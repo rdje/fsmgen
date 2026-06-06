@@ -16,6 +16,9 @@ This document defines the scoped R14 VHDL backend plan for FSMGen.
   chains lower to VHDL `xor`.
 - Composition VHDL, aggregate VHDL, broad expression parity, GHDL validation,
   packages, multi-clock domains, and full feature parity remain deferred.
+- The next active task-tree-owned expression edge is same-width runtime
+  division/modulo RHS-chain lowering from `t/corpus/direct_runtime_div_mod.fsm`;
+  until that leaf ships, division and modulo stay fail-closed in direct VHDL.
 
 ## Goal
 Implement a real, scoped VHDL backend that generates synthesizable VHDL from
@@ -75,6 +78,8 @@ The first VHDL lane is intentionally narrow:
   delayed-pulse nested clock-branch lowering, plus same-width addition,
   subtraction, multiplication, and XOR RHS expression chains.
 - Remaining semantic conversion work still belongs to exact future VHDL leaves.
+  The current selected future leaf is same-width runtime division/modulo
+  RHS-chain lowering for the direct scaffold.
 
 ### Phase 3: Regression and hardening (R14.3)
 - Focused direct VHDL generation tests cover pipeline and CLI routing,

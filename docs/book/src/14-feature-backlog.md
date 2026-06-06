@@ -3782,7 +3782,10 @@ operators, scalar arithmetic, mismatched-width arithmetic, and expression
 contexts beyond the same-width addition/subtraction/multiplication/XOR RHS
 chain family remain fail-closed at the scaffold boundary. The maintained
 arithmetic/XOR operator corpus now lowers through the direct VHDL scaffold for
-that family.
+that family. The next task-tree-owned direct-expression edge is same-width
+runtime division/modulo RHS chains from
+`t/corpus/direct_runtime_div_mod.fsm`; until that leaf ships, division and
+modulo remain fail-closed in direct VHDL.
 
 ### GHDL Validation
 

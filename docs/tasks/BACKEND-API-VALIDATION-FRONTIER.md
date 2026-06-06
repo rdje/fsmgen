@@ -91,7 +91,8 @@ items named in the 2026-06-05 remaining-work inventory.
     `BACKEND-API-VALIDATION-FRONTIER.24.1`,
     `BACKEND-API-VALIDATION-FRONTIER.25`,
     `BACKEND-API-VALIDATION-FRONTIER.25.1`,
-    `BACKEND-API-VALIDATION-FRONTIER.26`
+    `BACKEND-API-VALIDATION-FRONTIER.26`,
+    `BACKEND-API-VALIDATION-FRONTIER.26.1`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.1`
   Status: `done`
@@ -523,9 +524,17 @@ items named in the 2026-06-05 remaining-work inventory.
   Commit: `this slice`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.26`
-  Status: `active`
+  Status: `done`
   Goal: `Select the next exact backend/API/public-export edge after direct VHDL XOR-chain widening.`
+  Children: `BACKEND-API-VALIDATION-FRONTIER.26.1`
   Acceptance: `One remaining roadmap-aligned backend, validation, embedding, or public-export edge is selected from current code, contracts, mdBook, knowledge-map, and task-tree evidence. The selected edge has an exact implementation-or-deferral owner leaf before any code changes occur.`
+  Verification: `Selection audit/read of README.md, MEMORY_ARCHITECTURE.md, MEMORY.md, docs/TASK_TREE.md, docs/tasks/BACKEND-API-VALIDATION-FRONTIER.md, docs/book/src/14-feature-backlog.md, docs/VHDL_SCOPE.md, docs/knowledge/direct-vhdl-scaffold.md, perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm, t/1420-vhdl-direct-backend-scaffold.t, t/386-hdl-generator-facade-target-language-boundary-audit.t, t/corpus/direct_runtime_div_mod.fsm, t/corpus/arithmetic_xor_operator_variants.fsm, t/corpus/rhs_expression_supported_variants.fsm, and t/corpus/relational_operator_chains.fsm. ./bin/fsmgen --language vhdl --quiet t/corpus/arithmetic_xor_operator_variants.fsm passed; ./bin/fsmgen --language vhdl --quiet t/corpus/rhs_expression_supported_variants.fsm passed; ./bin/fsmgen --language vhdl --quiet t/corpus/relational_operator_chains.fsm passed; ./bin/fsmgen --language vhdl --quiet t/corpus/direct_runtime_div_mod.fsm failed first on arithmetic expression A / B outside the direct VHDL scaffold; command -v ghdl returned unavailable. The generated SystemVerilog shape is bounded to A / B, A % B, A / B / C, and A % B % C, with div/mod aliases normalized to / and %. Selected same-width runtime division/modulo RHS chains as the next narrow direct VHDL scaffold edge, with BACKEND-API-VALIDATION-FRONTIER.26.1 owning implementation before any backend code changes.`
+  Commit: `this slice`
+
+- ID: `BACKEND-API-VALIDATION-FRONTIER.26.1`
+  Status: `active`
+  Goal: `Support same-width runtime division/modulo RHS chains in the direct VHDL scaffold.`
+  Acceptance: `FSM::HDL::FlattenedDT::Backend::VHDL converts generated SystemVerilog same-width vector division and modulo RHS forms such as A / B, A % B, A / B / C, and A % B % C from t/corpus/direct_runtime_div_mod.fsm into valid VHDL for the direct single-FSM scaffold. The leaf does not widen literal-zero divisor safety, scalar arithmetic, mismatched-width arithmetic, aggregate-output, composition-top, package, multi-clock, GHDL-validation, or full backend-parity claims. Focused VHDL pipeline/CLI/facade tests cover the division/modulo path and preserve existing addition/subtraction/multiplication/XOR, delayed-pulse, concat, reset, aggregate-fail-closed, and composition-fail-closed behavior. README/live docs/mdBook, the direct-VHDL fact card if needed, task-tree, and memory are synchronized.`
   Verification: `pending`
   Commit: `pending`
 
@@ -588,7 +597,8 @@ items named in the 2026-06-05 remaining-work inventory.
 | 53 | `BACKEND-API-VALIDATION-FRONTIER.24.1` | `done` | Implemented same-width vector multiplication chains such as generated `a * b * c * d`; XOR and other arithmetic forms remain fail-closed. |
 | 54 | `BACKEND-API-VALIDATION-FRONTIER.25` | `done` | Selected same-width bitwise XOR-chain RHS lowering as the next exact direct VHDL scaffold edge. |
 | 55 | `BACKEND-API-VALIDATION-FRONTIER.25.1` | `done` | Implemented same-width scalar/vector bitwise XOR chains such as generated `x ^ y ^ z`; division, modulo, and other arithmetic forms remain fail-closed. |
-| 56 | `BACKEND-API-VALIDATION-FRONTIER.26` | `active` | Select the next exact backend/API/public-export edge after the bounded direct VHDL XOR-chain widening. |
+| 56 | `BACKEND-API-VALIDATION-FRONTIER.26` | `done` | Selected same-width runtime division/modulo RHS chains as the next exact direct VHDL scaffold edge after direct arithmetic/XOR and relational-expression probes showed `direct_runtime_div_mod` now fails first on `A / B`. |
+| 57 | `BACKEND-API-VALIDATION-FRONTIER.26.1` | `active` | Implement only same-width runtime division/modulo RHS chains for the direct VHDL scaffold. |
 
 ## Decisions
 
@@ -665,6 +675,7 @@ items named in the 2026-06-05 remaining-work inventory.
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.24.1` | `perl -Iperl -c perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm`; `perl -Iperl -c perl/FSM/HDL/FlattenedDT.pm`; `prove -Iperl t/1420-vhdl-direct-backend-scaffold.t t/386-hdl-generator-facade-target-language-boundary-audit.t t/114-composition-target-support-diagnostics.t t/404-hdl-generator-facade-target-language-shape-boundary-audit.t`; expected-failure probe `./bin/fsmgen --language vhdl --quiet t/corpus/arithmetic_xor_operator_variants.fsm` now fails on XOR chain `x ^ y ^ z` after passing addition, subtraction, and multiplication chain RHS shapes; `./bin/fsmgen --language vhdl --quiet t/corpus/direct_assignment_pair_form.fsm`; `prove -Iperl t/313-hdl-external-validation-contract.t t/308-systemverilog-external-validation.t`; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; direct VHDL same-width vector multiplication chains are shipped while XOR remains fail-closed |
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.25` | Selection audit/read of `KNOWLEDGE_MAP.md`, `docs/book/src/14-feature-backlog.md`, `docs/VHDL_SCOPE.md`, `docs/knowledge/direct-vhdl-scaffold.md`, `perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm`, `t/1420-vhdl-direct-backend-scaffold.t`, `t/386-hdl-generator-facade-target-language-boundary-audit.t`, and `t/corpus/arithmetic_xor_operator_variants.fsm`; `./bin/fsmgen --language vhdl --quiet t/corpus/direct_assignment_pair_form.fsm`; expected-failure probe `./bin/fsmgen --language vhdl --quiet t/corpus/arithmetic_xor_operator_variants.fsm` failed first on XOR chain `x ^ y ^ z`; `command -v ghdl` returned unavailable; `prove -Iperl t/1420-vhdl-direct-backend-scaffold.t t/386-hdl-generator-facade-target-language-boundary-audit.t`; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; selected direct VHDL same-width bitwise XOR chains for `.25.1` |
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.25.1` | `perl -Iperl -c perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm`; `perl -Iperl -c perl/FSM/HDL/FlattenedDT.pm`; `prove -Iperl t/1420-vhdl-direct-backend-scaffold.t t/386-hdl-generator-facade-target-language-boundary-audit.t t/114-composition-target-support-diagnostics.t t/404-hdl-generator-facade-target-language-shape-boundary-audit.t`; `./bin/fsmgen --language vhdl --quiet t/corpus/arithmetic_xor_operator_variants.fsm`; `./bin/fsmgen --language vhdl --quiet t/corpus/direct_assignment_pair_form.fsm`; `prove -Iperl t/313-hdl-external-validation-contract.t t/308-systemverilog-external-validation.t`; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; direct VHDL same-width bitwise XOR chains are shipped and the maintained arithmetic/XOR corpus now lowers cleanly |
+| `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.26` | Selection audit/read of `README.md`, `MEMORY_ARCHITECTURE.md`, `MEMORY.md`, `docs/TASK_TREE.md`, `docs/tasks/BACKEND-API-VALIDATION-FRONTIER.md`, `docs/book/src/14-feature-backlog.md`, `docs/VHDL_SCOPE.md`, `docs/knowledge/direct-vhdl-scaffold.md`, `perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm`, `t/1420-vhdl-direct-backend-scaffold.t`, `t/386-hdl-generator-facade-target-language-boundary-audit.t`, and direct expression corpora; `./bin/fsmgen --language vhdl --quiet -o /tmp/fsmgen_direct_runtime_div_mod_probe.vhd t/corpus/direct_runtime_div_mod.fsm` failed as expected on `A / B`; `./bin/fsmgen --language vhdl --quiet -o /tmp/fsmgen_relational_operator_chains_probe.vhd t/corpus/relational_operator_chains.fsm`; `./bin/fsmgen --language vhdl --quiet -o /tmp/fsmgen_rhs_expression_supported_probe.vhd t/corpus/rhs_expression_supported_variants.fsm`; `./bin/fsmgen --quiet -o /tmp/fsmgen_direct_runtime_div_mod_probe.sv t/corpus/direct_runtime_div_mod.fsm`; `rg -n "QUO|REM|/|%" /tmp/fsmgen_direct_runtime_div_mod_probe.sv`; composition/aggregate probes confirmed their existing broader boundaries; removed `/tmp/fsmgen_*_probe.*` artifacts; `command -v ghdl` returned unavailable; `scripts/check_memory_architecture.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; selected direct VHDL same-width runtime division/modulo RHS chains for `.26.1` |
 
 ## Commit Log
 
@@ -725,6 +736,7 @@ items named in the 2026-06-05 remaining-work inventory.
 | `BACKEND-API-VALIDATION-FRONTIER.24.1` | `BACKEND-API-VALIDATION-FRONTIER.24.1: ship VHDL multiplication chains` | this slice |
 | `BACKEND-API-VALIDATION-FRONTIER.25` | `BACKEND-API-VALIDATION-FRONTIER.25: select VHDL XOR chains` | selected `.25.1` |
 | `BACKEND-API-VALIDATION-FRONTIER.25.1` | `BACKEND-API-VALIDATION-FRONTIER.25.1: ship VHDL XOR chains` | this slice |
+| `BACKEND-API-VALIDATION-FRONTIER.26` | `BACKEND-API-VALIDATION-FRONTIER.26: select VHDL div mod chains` | selected `.26.1` |
 
 ## Changelog
 
@@ -991,3 +1003,8 @@ items named in the 2026-06-05 remaining-work inventory.
   arithmetic/XOR operator corpus now lowers cleanly for the shipped same-width
   addition/subtraction/multiplication/XOR RHS chain family. Activated `.26` to
   select the next backend/API edge.
+- `2026-06-06`: Completed `.26`; selected same-width runtime division/modulo
+  RHS chains as the next exact direct VHDL scaffold edge after
+  `direct_runtime_div_mod` failed first on `A / B` while the arithmetic/XOR,
+  relational-chain, and supported-expression corpora passed. Activated `.26.1`
+  before any backend code changes.
