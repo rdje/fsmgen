@@ -128,8 +128,9 @@ The first VHDL lane is intentionally narrow:
   fixtures, plus direct-root parameter blocks as VHDL
   generics, including integer expression defaults and typed scalar/vector
   sized-literal defaults.
-- Active follow-up: select the next exact direct VHDL scaffold edge from fresh
-  evidence.
+- Active follow-up: implement direct VHDL `logic signed` internal declaration
+  lowering under `BACKEND-API-VALIDATION-FRONTIER.55.1`; signed ports and
+  signed arithmetic semantics remain separate future edges.
 - Remaining semantic conversion work still belongs to exact future VHDL leaves.
 
 ### Phase 3: Regression and hardening (R14.3)

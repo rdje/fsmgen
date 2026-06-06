@@ -835,11 +835,12 @@ recursive type-entry schema metadata for `semantic.symbol_contract.types` and
 `kind`, `signed`, `width`, and optional `state_model`, while aggregate entries
 carry recursive `items` or `members` plus `member_order`.
 The current active backend/API frontier is
-`BACKEND-API-VALIDATION-FRONTIER.55`: select the next exact backend/API or
-public-export edge after the shipped symbol-contract type-entry schemas.
-Package-import internals, already bounded constant/enum/type internals,
-unrelated forward-IR payloads, and full normalized semantic export
-stabilization remain out of scope until a later exact leaf owns them.
+`BACKEND-API-VALIDATION-FRONTIER.55.1`: implement direct VHDL `logic signed`
+internal declaration lowering after `.55` selected that exact backend edge.
+Signed ports, signed arithmetic semantics, aggregate VHDL, composition/top
+VHDL, packages, GHDL validation, broad expression parity, package-import
+internals, unrelated forward-IR payloads, and full normalized semantic export
+stabilization remain out of scope until later exact leaves own them.
 The manifest is still not a full normalized semantic export stabilization
 promise.
 The manifest-facing stable diagnostic-code registry now has its own explicit

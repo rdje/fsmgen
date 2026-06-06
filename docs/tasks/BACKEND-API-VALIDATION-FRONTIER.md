@@ -149,7 +149,8 @@ items named in the 2026-06-05 remaining-work inventory.
     `BACKEND-API-VALIDATION-FRONTIER.53.1`,
     `BACKEND-API-VALIDATION-FRONTIER.54`,
     `BACKEND-API-VALIDATION-FRONTIER.54.1`,
-    `BACKEND-API-VALIDATION-FRONTIER.55`
+    `BACKEND-API-VALIDATION-FRONTIER.55`,
+    `BACKEND-API-VALIDATION-FRONTIER.55.1`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.1`
   Status: `done`
@@ -1016,10 +1017,18 @@ items named in the 2026-06-05 remaining-work inventory.
   Commit: `BACKEND-API-VALIDATION-FRONTIER.54.1: ship symbol type schema`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.55`
-  Status: `active`
+  Status: `done`
   Goal: `Select the next exact backend/API/public-export edge after symbol-contract type-entry schemas shipped.`
-  Acceptance: `Choose one executable backend/API or public-export leaf from the remaining roadmap-aligned frontier before any implementation/test/source edits. The selection must record evidence, scope, non-goals, verification plan, and an exact child implementation owner.`
-  Verification: `pending selection`
+  Children: `BACKEND-API-VALIDATION-FRONTIER.55.1`
+  Acceptance: `Selected direct VHDL logic-signed internal declaration lowering as the next exact backend edge. Evidence shows the direct VHDL converter currently has separate shipped support for signed vector reg declarations and non-signed four-state logic declarations, while t/1420-vhdl-direct-backend-scaffold.t still locks generated logic signed [7:0] OUT; as outside the scaffold. The implementation owner is BACKEND-API-VALIDATION-FRONTIER.55.1 before any backend/test/source edits. The slice must accept generated direct-root internal signal declarations for logic signed vectors and lower them to deterministic VHDL signed signals without widening signed ports, signed arithmetic semantics, aggregate VHDL, composition/top VHDL, VHDL packages, multi-clock domains, GHDL validation, broad expression parity, or full backend parity.`
+  Verification: `Selection audit/read of docs/book/src/14-feature-backlog.md, docs/VHDL_SCOPE.md, docs/knowledge/direct-vhdl-scaffold.md, README.md, perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm, t/1420-vhdl-direct-backend-scaffold.t, t/386-hdl-generator-facade-target-language-boundary-audit.t, and t/279-declarative-scalar-types.t. The converter still rejects signed logic declarations at the explicit guard in _parse_signal_declarations, and the focused VHDL scaffold test isolates the generated direct-root output-only shape logic signed [7:0] OUT; as a fail-closed boundary.`
+  Commit: `BACKEND-API-VALIDATION-FRONTIER.55: select VHDL logic signed declarations`
+
+- ID: `BACKEND-API-VALIDATION-FRONTIER.55.1`
+  Status: `active`
+  Goal: `Implement direct VHDL logic-signed internal declaration lowering.`
+  Acceptance: `FSM::HDL::FlattenedDT::Backend::VHDL accepts generated direct-root internal signal declarations for SystemVerilog logic signed vector signals, including the output-only four_state signed type shape currently covered as a fail-closed boundary in t/1420-vhdl-direct-backend-scaffold.t. The generated VHDL declares those internal signals as numeric_std signed vectors without leaking SystemVerilog logic syntax. Focused pipeline, CLI, and facade coverage prove the shape lowers, while README, docs/VHDL_SCOPE.md, mdBook, the direct-VHDL fact card, task tree, and memory stay synchronized. The leaf does not widen signed ports, signed arithmetic semantics, aggregate VHDL, composition/top VHDL, VHDL packages, multi-clock domains, GHDL validation, broad expression parity, or full backend parity.`
+  Verification: `pending implementation`
   Commit: `pending`
 
 ## Current Frontier
@@ -1139,7 +1148,8 @@ items named in the 2026-06-05 remaining-work inventory.
 | 111 | `BACKEND-API-VALIDATION-FRONTIER.53.1` | `done` | Published symbol-contract enum value-kind families for `semantic.symbol_contract.enums` and the intent-HIR alias without widening type/package-import internals or full normalized semantic export stabilization. |
 | 112 | `BACKEND-API-VALIDATION-FRONTIER.54` | `done` | Selected symbol-contract type-entry schemas after runtime and contract evidence showed the public types map still lacks bounded recursive type-entry metadata. |
 | 113 | `BACKEND-API-VALIDATION-FRONTIER.54.1` | `done` | Published bounded recursive symbol-contract type-entry schemas for `semantic.symbol_contract.types` and the intent-HIR alias before any package-import internals or full normalized semantic export stabilization. |
-| 114 | `BACKEND-API-VALIDATION-FRONTIER.55` | `active` | Select the next exact backend/API or public-export edge after symbol-contract type-entry schemas shipped. |
+| 114 | `BACKEND-API-VALIDATION-FRONTIER.55` | `done` | Selected direct VHDL `logic signed` internal declaration lowering after existing tests and converter evidence showed it remains an explicit direct VHDL fail-closed boundary. |
+| 115 | `BACKEND-API-VALIDATION-FRONTIER.55.1` | `active` | Implement direct VHDL `logic signed` internal declaration lowering without widening signed ports, signed arithmetic, aggregate/composition VHDL, GHDL validation, or full backend parity. |
 
 ## Decisions
 
@@ -1274,6 +1284,7 @@ items named in the 2026-06-05 remaining-work inventory.
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.53.1` | `perl -Iperl -c perl/FSM/Support/NormalizedSemanticSymbolContract.pm`; `perl -Iperl -c perl/FSM/Support/NormalizedSemanticIntentHIRContract.pm`; `perl -Iperl -c perl/FSM/Support/NormalizedSemanticForwardIRContract.pm`; `perl -Iperl -c perl/FSM/Support/NormalizedSemanticPayloadContract.pm`; `perl -Iperl -c perl/FSM/Support/NormalizedSemanticReportContract.pm`; edited-test syntax checks; focused normalized semantic symbol-enum schema prove bundle; broader normalized semantic contract/runtime prove bundle; manifest runtime prove bundle; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; symbol-contract enum value-kind schemas shipped through symbol, intent-HIR, forward-IR, payload/report, manifest, docs, knowledge-map, defensive-copy audits, and runtime schema coverage; activated `.54` |
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.54` | Selection audit/read of `docs/book/src/14-feature-backlog.md`, `docs/book/src/11-extensions-and-embedding.md`, `docs/book/src/04-symbols-types-and-imports.md`, `README.md`, `KNOWLEDGE_MAP.md`, `perl/FSM/Support/NormalizedSemanticSymbolContract.pm`, `perl/FSM/Package/Symbols.pm`, `perl/FSM/Package/DeclarativeTypeSupport.pm`, `perl/FSM/Package/DeclarativeTypeResolver.pm`, `t/277-direct-symbol-contract-forward-ir.t`, `t/278-composition-symbol-contract-forward-ir.t`, `t/279-declarative-scalar-types.t`, `t/335-normalized-semantic-symbol-contract.t`, and `t/354-normalized-semantic-child-runtime-contract-audit.t`; strict temporary normalized semantic JSON probe showed `semantic.symbol_contract.types` emits scalar entries with `kind`, `signed`, `width`, and optional `state_model`, plus aggregate entries with recursive `items` or `members`/`member_order`; `prove -Iperl t/277-direct-symbol-contract-forward-ir.t t/278-composition-symbol-contract-forward-ir.t t/279-declarative-scalar-types.t t/335-normalized-semantic-symbol-contract.t t/354-normalized-semantic-child-runtime-contract-audit.t`; `scripts/check_memory_architecture.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; selected symbol-contract type-entry schemas for `.54.1` |
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.54.1` | `perl -Iperl -c perl/FSM/Support/NormalizedSemanticSymbolContract.pm`; `perl -Iperl -c perl/FSM/Support/NormalizedSemanticIntentHIRContract.pm`; `perl -Iperl -c perl/FSM/Support/NormalizedSemanticForwardIRContract.pm`; `perl -Iperl -c perl/FSM/Support/NormalizedSemanticPayloadContract.pm`; `perl -Iperl -c perl/FSM/Support/NormalizedSemanticReportContract.pm`; edited-test syntax checks; `prove -Iperl t/335-normalized-semantic-symbol-contract.t t/339-normalized-semantic-intent-hir-contract.t t/334-normalized-semantic-forward-ir-contract.t t/330-normalized-semantic-payload-contract.t t/311-normalized-semantic-report-contract.t t/297-capability-manifest.t t/354-normalized-semantic-child-runtime-contract-audit.t t/442-normalized-semantic-payload-contract-defensive-copy-boundary-audit.t t/443-normalized-semantic-report-contract-defensive-copy-boundary-audit.t t/472-normalized-semantic-symbol-contract-defensive-copy-boundary-audit.t t/1023-normalized-semantic-symbol-contract-full-surface-json-roundtrip-audit.t t/1024-normalized-semantic-symbol-contract-full-surface-defensive-copy-audit.t`; broader normalized semantic full-surface/runtime prove bundle; manifest runtime prove bundle; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; symbol-contract type-entry schemas shipped through symbol, intent-HIR, forward-IR, payload/report, manifest, docs, knowledge-map, defensive-copy audits, and runtime schema coverage; activated `.55` |
+| `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.55` | Selection audit/read of `docs/book/src/14-feature-backlog.md`, `docs/book/src/11-extensions-and-embedding.md`, `docs/VHDL_SCOPE.md`, `docs/knowledge/direct-vhdl-scaffold.md`, `README.md`, `perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm`, `t/1420-vhdl-direct-backend-scaffold.t`, `t/386-hdl-generator-facade-target-language-boundary-audit.t`, and `t/279-declarative-scalar-types.t`; focused scaffold/facade boundary evidence shows `logic signed [7:0] OUT;` remains an explicit direct VHDL fail-closed boundary after signed vector reg and non-signed logic declarations shipped | `PASS`; selected direct VHDL `logic signed` internal declaration lowering for `.55.1` |
 
 ## Commit Log
 
@@ -1392,6 +1403,7 @@ items named in the 2026-06-05 remaining-work inventory.
 | `BACKEND-API-VALIDATION-FRONTIER.53.1` | `BACKEND-API-VALIDATION-FRONTIER.53.1: ship symbol enum schema` | this slice; activates `.54` |
 | `BACKEND-API-VALIDATION-FRONTIER.54` | `BACKEND-API-VALIDATION-FRONTIER.54: select symbol type schema` | selected `.54.1` |
 | `BACKEND-API-VALIDATION-FRONTIER.54.1` | `BACKEND-API-VALIDATION-FRONTIER.54.1: ship symbol type schema` | this slice; activates `.55` |
+| `BACKEND-API-VALIDATION-FRONTIER.55` | `BACKEND-API-VALIDATION-FRONTIER.55: select VHDL logic signed declarations` | selected `.55.1` |
 
 ## Changelog
 
@@ -1983,3 +1995,9 @@ items named in the 2026-06-05 remaining-work inventory.
   advertise `kind`, `signed`, `width`, and optional `state_model`; aggregate
   entries advertise recursive `items` or `members` plus `member_order`.
   Activated `.55` to select the next backend/API/public-export edge.
+- `2026-06-06`: Completed `.55`; selected direct VHDL `logic signed`
+  internal declaration lowering for `.55.1` after converter and test evidence
+  showed generated `logic signed [7:0] OUT;` remains an explicit direct VHDL
+  fail-closed boundary. Signed ports, signed arithmetic semantics, aggregate
+  VHDL, composition/top VHDL, packages, GHDL validation, broad expression
+  parity, and full backend parity remain deferred.
