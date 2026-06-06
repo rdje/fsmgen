@@ -193,7 +193,7 @@ sub _is_bounded_generated_fsm_c2_vhdl_top ($composition_plan) {
 
     for my $instance (@instances) {
         return 0 unless ($instance->kind // '') eq 'fsmc';
-        return 0 unless _has_only_scalar_integer_or_expression_parameter_overrides($instance);
+        return 0 unless _has_only_supported_generated_fsm_generic_overrides($instance);
     }
 
     for my $entry (@nets, @ports) {
@@ -299,7 +299,7 @@ sub _entries_match_widths ($entries, $expected_widths) {
     return keys(%remaining) == 0 ? 1 : 0;
 }
 
-sub _has_only_scalar_integer_or_expression_parameter_overrides ($instance) {
+sub _has_only_supported_generated_fsm_generic_overrides ($instance) {
     my @overrides = @{$instance->parameter_overrides || []};
     for my $override (@overrides) {
         return 0 unless ($override->{value_kind} // 'scalar') eq 'scalar';
@@ -307,6 +307,7 @@ sub _has_only_scalar_integer_or_expression_parameter_overrides ($instance) {
         return 0 unless defined($value);
         next if $value =~ /\A-?\d+\z/;
         next if _is_scalar_integer_expression($value);
+        next if _is_multi_bit_sized_bitstring_literal($value);
         return 0;
     }
     return 1;
@@ -314,6 +315,54 @@ sub _has_only_scalar_integer_or_expression_parameter_overrides ($instance) {
 
 sub _is_scalar_integer_expression ($value) {
     return $value =~ /\A\(\s*-?\d+(?:\s+[-+*\/]\s+-?\d+)+\s*\)\z/ ? 1 : 0;
+}
+
+sub _is_multi_bit_sized_bitstring_literal ($value) {
+    return 0
+        unless $value =~ /\A([1-9][0-9]*)'([bBhH])([0-9A-Fa-f_xXzZ]+)\z/;
+
+    my ($width, $base, $digits) = ($1 + 0, lc($2), $3);
+    return 0 if $width <= 1;
+    return 0 if $digits =~ /[xz]/i;
+
+    $digits =~ s/_//g;
+    my $bit_count = $base eq 'b'
+        ? _binary_bit_count($digits)
+        : _hex_bit_count($digits);
+    return 0 unless defined $bit_count;
+    return $bit_count <= $width ? 1 : 0;
+}
+
+sub _binary_bit_count ($digits) {
+    return undef unless $digits =~ /\A[01]+\z/;
+    return length($digits);
+}
+
+sub _hex_bit_count ($digits) {
+    return undef unless $digits =~ /\A[0-9A-Fa-f]+\z/;
+
+    my %hex_to_bits = (
+        0 => '0000',
+        1 => '0001',
+        2 => '0010',
+        3 => '0011',
+        4 => '0100',
+        5 => '0101',
+        6 => '0110',
+        7 => '0111',
+        8 => '1000',
+        9 => '1001',
+        a => '1010',
+        b => '1011',
+        c => '1100',
+        d => '1101',
+        e => '1110',
+        f => '1111',
+    );
+
+    my $bits = join '', map { $hex_to_bits{lc($_)} } split //, $digits;
+    $bits =~ s/\A0+(?=.)//;
+    return length($bits);
 }
 
 1;

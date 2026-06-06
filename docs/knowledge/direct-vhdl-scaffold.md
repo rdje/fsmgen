@@ -204,7 +204,10 @@ before the generated child port map, such as `WIDTH => 16`, while the child
 entity keeps the matching VHDL generic declaration. Scalar expression generic
 maps also emit before the generated child port map, such as
 `EXPR_WIDTH => (16 + 1)`, against the child VHDL integer generic declaration.
-Generated-FSM one-bit, bitstring, and aggregate generic actuals remain deferred.
+Multi-bit sized bitstring generic maps also emit before the generated child
+port map, such as `RESET_VALUE => "10100101"` for `RESET_VALUE 8'hA5`, against
+the child VHDL `std_logic_vector` generic declaration. Generated-FSM one-bit
+and aggregate generic actuals remain deferred.
 The bounded APB/C4 generated-FSM child composition VHDL top is also shipped for
 `fsm/apb_tb.fsm`. That subset emits VHDL-safe APB requester/completer child
 segments, vector APB structural signals, deterministic shared-datapath sink

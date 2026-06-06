@@ -119,8 +119,8 @@ sub _render_instance_block ($instance) {
     if (@parameter_overrides) {
         my $is_supported_generated_fsm_generic_map =
             $instance_kind eq 'fsmc'
-            && _has_only_scalar_integer_or_expression_generic_actuals(\@parameter_overrides);
-        confess _unsupported('composition VHDL generic maps are currently limited to external RTL scalar integer, scalar integer expression, sized bitstring, or packed aggregate overrides, plus generated-FSM scalar integer or scalar integer expression overrides')
+            && _has_only_supported_generated_fsm_generic_actuals(\@parameter_overrides);
+        confess _unsupported('composition VHDL generic maps are currently limited to external RTL scalar integer, scalar integer expression, sized bitstring, or packed aggregate overrides, plus generated-FSM scalar integer, scalar integer expression, or multi-bit sized bitstring overrides')
             unless $instance_kind eq 'rtl' || $is_supported_generated_fsm_generic_map;
     }
 
@@ -194,13 +194,16 @@ sub _vhdl_generic_actual ($override) {
     confess _unsupported(_generic_actual_limit());
 }
 
-sub _has_only_scalar_integer_or_expression_generic_actuals ($overrides) {
+sub _has_only_supported_generated_fsm_generic_actuals ($overrides) {
     for my $override (@$overrides) {
         return 0 unless ($override->{value_kind} // 'scalar') eq 'scalar';
         my $value = $override->{value_text};
         return 0 unless defined($value);
         next if $value =~ /\A-?\d+\z/;
         next if defined _vhdl_scalar_integer_expression_generic_actual($value);
+        my $literal_actual = eval { _vhdl_sized_bitstring_generic_actual($value) };
+        return 0 if $@;
+        next if defined $literal_actual;
         return 0;
     }
     return 1;

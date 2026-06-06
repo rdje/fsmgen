@@ -361,9 +361,11 @@ generated-FSM scalar-autowire fixture in
 generated-FSM fixture in `fsm/apb_tb.fsm`. The bounded C2 generated-FSM family
 also lowers scalar integer generic maps before the generated child port map,
 such as `WIDTH => 16`, and scalar expression generic maps such as
-`EXPR_WIDTH => (16 + 1)`. Other `?top` VHDL shapes still parse into typed
-composition IR and then fail closed with the scoped target-support diagnostic.
-Generated-FSM one-bit, bitstring, and aggregate actuals, standalone-DT generic
+`EXPR_WIDTH => (16 + 1)`, plus multi-bit sized bitstring generic maps such as
+`RESET_VALUE => "10100101"` for `RESET_VALUE 8'hA5`. Other `?top` VHDL shapes
+still parse into typed composition IR and then fail closed with the scoped
+target-support diagnostic.
+Generated-FSM one-bit and aggregate actuals, standalone-DT generic
 maps, aggregate/list/record actuals that do not resolve to multi-bit packed
 values, unresolved package/expression actuals, VHDL package
 declaration/emission, and APB/C4 generic-map shapes remain deferred until
@@ -3873,8 +3875,8 @@ standalone-DT child VHDL segment and a top-level
 generated-FSM scalar-autowire structural top now emits VHDL-safe generated-child
 shared-datapath export ports/assignments, scalar structural signals, and both
 generated child entity port maps; the same bounded C2 family now also emits
-scalar integer and scalar expression generic maps before the generated child
-port map. The bounded APB/C4 generated-FSM structural top now emits APB requester/completer child
+scalar integer, scalar expression, and multi-bit sized bitstring generic maps
+before the generated child port map. The bounded APB/C4 generated-FSM structural top now emits APB requester/completer child
 VHDL entities, vector APB
 structural signals, deterministic shared-datapath sink signals, and both child
 entity port maps. Other composition/top VHDL shapes remain
@@ -3913,7 +3915,8 @@ composition VHDL beyond the exact shipped fixtures, internal-net-heavy
 composition tops beyond APB, composition generic maps beyond external-RTL
 scalar integer, scalar integer expression, and multi-bit sized bitstring
 literal/resolved-package-constant actuals plus resolved packed aggregate
-actuals and generated-FSM scalar integer/scalar expression actuals, aggregate
+actuals and generated-FSM scalar integer/scalar expression/multi-bit sized
+bitstring actuals, aggregate
 VHDL, VHDL package declaration/emission, GHDL validation, and full backend
 parity remain outside the shipped
 scaffold. Signed vector numeric-literal
@@ -4126,12 +4129,9 @@ schema metadata for `semantic.symbol_contract.types` and
 recursive `items` or `members` plus `member_order`.
 
 Current active backend edge: task-tree leaf
-`BACKEND-API-VALIDATION-FRONTIER.80.1` owns the bounded C2 generated-FSM
-multi-bit sized bitstring VHDL generic-map edge selected by `.80`. The target
-shape is a generated child with a bitstring override such as `RESET_VALUE
-8'hA5`, resolved before emission to a top instance generic map such as
-`RESET_VALUE => "10100101"`; until that leaf commits, shipped VHDL behavior is
-unchanged. Package declaration and VHDL package emission, already bounded
+`BACKEND-API-VALIDATION-FRONTIER.81` selects the next exact backend/API edge
+after bounded C2 generated-FSM multi-bit sized bitstring VHDL generic-map
+actuals shipped in `.80.1`. Package declaration and VHDL package emission, already bounded
 constant/enum/type internals, unrelated forward-IR payloads, signed scalar
 division/modulo, mixed signed/unsigned arithmetic, generated-FSM one-bit and
 aggregate generic actuals, standalone-DT generic maps, APB/C4 generic maps,
