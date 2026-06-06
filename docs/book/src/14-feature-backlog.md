@@ -3958,7 +3958,9 @@ direct-root vector arithmetic with numeric literal operands, such as `SRC + 2`,
 `SRC - 1`, `byte_count + 4`, and `remaining - 3`, through target-width
 `to_unsigned` casts. Typed read-only direct-root two-state signals now lower
 generated `input bit FLAG_IN` and `input bit [7:0] BYTE_IN` ports to VHDL
-`std_logic` and `std_logic_vector` input ports. The declarative bits
+`std_logic` and `std_logic_vector` input ports. Typed read-only direct-root
+non-signed four-state signals now lower generated `input logic FLAG_IN` and
+`input logic [7:0] BYTE_IN` ports to the same VHDL input-port shapes. The declarative bits
 symbolic-width fixture now lowers
 generated scalar and vector two-state `bit` internal declarations, such as
 `bit FLAG;` and `bit [7:0] OUT;`, to VHDL `std_logic` and
@@ -4221,8 +4223,10 @@ package declaration/emission, and full normalized semantic export
 stabilization remain deferred.
 
 Current active backend edge: task-tree leaf
-`BACKEND-API-VALIDATION-FRONTIER.106.1` owns direct VHDL generated typed
-non-signed four-state input port declaration lowering for `input logic IN` and
+`BACKEND-API-VALIDATION-FRONTIER.107` selects the next exact backend/API edge
+after direct VHDL generated typed non-signed four-state input port declaration
+lowering shipped. Completed implementation leaf
+`BACKEND-API-VALIDATION-FRONTIER.106.1` lowers `input logic IN` and
 `input logic [7:0] IN` to VHDL `std_logic` / `std_logic_vector` ports.
 Completed selector leaf
 `BACKEND-API-VALIDATION-FRONTIER.106` chose that exact logic-input edge after

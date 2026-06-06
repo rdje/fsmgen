@@ -121,6 +121,9 @@ answers:
   - "does direct VHDL support bit input ports?"
   - "does direct VHDL support input bit declarations?"
   - "does direct VHDL support two-state bit input ports?"
+  - "does direct VHDL support logic input ports?"
+  - "does direct VHDL support input logic declarations?"
+  - "does direct VHDL support four-state logic input ports?"
   - "does direct VHDL support scalar bit declarations?"
   - "does direct VHDL support vector bit declarations?"
   - "does direct VHDL support two-state vector declarations?"
@@ -153,6 +156,9 @@ defaults become `std_logic` generics for one-bit defaults and
 vector `bit [MSB:LSB]` internal declarations lower to `std_logic_vector`
 signals. Typed read-only direct-root two-state ports that generate `input bit
 NAME` and `input bit [MSB:LSB] NAME` lower to VHDL `std_logic` and
+`std_logic_vector` input ports. Typed read-only direct-root non-signed
+four-state ports that generate `input logic NAME` and
+`input logic [MSB:LSB] NAME` also lower to VHDL `std_logic` and
 `std_logic_vector` input ports. Generated signed vector internal declarations such as
 `reg signed [3:0] NIB` lower to VHDL `signed` signals, generated non-signed
 four-state `logic` internal declarations lower to `std_logic` /

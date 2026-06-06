@@ -332,6 +332,64 @@ FSM
     );
 };
 
+subtest 'facade target_language option routes direct VHDL four-state logic input ports' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $direct_path = File::Spec->catfile($tempdir, 'facade_direct_vhdl_four_state_logic_inputs.fsm');
+    write_file(
+        $direct_path,
+        <<'FSM'
+(?fsm:facade_direct_vhdl_four_state_logic_inputs
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+  (+types
+    (type byte_t (four_state (bits 8)))
+    (type flag_t (four_state (bits 1)))
+  )
+  (+size
+    (BYTE_IN byte_t)
+    (FLAG_IN flag_t)
+    (OUT byte_t)
+  )
+  (idle
+    (<FLAG_IN
+      (= (OUT BYTE_IN))
+    )
+  )
+)
+FSM
+    );
+
+    my $vhdl_pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'vhdl',
+        quiet => 1,
+    );
+    my $vhdl_result = $vhdl_pipeline->generate_hdl_from_file($direct_path);
+
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bentity\s+facade_direct_vhdl_four_state_logic_inputs\s+is\b/s,
+        'explicit VHDL facade generation emits the four-state logic input direct entity',
+    );
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bBYTE_IN\s+:\s+in\s+std_logic_vector\(7\s+downto\s+0\);/s,
+        'explicit VHDL facade generation lowers generated vector logic input ports',
+    );
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bFLAG_IN\s+:\s+in\s+std_logic;?/s,
+        'explicit VHDL facade generation lowers generated scalar logic input ports',
+    );
+    unlike(
+        $vhdl_result->{hdl_code},
+        qr/\bmodule\b|\balways_(?:ff|comb)\b|\binput\s+logic\b/s,
+        'explicit VHDL four-state logic input facade generation does not leak SystemVerilog port syntax',
+    );
+};
+
 subtest 'facade target_language option routes bounded composition VHDL structural top behavior' => sub {
     my $composition_path = repo_file('t/corpus/composition_intent_integer_literals.fsm');
     my $vhdl_pipeline = FSM::Pipeline::HDLGenerator->new(
