@@ -188,8 +188,24 @@ sub _has_only_supported_standalone_dt_generic_overrides ($instance) {
         return 0 unless defined($value);
         next if $value =~ /\A-?\d+\z/;
         next if $value =~ /\A\(\s*-?\d+(?:\s+[-+*\/]\s+-?\d+)+\s*\)\z/;
+        next if _is_metadata_backed_scalar_one_bit_generic_override($override)
+            && _is_supported_one_bit_sized_bitstring_literal($value);
         return 0;
     }
+    return 1;
+}
+
+sub _is_metadata_backed_scalar_one_bit_generic_override ($override) {
+    return 0 unless ($override->{value_kind} // 'scalar') eq 'scalar';
+    return 0 unless ($override->{declaration_default_value_kind} // '') eq 'scalar';
+    return 0
+        unless defined $override->{declaration_default_value_width}
+        && $override->{declaration_default_value_width} =~ /\A\d+\z/
+        && $override->{declaration_default_value_width} == 1;
+    return 0
+        unless defined $override->{value_width}
+        && $override->{value_width} =~ /\A\d+\z/
+        && $override->{value_width} == 1;
     return 1;
 }
 
@@ -350,6 +366,21 @@ sub _is_supported_generated_fsm_sized_bitstring_literal ($value, %opts) {
         : _hex_bit_count($digits);
     return 0 unless defined $bit_count;
     return $bit_count <= $width ? 1 : 0;
+}
+
+sub _is_supported_one_bit_sized_bitstring_literal ($value) {
+    return 0
+        unless $value =~ /\A1'([bBhH])([0-9A-Fa-f_xXzZ]+)\z/;
+
+    my ($base, $digits) = (lc($1), $2);
+    return 0 if $digits =~ /[xz]/i;
+
+    $digits =~ s/_//g;
+    my $bit_count = $base eq 'b'
+        ? _binary_bit_count($digits)
+        : _hex_bit_count($digits);
+    return 0 unless defined $bit_count;
+    return $bit_count <= 1 ? 1 : 0;
 }
 
 sub _binary_bit_count ($digits) {

@@ -368,10 +368,12 @@ generic maps such as `RESET_VALUE => "10100101"` for `RESET_VALUE 8'hA5`, and
 resolved packed aggregate generic maps such as `LANES => "1010010100111100"` and
 `FRAME => "101"`. The bounded C1 standalone-DT family also lowers scalar
 integer generic maps before the standalone-DT child port map, such as
-`WIDTH => 16`, and scalar expression generic maps such as
-`EXPR_WIDTH => (8 + 1)`, while the child entity keeps the matching VHDL integer
-generic declaration. Other `?top` VHDL shapes still parse into typed composition
-IR and then fail closed with the scoped target-support diagnostic.
+`WIDTH => 16`, scalar expression generic maps such as
+`EXPR_WIDTH => (8 + 1)`, and one-bit sized bitstring generic maps such as
+`ENABLE_DEFAULT => '1'`, while the child entity keeps the matching VHDL integer
+or `std_logic` generic declaration. Other `?top` VHDL shapes still parse into
+typed composition IR and then fail closed with the scoped target-support
+diagnostic.
 Standalone-DT one-bit, multi-bit, and aggregate generic maps, APB/C4
 generic-map shapes, aggregate/list/record actuals that do not
 resolve to multi-bit packed values, unresolved package/expression actuals,
@@ -3880,7 +3882,8 @@ actuals such as `ENABLE_DEFAULT => '1'`, and resolved packed aggregate values
 such as `16'b1010010100111100`; broader
 generic-map families remain deferred except for the bounded C1 standalone-DT
 scalar integer actuals now emitted as `WIDTH => 16`, standalone-DT scalar
-expression actuals now emitted as `EXPR_WIDTH => (8 + 1)`, bounded C2
+expression actuals now emitted as `EXPR_WIDTH => (8 + 1)`, standalone-DT
+one-bit sized bitstring actuals now emitted as `ENABLE_DEFAULT => '1'`, bounded C2
 generated-FSM scalar integer actuals now emitted as `WIDTH => 16`,
 generated-FSM scalar expression actuals now emitted as `EXPR_WIDTH => (16 + 1)`,
 one-bit sized bitstring actuals now
@@ -3892,8 +3895,9 @@ concurrent literal/concat assignments and an external `entity work.uart_tx`
 port map. The bounded C1 standalone-DT passthrough structural top now emits the
 standalone-DT child VHDL segment and a top-level
 `entity work.standalone_route_src` port map; the same bounded C1 family now
-also emits scalar integer generic maps such as `WIDTH => 16` and scalar
-expression generic maps such as `EXPR_WIDTH => (8 + 1)` before that port map.
+also emits scalar integer generic maps such as `WIDTH => 16`, scalar
+expression generic maps such as `EXPR_WIDTH => (8 + 1)`, and one-bit sized
+bitstring generic maps such as `ENABLE_DEFAULT => '1'` before that port map.
 The bounded C2
 generated-FSM scalar-autowire structural top now emits VHDL-safe generated-child
 shared-datapath export ports/assignments, scalar structural signals, and both
@@ -4154,13 +4158,13 @@ schema metadata for `semantic.symbol_contract.types` and
 recursive `items` or `members` plus `member_order`.
 
 Current active backend edge: task-tree leaf
-`BACKEND-API-VALIDATION-FRONTIER.86.1` implements only bounded C1
-standalone-DT one-bit sized-bitstring VHDL generic-map actuals after `.86`
-selected that exact edge.
+`BACKEND-API-VALIDATION-FRONTIER.87` selects the next exact backend/API edge
+after bounded C1 standalone-DT one-bit sized-bitstring VHDL generic-map actuals
+shipped in `.86.1`.
 Package declaration and VHDL package emission, already bounded
 constant/enum/type internals, unrelated forward-IR payloads, signed scalar
 division/modulo, mixed signed/unsigned arithmetic, standalone-DT generic maps
-beyond scalar integer, scalar expression, and the active one-bit slice,
+beyond scalar integer, scalar expression, and one-bit sized bitstring actuals,
 APB/C4 generic maps,
 full aggregate VHDL record/array lowering, broader generated-FSM/C4
 composition VHDL beyond the exact shipped fixtures, internal nets/generic maps

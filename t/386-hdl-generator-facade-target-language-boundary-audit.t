@@ -668,7 +668,7 @@ FSM
     );
 };
 
-subtest 'facade target_language option keeps standalone-DT one-bit generic maps deferred' => sub {
+subtest 'facade target_language option routes bounded standalone-DT one-bit generic-map behavior' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $composition_path = File::Spec->catfile($tempdir, 'facade_vhdl_standalone_dtc_one_bit_generic_map_top.fsm');
     write_file(
@@ -714,16 +714,22 @@ FSM
         quiet => 1,
     );
 
-    my $exception = eval {
-        $vhdl_pipeline->generate_hdl_from_file($composition_path);
-        undef;
-    };
-    $exception = $@ if !$exception;
+    my $vhdl_result = $vhdl_pipeline->generate_hdl_from_file($composition_path);
 
     like(
-        $exception,
-        qr/Target language 'vhdl' is not implemented for this composition shape yet/s,
-        'explicit VHDL facade generation rejects standalone-DT one-bit generic maps',
+        $vhdl_result->{hdl_code},
+        qr/\bentity\s+standalone_route_src\s+is\s+generic\s*\(\s*ENABLE_DEFAULT\s+:\s+std_logic\s*:=\s*'0'\s*\);\s+port\s*\(/s,
+        'explicit VHDL facade generation emits the standalone-DT child one-bit generic declaration',
+    );
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\brouter\s+:\s+entity\s+work\.standalone_route_src\s+generic\s+map\s*\(\s*ENABLE_DEFAULT\s+=>\s+'1'\s*\)\s+port\s+map\s*\(/s,
+        'explicit VHDL facade generation emits standalone-DT one-bit generic maps before the child port map',
+    );
+    unlike(
+        $vhdl_result->{hdl_code},
+        qr/\bmodule\b|\bassign\b|\bendmodule\b|\balways_(?:ff|comb)\b|\#\s*\(|\.ENABLE_DEFAULT\s*\(|1'b/s,
+        'explicit VHDL standalone-DT one-bit generic-map generation does not leak SystemVerilog generic syntax or one-bit literals',
     );
 };
 
