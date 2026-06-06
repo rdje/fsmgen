@@ -4198,9 +4198,9 @@ schema metadata for `semantic.symbol_contract.types` and
 recursive `items` or `members` plus `member_order`.
 
 Current active backend edge: task-tree leaf
-`BACKEND-API-VALIDATION-FRONTIER.96.1` locks the APB/C4 generated-FSM
-non-packed aggregate VHDL generic-map boundary after bounded APB/C4
-package-backed generic-map actuals shipped.
+`BACKEND-API-VALIDATION-FRONTIER.97` selects the next exact backend/API edge
+after APB/C4 non-packed aggregate generic-map actuals were locked fail-closed
+before VHDL emission.
 Package declaration and VHDL package emission, already bounded
 constant/enum/type internals, unrelated forward-IR payloads, signed scalar
 division/modulo, mixed signed/unsigned arithmetic, standalone-DT generic maps
@@ -4208,7 +4208,8 @@ beyond scalar integer, scalar expression, one-bit sized bitstring, multi-bit
 sized bitstring, packed-list, and packed-map actuals,
 APB/C4 generic maps beyond scalar integer, scalar expression, one-bit sized
 bitstring, multi-bit sized bitstring, resolved packed aggregate, resolved
-package-backed actuals, and the active non-packed aggregate hardening leaf,
+package-backed actuals, and non-packed aggregate actuals now locked fail-closed
+before VHDL emission,
 full aggregate VHDL record/array lowering, broader generated-FSM/C4
 composition VHDL beyond the exact shipped fixtures, internal nets/generic maps
 beyond APB, broader expression parity beyond the shipped AMBA wrap family, and

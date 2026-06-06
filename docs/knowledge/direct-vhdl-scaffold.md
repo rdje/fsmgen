@@ -33,6 +33,8 @@ answers:
   - "does composition VHDL support APB/C4 bitstring generic maps?"
   - "does composition VHDL support APB/C4 aggregate generic maps?"
   - "does composition VHDL support APB/C4 packed aggregate generic maps?"
+  - "does composition VHDL support APB/C4 non-packed aggregate generic maps?"
+  - "does composition VHDL support non-packed aggregate generic maps?"
   - "does composition VHDL support APB/C4 package-backed generic maps?"
   - "does composition VHDL resolve APB/C4 package constants in generic maps?"
   - "does --language vhdl work for standalone-DT composition tops?"
@@ -274,8 +276,10 @@ the child port maps, such as `LANES => "0011110010100101"` and
 Qualified package constants in the same APB/C4 subset are resolved before VHDL
 emission, so `param_pkg.TIMEOUT_8` and `param_pkg.RESET_A5` emit
 `TIMEOUT_CYCLES => 8` and `RESET_VALUE => "10100101"` without leaking package
-tokens. APB/C4 VHDL package declaration/emission and non-packed aggregate
-generic maps remain deferred.
+tokens. APB/C4 non-packed aggregate generic maps are locked fail-closed before
+VHDL emission: aggregate actuals that do not lower to one packed literal fail
+with the packed-literal diagnostic instead of emitting VHDL record/array
+generics. APB/C4 VHDL package declaration/emission remains deferred.
 Other composition/top VHDL shapes remain locked fail-closed by focused pipeline
 and CLI coverage: `?top` sources are parsed into typed composition IR, then unsupported
 `target_language => 'vhdl'` and `--language vhdl` shapes are rejected with the

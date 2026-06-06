@@ -902,7 +902,8 @@ integer/expression, one-bit sized bitstring, multi-bit sized bitstring, and
 resolved packed aggregate actuals, plus APB/C4 generated-FSM scalar integer,
 scalar expression, one-bit sized bitstring, and multi-bit sized bitstring
 actuals, resolved packed aggregate actuals, and resolved package-backed
-actuals, VHDL package
+actuals, APB/C4 aggregate actuals that do not lower to one packed literal,
+VHDL package
 declaration/emission, GHDL validation, broad expression parity beyond the
 shipped AMBA wrap family, package-import internals, unrelated forward-IR
 payloads, and full normalized semantic export stabilization remain out of scope
