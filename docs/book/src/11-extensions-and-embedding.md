@@ -2347,9 +2347,11 @@ this normalized semantic shape:
 ```
 
 The current active backend/API frontier is
-`BACKEND-API-VALIDATION-FRONTIER.84`, which selects the next exact backend/API
-edge after bounded C3 external-RTL one-bit sized bitstring VHDL generic-map
-actuals shipped in `.83.1`.
+`BACKEND-API-VALIDATION-FRONTIER.84.1`, which owns the bounded C1
+standalone-DT scalar integer VHDL generic-map actual edge selected by `.84`.
+Until that leaf lands, standalone-DT generic maps remain a documented
+fail-closed boundary; the active implementation target is the single-child
+standalone-DT shape that can emit an actual such as `WIDTH => 16`.
 Package declaration and VHDL package emission, already bounded
 constant/enum/type internals, unrelated forward-IR payloads, signed scalar
 division/modulo, mixed signed/unsigned arithmetic, standalone-DT generic maps, APB/C4
