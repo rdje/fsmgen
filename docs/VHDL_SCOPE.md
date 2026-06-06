@@ -247,8 +247,8 @@ The VHDL lane is intentionally narrow:
    - Intermediate signal factorization (needs VHDL signal declaration semantics)
    - Multi-clock domains
    - VHDL-specific testbenches
-   - VHDL external validation (GHDL); blocker reconfirmation is currently owned
-     by `BACKEND-API-VALIDATION-FRONTIER.102.1`
+   - VHDL external validation (GHDL); blocker reconfirmed by
+     `BACKEND-API-VALIDATION-FRONTIER.102.1` because `ghdl` is unavailable
    - Verilator/Yosys VHDL path
 
 ## Implementation plan
@@ -460,8 +460,8 @@ The VHDL lane is intentionally narrow:
   structural VHDL type fail-closed diagnostics.
 - Add broader VHDL output to the regression corpus
 - Ensure `--check --json` and `--emit-semantic-json` stay target-neutral
-- Consider external VHDL validation via GHDL; the current blocker
-  reconfirmation owner is `BACKEND-API-VALIDATION-FRONTIER.102.1`
+- Consider external VHDL validation via GHDL; the current environment blocker is
+  reconfirmed by `BACKEND-API-VALIDATION-FRONTIER.102.1`
 
 ## Non-goals for R14
 - Broader VHDL composition-top generation beyond exact owned structural-top

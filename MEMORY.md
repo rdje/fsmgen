@@ -11,10 +11,10 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
 ## Current state (OVERWRITE this block each update — do not append)
-- latest_commit: `BACKEND-API-VALIDATION-FRONTIER.102` (this commit) — selected GHDL validation blocker/documented deferral reconfirmation as `.102.1`. `git log -1` for the hash.
-- active_work_unit: `BACKEND-API-VALIDATION-FRONTIER.102.1` active frontier — reconfirm and document that VHDL external validation remains blocked until a runnable GHDL validation lane exists.
-- recently_done: `BACKEND-API-VALIDATION-FRONTIER.102`; `BACKEND-API-VALIDATION-FRONTIER.101.1`; `BACKEND-API-VALIDATION-FRONTIER.101`; `BACKEND-API-VALIDATION-FRONTIER.100.1`; `BACKEND-API-VALIDATION-FRONTIER.100`; `BACKEND-API-VALIDATION-FRONTIER.99.1`; `BACKEND-API-VALIDATION-FRONTIER.99`; `BACKEND-API-VALIDATION-FRONTIER.98.1`; `BACKEND-API-VALIDATION-FRONTIER.98`; `BACKEND-API-VALIDATION-FRONTIER.97.1`; `BACKEND-API-VALIDATION-FRONTIER.97`; `BACKEND-API-VALIDATION-FRONTIER.96.1`; `BACKEND-API-VALIDATION-FRONTIER.96`.
-- in_flight_uncommitted: none expected after this `.102` selector commit; unrelated untracked `fx/` intentionally left alone.
+- latest_commit: `BACKEND-API-VALIDATION-FRONTIER.102.1` (this commit) — reconfirmed GHDL validation remains blocked because `ghdl` is unavailable while the validation contract remains SystemVerilog-only. `git log -1` for the hash.
+- active_work_unit: `BACKEND-API-VALIDATION-FRONTIER.103` active frontier — select the next exact backend/API edge after GHDL validation blocker reconfirmation shipped.
+- recently_done: `BACKEND-API-VALIDATION-FRONTIER.102.1`; `BACKEND-API-VALIDATION-FRONTIER.102`; `BACKEND-API-VALIDATION-FRONTIER.101.1`; `BACKEND-API-VALIDATION-FRONTIER.101`; `BACKEND-API-VALIDATION-FRONTIER.100.1`; `BACKEND-API-VALIDATION-FRONTIER.100`; `BACKEND-API-VALIDATION-FRONTIER.99.1`; `BACKEND-API-VALIDATION-FRONTIER.99`; `BACKEND-API-VALIDATION-FRONTIER.98.1`; `BACKEND-API-VALIDATION-FRONTIER.98`; `BACKEND-API-VALIDATION-FRONTIER.97.1`; `BACKEND-API-VALIDATION-FRONTIER.97`; `BACKEND-API-VALIDATION-FRONTIER.96.1`.
+- in_flight_uncommitted: none expected after this `.102.1` blocker commit; unrelated untracked `fx/` intentionally left alone.
 - blockers: none.
 
 ## Notes

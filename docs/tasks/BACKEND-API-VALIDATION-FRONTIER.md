@@ -244,7 +244,8 @@ items named in the 2026-06-05 remaining-work inventory.
     `BACKEND-API-VALIDATION-FRONTIER.101`,
     `BACKEND-API-VALIDATION-FRONTIER.101.1`,
     `BACKEND-API-VALIDATION-FRONTIER.102`,
-    `BACKEND-API-VALIDATION-FRONTIER.102.1`
+    `BACKEND-API-VALIDATION-FRONTIER.102.1`,
+    `BACKEND-API-VALIDATION-FRONTIER.103`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.1`
   Status: `done`
@@ -1814,10 +1815,17 @@ items named in the 2026-06-05 remaining-work inventory.
   Commit: `BACKEND-API-VALIDATION-FRONTIER.102: select GHDL validation blocker`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.102.1`
-  Status: `active`
+  Status: `done`
   Goal: `Reconfirm and document the GHDL validation blocker for the scoped VHDL backend.`
   Acceptance: `Run the current validation-environment check and focused external-validation contract tests to prove GHDL validation remains unavailable/deferred in this environment. The validation contract must remain bounded to SystemVerilog target spellings and keep the VHDL validation deferral guidance until a future exact GHDL leaf can actually run the tool. The leaf must not install tools, enable a GHDL lane, change HDL lowering, widen VHDL features, implement VHDL record/array declarations, implement VHDL package declaration/emission, change broad expression parity, or alter full backend parity. README, docs/VHDL_SCOPE.md, mdBook, direct-VHDL fact card/knowledge map if needed, task tree, and MEMORY stay synchronized.`
-  Verification: `pending implementation`
+  Verification: `command -v ghdl returned unavailable; prove -Iperl t/313-hdl-external-validation-contract.t t/308-systemverilog-external-validation.t; bash knowledge-map/scripts/gen_knowledge_map.sh; bash knowledge-map/scripts/check_knowledge_map.sh; scripts/check_memory_architecture.sh; prove -Iperl t/1414-docs-relative-paths-audit.t; prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t; mdbook build docs/book; git diff --check`
+  Commit: `BACKEND-API-VALIDATION-FRONTIER.102.1: reconfirm GHDL validation blocker`
+
+- ID: `BACKEND-API-VALIDATION-FRONTIER.103`
+  Status: `active`
+  Goal: `Select the next exact backend/API edge after GHDL validation blocker reconfirmation shipped.`
+  Acceptance: `Selection-only leaf. Audit the backend/API frontier, current VHDL scope, mdBook backlog, direct-VHDL fact card, focused scaffold/composition/facade tests, maintained direct/composition VHDL sweeps, current validation environment, and normalized semantic export/public API status; choose the next narrow implementation, hardening, or documented blocking owner before any code/test/source edits. The selector must preserve task-tree ownership for the chosen child leaf, synchronize README/VHDL scope/mdBook/fact card/memory if the selected frontier changes user-visible scope, and leave full VHDL record/array lowering, full VHDL package declaration/emission, broad expression parity, full composition VHDL parity, normalized semantic export stabilization, and full backend parity deferred unless it explicitly chooses one of those exact edges.`
+  Verification: `pending selection`
   Commit: `pending`
 
 ## Current Frontier
@@ -2032,7 +2040,8 @@ items named in the 2026-06-05 remaining-work inventory.
 | 206 | `BACKEND-API-VALIDATION-FRONTIER.101` | `done` | Selected declared aggregate structural VHDL type fail-closed hardening after a temporary aggregate top-port VHDL probe reached the explicit structural aggregate-type guard. |
 | 207 | `BACKEND-API-VALIDATION-FRONTIER.101.1` | `done` | Locked declared aggregate structural VHDL ports/nets/types as fail-closed before VHDL record/array emission through pipeline, CLI, and facade coverage. |
 | 208 | `BACKEND-API-VALIDATION-FRONTIER.102` | `done` | Selected GHDL validation blocker/documented deferral reconfirmation after the current environment still lacked `ghdl`. |
-| 209 | `BACKEND-API-VALIDATION-FRONTIER.102.1` | `active` | Reconfirm and document that VHDL external validation remains blocked until a runnable GHDL validation lane exists. |
+| 209 | `BACKEND-API-VALIDATION-FRONTIER.102.1` | `done` | Reconfirmed that VHDL external validation remains blocked because `ghdl` is unavailable, while the validation contract remains SystemVerilog-only. |
+| 210 | `BACKEND-API-VALIDATION-FRONTIER.103` | `active` | Select the next exact backend/API edge after GHDL validation blocker reconfirmation shipped. |
 
 ## Decisions
 
@@ -2434,6 +2443,7 @@ items named in the 2026-06-05 remaining-work inventory.
 | `BACKEND-API-VALIDATION-FRONTIER.101` | `BACKEND-API-VALIDATION-FRONTIER.101: select aggregate structural VHDL boundary` | selected `.101.1` |
 | `BACKEND-API-VALIDATION-FRONTIER.101.1` | `BACKEND-API-VALIDATION-FRONTIER.101.1: lock aggregate structural VHDL boundary` | this slice; activates `.102` |
 | `BACKEND-API-VALIDATION-FRONTIER.102` | `BACKEND-API-VALIDATION-FRONTIER.102: select GHDL validation blocker` | selected `.102.1` |
+| `BACKEND-API-VALIDATION-FRONTIER.102.1` | `BACKEND-API-VALIDATION-FRONTIER.102.1: reconfirm GHDL validation blocker` | this slice; activates `.103` |
 
 ## Changelog
 
@@ -2594,6 +2604,10 @@ items named in the 2026-06-05 remaining-work inventory.
 - `2026-06-06`: Completed `.102`; selected GHDL validation blocker/documented
   deferral reconfirmation as `.102.1` because `ghdl` remains unavailable in the
   current environment while the validation contract remains SystemVerilog-only.
+- `2026-06-06`: Completed `.102.1`; `ghdl` remains unavailable, focused
+  external-validation contract tests pass, and VHDL external validation remains
+  blocked behind a future runnable GHDL lane. `.103` is active for next-edge
+  selection.
 - `2026-06-05`: Activated the tree and selected `.2.1`, the first direct-root
   VHDL backend scaffold through an SV-first converter, before backend code
   changes.
