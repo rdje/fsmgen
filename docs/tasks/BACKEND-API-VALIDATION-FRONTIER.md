@@ -125,7 +125,8 @@ items named in the 2026-06-05 remaining-work inventory.
     `BACKEND-API-VALIDATION-FRONTIER.41.1`,
     `BACKEND-API-VALIDATION-FRONTIER.42`,
     `BACKEND-API-VALIDATION-FRONTIER.42.1`,
-    `BACKEND-API-VALIDATION-FRONTIER.43`
+    `BACKEND-API-VALIDATION-FRONTIER.43`,
+    `BACKEND-API-VALIDATION-FRONTIER.43.1`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.1`
   Status: `done`
@@ -812,9 +813,17 @@ items named in the 2026-06-05 remaining-work inventory.
   Commit: `BACKEND-API-VALIDATION-FRONTIER.42.1: ship ABC validation opt-in`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.43`
-  Status: `active`
+  Status: `done`
   Goal: `Select the next exact backend/API/public-export edge after optional ABC mapping validation opt-in.`
-  Acceptance: `pending`
+  Children: `BACKEND-API-VALIDATION-FRONTIER.43.1`
+  Acceptance: `Selected the normalized semantic lowered-RTL standalone-DT multi-drive target entry schema as the next exact public-export hardening edge. Evidence shows semantic.forward_ir.lowered_rtl_ir.standalone_dt_multi_drive_targets[] is already in the public lowered-RTL shell and runtime metadata, but the contract currently advertises only the shell keys while guidance explicitly says the deeper standalone-DT multi-drive target payload remains shell-bounded until deliberately widened. A focused temporary direct standalone-DT probe emitted one target with keys dt_enable_signals, dt_names, lhs_enable_signals, multi_drive_assertion, multiplexer_type, rhs_values, and signal_name, with nested multi_drive_assertion keys input_count, input_enable_signals, kind, and target_signal. The implementation owner is BACKEND-API-VALIDATION-FRONTIER.43.1 before any contract/test/code edits. Composition shared-datapath candidate payloads remain a later normalized semantic export edge.`
+  Verification: `Selection audit/read of docs/book/src/14-feature-backlog.md, docs/knowledge/normalized-semantic-output-drive-entry-schema.md, docs/knowledge/normalized-semantic-selector-conflict-entry-schema.md, docs/knowledge/normalized-semantic-structural-auxiliary-assignment-entry-schema.md, perl/FSM/Support/NormalizedSemanticLoweredRTLIRContract.pm, perl/FSM/Support/NormalizedSemanticForwardIRContract.pm, t/340-normalized-semantic-lowered-rtl-ir-contract.t, t/354-normalized-semantic-child-runtime-contract-audit.t, t/137-standalone-dt-multi-drive-family-metadata.t, t/154-standalone-dt-assertion-runtime-hdl.t, t/139-composition-shared-datapath-candidate-metadata.t, and t/159-composition-shared-datapath-forward-ir-exports.t. Temporary in-memory standalone-DT multi-drive probe confirmed emitted target keys and nested assertion keys.`
+  Commit: `BACKEND-API-VALIDATION-FRONTIER.43: select DT multi-drive schema`
+
+- ID: `BACKEND-API-VALIDATION-FRONTIER.43.1`
+  Status: `active`
+  Goal: `Publish standalone-DT multi-drive target entry schemas in the normalized semantic lowered-RTL contract.`
+  Acceptance: `FSM::Support::NormalizedSemanticLoweredRTLIRContract advertises bounded entry keys for semantic.forward_ir.lowered_rtl_ir.standalone_dt_multi_drive_targets[] and nested multi_drive_assertion metadata, and the forward-IR, payload/report, capability-manifest, README/live docs, mdBook, knowledge-map, and runtime contract tests inherit or describe the key family. Existing runtime metadata for standalone ?dt roots and realized ?dtc children remains unchanged, no raw Perl objects are exported, and composition_shared_datapath_candidates payload widening stays deferred to a later exact owner.`
   Verification: `pending`
   Commit: `pending`
 
@@ -911,7 +920,8 @@ items named in the 2026-06-05 remaining-work inventory.
 | 87 | `BACKEND-API-VALIDATION-FRONTIER.41.1` | `done` | Implemented direct VHDL non-signed four-state logic internal declaration lowering for package-backed symbolic-width types. |
 | 88 | `BACKEND-API-VALIDATION-FRONTIER.42` | `done` | Selected optional non-default ABC mapping validation hardening after direct VHDL corpus gaps were exhausted and GHDL remained unavailable. |
 | 89 | `BACKEND-API-VALIDATION-FRONTIER.42.1` | `done` | Implemented an explicit opt-in ABC-backed Yosys validation path without changing default --verify-hdl behavior. |
-| 90 | `BACKEND-API-VALIDATION-FRONTIER.43` | `active` | Select the next exact backend/API edge after optional ABC mapping validation opt-in. |
+| 90 | `BACKEND-API-VALIDATION-FRONTIER.43` | `done` | Selected normalized semantic lowered-RTL standalone-DT multi-drive target entry schemas as the next exact public-export edge. |
+| 91 | `BACKEND-API-VALIDATION-FRONTIER.43.1` | `active` | Publish bounded `standalone_dt_multi_drive_targets[]` and nested `multi_drive_assertion` key families before any broader shared-datapath candidate payload widening. |
 
 ## Decisions
 
@@ -1022,6 +1032,7 @@ items named in the 2026-06-05 remaining-work inventory.
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.41.1` | `perl -Iperl -c perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm`; `perl -Iperl -c perl/FSM/HDL/FlattenedDT.pm`; `perl -Iperl -c t/1420-vhdl-direct-backend-scaffold.t`; `perl -Iperl -c t/386-hdl-generator-facade-target-language-boundary-audit.t`; `prove -Iperl t/1420-vhdl-direct-backend-scaffold.t`; `prove -Iperl t/386-hdl-generator-facade-target-language-boundary-audit.t`; `prove -Iperl t/1420-vhdl-direct-backend-scaffold.t t/386-hdl-generator-facade-target-language-boundary-audit.t t/114-composition-target-support-diagnostics.t t/404-hdl-generator-facade-target-language-shape-boundary-audit.t`; `prove -Iperl t/279-declarative-scalar-types.t`; `prove -Iperl t/313-hdl-external-validation-contract.t t/308-systemverilog-external-validation.t`; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; direct VHDL non-signed four-state logic internal declarations now lower for package-backed scalar/vector declarative types |
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.42` | Selection audit/read of `docs/book/src/14-feature-backlog.md`, `docs/VHDL_SCOPE.md`, `docs/knowledge/direct-vhdl-scaffold.md`, `docs/knowledge/abc-discovery-validation-boundary.md`, `perl/FSM/Support/HDLExternalValidation.pm`, `perl/FSM/Support/HDLExternalValidationContract.pm`, and `t/308-systemverilog-external-validation.t`; fresh t/corpus SystemVerilog/VHDL sweep after `.41.1` returned `corpus_files=201 sv_ok=51 vhdl_ok=42 vhdl_fail=9`, with failures only at composition/top or aggregate-output fail-closed boundaries; `command -v ghdl` unavailable; `command -v yosys` returned `/opt/homebrew/bin/yosys`; `command -v yosys-abc` returned `/opt/homebrew/bin/yosys-abc`; `command -v berkeley-abc` unavailable; ABC-enabled Yosys probe over generated `fsm/lte_dif_pmaster.fsm` succeeded with `synth -top lte_dif_pmaster` and output mentioning ABC | `PASS`; selected optional non-default ABC mapping validation hardening for `.42.1` |
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.42.1` | `perl -Iperl -c perl/FSM/Support/HDLExternalValidation.pm`; `perl -Iperl -c perl/FSM/Support/HDLExternalValidationContract.pm`; `perl -Iperl -c t/313-hdl-external-validation-contract.t`; `perl -Iperl -c t/308-systemverilog-external-validation.t`; `perl -Iperl -c t/297-capability-manifest.t`; `prove -Iperl t/313-hdl-external-validation-contract.t`; `prove -Iperl t/308-systemverilog-external-validation.t`; `prove -Iperl t/297-capability-manifest.t`; `prove -Iperl t/460-hdl-external-validation-contract-defensive-copy-boundary-audit.t t/1057-hdl-external-validation-contract-full-surface-json-roundtrip-audit.t t/1058-hdl-external-validation-contract-full-surface-defensive-copy-audit.t t/323-backend-validation-contract.t`; `prove -Iperl t/365-backend-validation-section-runtime-contract-audit.t t/358-capability-manifest-runtime-contract-audit.t`; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; optional in-process ABC mapping validation opt-in shipped while default CLI validation remains ABC-free |
+| `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.43` | Selection audit/read of `docs/book/src/14-feature-backlog.md`, normalized semantic lowered/forward contract modules, lowered-RTL/semantic runtime contract tests, existing normalized semantic fact cards, standalone-DT multi-drive tests, and shared-datapath candidate tests; temporary in-memory standalone-DT probe confirmed one emitted `standalone_dt_multi_drive_targets[]` entry with target keys `dt_enable_signals`, `dt_names`, `lhs_enable_signals`, `multi_drive_assertion`, `multiplexer_type`, `rhs_values`, `signal_name`, and nested assertion keys `input_count`, `input_enable_signals`, `kind`, `target_signal` | `PASS`; selected standalone-DT multi-drive target entry schemas for `.43.1` |
 
 ## Commit Log
 
@@ -1116,6 +1127,7 @@ items named in the 2026-06-05 remaining-work inventory.
 | `BACKEND-API-VALIDATION-FRONTIER.41.1` | `BACKEND-API-VALIDATION-FRONTIER.41.1: ship VHDL logic declarations` | this slice |
 | `BACKEND-API-VALIDATION-FRONTIER.42` | `BACKEND-API-VALIDATION-FRONTIER.42: select ABC hardening` | selected `.42.1` |
 | `BACKEND-API-VALIDATION-FRONTIER.42.1` | `BACKEND-API-VALIDATION-FRONTIER.42.1: ship ABC validation opt-in` | this slice |
+| `BACKEND-API-VALIDATION-FRONTIER.43` | `BACKEND-API-VALIDATION-FRONTIER.43: select DT multi-drive schema` | selected `.43.1` |
 
 ## Changelog
 
@@ -1557,3 +1569,7 @@ items named in the 2026-06-05 remaining-work inventory.
   metadata and focused smoke coverage. Default `--verify-hdl` remains
   ABC-free and ABC remains non-required. Activated `.43` to select the next
   backend/API edge.
+- `2026-06-06`: Completed `.43`; selected normalized semantic lowered-RTL
+  `standalone_dt_multi_drive_targets[]` and nested `multi_drive_assertion`
+  entry schemas as the next exact public-export edge. Activated `.43.1` before
+  any implementation/test/source edits.

@@ -3939,3 +3939,11 @@ core and typed-extension entry keys. It now also advertises
 value-metadata-extension entry keys, and advertises `auxiliary_assignments[]`
 as scalar string assignment-line entries. The manifest is still not a full
 normalized semantic export.
+
+Current selected next edge: task-tree leaf
+`BACKEND-API-VALIDATION-FRONTIER.43.1` will publish bounded entry keys for
+`semantic.forward_ir.lowered_rtl_ir.standalone_dt_multi_drive_targets[]` and
+its nested `multi_drive_assertion` metadata. Until that leaf ships, those
+standalone-DT grouped multi-drive payloads remain shell-owned only. The
+composition shared-datapath candidate payload remains a separate later
+normalized semantic export edge.
