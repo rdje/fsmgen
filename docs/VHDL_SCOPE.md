@@ -171,8 +171,9 @@ The first VHDL lane is intentionally narrow:
   plus direct-root parameter blocks as VHDL
   generics, including integer expression defaults and typed scalar/vector
   sized-literal defaults.
-- Active follow-up: select the next exact backend/API/public-export edge under
-  `BACKEND-API-VALIDATION-FRONTIER.67`; broader expression parity and broader
+- Active follow-up: implement bounded direct VHDL aggregate-output
+  packed-vector lowering under `BACKEND-API-VALIDATION-FRONTIER.67.1`; full
+  aggregate VHDL record/array lowering, broader expression parity, and broader
   scalar signed arithmetic remain separate future edges.
 - Remaining semantic conversion work still belongs to exact future VHDL leaves.
 

@@ -173,7 +173,8 @@ items named in the 2026-06-05 remaining-work inventory.
     `BACKEND-API-VALIDATION-FRONTIER.65.1`,
     `BACKEND-API-VALIDATION-FRONTIER.66`,
     `BACKEND-API-VALIDATION-FRONTIER.66.1`,
-    `BACKEND-API-VALIDATION-FRONTIER.67`
+    `BACKEND-API-VALIDATION-FRONTIER.67`,
+    `BACKEND-API-VALIDATION-FRONTIER.67.1`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.1`
   Status: `done`
@@ -1220,10 +1221,18 @@ items named in the 2026-06-05 remaining-work inventory.
   Commit: `BACKEND-API-VALIDATION-FRONTIER.66.1: lower VHDL AMBA wrap arithmetic`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.67`
-  Status: `active`
+  Status: `done`
   Goal: `Select the next exact backend/API/public-export edge after bounded direct VHDL AMBA wrap arithmetic shipped.`
-  Acceptance: `pending selection`
-  Verification: `pending selection`
+  Children: `BACKEND-API-VALIDATION-FRONTIER.67.1`
+  Acceptance: `Selected bounded direct VHDL aggregate-output packed-vector lowering as the next exact backend edge. A supported direct-corpus VHDL sweep after .66.1 showed fsm/amba_requester.fsm now lowers through VHDL and the only remaining supported direct-root VHDL failures are t/corpus/direct_rhs_concat_target_autogrowth.fsm and t/corpus/direct_aggregate_constant_target_autogrowth.fsm, both at the existing aggregate struct-output boundary. SystemVerilog probes show those fixtures emit inferred packed struct output ports but mux assignments are already flattened bit-vector values. GHDL remains unavailable. The implementation owner is BACKEND-API-VALIDATION-FRONTIER.67.1 before any backend/test/source edits.`
+  Verification: `Selection audit/read of README.md, docs/VHDL_SCOPE.md, docs/book/src/11-extensions-and-embedding.md, docs/book/src/14-feature-backlog.md, docs/knowledge/direct-vhdl-scaffold.md, docs/tasks/BACKEND-API-VALIDATION-FRONTIER.md, KNOWLEDGE_MAP.md, perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm, t/1420-vhdl-direct-backend-scaffold.t, t/386-hdl-generator-facade-target-language-boundary-audit.t, t/corpus/direct_rhs_concat_target_autogrowth.fsm, and t/corpus/direct_aggregate_constant_target_autogrowth.fsm; supported direct-corpus VHDL sweep over RegressionCorpus direct_root_pipeline_cli entries showed only the two aggregate-output fixtures fail, both at aggregate struct outputs outside the direct VHDL scaffold; command -v ghdl returned unavailable; SystemVerilog probes over the two aggregate-output fixtures showed inferred packed struct output typedefs and flattened bit-vector mux assignments.`
+  Commit: `BACKEND-API-VALIDATION-FRONTIER.67: select VHDL aggregate outputs`
+
+- ID: `BACKEND-API-VALIDATION-FRONTIER.67.1`
+  Status: `active`
+  Goal: `Implement bounded direct VHDL aggregate-output packed-vector lowering.`
+  Acceptance: `FSM::HDL::FlattenedDT::Backend::VHDL accepts the generated inferred packed struct output shapes emitted by t/corpus/direct_rhs_concat_target_autogrowth.fsm and t/corpus/direct_aggregate_constant_target_autogrowth.fsm, lowering those direct VHDL output ports to deterministic std_logic_vector ports with the generated packed widths and preserving the existing flattened mux assignments. Focused pipeline/CLI/facade coverage proves both fixtures lower to VHDL without leaking SystemVerilog typedef/module syntax. The leaf does not claim full VHDL record/array aggregate lowering, composition/top VHDL, packages, GHDL validation, broad expression parity, scalar signed arithmetic, mixed signed/unsigned arithmetic, or full backend parity. README, docs/VHDL_SCOPE.md, mdBook, direct-VHDL fact card, task tree, and memory stay synchronized.`
+  Verification: `pending implementation`
   Commit: `pending`
 
 ## Current Frontier
@@ -1367,7 +1376,8 @@ items named in the 2026-06-05 remaining-work inventory.
 | 135 | `BACKEND-API-VALIDATION-FRONTIER.65.1` | `done` | Locked signed scalar subtraction/multiplication arithmetic fail-closed coverage without widening scalar signed arithmetic. |
 | 136 | `BACKEND-API-VALIDATION-FRONTIER.66` | `done` | Selected bounded direct VHDL AMBA wrap nested arithmetic lowering after the supported direct-corpus sweep found `fsm/amba_requester.fsm` blocked at `addr_q - addr_q % (beats_total_q * addr_step_q)`. |
 | 137 | `BACKEND-API-VALIDATION-FRONTIER.66.1` | `done` | Shipped the bounded AMBA wrap arithmetic expression family without widening broad expression parity. |
-| 138 | `BACKEND-API-VALIDATION-FRONTIER.67` | `active` | Select the next exact backend/API/public-export edge after AMBA wrap arithmetic shipped. |
+| 138 | `BACKEND-API-VALIDATION-FRONTIER.67` | `done` | Selected bounded direct VHDL aggregate-output packed-vector lowering after the supported direct-corpus sweep left only the two aggregate-output fixtures at the VHDL struct boundary. |
+| 139 | `BACKEND-API-VALIDATION-FRONTIER.67.1` | `active` | Implement packed-vector VHDL lowering for the two maintained direct aggregate-output fixtures without claiming full record/array aggregate parity. |
 
 ## Decisions
 
@@ -1526,6 +1536,7 @@ items named in the 2026-06-05 remaining-work inventory.
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.65.1` | `perl -Iperl -c perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm`; `perl -Iperl -c t/1420-vhdl-direct-backend-scaffold.t`; `perl -Iperl -c t/386-hdl-generator-facade-target-language-boundary-audit.t`; focused VHDL scaffold/facade prove bundle; composition/target-language boundary prove bundle; external-validation prove bundle; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; direct VHDL signed scalar addition/subtraction/multiplication arithmetic is locked fail-closed; activated `.66` |
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.66` | Selection audit/read of `README.md`, `docs/VHDL_SCOPE.md`, `docs/book/src/11-extensions-and-embedding.md`, `docs/book/src/14-feature-backlog.md`, `docs/knowledge/direct-vhdl-scaffold.md`, `docs/tasks/BACKEND-API-VALIDATION-FRONTIER.md`, `KNOWLEDGE_MAP.md`, `perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm`, `perl/FSM/Support/RegressionCorpus.pm`, `t/1420-vhdl-direct-backend-scaffold.t`, `t/386-hdl-generator-facade-target-language-boundary-audit.t`, and `fsm/amba_requester.fsm`; supported direct-corpus VHDL sweep; `command -v ghdl`; `./bin/fsmgen --language vhdl --quiet fsm/amba_requester.fsm`; `./bin/fsmgen --language vhdl --quiet t/corpus/direct_rhs_concat_target_autogrowth.fsm`; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; selected bounded AMBA wrap nested arithmetic lowering for `.66.1` |
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.66.1` | `perl -Iperl -c perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm`; `perl -Iperl -c t/1420-vhdl-direct-backend-scaffold.t`; `perl -Iperl -c t/386-hdl-generator-facade-target-language-boundary-audit.t`; focused VHDL scaffold/facade prove bundle; `./bin/fsmgen --language vhdl --quiet -o /tmp/fsmgen_amba_requester_vhdl_66_1.vhd fsm/amba_requester.fsm`; composition/target-language boundary prove bundle; external-validation prove bundle; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; direct VHDL now lowers bounded generated AMBA wrap span/base/high arithmetic and activates `.67` |
+| `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.67` | Selection audit/read of `README.md`, `docs/VHDL_SCOPE.md`, `docs/book/src/11-extensions-and-embedding.md`, `docs/book/src/14-feature-backlog.md`, `docs/knowledge/direct-vhdl-scaffold.md`, `docs/tasks/BACKEND-API-VALIDATION-FRONTIER.md`, `KNOWLEDGE_MAP.md`, `perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm`, `t/1420-vhdl-direct-backend-scaffold.t`, `t/386-hdl-generator-facade-target-language-boundary-audit.t`, `t/corpus/direct_rhs_concat_target_autogrowth.fsm`, and `t/corpus/direct_aggregate_constant_target_autogrowth.fsm`; supported direct-corpus VHDL sweep; `command -v ghdl`; SystemVerilog probes for the two direct aggregate-output fixtures; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; selected bounded direct VHDL aggregate-output packed-vector lowering for `.67.1` |
 
 ## Commit Log
 
@@ -1668,6 +1679,7 @@ items named in the 2026-06-05 remaining-work inventory.
 | `BACKEND-API-VALIDATION-FRONTIER.65.1` | `BACKEND-API-VALIDATION-FRONTIER.65.1: lock VHDL signed scalar arithmetic` | this slice; activates `.66` |
 | `BACKEND-API-VALIDATION-FRONTIER.66` | `BACKEND-API-VALIDATION-FRONTIER.66: select VHDL AMBA wrap arithmetic` | selected `.66.1` |
 | `BACKEND-API-VALIDATION-FRONTIER.66.1` | `BACKEND-API-VALIDATION-FRONTIER.66.1: lower VHDL AMBA wrap arithmetic` | this slice; activates `.67` |
+| `BACKEND-API-VALIDATION-FRONTIER.67` | `BACKEND-API-VALIDATION-FRONTIER.67: select VHDL aggregate outputs` | selected `.67.1` |
 
 ## Changelog
 
@@ -2431,3 +2443,11 @@ items named in the 2026-06-05 remaining-work inventory.
   validation, broad expression parity, and full backend parity remain
   deferred. Activated `.67` to select the next exact backend/API/public-export
   edge.
+- `2026-06-06`: Completed `.67`; selected bounded direct VHDL aggregate-output
+  packed-vector lowering for `.67.1` after the supported direct-corpus VHDL
+  sweep left only `t/corpus/direct_rhs_concat_target_autogrowth.fsm` and
+  `t/corpus/direct_aggregate_constant_target_autogrowth.fsm` at the aggregate
+  struct-output boundary. SystemVerilog probes showed inferred packed struct
+  output ports but flattened bit-vector mux assignments. Full VHDL record/array
+  aggregate lowering, composition/top VHDL, GHDL validation, broad expression
+  parity, and full backend parity remain deferred.

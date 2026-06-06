@@ -848,13 +848,15 @@ AMBA wrap arithmetic family in `fsm/amba_requester.fsm`, including
 `beats_total_q * addr_step_q`, `addr_q - addr_q % (beats_total_q * addr_step_q)`,
 and the matching wrap-high expression, through explicit unsigned target-width
 resizes. The current active backend/API frontier is
-`BACKEND-API-VALIDATION-FRONTIER.67`: select the next exact backend/API or
-public-export edge after `.66.1` shipped bounded AMBA wrap arithmetic. Scalar
-signed arithmetic remains explicitly fail-closed; aggregate VHDL,
-composition/top VHDL, packages, GHDL validation, broad expression parity beyond
-the shipped AMBA wrap family, package-import internals, unrelated forward-IR
-payloads, and full normalized semantic export stabilization remain out of
-scope until later exact leaves own them.
+`BACKEND-API-VALIDATION-FRONTIER.67.1`: implement bounded direct VHDL
+aggregate-output packed-vector lowering for
+`t/corpus/direct_rhs_concat_target_autogrowth.fsm` and
+`t/corpus/direct_aggregate_constant_target_autogrowth.fsm`. Scalar signed
+arithmetic remains explicitly fail-closed; full aggregate VHDL record/array
+lowering, composition/top VHDL, packages, GHDL validation, broad expression
+parity beyond the shipped AMBA wrap family, package-import internals, unrelated
+forward-IR payloads, and full normalized semantic export stabilization remain
+out of scope until later exact leaves own them.
 The manifest is still not a full normalized semantic export stabilization
 promise.
 The manifest-facing stable diagnostic-code registry now has its own explicit

@@ -2296,14 +2296,14 @@ this normalized semantic shape:
 ```
 
 The current active backend/API frontier is
-`BACKEND-API-VALIDATION-FRONTIER.67`, which selects the next exact backend/API
-or public-export edge after `.66.1` shipped bounded generated AMBA wrap
-arithmetic for `fsm/amba_requester.fsm`.
+`BACKEND-API-VALIDATION-FRONTIER.67.1`, which implements bounded direct VHDL
+aggregate-output packed-vector lowering for the two maintained direct
+aggregate-output fixtures.
 Package-import internals, already bounded constant/enum/type internals,
-unrelated forward-IR payloads, scalar signed arithmetic, aggregate/composition
-VHDL, broader expression parity beyond the shipped AMBA wrap family, and full
-normalized semantic export stabilization remain out of scope until later exact
-leaves own them.
+unrelated forward-IR payloads, scalar signed arithmetic, full aggregate VHDL
+record/array lowering, composition VHDL, broader expression parity beyond the
+shipped AMBA wrap family, and full normalized semantic export stabilization
+remain out of scope until later exact leaves own them.
 
 Do not treat the raw `HDLGenerator` result hash as a stable JSON document.
 

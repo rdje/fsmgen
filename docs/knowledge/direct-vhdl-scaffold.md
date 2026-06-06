@@ -132,9 +132,10 @@ unsigned product `beats_total_q * addr_step_q`, `wrap_base_q_next` lowers
 `addr_q - addr_q % (beats_total_q * addr_step_q)`, and `wrap_high_q_next`
 adds the same wrap-span product to the computed base. This is a pattern-owned
 AMBA wrap family, not broad expression-parser parity.
-The current active backend edge is `BACKEND-API-VALIDATION-FRONTIER.67`, which
-selects the next exact backend/API or public-export leaf after bounded AMBA
-wrap arithmetic shipped.
+The current active backend edge is `BACKEND-API-VALIDATION-FRONTIER.67.1`,
+which implements bounded direct VHDL aggregate-output packed-vector lowering
+for the two maintained direct aggregate-output fixtures; full VHDL record/array
+aggregate lowering remains a later exact owner.
 Aggregate-output
 roots are locked as explicit fail-closed direct VHDL boundaries by focused
 pipeline and facade coverage. Composition/top VHDL is locked fail-closed by

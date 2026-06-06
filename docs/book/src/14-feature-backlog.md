@@ -4048,11 +4048,12 @@ schema metadata for `semantic.symbol_contract.types` and
 recursive `items` or `members` plus `member_order`.
 
 Current active backend edge: task-tree leaf
-`BACKEND-API-VALIDATION-FRONTIER.67` selects the next exact backend/API or
-public-export edge after `.66.1` shipped bounded generated AMBA wrap arithmetic
-for `fsm/amba_requester.fsm`.
+`BACKEND-API-VALIDATION-FRONTIER.67.1` implements bounded direct VHDL
+aggregate-output packed-vector lowering for
+`t/corpus/direct_rhs_concat_target_autogrowth.fsm` and
+`t/corpus/direct_aggregate_constant_target_autogrowth.fsm`.
 Package-import internals, already bounded constant/enum/type internals,
-unrelated forward-IR payloads, scalar signed arithmetic, aggregate/composition
-VHDL, broader expression parity beyond the shipped AMBA wrap family, and full
-normalized semantic export stabilization remain out of scope until later exact
-leaves own them.
+unrelated forward-IR payloads, scalar signed arithmetic, full aggregate VHDL
+record/array lowering, composition VHDL, broader expression parity beyond the
+shipped AMBA wrap family, and full normalized semantic export stabilization
+remain out of scope until later exact leaves own them.
