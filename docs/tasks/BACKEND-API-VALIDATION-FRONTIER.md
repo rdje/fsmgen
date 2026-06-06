@@ -224,7 +224,8 @@ items named in the 2026-06-05 remaining-work inventory.
     `BACKEND-API-VALIDATION-FRONTIER.91`,
     `BACKEND-API-VALIDATION-FRONTIER.91.1`,
     `BACKEND-API-VALIDATION-FRONTIER.92`,
-    `BACKEND-API-VALIDATION-FRONTIER.92.1`
+    `BACKEND-API-VALIDATION-FRONTIER.92.1`,
+    `BACKEND-API-VALIDATION-FRONTIER.93`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.1`
   Status: `done`
@@ -1647,10 +1648,17 @@ items named in the 2026-06-05 remaining-work inventory.
   Commit: `BACKEND-API-VALIDATION-FRONTIER.92: select APB/C4 one-bit generic maps`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.92.1`
-  Status: `active`
+  Status: `done`
   Goal: `Implement bounded APB/C4 generated-FSM VHDL generic-map lowering for one-bit sized-bitstring actuals.`
   Acceptance: `The VHDL composition path accepts an APB/C4-shaped two-child generated-FSM top with the existing apb_requester/apb_completer module names, the shipped APB/C4 public port and wiring shape, child +params one-bit sized-bitstring declarations such as ENABLE_DEFAULT 1'b0, and top-level requester/completer one-bit overrides such as ENABLE_DEFAULT 1'b1. It emits each APB child VHDL std_logic generic declaration, emits requester/completer generic maps such as ENABLE_DEFAULT => '1' before the child port maps, and does not leak SystemVerilog parameter syntax or one-bit literal syntax. Focused pipeline, CLI, and facade/target-language coverage prove the accepted APB/C4 one-bit generic-map shape while APB/C4 multi-bit, packed aggregate, package-backed, record/non-packed aggregate, package, GHDL, broad expression parity, and full backend parity paths remain deferred. README if public scope wording changes, docs/VHDL_SCOPE.md, mdBook, direct-VHDL fact card/knowledge map if needed, task tree, and MEMORY stay synchronized.`
-  Verification: `pending implementation`
+  Verification: `perl -Iperl -c perl/FSM/Backend/VHDL/StructuralRTLIREmitter.pm; perl -Iperl -c perl/FSM/Composition/PlanBuilder.pm; perl -Iperl -c perl/FSM/Composition/GenerationOrchestrator.pm; perl -Iperl -c t/114-composition-target-support-diagnostics.t; perl -Iperl -c t/386-hdl-generator-facade-target-language-boundary-audit.t; prove -Iperl t/114-composition-target-support-diagnostics.t t/386-hdl-generator-facade-target-language-boundary-audit.t; prove -Iperl t/292-composition-generated-child-parameter-overrides.t t/91-composition-multi-rtl-children.t; prove -Iperl t/333-normalized-semantic-composition-contract.t t/334-normalized-semantic-forward-ir-contract.t t/330-normalized-semantic-payload-contract.t t/311-normalized-semantic-report-contract.t t/297-capability-manifest.t; prove -Iperl t/313-hdl-external-validation-contract.t t/308-systemverilog-external-validation.t; bash knowledge-map/scripts/gen_knowledge_map.sh; bash knowledge-map/scripts/check_knowledge_map.sh; scripts/check_memory_architecture.sh; prove -Iperl t/1414-docs-relative-paths-audit.t; prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t; mdbook build docs/book; git diff --check.`
+  Commit: `BACKEND-API-VALIDATION-FRONTIER.92.1: emit APB/C4 one-bit generic maps`
+
+- ID: `BACKEND-API-VALIDATION-FRONTIER.93`
+  Status: `active`
+  Goal: `Select the next exact backend/API edge after bounded APB/C4 generated-FSM one-bit VHDL generic-map actuals shipped.`
+  Acceptance: `Selection-only leaf. Audit the backend/API frontier, current VHDL scope, mdBook backlog, direct-VHDL fact card, focused scaffold/composition/facade tests, maintained direct/composition VHDL sweeps, and current validation environment; choose the next narrow implementation or hardening owner before any code/test/source edits. The selector must preserve task-tree ownership for the chosen child leaf, synchronize README/VHDL scope/mdBook/fact card/memory if the selected frontier changes user-visible scope, and leave APB/C4 multi-bit, packed aggregate, package-backed generic maps, standalone-DT record/non-packed aggregate generic maps, aggregate VHDL record/array declarations beyond packed vectors, VHDL package declaration/emission, GHDL validation, broad expression parity, full composition VHDL parity, and full backend parity deferred unless it explicitly chooses one of those exact edges.`
+  Verification: `pending selection`
   Commit: `pending`
 
 ## Current Frontier
@@ -1845,7 +1853,8 @@ items named in the 2026-06-05 remaining-work inventory.
 | 186 | `BACKEND-API-VALIDATION-FRONTIER.91` | `done` | Selected bounded APB/C4 generated-FSM scalar expression generic-map actuals because an APB-shaped C4 composition top with requester/completer TIMEOUT_CYCLES expression overrides still fails at the bounded VHDL target-support gate while a direct APB requester child already emits a matching integer generic declaration. |
 | 187 | `BACKEND-API-VALIDATION-FRONTIER.91.1` | `done` | Shipped bounded APB/C4 generated-FSM scalar expression VHDL generic-map actuals such as `TIMEOUT_CYCLES => (4 + 1)` and `TIMEOUT_CYCLES => (3 + 3)` while keeping APB/C4 bitstring/aggregate/package-backed generic maps, package, GHDL, and parity widening deferred. |
 | 188 | `BACKEND-API-VALIDATION-FRONTIER.92` | `done` | Selected bounded APB/C4 generated-FSM one-bit generic-map actuals because an APB-shaped C4 composition top with requester/completer ENABLE_DEFAULT overrides still fails at the bounded VHDL target-support gate while a direct APB requester child already emits a matching std_logic generic declaration. |
-| 189 | `BACKEND-API-VALIDATION-FRONTIER.92.1` | `active` | Implement only bounded APB/C4 generated-FSM one-bit VHDL generic-map actuals, leaving APB/C4 multi-bit/aggregate/package-backed generic maps, package, GHDL, and parity widening deferred. |
+| 189 | `BACKEND-API-VALIDATION-FRONTIER.92.1` | `done` | Shipped bounded APB/C4 generated-FSM one-bit VHDL generic-map actuals such as `ENABLE_DEFAULT => '1'` while keeping APB/C4 multi-bit/aggregate/package-backed generic maps, package, GHDL, and parity widening deferred. |
+| 190 | `BACKEND-API-VALIDATION-FRONTIER.93` | `active` | Select the next exact backend/API edge after bounded APB/C4 generated-FSM one-bit generic maps shipped. |
 
 ## Decisions
 
@@ -2227,6 +2236,7 @@ items named in the 2026-06-05 remaining-work inventory.
 | `BACKEND-API-VALIDATION-FRONTIER.91` | `BACKEND-API-VALIDATION-FRONTIER.91: select APB/C4 expression generic maps` | selected `.91.1` |
 | `BACKEND-API-VALIDATION-FRONTIER.91.1` | `BACKEND-API-VALIDATION-FRONTIER.91.1: emit APB/C4 expression generic maps` | this slice; activates `.92` |
 | `BACKEND-API-VALIDATION-FRONTIER.92` | `BACKEND-API-VALIDATION-FRONTIER.92: select APB/C4 one-bit generic maps` | selected `.92.1` |
+| `BACKEND-API-VALIDATION-FRONTIER.92.1` | `BACKEND-API-VALIDATION-FRONTIER.92.1: emit APB/C4 one-bit generic maps` | this slice; activates `.93` |
 
 ## Changelog
 
@@ -2306,6 +2316,9 @@ items named in the 2026-06-05 remaining-work inventory.
   one-bit VHDL generic maps after an APB-shaped C4 probe failed at the current
   target-support gate while a direct APB child already emitted a matching
   `std_logic` generic declaration.
+- `2026-06-06`: Completed `.92.1`; bounded APB/C4 generated-FSM one-bit
+  VHDL generic maps now emit `ENABLE_DEFAULT => '1'` before the requester and
+  completer child port maps, and `.93` is active for next-edge selection.
 - `2026-06-05`: Activated the tree and selected `.2.1`, the first direct-root
   VHDL backend scaffold through an SV-first converter, before backend code
   changes.

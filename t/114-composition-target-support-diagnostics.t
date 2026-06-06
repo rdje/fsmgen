@@ -13,6 +13,7 @@ use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 use FSM::Pipeline::HDLGenerator;
 
 my $tempdir = tempdir(CLEANUP => 1);
+my $apb_c4_one_bit_generic_map_dir = tempdir(CLEANUP => 1);
 my $repo_root = File::Spec->catdir($FindBin::Bin, '..');
 my $bounded_composition_path = File::Spec->catfile(
     $repo_root,
@@ -50,6 +51,8 @@ my $apb_c4_scalar_generic_map_path = File::Spec->catfile($tempdir, 'apb_c4_scala
 my $apb_c4_scalar_generic_map_output_path = File::Spec->catfile($tempdir, 'apb_c4_scalar_generic_map_top.vhd');
 my $apb_c4_expression_generic_map_path = File::Spec->catfile($tempdir, 'apb_c4_expression_generic_map_top.fsm');
 my $apb_c4_expression_generic_map_output_path = File::Spec->catfile($tempdir, 'apb_c4_expression_generic_map_top.vhd');
+my $apb_c4_one_bit_generic_map_path = File::Spec->catfile($apb_c4_one_bit_generic_map_dir, 'apb_c4_one_bit_generic_map_top.fsm');
+my $apb_c4_one_bit_generic_map_output_path = File::Spec->catfile($tempdir, 'apb_c4_one_bit_generic_map_top.vhd');
 my $scalar_generic_map_path = File::Spec->catfile($tempdir, 'vhdl_scalar_generic_map_top.fsm');
 my $scalar_generic_map_output_path = File::Spec->catfile($tempdir, 'vhdl_scalar_generic_map_top.vhd');
 my $package_generic_map_path = File::Spec->catfile($tempdir, 'vhdl_package_generic_map_top.fsm');
@@ -356,6 +359,7 @@ write_apb_c4_scalar_generic_map_fixture(
     requester_value => '(+ 4 1)',
     completer_value => '(+ 3 3)',
 );
+write_apb_c4_one_bit_generic_map_fixture($repo_root, $apb_c4_one_bit_generic_map_dir, $apb_c4_one_bit_generic_map_path);
 write_file(
     $package_generic_map_path,
     <<'FSM'
@@ -1266,6 +1270,33 @@ unlike(
     'pipeline APB/C4 scalar expression generic-map VHDL output does not leak SystemVerilog generic syntax',
 );
 
+my $apb_c4_one_bit_generic_map_result = $pipeline->generate_hdl_from_file($apb_c4_one_bit_generic_map_path);
+like(
+    $apb_c4_one_bit_generic_map_result->{hdl_code},
+    qr/\bentity\s+apb_requester\s+is\s+generic\s*\(\s*ENABLE_DEFAULT\s+:\s+std_logic\s*:=\s*'0'\s*\);\s+port\s*\(/s,
+    'pipeline emits the APB requester one-bit generic declaration',
+);
+like(
+    $apb_c4_one_bit_generic_map_result->{hdl_code},
+    qr/\bentity\s+apb_completer\s+is\s+generic\s*\(\s*ENABLE_DEFAULT\s+:\s+std_logic\s*:=\s*'0'\s*\);\s+port\s*\(/s,
+    'pipeline emits the APB completer one-bit generic declaration',
+);
+like(
+    $apb_c4_one_bit_generic_map_result->{hdl_code},
+    qr/\brequester\s+:\s+entity\s+work\.apb_requester\s+generic\s+map\s*\(\s*ENABLE_DEFAULT\s+=>\s+'1'\s*\)\s+port\s+map\s*\(/s,
+    'pipeline emits APB requester one-bit generic maps before the port map',
+);
+like(
+    $apb_c4_one_bit_generic_map_result->{hdl_code},
+    qr/\bcompleter\s+:\s+entity\s+work\.apb_completer\s+generic\s+map\s*\(\s*ENABLE_DEFAULT\s+=>\s+'1'\s*\)\s+port\s+map\s*\(/s,
+    'pipeline emits APB completer one-bit generic maps before the port map',
+);
+unlike(
+    $apb_c4_one_bit_generic_map_result->{hdl_code},
+    qr/\bmodule\b|\bassign\b|\bendmodule\b|\balways_(?:ff|comb)\b|\#\s*\(|\.ENABLE_DEFAULT\s*\(|1'b/s,
+    'pipeline APB/C4 one-bit generic-map VHDL output does not leak SystemVerilog generic syntax or one-bit literals',
+);
+
 my ($bounded_success, $bounded_error_message, $bounded_full_buf, $bounded_stdout_buf, $bounded_stderr_buf) = run(
     command => ['./bin/fsmgen', '--language', 'vhdl', '--quiet', '-o', $bounded_output_path, $bounded_composition_path],
 );
@@ -1965,6 +1996,43 @@ unlike(
     'CLI APB/C4 scalar expression generic-map VHDL output does not leak SystemVerilog generic syntax',
 );
 
+my ($apb_c4_one_bit_generic_map_success, $apb_c4_one_bit_generic_map_error_message, $apb_c4_one_bit_generic_map_full_buf, $apb_c4_one_bit_generic_map_stdout_buf, $apb_c4_one_bit_generic_map_stderr_buf) = run(
+    command => ['./bin/fsmgen', '--language', 'vhdl', '--quiet', '-o', $apb_c4_one_bit_generic_map_output_path, $apb_c4_one_bit_generic_map_path],
+);
+
+my $apb_c4_one_bit_generic_map_combined_output = join(
+    '',
+    @{ $apb_c4_one_bit_generic_map_stdout_buf || [] },
+    @{ $apb_c4_one_bit_generic_map_stderr_buf || [] },
+    ($apb_c4_one_bit_generic_map_error_message || ''),
+);
+
+ok($apb_c4_one_bit_generic_map_success, 'CLI accepts bounded APB/C4 one-bit generic maps for VHDL')
+    or diag($apb_c4_one_bit_generic_map_combined_output);
+ok(-e $apb_c4_one_bit_generic_map_output_path, 'CLI writes APB/C4 one-bit generic-map VHDL output');
+
+my $apb_c4_one_bit_generic_map_cli_hdl = read_file($apb_c4_one_bit_generic_map_output_path);
+like(
+    $apb_c4_one_bit_generic_map_cli_hdl,
+    qr/\bENABLE_DEFAULT\s+:\s+std_logic\s*:=\s*'0'/s,
+    'CLI APB/C4 one-bit generic-map output includes child generic declarations',
+);
+like(
+    $apb_c4_one_bit_generic_map_cli_hdl,
+    qr/\brequester\s+:\s+entity\s+work\.apb_requester\s+generic\s+map\s*\(\s*ENABLE_DEFAULT\s+=>\s+'1'\s*\)\s+port\s+map\s*\(/s,
+    'CLI APB/C4 one-bit generic-map output includes the requester generic map',
+);
+like(
+    $apb_c4_one_bit_generic_map_cli_hdl,
+    qr/\bcompleter\s+:\s+entity\s+work\.apb_completer\s+generic\s+map\s*\(\s*ENABLE_DEFAULT\s+=>\s+'1'\s*\)\s+port\s+map\s*\(/s,
+    'CLI APB/C4 one-bit generic-map output includes the completer generic map',
+);
+unlike(
+    $apb_c4_one_bit_generic_map_cli_hdl,
+    qr/\bmodule\b|\bassign\b|\bendmodule\b|\balways_(?:ff|comb)\b|\#\s*\(|\.ENABLE_DEFAULT\s*\(|1'b/s,
+    'CLI APB/C4 one-bit generic-map VHDL output does not leak SystemVerilog generic syntax or one-bit literals',
+);
+
 my $exception = eval {
     $pipeline->generate_hdl_from_file($composition_path);
     undef;
@@ -2052,5 +2120,23 @@ sub write_apb_c4_scalar_generic_map_fixture {
         or die 'Cannot add requester TIMEOUT_CYCLES override';
     $top =~ s/\(\?fsmc:completer apb_completer\)/(?fsmc:completer apb_completer\n    (params\n      (TIMEOUT_CYCLES $completer_value)\n    )\n  )/
         or die 'Cannot add completer TIMEOUT_CYCLES override';
+    write_file($top_path, $top);
+}
+
+sub write_apb_c4_one_bit_generic_map_fixture {
+    my ($repo_root, $fixture_dir, $top_path) = @_;
+
+    for my $module (qw(apb_requester apb_completer)) {
+        my $source = read_file(File::Spec->catfile($repo_root, 'fsm', "$module.fsm"));
+        $source =~ s/\(\?fsm:$module\n/(?fsm:$module\n  (+params\n    (ENABLE_DEFAULT 1'b0)\n  )\n/
+            or die "Cannot add ENABLE_DEFAULT to $module fixture";
+        write_file(File::Spec->catfile($fixture_dir, "$module.fsm"), $source);
+    }
+
+    my $top = read_file(File::Spec->catfile($repo_root, 'fsm', 'apb_tb.fsm'));
+    $top =~ s/\(\?fsmc:requester apb_requester\)/(?fsmc:requester apb_requester\n    (params\n      (ENABLE_DEFAULT 1'b1)\n    )\n  )/
+        or die 'Cannot add requester ENABLE_DEFAULT override';
+    $top =~ s/\(\?fsmc:completer apb_completer\)/(?fsmc:completer apb_completer\n    (params\n      (ENABLE_DEFAULT 1'b1)\n    )\n  )/
+        or die 'Cannot add completer ENABLE_DEFAULT override';
     write_file($top_path, $top);
 }

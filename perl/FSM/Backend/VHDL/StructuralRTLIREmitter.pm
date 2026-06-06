@@ -15,8 +15,8 @@ sized bitstring, and multi-bit sized bitstring generic-map actuals, simple
 resolved scalar integer expression actuals, plus resolved multi-bit packed
 aggregate actuals for external RTL instances, scalar integer and scalar
 integer expression generic-map actuals for bounded generated-FSM C2 instances,
-one-bit generated-FSM generic-map actuals, scalar integer and scalar integer
-expression generic-map actuals for bounded APB/C4 generated-FSM instances,
+one-bit generated-FSM generic-map actuals, scalar integer, scalar integer
+expression, and one-bit generic-map actuals for bounded APB/C4 generated-FSM instances,
 scalar integer and scalar integer expression, one-bit and multi-bit sized-bitstring, plus packed-list and packed-map
 generic-map actuals for bounded standalone-DT C1 instances, and port-map
 actuals whose connection expressions already render through the

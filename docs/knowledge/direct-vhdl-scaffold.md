@@ -28,6 +28,7 @@ answers:
   - "does composition VHDL support APB/C4 composition tops?"
   - "does composition VHDL support APB/C4 scalar generic maps?"
   - "does composition VHDL support APB/C4 scalar expression generic maps?"
+  - "does composition VHDL support APB/C4 one-bit generic maps?"
   - "does --language vhdl work for standalone-DT composition tops?"
   - "does --language vhdl work for C2 generated-FSM composition tops?"
   - "does --language vhdl work for APB/C4 composition tops?"
@@ -223,8 +224,8 @@ scalar one-bit default metadata such as `ENABLE_DEFAULT 1'b0`;
 aggregate/list/record actuals that do not resolve to multi-bit packed values,
 unresolved package/expression actuals, standalone-DT generic maps beyond scalar
 integer/scalar expression/one-bit sized-bitstring/multi-bit sized-bitstring/
-packed-list/packed-map actuals, and APB/C4 generic maps beyond scalar integer
-and scalar expression actuals remain deferred for those
+packed-list/packed-map actuals, and APB/C4 generic maps beyond scalar integer,
+scalar expression, and one-bit sized-bitstring actuals remain deferred for those
 families. The
 bounded C2 generated-FSM child
 composition VHDL top is also shipped for
@@ -253,10 +254,11 @@ signals, and VHDL entity port maps for `apb_requester` and `apb_completer`,
 without SystemVerilog structural syntax. The same bounded APB/C4 generated-FSM
 family also lowers scalar integer parameter overrides to VHDL generic maps
 before the requester/completer child port maps, such as
-`TIMEOUT_CYCLES => 8` and `TIMEOUT_CYCLES => 6`, and scalar expression
+`TIMEOUT_CYCLES => 8` and `TIMEOUT_CYCLES => 6`, scalar expression
 overrides such as `TIMEOUT_CYCLES => (4 + 1)` and
-`TIMEOUT_CYCLES => (3 + 3)`, while the child entities keep matching `integer`
-generic declarations. APB/C4 one-bit, multi-bit, packed aggregate, and
+`TIMEOUT_CYCLES => (3 + 3)`, and one-bit sized-bitstring overrides such as
+`ENABLE_DEFAULT => '1'`, while the child entities keep matching `integer` or
+`std_logic` generic declarations. APB/C4 multi-bit, packed aggregate, and
 package-backed generic maps remain deferred.
 Other composition/top VHDL shapes remain locked fail-closed by focused pipeline
 and CLI coverage: `?top` sources are parsed into typed composition IR, then unsupported

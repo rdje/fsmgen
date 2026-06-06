@@ -1510,6 +1510,46 @@ subtest 'facade target_language option routes bounded APB/C4 scalar expression g
     );
 };
 
+subtest 'facade target_language option routes bounded APB/C4 one-bit generic-map VHDL behavior' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'facade_apb_c4_one_bit_generic_map_top.fsm');
+    write_apb_c4_one_bit_generic_map_fixture($repo_root, $tempdir, $composition_path);
+
+    my $vhdl_pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'vhdl',
+        quiet => 1,
+    );
+
+    my $vhdl_result = $vhdl_pipeline->generate_hdl_from_file($composition_path);
+
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bentity\s+apb_requester\s+is\s+generic\s*\(\s*ENABLE_DEFAULT\s+:\s+std_logic\s*:=\s*'0'\s*\);/s,
+        'explicit VHDL facade generation emits the APB requester one-bit generic declaration',
+    );
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bentity\s+apb_completer\s+is\s+generic\s*\(\s*ENABLE_DEFAULT\s+:\s+std_logic\s*:=\s*'0'\s*\);/s,
+        'explicit VHDL facade generation emits the APB completer one-bit generic declaration',
+    );
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\brequester\s+:\s+entity\s+work\.apb_requester\s+generic\s+map\s*\(\s*ENABLE_DEFAULT\s+=>\s+'1'\s*\)\s+port\s+map\s*\(/s,
+        'explicit VHDL facade generation emits the APB requester one-bit generic map before the port map',
+    );
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bcompleter\s+:\s+entity\s+work\.apb_completer\s+generic\s+map\s*\(\s*ENABLE_DEFAULT\s+=>\s+'1'\s*\)\s+port\s+map\s*\(/s,
+        'explicit VHDL facade generation emits the APB completer one-bit generic map before the port map',
+    );
+    unlike(
+        $vhdl_result->{hdl_code},
+        qr/\bmodule\b|\bassign\b|\bendmodule\b|\balways_(?:ff|comb)\b|\#\s*\(|\.ENABLE_DEFAULT\s*\(|1'b/s,
+        'explicit VHDL APB/C4 one-bit generic-map generation does not leak SystemVerilog generic syntax or one-bit literals',
+    );
+};
+
 subtest 'facade target_language option routes direct VHDL delayed-pulse scaffold behavior' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $direct_path = File::Spec->catfile($tempdir, 'facade_direct_delayed_pulse_vhdl.fsm');
@@ -3332,5 +3372,23 @@ sub write_apb_c4_scalar_generic_map_fixture {
         or die 'Cannot add requester TIMEOUT_CYCLES override';
     $top =~ s/\(\?fsmc:completer apb_completer\)/(?fsmc:completer apb_completer\n    (params\n      (TIMEOUT_CYCLES $completer_value)\n    )\n  )/
         or die 'Cannot add completer TIMEOUT_CYCLES override';
+    write_file($top_path, $top);
+}
+
+sub write_apb_c4_one_bit_generic_map_fixture {
+    my ($repo_root, $fixture_dir, $top_path) = @_;
+
+    for my $module (qw(apb_requester apb_completer)) {
+        my $source = read_file(File::Spec->catfile($repo_root, 'fsm', "$module.fsm"));
+        $source =~ s/\(\?fsm:$module\n/(?fsm:$module\n  (+params\n    (ENABLE_DEFAULT 1'b0)\n  )\n/
+            or die "Cannot add ENABLE_DEFAULT to $module fixture";
+        write_file(File::Spec->catfile($fixture_dir, "$module.fsm"), $source);
+    }
+
+    my $top = read_file(File::Spec->catfile($repo_root, 'fsm', 'apb_tb.fsm'));
+    $top =~ s/\(\?fsmc:requester apb_requester\)/(?fsmc:requester apb_requester\n    (params\n      (ENABLE_DEFAULT 1'b1)\n    )\n  )/
+        or die 'Cannot add requester ENABLE_DEFAULT override';
+    $top =~ s/\(\?fsmc:completer apb_completer\)/(?fsmc:completer apb_completer\n    (params\n      (ENABLE_DEFAULT 1'b1)\n    )\n  )/
+        or die 'Cannot add completer ENABLE_DEFAULT override';
     write_file($top_path, $top);
 }
