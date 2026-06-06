@@ -247,7 +247,8 @@ items named in the 2026-06-05 remaining-work inventory.
     `BACKEND-API-VALIDATION-FRONTIER.102.1`,
     `BACKEND-API-VALIDATION-FRONTIER.103`,
     `BACKEND-API-VALIDATION-FRONTIER.103.1`,
-    `BACKEND-API-VALIDATION-FRONTIER.104`
+    `BACKEND-API-VALIDATION-FRONTIER.104`,
+    `BACKEND-API-VALIDATION-FRONTIER.104.1`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.1`
   Status: `done`
@@ -1839,10 +1840,18 @@ items named in the 2026-06-05 remaining-work inventory.
   Commit: `BACKEND-API-VALIDATION-FRONTIER.103.1: publish package-import name-list metadata`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.104`
-  Status: `active`
+  Status: `done`
   Goal: `Select the next exact backend/API edge after package-import name-list metadata shipped.`
+  Children: `BACKEND-API-VALIDATION-FRONTIER.104.1`
   Acceptance: `Selection-only leaf. Audit the backend/API frontier, current VHDL scope, mdBook backlog, direct-VHDL fact card, normalized semantic export/public API status, focused contract/backend/facade tests, maintained direct/composition VHDL sweeps, current validation environment, and current frontier rows; choose the next narrow implementation, hardening, or documented blocking owner before any code/test/source edits. The selector must preserve task-tree ownership for the chosen child leaf, synchronize README/VHDL scope/mdBook/fact card/memory if the selected frontier changes user-visible scope, and leave raw package-spec internals, VHDL package declaration/emission, GHDL validation, full normalized semantic export stabilization, broad VHDL aggregate lowering, broad expression parity, full composition VHDL parity, and full backend parity deferred unless it explicitly chooses one of those exact edges.`
-  Verification: `pending selection`
+  Verification: `Selection audit/read of README.md, MEMORY.md, COMMIT.md, docs/TASK_TREE.md, docs/tasks/BACKEND-API-VALIDATION-FRONTIER.md, docs/VHDL_SCOPE.md, docs/book/src/14-feature-backlog.md, docs/book/src/11-extensions-and-embedding.md, docs/knowledge/direct-vhdl-scaffold.md, KNOWLEDGE_MAP.md, perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm, perl/FSM/Backend/VHDL/StructuralRTLIREmitter.pm, perl/FSM/Composition/GenerationOrchestrator.pm, perl/FSM/Composition/PlanBuilder.pm, t/1420-vhdl-direct-backend-scaffold.t, t/386-hdl-generator-facade-target-language-boundary-audit.t, t/114-composition-target-support-diagnostics.t, t/354-normalized-semantic-child-runtime-contract-audit.t, t/335-normalized-semantic-symbol-contract.t, and t/297-capability-manifest.t; representative semantic JSON probes for fsm/apb_requester.fsm, fsm/apb_tb.fsm, t/corpus/params_aggregate_comparison.fsm, t/corpus/implicit_composition_system_autowire.fsm, t/corpus/standalone_dtc_explicit_system_autowire.fsm, and t/corpus/composition_intent_integer_literals.fsm found no unadvertised top-level normalized semantic keys after including bounded optional composition key families; command -v ghdl returned unavailable; temporary two-state vector direct VHDL probe generated SystemVerilog bit [7:0] OUT and failed at the direct VHDL vector-bit declaration guard. Selected direct VHDL two-state vector bit declaration lowering for .104.1 before any implementation/test/source edits; prove -Iperl t/1420-vhdl-direct-backend-scaffold.t t/386-hdl-generator-facade-target-language-boundary-audit.t t/114-composition-target-support-diagnostics.t; prove -Iperl t/354-normalized-semantic-child-runtime-contract-audit.t t/335-normalized-semantic-symbol-contract.t t/297-capability-manifest.t.`
+  Commit: `BACKEND-API-VALIDATION-FRONTIER.104: select vector bit VHDL declarations`
+
+- ID: `BACKEND-API-VALIDATION-FRONTIER.104.1`
+  Status: `active`
+  Goal: `Lower direct VHDL two-state vector bit internal declarations.`
+  Acceptance: `Direct single-FSM VHDL generation must accept generated SystemVerilog internal declarations such as bit [7:0] OUT emitted by a multi-bit (two_state (bits N)) direct-root type and lower them to std_logic_vector(N-1 downto 0) signals through pipeline, CLI, and facade coverage. Scalar bit declaration lowering, vector/four-state logic declaration lowering, signed scalar/vector declaration lowering, existing arithmetic and aggregate-output boundaries, composition VHDL, package roots/imports, GHDL validation, broad expression parity, broad aggregate VHDL record/array lowering, raw package-spec internals, full normalized semantic export stabilization, and full backend parity must remain unchanged or explicitly deferred. README, docs/VHDL_SCOPE.md, mdBook, direct-VHDL fact card/knowledge map, task tree, and MEMORY stay synchronized.`
+  Verification: `pending implementation`
   Commit: `pending`
 
 ## Current Frontier
@@ -2060,7 +2069,8 @@ items named in the 2026-06-05 remaining-work inventory.
 | 209 | `BACKEND-API-VALIDATION-FRONTIER.102.1` | `done` | Reconfirmed that VHDL external validation remains blocked because `ghdl` is unavailable, while the validation contract remains SystemVerilog-only. |
 | 210 | `BACKEND-API-VALIDATION-FRONTIER.103` | `done` | Selected normalized semantic symbol-contract package-import name-list entry metadata after runtime direct/composition semantic JSON probes showed scalar package-name lists under semantic.symbol_contract.package_imports and the forward_ir.intent_hir alias, while the current contract only advertises package_import_count/package_imports as a top-level key family. |
 | 211 | `BACKEND-API-VALIDATION-FRONTIER.103.1` | `done` | Published bounded package-import name-list entry metadata without exposing raw package-spec internals or full normalized semantic export stabilization. |
-| 212 | `BACKEND-API-VALIDATION-FRONTIER.104` | `active` | Select the next exact backend/API edge after package-import name-list metadata shipped. |
+| 212 | `BACKEND-API-VALIDATION-FRONTIER.104` | `done` | Selected direct VHDL two-state vector bit declaration lowering after a probe showed multi-bit `(two_state (bits N))` direct roots emit `bit [7:0] OUT;` and currently fail at the vector-bit declaration guard, while representative normalized semantic probes found no unadvertised bounded top-level contract keys. |
+| 213 | `BACKEND-API-VALIDATION-FRONTIER.104.1` | `active` | Lower generated direct-root vector `bit [N:0]` declarations to VHDL `std_logic_vector` through pipeline, CLI, facade, docs, and fact-card coverage. |
 
 ## Decisions
 
@@ -2465,10 +2475,18 @@ items named in the 2026-06-05 remaining-work inventory.
 | `BACKEND-API-VALIDATION-FRONTIER.102.1` | `BACKEND-API-VALIDATION-FRONTIER.102.1: reconfirm GHDL validation blocker` | this slice; activates `.103` |
 | `BACKEND-API-VALIDATION-FRONTIER.103` | `BACKEND-API-VALIDATION-FRONTIER.103: select package-import name-list export` | selected `.103.1` |
 | `BACKEND-API-VALIDATION-FRONTIER.103.1` | `BACKEND-API-VALIDATION-FRONTIER.103.1: publish package-import name-list metadata` | this slice; activates `.104` |
+| `BACKEND-API-VALIDATION-FRONTIER.104` | `BACKEND-API-VALIDATION-FRONTIER.104: select vector bit VHDL declarations` | selected `.104.1` |
+| `BACKEND-API-VALIDATION-FRONTIER.104.1` | `pending` | active implementation leaf |
 
 ## Changelog
 
 - `2026-06-05`: Created proposed backend/API frontier owner tree.
+- `2026-06-06`: Completed `.104`; selected direct VHDL two-state vector
+  `bit [N:0]` internal declaration lowering as `.104.1` after a temporary
+  direct-root probe showed multi-bit `(two_state (bits N))` emits
+  `bit [7:0] OUT;` and currently fails at the vector-bit declaration guard.
+  Representative normalized semantic probes found no unadvertised bounded
+  top-level contract keys once optional composition key families were included.
 - `2026-06-06`: Selected bounded C3 external-RTL one-bit VHDL
   generic-map actuals as `.83.1`, using .rtlif scalar one-bit declaration
   metadata to keep the implementation target-type-bounded.

@@ -4216,8 +4216,13 @@ package declaration/emission, and full normalized semantic export
 stabilization remain deferred.
 
 Current active backend edge: task-tree leaf
-`BACKEND-API-VALIDATION-FRONTIER.104` selects the next exact backend/API edge
-after package-import name-list metadata shipped. Completed leaf
+`BACKEND-API-VALIDATION-FRONTIER.104.1` owns direct VHDL generated two-state
+vector `bit [N:0]` internal declaration lowering to `std_logic_vector` signals.
+Completed selector leaf
+`BACKEND-API-VALIDATION-FRONTIER.104` chose that exact vector-bit declaration
+edge after representative normalized semantic probes found no unadvertised
+bounded top-level contract keys and a direct VHDL probe stopped at
+`bit [7:0] OUT;`. Completed leaf
 `BACKEND-API-VALIDATION-FRONTIER.102.1` reconfirms that VHDL external validation
 remains blocked because `ghdl` is unavailable. Completed leaf
 `BACKEND-API-VALIDATION-FRONTIER.101.1` locks declared aggregate structural VHDL

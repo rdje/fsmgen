@@ -934,10 +934,10 @@ GHDL validation blocker reconfirmation is locked by
 environment, so external HDL validation remains SystemVerilog-only until a
 future exact GHDL lane can run the tool.
 Current active backend/API work is
-`BACKEND-API-VALIDATION-FRONTIER.104`: select the next exact backend/API edge
-after package-import name-list metadata shipped. The shipped package-import
-edge remains bounded to scalar package-name metadata and does not expose raw
-package internals.
+`BACKEND-API-VALIDATION-FRONTIER.104.1`: lower direct VHDL generated
+two-state vector `bit [N:0]` internal declarations to `std_logic_vector`
+signals. The selected slice is narrower than broad VHDL expression, aggregate,
+package, GHDL, composition-parity, or normalized semantic stabilization work.
 The manifest is still not a full normalized semantic export stabilization
 promise.
 The manifest-facing stable diagnostic-code registry now has its own explicit
