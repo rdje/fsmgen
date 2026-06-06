@@ -311,7 +311,10 @@ sub _has_only_supported_generated_fsm_generic_overrides ($instance) {
         return 0 unless defined($value);
         next if $is_scalar && $value =~ /\A-?\d+\z/;
         next if $is_scalar && _is_scalar_integer_expression($value);
-        next if _is_multi_bit_sized_bitstring_literal($value);
+        next if _is_supported_generated_fsm_sized_bitstring_literal(
+            $value,
+            allow_one_bit => $is_scalar,
+        );
         return 0;
     }
     return 1;
@@ -321,12 +324,12 @@ sub _is_scalar_integer_expression ($value) {
     return $value =~ /\A\(\s*-?\d+(?:\s+[-+*\/]\s+-?\d+)+\s*\)\z/ ? 1 : 0;
 }
 
-sub _is_multi_bit_sized_bitstring_literal ($value) {
+sub _is_supported_generated_fsm_sized_bitstring_literal ($value, %opts) {
     return 0
         unless $value =~ /\A([1-9][0-9]*)'([bBhH])([0-9A-Fa-f_xXzZ]+)\z/;
 
     my ($width, $base, $digits) = ($1 + 0, lc($2), $3);
-    return 0 if $width <= 1;
+    return 0 if $width <= 1 && !$opts{allow_one_bit};
     return 0 if $digits =~ /[xz]/i;
 
     $digits =~ s/_//g;

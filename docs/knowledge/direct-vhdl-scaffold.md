@@ -24,6 +24,8 @@ answers:
   - "does composition VHDL support external RTL generic maps?"
   - "does composition VHDL support generated-FSM generic maps?"
   - "does composition VHDL support generated-child generic maps?"
+  - "does composition VHDL support generated-FSM one-bit generic maps?"
+  - "does composition VHDL support one-bit generated-FSM generic maps?"
   - "does composition VHDL support bitstring generic maps?"
   - "does composition VHDL support sized bitstring generic actuals?"
   - "does composition VHDL support scalar expression generic maps?"
@@ -189,9 +191,9 @@ constants in that same external-RTL subset are resolved before VHDL emission
 and also emit literal actuals, for example `param_pkg.WIDTH_16` and
 `param_pkg.RESET_A5` emit `WIDTH => 16` and
 `RESET_VALUE => "10100101"` without leaking `param_pkg` into the VHDL; this is
-not VHDL package declaration/emission support. One-bit actuals that need
-target-type discrimination, aggregate/list/record actuals that do not resolve
-to multi-bit packed values, unresolved package/expression actuals,
+not VHDL package declaration/emission support. External-RTL one-bit actuals
+that need target-type discrimination, aggregate/list/record actuals that do not
+resolve to multi-bit packed values, unresolved package/expression actuals,
 standalone-DT, and APB/C4 generic maps remain deferred for those families. The
 bounded C2 generated-FSM child
 composition VHDL top is also shipped for
@@ -204,13 +206,15 @@ before the generated child port map, such as `WIDTH => 16`, while the child
 entity keeps the matching VHDL generic declaration. Scalar expression generic
 maps also emit before the generated child port map, such as
 `EXPR_WIDTH => (16 + 1)`, against the child VHDL integer generic declaration.
+One-bit sized bitstring generic maps also emit before the generated child port
+map, such as `ENABLE_DEFAULT => '1'` for `ENABLE_DEFAULT 1'b1`, against the
+child VHDL `std_logic` generic declaration.
 Multi-bit sized bitstring generic maps also emit before the generated child
 port map, such as `RESET_VALUE => "10100101"` for `RESET_VALUE 8'hA5`, against
 the child VHDL `std_logic_vector` generic declaration. Resolved packed
 aggregate generic maps also emit before the generated child port map, such as
 `LANES => "1010010100111100"` and `FRAME => "101"`, against the child VHDL
-`std_logic_vector` generic declarations. Generated-FSM one-bit generic actuals
-remain deferred.
+`std_logic_vector` generic declarations.
 The bounded APB/C4 generated-FSM child composition VHDL top is also shipped for
 `fsm/apb_tb.fsm`. That subset emits VHDL-safe APB requester/completer child
 segments, vector APB structural signals, deterministic shared-datapath sink

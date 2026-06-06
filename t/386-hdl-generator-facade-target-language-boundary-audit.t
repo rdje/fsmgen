@@ -852,6 +852,86 @@ FSM
     );
 };
 
+subtest 'facade target_language option routes bounded generated-FSM one-bit generic-map VHDL behavior' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'facade_vhdl_generated_fsmc_one_bit_generic_map_top.fsm');
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:facade_vhdl_generated_fsmc_one_bit_generic_map_top
+  (?ports:public_io
+    clk
+    rst_n
+    result_data>
+  )
+  (?fsmc:producer implicit_autowire_producer
+    (params
+      (ENABLE_DEFAULT 1'b1)
+    )
+  )
+  (?fsmc:consumer implicit_autowire_consumer)
+  (?wiring:wiring
+    (producer.output_data consumer.input_data)
+    (consumer.result_data result_data)
+  )
+)
+
+(?fsm:implicit_autowire_producer
+  (+params
+    (ENABLE_DEFAULT 1'b0)
+  )
+  (+size
+    (output_data 1)
+  )
+
+  (-drive_outputs
+    (= (output_data> 1'b1))
+  )
+)
+
+(?fsm:implicit_autowire_consumer
+  (+size
+    (input_data 1)
+    (result_data 1)
+  )
+
+  (-drive_outputs
+    (= (result_data> input_data))
+  )
+)
+FSM
+    );
+
+    my $vhdl_pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'vhdl',
+        quiet => 1,
+    );
+
+    my $vhdl_result = $vhdl_pipeline->generate_hdl_from_file($composition_path);
+
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bentity\s+facade_vhdl_generated_fsmc_one_bit_generic_map_top\s+is\b/s,
+        'explicit VHDL facade generation emits the generated-FSM one-bit generic-map composition entity',
+    );
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bENABLE_DEFAULT\s+:\s+std_logic\s*:=\s*'0'/s,
+        'explicit VHDL facade generation emits the generated child one-bit generic declaration',
+    );
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bproducer\s+:\s+entity\s+work\.implicit_autowire_producer\s+generic\s+map\s*\(\s*ENABLE_DEFAULT\s+=>\s+'1'\s*\)\s+port\s+map\s*\(/s,
+        'explicit VHDL facade generation emits the generated-FSM one-bit generic map before the port map',
+    );
+    unlike(
+        $vhdl_result->{hdl_code},
+        qr/\bmodule\b|\bassign\b|\bendmodule\b|\balways_(?:ff|comb)\b|\#\s*\(|\.ENABLE_DEFAULT\s*\(|1'b/s,
+        'explicit VHDL generated-FSM one-bit generic-map generation does not leak SystemVerilog syntax or one-bit literals',
+    );
+};
+
 subtest 'facade target_language option routes bounded APB/C4 composition VHDL structural top behavior' => sub {
     my $composition_path = repo_file('fsm/apb_tb.fsm');
     my $vhdl_pipeline = FSM::Pipeline::HDLGenerator->new(

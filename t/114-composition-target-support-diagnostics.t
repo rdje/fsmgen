@@ -51,7 +51,8 @@ my $generated_fsmc_bitstring_generic_map_path = File::Spec->catfile($tempdir, 'v
 my $generated_fsmc_bitstring_generic_map_output_path = File::Spec->catfile($tempdir, 'vhdl_generated_fsmc_bitstring_generic_map_top.vhd');
 my $generated_fsmc_aggregate_generic_map_path = File::Spec->catfile($tempdir, 'vhdl_generated_fsmc_aggregate_generic_map_top.fsm');
 my $generated_fsmc_aggregate_generic_map_output_path = File::Spec->catfile($tempdir, 'vhdl_generated_fsmc_aggregate_generic_map_top.vhd');
-my $generated_fsmc_one_bit_generic_map_path = File::Spec->catfile($tempdir, 'vhdl_generated_fsmc_one_bit_generic_map_deferred_top.fsm');
+my $generated_fsmc_one_bit_generic_map_path = File::Spec->catfile($tempdir, 'vhdl_generated_fsmc_one_bit_generic_map_top.fsm');
+my $generated_fsmc_one_bit_generic_map_output_path = File::Spec->catfile($tempdir, 'vhdl_generated_fsmc_one_bit_generic_map_top.vhd');
 my $composition_path = File::Spec->catfile($tempdir, 'vhdl_composition_top.fsm');
 my $output_path = File::Spec->catfile($tempdir, 'vhdl_composition_top.vhd');
 
@@ -460,7 +461,7 @@ FSM
 write_file(
     $generated_fsmc_one_bit_generic_map_path,
     <<'FSM'
-(?top:vhdl_generated_fsmc_one_bit_generic_map_deferred_top
+(?top:vhdl_generated_fsmc_one_bit_generic_map_top
   (?ports:public_io
     clk
     rst_n
@@ -763,16 +764,26 @@ unlike(
     'pipeline generated-FSM aggregate generic-map VHDL output does not leak SystemVerilog generic syntax or packed literals',
 );
 
-my $generated_fsmc_one_bit_exception = eval {
-    $pipeline->generate_hdl_from_file($generated_fsmc_one_bit_generic_map_path);
-    undef;
-};
-$generated_fsmc_one_bit_exception = $@;
-
+my $generated_fsmc_one_bit_generic_map_result = $pipeline->generate_hdl_from_file($generated_fsmc_one_bit_generic_map_path);
 like(
-    $generated_fsmc_one_bit_exception,
-    qr/Composition target support is blocked because generated-child VHDL composition is outside the bounded VHDL structural-top leaves/s,
-    'pipeline keeps generated-FSM one-bit generic-map actuals outside the bounded VHDL scaffold',
+    $generated_fsmc_one_bit_generic_map_result->{hdl_code},
+    qr/\bentity\s+vhdl_generated_fsmc_one_bit_generic_map_top\s+is\b/s,
+    'pipeline emits the generated-FSM one-bit generic-map VHDL composition entity',
+);
+like(
+    $generated_fsmc_one_bit_generic_map_result->{hdl_code},
+    qr/\bENABLE_DEFAULT\s+:\s+std_logic\s*:=\s*'0'/s,
+    'pipeline emits the generated child VHDL one-bit generic declaration',
+);
+like(
+    $generated_fsmc_one_bit_generic_map_result->{hdl_code},
+    qr/\bproducer\s+:\s+entity\s+work\.implicit_autowire_producer\s+generic\s+map\s*\(\s*ENABLE_DEFAULT\s+=>\s+'1'\s*\)\s+port\s+map\s*\(/s,
+    'pipeline emits one-bit sized bitstring VHDL generic maps before the generated-FSM port map',
+);
+unlike(
+    $generated_fsmc_one_bit_generic_map_result->{hdl_code},
+    qr/\bmodule\b|\bassign\b|\bendmodule\b|\balways_(?:ff|comb)\b|\#\s*\(|\.ENABLE_DEFAULT\s*\(|1'b/s,
+    'pipeline generated-FSM one-bit generic-map VHDL output does not leak SystemVerilog generic syntax or one-bit literals',
 );
 
 my $apb_c4_result = $pipeline->generate_hdl_from_file($apb_c4_composition_path);
@@ -1179,6 +1190,38 @@ unlike(
     'CLI generated-FSM aggregate generic-map composition VHDL output does not leak SystemVerilog syntax or packed literals',
 );
 
+my ($generated_fsmc_one_bit_generic_map_success, $generated_fsmc_one_bit_generic_map_error_message, $generated_fsmc_one_bit_generic_map_full_buf, $generated_fsmc_one_bit_generic_map_stdout_buf, $generated_fsmc_one_bit_generic_map_stderr_buf) = run(
+    command => ['./bin/fsmgen', '--language', 'vhdl', '--quiet', '-o', $generated_fsmc_one_bit_generic_map_output_path, $generated_fsmc_one_bit_generic_map_path],
+);
+
+my $generated_fsmc_one_bit_generic_map_combined_output = join(
+    '',
+    @{ $generated_fsmc_one_bit_generic_map_stdout_buf || [] },
+    @{ $generated_fsmc_one_bit_generic_map_stderr_buf || [] },
+    ($generated_fsmc_one_bit_generic_map_error_message || ''),
+);
+
+ok($generated_fsmc_one_bit_generic_map_success, 'CLI accepts bounded composition --language vhdl for the C2 generated-FSM one-bit generic-map fixture')
+    or diag($generated_fsmc_one_bit_generic_map_combined_output);
+ok(-e $generated_fsmc_one_bit_generic_map_output_path, 'CLI writes bounded generated-FSM one-bit generic-map composition VHDL output');
+
+my $generated_fsmc_one_bit_generic_map_cli_hdl = read_file($generated_fsmc_one_bit_generic_map_output_path);
+like(
+    $generated_fsmc_one_bit_generic_map_cli_hdl,
+    qr/\bENABLE_DEFAULT\s+:\s+std_logic\s*:=\s*'0'/s,
+    'CLI generated-FSM one-bit generic-map composition VHDL output includes the one-bit generic declaration',
+);
+like(
+    $generated_fsmc_one_bit_generic_map_cli_hdl,
+    qr/\bproducer\s+:\s+entity\s+work\.implicit_autowire_producer\s+generic\s+map\s*\(\s*ENABLE_DEFAULT\s+=>\s+'1'\s*\)\s+port\s+map\s*\(/s,
+    'CLI generated-FSM one-bit generic-map composition VHDL output includes the child one-bit generic map',
+);
+unlike(
+    $generated_fsmc_one_bit_generic_map_cli_hdl,
+    qr/\bmodule\b|\bassign\b|\bendmodule\b|\balways_(?:ff|comb)\b|\#\s*\(|\.ENABLE_DEFAULT\s*\(|1'b/s,
+    'CLI generated-FSM one-bit generic-map composition VHDL output does not leak SystemVerilog syntax or one-bit literals',
+);
+
 my ($apb_c4_success, $apb_c4_error_message, $apb_c4_full_buf, $apb_c4_stdout_buf, $apb_c4_stderr_buf) = run(
     command => ['./bin/fsmgen', '--language', 'vhdl', '--quiet', '-o', $apb_c4_output_path, $apb_c4_composition_path],
 );
@@ -1224,7 +1267,7 @@ $exception = $@;
 
 like(
     $exception,
-    qr/recognized and parsed into typed composition IR, .*composition target support is blocked because the current active VHDL composition leaves only emit the bounded C3 external-RTL literal\/concat structural top, C1 standalone-DT passthrough structural top, C2 generated-FSM scalar-autowire\/scalar-bitstring-aggregate-generic structural top, and APB\/C4 generated-FSM structural top.*Target language 'vhdl' is not implemented for this composition shape yet: generated-child composition VHDL is outside the bounded C2 scalar-autowire\/scalar-bitstring-aggregate-generic and APB\/C4 generated-FSM structural-top leaves/s,
+    qr/recognized and parsed into typed composition IR, .*composition target support is blocked because the current active VHDL composition leaves only emit the bounded C3 external-RTL literal\/concat structural top, C1 standalone-DT passthrough structural top, C2 generated-FSM scalar-autowire\/scalar-bitstring-one-bit-aggregate-generic structural top, and APB\/C4 generated-FSM structural top.*Target language 'vhdl' is not implemented for this composition shape yet: generated-child composition VHDL is outside the bounded C2 scalar-autowire\/scalar-bitstring-one-bit-aggregate-generic and APB\/C4 generated-FSM structural-top leaves/s,
     'pipeline now says composition target support is blocked for unsupported composition backends',
 );
 like(
@@ -1259,7 +1302,7 @@ my $combined_output = join(
 
 like(
     $combined_output,
-    qr/recognized and parsed into typed composition IR, .*composition target support is blocked because the current active VHDL composition leaves only emit the bounded C3 external-RTL literal\/concat structural top, C1 standalone-DT passthrough structural top, C2 generated-FSM scalar-autowire\/scalar-bitstring-aggregate-generic structural top, and APB\/C4 generated-FSM structural top.*Target language 'vhdl' is not implemented for this composition shape yet: generated-child composition VHDL is outside the bounded C2 scalar-autowire\/scalar-bitstring-aggregate-generic and APB\/C4 generated-FSM structural-top leaves/s,
+    qr/recognized and parsed into typed composition IR, .*composition target support is blocked because the current active VHDL composition leaves only emit the bounded C3 external-RTL literal\/concat structural top, C1 standalone-DT passthrough structural top, C2 generated-FSM scalar-autowire\/scalar-bitstring-one-bit-aggregate-generic structural top, and APB\/C4 generated-FSM structural top.*Target language 'vhdl' is not implemented for this composition shape yet: generated-child composition VHDL is outside the bounded C2 scalar-autowire\/scalar-bitstring-one-bit-aggregate-generic and APB\/C4 generated-FSM structural-top leaves/s,
     'CLI surfaces the blocked composition target-support diagnostic',
 );
 like(

@@ -64,15 +64,16 @@ This document defines the scoped R14 VHDL backend plan for FSMGen.
   integer, scalar integer expression, multi-bit sized bitstring, and resolved
   packed aggregate generic maps, including resolved qualified package
   constants, plus bounded C2 generated-FSM scalar integer and scalar
-  expression, multi-bit sized bitstring, and resolved packed aggregate generic
-  maps.
+  expression, one-bit sized bitstring, multi-bit sized bitstring, and resolved
+  packed aggregate generic maps.
   Broader
   generated-FSM/C4 composition VHDL beyond the exact shipped fixtures,
-  internal-net-heavy tops beyond APB, generic maps beyond external-RTL scalar
+  internal-net-heavy tops beyond APB, generic maps beyond the shipped external-RTL scalar
   integer, scalar integer expression, multi-bit sized bitstring
   literal/resolved-package-constant actuals, and resolved packed aggregate
-  actuals plus generated-FSM scalar integer, scalar expression, multi-bit
-  sized bitstring, and resolved packed aggregate actuals, VHDL package
+  actuals plus shipped generated-FSM scalar integer, scalar expression, one-bit sized
+  bitstring, multi-bit sized bitstring, and resolved packed aggregate actuals,
+  VHDL package
   declaration/emission, full aggregate VHDL record/array lowering, broad
   expression parity, scalar division/modulo and broader scalar arithmetic,
   signed arithmetic operators beyond the shipped same-width vector arithmetic
@@ -94,8 +95,11 @@ This document defines the scoped R14 VHDL backend plan for FSMGen.
   vhdl` only for the C3 external-RTL literal/concat fixture, the explicit
   C1 standalone-DT passthrough fixture, and the C2 generated-FSM scalar
   autowire fixture, plus the APB/C4 generated-FSM fixture. The external-RTL
-  composition subset also accepts scalar integer and multi-bit sized bitstring
-  generic maps. Other `?top` shapes
+  composition subset also accepts scalar integer, scalar integer expression,
+  multi-bit sized bitstring, and resolved packed aggregate generic maps, while
+  the C2 generated-FSM subset also accepts scalar integer, scalar expression,
+  one-bit sized bitstring, multi-bit sized bitstring, and resolved packed
+  aggregate generic maps. Other `?top` shapes
   still parse into typed composition IR and then fail closed with the scoped
   composition target-support diagnostic.
 
@@ -118,10 +122,11 @@ The VHDL lane is intentionally narrow:
      generated-FSM shape in `fsm/apb_tb.fsm`
    - Broader generated-FSM/C4 composition VHDL, internal nets beyond exact
      owned fixtures, VHDL package declaration/emission, and generic maps
-     beyond external-RTL scalar integer, scalar integer expression, multi-bit
+     beyond the shipped external-RTL scalar integer, scalar integer expression, multi-bit
      sized bitstring literal/resolved-package-constant actuals, resolved
-     packed aggregate actuals, and generated-FSM scalar integer/scalar
-     expression actuals remain deferred
+     packed aggregate actuals, and shipped generated-FSM scalar integer/scalar
+     expression/one-bit sized bitstring/multi-bit sized bitstring/resolved
+     packed aggregate actuals remain deferred
 
 2. **Direct-root structural conversion from SystemVerilog**
    - Generate SystemVerilog through the existing direct backend
@@ -139,14 +144,15 @@ The VHDL lane is intentionally narrow:
      expression / multi-bit sized bitstring / resolved packed aggregate generic
      maps for external RTL instances, including resolved qualified package
      constants, and scalar integer / scalar integer expression / multi-bit
-     sized bitstring / resolved packed aggregate generic maps for the bounded
-     C2 generated-FSM family
+     sized bitstring / one-bit sized bitstring / resolved packed aggregate
+     generic maps for the bounded C2 generated-FSM family
    - Reject generated-FSM child instances outside exact shipped or active
-     leaves, generic maps outside external-RTL scalar integer and multi-bit
-     sized bitstring literal/resolved-package-constant actuals plus simple
-     scalar integer expressions and resolved packed aggregate actuals plus
-     generated-FSM scalar integer, scalar expression, multi-bit sized
-     bitstring, and resolved packed aggregate actuals, VHDL package
+     leaves, generic maps outside shipped external-RTL scalar integer,
+     scalar integer expression, multi-bit sized bitstring
+     literal/resolved-package-constant, and resolved packed aggregate actuals
+     plus shipped generated-FSM scalar integer, scalar expression, one-bit sized
+     bitstring, multi-bit sized bitstring, and resolved packed aggregate
+     actuals, VHDL package
      declaration/emission, declared aggregate structural types, structural nets outside exact
      scalar/vector leaves, and non-VHDL auxiliary
      assignments
@@ -283,7 +289,13 @@ The VHDL lane is intentionally narrow:
   lowering under `BACKEND-API-VALIDATION-FRONTIER.81.1`. VHDL structural tops
   now emit generated child instance aggregate actuals such as
   `LANES => "1010010100111100"` and `FRAME => "101"` before the generated
-  child port map, while generated-FSM one-bit actuals remain deferred.
+  child port map. At that slice, generated-FSM one-bit actuals remained
+  deferred.
+- Shipped bounded C2 generated-FSM one-bit sized bitstring generic-map actual
+  lowering under `BACKEND-API-VALIDATION-FRONTIER.82.1`. VHDL structural tops
+  now emit generated child instance one-bit actuals such as
+  `ENABLE_DEFAULT => '1'` before the generated child port map, while the child
+  entity keeps a `std_logic` generic declaration.
 - Shipped the bounded C1 standalone-DT child composition VHDL top under
   `BACKEND-API-VALIDATION-FRONTIER.69.1`, limited to
   `t/corpus/standalone_dtc_explicit_system_autowire.fsm`. It emits the
@@ -332,8 +344,9 @@ The VHDL lane is intentionally narrow:
   generation,
   bounded C1 standalone-DT and C2 generated-FSM composition VHDL
   structural-top generation,
-  bounded C2 generated-FSM scalar integer, scalar expression, multi-bit sized
-  bitstring, and resolved packed aggregate VHDL generic-map generation,
+  bounded C2 generated-FSM scalar integer, scalar expression, one-bit sized
+  bitstring, multi-bit sized bitstring, and resolved packed aggregate VHDL
+  generic-map generation,
   bounded APB/C4 generated-FSM composition VHDL structural-top generation,
   mixed signed/unsigned vector numeric arithmetic fail-closed diagnostics,
   signed scalar division/modulo and mixed signed/unsigned scalar arithmetic

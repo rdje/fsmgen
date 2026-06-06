@@ -10,11 +10,12 @@ Emits the bounded VHDL composition-top shapes from StructuralRTLIR. The
 current leaves intentionally support only external-RTL structural instances or
 one standalone-DT child passthrough instance plus bounded generated-FSM child
 tops, direct scalar/vector top ports, VHDL-form auxiliary assignments,
-scalar/vector signal declarations, scalar integer and multi-bit sized
+scalar/vector signal declarations, scalar integer and sized
 bitstring generic-map actuals, simple resolved scalar integer expression
 actuals, plus resolved multi-bit packed aggregate actuals for external RTL
 instances, scalar integer and scalar integer expression generic-map actuals for
-bounded generated-FSM C2 instances, and port-map actuals whose connection
+bounded generated-FSM C2 instances, one-bit generated-FSM generic-map actuals,
+and port-map actuals whose connection
 expressions already render through the backend-neutral StructuralRTLIR
 expression helper.
 
@@ -120,7 +121,7 @@ sub _render_instance_block ($instance) {
         my $is_supported_generated_fsm_generic_map =
             $instance_kind eq 'fsmc'
             && _has_only_supported_generated_fsm_generic_actuals(\@parameter_overrides);
-        confess _unsupported('composition VHDL generic maps are currently limited to external RTL scalar integer, scalar integer expression, sized bitstring, or packed aggregate overrides, plus generated-FSM scalar integer, scalar integer expression, multi-bit sized bitstring, or resolved packed aggregate overrides')
+        confess _unsupported('composition VHDL generic maps are currently limited to external RTL scalar integer, scalar integer expression, sized bitstring, or packed aggregate overrides, plus generated-FSM scalar integer, scalar integer expression, one-bit sized bitstring, multi-bit sized bitstring, or resolved packed aggregate overrides')
             unless $instance_kind eq 'rtl' || $is_supported_generated_fsm_generic_map;
     }
 
@@ -136,7 +137,10 @@ sub _render_instance_block ($instance) {
         push @generic_lines, sprintf(
             '      %s => %s%s',
             _identifier($override->{name}, 'instance generic name'),
-            _vhdl_generic_actual($override),
+            _vhdl_generic_actual(
+                $override,
+                allow_one_bit_sized_bitstring => $instance_kind eq 'fsmc',
+            ),
             $suffix,
         );
     }
@@ -170,7 +174,7 @@ sub _render_instance_block ($instance) {
     );
 }
 
-sub _vhdl_generic_actual ($override) {
+sub _vhdl_generic_actual ($override, %opts) {
     my $kind = $override->{value_kind} // 'scalar';
     my $is_scalar = $kind eq 'scalar';
     my $is_packed_aggregate = $kind eq 'list' || $kind eq 'map';
@@ -188,7 +192,10 @@ sub _vhdl_generic_actual ($override) {
         return $expression_actual if defined $expression_actual;
     }
 
-    my $literal_actual = _vhdl_sized_bitstring_generic_actual($value);
+    my $literal_actual = _vhdl_sized_bitstring_generic_actual(
+        $value,
+        allow_one_bit => $is_scalar && $opts{allow_one_bit_sized_bitstring},
+    );
     return $literal_actual if defined $literal_actual;
 
     confess _unsupported(_generic_actual_limit());
@@ -205,7 +212,12 @@ sub _has_only_supported_generated_fsm_generic_actuals ($overrides) {
         return 0 unless defined($value);
         next if $is_scalar && $value =~ /\A-?\d+\z/;
         next if $is_scalar && defined _vhdl_scalar_integer_expression_generic_actual($value);
-        my $literal_actual = eval { _vhdl_sized_bitstring_generic_actual($value) };
+        my $literal_actual = eval {
+            _vhdl_sized_bitstring_generic_actual(
+                $value,
+                allow_one_bit => $is_scalar,
+            )
+        };
         return 0 if $@;
         next if defined $literal_actual;
         return 0;
@@ -220,12 +232,12 @@ sub _vhdl_scalar_integer_expression_generic_actual ($value) {
     return $value;
 }
 
-sub _vhdl_sized_bitstring_generic_actual ($value) {
+sub _vhdl_sized_bitstring_generic_actual ($value, %opts) {
     return undef
         unless $value =~ /\A([1-9][0-9]*)'([bBhH])([0-9A-Fa-f_xXzZ]+)\z/;
 
     my ($width, $base, $digits) = ($1 + 0, lc($2), $3);
-    return undef if $width <= 1;
+    return undef if $width <= 1 && !$opts{allow_one_bit};
 
     confess _unsupported(_generic_actual_limit())
         if $digits =~ /[xz]/i;
@@ -234,10 +246,11 @@ sub _vhdl_sized_bitstring_generic_actual ($value) {
     my $bits = $base eq 'b'
         ? _vhdl_binary_digits($digits)
         : _vhdl_hex_digits_to_bits($digits);
-    confess _unsupported('composition VHDL generic maps are currently limited to width-fitting multi-bit sized bitstring actuals')
+    confess _unsupported('composition VHDL generic maps are currently limited to width-fitting sized bitstring actuals')
         if length($bits) > $width;
 
     $bits = ('0' x ($width - length($bits))) . $bits;
+    return qq{'$bits'} if $width == 1;
     return qq{"$bits"};
 }
 
