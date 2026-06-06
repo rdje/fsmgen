@@ -1171,6 +1171,54 @@ FSM
         qr/arithmetic expression 'A \+ B' is outside the direct VHDL scaffold/s,
         'signed scalar arithmetic remains outside the direct VHDL scaffold boundary',
     );
+
+    my @deferred_arithmetic_cases = (
+        {
+            name => 'direct_vhdl_signed_scalar_sub_deferred',
+            expr => '(DIFF = (- A B))',
+            output => 'DIFF',
+            diagnostic => qr/arithmetic expression 'A - B' is outside the direct VHDL scaffold/s,
+        },
+        {
+            name => 'direct_vhdl_signed_scalar_mul_deferred',
+            expr => '(PROD = (* A B))',
+            output => 'PROD',
+            diagnostic => qr/arithmetic expression 'A \* B' is outside the direct VHDL scaffold/s,
+        },
+    );
+    for my $case (@deferred_arithmetic_cases) {
+        my $name = $case->{name};
+        my $expr = $case->{expr};
+        my $output = $case->{output};
+        my $deferred_path = File::Spec->catfile($tempdir, "$name.fsm");
+        write_file(
+            $deferred_path,
+            <<"FSM"
+(?fsm:$name
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+  (+types
+    (type signed_bit_t (four_state (signed (bits 1))))
+  )
+  (+size
+    (A signed_bit_t)
+    (B signed_bit_t)
+    ($output signed_bit_t)
+  )
+  (idle
+    $expr
+  )
+)
+FSM
+        );
+
+        my $deferred_error = capture_exception(sub {
+            generate_vhdl($deferred_path);
+        });
+        like($deferred_error, $case->{diagnostic}, "$name remains outside the direct VHDL scaffold boundary");
+    }
 };
 
 subtest 'direct VHDL scaffold keeps mixed signed and unsigned vector arithmetic fail-closed' => sub {

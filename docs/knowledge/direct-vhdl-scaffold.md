@@ -45,6 +45,7 @@ answers:
   - "does direct VHDL support signed modulo?"
   - "does direct VHDL support signed division/modulo?"
   - "does direct VHDL support signed vector division/modulo?"
+  - "does direct VHDL support signed scalar arithmetic?"
   - "does direct VHDL support scalar bit declarations?"
   - "does direct VHDL support logic declarations?"
   - "does direct VHDL support four-state declarations?"
@@ -119,12 +120,13 @@ signed/unsigned arithmetic remain outside the current direct VHDL scaffold.
 Signed scalar direct-root port/internal declarations for non-arithmetic
 one-bit signed type-alias shapes lower to `std_logic`, including declarations
 such as `IN : in std_logic;` and `signal OUT : std_logic;`, while signed
-scalar arithmetic remains fail-closed.
+scalar addition/subtraction/multiplication arithmetic is locked fail-closed.
 Mixed signed/unsigned vector numeric arithmetic is locked as an explicit
 fail-closed direct VHDL boundary instead of lowering signed operands through
 unsigned casts.
-Signed scalar subtraction/multiplication arithmetic fail-closed coverage is
-the active hardening edge under `BACKEND-API-VALIDATION-FRONTIER.65.1`.
+The current active backend edge is `BACKEND-API-VALIDATION-FRONTIER.66`, which
+selects the next exact backend/API or public-export leaf after `.65.1` locked
+signed scalar arithmetic fail-closed coverage.
 Aggregate-output
 roots are locked as explicit fail-closed direct VHDL boundaries by focused
 pipeline and facade coverage. Composition/top VHDL is locked fail-closed by

@@ -892,6 +892,8 @@ forms.
 Scalar division/modulo remains fail-closed for explicit VHDL facade generation.
 Mixed signed/unsigned vector numeric arithmetic also remains fail-closed for
 explicit VHDL facade generation.
+Signed scalar addition/subtraction/multiplication arithmetic remains
+fail-closed for explicit VHDL facade generation.
 Aggregate-output direct roots also remain fail-closed for explicit VHDL facade
 generation.
 Composition/top VHDL is likewise fail-closed: composition sources are parsed
@@ -2294,9 +2296,9 @@ this normalized semantic shape:
 ```
 
 The current active backend/API frontier is
-`BACKEND-API-VALIDATION-FRONTIER.65.1`, which locks signed scalar subtraction
-and multiplication arithmetic fail-closed coverage after `.65` confirmed those
-operators already stop at the arithmetic guard.
+`BACKEND-API-VALIDATION-FRONTIER.66`, which selects the next exact backend/API
+or public-export edge after `.65.1` locked signed scalar
+addition/subtraction/multiplication arithmetic fail-closed coverage.
 Package-import internals, already bounded constant/enum/type internals,
 unrelated forward-IR payloads, scalar signed arithmetic,
 aggregate/composition VHDL, and full normalized semantic export stabilization

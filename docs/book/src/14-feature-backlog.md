@@ -3831,7 +3831,8 @@ starting with `input logic signed [7:0] IN`, now lower to VHDL `signed` ports.
 Generated signed scalar direct-root declarations from one-bit signed type
 aliases, such as `input logic signed IN` and `logic signed OUT;`, now lower to
 VHDL `std_logic` ports/signals for non-arithmetic shapes; signed scalar
-arithmetic remains fail-closed.
+addition/subtraction/multiplication arithmetic is locked fail-closed, and
+broader signed scalar arithmetic remains fail-closed.
 Same-width signed vector addition/subtraction/multiplication/division/modulo
 RHS assignments now lower as signed VHDL arithmetic when the target and all operands are
 same-width signed vectors, so a signed direct-root `SUM = (+ A B)` assignment
@@ -4040,9 +4041,9 @@ schema metadata for `semantic.symbol_contract.types` and
 recursive `items` or `members` plus `member_order`.
 
 Current active backend edge: task-tree leaf
-`BACKEND-API-VALIDATION-FRONTIER.65.1` locks signed scalar subtraction and
-multiplication arithmetic fail-closed coverage after `.65` confirmed those
-operators already stop at the arithmetic guard.
+`BACKEND-API-VALIDATION-FRONTIER.66` selects the next exact backend/API or
+public-export edge after `.65.1` locked signed scalar
+addition/subtraction/multiplication arithmetic fail-closed coverage.
 Package-import internals, already bounded constant/enum/type internals,
 unrelated forward-IR payloads, scalar signed arithmetic,
 aggregate/composition VHDL, and full normalized semantic export stabilization

@@ -31,7 +31,8 @@ This document defines the scoped R14 VHDL backend plan for FSMGen.
   multiplication/division/modulo resized to the target width.
 - The direct scaffold now includes signed scalar direct-root port/internal
   declaration lowering for non-arithmetic one-bit signed type-alias shapes,
-  while signed scalar arithmetic remains fail-closed.
+  while signed scalar addition/subtraction/multiplication arithmetic is locked
+  fail-closed.
 - The direct scaffold now includes generated internal signal declaration
   lowering for scalar `bit NAME;` and signed vector
   `reg signed [MSB:LSB] NAME;` shapes, as emitted by the declarative bits
@@ -54,6 +55,9 @@ This document defines the scoped R14 VHDL backend plan for FSMGen.
   remain deferred.
 - Mixed signed/unsigned vector numeric arithmetic is locked as an explicit
   fail-closed direct VHDL boundary by focused pipeline and facade coverage.
+- Signed scalar addition/subtraction/multiplication arithmetic is locked as an
+  explicit fail-closed direct VHDL boundary by focused pipeline and facade
+  coverage.
 - Scalar division/modulo RHS forms such as `A / B` and `A % B` are locked as
   explicit fail-closed direct VHDL boundaries by focused pipeline and facade
   coverage.
@@ -162,9 +166,9 @@ The first VHDL lane is intentionally narrow:
   plus direct-root parameter blocks as VHDL
   generics, including integer expression defaults and typed scalar/vector
   sized-literal defaults.
-- Active follow-up: lock signed scalar subtraction/multiplication arithmetic
-  fail-closed coverage under `BACKEND-API-VALIDATION-FRONTIER.65.1`; scalar
-  signed arithmetic remains a separate future edge.
+- Active follow-up: select the next exact backend/API/public-export edge under
+  `BACKEND-API-VALIDATION-FRONTIER.66`; broader scalar signed arithmetic
+  remains a separate future edge.
 - Remaining semantic conversion work still belongs to exact future VHDL leaves.
 
 ### Phase 3: Regression and hardening (R14.3)
@@ -180,6 +184,7 @@ The first VHDL lane is intentionally narrow:
   generic-bearing direct-root module headers, one-bit `std_logic` and
   multi-bit `std_logic_vector` sized-literal generic defaults,
   mixed signed/unsigned vector numeric arithmetic fail-closed diagnostics,
+  signed scalar arithmetic fail-closed diagnostics,
   mismatched-width arithmetic-expression fail-closed diagnostics, and
   aggregate-output plus composition/top VHDL fail-closed diagnostics.
 - Add broader VHDL output to the regression corpus
