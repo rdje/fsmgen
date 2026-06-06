@@ -333,8 +333,8 @@ generic maps.
 
 Current boundary: the Verilog-family backend lowers validated parameters and
 aggregate overrides to SystemVerilog `#(...)` instance parameters. VHDL
-generic-map lowering is not shipped. Composition/top VHDL is now the active
-fail-closed hardening leaf: current pipeline and CLI composition paths parse
+generic-map lowering is not shipped. Composition/top VHDL is locked as a
+fail-closed boundary: current pipeline and CLI composition paths parse
 `?top` sources into typed composition IR, then reject
 `target_language => 'vhdl'` / `--language vhdl` with the scoped target-support
 diagnostic. Generic maps remain deferred until a later leaf implements
@@ -3803,10 +3803,9 @@ fixture, and multi-bit sized-literal generic defaults now lower to typed
 `std_logic_vector` generics in the maintained aggregate unary complement
 fixture. Composition VHDL generic maps remain deferred until a composition VHDL
 leaf owns that path. Aggregate-output roots are locked as explicit fail-closed
-direct VHDL boundaries. Composition/top VHDL is the active hardening leaf and
-currently remains fail-closed after typed composition IR parsing, with the
-pipeline and CLI pointing users to the scoped composition target-support
-diagnostic instead of emitting a VHDL top.
+direct VHDL boundaries. Composition/top VHDL is locked fail-closed after typed
+composition IR parsing, with the pipeline and CLI pointing users to the scoped
+composition target-support diagnostic instead of emitting a VHDL top.
 
 ### GHDL Validation
 

@@ -87,6 +87,10 @@ lowering.
 Scalar division/modulo remains an explicit fail-closed direct VHDL boundary.
 Aggregate-output direct roots also remain explicit fail-closed direct VHDL
 boundaries.
+Composition/top VHDL is also fail-closed: `?top` sources are parsed into typed
+composition IR, then `target_language => 'vhdl'` or `--language vhdl` is
+rejected with the composition target-support diagnostic instead of emitting a
+VHDL top.
 VHDL validation with GHDL is intentionally deferred until a separate GHDL
 validation lane is runnable, documented, support-accounted, and regression-backed. The current
 regression gate is a focused SystemVerilog smoke, not yet a claim that every

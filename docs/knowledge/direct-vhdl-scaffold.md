@@ -4,6 +4,8 @@ title: Direct single-FSM VHDL generation has a scoped scaffold
 answers:
   - "is VHDL still not implemented?"
   - "does --language vhdl work for direct FSM roots?"
+  - "does --language vhdl work for composition tops?"
+  - "does target_language vhdl work for composition roots?"
   - "what VHDL subset is shipped?"
   - "does direct VHDL support aggregate outputs?"
   - "is composition VHDL supported?"
@@ -31,7 +33,7 @@ answers:
 date: 2026-06-06
 status: current
 tags: [vhdl, backend, direct-generation, validation]
-evidence: perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm; perl/FSM/Support/HDLExternalValidationContract.pm; t/1420-vhdl-direct-backend-scaffold.t; t/386-hdl-generator-facade-target-language-boundary-audit.t; docs/VHDL_SCOPE.md; docs/tasks/BACKEND-API-VALIDATION-FRONTIER.md
+evidence: perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm; perl/FSM/Support/HDLExternalValidationContract.pm; t/1420-vhdl-direct-backend-scaffold.t; t/386-hdl-generator-facade-target-language-boundary-audit.t; t/114-composition-target-support-diagnostics.t; docs/VHDL_SCOPE.md; docs/tasks/BACKEND-API-VALIDATION-FRONTIER.md
 reverify: prove -Iperl t/1420-vhdl-direct-backend-scaffold.t t/386-hdl-generator-facade-target-language-boundary-audit.t t/114-composition-target-support-diagnostics.t t/313-hdl-external-validation-contract.t t/308-systemverilog-external-validation.t
 ---
 
@@ -65,7 +67,10 @@ expressions. Scalar division/modulo RHS forms such as `A / B` and `A % B`
 remain explicit fail-closed direct VHDL boundaries. Same-width scalar/vector XOR
 chains become `A xor B xor ...`
 expressions. Aggregate-output roots are locked as explicit fail-closed direct
-VHDL boundaries by focused pipeline and facade coverage. Composition/top VHDL,
-composition generic-map lowering, packages, multi-clock domains, broad
-expression parity, GHDL validation, and full SystemVerilog parity remain
-deferred or fail-closed.
+VHDL boundaries by focused pipeline and facade coverage. Composition/top VHDL
+is locked fail-closed by focused pipeline and CLI coverage: `?top` sources are
+parsed into typed composition IR, then `target_language => 'vhdl'` and
+`--language vhdl` are rejected with the scoped composition target-support
+diagnostic instead of emitting a VHDL top. Composition generic-map lowering,
+packages, multi-clock domains, broad expression parity, GHDL validation, and
+full SystemVerilog parity remain deferred or fail-closed.

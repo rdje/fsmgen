@@ -70,6 +70,11 @@ like(
     qr/docs\/COMPOSITION_LEGACY_MAPPING\.md/s,
     'pipeline target-support diagnostic points to the legacy mapping note',
 );
+like(
+    $exception,
+    qr/Target language 'vhdl' is not implemented for composition yet/s,
+    'pipeline target-support diagnostic names the unsupported VHDL composition target',
+);
 
 my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
     command => ['./bin/fsmgen', '--language', 'vhdl', '--quiet', '-o', $output_path, $composition_path],
@@ -89,6 +94,11 @@ like(
     $combined_output,
     qr/recognized and parsed into typed composition IR, .*composition target support is blocked because the current active composition lanes only emit SystemVerilog\/Verilog tops.*Target language 'vhdl' is not implemented for composition yet/s,
     'CLI surfaces the blocked composition target-support diagnostic',
+);
+like(
+    $combined_output,
+    qr/Target language 'vhdl' is not implemented for composition yet/s,
+    'CLI target-support diagnostic names the unsupported VHDL composition target',
 );
 
 done_testing();

@@ -217,7 +217,8 @@ scalar/vector sized-literal defaults, scalar
 addition/subtraction/multiplication RHS/chain lowering, and same-width
 addition/subtraction/multiplication, division/modulo, and XOR RHS/chain
 lowering. Scalar division/modulo remains fail-closed in the direct VHDL
-scaffold, aggregate-output direct roots remain fail-closed, and VHDL/GHDL
+scaffold, aggregate-output direct roots remain fail-closed, composition/top
+VHDL remains fail-closed after typed composition IR parsing, and VHDL/GHDL
 validation waits for a separate GHDL validation lane.
 
 ### 6. Reset And Clock Contract Metadata

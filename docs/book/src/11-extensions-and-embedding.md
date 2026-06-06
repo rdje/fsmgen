@@ -885,6 +885,9 @@ forms.
 Scalar division/modulo remains fail-closed for explicit VHDL facade generation.
 Aggregate-output direct roots also remain fail-closed for explicit VHDL facade
 generation.
+Composition/top VHDL is likewise fail-closed: composition sources are parsed
+into typed composition IR, then explicit VHDL targets are rejected with the
+composition target-support diagnostic instead of emitting VHDL tops.
 That is still a scoped scaffold, not a full VHDL backend promise.
 
 [t/387-hdl-generator-facade-debug-level-boundary-audit.t](t/387-hdl-generator-facade-debug-level-boundary-audit.t)

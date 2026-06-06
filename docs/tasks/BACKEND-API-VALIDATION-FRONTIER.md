@@ -116,7 +116,8 @@ items named in the 2026-06-05 remaining-work inventory.
     `BACKEND-API-VALIDATION-FRONTIER.37`,
     `BACKEND-API-VALIDATION-FRONTIER.37.1`,
     `BACKEND-API-VALIDATION-FRONTIER.38`,
-    `BACKEND-API-VALIDATION-FRONTIER.38.1`
+    `BACKEND-API-VALIDATION-FRONTIER.38.1`,
+    `BACKEND-API-VALIDATION-FRONTIER.39`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.1`
   Status: `done`
@@ -736,9 +737,16 @@ items named in the 2026-06-05 remaining-work inventory.
   Commit: `BACKEND-API-VALIDATION-FRONTIER.38: select VHDL composition boundary`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.38.1`
-  Status: `active`
+  Status: `done`
   Goal: `Lock the composition/top VHDL fail-closed boundary.`
-  Acceptance: `Composition/top VHDL roots using target_language => 'vhdl' or CLI --language vhdl remain explicit fail-closed boundaries after typed composition IR parsing, with focused pipeline/CLI coverage and synced README/docs/mdBook/fact surfaces. The leaf does not implement VHDL composition-top emission, VHDL generic-map lowering, VHDL packages, multi-clock domains, GHDL validation, aggregate VHDL, broad expression parity, or full backend parity.`
+  Acceptance: `Composition/top VHDL roots using target_language => 'vhdl' or CLI --language vhdl remain explicit fail-closed boundaries after typed composition IR parsing, with focused pipeline/CLI coverage and synced README/docs/mdBook/fact surfaces. t/114-composition-target-support-diagnostics.t now separately asserts that both the pipeline and CLI target-support diagnostics name the unsupported VHDL composition target. The leaf does not implement VHDL composition-top emission, VHDL generic-map lowering, VHDL packages, multi-clock domains, GHDL validation, aggregate VHDL, broad expression parity, or full backend parity.`
+  Verification: `perl -Iperl -c t/114-composition-target-support-diagnostics.t; prove -Iperl t/114-composition-target-support-diagnostics.t; prove -Iperl t/1420-vhdl-direct-backend-scaffold.t t/386-hdl-generator-facade-target-language-boundary-audit.t t/114-composition-target-support-diagnostics.t t/404-hdl-generator-facade-target-language-shape-boundary-audit.t; prove -Iperl t/313-hdl-external-validation-contract.t t/308-systemverilog-external-validation.t; bash knowledge-map/scripts/gen_knowledge_map.sh; bash knowledge-map/scripts/check_knowledge_map.sh; scripts/check_memory_architecture.sh; prove -Iperl t/1414-docs-relative-paths-audit.t; prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t; mdbook build docs/book; git diff --check`
+  Commit: `BACKEND-API-VALIDATION-FRONTIER.38.1: lock VHDL composition boundary`
+
+- ID: `BACKEND-API-VALIDATION-FRONTIER.39`
+  Status: `active`
+  Goal: `Select the next exact backend/API/public-export edge after composition/top VHDL fail-closed hardening.`
+  Acceptance: `One remaining roadmap-aligned backend, validation, embedding, or public-export edge is selected from current code, contracts, mdBook, knowledge-map, and task-tree evidence. The selected edge has an exact implementation-or-deferral owner leaf before any code/test/source edits occur.`
   Verification: `pending`
   Commit: `pending`
 
@@ -826,7 +834,8 @@ items named in the 2026-06-05 remaining-work inventory.
 | 78 | `BACKEND-API-VALIDATION-FRONTIER.37` | `done` | Selected direct VHDL aggregate-output fail-closed hardening after probes showed inferred packed struct outputs still fail at the aggregate struct-output guard. |
 | 79 | `BACKEND-API-VALIDATION-FRONTIER.37.1` | `done` | Locked aggregate-output fail-closed pipeline/facade coverage and documentation without widening record/array VHDL lowering. |
 | 80 | `BACKEND-API-VALIDATION-FRONTIER.38` | `done` | Selected composition/top VHDL fail-closed hardening after the maintained composition target-support diagnostic showed pipeline and CLI rejection after typed composition IR parsing. |
-| 81 | `BACKEND-API-VALIDATION-FRONTIER.38.1` | `active` | Lock composition/top VHDL as an explicit fail-closed backend boundary without implementing VHDL top emission or generic maps. |
+| 81 | `BACKEND-API-VALIDATION-FRONTIER.38.1` | `done` | Locked composition/top VHDL fail-closed pipeline/CLI coverage and documentation without implementing VHDL top emission or generic maps. |
+| 82 | `BACKEND-API-VALIDATION-FRONTIER.39` | `active` | Select the next exact backend/API/public-export edge after composition/top VHDL fail-closed hardening. |
 
 ## Decisions
 
@@ -928,6 +937,7 @@ items named in the 2026-06-05 remaining-work inventory.
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.37` | Selection audit/read of `docs/book/src/14-feature-backlog.md`, `docs/VHDL_SCOPE.md`, `docs/knowledge/direct-vhdl-scaffold.md`, `t/1420-vhdl-direct-backend-scaffold.t`, `t/corpus/direct_rhs_concat_target_autogrowth.fsm`, and `perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm`; `./bin/fsmgen --language vhdl --quiet t/corpus/direct_rhs_concat_target_autogrowth.fsm` failed at aggregate struct outputs outside the direct VHDL scaffold; `./bin/fsmgen --quiet -o /tmp/fsmgen_direct_rhs_concat_target_autogrowth_select.sv t/corpus/direct_rhs_concat_target_autogrowth.fsm`; `rg -n "typedef|struct|OUT|out|packed" /tmp/fsmgen_direct_rhs_concat_target_autogrowth_select.sv`; removed `/tmp/fsmgen_direct_rhs_concat_target_autogrowth_select.sv`; `scripts/check_memory_architecture.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; selected aggregate-output fail-closed hardening for `.37.1` |
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.37.1` | `prove -Iperl t/1420-vhdl-direct-backend-scaffold.t`; `prove -Iperl t/386-hdl-generator-facade-target-language-boundary-audit.t`; `prove -Iperl t/1420-vhdl-direct-backend-scaffold.t t/386-hdl-generator-facade-target-language-boundary-audit.t t/114-composition-target-support-diagnostics.t t/404-hdl-generator-facade-target-language-shape-boundary-audit.t`; `prove -Iperl t/313-hdl-external-validation-contract.t t/308-systemverilog-external-validation.t`; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; aggregate-output roots are locked fail-closed through direct pipeline/facade coverage and documentation |
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.38` | Selection audit/read of `docs/book/src/14-feature-backlog.md`, `docs/VHDL_SCOPE.md`, `docs/COMPOSITION_SCOPE.md`, `docs/COMPOSITION_LEGACY_MAPPING.md`, `docs/knowledge/direct-vhdl-scaffold.md`, and `t/114-composition-target-support-diagnostics.t`; `prove -Iperl t/114-composition-target-support-diagnostics.t`; `scripts/check_memory_architecture.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; selected composition/top VHDL fail-closed hardening for `.38.1` |
+| `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.38.1` | `perl -Iperl -c t/114-composition-target-support-diagnostics.t`; `prove -Iperl t/114-composition-target-support-diagnostics.t`; `prove -Iperl t/1420-vhdl-direct-backend-scaffold.t t/386-hdl-generator-facade-target-language-boundary-audit.t t/114-composition-target-support-diagnostics.t t/404-hdl-generator-facade-target-language-shape-boundary-audit.t`; `prove -Iperl t/313-hdl-external-validation-contract.t t/308-systemverilog-external-validation.t`; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; composition/top VHDL is locked fail-closed through pipeline/CLI coverage and documentation |
 
 ## Commit Log
 
@@ -1013,6 +1023,7 @@ items named in the 2026-06-05 remaining-work inventory.
 | `BACKEND-API-VALIDATION-FRONTIER.37` | `BACKEND-API-VALIDATION-FRONTIER.37: select VHDL aggregate output boundary` | selected `.37.1` |
 | `BACKEND-API-VALIDATION-FRONTIER.37.1` | `BACKEND-API-VALIDATION-FRONTIER.37.1: lock VHDL aggregate output boundary` | this slice |
 | `BACKEND-API-VALIDATION-FRONTIER.38` | `BACKEND-API-VALIDATION-FRONTIER.38: select VHDL composition boundary` | selected `.38.1` |
+| `BACKEND-API-VALIDATION-FRONTIER.38.1` | `BACKEND-API-VALIDATION-FRONTIER.38.1: lock VHDL composition boundary` | this slice |
 
 ## Changelog
 
@@ -1406,3 +1417,7 @@ items named in the 2026-06-05 remaining-work inventory.
   showed pipeline and CLI rejection after typed composition IR parsing. VHDL
   generic maps, packages, GHDL validation, aggregate VHDL, broad expression
   parity, and full backend parity remain deferred.
+- `2026-06-06`: Completed `.38.1`; composition/top VHDL is locked as an
+  explicit fail-closed boundary through pipeline/CLI coverage and synced
+  docs/fact/mdBook coverage. Activated `.39` to select the next backend/API
+  edge.
