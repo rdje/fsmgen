@@ -894,11 +894,17 @@ Mixed signed/unsigned vector numeric arithmetic also remains fail-closed for
 explicit VHDL facade generation.
 Signed scalar addition/subtraction/multiplication arithmetic remains
 fail-closed for explicit VHDL facade generation.
-Aggregate-output direct roots also remain fail-closed for explicit VHDL facade
-generation.
-Composition/top VHDL is likewise fail-closed: composition sources are parsed
-into typed composition IR, then explicit VHDL targets are rejected with the
-composition target-support diagnostic instead of emitting VHDL tops.
+Aggregate-output direct roots are covered for the two maintained packed-vector
+fixtures.
+The facade also routes one bounded composition VHDL structural top: the C3
+external-RTL literal/concat fixture in
+`t/corpus/composition_intent_integer_literals.fsm` emits VHDL concurrent
+literal/concat assignments and an `entity work.uart_tx` port map without
+SystemVerilog `module`, `assign`, `endmodule`, or `always_*` syntax.
+Other composition/top VHDL shapes remain fail-closed after typed composition IR
+parsing, with generated-child, APB/C4, internal-net-heavy, generic-map, package,
+and full-parity composition shapes rejected by the scoped composition
+target-support diagnostic.
 That is still a scoped scaffold, not a full VHDL backend promise.
 
 [t/387-hdl-generator-facade-debug-level-boundary-audit.t](t/387-hdl-generator-facade-debug-level-boundary-audit.t)
@@ -2296,8 +2302,9 @@ this normalized semantic shape:
 ```
 
 The current active backend/API frontier is
-`BACKEND-API-VALIDATION-FRONTIER.68.1`, which implements only the first bounded
-composition VHDL structural top: the C3 external-RTL literal/concat fixture in
+`BACKEND-API-VALIDATION-FRONTIER.69`, which selects the next exact backend/API
+edge after the first bounded composition VHDL structural top shipped for the C3
+external-RTL literal/concat fixture in
 `t/corpus/composition_intent_integer_literals.fsm`.
 Package-import internals, already bounded constant/enum/type internals,
 unrelated forward-IR payloads, scalar signed arithmetic, full aggregate VHDL

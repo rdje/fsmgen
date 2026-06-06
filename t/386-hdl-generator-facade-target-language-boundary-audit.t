@@ -134,6 +134,48 @@ subtest 'facade target_language option routes direct VHDL scaffold behavior' => 
     );
 };
 
+subtest 'facade target_language option routes bounded composition VHDL structural top behavior' => sub {
+    my $composition_path = repo_file('t/corpus/composition_intent_integer_literals.fsm');
+    my $vhdl_pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'vhdl',
+        quiet => 1,
+    );
+
+    my $vhdl_result = $vhdl_pipeline->generate_hdl_from_file($composition_path);
+
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bentity\s+composition_intent_integer_literals\s+is\b/s,
+        'explicit VHDL facade generation emits the bounded composition entity',
+    );
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bdecimal_out\s+:\s+out\s+std_logic_vector\(4\s+downto\s+0\);/s,
+        'explicit VHDL facade generation emits structural vector output ports',
+    );
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bdecimal_out\s+<=\s+"10111";/s,
+        'explicit VHDL facade generation emits concurrent literal assignments',
+    );
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bpacked_out\s+<=\s+"10111"\s+&\s+"11110110"\s+&\s+"00000000000000000001";/s,
+        'explicit VHDL facade generation emits concurrent concat assignments',
+    );
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\buart_tx\s+:\s+entity\s+work\.uart_tx\s+port\s+map\s*\(\s*decimal_in\s+=>\s+"10111",\s*negative_in\s+=>\s+"11110110",\s*packed_in\s+=>\s+"10111"\s+&\s+"11110110"\s+&\s+"00000000000000000001"\s*\);/s,
+        'explicit VHDL facade generation emits the external RTL entity port map',
+    );
+    unlike(
+        $vhdl_result->{hdl_code},
+        qr/\bmodule\b|\bassign\b|\bendmodule\b|\balways_(?:ff|comb)\b/s,
+        'explicit VHDL facade generation does not leak SystemVerilog structural syntax',
+    );
+};
+
 subtest 'facade target_language option routes direct VHDL delayed-pulse scaffold behavior' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $direct_path = File::Spec->catfile($tempdir, 'facade_direct_delayed_pulse_vhdl.fsm');

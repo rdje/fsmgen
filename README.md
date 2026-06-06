@@ -54,8 +54,8 @@ Use it first for objective, navigation, and where to find code/docs quickly.
 
 ## Project objective
 FSMGen compiles Lisp-like `.fsm` state machine specifications into synthesizable HDL, and now accepts `.isf` intent-scheduling sources that lower into explicit scheduled `.fsm` before HDL generation.
-Current primary target is SystemVerilog, with Verilog conversion support and a scoped direct-root VHDL scaffold for the accepted single-FSM subset, including delayed-pulse clock-branch lowering, generic-bearing direct-root module headers with typed scalar/vector sized-literal defaults, signed vector and signed scalar direct-root ports, scalar bit, signed scalar/vector, non-signed four-state logic, and vector `logic signed` internal declaration lowering, scalar addition/subtraction/multiplication RHS/chain lowering, vector numeric-literal addition/subtraction emitted by compound update/shorthand forms, same-width unsigned-style addition/subtraction/multiplication/division/modulo/XOR RHS/chain lowering, same-width signed vector addition/subtraction/multiplication/division/modulo RHS lowering for signed targets and operands, signed vector numeric-literal addition/subtraction/multiplication/division/modulo RHS lowering, bounded generated AMBA wrap arithmetic for `fsm/amba_requester.fsm`, and bounded direct aggregate-output packed-vector lowering.
-Scalar division/modulo in the direct VHDL scaffold remains an explicit fail-closed boundary; full aggregate record/array VHDL and composition/top VHDL also remain deferred, so `--language vhdl` does not emit composition tops yet.
+Current primary target is SystemVerilog, with Verilog conversion support and a scoped direct-root VHDL scaffold for the accepted single-FSM subset, including delayed-pulse clock-branch lowering, generic-bearing direct-root module headers with typed scalar/vector sized-literal defaults, signed vector and signed scalar direct-root ports, scalar bit, signed scalar/vector, non-signed four-state logic, and vector `logic signed` internal declaration lowering, scalar addition/subtraction/multiplication RHS/chain lowering, vector numeric-literal addition/subtraction emitted by compound update/shorthand forms, same-width unsigned-style addition/subtraction/multiplication/division/modulo/XOR RHS/chain lowering, same-width signed vector addition/subtraction/multiplication/division/modulo RHS lowering for signed targets and operands, signed vector numeric-literal addition/subtraction/multiplication/division/modulo RHS lowering, bounded generated AMBA wrap arithmetic for `fsm/amba_requester.fsm`, bounded direct aggregate-output packed-vector lowering, and one bounded composition VHDL structural top for the C3 external-RTL literal/concat fixture `t/corpus/composition_intent_integer_literals.fsm`.
+Scalar division/modulo in the direct VHDL scaffold remains an explicit fail-closed boundary; full aggregate record/array VHDL, generated-child composition VHDL, APB/C4 composition VHDL, internal-net-heavy composition tops, generic maps, and full composition VHDL parity remain deferred.
 The project objective is robust, traceable FSM-to-HDL generation with clear assignment semantics, optimization via AST factorization, and behavior-preserving refactoring toward a modular architecture.
 
 ## Fast ramp-up order
@@ -850,10 +850,13 @@ and the matching wrap-high expression, through explicit unsigned target-width
 resizes. Bounded direct aggregate-output packed-vector lowering is also shipped
 for `t/corpus/direct_rhs_concat_target_autogrowth.fsm` and
 `t/corpus/direct_aggregate_constant_target_autogrowth.fsm`; the maintained
-supported direct-root VHDL sweep now runs clean. The current active backend/API
-frontier is `BACKEND-API-VALIDATION-FRONTIER.68.1`: implement only the first
-bounded composition VHDL structural top, the C3 external-RTL literal/concat
-fixture in `t/corpus/composition_intent_integer_literals.fsm`. Scalar signed
+supported direct-root VHDL sweep now runs clean. The first bounded composition
+VHDL structural top is also shipped for the C3 external-RTL literal/concat
+fixture in `t/corpus/composition_intent_integer_literals.fsm`, emitting VHDL
+concurrent literal/concat assignments and an `entity work.uart_tx` port map
+without SystemVerilog `module`/`assign` syntax. The current active backend/API
+frontier is `BACKEND-API-VALIDATION-FRONTIER.69`: select the next exact
+backend/API edge after this first composition VHDL top. Scalar signed
 arithmetic remains explicitly fail-closed; full aggregate VHDL record/array
 lowering, generated-child composition VHDL, APB/C4 composition VHDL, internal
 nets/generic maps, packages, GHDL validation, broad expression parity beyond

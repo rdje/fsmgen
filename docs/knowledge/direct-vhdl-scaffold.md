@@ -7,6 +7,7 @@ answers:
   - "does --language vhdl work for composition tops?"
   - "does target_language vhdl work for composition roots?"
   - "what VHDL subset is shipped?"
+  - "which composition VHDL subset is shipped?"
   - "does direct VHDL support aggregate outputs?"
   - "is composition VHDL supported?"
   - "is GHDL validation active?"
@@ -57,8 +58,8 @@ answers:
   - "does direct VHDL support vector sized literal generic defaults?"
 date: 2026-06-06
 status: current
-tags: [vhdl, backend, direct-generation, validation]
-evidence: perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm; perl/FSM/Support/HDLExternalValidationContract.pm; t/1420-vhdl-direct-backend-scaffold.t; t/386-hdl-generator-facade-target-language-boundary-audit.t; t/114-composition-target-support-diagnostics.t; docs/VHDL_SCOPE.md; docs/tasks/BACKEND-API-VALIDATION-FRONTIER.md
+tags: [vhdl, backend, direct-generation, composition, validation]
+evidence: perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm; perl/FSM/Backend/VHDL/StructuralRTLIREmitter.pm; perl/FSM/Support/HDLExternalValidationContract.pm; t/1420-vhdl-direct-backend-scaffold.t; t/386-hdl-generator-facade-target-language-boundary-audit.t; t/114-composition-target-support-diagnostics.t; docs/VHDL_SCOPE.md; docs/tasks/BACKEND-API-VALIDATION-FRONTIER.md
 reverify: prove -Iperl t/1420-vhdl-direct-backend-scaffold.t t/386-hdl-generator-facade-target-language-boundary-audit.t t/114-composition-target-support-diagnostics.t t/313-hdl-external-validation-contract.t t/308-systemverilog-external-validation.t
 ---
 
@@ -137,16 +138,18 @@ Bounded direct aggregate-output fixtures now lower as VHDL packed vectors:
 `std_logic_vector(2 downto 0)`, and `OUT_FRAME` / `OUT_LANES` are 5-bit
 `std_logic_vector` ports. Full VHDL record/array aggregate lowering remains a
 later exact owner.
-The maintained supported direct-root VHDL sweep now runs clean. The current
-active backend edge is `BACKEND-API-VALIDATION-FRONTIER.68.1`, which
-implements only the first bounded composition VHDL structural top: the C3
-external-RTL literal/concat fixture in
-`t/corpus/composition_intent_integer_literals.fsm`.
-Until that leaf ships, composition/top VHDL remains locked fail-closed by
-focused pipeline and CLI coverage: `?top` sources are parsed into typed
-composition IR, then `target_language => 'vhdl'` and `--language vhdl` are
-rejected with the scoped composition target-support diagnostic instead of
-emitting a VHDL top. Generated-child composition VHDL, APB/C4 composition VHDL,
-internal nets/generic maps, packages, multi-clock domains, broad expression
-parity, GHDL validation, and full SystemVerilog parity remain deferred or
-fail-closed.
+The maintained supported direct-root VHDL sweep now runs clean. The first
+bounded composition VHDL structural top is also shipped for the C3 external-RTL
+literal/concat fixture in `t/corpus/composition_intent_integer_literals.fsm`.
+That composition subset emits a VHDL entity/architecture with concurrent
+literal and concat assignments plus an external `entity work.uart_tx` port map,
+without SystemVerilog `module`, `assign`, `endmodule`, or `always_*` syntax.
+The current active backend edge is `BACKEND-API-VALIDATION-FRONTIER.69`, which
+selects the next exact backend/API edge. Other composition/top VHDL shapes remain
+locked fail-closed by focused pipeline and CLI coverage: `?top` sources are
+parsed into typed composition IR, then unsupported `target_language => 'vhdl'`
+and `--language vhdl` shapes are rejected with the scoped composition
+target-support diagnostic. Generated-child composition VHDL, APB/C4 composition
+VHDL, internal nets/generic maps, packages, multi-clock domains, broad
+expression parity, GHDL validation, and full SystemVerilog parity remain
+deferred or fail-closed.

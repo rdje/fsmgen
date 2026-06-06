@@ -76,6 +76,7 @@ sub build_plan ($class, %args) {
     my $fsm_file = $args{fsm_file};
     my $header = $args{header};
     my $top_symbols = $top && $top->can('top_symbols') ? $top->top_symbols : undef;
+    my $target_language = $args{target_language} // 'systemverilog';
 
     my $top_ports_by_name = $class->assert_unique_top_ports($ports_block, $fsm_file, $header);
     my %instances_by_name;
@@ -251,8 +252,8 @@ sub build_plan ($class, %args) {
                 }
 
                 if ($target->{kind} eq 'top_port') {
-                    my $expr_text = render_expr($bound_connection_expr, $target->{port}->name, 'systemverilog');
-                    push @auxiliary_assignments, "    assign ".$target->{port}->name." = $expr_text;";
+                    my $expr_text = render_expr($bound_connection_expr, $target->{port}->name, $target_language);
+                    push @auxiliary_assignments, _assignment_line($target->{port}->name, $expr_text, $target_language);
                     $top_port_usage{$target->{port}->name}{target} = 1;
                     push @resolved_links, {
                         link => $link,
@@ -263,8 +264,8 @@ sub build_plan ($class, %args) {
                 }
             }
             elsif ($target->{kind} eq 'top_port') {
-                my $expr_text = render_expr($bound_connection_expr, $target->{port}->name, 'systemverilog');
-                push @auxiliary_assignments, "    assign ".$target->{port}->name." = $expr_text;";
+                my $expr_text = render_expr($bound_connection_expr, $target->{port}->name, $target_language);
+                push @auxiliary_assignments, _assignment_line($target->{port}->name, $expr_text, $target_language);
                 $top_port_usage{$target->{port}->name}{target} = 1;
                 push @resolved_links, {
                     link => $link,
@@ -308,7 +309,7 @@ sub build_plan ($class, %args) {
         if ($source->{kind} eq 'top_port') {
             for my $resolved_link (@group) {
                 next unless $resolved_link->{target}{kind} eq 'top_port';
-                push @auxiliary_assignments, "    assign ".$resolved_link->{target}{port}->name." = ".$source->{port}->name.";";
+                push @auxiliary_assignments, _assignment_line($resolved_link->{target}{port}->name, $source->{port}->name, $target_language);
             }
             $carrier_signal_by_source{$source_key} = $source->{port}->name;
             next;
@@ -376,8 +377,8 @@ sub build_plan ($class, %args) {
                 && ($resolved_link->{source}{kind} || '') eq 'child_port'
                 && $resolved_link->{target}{port}->name eq $carrier_signal_name;
 
-            my $expr_text = render_expr($bound_connection_expr, $resolved_link->{target}{port}->name, 'systemverilog');
-            push @auxiliary_assignments, "    assign ".$resolved_link->{target}{port}->name." = $expr_text;";
+            my $expr_text = render_expr($bound_connection_expr, $resolved_link->{target}{port}->name, $target_language);
+            push @auxiliary_assignments, _assignment_line($resolved_link->{target}{port}->name, $expr_text, $target_language);
         }
     }
 
@@ -474,6 +475,13 @@ sub build_plan ($class, %args) {
         shared_datapath_candidates => [],
         raw_spec => $composition_spec,
     );
+}
+
+sub _assignment_line ($target_name, $expr_text, $target_language) {
+    my $language = lc($target_language // 'systemverilog');
+    return "    $target_name <= $expr_text;"
+        if $language eq 'vhdl';
+    return "    assign $target_name = $expr_text;";
 }
 
 sub system_interface_ports ($class, $ports) {

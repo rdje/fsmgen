@@ -23,6 +23,7 @@ no warnings 'experimental::signatures';
 use Storable qw(dclone);
 
 use FSM::Backend::GeneratedModuleEmitter;
+use FSM::Backend::VHDL::StructuralRTLIREmitter;
 use FSM::Backend::VerilogFamily::StructuralRTLIREmitter;
 use FSM::Composition::ChildExportBuilder;
 use FSM::Composition::PackageImportResolver;
@@ -110,8 +111,18 @@ sub generate_from_source ($class, %args) {
         target_language => $target_language,
     );
 
-    my @segments = map { $_->hdl_code } @{$composition_plan->instances};
-    push @segments, FSM::Backend::VerilogFamily::StructuralRTLIREmitter->emit_module($structural_rtl_ir);
+    my @child_segments = grep { defined && length } map { $_->hdl_code } @{$composition_plan->instances};
+    my @segments = @child_segments;
+    if (($target_language // '') eq 'vhdl') {
+        confess
+            "Composition target support is blocked because generated-child VHDL composition is outside the first structural-top leaf. ".
+            "Target language 'vhdl' is not implemented for this composition shape yet. ".
+            "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+            if @child_segments;
+        push @segments, FSM::Backend::VHDL::StructuralRTLIREmitter->emit_module($structural_rtl_ir);
+    } else {
+        push @segments, FSM::Backend::VerilogFamily::StructuralRTLIREmitter->emit_module($structural_rtl_ir);
+    }
     my $hdl_code = join("\n\n", grep { defined && length } @segments) . "\n";
 
     my $module_info = FSM::Composition::ResultMetadataBuilder->build_module_info(

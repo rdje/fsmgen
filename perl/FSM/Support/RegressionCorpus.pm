@@ -2109,7 +2109,7 @@ my @REGRESSION_CORPUS = (
         source_kind => 'composition',
         target_language => 'vhdl',
         diagnostic_code => 'FSMGEN_COMPOSITION_TARGET_SUPPORT',
-        expected_error_pattern => qr/Composition source '\?top:vhdl_composition_top' in '.*composition_target_support_vhdl_top\.fsm' is recognized and parsed into typed composition IR, .*composition target support is blocked because the current active composition lanes only emit SystemVerilog\/Verilog tops.*Target language 'vhdl' is not implemented for composition yet/s,
+        expected_error_pattern => qr/Composition source '\?top:vhdl_composition_top' in '.*composition_target_support_vhdl_top\.fsm' is recognized and parsed into typed composition IR, .*composition target support is blocked because the current active VHDL composition leaf only emits the bounded C3 external-RTL literal\/concat structural top.*Target language 'vhdl' is not implemented for this composition shape yet: generated-child composition VHDL is outside the first structural-top leaf/s,
     },
     {
         id => 'contract.composition_missing_explicit_wiring',

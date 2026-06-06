@@ -202,6 +202,10 @@ bounded aggregate-output packed-vector lowering. Full aggregate VHDL
 record/array lowering is still not shipped. The maintained direct aggregate
 output fixtures lower their generated packed struct outputs as VHDL
 `std_logic_vector` ports while preserving flattened mux assignments.
+The first bounded composition VHDL structural top is also shipped for the C3
+external-RTL literal/concat fixture in
+`t/corpus/composition_intent_integer_literals.fsm`; this does not provide VHDL
+record/array aggregate lowering.
 
 ### Public Type And Export Surfaces
 
@@ -333,12 +337,12 @@ generic maps.
 
 Current boundary: the Verilog-family backend lowers validated parameters and
 aggregate overrides to SystemVerilog `#(...)` instance parameters. VHDL
-generic-map lowering is not shipped. Composition/top VHDL is locked as a
-fail-closed boundary: current pipeline and CLI composition paths parse
-`?top` sources into typed composition IR, then reject
-`target_language => 'vhdl'` / `--language vhdl` with the scoped target-support
-diagnostic. Generic maps remain deferred until a later leaf implements
-composition VHDL top emission.
+generic-map lowering is not shipped. The only shipped composition VHDL top is
+the bounded C3 external-RTL literal/concat fixture in
+`t/corpus/composition_intent_integer_literals.fsm`, which has no parameter
+overrides. Other `?top` VHDL shapes still parse into typed composition IR and
+then fail closed with the scoped target-support diagnostic. Generic maps remain
+deferred until a later leaf owns that exact composition VHDL path.
 
 ### Broader Generated-Child Top Instantiation
 
@@ -3795,10 +3799,11 @@ struct outputs as VHDL `std_logic_vector` ports with the generated packed
 widths.
 It is covered by direct pipeline, CLI, and facade tests.
 
-Still backlog: composition/top VHDL, aggregate VHDL record/array lowering,
-VHDL packages, multi-clock domains, GHDL validation, broad expression parity,
-scalar signed arithmetic, mixed signed/unsigned arithmetic, and full feature
-parity with the SystemVerilog backend. Scalar division/modulo,
+Still backlog: generated-child composition VHDL, APB/C4 composition VHDL,
+internal-net-heavy composition tops, composition generic maps, aggregate VHDL
+record/array lowering, VHDL packages, multi-clock domains, GHDL validation,
+broad expression parity, scalar signed arithmetic, mixed signed/unsigned
+arithmetic, and full feature parity with the SystemVerilog backend. Scalar division/modulo,
 broader scalar arithmetic beyond scalar addition/subtraction/multiplication
 chains, broader arithmetic operators, mismatched-width arithmetic, and
 expression contexts beyond the same-width
@@ -3816,10 +3821,11 @@ fixture, and multi-bit sized-literal generic defaults now lower to typed
 fixture. Maintained aggregate-output direct roots now lower as packed-vector
 VHDL ports; full VHDL record/array aggregate lowering remains deferred.
 Composition VHDL generic maps remain deferred until a composition VHDL leaf
-owns that path. Composition/top VHDL remains fail-closed after typed
-composition IR parsing until the active first structural-top leaf ships, with
-the pipeline and CLI pointing users to the scoped composition target-support
-diagnostic instead of emitting a VHDL top.
+owns that path. The first bounded C3 external-RTL literal/concat structural top
+now emits a VHDL entity/architecture with concurrent literal/concat assignments
+and an external `entity work.uart_tx` port map. Other composition/top VHDL
+shapes remain fail-closed after typed composition IR parsing, with the pipeline
+and CLI pointing users to the scoped composition target-support diagnostic.
 
 The compound update and update-shorthand fixtures now lower generated
 direct-root vector arithmetic with numeric literal operands, such as `SRC + 2`,
@@ -3846,9 +3852,10 @@ emits `SUM <= A + B;`, a signed `DIFF = (- A B)` assignment emits
 `PROD <= resize(A * B, 8);`. Signed `QUOT = (/ A B)` emits
 `QUOT <= resize(A / B, 8);`, and signed `REM = (% A B)` emits
 `REM <= resize(A mod B, 8);`, rather than unsigned casts. Scalar signed
-arithmetic, mixed signed/unsigned arithmetic, composition/top VHDL, aggregate
-VHDL, packages, GHDL validation, and full backend parity remain outside the
-shipped scaffold. Signed vector numeric-literal
+arithmetic, mixed signed/unsigned arithmetic, generated-child composition VHDL,
+APB/C4 composition VHDL, internal-net-heavy composition tops, composition
+generic maps, aggregate VHDL, packages, GHDL validation, and full backend parity
+remain outside the shipped scaffold. Signed vector numeric-literal
 addition/subtraction/multiplication/division/modulo also lower through
 target-width `to_signed`, so `SUM = (+ A 1)` emits
 `SUM <= A + to_signed(1, 8);`, `DIFF = (- A 1)` emits
@@ -4058,8 +4065,9 @@ schema metadata for `semantic.symbol_contract.types` and
 recursive `items` or `members` plus `member_order`.
 
 Current active backend edge: task-tree leaf
-`BACKEND-API-VALIDATION-FRONTIER.68.1` implements only the first bounded
-composition VHDL structural top, the C3 external-RTL literal/concat fixture in
+`BACKEND-API-VALIDATION-FRONTIER.69` selects the next exact backend/API edge
+after the first bounded composition VHDL structural top shipped for the C3
+external-RTL literal/concat fixture in
 `t/corpus/composition_intent_integer_literals.fsm`.
 Package-import internals, already bounded constant/enum/type internals,
 unrelated forward-IR payloads, scalar signed arithmetic, full aggregate VHDL
