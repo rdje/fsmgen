@@ -2294,10 +2294,9 @@ this normalized semantic shape:
 ```
 
 The current active backend/API frontier is
-`BACKEND-API-VALIDATION-FRONTIER.65`, which selects the next exact backend/API
-or public-export edge after `.64.1` locked mixed signed/unsigned vector numeric
-arithmetic fail-closed instead of lowering signed operands through unsigned
-casts.
+`BACKEND-API-VALIDATION-FRONTIER.65.1`, which locks signed scalar subtraction
+and multiplication arithmetic fail-closed coverage after `.65` confirmed those
+operators already stop at the arithmetic guard.
 Package-import internals, already bounded constant/enum/type internals,
 unrelated forward-IR payloads, scalar signed arithmetic,
 aggregate/composition VHDL, and full normalized semantic export stabilization

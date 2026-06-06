@@ -123,6 +123,8 @@ scalar arithmetic remains fail-closed.
 Mixed signed/unsigned vector numeric arithmetic is locked as an explicit
 fail-closed direct VHDL boundary instead of lowering signed operands through
 unsigned casts.
+Signed scalar subtraction/multiplication arithmetic fail-closed coverage is
+the active hardening edge under `BACKEND-API-VALIDATION-FRONTIER.65.1`.
 Aggregate-output
 roots are locked as explicit fail-closed direct VHDL boundaries by focused
 pipeline and facade coverage. Composition/top VHDL is locked fail-closed by
