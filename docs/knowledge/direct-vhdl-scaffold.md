@@ -99,6 +99,8 @@ answers:
   - "does direct VHDL support numeric literal arithmetic?"
   - "does direct VHDL support signed numeric literal arithmetic?"
   - "does direct VHDL support signed vector numeric literal arithmetic?"
+  - "does direct VHDL support signed vector negative numeric literal arithmetic?"
+  - "does direct VHDL support signed vector negative numeric literal addition?"
   - "does direct VHDL support compound update arithmetic?"
   - "does direct VHDL support signed declarations?"
   - "does direct VHDL support signed logic declarations?"
@@ -261,8 +263,12 @@ assignments. The scaffold also lowers scalar output-port negative decimal
 literals for plain and signed one-bit output targets to `std_logic` low-bit
 literals, so `-1` emits `FLAG_next <= '1';` and `-2` emits `FLAG_next <= '0';`
 instead of failing at arithmetic expression `'-1'` or `'-2'`. Active leaf
-`BACKEND-API-VALIDATION-FRONTIER.113` owns selection of the next exact
-backend/API edge after that scalar negative literal slice shipped. Declared
+`BACKEND-API-VALIDATION-FRONTIER.113.1` owns the adjacent signed vector
+negative numeric-literal addition edge after unsigned and signed vector
+`SUM = (+ A -1)` probes both generated `SUM = A + -1;` and failed before VHDL
+emission at arithmetic expression `'A + -1'`; unsigned negative numeric-literal
+arithmetic and signed negative numeric-literal operators beyond addition remain
+deferred. Declared
 aggregate structural VHDL ports/nets/types in
 composition tops are locked fail-closed by
 `BACKEND-API-VALIDATION-FRONTIER.101.1`: aggregate top-port shapes that the

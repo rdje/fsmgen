@@ -941,13 +941,13 @@ GHDL validation blocker reconfirmation is locked by
 environment, so external HDL validation remains SystemVerilog-only until a
 future exact GHDL lane can run the tool.
 Current active backend/API work is
-`BACKEND-API-VALIDATION-FRONTIER.113`: select the next exact backend/API edge
-after `.112.1` shipped direct VHDL scalar output-port negative decimal literal
-assignments. The shipped scalar edge lowers plain and signed one-bit
-output-port targets to `std_logic` low-bit assignments, so `-1` emits
-`FLAG_next <= '1';` and `-2` emits `FLAG_next <= '0';`. The next selector is
-narrower than broad VHDL expression, aggregate, package, GHDL,
-composition-parity, or normalized semantic stabilization work.
+`BACKEND-API-VALIDATION-FRONTIER.113.1`: lower direct VHDL signed vector
+negative numeric-literal addition after `.113` selected that exact edge from
+temporary unsigned and signed vector probes for `SUM = (+ A -1)` that both
+failed at arithmetic expression `'A + -1'`. The selected edge is narrower than
+unsigned negative numeric-literal arithmetic, signed negative numeric-literal
+operators beyond addition, broad VHDL expression parity, aggregate, package,
+GHDL, composition-parity, or normalized semantic stabilization work.
 The manifest is still not a full normalized semantic export stabilization
 promise.
 The manifest-facing stable diagnostic-code registry now has its own explicit

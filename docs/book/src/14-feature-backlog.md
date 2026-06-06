@@ -4231,8 +4231,14 @@ package declaration/emission, and full normalized semantic export
 stabilization remain deferred.
 
 Current active backend edge: task-tree leaf
-`BACKEND-API-VALIDATION-FRONTIER.113` selects the next exact backend/API edge
-after scalar negative output literal lowering shipped. Completed implementation
+`BACKEND-API-VALIDATION-FRONTIER.113.1` owns direct VHDL signed vector
+negative numeric-literal addition RHS lowering after selector leaf
+`BACKEND-API-VALIDATION-FRONTIER.113` chose that edge. The selection probes
+generated `SUM = A + -1;` for both unsigned and signed vector shapes, and both
+failed before VHDL emission at arithmetic expression `'A + -1'`; the selected
+implementation edge is limited to signed vector addition, leaving unsigned
+negative numeric-literal arithmetic and signed negative numeric-literal
+operators beyond addition deferred. Completed implementation
 leaf `BACKEND-API-VALIDATION-FRONTIER.112.1` lowers direct VHDL scalar
 output-port next-signal assignments from negative decimal literals into
 `std_logic` low-bit assignments, so the selected plain scalar fixture emits
@@ -4251,10 +4257,11 @@ emission. Completed implementation leaf
 output-port next-signal assignments from negative decimal literals into
 VHDL-typed signed assignments, so the selected 8-bit signed interface-output
 fixture emits `OUT_next <= to_signed(-1, 8);` instead of failing at arithmetic
-expression `'-1'`. Scalar and non-signed vector negative output literals remain
-deferred. Selector leaf `BACKEND-API-VALIDATION-FRONTIER.110` chose that edge
-after the probe generated `signed` output/next-signal declarations but failed
-before VHDL emission. Completed
+expression `'-1'`. Later leaves now cover non-signed vector and scalar
+negative output literals too. Selector leaf
+`BACKEND-API-VALIDATION-FRONTIER.110` chose that edge after the probe generated
+`signed` output/next-signal declarations but failed before VHDL emission.
+Completed
 implementation leaf
 `BACKEND-API-VALIDATION-FRONTIER.109.1` lowers direct VHDL scalar output-port
 next-signal assignments from unsized decimal literals into `std_logic` low-bit
