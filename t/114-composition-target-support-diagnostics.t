@@ -77,6 +77,8 @@ my $aggregate_generic_map_path = File::Spec->catfile($tempdir, 'vhdl_aggregate_g
 my $aggregate_generic_map_output_path = File::Spec->catfile($tempdir, 'vhdl_aggregate_generic_map_top.vhd');
 my $external_nonpacked_aggregate_generic_map_path = File::Spec->catfile($tempdir, 'vhdl_external_nonpacked_aggregate_generic_map_top.fsm');
 my $external_nonpacked_aggregate_generic_map_output_path = File::Spec->catfile($tempdir, 'vhdl_external_nonpacked_aggregate_generic_map_top.vhd');
+my $aggregate_structural_type_path = File::Spec->catfile($tempdir, 'vhdl_declared_aggregate_structural_type_top.fsm');
+my $aggregate_structural_type_output_path = File::Spec->catfile($tempdir, 'vhdl_declared_aggregate_structural_type_top.vhd');
 my $one_bit_generic_map_path = File::Spec->catfile($tempdir, 'vhdl_one_bit_generic_map_top.fsm');
 my $one_bit_generic_map_output_path = File::Spec->catfile($tempdir, 'vhdl_one_bit_generic_map_top.vhd');
 my $generated_fsmc_scalar_generic_map_path = File::Spec->catfile($tempdir, 'vhdl_generated_fsmc_scalar_generic_map_top.fsm');
@@ -566,6 +568,27 @@ write_file(
 FSM
 );
 write_file(
+    $aggregate_structural_type_path,
+    <<'FSM'
+(?top:vhdl_declared_aggregate_structural_type_top
+  (+types
+    (type frame_t (record (tag (bits 4)) (flag bit)))
+  )
+  (?ports:public_io
+    in_frame<frame_t
+  )
+  (?rtl:sink)
+  (?wiring:wiring
+    /in_frame.tag,payload/sink.data_in/
+  )
+)
+
+(?rtlif:sink
+  data_in<8:data
+)
+FSM
+);
+write_file(
     $one_bit_generic_map_path,
     <<'FSM'
 (?top:vhdl_one_bit_generic_map_top
@@ -1027,6 +1050,39 @@ like(
     $external_nonpacked_aggregate_error,
     qr/aggregate parameter\/generic values must lower to one packed literal before backend emission.*malformed_payload/s,
     'pipeline external-RTL non-packed aggregate generic maps fail at the packed-literal boundary',
+);
+
+my $aggregate_structural_sv_pipeline = FSM::Pipeline::HDLGenerator->new(
+    debug_level => 0,
+    target_language => 'systemverilog',
+    quiet => 1,
+);
+my $aggregate_structural_sv_result = $aggregate_structural_sv_pipeline->generate_hdl_from_file($aggregate_structural_type_path);
+like(
+    $aggregate_structural_sv_result->{hdl_code},
+    qr/\btypedef\s+struct\s+packed\s*\{/s,
+    'pipeline SystemVerilog generation preserves the declared aggregate type as a packed typedef',
+);
+like(
+    $aggregate_structural_sv_result->{hdl_code},
+    qr/\binput\s+frame_t__fsmgen_t\s+in_frame\b/s,
+    'pipeline SystemVerilog generation exposes the declared aggregate top port',
+);
+
+my $aggregate_structural_type_error;
+my $aggregate_structural_type_ok = eval {
+    $pipeline->generate_hdl_from_file($aggregate_structural_type_path);
+    1;
+};
+$aggregate_structural_type_error = $@;
+ok(
+    !$aggregate_structural_type_ok,
+    'pipeline rejects declared aggregate structural VHDL types before record/array emission',
+);
+like(
+    $aggregate_structural_type_error,
+    qr/declared aggregate structural VHDL types are outside the first structural-top leaf/s,
+    'pipeline declared aggregate structural VHDL rejection names the record/array boundary',
 );
 
 my $standalone_dtc_result = $pipeline->generate_hdl_from_file($standalone_dtc_composition_path);
@@ -1767,6 +1823,31 @@ like(
 ok(
     !-e $external_nonpacked_aggregate_generic_map_output_path,
     'CLI does not write external-RTL non-packed aggregate generic-map VHDL output',
+);
+
+my ($aggregate_structural_type_success, $aggregate_structural_type_error_message, $aggregate_structural_type_full_buf, $aggregate_structural_type_stdout_buf, $aggregate_structural_type_stderr_buf) = run(
+    command => ['./bin/fsmgen', '--language', 'vhdl', '--quiet', '-o', $aggregate_structural_type_output_path, $aggregate_structural_type_path],
+);
+
+my $aggregate_structural_type_combined_output = join(
+    '',
+    @{ $aggregate_structural_type_stdout_buf || [] },
+    @{ $aggregate_structural_type_stderr_buf || [] },
+    ($aggregate_structural_type_error_message || ''),
+);
+
+ok(
+    !$aggregate_structural_type_success,
+    'CLI rejects declared aggregate structural VHDL types before record/array emission',
+);
+like(
+    $aggregate_structural_type_combined_output,
+    qr/declared aggregate structural VHDL types are outside the first structural-top leaf/s,
+    'CLI declared aggregate structural VHDL rejection names the record/array boundary',
+);
+ok(
+    !-e $aggregate_structural_type_output_path,
+    'CLI does not write declared aggregate structural VHDL output',
 );
 
 my ($standalone_dtc_success, $standalone_dtc_error_message, $standalone_dtc_full_buf, $standalone_dtc_stdout_buf, $standalone_dtc_stderr_buf) = run(

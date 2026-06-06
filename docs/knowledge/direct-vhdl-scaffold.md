@@ -59,6 +59,10 @@ answers:
   - "does composition VHDL support expression generic actuals?"
   - "does composition VHDL support aggregate generic maps?"
   - "does composition VHDL support aggregate generic actuals?"
+  - "does composition VHDL support declared aggregate structural types?"
+  - "does composition VHDL support declared aggregate top ports?"
+  - "does composition VHDL emit VHDL record/array declarations?"
+  - "does composition VHDL support VHDL records or arrays?"
   - "does composition VHDL support list generic actuals?"
   - "does composition VHDL support record generic actuals?"
   - "does composition VHDL support external-RTL non-packed aggregate generic maps?"
@@ -205,9 +209,11 @@ Bounded direct aggregate-output fixtures now lower as VHDL packed vectors:
 `NESTED` is `std_logic_vector(6 downto 0)`, `OUT` is
 `std_logic_vector(2 downto 0)`, and `OUT_FRAME` / `OUT_LANES` are 5-bit
 `std_logic_vector` ports. Full VHDL record/array aggregate lowering remains a
-later exact owner. Declared aggregate structural VHDL types in composition tops
-are currently owned by `BACKEND-API-VALIDATION-FRONTIER.101.1` for fail-closed
-hardening before any VHDL record/array declaration emission.
+later exact owner. Declared aggregate structural VHDL ports/nets/types in
+composition tops are locked fail-closed by
+`BACKEND-API-VALIDATION-FRONTIER.101.1`: aggregate top-port shapes that the
+SystemVerilog path emits as packed typedefs fail at the structural VHDL boundary
+before VHDL record/array declaration emission and do not write CLI output.
 The maintained supported direct-root VHDL sweep now runs clean. The first
 bounded composition VHDL structural top is also shipped for the C3 external-RTL
 literal/concat fixture in `t/corpus/composition_intent_integer_literals.fsm`.
@@ -312,7 +318,9 @@ declaration/emission remains deferred.
 Other composition/top VHDL shapes remain locked fail-closed by focused pipeline
 and CLI coverage: `?top` sources are parsed into typed composition IR, then unsupported
 `target_language => 'vhdl'` and `--language vhdl` shapes are rejected with the
-scoped composition target-support diagnostic. Broader generated-FSM/C4
-composition VHDL beyond the exact shipped fixtures, internal nets/generic maps,
-packages, multi-clock domains, broad expression parity, GHDL validation, and
-full SystemVerilog parity remain deferred or fail-closed.
+scoped composition target-support diagnostic or, for declared aggregate
+structural VHDL types that reach the structural emitter, the explicit
+record/array boundary diagnostic. Broader generated-FSM/C4 composition VHDL
+beyond the exact shipped fixtures, internal nets/generic maps, packages,
+multi-clock domains, broad expression parity, GHDL validation, and full
+SystemVerilog parity remain deferred or fail-closed.

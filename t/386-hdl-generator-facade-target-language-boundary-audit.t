@@ -86,6 +86,55 @@ FSM
     );
 };
 
+subtest 'facade target_language option rejects declared aggregate structural VHDL types' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'facade_vhdl_declared_aggregate_structural_type_top.fsm');
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:facade_vhdl_declared_aggregate_structural_type_top
+  (+types
+    (type frame_t (record (tag (bits 4)) (flag bit)))
+  )
+  (?ports:public_io
+    in_frame<frame_t
+  )
+  (?rtl:sink)
+  (?wiring:wiring
+    /in_frame.tag,payload/sink.data_in/
+  )
+)
+
+(?rtlif:sink
+  data_in<8:data
+)
+FSM
+    );
+
+    my $vhdl_pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'vhdl',
+        quiet => 1,
+    );
+
+    my $error;
+    my $ok = eval {
+        $vhdl_pipeline->generate_hdl_from_file($composition_path);
+        1;
+    };
+    $error = $@;
+
+    ok(
+        !$ok,
+        'explicit VHDL facade generation rejects declared aggregate structural types',
+    );
+    like(
+        $error,
+        qr/declared aggregate structural VHDL types are outside the first structural-top leaf/s,
+        'explicit VHDL facade rejection names the aggregate record/array boundary',
+    );
+};
+
 subtest 'facade target_language option routes direct generated-module backend behavior' => sub {
     my $direct_path = repo_file('t/corpus/direct_sreset_active_high.fsm');
 

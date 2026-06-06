@@ -2370,9 +2370,11 @@ this normalized semantic shape:
 ```
 
 The current active backend/API frontier is
-`BACKEND-API-VALIDATION-FRONTIER.101.1`, which locks declared aggregate
-structural VHDL types as fail-closed before record/array emission. Completed
-leaf `BACKEND-API-VALIDATION-FRONTIER.100.1` locks package roots as import-only
+`BACKEND-API-VALIDATION-FRONTIER.102`, a selection-only leaf for the next exact
+backend/API edge after declared aggregate structural VHDL hardening. Completed
+leaf `BACKEND-API-VALIDATION-FRONTIER.101.1` locks declared aggregate structural
+VHDL ports/nets/types as fail-closed before record/array emission. Completed leaf
+`BACKEND-API-VALIDATION-FRONTIER.100.1` locks package roots as import-only
 declaration containers that do not generate standalone SystemVerilog or VHDL
 package HDL directly.
 Package declaration and VHDL package emission, already bounded
@@ -2396,7 +2398,7 @@ of scope until later exact leaves own them.
 Package-root direct HDL generation is locked fail-closed by
 `BACKEND-API-VALIDATION-FRONTIER.100.1`; this keeps `?pkg` roots import-only
 and still does not implement VHDL package declaration/emission.
-Declared aggregate structural VHDL types are currently owned by
+Declared aggregate structural VHDL ports/nets/types are locked fail-closed by
 `BACKEND-API-VALIDATION-FRONTIER.101.1`; this keeps composition tops from
 emitting VHDL record/array declarations until a future exact aggregate-lowering
 leaf owns them.
