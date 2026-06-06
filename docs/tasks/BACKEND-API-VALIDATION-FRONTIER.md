@@ -123,7 +123,8 @@ items named in the 2026-06-05 remaining-work inventory.
     `BACKEND-API-VALIDATION-FRONTIER.40.1`,
     `BACKEND-API-VALIDATION-FRONTIER.41`,
     `BACKEND-API-VALIDATION-FRONTIER.41.1`,
-    `BACKEND-API-VALIDATION-FRONTIER.42`
+    `BACKEND-API-VALIDATION-FRONTIER.42`,
+    `BACKEND-API-VALIDATION-FRONTIER.42.1`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.1`
   Status: `done`
@@ -795,9 +796,17 @@ items named in the 2026-06-05 remaining-work inventory.
   Commit: `BACKEND-API-VALIDATION-FRONTIER.41.1: ship VHDL logic declarations`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.42`
-  Status: `active`
+  Status: `done`
   Goal: `Select the next exact backend/API/public-export edge after direct VHDL non-signed four-state logic internal declaration lowering.`
-  Acceptance: `pending`
+  Children: `BACKEND-API-VALIDATION-FRONTIER.42.1`
+  Acceptance: `Selected optional ABC-backed Yosys mapping validation hardening as the next exact backend-validation edge. A fresh t/corpus sweep after .41.1 showed no new direct VHDL corpus gap: SystemVerilog succeeded for 51 corpus files, VHDL succeeded for 42, and the remaining 9 VHDL failures are composition/top or aggregate-output boundaries already locked fail-closed. command -v ghdl remains unavailable, so GHDL validation is still blocked. command -v yosys and command -v yosys-abc are available, and a bounded lte_dif_pmaster probe using Yosys synth without -noabc succeeded while mentioning ABC. The implementation owner is BACKEND-API-VALIDATION-FRONTIER.42.1: add an explicit optional ABC mapping validation path while keeping default --verify-hdl ABC-free, keeping ABC non-required, and preserving existing external-validation contracts unless the new opt-in surface is requested.`
+  Verification: `Selection audit/read of docs/book/src/14-feature-backlog.md, docs/VHDL_SCOPE.md, docs/knowledge/direct-vhdl-scaffold.md, docs/knowledge/abc-discovery-validation-boundary.md, perl/FSM/Support/HDLExternalValidation.pm, perl/FSM/Support/HDLExternalValidationContract.pm, and t/308-systemverilog-external-validation.t. Fresh t/corpus SystemVerilog/VHDL sweep: corpus_files=201 sv_ok=51 vhdl_ok=42 vhdl_fail=9, with failures only at composition/top or aggregate-output fail-closed boundaries. command -v ghdl returned unavailable; command -v yosys returned /opt/homebrew/bin/yosys; command -v yosys-abc returned /opt/homebrew/bin/yosys-abc; command -v berkeley-abc returned unavailable. ABC-enabled Yosys probe over generated fsm/lte_dif_pmaster.fsm succeeded with synth -top lte_dif_pmaster and output mentioning ABC. Selected optional non-default ABC mapping validation hardening for .42.1 before any implementation/test edits.`
+  Commit: `BACKEND-API-VALIDATION-FRONTIER.42: select ABC hardening`
+
+- ID: `BACKEND-API-VALIDATION-FRONTIER.42.1`
+  Status: `active`
+  Goal: `Implement an optional non-default ABC-backed Yosys mapping validation path.`
+  Acceptance: `FSM::Support::HDLExternalValidation exposes an explicit opt-in ABC mapping validation path for generated SystemVerilog files when Yosys and an ABC mapping executable are available. The default validate_systemverilog_file path and CLI --verify-hdl path remain ABC-free, use synth -noabc, and do not require ABC. Focused tests prove the opt-in path records an ABC-enabled Yosys step, skips or fails clearly when optional ABC tooling is unavailable, and leaves existing external validation smoke behavior unchanged. The external-validation contract, capability manifest, README, mdBook, ABC knowledge fact, task tree, and memory are synchronized. This leaf does not add GHDL validation, VHDL validation, default ABC requirements, timeout policy beyond the bounded opt-in smoke, historical-sample expansion, or broader backend parity.`
   Verification: `pending`
   Commit: `pending`
 
@@ -892,7 +901,8 @@ items named in the 2026-06-05 remaining-work inventory.
 | 85 | `BACKEND-API-VALIDATION-FRONTIER.40.1` | `done` | Implemented direct VHDL scalar bit plus signed vector internal declaration lowering for the declarative bits symbolic-width fixture. |
 | 86 | `BACKEND-API-VALIDATION-FRONTIER.41` | `done` | Selected direct VHDL non-signed four-state logic internal declaration lowering after a package-backed probe failed at the explicit logic declaration guard. |
 | 87 | `BACKEND-API-VALIDATION-FRONTIER.41.1` | `done` | Implemented direct VHDL non-signed four-state logic internal declaration lowering for package-backed symbolic-width types. |
-| 88 | `BACKEND-API-VALIDATION-FRONTIER.42` | `active` | Select the next exact backend/API edge after logic declaration lowering. |
+| 88 | `BACKEND-API-VALIDATION-FRONTIER.42` | `done` | Selected optional non-default ABC mapping validation hardening after direct VHDL corpus gaps were exhausted and GHDL remained unavailable. |
+| 89 | `BACKEND-API-VALIDATION-FRONTIER.42.1` | `active` | Implement an explicit opt-in ABC-backed Yosys validation path without changing default --verify-hdl behavior. |
 
 ## Decisions
 
@@ -1001,6 +1011,7 @@ items named in the 2026-06-05 remaining-work inventory.
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.40.1` | `perl -Iperl -c perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm`; `perl -Iperl -c perl/FSM/HDL/FlattenedDT.pm`; `perl -Iperl -c t/1420-vhdl-direct-backend-scaffold.t`; `perl -Iperl -c t/386-hdl-generator-facade-target-language-boundary-audit.t`; `prove -Iperl t/1420-vhdl-direct-backend-scaffold.t`; `prove -Iperl t/386-hdl-generator-facade-target-language-boundary-audit.t`; `./bin/fsmgen --language vhdl --quiet t/corpus/declarative_bits_symbol_widths.fsm`; `prove -Iperl t/1420-vhdl-direct-backend-scaffold.t t/386-hdl-generator-facade-target-language-boundary-audit.t t/114-composition-target-support-diagnostics.t t/404-hdl-generator-facade-target-language-shape-boundary-audit.t`; `prove -Iperl t/279-declarative-scalar-types.t`; `prove -Iperl t/313-hdl-external-validation-contract.t t/308-systemverilog-external-validation.t`; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; direct VHDL scalar bit and signed vector internal declarations now lower for the declarative bits fixture |
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.41` | Selection audit/read of `docs/book/src/14-feature-backlog.md`, `docs/VHDL_SCOPE.md`, `docs/knowledge/direct-vhdl-scaffold.md`, `t/279-declarative-scalar-types.t`, `perl/FSM/Backend/VerilogFamily/TypeDeclarationSupport.pm`, and `perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm`; fresh in-memory t/corpus sweep after `.40.1`; `command -v ghdl`; temporary package-backed direct declarative `+types` probe emitted `logic [7:0] ISYM;` for SystemVerilog and failed VHDL at the explicit `logic` declaration guard; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; selected direct VHDL non-signed four-state logic internal declaration lowering for `.41.1` |
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.41.1` | `perl -Iperl -c perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm`; `perl -Iperl -c perl/FSM/HDL/FlattenedDT.pm`; `perl -Iperl -c t/1420-vhdl-direct-backend-scaffold.t`; `perl -Iperl -c t/386-hdl-generator-facade-target-language-boundary-audit.t`; `prove -Iperl t/1420-vhdl-direct-backend-scaffold.t`; `prove -Iperl t/386-hdl-generator-facade-target-language-boundary-audit.t`; `prove -Iperl t/1420-vhdl-direct-backend-scaffold.t t/386-hdl-generator-facade-target-language-boundary-audit.t t/114-composition-target-support-diagnostics.t t/404-hdl-generator-facade-target-language-shape-boundary-audit.t`; `prove -Iperl t/279-declarative-scalar-types.t`; `prove -Iperl t/313-hdl-external-validation-contract.t t/308-systemverilog-external-validation.t`; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; direct VHDL non-signed four-state logic internal declarations now lower for package-backed scalar/vector declarative types |
+| `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.42` | Selection audit/read of `docs/book/src/14-feature-backlog.md`, `docs/VHDL_SCOPE.md`, `docs/knowledge/direct-vhdl-scaffold.md`, `docs/knowledge/abc-discovery-validation-boundary.md`, `perl/FSM/Support/HDLExternalValidation.pm`, `perl/FSM/Support/HDLExternalValidationContract.pm`, and `t/308-systemverilog-external-validation.t`; fresh t/corpus SystemVerilog/VHDL sweep after `.41.1` returned `corpus_files=201 sv_ok=51 vhdl_ok=42 vhdl_fail=9`, with failures only at composition/top or aggregate-output fail-closed boundaries; `command -v ghdl` unavailable; `command -v yosys` returned `/opt/homebrew/bin/yosys`; `command -v yosys-abc` returned `/opt/homebrew/bin/yosys-abc`; `command -v berkeley-abc` unavailable; ABC-enabled Yosys probe over generated `fsm/lte_dif_pmaster.fsm` succeeded with `synth -top lte_dif_pmaster` and output mentioning ABC | `PASS`; selected optional non-default ABC mapping validation hardening for `.42.1` |
 
 ## Commit Log
 
@@ -1093,6 +1104,7 @@ items named in the 2026-06-05 remaining-work inventory.
 | `BACKEND-API-VALIDATION-FRONTIER.40.1` | `BACKEND-API-VALIDATION-FRONTIER.40.1: ship VHDL signed declarations` | this slice |
 | `BACKEND-API-VALIDATION-FRONTIER.41` | `BACKEND-API-VALIDATION-FRONTIER.41: select VHDL logic declarations` | selected `.41.1` |
 | `BACKEND-API-VALIDATION-FRONTIER.41.1` | `BACKEND-API-VALIDATION-FRONTIER.41.1: ship VHDL logic declarations` | this slice |
+| `BACKEND-API-VALIDATION-FRONTIER.42` | `BACKEND-API-VALIDATION-FRONTIER.42: select ABC hardening` | selected `.42.1` |
 
 ## Changelog
 
@@ -1524,3 +1536,7 @@ items named in the 2026-06-05 remaining-work inventory.
   semantics, aggregate VHDL, composition/top VHDL, packages, GHDL validation,
   broader expression parity, and full backend parity remain deferred.
   Activated `.42` to select the next backend/API edge.
+- `2026-06-06`: Completed `.42`; selected optional non-default ABC mapping
+  validation hardening for `.42.1` after a fresh corpus sweep showed no new
+  direct VHDL corpus gaps, GHDL remained unavailable, and an ABC-enabled Yosys
+  probe over `fsm/lte_dif_pmaster.fsm` succeeded with `yosys-abc` available.

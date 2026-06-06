@@ -7,7 +7,7 @@ answers:
   - "why does hdl external validation report abc_mapping?"
   - "what is the ABC mapping hardening boundary?"
   - "does FSMGen require ABC for Yosys validation?"
-date: 2026-06-05
+date: 2026-06-06
 status: current
 tags: [backend-validation, abc, yosys, capability-manifest]
 evidence: perl/FSM/Support/HDLExternalValidation.pm; perl/FSM/Support/HDLExternalValidationContract.pm; t/308-systemverilog-external-validation.t; t/313-hdl-external-validation-contract.t; t/297-capability-manifest.t; docs/book/src/09-generated-hdl-debugging-and-inspection.md; docs/book/src/11-extensions-and-embedding.md; docs/book/src/14-feature-backlog.md; docs/tasks/BACKEND-API-VALIDATION-FRONTIER.md
@@ -21,3 +21,9 @@ optional ABC mapping candidate found from `yosys-abc`, `berkeley-abc`, and
 `abc` under `abc_mapping` / `abc_mapping_tool` so the public contract and
 capability manifest can distinguish required validation tools from later
 ABC-mapping hardening metadata.
+
+After the direct VHDL scaffold frontier reached no new direct corpus gaps,
+`BACKEND-API-VALIDATION-FRONTIER.42` selected an explicit opt-in ABC mapping
+hardening leaf. That next leaf may add a non-default ABC-backed Yosys mapping
+validation path, but it must keep `--verify-hdl` ABC-free by default and must
+not make ABC a required external validation tool.

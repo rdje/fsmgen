@@ -3868,6 +3868,12 @@ Remaining hardening direction: any ABC-backed Yosys optimization/mapping gate
 still needs a separate opt-in lane with timeout/error policy and regression
 coverage before it can become a validation requirement.
 
+Active next leaf: optional, non-default ABC mapping validation hardening is
+selected. The intended slice is an explicit opt-in path for generated
+SystemVerilog validation when Yosys and an ABC mapping executable are present;
+it must keep default `--verify-hdl` on the existing ABC-free `synth -noabc`
+lane and must not make ABC a required tool.
+
 ### Structured Non-Flattened Generation
 
 Status: backlog.
