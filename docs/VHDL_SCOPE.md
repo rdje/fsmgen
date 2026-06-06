@@ -107,6 +107,10 @@ This document defines the scoped R14 VHDL backend plan for FSMGen.
 - Bounded direct vector output-port decimal literal assignments now lower
   through target-width `to_unsigned`; this is not broad expression-literal
   parity.
+- The active next direct VHDL implementation leaf is
+  `BACKEND-API-VALIDATION-FRONTIER.108.1`: lower signed vector output-port
+  next-signal assignments from unsized decimal literals into VHDL-typed signed
+  assignments. This is not broad expression-literal parity.
 - Composition/top VHDL is locked to the shipped structural-top leaves: the
   current pipeline and CLI accept `target_language => 'vhdl'` / `--language
   vhdl` only for the C3 external-RTL literal/concat fixture, the explicit

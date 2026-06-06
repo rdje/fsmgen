@@ -131,6 +131,8 @@ answers:
   - "does direct VHDL support four-state declarations?"
   - "does direct VHDL support vector output decimal literals?"
   - "does direct VHDL support vector output port decimal literal assignments?"
+  - "does direct VHDL support signed vector output decimal literals?"
+  - "does direct VHDL support signed vector output port decimal literal assignments?"
   - "does direct VHDL support generics?"
   - "does direct VHDL support parameterized direct roots?"
   - "does direct VHDL support sized literal generic defaults?"
@@ -229,7 +231,12 @@ Bounded direct aggregate-output fixtures now lower as VHDL packed vectors:
 later exact owner. The direct VHDL scaffold now lowers the narrower vector
 output-port next-signal decimal-literal edge: an 8-bit interface output emits
 `OUT_next <= std_logic_vector(to_unsigned(165, 8));` instead of raw
-`OUT_next <= 165;`. This is not broad expression-literal parity. Declared
+`OUT_next <= 165;`. The current active direct VHDL leaf is
+`BACKEND-API-VALIDATION-FRONTIER.108.1`, which owns the adjacent signed vector
+output-port next-signal decimal-literal edge: a probe showed an 8-bit signed
+interface output lowers to `signed` output/next-signal declarations but still
+emits raw `OUT_next <= 5;` before the selected implementation. These leaves do
+not claim broad expression-literal parity. Declared
 aggregate structural VHDL ports/nets/types in
 composition tops are locked fail-closed by
 `BACKEND-API-VALIDATION-FRONTIER.101.1`: aggregate top-port shapes that the
