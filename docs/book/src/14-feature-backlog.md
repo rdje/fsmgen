@@ -4090,12 +4090,15 @@ schema metadata for `semantic.symbol_contract.types` and
 recursive `items` or `members` plus `member_order`.
 
 Current active backend edge: task-tree leaf
-`BACKEND-API-VALIDATION-FRONTIER.72` selects the next exact backend/API edge
-after the bounded APB/C4 generated-FSM child composition VHDL top shipped for
-`fsm/apb_tb.fsm`. Package-import internals, already bounded constant/enum/type
-internals, unrelated forward-IR payloads, scalar signed arithmetic, full
-aggregate VHDL record/array lowering, broader generated-FSM/C4 composition
-VHDL beyond the exact shipped fixtures, internal nets/generic maps beyond APB,
-broader expression parity beyond the shipped AMBA wrap family, and full
-normalized semantic export stabilization remain out of scope until later exact
-leaves own them.
+`BACKEND-API-VALIDATION-FRONTIER.72.1` owns only direct VHDL signed scalar
+addition/subtraction/multiplication RHS lowering after the bounded APB/C4
+generated-FSM child composition VHDL top shipped for `fsm/apb_tb.fsm`. Until
+that leaf ships, signed scalar arithmetic still follows the documented
+fail-closed boundary. Package-import internals, already bounded
+constant/enum/type internals, unrelated forward-IR payloads, signed scalar
+division/modulo, mixed signed/unsigned arithmetic, full aggregate VHDL
+record/array lowering, broader generated-FSM/C4 composition VHDL beyond the
+exact shipped fixtures, internal nets/generic maps beyond APB, broader
+expression parity beyond the shipped AMBA wrap family, and full normalized
+semantic export stabilization remain out of scope until later exact leaves own
+them.
