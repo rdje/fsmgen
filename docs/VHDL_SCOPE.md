@@ -396,6 +396,8 @@ The VHDL lane is intentionally narrow:
   generic-map hardening is locked by `BACKEND-API-VALIDATION-FRONTIER.96.1`:
   aggregate actuals that do not lower to one packed literal fail before VHDL
   emission and do not imply record/array VHDL generic declaration support.
+  C3 external-RTL non-packed aggregate generic-map hardening is the active
+  `BACKEND-API-VALIDATION-FRONTIER.97.1` owner.
 - Remaining semantic conversion work still belongs to exact future VHDL leaves.
 
 ### Phase 3: Regression and hardening (R14.3)

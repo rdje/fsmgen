@@ -228,7 +228,9 @@ and also emit literal actuals, for example `param_pkg.WIDTH_16` and
 `RESET_VALUE => "10100101"` without leaking `param_pkg` into the VHDL; this is
 not VHDL package declaration/emission support. External-RTL one-bit actuals
 are supported only when the matching `.rtlif` parameter declaration provides
-scalar one-bit default metadata such as `ENABLE_DEFAULT 1'b0`;
+scalar one-bit default metadata such as `ENABLE_DEFAULT 1'b0`. External-RTL
+non-packed aggregate generic-map hardening is active under
+`BACKEND-API-VALIDATION-FRONTIER.97.1`; until that leaf ships,
 aggregate/list/record actuals that do not resolve to multi-bit packed values,
 unresolved package/expression actuals, standalone-DT generic maps beyond scalar
 integer/scalar expression/one-bit sized-bitstring/multi-bit sized-bitstring/
