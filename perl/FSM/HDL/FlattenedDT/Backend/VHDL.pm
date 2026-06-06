@@ -647,6 +647,8 @@ sub _sv_expr_to_vhdl ($expr, $ctx = {}) {
     my $target_decl = _decl_for_lvalue($ctx->{target_lhs}, $ctx->{decls_by_name} || {});
     return "'$trimmed'"
         if $target_decl && $target_decl->{scalar} && $trimmed =~ /^[01]$/;
+    return 'to_signed(' . $trimmed . ', ' . _decl_width($target_decl) . ')'
+        if $target_decl && !$target_decl->{scalar} && $target_decl->{signed} && $trimmed =~ /^\d+$/;
     return 'std_logic_vector(to_unsigned(' . $trimmed . ', ' . _decl_width($target_decl) . '))'
         if $target_decl && !$target_decl->{scalar} && !$target_decl->{signed} && $trimmed =~ /^\d+$/;
 

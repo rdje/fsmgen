@@ -231,11 +231,9 @@ Bounded direct aggregate-output fixtures now lower as VHDL packed vectors:
 later exact owner. The direct VHDL scaffold now lowers the narrower vector
 output-port next-signal decimal-literal edge: an 8-bit interface output emits
 `OUT_next <= std_logic_vector(to_unsigned(165, 8));` instead of raw
-`OUT_next <= 165;`. The current active direct VHDL leaf is
-`BACKEND-API-VALIDATION-FRONTIER.108.1`, which owns the adjacent signed vector
-output-port next-signal decimal-literal edge: a probe showed an 8-bit signed
-interface output lowers to `signed` output/next-signal declarations but still
-emits raw `OUT_next <= 5;` before the selected implementation. These leaves do
+`OUT_next <= 165;`. It also lowers the adjacent signed vector output-port
+next-signal decimal-literal edge: an 8-bit signed interface output emits
+`OUT_next <= to_signed(5, 8);` instead of raw `OUT_next <= 5;`. These leaves do
 not claim broad expression-literal parity. Declared
 aggregate structural VHDL ports/nets/types in
 composition tops are locked fail-closed by

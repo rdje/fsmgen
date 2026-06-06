@@ -4027,6 +4027,10 @@ Direct vector output-port next-signal assignments from unsized decimal
 literals now lower through target-width `to_unsigned`; for example an 8-bit
 interface output emits `OUT_next <= std_logic_vector(to_unsigned(165, 8));`
 instead of a raw integer-to-vector assignment.
+Signed vector output-port next-signal assignments from unsized decimal
+literals now lower through target-width `to_signed`; for example an 8-bit
+signed interface output emits `OUT_next <= to_signed(5, 8);` instead of a raw
+integer-to-signed-vector assignment.
 
 ### GHDL Validation
 
@@ -4227,12 +4231,16 @@ package declaration/emission, and full normalized semantic export
 stabilization remain deferred.
 
 Current active backend edge: task-tree leaf
+`BACKEND-API-VALIDATION-FRONTIER.109` selects the next exact backend/API edge
+after direct VHDL signed vector output-port decimal literal assignment lowering
+shipped. Completed implementation leaf
 `BACKEND-API-VALIDATION-FRONTIER.108.1` lowers direct VHDL signed vector
 output-port next-signal assignments from unsized decimal literals into
-VHDL-typed signed assignments. Selector leaf
-`BACKEND-API-VALIDATION-FRONTIER.108` chose that edge after an 8-bit signed
-interface-output probe emitted `signed` output/next-signal declarations but
-still wrote raw `OUT_next <= 5;`. Completed implementation leaf
+VHDL-typed signed assignments, so the selected 8-bit signed interface-output
+fixture emits `OUT_next <= to_signed(5, 8);` instead of raw
+`OUT_next <= 5;`. Selector leaf `BACKEND-API-VALIDATION-FRONTIER.108` chose
+that edge after the probe emitted `signed` output/next-signal declarations but
+still wrote the raw integer assignment. Completed implementation leaf
 `BACKEND-API-VALIDATION-FRONTIER.107.1` lowers direct VHDL vector output-port
 next-signal assignments from unsized decimal literals into VHDL-typed vector
 assignments, so the selected 8-bit interface-output fixture emits
