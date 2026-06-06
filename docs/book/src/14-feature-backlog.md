@@ -4201,6 +4201,8 @@ schema metadata for `semantic.symbol_contract.types` and
 recursive `items` or `members` plus `member_order`.
 
 Current active backend edge: task-tree leaf
+`BACKEND-API-VALIDATION-FRONTIER.101` selects the next exact backend/API edge
+after package-root/package-emission hardening. Completed leaf
 `BACKEND-API-VALIDATION-FRONTIER.100.1` locks package roots as import-only
 declaration containers that do not generate standalone SystemVerilog or VHDL
 package HDL directly.
@@ -4222,7 +4224,6 @@ composition VHDL beyond the exact shipped fixtures, internal nets/generic maps
 beyond APB, broader expression parity beyond the shipped AMBA wrap family, and
 full normalized semantic export stabilization remain out of scope until later
 exact leaves own them.
-Package-root direct HDL generation is in the active
-`BACKEND-API-VALIDATION-FRONTIER.100.1` fail-closed hardening leaf; this keeps
-`?pkg` roots import-only and still does not implement VHDL package
-declaration/emission.
+Package-root direct HDL generation is locked fail-closed by
+`BACKEND-API-VALIDATION-FRONTIER.100.1`; this keeps `?pkg` roots import-only
+and still does not implement VHDL package declaration/emission.

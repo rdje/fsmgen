@@ -239,8 +239,8 @@ The VHDL lane is intentionally narrow:
    - Internal-net-heavy composition-top VHDL beyond the APB/C4 fixture
    - Composition VHDL generic-map lowering
    - VHDL packages (SV packages -> VHDL packages); package-root direct HDL
-     generation is the active `BACKEND-API-VALIDATION-FRONTIER.100.1`
-     fail-closed hardening owner
+     generation is locked fail-closed by
+     `BACKEND-API-VALIDATION-FRONTIER.100.1`
    - Intermediate signal factorization (needs VHDL signal declaration semantics)
    - Multi-clock domains
    - VHDL-specific testbenches
@@ -407,8 +407,8 @@ The VHDL lane is intentionally narrow:
   `BACKEND-API-VALIDATION-FRONTIER.98.1` at the same packed-literal boundary.
   C2 generated-FSM non-packed aggregate generic-map hardening is locked by
   `BACKEND-API-VALIDATION-FRONTIER.99.1` at the same packed-literal boundary.
-  Package-root direct HDL generation is the active
-  `BACKEND-API-VALIDATION-FRONTIER.100.1` hardening owner for the package
+  Package-root direct HDL generation is locked fail-closed by
+  `BACKEND-API-VALIDATION-FRONTIER.100.1` at the package
   declaration/emission boundary.
 - Remaining semantic conversion work still belongs to exact future VHDL leaves.
 

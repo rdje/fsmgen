@@ -66,6 +66,11 @@ answers:
   - "does composition VHDL support package-backed generic maps?"
   - "does composition VHDL support package-backed generic actuals?"
   - "does composition VHDL emit package constants in generic maps?"
+  - "does ?pkg generate HDL directly?"
+  - "do package roots generate HDL directly?"
+  - "can package roots generate VHDL packages?"
+  - "does FSMGen emit VHDL packages?"
+  - "does VHDL package declaration/emission ship?"
   - "does composition VHDL support external RTL one-bit generic maps?"
   - "does composition VHDL support one-bit external RTL generic maps?"
   - "does direct VHDL support aggregate outputs?"
@@ -233,9 +238,10 @@ and also emit literal actuals, for example `param_pkg.WIDTH_16` and
 `param_pkg.RESET_A5` emit `WIDTH => 16` and
 `RESET_VALUE => "10100101"` without leaking `param_pkg` into the VHDL; this is
 not VHDL package declaration/emission support. Package-root direct HDL
-generation is the active `BACKEND-API-VALIDATION-FRONTIER.100.1`
-fail-closed hardening owner; `?pkg` roots remain import-only containers, not
-standalone HDL output roots. External-RTL one-bit actuals are supported only
+generation is locked fail-closed by
+`BACKEND-API-VALIDATION-FRONTIER.100.1`: `?pkg` roots remain import-only
+declaration containers and do not emit standalone SystemVerilog or VHDL package
+HDL directly. External-RTL one-bit actuals are supported only
 when the matching `.rtlif` parameter declaration provides
 scalar one-bit default metadata such as `ENABLE_DEFAULT 1'b0`. External-RTL
 non-packed aggregate generic maps are locked fail-closed before VHDL emission:
@@ -293,10 +299,14 @@ the child port maps, such as `LANES => "0011110010100101"` and
 Qualified package constants in the same APB/C4 subset are resolved before VHDL
 emission, so `param_pkg.TIMEOUT_8` and `param_pkg.RESET_A5` emit
 `TIMEOUT_CYCLES => 8` and `RESET_VALUE => "10100101"` without leaking package
-tokens. APB/C4 non-packed aggregate generic maps are locked fail-closed before
-VHDL emission: aggregate actuals that do not lower to one packed literal fail
-with the packed-literal diagnostic instead of emitting VHDL record/array
-generics. APB/C4 VHDL package declaration/emission remains deferred.
+tokens. Package roots themselves remain import-only containers: direct HDL
+generation from a `?pkg` root fails before backend emission for both the default
+SystemVerilog target and `--language vhdl`/`target_language => 'vhdl'`, and no
+standalone VHDL package declaration/emission is implied. APB/C4 non-packed
+aggregate generic maps are locked fail-closed before VHDL emission: aggregate
+actuals that do not lower to one packed literal fail with the packed-literal
+diagnostic instead of emitting VHDL record/array generics. APB/C4 VHDL package
+declaration/emission remains deferred.
 Other composition/top VHDL shapes remain locked fail-closed by focused pipeline
 and CLI coverage: `?top` sources are parsed into typed composition IR, then unsupported
 `target_language => 'vhdl'` and `--language vhdl` shapes are rejected with the

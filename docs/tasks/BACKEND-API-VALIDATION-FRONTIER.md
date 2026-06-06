@@ -240,7 +240,8 @@ items named in the 2026-06-05 remaining-work inventory.
     `BACKEND-API-VALIDATION-FRONTIER.99`,
     `BACKEND-API-VALIDATION-FRONTIER.99.1`,
     `BACKEND-API-VALIDATION-FRONTIER.100`,
-    `BACKEND-API-VALIDATION-FRONTIER.100.1`
+    `BACKEND-API-VALIDATION-FRONTIER.100.1`,
+    `BACKEND-API-VALIDATION-FRONTIER.101`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.1`
   Status: `done`
@@ -1780,10 +1781,17 @@ items named in the 2026-06-05 remaining-work inventory.
   Commit: `BACKEND-API-VALIDATION-FRONTIER.100: select package-root VHDL boundary`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.100.1`
-  Status: `active`
+  Status: `done`
   Goal: `Lock and document the package-root/package-emission HDL boundary.`
   Acceptance: `Focused pipeline, CLI, and facade/target-language coverage must prove that ?pkg roots do not generate HDL directly for either the default SystemVerilog target or target_language/--language vhdl. Package roots remain import-only reusable declaration containers, package-backed constants may still resolve into already shipped literal generic maps, and no standalone VHDL package declaration/emission is implied. The leaf must not implement VHDL package declaration/emission, full package lowering, aggregate record/array VHDL, GHDL validation, broad expression parity, full composition VHDL parity, normalized semantic export stabilization, or full backend parity. README, docs/VHDL_SCOPE.md, mdBook, direct-VHDL fact card/knowledge map if needed, task tree, and MEMORY stay synchronized.`
-  Verification: `pending implementation`
+  Verification: `perl -Iperl -c t/70-language-contract-top-level-directive-entrypoints.t; perl -Iperl -c t/386-hdl-generator-facade-target-language-boundary-audit.t; prove -Iperl t/70-language-contract-top-level-directive-entrypoints.t t/386-hdl-generator-facade-target-language-boundary-audit.t; prove -Iperl t/114-composition-target-support-diagnostics.t t/386-hdl-generator-facade-target-language-boundary-audit.t; prove -Iperl t/292-composition-generated-child-parameter-overrides.t t/91-composition-multi-rtl-children.t; prove -Iperl t/313-hdl-external-validation-contract.t t/308-systemverilog-external-validation.t; bash knowledge-map/scripts/gen_knowledge_map.sh; bash knowledge-map/scripts/check_knowledge_map.sh; scripts/check_memory_architecture.sh; prove -Iperl t/1414-docs-relative-paths-audit.t; prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t; mdbook build docs/book; git diff --check`
+  Commit: `BACKEND-API-VALIDATION-FRONTIER.100.1: lock package-root HDL boundary`
+
+- ID: `BACKEND-API-VALIDATION-FRONTIER.101`
+  Status: `active`
+  Goal: `Select the next exact backend/API edge after package-root/package-emission boundary hardening shipped.`
+  Acceptance: `Selection-only leaf. Audit the backend/API frontier, current VHDL scope, mdBook backlog, direct-VHDL fact card, focused scaffold/composition/facade tests, maintained direct/composition VHDL sweeps, and current validation environment; choose the next narrow implementation or hardening owner before any code/test/source edits. The selector must preserve task-tree ownership for the chosen child leaf, synchronize README/VHDL scope/mdBook/fact card/memory if the selected frontier changes user-visible scope, and leave aggregate VHDL record/array declarations beyond packed vectors, full VHDL package declaration/emission, GHDL validation, broad expression parity, full composition VHDL parity, normalized semantic export stabilization, and full backend parity deferred unless it explicitly chooses one of those exact edges.`
+  Verification: `pending selection`
   Commit: `pending`
 
 ## Current Frontier
@@ -1994,7 +2002,8 @@ items named in the 2026-06-05 remaining-work inventory.
 | 202 | `BACKEND-API-VALIDATION-FRONTIER.99` | `done` | Selected generated-FSM non-packed aggregate generic-map fail-closed hardening after prior C2 generated-FSM probe evidence showed aggregate actuals that do not lower to one packed literal fail before VHDL emission. |
 | 203 | `BACKEND-API-VALIDATION-FRONTIER.99.1` | `done` | Locked C2 generated-FSM non-packed aggregate generic-map actuals as fail-closed before VHDL emission at the packed-literal boundary, without implementing VHDL record/array generic declarations or broader aggregate VHDL lowering. |
 | 204 | `BACKEND-API-VALIDATION-FRONTIER.100` | `done` | Selected package-root/package-emission fail-closed hardening after a VHDL package-root probe showed ?pkg roots fail before HDL generation with the import-only package boundary diagnostic. |
-| 205 | `BACKEND-API-VALIDATION-FRONTIER.100.1` | `active` | Lock package roots as import-only declaration containers that do not generate standalone SystemVerilog or VHDL package HDL directly. |
+| 205 | `BACKEND-API-VALIDATION-FRONTIER.100.1` | `done` | Locked package roots as import-only declaration containers that do not generate standalone SystemVerilog or VHDL package HDL directly. |
+| 206 | `BACKEND-API-VALIDATION-FRONTIER.101` | `active` | Select the next exact backend/API edge after package-root/package-emission boundary hardening shipped. |
 
 ## Decisions
 
@@ -2392,6 +2401,7 @@ items named in the 2026-06-05 remaining-work inventory.
 | `BACKEND-API-VALIDATION-FRONTIER.99` | `BACKEND-API-VALIDATION-FRONTIER.99: select generated-FSM nonpacked aggregate boundary` | selected `.99.1` |
 | `BACKEND-API-VALIDATION-FRONTIER.99.1` | `BACKEND-API-VALIDATION-FRONTIER.99.1: lock generated-FSM nonpacked aggregate boundary` | this slice; activates `.100` |
 | `BACKEND-API-VALIDATION-FRONTIER.100` | `BACKEND-API-VALIDATION-FRONTIER.100: select package-root VHDL boundary` | selected `.100.1` |
+| `BACKEND-API-VALIDATION-FRONTIER.100.1` | `BACKEND-API-VALIDATION-FRONTIER.100.1: lock package-root HDL boundary` | this slice; activates `.101` |
 
 ## Changelog
 
@@ -2538,6 +2548,9 @@ items named in the 2026-06-05 remaining-work inventory.
   fail-closed hardening as `.100.1` after a VHDL package-root probe showed
   `?pkg` roots fail before HDL generation with the import-only package boundary
   diagnostic and no standalone package HDL output.
+- `2026-06-06`: Completed `.100.1`; `?pkg` roots are locked as import-only
+  declaration containers that do not generate standalone SystemVerilog or VHDL
+  package HDL directly. `.101` is active for next-edge selection.
 - `2026-06-05`: Activated the tree and selected `.2.1`, the first direct-root
   VHDL backend scaffold through an SV-first converter, before backend code
   changes.

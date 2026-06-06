@@ -2370,9 +2370,11 @@ this normalized semantic shape:
 ```
 
 The current active backend/API frontier is
-`BACKEND-API-VALIDATION-FRONTIER.100.1`, which locks package roots as
-import-only declaration containers that do not generate standalone
-SystemVerilog or VHDL package HDL directly.
+`BACKEND-API-VALIDATION-FRONTIER.101`, a selection-only leaf for the next exact
+backend/API edge after package-root/package-emission hardening. Completed leaf
+`BACKEND-API-VALIDATION-FRONTIER.100.1` locks package roots as import-only
+declaration containers that do not generate standalone SystemVerilog or VHDL
+package HDL directly.
 Package declaration and VHDL package emission, already bounded
 constant/enum/type internals, unrelated forward-IR payloads, signed scalar
 division/modulo, mixed signed/unsigned arithmetic, standalone-DT generic maps
@@ -2391,10 +2393,9 @@ generated-FSM/C4 composition VHDL beyond the exact shipped fixtures, internal
 nets/generic maps beyond APB, broader expression parity beyond the shipped
 AMBA wrap family, and full normalized semantic export stabilization remain out
 of scope until later exact leaves own them.
-Package-root direct HDL generation is in the active
-`BACKEND-API-VALIDATION-FRONTIER.100.1` fail-closed hardening leaf; this keeps
-`?pkg` roots import-only and still does not implement VHDL package
-declaration/emission.
+Package-root direct HDL generation is locked fail-closed by
+`BACKEND-API-VALIDATION-FRONTIER.100.1`; this keeps `?pkg` roots import-only
+and still does not implement VHDL package declaration/emission.
 
 Do not treat the raw `HDLGenerator` result hash as a stable JSON document.
 

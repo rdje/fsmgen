@@ -48,6 +48,44 @@ subtest 'facade contract advertises target_language as a public constructor opti
     );
 };
 
+subtest 'facade target_language option keeps package roots import-only' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $package_path = File::Spec->catfile($tempdir, 'facade_package_root_no_direct_hdl.fsm');
+    write_file(
+        $package_path,
+        <<'FSM'
+(?pkg:shared
+  (+constants
+    (WIDTH 8)
+  )
+)
+FSM
+    );
+
+    my $vhdl_pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'vhdl',
+        quiet => 1,
+    );
+
+    my $error;
+    my $ok = eval {
+        $vhdl_pipeline->generate_hdl_from_file($package_path);
+        1;
+    };
+    $error = $@;
+
+    ok(
+        !$ok,
+        'explicit VHDL facade generation rejects package roots',
+    );
+    like(
+        $error,
+        qr/Package source '\?pkg:shared' does not generate HDL directly.*not as standalone HDL-generation roots/s,
+        'explicit VHDL facade rejection names the import-only package-root boundary',
+    );
+};
+
 subtest 'facade target_language option routes direct generated-module backend behavior' => sub {
     my $direct_path = repo_file('t/corpus/direct_sreset_active_high.fsm');
 
