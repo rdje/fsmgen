@@ -516,6 +516,83 @@ subtest 'direct VHDL scaffold lowers generated sized-literal parameter defaults 
     unlike($vector_cli_hdl, qr/\bmodule\b|#\s*\(|\bparameter\b|\b(?:3|8|16)'[bdhBDH]|\balways_(?:ff|comb)\b/s, 'CLI vector sized-literal generic VHDL output remains VHDL-shaped');
 };
 
+subtest 'direct VHDL scaffold lowers binary scalar addition RHS shape' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $fsm_path = File::Spec->catfile($tempdir, 'direct_vhdl_scalar_addition.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'direct_vhdl_scalar_addition.vhd');
+    my $scalar_multiply_path = File::Spec->catfile($tempdir, 'direct_vhdl_scalar_multiplication_deferred.fsm');
+    write_file(
+        $fsm_path,
+        <<'FSM'
+(?fsm:direct_vhdl_scalar_addition
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+  (+size
+    (A 1)
+    (B 1)
+    (SUM 1)
+  )
+  (idle
+    (= (SUM (+ A B)))
+  )
+)
+FSM
+    );
+    write_file(
+        $scalar_multiply_path,
+        <<'FSM'
+(?fsm:direct_vhdl_scalar_multiplication_deferred
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+  (+size
+    (A 1)
+    (B 1)
+    (PRODUCT 1)
+  )
+  (idle
+    (= (PRODUCT (* A B)))
+  )
+)
+FSM
+    );
+
+    my $hdl = generate_vhdl($fsm_path);
+    like($hdl, qr/\bentity\s+direct_vhdl_scalar_addition\s+is\b/s, 'scalar-addition fixture emits direct VHDL entity');
+    like($hdl, qr/\bA\s+:\s+in\s+std_logic;\s+B\s+:\s+in\s+std_logic\b/s, 'scalar-addition fixture keeps scalar input ports');
+    like(
+        $hdl,
+        qr/\bSUM\s+<=\s+A\s+xor\s+B;/s,
+        'binary scalar addition lowers to one-bit truncated VHDL xor semantics',
+    );
+    unlike($hdl, qr/\bmodule\b|\balways_(?:ff|comb)\b|\bunsigned\(A\)/s, 'scalar-addition VHDL output remains scalar and VHDL-shaped');
+
+    my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--language', 'vhdl', '--quiet', '-o', $output_path, $fsm_path],
+    );
+
+    my $combined_output = join('', @{ $stdout_buf || [] }, @{ $stderr_buf || [] }, ($error_message || ''));
+    ok($success, 'CLI accepts direct --language vhdl for the binary scalar-addition fixture')
+        or diag($combined_output);
+    ok(-e $output_path, 'CLI writes binary scalar-addition VHDL output file');
+
+    my $cli_hdl = read_file($output_path);
+    like($cli_hdl, qr/\bSUM\s+<=\s+A\s+xor\s+B;/s, 'CLI scalar-addition VHDL output uses one-bit xor lowering');
+    unlike($cli_hdl, qr/\bmodule\b|\balways_(?:ff|comb)\b|\bunsigned\(A\)/s, 'CLI scalar-addition VHDL output remains scalar and VHDL-shaped');
+
+    my $scalar_multiply_error = capture_exception(sub {
+        generate_vhdl($scalar_multiply_path);
+    });
+    like(
+        $scalar_multiply_error,
+        qr/arithmetic expression 'A \* B' is outside the direct VHDL scaffold/s,
+        'scalar multiplication remains outside the direct VHDL scaffold boundary',
+    );
+};
+
 subtest 'direct VHDL scaffold keeps mismatched-width arithmetic expression parity fail-closed' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $fsm_path = File::Spec->catfile($tempdir, 'direct_vhdl_mismatched_division_deferred.fsm');

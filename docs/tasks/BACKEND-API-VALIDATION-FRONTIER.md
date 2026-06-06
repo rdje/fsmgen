@@ -100,7 +100,8 @@ items named in the 2026-06-05 remaining-work inventory.
     `BACKEND-API-VALIDATION-FRONTIER.29`,
     `BACKEND-API-VALIDATION-FRONTIER.29.1`,
     `BACKEND-API-VALIDATION-FRONTIER.30`,
-    `BACKEND-API-VALIDATION-FRONTIER.30.1`
+    `BACKEND-API-VALIDATION-FRONTIER.30.1`,
+    `BACKEND-API-VALIDATION-FRONTIER.31`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.1`
   Status: `done`
@@ -600,9 +601,16 @@ items named in the 2026-06-05 remaining-work inventory.
   Commit: `pending`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.30.1`
-  Status: `active`
+  Status: `done`
   Goal: `Support scalar addition RHS lowering in the direct VHDL scaffold.`
   Acceptance: `FSM::HDL::FlattenedDT::Backend::VHDL converts generated SystemVerilog scalar addition RHS forms such as A + B into valid VHDL for the accepted direct single-FSM scaffold, with focused pipeline, CLI, and facade coverage. The leaf does not widen scalar subtraction/multiplication/division/modulo, mismatched-width arithmetic, aggregate record/array VHDL, composition/top VHDL, VHDL packages, multi-clock domains, GHDL validation, broad expression parity, or full backend parity. README/live docs/mdBook, the direct-VHDL fact card, task-tree, and memory are synchronized.`
+  Verification: `perl -Iperl -c perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm; perl -Iperl -c perl/FSM/HDL/FlattenedDT.pm; prove -Iperl t/1420-vhdl-direct-backend-scaffold.t; prove -Iperl t/386-hdl-generator-facade-target-language-boundary-audit.t; prove -Iperl t/1420-vhdl-direct-backend-scaffold.t t/386-hdl-generator-facade-target-language-boundary-audit.t t/114-composition-target-support-diagnostics.t t/404-hdl-generator-facade-target-language-shape-boundary-audit.t; prove -Iperl t/313-hdl-external-validation-contract.t t/308-systemverilog-external-validation.t; bash knowledge-map/scripts/gen_knowledge_map.sh; bash knowledge-map/scripts/check_knowledge_map.sh; scripts/check_memory_architecture.sh; prove -Iperl t/1414-docs-relative-paths-audit.t; prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t; mdbook build docs/book; git diff --check`
+  Commit: `pending`
+
+- ID: `BACKEND-API-VALIDATION-FRONTIER.31`
+  Status: `active`
+  Goal: `Select the next exact backend/API/public-export edge after direct VHDL scalar addition.`
+  Acceptance: `One remaining roadmap-aligned backend, validation, embedding, or public-export edge is selected from current code, contracts, mdBook, knowledge-map, and task-tree evidence. The selected edge has an exact implementation-or-deferral owner leaf before any code/test/source edits occur.`
   Verification: `pending`
   Commit: `pending`
 
@@ -674,7 +682,8 @@ items named in the 2026-06-05 remaining-work inventory.
 | 62 | `BACKEND-API-VALIDATION-FRONTIER.29` | `done` | Selected explicit vector sized-literal generic-default coverage as the next direct VHDL hardening edge after probes showed the behavior already lowers but is not focused-test locked. |
 | 63 | `BACKEND-API-VALIDATION-FRONTIER.29.1` | `done` | Locked multi-bit sized-literal direct VHDL generic defaults through pipeline, CLI, and facade tests before selecting any broader aggregate or composition VHDL work. |
 | 64 | `BACKEND-API-VALIDATION-FRONTIER.30` | `done` | Selected scalar addition RHS lowering as the next narrow direct VHDL scaffold edge after probes showed the generated shape is a simple scalar `SUM = A + B` mux assignment. |
-| 65 | `BACKEND-API-VALIDATION-FRONTIER.30.1` | `active` | Implement only scalar addition RHS lowering before selecting broader scalar arithmetic, aggregate VHDL, composition VHDL, packages, or validation work. |
+| 65 | `BACKEND-API-VALIDATION-FRONTIER.30.1` | `done` | Implemented only binary scalar addition RHS lowering; scalar multiplication and broader scalar arithmetic remain fail-closed. |
+| 66 | `BACKEND-API-VALIDATION-FRONTIER.31` | `active` | Select the next exact backend/API/public-export edge after scalar addition. |
 
 ## Decisions
 
@@ -760,6 +769,7 @@ items named in the 2026-06-05 remaining-work inventory.
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.29` | Selection audit/read of `README.md`, `MEMORY.md`, `docs/TASK_TREE.md`, `docs/book/src/14-feature-backlog.md`, `docs/VHDL_SCOPE.md`, `docs/knowledge/direct-vhdl-scaffold.md`, `perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm`, `t/1420-vhdl-direct-backend-scaffold.t`, and direct aggregate/generic corpora; `./bin/fsmgen --language vhdl --quiet -o /tmp/fsmgen_rhs_expression_supported_variants_select.vhd t/corpus/rhs_expression_supported_variants.fsm`; `./bin/fsmgen --language vhdl --quiet -o /tmp/fsmgen_relational_operator_chains_select.vhd t/corpus/relational_operator_chains.fsm`; `./bin/fsmgen --language vhdl --quiet -o /tmp/fsmgen_params_aggregate_unary_complement_select.vhd t/corpus/params_aggregate_unary_complement.fsm`; `sed -n '1,200p' /tmp/fsmgen_params_aggregate_unary_complement_select.vhd`; mixed aggregate parameter probes failed at pre-backend language-contract boundaries; direct aggregate-output probes failed at the broader `typedef struct` record/array VHDL boundary; `command -v ghdl` returned unavailable; selected `.29.1` for explicit vector sized-literal generic-default coverage | `PASS`; selected vector generic-default coverage for `.29.1` |
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.29.1` | `perl -Iperl -c perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm`; `perl -Iperl -c perl/FSM/HDL/FlattenedDT.pm`; `prove -Iperl t/1420-vhdl-direct-backend-scaffold.t t/386-hdl-generator-facade-target-language-boundary-audit.t`; `./bin/fsmgen --language vhdl --quiet -o /tmp/fsmgen_params_aggregate_unary_complement_impl_probe.vhd t/corpus/params_aggregate_unary_complement.fsm`; `sed -n '1,180p' /tmp/fsmgen_params_aggregate_unary_complement_impl_probe.vhd`; `rg -n "generic|P_NOT|OUT_LIST|OUT_RECORD|module|parameter|always_" /tmp/fsmgen_params_aggregate_unary_complement_impl_probe.vhd`; removed `/tmp/fsmgen_params_aggregate_unary_complement_impl_probe.vhd`; `prove -Iperl t/1420-vhdl-direct-backend-scaffold.t t/386-hdl-generator-facade-target-language-boundary-audit.t t/114-composition-target-support-diagnostics.t t/404-hdl-generator-facade-target-language-shape-boundary-audit.t`; `prove -Iperl t/313-hdl-external-validation-contract.t t/308-systemverilog-external-validation.t`; `./bin/fsmgen --language vhdl --quiet t/corpus/params_aggregate_unary_complement.fsm`; `./bin/fsmgen --language vhdl --quiet t/corpus/params_aggregate_comparison.fsm`; `./bin/fsmgen --language vhdl --quiet t/corpus/direct_size_expression_widths.fsm`; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; direct VHDL vector sized-literal generic defaults are now locked by pipeline, CLI, and facade coverage |
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.30` | Selection audit/read of `docs/book/src/14-feature-backlog.md`, `docs/VHDL_SCOPE.md`, `docs/knowledge/direct-vhdl-scaffold.md`, `perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm`, and `t/1420-vhdl-direct-backend-scaffold.t`; temporary File::Temp VHDL probe for a scalar direct root with `(= (SUM (+ A B)))` failed at `arithmetic expression 'A + B' is outside the direct VHDL scaffold`; temporary File::Temp SystemVerilog probe showed scalar ports `A`/`B` and direct mux assignment `SUM = A + B`; `command -v ghdl` remains unavailable from prior checks; selected `.30.1` for scalar addition RHS lowering before any implementation edits | `PASS`; selected scalar addition RHS lowering for `.30.1` |
+| `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.30.1` | `perl -Iperl -c perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm`; `perl -Iperl -c perl/FSM/HDL/FlattenedDT.pm`; `prove -Iperl t/1420-vhdl-direct-backend-scaffold.t`; `prove -Iperl t/386-hdl-generator-facade-target-language-boundary-audit.t`; `prove -Iperl t/1420-vhdl-direct-backend-scaffold.t t/386-hdl-generator-facade-target-language-boundary-audit.t t/114-composition-target-support-diagnostics.t t/404-hdl-generator-facade-target-language-shape-boundary-audit.t`; `prove -Iperl t/313-hdl-external-validation-contract.t t/308-systemverilog-external-validation.t`; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; binary scalar addition now lowers to VHDL xor while scalar multiplication remains fail-closed |
 
 ## Commit Log
 
@@ -829,6 +839,7 @@ items named in the 2026-06-05 remaining-work inventory.
 | `BACKEND-API-VALIDATION-FRONTIER.29` | `BACKEND-API-VALIDATION-FRONTIER.29: select VHDL vector generics` | selected `.29.1` |
 | `BACKEND-API-VALIDATION-FRONTIER.29.1` | `BACKEND-API-VALIDATION-FRONTIER.29.1: lock VHDL vector generics` | this slice |
 | `BACKEND-API-VALIDATION-FRONTIER.30` | `BACKEND-API-VALIDATION-FRONTIER.30: select VHDL scalar addition` | selected `.30.1` |
+| `BACKEND-API-VALIDATION-FRONTIER.30.1` | `BACKEND-API-VALIDATION-FRONTIER.30.1: ship VHDL scalar addition` | this slice |
 
 ## Changelog
 
@@ -1144,3 +1155,7 @@ items named in the 2026-06-05 remaining-work inventory.
   scalar-arithmetic guard. Broader scalar arithmetic, aggregate VHDL,
   composition VHDL, packages, GHDL validation, and full backend parity remain
   deferred.
+- `2026-06-06`: Completed `.30.1`; binary scalar addition now lowers to
+  one-bit truncated VHDL `xor` semantics through pipeline, CLI, and facade
+  tests. Scalar multiplication and broader scalar arithmetic remain fail-closed.
+  Activated `.31` to select the next backend/API edge.

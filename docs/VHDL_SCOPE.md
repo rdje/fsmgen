@@ -10,6 +10,7 @@ This document defines the scoped R14 VHDL backend plan for FSMGen.
 - The direct scaffold now includes delayed-pulse clock-branch nested-if
   lowering for the generated `<N` pulse-delay shape.
 - The direct scaffold now includes the first arithmetic/XOR RHS expression family:
+  binary scalar addition lowers to one-bit truncated `xor` semantics,
   same-width vector addition/subtraction chains lower through `numeric_std`
   unsigned casts, and same-width vector multiplication/division/modulo chains
   lower through explicit target-width `numeric_std` resize. Same-width
@@ -19,10 +20,9 @@ This document defines the scoped R14 VHDL backend plan for FSMGen.
   arithmetic integer-expression defaults as `integer`, one-bit sized-literal
   defaults as `std_logic`, and multi-bit sized-literal defaults as
   `std_logic_vector` generics.
-- Composition VHDL, aggregate VHDL, broad expression parity, GHDL validation,
-  packages, multi-clock domains, and full feature parity remain deferred.
-- The active next exact VHDL leaf owns scalar addition RHS lowering only;
-  broader scalar arithmetic remains deferred.
+- Composition VHDL, aggregate VHDL, broad expression parity, broader scalar
+  arithmetic, GHDL validation, packages, multi-clock domains, and full feature
+  parity remain deferred.
 
 ## Goal
 Implement a real, scoped VHDL backend that generates synthesizable VHDL from
@@ -52,6 +52,8 @@ The first VHDL lane is intentionally narrow:
      the direct scaffold fixtures
    - Delayed-pulse clock branches that use the generated one-level nested
      `if (<pulse_delay_pipe>) begin ... end` shape
+   - Binary scalar addition RHS assignments, lowered as one-bit truncated
+     scalar `xor`
    - Same-width addition, subtraction, multiplication, division, modulo, and
      XOR RHS chains in the generated direct combinational mux shape
    - Generic-bearing direct-root module headers emitted by the generated
@@ -86,16 +88,18 @@ The first VHDL lane is intentionally narrow:
   mapping, module/entity conversion, reset polarity handling, and generated
   delayed-pulse nested clock-branch lowering, plus same-width addition,
   subtraction, multiplication, division, modulo, and XOR RHS expression chains,
-  and direct-root parameter blocks as VHDL generics, including integer
-  expression defaults and typed scalar/vector sized-literal defaults.
+  binary scalar addition RHS lowering, and direct-root parameter blocks as VHDL
+  generics, including integer expression defaults and typed scalar/vector
+  sized-literal defaults.
 - Remaining semantic conversion work still belongs to exact future VHDL leaves.
 
 ### Phase 3: Regression and hardening (R14.3)
 - Focused direct VHDL generation tests cover pipeline and CLI routing,
   sync/async reset processes, delayed-pulse clock branches, concat lowering,
-  same-width addition/subtraction/multiplication/division/modulo/XOR-chain
-  lowering, generic-bearing direct-root module headers, one-bit `std_logic`
-  and multi-bit `std_logic_vector` sized-literal generic defaults,
+  binary scalar addition, same-width
+  addition/subtraction/multiplication/division/modulo/XOR-chain lowering,
+  generic-bearing direct-root module headers, one-bit `std_logic` and
+  multi-bit `std_logic_vector` sized-literal generic defaults,
   mismatched-width arithmetic-expression fail-closed diagnostics, and
   aggregate-output fail-closed diagnostics.
 - Add broader VHDL output to the regression corpus
