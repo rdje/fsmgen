@@ -9,6 +9,7 @@ answers:
   - "is composition VHDL supported?"
   - "is GHDL validation active?"
   - "does direct VHDL support delayed pulses?"
+  - "does direct VHDL support arithmetic expressions?"
 date: 2026-06-06
 status: current
 tags: [vhdl, backend, direct-generation, validation]
@@ -21,5 +22,7 @@ Direct single-FSM roots can now use `target_language => 'vhdl'` or
 constants, enable assignments, sync/async reset processes, `process(all)`
 combinational muxes, basic concat RHS forms, and delayed-pulse clock-branch
 nested-if lowering. Composition/top VHDL, aggregate-output VHDL, packages,
-multi-clock domains, arithmetic/broad expression parity, GHDL validation, and
-full SystemVerilog parity remain deferred or fail-closed.
+multi-clock domains, broad expression parity, GHDL validation, and full
+SystemVerilog parity remain deferred or fail-closed. Arithmetic expression
+parity is the active next direct-VHDL scaffold edge; before that ships, the
+current boundary rejects generated RHS forms such as `A + B`.

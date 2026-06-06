@@ -3773,8 +3773,11 @@ nested-if lowering, and basic concat RHS forms. It is covered by direct
 pipeline, CLI, and facade tests.
 
 Still backlog: composition/top VHDL, aggregate VHDL record/array lowering,
-VHDL packages, multi-clock domains, GHDL validation, arithmetic/broad
-expression parity, and full feature parity with the SystemVerilog backend.
+VHDL packages, multi-clock domains, GHDL validation, broad expression parity,
+and full feature parity with the SystemVerilog backend. Arithmetic RHS
+expression parity is the active next direct-VHDL scaffold edge; before that
+ships, generated forms such as `A + B` remain fail-closed at the scaffold
+boundary.
 
 ### GHDL Validation
 

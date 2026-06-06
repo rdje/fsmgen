@@ -9,9 +9,10 @@ This document defines the scoped R14 VHDL backend plan for FSMGen.
   converter.
 - The direct scaffold now includes delayed-pulse clock-branch nested-if
   lowering for the generated `<N` pulse-delay shape.
-- Composition VHDL, aggregate VHDL, arithmetic expression parity, GHDL
-  validation, packages, multi-clock domains, and full feature parity remain
-  deferred.
+- Direct arithmetic expression parity is the active next scaffold edge, but it
+  is not shipped yet.
+- Composition VHDL, aggregate VHDL, broad expression parity, GHDL validation,
+  packages, multi-clock domains, and full feature parity remain deferred.
 
 ## Goal
 Implement a real, scoped VHDL backend that generates synthesizable VHDL from
@@ -74,6 +75,8 @@ The first VHDL lane is intentionally narrow:
   sync/async reset processes, delayed-pulse clock branches, concat lowering,
   arithmetic-expression fail-closed diagnostics, and aggregate-output
   fail-closed diagnostics.
+- The next active hardening leaf is the first direct arithmetic RHS expression
+  shape from `t/corpus/direct_assignment_pair_form.fsm`.
 - Add broader VHDL output to the regression corpus
 - Ensure `--check --json` and `--emit-semantic-json` stay target-neutral
 - Consider external VHDL validation via GHDL
