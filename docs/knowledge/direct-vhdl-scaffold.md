@@ -26,6 +26,7 @@ answers:
   - "does composition VHDL support APB/C4 generated-FSM children?"
   - "does composition VHDL support APB composition tops?"
   - "does composition VHDL support APB/C4 composition tops?"
+  - "does composition VHDL support APB/C4 scalar generic maps?"
   - "does --language vhdl work for standalone-DT composition tops?"
   - "does --language vhdl work for C2 generated-FSM composition tops?"
   - "does --language vhdl work for APB/C4 composition tops?"
@@ -221,7 +222,8 @@ scalar one-bit default metadata such as `ENABLE_DEFAULT 1'b0`;
 aggregate/list/record actuals that do not resolve to multi-bit packed values,
 unresolved package/expression actuals, standalone-DT generic maps beyond scalar
 integer/scalar expression/one-bit sized-bitstring/multi-bit sized-bitstring/
-packed-list/packed-map actuals, and APB/C4 generic maps remain deferred for those
+packed-list/packed-map actuals, and APB/C4 generic maps beyond scalar integer
+actuals remain deferred for those
 families. The
 bounded C2 generated-FSM child
 composition VHDL top is also shipped for
@@ -247,9 +249,14 @@ The bounded APB/C4 generated-FSM child composition VHDL top is also shipped for
 `fsm/apb_tb.fsm`. That subset emits VHDL-safe APB requester/completer child
 segments, vector APB structural signals, deterministic shared-datapath sink
 signals, and VHDL entity port maps for `apb_requester` and `apb_completer`,
-without SystemVerilog structural syntax. Other composition/top VHDL shapes
-remain locked fail-closed by focused pipeline and CLI coverage: `?top` sources
-are parsed into typed composition IR, then unsupported
+without SystemVerilog structural syntax. The same bounded APB/C4 generated-FSM
+family also lowers scalar integer parameter overrides to VHDL generic maps
+before the requester/completer child port maps, such as
+`TIMEOUT_CYCLES => 8` and `TIMEOUT_CYCLES => 6`, while the child entities keep
+matching `integer` generic declarations. APB/C4 scalar expression, one-bit,
+multi-bit, packed aggregate, and package-backed generic maps remain deferred.
+Other composition/top VHDL shapes remain locked fail-closed by focused pipeline
+and CLI coverage: `?top` sources are parsed into typed composition IR, then unsupported
 `target_language => 'vhdl'` and `--language vhdl` shapes are rejected with the
 scoped composition target-support diagnostic. Broader generated-FSM/C4
 composition VHDL beyond the exact shipped fixtures, internal nets/generic maps,

@@ -325,7 +325,7 @@ sub _is_vhdl_apb_c4_generated_fsm_candidate ($instances, $ports_blocks, $wiring_
         my $name = $instance->name // '';
         return 0 unless ($instance->kind // '') eq 'fsmc';
         return 0 unless ($expected_instance_source{$name} // '') eq ($instance->source_name // '');
-        return 0 if @{$instance->parameter_overrides || []};
+        return 0 unless _has_only_scalar_integer_parameter_overrides($instance);
         delete $expected_instance_source{$name};
     }
     return 0 if keys %expected_instance_source;
@@ -375,6 +375,15 @@ sub _is_vhdl_apb_c4_generated_fsm_candidate ($instances, $ports_blocks, $wiring_
     }
     return 0 if keys %expected_link;
 
+    return 1;
+}
+
+sub _has_only_scalar_integer_parameter_overrides ($instance) {
+    for my $override (@{$instance->parameter_overrides || []}) {
+        return 0 unless ($override->{value_kind} // 'scalar') eq 'scalar';
+        my $value = $override->{value_text};
+        return 0 unless defined($value) && $value =~ /\A-?\d+\z/;
+    }
     return 1;
 }
 

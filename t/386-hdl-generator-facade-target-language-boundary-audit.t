@@ -1429,6 +1429,46 @@ subtest 'facade target_language option routes bounded APB/C4 composition VHDL st
     );
 };
 
+subtest 'facade target_language option routes bounded APB/C4 scalar generic-map VHDL behavior' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'facade_apb_c4_scalar_generic_map_top.fsm');
+    write_apb_c4_scalar_generic_map_fixture($repo_root, $tempdir, $composition_path);
+
+    my $vhdl_pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'vhdl',
+        quiet => 1,
+    );
+
+    my $vhdl_result = $vhdl_pipeline->generate_hdl_from_file($composition_path);
+
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bentity\s+apb_requester\s+is\s+generic\s*\(\s*TIMEOUT_CYCLES\s+:\s+integer\s*:=\s*4\s*\);/s,
+        'explicit VHDL facade generation emits the APB requester scalar generic declaration',
+    );
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bentity\s+apb_completer\s+is\s+generic\s*\(\s*TIMEOUT_CYCLES\s+:\s+integer\s*:=\s*4\s*\);/s,
+        'explicit VHDL facade generation emits the APB completer scalar generic declaration',
+    );
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\brequester\s+:\s+entity\s+work\.apb_requester\s+generic\s+map\s*\(\s*TIMEOUT_CYCLES\s+=>\s+8\s*\)\s+port\s+map\s*\(/s,
+        'explicit VHDL facade generation emits the APB requester scalar generic map before the port map',
+    );
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bcompleter\s+:\s+entity\s+work\.apb_completer\s+generic\s+map\s*\(\s*TIMEOUT_CYCLES\s+=>\s+6\s*\)\s+port\s+map\s*\(/s,
+        'explicit VHDL facade generation emits the APB completer scalar generic map before the port map',
+    );
+    unlike(
+        $vhdl_result->{hdl_code},
+        qr/\bmodule\b|\bassign\b|\bendmodule\b|\balways_(?:ff|comb)\b|\#\s*\(|\.TIMEOUT_CYCLES\s*\(/s,
+        'explicit VHDL APB/C4 scalar generic-map generation does not leak SystemVerilog generic syntax',
+    );
+};
+
 subtest 'facade target_language option routes direct VHDL delayed-pulse scaffold behavior' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $direct_path = File::Spec->catfile($tempdir, 'facade_direct_delayed_pulse_vhdl.fsm');
@@ -3223,4 +3263,31 @@ sub write_file {
     open my $fh, '>', $path or die "Cannot open $path for write: $!";
     print {$fh} $content or die "Cannot write $path: $!";
     close $fh or die "Cannot close $path: $!";
+}
+
+sub read_file {
+    my ($path) = @_;
+    open my $fh, '<', $path or die "Cannot open $path for read: $!";
+    local $/;
+    my $content = <$fh>;
+    close $fh or die "Cannot close $path: $!";
+    return $content;
+}
+
+sub write_apb_c4_scalar_generic_map_fixture {
+    my ($repo_root, $fixture_dir, $top_path) = @_;
+
+    for my $module (qw(apb_requester apb_completer)) {
+        my $source = read_file(File::Spec->catfile($repo_root, 'fsm', "$module.fsm"));
+        $source =~ s/\(\?fsm:$module\n/(?fsm:$module\n  (+params\n    (TIMEOUT_CYCLES 4)\n  )\n/
+            or die "Cannot add TIMEOUT_CYCLES to $module fixture";
+        write_file(File::Spec->catfile($fixture_dir, "$module.fsm"), $source);
+    }
+
+    my $top = read_file(File::Spec->catfile($repo_root, 'fsm', 'apb_tb.fsm'));
+    $top =~ s/\(\?fsmc:requester apb_requester\)/(?fsmc:requester apb_requester\n    (params\n      (TIMEOUT_CYCLES 8)\n    )\n  )/
+        or die 'Cannot add requester TIMEOUT_CYCLES override';
+    $top =~ s/\(\?fsmc:completer apb_completer\)/(?fsmc:completer apb_completer\n    (params\n      (TIMEOUT_CYCLES 6)\n    )\n  )/
+        or die 'Cannot add completer TIMEOUT_CYCLES override';
+    write_file($top_path, $top);
 }

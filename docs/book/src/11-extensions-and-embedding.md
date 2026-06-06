@@ -945,17 +945,21 @@ requester/completer child VHDL
 entities, vector APB structural signals, deterministic shared-datapath sink
 signals, and both generated child entity port maps. These outputs avoid
 SystemVerilog `module`, `assign`, `endmodule`, or `always_*` syntax.
+The same bounded APB/C4 family also emits scalar integer generic maps such as
+`TIMEOUT_CYCLES => 8` and `TIMEOUT_CYCLES => 6` before the requester/completer
+child port maps.
 Other composition/top VHDL shapes remain fail-closed after typed composition IR
 parsing, with broader generated-child/C4, internal-net-heavy, generic-map,
 package, and full-parity composition shapes rejected by the scoped composition
-target-support diagnostic. Generic-map families outside the shipped external-RTL
-scalar integer, scalar integer expression, metadata-backed one-bit sized
-bitstring, multi-bit sized bitstring, resolved package-backed, and packed
-aggregate actuals, shipped C1 standalone-DT scalar integer, scalar expression,
-one-bit sized bitstring, multi-bit sized bitstring, packed-list, and
-packed-map actuals, and shipped C2 generated-FSM scalar integer, scalar
-expression, one-bit sized bitstring, multi-bit sized bitstring, and packed
-aggregate actuals remain deferred.
+target-support diagnostic. Generic-map families remain deferred outside the
+shipped external-RTL scalar integer, scalar integer expression,
+metadata-backed one-bit sized bitstring, multi-bit sized bitstring, resolved
+package-backed, and packed aggregate actuals; shipped C1 standalone-DT scalar
+integer, scalar expression, one-bit sized bitstring, multi-bit sized bitstring,
+packed-list, and packed-map actuals; shipped C2 generated-FSM scalar integer,
+scalar expression, one-bit sized bitstring, multi-bit sized bitstring, and
+packed aggregate actuals; and shipped APB/C4 generated-FSM scalar integer
+actuals.
 That is still a scoped scaffold, not a full VHDL backend promise.
 
 [t/387-hdl-generator-facade-debug-level-boundary-audit.t](t/387-hdl-generator-facade-debug-level-boundary-audit.t)
@@ -2353,14 +2357,15 @@ this normalized semantic shape:
 ```
 
 The current active backend/API frontier is
-`BACKEND-API-VALIDATION-FRONTIER.90.1`, which implements the bounded APB/C4
-generated-FSM scalar integer VHDL generic-map edge selected by `.90`.
+`BACKEND-API-VALIDATION-FRONTIER.91`, which selects the next exact backend/API
+edge after bounded APB/C4 generated-FSM scalar integer VHDL generic-map
+actuals shipped in `.90.1`.
 Package declaration and VHDL package emission, already bounded
 constant/enum/type internals, unrelated forward-IR payloads, signed scalar
 division/modulo, mixed signed/unsigned arithmetic, standalone-DT generic maps
 beyond scalar integer, scalar expression, one-bit sized bitstring, multi-bit
 sized bitstring, packed-list, and packed-map actuals, APB/C4
-generic maps beyond the selected scalar integer edge, full aggregate VHDL
+generic maps beyond shipped scalar integer actuals, full aggregate VHDL
 record/array lowering, broader
 generated-FSM/C4 composition VHDL beyond the exact shipped fixtures, internal
 nets/generic maps beyond APB, broader expression parity beyond the shipped
