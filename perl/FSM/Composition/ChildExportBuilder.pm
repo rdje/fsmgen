@@ -102,6 +102,8 @@ sub build_generated_child_exports ($class, %args) {
             standalone_dt_count => ($child->{standalone_dt_count} || 0),
             output_drive_family_count => ($child->{output_drive_family_count} || 0),
             standalone_dt_multi_drive_target_count => ($child->{standalone_dt_multi_drive_target_count} || 0),
+            parameter_override_count => ($child->{parameter_override_count} || 0),
+            parameter_overrides => _clone($child->{parameter_overrides} || []),
             intent_hir => _clone($child->{intent_hir} || {}),
             lowered_rtl_ir => _clone($child->{lowered_rtl_ir} || {}),
             structural_rtl_ir => _clone($child->{structural_rtl_ir} || {}),

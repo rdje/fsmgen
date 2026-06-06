@@ -3924,9 +3924,11 @@ Current shipped boundary: the normalized semantic payload contract publishes
 `semantic.symbol_contract`, and the report contract republishes that list as
 `success_semantic_optional_child_presence_keys`. The
 `semantic.composition` contract also advertises bounded
-`children[]`, `generated_children[]`, and `standalone_dt_children[]` shallow
-entry key families while delegating child `intent_hir`, `lowered_rtl_ir`, and
-`structural_rtl_ir` summaries to their existing bounded owners. The standalone-DT
+`children[]`, `children[].parameter_overrides[]`, `generated_children[]`,
+`generated_children[].parameter_overrides[]`, and `standalone_dt_children[]`
+shallow/alias entry key families while delegating child `intent_hir`,
+`lowered_rtl_ir`, and `structural_rtl_ir` summaries to their existing bounded
+owners. The standalone-DT
 child family also advertises bounded reusable-DT enable-family metadata,
 module-enable-family metadata, and nested multi-drive target metadata while
 delegating the assertion shape to the existing lowered-RTL standalone-DT
@@ -3958,7 +3960,9 @@ metadata. It also advertises bounded alias key families for
 delegating to the existing `semantic.composition` child and standalone-DT child
 schema owners. It also advertises
 `semantic.forward_ir.intent_hir.composition_children[].parameter_overrides[]`
-by delegating through the composition child alias to the structural instance
+and
+`semantic.forward_ir.intent_hir.composition_generated_children[].parameter_overrides[]`
+by delegating through the composition aliases to the structural instance
 parameter-override schema owner. Contributor and child `intent_hir`,
 `lowered_rtl_ir`, and `structural_rtl_ir` summaries stay delegated to their
 existing bounded contracts. The
@@ -3970,14 +3974,16 @@ core and typed-extension entry keys. It now also advertises
 `instances[].parameter_overrides[]` core, raw-value-extension, and
 value-metadata-extension entry keys, and advertises `auxiliary_assignments[]`
 as scalar string assignment-line entries. The `semantic.composition` contract
-now also advertises `children[].parameter_overrides[]` as aliases of those same
+now also advertises `children[].parameter_overrides[]` and
+`generated_children[].parameter_overrides[]` as aliases of those same
 structural instance parameter-override core, raw-value-extension, and
 value-metadata-extension schemas. The manifest is still not a full normalized
 semantic export.
 
-Current selected next edge: task-tree leaf
-`BACKEND-API-VALIDATION-FRONTIER.51.1` will publish generated-child
-parameter-override metadata and alias key families for
+Shipped generated-child export edge: task-tree leaf
+`BACKEND-API-VALIDATION-FRONTIER.51.1` publishes
+`parameter_override_count`, `parameter_overrides[]`, and bounded
+parameter-override alias key families for
 `semantic.composition.generated_children[]` and
 `semantic.forward_ir.intent_hir.composition_generated_children[]`. Full
 normalized semantic export stabilization remains out of scope.

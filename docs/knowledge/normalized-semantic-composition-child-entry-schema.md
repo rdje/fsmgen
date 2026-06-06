@@ -20,7 +20,10 @@ entry schemas under `semantic.composition.children[]` and
 The payload/report contracts and capability manifest inherit those key families
 through the normalized semantic contract helper chain. The runtime contract audit
 checks a strict composition semantic JSON export over `fsm/apb_tb.fsm` against
-the exact child and generated-child entry key sets.
+the exact child and generated-child entry key sets. Generated-child entries now
+include `parameter_override_count` and `parameter_overrides`; the nested
+generated-child parameter-override alias schema is owned by
+`normalized-semantic-generated-child-parameter-override-alias-schema`.
 
 Child `intent_hir`, `lowered_rtl_ir`, and `structural_rtl_ir` summaries remain
 delegated to their existing bounded child contracts instead of being duplicated

@@ -26,5 +26,6 @@ families reuse the same optional key families as
 `FSM::Support::NormalizedSemanticIntentHIRContract` advertises the matching
 `semantic.forward_ir.intent_hir.composition_children[].parameter_overrides[]`
 alias key families by delegating through the composition child schema owner.
-Generated-child and standalone-DT child parameter-override schemas remain out
-of this specific alias boundary.
+Generated-child parameter-override aliases are owned separately by
+`normalized-semantic-generated-child-parameter-override-alias-schema`; standalone-DT
+child parameter-override schemas remain out of this specific alias boundary.

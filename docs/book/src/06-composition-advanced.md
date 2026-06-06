@@ -802,7 +802,9 @@ direct `(+params ...)` block rather than in `.rtlif` metadata:
     (out_data 16)
   )
   (-idle
-    (out_data> = LANES <in_data=WIDTH)
+    (<in_data=WIDTH
+      (= (out_data> LANES))
+    )
   )
 )
 ```

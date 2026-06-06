@@ -40,6 +40,9 @@ our @EXPORT_OK = qw(
     normalized_semantic_composition_collection_keys
     normalized_semantic_composition_contract_source
     normalized_semantic_composition_generated_child_entry_keys
+    normalized_semantic_composition_generated_child_parameter_override_entry_keys
+    normalized_semantic_composition_generated_child_parameter_override_raw_value_extension_keys
+    normalized_semantic_composition_generated_child_parameter_override_value_metadata_extension_keys
     normalized_semantic_composition_nested_presence_keys
     normalized_semantic_composition_presence_key_family_map
     normalized_semantic_composition_presence_keys
@@ -96,6 +99,12 @@ sub build_normalized_semantic_composition_contract {
         child_parameter_override_value_metadata_extension_keys =>
             normalized_semantic_composition_child_parameter_override_value_metadata_extension_keys(),
         generated_child_entry_keys => normalized_semantic_composition_generated_child_entry_keys(),
+        generated_child_parameter_override_entry_keys =>
+            normalized_semantic_composition_generated_child_parameter_override_entry_keys(),
+        generated_child_parameter_override_raw_value_extension_keys =>
+            normalized_semantic_composition_generated_child_parameter_override_raw_value_extension_keys(),
+        generated_child_parameter_override_value_metadata_extension_keys =>
+            normalized_semantic_composition_generated_child_parameter_override_value_metadata_extension_keys(),
         standalone_dt_child_entry_keys => normalized_semantic_composition_standalone_dt_child_entry_keys(),
         standalone_dt_enable_family_entry_keys =>
             normalized_semantic_composition_standalone_dt_enable_family_entry_keys(),
@@ -139,7 +148,7 @@ sub build_normalized_semantic_composition_contract {
             q{Treat this contract as the bounded nested `composition` object used inside successful public normalized semantic JSON reports for composition sources.},
             'The bounded public promise covers the lane, child/net/link, generated-child, standalone-DT-child, shared-datapath, plan-snapshot, and sanitized provenance-report keys exported for composition roots.',
             'The children[] and generated_children[] entry key families describe shallow composition-child summaries while delegating child intent_hir, lowered_rtl_ir, and structural_rtl_ir objects to their existing bounded contracts.',
-            'The children[].parameter_overrides[] key families are composition-child aliases of the already bounded structural instance parameter-override entry, raw-value extension, and value-metadata extension schemas.',
+            'The children[].parameter_overrides[] and generated_children[].parameter_overrides[] key families are composition-child aliases of the already bounded structural instance parameter-override entry, raw-value extension, and value-metadata extension schemas.',
             'The standalone_dt_children[] entry key family describes shallow reusable standalone-DT child summaries while delegating child intent_hir, lowered_rtl_ir, structural_rtl_ir, and nested standalone-DT multi-drive assertion shapes to their existing bounded contracts.',
             'The shared_datapath_candidates[] entry key families are composition-side aliases of the already bounded lowered-RTL shared-datapath candidate, contributor, drive-intent, aggregate-enable, assertion, and bound-connection schemas.',
             'The nested plan_snapshot fragment stays bounded through FSM::Support::SerializableCompositionPlanSnapshot.',
@@ -239,11 +248,25 @@ sub normalized_semantic_composition_generated_child_entry_keys {
             standalone_dt_count
             output_drive_family_count
             standalone_dt_multi_drive_target_count
+            parameter_override_count
+            parameter_overrides
             intent_hir
             lowered_rtl_ir
             structural_rtl_ir
         ),
     ];
+}
+
+sub normalized_semantic_composition_generated_child_parameter_override_entry_keys {
+    return normalized_semantic_structural_rtl_ir_instance_parameter_override_entry_keys();
+}
+
+sub normalized_semantic_composition_generated_child_parameter_override_raw_value_extension_keys {
+    return normalized_semantic_structural_rtl_ir_instance_parameter_override_raw_value_extension_keys();
+}
+
+sub normalized_semantic_composition_generated_child_parameter_override_value_metadata_extension_keys {
+    return normalized_semantic_structural_rtl_ir_instance_parameter_override_value_metadata_extension_keys();
 }
 
 sub normalized_semantic_composition_standalone_dt_child_entry_keys {
@@ -352,6 +375,12 @@ sub normalized_semantic_composition_presence_key_family_map {
         child_parameter_override_value_metadata_extension_keys =>
             normalized_semantic_composition_child_parameter_override_value_metadata_extension_keys(),
         generated_child_entry_keys => normalized_semantic_composition_generated_child_entry_keys(),
+        generated_child_parameter_override_entry_keys =>
+            normalized_semantic_composition_generated_child_parameter_override_entry_keys(),
+        generated_child_parameter_override_raw_value_extension_keys =>
+            normalized_semantic_composition_generated_child_parameter_override_raw_value_extension_keys(),
+        generated_child_parameter_override_value_metadata_extension_keys =>
+            normalized_semantic_composition_generated_child_parameter_override_value_metadata_extension_keys(),
         standalone_dt_child_entry_keys => normalized_semantic_composition_standalone_dt_child_entry_keys(),
         standalone_dt_enable_family_entry_keys =>
             normalized_semantic_composition_standalone_dt_enable_family_entry_keys(),

@@ -168,6 +168,9 @@ use FSM::Support::NormalizedSemanticReportContract qw(
     normalized_semantic_composition_child_parameter_override_raw_value_extension_keys
     normalized_semantic_composition_child_parameter_override_value_metadata_extension_keys
     normalized_semantic_composition_generated_child_entry_keys
+    normalized_semantic_composition_generated_child_parameter_override_entry_keys
+    normalized_semantic_composition_generated_child_parameter_override_raw_value_extension_keys
+    normalized_semantic_composition_generated_child_parameter_override_value_metadata_extension_keys
     normalized_semantic_composition_shared_datapath_aggregate_enable_contributor_entry_keys
     normalized_semantic_composition_shared_datapath_aggregate_enable_family_entry_keys
     normalized_semantic_composition_shared_datapath_assertion_keys
@@ -188,6 +191,9 @@ use FSM::Support::NormalizedSemanticReportContract qw(
     normalized_semantic_forward_ir_intent_hir_composition_child_parameter_override_raw_value_extension_keys
     normalized_semantic_forward_ir_intent_hir_composition_child_parameter_override_value_metadata_extension_keys
     normalized_semantic_forward_ir_intent_hir_composition_generated_child_entry_keys
+    normalized_semantic_forward_ir_intent_hir_composition_generated_child_parameter_override_entry_keys
+    normalized_semantic_forward_ir_intent_hir_composition_generated_child_parameter_override_raw_value_extension_keys
+    normalized_semantic_forward_ir_intent_hir_composition_generated_child_parameter_override_value_metadata_extension_keys
     normalized_semantic_forward_ir_intent_hir_composition_standalone_dt_child_entry_keys
     normalized_semantic_forward_ir_intent_hir_composition_standalone_dt_enable_family_entry_keys
     normalized_semantic_forward_ir_intent_hir_composition_standalone_dt_module_enable_family_keys
@@ -1014,6 +1020,41 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
     );
     for my $case (
         [
+            'composition_generated_child_parameter_override_entry_keys',
+            normalized_semantic_composition_generated_child_parameter_override_entry_keys(),
+            'composition generated-child parameter-override core entry keys',
+        ],
+        [
+            'composition_generated_child_parameter_override_raw_value_extension_keys',
+            normalized_semantic_composition_generated_child_parameter_override_raw_value_extension_keys(),
+            'composition generated-child parameter-override raw-value extension keys',
+        ],
+        [
+            'composition_generated_child_parameter_override_value_metadata_extension_keys',
+            normalized_semantic_composition_generated_child_parameter_override_value_metadata_extension_keys(),
+            'composition generated-child parameter-override value-metadata extension keys',
+        ],
+    ) {
+        my ($field, $expected, $label) = @{$case};
+
+        is_deeply(
+            $manifest->{semantic_exports}{normalized_semantic_json}{$field},
+            $expected,
+            "manifest records exact normalized semantic $label",
+        );
+        is_deeply(
+            $manifest->{semantic_exports}{normalized_semantic_json}{presence_key_family_map}{$field},
+            $expected,
+            "manifest report family map records $label",
+        );
+        is_deeply(
+            $manifest->{semantic_exports}{normalized_semantic_json}{semantic_presence_key_family_map}{$field},
+            $expected,
+            "manifest semantic family map records $label",
+        );
+    }
+    for my $case (
+        [
             'composition_standalone_dt_child_entry_keys',
             normalized_semantic_composition_standalone_dt_child_entry_keys(),
             'composition standalone-DT child entry keys',
@@ -1181,6 +1222,24 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
             'forward_ir_intent_hir_composition_generated_child_entry_keys',
             normalized_semantic_forward_ir_intent_hir_composition_generated_child_entry_keys(),
             'intent-HIR composition generated-child entry keys',
+        ],
+        [
+            'success_forward_ir_intent_hir_composition_generated_child_parameter_override_entry_keys',
+            'forward_ir_intent_hir_composition_generated_child_parameter_override_entry_keys',
+            normalized_semantic_forward_ir_intent_hir_composition_generated_child_parameter_override_entry_keys(),
+            'intent-HIR composition generated-child parameter-override core entry keys',
+        ],
+        [
+            'success_forward_ir_intent_hir_composition_generated_child_parameter_override_raw_value_extension_keys',
+            'forward_ir_intent_hir_composition_generated_child_parameter_override_raw_value_extension_keys',
+            normalized_semantic_forward_ir_intent_hir_composition_generated_child_parameter_override_raw_value_extension_keys(),
+            'intent-HIR composition generated-child parameter-override raw-value extension keys',
+        ],
+        [
+            'success_forward_ir_intent_hir_composition_generated_child_parameter_override_value_metadata_extension_keys',
+            'forward_ir_intent_hir_composition_generated_child_parameter_override_value_metadata_extension_keys',
+            normalized_semantic_forward_ir_intent_hir_composition_generated_child_parameter_override_value_metadata_extension_keys(),
+            'intent-HIR composition generated-child parameter-override value-metadata extension keys',
         ],
         [
             'success_forward_ir_intent_hir_composition_standalone_dt_child_entry_keys',

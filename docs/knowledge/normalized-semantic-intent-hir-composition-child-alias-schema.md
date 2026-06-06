@@ -23,6 +23,12 @@ standalone-DT child schema helpers. The forward-IR, semantic payload, normalized
 semantic report, and capability manifest layers inherit the same key families
 through their helper chains.
 
+IntentHIR also advertises parameter-override alias key families for
+`semantic.forward_ir.intent_hir.composition_children[].parameter_overrides[]`
+and
+`semantic.forward_ir.intent_hir.composition_generated_children[].parameter_overrides[]`
+by delegating to the composition child and generated-child alias owners.
+
 Nested child `intent_hir`, `lowered_rtl_ir`, and `structural_rtl_ir` summaries
 remain delegated to their existing bounded child contracts instead of being
 duplicated inside the IntentHIR alias schemas.

@@ -49,6 +49,9 @@ use FSM::Support::NormalizedSemanticPayloadContract qw(
     normalized_semantic_payload_composition_child_parameter_override_raw_value_extension_keys
     normalized_semantic_payload_composition_child_parameter_override_value_metadata_extension_keys
     normalized_semantic_payload_composition_generated_child_entry_keys
+    normalized_semantic_payload_composition_generated_child_parameter_override_entry_keys
+    normalized_semantic_payload_composition_generated_child_parameter_override_raw_value_extension_keys
+    normalized_semantic_payload_composition_generated_child_parameter_override_value_metadata_extension_keys
     normalized_semantic_payload_composition_keys
     normalized_semantic_payload_composition_shared_datapath_aggregate_enable_contributor_entry_keys
     normalized_semantic_payload_composition_shared_datapath_aggregate_enable_family_entry_keys
@@ -78,6 +81,9 @@ use FSM::Support::NormalizedSemanticPayloadContract qw(
     normalized_semantic_payload_forward_ir_intent_hir_composition_child_parameter_override_raw_value_extension_keys
     normalized_semantic_payload_forward_ir_intent_hir_composition_child_parameter_override_value_metadata_extension_keys
     normalized_semantic_payload_forward_ir_intent_hir_composition_generated_child_entry_keys
+    normalized_semantic_payload_forward_ir_intent_hir_composition_generated_child_parameter_override_entry_keys
+    normalized_semantic_payload_forward_ir_intent_hir_composition_generated_child_parameter_override_raw_value_extension_keys
+    normalized_semantic_payload_forward_ir_intent_hir_composition_generated_child_parameter_override_value_metadata_extension_keys
     normalized_semantic_payload_forward_ir_intent_hir_composition_standalone_dt_child_entry_keys
     normalized_semantic_payload_forward_ir_intent_hir_composition_standalone_dt_enable_family_entry_keys
     normalized_semantic_payload_forward_ir_intent_hir_composition_standalone_dt_module_enable_family_keys
@@ -171,6 +177,9 @@ our @EXPORT_OK = qw(
     normalized_semantic_composition_child_parameter_override_raw_value_extension_keys
     normalized_semantic_composition_child_parameter_override_value_metadata_extension_keys
     normalized_semantic_composition_generated_child_entry_keys
+    normalized_semantic_composition_generated_child_parameter_override_entry_keys
+    normalized_semantic_composition_generated_child_parameter_override_raw_value_extension_keys
+    normalized_semantic_composition_generated_child_parameter_override_value_metadata_extension_keys
     normalized_semantic_composition_keys
     normalized_semantic_composition_shared_datapath_aggregate_enable_contributor_entry_keys
     normalized_semantic_composition_shared_datapath_aggregate_enable_family_entry_keys
@@ -198,6 +207,9 @@ our @EXPORT_OK = qw(
     normalized_semantic_forward_ir_intent_hir_composition_child_parameter_override_raw_value_extension_keys
     normalized_semantic_forward_ir_intent_hir_composition_child_parameter_override_value_metadata_extension_keys
     normalized_semantic_forward_ir_intent_hir_composition_generated_child_entry_keys
+    normalized_semantic_forward_ir_intent_hir_composition_generated_child_parameter_override_entry_keys
+    normalized_semantic_forward_ir_intent_hir_composition_generated_child_parameter_override_raw_value_extension_keys
+    normalized_semantic_forward_ir_intent_hir_composition_generated_child_parameter_override_value_metadata_extension_keys
     normalized_semantic_forward_ir_intent_hir_composition_standalone_dt_child_entry_keys
     normalized_semantic_forward_ir_intent_hir_composition_standalone_dt_enable_family_entry_keys
     normalized_semantic_forward_ir_intent_hir_composition_standalone_dt_module_enable_family_keys
@@ -362,6 +374,12 @@ sub build_normalized_semantic_report_contract {
             normalized_semantic_forward_ir_intent_hir_composition_child_parameter_override_value_metadata_extension_keys(),
         success_forward_ir_intent_hir_composition_generated_child_entry_keys =>
             normalized_semantic_forward_ir_intent_hir_composition_generated_child_entry_keys(),
+        success_forward_ir_intent_hir_composition_generated_child_parameter_override_entry_keys =>
+            normalized_semantic_forward_ir_intent_hir_composition_generated_child_parameter_override_entry_keys(),
+        success_forward_ir_intent_hir_composition_generated_child_parameter_override_raw_value_extension_keys =>
+            normalized_semantic_forward_ir_intent_hir_composition_generated_child_parameter_override_raw_value_extension_keys(),
+        success_forward_ir_intent_hir_composition_generated_child_parameter_override_value_metadata_extension_keys =>
+            normalized_semantic_forward_ir_intent_hir_composition_generated_child_parameter_override_value_metadata_extension_keys(),
         success_forward_ir_intent_hir_composition_standalone_dt_child_entry_keys =>
             normalized_semantic_forward_ir_intent_hir_composition_standalone_dt_child_entry_keys(),
         success_forward_ir_intent_hir_composition_standalone_dt_enable_family_entry_keys =>
@@ -451,6 +469,12 @@ sub build_normalized_semantic_report_contract {
         composition_child_parameter_override_value_metadata_extension_keys =>
             normalized_semantic_composition_child_parameter_override_value_metadata_extension_keys(),
         composition_generated_child_entry_keys => normalized_semantic_composition_generated_child_entry_keys(),
+        composition_generated_child_parameter_override_entry_keys =>
+            normalized_semantic_composition_generated_child_parameter_override_entry_keys(),
+        composition_generated_child_parameter_override_raw_value_extension_keys =>
+            normalized_semantic_composition_generated_child_parameter_override_raw_value_extension_keys(),
+        composition_generated_child_parameter_override_value_metadata_extension_keys =>
+            normalized_semantic_composition_generated_child_parameter_override_value_metadata_extension_keys(),
         composition_standalone_dt_child_entry_keys =>
             normalized_semantic_composition_standalone_dt_child_entry_keys(),
         composition_standalone_dt_enable_family_entry_keys =>
@@ -496,7 +520,7 @@ sub build_normalized_semantic_report_contract {
             'The nested semantic composition object stays bounded through FSM::Support::NormalizedSemanticCompositionContract.',
             'The nested semantic explicit_system_contract object, when present, stays bounded through FSM::Support::NormalizedSemanticExplicitSystemContract.',
             'The nested semantic forward_ir object stays bounded through FSM::Support::NormalizedSemanticForwardIRContract.',
-            'The success forward_ir.intent_hir composition-child alias families, including child parameter-override alias metadata, stay delegated to the already bounded composition child schema owners.',
+            'The success forward_ir.intent_hir composition-child alias families, including child and generated-child parameter-override alias metadata, stay delegated to the already bounded composition child schema owners.',
             'Use the grouped nested_presence_key_map to discover the primary nested object key families without collecting those key lists one field at a time.',
             'Use the grouped presence_key_family_map to discover the shell-owned shared-report, success, and failure key families without collecting those normalized semantic field-family lists separately.',
             'Use the grouped semantic_presence_key_family_map to discover the shell-owned semantic payload and child-extension key families without reconstructing them from separate success_* fields.',
@@ -508,7 +532,7 @@ sub build_normalized_semantic_report_contract {
             'The standalone-DT multi-drive target and assertion key families document the current nested `semantic.forward_ir.lowered_rtl_ir.standalone_dt_multi_drive_targets` entry schemas without freezing unrelated lowered-RTL payloads.',
             'The composition shared-datapath candidate key families document the current nested `semantic.forward_ir.lowered_rtl_ir.composition_shared_datapath_candidates` entry schemas, including contributor drive-intent projections and their rhs-enable-family entries, without freezing unrelated lowered-RTL payloads.',
             'The structural auxiliary-assignment value-kind, port, net, declared/resolved link, instance shallow, nested instance interface-port, nested instance parameter-override, and nested instance port-binding entry key families document the current nested `semantic.forward_ir.structural_rtl_ir.auxiliary_assignments`, `semantic.forward_ir.structural_rtl_ir.ports`, `semantic.forward_ir.structural_rtl_ir.nets`, `semantic.forward_ir.structural_rtl_ir.declared_links`, `semantic.forward_ir.structural_rtl_ir.resolved_links`, `semantic.forward_ir.structural_rtl_ir.instances`, `semantic.forward_ir.structural_rtl_ir.instances[].interface_ports`, `semantic.forward_ir.structural_rtl_ir.instances[].parameter_overrides`, and `semantic.forward_ir.structural_rtl_ir.instances[].port_bindings` entry schemas without freezing unrelated structural-RTL payloads.',
-            'The composition child and generated-child entry key families document the current nested `semantic.composition.children` and `semantic.composition.generated_children` shallow entry schemas; `semantic.composition.children[].parameter_overrides[]` delegates to the bounded structural instance parameter-override schema owner.',
+            'The composition child and generated-child entry key families document the current nested `semantic.composition.children` and `semantic.composition.generated_children` shallow entry schemas; `semantic.composition.children[].parameter_overrides[]` and `semantic.composition.generated_children[].parameter_overrides[]` delegate to the bounded structural instance parameter-override schema owner.',
             'The composition standalone-DT child entry key families document the current nested `semantic.composition.standalone_dt_children` shallow entry schemas, enable-family metadata, and nested standalone-DT multi-drive target metadata without freezing delegated child IR internals or duplicating the lowered-RTL assertion owner.',
             'The composition shared-datapath alias key families document the current nested `semantic.composition.shared_datapath_candidates` entries by reusing the bounded lowered-RTL shared-datapath candidate schema owner.',
             'The nested semantic forward_ir.intent_hir object shell stays bounded through FSM::Support::NormalizedSemanticIntentHIRContract.',
@@ -601,6 +625,12 @@ sub normalized_semantic_presence_key_family_map {
             normalized_semantic_forward_ir_intent_hir_composition_child_parameter_override_value_metadata_extension_keys(),
         success_forward_ir_intent_hir_composition_generated_child_entry_keys =>
             normalized_semantic_forward_ir_intent_hir_composition_generated_child_entry_keys(),
+        success_forward_ir_intent_hir_composition_generated_child_parameter_override_entry_keys =>
+            normalized_semantic_forward_ir_intent_hir_composition_generated_child_parameter_override_entry_keys(),
+        success_forward_ir_intent_hir_composition_generated_child_parameter_override_raw_value_extension_keys =>
+            normalized_semantic_forward_ir_intent_hir_composition_generated_child_parameter_override_raw_value_extension_keys(),
+        success_forward_ir_intent_hir_composition_generated_child_parameter_override_value_metadata_extension_keys =>
+            normalized_semantic_forward_ir_intent_hir_composition_generated_child_parameter_override_value_metadata_extension_keys(),
         success_forward_ir_intent_hir_composition_standalone_dt_child_entry_keys =>
             normalized_semantic_forward_ir_intent_hir_composition_standalone_dt_child_entry_keys(),
         success_forward_ir_intent_hir_composition_standalone_dt_enable_family_entry_keys =>
@@ -686,6 +716,12 @@ sub normalized_semantic_presence_key_family_map {
         composition_child_parameter_override_value_metadata_extension_keys =>
             normalized_semantic_composition_child_parameter_override_value_metadata_extension_keys(),
         composition_generated_child_entry_keys => normalized_semantic_composition_generated_child_entry_keys(),
+        composition_generated_child_parameter_override_entry_keys =>
+            normalized_semantic_composition_generated_child_parameter_override_entry_keys(),
+        composition_generated_child_parameter_override_raw_value_extension_keys =>
+            normalized_semantic_composition_generated_child_parameter_override_raw_value_extension_keys(),
+        composition_generated_child_parameter_override_value_metadata_extension_keys =>
+            normalized_semantic_composition_generated_child_parameter_override_value_metadata_extension_keys(),
         composition_standalone_dt_child_entry_keys =>
             normalized_semantic_composition_standalone_dt_child_entry_keys(),
         composition_standalone_dt_enable_family_entry_keys =>
@@ -799,6 +835,18 @@ sub normalized_semantic_forward_ir_intent_hir_composition_child_parameter_overri
 
 sub normalized_semantic_forward_ir_intent_hir_composition_generated_child_entry_keys {
     return normalized_semantic_payload_forward_ir_intent_hir_composition_generated_child_entry_keys();
+}
+
+sub normalized_semantic_forward_ir_intent_hir_composition_generated_child_parameter_override_entry_keys {
+    return normalized_semantic_payload_forward_ir_intent_hir_composition_generated_child_parameter_override_entry_keys();
+}
+
+sub normalized_semantic_forward_ir_intent_hir_composition_generated_child_parameter_override_raw_value_extension_keys {
+    return normalized_semantic_payload_forward_ir_intent_hir_composition_generated_child_parameter_override_raw_value_extension_keys();
+}
+
+sub normalized_semantic_forward_ir_intent_hir_composition_generated_child_parameter_override_value_metadata_extension_keys {
+    return normalized_semantic_payload_forward_ir_intent_hir_composition_generated_child_parameter_override_value_metadata_extension_keys();
 }
 
 sub normalized_semantic_forward_ir_intent_hir_composition_standalone_dt_child_entry_keys {
@@ -999,6 +1047,18 @@ sub normalized_semantic_composition_child_parameter_override_value_metadata_exte
 
 sub normalized_semantic_composition_generated_child_entry_keys {
     return normalized_semantic_payload_composition_generated_child_entry_keys();
+}
+
+sub normalized_semantic_composition_generated_child_parameter_override_entry_keys {
+    return normalized_semantic_payload_composition_generated_child_parameter_override_entry_keys();
+}
+
+sub normalized_semantic_composition_generated_child_parameter_override_raw_value_extension_keys {
+    return normalized_semantic_payload_composition_generated_child_parameter_override_raw_value_extension_keys();
+}
+
+sub normalized_semantic_composition_generated_child_parameter_override_value_metadata_extension_keys {
+    return normalized_semantic_payload_composition_generated_child_parameter_override_value_metadata_extension_keys();
 }
 
 sub normalized_semantic_composition_standalone_dt_child_entry_keys {

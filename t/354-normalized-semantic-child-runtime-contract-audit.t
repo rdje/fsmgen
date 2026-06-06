@@ -20,6 +20,9 @@ use FSM::Support::NormalizedSemanticCompositionContract qw(
     normalized_semantic_composition_child_parameter_override_raw_value_extension_keys
     normalized_semantic_composition_child_parameter_override_value_metadata_extension_keys
     normalized_semantic_composition_generated_child_entry_keys
+    normalized_semantic_composition_generated_child_parameter_override_entry_keys
+    normalized_semantic_composition_generated_child_parameter_override_raw_value_extension_keys
+    normalized_semantic_composition_generated_child_parameter_override_value_metadata_extension_keys
     normalized_semantic_composition_presence_keys
     normalized_semantic_composition_shared_datapath_aggregate_enable_family_entry_keys
     normalized_semantic_composition_shared_datapath_assertion_keys
@@ -46,6 +49,9 @@ use FSM::Support::NormalizedSemanticIntentHIRContract qw(
     normalized_semantic_intent_hir_composition_child_parameter_override_raw_value_extension_keys
     normalized_semantic_intent_hir_composition_child_parameter_override_value_metadata_extension_keys
     normalized_semantic_intent_hir_composition_generated_child_entry_keys
+    normalized_semantic_intent_hir_composition_generated_child_parameter_override_entry_keys
+    normalized_semantic_intent_hir_composition_generated_child_parameter_override_raw_value_extension_keys
+    normalized_semantic_intent_hir_composition_generated_child_parameter_override_value_metadata_extension_keys
     normalized_semantic_intent_hir_composition_standalone_dt_child_entry_keys
     normalized_semantic_intent_hir_composition_standalone_dt_enable_family_entry_keys
     normalized_semantic_intent_hir_composition_standalone_dt_module_enable_family_keys
@@ -680,6 +686,162 @@ FSM
         $intent_override_by_name{WIDTH},
         normalized_semantic_intent_hir_composition_child_parameter_override_value_metadata_extension_keys(),
         'intent-HIR child WIDTH parameter override keeps bounded value-metadata extension keys',
+    );
+};
+
+subtest 'parameterized generated child semantic payload keeps bounded generated-child parameter-override aliases at runtime' => sub {
+    my $composition_path = write_fsm('parameterized_generated_child_semantic_schema.fsm', <<'FSM');
+(?top:parameterized_generated_child_semantic_schema
+  (+constants
+    (OVERRIDE_WIDTH 16)
+    (TOP_LANES (8'hA5 8'h3C))
+  )
+  (?ports:public_io
+    clk
+    reset
+    payload_in<16
+    payload_out>16
+  )
+  (?fsmc:u_child child_src
+    (params
+      (WIDTH OVERRIDE_WIDTH)
+      (LANES TOP_LANES)
+    )
+  )
+  (?dtc:sink sink_src)
+  (?wiring:wiring
+    (payload_in u_child.in_data)
+    (u_child.out_data sink.sink_in)
+    (sink.sink_out payload_out)
+  )
+)
+
+(?fsm:child_src
+  (+params
+    (WIDTH 8)
+    (LANES (8'h00 8'h00))
+  )
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+  (+size
+    (in_data 16)
+    (out_data 16)
+  )
+  (-idle
+    (<in_data=WIDTH
+      (= (out_data> LANES))
+    )
+  )
+)
+
+(?dt:sink_src
+  (+size
+    (sink_in 16)
+    (sink_out 16)
+  )
+  (-pass
+    (= (sink_out> sink_in))
+  )
+)
+FSM
+
+    my $decoded = run_semantic_json($composition_path);
+    my $semantic = $decoded->{semantic};
+
+    my %structural_instance_by_name =
+        map { $_->{instance_name} => $_ } @{$semantic->{forward_ir}{structural_rtl_ir}{instances} || []};
+    my $structural_child = $structural_instance_by_name{u_child} || {};
+    ok($structural_instance_by_name{u_child}, 'structural RTL IR includes the parameterized generated child');
+    is(
+        scalar(@{$structural_child->{parameter_overrides} || []}),
+        2,
+        'parameterized generated child structural instance exposes two parameter overrides',
+    );
+
+    my %composition_child_by_instance =
+        map { $_->{instance_name} => $_ } @{$semantic->{composition}{children} || []};
+    my $composition_child = $composition_child_by_instance{u_child} || {};
+    ok($composition_child_by_instance{u_child}, 'composition children list includes the parameterized generated child');
+    is_deeply(
+        $composition_child->{parameter_overrides},
+        $structural_child->{parameter_overrides},
+        'composition child parameter_overrides aliases generated-child structural instance parameter_overrides',
+    );
+
+    my %generated_child_by_instance =
+        map { $_->{instance_name} => $_ } @{$semantic->{composition}{generated_children} || []};
+    my $generated_child = $generated_child_by_instance{u_child} || {};
+    ok($generated_child_by_instance{u_child}, 'composition generated_children list includes the parameterized generated child');
+    assert_exact_keys(
+        $generated_child,
+        normalized_semantic_composition_generated_child_entry_keys(),
+        'composition generated_children[] entry keeps exact bounded keys with parameter overrides',
+    );
+    is(
+        $generated_child->{parameter_override_count},
+        2,
+        'composition generated_children[] reports generated-child parameter override count',
+    );
+    is_deeply(
+        $generated_child->{parameter_overrides},
+        $composition_child->{parameter_overrides},
+        'composition generated_children[] parameter_overrides aliases composition child parameter_overrides',
+    );
+    my %generated_override_by_name =
+        map { $_->{name} => $_ } @{$generated_child->{parameter_overrides} || []};
+    $generated_override_by_name{WIDTH} ||= {};
+    assert_keys_present(
+        $generated_override_by_name{WIDTH},
+        normalized_semantic_composition_generated_child_parameter_override_entry_keys(),
+        'composition generated child WIDTH parameter override keeps bounded core keys',
+    );
+    assert_keys_present(
+        $generated_override_by_name{WIDTH},
+        normalized_semantic_composition_generated_child_parameter_override_raw_value_extension_keys(),
+        'composition generated child WIDTH parameter override keeps bounded raw-value extension keys',
+    );
+    assert_keys_present(
+        $generated_override_by_name{WIDTH},
+        normalized_semantic_composition_generated_child_parameter_override_value_metadata_extension_keys(),
+        'composition generated child WIDTH parameter override keeps bounded value-metadata extension keys',
+    );
+
+    my %intent_generated_child_by_instance =
+        map { $_->{instance_name} => $_ } @{$semantic->{forward_ir}{intent_hir}{composition_generated_children} || []};
+    my $intent_generated_child = $intent_generated_child_by_instance{u_child} || {};
+    ok(
+        $intent_generated_child_by_instance{u_child},
+        'intent-HIR composition_generated_children list includes the parameterized generated child',
+    );
+    assert_exact_keys(
+        $intent_generated_child,
+        normalized_semantic_intent_hir_composition_generated_child_entry_keys(),
+        'intent-HIR composition_generated_children[] entry keeps exact bounded keys with parameter overrides',
+    );
+    is_deeply(
+        $intent_generated_child->{parameter_overrides},
+        $generated_child->{parameter_overrides},
+        'intent-HIR composition_generated_children[] parameter_overrides aliases composition generated_children[]',
+    );
+    my %intent_generated_override_by_name =
+        map { $_->{name} => $_ } @{$intent_generated_child->{parameter_overrides} || []};
+    $intent_generated_override_by_name{WIDTH} ||= {};
+    assert_keys_present(
+        $intent_generated_override_by_name{WIDTH},
+        normalized_semantic_intent_hir_composition_generated_child_parameter_override_entry_keys(),
+        'intent-HIR generated child WIDTH parameter override keeps bounded core keys',
+    );
+    assert_keys_present(
+        $intent_generated_override_by_name{WIDTH},
+        normalized_semantic_intent_hir_composition_generated_child_parameter_override_raw_value_extension_keys(),
+        'intent-HIR generated child WIDTH parameter override keeps bounded raw-value extension keys',
+    );
+    assert_keys_present(
+        $intent_generated_override_by_name{WIDTH},
+        normalized_semantic_intent_hir_composition_generated_child_parameter_override_value_metadata_extension_keys(),
+        'intent-HIR generated child WIDTH parameter override keeps bounded value-metadata extension keys',
     );
 };
 

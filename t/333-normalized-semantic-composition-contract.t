@@ -20,6 +20,9 @@ use FSM::Support::NormalizedSemanticCompositionContract qw(
     normalized_semantic_composition_collection_keys
     normalized_semantic_composition_contract_source
     normalized_semantic_composition_generated_child_entry_keys
+    normalized_semantic_composition_generated_child_parameter_override_entry_keys
+    normalized_semantic_composition_generated_child_parameter_override_raw_value_extension_keys
+    normalized_semantic_composition_generated_child_parameter_override_value_metadata_extension_keys
     normalized_semantic_composition_nested_presence_keys
     normalized_semantic_composition_presence_key_family_map
     normalized_semantic_composition_presence_keys
@@ -194,6 +197,8 @@ subtest 'contract exposes the bounded normalized semantic composition object' =>
                 standalone_dt_count
                 output_drive_family_count
                 standalone_dt_multi_drive_target_count
+                parameter_override_count
+                parameter_overrides
                 intent_hir
                 lowered_rtl_ir
                 structural_rtl_ir
@@ -201,6 +206,44 @@ subtest 'contract exposes the bounded normalized semantic composition object' =>
         ],
         'composition generated-child entry keys stay exact and ordered',
     );
+    for my $case (
+        [
+            'generated_child_parameter_override_entry_keys',
+            normalized_semantic_composition_generated_child_parameter_override_entry_keys(),
+            normalized_semantic_structural_rtl_ir_instance_parameter_override_entry_keys(),
+            'core entry',
+        ],
+        [
+            'generated_child_parameter_override_raw_value_extension_keys',
+            normalized_semantic_composition_generated_child_parameter_override_raw_value_extension_keys(),
+            normalized_semantic_structural_rtl_ir_instance_parameter_override_raw_value_extension_keys(),
+            'raw-value extension',
+        ],
+        [
+            'generated_child_parameter_override_value_metadata_extension_keys',
+            normalized_semantic_composition_generated_child_parameter_override_value_metadata_extension_keys(),
+            normalized_semantic_structural_rtl_ir_instance_parameter_override_value_metadata_extension_keys(),
+            'value-metadata extension',
+        ],
+    ) {
+        my ($field, $composition_keys, $structural_keys, $label) = @{$case};
+
+        is_deeply(
+            $contract->{$field},
+            $composition_keys,
+            "contract publishes composition generated-child parameter-override $label keys",
+        );
+        is_deeply(
+            $contract->{presence_key_family_map}{$field},
+            $composition_keys,
+            "grouped composition family map publishes generated-child parameter-override $label keys",
+        );
+        is_deeply(
+            $composition_keys,
+            $structural_keys,
+            "composition generated-child parameter-override $label keys delegate to structural instance overrides",
+        );
+    }
     is_deeply(
         $contract->{standalone_dt_child_entry_keys},
         normalized_semantic_composition_standalone_dt_child_entry_keys(),
