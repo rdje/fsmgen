@@ -8,8 +8,9 @@ FSM::Backend::VHDL::StructuralRTLIREmitter - VHDL emitter for bounded structural
 
 Emits the bounded VHDL composition-top shapes from StructuralRTLIR. The
 current leaves intentionally support only external-RTL structural instances or
-one standalone-DT child passthrough instance, direct scalar/vector top ports,
-VHDL-form auxiliary assignments, and port-map actuals whose connection
+one standalone-DT child passthrough instance plus one bounded scalar C2
+generated-FSM child top, direct scalar/vector top ports, VHDL-form auxiliary
+assignments, scalar signal declarations, and port-map actuals whose connection
 expressions already render through the backend-neutral StructuralRTLIR
 expression helper.
 
@@ -43,10 +44,11 @@ sub emit_module ($class, $structural_rtl_ir) {
     my @instances = @{$structural->{instances} || []};
     my @auxiliary_assignments = @{$structural->{auxiliary_assignments} || []};
 
-    confess _unsupported('internal structural nets are outside the first composition VHDL structural-top leaf')
-        if @nets;
+    confess _unsupported('internal structural nets beyond scalar signals are outside the bounded composition VHDL structural-top leaves')
+        if grep { ($_->{width} // 1) != 1 } @nets;
 
     my @port_lines = _render_port_lines(\@ports);
+    my @net_lines = _render_signal_lines(\@nets);
     my @instance_blocks = map { _render_instance_block($_) } @instances;
 
     my @body_lines = (
@@ -67,8 +69,10 @@ sub emit_module ($class, $structural_rtl_ir) {
     push @body_lines,
         "end entity $top_name;",
         '',
-        "architecture rtl of $top_name is",
-        'begin';
+        "architecture rtl of $top_name is";
+
+    push @body_lines, @net_lines if @net_lines;
+    push @body_lines, 'begin';
 
     push @body_lines, map { _normalize_vhdl_auxiliary_assignment($_) } @auxiliary_assignments;
     push @body_lines, '' if @auxiliary_assignments && @instance_blocks;
@@ -95,12 +99,20 @@ sub _render_port_lines ($ports) {
     return @lines;
 }
 
+sub _render_signal_lines ($nets) {
+    return map {
+        sprintf(
+            '  signal %s : %s;',
+            _identifier($_->{name}, 'signal name'),
+            _vhdl_type($_),
+        )
+    } @$nets;
+}
+
 sub _render_instance_block ($instance) {
     my $instance_kind = $instance->{kind} // '';
-    confess _unsupported('generated-FSM child composition VHDL is outside the bounded structural-top leaves')
-        if $instance_kind eq 'fsmc';
     confess _unsupported("child kind '$instance_kind' is outside the bounded structural-top leaves")
-        unless $instance_kind eq 'rtl' || $instance_kind eq 'dtc';
+        unless $instance_kind eq 'rtl' || $instance_kind eq 'dtc' || $instance_kind eq 'fsmc';
     confess _unsupported('composition VHDL generic maps are outside the first structural-top leaf')
         if @{$instance->{parameter_overrides} || []};
 
@@ -177,7 +189,7 @@ __END__
 =head2 emit_module
 
 Renders one bounded VHDL structural top from StructuralRTLIR. Anything outside
-the shipped external-RTL literal/concat and standalone-DT passthrough
-composition-top leaves fails closed.
+the shipped external-RTL literal/concat, standalone-DT passthrough, and scalar
+C2 generated-FSM composition-top leaves fails closed.
 
 =cut

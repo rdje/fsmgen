@@ -208,6 +208,48 @@ subtest 'facade target_language option routes bounded standalone-DT composition 
     );
 };
 
+subtest 'facade target_language option routes bounded generated-FSM composition VHDL structural top behavior' => sub {
+    my $composition_path = repo_file('t/corpus/implicit_composition_system_autowire.fsm');
+    my $vhdl_pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'vhdl',
+        quiet => 1,
+    );
+
+    my $vhdl_result = $vhdl_pipeline->generate_hdl_from_file($composition_path);
+
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bentity\s+implicit_autowire_producer\s+is\b/s,
+        'explicit VHDL facade generation emits the generated-FSM producer child entity',
+    );
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bshared_dp_export_output_data_1_b1_en\s+:\s+out\s+std_logic\b/s,
+        'explicit VHDL facade generation emits generated-FSM shared-datapath export ports',
+    );
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bentity\s+implicit_composition_system_autowire\s+is\b/s,
+        'explicit VHDL facade generation emits the generated-FSM composition entity',
+    );
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bsignal\s+comp_link_producer_output_data\s+:\s+std_logic;/s,
+        'explicit VHDL facade generation emits scalar internal structural signals',
+    );
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bconsumer\s+:\s+entity\s+work\.implicit_autowire_consumer\s+port\s+map\s*\(\s*clk\s+=>\s+clk,\s*rst_n\s+=>\s+rst_n,\s*input_data\s+=>\s+comp_link_producer_output_data,\s*result_data\s+=>\s+result_data,\s*shared_dp_export_result_data_input_data_en\s+=>\s+shared_dp_unused_consumer_shared_dp_export_result_data_input_data_en\s*\);/s,
+        'explicit VHDL facade generation emits the generated-FSM consumer port map',
+    );
+    unlike(
+        $vhdl_result->{hdl_code},
+        qr/\bmodule\b|\bassign\b|\bendmodule\b|\balways_(?:ff|comb)\b/s,
+        'explicit VHDL generated-FSM composition generation does not leak SystemVerilog structural syntax',
+    );
+};
+
 subtest 'facade target_language option routes direct VHDL delayed-pulse scaffold behavior' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $direct_path = File::Spec->catfile($tempdir, 'facade_direct_delayed_pulse_vhdl.fsm');

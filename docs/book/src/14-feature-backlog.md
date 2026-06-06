@@ -344,7 +344,9 @@ generic-map lowering is not shipped. The shipped composition VHDL tops are the
 bounded C3 external-RTL literal/concat fixture in
 `t/corpus/composition_intent_integer_literals.fsm` and the bounded C1
 standalone-DT passthrough fixture in
-`t/corpus/standalone_dtc_explicit_system_autowire.fsm`; both have no parameter
+`t/corpus/standalone_dtc_explicit_system_autowire.fsm`, plus the bounded C2
+generated-FSM scalar-autowire fixture in
+`t/corpus/implicit_composition_system_autowire.fsm`; all have no parameter
 overrides. Other `?top` VHDL shapes still parse into typed composition IR and
 then fail closed with the scoped target-support diagnostic. Generic maps remain
 deferred until a later leaf owns that exact composition VHDL path.
@@ -3807,9 +3809,9 @@ It is covered by direct pipeline, CLI, and facade tests.
 Composition VHDL now includes the bounded C3 external-RTL literal/concat top
 for `t/corpus/composition_intent_integer_literals.fsm` and the bounded C1
 standalone-DT passthrough top for
-`t/corpus/standalone_dtc_explicit_system_autowire.fsm`.
-The exact C2 generated-FSM child composition VHDL top for
-`t/corpus/implicit_composition_system_autowire.fsm` is the active follow-up.
+`t/corpus/standalone_dtc_explicit_system_autowire.fsm`, plus the bounded C2
+generated-FSM scalar-autowire top for
+`t/corpus/implicit_composition_system_autowire.fsm`.
 Still backlog: broader generated-FSM child composition VHDL, APB/C4
 composition VHDL, internal-net-heavy composition tops, composition generic
 maps, aggregate VHDL record/array lowering, VHDL packages, multi-clock domains,
@@ -3837,10 +3839,12 @@ owns that path. The bounded C3 external-RTL literal/concat structural top now
 emits a VHDL entity/architecture with concurrent literal/concat assignments and
 an external `entity work.uart_tx` port map. The bounded C1 standalone-DT
 passthrough structural top now emits the standalone-DT child VHDL segment and a
-top-level `entity work.standalone_route_src` port map. Other composition/top
-VHDL shapes remain fail-closed after typed composition IR parsing, with the
-pipeline and CLI pointing users to the scoped composition target-support
-diagnostic.
+top-level `entity work.standalone_route_src` port map. The bounded C2
+generated-FSM scalar-autowire structural top now emits VHDL-safe generated-child
+shared-datapath export ports/assignments, scalar structural signals, and both
+generated child entity port maps. Other composition/top VHDL shapes remain
+fail-closed after typed composition IR parsing, with the pipeline and CLI
+pointing users to the scoped composition target-support diagnostic.
 
 The compound update and update-shorthand fixtures now lower generated
 direct-root vector arithmetic with numeric literal operands, such as `SRC + 2`,
@@ -4080,10 +4084,10 @@ schema metadata for `semantic.symbol_contract.types` and
 recursive `items` or `members` plus `member_order`.
 
 Current active backend edge: task-tree leaf
-`BACKEND-API-VALIDATION-FRONTIER.70.1` implements only the bounded C2
-generated-FSM child composition VHDL top for
-`t/corpus/implicit_composition_system_autowire.fsm` after the bounded C1
-standalone-DT child composition VHDL top shipped alongside the bounded C3
+`BACKEND-API-VALIDATION-FRONTIER.71` selects the next exact backend/API edge
+after the bounded C2 generated-FSM child composition VHDL top for
+`t/corpus/implicit_composition_system_autowire.fsm` shipped alongside the
+bounded C1 standalone-DT child composition VHDL top and the bounded C3
 external-RTL literal/concat composition VHDL top.
 Package-import internals, already bounded constant/enum/type internals,
 unrelated forward-IR payloads, scalar signed arithmetic, full aggregate VHDL

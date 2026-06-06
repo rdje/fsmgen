@@ -118,7 +118,9 @@ sub generate_from_source ($class, %args) {
             "Composition target support is blocked because generated-child VHDL composition is outside the first structural-top leaf. ".
             "Target language 'vhdl' is not implemented for this composition shape yet. ".
             "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
-            if @child_segments && !_is_bounded_standalone_dt_vhdl_top($composition_plan);
+            if @child_segments
+                && !_is_bounded_standalone_dt_vhdl_top($composition_plan)
+                && !_is_bounded_generated_fsm_c2_vhdl_top($composition_plan);
         push @segments, FSM::Backend::VHDL::StructuralRTLIREmitter->emit_module($structural_rtl_ir);
     } else {
         push @segments, FSM::Backend::VerilogFamily::StructuralRTLIREmitter->emit_module($structural_rtl_ir);
@@ -175,6 +177,29 @@ sub _is_bounded_standalone_dt_vhdl_top ($composition_plan) {
     return 0 if @{$composition_plan->nets || []};
     return 0 if @{$composition_plan->auxiliary_assignments || []};
     return 0 if @{$instances[0]->parameter_overrides || []};
+    return 1;
+}
+
+sub _is_bounded_generated_fsm_c2_vhdl_top ($composition_plan) {
+    return 0 unless ($composition_plan->lane // '') eq 'C2';
+    my @instances = @{$composition_plan->instances || []};
+    my @nets = @{$composition_plan->nets || []};
+    my @ports = @{$composition_plan->ports || []};
+    return 0 unless @instances == 2;
+    return 0 unless @nets == 3;
+    return 0 unless @ports == 3;
+    return 0 if @{$composition_plan->auxiliary_assignments || []};
+
+    for my $instance (@instances) {
+        return 0 unless ($instance->kind // '') eq 'fsmc';
+        return 0 if @{$instance->parameter_overrides || []};
+    }
+
+    for my $entry (@nets, @ports) {
+        my $width = ref($entry) eq 'HASH' ? ($entry->{width} // 0) : $entry->width;
+        return 0 unless $width == 1;
+    }
+
     return 1;
 }
 

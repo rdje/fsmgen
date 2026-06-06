@@ -190,6 +190,9 @@ sub augment_generated_child_hdl_with_shared_datapath_exports ($class, $hdl_code,
     return $hdl_code unless defined($hdl_code) && length($hdl_code);
     return $hdl_code unless @{$exports || []};
 
+    return $class->_augment_vhdl_generated_child_hdl_with_shared_datapath_exports($hdl_code, $exports)
+        if $hdl_code =~ /\bentity\s+\w+\s+is\b/s && $hdl_code =~ /\bend\s+architecture\s+rtl\s*;\s*\z/s;
+
     my @port_lines = map {
         "  output  wire " . $_->{port_name}
     } @{$exports || []};
@@ -208,6 +211,29 @@ sub augment_generated_child_hdl_with_shared_datapath_exports ($class, $hdl_code,
     my $endmodule_replaced = ($patched =~ s/\nendmodule\s*\z/$assign_block . "endmodule\n"/se);
     confess("Failed to inject shared-datapath export assignments into generated child HDL\n")
         unless $endmodule_replaced;
+
+    return $patched;
+}
+
+sub _augment_vhdl_generated_child_hdl_with_shared_datapath_exports ($class, $hdl_code, $exports) {
+    my @port_lines = map {
+        "    " . $_->{port_name} . " : out std_logic"
+    } @{$exports || []};
+
+    my $patched = $hdl_code;
+    my $port_block = join(";\n", @port_lines);
+    my $header_replaced = ($patched =~ s/\n  \);\nend entity/;\n$port_block\n  );\nend entity/s);
+    confess("Failed to inject shared-datapath export ports into generated child VHDL\n")
+        unless $header_replaced;
+
+    my $assign_block = "\n  -- Shared-datapath source-enable exports\n"
+        . join('', map {
+            "  " . $_->{port_name} . " <= " . $_->{source_signal} . ";\n"
+        } @{$exports || []});
+
+    my $architecture_replaced = ($patched =~ s/\nend architecture rtl;\s*\z/$assign_block . "end architecture rtl;\n"/se);
+    confess("Failed to inject shared-datapath export assignments into generated child VHDL\n")
+        unless $architecture_replaced;
 
     return $patched;
 }

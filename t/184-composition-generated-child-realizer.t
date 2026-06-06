@@ -82,6 +82,64 @@ FSM
     like($realized->hdl_code, qr/assign shared_dp_export_data_out_8_d1_en = data_out__8_d1_en;/s, 'realizer augments generated fsm child hdl with shared-datapath export assignments');
 };
 
+subtest 'generated child realizer owns embedded ?fsmc VHDL shared-datapath exports' => sub {
+    my $composition_path = write_fsm('generated_child_realizer_fsmc_vhdl_top.fsm', <<'FSM');
+(?top:generated_child_realizer_fsmc_vhdl_top
+  (?ports:public_io
+    trigger
+    data_out>8
+  )
+  (?fsmc:child child_src)
+)
+
+(?fsm:child_src
+  (-idle
+    (<trigger
+      (data_out> <= 8'1)
+    )
+    (<!trigger
+      (data_out> <= 8'0)
+    )
+  )
+  (+size
+    (data_out 8)
+  )
+)
+FSM
+
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        target_language => 'vhdl',
+        debug_level => 0,
+        quiet => 1,
+    );
+
+    my $raw_ast = FSM::Pipeline::SourceFrontend->parse_fsm_file(
+        fsm_file => $composition_path,
+        debug_level => 0,
+    );
+    my $source_info = FSM::Pipeline::SourceFrontend->classify_source_ast($raw_ast);
+    my $composition_spec = FSM::Pipeline::SourceFrontend->parse_composition_source(
+        raw_ast => $raw_ast,
+        debug_level => 0,
+    );
+    my $instance = $composition_spec->top->instances->[0];
+    my $realized = FSM::Composition::GeneratedChildRealizer->realize_fsmc_child_instance(
+        pipeline => $pipeline,
+        instance => $instance,
+        composition_spec => $composition_spec,
+        fsm_file => $composition_path,
+        header => $source_info->{header},
+    );
+
+    isa_ok($realized, 'FSM::Composition::RealizedInstance');
+    is($realized->kind, 'fsmc', 'VHDL realizer keeps the fsmc kind');
+    like($realized->hdl_code, qr/\bentity\s+child_src\s+is\b/s, 'VHDL realizer emits the expected child entity');
+    like($realized->hdl_code, qr/\bshared_dp_export_data_out_8_d0_en\s+:\s+out\s+std_logic\b/s, 'VHDL realizer augments generated child entity ports with the first shared-datapath export');
+    like($realized->hdl_code, qr/\bshared_dp_export_data_out_8_d1_en\s+:\s+out\s+std_logic\b/s, 'VHDL realizer augments generated child entity ports with the second shared-datapath export');
+    like($realized->hdl_code, qr/\bshared_dp_export_data_out_8_d1_en\s+<=\s+data_out__8_d1_en;/s, 'VHDL realizer augments generated child architecture with shared-datapath export assignments');
+    unlike($realized->hdl_code, qr/\bmodule\b|\bassign\b|\bendmodule\b/s, 'VHDL realizer shared-datapath export injection does not leak SystemVerilog syntax');
+};
+
 subtest 'generated child realizer owns external ?dtc realization' => sub {
     my $libdir = tempdir(CLEANUP => 1);
     my $composition_path = write_fsm('generated_child_realizer_dtc_top.fsm', <<'FSM');

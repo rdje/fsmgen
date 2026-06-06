@@ -220,6 +220,9 @@ sub assert_vhdl_structural_top_candidate ($class, %args) {
     my $fsm_file = $args{fsm_file};
     my $header = $args{header};
 
+    return
+        if _is_vhdl_c2_generated_fsm_candidate($instances, $ports_blocks, $wiring_blocks);
+
     my @generated = grep { $class->is_generated_child_kind($_->kind // '') } @$instances;
     my $generated_reason = _vhdl_generated_instance_reason(\@generated);
     $class->_confess_vhdl_composition_shape_blocked(
@@ -272,7 +275,7 @@ sub _confess_vhdl_composition_shape_blocked ($class, %args) {
 
     confess
         "Composition source '$header' in '$fsm_file' is recognized and parsed into typed composition IR, ".
-        "but composition target support is blocked because the current active VHDL composition leaves only emit the bounded C3 external-RTL literal/concat structural top and C1 standalone-DT passthrough structural top. ".
+        "but composition target support is blocked because the current active VHDL composition leaves only emit the bounded C3 external-RTL literal/concat structural top, C1 standalone-DT passthrough structural top, and C2 generated-FSM scalar autowire structural top. ".
         "Target language 'vhdl' is not implemented for this composition shape yet: $reason. ".
         "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
 }
@@ -287,6 +290,24 @@ sub _vhdl_generated_instance_reason ($instances) {
     return "generated-child and standalone-DT child composition VHDL are outside the first structural-top leaf"
         if $kind{dtc} && $kind{fsmc};
     return "generated-child composition VHDL is outside the first structural-top leaf";
+}
+
+sub _is_vhdl_c2_generated_fsm_candidate ($instances, $ports_blocks, $wiring_blocks) {
+    return 0 unless @$instances == 2;
+    return 0 unless !grep { ($_->kind // '') ne 'fsmc' } @$instances;
+    return 0 unless @$ports_blocks == 1;
+    return 0 unless @$wiring_blocks == 1;
+    return 0 unless @{$wiring_blocks->[0]->links || []} == 2;
+
+    my @ports = @{$ports_blocks->[0]->ports || []};
+    return 0 unless @ports == 3;
+    my %expected_port = map { $_ => 1 } qw(clk rst_n result_data);
+    for my $port (@ports) {
+        return 0 unless $expected_port{$port->name // ''};
+        return 0 unless ($port->width // 0) == 1;
+    }
+
+    return 1;
 }
 
 sub realize_instances ($class, %args) {

@@ -903,11 +903,14 @@ literal/concat assignments and an `entity work.uart_tx` port map, and the C1
 standalone-DT passthrough fixture in
 `t/corpus/standalone_dtc_explicit_system_autowire.fsm` emits the
 `standalone_route_src` child VHDL entity plus an `entity work.standalone_route_src`
-port map. Both outputs avoid SystemVerilog `module`, `assign`, `endmodule`, or
-`always_*` syntax.
+port map. The C2 generated-FSM scalar-autowire fixture in
+`t/corpus/implicit_composition_system_autowire.fsm` emits VHDL-safe
+generated-child shared-datapath export ports/assignments, scalar structural
+signals, and both generated child entity port maps. These outputs avoid
+SystemVerilog `module`, `assign`, `endmodule`, or `always_*` syntax.
 Other composition/top VHDL shapes remain fail-closed after typed composition IR
-parsing, with generated-child, APB/C4, internal-net-heavy, generic-map, package,
-and full-parity composition shapes rejected by the scoped composition
+parsing, with broader generated-child, APB/C4, internal-net-heavy, generic-map,
+package, and full-parity composition shapes rejected by the scoped composition
 target-support diagnostic.
 That is still a scoped scaffold, not a full VHDL backend promise.
 
@@ -2306,10 +2309,10 @@ this normalized semantic shape:
 ```
 
 The current active backend/API frontier is
-`BACKEND-API-VALIDATION-FRONTIER.70.1`, which implements only the bounded C2
-generated-FSM child composition VHDL top for
-`t/corpus/implicit_composition_system_autowire.fsm` after the bounded C1
-standalone-DT child composition VHDL top shipped alongside the bounded C3
+`BACKEND-API-VALIDATION-FRONTIER.71`, which selects the next exact backend/API
+edge after the bounded C2 generated-FSM child composition VHDL top for
+`t/corpus/implicit_composition_system_autowire.fsm` shipped alongside the
+bounded C1 standalone-DT child composition VHDL top and the bounded C3
 external-RTL literal/concat composition VHDL top.
 Package-import internals, already bounded constant/enum/type internals,
 unrelated forward-IR payloads, scalar signed arithmetic, full aggregate VHDL
