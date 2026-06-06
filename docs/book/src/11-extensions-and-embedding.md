@@ -2350,13 +2350,16 @@ this normalized semantic shape:
 ```
 
 The current active backend/API frontier is
-`BACKEND-API-VALIDATION-FRONTIER.85`, which selects the next exact backend/API
-edge after bounded C1 standalone-DT scalar integer VHDL generic-map actuals
-shipped in `.84.1`.
+`BACKEND-API-VALIDATION-FRONTIER.85.1`, which owns the bounded C1
+standalone-DT scalar expression VHDL generic-map actual edge selected by `.85`.
+Until that leaf lands, standalone-DT scalar expression generic maps remain a
+documented fail-closed boundary; the active implementation target is the
+single-child standalone-DT shape that can emit an actual such as
+`EXPR_WIDTH => (8 + 1)`.
 Package declaration and VHDL package emission, already bounded
 constant/enum/type internals, unrelated forward-IR payloads, signed scalar
 division/modulo, mixed signed/unsigned arithmetic, standalone-DT generic maps
-beyond scalar integer, APB/C4
+beyond scalar integer and scalar expression, APB/C4
 generic maps, full aggregate VHDL record/array lowering, broader
 generated-FSM/C4 composition VHDL beyond the exact shipped fixtures, internal
 nets/generic maps beyond APB, broader expression parity beyond the shipped
