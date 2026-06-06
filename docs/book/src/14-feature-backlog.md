@@ -4129,12 +4129,16 @@ schema metadata for `semantic.symbol_contract.types` and
 recursive `items` or `members` plus `member_order`.
 
 Current active backend edge: task-tree leaf
-`BACKEND-API-VALIDATION-FRONTIER.81` selects the next exact backend/API edge
-after bounded C2 generated-FSM multi-bit sized bitstring VHDL generic-map
-actuals shipped in `.80.1`. Package declaration and VHDL package emission, already bounded
+`BACKEND-API-VALIDATION-FRONTIER.81.1` owns the bounded C2 generated-FSM
+resolved packed aggregate VHDL generic-map edge selected by `.81`. The target
+shape is a generated child with resolved packed aggregate overrides such as
+`LANES LOCAL_LANES` and `FRAME LOCAL_FRAME`, resolved before emission to top
+instance generic maps such as `LANES => "1010010100111100"` and
+`FRAME => "101"`; until that leaf commits, shipped VHDL behavior is unchanged.
+Package declaration and VHDL package emission, already bounded
 constant/enum/type internals, unrelated forward-IR payloads, signed scalar
-division/modulo, mixed signed/unsigned arithmetic, generated-FSM one-bit and
-aggregate generic actuals, standalone-DT generic maps, APB/C4 generic maps,
+division/modulo, mixed signed/unsigned arithmetic, generated-FSM one-bit
+generic actuals, standalone-DT generic maps, APB/C4 generic maps,
 full aggregate VHDL record/array lowering, broader generated-FSM/C4
 composition VHDL beyond the exact shipped fixtures, internal nets/generic maps
 beyond APB, broader expression parity beyond the shipped AMBA wrap family, and
