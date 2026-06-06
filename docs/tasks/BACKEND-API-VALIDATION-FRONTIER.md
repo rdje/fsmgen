@@ -203,7 +203,8 @@ items named in the 2026-06-05 remaining-work inventory.
     `BACKEND-API-VALIDATION-FRONTIER.80.1`,
     `BACKEND-API-VALIDATION-FRONTIER.81`,
     `BACKEND-API-VALIDATION-FRONTIER.81.1`,
-    `BACKEND-API-VALIDATION-FRONTIER.82`
+    `BACKEND-API-VALIDATION-FRONTIER.82`,
+    `BACKEND-API-VALIDATION-FRONTIER.82.1`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.1`
   Status: `done`
@@ -1475,10 +1476,18 @@ items named in the 2026-06-05 remaining-work inventory.
   Commit: `BACKEND-API-VALIDATION-FRONTIER.81.1: emit generated-FSM VHDL aggregate generic maps`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.82`
-  Status: `active`
+  Status: `done`
   Goal: `Select the next exact backend/API edge after bounded C2 generated-FSM resolved packed aggregate VHDL generic-map actuals shipped.`
+  Children: `BACKEND-API-VALIDATION-FRONTIER.82.1`
   Acceptance: `Selection-only leaf. Audit the backend/API frontier, current VHDL scope, mdBook backlog, direct-VHDL fact card, focused scaffold/composition/facade tests, maintained direct/composition VHDL sweeps, and current validation environment; choose the next narrow implementation or hardening owner before any code/test/source edits. The selector must preserve task-tree ownership for the chosen child leaf, synchronize README/VHDL scope/mdBook/fact card/memory if the selected frontier changes user-visible scope, and leave generated-FSM one-bit actuals; standalone-DT generic maps; APB/C4 generic maps; aggregate VHDL record/array declarations beyond packed vectors; VHDL package declaration/emission; GHDL validation; broad expression parity; full composition VHDL parity; and full backend parity deferred unless it explicitly chooses one of those exact edges.`
-  Verification: `pending selection`
+  Verification: `Selection audit/read of README.md, MEMORY_ARCHITECTURE.md, MEMORY.md, COMMIT.md, docs/TASK_TREE.md, docs/tasks/BACKEND-API-VALIDATION-FRONTIER.md, docs/VHDL_SCOPE.md, docs/book/src/14-feature-backlog.md, docs/book/src/11-extensions-and-embedding.md, docs/knowledge/direct-vhdl-scaffold.md, perl/FSM/Composition/GenerationOrchestrator.pm, perl/FSM/Backend/VHDL/StructuralRTLIREmitter.pm, perl/FSM/Composition/PlanBuilder.pm, t/114-composition-target-support-diagnostics.t, t/292-composition-generated-child-parameter-overrides.t, t/386-hdl-generator-facade-target-language-boundary-audit.t, and t/corpus/implicit_composition_system_autowire.fsm; focused prove -Iperl t/114-composition-target-support-diagnostics.t t/386-hdl-generator-facade-target-language-boundary-audit.t; prove -Iperl t/292-composition-generated-child-parameter-overrides.t; command -v ghdl returned unavailable; selected generated-FSM one-bit VHDL generic-map actuals for .82.1 because the exact C2 generated-FSM one-bit probe already emits .ENABLE_DEFAULT(1'b1) in SystemVerilog while VHDL remains fail-closed, and generated children carry VHDL std_logic generic declarations that make the one-bit literal target type explicit. External-RTL one-bit actuals, standalone-DT generic maps, APB/C4 generic maps, package declaration/emission, GHDL validation, broad expression parity, and full backend parity remain deferred.`
+  Commit: `BACKEND-API-VALIDATION-FRONTIER.82: select generated-FSM one-bit generic maps`
+
+- ID: `BACKEND-API-VALIDATION-FRONTIER.82.1`
+  Status: `active`
+  Goal: `Implement bounded C2 generated-FSM VHDL generic-map lowering for one-bit sized bitstring actuals.`
+  Acceptance: `The VHDL composition path accepts the exact C2 generated-FSM one-bit sized bitstring parameter override shape represented by a generated child such as producer/implicit_autowire_producer with ENABLE_DEFAULT 1'b1, emits the generated child VHDL std_logic generic declaration with the default as a character literal such as ENABLE_DEFAULT : std_logic := '0', and emits a top-level VHDL instance generic map such as ENABLE_DEFAULT => '1' before the generated child port map. Focused pipeline, CLI, and facade/target-language coverage prove the generated-FSM one-bit actual without leaking SystemVerilog parameter syntax. The leaf does not widen external-RTL one-bit actuals, standalone-DT generic maps, APB/C4 generic maps, VHDL package declaration/emission, full generated-FSM/C4 composition VHDL, aggregate record/array VHDL declarations beyond packed vectors, GHDL validation, broad expression parity, full composition VHDL parity, or full backend parity. README, docs/VHDL_SCOPE.md, mdBook, direct-VHDL fact card/knowledge map if needed, task tree, and memory stay synchronized.`
+  Verification: `pending implementation`
   Commit: `pending`
 
 ## Current Frontier
@@ -1652,7 +1661,8 @@ items named in the 2026-06-05 remaining-work inventory.
 | 165 | `BACKEND-API-VALIDATION-FRONTIER.80.1` | `done` | Shipped bounded C2 generated-FSM multi-bit sized bitstring VHDL generic-map actuals such as `RESET_VALUE => "10100101"` while keeping generated-FSM one-bit/aggregate, standalone-DT, APB/C4, package, GHDL, and parity widening deferred. |
 | 166 | `BACKEND-API-VALIDATION-FRONTIER.81` | `done` | Selected bounded C2 generated-FSM resolved packed aggregate VHDL generic-map actuals after probe evidence showed SystemVerilog emits `.LANES(16'b1010010100111100)` and `.FRAME(3'b101)` while VHDL rejects the generated-child aggregate shape. |
 | 167 | `BACKEND-API-VALIDATION-FRONTIER.81.1` | `done` | Shipped bounded C2 generated-FSM resolved packed aggregate VHDL generic-map actuals such as `LANES => "1010010100111100"` and `FRAME => "101"` while keeping generated-FSM one-bit, standalone-DT, APB/C4, package, GHDL, and parity widening deferred. |
-| 168 | `BACKEND-API-VALIDATION-FRONTIER.82` | `active` | Select the next exact backend/API edge after generated-FSM resolved packed aggregate VHDL generic-map actuals shipped. |
+| 168 | `BACKEND-API-VALIDATION-FRONTIER.82` | `done` | Selected generated-FSM one-bit VHDL generic-map actuals because the bounded C2 child carries std_logic generic declarations that make the one-bit target type explicit, while external-RTL one-bit actuals remain deferred. |
+| 169 | `BACKEND-API-VALIDATION-FRONTIER.82.1` | `active` | Implement bounded C2 generated-FSM one-bit sized bitstring generic-map actuals such as `ENABLE_DEFAULT => '1'` without widening external-RTL, standalone-DT, APB/C4, package, GHDL, or full-parity paths. |
 
 ## Decisions
 
@@ -2013,6 +2023,7 @@ items named in the 2026-06-05 remaining-work inventory.
 | `BACKEND-API-VALIDATION-FRONTIER.80.1` | `BACKEND-API-VALIDATION-FRONTIER.80.1: emit generated-FSM VHDL bitstring generic maps` | this slice; activates `.81` |
 | `BACKEND-API-VALIDATION-FRONTIER.81` | `BACKEND-API-VALIDATION-FRONTIER.81: select generated-FSM VHDL aggregate generic maps` | selected `.81.1` |
 | `BACKEND-API-VALIDATION-FRONTIER.81.1` | `BACKEND-API-VALIDATION-FRONTIER.81.1: emit generated-FSM VHDL aggregate generic maps` | this slice; activates `.82` |
+| `BACKEND-API-VALIDATION-FRONTIER.82` | `BACKEND-API-VALIDATION-FRONTIER.82: select generated-FSM one-bit generic maps` | selected `.82.1` |
 
 ## Changelog
 
@@ -2992,3 +3003,12 @@ items named in the 2026-06-05 remaining-work inventory.
   APB/C4 generic maps, VHDL package declaration/emission, GHDL validation,
   broad expression parity, and full backend parity remain deferred. Activated
   `.82` to select the next exact backend/API edge.
+- `2026-06-06`: Completed `.82`; selected bounded C2 generated-FSM one-bit
+  sized bitstring VHDL generic-map actuals for `.82.1` after the existing
+  focused C2 probe showed SystemVerilog emits `.ENABLE_DEFAULT(1'b1)` while
+  VHDL still rejects that one-bit shape. This is narrower than external-RTL
+  one-bit actuals because generated-FSM child VHDL emits an owned `std_logic`
+  generic declaration, making the target literal form explicit. External-RTL
+  one-bit actuals, standalone-DT generic maps, APB/C4 generic maps, VHDL
+  package declaration/emission, GHDL validation, broad expression parity, and
+  full backend parity remain deferred.

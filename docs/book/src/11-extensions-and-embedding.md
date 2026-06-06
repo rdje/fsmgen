@@ -2341,12 +2341,12 @@ this normalized semantic shape:
 ```
 
 The current active backend/API frontier is
-`BACKEND-API-VALIDATION-FRONTIER.82`, which selects the next exact backend/API
-edge after bounded C2 generated-FSM resolved packed aggregate VHDL generic-map
-actuals shipped in `.81.1`.
+`BACKEND-API-VALIDATION-FRONTIER.82.1`, which implements bounded C2
+generated-FSM one-bit sized bitstring VHDL generic-map actuals after `.82`
+selected that exact edge.
 Package declaration and VHDL package emission, already bounded
 constant/enum/type internals, unrelated forward-IR payloads, signed scalar
-division/modulo, mixed signed/unsigned arithmetic, generated-FSM one-bit
+division/modulo, mixed signed/unsigned arithmetic, external-RTL one-bit
 generic actuals, standalone-DT generic maps, APB/C4
 generic maps, full aggregate VHDL record/array lowering, broader
 generated-FSM/C4 composition VHDL beyond the exact shipped fixtures, internal
