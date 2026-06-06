@@ -91,9 +91,11 @@ The first VHDL lane is intentionally narrow:
 - Focused direct VHDL generation tests cover pipeline and CLI routing,
   sync/async reset processes, delayed-pulse clock branches, concat lowering,
   same-width addition/subtraction/multiplication/division/modulo/XOR-chain
-  lowering, generic-bearing direct-root module headers, sized-literal generic
-  defaults, mismatched-width arithmetic-expression fail-closed diagnostics,
-  and aggregate-output fail-closed diagnostics.
+  lowering, generic-bearing direct-root module headers, one-bit sized-literal
+  generic defaults, mismatched-width arithmetic-expression fail-closed
+  diagnostics, and aggregate-output fail-closed diagnostics. The active
+  `BACKEND-API-VALIDATION-FRONTIER.29.1` leaf owns explicit multi-bit
+  `std_logic_vector` generic-default coverage.
 - Add broader VHDL output to the regression corpus
 - Ensure `--check --json` and `--emit-semantic-json` stay target-neutral
 - Consider external VHDL validation via GHDL

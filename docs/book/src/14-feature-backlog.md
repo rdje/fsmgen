@@ -3789,8 +3789,11 @@ division/modulo corpora now lower through the direct VHDL scaffold for that
 family, and the maintained size-expression width fixture now lowers generated
 direct-root parameter blocks to VHDL integer generics. Generated sized-literal
 generic defaults such as `1'b1` and `1'b0` now lower to typed `std_logic`
-generics in the maintained aggregate-parameter comparison fixture. Composition
-VHDL generic maps remain deferred until a composition VHDL leaf owns that path.
+generics in the maintained aggregate-parameter comparison fixture. The next
+active hardening leaf locks the already-observed multi-bit `std_logic_vector`
+generic-default path from the maintained aggregate unary complement fixture.
+Composition VHDL generic maps remain deferred until a composition VHDL leaf
+owns that path.
 
 ### GHDL Validation
 

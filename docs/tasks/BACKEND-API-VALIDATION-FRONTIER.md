@@ -97,7 +97,8 @@ items named in the 2026-06-05 remaining-work inventory.
     `BACKEND-API-VALIDATION-FRONTIER.27.1`,
     `BACKEND-API-VALIDATION-FRONTIER.28`,
     `BACKEND-API-VALIDATION-FRONTIER.28.1`,
-    `BACKEND-API-VALIDATION-FRONTIER.29`
+    `BACKEND-API-VALIDATION-FRONTIER.29`,
+    `BACKEND-API-VALIDATION-FRONTIER.29.1`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.1`
   Status: `done`
@@ -574,9 +575,17 @@ items named in the 2026-06-05 remaining-work inventory.
   Commit: `this slice`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.29`
-  Status: `active`
+  Status: `done`
   Goal: `Select the next exact backend/API/public-export edge after direct VHDL sized-literal generic widening.`
-  Acceptance: `One remaining roadmap-aligned backend, validation, embedding, or public-export edge is selected from current code, contracts, mdBook, knowledge-map, and task-tree evidence. The selected edge has an exact implementation-or-deferral owner leaf before any code changes occur.`
+  Children: `BACKEND-API-VALIDATION-FRONTIER.29.1`
+  Acceptance: `Selected explicit direct VHDL vector sized-literal generic-default coverage as the next exact backend hardening edge. Runtime probes show t/corpus/params_aggregate_unary_complement.fsm already lowers aggregate unary-complement parameters to std_logic_vector VHDL generics, while the current focused VHDL tests only lock the one-bit std_logic generic-default path from t/corpus/params_aggregate_comparison.fsm. The implementation owner is BACKEND-API-VALIDATION-FRONTIER.29.1; aggregate record/array VHDL, composition generic maps, VHDL packages, GHDL validation, and full backend parity remain deferred.`
+  Verification: `Selection audit/read of README.md, MEMORY.md, docs/TASK_TREE.md, docs/book/src/14-feature-backlog.md, docs/VHDL_SCOPE.md, docs/knowledge/direct-vhdl-scaffold.md, perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm, t/1420-vhdl-direct-backend-scaffold.t, and direct aggregate/generic corpora. ./bin/fsmgen --language vhdl --quiet -o /tmp/fsmgen_rhs_expression_supported_variants_select.vhd t/corpus/rhs_expression_supported_variants.fsm passed; ./bin/fsmgen --language vhdl --quiet -o /tmp/fsmgen_relational_operator_chains_select.vhd t/corpus/relational_operator_chains.fsm passed; ./bin/fsmgen --language vhdl --quiet -o /tmp/fsmgen_params_aggregate_unary_complement_select.vhd t/corpus/params_aggregate_unary_complement.fsm passed and emitted P_NOT_LIST : std_logic_vector(15 downto 0) := "0101101011000011" plus P_NOT_RECORD : std_logic_vector(2 downto 0) := "010"; mixed aggregate parameter probes failed at pre-backend language-contract boundaries; direct aggregate-output probes failed at the broader typedef struct record/array VHDL boundary; command -v ghdl returned unavailable. Selected vector sized-literal generic-default coverage for .29.1 before any test/source edits.`
+  Commit: `pending`
+
+- ID: `BACKEND-API-VALIDATION-FRONTIER.29.1`
+  Status: `active`
+  Goal: `Lock direct VHDL vector sized-literal generic defaults with focused pipeline, CLI, and facade coverage.`
+  Acceptance: `Focused tests cover t/corpus/params_aggregate_unary_complement.fsm through the direct VHDL pipeline, CLI, and HDLGenerator facade target-language path, proving generated multi-bit sized-literal parameter defaults lower to typed std_logic_vector VHDL generics and drive vector assignments without SystemVerilog parameter syntax. The leaf does not widen aggregate record/array VHDL, composition generic maps, VHDL packages, multi-clock domains, GHDL validation, broad expression parity, or full backend parity. README/live docs/mdBook, the direct-VHDL fact card, task-tree, and memory are synchronized.`
   Verification: `pending`
   Commit: `pending`
 
@@ -645,7 +654,8 @@ items named in the 2026-06-05 remaining-work inventory.
 | 59 | `BACKEND-API-VALIDATION-FRONTIER.27.1` | `done` | Implemented only the direct parameter-block-to-VHDL-generic conversion for generated direct roots, leaving composition generic maps, VHDL packages, aggregate VHDL, GHDL, and full parity deferred. |
 | 60 | `BACKEND-API-VALIDATION-FRONTIER.28` | `done` | Selected generated sized-literal defaults for direct VHDL generics as the next exact scaffold edge after probes showed `params_aggregate_comparison` now fails only on `1'b1` generic defaults, while aggregate-output fixtures require broader typedef/record lowering. |
 | 61 | `BACKEND-API-VALIDATION-FRONTIER.28.1` | `done` | Implemented only typed sized-literal defaults in direct VHDL generics, leaving aggregate VHDL, composition generic maps, packages, GHDL, and full parity deferred. |
-| 62 | `BACKEND-API-VALIDATION-FRONTIER.29` | `active` | Select the next exact backend/API/public-export edge after the bounded direct VHDL sized-literal generic widening. |
+| 62 | `BACKEND-API-VALIDATION-FRONTIER.29` | `done` | Selected explicit vector sized-literal generic-default coverage as the next direct VHDL hardening edge after probes showed the behavior already lowers but is not focused-test locked. |
+| 63 | `BACKEND-API-VALIDATION-FRONTIER.29.1` | `active` | Lock multi-bit sized-literal direct VHDL generic defaults through pipeline, CLI, and facade tests before selecting any broader aggregate or composition VHDL work. |
 
 ## Decisions
 
@@ -728,6 +738,7 @@ items named in the 2026-06-05 remaining-work inventory.
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.27.1` | `perl -Iperl -c perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm`; `perl -Iperl -c perl/FSM/HDL/FlattenedDT.pm`; `prove -Iperl t/1420-vhdl-direct-backend-scaffold.t t/386-hdl-generator-facade-target-language-boundary-audit.t t/114-composition-target-support-diagnostics.t t/404-hdl-generator-facade-target-language-shape-boundary-audit.t`; `prove -Iperl t/50-language-contract-size-section-boundary.t t/57-language-contract-pulse-boundary.t`; `prove -Iperl t/313-hdl-external-validation-contract.t t/308-systemverilog-external-validation.t`; `./bin/fsmgen --language vhdl --quiet t/corpus/arithmetic_xor_operator_variants.fsm`; `./bin/fsmgen --language vhdl --quiet t/corpus/direct_runtime_div_mod.fsm`; `./bin/fsmgen --language vhdl --quiet t/corpus/direct_size_expression_widths.fsm`; `./bin/fsmgen --language vhdl --quiet -o /tmp/fsmgen_direct_size_expression_widths_impl_probe.vhd t/corpus/direct_size_expression_widths.fsm`; `sed -n '1,180p' /tmp/fsmgen_direct_size_expression_widths_impl_probe.vhd`; `rg -n "generic|PARAM|signal [ABCH]|H <=|module|parameter|always_" /tmp/fsmgen_direct_size_expression_widths_impl_probe.vhd`; expected language-contract failure `./bin/fsmgen --language vhdl --quiet t/corpus/assignment_multiple_pulse_delays.fsm`; removed `/tmp/fsmgen_direct_size_expression_widths_impl_probe.vhd`; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; direct VHDL generic-bearing direct-root module headers are shipped as VHDL integer generics while composition generic maps, packages, aggregate VHDL, and GHDL validation remain deferred |
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.28` | Selection audit/read of `docs/book/src/14-feature-backlog.md`, `docs/VHDL_SCOPE.md`, `docs/knowledge/direct-vhdl-scaffold.md`, `perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm`, `t/1420-vhdl-direct-backend-scaffold.t`, `t/114-composition-target-support-diagnostics.t`, and direct aggregate/generic fixtures; direct VHDL corpus sweep; `./bin/fsmgen --quiet -o /tmp/fsmgen_direct_rhs_concat_target_autogrowth_probe.sv t/corpus/direct_rhs_concat_target_autogrowth.fsm`; `./bin/fsmgen --quiet -o /tmp/fsmgen_direct_aggregate_constant_target_autogrowth_probe.sv t/corpus/direct_aggregate_constant_target_autogrowth.fsm`; `./bin/fsmgen --quiet -o /tmp/fsmgen_params_aggregate_comparison_probe.sv t/corpus/params_aggregate_comparison.fsm`; `./bin/fsmgen --language vhdl --quiet -o /tmp/fsmgen_params_aggregate_comparison_vhdl_probe.vhd t/corpus/params_aggregate_comparison.fsm` failed on unsupported parameter expression `1'b1`; removed temporary `/tmp/fsmgen_*` probe files; `scripts/check_memory_architecture.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; selected direct VHDL sized-literal generic defaults for `.28.1` |
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.28.1` | `perl -Iperl -c perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm`; `perl -Iperl -c perl/FSM/HDL/FlattenedDT.pm`; `prove -Iperl t/1420-vhdl-direct-backend-scaffold.t t/386-hdl-generator-facade-target-language-boundary-audit.t`; `./bin/fsmgen --language vhdl --quiet -o /tmp/fsmgen_params_aggregate_comparison_impl_probe.vhd t/corpus/params_aggregate_comparison.fsm`; `sed -n '1,180p' /tmp/fsmgen_params_aggregate_comparison_impl_probe.vhd`; `rg -n "generic|P_EQ|P_NE|1'b|module|parameter|always_" /tmp/fsmgen_params_aggregate_comparison_impl_probe.vhd`; `prove -Iperl t/1420-vhdl-direct-backend-scaffold.t t/386-hdl-generator-facade-target-language-boundary-audit.t t/114-composition-target-support-diagnostics.t t/404-hdl-generator-facade-target-language-shape-boundary-audit.t`; `prove -Iperl t/50-language-contract-size-section-boundary.t t/57-language-contract-pulse-boundary.t`; `prove -Iperl t/313-hdl-external-validation-contract.t t/308-systemverilog-external-validation.t`; `./bin/fsmgen --language vhdl --quiet t/corpus/arithmetic_xor_operator_variants.fsm`; `./bin/fsmgen --language vhdl --quiet t/corpus/direct_runtime_div_mod.fsm`; `./bin/fsmgen --language vhdl --quiet t/corpus/direct_size_expression_widths.fsm`; `./bin/fsmgen --language vhdl --quiet t/corpus/params_aggregate_comparison.fsm`; removed `/tmp/fsmgen_params_aggregate_comparison_impl_probe.vhd`; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; direct VHDL sized-literal parameter defaults now lower to typed scalar/vector generics while aggregate VHDL, composition generic maps, packages, and GHDL validation remain deferred |
+| `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.29` | Selection audit/read of `README.md`, `MEMORY.md`, `docs/TASK_TREE.md`, `docs/book/src/14-feature-backlog.md`, `docs/VHDL_SCOPE.md`, `docs/knowledge/direct-vhdl-scaffold.md`, `perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm`, `t/1420-vhdl-direct-backend-scaffold.t`, and direct aggregate/generic corpora; `./bin/fsmgen --language vhdl --quiet -o /tmp/fsmgen_rhs_expression_supported_variants_select.vhd t/corpus/rhs_expression_supported_variants.fsm`; `./bin/fsmgen --language vhdl --quiet -o /tmp/fsmgen_relational_operator_chains_select.vhd t/corpus/relational_operator_chains.fsm`; `./bin/fsmgen --language vhdl --quiet -o /tmp/fsmgen_params_aggregate_unary_complement_select.vhd t/corpus/params_aggregate_unary_complement.fsm`; `sed -n '1,200p' /tmp/fsmgen_params_aggregate_unary_complement_select.vhd`; mixed aggregate parameter probes failed at pre-backend language-contract boundaries; direct aggregate-output probes failed at the broader `typedef struct` record/array VHDL boundary; `command -v ghdl` returned unavailable; selected `.29.1` for explicit vector sized-literal generic-default coverage | `PASS`; selected vector generic-default coverage for `.29.1` |
 
 ## Commit Log
 
@@ -794,6 +805,7 @@ items named in the 2026-06-05 remaining-work inventory.
 | `BACKEND-API-VALIDATION-FRONTIER.27.1` | `BACKEND-API-VALIDATION-FRONTIER.27.1: ship VHDL direct generics` | this slice |
 | `BACKEND-API-VALIDATION-FRONTIER.28` | `BACKEND-API-VALIDATION-FRONTIER.28: select VHDL generic literals` | selected `.28.1` |
 | `BACKEND-API-VALIDATION-FRONTIER.28.1` | `BACKEND-API-VALIDATION-FRONTIER.28.1: ship VHDL generic literals` | this slice |
+| `BACKEND-API-VALIDATION-FRONTIER.29` | `BACKEND-API-VALIDATION-FRONTIER.29: select VHDL vector generics` | selected `.29.1` |
 
 ## Changelog
 
@@ -1092,3 +1104,10 @@ items named in the 2026-06-05 remaining-work inventory.
   aggregate VHDL, composition generic maps, packages, GHDL validation, and full
   backend parity remain deferred. Activated `.29` to select the next
   backend/API edge.
+- `2026-06-06`: Completed `.29`; selected explicit vector sized-literal
+  generic-default coverage for `.29.1` because
+  `params_aggregate_unary_complement` already emits multi-bit
+  `std_logic_vector` generic defaults, while the focused direct VHDL tests only
+  lock one-bit `std_logic` generic defaults. Aggregate record/array VHDL,
+  composition generic maps, packages, GHDL validation, and full backend parity
+  remain deferred.
