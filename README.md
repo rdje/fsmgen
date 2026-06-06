@@ -836,9 +836,9 @@ recursive type-entry schema metadata for `semantic.symbol_contract.types` and
 carry recursive `items` or `members` plus `member_order`.
 The direct VHDL scaffold now lowers generated vector `logic signed` internal
 declarations to VHDL `signed` signals. The current active backend/API frontier
-is `BACKEND-API-VALIDATION-FRONTIER.56`: select the next exact backend/API or
-public-export edge after direct VHDL `logic signed` declaration lowering.
-Signed ports, signed arithmetic semantics, aggregate VHDL, composition/top
+is `BACKEND-API-VALIDATION-FRONTIER.56.1`: implement direct VHDL signed vector
+port declaration lowering after `.56` selected that exact backend edge. Signed
+arithmetic semantics, scalar signed ports, aggregate VHDL, composition/top
 VHDL, packages, GHDL validation, broad expression parity, package-import
 internals, unrelated forward-IR payloads, and full normalized semantic export
 stabilization remain out of scope until later exact leaves own them.

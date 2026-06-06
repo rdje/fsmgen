@@ -2288,12 +2288,12 @@ this normalized semantic shape:
 ```
 
 The current active backend/API frontier is
-`BACKEND-API-VALIDATION-FRONTIER.56`, which selects the next exact backend/API
-or public-export edge after direct VHDL `logic signed` internal declaration
-lowering shipped. Package-import internals, already bounded constant/enum/type
-internals, unrelated forward-IR payloads, signed ports, signed arithmetic
-semantics, aggregate/composition VHDL, and full normalized semantic export
-stabilization remain out of scope until later exact leaves own them.
+`BACKEND-API-VALIDATION-FRONTIER.56.1`, which implements direct VHDL signed
+vector port declaration lowering after `.56` selected that exact backend edge.
+Package-import internals, already bounded constant/enum/type internals,
+unrelated forward-IR payloads, signed arithmetic semantics,
+aggregate/composition VHDL, and full normalized semantic export stabilization
+remain out of scope until later exact leaves own them.
 
 Do not treat the raw `HDLGenerator` result hash as a stable JSON document.
 

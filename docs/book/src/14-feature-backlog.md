@@ -3826,6 +3826,10 @@ Generated internal `logic signed [MSB:LSB] NAME;` declarations now lower to
 VHDL `signed` signals. Signed ports, signed arithmetic semantics,
 composition/top VHDL, aggregate VHDL, packages, GHDL validation, and full
 backend parity remain outside the shipped scaffold.
+Active implementation leaf `BACKEND-API-VALIDATION-FRONTIER.56.1` now owns the
+next narrow direct VHDL edge: generated signed vector direct-root port
+declarations, starting with `input logic signed [7:0] IN`, lowering to VHDL
+`signed` ports. Signed arithmetic semantics remain a separate future edge.
 
 ### GHDL Validation
 
@@ -4013,10 +4017,10 @@ schema metadata for `semantic.symbol_contract.types` and
 `kind`, `signed`, `width`, and optional `state_model`; aggregate entries carry
 recursive `items` or `members` plus `member_order`.
 
-Current active selector: task-tree leaf `BACKEND-API-VALIDATION-FRONTIER.56`
-selects the next exact backend/API or public-export edge after direct VHDL
-`logic signed` internal declaration lowering shipped. Package-import internals,
-already bounded constant/enum/type internals, unrelated forward-IR payloads,
-signed ports, signed arithmetic semantics, aggregate/composition VHDL, and full
-normalized semantic export stabilization remain out of scope until later exact
-leaves own them.
+Current active backend edge: task-tree leaf
+`BACKEND-API-VALIDATION-FRONTIER.56.1` implements direct VHDL signed vector
+port declaration lowering after `.56` selected that exact scaffold gap.
+Package-import internals, already bounded constant/enum/type internals,
+unrelated forward-IR payloads, signed arithmetic semantics, aggregate/composition
+VHDL, and full normalized semantic export stabilization remain out of scope
+until later exact leaves own them.
