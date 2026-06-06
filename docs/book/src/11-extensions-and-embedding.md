@@ -2183,6 +2183,12 @@ Shared-datapath alias metadata reuses the already bounded lowered-RTL
 shared-datapath candidate, contributor, drive-intent, aggregate-enable,
 assertion, and bound-connection shapes.
 
+The current selected public-export hardening edge is
+`BACKEND-API-VALIDATION-FRONTIER.51.1`: publish generated-child
+parameter-override metadata and alias key families for
+`semantic.composition.generated_children[]` and
+`semantic.forward_ir.intent_hir.composition_generated_children[]`.
+
 Do not treat the raw `HDLGenerator` result hash as a stable JSON document.
 
 Some nested branches still contain live CoreAST/AST objects for compatibility and

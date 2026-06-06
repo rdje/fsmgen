@@ -810,8 +810,10 @@ own bounded owner for composition sources, including bounded
 `semantic.forward_ir.structural_rtl_ir.instances[].parameter_overrides[]`:
 [perl/FSM/Support/NormalizedSemanticCompositionContract.pm](perl/FSM/Support/NormalizedSemanticCompositionContract.pm).
 The current selected public-export hardening edge is
-`BACKEND-API-VALIDATION-FRONTIER.51`: select the next exact backend/API/public-export
-edge after bounded composition child parameter-override alias schemas shipped.
+`BACKEND-API-VALIDATION-FRONTIER.51.1`: publish generated-child
+parameter-override metadata and alias key families for
+`semantic.composition.generated_children[]` and
+`semantic.forward_ir.intent_hir.composition_generated_children[]`.
 The manifest is still not a full normalized semantic export stabilization
 promise.
 The manifest-facing stable diagnostic-code registry now has its own explicit

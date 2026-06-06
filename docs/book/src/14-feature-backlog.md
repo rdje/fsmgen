@@ -3976,7 +3976,8 @@ value-metadata-extension schemas. The manifest is still not a full normalized
 semantic export.
 
 Current selected next edge: task-tree leaf
-`BACKEND-API-VALIDATION-FRONTIER.51` will select the next exact
-backend/API/public-export edge after bounded composition child
-parameter-override alias schemas shipped. Full normalized semantic export
-stabilization remains out of scope.
+`BACKEND-API-VALIDATION-FRONTIER.51.1` will publish generated-child
+parameter-override metadata and alias key families for
+`semantic.composition.generated_children[]` and
+`semantic.forward_ir.intent_hir.composition_generated_children[]`. Full
+normalized semantic export stabilization remains out of scope.
