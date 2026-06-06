@@ -18,6 +18,7 @@ answers:
   - "does direct VHDL support generics?"
   - "does direct VHDL support parameterized direct roots?"
   - "does direct VHDL support sized literal generic defaults?"
+  - "does direct VHDL support vector sized literal generic defaults?"
 date: 2026-06-06
 status: current
 tags: [vhdl, backend, direct-generation, validation]
@@ -32,8 +33,11 @@ combinational muxes, generic-bearing direct-root module headers, basic concat
 RHS forms, and delayed-pulse clock-branch nested-if lowering. Generated
 SystemVerilog `parameter` blocks for direct roots lower to VHDL generics before
 the port block while the body keeps already-resolved concrete signal widths:
-arithmetic integer-expression defaults become `integer` generics, and
-sized-literal defaults become `std_logic` or `std_logic_vector` generics. The
+arithmetic integer-expression defaults become `integer` generics. Sized-literal
+defaults become `std_logic` generics for one-bit defaults and
+`std_logic_vector` generics for multi-bit defaults; the focused coverage uses
+`params_aggregate_comparison` for the scalar case and
+`params_aggregate_unary_complement` for the vector case. The
 scaffold also lowers the first arithmetic RHS shape:
 same-width vector `NAME + NAME` assignments and same-width multi-operand
 addition chains become `std_logic_vector(unsigned(A) + unsigned(B) + ...)`

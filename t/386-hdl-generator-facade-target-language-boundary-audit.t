@@ -473,6 +473,35 @@ subtest 'facade target_language option routes direct VHDL sized-literal generic 
         qr/\bmodule\b|#\s*\(|\bparameter\b|\b1'b[01]\b|\balways_(?:ff|comb)\b/s,
         'explicit VHDL sized-literal generic facade generation does not leak SystemVerilog parameter syntax',
     );
+
+    my $vector_direct_path = repo_file('t/corpus/params_aggregate_unary_complement.fsm');
+    my $vector_vhdl_result = $vhdl_pipeline->generate_hdl_from_file($vector_direct_path);
+
+    like(
+        $vector_vhdl_result->{hdl_code},
+        qr/\bentity\s+params_aggregate_unary_complement\s+is\b/s,
+        'explicit VHDL facade generation emits the vector sized-literal generic direct entity',
+    );
+    like(
+        $vector_vhdl_result->{hdl_code},
+        qr/\bP_NOT_LIST\s+:\s+std_logic_vector\(15\s+downto\s+0\)\s+:=\s+"0101101011000011";/s,
+        'explicit VHDL facade generation lowers list-width defaults to std_logic_vector generics',
+    );
+    like(
+        $vector_vhdl_result->{hdl_code},
+        qr/\bP_NOT_RECORD\s+:\s+std_logic_vector\(2\s+downto\s+0\)\s+:=\s+"010"/s,
+        'explicit VHDL facade generation lowers record-width defaults to std_logic_vector generics',
+    );
+    like(
+        $vector_vhdl_result->{hdl_code},
+        qr/\bOUT_LIST\s+<=\s+P_NOT_LIST;/s,
+        'explicit VHDL facade generation routes vector generics into vector assignments',
+    );
+    unlike(
+        $vector_vhdl_result->{hdl_code},
+        qr/\bmodule\b|#\s*\(|\bparameter\b|\b(?:3|8|16)'[bdhBDH]|\balways_(?:ff|comb)\b/s,
+        'explicit VHDL vector sized-literal generic facade generation does not leak SystemVerilog parameter syntax',
+    );
 };
 
 done_testing();

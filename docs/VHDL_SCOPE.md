@@ -16,8 +16,9 @@ This document defines the scoped R14 VHDL backend plan for FSMGen.
   scalar/vector XOR chains lower to VHDL `xor`.
 - The direct scaffold now includes generic-bearing direct-root module headers:
   generated SystemVerilog `parameter` blocks lower to VHDL generics, with
-  arithmetic integer-expression defaults as `integer` and sized-literal
-  defaults as `std_logic` or `std_logic_vector` generics.
+  arithmetic integer-expression defaults as `integer`, one-bit sized-literal
+  defaults as `std_logic`, and multi-bit sized-literal defaults as
+  `std_logic_vector` generics.
 - Composition VHDL, aggregate VHDL, broad expression parity, GHDL validation,
   packages, multi-clock domains, and full feature parity remain deferred.
 
@@ -84,18 +85,17 @@ The first VHDL lane is intentionally narrow:
   delayed-pulse nested clock-branch lowering, plus same-width addition,
   subtraction, multiplication, division, modulo, and XOR RHS expression chains,
   and direct-root parameter blocks as VHDL generics, including integer
-  expression defaults and typed sized-literal defaults.
+  expression defaults and typed scalar/vector sized-literal defaults.
 - Remaining semantic conversion work still belongs to exact future VHDL leaves.
 
 ### Phase 3: Regression and hardening (R14.3)
 - Focused direct VHDL generation tests cover pipeline and CLI routing,
   sync/async reset processes, delayed-pulse clock branches, concat lowering,
   same-width addition/subtraction/multiplication/division/modulo/XOR-chain
-  lowering, generic-bearing direct-root module headers, one-bit sized-literal
-  generic defaults, mismatched-width arithmetic-expression fail-closed
-  diagnostics, and aggregate-output fail-closed diagnostics. The active
-  `BACKEND-API-VALIDATION-FRONTIER.29.1` leaf owns explicit multi-bit
-  `std_logic_vector` generic-default coverage.
+  lowering, generic-bearing direct-root module headers, one-bit `std_logic`
+  and multi-bit `std_logic_vector` sized-literal generic defaults,
+  mismatched-width arithmetic-expression fail-closed diagnostics, and
+  aggregate-output fail-closed diagnostics.
 - Add broader VHDL output to the regression corpus
 - Ensure `--check --json` and `--emit-semantic-json` stay target-neutral
 - Consider external VHDL validation via GHDL

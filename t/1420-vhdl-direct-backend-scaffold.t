@@ -488,6 +488,32 @@ subtest 'direct VHDL scaffold lowers generated sized-literal parameter defaults 
     my $cli_hdl = read_file($output_path);
     like($cli_hdl, qr/\bP_NE_LIST_FALSE\s+:\s+std_logic\s+:=\s+'0';/s, 'CLI sized-literal generic VHDL output includes zero-valued std_logic default');
     unlike($cli_hdl, qr/\bmodule\b|#\s*\(|\bparameter\b|\b1'b[01]\b|\balways_(?:ff|comb)\b/s, 'CLI sized-literal generic VHDL output remains VHDL-shaped');
+
+    my $vector_output_path = File::Spec->catfile($tempdir, 'params_aggregate_unary_complement.vhd');
+    my $vector_hdl = generate_vhdl('t/corpus/params_aggregate_unary_complement.fsm');
+    like($vector_hdl, qr/\bentity\s+params_aggregate_unary_complement\s+is\b/s, 'vector generic fixture emits direct VHDL entity');
+    like(
+        $vector_hdl,
+        qr/\bgeneric\s*\(\s+P_NOT_LIST\s+:\s+std_logic_vector\(15\s+downto\s+0\)\s+:=\s+"0101101011000011";\s+P_NOT_RECORD\s+:\s+std_logic_vector\(2\s+downto\s+0\)\s+:=\s+"010"\s+\);/s,
+        'generated multi-bit literal parameter defaults lower to std_logic_vector generics',
+    );
+    like($vector_hdl, qr/\bOUT_LIST\s+<=\s+P_NOT_LIST;/s, 'std_logic_vector generic drives the list-width VHDL assignment');
+    like($vector_hdl, qr/\bOUT_RECORD\s+<=\s+P_NOT_RECORD;/s, 'std_logic_vector generic drives the record-width VHDL assignment');
+    unlike($vector_hdl, qr/\bmodule\b|#\s*\(|\bparameter\b|\b(?:3|8|16)'[bdhBDH]|\balways_(?:ff|comb)\b/s, 'vector sized-literal generic VHDL output does not leak SystemVerilog parameter syntax');
+
+    my ($vector_success, $vector_error_message, $vector_full_buf, $vector_stdout_buf, $vector_stderr_buf) = run(
+        command => ['./bin/fsmgen', '--language', 'vhdl', '--quiet', '-o', $vector_output_path, repo_file('t/corpus/params_aggregate_unary_complement.fsm')],
+    );
+
+    my $vector_combined_output = join('', @{ $vector_stdout_buf || [] }, @{ $vector_stderr_buf || [] }, ($vector_error_message || ''));
+    ok($vector_success, 'CLI accepts direct --language vhdl for vector sized-literal generic defaults')
+        or diag($vector_combined_output);
+    ok(-e $vector_output_path, 'CLI writes vector sized-literal generic VHDL output file');
+
+    my $vector_cli_hdl = read_file($vector_output_path);
+    like($vector_cli_hdl, qr/\bP_NOT_LIST\s+:\s+std_logic_vector\(15\s+downto\s+0\)\s+:=\s+"0101101011000011";/s, 'CLI vector sized-literal generic VHDL output includes the list-width default');
+    like($vector_cli_hdl, qr/\bP_NOT_RECORD\s+:\s+std_logic_vector\(2\s+downto\s+0\)\s+:=\s+"010"/s, 'CLI vector sized-literal generic VHDL output includes the record-width default');
+    unlike($vector_cli_hdl, qr/\bmodule\b|#\s*\(|\bparameter\b|\b(?:3|8|16)'[bdhBDH]|\balways_(?:ff|comb)\b/s, 'CLI vector sized-literal generic VHDL output remains VHDL-shaped');
 };
 
 subtest 'direct VHDL scaffold keeps mismatched-width arithmetic expression parity fail-closed' => sub {
