@@ -593,6 +593,82 @@ FSM
     );
 };
 
+subtest 'direct VHDL scaffold lowers binary scalar subtraction RHS shape' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $fsm_path = File::Spec->catfile($tempdir, 'direct_vhdl_scalar_subtraction.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'direct_vhdl_scalar_subtraction.vhd');
+    my $scalar_division_path = File::Spec->catfile($tempdir, 'direct_vhdl_scalar_division_deferred.fsm');
+    write_file(
+        $fsm_path,
+        <<'FSM'
+(?fsm:direct_vhdl_scalar_subtraction
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+  (+size
+    (A 1)
+    (B 1)
+    (DIFF 1)
+  )
+  (idle
+    (= (DIFF (- A B)))
+  )
+)
+FSM
+    );
+    write_file(
+        $scalar_division_path,
+        <<'FSM'
+(?fsm:direct_vhdl_scalar_division_deferred
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+  (+size
+    (A 1)
+    (B 1)
+    (QUOTIENT 1)
+  )
+  (idle
+    (= (QUOTIENT (/ A B)))
+  )
+)
+FSM
+    );
+
+    my $hdl = generate_vhdl($fsm_path);
+    like($hdl, qr/\bentity\s+direct_vhdl_scalar_subtraction\s+is\b/s, 'scalar-subtraction fixture emits direct VHDL entity');
+    like(
+        $hdl,
+        qr/\bDIFF\s+<=\s+A\s+xor\s+B;/s,
+        'binary scalar subtraction lowers to one-bit truncated VHDL xor semantics',
+    );
+    unlike($hdl, qr/\bmodule\b|\balways_(?:ff|comb)\b|\bunsigned\(A\)/s, 'scalar-subtraction VHDL output remains scalar and VHDL-shaped');
+
+    my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--language', 'vhdl', '--quiet', '-o', $output_path, $fsm_path],
+    );
+
+    my $combined_output = join('', @{ $stdout_buf || [] }, @{ $stderr_buf || [] }, ($error_message || ''));
+    ok($success, 'CLI accepts direct --language vhdl for the binary scalar-subtraction fixture')
+        or diag($combined_output);
+    ok(-e $output_path, 'CLI writes binary scalar-subtraction VHDL output file');
+
+    my $cli_hdl = read_file($output_path);
+    like($cli_hdl, qr/\bDIFF\s+<=\s+A\s+xor\s+B;/s, 'CLI scalar-subtraction VHDL output uses one-bit xor lowering');
+    unlike($cli_hdl, qr/\bmodule\b|\balways_(?:ff|comb)\b|\bunsigned\(A\)/s, 'CLI scalar-subtraction VHDL output remains scalar and VHDL-shaped');
+
+    my $scalar_division_error = capture_exception(sub {
+        generate_vhdl($scalar_division_path);
+    });
+    like(
+        $scalar_division_error,
+        qr/arithmetic expression 'A \/ B' is outside the direct VHDL scaffold/s,
+        'scalar division remains outside the direct VHDL scaffold boundary',
+    );
+};
+
 subtest 'direct VHDL scaffold keeps mismatched-width arithmetic expression parity fail-closed' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $fsm_path = File::Spec->catfile($tempdir, 'direct_vhdl_mismatched_division_deferred.fsm');
