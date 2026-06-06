@@ -94,8 +94,10 @@ The first VHDL lane is intentionally narrow:
      as one-bit scalar `and`
    - Generated direct mux assignments with vector signal plus/minus numeric
      literal operands, such as `SRC + 2` and `byte_count + 4`
-   - Signed vector plus/minus numeric literal RHS assignments, such as
-     `A + 1` and `A - 1`, through target-width `to_signed`
+   - Signed vector numeric-literal
+     addition/subtraction/multiplication/division/modulo RHS assignments, such
+     as `A + 1`, `A - 1`, `A * 2`, `A / 2`, and `A mod 2`, through
+     target-width `to_signed`
    - Generated scalar `bit` internal signal declarations as `std_logic`
    - Generated signed vector internal signal declarations as VHDL `signed`
    - Generated non-signed four-state `logic` internal signal declarations as
@@ -153,9 +155,10 @@ The first VHDL lane is intentionally narrow:
   plus direct-root parameter blocks as VHDL
   generics, including integer expression defaults and typed scalar/vector
   sized-literal defaults.
-- Active follow-up: select the next exact backend/API/public-export edge under
-  `BACKEND-API-VALIDATION-FRONTIER.63`; scalar signed arithmetic and mixed
-  signed/unsigned arithmetic remain separate future edges.
+- Active follow-up: implement signed scalar direct-root port/internal
+  declaration lowering under `BACKEND-API-VALIDATION-FRONTIER.63.1`;
+  scalar signed arithmetic and mixed signed/unsigned arithmetic remain
+  separate future edges.
 - Remaining semantic conversion work still belongs to exact future VHDL leaves.
 
 ### Phase 3: Regression and hardening (R14.3)

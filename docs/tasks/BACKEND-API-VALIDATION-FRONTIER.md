@@ -165,7 +165,8 @@ items named in the 2026-06-05 remaining-work inventory.
     `BACKEND-API-VALIDATION-FRONTIER.61.1`,
     `BACKEND-API-VALIDATION-FRONTIER.62`,
     `BACKEND-API-VALIDATION-FRONTIER.62.1`,
-    `BACKEND-API-VALIDATION-FRONTIER.63`
+    `BACKEND-API-VALIDATION-FRONTIER.63`,
+    `BACKEND-API-VALIDATION-FRONTIER.63.1`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.1`
   Status: `done`
@@ -1152,10 +1153,18 @@ items named in the 2026-06-05 remaining-work inventory.
   Commit: `BACKEND-API-VALIDATION-FRONTIER.62.1: ship VHDL signed literal divmul`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.63`
-  Status: `active`
+  Status: `done`
   Goal: `Select the next exact backend/API/public-export edge after direct VHDL signed vector numeric-literal multiplication/division/modulo RHS lowering shipped.`
-  Acceptance: `pending selection`
-  Verification: `pending selection`
+  Children: `BACKEND-API-VALIDATION-FRONTIER.63.1`
+  Acceptance: `Selected direct VHDL signed scalar direct-root port/internal declaration lowering as the next exact backend edge. Evidence shows a generated one-bit signed type-alias pass-through fixture emits SystemVerilog scalar signed declarations such as input logic signed IN and logic signed OUT, but the VHDL scaffold fails at unsupported generated port declaration 'input logic signed IN'. A signed scalar addition probe also fails at the same declaration boundary before arithmetic can be evaluated, so the implementation owner is BACKEND-API-VALIDATION-FRONTIER.63.1 before any backend/test/source edits. The slice must lower signed scalar declarations for non-arithmetic direct-root shapes while preserving signed scalar arithmetic and mixed signed/unsigned arithmetic as separate fail-closed future edges.`
+  Verification: `Selection audit/read of README.md, docs/VHDL_SCOPE.md, docs/book/src/11-extensions-and-embedding.md, docs/book/src/14-feature-backlog.md, docs/knowledge/direct-vhdl-scaffold.md, docs/tasks/BACKEND-API-VALIDATION-FRONTIER.md, perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm, t/1420-vhdl-direct-backend-scaffold.t, t/386-hdl-generator-facade-target-language-boundary-audit.t, and t/279-declarative-scalar-types.t; temporary direct VHDL probes showed mixed signed/unsigned vector addition fails closed at arithmetic expression A + B, signed one-bit addition fails at unsupported generated port declaration input logic signed A, and signed one-bit pass-through fails at unsupported generated port declaration input logic signed IN while SystemVerilog generation emits the scalar signed declaration shape.`
+  Commit: `BACKEND-API-VALIDATION-FRONTIER.63: select VHDL signed scalar declarations`
+
+- ID: `BACKEND-API-VALIDATION-FRONTIER.63.1`
+  Status: `active`
+  Goal: `Implement direct VHDL signed scalar direct-root port/internal declaration lowering.`
+  Acceptance: `FSM::HDL::FlattenedDT::Backend::VHDL accepts generated scalar signed direct-root input/output ports and internal declarations, lowering them to deterministic VHDL std_logic declarations for non-arithmetic direct-root shapes. Focused pipeline, CLI, and facade coverage prove a signed one-bit type-alias pass-through fixture emits std_logic ports/signals without failing at input logic signed or logic signed declarations. Focused coverage also proves signed scalar arithmetic remains fail-closed rather than silently lowering through the existing one-bit unsigned/scalar arithmetic rules. README, docs/VHDL_SCOPE.md, mdBook, direct-VHDL fact card, task tree, and memory stay synchronized. The leaf does not widen scalar signed arithmetic, mixed signed/unsigned arithmetic, aggregate VHDL, composition/top VHDL, GHDL validation, broad expression parity, or full backend parity.`
+  Verification: `pending implementation`
   Commit: `pending`
 
 ## Current Frontier
@@ -1291,7 +1300,8 @@ items named in the 2026-06-05 remaining-work inventory.
 | 127 | `BACKEND-API-VALIDATION-FRONTIER.61.1` | `done` | Shipped signed vector plus/minus numeric literal lowering without widening other signed literal arithmetic or full VHDL parity. |
 | 128 | `BACKEND-API-VALIDATION-FRONTIER.62` | `done` | Selected signed vector numeric-literal multiplication/division/modulo after probes showed `A * 2`, `A / 2`, and `A % 2` still fail closed for signed targets. |
 | 129 | `BACKEND-API-VALIDATION-FRONTIER.62.1` | `done` | Shipped signed vector numeric-literal multiplication/division/modulo lowering without widening scalar signed arithmetic or full VHDL parity. |
-| 130 | `BACKEND-API-VALIDATION-FRONTIER.63` | `active` | Select the next exact backend/API/public-export edge after signed vector numeric-literal multiplication/division/modulo shipped. |
+| 130 | `BACKEND-API-VALIDATION-FRONTIER.63` | `done` | Selected signed scalar direct-root declaration lowering after probes showed generated one-bit signed type aliases fail at `input logic signed IN`. |
+| 131 | `BACKEND-API-VALIDATION-FRONTIER.63.1` | `active` | Implement signed scalar declaration lowering while keeping signed scalar arithmetic and mixed signed/unsigned arithmetic fail-closed. |
 
 ## Decisions
 
@@ -1442,6 +1452,7 @@ items named in the 2026-06-05 remaining-work inventory.
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.61.1` | `perl -Iperl -c perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm`; `perl -Iperl -c t/1420-vhdl-direct-backend-scaffold.t`; `perl -Iperl -c t/386-hdl-generator-facade-target-language-boundary-audit.t`; focused VHDL scaffold/facade prove bundle; `prove -Iperl t/279-declarative-scalar-types.t`; composition/target-language boundary prove bundle; external-validation prove bundle; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; direct VHDL now lowers signed vector plus/minus numeric literal RHS assignments through target-width `to_signed` conversion; activated `.62` |
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.62` | Selection audit/read of `README.md`, `docs/VHDL_SCOPE.md`, `docs/book/src/11-extensions-and-embedding.md`, `docs/book/src/14-feature-backlog.md`, `docs/knowledge/direct-vhdl-scaffold.md`, `docs/tasks/BACKEND-API-VALIDATION-FRONTIER.md`, `perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm`, `t/1420-vhdl-direct-backend-scaffold.t`, and `t/386-hdl-generator-facade-target-language-boundary-audit.t`; temporary signed A/PROD, A/QUOT, and A/REM VHDL probes failed closed at arithmetic expressions `A * 2`, `A / 2`, and `A % 2` | `PASS`; selected signed vector numeric-literal multiplication/division/modulo RHS lowering for `.62.1` |
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.62.1` | `perl -Iperl -c perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm`; `perl -Iperl -c t/1420-vhdl-direct-backend-scaffold.t`; `perl -Iperl -c t/386-hdl-generator-facade-target-language-boundary-audit.t`; focused VHDL scaffold/facade prove bundle; `prove -Iperl t/279-declarative-scalar-types.t`; composition/target-language boundary prove bundle; external-validation prove bundle; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; direct VHDL now lowers signed vector numeric-literal multiplication/division/modulo RHS assignments through target-width `to_signed` conversion and resize; activated `.63` |
+| `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.63` | Selection audit/read of `README.md`, `docs/VHDL_SCOPE.md`, `docs/book/src/11-extensions-and-embedding.md`, `docs/book/src/14-feature-backlog.md`, `docs/knowledge/direct-vhdl-scaffold.md`, `docs/tasks/BACKEND-API-VALIDATION-FRONTIER.md`, `perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm`, `t/1420-vhdl-direct-backend-scaffold.t`, `t/386-hdl-generator-facade-target-language-boundary-audit.t`, and `t/279-declarative-scalar-types.t`; temporary mixed signed/unsigned vector addition probe failed closed at arithmetic expression `A + B`; temporary signed one-bit addition and pass-through probes failed at unsupported generated port declarations `input logic signed A` and `input logic signed IN` | `PASS`; selected signed scalar direct-root declaration lowering for `.63.1` |
 
 ## Commit Log
 
@@ -1576,6 +1587,7 @@ items named in the 2026-06-05 remaining-work inventory.
 | `BACKEND-API-VALIDATION-FRONTIER.61.1` | `BACKEND-API-VALIDATION-FRONTIER.61.1: ship VHDL signed literal arithmetic` | this slice; activates `.62` |
 | `BACKEND-API-VALIDATION-FRONTIER.62` | `BACKEND-API-VALIDATION-FRONTIER.62: select VHDL signed literal divmul` | selected `.62.1` |
 | `BACKEND-API-VALIDATION-FRONTIER.62.1` | `BACKEND-API-VALIDATION-FRONTIER.62.1: ship VHDL signed literal divmul` | this slice; activates `.63` |
+| `BACKEND-API-VALIDATION-FRONTIER.63` | `BACKEND-API-VALIDATION-FRONTIER.63: select VHDL signed scalar declarations` | selected `.63.1` |
 
 ## Changelog
 
@@ -2282,3 +2294,11 @@ items named in the 2026-06-05 remaining-work inventory.
   validation, broad expression parity, and full backend parity remain
   deferred. Activated `.63` to select the next exact backend/API/public-export
   edge.
+- `2026-06-06`: Completed `.63`; selected signed scalar direct-root
+  port/internal declaration lowering for `.63.1` after signed one-bit
+  pass-through and addition probes failed at generated `input logic signed`
+  scalar port declarations before VHDL conversion could proceed. Mixed
+  signed/unsigned vector arithmetic remains a separate future edge after a
+  probe confirmed signed-target `A + B` fails at the arithmetic guard. Signed
+  scalar arithmetic, aggregate VHDL, composition/top VHDL, GHDL validation,
+  broad expression parity, and full backend parity remain deferred.

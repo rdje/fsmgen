@@ -2291,9 +2291,9 @@ this normalized semantic shape:
 ```
 
 The current active backend/API frontier is
-`BACKEND-API-VALIDATION-FRONTIER.63`, which selects the next exact backend/API
-or public-export edge after `.62.1` shipped signed vector numeric-literal
-multiplication/division/modulo RHS lowering.
+`BACKEND-API-VALIDATION-FRONTIER.63.1`, which implements signed scalar
+direct-root port/internal declaration lowering after `.63` selected the
+generated one-bit signed type-alias shape.
 Package-import internals, already bounded constant/enum/type internals,
 unrelated forward-IR payloads, scalar signed arithmetic,
 mixed signed/unsigned arithmetic,

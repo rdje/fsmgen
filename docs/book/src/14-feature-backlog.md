@@ -3794,7 +3794,7 @@ It is covered by direct pipeline, CLI, and facade tests.
 
 Still backlog: composition/top VHDL, aggregate VHDL record/array lowering,
 VHDL packages, multi-clock domains, GHDL validation, broad expression parity,
-signed arithmetic operators beyond same-width vector addition, and full feature
+scalar signed arithmetic, mixed signed/unsigned arithmetic, and full feature
 parity with the SystemVerilog backend. Scalar division/modulo,
 broader scalar arithmetic beyond scalar addition/subtraction/multiplication
 chains, broader arithmetic operators, mismatched-width arithmetic, and
@@ -4034,9 +4034,9 @@ schema metadata for `semantic.symbol_contract.types` and
 recursive `items` or `members` plus `member_order`.
 
 Current active backend edge: task-tree leaf
-`BACKEND-API-VALIDATION-FRONTIER.63` selects the next exact backend/API or
-public-export edge after `.62.1` shipped signed vector numeric-literal
-multiplication/division/modulo RHS lowering.
+`BACKEND-API-VALIDATION-FRONTIER.63.1` implements signed scalar direct-root
+port/internal declaration lowering after `.63` selected the generated one-bit
+signed type-alias shape.
 Package-import internals, already bounded constant/enum/type internals,
 unrelated forward-IR payloads, scalar signed arithmetic,
 mixed signed/unsigned arithmetic,
