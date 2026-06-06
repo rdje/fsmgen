@@ -11,6 +11,8 @@ This document defines the scoped R14 VHDL backend plan for FSMGen.
   lowering for the generated `<N` pulse-delay shape.
 - The direct scaffold now includes the first arithmetic RHS expression shape:
   same-width vector `NAME + NAME` lowers through `numeric_std` unsigned casts.
+- Same-width vector multi-operand addition chains are the active next direct
+  VHDL scaffold edge, but they are not shipped yet.
 - Composition VHDL, aggregate VHDL, broad expression parity, GHDL validation,
   packages, multi-clock domains, and full feature parity remain deferred.
 

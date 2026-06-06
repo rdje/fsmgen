@@ -3,7 +3,7 @@
 > **AUTO-GENERATED — DO NOT EDIT.** Regenerate with `knowledge-map/scripts/gen_knowledge_map.sh`.
 > Source of truth = YAML front-matter in: `docs/knowledge docs/decisions`. Edit the fact files, never this map.
 > A fact is any `.md` whose front-matter has a non-empty `answers:` list.
-> **31** facts · **147** question keys.
+> **31** facts · **148** question keys.
 
 ## Questions → fact
 
@@ -34,6 +34,7 @@
 - "does direct VHDL support aggregate outputs?" -> [direct-vhdl-scaffold](docs/knowledge/direct-vhdl-scaffold.md) · 2026-06-06 · reverify: `prove -Iperl t/1420-vhdl-direct-backend-scaffold.t t/386-hdl-generator-facade-target-language-boundary-audit.t t/114-composition-target-support-diagnostics.t t/313-hdl-external-validation-contract.t t/308-systemverilog-external-validation.t`
 - "does direct VHDL support arithmetic expressions?" -> [direct-vhdl-scaffold](docs/knowledge/direct-vhdl-scaffold.md) · 2026-06-06 · reverify: `prove -Iperl t/1420-vhdl-direct-backend-scaffold.t t/386-hdl-generator-facade-target-language-boundary-audit.t t/114-composition-target-support-diagnostics.t t/313-hdl-external-validation-contract.t t/308-systemverilog-external-validation.t`
 - "does direct VHDL support delayed pulses?" -> [direct-vhdl-scaffold](docs/knowledge/direct-vhdl-scaffold.md) · 2026-06-06 · reverify: `prove -Iperl t/1420-vhdl-direct-backend-scaffold.t t/386-hdl-generator-facade-target-language-boundary-audit.t t/114-composition-target-support-diagnostics.t t/313-hdl-external-validation-contract.t t/308-systemverilog-external-validation.t`
+- "does direct VHDL support multi-operand addition?" -> [direct-vhdl-scaffold](docs/knowledge/direct-vhdl-scaffold.md) · 2026-06-06 · reverify: `prove -Iperl t/1420-vhdl-direct-backend-scaffold.t t/386-hdl-generator-facade-target-language-boundary-audit.t t/114-composition-target-support-diagnostics.t t/313-hdl-external-validation-contract.t t/308-systemverilog-external-validation.t`
 - "does generation_result_snapshot expose raw HDLGenerator objects?" -> [generation-result-snapshot-embedding-child](docs/knowledge/generation-result-snapshot-embedding-child.md) · 2026-06-05 · reverify: `prove -Iperl t/321-embedding-contract.t t/297-capability-manifest.t t/358-capability-manifest-runtime-contract-audit.t t/437-embedding-section-defensive-copy-boundary-audit.t t/632-serializable-generation-result-snapshot.t`
 - "does multi-unknown width inference have a decidable subcase?" -> [isf-full-width-inference-terminal](docs/knowledge/isf-full-width-inference-terminal.md) · 2026-06-05 · reverify: `prove -Iperl t/1385-isf-multi-unknown-width-fail-closed-terminal.t t/1344-isf-assemble-static-part-widths.t t/1101-isf-extract-slices.t`
 - "does normalized semantic JSON always include semantic.composition?" -> [normalized-semantic-optional-children](docs/knowledge/normalized-semantic-optional-children.md) · 2026-06-05 · reverify: `prove -Iperl t/330-normalized-semantic-payload-contract.t t/311-normalized-semantic-report-contract.t t/442-normalized-semantic-payload-contract-defensive-copy-boundary-audit.t t/443-normalized-semantic-report-contract-defensive-copy-boundary-audit.t t/297-capability-manifest.t`
@@ -187,7 +188,7 @@ _Generated-child shared-datapath export pins are bound to deterministic sink wir
 ### direct-vhdl-scaffold
 _Direct single-FSM VHDL generation has a scoped scaffold_
 
-- **answers:** is VHDL still not implemented? | does --language vhdl work for direct FSM roots? | what VHDL subset is shipped? | does direct VHDL support aggregate outputs? | is composition VHDL supported? | is GHDL validation active? | does direct VHDL support delayed pulses? | does direct VHDL support arithmetic expressions?
+- **answers:** is VHDL still not implemented? | does --language vhdl work for direct FSM roots? | what VHDL subset is shipped? | does direct VHDL support aggregate outputs? | is composition VHDL supported? | is GHDL validation active? | does direct VHDL support delayed pulses? | does direct VHDL support arithmetic expressions? | does direct VHDL support multi-operand addition?
 - **date:** 2026-06-06 · **status:** current
 - **evidence:** `perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm; perl/FSM/Support/HDLExternalValidationContract.pm; t/1420-vhdl-direct-backend-scaffold.t; t/386-hdl-generator-facade-target-language-boundary-audit.t; docs/VHDL_SCOPE.md; docs/tasks/BACKEND-API-VALIDATION-FRONTIER.md`
 - **reverify:** `prove -Iperl t/1420-vhdl-direct-backend-scaffold.t t/386-hdl-generator-facade-target-language-boundary-audit.t t/114-composition-target-support-diagnostics.t t/313-hdl-external-validation-contract.t t/308-systemverilog-external-validation.t`

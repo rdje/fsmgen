@@ -10,6 +10,7 @@ answers:
   - "is GHDL validation active?"
   - "does direct VHDL support delayed pulses?"
   - "does direct VHDL support arithmetic expressions?"
+  - "does direct VHDL support multi-operand addition?"
 date: 2026-06-06
 status: current
 tags: [vhdl, backend, direct-generation, validation]
@@ -26,4 +27,6 @@ same-width vector `NAME + NAME` assignments become
 `std_logic_vector(unsigned(LEFT) + unsigned(RIGHT))` expressions. Composition/top
 VHDL, aggregate-output VHDL, packages, multi-clock domains, broad expression
 parity, GHDL validation, and full SystemVerilog parity remain deferred or
-fail-closed.
+fail-closed. Same-width vector multi-operand addition chains are the active
+next direct-VHDL scaffold edge; before that ships, generated expressions such
+as `a + b + c + d` remain fail-closed.

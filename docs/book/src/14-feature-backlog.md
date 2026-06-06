@@ -3776,9 +3776,11 @@ pipeline, CLI, and facade tests.
 Still backlog: composition/top VHDL, aggregate VHDL record/array lowering,
 VHDL packages, multi-clock domains, GHDL validation, broad expression parity,
 and full feature parity with the SystemVerilog backend. Broader arithmetic
-operators, multi-operand arithmetic expressions, scalar arithmetic, mismatched
-width arithmetic, and expression contexts beyond the same-width vector
-`NAME + NAME` RHS shape remain fail-closed at the scaffold boundary.
+operators, scalar arithmetic, mismatched-width arithmetic, and expression
+contexts beyond the same-width vector `NAME + NAME` RHS shape remain
+fail-closed at the scaffold boundary. Same-width vector multi-operand
+addition chains are the active next direct-VHDL scaffold edge, but they are
+not shipped yet.
 
 ### GHDL Validation
 
