@@ -2147,14 +2147,16 @@ owns the composition key family, including bounded `children[]` and
 `standalone_dt_children[]` shallow entries for reusable-DT child summaries.
 Standalone-DT child entries include the current reusable-DT names,
 enable-family metadata, module enable-family metadata, and nested multi-drive
-target metadata, while keeping nested provenance-report ownership delegated to
+target metadata. The same owner also advertises `shared_datapath_candidates[]`
+as a composition-side alias of the already bounded lowered-RTL shared-datapath
+candidate schemas, while keeping nested provenance-report ownership delegated to
 [perl/FSM/Support/CompositionReportContract.pm](perl/FSM/Support/CompositionReportContract.pm).
 
 That same owner now also publishes a grouped `presence_key_family_map` so
 embedders can discover the bounded composition summary, collection,
-child-entry, generated-child-entry, standalone-DT-child, and nested provenance
-key families from one place instead of collecting the individual key-family
-lists separately.
+child-entry, generated-child-entry, standalone-DT-child, shared-datapath alias,
+and nested provenance key families from one place instead of collecting the
+individual key-family lists separately.
 
 The child, generated-child, and standalone-DT-child entry families describe
 only the shallow composition child summaries. Their nested `intent_hir`,
@@ -2162,6 +2164,9 @@ only the shallow composition child summaries. Their nested `intent_hir`,
 existing bounded child owners instead of being duplicated in the composition
 contract. Standalone-DT child multi-drive target metadata reuses the already
 bounded lowered-RTL standalone-DT multi-drive target and assertion shapes.
+Shared-datapath alias metadata reuses the already bounded lowered-RTL
+shared-datapath candidate, contributor, drive-intent, aggregate-enable,
+assertion, and bound-connection shapes.
 
 Do not treat the raw `HDLGenerator` result hash as a stable JSON document.
 

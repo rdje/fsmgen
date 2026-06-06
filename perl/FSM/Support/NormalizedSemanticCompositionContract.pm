@@ -9,6 +9,16 @@ use FSM::Support::CompositionReportContract qw(
     composition_report_contract_source
 );
 use FSM::Support::NormalizedSemanticLoweredRTLIRContract qw(
+    normalized_semantic_lowered_rtl_ir_composition_shared_datapath_aggregate_enable_contributor_entry_keys
+    normalized_semantic_lowered_rtl_ir_composition_shared_datapath_aggregate_enable_family_entry_keys
+    normalized_semantic_lowered_rtl_ir_composition_shared_datapath_assertion_keys
+    normalized_semantic_lowered_rtl_ir_composition_shared_datapath_bound_connection_expr_keys
+    normalized_semantic_lowered_rtl_ir_composition_shared_datapath_candidate_contributor_declared_type_extension_keys
+    normalized_semantic_lowered_rtl_ir_composition_shared_datapath_candidate_contributor_drive_intent_entry_keys
+    normalized_semantic_lowered_rtl_ir_composition_shared_datapath_candidate_contributor_drive_intent_rhs_enable_family_entry_keys
+    normalized_semantic_lowered_rtl_ir_composition_shared_datapath_candidate_contributor_entry_keys
+    normalized_semantic_lowered_rtl_ir_composition_shared_datapath_candidate_declared_type_extension_keys
+    normalized_semantic_lowered_rtl_ir_composition_shared_datapath_candidate_entry_keys
     normalized_semantic_lowered_rtl_ir_standalone_dt_multi_drive_assertion_keys
     normalized_semantic_lowered_rtl_ir_standalone_dt_multi_drive_target_entry_keys
 );
@@ -25,6 +35,16 @@ our @EXPORT_OK = qw(
     normalized_semantic_composition_nested_presence_keys
     normalized_semantic_composition_presence_key_family_map
     normalized_semantic_composition_presence_keys
+    normalized_semantic_composition_shared_datapath_aggregate_enable_contributor_entry_keys
+    normalized_semantic_composition_shared_datapath_aggregate_enable_family_entry_keys
+    normalized_semantic_composition_shared_datapath_assertion_keys
+    normalized_semantic_composition_shared_datapath_bound_connection_expr_keys
+    normalized_semantic_composition_shared_datapath_candidate_contributor_declared_type_extension_keys
+    normalized_semantic_composition_shared_datapath_candidate_contributor_drive_intent_entry_keys
+    normalized_semantic_composition_shared_datapath_candidate_contributor_drive_intent_rhs_enable_family_entry_keys
+    normalized_semantic_composition_shared_datapath_candidate_contributor_entry_keys
+    normalized_semantic_composition_shared_datapath_candidate_declared_type_extension_keys
+    normalized_semantic_composition_shared_datapath_candidate_entry_keys
     normalized_semantic_composition_standalone_dt_child_entry_keys
     normalized_semantic_composition_standalone_dt_enable_family_entry_keys
     normalized_semantic_composition_standalone_dt_module_enable_family_keys
@@ -71,6 +91,26 @@ sub build_normalized_semantic_composition_contract {
             normalized_semantic_composition_standalone_dt_multi_drive_target_entry_keys(),
         standalone_dt_multi_drive_assertion_keys =>
             normalized_semantic_composition_standalone_dt_multi_drive_assertion_keys(),
+        shared_datapath_candidate_entry_keys =>
+            normalized_semantic_composition_shared_datapath_candidate_entry_keys(),
+        shared_datapath_candidate_declared_type_extension_keys =>
+            normalized_semantic_composition_shared_datapath_candidate_declared_type_extension_keys(),
+        shared_datapath_candidate_contributor_entry_keys =>
+            normalized_semantic_composition_shared_datapath_candidate_contributor_entry_keys(),
+        shared_datapath_candidate_contributor_declared_type_extension_keys =>
+            normalized_semantic_composition_shared_datapath_candidate_contributor_declared_type_extension_keys(),
+        shared_datapath_candidate_contributor_drive_intent_entry_keys =>
+            normalized_semantic_composition_shared_datapath_candidate_contributor_drive_intent_entry_keys(),
+        shared_datapath_candidate_contributor_drive_intent_rhs_enable_family_entry_keys =>
+            normalized_semantic_composition_shared_datapath_candidate_contributor_drive_intent_rhs_enable_family_entry_keys(),
+        shared_datapath_bound_connection_expr_keys =>
+            normalized_semantic_composition_shared_datapath_bound_connection_expr_keys(),
+        shared_datapath_aggregate_enable_family_entry_keys =>
+            normalized_semantic_composition_shared_datapath_aggregate_enable_family_entry_keys(),
+        shared_datapath_aggregate_enable_contributor_entry_keys =>
+            normalized_semantic_composition_shared_datapath_aggregate_enable_contributor_entry_keys(),
+        shared_datapath_assertion_keys =>
+            normalized_semantic_composition_shared_datapath_assertion_keys(),
         nested_presence_keys => normalized_semantic_composition_nested_presence_keys(),
         presence_key_family_map => normalized_semantic_composition_presence_key_family_map(),
         nested_contract_source_map => {
@@ -86,6 +126,7 @@ sub build_normalized_semantic_composition_contract {
             'The bounded public promise covers the lane, child/net/link, generated-child, standalone-DT-child, shared-datapath, plan-snapshot, and sanitized provenance-report keys exported for composition roots.',
             'The children[] and generated_children[] entry key families describe shallow composition-child summaries while delegating child intent_hir, lowered_rtl_ir, and structural_rtl_ir objects to their existing bounded contracts.',
             'The standalone_dt_children[] entry key family describes shallow reusable standalone-DT child summaries while delegating child intent_hir, lowered_rtl_ir, structural_rtl_ir, and nested standalone-DT multi-drive assertion shapes to their existing bounded contracts.',
+            'The shared_datapath_candidates[] entry key families are composition-side aliases of the already bounded lowered-RTL shared-datapath candidate, contributor, drive-intent, aggregate-enable, assertion, and bound-connection schemas.',
             'The nested plan_snapshot fragment stays bounded through FSM::Support::SerializableCompositionPlanSnapshot.',
             'The nested provenance_report fragment stays bounded through FSM::Support::CompositionReportContract.',
             'Use the grouped presence_key_family_map to discover the bounded composition summary, collection, child-entry, generated-child-entry, standalone-DT-child, plan-snapshot, and provenance key families without collecting those key-family lists separately.',
@@ -223,6 +264,46 @@ sub normalized_semantic_composition_standalone_dt_multi_drive_assertion_keys {
     return normalized_semantic_lowered_rtl_ir_standalone_dt_multi_drive_assertion_keys();
 }
 
+sub normalized_semantic_composition_shared_datapath_candidate_entry_keys {
+    return normalized_semantic_lowered_rtl_ir_composition_shared_datapath_candidate_entry_keys();
+}
+
+sub normalized_semantic_composition_shared_datapath_candidate_declared_type_extension_keys {
+    return normalized_semantic_lowered_rtl_ir_composition_shared_datapath_candidate_declared_type_extension_keys();
+}
+
+sub normalized_semantic_composition_shared_datapath_candidate_contributor_entry_keys {
+    return normalized_semantic_lowered_rtl_ir_composition_shared_datapath_candidate_contributor_entry_keys();
+}
+
+sub normalized_semantic_composition_shared_datapath_candidate_contributor_declared_type_extension_keys {
+    return normalized_semantic_lowered_rtl_ir_composition_shared_datapath_candidate_contributor_declared_type_extension_keys();
+}
+
+sub normalized_semantic_composition_shared_datapath_candidate_contributor_drive_intent_entry_keys {
+    return normalized_semantic_lowered_rtl_ir_composition_shared_datapath_candidate_contributor_drive_intent_entry_keys();
+}
+
+sub normalized_semantic_composition_shared_datapath_candidate_contributor_drive_intent_rhs_enable_family_entry_keys {
+    return normalized_semantic_lowered_rtl_ir_composition_shared_datapath_candidate_contributor_drive_intent_rhs_enable_family_entry_keys();
+}
+
+sub normalized_semantic_composition_shared_datapath_bound_connection_expr_keys {
+    return normalized_semantic_lowered_rtl_ir_composition_shared_datapath_bound_connection_expr_keys();
+}
+
+sub normalized_semantic_composition_shared_datapath_aggregate_enable_family_entry_keys {
+    return normalized_semantic_lowered_rtl_ir_composition_shared_datapath_aggregate_enable_family_entry_keys();
+}
+
+sub normalized_semantic_composition_shared_datapath_aggregate_enable_contributor_entry_keys {
+    return normalized_semantic_lowered_rtl_ir_composition_shared_datapath_aggregate_enable_contributor_entry_keys();
+}
+
+sub normalized_semantic_composition_shared_datapath_assertion_keys {
+    return normalized_semantic_lowered_rtl_ir_composition_shared_datapath_assertion_keys();
+}
+
 sub normalized_semantic_composition_nested_presence_keys {
     return [
         qw(
@@ -247,6 +328,26 @@ sub normalized_semantic_composition_presence_key_family_map {
             normalized_semantic_composition_standalone_dt_multi_drive_target_entry_keys(),
         standalone_dt_multi_drive_assertion_keys =>
             normalized_semantic_composition_standalone_dt_multi_drive_assertion_keys(),
+        shared_datapath_candidate_entry_keys =>
+            normalized_semantic_composition_shared_datapath_candidate_entry_keys(),
+        shared_datapath_candidate_declared_type_extension_keys =>
+            normalized_semantic_composition_shared_datapath_candidate_declared_type_extension_keys(),
+        shared_datapath_candidate_contributor_entry_keys =>
+            normalized_semantic_composition_shared_datapath_candidate_contributor_entry_keys(),
+        shared_datapath_candidate_contributor_declared_type_extension_keys =>
+            normalized_semantic_composition_shared_datapath_candidate_contributor_declared_type_extension_keys(),
+        shared_datapath_candidate_contributor_drive_intent_entry_keys =>
+            normalized_semantic_composition_shared_datapath_candidate_contributor_drive_intent_entry_keys(),
+        shared_datapath_candidate_contributor_drive_intent_rhs_enable_family_entry_keys =>
+            normalized_semantic_composition_shared_datapath_candidate_contributor_drive_intent_rhs_enable_family_entry_keys(),
+        shared_datapath_bound_connection_expr_keys =>
+            normalized_semantic_composition_shared_datapath_bound_connection_expr_keys(),
+        shared_datapath_aggregate_enable_family_entry_keys =>
+            normalized_semantic_composition_shared_datapath_aggregate_enable_family_entry_keys(),
+        shared_datapath_aggregate_enable_contributor_entry_keys =>
+            normalized_semantic_composition_shared_datapath_aggregate_enable_contributor_entry_keys(),
+        shared_datapath_assertion_keys =>
+            normalized_semantic_composition_shared_datapath_assertion_keys(),
         nested_presence_keys => normalized_semantic_composition_nested_presence_keys(),
     };
 }

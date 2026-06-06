@@ -3930,7 +3930,10 @@ entry key families while delegating child `intent_hir`, `lowered_rtl_ir`, and
 child family also advertises bounded reusable-DT enable-family metadata,
 module-enable-family metadata, and nested multi-drive target metadata while
 delegating the assertion shape to the existing lowered-RTL standalone-DT
-multi-drive assertion owner. The
+multi-drive assertion owner. The same contract also advertises the
+composition-side `shared_datapath_candidates[]` alias family by delegating to
+the already bounded lowered-RTL shared-datapath candidate, contributor,
+drive-intent, aggregate-enable, assertion, and bound-connection schemas. The
 `semantic.forward_ir.lowered_rtl_ir` contract also advertises the emitted
 `output_drive_family_count` and `output_drive_families` metadata with bounded
 entry keys for `output_drive_families[]` and its nested
@@ -3962,8 +3965,7 @@ as scalar string assignment-line entries. The manifest is still not a full
 normalized semantic export.
 
 Current selected next edge: task-tree leaf
-`BACKEND-API-VALIDATION-FRONTIER.48.1` will publish the bounded
-`semantic.composition.shared_datapath_candidates[]` alias family by delegating
-to the existing lowered-RTL shared-datapath candidate schemas before any full
-normalized semantic export stabilization work. Full normalized semantic export
-stabilization remains out of scope.
+`BACKEND-API-VALIDATION-FRONTIER.49` will audit the remaining backend/API and
+public-export backlog after the composition shared-datapath alias schemas
+shipped, then activate one exact executable child before any implementation
+edits. Full normalized semantic export stabilization remains out of scope.

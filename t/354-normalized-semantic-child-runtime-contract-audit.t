@@ -18,6 +18,13 @@ use FSM::Support::NormalizedSemanticCompositionContract qw(
     normalized_semantic_composition_child_entry_keys
     normalized_semantic_composition_generated_child_entry_keys
     normalized_semantic_composition_presence_keys
+    normalized_semantic_composition_shared_datapath_aggregate_enable_family_entry_keys
+    normalized_semantic_composition_shared_datapath_assertion_keys
+    normalized_semantic_composition_shared_datapath_bound_connection_expr_keys
+    normalized_semantic_composition_shared_datapath_candidate_contributor_drive_intent_entry_keys
+    normalized_semantic_composition_shared_datapath_candidate_contributor_drive_intent_rhs_enable_family_entry_keys
+    normalized_semantic_composition_shared_datapath_candidate_contributor_entry_keys
+    normalized_semantic_composition_shared_datapath_candidate_entry_keys
     normalized_semantic_composition_standalone_dt_child_entry_keys
     normalized_semantic_composition_standalone_dt_enable_family_entry_keys
     normalized_semantic_composition_standalone_dt_module_enable_family_keys
@@ -255,6 +262,7 @@ subtest 'composition semantic payload keeps bounded shared-datapath candidate sc
 FSM
 
     my $decoded = run_semantic_json($composition_path);
+    my $composition = $decoded->{semantic}{composition};
     my $lowered_rtl_ir = $decoded->{semantic}{forward_ir}{lowered_rtl_ir};
 
     assert_keys_present(
@@ -278,6 +286,50 @@ FSM
     );
 
     my $candidate = $lowered_rtl_ir->{composition_shared_datapath_candidates}[0];
+    is_deeply(
+        $composition->{shared_datapath_candidates},
+        $lowered_rtl_ir->{composition_shared_datapath_candidates},
+        'composition semantic.composition.shared_datapath_candidates aliases the lowered-RTL candidate surface',
+    );
+    assert_exact_keys(
+        $composition->{shared_datapath_candidates}[0],
+        normalized_semantic_composition_shared_datapath_candidate_entry_keys(),
+        'composition shared-datapath candidate alias keeps the bounded entry key schema',
+    );
+    assert_exact_keys(
+        $composition->{shared_datapath_candidates}[0]{multi_value_assertion},
+        normalized_semantic_composition_shared_datapath_assertion_keys(),
+        'composition shared-datapath candidate alias multi-value assertion keeps the bounded key schema',
+    );
+    assert_exact_keys(
+        $composition->{shared_datapath_candidates}[0]{contributors}[0],
+        normalized_semantic_composition_shared_datapath_candidate_contributor_entry_keys(),
+        'composition shared-datapath candidate alias contributor keeps the bounded contributor key schema',
+    );
+    assert_exact_keys(
+        $composition->{shared_datapath_candidates}[0]{contributors}[0]{bound_connection_expr},
+        normalized_semantic_composition_shared_datapath_bound_connection_expr_keys(),
+        'composition shared-datapath candidate alias contributor bound_connection_expr keeps the bounded schema',
+    );
+    assert_exact_keys(
+        $composition->{shared_datapath_candidates}[0]{contributors}[0]{drive_intent},
+        normalized_semantic_composition_shared_datapath_candidate_contributor_drive_intent_entry_keys(),
+        'composition shared-datapath candidate alias contributor drive_intent keeps the bounded schema',
+    );
+    if (@{$composition->{shared_datapath_candidates}[0]{contributors}[0]{drive_intent}{rhs_enable_families} || []}) {
+        assert_exact_keys(
+            $composition->{shared_datapath_candidates}[0]{contributors}[0]{drive_intent}{rhs_enable_families}[0],
+            normalized_semantic_composition_shared_datapath_candidate_contributor_drive_intent_rhs_enable_family_entry_keys(),
+            'composition shared-datapath candidate alias contributor drive_intent rhs_enable_families keep the bounded schema',
+        );
+    }
+    if (@{$composition->{shared_datapath_candidates}[0]{aggregate_enable_families} || []}) {
+        assert_exact_keys(
+            $composition->{shared_datapath_candidates}[0]{aggregate_enable_families}[0],
+            normalized_semantic_composition_shared_datapath_aggregate_enable_family_entry_keys(),
+            'composition shared-datapath candidate alias aggregate_enable_families keep the bounded schema',
+        );
+    }
     assert_exact_keys(
         $candidate,
         normalized_semantic_lowered_rtl_ir_composition_shared_datapath_candidate_entry_keys(),

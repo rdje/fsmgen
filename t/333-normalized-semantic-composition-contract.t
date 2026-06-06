@@ -20,6 +20,16 @@ use FSM::Support::NormalizedSemanticCompositionContract qw(
     normalized_semantic_composition_nested_presence_keys
     normalized_semantic_composition_presence_key_family_map
     normalized_semantic_composition_presence_keys
+    normalized_semantic_composition_shared_datapath_aggregate_enable_contributor_entry_keys
+    normalized_semantic_composition_shared_datapath_aggregate_enable_family_entry_keys
+    normalized_semantic_composition_shared_datapath_assertion_keys
+    normalized_semantic_composition_shared_datapath_bound_connection_expr_keys
+    normalized_semantic_composition_shared_datapath_candidate_contributor_declared_type_extension_keys
+    normalized_semantic_composition_shared_datapath_candidate_contributor_drive_intent_entry_keys
+    normalized_semantic_composition_shared_datapath_candidate_contributor_drive_intent_rhs_enable_family_entry_keys
+    normalized_semantic_composition_shared_datapath_candidate_contributor_entry_keys
+    normalized_semantic_composition_shared_datapath_candidate_declared_type_extension_keys
+    normalized_semantic_composition_shared_datapath_candidate_entry_keys
     normalized_semantic_composition_standalone_dt_child_entry_keys
     normalized_semantic_composition_standalone_dt_enable_family_entry_keys
     normalized_semantic_composition_standalone_dt_module_enable_family_keys
@@ -200,6 +210,65 @@ subtest 'contract exposes the bounded normalized semantic composition object' =>
         normalized_semantic_composition_standalone_dt_multi_drive_assertion_keys(),
         'contract publishes the delegated standalone-DT multi-drive assertion key family',
     );
+    for my $case (
+        [
+            'shared_datapath_candidate_entry_keys',
+            normalized_semantic_composition_shared_datapath_candidate_entry_keys(),
+            'shared-datapath candidate entry',
+        ],
+        [
+            'shared_datapath_candidate_declared_type_extension_keys',
+            normalized_semantic_composition_shared_datapath_candidate_declared_type_extension_keys(),
+            'shared-datapath candidate declared-type extension',
+        ],
+        [
+            'shared_datapath_candidate_contributor_entry_keys',
+            normalized_semantic_composition_shared_datapath_candidate_contributor_entry_keys(),
+            'shared-datapath contributor entry',
+        ],
+        [
+            'shared_datapath_candidate_contributor_declared_type_extension_keys',
+            normalized_semantic_composition_shared_datapath_candidate_contributor_declared_type_extension_keys(),
+            'shared-datapath contributor declared-type extension',
+        ],
+        [
+            'shared_datapath_candidate_contributor_drive_intent_entry_keys',
+            normalized_semantic_composition_shared_datapath_candidate_contributor_drive_intent_entry_keys(),
+            'shared-datapath contributor drive-intent entry',
+        ],
+        [
+            'shared_datapath_candidate_contributor_drive_intent_rhs_enable_family_entry_keys',
+            normalized_semantic_composition_shared_datapath_candidate_contributor_drive_intent_rhs_enable_family_entry_keys(),
+            'shared-datapath contributor drive-intent rhs-enable-family entry',
+        ],
+        [
+            'shared_datapath_bound_connection_expr_keys',
+            normalized_semantic_composition_shared_datapath_bound_connection_expr_keys(),
+            'shared-datapath bound-connection expression',
+        ],
+        [
+            'shared_datapath_aggregate_enable_family_entry_keys',
+            normalized_semantic_composition_shared_datapath_aggregate_enable_family_entry_keys(),
+            'shared-datapath aggregate-enable family entry',
+        ],
+        [
+            'shared_datapath_aggregate_enable_contributor_entry_keys',
+            normalized_semantic_composition_shared_datapath_aggregate_enable_contributor_entry_keys(),
+            'shared-datapath aggregate-enable contributor entry',
+        ],
+        [
+            'shared_datapath_assertion_keys',
+            normalized_semantic_composition_shared_datapath_assertion_keys(),
+            'shared-datapath assertion',
+        ],
+    ) {
+        my ($field, $expected, $label) = @{$case};
+        is_deeply(
+            $contract->{$field},
+            $expected,
+            "contract publishes the delegated composition $label key family",
+        );
+    }
     is_deeply(
         $contract->{nested_presence_keys},
         normalized_semantic_composition_nested_presence_keys(),

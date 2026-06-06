@@ -13,6 +13,16 @@ use FSM::Support::NormalizedSemanticCompositionContract qw(
     normalized_semantic_composition_contract_source
     normalized_semantic_composition_generated_child_entry_keys
     normalized_semantic_composition_presence_keys
+    normalized_semantic_composition_shared_datapath_aggregate_enable_contributor_entry_keys
+    normalized_semantic_composition_shared_datapath_aggregate_enable_family_entry_keys
+    normalized_semantic_composition_shared_datapath_assertion_keys
+    normalized_semantic_composition_shared_datapath_bound_connection_expr_keys
+    normalized_semantic_composition_shared_datapath_candidate_contributor_declared_type_extension_keys
+    normalized_semantic_composition_shared_datapath_candidate_contributor_drive_intent_entry_keys
+    normalized_semantic_composition_shared_datapath_candidate_contributor_drive_intent_rhs_enable_family_entry_keys
+    normalized_semantic_composition_shared_datapath_candidate_contributor_entry_keys
+    normalized_semantic_composition_shared_datapath_candidate_declared_type_extension_keys
+    normalized_semantic_composition_shared_datapath_candidate_entry_keys
     normalized_semantic_composition_standalone_dt_child_entry_keys
     normalized_semantic_composition_standalone_dt_enable_family_entry_keys
     normalized_semantic_composition_standalone_dt_module_enable_family_keys
@@ -91,6 +101,16 @@ use FSM::Support::NormalizedSemanticPayloadContract qw(
     normalized_semantic_payload_composition_child_entry_keys
     normalized_semantic_payload_composition_generated_child_entry_keys
     normalized_semantic_payload_composition_keys
+    normalized_semantic_payload_composition_shared_datapath_aggregate_enable_contributor_entry_keys
+    normalized_semantic_payload_composition_shared_datapath_aggregate_enable_family_entry_keys
+    normalized_semantic_payload_composition_shared_datapath_assertion_keys
+    normalized_semantic_payload_composition_shared_datapath_bound_connection_expr_keys
+    normalized_semantic_payload_composition_shared_datapath_candidate_contributor_declared_type_extension_keys
+    normalized_semantic_payload_composition_shared_datapath_candidate_contributor_drive_intent_entry_keys
+    normalized_semantic_payload_composition_shared_datapath_candidate_contributor_drive_intent_rhs_enable_family_entry_keys
+    normalized_semantic_payload_composition_shared_datapath_candidate_contributor_entry_keys
+    normalized_semantic_payload_composition_shared_datapath_candidate_declared_type_extension_keys
+    normalized_semantic_payload_composition_shared_datapath_candidate_entry_keys
     normalized_semantic_payload_composition_standalone_dt_child_entry_keys
     normalized_semantic_payload_composition_standalone_dt_enable_family_entry_keys
     normalized_semantic_payload_composition_standalone_dt_module_enable_family_keys
@@ -254,6 +274,14 @@ subtest 'contract exposes the bounded normalized semantic payload object' => sub
         normalized_semantic_payload_composition_standalone_dt_multi_drive_assertion_keys(),
         'grouped semantic-payload family map publishes composition standalone-DT multi-drive assertion keys',
     );
+    for my $case (composition_shared_datapath_alias_cases()) {
+        my ($field, $payload_helper) = @{$case};
+        is_deeply(
+            $contract->{presence_key_family_map}{$field},
+            $payload_helper->(),
+            "grouped semantic-payload family map publishes $field",
+        );
+    }
     is_deeply(
         $contract->{presence_key_family_map}{forward_ir_lowered_rtl_ir_selector_conflict_target_entry_keys},
         normalized_semantic_payload_forward_ir_lowered_rtl_ir_selector_conflict_target_entry_keys(),
@@ -978,6 +1006,74 @@ subtest 'contract exposes the bounded normalized semantic payload object' => sub
         normalized_semantic_composition_standalone_dt_multi_drive_assertion_keys(),
         'semantic payload composition standalone-DT multi-drive assertion keys map to the nested composition owner',
     );
+    for my $case (composition_shared_datapath_alias_cases()) {
+        my ($field, $payload_helper, $composition_helper) = @{$case};
+        is_deeply(
+            $contract->{$field},
+            $payload_helper->(),
+            "contract publishes the bounded $field list",
+        );
+        is_deeply(
+            $payload_helper->(),
+            $composition_helper->(),
+            "semantic payload $field maps to the nested composition owner",
+        );
+    }
 };
+
+sub composition_shared_datapath_alias_cases {
+    return (
+        [
+            'composition_shared_datapath_candidate_entry_keys',
+            \&normalized_semantic_payload_composition_shared_datapath_candidate_entry_keys,
+            \&normalized_semantic_composition_shared_datapath_candidate_entry_keys,
+        ],
+        [
+            'composition_shared_datapath_candidate_declared_type_extension_keys',
+            \&normalized_semantic_payload_composition_shared_datapath_candidate_declared_type_extension_keys,
+            \&normalized_semantic_composition_shared_datapath_candidate_declared_type_extension_keys,
+        ],
+        [
+            'composition_shared_datapath_candidate_contributor_entry_keys',
+            \&normalized_semantic_payload_composition_shared_datapath_candidate_contributor_entry_keys,
+            \&normalized_semantic_composition_shared_datapath_candidate_contributor_entry_keys,
+        ],
+        [
+            'composition_shared_datapath_candidate_contributor_declared_type_extension_keys',
+            \&normalized_semantic_payload_composition_shared_datapath_candidate_contributor_declared_type_extension_keys,
+            \&normalized_semantic_composition_shared_datapath_candidate_contributor_declared_type_extension_keys,
+        ],
+        [
+            'composition_shared_datapath_candidate_contributor_drive_intent_entry_keys',
+            \&normalized_semantic_payload_composition_shared_datapath_candidate_contributor_drive_intent_entry_keys,
+            \&normalized_semantic_composition_shared_datapath_candidate_contributor_drive_intent_entry_keys,
+        ],
+        [
+            'composition_shared_datapath_candidate_contributor_drive_intent_rhs_enable_family_entry_keys',
+            \&normalized_semantic_payload_composition_shared_datapath_candidate_contributor_drive_intent_rhs_enable_family_entry_keys,
+            \&normalized_semantic_composition_shared_datapath_candidate_contributor_drive_intent_rhs_enable_family_entry_keys,
+        ],
+        [
+            'composition_shared_datapath_bound_connection_expr_keys',
+            \&normalized_semantic_payload_composition_shared_datapath_bound_connection_expr_keys,
+            \&normalized_semantic_composition_shared_datapath_bound_connection_expr_keys,
+        ],
+        [
+            'composition_shared_datapath_aggregate_enable_family_entry_keys',
+            \&normalized_semantic_payload_composition_shared_datapath_aggregate_enable_family_entry_keys,
+            \&normalized_semantic_composition_shared_datapath_aggregate_enable_family_entry_keys,
+        ],
+        [
+            'composition_shared_datapath_aggregate_enable_contributor_entry_keys',
+            \&normalized_semantic_payload_composition_shared_datapath_aggregate_enable_contributor_entry_keys,
+            \&normalized_semantic_composition_shared_datapath_aggregate_enable_contributor_entry_keys,
+        ],
+        [
+            'composition_shared_datapath_assertion_keys',
+            \&normalized_semantic_payload_composition_shared_datapath_assertion_keys,
+            \&normalized_semantic_composition_shared_datapath_assertion_keys,
+        ],
+    );
+}
 
 done_testing();
