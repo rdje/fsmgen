@@ -257,10 +257,12 @@ arithmetic expression `'-1'`. The scaffold also lowers scalar output-port
 next-signal decimal literals: plain and signed one-bit output
 targets lower to `std_logic` low-bit literals, so `2` emits
 `FLAG_next <= '0';` and `3` emits `FLAG_next <= '1';` instead of raw integer
-assignments. Active leaf `BACKEND-API-VALIDATION-FRONTIER.112.1` owns the
-adjacent scalar output-port negative decimal-literal edge: current plain and
-signed one-bit output probes lower the VHDL target to `std_logic` but fail
-before VHDL emission at arithmetic expressions `'-1'` and `'-2'`. Declared
+assignments. The scaffold also lowers scalar output-port negative decimal
+literals for plain and signed one-bit output targets to `std_logic` low-bit
+literals, so `-1` emits `FLAG_next <= '1';` and `-2` emits `FLAG_next <= '0';`
+instead of failing at arithmetic expression `'-1'` or `'-2'`. Active leaf
+`BACKEND-API-VALIDATION-FRONTIER.113` owns selection of the next exact
+backend/API edge after that scalar negative literal slice shipped. Declared
 aggregate structural VHDL ports/nets/types in
 composition tops are locked fail-closed by
 `BACKEND-API-VALIDATION-FRONTIER.101.1`: aggregate top-port shapes that the

@@ -2446,6 +2446,101 @@ FSM
     unlike($signed_cli_hdl, qr/\bFLAG_next\s+<=\s+3;|to_unsigned\(3,\s+1\)|to_signed\(3,\s+1\)|\bmodule\b|\balways_(?:ff|comb)\b/s, 'CLI signed scalar output decimal VHDL output avoids raw integer assignment, vector casts, and SystemVerilog syntax');
 };
 
+subtest 'direct VHDL scaffold lowers scalar output negative decimal literal assignments' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $scalar_fsm_path = File::Spec->catfile($tempdir, 'direct_vhdl_scalar_output_negative_decimal_literal.fsm');
+    my $scalar_output_path = File::Spec->catfile($tempdir, 'direct_vhdl_scalar_output_negative_decimal_literal.vhd');
+    my $signed_scalar_fsm_path = File::Spec->catfile($tempdir, 'direct_vhdl_signed_scalar_output_negative_decimal_literal.fsm');
+    my $signed_scalar_output_path = File::Spec->catfile($tempdir, 'direct_vhdl_signed_scalar_output_negative_decimal_literal.vhd');
+
+    write_file(
+        $scalar_fsm_path,
+        <<'FSM'
+(?fsm:direct_vhdl_scalar_output_negative_decimal_literal
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+  (+interface
+    (output FLAG)
+  )
+  (+size
+    (FLAG 1)
+  )
+  (idle
+    (<- (FLAG> -1))
+  )
+)
+FSM
+    );
+
+    write_file(
+        $signed_scalar_fsm_path,
+        <<'FSM'
+(?fsm:direct_vhdl_signed_scalar_output_negative_decimal_literal
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+  (+types
+    (type signed_bit_t (four_state (signed (bits 1))))
+  )
+  (+interface
+    (output FLAG)
+  )
+  (+size
+    (FLAG signed_bit_t)
+  )
+  (idle
+    (<- (FLAG> -2))
+  )
+)
+FSM
+    );
+
+    my $scalar_hdl = generate_vhdl($scalar_fsm_path);
+    like($scalar_hdl, qr/\bentity\s+direct_vhdl_scalar_output_negative_decimal_literal\s+is\b/s, 'scalar output negative decimal fixture emits direct VHDL entity');
+    like($scalar_hdl, qr/\bFLAG\s+:\s+out\s+std_logic;?/s, 'scalar output negative decimal fixture lowers output port to std_logic');
+    like($scalar_hdl, qr/\bsignal\s+FLAG_next\s+:\s+std_logic;/s, 'scalar output negative decimal fixture declares scalar next signal');
+    like($scalar_hdl, qr/\bFLAG_next\s+<=\s+'1';/s, 'odd scalar output negative decimal literal lowers to std_logic one');
+    unlike($scalar_hdl, qr/\bFLAG_next\s+<=\s+-1;|to_unsigned\(-1,\s+1\)|to_signed\(-1,\s+1\)/s, 'scalar output negative decimal fixture avoids raw integer assignments and vector casts');
+    unlike($scalar_hdl, qr/\bmodule\b|\balways_(?:ff|comb)\b/s, 'scalar output negative decimal VHDL output does not leak SystemVerilog structural syntax');
+
+    my $signed_scalar_hdl = generate_vhdl($signed_scalar_fsm_path);
+    like($signed_scalar_hdl, qr/\bentity\s+direct_vhdl_signed_scalar_output_negative_decimal_literal\s+is\b/s, 'signed scalar output negative decimal fixture emits direct VHDL entity');
+    like($signed_scalar_hdl, qr/\bFLAG\s+:\s+out\s+std_logic;?/s, 'signed scalar output negative decimal fixture lowers one-bit signed output port to std_logic');
+    like($signed_scalar_hdl, qr/\bsignal\s+FLAG_next\s+:\s+std_logic;/s, 'signed scalar output negative decimal fixture declares scalar next signal');
+    like($signed_scalar_hdl, qr/\bFLAG_next\s+<=\s+'0';/s, 'even signed scalar output negative decimal literal lowers to std_logic zero');
+    unlike($signed_scalar_hdl, qr/\bFLAG_next\s+<=\s+-2;|to_unsigned\(-2,\s+1\)|to_signed\(-2,\s+1\)/s, 'signed scalar output negative decimal fixture avoids raw integer assignments and vector casts');
+    unlike($signed_scalar_hdl, qr/\bmodule\b|\balways_(?:ff|comb)\b/s, 'signed scalar output negative decimal VHDL output does not leak SystemVerilog structural syntax');
+
+    my ($scalar_success, $scalar_error_message, $scalar_full_buf, $scalar_stdout_buf, $scalar_stderr_buf) = run(
+        command => ['./bin/fsmgen', '--language', 'vhdl', '--quiet', '-o', $scalar_output_path, $scalar_fsm_path],
+    );
+
+    my $scalar_combined_output = join('', @{ $scalar_stdout_buf || [] }, @{ $scalar_stderr_buf || [] }, ($scalar_error_message || ''));
+    ok($scalar_success, 'CLI accepts direct --language vhdl for scalar output negative decimal literal fixture')
+        or diag($scalar_combined_output);
+    ok(-e $scalar_output_path, 'CLI writes scalar output negative decimal literal VHDL output file');
+
+    my $scalar_cli_hdl = read_file($scalar_output_path);
+    like($scalar_cli_hdl, qr/\bFLAG_next\s+<=\s+'1';/s, 'CLI scalar output negative decimal VHDL output includes std_logic low-bit assignment');
+    unlike($scalar_cli_hdl, qr/\bFLAG_next\s+<=\s+-1;|to_unsigned\(-1,\s+1\)|to_signed\(-1,\s+1\)|\bmodule\b|\balways_(?:ff|comb)\b/s, 'CLI scalar output negative decimal VHDL output avoids raw integer assignment, vector casts, and SystemVerilog syntax');
+
+    my ($signed_success, $signed_error_message, $signed_full_buf, $signed_stdout_buf, $signed_stderr_buf) = run(
+        command => ['./bin/fsmgen', '--language', 'vhdl', '--quiet', '-o', $signed_scalar_output_path, $signed_scalar_fsm_path],
+    );
+
+    my $signed_combined_output = join('', @{ $signed_stdout_buf || [] }, @{ $signed_stderr_buf || [] }, ($signed_error_message || ''));
+    ok($signed_success, 'CLI accepts direct --language vhdl for signed scalar output negative decimal literal fixture')
+        or diag($signed_combined_output);
+    ok(-e $signed_scalar_output_path, 'CLI writes signed scalar output negative decimal literal VHDL output file');
+
+    my $signed_cli_hdl = read_file($signed_scalar_output_path);
+    like($signed_cli_hdl, qr/\bFLAG_next\s+<=\s+'0';/s, 'CLI signed scalar output negative decimal VHDL output includes std_logic low-bit assignment');
+    unlike($signed_cli_hdl, qr/\bFLAG_next\s+<=\s+-2;|to_unsigned\(-2,\s+1\)|to_signed\(-2,\s+1\)|\bmodule\b|\balways_(?:ff|comb)\b/s, 'CLI signed scalar output negative decimal VHDL output avoids raw integer assignment, vector casts, and SystemVerilog syntax');
+};
+
 done_testing();
 
 sub generate_vhdl {
