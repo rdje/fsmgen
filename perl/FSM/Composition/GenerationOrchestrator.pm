@@ -183,14 +183,23 @@ sub _is_bounded_standalone_dt_vhdl_top ($composition_plan) {
 
 sub _has_only_supported_standalone_dt_generic_overrides ($instance) {
     for my $override (@{$instance->parameter_overrides || []}) {
-        return 0 unless ($override->{value_kind} // 'scalar') eq 'scalar';
+        my $kind = $override->{value_kind} // 'scalar';
+        my $is_scalar = $kind eq 'scalar';
+        my $is_packed_list = $kind eq 'list';
+        return 0 unless $is_scalar || $is_packed_list;
+
         my $value = $override->{value_text};
         return 0 unless defined($value);
-        next if $value =~ /\A-?\d+\z/;
-        next if $value =~ /\A\(\s*-?\d+(?:\s+[-+*\/]\s+-?\d+)+\s*\)\z/;
-        next if _is_metadata_backed_scalar_one_bit_generic_override($override)
+        next if $is_scalar && $value =~ /\A-?\d+\z/;
+        next if $is_scalar && $value =~ /\A\(\s*-?\d+(?:\s+[-+*\/]\s+-?\d+)+\s*\)\z/;
+        next if $is_scalar
+            && _is_metadata_backed_scalar_one_bit_generic_override($override)
             && _is_supported_one_bit_sized_bitstring_literal($value);
-        next if _is_metadata_backed_scalar_multi_bit_generic_override($override)
+        next if $is_scalar
+            && _is_metadata_backed_scalar_multi_bit_generic_override($override)
+            && _is_supported_multi_bit_sized_bitstring_literal($value);
+        next if $is_packed_list
+            && _is_metadata_backed_packed_list_generic_override($override)
             && _is_supported_multi_bit_sized_bitstring_literal($value);
         return 0;
     }
@@ -214,6 +223,22 @@ sub _is_metadata_backed_scalar_one_bit_generic_override ($override) {
 sub _is_metadata_backed_scalar_multi_bit_generic_override ($override) {
     return 0 unless ($override->{value_kind} // 'scalar') eq 'scalar';
     return 0 unless ($override->{declaration_default_value_kind} // '') eq 'scalar';
+    return 0
+        unless defined $override->{declaration_default_value_width}
+        && $override->{declaration_default_value_width} =~ /\A\d+\z/;
+    return 0
+        unless defined $override->{value_width}
+        && $override->{value_width} =~ /\A\d+\z/;
+
+    my $decl_width = $override->{declaration_default_value_width} + 0;
+    my $value_width = $override->{value_width} + 0;
+    return 0 unless $decl_width > 1;
+    return $decl_width == $value_width ? 1 : 0;
+}
+
+sub _is_metadata_backed_packed_list_generic_override ($override) {
+    return 0 unless ($override->{value_kind} // '') eq 'list';
+    return 0 unless ($override->{declaration_default_value_kind} // '') eq 'list';
     return 0
         unless defined $override->{declaration_default_value_width}
         && $override->{declaration_default_value_width} =~ /\A\d+\z/;

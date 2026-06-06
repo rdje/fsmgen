@@ -16,9 +16,9 @@ resolved scalar integer expression actuals, plus resolved multi-bit packed
 aggregate actuals for external RTL instances, scalar integer and scalar
 integer expression generic-map actuals for bounded generated-FSM C2 instances,
 one-bit generated-FSM generic-map actuals, scalar integer and scalar integer
-expression plus one-bit and multi-bit sized-bitstring generic-map actuals for
-bounded standalone-DT C1 instances, and port-map actuals whose connection
-expressions already render through the
+expression, one-bit and multi-bit sized-bitstring, plus packed-list
+generic-map actuals for bounded standalone-DT C1 instances, and port-map
+actuals whose connection expressions already render through the
 backend-neutral StructuralRTLIR expression helper.
 
 =cut
@@ -126,7 +126,7 @@ sub _render_instance_block ($instance) {
         my $is_supported_standalone_dt_generic_map =
             $instance_kind eq 'dtc'
             && _has_only_supported_standalone_dt_generic_actuals(\@parameter_overrides);
-        confess _unsupported('composition VHDL generic maps are currently limited to external RTL scalar integer, scalar integer expression, sized bitstring, or packed aggregate overrides, generated-FSM scalar integer, scalar integer expression, one-bit sized bitstring, multi-bit sized bitstring, or resolved packed aggregate overrides, plus standalone-DT scalar integer, scalar integer expression, or metadata-backed one-bit and multi-bit sized bitstring overrides')
+        confess _unsupported('composition VHDL generic maps are currently limited to external RTL scalar integer, scalar integer expression, sized bitstring, or packed aggregate overrides, generated-FSM scalar integer, scalar integer expression, one-bit sized bitstring, multi-bit sized bitstring, or resolved packed aggregate overrides, plus standalone-DT scalar integer, scalar integer expression, metadata-backed one-bit and multi-bit sized bitstring, or packed-list overrides')
             unless $instance_kind eq 'rtl'
             || $is_supported_generated_fsm_generic_map
             || $is_supported_standalone_dt_generic_map;
@@ -236,12 +236,16 @@ sub _has_only_supported_generated_fsm_generic_actuals ($overrides) {
 
 sub _has_only_supported_standalone_dt_generic_actuals ($overrides) {
     for my $override (@$overrides) {
-        return 0 unless ($override->{value_kind} // 'scalar') eq 'scalar';
+        my $kind = $override->{value_kind} // 'scalar';
+        my $is_scalar = $kind eq 'scalar';
+        my $is_packed_list = $kind eq 'list';
+        return 0 unless $is_scalar || $is_packed_list;
+
         my $value = $override->{value_text};
         return 0 unless defined($value);
-        next if $value =~ /\A-?\d+\z/;
-        next if defined _vhdl_scalar_integer_expression_generic_actual($value);
-        if (_is_metadata_backed_scalar_one_bit_generic($override)) {
+        next if $is_scalar && $value =~ /\A-?\d+\z/;
+        next if $is_scalar && defined _vhdl_scalar_integer_expression_generic_actual($value);
+        if ($is_scalar && _is_metadata_backed_scalar_one_bit_generic($override)) {
             my $literal_actual = eval {
                 _vhdl_sized_bitstring_generic_actual(
                     $value,
@@ -251,7 +255,14 @@ sub _has_only_supported_standalone_dt_generic_actuals ($overrides) {
             return 0 if $@;
             next if defined $literal_actual && $literal_actual =~ /\A'[01]'\z/;
         }
-        if (_is_metadata_backed_scalar_multi_bit_generic($override)) {
+        if ($is_scalar && _is_metadata_backed_scalar_multi_bit_generic($override)) {
+            my $literal_actual = eval {
+                _vhdl_sized_bitstring_generic_actual($value)
+            };
+            return 0 if $@;
+            next if defined $literal_actual && $literal_actual =~ /\A"[01]+"\z/;
+        }
+        if ($is_packed_list && _is_metadata_backed_packed_list_generic($override)) {
             my $literal_actual = eval {
                 _vhdl_sized_bitstring_generic_actual($value)
             };
@@ -280,6 +291,22 @@ sub _is_metadata_backed_scalar_one_bit_generic ($override) {
 sub _is_metadata_backed_scalar_multi_bit_generic ($override) {
     return 0 unless ($override->{value_kind} // 'scalar') eq 'scalar';
     return 0 unless ($override->{declaration_default_value_kind} // '') eq 'scalar';
+    return 0
+        unless defined $override->{declaration_default_value_width}
+        && $override->{declaration_default_value_width} =~ /\A\d+\z/;
+    return 0
+        unless defined $override->{value_width}
+        && $override->{value_width} =~ /\A\d+\z/;
+
+    my $decl_width = $override->{declaration_default_value_width} + 0;
+    my $value_width = $override->{value_width} + 0;
+    return 0 unless $decl_width > 1;
+    return $decl_width == $value_width ? 1 : 0;
+}
+
+sub _is_metadata_backed_packed_list_generic ($override) {
+    return 0 unless ($override->{value_kind} // '') eq 'list';
+    return 0 unless ($override->{declaration_default_value_kind} // '') eq 'list';
     return 0
         unless defined $override->{declaration_default_value_width}
         && $override->{declaration_default_value_width} =~ /\A\d+\z/;
@@ -360,7 +387,7 @@ sub _vhdl_hex_digits_to_bits ($digits) {
 }
 
 sub _generic_actual_limit () {
-    return 'composition VHDL generic maps are currently limited to scalar integer, scalar integer expression, metadata-backed one-bit sized bitstring, multi-bit sized bitstring, or multi-bit packed aggregate actuals; standalone-DT generic maps are currently limited to scalar integer, scalar integer expression, or metadata-backed one-bit and multi-bit sized bitstring actuals';
+    return 'composition VHDL generic maps are currently limited to scalar integer, scalar integer expression, metadata-backed one-bit sized bitstring, multi-bit sized bitstring, or multi-bit packed aggregate actuals; standalone-DT generic maps are currently limited to scalar integer, scalar integer expression, metadata-backed one-bit and multi-bit sized bitstring, or packed-list actuals';
 }
 
 sub _normalize_vhdl_auxiliary_assignment ($line) {
