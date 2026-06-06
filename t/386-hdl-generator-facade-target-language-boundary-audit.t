@@ -238,6 +238,76 @@ FSM
     );
 };
 
+subtest 'facade target_language option routes bounded composition VHDL package-backed generic-map behavior' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'facade_vhdl_package_generic_map_top.fsm');
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:facade_vhdl_package_generic_map_top
+  (+import param_pkg)
+  (?ports:public_io
+    clk
+    payload_in<16
+    serial_out>
+  )
+  (?rtl:u_uart
+    (module uart_tx)
+    (params
+      (WIDTH param_pkg.WIDTH_16)
+      (RESET_VALUE param_pkg.RESET_A5)
+    )
+  )
+  (?wiring:wiring
+    /payload_in/u_uart.data_in/
+    /u_uart.txd/serial_out/
+  )
+)
+
+(?rtlif:uart_tx
+  (params
+    (WIDTH 8)
+    (RESET_VALUE 8'h00)
+  )
+  clk:clock
+  data_in<16:data
+  txd>:data
+)
+
+(?pkg:param_pkg
+  (+constants
+    (WIDTH_16 16)
+    (RESET_A5 8'hA5)
+  )
+)
+FSM
+    );
+
+    my $vhdl_pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'vhdl',
+        quiet => 1,
+    );
+
+    my $vhdl_result = $vhdl_pipeline->generate_hdl_from_file($composition_path);
+
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bentity\s+facade_vhdl_package_generic_map_top\s+is\b/s,
+        'explicit VHDL facade generation emits the package-backed generic-map composition entity',
+    );
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bu_uart\s+:\s+entity\s+work\.uart_tx\s+generic\s+map\s*\(\s*WIDTH\s+=>\s+16,\s*RESET_VALUE\s+=>\s+"10100101"\s*\)\s+port\s+map\s*\(\s*clk\s+=>\s+clk,\s*data_in\s+=>\s+payload_in,\s*txd\s+=>\s+serial_out\s*\);/s,
+        'explicit VHDL facade generation emits resolved package-backed scalar integer and sized bitstring generic maps before the port map',
+    );
+    unlike(
+        $vhdl_result->{hdl_code},
+        qr/\bmodule\b|\bassign\b|\bendmodule\b|\balways_(?:ff|comb)\b|\#\s*\(|8'hA5|\bparam_pkg\b/s,
+        'explicit VHDL package-backed generic-map facade generation does not leak SystemVerilog syntax, raw literals, or package tokens',
+    );
+};
+
 subtest 'facade target_language option routes bounded standalone-DT composition VHDL structural top behavior' => sub {
     my $composition_path = repo_file('t/corpus/standalone_dtc_explicit_system_autowire.fsm');
     my $vhdl_pipeline = FSM::Pipeline::HDLGenerator->new(

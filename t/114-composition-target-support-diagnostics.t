@@ -36,6 +36,8 @@ my $generated_fsmc_output_path = File::Spec->catfile($tempdir, 'implicit_composi
 my $apb_c4_output_path = File::Spec->catfile($tempdir, 'apb_tb.vhd');
 my $scalar_generic_map_path = File::Spec->catfile($tempdir, 'vhdl_scalar_generic_map_top.fsm');
 my $scalar_generic_map_output_path = File::Spec->catfile($tempdir, 'vhdl_scalar_generic_map_top.vhd');
+my $package_generic_map_path = File::Spec->catfile($tempdir, 'vhdl_package_generic_map_top.fsm');
+my $package_generic_map_output_path = File::Spec->catfile($tempdir, 'vhdl_package_generic_map_top.vhd');
 my $expression_generic_map_path = File::Spec->catfile($tempdir, 'vhdl_expression_generic_map_deferred_top.fsm');
 my $one_bit_generic_map_path = File::Spec->catfile($tempdir, 'vhdl_one_bit_generic_map_deferred_top.fsm');
 my $composition_path = File::Spec->catfile($tempdir, 'vhdl_composition_top.fsm');
@@ -97,6 +99,47 @@ write_file(
   clk:clock
   data_in<16:data
   txd>:data
+)
+FSM
+);
+write_file(
+    $package_generic_map_path,
+    <<'FSM'
+(?top:vhdl_package_generic_map_top
+  (+import param_pkg)
+  (?ports:public_io
+    clk
+    payload_in<16
+    serial_out>
+  )
+  (?rtl:u_uart
+    (module uart_tx)
+    (params
+      (WIDTH param_pkg.WIDTH_16)
+      (RESET_VALUE param_pkg.RESET_A5)
+    )
+  )
+  (?wiring:wiring
+    /payload_in/u_uart.data_in/
+    /u_uart.txd/serial_out/
+  )
+)
+
+(?rtlif:uart_tx
+  (params
+    (WIDTH 8)
+    (RESET_VALUE 8'h00)
+  )
+  clk:clock
+  data_in<16:data
+  txd>:data
+)
+
+(?pkg:param_pkg
+  (+constants
+    (WIDTH_16 16)
+    (RESET_A5 8'hA5)
+  )
 )
 FSM
 );
@@ -219,6 +262,23 @@ unlike(
     $scalar_generic_map_result->{hdl_code},
     qr/\bmodule\b|\bassign\b|\bendmodule\b|\balways_(?:ff|comb)\b|\#\s*\(|8'hA5/s,
     'pipeline scalar generic-map VHDL output does not leak SystemVerilog structural syntax or generic literals',
+);
+
+my $package_generic_map_result = $pipeline->generate_hdl_from_file($package_generic_map_path);
+like(
+    $package_generic_map_result->{hdl_code},
+    qr/\bentity\s+vhdl_package_generic_map_top\s+is\b/s,
+    'pipeline emits the package-backed generic-map VHDL composition entity',
+);
+like(
+    $package_generic_map_result->{hdl_code},
+    qr/\bu_uart\s+:\s+entity\s+work\.uart_tx\s+generic\s+map\s*\(\s*WIDTH\s+=>\s+16,\s*RESET_VALUE\s+=>\s+"10100101"\s*\)\s+port\s+map\s*\(\s*clk\s+=>\s+clk,\s*data_in\s+=>\s+payload_in,\s*txd\s+=>\s+serial_out\s*\);/s,
+    'pipeline emits resolved package-backed scalar integer and sized bitstring VHDL generic maps before the port map',
+);
+unlike(
+    $package_generic_map_result->{hdl_code},
+    qr/\bmodule\b|\bassign\b|\bendmodule\b|\balways_(?:ff|comb)\b|\#\s*\(|8'hA5|\bparam_pkg\b/s,
+    'pipeline package-backed generic-map VHDL output does not leak SystemVerilog syntax, raw literals, or package tokens',
 );
 
 my $expression_generic_exception = eval {
@@ -423,6 +483,33 @@ unlike(
     $scalar_generic_map_cli_hdl,
     qr/\bmodule\b|\bassign\b|\bendmodule\b|\balways_(?:ff|comb)\b|\#\s*\(|8'hA5/s,
     'CLI scalar generic-map composition VHDL output does not leak SystemVerilog syntax or generic literals',
+);
+
+my ($package_generic_map_success, $package_generic_map_error_message, $package_generic_map_full_buf, $package_generic_map_stdout_buf, $package_generic_map_stderr_buf) = run(
+    command => ['./bin/fsmgen', '--language', 'vhdl', '--quiet', '-o', $package_generic_map_output_path, $package_generic_map_path],
+);
+
+my $package_generic_map_combined_output = join(
+    '',
+    @{ $package_generic_map_stdout_buf || [] },
+    @{ $package_generic_map_stderr_buf || [] },
+    ($package_generic_map_error_message || ''),
+);
+
+ok($package_generic_map_success, 'CLI accepts bounded composition --language vhdl for the package-backed generic-map external-RTL fixture')
+    or diag($package_generic_map_combined_output);
+ok(-e $package_generic_map_output_path, 'CLI writes package-backed generic-map composition VHDL output');
+
+my $package_generic_map_cli_hdl = read_file($package_generic_map_output_path);
+like(
+    $package_generic_map_cli_hdl,
+    qr/\bu_uart\s+:\s+entity\s+work\.uart_tx\s+generic\s+map\s*\(\s*WIDTH\s+=>\s+16,\s*RESET_VALUE\s+=>\s+"10100101"\s*\)\s+port\s+map\s*\(\s*clk\s+=>\s+clk,\s*data_in\s+=>\s+payload_in,\s*txd\s+=>\s+serial_out\s*\);/s,
+    'CLI package-backed generic-map composition VHDL output includes resolved literal generic actuals',
+);
+unlike(
+    $package_generic_map_cli_hdl,
+    qr/\bmodule\b|\bassign\b|\bendmodule\b|\balways_(?:ff|comb)\b|\#\s*\(|8'hA5|\bparam_pkg\b/s,
+    'CLI package-backed generic-map composition VHDL output does not leak SystemVerilog syntax, raw literals, or package tokens',
 );
 
 my ($standalone_dtc_success, $standalone_dtc_error_message, $standalone_dtc_full_buf, $standalone_dtc_stdout_buf, $standalone_dtc_stderr_buf) = run(

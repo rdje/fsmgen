@@ -342,7 +342,12 @@ Current boundary: the Verilog-family backend lowers validated parameters and
 aggregate overrides to SystemVerilog `#(...)` instance parameters. VHDL now
 lowers bounded external-RTL scalar integer and multi-bit sized bitstring
 overrides to `generic map` actuals, such as `WIDTH => 16` and
-`RESET_VALUE => "10100101"` for `8'hA5`, before the instance `port map`. The shipped composition
+`RESET_VALUE => "10100101"` for `8'hA5`, before the instance `port map`.
+Qualified imported package constants in that same bounded external-RTL subset
+are resolved before VHDL emission and also emit literal actuals, for example
+`param_pkg.WIDTH_16` and `param_pkg.RESET_A5` emit `WIDTH => 16` and
+`RESET_VALUE => "10100101"` without leaking `param_pkg` into the VHDL. This is
+not VHDL package declaration/emission support. The shipped composition
 VHDL tops are the bounded C3 external-RTL literal/concat fixture in
 `t/corpus/composition_intent_integer_literals.fsm` and the bounded C1
 standalone-DT passthrough fixture in
@@ -353,8 +358,9 @@ generated-FSM fixture in `fsm/apb_tb.fsm`. Other `?top` VHDL shapes still
 parse into typed composition IR and then fail closed with the scoped
 target-support diagnostic. Generated-FSM and standalone-DT generic maps,
 scalar expressions, one-bit actuals that need target-type discrimination,
-aggregate/list/record actuals, package-backed actuals, and APB/C4 generic-map
-shapes remain deferred until later exact leaves own those paths.
+aggregate/list/record actuals, unresolved package/expression actuals, VHDL
+package declaration/emission, and APB/C4 generic-map shapes remain deferred
+until later exact leaves own those paths.
 
 ### Broader Generated-Child Top Instantiation
 
@@ -3820,8 +3826,9 @@ generated-FSM scalar-autowire top for
 generated-FSM top for `fsm/apb_tb.fsm`.
 Still backlog beyond those exact owners: broader generated-FSM/C4 composition
 VHDL, internal-net-heavy composition tops beyond APB, composition generic maps
-beyond external-RTL scalar integer and multi-bit sized bitstring actuals,
-aggregate VHDL record/array lowering, VHDL packages, multi-clock domains, GHDL
+beyond external-RTL scalar integer and multi-bit sized bitstring
+literal/resolved-package-constant actuals, aggregate VHDL record/array
+lowering, VHDL package declaration/emission, multi-clock domains, GHDL
 validation, broad expression parity, signed scalar division/modulo,
 mixed signed/unsigned scalar arithmetic, mixed signed/unsigned vector
 arithmetic, and full feature parity with the
@@ -3843,8 +3850,10 @@ fixture, and multi-bit sized-literal generic defaults now lower to typed
 fixture. Maintained aggregate-output direct roots now lower as packed-vector
 VHDL ports; full VHDL record/array aggregate lowering remains deferred.
 External-RTL scalar integer and multi-bit sized bitstring composition generic
-maps now lower to VHDL `generic map` actuals before the port map; broader
-generic-map families remain deferred until exact owner leaves select them. The bounded C3 external-RTL
+maps now lower to VHDL `generic map` actuals before the port map, including
+qualified package constants after they resolve to scalar integer or multi-bit
+sized bitstring literals; broader generic-map families remain deferred until
+exact owner leaves select them. The bounded C3 external-RTL
 literal/concat structural top now emits a VHDL entity/architecture with
 concurrent literal/concat assignments and an external `entity work.uart_tx`
 port map. The bounded C1 standalone-DT passthrough structural top now emits the
@@ -3889,8 +3898,9 @@ emits `SUM <= A + B;`, a signed `DIFF = (- A B)` assignment emits
 division/modulo, mixed signed/unsigned arithmetic, broader generated-FSM/C4
 composition VHDL beyond the exact shipped fixtures, internal-net-heavy
 composition tops beyond APB, composition generic maps beyond external-RTL
-scalar integer and multi-bit sized bitstring actuals, aggregate VHDL,
-packages, GHDL validation, and full backend parity remain outside the shipped
+scalar integer and multi-bit sized bitstring literal/resolved-package-constant
+actuals, aggregate VHDL, VHDL package declaration/emission, GHDL validation,
+and full backend parity remain outside the shipped
 scaffold. Signed vector numeric-literal
 addition/subtraction/multiplication/division/modulo also lower through
 target-width `to_signed`, so `SUM = (+ A 1)` emits
@@ -4101,15 +4111,15 @@ schema metadata for `semantic.symbol_contract.types` and
 recursive `items` or `members` plus `member_order`.
 
 Current active backend edge: task-tree leaf
-`BACKEND-API-VALIDATION-FRONTIER.75` selects the next exact backend/API edge
-after bounded external-RTL C3 scalar integer and multi-bit sized bitstring VHDL
-generic-map actuals shipped. Package-import internals, already bounded
-constant/enum/type internals, unrelated forward-IR payloads, signed scalar
-division/modulo, mixed signed/unsigned arithmetic, generated-FSM and
-standalone-DT generic maps, scalar expressions, aggregate generic actuals,
-full aggregate VHDL record/array lowering, broader generated-FSM/C4
-composition VHDL beyond the exact shipped fixtures, internal nets/generic maps
-beyond APB, broader expression parity beyond the shipped AMBA wrap family, and
-full normalized semantic export stabilization remain out of scope until later
-exact leaves own
+`BACKEND-API-VALIDATION-FRONTIER.76` selects the next exact backend/API edge
+after bounded resolved package-backed external-RTL C3 scalar integer and
+multi-bit sized bitstring VHDL generic-map actuals shipped. Package declaration
+and VHDL package emission, already bounded constant/enum/type internals,
+unrelated forward-IR payloads, signed scalar division/modulo, mixed
+signed/unsigned arithmetic, generated-FSM and standalone-DT generic maps,
+scalar expressions, aggregate generic actuals, full aggregate VHDL record/array
+lowering, broader generated-FSM/C4 composition VHDL beyond the exact shipped
+fixtures, internal nets/generic maps beyond APB, broader expression parity
+beyond the shipped AMBA wrap family, and full normalized semantic export
+stabilization remain out of scope until later exact leaves own
 them.

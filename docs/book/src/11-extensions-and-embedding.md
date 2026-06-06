@@ -904,7 +904,11 @@ the C3 external-RTL literal/concat fixture in
 literal/concat assignments and an `entity work.uart_tx` port map. The external
 RTL C3 subset also emits scalar integer and multi-bit sized bitstring
 `generic map` actuals before the port map, such as `WIDTH => 16` and
-`RESET_VALUE => "10100101"` for `8'hA5`. The C1
+`RESET_VALUE => "10100101"` for `8'hA5`; qualified imported package constants
+in that same subset are resolved before VHDL emission and also emit literals,
+for example `param_pkg.WIDTH_16` and `param_pkg.RESET_A5` emit `WIDTH => 16`
+and `RESET_VALUE => "10100101"` without leaking `param_pkg` into the VHDL.
+This is not VHDL package declaration/emission support. The C1
 standalone-DT passthrough fixture in
 `t/corpus/standalone_dtc_explicit_system_autowire.fsm` emits the
 `standalone_route_src` child VHDL entity plus an `entity work.standalone_route_src`
@@ -2318,18 +2322,17 @@ this normalized semantic shape:
 ```
 
 The current active backend/API frontier is
-`BACKEND-API-VALIDATION-FRONTIER.75`, which selects the next exact backend/API
-edge after bounded external-RTL C3 scalar integer and multi-bit sized bitstring
-VHDL generic-map actuals shipped. Package-import internals, already bounded
-constant/enum/type internals, unrelated forward-IR payloads, signed scalar
-division/modulo, mixed signed/unsigned arithmetic, generated-FSM and
-standalone-DT generic maps, scalar expressions, aggregate generic actuals,
-full aggregate VHDL record/array lowering, broader generated-FSM/C4
-composition VHDL beyond the exact shipped fixtures, internal nets/generic maps
-beyond APB, broader expression parity beyond the shipped AMBA wrap family, and
-full normalized semantic export stabilization remain out of scope until later
-exact leaves own
-them.
+`BACKEND-API-VALIDATION-FRONTIER.76`, which selects the next exact backend/API
+edge after bounded resolved package-backed external-RTL C3 scalar integer and
+multi-bit sized bitstring VHDL generic-map actuals shipped. Package declaration
+and VHDL package emission, already bounded constant/enum/type internals,
+unrelated forward-IR payloads, signed scalar division/modulo, mixed
+signed/unsigned arithmetic, generated-FSM and standalone-DT generic maps,
+scalar expressions, aggregate generic actuals, full aggregate VHDL record/array
+lowering, broader generated-FSM/C4 composition VHDL beyond the exact shipped
+fixtures, internal nets/generic maps beyond APB, broader expression parity
+beyond the shipped AMBA wrap family, and full normalized semantic export
+stabilization remain out of scope until later exact leaves own them.
 
 Do not treat the raw `HDLGenerator` result hash as a stable JSON document.
 

@@ -24,6 +24,9 @@ answers:
   - "does composition VHDL support external RTL generic maps?"
   - "does composition VHDL support bitstring generic maps?"
   - "does composition VHDL support sized bitstring generic actuals?"
+  - "does composition VHDL support package-backed generic maps?"
+  - "does composition VHDL support package-backed generic actuals?"
+  - "does composition VHDL emit package constants in generic maps?"
   - "does direct VHDL support aggregate outputs?"
   - "is composition VHDL supported?"
   - "is GHDL validation active?"
@@ -170,9 +173,14 @@ The bounded C1 standalone-DT child composition VHDL top is also shipped for
 without SystemVerilog structural syntax. External-RTL C3 composition VHDL also
 lowers scalar integer and multi-bit sized bitstring parameter overrides to
 `generic map` actuals before the port map, such as `WIDTH => 16` and
-`RESET_VALUE => "10100101"` for `8'hA5`; scalar expressions, one-bit actuals
-that need target-type discrimination, aggregate/list/record, package-backed,
-generated-child, standalone-DT, and APB/C4 generic maps remain deferred. The bounded C2 generated-FSM child
+`RESET_VALUE => "10100101"` for `8'hA5`. Qualified imported package constants
+in that same external-RTL subset are resolved before VHDL emission and also
+emit literal actuals, for example `param_pkg.WIDTH_16` and `param_pkg.RESET_A5`
+emit `WIDTH => 16` and `RESET_VALUE => "10100101"` without leaking `param_pkg`
+into the VHDL; this is not VHDL package declaration/emission support. Scalar
+expressions, one-bit actuals that need target-type discrimination,
+aggregate/list/record, unresolved package/expression actuals, generated-child,
+standalone-DT, and APB/C4 generic maps remain deferred. The bounded C2 generated-FSM child
 composition VHDL top is also shipped for
 `t/corpus/implicit_composition_system_autowire.fsm`. That subset emits VHDL-safe
 generated-child shared-datapath export ports/assignments, scalar structural
