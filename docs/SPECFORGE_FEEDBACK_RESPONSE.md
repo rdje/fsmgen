@@ -341,7 +341,8 @@ project policies:
   `rhs_enable_families[]` entry and selector assertion metadata keys, and
   structural-RTL `ports[]` core plus composition-top extension entry keys and
   `nets[]`, `declared_links[]`, `resolved_links[]`, and shallow
-  `instances[]` plus nested `instances[].interface_ports[]` entry keys;
+  `instances[]` plus nested `instances[].interface_ports[]` and
+  `instances[].port_bindings[]` core/typed-extension entry keys;
 - `FSM::Pipeline::HDLGenerator->generate_hdl_from_file(...)` now has a bounded
   top-level result-presence contract advertised through the capability
   manifest, while the raw result hash is explicitly not a JSON-safe interchange

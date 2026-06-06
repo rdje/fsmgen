@@ -26,6 +26,8 @@ use FSM::Support::NormalizedSemanticPayloadContract qw(
     normalized_semantic_payload_forward_ir_structural_rtl_ir_declared_link_entry_keys
     normalized_semantic_payload_forward_ir_structural_rtl_ir_instance_entry_keys
     normalized_semantic_payload_forward_ir_structural_rtl_ir_instance_interface_port_entry_keys
+    normalized_semantic_payload_forward_ir_structural_rtl_ir_instance_port_binding_entry_keys
+    normalized_semantic_payload_forward_ir_structural_rtl_ir_instance_port_binding_typed_extension_keys
     normalized_semantic_payload_forward_ir_nested_contract_source_map
     normalized_semantic_payload_forward_ir_nested_presence_key_map
     normalized_semantic_payload_forward_ir_structural_rtl_ir_net_entry_keys
@@ -176,6 +178,14 @@ subtest 'normalized semantic payload helper builders return fresh nested structu
             build => \&normalized_semantic_payload_forward_ir_structural_rtl_ir_instance_interface_port_entry_keys,
         },
         {
+            label => 'forward_ir_structural_rtl_ir_instance_port_binding_entry_keys',
+            build => \&normalized_semantic_payload_forward_ir_structural_rtl_ir_instance_port_binding_entry_keys,
+        },
+        {
+            label => 'forward_ir_structural_rtl_ir_instance_port_binding_typed_extension_keys',
+            build => \&normalized_semantic_payload_forward_ir_structural_rtl_ir_instance_port_binding_typed_extension_keys,
+        },
+        {
             label => 'explicit_system_contract_keys',
             build => \&normalized_semantic_payload_explicit_system_contract_keys,
         },
@@ -296,6 +306,16 @@ subtest 'fresh normalized semantic grouped maps stay aligned with helper familie
         $family_map->{forward_ir_structural_rtl_ir_instance_interface_port_entry_keys},
         normalized_semantic_payload_forward_ir_structural_rtl_ir_instance_interface_port_entry_keys(),
         'structural-RTL instance interface-port entry family matches helper',
+    );
+    is_deeply(
+        $family_map->{forward_ir_structural_rtl_ir_instance_port_binding_entry_keys},
+        normalized_semantic_payload_forward_ir_structural_rtl_ir_instance_port_binding_entry_keys(),
+        'structural-RTL instance port-binding core entry family matches helper',
+    );
+    is_deeply(
+        $family_map->{forward_ir_structural_rtl_ir_instance_port_binding_typed_extension_keys},
+        normalized_semantic_payload_forward_ir_structural_rtl_ir_instance_port_binding_typed_extension_keys(),
+        'structural-RTL instance port-binding typed extension family matches helper',
     );
 
     my $forward_ir_map = normalized_semantic_payload_forward_ir_nested_presence_key_map();

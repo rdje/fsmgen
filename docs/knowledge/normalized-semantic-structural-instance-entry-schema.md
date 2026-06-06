@@ -5,7 +5,6 @@ answers:
   - "where are structural_rtl_ir instances entry keys advertised?"
   - "what keys are in semantic.forward_ir.structural_rtl_ir.instances entries?"
   - "what is the normalized semantic structural instance entry schema?"
-  - "are structural_rtl_ir instance port bindings entry keys advertised?"
 date: 2026-06-05
 status: current
 tags: [normalized-semantic-json, structural-rtl-ir, instances, public-api]
@@ -23,6 +22,8 @@ The public key family covers the instance shell keys:
 
 Nested instance `interface_ports[]` entries are now advertised separately by
 `normalized-semantic-structural-instance-interface-port-entry-schema`.
-Nested instance `parameter_overrides[]` and `port_bindings[]` entries are not
-separately advertised yet; later exact task-tree owners must widen those nested
-entry schemas deliberately.
+Nested instance `port_bindings[]` entries are now advertised separately by
+`normalized-semantic-structural-instance-port-binding-entry-schema`.
+Nested instance `parameter_overrides[]` entries are not separately advertised
+yet; a later exact task-tree owner must widen that nested entry schema
+deliberately.

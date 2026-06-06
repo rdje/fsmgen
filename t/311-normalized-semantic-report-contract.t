@@ -80,6 +80,8 @@ use FSM::Support::NormalizedSemanticReportContract qw(
     normalized_semantic_forward_ir_structural_rtl_ir_declared_link_entry_keys
     normalized_semantic_forward_ir_structural_rtl_ir_instance_entry_keys
     normalized_semantic_forward_ir_structural_rtl_ir_instance_interface_port_entry_keys
+    normalized_semantic_forward_ir_structural_rtl_ir_instance_port_binding_entry_keys
+    normalized_semantic_forward_ir_structural_rtl_ir_instance_port_binding_typed_extension_keys
     normalized_semantic_forward_ir_structural_rtl_ir_net_entry_keys
     normalized_semantic_forward_ir_structural_rtl_ir_port_composition_extension_keys
     normalized_semantic_forward_ir_structural_rtl_ir_port_entry_keys
@@ -120,6 +122,8 @@ use FSM::Support::NormalizedSemanticPayloadContract qw(
     normalized_semantic_payload_forward_ir_structural_rtl_ir_declared_link_entry_keys
     normalized_semantic_payload_forward_ir_structural_rtl_ir_instance_entry_keys
     normalized_semantic_payload_forward_ir_structural_rtl_ir_instance_interface_port_entry_keys
+    normalized_semantic_payload_forward_ir_structural_rtl_ir_instance_port_binding_entry_keys
+    normalized_semantic_payload_forward_ir_structural_rtl_ir_instance_port_binding_typed_extension_keys
     normalized_semantic_payload_forward_ir_structural_rtl_ir_net_entry_keys
     normalized_semantic_payload_forward_ir_structural_rtl_ir_port_composition_extension_keys
     normalized_semantic_payload_forward_ir_structural_rtl_ir_port_entry_keys
@@ -612,6 +616,16 @@ subtest 'contract exposes the bounded normalized semantic surface' => sub {
         'contract publishes the bounded forward-ir structural-rtl-ir instance interface-port entry key list',
     );
     is_deeply(
+        $contract->{success_forward_ir_structural_rtl_ir_instance_port_binding_entry_keys},
+        normalized_semantic_forward_ir_structural_rtl_ir_instance_port_binding_entry_keys(),
+        'contract publishes the bounded forward-ir structural-rtl-ir instance port-binding core entry key list',
+    );
+    is_deeply(
+        $contract->{success_forward_ir_structural_rtl_ir_instance_port_binding_typed_extension_keys},
+        normalized_semantic_forward_ir_structural_rtl_ir_instance_port_binding_typed_extension_keys(),
+        'contract publishes the bounded forward-ir structural-rtl-ir instance port-binding typed extension key list',
+    );
+    is_deeply(
         normalized_semantic_forward_ir_keys(),
         normalized_semantic_forward_ir_presence_keys(),
         'normalized semantic forward-IR keys map to the nested forward-IR owner',
@@ -692,6 +706,16 @@ subtest 'contract exposes the bounded normalized semantic surface' => sub {
         'report presence family map publishes structural-rtl-ir instance interface-port entry keys',
     );
     is_deeply(
+        $contract->{presence_key_family_map}{success_forward_ir_structural_rtl_ir_instance_port_binding_entry_keys},
+        normalized_semantic_forward_ir_structural_rtl_ir_instance_port_binding_entry_keys(),
+        'report presence family map publishes structural-rtl-ir instance port-binding core entry keys',
+    );
+    is_deeply(
+        $contract->{presence_key_family_map}{success_forward_ir_structural_rtl_ir_instance_port_binding_typed_extension_keys},
+        normalized_semantic_forward_ir_structural_rtl_ir_instance_port_binding_typed_extension_keys(),
+        'report presence family map publishes structural-rtl-ir instance port-binding typed extension keys',
+    );
+    is_deeply(
         normalized_semantic_forward_ir_structural_rtl_ir_keys(),
         normalized_semantic_forward_ir_structural_rtl_ir_presence_keys(),
         'normalized semantic report forward-ir structural-rtl-ir keys map to the nested structural-rtl-ir owner',
@@ -765,6 +789,16 @@ subtest 'contract exposes the bounded normalized semantic surface' => sub {
         normalized_semantic_payload_forward_ir_structural_rtl_ir_instance_interface_port_entry_keys(),
         normalized_semantic_forward_ir_structural_rtl_ir_instance_interface_port_entry_keys(),
         'semantic payload forward-ir structural-rtl-ir instance interface-port entry keys map to the nested structural-rtl-ir owner',
+    );
+    is_deeply(
+        normalized_semantic_payload_forward_ir_structural_rtl_ir_instance_port_binding_entry_keys(),
+        normalized_semantic_forward_ir_structural_rtl_ir_instance_port_binding_entry_keys(),
+        'semantic payload forward-ir structural-rtl-ir instance port-binding core entry keys map to the nested structural-rtl-ir owner',
+    );
+    is_deeply(
+        normalized_semantic_payload_forward_ir_structural_rtl_ir_instance_port_binding_typed_extension_keys(),
+        normalized_semantic_forward_ir_structural_rtl_ir_instance_port_binding_typed_extension_keys(),
+        'semantic payload forward-ir structural-rtl-ir instance port-binding typed extension keys map to the nested structural-rtl-ir owner',
     );
     is_deeply(
         $contract->{composition_presence_keys},
@@ -1212,6 +1246,27 @@ subtest 'successful composition semantic JSON conforms to the bounded contract' 
         $composition_instance_interface_port,
         normalized_semantic_forward_ir_structural_rtl_ir_instance_interface_port_entry_keys(),
         'composition success structural-rtl-ir instance interface-port entry keeps bounded keys',
+    );
+    my $composition_instance_port_binding = $composition_instance->{port_bindings}[0];
+    ok(
+        $composition_instance_port_binding,
+        'composition success structural-rtl-ir instance includes at least one port-binding entry',
+    );
+    assert_keys_present(
+        $composition_instance_port_binding,
+        normalized_semantic_forward_ir_structural_rtl_ir_instance_port_binding_entry_keys(),
+        'composition success structural-rtl-ir instance port-binding entry keeps bounded core keys',
+    );
+    my ($composition_instance_typed_port_binding) =
+        grep { exists $_->{connection_type_spec} } @{$composition_instance->{port_bindings} || []};
+    ok(
+        $composition_instance_typed_port_binding,
+        'composition success structural-rtl-ir instance includes at least one typed port-binding entry',
+    );
+    assert_keys_present(
+        $composition_instance_typed_port_binding,
+        normalized_semantic_forward_ir_structural_rtl_ir_instance_port_binding_typed_extension_keys(),
+        'composition success structural-rtl-ir instance typed port-binding entry keeps bounded typed extension keys',
     );
     ok(
         exists $decoded->{semantic}{module}{composition_child_count},
