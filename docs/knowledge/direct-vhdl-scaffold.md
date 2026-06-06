@@ -27,6 +27,8 @@ answers:
   - "does direct VHDL support scalar multiplication?"
   - "does direct VHDL support scalar multiplication chains?"
   - "does direct VHDL support numeric literal arithmetic?"
+  - "does direct VHDL support signed numeric literal arithmetic?"
+  - "does direct VHDL support signed vector numeric literal arithmetic?"
   - "does direct VHDL support compound update arithmetic?"
   - "does direct VHDL support signed declarations?"
   - "does direct VHDL support signed logic declarations?"
@@ -105,9 +107,11 @@ assignments lower as target-width resized signed VHDL arithmetic, such as
 `PROD <= resize(A * B, 8);`, under the same target/operand constraints.
 Same-width signed vector division/modulo RHS assignments lower as target-width
 resized signed VHDL arithmetic, such as `QUOT <= resize(A / B, 8);` and
-`REM <= resize(A mod B, 8);`, under the same target/operand constraints. Scalar
-signed arithmetic and mixed signed/unsigned arithmetic remain outside the
-current direct VHDL scaffold.
+`REM <= resize(A mod B, 8);`, under the same target/operand constraints. Signed
+vector numeric-literal addition/subtraction is selected as the active
+next implementation edge under `BACKEND-API-VALIDATION-FRONTIER.61.1`; signed
+literal multiplication/division/modulo, scalar signed arithmetic, and mixed
+signed/unsigned arithmetic remain outside the current direct VHDL scaffold.
 Aggregate-output
 roots are locked as explicit fail-closed direct VHDL boundaries by focused
 pipeline and facade coverage. Composition/top VHDL is locked fail-closed by

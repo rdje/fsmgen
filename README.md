@@ -840,9 +840,10 @@ ports to VHDL `signed` ports. Same-width signed vector
 addition/subtraction/multiplication/division/modulo RHS assignments now lower
 as native signed VHDL arithmetic when the target and all operands are same-width
 signed vectors, with multiplication/division/modulo target-width resized. The
-current active backend/API frontier is `BACKEND-API-VALIDATION-FRONTIER.61`:
-select the next exact backend/API/public-export edge after `.60.1` shipped
-signed division/modulo. Scalar signed arithmetic, mixed
+current active backend/API frontier is `BACKEND-API-VALIDATION-FRONTIER.61.1`:
+implement signed vector numeric-literal addition/subtraction RHS lowering after
+`.61` selected that exact backend edge. Signed literal
+multiplication/division/modulo, scalar signed arithmetic, mixed
 signed/unsigned arithmetic, aggregate VHDL, composition/top VHDL, packages,
 GHDL validation, broad expression parity, package-import internals, unrelated
 forward-IR payloads, and full normalized semantic export stabilization remain

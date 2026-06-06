@@ -3838,7 +3838,9 @@ emits `SUM <= A + B;`, a signed `DIFF = (- A B)` assignment emits
 `REM <= resize(A mod B, 8);`, rather than unsigned casts. Scalar signed
 arithmetic, mixed signed/unsigned arithmetic, composition/top VHDL, aggregate
 VHDL, packages, GHDL validation, and full backend parity remain outside the
-shipped scaffold.
+shipped scaffold. Signed vector numeric-literal addition/subtraction is the
+active next implementation edge under `BACKEND-API-VALIDATION-FRONTIER.61.1`;
+signed literal multiplication/division/modulo remains a later edge.
 
 ### GHDL Validation
 
@@ -4027,11 +4029,11 @@ schema metadata for `semantic.symbol_contract.types` and
 recursive `items` or `members` plus `member_order`.
 
 Current active backend edge: task-tree leaf
-`BACKEND-API-VALIDATION-FRONTIER.61` selects the next exact backend/API or
-public-export edge after `.60.1` shipped same-width signed vector
-division/modulo RHS lowering.
+`BACKEND-API-VALIDATION-FRONTIER.61.1` implements signed vector
+numeric-literal addition/subtraction RHS lowering after `.61` selected that
+exact scaffold gap.
 Package-import internals, already bounded constant/enum/type internals,
-unrelated forward-IR payloads, scalar signed arithmetic,
-mixed signed/unsigned arithmetic,
+unrelated forward-IR payloads, signed literal multiplication/division/modulo,
+scalar signed arithmetic, mixed signed/unsigned arithmetic,
 aggregate/composition VHDL, and full normalized semantic export stabilization
 remain out of scope until later exact leaves own them.
