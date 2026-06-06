@@ -202,6 +202,9 @@ bounded aggregate-output packed-vector lowering. Full aggregate VHDL
 record/array lowering is still not shipped. The maintained direct aggregate
 output fixtures lower their generated packed struct outputs as VHDL
 `std_logic_vector` ports while preserving flattened mux assignments.
+Declared aggregate structural VHDL types in composition tops are currently owned
+by `BACKEND-API-VALIDATION-FRONTIER.101.1` for fail-closed hardening before any
+record/array declaration emission.
 The first bounded composition VHDL structural top is also shipped for the C3
 external-RTL literal/concat fixture in
 `t/corpus/composition_intent_integer_literals.fsm`. The bounded C1
@@ -4201,8 +4204,8 @@ schema metadata for `semantic.symbol_contract.types` and
 recursive `items` or `members` plus `member_order`.
 
 Current active backend edge: task-tree leaf
-`BACKEND-API-VALIDATION-FRONTIER.101` selects the next exact backend/API edge
-after package-root/package-emission hardening. Completed leaf
+`BACKEND-API-VALIDATION-FRONTIER.101.1` locks declared aggregate structural VHDL
+types as fail-closed before record/array emission. Completed leaf
 `BACKEND-API-VALIDATION-FRONTIER.100.1` locks package roots as import-only
 declaration containers that do not generate standalone SystemVerilog or VHDL
 package HDL directly.
@@ -4227,3 +4230,7 @@ exact leaves own them.
 Package-root direct HDL generation is locked fail-closed by
 `BACKEND-API-VALIDATION-FRONTIER.100.1`; this keeps `?pkg` roots import-only
 and still does not implement VHDL package declaration/emission.
+Declared aggregate structural VHDL types are currently owned by
+`BACKEND-API-VALIDATION-FRONTIER.101.1`; this keeps composition tops from
+emitting VHDL record/array declarations until a future exact aggregate-lowering
+leaf owns them.

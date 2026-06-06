@@ -193,6 +193,9 @@ The VHDL lane is intentionally narrow:
      declaration/emission, declared aggregate structural types, structural nets outside exact
      scalar/vector leaves, and non-VHDL auxiliary
      assignments
+   - Declared aggregate structural VHDL types are currently owned by
+     `BACKEND-API-VALIDATION-FRONTIER.101.1` for fail-closed hardening; this is
+     not VHDL record/array declaration support
 
 4. **Supported constructs in the first lane:**
    - Module declaration with port list
@@ -452,7 +455,9 @@ The VHDL lane is intentionally narrow:
   signed scalar division/modulo and mixed signed/unsigned scalar arithmetic
   fail-closed diagnostics,
   mismatched-width arithmetic-expression fail-closed diagnostics, and
-  broader composition/top VHDL fail-closed diagnostics.
+  broader composition/top VHDL fail-closed diagnostics. Declared aggregate
+  structural VHDL type diagnostics are currently owned by
+  `BACKEND-API-VALIDATION-FRONTIER.101.1`.
 - Add broader VHDL output to the regression corpus
 - Ensure `--check --json` and `--emit-semantic-json` stay target-neutral
 - Consider external VHDL validation via GHDL

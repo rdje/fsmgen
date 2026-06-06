@@ -205,7 +205,9 @@ Bounded direct aggregate-output fixtures now lower as VHDL packed vectors:
 `NESTED` is `std_logic_vector(6 downto 0)`, `OUT` is
 `std_logic_vector(2 downto 0)`, and `OUT_FRAME` / `OUT_LANES` are 5-bit
 `std_logic_vector` ports. Full VHDL record/array aggregate lowering remains a
-later exact owner.
+later exact owner. Declared aggregate structural VHDL types in composition tops
+are currently owned by `BACKEND-API-VALIDATION-FRONTIER.101.1` for fail-closed
+hardening before any VHDL record/array declaration emission.
 The maintained supported direct-root VHDL sweep now runs clean. The first
 bounded composition VHDL structural top is also shipped for the C3 external-RTL
 literal/concat fixture in `t/corpus/composition_intent_integer_literals.fsm`.

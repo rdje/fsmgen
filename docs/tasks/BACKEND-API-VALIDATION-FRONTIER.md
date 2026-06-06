@@ -241,7 +241,8 @@ items named in the 2026-06-05 remaining-work inventory.
     `BACKEND-API-VALIDATION-FRONTIER.99.1`,
     `BACKEND-API-VALIDATION-FRONTIER.100`,
     `BACKEND-API-VALIDATION-FRONTIER.100.1`,
-    `BACKEND-API-VALIDATION-FRONTIER.101`
+    `BACKEND-API-VALIDATION-FRONTIER.101`,
+    `BACKEND-API-VALIDATION-FRONTIER.101.1`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.1`
   Status: `done`
@@ -1788,10 +1789,18 @@ items named in the 2026-06-05 remaining-work inventory.
   Commit: `BACKEND-API-VALIDATION-FRONTIER.100.1: lock package-root HDL boundary`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.101`
-  Status: `active`
+  Status: `done`
   Goal: `Select the next exact backend/API edge after package-root/package-emission boundary hardening shipped.`
+  Children: `BACKEND-API-VALIDATION-FRONTIER.101.1`
   Acceptance: `Selection-only leaf. Audit the backend/API frontier, current VHDL scope, mdBook backlog, direct-VHDL fact card, focused scaffold/composition/facade tests, maintained direct/composition VHDL sweeps, and current validation environment; choose the next narrow implementation or hardening owner before any code/test/source edits. The selector must preserve task-tree ownership for the chosen child leaf, synchronize README/VHDL scope/mdBook/fact card/memory if the selected frontier changes user-visible scope, and leave aggregate VHDL record/array declarations beyond packed vectors, full VHDL package declaration/emission, GHDL validation, broad expression parity, full composition VHDL parity, normalized semantic export stabilization, and full backend parity deferred unless it explicitly chooses one of those exact edges.`
-  Verification: `pending selection`
+  Verification: `Selection audit/read of README.md, MEMORY.md, COMMIT.md, docs/TASK_TREE.md, docs/tasks/BACKEND-API-VALIDATION-FRONTIER.md, docs/VHDL_SCOPE.md, docs/book/src/14-feature-backlog.md, docs/book/src/11-extensions-and-embedding.md, docs/book/src/07-packages-and-sharing.md, docs/knowledge/direct-vhdl-scaffold.md, KNOWLEDGE_MAP.md, t/70-language-contract-top-level-directive-entrypoints.t, t/114-composition-target-support-diagnostics.t, t/386-hdl-generator-facade-target-language-boundary-audit.t, t/1420-vhdl-direct-backend-scaffold.t, t/288-composition-aggregate-top-expression-inference.t, perl/FSM/Backend/VHDL/StructuralRTLIREmitter.pm, and current frontier rows; command -v ghdl returned unavailable; temporary VHDL aggregate top-port probe using the existing t/288 declared-aggregate concat shape failed at the explicit structural VHDL declared-aggregate type guard before VHDL record/array emission. Selected declared aggregate structural VHDL type fail-closed hardening for .101.1 before implementation/test edits; bash knowledge-map/scripts/gen_knowledge_map.sh; bash knowledge-map/scripts/check_knowledge_map.sh; scripts/check_memory_architecture.sh; prove -Iperl t/1414-docs-relative-paths-audit.t; prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t; mdbook build docs/book; git diff --check.`
+  Commit: `BACKEND-API-VALIDATION-FRONTIER.101: select aggregate structural VHDL boundary`
+
+- ID: `BACKEND-API-VALIDATION-FRONTIER.101.1`
+  Status: `active`
+  Goal: `Lock and document the declared aggregate structural VHDL type boundary for composition tops.`
+  Acceptance: `Focused pipeline, CLI, and facade/target-language coverage must prove that composition VHDL rejects declared aggregate structural ports/nets/types, such as aggregate top ports that SystemVerilog emits as packed typedefs, at the structural VHDL boundary before emitting VHDL record/array declarations or output files. The leaf may use existing aggregate top-expression/typed-composition fixture shapes and must preserve the shipped packed-vector direct aggregate-output scaffold plus packed-literal generic-map families. The leaf must not implement VHDL record/array declarations, broad aggregate VHDL lowering, VHDL package declaration/emission, GHDL validation, broad expression parity, full composition VHDL parity, normalized semantic export stabilization, or full backend parity. README, docs/VHDL_SCOPE.md, mdBook, direct-VHDL fact card/knowledge map if needed, task tree, and MEMORY stay synchronized.`
+  Verification: `pending implementation`
   Commit: `pending`
 
 ## Current Frontier
@@ -2003,7 +2012,8 @@ items named in the 2026-06-05 remaining-work inventory.
 | 203 | `BACKEND-API-VALIDATION-FRONTIER.99.1` | `done` | Locked C2 generated-FSM non-packed aggregate generic-map actuals as fail-closed before VHDL emission at the packed-literal boundary, without implementing VHDL record/array generic declarations or broader aggregate VHDL lowering. |
 | 204 | `BACKEND-API-VALIDATION-FRONTIER.100` | `done` | Selected package-root/package-emission fail-closed hardening after a VHDL package-root probe showed ?pkg roots fail before HDL generation with the import-only package boundary diagnostic. |
 | 205 | `BACKEND-API-VALIDATION-FRONTIER.100.1` | `done` | Locked package roots as import-only declaration containers that do not generate standalone SystemVerilog or VHDL package HDL directly. |
-| 206 | `BACKEND-API-VALIDATION-FRONTIER.101` | `active` | Select the next exact backend/API edge after package-root/package-emission boundary hardening shipped. |
+| 206 | `BACKEND-API-VALIDATION-FRONTIER.101` | `done` | Selected declared aggregate structural VHDL type fail-closed hardening after a temporary aggregate top-port VHDL probe reached the explicit structural aggregate-type guard. |
+| 207 | `BACKEND-API-VALIDATION-FRONTIER.101.1` | `active` | Lock declared aggregate structural VHDL ports/nets/types as fail-closed before VHDL record/array emission. |
 
 ## Decisions
 
@@ -2402,6 +2412,7 @@ items named in the 2026-06-05 remaining-work inventory.
 | `BACKEND-API-VALIDATION-FRONTIER.99.1` | `BACKEND-API-VALIDATION-FRONTIER.99.1: lock generated-FSM nonpacked aggregate boundary` | this slice; activates `.100` |
 | `BACKEND-API-VALIDATION-FRONTIER.100` | `BACKEND-API-VALIDATION-FRONTIER.100: select package-root VHDL boundary` | selected `.100.1` |
 | `BACKEND-API-VALIDATION-FRONTIER.100.1` | `BACKEND-API-VALIDATION-FRONTIER.100.1: lock package-root HDL boundary` | this slice; activates `.101` |
+| `BACKEND-API-VALIDATION-FRONTIER.101` | `BACKEND-API-VALIDATION-FRONTIER.101: select aggregate structural VHDL boundary` | selected `.101.1` |
 
 ## Changelog
 
@@ -2551,6 +2562,10 @@ items named in the 2026-06-05 remaining-work inventory.
 - `2026-06-06`: Completed `.100.1`; `?pkg` roots are locked as import-only
   declaration containers that do not generate standalone SystemVerilog or VHDL
   package HDL directly. `.101` is active for next-edge selection.
+- `2026-06-06`: Completed `.101`; selected declared aggregate structural VHDL
+  type fail-closed hardening as `.101.1` after a temporary aggregate top-port
+  VHDL probe hit the explicit structural aggregate-type guard before record/array
+  emission.
 - `2026-06-05`: Activated the tree and selected `.2.1`, the first direct-root
   VHDL backend scaffold through an SV-first converter, before backend code
   changes.
