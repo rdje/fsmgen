@@ -879,8 +879,9 @@ direct backend behavior: the default path emits SystemVerilog forms, explicit
 VHDL scaffold for the supported subset, including delayed-pulse clock-branch
 lowering, generic-bearing direct-root module headers with typed scalar/vector
 sized-literal defaults, scalar addition/subtraction/multiplication RHS/chain
-lowering, scalar bit, signed vector, and non-signed four-state logic internal
-declaration lowering, vector
+lowering, scalar bit, signed vector, non-signed four-state logic, and vector
+`logic signed` internal declaration lowering, signed vector direct-root ports,
+same-width signed vector addition RHS lowering, vector
 numeric-literal addition/subtraction emitted by compound update/shorthand
 forms, and same-width addition/subtraction/multiplication, division/modulo, and
 XOR RHS/chain lowering, without leaking SystemVerilog module or `always_*`
@@ -2288,8 +2289,9 @@ this normalized semantic shape:
 ```
 
 The current active backend/API frontier is
-`BACKEND-API-VALIDATION-FRONTIER.57.1`, which implements same-width signed
-vector addition RHS lowering after `.57` selected that exact backend edge.
+`BACKEND-API-VALIDATION-FRONTIER.58`, which selects the next exact backend/API
+or public-export edge after `.57.1` shipped same-width signed vector addition
+RHS lowering.
 Package-import internals, already bounded constant/enum/type internals,
 unrelated forward-IR payloads, other signed arithmetic operators,
 aggregate/composition VHDL, and full normalized semantic export stabilization

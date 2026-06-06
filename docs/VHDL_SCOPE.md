@@ -36,9 +36,13 @@ This document defines the scoped R14 VHDL backend plan for FSMGen.
   signal declarations, lowered to VHDL `signed` signals.
 - The direct scaffold now includes generated signed vector direct-root port
   declarations, lowered to VHDL `signed` ports.
+- The direct scaffold now includes same-width signed vector addition RHS
+  lowering for assignments where the target and all operands are signed
+  vectors of the same width.
 - Composition VHDL, aggregate VHDL, broad expression parity, scalar
-  division/modulo and broader scalar arithmetic, signed arithmetic semantics,
-  GHDL validation, packages, multi-clock domains, and full feature parity
+  division/modulo and broader scalar arithmetic, signed arithmetic operators
+  beyond same-width vector addition, GHDL validation, packages, multi-clock
+  domains, and full feature parity
   remain deferred.
 - Scalar division/modulo RHS forms such as `A / B` and `A % B` are locked as
   explicit fail-closed direct VHDL boundaries by focused pipeline and facade
@@ -92,6 +96,8 @@ The first VHDL lane is intentionally narrow:
    - Generated vector `logic signed` internal signal declarations as VHDL
      `signed`
    - Generated signed vector direct-root ports as VHDL `signed`
+   - Same-width signed vector addition RHS assignments for signed targets and
+     operands
    - Same-width addition, subtraction, multiplication, division, modulo, and
      XOR RHS chains in the generated direct combinational mux shape
    - Generic-bearing direct-root module headers emitted by the generated
@@ -133,13 +139,13 @@ The first VHDL lane is intentionally narrow:
   `+types` symbolic-width fixtures, generated non-signed four-state `logic`
   internal signal declarations from package-backed declarative `+types`
   fixtures, generated vector `logic signed` internal signal declarations,
-  generated signed vector direct-root port declarations, plus direct-root
-  parameter blocks as VHDL
+  generated signed vector direct-root port declarations, same-width signed
+  vector addition RHS assignments, plus direct-root parameter blocks as VHDL
   generics, including integer expression defaults and typed scalar/vector
   sized-literal defaults.
-- Active follow-up: implement same-width signed vector addition RHS lowering
-  under `BACKEND-API-VALIDATION-FRONTIER.57.1`; other signed arithmetic
-  operators remain separate future edges.
+- Active follow-up: select the next exact backend/API/public-export edge under
+  `BACKEND-API-VALIDATION-FRONTIER.58`; signed arithmetic operators beyond
+  same-width vector addition remain separate future edges.
 - Remaining semantic conversion work still belongs to exact future VHDL leaves.
 
 ### Phase 3: Regression and hardening (R14.3)

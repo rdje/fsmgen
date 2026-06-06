@@ -154,7 +154,8 @@ items named in the 2026-06-05 remaining-work inventory.
     `BACKEND-API-VALIDATION-FRONTIER.56`,
     `BACKEND-API-VALIDATION-FRONTIER.56.1`,
     `BACKEND-API-VALIDATION-FRONTIER.57`,
-    `BACKEND-API-VALIDATION-FRONTIER.57.1`
+    `BACKEND-API-VALIDATION-FRONTIER.57.1`,
+    `BACKEND-API-VALIDATION-FRONTIER.58`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.1`
   Status: `done`
@@ -1059,10 +1060,17 @@ items named in the 2026-06-05 remaining-work inventory.
   Commit: `BACKEND-API-VALIDATION-FRONTIER.57: select VHDL signed addition`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.57.1`
-  Status: `active`
+  Status: `done`
   Goal: `Implement direct VHDL same-width signed vector addition RHS lowering.`
   Acceptance: `FSM::HDL::FlattenedDT::Backend::VHDL lowers generated same-width signed vector addition RHS assignments into VHDL signed arithmetic when the target and operands are signed vectors. Focused pipeline, CLI, and facade coverage prove a direct signed A/B/SUM fixture emits signed ports/signals and a signed addition assignment without std_logic_vector(unsigned(...)) casts. README, docs/VHDL_SCOPE.md, mdBook, direct-VHDL fact card, task tree, and memory stay synchronized. The leaf does not widen subtraction, multiplication, division/modulo, scalar signed arithmetic, mixed signed/unsigned arithmetic, aggregate VHDL, composition/top VHDL, GHDL validation, broad expression parity, or full backend parity.`
-  Verification: `pending implementation`
+  Verification: `perl -Iperl -c perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm; perl -Iperl -c t/1420-vhdl-direct-backend-scaffold.t; perl -Iperl -c t/386-hdl-generator-facade-target-language-boundary-audit.t; prove -Iperl t/1420-vhdl-direct-backend-scaffold.t t/386-hdl-generator-facade-target-language-boundary-audit.t; prove -Iperl t/279-declarative-scalar-types.t; prove -Iperl t/114-composition-target-support-diagnostics.t t/404-hdl-generator-facade-target-language-shape-boundary-audit.t; prove -Iperl t/313-hdl-external-validation-contract.t t/308-systemverilog-external-validation.t; bash knowledge-map/scripts/gen_knowledge_map.sh; bash knowledge-map/scripts/check_knowledge_map.sh; scripts/check_memory_architecture.sh; prove -Iperl t/1414-docs-relative-paths-audit.t; prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t; mdbook build docs/book; git diff --check`
+  Commit: `BACKEND-API-VALIDATION-FRONTIER.57.1: ship VHDL signed addition`
+
+- ID: `BACKEND-API-VALIDATION-FRONTIER.58`
+  Status: `active`
+  Goal: `Select the next exact backend/API/public-export edge after direct VHDL same-width signed vector addition RHS lowering shipped.`
+  Acceptance: `pending selection`
+  Verification: `pending selection`
   Commit: `pending`
 
 ## Current Frontier
@@ -1187,7 +1195,8 @@ items named in the 2026-06-05 remaining-work inventory.
 | 116 | `BACKEND-API-VALIDATION-FRONTIER.56` | `done` | Selected direct VHDL signed direct-root port declaration lowering after t/279/probe evidence showed `input logic signed [7:0] IN` remains outside the port parser. |
 | 117 | `BACKEND-API-VALIDATION-FRONTIER.56.1` | `done` | Shipped direct VHDL signed vector port declaration lowering without widening signed arithmetic, aggregate/composition VHDL, GHDL validation, or full backend parity. |
 | 118 | `BACKEND-API-VALIDATION-FRONTIER.57` | `done` | Selected same-width signed vector addition RHS lowering after probe evidence showed signed ports/signals still use unsigned arithmetic casts. |
-| 119 | `BACKEND-API-VALIDATION-FRONTIER.57.1` | `active` | Implement same-width signed vector addition RHS lowering without widening other signed arithmetic or full VHDL parity. |
+| 119 | `BACKEND-API-VALIDATION-FRONTIER.57.1` | `done` | Shipped same-width signed vector addition RHS lowering for signed vector targets and operands without widening other signed arithmetic or full VHDL parity. |
+| 120 | `BACKEND-API-VALIDATION-FRONTIER.58` | `active` | Select the next exact backend/API/public-export edge after direct VHDL signed addition shipped. |
 
 ## Decisions
 
@@ -1327,6 +1336,7 @@ items named in the 2026-06-05 remaining-work inventory.
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.56` | Selection audit/read of `README.md`, `docs/VHDL_SCOPE.md`, `docs/book/src/14-feature-backlog.md`, `docs/knowledge/direct-vhdl-scaffold.md`, `perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm`, `t/279-declarative-scalar-types.t`, and `t/1420-vhdl-direct-backend-scaffold.t`; `prove -Iperl t/279-declarative-scalar-types.t t/1420-vhdl-direct-backend-scaffold.t`; temporary VHDL pipeline probe for the t/279 signed direct-root input/output shape failed at unsupported generated port declaration `input logic signed [7:0] IN` | `PASS`; selected direct VHDL signed vector port declaration lowering for `.56.1` |
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.56.1` | `perl -Iperl -c perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm`; `perl -Iperl -c t/1420-vhdl-direct-backend-scaffold.t`; `perl -Iperl -c t/386-hdl-generator-facade-target-language-boundary-audit.t`; focused VHDL scaffold/facade prove bundle; `prove -Iperl t/279-declarative-scalar-types.t`; composition/target-language boundary prove bundle; external-validation prove bundle; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; direct VHDL now lowers signed vector direct-root ports to VHDL `signed` ports; activated `.57` |
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.57` | Selection audit/read of `README.md`, `docs/VHDL_SCOPE.md`, `docs/book/src/14-feature-backlog.md`, `docs/knowledge/direct-vhdl-scaffold.md`, `perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm`, `t/1420-vhdl-direct-backend-scaffold.t`, and `t/386-hdl-generator-facade-target-language-boundary-audit.t`; `prove -Iperl t/1420-vhdl-direct-backend-scaffold.t t/386-hdl-generator-facade-target-language-boundary-audit.t`; temporary signed A/B/SUM VHDL probe showed signed VHDL ports/signals but unsigned addition assignment `SUM <= std_logic_vector(unsigned(A) + unsigned(B));` | `PASS`; selected same-width signed vector addition RHS lowering for `.57.1` |
+| `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.57.1` | `perl -Iperl -c perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm`; `perl -Iperl -c t/1420-vhdl-direct-backend-scaffold.t`; `perl -Iperl -c t/386-hdl-generator-facade-target-language-boundary-audit.t`; focused VHDL scaffold/facade prove bundle; `prove -Iperl t/279-declarative-scalar-types.t`; composition/target-language boundary prove bundle; external-validation prove bundle; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; direct VHDL now lowers same-width signed vector addition RHS assignments as signed VHDL arithmetic; activated `.58` |
 
 ## Commit Log
 
@@ -1450,6 +1460,7 @@ items named in the 2026-06-05 remaining-work inventory.
 | `BACKEND-API-VALIDATION-FRONTIER.56` | `BACKEND-API-VALIDATION-FRONTIER.56: select VHDL signed ports` | selected `.56.1` |
 | `BACKEND-API-VALIDATION-FRONTIER.56.1` | `BACKEND-API-VALIDATION-FRONTIER.56.1: ship VHDL signed ports` | this slice; activates `.57` |
 | `BACKEND-API-VALIDATION-FRONTIER.57` | `BACKEND-API-VALIDATION-FRONTIER.57: select VHDL signed addition` | selected `.57.1` |
+| `BACKEND-API-VALIDATION-FRONTIER.57.1` | `BACKEND-API-VALIDATION-FRONTIER.57.1: ship VHDL signed addition` | this slice; activates `.58` |
 
 ## Changelog
 
@@ -2072,3 +2083,12 @@ items named in the 2026-06-05 remaining-work inventory.
   Subtraction, multiplication, division/modulo, scalar signed arithmetic,
   mixed signed/unsigned arithmetic, aggregate VHDL, composition/top VHDL, GHDL
   validation, broad expression parity, and full backend parity remain deferred.
+- `2026-06-06`: Completed `.57.1`; direct VHDL now lowers same-width signed
+  vector addition RHS assignments as native signed VHDL arithmetic when the
+  target and all operands are same-width signed vectors. The direct pipeline,
+  CLI, and facade tests cover a signed A/B/SUM fixture and assert the unsigned
+  cast expression is not emitted. Other signed arithmetic operators, scalar
+  signed arithmetic, mixed signed/unsigned arithmetic, aggregate VHDL,
+  composition/top VHDL, GHDL validation, broad expression parity, and full
+  backend parity remain deferred. Activated `.58` to select the next exact
+  backend/API/public-export edge.

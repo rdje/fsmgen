@@ -54,7 +54,7 @@ Use it first for objective, navigation, and where to find code/docs quickly.
 
 ## Project objective
 FSMGen compiles Lisp-like `.fsm` state machine specifications into synthesizable HDL, and now accepts `.isf` intent-scheduling sources that lower into explicit scheduled `.fsm` before HDL generation.
-Current primary target is SystemVerilog, with Verilog conversion support and a scoped direct-root VHDL scaffold for the accepted single-FSM subset, including delayed-pulse clock-branch lowering, generic-bearing direct-root module headers with typed scalar/vector sized-literal defaults, signed vector direct-root ports, scalar bit, signed vector, non-signed four-state logic, and vector `logic signed` internal declaration lowering, scalar addition/subtraction/multiplication RHS/chain lowering, vector numeric-literal addition/subtraction emitted by compound update/shorthand forms, and same-width addition/subtraction/multiplication/division/modulo/XOR RHS/chain lowering.
+Current primary target is SystemVerilog, with Verilog conversion support and a scoped direct-root VHDL scaffold for the accepted single-FSM subset, including delayed-pulse clock-branch lowering, generic-bearing direct-root module headers with typed scalar/vector sized-literal defaults, signed vector direct-root ports, scalar bit, signed vector, non-signed four-state logic, and vector `logic signed` internal declaration lowering, scalar addition/subtraction/multiplication RHS/chain lowering, vector numeric-literal addition/subtraction emitted by compound update/shorthand forms, same-width unsigned-style addition/subtraction/multiplication/division/modulo/XOR RHS/chain lowering, and same-width signed vector addition RHS lowering for signed targets and operands.
 Scalar division/modulo and aggregate-output roots in the direct VHDL scaffold remain explicit fail-closed boundaries; composition/top VHDL is also fail-closed after typed composition IR parsing, so `--language vhdl` does not emit composition tops yet.
 The project objective is robust, traceable FSM-to-HDL generation with clear assignment semantics, optimization via AST factorization, and behavior-preserving refactoring toward a modular architecture.
 
@@ -836,9 +836,11 @@ recursive type-entry schema metadata for `semantic.symbol_contract.types` and
 carry recursive `items` or `members` plus `member_order`.
 The direct VHDL scaffold now lowers generated vector `logic signed` internal
 declarations to VHDL `signed` signals and generated signed vector direct-root
-ports to VHDL `signed` ports. The current active backend/API frontier is
-`BACKEND-API-VALIDATION-FRONTIER.57.1`: implement same-width signed vector
-addition RHS lowering after `.57` selected that exact backend edge. Signed
+ports to VHDL `signed` ports. Same-width signed vector addition RHS
+assignments now lower as native signed VHDL arithmetic when the target and all
+operands are same-width signed vectors. The current active backend/API
+frontier is `BACKEND-API-VALIDATION-FRONTIER.58`: select the next exact
+backend/API/public-export edge after `.57.1` shipped signed addition. Signed
 subtraction/multiplication/division/modulo, scalar signed arithmetic, mixed
 signed/unsigned arithmetic, aggregate VHDL, composition/top VHDL, packages,
 GHDL validation, broad expression parity, package-import internals, unrelated

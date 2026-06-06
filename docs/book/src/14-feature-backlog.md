@@ -3787,13 +3787,15 @@ target-width `numeric_std` resize, same-width scalar/vector XOR chain lowering
 through VHDL `xor`, and generated non-signed four-state `logic` scalar/vector
 internal declarations as `std_logic` / `std_logic_vector`, plus generated
 vector `logic signed` internal declarations as VHDL `signed` signals and
-generated signed vector direct-root port declarations as VHDL `signed` ports.
+generated signed vector direct-root port declarations as VHDL `signed` ports,
+and same-width signed vector addition RHS assignments as signed VHDL
+arithmetic.
 It is covered by direct pipeline, CLI, and facade tests.
 
 Still backlog: composition/top VHDL, aggregate VHDL record/array lowering,
 VHDL packages, multi-clock domains, GHDL validation, broad expression parity,
-signed arithmetic semantics, and full feature parity with the SystemVerilog
-backend. Scalar division/modulo,
+signed arithmetic operators beyond same-width vector addition, and full feature
+parity with the SystemVerilog backend. Scalar division/modulo,
 broader scalar arithmetic beyond scalar addition/subtraction/multiplication
 chains, broader arithmetic operators, mismatched-width arithmetic, and
 expression contexts beyond the same-width
@@ -3826,12 +3828,14 @@ non-signed four-state `logic` internal declarations, such as
 Generated internal `logic signed [MSB:LSB] NAME;` declarations now lower to
 VHDL `signed` signals. Generated signed vector direct-root port declarations,
 starting with `input logic signed [7:0] IN`, now lower to VHDL `signed` ports.
-Signed arithmetic semantics, composition/top VHDL, aggregate VHDL, packages,
-GHDL validation, and full backend parity remain outside the shipped scaffold.
-Active implementation leaf `BACKEND-API-VALIDATION-FRONTIER.57.1` now owns the
-first narrow signed arithmetic edge: same-width signed vector addition RHS
-lowering for signed targets and operands. Other signed arithmetic operators
-remain separate future edges.
+Same-width signed vector addition RHS assignments now lower as signed VHDL
+arithmetic when the target and all operands are same-width signed vectors, so
+a signed direct-root `SUM = (+ A B)` assignment emits `SUM <= A + B;` rather
+than unsigned casts. Other signed arithmetic operators, scalar signed
+arithmetic, mixed signed/unsigned arithmetic, composition/top VHDL, aggregate
+VHDL, packages, GHDL validation, and full backend parity remain outside the
+shipped scaffold. Active selector leaf `BACKEND-API-VALIDATION-FRONTIER.58`
+owns choosing the next exact backend/API/public-export edge.
 
 ### GHDL Validation
 
@@ -4020,8 +4024,9 @@ schema metadata for `semantic.symbol_contract.types` and
 recursive `items` or `members` plus `member_order`.
 
 Current active backend edge: task-tree leaf
-`BACKEND-API-VALIDATION-FRONTIER.57.1` implements same-width signed vector
-addition RHS lowering after `.57` selected that exact scaffold gap.
+`BACKEND-API-VALIDATION-FRONTIER.58` selects the next exact backend/API or
+public-export edge after `.57.1` shipped same-width signed vector addition RHS
+lowering.
 Package-import internals, already bounded constant/enum/type internals,
 unrelated forward-IR payloads, other signed arithmetic operators,
 aggregate/composition VHDL, and full normalized semantic export stabilization
