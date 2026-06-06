@@ -232,8 +232,11 @@ constants in that same external-RTL subset are resolved before VHDL emission
 and also emit literal actuals, for example `param_pkg.WIDTH_16` and
 `param_pkg.RESET_A5` emit `WIDTH => 16` and
 `RESET_VALUE => "10100101"` without leaking `param_pkg` into the VHDL; this is
-not VHDL package declaration/emission support. External-RTL one-bit actuals
-are supported only when the matching `.rtlif` parameter declaration provides
+not VHDL package declaration/emission support. Package-root direct HDL
+generation is the active `BACKEND-API-VALIDATION-FRONTIER.100.1`
+fail-closed hardening owner; `?pkg` roots remain import-only containers, not
+standalone HDL output roots. External-RTL one-bit actuals are supported only
+when the matching `.rtlif` parameter declaration provides
 scalar one-bit default metadata such as `ENABLE_DEFAULT 1'b0`. External-RTL
 non-packed aggregate generic maps are locked fail-closed before VHDL emission:
 aggregate/list/record actuals that do not lower to one packed literal fail
