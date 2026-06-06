@@ -4179,15 +4179,15 @@ schema metadata for `semantic.symbol_contract.types` and
 recursive `items` or `members` plus `member_order`.
 
 Current active backend edge: task-tree leaf
-`BACKEND-API-VALIDATION-FRONTIER.92` selects the next exact backend/API edge
-after bounded APB/C4 generated-FSM scalar expression VHDL generic-map actuals
-shipped in `.91.1`.
+`BACKEND-API-VALIDATION-FRONTIER.92.1` implements the next exact backend/API
+edge selected by `.92`: bounded APB/C4 generated-FSM one-bit VHDL generic-map
+actuals.
 Package declaration and VHDL package emission, already bounded
 constant/enum/type internals, unrelated forward-IR payloads, signed scalar
 division/modulo, mixed signed/unsigned arithmetic, standalone-DT generic maps
 beyond scalar integer, scalar expression, one-bit sized bitstring, multi-bit
 sized bitstring, packed-list, and packed-map actuals,
-APB/C4 generic maps beyond shipped scalar expression actuals,
+APB/C4 generic maps beyond the selected one-bit edge,
 full aggregate VHDL record/array lowering, broader generated-FSM/C4
 composition VHDL beyond the exact shipped fixtures, internal nets/generic maps
 beyond APB, broader expression parity beyond the shipped AMBA wrap family, and
