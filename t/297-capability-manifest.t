@@ -164,6 +164,14 @@ use FSM::Support::NormalizedSemanticPayloadContract qw(
 );
 use FSM::Support::NormalizedSemanticReportContract qw(
     normalized_semantic_forward_ir_lowered_rtl_ir_keys
+    normalized_semantic_forward_ir_lowered_rtl_ir_composition_shared_datapath_aggregate_enable_contributor_entry_keys
+    normalized_semantic_forward_ir_lowered_rtl_ir_composition_shared_datapath_aggregate_enable_family_entry_keys
+    normalized_semantic_forward_ir_lowered_rtl_ir_composition_shared_datapath_assertion_keys
+    normalized_semantic_forward_ir_lowered_rtl_ir_composition_shared_datapath_bound_connection_expr_keys
+    normalized_semantic_forward_ir_lowered_rtl_ir_composition_shared_datapath_candidate_contributor_declared_type_extension_keys
+    normalized_semantic_forward_ir_lowered_rtl_ir_composition_shared_datapath_candidate_contributor_entry_keys
+    normalized_semantic_forward_ir_lowered_rtl_ir_composition_shared_datapath_candidate_declared_type_extension_keys
+    normalized_semantic_forward_ir_lowered_rtl_ir_composition_shared_datapath_candidate_entry_keys
     normalized_semantic_forward_ir_lowered_rtl_ir_output_drive_family_entry_keys
     normalized_semantic_forward_ir_lowered_rtl_ir_output_drive_rhs_enable_family_entry_keys
     normalized_semantic_forward_ir_lowered_rtl_ir_selector_conflict_multi_value_assertion_keys
@@ -990,6 +998,59 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
         normalized_semantic_forward_ir_lowered_rtl_ir_standalone_dt_multi_drive_assertion_keys(),
         'manifest report family map records standalone-DT multi-drive assertion keys',
     );
+    for my $case (
+        [
+            'success_forward_ir_lowered_rtl_ir_composition_shared_datapath_candidate_entry_keys',
+            normalized_semantic_forward_ir_lowered_rtl_ir_composition_shared_datapath_candidate_entry_keys(),
+            'candidate entry',
+        ],
+        [
+            'success_forward_ir_lowered_rtl_ir_composition_shared_datapath_candidate_declared_type_extension_keys',
+            normalized_semantic_forward_ir_lowered_rtl_ir_composition_shared_datapath_candidate_declared_type_extension_keys(),
+            'candidate declared-type extension',
+        ],
+        [
+            'success_forward_ir_lowered_rtl_ir_composition_shared_datapath_candidate_contributor_entry_keys',
+            normalized_semantic_forward_ir_lowered_rtl_ir_composition_shared_datapath_candidate_contributor_entry_keys(),
+            'candidate contributor entry',
+        ],
+        [
+            'success_forward_ir_lowered_rtl_ir_composition_shared_datapath_candidate_contributor_declared_type_extension_keys',
+            normalized_semantic_forward_ir_lowered_rtl_ir_composition_shared_datapath_candidate_contributor_declared_type_extension_keys(),
+            'candidate contributor declared-type extension',
+        ],
+        [
+            'success_forward_ir_lowered_rtl_ir_composition_shared_datapath_bound_connection_expr_keys',
+            normalized_semantic_forward_ir_lowered_rtl_ir_composition_shared_datapath_bound_connection_expr_keys(),
+            'bound connection expression',
+        ],
+        [
+            'success_forward_ir_lowered_rtl_ir_composition_shared_datapath_aggregate_enable_family_entry_keys',
+            normalized_semantic_forward_ir_lowered_rtl_ir_composition_shared_datapath_aggregate_enable_family_entry_keys(),
+            'aggregate-enable family entry',
+        ],
+        [
+            'success_forward_ir_lowered_rtl_ir_composition_shared_datapath_aggregate_enable_contributor_entry_keys',
+            normalized_semantic_forward_ir_lowered_rtl_ir_composition_shared_datapath_aggregate_enable_contributor_entry_keys(),
+            'aggregate-enable contributor entry',
+        ],
+        [
+            'success_forward_ir_lowered_rtl_ir_composition_shared_datapath_assertion_keys',
+            normalized_semantic_forward_ir_lowered_rtl_ir_composition_shared_datapath_assertion_keys(),
+            'assertion metadata',
+        ],
+    ) {
+        is_deeply(
+            $manifest->{semantic_exports}{normalized_semantic_json}{$case->[0]},
+            $case->[1],
+            "manifest records exact normalized semantic shared-datapath $case->[2] keys",
+        );
+        is_deeply(
+            $manifest->{semantic_exports}{normalized_semantic_json}{presence_key_family_map}{$case->[0]},
+            $case->[1],
+            "manifest report family map records shared-datapath $case->[2] keys",
+        );
+    }
     ok(
         scalar(@{$manifest->{semantic_exports}{normalized_semantic_json}{success_forward_ir_lowered_rtl_ir_optional_composition_keys} || []}) >= 7,
         'manifest advertises bounded normalized semantic forward-ir lowered-rtl-ir composition-only key presence',

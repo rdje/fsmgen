@@ -3933,7 +3933,14 @@ including bounded entry keys for `selector_conflict_targets[]`, nested
 `standalone_dt_multi_drive_target_count` and
 `standalone_dt_multi_drive_targets` metadata, including bounded entry keys for
 `semantic.forward_ir.lowered_rtl_ir.standalone_dt_multi_drive_targets[]` and
-its nested `multi_drive_assertion` metadata. The
+its nested `multi_drive_assertion` metadata. It also advertises bounded entry
+keys for
+`semantic.forward_ir.lowered_rtl_ir.composition_shared_datapath_candidates[]`,
+including optional declared-type extensions, contributor entries, contributor
+`bound_connection_expr` metadata, aggregate enable-family entries, aggregate
+family contributors, and multi/same-value assertion metadata. Contributor child
+`intent_hir`, `lowered_rtl_ir`, and `structural_rtl_ir` summaries stay delegated
+to their existing bounded contracts. The
 `semantic.forward_ir.structural_rtl_ir` contract also advertises bounded
 `ports[]` core entry keys, composition-top port extension keys, and bounded
 `nets[]`, `declared_links[]`, `resolved_links[]`, shallow `instances[]`, and
@@ -3945,10 +3952,7 @@ as scalar string assignment-line entries. The manifest is still not a full
 normalized semantic export.
 
 Current selected next edge: task-tree leaf
-`BACKEND-API-VALIDATION-FRONTIER.44.1` will publish bounded key families for
-`semantic.forward_ir.lowered_rtl_ir.composition_shared_datapath_candidates[]`,
-including candidate entries, optional declared-type extensions, contributors,
-contributor connection expressions, aggregate enable families, aggregate family
-contributors, and multi/same-value assertion metadata. Nested contributor child
-IR contents remain delegated to their existing bounded contracts, and full
-normalized semantic export stabilization remains out of scope.
+`BACKEND-API-VALIDATION-FRONTIER.45` will audit the remaining backend/API and
+public-export backlog after the shared-datapath candidate schema shipped, then
+activate one exact executable child before any further implementation edits.
+Full normalized semantic export stabilization remains out of scope.

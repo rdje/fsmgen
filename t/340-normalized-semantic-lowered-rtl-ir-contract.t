@@ -11,6 +11,14 @@ use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 use FSM::Support::NormalizedSemanticLoweredRTLIRContract qw(
     build_normalized_semantic_lowered_rtl_ir_contract
     normalized_semantic_lowered_rtl_ir_contract_source
+    normalized_semantic_lowered_rtl_ir_composition_shared_datapath_aggregate_enable_contributor_entry_keys
+    normalized_semantic_lowered_rtl_ir_composition_shared_datapath_aggregate_enable_family_entry_keys
+    normalized_semantic_lowered_rtl_ir_composition_shared_datapath_assertion_keys
+    normalized_semantic_lowered_rtl_ir_composition_shared_datapath_bound_connection_expr_keys
+    normalized_semantic_lowered_rtl_ir_composition_shared_datapath_candidate_contributor_declared_type_extension_keys
+    normalized_semantic_lowered_rtl_ir_composition_shared_datapath_candidate_contributor_entry_keys
+    normalized_semantic_lowered_rtl_ir_composition_shared_datapath_candidate_declared_type_extension_keys
+    normalized_semantic_lowered_rtl_ir_composition_shared_datapath_candidate_entry_keys
     normalized_semantic_lowered_rtl_ir_optional_composition_keys
     normalized_semantic_lowered_rtl_ir_output_drive_family_entry_keys
     normalized_semantic_lowered_rtl_ir_output_drive_rhs_enable_family_entry_keys
@@ -221,6 +229,154 @@ subtest 'contract exposes the bounded normalized semantic lowered-rtl-ir object'
         'standalone-DT multi-drive assertion key list stays bounded and ordered',
     );
     is_deeply(
+        $contract->{composition_shared_datapath_candidate_entry_keys},
+        normalized_semantic_lowered_rtl_ir_composition_shared_datapath_candidate_entry_keys(),
+        'contract publishes the bounded composition shared-datapath candidate entry key list',
+    );
+    is_deeply(
+        normalized_semantic_lowered_rtl_ir_composition_shared_datapath_candidate_entry_keys(),
+        [
+            qw(
+                signal_name
+                width
+                interface_type
+                storage_class
+                reset_value
+                contributor_count
+                contributors
+                top_output_signals
+                peer_input_count
+                peer_input_endpoints
+                default_lifted_visibility
+                planned_reexport_top_output_signals
+                loopback_allowed
+                lifted_runtime_kind
+                lifted_runtime_signal
+                lifted_runtime_next_signal
+                lifted_runtime_reset_value
+                lifted_runtime_reset_active_level
+                lifted_runtime_reset_kind
+                lifted_runtime_reset_keyword
+                aggregate_target_enable_signal
+                multi_value_conflict_signal
+                multi_value_assertion
+                aggregate_enable_family_count
+                aggregate_enable_families
+            ),
+        ],
+        'composition shared-datapath candidate entry key list stays bounded and ordered',
+    );
+    is_deeply(
+        $contract->{composition_shared_datapath_candidate_declared_type_extension_keys},
+        normalized_semantic_lowered_rtl_ir_composition_shared_datapath_candidate_declared_type_extension_keys(),
+        'contract publishes the optional composition shared-datapath candidate declared-type extension key list',
+    );
+    is_deeply(
+        normalized_semantic_lowered_rtl_ir_composition_shared_datapath_candidate_declared_type_extension_keys(),
+        [qw(declared_type_name declared_type_spec)],
+        'composition shared-datapath candidate declared-type extension key list stays bounded and ordered',
+    );
+    is_deeply(
+        $contract->{composition_shared_datapath_candidate_contributor_entry_keys},
+        normalized_semantic_lowered_rtl_ir_composition_shared_datapath_candidate_contributor_entry_keys(),
+        'contract publishes the bounded composition shared-datapath contributor entry key list',
+    );
+    is_deeply(
+        normalized_semantic_lowered_rtl_ir_composition_shared_datapath_candidate_contributor_entry_keys(),
+        [
+            qw(
+                kind
+                instance_name
+                module_name
+                source_name
+                endpoint
+                bound_signal
+                bound_signals
+                bound_connection_expr
+                output_drive_family
+                drive_intent
+                intent_hir
+                lowered_rtl_ir
+                structural_rtl_ir
+            ),
+        ],
+        'composition shared-datapath contributor entry key list stays bounded and ordered',
+    );
+    is_deeply(
+        $contract->{composition_shared_datapath_candidate_contributor_declared_type_extension_keys},
+        normalized_semantic_lowered_rtl_ir_composition_shared_datapath_candidate_contributor_declared_type_extension_keys(),
+        'contract publishes the optional composition shared-datapath contributor declared-type extension key list',
+    );
+    is_deeply(
+        normalized_semantic_lowered_rtl_ir_composition_shared_datapath_candidate_contributor_declared_type_extension_keys(),
+        [qw(declared_type_name declared_type_spec)],
+        'composition shared-datapath contributor declared-type extension key list stays bounded and ordered',
+    );
+    is_deeply(
+        $contract->{composition_shared_datapath_bound_connection_expr_keys},
+        normalized_semantic_lowered_rtl_ir_composition_shared_datapath_bound_connection_expr_keys(),
+        'contract publishes the bounded composition shared-datapath contributor bound connection expression key list',
+    );
+    is_deeply(
+        normalized_semantic_lowered_rtl_ir_composition_shared_datapath_bound_connection_expr_keys(),
+        [qw(kind signal_name)],
+        'composition shared-datapath bound connection expression key list stays bounded and ordered',
+    );
+    is_deeply(
+        $contract->{composition_shared_datapath_aggregate_enable_family_entry_keys},
+        normalized_semantic_lowered_rtl_ir_composition_shared_datapath_aggregate_enable_family_entry_keys(),
+        'contract publishes the bounded composition shared-datapath aggregate-enable family entry key list',
+    );
+    is_deeply(
+        normalized_semantic_lowered_rtl_ir_composition_shared_datapath_aggregate_enable_family_entry_keys(),
+        [
+            qw(
+                rhs_value
+                aggregate_enable_signal
+                same_value_conflict_signal
+                same_value_assertion
+                contributor_count
+                contributors
+            ),
+        ],
+        'composition shared-datapath aggregate-enable family entry key list stays bounded and ordered',
+    );
+    is_deeply(
+        $contract->{composition_shared_datapath_aggregate_enable_contributor_entry_keys},
+        normalized_semantic_lowered_rtl_ir_composition_shared_datapath_aggregate_enable_contributor_entry_keys(),
+        'contract publishes the bounded composition shared-datapath aggregate-enable contributor entry key list',
+    );
+    is_deeply(
+        normalized_semantic_lowered_rtl_ir_composition_shared_datapath_aggregate_enable_contributor_entry_keys(),
+        [
+            qw(
+                endpoint
+                family_enable_signal
+                source_enable_signal
+                driver_blocks
+                driver_enable_signals
+            ),
+        ],
+        'composition shared-datapath aggregate-enable contributor entry key list stays bounded and ordered',
+    );
+    is_deeply(
+        $contract->{composition_shared_datapath_assertion_keys},
+        normalized_semantic_lowered_rtl_ir_composition_shared_datapath_assertion_keys(),
+        'contract publishes the bounded composition shared-datapath assertion key list',
+    );
+    is_deeply(
+        normalized_semantic_lowered_rtl_ir_composition_shared_datapath_assertion_keys(),
+        [
+            qw(
+                input_count
+                input_enable_signals
+                kind
+                result_signal
+            ),
+        ],
+        'composition shared-datapath assertion key list stays bounded and ordered',
+    );
+    is_deeply(
         $contract->{presence_key_family_map},
         normalized_semantic_lowered_rtl_ir_presence_key_family_map(),
         'contract publishes the grouped lowered-rtl-ir key-family discovery map',
@@ -249,6 +405,46 @@ subtest 'contract exposes the bounded normalized semantic lowered-rtl-ir object'
         $contract->{presence_key_family_map}{standalone_dt_multi_drive_assertion_keys},
         normalized_semantic_lowered_rtl_ir_standalone_dt_multi_drive_assertion_keys(),
         'grouped lowered-rtl-ir family map includes standalone-DT multi-drive assertion entries',
+    );
+    is_deeply(
+        $contract->{presence_key_family_map}{composition_shared_datapath_candidate_entry_keys},
+        normalized_semantic_lowered_rtl_ir_composition_shared_datapath_candidate_entry_keys(),
+        'grouped lowered-rtl-ir family map includes composition shared-datapath candidate entries',
+    );
+    is_deeply(
+        $contract->{presence_key_family_map}{composition_shared_datapath_candidate_declared_type_extension_keys},
+        normalized_semantic_lowered_rtl_ir_composition_shared_datapath_candidate_declared_type_extension_keys(),
+        'grouped lowered-rtl-ir family map includes composition shared-datapath candidate declared-type extensions',
+    );
+    is_deeply(
+        $contract->{presence_key_family_map}{composition_shared_datapath_candidate_contributor_entry_keys},
+        normalized_semantic_lowered_rtl_ir_composition_shared_datapath_candidate_contributor_entry_keys(),
+        'grouped lowered-rtl-ir family map includes composition shared-datapath contributor entries',
+    );
+    is_deeply(
+        $contract->{presence_key_family_map}{composition_shared_datapath_candidate_contributor_declared_type_extension_keys},
+        normalized_semantic_lowered_rtl_ir_composition_shared_datapath_candidate_contributor_declared_type_extension_keys(),
+        'grouped lowered-rtl-ir family map includes composition shared-datapath contributor declared-type extensions',
+    );
+    is_deeply(
+        $contract->{presence_key_family_map}{composition_shared_datapath_bound_connection_expr_keys},
+        normalized_semantic_lowered_rtl_ir_composition_shared_datapath_bound_connection_expr_keys(),
+        'grouped lowered-rtl-ir family map includes composition shared-datapath bound connection expressions',
+    );
+    is_deeply(
+        $contract->{presence_key_family_map}{composition_shared_datapath_aggregate_enable_family_entry_keys},
+        normalized_semantic_lowered_rtl_ir_composition_shared_datapath_aggregate_enable_family_entry_keys(),
+        'grouped lowered-rtl-ir family map includes composition shared-datapath aggregate-enable family entries',
+    );
+    is_deeply(
+        $contract->{presence_key_family_map}{composition_shared_datapath_aggregate_enable_contributor_entry_keys},
+        normalized_semantic_lowered_rtl_ir_composition_shared_datapath_aggregate_enable_contributor_entry_keys(),
+        'grouped lowered-rtl-ir family map includes composition shared-datapath aggregate-enable contributors',
+    );
+    is_deeply(
+        $contract->{presence_key_family_map}{composition_shared_datapath_assertion_keys},
+        normalized_semantic_lowered_rtl_ir_composition_shared_datapath_assertion_keys(),
+        'grouped lowered-rtl-ir family map includes composition shared-datapath assertion metadata',
     );
 };
 

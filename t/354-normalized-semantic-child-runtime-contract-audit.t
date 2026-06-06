@@ -28,6 +28,14 @@ use FSM::Support::NormalizedSemanticIntentHIRContract qw(
     normalized_semantic_intent_hir_presence_keys
 );
 use FSM::Support::NormalizedSemanticLoweredRTLIRContract qw(
+    normalized_semantic_lowered_rtl_ir_composition_shared_datapath_aggregate_enable_contributor_entry_keys
+    normalized_semantic_lowered_rtl_ir_composition_shared_datapath_aggregate_enable_family_entry_keys
+    normalized_semantic_lowered_rtl_ir_composition_shared_datapath_assertion_keys
+    normalized_semantic_lowered_rtl_ir_composition_shared_datapath_bound_connection_expr_keys
+    normalized_semantic_lowered_rtl_ir_composition_shared_datapath_candidate_contributor_entry_keys
+    normalized_semantic_lowered_rtl_ir_composition_shared_datapath_candidate_entry_keys
+    normalized_semantic_lowered_rtl_ir_output_drive_family_entry_keys
+    normalized_semantic_lowered_rtl_ir_output_drive_rhs_enable_family_entry_keys
     normalized_semantic_lowered_rtl_ir_standalone_dt_multi_drive_assertion_keys
     normalized_semantic_lowered_rtl_ir_standalone_dt_multi_drive_target_entry_keys
     normalized_semantic_lowered_rtl_ir_optional_composition_keys
@@ -191,6 +199,166 @@ DT
         normalized_semantic_lowered_rtl_ir_standalone_dt_multi_drive_assertion_keys(),
         'standalone dt multi-drive assertion keeps the bounded key schema',
     );
+};
+
+subtest 'composition semantic payload keeps bounded shared-datapath candidate schemas at runtime' => sub {
+    my $composition_path = write_fsm('shared_datapath_semantic_schema.fsm', <<'FSM');
+(?top:shared_datapath_semantic_schema
+  (?ports:public_io
+    clk
+    reset
+    left_status>8
+    right_status>8
+  )
+  (?fsmc:left left_src)
+  (?fsmc:right right_src)
+  (?wiring:wiring
+    (left.status_bus left_status)
+    (right.status_bus right_status)
+  )
+)
+
+(?fsm:left_src
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+  (-state0
+    (<= (status_bus> 8'1))
+  )
+  (+size
+    (status_bus 8)
+  )
+)
+
+(?fsm:right_src
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+  (-state0
+    (<= (status_bus> 8'2))
+  )
+  (+size
+    (status_bus 8)
+  )
+)
+FSM
+
+    my $decoded = run_semantic_json($composition_path);
+    my $lowered_rtl_ir = $decoded->{semantic}{forward_ir}{lowered_rtl_ir};
+
+    assert_keys_present(
+        $lowered_rtl_ir,
+        normalized_semantic_lowered_rtl_ir_presence_keys(),
+        'composition semantic.forward_ir.lowered_rtl_ir keeps bounded shell keys',
+    );
+    assert_keys_present(
+        $lowered_rtl_ir,
+        normalized_semantic_lowered_rtl_ir_optional_composition_keys(),
+        'composition semantic.forward_ir.lowered_rtl_ir keeps composition-only keys',
+    );
+    is(
+        $lowered_rtl_ir->{composition_shared_datapath_candidate_count},
+        1,
+        'composition semantic.forward_ir.lowered_rtl_ir reports one shared-datapath candidate',
+    );
+    ok(
+        ref($lowered_rtl_ir->{composition_shared_datapath_candidates}) eq 'ARRAY',
+        'composition semantic.forward_ir.lowered_rtl_ir emits a shared-datapath candidate array',
+    );
+
+    my $candidate = $lowered_rtl_ir->{composition_shared_datapath_candidates}[0];
+    assert_exact_keys(
+        $candidate,
+        normalized_semantic_lowered_rtl_ir_composition_shared_datapath_candidate_entry_keys(),
+        'shared-datapath candidate keeps the bounded entry key schema',
+    );
+    assert_exact_keys(
+        $candidate->{multi_value_assertion},
+        normalized_semantic_lowered_rtl_ir_composition_shared_datapath_assertion_keys(),
+        'shared-datapath candidate multi-value assertion keeps the bounded key schema',
+    );
+
+    ok(ref($candidate->{contributors}) eq 'ARRAY', 'shared-datapath candidate emits contributor entries');
+    is($candidate->{contributor_count}, 2, 'shared-datapath candidate reports two contributors');
+    for my $index (0 .. $#{$candidate->{contributors} || []}) {
+        my $contributor = $candidate->{contributors}[$index];
+        my $label = "shared-datapath contributor $index";
+
+        assert_exact_keys(
+            $contributor,
+            normalized_semantic_lowered_rtl_ir_composition_shared_datapath_candidate_contributor_entry_keys(),
+            "$label keeps the bounded contributor key schema",
+        );
+        assert_exact_keys(
+            $contributor->{bound_connection_expr},
+            normalized_semantic_lowered_rtl_ir_composition_shared_datapath_bound_connection_expr_keys(),
+            "$label bound_connection_expr keeps the bounded key schema",
+        );
+        assert_exact_keys(
+            $contributor->{output_drive_family},
+            normalized_semantic_lowered_rtl_ir_output_drive_family_entry_keys(),
+            "$label output_drive_family keeps the existing bounded output-drive schema",
+        );
+        if (@{$contributor->{output_drive_family}{rhs_enable_families} || []}) {
+            assert_exact_keys(
+                $contributor->{output_drive_family}{rhs_enable_families}[0],
+                normalized_semantic_lowered_rtl_ir_output_drive_rhs_enable_family_entry_keys(),
+                "$label output_drive_family rhs_enable_families keep the existing bounded schema",
+            );
+        }
+        assert_keys_present(
+            $contributor->{intent_hir},
+            normalized_semantic_intent_hir_presence_keys(),
+            "$label delegates nested intent_hir to the existing bounded owner",
+        );
+        assert_keys_present(
+            $contributor->{lowered_rtl_ir},
+            normalized_semantic_lowered_rtl_ir_presence_keys(),
+            "$label delegates nested lowered_rtl_ir to the existing bounded owner",
+        );
+        assert_keys_present(
+            $contributor->{structural_rtl_ir},
+            normalized_semantic_structural_rtl_ir_presence_keys(),
+            "$label delegates nested structural_rtl_ir to the existing bounded owner",
+        );
+    }
+
+    ok(ref($candidate->{aggregate_enable_families}) eq 'ARRAY', 'shared-datapath candidate emits aggregate enable families');
+    is(
+        $candidate->{aggregate_enable_family_count},
+        scalar(@{$candidate->{aggregate_enable_families} || []}),
+        'shared-datapath candidate aggregate family count matches the emitted array',
+    );
+    for my $index (0 .. $#{$candidate->{aggregate_enable_families} || []}) {
+        my $family = $candidate->{aggregate_enable_families}[$index];
+        my $label = "shared-datapath aggregate family $index";
+
+        assert_exact_keys(
+            $family,
+            normalized_semantic_lowered_rtl_ir_composition_shared_datapath_aggregate_enable_family_entry_keys(),
+            "$label keeps the bounded family key schema",
+        );
+        assert_exact_keys(
+            $family->{same_value_assertion},
+            normalized_semantic_lowered_rtl_ir_composition_shared_datapath_assertion_keys(),
+            "$label same-value assertion keeps the bounded key schema",
+        );
+        ok(ref($family->{contributors}) eq 'ARRAY', "$label emits aggregate contributor entries");
+        is(
+            $family->{contributor_count},
+            scalar(@{$family->{contributors} || []}),
+            "$label contributor count matches the emitted array",
+        );
+        for my $contributor (@{$family->{contributors} || []}) {
+            assert_exact_keys(
+                $contributor,
+                normalized_semantic_lowered_rtl_ir_composition_shared_datapath_aggregate_enable_contributor_entry_keys(),
+                "$label aggregate contributor keeps the bounded key schema",
+            );
+        }
+    }
 };
 
 subtest 'composition semantic payload keeps bounded child-owner contracts at runtime' => sub {

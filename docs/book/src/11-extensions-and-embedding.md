@@ -2075,7 +2075,14 @@ emitted `standalone_dt_multi_drive_target_count` and
 `standalone_dt_multi_drive_targets` metadata, bounded
 `standalone_dt_multi_drive_targets[]` entry keys, and nested
 `multi_drive_assertion` metadata keys, plus the composition-only extension keys
-emitted today for top roots.
+emitted today for top roots. For composition roots, it also advertises bounded
+`composition_shared_datapath_candidates[]` entry keys, optional declared-type
+extension keys, contributor entries and contributor `bound_connection_expr`
+metadata, aggregate enable-family entries, aggregate-family contributors, and
+multi/same-value assertion metadata. Contributor child `intent_hir`,
+`lowered_rtl_ir`, and `structural_rtl_ir` summaries remain delegated to their
+existing bounded contracts instead of being duplicated under the
+shared-datapath candidate schema.
 
 That same owner now also publishes a grouped `presence_key_family_map` so
 embedders can discover those bounded `lowered_rtl_ir` key families from one

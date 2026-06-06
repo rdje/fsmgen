@@ -751,7 +751,13 @@ count/list metadata, the bounded `selector_conflict_targets[]` entry schema,
 standalone-DT multi-drive target metadata, the bounded
 `standalone_dt_multi_drive_targets[]` entry schema and nested
 `multi_drive_assertion` metadata keys, and the current composition-only
-extension keys:
+extension keys. For composition roots, that same contract also advertises the
+bounded `composition_shared_datapath_candidates[]` entry schema, optional
+declared-type extension keys, contributor entries and `bound_connection_expr`
+metadata, aggregate enable-family entries, aggregate-family contributors, and
+multi/same-value assertion metadata. Contributor child `intent_hir`,
+`lowered_rtl_ir`, and `structural_rtl_ir` summaries remain delegated to their
+existing bounded contracts:
 [perl/FSM/Support/NormalizedSemanticLoweredRTLIRContract.pm](perl/FSM/Support/NormalizedSemanticLoweredRTLIRContract.pm).
 The nested `semantic.forward_ir.structural_rtl_ir` summary inside that branch
 now also has its own bounded owner for the current structural-RTL shell,
