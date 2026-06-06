@@ -234,10 +234,12 @@ scalar one-bit default metadata such as `ENABLE_DEFAULT 1'b0`. External-RTL
 non-packed aggregate generic maps are locked fail-closed before VHDL emission:
 aggregate/list/record actuals that do not lower to one packed literal fail
 with the packed-literal diagnostic instead of emitting VHDL record/array
-generics. Unresolved package/expression actuals and standalone-DT generic maps
-beyond
+generics. Standalone-DT non-packed aggregate generic-map hardening is active
+under `BACKEND-API-VALIDATION-FRONTIER.98.1`; until that leaf ships,
+standalone-DT generic maps beyond
 integer/scalar expression/one-bit sized-bitstring/multi-bit sized-bitstring/
-packed-list/packed-map actuals, and APB/C4 generic maps beyond scalar integer,
+packed-list/packed-map actuals remain deferred. Unresolved
+package/expression actuals and APB/C4 generic maps beyond scalar integer,
 scalar expression, one-bit sized-bitstring, and multi-bit sized-bitstring
 actuals plus resolved packed aggregate and resolved package-backed actuals
 remain deferred for those
