@@ -799,6 +799,11 @@ family:
 The nested `semantic.composition` summary inside that payload now also has its
 own bounded owner for composition sources:
 [perl/FSM/Support/NormalizedSemanticCompositionContract.pm](perl/FSM/Support/NormalizedSemanticCompositionContract.pm).
+The current selected public-export hardening edge is
+`BACKEND-API-VALIDATION-FRONTIER.49.1`: publish bounded
+`semantic.forward_ir.intent_hir` composition child alias key families by
+delegating to the already bounded composition child schema owners. This is not
+a full normalized semantic export stabilization promise.
 The manifest-facing stable diagnostic-code registry now has its own explicit
 bounded contract owner in
 [perl/FSM/Support/DiagnosticCodeRegistryContract.pm](perl/FSM/Support/DiagnosticCodeRegistryContract.pm),
