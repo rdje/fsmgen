@@ -13,6 +13,7 @@ answers:
   - "does direct VHDL support multi-operand addition?"
   - "does direct VHDL support subtraction chains?"
   - "does direct VHDL support multiplication chains?"
+  - "does direct VHDL support division/modulo chains?"
   - "does direct VHDL support XOR chains?"
 date: 2026-06-06
 status: current
@@ -32,7 +33,10 @@ expressions; same-width vector subtraction chains become
 `std_logic_vector(unsigned(A) - unsigned(B) - ...)` expressions.
 Same-width vector multiplication chains become
 `std_logic_vector(resize(unsigned(A) * unsigned(B) * ..., WIDTH))`
+expressions. Same-width vector division/modulo chains become
+`std_logic_vector(resize(unsigned(A) / unsigned(B) / ..., WIDTH))` and
+`std_logic_vector(resize(unsigned(A) mod unsigned(B) mod ..., WIDTH))`
 expressions. Same-width scalar/vector XOR chains become `A xor B xor ...`
 expressions. Composition/top VHDL, aggregate-output VHDL, packages,
-multi-clock domains, division/modulo, broad expression parity, GHDL
-validation, and full SystemVerilog parity remain deferred or fail-closed.
+multi-clock domains, broad expression parity, GHDL validation, and full
+SystemVerilog parity remain deferred or fail-closed.

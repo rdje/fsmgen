@@ -534,11 +534,8 @@ sub _simple_arithmetic_to_vhdl ($expr, $ctx) {
         confess _unsupported("arithmetic expression '$expr' is outside the direct VHDL scaffold");
     };
 
-    $unsupported->()
-        if $expr =~ /[\/%]/ || $expr =~ /\bmod\b/i;
-
     my $operator;
-    my @operators = $expr =~ /([+*^]|-)/g;
+    my @operators = map { lc($_) eq 'mod' ? '%' : $_ } $expr =~ /(\bmod\b|[+*^\/%]|-)/ig;
     my %operator_seen = map { $_ => 1 } @operators;
     if (!@operators || keys(%operator_seen) != 1) {
         $unsupported->();
@@ -559,6 +556,12 @@ sub _simple_arithmetic_to_vhdl ($expr, $ctx) {
     }
     elsif ($operator eq '^') {
         $separator = qr/\s*\^\s*/;
+    }
+    elsif ($operator eq '/') {
+        $separator = qr/\s*\/\s*/;
+    }
+    elsif ($operator eq '%') {
+        $separator = qr/\s*(?:%|\bmod\b)\s*/i;
     }
 
     my @operand_names = split $separator, $expr;
@@ -594,9 +597,10 @@ sub _simple_arithmetic_to_vhdl ($expr, $ctx) {
     return join(' xor ', @converted_operands)
         if $operator eq '^';
 
-    my $converted_expression = join(" $operator ", @converted_operands);
+    my $vhdl_operator = $operator eq '%' ? 'mod' : $operator;
+    my $converted_expression = join(" $vhdl_operator ", @converted_operands);
     return "std_logic_vector(resize($converted_expression, $target_width))"
-        if $operator eq '*';
+        if $operator eq '*' || $operator eq '/' || $operator eq '%';
 
     return "std_logic_vector($converted_expression)";
 }

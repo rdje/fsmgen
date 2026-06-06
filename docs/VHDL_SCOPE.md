@@ -11,14 +11,11 @@ This document defines the scoped R14 VHDL backend plan for FSMGen.
   lowering for the generated `<N` pulse-delay shape.
 - The direct scaffold now includes the first arithmetic/XOR RHS expression family:
   same-width vector addition/subtraction chains lower through `numeric_std`
-  unsigned casts, and same-width vector multiplication chains lower through
-  explicit target-width `numeric_std` resize. Same-width scalar/vector XOR
-  chains lower to VHDL `xor`.
+  unsigned casts, and same-width vector multiplication/division/modulo chains
+  lower through explicit target-width `numeric_std` resize. Same-width
+  scalar/vector XOR chains lower to VHDL `xor`.
 - Composition VHDL, aggregate VHDL, broad expression parity, GHDL validation,
   packages, multi-clock domains, and full feature parity remain deferred.
-- The next active task-tree-owned expression edge is same-width runtime
-  division/modulo RHS-chain lowering from `t/corpus/direct_runtime_div_mod.fsm`;
-  until that leaf ships, division and modulo stay fail-closed in direct VHDL.
 
 ## Goal
 Implement a real, scoped VHDL backend that generates synthesizable VHDL from
@@ -48,8 +45,8 @@ The first VHDL lane is intentionally narrow:
      the direct scaffold fixtures
    - Delayed-pulse clock branches that use the generated one-level nested
      `if (<pulse_delay_pipe>) begin ... end` shape
-   - Same-width addition, subtraction, multiplication, and XOR RHS chains in
-     the generated direct combinational mux shape
+   - Same-width addition, subtraction, multiplication, division, modulo, and
+     XOR RHS chains in the generated direct combinational mux shape
 
 4. **Intentionally deferred:**
    - Composition-top VHDL
@@ -76,17 +73,15 @@ The first VHDL lane is intentionally narrow:
   SystemVerilog `always_comb` → VHDL `process(all)`, port/signal type
   mapping, module/entity conversion, reset polarity handling, and generated
   delayed-pulse nested clock-branch lowering, plus same-width addition,
-  subtraction, multiplication, and XOR RHS expression chains.
+  subtraction, multiplication, division, modulo, and XOR RHS expression chains.
 - Remaining semantic conversion work still belongs to exact future VHDL leaves.
-  The current selected future leaf is same-width runtime division/modulo
-  RHS-chain lowering for the direct scaffold.
 
 ### Phase 3: Regression and hardening (R14.3)
 - Focused direct VHDL generation tests cover pipeline and CLI routing,
   sync/async reset processes, delayed-pulse clock branches, concat lowering,
-  same-width addition/subtraction/multiplication/XOR-chain lowering, broader
-  arithmetic-expression fail-closed diagnostics, and aggregate-output
-  fail-closed diagnostics.
+  same-width addition/subtraction/multiplication/division/modulo/XOR-chain
+  lowering, mismatched-width arithmetic-expression fail-closed diagnostics,
+  and aggregate-output fail-closed diagnostics.
 - Add broader VHDL output to the regression corpus
 - Ensure `--check --json` and `--emit-semantic-json` stay target-neutral
 - Consider external VHDL validation via GHDL

@@ -3770,22 +3770,21 @@ entity/architecture text for scalar/vector ports, state constants,
 continuous enable assignments, `process(all)` combinational muxes, sync-reset
 clocked processes, async-reset clocked processes, delayed-pulse clock-branch
 nested-if lowering, basic concat RHS forms, same-width vector
-addition/subtraction/multiplication RHS chain lowering through `numeric_std`
-unsigned casts and explicit target-width multiplication resize, and
-same-width scalar/vector XOR chain lowering through VHDL `xor`. It is covered
-by direct pipeline, CLI, and facade tests.
+addition/subtraction RHS chain lowering through `numeric_std` unsigned casts,
+same-width vector multiplication/division/modulo RHS chain lowering through
+explicit target-width `numeric_std` resize, and same-width scalar/vector XOR
+chain lowering through VHDL `xor`. It is covered by direct pipeline, CLI, and
+facade tests.
 
 Still backlog: composition/top VHDL, aggregate VHDL record/array lowering,
 VHDL packages, multi-clock domains, GHDL validation, broad expression parity,
 and full feature parity with the SystemVerilog backend. Broader arithmetic
 operators, scalar arithmetic, mismatched-width arithmetic, and expression
-contexts beyond the same-width addition/subtraction/multiplication/XOR RHS
-chain family remain fail-closed at the scaffold boundary. The maintained
-arithmetic/XOR operator corpus now lowers through the direct VHDL scaffold for
-that family. The next task-tree-owned direct-expression edge is same-width
-runtime division/modulo RHS chains from
-`t/corpus/direct_runtime_div_mod.fsm`; until that leaf ships, division and
-modulo remain fail-closed in direct VHDL.
+contexts beyond the same-width
+addition/subtraction/multiplication/division/modulo/XOR RHS chain family remain
+fail-closed at the scaffold boundary. The maintained arithmetic/XOR and runtime
+division/modulo corpora now lower through the direct VHDL scaffold for that
+family.
 
 ### GHDL Validation
 

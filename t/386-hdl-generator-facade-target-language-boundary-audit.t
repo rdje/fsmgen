@@ -389,6 +389,33 @@ FSM
     );
 };
 
+subtest 'facade target_language option routes direct VHDL division/modulo scaffold behavior' => sub {
+    my $direct_path = repo_file('t/corpus/direct_runtime_div_mod.fsm');
+    my $vhdl_pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'vhdl',
+        quiet => 1,
+    );
+
+    my $vhdl_result = $vhdl_pipeline->generate_hdl_from_file($direct_path);
+
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bQUO_CHAIN\s+<=\s+std_logic_vector\(resize\(unsigned\(A\)\s+\/\s+unsigned\(B\)\s+\/\s+unsigned\(C\),\s+8\)\);/s,
+        'explicit VHDL facade generation lowers same-width division chains through target-width numeric_std resize',
+    );
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bREM_CHAIN\s+<=\s+std_logic_vector\(resize\(unsigned\(A\)\s+mod\s+unsigned\(B\)\s+mod\s+unsigned\(C\),\s+8\)\);/s,
+        'explicit VHDL facade generation lowers same-width modulo chains through target-width numeric_std resize',
+    );
+    unlike(
+        $vhdl_result->{hdl_code},
+        qr/\bmodule\b|\balways_(?:ff|comb)\b|\s%\s/s,
+        'explicit VHDL division/modulo facade generation does not leak SystemVerilog module, always_*, or percent-modulo forms',
+    );
+};
+
 done_testing();
 
 sub repo_file {

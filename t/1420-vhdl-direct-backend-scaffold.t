@@ -366,20 +366,79 @@ FSM
     );
 };
 
-subtest 'direct VHDL scaffold keeps broader arithmetic expression parity fail-closed' => sub {
+subtest 'direct VHDL scaffold lowers same-width vector division/modulo RHS chains' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
-    my $fsm_path = File::Spec->catfile($tempdir, 'direct_vhdl_division_deferred.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'direct_runtime_div_mod.vhd');
+
+    my $hdl = generate_vhdl('t/corpus/direct_runtime_div_mod.fsm');
+    like(
+        $hdl,
+        qr/\bQUO\s+<=\s+std_logic_vector\(resize\(unsigned\(A\)\s+\/\s+unsigned\(B\),\s+8\)\);/s,
+        'same-width vector division lowers through target-width numeric_std resize',
+    );
+    like(
+        $hdl,
+        qr/\bREM\s+<=\s+std_logic_vector\(resize\(unsigned\(A\)\s+mod\s+unsigned\(B\),\s+8\)\);/s,
+        'same-width vector modulo lowers through target-width numeric_std resize',
+    );
+    like(
+        $hdl,
+        qr/\bQUO_ALIAS\s+<=\s+std_logic_vector\(resize\(unsigned\(A\)\s+\/\s+unsigned\(B\),\s+8\)\);/s,
+        'division aliases lower to the same VHDL division expression',
+    );
+    like(
+        $hdl,
+        qr/\bREM_ALIAS\s+<=\s+std_logic_vector\(resize\(unsigned\(A\)\s+mod\s+unsigned\(B\),\s+8\)\);/s,
+        'modulo aliases lower to the same VHDL mod expression',
+    );
+    like(
+        $hdl,
+        qr/\bQUO_CHAIN\s+<=\s+std_logic_vector\(resize\(unsigned\(A\)\s+\/\s+unsigned\(B\)\s+\/\s+unsigned\(C\),\s+8\)\);/s,
+        'same-width vector division chains lower through target-width numeric_std resize',
+    );
+    like(
+        $hdl,
+        qr/\bREM_CHAIN\s+<=\s+std_logic_vector\(resize\(unsigned\(A\)\s+mod\s+unsigned\(B\)\s+mod\s+unsigned\(C\),\s+8\)\);/s,
+        'same-width vector modulo chains lower through target-width numeric_std resize',
+    );
+    unlike($hdl, qr/\balways_(?:ff|comb)\b|\bmodule\b|\s%\s/s, 'division/modulo VHDL output remains VHDL-shaped');
+
+    my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--language', 'vhdl', '--quiet', '-o', $output_path, repo_file('t/corpus/direct_runtime_div_mod.fsm')],
+    );
+
+    my $combined_output = join('', @{ $stdout_buf || [] }, @{ $stderr_buf || [] }, ($error_message || ''));
+    ok($success, 'CLI accepts direct --language vhdl for the same-width vector division/modulo fixture')
+        or diag($combined_output);
+    ok(-e $output_path, 'CLI writes direct division/modulo VHDL output file');
+
+    my $cli_hdl = read_file($output_path);
+    like(
+        $cli_hdl,
+        qr/\bQUO_CHAIN\s+<=\s+std_logic_vector\(resize\(unsigned\(A\)\s+\/\s+unsigned\(B\)\s+\/\s+unsigned\(C\),\s+8\)\);/s,
+        'CLI division/modulo VHDL output includes division-chain lowering',
+    );
+    like(
+        $cli_hdl,
+        qr/\bREM_CHAIN\s+<=\s+std_logic_vector\(resize\(unsigned\(A\)\s+mod\s+unsigned\(B\)\s+mod\s+unsigned\(C\),\s+8\)\);/s,
+        'CLI division/modulo VHDL output includes modulo-chain lowering',
+    );
+};
+
+subtest 'direct VHDL scaffold keeps mismatched-width arithmetic expression parity fail-closed' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $fsm_path = File::Spec->catfile($tempdir, 'direct_vhdl_mismatched_division_deferred.fsm');
     write_file(
         $fsm_path,
         <<'FSM'
-(?fsm:direct_vhdl_division_deferred
+(?fsm:direct_vhdl_mismatched_division_deferred
   (+system
     (clock clk)
     (sreset reset)
   )
   (+size
     (A 8)
-    (B 8)
+    (B 4)
     (QUOTIENT 8)
   )
   (idle
@@ -393,7 +452,7 @@ FSM
         generate_vhdl($fsm_path);
     });
 
-    like($error, qr/arithmetic expression 'A \/ B' is outside the direct VHDL scaffold/s, 'division remains outside the direct VHDL scaffold boundary');
+    like($error, qr/arithmetic expression 'A \/ B' is outside the direct VHDL scaffold/s, 'mismatched-width division remains outside the direct VHDL scaffold boundary');
 
     my $corpus_hdl = generate_vhdl('t/corpus/arithmetic_xor_operator_variants.fsm');
 
