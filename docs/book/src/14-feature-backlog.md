@@ -3777,8 +3777,10 @@ clocked processes, async-reset clocked processes, delayed-pulse clock-branch
 nested-if lowering, generic-bearing direct-root module headers as VHDL integer
 generics or typed scalar/vector generics for sized-literal defaults, basic
 concat RHS forms, scalar addition/subtraction/multiplication RHS/chain
-lowering, same-width vector addition/subtraction RHS chain lowering through
-`numeric_std` unsigned casts, same-width vector
+lowering, generated mux arithmetic with vector signal plus/minus numeric
+literal operands through target-width `to_unsigned` casts, same-width vector
+addition/subtraction RHS chain lowering through `numeric_std` unsigned casts,
+same-width vector
 multiplication/division/modulo RHS chain lowering through explicit
 target-width `numeric_std` resize, and same-width scalar/vector XOR chain
 lowering through VHDL `xor`. It is covered by direct pipeline, CLI, and facade
@@ -3807,10 +3809,10 @@ direct VHDL boundaries. Composition/top VHDL is locked fail-closed after typed
 composition IR parsing, with the pipeline and CLI pointing users to the scoped
 composition target-support diagnostic instead of emitting a VHDL top.
 
-Active next leaf: generated direct-root vector arithmetic with numeric literal
-operands, such as compound update/shorthand mux expressions `SRC + 2`,
-`SRC - 1`, `byte_count + 4`, and `remaining - 3`, is selected for the next
-exact VHDL hardening slice.
+The compound update and update-shorthand fixtures now lower generated
+direct-root vector arithmetic with numeric literal operands, such as `SRC + 2`,
+`SRC - 1`, `byte_count + 4`, and `remaining - 3`, through target-width
+`to_unsigned` casts.
 
 ### GHDL Validation
 

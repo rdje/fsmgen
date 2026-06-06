@@ -26,6 +26,8 @@ answers:
   - "does direct VHDL support scalar division/modulo?"
   - "does direct VHDL support scalar multiplication?"
   - "does direct VHDL support scalar multiplication chains?"
+  - "does direct VHDL support numeric literal arithmetic?"
+  - "does direct VHDL support compound update arithmetic?"
   - "does direct VHDL support generics?"
   - "does direct VHDL support parameterized direct roots?"
   - "does direct VHDL support sized literal generic defaults?"
@@ -52,8 +54,11 @@ defaults become `std_logic` generics for one-bit defaults and
 scaffold also lowers the first arithmetic RHS shape: scalar addition and
 subtraction RHS forms and chains lower to one-bit truncated `xor` semantics,
 and scalar multiplication plus scalar multiplication chains lower to one-bit
-`and` semantics, while
-same-width vector `NAME + NAME` assignments and same-width multi-operand
+`and` semantics. Generated direct mux expressions with one vector signal and
+one numeric literal operand for `+` or `-`, such as `SRC + 2` and
+`byte_count + 4` from compound update/shorthand fixtures, lower through
+target-width `to_unsigned` casts. Same-width vector `NAME + NAME` assignments
+and same-width multi-operand
 addition chains become
 `std_logic_vector(unsigned(A) + unsigned(B) + ...)` expressions; same-width
 vector subtraction chains become

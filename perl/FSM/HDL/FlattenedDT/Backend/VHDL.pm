@@ -629,13 +629,9 @@ sub _simple_arithmetic_to_vhdl ($expr, $ctx) {
         $separator = qr/\s*(?:%|\bmod\b)\s*/i;
     }
 
-    my @operand_names = split $separator, $expr;
+    my @operand_names = map { _trim($_) } split $separator, $expr;
     $unsupported->()
         unless @operand_names >= 2;
-    for my $operand_name (@operand_names) {
-        $unsupported->()
-            unless $operand_name =~ /^[A-Za-z_][A-Za-z0-9_]*$/;
-    }
 
     my $decls_by_name = $ctx->{decls_by_name} || {};
     my $target_decl = _decl_for_lvalue($ctx->{target_lhs}, $decls_by_name)
@@ -658,6 +654,16 @@ sub _simple_arithmetic_to_vhdl ($expr, $ctx) {
 
     my @converted_operands;
     for my $operand_name (@operand_names) {
+        my $literal_value = _arithmetic_literal_value($operand_name);
+        if (defined $literal_value) {
+            $unsupported->()
+                unless ($operator eq '+' || $operator eq '-') && !$target_decl->{scalar};
+            push @converted_operands, "to_unsigned($literal_value, $target_width)";
+            next;
+        }
+
+        $unsupported->()
+            unless $operand_name =~ /^[A-Za-z_][A-Za-z0-9_]*$/;
         my $operand_decl = $decls_by_name->{$operand_name}
             or $unsupported->();
         my $operand_width = _decl_width($operand_decl);
@@ -682,6 +688,16 @@ sub _simple_arithmetic_to_vhdl ($expr, $ctx) {
         if $operator eq '*' || $operator eq '/' || $operator eq '%';
 
     return "std_logic_vector($converted_expression)";
+}
+
+sub _arithmetic_literal_value ($operand) {
+    my $trimmed = _trim($operand);
+    return $trimmed + 0
+        if $trimmed =~ /^\d+$/;
+
+    my $literal = _parse_sized_literal($trimmed);
+    return undef unless $literal;
+    return _literal_integer_value($literal);
 }
 
 sub _decl_for_lvalue ($lhs, $decls_by_name) {

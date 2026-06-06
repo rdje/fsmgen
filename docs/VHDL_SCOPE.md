@@ -22,6 +22,9 @@ This document defines the scoped R14 VHDL backend plan for FSMGen.
   arithmetic integer-expression defaults as `integer`, one-bit sized-literal
   defaults as `std_logic`, and multi-bit sized-literal defaults as
   `std_logic_vector` generics.
+- The direct scaffold now includes generated mux arithmetic with one vector
+  signal and one numeric literal operand for `+` and `-`, as emitted by the
+  compound update/shorthand fixtures.
 - Composition VHDL, aggregate VHDL, broad expression parity, scalar
   division/modulo and broader scalar arithmetic, GHDL validation, packages,
   multi-clock domains, and full feature parity remain deferred.
@@ -35,9 +38,6 @@ This document defines the scoped R14 VHDL backend plan for FSMGen.
   composition IR, then reject `target_language => 'vhdl'` / `--language vhdl`
   with the scoped composition target-support diagnostic instead of emitting a
   VHDL top.
-- The active next direct VHDL hardening leaf is vector arithmetic with numeric
-  literal operands in generated mux expressions, such as `SRC + 2` and
-  `byte_count + 4`.
 
 ## Goal
 Implement a real, scoped VHDL backend that generates synthesizable VHDL from
@@ -71,6 +71,8 @@ The first VHDL lane is intentionally narrow:
      one-bit truncated scalar `xor`
    - Scalar multiplication RHS assignments and multiplication chains, lowered
      as one-bit scalar `and`
+   - Generated direct mux assignments with vector signal plus/minus numeric
+     literal operands, such as `SRC + 2` and `byte_count + 4`
    - Same-width addition, subtraction, multiplication, division, modulo, and
      XOR RHS chains in the generated direct combinational mux shape
    - Generic-bearing direct-root module headers emitted by the generated
@@ -106,10 +108,10 @@ The first VHDL lane is intentionally narrow:
   delayed-pulse nested clock-branch lowering, plus same-width addition,
   subtraction, multiplication, division, modulo, and XOR RHS expression chains,
   scalar addition/subtraction/multiplication RHS/chain lowering, and
-  direct-root parameter blocks as VHDL generics, including integer expression
-  defaults and typed scalar/vector sized-literal defaults.
-- Active follow-up: generated direct-root vector signal plus/minus numeric
-  literal mux expressions from compound update/shorthand fixtures.
+  generated direct-root vector signal plus/minus numeric literal mux
+  expressions from compound update/shorthand fixtures, plus direct-root
+  parameter blocks as VHDL generics, including integer expression defaults and
+  typed scalar/vector sized-literal defaults.
 - Remaining semantic conversion work still belongs to exact future VHDL leaves.
 
 ### Phase 3: Regression and hardening (R14.3)
@@ -117,6 +119,7 @@ The first VHDL lane is intentionally narrow:
   sync/async reset processes, delayed-pulse clock branches, concat lowering,
   scalar addition/subtraction/multiplication chains, same-width
   addition/subtraction/multiplication/division/modulo/XOR chain lowering,
+  vector numeric-literal addition/subtraction mux lowering,
   generic-bearing direct-root module headers, one-bit `std_logic` and
   multi-bit `std_logic_vector` sized-literal generic defaults,
   mismatched-width arithmetic-expression fail-closed diagnostics, and

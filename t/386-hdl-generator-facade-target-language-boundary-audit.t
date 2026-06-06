@@ -210,6 +210,38 @@ subtest 'facade target_language option routes direct VHDL arithmetic scaffold be
     );
 };
 
+subtest 'facade target_language option routes direct VHDL numeric-literal arithmetic scaffold behavior' => sub {
+    my $direct_path = repo_file('t/corpus/compound_update_variants.fsm');
+    my $vhdl_pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'vhdl',
+        quiet => 1,
+    );
+
+    my $vhdl_result = $vhdl_pipeline->generate_hdl_from_file($direct_path);
+
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bentity\s+compound_update_variants\s+is\b/s,
+        'explicit VHDL facade generation emits the numeric-literal arithmetic direct entity',
+    );
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bACC_next\s+<=\s+std_logic_vector\(unsigned\(SRC\)\s+\+\s+to_unsigned\(2,\s+8\)\);/s,
+        'explicit VHDL facade generation lowers vector plus literal through numeric_std',
+    );
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bCOMB\s+<=\s+std_logic_vector\(unsigned\(SRC\)\s+-\s+to_unsigned\(1,\s+8\)\);/s,
+        'explicit VHDL facade generation lowers vector minus literal through numeric_std',
+    );
+    unlike(
+        $vhdl_result->{hdl_code},
+        qr/\bmodule\b|\balways_(?:ff|comb)\b|\bSRC\s+\+\s+2\b/s,
+        'explicit VHDL numeric-literal arithmetic facade generation does not leak SystemVerilog syntax',
+    );
+};
+
 subtest 'facade target_language option routes direct VHDL scalar-addition scaffold behavior' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $direct_path = File::Spec->catfile($tempdir, 'facade_direct_vhdl_scalar_addition.fsm');

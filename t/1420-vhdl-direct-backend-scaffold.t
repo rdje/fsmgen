@@ -232,6 +232,71 @@ FSM
     );
 };
 
+subtest 'direct VHDL scaffold lowers vector arithmetic with numeric literal operands' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $compound_output_path = File::Spec->catfile($tempdir, 'compound_update_variants.vhd');
+    my $shorthand_output_path = File::Spec->catfile($tempdir, 'update_shorthand_variants.vhd');
+
+    my $compound_hdl = generate_vhdl('t/corpus/compound_update_variants.fsm');
+    like(
+        $compound_hdl,
+        qr/\bACC_next\s+<=\s+std_logic_vector\(unsigned\(SRC\)\s+\+\s+to_unsigned\(2,\s+8\)\);/s,
+        'compound update register mux lowers vector plus literal through numeric_std',
+    );
+    like(
+        $compound_hdl,
+        qr/\bCOMB\s+<=\s+std_logic_vector\(unsigned\(SRC\)\s+-\s+to_unsigned\(1,\s+8\)\);/s,
+        'compound update combinational mux lowers vector minus literal through numeric_std',
+    );
+    like(
+        $compound_hdl,
+        qr/\bbyte_count_next\s+<=\s+std_logic_vector\(unsigned\(byte_count\)\s+\+\s+to_unsigned\(4,\s+8\)\);/s,
+        'compound update shorthand plus literal lowers through target-width to_unsigned',
+    );
+    unlike($compound_hdl, qr/\balways_(?:ff|comb)\b|\bmodule\b|\bSRC\s+\+\s+2\b/s, 'compound update VHDL output remains VHDL-shaped');
+
+    my $shorthand_hdl = generate_vhdl('t/corpus/update_shorthand_variants.fsm');
+    like(
+        $shorthand_hdl,
+        qr/\bremaining_next\s+<=\s+std_logic_vector\(unsigned\(remaining\)\s+-\s+to_unsigned\(3,\s+8\)\);/s,
+        'update shorthand minus literal lowers through target-width to_unsigned',
+    );
+    like(
+        $shorthand_hdl,
+        qr/\bupdates_byte_count_byte_count_4_en\s+<=\s+updates_en\s+and\s+ENABLE;/s,
+        'update shorthand VHDL keeps guarded enable lowering alongside literal arithmetic',
+    );
+    unlike($shorthand_hdl, qr/\balways_(?:ff|comb)\b|\bmodule\b|\bbyte_count\s+\+\s+4\b/s, 'update shorthand VHDL output remains VHDL-shaped');
+
+    my ($compound_success, $compound_error_message, $compound_full_buf, $compound_stdout_buf, $compound_stderr_buf) = run(
+        command => ['./bin/fsmgen', '--language', 'vhdl', '--quiet', '-o', $compound_output_path, repo_file('t/corpus/compound_update_variants.fsm')],
+    );
+    my $compound_combined_output = join('', @{ $compound_stdout_buf || [] }, @{ $compound_stderr_buf || [] }, ($compound_error_message || ''));
+    ok($compound_success, 'CLI accepts direct --language vhdl for compound update numeric-literal arithmetic')
+        or diag($compound_combined_output);
+    ok(-e $compound_output_path, 'CLI writes compound update numeric-literal VHDL output file');
+    my $compound_cli_hdl = read_file($compound_output_path);
+    like(
+        $compound_cli_hdl,
+        qr/\bACC_next\s+<=\s+std_logic_vector\(unsigned\(SRC\)\s+\+\s+to_unsigned\(2,\s+8\)\);/s,
+        'CLI compound update VHDL output includes plus literal lowering',
+    );
+
+    my ($shorthand_success, $shorthand_error_message, $shorthand_full_buf, $shorthand_stdout_buf, $shorthand_stderr_buf) = run(
+        command => ['./bin/fsmgen', '--language', 'vhdl', '--quiet', '-o', $shorthand_output_path, repo_file('t/corpus/update_shorthand_variants.fsm')],
+    );
+    my $shorthand_combined_output = join('', @{ $shorthand_stdout_buf || [] }, @{ $shorthand_stderr_buf || [] }, ($shorthand_error_message || ''));
+    ok($shorthand_success, 'CLI accepts direct --language vhdl for update shorthand numeric-literal arithmetic')
+        or diag($shorthand_combined_output);
+    ok(-e $shorthand_output_path, 'CLI writes update shorthand numeric-literal VHDL output file');
+    my $shorthand_cli_hdl = read_file($shorthand_output_path);
+    like(
+        $shorthand_cli_hdl,
+        qr/\bremaining_next\s+<=\s+std_logic_vector\(unsigned\(remaining\)\s+-\s+to_unsigned\(3,\s+8\)\);/s,
+        'CLI update shorthand VHDL output includes minus literal lowering',
+    );
+};
+
 subtest 'direct VHDL scaffold lowers same-width vector multiplication RHS chains' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $fsm_path = File::Spec->catfile($tempdir, 'direct_vhdl_multiplication_chain.fsm');
