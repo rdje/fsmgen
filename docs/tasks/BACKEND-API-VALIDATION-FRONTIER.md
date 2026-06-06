@@ -77,7 +77,8 @@ items named in the 2026-06-05 remaining-work inventory.
     `BACKEND-API-VALIDATION-FRONTIER.17.1`,
     `BACKEND-API-VALIDATION-FRONTIER.18`,
     `BACKEND-API-VALIDATION-FRONTIER.18.1`,
-    `BACKEND-API-VALIDATION-FRONTIER.19`
+    `BACKEND-API-VALIDATION-FRONTIER.19`,
+    `BACKEND-API-VALIDATION-FRONTIER.19.1`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.1`
   Status: `done`
@@ -404,9 +405,17 @@ items named in the 2026-06-05 remaining-work inventory.
   Commit: `this slice`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.19`
-  Status: `active`
+  Status: `done`
   Goal: `Select the next normalized semantic export hardening edge after structural instance parameter-override entry schemas.`
-  Acceptance: `Pick the next exact backend/API or normalized semantic export hardening edge from evidence, create the smallest implementation owner leaf if code or source changes are needed, keep mdBook/docs aligned, and preserve current unadvertised boundaries until selected.`
+  Children: `BACKEND-API-VALIDATION-FRONTIER.19.1`
+  Acceptance: `Selected the structural-RTL auxiliary_assignments[] scalar-string entry contract as the next exact normalized semantic export field family. Evidence from a strict-clean composition pipeline/report probe shows semantic.forward_ir.structural_rtl_ir.auxiliary_assignments[] preserves generated assignment lines as scalar strings such as assign tap_a = start; and assign tap_b = start;, with auxiliary_assignment_count matching the array length. Because these entries are scalar HDL assignment text rather than hash records, the implementation owner is BACKEND-API-VALIDATION-FRONTIER.19.1 and must advertise value kind/meaning without pretending there are entry keys.`
+  Verification: `Selection audit/read of KNOWLEDGE_MAP.md, normalized semantic structural instance/parameter-override knowledge cards, docs/book/src/11-extensions-and-embedding.md, docs/book/src/14-feature-backlog.md, perl/FSM/Support/NormalizedSemanticStructuralRTLIRContract.pm, perl/FSM/IR/StructuralRTLIR.pm, perl/FSM/IR/StructuralRTLIRBuilder.pm, t/266-composition-top-input-top-output-fanout.t, and auxiliary-assignment tests; strict-clean pipeline/report probe of a canonical aux_top composition showed structural_rtl_ir.auxiliary_assignment_count 2 and auxiliary_assignments[] scalar string entries assign tap_a = start; and assign tap_b = start;; prove -Iperl t/266-composition-top-input-top-output-fanout.t t/341-normalized-semantic-structural-rtl-ir-contract.t t/311-normalized-semantic-report-contract.t; scripts/check_memory_architecture.sh; bash knowledge-map/scripts/check_knowledge_map.sh; prove -Iperl t/1414-docs-relative-paths-audit.t; prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t; mdbook build docs/book; git diff --check.`
+  Commit: `this slice`
+
+- ID: `BACKEND-API-VALIDATION-FRONTIER.19.1`
+  Status: `active`
+  Goal: `Publish structural-RTL auxiliary assignment scalar-string entries in the normalized semantic export contract.`
+  Acceptance: `FSM::Support::NormalizedSemanticStructuralRTLIRContract advertises the bounded structural_rtl_ir.auxiliary_assignments[] scalar string entry value contract for semantic.forward_ir.structural_rtl_ir without parsing those HDL assignment lines into unstable lhs/rhs records. Payload/report contracts and capability-manifest semantic export metadata inherit the new value-family contract where applicable. Runtime contract tests assert strict-clean composition semantic JSON preserves nonempty auxiliary assignment strings and matching counts. README/live docs/mdBook explain the scalar auxiliary-assignment entry contract and focused contract/runtime/manifest/defensive-copy tests pass.`
   Verification: `pending`
   Commit: `pending`
 
@@ -455,7 +464,8 @@ items named in the 2026-06-05 remaining-work inventory.
 | 39 | `BACKEND-API-VALIDATION-FRONTIER.17.1` | `done` | Published bounded key families for structural-RTL `instances[].port_bindings[]` core entries and typed extensions. |
 | 40 | `BACKEND-API-VALIDATION-FRONTIER.18` | `done` | Selected structural-RTL `instances[].parameter_overrides[]` entry schemas as the next exact normalized semantic export field family. |
 | 41 | `BACKEND-API-VALIDATION-FRONTIER.18.1` | `done` | Published bounded key families for structural-RTL `instances[].parameter_overrides[]` core entries and optional raw-value/value-metadata extensions. |
-| 42 | `BACKEND-API-VALIDATION-FRONTIER.19` | `active` | Select the next normalized semantic export hardening edge after structural instance parameter-override entry schemas. |
+| 42 | `BACKEND-API-VALIDATION-FRONTIER.19` | `done` | Selected structural-RTL `auxiliary_assignments[]` scalar string entries as the next exact normalized semantic export field family. |
+| 43 | `BACKEND-API-VALIDATION-FRONTIER.19.1` | `active` | Publish the scalar auxiliary-assignment entry value contract without inventing hash-entry keys. |
 
 ## Decisions
 
@@ -758,3 +768,15 @@ items named in the 2026-06-05 remaining-work inventory.
   extension entry keys, with forward-IR, payload/report, manifest,
   mdBook/live-doc, and knowledge-map sync. Activated `.18` to select the next
   normalized semantic export edge.
+- `2026-06-06`: Completed `.18`; selected the next exact normalized semantic
+  export edge as the structural-RTL `instances[].parameter_overrides[]` entry
+  schema, including optional raw-value and value-metadata extensions.
+  Activated `.18.1` before implementation.
+- `2026-06-06`: Completed `.18.1`; normalized semantic structural-RTL
+  contracts now advertise `instances[].parameter_overrides[]` core,
+  raw-value-extension, and value-metadata-extension key families, with
+  forward-IR, payload/report, manifest, mdBook/live-doc, and knowledge-map
+  sync. Activated `.19` to select the next normalized semantic export edge.
+- `2026-06-06`: Completed `.19`; selected the next exact normalized semantic
+  export edge as the structural-RTL `auxiliary_assignments[]` scalar string
+  entry value contract. Activated `.19.1` before implementation.
