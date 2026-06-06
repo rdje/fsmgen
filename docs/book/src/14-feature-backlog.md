@@ -4100,12 +4100,12 @@ schema metadata for `semantic.symbol_contract.types` and
 recursive `items` or `members` plus `member_order`.
 
 Current active backend edge: task-tree leaf
-`BACKEND-API-VALIDATION-FRONTIER.74` selects the next exact backend/API edge
-after bounded external-RTL C3 scalar integer VHDL generic-map lowering shipped.
-Package-import internals, already bounded
+`BACKEND-API-VALIDATION-FRONTIER.74.1` owns only bounded external-RTL C3 sized
+bitstring scalar VHDL generic-map actuals after scalar integer generic maps
+shipped. Package-import internals, already bounded
 constant/enum/type internals, unrelated forward-IR payloads, signed scalar
 division/modulo, mixed signed/unsigned arithmetic, generated-FSM and
-standalone-DT generic maps, vector/bitstring and aggregate generic actuals,
+standalone-DT generic maps, scalar expressions, aggregate generic actuals,
 full aggregate VHDL record/array lowering, broader generated-FSM/C4
 composition VHDL beyond the exact shipped fixtures, internal nets/generic maps
 beyond APB, broader expression parity beyond the shipped AMBA wrap family, and
