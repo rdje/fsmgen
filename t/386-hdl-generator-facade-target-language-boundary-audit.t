@@ -300,6 +300,51 @@ FSM
     );
 };
 
+subtest 'facade target_language option routes direct VHDL multiplication-chain scaffold behavior' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $direct_path = File::Spec->catfile($tempdir, 'facade_direct_vhdl_multiplication_chain.fsm');
+    write_file(
+        $direct_path,
+        <<'FSM'
+(?fsm:facade_direct_vhdl_multiplication_chain
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+  (+size
+    (A 8)
+    (B 8)
+    (C 8)
+    (D 8)
+    (PRODUCT 8)
+  )
+  (idle
+    (= (PRODUCT (* A B C D)))
+  )
+)
+FSM
+    );
+
+    my $vhdl_pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'vhdl',
+        quiet => 1,
+    );
+
+    my $vhdl_result = $vhdl_pipeline->generate_hdl_from_file($direct_path);
+
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bPRODUCT\s+<=\s+std_logic_vector\(resize\(unsigned\(A\)\s+\*\s+unsigned\(B\)\s+\*\s+unsigned\(C\)\s+\*\s+unsigned\(D\),\s+8\)\);/s,
+        'explicit VHDL facade generation lowers same-width vector multiplication chains through target-width numeric_std resize',
+    );
+    unlike(
+        $vhdl_result->{hdl_code},
+        qr/\bmodule\b|\balways_(?:ff|comb)\b/s,
+        'explicit VHDL multiplication-chain facade generation does not leak SystemVerilog module or always_* forms',
+    );
+};
+
 done_testing();
 
 sub repo_file {

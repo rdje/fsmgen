@@ -54,7 +54,7 @@ Use it first for objective, navigation, and where to find code/docs quickly.
 
 ## Project objective
 FSMGen compiles Lisp-like `.fsm` state machine specifications into synthesizable HDL, and now accepts `.isf` intent-scheduling sources that lower into explicit scheduled `.fsm` before HDL generation.
-Current primary target is SystemVerilog, with Verilog conversion support and a scoped direct-root VHDL scaffold for the accepted single-FSM subset, including delayed-pulse clock-branch lowering and same-width vector addition/subtraction RHS/chain lowering.
+Current primary target is SystemVerilog, with Verilog conversion support and a scoped direct-root VHDL scaffold for the accepted single-FSM subset, including delayed-pulse clock-branch lowering and same-width vector addition/subtraction/multiplication RHS/chain lowering.
 The project objective is robust, traceable FSM-to-HDL generation with clear assignment semantics, optimization via AST factorization, and behavior-preserving refactoring toward a modular architecture.
 
 ## Fast ramp-up order

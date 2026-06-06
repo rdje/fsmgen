@@ -88,7 +88,8 @@ items named in the 2026-06-05 remaining-work inventory.
     `BACKEND-API-VALIDATION-FRONTIER.23`,
     `BACKEND-API-VALIDATION-FRONTIER.23.1`,
     `BACKEND-API-VALIDATION-FRONTIER.24`,
-    `BACKEND-API-VALIDATION-FRONTIER.24.1`
+    `BACKEND-API-VALIDATION-FRONTIER.24.1`,
+    `BACKEND-API-VALIDATION-FRONTIER.25`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.1`
   Status: `done`
@@ -498,9 +499,16 @@ items named in the 2026-06-05 remaining-work inventory.
   Commit: `this slice`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.24.1`
-  Status: `active`
+  Status: `done`
   Goal: `Support same-width vector multiplication-chain RHS shapes in the direct VHDL scaffold.`
   Acceptance: `FSM::HDL::FlattenedDT::Backend::VHDL converts generated SystemVerilog same-width vector multiplication chains such as a * b * c * d from t/corpus/arithmetic_xor_operator_variants.fsm into valid VHDL for the direct single-FSM scaffold with explicit target-width resize/truncation semantics, without widening division, modulo, XOR, scalar arithmetic, mismatched-width arithmetic, aggregate-output, composition-top, package, multi-clock, GHDL-validation, or full backend-parity claims. Focused VHDL pipeline/CLI/facade tests cover the multiplication-chain path and preserve existing addition-chain, subtraction-chain, delayed-pulse, concat, reset, aggregate-fail-closed, and composition-fail-closed behavior. README/live docs/mdBook, the direct-VHDL fact card, task-tree, and memory are synchronized.`
+  Verification: `perl -Iperl -c perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm; perl -Iperl -c perl/FSM/HDL/FlattenedDT.pm; prove -Iperl t/1420-vhdl-direct-backend-scaffold.t t/386-hdl-generator-facade-target-language-boundary-audit.t t/114-composition-target-support-diagnostics.t t/404-hdl-generator-facade-target-language-shape-boundary-audit.t; ./bin/fsmgen --language vhdl --quiet t/corpus/arithmetic_xor_operator_variants.fsm failed as expected on XOR chain x ^ y ^ z after passing addition, subtraction, and multiplication chain RHS shapes; ./bin/fsmgen --language vhdl --quiet t/corpus/direct_assignment_pair_form.fsm; prove -Iperl t/313-hdl-external-validation-contract.t t/308-systemverilog-external-validation.t; bash knowledge-map/scripts/gen_knowledge_map.sh; bash knowledge-map/scripts/check_knowledge_map.sh; scripts/check_memory_architecture.sh; prove -Iperl t/1414-docs-relative-paths-audit.t; prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t; mdbook build docs/book; git diff --check`
+  Commit: `this slice`
+
+- ID: `BACKEND-API-VALIDATION-FRONTIER.25`
+  Status: `active`
+  Goal: `Select the next exact backend/API/public-export edge after direct VHDL multiplication-chain widening.`
+  Acceptance: `One remaining roadmap-aligned backend, validation, embedding, or public-export edge is selected from current code, contracts, mdBook, knowledge-map, and task-tree evidence. The selected edge has an exact implementation-or-deferral owner leaf before any code changes occur.`
   Verification: `pending`
   Commit: `pending`
 
@@ -560,7 +568,8 @@ items named in the 2026-06-05 remaining-work inventory.
 | 50 | `BACKEND-API-VALIDATION-FRONTIER.23` | `done` | Selected same-width vector subtraction-chain RHS lowering as the next exact direct VHDL scaffold edge. |
 | 51 | `BACKEND-API-VALIDATION-FRONTIER.23.1` | `done` | Implemented same-width vector subtraction chains such as generated `a - b - c - d`; multiplication and other arithmetic forms remain fail-closed. |
 | 52 | `BACKEND-API-VALIDATION-FRONTIER.24` | `done` | Selected same-width vector multiplication-chain RHS lowering as the next exact direct VHDL scaffold edge. |
-| 53 | `BACKEND-API-VALIDATION-FRONTIER.24.1` | `active` | Implement only same-width vector multiplication chains such as generated `a * b * c * d`; keep division, modulo, XOR, scalar arithmetic, and mismatched-width arithmetic fail-closed. |
+| 53 | `BACKEND-API-VALIDATION-FRONTIER.24.1` | `done` | Implemented same-width vector multiplication chains such as generated `a * b * c * d`; XOR and other arithmetic forms remain fail-closed. |
+| 54 | `BACKEND-API-VALIDATION-FRONTIER.25` | `active` | Select the next exact backend/API/public-export edge after the bounded direct VHDL multiplication-chain widening. |
 
 ## Decisions
 
@@ -634,6 +643,7 @@ items named in the 2026-06-05 remaining-work inventory.
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.23` | Selection audit/read of `KNOWLEDGE_MAP.md`, `docs/book/src/14-feature-backlog.md`, `docs/VHDL_SCOPE.md`, `docs/knowledge/direct-vhdl-scaffold.md`, `perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm`, `t/1420-vhdl-direct-backend-scaffold.t`, `t/386-hdl-generator-facade-target-language-boundary-audit.t`, `t/corpus/arithmetic_xor_operator_variants.fsm`, `t/corpus/direct_assignment_pair_form.fsm`, and `t/corpus/rhs_expression_supported_variants.fsm`; `./bin/fsmgen --language vhdl --quiet t/corpus/direct_assignment_pair_form.fsm`; `./bin/fsmgen --language vhdl --quiet t/corpus/rhs_expression_supported_variants.fsm`; expected-failure probe `./bin/fsmgen --language vhdl --quiet t/corpus/arithmetic_xor_operator_variants.fsm` failed first on subtraction chain `a - b - c - d`; `command -v ghdl` returned unavailable; `prove -Iperl t/1420-vhdl-direct-backend-scaffold.t t/386-hdl-generator-facade-target-language-boundary-audit.t`; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; selected direct VHDL same-width vector subtraction chains for `.23.1` |
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.23.1` | `perl -Iperl -c perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm`; `perl -Iperl -c perl/FSM/HDL/FlattenedDT.pm`; `prove -Iperl t/1420-vhdl-direct-backend-scaffold.t t/386-hdl-generator-facade-target-language-boundary-audit.t t/114-composition-target-support-diagnostics.t t/404-hdl-generator-facade-target-language-shape-boundary-audit.t`; expected-failure probe `./bin/fsmgen --language vhdl --quiet t/corpus/arithmetic_xor_operator_variants.fsm` now fails on multiplication chain `a * b * c * d` after passing addition and subtraction chain RHS shapes; `./bin/fsmgen --language vhdl --quiet t/corpus/direct_assignment_pair_form.fsm`; `prove -Iperl t/313-hdl-external-validation-contract.t t/308-systemverilog-external-validation.t`; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; direct VHDL same-width vector subtraction chains are shipped while multiplication remains fail-closed |
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.24` | Selection audit/read of `KNOWLEDGE_MAP.md`, `docs/book/src/14-feature-backlog.md`, `docs/VHDL_SCOPE.md`, `docs/knowledge/direct-vhdl-scaffold.md`, `perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm`, `t/1420-vhdl-direct-backend-scaffold.t`, `t/386-hdl-generator-facade-target-language-boundary-audit.t`, and `t/corpus/arithmetic_xor_operator_variants.fsm`; `./bin/fsmgen --language vhdl --quiet t/corpus/direct_assignment_pair_form.fsm`; expected-failure probe `./bin/fsmgen --language vhdl --quiet t/corpus/arithmetic_xor_operator_variants.fsm` failed first on multiplication chain `a * b * c * d`; `command -v ghdl` returned unavailable; `prove -Iperl t/1420-vhdl-direct-backend-scaffold.t t/386-hdl-generator-facade-target-language-boundary-audit.t`; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; selected direct VHDL same-width vector multiplication chains for `.24.1` |
+| `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.24.1` | `perl -Iperl -c perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm`; `perl -Iperl -c perl/FSM/HDL/FlattenedDT.pm`; `prove -Iperl t/1420-vhdl-direct-backend-scaffold.t t/386-hdl-generator-facade-target-language-boundary-audit.t t/114-composition-target-support-diagnostics.t t/404-hdl-generator-facade-target-language-shape-boundary-audit.t`; expected-failure probe `./bin/fsmgen --language vhdl --quiet t/corpus/arithmetic_xor_operator_variants.fsm` now fails on XOR chain `x ^ y ^ z` after passing addition, subtraction, and multiplication chain RHS shapes; `./bin/fsmgen --language vhdl --quiet t/corpus/direct_assignment_pair_form.fsm`; `prove -Iperl t/313-hdl-external-validation-contract.t t/308-systemverilog-external-validation.t`; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; direct VHDL same-width vector multiplication chains are shipped while XOR remains fail-closed |
 
 ## Commit Log
 
@@ -691,6 +701,7 @@ items named in the 2026-06-05 remaining-work inventory.
 | `BACKEND-API-VALIDATION-FRONTIER.23` | `BACKEND-API-VALIDATION-FRONTIER.23: select VHDL subtraction chains` | selected `.23.1` |
 | `BACKEND-API-VALIDATION-FRONTIER.23.1` | `BACKEND-API-VALIDATION-FRONTIER.23.1: ship VHDL subtraction chains` | this slice |
 | `BACKEND-API-VALIDATION-FRONTIER.24` | `BACKEND-API-VALIDATION-FRONTIER.24: select VHDL multiplication chains` | selected `.24.1` |
+| `BACKEND-API-VALIDATION-FRONTIER.24.1` | `BACKEND-API-VALIDATION-FRONTIER.24.1: ship VHDL multiplication chains` | this slice |
 
 ## Changelog
 
@@ -943,3 +954,8 @@ items named in the 2026-06-05 remaining-work inventory.
   multiplication-chain RHS lowering as the next exact direct VHDL scaffold edge
   after the arithmetic operator corpus failed first on `a * b * c * d`.
   Activated `.24.1` before any backend code changes.
+- `2026-06-06`: Completed `.24.1`; direct VHDL generation now lowers
+  same-width vector multiplication chains through target-width `numeric_std`
+  resize. The arithmetic/XOR operator corpus now reaches the next fail-closed
+  boundary, XOR chain `x ^ y ^ z`. Activated `.25` to select the next
+  backend/API edge.

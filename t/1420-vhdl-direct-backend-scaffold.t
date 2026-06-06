@@ -232,13 +232,14 @@ FSM
     );
 };
 
-subtest 'direct VHDL scaffold keeps broader arithmetic expression parity fail-closed' => sub {
+subtest 'direct VHDL scaffold lowers same-width vector multiplication RHS chains' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
-    my $fsm_path = File::Spec->catfile($tempdir, 'direct_vhdl_multiply_deferred.fsm');
+    my $fsm_path = File::Spec->catfile($tempdir, 'direct_vhdl_multiplication_chain.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'direct_vhdl_multiplication_chain.vhd');
     write_file(
         $fsm_path,
         <<'FSM'
-(?fsm:direct_vhdl_multiply_deferred
+(?fsm:direct_vhdl_multiplication_chain
   (+system
     (clock clk)
     (sreset reset)
@@ -246,10 +247,60 @@ subtest 'direct VHDL scaffold keeps broader arithmetic expression parity fail-cl
   (+size
     (A 8)
     (B 8)
+    (C 8)
+    (D 8)
     (PRODUCT 8)
   )
   (idle
-    (= (PRODUCT (* A B)))
+    (= (PRODUCT (* A B C D)))
+  )
+)
+FSM
+    );
+
+    my $hdl = generate_vhdl($fsm_path);
+    like(
+        $hdl,
+        qr/\bPRODUCT\s+<=\s+std_logic_vector\(resize\(unsigned\(A\)\s+\*\s+unsigned\(B\)\s+\*\s+unsigned\(C\)\s+\*\s+unsigned\(D\),\s+8\)\);/s,
+        'same-width vector multiplication chains lower through target-width numeric_std resize',
+    );
+    unlike($hdl, qr/\balways_(?:ff|comb)\b|\bmodule\b/s, 'multiplication-chain VHDL output remains VHDL-shaped');
+
+    my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--language', 'vhdl', '--quiet', '-o', $output_path, $fsm_path],
+    );
+
+    my $combined_output = join('', @{ $stdout_buf || [] }, @{ $stderr_buf || [] }, ($error_message || ''));
+    ok($success, 'CLI accepts direct --language vhdl for the same-width vector multiplication-chain fixture')
+        or diag($combined_output);
+    ok(-e $output_path, 'CLI writes direct multiplication-chain VHDL output file');
+
+    my $cli_hdl = read_file($output_path);
+    like(
+        $cli_hdl,
+        qr/\bPRODUCT\s+<=\s+std_logic_vector\(resize\(unsigned\(A\)\s+\*\s+unsigned\(B\)\s+\*\s+unsigned\(C\)\s+\*\s+unsigned\(D\),\s+8\)\);/s,
+        'CLI multiplication-chain VHDL output uses target-width numeric_std resize',
+    );
+};
+
+subtest 'direct VHDL scaffold keeps broader arithmetic expression parity fail-closed' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $fsm_path = File::Spec->catfile($tempdir, 'direct_vhdl_division_deferred.fsm');
+    write_file(
+        $fsm_path,
+        <<'FSM'
+(?fsm:direct_vhdl_division_deferred
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+  (+size
+    (A 8)
+    (B 8)
+    (QUOTIENT 8)
+  )
+  (idle
+    (= (QUOTIENT (/ A B)))
   )
 )
 FSM
@@ -259,7 +310,7 @@ FSM
         generate_vhdl($fsm_path);
     });
 
-    like($error, qr/arithmetic expression 'A \* B' is outside the direct VHDL scaffold/s, 'multiplication remains outside the direct VHDL scaffold boundary');
+    like($error, qr/arithmetic expression 'A \/ B' is outside the direct VHDL scaffold/s, 'division remains outside the direct VHDL scaffold boundary');
 
     my $corpus_error = capture_exception(sub {
         generate_vhdl('t/corpus/arithmetic_xor_operator_variants.fsm');
@@ -267,7 +318,8 @@ FSM
 
     unlike($corpus_error, qr/arithmetic expression 'a \+ b \+ c \+ d'/s, 'arithmetic corpus no longer fails on the same-width addition chain');
     unlike($corpus_error, qr/arithmetic expression 'a - b - c - d'/s, 'arithmetic corpus no longer fails on the same-width subtraction chain');
-    like($corpus_error, qr/arithmetic expression 'a \* b \* c \* d' is outside the direct VHDL scaffold/s, 'multiplication chains remain outside the direct VHDL scaffold boundary');
+    unlike($corpus_error, qr/arithmetic expression 'a \* b \* c \* d'/s, 'arithmetic corpus no longer fails on the same-width multiplication chain');
+    like($corpus_error, qr/arithmetic expression 'x \^ y \^ z' is outside the direct VHDL scaffold/s, 'XOR chains remain outside the direct VHDL scaffold boundary');
 };
 
 subtest 'CLI routes direct --language vhdl through the scaffold' => sub {

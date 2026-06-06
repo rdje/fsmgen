@@ -524,6 +524,7 @@ sub _sv_expr_to_vhdl ($expr, $ctx = {}) {
 
 sub _has_arithmetic_operator ($expr) {
     return 1 if $expr =~ /[+\-*\/%]/;
+    return 1 if $expr =~ /\^/;
     return 1 if $expr =~ /\bmod\b/i;
     return 0;
 }
@@ -534,25 +535,30 @@ sub _simple_arithmetic_to_vhdl ($expr, $ctx) {
     };
 
     $unsupported->()
-        if $expr =~ /[*\/%]/ || $expr =~ /\bmod\b/i;
+        if $expr =~ /[\/%]/ || $expr =~ /\bmod\b/i || $expr =~ /\^/;
 
     my $operator;
-    my @operand_names;
-    if ($expr =~ /\+/ && $expr =~ /-/) {
+    my @operators = $expr =~ /([+*]|-)/g;
+    my %operator_seen = map { $_ => 1 } @operators;
+    if (!@operators || keys(%operator_seen) != 1) {
         $unsupported->();
-    }
-    elsif ($expr =~ /\+/) {
-        $operator = '+';
-        @operand_names = split /\s*\+\s*/, $expr;
-    }
-    elsif ($expr =~ /-/) {
-        $operator = '-';
-        @operand_names = split /\s*-\s*/, $expr;
     }
     else {
-        $unsupported->();
+        ($operator) = keys %operator_seen;
     }
 
+    my $separator;
+    if ($operator eq '+') {
+        $separator = qr/\s*\+\s*/;
+    }
+    elsif ($operator eq '-') {
+        $separator = qr/\s*-\s*/;
+    }
+    elsif ($operator eq '*') {
+        $separator = qr/\s*\*\s*/;
+    }
+
+    my @operand_names = split $separator, $expr;
     $unsupported->()
         unless @operand_names >= 2;
     for my $operand_name (@operand_names) {
@@ -577,7 +583,11 @@ sub _simple_arithmetic_to_vhdl ($expr, $ctx) {
         push @converted_operands, "unsigned($operand_name)";
     }
 
-    return 'std_logic_vector(' . join(" $operator ", @converted_operands) . ')';
+    my $converted_expression = join(" $operator ", @converted_operands);
+    return "std_logic_vector(resize($converted_expression, $target_width))"
+        if $operator eq '*';
+
+    return "std_logic_vector($converted_expression)";
 }
 
 sub _decl_for_lvalue ($lhs, $decls_by_name) {
