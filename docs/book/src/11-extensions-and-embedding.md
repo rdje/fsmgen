@@ -2195,6 +2195,10 @@ The generated-child public-export hardening edge now publishes
 parameter-override alias key families for
 `semantic.composition.generated_children[]` and
 `semantic.forward_ir.intent_hir.composition_generated_children[]`.
+The current selected public-export hardening edge is
+`BACKEND-API-VALIDATION-FRONTIER.52.1`: publish bounded scalar/list value key
+families for `semantic.symbol_contract.constants` and
+`semantic.forward_ir.intent_hir.symbol_contract.constants`.
 
 Do not treat the raw `HDLGenerator` result hash as a stable JSON document.
 
