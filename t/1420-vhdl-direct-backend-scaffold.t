@@ -1825,6 +1825,51 @@ FSM
     unlike($cli_hdl, qr/std_logic_vector\(unsigned\(A\)\s+\+\s+to_unsigned\(1,\s+8\)\)|to_unsigned\(1,\s+8\)/s, 'CLI signed literal addition output avoids unsigned casts');
 };
 
+subtest 'direct VHDL scaffold lowers signed vector negative numeric-literal addition RHS shape' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $fsm_path = File::Spec->catfile($tempdir, 'direct_vhdl_signed_negative_literal_add.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'direct_vhdl_signed_negative_literal_add.vhd');
+    write_file(
+        $fsm_path,
+        <<'FSM'
+(?fsm:direct_vhdl_signed_negative_literal_add
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+  (+types
+    (type signed_byte_t (four_state (signed (bits 8))))
+  )
+  (+size
+    (A signed_byte_t)
+    (SUM signed_byte_t)
+  )
+  (idle
+    (SUM = (+ A -1))
+  )
+)
+FSM
+    );
+
+    my $hdl = generate_vhdl($fsm_path);
+    like($hdl, qr/\bA\s+:\s+in\s+signed\(7\s+downto\s+0\);?/s, 'signed negative literal addition fixture lowers signed input port A');
+    like($hdl, qr/\bsignal\s+SUM\s+:\s+signed\(7\s+downto\s+0\);/s, 'signed negative literal addition fixture lowers signed output signal');
+    like($hdl, qr/\bSUM\s+<=\s+A\s+\+\s+to_signed\(-1,\s+8\);/s, 'signed vector negative literal addition lowers through to_signed');
+    unlike($hdl, qr/std_logic_vector\(unsigned\(A\)\s+\+\s+to_unsigned\(-1,\s+8\)\)|to_unsigned\(-1,\s+8\)|arithmetic expression 'A \+ -1'/s, 'signed negative literal addition avoids unsigned casts and the prior arithmetic guard');
+
+    my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--language', 'vhdl', '--quiet', '-o', $output_path, $fsm_path],
+    );
+    my $combined_output = join('', @{ $stdout_buf || [] }, @{ $stderr_buf || [] }, ($error_message || ''));
+    ok($success, 'CLI accepts direct --language vhdl for signed vector negative literal addition')
+        or diag($combined_output);
+    ok(-e $output_path, 'CLI writes signed vector negative literal addition VHDL output file');
+
+    my $cli_hdl = read_file($output_path);
+    like($cli_hdl, qr/\bSUM\s+<=\s+A\s+\+\s+to_signed\(-1,\s+8\);/s, 'CLI VHDL output includes signed negative literal addition assignment');
+    unlike($cli_hdl, qr/std_logic_vector\(unsigned\(A\)\s+\+\s+to_unsigned\(-1,\s+8\)\)|to_unsigned\(-1,\s+8\)|arithmetic expression 'A \+ -1'/s, 'CLI signed negative literal addition output avoids unsigned casts and the prior arithmetic guard');
+};
+
 subtest 'direct VHDL scaffold lowers signed vector numeric-literal subtraction RHS shape' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $fsm_path = File::Spec->catfile($tempdir, 'direct_vhdl_signed_literal_sub.fsm');

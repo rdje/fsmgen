@@ -262,13 +262,12 @@ targets lower to `std_logic` low-bit literals, so `2` emits
 assignments. The scaffold also lowers scalar output-port negative decimal
 literals for plain and signed one-bit output targets to `std_logic` low-bit
 literals, so `-1` emits `FLAG_next <= '1';` and `-2` emits `FLAG_next <= '0';`
-instead of failing at arithmetic expression `'-1'` or `'-2'`. Active leaf
-`BACKEND-API-VALIDATION-FRONTIER.113.1` owns the adjacent signed vector
-negative numeric-literal addition edge after unsigned and signed vector
-`SUM = (+ A -1)` probes both generated `SUM = A + -1;` and failed before VHDL
-emission at arithmetic expression `'A + -1'`; unsigned negative numeric-literal
-arithmetic and signed negative numeric-literal operators beyond addition remain
-deferred. Declared
+instead of failing at arithmetic expression `'-1'` or `'-2'`. The scaffold also
+lowers signed vector addition with a negative decimal numeric literal: an
+8-bit signed `SUM = (+ A -1)` fixture emits `SUM <= A + to_signed(-1, 8);`
+instead of failing at arithmetic expression `'A + -1'`. Active leaf
+`BACKEND-API-VALIDATION-FRONTIER.114` owns selection of the next exact
+backend/API edge after that signed negative addition slice shipped. Declared
 aggregate structural VHDL ports/nets/types in
 composition tops are locked fail-closed by
 `BACKEND-API-VALIDATION-FRONTIER.101.1`: aggregate top-port shapes that the
