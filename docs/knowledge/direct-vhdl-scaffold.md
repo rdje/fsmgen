@@ -57,6 +57,8 @@ answers:
   - "does composition VHDL support aggregate generic actuals?"
   - "does composition VHDL support list generic actuals?"
   - "does composition VHDL support record generic actuals?"
+  - "does composition VHDL support external-RTL non-packed aggregate generic maps?"
+  - "does composition VHDL support external non-packed aggregate generic maps?"
   - "does composition VHDL support package-backed generic maps?"
   - "does composition VHDL support package-backed generic actuals?"
   - "does composition VHDL emit package constants in generic maps?"
@@ -229,10 +231,11 @@ and also emit literal actuals, for example `param_pkg.WIDTH_16` and
 not VHDL package declaration/emission support. External-RTL one-bit actuals
 are supported only when the matching `.rtlif` parameter declaration provides
 scalar one-bit default metadata such as `ENABLE_DEFAULT 1'b0`. External-RTL
-non-packed aggregate generic-map hardening is active under
-`BACKEND-API-VALIDATION-FRONTIER.97.1`; until that leaf ships,
-aggregate/list/record actuals that do not resolve to multi-bit packed values,
-unresolved package/expression actuals, standalone-DT generic maps beyond scalar
+non-packed aggregate generic maps are locked fail-closed before VHDL emission:
+aggregate/list/record actuals that do not lower to one packed literal fail
+with the packed-literal diagnostic instead of emitting VHDL record/array
+generics. Unresolved package/expression actuals and standalone-DT generic maps
+beyond
 integer/scalar expression/one-bit sized-bitstring/multi-bit sized-bitstring/
 packed-list/packed-map actuals, and APB/C4 generic maps beyond scalar integer,
 scalar expression, one-bit sized-bitstring, and multi-bit sized-bitstring

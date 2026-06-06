@@ -73,6 +73,8 @@ my $expression_generic_map_path = File::Spec->catfile($tempdir, 'vhdl_expression
 my $expression_generic_map_output_path = File::Spec->catfile($tempdir, 'vhdl_expression_generic_map_top.vhd');
 my $aggregate_generic_map_path = File::Spec->catfile($tempdir, 'vhdl_aggregate_generic_map_top.fsm');
 my $aggregate_generic_map_output_path = File::Spec->catfile($tempdir, 'vhdl_aggregate_generic_map_top.vhd');
+my $external_nonpacked_aggregate_generic_map_path = File::Spec->catfile($tempdir, 'vhdl_external_nonpacked_aggregate_generic_map_top.fsm');
+my $external_nonpacked_aggregate_generic_map_output_path = File::Spec->catfile($tempdir, 'vhdl_external_nonpacked_aggregate_generic_map_top.vhd');
 my $one_bit_generic_map_path = File::Spec->catfile($tempdir, 'vhdl_one_bit_generic_map_top.fsm');
 my $one_bit_generic_map_output_path = File::Spec->catfile($tempdir, 'vhdl_one_bit_generic_map_top.vhd');
 my $generated_fsmc_scalar_generic_map_path = File::Spec->catfile($tempdir, 'vhdl_generated_fsmc_scalar_generic_map_top.fsm');
@@ -493,6 +495,37 @@ write_file(
 FSM
 );
 write_file(
+    $external_nonpacked_aggregate_generic_map_path,
+    <<'FSM'
+(?top:vhdl_external_nonpacked_aggregate_generic_map_top
+  (?ports:public_io
+    clk
+    payload_in<16
+    serial_out>
+  )
+  (?rtl:u_uart
+    (module uart_tx)
+    (params
+      (LANES ((+ 6 1) (+ 7 1)))
+    )
+  )
+  (?wiring:wiring
+    /payload_in/u_uart.data_in/
+    /u_uart.txd/serial_out/
+  )
+)
+
+(?rtlif:uart_tx
+  (params
+    (LANES ((+ 4 1) (+ 5 1)))
+  )
+  clk:clock
+  data_in<16:data
+  txd>:data
+)
+FSM
+);
+write_file(
     $one_bit_generic_map_path,
     <<'FSM'
 (?top:vhdl_one_bit_generic_map_top
@@ -892,6 +925,22 @@ unlike(
     $aggregate_generic_map_result->{hdl_code},
     qr/\bmodule\b|\bassign\b|\bendmodule\b|\balways_(?:ff|comb)\b|\#\s*\(|16'b1010010100111100|3'b101/s,
     'pipeline aggregate generic-map VHDL output does not leak SystemVerilog syntax or packed literal tokens',
+);
+
+my $external_nonpacked_aggregate_error;
+my $external_nonpacked_aggregate_ok = eval {
+    $pipeline->generate_hdl_from_file($external_nonpacked_aggregate_generic_map_path);
+    1;
+};
+$external_nonpacked_aggregate_error = $@;
+ok(
+    !$external_nonpacked_aggregate_ok,
+    'pipeline rejects external-RTL non-packed aggregate generic maps before VHDL emission',
+);
+like(
+    $external_nonpacked_aggregate_error,
+    qr/aggregate parameter\/generic values must lower to one packed literal before backend emission.*malformed_payload/s,
+    'pipeline external-RTL non-packed aggregate generic maps fail at the packed-literal boundary',
 );
 
 my $standalone_dtc_result = $pipeline->generate_hdl_from_file($standalone_dtc_composition_path);
@@ -1575,6 +1624,31 @@ unlike(
     $aggregate_generic_map_cli_hdl,
     qr/\bmodule\b|\bassign\b|\bendmodule\b|\balways_(?:ff|comb)\b|\#\s*\(|16'b1010010100111100|3'b101/s,
     'CLI aggregate generic-map composition VHDL output does not leak SystemVerilog syntax or packed literal tokens',
+);
+
+my ($external_nonpacked_aggregate_generic_map_success, $external_nonpacked_aggregate_generic_map_error_message, $external_nonpacked_aggregate_generic_map_full_buf, $external_nonpacked_aggregate_generic_map_stdout_buf, $external_nonpacked_aggregate_generic_map_stderr_buf) = run(
+    command => ['./bin/fsmgen', '--language', 'vhdl', '--quiet', '-o', $external_nonpacked_aggregate_generic_map_output_path, $external_nonpacked_aggregate_generic_map_path],
+);
+
+my $external_nonpacked_aggregate_generic_map_combined_output = join(
+    '',
+    @{ $external_nonpacked_aggregate_generic_map_stdout_buf || [] },
+    @{ $external_nonpacked_aggregate_generic_map_stderr_buf || [] },
+    ($external_nonpacked_aggregate_generic_map_error_message || ''),
+);
+
+ok(
+    !$external_nonpacked_aggregate_generic_map_success,
+    'CLI rejects external-RTL non-packed aggregate generic maps for VHDL',
+);
+like(
+    $external_nonpacked_aggregate_generic_map_combined_output,
+    qr/aggregate parameter\/generic values must lower to one packed literal before backend emission.*malformed_payload/s,
+    'CLI external-RTL non-packed aggregate generic-map rejection names the packed-literal boundary',
+);
+ok(
+    !-e $external_nonpacked_aggregate_generic_map_output_path,
+    'CLI does not write external-RTL non-packed aggregate generic-map VHDL output',
 );
 
 my ($standalone_dtc_success, $standalone_dtc_error_message, $standalone_dtc_full_buf, $standalone_dtc_stdout_buf, $standalone_dtc_stderr_buf) = run(

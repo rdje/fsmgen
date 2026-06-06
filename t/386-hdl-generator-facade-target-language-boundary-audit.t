@@ -501,6 +501,65 @@ FSM
     );
 };
 
+subtest 'facade target_language option rejects external-RTL non-packed aggregate generic-map VHDL boundary' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'facade_vhdl_external_nonpacked_aggregate_generic_map_top.fsm');
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:facade_vhdl_external_nonpacked_aggregate_generic_map_top
+  (?ports:public_io
+    clk
+    payload_in<16
+    serial_out>
+  )
+  (?rtl:u_uart
+    (module uart_tx)
+    (params
+      (LANES ((+ 6 1) (+ 7 1)))
+    )
+  )
+  (?wiring:wiring
+    /payload_in/u_uart.data_in/
+    /u_uart.txd/serial_out/
+  )
+)
+
+(?rtlif:uart_tx
+  (params
+    (LANES ((+ 4 1) (+ 5 1)))
+  )
+  clk:clock
+  data_in<16:data
+  txd>:data
+)
+FSM
+    );
+
+    my $vhdl_pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'vhdl',
+        quiet => 1,
+    );
+
+    my $error;
+    my $ok = eval {
+        $vhdl_pipeline->generate_hdl_from_file($composition_path);
+        1;
+    };
+    $error = $@;
+
+    ok(
+        !$ok,
+        'explicit VHDL facade generation rejects external-RTL non-packed aggregate generic maps',
+    );
+    like(
+        $error,
+        qr/aggregate parameter\/generic values must lower to one packed literal before backend emission.*malformed_payload/s,
+        'explicit VHDL facade rejection names the external-RTL non-packed aggregate packed-literal boundary',
+    );
+};
+
 subtest 'facade target_language option routes bounded standalone-DT composition VHDL structural top behavior' => sub {
     my $composition_path = repo_file('t/corpus/standalone_dtc_explicit_system_autowire.fsm');
     my $vhdl_pipeline = FSM::Pipeline::HDLGenerator->new(
