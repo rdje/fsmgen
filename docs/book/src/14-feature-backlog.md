@@ -3784,7 +3784,9 @@ contexts beyond the same-width
 addition/subtraction/multiplication/division/modulo/XOR RHS chain family remain
 fail-closed at the scaffold boundary. The maintained arithmetic/XOR and runtime
 division/modulo corpora now lower through the direct VHDL scaffold for that
-family.
+family. Generic-bearing direct-root module headers are selected for the next
+exact scaffold leaf (`BACKEND-API-VALIDATION-FRONTIER.27.1`) and are not yet a
+shipped VHDL subset claim.
 
 ### GHDL Validation
 

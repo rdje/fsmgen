@@ -16,6 +16,9 @@ This document defines the scoped R14 VHDL backend plan for FSMGen.
   scalar/vector XOR chains lower to VHDL `xor`.
 - Composition VHDL, aggregate VHDL, broad expression parity, GHDL validation,
   packages, multi-clock domains, and full feature parity remain deferred.
+- Generic-bearing direct-root module headers are the active next exact scaffold
+  edge (`BACKEND-API-VALIDATION-FRONTIER.27.1`); they are not yet shipped in
+  the current committed subset.
 
 ## Goal
 Implement a real, scoped VHDL backend that generates synthesizable VHDL from
@@ -47,9 +50,12 @@ The first VHDL lane is intentionally narrow:
      `if (<pulse_delay_pipe>) begin ... end` shape
    - Same-width addition, subtraction, multiplication, division, modulo, and
      XOR RHS chains in the generated direct combinational mux shape
+   - Direct-root generic-bearing module headers are selected for the next exact
+     leaf, not part of the currently shipped subset
 
 4. **Intentionally deferred:**
    - Composition-top VHDL
+   - Composition VHDL generic-map lowering
    - VHDL packages (SV packages → VHDL packages)
    - Intermediate signal factorization (needs VHDL signal declaration semantics)
    - Multi-clock domains

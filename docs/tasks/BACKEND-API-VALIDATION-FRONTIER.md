@@ -93,7 +93,8 @@ items named in the 2026-06-05 remaining-work inventory.
     `BACKEND-API-VALIDATION-FRONTIER.25.1`,
     `BACKEND-API-VALIDATION-FRONTIER.26`,
     `BACKEND-API-VALIDATION-FRONTIER.26.1`,
-    `BACKEND-API-VALIDATION-FRONTIER.27`
+    `BACKEND-API-VALIDATION-FRONTIER.27`,
+    `BACKEND-API-VALIDATION-FRONTIER.27.1`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.1`
   Status: `done`
@@ -540,9 +541,17 @@ items named in the 2026-06-05 remaining-work inventory.
   Commit: `this slice`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.27`
-  Status: `active`
+  Status: `done`
   Goal: `Select the next exact backend/API/public-export edge after direct VHDL division/modulo widening.`
+  Children: `BACKEND-API-VALIDATION-FRONTIER.27.1`
   Acceptance: `One remaining roadmap-aligned backend, validation, embedding, or public-export edge is selected from current code, contracts, mdBook, knowledge-map, and task-tree evidence. The selected edge has an exact implementation-or-deferral owner leaf before any code changes occur.`
+  Verification: `Selection audit/read of README.md, MEMORY_ARCHITECTURE.md, MEMORY.md, docs/TASK_TREE.md, docs/tasks/BACKEND-API-VALIDATION-FRONTIER.md, docs/book/src/14-feature-backlog.md, docs/VHDL_SCOPE.md, docs/knowledge/direct-vhdl-scaffold.md, perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm, t/1420-vhdl-direct-backend-scaffold.t, t/corpus/direct_intent_integer_literals.fsm, t/corpus/direct_lhs_deconstruct_pack.fsm, t/corpus/direct_canonical_init_directive.fsm, t/corpus/assignment_multiple_pulse_delays.fsm, and t/corpus/direct_size_expression_widths.fsm. ./bin/fsmgen --language vhdl --quiet -o /tmp/fsmgen_direct_intent_integer_literals_probe.vhd t/corpus/direct_intent_integer_literals.fsm passed; ./bin/fsmgen --language vhdl --quiet -o /tmp/fsmgen_direct_lhs_deconstruct_pack_probe.vhd t/corpus/direct_lhs_deconstruct_pack.fsm passed; ./bin/fsmgen --language vhdl --quiet -o /tmp/fsmgen_direct_canonical_init_directive_probe.vhd t/corpus/direct_canonical_init_directive.fsm passed; ./bin/fsmgen --language vhdl --quiet -o /tmp/fsmgen_assignment_multiple_pulse_delays_probe.vhd t/corpus/assignment_multiple_pulse_delays.fsm remains a pre-VHDL language-contract rejection for multiple pulse delays on one LHS; ./bin/fsmgen --language vhdl --quiet -o /tmp/fsmgen_direct_size_expression_widths_probe.vhd t/corpus/direct_size_expression_widths.fsm failed at the direct VHDL converter on the generated parameterized module boundary; ./bin/fsmgen --quiet -o /tmp/fsmgen_direct_size_expression_widths_probe.sv t/corpus/direct_size_expression_widths.fsm showed a bounded direct module parameter block with concrete resolved signal widths and no package/aggregate type payload; removed temporary /tmp/fsmgen_* probe outputs; command -v ghdl returned unavailable. Selected direct VHDL generic-bearing direct-root module headers as the next narrow scaffold edge, with BACKEND-API-VALIDATION-FRONTIER.27.1 owning implementation before any backend code changes.`
+  Commit: `pending`
+
+- ID: `BACKEND-API-VALIDATION-FRONTIER.27.1`
+  Status: `active`
+  Goal: `Support generic-bearing direct-root module headers in the direct VHDL scaffold.`
+  Acceptance: `FSM::HDL::FlattenedDT::Backend::VHDL accepts the generated SystemVerilog module parameter block shape emitted for t/corpus/direct_size_expression_widths.fsm and renders deterministic VHDL entity generics for positive integer direct-root parameters while preserving the already-resolved scalar/vector signal widths and literal assignments. The leaf does not widen composition generic maps, VHDL packages, aggregate VHDL record/array lowering, multi-clock domains, GHDL validation, full expression parity, or full backend parity. Focused VHDL pipeline/CLI/facade tests cover the direct generic-bearing fixture and preserve existing arithmetic/XOR, delayed-pulse, concat, reset, aggregate-fail-closed, composition-fail-closed, and multiple-pulse language-contract behavior. README/live docs/mdBook, the direct-VHDL fact card, task-tree, and memory are synchronized.`
   Verification: `pending`
   Commit: `pending`
 
@@ -607,7 +616,8 @@ items named in the 2026-06-05 remaining-work inventory.
 | 55 | `BACKEND-API-VALIDATION-FRONTIER.25.1` | `done` | Implemented same-width scalar/vector bitwise XOR chains such as generated `x ^ y ^ z`; division/modulo stayed out of that slice and were routed to later exact owners. |
 | 56 | `BACKEND-API-VALIDATION-FRONTIER.26` | `done` | Selected same-width runtime division/modulo RHS chains as the next exact direct VHDL scaffold edge after direct arithmetic/XOR and relational-expression probes showed `direct_runtime_div_mod` now fails first on `A / B`. |
 | 57 | `BACKEND-API-VALIDATION-FRONTIER.26.1` | `done` | Implemented same-width runtime division/modulo RHS chains with target-width `numeric_std` resize while keeping mismatched-width arithmetic and literal-zero divisor safety fail-closed. |
-| 58 | `BACKEND-API-VALIDATION-FRONTIER.27` | `active` | Select the next exact backend/API/public-export edge after the bounded direct VHDL division/modulo widening. |
+| 58 | `BACKEND-API-VALIDATION-FRONTIER.27` | `done` | Selected direct VHDL generic-bearing direct-root module headers as the next exact scaffold edge after probes showed the remaining direct size-expression fixture fails first on the generated SV `#(...)` parameter block. |
+| 59 | `BACKEND-API-VALIDATION-FRONTIER.27.1` | `active` | Implement only the direct parameter-block-to-VHDL-generic conversion for generated direct roots, leaving composition generic maps, VHDL packages, aggregate VHDL, GHDL, and full parity deferred. |
 
 ## Decisions
 
@@ -686,6 +696,7 @@ items named in the 2026-06-05 remaining-work inventory.
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.25.1` | `perl -Iperl -c perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm`; `perl -Iperl -c perl/FSM/HDL/FlattenedDT.pm`; `prove -Iperl t/1420-vhdl-direct-backend-scaffold.t t/386-hdl-generator-facade-target-language-boundary-audit.t t/114-composition-target-support-diagnostics.t t/404-hdl-generator-facade-target-language-shape-boundary-audit.t`; `./bin/fsmgen --language vhdl --quiet t/corpus/arithmetic_xor_operator_variants.fsm`; `./bin/fsmgen --language vhdl --quiet t/corpus/direct_assignment_pair_form.fsm`; `prove -Iperl t/313-hdl-external-validation-contract.t t/308-systemverilog-external-validation.t`; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; direct VHDL same-width bitwise XOR chains are shipped and the maintained arithmetic/XOR corpus now lowers cleanly |
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.26` | Selection audit/read of `README.md`, `MEMORY_ARCHITECTURE.md`, `MEMORY.md`, `docs/TASK_TREE.md`, `docs/tasks/BACKEND-API-VALIDATION-FRONTIER.md`, `docs/book/src/14-feature-backlog.md`, `docs/VHDL_SCOPE.md`, `docs/knowledge/direct-vhdl-scaffold.md`, `perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm`, `t/1420-vhdl-direct-backend-scaffold.t`, `t/386-hdl-generator-facade-target-language-boundary-audit.t`, and direct expression corpora; `./bin/fsmgen --language vhdl --quiet -o /tmp/fsmgen_direct_runtime_div_mod_probe.vhd t/corpus/direct_runtime_div_mod.fsm` failed as expected on `A / B`; `./bin/fsmgen --language vhdl --quiet -o /tmp/fsmgen_relational_operator_chains_probe.vhd t/corpus/relational_operator_chains.fsm`; `./bin/fsmgen --language vhdl --quiet -o /tmp/fsmgen_rhs_expression_supported_probe.vhd t/corpus/rhs_expression_supported_variants.fsm`; `./bin/fsmgen --quiet -o /tmp/fsmgen_direct_runtime_div_mod_probe.sv t/corpus/direct_runtime_div_mod.fsm`; `rg -n "QUO|REM|/|%" /tmp/fsmgen_direct_runtime_div_mod_probe.sv`; composition/aggregate probes confirmed their existing broader boundaries; removed `/tmp/fsmgen_*_probe.*` artifacts; `command -v ghdl` returned unavailable; `scripts/check_memory_architecture.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; selected direct VHDL same-width runtime division/modulo RHS chains for `.26.1` |
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.26.1` | `perl -Iperl -c perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm`; `perl -Iperl -c perl/FSM/HDL/FlattenedDT.pm`; `prove -Iperl t/1420-vhdl-direct-backend-scaffold.t t/386-hdl-generator-facade-target-language-boundary-audit.t t/114-composition-target-support-diagnostics.t t/404-hdl-generator-facade-target-language-shape-boundary-audit.t`; `prove -Iperl t/1320-direct-runtime-divisor-safety.t`; `./bin/fsmgen --language vhdl --quiet t/corpus/direct_runtime_div_mod.fsm`; `./bin/fsmgen --language vhdl --quiet t/corpus/arithmetic_xor_operator_variants.fsm`; `prove -Iperl t/313-hdl-external-validation-contract.t t/308-systemverilog-external-validation.t`; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; direct VHDL same-width runtime division/modulo RHS chains are shipped while mismatched-width arithmetic and literal-zero divisor safety remain fail-closed |
+| `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.27` | Selection audit/read of `README.md`, `MEMORY_ARCHITECTURE.md`, `MEMORY.md`, `docs/TASK_TREE.md`, `docs/tasks/BACKEND-API-VALIDATION-FRONTIER.md`, `docs/book/src/14-feature-backlog.md`, `docs/VHDL_SCOPE.md`, `docs/knowledge/direct-vhdl-scaffold.md`, `perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm`, `t/1420-vhdl-direct-backend-scaffold.t`, and direct VHDL corpus fixtures; `./bin/fsmgen --language vhdl --quiet -o /tmp/fsmgen_direct_intent_integer_literals_probe.vhd t/corpus/direct_intent_integer_literals.fsm`; `./bin/fsmgen --language vhdl --quiet -o /tmp/fsmgen_direct_lhs_deconstruct_pack_probe.vhd t/corpus/direct_lhs_deconstruct_pack.fsm`; `./bin/fsmgen --language vhdl --quiet -o /tmp/fsmgen_direct_canonical_init_directive_probe.vhd t/corpus/direct_canonical_init_directive.fsm`; expected language-contract failure `./bin/fsmgen --language vhdl --quiet -o /tmp/fsmgen_assignment_multiple_pulse_delays_probe.vhd t/corpus/assignment_multiple_pulse_delays.fsm`; expected VHDL boundary failure `./bin/fsmgen --language vhdl --quiet -o /tmp/fsmgen_direct_size_expression_widths_probe.vhd t/corpus/direct_size_expression_widths.fsm`; `./bin/fsmgen --quiet -o /tmp/fsmgen_direct_size_expression_widths_probe.sv t/corpus/direct_size_expression_widths.fsm`; `sed -n '1,260p' /tmp/fsmgen_direct_size_expression_widths_probe.sv`; removed temporary `/tmp/fsmgen_*` probe outputs; `command -v ghdl` returned unavailable; `scripts/check_memory_architecture.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; selected direct VHDL generic-bearing direct-root module headers for `.27.1` |
 
 ## Commit Log
 
@@ -748,6 +759,7 @@ items named in the 2026-06-05 remaining-work inventory.
 | `BACKEND-API-VALIDATION-FRONTIER.25.1` | `BACKEND-API-VALIDATION-FRONTIER.25.1: ship VHDL XOR chains` | this slice |
 | `BACKEND-API-VALIDATION-FRONTIER.26` | `BACKEND-API-VALIDATION-FRONTIER.26: select VHDL div mod chains` | selected `.26.1` |
 | `BACKEND-API-VALIDATION-FRONTIER.26.1` | `BACKEND-API-VALIDATION-FRONTIER.26.1: ship VHDL div mod chains` | this slice |
+| `BACKEND-API-VALIDATION-FRONTIER.27` | `BACKEND-API-VALIDATION-FRONTIER.27: select VHDL direct generics` | selected `.27.1` |
 
 ## Changelog
 
@@ -1025,3 +1037,8 @@ items named in the 2026-06-05 remaining-work inventory.
   safety, aggregate VHDL, composition VHDL, GHDL validation, and full backend
   parity remain deferred or fail-closed. Activated `.27` to select the next
   backend/API edge.
+- `2026-06-06`: Completed `.27`; selected generic-bearing direct-root module
+  headers as the next exact direct VHDL scaffold edge after
+  `direct_size_expression_widths` failed first on the generated SV `#(...)`
+  parameter block while narrower direct fixtures passed. Activated `.27.1`
+  before any backend code changes.
