@@ -267,7 +267,8 @@ items named in the 2026-06-05 remaining-work inventory.
     `BACKEND-API-VALIDATION-FRONTIER.112.1`,
     `BACKEND-API-VALIDATION-FRONTIER.113`,
     `BACKEND-API-VALIDATION-FRONTIER.113.1`,
-    `BACKEND-API-VALIDATION-FRONTIER.114`
+    `BACKEND-API-VALIDATION-FRONTIER.114`,
+    `BACKEND-API-VALIDATION-FRONTIER.114.1`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.1`
   Status: `done`
@@ -2009,10 +2010,18 @@ items named in the 2026-06-05 remaining-work inventory.
   Commit: `BACKEND-API-VALIDATION-FRONTIER.113.1: lower signed negative arithmetic VHDL literals`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.114`
-  Status: `active`
+  Status: `done`
   Goal: `Select the next exact backend/API edge after signed vector negative numeric-literal addition lowering shipped.`
+  Children: `BACKEND-API-VALIDATION-FRONTIER.114.1`
   Acceptance: `Selection-only leaf. Audit the backend/API frontier after .113.1, current VHDL scope, mdBook backlog, direct-VHDL fact card, normalized semantic export/public API status, focused contract/backend/facade tests, maintained direct/composition VHDL sweeps, current validation environment, and current frontier rows; choose the next narrow implementation, hardening, or documented blocking owner before any code/test/source edits. The selector must preserve task-tree ownership for the chosen child leaf, synchronize README/VHDL scope/mdBook/fact card/memory if the selected frontier changes user-visible scope, and leave unsigned negative numeric-literal arithmetic, signed negative numeric-literal operators beyond addition, broad expression-literal parity, raw package-spec internals, VHDL package declaration/emission, GHDL validation, full normalized semantic export stabilization, broad VHDL aggregate record/array lowering, full composition VHDL parity, and full backend parity deferred unless it explicitly chooses one of those exact edges.`
-  Verification: `pending selection`
+  Verification: `Selection audit/read of MEMORY.md, docs/TASK_TREE.md, docs/tasks/BACKEND-API-VALIDATION-FRONTIER.md, docs/VHDL_SCOPE.md, docs/book/src/14-feature-backlog.md, docs/knowledge/direct-vhdl-scaffold.md, KNOWLEDGE_MAP.md, README.md, and the current direct-VHDL frontier facts. Temporary direct VHDL probes showed signed vector SUM = (- A -1), (* A -2), (/ A -2), and (% A -2) all still fail closed at arithmetic expressions 'A - -1', 'A * -2', 'A / -2', and 'A % -2'; an unsigned vector SUM = (+ A -1) probe also still fails at arithmetic expression 'A + -1'. Selected bounded direct VHDL signed vector negative numeric-literal subtraction RHS lowering for .114.1 before any implementation/test/source edits, leaving unsigned negative numeric-literal arithmetic, signed negative numeric-literal multiplication/division/modulo, broad expression-literal parity, package emission, GHDL validation, aggregate record/array VHDL, composition widening, normalized semantic stabilization, and full backend parity deferred. Focused prove -Iperl t/1420-vhdl-direct-backend-scaffold.t t/386-hdl-generator-facade-target-language-boundary-audit.t t/114-composition-target-support-diagnostics.t; bash knowledge-map/scripts/check_knowledge_map.sh; scripts/check_memory_architecture.sh.`
+  Commit: `BACKEND-API-VALIDATION-FRONTIER.114: select signed negative subtraction VHDL lowering`
+
+- ID: `BACKEND-API-VALIDATION-FRONTIER.114.1`
+  Status: `active`
+  Goal: `Lower direct VHDL signed vector negative numeric-literal subtraction RHS assignments.`
+  Acceptance: `Direct single-FSM VHDL generation must lower generated signed vector RHS assignments with one signed vector operand minus one negative decimal numeric literal, such as DIFF = A - -1 for an 8-bit signed target and operand, into VHDL signed arithmetic through pipeline, CLI, and facade coverage. The leaf is limited to signed vector subtraction with literal negative decimal RHS operands in the direct VHDL scaffold; unsigned negative numeric-literal arithmetic, signed negative numeric-literal addition beyond the already shipped .113.1 subset, signed negative numeric-literal multiplication/division/modulo, positive signed numeric-literal arithmetic, direct assignment/output literal behavior, sized bitstring literal behavior, aggregate record/array lowering, composition/top VHDL, package root/import behavior, GHDL validation, broad expression parity, raw package-spec internals, full normalized semantic export stabilization, and full backend parity must remain unchanged or explicitly deferred. README, docs/VHDL_SCOPE.md, mdBook, direct-VHDL fact card/knowledge map, task tree, and MEMORY stay synchronized.`
+  Verification: `pending implementation`
   Commit: `pending`
 
 ## Current Frontier
@@ -2250,7 +2259,8 @@ items named in the 2026-06-05 remaining-work inventory.
 | 229 | `BACKEND-API-VALIDATION-FRONTIER.112.1` | `done` | Lowered scalar output negative decimal literal assignments such as FLAG_next <= -1 and signed one-bit aliases such as FLAG_next <= -2 into VHDL std_logic low-bit assignments through pipeline, CLI, facade, docs, and fact-card coverage. |
 | 230 | `BACKEND-API-VALIDATION-FRONTIER.113` | `done` | Selected direct VHDL signed vector negative numeric-literal addition after unsigned and signed vector SUM = (+ A -1) probes both failed at arithmetic expression 'A + -1'. |
 | 231 | `BACKEND-API-VALIDATION-FRONTIER.113.1` | `done` | Lowered signed vector negative numeric-literal addition such as SUM = (+ A -1) into VHDL signed arithmetic through pipeline, CLI, facade, docs, and fact-card coverage. |
-| 232 | `BACKEND-API-VALIDATION-FRONTIER.114` | `active` | Select the next exact backend/API edge after signed vector negative numeric-literal addition lowering shipped. |
+| 232 | `BACKEND-API-VALIDATION-FRONTIER.114` | `done` | Selected direct VHDL signed vector negative numeric-literal subtraction after signed vector subtraction/multiplication/division/modulo probes and an unsigned negative addition probe all still failed closed. |
+| 233 | `BACKEND-API-VALIDATION-FRONTIER.114.1` | `active` | Lower signed vector negative numeric-literal subtraction such as DIFF = (- A -1) into VHDL signed arithmetic through pipeline, CLI, facade, docs, and fact-card coverage. |
 
 ## Decisions
 
@@ -2675,11 +2685,20 @@ items named in the 2026-06-05 remaining-work inventory.
 | `BACKEND-API-VALIDATION-FRONTIER.112.1` | `BACKEND-API-VALIDATION-FRONTIER.112.1: lower scalar negative output VHDL literals` | this slice; activates `.113` |
 | `BACKEND-API-VALIDATION-FRONTIER.113` | `BACKEND-API-VALIDATION-FRONTIER.113: select signed negative arithmetic literal VHDL lowering` | selected `.113.1` |
 | `BACKEND-API-VALIDATION-FRONTIER.113.1` | `BACKEND-API-VALIDATION-FRONTIER.113.1: lower signed negative arithmetic VHDL literals` | this slice; activates `.114` |
-| `BACKEND-API-VALIDATION-FRONTIER.114` | `pending` | active selector leaf |
+| `BACKEND-API-VALIDATION-FRONTIER.114` | `BACKEND-API-VALIDATION-FRONTIER.114: select signed negative subtraction VHDL lowering` | selected `.114.1` |
+| `BACKEND-API-VALIDATION-FRONTIER.114.1` | `pending` | active implementation leaf |
 
 ## Changelog
 
 - `2026-06-05`: Created proposed backend/API frontier owner tree.
+- `2026-06-06`: Completed `.114`; selected direct VHDL signed vector negative
+  numeric-literal subtraction RHS lowering as `.114.1` after temporary signed
+  vector probes for `SUM = (- A -1)`, `(* A -2)`, `(/ A -2)`, and `(% A -2)`
+  failed at arithmetic expressions `'A - -1'`, `'A * -2'`, `'A / -2'`, and
+  `'A % -2'`; an unsigned vector `SUM = (+ A -1)` probe also still failed at
+  arithmetic expression `'A + -1'`. Unsigned negative numeric-literal
+  arithmetic and signed negative numeric-literal multiplication/division/modulo
+  remain deferred to later exact leaves.
 - `2026-06-06`: Completed `.113.1`; direct VHDL now lowers signed vector
   negative numeric-literal addition RHS assignments through target-width
   `to_signed`, so an 8-bit signed `SUM = (+ A -1)` fixture emits
