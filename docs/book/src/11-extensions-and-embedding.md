@@ -901,7 +901,9 @@ fixtures.
 The facade also routes the shipped bounded composition VHDL structural tops:
 the C3 external-RTL literal/concat fixture in
 `t/corpus/composition_intent_integer_literals.fsm` emits VHDL concurrent
-literal/concat assignments and an `entity work.uart_tx` port map, and the C1
+literal/concat assignments and an `entity work.uart_tx` port map. The external
+RTL C3 subset also emits scalar integer `generic map` actuals before the port
+map, such as `WIDTH => 16`. The C1
 standalone-DT passthrough fixture in
 `t/corpus/standalone_dtc_explicit_system_autowire.fsm` emits the
 `standalone_route_src` child VHDL entity plus an `entity work.standalone_route_src`
@@ -916,7 +918,8 @@ SystemVerilog `module`, `assign`, `endmodule`, or `always_*` syntax.
 Other composition/top VHDL shapes remain fail-closed after typed composition IR
 parsing, with broader generated-child/C4, internal-net-heavy, generic-map,
 package, and full-parity composition shapes rejected by the scoped composition
-target-support diagnostic.
+target-support diagnostic. Generic maps beyond external-RTL scalar integer
+actuals remain deferred.
 That is still a scoped scaffold, not a full VHDL backend promise.
 
 [t/387-hdl-generator-facade-debug-level-boundary-audit.t](t/387-hdl-generator-facade-debug-level-boundary-audit.t)
@@ -2314,10 +2317,9 @@ this normalized semantic shape:
 ```
 
 The current active backend/API frontier is
-`BACKEND-API-VALIDATION-FRONTIER.73.1`, which owns only bounded external-RTL
-C3 scalar integer VHDL generic-map lowering after direct VHDL signed scalar
-addition/subtraction/multiplication RHS lowering shipped. Package-import
-internals, already bounded
+`BACKEND-API-VALIDATION-FRONTIER.74`, which selects the next exact backend/API
+edge after bounded external-RTL C3 scalar integer VHDL generic-map lowering
+shipped. Package-import internals, already bounded
 constant/enum/type internals, unrelated forward-IR payloads, signed scalar
 division/modulo, mixed signed/unsigned arithmetic, generated-FSM and
 standalone-DT generic maps, vector/bitstring and aggregate generic actuals,

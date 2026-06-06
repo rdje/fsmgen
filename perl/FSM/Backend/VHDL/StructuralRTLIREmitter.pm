@@ -110,13 +110,29 @@ sub _render_instance_block ($instance) {
     my $instance_kind = $instance->{kind} // '';
     confess _unsupported("child kind '$instance_kind' is outside the bounded structural-top leaves")
         unless $instance_kind eq 'rtl' || $instance_kind eq 'dtc' || $instance_kind eq 'fsmc';
-    confess _unsupported('composition VHDL generic maps are outside the first structural-top leaf')
-        if @{$instance->{parameter_overrides} || []};
+
+    my @parameter_overrides = @{$instance->{parameter_overrides} || []};
+    if (@parameter_overrides) {
+        confess _unsupported('composition VHDL generic maps are currently limited to external RTL scalar integer overrides')
+            unless $instance_kind eq 'rtl';
+    }
 
     my $instance_name = _identifier($instance->{instance_name}, 'instance name');
     my $module_name = _identifier($instance->{module_name}, 'instance module name');
     my @bindings = @{$instance->{port_bindings} || []};
+    my @generic_lines;
     my @binding_lines;
+
+    for my $index (0 .. $#parameter_overrides) {
+        my $override = $parameter_overrides[$index];
+        my $suffix = $index == $#parameter_overrides ? '' : ',';
+        push @generic_lines, sprintf(
+            '      %s => %s%s',
+            _identifier($override->{name}, 'instance generic name'),
+            _vhdl_generic_actual($override),
+            $suffix,
+        );
+    }
 
     for my $index (0 .. $#bindings) {
         my $binding = $bindings[$index];
@@ -131,10 +147,32 @@ sub _render_instance_block ($instance) {
 
     return join("\n",
         "  $instance_name : entity work.$module_name",
+        '    generic map (',
+        @generic_lines,
+        '    )',
+        '    port map (',
+        @binding_lines,
+        '    );',
+    ) if @generic_lines;
+
+    return join("\n",
+        "  $instance_name : entity work.$module_name",
         '    port map (',
         @binding_lines,
         '    );',
     );
+}
+
+sub _vhdl_generic_actual ($override) {
+    my $kind = $override->{value_kind} // 'scalar';
+    confess _unsupported('composition VHDL generic maps are currently limited to scalar integer actuals')
+        unless $kind eq 'scalar';
+
+    my $value = $override->{value_text};
+    confess _unsupported('composition VHDL generic maps are currently limited to scalar integer actuals')
+        unless defined($value) && $value =~ /\A-?\d+\z/;
+
+    return $value;
 }
 
 sub _normalize_vhdl_auxiliary_assignment ($line) {

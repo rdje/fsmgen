@@ -20,6 +20,8 @@ answers:
   - "does target_language vhdl work for standalone-DT composition roots?"
   - "does target_language vhdl work for C2 generated-FSM composition roots?"
   - "does target_language vhdl work for APB/C4 composition roots?"
+  - "does composition VHDL support generic maps?"
+  - "does composition VHDL support external RTL generic maps?"
   - "does direct VHDL support aggregate outputs?"
   - "is composition VHDL supported?"
   - "is GHDL validation active?"
@@ -163,7 +165,11 @@ The bounded C1 standalone-DT child composition VHDL top is also shipped for
 `t/corpus/standalone_dtc_explicit_system_autowire.fsm`. That subset emits the
 `standalone_route_src` child VHDL entity plus a top-level
 `entity work.standalone_route_src` port map for the explicit passthrough ports,
-without SystemVerilog structural syntax. The bounded C2 generated-FSM child
+without SystemVerilog structural syntax. External-RTL C3 composition VHDL also
+lowers scalar integer parameter overrides to `generic map` actuals before the
+port map, such as `WIDTH => 16`; vector/bitstring, aggregate/list/record,
+package-backed, generated-child, standalone-DT, and APB/C4 generic maps remain
+deferred. The bounded C2 generated-FSM child
 composition VHDL top is also shipped for
 `t/corpus/implicit_composition_system_autowire.fsm`. That subset emits VHDL-safe
 generated-child shared-datapath export ports/assignments, scalar structural

@@ -333,24 +333,27 @@ semantics remain deferred until one exact composition contract is selected.
 
 ### VHDL Generic-Map Lowering
 
-Status: backlog, behind future composition VHDL work.
+Status: partially shipped; broader generic-map actuals and child families remain backlog.
 
 Goal: lower validated composition parameter/generic overrides into VHDL
 generic maps.
 
 Current boundary: the Verilog-family backend lowers validated parameters and
-aggregate overrides to SystemVerilog `#(...)` instance parameters. VHDL
-generic-map lowering is not shipped. The shipped composition VHDL tops are the
-bounded C3 external-RTL literal/concat fixture in
+aggregate overrides to SystemVerilog `#(...)` instance parameters. VHDL now
+lowers bounded external-RTL scalar integer overrides to `generic map` actuals,
+such as `WIDTH => 16`, before the instance `port map`. The shipped composition
+VHDL tops are the bounded C3 external-RTL literal/concat fixture in
 `t/corpus/composition_intent_integer_literals.fsm` and the bounded C1
 standalone-DT passthrough fixture in
 `t/corpus/standalone_dtc_explicit_system_autowire.fsm`, plus the bounded C2
 generated-FSM scalar-autowire fixture in
 `t/corpus/implicit_composition_system_autowire.fsm`, plus the bounded APB/C4
-generated-FSM fixture in `fsm/apb_tb.fsm`; all have no parameter overrides.
-Other `?top` VHDL shapes still parse into typed composition IR and
-then fail closed with the scoped target-support diagnostic. Generic maps remain
-deferred until a later leaf owns that exact composition VHDL path.
+generated-FSM fixture in `fsm/apb_tb.fsm`. Other `?top` VHDL shapes still
+parse into typed composition IR and then fail closed with the scoped
+target-support diagnostic. Generated-FSM and standalone-DT generic maps,
+vector/bitstring actuals, aggregate/list/record actuals, package-backed
+actuals, and APB/C4 generic-map shapes remain deferred until later exact leaves
+own those paths.
 
 ### Broader Generated-Child Top Instantiation
 
@@ -3815,7 +3818,8 @@ generated-FSM scalar-autowire top for
 `t/corpus/implicit_composition_system_autowire.fsm`, plus the bounded APB/C4
 generated-FSM top for `fsm/apb_tb.fsm`.
 Still backlog beyond those exact owners: broader generated-FSM/C4 composition
-VHDL, internal-net-heavy composition tops beyond APB, composition generic maps,
+VHDL, internal-net-heavy composition tops beyond APB, composition generic maps
+beyond external-RTL scalar integer actuals,
 aggregate VHDL record/array lowering, VHDL packages, multi-clock domains, GHDL
 validation, broad expression parity, signed scalar division/modulo,
 mixed signed/unsigned scalar arithmetic, mixed signed/unsigned vector
@@ -3837,12 +3841,14 @@ fixture, and multi-bit sized-literal generic defaults now lower to typed
 `std_logic_vector` generics in the maintained aggregate unary complement
 fixture. Maintained aggregate-output direct roots now lower as packed-vector
 VHDL ports; full VHDL record/array aggregate lowering remains deferred.
-Composition VHDL generic maps remain deferred until a composition VHDL leaf
-owns that path. The bounded C3 external-RTL literal/concat structural top now
-emits a VHDL entity/architecture with concurrent literal/concat assignments and
-an external `entity work.uart_tx` port map. The bounded C1 standalone-DT
-passthrough structural top now emits the standalone-DT child VHDL segment and a
-top-level `entity work.standalone_route_src` port map. The bounded C2
+External-RTL scalar integer composition generic maps now lower to VHDL
+`generic map` actuals before the port map; broader generic-map families remain
+deferred until exact owner leaves select them. The bounded C3 external-RTL
+literal/concat structural top now emits a VHDL entity/architecture with
+concurrent literal/concat assignments and an external `entity work.uart_tx`
+port map. The bounded C1 standalone-DT passthrough structural top now emits the
+standalone-DT child VHDL segment and a top-level
+`entity work.standalone_route_src` port map. The bounded C2
 generated-FSM scalar-autowire structural top now emits VHDL-safe generated-child
 shared-datapath export ports/assignments, scalar structural signals, and both
 generated child entity port maps. The bounded APB/C4 generated-FSM structural
@@ -3881,8 +3887,9 @@ emits `SUM <= A + B;`, a signed `DIFF = (- A B)` assignment emits
 `REM <= resize(A mod B, 8);`, rather than unsigned casts. Scalar signed
 division/modulo, mixed signed/unsigned arithmetic, broader generated-FSM/C4
 composition VHDL beyond the exact shipped fixtures, internal-net-heavy
-composition tops beyond APB, composition generic maps, aggregate VHDL,
-packages, GHDL validation, and full backend parity remain outside the shipped
+composition tops beyond APB, composition generic maps beyond external-RTL
+scalar integer actuals, aggregate VHDL, packages, GHDL validation, and full
+backend parity remain outside the shipped
 scaffold. Signed vector numeric-literal
 addition/subtraction/multiplication/division/modulo also lower through
 target-width `to_signed`, so `SUM = (+ A 1)` emits
@@ -4093,10 +4100,9 @@ schema metadata for `semantic.symbol_contract.types` and
 recursive `items` or `members` plus `member_order`.
 
 Current active backend edge: task-tree leaf
-`BACKEND-API-VALIDATION-FRONTIER.73.1` owns only bounded external-RTL C3 scalar
-integer VHDL generic-map lowering after direct VHDL signed scalar
-addition/subtraction/multiplication RHS lowering shipped. Package-import
-internals, already bounded
+`BACKEND-API-VALIDATION-FRONTIER.74` selects the next exact backend/API edge
+after bounded external-RTL C3 scalar integer VHDL generic-map lowering shipped.
+Package-import internals, already bounded
 constant/enum/type internals, unrelated forward-IR payloads, signed scalar
 division/modulo, mixed signed/unsigned arithmetic, generated-FSM and
 standalone-DT generic maps, vector/bitstring and aggregate generic actuals,
