@@ -373,9 +373,10 @@ integer generic maps before the standalone-DT child port map, such as
 `ENABLE_DEFAULT => '1'`, and multi-bit sized bitstring generic maps such as
 `RESET_VALUE => "10100101"`, while the child entity keeps the matching VHDL
 integer, `std_logic`, or `std_logic_vector` generic declaration. Packed-list
-generic maps such as `LANES => "1010010100111100"` also emit before the
-standalone-DT child port map. Other `?top` VHDL shapes still parse into typed
-composition IR and then fail closed with the scoped target-support diagnostic.
+generic maps such as `LANES => "1010010100111100"` and packed-map generic
+maps such as `FRAME => "101"` also emit before the standalone-DT child port
+map. Other `?top` VHDL shapes still parse into typed composition IR and then
+fail closed with the scoped target-support diagnostic.
 Standalone-DT one-bit, multi-bit, and aggregate generic maps, APB/C4
 generic-map shapes, aggregate/list/record actuals that do not
 resolve to multi-bit packed values, unresolved package/expression actuals,
@@ -3888,7 +3889,8 @@ expression actuals now emitted as `EXPR_WIDTH => (8 + 1)`, standalone-DT
 one-bit sized bitstring actuals now emitted as `ENABLE_DEFAULT => '1'`,
 standalone-DT multi-bit sized bitstring actuals now emitted as
 `RESET_VALUE => "10100101"`, standalone-DT packed-list actuals now emitted as
-`LANES => "1010010100111100"`, bounded C2
+`LANES => "1010010100111100"`, standalone-DT packed-map actuals now emitted as
+`FRAME => "101"`, bounded C2
 generated-FSM scalar integer actuals now emitted as `WIDTH => 16`,
 generated-FSM scalar expression actuals now emitted as `EXPR_WIDTH => (16 + 1)`,
 one-bit sized bitstring actuals now
@@ -3903,8 +3905,9 @@ standalone-DT child VHDL segment and a top-level
 also emits scalar integer generic maps such as `WIDTH => 16`, scalar
 expression generic maps such as `EXPR_WIDTH => (8 + 1)`, and one-bit sized
 bitstring generic maps such as `ENABLE_DEFAULT => '1'`, and multi-bit sized
-bitstring generic maps such as `RESET_VALUE => "10100101"`, and packed-list
-generic maps such as `LANES => "1010010100111100"` before that port map.
+bitstring generic maps such as `RESET_VALUE => "10100101"`, packed-list
+generic maps such as `LANES => "1010010100111100"`, and packed-map generic
+maps such as `FRAME => "101"` before that port map.
 The bounded C2
 generated-FSM scalar-autowire structural top now emits VHDL-safe generated-child
 shared-datapath export ports/assignments, scalar structural signals, and both
@@ -4165,14 +4168,14 @@ schema metadata for `semantic.symbol_contract.types` and
 recursive `items` or `members` plus `member_order`.
 
 Current active backend edge: task-tree leaf
-`BACKEND-API-VALIDATION-FRONTIER.89.1` implements only bounded C1
-standalone-DT packed-map VHDL generic-map actuals after `.89` selected that
-exact edge.
+`BACKEND-API-VALIDATION-FRONTIER.90` selects the next exact backend/API edge
+after bounded C1 standalone-DT packed-map VHDL generic-map actuals shipped in
+`.89.1`.
 Package declaration and VHDL package emission, already bounded
 constant/enum/type internals, unrelated forward-IR payloads, signed scalar
 division/modulo, mixed signed/unsigned arithmetic, standalone-DT generic maps
 beyond scalar integer, scalar expression, one-bit sized bitstring, multi-bit
-sized bitstring, packed-list actuals, and the active packed-map slice,
+sized bitstring, packed-list, and packed-map actuals,
 APB/C4 generic maps,
 full aggregate VHDL record/array lowering, broader generated-FSM/C4
 composition VHDL beyond the exact shipped fixtures, internal nets/generic maps

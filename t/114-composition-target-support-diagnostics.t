@@ -42,6 +42,8 @@ my $standalone_dtc_bitstring_generic_map_path = File::Spec->catfile($tempdir, 'v
 my $standalone_dtc_bitstring_generic_map_output_path = File::Spec->catfile($tempdir, 'vhdl_standalone_dtc_bitstring_generic_map_top.vhd');
 my $standalone_dtc_list_generic_map_path = File::Spec->catfile($tempdir, 'vhdl_standalone_dtc_list_generic_map_top.fsm');
 my $standalone_dtc_list_generic_map_output_path = File::Spec->catfile($tempdir, 'vhdl_standalone_dtc_list_generic_map_top.vhd');
+my $standalone_dtc_map_generic_map_path = File::Spec->catfile($tempdir, 'vhdl_standalone_dtc_map_generic_map_top.fsm');
+my $standalone_dtc_map_generic_map_output_path = File::Spec->catfile($tempdir, 'vhdl_standalone_dtc_map_generic_map_top.vhd');
 my $generated_fsmc_output_path = File::Spec->catfile($tempdir, 'implicit_composition_system_autowire.vhd');
 my $apb_c4_output_path = File::Spec->catfile($tempdir, 'apb_tb.vhd');
 my $scalar_generic_map_path = File::Spec->catfile($tempdir, 'vhdl_scalar_generic_map_top.fsm');
@@ -290,6 +292,42 @@ write_file(
 (?dt:standalone_route_src
   (+params
     (LANES (8'h00 8'h00))
+  )
+  (+system
+    (clock clk)
+    (areset rst_n)
+  )
+  (+size
+    (data_in 16)
+    (result_data 16)
+  )
+  (:= (result_data 16'0))
+  (-capture
+    (<= (result_data data_in))
+  )
+)
+FSM
+);
+write_file(
+    $standalone_dtc_map_generic_map_path,
+    <<'FSM'
+(?top:vhdl_standalone_dtc_map_generic_map_top
+  (?ports:public_io
+    clk
+    rst_n
+    data_in<16
+    result_data>16
+  )
+  (?dtc:router standalone_route_src
+    (params
+      (FRAME ((mode 2'b10) (flag 1)))
+    )
+  )
+)
+
+(?dt:standalone_route_src
+  (+params
+    (FRAME ((mode 2'b00) (flag 0)))
   )
   (+system
     (clock clk)
@@ -936,6 +974,23 @@ unlike(
     'pipeline standalone-DT packed-list generic-map VHDL output does not leak SystemVerilog generic syntax or packed literals',
 );
 
+my $standalone_dtc_map_generic_map_result = $pipeline->generate_hdl_from_file($standalone_dtc_map_generic_map_path);
+like(
+    $standalone_dtc_map_generic_map_result->{hdl_code},
+    qr/\bentity\s+standalone_route_src\s+is\s+generic\s*\(\s*FRAME\s+:\s+std_logic_vector\(2\s+downto\s+0\)\s*:=\s*"000"\s*\);\s+port\s*\(/s,
+    'pipeline emits the standalone-DT child packed-map generic declaration',
+);
+like(
+    $standalone_dtc_map_generic_map_result->{hdl_code},
+    qr/\brouter\s+:\s+entity\s+work\.standalone_route_src\s+generic\s+map\s*\(\s*FRAME\s+=>\s+"101"\s*\)\s+port\s+map\s*\(/s,
+    'pipeline emits standalone-DT packed-map generic maps before the child port map',
+);
+unlike(
+    $standalone_dtc_map_generic_map_result->{hdl_code},
+    qr/\bmodule\b|\bassign\b|\bendmodule\b|\balways_(?:ff|comb)\b|\#\s*\(|\.FRAME\s*\(|3'b|2'b/s,
+    'pipeline standalone-DT packed-map generic-map VHDL output does not leak SystemVerilog generic syntax or packed literals',
+);
+
 my $generated_fsmc_result = $pipeline->generate_hdl_from_file($generated_fsmc_composition_path);
 like(
     $generated_fsmc_result->{hdl_code},
@@ -1507,6 +1562,38 @@ unlike(
     $standalone_dtc_list_generic_map_cli_hdl,
     qr/\bmodule\b|\bassign\b|\bendmodule\b|\balways_(?:ff|comb)\b|\#\s*\(|\.LANES\s*\(|16'b|8'h/s,
     'CLI standalone-DT packed-list generic-map VHDL output does not leak SystemVerilog generic syntax or packed literals',
+);
+
+my ($standalone_dtc_map_generic_map_success, $standalone_dtc_map_generic_map_error_message, $standalone_dtc_map_generic_map_full_buf, $standalone_dtc_map_generic_map_stdout_buf, $standalone_dtc_map_generic_map_stderr_buf) = run(
+    command => ['./bin/fsmgen', '--language', 'vhdl', '--quiet', '-o', $standalone_dtc_map_generic_map_output_path, $standalone_dtc_map_generic_map_path],
+);
+
+my $standalone_dtc_map_generic_map_combined_output = join(
+    '',
+    @{ $standalone_dtc_map_generic_map_stdout_buf || [] },
+    @{ $standalone_dtc_map_generic_map_stderr_buf || [] },
+    ($standalone_dtc_map_generic_map_error_message || ''),
+);
+
+ok($standalone_dtc_map_generic_map_success, 'CLI accepts standalone-DT packed-map generic maps for VHDL')
+    or diag($standalone_dtc_map_generic_map_combined_output);
+ok(-e $standalone_dtc_map_generic_map_output_path, 'CLI writes standalone-DT packed-map generic-map VHDL output');
+
+my $standalone_dtc_map_generic_map_cli_hdl = read_file($standalone_dtc_map_generic_map_output_path);
+like(
+    $standalone_dtc_map_generic_map_cli_hdl,
+    qr/\bFRAME\s+:\s+std_logic_vector\(2\s+downto\s+0\)\s*:=\s*"000"/s,
+    'CLI standalone-DT packed-map generic-map output includes the child generic declaration',
+);
+like(
+    $standalone_dtc_map_generic_map_cli_hdl,
+    qr/\brouter\s+:\s+entity\s+work\.standalone_route_src\s+generic\s+map\s*\(\s*FRAME\s+=>\s+"101"\s*\)\s+port\s+map\s*\(/s,
+    'CLI standalone-DT packed-map generic-map output includes the child generic map',
+);
+unlike(
+    $standalone_dtc_map_generic_map_cli_hdl,
+    qr/\bmodule\b|\bassign\b|\bendmodule\b|\balways_(?:ff|comb)\b|\#\s*\(|\.FRAME\s*\(|3'b|2'b/s,
+    'CLI standalone-DT packed-map generic-map VHDL output does not leak SystemVerilog generic syntax or packed literals',
 );
 
 my ($generated_fsmc_success, $generated_fsmc_error_message, $generated_fsmc_full_buf, $generated_fsmc_stdout_buf, $generated_fsmc_stderr_buf) = run(

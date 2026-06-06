@@ -863,6 +863,71 @@ FSM
     );
 };
 
+subtest 'facade target_language option routes bounded standalone-DT packed-map generic-map behavior' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'facade_vhdl_standalone_dtc_map_generic_map_top.fsm');
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:facade_vhdl_standalone_dtc_map_generic_map_top
+  (?ports:public_io
+    clk
+    rst_n
+    data_in<16
+    result_data>16
+  )
+  (?dtc:router standalone_route_src
+    (params
+      (FRAME ((mode 2'b10) (flag 1)))
+    )
+  )
+)
+
+(?dt:standalone_route_src
+  (+params
+    (FRAME ((mode 2'b00) (flag 0)))
+  )
+  (+system
+    (clock clk)
+    (areset rst_n)
+  )
+  (+size
+    (data_in 16)
+    (result_data 16)
+  )
+  (:= (result_data 16'0))
+  (-capture
+    (<= (result_data data_in))
+  )
+)
+FSM
+    );
+
+    my $vhdl_pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'vhdl',
+        quiet => 1,
+    );
+
+    my $vhdl_result = $vhdl_pipeline->generate_hdl_from_file($composition_path);
+
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bentity\s+standalone_route_src\s+is\s+generic\s*\(\s*FRAME\s+:\s+std_logic_vector\(2\s+downto\s+0\)\s*:=\s*"000"\s*\);\s+port\s*\(/s,
+        'explicit VHDL facade generation emits the standalone-DT child packed-map generic declaration',
+    );
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\brouter\s+:\s+entity\s+work\.standalone_route_src\s+generic\s+map\s*\(\s*FRAME\s+=>\s+"101"\s*\)\s+port\s+map\s*\(/s,
+        'explicit VHDL facade generation emits standalone-DT packed-map generic maps before the child port map',
+    );
+    unlike(
+        $vhdl_result->{hdl_code},
+        qr/\bmodule\b|\bassign\b|\bendmodule\b|\balways_(?:ff|comb)\b|\#\s*\(|\.FRAME\s*\(|3'b|2'b/s,
+        'explicit VHDL standalone-DT packed-map generic-map generation does not leak SystemVerilog generic syntax or packed literals',
+    );
+};
+
 subtest 'facade target_language option routes bounded generated-FSM composition VHDL structural top behavior' => sub {
     my $composition_path = repo_file('t/corpus/implicit_composition_system_autowire.fsm');
     my $vhdl_pipeline = FSM::Pipeline::HDLGenerator->new(

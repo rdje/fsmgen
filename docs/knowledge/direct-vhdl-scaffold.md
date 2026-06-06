@@ -19,6 +19,8 @@ answers:
   - "does composition VHDL support standalone-DT bitstring generic maps?"
   - "does composition VHDL support standalone-DT list generic maps?"
   - "does composition VHDL support standalone-DT packed-list generic maps?"
+  - "does composition VHDL support standalone-DT map generic maps?"
+  - "does composition VHDL support standalone-DT packed-map generic maps?"
   - "does composition VHDL support generated-FSM children?"
   - "does composition VHDL support C2 generated-FSM children?"
   - "does composition VHDL support APB/C4 generated-FSM children?"
@@ -194,12 +196,13 @@ The bounded C1 standalone-DT child composition VHDL top is also shipped for
 `entity work.standalone_route_src` port map for the explicit passthrough ports,
 without SystemVerilog structural syntax. The same bounded C1 standalone-DT
 family also lowers scalar integer, scalar integer expression, one-bit
-sized-bitstring, multi-bit sized-bitstring, and packed-list parameter overrides to
-`generic map` actuals before the standalone-DT child port map, such as
-`WIDTH => 16`, `EXPR_WIDTH => (8 + 1)`, `ENABLE_DEFAULT => '1'`, and
-`RESET_VALUE => "10100101"` plus `LANES => "1010010100111100"`, while the
-child entity keeps the matching VHDL integer, `std_logic`, or
-`std_logic_vector` generic declaration.
+sized-bitstring, multi-bit sized-bitstring, packed-list, and packed-map
+parameter overrides to `generic map` actuals before the standalone-DT child
+port map, such as `WIDTH => 16`, `EXPR_WIDTH => (8 + 1)`,
+`ENABLE_DEFAULT => '1'`, `RESET_VALUE => "10100101"`,
+`LANES => "1010010100111100"`, and `FRAME => "101"`, while the child entity
+keeps the matching VHDL integer, `std_logic`, or `std_logic_vector` generic
+declaration.
 External-RTL C3 composition VHDL also
 lowers scalar integer, metadata-backed one-bit sized bitstring, and multi-bit
 sized bitstring parameter overrides to `generic map` actuals before the port
@@ -218,7 +221,7 @@ scalar one-bit default metadata such as `ENABLE_DEFAULT 1'b0`;
 aggregate/list/record actuals that do not resolve to multi-bit packed values,
 unresolved package/expression actuals, standalone-DT generic maps beyond scalar
 integer/scalar expression/one-bit sized-bitstring/multi-bit sized-bitstring/
-packed-list actuals, and APB/C4 generic maps remain deferred for those
+packed-list/packed-map actuals, and APB/C4 generic maps remain deferred for those
 families. The
 bounded C2 generated-FSM child
 composition VHDL top is also shipped for

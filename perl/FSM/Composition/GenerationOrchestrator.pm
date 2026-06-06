@@ -186,7 +186,8 @@ sub _has_only_supported_standalone_dt_generic_overrides ($instance) {
         my $kind = $override->{value_kind} // 'scalar';
         my $is_scalar = $kind eq 'scalar';
         my $is_packed_list = $kind eq 'list';
-        return 0 unless $is_scalar || $is_packed_list;
+        my $is_packed_map = $kind eq 'map';
+        return 0 unless $is_scalar || $is_packed_list || $is_packed_map;
 
         my $value = $override->{value_text};
         return 0 unless defined($value);
@@ -200,6 +201,9 @@ sub _has_only_supported_standalone_dt_generic_overrides ($instance) {
             && _is_supported_multi_bit_sized_bitstring_literal($value);
         next if $is_packed_list
             && _is_metadata_backed_packed_list_generic_override($override)
+            && _is_supported_multi_bit_sized_bitstring_literal($value);
+        next if $is_packed_map
+            && _is_metadata_backed_packed_map_generic_override($override)
             && _is_supported_multi_bit_sized_bitstring_literal($value);
         return 0;
     }
@@ -239,6 +243,22 @@ sub _is_metadata_backed_scalar_multi_bit_generic_override ($override) {
 sub _is_metadata_backed_packed_list_generic_override ($override) {
     return 0 unless ($override->{value_kind} // '') eq 'list';
     return 0 unless ($override->{declaration_default_value_kind} // '') eq 'list';
+    return 0
+        unless defined $override->{declaration_default_value_width}
+        && $override->{declaration_default_value_width} =~ /\A\d+\z/;
+    return 0
+        unless defined $override->{value_width}
+        && $override->{value_width} =~ /\A\d+\z/;
+
+    my $decl_width = $override->{declaration_default_value_width} + 0;
+    my $value_width = $override->{value_width} + 0;
+    return 0 unless $decl_width > 1;
+    return $decl_width == $value_width ? 1 : 0;
+}
+
+sub _is_metadata_backed_packed_map_generic_override ($override) {
+    return 0 unless ($override->{value_kind} // '') eq 'map';
+    return 0 unless ($override->{declaration_default_value_kind} // '') eq 'map';
     return 0
         unless defined $override->{declaration_default_value_width}
         && $override->{declaration_default_value_width} =~ /\A\d+\z/;
