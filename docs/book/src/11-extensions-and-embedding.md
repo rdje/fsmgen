@@ -2364,16 +2364,15 @@ this normalized semantic shape:
 ```
 
 The current active backend/API frontier is
-`BACKEND-API-VALIDATION-FRONTIER.95`, which selects the next exact backend/API
-edge after bounded APB/C4 generated-FSM resolved packed aggregate VHDL generic
-maps shipped.
+`BACKEND-API-VALIDATION-FRONTIER.95.1`, which locks and documents the bounded
+APB/C4 generated-FSM resolved package-backed VHDL generic-map edge selected by
+`.95`.
 Package declaration and VHDL package emission, already bounded
 constant/enum/type internals, unrelated forward-IR payloads, signed scalar
 division/modulo, mixed signed/unsigned arithmetic, standalone-DT generic maps
 beyond scalar integer, scalar expression, one-bit sized bitstring, multi-bit
 sized bitstring, packed-list, and packed-map actuals, APB/C4
-generic maps beyond scalar integer, scalar expression, one-bit sized bitstring,
-multi-bit sized bitstring, and resolved packed aggregate actuals, full aggregate VHDL
+generic maps beyond the selected package-backed edge, full aggregate VHDL
 record/array lowering, broader
 generated-FSM/C4 composition VHDL beyond the exact shipped fixtures, internal
 nets/generic maps beyond APB, broader expression parity beyond the shipped
