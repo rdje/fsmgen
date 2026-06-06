@@ -2203,9 +2203,11 @@ constant value carries `kind`; scalar values add `payload`, and list values add
 `items`. Enum/type nested schemas, package-import internals, and full
 normalized semantic export stabilization remain out of scope.
 The current active backend/API frontier is
-`BACKEND-API-VALIDATION-FRONTIER.53`, which selects the next exact
-backend/API/public-export edge after these symbol-contract constants map value
-schemas.
+`BACKEND-API-VALIDATION-FRONTIER.53.1`, which publishes symbol-contract enum
+map value schema metadata for `semantic.symbol_contract.enums` and
+`semantic.forward_ir.intent_hir.symbol_contract.enums`. Type nested schemas,
+package-import internals, already bounded constant internals, and full
+normalized semantic export stabilization remain out of scope.
 
 Do not treat the raw `HDLGenerator` result hash as a stable JSON document.
 

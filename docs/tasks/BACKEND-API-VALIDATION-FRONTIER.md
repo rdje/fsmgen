@@ -145,7 +145,8 @@ items named in the 2026-06-05 remaining-work inventory.
     `BACKEND-API-VALIDATION-FRONTIER.51.1`,
     `BACKEND-API-VALIDATION-FRONTIER.52`,
     `BACKEND-API-VALIDATION-FRONTIER.52.1`,
-    `BACKEND-API-VALIDATION-FRONTIER.53`
+    `BACKEND-API-VALIDATION-FRONTIER.53`,
+    `BACKEND-API-VALIDATION-FRONTIER.53.1`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.1`
   Status: `done`
@@ -982,10 +983,18 @@ items named in the 2026-06-05 remaining-work inventory.
   Commit: `BACKEND-API-VALIDATION-FRONTIER.52.1: ship symbol constants schema`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.53`
-  Status: `active`
+  Status: `done`
   Goal: `Select the next exact backend/API/public-export edge after symbol-contract constants map value schemas shipped.`
-  Acceptance: `A single next executable backend/API/public-export leaf is selected from roadmap, mdBook, knowledge-map, and code/test evidence. The selected edge receives an exact implementation owner before any code/test/source/config edits, and the selection preserves the current public-export stabilization boundaries unless evidence proves a narrower safe slice.`
-  Verification: `pending selection`
+  Children: `BACKEND-API-VALIDATION-FRONTIER.53.1`
+  Acceptance: `Selected normalized semantic symbol-contract enum map value schemas as the next exact public-export hardening edge. Evidence shows semantic.symbol_contract.enums and semantic.forward_ir.intent_hir.symbol_contract.enums are emitted for symbol-rich roots and already checked by direct/composition symbol-contract tests, while FSM::Support::NormalizedSemanticSymbolContract guidance still says nested enum/type fields are not frozen unless separately documented and regression-backed. The implementation owner is BACKEND-API-VALIDATION-FRONTIER.53.1 before any contract/test/code edits. The slice must publish bounded enum map value/member-payload schema metadata for symbol_contract enums by delegating the matching top-level and intent-HIR symbol-contract surfaces, without widening type internals, package-import internals, constant internals beyond the already shipped scalar/list value schema, unrelated forward-IR payloads, or full normalized semantic export stabilization.`
+  Verification: `Selection audit/read of docs/book/src/14-feature-backlog.md, docs/book/src/11-extensions-and-embedding.md, README.md, KNOWLEDGE_MAP.md, perl/FSM/Support/NormalizedSemanticSymbolContract.pm, perl/FSM/Package/Symbols.pm, perl/FSM/Composition/TopSymbols.pm, t/277-direct-symbol-contract-forward-ir.t, t/278-composition-symbol-contract-forward-ir.t, t/279-declarative-scalar-types.t, t/335-normalized-semantic-symbol-contract.t, and t/corpus/direct_size_expression_widths.fsm. A strict normalized semantic JSON probe over t/corpus/direct_size_expression_widths.fsm showed semantic.symbol_contract.enums emits {"width_e":{"FLAG":1}}, with types empty and package_imports empty for that fixture.`
+  Commit: `BACKEND-API-VALIDATION-FRONTIER.53: select symbol enum schema`
+
+- ID: `BACKEND-API-VALIDATION-FRONTIER.53.1`
+  Status: `active`
+  Goal: `Publish symbol-contract enum map value schemas in normalized semantic symbol contracts.`
+  Acceptance: `semantic.symbol_contract.enums and semantic.forward_ir.intent_hir.symbol_contract.enums advertise bounded enum map value/member-payload schema metadata for emitted enum entries. Payload/report contracts, capability-manifest semantic export metadata, README, mdBook, defensive-copy audits, and runtime contract tests inherit or describe those symbol-contract enum schema metadata fields. The slice does not widen type nested schemas, package-import nested schemas, already bounded constant scalar/list internals, unrelated forward-IR payloads, or full normalized semantic export stabilization.`
+  Verification: `pending implementation`
   Commit: `pending`
 
 ## Current Frontier
@@ -1101,7 +1110,8 @@ items named in the 2026-06-05 remaining-work inventory.
 | 107 | `BACKEND-API-VALIDATION-FRONTIER.51.1` | `done` | Published generated-child parameter-override metadata and alias key families for semantic.composition.generated_children[] and semantic.forward_ir.intent_hir.composition_generated_children[]. |
 | 108 | `BACKEND-API-VALIDATION-FRONTIER.52` | `done` | Selected symbol-contract constants map value schemas after runtime and contract evidence showed the public constants map still lacks bounded nested scalar/list value key families. |
 | 109 | `BACKEND-API-VALIDATION-FRONTIER.52.1` | `done` | Published bounded semantic.symbol_contract.constants value schemas for scalar/list constants without widening enum/type internals or full normalized semantic export stabilization. |
-| 110 | `BACKEND-API-VALIDATION-FRONTIER.53` | `active` | Select the next exact backend/API/public-export edge after symbol-contract constants map value schemas shipped. |
+| 110 | `BACKEND-API-VALIDATION-FRONTIER.53` | `done` | Selected symbol-contract enum map value schemas after runtime and contract evidence showed the public enums map still lacks bounded nested enum value/member-payload metadata. |
+| 111 | `BACKEND-API-VALIDATION-FRONTIER.53.1` | `active` | Publish symbol-contract enum map value schemas for `semantic.symbol_contract.enums` and the intent-HIR alias before any type/package-import internals or full normalized semantic export stabilization. |
 
 ## Decisions
 
@@ -1232,6 +1242,7 @@ items named in the 2026-06-05 remaining-work inventory.
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.51.1` | `perl -Iperl -c perl/FSM/Composition/ChildExportBuilder.pm`; `perl -Iperl -c perl/FSM/Support/NormalizedSemanticCompositionContract.pm`; `perl -Iperl -c perl/FSM/Support/NormalizedSemanticIntentHIRContract.pm`; `perl -Iperl -c perl/FSM/Support/NormalizedSemanticForwardIRContract.pm`; `perl -Iperl -c perl/FSM/Support/NormalizedSemanticPayloadContract.pm`; `perl -Iperl -c perl/FSM/Support/NormalizedSemanticReportContract.pm`; edited-test syntax checks; focused normalized semantic generated-child parameter-override prove bundle; broader normalized semantic contract/runtime prove bundle; manifest runtime prove bundle; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; generated-child parameter-override metadata and alias key families shipped through composition, intent-HIR, forward-IR, payload/report, manifest, docs, knowledge-map, defensive-copy audits, and runtime schema coverage; activated `.52` |
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.52` | Selection audit/read of `docs/book/src/14-feature-backlog.md`, `docs/book/src/11-extensions-and-embedding.md`, `KNOWLEDGE_MAP.md`, `perl/FSM/Support/NormalizedSemanticSymbolContract.pm`, `perl/FSM/Support/NormalizedSemanticIntentHIRContract.pm`, `perl/FSM/Support/NormalizedSemanticPayloadContract.pm`, `perl/FSM/Support/NormalizedSemanticReportContract.pm`, `t/335-normalized-semantic-symbol-contract.t`, `t/354-normalized-semantic-child-runtime-contract-audit.t`, and `t/corpus/direct_size_expression_widths.fsm`; strict normalized semantic JSON probe over `t/corpus/direct_size_expression_widths.fsm` showed `semantic.symbol_contract.constants` and `semantic.forward_ir.intent_hir.symbol_contract.constants` both emit scalar values with `kind`/`payload` and list values with `kind`/`items`; `prove -Iperl t/335-normalized-semantic-symbol-contract.t t/354-normalized-semantic-child-runtime-contract-audit.t`; `scripts/check_memory_architecture.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; selected symbol-contract constants map value schemas for `.52.1` |
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.52.1` | `perl -Iperl -c perl/FSM/Support/NormalizedSemanticSymbolContract.pm`; `perl -Iperl -c perl/FSM/Support/NormalizedSemanticIntentHIRContract.pm`; `perl -Iperl -c perl/FSM/Support/NormalizedSemanticForwardIRContract.pm`; `perl -Iperl -c perl/FSM/Support/NormalizedSemanticPayloadContract.pm`; `perl -Iperl -c perl/FSM/Support/NormalizedSemanticReportContract.pm`; edited-test syntax checks; focused normalized semantic symbol-constant schema prove bundle; broader normalized semantic contract/runtime prove bundle; manifest runtime prove bundle; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; symbol-contract constants map value schemas shipped through symbol, intent-HIR, forward-IR, payload/report, manifest, docs, knowledge-map, defensive-copy audits, and runtime schema coverage; activated `.53` |
+| `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.53` | Selection audit/read of `docs/book/src/14-feature-backlog.md`, `docs/book/src/11-extensions-and-embedding.md`, `README.md`, `KNOWLEDGE_MAP.md`, `perl/FSM/Support/NormalizedSemanticSymbolContract.pm`, `perl/FSM/Package/Symbols.pm`, `perl/FSM/Composition/TopSymbols.pm`, `t/277-direct-symbol-contract-forward-ir.t`, `t/278-composition-symbol-contract-forward-ir.t`, `t/279-declarative-scalar-types.t`, `t/335-normalized-semantic-symbol-contract.t`, and `t/corpus/direct_size_expression_widths.fsm`; strict normalized semantic JSON probe over `t/corpus/direct_size_expression_widths.fsm` showed `semantic.symbol_contract.enums` emits `{"width_e":{"FLAG":1}}`, with `types` empty and `package_imports` empty for that fixture; focused direct/composition/type/symbol-contract prove bundle; `scripts/check_memory_architecture.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; selected symbol-contract enum map value schemas for `.53.1` |
 
 ## Commit Log
 
@@ -1346,6 +1357,7 @@ items named in the 2026-06-05 remaining-work inventory.
 | `BACKEND-API-VALIDATION-FRONTIER.51.1` | `BACKEND-API-VALIDATION-FRONTIER.51.1: ship generated child parameter overrides` | this slice; activates `.52` |
 | `BACKEND-API-VALIDATION-FRONTIER.52` | `BACKEND-API-VALIDATION-FRONTIER.52: select symbol constants schema` | selected `.52.1` |
 | `BACKEND-API-VALIDATION-FRONTIER.52.1` | `BACKEND-API-VALIDATION-FRONTIER.52.1: ship symbol constants schema` | this slice; activates `.53` |
+| `BACKEND-API-VALIDATION-FRONTIER.53` | `BACKEND-API-VALIDATION-FRONTIER.53: select symbol enum schema` | selected `.53.1` |
 
 ## Changelog
 
@@ -1910,3 +1922,9 @@ items named in the 2026-06-05 remaining-work inventory.
   intent-HIR, forward-IR, payload/report, capability-manifest, README, mdBook,
   knowledge-map, defensive-copy audits, and runtime schema coverage. Activated
   `.53` to select the next backend/API/public-export edge.
+- `2026-06-06`: Completed `.53`; selected symbol-contract enum map value
+  schemas as the next exact public-export edge after runtime evidence showed
+  `semantic.symbol_contract.enums` emits enum-name maps whose values are
+  member-payload maps, while the normalized semantic contract still had no
+  bounded enum value/member-payload schema metadata. Activated `.53.1` before
+  any implementation/test/source edits.

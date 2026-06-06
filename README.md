@@ -826,9 +826,11 @@ constant value carries `kind`; scalar values add `payload`, and list values add
 `items`. Enum/type nested schemas, package-import internals, and full
 normalized semantic export stabilization remain out of scope.
 The current active backend/API frontier is
-`BACKEND-API-VALIDATION-FRONTIER.53`: select the next exact
-backend/API/public-export edge after the symbol-contract constants map value
-schemas shipped.
+`BACKEND-API-VALIDATION-FRONTIER.53.1`: publish symbol-contract enum map
+value schema metadata for `semantic.symbol_contract.enums` and
+`semantic.forward_ir.intent_hir.symbol_contract.enums`. Type nested schemas,
+package-import internals, already bounded constant internals, and full
+normalized semantic export stabilization remain out of scope.
 The manifest is still not a full normalized semantic export stabilization
 promise.
 The manifest-facing stable diagnostic-code registry now has its own explicit
