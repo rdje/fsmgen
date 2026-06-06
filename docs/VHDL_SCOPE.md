@@ -18,6 +18,9 @@ This document defines the scoped R14 VHDL backend plan for FSMGen.
   generated SystemVerilog `parameter` blocks lower to VHDL integer generics.
 - Composition VHDL, aggregate VHDL, broad expression parity, GHDL validation,
   packages, multi-clock domains, and full feature parity remain deferred.
+- Generated sized-literal generic defaults such as `1'b1` and `1'b0` are the
+  active next exact scaffold edge (`BACKEND-API-VALIDATION-FRONTIER.28.1`);
+  they are not yet shipped in the current committed subset.
 
 ## Goal
 Implement a real, scoped VHDL backend that generates synthesizable VHDL from
@@ -51,6 +54,8 @@ The first VHDL lane is intentionally narrow:
      XOR RHS chains in the generated direct combinational mux shape
    - Generic-bearing direct-root module headers emitted by the generated
      SystemVerilog `#(...)` parameter-block shape
+   - Sized-literal generic defaults are selected for the next exact leaf, not
+     part of the currently shipped subset
 
 4. **Intentionally deferred:**
    - Composition-top VHDL

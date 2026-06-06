@@ -3788,6 +3788,10 @@ division/modulo corpora now lower through the direct VHDL scaffold for that
 family, and the maintained size-expression width fixture now lowers generated
 direct-root parameter blocks to VHDL integer generics. Composition VHDL
 generic maps remain deferred until a composition VHDL leaf owns that path.
+Generated sized-literal generic defaults such as `1'b1` and `1'b0` are
+selected for the next exact scaffold leaf
+(`BACKEND-API-VALIDATION-FRONTIER.28.1`) and are not yet a shipped VHDL subset
+claim.
 
 ### GHDL Validation
 
