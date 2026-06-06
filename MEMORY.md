@@ -11,9 +11,9 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
 ## Current state (OVERWRITE this block each update — do not append)
-- latest_commit: `BACKEND-API-VALIDATION-FRONTIER.39.1` (this commit) — shipped direct VHDL vector signal plus/minus numeric literal mux lowering through target-width `to_unsigned` casts. `git log -1` for the hash.
-- active_work_unit: `BACKEND-API-VALIDATION-FRONTIER.40` active frontier — select the next exact backend/API/public-export edge before any further code/test/source edits.
-- recently_done: `BACKEND-API-VALIDATION-FRONTIER.39.1`; `BACKEND-API-VALIDATION-FRONTIER.39`; `BACKEND-API-VALIDATION-FRONTIER.38.1`; `BACKEND-API-VALIDATION-FRONTIER.38`; `BACKEND-API-VALIDATION-FRONTIER.37.1`; `BACKEND-API-VALIDATION-FRONTIER.37`; `BACKEND-API-VALIDATION-FRONTIER.36.1`; `BACKEND-API-VALIDATION-FRONTIER.36`; `BACKEND-API-VALIDATION-FRONTIER.35.1`; `BACKEND-API-VALIDATION-FRONTIER.35`; `BACKEND-API-VALIDATION-FRONTIER.34.1`; `BACKEND-API-VALIDATION-FRONTIER.34`; `BACKEND-API-VALIDATION-FRONTIER.33.1`; `BACKEND-API-VALIDATION-FRONTIER.33`.
+- latest_commit: `BACKEND-API-VALIDATION-FRONTIER.40` (this commit) — selected direct VHDL scalar bit plus signed vector internal declaration lowering for `.40.1`. `git log -1` for the hash.
+- active_work_unit: `BACKEND-API-VALIDATION-FRONTIER.40.1` active frontier — implement only generated scalar `bit` and `reg signed [MSB:LSB]` internal declaration lowering for the declarative bits fixture.
+- recently_done: `BACKEND-API-VALIDATION-FRONTIER.40`; `BACKEND-API-VALIDATION-FRONTIER.39.1`; `BACKEND-API-VALIDATION-FRONTIER.39`; `BACKEND-API-VALIDATION-FRONTIER.38.1`; `BACKEND-API-VALIDATION-FRONTIER.38`; `BACKEND-API-VALIDATION-FRONTIER.37.1`; `BACKEND-API-VALIDATION-FRONTIER.37`; `BACKEND-API-VALIDATION-FRONTIER.36.1`; `BACKEND-API-VALIDATION-FRONTIER.36`; `BACKEND-API-VALIDATION-FRONTIER.35.1`; `BACKEND-API-VALIDATION-FRONTIER.35`; `BACKEND-API-VALIDATION-FRONTIER.34.1`; `BACKEND-API-VALIDATION-FRONTIER.34`; `BACKEND-API-VALIDATION-FRONTIER.33.1`.
 - in_flight_uncommitted: none expected after this commit; unrelated untracked `fx/` intentionally left alone.
 - blockers: none.
 

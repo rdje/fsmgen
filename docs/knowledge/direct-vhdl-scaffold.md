@@ -28,6 +28,8 @@ answers:
   - "does direct VHDL support scalar multiplication chains?"
   - "does direct VHDL support numeric literal arithmetic?"
   - "does direct VHDL support compound update arithmetic?"
+  - "does direct VHDL support signed declarations?"
+  - "does direct VHDL support scalar bit declarations?"
   - "does direct VHDL support generics?"
   - "does direct VHDL support parameterized direct roots?"
   - "does direct VHDL support sized literal generic defaults?"
@@ -71,11 +73,16 @@ expressions. Same-width vector division/modulo chains become
 expressions. Scalar division/modulo RHS forms such as `A / B` and `A % B`
 remain explicit fail-closed direct VHDL boundaries. Same-width scalar/vector XOR
 chains become `A xor B xor ...`
-expressions. Aggregate-output roots are locked as explicit fail-closed direct
-VHDL boundaries by focused pipeline and facade coverage. Composition/top VHDL
-is locked fail-closed by focused pipeline and CLI coverage: `?top` sources are
-parsed into typed composition IR, then `target_language => 'vhdl'` and
-`--language vhdl` are rejected with the scoped composition target-support
-diagnostic instead of emitting a VHDL top. Composition generic-map lowering,
-packages, multi-clock domains, broad expression parity, GHDL validation, and
-full SystemVerilog parity remain deferred or fail-closed.
+expressions. Generated scalar `bit` internal declarations and signed vector
+internal declarations such as `reg signed [3:0] NIB` remain unsupported in the
+current direct VHDL scaffold and are selected as the next exact hardening leaf.
+Four-state `logic` declarations, signed ports, and signed arithmetic semantics
+remain outside that selected slice. Aggregate-output roots are locked as
+explicit fail-closed direct VHDL boundaries by focused pipeline and facade
+coverage. Composition/top VHDL is locked fail-closed by focused pipeline and
+CLI coverage: `?top` sources are parsed into typed composition IR, then
+`target_language => 'vhdl'` and `--language vhdl` are rejected with the scoped
+composition target-support diagnostic instead of emitting a VHDL top.
+Composition generic-map lowering, packages, multi-clock domains, broad
+expression parity, GHDL validation, and full SystemVerilog parity remain
+deferred or fail-closed.

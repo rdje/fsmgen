@@ -25,6 +25,10 @@ This document defines the scoped R14 VHDL backend plan for FSMGen.
 - The direct scaffold now includes generated mux arithmetic with one vector
   signal and one numeric literal operand for `+` and `-`, as emitted by the
   compound update/shorthand fixtures.
+- The active next direct VHDL hardening leaf is generated internal signal
+  declaration lowering for scalar `bit NAME;` and signed vector
+  `reg signed [MSB:LSB] NAME;` shapes, as emitted by the declarative bits
+  symbolic-width fixture.
 - Composition VHDL, aggregate VHDL, broad expression parity, scalar
   division/modulo and broader scalar arithmetic, GHDL validation, packages,
   multi-clock domains, and full feature parity remain deferred.
@@ -112,6 +116,9 @@ The first VHDL lane is intentionally narrow:
   expressions from compound update/shorthand fixtures, plus direct-root
   parameter blocks as VHDL generics, including integer expression defaults and
   typed scalar/vector sized-literal defaults.
+- Active follow-up: generated direct-root scalar `bit` and signed vector
+  internal signal declarations from declarative `+types` symbolic-width
+  fixtures.
 - Remaining semantic conversion work still belongs to exact future VHDL leaves.
 
 ### Phase 3: Regression and hardening (R14.3)

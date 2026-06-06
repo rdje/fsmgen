@@ -3814,6 +3814,13 @@ direct-root vector arithmetic with numeric literal operands, such as `SRC + 2`,
 `SRC - 1`, `byte_count + 4`, and `remaining - 3`, through target-width
 `to_unsigned` casts.
 
+Active next leaf: generated direct-root scalar `bit` and signed vector internal
+signal declarations, such as `bit FLAG;` and `reg signed [3:0] NIB;` from the
+declarative bits symbolic-width fixture, are selected for the next exact VHDL
+hardening slice. Four-state `logic` declarations, signed ports, signed
+arithmetic semantics, composition/top VHDL, aggregate VHDL, packages, GHDL
+validation, and full backend parity remain outside that slice.
+
 ### GHDL Validation
 
 Status: backlog, behind a VHDL validation leaf.
