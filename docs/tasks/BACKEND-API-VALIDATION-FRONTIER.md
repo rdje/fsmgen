@@ -213,7 +213,8 @@ items named in the 2026-06-05 remaining-work inventory.
     `BACKEND-API-VALIDATION-FRONTIER.85.1`,
     `BACKEND-API-VALIDATION-FRONTIER.86`,
     `BACKEND-API-VALIDATION-FRONTIER.86.1`,
-    `BACKEND-API-VALIDATION-FRONTIER.87`
+    `BACKEND-API-VALIDATION-FRONTIER.87`,
+    `BACKEND-API-VALIDATION-FRONTIER.87.1`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.1`
   Status: `done`
@@ -1559,10 +1560,17 @@ items named in the 2026-06-05 remaining-work inventory.
   Commit: `BACKEND-API-VALIDATION-FRONTIER.86.1: emit standalone-DT one-bit generic maps`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.87`
-  Status: `active`
+  Status: `done`
   Goal: `Select the next exact backend/API edge after bounded C1 standalone-DT one-bit VHDL generic-map actuals shipped.`
-  Acceptance: `Selection-only leaf. Audit the backend/API frontier, current VHDL scope, mdBook backlog, direct-VHDL fact card, focused scaffold/composition/facade tests, maintained direct/composition VHDL sweeps, and current validation environment; choose the next narrow implementation or hardening owner before any code/test/source edits. The selector must preserve task-tree ownership for the chosen child leaf, synchronize README/VHDL scope/mdBook/fact card/memory if the selected frontier changes user-visible scope, and leave standalone-DT multi-bit and aggregate generic maps, APB/C4 generic maps, aggregate VHDL record/array declarations beyond packed vectors, VHDL package declaration/emission, GHDL validation, broad expression parity, full composition VHDL parity, and full backend parity deferred unless it explicitly chooses one of those exact edges.`
-  Verification: `pending selection`
+  Acceptance: `Selected bounded C1 standalone-DT multi-bit sized-bitstring VHDL generic-map actuals as BACKEND-API-VALIDATION-FRONTIER.87.1. Evidence shows a temporary C1 standalone-DT composition probe with child +params RESET_VALUE 8'h00 and top override RESET_VALUE 8'hA5 still fails at the bounded VHDL composition target-support gate, while the direct standalone-DT child VHDL path already emits RESET_VALUE : std_logic_vector(7 downto 0) := "00000000". Generated-FSM and external-RTL multi-bit generic maps already ship, and the implementation can stay target-type-bounded to the existing standalone-DT child declaration metadata. Standalone-DT aggregate/list/record generic maps, APB/C4 generic maps, package declaration/emission, GHDL validation, broad expression parity, full composition VHDL parity, and full backend parity remain deferred.`
+  Verification: `Selection audit/read of README.md, MEMORY.md, COMMIT.md, docs/TASK_TREE.md, docs/tasks/BACKEND-API-VALIDATION-FRONTIER.md, docs/VHDL_SCOPE.md, docs/book/src/14-feature-backlog.md, docs/book/src/11-extensions-and-embedding.md, docs/knowledge/direct-vhdl-scaffold.md, perl/FSM/Backend/VHDL/StructuralRTLIREmitter.pm, perl/FSM/Composition/GenerationOrchestrator.pm, t/114-composition-target-support-diagnostics.t, and t/386-hdl-generator-facade-target-language-boundary-audit.t; command -v ghdl returned unavailable; temporary C1 standalone-DT multi-bit generic-map composition probe failed at the bounded VHDL composition target-support gate; temporary direct standalone-DT child VHDL probe emitted RESET_VALUE : std_logic_vector(7 downto 0) := "00000000"; selected standalone-DT multi-bit sized-bitstring VHDL generic-map actuals for .87.1 before implementation edits.`
+  Commit: `BACKEND-API-VALIDATION-FRONTIER.87: select standalone-DT multi-bit generic maps`
+
+- ID: `BACKEND-API-VALIDATION-FRONTIER.87.1`
+  Status: `active`
+  Goal: `Implement bounded C1 standalone-DT VHDL generic-map lowering for multi-bit sized-bitstring actuals.`
+  Acceptance: `The VHDL composition path accepts the exact C1 standalone-DT multi-bit parameter override shape represented by a single ?dtc child in the shipped standalone-DT passthrough family, a child +params multi-bit declaration such as RESET_VALUE 8'h00, and a top-level override such as RESET_VALUE 8'hA5. It emits the standalone-DT child VHDL std_logic_vector generic declaration, emits a top-level VHDL instance generic map such as RESET_VALUE => "10100101" before the standalone-DT port map, and does not leak SystemVerilog parameter syntax or sized-literal syntax. Focused pipeline, CLI, and facade/target-language coverage prove the accepted standalone-DT multi-bit shape and keep standalone-DT aggregate/list/record, APB/C4, package, GHDL, broad expression parity, and full backend parity paths deferred. README, docs/VHDL_SCOPE.md, mdBook, direct-VHDL fact card/knowledge map if needed, task tree, and MEMORY stay synchronized.`
+  Verification: `pending implementation`
   Commit: `pending`
 
 ## Current Frontier
@@ -1746,7 +1754,8 @@ items named in the 2026-06-05 remaining-work inventory.
 | 175 | `BACKEND-API-VALIDATION-FRONTIER.85.1` | `done` | Shipped bounded standalone-DT scalar expression generic-map actuals such as `EXPR_WIDTH => (8 + 1)` without widening standalone-DT bitstrings/aggregates, APB/C4, package, GHDL, or parity paths. |
 | 176 | `BACKEND-API-VALIDATION-FRONTIER.86` | `done` | Selected bounded standalone-DT one-bit sized-bitstring generic-map actuals because the C1 standalone-DT fixture now has explicit fail-closed coverage and the child VHDL declaration metadata makes the std_logic target type explicit. |
 | 177 | `BACKEND-API-VALIDATION-FRONTIER.86.1` | `done` | Shipped bounded C1 standalone-DT one-bit sized-bitstring VHDL generic-map actuals such as `ENABLE_DEFAULT => '1'` while keeping standalone-DT multi-bit/aggregate, APB/C4, package, GHDL, and parity widening deferred. |
-| 178 | `BACKEND-API-VALIDATION-FRONTIER.87` | `active` | Select the next exact backend/API edge after standalone-DT one-bit VHDL generic-map actuals shipped. |
+| 178 | `BACKEND-API-VALIDATION-FRONTIER.87` | `done` | Selected bounded standalone-DT multi-bit sized-bitstring generic-map actuals because the C1 composition top still rejects the shape while the direct standalone-DT child already emits a matching std_logic_vector generic declaration. |
+| 179 | `BACKEND-API-VALIDATION-FRONTIER.87.1` | `active` | Implement only bounded C1 standalone-DT multi-bit sized-bitstring VHDL generic-map actuals, leaving standalone-DT aggregate, APB/C4, package, GHDL, and parity widening deferred. |
 
 ## Decisions
 
@@ -2117,6 +2126,7 @@ items named in the 2026-06-05 remaining-work inventory.
 | `BACKEND-API-VALIDATION-FRONTIER.85.1` | `BACKEND-API-VALIDATION-FRONTIER.85.1: emit standalone-DT expression generic maps` | this slice; activates `.86` |
 | `BACKEND-API-VALIDATION-FRONTIER.86` | `BACKEND-API-VALIDATION-FRONTIER.86: select standalone-DT one-bit generic maps` | selected `.86.1` |
 | `BACKEND-API-VALIDATION-FRONTIER.86.1` | `BACKEND-API-VALIDATION-FRONTIER.86.1: emit standalone-DT one-bit generic maps` | this slice; activates `.87` |
+| `BACKEND-API-VALIDATION-FRONTIER.87` | `BACKEND-API-VALIDATION-FRONTIER.87: select standalone-DT multi-bit generic maps` | selected `.87.1` |
 
 ## Changelog
 
@@ -2148,6 +2158,12 @@ items named in the 2026-06-05 remaining-work inventory.
 - `2026-06-06`: Completed `.86.1`; bounded C1 standalone-DT one-bit
   sized-bitstring VHDL generic maps now emit `ENABLE_DEFAULT => '1'` before the
   standalone-DT child port map, and `.87` is active for next-edge selection.
+- `2026-06-06`: Completed `.87`; selected bounded C1 standalone-DT multi-bit
+  sized-bitstring VHDL generic-map actuals as `.87.1` after a temporary probe
+  showed the C1 composition top still rejects `RESET_VALUE 8'hA5` while the
+  direct standalone-DT child already emits a matching `std_logic_vector`
+  generic declaration. Standalone-DT aggregate, APB/C4, package, GHDL, broad
+  parity, and full-parity paths remain deferred.
 - `2026-06-05`: Activated the tree and selected `.2.1`, the first direct-root
   VHDL backend scaffold through an SV-first converter, before backend code
   changes.
