@@ -360,13 +360,14 @@ generated-FSM scalar-autowire fixture in
 `t/corpus/implicit_composition_system_autowire.fsm`, plus the bounded APB/C4
 generated-FSM fixture in `fsm/apb_tb.fsm`. The bounded C2 generated-FSM family
 also lowers scalar integer generic maps before the generated child port map,
-such as `WIDTH => 16`. Other `?top` VHDL shapes still parse into typed
+such as `WIDTH => 16`, and scalar expression generic maps such as
+`EXPR_WIDTH => (16 + 1)`. Other `?top` VHDL shapes still parse into typed
 composition IR and then fail closed with the scoped target-support diagnostic.
-Generated-FSM scalar expression, one-bit, bitstring, and aggregate actuals,
-standalone-DT generic maps, aggregate/list/record actuals that do not resolve
-to multi-bit packed values, unresolved package/expression actuals, VHDL
-package declaration/emission, and APB/C4 generic-map shapes remain deferred
-until later exact leaves own those paths.
+Generated-FSM one-bit, bitstring, and aggregate actuals, standalone-DT generic
+maps, aggregate/list/record actuals that do not resolve to multi-bit packed
+values, unresolved package/expression actuals, VHDL package
+declaration/emission, and APB/C4 generic-map shapes remain deferred until
+later exact leaves own those paths.
 
 ### Broader Generated-Child Top Instantiation
 
@@ -3862,7 +3863,8 @@ qualified package constants after they resolve to scalar integer or multi-bit
 sized bitstring literals, scalar integer expressions such as `(16 + 1)`, and
 resolved packed aggregate values such as `16'b1010010100111100`; broader
 generic-map families remain deferred except for the bounded C2 generated-FSM
-scalar integer actuals now emitted as `WIDTH => 16`. The bounded C3 external-RTL
+scalar integer actuals now emitted as `WIDTH => 16` and scalar expression
+actuals now emitted as `EXPR_WIDTH => (16 + 1)`. The bounded C3 external-RTL
 literal/concat structural top now emits a VHDL entity/architecture with
 concurrent literal/concat assignments and an external `entity work.uart_tx`
 port map. The bounded C1 standalone-DT passthrough structural top now emits the
@@ -3871,8 +3873,8 @@ standalone-DT child VHDL segment and a top-level
 generated-FSM scalar-autowire structural top now emits VHDL-safe generated-child
 shared-datapath export ports/assignments, scalar structural signals, and both
 generated child entity port maps; the same bounded C2 family now also emits
-scalar integer generic maps before the generated child port map. The bounded
-APB/C4 generated-FSM structural top now emits APB requester/completer child
+scalar integer and scalar expression generic maps before the generated child
+port map. The bounded APB/C4 generated-FSM structural top now emits APB requester/completer child
 VHDL entities, vector APB
 structural signals, deterministic shared-datapath sink signals, and both child
 entity port maps. Other composition/top VHDL shapes remain
@@ -3911,8 +3913,9 @@ composition VHDL beyond the exact shipped fixtures, internal-net-heavy
 composition tops beyond APB, composition generic maps beyond external-RTL
 scalar integer, scalar integer expression, and multi-bit sized bitstring
 literal/resolved-package-constant actuals plus resolved packed aggregate
-actuals and generated-FSM scalar integer actuals, aggregate VHDL, VHDL package
-declaration/emission, GHDL validation, and full backend parity remain outside the shipped
+actuals and generated-FSM scalar integer/scalar expression actuals, aggregate
+VHDL, VHDL package declaration/emission, GHDL validation, and full backend
+parity remain outside the shipped
 scaffold. Signed vector numeric-literal
 addition/subtraction/multiplication/division/modulo also lower through
 target-width `to_signed`, so `SUM = (+ A 1)` emits
@@ -4123,16 +4126,13 @@ schema metadata for `semantic.symbol_contract.types` and
 recursive `items` or `members` plus `member_order`.
 
 Current active backend edge: task-tree leaf
-`BACKEND-API-VALIDATION-FRONTIER.79.1` owns the bounded C2 generated-FSM scalar
-expression VHDL generic-map edge selected by `.79`. The target shape is a
-generated child with a scalar expression override such as `EXPR_WIDTH (+
-OVERRIDE_WIDTH 1)`, resolved before emission to a top instance generic map
-such as `EXPR_WIDTH => (16 + 1)`; until that leaf commits, shipped VHDL
-behavior is unchanged. Package declaration and VHDL package emission, already
-bounded constant/enum/type internals, unrelated forward-IR payloads, signed
-scalar division/modulo, mixed signed/unsigned arithmetic, generated-FSM
-one-bit, bitstring, and aggregate generic actuals, standalone-DT generic maps,
-APB/C4 generic maps, full aggregate VHDL record/array lowering, broader
+`BACKEND-API-VALIDATION-FRONTIER.80` selects the next exact backend/API edge
+after bounded C2 generated-FSM scalar expression VHDL generic-map actuals
+shipped. Package declaration and VHDL package emission, already bounded
+constant/enum/type internals, unrelated forward-IR payloads, signed scalar
+division/modulo, mixed signed/unsigned arithmetic, generated-FSM one-bit,
+bitstring, and aggregate generic actuals, standalone-DT generic maps, APB/C4
+generic maps, full aggregate VHDL record/array lowering, broader
 generated-FSM/C4 composition VHDL beyond the exact shipped fixtures, internal
 nets/generic maps beyond APB, broader expression parity beyond the shipped
 AMBA wrap family, and full normalized semantic export stabilization remain out

@@ -193,7 +193,7 @@ sub _is_bounded_generated_fsm_c2_vhdl_top ($composition_plan) {
 
     for my $instance (@instances) {
         return 0 unless ($instance->kind // '') eq 'fsmc';
-        return 0 unless _has_only_scalar_integer_parameter_overrides($instance);
+        return 0 unless _has_only_scalar_integer_or_expression_parameter_overrides($instance);
     }
 
     for my $entry (@nets, @ports) {
@@ -299,14 +299,21 @@ sub _entries_match_widths ($entries, $expected_widths) {
     return keys(%remaining) == 0 ? 1 : 0;
 }
 
-sub _has_only_scalar_integer_parameter_overrides ($instance) {
+sub _has_only_scalar_integer_or_expression_parameter_overrides ($instance) {
     my @overrides = @{$instance->parameter_overrides || []};
     for my $override (@overrides) {
         return 0 unless ($override->{value_kind} // 'scalar') eq 'scalar';
         my $value = $override->{value_text};
-        return 0 unless defined($value) && $value =~ /\A-?\d+\z/;
+        return 0 unless defined($value);
+        next if $value =~ /\A-?\d+\z/;
+        next if _is_scalar_integer_expression($value);
+        return 0;
     }
     return 1;
+}
+
+sub _is_scalar_integer_expression ($value) {
+    return $value =~ /\A\(\s*-?\d+(?:\s+[-+*\/]\s+-?\d+)+\s*\)\z/ ? 1 : 0;
 }
 
 1;

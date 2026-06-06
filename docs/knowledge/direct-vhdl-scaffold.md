@@ -201,10 +201,11 @@ signals, and VHDL entity port maps for `implicit_autowire_producer` and
 `implicit_autowire_consumer`, without SystemVerilog structural syntax. The
 same bounded C2 generated-FSM family also emits scalar integer generic maps
 before the generated child port map, such as `WIDTH => 16`, while the child
-entity keeps the matching VHDL generic declaration. Generated-FSM scalar
-expression, one-bit, bitstring, and aggregate generic actuals remain deferred.
-The
-bounded APB/C4 generated-FSM child composition VHDL top is also shipped for
+entity keeps the matching VHDL generic declaration. Scalar expression generic
+maps also emit before the generated child port map, such as
+`EXPR_WIDTH => (16 + 1)`, against the child VHDL integer generic declaration.
+Generated-FSM one-bit, bitstring, and aggregate generic actuals remain deferred.
+The bounded APB/C4 generated-FSM child composition VHDL top is also shipped for
 `fsm/apb_tb.fsm`. That subset emits VHDL-safe APB requester/completer child
 segments, vector APB structural signals, deterministic shared-datapath sink
 signals, and VHDL entity port maps for `apb_requester` and `apb_completer`,

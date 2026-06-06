@@ -45,7 +45,9 @@ my $aggregate_generic_map_output_path = File::Spec->catfile($tempdir, 'vhdl_aggr
 my $one_bit_generic_map_path = File::Spec->catfile($tempdir, 'vhdl_one_bit_generic_map_deferred_top.fsm');
 my $generated_fsmc_scalar_generic_map_path = File::Spec->catfile($tempdir, 'vhdl_generated_fsmc_scalar_generic_map_top.fsm');
 my $generated_fsmc_scalar_generic_map_output_path = File::Spec->catfile($tempdir, 'vhdl_generated_fsmc_scalar_generic_map_top.vhd');
-my $generated_fsmc_expression_generic_map_path = File::Spec->catfile($tempdir, 'vhdl_generated_fsmc_expression_generic_map_deferred_top.fsm');
+my $generated_fsmc_expression_generic_map_path = File::Spec->catfile($tempdir, 'vhdl_generated_fsmc_expression_generic_map_top.fsm');
+my $generated_fsmc_expression_generic_map_output_path = File::Spec->catfile($tempdir, 'vhdl_generated_fsmc_expression_generic_map_top.vhd');
+my $generated_fsmc_one_bit_generic_map_path = File::Spec->catfile($tempdir, 'vhdl_generated_fsmc_one_bit_generic_map_deferred_top.fsm');
 my $composition_path = File::Spec->catfile($tempdir, 'vhdl_composition_top.fsm');
 my $output_path = File::Spec->catfile($tempdir, 'vhdl_composition_top.vhd');
 
@@ -307,7 +309,7 @@ FSM
 write_file(
     $generated_fsmc_expression_generic_map_path,
     <<'FSM'
-(?top:vhdl_generated_fsmc_expression_generic_map_deferred_top
+(?top:vhdl_generated_fsmc_expression_generic_map_top
   (+constants
     (OVERRIDE_WIDTH 16)
   )
@@ -331,6 +333,52 @@ write_file(
 (?fsm:implicit_autowire_producer
   (+params
     (EXPR_WIDTH 8)
+  )
+  (+size
+    (output_data 1)
+  )
+
+  (-drive_outputs
+    (= (output_data> 1'b1))
+  )
+)
+
+(?fsm:implicit_autowire_consumer
+  (+size
+    (input_data 1)
+    (result_data 1)
+  )
+
+  (-drive_outputs
+    (= (result_data> input_data))
+  )
+)
+FSM
+);
+write_file(
+    $generated_fsmc_one_bit_generic_map_path,
+    <<'FSM'
+(?top:vhdl_generated_fsmc_one_bit_generic_map_deferred_top
+  (?ports:public_io
+    clk
+    rst_n
+    result_data>
+  )
+  (?fsmc:producer implicit_autowire_producer
+    (params
+      (ENABLE_DEFAULT 1'b1)
+    )
+  )
+  (?fsmc:consumer implicit_autowire_consumer)
+  (?wiring:wiring
+    (producer.output_data consumer.input_data)
+    (consumer.result_data result_data)
+  )
+)
+
+(?fsm:implicit_autowire_producer
+  (+params
+    (ENABLE_DEFAULT 1'b0)
   )
   (+size
     (output_data 1)
@@ -542,16 +590,38 @@ unlike(
     'pipeline generated-FSM scalar generic-map VHDL output does not leak SystemVerilog generic syntax',
 );
 
-my $generated_fsmc_expression_exception = eval {
-    $pipeline->generate_hdl_from_file($generated_fsmc_expression_generic_map_path);
+my $generated_fsmc_expression_generic_map_result = $pipeline->generate_hdl_from_file($generated_fsmc_expression_generic_map_path);
+like(
+    $generated_fsmc_expression_generic_map_result->{hdl_code},
+    qr/\bentity\s+vhdl_generated_fsmc_expression_generic_map_top\s+is\b/s,
+    'pipeline emits the generated-FSM expression generic-map VHDL composition entity',
+);
+like(
+    $generated_fsmc_expression_generic_map_result->{hdl_code},
+    qr/\bentity\s+implicit_autowire_producer\s+is\s+generic\s*\(\s*EXPR_WIDTH\s+:\s+integer\s*:=\s*8\s*\);\s+port\s*\(/s,
+    'pipeline emits the generated child VHDL integer generic declaration for expression overrides',
+);
+like(
+    $generated_fsmc_expression_generic_map_result->{hdl_code},
+    qr/\bproducer\s+:\s+entity\s+work\.implicit_autowire_producer\s+generic\s+map\s*\(\s*EXPR_WIDTH\s+=>\s+\(16\s+\+\s+1\)\s*\)\s+port\s+map\s*\(/s,
+    'pipeline emits scalar expression VHDL generic maps before the generated-FSM port map',
+);
+unlike(
+    $generated_fsmc_expression_generic_map_result->{hdl_code},
+    qr/\bmodule\b|\bassign\b|\bendmodule\b|\balways_(?:ff|comb)\b|\#\s*\(|\.EXPR_WIDTH\s*\(/s,
+    'pipeline generated-FSM expression generic-map VHDL output does not leak SystemVerilog generic syntax',
+);
+
+my $generated_fsmc_one_bit_exception = eval {
+    $pipeline->generate_hdl_from_file($generated_fsmc_one_bit_generic_map_path);
     undef;
 };
-$generated_fsmc_expression_exception = $@;
+$generated_fsmc_one_bit_exception = $@;
 
 like(
-    $generated_fsmc_expression_exception,
+    $generated_fsmc_one_bit_exception,
     qr/Composition target support is blocked because generated-child VHDL composition is outside the bounded VHDL structural-top leaves/s,
-    'pipeline keeps generated-FSM scalar expression generic-map actuals outside the bounded VHDL scaffold',
+    'pipeline keeps generated-FSM one-bit generic-map actuals outside the bounded VHDL scaffold',
 );
 
 my $apb_c4_result = $pipeline->generate_hdl_from_file($apb_c4_composition_path);
@@ -855,6 +925,38 @@ unlike(
     $generated_fsmc_scalar_generic_map_cli_hdl,
     qr/\bmodule\b|\bassign\b|\bendmodule\b|\balways_(?:ff|comb)\b|\#\s*\(|\.WIDTH\s*\(/s,
     'CLI generated-FSM scalar generic-map composition VHDL output does not leak SystemVerilog syntax',
+);
+
+my ($generated_fsmc_expression_generic_map_success, $generated_fsmc_expression_generic_map_error_message, $generated_fsmc_expression_generic_map_full_buf, $generated_fsmc_expression_generic_map_stdout_buf, $generated_fsmc_expression_generic_map_stderr_buf) = run(
+    command => ['./bin/fsmgen', '--language', 'vhdl', '--quiet', '-o', $generated_fsmc_expression_generic_map_output_path, $generated_fsmc_expression_generic_map_path],
+);
+
+my $generated_fsmc_expression_generic_map_combined_output = join(
+    '',
+    @{ $generated_fsmc_expression_generic_map_stdout_buf || [] },
+    @{ $generated_fsmc_expression_generic_map_stderr_buf || [] },
+    ($generated_fsmc_expression_generic_map_error_message || ''),
+);
+
+ok($generated_fsmc_expression_generic_map_success, 'CLI accepts bounded composition --language vhdl for the C2 generated-FSM expression generic-map fixture')
+    or diag($generated_fsmc_expression_generic_map_combined_output);
+ok(-e $generated_fsmc_expression_generic_map_output_path, 'CLI writes bounded generated-FSM expression generic-map composition VHDL output');
+
+my $generated_fsmc_expression_generic_map_cli_hdl = read_file($generated_fsmc_expression_generic_map_output_path);
+like(
+    $generated_fsmc_expression_generic_map_cli_hdl,
+    qr/\bentity\s+implicit_autowire_producer\s+is\s+generic\s*\(\s*EXPR_WIDTH\s+:\s+integer\s*:=\s*8\s*\);/s,
+    'CLI generated-FSM expression generic-map composition VHDL output includes the child generic declaration',
+);
+like(
+    $generated_fsmc_expression_generic_map_cli_hdl,
+    qr/\bproducer\s+:\s+entity\s+work\.implicit_autowire_producer\s+generic\s+map\s*\(\s*EXPR_WIDTH\s+=>\s+\(16\s+\+\s+1\)\s*\)\s+port\s+map\s*\(/s,
+    'CLI generated-FSM expression generic-map composition VHDL output includes the child generic map',
+);
+unlike(
+    $generated_fsmc_expression_generic_map_cli_hdl,
+    qr/\bmodule\b|\bassign\b|\bendmodule\b|\balways_(?:ff|comb)\b|\#\s*\(|\.EXPR_WIDTH\s*\(/s,
+    'CLI generated-FSM expression generic-map composition VHDL output does not leak SystemVerilog syntax',
 );
 
 my ($apb_c4_success, $apb_c4_error_message, $apb_c4_full_buf, $apb_c4_stdout_buf, $apb_c4_stderr_buf) = run(

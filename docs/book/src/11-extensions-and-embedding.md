@@ -922,8 +922,11 @@ generated-child shared-datapath export ports/assignments, scalar structural
 signals, and both generated child entity port maps. The same bounded C2
 generated-FSM family also emits scalar integer generic maps before the
 generated child port map, such as `WIDTH => 16`, while the child entity keeps
-the matching VHDL generic declaration. The APB/C4 generated-FSM fixture in
-`fsm/apb_tb.fsm` emits the APB requester/completer child VHDL
+the matching VHDL generic declaration. Scalar expression generic maps also
+emit before the generated child port map, such as
+`EXPR_WIDTH => (16 + 1)`, against the child VHDL integer generic declaration.
+The APB/C4 generated-FSM fixture in `fsm/apb_tb.fsm` emits the APB
+requester/completer child VHDL
 entities, vector APB structural signals, deterministic shared-datapath sink
 signals, and both generated child entity port maps. These outputs avoid
 SystemVerilog `module`, `assign`, `endmodule`, or `always_*` syntax.
@@ -933,7 +936,7 @@ package, and full-parity composition shapes rejected by the scoped composition
 target-support diagnostic. Generic maps beyond the shipped external-RTL scalar
 integer, scalar integer expression, multi-bit sized bitstring, resolved
 package-backed, and packed aggregate actuals plus C2 generated-FSM scalar
-integer actuals remain deferred.
+integer and scalar expression actuals remain deferred.
 That is still a scoped scaffold, not a full VHDL backend promise.
 
 [t/387-hdl-generator-facade-debug-level-boundary-audit.t](t/387-hdl-generator-facade-debug-level-boundary-audit.t)
@@ -2331,12 +2334,9 @@ this normalized semantic shape:
 ```
 
 The current active backend/API frontier is
-`BACKEND-API-VALIDATION-FRONTIER.79.1`, which owns the bounded C2
-generated-FSM scalar expression VHDL generic-map edge selected by `.79`. The
-target shape is a generated child with a scalar expression override such as
-`EXPR_WIDTH (+ OVERRIDE_WIDTH 1)`, resolved before emission to a top instance
-generic map such as `EXPR_WIDTH => (16 + 1)`; until that leaf commits, shipped
-VHDL behavior is unchanged.
+`BACKEND-API-VALIDATION-FRONTIER.80`, which selects the next exact backend/API
+edge after bounded C2 generated-FSM scalar expression VHDL generic-map actuals
+shipped.
 Package declaration and VHDL package emission, already bounded
 constant/enum/type internals, unrelated forward-IR payloads, signed scalar
 division/modulo, mixed signed/unsigned arithmetic, generated-FSM one-bit,

@@ -13,9 +13,10 @@ tops, direct scalar/vector top ports, VHDL-form auxiliary assignments,
 scalar/vector signal declarations, scalar integer and multi-bit sized
 bitstring generic-map actuals, simple resolved scalar integer expression
 actuals, plus resolved multi-bit packed aggregate actuals for external RTL
-instances, scalar integer generic-map actuals for bounded generated-FSM C2
-instances, and port-map actuals whose connection expressions already render
-through the backend-neutral StructuralRTLIR expression helper.
+instances, scalar integer and scalar integer expression generic-map actuals for
+bounded generated-FSM C2 instances, and port-map actuals whose connection
+expressions already render through the backend-neutral StructuralRTLIR
+expression helper.
 
 =cut
 
@@ -118,8 +119,8 @@ sub _render_instance_block ($instance) {
     if (@parameter_overrides) {
         my $is_supported_generated_fsm_generic_map =
             $instance_kind eq 'fsmc'
-            && _has_only_scalar_integer_generic_actuals(\@parameter_overrides);
-        confess _unsupported('composition VHDL generic maps are currently limited to external RTL scalar integer, scalar integer expression, sized bitstring, or packed aggregate overrides, plus generated-FSM scalar integer overrides')
+            && _has_only_scalar_integer_or_expression_generic_actuals(\@parameter_overrides);
+        confess _unsupported('composition VHDL generic maps are currently limited to external RTL scalar integer, scalar integer expression, sized bitstring, or packed aggregate overrides, plus generated-FSM scalar integer or scalar integer expression overrides')
             unless $instance_kind eq 'rtl' || $is_supported_generated_fsm_generic_map;
     }
 
@@ -193,11 +194,14 @@ sub _vhdl_generic_actual ($override) {
     confess _unsupported(_generic_actual_limit());
 }
 
-sub _has_only_scalar_integer_generic_actuals ($overrides) {
+sub _has_only_scalar_integer_or_expression_generic_actuals ($overrides) {
     for my $override (@$overrides) {
         return 0 unless ($override->{value_kind} // 'scalar') eq 'scalar';
         my $value = $override->{value_text};
-        return 0 unless defined($value) && $value =~ /\A-?\d+\z/;
+        return 0 unless defined($value);
+        next if $value =~ /\A-?\d+\z/;
+        next if defined _vhdl_scalar_integer_expression_generic_actual($value);
+        return 0;
     }
     return 1;
 }
