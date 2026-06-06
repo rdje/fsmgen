@@ -36,8 +36,9 @@ sub convert_systemverilog_to_vhdl ($self, $sv_hdl) {
     my $body = $module->{body};
     my @constants = _parse_constants($body);
     my @signals = _parse_signal_declarations($body, { map { $_->{name} => 1 } @ports });
+    my %decls_by_name = map { $_->{name} => $_ } (@ports, @signals);
     my @assigns = _parse_continuous_assignments($body);
-    my @processes = _parse_processes($body);
+    my @processes = _parse_processes($body, \%decls_by_name);
 
     return _render_vhdl(
         module_name => $module->{name},
@@ -46,6 +47,7 @@ sub convert_systemverilog_to_vhdl ($self, $sv_hdl) {
         signals => \@signals,
         assigns => \@assigns,
         processes => \@processes,
+        decls_by_name => \%decls_by_name,
     );
 }
 
@@ -140,6 +142,7 @@ sub _parse_continuous_assignments ($body) {
         next unless $line =~ /^assign\s+([A-Za-z_][A-Za-z0-9_]*(?:\[[^\]]+\])?)\s*=\s*(.+);$/;
         my ($lhs, $expr) = ($1, $2);
         push @assigns, {
+            raw_lhs => $lhs,
             lhs => _sv_lvalue_to_vhdl($lhs),
             expr => $expr,
         };
@@ -148,7 +151,7 @@ sub _parse_continuous_assignments ($body) {
     return @assigns;
 }
 
-sub _parse_processes ($body) {
+sub _parse_processes ($body, $decls_by_name) {
     my @lines = split /\n/, $body;
     my @processes;
 
@@ -175,7 +178,7 @@ sub _parse_processes ($body) {
         if ($header =~ /^\s*always_comb\s+begin\b/) {
             push @processes, {
                 kind => 'comb',
-                lines => [ _convert_comb_process(@block) ],
+                lines => [ _convert_comb_process($decls_by_name, @block) ],
             };
             next;
         }
@@ -183,7 +186,7 @@ sub _parse_processes ($body) {
         if ($header =~ /^\s*always_ff\s*@\(([^)]+)\)\s+begin\b/) {
             push @processes, {
                 kind => 'ff',
-                lines => [ _convert_ff_process($1, @block) ],
+                lines => [ _convert_ff_process($decls_by_name, $1, @block) ],
             };
             next;
         }
@@ -194,7 +197,7 @@ sub _parse_processes ($body) {
     return @processes;
 }
 
-sub _convert_comb_process (@block) {
+sub _convert_comb_process ($decls_by_name, @block) {
     my @out = ('  process(all) begin');
     my $indent_level = 0;
 
@@ -218,7 +221,8 @@ sub _convert_comb_process (@block) {
         }
 
         if ($line =~ /^([A-Za-z_][A-Za-z0-9_]*(?:\[[^\]]+\])?)\s*=\s*(.+);$/) {
-            push @out, _indent(2 + $indent_level) . _sv_lvalue_to_vhdl($1) . ' <= ' . _sv_expr_to_vhdl($2) . ';';
+            push @out, _indent(2 + $indent_level) . _sv_lvalue_to_vhdl($1) . ' <= '
+                . _sv_expr_to_vhdl($2, { decls_by_name => $decls_by_name, target_lhs => $1 }) . ';';
             next;
         }
 
@@ -232,9 +236,9 @@ sub _convert_comb_process (@block) {
     return @out;
 }
 
-sub _convert_ff_process ($sensitivity, @block) {
+sub _convert_ff_process ($decls_by_name, $sensitivity, @block) {
     my @inner = @block[1 .. $#block - 1];
-    my $branches = _split_if_else_assignments(@inner);
+    my $branches = _split_if_else_assignments($decls_by_name, @inner);
     my $reset_condition = $branches->{condition};
     my @reset_assigns = @{$branches->{reset_assigns}};
     my @clock_assigns = @{$branches->{clock_assigns}};
@@ -279,7 +283,7 @@ sub _convert_ff_process ($sensitivity, @block) {
     confess _unsupported("unsupported generated always_ff sensitivity '$sensitivity'");
 }
 
-sub _split_if_else_assignments (@inner) {
+sub _split_if_else_assignments ($decls_by_name, @inner) {
     confess _unsupported('empty generated always_ff body')
         unless @inner;
 
@@ -322,12 +326,12 @@ sub _split_if_else_assignments (@inner) {
 
     return {
         condition => $condition,
-        reset_assigns => [ _convert_sequential_branch_statements(@reset_raw_lines) ],
-        clock_assigns => [ _convert_sequential_branch_statements(@clock_raw_lines) ],
+        reset_assigns => [ _convert_sequential_branch_statements($decls_by_name, @reset_raw_lines) ],
+        clock_assigns => [ _convert_sequential_branch_statements($decls_by_name, @clock_raw_lines) ],
     };
 }
 
-sub _convert_sequential_branch_statements (@raw_lines) {
+sub _convert_sequential_branch_statements ($decls_by_name, @raw_lines) {
     my @out;
 
     for (my $idx = 0; $idx <= $#raw_lines; $idx++) {
@@ -368,23 +372,24 @@ sub _convert_sequential_branch_statements (@raw_lines) {
             confess _unsupported('generated nested always_ff branch left an if statement open')
                 if $nested_depth != 0;
 
-            my @nested_lines = _convert_sequential_branch_statements(@nested_raw_lines);
+            my @nested_lines = _convert_sequential_branch_statements($decls_by_name, @nested_raw_lines);
             push @out, 'if ' . _sv_condition_to_vhdl($condition) . ' then';
             push @out, map { '  ' . $_ } @nested_lines;
             push @out, 'end if;';
             next;
         }
 
-        push @out, _convert_sequential_assignment($line);
+        push @out, _convert_sequential_assignment($decls_by_name, $line);
     }
 
     return @out;
 }
 
-sub _convert_sequential_assignment ($line) {
+sub _convert_sequential_assignment ($decls_by_name, $line) {
     $line =~ /^([A-Za-z_][A-Za-z0-9_]*(?:\[[^\]]+\])?)\s*<=\s*(.+);$/
         or confess _unsupported("unsupported generated always_ff assignment '$line'");
-    return _sv_lvalue_to_vhdl($1) . ' <= ' . _sv_expr_to_vhdl($2) . ';';
+    return _sv_lvalue_to_vhdl($1) . ' <= '
+        . _sv_expr_to_vhdl($2, { decls_by_name => $decls_by_name, target_lhs => $1 }) . ';';
 }
 
 sub _render_vhdl (%args) {
@@ -436,7 +441,8 @@ sub _render_vhdl (%args) {
         if ($expr =~ /==/) {
             push @lines, '  ' . $assign->{lhs} . " <= '1' when " . _sv_condition_to_vhdl($expr) . " else '0';";
         } else {
-            push @lines, '  ' . $assign->{lhs} . ' <= ' . _sv_expr_to_vhdl($expr) . ';';
+            push @lines, '  ' . $assign->{lhs} . ' <= '
+                . _sv_expr_to_vhdl($expr, { decls_by_name => $args{decls_by_name}, target_lhs => $assign->{raw_lhs} }) . ';';
         }
     }
 
@@ -493,8 +499,12 @@ sub _sv_condition_to_vhdl ($expr) {
     return "($converted) = '1'";
 }
 
-sub _sv_expr_to_vhdl ($expr) {
-    my $converted = _trim($expr);
+sub _sv_expr_to_vhdl ($expr, $ctx = {}) {
+    my $trimmed = _trim($expr);
+    return _simple_arithmetic_to_vhdl($trimmed, $ctx)
+        if _has_arithmetic_operator($trimmed);
+
+    my $converted = $trimmed;
     $converted = _convert_concat_braces($converted);
     $converted =~ s/\b([A-Za-z_][A-Za-z0-9_]*)\[([0-9]+):([0-9]+)\]/$1($2 downto $3)/g;
     $converted =~ s/\b([A-Za-z_][A-Za-z0-9_]*)\[([0-9]+)\]/$1($2)/g;
@@ -510,6 +520,52 @@ sub _sv_expr_to_vhdl ($expr) {
     confess _unsupported("arithmetic expression '$expr' is outside the direct VHDL scaffold")
         if $converted =~ /[+\-*\/%]/ || $converted =~ /\bmod\b/i;
     return _trim($converted);
+}
+
+sub _has_arithmetic_operator ($expr) {
+    return 1 if $expr =~ /[+\-*\/%]/;
+    return 1 if $expr =~ /\bmod\b/i;
+    return 0;
+}
+
+sub _simple_arithmetic_to_vhdl ($expr, $ctx) {
+    my $unsupported = sub {
+        confess _unsupported("arithmetic expression '$expr' is outside the direct VHDL scaffold");
+    };
+
+    $unsupported->()
+        unless $expr =~ /^([A-Za-z_][A-Za-z0-9_]*)\s*\+\s*([A-Za-z_][A-Za-z0-9_]*)$/;
+
+    my ($left_name, $right_name) = ($1, $2);
+    my $decls_by_name = $ctx->{decls_by_name} || {};
+    my $target_decl = _decl_for_lvalue($ctx->{target_lhs}, $decls_by_name)
+        or $unsupported->();
+    my $left_decl = $decls_by_name->{$left_name}
+        or $unsupported->();
+    my $right_decl = $decls_by_name->{$right_name}
+        or $unsupported->();
+
+    $unsupported->()
+        if $target_decl->{scalar} || $left_decl->{scalar} || $right_decl->{scalar};
+
+    my $target_width = _decl_width($target_decl);
+    $unsupported->()
+        unless $target_width == _decl_width($left_decl)
+        && $target_width == _decl_width($right_decl);
+
+    return "std_logic_vector(unsigned($left_name) + unsigned($right_name))";
+}
+
+sub _decl_for_lvalue ($lhs, $decls_by_name) {
+    return undef unless defined $lhs;
+    my $name = $lhs;
+    $name =~ s/\[.*\]\z//;
+    return $decls_by_name->{$name};
+}
+
+sub _decl_width ($decl) {
+    return 1 if $decl->{scalar};
+    return abs($decl->{msb} - $decl->{lsb}) + 1;
 }
 
 sub _convert_concat_braces ($expr) {

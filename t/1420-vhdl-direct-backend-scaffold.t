@@ -94,12 +94,70 @@ FSM
     unlike($cli_hdl, qr/\balways_(?:ff|comb)\b|\bif\s*\(/s, 'CLI delayed-pulse VHDL output remains VHDL-shaped');
 };
 
-subtest 'direct VHDL scaffold keeps arithmetic expression parity fail-closed after delayed-pulse widening' => sub {
+subtest 'direct VHDL scaffold lowers same-width vector addition RHS shape' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $output_path = File::Spec->catfile($tempdir, 'direct_assignment_pair_form.vhd');
+
+    my $hdl = generate_vhdl('t/corpus/direct_assignment_pair_form.fsm');
+    like($hdl, qr/\bentity\s+direct_assignment_pair_form\s+is\b/s, 'addition fixture emits direct VHDL entity');
+    like(
+        $hdl,
+        qr/\bSUM\s+<=\s+std_logic_vector\(unsigned\(A\)\s+\+\s+unsigned\(B\)\);/s,
+        'same-width vector addition lowers through numeric_std unsigned casts',
+    );
+    like(
+        $hdl,
+        qr/\bPULSE\s+<=\s+'0';\s+if\s+PULSE_pulse_delay_pipe\s+=\s+'1'\s+then\s+PULSE\s+<=\s+'1';\s+end if;/s,
+        'addition fixture still lowers delayed-pulse sequential if syntax',
+    );
+    unlike($hdl, qr/\balways_(?:ff|comb)\b|\bif\s*\(/s, 'addition fixture VHDL output does not leak SystemVerilog block syntax');
+
+    my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--language', 'vhdl', '--quiet', '-o', $output_path, repo_file('t/corpus/direct_assignment_pair_form.fsm')],
+    );
+
+    my $combined_output = join('', @{ $stdout_buf || [] }, @{ $stderr_buf || [] }, ($error_message || ''));
+    ok($success, 'CLI accepts direct --language vhdl for the same-width vector addition fixture')
+        or diag($combined_output);
+    ok(-e $output_path, 'CLI writes direct addition VHDL output file');
+
+    my $cli_hdl = read_file($output_path);
+    like(
+        $cli_hdl,
+        qr/\bSUM\s+<=\s+std_logic_vector\(unsigned\(A\)\s+\+\s+unsigned\(B\)\);/s,
+        'CLI addition VHDL output uses numeric_std unsigned casts',
+    );
+    unlike($cli_hdl, qr/\balways_(?:ff|comb)\b|\bmodule\b/s, 'CLI addition VHDL output remains VHDL-shaped');
+};
+
+subtest 'direct VHDL scaffold keeps broader arithmetic expression parity fail-closed' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $fsm_path = File::Spec->catfile($tempdir, 'direct_vhdl_multiply_deferred.fsm');
+    write_file(
+        $fsm_path,
+        <<'FSM'
+(?fsm:direct_vhdl_multiply_deferred
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+  (+size
+    (A 8)
+    (B 8)
+    (PRODUCT 8)
+  )
+  (idle
+    (= (PRODUCT (* A B)))
+  )
+)
+FSM
+    );
+
     my $error = capture_exception(sub {
-        generate_vhdl('t/corpus/direct_assignment_pair_form.fsm');
+        generate_vhdl($fsm_path);
     });
 
-    like($error, qr/arithmetic expression 'A \+ B' is outside the direct VHDL scaffold/s, 'mixed assignment fixture still fails closed on arithmetic expression parity');
+    like($error, qr/arithmetic expression 'A \* B' is outside the direct VHDL scaffold/s, 'multiplication remains outside the direct VHDL scaffold boundary');
 };
 
 subtest 'CLI routes direct --language vhdl through the scaffold' => sub {

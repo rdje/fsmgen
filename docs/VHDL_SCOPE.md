@@ -9,8 +9,8 @@ This document defines the scoped R14 VHDL backend plan for FSMGen.
   converter.
 - The direct scaffold now includes delayed-pulse clock-branch nested-if
   lowering for the generated `<N` pulse-delay shape.
-- Direct arithmetic expression parity is the active next scaffold edge, but it
-  is not shipped yet.
+- The direct scaffold now includes the first arithmetic RHS expression shape:
+  same-width vector `NAME + NAME` lowers through `numeric_std` unsigned casts.
 - Composition VHDL, aggregate VHDL, broad expression parity, GHDL validation,
   packages, multi-clock domains, and full feature parity remain deferred.
 
@@ -42,6 +42,8 @@ The first VHDL lane is intentionally narrow:
      the direct scaffold fixtures
    - Delayed-pulse clock branches that use the generated one-level nested
      `if (<pulse_delay_pipe>) begin ... end` shape
+   - Same-width vector `NAME + NAME` RHS assignments in the generated direct
+     combinational mux shape
 
 4. **Intentionally deferred:**
    - Composition-top VHDL
@@ -67,16 +69,15 @@ The first VHDL lane is intentionally narrow:
   SystemVerilog `always_ff` → VHDL synchronous/async-reset process,
   SystemVerilog `always_comb` → VHDL `process(all)`, port/signal type
   mapping, module/entity conversion, reset polarity handling, and generated
-  delayed-pulse nested clock-branch lowering.
+  delayed-pulse nested clock-branch lowering, plus the first same-width vector
+  addition RHS expression shape.
 - Remaining semantic conversion work still belongs to exact future VHDL leaves.
 
 ### Phase 3: Regression and hardening (R14.3)
 - Focused direct VHDL generation tests cover pipeline and CLI routing,
   sync/async reset processes, delayed-pulse clock branches, concat lowering,
-  arithmetic-expression fail-closed diagnostics, and aggregate-output
-  fail-closed diagnostics.
-- The next active hardening leaf is the first direct arithmetic RHS expression
-  shape from `t/corpus/direct_assignment_pair_form.fsm`.
+  same-width vector addition lowering, broader arithmetic-expression
+  fail-closed diagnostics, and aggregate-output fail-closed diagnostics.
 - Add broader VHDL output to the regression corpus
 - Ensure `--check --json` and `--emit-semantic-json` stay target-neutral
 - Consider external VHDL validation via GHDL

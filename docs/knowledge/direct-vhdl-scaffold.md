@@ -21,8 +21,9 @@ Direct single-FSM roots can now use `target_language => 'vhdl'` or
 `--language vhdl` for the shipped scaffold subset: scalar/vector ports, state
 constants, enable assignments, sync/async reset processes, `process(all)`
 combinational muxes, basic concat RHS forms, and delayed-pulse clock-branch
-nested-if lowering. Composition/top VHDL, aggregate-output VHDL, packages,
-multi-clock domains, broad expression parity, GHDL validation, and full
-SystemVerilog parity remain deferred or fail-closed. Arithmetic expression
-parity is the active next direct-VHDL scaffold edge; before that ships, the
-current boundary rejects generated RHS forms such as `A + B`.
+nested-if lowering. The scaffold also lowers the first arithmetic RHS shape:
+same-width vector `NAME + NAME` assignments become
+`std_logic_vector(unsigned(LEFT) + unsigned(RIGHT))` expressions. Composition/top
+VHDL, aggregate-output VHDL, packages, multi-clock domains, broad expression
+parity, GHDL validation, and full SystemVerilog parity remain deferred or
+fail-closed.

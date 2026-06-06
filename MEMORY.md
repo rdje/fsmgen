@@ -11,9 +11,9 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
 ## Current state (OVERWRITE this block each update — do not append)
-- latest_commit: `BACKEND-API-VALIDATION-FRONTIER.21` (this commit) — selected direct VHDL arithmetic expression parity as the next exact scaffold edge. `git log -1` for the hash.
-- active_work_unit: `BACKEND-API-VALIDATION-FRONTIER.21.1` active frontier — implement only the first direct VHDL arithmetic RHS expression shape, starting with generated `A + B` in `t/corpus/direct_assignment_pair_form.fsm`.
-- recently_done: `BACKEND-API-VALIDATION-FRONTIER.21`; `BACKEND-API-VALIDATION-FRONTIER.20.1`; `BACKEND-API-VALIDATION-FRONTIER.20`; `BACKEND-API-VALIDATION-FRONTIER.19.1`; `BACKEND-API-VALIDATION-FRONTIER.19`; `BACKEND-API-VALIDATION-FRONTIER.18.1`; `BACKEND-API-VALIDATION-FRONTIER.18`; `BACKEND-API-VALIDATION-FRONTIER.17.1`; `BACKEND-API-VALIDATION-FRONTIER.17`; `BACKEND-API-VALIDATION-FRONTIER.16.1`; `BACKEND-API-VALIDATION-FRONTIER.16`; `BACKEND-API-VALIDATION-FRONTIER.15.1`; `BACKEND-API-VALIDATION-FRONTIER.15`; `BACKEND-API-VALIDATION-FRONTIER.14.1`; `BACKEND-API-VALIDATION-FRONTIER.14`.
+- latest_commit: `BACKEND-API-VALIDATION-FRONTIER.21.1` (this commit) — shipped direct VHDL same-width vector addition RHS lowering while broader arithmetic remains fail-closed. `git log -1` for the hash.
+- active_work_unit: `BACKEND-API-VALIDATION-FRONTIER.22` active frontier — select the next exact backend/API/public-export edge before any further code changes.
+- recently_done: `BACKEND-API-VALIDATION-FRONTIER.21.1`; `BACKEND-API-VALIDATION-FRONTIER.21`; `BACKEND-API-VALIDATION-FRONTIER.20.1`; `BACKEND-API-VALIDATION-FRONTIER.20`; `BACKEND-API-VALIDATION-FRONTIER.19.1`; `BACKEND-API-VALIDATION-FRONTIER.19`; `BACKEND-API-VALIDATION-FRONTIER.18.1`; `BACKEND-API-VALIDATION-FRONTIER.18`; `BACKEND-API-VALIDATION-FRONTIER.17.1`; `BACKEND-API-VALIDATION-FRONTIER.17`; `BACKEND-API-VALIDATION-FRONTIER.16.1`; `BACKEND-API-VALIDATION-FRONTIER.16`; `BACKEND-API-VALIDATION-FRONTIER.15.1`; `BACKEND-API-VALIDATION-FRONTIER.15`; `BACKEND-API-VALIDATION-FRONTIER.14.1`.
 - in_flight_uncommitted: none expected after this commit; unrelated untracked `fx/` intentionally left alone.
 - blockers: none.
 

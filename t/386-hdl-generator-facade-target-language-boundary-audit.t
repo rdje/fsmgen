@@ -183,6 +183,33 @@ FSM
     );
 };
 
+subtest 'facade target_language option routes direct VHDL arithmetic scaffold behavior' => sub {
+    my $direct_path = repo_file('t/corpus/direct_assignment_pair_form.fsm');
+    my $vhdl_pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'vhdl',
+        quiet => 1,
+    );
+
+    my $vhdl_result = $vhdl_pipeline->generate_hdl_from_file($direct_path);
+
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bentity\s+direct_assignment_pair_form\s+is\b/s,
+        'explicit VHDL facade generation emits the arithmetic direct entity',
+    );
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bSUM\s+<=\s+std_logic_vector\(unsigned\(A\)\s+\+\s+unsigned\(B\)\);/s,
+        'explicit VHDL facade generation lowers same-width vector addition through numeric_std casts',
+    );
+    unlike(
+        $vhdl_result->{hdl_code},
+        qr/\bmodule\b|\balways_(?:ff|comb)\b/s,
+        'explicit VHDL arithmetic facade generation does not leak SystemVerilog module or always_* forms',
+    );
+};
+
 done_testing();
 
 sub repo_file {

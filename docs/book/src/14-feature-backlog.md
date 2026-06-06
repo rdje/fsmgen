@@ -3769,15 +3769,16 @@ Current boundary: the CLI and `FSM::Pipeline::HDLGenerator` route
 entity/architecture text for scalar/vector ports, state constants,
 continuous enable assignments, `process(all)` combinational muxes, sync-reset
 clocked processes, async-reset clocked processes, delayed-pulse clock-branch
-nested-if lowering, and basic concat RHS forms. It is covered by direct
+nested-if lowering, basic concat RHS forms, and same-width vector addition RHS
+lowering through `numeric_std` unsigned casts. It is covered by direct
 pipeline, CLI, and facade tests.
 
 Still backlog: composition/top VHDL, aggregate VHDL record/array lowering,
 VHDL packages, multi-clock domains, GHDL validation, broad expression parity,
-and full feature parity with the SystemVerilog backend. Arithmetic RHS
-expression parity is the active next direct-VHDL scaffold edge; before that
-ships, generated forms such as `A + B` remain fail-closed at the scaffold
-boundary.
+and full feature parity with the SystemVerilog backend. Broader arithmetic
+operators, multi-operand arithmetic expressions, scalar arithmetic, mismatched
+width arithmetic, and expression contexts beyond the same-width vector
+`NAME + NAME` RHS shape remain fail-closed at the scaffold boundary.
 
 ### GHDL Validation
 

@@ -82,7 +82,8 @@ items named in the 2026-06-05 remaining-work inventory.
     `BACKEND-API-VALIDATION-FRONTIER.20`,
     `BACKEND-API-VALIDATION-FRONTIER.20.1`,
     `BACKEND-API-VALIDATION-FRONTIER.21`,
-    `BACKEND-API-VALIDATION-FRONTIER.21.1`
+    `BACKEND-API-VALIDATION-FRONTIER.21.1`,
+    `BACKEND-API-VALIDATION-FRONTIER.22`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.1`
   Status: `done`
@@ -447,9 +448,16 @@ items named in the 2026-06-05 remaining-work inventory.
   Commit: `this slice`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.21.1`
-  Status: `active`
+  Status: `done`
   Goal: `Support the first arithmetic RHS expression shape in the direct VHDL scaffold.`
   Acceptance: `FSM::HDL::FlattenedDT::Backend::VHDL converts the generated SystemVerilog combinational RHS expression shape A + B from t/corpus/direct_assignment_pair_form.fsm into valid VHDL for the direct single-FSM scaffold without widening aggregate-output, composition-top, package, multi-clock, GHDL-validation, or full backend-parity claims. Focused VHDL pipeline/CLI/facade tests cover the arithmetic expression path and preserve existing delayed-pulse, concat, reset, aggregate-fail-closed, and composition-fail-closed behavior. README/live docs/mdBook, the direct-VHDL fact card, task-tree, and memory are synchronized.`
+  Verification: `perl -Iperl -c perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm; perl -Iperl -c perl/FSM/HDL/FlattenedDT.pm; prove -Iperl t/1420-vhdl-direct-backend-scaffold.t t/386-hdl-generator-facade-target-language-boundary-audit.t t/114-composition-target-support-diagnostics.t t/404-hdl-generator-facade-target-language-shape-boundary-audit.t; prove -Iperl t/313-hdl-external-validation-contract.t t/308-systemverilog-external-validation.t; ./bin/fsmgen --language vhdl --quiet -o /tmp/fsmgen_direct_assignment_pair_form.vhd t/corpus/direct_assignment_pair_form.fsm; bash knowledge-map/scripts/gen_knowledge_map.sh; bash knowledge-map/scripts/check_knowledge_map.sh; scripts/check_memory_architecture.sh; prove -Iperl t/1414-docs-relative-paths-audit.t; prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t; mdbook build docs/book; git diff --check`
+  Commit: `this slice`
+
+- ID: `BACKEND-API-VALIDATION-FRONTIER.22`
+  Status: `active`
+  Goal: `Select the next exact backend/API/public-export edge after direct VHDL same-width vector addition widening.`
+  Acceptance: `One remaining roadmap-aligned backend, validation, embedding, or public-export edge is selected from current code, contracts, mdBook, knowledge-map, and task-tree evidence. The selected edge has an exact implementation-or-deferral owner leaf before any code changes occur.`
   Verification: `pending`
   Commit: `pending`
 
@@ -503,7 +511,8 @@ items named in the 2026-06-05 remaining-work inventory.
 | 44 | `BACKEND-API-VALIDATION-FRONTIER.20` | `done` | Selected direct VHDL delayed-pulse clock-branch lowering as the next exact backend/API edge after exhausting the structural-RTL normalized semantic field families currently called out by the backlog. |
 | 45 | `BACKEND-API-VALIDATION-FRONTIER.20.1` | `done` | Implemented only the generated delayed-pulse nested-if clock-branch shape in the direct VHDL scaffold, leaving arithmetic, aggregate, composition, GHDL, and full-parity work deferred. |
 | 46 | `BACKEND-API-VALIDATION-FRONTIER.21` | `done` | Selected direct VHDL arithmetic expression parity as the next exact backend/API edge after the bounded delayed-pulse widening. |
-| 47 | `BACKEND-API-VALIDATION-FRONTIER.21.1` | `active` | Implement only the first direct VHDL arithmetic RHS expression shape, starting with the generated `A + B` combinational assignment. |
+| 47 | `BACKEND-API-VALIDATION-FRONTIER.21.1` | `done` | Implemented only the first direct VHDL arithmetic RHS expression shape: same-width vector `NAME + NAME` assignments lower through `numeric_std` unsigned casts. |
+| 48 | `BACKEND-API-VALIDATION-FRONTIER.22` | `active` | Select the next exact backend/API/public-export edge after the bounded direct VHDL same-width vector addition widening. |
 
 ## Decisions
 
@@ -571,6 +580,7 @@ items named in the 2026-06-05 remaining-work inventory.
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.20` | Selection audit/read of `docs/book/src/14-feature-backlog.md`, `docs/VHDL_SCOPE.md`, `perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm`, `perl/FSM/HDL/FlattenedDT.pm`, `t/1420-vhdl-direct-backend-scaffold.t`, `t/386-hdl-generator-facade-target-language-boundary-audit.t`, `t/114-composition-target-support-diagnostics.t`, and direct VHDL corpus probes; `command -v ghdl` returned unavailable; `./bin/fsmgen --language vhdl --quiet t/corpus/direct_assignment_pair_form.fsm` failed as expected on the unsupported generated delayed-pulse `if (PULSE_pulse_delay_pipe) begin` clock-branch shape; `prove -Iperl t/1420-vhdl-direct-backend-scaffold.t t/386-hdl-generator-facade-target-language-boundary-audit.t t/114-composition-target-support-diagnostics.t t/404-hdl-generator-facade-target-language-shape-boundary-audit.t` | `PASS`; selected direct VHDL delayed-pulse clock-branch lowering for `.20.1` |
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.20.1` | `perl -Iperl -c perl/FSM/HDL/FlattenedDT.pm`; `perl -Iperl -c perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm`; `prove -Iperl t/1420-vhdl-direct-backend-scaffold.t t/386-hdl-generator-facade-target-language-boundary-audit.t t/114-composition-target-support-diagnostics.t t/404-hdl-generator-facade-target-language-shape-boundary-audit.t`; `prove -Iperl t/313-hdl-external-validation-contract.t t/308-systemverilog-external-validation.t`; `./bin/fsmgen --language vhdl --quiet -o /tmp/fsmgen_direct_assignment_pair_form_probe.vhd t/corpus/direct_assignment_pair_form.fsm` failed as expected on arithmetic expression `A + B` outside the direct VHDL scaffold; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; delayed-pulse direct VHDL clock-branch lowering is shipped while arithmetic expression parity stays fail-closed |
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.21` | Selection audit/read of `README.md`, `MEMORY_ARCHITECTURE.md`, `MEMORY.md`, `docs/TASK_TREE.md`, `docs/tasks/BACKEND-API-VALIDATION-FRONTIER.md`, `docs/book/src/14-feature-backlog.md`, `docs/book/src/09-generated-hdl-debugging-and-inspection.md`, `docs/VHDL_SCOPE.md`, `docs/knowledge/direct-vhdl-scaffold.md`, `perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm`, `t/1420-vhdl-direct-backend-scaffold.t`, `t/386-hdl-generator-facade-target-language-boundary-audit.t`, and `t/corpus/direct_assignment_pair_form.fsm`; `./bin/fsmgen --language vhdl --quiet t/corpus/direct_rhs_concat_pack.fsm`; expected-failure probe `./bin/fsmgen --language vhdl --quiet t/corpus/direct_assignment_pair_form.fsm` failed on arithmetic expression `A + B`; `command -v ghdl` returned unavailable; `prove -Iperl t/1420-vhdl-direct-backend-scaffold.t t/386-hdl-generator-facade-target-language-boundary-audit.t t/114-composition-target-support-diagnostics.t t/404-hdl-generator-facade-target-language-shape-boundary-audit.t`; `prove -Iperl t/341-normalized-semantic-structural-rtl-ir-contract.t t/311-normalized-semantic-report-contract.t`; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; selected direct VHDL arithmetic expression parity for `.21.1` |
+| `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.21.1` | `perl -Iperl -c perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm`; `perl -Iperl -c perl/FSM/HDL/FlattenedDT.pm`; `prove -Iperl t/1420-vhdl-direct-backend-scaffold.t t/386-hdl-generator-facade-target-language-boundary-audit.t t/114-composition-target-support-diagnostics.t t/404-hdl-generator-facade-target-language-shape-boundary-audit.t`; `prove -Iperl t/313-hdl-external-validation-contract.t t/308-systemverilog-external-validation.t`; `./bin/fsmgen --language vhdl --quiet -o /tmp/fsmgen_direct_assignment_pair_form.vhd t/corpus/direct_assignment_pair_form.fsm`; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; direct VHDL same-width vector addition RHS lowering is shipped while broader arithmetic stays fail-closed |
 
 ## Commit Log
 
@@ -622,6 +632,7 @@ items named in the 2026-06-05 remaining-work inventory.
 | `BACKEND-API-VALIDATION-FRONTIER.20` | `BACKEND-API-VALIDATION-FRONTIER.20: select VHDL delayed pulse` | selected `.20.1` |
 | `BACKEND-API-VALIDATION-FRONTIER.20.1` | `BACKEND-API-VALIDATION-FRONTIER.20.1: ship VHDL delayed pulse` | this slice |
 | `BACKEND-API-VALIDATION-FRONTIER.21` | `BACKEND-API-VALIDATION-FRONTIER.21: select VHDL arithmetic parity` | selected `.21.1` |
+| `BACKEND-API-VALIDATION-FRONTIER.21.1` | `BACKEND-API-VALIDATION-FRONTIER.21.1: ship VHDL vector addition` | this slice |
 
 ## Changelog
 
@@ -846,3 +857,9 @@ items named in the 2026-06-05 remaining-work inventory.
   parity as the next exact scaffold edge after probes showed the accepted
   direct assignment-pair corpus now fails first on `A + B`. Activated `.21.1`
   before any backend code changes.
+- `2026-06-06`: Completed `.21.1`; direct VHDL generation now lowers the
+  first arithmetic RHS shape, same-width vector `NAME + NAME`, through
+  `numeric_std` unsigned casts. Broader arithmetic operators, multi-operand
+  expressions, scalar arithmetic, mismatched widths, aggregate VHDL, and full
+  backend parity remain deferred. Activated `.22` to select the next
+  backend/API edge.
