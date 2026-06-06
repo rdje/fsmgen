@@ -2315,6 +2315,61 @@ FSM
     );
 };
 
+subtest 'facade target_language option routes direct VHDL signed negative numeric-literal subtraction behavior' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $direct_path = File::Spec->catfile($tempdir, 'facade_direct_vhdl_signed_negative_literal_sub.fsm');
+    write_file(
+        $direct_path,
+        <<'FSM'
+(?fsm:facade_direct_vhdl_signed_negative_literal_sub
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+  (+types
+    (type signed_byte_t (four_state (signed (bits 8))))
+  )
+  (+size
+    (A signed_byte_t)
+    (DIFF signed_byte_t)
+  )
+  (idle
+    (DIFF = (- A -1))
+  )
+)
+FSM
+    );
+
+    my $vhdl_pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'vhdl',
+        quiet => 1,
+    );
+
+    my $vhdl_result = $vhdl_pipeline->generate_hdl_from_file($direct_path);
+
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bentity\s+facade_direct_vhdl_signed_negative_literal_sub\s+is\b/s,
+        'explicit VHDL facade generation emits the signed negative literal subtraction direct entity',
+    );
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bA\s+:\s+in\s+signed\(7\s+downto\s+0\);?/s,
+        'explicit VHDL facade generation lowers signed negative literal subtraction input port',
+    );
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bDIFF\s+<=\s+A\s+-\s+to_signed\(-1,\s+8\);/s,
+        'explicit VHDL facade generation lowers signed vector minus negative literal through numeric_std',
+    );
+    unlike(
+        $vhdl_result->{hdl_code},
+        qr/\bmodule\b|\balways_(?:ff|comb)\b|std_logic_vector\(unsigned\(A\)\s+-\s+to_unsigned\(-1,\s+8\)\)|to_unsigned\(-1,\s+8\)|arithmetic expression 'A - -1'/s,
+        'explicit VHDL signed negative literal subtraction facade generation avoids SystemVerilog syntax, unsigned casts, and the prior guard',
+    );
+};
+
 subtest 'facade target_language option routes direct VHDL vector output decimal literal behavior' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $direct_path = File::Spec->catfile($tempdir, 'facade_direct_vhdl_vector_output_decimal_literal.fsm');

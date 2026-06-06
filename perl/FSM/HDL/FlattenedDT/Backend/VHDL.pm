@@ -692,8 +692,8 @@ sub _simple_arithmetic_to_vhdl ($expr, $ctx) {
     my $bounded_wrap = _bounded_unsigned_wrap_arithmetic_to_vhdl($expr, $ctx, $unsupported);
     return $bounded_wrap if defined $bounded_wrap;
 
-    my $signed_negative_addition = _signed_vector_negative_literal_addition_to_vhdl($expr, $ctx, $unsupported);
-    return $signed_negative_addition if defined $signed_negative_addition;
+    my $signed_negative_add_sub = _signed_vector_negative_literal_add_sub_to_vhdl($expr, $ctx, $unsupported);
+    return $signed_negative_add_sub if defined $signed_negative_add_sub;
 
     my $operator;
     my @operators = map { lc($_) eq 'mod' ? '%' : $_ } $expr =~ /(\bmod\b|[+*^\/%]|-)/ig;
@@ -825,14 +825,14 @@ sub _simple_arithmetic_to_vhdl ($expr, $ctx) {
     return "std_logic_vector($converted_expression)";
 }
 
-sub _signed_vector_negative_literal_addition_to_vhdl ($expr, $ctx, $unsupported) {
+sub _signed_vector_negative_literal_add_sub_to_vhdl ($expr, $ctx, $unsupported) {
     my $identifier = qr/[A-Za-z_][A-Za-z0-9_]*/;
-    my ($signal_name, $literal_value, $literal_first);
-    if ($expr =~ /\A\s*($identifier)\s*\+\s*(-\d+)\s*\z/) {
-        ($signal_name, $literal_value, $literal_first) = ($1, $2, 0);
+    my ($signal_name, $operator, $literal_value, $literal_first);
+    if ($expr =~ /\A\s*($identifier)\s*([+-])\s*(-\d+)\s*\z/) {
+        ($signal_name, $operator, $literal_value, $literal_first) = ($1, $2, $3, 0);
     }
     elsif ($expr =~ /\A\s*(-\d+)\s*\+\s*($identifier)\s*\z/) {
-        ($literal_value, $signal_name, $literal_first) = ($1, $2, 1);
+        ($literal_value, $signal_name, $operator, $literal_first) = ($1, $2, '+', 1);
     }
     else {
         return undef;
@@ -850,7 +850,7 @@ sub _signed_vector_negative_literal_addition_to_vhdl ($expr, $ctx, $unsupported)
         if $operand_decl->{scalar} || !$operand_decl->{signed} || _decl_width($operand_decl) != $target_width;
 
     my $literal = "to_signed($literal_value, $target_width)";
-    return $literal_first ? "$literal + $signal_name" : "$signal_name + $literal";
+    return $literal_first ? "$literal + $signal_name" : "$signal_name $operator $literal";
 }
 
 sub _bounded_unsigned_wrap_arithmetic_to_vhdl ($expr, $ctx, $unsupported) {

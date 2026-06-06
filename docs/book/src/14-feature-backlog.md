@@ -4231,10 +4231,13 @@ package declaration/emission, and full normalized semantic export
 stabilization remain deferred.
 
 Current active backend edge: task-tree leaf
-`BACKEND-API-VALIDATION-FRONTIER.114.1` owns direct VHDL signed vector
-negative numeric-literal subtraction lowering after selector leaf
-`BACKEND-API-VALIDATION-FRONTIER.114` chose it from adjacent fail-closed
-arithmetic probes.
+`BACKEND-API-VALIDATION-FRONTIER.115` selects the next exact backend/API edge
+after signed vector negative numeric-literal subtraction lowering shipped.
+Completed implementation leaf `BACKEND-API-VALIDATION-FRONTIER.114.1` lowers
+direct VHDL signed vector subtraction with a negative decimal numeric literal
+into signed VHDL arithmetic, so the selected 8-bit signed fixture emits
+`DIFF <= A - to_signed(-1, 8);` instead of failing at arithmetic expression
+`'A - -1'`.
 Completed implementation leaf `BACKEND-API-VALIDATION-FRONTIER.113.1` lowers
 direct VHDL signed vector addition with a negative decimal numeric literal into
 signed VHDL arithmetic, so the selected 8-bit signed fixture emits
