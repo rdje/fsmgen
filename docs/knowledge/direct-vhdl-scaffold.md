@@ -11,6 +11,7 @@ answers:
   - "does composition VHDL support standalone-DT children?"
   - "does composition VHDL support standalone-DT generic maps?"
   - "does composition VHDL support standalone-DT scalar generic maps?"
+  - "does composition VHDL support standalone-DT scalar expression generic maps?"
   - "does composition VHDL support generated-FSM children?"
   - "does composition VHDL support C2 generated-FSM children?"
   - "does composition VHDL support APB/C4 generated-FSM children?"
@@ -185,9 +186,10 @@ The bounded C1 standalone-DT child composition VHDL top is also shipped for
 `standalone_route_src` child VHDL entity plus a top-level
 `entity work.standalone_route_src` port map for the explicit passthrough ports,
 without SystemVerilog structural syntax. The same bounded C1 standalone-DT
-family also lowers scalar integer parameter overrides to `generic map` actuals
-before the standalone-DT child port map, such as `WIDTH => 16`, while the child
-entity keeps the matching VHDL integer generic declaration.
+family also lowers scalar integer and scalar integer expression parameter
+overrides to `generic map` actuals before the standalone-DT child port map,
+such as `WIDTH => 16` and `EXPR_WIDTH => (8 + 1)`, while the child entity keeps
+the matching VHDL integer generic declaration.
 External-RTL C3 composition VHDL also
 lowers scalar integer, metadata-backed one-bit sized bitstring, and multi-bit
 sized bitstring parameter overrides to `generic map` actuals before the port
@@ -205,7 +207,8 @@ are supported only when the matching `.rtlif` parameter declaration provides
 scalar one-bit default metadata such as `ENABLE_DEFAULT 1'b0`;
 aggregate/list/record actuals that do not resolve to multi-bit packed values,
 unresolved package/expression actuals, standalone-DT generic maps beyond scalar
-integer, and APB/C4 generic maps remain deferred for those families. The
+integer/scalar expression, and APB/C4 generic maps remain deferred for those
+families. The
 bounded C2 generated-FSM child
 composition VHDL top is also shipped for
 `t/corpus/implicit_composition_system_autowire.fsm`. That subset emits VHDL-safe

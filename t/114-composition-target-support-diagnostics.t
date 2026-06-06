@@ -36,6 +36,8 @@ my $standalone_dtc_scalar_generic_map_path = File::Spec->catfile($tempdir, 'vhdl
 my $standalone_dtc_scalar_generic_map_output_path = File::Spec->catfile($tempdir, 'vhdl_standalone_dtc_scalar_generic_map_top.vhd');
 my $standalone_dtc_expression_generic_map_path = File::Spec->catfile($tempdir, 'vhdl_standalone_dtc_expression_generic_map_top.fsm');
 my $standalone_dtc_expression_generic_map_output_path = File::Spec->catfile($tempdir, 'vhdl_standalone_dtc_expression_generic_map_top.vhd');
+my $standalone_dtc_one_bit_generic_map_path = File::Spec->catfile($tempdir, 'vhdl_standalone_dtc_one_bit_generic_map_top.fsm');
+my $standalone_dtc_one_bit_generic_map_output_path = File::Spec->catfile($tempdir, 'vhdl_standalone_dtc_one_bit_generic_map_top.vhd');
 my $generated_fsmc_output_path = File::Spec->catfile($tempdir, 'implicit_composition_system_autowire.vhd');
 my $apb_c4_output_path = File::Spec->catfile($tempdir, 'apb_tb.vhd');
 my $scalar_generic_map_path = File::Spec->catfile($tempdir, 'vhdl_scalar_generic_map_top.fsm');
@@ -168,14 +170,50 @@ write_file(
   )
   (?dtc:router standalone_route_src
     (params
-      (WIDTH (+ 8 1))
+      (EXPR_WIDTH (+ 8 1))
     )
   )
 )
 
 (?dt:standalone_route_src
   (+params
-    (WIDTH 8)
+    (EXPR_WIDTH 8)
+  )
+  (+system
+    (clock clk)
+    (areset rst_n)
+  )
+  (+size
+    (data_in 16)
+    (result_data 16)
+  )
+  (:= (result_data 16'0))
+  (-capture
+    (<= (result_data data_in))
+  )
+)
+FSM
+);
+write_file(
+    $standalone_dtc_one_bit_generic_map_path,
+    <<'FSM'
+(?top:vhdl_standalone_dtc_one_bit_generic_map_top
+  (?ports:public_io
+    clk
+    rst_n
+    data_in<16
+    result_data>16
+  )
+  (?dtc:router standalone_route_src
+    (params
+      (ENABLE_DEFAULT 1'b1)
+    )
+  )
+)
+
+(?dt:standalone_route_src
+  (+params
+    (ENABLE_DEFAULT 1'b0)
   )
   (+system
     (clock clk)
@@ -754,15 +792,32 @@ unlike(
     'pipeline standalone-DT scalar generic-map VHDL output does not leak SystemVerilog generic syntax',
 );
 
-my $standalone_dtc_expression_generic_map_exception = eval {
-    $pipeline->generate_hdl_from_file($standalone_dtc_expression_generic_map_path);
+my $standalone_dtc_expression_generic_map_result = $pipeline->generate_hdl_from_file($standalone_dtc_expression_generic_map_path);
+like(
+    $standalone_dtc_expression_generic_map_result->{hdl_code},
+    qr/\bentity\s+standalone_route_src\s+is\s+generic\s*\(\s*EXPR_WIDTH\s+:\s+integer\s*:=\s*8\s*\);\s+port\s*\(/s,
+    'pipeline emits the standalone-DT child VHDL scalar expression generic declaration',
+);
+like(
+    $standalone_dtc_expression_generic_map_result->{hdl_code},
+    qr/\brouter\s+:\s+entity\s+work\.standalone_route_src\s+generic\s+map\s*\(\s*EXPR_WIDTH\s+=>\s+\(8\s+\+\s+1\)\s*\)\s+port\s+map\s*\(/s,
+    'pipeline emits standalone-DT scalar expression generic maps before the child port map',
+);
+unlike(
+    $standalone_dtc_expression_generic_map_result->{hdl_code},
+    qr/\bmodule\b|\bassign\b|\bendmodule\b|\balways_(?:ff|comb)\b|\#\s*\(|\.EXPR_WIDTH\s*\(/s,
+    'pipeline standalone-DT scalar expression generic-map VHDL output does not leak SystemVerilog generic syntax',
+);
+
+my $standalone_dtc_one_bit_generic_map_exception = eval {
+    $pipeline->generate_hdl_from_file($standalone_dtc_one_bit_generic_map_path);
     undef;
 };
-$standalone_dtc_expression_generic_map_exception = $@ if !$standalone_dtc_expression_generic_map_exception;
+$standalone_dtc_one_bit_generic_map_exception = $@ if !$standalone_dtc_one_bit_generic_map_exception;
 like(
-    $standalone_dtc_expression_generic_map_exception,
+    $standalone_dtc_one_bit_generic_map_exception,
     qr/Target language 'vhdl' is not implemented for this composition shape yet/s,
-    'pipeline rejects standalone-DT scalar expression generic maps outside the bounded C1 scalar-integer leaf',
+    'pipeline keeps standalone-DT one-bit generic maps outside the bounded C1 scalar expression leaf',
 );
 
 my $generated_fsmc_result = $pipeline->generate_hdl_from_file($generated_fsmc_composition_path);
@@ -1221,12 +1276,44 @@ my $standalone_dtc_expression_generic_map_combined_output = join(
     ($standalone_dtc_expression_generic_map_error_message || ''),
 );
 
-ok(!$standalone_dtc_expression_generic_map_success, 'CLI rejects standalone-DT scalar expression generic maps for VHDL');
-ok(!-e $standalone_dtc_expression_generic_map_output_path, 'CLI does not emit standalone-DT expression generic-map VHDL output');
+ok($standalone_dtc_expression_generic_map_success, 'CLI accepts standalone-DT scalar expression generic maps for VHDL')
+    or diag($standalone_dtc_expression_generic_map_combined_output);
+ok(-e $standalone_dtc_expression_generic_map_output_path, 'CLI writes standalone-DT expression generic-map VHDL output');
+
+my $standalone_dtc_expression_generic_map_cli_hdl = read_file($standalone_dtc_expression_generic_map_output_path);
 like(
-    $standalone_dtc_expression_generic_map_combined_output,
+    $standalone_dtc_expression_generic_map_cli_hdl,
+    qr/\bEXPR_WIDTH\s+:\s+integer\s*:=\s*8\b/s,
+    'CLI standalone-DT scalar expression generic-map output includes the child generic declaration',
+);
+like(
+    $standalone_dtc_expression_generic_map_cli_hdl,
+    qr/\brouter\s+:\s+entity\s+work\.standalone_route_src\s+generic\s+map\s*\(\s*EXPR_WIDTH\s+=>\s+\(8\s+\+\s+1\)\s*\)\s+port\s+map\s*\(/s,
+    'CLI standalone-DT scalar expression generic-map output includes the child generic map',
+);
+unlike(
+    $standalone_dtc_expression_generic_map_cli_hdl,
+    qr/\bmodule\b|\bassign\b|\bendmodule\b|\balways_(?:ff|comb)\b|\#\s*\(|\.EXPR_WIDTH\s*\(/s,
+    'CLI standalone-DT scalar expression generic-map VHDL output does not leak SystemVerilog generic syntax',
+);
+
+my ($standalone_dtc_one_bit_generic_map_success, $standalone_dtc_one_bit_generic_map_error_message, $standalone_dtc_one_bit_generic_map_full_buf, $standalone_dtc_one_bit_generic_map_stdout_buf, $standalone_dtc_one_bit_generic_map_stderr_buf) = run(
+    command => ['./bin/fsmgen', '--language', 'vhdl', '--quiet', '-o', $standalone_dtc_one_bit_generic_map_output_path, $standalone_dtc_one_bit_generic_map_path],
+);
+
+my $standalone_dtc_one_bit_generic_map_combined_output = join(
+    '',
+    @{ $standalone_dtc_one_bit_generic_map_stdout_buf || [] },
+    @{ $standalone_dtc_one_bit_generic_map_stderr_buf || [] },
+    ($standalone_dtc_one_bit_generic_map_error_message || ''),
+);
+
+ok(!$standalone_dtc_one_bit_generic_map_success, 'CLI rejects standalone-DT one-bit generic maps for VHDL');
+ok(!-e $standalone_dtc_one_bit_generic_map_output_path, 'CLI does not emit standalone-DT one-bit generic-map VHDL output');
+like(
+    $standalone_dtc_one_bit_generic_map_combined_output,
     qr/Target language 'vhdl' is not implemented for this composition shape yet/s,
-    'CLI surfaces the standalone-DT expression generic-map VHDL boundary',
+    'CLI surfaces the standalone-DT one-bit generic-map VHDL boundary',
 );
 
 my ($generated_fsmc_success, $generated_fsmc_error_message, $generated_fsmc_full_buf, $generated_fsmc_stdout_buf, $generated_fsmc_stderr_buf) = run(

@@ -603,7 +603,7 @@ FSM
     );
 };
 
-subtest 'facade target_language option rejects standalone-DT scalar expression generic-map widening' => sub {
+subtest 'facade target_language option routes bounded standalone-DT scalar expression generic-map behavior' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $composition_path = File::Spec->catfile($tempdir, 'facade_vhdl_standalone_dtc_expression_generic_map_top.fsm');
     write_file(
@@ -618,14 +618,79 @@ subtest 'facade target_language option rejects standalone-DT scalar expression g
   )
   (?dtc:router standalone_route_src
     (params
-      (WIDTH (+ 8 1))
+      (EXPR_WIDTH (+ 8 1))
     )
   )
 )
 
 (?dt:standalone_route_src
   (+params
-    (WIDTH 8)
+    (EXPR_WIDTH 8)
+  )
+  (+system
+    (clock clk)
+    (areset rst_n)
+  )
+  (+size
+    (data_in 16)
+    (result_data 16)
+  )
+  (:= (result_data 16'0))
+  (-capture
+    (<= (result_data data_in))
+  )
+)
+FSM
+    );
+
+    my $vhdl_pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'vhdl',
+        quiet => 1,
+    );
+
+    my $vhdl_result = $vhdl_pipeline->generate_hdl_from_file($composition_path);
+
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bentity\s+standalone_route_src\s+is\s+generic\s*\(\s*EXPR_WIDTH\s+:\s+integer\s*:=\s*8\s*\);\s+port\s*\(/s,
+        'explicit VHDL facade generation emits the standalone-DT child scalar expression generic declaration',
+    );
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\brouter\s+:\s+entity\s+work\.standalone_route_src\s+generic\s+map\s*\(\s*EXPR_WIDTH\s+=>\s+\(8\s+\+\s+1\)\s*\)\s+port\s+map\s*\(/s,
+        'explicit VHDL facade generation emits standalone-DT scalar expression generic maps before the child port map',
+    );
+    unlike(
+        $vhdl_result->{hdl_code},
+        qr/\bmodule\b|\bassign\b|\bendmodule\b|\balways_(?:ff|comb)\b|\#\s*\(|\.EXPR_WIDTH\s*\(/s,
+        'explicit VHDL standalone-DT scalar expression generic-map generation does not leak SystemVerilog generic syntax',
+    );
+};
+
+subtest 'facade target_language option keeps standalone-DT one-bit generic maps deferred' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'facade_vhdl_standalone_dtc_one_bit_generic_map_top.fsm');
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:facade_vhdl_standalone_dtc_one_bit_generic_map_top
+  (?ports:public_io
+    clk
+    rst_n
+    data_in<16
+    result_data>16
+  )
+  (?dtc:router standalone_route_src
+    (params
+      (ENABLE_DEFAULT 1'b1)
+    )
+  )
+)
+
+(?dt:standalone_route_src
+  (+params
+    (ENABLE_DEFAULT 1'b0)
   )
   (+system
     (clock clk)
@@ -658,7 +723,7 @@ FSM
     like(
         $exception,
         qr/Target language 'vhdl' is not implemented for this composition shape yet/s,
-        'explicit VHDL facade generation rejects standalone-DT scalar expression generic maps',
+        'explicit VHDL facade generation rejects standalone-DT one-bit generic maps',
     );
 };
 

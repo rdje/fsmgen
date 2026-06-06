@@ -185,7 +185,10 @@ sub _has_only_supported_standalone_dt_generic_overrides ($instance) {
     for my $override (@{$instance->parameter_overrides || []}) {
         return 0 unless ($override->{value_kind} // 'scalar') eq 'scalar';
         my $value = $override->{value_text};
-        return 0 unless defined($value) && $value =~ /\A-?\d+\z/;
+        return 0 unless defined($value);
+        next if $value =~ /\A-?\d+\z/;
+        next if $value =~ /\A\(\s*-?\d+(?:\s+[-+*\/]\s+-?\d+)+\s*\)\z/;
+        return 0;
     }
     return 1;
 }

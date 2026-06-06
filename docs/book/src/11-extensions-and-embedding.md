@@ -919,7 +919,8 @@ standalone-DT passthrough fixture in
 `standalone_route_src` child VHDL entity plus an `entity work.standalone_route_src`
 port map. The same bounded C1 standalone-DT family also emits scalar integer
 generic maps before the standalone-DT child port map, such as `WIDTH => 16`,
-while the child entity keeps the matching VHDL integer generic declaration.
+and scalar expression generic maps such as `EXPR_WIDTH => (8 + 1)`, while the
+child entity keeps the matching VHDL integer generic declaration.
 The C2 generated-FSM scalar-autowire fixture in
 `t/corpus/implicit_composition_system_autowire.fsm` emits VHDL-safe
 generated-child shared-datapath export ports/assignments, scalar structural
@@ -950,9 +951,10 @@ package, and full-parity composition shapes rejected by the scoped composition
 target-support diagnostic. Generic-map families outside the shipped external-RTL
 scalar integer, scalar integer expression, metadata-backed one-bit sized
 bitstring, multi-bit sized bitstring, resolved package-backed, and packed
-aggregate actuals, shipped C1 standalone-DT scalar integer actuals, and shipped
-C2 generated-FSM scalar integer, scalar expression, one-bit sized bitstring,
-multi-bit sized bitstring, and packed aggregate actuals remain deferred.
+aggregate actuals, shipped C1 standalone-DT scalar integer and scalar
+expression actuals, and shipped C2 generated-FSM scalar integer, scalar
+expression, one-bit sized bitstring, multi-bit sized bitstring, and packed
+aggregate actuals remain deferred.
 That is still a scoped scaffold, not a full VHDL backend promise.
 
 [t/387-hdl-generator-facade-debug-level-boundary-audit.t](t/387-hdl-generator-facade-debug-level-boundary-audit.t)
@@ -2350,12 +2352,9 @@ this normalized semantic shape:
 ```
 
 The current active backend/API frontier is
-`BACKEND-API-VALIDATION-FRONTIER.85.1`, which owns the bounded C1
-standalone-DT scalar expression VHDL generic-map actual edge selected by `.85`.
-Until that leaf lands, standalone-DT scalar expression generic maps remain a
-documented fail-closed boundary; the active implementation target is the
-single-child standalone-DT shape that can emit an actual such as
-`EXPR_WIDTH => (8 + 1)`.
+`BACKEND-API-VALIDATION-FRONTIER.86`, which selects the next exact backend/API
+edge after bounded C1 standalone-DT scalar expression VHDL generic-map actuals
+shipped in `.85.1`.
 Package declaration and VHDL package emission, already bounded
 constant/enum/type internals, unrelated forward-IR payloads, signed scalar
 division/modulo, mixed signed/unsigned arithmetic, standalone-DT generic maps
