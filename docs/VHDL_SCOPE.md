@@ -58,13 +58,15 @@ This document defines the scoped R14 VHDL backend plan for FSMGen.
   standalone-DT child passthrough top in
   `t/corpus/standalone_dtc_explicit_system_autowire.fsm`, plus the bounded C2
   generated-FSM scalar-autowire top in
-  `t/corpus/implicit_composition_system_autowire.fsm`. Broader generated-FSM
-  child composition VHDL, APB/C4 composition VHDL, internal-net-heavy tops,
-  generic maps, full aggregate VHDL record/array lowering, broad expression
-  parity, scalar division/modulo and broader scalar arithmetic, signed
-  arithmetic operators beyond the shipped same-width vector arithmetic family,
-  GHDL validation, packages, multi-clock domains, and full feature parity
-  remain deferred.
+  `t/corpus/implicit_composition_system_autowire.fsm`. APB/C4 composition VHDL
+  for `fsm/apb_tb.fsm` is selected under
+  `BACKEND-API-VALIDATION-FRONTIER.71.1` but remains unshipped until that leaf
+  completes. Broader generated-FSM child composition VHDL, internal-net-heavy
+  tops, generic maps, full aggregate VHDL record/array lowering, broad
+  expression parity, scalar division/modulo and broader scalar arithmetic,
+  signed arithmetic operators beyond the shipped same-width vector arithmetic
+  family, GHDL validation, packages, multi-clock domains, and full feature
+  parity remain deferred.
 - Mixed signed/unsigned vector numeric arithmetic is locked as an explicit
   fail-closed direct VHDL boundary by focused pipeline and facade coverage.
 - Signed scalar addition/subtraction/multiplication arithmetic is locked as an
@@ -78,10 +80,10 @@ This document defines the scoped R14 VHDL backend plan for FSMGen.
   record/array aggregate lowering remains deferred.
 - Composition/top VHDL is locked to the shipped structural-top leaves: the
   current pipeline and CLI accept `target_language => 'vhdl'` / `--language
-  vhdl` only for the C3 external-RTL literal/concat fixture and the explicit
-  C1 standalone-DT passthrough fixture. Other `?top` shapes still parse into
-  typed composition IR and then fail closed with the scoped composition
-  target-support diagnostic.
+  vhdl` only for the C3 external-RTL literal/concat fixture, the explicit
+  C1 standalone-DT passthrough fixture, and the C2 generated-FSM scalar
+  autowire fixture. Other `?top` shapes still parse into typed composition IR
+  and then fail closed with the scoped composition target-support diagnostic.
 
 ## Goal
 Implement a real, scoped VHDL backend that generates synthesizable VHDL from
@@ -91,7 +93,7 @@ SystemVerilog-first-then-convert pattern already used for Verilog.
 ## Scope boundary — what the first lane covers
 The VHDL lane is intentionally narrow:
 
-1. **Direct-root scaffold plus two bounded composition structural tops**
+1. **Direct-root scaffold plus three bounded composition structural tops**
    - Direct roots cover `?fsm:name` and `?dt:name`
    - Composition roots cover only the C3 external-RTL literal/concat shape in
      `t/corpus/composition_intent_integer_literals.fsm` and the C1
@@ -99,8 +101,10 @@ The VHDL lane is intentionally narrow:
      `t/corpus/standalone_dtc_explicit_system_autowire.fsm`, plus the C2
      generated-FSM scalar-autowire shape in
      `t/corpus/implicit_composition_system_autowire.fsm`
-   - APB/C4 composition VHDL, broader generated-FSM composition VHDL, internal
-     nets beyond the shipped C2 fixture, and generic maps remain deferred
+   - APB/C4 composition VHDL is active under
+     `BACKEND-API-VALIDATION-FRONTIER.71.1` but remains unshipped; broader
+     generated-FSM composition VHDL, internal nets beyond exact owned fixtures,
+     and generic maps remain deferred
 
 2. **Direct-root structural conversion from SystemVerilog**
    - Generate SystemVerilog through the existing direct backend
@@ -108,13 +112,16 @@ The VHDL lane is intentionally narrow:
    - Follow the same `convert_systemverilog_to_*` pattern as Verilog
 
 3. **Composition structural emission from typed structural RTL IR**
-   - Emit only the shipped no-net external-RTL and standalone-DT passthrough
-     structural tops through
+   - Emit only the shipped external-RTL literal/concat, standalone-DT
+     passthrough, and C2 generated-FSM scalar-autowire structural tops through
      `FSM::Backend::VHDL::StructuralRTLIREmitter`
    - Render VHDL concurrent auxiliary assignments, generated standalone-DT
-     child VHDL segments for the bounded C1 leaf, and VHDL port-map actuals
-   - Reject generated-FSM child instances, parameter overrides, declared
-     aggregate structural types, internal nets, and non-VHDL auxiliary
+     child VHDL segments for the bounded C1 leaf, generated-FSM child VHDL
+     segments for the bounded C2 leaf, scalar structural signals, and VHDL
+     port-map actuals
+   - Reject generated-FSM child instances outside exact shipped or active
+     leaves, parameter overrides, declared aggregate structural types,
+     structural nets outside exact scalar/vector leaves, and non-VHDL auxiliary
      assignments
 
 4. **Supported constructs in the first lane:**
@@ -237,6 +244,8 @@ The VHDL lane is intentionally narrow:
   bounded direct aggregate-output packed-vector lowering,
   bounded C3 external-RTL literal/concat composition VHDL structural-top
   generation,
+  bounded C1 standalone-DT and C2 generated-FSM composition VHDL
+  structural-top generation,
   mixed signed/unsigned vector numeric arithmetic fail-closed diagnostics,
   signed scalar arithmetic fail-closed diagnostics,
   mismatched-width arithmetic-expression fail-closed diagnostics, and
@@ -246,8 +255,8 @@ The VHDL lane is intentionally narrow:
 - Consider external VHDL validation via GHDL
 
 ## Non-goals for R14
-- Broader VHDL composition-top generation beyond the first C3 external-RTL
-  literal/concat structural top
+- Broader VHDL composition-top generation beyond exact owned structural-top
+  leaves
 - Full VHDL structural feature parity with SystemVerilog
 - VHDL-2019 specific features in the first lane
 - Mixed-language (SV+VHDL) co-simulation

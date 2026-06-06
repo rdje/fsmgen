@@ -3812,12 +3812,13 @@ standalone-DT passthrough top for
 `t/corpus/standalone_dtc_explicit_system_autowire.fsm`, plus the bounded C2
 generated-FSM scalar-autowire top for
 `t/corpus/implicit_composition_system_autowire.fsm`.
-Still backlog: broader generated-FSM child composition VHDL, APB/C4
-composition VHDL, internal-net-heavy composition tops, composition generic
-maps, aggregate VHDL record/array lowering, VHDL packages, multi-clock domains,
-GHDL validation, broad expression parity, scalar signed arithmetic, mixed
-signed/unsigned arithmetic, and full feature parity with the SystemVerilog
-backend. Scalar division/modulo,
+The next active exact leaf is the bounded APB/C4 generated-FSM composition
+VHDL top for `fsm/apb_tb.fsm`; it is not shipped yet. Still backlog beyond
+that exact owner: broader generated-FSM child composition VHDL,
+internal-net-heavy composition tops, composition generic maps, aggregate VHDL
+record/array lowering, VHDL packages, multi-clock domains, GHDL validation,
+broad expression parity, scalar signed arithmetic, mixed signed/unsigned
+arithmetic, and full feature parity with the SystemVerilog backend. Scalar division/modulo,
 broader scalar arithmetic beyond scalar addition/subtraction/multiplication
 chains, broader arithmetic operators, mismatched-width arithmetic, and
 expression contexts beyond the same-width
@@ -4084,15 +4085,13 @@ schema metadata for `semantic.symbol_contract.types` and
 recursive `items` or `members` plus `member_order`.
 
 Current active backend edge: task-tree leaf
-`BACKEND-API-VALIDATION-FRONTIER.71` selects the next exact backend/API edge
-after the bounded C2 generated-FSM child composition VHDL top for
-`t/corpus/implicit_composition_system_autowire.fsm` shipped alongside the
-bounded C1 standalone-DT child composition VHDL top and the bounded C3
-external-RTL literal/concat composition VHDL top.
+`BACKEND-API-VALIDATION-FRONTIER.71.1` implements only the bounded APB/C4
+generated-FSM child composition VHDL top for `fsm/apb_tb.fsm`, after
+`BACKEND-API-VALIDATION-FRONTIER.71` selected that exact edge from the
+remaining supported composition VHDL sweep failure.
 Package-import internals, already bounded constant/enum/type internals,
 unrelated forward-IR payloads, scalar signed arithmetic, full aggregate VHDL
-record/array lowering, broader generated-FSM child composition VHDL, APB/C4
-composition VHDL, internal nets/generic maps beyond the selected fixture,
-broader expression parity beyond the shipped AMBA wrap family, and full
-normalized semantic export stabilization remain out of scope until later exact
-leaves own them.
+record/array lowering, broader generated-FSM child composition VHDL, internal
+nets/generic maps beyond the APB fixture, broader expression parity beyond the
+shipped AMBA wrap family, and full normalized semantic export stabilization
+remain out of scope until later exact leaves own them.
