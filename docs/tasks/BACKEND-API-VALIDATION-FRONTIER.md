@@ -1321,10 +1321,18 @@ items named in the 2026-06-05 remaining-work inventory.
   Commit: `BACKEND-API-VALIDATION-FRONTIER.72.1: lower VHDL signed scalar arithmetic`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.73`
-  Status: `active`
+  Status: `done`
   Goal: `Select the next exact backend/API edge after direct VHDL signed scalar addition/subtraction/multiplication RHS lowering shipped.`
+  Children: `BACKEND-API-VALIDATION-FRONTIER.73.1`
   Acceptance: `Selection-only leaf. Audit the backend/API frontier, current VHDL scope, mdBook backlog, direct-VHDL fact card, focused scaffold/facade tests, maintained direct/composition VHDL sweeps, and current validation environment; choose the next narrow implementation or hardening owner before any code/test/source edits. The selector must preserve task-tree ownership for the chosen child leaf, synchronize README/VHDL scope/mdBook/fact card/memory if the selected frontier changes user-visible scope, and leave signed scalar division/modulo, mixed signed/unsigned arithmetic, aggregate VHDL, packages, GHDL validation, broad expression parity, and full backend parity deferred unless it explicitly chooses one of those exact edges.`
-  Verification: `pending selection`
+  Verification: `Selection audit/read of docs/TASK_TREE.md, docs/tasks/BACKEND-API-VALIDATION-FRONTIER.md, docs/VHDL_SCOPE.md, docs/book/src/14-feature-backlog.md, docs/book/src/11-extensions-and-embedding.md, docs/knowledge/direct-vhdl-scaffold.md, perl/FSM/Backend/VHDL/StructuralRTLIREmitter.pm, t/91-composition-multi-rtl-children.t, t/292-composition-generated-child-parameter-overrides.t, t/114-composition-target-support-diagnostics.t, and t/386-hdl-generator-facade-target-language-boundary-audit.t; command -v ghdl returned unavailable; temporary scalar-only external-RTL parameter override probe passed on SystemVerilog with lane=C3 overrides=1 and failed on VHDL exactly at Structural VHDL composition-top scaffold unsupported: composition VHDL generic maps are outside the first structural-top leaf; prove -Iperl t/114-composition-target-support-diagnostics.t t/386-hdl-generator-facade-target-language-boundary-audit.t; bash knowledge-map/scripts/check_knowledge_map.sh; scripts/check_memory_architecture.sh; prove -Iperl t/1414-docs-relative-paths-audit.t; prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t; mdbook build docs/book.`
+  Commit: `BACKEND-API-VALIDATION-FRONTIER.73: select VHDL scalar generic maps`
+
+- ID: `BACKEND-API-VALIDATION-FRONTIER.73.1`
+  Status: `active`
+  Goal: `Implement bounded VHDL generic-map lowering for scalar integer external-RTL composition overrides.`
+  Acceptance: `The structural VHDL composition-top emitter accepts the exact C3 external-RTL shape represented by one or more ?rtl instances whose parameter_overrides[] entries are scalar integer values, emitting a VHDL generic map before the port map, such as WIDTH => 16, while preserving existing VHDL entity work.<module> instantiation, port-map actuals, and no SystemVerilog structural syntax. Focused pipeline, CLI, and facade/target-language coverage prove the scalar generic-map shape, including the previously probed single external RTL child with WIDTH 16. Generated-FSM and standalone-DT generic maps, vector/bitstring scalar generic actuals, aggregate/list/record generic actuals, package-backed generic actuals, APB/C4 generic maps, broader generated-FSM/C4 composition VHDL, internal-net-heavy tops beyond shipped fixtures, aggregate VHDL, packages, GHDL validation, broad expression parity, and full backend parity remain fail-closed or deferred. README, docs/VHDL_SCOPE.md, mdBook, direct-VHDL fact card if needed, task tree, and memory stay synchronized.`
+  Verification: `pending implementation`
   Commit: `pending`
 
 ## Current Frontier
@@ -1480,7 +1488,8 @@ items named in the 2026-06-05 remaining-work inventory.
 | 147 | `BACKEND-API-VALIDATION-FRONTIER.71.1` | `done` | Shipped the APB/C4 generated-FSM child VHDL top for `fsm/apb_tb.fsm`; supported composition VHDL sweep now passes 4/4. |
 | 148 | `BACKEND-API-VALIDATION-FRONTIER.72` | `done` | Selected direct VHDL signed scalar addition/subtraction/multiplication RHS lowering after focused tests still lock that exact one-bit signed scalar arithmetic family fail-closed and GHDL remains unavailable. |
 | 149 | `BACKEND-API-VALIDATION-FRONTIER.72.1` | `done` | Shipped one-bit signed scalar +, -, and * direct VHDL RHS/chain lowering as std_logic xor/and bit-pattern logic while keeping signed scalar division/modulo and mixed signed/unsigned scalar arithmetic fail-closed. |
-| 150 | `BACKEND-API-VALIDATION-FRONTIER.73` | `active` | Select the next exact backend/API edge after direct VHDL signed scalar arithmetic shipped; no implementation starts until the selected child leaf owns it. |
+| 150 | `BACKEND-API-VALIDATION-FRONTIER.73` | `done` | Selected bounded external-RTL C3 scalar integer generic-map lowering after a scalar parameter-override probe failed exactly at the structural VHDL generic-map guard while the same source passed SystemVerilog. |
+| 151 | `BACKEND-API-VALIDATION-FRONTIER.73.1` | `active` | Implement only scalar integer VHDL generic maps for external-RTL composition instances before any generated-child, aggregate, package, GHDL, or full-parity generic-map work. |
 
 ## Decisions
 
@@ -1651,6 +1660,7 @@ items named in the 2026-06-05 remaining-work inventory.
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.71.1` | `perl -Iperl -c perl/FSM/Composition/PlanBuilder.pm`; `perl -Iperl -c perl/FSM/Composition/GenerationOrchestrator.pm`; `perl -Iperl -c perl/FSM/Backend/VHDL/StructuralRTLIREmitter.pm`; `perl -Iperl -c perl/FSM/Support/RegressionCorpus.pm`; `perl -Iperl -c t/114-composition-target-support-diagnostics.t`; `perl -Iperl -c t/386-hdl-generator-facade-target-language-boundary-audit.t`; focused VHDL composition/facade/direct prove bundle; APB/C3/C2 CLI VHDL probes; APB VHDL output inspection; regression-corpus contract bundle; external-validation prove bundle; supported direct-root VHDL sweep returned `entries=37 failures=0`; supported composition VHDL sweep returned `entries=4 passes=4 failures=0`; `command -v ghdl` unavailable; docs/knowledge/mdBook gates; `git diff --check` | `PASS`; bounded APB/C4 generated-FSM child composition VHDL top shipped and `.72` activated for next-edge selection |
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.72` | Selection audit/read of `README.md`, `docs/TASK_TREE.md`, `docs/tasks/BACKEND-API-VALIDATION-FRONTIER.md`, `docs/VHDL_SCOPE.md`, `docs/book/src/11-extensions-and-embedding.md`, `docs/book/src/14-feature-backlog.md`, `docs/knowledge/direct-vhdl-scaffold.md`, `perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm`, `t/1420-vhdl-direct-backend-scaffold.t`, and `t/386-hdl-generator-facade-target-language-boundary-audit.t`; `prove -Iperl t/1420-vhdl-direct-backend-scaffold.t t/386-hdl-generator-facade-target-language-boundary-audit.t`; `command -v ghdl`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh` | `PASS`; selected direct VHDL signed scalar addition/subtraction/multiplication RHS lowering for `.72.1`; `command -v ghdl` returned unavailable |
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.72.1` | `perl -Iperl -c perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm`; `perl -Iperl -c t/1420-vhdl-direct-backend-scaffold.t`; `perl -Iperl -c t/386-hdl-generator-facade-target-language-boundary-audit.t`; focused VHDL scaffold/facade prove bundle; composition/target-language boundary prove bundle; external-validation prove bundle; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; direct VHDL signed scalar addition/subtraction/multiplication RHS/chain lowering shipped and `.73` activated for next-edge selection |
+| `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.73` | Selection audit/read of `docs/TASK_TREE.md`, `docs/tasks/BACKEND-API-VALIDATION-FRONTIER.md`, `docs/VHDL_SCOPE.md`, `docs/book/src/14-feature-backlog.md`, `docs/book/src/11-extensions-and-embedding.md`, `docs/knowledge/direct-vhdl-scaffold.md`, `perl/FSM/Backend/VHDL/StructuralRTLIREmitter.pm`, `t/91-composition-multi-rtl-children.t`, `t/292-composition-generated-child-parameter-overrides.t`, `t/114-composition-target-support-diagnostics.t`, and `t/386-hdl-generator-facade-target-language-boundary-audit.t`; `command -v ghdl`; temporary scalar-only external-RTL parameter override probes for SystemVerilog and VHDL; target-language/facade prove bundle; knowledge-map/memory/doc/mdBook gates | `PASS`; selected bounded external-RTL scalar integer VHDL generic-map lowering for `.73.1`; `command -v ghdl` returned unavailable |
 
 ## Commit Log
 
@@ -1805,6 +1815,7 @@ items named in the 2026-06-05 remaining-work inventory.
 | `BACKEND-API-VALIDATION-FRONTIER.71.1` | `BACKEND-API-VALIDATION-FRONTIER.71.1: emit APB C4 VHDL top` | this slice; activates `.72` |
 | `BACKEND-API-VALIDATION-FRONTIER.72` | `BACKEND-API-VALIDATION-FRONTIER.72: select VHDL signed scalar arithmetic` | selected `.72.1` |
 | `BACKEND-API-VALIDATION-FRONTIER.72.1` | `BACKEND-API-VALIDATION-FRONTIER.72.1: lower VHDL signed scalar arithmetic` | this slice; activates `.73` |
+| `BACKEND-API-VALIDATION-FRONTIER.73` | `BACKEND-API-VALIDATION-FRONTIER.73: select VHDL scalar generic maps` | selected `.73.1` |
 
 ## Changelog
 
@@ -2686,3 +2697,11 @@ items named in the 2026-06-05 remaining-work inventory.
   declarations. Signed scalar division/modulo and mixed signed/unsigned scalar
   arithmetic remain fail-closed. Activated `.73` to select the next exact
   backend/API edge.
+- `2026-06-06`: Completed `.73`; selected bounded external-RTL C3 scalar
+  integer generic-map lowering for `.73.1` after a scalar-only parameterized
+  external RTL composition probe passed SystemVerilog with lane C3 and one
+  override, while VHDL failed exactly at the structural generic-map guard.
+  Generated-FSM/standalone-DT generic maps, vector/bitstring and aggregate
+  generic actuals, package-backed actuals, APB/C4 generic maps, GHDL
+  validation, broad expression parity, and full backend parity remain
+  deferred.
