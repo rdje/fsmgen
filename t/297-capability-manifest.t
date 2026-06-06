@@ -169,6 +169,8 @@ use FSM::Support::NormalizedSemanticReportContract qw(
     normalized_semantic_forward_ir_lowered_rtl_ir_selector_conflict_rhs_enable_family_entry_keys
     normalized_semantic_forward_ir_lowered_rtl_ir_selector_conflict_same_value_assertion_keys
     normalized_semantic_forward_ir_lowered_rtl_ir_selector_conflict_target_entry_keys
+    normalized_semantic_forward_ir_structural_rtl_ir_auxiliary_assignment_entry_value_kinds
+    normalized_semantic_forward_ir_structural_rtl_ir_auxiliary_assignment_entry_value_meaning
     normalized_semantic_forward_ir_structural_rtl_ir_declared_link_entry_keys
     normalized_semantic_forward_ir_structural_rtl_ir_instance_entry_keys
     normalized_semantic_forward_ir_structural_rtl_ir_instance_interface_port_entry_keys
@@ -972,6 +974,16 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
     ok(
         scalar(@{$manifest->{semantic_exports}{normalized_semantic_json}{success_forward_ir_structural_rtl_ir_presence_keys} || []}) >= 15,
         'manifest advertises bounded normalized semantic forward-ir structural-rtl-ir key presence',
+    );
+    is_deeply(
+        $manifest->{semantic_exports}{normalized_semantic_json}{success_forward_ir_structural_rtl_ir_auxiliary_assignment_entry_value_kinds},
+        normalized_semantic_forward_ir_structural_rtl_ir_auxiliary_assignment_entry_value_kinds(),
+        'manifest records exact normalized semantic structural-rtl-ir auxiliary-assignment entry value kinds',
+    );
+    is(
+        $manifest->{semantic_exports}{normalized_semantic_json}{success_forward_ir_structural_rtl_ir_auxiliary_assignment_entry_value_meaning},
+        normalized_semantic_forward_ir_structural_rtl_ir_auxiliary_assignment_entry_value_meaning(),
+        'manifest records normalized semantic structural-rtl-ir auxiliary-assignment entry value meaning',
     );
     is_deeply(
         $manifest->{semantic_exports}{normalized_semantic_json}{success_forward_ir_structural_rtl_ir_port_entry_keys},

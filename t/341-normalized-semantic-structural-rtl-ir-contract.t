@@ -10,6 +10,8 @@ use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::Support::NormalizedSemanticStructuralRTLIRContract qw(
     build_normalized_semantic_structural_rtl_ir_contract
+    normalized_semantic_structural_rtl_ir_auxiliary_assignment_entry_value_kinds
+    normalized_semantic_structural_rtl_ir_auxiliary_assignment_entry_value_meaning
     normalized_semantic_structural_rtl_ir_collection_presence_keys
     normalized_semantic_structural_rtl_ir_contract_source
     normalized_semantic_structural_rtl_ir_declared_link_entry_keys
@@ -60,6 +62,21 @@ subtest 'contract exposes the bounded normalized semantic structural-rtl-ir obje
         $contract->{collection_presence_keys},
         normalized_semantic_structural_rtl_ir_collection_presence_keys(),
         'contract publishes the bounded structural-rtl-ir collection key family',
+    );
+    is_deeply(
+        $contract->{auxiliary_assignment_entry_value_kinds},
+        normalized_semantic_structural_rtl_ir_auxiliary_assignment_entry_value_kinds(),
+        'contract publishes the bounded structural-rtl-ir auxiliary-assignment entry value-kind family',
+    );
+    is_deeply(
+        normalized_semantic_structural_rtl_ir_auxiliary_assignment_entry_value_kinds(),
+        [qw(scalar_string)],
+        'structural-rtl-ir auxiliary-assignment entry value kinds stay exact and ordered',
+    );
+    is(
+        $contract->{auxiliary_assignment_entry_value_meaning},
+        normalized_semantic_structural_rtl_ir_auxiliary_assignment_entry_value_meaning(),
+        'contract publishes the bounded structural-rtl-ir auxiliary-assignment entry value meaning',
     );
     is_deeply(
         $contract->{port_entry_keys},
@@ -250,6 +267,11 @@ subtest 'contract exposes the bounded normalized semantic structural-rtl-ir obje
         $contract->{presence_key_family_map}{instance_port_binding_typed_extension_keys},
         normalized_semantic_structural_rtl_ir_instance_port_binding_typed_extension_keys(),
         'grouped structural-rtl-ir family map publishes instance port-binding typed extension keys',
+    );
+    is_deeply(
+        $contract->{presence_key_family_map}{auxiliary_assignment_entry_value_kinds},
+        normalized_semantic_structural_rtl_ir_auxiliary_assignment_entry_value_kinds(),
+        'grouped structural-rtl-ir family map publishes auxiliary-assignment entry value kinds',
     );
 };
 

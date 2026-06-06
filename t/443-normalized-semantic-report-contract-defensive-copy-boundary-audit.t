@@ -33,6 +33,8 @@ use FSM::Support::NormalizedSemanticReportContract qw(
     normalized_semantic_forward_ir_lowered_rtl_ir_selector_conflict_rhs_enable_family_entry_keys
     normalized_semantic_forward_ir_lowered_rtl_ir_selector_conflict_same_value_assertion_keys
     normalized_semantic_forward_ir_lowered_rtl_ir_selector_conflict_target_entry_keys
+    normalized_semantic_forward_ir_structural_rtl_ir_auxiliary_assignment_entry_value_kinds
+    normalized_semantic_forward_ir_structural_rtl_ir_auxiliary_assignment_entry_value_meaning
     normalized_semantic_forward_ir_structural_rtl_ir_declared_link_entry_keys
     normalized_semantic_forward_ir_structural_rtl_ir_instance_entry_keys
     normalized_semantic_forward_ir_structural_rtl_ir_instance_interface_port_entry_keys
@@ -220,6 +222,14 @@ subtest 'normalized semantic report helper builders return fresh nested structur
             build => \&normalized_semantic_forward_ir_structural_rtl_ir_keys,
         },
         {
+            label => 'forward_ir_structural_rtl_ir_auxiliary_assignment_entry_value_kinds',
+            build => \&normalized_semantic_forward_ir_structural_rtl_ir_auxiliary_assignment_entry_value_kinds,
+        },
+        {
+            label => 'forward_ir_structural_rtl_ir_auxiliary_assignment_entry_value_meaning',
+            build => \&normalized_semantic_forward_ir_structural_rtl_ir_auxiliary_assignment_entry_value_meaning,
+        },
+        {
             label => 'forward_ir_structural_rtl_ir_port_entry_keys',
             build => \&normalized_semantic_forward_ir_structural_rtl_ir_port_entry_keys,
         },
@@ -369,6 +379,11 @@ subtest 'fresh normalized semantic report maps stay aligned with helper families
         $family_map->{success_forward_ir_lowered_rtl_ir_selector_conflict_same_value_assertion_keys},
         normalized_semantic_forward_ir_lowered_rtl_ir_selector_conflict_same_value_assertion_keys(),
         'lowered-RTL selector-conflict same-value assertion family matches helper',
+    );
+    is_deeply(
+        $family_map->{success_forward_ir_structural_rtl_ir_auxiliary_assignment_entry_value_kinds},
+        normalized_semantic_forward_ir_structural_rtl_ir_auxiliary_assignment_entry_value_kinds(),
+        'structural-RTL auxiliary-assignment value-kind family matches helper',
     );
     is_deeply(
         $family_map->{success_forward_ir_structural_rtl_ir_port_entry_keys},

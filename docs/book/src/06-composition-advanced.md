@@ -669,6 +669,11 @@ extension families advertise `raw_value` when a single authored token is
 preserved and `value_type_spec`/`value_width` when resolved value metadata is
 available.
 
+Composition top-output helper assignments surface separately under
+`semantic.forward_ir.structural_rtl_ir.auxiliary_assignments[]`. Those entries
+are scalar strings containing the generated SystemVerilog assignment line, not
+parsed `lhs`/`rhs` records.
+
 VHDL generic-map lowering is still a future backend follow-up tracked in
 [Feature Backlog](14-feature-backlog.md).
 

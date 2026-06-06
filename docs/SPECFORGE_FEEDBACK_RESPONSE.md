@@ -339,7 +339,8 @@ project policies:
   `semantic.symbol_contract`, plus lowered-RTL selector-conflict target
   count/list metadata and bounded `selector_conflict_targets[]` /
   `rhs_enable_families[]` entry and selector assertion metadata keys, and
-  structural-RTL `ports[]` core plus composition-top extension entry keys and
+  structural-RTL `auxiliary_assignments[]` scalar-string assignment-line
+  entries, `ports[]` core plus composition-top extension entry keys and
   `nets[]`, `declared_links[]`, `resolved_links[]`, and shallow
   `instances[]` plus nested `instances[].interface_ports[]`,
   `instances[].parameter_overrides[]` core/raw-value/value-metadata entry keys,

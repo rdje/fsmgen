@@ -3881,5 +3881,6 @@ including bounded entry keys for `selector_conflict_targets[]`, nested
 nested `instances[].interface_ports[]` plus `instances[].port_bindings[]`
 core and typed-extension entry keys. It now also advertises
 `instances[].parameter_overrides[]` core, raw-value-extension, and
-value-metadata-extension entry keys while keeping auxiliary assignments
-shell-only. The manifest is still not a full normalized semantic export.
+value-metadata-extension entry keys, and advertises `auxiliary_assignments[]`
+as scalar string assignment-line entries. The manifest is still not a full
+normalized semantic export.

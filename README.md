@@ -556,7 +556,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `perl/FSM/Support/NormalizedSemanticExplicitSystemContract.pm` — bounded nested-object contract for the `semantic.explicit_system_contract` summary in successful public normalized semantic JSON when that authored explicit contract is preserved.
 - `perl/FSM/Support/NormalizedSemanticForwardIRContract.pm` — bounded nested-object contract for the `semantic.forward_ir` summary in successful public normalized semantic JSON.
 - `perl/FSM/Support/NormalizedSemanticLoweredRTLIRContract.pm` — bounded nested-object contract for the `semantic.forward_ir.lowered_rtl_ir` summary in successful public normalized semantic JSON, including its composition-only extension keys.
-- `perl/FSM/Support/NormalizedSemanticStructuralRTLIRContract.pm` — bounded nested-object contract for the `semantic.forward_ir.structural_rtl_ir` summary in successful public normalized semantic JSON, including bounded `ports[]`, `nets[]`, `declared_links[]`, `resolved_links[]`, shallow `instances[]`, nested `instances[].interface_ports[]`, nested `instances[].parameter_overrides[]` core plus optional raw-value/value-metadata extension keys, and nested `instances[].port_bindings[]` core plus typed-extension entry keys.
+- `perl/FSM/Support/NormalizedSemanticStructuralRTLIRContract.pm` — bounded nested-object contract for the `semantic.forward_ir.structural_rtl_ir` summary in successful public normalized semantic JSON, including bounded `auxiliary_assignments[]` scalar-string entry values, bounded `ports[]`, `nets[]`, `declared_links[]`, `resolved_links[]`, shallow `instances[]`, nested `instances[].interface_ports[]`, nested `instances[].parameter_overrides[]` core plus optional raw-value/value-metadata extension keys, and nested `instances[].port_bindings[]` core plus typed-extension entry keys.
 - `perl/FSM/Support/NormalizedSemanticIntentHIRContract.pm` — bounded nested-object contract for the `semantic.forward_ir.intent_hir` summary in successful public normalized semantic JSON, including its composition-only extension keys.
 - `perl/FSM/Support/NormalizedSemanticSignalAnalysisContract.pm` — bounded nested-object contract for the `semantic.signal_analysis` summary in successful public normalized semantic JSON, including the shared core signal-entry keys.
 - `perl/FSM/Support/NormalizedSemanticSystemContract.pm` — bounded nested-object contract for the `semantic.system_contract` summary in successful public normalized semantic JSON.
@@ -751,10 +751,11 @@ and the current composition-only extension keys:
 [perl/FSM/Support/NormalizedSemanticLoweredRTLIRContract.pm](perl/FSM/Support/NormalizedSemanticLoweredRTLIRContract.pm).
 The nested `semantic.forward_ir.structural_rtl_ir` summary inside that branch
 now also has its own bounded owner for the current structural-RTL shell,
-including the bounded `ports[]` core entry keys, composition-top port
-extension keys, bounded `nets[]` entry keys, and bounded `declared_links[]`
-plus `resolved_links[]` entry keys, plus bounded shallow `instances[]` entry
-keys, nested `instances[].interface_ports[]` entry keys, and nested
+including bounded `auxiliary_assignments[]` scalar-string entry values,
+bounded `ports[]` core entry keys, composition-top port extension keys,
+bounded `nets[]` entry keys, and bounded `declared_links[]` plus
+`resolved_links[]` entry keys, plus bounded shallow `instances[]` entry keys,
+nested `instances[].interface_ports[]` entry keys, and nested
 `instances[].parameter_overrides[]` core plus optional raw-value/value-metadata
 extension keys, plus nested `instances[].port_bindings[]` core plus
 typed-extension entry keys:

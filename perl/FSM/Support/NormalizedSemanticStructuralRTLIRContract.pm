@@ -8,6 +8,8 @@ use JSON::PP ();
 
 our @EXPORT_OK = qw(
     build_normalized_semantic_structural_rtl_ir_contract
+    normalized_semantic_structural_rtl_ir_auxiliary_assignment_entry_value_kinds
+    normalized_semantic_structural_rtl_ir_auxiliary_assignment_entry_value_meaning
     normalized_semantic_structural_rtl_ir_collection_presence_keys
     normalized_semantic_structural_rtl_ir_contract_source
     normalized_semantic_structural_rtl_ir_declared_link_entry_keys
@@ -51,6 +53,10 @@ sub build_normalized_semantic_structural_rtl_ir_contract {
         public_presence_keys => normalized_semantic_structural_rtl_ir_presence_keys(),
         summary_presence_keys => normalized_semantic_structural_rtl_ir_summary_presence_keys(),
         collection_presence_keys => normalized_semantic_structural_rtl_ir_collection_presence_keys(),
+        auxiliary_assignment_entry_value_kinds =>
+            normalized_semantic_structural_rtl_ir_auxiliary_assignment_entry_value_kinds(),
+        auxiliary_assignment_entry_value_meaning =>
+            normalized_semantic_structural_rtl_ir_auxiliary_assignment_entry_value_meaning(),
         port_entry_keys => normalized_semantic_structural_rtl_ir_port_entry_keys(),
         port_composition_extension_keys =>
             normalized_semantic_structural_rtl_ir_port_composition_extension_keys(),
@@ -87,7 +93,7 @@ sub build_normalized_semantic_structural_rtl_ir_contract {
             'The instance parameter-override value-metadata extension key family describes optional resolved type and packed-width metadata on parameter overrides where the value resolver provides it.',
             'The instance port-binding entry key family describes the current nested `instances[].port_bindings[]` core entry schema emitted by composition tops.',
             'The instance port-binding typed-extension key family describes optional `connection_type_spec` metadata on typed structural instance bindings.',
-            'The deeper `auxiliary_assignments` payload contents remain bounded only at the current object-shell level unless later widened deliberately.',
+            'The auxiliary-assignment entry value-kind family describes the current `auxiliary_assignments[]` scalar string entries emitted by composition tops without parsing assignment text into unstable lhs/rhs records.',
             'Use the grouped presence_key_family_map to discover the bounded structural-RTL shell summary and collection key families without collecting those key-family lists separately.',
         ],
     };
@@ -146,6 +152,14 @@ sub normalized_semantic_structural_rtl_ir_collection_presence_keys {
             resolved_links
         ),
     ];
+}
+
+sub normalized_semantic_structural_rtl_ir_auxiliary_assignment_entry_value_kinds {
+    return [qw(scalar_string)];
+}
+
+sub normalized_semantic_structural_rtl_ir_auxiliary_assignment_entry_value_meaning {
+    return 'generated SystemVerilog continuous assignment line text';
 }
 
 sub normalized_semantic_structural_rtl_ir_port_entry_keys {
@@ -241,6 +255,8 @@ sub normalized_semantic_structural_rtl_ir_presence_key_family_map {
     return {
         summary_presence_keys => normalized_semantic_structural_rtl_ir_summary_presence_keys(),
         collection_presence_keys => normalized_semantic_structural_rtl_ir_collection_presence_keys(),
+        auxiliary_assignment_entry_value_kinds =>
+            normalized_semantic_structural_rtl_ir_auxiliary_assignment_entry_value_kinds(),
         port_entry_keys => normalized_semantic_structural_rtl_ir_port_entry_keys(),
         port_composition_extension_keys =>
             normalized_semantic_structural_rtl_ir_port_composition_extension_keys(),

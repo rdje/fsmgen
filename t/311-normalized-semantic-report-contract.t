@@ -77,6 +77,8 @@ use FSM::Support::NormalizedSemanticReportContract qw(
     normalized_semantic_forward_ir_lowered_rtl_ir_selector_conflict_rhs_enable_family_entry_keys
     normalized_semantic_forward_ir_lowered_rtl_ir_selector_conflict_same_value_assertion_keys
     normalized_semantic_forward_ir_lowered_rtl_ir_selector_conflict_target_entry_keys
+    normalized_semantic_forward_ir_structural_rtl_ir_auxiliary_assignment_entry_value_kinds
+    normalized_semantic_forward_ir_structural_rtl_ir_auxiliary_assignment_entry_value_meaning
     normalized_semantic_forward_ir_structural_rtl_ir_declared_link_entry_keys
     normalized_semantic_forward_ir_structural_rtl_ir_instance_entry_keys
     normalized_semantic_forward_ir_structural_rtl_ir_instance_interface_port_entry_keys
@@ -122,6 +124,8 @@ use FSM::Support::NormalizedSemanticPayloadContract qw(
     normalized_semantic_payload_forward_ir_lowered_rtl_ir_optional_composition_keys
     normalized_semantic_payload_forward_ir_lowered_rtl_ir_output_drive_family_entry_keys
     normalized_semantic_payload_forward_ir_lowered_rtl_ir_output_drive_rhs_enable_family_entry_keys
+    normalized_semantic_payload_forward_ir_structural_rtl_ir_auxiliary_assignment_entry_value_kinds
+    normalized_semantic_payload_forward_ir_structural_rtl_ir_auxiliary_assignment_entry_value_meaning
     normalized_semantic_payload_forward_ir_structural_rtl_ir_declared_link_entry_keys
     normalized_semantic_payload_forward_ir_structural_rtl_ir_instance_entry_keys
     normalized_semantic_payload_forward_ir_structural_rtl_ir_instance_interface_port_entry_keys
@@ -587,6 +591,16 @@ subtest 'contract exposes the bounded normalized semantic surface' => sub {
         'contract publishes the bounded forward-ir structural-rtl-ir key list',
     );
     is_deeply(
+        $contract->{success_forward_ir_structural_rtl_ir_auxiliary_assignment_entry_value_kinds},
+        normalized_semantic_forward_ir_structural_rtl_ir_auxiliary_assignment_entry_value_kinds(),
+        'contract publishes the bounded forward-ir structural-rtl-ir auxiliary-assignment entry value-kind family',
+    );
+    is(
+        $contract->{success_forward_ir_structural_rtl_ir_auxiliary_assignment_entry_value_meaning},
+        normalized_semantic_forward_ir_structural_rtl_ir_auxiliary_assignment_entry_value_meaning(),
+        'contract publishes the bounded forward-ir structural-rtl-ir auxiliary-assignment entry value meaning',
+    );
+    is_deeply(
         $contract->{success_forward_ir_structural_rtl_ir_port_entry_keys},
         normalized_semantic_forward_ir_structural_rtl_ir_port_entry_keys(),
         'contract publishes the bounded forward-ir structural-rtl-ir port entry key list',
@@ -692,6 +706,11 @@ subtest 'contract exposes the bounded normalized semantic surface' => sub {
         'report presence family map publishes selector-conflict rhs-enable-family entry keys',
     );
     is_deeply(
+        $contract->{presence_key_family_map}{success_forward_ir_structural_rtl_ir_auxiliary_assignment_entry_value_kinds},
+        normalized_semantic_forward_ir_structural_rtl_ir_auxiliary_assignment_entry_value_kinds(),
+        'report presence family map publishes structural-rtl-ir auxiliary-assignment entry value kinds',
+    );
+    is_deeply(
         $contract->{presence_key_family_map}{success_forward_ir_structural_rtl_ir_port_entry_keys},
         normalized_semantic_forward_ir_structural_rtl_ir_port_entry_keys(),
         'report presence family map publishes structural-rtl-ir port entry keys',
@@ -790,6 +809,16 @@ subtest 'contract exposes the bounded normalized semantic surface' => sub {
         normalized_semantic_payload_forward_ir_structural_rtl_ir_keys(),
         normalized_semantic_forward_ir_structural_rtl_ir_presence_keys(),
         'semantic payload forward-ir structural-rtl-ir keys map to the nested structural-rtl-ir owner',
+    );
+    is_deeply(
+        normalized_semantic_payload_forward_ir_structural_rtl_ir_auxiliary_assignment_entry_value_kinds(),
+        normalized_semantic_forward_ir_structural_rtl_ir_auxiliary_assignment_entry_value_kinds(),
+        'semantic payload forward-ir structural-rtl-ir auxiliary-assignment entry value kinds map to the nested structural-rtl-ir owner',
+    );
+    is(
+        normalized_semantic_payload_forward_ir_structural_rtl_ir_auxiliary_assignment_entry_value_meaning(),
+        normalized_semantic_forward_ir_structural_rtl_ir_auxiliary_assignment_entry_value_meaning(),
+        'semantic payload forward-ir structural-rtl-ir auxiliary-assignment entry value meaning maps to the nested structural-rtl-ir owner',
     );
     is_deeply(
         normalized_semantic_payload_forward_ir_structural_rtl_ir_port_entry_keys(),
@@ -1323,6 +1352,70 @@ subtest 'successful composition semantic JSON conforms to the bounded contract' 
         exists $decoded->{semantic}{module}{composition_child_count},
         'composition success module payload exposes composition child count',
     );
+};
+
+subtest 'successful composition semantic JSON keeps bounded auxiliary assignment scalar-string entries' => sub {
+    my $auxiliary_path = File::Spec->catfile($tempdir, 'semantic_contract_auxiliary_assignments_top.fsm');
+    my $auxiliary_out_path = File::Spec->catfile($tempdir, 'semantic_contract_auxiliary_assignments_top.sv');
+
+    write_file(
+        $auxiliary_path,
+        <<'FSM'
+(?top:auxiliary_assignments_top
+  (?ports:public_io
+    clk
+    rstn
+    start<8
+    tap_a>8
+    tap_b>8
+    serial_out>
+  )
+  (?rtl:u_tx uart_tx)
+  (?wiring:wiring
+    (start tap_a)
+    (start tap_b)
+    (start u_tx.data_in)
+    (u_tx.txd serial_out)
+  )
+)
+
+(?rtlif:uart_tx
+  clk:clock
+  rstn:reset
+  data_in<8:data
+  txd>:data
+)
+FSM
+    );
+
+    my $decoded = run_semantic_json(
+        ['./bin/fsmgen', '--strict', '--emit-semantic-json', '-o', $auxiliary_out_path, $auxiliary_path],
+        'strict semantic JSON succeeds for auxiliary-assignment composition',
+    );
+
+    my $structural = $decoded->{semantic}{forward_ir}{structural_rtl_ir};
+    is(
+        $structural->{auxiliary_assignment_count},
+        2,
+        'auxiliary-assignment composition structural-rtl-ir reports the assignment count',
+    );
+    is_deeply(
+        normalized_semantic_forward_ir_structural_rtl_ir_auxiliary_assignment_entry_value_kinds(),
+        [qw(scalar_string)],
+        'auxiliary-assignment contract advertises scalar-string entry values',
+    );
+    is_deeply(
+        $structural->{auxiliary_assignments},
+        [
+            '    assign tap_a = start;',
+            '    assign tap_b = start;',
+        ],
+        'auxiliary-assignment composition structural-rtl-ir preserves assignment strings',
+    );
+    for my $assignment (@{$structural->{auxiliary_assignments} || []}) {
+        ok(!ref($assignment), 'auxiliary-assignment entry is a scalar string');
+        like($assignment, qr/\A\s*assign\s+\w+\s*=\s*\w+;\z/, 'auxiliary-assignment entry is assignment line text');
+    }
 };
 
 subtest 'successful parameterized composition semantic JSON conforms to bounded structural parameter-override contracts' => sub {
