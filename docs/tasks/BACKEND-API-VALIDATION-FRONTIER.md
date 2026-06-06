@@ -117,7 +117,8 @@ items named in the 2026-06-05 remaining-work inventory.
     `BACKEND-API-VALIDATION-FRONTIER.37.1`,
     `BACKEND-API-VALIDATION-FRONTIER.38`,
     `BACKEND-API-VALIDATION-FRONTIER.38.1`,
-    `BACKEND-API-VALIDATION-FRONTIER.39`
+    `BACKEND-API-VALIDATION-FRONTIER.39`,
+    `BACKEND-API-VALIDATION-FRONTIER.39.1`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.1`
   Status: `done`
@@ -744,9 +745,17 @@ items named in the 2026-06-05 remaining-work inventory.
   Commit: `BACKEND-API-VALIDATION-FRONTIER.38.1: lock VHDL composition boundary`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.39`
-  Status: `active`
+  Status: `done`
   Goal: `Select the next exact backend/API/public-export edge after composition/top VHDL fail-closed hardening.`
-  Acceptance: `One remaining roadmap-aligned backend, validation, embedding, or public-export edge is selected from current code, contracts, mdBook, knowledge-map, and task-tree evidence. The selected edge has an exact implementation-or-deferral owner leaf before any code/test/source edits occur.`
+  Children: `BACKEND-API-VALIDATION-FRONTIER.39.1`
+  Acceptance: `Selected direct VHDL vector arithmetic with numeric literal operands as the next exact backend edge. Current direct VHDL expression fixtures such as rhs_expression_supported_variants.fsm, relational_operator_chains.fsm, arithmetic_xor_operator_variants.fsm, and computed_comparison_selector.fsm already pass, and a temporary package-import direct-root probe also passed after package symbols resolved before emission. The remaining corpus sweep found generated direct-root mux expressions such as SRC + 2, SRC - 1, byte_count + 4, and remaining - 3 still fail at the direct VHDL arithmetic guard while SystemVerilog generation succeeds. The implementation owner is BACKEND-API-VALIDATION-FRONTIER.39.1; signed declaration lowering, aggregate VHDL, composition/top VHDL, VHDL packages, multi-clock domains, GHDL validation, broader expression parity, and full backend parity remain deferred.`
+  Verification: `Selection audit/read of docs/book/src/14-feature-backlog.md, docs/VHDL_SCOPE.md, docs/knowledge/direct-vhdl-scaffold.md, t/corpus/compound_update_variants.fsm, t/corpus/update_shorthand_variants.fsm, t/corpus/rhs_expression_supported_variants.fsm, t/corpus/relational_operator_chains.fsm, t/corpus/arithmetic_xor_operator_variants.fsm, and t/corpus/computed_comparison_selector.fsm. command -v ghdl returned unavailable. A temporary package-import direct-root VHDL probe passed. In-memory t/corpus sweep of files where SystemVerilog generation succeeds showed the first non-composition direct VHDL backend gaps include compound_update_variants.fsm and update_shorthand_variants.fsm at vector arithmetic with numeric literal operands; declarative signed declaration lowering and aggregate outputs remain later boundaries. ./bin/fsmgen --language vhdl --quiet t/corpus/compound_update_variants.fsm failed at arithmetic expression 'SRC + 2'; ./bin/fsmgen --language vhdl --quiet t/corpus/update_shorthand_variants.fsm failed at arithmetic expression 'byte_count + 4'; SystemVerilog probes emitted SRC + 2, SRC - 1, byte_count + 4, counter + 1, remaining - 3, and retry_count - 1 mux expressions; temporary /tmp probe outputs were removed. Selected vector numeric-literal arithmetic lowering for .39.1 before any implementation/test edits.`
+  Commit: `BACKEND-API-VALIDATION-FRONTIER.39: select VHDL literal arithmetic`
+
+- ID: `BACKEND-API-VALIDATION-FRONTIER.39.1`
+  Status: `active`
+  Goal: `Implement direct VHDL vector arithmetic with numeric literal operands.`
+  Acceptance: `FSM::HDL::FlattenedDT::Backend::VHDL converts generated direct-root mux arithmetic expressions with one vector signal and one numeric literal operand, including additions and subtractions emitted by compound update/shorthand fixtures, into deterministic target-width VHDL without widening signed declaration lowering, aggregate VHDL, composition/top VHDL, VHDL packages, multi-clock domains, GHDL validation, broader expression parity, or full backend parity. Focused pipeline/CLI/facade tests cover compound_update_variants.fsm and update_shorthand_variants.fsm or narrower fixtures with the same generated shapes, and README/docs/mdBook/fact surfaces stay synchronized.`
   Verification: `pending`
   Commit: `pending`
 
@@ -835,7 +844,8 @@ items named in the 2026-06-05 remaining-work inventory.
 | 79 | `BACKEND-API-VALIDATION-FRONTIER.37.1` | `done` | Locked aggregate-output fail-closed pipeline/facade coverage and documentation without widening record/array VHDL lowering. |
 | 80 | `BACKEND-API-VALIDATION-FRONTIER.38` | `done` | Selected composition/top VHDL fail-closed hardening after the maintained composition target-support diagnostic showed pipeline and CLI rejection after typed composition IR parsing. |
 | 81 | `BACKEND-API-VALIDATION-FRONTIER.38.1` | `done` | Locked composition/top VHDL fail-closed pipeline/CLI coverage and documentation without implementing VHDL top emission or generic maps. |
-| 82 | `BACKEND-API-VALIDATION-FRONTIER.39` | `active` | Select the next exact backend/API/public-export edge after composition/top VHDL fail-closed hardening. |
+| 82 | `BACKEND-API-VALIDATION-FRONTIER.39` | `done` | Selected direct VHDL vector arithmetic with numeric literal operands after corpus sweep showed SystemVerilog succeeds while VHDL fails at `SRC + 2` / `byte_count + 4` shapes. |
+| 83 | `BACKEND-API-VALIDATION-FRONTIER.39.1` | `active` | Implement direct VHDL vector signal plus/minus numeric literal lowering for compound update/shorthand generated muxes. |
 
 ## Decisions
 
@@ -938,6 +948,7 @@ items named in the 2026-06-05 remaining-work inventory.
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.37.1` | `prove -Iperl t/1420-vhdl-direct-backend-scaffold.t`; `prove -Iperl t/386-hdl-generator-facade-target-language-boundary-audit.t`; `prove -Iperl t/1420-vhdl-direct-backend-scaffold.t t/386-hdl-generator-facade-target-language-boundary-audit.t t/114-composition-target-support-diagnostics.t t/404-hdl-generator-facade-target-language-shape-boundary-audit.t`; `prove -Iperl t/313-hdl-external-validation-contract.t t/308-systemverilog-external-validation.t`; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; aggregate-output roots are locked fail-closed through direct pipeline/facade coverage and documentation |
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.38` | Selection audit/read of `docs/book/src/14-feature-backlog.md`, `docs/VHDL_SCOPE.md`, `docs/COMPOSITION_SCOPE.md`, `docs/COMPOSITION_LEGACY_MAPPING.md`, `docs/knowledge/direct-vhdl-scaffold.md`, and `t/114-composition-target-support-diagnostics.t`; `prove -Iperl t/114-composition-target-support-diagnostics.t`; `scripts/check_memory_architecture.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; selected composition/top VHDL fail-closed hardening for `.38.1` |
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.38.1` | `perl -Iperl -c t/114-composition-target-support-diagnostics.t`; `prove -Iperl t/114-composition-target-support-diagnostics.t`; `prove -Iperl t/1420-vhdl-direct-backend-scaffold.t t/386-hdl-generator-facade-target-language-boundary-audit.t t/114-composition-target-support-diagnostics.t t/404-hdl-generator-facade-target-language-shape-boundary-audit.t`; `prove -Iperl t/313-hdl-external-validation-contract.t t/308-systemverilog-external-validation.t`; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; composition/top VHDL is locked fail-closed through pipeline/CLI coverage and documentation |
+| `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.39` | Selection audit/read of `docs/book/src/14-feature-backlog.md`, `docs/VHDL_SCOPE.md`, `docs/knowledge/direct-vhdl-scaffold.md`, `t/corpus/compound_update_variants.fsm`, `t/corpus/update_shorthand_variants.fsm`, `t/corpus/rhs_expression_supported_variants.fsm`, `t/corpus/relational_operator_chains.fsm`, `t/corpus/arithmetic_xor_operator_variants.fsm`, and `t/corpus/computed_comparison_selector.fsm`; `command -v ghdl`; temporary package-import direct-root VHDL probe; in-memory t/corpus sweep of files where SystemVerilog succeeds but VHDL fails; `./bin/fsmgen --language vhdl --quiet t/corpus/rhs_expression_supported_variants.fsm`; `./bin/fsmgen --language vhdl --quiet t/corpus/relational_operator_chains.fsm`; `./bin/fsmgen --language vhdl --quiet t/corpus/arithmetic_xor_operator_variants.fsm`; `./bin/fsmgen --language vhdl --quiet t/corpus/computed_comparison_selector.fsm`; `./bin/fsmgen --language vhdl --quiet t/corpus/compound_update_variants.fsm` failed at `SRC + 2`; `./bin/fsmgen --language vhdl --quiet t/corpus/update_shorthand_variants.fsm` failed at `byte_count + 4`; SystemVerilog probes for compound/update shorthand fixtures; removed `/tmp/fsmgen_compound_update_variants_select.sv` and `/tmp/fsmgen_update_shorthand_variants_select.sv`; `scripts/check_memory_architecture.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; selected vector numeric-literal arithmetic lowering for `.39.1` |
 
 ## Commit Log
 
@@ -1024,6 +1035,7 @@ items named in the 2026-06-05 remaining-work inventory.
 | `BACKEND-API-VALIDATION-FRONTIER.37.1` | `BACKEND-API-VALIDATION-FRONTIER.37.1: lock VHDL aggregate output boundary` | this slice |
 | `BACKEND-API-VALIDATION-FRONTIER.38` | `BACKEND-API-VALIDATION-FRONTIER.38: select VHDL composition boundary` | selected `.38.1` |
 | `BACKEND-API-VALIDATION-FRONTIER.38.1` | `BACKEND-API-VALIDATION-FRONTIER.38.1: lock VHDL composition boundary` | this slice |
+| `BACKEND-API-VALIDATION-FRONTIER.39` | `BACKEND-API-VALIDATION-FRONTIER.39: select VHDL literal arithmetic` | selected `.39.1` |
 
 ## Changelog
 
@@ -1421,3 +1433,9 @@ items named in the 2026-06-05 remaining-work inventory.
   explicit fail-closed boundary through pipeline/CLI coverage and synced
   docs/fact/mdBook coverage. Activated `.39` to select the next backend/API
   edge.
+- `2026-06-06`: Completed `.39`; selected direct VHDL vector arithmetic with
+  numeric literal operands for `.39.1` after corpus sweep and fixture probes
+  showed SystemVerilog succeeds while VHDL fails at generated `SRC + 2` and
+  `byte_count + 4` mux expressions. Signed declaration lowering, aggregate
+  VHDL, composition/top VHDL, packages, GHDL validation, broader expression
+  parity, and full backend parity remain deferred.

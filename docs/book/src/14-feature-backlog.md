@@ -3807,6 +3807,11 @@ direct VHDL boundaries. Composition/top VHDL is locked fail-closed after typed
 composition IR parsing, with the pipeline and CLI pointing users to the scoped
 composition target-support diagnostic instead of emitting a VHDL top.
 
+Active next leaf: generated direct-root vector arithmetic with numeric literal
+operands, such as compound update/shorthand mux expressions `SRC + 2`,
+`SRC - 1`, `byte_count + 4`, and `remaining - 3`, is selected for the next
+exact VHDL hardening slice.
+
 ### GHDL Validation
 
 Status: backlog, behind a VHDL validation leaf.

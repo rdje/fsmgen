@@ -35,6 +35,9 @@ This document defines the scoped R14 VHDL backend plan for FSMGen.
   composition IR, then reject `target_language => 'vhdl'` / `--language vhdl`
   with the scoped composition target-support diagnostic instead of emitting a
   VHDL top.
+- The active next direct VHDL hardening leaf is vector arithmetic with numeric
+  literal operands in generated mux expressions, such as `SRC + 2` and
+  `byte_count + 4`.
 
 ## Goal
 Implement a real, scoped VHDL backend that generates synthesizable VHDL from
@@ -105,6 +108,8 @@ The first VHDL lane is intentionally narrow:
   scalar addition/subtraction/multiplication RHS/chain lowering, and
   direct-root parameter blocks as VHDL generics, including integer expression
   defaults and typed scalar/vector sized-literal defaults.
+- Active follow-up: generated direct-root vector signal plus/minus numeric
+  literal mux expressions from compound update/shorthand fixtures.
 - Remaining semantic conversion work still belongs to exact future VHDL leaves.
 
 ### Phase 3: Regression and hardening (R14.3)
