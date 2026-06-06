@@ -3799,11 +3799,13 @@ struct outputs as VHDL `std_logic_vector` ports with the generated packed
 widths.
 It is covered by direct pipeline, CLI, and facade tests.
 
-Still backlog: generated-child composition VHDL, APB/C4 composition VHDL,
-internal-net-heavy composition tops, composition generic maps, aggregate VHDL
-record/array lowering, VHDL packages, multi-clock domains, GHDL validation,
-broad expression parity, scalar signed arithmetic, mixed signed/unsigned
-arithmetic, and full feature parity with the SystemVerilog backend. Scalar division/modulo,
+Still backlog: standalone-DT child composition VHDL is the active
+`BACKEND-API-VALIDATION-FRONTIER.69.1` follow-up; generated-FSM child
+composition VHDL, APB/C4 composition VHDL, internal-net-heavy composition tops,
+composition generic maps, aggregate VHDL record/array lowering, VHDL packages,
+multi-clock domains, GHDL validation, broad expression parity, scalar signed
+arithmetic, mixed signed/unsigned arithmetic, and full feature parity with the
+SystemVerilog backend. Scalar division/modulo,
 broader scalar arithmetic beyond scalar addition/subtraction/multiplication
 chains, broader arithmetic operators, mismatched-width arithmetic, and
 expression contexts beyond the same-width
@@ -3852,8 +3854,8 @@ emits `SUM <= A + B;`, a signed `DIFF = (- A B)` assignment emits
 `PROD <= resize(A * B, 8);`. Signed `QUOT = (/ A B)` emits
 `QUOT <= resize(A / B, 8);`, and signed `REM = (% A B)` emits
 `REM <= resize(A mod B, 8);`, rather than unsigned casts. Scalar signed
-arithmetic, mixed signed/unsigned arithmetic, generated-child composition VHDL,
-APB/C4 composition VHDL, internal-net-heavy composition tops, composition
+arithmetic, mixed signed/unsigned arithmetic, generated-FSM child composition
+VHDL, APB/C4 composition VHDL, internal-net-heavy composition tops, composition
 generic maps, aggregate VHDL, packages, GHDL validation, and full backend parity
 remain outside the shipped scaffold. Signed vector numeric-literal
 addition/subtraction/multiplication/division/modulo also lower through
@@ -4065,13 +4067,13 @@ schema metadata for `semantic.symbol_contract.types` and
 recursive `items` or `members` plus `member_order`.
 
 Current active backend edge: task-tree leaf
-`BACKEND-API-VALIDATION-FRONTIER.69` selects the next exact backend/API edge
-after the first bounded composition VHDL structural top shipped for the C3
-external-RTL literal/concat fixture in
-`t/corpus/composition_intent_integer_literals.fsm`.
+`BACKEND-API-VALIDATION-FRONTIER.69.1` implements only the bounded C1
+standalone-DT child composition VHDL top for
+`t/corpus/standalone_dtc_explicit_system_autowire.fsm` after the first bounded
+C3 external-RTL literal/concat composition VHDL top shipped.
 Package-import internals, already bounded constant/enum/type internals,
 unrelated forward-IR payloads, scalar signed arithmetic, full aggregate VHDL
-record/array lowering, generated-child composition VHDL, APB/C4 composition
-VHDL, internal nets/generic maps, broader expression parity beyond the shipped
-AMBA wrap family, and full normalized semantic export stabilization remain out
-of scope until later exact leaves own them.
+record/array lowering, generated-FSM child composition VHDL, APB/C4
+composition VHDL, internal nets/generic maps, broader expression parity beyond
+the shipped AMBA wrap family, and full normalized semantic export stabilization
+remain out of scope until later exact leaves own them.

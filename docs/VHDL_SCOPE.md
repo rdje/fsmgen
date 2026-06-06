@@ -54,13 +54,13 @@ This document defines the scoped R14 VHDL backend plan for FSMGen.
   width.
 - Composition VHDL is shipped only for the bounded C3 external-RTL
   literal/concat structural top in
-  `t/corpus/composition_intent_integer_literals.fsm`. Generated-child
-  composition VHDL, APB/C4 composition VHDL, internal-net-heavy tops, generic
-  maps, full aggregate VHDL record/array lowering, broad expression parity,
-  scalar division/modulo and broader scalar arithmetic, signed arithmetic
-  operators beyond same-width vector addition/subtraction/multiplication/
-  division/modulo, GHDL validation, packages, multi-clock domains, and full
-  feature parity remain deferred.
+  `t/corpus/composition_intent_integer_literals.fsm`. Standalone-DT child
+  composition VHDL, generated-FSM child composition VHDL, APB/C4 composition
+  VHDL, internal-net-heavy tops, generic maps, full aggregate VHDL record/array
+  lowering, broad expression parity, scalar division/modulo and broader scalar
+  arithmetic, signed arithmetic operators beyond same-width vector
+  addition/subtraction/multiplication/division/modulo, GHDL validation,
+  packages, multi-clock domains, and full feature parity remain deferred.
 - Mixed signed/unsigned vector numeric arithmetic is locked as an explicit
   fail-closed direct VHDL boundary by focused pipeline and facade coverage.
 - Signed scalar addition/subtraction/multiplication arithmetic is locked as an
@@ -90,8 +90,9 @@ The VHDL lane is intentionally narrow:
    - Direct roots cover `?fsm:name` and `?dt:name`
    - Composition roots cover only the C3 external-RTL literal/concat shape in
      `t/corpus/composition_intent_integer_literals.fsm`
-   - Generated-child composition VHDL, APB/C4 composition VHDL, internal nets,
-     and generic maps remain deferred
+   - C1 standalone-DT child composition VHDL is the active follow-up leaf;
+     generated-FSM child composition VHDL, APB/C4 composition VHDL, internal
+     nets, and generic maps remain deferred
 
 2. **Direct-root structural conversion from SystemVerilog**
    - Generate SystemVerilog through the existing direct backend
@@ -191,12 +192,13 @@ The VHDL lane is intentionally narrow:
   `BACKEND-API-VALIDATION-FRONTIER.68.1`, limited to the C3 external-RTL
   literal/concat fixture in `t/corpus/composition_intent_integer_literals.fsm`.
   It emits VHDL concurrent literal/concat assignments and an
-  `entity work.uart_tx` port map. Generated-child composition VHDL, APB/C4
-  composition VHDL, internal nets/generic maps, full aggregate VHDL
-  record/array lowering, broader expression parity, and broader scalar signed
-  arithmetic remain separate future edges. The active follow-up is
-  `BACKEND-API-VALIDATION-FRONTIER.69`, which selects the next exact backend/API
-  edge.
+  `entity work.uart_tx` port map. The active follow-up is
+  `BACKEND-API-VALIDATION-FRONTIER.69.1`, which implements only the bounded C1
+  standalone-DT child composition VHDL top for
+  `t/corpus/standalone_dtc_explicit_system_autowire.fsm`. Generated-FSM child
+  composition VHDL, APB/C4 composition VHDL, internal nets/generic maps, full
+  aggregate VHDL record/array lowering, broader expression parity, and broader
+  scalar signed arithmetic remain separate future edges.
 - Remaining semantic conversion work still belongs to exact future VHDL leaves.
 
 ### Phase 3: Regression and hardening (R14.3)

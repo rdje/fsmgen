@@ -144,12 +144,13 @@ literal/concat fixture in `t/corpus/composition_intent_integer_literals.fsm`.
 That composition subset emits a VHDL entity/architecture with concurrent
 literal and concat assignments plus an external `entity work.uart_tx` port map,
 without SystemVerilog `module`, `assign`, `endmodule`, or `always_*` syntax.
-The current active backend edge is `BACKEND-API-VALIDATION-FRONTIER.69`, which
-selects the next exact backend/API edge. Other composition/top VHDL shapes remain
-locked fail-closed by focused pipeline and CLI coverage: `?top` sources are
-parsed into typed composition IR, then unsupported `target_language => 'vhdl'`
-and `--language vhdl` shapes are rejected with the scoped composition
-target-support diagnostic. Generated-child composition VHDL, APB/C4 composition
-VHDL, internal nets/generic maps, packages, multi-clock domains, broad
-expression parity, GHDL validation, and full SystemVerilog parity remain
-deferred or fail-closed.
+The current active backend edge is `BACKEND-API-VALIDATION-FRONTIER.69.1`,
+which implements only the bounded C1 standalone-DT child composition VHDL top
+for `t/corpus/standalone_dtc_explicit_system_autowire.fsm`. Other composition/top
+VHDL shapes remain locked fail-closed by focused pipeline and CLI coverage:
+`?top` sources are parsed into typed composition IR, then unsupported
+`target_language => 'vhdl'` and `--language vhdl` shapes are rejected with the
+scoped composition target-support diagnostic. Generated-FSM child composition
+VHDL, APB/C4 composition VHDL, internal nets/generic maps, packages,
+multi-clock domains, broad expression parity, GHDL validation, and full
+SystemVerilog parity remain deferred or fail-closed.
