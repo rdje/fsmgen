@@ -992,6 +992,69 @@ FSM
     );
 };
 
+subtest 'facade target_language option keeps direct VHDL mixed signed/unsigned vector arithmetic fail-closed' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $vhdl_pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'vhdl',
+        quiet => 1,
+    );
+    my @cases = (
+        {
+            name => 'facade_direct_vhdl_mixed_signed_unsigned_signed_target_add',
+            output => 'SUM',
+            output_type => 'signed_byte_t',
+            expr => '(SUM = (+ A B))',
+        },
+        {
+            name => 'facade_direct_vhdl_mixed_signed_unsigned_unsigned_target_add',
+            output => 'SUM',
+            output_type => '8',
+            expr => '(SUM = (+ A B))',
+        },
+    );
+
+    for my $case (@cases) {
+        my $name = $case->{name};
+        my $output = $case->{output};
+        my $output_type = $case->{output_type};
+        my $expr = $case->{expr};
+        my $direct_path = File::Spec->catfile($tempdir, "$name.fsm");
+        write_file(
+            $direct_path,
+            <<"FSM"
+(?fsm:$name
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+  (+types
+    (type signed_byte_t (four_state (signed (bits 8))))
+  )
+  (+size
+    (A signed_byte_t)
+    (B 8)
+    ($output $output_type)
+  )
+  (idle
+    $expr
+  )
+)
+FSM
+        );
+
+        my $error = capture_exception(sub {
+            $vhdl_pipeline->generate_hdl_from_file($direct_path);
+        });
+
+        like(
+            $error,
+            qr/arithmetic expression 'A \+ B' is outside the direct VHDL scaffold/s,
+            "$name remains outside the explicit VHDL facade arithmetic scaffold",
+        );
+    }
+};
+
 subtest 'facade target_language option routes direct VHDL scalar-addition scaffold behavior' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $direct_path = File::Spec->catfile($tempdir, 'facade_direct_vhdl_scalar_addition.fsm');

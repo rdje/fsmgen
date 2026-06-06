@@ -740,6 +740,8 @@ sub _simple_arithmetic_to_vhdl ($expr, $ctx) {
 
         $unsupported->()
             if $target_decl->{scalar} || $operand_decl->{scalar} || $target_width != $operand_width;
+        $unsupported->()
+            if $operand_decl->{signed};
         push @converted_operands, "unsigned($operand_name)";
     }
 

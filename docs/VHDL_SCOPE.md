@@ -52,6 +52,8 @@ This document defines the scoped R14 VHDL backend plan for FSMGen.
   beyond same-width vector addition/subtraction/multiplication/division/modulo,
   GHDL validation, packages, multi-clock domains, and full feature parity
   remain deferred.
+- Mixed signed/unsigned vector numeric arithmetic is locked as an explicit
+  fail-closed direct VHDL boundary by focused pipeline and facade coverage.
 - Scalar division/modulo RHS forms such as `A / B` and `A % B` are locked as
   explicit fail-closed direct VHDL boundaries by focused pipeline and facade
   coverage.
@@ -160,9 +162,9 @@ The first VHDL lane is intentionally narrow:
   plus direct-root parameter blocks as VHDL
   generics, including integer expression defaults and typed scalar/vector
   sized-literal defaults.
-- Active follow-up: harden mixed signed/unsigned vector numeric arithmetic as
-  fail-closed under `BACKEND-API-VALIDATION-FRONTIER.64.1`; scalar signed
-  arithmetic remains a separate future edge.
+- Active follow-up: select the next exact backend/API/public-export edge under
+  `BACKEND-API-VALIDATION-FRONTIER.65`; scalar signed arithmetic remains a
+  separate future edge.
 - Remaining semantic conversion work still belongs to exact future VHDL leaves.
 
 ### Phase 3: Regression and hardening (R14.3)
@@ -177,6 +179,7 @@ The first VHDL lane is intentionally narrow:
   signed vector direct-root port declaration lowering,
   generic-bearing direct-root module headers, one-bit `std_logic` and
   multi-bit `std_logic_vector` sized-literal generic defaults,
+  mixed signed/unsigned vector numeric arithmetic fail-closed diagnostics,
   mismatched-width arithmetic-expression fail-closed diagnostics, and
   aggregate-output plus composition/top VHDL fail-closed diagnostics.
 - Add broader VHDL output to the regression corpus

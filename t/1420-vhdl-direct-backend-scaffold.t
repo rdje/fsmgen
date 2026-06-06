@@ -1173,6 +1173,80 @@ FSM
     );
 };
 
+subtest 'direct VHDL scaffold keeps mixed signed and unsigned vector arithmetic fail-closed' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my @cases = (
+        {
+            name => 'direct_vhdl_mixed_signed_unsigned_signed_target_add',
+            output => 'SUM',
+            output_type => 'signed_byte_t',
+            expr => '(SUM = (+ A B))',
+        },
+        {
+            name => 'direct_vhdl_mixed_signed_unsigned_unsigned_target_add',
+            output => 'SUM',
+            output_type => '8',
+            expr => '(SUM = (+ A B))',
+        },
+        {
+            name => 'direct_vhdl_mixed_signed_unsigned_unsigned_target_mul',
+            output => 'PROD',
+            output_type => '8',
+            expr => '(PROD = (* A B))',
+            diagnostic => qr/arithmetic expression 'A \* B' is outside the direct VHDL scaffold/s,
+        },
+    );
+
+    my $cli_case_path;
+    for my $case (@cases) {
+        my $name = $case->{name};
+        my $output = $case->{output};
+        my $output_type = $case->{output_type};
+        my $expr = $case->{expr};
+        my $fsm_path = File::Spec->catfile($tempdir, "$name.fsm");
+        my $diagnostic = $case->{diagnostic}
+            || qr/arithmetic expression 'A \+ B' is outside the direct VHDL scaffold/s;
+        write_file(
+            $fsm_path,
+            <<"FSM"
+(?fsm:$name
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+  (+types
+    (type signed_byte_t (four_state (signed (bits 8))))
+  )
+  (+size
+    (A signed_byte_t)
+    (B 8)
+    ($output $output_type)
+  )
+  (idle
+    $expr
+  )
+)
+FSM
+        );
+
+        my $error = capture_exception(sub {
+            generate_vhdl($fsm_path);
+        });
+        like($error, $diagnostic, "$name remains outside the direct VHDL scaffold boundary");
+        $cli_case_path = $fsm_path if $name eq 'direct_vhdl_mixed_signed_unsigned_unsigned_target_add';
+    }
+
+    my $output_path = File::Spec->catfile($tempdir, 'direct_vhdl_mixed_signed_unsigned_unsigned_target_add.vhd');
+    my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--language', 'vhdl', '--quiet', '-o', $output_path, $cli_case_path],
+    );
+    my $combined_output = join('', @{ $stdout_buf || [] }, @{ $stderr_buf || [] }, ($error_message || ''));
+    ok(!$success, 'CLI rejects direct --language vhdl for mixed signed/unsigned vector arithmetic')
+        or diag($combined_output);
+    ok(!-e $output_path, 'CLI does not write mixed signed/unsigned vector arithmetic VHDL output');
+    like($combined_output, qr/arithmetic expression 'A \+ B' is outside the direct VHDL scaffold/s, 'CLI reports the mixed signed/unsigned arithmetic boundary');
+};
+
 subtest 'direct VHDL scaffold lowers same-width signed vector addition RHS shape' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $fsm_path = File::Spec->catfile($tempdir, 'direct_vhdl_signed_addition.fsm');

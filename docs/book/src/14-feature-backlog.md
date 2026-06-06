@@ -3849,7 +3849,9 @@ target-width `to_signed`, so `SUM = (+ A 1)` emits
 `DIFF <= A - to_signed(1, 8);`, `PROD = (* A 2)` emits
 `PROD <= resize(A * to_signed(2, 8), 8);`, `QUOT = (/ A 2)` emits
 `QUOT <= resize(A / to_signed(2, 8), 8);`, and `REM = (% A 2)` emits
-`REM <= resize(A mod to_signed(2, 8), 8);`.
+`REM <= resize(A mod to_signed(2, 8), 8);`. Mixed signed/unsigned vector
+numeric arithmetic is locked fail-closed rather than lowering signed operands
+through unsigned casts.
 
 ### GHDL Validation
 
@@ -4038,11 +4040,11 @@ schema metadata for `semantic.symbol_contract.types` and
 recursive `items` or `members` plus `member_order`.
 
 Current active backend edge: task-tree leaf
-`BACKEND-API-VALIDATION-FRONTIER.64.1` hardens mixed signed/unsigned vector
-numeric arithmetic as fail-closed after `.64` found an unsigned-target mixed
-addition path still lowering through unsigned casts.
+`BACKEND-API-VALIDATION-FRONTIER.65` selects the next exact backend/API or
+public-export edge after `.64.1` locked mixed signed/unsigned vector numeric
+arithmetic fail-closed instead of lowering signed operands through unsigned
+casts.
 Package-import internals, already bounded constant/enum/type internals,
 unrelated forward-IR payloads, scalar signed arithmetic,
-mixed signed/unsigned arithmetic,
 aggregate/composition VHDL, and full normalized semantic export stabilization
 remain out of scope until later exact leaves own them.

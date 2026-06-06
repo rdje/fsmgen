@@ -890,6 +890,8 @@ forms, and same-width addition/subtraction/multiplication, division/modulo, and
 XOR RHS/chain lowering, without leaking SystemVerilog module or `always_*`
 forms.
 Scalar division/modulo remains fail-closed for explicit VHDL facade generation.
+Mixed signed/unsigned vector numeric arithmetic also remains fail-closed for
+explicit VHDL facade generation.
 Aggregate-output direct roots also remain fail-closed for explicit VHDL facade
 generation.
 Composition/top VHDL is likewise fail-closed: composition sources are parsed
@@ -2292,12 +2294,12 @@ this normalized semantic shape:
 ```
 
 The current active backend/API frontier is
-`BACKEND-API-VALIDATION-FRONTIER.64.1`, which hardens mixed signed/unsigned
-vector numeric arithmetic as fail-closed after `.64` found an unsigned-target
-mixed addition path still lowering through unsigned casts.
+`BACKEND-API-VALIDATION-FRONTIER.65`, which selects the next exact backend/API
+or public-export edge after `.64.1` locked mixed signed/unsigned vector numeric
+arithmetic fail-closed instead of lowering signed operands through unsigned
+casts.
 Package-import internals, already bounded constant/enum/type internals,
 unrelated forward-IR payloads, scalar signed arithmetic,
-mixed signed/unsigned arithmetic,
 aggregate/composition VHDL, and full normalized semantic export stabilization
 remain out of scope until later exact leaves own them.
 
