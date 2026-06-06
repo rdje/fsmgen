@@ -239,8 +239,6 @@ sub _parse_signal_declarations ($body, $port_names) {
         next unless $line =~ /^(reg|wire|bit|logic)\s+(?:(signed)\s+)?(?:\[(\d+):(\d+)\]\s+)?(.+);$/;
         my ($kind, $signed_keyword, $msb, $lsb, $names_text) = ($1, $2, $3, $4, $5);
         my $signed = defined $signed_keyword ? 1 : 0;
-        confess _unsupported("vector bit declaration '$line' is outside the direct VHDL scaffold")
-            if $kind eq 'bit' && (defined($msb) || defined($lsb));
 
         my @names = map {
             my $name = $_;

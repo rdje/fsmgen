@@ -221,6 +221,8 @@ The VHDL lane is intentionally narrow:
    - Signed scalar direct-root ports and internal declarations for
      non-arithmetic one-bit signed type-alias shapes, lowered as `std_logic`
    - Generated scalar `bit` internal signal declarations as `std_logic`
+   - Generated vector `bit [MSB:LSB]` internal signal declarations as
+     `std_logic_vector`
    - Generated signed vector internal signal declarations as VHDL `signed`
    - Generated non-signed four-state `logic` internal signal declarations as
      `std_logic` / `std_logic_vector`
@@ -422,7 +424,7 @@ The VHDL lane is intentionally narrow:
   scalar addition/subtraction/multiplication chains, same-width
   addition/subtraction/multiplication/division/modulo/XOR chain lowering,
   vector numeric-literal addition/subtraction mux lowering,
-  scalar `bit` and signed vector internal declaration lowering,
+  scalar/vector two-state `bit` and signed vector internal declaration lowering,
   non-signed four-state `logic` scalar/vector internal declaration lowering,
   vector `logic signed` internal declaration lowering,
   signed vector direct-root port declaration lowering,

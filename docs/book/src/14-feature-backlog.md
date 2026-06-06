@@ -3957,9 +3957,11 @@ The compound update and update-shorthand fixtures now lower generated
 direct-root vector arithmetic with numeric literal operands, such as `SRC + 2`,
 `SRC - 1`, `byte_count + 4`, and `remaining - 3`, through target-width
 `to_unsigned` casts. The declarative bits symbolic-width fixture now lowers
-generated scalar `bit` and signed vector internal declarations, such as
-`bit FLAG;` and `reg signed [3:0] NIB;`, to VHDL `std_logic` and `signed`
-signals. Package-backed declarative `+types` fixtures now lower generated
+generated scalar and vector two-state `bit` internal declarations, such as
+`bit FLAG;` and `bit [7:0] OUT;`, to VHDL `std_logic` and
+`std_logic_vector` signals; signed vector declarations such as
+`reg signed [3:0] NIB;` lower to VHDL `signed` signals. Package-backed
+declarative `+types` fixtures now lower generated
 non-signed four-state `logic` internal declarations, such as
 `logic [7:0] ISYM;` and `logic LFLAG;`, to `std_logic_vector` and `std_logic`.
 Generated internal `logic signed [MSB:LSB] NAME;` declarations now lower to
@@ -4216,8 +4218,11 @@ package declaration/emission, and full normalized semantic export
 stabilization remain deferred.
 
 Current active backend edge: task-tree leaf
-`BACKEND-API-VALIDATION-FRONTIER.104.1` owns direct VHDL generated two-state
-vector `bit [N:0]` internal declaration lowering to `std_logic_vector` signals.
+`BACKEND-API-VALIDATION-FRONTIER.105` selects the next exact backend/API edge
+after direct VHDL generated two-state vector `bit [N:0]` internal declaration
+lowering shipped. Completed implementation leaf
+`BACKEND-API-VALIDATION-FRONTIER.104.1` lowers those generated declarations to
+`std_logic_vector` signals through pipeline, CLI, and facade coverage.
 Completed selector leaf
 `BACKEND-API-VALIDATION-FRONTIER.104` chose that exact vector-bit declaration
 edge after representative normalized semantic probes found no unadvertised

@@ -119,6 +119,8 @@ answers:
   - "does direct VHDL support AMBA requester?"
   - "does direct VHDL support AMBA wrap arithmetic?"
   - "does direct VHDL support scalar bit declarations?"
+  - "does direct VHDL support vector bit declarations?"
+  - "does direct VHDL support two-state vector declarations?"
   - "does direct VHDL support logic declarations?"
   - "does direct VHDL support four-state declarations?"
   - "does direct VHDL support generics?"
@@ -144,11 +146,13 @@ defaults become `std_logic` generics for one-bit defaults and
 `std_logic_vector` generics for multi-bit defaults; the focused coverage uses
 `params_aggregate_comparison` for the scalar case and
 `params_aggregate_unary_complement` for the vector case. Generated scalar
-`bit` internal declarations lower to `std_logic`, generated signed vector
-internal declarations such as `reg signed [3:0] NIB` lower to VHDL `signed`
-signals, generated non-signed four-state `logic` internal declarations lower
-to `std_logic` / `std_logic_vector` for package-backed declarative `+types`
-fixtures, and generated vector `logic signed [MSB:LSB] NAME;` internal
+`bit` internal declarations lower to `std_logic`, and generated two-state
+vector `bit [MSB:LSB]` internal declarations lower to `std_logic_vector`
+signals. Generated signed vector internal declarations such as
+`reg signed [3:0] NIB` lower to VHDL `signed` signals, generated non-signed
+four-state `logic` internal declarations lower to `std_logic` /
+`std_logic_vector` for package-backed declarative `+types` fixtures, and
+generated vector `logic signed [MSB:LSB] NAME;` internal
 declarations lower to VHDL `signed` signals. Generated signed vector
 direct-root input/output port declarations lower to VHDL `signed` ports. The
 scaffold also lowers the first arithmetic RHS shape:

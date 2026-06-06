@@ -221,6 +221,59 @@ subtest 'facade target_language option routes direct VHDL scaffold behavior' => 
     );
 };
 
+subtest 'facade target_language option routes direct VHDL two-state vector bit declarations' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $direct_path = File::Spec->catfile($tempdir, 'facade_direct_vhdl_two_state_vector_bit.fsm');
+    write_file(
+        $direct_path,
+        <<'FSM'
+(?fsm:facade_direct_vhdl_two_state_vector_bit
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+  (+types
+    (type byte_t (two_state (bits 8)))
+  )
+  (+size
+    (OUT byte_t)
+  )
+  (idle
+    (= (OUT 8'hA5))
+  )
+)
+FSM
+    );
+
+    my $vhdl_pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'vhdl',
+        quiet => 1,
+    );
+    my $vhdl_result = $vhdl_pipeline->generate_hdl_from_file($direct_path);
+
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bentity\s+facade_direct_vhdl_two_state_vector_bit\s+is\b/s,
+        'explicit VHDL facade generation emits the two-state vector bit direct entity',
+    );
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bsignal\s+OUT\s+:\s+std_logic_vector\(7\s+downto\s+0\);/s,
+        'explicit VHDL facade generation lowers generated vector bit declarations',
+    );
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bOUT\s+<=\s+"10100101";/s,
+        'explicit VHDL facade generation lowers two-state vector bit literals',
+    );
+    unlike(
+        $vhdl_result->{hdl_code},
+        qr/\bmodule\b|\balways_(?:ff|comb)\b|\bbit\s+\[7:0\]\s+OUT\b/s,
+        'explicit VHDL two-state vector bit facade generation does not leak SystemVerilog declarations',
+    );
+};
+
 subtest 'facade target_language option routes bounded composition VHDL structural top behavior' => sub {
     my $composition_path = repo_file('t/corpus/composition_intent_integer_literals.fsm');
     my $vhdl_pipeline = FSM::Pipeline::HDLGenerator->new(
