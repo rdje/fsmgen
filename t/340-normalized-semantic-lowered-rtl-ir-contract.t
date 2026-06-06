@@ -20,6 +20,8 @@ use FSM::Support::NormalizedSemanticLoweredRTLIRContract qw(
     normalized_semantic_lowered_rtl_ir_selector_conflict_rhs_enable_family_entry_keys
     normalized_semantic_lowered_rtl_ir_selector_conflict_same_value_assertion_keys
     normalized_semantic_lowered_rtl_ir_selector_conflict_target_entry_keys
+    normalized_semantic_lowered_rtl_ir_standalone_dt_multi_drive_assertion_keys
+    normalized_semantic_lowered_rtl_ir_standalone_dt_multi_drive_target_entry_keys
 );
 
 subtest 'contract exposes the bounded normalized semantic lowered-rtl-ir object' => sub {
@@ -182,6 +184,43 @@ subtest 'contract exposes the bounded normalized semantic lowered-rtl-ir object'
         'selector-conflict same-value assertion key list stays bounded and ordered',
     );
     is_deeply(
+        $contract->{standalone_dt_multi_drive_target_entry_keys},
+        normalized_semantic_lowered_rtl_ir_standalone_dt_multi_drive_target_entry_keys(),
+        'contract publishes the bounded standalone-DT multi-drive target entry key list',
+    );
+    is_deeply(
+        normalized_semantic_lowered_rtl_ir_standalone_dt_multi_drive_target_entry_keys(),
+        [
+            qw(
+                dt_enable_signals
+                dt_names
+                lhs_enable_signals
+                multi_drive_assertion
+                multiplexer_type
+                rhs_values
+                signal_name
+            ),
+        ],
+        'standalone-DT multi-drive target entry key list stays bounded and ordered',
+    );
+    is_deeply(
+        $contract->{standalone_dt_multi_drive_assertion_keys},
+        normalized_semantic_lowered_rtl_ir_standalone_dt_multi_drive_assertion_keys(),
+        'contract publishes the bounded standalone-DT multi-drive assertion key list',
+    );
+    is_deeply(
+        normalized_semantic_lowered_rtl_ir_standalone_dt_multi_drive_assertion_keys(),
+        [
+            qw(
+                input_count
+                input_enable_signals
+                kind
+                target_signal
+            ),
+        ],
+        'standalone-DT multi-drive assertion key list stays bounded and ordered',
+    );
+    is_deeply(
         $contract->{presence_key_family_map},
         normalized_semantic_lowered_rtl_ir_presence_key_family_map(),
         'contract publishes the grouped lowered-rtl-ir key-family discovery map',
@@ -200,6 +239,16 @@ subtest 'contract exposes the bounded normalized semantic lowered-rtl-ir object'
         $contract->{presence_key_family_map}{output_drive_rhs_enable_family_entry_keys},
         normalized_semantic_lowered_rtl_ir_output_drive_rhs_enable_family_entry_keys(),
         'grouped lowered-rtl-ir family map includes output-drive rhs-enable-family entries',
+    );
+    is_deeply(
+        $contract->{presence_key_family_map}{standalone_dt_multi_drive_target_entry_keys},
+        normalized_semantic_lowered_rtl_ir_standalone_dt_multi_drive_target_entry_keys(),
+        'grouped lowered-rtl-ir family map includes standalone-DT multi-drive target entries',
+    );
+    is_deeply(
+        $contract->{presence_key_family_map}{standalone_dt_multi_drive_assertion_keys},
+        normalized_semantic_lowered_rtl_ir_standalone_dt_multi_drive_assertion_keys(),
+        'grouped lowered-rtl-ir family map includes standalone-DT multi-drive assertion entries',
     );
 };
 

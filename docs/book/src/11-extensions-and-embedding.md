@@ -2070,8 +2070,12 @@ owns the current lowered-RTL shell keys, including the emitted
 `rhs_enable_families[]` entry keys, the emitted
 `selector_conflict_target_count` and `selector_conflict_targets` metadata,
 bounded `selector_conflict_targets[]` entry keys, nested selector
-`rhs_enable_families[]` entry keys, and selector assertion metadata keys, plus
-the composition-only extension keys emitted today for top roots.
+`rhs_enable_families[]` entry keys, selector assertion metadata keys, the
+emitted `standalone_dt_multi_drive_target_count` and
+`standalone_dt_multi_drive_targets` metadata, bounded
+`standalone_dt_multi_drive_targets[]` entry keys, and nested
+`multi_drive_assertion` metadata keys, plus the composition-only extension keys
+emitted today for top roots.
 
 That same owner now also publishes a grouped `presence_key_family_map` so
 embedders can discover those bounded `lowered_rtl_ir` key families from one

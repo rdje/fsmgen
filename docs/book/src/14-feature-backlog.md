@@ -3929,7 +3929,11 @@ entry keys for `output_drive_families[]` and its nested
 `rhs_enable_families[]` entries. It also advertises
 `selector_conflict_target_count` and `selector_conflict_targets` metadata,
 including bounded entry keys for `selector_conflict_targets[]`, nested
-`rhs_enable_families[]`, and selector assertion metadata. The
+`rhs_enable_families[]`, and selector assertion metadata. It also advertises
+`standalone_dt_multi_drive_target_count` and
+`standalone_dt_multi_drive_targets` metadata, including bounded entry keys for
+`semantic.forward_ir.lowered_rtl_ir.standalone_dt_multi_drive_targets[]` and
+its nested `multi_drive_assertion` metadata. The
 `semantic.forward_ir.structural_rtl_ir` contract also advertises bounded
 `ports[]` core entry keys, composition-top port extension keys, and bounded
 `nets[]`, `declared_links[]`, `resolved_links[]`, shallow `instances[]`, and
@@ -3937,13 +3941,9 @@ nested `instances[].interface_ports[]` plus `instances[].port_bindings[]`
 core and typed-extension entry keys. It now also advertises
 `instances[].parameter_overrides[]` core, raw-value-extension, and
 value-metadata-extension entry keys, and advertises `auxiliary_assignments[]`
-as scalar string assignment-line entries. The manifest is still not a full
-normalized semantic export.
-
-Current selected next edge: task-tree leaf
-`BACKEND-API-VALIDATION-FRONTIER.43.1` will publish bounded entry keys for
-`semantic.forward_ir.lowered_rtl_ir.standalone_dt_multi_drive_targets[]` and
-its nested `multi_drive_assertion` metadata. Until that leaf ships, those
-standalone-DT grouped multi-drive payloads remain shell-owned only. The
-composition shared-datapath candidate payload remains a separate later
-normalized semantic export edge.
+as scalar string assignment-line entries. The composition shared-datapath
+candidate payload remains a separate later normalized semantic export edge, and
+the manifest is still not a full normalized semantic export. The active
+task-tree frontier is `BACKEND-API-VALIDATION-FRONTIER.44`, which selects the
+next exact backend/API/public-export edge before any further implementation
+edits.

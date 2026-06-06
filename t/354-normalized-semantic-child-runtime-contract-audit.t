@@ -4,6 +4,7 @@ use strict;
 use warnings;
 use Test::More;
 use File::Spec;
+use File::Temp qw(tempdir);
 use FindBin;
 use IPC::Cmd qw(run);
 use JSON::PP qw(decode_json);
@@ -27,6 +28,8 @@ use FSM::Support::NormalizedSemanticIntentHIRContract qw(
     normalized_semantic_intent_hir_presence_keys
 );
 use FSM::Support::NormalizedSemanticLoweredRTLIRContract qw(
+    normalized_semantic_lowered_rtl_ir_standalone_dt_multi_drive_assertion_keys
+    normalized_semantic_lowered_rtl_ir_standalone_dt_multi_drive_target_entry_keys
     normalized_semantic_lowered_rtl_ir_optional_composition_keys
     normalized_semantic_lowered_rtl_ir_presence_keys
 );
@@ -49,6 +52,7 @@ use FSM::Support::NormalizedSemanticSystemContract qw(
 );
 
 my $repo_root = File::Spec->catdir($FindBin::Bin, '..');
+my $tempdir = tempdir(CLEANUP => 1);
 
 subtest 'symbol-rich direct semantic payload keeps bounded child-owner contracts at runtime' => sub {
     my $decoded = run_semantic_json('t/corpus/direct_size_expression_widths.fsm');
@@ -128,6 +132,64 @@ subtest 'symbol-rich direct semantic payload keeps bounded child-owner contracts
     ok(
         !exists $semantic->{composition},
         'symbol-rich direct semantic payload omits the optional composition branch',
+    );
+};
+
+subtest 'standalone dt semantic payload keeps bounded multi-drive entry schemas at runtime' => sub {
+    my $dt_path = write_fsm('standalone_dt_semantic_multi_drive_schema.fsm', <<'DT');
+(?dt:standalone_dt_semantic_multi_drive_schema
+  (+size
+    (SEL 1)
+    (A 8)
+    (B 8)
+    (OUT 8)
+  )
+  (-from_a
+    (<SEL==1'b0
+      (= (OUT A))
+    )
+  )
+  (-from_b
+    (<SEL==1'b1
+      (= (OUT B))
+    )
+  )
+)
+DT
+
+    my $decoded = run_semantic_json($dt_path);
+    my $lowered_rtl_ir = $decoded->{semantic}{forward_ir}{lowered_rtl_ir};
+
+    assert_keys_present(
+        $lowered_rtl_ir,
+        normalized_semantic_lowered_rtl_ir_presence_keys(),
+        'standalone dt semantic.forward_ir.lowered_rtl_ir keeps bounded shell keys',
+    );
+    assert_keys_absent(
+        $lowered_rtl_ir,
+        normalized_semantic_lowered_rtl_ir_optional_composition_keys(),
+        'standalone dt semantic.forward_ir.lowered_rtl_ir omits composition-only keys',
+    );
+    is(
+        $lowered_rtl_ir->{standalone_dt_multi_drive_target_count},
+        1,
+        'standalone dt semantic.forward_ir.lowered_rtl_ir reports one multi-drive target',
+    );
+    ok(
+        ref($lowered_rtl_ir->{standalone_dt_multi_drive_targets}) eq 'ARRAY',
+        'standalone dt semantic.forward_ir.lowered_rtl_ir emits a multi-drive target array',
+    );
+
+    my $target = $lowered_rtl_ir->{standalone_dt_multi_drive_targets}[0];
+    assert_exact_keys(
+        $target,
+        normalized_semantic_lowered_rtl_ir_standalone_dt_multi_drive_target_entry_keys(),
+        'standalone dt multi-drive target entry keeps the bounded key schema',
+    );
+    assert_exact_keys(
+        $target->{multi_drive_assertion},
+        normalized_semantic_lowered_rtl_ir_standalone_dt_multi_drive_assertion_keys(),
+        'standalone dt multi-drive assertion keeps the bounded key schema',
     );
 };
 
@@ -216,7 +278,7 @@ done_testing();
 
 sub run_semantic_json {
     my ($relpath) = @_;
-    my $path = repo_file($relpath);
+    my $path = File::Spec->file_name_is_absolute($relpath) ? $relpath : repo_file($relpath);
     my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
         command => ['./bin/fsmgen', '--strict', '--emit-semantic-json', $path],
     );
@@ -230,6 +292,15 @@ sub run_semantic_json {
 sub repo_file {
     my ($relpath) = @_;
     return File::Spec->catfile($repo_root, split m{/}, $relpath);
+}
+
+sub write_fsm {
+    my ($filename, $content) = @_;
+    my $path = File::Spec->catfile($tempdir, $filename);
+    open my $fh, '>', $path or die "Cannot open $path for write: $!";
+    print {$fh} $content or die "Cannot write $path: $!";
+    close $fh or die "Cannot close $path: $!";
+    return $path;
 }
 
 sub assert_signal_analysis_contract {
@@ -259,6 +330,18 @@ sub assert_keys_present {
     for my $key (@{$keys || []}) {
         ok(exists $payload->{$key}, "$label: keeps key $key");
     }
+}
+
+sub assert_exact_keys {
+    my ($payload, $keys, $label) = @_;
+    ok(ref($payload) eq 'HASH', "$label: payload is a hash");
+    return unless ref($payload) eq 'HASH';
+
+    is_deeply(
+        [sort keys %{$payload}],
+        [sort @{$keys || []}],
+        "$label: exact keys match",
+    );
 }
 
 sub assert_keys_absent {

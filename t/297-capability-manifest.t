@@ -170,6 +170,8 @@ use FSM::Support::NormalizedSemanticReportContract qw(
     normalized_semantic_forward_ir_lowered_rtl_ir_selector_conflict_rhs_enable_family_entry_keys
     normalized_semantic_forward_ir_lowered_rtl_ir_selector_conflict_same_value_assertion_keys
     normalized_semantic_forward_ir_lowered_rtl_ir_selector_conflict_target_entry_keys
+    normalized_semantic_forward_ir_lowered_rtl_ir_standalone_dt_multi_drive_assertion_keys
+    normalized_semantic_forward_ir_lowered_rtl_ir_standalone_dt_multi_drive_target_entry_keys
     normalized_semantic_forward_ir_structural_rtl_ir_auxiliary_assignment_entry_value_kinds
     normalized_semantic_forward_ir_structural_rtl_ir_auxiliary_assignment_entry_value_meaning
     normalized_semantic_forward_ir_structural_rtl_ir_declared_link_entry_keys
@@ -967,6 +969,26 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
         $manifest->{semantic_exports}{normalized_semantic_json}{success_forward_ir_lowered_rtl_ir_selector_conflict_same_value_assertion_keys},
         normalized_semantic_forward_ir_lowered_rtl_ir_selector_conflict_same_value_assertion_keys(),
         'manifest records exact normalized semantic selector-conflict same-value assertion keys',
+    );
+    is_deeply(
+        $manifest->{semantic_exports}{normalized_semantic_json}{success_forward_ir_lowered_rtl_ir_standalone_dt_multi_drive_target_entry_keys},
+        normalized_semantic_forward_ir_lowered_rtl_ir_standalone_dt_multi_drive_target_entry_keys(),
+        'manifest records exact normalized semantic standalone-DT multi-drive target entry keys',
+    );
+    is_deeply(
+        $manifest->{semantic_exports}{normalized_semantic_json}{success_forward_ir_lowered_rtl_ir_standalone_dt_multi_drive_assertion_keys},
+        normalized_semantic_forward_ir_lowered_rtl_ir_standalone_dt_multi_drive_assertion_keys(),
+        'manifest records exact normalized semantic standalone-DT multi-drive assertion keys',
+    );
+    is_deeply(
+        $manifest->{semantic_exports}{normalized_semantic_json}{presence_key_family_map}{success_forward_ir_lowered_rtl_ir_standalone_dt_multi_drive_target_entry_keys},
+        normalized_semantic_forward_ir_lowered_rtl_ir_standalone_dt_multi_drive_target_entry_keys(),
+        'manifest report family map records standalone-DT multi-drive target entry keys',
+    );
+    is_deeply(
+        $manifest->{semantic_exports}{normalized_semantic_json}{presence_key_family_map}{success_forward_ir_lowered_rtl_ir_standalone_dt_multi_drive_assertion_keys},
+        normalized_semantic_forward_ir_lowered_rtl_ir_standalone_dt_multi_drive_assertion_keys(),
+        'manifest report family map records standalone-DT multi-drive assertion keys',
     );
     ok(
         scalar(@{$manifest->{semantic_exports}{normalized_semantic_json}{success_forward_ir_lowered_rtl_ir_optional_composition_keys} || []}) >= 7,

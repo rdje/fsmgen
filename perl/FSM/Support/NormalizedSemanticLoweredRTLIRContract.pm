@@ -18,6 +18,8 @@ our @EXPORT_OK = qw(
     normalized_semantic_lowered_rtl_ir_selector_conflict_rhs_enable_family_entry_keys
     normalized_semantic_lowered_rtl_ir_selector_conflict_same_value_assertion_keys
     normalized_semantic_lowered_rtl_ir_selector_conflict_target_entry_keys
+    normalized_semantic_lowered_rtl_ir_standalone_dt_multi_drive_assertion_keys
+    normalized_semantic_lowered_rtl_ir_standalone_dt_multi_drive_target_entry_keys
 );
 
 sub build_normalized_semantic_lowered_rtl_ir_contract {
@@ -54,6 +56,10 @@ sub build_normalized_semantic_lowered_rtl_ir_contract {
             normalized_semantic_lowered_rtl_ir_selector_conflict_multi_value_assertion_keys(),
         selector_conflict_same_value_assertion_keys =>
             normalized_semantic_lowered_rtl_ir_selector_conflict_same_value_assertion_keys(),
+        standalone_dt_multi_drive_target_entry_keys =>
+            normalized_semantic_lowered_rtl_ir_standalone_dt_multi_drive_target_entry_keys(),
+        standalone_dt_multi_drive_assertion_keys =>
+            normalized_semantic_lowered_rtl_ir_standalone_dt_multi_drive_assertion_keys(),
         presence_key_family_map => normalized_semantic_lowered_rtl_ir_presence_key_family_map(),
         optional_for_non_composition_sources => JSON::PP::true,
         json_safe_when_embedded_in_public_reports => JSON::PP::true,
@@ -62,8 +68,9 @@ sub build_normalized_semantic_lowered_rtl_ir_contract {
             'The bounded public promise covers the current lowered-RTL summary shared by direct roots, including selector-conflict metadata, plus the current composition-only extension keys.',
             'The output-drive family and rhs-enable-family key families describe the current nested entry schemas emitted in output_drive_families[].',
             'The selector-conflict target, rhs-enable-family, and assertion key families describe the current nested entry schemas emitted in selector_conflict_targets[].',
+            'The standalone-DT multi-drive target and assertion key families describe the current nested entry schemas emitted in standalone_dt_multi_drive_targets[].',
             'Use the grouped presence_key_family_map to discover the bounded core and composition-only lowered_rtl_ir key families without collecting those key-family lists separately.',
-            'The deeper `standalone_dt_multi_drive_targets` and composition candidate payload contents remain bounded only at the current object-shell level unless later widened deliberately.',
+            'The deeper composition candidate payload contents remain bounded only at the current object-shell level unless later widened deliberately.',
         ],
     };
 }
@@ -178,6 +185,31 @@ sub normalized_semantic_lowered_rtl_ir_selector_conflict_same_value_assertion_ke
     ];
 }
 
+sub normalized_semantic_lowered_rtl_ir_standalone_dt_multi_drive_target_entry_keys {
+    return [
+        qw(
+            dt_enable_signals
+            dt_names
+            lhs_enable_signals
+            multi_drive_assertion
+            multiplexer_type
+            rhs_values
+            signal_name
+        ),
+    ];
+}
+
+sub normalized_semantic_lowered_rtl_ir_standalone_dt_multi_drive_assertion_keys {
+    return [
+        qw(
+            input_count
+            input_enable_signals
+            kind
+            target_signal
+        ),
+    ];
+}
+
 sub normalized_semantic_lowered_rtl_ir_presence_key_family_map {
     return {
         public_presence_keys => normalized_semantic_lowered_rtl_ir_presence_keys(),
@@ -194,6 +226,10 @@ sub normalized_semantic_lowered_rtl_ir_presence_key_family_map {
             normalized_semantic_lowered_rtl_ir_selector_conflict_multi_value_assertion_keys(),
         selector_conflict_same_value_assertion_keys =>
             normalized_semantic_lowered_rtl_ir_selector_conflict_same_value_assertion_keys(),
+        standalone_dt_multi_drive_target_entry_keys =>
+            normalized_semantic_lowered_rtl_ir_standalone_dt_multi_drive_target_entry_keys(),
+        standalone_dt_multi_drive_assertion_keys =>
+            normalized_semantic_lowered_rtl_ir_standalone_dt_multi_drive_assertion_keys(),
     };
 }
 

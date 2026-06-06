@@ -28,6 +28,8 @@ use FSM::Support::NormalizedSemanticForwardIRContract qw(
     normalized_semantic_forward_ir_lowered_rtl_ir_selector_conflict_rhs_enable_family_entry_keys
     normalized_semantic_forward_ir_lowered_rtl_ir_selector_conflict_same_value_assertion_keys
     normalized_semantic_forward_ir_lowered_rtl_ir_selector_conflict_target_entry_keys
+    normalized_semantic_forward_ir_lowered_rtl_ir_standalone_dt_multi_drive_assertion_keys
+    normalized_semantic_forward_ir_lowered_rtl_ir_standalone_dt_multi_drive_target_entry_keys
     normalized_semantic_forward_ir_structural_rtl_ir_auxiliary_assignment_entry_value_kinds
     normalized_semantic_forward_ir_structural_rtl_ir_auxiliary_assignment_entry_value_meaning
     normalized_semantic_forward_ir_structural_rtl_ir_contract_source
@@ -86,6 +88,8 @@ our @EXPORT_OK = qw(
     normalized_semantic_payload_forward_ir_lowered_rtl_ir_selector_conflict_rhs_enable_family_entry_keys
     normalized_semantic_payload_forward_ir_lowered_rtl_ir_selector_conflict_same_value_assertion_keys
     normalized_semantic_payload_forward_ir_lowered_rtl_ir_selector_conflict_target_entry_keys
+    normalized_semantic_payload_forward_ir_lowered_rtl_ir_standalone_dt_multi_drive_assertion_keys
+    normalized_semantic_payload_forward_ir_lowered_rtl_ir_standalone_dt_multi_drive_target_entry_keys
     normalized_semantic_payload_forward_ir_structural_rtl_ir_auxiliary_assignment_entry_value_kinds
     normalized_semantic_payload_forward_ir_structural_rtl_ir_auxiliary_assignment_entry_value_meaning
     normalized_semantic_payload_forward_ir_structural_rtl_ir_declared_link_entry_keys
@@ -178,6 +182,10 @@ sub build_normalized_semantic_payload_contract {
             normalized_semantic_payload_forward_ir_lowered_rtl_ir_selector_conflict_multi_value_assertion_keys(),
         forward_ir_lowered_rtl_ir_selector_conflict_same_value_assertion_keys =>
             normalized_semantic_payload_forward_ir_lowered_rtl_ir_selector_conflict_same_value_assertion_keys(),
+        forward_ir_lowered_rtl_ir_standalone_dt_multi_drive_target_entry_keys =>
+            normalized_semantic_payload_forward_ir_lowered_rtl_ir_standalone_dt_multi_drive_target_entry_keys(),
+        forward_ir_lowered_rtl_ir_standalone_dt_multi_drive_assertion_keys =>
+            normalized_semantic_payload_forward_ir_lowered_rtl_ir_standalone_dt_multi_drive_assertion_keys(),
         forward_ir_structural_rtl_ir_contract_source => normalized_semantic_forward_ir_structural_rtl_ir_contract_source(),
         forward_ir_structural_rtl_ir_presence_keys => normalized_semantic_payload_forward_ir_structural_rtl_ir_keys(),
         forward_ir_structural_rtl_ir_auxiliary_assignment_entry_value_kinds =>
@@ -226,6 +234,7 @@ sub build_normalized_semantic_payload_contract {
             'Use the grouped `forward_ir_nested_contract_source_map` to discover the deeper bounded `forward_ir` shell owners without reconstructing them from parallel scalar fields.',
             'Use the grouped output-drive entry key families to inspect `forward_ir.lowered_rtl_ir.output_drive_families` without binding to unrelated lowered-RTL internals.',
             'Use the grouped selector-conflict entry key families to inspect `forward_ir.lowered_rtl_ir.selector_conflict_targets` without binding to unrelated lowered-RTL internals.',
+            'Use the grouped standalone-DT multi-drive entry key families to inspect `forward_ir.lowered_rtl_ir.standalone_dt_multi_drive_targets` without binding to unrelated lowered-RTL internals.',
             'Use the grouped structural auxiliary-assignment value-kind, port, net, declared/resolved link, instance shallow, nested instance interface-port, nested instance parameter-override, and nested instance port-binding entry families to inspect `forward_ir.structural_rtl_ir.auxiliary_assignments`, `forward_ir.structural_rtl_ir.ports`, `forward_ir.structural_rtl_ir.nets`, `forward_ir.structural_rtl_ir.declared_links`, `forward_ir.structural_rtl_ir.resolved_links`, `forward_ir.structural_rtl_ir.instances`, `forward_ir.structural_rtl_ir.instances[].interface_ports`, `forward_ir.structural_rtl_ir.instances[].parameter_overrides`, and `forward_ir.structural_rtl_ir.instances[].port_bindings` without binding to unrelated structural-RTL collections.',
             'The nested `forward_ir.intent_hir` object shell stays bounded through FSM::Support::NormalizedSemanticIntentHIRContract.',
             'The nested `forward_ir.lowered_rtl_ir` object shell stays bounded through FSM::Support::NormalizedSemanticLoweredRTLIRContract.',
@@ -290,6 +299,10 @@ sub normalized_semantic_payload_presence_key_family_map {
             normalized_semantic_payload_forward_ir_lowered_rtl_ir_selector_conflict_multi_value_assertion_keys(),
         forward_ir_lowered_rtl_ir_selector_conflict_same_value_assertion_keys =>
             normalized_semantic_payload_forward_ir_lowered_rtl_ir_selector_conflict_same_value_assertion_keys(),
+        forward_ir_lowered_rtl_ir_standalone_dt_multi_drive_target_entry_keys =>
+            normalized_semantic_payload_forward_ir_lowered_rtl_ir_standalone_dt_multi_drive_target_entry_keys(),
+        forward_ir_lowered_rtl_ir_standalone_dt_multi_drive_assertion_keys =>
+            normalized_semantic_payload_forward_ir_lowered_rtl_ir_standalone_dt_multi_drive_assertion_keys(),
         forward_ir_structural_rtl_ir_auxiliary_assignment_entry_value_kinds =>
             normalized_semantic_payload_forward_ir_structural_rtl_ir_auxiliary_assignment_entry_value_kinds(),
         forward_ir_structural_rtl_ir_port_entry_keys =>
@@ -373,6 +386,14 @@ sub normalized_semantic_payload_forward_ir_lowered_rtl_ir_selector_conflict_mult
 
 sub normalized_semantic_payload_forward_ir_lowered_rtl_ir_selector_conflict_same_value_assertion_keys {
     return normalized_semantic_forward_ir_lowered_rtl_ir_selector_conflict_same_value_assertion_keys();
+}
+
+sub normalized_semantic_payload_forward_ir_lowered_rtl_ir_standalone_dt_multi_drive_target_entry_keys {
+    return normalized_semantic_forward_ir_lowered_rtl_ir_standalone_dt_multi_drive_target_entry_keys();
+}
+
+sub normalized_semantic_payload_forward_ir_lowered_rtl_ir_standalone_dt_multi_drive_assertion_keys {
+    return normalized_semantic_forward_ir_lowered_rtl_ir_standalone_dt_multi_drive_assertion_keys();
 }
 
 sub normalized_semantic_payload_forward_ir_structural_rtl_ir_keys {

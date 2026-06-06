@@ -11,10 +11,10 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
 ## Current state (OVERWRITE this block each update — do not append)
-- latest_commit: `BACKEND-API-VALIDATION-FRONTIER.43` (this commit) — selected normalized semantic lowered-RTL standalone-DT multi-drive target entry schemas as the next exact public-export edge. `git log -1` for the hash.
-- active_work_unit: `BACKEND-API-VALIDATION-FRONTIER.43.1` active frontier — publish bounded `standalone_dt_multi_drive_targets[]` and nested `multi_drive_assertion` key families before any broader shared-datapath payload widening.
-- recently_done: `BACKEND-API-VALIDATION-FRONTIER.43`; `BACKEND-API-VALIDATION-FRONTIER.42.1`; `BACKEND-API-VALIDATION-FRONTIER.42`; `BACKEND-API-VALIDATION-FRONTIER.41.1`; `BACKEND-API-VALIDATION-FRONTIER.41`; `BACKEND-API-VALIDATION-FRONTIER.40.1`; `BACKEND-API-VALIDATION-FRONTIER.40`; `BACKEND-API-VALIDATION-FRONTIER.39.1`; `BACKEND-API-VALIDATION-FRONTIER.39`; `BACKEND-API-VALIDATION-FRONTIER.38.1`; `BACKEND-API-VALIDATION-FRONTIER.38`; `BACKEND-API-VALIDATION-FRONTIER.37.1`; `BACKEND-API-VALIDATION-FRONTIER.37`; `BACKEND-API-VALIDATION-FRONTIER.36.1`.
-- in_flight_uncommitted: none expected after this selection commit; unrelated untracked `fx/` intentionally left alone.
+- latest_commit: `BACKEND-API-VALIDATION-FRONTIER.43.1` (this commit) — shipped bounded normalized semantic lowered-RTL standalone-DT multi-drive target and nested assertion entry schemas. `git log -1` for the hash.
+- active_work_unit: `BACKEND-API-VALIDATION-FRONTIER.44` active frontier — select the next exact backend/API/public-export edge before any further implementation edits.
+- recently_done: `BACKEND-API-VALIDATION-FRONTIER.43.1`; `BACKEND-API-VALIDATION-FRONTIER.43`; `BACKEND-API-VALIDATION-FRONTIER.42.1`; `BACKEND-API-VALIDATION-FRONTIER.42`; `BACKEND-API-VALIDATION-FRONTIER.41.1`; `BACKEND-API-VALIDATION-FRONTIER.41`; `BACKEND-API-VALIDATION-FRONTIER.40.1`; `BACKEND-API-VALIDATION-FRONTIER.40`; `BACKEND-API-VALIDATION-FRONTIER.39.1`; `BACKEND-API-VALIDATION-FRONTIER.39`; `BACKEND-API-VALIDATION-FRONTIER.38.1`; `BACKEND-API-VALIDATION-FRONTIER.38`; `BACKEND-API-VALIDATION-FRONTIER.37.1`; `BACKEND-API-VALIDATION-FRONTIER.37`.
+- in_flight_uncommitted: none expected after this `.43.1` commit; unrelated untracked `fx/` intentionally left alone.
 - blockers: none.
 
 ## Notes

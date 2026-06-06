@@ -24,6 +24,8 @@ use FSM::Support::NormalizedSemanticForwardIRContract qw(
     normalized_semantic_forward_ir_lowered_rtl_ir_selector_conflict_rhs_enable_family_entry_keys
     normalized_semantic_forward_ir_lowered_rtl_ir_selector_conflict_same_value_assertion_keys
     normalized_semantic_forward_ir_lowered_rtl_ir_selector_conflict_target_entry_keys
+    normalized_semantic_forward_ir_lowered_rtl_ir_standalone_dt_multi_drive_assertion_keys
+    normalized_semantic_forward_ir_lowered_rtl_ir_standalone_dt_multi_drive_target_entry_keys
     normalized_semantic_forward_ir_presence_key_family_map
     normalized_semantic_forward_ir_structural_rtl_ir_auxiliary_assignment_entry_value_kinds
     normalized_semantic_forward_ir_structural_rtl_ir_auxiliary_assignment_entry_value_meaning
@@ -54,6 +56,8 @@ use FSM::Support::NormalizedSemanticPayloadContract qw(
     normalized_semantic_payload_forward_ir_lowered_rtl_ir_selector_conflict_rhs_enable_family_entry_keys
     normalized_semantic_payload_forward_ir_lowered_rtl_ir_selector_conflict_same_value_assertion_keys
     normalized_semantic_payload_forward_ir_lowered_rtl_ir_selector_conflict_target_entry_keys
+    normalized_semantic_payload_forward_ir_lowered_rtl_ir_standalone_dt_multi_drive_assertion_keys
+    normalized_semantic_payload_forward_ir_lowered_rtl_ir_standalone_dt_multi_drive_target_entry_keys
     normalized_semantic_payload_forward_ir_structural_rtl_ir_auxiliary_assignment_entry_value_kinds
     normalized_semantic_payload_forward_ir_structural_rtl_ir_auxiliary_assignment_entry_value_meaning
     normalized_semantic_payload_forward_ir_structural_rtl_ir_declared_link_entry_keys
@@ -83,6 +87,8 @@ use FSM::Support::NormalizedSemanticReportContract qw(
     normalized_semantic_forward_ir_lowered_rtl_ir_selector_conflict_rhs_enable_family_entry_keys
     normalized_semantic_forward_ir_lowered_rtl_ir_selector_conflict_same_value_assertion_keys
     normalized_semantic_forward_ir_lowered_rtl_ir_selector_conflict_target_entry_keys
+    normalized_semantic_forward_ir_lowered_rtl_ir_standalone_dt_multi_drive_assertion_keys
+    normalized_semantic_forward_ir_lowered_rtl_ir_standalone_dt_multi_drive_target_entry_keys
     normalized_semantic_forward_ir_structural_rtl_ir_auxiliary_assignment_entry_value_kinds
     normalized_semantic_forward_ir_structural_rtl_ir_auxiliary_assignment_entry_value_meaning
     normalized_semantic_forward_ir_structural_rtl_ir_declared_link_entry_keys
@@ -167,6 +173,16 @@ subtest 'contract exposes the bounded normalized semantic forward-IR object' => 
         $contract->{presence_key_family_map}{lowered_rtl_ir_selector_conflict_rhs_enable_family_entry_keys},
         normalized_semantic_forward_ir_lowered_rtl_ir_selector_conflict_rhs_enable_family_entry_keys(),
         'grouped forward-ir family map publishes selector-conflict rhs-family entry keys',
+    );
+    is_deeply(
+        $contract->{presence_key_family_map}{lowered_rtl_ir_standalone_dt_multi_drive_target_entry_keys},
+        normalized_semantic_forward_ir_lowered_rtl_ir_standalone_dt_multi_drive_target_entry_keys(),
+        'grouped forward-ir family map publishes standalone-DT multi-drive target entry keys',
+    );
+    is_deeply(
+        $contract->{presence_key_family_map}{lowered_rtl_ir_standalone_dt_multi_drive_assertion_keys},
+        normalized_semantic_forward_ir_lowered_rtl_ir_standalone_dt_multi_drive_assertion_keys(),
+        'grouped forward-ir family map publishes standalone-DT multi-drive assertion keys',
     );
     is_deeply(
         $contract->{presence_key_family_map}{structural_rtl_ir_auxiliary_assignment_entry_value_kinds},
@@ -292,6 +308,16 @@ subtest 'contract exposes the bounded normalized semantic forward-IR object' => 
         $contract->{lowered_rtl_ir_selector_conflict_same_value_assertion_keys},
         normalized_semantic_forward_ir_lowered_rtl_ir_selector_conflict_same_value_assertion_keys(),
         'contract publishes the bounded forward-ir lowered-rtl-ir selector same-value assertion key list',
+    );
+    is_deeply(
+        $contract->{lowered_rtl_ir_standalone_dt_multi_drive_target_entry_keys},
+        normalized_semantic_forward_ir_lowered_rtl_ir_standalone_dt_multi_drive_target_entry_keys(),
+        'contract publishes the bounded forward-ir lowered-rtl-ir standalone-DT multi-drive target entry key list',
+    );
+    is_deeply(
+        $contract->{lowered_rtl_ir_standalone_dt_multi_drive_assertion_keys},
+        normalized_semantic_forward_ir_lowered_rtl_ir_standalone_dt_multi_drive_assertion_keys(),
+        'contract publishes the bounded forward-ir lowered-rtl-ir standalone-DT multi-drive assertion key list',
     );
     is(
         $contract->{structural_rtl_ir_contract_source},
@@ -429,6 +455,16 @@ subtest 'contract exposes the bounded normalized semantic forward-IR object' => 
         'semantic payload lowered-rtl-ir selector same-value assertion keys map to the nested lowered-rtl-ir owner',
     );
     is_deeply(
+        normalized_semantic_payload_forward_ir_lowered_rtl_ir_standalone_dt_multi_drive_target_entry_keys(),
+        normalized_semantic_forward_ir_lowered_rtl_ir_standalone_dt_multi_drive_target_entry_keys(),
+        'semantic payload lowered-rtl-ir standalone-DT multi-drive target entry keys map to the nested lowered-rtl-ir owner',
+    );
+    is_deeply(
+        normalized_semantic_payload_forward_ir_lowered_rtl_ir_standalone_dt_multi_drive_assertion_keys(),
+        normalized_semantic_forward_ir_lowered_rtl_ir_standalone_dt_multi_drive_assertion_keys(),
+        'semantic payload lowered-rtl-ir standalone-DT multi-drive assertion keys map to the nested lowered-rtl-ir owner',
+    );
+    is_deeply(
         normalized_semantic_payload_forward_ir_structural_rtl_ir_keys(),
         normalized_semantic_forward_ir_structural_rtl_ir_presence_keys(),
         'semantic payload structural-rtl-ir keys map to the nested structural-rtl-ir owner',
@@ -537,6 +573,16 @@ subtest 'contract exposes the bounded normalized semantic forward-IR object' => 
         normalized_semantic_forward_ir_lowered_rtl_ir_output_drive_rhs_enable_family_entry_keys(),
         normalized_semantic_forward_ir_lowered_rtl_ir_output_drive_rhs_enable_family_entry_keys(),
         'normalized semantic report lowered-rtl-ir output-drive rhs-family keys map to the nested lowered-rtl-ir owner',
+    );
+    is_deeply(
+        normalized_semantic_forward_ir_lowered_rtl_ir_standalone_dt_multi_drive_target_entry_keys(),
+        normalized_semantic_forward_ir_lowered_rtl_ir_standalone_dt_multi_drive_target_entry_keys(),
+        'normalized semantic report lowered-rtl-ir standalone-DT multi-drive target entry keys map to the nested lowered-rtl-ir owner',
+    );
+    is_deeply(
+        normalized_semantic_forward_ir_lowered_rtl_ir_standalone_dt_multi_drive_assertion_keys(),
+        normalized_semantic_forward_ir_lowered_rtl_ir_standalone_dt_multi_drive_assertion_keys(),
+        'normalized semantic report lowered-rtl-ir standalone-DT multi-drive assertion keys map to the nested lowered-rtl-ir owner',
     );
     is_deeply(
         normalized_semantic_forward_ir_structural_rtl_ir_keys(),
