@@ -11,10 +11,10 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
 ## Current state (OVERWRITE this block each update — do not append)
-- latest_commit: `BACKEND-API-VALIDATION-FRONTIER.54` (this commit) — selected normalized semantic symbol-contract type-entry schemas as the next public-export hardening edge. `git log -1` for the hash.
-- active_work_unit: `BACKEND-API-VALIDATION-FRONTIER.54.1` active frontier — publish symbol-contract type-entry schema metadata for `semantic.symbol_contract.types` and `semantic.forward_ir.intent_hir.symbol_contract.types`.
-- recently_done: `BACKEND-API-VALIDATION-FRONTIER.54`; `BACKEND-API-VALIDATION-FRONTIER.53.1`; `BACKEND-API-VALIDATION-FRONTIER.53`; `BACKEND-API-VALIDATION-FRONTIER.52.1`; `BACKEND-API-VALIDATION-FRONTIER.52`; `BACKEND-API-VALIDATION-FRONTIER.51.1`; `BACKEND-API-VALIDATION-FRONTIER.51`; `BACKEND-API-VALIDATION-FRONTIER.50.1`; `BACKEND-API-VALIDATION-FRONTIER.50`; `BACKEND-API-VALIDATION-FRONTIER.49.1`; `BACKEND-API-VALIDATION-FRONTIER.49`; `BACKEND-API-VALIDATION-FRONTIER.48.1`; `BACKEND-API-VALIDATION-FRONTIER.48`; `BACKEND-API-VALIDATION-FRONTIER.47.1`.
-- in_flight_uncommitted: none expected after this `.54` commit; unrelated untracked `fx/` intentionally left alone.
+- latest_commit: `BACKEND-API-VALIDATION-FRONTIER.54.1` (this commit) — shipped normalized semantic symbol-contract type-entry schemas. `git log -1` for the hash.
+- active_work_unit: `BACKEND-API-VALIDATION-FRONTIER.55` active frontier — select the next exact backend/API/public-export edge after symbol-contract type-entry schemas shipped.
+- recently_done: `BACKEND-API-VALIDATION-FRONTIER.54.1`; `BACKEND-API-VALIDATION-FRONTIER.54`; `BACKEND-API-VALIDATION-FRONTIER.53.1`; `BACKEND-API-VALIDATION-FRONTIER.53`; `BACKEND-API-VALIDATION-FRONTIER.52.1`; `BACKEND-API-VALIDATION-FRONTIER.52`; `BACKEND-API-VALIDATION-FRONTIER.51.1`; `BACKEND-API-VALIDATION-FRONTIER.51`; `BACKEND-API-VALIDATION-FRONTIER.50.1`; `BACKEND-API-VALIDATION-FRONTIER.50`; `BACKEND-API-VALIDATION-FRONTIER.49.1`; `BACKEND-API-VALIDATION-FRONTIER.49`; `BACKEND-API-VALIDATION-FRONTIER.48.1`; `BACKEND-API-VALIDATION-FRONTIER.48`.
+- in_flight_uncommitted: none expected after this `.54.1` commit; unrelated untracked `fx/` intentionally left alone.
 - blockers: none.
 
 ## Notes

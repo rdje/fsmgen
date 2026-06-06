@@ -64,6 +64,12 @@ use FSM::Support::NormalizedSemanticIntentHIRContract qw(
     normalized_semantic_intent_hir_symbol_contract_constant_value_entry_keys
     normalized_semantic_intent_hir_symbol_contract_enum_entry_value_kinds
     normalized_semantic_intent_hir_symbol_contract_enum_member_value_kinds
+    normalized_semantic_intent_hir_symbol_contract_type_aggregate_value_kinds
+    normalized_semantic_intent_hir_symbol_contract_type_entry_keys
+    normalized_semantic_intent_hir_symbol_contract_type_list_extension_keys
+    normalized_semantic_intent_hir_symbol_contract_type_record_extension_keys
+    normalized_semantic_intent_hir_symbol_contract_type_scalar_value_kinds
+    normalized_semantic_intent_hir_symbol_contract_type_state_model_extension_keys
 );
 use FSM::Support::NormalizedSemanticLoweredRTLIRContract qw(
     normalized_semantic_lowered_rtl_ir_composition_shared_datapath_aggregate_enable_contributor_entry_keys
@@ -102,6 +108,12 @@ use FSM::Support::NormalizedSemanticSymbolContract qw(
     normalized_semantic_symbol_contract_enum_entry_value_kinds
     normalized_semantic_symbol_contract_enum_member_value_kinds
     normalized_semantic_symbol_contract_presence_keys
+    normalized_semantic_symbol_contract_type_aggregate_value_kinds
+    normalized_semantic_symbol_contract_type_entry_keys
+    normalized_semantic_symbol_contract_type_list_extension_keys
+    normalized_semantic_symbol_contract_type_record_extension_keys
+    normalized_semantic_symbol_contract_type_scalar_value_kinds
+    normalized_semantic_symbol_contract_type_state_model_extension_keys
 );
 use FSM::Support::NormalizedSemanticSystemContract qw(
     normalized_semantic_system_contract_presence_keys
@@ -284,6 +296,163 @@ subtest 'symbol-rich direct semantic payload keeps bounded child-owner contracts
     ok(
         !exists $semantic->{composition},
         'symbol-rich direct semantic payload omits the optional composition branch',
+    );
+};
+
+subtest 'type-rich direct semantic payload keeps bounded symbol-contract type schemas at runtime' => sub {
+    my $typed_path = write_fsm('type_rich_semantic_schema.fsm', <<'FSM');
+(?fsm:type_rich_semantic_schema
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+  (+constants
+    (BYTE_W 8)
+  )
+  (+enums
+    (width_e
+      (NIBBLE 4))
+  )
+  (+types
+    (type bit_t bit)
+    (type byte_t (bits BYTE_W))
+    (type signed_nibble_t (signed (bits width_e.NIBBLE)))
+    (type two_state_byte_t (two_state (bits BYTE_W)))
+    (type pair_t (list bit byte_t))
+    (type frame_t (record (flag bit) (payload pair_t)))
+  )
+  (+size
+    (OUT byte_t)
+  )
+  (idle
+    (= (OUT 0))
+  )
+)
+FSM
+
+    my $decoded = run_semantic_json($typed_path);
+    my $semantic = $decoded->{semantic};
+    my $types = $semantic->{symbol_contract}{types} || {};
+    my $intent_hir_types = $semantic->{forward_ir}{intent_hir}{symbol_contract}{types} || {};
+
+    is_deeply(
+        normalized_semantic_symbol_contract_type_entry_keys(),
+        [qw(kind signed width)],
+        'symbol-contract type entries advertise bounded core keys',
+    );
+    is_deeply(
+        normalized_semantic_symbol_contract_type_scalar_value_kinds(),
+        [qw(bit bits)],
+        'symbol-contract type entries advertise scalar value kinds',
+    );
+    is_deeply(
+        normalized_semantic_symbol_contract_type_aggregate_value_kinds(),
+        [qw(list record)],
+        'symbol-contract type entries advertise aggregate value kinds',
+    );
+    is_deeply(
+        normalized_semantic_symbol_contract_type_state_model_extension_keys(),
+        [qw(state_model)],
+        'symbol-contract type entries advertise state-model extension keys',
+    );
+    is_deeply(
+        normalized_semantic_symbol_contract_type_list_extension_keys(),
+        [qw(items)],
+        'symbol-contract type entries advertise list extension keys',
+    );
+    is_deeply(
+        normalized_semantic_symbol_contract_type_record_extension_keys(),
+        [qw(member_order members)],
+        'symbol-contract type entries advertise record extension keys',
+    );
+    is_deeply(
+        normalized_semantic_intent_hir_symbol_contract_type_entry_keys(),
+        normalized_semantic_symbol_contract_type_entry_keys(),
+        'intent-HIR type entry keys delegate to symbol-contract owner',
+    );
+    is_deeply(
+        normalized_semantic_intent_hir_symbol_contract_type_scalar_value_kinds(),
+        normalized_semantic_symbol_contract_type_scalar_value_kinds(),
+        'intent-HIR scalar type value kinds delegate to symbol-contract owner',
+    );
+    is_deeply(
+        normalized_semantic_intent_hir_symbol_contract_type_aggregate_value_kinds(),
+        normalized_semantic_symbol_contract_type_aggregate_value_kinds(),
+        'intent-HIR aggregate type value kinds delegate to symbol-contract owner',
+    );
+    is_deeply(
+        normalized_semantic_intent_hir_symbol_contract_type_state_model_extension_keys(),
+        normalized_semantic_symbol_contract_type_state_model_extension_keys(),
+        'intent-HIR type state-model extension keys delegate to symbol-contract owner',
+    );
+    is_deeply(
+        normalized_semantic_intent_hir_symbol_contract_type_list_extension_keys(),
+        normalized_semantic_symbol_contract_type_list_extension_keys(),
+        'intent-HIR type list extension keys delegate to symbol-contract owner',
+    );
+    is_deeply(
+        normalized_semantic_intent_hir_symbol_contract_type_record_extension_keys(),
+        normalized_semantic_symbol_contract_type_record_extension_keys(),
+        'intent-HIR type record extension keys delegate to symbol-contract owner',
+    );
+    is_deeply(
+        $intent_hir_types,
+        $types,
+        'type-rich direct semantic.forward_ir.intent_hir.symbol_contract.types aliases semantic.symbol_contract.types',
+    );
+
+    my $type_core_keys = normalized_semantic_symbol_contract_type_entry_keys();
+    my $state_model_type_keys = [
+        @{$type_core_keys},
+        @{normalized_semantic_symbol_contract_type_state_model_extension_keys()},
+    ];
+    my $list_type_keys = [
+        @{$type_core_keys},
+        @{normalized_semantic_symbol_contract_type_list_extension_keys()},
+    ];
+    my $record_type_keys = [
+        @{$type_core_keys},
+        @{normalized_semantic_symbol_contract_type_record_extension_keys()},
+    ];
+
+    assert_exact_keys(
+        $types->{bit_t},
+        $type_core_keys,
+        'type-rich semantic.symbol_contract.types.bit_t keeps exact scalar bit keys',
+    );
+    is($types->{bit_t}{kind}, 'bit', 'bit_t exposes bit kind');
+    is($types->{bit_t}{signed}, 0, 'bit_t exposes unsigned intent');
+    is($types->{bit_t}{width}, 1, 'bit_t exposes width');
+    assert_exact_keys(
+        $types->{two_state_byte_t},
+        $state_model_type_keys,
+        'type-rich semantic.symbol_contract.types.two_state_byte_t keeps exact state-model scalar keys',
+    );
+    is($types->{two_state_byte_t}{kind}, 'bits', 'two_state_byte_t exposes bits kind');
+    is($types->{two_state_byte_t}{state_model}, 'two_state', 'two_state_byte_t exposes state model');
+    assert_exact_keys(
+        $types->{pair_t},
+        $list_type_keys,
+        'type-rich semantic.symbol_contract.types.pair_t keeps exact list type keys',
+    );
+    is($types->{pair_t}{kind}, 'list', 'pair_t exposes list kind');
+    ok(ref($types->{pair_t}{items}) eq 'ARRAY', 'pair_t exposes recursive item specs');
+    assert_exact_keys(
+        $types->{pair_t}{items}[0],
+        $type_core_keys,
+        'type-rich semantic.symbol_contract.types.pair_t.items[0] keeps exact recursive scalar type keys',
+    );
+    assert_exact_keys(
+        $types->{frame_t},
+        $record_type_keys,
+        'type-rich semantic.symbol_contract.types.frame_t keeps exact record type keys',
+    );
+    is($types->{frame_t}{kind}, 'record', 'frame_t exposes record kind');
+    is_deeply($types->{frame_t}{member_order}, [qw(flag payload)], 'frame_t exposes deterministic member order');
+    assert_exact_keys(
+        $types->{frame_t}{members}{payload},
+        $list_type_keys,
+        'type-rich semantic.symbol_contract.types.frame_t.members.payload keeps exact recursive list keys',
     );
 };
 
@@ -1122,11 +1291,20 @@ sub run_semantic_json {
     my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
         command => ['./bin/fsmgen', '--strict', '--emit-semantic-json', $path],
     );
+    my $stdout = join('', @{$stdout_buf || []});
+    my $stderr = join('', @{$stderr_buf || []});
+
+    if (!$success) {
+        diag("semantic JSON export failed for $relpath");
+        diag('error: ' . (defined($error_message) ? $error_message : '<undef>'));
+        diag("stdout:\n$stdout") if $stdout ne '';
+        diag("stderr:\n$stderr") if $stderr ne '';
+    }
 
     ok($success, "semantic JSON export succeeds for $relpath");
-    is(join('', @{$stderr_buf || []}), '', "semantic JSON export keeps stderr clean for $relpath");
+    is($stderr, '', "semantic JSON export keeps stderr clean for $relpath");
 
-    return decode_json(join('', @{$stdout_buf || []}));
+    return decode_json($stdout);
 }
 
 sub repo_file {

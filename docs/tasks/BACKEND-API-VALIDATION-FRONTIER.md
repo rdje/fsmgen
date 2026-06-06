@@ -148,7 +148,8 @@ items named in the 2026-06-05 remaining-work inventory.
     `BACKEND-API-VALIDATION-FRONTIER.53`,
     `BACKEND-API-VALIDATION-FRONTIER.53.1`,
     `BACKEND-API-VALIDATION-FRONTIER.54`,
-    `BACKEND-API-VALIDATION-FRONTIER.54.1`
+    `BACKEND-API-VALIDATION-FRONTIER.54.1`,
+    `BACKEND-API-VALIDATION-FRONTIER.55`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.1`
   Status: `done`
@@ -1008,10 +1009,17 @@ items named in the 2026-06-05 remaining-work inventory.
   Commit: `BACKEND-API-VALIDATION-FRONTIER.54: select symbol type schema`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.54.1`
-  Status: `active`
+  Status: `done`
   Goal: `Publish symbol-contract type-entry schemas in normalized semantic symbol contracts.`
   Acceptance: `semantic.symbol_contract.types and semantic.forward_ir.intent_hir.symbol_contract.types advertise bounded recursive type-entry schema metadata for emitted type entries: scalar type entries use bit/bits value kinds with kind, signed, width, and optional state_model keys; aggregate type entries use list/record value kinds with kind, signed, width, and recursive items or members plus member_order. Payload/report contracts, capability-manifest semantic export metadata, README, mdBook, knowledge-map, defensive-copy audits, and runtime contract tests inherit or describe those symbol-contract type schema metadata fields. The slice does not widen package-import nested schemas, already bounded constant/enum internals, unrelated forward-IR payloads, or full normalized semantic export stabilization.`
-  Verification: `pending implementation`
+  Verification: `perl -Iperl -c perl/FSM/Support/NormalizedSemanticSymbolContract.pm; perl -Iperl -c perl/FSM/Support/NormalizedSemanticIntentHIRContract.pm; perl -Iperl -c perl/FSM/Support/NormalizedSemanticForwardIRContract.pm; perl -Iperl -c perl/FSM/Support/NormalizedSemanticPayloadContract.pm; perl -Iperl -c perl/FSM/Support/NormalizedSemanticReportContract.pm; edited-test syntax checks; focused normalized semantic symbol-type schema prove bundle; broader normalized semantic contract/runtime prove bundle; manifest runtime prove bundle; bash knowledge-map/scripts/gen_knowledge_map.sh; bash knowledge-map/scripts/check_knowledge_map.sh; scripts/check_memory_architecture.sh; prove -Iperl t/1414-docs-relative-paths-audit.t; prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t; mdbook build docs/book; git diff --check`
+  Commit: `BACKEND-API-VALIDATION-FRONTIER.54.1: ship symbol type schema`
+
+- ID: `BACKEND-API-VALIDATION-FRONTIER.55`
+  Status: `active`
+  Goal: `Select the next exact backend/API/public-export edge after symbol-contract type-entry schemas shipped.`
+  Acceptance: `Choose one executable backend/API or public-export leaf from the remaining roadmap-aligned frontier before any implementation/test/source edits. The selection must record evidence, scope, non-goals, verification plan, and an exact child implementation owner.`
+  Verification: `pending selection`
   Commit: `pending`
 
 ## Current Frontier
@@ -1130,7 +1138,8 @@ items named in the 2026-06-05 remaining-work inventory.
 | 110 | `BACKEND-API-VALIDATION-FRONTIER.53` | `done` | Selected symbol-contract enum map value schemas after runtime and contract evidence showed the public enums map still lacks bounded nested enum value/member-payload metadata. |
 | 111 | `BACKEND-API-VALIDATION-FRONTIER.53.1` | `done` | Published symbol-contract enum value-kind families for `semantic.symbol_contract.enums` and the intent-HIR alias without widening type/package-import internals or full normalized semantic export stabilization. |
 | 112 | `BACKEND-API-VALIDATION-FRONTIER.54` | `done` | Selected symbol-contract type-entry schemas after runtime and contract evidence showed the public types map still lacks bounded recursive type-entry metadata. |
-| 113 | `BACKEND-API-VALIDATION-FRONTIER.54.1` | `active` | Publish symbol-contract type-entry schemas for `semantic.symbol_contract.types` and the intent-HIR alias before any package-import internals or full normalized semantic export stabilization. |
+| 113 | `BACKEND-API-VALIDATION-FRONTIER.54.1` | `done` | Published bounded recursive symbol-contract type-entry schemas for `semantic.symbol_contract.types` and the intent-HIR alias before any package-import internals or full normalized semantic export stabilization. |
+| 114 | `BACKEND-API-VALIDATION-FRONTIER.55` | `active` | Select the next exact backend/API or public-export edge after symbol-contract type-entry schemas shipped. |
 
 ## Decisions
 
@@ -1264,6 +1273,7 @@ items named in the 2026-06-05 remaining-work inventory.
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.53` | Selection audit/read of `docs/book/src/14-feature-backlog.md`, `docs/book/src/11-extensions-and-embedding.md`, `README.md`, `KNOWLEDGE_MAP.md`, `perl/FSM/Support/NormalizedSemanticSymbolContract.pm`, `perl/FSM/Package/Symbols.pm`, `perl/FSM/Composition/TopSymbols.pm`, `t/277-direct-symbol-contract-forward-ir.t`, `t/278-composition-symbol-contract-forward-ir.t`, `t/279-declarative-scalar-types.t`, `t/335-normalized-semantic-symbol-contract.t`, and `t/corpus/direct_size_expression_widths.fsm`; strict normalized semantic JSON probe over `t/corpus/direct_size_expression_widths.fsm` showed `semantic.symbol_contract.enums` emits `{"width_e":{"FLAG":1}}`, with `types` empty and `package_imports` empty for that fixture; focused direct/composition/type/symbol-contract prove bundle; `scripts/check_memory_architecture.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; selected symbol-contract enum map value schemas for `.53.1` |
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.53.1` | `perl -Iperl -c perl/FSM/Support/NormalizedSemanticSymbolContract.pm`; `perl -Iperl -c perl/FSM/Support/NormalizedSemanticIntentHIRContract.pm`; `perl -Iperl -c perl/FSM/Support/NormalizedSemanticForwardIRContract.pm`; `perl -Iperl -c perl/FSM/Support/NormalizedSemanticPayloadContract.pm`; `perl -Iperl -c perl/FSM/Support/NormalizedSemanticReportContract.pm`; edited-test syntax checks; focused normalized semantic symbol-enum schema prove bundle; broader normalized semantic contract/runtime prove bundle; manifest runtime prove bundle; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; symbol-contract enum value-kind schemas shipped through symbol, intent-HIR, forward-IR, payload/report, manifest, docs, knowledge-map, defensive-copy audits, and runtime schema coverage; activated `.54` |
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.54` | Selection audit/read of `docs/book/src/14-feature-backlog.md`, `docs/book/src/11-extensions-and-embedding.md`, `docs/book/src/04-symbols-types-and-imports.md`, `README.md`, `KNOWLEDGE_MAP.md`, `perl/FSM/Support/NormalizedSemanticSymbolContract.pm`, `perl/FSM/Package/Symbols.pm`, `perl/FSM/Package/DeclarativeTypeSupport.pm`, `perl/FSM/Package/DeclarativeTypeResolver.pm`, `t/277-direct-symbol-contract-forward-ir.t`, `t/278-composition-symbol-contract-forward-ir.t`, `t/279-declarative-scalar-types.t`, `t/335-normalized-semantic-symbol-contract.t`, and `t/354-normalized-semantic-child-runtime-contract-audit.t`; strict temporary normalized semantic JSON probe showed `semantic.symbol_contract.types` emits scalar entries with `kind`, `signed`, `width`, and optional `state_model`, plus aggregate entries with recursive `items` or `members`/`member_order`; `prove -Iperl t/277-direct-symbol-contract-forward-ir.t t/278-composition-symbol-contract-forward-ir.t t/279-declarative-scalar-types.t t/335-normalized-semantic-symbol-contract.t t/354-normalized-semantic-child-runtime-contract-audit.t`; `scripts/check_memory_architecture.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; selected symbol-contract type-entry schemas for `.54.1` |
+| `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.54.1` | `perl -Iperl -c perl/FSM/Support/NormalizedSemanticSymbolContract.pm`; `perl -Iperl -c perl/FSM/Support/NormalizedSemanticIntentHIRContract.pm`; `perl -Iperl -c perl/FSM/Support/NormalizedSemanticForwardIRContract.pm`; `perl -Iperl -c perl/FSM/Support/NormalizedSemanticPayloadContract.pm`; `perl -Iperl -c perl/FSM/Support/NormalizedSemanticReportContract.pm`; edited-test syntax checks; `prove -Iperl t/335-normalized-semantic-symbol-contract.t t/339-normalized-semantic-intent-hir-contract.t t/334-normalized-semantic-forward-ir-contract.t t/330-normalized-semantic-payload-contract.t t/311-normalized-semantic-report-contract.t t/297-capability-manifest.t t/354-normalized-semantic-child-runtime-contract-audit.t t/442-normalized-semantic-payload-contract-defensive-copy-boundary-audit.t t/443-normalized-semantic-report-contract-defensive-copy-boundary-audit.t t/472-normalized-semantic-symbol-contract-defensive-copy-boundary-audit.t t/1023-normalized-semantic-symbol-contract-full-surface-json-roundtrip-audit.t t/1024-normalized-semantic-symbol-contract-full-surface-defensive-copy-audit.t`; broader normalized semantic full-surface/runtime prove bundle; manifest runtime prove bundle; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; symbol-contract type-entry schemas shipped through symbol, intent-HIR, forward-IR, payload/report, manifest, docs, knowledge-map, defensive-copy audits, and runtime schema coverage; activated `.55` |
 
 ## Commit Log
 
@@ -1381,6 +1391,7 @@ items named in the 2026-06-05 remaining-work inventory.
 | `BACKEND-API-VALIDATION-FRONTIER.53` | `BACKEND-API-VALIDATION-FRONTIER.53: select symbol enum schema` | selected `.53.1` |
 | `BACKEND-API-VALIDATION-FRONTIER.53.1` | `BACKEND-API-VALIDATION-FRONTIER.53.1: ship symbol enum schema` | this slice; activates `.54` |
 | `BACKEND-API-VALIDATION-FRONTIER.54` | `BACKEND-API-VALIDATION-FRONTIER.54: select symbol type schema` | selected `.54.1` |
+| `BACKEND-API-VALIDATION-FRONTIER.54.1` | `BACKEND-API-VALIDATION-FRONTIER.54.1: ship symbol type schema` | this slice; activates `.55` |
 
 ## Changelog
 
@@ -1965,3 +1976,10 @@ items named in the 2026-06-05 remaining-work inventory.
   list/record entries while the normalized semantic contract still had no
   bounded recursive type-entry schema metadata. Activated `.54.1` before any
   implementation/test/source edits.
+- `2026-06-06`: Completed `.54.1`; published bounded recursive
+  symbol-contract type-entry schema metadata for
+  `semantic.symbol_contract.types` and
+  `semantic.forward_ir.intent_hir.symbol_contract.types`. Scalar entries now
+  advertise `kind`, `signed`, `width`, and optional `state_model`; aggregate
+  entries advertise recursive `items` or `members` plus `member_order`.
+  Activated `.55` to select the next backend/API/public-export edge.

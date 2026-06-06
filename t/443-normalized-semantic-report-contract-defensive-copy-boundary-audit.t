@@ -64,6 +64,12 @@ use FSM::Support::NormalizedSemanticReportContract qw(
     normalized_semantic_forward_ir_intent_hir_symbol_contract_constant_value_entry_keys
     normalized_semantic_forward_ir_intent_hir_symbol_contract_enum_entry_value_kinds
     normalized_semantic_forward_ir_intent_hir_symbol_contract_enum_member_value_kinds
+    normalized_semantic_forward_ir_intent_hir_symbol_contract_type_aggregate_value_kinds
+    normalized_semantic_forward_ir_intent_hir_symbol_contract_type_entry_keys
+    normalized_semantic_forward_ir_intent_hir_symbol_contract_type_list_extension_keys
+    normalized_semantic_forward_ir_intent_hir_symbol_contract_type_record_extension_keys
+    normalized_semantic_forward_ir_intent_hir_symbol_contract_type_scalar_value_kinds
+    normalized_semantic_forward_ir_intent_hir_symbol_contract_type_state_model_extension_keys
     normalized_semantic_forward_ir_intent_hir_optional_composition_keys
     normalized_semantic_forward_ir_keys
     normalized_semantic_forward_ir_lowered_rtl_ir_keys
@@ -120,6 +126,12 @@ use FSM::Support::NormalizedSemanticReportContract qw(
     normalized_semantic_symbol_contract_enum_entry_value_kinds
     normalized_semantic_symbol_contract_enum_member_value_kinds
     normalized_semantic_symbol_contract_keys
+    normalized_semantic_symbol_contract_type_aggregate_value_kinds
+    normalized_semantic_symbol_contract_type_entry_keys
+    normalized_semantic_symbol_contract_type_list_extension_keys
+    normalized_semantic_symbol_contract_type_record_extension_keys
+    normalized_semantic_symbol_contract_type_scalar_value_kinds
+    normalized_semantic_symbol_contract_type_state_model_extension_keys
     normalized_semantic_system_contract_keys
 );
 
@@ -306,6 +318,30 @@ subtest 'normalized semantic report helper builders return fresh nested structur
             build => \&normalized_semantic_forward_ir_intent_hir_symbol_contract_constant_list_value_extension_keys,
         },
         {
+            label => 'forward_ir_intent_hir_symbol_contract_type_entry_keys',
+            build => \&normalized_semantic_forward_ir_intent_hir_symbol_contract_type_entry_keys,
+        },
+        {
+            label => 'forward_ir_intent_hir_symbol_contract_type_scalar_value_kinds',
+            build => \&normalized_semantic_forward_ir_intent_hir_symbol_contract_type_scalar_value_kinds,
+        },
+        {
+            label => 'forward_ir_intent_hir_symbol_contract_type_aggregate_value_kinds',
+            build => \&normalized_semantic_forward_ir_intent_hir_symbol_contract_type_aggregate_value_kinds,
+        },
+        {
+            label => 'forward_ir_intent_hir_symbol_contract_type_state_model_extension_keys',
+            build => \&normalized_semantic_forward_ir_intent_hir_symbol_contract_type_state_model_extension_keys,
+        },
+        {
+            label => 'forward_ir_intent_hir_symbol_contract_type_list_extension_keys',
+            build => \&normalized_semantic_forward_ir_intent_hir_symbol_contract_type_list_extension_keys,
+        },
+        {
+            label => 'forward_ir_intent_hir_symbol_contract_type_record_extension_keys',
+            build => \&normalized_semantic_forward_ir_intent_hir_symbol_contract_type_record_extension_keys,
+        },
+        {
             label => 'forward_ir_lowered_rtl_ir_keys',
             build => \&normalized_semantic_forward_ir_lowered_rtl_ir_keys,
         },
@@ -470,6 +506,30 @@ subtest 'normalized semantic report helper builders return fresh nested structur
             build => \&normalized_semantic_symbol_contract_constant_list_value_extension_keys,
         },
         {
+            label => 'symbol_contract_type_entry_keys',
+            build => \&normalized_semantic_symbol_contract_type_entry_keys,
+        },
+        {
+            label => 'symbol_contract_type_scalar_value_kinds',
+            build => \&normalized_semantic_symbol_contract_type_scalar_value_kinds,
+        },
+        {
+            label => 'symbol_contract_type_aggregate_value_kinds',
+            build => \&normalized_semantic_symbol_contract_type_aggregate_value_kinds,
+        },
+        {
+            label => 'symbol_contract_type_state_model_extension_keys',
+            build => \&normalized_semantic_symbol_contract_type_state_model_extension_keys,
+        },
+        {
+            label => 'symbol_contract_type_list_extension_keys',
+            build => \&normalized_semantic_symbol_contract_type_list_extension_keys,
+        },
+        {
+            label => 'symbol_contract_type_record_extension_keys',
+            build => \&normalized_semantic_symbol_contract_type_record_extension_keys,
+        },
+        {
             label => 'composition_keys',
             build => \&normalized_semantic_composition_keys,
         },
@@ -602,6 +662,12 @@ subtest 'fresh normalized semantic report maps stay aligned with helper families
     is_deeply($family_map->{symbol_contract_constant_list_value_extension_keys}, normalized_semantic_symbol_contract_constant_list_value_extension_keys(), 'symbol-contract list constant value extension family matches helper');
     is_deeply($family_map->{symbol_contract_enum_entry_value_kinds}, normalized_semantic_symbol_contract_enum_entry_value_kinds(), 'symbol-contract enum entry value-kind family matches helper');
     is_deeply($family_map->{symbol_contract_enum_member_value_kinds}, normalized_semantic_symbol_contract_enum_member_value_kinds(), 'symbol-contract enum member value-kind family matches helper');
+    is_deeply($family_map->{symbol_contract_type_entry_keys}, normalized_semantic_symbol_contract_type_entry_keys(), 'symbol-contract type entry family matches helper');
+    is_deeply($family_map->{symbol_contract_type_scalar_value_kinds}, normalized_semantic_symbol_contract_type_scalar_value_kinds(), 'symbol-contract type scalar value-kind family matches helper');
+    is_deeply($family_map->{symbol_contract_type_aggregate_value_kinds}, normalized_semantic_symbol_contract_type_aggregate_value_kinds(), 'symbol-contract type aggregate value-kind family matches helper');
+    is_deeply($family_map->{symbol_contract_type_state_model_extension_keys}, normalized_semantic_symbol_contract_type_state_model_extension_keys(), 'symbol-contract type state-model extension family matches helper');
+    is_deeply($family_map->{symbol_contract_type_list_extension_keys}, normalized_semantic_symbol_contract_type_list_extension_keys(), 'symbol-contract type list extension family matches helper');
+    is_deeply($family_map->{symbol_contract_type_record_extension_keys}, normalized_semantic_symbol_contract_type_record_extension_keys(), 'symbol-contract type record extension family matches helper');
     is_deeply($family_map->{composition_child_entry_keys}, normalized_semantic_composition_child_entry_keys(), 'composition child entry family matches helper');
     is_deeply($family_map->{composition_child_parameter_override_entry_keys}, normalized_semantic_composition_child_parameter_override_entry_keys(), 'composition child parameter-override core entry family matches helper');
     is_deeply($family_map->{composition_child_parameter_override_raw_value_extension_keys}, normalized_semantic_composition_child_parameter_override_raw_value_extension_keys(), 'composition child parameter-override raw-value extension family matches helper');
@@ -661,6 +727,30 @@ subtest 'fresh normalized semantic report maps stay aligned with helper families
         [
             'success_forward_ir_intent_hir_symbol_contract_enum_member_value_kinds',
             normalized_semantic_forward_ir_intent_hir_symbol_contract_enum_member_value_kinds(),
+        ],
+        [
+            'success_forward_ir_intent_hir_symbol_contract_type_entry_keys',
+            normalized_semantic_forward_ir_intent_hir_symbol_contract_type_entry_keys(),
+        ],
+        [
+            'success_forward_ir_intent_hir_symbol_contract_type_scalar_value_kinds',
+            normalized_semantic_forward_ir_intent_hir_symbol_contract_type_scalar_value_kinds(),
+        ],
+        [
+            'success_forward_ir_intent_hir_symbol_contract_type_aggregate_value_kinds',
+            normalized_semantic_forward_ir_intent_hir_symbol_contract_type_aggregate_value_kinds(),
+        ],
+        [
+            'success_forward_ir_intent_hir_symbol_contract_type_state_model_extension_keys',
+            normalized_semantic_forward_ir_intent_hir_symbol_contract_type_state_model_extension_keys(),
+        ],
+        [
+            'success_forward_ir_intent_hir_symbol_contract_type_list_extension_keys',
+            normalized_semantic_forward_ir_intent_hir_symbol_contract_type_list_extension_keys(),
+        ],
+        [
+            'success_forward_ir_intent_hir_symbol_contract_type_record_extension_keys',
+            normalized_semantic_forward_ir_intent_hir_symbol_contract_type_record_extension_keys(),
         ],
         [
             'success_forward_ir_intent_hir_composition_child_entry_keys',

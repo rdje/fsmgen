@@ -47,6 +47,12 @@ use FSM::Support::NormalizedSemanticIntentHIRContract qw(
     normalized_semantic_intent_hir_symbol_contract_constant_value_entry_keys
     normalized_semantic_intent_hir_symbol_contract_enum_entry_value_kinds
     normalized_semantic_intent_hir_symbol_contract_enum_member_value_kinds
+    normalized_semantic_intent_hir_symbol_contract_type_aggregate_value_kinds
+    normalized_semantic_intent_hir_symbol_contract_type_entry_keys
+    normalized_semantic_intent_hir_symbol_contract_type_list_extension_keys
+    normalized_semantic_intent_hir_symbol_contract_type_record_extension_keys
+    normalized_semantic_intent_hir_symbol_contract_type_scalar_value_kinds
+    normalized_semantic_intent_hir_symbol_contract_type_state_model_extension_keys
 );
 use FSM::Support::NormalizedSemanticSymbolContract qw(
     normalized_semantic_symbol_contract_constant_list_value_extension_keys
@@ -54,6 +60,12 @@ use FSM::Support::NormalizedSemanticSymbolContract qw(
     normalized_semantic_symbol_contract_constant_value_entry_keys
     normalized_semantic_symbol_contract_enum_entry_value_kinds
     normalized_semantic_symbol_contract_enum_member_value_kinds
+    normalized_semantic_symbol_contract_type_aggregate_value_kinds
+    normalized_semantic_symbol_contract_type_entry_keys
+    normalized_semantic_symbol_contract_type_list_extension_keys
+    normalized_semantic_symbol_contract_type_record_extension_keys
+    normalized_semantic_symbol_contract_type_scalar_value_kinds
+    normalized_semantic_symbol_contract_type_state_model_extension_keys
 );
 
 subtest 'contract exposes the bounded normalized semantic intent-hir object' => sub {
@@ -116,6 +128,36 @@ subtest 'contract exposes the bounded normalized semantic intent-hir object' => 
             'symbol_contract_enum_member_value_kinds',
             normalized_semantic_intent_hir_symbol_contract_enum_member_value_kinds(),
             normalized_semantic_symbol_contract_enum_member_value_kinds(),
+        ],
+        [
+            'symbol_contract_type_entry_keys',
+            normalized_semantic_intent_hir_symbol_contract_type_entry_keys(),
+            normalized_semantic_symbol_contract_type_entry_keys(),
+        ],
+        [
+            'symbol_contract_type_scalar_value_kinds',
+            normalized_semantic_intent_hir_symbol_contract_type_scalar_value_kinds(),
+            normalized_semantic_symbol_contract_type_scalar_value_kinds(),
+        ],
+        [
+            'symbol_contract_type_aggregate_value_kinds',
+            normalized_semantic_intent_hir_symbol_contract_type_aggregate_value_kinds(),
+            normalized_semantic_symbol_contract_type_aggregate_value_kinds(),
+        ],
+        [
+            'symbol_contract_type_state_model_extension_keys',
+            normalized_semantic_intent_hir_symbol_contract_type_state_model_extension_keys(),
+            normalized_semantic_symbol_contract_type_state_model_extension_keys(),
+        ],
+        [
+            'symbol_contract_type_list_extension_keys',
+            normalized_semantic_intent_hir_symbol_contract_type_list_extension_keys(),
+            normalized_semantic_symbol_contract_type_list_extension_keys(),
+        ],
+        [
+            'symbol_contract_type_record_extension_keys',
+            normalized_semantic_intent_hir_symbol_contract_type_record_extension_keys(),
+            normalized_semantic_symbol_contract_type_record_extension_keys(),
         ],
         [
             'composition_child_entry_keys',

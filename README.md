@@ -829,18 +829,17 @@ The symbol-contract enum public-export hardening edge now publishes enum
 value-kind families for `semantic.symbol_contract.enums` and
 `semantic.forward_ir.intent_hir.symbol_contract.enums`: enum entries are
 member-payload maps, and dynamic enum members carry scalar payloads.
-The selected symbol-contract type public-export hardening edge will publish
-bounded recursive type-entry schema metadata for `semantic.symbol_contract.types`
-and `semantic.forward_ir.intent_hir.symbol_contract.types`: scalar entries carry
+The symbol-contract type public-export hardening edge now publishes bounded
+recursive type-entry schema metadata for `semantic.symbol_contract.types` and
+`semantic.forward_ir.intent_hir.symbol_contract.types`: scalar entries carry
 `kind`, `signed`, `width`, and optional `state_model`, while aggregate entries
 carry recursive `items` or `members` plus `member_order`.
 The current active backend/API frontier is
-`BACKEND-API-VALIDATION-FRONTIER.54.1`: publish symbol-contract type-entry
-schema metadata for `semantic.symbol_contract.types` and
-`semantic.forward_ir.intent_hir.symbol_contract.types`. Package-import
-internals, already bounded constant/enum internals, unrelated forward-IR
-payloads, and full normalized semantic export stabilization remain out of
-scope.
+`BACKEND-API-VALIDATION-FRONTIER.55`: select the next exact backend/API or
+public-export edge after the shipped symbol-contract type-entry schemas.
+Package-import internals, already bounded constant/enum/type internals,
+unrelated forward-IR payloads, and full normalized semantic export
+stabilization remain out of scope until a later exact leaf owns them.
 The manifest is still not a full normalized semantic export stabilization
 promise.
 The manifest-facing stable diagnostic-code registry now has its own explicit

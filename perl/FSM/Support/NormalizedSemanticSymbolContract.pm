@@ -21,6 +21,12 @@ our @EXPORT_OK = qw(
     normalized_semantic_symbol_contract_symbol_map_keys
     normalized_semantic_symbol_contract_symbol_name_keys
     normalized_semantic_symbol_contract_package_import_keys
+    normalized_semantic_symbol_contract_type_aggregate_value_kinds
+    normalized_semantic_symbol_contract_type_entry_keys
+    normalized_semantic_symbol_contract_type_list_extension_keys
+    normalized_semantic_symbol_contract_type_record_extension_keys
+    normalized_semantic_symbol_contract_type_scalar_value_kinds
+    normalized_semantic_symbol_contract_type_state_model_extension_keys
 );
 
 sub normalized_semantic_symbol_contract_source {
@@ -58,6 +64,13 @@ sub build_normalized_semantic_symbol_contract {
             normalized_semantic_symbol_contract_constant_list_value_extension_keys(),
         enum_entry_value_kinds => normalized_semantic_symbol_contract_enum_entry_value_kinds(),
         enum_member_value_kinds => normalized_semantic_symbol_contract_enum_member_value_kinds(),
+        type_entry_keys => normalized_semantic_symbol_contract_type_entry_keys(),
+        type_scalar_value_kinds => normalized_semantic_symbol_contract_type_scalar_value_kinds(),
+        type_aggregate_value_kinds => normalized_semantic_symbol_contract_type_aggregate_value_kinds(),
+        type_state_model_extension_keys =>
+            normalized_semantic_symbol_contract_type_state_model_extension_keys(),
+        type_list_extension_keys => normalized_semantic_symbol_contract_type_list_extension_keys(),
+        type_record_extension_keys => normalized_semantic_symbol_contract_type_record_extension_keys(),
         package_import_keys => normalized_semantic_symbol_contract_package_import_keys(),
         presence_key_family_map => normalized_semantic_symbol_contract_presence_key_family_map(),
         optional_for_symbol_free_sources => JSON::PP::true,
@@ -67,8 +80,8 @@ sub build_normalized_semantic_symbol_contract {
             'The bounded public promise covers the published count, name-list, nested map, scalar-leaf, aggregate-path, and package-import top-level keys exported for declared symbols.',
             'The constants map value key families describe the currently emitted scalar/list constant value variants only: every value has `kind`, scalar values add `payload`, and list values add `items`.',
             'The enum map value-kind families describe the currently emitted `enums` shape: each enum entry value is a member-payload map, and each dynamic member-name value is a scalar payload.',
-            'Do not treat every nested scalar/list/hash field inside `types` as frozen unless it is separately documented and regression-backed.',
-            'Use the grouped presence_key_family_map to discover the bounded symbol-contract summary, name-list, nested-map, constant-detail, constant-value, enum-value, and package-import key families without collecting those key-family lists separately.',
+            'The type-entry key families describe the currently emitted recursive `types` shape: every advertised entry carries `kind`, `signed`, and `width`; scalar bit/bits entries may add `state_model`; list entries add recursive `items`; record entries add recursive `members` plus `member_order`.',
+            'Use the grouped presence_key_family_map to discover the bounded symbol-contract summary, name-list, nested-map, constant-detail, constant-value, enum-value, type-entry, and package-import key families without collecting those key-family lists separately.',
         ],
     };
 }
@@ -172,6 +185,59 @@ sub normalized_semantic_symbol_contract_enum_member_value_kinds {
     ];
 }
 
+sub normalized_semantic_symbol_contract_type_entry_keys {
+    return [
+        qw(
+            kind
+            signed
+            width
+        ),
+    ];
+}
+
+sub normalized_semantic_symbol_contract_type_scalar_value_kinds {
+    return [
+        qw(
+            bit
+            bits
+        ),
+    ];
+}
+
+sub normalized_semantic_symbol_contract_type_aggregate_value_kinds {
+    return [
+        qw(
+            list
+            record
+        ),
+    ];
+}
+
+sub normalized_semantic_symbol_contract_type_state_model_extension_keys {
+    return [
+        qw(
+            state_model
+        ),
+    ];
+}
+
+sub normalized_semantic_symbol_contract_type_list_extension_keys {
+    return [
+        qw(
+            items
+        ),
+    ];
+}
+
+sub normalized_semantic_symbol_contract_type_record_extension_keys {
+    return [
+        qw(
+            member_order
+            members
+        ),
+    ];
+}
+
 sub normalized_semantic_symbol_contract_package_import_keys {
     return [
         qw(
@@ -194,6 +260,12 @@ sub normalized_semantic_symbol_contract_presence_key_family_map {
             normalized_semantic_symbol_contract_constant_list_value_extension_keys(),
         enum_entry_value_kinds => normalized_semantic_symbol_contract_enum_entry_value_kinds(),
         enum_member_value_kinds => normalized_semantic_symbol_contract_enum_member_value_kinds(),
+        type_entry_keys => normalized_semantic_symbol_contract_type_entry_keys(),
+        type_scalar_value_kinds => normalized_semantic_symbol_contract_type_scalar_value_kinds(),
+        type_aggregate_value_kinds => normalized_semantic_symbol_contract_type_aggregate_value_kinds(),
+        type_state_model_extension_keys => normalized_semantic_symbol_contract_type_state_model_extension_keys(),
+        type_list_extension_keys => normalized_semantic_symbol_contract_type_list_extension_keys(),
+        type_record_extension_keys => normalized_semantic_symbol_contract_type_record_extension_keys(),
         package_import_keys => normalized_semantic_symbol_contract_package_import_keys(),
     };
 }

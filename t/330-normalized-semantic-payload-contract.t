@@ -60,6 +60,12 @@ use FSM::Support::NormalizedSemanticForwardIRContract qw(
     normalized_semantic_forward_ir_intent_hir_symbol_contract_constant_value_entry_keys
     normalized_semantic_forward_ir_intent_hir_symbol_contract_enum_entry_value_kinds
     normalized_semantic_forward_ir_intent_hir_symbol_contract_enum_member_value_kinds
+    normalized_semantic_forward_ir_intent_hir_symbol_contract_type_aggregate_value_kinds
+    normalized_semantic_forward_ir_intent_hir_symbol_contract_type_entry_keys
+    normalized_semantic_forward_ir_intent_hir_symbol_contract_type_list_extension_keys
+    normalized_semantic_forward_ir_intent_hir_symbol_contract_type_record_extension_keys
+    normalized_semantic_forward_ir_intent_hir_symbol_contract_type_scalar_value_kinds
+    normalized_semantic_forward_ir_intent_hir_symbol_contract_type_state_model_extension_keys
     normalized_semantic_forward_ir_intent_hir_optional_composition_keys
     normalized_semantic_forward_ir_intent_hir_presence_keys
     normalized_semantic_forward_ir_lowered_rtl_ir_contract_source
@@ -121,6 +127,12 @@ use FSM::Support::NormalizedSemanticSymbolContract qw(
     normalized_semantic_symbol_contract_constant_value_entry_keys
     normalized_semantic_symbol_contract_enum_entry_value_kinds
     normalized_semantic_symbol_contract_enum_member_value_kinds
+    normalized_semantic_symbol_contract_type_aggregate_value_kinds
+    normalized_semantic_symbol_contract_type_entry_keys
+    normalized_semantic_symbol_contract_type_list_extension_keys
+    normalized_semantic_symbol_contract_type_record_extension_keys
+    normalized_semantic_symbol_contract_type_scalar_value_kinds
+    normalized_semantic_symbol_contract_type_state_model_extension_keys
     normalized_semantic_symbol_contract_source
     normalized_semantic_symbol_contract_presence_keys
 );
@@ -177,6 +189,12 @@ use FSM::Support::NormalizedSemanticPayloadContract qw(
     normalized_semantic_payload_forward_ir_intent_hir_symbol_contract_constant_value_entry_keys
     normalized_semantic_payload_forward_ir_intent_hir_symbol_contract_enum_entry_value_kinds
     normalized_semantic_payload_forward_ir_intent_hir_symbol_contract_enum_member_value_kinds
+    normalized_semantic_payload_forward_ir_intent_hir_symbol_contract_type_aggregate_value_kinds
+    normalized_semantic_payload_forward_ir_intent_hir_symbol_contract_type_entry_keys
+    normalized_semantic_payload_forward_ir_intent_hir_symbol_contract_type_list_extension_keys
+    normalized_semantic_payload_forward_ir_intent_hir_symbol_contract_type_record_extension_keys
+    normalized_semantic_payload_forward_ir_intent_hir_symbol_contract_type_scalar_value_kinds
+    normalized_semantic_payload_forward_ir_intent_hir_symbol_contract_type_state_model_extension_keys
     normalized_semantic_payload_forward_ir_intent_hir_optional_composition_keys
     normalized_semantic_payload_forward_ir_lowered_rtl_ir_keys
     normalized_semantic_payload_forward_ir_lowered_rtl_ir_composition_shared_datapath_aggregate_enable_contributor_entry_keys
@@ -222,6 +240,12 @@ use FSM::Support::NormalizedSemanticPayloadContract qw(
     normalized_semantic_payload_symbol_contract_constant_value_entry_keys
     normalized_semantic_payload_symbol_contract_enum_entry_value_kinds
     normalized_semantic_payload_symbol_contract_enum_member_value_kinds
+    normalized_semantic_payload_symbol_contract_type_aggregate_value_kinds
+    normalized_semantic_payload_symbol_contract_type_entry_keys
+    normalized_semantic_payload_symbol_contract_type_list_extension_keys
+    normalized_semantic_payload_symbol_contract_type_record_extension_keys
+    normalized_semantic_payload_symbol_contract_type_scalar_value_kinds
+    normalized_semantic_payload_symbol_contract_type_state_model_extension_keys
     normalized_semantic_payload_symbol_contract_keys
 );
 
@@ -1074,6 +1098,42 @@ subtest 'contract exposes the bounded normalized semantic payload object' => sub
             normalized_semantic_symbol_contract_enum_member_value_kinds(),
             'enum member value kinds',
         ],
+        [
+            'symbol_contract_type_entry_keys',
+            normalized_semantic_payload_symbol_contract_type_entry_keys(),
+            normalized_semantic_symbol_contract_type_entry_keys(),
+            'type entry keys',
+        ],
+        [
+            'symbol_contract_type_scalar_value_kinds',
+            normalized_semantic_payload_symbol_contract_type_scalar_value_kinds(),
+            normalized_semantic_symbol_contract_type_scalar_value_kinds(),
+            'scalar type value kinds',
+        ],
+        [
+            'symbol_contract_type_aggregate_value_kinds',
+            normalized_semantic_payload_symbol_contract_type_aggregate_value_kinds(),
+            normalized_semantic_symbol_contract_type_aggregate_value_kinds(),
+            'aggregate type value kinds',
+        ],
+        [
+            'symbol_contract_type_state_model_extension_keys',
+            normalized_semantic_payload_symbol_contract_type_state_model_extension_keys(),
+            normalized_semantic_symbol_contract_type_state_model_extension_keys(),
+            'type state-model extension keys',
+        ],
+        [
+            'symbol_contract_type_list_extension_keys',
+            normalized_semantic_payload_symbol_contract_type_list_extension_keys(),
+            normalized_semantic_symbol_contract_type_list_extension_keys(),
+            'type list extension keys',
+        ],
+        [
+            'symbol_contract_type_record_extension_keys',
+            normalized_semantic_payload_symbol_contract_type_record_extension_keys(),
+            normalized_semantic_symbol_contract_type_record_extension_keys(),
+            'type record extension keys',
+        ],
     ) {
         my ($field, $payload_keys, $symbol_keys, $label) = @{$case};
 
@@ -1335,6 +1395,36 @@ sub intent_hir_alias_cases {
             'forward_ir_intent_hir_symbol_contract_enum_member_value_kinds',
             normalized_semantic_payload_forward_ir_intent_hir_symbol_contract_enum_member_value_kinds(),
             normalized_semantic_forward_ir_intent_hir_symbol_contract_enum_member_value_kinds(),
+        ],
+        [
+            'forward_ir_intent_hir_symbol_contract_type_entry_keys',
+            normalized_semantic_payload_forward_ir_intent_hir_symbol_contract_type_entry_keys(),
+            normalized_semantic_forward_ir_intent_hir_symbol_contract_type_entry_keys(),
+        ],
+        [
+            'forward_ir_intent_hir_symbol_contract_type_scalar_value_kinds',
+            normalized_semantic_payload_forward_ir_intent_hir_symbol_contract_type_scalar_value_kinds(),
+            normalized_semantic_forward_ir_intent_hir_symbol_contract_type_scalar_value_kinds(),
+        ],
+        [
+            'forward_ir_intent_hir_symbol_contract_type_aggregate_value_kinds',
+            normalized_semantic_payload_forward_ir_intent_hir_symbol_contract_type_aggregate_value_kinds(),
+            normalized_semantic_forward_ir_intent_hir_symbol_contract_type_aggregate_value_kinds(),
+        ],
+        [
+            'forward_ir_intent_hir_symbol_contract_type_state_model_extension_keys',
+            normalized_semantic_payload_forward_ir_intent_hir_symbol_contract_type_state_model_extension_keys(),
+            normalized_semantic_forward_ir_intent_hir_symbol_contract_type_state_model_extension_keys(),
+        ],
+        [
+            'forward_ir_intent_hir_symbol_contract_type_list_extension_keys',
+            normalized_semantic_payload_forward_ir_intent_hir_symbol_contract_type_list_extension_keys(),
+            normalized_semantic_forward_ir_intent_hir_symbol_contract_type_list_extension_keys(),
+        ],
+        [
+            'forward_ir_intent_hir_symbol_contract_type_record_extension_keys',
+            normalized_semantic_payload_forward_ir_intent_hir_symbol_contract_type_record_extension_keys(),
+            normalized_semantic_forward_ir_intent_hir_symbol_contract_type_record_extension_keys(),
         ],
         [
             'forward_ir_intent_hir_composition_child_entry_keys',

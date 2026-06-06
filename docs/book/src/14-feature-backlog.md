@@ -4004,11 +4004,15 @@ member-payload maps, and dynamic enum members carry scalar payloads. Type
 nested schemas, package-import internals, already bounded constant internals,
 and full normalized semantic export stabilization remain out of scope.
 
-Current selected next edge: task-tree leaf
-`BACKEND-API-VALIDATION-FRONTIER.54.1` will publish bounded recursive
-type-entry schema metadata for `semantic.symbol_contract.types` and
+Shipped symbol-contract type export edge: task-tree leaf
+`BACKEND-API-VALIDATION-FRONTIER.54.1` publishes bounded recursive type-entry
+schema metadata for `semantic.symbol_contract.types` and
 `semantic.forward_ir.intent_hir.symbol_contract.types`. Scalar entries carry
 `kind`, `signed`, `width`, and optional `state_model`; aggregate entries carry
-recursive `items` or `members` plus `member_order`. Package-import internals,
-already bounded constant/enum internals, unrelated forward-IR payloads, and
-full normalized semantic export stabilization remain out of scope.
+recursive `items` or `members` plus `member_order`.
+
+Current active selector: task-tree leaf `BACKEND-API-VALIDATION-FRONTIER.55`
+selects the next exact backend/API or public-export edge. Package-import
+internals, already bounded constant/enum/type internals, unrelated forward-IR
+payloads, and full normalized semantic export stabilization remain out of
+scope until a later exact leaf owns them.
