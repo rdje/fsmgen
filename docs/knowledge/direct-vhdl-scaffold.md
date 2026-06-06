@@ -245,12 +245,12 @@ next-signal decimal-literal edge: an 8-bit signed interface output emits
 not claim broad expression-literal parity. The scaffold now lowers the adjacent
 signed vector output-port negative decimal-literal edge too: an 8-bit signed
 interface output assigned `-1` emits `OUT_next <= to_signed(-1, 8);` instead
-of failing at arithmetic expression `'-1'`. Active leaf
-`BACKEND-API-VALIDATION-FRONTIER.111.1` owns the adjacent non-signed vector
-output-port negative decimal-literal edge: a current 8-bit output probe lowers
-the VHDL target to `std_logic_vector(7 downto 0)` but fails before VHDL
-emission at arithmetic expression `'-1'`. The scaffold also lowers scalar
-output-port next-signal decimal literals: plain and signed one-bit output
+of failing at arithmetic expression `'-1'`. The scaffold now lowers the
+adjacent non-signed vector output-port negative decimal-literal edge as well:
+an 8-bit interface output assigned `-1` emits
+`OUT_next <= std_logic_vector(to_signed(-1, 8));` instead of failing at
+arithmetic expression `'-1'`. The scaffold also lowers scalar output-port
+next-signal decimal literals: plain and signed one-bit output
 targets lower to `std_logic` low-bit literals, so `2` emits
 `FLAG_next <= '0';` and `3` emits `FLAG_next <= '1';` instead of raw integer
 assignments. Scalar negative output literals remain deferred to a later exact

@@ -651,6 +651,8 @@ sub _sv_expr_to_vhdl ($expr, $ctx = {}) {
     }
     return 'to_signed(' . $trimmed . ', ' . _decl_width($target_decl) . ')'
         if $target_decl && !$target_decl->{scalar} && $target_decl->{signed} && $trimmed =~ /^-?\d+$/;
+    return 'std_logic_vector(to_signed(' . $trimmed . ', ' . _decl_width($target_decl) . '))'
+        if $target_decl && !$target_decl->{scalar} && !$target_decl->{signed} && $trimmed =~ /^-\d+$/;
     return 'std_logic_vector(to_unsigned(' . $trimmed . ', ' . _decl_width($target_decl) . '))'
         if $target_decl && !$target_decl->{scalar} && !$target_decl->{signed} && $trimmed =~ /^\d+$/;
 
