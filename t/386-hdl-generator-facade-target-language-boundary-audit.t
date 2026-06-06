@@ -192,6 +192,7 @@ subtest 'facade target_language option routes bounded composition VHDL scalar ge
     (module uart_tx)
     (params
       (WIDTH 16)
+      (RESET_VALUE 8'hA5)
     )
   )
   (?wiring:wiring
@@ -203,6 +204,7 @@ subtest 'facade target_language option routes bounded composition VHDL scalar ge
 (?rtlif:uart_tx
   (params
     (WIDTH 8)
+    (RESET_VALUE 8'h00)
   )
   clk:clock
   data_in<16:data
@@ -226,13 +228,13 @@ FSM
     );
     like(
         $vhdl_result->{hdl_code},
-        qr/\bu_uart\s+:\s+entity\s+work\.uart_tx\s+generic\s+map\s*\(\s*WIDTH\s+=>\s+16\s*\)\s+port\s+map\s*\(\s*clk\s+=>\s+clk,\s*data_in\s+=>\s+payload_in,\s*txd\s+=>\s+serial_out\s*\);/s,
-        'explicit VHDL facade generation emits the scalar integer generic map before the port map',
+        qr/\bu_uart\s+:\s+entity\s+work\.uart_tx\s+generic\s+map\s*\(\s*WIDTH\s+=>\s+16,\s*RESET_VALUE\s+=>\s+"10100101"\s*\)\s+port\s+map\s*\(\s*clk\s+=>\s+clk,\s*data_in\s+=>\s+payload_in,\s*txd\s+=>\s+serial_out\s*\);/s,
+        'explicit VHDL facade generation emits scalar integer and sized bitstring generic maps before the port map',
     );
     unlike(
         $vhdl_result->{hdl_code},
-        qr/\bmodule\b|\bassign\b|\bendmodule\b|\balways_(?:ff|comb)\b|\#\s*\(/s,
-        'explicit VHDL scalar generic-map facade generation does not leak SystemVerilog syntax',
+        qr/\bmodule\b|\bassign\b|\bendmodule\b|\balways_(?:ff|comb)\b|\#\s*\(|8'hA5/s,
+        'explicit VHDL scalar generic-map facade generation does not leak SystemVerilog syntax or generic literals',
     );
 };
 

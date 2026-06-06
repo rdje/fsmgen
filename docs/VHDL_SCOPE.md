@@ -61,10 +61,11 @@ This document defines the scoped R14 VHDL backend plan for FSMGen.
   generated-FSM scalar-autowire top in
   `t/corpus/implicit_composition_system_autowire.fsm`, plus the bounded APB/C4
   generated-FSM top in `fsm/apb_tb.fsm`. It also supports external-RTL scalar
-  integer generic maps. Broader generated-FSM/C4 composition VHDL beyond the
-  exact shipped fixtures, internal-net-heavy tops beyond APB, generic maps
-  beyond external-RTL scalar integer actuals, full aggregate VHDL record/array
-  lowering, broad
+  integer and multi-bit sized bitstring generic maps. Broader
+  generated-FSM/C4 composition VHDL beyond the exact shipped fixtures,
+  internal-net-heavy tops beyond APB, generic maps beyond external-RTL scalar
+  integer and multi-bit sized bitstring actuals, full aggregate VHDL
+  record/array lowering, broad
   expression parity, scalar division/modulo and broader scalar arithmetic,
   signed arithmetic operators beyond the shipped same-width vector arithmetic
   family, GHDL validation, packages, multi-clock domains, and full feature
@@ -85,7 +86,8 @@ This document defines the scoped R14 VHDL backend plan for FSMGen.
   vhdl` only for the C3 external-RTL literal/concat fixture, the explicit
   C1 standalone-DT passthrough fixture, and the C2 generated-FSM scalar
   autowire fixture, plus the APB/C4 generated-FSM fixture. The external-RTL
-  composition subset also accepts scalar integer generic maps. Other `?top` shapes
+  composition subset also accepts scalar integer and multi-bit sized bitstring
+  generic maps. Other `?top` shapes
   still parse into typed composition IR and then fail closed with the scoped
   composition target-support diagnostic.
 
@@ -107,8 +109,8 @@ The VHDL lane is intentionally narrow:
      `t/corpus/implicit_composition_system_autowire.fsm`, plus the APB/C4
      generated-FSM shape in `fsm/apb_tb.fsm`
    - Broader generated-FSM/C4 composition VHDL, internal nets beyond exact
-     owned fixtures, and generic maps beyond external-RTL scalar integer
-     actuals remain deferred
+     owned fixtures, and generic maps beyond external-RTL scalar integer and
+     multi-bit sized bitstring actuals remain deferred
 
 2. **Direct-root structural conversion from SystemVerilog**
    - Generate SystemVerilog through the existing direct backend
@@ -122,12 +124,12 @@ The VHDL lane is intentionally narrow:
    - Render VHDL concurrent auxiliary assignments, generated standalone-DT
      child VHDL segments for the bounded C1 leaf, generated-FSM child VHDL
      segments for the bounded C2 and APB/C4 leaves, scalar/vector structural
-     signals, VHDL port-map actuals, and scalar integer generic maps for
-     external RTL instances
+     signals, VHDL port-map actuals, and scalar integer / multi-bit sized
+     bitstring generic maps for external RTL instances
    - Reject generated-FSM child instances outside exact shipped or active
-     leaves, generic maps outside external-RTL scalar integer actuals, declared
-     aggregate structural types, structural nets outside exact scalar/vector
-     leaves, and non-VHDL auxiliary
+     leaves, generic maps outside external-RTL scalar integer and multi-bit
+     sized bitstring actuals, declared aggregate structural types, structural
+     nets outside exact scalar/vector leaves, and non-VHDL auxiliary
      assignments
 
 4. **Supported constructs in the first lane:**
@@ -222,8 +224,13 @@ The VHDL lane is intentionally narrow:
 - Shipped bounded external-RTL scalar integer generic-map lowering under
   `BACKEND-API-VALIDATION-FRONTIER.73.1`. VHDL structural tops now emit
   `generic map` blocks such as `WIDTH => 16` before an external RTL instance's
-  port map; generated-child, standalone-DT, vector/bitstring, aggregate, and
-  package-backed generic actuals remain deferred.
+  port map.
+- Shipped bounded external-RTL multi-bit sized bitstring generic-map actual
+  lowering under `BACKEND-API-VALIDATION-FRONTIER.74.1`. VHDL structural tops
+  now emit actuals such as `RESET_VALUE => "10100101"` for `8'hA5`;
+  generated-child, standalone-DT, scalar expressions, one-bit actuals that need
+  target-type discrimination, aggregate, and package-backed generic actuals
+  remain deferred.
 - Shipped the bounded C1 standalone-DT child composition VHDL top under
   `BACKEND-API-VALIDATION-FRONTIER.69.1`, limited to
   `t/corpus/standalone_dtc_explicit_system_autowire.fsm`. It emits the
@@ -240,8 +247,8 @@ The VHDL lane is intentionally narrow:
   VHDL-safe APB requester/completer child segments, vector APB structural
   signals, deterministic shared-datapath sink signals, and both generated child
   entity port maps. Broader generated-FSM/C4 composition VHDL, internal
-  nets/generic maps beyond the exact shipped scalar-integer external-RTL
-  generic-map fixture, full aggregate VHDL
+  nets/generic maps beyond the exact shipped external-RTL scalar-integer and
+  multi-bit sized-bitstring generic-map fixtures, full aggregate VHDL
   record/array lowering, broader expression parity, signed scalar
   division/modulo, and mixed signed/unsigned scalar arithmetic remain separate
   future edges.
@@ -264,7 +271,8 @@ The VHDL lane is intentionally narrow:
   bounded direct aggregate-output packed-vector lowering,
   bounded C3 external-RTL literal/concat composition VHDL structural-top
   generation,
-  bounded external-RTL scalar integer VHDL generic-map generation,
+  bounded external-RTL scalar integer and multi-bit sized bitstring VHDL
+  generic-map generation,
   bounded C1 standalone-DT and C2 generated-FSM composition VHDL
   structural-top generation,
   bounded APB/C4 generated-FSM composition VHDL structural-top generation,

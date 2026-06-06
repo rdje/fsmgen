@@ -340,8 +340,9 @@ generic maps.
 
 Current boundary: the Verilog-family backend lowers validated parameters and
 aggregate overrides to SystemVerilog `#(...)` instance parameters. VHDL now
-lowers bounded external-RTL scalar integer overrides to `generic map` actuals,
-such as `WIDTH => 16`, before the instance `port map`. The shipped composition
+lowers bounded external-RTL scalar integer and multi-bit sized bitstring
+overrides to `generic map` actuals, such as `WIDTH => 16` and
+`RESET_VALUE => "10100101"` for `8'hA5`, before the instance `port map`. The shipped composition
 VHDL tops are the bounded C3 external-RTL literal/concat fixture in
 `t/corpus/composition_intent_integer_literals.fsm` and the bounded C1
 standalone-DT passthrough fixture in
@@ -351,9 +352,9 @@ generated-FSM scalar-autowire fixture in
 generated-FSM fixture in `fsm/apb_tb.fsm`. Other `?top` VHDL shapes still
 parse into typed composition IR and then fail closed with the scoped
 target-support diagnostic. Generated-FSM and standalone-DT generic maps,
-vector/bitstring actuals, aggregate/list/record actuals, package-backed
-actuals, and APB/C4 generic-map shapes remain deferred until later exact leaves
-own those paths.
+scalar expressions, one-bit actuals that need target-type discrimination,
+aggregate/list/record actuals, package-backed actuals, and APB/C4 generic-map
+shapes remain deferred until later exact leaves own those paths.
 
 ### Broader Generated-Child Top Instantiation
 
@@ -3819,7 +3820,7 @@ generated-FSM scalar-autowire top for
 generated-FSM top for `fsm/apb_tb.fsm`.
 Still backlog beyond those exact owners: broader generated-FSM/C4 composition
 VHDL, internal-net-heavy composition tops beyond APB, composition generic maps
-beyond external-RTL scalar integer actuals,
+beyond external-RTL scalar integer and multi-bit sized bitstring actuals,
 aggregate VHDL record/array lowering, VHDL packages, multi-clock domains, GHDL
 validation, broad expression parity, signed scalar division/modulo,
 mixed signed/unsigned scalar arithmetic, mixed signed/unsigned vector
@@ -3841,9 +3842,9 @@ fixture, and multi-bit sized-literal generic defaults now lower to typed
 `std_logic_vector` generics in the maintained aggregate unary complement
 fixture. Maintained aggregate-output direct roots now lower as packed-vector
 VHDL ports; full VHDL record/array aggregate lowering remains deferred.
-External-RTL scalar integer composition generic maps now lower to VHDL
-`generic map` actuals before the port map; broader generic-map families remain
-deferred until exact owner leaves select them. The bounded C3 external-RTL
+External-RTL scalar integer and multi-bit sized bitstring composition generic
+maps now lower to VHDL `generic map` actuals before the port map; broader
+generic-map families remain deferred until exact owner leaves select them. The bounded C3 external-RTL
 literal/concat structural top now emits a VHDL entity/architecture with
 concurrent literal/concat assignments and an external `entity work.uart_tx`
 port map. The bounded C1 standalone-DT passthrough structural top now emits the
@@ -3888,8 +3889,8 @@ emits `SUM <= A + B;`, a signed `DIFF = (- A B)` assignment emits
 division/modulo, mixed signed/unsigned arithmetic, broader generated-FSM/C4
 composition VHDL beyond the exact shipped fixtures, internal-net-heavy
 composition tops beyond APB, composition generic maps beyond external-RTL
-scalar integer actuals, aggregate VHDL, packages, GHDL validation, and full
-backend parity remain outside the shipped
+scalar integer and multi-bit sized bitstring actuals, aggregate VHDL,
+packages, GHDL validation, and full backend parity remain outside the shipped
 scaffold. Signed vector numeric-literal
 addition/subtraction/multiplication/division/modulo also lower through
 target-width `to_signed`, so `SUM = (+ A 1)` emits
@@ -4100,9 +4101,9 @@ schema metadata for `semantic.symbol_contract.types` and
 recursive `items` or `members` plus `member_order`.
 
 Current active backend edge: task-tree leaf
-`BACKEND-API-VALIDATION-FRONTIER.74.1` owns only bounded external-RTL C3 sized
-bitstring scalar VHDL generic-map actuals after scalar integer generic maps
-shipped. Package-import internals, already bounded
+`BACKEND-API-VALIDATION-FRONTIER.75` selects the next exact backend/API edge
+after bounded external-RTL C3 scalar integer and multi-bit sized bitstring VHDL
+generic-map actuals shipped. Package-import internals, already bounded
 constant/enum/type internals, unrelated forward-IR payloads, signed scalar
 division/modulo, mixed signed/unsigned arithmetic, generated-FSM and
 standalone-DT generic maps, scalar expressions, aggregate generic actuals,

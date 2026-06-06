@@ -10,9 +10,10 @@ Emits the bounded VHDL composition-top shapes from StructuralRTLIR. The
 current leaves intentionally support only external-RTL structural instances or
 one standalone-DT child passthrough instance plus bounded generated-FSM child
 tops, direct scalar/vector top ports, VHDL-form auxiliary assignments,
-scalar/vector signal declarations, and port-map actuals whose connection
-expressions already render through the backend-neutral StructuralRTLIR
-expression helper.
+scalar/vector signal declarations, scalar integer and multi-bit sized
+bitstring generic-map actuals for external RTL instances, and port-map actuals
+whose connection expressions already render through the backend-neutral
+StructuralRTLIR expression helper.
 
 =cut
 
@@ -113,7 +114,7 @@ sub _render_instance_block ($instance) {
 
     my @parameter_overrides = @{$instance->{parameter_overrides} || []};
     if (@parameter_overrides) {
-        confess _unsupported('composition VHDL generic maps are currently limited to external RTL scalar integer overrides')
+        confess _unsupported('composition VHDL generic maps are currently limited to external RTL scalar integer or sized bitstring overrides')
             unless $instance_kind eq 'rtl';
     }
 
@@ -165,14 +166,77 @@ sub _render_instance_block ($instance) {
 
 sub _vhdl_generic_actual ($override) {
     my $kind = $override->{value_kind} // 'scalar';
-    confess _unsupported('composition VHDL generic maps are currently limited to scalar integer actuals')
+    confess _unsupported('composition VHDL generic maps are currently limited to scalar integer or multi-bit sized bitstring actuals')
         unless $kind eq 'scalar';
 
     my $value = $override->{value_text};
-    confess _unsupported('composition VHDL generic maps are currently limited to scalar integer actuals')
-        unless defined($value) && $value =~ /\A-?\d+\z/;
+    confess _unsupported('composition VHDL generic maps are currently limited to scalar integer or multi-bit sized bitstring actuals')
+        unless defined $value;
 
-    return $value;
+    return $value if $value =~ /\A-?\d+\z/;
+
+    my $literal_actual = _vhdl_sized_bitstring_generic_actual($value);
+    return $literal_actual if defined $literal_actual;
+
+    confess _unsupported('composition VHDL generic maps are currently limited to scalar integer or multi-bit sized bitstring actuals');
+}
+
+sub _vhdl_sized_bitstring_generic_actual ($value) {
+    return undef
+        unless $value =~ /\A([1-9][0-9]*)'([bBhH])([0-9A-Fa-f_xXzZ]+)\z/;
+
+    my ($width, $base, $digits) = ($1 + 0, lc($2), $3);
+    return undef if $width <= 1;
+
+    confess _unsupported('composition VHDL generic maps are currently limited to scalar integer or multi-bit sized bitstring actuals')
+        if $digits =~ /[xz]/i;
+    $digits =~ s/_//g;
+
+    my $bits = $base eq 'b'
+        ? _vhdl_binary_digits($digits)
+        : _vhdl_hex_digits_to_bits($digits);
+    confess _unsupported('composition VHDL generic maps are currently limited to width-fitting multi-bit sized bitstring actuals')
+        if length($bits) > $width;
+
+    $bits = ('0' x ($width - length($bits))) . $bits;
+    return qq{"$bits"};
+}
+
+sub _vhdl_binary_digits ($digits) {
+    confess _unsupported('composition VHDL generic maps are currently limited to scalar integer or multi-bit sized bitstring actuals')
+        unless $digits =~ /\A[01]+\z/;
+    return $digits;
+}
+
+sub _vhdl_hex_digits_to_bits ($digits) {
+    my %hex_to_bits = (
+        0 => '0000',
+        1 => '0001',
+        2 => '0010',
+        3 => '0011',
+        4 => '0100',
+        5 => '0101',
+        6 => '0110',
+        7 => '0111',
+        8 => '1000',
+        9 => '1001',
+        a => '1010',
+        b => '1011',
+        c => '1100',
+        d => '1101',
+        e => '1110',
+        f => '1111',
+    );
+
+    my $bits = join '', map {
+        my $digit = lc($_);
+        confess _unsupported('composition VHDL generic maps are currently limited to scalar integer or multi-bit sized bitstring actuals')
+            unless exists $hex_to_bits{$digit};
+        $hex_to_bits{$digit}
+    } split //, $digits;
+
+    $bits =~ s/\A0+(?=.)//;
+    return $bits;
 }
 
 sub _normalize_vhdl_auxiliary_assignment ($line) {
