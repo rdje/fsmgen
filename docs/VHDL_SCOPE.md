@@ -42,7 +42,8 @@ This document defines the scoped R14 VHDL backend plan for FSMGen.
 - Composition VHDL, aggregate VHDL, broad expression parity, scalar
   division/modulo and broader scalar arithmetic, signed arithmetic operators
   beyond same-width vector addition/subtraction, GHDL validation, packages,
-  multi-clock domains, and full feature parity remain deferred.
+  multi-clock domains, and full feature parity remain deferred; same-width
+  signed vector multiplication is the active next implementation edge.
 - Scalar division/modulo RHS forms such as `A / B` and `A % B` are locked as
   explicit fail-closed direct VHDL boundaries by focused pipeline and facade
   coverage.
@@ -142,9 +143,10 @@ The first VHDL lane is intentionally narrow:
   vector addition/subtraction RHS assignments, plus direct-root parameter blocks as VHDL
   generics, including integer expression defaults and typed scalar/vector
   sized-literal defaults.
-- Active follow-up: select the next exact backend/API/public-export edge under
-  `BACKEND-API-VALIDATION-FRONTIER.59`; signed arithmetic operators beyond
-  same-width vector addition/subtraction remain separate future edges.
+- Active follow-up: implement same-width signed vector multiplication RHS
+  lowering under `BACKEND-API-VALIDATION-FRONTIER.59.1`; signed arithmetic
+  operators beyond same-width vector addition/subtraction/multiplication remain
+  separate future edges.
 - Remaining semantic conversion work still belongs to exact future VHDL leaves.
 
 ### Phase 3: Regression and hardening (R14.3)

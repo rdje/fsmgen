@@ -157,7 +157,8 @@ items named in the 2026-06-05 remaining-work inventory.
     `BACKEND-API-VALIDATION-FRONTIER.57.1`,
     `BACKEND-API-VALIDATION-FRONTIER.58`,
     `BACKEND-API-VALIDATION-FRONTIER.58.1`,
-    `BACKEND-API-VALIDATION-FRONTIER.59`
+    `BACKEND-API-VALIDATION-FRONTIER.59`,
+    `BACKEND-API-VALIDATION-FRONTIER.59.1`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.1`
   Status: `done`
@@ -1084,10 +1085,18 @@ items named in the 2026-06-05 remaining-work inventory.
   Commit: `BACKEND-API-VALIDATION-FRONTIER.58.1: ship VHDL signed subtraction`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.59`
-  Status: `active`
+  Status: `done`
   Goal: `Select the next exact backend/API/public-export edge after direct VHDL same-width signed vector subtraction RHS lowering shipped.`
-  Acceptance: `pending selection`
-  Verification: `pending selection`
+  Children: `BACKEND-API-VALIDATION-FRONTIER.59.1`
+  Acceptance: `Selected direct VHDL same-width signed vector multiplication RHS lowering as the next exact backend edge. Evidence shows .58.1 handles signed vector addition/subtraction by returning native signed VHDL arithmetic for + and -, while the same signed A/B/PROD multiplication shape still falls through the unsigned vector arithmetic path and emits PROD <= std_logic_vector(resize(unsigned(A) * unsigned(B), 8)); into a signed target. The implementation owner is BACKEND-API-VALIDATION-FRONTIER.59.1 before any backend/test/source edits. The slice must handle same-width signed vector multiplication RHS assignments without widening division/modulo, scalar signed arithmetic, mixed signed/unsigned arithmetic, aggregate VHDL, composition/top VHDL, GHDL validation, broad expression parity, or full backend parity.`
+  Verification: `Selection audit/read of README.md, docs/VHDL_SCOPE.md, docs/book/src/11-extensions-and-embedding.md, docs/book/src/14-feature-backlog.md, docs/knowledge/direct-vhdl-scaffold.md, docs/tasks/BACKEND-API-VALIDATION-FRONTIER.md, perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm, t/1420-vhdl-direct-backend-scaffold.t, and t/386-hdl-generator-facade-target-language-boundary-audit.t; temporary signed A/B/PROD VHDL probe showed signed VHDL ports/signals but unsigned multiplication assignment PROD <= std_logic_vector(resize(unsigned(A) * unsigned(B), 8)).`
+  Commit: `BACKEND-API-VALIDATION-FRONTIER.59: select VHDL signed multiplication`
+
+- ID: `BACKEND-API-VALIDATION-FRONTIER.59.1`
+  Status: `active`
+  Goal: `Implement direct VHDL same-width signed vector multiplication RHS lowering.`
+  Acceptance: `FSM::HDL::FlattenedDT::Backend::VHDL lowers generated same-width signed vector multiplication RHS assignments into VHDL signed arithmetic with target-width resize when the target and operands are signed vectors. Focused pipeline, CLI, and facade coverage prove a direct signed A/B/PROD fixture emits signed ports/signals and a signed multiplication assignment without std_logic_vector(resize(unsigned(...))) casts. README, docs/VHDL_SCOPE.md, mdBook, direct-VHDL fact card, task tree, and memory stay synchronized. The leaf does not widen division/modulo, scalar signed arithmetic, mixed signed/unsigned arithmetic, aggregate VHDL, composition/top VHDL, GHDL validation, broad expression parity, or full backend parity.`
+  Verification: `pending implementation`
   Commit: `pending`
 
 ## Current Frontier
@@ -1215,7 +1224,8 @@ items named in the 2026-06-05 remaining-work inventory.
 | 119 | `BACKEND-API-VALIDATION-FRONTIER.57.1` | `done` | Shipped same-width signed vector addition RHS lowering for signed vector targets and operands without widening other signed arithmetic or full VHDL parity. |
 | 120 | `BACKEND-API-VALIDATION-FRONTIER.58` | `done` | Selected same-width signed vector subtraction RHS lowering after probe evidence showed signed ports/signals still use unsigned subtraction casts. |
 | 121 | `BACKEND-API-VALIDATION-FRONTIER.58.1` | `done` | Shipped same-width signed vector subtraction RHS lowering for signed vector targets and operands without widening other signed arithmetic or full VHDL parity. |
-| 122 | `BACKEND-API-VALIDATION-FRONTIER.59` | `active` | Select the next exact backend/API/public-export edge after direct VHDL signed subtraction shipped. |
+| 122 | `BACKEND-API-VALIDATION-FRONTIER.59` | `done` | Selected same-width signed vector multiplication RHS lowering after probe evidence showed signed ports/signals still use unsigned multiplication casts. |
+| 123 | `BACKEND-API-VALIDATION-FRONTIER.59.1` | `active` | Implement same-width signed vector multiplication RHS lowering without widening division/modulo, scalar signed arithmetic, or full VHDL parity. |
 
 ## Decisions
 
@@ -1358,6 +1368,7 @@ items named in the 2026-06-05 remaining-work inventory.
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.57.1` | `perl -Iperl -c perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm`; `perl -Iperl -c t/1420-vhdl-direct-backend-scaffold.t`; `perl -Iperl -c t/386-hdl-generator-facade-target-language-boundary-audit.t`; focused VHDL scaffold/facade prove bundle; `prove -Iperl t/279-declarative-scalar-types.t`; composition/target-language boundary prove bundle; external-validation prove bundle; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; direct VHDL now lowers same-width signed vector addition RHS assignments as signed VHDL arithmetic; activated `.58` |
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.58` | Selection audit/read of `README.md`, `docs/VHDL_SCOPE.md`, `docs/book/src/11-extensions-and-embedding.md`, `docs/book/src/14-feature-backlog.md`, `docs/knowledge/direct-vhdl-scaffold.md`, `docs/tasks/BACKEND-API-VALIDATION-FRONTIER.md`, `perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm`, `t/1420-vhdl-direct-backend-scaffold.t`, and `t/386-hdl-generator-facade-target-language-boundary-audit.t`; temporary signed A/B/DIFF VHDL probe showed signed VHDL ports/signals but unsigned subtraction assignment `DIFF <= std_logic_vector(unsigned(A) - unsigned(B));` | `PASS`; selected same-width signed vector subtraction RHS lowering for `.58.1` |
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.58.1` | `perl -Iperl -c perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm`; `perl -Iperl -c t/1420-vhdl-direct-backend-scaffold.t`; `perl -Iperl -c t/386-hdl-generator-facade-target-language-boundary-audit.t`; focused VHDL scaffold/facade prove bundle; `prove -Iperl t/279-declarative-scalar-types.t`; composition/target-language boundary prove bundle; external-validation prove bundle; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; direct VHDL now lowers same-width signed vector subtraction RHS assignments as signed VHDL arithmetic; activated `.59` |
+| `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.59` | Selection audit/read of `README.md`, `docs/VHDL_SCOPE.md`, `docs/book/src/11-extensions-and-embedding.md`, `docs/book/src/14-feature-backlog.md`, `docs/knowledge/direct-vhdl-scaffold.md`, `docs/tasks/BACKEND-API-VALIDATION-FRONTIER.md`, `perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm`, `t/1420-vhdl-direct-backend-scaffold.t`, and `t/386-hdl-generator-facade-target-language-boundary-audit.t`; temporary signed A/B/PROD VHDL probe showed signed VHDL ports/signals but unsigned multiplication assignment `PROD <= std_logic_vector(resize(unsigned(A) * unsigned(B), 8));` | `PASS`; selected same-width signed vector multiplication RHS lowering for `.59.1` |
 
 ## Commit Log
 
@@ -1484,6 +1495,7 @@ items named in the 2026-06-05 remaining-work inventory.
 | `BACKEND-API-VALIDATION-FRONTIER.57.1` | `BACKEND-API-VALIDATION-FRONTIER.57.1: ship VHDL signed addition` | this slice; activates `.58` |
 | `BACKEND-API-VALIDATION-FRONTIER.58` | `BACKEND-API-VALIDATION-FRONTIER.58: select VHDL signed subtraction` | selected `.58.1` |
 | `BACKEND-API-VALIDATION-FRONTIER.58.1` | `BACKEND-API-VALIDATION-FRONTIER.58.1: ship VHDL signed subtraction` | this slice; activates `.59` |
+| `BACKEND-API-VALIDATION-FRONTIER.59` | `BACKEND-API-VALIDATION-FRONTIER.59: select VHDL signed multiplication` | selected `.59.1` |
 
 ## Changelog
 
@@ -2130,3 +2142,9 @@ items named in the 2026-06-05 remaining-work inventory.
   composition/top VHDL, GHDL validation, broad expression parity, and full
   backend parity remain deferred. Activated `.59` to select the next exact
   backend/API/public-export edge.
+- `2026-06-06`: Completed `.59`; selected same-width signed vector
+  multiplication RHS lowering for `.59.1` after a signed A/B/PROD probe showed
+  signed VHDL ports/signals but an unsigned-cast resized multiplication
+  assignment into a signed target. Division/modulo, scalar signed arithmetic,
+  mixed signed/unsigned arithmetic, aggregate VHDL, composition/top VHDL, GHDL
+  validation, broad expression parity, and full backend parity remain deferred.

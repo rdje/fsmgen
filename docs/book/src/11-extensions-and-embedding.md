@@ -2289,12 +2289,12 @@ this normalized semantic shape:
 ```
 
 The current active backend/API frontier is
-`BACKEND-API-VALIDATION-FRONTIER.59`, which selects the next exact backend/API
-or public-export edge after `.58.1` shipped same-width signed vector
-subtraction RHS lowering.
+`BACKEND-API-VALIDATION-FRONTIER.59.1`, which implements same-width signed
+vector multiplication RHS lowering after `.59` selected that exact backend
+edge.
 Package-import internals, already bounded constant/enum/type internals,
-unrelated forward-IR payloads, signed arithmetic operators beyond same-width
-vector addition/subtraction,
+unrelated forward-IR payloads, signed arithmetic operators beyond
+same-width vector addition/subtraction/multiplication,
 aggregate/composition VHDL, and full normalized semantic export stabilization
 remain out of scope until later exact leaves own them.
 
