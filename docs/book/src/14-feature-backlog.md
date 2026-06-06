@@ -3831,11 +3831,11 @@ starting with `input logic signed [7:0] IN`, now lower to VHDL `signed` ports.
 Same-width signed vector addition RHS assignments now lower as signed VHDL
 arithmetic when the target and all operands are same-width signed vectors, so
 a signed direct-root `SUM = (+ A B)` assignment emits `SUM <= A + B;` rather
-than unsigned casts. Other signed arithmetic operators, scalar signed
-arithmetic, mixed signed/unsigned arithmetic, composition/top VHDL, aggregate
-VHDL, packages, GHDL validation, and full backend parity remain outside the
-shipped scaffold. Active selector leaf `BACKEND-API-VALIDATION-FRONTIER.58`
-owns choosing the next exact backend/API/public-export edge.
+than unsigned casts. Same-width signed vector subtraction is the active next
+implementation edge under `BACKEND-API-VALIDATION-FRONTIER.58.1`; other
+signed arithmetic operators, scalar signed arithmetic, mixed signed/unsigned
+arithmetic, composition/top VHDL, aggregate VHDL, packages, GHDL validation,
+and full backend parity remain outside the shipped scaffold.
 
 ### GHDL Validation
 
@@ -4024,10 +4024,10 @@ schema metadata for `semantic.symbol_contract.types` and
 recursive `items` or `members` plus `member_order`.
 
 Current active backend edge: task-tree leaf
-`BACKEND-API-VALIDATION-FRONTIER.58` selects the next exact backend/API or
-public-export edge after `.57.1` shipped same-width signed vector addition RHS
-lowering.
+`BACKEND-API-VALIDATION-FRONTIER.58.1` implements same-width signed vector
+subtraction RHS lowering after `.58` selected that exact scaffold gap.
 Package-import internals, already bounded constant/enum/type internals,
-unrelated forward-IR payloads, other signed arithmetic operators,
+unrelated forward-IR payloads, signed arithmetic operators beyond same-width
+vector addition/subtraction,
 aggregate/composition VHDL, and full normalized semantic export stabilization
 remain out of scope until later exact leaves own them.
