@@ -3770,7 +3770,8 @@ entity/architecture text for scalar/vector ports, state constants,
 continuous enable assignments, `process(all)` combinational muxes, sync-reset
 clocked processes, async-reset clocked processes, delayed-pulse clock-branch
 nested-if lowering, generic-bearing direct-root module headers as VHDL integer
-generics, basic concat RHS forms, same-width vector
+generics or typed scalar/vector generics for sized-literal defaults, basic
+concat RHS forms, same-width vector
 addition/subtraction RHS chain lowering through `numeric_std` unsigned casts,
 same-width vector multiplication/division/modulo RHS chain lowering through
 explicit target-width `numeric_std` resize, and same-width scalar/vector XOR
@@ -3786,12 +3787,10 @@ addition/subtraction/multiplication/division/modulo/XOR RHS chain family remain
 fail-closed at the scaffold boundary. The maintained arithmetic/XOR and runtime
 division/modulo corpora now lower through the direct VHDL scaffold for that
 family, and the maintained size-expression width fixture now lowers generated
-direct-root parameter blocks to VHDL integer generics. Composition VHDL
-generic maps remain deferred until a composition VHDL leaf owns that path.
-Generated sized-literal generic defaults such as `1'b1` and `1'b0` are
-selected for the next exact scaffold leaf
-(`BACKEND-API-VALIDATION-FRONTIER.28.1`) and are not yet a shipped VHDL subset
-claim.
+direct-root parameter blocks to VHDL integer generics. Generated sized-literal
+generic defaults such as `1'b1` and `1'b0` now lower to typed `std_logic`
+generics in the maintained aggregate-parameter comparison fixture. Composition
+VHDL generic maps remain deferred until a composition VHDL leaf owns that path.
 
 ### GHDL Validation
 

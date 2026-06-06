@@ -443,6 +443,38 @@ subtest 'facade target_language option routes direct VHDL generic-bearing scaffo
     );
 };
 
+subtest 'facade target_language option routes direct VHDL sized-literal generic defaults' => sub {
+    my $direct_path = repo_file('t/corpus/params_aggregate_comparison.fsm');
+    my $vhdl_pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'vhdl',
+        quiet => 1,
+    );
+
+    my $vhdl_result = $vhdl_pipeline->generate_hdl_from_file($direct_path);
+
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bentity\s+params_aggregate_comparison\s+is\b/s,
+        'explicit VHDL facade generation emits the sized-literal generic direct entity',
+    );
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bP_EQ_LIST\s+:\s+std_logic\s+:=\s+'1';/s,
+        'explicit VHDL facade generation lowers one-valued parameter defaults to std_logic generics',
+    );
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bP_EQ_RECORD_FALSE\s+:\s+std_logic\s+:=\s+'0';/s,
+        'explicit VHDL facade generation lowers zero-valued parameter defaults to std_logic generics',
+    );
+    unlike(
+        $vhdl_result->{hdl_code},
+        qr/\bmodule\b|#\s*\(|\bparameter\b|\b1'b[01]\b|\balways_(?:ff|comb)\b/s,
+        'explicit VHDL sized-literal generic facade generation does not leak SystemVerilog parameter syntax',
+    );
+};
+
 done_testing();
 
 sub repo_file {

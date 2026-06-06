@@ -96,9 +96,11 @@ sub _parse_generics ($parameter_text) {
         next unless length $line;
 
         if ($line =~ /^parameter\s+([A-Za-z_][A-Za-z0-9_]*)\s*=\s*(.+)$/) {
+            my $default = _sv_parameter_default_to_vhdl($2);
             push @generics, {
                 name => $1,
-                default => _sv_integer_expr_to_vhdl($2),
+                type => $default->{type},
+                default => $default->{default},
             };
             next;
         }
@@ -457,8 +459,9 @@ sub _render_vhdl (%args) {
             my $generic = $args{generics}->[$idx];
             my $suffix = $idx == $#{$args{generics}} ? '' : ';';
             push @lines, sprintf(
-                '    %s : integer := %s%s',
+                '    %s : %s := %s%s',
                 $generic->{name},
+                $generic->{type},
                 $generic->{default},
                 $suffix,
             );
@@ -752,8 +755,25 @@ sub _literal_bits ($literal) {
     confess _unsupported("unsupported literal base '$base'");
 }
 
+sub _sv_parameter_default_to_vhdl ($expr) {
+    my $converted = _trim($expr);
+    my $literal = _parse_sized_literal($converted);
+    if ($literal) {
+        return {
+            type => $literal->{width} == 1 ? 'std_logic' : _vhdl_type($literal->{width} - 1, 0),
+            default => _literal_bits_value($literal),
+        };
+    }
+
+    return {
+        type => 'integer',
+        default => _sv_integer_expr_to_vhdl($expr),
+    };
+}
+
 sub _sv_integer_expr_to_vhdl ($expr) {
     my $converted = _trim($expr);
+    $converted =~ s/\b([0-9]+)'([bdhBDH])([0-9A-Fa-f_xXzZ]+)\b/_literal_integer_match_to_vhdl($1, lc($2), $3)/ge;
     confess _unsupported("unsupported parameter expression '$expr'")
         unless length $converted;
     confess _unsupported("unsupported parameter expression '$expr'")
@@ -763,6 +783,23 @@ sub _sv_integer_expr_to_vhdl ($expr) {
     $converted =~ s/\+\s*-(?=\s*(?:[0-9]|[A-Za-z_]))/- /g;
     $converted =~ s/\s+/ /g;
     return _trim($converted);
+}
+
+sub _literal_integer_match_to_vhdl ($width, $base, $digits) {
+    return _literal_integer_value({
+        width => $width + 0,
+        base => $base,
+        digits => $digits,
+    });
+}
+
+sub _literal_integer_value ($literal) {
+    my $bits = _literal_bits($literal);
+    my $value = 0;
+    for my $bit (split //, $bits) {
+        $value = ($value * 2) + ($bit eq '1' ? 1 : 0);
+    }
+    return $value;
 }
 
 sub _skip_ws ($text, $pos) {

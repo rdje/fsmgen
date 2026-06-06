@@ -17,6 +17,7 @@ answers:
   - "does direct VHDL support XOR chains?"
   - "does direct VHDL support generics?"
   - "does direct VHDL support parameterized direct roots?"
+  - "does direct VHDL support sized literal generic defaults?"
 date: 2026-06-06
 status: current
 tags: [vhdl, backend, direct-generation, validation]
@@ -29,9 +30,11 @@ Direct single-FSM roots can now use `target_language => 'vhdl'` or
 constants, enable assignments, sync/async reset processes, `process(all)`
 combinational muxes, generic-bearing direct-root module headers, basic concat
 RHS forms, and delayed-pulse clock-branch nested-if lowering. Generated
-SystemVerilog `parameter` blocks for direct roots lower to VHDL integer
-generics before the port block while the body keeps already-resolved concrete
-signal widths. The scaffold also lowers the first arithmetic RHS shape:
+SystemVerilog `parameter` blocks for direct roots lower to VHDL generics before
+the port block while the body keeps already-resolved concrete signal widths:
+arithmetic integer-expression defaults become `integer` generics, and
+sized-literal defaults become `std_logic` or `std_logic_vector` generics. The
+scaffold also lowers the first arithmetic RHS shape:
 same-width vector `NAME + NAME` assignments and same-width multi-operand
 addition chains become `std_logic_vector(unsigned(A) + unsigned(B) + ...)`
 expressions; same-width vector subtraction chains become

@@ -462,6 +462,34 @@ subtest 'direct VHDL scaffold lowers generated parameterized direct headers to g
     unlike($cli_hdl, qr/\bmodule\b|#\s*\(|\bparameter\b|\balways_(?:ff|comb)\b/s, 'CLI generic-bearing VHDL output remains VHDL-shaped');
 };
 
+subtest 'direct VHDL scaffold lowers generated sized-literal parameter defaults to typed generics' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $output_path = File::Spec->catfile($tempdir, 'params_aggregate_comparison.vhd');
+
+    my $hdl = generate_vhdl('t/corpus/params_aggregate_comparison.fsm');
+    like($hdl, qr/\bentity\s+params_aggregate_comparison\s+is\b/s, 'sized-literal generic fixture emits direct VHDL entity');
+    like(
+        $hdl,
+        qr/\bgeneric\s*\(\s+P_EQ_LIST\s+:\s+std_logic\s+:=\s+'1';\s+P_EQ_RECORD\s+:\s+std_logic\s+:=\s+'1';\s+P_EQ_RECORD_FALSE\s+:\s+std_logic\s+:=\s+'0';\s+P_NE_LIST\s+:\s+std_logic\s+:=\s+'1';\s+P_NE_LIST_FALSE\s+:\s+std_logic\s+:=\s+'0';\s+P_NE_RECORD\s+:\s+std_logic\s+:=\s+'1'\s+\);/s,
+        'generated one-bit literal parameter defaults lower to std_logic generics',
+    );
+    like($hdl, qr/\bOUT_EQ_LIST\s+<=\s+P_EQ_LIST;/s, 'std_logic generic drives scalar VHDL assignment without integer conversion');
+    unlike($hdl, qr/\bmodule\b|#\s*\(|\bparameter\b|\b1'b[01]\b|\balways_(?:ff|comb)\b/s, 'sized-literal generic VHDL output does not leak SystemVerilog parameter syntax');
+
+    my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--language', 'vhdl', '--quiet', '-o', $output_path, repo_file('t/corpus/params_aggregate_comparison.fsm')],
+    );
+
+    my $combined_output = join('', @{ $stdout_buf || [] }, @{ $stderr_buf || [] }, ($error_message || ''));
+    ok($success, 'CLI accepts direct --language vhdl for sized-literal generic defaults')
+        or diag($combined_output);
+    ok(-e $output_path, 'CLI writes sized-literal generic VHDL output file');
+
+    my $cli_hdl = read_file($output_path);
+    like($cli_hdl, qr/\bP_NE_LIST_FALSE\s+:\s+std_logic\s+:=\s+'0';/s, 'CLI sized-literal generic VHDL output includes zero-valued std_logic default');
+    unlike($cli_hdl, qr/\bmodule\b|#\s*\(|\bparameter\b|\b1'b[01]\b|\balways_(?:ff|comb)\b/s, 'CLI sized-literal generic VHDL output remains VHDL-shaped');
+};
+
 subtest 'direct VHDL scaffold keeps mismatched-width arithmetic expression parity fail-closed' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $fsm_path = File::Spec->catfile($tempdir, 'direct_vhdl_mismatched_division_deferred.fsm');

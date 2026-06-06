@@ -15,12 +15,11 @@ This document defines the scoped R14 VHDL backend plan for FSMGen.
   lower through explicit target-width `numeric_std` resize. Same-width
   scalar/vector XOR chains lower to VHDL `xor`.
 - The direct scaffold now includes generic-bearing direct-root module headers:
-  generated SystemVerilog `parameter` blocks lower to VHDL integer generics.
+  generated SystemVerilog `parameter` blocks lower to VHDL generics, with
+  arithmetic integer-expression defaults as `integer` and sized-literal
+  defaults as `std_logic` or `std_logic_vector` generics.
 - Composition VHDL, aggregate VHDL, broad expression parity, GHDL validation,
   packages, multi-clock domains, and full feature parity remain deferred.
-- Generated sized-literal generic defaults such as `1'b1` and `1'b0` are the
-  active next exact scaffold edge (`BACKEND-API-VALIDATION-FRONTIER.28.1`);
-  they are not yet shipped in the current committed subset.
 
 ## Goal
 Implement a real, scoped VHDL backend that generates synthesizable VHDL from
@@ -54,8 +53,8 @@ The first VHDL lane is intentionally narrow:
      XOR RHS chains in the generated direct combinational mux shape
    - Generic-bearing direct-root module headers emitted by the generated
      SystemVerilog `#(...)` parameter-block shape
-   - Sized-literal generic defaults are selected for the next exact leaf, not
-     part of the currently shipped subset
+   - Generated sized-literal generic defaults such as `1'b1` and `1'b0`
+     mapped to typed VHDL scalar/vector generics
 
 4. **Intentionally deferred:**
    - Composition-top VHDL
@@ -84,16 +83,17 @@ The first VHDL lane is intentionally narrow:
   mapping, module/entity conversion, reset polarity handling, and generated
   delayed-pulse nested clock-branch lowering, plus same-width addition,
   subtraction, multiplication, division, modulo, and XOR RHS expression chains,
-  and direct-root parameter blocks as VHDL integer generics.
+  and direct-root parameter blocks as VHDL generics, including integer
+  expression defaults and typed sized-literal defaults.
 - Remaining semantic conversion work still belongs to exact future VHDL leaves.
 
 ### Phase 3: Regression and hardening (R14.3)
 - Focused direct VHDL generation tests cover pipeline and CLI routing,
   sync/async reset processes, delayed-pulse clock branches, concat lowering,
   same-width addition/subtraction/multiplication/division/modulo/XOR-chain
-  lowering, generic-bearing direct-root module headers, mismatched-width
-  arithmetic-expression fail-closed diagnostics, and aggregate-output
-  fail-closed diagnostics.
+  lowering, generic-bearing direct-root module headers, sized-literal generic
+  defaults, mismatched-width arithmetic-expression fail-closed diagnostics,
+  and aggregate-output fail-closed diagnostics.
 - Add broader VHDL output to the regression corpus
 - Ensure `--check --json` and `--emit-semantic-json` stay target-neutral
 - Consider external VHDL validation via GHDL
