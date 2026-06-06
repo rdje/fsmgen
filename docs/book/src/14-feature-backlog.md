@@ -3794,6 +3794,9 @@ fixture, and multi-bit sized-literal generic defaults now lower to typed
 `std_logic_vector` generics in the maintained aggregate unary complement
 fixture. Composition VHDL generic maps remain deferred until a composition VHDL
 leaf owns that path.
+The active next direct VHDL leaf owns only scalar multiplication-chain RHS
+lowering; scalar division/modulo and broader scalar arithmetic remain separate
+backlog.
 
 ### GHDL Validation
 

@@ -24,6 +24,8 @@ This document defines the scoped R14 VHDL backend plan for FSMGen.
 - Composition VHDL, aggregate VHDL, broad expression parity, broader scalar
   arithmetic, GHDL validation, packages, multi-clock domains, and full feature
   parity remain deferred.
+- The active next exact VHDL leaf owns scalar multiplication-chain RHS lowering
+  only; scalar division/modulo and broader scalar arithmetic remain deferred.
 
 ## Goal
 Implement a real, scoped VHDL backend that generates synthesizable VHDL from
