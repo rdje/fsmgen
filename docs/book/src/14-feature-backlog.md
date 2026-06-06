@@ -3786,7 +3786,10 @@ broader scalar arithmetic beyond scalar addition/subtraction/multiplication
 chains, broader arithmetic operators, mismatched-width arithmetic, and
 expression contexts beyond the same-width
 addition/subtraction/multiplication/division/modulo/XOR RHS chain family remain
-fail-closed at the scaffold boundary. The maintained
+fail-closed at the scaffold boundary. The active next leaf is scalar
+division/modulo fail-closed hardening: scalar `A / B` and `A % B` remain
+unsupported until that boundary is locked by focused coverage and
+documentation. The maintained
 arithmetic/XOR and runtime division/modulo corpora now lower through the direct
 VHDL scaffold for that family, and the maintained size-expression width fixture
 now lowers generated direct-root parameter blocks to VHDL integer generics.

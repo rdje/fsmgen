@@ -111,7 +111,8 @@ items named in the 2026-06-05 remaining-work inventory.
     `BACKEND-API-VALIDATION-FRONTIER.34.1`,
     `BACKEND-API-VALIDATION-FRONTIER.35`,
     `BACKEND-API-VALIDATION-FRONTIER.35.1`,
-    `BACKEND-API-VALIDATION-FRONTIER.36`
+    `BACKEND-API-VALIDATION-FRONTIER.36`,
+    `BACKEND-API-VALIDATION-FRONTIER.36.1`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.1`
   Status: `done`
@@ -693,9 +694,17 @@ items named in the 2026-06-05 remaining-work inventory.
   Commit: `pending`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.36`
-  Status: `active`
+  Status: `done`
   Goal: `Select the next exact backend/API/public-export edge after direct VHDL scalar subtraction chains.`
-  Acceptance: `One remaining roadmap-aligned backend, validation, embedding, or public-export edge is selected from current code, contracts, mdBook, knowledge-map, and task-tree evidence. The selected edge has an exact implementation-or-deferral owner leaf before any code/test/source edits occur.`
+  Children: `BACKEND-API-VALIDATION-FRONTIER.36.1`
+  Acceptance: `Selected an explicit direct VHDL scalar division/modulo fail-closed boundary as the next exact backend edge. Temporary scalar direct-root probes show generated SystemVerilog emits simple scalar mux assignments QUOTIENT = A / B and REMAINDER = A % B, while direct VHDL fails both at the scalar arithmetic guard. The existing vector numeric_std division/modulo path is not a safe scalar lowering because one-bit scalar division/modulo preserve runtime zero-divisor behavior that cannot be reduced to the existing scalar xor/and boolean semantics. The implementation-or-deferral owner is BACKEND-API-VALIDATION-FRONTIER.36.1; other scalar arithmetic, mismatched-width arithmetic, aggregate record/array VHDL, composition/top VHDL, packages, GHDL validation, and full backend parity remain deferred.`
+  Verification: `Selection audit/read of docs/book/src/14-feature-backlog.md, docs/VHDL_SCOPE.md, docs/knowledge/direct-vhdl-scaffold.md, perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm, and t/1420-vhdl-direct-backend-scaffold.t. Temporary File::Temp SystemVerilog probes for scalar direct roots with (= (QUOTIENT (/ A B))) and (= (REMAINDER (% A B))) emitted QUOTIENT = A / B and REMAINDER = A % B. Temporary File::Temp VHDL probes failed at arithmetic expression 'A / B' and arithmetic expression 'A % B' outside the direct VHDL scaffold. Selected explicit scalar division/modulo fail-closed hardening for .36.1 before any implementation/test edits.`
+  Commit: `pending`
+
+- ID: `BACKEND-API-VALIDATION-FRONTIER.36.1`
+  Status: `active`
+  Goal: `Lock the direct VHDL scalar division/modulo fail-closed boundary.`
+  Acceptance: `Direct VHDL scalar division/modulo RHS forms such as A / B and A % B remain explicit fail-closed boundaries with focused pipeline and facade coverage, plus README/live docs/mdBook, the direct-VHDL fact card, task-tree, and memory synchronized. The leaf does not widen scalar division/modulo lowering, other scalar arithmetic, mismatched-width arithmetic, aggregate record/array VHDL, composition/top VHDL, VHDL packages, multi-clock domains, GHDL validation, broad expression parity, or full backend parity.`
   Verification: `pending`
   Commit: `pending`
 
@@ -778,7 +787,8 @@ items named in the 2026-06-05 remaining-work inventory.
 | 73 | `BACKEND-API-VALIDATION-FRONTIER.34.1` | `done` | Implemented scalar addition-chain RHS lowering; scalar subtraction chains, scalar division/modulo, and other scalar arithmetic remain fail-closed. |
 | 74 | `BACKEND-API-VALIDATION-FRONTIER.35` | `done` | Selected scalar subtraction-chain RHS lowering as the next narrow direct VHDL scaffold edge after probes showed the generated shape is a simple scalar `DIFF = A - B - C` mux assignment. |
 | 75 | `BACKEND-API-VALIDATION-FRONTIER.35.1` | `done` | Implemented scalar subtraction-chain RHS lowering; scalar division/modulo and broader scalar arithmetic remain fail-closed. |
-| 76 | `BACKEND-API-VALIDATION-FRONTIER.36` | `active` | Select the next exact backend/API/public-export edge after scalar subtraction chains. |
+| 76 | `BACKEND-API-VALIDATION-FRONTIER.36` | `done` | Selected scalar division/modulo as an explicit direct VHDL fail-closed hardening edge after probes showed simple scalar `A / B` and `A % B` mux assignments still fail at the scalar guard. |
+| 77 | `BACKEND-API-VALIDATION-FRONTIER.36.1` | `active` | Lock scalar division/modulo fail-closed coverage and documentation without widening unsafe one-bit divisor semantics. |
 
 ## Decisions
 
