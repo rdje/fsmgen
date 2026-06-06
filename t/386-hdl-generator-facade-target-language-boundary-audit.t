@@ -279,6 +279,86 @@ subtest 'facade target_language option routes direct VHDL scalar bit and signed 
     );
 };
 
+subtest 'facade target_language option routes direct VHDL non-signed four-state logic declaration behavior' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $libdir = File::Spec->catdir($tempdir, 'pkg_lib');
+    mkdir $libdir or die "Cannot create $libdir: $!";
+
+    my $package_path = File::Spec->catfile($libdir, 'shared_cfg.fsm');
+    my $direct_path = File::Spec->catfile($tempdir, 'facade_direct_vhdl_four_state_logic.fsm');
+    write_file(
+        $package_path,
+        <<'FSM'
+(?pkg:shared_cfg
+  (+types
+    (type imported_byte (four_state (bits BYTE_W)))
+    (type imported_flag (four_state (bits FLAG_W)))
+  )
+  (+constants
+    (BYTE_W 8)
+    (FLAG_W 1)
+  )
+)
+FSM
+    );
+    write_file(
+        $direct_path,
+        <<'FSM'
+(?fsm:facade_direct_vhdl_four_state_logic
+  (+import shared_cfg)
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+  (+types
+    (type byte_t shared_cfg.imported_byte)
+    (type flag_t shared_cfg.imported_flag)
+  )
+  (+size
+    (OUT byte_t)
+    (ISYM byte_t)
+    (LFLAG flag_t)
+  )
+  (idle
+    (OUT = 8'hA5)
+    (ISYM = OUT)
+    (LFLAG = 1)
+  )
+)
+FSM
+    );
+
+    my $vhdl_pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'vhdl',
+        quiet => 1,
+        source_search_paths => [$libdir],
+    );
+
+    my $vhdl_result = $vhdl_pipeline->generate_hdl_from_file($direct_path);
+
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bentity\s+facade_direct_vhdl_four_state_logic\s+is\b/s,
+        'explicit VHDL facade generation emits the four-state logic direct entity',
+    );
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bsignal\s+ISYM\s+:\s+std_logic_vector\(7\s+downto\s+0\);/s,
+        'explicit VHDL facade generation lowers vector logic declaration',
+    );
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bsignal\s+LFLAG\s+:\s+std_logic;/s,
+        'explicit VHDL facade generation lowers scalar logic declaration',
+    );
+    unlike(
+        $vhdl_result->{hdl_code},
+        qr/\bmodule\b|\balways_(?:ff|comb)\b|\blogic\b/s,
+        'explicit VHDL four-state logic facade generation does not leak SystemVerilog syntax',
+    );
+};
+
 subtest 'facade target_language option routes direct VHDL scalar-addition scaffold behavior' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $direct_path = File::Spec->catfile($tempdir, 'facade_direct_vhdl_scalar_addition.fsm');

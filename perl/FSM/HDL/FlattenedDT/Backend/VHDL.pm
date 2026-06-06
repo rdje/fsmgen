@@ -28,9 +28,6 @@ sub generate_vhdl ($self, $fsm_module) {
 sub convert_systemverilog_to_vhdl ($self, $sv_hdl) {
     confess _unsupported('aggregate struct outputs are outside the direct VHDL scaffold')
         if $sv_hdl =~ /\btypedef\s+struct\b/s;
-    confess _unsupported('SystemVerilog logic declarations are outside the direct VHDL scaffold')
-        if $sv_hdl =~ /^\s*logic\b/m;
-
     my $module = _parse_module($sv_hdl);
     my @generics = _parse_generics($module->{parameters});
     my @ports = _parse_ports($module->{ports});
@@ -161,11 +158,13 @@ sub _parse_signal_declarations ($body, $port_names) {
         $line =~ s/^\s+|\s+$//g;
         next unless length $line;
 
-        next unless $line =~ /^(reg|wire|bit)\s+(?:(signed)\s+)?(?:\[(\d+):(\d+)\]\s+)?(.+);$/;
+        next unless $line =~ /^(reg|wire|bit|logic)\s+(?:(signed)\s+)?(?:\[(\d+):(\d+)\]\s+)?(.+);$/;
         my ($kind, $signed_keyword, $msb, $lsb, $names_text) = ($1, $2, $3, $4, $5);
         my $signed = defined $signed_keyword ? 1 : 0;
         confess _unsupported("vector bit declaration '$line' is outside the direct VHDL scaffold")
             if $kind eq 'bit' && (defined($msb) || defined($lsb));
+        confess _unsupported("signed logic declaration '$line' is outside the direct VHDL scaffold")
+            if $kind eq 'logic' && $signed;
         confess _unsupported("signed scalar declaration '$line' is outside the direct VHDL scaffold")
             if $signed && (!defined($msb) || !defined($lsb));
 

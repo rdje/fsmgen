@@ -3783,9 +3783,10 @@ arithmetic with vector signal plus/minus numeric literal operands through
 target-width `to_unsigned` casts, same-width vector addition/subtraction RHS
 chain lowering through `numeric_std` unsigned casts, same-width vector
 multiplication/division/modulo RHS chain lowering through explicit
-target-width `numeric_std` resize, and same-width scalar/vector XOR chain
-lowering through VHDL `xor`. It is covered by direct pipeline, CLI, and facade
-tests.
+target-width `numeric_std` resize, same-width scalar/vector XOR chain lowering
+through VHDL `xor`, and generated non-signed four-state `logic` scalar/vector
+internal declarations as `std_logic` / `std_logic_vector`. It is covered by
+direct pipeline, CLI, and facade tests.
 
 Still backlog: composition/top VHDL, aggregate VHDL record/array lowering,
 VHDL packages, multi-clock domains, GHDL validation, broad expression parity,
@@ -3817,14 +3818,12 @@ direct-root vector arithmetic with numeric literal operands, such as `SRC + 2`,
 `to_unsigned` casts. The declarative bits symbolic-width fixture now lowers
 generated scalar `bit` and signed vector internal declarations, such as
 `bit FLAG;` and `reg signed [3:0] NIB;`, to VHDL `std_logic` and `signed`
-signals.
-
-Active next leaf: generated direct-root non-signed four-state `logic` internal
-signal declarations, such as `logic [7:0] ISYM;` from package-backed
-declarative `+types` fixtures, are selected for the next exact VHDL hardening
-slice. `logic signed` declarations, signed ports, signed arithmetic semantics,
+signals. Package-backed declarative `+types` fixtures now lower generated
+non-signed four-state `logic` internal declarations, such as
+`logic [7:0] ISYM;` and `logic LFLAG;`, to `std_logic_vector` and `std_logic`.
+`logic signed` declarations, signed ports, signed arithmetic semantics,
 composition/top VHDL, aggregate VHDL, packages, GHDL validation, and full
-backend parity remain outside that slice.
+backend parity remain outside the shipped scaffold.
 
 ### GHDL Validation
 

@@ -879,7 +879,8 @@ direct backend behavior: the default path emits SystemVerilog forms, explicit
 VHDL scaffold for the supported subset, including delayed-pulse clock-branch
 lowering, generic-bearing direct-root module headers with typed scalar/vector
 sized-literal defaults, scalar addition/subtraction/multiplication RHS/chain
-lowering, scalar bit and signed vector internal declaration lowering, vector
+lowering, scalar bit, signed vector, and non-signed four-state logic internal
+declaration lowering, vector
 numeric-literal addition/subtraction emitted by compound update/shorthand
 forms, and same-width addition/subtraction/multiplication, division/modulo, and
 XOR RHS/chain lowering, without leaking SystemVerilog module or `always_*`

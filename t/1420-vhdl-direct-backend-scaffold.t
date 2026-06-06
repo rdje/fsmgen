@@ -952,6 +952,115 @@ subtest 'direct VHDL scaffold lowers scalar bit and signed vector internal decla
     unlike($cli_hdl, qr/\bmodule\b|\balways_(?:ff|comb)\b|\breg\s+signed\b|\bbit\s+FLAG\b/s, 'CLI declarative bits VHDL output remains VHDL-shaped');
 };
 
+subtest 'direct VHDL scaffold lowers non-signed four-state logic internal declarations' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $libdir = File::Spec->catdir($tempdir, 'pkg_lib');
+    mkdir $libdir or die "Cannot create $libdir: $!";
+
+    my $package_path = File::Spec->catfile($libdir, 'shared_cfg.fsm');
+    my $fsm_path = File::Spec->catfile($tempdir, 'direct_vhdl_four_state_logic.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'direct_vhdl_four_state_logic.vhd');
+    my $signed_fsm_path = File::Spec->catfile($tempdir, 'direct_vhdl_signed_logic_deferred.fsm');
+    write_file(
+        $package_path,
+        <<'FSM'
+(?pkg:shared_cfg
+  (+types
+    (type imported_byte (four_state (bits BYTE_W)))
+    (type imported_flag (four_state (bits FLAG_W)))
+  )
+  (+constants
+    (BYTE_W 8)
+    (FLAG_W 1)
+  )
+)
+FSM
+    );
+    write_file(
+        $fsm_path,
+        <<'FSM'
+(?fsm:direct_vhdl_four_state_logic
+  (+import shared_cfg)
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+  (+types
+    (type byte_t shared_cfg.imported_byte)
+    (type flag_t shared_cfg.imported_flag)
+  )
+  (+size
+    (OUT byte_t)
+    (ISYM byte_t)
+    (LFLAG flag_t)
+  )
+  (idle
+    (OUT = 8'hA5)
+    (ISYM = OUT)
+    (LFLAG = 1)
+  )
+)
+FSM
+    );
+    write_file(
+        $signed_fsm_path,
+        <<'FSM'
+(?fsm:direct_vhdl_signed_logic_deferred
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+  (+types
+    (type signed_byte_t (four_state (signed (bits 8))))
+  )
+  (+size
+    (OUT signed_byte_t)
+  )
+  (idle
+    (OUT = 8'h01)
+  )
+)
+FSM
+    );
+
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'vhdl',
+        quiet => 1,
+        source_search_paths => [$libdir],
+    );
+    my $hdl = $pipeline->generate_hdl_from_file($fsm_path)->{hdl_code};
+
+    like($hdl, qr/\bentity\s+direct_vhdl_four_state_logic\s+is\b/s, 'four-state logic fixture emits direct VHDL entity');
+    like($hdl, qr/\bsignal\s+ISYM\s+:\s+std_logic_vector\(7\s+downto\s+0\);/s, 'non-signed vector logic declaration lowers to std_logic_vector signal');
+    like($hdl, qr/\bsignal\s+LFLAG\s+:\s+std_logic;/s, 'non-signed scalar logic declaration lowers to std_logic signal');
+    like($hdl, qr/\bISYM\s+<=\s+"00000000";\s+if\s+\w+\s+=\s+'1'\s+then\s+ISYM\s+<=\s+OUT;/s, 'logic vector assignment lowering remains VHDL-shaped');
+    like($hdl, qr/\bLFLAG\s+<=\s+'0';\s+if\s+\w+\s+=\s+'1'\s+then\s+LFLAG\s+<=\s+'1';/s, 'logic scalar assignment lowering uses std_logic literals');
+    unlike($hdl, qr/\bmodule\b|\balways_(?:ff|comb)\b|\blogic\b/s, 'four-state logic VHDL output does not leak SystemVerilog declaration syntax');
+
+    my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--language', 'vhdl', '--quiet', '--path', $libdir, '-o', $output_path, $fsm_path],
+    );
+    my $combined_output = join('', @{ $stdout_buf || [] }, @{ $stderr_buf || [] }, ($error_message || ''));
+    ok($success, 'CLI accepts direct --language vhdl for non-signed four-state logic declarations')
+        or diag($combined_output);
+    ok(-e $output_path, 'CLI writes non-signed four-state logic declaration VHDL output file');
+
+    my $cli_hdl = read_file($output_path);
+    like($cli_hdl, qr/\bsignal\s+ISYM\s+:\s+std_logic_vector\(7\s+downto\s+0\);/s, 'CLI VHDL output includes vector logic declaration lowering');
+    like($cli_hdl, qr/\bsignal\s+LFLAG\s+:\s+std_logic;/s, 'CLI VHDL output includes scalar logic declaration lowering');
+    unlike($cli_hdl, qr/\bmodule\b|\balways_(?:ff|comb)\b|\blogic\b/s, 'CLI four-state logic VHDL output remains VHDL-shaped');
+
+    my $signed_error = capture_exception(sub {
+        $pipeline->generate_hdl_from_file($signed_fsm_path);
+    });
+    like(
+        $signed_error,
+        qr/signed logic declaration 'logic signed \[7:0\] OUT;' is outside the direct VHDL scaffold/s,
+        'logic signed declarations remain outside the direct VHDL scaffold boundary',
+    );
+};
+
 subtest 'direct VHDL scaffold keeps mismatched-width arithmetic expression parity fail-closed' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $fsm_path = File::Spec->catfile($tempdir, 'direct_vhdl_mismatched_division_deferred.fsm');

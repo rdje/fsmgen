@@ -82,7 +82,8 @@ Direct VHDL generation now has a scaffold subset for direct single-FSM roots,
 including delayed-pulse clock-branch lowering, generic-bearing direct-root
 module headers with typed scalar/vector sized-literal defaults, scalar addition,
 subtraction, and multiplication RHS/chain lowering, scalar bit and signed vector
-internal declaration lowering, vector numeric-literal addition/subtraction
+internal declaration lowering, non-signed four-state logic internal declaration
+lowering, vector numeric-literal addition/subtraction
 emitted by compound update/shorthand forms, and same-width
 addition/subtraction/multiplication, division/modulo, and XOR RHS/chain
 lowering.

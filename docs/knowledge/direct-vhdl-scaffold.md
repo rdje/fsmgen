@@ -55,11 +55,11 @@ defaults become `std_logic` generics for one-bit defaults and
 `std_logic_vector` generics for multi-bit defaults; the focused coverage uses
 `params_aggregate_comparison` for the scalar case and
 `params_aggregate_unary_complement` for the vector case. Generated scalar
-`bit` internal declarations lower to `std_logic`, and generated signed vector
+`bit` internal declarations lower to `std_logic`, generated signed vector
 internal declarations such as `reg signed [3:0] NIB` lower to VHDL `signed`
-signals. Generated non-signed four-state `logic` internal declarations remain
-outside the current direct VHDL scaffold and are selected as the next exact
-hardening leaf. The scaffold also lowers the first arithmetic RHS shape:
+signals, and generated non-signed four-state `logic` internal declarations
+lower to `std_logic` / `std_logic_vector` for package-backed declarative
+`+types` fixtures. The scaffold also lowers the first arithmetic RHS shape:
 scalar addition and subtraction RHS forms and chains lower to one-bit truncated
 `xor` semantics, and scalar multiplication plus scalar multiplication chains
 lower to one-bit `and` semantics. Generated direct mux expressions with one vector
