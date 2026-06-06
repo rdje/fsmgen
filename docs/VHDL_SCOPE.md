@@ -150,6 +150,9 @@ The VHDL lane is intentionally narrow:
      generated-FSM scalar integer, scalar expression, one-bit sized bitstring,
      multi-bit sized bitstring, resolved packed aggregate, and resolved
      package-backed actuals
+   - C2 generated-FSM aggregate actuals that do not lower to one packed literal
+     are currently owned by `BACKEND-API-VALIDATION-FRONTIER.99.1` for
+     fail-closed hardening; this is not record/array VHDL generic support
 
 2. **Direct-root structural conversion from SystemVerilog**
    - Generate SystemVerilog through the existing direct backend
@@ -400,6 +403,9 @@ The VHDL lane is intentionally narrow:
   `BACKEND-API-VALIDATION-FRONTIER.97.1` at the same packed-literal boundary.
   C1 standalone-DT non-packed aggregate generic-map hardening is locked by
   `BACKEND-API-VALIDATION-FRONTIER.98.1` at the same packed-literal boundary.
+  C2 generated-FSM non-packed aggregate generic-map hardening is the active
+  `BACKEND-API-VALIDATION-FRONTIER.99.1` owner at the same packed-literal
+  boundary.
 - Remaining semantic conversion work still belongs to exact future VHDL leaves.
 
 ### Phase 3: Regression and hardening (R14.3)

@@ -265,6 +265,10 @@ the child VHDL `std_logic_vector` generic declaration. Resolved packed
 aggregate generic maps also emit before the generated child port map, such as
 `LANES => "1010010100111100"` and `FRAME => "101"`, against the child VHDL
 `std_logic_vector` generic declarations.
+C2 generated-FSM non-packed aggregate generic-map actuals that do not lower to
+one packed literal are currently owned by
+`BACKEND-API-VALIDATION-FRONTIER.99.1` for fail-closed hardening; this is not
+record/array VHDL generic declaration support.
 The bounded APB/C4 generated-FSM child composition VHDL top is also shipped for
 `fsm/apb_tb.fsm`. That subset emits VHDL-safe APB requester/completer child
 segments, vector APB structural signals, deterministic shared-datapath sink
