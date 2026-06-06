@@ -139,8 +139,12 @@ answers:
   - "does direct VHDL support signed vector output port negative decimal literal assignments?"
   - "does direct VHDL support scalar output decimal literals?"
   - "does direct VHDL support scalar output port decimal literal assignments?"
+  - "does direct VHDL support scalar output negative decimal literals?"
+  - "does direct VHDL support scalar output port negative decimal literal assignments?"
   - "does direct VHDL support signed scalar output decimal literals?"
   - "does direct VHDL support signed scalar output port decimal literal assignments?"
+  - "does direct VHDL support signed scalar output negative decimal literals?"
+  - "does direct VHDL support signed scalar output port negative decimal literal assignments?"
   - "does direct VHDL support generics?"
   - "does direct VHDL support parameterized direct roots?"
   - "does direct VHDL support sized literal generic defaults?"
@@ -253,8 +257,10 @@ arithmetic expression `'-1'`. The scaffold also lowers scalar output-port
 next-signal decimal literals: plain and signed one-bit output
 targets lower to `std_logic` low-bit literals, so `2` emits
 `FLAG_next <= '0';` and `3` emits `FLAG_next <= '1';` instead of raw integer
-assignments. Scalar negative output literals remain deferred to a later exact
-owner. Declared
+assignments. Active leaf `BACKEND-API-VALIDATION-FRONTIER.112.1` owns the
+adjacent scalar output-port negative decimal-literal edge: current plain and
+signed one-bit output probes lower the VHDL target to `std_logic` but fail
+before VHDL emission at arithmetic expressions `'-1'` and `'-2'`. Declared
 aggregate structural VHDL ports/nets/types in
 composition tops are locked fail-closed by
 `BACKEND-API-VALIDATION-FRONTIER.101.1`: aggregate top-port shapes that the

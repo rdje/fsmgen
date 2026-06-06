@@ -11,10 +11,10 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
 ## Current state (OVERWRITE this block each update — do not append)
-- latest_commit: `BACKEND-API-VALIDATION-FRONTIER.111.1` (this commit) — direct VHDL now lowers non-signed vector output-port next-signal negative decimal literals through target-width `std_logic_vector(to_signed(...))` with pipeline, CLI, facade, README/VHDL scope, mdBook, and fact-card coverage. `git log -1` for the hash.
-- active_work_unit: `BACKEND-API-VALIDATION-FRONTIER.112` active frontier — select the next exact backend/API edge after vector negative output literal lowering shipped.
-- recently_done: `BACKEND-API-VALIDATION-FRONTIER.111.1`; `BACKEND-API-VALIDATION-FRONTIER.111`; `BACKEND-API-VALIDATION-FRONTIER.110.1`; `BACKEND-API-VALIDATION-FRONTIER.110`; `BACKEND-API-VALIDATION-FRONTIER.109.1`; `BACKEND-API-VALIDATION-FRONTIER.109`; `BACKEND-API-VALIDATION-FRONTIER.108.1`; `BACKEND-API-VALIDATION-FRONTIER.108`; `BACKEND-API-VALIDATION-FRONTIER.107.1`; `BACKEND-API-VALIDATION-FRONTIER.107`; `BACKEND-API-VALIDATION-FRONTIER.106.1`; `BACKEND-API-VALIDATION-FRONTIER.106`; `BACKEND-API-VALIDATION-FRONTIER.105.1`.
-- in_flight_uncommitted: none expected after this `.111.1` commit; unrelated untracked `fx/` intentionally left alone.
+- latest_commit: `BACKEND-API-VALIDATION-FRONTIER.112` (this commit) — selected direct VHDL scalar output-port negative decimal literal lowering after plain and signed one-bit probes failed at arithmetic expressions `'-1'` and `'-2'`. `git log -1` for the hash.
+- active_work_unit: `BACKEND-API-VALIDATION-FRONTIER.112.1` active frontier — lower scalar output-port negative decimal literal assignments through pipeline, CLI, facade, docs, mdBook, and fact-card coverage.
+- recently_done: `BACKEND-API-VALIDATION-FRONTIER.112`; `BACKEND-API-VALIDATION-FRONTIER.111.1`; `BACKEND-API-VALIDATION-FRONTIER.111`; `BACKEND-API-VALIDATION-FRONTIER.110.1`; `BACKEND-API-VALIDATION-FRONTIER.110`; `BACKEND-API-VALIDATION-FRONTIER.109.1`; `BACKEND-API-VALIDATION-FRONTIER.109`; `BACKEND-API-VALIDATION-FRONTIER.108.1`; `BACKEND-API-VALIDATION-FRONTIER.108`; `BACKEND-API-VALIDATION-FRONTIER.107.1`; `BACKEND-API-VALIDATION-FRONTIER.107`; `BACKEND-API-VALIDATION-FRONTIER.106.1`; `BACKEND-API-VALIDATION-FRONTIER.106`.
+- in_flight_uncommitted: none expected after this `.112` selector commit; unrelated untracked `fx/` intentionally left alone.
 - blockers: none.
 
 ## Notes

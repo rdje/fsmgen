@@ -68,9 +68,10 @@ This document defines the scoped R14 VHDL backend plan for FSMGen.
 - The direct scaffold now includes scalar output-port next-signal assignments
   from unsized decimal literals, lowered to `std_logic` low-bit literals for
   plain scalar and signed one-bit alias targets.
-- Active leaf `BACKEND-API-VALIDATION-FRONTIER.112` selects the next exact
-  backend/API edge after non-signed vector output-port negative decimal
-  literal lowering shipped.
+- Active leaf `BACKEND-API-VALIDATION-FRONTIER.112.1` owns only the adjacent
+  scalar output-port negative decimal literal edge: current probes lower the
+  output/next-signal target to `std_logic` but fail at arithmetic expression
+  `'-1'` or `'-2'` until that leaf ships.
 - Composition VHDL is shipped only for the bounded C3 external-RTL
   literal/concat structural top in
   `t/corpus/composition_intent_integer_literals.fsm` and the bounded C1
