@@ -212,9 +212,9 @@ tool and is not run by `--verify-hdl`. This should be understood as a backend
 quality gate for emitted HDL, not as a replacement for FSMGen's semantic,
 strict-mode, and pre-generation checks. The lane is SystemVerilog-only for now;
 direct VHDL generation has a scaffold subset, including delayed-pulse
-clock-branch lowering and same-width
-addition/subtraction/multiplication/division/modulo/XOR RHS/chain lowering, but
-VHDL/GHDL validation waits for a separate GHDL validation lane.
+clock-branch lowering, generic-bearing direct-root module headers, and
+same-width addition/subtraction/multiplication/division/modulo/XOR RHS/chain
+lowering, but VHDL/GHDL validation waits for a separate GHDL validation lane.
 
 ### 6. Reset And Clock Contract Metadata
 

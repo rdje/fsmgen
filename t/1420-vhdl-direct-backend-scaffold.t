@@ -425,6 +425,43 @@ subtest 'direct VHDL scaffold lowers same-width vector division/modulo RHS chain
     );
 };
 
+subtest 'direct VHDL scaffold lowers generated parameterized direct headers to generics' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $output_path = File::Spec->catfile($tempdir, 'direct_size_expression_widths.vhd');
+
+    my $hdl = generate_vhdl('t/corpus/direct_size_expression_widths.fsm');
+    like($hdl, qr/\bentity\s+direct_size_expression_widths\s+is\b/s, 'generic-bearing fixture emits direct VHDL entity');
+    like(
+        $hdl,
+        qr/\bgeneric\s*\(\s+PARAM_DEC_W\s+:\s+integer\s+:=\s+\(10\s+-\s+2\);\s+PARAM_W\s+:\s+integer\s+:=\s+\(2\s+\+\s+1\)\s+\);\s+port\s*\(/s,
+        'generated SV parameter block lowers to a VHDL integer generic block before ports',
+    );
+    like($hdl, qr/\bclk\s+:\s+in\s+std_logic;\s+reset\s+:\s+in\s+std_logic\b/s, 'generic-bearing fixture keeps direct clock/reset ports');
+    like($hdl, qr/\bsignal\s+A\s+:\s+std_logic_vector\(2\s+downto\s+0\);/s, 'resolved symbolic width A lowers to concrete VHDL range');
+    like($hdl, qr/\bsignal\s+B\s+:\s+std_logic_vector\(3\s+downto\s+0\);/s, 'resolved parameter-plus-enum width B lowers to concrete VHDL range');
+    like($hdl, qr/\bsignal\s+C\s+:\s+std_logic_vector\(7\s+downto\s+0\);/s, 'resolved aggregate-index width C lowers to concrete VHDL range');
+    like($hdl, qr/\bsignal\s+H\s+:\s+std_logic_vector\(8\s+downto\s+0\);/s, 'resolved unsized-hex width H lowers to concrete VHDL range');
+    like($hdl, qr/\bH\s+<=\s+"100000001";/s, 'wide hex literal assignment lowers to exact VHDL bit string');
+    unlike($hdl, qr/\bmodule\b|#\s*\(|\bparameter\b|\balways_(?:ff|comb)\b/s, 'generic-bearing VHDL output does not leak SystemVerilog module syntax');
+
+    my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--language', 'vhdl', '--quiet', '-o', $output_path, repo_file('t/corpus/direct_size_expression_widths.fsm')],
+    );
+
+    my $combined_output = join('', @{ $stdout_buf || [] }, @{ $stderr_buf || [] }, ($error_message || ''));
+    ok($success, 'CLI accepts direct --language vhdl for the generic-bearing direct fixture')
+        or diag($combined_output);
+    ok(-e $output_path, 'CLI writes generic-bearing direct VHDL output file');
+
+    my $cli_hdl = read_file($output_path);
+    like(
+        $cli_hdl,
+        qr/\bgeneric\s*\(\s+PARAM_DEC_W\s+:\s+integer\s+:=\s+\(10\s+-\s+2\);\s+PARAM_W\s+:\s+integer\s+:=\s+\(2\s+\+\s+1\)\s+\);/s,
+        'CLI generic-bearing VHDL output includes the integer generic block',
+    );
+    unlike($cli_hdl, qr/\bmodule\b|#\s*\(|\bparameter\b|\balways_(?:ff|comb)\b/s, 'CLI generic-bearing VHDL output remains VHDL-shaped');
+};
+
 subtest 'direct VHDL scaffold keeps mismatched-width arithmetic expression parity fail-closed' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $fsm_path = File::Spec->catfile($tempdir, 'direct_vhdl_mismatched_division_deferred.fsm');

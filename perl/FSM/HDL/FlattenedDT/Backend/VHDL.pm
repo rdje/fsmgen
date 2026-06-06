@@ -32,6 +32,7 @@ sub convert_systemverilog_to_vhdl ($self, $sv_hdl) {
         if $sv_hdl =~ /^\s*logic\b/m;
 
     my $module = _parse_module($sv_hdl);
+    my @generics = _parse_generics($module->{parameters});
     my @ports = _parse_ports($module->{ports});
     my $body = $module->{body};
     my @constants = _parse_constants($body);
@@ -42,6 +43,7 @@ sub convert_systemverilog_to_vhdl ($self, $sv_hdl) {
 
     return _render_vhdl(
         module_name => $module->{name},
+        generics => \@generics,
         ports => \@ports,
         constants => \@constants,
         signals => \@signals,
@@ -52,14 +54,59 @@ sub convert_systemverilog_to_vhdl ($self, $sv_hdl) {
 }
 
 sub _parse_module ($sv_hdl) {
-    $sv_hdl =~ /\bmodule\s+([A-Za-z_][A-Za-z0-9_]*)\s*\((.*?)\n\);\s*(.*?)\nendmodule\b/s
+    $sv_hdl =~ /\bmodule\s+([A-Za-z_][A-Za-z0-9_]*)\b/g
+        or confess _unsupported('could not locate the generated module boundary');
+
+    my $name = $1;
+    my $pos = _skip_ws($sv_hdl, pos($sv_hdl));
+    my $parameters = '';
+
+    if (substr($sv_hdl, $pos, 1) eq '#') {
+        $pos = _skip_ws($sv_hdl, $pos + 1);
+        my $parameter_block = _consume_parenthesized($sv_hdl, $pos, 'parameter block');
+        $parameters = $parameter_block->{content};
+        $pos = _skip_ws($sv_hdl, $parameter_block->{next});
+    }
+
+    my $port_block = _consume_parenthesized($sv_hdl, $pos, 'port list');
+    $pos = _skip_ws($sv_hdl, $port_block->{next});
+    substr($sv_hdl, $pos, 1) eq ';'
+        or confess _unsupported('could not locate the generated module boundary');
+    $pos++;
+
+    pos($sv_hdl) = $pos;
+    $sv_hdl =~ /\G\s*(.*?)\nendmodule\b/gs
         or confess _unsupported('could not locate the generated module boundary');
 
     return {
-        name => $1,
-        ports => $2,
-        body => $3,
+        name => $name,
+        parameters => $parameters,
+        ports => $port_block->{content},
+        body => $1,
     };
+}
+
+sub _parse_generics ($parameter_text) {
+    my @generics;
+
+    for my $raw_line (split /\n/, $parameter_text) {
+        my $line = _strip_line_comment($raw_line);
+        $line =~ s/^\s+|\s+$//g;
+        $line =~ s/,\s*$//;
+        next unless length $line;
+
+        if ($line =~ /^parameter\s+([A-Za-z_][A-Za-z0-9_]*)\s*=\s*(.+)$/) {
+            push @generics, {
+                name => $1,
+                default => _sv_integer_expr_to_vhdl($2),
+            };
+            next;
+        }
+
+        confess _unsupported("unsupported generated parameter declaration '$line'");
+    }
+
+    return @generics;
 }
 
 sub _parse_ports ($port_text) {
@@ -404,6 +451,21 @@ sub _render_vhdl (%args) {
         "entity $module_name is",
     );
 
+    if (@{$args{generics}}) {
+        push @lines, '  generic (';
+        for my $idx (0 .. $#{$args{generics}}) {
+            my $generic = $args{generics}->[$idx];
+            my $suffix = $idx == $#{$args{generics}} ? '' : ';';
+            push @lines, sprintf(
+                '    %s : integer := %s%s',
+                $generic->{name},
+                $generic->{default},
+                $suffix,
+            );
+        }
+        push @lines, '  );';
+    }
+
     if (@{$args{ports}}) {
         push @lines, '  port (';
         for my $idx (0 .. $#{$args{ports}}) {
@@ -688,6 +750,52 @@ sub _literal_bits ($literal) {
     }
 
     confess _unsupported("unsupported literal base '$base'");
+}
+
+sub _sv_integer_expr_to_vhdl ($expr) {
+    my $converted = _trim($expr);
+    confess _unsupported("unsupported parameter expression '$expr'")
+        unless length $converted;
+    confess _unsupported("unsupported parameter expression '$expr'")
+        unless $converted =~ /\A[A-Za-z0-9_()\s+\-*\/%]+\z/;
+
+    $converted =~ s/%/ mod /g;
+    $converted =~ s/\+\s*-(?=\s*(?:[0-9]|[A-Za-z_]))/- /g;
+    $converted =~ s/\s+/ /g;
+    return _trim($converted);
+}
+
+sub _skip_ws ($text, $pos) {
+    $pos++ while $pos < length($text) && substr($text, $pos, 1) =~ /\s/;
+    return $pos;
+}
+
+sub _consume_parenthesized ($text, $pos, $label) {
+    substr($text, $pos, 1) eq '('
+        or confess _unsupported("could not locate the generated module $label");
+
+    my $depth = 0;
+    my $start = $pos + 1;
+    for (my $idx = $pos; $idx < length($text); $idx++) {
+        my $char = substr($text, $idx, 1);
+        if ($char eq '(') {
+            $depth++;
+            next;
+        }
+        if ($char eq ')') {
+            $depth--;
+            if ($depth == 0) {
+                return {
+                    content => substr($text, $start, $idx - $start),
+                    next => $idx + 1,
+                };
+            }
+            confess _unsupported("generated module $label closed more parentheses than it opened")
+                if $depth < 0;
+        }
+    }
+
+    confess _unsupported("unterminated generated module $label");
 }
 
 sub _strip_line_comment ($line) {

@@ -416,6 +416,33 @@ subtest 'facade target_language option routes direct VHDL division/modulo scaffo
     );
 };
 
+subtest 'facade target_language option routes direct VHDL generic-bearing scaffold behavior' => sub {
+    my $direct_path = repo_file('t/corpus/direct_size_expression_widths.fsm');
+    my $vhdl_pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'vhdl',
+        quiet => 1,
+    );
+
+    my $vhdl_result = $vhdl_pipeline->generate_hdl_from_file($direct_path);
+
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bentity\s+direct_size_expression_widths\s+is\b/s,
+        'explicit VHDL facade generation emits the generic-bearing direct entity',
+    );
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bgeneric\s*\(\s+PARAM_DEC_W\s+:\s+integer\s+:=\s+\(10\s+-\s+2\);\s+PARAM_W\s+:\s+integer\s+:=\s+\(2\s+\+\s+1\)\s+\);\s+port\s*\(/s,
+        'explicit VHDL facade generation lowers direct parameters to integer generics',
+    );
+    unlike(
+        $vhdl_result->{hdl_code},
+        qr/\bmodule\b|#\s*\(|\bparameter\b|\balways_(?:ff|comb)\b/s,
+        'explicit VHDL generic-bearing facade generation does not leak SystemVerilog module syntax',
+    );
+};
+
 done_testing();
 
 sub repo_file {

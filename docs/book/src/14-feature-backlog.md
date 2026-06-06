@@ -3769,7 +3769,8 @@ Current boundary: the CLI and `FSM::Pipeline::HDLGenerator` route
 entity/architecture text for scalar/vector ports, state constants,
 continuous enable assignments, `process(all)` combinational muxes, sync-reset
 clocked processes, async-reset clocked processes, delayed-pulse clock-branch
-nested-if lowering, basic concat RHS forms, same-width vector
+nested-if lowering, generic-bearing direct-root module headers as VHDL integer
+generics, basic concat RHS forms, same-width vector
 addition/subtraction RHS chain lowering through `numeric_std` unsigned casts,
 same-width vector multiplication/division/modulo RHS chain lowering through
 explicit target-width `numeric_std` resize, and same-width scalar/vector XOR
@@ -3784,9 +3785,9 @@ contexts beyond the same-width
 addition/subtraction/multiplication/division/modulo/XOR RHS chain family remain
 fail-closed at the scaffold boundary. The maintained arithmetic/XOR and runtime
 division/modulo corpora now lower through the direct VHDL scaffold for that
-family. Generic-bearing direct-root module headers are selected for the next
-exact scaffold leaf (`BACKEND-API-VALIDATION-FRONTIER.27.1`) and are not yet a
-shipped VHDL subset claim.
+family, and the maintained size-expression width fixture now lowers generated
+direct-root parameter blocks to VHDL integer generics. Composition VHDL
+generic maps remain deferred until a composition VHDL leaf owns that path.
 
 ### GHDL Validation
 

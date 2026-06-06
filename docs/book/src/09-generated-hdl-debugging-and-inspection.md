@@ -79,8 +79,9 @@ ABC is not required for `--verify-hdl`, and the validation command sequence
 does not run a standalone ABC pass.
 
 Direct VHDL generation now has a scaffold subset for direct single-FSM roots,
-including delayed-pulse clock-branch lowering and same-width
-addition/subtraction/multiplication/division/modulo/XOR RHS/chain lowering.
+including delayed-pulse clock-branch lowering, generic-bearing direct-root
+module headers, and same-width addition/subtraction/multiplication,
+division/modulo, and XOR RHS/chain lowering.
 VHDL validation with GHDL is intentionally deferred until a separate GHDL
 validation lane is runnable, documented, support-accounted, and regression-backed. The current
 regression gate is a focused SystemVerilog smoke, not yet a claim that every
