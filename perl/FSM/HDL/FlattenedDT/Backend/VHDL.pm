@@ -535,10 +535,10 @@ sub _simple_arithmetic_to_vhdl ($expr, $ctx) {
     };
 
     $unsupported->()
-        if $expr =~ /[\/%]/ || $expr =~ /\bmod\b/i || $expr =~ /\^/;
+        if $expr =~ /[\/%]/ || $expr =~ /\bmod\b/i;
 
     my $operator;
-    my @operators = $expr =~ /([+*]|-)/g;
+    my @operators = $expr =~ /([+*^]|-)/g;
     my %operator_seen = map { $_ => 1 } @operators;
     if (!@operators || keys(%operator_seen) != 1) {
         $unsupported->();
@@ -557,6 +557,9 @@ sub _simple_arithmetic_to_vhdl ($expr, $ctx) {
     elsif ($operator eq '*') {
         $separator = qr/\s*\*\s*/;
     }
+    elsif ($operator eq '^') {
+        $separator = qr/\s*\^\s*/;
+    }
 
     my @operand_names = split $separator, $expr;
     $unsupported->()
@@ -570,18 +573,26 @@ sub _simple_arithmetic_to_vhdl ($expr, $ctx) {
     my $target_decl = _decl_for_lvalue($ctx->{target_lhs}, $decls_by_name)
         or $unsupported->();
 
-    $unsupported->()
-        if $target_decl->{scalar};
-
     my $target_width = _decl_width($target_decl);
     my @converted_operands;
     for my $operand_name (@operand_names) {
         my $operand_decl = $decls_by_name->{$operand_name}
             or $unsupported->();
+        my $operand_width = _decl_width($operand_decl);
+        if ($operator eq '^') {
+            $unsupported->()
+                if $target_width != $operand_width;
+            push @converted_operands, $operand_name;
+            next;
+        }
+
         $unsupported->()
-            if $operand_decl->{scalar} || $target_width != _decl_width($operand_decl);
+            if $target_decl->{scalar} || $operand_decl->{scalar} || $target_width != $operand_width;
         push @converted_operands, "unsigned($operand_name)";
     }
+
+    return join(' xor ', @converted_operands)
+        if $operator eq '^';
 
     my $converted_expression = join(" $operator ", @converted_operands);
     return "std_logic_vector(resize($converted_expression, $target_width))"

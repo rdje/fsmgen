@@ -3,7 +3,7 @@
 > **AUTO-GENERATED — DO NOT EDIT.** Regenerate with `knowledge-map/scripts/gen_knowledge_map.sh`.
 > Source of truth = YAML front-matter in: `docs/knowledge docs/decisions`. Edit the fact files, never this map.
 > A fact is any `.md` whose front-matter has a non-empty `answers:` list.
-> **31** facts · **150** question keys.
+> **31** facts · **151** question keys.
 
 ## Questions → fact
 
@@ -31,6 +31,7 @@
 - "does ISF support $stable / $rose / $fell / $changed?" -> [isf-sampled-value-predicates](docs/knowledge/isf-sampled-value-predicates.md) · 2026-06-05 · reverify: `prove -Iperl t/1417-isf-property-sampled-value.t`
 - "does ISF validate the assert condition or pass it through?" -> [isf-property-grammar-location](docs/knowledge/isf-property-grammar-location.md) · 2026-06-05 · reverify: `grep -n "sub parse_check_property" perl/FSM/Adapter/FSMGenFull/Parser.pm`
 - "does adding a schedule-report key need a schema_version bump?" -> [isf-schedule-report-additive-keys](docs/knowledge/isf-schedule-report-additive-keys.md) · 2026-06-03 · reverify: `prove -Iperl t/1116-isf-public-schedule-report-key-family-audit.t t/1227-isf-schedule-report-freeze-boundary.t`
+- "does direct VHDL support XOR chains?" -> [direct-vhdl-scaffold](docs/knowledge/direct-vhdl-scaffold.md) · 2026-06-06 · reverify: `prove -Iperl t/1420-vhdl-direct-backend-scaffold.t t/386-hdl-generator-facade-target-language-boundary-audit.t t/114-composition-target-support-diagnostics.t t/313-hdl-external-validation-contract.t t/308-systemverilog-external-validation.t`
 - "does direct VHDL support aggregate outputs?" -> [direct-vhdl-scaffold](docs/knowledge/direct-vhdl-scaffold.md) · 2026-06-06 · reverify: `prove -Iperl t/1420-vhdl-direct-backend-scaffold.t t/386-hdl-generator-facade-target-language-boundary-audit.t t/114-composition-target-support-diagnostics.t t/313-hdl-external-validation-contract.t t/308-systemverilog-external-validation.t`
 - "does direct VHDL support arithmetic expressions?" -> [direct-vhdl-scaffold](docs/knowledge/direct-vhdl-scaffold.md) · 2026-06-06 · reverify: `prove -Iperl t/1420-vhdl-direct-backend-scaffold.t t/386-hdl-generator-facade-target-language-boundary-audit.t t/114-composition-target-support-diagnostics.t t/313-hdl-external-validation-contract.t t/308-systemverilog-external-validation.t`
 - "does direct VHDL support delayed pulses?" -> [direct-vhdl-scaffold](docs/knowledge/direct-vhdl-scaffold.md) · 2026-06-06 · reverify: `prove -Iperl t/1420-vhdl-direct-backend-scaffold.t t/386-hdl-generator-facade-target-language-boundary-audit.t t/114-composition-target-support-diagnostics.t t/313-hdl-external-validation-contract.t t/308-systemverilog-external-validation.t`
@@ -190,7 +191,7 @@ _Generated-child shared-datapath export pins are bound to deterministic sink wir
 ### direct-vhdl-scaffold
 _Direct single-FSM VHDL generation has a scoped scaffold_
 
-- **answers:** is VHDL still not implemented? | does --language vhdl work for direct FSM roots? | what VHDL subset is shipped? | does direct VHDL support aggregate outputs? | is composition VHDL supported? | is GHDL validation active? | does direct VHDL support delayed pulses? | does direct VHDL support arithmetic expressions? | does direct VHDL support multi-operand addition? | does direct VHDL support subtraction chains? | does direct VHDL support multiplication chains?
+- **answers:** is VHDL still not implemented? | does --language vhdl work for direct FSM roots? | what VHDL subset is shipped? | does direct VHDL support aggregate outputs? | is composition VHDL supported? | is GHDL validation active? | does direct VHDL support delayed pulses? | does direct VHDL support arithmetic expressions? | does direct VHDL support multi-operand addition? | does direct VHDL support subtraction chains? | does direct VHDL support multiplication chains? | does direct VHDL support XOR chains?
 - **date:** 2026-06-06 · **status:** current
 - **evidence:** `perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm; perl/FSM/Support/HDLExternalValidationContract.pm; t/1420-vhdl-direct-backend-scaffold.t; t/386-hdl-generator-facade-target-language-boundary-audit.t; docs/VHDL_SCOPE.md; docs/tasks/BACKEND-API-VALIDATION-FRONTIER.md`
 - **reverify:** `prove -Iperl t/1420-vhdl-direct-backend-scaffold.t t/386-hdl-generator-facade-target-language-boundary-audit.t t/114-composition-target-support-diagnostics.t t/313-hdl-external-validation-contract.t t/308-systemverilog-external-validation.t`

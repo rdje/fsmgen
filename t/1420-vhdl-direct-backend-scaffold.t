@@ -283,6 +283,89 @@ FSM
     );
 };
 
+subtest 'direct VHDL scaffold lowers same-width bitwise XOR RHS chains' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $scalar_fsm_path = File::Spec->catfile($tempdir, 'direct_vhdl_scalar_xor_chain.fsm');
+    my $vector_fsm_path = File::Spec->catfile($tempdir, 'direct_vhdl_vector_xor_chain.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'direct_vhdl_scalar_xor_chain.vhd');
+    write_file(
+        $scalar_fsm_path,
+        <<'FSM'
+(?fsm:direct_vhdl_scalar_xor_chain
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+  (+size
+    (X 1)
+    (Y 1)
+    (Z 1)
+    (MASK 1)
+  )
+  (idle
+    (= (MASK (^ X Y Z)))
+  )
+)
+FSM
+    );
+    write_file(
+        $vector_fsm_path,
+        <<'FSM'
+(?fsm:direct_vhdl_vector_xor_chain
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+  (+size
+    (A 8)
+    (B 8)
+    (C 8)
+    (MASK 8)
+  )
+  (idle
+    (= (MASK (^ A B C)))
+  )
+)
+FSM
+    );
+
+    my $scalar_hdl = generate_vhdl($scalar_fsm_path);
+    like(
+        $scalar_hdl,
+        qr/\bintermediate_xor_X_Y_Z_1\s+<=\s+X\s+xor\s+Y\s+xor\s+Z;/s,
+        'same-width scalar bitwise XOR chains lower to VHDL xor',
+    );
+    like(
+        $scalar_hdl,
+        qr/\bMASK\s+<=\s+intermediate_xor_X_Y_Z_1;/s,
+        'same-width scalar bitwise XOR result drives the VHDL mux assignment',
+    );
+    unlike($scalar_hdl, qr/\balways_(?:ff|comb)\b|\bmodule\b/s, 'scalar XOR-chain VHDL output remains VHDL-shaped');
+
+    my $vector_hdl = generate_vhdl($vector_fsm_path);
+    like(
+        $vector_hdl,
+        qr/\bintermediate_xor_A_B_C_1\s+<=\s+A\s+xor\s+B\s+xor\s+C;/s,
+        'same-width vector bitwise XOR chains lower to VHDL xor',
+    );
+
+    my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--language', 'vhdl', '--quiet', '-o', $output_path, $scalar_fsm_path],
+    );
+
+    my $combined_output = join('', @{ $stdout_buf || [] }, @{ $stderr_buf || [] }, ($error_message || ''));
+    ok($success, 'CLI accepts direct --language vhdl for the same-width scalar XOR-chain fixture')
+        or diag($combined_output);
+    ok(-e $output_path, 'CLI writes direct scalar XOR-chain VHDL output file');
+
+    my $cli_hdl = read_file($output_path);
+    like(
+        $cli_hdl,
+        qr/\bintermediate_xor_X_Y_Z_1\s+<=\s+X\s+xor\s+Y\s+xor\s+Z;/s,
+        'CLI scalar XOR-chain VHDL output uses VHDL xor',
+    );
+};
+
 subtest 'direct VHDL scaffold keeps broader arithmetic expression parity fail-closed' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $fsm_path = File::Spec->catfile($tempdir, 'direct_vhdl_division_deferred.fsm');
@@ -312,14 +395,12 @@ FSM
 
     like($error, qr/arithmetic expression 'A \/ B' is outside the direct VHDL scaffold/s, 'division remains outside the direct VHDL scaffold boundary');
 
-    my $corpus_error = capture_exception(sub {
-        generate_vhdl('t/corpus/arithmetic_xor_operator_variants.fsm');
-    });
+    my $corpus_hdl = generate_vhdl('t/corpus/arithmetic_xor_operator_variants.fsm');
 
-    unlike($corpus_error, qr/arithmetic expression 'a \+ b \+ c \+ d'/s, 'arithmetic corpus no longer fails on the same-width addition chain');
-    unlike($corpus_error, qr/arithmetic expression 'a - b - c - d'/s, 'arithmetic corpus no longer fails on the same-width subtraction chain');
-    unlike($corpus_error, qr/arithmetic expression 'a \* b \* c \* d'/s, 'arithmetic corpus no longer fails on the same-width multiplication chain');
-    like($corpus_error, qr/arithmetic expression 'x \^ y \^ z' is outside the direct VHDL scaffold/s, 'XOR chains remain outside the direct VHDL scaffold boundary');
+    like($corpus_hdl, qr/\bsum\s+<=\s+std_logic_vector\(unsigned\(a\)\s+\+\s+unsigned\(b\)\s+\+\s+unsigned\(c\)\s+\+\s+unsigned\(d\)\);/s, 'arithmetic corpus lowers the same-width addition chain');
+    like($corpus_hdl, qr/\bdiff\s+<=\s+std_logic_vector\(unsigned\(a\)\s+-\s+unsigned\(b\)\s+-\s+unsigned\(c\)\s+-\s+unsigned\(d\)\);/s, 'arithmetic corpus lowers the same-width subtraction chain');
+    like($corpus_hdl, qr/\bprod\s+<=\s+std_logic_vector\(resize\(unsigned\(a\)\s+\*\s+unsigned\(b\)\s+\*\s+unsigned\(c\)\s+\*\s+unsigned\(d\),\s+8\)\);/s, 'arithmetic corpus lowers the same-width multiplication chain');
+    like($corpus_hdl, qr/\bintermediate_xor_x_y_z_1\s+<=\s+x\s+xor\s+y\s+xor\s+z;/s, 'arithmetic corpus lowers the same-width scalar XOR chain');
 };
 
 subtest 'CLI routes direct --language vhdl through the scaffold' => sub {

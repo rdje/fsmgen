@@ -3769,18 +3769,20 @@ Current boundary: the CLI and `FSM::Pipeline::HDLGenerator` route
 entity/architecture text for scalar/vector ports, state constants,
 continuous enable assignments, `process(all)` combinational muxes, sync-reset
 clocked processes, async-reset clocked processes, delayed-pulse clock-branch
-nested-if lowering, basic concat RHS forms, and same-width vector
+nested-if lowering, basic concat RHS forms, same-width vector
 addition/subtraction/multiplication RHS chain lowering through `numeric_std`
-unsigned casts and explicit target-width multiplication resize. It is covered
+unsigned casts and explicit target-width multiplication resize, and
+same-width scalar/vector XOR chain lowering through VHDL `xor`. It is covered
 by direct pipeline, CLI, and facade tests.
 
 Still backlog: composition/top VHDL, aggregate VHDL record/array lowering,
 VHDL packages, multi-clock domains, GHDL validation, broad expression parity,
 and full feature parity with the SystemVerilog backend. Broader arithmetic
 operators, scalar arithmetic, mismatched-width arithmetic, and expression
-contexts beyond same-width vector addition/subtraction/multiplication RHS
-chains remain fail-closed at the scaffold boundary. XOR chains such as
-`x ^ y ^ z` are the current first arithmetic/XOR corpus boundary.
+contexts beyond the same-width addition/subtraction/multiplication/XOR RHS
+chain family remain fail-closed at the scaffold boundary. The maintained
+arithmetic/XOR operator corpus now lowers through the direct VHDL scaffold for
+that family.
 
 ### GHDL Validation
 

@@ -345,6 +345,50 @@ FSM
     );
 };
 
+subtest 'facade target_language option routes direct VHDL XOR-chain scaffold behavior' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $direct_path = File::Spec->catfile($tempdir, 'facade_direct_vhdl_xor_chain.fsm');
+    write_file(
+        $direct_path,
+        <<'FSM'
+(?fsm:facade_direct_vhdl_xor_chain
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+  (+size
+    (X 1)
+    (Y 1)
+    (Z 1)
+    (MASK 1)
+  )
+  (idle
+    (= (MASK (^ X Y Z)))
+  )
+)
+FSM
+    );
+
+    my $vhdl_pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'vhdl',
+        quiet => 1,
+    );
+
+    my $vhdl_result = $vhdl_pipeline->generate_hdl_from_file($direct_path);
+
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bintermediate_xor_X_Y_Z_1\s+<=\s+X\s+xor\s+Y\s+xor\s+Z;/s,
+        'explicit VHDL facade generation lowers same-width scalar XOR chains to VHDL xor',
+    );
+    unlike(
+        $vhdl_result->{hdl_code},
+        qr/\bmodule\b|\balways_(?:ff|comb)\b/s,
+        'explicit VHDL XOR-chain facade generation does not leak SystemVerilog module or always_* forms',
+    );
+};
+
 done_testing();
 
 sub repo_file {
