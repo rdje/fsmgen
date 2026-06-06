@@ -325,7 +325,7 @@ sub _is_vhdl_apb_c4_generated_fsm_candidate ($instances, $ports_blocks, $wiring_
         my $name = $instance->name // '';
         return 0 unless ($instance->kind // '') eq 'fsmc';
         return 0 unless ($expected_instance_source{$name} // '') eq ($instance->source_name // '');
-        return 0 unless _has_only_scalar_integer_expression_or_one_bit_parameter_overrides($instance);
+        return 0 unless _has_only_scalar_integer_expression_or_sized_bitstring_parameter_overrides($instance);
         delete $expected_instance_source{$name};
     }
     return 0 if keys %expected_instance_source;
@@ -378,14 +378,14 @@ sub _is_vhdl_apb_c4_generated_fsm_candidate ($instances, $ports_blocks, $wiring_
     return 1;
 }
 
-sub _has_only_scalar_integer_expression_or_one_bit_parameter_overrides ($instance) {
+sub _has_only_scalar_integer_expression_or_sized_bitstring_parameter_overrides ($instance) {
     for my $override (@{$instance->parameter_overrides || []}) {
         return 0 unless ($override->{value_kind} // 'scalar') eq 'scalar';
         my $value = $override->{value_text};
         return 0 unless defined($value);
         next if $value =~ /\A-?\d+\z/;
         next if _is_scalar_integer_expression($value);
-        next if _is_one_bit_sized_bitstring_literal($value);
+        next if _is_sized_bitstring_literal($value);
         return 0;
     }
     return 1;
@@ -395,8 +395,27 @@ sub _is_scalar_integer_expression ($value) {
     return $value =~ /\A\(\s*-?\d+(?:\s+[-+*\/]\s+-?\d+)+\s*\)\z/ ? 1 : 0;
 }
 
-sub _is_one_bit_sized_bitstring_literal ($value) {
-    return $value =~ /\A1'[bB][01]\z/ ? 1 : 0;
+sub _is_sized_bitstring_literal ($value) {
+    return 0
+        unless $value =~ /\A([1-9][0-9]*)'([bBhH])([0-9A-Fa-f_xXzZ]+)\z/;
+
+    my ($width, $base, $digits) = ($1 + 0, lc($2), $3);
+    return 0 if $digits =~ /[xz]/i;
+
+    $digits =~ s/_//g;
+    my $bit_count = $base eq 'b'
+        ? _binary_bit_count($digits)
+        : _hex_bit_count($digits);
+    return 0 unless defined $bit_count;
+    return $bit_count <= $width ? 1 : 0;
+}
+
+sub _binary_bit_count ($digits) {
+    return $digits =~ /\A[01]+\z/ ? length($digits) : undef;
+}
+
+sub _hex_bit_count ($digits) {
+    return $digits =~ /\A[0-9A-Fa-f]+\z/ ? length($digits) * 4 : undef;
 }
 
 sub realize_instances ($class, %args) {
