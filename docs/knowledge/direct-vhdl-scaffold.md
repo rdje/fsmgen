@@ -51,6 +51,8 @@ answers:
   - "does composition VHDL support generated-child generic maps?"
   - "does composition VHDL support generated-FSM one-bit generic maps?"
   - "does composition VHDL support one-bit generated-FSM generic maps?"
+  - "does composition VHDL support generated-FSM non-packed aggregate generic maps?"
+  - "does composition VHDL support C2 generated-FSM non-packed aggregate generic maps?"
   - "does composition VHDL support bitstring generic maps?"
   - "does composition VHDL support sized bitstring generic actuals?"
   - "does composition VHDL support scalar expression generic maps?"
@@ -266,9 +268,9 @@ aggregate generic maps also emit before the generated child port map, such as
 `LANES => "1010010100111100"` and `FRAME => "101"`, against the child VHDL
 `std_logic_vector` generic declarations.
 C2 generated-FSM non-packed aggregate generic-map actuals that do not lower to
-one packed literal are currently owned by
-`BACKEND-API-VALIDATION-FRONTIER.99.1` for fail-closed hardening; this is not
-record/array VHDL generic declaration support.
+one packed literal are locked fail-closed by
+`BACKEND-API-VALIDATION-FRONTIER.99.1`; this is not record/array VHDL generic
+declaration support.
 The bounded APB/C4 generated-FSM child composition VHDL top is also shipped for
 `fsm/apb_tb.fsm`. That subset emits VHDL-safe APB requester/completer child
 segments, vector APB structural signals, deterministic shared-datapath sink

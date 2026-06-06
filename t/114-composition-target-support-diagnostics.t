@@ -87,6 +87,8 @@ my $generated_fsmc_bitstring_generic_map_path = File::Spec->catfile($tempdir, 'v
 my $generated_fsmc_bitstring_generic_map_output_path = File::Spec->catfile($tempdir, 'vhdl_generated_fsmc_bitstring_generic_map_top.vhd');
 my $generated_fsmc_aggregate_generic_map_path = File::Spec->catfile($tempdir, 'vhdl_generated_fsmc_aggregate_generic_map_top.fsm');
 my $generated_fsmc_aggregate_generic_map_output_path = File::Spec->catfile($tempdir, 'vhdl_generated_fsmc_aggregate_generic_map_top.vhd');
+my $generated_fsmc_nonpacked_aggregate_generic_map_path = File::Spec->catfile($tempdir, 'vhdl_generated_fsmc_nonpacked_aggregate_generic_map_top.fsm');
+my $generated_fsmc_nonpacked_aggregate_generic_map_output_path = File::Spec->catfile($tempdir, 'vhdl_generated_fsmc_nonpacked_aggregate_generic_map_top.vhd');
 my $generated_fsmc_one_bit_generic_map_path = File::Spec->catfile($tempdir, 'vhdl_generated_fsmc_one_bit_generic_map_top.fsm');
 my $generated_fsmc_one_bit_generic_map_output_path = File::Spec->catfile($tempdir, 'vhdl_generated_fsmc_one_bit_generic_map_top.vhd');
 my $composition_path = File::Spec->catfile($tempdir, 'vhdl_composition_top.fsm');
@@ -791,6 +793,52 @@ write_file(
 FSM
 );
 write_file(
+    $generated_fsmc_nonpacked_aggregate_generic_map_path,
+    <<'FSM'
+(?top:vhdl_generated_fsmc_nonpacked_aggregate_generic_map_top
+  (?ports:public_io
+    clk
+    rst_n
+    result_data>
+  )
+  (?fsmc:producer implicit_autowire_producer
+    (params
+      (LANES ((+ 6 1) (+ 7 1)))
+    )
+  )
+  (?fsmc:consumer implicit_autowire_consumer)
+  (?wiring:wiring
+    (producer.output_data consumer.input_data)
+    (consumer.result_data result_data)
+  )
+)
+
+(?fsm:implicit_autowire_producer
+  (+params
+    (LANES ((+ 4 1) (+ 5 1)))
+  )
+  (+size
+    (output_data 1)
+  )
+
+  (-drive_outputs
+    (= (output_data> 1'b1))
+  )
+)
+
+(?fsm:implicit_autowire_consumer
+  (+size
+    (input_data 1)
+    (result_data 1)
+  )
+
+  (-drive_outputs
+    (= (result_data> input_data))
+  )
+)
+FSM
+);
+write_file(
     $generated_fsmc_one_bit_generic_map_path,
     <<'FSM'
 (?top:vhdl_generated_fsmc_one_bit_generic_map_top
@@ -1254,6 +1302,22 @@ unlike(
     $generated_fsmc_aggregate_generic_map_result->{hdl_code},
     qr/\bmodule\b|\bassign\b|\bendmodule\b|\balways_(?:ff|comb)\b|\#\s*\(|\.LANES\s*\(|\.FRAME\s*\(|16'b|3'b/s,
     'pipeline generated-FSM aggregate generic-map VHDL output does not leak SystemVerilog generic syntax or packed literals',
+);
+
+my $generated_fsmc_nonpacked_aggregate_generic_map_error;
+my $generated_fsmc_nonpacked_aggregate_generic_map_ok = eval {
+    $pipeline->generate_hdl_from_file($generated_fsmc_nonpacked_aggregate_generic_map_path);
+    1;
+};
+$generated_fsmc_nonpacked_aggregate_generic_map_error = $@;
+ok(
+    !$generated_fsmc_nonpacked_aggregate_generic_map_ok,
+    'pipeline rejects generated-FSM non-packed aggregate generic maps for VHDL',
+);
+like(
+    $generated_fsmc_nonpacked_aggregate_generic_map_error,
+    qr/aggregate parameter\/generic values must lower to one packed literal before backend emission.*malformed_payload/s,
+    'pipeline generated-FSM non-packed aggregate generic-map rejection names the packed-literal boundary',
 );
 
 my $generated_fsmc_one_bit_generic_map_result = $pipeline->generate_hdl_from_file($generated_fsmc_one_bit_generic_map_path);
@@ -2122,6 +2186,31 @@ unlike(
     $generated_fsmc_aggregate_generic_map_cli_hdl,
     qr/\bmodule\b|\bassign\b|\bendmodule\b|\balways_(?:ff|comb)\b|\#\s*\(|\.LANES\s*\(|\.FRAME\s*\(|16'b|3'b/s,
     'CLI generated-FSM aggregate generic-map composition VHDL output does not leak SystemVerilog syntax or packed literals',
+);
+
+my ($generated_fsmc_nonpacked_aggregate_generic_map_success, $generated_fsmc_nonpacked_aggregate_generic_map_error_message, $generated_fsmc_nonpacked_aggregate_generic_map_full_buf, $generated_fsmc_nonpacked_aggregate_generic_map_stdout_buf, $generated_fsmc_nonpacked_aggregate_generic_map_stderr_buf) = run(
+    command => ['./bin/fsmgen', '--language', 'vhdl', '--quiet', '-o', $generated_fsmc_nonpacked_aggregate_generic_map_output_path, $generated_fsmc_nonpacked_aggregate_generic_map_path],
+);
+
+my $generated_fsmc_nonpacked_aggregate_generic_map_combined_output = join(
+    '',
+    @{ $generated_fsmc_nonpacked_aggregate_generic_map_stdout_buf || [] },
+    @{ $generated_fsmc_nonpacked_aggregate_generic_map_stderr_buf || [] },
+    ($generated_fsmc_nonpacked_aggregate_generic_map_error_message || ''),
+);
+
+ok(
+    !$generated_fsmc_nonpacked_aggregate_generic_map_success,
+    'CLI rejects generated-FSM non-packed aggregate generic maps for VHDL',
+);
+like(
+    $generated_fsmc_nonpacked_aggregate_generic_map_combined_output,
+    qr/aggregate parameter\/generic values must lower to one packed literal before backend emission.*malformed_payload/s,
+    'CLI generated-FSM non-packed aggregate generic-map rejection names the packed-literal boundary',
+);
+ok(
+    !-e $generated_fsmc_nonpacked_aggregate_generic_map_output_path,
+    'CLI does not write generated-FSM non-packed aggregate generic-map VHDL output',
 );
 
 my ($generated_fsmc_one_bit_generic_map_success, $generated_fsmc_one_bit_generic_map_error_message, $generated_fsmc_one_bit_generic_map_full_buf, $generated_fsmc_one_bit_generic_map_stdout_buf, $generated_fsmc_one_bit_generic_map_stderr_buf) = run(

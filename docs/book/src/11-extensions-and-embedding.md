@@ -971,8 +971,8 @@ packed aggregate actuals; and shipped APB/C4 generated-FSM scalar integer and
 scalar expression, one-bit sized bitstring, and multi-bit sized bitstring
 actuals plus resolved packed aggregate and resolved package-backed actuals.
 C2 generated-FSM aggregate actuals that do not lower to one packed literal are
-the active `BACKEND-API-VALIDATION-FRONTIER.99.1` fail-closed hardening
-boundary; that does not imply record/array VHDL generic declaration support.
+locked fail-closed by `BACKEND-API-VALIDATION-FRONTIER.99.1`; that does not
+imply record/array VHDL generic declaration support.
 That is still a scoped scaffold, not a full VHDL backend promise.
 
 [t/387-hdl-generator-facade-debug-level-boundary-audit.t](t/387-hdl-generator-facade-debug-level-boundary-audit.t)
@@ -2370,9 +2370,9 @@ this normalized semantic shape:
 ```
 
 The current active backend/API frontier is
-`BACKEND-API-VALIDATION-FRONTIER.99.1`, which locks C2 generated-FSM
-non-packed aggregate generic-map actuals that do not lower to one packed
-literal as fail-closed before VHDL emission.
+`BACKEND-API-VALIDATION-FRONTIER.100`, which selects the next exact
+backend/API edge after C2 generated-FSM non-packed aggregate generic-map
+actuals were locked fail-closed before VHDL emission.
 Package declaration and VHDL package emission, already bounded
 constant/enum/type internals, unrelated forward-IR payloads, signed scalar
 division/modulo, mixed signed/unsigned arithmetic, standalone-DT generic maps
@@ -2385,8 +2385,7 @@ emission, external-RTL aggregate actuals that do not lower to one packed
 literal now locked fail-closed before VHDL emission, standalone-DT aggregate
 actuals that do not lower to one packed literal now locked fail-closed before
 VHDL emission, generated-FSM aggregate actuals that do not lower to one packed
-literal currently owned by `BACKEND-API-VALIDATION-FRONTIER.99.1` for
-fail-closed hardening, full aggregate VHDL
+literal now locked fail-closed before VHDL emission, full aggregate VHDL
 record/array lowering, broader
 generated-FSM/C4 composition VHDL beyond the exact shipped fixtures, internal
 nets/generic maps beyond APB, broader expression parity beyond the shipped

@@ -1430,6 +1430,80 @@ FSM
     );
 };
 
+subtest 'facade target_language option rejects generated-FSM non-packed aggregate generic-map VHDL boundary' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'facade_vhdl_generated_fsmc_nonpacked_aggregate_generic_map_top.fsm');
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:facade_vhdl_generated_fsmc_nonpacked_aggregate_generic_map_top
+  (?ports:public_io
+    clk
+    rst_n
+    result_data>
+  )
+  (?fsmc:producer implicit_autowire_producer
+    (params
+      (LANES ((+ 6 1) (+ 7 1)))
+    )
+  )
+  (?fsmc:consumer implicit_autowire_consumer)
+  (?wiring:wiring
+    (producer.output_data consumer.input_data)
+    (consumer.result_data result_data)
+  )
+)
+
+(?fsm:implicit_autowire_producer
+  (+params
+    (LANES ((+ 4 1) (+ 5 1)))
+  )
+  (+size
+    (output_data 1)
+  )
+
+  (-drive_outputs
+    (= (output_data> 1'b1))
+  )
+)
+
+(?fsm:implicit_autowire_consumer
+  (+size
+    (input_data 1)
+    (result_data 1)
+  )
+
+  (-drive_outputs
+    (= (result_data> input_data))
+  )
+)
+FSM
+    );
+
+    my $vhdl_pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'vhdl',
+        quiet => 1,
+    );
+
+    my $error;
+    my $ok = eval {
+        $vhdl_pipeline->generate_hdl_from_file($composition_path);
+        1;
+    };
+    $error = $@;
+
+    ok(
+        !$ok,
+        'explicit VHDL facade generation rejects generated-FSM non-packed aggregate generic maps',
+    );
+    like(
+        $error,
+        qr/aggregate parameter\/generic values must lower to one packed literal before backend emission.*malformed_payload/s,
+        'explicit VHDL facade rejection names the generated-FSM non-packed aggregate packed-literal boundary',
+    );
+};
+
 subtest 'facade target_language option routes bounded generated-FSM one-bit generic-map VHDL behavior' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $composition_path = File::Spec->catfile($tempdir, 'facade_vhdl_generated_fsmc_one_bit_generic_map_top.fsm');

@@ -3860,8 +3860,7 @@ integer, scalar expression, one-bit sized bitstring, and multi-bit sized
 bitstring actuals plus resolved packed aggregate and resolved package-backed
 actuals, aggregate VHDL record/array lowering,
 C2 generated-FSM aggregate actuals that do not lower to one packed literal
-currently owned by `BACKEND-API-VALIDATION-FRONTIER.99.1` for fail-closed
-hardening,
+now locked fail-closed before VHDL emission,
 VHDL package
 declaration/emission, multi-clock domains, GHDL validation, broad expression
 parity, signed scalar division/modulo,
@@ -3989,8 +3988,7 @@ bitstring/multi-bit sized bitstring/resolved packed aggregate actuals plus
 APB/C4 generated-FSM scalar integer/scalar expression/one-bit sized bitstring/
 multi-bit sized bitstring/resolved packed aggregate/resolved package-backed
 actuals, generated-FSM aggregate actuals that do not lower to one packed
-literal currently owned by `BACKEND-API-VALIDATION-FRONTIER.99.1` for
-fail-closed hardening, aggregate
+literal now locked fail-closed before VHDL emission, aggregate
 VHDL, VHDL package declaration/emission, GHDL validation, and full backend
 parity remain outside the shipped
 scaffold. Signed vector numeric-literal
@@ -4203,8 +4201,8 @@ schema metadata for `semantic.symbol_contract.types` and
 recursive `items` or `members` plus `member_order`.
 
 Current active backend edge: task-tree leaf
-`BACKEND-API-VALIDATION-FRONTIER.99.1` locks C2 generated-FSM non-packed
-aggregate generic-map actuals that do not lower to one packed literal as
+`BACKEND-API-VALIDATION-FRONTIER.100` selects the next exact backend/API edge
+after C2 generated-FSM non-packed aggregate generic-map actuals were locked
 fail-closed before VHDL emission.
 Package declaration and VHDL package emission, already bounded
 constant/enum/type internals, unrelated forward-IR payloads, signed scalar
@@ -4218,8 +4216,7 @@ before VHDL emission, external-RTL aggregate actuals that do not lower to one
 packed literal now locked fail-closed before VHDL emission, standalone-DT
 aggregate actuals that do not lower to one packed literal now locked
 fail-closed before VHDL emission, generated-FSM aggregate actuals that do not
-lower to one packed literal currently owned by
-`BACKEND-API-VALIDATION-FRONTIER.99.1` for fail-closed hardening,
+lower to one packed literal now locked fail-closed before VHDL emission,
 full aggregate VHDL record/array lowering, broader generated-FSM/C4
 composition VHDL beyond the exact shipped fixtures, internal nets/generic maps
 beyond APB, broader expression parity beyond the shipped AMBA wrap family, and
