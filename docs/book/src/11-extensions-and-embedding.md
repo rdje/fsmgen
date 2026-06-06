@@ -2334,13 +2334,16 @@ this normalized semantic shape:
 ```
 
 The current active backend/API frontier is
-`BACKEND-API-VALIDATION-FRONTIER.80`, which selects the next exact backend/API
-edge after bounded C2 generated-FSM scalar expression VHDL generic-map actuals
-shipped.
+`BACKEND-API-VALIDATION-FRONTIER.80.1`, which owns the bounded C2
+generated-FSM multi-bit sized bitstring VHDL generic-map edge selected by
+`.80`. The target shape is a generated child with a bitstring override such as
+`RESET_VALUE 8'hA5`, resolved before emission to a top instance generic map
+such as `RESET_VALUE => "10100101"`; until that leaf commits, shipped VHDL
+behavior is unchanged.
 Package declaration and VHDL package emission, already bounded
 constant/enum/type internals, unrelated forward-IR payloads, signed scalar
-division/modulo, mixed signed/unsigned arithmetic, generated-FSM one-bit,
-bitstring, and aggregate generic actuals, standalone-DT generic maps, APB/C4
+division/modulo, mixed signed/unsigned arithmetic, generated-FSM one-bit and
+aggregate generic actuals, standalone-DT generic maps, APB/C4
 generic maps, full aggregate VHDL record/array lowering, broader
 generated-FSM/C4 composition VHDL beyond the exact shipped fixtures, internal
 nets/generic maps beyond APB, broader expression parity beyond the shipped

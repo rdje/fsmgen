@@ -4126,14 +4126,17 @@ schema metadata for `semantic.symbol_contract.types` and
 recursive `items` or `members` plus `member_order`.
 
 Current active backend edge: task-tree leaf
-`BACKEND-API-VALIDATION-FRONTIER.80` selects the next exact backend/API edge
-after bounded C2 generated-FSM scalar expression VHDL generic-map actuals
-shipped. Package declaration and VHDL package emission, already bounded
+`BACKEND-API-VALIDATION-FRONTIER.80.1` owns the bounded C2 generated-FSM
+multi-bit sized bitstring VHDL generic-map edge selected by `.80`. The target
+shape is a generated child with a bitstring override such as `RESET_VALUE
+8'hA5`, resolved before emission to a top instance generic map such as
+`RESET_VALUE => "10100101"`; until that leaf commits, shipped VHDL behavior is
+unchanged. Package declaration and VHDL package emission, already bounded
 constant/enum/type internals, unrelated forward-IR payloads, signed scalar
-division/modulo, mixed signed/unsigned arithmetic, generated-FSM one-bit,
-bitstring, and aggregate generic actuals, standalone-DT generic maps, APB/C4
-generic maps, full aggregate VHDL record/array lowering, broader
-generated-FSM/C4 composition VHDL beyond the exact shipped fixtures, internal
-nets/generic maps beyond APB, broader expression parity beyond the shipped
-AMBA wrap family, and full normalized semantic export stabilization remain out
-of scope until later exact leaves own them.
+division/modulo, mixed signed/unsigned arithmetic, generated-FSM one-bit and
+aggregate generic actuals, standalone-DT generic maps, APB/C4 generic maps,
+full aggregate VHDL record/array lowering, broader generated-FSM/C4
+composition VHDL beyond the exact shipped fixtures, internal nets/generic maps
+beyond APB, broader expression parity beyond the shipped AMBA wrap family, and
+full normalized semantic export stabilization remain out of scope until later
+exact leaves own them.
