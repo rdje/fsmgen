@@ -806,10 +806,12 @@ The nested `semantic.composition` summary inside that payload now also has its
 own bounded owner for composition sources:
 [perl/FSM/Support/NormalizedSemanticCompositionContract.pm](perl/FSM/Support/NormalizedSemanticCompositionContract.pm).
 The current selected public-export hardening edge is
-`BACKEND-API-VALIDATION-FRONTIER.50`: select the next exact backend/API or
-public-export surface after the IntentHIR composition child alias schemas
-shipped. The manifest is still not a full normalized semantic export
-stabilization promise.
+`BACKEND-API-VALIDATION-FRONTIER.50.1`: publish bounded
+`semantic.composition.children[].parameter_overrides[]` and
+`semantic.forward_ir.intent_hir.composition_children[].parameter_overrides[]`
+alias key families by delegating to the already bounded structural instance
+parameter-override schema owners. The manifest is still not a full normalized
+semantic export stabilization promise.
 The manifest-facing stable diagnostic-code registry now has its own explicit
 bounded contract owner in
 [perl/FSM/Support/DiagnosticCodeRegistryContract.pm](perl/FSM/Support/DiagnosticCodeRegistryContract.pm),

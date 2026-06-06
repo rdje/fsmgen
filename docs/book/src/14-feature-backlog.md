@@ -3970,6 +3970,9 @@ as scalar string assignment-line entries. The manifest is still not a full
 normalized semantic export.
 
 Current selected next edge: task-tree leaf
-`BACKEND-API-VALIDATION-FRONTIER.50` will select the next exact backend/API or
-public-export surface after the IntentHIR composition child alias schemas
-shipped. Full normalized semantic export stabilization remains out of scope.
+`BACKEND-API-VALIDATION-FRONTIER.50.1` will publish bounded
+`semantic.composition.children[].parameter_overrides[]` and
+`semantic.forward_ir.intent_hir.composition_children[].parameter_overrides[]`
+alias key families by delegating to the already bounded structural instance
+parameter-override schema owners. Full normalized semantic export stabilization
+remains out of scope.
