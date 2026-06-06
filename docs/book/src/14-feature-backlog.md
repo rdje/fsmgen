@@ -3786,7 +3786,9 @@ arithmetic beyond scalar addition/multiplication chains and binary scalar
 subtraction, broader arithmetic operators, mismatched-width arithmetic, and
 expression contexts beyond the same-width
 addition/subtraction/multiplication/division/modulo/XOR RHS chain family remain
-fail-closed at the scaffold boundary. The maintained
+fail-closed at the scaffold boundary. The active next leaf is scalar
+subtraction-chain RHS lowering; until that leaf ships, scalar subtraction
+chains such as `A - B - C` remain fail-closed. The maintained
 arithmetic/XOR and runtime division/modulo corpora now lower through the direct
 VHDL scaffold for that family, and the maintained size-expression width fixture
 now lowers generated direct-root parameter blocks to VHDL integer generics.

@@ -109,7 +109,8 @@ items named in the 2026-06-05 remaining-work inventory.
     `BACKEND-API-VALIDATION-FRONTIER.33.1`,
     `BACKEND-API-VALIDATION-FRONTIER.34`,
     `BACKEND-API-VALIDATION-FRONTIER.34.1`,
-    `BACKEND-API-VALIDATION-FRONTIER.35`
+    `BACKEND-API-VALIDATION-FRONTIER.35`,
+    `BACKEND-API-VALIDATION-FRONTIER.35.1`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.1`
   Status: `done`
@@ -676,9 +677,17 @@ items named in the 2026-06-05 remaining-work inventory.
   Commit: `pending`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.35`
-  Status: `active`
+  Status: `done`
   Goal: `Select the next exact backend/API/public-export edge after direct VHDL scalar addition chains.`
-  Acceptance: `One remaining roadmap-aligned backend, validation, embedding, or public-export edge is selected from current code, contracts, mdBook, knowledge-map, and task-tree evidence. The selected edge has an exact implementation-or-deferral owner leaf before any code/test/source edits occur.`
+  Children: `BACKEND-API-VALIDATION-FRONTIER.35.1`
+  Acceptance: `Selected direct VHDL scalar subtraction-chain RHS lowering as the next exact backend edge. A temporary scalar direct-root probe emits the same simple generated direct mux shape as binary scalar subtraction, with scalar ports A, B, and C and scalar assignment DIFF = A - B - C, but the current VHDL converter fails at the scalar chain guard because multi-operand scalar subtraction remains outside the scaffold. The implementation owner is BACKEND-API-VALIDATION-FRONTIER.35.1; scalar division/modulo, other scalar arithmetic, mismatched-width arithmetic, aggregate record/array VHDL, composition/top VHDL, packages, GHDL validation, and full backend parity remain deferred.`
+  Verification: `Selection audit/read of docs/book/src/14-feature-backlog.md, docs/VHDL_SCOPE.md, docs/knowledge/direct-vhdl-scaffold.md, perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm, t/1420-vhdl-direct-backend-scaffold.t, and current direct VHDL scalar-addition/subtraction/multiplication-chain tests. Temporary File::Temp SystemVerilog probe for a scalar direct root with (= (DIFF (- A B C))) emitted DIFF = A - B - C. Temporary File::Temp VHDL probe failed at arithmetic expression 'A - B - C' outside the direct VHDL scaffold. Selected scalar subtraction-chain RHS lowering for .35.1 before any implementation edits.`
+  Commit: `pending`
+
+- ID: `BACKEND-API-VALIDATION-FRONTIER.35.1`
+  Status: `active`
+  Goal: `Support scalar subtraction-chain RHS lowering in the direct VHDL scaffold.`
+  Acceptance: `FSM::HDL::FlattenedDT::Backend::VHDL converts generated SystemVerilog scalar subtraction-chain RHS forms such as A - B - C into valid VHDL for the accepted direct single-FSM scaffold, with focused pipeline, CLI, and facade coverage. The leaf does not widen scalar division/modulo, other scalar arithmetic, mismatched-width arithmetic, aggregate record/array VHDL, composition/top VHDL, VHDL packages, multi-clock domains, GHDL validation, broad expression parity, or full backend parity. README/live docs/mdBook, the direct-VHDL fact card, task-tree, and memory are synchronized.`
   Verification: `pending`
   Commit: `pending`
 
@@ -759,7 +768,8 @@ items named in the 2026-06-05 remaining-work inventory.
 | 71 | `BACKEND-API-VALIDATION-FRONTIER.33.1` | `done` | Implemented scalar multiplication-chain RHS lowering; scalar division/modulo and other scalar arithmetic remain fail-closed. |
 | 72 | `BACKEND-API-VALIDATION-FRONTIER.34` | `done` | Selected scalar addition-chain RHS lowering as the next narrow direct VHDL scaffold edge after probes showed the generated shape is a simple scalar `SUM = A + B + C` mux assignment. |
 | 73 | `BACKEND-API-VALIDATION-FRONTIER.34.1` | `done` | Implemented scalar addition-chain RHS lowering; scalar subtraction chains, scalar division/modulo, and other scalar arithmetic remain fail-closed. |
-| 74 | `BACKEND-API-VALIDATION-FRONTIER.35` | `active` | Select the next exact backend/API/public-export edge after scalar addition chains. |
+| 74 | `BACKEND-API-VALIDATION-FRONTIER.35` | `done` | Selected scalar subtraction-chain RHS lowering as the next narrow direct VHDL scaffold edge after probes showed the generated shape is a simple scalar `DIFF = A - B - C` mux assignment. |
+| 75 | `BACKEND-API-VALIDATION-FRONTIER.35.1` | `active` | Implement scalar subtraction-chain RHS lowering while keeping scalar division/modulo and broader scalar arithmetic fail-closed. |
 
 ## Decisions
 
