@@ -56,11 +56,13 @@ This document defines the scoped R14 VHDL backend plan for FSMGen.
   literal/concat structural top in
   `t/corpus/composition_intent_integer_literals.fsm` and the bounded C1
   standalone-DT child passthrough top in
-  `t/corpus/standalone_dtc_explicit_system_autowire.fsm`. Generated-FSM child
-  composition VHDL, APB/C4 composition VHDL, internal-net-heavy tops, generic
-  maps, full aggregate VHDL record/array lowering, broad expression parity,
-  scalar division/modulo and broader scalar arithmetic, signed arithmetic
-  operators beyond same-width vector add/subtract/multiply/divide/modulo, GHDL
+  `t/corpus/standalone_dtc_explicit_system_autowire.fsm`. The exact C2
+  generated-FSM child top for `t/corpus/implicit_composition_system_autowire.fsm`
+  is the active follow-up. Broader generated-FSM child composition VHDL,
+  APB/C4 composition VHDL, internal-net-heavy tops, generic maps, full
+  aggregate VHDL record/array lowering, broad expression parity, scalar
+  division/modulo and broader scalar arithmetic, signed arithmetic operators
+  beyond same-width vector add/subtract/multiply/divide/modulo, GHDL
   validation, packages, multi-clock domains, and full feature parity remain
   deferred.
 - Mixed signed/unsigned vector numeric arithmetic is locked as an explicit
@@ -95,8 +97,10 @@ The VHDL lane is intentionally narrow:
      `t/corpus/composition_intent_integer_literals.fsm` and the C1
      standalone-DT explicit-port passthrough shape in
      `t/corpus/standalone_dtc_explicit_system_autowire.fsm`
-   - Generated-FSM child composition VHDL, APB/C4 composition VHDL, internal
-     nets, and generic maps remain deferred
+   - The exact C2 generated-FSM child composition VHDL top is the active
+     follow-up; APB/C4 composition VHDL, broader generated-FSM composition
+     VHDL, internal nets beyond the selected fixture, and generic maps remain
+     deferred
 
 2. **Direct-root structural conversion from SystemVerilog**
    - Generate SystemVerilog through the existing direct backend
@@ -205,10 +209,15 @@ The VHDL lane is intentionally narrow:
   `t/corpus/standalone_dtc_explicit_system_autowire.fsm`. It emits the
   `standalone_route_src` VHDL child segment and a top-level
   `entity work.standalone_route_src` port map for the explicit passthrough
-  ports. Generated-FSM child composition VHDL, APB/C4 composition VHDL,
-  internal nets/generic maps, full aggregate VHDL record/array lowering,
-  broader expression parity, and broader scalar signed arithmetic remain
-  separate future edges.
+  ports.
+- Selected `BACKEND-API-VALIDATION-FRONTIER.70.1` as the active follow-up for
+  the bounded C2 generated-FSM child composition VHDL top in
+  `t/corpus/implicit_composition_system_autowire.fsm`. The first implementation
+  prerequisite is VHDL-safe generated-child shared-datapath export injection.
+  APB/C4 composition VHDL, broader generated-FSM child composition VHDL,
+  internal nets/generic maps beyond the selected fixture, full aggregate VHDL
+  record/array lowering, broader expression parity, and broader scalar signed
+  arithmetic remain separate future edges.
 - Remaining semantic conversion work still belongs to exact future VHDL leaves.
 
 ### Phase 3: Regression and hardening (R14.3)

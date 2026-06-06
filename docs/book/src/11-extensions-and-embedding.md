@@ -2306,16 +2306,18 @@ this normalized semantic shape:
 ```
 
 The current active backend/API frontier is
-`BACKEND-API-VALIDATION-FRONTIER.70`, which selects the next exact backend/API
-edge after the bounded C1 standalone-DT child composition VHDL top for
-`t/corpus/standalone_dtc_explicit_system_autowire.fsm` shipped alongside the
-bounded C3 external-RTL literal/concat composition VHDL top.
+`BACKEND-API-VALIDATION-FRONTIER.70.1`, which implements only the bounded C2
+generated-FSM child composition VHDL top for
+`t/corpus/implicit_composition_system_autowire.fsm` after the bounded C1
+standalone-DT child composition VHDL top shipped alongside the bounded C3
+external-RTL literal/concat composition VHDL top.
 Package-import internals, already bounded constant/enum/type internals,
 unrelated forward-IR payloads, scalar signed arithmetic, full aggregate VHDL
-record/array lowering, generated-FSM child composition VHDL, APB/C4
-composition VHDL, internal nets/generic maps, broader expression parity beyond
-the shipped AMBA wrap family, and full normalized semantic export stabilization
-remain out of scope until later exact leaves own them.
+record/array lowering, broader generated-FSM child composition VHDL, APB/C4
+composition VHDL, internal nets/generic maps beyond the selected fixture,
+broader expression parity beyond the shipped AMBA wrap family, and full
+normalized semantic export stabilization remain out of scope until later exact
+leaves own them.
 
 Do not treat the raw `HDLGenerator` result hash as a stable JSON document.
 

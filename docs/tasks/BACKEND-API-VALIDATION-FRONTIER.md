@@ -179,7 +179,8 @@ items named in the 2026-06-05 remaining-work inventory.
     `BACKEND-API-VALIDATION-FRONTIER.68.1`,
     `BACKEND-API-VALIDATION-FRONTIER.69`,
     `BACKEND-API-VALIDATION-FRONTIER.69.1`,
-    `BACKEND-API-VALIDATION-FRONTIER.70`
+    `BACKEND-API-VALIDATION-FRONTIER.70`,
+    `BACKEND-API-VALIDATION-FRONTIER.70.1`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.1`
   Status: `done`
@@ -1271,10 +1272,18 @@ items named in the 2026-06-05 remaining-work inventory.
   Commit: `BACKEND-API-VALIDATION-FRONTIER.69.1: emit standalone-DT VHDL top`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.70`
-  Status: `active`
+  Status: `done`
   Goal: `Select the next exact backend/API edge after bounded C1 standalone-DT child composition VHDL structural-top lowering shipped.`
-  Acceptance: `Existing backend/API roadmap, VHDL backlog, supported composition VHDL sweep evidence, mdBook text, direct-VHDL fact card, and regression coverage are reviewed; one exact executable child leaf is added or activated for the next safe backend/API edge, or the edge is explicitly deferred with a prerequisite. No code/test/source/config change may occur under .70 until that next implementation or deferral leaf owns it.`
-  Verification: `pending selection`
+  Children: `BACKEND-API-VALIDATION-FRONTIER.70.1`
+  Acceptance: `Selected BACKEND-API-VALIDATION-FRONTIER.70.1 as the next exact backend/API edge: implement only the bounded C2 generated-FSM child composition VHDL structural top represented by t/corpus/implicit_composition_system_autowire.fsm. Evidence shows the supported composition VHDL sweep now has two passing shipped leaves and two remaining fail-closed generated-FSM shapes; the C2 fixture is narrower than APB/C4 because it has two ?fsmc children, three scalar internal nets, three top ports, no parameter overrides, and simple generated child modules. A direct generated-child VHDL realizer probe also exposed the first concrete prerequisite: shared-datapath source-export HDL injection is currently SystemVerilog-specific and fails when the child backend emits VHDL. APB/C4 composition VHDL, broad generated-FSM composition VHDL, internal-net-heavy/bus-heavy tops beyond this fixture, generic maps, packages, GHDL validation, broad expression parity, and full composition VHDL parity remain deferred behind later exact leaves.`
+  Verification: `Selection audit/read of docs/tasks/BACKEND-API-VALIDATION-FRONTIER.md, docs/TASK_TREE.md, README.md, docs/VHDL_SCOPE.md, docs/book/src/14-feature-backlog.md, docs/book/src/11-extensions-and-embedding.md, docs/knowledge/direct-vhdl-scaffold.md, perl/FSM/Support/RegressionCorpus.pm, perl/FSM/Composition/GeneratedChildRealizer.pm, perl/FSM/Composition/PlanBuilder.pm, perl/FSM/Composition/LinkedPlanBuilder.pm, perl/FSM/Backend/VHDL/StructuralRTLIREmitter.pm, t/corpus/implicit_composition_system_autowire.fsm, and fsm/apb_tb.fsm; supported composition VHDL sweep evidence from .69.1 showed entries=4 passes=2 failures=2; systemverilog composition plan probes showed implicit_composition_system_autowire is C2 with ports=3 nets=3 instances=2 kind=fsmc params=0 hdl=yes while fsm/apb_tb.fsm is C4 with ports=11 nets=31 instances=2 kind=fsmc params=0 hdl=yes; VHDL generated-child realizer probe for implicit_composition_system_autowire failed before top emission at Failed to inject shared-datapath export ports into generated child HDL.`
+  Commit: `BACKEND-API-VALIDATION-FRONTIER.70: select C2 generated-FSM VHDL top`
+
+- ID: `BACKEND-API-VALIDATION-FRONTIER.70.1`
+  Status: `active`
+  Goal: `Implement bounded C2 generated-FSM child composition VHDL structural-top lowering.`
+  Acceptance: `The composition pipeline accepts target_language => 'vhdl' / --language vhdl for the exact C2 generated-FSM structural top shape represented by t/corpus/implicit_composition_system_autowire.fsm: two generated ?fsmc children, no parameter overrides, explicit top ports, three scalar internal nets including deterministic unused shared-datapath export sinks, VHDL child HDL segments with VHDL-safe shared-datapath export ports/assignments, and a VHDL top entity/architecture instantiating the children with VHDL signal declarations and port-map actuals. Focused pipeline/CLI/facade/realizer coverage proves deterministic VHDL without leaking SystemVerilog module/assign syntax. APB/C4 composition VHDL, broader generated-FSM composition VHDL, internal-net-heavy/bus-heavy tops beyond this fixture, generic maps, packages, GHDL validation, broad expression parity, and full VHDL composition parity remain fail-closed or deferred. README, docs/VHDL_SCOPE.md, mdBook, direct-VHDL fact card if needed, task tree, and memory stay synchronized.`
+  Verification: `pending implementation`
   Commit: `pending`
 
 ## Current Frontier
@@ -1424,7 +1433,8 @@ items named in the 2026-06-05 remaining-work inventory.
 | 141 | `BACKEND-API-VALIDATION-FRONTIER.68.1` | `done` | Shipped the first composition VHDL structural top for `t/corpus/composition_intent_integer_literals.fsm`, leaving generated-child, APB/C4, nets, generic maps, and full parity deferred. |
 | 142 | `BACKEND-API-VALIDATION-FRONTIER.69` | `done` | Selected bounded C1 standalone-DT child composition VHDL structural-top lowering as the next exact backend/API edge. |
 | 143 | `BACKEND-API-VALIDATION-FRONTIER.69.1` | `done` | Shipped the C1 standalone-DT child VHDL top for `t/corpus/standalone_dtc_explicit_system_autowire.fsm`, leaving generated-FSM children, APB/C4, nets, generic maps, and full parity deferred. |
-| 144 | `BACKEND-API-VALIDATION-FRONTIER.70` | `active` | Select the next exact backend/API edge after the shipped C1 standalone-DT child composition VHDL top. |
+| 144 | `BACKEND-API-VALIDATION-FRONTIER.70` | `done` | Selected bounded C2 generated-FSM child composition VHDL structural-top lowering as the next exact backend/API edge. |
+| 145 | `BACKEND-API-VALIDATION-FRONTIER.70.1` | `active` | Implement only the C2 generated-FSM child VHDL top for `t/corpus/implicit_composition_system_autowire.fsm`, leaving APB/C4, broader generated-FSM, generic maps, and full parity deferred. |
 
 ## Decisions
 
@@ -1589,6 +1599,7 @@ items named in the 2026-06-05 remaining-work inventory.
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.68.1` | `perl -Iperl -c perl/FSM/Backend/VHDL/StructuralRTLIREmitter.pm`; `perl -Iperl -c perl/FSM/Composition/LinkedPlanBuilder.pm`; `perl -Iperl -c perl/FSM/Composition/PlanBuilder.pm`; `perl -Iperl -c perl/FSM/Composition/GenerationOrchestrator.pm`; `perl -Iperl -c perl/FSM/Support/RegressionCorpus.pm`; `perl -Iperl -c t/114-composition-target-support-diagnostics.t`; `perl -Iperl -c t/386-hdl-generator-facade-target-language-boundary-audit.t`; focused VHDL composition/direct prove bundle; regression-corpus contract bundle; external-validation prove bundle; selected-fixture CLI probe; three unsupported composition VHDL shape probes; supported direct-root VHDL sweep returned `entries=37 failures=0`; supported composition VHDL sweep returned `entries=4 passes=1 failures=3` with only `feature.composition_intent_integer_literals` passing; `command -v ghdl`; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; first bounded composition VHDL structural top shipped and `.69` activated for next-edge selection |
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.69` | Selection audit/read of `docs/tasks/BACKEND-API-VALIDATION-FRONTIER.md`, `docs/TASK_TREE.md`, `README.md`, `docs/VHDL_SCOPE.md`, `docs/book/src/14-feature-backlog.md`, `docs/knowledge/direct-vhdl-scaffold.md`, `perl/FSM/Composition/PlanBuilder.pm`, `perl/FSM/Composition/GeneratedChildRealizer.pm`, `perl/FSM/Composition/C1PlanBuilder.pm`, `perl/FSM/Composition/LinkedPlanBuilder.pm`, `perl/FSM/Backend/GeneratedModuleEmitter.pm`, `t/corpus/standalone_dtc_explicit_system_autowire.fsm`, `t/corpus/implicit_composition_system_autowire.fsm`, and `fsm/apb_tb.fsm`; plan-shape probes showed standalone-DT C1 has `ports=4 nets=0 instances=1 kind=dtc params=0 hdl=yes`, generated-FSM C2 has `nets=3 instances=2 kind=fsmc`, and APB C4 has `nets=31 instances=2 kind=fsmc`; temporary direct-DT VHDL probe for `standalone_route_src` exited 0 and emitted a VHDL entity | `PASS`; selected bounded C1 standalone-DT child composition VHDL structural-top lowering for `.69.1` |
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.69.1` | `perl -Iperl -c perl/FSM/Backend/VHDL/StructuralRTLIREmitter.pm`; `perl -Iperl -c perl/FSM/Composition/PlanBuilder.pm`; `perl -Iperl -c perl/FSM/Composition/GenerationOrchestrator.pm`; `perl -Iperl -c perl/FSM/Support/RegressionCorpus.pm`; `perl -Iperl -c t/114-composition-target-support-diagnostics.t`; `perl -Iperl -c t/386-hdl-generator-facade-target-language-boundary-audit.t`; focused VHDL composition/direct prove bundle; regression-corpus contract bundle; external-validation prove bundle; selected passing and failing CLI VHDL composition probes; supported direct-root VHDL sweep returned `entries=37 failures=0`; supported composition VHDL sweep returned `entries=4 passes=2 failures=2`; `command -v ghdl` unavailable; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; bounded C1 standalone-DT child composition VHDL top shipped and `.70` activated for next-edge selection |
+| `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.70` | Selection audit/read of `docs/tasks/BACKEND-API-VALIDATION-FRONTIER.md`, `docs/TASK_TREE.md`, `README.md`, `docs/VHDL_SCOPE.md`, `docs/book/src/14-feature-backlog.md`, `docs/book/src/11-extensions-and-embedding.md`, `docs/knowledge/direct-vhdl-scaffold.md`, `perl/FSM/Support/RegressionCorpus.pm`, `perl/FSM/Composition/GeneratedChildRealizer.pm`, `perl/FSM/Composition/PlanBuilder.pm`, `perl/FSM/Composition/LinkedPlanBuilder.pm`, `perl/FSM/Backend/VHDL/StructuralRTLIREmitter.pm`, `t/corpus/implicit_composition_system_autowire.fsm`, and `fsm/apb_tb.fsm`; supported composition VHDL sweep evidence from `.69.1`; systemverilog plan probes for C2 and APB/C4; VHDL generated-child realizer probe failed at SystemVerilog-specific shared-datapath export HDL injection | `PASS`; selected bounded C2 generated-FSM child composition VHDL structural-top lowering for `.70.1` |
 
 ## Commit Log
 
@@ -1737,6 +1748,7 @@ items named in the 2026-06-05 remaining-work inventory.
 | `BACKEND-API-VALIDATION-FRONTIER.68.1` | `BACKEND-API-VALIDATION-FRONTIER.68.1: emit composition VHDL structural top` | this slice; activates `.69` |
 | `BACKEND-API-VALIDATION-FRONTIER.69` | `BACKEND-API-VALIDATION-FRONTIER.69: select C1 standalone-DT VHDL top` | selected `.69.1` |
 | `BACKEND-API-VALIDATION-FRONTIER.69.1` | `BACKEND-API-VALIDATION-FRONTIER.69.1: emit standalone-DT VHDL top` | this slice; activates `.70` |
+| `BACKEND-API-VALIDATION-FRONTIER.70` | `BACKEND-API-VALIDATION-FRONTIER.70: select C2 generated-FSM VHDL top` | selected `.70.1` |
 
 ## Changelog
 
@@ -2557,3 +2569,14 @@ items named in the 2026-06-05 remaining-work inventory.
   VHDL, internal nets, generic maps, packages, GHDL validation, broad
   expression parity, and full composition VHDL parity remain fail-closed or
   deferred. Activated `.70` to select the next exact backend/API edge.
+- `2026-06-06`: Completed `.70`; selected bounded C2 generated-FSM child
+  composition VHDL structural-top lowering for `.70.1`. The selected fixture is
+  `t/corpus/implicit_composition_system_autowire.fsm`: two `?fsmc` children,
+  C2 lane, three explicit top ports, three scalar internal nets, zero
+  parameter overrides, and simple generated children. A VHDL child-realizer
+  probe showed the first implementation prerequisite is VHDL-safe
+  shared-datapath source-export HDL injection because the current injection path
+  expects SystemVerilog module syntax. APB/C4 composition VHDL,
+  internal-net-heavy/bus-heavy tops beyond this fixture, generic maps,
+  packages, GHDL validation, broad expression parity, and full composition VHDL
+  parity remain deferred.
