@@ -199,9 +199,9 @@ for the subset that can be validated as synthesizable.
 Current boundary: direct single-FSM VHDL generation has a scaffold subset for
 scalar/vector ports, basic enables, reset processes, and concat assignments.
 Aggregate VHDL lowering is still not shipped; aggregate-output direct roots
-remain fail-closed outside the scaffold. The active next leaf is
-aggregate-output fail-closed hardening; until that leaf ships, direct aggregate
-outputs remain unsupported.
+remain fail-closed outside the scaffold. Direct aggregate-output roots are
+locked as explicit fail-closed direct VHDL boundaries by focused pipeline and
+facade coverage.
 
 ### Public Type And Export Surfaces
 
@@ -3799,8 +3799,8 @@ to typed `std_logic` generics in the maintained aggregate-parameter comparison
 fixture, and multi-bit sized-literal generic defaults now lower to typed
 `std_logic_vector` generics in the maintained aggregate unary complement
 fixture. Composition VHDL generic maps remain deferred until a composition VHDL
-leaf owns that path. The active next leaf locks aggregate-output roots as an
-explicit fail-closed direct VHDL boundary.
+leaf owns that path. Aggregate-output roots are locked as explicit fail-closed
+direct VHDL boundaries.
 
 ### GHDL Validation
 

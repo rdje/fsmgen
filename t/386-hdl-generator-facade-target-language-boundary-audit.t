@@ -860,6 +860,26 @@ subtest 'facade target_language option routes direct VHDL sized-literal generic 
     );
 };
 
+subtest 'facade target_language option keeps direct VHDL aggregate outputs fail-closed' => sub {
+    my $direct_path = repo_file('t/corpus/direct_rhs_concat_target_autogrowth.fsm');
+
+    my $vhdl_pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'vhdl',
+        quiet => 1,
+    );
+
+    my $error = capture_exception(sub {
+        $vhdl_pipeline->generate_hdl_from_file($direct_path);
+    });
+
+    like(
+        $error,
+        qr/aggregate struct outputs are outside the direct VHDL scaffold/s,
+        'explicit VHDL facade generation keeps aggregate outputs outside the direct scaffold boundary',
+    );
+};
+
 done_testing();
 
 sub repo_file {

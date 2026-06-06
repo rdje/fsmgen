@@ -883,6 +883,8 @@ lowering, and same-width addition/subtraction/multiplication, division/modulo,
 and XOR RHS/chain lowering, without leaking SystemVerilog module or `always_*`
 forms.
 Scalar division/modulo remains fail-closed for explicit VHDL facade generation.
+Aggregate-output direct roots also remain fail-closed for explicit VHDL facade
+generation.
 That is still a scoped scaffold, not a full VHDL backend promise.
 
 [t/387-hdl-generator-facade-debug-level-boundary-audit.t](t/387-hdl-generator-facade-debug-level-boundary-audit.t)

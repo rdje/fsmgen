@@ -64,6 +64,8 @@ expressions. Same-width vector division/modulo chains become
 expressions. Scalar division/modulo RHS forms such as `A / B` and `A % B`
 remain explicit fail-closed direct VHDL boundaries. Same-width scalar/vector XOR
 chains become `A xor B xor ...`
-expressions. Composition/top VHDL, composition generic-map lowering,
-aggregate-output VHDL, packages, multi-clock domains, broad expression parity,
-GHDL validation, and full SystemVerilog parity remain deferred or fail-closed.
+expressions. Aggregate-output roots are locked as explicit fail-closed direct
+VHDL boundaries by focused pipeline and facade coverage. Composition/top VHDL,
+composition generic-map lowering, packages, multi-clock domains, broad
+expression parity, GHDL validation, and full SystemVerilog parity remain
+deferred or fail-closed.

@@ -114,7 +114,8 @@ items named in the 2026-06-05 remaining-work inventory.
     `BACKEND-API-VALIDATION-FRONTIER.36`,
     `BACKEND-API-VALIDATION-FRONTIER.36.1`,
     `BACKEND-API-VALIDATION-FRONTIER.37`,
-    `BACKEND-API-VALIDATION-FRONTIER.37.1`
+    `BACKEND-API-VALIDATION-FRONTIER.37.1`,
+    `BACKEND-API-VALIDATION-FRONTIER.38`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.1`
   Status: `done`
@@ -716,12 +717,19 @@ items named in the 2026-06-05 remaining-work inventory.
   Children: `BACKEND-API-VALIDATION-FRONTIER.37.1`
   Acceptance: `Selected direct VHDL aggregate-output fail-closed hardening as the next exact backend edge. The VHDL Aggregate Lowering backlog remains unshipped, and the direct aggregate-output fixture t/corpus/direct_rhs_concat_target_autogrowth.fsm still fails at the direct VHDL aggregate struct-output guard. A matching SystemVerilog probe emits inferred packed struct output types for OUT and NESTED, confirming this is the broader aggregate record/array boundary rather than a scalar/vector scaffold extension. The implementation-or-deferral owner is BACKEND-API-VALIDATION-FRONTIER.37.1; composition/top VHDL, VHDL packages, multi-clock domains, GHDL validation, broad expression parity, and full backend parity remain deferred.`
   Verification: `Selection audit/read of docs/book/src/14-feature-backlog.md, docs/VHDL_SCOPE.md, docs/knowledge/direct-vhdl-scaffold.md, t/1420-vhdl-direct-backend-scaffold.t, t/corpus/direct_rhs_concat_target_autogrowth.fsm, and perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm. ./bin/fsmgen --language vhdl --quiet t/corpus/direct_rhs_concat_target_autogrowth.fsm failed at aggregate struct outputs outside the direct VHDL scaffold. ./bin/fsmgen --quiet -o /tmp/fsmgen_direct_rhs_concat_target_autogrowth_select.sv t/corpus/direct_rhs_concat_target_autogrowth.fsm plus rg showed inferred typedef struct packed output types for OUT and NESTED and mux assignment OUT = {FLAG, DATA}; the temporary /tmp probe output was removed. Selected aggregate-output fail-closed hardening for .37.1 before any implementation/test edits.`
-  Commit: `pending`
+  Commit: `BACKEND-API-VALIDATION-FRONTIER.37: select VHDL aggregate output boundary`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.37.1`
-  Status: `active`
+  Status: `done`
   Goal: `Lock the direct VHDL aggregate-output fail-closed boundary.`
   Acceptance: `Direct VHDL aggregate-output roots such as t/corpus/direct_rhs_concat_target_autogrowth.fsm remain explicit fail-closed boundaries with focused pipeline and facade coverage, plus README/live docs/mdBook, the direct-VHDL fact card, task-tree, and memory synchronized. The leaf does not widen aggregate VHDL record/array lowering, composition/top VHDL, VHDL packages, multi-clock domains, GHDL validation, broad expression parity, or full backend parity.`
+  Verification: `prove -Iperl t/1420-vhdl-direct-backend-scaffold.t; prove -Iperl t/386-hdl-generator-facade-target-language-boundary-audit.t; prove -Iperl t/1420-vhdl-direct-backend-scaffold.t t/386-hdl-generator-facade-target-language-boundary-audit.t t/114-composition-target-support-diagnostics.t t/404-hdl-generator-facade-target-language-shape-boundary-audit.t; prove -Iperl t/313-hdl-external-validation-contract.t t/308-systemverilog-external-validation.t; bash knowledge-map/scripts/gen_knowledge_map.sh; bash knowledge-map/scripts/check_knowledge_map.sh; scripts/check_memory_architecture.sh; prove -Iperl t/1414-docs-relative-paths-audit.t; prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t; mdbook build docs/book; git diff --check`
+  Commit: `pending`
+
+- ID: `BACKEND-API-VALIDATION-FRONTIER.38`
+  Status: `active`
+  Goal: `Select the next exact backend/API/public-export edge after direct VHDL aggregate-output fail-closed hardening.`
+  Acceptance: `One remaining roadmap-aligned backend, validation, embedding, or public-export edge is selected from current code, contracts, mdBook, knowledge-map, and task-tree evidence. The selected edge has an exact implementation-or-deferral owner leaf before any code/test/source edits occur.`
   Verification: `pending`
   Commit: `pending`
 
@@ -807,7 +815,8 @@ items named in the 2026-06-05 remaining-work inventory.
 | 76 | `BACKEND-API-VALIDATION-FRONTIER.36` | `done` | Selected scalar division/modulo as an explicit direct VHDL fail-closed hardening edge after probes showed simple scalar `A / B` and `A % B` mux assignments still fail at the scalar guard. |
 | 77 | `BACKEND-API-VALIDATION-FRONTIER.36.1` | `done` | Locked scalar division/modulo fail-closed pipeline/facade coverage and documentation without widening unsafe one-bit divisor semantics. |
 | 78 | `BACKEND-API-VALIDATION-FRONTIER.37` | `done` | Selected direct VHDL aggregate-output fail-closed hardening after probes showed inferred packed struct outputs still fail at the aggregate struct-output guard. |
-| 79 | `BACKEND-API-VALIDATION-FRONTIER.37.1` | `active` | Lock aggregate-output fail-closed coverage and documentation without widening record/array VHDL lowering. |
+| 79 | `BACKEND-API-VALIDATION-FRONTIER.37.1` | `done` | Locked aggregate-output fail-closed pipeline/facade coverage and documentation without widening record/array VHDL lowering. |
+| 80 | `BACKEND-API-VALIDATION-FRONTIER.38` | `active` | Select the next exact backend/API/public-export edge after aggregate-output fail-closed hardening. |
 
 ## Decisions
 
@@ -906,6 +915,8 @@ items named in the 2026-06-05 remaining-work inventory.
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.35.1` | `perl -Iperl -c perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm`; `perl -Iperl -c perl/FSM/HDL/FlattenedDT.pm`; `prove -Iperl t/1420-vhdl-direct-backend-scaffold.t`; `prove -Iperl t/386-hdl-generator-facade-target-language-boundary-audit.t`; `prove -Iperl t/1420-vhdl-direct-backend-scaffold.t t/386-hdl-generator-facade-target-language-boundary-audit.t t/114-composition-target-support-diagnostics.t t/404-hdl-generator-facade-target-language-shape-boundary-audit.t`; `prove -Iperl t/313-hdl-external-validation-contract.t t/308-systemverilog-external-validation.t`; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; scalar subtraction chains now lower to VHDL `xor` chains while scalar division/modulo remain fail-closed |
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.36` | Selection audit/read of `docs/book/src/14-feature-backlog.md`, `docs/VHDL_SCOPE.md`, `docs/knowledge/direct-vhdl-scaffold.md`, `perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm`, and `t/1420-vhdl-direct-backend-scaffold.t`; temporary File::Temp SystemVerilog probes for scalar direct roots `(= (QUOTIENT (/ A B)))` and `(= (REMAINDER (% A B)))` emitted `QUOTIENT = A / B` and `REMAINDER = A % B`; temporary File::Temp VHDL probes failed at `arithmetic expression 'A / B'` and `arithmetic expression 'A % B'` outside the direct VHDL scaffold; `scripts/check_memory_architecture.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; selected scalar division/modulo fail-closed hardening for `.36.1` |
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.36.1` | `prove -Iperl t/1420-vhdl-direct-backend-scaffold.t`; `prove -Iperl t/386-hdl-generator-facade-target-language-boundary-audit.t`; `prove -Iperl t/1420-vhdl-direct-backend-scaffold.t t/386-hdl-generator-facade-target-language-boundary-audit.t t/114-composition-target-support-diagnostics.t t/404-hdl-generator-facade-target-language-shape-boundary-audit.t`; `prove -Iperl t/313-hdl-external-validation-contract.t t/308-systemverilog-external-validation.t`; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; scalar division/modulo are locked fail-closed through direct pipeline/facade coverage and documentation |
+| `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.37` | Selection audit/read of `docs/book/src/14-feature-backlog.md`, `docs/VHDL_SCOPE.md`, `docs/knowledge/direct-vhdl-scaffold.md`, `t/1420-vhdl-direct-backend-scaffold.t`, `t/corpus/direct_rhs_concat_target_autogrowth.fsm`, and `perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm`; `./bin/fsmgen --language vhdl --quiet t/corpus/direct_rhs_concat_target_autogrowth.fsm` failed at aggregate struct outputs outside the direct VHDL scaffold; `./bin/fsmgen --quiet -o /tmp/fsmgen_direct_rhs_concat_target_autogrowth_select.sv t/corpus/direct_rhs_concat_target_autogrowth.fsm`; `rg -n "typedef|struct|OUT|out|packed" /tmp/fsmgen_direct_rhs_concat_target_autogrowth_select.sv`; removed `/tmp/fsmgen_direct_rhs_concat_target_autogrowth_select.sv`; `scripts/check_memory_architecture.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; selected aggregate-output fail-closed hardening for `.37.1` |
+| `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.37.1` | `prove -Iperl t/1420-vhdl-direct-backend-scaffold.t`; `prove -Iperl t/386-hdl-generator-facade-target-language-boundary-audit.t`; `prove -Iperl t/1420-vhdl-direct-backend-scaffold.t t/386-hdl-generator-facade-target-language-boundary-audit.t t/114-composition-target-support-diagnostics.t t/404-hdl-generator-facade-target-language-shape-boundary-audit.t`; `prove -Iperl t/313-hdl-external-validation-contract.t t/308-systemverilog-external-validation.t`; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; aggregate-output roots are locked fail-closed through direct pipeline/facade coverage and documentation |
 
 ## Commit Log
 
@@ -988,6 +999,8 @@ items named in the 2026-06-05 remaining-work inventory.
 | `BACKEND-API-VALIDATION-FRONTIER.35.1` | `BACKEND-API-VALIDATION-FRONTIER.35.1: ship VHDL scalar subtraction chains` | this slice |
 | `BACKEND-API-VALIDATION-FRONTIER.36` | `BACKEND-API-VALIDATION-FRONTIER.36: select VHDL scalar divmod boundary` | selected `.36.1` |
 | `BACKEND-API-VALIDATION-FRONTIER.36.1` | `BACKEND-API-VALIDATION-FRONTIER.36.1: lock VHDL scalar divmod boundary` | this slice |
+| `BACKEND-API-VALIDATION-FRONTIER.37` | `BACKEND-API-VALIDATION-FRONTIER.37: select VHDL aggregate output boundary` | selected `.37.1` |
+| `BACKEND-API-VALIDATION-FRONTIER.37.1` | `BACKEND-API-VALIDATION-FRONTIER.37.1: lock VHDL aggregate output boundary` | this slice |
 
 ## Changelog
 
@@ -1366,4 +1379,13 @@ items named in the 2026-06-05 remaining-work inventory.
 - `2026-06-06`: Completed `.36.1`; scalar division/modulo is locked as an
   explicit direct VHDL fail-closed boundary through pipeline/facade tests and
   synced docs/fact coverage. Activated `.37` to select the next backend/API
+  edge.
+- `2026-06-06`: Completed `.37`; selected aggregate-output fail-closed
+  hardening for `.37.1` after probes showed inferred packed struct outputs in
+  the SystemVerilog shape and a direct VHDL aggregate struct-output guard.
+  Composition VHDL, packages, GHDL validation, and full backend parity remain
+  deferred.
+- `2026-06-06`: Completed `.37.1`; aggregate-output roots are locked as an
+  explicit direct VHDL fail-closed boundary through pipeline/facade tests and
+  synced docs/fact coverage. Activated `.38` to select the next backend/API
   edge.

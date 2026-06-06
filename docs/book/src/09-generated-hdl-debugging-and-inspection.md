@@ -85,6 +85,8 @@ subtraction, and multiplication RHS/chain lowering, and same-width
 addition/subtraction/multiplication, division/modulo, and XOR RHS/chain
 lowering.
 Scalar division/modulo remains an explicit fail-closed direct VHDL boundary.
+Aggregate-output direct roots also remain explicit fail-closed direct VHDL
+boundaries.
 VHDL validation with GHDL is intentionally deferred until a separate GHDL
 validation lane is runnable, documented, support-accounted, and regression-backed. The current
 regression gate is a focused SystemVerilog smoke, not yet a claim that every
