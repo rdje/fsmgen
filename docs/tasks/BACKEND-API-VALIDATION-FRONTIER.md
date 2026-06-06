@@ -208,7 +208,8 @@ items named in the 2026-06-05 remaining-work inventory.
     `BACKEND-API-VALIDATION-FRONTIER.83`,
     `BACKEND-API-VALIDATION-FRONTIER.83.1`,
     `BACKEND-API-VALIDATION-FRONTIER.84`,
-    `BACKEND-API-VALIDATION-FRONTIER.84.1`
+    `BACKEND-API-VALIDATION-FRONTIER.84.1`,
+    `BACKEND-API-VALIDATION-FRONTIER.85`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.1`
   Status: `done`
@@ -1518,10 +1519,17 @@ items named in the 2026-06-05 remaining-work inventory.
   Commit: `BACKEND-API-VALIDATION-FRONTIER.84: select standalone-DT scalar generic maps`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.84.1`
-  Status: `active`
+  Status: `done`
   Goal: `Implement bounded C1 standalone-DT VHDL generic-map lowering for scalar integer actuals.`
   Acceptance: `The VHDL composition path accepts the exact C1 standalone-DT scalar integer parameter override shape represented by a single ?dtc child in the shipped standalone-DT passthrough family, a child +params declaration such as WIDTH 8, and a top-level override such as WIDTH 16. It emits the standalone-DT child VHDL integer generic declaration, emits a top-level VHDL instance generic map such as WIDTH => 16 before the standalone-DT port map, and does not leak SystemVerilog parameter syntax. Focused pipeline, CLI, and facade/target-language coverage prove the accepted standalone-DT scalar shape. The leaf must not widen standalone-DT scalar expressions, one-bit or multi-bit bitstring actuals, aggregate/list/record actuals, APB/C4 generic maps, broader generated-FSM/C4 composition VHDL, VHDL package declaration/emission, aggregate record/array VHDL declarations beyond packed vectors, GHDL validation, broad expression parity, full composition VHDL parity, or full backend parity. README, docs/VHDL_SCOPE.md, mdBook, direct-VHDL fact card/knowledge map if needed, task tree, and MEMORY stay synchronized.`
-  Verification: `pending implementation`
+  Verification: `perl -Iperl -c perl/FSM/Backend/VHDL/StructuralRTLIREmitter.pm; perl -Iperl -c perl/FSM/Composition/GenerationOrchestrator.pm; perl -Iperl -c t/114-composition-target-support-diagnostics.t; perl -Iperl -c t/386-hdl-generator-facade-target-language-boundary-audit.t; prove -Iperl t/114-composition-target-support-diagnostics.t t/386-hdl-generator-facade-target-language-boundary-audit.t; prove -Iperl t/292-composition-generated-child-parameter-overrides.t t/91-composition-multi-rtl-children.t; prove -Iperl t/333-normalized-semantic-composition-contract.t t/334-normalized-semantic-forward-ir-contract.t t/330-normalized-semantic-payload-contract.t t/311-normalized-semantic-report-contract.t t/297-capability-manifest.t; prove -Iperl t/313-hdl-external-validation-contract.t t/308-systemverilog-external-validation.t; bash knowledge-map/scripts/gen_knowledge_map.sh; bash knowledge-map/scripts/check_knowledge_map.sh; scripts/check_memory_architecture.sh; prove -Iperl t/1414-docs-relative-paths-audit.t; prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t; mdbook build docs/book; git diff --check.`
+  Commit: `BACKEND-API-VALIDATION-FRONTIER.84.1: emit standalone-DT scalar generic maps`
+
+- ID: `BACKEND-API-VALIDATION-FRONTIER.85`
+  Status: `active`
+  Goal: `Select the next exact backend/API edge after bounded C1 standalone-DT scalar integer VHDL generic-map actuals shipped.`
+  Acceptance: `Selection-only leaf. Audit the backend/API frontier, current VHDL scope, mdBook backlog, direct-VHDL fact card, focused scaffold/composition/facade tests, maintained direct/composition VHDL sweeps, and current validation environment; choose the next narrow implementation or hardening owner before any code/test/source edits. The selector must preserve task-tree ownership for the chosen child leaf, synchronize README/VHDL scope/mdBook/fact card/memory if the selected frontier changes user-visible scope, and leave standalone-DT scalar expression, one-bit, multi-bit, and aggregate generic maps, APB/C4 generic maps, aggregate VHDL record/array declarations beyond packed vectors, VHDL package declaration/emission, GHDL validation, broad expression parity, full composition VHDL parity, and full backend parity deferred unless it explicitly chooses one of those exact edges.`
+  Verification: `pending selection`
   Commit: `pending`
 
 ## Current Frontier
@@ -1700,7 +1708,8 @@ items named in the 2026-06-05 remaining-work inventory.
 | 170 | `BACKEND-API-VALIDATION-FRONTIER.83` | `done` | Selected bounded C3 external-RTL one-bit VHDL generic-map actuals because the deferred fixture already has .rtlif scalar one-bit default metadata, while generated-FSM one-bit and the other bounded generic-map families now ship. |
 | 171 | `BACKEND-API-VALIDATION-FRONTIER.83.1` | `done` | Shipped bounded external-RTL one-bit sized bitstring generic-map actuals such as `ENABLE_DEFAULT => '1'` when the matching `.rtlif` declaration provides scalar one-bit default metadata. |
 | 172 | `BACKEND-API-VALIDATION-FRONTIER.84` | `done` | Selected bounded C1 standalone-DT scalar integer VHDL generic-map actuals because standalone-DT child parameter overrides already lower to SystemVerilog instance parameters while VHDL remains blocked by an exact bounded-shape gate, and APB/C4 generic maps need fixture parameter design first. |
-| 173 | `BACKEND-API-VALIDATION-FRONTIER.84.1` | `active` | Implement bounded standalone-DT scalar integer generic-map actuals such as `WIDTH => 16` without widening standalone-DT expressions/bitstrings/aggregates, APB/C4, package, GHDL, or parity paths. |
+| 173 | `BACKEND-API-VALIDATION-FRONTIER.84.1` | `done` | Shipped bounded standalone-DT scalar integer generic-map actuals such as `WIDTH => 16` without widening standalone-DT expressions/bitstrings/aggregates, APB/C4, package, GHDL, or parity paths. |
+| 174 | `BACKEND-API-VALIDATION-FRONTIER.85` | `active` | Select the next exact backend/API edge after standalone-DT scalar integer VHDL generic-map actuals shipped. |
 
 ## Decisions
 
@@ -2066,6 +2075,7 @@ items named in the 2026-06-05 remaining-work inventory.
 | `BACKEND-API-VALIDATION-FRONTIER.83` | `BACKEND-API-VALIDATION-FRONTIER.83: select external-RTL one-bit generic maps` | selected `.83.1` |
 | `BACKEND-API-VALIDATION-FRONTIER.83.1` | `BACKEND-API-VALIDATION-FRONTIER.83.1: emit external-RTL one-bit generic maps` | this slice; activates `.84` |
 | `BACKEND-API-VALIDATION-FRONTIER.84` | `BACKEND-API-VALIDATION-FRONTIER.84: select standalone-DT scalar generic maps` | selected `.84.1` |
+| `BACKEND-API-VALIDATION-FRONTIER.84.1` | `BACKEND-API-VALIDATION-FRONTIER.84.1: emit standalone-DT scalar generic maps` | this slice; activates `.85` |
 
 ## Changelog
 
@@ -2079,6 +2089,9 @@ items named in the 2026-06-05 remaining-work inventory.
 - `2026-06-06`: Selected bounded C1 standalone-DT scalar integer VHDL
   generic-map actuals as `.84.1`; APB/C4 generic maps remain deferred because
   the maintained APB requester/completer fixtures do not yet declare `+params`.
+- `2026-06-06`: Completed `.84.1`; bounded C1 standalone-DT scalar integer
+  VHDL generic maps now emit `WIDTH => 16` before the standalone-DT child port
+  map, and `.85` is active for next-edge selection.
 - `2026-06-05`: Activated the tree and selected `.2.1`, the first direct-root
   VHDL backend scaffold through an SV-first converter, before backend code
   changes.

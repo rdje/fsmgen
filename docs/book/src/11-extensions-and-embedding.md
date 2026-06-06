@@ -917,7 +917,10 @@ This is not VHDL package declaration/emission support. The C1
 standalone-DT passthrough fixture in
 `t/corpus/standalone_dtc_explicit_system_autowire.fsm` emits the
 `standalone_route_src` child VHDL entity plus an `entity work.standalone_route_src`
-port map. The C2 generated-FSM scalar-autowire fixture in
+port map. The same bounded C1 standalone-DT family also emits scalar integer
+generic maps before the standalone-DT child port map, such as `WIDTH => 16`,
+while the child entity keeps the matching VHDL integer generic declaration.
+The C2 generated-FSM scalar-autowire fixture in
 `t/corpus/implicit_composition_system_autowire.fsm` emits VHDL-safe
 generated-child shared-datapath export ports/assignments, scalar structural
 signals, and both generated child entity port maps. The same bounded C2
@@ -944,12 +947,12 @@ SystemVerilog `module`, `assign`, `endmodule`, or `always_*` syntax.
 Other composition/top VHDL shapes remain fail-closed after typed composition IR
 parsing, with broader generated-child/C4, internal-net-heavy, generic-map,
 package, and full-parity composition shapes rejected by the scoped composition
-target-support diagnostic. Generic maps beyond the shipped external-RTL scalar
-integer, scalar integer expression, metadata-backed one-bit sized bitstring,
-multi-bit sized bitstring, resolved package-backed, and packed aggregate
-actuals plus C2 generated-FSM scalar integer, scalar expression, one-bit sized
-bitstring, multi-bit sized bitstring, and packed aggregate actuals remain
-deferred.
+target-support diagnostic. Generic-map families outside the shipped external-RTL
+scalar integer, scalar integer expression, metadata-backed one-bit sized
+bitstring, multi-bit sized bitstring, resolved package-backed, and packed
+aggregate actuals, shipped C1 standalone-DT scalar integer actuals, and shipped
+C2 generated-FSM scalar integer, scalar expression, one-bit sized bitstring,
+multi-bit sized bitstring, and packed aggregate actuals remain deferred.
 That is still a scoped scaffold, not a full VHDL backend promise.
 
 [t/387-hdl-generator-facade-debug-level-boundary-audit.t](t/387-hdl-generator-facade-debug-level-boundary-audit.t)
@@ -2347,14 +2350,13 @@ this normalized semantic shape:
 ```
 
 The current active backend/API frontier is
-`BACKEND-API-VALIDATION-FRONTIER.84.1`, which owns the bounded C1
-standalone-DT scalar integer VHDL generic-map actual edge selected by `.84`.
-Until that leaf lands, standalone-DT generic maps remain a documented
-fail-closed boundary; the active implementation target is the single-child
-standalone-DT shape that can emit an actual such as `WIDTH => 16`.
+`BACKEND-API-VALIDATION-FRONTIER.85`, which selects the next exact backend/API
+edge after bounded C1 standalone-DT scalar integer VHDL generic-map actuals
+shipped in `.84.1`.
 Package declaration and VHDL package emission, already bounded
 constant/enum/type internals, unrelated forward-IR payloads, signed scalar
-division/modulo, mixed signed/unsigned arithmetic, standalone-DT generic maps, APB/C4
+division/modulo, mixed signed/unsigned arithmetic, standalone-DT generic maps
+beyond scalar integer, APB/C4
 generic maps, full aggregate VHDL record/array lowering, broader
 generated-FSM/C4 composition VHDL beyond the exact shipped fixtures, internal
 nets/generic maps beyond APB, broader expression parity beyond the shipped

@@ -15,7 +15,8 @@ sized bitstring, and multi-bit sized bitstring generic-map actuals, simple
 resolved scalar integer expression actuals, plus resolved multi-bit packed
 aggregate actuals for external RTL instances, scalar integer and scalar
 integer expression generic-map actuals for bounded generated-FSM C2 instances,
-one-bit generated-FSM generic-map actuals, and port-map actuals whose connection
+one-bit generated-FSM generic-map actuals, scalar integer generic-map actuals
+for bounded standalone-DT C1 instances, and port-map actuals whose connection
 expressions already render through the backend-neutral StructuralRTLIR
 expression helper.
 
@@ -121,8 +122,13 @@ sub _render_instance_block ($instance) {
         my $is_supported_generated_fsm_generic_map =
             $instance_kind eq 'fsmc'
             && _has_only_supported_generated_fsm_generic_actuals(\@parameter_overrides);
-        confess _unsupported('composition VHDL generic maps are currently limited to external RTL scalar integer, scalar integer expression, sized bitstring, or packed aggregate overrides, plus generated-FSM scalar integer, scalar integer expression, one-bit sized bitstring, multi-bit sized bitstring, or resolved packed aggregate overrides')
-            unless $instance_kind eq 'rtl' || $is_supported_generated_fsm_generic_map;
+        my $is_supported_standalone_dt_generic_map =
+            $instance_kind eq 'dtc'
+            && _has_only_supported_standalone_dt_generic_actuals(\@parameter_overrides);
+        confess _unsupported('composition VHDL generic maps are currently limited to external RTL scalar integer, scalar integer expression, sized bitstring, or packed aggregate overrides, generated-FSM scalar integer, scalar integer expression, one-bit sized bitstring, multi-bit sized bitstring, or resolved packed aggregate overrides, plus standalone-DT scalar integer overrides')
+            unless $instance_kind eq 'rtl'
+            || $is_supported_generated_fsm_generic_map
+            || $is_supported_standalone_dt_generic_map;
     }
 
     my $instance_name = _identifier($instance->{instance_name}, 'instance name');
@@ -227,6 +233,15 @@ sub _has_only_supported_generated_fsm_generic_actuals ($overrides) {
     return 1;
 }
 
+sub _has_only_supported_standalone_dt_generic_actuals ($overrides) {
+    for my $override (@$overrides) {
+        return 0 unless ($override->{value_kind} // 'scalar') eq 'scalar';
+        my $value = $override->{value_text};
+        return 0 unless defined($value) && $value =~ /\A-?\d+\z/;
+    }
+    return 1;
+}
+
 sub _is_metadata_backed_scalar_one_bit_generic ($override) {
     return 0 unless ($override->{value_kind} // 'scalar') eq 'scalar';
     return 0 unless ($override->{declaration_default_value_kind} // '') eq 'scalar';
@@ -308,7 +323,7 @@ sub _vhdl_hex_digits_to_bits ($digits) {
 }
 
 sub _generic_actual_limit () {
-    return 'composition VHDL generic maps are currently limited to scalar integer, scalar integer expression, metadata-backed one-bit sized bitstring, multi-bit sized bitstring, or multi-bit packed aggregate actuals';
+    return 'composition VHDL generic maps are currently limited to scalar integer, scalar integer expression, metadata-backed one-bit sized bitstring, multi-bit sized bitstring, or multi-bit packed aggregate actuals; standalone-DT generic maps are currently limited to scalar integer actuals';
 }
 
 sub _normalize_vhdl_auxiliary_assignment ($line) {

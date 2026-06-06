@@ -177,7 +177,16 @@ sub _is_bounded_standalone_dt_vhdl_top ($composition_plan) {
     return 0 unless ($instances[0]->kind // '') eq 'dtc';
     return 0 if @{$composition_plan->nets || []};
     return 0 if @{$composition_plan->auxiliary_assignments || []};
-    return 0 if @{$instances[0]->parameter_overrides || []};
+    return 0 unless _has_only_supported_standalone_dt_generic_overrides($instances[0]);
+    return 1;
+}
+
+sub _has_only_supported_standalone_dt_generic_overrides ($instance) {
+    for my $override (@{$instance->parameter_overrides || []}) {
+        return 0 unless ($override->{value_kind} // 'scalar') eq 'scalar';
+        my $value = $override->{value_text};
+        return 0 unless defined($value) && $value =~ /\A-?\d+\z/;
+    }
     return 1;
 }
 
