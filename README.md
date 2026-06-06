@@ -823,18 +823,24 @@ bounded scalar/list value key families for
 `semantic.symbol_contract.constants` and
 `semantic.forward_ir.intent_hir.symbol_contract.constants`. Every advertised
 constant value carries `kind`; scalar values add `payload`, and list values add
-`items`. Enum/type nested schemas, package-import internals, and full
-normalized semantic export stabilization remain out of scope.
+`items`. That constants edge did not widen enum/type nested schemas,
+package-import internals, or full normalized semantic export stabilization.
 The symbol-contract enum public-export hardening edge now publishes enum
 value-kind families for `semantic.symbol_contract.enums` and
 `semantic.forward_ir.intent_hir.symbol_contract.enums`: enum entries are
 member-payload maps, and dynamic enum members carry scalar payloads.
+The selected symbol-contract type public-export hardening edge will publish
+bounded recursive type-entry schema metadata for `semantic.symbol_contract.types`
+and `semantic.forward_ir.intent_hir.symbol_contract.types`: scalar entries carry
+`kind`, `signed`, `width`, and optional `state_model`, while aggregate entries
+carry recursive `items` or `members` plus `member_order`.
 The current active backend/API frontier is
-`BACKEND-API-VALIDATION-FRONTIER.54`: select the next exact
-backend/API/public-export edge after the symbol-contract enum map value schemas
-shipped. Type nested schemas, package-import internals, already bounded
-constant internals, and full normalized semantic export stabilization remain
-out of scope.
+`BACKEND-API-VALIDATION-FRONTIER.54.1`: publish symbol-contract type-entry
+schema metadata for `semantic.symbol_contract.types` and
+`semantic.forward_ir.intent_hir.symbol_contract.types`. Package-import
+internals, already bounded constant/enum internals, unrelated forward-IR
+payloads, and full normalized semantic export stabilization remain out of
+scope.
 The manifest is still not a full normalized semantic export stabilization
 promise.
 The manifest-facing stable diagnostic-code registry now has its own explicit

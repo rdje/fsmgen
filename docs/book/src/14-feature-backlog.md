@@ -3993,8 +3993,8 @@ Shipped symbol-contract constants export edge: task-tree leaf
 families for `semantic.symbol_contract.constants` and
 `semantic.forward_ir.intent_hir.symbol_contract.constants`. Every advertised
 constant value carries `kind`; scalar values add `payload`, and list values add
-`items`. Enum/type nested schemas, package-import internals, and full
-normalized semantic export stabilization remain out of scope.
+`items`. That constants edge did not widen enum/type nested schemas,
+package-import internals, or full normalized semantic export stabilization.
 
 Shipped symbol-contract enum export edge: task-tree leaf
 `BACKEND-API-VALIDATION-FRONTIER.53.1` publishes enum value-kind families for
@@ -4005,6 +4005,10 @@ nested schemas, package-import internals, already bounded constant internals,
 and full normalized semantic export stabilization remain out of scope.
 
 Current selected next edge: task-tree leaf
-`BACKEND-API-VALIDATION-FRONTIER.54` will select the next exact
-backend/API/public-export edge after the symbol-contract enum map value schemas
-shipped.
+`BACKEND-API-VALIDATION-FRONTIER.54.1` will publish bounded recursive
+type-entry schema metadata for `semantic.symbol_contract.types` and
+`semantic.forward_ir.intent_hir.symbol_contract.types`. Scalar entries carry
+`kind`, `signed`, `width`, and optional `state_model`; aggregate entries carry
+recursive `items` or `members` plus `member_order`. Package-import internals,
+already bounded constant/enum internals, unrelated forward-IR payloads, and
+full normalized semantic export stabilization remain out of scope.
