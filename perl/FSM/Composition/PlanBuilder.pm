@@ -277,7 +277,7 @@ sub _confess_vhdl_composition_shape_blocked ($class, %args) {
 
     confess
         "Composition source '$header' in '$fsm_file' is recognized and parsed into typed composition IR, ".
-        "but composition target support is blocked because the current active VHDL composition leaves only emit the bounded C3 external-RTL literal/concat structural top, C1 standalone-DT passthrough structural top, C2 generated-FSM scalar autowire structural top, and APB/C4 generated-FSM structural top. ".
+        "but composition target support is blocked because the current active VHDL composition leaves only emit the bounded C3 external-RTL literal/concat structural top, C1 standalone-DT passthrough structural top, C2 generated-FSM scalar-autowire/scalar-generic structural top, and APB/C4 generated-FSM structural top. ".
         "Target language 'vhdl' is not implemented for this composition shape yet: $reason. ".
         "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
 }
@@ -291,7 +291,7 @@ sub _vhdl_generated_instance_reason ($instances) {
         if $kind{dtc} && !($kind{fsmc}) && @$instances == 1;
     return "generated-child and standalone-DT child composition VHDL are outside the first structural-top leaf"
         if $kind{dtc} && $kind{fsmc};
-    return "generated-child composition VHDL is outside the bounded C2 scalar-autowire and APB/C4 generated-FSM structural-top leaves";
+    return "generated-child composition VHDL is outside the bounded C2 scalar-autowire/scalar-generic and APB/C4 generated-FSM structural-top leaves";
 }
 
 sub _is_vhdl_c2_generated_fsm_candidate ($instances, $ports_blocks, $wiring_blocks) {

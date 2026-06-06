@@ -63,13 +63,14 @@ This document defines the scoped R14 VHDL backend plan for FSMGen.
   generated-FSM top in `fsm/apb_tb.fsm`. It also supports external-RTL scalar
   integer, scalar integer expression, multi-bit sized bitstring, and resolved
   packed aggregate generic maps, including resolved qualified package
-  constants. Broader
+  constants, plus bounded C2 generated-FSM scalar integer generic maps.
+  Broader
   generated-FSM/C4 composition VHDL beyond the exact shipped fixtures,
   internal-net-heavy tops beyond APB, generic maps beyond external-RTL scalar
   integer, scalar integer expression, multi-bit sized bitstring
   literal/resolved-package-constant actuals, and resolved packed aggregate
-  actuals, VHDL package declaration/emission, full aggregate VHDL record/array
-  lowering, broad
+  actuals plus generated-FSM scalar integer actuals, VHDL package
+  declaration/emission, full aggregate VHDL record/array lowering, broad
   expression parity, scalar division/modulo and broader scalar arithmetic,
   signed arithmetic operators beyond the shipped same-width vector arithmetic
   family, GHDL validation, packages, multi-clock domains, and full feature
@@ -115,8 +116,9 @@ The VHDL lane is intentionally narrow:
    - Broader generated-FSM/C4 composition VHDL, internal nets beyond exact
      owned fixtures, VHDL package declaration/emission, and generic maps
      beyond external-RTL scalar integer, scalar integer expression, multi-bit
-     sized bitstring literal/resolved-package-constant actuals, and resolved
-     packed aggregate actuals remain deferred
+     sized bitstring literal/resolved-package-constant actuals, resolved
+     packed aggregate actuals, and generated-FSM scalar integer actuals remain
+     deferred
 
 2. **Direct-root structural conversion from SystemVerilog**
    - Generate SystemVerilog through the existing direct backend
@@ -130,16 +132,18 @@ The VHDL lane is intentionally narrow:
    - Render VHDL concurrent auxiliary assignments, generated standalone-DT
      child VHDL segments for the bounded C1 leaf, generated-FSM child VHDL
      segments for the bounded C2 and APB/C4 leaves, scalar/vector structural
-     signals, VHDL port-map actuals, and scalar integer / scalar integer
+     signals, VHDL port-map actuals, scalar integer / scalar integer
      expression / multi-bit sized bitstring / resolved packed aggregate generic
      maps for external RTL instances, including resolved qualified package
-     constants
+     constants, and scalar integer generic maps for the bounded C2
+     generated-FSM family
    - Reject generated-FSM child instances outside exact shipped or active
      leaves, generic maps outside external-RTL scalar integer and multi-bit
      sized bitstring literal/resolved-package-constant actuals plus simple
-     scalar integer expressions and resolved packed aggregate actuals, VHDL
-     package declaration/emission, declared aggregate structural types,
-     structural nets outside exact scalar/vector leaves, and non-VHDL auxiliary
+     scalar integer expressions and resolved packed aggregate actuals plus
+     generated-FSM scalar integer actuals, VHDL package declaration/emission,
+     declared aggregate structural types, structural nets outside exact
+     scalar/vector leaves, and non-VHDL auxiliary
      assignments
 
 4. **Supported constructs in the first lane:**
@@ -255,6 +259,11 @@ The VHDL lane is intentionally narrow:
   lowering under `BACKEND-API-VALIDATION-FRONTIER.77.1`. VHDL structural tops
   now emit list/map aggregate actuals after they resolve to multi-bit packed
   values, such as `LANES => "1010010100111100"` and `FRAME => "101"`.
+- Shipped bounded C2 generated-FSM scalar integer generic-map actual lowering
+  under `BACKEND-API-VALIDATION-FRONTIER.78.1`. VHDL structural tops now emit
+  generated child instance actuals such as `WIDTH => 16` before the generated
+  child port map, while generated-FSM scalar expressions, one-bit, bitstring,
+  and aggregate actuals remain deferred.
 - Shipped the bounded C1 standalone-DT child composition VHDL top under
   `BACKEND-API-VALIDATION-FRONTIER.69.1`, limited to
   `t/corpus/standalone_dtc_explicit_system_autowire.fsm`. It emits the
@@ -273,11 +282,11 @@ The VHDL lane is intentionally narrow:
   entity port maps. Broader generated-FSM/C4 composition VHDL, internal
   nets/generic maps beyond the exact shipped external-RTL scalar-integer,
   scalar-expression, multi-bit sized-bitstring literal/
-  resolved-package-constant, and resolved packed aggregate generic-map
-  fixtures, VHDL package declaration/emission, full aggregate VHDL
-  record/array lowering, broader expression parity, signed scalar
-  division/modulo, and mixed signed/unsigned scalar arithmetic remain separate
-  future edges.
+  resolved-package-constant, resolved packed aggregate generic-map, and C2
+  generated-FSM scalar-integer generic-map fixtures, VHDL package
+  declaration/emission, full aggregate VHDL record/array lowering, broader
+  expression parity, signed scalar division/modulo, and mixed signed/unsigned
+  scalar arithmetic remain separate future edges.
 - Remaining semantic conversion work still belongs to exact future VHDL leaves.
 
 ### Phase 3: Regression and hardening (R14.3)
@@ -297,10 +306,12 @@ The VHDL lane is intentionally narrow:
   bounded direct aggregate-output packed-vector lowering,
   bounded C3 external-RTL literal/concat composition VHDL structural-top
   generation,
-  bounded external-RTL scalar integer and multi-bit sized bitstring VHDL
-  generic-map generation,
+  bounded external-RTL scalar integer, scalar expression, multi-bit sized
+  bitstring, resolved package-backed, and packed aggregate VHDL generic-map
+  generation,
   bounded C1 standalone-DT and C2 generated-FSM composition VHDL
   structural-top generation,
+  bounded C2 generated-FSM scalar integer VHDL generic-map generation,
   bounded APB/C4 generated-FSM composition VHDL structural-top generation,
   mixed signed/unsigned vector numeric arithmetic fail-closed diagnostics,
   signed scalar division/modulo and mixed signed/unsigned scalar arithmetic

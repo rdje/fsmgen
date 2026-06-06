@@ -22,6 +22,8 @@ answers:
   - "does target_language vhdl work for APB/C4 composition roots?"
   - "does composition VHDL support generic maps?"
   - "does composition VHDL support external RTL generic maps?"
+  - "does composition VHDL support generated-FSM generic maps?"
+  - "does composition VHDL support generated-child generic maps?"
   - "does composition VHDL support bitstring generic maps?"
   - "does composition VHDL support sized bitstring generic actuals?"
   - "does composition VHDL support scalar expression generic maps?"
@@ -84,7 +86,7 @@ answers:
 date: 2026-06-06
 status: current
 tags: [vhdl, backend, direct-generation, composition, validation]
-evidence: perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm; perl/FSM/Backend/VHDL/StructuralRTLIREmitter.pm; perl/FSM/Support/HDLExternalValidationContract.pm; t/1420-vhdl-direct-backend-scaffold.t; t/386-hdl-generator-facade-target-language-boundary-audit.t; t/114-composition-target-support-diagnostics.t; docs/VHDL_SCOPE.md; docs/tasks/BACKEND-API-VALIDATION-FRONTIER.md
+evidence: perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm; perl/FSM/Backend/VHDL/StructuralRTLIREmitter.pm; perl/FSM/Composition/GenerationOrchestrator.pm; perl/FSM/Composition/PlanBuilder.pm; perl/FSM/Support/HDLExternalValidationContract.pm; t/1420-vhdl-direct-backend-scaffold.t; t/386-hdl-generator-facade-target-language-boundary-audit.t; t/114-composition-target-support-diagnostics.t; docs/VHDL_SCOPE.md; docs/tasks/BACKEND-API-VALIDATION-FRONTIER.md
 reverify: prove -Iperl t/1420-vhdl-direct-backend-scaffold.t t/386-hdl-generator-facade-target-language-boundary-audit.t t/114-composition-target-support-diagnostics.t t/313-hdl-external-validation-contract.t t/308-systemverilog-external-validation.t
 ---
 
@@ -190,12 +192,18 @@ and also emit literal actuals, for example `param_pkg.WIDTH_16` and
 not VHDL package declaration/emission support. One-bit actuals that need
 target-type discrimination, aggregate/list/record actuals that do not resolve
 to multi-bit packed values, unresolved package/expression actuals,
-generated-child, standalone-DT, and APB/C4 generic maps remain deferred. The bounded C2 generated-FSM child
+standalone-DT, and APB/C4 generic maps remain deferred for those families. The
+bounded C2 generated-FSM child
 composition VHDL top is also shipped for
 `t/corpus/implicit_composition_system_autowire.fsm`. That subset emits VHDL-safe
 generated-child shared-datapath export ports/assignments, scalar structural
 signals, and VHDL entity port maps for `implicit_autowire_producer` and
 `implicit_autowire_consumer`, without SystemVerilog structural syntax. The
+same bounded C2 generated-FSM family also emits scalar integer generic maps
+before the generated child port map, such as `WIDTH => 16`, while the child
+entity keeps the matching VHDL generic declaration. Generated-FSM scalar
+expression, one-bit, bitstring, and aggregate generic actuals remain deferred.
+The
 bounded APB/C4 generated-FSM child composition VHDL top is also shipped for
 `fsm/apb_tb.fsm`. That subset emits VHDL-safe APB requester/completer child
 segments, vector APB structural signals, deterministic shared-datapath sink

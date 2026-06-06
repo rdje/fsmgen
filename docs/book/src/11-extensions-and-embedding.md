@@ -919,16 +919,21 @@ standalone-DT passthrough fixture in
 port map. The C2 generated-FSM scalar-autowire fixture in
 `t/corpus/implicit_composition_system_autowire.fsm` emits VHDL-safe
 generated-child shared-datapath export ports/assignments, scalar structural
-signals, and both generated child entity port maps. The APB/C4 generated-FSM
-fixture in `fsm/apb_tb.fsm` emits the APB requester/completer child VHDL
+signals, and both generated child entity port maps. The same bounded C2
+generated-FSM family also emits scalar integer generic maps before the
+generated child port map, such as `WIDTH => 16`, while the child entity keeps
+the matching VHDL generic declaration. The APB/C4 generated-FSM fixture in
+`fsm/apb_tb.fsm` emits the APB requester/completer child VHDL
 entities, vector APB structural signals, deterministic shared-datapath sink
 signals, and both generated child entity port maps. These outputs avoid
 SystemVerilog `module`, `assign`, `endmodule`, or `always_*` syntax.
 Other composition/top VHDL shapes remain fail-closed after typed composition IR
 parsing, with broader generated-child/C4, internal-net-heavy, generic-map,
 package, and full-parity composition shapes rejected by the scoped composition
-target-support diagnostic. Generic maps beyond external-RTL scalar integer and
-multi-bit sized bitstring actuals remain deferred.
+target-support diagnostic. Generic maps beyond the shipped external-RTL scalar
+integer, scalar integer expression, multi-bit sized bitstring, resolved
+package-backed, and packed aggregate actuals plus C2 generated-FSM scalar
+integer actuals remain deferred.
 That is still a scoped scaffold, not a full VHDL backend promise.
 
 [t/387-hdl-generator-facade-debug-level-boundary-audit.t](t/387-hdl-generator-facade-debug-level-boundary-audit.t)
@@ -2326,11 +2331,9 @@ this normalized semantic shape:
 ```
 
 The current active backend/API frontier is
-`BACKEND-API-VALIDATION-FRONTIER.78.1`, which owns the bounded C2
-generated-FSM scalar integer VHDL generic-map edge selected by `.78`. The
-target shape is a generated child with a scalar override such as `WIDTH
-OVERRIDE_WIDTH`, resolved before emission to a top instance generic map such as
-`WIDTH => 16`; until that leaf commits, shipped VHDL behavior is unchanged.
+`BACKEND-API-VALIDATION-FRONTIER.79`, which selects the next exact backend/API
+edge after bounded C2 generated-FSM scalar integer VHDL generic-map actuals
+shipped.
 Package declaration and VHDL package emission, already bounded
 constant/enum/type internals, unrelated forward-IR payloads, signed scalar
 division/modulo, mixed signed/unsigned arithmetic, generated-FSM expression,

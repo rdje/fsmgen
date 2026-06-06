@@ -43,6 +43,9 @@ my $expression_generic_map_output_path = File::Spec->catfile($tempdir, 'vhdl_exp
 my $aggregate_generic_map_path = File::Spec->catfile($tempdir, 'vhdl_aggregate_generic_map_top.fsm');
 my $aggregate_generic_map_output_path = File::Spec->catfile($tempdir, 'vhdl_aggregate_generic_map_top.vhd');
 my $one_bit_generic_map_path = File::Spec->catfile($tempdir, 'vhdl_one_bit_generic_map_deferred_top.fsm');
+my $generated_fsmc_scalar_generic_map_path = File::Spec->catfile($tempdir, 'vhdl_generated_fsmc_scalar_generic_map_top.fsm');
+my $generated_fsmc_scalar_generic_map_output_path = File::Spec->catfile($tempdir, 'vhdl_generated_fsmc_scalar_generic_map_top.vhd');
+my $generated_fsmc_expression_generic_map_path = File::Spec->catfile($tempdir, 'vhdl_generated_fsmc_expression_generic_map_deferred_top.fsm');
 my $composition_path = File::Spec->catfile($tempdir, 'vhdl_composition_top.fsm');
 my $output_path = File::Spec->catfile($tempdir, 'vhdl_composition_top.vhd');
 
@@ -252,6 +255,104 @@ write_file(
 )
 FSM
 );
+write_file(
+    $generated_fsmc_scalar_generic_map_path,
+    <<'FSM'
+(?top:vhdl_generated_fsmc_scalar_generic_map_top
+  (+constants
+    (OVERRIDE_WIDTH 16)
+  )
+  (?ports:public_io
+    clk
+    rst_n
+    result_data>
+  )
+  (?fsmc:producer implicit_autowire_producer
+    (params
+      (WIDTH OVERRIDE_WIDTH)
+    )
+  )
+  (?fsmc:consumer implicit_autowire_consumer)
+  (?wiring:wiring
+    (producer.output_data consumer.input_data)
+    (consumer.result_data result_data)
+  )
+)
+
+(?fsm:implicit_autowire_producer
+  (+params
+    (WIDTH 8)
+  )
+  (+size
+    (output_data 1)
+  )
+
+  (-drive_outputs
+    (= (output_data> 1'b1))
+  )
+)
+
+(?fsm:implicit_autowire_consumer
+  (+size
+    (input_data 1)
+    (result_data 1)
+  )
+
+  (-drive_outputs
+    (= (result_data> input_data))
+  )
+)
+FSM
+);
+write_file(
+    $generated_fsmc_expression_generic_map_path,
+    <<'FSM'
+(?top:vhdl_generated_fsmc_expression_generic_map_deferred_top
+  (+constants
+    (OVERRIDE_WIDTH 16)
+  )
+  (?ports:public_io
+    clk
+    rst_n
+    result_data>
+  )
+  (?fsmc:producer implicit_autowire_producer
+    (params
+      (EXPR_WIDTH (+ OVERRIDE_WIDTH 1))
+    )
+  )
+  (?fsmc:consumer implicit_autowire_consumer)
+  (?wiring:wiring
+    (producer.output_data consumer.input_data)
+    (consumer.result_data result_data)
+  )
+)
+
+(?fsm:implicit_autowire_producer
+  (+params
+    (EXPR_WIDTH 8)
+  )
+  (+size
+    (output_data 1)
+  )
+
+  (-drive_outputs
+    (= (output_data> 1'b1))
+  )
+)
+
+(?fsm:implicit_autowire_consumer
+  (+size
+    (input_data 1)
+    (result_data 1)
+  )
+
+  (-drive_outputs
+    (= (result_data> input_data))
+  )
+)
+FSM
+);
 
 my $pipeline = FSM::Pipeline::HDLGenerator->new(
     debug_level => 0,
@@ -417,6 +518,40 @@ unlike(
     $generated_fsmc_result->{hdl_code},
     qr/\bmodule\b|\bassign\b|\bendmodule\b|\balways_(?:ff|comb)\b/s,
     'pipeline generated-FSM composition VHDL output does not leak SystemVerilog syntax',
+);
+
+my $generated_fsmc_scalar_generic_map_result = $pipeline->generate_hdl_from_file($generated_fsmc_scalar_generic_map_path);
+like(
+    $generated_fsmc_scalar_generic_map_result->{hdl_code},
+    qr/\bentity\s+vhdl_generated_fsmc_scalar_generic_map_top\s+is\b/s,
+    'pipeline emits the generated-FSM scalar generic-map VHDL composition entity',
+);
+like(
+    $generated_fsmc_scalar_generic_map_result->{hdl_code},
+    qr/\bentity\s+implicit_autowire_producer\s+is\s+generic\s*\(\s*WIDTH\s+:\s+integer\s*:=\s*8\s*\);\s+port\s*\(/s,
+    'pipeline emits the generated child VHDL generic declaration',
+);
+like(
+    $generated_fsmc_scalar_generic_map_result->{hdl_code},
+    qr/\bproducer\s+:\s+entity\s+work\.implicit_autowire_producer\s+generic\s+map\s*\(\s*WIDTH\s+=>\s+16\s*\)\s+port\s+map\s*\(\s*clk\s+=>\s+clk,\s*rst_n\s+=>\s+rst_n,\s*output_data\s+=>\s+comp_link_producer_output_data,\s*shared_dp_export_output_data_1_b1_en\s+=>\s+shared_dp_unused_producer_shared_dp_export_output_data_1_b1_en\s*\);/s,
+    'pipeline emits scalar integer VHDL generic maps before the generated-FSM port map',
+);
+unlike(
+    $generated_fsmc_scalar_generic_map_result->{hdl_code},
+    qr/\bmodule\b|\bassign\b|\bendmodule\b|\balways_(?:ff|comb)\b|\#\s*\(|\.WIDTH\s*\(/s,
+    'pipeline generated-FSM scalar generic-map VHDL output does not leak SystemVerilog generic syntax',
+);
+
+my $generated_fsmc_expression_exception = eval {
+    $pipeline->generate_hdl_from_file($generated_fsmc_expression_generic_map_path);
+    undef;
+};
+$generated_fsmc_expression_exception = $@;
+
+like(
+    $generated_fsmc_expression_exception,
+    qr/Composition target support is blocked because generated-child VHDL composition is outside the bounded VHDL structural-top leaves/s,
+    'pipeline keeps generated-FSM scalar expression generic-map actuals outside the bounded VHDL scaffold',
 );
 
 my $apb_c4_result = $pipeline->generate_hdl_from_file($apb_c4_composition_path);
@@ -690,6 +825,38 @@ unlike(
     'CLI generated-FSM composition VHDL output does not leak SystemVerilog syntax',
 );
 
+my ($generated_fsmc_scalar_generic_map_success, $generated_fsmc_scalar_generic_map_error_message, $generated_fsmc_scalar_generic_map_full_buf, $generated_fsmc_scalar_generic_map_stdout_buf, $generated_fsmc_scalar_generic_map_stderr_buf) = run(
+    command => ['./bin/fsmgen', '--language', 'vhdl', '--quiet', '-o', $generated_fsmc_scalar_generic_map_output_path, $generated_fsmc_scalar_generic_map_path],
+);
+
+my $generated_fsmc_scalar_generic_map_combined_output = join(
+    '',
+    @{ $generated_fsmc_scalar_generic_map_stdout_buf || [] },
+    @{ $generated_fsmc_scalar_generic_map_stderr_buf || [] },
+    ($generated_fsmc_scalar_generic_map_error_message || ''),
+);
+
+ok($generated_fsmc_scalar_generic_map_success, 'CLI accepts bounded composition --language vhdl for the C2 generated-FSM scalar generic-map fixture')
+    or diag($generated_fsmc_scalar_generic_map_combined_output);
+ok(-e $generated_fsmc_scalar_generic_map_output_path, 'CLI writes bounded generated-FSM scalar generic-map composition VHDL output');
+
+my $generated_fsmc_scalar_generic_map_cli_hdl = read_file($generated_fsmc_scalar_generic_map_output_path);
+like(
+    $generated_fsmc_scalar_generic_map_cli_hdl,
+    qr/\bentity\s+implicit_autowire_producer\s+is\s+generic\s*\(\s*WIDTH\s+:\s+integer\s*:=\s*8\s*\);/s,
+    'CLI generated-FSM scalar generic-map composition VHDL output includes the child generic declaration',
+);
+like(
+    $generated_fsmc_scalar_generic_map_cli_hdl,
+    qr/\bproducer\s+:\s+entity\s+work\.implicit_autowire_producer\s+generic\s+map\s*\(\s*WIDTH\s+=>\s+16\s*\)\s+port\s+map\s*\(/s,
+    'CLI generated-FSM scalar generic-map composition VHDL output includes the child generic map',
+);
+unlike(
+    $generated_fsmc_scalar_generic_map_cli_hdl,
+    qr/\bmodule\b|\bassign\b|\bendmodule\b|\balways_(?:ff|comb)\b|\#\s*\(|\.WIDTH\s*\(/s,
+    'CLI generated-FSM scalar generic-map composition VHDL output does not leak SystemVerilog syntax',
+);
+
 my ($apb_c4_success, $apb_c4_error_message, $apb_c4_full_buf, $apb_c4_stdout_buf, $apb_c4_stderr_buf) = run(
     command => ['./bin/fsmgen', '--language', 'vhdl', '--quiet', '-o', $apb_c4_output_path, $apb_c4_composition_path],
 );
@@ -735,7 +902,7 @@ $exception = $@;
 
 like(
     $exception,
-    qr/recognized and parsed into typed composition IR, .*composition target support is blocked because the current active VHDL composition leaves only emit the bounded C3 external-RTL literal\/concat structural top, C1 standalone-DT passthrough structural top, C2 generated-FSM scalar autowire structural top, and APB\/C4 generated-FSM structural top.*Target language 'vhdl' is not implemented for this composition shape yet: generated-child composition VHDL is outside the bounded C2 scalar-autowire and APB\/C4 generated-FSM structural-top leaves/s,
+    qr/recognized and parsed into typed composition IR, .*composition target support is blocked because the current active VHDL composition leaves only emit the bounded C3 external-RTL literal\/concat structural top, C1 standalone-DT passthrough structural top, C2 generated-FSM scalar-autowire\/scalar-generic structural top, and APB\/C4 generated-FSM structural top.*Target language 'vhdl' is not implemented for this composition shape yet: generated-child composition VHDL is outside the bounded C2 scalar-autowire\/scalar-generic and APB\/C4 generated-FSM structural-top leaves/s,
     'pipeline now says composition target support is blocked for unsupported composition backends',
 );
 like(
@@ -770,7 +937,7 @@ my $combined_output = join(
 
 like(
     $combined_output,
-    qr/recognized and parsed into typed composition IR, .*composition target support is blocked because the current active VHDL composition leaves only emit the bounded C3 external-RTL literal\/concat structural top, C1 standalone-DT passthrough structural top, C2 generated-FSM scalar autowire structural top, and APB\/C4 generated-FSM structural top.*Target language 'vhdl' is not implemented for this composition shape yet: generated-child composition VHDL is outside the bounded C2 scalar-autowire and APB\/C4 generated-FSM structural-top leaves/s,
+    qr/recognized and parsed into typed composition IR, .*composition target support is blocked because the current active VHDL composition leaves only emit the bounded C3 external-RTL literal\/concat structural top, C1 standalone-DT passthrough structural top, C2 generated-FSM scalar-autowire\/scalar-generic structural top, and APB\/C4 generated-FSM structural top.*Target language 'vhdl' is not implemented for this composition shape yet: generated-child composition VHDL is outside the bounded C2 scalar-autowire\/scalar-generic and APB\/C4 generated-FSM structural-top leaves/s,
     'CLI surfaces the blocked composition target-support diagnostic',
 );
 like(
