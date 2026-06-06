@@ -30,6 +30,8 @@ answers:
   - "does direct VHDL support compound update arithmetic?"
   - "does direct VHDL support signed declarations?"
   - "does direct VHDL support scalar bit declarations?"
+  - "does direct VHDL support logic declarations?"
+  - "does direct VHDL support four-state declarations?"
   - "does direct VHDL support generics?"
   - "does direct VHDL support parameterized direct roots?"
   - "does direct VHDL support sized literal generic defaults?"
@@ -55,10 +57,12 @@ defaults become `std_logic` generics for one-bit defaults and
 `params_aggregate_unary_complement` for the vector case. Generated scalar
 `bit` internal declarations lower to `std_logic`, and generated signed vector
 internal declarations such as `reg signed [3:0] NIB` lower to VHDL `signed`
-signals. The scaffold also lowers the first arithmetic RHS shape: scalar
-addition and subtraction RHS forms and chains lower to one-bit truncated `xor`
-semantics, and scalar multiplication plus scalar multiplication chains lower to
-one-bit `and` semantics. Generated direct mux expressions with one vector
+signals. Generated non-signed four-state `logic` internal declarations remain
+outside the current direct VHDL scaffold and are selected as the next exact
+hardening leaf. The scaffold also lowers the first arithmetic RHS shape:
+scalar addition and subtraction RHS forms and chains lower to one-bit truncated
+`xor` semantics, and scalar multiplication plus scalar multiplication chains
+lower to one-bit `and` semantics. Generated direct mux expressions with one vector
 signal and one numeric literal operand for `+` or `-`, such as `SRC + 2` and
 `byte_count + 4` from compound update/shorthand fixtures, lower through
 target-width `to_unsigned` casts. Same-width vector `NAME + NAME` assignments
@@ -75,13 +79,13 @@ expressions. Same-width vector division/modulo chains become
 expressions. Scalar division/modulo RHS forms such as `A / B` and `A % B`
 remain explicit fail-closed direct VHDL boundaries. Same-width scalar/vector XOR
 chains become `A xor B xor ...`
-expressions. Four-state `logic` declarations, signed ports, and signed
-arithmetic semantics remain outside the current direct VHDL scaffold.
-Aggregate-output roots are locked as explicit fail-closed direct VHDL
-boundaries by focused pipeline and facade coverage. Composition/top VHDL is
-locked fail-closed by focused pipeline and CLI coverage: `?top` sources are
-parsed into typed composition IR, then `target_language => 'vhdl'` and
-`--language vhdl` are rejected with the scoped composition target-support
-diagnostic instead of emitting a VHDL top. Composition generic-map lowering,
-packages, multi-clock domains, broad expression parity, GHDL validation, and
-full SystemVerilog parity remain deferred or fail-closed.
+expressions. `logic signed` declarations, signed ports, and signed arithmetic
+semantics remain outside the current direct VHDL scaffold. Aggregate-output
+roots are locked as explicit fail-closed direct VHDL boundaries by focused
+pipeline and facade coverage. Composition/top VHDL is locked fail-closed by
+focused pipeline and CLI coverage: `?top` sources are parsed into typed
+composition IR, then `target_language => 'vhdl'` and `--language vhdl` are
+rejected with the scoped composition target-support diagnostic instead of
+emitting a VHDL top. Composition generic-map lowering, packages, multi-clock
+domains, broad expression parity, GHDL validation, and full SystemVerilog
+parity remain deferred or fail-closed.

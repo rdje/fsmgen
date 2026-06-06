@@ -3789,7 +3789,7 @@ tests.
 
 Still backlog: composition/top VHDL, aggregate VHDL record/array lowering,
 VHDL packages, multi-clock domains, GHDL validation, broad expression parity,
-four-state `logic` declarations, signed ports, signed arithmetic semantics,
+`logic signed` declarations, signed ports, signed arithmetic semantics,
 and full feature parity with the SystemVerilog backend. Scalar division/modulo,
 broader scalar arithmetic beyond scalar addition/subtraction/multiplication
 chains, broader arithmetic operators, mismatched-width arithmetic, and
@@ -3818,6 +3818,13 @@ direct-root vector arithmetic with numeric literal operands, such as `SRC + 2`,
 generated scalar `bit` and signed vector internal declarations, such as
 `bit FLAG;` and `reg signed [3:0] NIB;`, to VHDL `std_logic` and `signed`
 signals.
+
+Active next leaf: generated direct-root non-signed four-state `logic` internal
+signal declarations, such as `logic [7:0] ISYM;` from package-backed
+declarative `+types` fixtures, are selected for the next exact VHDL hardening
+slice. `logic signed` declarations, signed ports, signed arithmetic semantics,
+composition/top VHDL, aggregate VHDL, packages, GHDL validation, and full
+backend parity remain outside that slice.
 
 ### GHDL Validation
 

@@ -29,10 +29,13 @@ This document defines the scoped R14 VHDL backend plan for FSMGen.
   lowering for scalar `bit NAME;` and signed vector
   `reg signed [MSB:LSB] NAME;` shapes, as emitted by the declarative bits
   symbolic-width fixture.
+- The active next direct VHDL hardening leaf is generated non-signed
+  four-state `logic` internal signal declaration lowering for scalar/vector
+  direct-root shapes.
 - Composition VHDL, aggregate VHDL, broad expression parity, scalar
-  division/modulo and broader scalar arithmetic, four-state `logic`
-  declarations, signed ports, signed arithmetic semantics, GHDL validation,
-  packages, multi-clock domains, and full feature parity remain deferred.
+  division/modulo and broader scalar arithmetic, `logic signed` declarations,
+  signed ports, signed arithmetic semantics, GHDL validation, packages,
+  multi-clock domains, and full feature parity remain deferred.
 - Scalar division/modulo RHS forms such as `A / B` and `A % B` are locked as
   explicit fail-closed direct VHDL boundaries by focused pipeline and facade
   coverage.
@@ -121,6 +124,8 @@ The first VHDL lane is intentionally narrow:
   `+types` symbolic-width fixtures, plus direct-root parameter blocks as VHDL
   generics, including integer expression defaults and typed scalar/vector
   sized-literal defaults.
+- Active follow-up: generated non-signed four-state `logic` internal signal
+  declarations from direct-root declarative `+types` fixtures.
 - Remaining semantic conversion work still belongs to exact future VHDL leaves.
 
 ### Phase 3: Regression and hardening (R14.3)

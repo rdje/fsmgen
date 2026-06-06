@@ -121,7 +121,8 @@ items named in the 2026-06-05 remaining-work inventory.
     `BACKEND-API-VALIDATION-FRONTIER.39.1`,
     `BACKEND-API-VALIDATION-FRONTIER.40`,
     `BACKEND-API-VALIDATION-FRONTIER.40.1`,
-    `BACKEND-API-VALIDATION-FRONTIER.41`
+    `BACKEND-API-VALIDATION-FRONTIER.41`,
+    `BACKEND-API-VALIDATION-FRONTIER.41.1`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.1`
   Status: `done`
@@ -778,9 +779,17 @@ items named in the 2026-06-05 remaining-work inventory.
   Commit: `BACKEND-API-VALIDATION-FRONTIER.40.1: ship VHDL signed declarations`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.41`
-  Status: `active`
+  Status: `done`
   Goal: `Select the next exact backend/API/public-export edge after direct VHDL scalar bit and signed vector internal declaration lowering.`
-  Acceptance: `One remaining roadmap-aligned backend, validation, embedding, or public-export edge is selected from current code, contracts, mdBook, knowledge-map, and task-tree evidence. The selected edge has an exact implementation-or-deferral owner leaf before any further code/test/source edits occur.`
+  Children: `BACKEND-API-VALIDATION-FRONTIER.41.1`
+  Acceptance: `Selected generated direct VHDL non-signed four-state logic internal declaration lowering as the next exact backend edge. A fresh corpus sweep after .40.1 shows the remaining corpus VHDL failures are composition/top and aggregate-output boundaries already locked fail-closed. GHDL remains unavailable. A temporary package-backed direct declarative +types probe based on t/279-declarative-scalar-types.t generated SystemVerilog logic [7:0] ISYM; for a four_state imported symbolic-width type, while VHDL failed at the explicit SystemVerilog logic declaration guard. The implementation owner is BACKEND-API-VALIDATION-FRONTIER.41.1; logic signed declarations, signed ports, signed arithmetic semantics, aggregate VHDL, composition/top VHDL, VHDL packages, multi-clock domains, GHDL validation, broader expression parity, and full backend parity remain deferred.`
+  Verification: `Selection audit/read of docs/book/src/14-feature-backlog.md, docs/VHDL_SCOPE.md, docs/knowledge/direct-vhdl-scaffold.md, t/279-declarative-scalar-types.t, perl/FSM/Backend/VerilogFamily/TypeDeclarationSupport.pm, and perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm. Fresh in-memory t/corpus sweep after .40.1 showed only composition/top VHDL failures and aggregate-output VHDL failures, which are already locked fail-closed. command -v ghdl returned unavailable. A temporary package-backed direct declarative +types probe generated SystemVerilog logic [7:0] ISYM; and VHDL failed at SystemVerilog logic declarations outside the direct VHDL scaffold. bash knowledge-map/scripts/gen_knowledge_map.sh; bash knowledge-map/scripts/check_knowledge_map.sh; scripts/check_memory_architecture.sh; prove -Iperl t/1414-docs-relative-paths-audit.t; prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t; mdbook build docs/book; git diff --check. Selected non-signed four-state logic internal declaration lowering for .41.1 before any implementation/test edits.`
+  Commit: `BACKEND-API-VALIDATION-FRONTIER.41: select VHDL logic declarations`
+
+- ID: `BACKEND-API-VALIDATION-FRONTIER.41.1`
+  Status: `active`
+  Goal: `Implement direct VHDL non-signed four-state logic internal declaration lowering.`
+  Acceptance: `FSM::HDL::FlattenedDT::Backend::VHDL accepts generated direct-root internal signal declarations for non-signed SystemVerilog logic signals, including the package-backed four_state symbolic-width shape from t/279-declarative-scalar-types.t. The generated VHDL declares scalar logic as std_logic and vector logic as std_logic_vector without leaking SystemVerilog logic syntax, and focused pipeline/CLI/facade coverage proves the fixture lowers. README, docs/VHDL_SCOPE.md, mdBook, direct-VHDL fact card, task-tree, and memory stay synchronized. The leaf does not widen logic signed declarations, signed ports, signed arithmetic semantics, aggregate VHDL, composition/top VHDL, VHDL packages, multi-clock domains, GHDL validation, broader expression parity, or full backend parity.`
   Verification: `pending`
   Commit: `pending`
 
@@ -873,7 +882,8 @@ items named in the 2026-06-05 remaining-work inventory.
 | 83 | `BACKEND-API-VALIDATION-FRONTIER.39.1` | `done` | Implemented direct VHDL vector signal plus/minus numeric literal lowering for compound update/shorthand generated muxes. |
 | 84 | `BACKEND-API-VALIDATION-FRONTIER.40` | `done` | Selected direct VHDL scalar bit plus signed vector internal declaration lowering after corpus sweep showed `declarative_bits_symbol_widths.fsm` still fails at `signed [3:0] NIB`. |
 | 85 | `BACKEND-API-VALIDATION-FRONTIER.40.1` | `done` | Implemented direct VHDL scalar bit plus signed vector internal declaration lowering for the declarative bits symbolic-width fixture. |
-| 86 | `BACKEND-API-VALIDATION-FRONTIER.41` | `active` | Select the next exact backend/API/public-export edge after scalar bit and signed vector declaration lowering. |
+| 86 | `BACKEND-API-VALIDATION-FRONTIER.41` | `done` | Selected direct VHDL non-signed four-state logic internal declaration lowering after a package-backed probe failed at the explicit logic declaration guard. |
+| 87 | `BACKEND-API-VALIDATION-FRONTIER.41.1` | `active` | Implement direct VHDL non-signed four-state logic internal declaration lowering for package-backed symbolic-width types. |
 
 ## Decisions
 
@@ -980,6 +990,7 @@ items named in the 2026-06-05 remaining-work inventory.
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.39.1` | `perl -Iperl -c perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm`; `perl -Iperl -c perl/FSM/HDL/FlattenedDT.pm`; `perl -Iperl -c t/1420-vhdl-direct-backend-scaffold.t`; `perl -Iperl -c t/386-hdl-generator-facade-target-language-boundary-audit.t`; `prove -Iperl t/1420-vhdl-direct-backend-scaffold.t`; `prove -Iperl t/386-hdl-generator-facade-target-language-boundary-audit.t`; `prove -Iperl t/1420-vhdl-direct-backend-scaffold.t t/386-hdl-generator-facade-target-language-boundary-audit.t t/114-composition-target-support-diagnostics.t t/404-hdl-generator-facade-target-language-shape-boundary-audit.t`; `prove -Iperl t/313-hdl-external-validation-contract.t t/308-systemverilog-external-validation.t`; `./bin/fsmgen --language vhdl --quiet t/corpus/compound_update_variants.fsm`; `./bin/fsmgen --language vhdl --quiet t/corpus/update_shorthand_variants.fsm`; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; direct VHDL vector numeric-literal arithmetic now lowers through target-width `to_unsigned` casts |
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.40` | Selection audit/read of `docs/book/src/14-feature-backlog.md`, `docs/VHDL_SCOPE.md`, `docs/knowledge/direct-vhdl-scaffold.md`, `t/corpus/declarative_bits_symbol_widths.fsm`, `perl/FSM/Support/RegressionCorpus.pm`, `t/279-declarative-scalar-types.t`, and `perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm`; fresh in-memory t/corpus sweep after `.39.1`; `./bin/fsmgen --language systemverilog t/corpus/declarative_bits_symbol_widths.fsm`; removed generated `declarative_bits_symbol_widths.sv`; `./bin/fsmgen --language vhdl --quiet t/corpus/declarative_bits_symbol_widths.fsm` failed at unsupported generated declaration name `signed [3:0] NIB`; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; selected direct VHDL scalar bit plus signed vector internal declaration lowering for `.40.1` |
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.40.1` | `perl -Iperl -c perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm`; `perl -Iperl -c perl/FSM/HDL/FlattenedDT.pm`; `perl -Iperl -c t/1420-vhdl-direct-backend-scaffold.t`; `perl -Iperl -c t/386-hdl-generator-facade-target-language-boundary-audit.t`; `prove -Iperl t/1420-vhdl-direct-backend-scaffold.t`; `prove -Iperl t/386-hdl-generator-facade-target-language-boundary-audit.t`; `./bin/fsmgen --language vhdl --quiet t/corpus/declarative_bits_symbol_widths.fsm`; `prove -Iperl t/1420-vhdl-direct-backend-scaffold.t t/386-hdl-generator-facade-target-language-boundary-audit.t t/114-composition-target-support-diagnostics.t t/404-hdl-generator-facade-target-language-shape-boundary-audit.t`; `prove -Iperl t/279-declarative-scalar-types.t`; `prove -Iperl t/313-hdl-external-validation-contract.t t/308-systemverilog-external-validation.t`; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; direct VHDL scalar bit and signed vector internal declarations now lower for the declarative bits fixture |
+| `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.41` | Selection audit/read of `docs/book/src/14-feature-backlog.md`, `docs/VHDL_SCOPE.md`, `docs/knowledge/direct-vhdl-scaffold.md`, `t/279-declarative-scalar-types.t`, `perl/FSM/Backend/VerilogFamily/TypeDeclarationSupport.pm`, and `perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm`; fresh in-memory t/corpus sweep after `.40.1`; `command -v ghdl`; temporary package-backed direct declarative `+types` probe emitted `logic [7:0] ISYM;` for SystemVerilog and failed VHDL at the explicit `logic` declaration guard; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; selected direct VHDL non-signed four-state logic internal declaration lowering for `.41.1` |
 
 ## Commit Log
 
@@ -1070,6 +1081,7 @@ items named in the 2026-06-05 remaining-work inventory.
 | `BACKEND-API-VALIDATION-FRONTIER.39.1` | `BACKEND-API-VALIDATION-FRONTIER.39.1: ship VHDL literal arithmetic` | this slice |
 | `BACKEND-API-VALIDATION-FRONTIER.40` | `BACKEND-API-VALIDATION-FRONTIER.40: select VHDL signed declarations` | selected `.40.1` |
 | `BACKEND-API-VALIDATION-FRONTIER.40.1` | `BACKEND-API-VALIDATION-FRONTIER.40.1: ship VHDL signed declarations` | this slice |
+| `BACKEND-API-VALIDATION-FRONTIER.41` | `BACKEND-API-VALIDATION-FRONTIER.41: select VHDL logic declarations` | selected `.41.1` |
 
 ## Changelog
 
@@ -1487,3 +1499,10 @@ items named in the 2026-06-05 remaining-work inventory.
   declarations to VHDL `signed`, and scalar 0/1 assignments to std_logic
   literals for the declarative bits symbolic-width fixture. Activated `.41` to
   select the next backend/API edge.
+- `2026-06-06`: Completed `.41`; selected generated non-signed four-state
+  `logic` internal declaration lowering for `.41.1` after a package-backed
+  direct declarative `+types` probe showed SystemVerilog emits
+  `logic [7:0] ISYM;` while VHDL still fails at the explicit logic declaration
+  guard. Logic signed declarations, signed ports, signed arithmetic semantics,
+  aggregate VHDL, composition/top VHDL, packages, GHDL validation, broader
+  expression parity, and full backend parity remain deferred.
