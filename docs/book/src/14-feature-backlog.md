@@ -3962,7 +3962,8 @@ as scalar string assignment-line entries. The manifest is still not a full
 normalized semantic export.
 
 Current selected next edge: task-tree leaf
-`BACKEND-API-VALIDATION-FRONTIER.48` will audit the remaining backend/API and
-public-export backlog after the composition standalone-DT child entry schemas
-shipped, then activate one exact executable child before any implementation
-edits. Full normalized semantic export stabilization remains out of scope.
+`BACKEND-API-VALIDATION-FRONTIER.48.1` will publish the bounded
+`semantic.composition.shared_datapath_candidates[]` alias family by delegating
+to the existing lowered-RTL shared-datapath candidate schemas before any full
+normalized semantic export stabilization work. Full normalized semantic export
+stabilization remains out of scope.
