@@ -392,6 +392,8 @@ FSM
     is($overrides{RESET_VALUE}{value_text}, "8'hA5", 'composition plan preserves sized based scalar parameter override text');
     is($overrides{RESET_VALUE}{raw_value}, 'param_pkg.RESET_A5', 'composition plan preserves package-symbol raw scalar parameter override token');
     is($overrides{RESET_VALUE}{value_width}, 8, 'composition plan infers width for sized based scalar parameter overrides');
+    is($overrides{RESET_VALUE}{declaration_default_value_kind}, 'scalar', 'composition plan records scalar declaration default kind for RTL parameter overrides');
+    is($overrides{RESET_VALUE}{declaration_default_value_width}, 8, 'composition plan records declaration default width for RTL parameter overrides');
     is($overrides{LANES}{value_text}, "16'b1010010100111100", 'composition plan packs list aggregate parameter overrides');
     is($overrides{LANES}{value_kind}, 'list', 'composition plan marks list aggregate parameter overrides');
     is($overrides{LANES}{raw_value}, 'LOCAL_LANES', 'composition plan preserves local aggregate raw parameter override token');

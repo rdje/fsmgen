@@ -180,7 +180,7 @@ subtest 'contract exposes the bounded normalized semantic structural-rtl-ir obje
     );
     is_deeply(
         normalized_semantic_structural_rtl_ir_instance_parameter_override_value_metadata_extension_keys(),
-        [qw(value_type_spec value_width)],
+        [qw(declaration_default_value_kind declaration_default_value_width value_type_spec value_width)],
         'structural-rtl-ir instance parameter-override value-metadata extension keys stay exact and ordered',
     );
     is_deeply(

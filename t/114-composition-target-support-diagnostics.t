@@ -42,7 +42,8 @@ my $expression_generic_map_path = File::Spec->catfile($tempdir, 'vhdl_expression
 my $expression_generic_map_output_path = File::Spec->catfile($tempdir, 'vhdl_expression_generic_map_top.vhd');
 my $aggregate_generic_map_path = File::Spec->catfile($tempdir, 'vhdl_aggregate_generic_map_top.fsm');
 my $aggregate_generic_map_output_path = File::Spec->catfile($tempdir, 'vhdl_aggregate_generic_map_top.vhd');
-my $one_bit_generic_map_path = File::Spec->catfile($tempdir, 'vhdl_one_bit_generic_map_deferred_top.fsm');
+my $one_bit_generic_map_path = File::Spec->catfile($tempdir, 'vhdl_one_bit_generic_map_top.fsm');
+my $one_bit_generic_map_output_path = File::Spec->catfile($tempdir, 'vhdl_one_bit_generic_map_top.vhd');
 my $generated_fsmc_scalar_generic_map_path = File::Spec->catfile($tempdir, 'vhdl_generated_fsmc_scalar_generic_map_top.fsm');
 my $generated_fsmc_scalar_generic_map_output_path = File::Spec->catfile($tempdir, 'vhdl_generated_fsmc_scalar_generic_map_top.vhd');
 my $generated_fsmc_expression_generic_map_path = File::Spec->catfile($tempdir, 'vhdl_generated_fsmc_expression_generic_map_top.fsm');
@@ -234,7 +235,7 @@ FSM
 write_file(
     $one_bit_generic_map_path,
     <<'FSM'
-(?top:vhdl_one_bit_generic_map_deferred_top
+(?top:vhdl_one_bit_generic_map_top
   (?ports:public_io
     clk
     payload_in
@@ -583,16 +584,37 @@ like(
     'pipeline emits resolved scalar expression VHDL generic maps before the external RTL port map',
 );
 
-my $one_bit_generic_exception = eval {
-    $pipeline->generate_hdl_from_file($one_bit_generic_map_path);
-    undef;
-};
-$one_bit_generic_exception = $@;
-
+my $one_bit_generic_map_result = $pipeline->generate_hdl_from_file($one_bit_generic_map_path);
+my $one_bit_generic_map_override = $one_bit_generic_map_result->{composition_plan}->instances->[0]->parameter_overrides->[0];
+is(
+    $one_bit_generic_map_override->{declaration_default_value_kind},
+    'scalar',
+    'pipeline one-bit generic-map override records scalar declaration default metadata',
+);
+is(
+    $one_bit_generic_map_override->{declaration_default_value_width},
+    1,
+    'pipeline one-bit generic-map override records one-bit declaration default width',
+);
+is(
+    $one_bit_generic_map_override->{value_width},
+    1,
+    'pipeline one-bit generic-map override records one-bit actual width',
+);
 like(
-    $one_bit_generic_exception,
-    qr/Structural VHDL composition-top scaffold unsupported: composition VHDL generic maps are currently limited to scalar integer, scalar integer expression, multi-bit sized bitstring, or multi-bit packed aggregate actuals/s,
-    'pipeline keeps one-bit generic-map actuals outside the bounded VHDL scaffold',
+    $one_bit_generic_map_result->{hdl_code},
+    qr/\bentity\s+vhdl_one_bit_generic_map_top\s+is\b/s,
+    'pipeline emits the one-bit generic-map VHDL composition entity',
+);
+like(
+    $one_bit_generic_map_result->{hdl_code},
+    qr/\bu_uart\s+:\s+entity\s+work\.uart_tx\s+generic\s+map\s*\(\s*ENABLE_DEFAULT\s+=>\s+'1'\s*\)\s+port\s+map\s*\(\s*clk\s+=>\s+clk,\s*data_in\s+=>\s+payload_in,\s*txd\s+=>\s+serial_out\s*\);/s,
+    'pipeline emits metadata-backed one-bit VHDL generic maps before the external RTL port map',
+);
+unlike(
+    $one_bit_generic_map_result->{hdl_code},
+    qr/\bmodule\b|\bassign\b|\bendmodule\b|\balways_(?:ff|comb)\b|\#\s*\(|1'b1/s,
+    'pipeline one-bit generic-map VHDL output does not leak SystemVerilog syntax or one-bit literals',
 );
 
 my $aggregate_generic_map_result = $pipeline->generate_hdl_from_file($aggregate_generic_map_path);
@@ -959,6 +981,33 @@ unlike(
     $expression_generic_map_cli_hdl,
     qr/\bmodule\b|\bassign\b|\bendmodule\b|\balways_(?:ff|comb)\b|\#\s*\(/s,
     'CLI scalar expression generic-map composition VHDL output does not leak SystemVerilog structural syntax',
+);
+
+my ($one_bit_generic_map_success, $one_bit_generic_map_error_message, $one_bit_generic_map_full_buf, $one_bit_generic_map_stdout_buf, $one_bit_generic_map_stderr_buf) = run(
+    command => ['./bin/fsmgen', '--language', 'vhdl', '--quiet', '-o', $one_bit_generic_map_output_path, $one_bit_generic_map_path],
+);
+
+my $one_bit_generic_map_combined_output = join(
+    '',
+    @{ $one_bit_generic_map_stdout_buf || [] },
+    @{ $one_bit_generic_map_stderr_buf || [] },
+    ($one_bit_generic_map_error_message || ''),
+);
+
+ok($one_bit_generic_map_success, 'CLI accepts bounded composition --language vhdl for the one-bit generic-map external-RTL fixture')
+    or diag($one_bit_generic_map_combined_output);
+ok(-e $one_bit_generic_map_output_path, 'CLI writes one-bit generic-map composition VHDL output');
+
+my $one_bit_generic_map_cli_hdl = read_file($one_bit_generic_map_output_path);
+like(
+    $one_bit_generic_map_cli_hdl,
+    qr/\bu_uart\s+:\s+entity\s+work\.uart_tx\s+generic\s+map\s*\(\s*ENABLE_DEFAULT\s+=>\s+'1'\s*\)\s+port\s+map\s*\(\s*clk\s+=>\s+clk,\s*data_in\s+=>\s+payload_in,\s*txd\s+=>\s+serial_out\s*\);/s,
+    'CLI one-bit generic-map composition VHDL output includes the metadata-backed generic actual',
+);
+unlike(
+    $one_bit_generic_map_cli_hdl,
+    qr/\bmodule\b|\bassign\b|\bendmodule\b|\balways_(?:ff|comb)\b|\#\s*\(|1'b1/s,
+    'CLI one-bit generic-map composition VHDL output does not leak SystemVerilog structural syntax or one-bit literals',
 );
 
 my ($aggregate_generic_map_success, $aggregate_generic_map_error_message, $aggregate_generic_map_full_buf, $aggregate_generic_map_stdout_buf, $aggregate_generic_map_stderr_buf) = run(

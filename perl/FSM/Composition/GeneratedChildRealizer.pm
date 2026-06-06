@@ -355,6 +355,7 @@ sub validate_parameter_overrides ($class, %args) {
     my $instance_name = $instance->name // $module_name;
     my $parameter_declarations = $child_module->parameters || {};
 
+    my @validated_overrides;
     for my $override (@overrides) {
         my $name = $override->{name} // '';
         confess
@@ -373,9 +374,17 @@ sub validate_parameter_overrides ($class, %args) {
             declaration => $declaration,
             override => $override,
         );
+        my $validated_override = _clone($override);
+        my $declaration_kind = $declaration->{value_kind};
+        my $declaration_width = $declaration->{value_width};
+        $validated_override->{declaration_default_value_kind} = $declaration_kind
+            if defined $declaration_kind;
+        $validated_override->{declaration_default_value_width} = $declaration_width
+            if defined $declaration_width;
+        push @validated_overrides, $validated_override;
     }
 
-    return _clone(\@overrides);
+    return \@validated_overrides;
 }
 
 sub validate_parameter_override_type_shape ($class, %args) {

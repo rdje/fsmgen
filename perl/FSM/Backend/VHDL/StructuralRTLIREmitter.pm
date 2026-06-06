@@ -10,12 +10,12 @@ Emits the bounded VHDL composition-top shapes from StructuralRTLIR. The
 current leaves intentionally support only external-RTL structural instances or
 one standalone-DT child passthrough instance plus bounded generated-FSM child
 tops, direct scalar/vector top ports, VHDL-form auxiliary assignments,
-scalar/vector signal declarations, scalar integer and sized
-bitstring generic-map actuals, simple resolved scalar integer expression
-actuals, plus resolved multi-bit packed aggregate actuals for external RTL
-instances, scalar integer and scalar integer expression generic-map actuals for
-bounded generated-FSM C2 instances, one-bit generated-FSM generic-map actuals,
-and port-map actuals whose connection
+scalar/vector signal declarations, scalar integer, metadata-backed one-bit
+sized bitstring, and multi-bit sized bitstring generic-map actuals, simple
+resolved scalar integer expression actuals, plus resolved multi-bit packed
+aggregate actuals for external RTL instances, scalar integer and scalar
+integer expression generic-map actuals for bounded generated-FSM C2 instances,
+one-bit generated-FSM generic-map actuals, and port-map actuals whose connection
 expressions already render through the backend-neutral StructuralRTLIR
 expression helper.
 
@@ -139,7 +139,9 @@ sub _render_instance_block ($instance) {
             _identifier($override->{name}, 'instance generic name'),
             _vhdl_generic_actual(
                 $override,
-                allow_one_bit_sized_bitstring => $instance_kind eq 'fsmc',
+                allow_one_bit_sized_bitstring =>
+                    $instance_kind eq 'fsmc'
+                    || _is_metadata_backed_scalar_one_bit_generic($override),
             ),
             $suffix,
         );
@@ -225,6 +227,20 @@ sub _has_only_supported_generated_fsm_generic_actuals ($overrides) {
     return 1;
 }
 
+sub _is_metadata_backed_scalar_one_bit_generic ($override) {
+    return 0 unless ($override->{value_kind} // 'scalar') eq 'scalar';
+    return 0 unless ($override->{declaration_default_value_kind} // '') eq 'scalar';
+    return 0
+        unless defined $override->{declaration_default_value_width}
+        && $override->{declaration_default_value_width} =~ /\A\d+\z/
+        && $override->{declaration_default_value_width} == 1;
+    return 0
+        unless defined $override->{value_width}
+        && $override->{value_width} =~ /\A\d+\z/
+        && $override->{value_width} == 1;
+    return 1;
+}
+
 sub _vhdl_scalar_integer_expression_generic_actual ($value) {
     return undef
         unless $value =~ /\A\(\s*-?\d+(?:\s+[-+*\/]\s+-?\d+)+\s*\)\z/;
@@ -292,7 +308,7 @@ sub _vhdl_hex_digits_to_bits ($digits) {
 }
 
 sub _generic_actual_limit () {
-    return 'composition VHDL generic maps are currently limited to scalar integer, scalar integer expression, multi-bit sized bitstring, or multi-bit packed aggregate actuals';
+    return 'composition VHDL generic maps are currently limited to scalar integer, scalar integer expression, metadata-backed one-bit sized bitstring, multi-bit sized bitstring, or multi-bit packed aggregate actuals';
 }
 
 sub _normalize_vhdl_auxiliary_assignment ($line) {

@@ -902,8 +902,9 @@ The facade also routes the shipped bounded composition VHDL structural tops:
 the C3 external-RTL literal/concat fixture in
 `t/corpus/composition_intent_integer_literals.fsm` emits VHDL concurrent
 literal/concat assignments and an `entity work.uart_tx` port map. The external
-RTL C3 subset also emits scalar integer and multi-bit sized bitstring
-`generic map` actuals before the port map, such as `WIDTH => 16` and
+RTL C3 subset also emits scalar integer, metadata-backed one-bit sized
+bitstring, and multi-bit sized bitstring `generic map` actuals before the port
+map, such as `WIDTH => 16`, `ENABLE_DEFAULT => '1'`, and
 `RESET_VALUE => "10100101"` for `8'hA5`; resolved scalar integer expressions
 also emit as VHDL expression actuals such as `EXPR_WIDTH => (16 + 1)`, and
 resolved packed aggregate actuals emit as VHDL bit strings such as
@@ -925,6 +926,9 @@ generated child port map, such as `WIDTH => 16`, while the child entity keeps
 the matching VHDL generic declaration. Scalar expression generic maps also
 emit before the generated child port map, such as
 `EXPR_WIDTH => (16 + 1)`, against the child VHDL integer generic declaration.
+One-bit sized bitstring generic maps also emit before the generated child port
+map, such as `ENABLE_DEFAULT => '1'`, against the child VHDL `std_logic`
+generic declaration.
 Multi-bit sized bitstring generic maps also emit before the generated child
 port map, such as `RESET_VALUE => "10100101"` for a source override of
 `RESET_VALUE 8'hA5`, against the child VHDL `std_logic_vector` generic
@@ -941,9 +945,11 @@ Other composition/top VHDL shapes remain fail-closed after typed composition IR
 parsing, with broader generated-child/C4, internal-net-heavy, generic-map,
 package, and full-parity composition shapes rejected by the scoped composition
 target-support diagnostic. Generic maps beyond the shipped external-RTL scalar
-integer, scalar integer expression, multi-bit sized bitstring, resolved
-package-backed, and packed aggregate actuals plus C2 generated-FSM scalar
-integer and scalar expression actuals remain deferred.
+integer, scalar integer expression, metadata-backed one-bit sized bitstring,
+multi-bit sized bitstring, resolved package-backed, and packed aggregate
+actuals plus C2 generated-FSM scalar integer, scalar expression, one-bit sized
+bitstring, multi-bit sized bitstring, and packed aggregate actuals remain
+deferred.
 That is still a scoped scaffold, not a full VHDL backend promise.
 
 [t/387-hdl-generator-facade-debug-level-boundary-audit.t](t/387-hdl-generator-facade-debug-level-boundary-audit.t)
@@ -2341,12 +2347,9 @@ this normalized semantic shape:
 ```
 
 The current active backend/API frontier is
-`BACKEND-API-VALIDATION-FRONTIER.83.1`, which owns the bounded C3
-external-RTL one-bit sized bitstring VHDL generic-map actual edge selected by
-`.83`. Until that leaf lands, external-RTL one-bit generic actuals remain a
-documented fail-closed boundary; the active implementation target is the
-.rtlif-declared scalar one-bit shape that can emit an actual such as
-`ENABLE_DEFAULT => '1'`.
+`BACKEND-API-VALIDATION-FRONTIER.84`, which selects the next exact backend/API
+edge after bounded C3 external-RTL one-bit sized bitstring VHDL generic-map
+actuals shipped in `.83.1`.
 Package declaration and VHDL package emission, already bounded
 constant/enum/type internals, unrelated forward-IR payloads, signed scalar
 division/modulo, mixed signed/unsigned arithmetic, standalone-DT generic maps, APB/C4

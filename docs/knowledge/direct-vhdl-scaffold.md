@@ -37,6 +37,8 @@ answers:
   - "does composition VHDL support package-backed generic maps?"
   - "does composition VHDL support package-backed generic actuals?"
   - "does composition VHDL emit package constants in generic maps?"
+  - "does composition VHDL support external RTL one-bit generic maps?"
+  - "does composition VHDL support one-bit external RTL generic maps?"
   - "does direct VHDL support aggregate outputs?"
   - "is composition VHDL supported?"
   - "is GHDL validation active?"
@@ -181,8 +183,9 @@ The bounded C1 standalone-DT child composition VHDL top is also shipped for
 `standalone_route_src` child VHDL entity plus a top-level
 `entity work.standalone_route_src` port map for the explicit passthrough ports,
 without SystemVerilog structural syntax. External-RTL C3 composition VHDL also
-lowers scalar integer and multi-bit sized bitstring parameter overrides to
-`generic map` actuals before the port map, such as `WIDTH => 16` and
+lowers scalar integer, metadata-backed one-bit sized bitstring, and multi-bit
+sized bitstring parameter overrides to `generic map` actuals before the port
+map, such as `WIDTH => 16`, `ENABLE_DEFAULT => '1'`, and
 `RESET_VALUE => "10100101"` for `8'hA5`, and resolved scalar integer
 expressions such as `EXPR_WIDTH => (16 + 1)`. Resolved packed list/map
 aggregate actuals also emit as VHDL bit strings, such as
@@ -192,9 +195,11 @@ and also emit literal actuals, for example `param_pkg.WIDTH_16` and
 `param_pkg.RESET_A5` emit `WIDTH => 16` and
 `RESET_VALUE => "10100101"` without leaking `param_pkg` into the VHDL; this is
 not VHDL package declaration/emission support. External-RTL one-bit actuals
-that need target-type discrimination, aggregate/list/record actuals that do not
-resolve to multi-bit packed values, unresolved package/expression actuals,
-standalone-DT, and APB/C4 generic maps remain deferred for those families. The
+are supported only when the matching `.rtlif` parameter declaration provides
+scalar one-bit default metadata such as `ENABLE_DEFAULT 1'b0`;
+aggregate/list/record actuals that do not resolve to multi-bit packed values,
+unresolved package/expression actuals, standalone-DT, and APB/C4 generic maps
+remain deferred for those families. The
 bounded C2 generated-FSM child
 composition VHDL top is also shipped for
 `t/corpus/implicit_composition_system_autowire.fsm`. That subset emits VHDL-safe

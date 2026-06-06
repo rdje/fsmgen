@@ -90,7 +90,7 @@ sub build_normalized_semantic_structural_rtl_ir_contract {
             'The instance interface-port entry key family describes the current nested `instances[].interface_ports[]` entry schema emitted by composition tops.',
             'The instance parameter-override entry key family describes the current nested `instances[].parameter_overrides[]` core entry schema emitted by parameterized composition tops.',
             'The instance parameter-override raw-value extension key family describes optional authored-token metadata on parameter overrides where a single token survives validation.',
-            'The instance parameter-override value-metadata extension key family describes optional resolved type and packed-width metadata on parameter overrides where the value resolver provides it.',
+            'The instance parameter-override value-metadata extension key family describes optional resolved type, packed-width, and matched declaration-default metadata on parameter overrides where the value resolver and child/interface declaration validation provide it.',
             'The instance port-binding entry key family describes the current nested `instances[].port_bindings[]` core entry schema emitted by composition tops.',
             'The instance port-binding typed-extension key family describes optional `connection_type_spec` metadata on typed structural instance bindings.',
             'The auxiliary-assignment entry value-kind family describes the current `auxiliary_assignments[]` scalar string entries emitted by composition tops without parsing assignment text into unstable lhs/rhs records.',
@@ -240,7 +240,7 @@ sub normalized_semantic_structural_rtl_ir_instance_parameter_override_raw_value_
 }
 
 sub normalized_semantic_structural_rtl_ir_instance_parameter_override_value_metadata_extension_keys {
-    return [qw(value_type_spec value_width)];
+    return [qw(declaration_default_value_kind declaration_default_value_width value_type_spec value_width)];
 }
 
 sub normalized_semantic_structural_rtl_ir_instance_port_binding_entry_keys {

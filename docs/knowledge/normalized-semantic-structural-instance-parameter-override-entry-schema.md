@@ -21,8 +21,10 @@ The public core key family covers `name`, `origin_kind`, `raw_value_ast`,
 `value_kind`, `value_payload`, and `value_text`. A raw-value extension key
 family covers optional `raw_value` metadata when a single authored token is
 preserved. A value-metadata extension key family covers optional
-`value_type_spec` and `value_width` metadata when the resolver can report the
-resolved value shape.
+`declaration_default_value_kind`, `declaration_default_value_width`,
+`value_type_spec`, and `value_width` metadata when the resolver can report the
+resolved value shape and child/interface declaration validation can report the
+matched declaration default shape.
 
 Nested instance `port_bindings[]` entries are advertised separately by
 `normalized-semantic-structural-instance-port-binding-entry-schema`.
