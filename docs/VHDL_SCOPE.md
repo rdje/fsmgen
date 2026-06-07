@@ -87,12 +87,13 @@ This document defines the scoped R14 VHDL backend plan for FSMGen.
 - The direct scaffold now includes scalar output-port next-signal assignments
   from negative decimal literals, lowered to `std_logic` low-bit literals for
   plain scalar and signed one-bit alias targets.
-- Active leaf `BACKEND-API-VALIDATION-FRONTIER.130` owns only the next
-  backend/API edge selection after direct VHDL non-signed vector positive
-  numeric-literal literal-literal multiplication shipped; literal-literal
-  division/modulo, broad VHDL expression parity, aggregate record/array
-  lowering, package emission, GHDL validation, composition parity, and full
-  backend parity remain outside this selector until an exact child owns them.
+- Active leaf `BACKEND-API-VALIDATION-FRONTIER.130.1` owns the selected direct
+  VHDL non-signed vector positive numeric-literal literal-literal division
+  implementation edge. Literal-literal division still fails closed until
+  `.130.1` lands; literal-literal modulo, broad VHDL expression parity,
+  aggregate record/array lowering, package emission, GHDL validation,
+  composition parity, and full backend parity remain outside this leaf until an
+  exact child owns them.
 - Composition VHDL is shipped only for the bounded C3 external-RTL
   literal/concat structural top in
   `t/corpus/composition_intent_integer_literals.fsm` and the bounded C1
