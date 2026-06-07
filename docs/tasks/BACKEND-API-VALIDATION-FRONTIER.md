@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `BACKEND-API-VALIDATION-FRONTIER`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `Backends And Validation` / `Embedding And Public APIs`
 - Created: `2026-06-05`
 - Last updated: `2026-06-07`
@@ -32,7 +32,7 @@ items named in the 2026-06-05 remaining-work inventory.
 ## Task Tree
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER`
-  Status: `active`
+  Status: `done`
   Goal: `Track backend, validation, embedding, and public API backlog directions.`
   Children: `BACKEND-API-VALIDATION-FRONTIER.1`,
     `BACKEND-API-VALIDATION-FRONTIER.2`,
@@ -2315,11 +2315,11 @@ items named in the 2026-06-05 remaining-work inventory.
   Commit: `BACKEND-API-VALIDATION-FRONTIER.131.1: lower literal-literal modulo VHDL`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.132`
-  Status: `active`
+  Status: `done`
   Goal: `Select the next exact backend/API edge after non-signed vector positive numeric-literal literal-literal multiplication/division/modulo lowering shipped.`
   Acceptance: `Selection-only leaf. Audit the backend/API frontier after .131.1, current VHDL scope, mdBook backlog, direct-VHDL fact card, normalized semantic export/public API status, focused contract/backend/facade tests, maintained direct/composition VHDL sweeps, current validation environment, and current frontier rows; choose the next narrow implementation, hardening, or documented blocking owner before any code/test/source edits. The selector must preserve task-tree ownership for the chosen child leaf, synchronize README/VHDL scope/mdBook/fact card/memory if the selected frontier changes user-visible scope, and leave broad expression-literal parity, raw package-spec internals, VHDL package declaration/emission, GHDL validation, full normalized semantic export stabilization, broad VHDL aggregate record/array lowering, full composition VHDL parity, and full backend parity deferred unless it explicitly chooses one of those exact edges.`
-  Verification: `pending selection`
-  Commit: `pending`
+  Verification: `Selection audit/read of MEMORY.md, README.md, docs/TASK_TREE.md, docs/tasks/BACKEND-API-VALIDATION-FRONTIER.md, docs/tasks/ARCHITECTURE-DEBT-FRONTIER.md, docs/VHDL_SCOPE.md, docs/book/src/14-feature-backlog.md, docs/knowledge/direct-vhdl-scaffold.md, perl/FSM/Support/RegressionCorpus.pm, t/1420-vhdl-direct-backend-scaffold.t, t/386-hdl-generator-facade-target-language-boundary-audit.t, and t/114-composition-target-support-diagnostics.t after .131.1. Focused probes showed t/corpus/arithmetic_xor_operator_variants.fsm, t/corpus/rhs_expression_supported_variants.fsm, t/corpus/direct_assignment_pair_form.fsm, and t/corpus/direct_runtime_div_mod.fsm all pass under ./bin/fsmgen --language vhdl --quiet. The supported-smoke corpus sweep returned entries=41, passes=41, failures=0 for --language vhdl. command -v ghdl returned unavailable. Existing leaves already lock package-root emission, declared aggregate structural VHDL, non-packed aggregate generic-map, scalar division/modulo, mixed signed/unsigned arithmetic, and normalized semantic package-import metadata boundaries. No narrower executable backend/API edge remains in the active frontier without selecting a broad future owner; the backend/API frontier is exhausted and PNT routes to ARCHITECTURE-DEBT-FRONTIER.1 as the next active selector.`
+  Commit: `BACKEND-API-VALIDATION-FRONTIER.132: exhaust backend API frontier`
 
 ## Current Frontier
 
@@ -2592,7 +2592,7 @@ items named in the 2026-06-05 remaining-work inventory.
 | 265 | `BACKEND-API-VALIDATION-FRONTIER.130.1` | `done` | Lowered non-signed vector positive numeric-literal literal-literal division such as QUOT = (/ 2 3) into target-width resized VHDL arithmetic while leaving literal-literal modulo fail-closed. |
 | 266 | `BACKEND-API-VALIDATION-FRONTIER.131` | `done` | Selected direct VHDL non-signed vector positive numeric-literal literal-literal modulo after literal-literal multiplication/division now lower but literal-literal modulo still fails closed. |
 | 267 | `BACKEND-API-VALIDATION-FRONTIER.131.1` | `done` | Lowered non-signed vector positive numeric-literal literal-literal modulo such as REM = (% 2 3) into target-width resized VHDL arithmetic. |
-| 268 | `BACKEND-API-VALIDATION-FRONTIER.132` | `active` | Select the next exact backend/API edge after literal-literal multiplication/division/modulo now lower. |
+| 268 | `BACKEND-API-VALIDATION-FRONTIER.132` | `done` | Exhausted the active backend/API frontier after supported VHDL direct/composition sweeps passed, GHDL remained unavailable, and remaining broad backend/API work stayed behind already documented future exact owners. |
 
 ## Decisions
 
@@ -2781,6 +2781,7 @@ items named in the 2026-06-05 remaining-work inventory.
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.80.1` | `perl -Iperl -c perl/FSM/Composition/GenerationOrchestrator.pm`; `perl -Iperl -c perl/FSM/Composition/PlanBuilder.pm`; `perl -Iperl -c perl/FSM/Backend/VHDL/StructuralRTLIREmitter.pm`; `perl -Iperl -c t/114-composition-target-support-diagnostics.t`; `perl -Iperl -c t/386-hdl-generator-facade-target-language-boundary-audit.t`; focused VHDL composition/facade prove bundle; generated-child/parameter-override composition regression bundle; facade target-language shape boundary bundle; external-validation prove bundle; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; bounded C2 generated-FSM multi-bit sized bitstring VHDL generic-map actuals shipped and `.81` activated for next-edge selection |
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.81` | Selection audit/read of `README.md`, `MEMORY_ARCHITECTURE.md`, `MEMORY.md`, `COMMIT.md`, `docs/TASK_TREE.md`, `docs/tasks/BACKEND-API-VALIDATION-FRONTIER.md`, `docs/VHDL_SCOPE.md`, `docs/book/src/14-feature-backlog.md`, `docs/book/src/11-extensions-and-embedding.md`, `docs/knowledge/direct-vhdl-scaffold.md`, `perl/FSM/Composition/GenerationOrchestrator.pm`, `perl/FSM/Backend/VHDL/StructuralRTLIREmitter.pm`, `t/114-composition-target-support-diagnostics.t`, `t/292-composition-generated-child-parameter-overrides.t`, `t/386-hdl-generator-facade-target-language-boundary-audit.t`, and `t/corpus/implicit_composition_system_autowire.fsm`; `command -v ghdl`; temporary C2 generated-FSM aggregate override probe; temporary C2 generated-FSM one-bit override probe; focused composition/facade prove bundle; knowledge-map/memory/doc/mdBook gates; `git diff --check` | `PASS`; selected bounded C2 generated-FSM resolved packed aggregate VHDL generic-map actuals for `.81.1`; `command -v ghdl` returned unavailable |
 | `2026-06-06` | `BACKEND-API-VALIDATION-FRONTIER.81.1` | `perl -Iperl -c perl/FSM/Composition/GenerationOrchestrator.pm`; `perl -Iperl -c perl/FSM/Backend/VHDL/StructuralRTLIREmitter.pm`; `perl -Iperl -c t/114-composition-target-support-diagnostics.t`; `perl -Iperl -c t/386-hdl-generator-facade-target-language-boundary-audit.t`; focused VHDL composition/facade prove bundle; generated-child/parameter-override composition regression bundle; facade target-language shape boundary bundle; external-validation prove bundle; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | `PASS`; bounded C2 generated-FSM resolved packed aggregate VHDL generic-map actuals shipped and `.82` activated for next-edge selection |
+| `2026-06-07` | `BACKEND-API-VALIDATION-FRONTIER.132` | Selection audit/read of backend/API task tree, architecture-debt task tree, README, VHDL scope, mdBook backlog, direct VHDL fact card, regression corpus support accounting, focused VHDL backend/facade/composition tests; current-code probes for arithmetic/XOR, RHS-expression, direct assignment, and runtime div/mod VHDL fixtures; supported-smoke `--language vhdl` sweep returned `entries=41 passes=41 failures=0`; `command -v ghdl` unavailable; doc/memory/book gates for this selector slice | `PASS`; backend/API frontier exhausted and PNT routed to `ARCHITECTURE-DEBT-FRONTIER.1` |
 
 ## Commit Log
 
@@ -3053,11 +3054,16 @@ items named in the 2026-06-05 remaining-work inventory.
 | `BACKEND-API-VALIDATION-FRONTIER.130.1` | `BACKEND-API-VALIDATION-FRONTIER.130.1: lower literal-literal division VHDL` | this slice; activates `.131` |
 | `BACKEND-API-VALIDATION-FRONTIER.131` | `BACKEND-API-VALIDATION-FRONTIER.131: select literal-literal modulo VHDL lowering` | selected `.131.1` |
 | `BACKEND-API-VALIDATION-FRONTIER.131.1` | `BACKEND-API-VALIDATION-FRONTIER.131.1: lower literal-literal modulo VHDL` | this slice; activates `.132` |
-| `BACKEND-API-VALIDATION-FRONTIER.132` | `pending` | active selector leaf |
+| `BACKEND-API-VALIDATION-FRONTIER.132` | `BACKEND-API-VALIDATION-FRONTIER.132: exhaust backend API frontier` | this slice; closes backend/API tree and activates `ARCHITECTURE-DEBT-FRONTIER.1` |
 
 ## Changelog
 
 - `2026-06-05`: Created proposed backend/API frontier owner tree.
+- `2026-06-07`: Completed `.132`; all supported-smoke `.fsm` entries now pass
+  under `--language vhdl`, representative direct expression probes pass, GHDL
+  remains unavailable, and remaining backend/API directions are either shipped,
+  locked fail-closed, or blocked behind future exact owner leaves. The
+  backend/API frontier is closed and PNT routes to `ARCHITECTURE-DEBT-FRONTIER.1`.
 - `2026-06-07`: Completed `.129.1`; direct VHDL now lowers non-signed vector
   positive numeric-literal literal-literal multiplication RHS assignments
   through target-width resized unsigned arithmetic, so an 8-bit non-signed

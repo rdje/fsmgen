@@ -67,7 +67,8 @@ first.
 | `ISF-NESTED-COUNTED-REPEAT` | `done` | `R14` | `closed (.1–.2; nested counted (repeat M (repeat N body)) with per-instance counters — body runs M*N times; simulated + --verify-hdl clean; substrate for nested for-loops)` | [docs/tasks/ISF-NESTED-COUNTED-REPEAT.md](docs/tasks/ISF-NESTED-COUNTED-REPEAT.md) |
 | `ISF-COUNTED-REPEAT-TERMINATION` | `done` | `R14` | complete (`.1`–`.4`; check-first lowering terminates exactly-N for static/runtime/zero; `(!=0)` decision edge passes `--verify-hdl`; leading runtime waits in repeat bodies now reload/enter/zero-bypass from `repeat_check`) | [docs/tasks/ISF-COUNTED-REPEAT-TERMINATION.md](docs/tasks/ISF-COUNTED-REPEAT-TERMINATION.md) |
 | `ISF-REMAINING-BROAD-FRONTIER` | `done` | `R14` | complete (`.1`-`.12`; broad remaining ISF/R14 frontier exhausted: ATL/IAL2/parity/resource/priority/port/temporal/report/CDC/full-width surfaces either shipped, synced, or deferred to future exact owners) | [docs/tasks/ISF-REMAINING-BROAD-FRONTIER.md](docs/tasks/ISF-REMAINING-BROAD-FRONTIER.md) |
-| `BACKEND-API-VALIDATION-FRONTIER` | `active` | Backends And Validation / Embedding And Public APIs | `BACKEND-API-VALIDATION-FRONTIER.132` (`.131.1` shipped direct VHDL non-signed vector positive numeric-literal literal-literal modulo lowering) | [docs/tasks/BACKEND-API-VALIDATION-FRONTIER.md](docs/tasks/BACKEND-API-VALIDATION-FRONTIER.md) |
+| `BACKEND-API-VALIDATION-FRONTIER` | `done` | Backends And Validation / Embedding And Public APIs | complete through `BACKEND-API-VALIDATION-FRONTIER.132`; all supported-smoke `.fsm` entries pass under `--language vhdl`, GHDL remains unavailable, and broad backend/API work is behind future exact owners | [docs/tasks/BACKEND-API-VALIDATION-FRONTIER.md](docs/tasks/BACKEND-API-VALIDATION-FRONTIER.md) |
+| `ARCHITECTURE-DEBT-FRONTIER` | `active` | architecture | `ARCHITECTURE-DEBT-FRONTIER.1` (select the next executable architecture-debt leaf after backend/API frontier exhaustion) | [docs/tasks/ARCHITECTURE-DEBT-FRONTIER.md](docs/tasks/ARCHITECTURE-DEBT-FRONTIER.md) |
 
 ## Proposed Task Trees
 
@@ -76,7 +77,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Proposed first leaf | File |
 | --- | --- | --- | --- | --- |
-| `ARCHITECTURE-DEBT-FRONTIER` | `proposed` | architecture | `ARCHITECTURE-DEBT-FRONTIER.1` (select the next executable architecture-debt leaf when this lane is re-selected) | [docs/tasks/ARCHITECTURE-DEBT-FRONTIER.md](docs/tasks/ARCHITECTURE-DEBT-FRONTIER.md) |
+| `_None_` | `_None_` | `_None_` | No proposed task tree is queued; `ARCHITECTURE-DEBT-FRONTIER` is now active. | `_None_` |
 
 ## Completed Task Trees
 
@@ -631,10 +632,10 @@ criteria.
 | --- | --- |
 | `Language Ergonomics` | `completed DYNAMIC-DIVISOR-SAFETY-FRONTIER tree for direct runtime literal-zero divisor rejection; completed INFERENCE-FIRST-SCALAR-AUTHORING tree for symbolic scalar type widths; future task tree required for broader language ergonomics behavior outside those trees` |
 | `Aggregate Types And Data` | `completed COMPOSITION-TYPE-BACKLOG-EXHAUSTION tree for broader aggregate/type exhaustion; completed RICHER-AGGREGATE-OPERATORS tree for semantic parameter/generic aggregate operator widening; completed AGGREGATE-AUTOGROWTH-FROM-USAGE tree for bounded automatic aggregate growth; completed BACKEND-OWNED-STRUCT-RECORD-DEFAULT-LOWERING tree for exact-contract Verilog-family structured-lowering audit; completed R11-PORTABLE-TYPE-CONTRACT-FRONTIER-AUDIT tree for the shipped bounded portable-type frontier decision` |
-| `Composition` | `completed COMPOSITION-TYPE-BACKLOG-EXHAUSTION tree for generated-child, reusable-module, top-boundary, shared-datapath, VHDL generic-map, and generalized composition backlog exhaustion; completed R11-TOP-BOUNDARY-CONVENTION-FRONTIER-AUDIT tree for the declared top-port/connect-by-name convention frontier; covered by completed composition task trees for shipped surfaces; VHDL backend-dependent work remains under proposed BACKEND-API-VALIDATION-FRONTIER` |
-| `Intent Scheduling Format` | `covered by the R14 ISF objective coverage table above for shipped surfaces and by proposed ISF-REMAINING-BROAD-FRONTIER for broad remaining deferred ISF behavior; existing active trees own their current immediate frontiers` |
-| `Backends And Validation` | `proposed BACKEND-API-VALIDATION-FRONTIER tree owns VHDL backend expansion, richer backend validation, warning-clean historical validation, ABC hardening, and non-shipped backend targets` |
-| `Embedding And Public APIs` | `proposed BACKEND-API-VALIDATION-FRONTIER tree owns richer embedding, public API, and export surfaces beyond the frozen advertised contracts` |
+| `Composition` | `completed COMPOSITION-TYPE-BACKLOG-EXHAUSTION tree for generated-child, reusable-module, top-boundary, shared-datapath, VHDL generic-map, and generalized composition backlog exhaustion; completed R11-TOP-BOUNDARY-CONVENTION-FRONTIER-AUDIT tree for the declared top-port/connect-by-name convention frontier; covered by completed composition task trees for shipped surfaces; VHDL backend-dependent follow-up work was routed through completed BACKEND-API-VALIDATION-FRONTIER leaves or left behind future exact owners` |
+| `Intent Scheduling Format` | `covered by the R14 ISF objective coverage table above for shipped surfaces and by completed ISF-REMAINING-BROAD-FRONTIER for broad remaining deferred ISF behavior; active PNT has moved to architecture-debt selection` |
+| `Backends And Validation` | `completed BACKEND-API-VALIDATION-FRONTIER tree owns the exhausted active VHDL/backend-validation/API frontier through .132; future behavior-bearing backend work still requires a new exact active owner leaf` |
+| `Embedding And Public APIs` | `completed BACKEND-API-VALIDATION-FRONTIER tree owns the exhausted normalized-export/public-API frontier through .132; future public API/export work still requires a new exact active owner leaf` |
 
 ## ISF Task-Tree Rule
 

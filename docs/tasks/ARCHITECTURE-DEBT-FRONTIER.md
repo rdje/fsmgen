@@ -3,10 +3,10 @@
 ## Metadata
 
 - Tree ID: `ARCHITECTURE-DEBT-FRONTIER`
-- Status: `proposed`
+- Status: `active`
 - Roadmap lane: `architecture`
 - Created: `2026-06-05`
-- Last updated: `2026-06-05`
+- Last updated: `2026-06-07`
 - Owner: repo-local workflow
 
 ## Goal
@@ -17,7 +17,7 @@ rather than informal cleanup.
 
 ## Non-Goals
 
-- Do not perform broad refactors while this tree is proposed.
+- Do not perform broad refactors without selecting an exact active leaf first.
 - Do not change public behavior under an architecture-debt label without the
   same behavior, docs, and regression responsibilities as a feature leaf.
 - Do not extract modules merely for aesthetics; extraction must reduce real
@@ -34,14 +34,14 @@ rather than informal cleanup.
 ## Task Tree
 
 - ID: `ARCHITECTURE-DEBT-FRONTIER`
-  Status: `proposed`
+  Status: `active`
   Goal: `Track architecture convergence and extraction backlog directions.`
   Children: `ARCHITECTURE-DEBT-FRONTIER.1`,
     `ARCHITECTURE-DEBT-FRONTIER.2`,
     `ARCHITECTURE-DEBT-FRONTIER.3`
 
 - ID: `ARCHITECTURE-DEBT-FRONTIER.1`
-  Status: `pending`
+  Status: `active`
   Goal: `Select the next executable architecture-debt leaf from evidence.`
   Acceptance: `One architecture item is activated, explicitly deferred, or linked to a stronger prerequisite owner.`
   Verification: `pending`
@@ -65,20 +65,22 @@ rather than informal cleanup.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ARCHITECTURE-DEBT-FRONTIER.1` | `pending` | Proposed owner only; not PNT-eligible until architecture-debt work is selected. |
+| 1 | `ARCHITECTURE-DEBT-FRONTIER.1` | `active` | PNT frontier selected after `BACKEND-API-VALIDATION-FRONTIER.132` exhausted the active backend/API tree. |
 
 ## Decisions
 
 - `2026-06-05`: Keep this tree proposed while the user-selected active focus is
   Composition/type.
+- `2026-06-07`: Activated after `BACKEND-API-VALIDATION-FRONTIER.132` exhausted
+  the active backend/API frontier and routed PNT to architecture-debt selection.
 
 ## Open Questions
 
-- None while proposed.
+- None for the active selector leaf.
 
 ## Blockers
 
-- None while proposed.
+- None for the active selector leaf.
 
 ## Verification Log
 

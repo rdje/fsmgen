@@ -4230,10 +4230,13 @@ string`. Raw package-spec internals, package source AST, package symbols, VHDL
 package declaration/emission, and full normalized semantic export
 stabilization remain deferred.
 
-Current active backend edge: task-tree leaf
-`BACKEND-API-VALIDATION-FRONTIER.132` selects the next exact backend/API edge
+Completed backend/API frontier leaf
+`BACKEND-API-VALIDATION-FRONTIER.132` exhausted the active backend/API selector
 after `.131.1` shipped direct VHDL non-signed vector positive numeric-literal
-literal-literal modulo. Completed implementation leaf
+literal-literal modulo, the supported-smoke `.fsm` corpus passed under
+`--language vhdl`, and `ghdl` remained unavailable. Active PNT work now routes
+to `ARCHITECTURE-DEBT-FRONTIER.1` for architecture-debt selection. Completed
+implementation leaf
 `BACKEND-API-VALIDATION-FRONTIER.131.1` lowers an 8-bit non-signed
 `REM = (% 2 3)` fixture into
 `REM <= std_logic_vector(resize(to_unsigned(2, 8) mod to_unsigned(3, 8), 8));`.

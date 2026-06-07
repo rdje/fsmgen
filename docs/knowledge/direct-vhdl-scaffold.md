@@ -351,8 +351,10 @@ literal case as well: an 8-bit non-signed `QUOT = (/ 2 3)` fixture emits
 Literal-literal modulo now lowers for the bounded non-signed vector positive
 literal case too: an 8-bit non-signed `REM = (% 2 3)` fixture emits
 `REM <= std_logic_vector(resize(to_unsigned(2, 8) mod to_unsigned(3, 8), 8));`.
-Active leaf `BACKEND-API-VALIDATION-FRONTIER.132` owns selection of the next
-exact backend/API edge after literal-literal modulo shipped.
+Completed leaf `BACKEND-API-VALIDATION-FRONTIER.132` exhausted the active
+backend/API frontier after literal-literal modulo shipped and the
+supported-smoke `.fsm` VHDL sweep passed with zero failures. Active PNT now
+routes to `ARCHITECTURE-DEBT-FRONTIER.1`.
 Declared
 aggregate structural VHDL ports/nets/types in
 composition tops are locked fail-closed by
