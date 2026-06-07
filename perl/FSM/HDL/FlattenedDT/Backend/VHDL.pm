@@ -807,10 +807,17 @@ sub _simple_arithmetic_to_vhdl ($expr, $ctx) {
                 && @converted_operands == 0
                 && $operand_name =~ /^\d+$/
                 && $literal_value > 0;
+            my $is_scoped_positive_decimal_literal_pair_multiplication = $operator eq '*'
+                && !$target_decl->{scalar}
+                && @operand_names == 2
+                && $literal_operand_count == 2
+                && $operand_name =~ /^\d+$/
+                && $literal_value > 0;
             $unsupported->()
                 unless (($operator eq '+' || $operator eq '-') && !$target_decl->{scalar})
                 || $is_scoped_positive_decimal_literal_arithmetic
-                || $is_scoped_literal_first_positive_decimal_multiply_divide_or_modulo;
+                || $is_scoped_literal_first_positive_decimal_multiply_divide_or_modulo
+                || $is_scoped_positive_decimal_literal_pair_multiplication;
             push @converted_operands, "to_unsigned($literal_value, $target_width)";
             next;
         }

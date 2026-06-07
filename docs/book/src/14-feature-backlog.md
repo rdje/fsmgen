@@ -4231,11 +4231,13 @@ package declaration/emission, and full normalized semantic export
 stabilization remain deferred.
 
 Current active backend edge: task-tree leaf
-`BACKEND-API-VALIDATION-FRONTIER.129.1` owns direct VHDL non-signed vector
-positive numeric-literal multiplication with two literal operands after
-selection leaf `.129` confirmed `2 * 3`, `2 / 3`, and `2 % 3` still fail
-closed while one-literal/one-signal arithmetic now emits target-width
-`to_unsigned` arithmetic. Completed implementation leaf
+`BACKEND-API-VALIDATION-FRONTIER.130` selects the next exact backend/API edge
+after `.129.1` shipped direct VHDL non-signed vector positive numeric-literal
+literal-literal multiplication. Completed implementation leaf
+`BACKEND-API-VALIDATION-FRONTIER.129.1` lowers an 8-bit non-signed
+`PROD = (* 2 3)` fixture into
+`PROD <= std_logic_vector(resize(to_unsigned(2, 8) * to_unsigned(3, 8), 8));`.
+Completed implementation leaf
 `BACKEND-API-VALIDATION-FRONTIER.128.1` lowers an 8-bit non-signed
 `REM = (% 2 A)` fixture into
 `REM <= std_logic_vector(resize(to_unsigned(2, 8) mod unsigned(A), 8));`.
@@ -4259,8 +4261,8 @@ Completed implementation leaf
 `BACKEND-API-VALIDATION-FRONTIER.123.1` lowers an 8-bit non-signed
 `PROD = (* A 2)` signal-first fixture into
 `PROD <= std_logic_vector(resize(unsigned(A) * to_unsigned(2, 8), 8));`.
-Literal-literal multiplication/division/modulo stay fail-closed until exact
-implementation leaves ship them; active `.129.1` owns the multiplication slice.
+Literal-literal division/modulo stay fail-closed until exact implementation
+leaves ship them.
 Completed implementation leaf `BACKEND-API-VALIDATION-FRONTIER.122.1` lowers
 direct VHDL non-signed vector modulo with a negative decimal numeric literal
 into target-width resized unsigned arithmetic over a two-complement literal,
