@@ -288,10 +288,11 @@ It also lowers non-signed vector addition with a negative decimal numeric
 literal: an 8-bit non-signed `SUM = (+ A -1)` fixture emits
 `SUM <= std_logic_vector(unsigned(A) + unsigned(to_signed(-1, 8)));` instead
 of failing at arithmetic expression `'A + -1'`. Active leaf
-`BACKEND-API-VALIDATION-FRONTIER.119` owns selection of the next exact
-backend/API edge after that non-signed negative addition slice shipped;
-non-signed vector negative numeric-literal operators beyond addition remain
-deferred. Declared
+`BACKEND-API-VALIDATION-FRONTIER.119.1` owns direct VHDL non-signed vector
+negative numeric-literal subtraction after current-code probes confirmed
+`DIFF = (- A -1)` still fails at arithmetic expression `'A - -1'`.
+Non-signed vector negative numeric-literal multiplication/division/modulo
+remain deferred. Declared
 aggregate structural VHDL ports/nets/types in
 composition tops are locked fail-closed by
 `BACKEND-API-VALIDATION-FRONTIER.101.1`: aggregate top-port shapes that the

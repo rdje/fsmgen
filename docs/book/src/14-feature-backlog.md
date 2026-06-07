@@ -4231,8 +4231,11 @@ package declaration/emission, and full normalized semantic export
 stabilization remain deferred.
 
 Current active backend edge: task-tree leaf
-`BACKEND-API-VALIDATION-FRONTIER.119` selects the next exact backend/API edge
-after non-signed vector negative numeric-literal addition lowering shipped.
+`BACKEND-API-VALIDATION-FRONTIER.119.1` owns direct VHDL non-signed vector
+subtraction with a negative decimal numeric literal after selector leaf
+`BACKEND-API-VALIDATION-FRONTIER.119` chose it from adjacent fail-closed
+arithmetic probes. The selected 8-bit fixture is `DIFF = (- A -1)`, which
+currently fails at arithmetic expression `'A - -1'` until this leaf ships.
 Completed implementation leaf `BACKEND-API-VALIDATION-FRONTIER.118.1` lowers
 direct VHDL non-signed vector addition with a negative decimal numeric literal
 into unsigned arithmetic over a target-width two-complement literal, so the
