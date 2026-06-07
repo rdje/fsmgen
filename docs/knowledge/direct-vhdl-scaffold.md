@@ -105,6 +105,8 @@ answers:
   - "does direct VHDL support signed vector negative numeric literal multiplication?"
   - "does direct VHDL support signed vector negative numeric literal division?"
   - "does direct VHDL support signed vector negative numeric literal modulo?"
+  - "does direct VHDL support non-signed vector negative numeric literal addition?"
+  - "does direct VHDL support vector negative numeric literal addition?"
   - "does direct VHDL support compound update arithmetic?"
   - "does direct VHDL support signed declarations?"
   - "does direct VHDL support signed logic declarations?"
@@ -282,9 +284,12 @@ instead of failing at arithmetic expression `'A / -2'`. It also lowers signed
 vector modulo with a negative decimal numeric literal: an 8-bit signed
 `REM = (% A -2)` fixture emits `REM <= resize(A mod to_signed(-2, 8), 8);`
 instead of failing at arithmetic expression `'A % -2'`. Active leaf
-`BACKEND-API-VALIDATION-FRONTIER.118` owns selection of the next exact
-backend/API edge after that signed negative modulo slice shipped; unsigned
-negative numeric-literal arithmetic remains deferred. Declared
+`BACKEND-API-VALIDATION-FRONTIER.118.1` owns direct VHDL non-signed vector
+negative numeric-literal addition after current-code probes confirmed the
+signed negative operator family is accepted while non-signed `A + -1`,
+`A - -1`, `A * -2`, `A / -2`, and `A % -2` still fail closed. Non-signed
+vector negative numeric-literal operators beyond addition remain deferred.
+Declared
 aggregate structural VHDL ports/nets/types in
 composition tops are locked fail-closed by
 `BACKEND-API-VALIDATION-FRONTIER.101.1`: aggregate top-port shapes that the
