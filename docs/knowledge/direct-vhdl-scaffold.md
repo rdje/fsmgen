@@ -329,13 +329,19 @@ instead of failing at arithmetic expression `'A / 2'`. Positive non-signed
 vector numeric-literal modulo now lowers as well: an 8-bit non-signed
 `REM = (% A 2)` fixture emits
 `REM <= std_logic_vector(resize(unsigned(A) mod to_unsigned(2, 8), 8));`
-instead of failing at arithmetic expression `'A % 2'`. Literal-first arithmetic
-remains deferred: `.125.1` probes confirmed `REM = (% 2 A)`,
-`QUOT = (/ 2 A)`, and `PROD = (* 2 A)` still fail closed at arithmetic
-expressions `'2 % A'`, `'2 / A'`, and `'2 * A'`. Active leaf
-`BACKEND-API-VALIDATION-FRONTIER.126.1` owns only the direct VHDL non-signed
-vector positive numeric-literal literal-first multiplication slice; literal-first
-division/modulo and broad expression parity remain deferred.
+instead of failing at arithmetic expression `'A % 2'`. After `.125.1`,
+literal-first probes confirmed `REM = (% 2 A)`, `QUOT = (/ 2 A)`, and
+`PROD = (* 2 A)` still failed closed at arithmetic expressions `'2 % A'`,
+`'2 / A'`, and `'2 * A'`. Literal-first multiplication
+now lowers for the bounded non-signed vector positive literal case: an 8-bit
+non-signed `PROD = (* 2 A)` fixture emits
+`PROD <= std_logic_vector(resize(to_unsigned(2, 8) * unsigned(A), 8));`.
+Literal-first division/modulo and literal-literal arithmetic remain deferred:
+`.126.1` probes confirmed `QUOT = (/ 2 A)`, `REM = (% 2 A)`, and
+`PROD = (* 2 3)` still fail closed at arithmetic expressions `'2 / A'`,
+`'2 % A'`, and `'2 * 3'`. Active leaf
+`BACKEND-API-VALIDATION-FRONTIER.127` owns selection of the next exact
+backend/API edge after that literal-first multiplication slice shipped.
 Declared
 aggregate structural VHDL ports/nets/types in
 composition tops are locked fail-closed by

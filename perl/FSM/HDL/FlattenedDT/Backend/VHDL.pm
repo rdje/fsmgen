@@ -788,6 +788,7 @@ sub _simple_arithmetic_to_vhdl ($expr, $ctx) {
         return $signed_expression;
     }
 
+    my $literal_operand_count = grep { defined _arithmetic_literal_value($_) } @operand_names;
     my @converted_operands;
     for my $operand_name (@operand_names) {
         my $literal_value = _arithmetic_literal_value($operand_name);
@@ -795,12 +796,21 @@ sub _simple_arithmetic_to_vhdl ($expr, $ctx) {
             my $is_scoped_positive_decimal_literal_arithmetic = ($operator eq '*' || $operator eq '/' || $operator eq '%')
                 && !$target_decl->{scalar}
                 && @operand_names == 2
+                && $literal_operand_count == 1
                 && @converted_operands == 1
+                && $operand_name =~ /^\d+$/
+                && $literal_value > 0;
+            my $is_scoped_literal_first_positive_decimal_multiplication = $operator eq '*'
+                && !$target_decl->{scalar}
+                && @operand_names == 2
+                && $literal_operand_count == 1
+                && @converted_operands == 0
                 && $operand_name =~ /^\d+$/
                 && $literal_value > 0;
             $unsupported->()
                 unless (($operator eq '+' || $operator eq '-') && !$target_decl->{scalar})
-                || $is_scoped_positive_decimal_literal_arithmetic;
+                || $is_scoped_positive_decimal_literal_arithmetic
+                || $is_scoped_literal_first_positive_decimal_multiplication;
             push @converted_operands, "to_unsigned($literal_value, $target_width)";
             next;
         }
