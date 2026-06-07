@@ -11,10 +11,10 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
 ## Current state (OVERWRITE this block each update — do not append)
-- latest_commit: `DOC-PATH-RELATIVE-KNOWLEDGE-MAP.1` (this commit) — extended the relative-path guard to `KNOWLEDGE_MAP.md`, added decision `0012`, added a Knowledge Map fact card, and verified no machine-local absolute paths in guarded doc surfaces.
+- latest_commit: `BIN-FSMGEN-IMPORT-TREE-JUN07-REFRESH.1` (this commit) — refreshed `docs/BIN_FSMGEN_IMPORT_TREE.md` after bootstrap remeasurement: `bin/fsmgen` closure is `198` total / `197` `.pm`, VHDL backend owners are reachable, and stale line counts are current.
 - active_work_unit: none — no active or proposed task-tree remains; future work needs a new or reactivated exact owner before source/config/test/doc changes.
-- recently_done: `DOC-PATH-RELATIVE-KNOWLEDGE-MAP.1`; `ARCHITECTURE-DEBT-FRONTIER.3`; `ARCHITECTURE-DEBT-FRONTIER.2.1`; `ARCHITECTURE-DEBT-FRONTIER.2`; `ARCHITECTURE-DEBT-FRONTIER.1`; `BACKEND-API-VALIDATION-FRONTIER.132`; `BACKEND-API-VALIDATION-FRONTIER.131.1`; `BACKEND-API-VALIDATION-FRONTIER.131`; `BACKEND-API-VALIDATION-FRONTIER.130.1`; `BACKEND-API-VALIDATION-FRONTIER.130`; `BACKEND-API-VALIDATION-FRONTIER.129.1`; `BACKEND-API-VALIDATION-FRONTIER.129`.
-- in_flight_uncommitted: none expected after this path-invariant commit; unrelated untracked `fx/` intentionally left alone.
+- recently_done: `BIN-FSMGEN-IMPORT-TREE-JUN07-REFRESH.1`; `DOC-PATH-RELATIVE-KNOWLEDGE-MAP.1`; `ARCHITECTURE-DEBT-FRONTIER.3`; `ARCHITECTURE-DEBT-FRONTIER.2.1`; `ARCHITECTURE-DEBT-FRONTIER.2`; `ARCHITECTURE-DEBT-FRONTIER.1`; `BACKEND-API-VALIDATION-FRONTIER.132`; `BACKEND-API-VALIDATION-FRONTIER.131.1`; `BACKEND-API-VALIDATION-FRONTIER.131`; `BACKEND-API-VALIDATION-FRONTIER.130.1`; `BACKEND-API-VALIDATION-FRONTIER.130`; `BACKEND-API-VALIDATION-FRONTIER.129.1`.
+- in_flight_uncommitted: none expected after this import-tree refresh commit; unrelated untracked `fx/` intentionally left alone.
 - blockers: none.
 
 ## Notes

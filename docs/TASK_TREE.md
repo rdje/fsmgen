@@ -44,6 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
+| `BIN-FSMGEN-IMPORT-TREE-JUN07-REFRESH` | `done` | bootstrap architecture maintenance | complete (`.1`; refreshed `bin/fsmgen` import-tree note to `198` total / `197` `.pm`; VHDL backend owners now reachable; stale line counts refreshed) | [docs/tasks/BIN-FSMGEN-IMPORT-TREE-JUN07-REFRESH.md](docs/tasks/BIN-FSMGEN-IMPORT-TREE-JUN07-REFRESH.md) |
 | `DOC-PATH-RELATIVE-KNOWLEDGE-MAP` | `done` | infra/continuity | complete (`.1`; decision `0012`; guard `t/1414` now scans `docs/**/*.md` plus root `KNOWLEDGE_MAP.md`; fact card added; no absolute machine-local paths found) | [docs/tasks/DOC-PATH-RELATIVE-KNOWLEDGE-MAP.md](docs/tasks/DOC-PATH-RELATIVE-KNOWLEDGE-MAP.md) |
 | `TRACE-SEVERITY-NEVER-GATED` | `done` | infra/observability | complete (`.1`–`.4`; ungated `fsm_warn`/`fsm_error`/`fsm_fatal` in `FSM::Debug`; genuine warnings/errors rerouted off the gated path, routine notes kept gated + reworded; guard `t/1415`; decision `0010`) | [docs/tasks/TRACE-SEVERITY-NEVER-GATED.md](docs/tasks/TRACE-SEVERITY-NEVER-GATED.md) |
 | `ISF-TRIGGER-ANCHOR` | `done` | `R14` | complete — event `(after …)` + inline/monitor `(monitor (within S N))` + Ref `(point …)`/`(at …)`/`(on … as …)` triggers, all signal-anchored (ISF↔FSM boundary); window-source parity; **`(contract …)` removed** (closes `0008`); 7 runnable synced mdBook examples; residual "contract" wording neutralized | [docs/tasks/ISF-TRIGGER-ANCHOR.md](docs/tasks/ISF-TRIGGER-ANCHOR.md) |
