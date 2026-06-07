@@ -270,14 +270,14 @@ lowers signed vector addition with a negative decimal numeric literal: an
 instead of failing at arithmetic expression `'A + -1'`. It also lowers signed
 vector subtraction with a negative decimal numeric literal: an 8-bit signed
 `DIFF = (- A -1)` fixture emits `DIFF <= A - to_signed(-1, 8);` instead of
-failing at arithmetic expression `'A - -1'`. Selector leaf
-`BACKEND-API-VALIDATION-FRONTIER.115` chose direct VHDL signed vector
-negative numeric-literal multiplication after current-code probes confirmed
-subtraction is accepted while `A * -2`, `A / -2`, `A % -2`, and unsigned
-`A + -1` still fail closed. Active leaf
-`BACKEND-API-VALIDATION-FRONTIER.115.1` owns that multiplication edge; signed
-negative numeric-literal division/modulo and unsigned negative numeric-literal
-arithmetic remain deferred. Declared
+failing at arithmetic expression `'A - -1'`. It also lowers signed vector
+multiplication with a negative decimal numeric literal: an 8-bit signed
+`PROD = (* A -2)` fixture emits `PROD <= resize(A * to_signed(-2, 8), 8);`
+instead of failing at arithmetic expression `'A * -2'`. Active leaf
+`BACKEND-API-VALIDATION-FRONTIER.116` owns selection of the next exact
+backend/API edge after that signed negative multiplication slice shipped;
+signed negative numeric-literal division/modulo and unsigned negative
+numeric-literal arithmetic remain deferred. Declared
 aggregate structural VHDL ports/nets/types in
 composition tops are locked fail-closed by
 `BACKEND-API-VALIDATION-FRONTIER.101.1`: aggregate top-port shapes that the
