@@ -41,14 +41,14 @@ rather than informal cleanup.
     `ARCHITECTURE-DEBT-FRONTIER.3`
 
 - ID: `ARCHITECTURE-DEBT-FRONTIER.1`
-  Status: `active`
+  Status: `done`
   Goal: `Select the next executable architecture-debt leaf from evidence.`
   Acceptance: `One architecture item is activated, explicitly deferred, or linked to a stronger prerequisite owner.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check`
+  Commit: `ARCHITECTURE-DEBT-FRONTIER.1: select direct backend convergence`
 
 - ID: `ARCHITECTURE-DEBT-FRONTIER.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Converge the direct backend path toward StructuralRTLIR-to-emitter where one bounded step is safe.`
   Acceptance: `One exact backend convergence boundary is selected, implemented or deferred, documented if user-visible, and regression-covered.`
   Verification: `pending`
@@ -65,7 +65,8 @@ rather than informal cleanup.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ARCHITECTURE-DEBT-FRONTIER.1` | `active` | PNT frontier selected after `BACKEND-API-VALIDATION-FRONTIER.132` exhausted the active backend/API tree. |
+| 1 | `ARCHITECTURE-DEBT-FRONTIER.1` | `done` | Selected direct backend convergence from completed architecture evidence. |
+| 2 | `ARCHITECTURE-DEBT-FRONTIER.2` | `active` | `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE` left behavior-bearing direct-root convergence open, while `ISF-LOWERINGIR-BOUNDARY-EXTRACTION` deferred extraction until a stable family is identified. |
 
 ## Decisions
 
@@ -73,10 +74,16 @@ rather than informal cleanup.
   Composition/type.
 - `2026-06-07`: Activated after `BACKEND-API-VALIDATION-FRONTIER.132` exhausted
   the active backend/API frontier and routed PNT to architecture-debt selection.
+- `2026-06-07`: Selector leaf `ARCHITECTURE-DEBT-FRONTIER.1` chose
+  `ARCHITECTURE-DEBT-FRONTIER.2` as the next executable lane. Evidence came from
+  the completed direct-structural convergence tree's open behavior-bearing
+  follow-up, the completed ISF LoweringIR extraction tree's no-extraction-yet
+  outcome, and the import-tree audit's current direct-backend pressure notes.
 
 ## Open Questions
 
-- None for the active selector leaf.
+- `ARCHITECTURE-DEBT-FRONTIER.2`: Which exact direct-root behavior family is
+  the first safe StructuralRTLIR convergence step beyond identity and ports?
 
 ## Blockers
 
@@ -87,13 +94,16 @@ rather than informal cleanup.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- |
 | `2026-06-05` | `ARCHITECTURE-DEBT-FRONTIER.1` | `pending` | `pending` |
+| `2026-06-07` | `ARCHITECTURE-DEBT-FRONTIER.1` | Evidence review: `docs/tasks/IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.md`, `docs/tasks/ISF-LOWERINGIR-BOUNDARY-EXTRACTION.md`, `docs/BIN_FSMGEN_IMPORT_TREE.md`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | pass; selected `ARCHITECTURE-DEBT-FRONTIER.2` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ARCHITECTURE-DEBT-FRONTIER.1` | `pending` | `pending` |
+| `ARCHITECTURE-DEBT-FRONTIER.1` | `ARCHITECTURE-DEBT-FRONTIER.1: select direct backend convergence` | selected `.2` after direct/backend and ISF extraction evidence review |
 
 ## Changelog
 
 - `2026-06-05`: Created proposed architecture-debt frontier owner tree.
+- `2026-06-07`: Completed selector leaf `.1`; activated `.2` for direct backend
+  StructuralRTLIR convergence selection.

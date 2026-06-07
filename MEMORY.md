@@ -11,10 +11,10 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
 ## Current state (OVERWRITE this block each update — do not append)
-- latest_commit: `BACKEND-API-VALIDATION-FRONTIER.132` (this commit) — backend/API frontier exhausted after supported-smoke `.fsm` VHDL sweep returned 41 passes / 0 failures and `ghdl` remained unavailable.
-- active_work_unit: `ARCHITECTURE-DEBT-FRONTIER.1` active frontier — select the next executable architecture-debt leaf before any implementation.
-- recently_done: `BACKEND-API-VALIDATION-FRONTIER.132`; `BACKEND-API-VALIDATION-FRONTIER.131.1`; `BACKEND-API-VALIDATION-FRONTIER.131`; `BACKEND-API-VALIDATION-FRONTIER.130.1`; `BACKEND-API-VALIDATION-FRONTIER.130`; `BACKEND-API-VALIDATION-FRONTIER.129.1`; `BACKEND-API-VALIDATION-FRONTIER.129`; `BACKEND-API-VALIDATION-FRONTIER.128.1`; `BACKEND-API-VALIDATION-FRONTIER.128`; `BACKEND-API-VALIDATION-FRONTIER.127.1`; `BACKEND-API-VALIDATION-FRONTIER.127`; `BACKEND-API-VALIDATION-FRONTIER.126.1`.
-- in_flight_uncommitted: none expected after this `.132` selector/routing commit; unrelated untracked `fx/` intentionally left alone.
+- latest_commit: `ARCHITECTURE-DEBT-FRONTIER.1` (this commit) — selected direct-backend StructuralRTLIR convergence as the next executable architecture-debt lane after direct/backend and ISF extraction evidence review.
+- active_work_unit: `ARCHITECTURE-DEBT-FRONTIER.2` active frontier — select the first safe direct-root behavior family for StructuralRTLIR convergence beyond identity and ports before any implementation.
+- recently_done: `ARCHITECTURE-DEBT-FRONTIER.1`; `BACKEND-API-VALIDATION-FRONTIER.132`; `BACKEND-API-VALIDATION-FRONTIER.131.1`; `BACKEND-API-VALIDATION-FRONTIER.131`; `BACKEND-API-VALIDATION-FRONTIER.130.1`; `BACKEND-API-VALIDATION-FRONTIER.130`; `BACKEND-API-VALIDATION-FRONTIER.129.1`; `BACKEND-API-VALIDATION-FRONTIER.129`; `BACKEND-API-VALIDATION-FRONTIER.128.1`; `BACKEND-API-VALIDATION-FRONTIER.128`; `BACKEND-API-VALIDATION-FRONTIER.127.1`; `BACKEND-API-VALIDATION-FRONTIER.127`.
+- in_flight_uncommitted: none expected after this `.1` selector/routing commit; unrelated untracked `fx/` intentionally left alone.
 - blockers: none.
 
 ## Notes
