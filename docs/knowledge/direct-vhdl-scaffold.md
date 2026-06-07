@@ -326,11 +326,15 @@ vector numeric-literal division now lowers too: an 8-bit non-signed
 `QUOT = (/ A 2)` fixture emits
 `QUOT <= std_logic_vector(resize(unsigned(A) / to_unsigned(2, 8), 8));`
 instead of failing at arithmetic expression `'A / 2'`. Positive non-signed
-vector numeric-literal modulo remains a separate edge from the shipped
-multiplication/division paths: `.125` probes confirmed `REM = (% A 2)` and
-`REM = (% 2 A)` still fail closed at arithmetic expressions `'A % 2'` and
-`'2 % A'`. Active leaf `BACKEND-API-VALIDATION-FRONTIER.125.1` owns only the
-modulo slice; literal-first arithmetic remains deferred.
+vector numeric-literal modulo now lowers as well: an 8-bit non-signed
+`REM = (% A 2)` fixture emits
+`REM <= std_logic_vector(resize(unsigned(A) mod to_unsigned(2, 8), 8));`
+instead of failing at arithmetic expression `'A % 2'`. Literal-first arithmetic
+remains deferred: `.125.1` probes confirmed `REM = (% 2 A)`,
+`QUOT = (/ 2 A)`, and `PROD = (* 2 A)` still fail closed at arithmetic
+expressions `'2 % A'`, `'2 / A'`, and `'2 * A'`. Active leaf
+`BACKEND-API-VALIDATION-FRONTIER.126` owns selection of the next exact
+backend/API edge after that modulo slice shipped.
 Declared
 aggregate structural VHDL ports/nets/types in
 composition tops are locked fail-closed by

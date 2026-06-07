@@ -4231,10 +4231,13 @@ package declaration/emission, and full normalized semantic export
 stabilization remain deferred.
 
 Current active backend edge: task-tree leaf
-`BACKEND-API-VALIDATION-FRONTIER.125.1` owns direct VHDL non-signed vector
-positive numeric-literal modulo lowering after selection leaf `.125`
-confirmed `A % 2` still fails closed while multiplication/division now emit
-target-width `to_unsigned` arithmetic. Completed implementation leaf
+`BACKEND-API-VALIDATION-FRONTIER.126` selects the next exact backend/API edge
+after `.125.1` shipped direct VHDL non-signed vector positive numeric-literal
+modulo lowering. Completed implementation leaf
+`BACKEND-API-VALIDATION-FRONTIER.125.1` lowers an 8-bit non-signed
+`REM = (% A 2)` fixture into
+`REM <= std_logic_vector(resize(unsigned(A) mod to_unsigned(2, 8), 8));`.
+Completed implementation leaf
 `BACKEND-API-VALIDATION-FRONTIER.124.1` lowers an 8-bit non-signed
 `QUOT = (/ A 2)` fixture into
 `QUOT <= std_logic_vector(resize(unsigned(A) / to_unsigned(2, 8), 8));`.

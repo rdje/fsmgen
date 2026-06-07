@@ -2645,6 +2645,61 @@ FSM
     );
 };
 
+subtest 'facade target_language option routes direct VHDL non-signed positive numeric-literal modulo behavior' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $direct_path = File::Spec->catfile($tempdir, 'facade_direct_vhdl_vector_positive_literal_mod.fsm');
+    write_file(
+        $direct_path,
+        <<'FSM'
+(?fsm:facade_direct_vhdl_vector_positive_literal_mod
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+  (+types
+    (type byte_t (bits 8))
+  )
+  (+size
+    (A byte_t)
+    (REM byte_t)
+  )
+  (idle
+    (REM = (% A 2))
+  )
+)
+FSM
+    );
+
+    my $vhdl_pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'vhdl',
+        quiet => 1,
+    );
+
+    my $vhdl_result = $vhdl_pipeline->generate_hdl_from_file($direct_path);
+
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bentity\s+facade_direct_vhdl_vector_positive_literal_mod\s+is\b/s,
+        'explicit VHDL facade generation emits the non-signed positive literal modulo direct entity',
+    );
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bA\s+:\s+in\s+std_logic_vector\(7\s+downto\s+0\);?/s,
+        'explicit VHDL facade generation lowers non-signed positive literal modulo input port',
+    );
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bREM\s+<=\s+std_logic_vector\(resize\(unsigned\(A\)\s+mod\s+to_unsigned\(2,\s+8\),\s+8\)\);/s,
+        'explicit VHDL facade generation lowers non-signed vector modulo positive literal through resized numeric_std',
+    );
+    unlike(
+        $vhdl_result->{hdl_code},
+        qr/\bmodule\b|\balways_(?:ff|comb)\b|to_signed\(2,\s+8\)|arithmetic expression 'A % 2'/s,
+        'explicit VHDL non-signed positive literal modulo facade generation avoids SystemVerilog syntax, signed casts, and the prior guard',
+    );
+};
+
 subtest 'facade target_language option routes direct VHDL signed negative numeric-literal arithmetic behavior' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $direct_path = File::Spec->catfile($tempdir, 'facade_direct_vhdl_signed_negative_literal_add.fsm');

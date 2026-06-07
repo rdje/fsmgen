@@ -792,7 +792,7 @@ sub _simple_arithmetic_to_vhdl ($expr, $ctx) {
     for my $operand_name (@operand_names) {
         my $literal_value = _arithmetic_literal_value($operand_name);
         if (defined $literal_value) {
-            my $is_scoped_positive_decimal_literal_arithmetic = ($operator eq '*' || $operator eq '/')
+            my $is_scoped_positive_decimal_literal_arithmetic = ($operator eq '*' || $operator eq '/' || $operator eq '%')
                 && !$target_decl->{scalar}
                 && @operand_names == 2
                 && @converted_operands == 1
