@@ -339,12 +339,14 @@ non-signed `PROD = (* 2 A)` fixture emits
 Literal-first division now lowers for the bounded non-signed vector positive
 literal case: an 8-bit non-signed `QUOT = (/ 2 A)` fixture emits
 `QUOT <= std_logic_vector(resize(to_unsigned(2, 8) / unsigned(A), 8));`.
-Literal-first modulo and literal-literal arithmetic remain deferred: `.128`
-probes confirmed `REM = (% 2 A)` and `REM = (% 2 3)` still fail closed at
-arithmetic expressions `'2 % A'` and `'2 % 3'`. Active leaf
-`BACKEND-API-VALIDATION-FRONTIER.128.1` owns only the direct VHDL non-signed
-vector positive numeric-literal literal-first modulo slice; literal-literal
-arithmetic and broad expression parity remain deferred.
+Literal-first modulo now lowers for the bounded non-signed vector positive
+literal case: an 8-bit non-signed `REM = (% 2 A)` fixture emits
+`REM <= std_logic_vector(resize(to_unsigned(2, 8) mod unsigned(A), 8));`.
+Literal-literal arithmetic remains deferred: `.128.1` probes confirmed
+`REM = (% 2 3)` and `PROD = (* 2 3)` still fail closed at arithmetic
+expressions `'2 % 3'` and `'2 * 3'`. Active leaf
+`BACKEND-API-VALIDATION-FRONTIER.129` owns selection of the next exact
+backend/API edge after that literal-first modulo slice shipped.
 Declared
 aggregate structural VHDL ports/nets/types in
 composition tops are locked fail-closed by
