@@ -56,14 +56,14 @@ rather than informal cleanup.
   Commit: `ARCHITECTURE-DEBT-FRONTIER.2: select direct structural internal nets`
 
 - ID: `ARCHITECTURE-DEBT-FRONTIER.2.1`
-  Status: `active`
+  Status: `done`
   Goal: `Project direct backend internal storage/helper declarations into StructuralRTLIR nets.`
   Acceptance: `Direct-root structural_rtl_ir.nets[] is built from the existing backend internal declaration plan's signal_decls and aux_decls, preserving width/signed/state-model/declared-type metadata without rerouting HDL emission or claiming direct instances, links, auxiliary assignments, or generated enable wires.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `perl -Iperl -c perl/FSM/IR/StructuralRTLIRBuilder.pm`; `perl -Iperl -c perl/FSM/Pipeline/DirectGenerationOrchestrator.pm`; `perl -Iperl -c perl/FSM/Support/NormalizedSemanticStructuralRTLIRContract.pm`; `prove -Iperl t/1333-direct-structural-rtl-ir-projection.t t/163-forward-structural-rtl-ir-surface.t t/190-pipeline-direct-generation-orchestrator.t t/204-enable-graph-module-planning-support.t t/303-normalized-semantic-json-supported-corpus.t t/341-normalized-semantic-structural-rtl-ir-contract.t t/334-normalized-semantic-forward-ir-contract.t t/330-normalized-semantic-payload-contract.t t/311-normalized-semantic-report-contract.t t/297-capability-manifest.t`; `prove -Iperl t/1414-docs-relative-paths-audit.t t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `mdbook build docs/book`; `git diff --check`
+  Commit: `ARCHITECTURE-DEBT-FRONTIER.2.1: project direct structural nets`
 
 - ID: `ARCHITECTURE-DEBT-FRONTIER.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Extract large ISF parser/lowerer responsibilities only after stable families are identified.`
   Acceptance: `One exact extraction boundary is selected, implemented or deferred, and validated without behavior drift.`
   Verification: `pending`
@@ -75,7 +75,8 @@ rather than informal cleanup.
 | --- | --- | --- | --- |
 | 1 | `ARCHITECTURE-DEBT-FRONTIER.1` | `done` | Selected direct backend convergence from completed architecture evidence. |
 | 2 | `ARCHITECTURE-DEBT-FRONTIER.2` | `done` | Selected direct structural internal declaration nets as the first behavior-bearing convergence step. |
-| 3 | `ARCHITECTURE-DEBT-FRONTIER.2.1` | `active` | The backend internal declaration plan already exposes direct storage/helper declarations (`signal_decls`/`aux_decls`) with metadata, while generated enable wires remain private emitter logic and should not be claimed in this slice. |
+| 3 | `ARCHITECTURE-DEBT-FRONTIER.2.1` | `done` | Implemented direct storage/helper declaration-plan nets in `structural_rtl_ir.nets[]`; generated enable wires, assignments, instances, links, and HDL rerouting remain outside the slice. |
+| 4 | `ARCHITECTURE-DEBT-FRONTIER.3` | `active` | Existing architecture-debt child for ISF parser/lowerer extraction remains; it must select or defer one stable family before any extraction. |
 
 ## Decisions
 
@@ -93,10 +94,18 @@ rather than informal cleanup.
   convergence leaf. The selected boundary is storage/helper declaration-plan
   nets only; generated enable wires, behavior assignments, instances, links,
   and HDL emission rerouting remain outside this slice.
+- `2026-06-07`: Implementation leaf `ARCHITECTURE-DEBT-FRONTIER.2.1` projected
+  direct backend `signal_decls` and `aux_decls` into `structural_rtl_ir.nets[]`
+  as declaration-only internal storage/helper nets, preserving width,
+  signedness, state-model, and declared-type metadata. The next active
+  architecture-debt frontier is `.3`.
 
 ## Open Questions
 
-- `ARCHITECTURE-DEBT-FRONTIER.2.1`: Which later owner should model generated
+- `ARCHITECTURE-DEBT-FRONTIER.3`: Which ISF parser/lowerer family, if any, is
+  stable enough for a behavior-preserving extraction; otherwise, should `.3`
+  explicitly defer extraction again?
+- Future direct StructuralRTLIR owner: Which later owner should model generated
   enable wires or direct assignment/connectivity behavior after storage/helper
   declaration nets are stable?
 
@@ -111,6 +120,7 @@ rather than informal cleanup.
 | `2026-06-05` | `ARCHITECTURE-DEBT-FRONTIER.1` | `pending` | `pending` |
 | `2026-06-07` | `ARCHITECTURE-DEBT-FRONTIER.1` | Evidence review: `docs/tasks/IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.md`, `docs/tasks/ISF-LOWERINGIR-BOUNDARY-EXTRACTION.md`, `docs/BIN_FSMGEN_IMPORT_TREE.md`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | pass; selected `ARCHITECTURE-DEBT-FRONTIER.2` |
 | `2026-06-07` | `ARCHITECTURE-DEBT-FRONTIER.2` | Evidence review: `perl/FSM/IR/StructuralRTLIRBuilder.pm`, `perl/FSM/Pipeline/DirectGenerationOrchestrator.pm`, `perl/FSM/Synthesis/EnableGraph/ModulePlanningSupport.pm`, `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/InternalDeclarationEmitter.pm`, `t/1333-direct-structural-rtl-ir-projection.t`, `t/204-enable-graph-module-planning-support.t`; temp full-pipeline probe of the module-planning fixture; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | pass; selected `ARCHITECTURE-DEBT-FRONTIER.2.1` |
+| `2026-06-07` | `ARCHITECTURE-DEBT-FRONTIER.2.1` | `perl -Iperl -c perl/FSM/IR/StructuralRTLIRBuilder.pm`; `perl -Iperl -c perl/FSM/Pipeline/DirectGenerationOrchestrator.pm`; `perl -Iperl -c perl/FSM/Support/NormalizedSemanticStructuralRTLIRContract.pm`; `prove -Iperl t/1333-direct-structural-rtl-ir-projection.t t/163-forward-structural-rtl-ir-surface.t t/190-pipeline-direct-generation-orchestrator.t t/204-enable-graph-module-planning-support.t t/303-normalized-semantic-json-supported-corpus.t t/341-normalized-semantic-structural-rtl-ir-contract.t t/334-normalized-semantic-forward-ir-contract.t t/330-normalized-semantic-payload-contract.t t/311-normalized-semantic-report-contract.t t/297-capability-manifest.t`; `prove -Iperl t/1414-docs-relative-paths-audit.t t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `mdbook build docs/book`; `git diff --check` | pass |
 
 ## Commit Log
 
@@ -118,6 +128,7 @@ rather than informal cleanup.
 | --- | --- | --- |
 | `ARCHITECTURE-DEBT-FRONTIER.1` | `ARCHITECTURE-DEBT-FRONTIER.1: select direct backend convergence` | selected `.2` after direct/backend and ISF extraction evidence review |
 | `ARCHITECTURE-DEBT-FRONTIER.2` | `ARCHITECTURE-DEBT-FRONTIER.2: select direct structural internal nets` | selected `.2.1` as the first behavior-bearing direct StructuralRTLIR convergence leaf |
+| `ARCHITECTURE-DEBT-FRONTIER.2.1` | `ARCHITECTURE-DEBT-FRONTIER.2.1: project direct structural nets` | shipped declaration-only direct storage/helper nets and routed PNT to `.3` |
 
 ## Changelog
 
@@ -126,3 +137,5 @@ rather than informal cleanup.
   StructuralRTLIR convergence selection.
 - `2026-06-07`: Completed selector leaf `.2`; activated `.2.1` for direct
   internal storage/helper declaration nets in StructuralRTLIR.
+- `2026-06-07`: Implemented `.2.1`; activated `.3` for ISF parser/lowerer
+  extraction selection or deferral.

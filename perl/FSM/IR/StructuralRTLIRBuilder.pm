@@ -30,6 +30,7 @@ sub build_from_generated_module_info ($class, %args) {
         or confess "StructuralRTLIRBuilder requires a module_info";
     my $target_language = $args{target_language} // 'systemverilog';
     my $fsm_module = $args{fsm_module};
+    my $hdl_generator = $args{hdl_generator};
 
     my @ports;
     my %seen_ports;
@@ -103,7 +104,10 @@ sub build_from_generated_module_info ($class, %args) {
         ),
         target_language => $target_language,
         ports => \@ports,
-        nets => [],
+        nets => _direct_internal_declaration_nets(
+            fsm_module => $fsm_module,
+            hdl_generator => $hdl_generator,
+        ),
         instances => [],
         auxiliary_assignments => [],
     );
@@ -252,6 +256,76 @@ sub _clone ($value) {
         return [ map { _clone($_) } @$value ];
     }
     return $value;
+}
+
+sub _direct_internal_declaration_nets (%args) {
+    my $fsm_module = $args{fsm_module};
+    my $hdl_generator = $args{hdl_generator};
+    return [] unless $fsm_module && ref($hdl_generator);
+
+    my $planning_support = $hdl_generator->{enable_graph_module_planning_support};
+    return [] unless ref($planning_support)
+        && $planning_support->can('build_module_declaration_plan')
+        && $planning_support->can('build_internal_signal_declaration_plan');
+
+    my $module_plan = $planning_support->build_module_declaration_plan($fsm_module);
+    return [] unless ref($module_plan) eq 'HASH';
+
+    my $declaration_plan = $planning_support->build_internal_signal_declaration_plan(
+        $fsm_module,
+        $module_plan->{declared_port_signals},
+    );
+    return [] unless ref($declaration_plan) eq 'HASH';
+
+    return [
+        _direct_net_entries_from_declarations(
+            $declaration_plan->{signal_decls},
+            $declaration_plan->{signal_signed},
+            $declaration_plan->{signal_state_model},
+            $declaration_plan->{signal_declared_type_name},
+            $declaration_plan->{signal_declared_type_spec},
+        ),
+        _direct_net_entries_from_declarations(
+            $declaration_plan->{aux_decls},
+            $declaration_plan->{aux_signed},
+            $declaration_plan->{aux_state_model},
+            $declaration_plan->{aux_declared_type_name},
+            $declaration_plan->{aux_declared_type_spec},
+        ),
+    ];
+}
+
+sub _direct_net_entries_from_declarations (
+    $decls,
+    $signed_map = undef,
+    $state_model_map = undef,
+    $declared_type_name_map = undef,
+    $declared_type_spec_map = undef,
+) {
+    return () unless ref($decls) eq 'HASH';
+
+    my @entries;
+    for my $name (sort keys %$decls) {
+        my $entry = {
+            name => $name,
+            width => ($decls->{$name} || 1),
+            source => undef,
+            targets => [],
+            signed => (($signed_map || {})->{$name} // 0) ? 1 : 0,
+        };
+
+        my $state_model = ($state_model_map || {})->{$name};
+        my $declared_type_name = ($declared_type_name_map || {})->{$name};
+        my $declared_type_spec = ($declared_type_spec_map || {})->{$name};
+
+        $entry->{state_model} = $state_model if defined $state_model;
+        $entry->{declared_type_name} = $declared_type_name if defined $declared_type_name;
+        $entry->{declared_type_spec} = _clone($declared_type_spec) if defined $declared_type_spec;
+
+        push @entries, $entry;
+    }
+
+    return @entries;
 }
 
 1;

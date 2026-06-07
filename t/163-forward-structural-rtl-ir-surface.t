@@ -74,7 +74,20 @@ FSM
         },
         'structural_rtl_ir preserves direct module boundary port metadata',
     );
-    is($structural_rtl_ir->{net_count}, 0, 'bounded direct structural_rtl_ir keeps internal net count empty at this slice');
+    is($structural_rtl_ir->{net_count}, 1, 'bounded direct structural_rtl_ir reports the projected helper net count');
+    is_deeply(
+        $structural_rtl_ir->{nets},
+        [
+            {
+                name => 'OUT_q',
+                width => 8,
+                signed => 0,
+                source => undef,
+                targets => [],
+            },
+        ],
+        'structural_rtl_ir projects the direct output helper declaration as a declaration-only net',
+    );
     is($structural_rtl_ir->{instance_count}, 0, 'bounded direct structural_rtl_ir keeps instance count empty at this slice');
     is($structural_rtl_ir->{auxiliary_assignment_count}, 0, 'bounded direct structural_rtl_ir keeps auxiliary assignment count empty at this slice');
 };

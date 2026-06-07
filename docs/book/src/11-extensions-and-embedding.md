@@ -2184,6 +2184,13 @@ keys, bounded `nets[]` entry keys, and bounded `declared_links[]` plus
 value-metadata-extension entry keys, plus nested `instances[].port_bindings[]`
 core and typed-extension entry keys.
 
+For direct roots, `structural_rtl_ir.nets[]` now includes declaration-only
+internal storage/helper nets projected from the backend internal declaration
+plan. These entries preserve width, signedness, state-model, and declared-type
+metadata where available. They intentionally do not include generated enable
+wires, direct instances, links, auxiliary assignments, or assignment
+connectivity.
+
 That same owner now also publishes a grouped `presence_key_family_map` so
 embedders can discover the bounded structural-RTL shell summary and
 collection key families, including auxiliary-assignment scalar-string value

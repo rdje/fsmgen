@@ -4235,8 +4235,11 @@ Completed backend/API frontier leaf
 after `.131.1` shipped direct VHDL non-signed vector positive numeric-literal
 literal-literal modulo, the supported-smoke `.fsm` corpus passed under
 `--language vhdl`, and `ghdl` remained unavailable. Active PNT work now routes
-to `ARCHITECTURE-DEBT-FRONTIER.2.1` for direct-backend StructuralRTLIR
-internal declaration nets. Completed
+to `ARCHITECTURE-DEBT-FRONTIER.3` for ISF parser/lowerer extraction selection
+or deferral. Completed implementation leaf `ARCHITECTURE-DEBT-FRONTIER.2.1`
+projects direct backend storage/helper declaration-plan entries into
+`structural_rtl_ir.nets[]` without rerouting HDL emission or claiming generated
+enable wires and direct assignment connectivity. Completed
 implementation leaf
 `BACKEND-API-VALIDATION-FRONTIER.131.1` lowers an 8-bit non-signed
 `REM = (% 2 3)` fixture into

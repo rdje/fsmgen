@@ -70,6 +70,7 @@ sub generate_from_source ($class, %args) {
         module_info => $module_info,
         fsm_module => $fsm_module,
         target_language => ($pipeline->{target_language} // 'systemverilog'),
+        hdl_generator => $pipeline->{hdl_generator},
     );
     $module_info->{structural_rtl_ir} = $structural_rtl_ir->as_hashref;
     my $hdl_code = FSM::Backend::GeneratedModuleEmitter->augment_with_runtime_assertions(
