@@ -565,6 +565,49 @@ FSM
     unlike($cli_hdl, qr/to_signed\([23],\s+8\)|arithmetic expression '2 \* 3'/s, 'CLI non-signed vector positive literal-literal multiplication avoids signed casts and the prior arithmetic guard');
 };
 
+subtest 'direct VHDL scaffold lowers non-signed vector positive numeric-literal literal-literal division RHS shape' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $fsm_path = File::Spec->catfile($tempdir, 'direct_vhdl_vector_positive_literal_pair_div.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'direct_vhdl_vector_positive_literal_pair_div.vhd');
+    write_file(
+        $fsm_path,
+        <<'FSM'
+(?fsm:direct_vhdl_vector_positive_literal_pair_div
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+  (+types
+    (type byte_t (bits 8))
+  )
+  (+size
+    (QUOT byte_t)
+  )
+  (idle
+    (QUOT = (/ 2 3))
+  )
+)
+FSM
+    );
+
+    my $hdl = generate_vhdl($fsm_path);
+    like($hdl, qr/\bsignal\s+QUOT\s+:\s+std_logic_vector\(7\s+downto\s+0\);/s, 'vector positive literal-literal division fixture lowers non-signed output signal');
+    like($hdl, qr/\bQUOT\s+<=\s+std_logic_vector\(resize\(to_unsigned\(2,\s+8\)\s+\/\s+to_unsigned\(3,\s+8\),\s+8\)\);/s, 'non-signed vector positive literal-literal division lowers through resized to_unsigned arithmetic');
+    unlike($hdl, qr/to_signed\([23],\s+8\)|arithmetic expression '2 \/ 3'/s, 'non-signed vector positive literal-literal division avoids signed casts and the prior arithmetic guard');
+
+    my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--language', 'vhdl', '--quiet', '-o', $output_path, $fsm_path],
+    );
+    my $combined_output = join('', @{ $stdout_buf || [] }, @{ $stderr_buf || [] }, ($error_message || ''));
+    ok($success, 'CLI accepts direct --language vhdl for non-signed vector positive literal-literal division')
+        or diag($combined_output);
+    ok(-e $output_path, 'CLI writes non-signed vector positive literal-literal division VHDL output file');
+
+    my $cli_hdl = read_file($output_path);
+    like($cli_hdl, qr/\bQUOT\s+<=\s+std_logic_vector\(resize\(to_unsigned\(2,\s+8\)\s+\/\s+to_unsigned\(3,\s+8\),\s+8\)\);/s, 'CLI VHDL output includes non-signed vector positive literal-literal division assignment');
+    unlike($cli_hdl, qr/to_signed\([23],\s+8\)|arithmetic expression '2 \/ 3'/s, 'CLI non-signed vector positive literal-literal division avoids signed casts and the prior arithmetic guard');
+};
+
 subtest 'direct VHDL scaffold lowers non-signed vector negative numeric-literal division RHS shape' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $fsm_path = File::Spec->catfile($tempdir, 'direct_vhdl_vector_negative_literal_div.fsm');
