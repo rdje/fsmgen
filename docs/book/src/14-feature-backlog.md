@@ -4231,9 +4231,13 @@ package declaration/emission, and full normalized semantic export
 stabilization remain deferred.
 
 Current active backend edge: task-tree leaf
-`BACKEND-API-VALIDATION-FRONTIER.131.1` implements the selected direct VHDL
-non-signed vector positive numeric-literal literal-literal modulo edge after
-`.131` chose it from the post-`.130.1` boundary. Completed implementation leaf
+`BACKEND-API-VALIDATION-FRONTIER.132` selects the next exact backend/API edge
+after `.131.1` shipped direct VHDL non-signed vector positive numeric-literal
+literal-literal modulo. Completed implementation leaf
+`BACKEND-API-VALIDATION-FRONTIER.131.1` lowers an 8-bit non-signed
+`REM = (% 2 3)` fixture into
+`REM <= std_logic_vector(resize(to_unsigned(2, 8) mod to_unsigned(3, 8), 8));`.
+Completed implementation leaf
 `BACKEND-API-VALIDATION-FRONTIER.130.1` lowers an 8-bit non-signed
 `QUOT = (/ 2 3)` fixture into
 `QUOT <= std_logic_vector(resize(to_unsigned(2, 8) / to_unsigned(3, 8), 8));`.
@@ -4265,7 +4269,6 @@ Completed implementation leaf
 `BACKEND-API-VALIDATION-FRONTIER.123.1` lowers an 8-bit non-signed
 `PROD = (* A 2)` signal-first fixture into
 `PROD <= std_logic_vector(resize(unsigned(A) * to_unsigned(2, 8), 8));`.
-Literal-literal modulo stays fail-closed until `.131.1` ships it.
 Completed implementation leaf `BACKEND-API-VALIDATION-FRONTIER.122.1` lowers
 direct VHDL non-signed vector modulo with a negative decimal numeric literal
 into target-width resized unsigned arithmetic over a two-complement literal,

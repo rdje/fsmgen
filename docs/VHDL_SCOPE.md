@@ -31,11 +31,9 @@ This document defines the scoped R14 VHDL backend plan for FSMGen.
   emits `PROD <= std_logic_vector(resize(unsigned(A) * to_unsigned(2, 8), 8));`
   and `REM = (% 2 A)` emits
   `REM <= std_logic_vector(resize(to_unsigned(2, 8) mod unsigned(A), 8));`.
-  It also includes literal-literal multiplication/division for positive
-  decimal operands; for example, `QUOT = (/ 2 3)` emits
-  `QUOT <= std_logic_vector(resize(to_unsigned(2, 8) / to_unsigned(3, 8), 8));`.
-  Literal-literal modulo remains fail-closed until active leaf
-  `BACKEND-API-VALIDATION-FRONTIER.131.1` lands.
+  It also includes literal-literal multiplication/division/modulo for positive
+  decimal operands; for example, `REM = (% 2 3)` emits
+  `REM <= std_logic_vector(resize(to_unsigned(2, 8) mod to_unsigned(3, 8), 8));`.
 - The direct scaffold now includes signed vector numeric-literal
   addition/subtraction/multiplication/division/modulo RHS assignments through
   target-width `to_signed` literal conversion, with
@@ -89,12 +87,12 @@ This document defines the scoped R14 VHDL backend plan for FSMGen.
 - The direct scaffold now includes scalar output-port next-signal assignments
   from negative decimal literals, lowered to `std_logic` low-bit literals for
   plain scalar and signed one-bit alias targets.
-- Active leaf `BACKEND-API-VALIDATION-FRONTIER.131.1` owns the selected direct
-  VHDL non-signed vector positive numeric-literal literal-literal modulo
-  implementation edge. Literal-literal modulo still fails closed until
-  `.131.1` lands; broad VHDL expression parity, aggregate record/array
-  lowering, package emission, GHDL validation, composition parity, and full
-  backend parity remain outside this leaf until an exact child owns them.
+- Active leaf `BACKEND-API-VALIDATION-FRONTIER.132` owns only the next
+  backend/API edge selection after direct VHDL non-signed vector positive
+  numeric-literal literal-literal modulo shipped. Broad VHDL expression parity,
+  aggregate record/array lowering, package emission, GHDL validation,
+  composition parity, and full backend parity remain outside this selector
+  until an exact child owns them.
 - Composition VHDL is shipped only for the bounded C3 external-RTL
   literal/concat structural top in
   `t/corpus/composition_intent_integer_literals.fsm` and the bounded C1

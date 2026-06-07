@@ -2633,6 +2633,55 @@ FSM
     );
 };
 
+subtest 'facade target_language option routes direct VHDL non-signed positive numeric-literal literal-literal modulo behavior' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $direct_path = File::Spec->catfile($tempdir, 'facade_direct_vhdl_vector_positive_literal_pair_mod.fsm');
+    write_file(
+        $direct_path,
+        <<'FSM'
+(?fsm:facade_direct_vhdl_vector_positive_literal_pair_mod
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+  (+types
+    (type byte_t (bits 8))
+  )
+  (+size
+    (REM byte_t)
+  )
+  (idle
+    (REM = (% 2 3))
+  )
+)
+FSM
+    );
+
+    my $vhdl_pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'vhdl',
+        quiet => 1,
+    );
+
+    my $vhdl_result = $vhdl_pipeline->generate_hdl_from_file($direct_path);
+
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bentity\s+facade_direct_vhdl_vector_positive_literal_pair_mod\s+is\b/s,
+        'explicit VHDL facade generation emits the non-signed positive literal-literal modulo direct entity',
+    );
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bREM\s+<=\s+std_logic_vector\(resize\(to_unsigned\(2,\s+8\)\s+mod\s+to_unsigned\(3,\s+8\),\s+8\)\);/s,
+        'explicit VHDL facade generation lowers non-signed vector literal-literal modulo through resized numeric_std',
+    );
+    unlike(
+        $vhdl_result->{hdl_code},
+        qr/\bmodule\b|\balways_(?:ff|comb)\b|to_signed\([23],\s+8\)|arithmetic expression '2 % 3'/s,
+        'explicit VHDL non-signed positive literal-literal modulo facade generation avoids SystemVerilog syntax, signed casts, and the prior guard',
+    );
+};
+
 subtest 'facade target_language option routes direct VHDL non-signed negative numeric-literal division behavior' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $direct_path = File::Spec->catfile($tempdir, 'facade_direct_vhdl_vector_negative_literal_div.fsm');
