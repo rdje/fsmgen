@@ -48,9 +48,17 @@ rather than informal cleanup.
   Commit: `ARCHITECTURE-DEBT-FRONTIER.1: select direct backend convergence`
 
 - ID: `ARCHITECTURE-DEBT-FRONTIER.2`
-  Status: `active`
+  Status: `done`
   Goal: `Converge the direct backend path toward StructuralRTLIR-to-emitter where one bounded step is safe.`
   Acceptance: `One exact backend convergence boundary is selected, implemented or deferred, documented if user-visible, and regression-covered.`
+  Children: `ARCHITECTURE-DEBT-FRONTIER.2.1`
+  Verification: `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check`
+  Commit: `ARCHITECTURE-DEBT-FRONTIER.2: select direct structural internal nets`
+
+- ID: `ARCHITECTURE-DEBT-FRONTIER.2.1`
+  Status: `active`
+  Goal: `Project direct backend internal storage/helper declarations into StructuralRTLIR nets.`
+  Acceptance: `Direct-root structural_rtl_ir.nets[] is built from the existing backend internal declaration plan's signal_decls and aux_decls, preserving width/signed/state-model/declared-type metadata without rerouting HDL emission or claiming direct instances, links, auxiliary assignments, or generated enable wires.`
   Verification: `pending`
   Commit: `pending`
 
@@ -66,7 +74,8 @@ rather than informal cleanup.
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
 | 1 | `ARCHITECTURE-DEBT-FRONTIER.1` | `done` | Selected direct backend convergence from completed architecture evidence. |
-| 2 | `ARCHITECTURE-DEBT-FRONTIER.2` | `active` | `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE` left behavior-bearing direct-root convergence open, while `ISF-LOWERINGIR-BOUNDARY-EXTRACTION` deferred extraction until a stable family is identified. |
+| 2 | `ARCHITECTURE-DEBT-FRONTIER.2` | `done` | Selected direct structural internal declaration nets as the first behavior-bearing convergence step. |
+| 3 | `ARCHITECTURE-DEBT-FRONTIER.2.1` | `active` | The backend internal declaration plan already exposes direct storage/helper declarations (`signal_decls`/`aux_decls`) with metadata, while generated enable wires remain private emitter logic and should not be claimed in this slice. |
 
 ## Decisions
 
@@ -79,11 +88,17 @@ rather than informal cleanup.
   the completed direct-structural convergence tree's open behavior-bearing
   follow-up, the completed ISF LoweringIR extraction tree's no-extraction-yet
   outcome, and the import-tree audit's current direct-backend pressure notes.
+- `2026-06-07`: Selector leaf `ARCHITECTURE-DEBT-FRONTIER.2` chose
+  `ARCHITECTURE-DEBT-FRONTIER.2.1` as the first exact direct StructuralRTLIR
+  convergence leaf. The selected boundary is storage/helper declaration-plan
+  nets only; generated enable wires, behavior assignments, instances, links,
+  and HDL emission rerouting remain outside this slice.
 
 ## Open Questions
 
-- `ARCHITECTURE-DEBT-FRONTIER.2`: Which exact direct-root behavior family is
-  the first safe StructuralRTLIR convergence step beyond identity and ports?
+- `ARCHITECTURE-DEBT-FRONTIER.2.1`: Which later owner should model generated
+  enable wires or direct assignment/connectivity behavior after storage/helper
+  declaration nets are stable?
 
 ## Blockers
 
@@ -95,15 +110,19 @@ rather than informal cleanup.
 | --- | --- | --- |
 | `2026-06-05` | `ARCHITECTURE-DEBT-FRONTIER.1` | `pending` | `pending` |
 | `2026-06-07` | `ARCHITECTURE-DEBT-FRONTIER.1` | Evidence review: `docs/tasks/IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.md`, `docs/tasks/ISF-LOWERINGIR-BOUNDARY-EXTRACTION.md`, `docs/BIN_FSMGEN_IMPORT_TREE.md`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | pass; selected `ARCHITECTURE-DEBT-FRONTIER.2` |
+| `2026-06-07` | `ARCHITECTURE-DEBT-FRONTIER.2` | Evidence review: `perl/FSM/IR/StructuralRTLIRBuilder.pm`, `perl/FSM/Pipeline/DirectGenerationOrchestrator.pm`, `perl/FSM/Synthesis/EnableGraph/ModulePlanningSupport.pm`, `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/InternalDeclarationEmitter.pm`, `t/1333-direct-structural-rtl-ir-projection.t`, `t/204-enable-graph-module-planning-support.t`; temp full-pipeline probe of the module-planning fixture; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | pass; selected `ARCHITECTURE-DEBT-FRONTIER.2.1` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `ARCHITECTURE-DEBT-FRONTIER.1` | `ARCHITECTURE-DEBT-FRONTIER.1: select direct backend convergence` | selected `.2` after direct/backend and ISF extraction evidence review |
+| `ARCHITECTURE-DEBT-FRONTIER.2` | `ARCHITECTURE-DEBT-FRONTIER.2: select direct structural internal nets` | selected `.2.1` as the first behavior-bearing direct StructuralRTLIR convergence leaf |
 
 ## Changelog
 
 - `2026-06-05`: Created proposed architecture-debt frontier owner tree.
 - `2026-06-07`: Completed selector leaf `.1`; activated `.2` for direct backend
   StructuralRTLIR convergence selection.
+- `2026-06-07`: Completed selector leaf `.2`; activated `.2.1` for direct
+  internal storage/helper declaration nets in StructuralRTLIR.

@@ -68,7 +68,7 @@ first.
 | `ISF-COUNTED-REPEAT-TERMINATION` | `done` | `R14` | complete (`.1`–`.4`; check-first lowering terminates exactly-N for static/runtime/zero; `(!=0)` decision edge passes `--verify-hdl`; leading runtime waits in repeat bodies now reload/enter/zero-bypass from `repeat_check`) | [docs/tasks/ISF-COUNTED-REPEAT-TERMINATION.md](docs/tasks/ISF-COUNTED-REPEAT-TERMINATION.md) |
 | `ISF-REMAINING-BROAD-FRONTIER` | `done` | `R14` | complete (`.1`-`.12`; broad remaining ISF/R14 frontier exhausted: ATL/IAL2/parity/resource/priority/port/temporal/report/CDC/full-width surfaces either shipped, synced, or deferred to future exact owners) | [docs/tasks/ISF-REMAINING-BROAD-FRONTIER.md](docs/tasks/ISF-REMAINING-BROAD-FRONTIER.md) |
 | `BACKEND-API-VALIDATION-FRONTIER` | `done` | Backends And Validation / Embedding And Public APIs | complete through `BACKEND-API-VALIDATION-FRONTIER.132`; all supported-smoke `.fsm` entries pass under `--language vhdl`, GHDL remains unavailable, and broad backend/API work is behind future exact owners | [docs/tasks/BACKEND-API-VALIDATION-FRONTIER.md](docs/tasks/BACKEND-API-VALIDATION-FRONTIER.md) |
-| `ARCHITECTURE-DEBT-FRONTIER` | `active` | architecture | `ARCHITECTURE-DEBT-FRONTIER.2` (select the first safe direct-backend StructuralRTLIR convergence step) | [docs/tasks/ARCHITECTURE-DEBT-FRONTIER.md](docs/tasks/ARCHITECTURE-DEBT-FRONTIER.md) |
+| `ARCHITECTURE-DEBT-FRONTIER` | `active` | architecture | `ARCHITECTURE-DEBT-FRONTIER.2.1` (project direct internal storage/helper declaration-plan entries into StructuralRTLIR nets) | [docs/tasks/ARCHITECTURE-DEBT-FRONTIER.md](docs/tasks/ARCHITECTURE-DEBT-FRONTIER.md) |
 
 ## Proposed Task Trees
 
@@ -636,7 +636,7 @@ criteria.
 | `Intent Scheduling Format` | `covered by the R14 ISF objective coverage table above for shipped surfaces and by completed ISF-REMAINING-BROAD-FRONTIER for broad remaining deferred ISF behavior; ISF extraction remains deferred until a stable family is identified by an exact owner` |
 | `Backends And Validation` | `completed BACKEND-API-VALIDATION-FRONTIER tree owns the exhausted active VHDL/backend-validation/API frontier through .132; future behavior-bearing backend work still requires a new exact active owner leaf` |
 | `Embedding And Public APIs` | `completed BACKEND-API-VALIDATION-FRONTIER tree owns the exhausted normalized-export/public-API frontier through .132; future public API/export work still requires a new exact active owner leaf` |
-| `Architecture` | `active ARCHITECTURE-DEBT-FRONTIER tree now routes PNT to .2 for direct-backend StructuralRTLIR convergence selection; broad extraction/refactor work remains gated by exact leaves` |
+| `Architecture` | `active ARCHITECTURE-DEBT-FRONTIER tree now routes PNT to .2.1 for direct-backend StructuralRTLIR internal declaration nets; broad extraction/refactor work remains gated by exact leaves` |
 
 ## ISF Task-Tree Rule
 
