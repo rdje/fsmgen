@@ -345,8 +345,9 @@ literal case: an 8-bit non-signed `REM = (% 2 A)` fixture emits
 Literal-literal arithmetic remains deferred: `.128.1` probes confirmed
 `REM = (% 2 3)` and `PROD = (* 2 3)` still fail closed at arithmetic
 expressions `'2 % 3'` and `'2 * 3'`. Active leaf
-`BACKEND-API-VALIDATION-FRONTIER.129` owns selection of the next exact
-backend/API edge after that literal-first modulo slice shipped.
+`BACKEND-API-VALIDATION-FRONTIER.129.1` owns only the direct VHDL non-signed
+vector positive numeric-literal literal-literal multiplication slice;
+literal-literal division/modulo and broad expression parity remain deferred.
 Declared
 aggregate structural VHDL ports/nets/types in
 composition tops are locked fail-closed by
