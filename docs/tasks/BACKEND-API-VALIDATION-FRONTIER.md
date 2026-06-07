@@ -272,7 +272,8 @@ items named in the 2026-06-05 remaining-work inventory.
     `BACKEND-API-VALIDATION-FRONTIER.115`,
     `BACKEND-API-VALIDATION-FRONTIER.115.1`,
     `BACKEND-API-VALIDATION-FRONTIER.116`,
-    `BACKEND-API-VALIDATION-FRONTIER.116.1`
+    `BACKEND-API-VALIDATION-FRONTIER.116.1`,
+    `BACKEND-API-VALIDATION-FRONTIER.117`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.1`
   Status: `done`
@@ -2052,10 +2053,17 @@ items named in the 2026-06-05 remaining-work inventory.
   Commit: `BACKEND-API-VALIDATION-FRONTIER.116: select signed negative division VHDL lowering`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.116.1`
-  Status: `active`
+  Status: `done`
   Goal: `Lower direct VHDL signed vector negative numeric-literal division RHS assignments.`
   Acceptance: `Direct single-FSM VHDL generation must lower generated signed vector RHS assignments with one signed vector operand divided by one negative decimal numeric literal, such as QUOT = A / -2 for an 8-bit signed target and operand, into target-width resized VHDL signed arithmetic through pipeline, CLI, and facade coverage. The leaf is limited to signed vector division with literal negative decimal RHS operands in the direct VHDL scaffold; unsigned negative numeric-literal arithmetic, signed negative numeric-literal addition/subtraction/multiplication beyond the already shipped subsets, signed negative numeric-literal modulo, positive signed numeric-literal arithmetic, direct assignment/output literal behavior, sized bitstring literal behavior, aggregate record/array lowering, composition/top VHDL, package root/import behavior, GHDL validation, broad expression parity, raw package-spec internals, full normalized semantic export stabilization, and full backend parity must remain unchanged or explicitly deferred. README, docs/VHDL_SCOPE.md, mdBook, direct-VHDL fact card/knowledge map, task tree, and MEMORY stay synchronized.`
-  Verification: `pending implementation`
+  Verification: `Generalized the scoped signed-vector negative decimal literal helper in perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm so generated expressions such as QUOT = A / -2 lower to QUOT <= resize(A / to_signed(-2, 8), 8); for signed vector targets and same-width signed vector operands, while preserving the already shipped signed negative addition/subtraction/multiplication subsets and leaving unsigned negative-literal arithmetic and signed negative modulo fail-closed. Added focused pipeline/CLI coverage in t/1420-vhdl-direct-backend-scaffold.t and facade coverage in t/386-hdl-generator-facade-target-language-boundary-audit.t for an 8-bit signed QUOT = (/ A -2) fixture. Synchronized README.md, docs/VHDL_SCOPE.md, docs/book/src/14-feature-backlog.md, docs/knowledge/direct-vhdl-scaffold.md, docs/TASK_TREE.md, task tree, and MEMORY.md while preserving unsigned negative numeric-literal arithmetic, signed negative numeric-literal modulo, positive signed numeric-literal arithmetic, direct assignment/output literal behavior, sized bitstring behavior, aggregate record/array, composition/top VHDL, package, GHDL, normalized semantic, and full backend parity deferrals. Checks: perl -Iperl -c perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm; prove -Iperl t/1420-vhdl-direct-backend-scaffold.t t/386-hdl-generator-facade-target-language-boundary-audit.t; prove -Iperl t/114-composition-target-support-diagnostics.t; bash knowledge-map/scripts/gen_knowledge_map.sh; bash knowledge-map/scripts/check_knowledge_map.sh; scripts/check_memory_architecture.sh; prove -Iperl t/1414-docs-relative-paths-audit.t t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t; mdbook build docs/book; git diff --check.`
+  Commit: `BACKEND-API-VALIDATION-FRONTIER.116.1: lower signed negative division VHDL literals`
+
+- ID: `BACKEND-API-VALIDATION-FRONTIER.117`
+  Status: `active`
+  Goal: `Select the next exact backend/API edge after signed vector negative numeric-literal division lowering shipped.`
+  Acceptance: `Selection-only leaf. Audit the backend/API frontier after .116.1, current VHDL scope, mdBook backlog, direct-VHDL fact card, normalized semantic export/public API status, focused contract/backend/facade tests, maintained direct/composition VHDL sweeps, current validation environment, and current frontier rows; choose the next narrow implementation, hardening, or documented blocking owner before any code/test/source edits. The selector must preserve task-tree ownership for the chosen child leaf, synchronize README/VHDL scope/mdBook/fact card/memory if the selected frontier changes user-visible scope, and leave unsigned negative numeric-literal arithmetic, signed negative numeric-literal modulo, broad expression-literal parity, raw package-spec internals, VHDL package declaration/emission, GHDL validation, full normalized semantic export stabilization, broad VHDL aggregate record/array lowering, full composition VHDL parity, and full backend parity deferred unless it explicitly chooses one of those exact edges.`
+  Verification: `pending selection`
   Commit: `pending`
 
 ## Current Frontier
@@ -2298,7 +2306,8 @@ items named in the 2026-06-05 remaining-work inventory.
 | 234 | `BACKEND-API-VALIDATION-FRONTIER.115` | `done` | Selected direct VHDL signed vector negative numeric-literal multiplication after signed vector multiplication/division/modulo probes and an unsigned negative addition probe still failed closed. |
 | 235 | `BACKEND-API-VALIDATION-FRONTIER.115.1` | `done` | Lowered signed vector negative numeric-literal multiplication such as PROD = (* A -2) into target-width resized VHDL signed arithmetic through pipeline, CLI, facade, docs, and fact-card coverage. |
 | 236 | `BACKEND-API-VALIDATION-FRONTIER.116` | `done` | Selected direct VHDL signed vector negative numeric-literal division after signed vector division/modulo probes and an unsigned negative addition probe still failed closed. |
-| 237 | `BACKEND-API-VALIDATION-FRONTIER.116.1` | `active` | Lower signed vector negative numeric-literal division such as QUOT = (/ A -2) into target-width resized VHDL signed arithmetic through pipeline, CLI, facade, docs, and fact-card coverage. |
+| 237 | `BACKEND-API-VALIDATION-FRONTIER.116.1` | `done` | Lowered signed vector negative numeric-literal division such as QUOT = (/ A -2) into target-width resized VHDL signed arithmetic through pipeline, CLI, facade, docs, and fact-card coverage. |
+| 238 | `BACKEND-API-VALIDATION-FRONTIER.117` | `active` | Select the next exact backend/API edge after signed vector negative numeric-literal division lowering shipped. |
 
 ## Decisions
 
@@ -2728,11 +2737,18 @@ items named in the 2026-06-05 remaining-work inventory.
 | `BACKEND-API-VALIDATION-FRONTIER.115` | `BACKEND-API-VALIDATION-FRONTIER.115: select signed negative multiplication VHDL lowering` | selected `.115.1` |
 | `BACKEND-API-VALIDATION-FRONTIER.115.1` | `BACKEND-API-VALIDATION-FRONTIER.115.1: lower signed negative multiplication VHDL literals` | this slice; activates `.116` |
 | `BACKEND-API-VALIDATION-FRONTIER.116` | `BACKEND-API-VALIDATION-FRONTIER.116: select signed negative division VHDL lowering` | selected `.116.1` |
-| `BACKEND-API-VALIDATION-FRONTIER.116.1` | `pending` | active implementation leaf |
+| `BACKEND-API-VALIDATION-FRONTIER.116.1` | `BACKEND-API-VALIDATION-FRONTIER.116.1: lower signed negative division VHDL literals` | this slice; activates `.117` |
+| `BACKEND-API-VALIDATION-FRONTIER.117` | `pending` | active selector leaf |
 
 ## Changelog
 
 - `2026-06-05`: Created proposed backend/API frontier owner tree.
+- `2026-06-06`: Completed `.116.1`; direct VHDL now lowers signed vector
+  negative numeric-literal division RHS assignments through target-width
+  resized `to_signed` arithmetic, so an 8-bit signed `QUOT = (/ A -2)` fixture
+  emits `QUOT <= resize(A / to_signed(-2, 8), 8);` instead of failing at
+  arithmetic expression `'A / -2'`. Activated `.117` to select the next exact
+  backend/API edge.
 - `2026-06-06`: Completed `.116`; selected direct VHDL signed vector negative
   numeric-literal division RHS lowering as `.116.1` after temporary
   current-code probes showed signed vector negative multiplication is accepted

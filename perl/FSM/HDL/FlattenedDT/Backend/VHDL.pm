@@ -692,8 +692,8 @@ sub _simple_arithmetic_to_vhdl ($expr, $ctx) {
     my $bounded_wrap = _bounded_unsigned_wrap_arithmetic_to_vhdl($expr, $ctx, $unsupported);
     return $bounded_wrap if defined $bounded_wrap;
 
-    my $signed_negative_add_sub_mul = _signed_vector_negative_literal_add_sub_mul_to_vhdl($expr, $ctx, $unsupported);
-    return $signed_negative_add_sub_mul if defined $signed_negative_add_sub_mul;
+    my $signed_negative_add_sub_mul_div = _signed_vector_negative_literal_add_sub_mul_div_to_vhdl($expr, $ctx, $unsupported);
+    return $signed_negative_add_sub_mul_div if defined $signed_negative_add_sub_mul_div;
 
     my $operator;
     my @operators = map { lc($_) eq 'mod' ? '%' : $_ } $expr =~ /(\bmod\b|[+*^\/%]|-)/ig;
@@ -825,10 +825,10 @@ sub _simple_arithmetic_to_vhdl ($expr, $ctx) {
     return "std_logic_vector($converted_expression)";
 }
 
-sub _signed_vector_negative_literal_add_sub_mul_to_vhdl ($expr, $ctx, $unsupported) {
+sub _signed_vector_negative_literal_add_sub_mul_div_to_vhdl ($expr, $ctx, $unsupported) {
     my $identifier = qr/[A-Za-z_][A-Za-z0-9_]*/;
     my ($signal_name, $operator, $literal_value, $literal_first);
-    if ($expr =~ /\A\s*($identifier)\s*([+*\-])\s*(-\d+)\s*\z/) {
+    if ($expr =~ /\A\s*($identifier)\s*([+*\/\-])\s*(-\d+)\s*\z/) {
         ($signal_name, $operator, $literal_value, $literal_first) = ($1, $2, $3, 0);
     }
     elsif ($expr =~ /\A\s*(-\d+)\s*([+*])\s*($identifier)\s*\z/) {
@@ -852,7 +852,7 @@ sub _signed_vector_negative_literal_add_sub_mul_to_vhdl ($expr, $ctx, $unsupport
     my $literal = "to_signed($literal_value, $target_width)";
     my $expression = $literal_first ? "$literal $operator $signal_name" : "$signal_name $operator $literal";
     return "resize($expression, $target_width)"
-        if $operator eq '*';
+        if $operator eq '*' || $operator eq '/';
     return $expression;
 }
 
