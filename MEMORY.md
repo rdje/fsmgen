@@ -11,10 +11,10 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
 ## Current state (OVERWRITE this block each update — do not append)
-- latest_commit: `BACKEND-API-VALIDATION-FRONTIER.124` (this commit) — selected direct VHDL non-signed vector positive numeric-literal division lowering after probes showed `A / 2` and `A % 2` still fail closed while `A * 2` now emits `to_unsigned`.
-- active_work_unit: `BACKEND-API-VALIDATION-FRONTIER.124.1` active frontier — lower direct VHDL non-signed vector positive numeric-literal division RHS assignments.
-- recently_done: `BACKEND-API-VALIDATION-FRONTIER.124`; `BACKEND-API-VALIDATION-FRONTIER.123.1`; `BACKEND-API-VALIDATION-FRONTIER.123`; `BACKEND-API-VALIDATION-FRONTIER.122.1`; `BACKEND-API-VALIDATION-FRONTIER.122`; `BACKEND-API-VALIDATION-FRONTIER.121.1`; `BACKEND-API-VALIDATION-FRONTIER.121`; `BACKEND-API-VALIDATION-FRONTIER.120.1`; `BACKEND-API-VALIDATION-FRONTIER.120`; `BACKEND-API-VALIDATION-FRONTIER.119.1`; `BACKEND-API-VALIDATION-FRONTIER.119`; `BACKEND-API-VALIDATION-FRONTIER.118.1`.
-- in_flight_uncommitted: none expected after this `.124` selector commit; unrelated untracked `fx/` intentionally left alone.
+- latest_commit: `BACKEND-API-VALIDATION-FRONTIER.124.1` (this commit) — direct VHDL non-signed vector positive numeric-literal division now lowers `QUOT = (/ A 2)` to `QUOT <= std_logic_vector(resize(unsigned(A) / to_unsigned(2, 8), 8));`.
+- active_work_unit: `BACKEND-API-VALIDATION-FRONTIER.125` active frontier — select the next exact backend/API edge after non-signed vector positive numeric-literal division lowering shipped.
+- recently_done: `BACKEND-API-VALIDATION-FRONTIER.124.1`; `BACKEND-API-VALIDATION-FRONTIER.124`; `BACKEND-API-VALIDATION-FRONTIER.123.1`; `BACKEND-API-VALIDATION-FRONTIER.123`; `BACKEND-API-VALIDATION-FRONTIER.122.1`; `BACKEND-API-VALIDATION-FRONTIER.122`; `BACKEND-API-VALIDATION-FRONTIER.121.1`; `BACKEND-API-VALIDATION-FRONTIER.121`; `BACKEND-API-VALIDATION-FRONTIER.120.1`; `BACKEND-API-VALIDATION-FRONTIER.120`; `BACKEND-API-VALIDATION-FRONTIER.119.1`; `BACKEND-API-VALIDATION-FRONTIER.119`.
+- in_flight_uncommitted: none expected after this `.124.1` implementation commit; unrelated untracked `fx/` intentionally left alone.
 - blockers: none.
 
 ## Notes

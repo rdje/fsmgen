@@ -322,11 +322,16 @@ bounded signal-first positive decimal multiplication edge too: an 8-bit
 non-signed `PROD = (* A 2)` fixture emits
 `PROD <= std_logic_vector(resize(unsigned(A) * to_unsigned(2, 8), 8));`
 instead of failing at arithmetic expression `'A * 2'`. Positive non-signed
-vector numeric-literal division/modulo and literal-first multiplication remain
-separate edges: `.124` probes confirmed `QUOT = (/ A 2)`, `REM = (% A 2)`,
-and `PROD = (* 2 A)` still fail closed at arithmetic expressions `'A / 2'`,
-`'A % 2'`, and `'2 * A'`. Active leaf
-`BACKEND-API-VALIDATION-FRONTIER.124.1` owns only the division slice.
+vector numeric-literal division now lowers too: an 8-bit non-signed
+`QUOT = (/ A 2)` fixture emits
+`QUOT <= std_logic_vector(resize(unsigned(A) / to_unsigned(2, 8), 8));`
+instead of failing at arithmetic expression `'A / 2'`. Positive non-signed
+vector numeric-literal modulo and literal-first arithmetic remain separate
+edges: `.124.1` probes confirmed `REM = (% A 2)`, `QUOT = (/ 2 A)`, and
+`PROD = (* 2 A)` still fail closed at arithmetic expressions `'A % 2'`,
+`'2 / A'`, and `'2 * A'`. Active leaf
+`BACKEND-API-VALIDATION-FRONTIER.125` owns selection of the next exact
+backend/API edge after that division slice shipped.
 Declared
 aggregate structural VHDL ports/nets/types in
 composition tops are locked fail-closed by
