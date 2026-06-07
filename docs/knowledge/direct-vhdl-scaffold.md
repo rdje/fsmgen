@@ -333,8 +333,9 @@ instead of failing at arithmetic expression `'A % 2'`. Literal-first arithmetic
 remains deferred: `.125.1` probes confirmed `REM = (% 2 A)`,
 `QUOT = (/ 2 A)`, and `PROD = (* 2 A)` still fail closed at arithmetic
 expressions `'2 % A'`, `'2 / A'`, and `'2 * A'`. Active leaf
-`BACKEND-API-VALIDATION-FRONTIER.126` owns selection of the next exact
-backend/API edge after that modulo slice shipped.
+`BACKEND-API-VALIDATION-FRONTIER.126.1` owns only the direct VHDL non-signed
+vector positive numeric-literal literal-first multiplication slice; literal-first
+division/modulo and broad expression parity remain deferred.
 Declared
 aggregate structural VHDL ports/nets/types in
 composition tops are locked fail-closed by
