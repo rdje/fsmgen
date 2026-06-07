@@ -25,6 +25,12 @@ This document defines the scoped R14 VHDL backend plan for FSMGen.
 - The direct scaffold now includes generated mux arithmetic with one vector
   signal and one numeric literal operand for `+` and `-`, as emitted by the
   compound update/shorthand fixtures.
+- The direct scaffold now includes non-signed vector positive numeric-literal
+  multiplication for the bounded signal-first decimal RHS shape; for example,
+  `PROD = (* A 2)` emits
+  `PROD <= std_logic_vector(resize(unsigned(A) * to_unsigned(2, 8), 8));`.
+  Positive numeric-literal division/modulo and literal-first multiplication
+  remain fail-closed until exact leaves own them.
 - The direct scaffold now includes signed vector numeric-literal
   addition/subtraction/multiplication/division/modulo RHS assignments through
   target-width `to_signed` literal conversion, with
@@ -78,12 +84,12 @@ This document defines the scoped R14 VHDL backend plan for FSMGen.
 - The direct scaffold now includes scalar output-port next-signal assignments
   from negative decimal literals, lowered to `std_logic` low-bit literals for
   plain scalar and signed one-bit alias targets.
-- Active leaf `BACKEND-API-VALIDATION-FRONTIER.123.1` owns only direct VHDL
-  non-signed vector positive numeric-literal multiplication lowering after
-  selection proved positive numeric-literal division/modulo still fail closed;
-  broad VHDL expression parity, aggregate record/array lowering, package
-  emission, GHDL validation, composition parity, and full backend parity remain
-  outside this implementation until an exact child owns them.
+- Active leaf `BACKEND-API-VALIDATION-FRONTIER.124` owns only the next
+  backend/API edge selection after non-signed vector positive numeric-literal
+  multiplication shipped; positive numeric-literal division/modulo, literal-first
+  multiplication, broad VHDL expression parity, aggregate record/array lowering,
+  package emission, GHDL validation, composition parity, and full backend parity
+  remain outside this selector until an exact child owns them.
 - Composition VHDL is shipped only for the bounded C3 external-RTL
   literal/concat structural top in
   `t/corpus/composition_intent_integer_literals.fsm` and the bounded C1
@@ -251,6 +257,8 @@ The VHDL lane is intentionally narrow:
      as one-bit scalar `and`
    - Generated direct mux assignments with vector signal plus/minus numeric
      literal operands, such as `SRC + 2` and `byte_count + 4`
+   - Non-signed vector positive numeric-literal multiplication for the
+     signal-first decimal RHS shape, such as `A * 2`
    - Signed vector numeric-literal
      addition/subtraction/multiplication/division/modulo RHS assignments, such
      as `A + 1`, `A - 1`, `A * 2`, `A / 2`, and `A mod 2`, through
@@ -314,7 +322,8 @@ The VHDL lane is intentionally narrow:
   subtraction, multiplication, division, modulo, and XOR RHS expression chains,
   scalar addition/subtraction/multiplication RHS/chain lowering, and
   generated direct-root vector signal plus/minus numeric literal mux
-  expressions from compound update/shorthand fixtures, generated direct-root
+  expressions from compound update/shorthand fixtures, non-signed vector
+  positive numeric-literal multiplication RHS assignments, generated direct-root
   scalar `bit` and signed vector internal signal declarations from declarative
   `+types` symbolic-width fixtures, generated non-signed four-state `logic`
   internal signal declarations from package-backed declarative `+types`
@@ -481,6 +490,7 @@ The VHDL lane is intentionally narrow:
   signed scalar addition/subtraction/multiplication RHS/chain lowering,
   signed vector negative numeric-literal addition/subtraction/multiplication/
   division/modulo RHS lowering,
+  non-signed vector positive numeric-literal multiplication RHS lowering,
   non-signed vector negative numeric-literal addition/subtraction/
   multiplication/division/modulo RHS lowering,
   generic-bearing direct-root module headers, one-bit `std_logic` and

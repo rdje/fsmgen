@@ -792,8 +792,15 @@ sub _simple_arithmetic_to_vhdl ($expr, $ctx) {
     for my $operand_name (@operand_names) {
         my $literal_value = _arithmetic_literal_value($operand_name);
         if (defined $literal_value) {
+            my $is_scoped_literal_multiplication = $operator eq '*'
+                && !$target_decl->{scalar}
+                && @operand_names == 2
+                && @converted_operands == 1
+                && $operand_name =~ /^\d+$/
+                && $literal_value > 0;
             $unsupported->()
-                unless ($operator eq '+' || $operator eq '-') && !$target_decl->{scalar};
+                unless (($operator eq '+' || $operator eq '-') && !$target_decl->{scalar})
+                || $is_scoped_literal_multiplication;
             push @converted_operands, "to_unsigned($literal_value, $target_width)";
             next;
         }
