@@ -29,9 +29,9 @@ This document defines the scoped R14 VHDL backend plan for FSMGen.
   addition/subtraction/multiplication/division/modulo RHS assignments through
   target-width `to_signed` literal conversion, with
   multiplication/division/modulo resized to the target width. The addition,
-  subtraction, multiplication, and division subsets now also include negative
-  decimal numeric literals for signed vector targets and same-width signed
-  vector operands.
+  subtraction, multiplication, division, and modulo subsets now also include
+  negative decimal numeric literals for signed vector targets and same-width
+  signed vector operands.
 - The direct scaffold now includes signed scalar direct-root port/internal
   declaration lowering and signed scalar addition/subtraction/multiplication
   RHS/chain lowering for one-bit signed scalar target/operand shapes. Signed
@@ -74,13 +74,12 @@ This document defines the scoped R14 VHDL backend plan for FSMGen.
 - The direct scaffold now includes scalar output-port next-signal assignments
   from negative decimal literals, lowered to `std_logic` low-bit literals for
   plain scalar and signed one-bit alias targets.
-- Active leaf `BACKEND-API-VALIDATION-FRONTIER.117.1` owns only direct VHDL
-  signed vector negative numeric-literal modulo lowering after `.117`
-  selected it from the adjacent fail-closed arithmetic probes; unsigned
-  negative numeric-literal arithmetic, broad VHDL expression parity,
-  aggregate record/array lowering, package emission, GHDL validation,
-  composition parity, and full backend parity remain outside this leaf until
-  an exact child owns them.
+- Active leaf `BACKEND-API-VALIDATION-FRONTIER.118` owns only the next
+  backend/API edge selection after signed vector negative numeric-literal
+  modulo lowering shipped; unsigned negative numeric-literal arithmetic, broad
+  VHDL expression parity, aggregate record/array lowering, package emission,
+  GHDL validation, composition parity, and full backend parity remain outside
+  this selector until an exact child owns them.
 - Composition VHDL is shipped only for the bounded C3 external-RTL
   literal/concat structural top in
   `t/corpus/composition_intent_integer_literals.fsm` and the bounded C1
@@ -477,7 +476,7 @@ The VHDL lane is intentionally narrow:
   signed vector direct-root port declaration lowering,
   signed scalar addition/subtraction/multiplication RHS/chain lowering,
   signed vector negative numeric-literal addition/subtraction/multiplication/
-  division RHS lowering,
+  division/modulo RHS lowering,
   generic-bearing direct-root module headers, one-bit `std_logic` and
   multi-bit `std_logic_vector` sized-literal generic defaults,
   bounded generated AMBA wrap arithmetic for `fsm/amba_requester.fsm`,
