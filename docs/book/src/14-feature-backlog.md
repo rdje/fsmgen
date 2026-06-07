@@ -4231,11 +4231,14 @@ package declaration/emission, and full normalized semantic export
 stabilization remain deferred.
 
 Current active backend edge: task-tree leaf
-`BACKEND-API-VALIDATION-FRONTIER.119.1` owns direct VHDL non-signed vector
-subtraction with a negative decimal numeric literal after selector leaf
-`BACKEND-API-VALIDATION-FRONTIER.119` chose it from adjacent fail-closed
-arithmetic probes. The selected 8-bit fixture is `DIFF = (- A -1)`, which
-currently fails at arithmetic expression `'A - -1'` until this leaf ships.
+`BACKEND-API-VALIDATION-FRONTIER.120` selects the next exact backend/API edge
+after non-signed vector negative numeric-literal subtraction lowering shipped.
+Completed implementation leaf `BACKEND-API-VALIDATION-FRONTIER.119.1` lowers
+direct VHDL non-signed vector subtraction with a negative decimal numeric
+literal into unsigned arithmetic over a target-width two-complement literal,
+so the selected 8-bit fixture emits
+`DIFF <= std_logic_vector(unsigned(A) - unsigned(to_signed(-1, 8)));`
+instead of failing at arithmetic expression `'A - -1'`.
 Completed implementation leaf `BACKEND-API-VALIDATION-FRONTIER.118.1` lowers
 direct VHDL non-signed vector addition with a negative decimal numeric literal
 into unsigned arithmetic over a target-width two-complement literal, so the
@@ -4266,7 +4269,7 @@ Completed implementation leaf `BACKEND-API-VALIDATION-FRONTIER.113.1` lowers
 direct VHDL signed vector addition with a negative decimal numeric literal into
 signed VHDL arithmetic, so the selected 8-bit signed fixture emits
 `SUM <= A + to_signed(-1, 8);` instead of failing at arithmetic expression
-`'A + -1'`. Non-signed vector negative operators beyond addition remain
+`'A + -1'`. Non-signed vector negative operators beyond subtraction remain
 deferred.
 Completed implementation
 leaf `BACKEND-API-VALIDATION-FRONTIER.112.1` lowers direct VHDL scalar

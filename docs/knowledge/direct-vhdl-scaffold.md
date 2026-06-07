@@ -106,7 +106,9 @@ answers:
   - "does direct VHDL support signed vector negative numeric literal division?"
   - "does direct VHDL support signed vector negative numeric literal modulo?"
   - "does direct VHDL support non-signed vector negative numeric literal addition?"
+  - "does direct VHDL support non-signed vector negative numeric literal subtraction?"
   - "does direct VHDL support vector negative numeric literal addition?"
+  - "does direct VHDL support vector negative numeric literal subtraction?"
   - "does direct VHDL support compound update arithmetic?"
   - "does direct VHDL support signed declarations?"
   - "does direct VHDL support signed logic declarations?"
@@ -287,11 +289,14 @@ instead of failing at arithmetic expression `'A % -2'`. Active leaf
 It also lowers non-signed vector addition with a negative decimal numeric
 literal: an 8-bit non-signed `SUM = (+ A -1)` fixture emits
 `SUM <= std_logic_vector(unsigned(A) + unsigned(to_signed(-1, 8)));` instead
-of failing at arithmetic expression `'A + -1'`. Active leaf
-`BACKEND-API-VALIDATION-FRONTIER.119.1` owns direct VHDL non-signed vector
-negative numeric-literal subtraction after current-code probes confirmed
-`DIFF = (- A -1)` still fails at arithmetic expression `'A - -1'`.
-Non-signed vector negative numeric-literal multiplication/division/modulo
+of failing at arithmetic expression `'A + -1'`. It also lowers non-signed
+vector subtraction with a negative decimal numeric literal: an 8-bit
+non-signed `DIFF = (- A -1)` fixture emits
+`DIFF <= std_logic_vector(unsigned(A) - unsigned(to_signed(-1, 8)));`
+instead of failing at arithmetic expression `'A - -1'`. Active leaf
+`BACKEND-API-VALIDATION-FRONTIER.120` owns selection of the next exact
+backend/API edge after that non-signed negative subtraction slice shipped;
+non-signed vector negative numeric-literal multiplication/division/modulo
 remain deferred. Declared
 aggregate structural VHDL ports/nets/types in
 composition tops are locked fail-closed by
