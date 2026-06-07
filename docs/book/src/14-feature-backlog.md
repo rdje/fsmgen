@@ -4231,9 +4231,11 @@ package declaration/emission, and full normalized semantic export
 stabilization remain deferred.
 
 Current active backend edge: task-tree leaf
-`BACKEND-API-VALIDATION-FRONTIER.121` selects the next exact backend/API edge
-after non-signed vector negative numeric-literal multiplication lowering
-shipped.
+`BACKEND-API-VALIDATION-FRONTIER.121.1` owns direct VHDL non-signed vector
+division with a negative decimal numeric literal after selector leaf
+`BACKEND-API-VALIDATION-FRONTIER.121` chose it from adjacent fail-closed
+arithmetic probes. The selected 8-bit fixture is `QUOT = (/ A -2)`, which
+currently fails at arithmetic expression `'A / -2'` until this leaf ships.
 Completed implementation leaf `BACKEND-API-VALIDATION-FRONTIER.120.1` lowers
 direct VHDL non-signed vector multiplication with a negative decimal numeric
 literal into target-width resized unsigned arithmetic over a two-complement
@@ -4276,8 +4278,7 @@ Completed implementation leaf `BACKEND-API-VALIDATION-FRONTIER.113.1` lowers
 direct VHDL signed vector addition with a negative decimal numeric literal into
 signed VHDL arithmetic, so the selected 8-bit signed fixture emits
 `SUM <= A + to_signed(-1, 8);` instead of failing at arithmetic expression
-`'A + -1'`. Non-signed vector negative operators beyond multiplication remain
-deferred.
+`'A + -1'`. Non-signed vector negative modulo remains deferred.
 Completed implementation
 leaf `BACKEND-API-VALIDATION-FRONTIER.112.1` lowers direct VHDL scalar
 output-port next-signal assignments from negative decimal literals into

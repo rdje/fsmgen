@@ -108,9 +108,13 @@ answers:
   - "does direct VHDL support non-signed vector negative numeric literal addition?"
   - "does direct VHDL support non-signed vector negative numeric literal subtraction?"
   - "does direct VHDL support non-signed vector negative numeric literal multiplication?"
+  - "does direct VHDL support non-signed vector negative numeric literal division?"
+  - "does direct VHDL support non-signed vector negative numeric literal modulo?"
   - "does direct VHDL support vector negative numeric literal addition?"
   - "does direct VHDL support vector negative numeric literal subtraction?"
   - "does direct VHDL support vector negative numeric literal multiplication?"
+  - "does direct VHDL support vector negative numeric literal division?"
+  - "does direct VHDL support vector negative numeric literal modulo?"
   - "does direct VHDL support compound update arithmetic?"
   - "does direct VHDL support signed declarations?"
   - "does direct VHDL support signed logic declarations?"
@@ -161,7 +165,7 @@ answers:
   - "does direct VHDL support parameterized direct roots?"
   - "does direct VHDL support sized literal generic defaults?"
   - "does direct VHDL support vector sized literal generic defaults?"
-date: 2026-06-06
+date: 2026-06-07
 status: current
 tags: [vhdl, backend, direct-generation, composition, validation]
 evidence: perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm; perl/FSM/Backend/VHDL/StructuralRTLIREmitter.pm; perl/FSM/Composition/GenerationOrchestrator.pm; perl/FSM/Composition/PlanBuilder.pm; perl/FSM/Support/HDLExternalValidationContract.pm; t/1420-vhdl-direct-backend-scaffold.t; t/386-hdl-generator-facade-target-language-boundary-audit.t; t/114-composition-target-support-diagnostics.t; docs/VHDL_SCOPE.md; docs/tasks/BACKEND-API-VALIDATION-FRONTIER.md
@@ -287,8 +291,8 @@ vector division by a negative decimal numeric literal: an 8-bit signed
 instead of failing at arithmetic expression `'A / -2'`. It also lowers signed
 vector modulo with a negative decimal numeric literal: an 8-bit signed
 `REM = (% A -2)` fixture emits `REM <= resize(A mod to_signed(-2, 8), 8);`
-instead of failing at arithmetic expression `'A % -2'`. Active leaf
-It also lowers non-signed vector addition with a negative decimal numeric
+instead of failing at arithmetic expression `'A % -2'`. It also lowers
+non-signed vector addition with a negative decimal numeric
 literal: an 8-bit non-signed `SUM = (+ A -1)` fixture emits
 `SUM <= std_logic_vector(unsigned(A) + unsigned(to_signed(-1, 8)));` instead
 of failing at arithmetic expression `'A + -1'`. It also lowers non-signed
@@ -300,9 +304,12 @@ non-signed vector multiplication with a negative decimal numeric literal: an
 8-bit non-signed `PROD = (* A -2)` fixture emits
 `PROD <= std_logic_vector(resize(unsigned(A) * unsigned(to_signed(-2, 8)), 8));`
 instead of failing at arithmetic expression `'A * -2'`. Active leaf
-`BACKEND-API-VALIDATION-FRONTIER.121` owns selection of the next exact
-backend/API edge after that non-signed negative multiplication slice shipped;
-non-signed vector negative numeric-literal division/modulo remain deferred.
+`BACKEND-API-VALIDATION-FRONTIER.121.1` owns non-signed vector division with a
+negative decimal numeric literal: the selected 8-bit non-signed
+`QUOT = (/ A -2)` fixture currently fails at arithmetic expression
+`'A / -2'` until that leaf ships. Non-signed vector negative numeric-literal
+modulo remains deferred and currently fails at arithmetic expression
+`'A % -2'`.
 Declared
 aggregate structural VHDL ports/nets/types in
 composition tops are locked fail-closed by
