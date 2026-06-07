@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ARCHITECTURE-DEBT-FRONTIER`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `architecture`
 - Created: `2026-06-05`
 - Last updated: `2026-06-07`
@@ -34,7 +34,7 @@ rather than informal cleanup.
 ## Task Tree
 
 - ID: `ARCHITECTURE-DEBT-FRONTIER`
-  Status: `active`
+  Status: `done`
   Goal: `Track architecture convergence and extraction backlog directions.`
   Children: `ARCHITECTURE-DEBT-FRONTIER.1`,
     `ARCHITECTURE-DEBT-FRONTIER.2`,
@@ -63,20 +63,24 @@ rather than informal cleanup.
   Commit: `ARCHITECTURE-DEBT-FRONTIER.2.1: project direct structural nets`
 
 - ID: `ARCHITECTURE-DEBT-FRONTIER.3`
-  Status: `active`
+  Status: `deferred`
   Goal: `Extract large ISF parser/lowerer responsibilities only after stable families are identified.`
   Acceptance: `One exact extraction boundary is selected, implemented or deferred, and validated without behavior drift.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check`
+  Commit: `ARCHITECTURE-DEBT-FRONTIER.3: defer ISF extraction`
 
 ## Current Frontier
+
+This tree is closed. Direct structural internal declaration nets shipped in
+`.2.1`; ISF parser/lowerer extraction remains deferred until a future exact
+owner can prove one stable behavior family.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
 | 1 | `ARCHITECTURE-DEBT-FRONTIER.1` | `done` | Selected direct backend convergence from completed architecture evidence. |
 | 2 | `ARCHITECTURE-DEBT-FRONTIER.2` | `done` | Selected direct structural internal declaration nets as the first behavior-bearing convergence step. |
 | 3 | `ARCHITECTURE-DEBT-FRONTIER.2.1` | `done` | Implemented direct storage/helper declaration-plan nets in `structural_rtl_ir.nets[]`; generated enable wires, assignments, instances, links, and HDL rerouting remain outside the slice. |
-| 4 | `ARCHITECTURE-DEBT-FRONTIER.3` | `active` | Existing architecture-debt child for ISF parser/lowerer extraction remains; it must select or defer one stable family before any extraction. |
+| 4 | `ARCHITECTURE-DEBT-FRONTIER.3` | `deferred` | No extraction is selected: the prior LoweringIR extraction tree already chose no candidate, later ISF commits show continued feature churn, and the import-tree audit still says extraction should wait for a stable family. |
 
 ## Decisions
 
@@ -99,15 +103,18 @@ rather than informal cleanup.
   as declaration-only internal storage/helper nets, preserving width,
   signedness, state-model, and declared-type metadata. The next active
   architecture-debt frontier is `.3`.
+- `2026-06-07`: Selector leaf `ARCHITECTURE-DEBT-FRONTIER.3` selected no ISF
+  parser/lowerer extraction candidate now. The completed
+  `ISF-LOWERINGIR-BOUNDARY-EXTRACTION` tree already deferred extraction, later
+  `LoweringIR`/parser git history shows continued active feature delivery, and
+  the import-tree audit still requires a stable family before extraction.
+  `ARCHITECTURE-DEBT-FRONTIER` is exhausted.
 
 ## Open Questions
 
-- `ARCHITECTURE-DEBT-FRONTIER.3`: Which ISF parser/lowerer family, if any, is
-  stable enough for a behavior-preserving extraction; otherwise, should `.3`
-  explicitly defer extraction again?
-- Future direct StructuralRTLIR owner: Which later owner should model generated
-  enable wires or direct assignment/connectivity behavior after storage/helper
-  declaration nets are stable?
+- None for this closed tree. Future ISF parser/lowerer extraction and future
+  direct StructuralRTLIR enable-wire or assignment/connectivity work require a
+  new or reactivated exact owner leaf before source changes.
 
 ## Blockers
 
@@ -121,6 +128,7 @@ rather than informal cleanup.
 | `2026-06-07` | `ARCHITECTURE-DEBT-FRONTIER.1` | Evidence review: `docs/tasks/IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.md`, `docs/tasks/ISF-LOWERINGIR-BOUNDARY-EXTRACTION.md`, `docs/BIN_FSMGEN_IMPORT_TREE.md`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | pass; selected `ARCHITECTURE-DEBT-FRONTIER.2` |
 | `2026-06-07` | `ARCHITECTURE-DEBT-FRONTIER.2` | Evidence review: `perl/FSM/IR/StructuralRTLIRBuilder.pm`, `perl/FSM/Pipeline/DirectGenerationOrchestrator.pm`, `perl/FSM/Synthesis/EnableGraph/ModulePlanningSupport.pm`, `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/InternalDeclarationEmitter.pm`, `t/1333-direct-structural-rtl-ir-projection.t`, `t/204-enable-graph-module-planning-support.t`; temp full-pipeline probe of the module-planning fixture; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | pass; selected `ARCHITECTURE-DEBT-FRONTIER.2.1` |
 | `2026-06-07` | `ARCHITECTURE-DEBT-FRONTIER.2.1` | `perl -Iperl -c perl/FSM/IR/StructuralRTLIRBuilder.pm`; `perl -Iperl -c perl/FSM/Pipeline/DirectGenerationOrchestrator.pm`; `perl -Iperl -c perl/FSM/Support/NormalizedSemanticStructuralRTLIRContract.pm`; `prove -Iperl t/1333-direct-structural-rtl-ir-projection.t t/163-forward-structural-rtl-ir-surface.t t/190-pipeline-direct-generation-orchestrator.t t/204-enable-graph-module-planning-support.t t/303-normalized-semantic-json-supported-corpus.t t/341-normalized-semantic-structural-rtl-ir-contract.t t/334-normalized-semantic-forward-ir-contract.t t/330-normalized-semantic-payload-contract.t t/311-normalized-semantic-report-contract.t t/297-capability-manifest.t`; `prove -Iperl t/1414-docs-relative-paths-audit.t t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `mdbook build docs/book`; `git diff --check` | pass |
+| `2026-06-07` | `ARCHITECTURE-DEBT-FRONTIER.3` | Evidence review: `docs/tasks/ISF-LOWERINGIR-BOUNDARY-EXTRACTION.md`, `docs/BIN_FSMGEN_IMPORT_TREE.md`, `git log --oneline -20 -- perl/FSM/Scheduler/ISF/LoweringIR.pm perl/FSM/Adapter/ISF/Parser.pm docs/tasks/ISF-LOWERINGIR-BOUNDARY-EXTRACTION.md`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t`; `mdbook build docs/book`; `git diff --check` | pass; selected no extraction candidate |
 
 ## Commit Log
 
@@ -129,6 +137,7 @@ rather than informal cleanup.
 | `ARCHITECTURE-DEBT-FRONTIER.1` | `ARCHITECTURE-DEBT-FRONTIER.1: select direct backend convergence` | selected `.2` after direct/backend and ISF extraction evidence review |
 | `ARCHITECTURE-DEBT-FRONTIER.2` | `ARCHITECTURE-DEBT-FRONTIER.2: select direct structural internal nets` | selected `.2.1` as the first behavior-bearing direct StructuralRTLIR convergence leaf |
 | `ARCHITECTURE-DEBT-FRONTIER.2.1` | `ARCHITECTURE-DEBT-FRONTIER.2.1: project direct structural nets` | shipped declaration-only direct storage/helper nets and routed PNT to `.3` |
+| `ARCHITECTURE-DEBT-FRONTIER.3` | `ARCHITECTURE-DEBT-FRONTIER.3: defer ISF extraction` | selected no extraction candidate and exhausted active PNT |
 
 ## Changelog
 
@@ -139,3 +148,5 @@ rather than informal cleanup.
   internal storage/helper declaration nets in StructuralRTLIR.
 - `2026-06-07`: Implemented `.2.1`; activated `.3` for ISF parser/lowerer
   extraction selection or deferral.
+- `2026-06-07`: Deferred `.3`; closed the architecture-debt frontier with no
+  active or proposed follow-up task tree remaining.
