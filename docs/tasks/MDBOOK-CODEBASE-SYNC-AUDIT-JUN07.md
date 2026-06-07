@@ -73,10 +73,8 @@ and explicit deferrals.
 
 ## Open Questions
 
-- Future exact owner needed if the project chooses to repair the quick-suite
-  lock failure: update or replace the stale `t/84` net-count assertion so it
-  proves the child-to-child carrier without rejecting documented
-  `shared_dp_unused_*` sink nets.
+- Resolved by `COMPOSITION-T84-NET-COUNT-REPAIR.1`, which repaired the stale
+  `t/84` net-count assertion without changing composition behavior.
 
 ## Blockers
 
@@ -105,3 +103,5 @@ and explicit deferrals.
 - `2026-06-07`: Created task tree for the requested mdBook/codebase sync audit.
 - `2026-06-07`: Completed the audit, recorded the green gates, and captured the
   reproducible `t/84` quick-suite lock failure as a future exact-owner repair.
+- `2026-06-07`: Linked the completed `COMPOSITION-T84-NET-COUNT-REPAIR.1`
+  follow-up that resolved the stale quick-suite assertion.

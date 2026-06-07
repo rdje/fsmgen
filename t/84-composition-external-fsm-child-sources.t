@@ -141,8 +141,23 @@ FSM
     isa_ok($result->{composition_plan}, 'FSM::Composition::Plan');
     is($result->{composition_plan}->lane, 'C2', 'multi-child external-child composition records C2');
     is(scalar(@{$result->{composition_plan}->instances}), 2, 'two external child FSM sources are realized');
-    is(scalar(@{$result->{composition_plan}->nets}), 1, 'deterministic child-to-child net is still materialized');
-    isa_ok($result->{composition_plan}->nets->[0], 'FSM::Composition::Net');
+    my @plan_nets = @{$result->{composition_plan}->nets};
+    my @child_link_nets = grep { $_->name eq 'comp_link_producer_output_data' } @plan_nets;
+    is(scalar(@child_link_nets), 1, 'deterministic child-to-child net is still materialized');
+    isa_ok($child_link_nets[0], 'FSM::Composition::Net');
+    is($child_link_nets[0]->width, 8, 'child-to-child net preserves width');
+    is($child_link_nets[0]->source, 'producer.output_data', 'child-to-child net records producer output source');
+    is_deeply($child_link_nets[0]->targets, ['consumer.input_data'], 'child-to-child net records consumer input target');
+
+    my @unexpected_plan_nets = grep {
+        $_->name ne 'comp_link_producer_output_data'
+            && $_->name !~ /\Ashared_dp_unused_(?:producer|consumer)_shared_dp_export_/
+    } @plan_nets;
+    is_deeply(
+        [map { $_->name } @unexpected_plan_nets],
+        [],
+        'only documented shared-datapath sink nets accompany the child-to-child carrier',
+    );
     is($result->{composition_plan}->instances->[0]->instance_name, 'producer', 'producer instance stays first');
     is($result->{composition_plan}->instances->[1]->instance_name, 'consumer', 'consumer instance stays second');
 
