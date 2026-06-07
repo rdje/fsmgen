@@ -104,6 +104,7 @@ answers:
   - "does direct VHDL support signed vector negative numeric literal subtraction?"
   - "does direct VHDL support signed vector negative numeric literal multiplication?"
   - "does direct VHDL support signed vector negative numeric literal division?"
+  - "does direct VHDL support signed vector negative numeric literal modulo?"
   - "does direct VHDL support compound update arithmetic?"
   - "does direct VHDL support signed declarations?"
   - "does direct VHDL support signed logic declarations?"
@@ -277,11 +278,12 @@ multiplication with a negative decimal numeric literal: an 8-bit signed
 instead of failing at arithmetic expression `'A * -2'`. It also lowers signed
 vector division by a negative decimal numeric literal: an 8-bit signed
 `QUOT = (/ A -2)` fixture emits `QUOT <= resize(A / to_signed(-2, 8), 8);`
-instead of failing at arithmetic expression `'A / -2'`. Active leaf
-`BACKEND-API-VALIDATION-FRONTIER.117` owns selection of the next exact
-backend/API edge after that signed negative division slice shipped; signed
-negative numeric-literal modulo and unsigned negative numeric-literal
-arithmetic remain deferred. Declared
+instead of failing at arithmetic expression `'A / -2'`. Selector leaf
+`BACKEND-API-VALIDATION-FRONTIER.117` chose direct VHDL signed vector
+negative numeric-literal modulo after current-code probes confirmed division
+is accepted while `A % -2` and unsigned `A + -1` still fail closed. Active
+leaf `BACKEND-API-VALIDATION-FRONTIER.117.1` owns that modulo edge; unsigned
+negative numeric-literal arithmetic remains deferred. Declared
 aggregate structural VHDL ports/nets/types in
 composition tops are locked fail-closed by
 `BACKEND-API-VALIDATION-FRONTIER.101.1`: aggregate top-port shapes that the
