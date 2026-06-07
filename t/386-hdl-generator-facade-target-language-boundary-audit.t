@@ -2645,6 +2645,61 @@ FSM
     );
 };
 
+subtest 'facade target_language option routes direct VHDL non-signed positive numeric-literal literal-first division behavior' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $direct_path = File::Spec->catfile($tempdir, 'facade_direct_vhdl_vector_positive_literal_first_div.fsm');
+    write_file(
+        $direct_path,
+        <<'FSM'
+(?fsm:facade_direct_vhdl_vector_positive_literal_first_div
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+  (+types
+    (type byte_t (bits 8))
+  )
+  (+size
+    (A byte_t)
+    (QUOT byte_t)
+  )
+  (idle
+    (QUOT = (/ 2 A))
+  )
+)
+FSM
+    );
+
+    my $vhdl_pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'vhdl',
+        quiet => 1,
+    );
+
+    my $vhdl_result = $vhdl_pipeline->generate_hdl_from_file($direct_path);
+
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bentity\s+facade_direct_vhdl_vector_positive_literal_first_div\s+is\b/s,
+        'explicit VHDL facade generation emits the non-signed positive literal-first division direct entity',
+    );
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bA\s+:\s+in\s+std_logic_vector\(7\s+downto\s+0\);?/s,
+        'explicit VHDL facade generation lowers non-signed positive literal-first division input port',
+    );
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bQUOT\s+<=\s+std_logic_vector\(resize\(to_unsigned\(2,\s+8\)\s+\/\s+unsigned\(A\),\s+8\)\);/s,
+        'explicit VHDL facade generation lowers non-signed vector literal-first division through resized numeric_std',
+    );
+    unlike(
+        $vhdl_result->{hdl_code},
+        qr/\bmodule\b|\balways_(?:ff|comb)\b|to_signed\(2,\s+8\)|arithmetic expression '2 \/ A'/s,
+        'explicit VHDL non-signed positive literal-first division facade generation avoids SystemVerilog syntax, signed casts, and the prior guard',
+    );
+};
+
 subtest 'facade target_language option routes direct VHDL non-signed negative numeric-literal modulo behavior' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $direct_path = File::Spec->catfile($tempdir, 'facade_direct_vhdl_vector_negative_literal_mod.fsm');

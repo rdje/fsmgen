@@ -800,7 +800,7 @@ sub _simple_arithmetic_to_vhdl ($expr, $ctx) {
                 && @converted_operands == 1
                 && $operand_name =~ /^\d+$/
                 && $literal_value > 0;
-            my $is_scoped_literal_first_positive_decimal_multiplication = $operator eq '*'
+            my $is_scoped_literal_first_positive_decimal_multiply_or_divide = ($operator eq '*' || $operator eq '/')
                 && !$target_decl->{scalar}
                 && @operand_names == 2
                 && $literal_operand_count == 1
@@ -810,7 +810,7 @@ sub _simple_arithmetic_to_vhdl ($expr, $ctx) {
             $unsupported->()
                 unless (($operator eq '+' || $operator eq '-') && !$target_decl->{scalar})
                 || $is_scoped_positive_decimal_literal_arithmetic
-                || $is_scoped_literal_first_positive_decimal_multiplication;
+                || $is_scoped_literal_first_positive_decimal_multiply_or_divide;
             push @converted_operands, "to_unsigned($literal_value, $target_width)";
             next;
         }
