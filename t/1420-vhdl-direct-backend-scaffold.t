@@ -477,6 +477,51 @@ FSM
     unlike($cli_hdl, qr/to_unsigned\(-2,\s+8\)|arithmetic expression 'A \/ -2'/s, 'CLI non-signed vector negative literal division avoids invalid to_unsigned and the prior arithmetic guard');
 };
 
+subtest 'direct VHDL scaffold lowers non-signed vector negative numeric-literal modulo RHS shape' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $fsm_path = File::Spec->catfile($tempdir, 'direct_vhdl_vector_negative_literal_mod.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'direct_vhdl_vector_negative_literal_mod.vhd');
+    write_file(
+        $fsm_path,
+        <<'FSM'
+(?fsm:direct_vhdl_vector_negative_literal_mod
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+  (+types
+    (type byte_t (bits 8))
+  )
+  (+size
+    (A byte_t)
+    (REM byte_t)
+  )
+  (idle
+    (REM = (% A -2))
+  )
+)
+FSM
+    );
+
+    my $hdl = generate_vhdl($fsm_path);
+    like($hdl, qr/\bA\s+:\s+in\s+std_logic_vector\(7\s+downto\s+0\);?/s, 'vector negative literal modulo fixture lowers non-signed input port A');
+    like($hdl, qr/\bsignal\s+REM\s+:\s+std_logic_vector\(7\s+downto\s+0\);/s, 'vector negative literal modulo fixture lowers non-signed output signal');
+    like($hdl, qr/\bREM\s+<=\s+std_logic_vector\(resize\(unsigned\(A\)\s+mod\s+unsigned\(to_signed\(-2,\s+8\)\),\s+8\)\);/s, 'non-signed vector negative literal modulo lowers through resized unsigned two-complement literal arithmetic');
+    unlike($hdl, qr/to_unsigned\(-2,\s+8\)|arithmetic expression 'A % -2'/s, 'non-signed vector negative literal modulo avoids invalid to_unsigned and the prior arithmetic guard');
+
+    my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--language', 'vhdl', '--quiet', '-o', $output_path, $fsm_path],
+    );
+    my $combined_output = join('', @{ $stdout_buf || [] }, @{ $stderr_buf || [] }, ($error_message || ''));
+    ok($success, 'CLI accepts direct --language vhdl for non-signed vector negative literal modulo')
+        or diag($combined_output);
+    ok(-e $output_path, 'CLI writes non-signed vector negative literal modulo VHDL output file');
+
+    my $cli_hdl = read_file($output_path);
+    like($cli_hdl, qr/\bREM\s+<=\s+std_logic_vector\(resize\(unsigned\(A\)\s+mod\s+unsigned\(to_signed\(-2,\s+8\)\),\s+8\)\);/s, 'CLI VHDL output includes non-signed vector negative literal modulo assignment');
+    unlike($cli_hdl, qr/to_unsigned\(-2,\s+8\)|arithmetic expression 'A % -2'/s, 'CLI non-signed vector negative literal modulo avoids invalid to_unsigned and the prior arithmetic guard');
+};
+
 subtest 'direct VHDL scaffold lowers same-width vector multiplication RHS chains' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $fsm_path = File::Spec->catfile($tempdir, 'direct_vhdl_multiplication_chain.fsm');

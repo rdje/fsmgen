@@ -695,8 +695,8 @@ sub _simple_arithmetic_to_vhdl ($expr, $ctx) {
     my $signed_negative_add_sub_mul_div_mod = _signed_vector_negative_literal_add_sub_mul_div_mod_to_vhdl($expr, $ctx, $unsupported);
     return $signed_negative_add_sub_mul_div_mod if defined $signed_negative_add_sub_mul_div_mod;
 
-    my $vector_negative_add_sub_mul_division = _non_signed_vector_negative_literal_add_sub_mul_div_to_vhdl($expr, $ctx, $unsupported);
-    return $vector_negative_add_sub_mul_division if defined $vector_negative_add_sub_mul_division;
+    my $vector_negative_add_sub_mul_div_mod = _non_signed_vector_negative_literal_add_sub_mul_div_mod_to_vhdl($expr, $ctx, $unsupported);
+    return $vector_negative_add_sub_mul_div_mod if defined $vector_negative_add_sub_mul_div_mod;
 
     my $operator;
     my @operators = map { lc($_) eq 'mod' ? '%' : $_ } $expr =~ /(\bmod\b|[+*^\/%]|-)/ig;
@@ -860,10 +860,10 @@ sub _signed_vector_negative_literal_add_sub_mul_div_mod_to_vhdl ($expr, $ctx, $u
     return $expression;
 }
 
-sub _non_signed_vector_negative_literal_add_sub_mul_div_to_vhdl ($expr, $ctx, $unsupported) {
+sub _non_signed_vector_negative_literal_add_sub_mul_div_mod_to_vhdl ($expr, $ctx, $unsupported) {
     my $identifier = qr/[A-Za-z_][A-Za-z0-9_]*/;
     my ($signal_name, $operator, $literal_value, $literal_first);
-    if ($expr =~ /\A\s*($identifier)\s*([+*\/\-])\s*(-\d+)\s*\z/) {
+    if ($expr =~ /\A\s*($identifier)\s*([+*\/%\-])\s*(-\d+)\s*\z/) {
         ($signal_name, $operator, $literal_value, $literal_first) = ($1, $2, $3, 0);
     }
     elsif ($expr =~ /\A\s*(-\d+)\s*([+*])\s*($identifier)\s*\z/) {
@@ -885,9 +885,10 @@ sub _non_signed_vector_negative_literal_add_sub_mul_div_to_vhdl ($expr, $ctx, $u
         if $operand_decl->{scalar} || $operand_decl->{signed} || _decl_width($operand_decl) != $target_width;
 
     my $literal = "unsigned(to_signed($literal_value, $target_width))";
-    my $expression = $literal_first ? "$literal $operator unsigned($signal_name)" : "unsigned($signal_name) $operator $literal";
+    my $vhdl_operator = $operator eq '%' ? 'mod' : $operator;
+    my $expression = $literal_first ? "$literal $vhdl_operator unsigned($signal_name)" : "unsigned($signal_name) $vhdl_operator $literal";
     return "std_logic_vector(resize($expression, $target_width))"
-        if $operator eq '*' || $operator eq '/';
+        if $operator eq '*' || $operator eq '/' || $operator eq '%';
     return "std_logic_vector($expression)";
 }
 
