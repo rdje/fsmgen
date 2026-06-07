@@ -4231,11 +4231,14 @@ package declaration/emission, and full normalized semantic export
 stabilization remain deferred.
 
 Current active backend edge: task-tree leaf
-`BACKEND-API-VALIDATION-FRONTIER.121.1` owns direct VHDL non-signed vector
-division with a negative decimal numeric literal after selector leaf
-`BACKEND-API-VALIDATION-FRONTIER.121` chose it from adjacent fail-closed
-arithmetic probes. The selected 8-bit fixture is `QUOT = (/ A -2)`, which
-currently fails at arithmetic expression `'A / -2'` until this leaf ships.
+`BACKEND-API-VALIDATION-FRONTIER.122` selects the next exact backend/API edge
+after non-signed vector negative numeric-literal division lowering shipped.
+Completed implementation leaf `BACKEND-API-VALIDATION-FRONTIER.121.1` lowers
+direct VHDL non-signed vector division with a negative decimal numeric literal
+into target-width resized unsigned arithmetic over a two-complement literal,
+so the selected 8-bit fixture emits
+`QUOT <= std_logic_vector(resize(unsigned(A) / unsigned(to_signed(-2, 8)), 8));`
+instead of failing at arithmetic expression `'A / -2'`.
 Completed implementation leaf `BACKEND-API-VALIDATION-FRONTIER.120.1` lowers
 direct VHDL non-signed vector multiplication with a negative decimal numeric
 literal into target-width resized unsigned arithmetic over a two-complement
