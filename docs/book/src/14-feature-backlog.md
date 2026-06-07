@@ -4231,8 +4231,12 @@ package declaration/emission, and full normalized semantic export
 stabilization remain deferred.
 
 Current active backend edge: task-tree leaf
-`BACKEND-API-VALIDATION-FRONTIER.122` selects the next exact backend/API edge
-after non-signed vector negative numeric-literal division lowering shipped.
+`BACKEND-API-VALIDATION-FRONTIER.122.1` owns direct VHDL non-signed vector
+modulo with a negative decimal numeric literal after selector leaf
+`BACKEND-API-VALIDATION-FRONTIER.122` chose it from the remaining fail-closed
+adjacent arithmetic probe. The selected 8-bit fixture is `REM = (% A -2)`,
+which currently fails at arithmetic expression `'A % -2'` until this leaf
+ships.
 Completed implementation leaf `BACKEND-API-VALIDATION-FRONTIER.121.1` lowers
 direct VHDL non-signed vector division with a negative decimal numeric literal
 into target-width resized unsigned arithmetic over a two-complement literal,

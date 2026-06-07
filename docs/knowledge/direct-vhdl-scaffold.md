@@ -308,10 +308,10 @@ non-signed vector division by a negative decimal numeric literal: an 8-bit
 non-signed `QUOT = (/ A -2)` fixture emits
 `QUOT <= std_logic_vector(resize(unsigned(A) / unsigned(to_signed(-2, 8)), 8));`
 instead of failing at arithmetic expression `'A / -2'`. Active leaf
-`BACKEND-API-VALIDATION-FRONTIER.122` owns selection of the next exact
-backend/API edge after that non-signed negative division slice shipped;
-non-signed vector negative numeric-literal modulo remains deferred and
-currently fails at arithmetic expression `'A % -2'`.
+`BACKEND-API-VALIDATION-FRONTIER.122.1` owns non-signed vector modulo with a
+negative decimal numeric literal: the selected 8-bit non-signed
+`REM = (% A -2)` fixture currently fails at arithmetic expression
+`'A % -2'` until that leaf ships.
 Declared
 aggregate structural VHDL ports/nets/types in
 composition tops are locked fail-closed by
