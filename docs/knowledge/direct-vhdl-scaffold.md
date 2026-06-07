@@ -107,8 +107,10 @@ answers:
   - "does direct VHDL support signed vector negative numeric literal modulo?"
   - "does direct VHDL support non-signed vector negative numeric literal addition?"
   - "does direct VHDL support non-signed vector negative numeric literal subtraction?"
+  - "does direct VHDL support non-signed vector negative numeric literal multiplication?"
   - "does direct VHDL support vector negative numeric literal addition?"
   - "does direct VHDL support vector negative numeric literal subtraction?"
+  - "does direct VHDL support vector negative numeric literal multiplication?"
   - "does direct VHDL support compound update arithmetic?"
   - "does direct VHDL support signed declarations?"
   - "does direct VHDL support signed logic declarations?"
@@ -293,11 +295,14 @@ of failing at arithmetic expression `'A + -1'`. It also lowers non-signed
 vector subtraction with a negative decimal numeric literal: an 8-bit
 non-signed `DIFF = (- A -1)` fixture emits
 `DIFF <= std_logic_vector(unsigned(A) - unsigned(to_signed(-1, 8)));`
-instead of failing at arithmetic expression `'A - -1'`. Active leaf
-`BACKEND-API-VALIDATION-FRONTIER.120.1` owns direct VHDL non-signed vector
-negative numeric-literal multiplication after current-code probes confirmed
-`PROD = (* A -2)` still fails at arithmetic expression `'A * -2'`.
-Non-signed vector negative numeric-literal division/modulo remain deferred.
+instead of failing at arithmetic expression `'A - -1'`. It also lowers
+non-signed vector multiplication with a negative decimal numeric literal: an
+8-bit non-signed `PROD = (* A -2)` fixture emits
+`PROD <= std_logic_vector(resize(unsigned(A) * unsigned(to_signed(-2, 8)), 8));`
+instead of failing at arithmetic expression `'A * -2'`. Active leaf
+`BACKEND-API-VALIDATION-FRONTIER.121` owns selection of the next exact
+backend/API edge after that non-signed negative multiplication slice shipped;
+non-signed vector negative numeric-literal division/modulo remain deferred.
 Declared
 aggregate structural VHDL ports/nets/types in
 composition tops are locked fail-closed by

@@ -2370,6 +2370,61 @@ FSM
     );
 };
 
+subtest 'facade target_language option routes direct VHDL non-signed negative numeric-literal multiplication behavior' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $direct_path = File::Spec->catfile($tempdir, 'facade_direct_vhdl_vector_negative_literal_mul.fsm');
+    write_file(
+        $direct_path,
+        <<'FSM'
+(?fsm:facade_direct_vhdl_vector_negative_literal_mul
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+  (+types
+    (type byte_t (bits 8))
+  )
+  (+size
+    (A byte_t)
+    (PROD byte_t)
+  )
+  (idle
+    (PROD = (* A -2))
+  )
+)
+FSM
+    );
+
+    my $vhdl_pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'vhdl',
+        quiet => 1,
+    );
+
+    my $vhdl_result = $vhdl_pipeline->generate_hdl_from_file($direct_path);
+
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bentity\s+facade_direct_vhdl_vector_negative_literal_mul\s+is\b/s,
+        'explicit VHDL facade generation emits the non-signed negative literal multiplication direct entity',
+    );
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bA\s+:\s+in\s+std_logic_vector\(7\s+downto\s+0\);?/s,
+        'explicit VHDL facade generation lowers non-signed negative literal multiplication input port',
+    );
+    like(
+        $vhdl_result->{hdl_code},
+        qr/\bPROD\s+<=\s+std_logic_vector\(resize\(unsigned\(A\)\s+\*\s+unsigned\(to_signed\(-2,\s+8\)\),\s+8\)\);/s,
+        'explicit VHDL facade generation lowers non-signed vector times negative literal through resized two-complement numeric_std',
+    );
+    unlike(
+        $vhdl_result->{hdl_code},
+        qr/\bmodule\b|\balways_(?:ff|comb)\b|to_unsigned\(-2,\s+8\)|arithmetic expression 'A \* -2'/s,
+        'explicit VHDL non-signed negative literal multiplication facade generation avoids SystemVerilog syntax, invalid to_unsigned, and the prior guard',
+    );
+};
+
 subtest 'facade target_language option routes direct VHDL signed negative numeric-literal arithmetic behavior' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $direct_path = File::Spec->catfile($tempdir, 'facade_direct_vhdl_signed_negative_literal_add.fsm');
