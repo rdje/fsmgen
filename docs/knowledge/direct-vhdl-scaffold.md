@@ -105,11 +105,17 @@ answers:
   - "does direct VHDL support signed vector negative numeric literal multiplication?"
   - "does direct VHDL support signed vector negative numeric literal division?"
   - "does direct VHDL support signed vector negative numeric literal modulo?"
+  - "does direct VHDL support non-signed vector numeric literal multiplication?"
+  - "does direct VHDL support non-signed vector numeric literal division?"
+  - "does direct VHDL support non-signed vector numeric literal modulo?"
   - "does direct VHDL support non-signed vector negative numeric literal addition?"
   - "does direct VHDL support non-signed vector negative numeric literal subtraction?"
   - "does direct VHDL support non-signed vector negative numeric literal multiplication?"
   - "does direct VHDL support non-signed vector negative numeric literal division?"
   - "does direct VHDL support non-signed vector negative numeric literal modulo?"
+  - "does direct VHDL support vector numeric literal multiplication?"
+  - "does direct VHDL support vector numeric literal division?"
+  - "does direct VHDL support vector numeric literal modulo?"
   - "does direct VHDL support vector negative numeric literal addition?"
   - "does direct VHDL support vector negative numeric literal subtraction?"
   - "does direct VHDL support vector negative numeric literal multiplication?"
@@ -307,13 +313,17 @@ instead of failing at arithmetic expression `'A * -2'`. It also lowers
 non-signed vector division by a negative decimal numeric literal: an 8-bit
 non-signed `QUOT = (/ A -2)` fixture emits
 `QUOT <= std_logic_vector(resize(unsigned(A) / unsigned(to_signed(-2, 8)), 8));`
-instead of failing at arithmetic expression `'A / -2'`. Active leaf
+instead of failing at arithmetic expression `'A / -2'`. It also lowers
 non-signed vector modulo with a negative decimal numeric literal: an 8-bit
 non-signed `REM = (% A -2)` fixture emits
 `REM <= std_logic_vector(resize(unsigned(A) mod unsigned(to_signed(-2, 8)), 8));`
-instead of failing at arithmetic expression `'A % -2'`. Active leaf
-`BACKEND-API-VALIDATION-FRONTIER.123` owns selection of the next exact
-backend/API edge after that non-signed negative modulo slice shipped.
+instead of failing at arithmetic expression `'A % -2'`. Positive
+non-signed vector numeric-literal multiplication/division/modulo remain
+separate edges from the shipped positive addition/subtraction path: selection
+leaf `BACKEND-API-VALIDATION-FRONTIER.123` confirmed `PROD = (* A 2)`,
+`QUOT = (/ A 2)`, and `REM = (% A 2)` still fail closed at arithmetic
+expressions `'A * 2'`, `'A / 2'`, and `'A % 2'`. Active leaf
+`BACKEND-API-VALIDATION-FRONTIER.123.1` owns only the multiplication slice.
 Declared
 aggregate structural VHDL ports/nets/types in
 composition tops are locked fail-closed by

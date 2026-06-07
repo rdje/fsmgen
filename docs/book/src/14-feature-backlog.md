@@ -4231,8 +4231,12 @@ package declaration/emission, and full normalized semantic export
 stabilization remain deferred.
 
 Current active backend edge: task-tree leaf
-`BACKEND-API-VALIDATION-FRONTIER.123` selects the next exact backend/API edge
-after non-signed vector negative numeric-literal modulo lowering shipped.
+`BACKEND-API-VALIDATION-FRONTIER.123.1` owns direct VHDL non-signed vector
+positive numeric-literal multiplication lowering after selection leaf
+`.123` proved positive numeric-literal `+`/`-` already emit `to_unsigned`
+arithmetic, while `*`, `/`, and `%` still fail closed for non-signed vector
+positive literal RHS shapes. Positive numeric-literal division/modulo stay
+deferred until their own exact leaves.
 Completed implementation leaf `BACKEND-API-VALIDATION-FRONTIER.122.1` lowers
 direct VHDL non-signed vector modulo with a negative decimal numeric literal
 into target-width resized unsigned arithmetic over a two-complement literal,

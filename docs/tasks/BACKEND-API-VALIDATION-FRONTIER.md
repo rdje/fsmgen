@@ -285,7 +285,8 @@ items named in the 2026-06-05 remaining-work inventory.
     `BACKEND-API-VALIDATION-FRONTIER.121.1`,
     `BACKEND-API-VALIDATION-FRONTIER.122`,
     `BACKEND-API-VALIDATION-FRONTIER.122.1`,
-    `BACKEND-API-VALIDATION-FRONTIER.123`
+    `BACKEND-API-VALIDATION-FRONTIER.123`,
+    `BACKEND-API-VALIDATION-FRONTIER.123.1`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.1`
   Status: `done`
@@ -2162,10 +2163,18 @@ items named in the 2026-06-05 remaining-work inventory.
   Commit: `BACKEND-API-VALIDATION-FRONTIER.122.1: lower vector negative modulo VHDL literals`
 
 - ID: `BACKEND-API-VALIDATION-FRONTIER.123`
-  Status: `active`
+  Status: `done`
   Goal: `Select the next exact backend/API edge after non-signed vector negative numeric-literal modulo lowering shipped.`
+  Children: `BACKEND-API-VALIDATION-FRONTIER.123.1`
   Acceptance: `Selection-only leaf. Audit the backend/API frontier after .122.1, current VHDL scope, mdBook backlog, direct-VHDL fact card, normalized semantic export/public API status, focused contract/backend/facade tests, maintained direct/composition VHDL sweeps, current validation environment, and current frontier rows; choose the next narrow implementation, hardening, or documented blocking owner before any code/test/source edits. The selector must preserve task-tree ownership for the chosen child leaf, synchronize README/VHDL scope/mdBook/fact card/memory if the selected frontier changes user-visible scope, and leave broad expression-literal parity, raw package-spec internals, VHDL package declaration/emission, GHDL validation, full normalized semantic export stabilization, broad VHDL aggregate record/array lowering, full composition VHDL parity, and full backend parity deferred unless it explicitly chooses one of those exact edges.`
-  Verification: `pending selection`
+  Verification: `Selection audit/read of MEMORY.md, README.md, MEMORY_ARCHITECTURE.md, COMMIT.md, docs/TASK_TREE.md, docs/tasks/BACKEND-API-VALIDATION-FRONTIER.md, docs/VHDL_SCOPE.md, docs/book/src/14-feature-backlog.md, docs/knowledge/direct-vhdl-scaffold.md, KNOWLEDGE_MAP.md, perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm, t/1420-vhdl-direct-backend-scaffold.t, and t/386-hdl-generator-facade-target-language-boundary-audit.t after .122.1. Temporary current-code direct VHDL probes showed non-signed vector positive numeric-literal addition/subtraction remain accepted, emitting SUM <= std_logic_vector(unsigned(A) + to_unsigned(2, 8)); and DIFF <= std_logic_vector(unsigned(A) - to_unsigned(1, 8));, while non-signed vector positive numeric-literal multiplication, division, and modulo still fail closed at arithmetic expressions 'A * 2', 'A / 2', and 'A % 2'. command -v ghdl remained unavailable from the pre-selector audit. Selected bounded direct VHDL non-signed vector positive numeric-literal multiplication RHS lowering for .123.1 before any implementation/test/source edits, leaving positive numeric-literal division/modulo, broad expression-literal parity, package emission, GHDL validation, aggregate record/array VHDL, composition widening, normalized semantic stabilization, and full backend parity deferred. Focused prove -Iperl t/1420-vhdl-direct-backend-scaffold.t t/386-hdl-generator-facade-target-language-boundary-audit.t t/114-composition-target-support-diagnostics.t; bash knowledge-map/scripts/gen_knowledge_map.sh; bash knowledge-map/scripts/check_knowledge_map.sh; scripts/check_memory_architecture.sh; prove -Iperl t/1414-docs-relative-paths-audit.t t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t; mdbook build docs/book; git diff --check.`
+  Commit: `BACKEND-API-VALIDATION-FRONTIER.123: select vector literal multiplication VHDL lowering`
+
+- ID: `BACKEND-API-VALIDATION-FRONTIER.123.1`
+  Status: `active`
+  Goal: `Lower direct VHDL non-signed vector positive numeric-literal multiplication RHS assignments.`
+  Acceptance: `Direct single-FSM VHDL generation must lower generated non-signed vector RHS assignments with one vector operand multiplied by one positive decimal numeric literal, such as PROD = A * 2 for an 8-bit non-signed target and operand, into target-width resized VHDL arithmetic through pipeline, CLI, and facade coverage. The leaf is limited to non-signed vector multiplication with literal positive decimal RHS operands in the direct VHDL scaffold; non-signed vector positive numeric-literal division/modulo, literal-first arithmetic, signed vector numeric-literal arithmetic beyond the already shipped subsets, negative numeric-literal arithmetic beyond the already shipped subsets, direct assignment/output literal behavior, sized bitstring literal behavior, aggregate record/array lowering, composition/top VHDL, package root/import behavior, GHDL validation, broad expression parity, raw package-spec internals, full normalized semantic export stabilization, and full backend parity must remain unchanged or explicitly deferred. README, docs/VHDL_SCOPE.md, mdBook, direct-VHDL fact card/knowledge map, task tree, and MEMORY stay synchronized.`
+  Verification: `pending implementation`
   Commit: `pending`
 
 ## Current Frontier
@@ -2421,7 +2430,8 @@ items named in the 2026-06-05 remaining-work inventory.
 | 247 | `BACKEND-API-VALIDATION-FRONTIER.121.1` | `done` | Lowered non-signed vector negative numeric-literal division such as QUOT = (/ A -2) into target-width resized VHDL arithmetic through pipeline, CLI, facade, docs, and fact-card coverage. |
 | 248 | `BACKEND-API-VALIDATION-FRONTIER.122` | `done` | Selected direct VHDL non-signed vector negative numeric-literal modulo after modulo still failed closed and GHDL remained unavailable. |
 | 249 | `BACKEND-API-VALIDATION-FRONTIER.122.1` | `done` | Lowered non-signed vector negative numeric-literal modulo such as REM = (% A -2) into target-width resized VHDL arithmetic through pipeline, CLI, facade, docs, and fact-card coverage. |
-| 250 | `BACKEND-API-VALIDATION-FRONTIER.123` | `active` | Select the next exact backend/API edge after non-signed vector negative numeric-literal modulo lowering shipped. |
+| 250 | `BACKEND-API-VALIDATION-FRONTIER.123` | `done` | Selected direct VHDL non-signed vector positive numeric-literal multiplication after positive multiplication/division/modulo probes still failed closed while positive addition/subtraction remained accepted. |
+| 251 | `BACKEND-API-VALIDATION-FRONTIER.123.1` | `active` | Lower non-signed vector positive numeric-literal multiplication such as PROD = (* A 2) before widening division/modulo or broad expression parity. |
 
 ## Decisions
 
@@ -2864,11 +2874,19 @@ items named in the 2026-06-05 remaining-work inventory.
 | `BACKEND-API-VALIDATION-FRONTIER.121.1` | `BACKEND-API-VALIDATION-FRONTIER.121.1: lower vector negative division VHDL literals` | this slice; activates `.122` |
 | `BACKEND-API-VALIDATION-FRONTIER.122` | `BACKEND-API-VALIDATION-FRONTIER.122: select vector negative modulo VHDL lowering` | selected `.122.1` |
 | `BACKEND-API-VALIDATION-FRONTIER.122.1` | `BACKEND-API-VALIDATION-FRONTIER.122.1: lower vector negative modulo VHDL literals` | this slice; activates `.123` |
-| `BACKEND-API-VALIDATION-FRONTIER.123` | `pending` | active selector leaf |
+| `BACKEND-API-VALIDATION-FRONTIER.123` | `BACKEND-API-VALIDATION-FRONTIER.123: select vector literal multiplication VHDL lowering` | selected `.123.1` |
+| `BACKEND-API-VALIDATION-FRONTIER.123.1` | `pending` | active implementation leaf |
 
 ## Changelog
 
 - `2026-06-05`: Created proposed backend/API frontier owner tree.
+- `2026-06-07`: Completed `.123`; selected direct VHDL non-signed vector
+  positive numeric-literal multiplication RHS lowering as `.123.1` after
+  temporary current-code probes showed positive numeric-literal addition and
+  subtraction still emit `SUM <= std_logic_vector(unsigned(A) + to_unsigned(2, 8));`
+  and `DIFF <= std_logic_vector(unsigned(A) - to_unsigned(1, 8));`, while
+  `PROD = (* A 2)`, `QUOT = (/ A 2)`, and `REM = (% A 2)` still fail closed
+  at arithmetic expressions `'A * 2'`, `'A / 2'`, and `'A % 2'`.
 - `2026-06-07`: Completed `.122.1`; direct VHDL now lowers non-signed vector
   negative numeric-literal modulo RHS assignments through target-width resized
   unsigned two-complement literal arithmetic, so an 8-bit non-signed
