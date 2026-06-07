@@ -4231,8 +4231,11 @@ package declaration/emission, and full normalized semantic export
 stabilization remain deferred.
 
 Current active backend edge: task-tree leaf
-`BACKEND-API-VALIDATION-FRONTIER.120` selects the next exact backend/API edge
-after non-signed vector negative numeric-literal subtraction lowering shipped.
+`BACKEND-API-VALIDATION-FRONTIER.120.1` owns direct VHDL non-signed vector
+multiplication with a negative decimal numeric literal after selector leaf
+`BACKEND-API-VALIDATION-FRONTIER.120` chose it from adjacent fail-closed
+arithmetic probes. The selected 8-bit fixture is `PROD = (* A -2)`, which
+currently fails at arithmetic expression `'A * -2'` until this leaf ships.
 Completed implementation leaf `BACKEND-API-VALIDATION-FRONTIER.119.1` lowers
 direct VHDL non-signed vector subtraction with a negative decimal numeric
 literal into unsigned arithmetic over a target-width two-complement literal,
