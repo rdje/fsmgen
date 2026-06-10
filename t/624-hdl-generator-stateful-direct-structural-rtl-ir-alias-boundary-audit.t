@@ -43,8 +43,16 @@ subtest 'stateful facade reuse returns fresh direct structural_rtl_ir containers
     );
     is_deeply(
         $second->{structural_rtl_ir}{nets},
-        [],
-        'later generation on the same facade does not inherit caller mutation of direct structural_rtl_ir nets',
+        [
+            {
+                name => 'OUT_q',
+                source => undef,
+                targets => [],
+                width => 1,
+                signed => 0,
+            },
+        ],
+        'later generation on the same facade does not inherit caller mutation of direct structural_rtl_ir declaration nets',
     );
 };
 

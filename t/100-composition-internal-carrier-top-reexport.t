@@ -9,9 +9,11 @@ use IPC::Cmd qw(run);
 use FindBin;
 
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
+use lib File::Spec->catdir($FindBin::Bin, 'lib');
 
 use FSM::Pipeline::HDLGenerator;
 use FSM::Composition::Plan;
+use FSM::Test::CompositionNets qw(assert_only_carrier_and_shared_dp_sink_nets);
 
 my $tempdir = tempdir(CLEANUP => 1);
 my $c2_path = File::Spec->catfile($tempdir, 'reexport_internal_carrier_top.fsm');
@@ -292,7 +294,11 @@ subtest 'explicit-link C2 can re-export an inferred same-name internal carrier t
 
     isa_ok($result->{composition_plan}, 'FSM::Composition::Plan');
     is($result->{composition_plan}->lane, 'C2', 'generated-child internal-carrier re-export stays in C2');
-    is(scalar(@{$result->{composition_plan}->nets}), 0, 'no separate internal net is emitted when the carrier is re-exported at top level');
+    assert_only_carrier_and_shared_dp_sink_nets(
+        $result->{composition_plan}->nets,
+        [],
+        're-exported internal carrier top',
+    );
 
     my %ports = map { $_->name => $_ } @{$result->{composition_plan}->ports};
     ok($ports{clk}, 'clk is inferred as a top input');
@@ -332,7 +338,11 @@ subtest 'explicit-link C3 can re-export an inferred same-name internal carrier a
 
     isa_ok($result->{composition_plan}, 'FSM::Composition::Plan');
     is($result->{composition_plan}->lane, 'C3', 'mixed internal-carrier re-export stays in C3');
-    is(scalar(@{$result->{composition_plan}->nets}), 0, 'mixed re-export does not emit a separate internal net');
+    assert_only_carrier_and_shared_dp_sink_nets(
+        $result->{composition_plan}->nets,
+        [],
+        'mixed re-exported internal carrier top',
+    );
 
     my %ports = map { $_->name => $_ } @{$result->{composition_plan}->ports};
     ok($ports{clk}, 'rtl clock is inferred as a top input');

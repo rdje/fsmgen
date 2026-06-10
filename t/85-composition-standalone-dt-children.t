@@ -9,10 +9,12 @@ use IPC::Cmd qw(run);
 use FindBin;
 
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
+use lib File::Spec->catdir($FindBin::Bin, 'lib');
 
 use FSM::Pipeline::HDLGenerator;
 use FSM::Composition::Plan;
 use FSM::Composition::Net;
+use FSM::Test::CompositionNets qw(assert_only_carrier_and_shared_dp_sink_nets);
 
 subtest 'single-child composition realizes embedded combinational dt child without fake system ports' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
@@ -130,8 +132,12 @@ FSM
     is($result->{composition_plan}->lane, 'C2', 'mixed fsmc + dtc composition uses C2 lane');
     is($result->{composition_plan}->instances->[0]->kind, 'fsmc', 'first realized child stays fsmc');
     is($result->{composition_plan}->instances->[1]->kind, 'dtc', 'second realized child is dtc');
-    is(scalar(@{$result->{composition_plan}->nets}), 1, 'mixed generated-child composition still materializes one deterministic net');
-    isa_ok($result->{composition_plan}->nets->[0], 'FSM::Composition::Net');
+    my ($carrier_nets) = assert_only_carrier_and_shared_dp_sink_nets(
+        $result->{composition_plan}->nets,
+        ['comp_link_producer_output_data'],
+        'mixed generated-child composition',
+    );
+    isa_ok($carrier_nets->[0], 'FSM::Composition::Net');
 
     my %router_bindings = map { $_->{port_name} => $_->{signal_name} } @{$result->{composition_plan}->instances->[1]->port_bindings};
     ok(!exists $router_bindings{clk}, 'combinational dt child does not receive a fake clk binding');

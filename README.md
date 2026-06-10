@@ -846,7 +846,12 @@ explicit scalar package-name entry metadata for
 `semantic.forward_ir.intent_hir.symbol_contract.package_imports`.
 `package_import_entry_value_kinds` is `[scalar_package_name]`, and
 `package_import_entry_value_meaning` is `authored package-import package-name
-string`. That edge does not expose raw `FSM::Package::Spec` internals,
+string` on the top-level contract surface. Inside grouped
+`presence_key_family_map` discovery maps, the corresponding
+`*_package_import_entry_value_meaning` entries are single-element arrays
+containing that same meaning string, preserving the invariant that every
+grouped family-map value is array-valued. That edge does not expose raw
+`FSM::Package::Spec` internals,
 package source AST, package symbols, VHDL package declaration/emission, or full
 normalized semantic export stabilization.
 The direct VHDL scaffold now lowers generated two-state vector `bit [N:0]`

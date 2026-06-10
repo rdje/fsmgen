@@ -8,8 +8,10 @@ use File::Temp qw(tempdir);
 use FindBin;
 
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
+use lib File::Spec->catdir($FindBin::Bin, 'lib');
 
 use FSM::Pipeline::HDLGenerator;
+use FSM::Test::CompositionNets qw(assert_only_carrier_and_shared_dp_sink_nets);
 
 my $tempdir = tempdir(CLEANUP => 1);
 
@@ -212,12 +214,12 @@ FSM
         [],
         'composition lowered_rtl_ir preserves an explicit empty shared-datapath candidate list in that case',
     );
-    is($lowered_rtl_ir->{internal_net_count}, 1, 'composition lowered_rtl_ir reports internal composition net count');
-    is_deeply(
-        $lowered_rtl_ir->{internal_net_names},
+    assert_only_carrier_and_shared_dp_sink_nets(
+        [map { +{ name => $_ } } @{$lowered_rtl_ir->{internal_net_names}}],
         ['comp_link_producer_output_data'],
-        'composition lowered_rtl_ir preserves internal composition net names',
+        'composition lowered_rtl_ir internal composition nets',
     );
+    is($lowered_rtl_ir->{internal_net_count}, scalar(@{$lowered_rtl_ir->{internal_net_names}}), 'composition lowered_rtl_ir reports physical internal net count');
     is($lowered_rtl_ir->{instance_count}, 2, 'composition lowered_rtl_ir reports realized instance count');
     is_deeply(
         $lowered_rtl_ir->{instance_names},

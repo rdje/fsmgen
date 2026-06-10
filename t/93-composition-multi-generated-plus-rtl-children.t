@@ -9,10 +9,12 @@ use IPC::Cmd qw(run);
 use FindBin;
 
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
+use lib File::Spec->catdir($FindBin::Bin, 'lib');
 
 use FSM::Pipeline::HDLGenerator;
 use FSM::Composition::Net;
 use FSM::Composition::Plan;
+use FSM::Test::CompositionNets qw(assert_only_carrier_and_shared_dp_sink_nets);
 
 subtest 'explicit-link C3 composition supports multiple generated children plus rtl children' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
@@ -95,14 +97,13 @@ FSM
     );
 
     my @nets = @{$result->{composition_plan}->nets};
-    is(scalar(@nets), 2, 'composition materializes two deterministic internal nets');
-    isa_ok($nets[0], 'FSM::Composition::Net');
-    isa_ok($nets[1], 'FSM::Composition::Net');
-    is_deeply(
-        [map { $_->name } @nets],
+    my ($carrier_nets) = assert_only_carrier_and_shared_dp_sink_nets(
+        \@nets,
         ['comp_link_producer_output_data', 'comp_link_router_route_data'],
         'composition uses deterministic net names for generated-to-generated and generated-to-rtl links',
     );
+    isa_ok($carrier_nets->[0], 'FSM::Composition::Net');
+    isa_ok($carrier_nets->[1], 'FSM::Composition::Net');
 
     my %producer_bindings = map { $_->{port_name} => $_->{signal_name} } @{$result->{composition_plan}->instances->[0]->port_bindings};
     my %router_bindings = map { $_->{port_name} => $_->{signal_name} } @{$result->{composition_plan}->instances->[1]->port_bindings};

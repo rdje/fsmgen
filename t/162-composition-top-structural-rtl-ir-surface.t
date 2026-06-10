@@ -8,11 +8,13 @@ use File::Temp qw(tempdir);
 use FindBin;
 
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
+use lib File::Spec->catdir($FindBin::Bin, 'lib');
 
 use FSM::Backend::VerilogFamily::StructuralRTLIREmitter;
 use FSM::IR::StructuralRTLIRBuilder;
 use FSM::Pipeline::HDLGenerator;
 use FSM::IR::StructuralRTLIR;
+use FSM::Test::CompositionNets qw(assert_only_carrier_and_shared_dp_sink_nets);
 
 my $tempdir = tempdir(CLEANUP => 1);
 
@@ -121,9 +123,14 @@ FSM
         'structural_rtl_ir preserves top port widths',
     );
 
-    is($structural_rtl_ir->{net_count}, 1, 'structural_rtl_ir reports internal net count');
-    is_deeply(
+    my ($structural_carrier_nets) = assert_only_carrier_and_shared_dp_sink_nets(
         $structural_rtl_ir->{nets},
+        ['comp_link_producer_output_data'],
+        'structural_rtl_ir internal connectivity',
+    );
+    is($structural_rtl_ir->{net_count}, scalar(@{$structural_rtl_ir->{nets}}), 'structural_rtl_ir reports physical internal net count');
+    is_deeply(
+        $structural_carrier_nets,
         [
             {
                 name => 'comp_link_producer_output_data',
@@ -164,7 +171,11 @@ FSM
         'structural_rtl_ir preserves the first instance interface port metadata',
     );
     is_deeply(
-        { map { $_->{port_name} => $_->{signal_name} } @{$producer->{port_bindings}} },
+        {
+            map { $_->{port_name} => $_->{signal_name} }
+            grep { (($_->{signal_name} || '') !~ /\Ashared_dp_unused_/) }
+            @{$producer->{port_bindings}}
+        },
         {
             clk => 'clk',
             rstn => 'rstn',
@@ -174,7 +185,11 @@ FSM
         'structural_rtl_ir preserves the first instance pin bindings',
     );
     is_deeply(
-        { map { $_->{port_name} => $_->{connection_expr} } @{$producer->{port_bindings}} },
+        {
+            map { $_->{port_name} => $_->{connection_expr} }
+            grep { (($_->{signal_name} || '') !~ /\Ashared_dp_unused_/) }
+            @{$producer->{port_bindings}}
+        },
         {
             clk => { kind => 'signal_ref', signal_name => 'clk' },
             rstn => { kind => 'signal_ref', signal_name => 'rstn' },
@@ -184,7 +199,11 @@ FSM
         'structural_rtl_ir preserves the first instance connection expressions',
     );
     is_deeply(
-        { map { $_->{port_name} => $_->{connection_expr} } @{$planned_producer->port_bindings} },
+        {
+            map { $_->{port_name} => $_->{connection_expr} }
+            grep { (($_->{signal_name} || '') !~ /\Ashared_dp_unused_/) }
+            @{$planned_producer->port_bindings}
+        },
         {
             clk => { kind => 'signal_ref', signal_name => 'clk' },
             rstn => { kind => 'signal_ref', signal_name => 'rstn' },

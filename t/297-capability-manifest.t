@@ -1055,12 +1055,12 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
         );
         is_deeply(
             $manifest->{semantic_exports}{normalized_semantic_json}{presence_key_family_map}{$field},
-            $expected,
+            _family_map_expected($field, $expected),
             "manifest report family map records $label",
         );
         is_deeply(
             $manifest->{semantic_exports}{normalized_semantic_json}{semantic_presence_key_family_map}{$field},
-            $expected,
+            _family_map_expected($field, $expected),
             "manifest semantic family map records $label",
         );
     }
@@ -1470,12 +1470,12 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
         );
         is_deeply(
             $manifest->{semantic_exports}{normalized_semantic_json}{presence_key_family_map}{$report_field},
-            $expected,
+            _family_map_expected($report_field, $expected),
             "manifest report family map records $label",
         );
         is_deeply(
             $manifest->{semantic_exports}{normalized_semantic_json}{semantic_presence_key_family_map}{$semantic_field},
-            $expected,
+            _family_map_expected($semantic_field, $expected),
             "manifest semantic family map records $label",
         );
     }
@@ -2815,6 +2815,12 @@ subtest 'CLI emits the same valid JSON manifest without an input file' => sub {
 };
 
 done_testing();
+
+sub _family_map_expected {
+    my ($field, $expected) = @_;
+    return [$expected] if ($field || '') =~ /package_import_entry_value_meaning\z/;
+    return $expected;
+}
 
 sub assert_manifest_section_contract_sources {
     my ($manifest, $expected_map, $label) = @_;

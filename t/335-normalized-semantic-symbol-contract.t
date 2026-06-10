@@ -240,9 +240,9 @@ subtest 'contract exposes the bounded normalized semantic symbol-contract object
         normalized_semantic_symbol_contract_package_import_entry_value_kinds(),
         'grouped symbol-contract family map publishes package-import entry value kinds',
     );
-    is(
+    is_deeply(
         $contract->{presence_key_family_map}{package_import_entry_value_meaning},
-        normalized_semantic_symbol_contract_package_import_entry_value_meaning(),
+        [normalized_semantic_symbol_contract_package_import_entry_value_meaning()],
         'grouped symbol-contract family map publishes package-import entry value meaning',
     );
     is_deeply(

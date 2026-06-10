@@ -9,9 +9,11 @@ use IPC::Cmd qw(run);
 use FindBin;
 
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
+use lib File::Spec->catdir($FindBin::Bin, 'lib');
 
 use FSM::Pipeline::HDLGenerator;
 use FSM::Composition::Plan;
+use FSM::Test::CompositionNets qw(shared_dp_sink_nets);
 
 subtest 'single generated fsm child supports declared connect-by-name without explicit wiring_blocks' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
@@ -57,9 +59,20 @@ FSM
     is($result->{composition_plan}->lane, 'C4', 'single generated fsm child uses the C4 by-name lane');
     is(scalar(@{$result->{composition_plan}->links}), 2, 'single-child by-name plan records both top input and top output links');
     is_deeply(
-        [map { $_->{port_name}.'=>'.$_->{signal_name} } @{$result->{composition_plan}->instances->[0]->port_bindings}],
+        [
+            grep {
+                $_ !~ /=>shared_dp_unused_/
+            } map {
+                $_->{port_name}.'=>'.$_->{signal_name}
+            } @{$result->{composition_plan}->instances->[0]->port_bindings}
+        ],
         ['clk=>clk', 'rst_n=>rst_n', 'enable=>enable', 'output_data=>output_data'],
         'single generated fsm child binds system and user ports directly by name',
+    );
+    is(
+        scalar(@{shared_dp_sink_nets(@{$result->{composition_plan}->nets})}),
+        2,
+        'single generated fsm child binds its unused shared-datapath exports to sink nets',
     );
 
     my $hdl = $result->{hdl_code};

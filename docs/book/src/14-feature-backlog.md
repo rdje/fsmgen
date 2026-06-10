@@ -4226,9 +4226,12 @@ name-list entry metadata for `semantic.symbol_contract.package_imports` and
 `semantic.forward_ir.intent_hir.symbol_contract.package_imports`.
 `package_import_entry_value_kinds` is `[scalar_package_name]`, and
 `package_import_entry_value_meaning` is `authored package-import package-name
-string`. Raw package-spec internals, package source AST, package symbols, VHDL
-package declaration/emission, and full normalized semantic export
-stabilization remain deferred.
+string` on the top-level contract surface. The same meaning entries appear as
+single-element arrays inside grouped `presence_key_family_map` discovery maps
+so every grouped family-map value remains array-valued. Raw package-spec
+internals, package source AST, package symbols, VHDL package
+declaration/emission, and full normalized semantic export stabilization remain
+deferred.
 
 Completed backend/API frontier leaf
 `BACKEND-API-VALIDATION-FRONTIER.132` exhausted the active backend/API selector

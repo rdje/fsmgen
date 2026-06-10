@@ -859,12 +859,12 @@ subtest 'contract exposes the bounded normalized semantic surface' => sub {
         );
         is_deeply(
             $contract->{presence_key_family_map}{$report_field},
-            $report_helper->(),
+            _family_map_expected($report_field, $report_helper->()),
             "report presence family map publishes $report_field",
         );
         is_deeply(
             $contract->{semantic_presence_key_family_map}{$semantic_field},
-            $payload_helper->(),
+            _family_map_expected($semantic_field, $payload_helper->()),
             "semantic payload family map publishes $semantic_field",
         );
         is_deeply(
@@ -1544,7 +1544,7 @@ subtest 'contract exposes the bounded normalized semantic surface' => sub {
         );
         is_deeply(
             $contract->{presence_key_family_map}{$field},
-            $report_keys,
+            _family_map_expected($field, $report_keys),
             "grouped report family map publishes symbol-contract $label",
         );
         is_deeply(
@@ -2785,6 +2785,12 @@ subtest 'failed semantic JSON conforms to the bounded contract' => sub {
 };
 
 done_testing();
+
+sub _family_map_expected {
+    my ($field, $expected) = @_;
+    return [$expected] if ($field || '') =~ /package_import_entry_value_meaning\z/;
+    return $expected;
+}
 
 sub run_semantic_json {
     my ($command, $label) = @_;

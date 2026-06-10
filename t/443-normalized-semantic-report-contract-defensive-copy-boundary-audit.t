@@ -683,7 +683,7 @@ subtest 'fresh normalized semantic report maps stay aligned with helper families
     is_deeply($family_map->{symbol_contract_enum_entry_value_kinds}, normalized_semantic_symbol_contract_enum_entry_value_kinds(), 'symbol-contract enum entry value-kind family matches helper');
     is_deeply($family_map->{symbol_contract_enum_member_value_kinds}, normalized_semantic_symbol_contract_enum_member_value_kinds(), 'symbol-contract enum member value-kind family matches helper');
     is_deeply($family_map->{symbol_contract_package_import_entry_value_kinds}, normalized_semantic_symbol_contract_package_import_entry_value_kinds(), 'symbol-contract package-import entry value-kind family matches helper');
-    is($family_map->{symbol_contract_package_import_entry_value_meaning}, normalized_semantic_symbol_contract_package_import_entry_value_meaning(), 'symbol-contract package-import entry value meaning family matches helper');
+    is_deeply($family_map->{symbol_contract_package_import_entry_value_meaning}, [normalized_semantic_symbol_contract_package_import_entry_value_meaning()], 'symbol-contract package-import entry value meaning family matches helper');
     is_deeply($family_map->{symbol_contract_type_entry_keys}, normalized_semantic_symbol_contract_type_entry_keys(), 'symbol-contract type entry family matches helper');
     is_deeply($family_map->{symbol_contract_type_scalar_value_kinds}, normalized_semantic_symbol_contract_type_scalar_value_kinds(), 'symbol-contract type scalar value-kind family matches helper');
     is_deeply($family_map->{symbol_contract_type_aggregate_value_kinds}, normalized_semantic_symbol_contract_type_aggregate_value_kinds(), 'symbol-contract type aggregate value-kind family matches helper');
@@ -837,7 +837,7 @@ subtest 'fresh normalized semantic report maps stay aligned with helper families
     ) {
         is_deeply(
             $family_map->{$case->[0]},
-            $case->[1],
+            _family_map_expected($case->[0], $case->[1]),
             "$case->[0] family matches helper",
         );
     }
@@ -992,6 +992,12 @@ subtest 'fresh normalized semantic report maps stay aligned with helper families
 };
 
 done_testing();
+
+sub _family_map_expected {
+    my ($field, $expected) = @_;
+    return [$expected] if ($field || '') =~ /package_import_entry_value_meaning\z/;
+    return $expected;
+}
 
 sub mutate_structure {
     my ($value) = @_;

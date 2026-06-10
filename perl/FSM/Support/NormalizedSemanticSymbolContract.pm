@@ -289,7 +289,7 @@ sub normalized_semantic_symbol_contract_presence_key_family_map {
         package_import_entry_value_kinds =>
             normalized_semantic_symbol_contract_package_import_entry_value_kinds(),
         package_import_entry_value_meaning =>
-            normalized_semantic_symbol_contract_package_import_entry_value_meaning(),
+            [normalized_semantic_symbol_contract_package_import_entry_value_meaning()],
     };
 }
 

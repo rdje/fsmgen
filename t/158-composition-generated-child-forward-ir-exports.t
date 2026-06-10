@@ -124,6 +124,8 @@ FSM
                     standalone_dt_count => $_->{standalone_dt_count},
                     output_drive_family_count => $_->{output_drive_family_count},
                     standalone_dt_multi_drive_target_count => $_->{standalone_dt_multi_drive_target_count},
+                    parameter_override_count => $_->{parameter_override_count},
+                    parameter_overrides => $_->{parameter_overrides},
                     intent_hir => $_->{intent_hir},
                     lowered_rtl_ir => $_->{lowered_rtl_ir},
                     structural_rtl_ir => $_->{structural_rtl_ir},

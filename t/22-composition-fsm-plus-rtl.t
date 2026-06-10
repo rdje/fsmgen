@@ -9,11 +9,13 @@ use IPC::Cmd qw(run);
 use FindBin;
 
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
+use lib File::Spec->catdir($FindBin::Bin, 'lib');
 
 use FSM::Pipeline::HDLGenerator;
 use FSM::Composition::Net;
 use FSM::Composition::Plan;
 use FSM::Composition::Port;
+use FSM::Test::CompositionNets qw(assert_only_carrier_and_shared_dp_sink_nets);
 
 my $tempdir = tempdir(CLEANUP => 1);
 my $composition_path = File::Spec->catfile($tempdir, 'fsm_plus_rtl_top.fsm');
@@ -85,9 +87,12 @@ is(scalar(@{$result->{composition_plan}->instances->[1]->interface_ports}), 4, '
 isa_ok($result->{composition_plan}->instances->[1]->interface_ports->[0], 'FSM::Composition::Port');
 is($result->{composition_plan}->instances->[1]->interface_ports->[2]->name, 'data_in', 'external RTL realization preserves typed input ports');
 is($result->{composition_plan}->instances->[1]->interface_ports->[3]->name, 'txd', 'external RTL realization preserves typed output ports');
-is(scalar(@{$result->{composition_plan}->nets}), 1, 'mixed plan materializes one deterministic internal net');
-isa_ok($result->{composition_plan}->nets->[0], 'FSM::Composition::Net');
-is($result->{composition_plan}->nets->[0]->name, 'comp_link_producer_output_data', 'mixed plan reuses deterministic internal net naming');
+my ($carrier_nets) = assert_only_carrier_and_shared_dp_sink_nets(
+    $result->{composition_plan}->nets,
+    ['comp_link_producer_output_data'],
+    'mixed plan generated-to-RTL wiring',
+);
+isa_ok($carrier_nets->[0], 'FSM::Composition::Net');
 
 my %producer_bindings = map { $_->{port_name} => $_->{signal_name} } @{$result->{composition_plan}->instances->[0]->port_bindings};
 my %rtl_bindings = map { $_->{port_name} => $_->{signal_name} } @{$result->{composition_plan}->instances->[1]->port_bindings};
@@ -100,9 +105,9 @@ is($rtl_bindings{txd}, 'serial_out', 'external RTL child output is wired directl
 
 is($result->{module_info}{module_name}, 'fsm_plus_rtl_top', 'composition result reports the generated mixed top module name');
 is($result->{module_info}{composition_child_count}, 2, 'composition module info reports both realized children');
-is($result->{module_info}{composition_net_count}, 1, 'composition module info reports one deterministic composition net');
+is($result->{module_info}{composition_net_count}, scalar(@{$result->{composition_plan}->nets}), 'composition module info reports physical composition nets including shared-datapath sinks');
 is($result->{statistics}{composition_child_count}, 2, 'composition statistics report both realized children');
-is($result->{statistics}{composition_net_count}, 1, 'composition statistics report the deterministic composition net');
+is($result->{statistics}{composition_net_count}, scalar(@{$result->{composition_plan}->nets}), 'composition statistics report physical composition nets including shared-datapath sinks');
 is($result->{statistics}{composition_lane}, 'C3', 'composition statistics preserve the mixed-lane label');
 
 my $hdl = $result->{hdl_code};

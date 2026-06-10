@@ -11,9 +11,9 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
 ## Current state (OVERWRITE this block each update — do not append)
-- latest_commit: `COMPOSITION-T84-NET-COUNT-REPAIR.1` (this commit) — repaired stale `t/84` composition net-count assertion: the test now proves the explicit child-to-child carrier and accepts documented `shared_dp_unused_*` sink nets; quick regression passes.
+- latest_commit: `CI-SHARED-DP-SURFACE-REPAIR.1` (this commit) — repaired the reproduced GitHub `Perl FSM Regression` failure cluster from run `27086344097`: tests now distinguish authored composition carrier nets from intentional `shared_dp_unused_*` sink wiring, VHDL composition contract classification matches shipped wording, grouped contract family maps preserve array-valued shape, and mdBook/fact-card wording is synced.
 - active_work_unit: none — no active or proposed task-tree remains; future work needs a new or reactivated exact owner before source/config/test/doc changes.
-- recently_done: `COMPOSITION-T84-NET-COUNT-REPAIR.1`; `MDBOOK-CODEBASE-SYNC-AUDIT-JUN07.1`; `BIN-FSMGEN-IMPORT-TREE-JUN07-REFRESH.1`; `DOC-PATH-RELATIVE-KNOWLEDGE-MAP.1`; `ARCHITECTURE-DEBT-FRONTIER.3`; `ARCHITECTURE-DEBT-FRONTIER.2.1`; `ARCHITECTURE-DEBT-FRONTIER.2`; `ARCHITECTURE-DEBT-FRONTIER.1`; `BACKEND-API-VALIDATION-FRONTIER.132`; `BACKEND-API-VALIDATION-FRONTIER.131.1`; `BACKEND-API-VALIDATION-FRONTIER.131`; `BACKEND-API-VALIDATION-FRONTIER.130`.
+- recently_done: `CI-SHARED-DP-SURFACE-REPAIR.1`; `COMPOSITION-T84-NET-COUNT-REPAIR.1`; `MDBOOK-CODEBASE-SYNC-AUDIT-JUN07.1`; `BIN-FSMGEN-IMPORT-TREE-JUN07-REFRESH.1`; `DOC-PATH-RELATIVE-KNOWLEDGE-MAP.1`; `ARCHITECTURE-DEBT-FRONTIER.3`; `ARCHITECTURE-DEBT-FRONTIER.2.1`; `ARCHITECTURE-DEBT-FRONTIER.2`; `ARCHITECTURE-DEBT-FRONTIER.1`; `BACKEND-API-VALIDATION-FRONTIER.132`; `BACKEND-API-VALIDATION-FRONTIER.131.1`; `BACKEND-API-VALIDATION-FRONTIER.131`.
 - in_flight_uncommitted: none expected after this repair commit; unrelated untracked `fx/` intentionally left alone.
 - blockers: none.
 

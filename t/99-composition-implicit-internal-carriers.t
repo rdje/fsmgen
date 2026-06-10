@@ -9,9 +9,11 @@ use IPC::Cmd qw(run);
 use FindBin;
 
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
+use lib File::Spec->catdir($FindBin::Bin, 'lib');
 
 use FSM::Pipeline::HDLGenerator;
 use FSM::Composition::Plan;
+use FSM::Test::CompositionNets qw(assert_only_carrier_and_shared_dp_sink_nets net_width);
 
 my $tempdir = tempdir(CLEANUP => 1);
 my $c2_path = File::Spec->catfile($tempdir, 'implicit_internal_carrier_top.fsm');
@@ -211,9 +213,12 @@ subtest 'explicit-link C2 infers same-name internal carriers with one driver and
 
     isa_ok($result->{composition_plan}, 'FSM::Composition::Plan');
     is($result->{composition_plan}->lane, 'C2', 'generated-child internal carrier inference stays in C2');
-    is(scalar(@{$result->{composition_plan}->nets}), 1, 'one inferred internal carrier net is created');
-    is($result->{composition_plan}->nets->[0]->name, 'payload', 'internal same-name carrier uses the shared signal name');
-    is($result->{composition_plan}->nets->[0]->width, 8, 'internal same-name carrier preserves width');
+    my ($carrier_nets) = assert_only_carrier_and_shared_dp_sink_nets(
+        $result->{composition_plan}->nets,
+        ['payload'],
+        'explicit-link C2 same-name internal carrier',
+    );
+    is(net_width($carrier_nets->[0]), 8, 'internal same-name carrier preserves width');
 
     my %ports = map { $_->name => $_ } @{$result->{composition_plan}->ports};
     ok($ports{clk}, 'clk is inferred as a top input');
@@ -253,8 +258,11 @@ subtest 'explicit-link C3 infers same-name internal carriers across generated an
 
     isa_ok($result->{composition_plan}, 'FSM::Composition::Plan');
     is($result->{composition_plan}->lane, 'C3', 'mixed generated-plus-rtl internal carrier inference stays in C3');
-    is(scalar(@{$result->{composition_plan}->nets}), 1, 'one inferred internal carrier net is created in mixed composition');
-    is($result->{composition_plan}->nets->[0]->name, 'payload', 'mixed internal carrier uses the shared signal name');
+    assert_only_carrier_and_shared_dp_sink_nets(
+        $result->{composition_plan}->nets,
+        ['payload'],
+        'mixed internal same-name carrier',
+    );
 
     my %ports = map { $_->name => $_ } @{$result->{composition_plan}->ports};
     ok($ports{clk}, 'rtl clock is inferred as a top input');

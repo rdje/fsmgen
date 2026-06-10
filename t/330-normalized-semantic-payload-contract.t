@@ -675,7 +675,7 @@ subtest 'contract exposes the bounded normalized semantic payload object' => sub
         );
         is_deeply(
             $contract->{presence_key_family_map}{$field},
-            $payload_keys,
+            _family_map_expected($field, $payload_keys),
             "grouped semantic-payload family map publishes $field",
         );
         is_deeply(
@@ -1164,7 +1164,7 @@ subtest 'contract exposes the bounded normalized semantic payload object' => sub
         );
         is_deeply(
             $contract->{presence_key_family_map}{$field},
-            $payload_keys,
+            _family_map_expected($field, $payload_keys),
             "grouped semantic-payload family map publishes symbol-contract $label",
         );
         is_deeply(
@@ -1525,3 +1525,9 @@ sub intent_hir_alias_cases {
 }
 
 done_testing();
+
+sub _family_map_expected {
+    my ($field, $expected) = @_;
+    return [$expected] if ($field || '') =~ /package_import_entry_value_meaning\z/;
+    return $expected;
+}

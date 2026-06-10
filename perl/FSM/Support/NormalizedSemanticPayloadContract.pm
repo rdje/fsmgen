@@ -591,7 +591,7 @@ sub normalized_semantic_payload_presence_key_family_map {
         symbol_contract_package_import_entry_value_kinds =>
             normalized_semantic_payload_symbol_contract_package_import_entry_value_kinds(),
         symbol_contract_package_import_entry_value_meaning =>
-            normalized_semantic_payload_symbol_contract_package_import_entry_value_meaning(),
+            [normalized_semantic_payload_symbol_contract_package_import_entry_value_meaning()],
         symbol_contract_type_entry_keys =>
             normalized_semantic_payload_symbol_contract_type_entry_keys(),
         symbol_contract_type_scalar_value_kinds =>
@@ -617,7 +617,7 @@ sub normalized_semantic_payload_presence_key_family_map {
         forward_ir_intent_hir_symbol_contract_package_import_entry_value_kinds =>
             normalized_semantic_payload_forward_ir_intent_hir_symbol_contract_package_import_entry_value_kinds(),
         forward_ir_intent_hir_symbol_contract_package_import_entry_value_meaning =>
-            normalized_semantic_payload_forward_ir_intent_hir_symbol_contract_package_import_entry_value_meaning(),
+            [normalized_semantic_payload_forward_ir_intent_hir_symbol_contract_package_import_entry_value_meaning()],
         forward_ir_intent_hir_symbol_contract_type_entry_keys =>
             normalized_semantic_payload_forward_ir_intent_hir_symbol_contract_type_entry_keys(),
         forward_ir_intent_hir_symbol_contract_type_scalar_value_kinds =>

@@ -901,9 +901,9 @@ subtest 'fresh normalized semantic grouped maps stay aligned with helper familie
         normalized_semantic_payload_symbol_contract_package_import_entry_value_kinds(),
         'symbol-contract package-import entry value-kind family matches helper',
     );
-    is(
+    is_deeply(
         $family_map->{symbol_contract_package_import_entry_value_meaning},
-        normalized_semantic_payload_symbol_contract_package_import_entry_value_meaning(),
+        [normalized_semantic_payload_symbol_contract_package_import_entry_value_meaning()],
         'symbol-contract package-import entry value meaning family matches helper',
     );
     is_deeply(
@@ -911,9 +911,9 @@ subtest 'fresh normalized semantic grouped maps stay aligned with helper familie
         normalized_semantic_payload_forward_ir_intent_hir_symbol_contract_package_import_entry_value_kinds(),
         'forward-IR intent-HIR symbol-contract package-import entry value-kind family matches helper',
     );
-    is(
+    is_deeply(
         $family_map->{forward_ir_intent_hir_symbol_contract_package_import_entry_value_meaning},
-        normalized_semantic_payload_forward_ir_intent_hir_symbol_contract_package_import_entry_value_meaning(),
+        [normalized_semantic_payload_forward_ir_intent_hir_symbol_contract_package_import_entry_value_meaning()],
         'forward-IR intent-HIR symbol-contract package-import entry value meaning family matches helper',
     );
 

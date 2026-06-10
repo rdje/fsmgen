@@ -53,14 +53,15 @@ FSM
         fsm_module => $fsm_module,
         intent_hir => $intent_hir,
     );
+    my $pipeline_for_full = new_pipeline();
+    my $result = $pipeline_for_full->generate_hdl_from_file($fsm_path);
+
     my $rebuilt_structural_rtl_ir = FSM::IR::StructuralRTLIRBuilder->build_from_generated_module_info(
         module_info => $module_info,
         fsm_module => $fsm_module,
+        hdl_generator => $pipeline_for_full->{hdl_generator},
         target_language => 'systemverilog',
     );
-
-    my $pipeline_for_full = new_pipeline();
-    my $result = $pipeline_for_full->generate_hdl_from_file($fsm_path);
 
     is_deeply(
         $rebuilt_structural_rtl_ir->as_hashref,

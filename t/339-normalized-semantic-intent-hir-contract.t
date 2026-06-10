@@ -248,7 +248,7 @@ subtest 'contract exposes the bounded normalized semantic intent-hir object' => 
         );
         is_deeply(
             $contract->{presence_key_family_map}{$field},
-            $intent_hir_keys,
+            _family_map_expected($field, $intent_hir_keys),
             "presence family map publishes $field",
         );
         is_deeply(
@@ -260,3 +260,9 @@ subtest 'contract exposes the bounded normalized semantic intent-hir object' => 
 };
 
 done_testing();
+
+sub _family_map_expected {
+    my ($field, $expected) = @_;
+    return [$expected] if ($field || '') =~ /package_import_entry_value_meaning\z/;
+    return $expected;
+}

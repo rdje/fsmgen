@@ -9,10 +9,12 @@ use IPC::Cmd qw(run);
 use FindBin;
 
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
+use lib File::Spec->catdir($FindBin::Bin, 'lib');
 
 use FSM::Pipeline::HDLGenerator;
 use FSM::Composition::Plan;
 use FSM::Composition::Net;
+use FSM::Test::CompositionNets qw(assert_only_carrier_and_shared_dp_sink_nets);
 
 subtest 'mixed fsmc plus rtl composition supports declared connect-by-name on top ports' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
@@ -78,9 +80,12 @@ RTLIF
     isa_ok($result->{composition_plan}, 'FSM::Composition::Plan');
     is($result->{composition_plan}->lane, 'C4', 'mixed fsmc plus rtl by-name composition uses C4 lane');
     is(scalar(@{$result->{composition_plan}->links}), 3, 'mixed by-name plan preserves one explicit link plus two by-name links');
-    is(scalar(@{$result->{composition_plan}->nets}), 1, 'mixed by-name plan still creates one deterministic internal net');
-    isa_ok($result->{composition_plan}->nets->[0], 'FSM::Composition::Net');
-    is($result->{composition_plan}->nets->[0]->name, 'comp_link_producer_output_data', 'mixed by-name plan reuses deterministic internal net naming');
+my ($carrier_nets) = assert_only_carrier_and_shared_dp_sink_nets(
+    $result->{composition_plan}->nets,
+    ['comp_link_producer_output_data'],
+    'mixed fsmc plus rtl by-name plan',
+);
+isa_ok($carrier_nets->[0], 'FSM::Composition::Net');
 
     my %producer_bindings = map { $_->{port_name} => $_->{signal_name} } @{$result->{composition_plan}->instances->[0]->port_bindings};
     my %rtl_bindings = map { $_->{port_name} => $_->{signal_name} } @{$result->{composition_plan}->instances->[1]->port_bindings};

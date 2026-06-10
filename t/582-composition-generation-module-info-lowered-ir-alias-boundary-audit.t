@@ -9,8 +9,10 @@ use FindBin;
 use Scalar::Util qw(refaddr);
 
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
+use lib File::Spec->catdir($FindBin::Bin, 'lib');
 
 use FSM::Pipeline::HDLGenerator;
+use FSM::Test::CompositionNets qw(carrier_nets net_name);
 
 subtest 'composition generation separates module_info lowered summaries from embedded lowered_rtl_ir mirrors' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
@@ -94,7 +96,7 @@ FSM
     $module_info->{instance_names}[0] = 'mutated_summary_instance';
 
     is_deeply(
-        $module_info->{lowered_rtl_ir}{internal_net_names},
+        [map { net_name($_) } @{carrier_nets(map { +{ name => $_ } } @{$module_info->{lowered_rtl_ir}{internal_net_names}})}],
         ['comp_link_producer_output_data'],
         'mutating module_info internal_net_names summary does not contaminate embedded lowered_rtl_ir internal_net_names',
     );
@@ -110,7 +112,7 @@ FSM
     $second_module_info->{lowered_rtl_ir}{instance_names}[0] = 'mutated_embedded_instance';
 
     is_deeply(
-        $second_module_info->{internal_net_names},
+        [map { net_name($_) } @{carrier_nets(map { +{ name => $_ } } @{$second_module_info->{internal_net_names}})}],
         ['comp_link_producer_output_data'],
         'mutating embedded lowered_rtl_ir internal_net_names does not contaminate module_info internal_net_names summary',
     );

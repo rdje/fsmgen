@@ -9,9 +9,11 @@ use IPC::Cmd qw(run);
 use FindBin;
 
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
+use lib File::Spec->catdir($FindBin::Bin, 'lib');
 
 use FSM::Pipeline::HDLGenerator;
 use FSM::Composition::Plan;
+use FSM::Test::CompositionNets qw(assert_only_carrier_and_shared_dp_sink_nets);
 
 my $tempdir = tempdir(CLEANUP => 1);
 my $c2_path = File::Spec->catfile($tempdir, 'implicit_ports_generated_top.fsm');
@@ -246,8 +248,11 @@ subtest 'explicit-link C2 can omit ?ports entirely when the top boundary is infe
     ok(!$ports{result_data}, 'child-local output name is not surfaced when the explicit top link renames it');
     ok(!$ports{payload}, 'explicit child-to-child carrier stays internal without ?ports');
 
-    is(scalar(@{$result->{composition_plan}->nets}), 1, 'one internal carrier net is still inferred');
-    is($result->{composition_plan}->nets->[0]->name, 'comp_link_producer_payload', 'explicit child-to-child carrier still uses the deterministic generated net');
+    assert_only_carrier_and_shared_dp_sink_nets(
+        $result->{composition_plan}->nets,
+        ['comp_link_producer_payload'],
+        'explicit-link C2 without explicit ports',
+    );
 
     my %instance_bindings;
     for my $instance (@{$result->{composition_plan}->instances}) {

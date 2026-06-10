@@ -9,10 +9,12 @@ use IPC::Cmd qw(run);
 use FindBin;
 
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
+use lib File::Spec->catdir($FindBin::Bin, 'lib');
 
 use FSM::Pipeline::HDLGenerator;
 use FSM::Composition::Net;
 use FSM::Composition::Plan;
+use FSM::Test::CompositionNets qw(assert_only_carrier_and_shared_dp_sink_nets);
 
 subtest 'multiple generated children plus rtl children support declared connect-by-name' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
@@ -94,14 +96,13 @@ FSM
     is(scalar(@{$result->{composition_plan}->links}), 5, 'mixed by-name plan preserves explicit links and declared by-name links together');
 
     my @nets = @{$result->{composition_plan}->nets};
-    is(scalar(@nets), 2, 'mixed by-name plan still materializes the expected deterministic internal nets');
-    isa_ok($nets[0], 'FSM::Composition::Net');
-    isa_ok($nets[1], 'FSM::Composition::Net');
-    is_deeply(
-        [map { $_->name } @nets],
+    my ($carrier_nets) = assert_only_carrier_and_shared_dp_sink_nets(
+        \@nets,
         ['comp_link_producer_output_data', 'comp_link_router_route_data'],
         'mixed by-name plan keeps deterministic carrier naming across generated and rtl children',
     );
+    isa_ok($carrier_nets->[0], 'FSM::Composition::Net');
+    isa_ok($carrier_nets->[1], 'FSM::Composition::Net');
 
     my %producer_bindings = map { $_->{port_name} => $_->{signal_name} } @{$result->{composition_plan}->instances->[0]->port_bindings};
     my %router_bindings = map { $_->{port_name} => $_->{signal_name} } @{$result->{composition_plan}->instances->[1]->port_bindings};

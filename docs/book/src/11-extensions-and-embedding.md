@@ -2305,9 +2305,14 @@ package-name entry metadata for `semantic.symbol_contract.package_imports` and
 `semantic.forward_ir.intent_hir.symbol_contract.package_imports`.
 `package_import_entry_value_kinds` is `[scalar_package_name]`, and
 `package_import_entry_value_meaning` is `authored package-import package-name
-string`. It does not expose raw `FSM::Package::Spec` internals, package source
-AST, package symbols, VHDL package declaration/emission, or full normalized
-semantic export stabilization.
+string` on the top-level contract surface. Inside grouped
+`presence_key_family_map` discovery maps, the corresponding
+`*_package_import_entry_value_meaning` entries are single-element arrays
+containing that same meaning string, preserving the invariant that every
+grouped family-map value is array-valued. It does not expose raw
+`FSM::Package::Spec` internals, package source AST, package symbols, VHDL
+package declaration/emission, or full normalized semantic export
+stabilization.
 
 For example, capability-manifest and report-contract consumers can discover
 the package-import list shape without traversing package internals:
@@ -2318,10 +2323,20 @@ the package-import list shape without traversing package internals:
     "scalar_package_name"
   ],
   "symbol_contract_package_import_entry_value_meaning": "authored package-import package-name string",
+  "presence_key_family_map": {
+    "symbol_contract_package_import_entry_value_meaning": [
+      "authored package-import package-name string"
+    ]
+  },
   "success_forward_ir_intent_hir_symbol_contract_package_import_entry_value_kinds": [
     "scalar_package_name"
   ],
-  "success_forward_ir_intent_hir_symbol_contract_package_import_entry_value_meaning": "authored package-import package-name string"
+  "success_forward_ir_intent_hir_symbol_contract_package_import_entry_value_meaning": "authored package-import package-name string",
+  "semantic_presence_key_family_map": {
+    "forward_ir_intent_hir_symbol_contract_package_import_entry_value_meaning": [
+      "authored package-import package-name string"
+    ]
+  }
 }
 ```
 
