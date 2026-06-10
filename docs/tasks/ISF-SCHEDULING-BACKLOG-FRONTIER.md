@@ -202,6 +202,13 @@ Goal: Select and implement the first exact lifetime rule beyond the current
 mandatory repeat re-entry drain model, or close the first candidate with a
 targeted diagnostic if the hardware contract is not yet safe.
 
+Handoff:
+
+- 2026-06-10: user redirected full-time implementation focus to
+  `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE`. This leaf remains pending and
+  will be addressed through that tree's typed outstanding-child lifetime
+  effects instead of another one-off syntax combination gate.
+
 Acceptance:
 
 - Audit current outstanding generated-child diagnostics around undrained spawn
@@ -306,4 +313,5 @@ Acceptance:
   ISF-SCHEDULING-BACKLOG-FRONTIER.1: track scheduling backlog`
 - `ISF-SCHEDULING-BACKLOG-FRONTIER.2.1`: `fedfde19
   ISF-SCHEDULING-BACKLOG-FRONTIER.2.1: close direct on override boundary`
-- Pending: `ISF-SCHEDULING-BACKLOG-FRONTIER.3.1`.
+- `ISF-SCHEDULING-BACKLOG-FRONTIER.3.1`: `9c87ecc4
+  ISF-SCHEDULING-BACKLOG-FRONTIER.3.1: ship while-when repeat local do`
