@@ -7,7 +7,7 @@ use feature qw(signatures postderef);
 no warnings 'experimental::signatures';
 use POSIX qw(log);
 use Carp qw(confess);
-use Scalar::Util qw(refaddr);
+use Scalar::Util qw(refaddr weaken);
 use FSM::Package::IntegerLiteralSupport;
 use FSM::Scheduler::ISF::ControlFlowEffects;
 
@@ -2784,7 +2784,7 @@ sub _validate_transaction_clause_domain_refs {
                 $domain,
                 $transaction_domains->{$target},
                 'transaction',
-            );
+            ) unless _control_flow_effects_prove_same_domain_activation($actor, $tx->{name}, $target);
             if (my $activation_domain = _activation_domain_from_clause($clause, $tx->{name}, $label)) {
                 _validate_same_domain_target(
                     "$context $keyword instance domain '$activation_domain'",
@@ -2883,10 +2883,18 @@ sub _control_flow_effect_check($actor) {
     my $key = refaddr($actor);
     confess "ISF control-flow effect check cache expects an actor hash reference\n"
         unless defined($key);
-    return $CONTROL_FLOW_EFFECT_CHECK_CACHE{$key}
-        if exists $CONTROL_FLOW_EFFECT_CHECK_CACHE{$key};
-    return $CONTROL_FLOW_EFFECT_CHECK_CACHE{$key} =
-        FSM::Scheduler::ISF::ControlFlowEffects->new()->check_actor($actor);
+    if (my $cached = $CONTROL_FLOW_EFFECT_CHECK_CACHE{$key}) {
+        return $cached->{check}
+            if defined($cached->{actor}) && $cached->{actor} == $actor;
+    }
+
+    my $entry = {
+        actor => $actor,
+        check => FSM::Scheduler::ISF::ControlFlowEffects->new()->check_actor($actor),
+    };
+    weaken($entry->{actor});
+    $CONTROL_FLOW_EFFECT_CHECK_CACHE{$key} = $entry;
+    return $entry->{check};
 }
 
 sub _control_flow_effects_prove_activation_crossing($actor, $transaction_name, $target) {
@@ -2898,6 +2906,22 @@ sub _control_flow_effects_prove_activation_crossing($actor, $transaction_name, $
         next unless ($tx->{name} // '') eq $transaction_name;
         for my $proof (@{$tx->{proofs} || []}) {
             next unless ($proof->{code} // '') eq 'activation_crossing_covers_child_start';
+            next unless ($proof->{child} // '') eq $target;
+            return 1;
+        }
+    }
+    return 0;
+}
+
+sub _control_flow_effects_prove_same_domain_activation($actor, $transaction_name, $target) {
+    return 0 unless defined($transaction_name) && !ref($transaction_name);
+    return 0 unless defined($target) && !ref($target);
+
+    my $check = _control_flow_effect_check($actor);
+    for my $tx (@{$check->{transactions} || []}) {
+        next unless ($tx->{name} // '') eq $transaction_name;
+        for my $proof (@{$tx->{proofs} || []}) {
+            next unless ($proof->{code} // '') eq 'activation_target_is_same_domain';
             next unless ($proof->{child} // '') eq $target;
             return 1;
         }

@@ -10,10 +10,10 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.7.1` (this commit) — routed covered cross-domain blocking `do` validator coverage through the effect-checker proof; public accepted/rejected behavior unchanged.
-- active_work_unit: `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.7.2` — select and migrate the next narrow validator gate through region/effect proof without broad behavior widening.
-- recently_done: `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.7.1`; `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.6`; `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.5`; `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.4`; `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.3`; `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.2.1`; `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.1`; `ISF-SCHEDULING-BACKLOG-FRONTIER.3.1`; `ISF-SCHEDULING-BACKLOG-FRONTIER.2.1`; `ISF-SCHEDULING-BACKLOG-FRONTIER.1`; `CI-SHARED-DP-SURFACE-REPAIR.1`; `COMPOSITION-T84-NET-COUNT-REPAIR.1`.
-- in_flight_uncommitted: none expected after the `.7.1` commit; unrelated untracked `fx/` intentionally left alone.
+- latest_commit: `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.7.2` (this commit) — routed same-domain child-target validation for `do`/`spawn` through the effect-checker proof; public accepted/rejected behavior unchanged.
+- active_work_unit: `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.7.3` — select and migrate the next narrow validator gate after same-domain target validation.
+- recently_done: `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.7.2`; `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.7.1`; `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.6`; `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.5`; `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.4`; `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.3`; `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.2.1`; `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.1`; `ISF-SCHEDULING-BACKLOG-FRONTIER.3.1`; `ISF-SCHEDULING-BACKLOG-FRONTIER.2.1`; `ISF-SCHEDULING-BACKLOG-FRONTIER.1`; `CI-SHARED-DP-SURFACE-REPAIR.1`.
+- in_flight_uncommitted: none expected after the `.7.2` commit; unrelated untracked `fx/` intentionally left alone.
 - blockers: none.
 
 ## Notes

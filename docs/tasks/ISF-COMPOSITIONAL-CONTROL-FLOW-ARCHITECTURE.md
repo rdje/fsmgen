@@ -6,7 +6,7 @@ Roadmap lane: R14 / ISF compositional control-flow and activation architecture
 
 Created: 2026-06-10
 
-Current frontier: `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.7.2`
+Current frontier: `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.7.3`
 
 ## Goal
 
@@ -203,7 +203,7 @@ Acceptance:
 
 #### ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.7.2 — Next Validator Gate Selection
 
-Status: active
+Status: done
 
 Goal: Select and migrate the next narrow validator gate that can be proven by
 the current region/effect model without broad behavior widening.
@@ -215,6 +215,34 @@ Acceptance:
   decision, or the leaf first adds that proof in shadow mode.
 - Public diagnostics and accepted/rejected behavior remain stable unless the
   leaf explicitly selects one newly accepted combination.
+
+Result:
+
+- Selected the direct child-target same-domain validator check for `do` and
+  `spawn` clauses.
+- The validator now skips that direct target-domain check only when
+  `ControlFlowEffects` proves `activation_target_is_same_domain`.
+- Activation-domain metadata remains checked independently, so mismatched
+  `(domain ...)` metadata and uncovered cross-domain activations keep their
+  previous public diagnostics.
+- The effect-check cache now rejects stale `refaddr` slots unless the cached
+  weak actor reference still identifies the live actor.
+
+#### ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.7.3 — Next Validator Gate Selection
+
+Status: active
+
+Goal: Select and migrate the next narrow validator gate after same-domain
+target validation, still preserving public behavior unless one exact
+combination is explicitly selected for widening.
+
+Acceptance:
+
+- The selected gate has positive and negative fixtures before migration.
+- The region/effect checker owns the proof or violation used by the migrated
+  decision.
+- Existing accepted/rejected behavior remains stable unless this leaf records
+  an exact newly accepted combination before implementation.
 
 ### ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.8 — Combination Enablement
 
@@ -335,6 +363,33 @@ Acceptance:
   `knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl
   t/1414-docs-relative-paths-audit.t`; `mdbook build docs/book`; and
   `git diff --check` pass.
+- 2026-06-10 (`.7.2`): migrated the same-domain child-target validator
+  decision for `do`/`spawn` clauses from a direct domain comparison to the
+  `ControlFlowEffects` proof `activation_target_is_same_domain`. Activation
+  instance-domain metadata remains separately checked, so mismatched
+  `(domain ...)` annotations and uncovered cross-domain activations keep their
+  previous diagnostics. A focused negative test also caught and fixed a stale
+  `refaddr` effect-check cache hazard by requiring the cached weak actor
+  reference to still identify the live actor. `perl -Iperl -c
+  perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c
+  t/1426-isf-control-flow-same-domain-validator-effect-migration.t`; `prove
+  -Iperl t/1247-isf-clock-domain-partition.t
+  t/1387-isf-cross-domain-activation-handshake-lowering.t
+  t/1425-isf-control-flow-validator-effect-migration.t
+  t/1426-isf-control-flow-same-domain-validator-effect-migration.t`; `prove
+  -Iperl t/1215-isf-spawn-parameter-binding.t`; `prove -Iperl
+  t/1419-isf-control-flow-effect-inventory.t
+  t/1421-isf-control-flow-effect-checks.t
+  t/1422-isf-control-flow-child-plan.t
+  t/1423-isf-control-flow-lifetime-checks.t
+  t/1424-isf-control-flow-domain-binding-effects.t
+  t/1425-isf-control-flow-validator-effect-migration.t
+  t/1426-isf-control-flow-same-domain-validator-effect-migration.t`; `prove
+  -Iperl t/1250-isf-spec-focused-test-index-audit.t`; `./bin/ci-regression
+  isf --no-book` (Files=294, Tests=2133); `scripts/check_memory_architecture.sh`;
+  `knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl
+  t/1414-docs-relative-paths-audit.t`; `mdbook build docs/book`; and
+  `git diff --check` pass.
 - 2026-06-10 (`.4`): added private `plan_actor` / `plan_inventory` child-plan
   projection derived from the shadow effect list. The plan records local child
   start/done wiring requirements, generated child instance plans, and sync
@@ -384,5 +439,7 @@ Acceptance:
   `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.5: refine lifetime proofs`.
 - `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.6`: `1d61afc7`
   `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.6: model domain binding cdc effects`.
-- `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.7.1`: this commit,
+- `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.7.1`: `d392930d`,
   `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.7.1: route xdomain do through effects`.
+- `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.7.2`: this commit,
+  `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.7.2: route same-domain activations through effects`.
