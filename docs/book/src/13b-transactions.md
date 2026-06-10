@@ -148,7 +148,8 @@ parameter override. Transaction-local `params` on that transaction remain
 definition defaults. If an author needs a statically specialized child
 instance, use a generated activation form (`spawn`, parameterized blocking
 `do`, or parameterized rule `trigger`) and pass runtime data through ports or
-bindings.
+bindings. The optional `(on SIGNAL as NAME)` activation label only names the
+entry state for checks; it still is not a generated activation site.
 
 **Timing**: 0 active cycles (waits). Fires in 1 cycle when condition is met.
 

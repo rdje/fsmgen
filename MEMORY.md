@@ -10,10 +10,10 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `ISF-SCHEDULING-BACKLOG-FRONTIER.1` (this commit) — activated the R14 scheduling/control-flow frontier that task-tree owns all seven user-requested deferred bullets and selects the direct `(on ...)` activation-override contract slice first.
-- active_work_unit: `ISF-SCHEDULING-BACKLOG-FRONTIER.2.1` — audit direct `(on ...)` override-like forms, then either ship the smallest explicit generated activation contract or tighten the fail-closed diagnostic/docs if direct `(on ...)` cannot carry call-site values.
-- recently_done: `ISF-SCHEDULING-BACKLOG-FRONTIER.1`; `CI-SHARED-DP-SURFACE-REPAIR.1`; `COMPOSITION-T84-NET-COUNT-REPAIR.1`; `MDBOOK-CODEBASE-SYNC-AUDIT-JUN07.1`; `BIN-FSMGEN-IMPORT-TREE-JUN07-REFRESH.1`; `DOC-PATH-RELATIVE-KNOWLEDGE-MAP.1`; `ARCHITECTURE-DEBT-FRONTIER.3`; `ARCHITECTURE-DEBT-FRONTIER.2.1`; `ARCHITECTURE-DEBT-FRONTIER.2`; `ARCHITECTURE-DEBT-FRONTIER.1`; `BACKEND-API-VALIDATION-FRONTIER.132`; `BACKEND-API-VALIDATION-FRONTIER.131.1`.
-- in_flight_uncommitted: none expected after the task-tree activation commit; unrelated untracked `fx/` intentionally left alone.
+- latest_commit: `ISF-SCHEDULING-BACKLOG-FRONTIER.2.1` (this commit) — closed direct `(on ...)` activation overrides as the shipped fail-closed entry-guard boundary, added labeled-entry regression coverage, and synced the book/spec wording.
+- active_work_unit: `ISF-SCHEDULING-BACKLOG-FRONTIER.3.1` — implement or close the narrow `while -> when -> repeat -> local do` loop-plus-branch repeat-body activation slice; generated/spawn/CDC/extra-loop variants remain out of scope unless explicitly proven.
+- recently_done: `ISF-SCHEDULING-BACKLOG-FRONTIER.2.1`; `ISF-SCHEDULING-BACKLOG-FRONTIER.1`; `CI-SHARED-DP-SURFACE-REPAIR.1`; `COMPOSITION-T84-NET-COUNT-REPAIR.1`; `MDBOOK-CODEBASE-SYNC-AUDIT-JUN07.1`; `BIN-FSMGEN-IMPORT-TREE-JUN07-REFRESH.1`; `DOC-PATH-RELATIVE-KNOWLEDGE-MAP.1`; `ARCHITECTURE-DEBT-FRONTIER.3`; `ARCHITECTURE-DEBT-FRONTIER.2.1`; `ARCHITECTURE-DEBT-FRONTIER.2`; `ARCHITECTURE-DEBT-FRONTIER.1`; `BACKEND-API-VALIDATION-FRONTIER.132`.
+- in_flight_uncommitted: none expected after the direct-on boundary commit; unrelated untracked `fx/` intentionally left alone.
 - blockers: none.
 
 ## Notes

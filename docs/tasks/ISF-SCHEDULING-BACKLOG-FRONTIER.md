@@ -6,7 +6,7 @@ Roadmap lane: R14 / ISF scheduling, activation, CDC, ATL, actor-network, and gen
 
 Created: 2026-06-10
 
-Current frontier: `ISF-SCHEDULING-BACKLOG-FRONTIER.2.1`
+Current frontier: `ISF-SCHEDULING-BACKLOG-FRONTIER.3.1`
 
 ## Goal
 
@@ -90,7 +90,7 @@ Evidence:
 
 ### ISF-SCHEDULING-BACKLOG-FRONTIER.2 — Direct `(on ...)` Activation Parameter Overrides
 
-Status: active
+Status: done
 
 Goal: Resolve the deferred question of parameter overrides on direct
 `(on ...)` entries, where the current surface is an entry guard rather than a
@@ -98,7 +98,7 @@ generated child activation.
 
 #### ISF-SCHEDULING-BACKLOG-FRONTIER.2.1 — Direct-On Override Contract Slice
 
-Status: pending
+Status: done
 
 Goal: Audit the parser/lowerer/runtime contract for override-like direct
 `(on ...)` forms and make one signoff-level change: either ship the smallest
@@ -118,9 +118,21 @@ Acceptance:
 - Update `docs/book/` and any public spec text impacted by the result.
 - Run focused ISF tests and the memory-architecture gate before commit.
 
+Evidence:
+
+- Current behavior already rejects direct `(on ... (params ...))` before
+  scheduled `.fsm` emission with the targeted entry-guard/generated-activation
+  diagnostic.
+- Added regression coverage for the labeled-entry shape
+  `(on start as accepting (params ...))`; it hits the same diagnostic because
+  `as NAME` names the entry state for checks only.
+- Synced `docs/book/src/13b-transactions.md`,
+  `docs/book/src/13h-lowering-reference.md`,
+  `docs/book/src/14-feature-backlog.md`, and `docs/ISF_SPEC.md`.
+
 ### ISF-SCHEDULING-BACKLOG-FRONTIER.3 — Deeper Nested Repeat-Body `do` / `spawn`
 
-Status: pending
+Status: active
 
 Goal: Extend or close the remaining deeper/general nested repeat-body child
 activation combinations beyond the currently covered local, generated, loop,
@@ -132,6 +144,29 @@ Acceptance:
   repeat-contained branch/loop/control body.
 - Prove no regression to current repeat drain/re-entry guarantees.
 - Sync the 13d control-flow examples and backlog matrix.
+
+#### ISF-SCHEDULING-BACKLOG-FRONTIER.3.1 — Loop-Then-When Repeat Local `do`
+
+Status: pending
+
+Goal: Implement or close the first loop-plus-branch repeat-body activation
+shape: a plain local `(do child)` inside a `(repeat ...)` reached through one
+`while` body and one nested `when` body, e.g.
+`(while c1 (when c2 (repeat n (do worker))))`.
+
+Acceptance:
+
+- Reproduce the current `loop-contained repeat-body do remains deferred`
+  rejection from `t/1379-isf-loop-contained-repeat-body-local-do.t`.
+- If the lowering path is viable, accept the `while -> when -> repeat -> local
+  do` shape and prove the schedule order: loop pre-test, branch guard,
+  repeat init/check, local child start, fresh child done wait, repeat re-entry,
+  then loop re-test.
+- Keep generated `do`, `spawn`, cross-domain, extra loop nesting, `until`, and
+  switch-containing variants fail-closed unless this leaf explicitly proves a
+  smaller same-contract generalization.
+- Sync `docs/book/src/13d-control-flow.md`, the feature backlog, and public
+  audits/spec text impacted by the result.
 
 ### ISF-SCHEDULING-BACKLOG-FRONTIER.4 — Outstanding-Child Lifetime Rules
 
@@ -205,7 +240,17 @@ Acceptance:
 - 2026-06-10 (`.1`): task-tree owner created; implementation not started yet.
   `scripts/check_memory_architecture.sh`, `git diff --check`, and
   `prove -Iperl t/1414-docs-relative-paths-audit.t` pass.
+- 2026-06-10 (`.2.1`): direct `(on ...)` activation override boundary
+  reverified and labeled-entry regression added. `prove -Iperl
+  t/1195-isf-sample-clause-boundary.t
+  t/1250-isf-spec-focused-test-index-audit.t
+  t/1303-isf-public-live-book-paths-audit.t
+  t/1305-isf-book-feature-matrix-audit.t
+  t/1256-feature-backlog-status-audit.t`, `mdbook build docs/book`,
+  `scripts/check_memory_architecture.sh`, and `git diff --check` pass.
 
 ## Commit Log
 
-- Pending: `ISF-SCHEDULING-BACKLOG-FRONTIER.1`.
+- `ISF-SCHEDULING-BACKLOG-FRONTIER.1`: `0cf6722c
+  ISF-SCHEDULING-BACKLOG-FRONTIER.1: track scheduling backlog`
+- Pending: `ISF-SCHEDULING-BACKLOG-FRONTIER.2.1`.

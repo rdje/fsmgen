@@ -278,7 +278,9 @@ instance. It does not accept `(params ...)`; nested body clauses are limited to
 `(sample port as name)`. Unsupported `(params ...)` body clauses fail with a
 diagnostic that names the entry-guard/generated-activation boundary. Static
 specialization must happen through generated activation forms such as `spawn`,
-parameterized blocking `do`, or parameterized rule `trigger`.
+parameterized blocking `do`, or parameterized rule `trigger`. The optional
+`(on SIGNAL as NAME)` activation label only gives the entry state a name for
+checks; it does not create a parameterizable activation instance.
 
 ## `(drive name args...)` -> One State + Non-State DT
 

@@ -2166,7 +2166,9 @@ generated activation-site parameter override. It must not be interpreted as
 either a runtime assignment or a static specialization site. Authors who need
 runtime-varying values at entry should sample or read ports; authors who need
 static specialization should move the reusable work behind a generated
-activation site.
+activation site. The optional `(on SIGNAL as NAME)` activation label names the
+entry state for checks only; it does not create a parameterizable activation
+instance.
 
 Current transaction clauses:
 - `(on port body...)`
