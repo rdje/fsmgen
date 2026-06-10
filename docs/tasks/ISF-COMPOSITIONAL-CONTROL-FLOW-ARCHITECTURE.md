@@ -6,7 +6,7 @@ Roadmap lane: R14 / ISF compositional control-flow and activation architecture
 
 Created: 2026-06-10
 
-Current frontier: `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.4`
+Current frontier: `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.5`
 
 ## Goal
 
@@ -131,7 +131,7 @@ Acceptance:
 
 ### ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.4 — Child Discovery And Generated Instance Planning
 
-Status: active
+Status: done
 
 Goal: Derive child-action discovery, local start/done wiring requirements, and
 generated-child instance planning from effects instead of parallel ad hoc walks.
@@ -144,7 +144,7 @@ Acceptance:
 
 ### ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.5 — Outstanding-Child Lifetime Contract
 
-Status: pending
+Status: active
 
 Goal: Move outstanding-child lifetime rules into the effect checker.
 
@@ -236,6 +236,23 @@ Acceptance:
   `scripts/check_memory_architecture.sh`; `prove -Iperl
   t/1414-docs-relative-paths-audit.t`; `mdbook build docs/book`; and
   `git diff --check` pass.
+- 2026-06-10 (`.4`): added private `plan_actor` / `plan_inventory` child-plan
+  projection derived from the shadow effect list. The plan records local child
+  start/done wiring requirements, generated child instance plans, and sync
+  points, and focused tests compare that private plan against current emitted
+  `.fsm` / `_top` artifacts for local `do`, generated conditional `do`, repeat
+  generated `do`, and spawn fan-out. No emitted artifact path consumes the plan
+  yet. `perl -Iperl -c perl/FSM/Scheduler/ISF/ControlFlowEffects.pm`; `perl
+  -Iperl -c t/1422-isf-control-flow-child-plan.t`; `prove -Iperl
+  t/1422-isf-control-flow-child-plan.t`; `prove -Iperl
+  t/1419-isf-control-flow-effect-inventory.t
+  t/1421-isf-control-flow-effect-checks.t
+  t/1422-isf-control-flow-child-plan.t`; `prove -Iperl
+  t/1250-isf-spec-focused-test-index-audit.t`; `./bin/ci-regression isf
+  --no-book` (Files=294, Tests=2133); `knowledge-map/scripts/check_knowledge_map.sh`;
+  `scripts/check_memory_architecture.sh`; `prove -Iperl
+  t/1414-docs-relative-paths-audit.t`; `mdbook build docs/book`; and
+  `git diff --check` pass.
 - 2026-06-10 (`.3`): added private `check_actor` / `check_inventory`
   invariant checks over the shadow control-flow/effect inventory. The checker
   returns structured proofs and violations for outstanding-child lifetime,
@@ -260,5 +277,7 @@ Acceptance:
   `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.1: own uniform activation architecture`.
 - `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.2.1`: `4f6cde86`
   `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.2.1: add shadow effect inventory`.
-- `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.3`: this commit,
+- `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.3`: `b06197e4`
   `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.3: add shadow invariant checks`.
+- `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.4`: this commit,
+  `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.4: derive child plan from effects`.

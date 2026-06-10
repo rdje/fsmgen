@@ -10,10 +10,10 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.3` (this commit) — added private shadow invariant checks over control-flow/effect proofs; no ISF lowering/report behavior widened.
-- active_work_unit: `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.4` — derive child discovery and generated instance planning from effects without changing emitted artifacts.
-- recently_done: `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.3`; `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.2.1`; `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.1`; `ISF-SCHEDULING-BACKLOG-FRONTIER.3.1`; `ISF-SCHEDULING-BACKLOG-FRONTIER.2.1`; `ISF-SCHEDULING-BACKLOG-FRONTIER.1`; `CI-SHARED-DP-SURFACE-REPAIR.1`; `COMPOSITION-T84-NET-COUNT-REPAIR.1`; `MDBOOK-CODEBASE-SYNC-AUDIT-JUN07.1`; `BIN-FSMGEN-IMPORT-TREE-JUN07-REFRESH.1`; `DOC-PATH-RELATIVE-KNOWLEDGE-MAP.1`; `ARCHITECTURE-DEBT-FRONTIER.3`.
-- in_flight_uncommitted: none expected after the `.3` commit; unrelated untracked `fx/` intentionally left alone.
+- latest_commit: `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.4` (this commit) — derived private child discovery/generated instance planning from shadow effects; no emitted artifacts consume it yet.
+- active_work_unit: `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.5` — move outstanding-child lifetime rules into the shadow effect checker while preserving current behavior.
+- recently_done: `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.4`; `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.3`; `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.2.1`; `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.1`; `ISF-SCHEDULING-BACKLOG-FRONTIER.3.1`; `ISF-SCHEDULING-BACKLOG-FRONTIER.2.1`; `ISF-SCHEDULING-BACKLOG-FRONTIER.1`; `CI-SHARED-DP-SURFACE-REPAIR.1`; `COMPOSITION-T84-NET-COUNT-REPAIR.1`; `MDBOOK-CODEBASE-SYNC-AUDIT-JUN07.1`; `BIN-FSMGEN-IMPORT-TREE-JUN07-REFRESH.1`; `DOC-PATH-RELATIVE-KNOWLEDGE-MAP.1`.
+- in_flight_uncommitted: none expected after the `.4` commit; unrelated untracked `fx/` intentionally left alone.
 - blockers: none.
 
 ## Notes

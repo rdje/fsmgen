@@ -5800,6 +5800,7 @@ Focused tests:
 - [t/1418-isf-property-window-range.t](../t/1418-isf-property-window-range.t)
 - [t/1419-isf-control-flow-effect-inventory.t](../t/1419-isf-control-flow-effect-inventory.t)
 - [t/1421-isf-control-flow-effect-checks.t](../t/1421-isf-control-flow-effect-checks.t)
+- [t/1422-isf-control-flow-child-plan.t](../t/1422-isf-control-flow-child-plan.t)
 
 ## 12. Explicitly Deferred
 

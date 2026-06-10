@@ -57,6 +57,38 @@ sub check_inventory($self, $inventory) {
     };
 }
 
+sub plan_actor($self, $actor) {
+    return $self->plan_inventory($self->inventory_actor($actor));
+}
+
+sub plan_inventory($self, $inventory) {
+    confess "ControlFlowEffects planner expects an inventory hash reference\n"
+        unless ref($inventory) eq 'HASH';
+    confess "ControlFlowEffects planner inventory is missing transactions array\n"
+        unless ref($inventory->{transactions}) eq 'ARRAY';
+
+    my @transactions = map { _plan_transaction($_) } @{$inventory->{transactions}};
+    my @generated_instances = map { @{$_->{generated_instances}} } @transactions;
+    my @local_child_wires = map { @{$_->{local_child_wires}} } @transactions;
+    my @sync_points = map { @{$_->{sync_points}} } @transactions;
+
+    return {
+        model                   => 'isf_control_flow_child_plan_v1',
+        actor_name              => $inventory->{actor_name},
+        generated_child_targets => $inventory->{generated_child_targets} || [],
+        generated_instances     => \@generated_instances,
+        local_child_wires       => \@local_child_wires,
+        sync_points             => \@sync_points,
+        transactions            => \@transactions,
+        summary                 => {
+            transaction_count        => scalar(@transactions),
+            generated_instance_count => scalar(@generated_instances),
+            local_child_wire_count   => scalar(@local_child_wires),
+            sync_point_count         => scalar(@sync_points),
+        },
+    };
+}
+
 sub _validate_actor($actor) {
     confess "ControlFlowEffects inventory expects an actor hash reference\n"
         unless ref($actor) eq 'HASH';
@@ -458,6 +490,81 @@ sub _check_transaction($tx) {
         summary    => {
             proof_count     => scalar(@proofs),
             violation_count => scalar(@violations),
+        },
+    };
+}
+
+sub _plan_transaction($tx) {
+    confess "ControlFlowEffects planner transaction entry must be a hash reference\n"
+        unless ref($tx) eq 'HASH';
+    confess "ControlFlowEffects planner transaction is missing scalar name\n"
+        unless defined($tx->{name}) && !ref($tx->{name});
+
+    my @local_child_wires;
+    my @generated_instances;
+    my @sync_points;
+
+    for my $effect (@{$tx->{effects} || []}) {
+        next unless ref($effect) eq 'HASH';
+        if (($effect->{kind} // '') eq 'child_start' && ($effect->{target_kind} // '') eq 'local_child') {
+            push @local_child_wires, {
+                transaction => $tx->{name},
+                effect_id   => $effect->{id},
+                region_id   => $effect->{region_id},
+                region_kind => $effect->{region_kind},
+                context     => $effect->{context},
+                activation  => $effect->{activation},
+                child       => $effect->{child},
+                start       => $effect->{start_signal},
+                done        => $effect->{done_signal},
+            };
+            next;
+        }
+
+        if (($effect->{kind} // '') eq 'child_start' && $effect->{generated_child}) {
+            push @generated_instances, {
+                transaction   => $tx->{name},
+                effect_id     => $effect->{id},
+                region_id     => $effect->{region_id},
+                region_kind   => $effect->{region_kind},
+                context       => $effect->{context},
+                activation    => $effect->{activation},
+                child         => $effect->{child},
+                instance      => $effect->{instance},
+                start         => $effect->{start_signal},
+                done          => $effect->{done_signal},
+                parameterized => $effect->{parameterized} ? 1 : 0,
+                domain        => $effect->{domain},
+                bindings      => $effect->{bindings} || [],
+            };
+            next;
+        }
+
+        if (($effect->{kind} // '') eq 'child_done_observe'
+            || ($effect->{kind} // '') eq 'child_done_drain') {
+            push @sync_points, {
+                transaction => $tx->{name},
+                effect_id   => $effect->{id},
+                region_id   => $effect->{region_id},
+                region_kind => $effect->{region_kind},
+                context     => $effect->{context},
+                activation  => $effect->{activation},
+                kind        => $effect->{kind},
+                done_ports  => $effect->{done_ports} || [],
+                drains_all  => $effect->{drains_all} ? 1 : 0,
+            };
+        }
+    }
+
+    return {
+        name                => $tx->{name},
+        local_child_wires   => \@local_child_wires,
+        generated_instances => \@generated_instances,
+        sync_points         => \@sync_points,
+        summary             => {
+            local_child_wire_count   => scalar(@local_child_wires),
+            generated_instance_count => scalar(@generated_instances),
+            sync_point_count         => scalar(@sync_points),
         },
     };
 }
