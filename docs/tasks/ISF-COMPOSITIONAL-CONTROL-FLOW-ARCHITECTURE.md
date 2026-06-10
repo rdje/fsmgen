@@ -6,7 +6,7 @@ Roadmap lane: R14 / ISF compositional control-flow and activation architecture
 
 Created: 2026-06-10
 
-Current frontier: `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.6`
+Current frontier: `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.7`
 
 ## Goal
 
@@ -157,7 +157,7 @@ Acceptance:
 
 ### ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.6 — Domain, Binding, And CDC Effects
 
-Status: active
+Status: done
 
 Goal: Model binding handoffs, domain ownership, and CDC activation requirements
 as explicit effects.
@@ -171,7 +171,7 @@ Acceptance:
 
 ### ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.7 — Validator Migration
 
-Status: pending
+Status: active
 
 Goal: Replace syntax-path allow-list decisions with region/effect proof
 decisions incrementally.
@@ -255,6 +255,28 @@ Acceptance:
   `scripts/check_memory_architecture.sh`; `prove -Iperl
   t/1414-docs-relative-paths-audit.t`; `mdbook build docs/book`; and
   `git diff --check` pass.
+- 2026-06-10 (`.6`): enriched private child-start effects with actor
+  domain context, caller/child/activation domain contracts, typed binding
+  handoff direction/timing, generated-top start/done and binding requirements,
+  and explicit activation-crossing CDC start/done requirements. The checker now
+  proves same-domain activations, covered cross-domain blocking `do`, binding
+  handoffs, and generated-top/CDC requirements, while uncovered cross-domain
+  `do` and cross-domain `spawn` remain private violations that mirror the
+  existing fail-closed validators. No lowering or public report path consumes
+  the model yet. `perl -Iperl -c
+  perl/FSM/Scheduler/ISF/ControlFlowEffects.pm`; `perl -Iperl -c
+  t/1424-isf-control-flow-domain-binding-effects.t`; `prove -Iperl
+  t/1424-isf-control-flow-domain-binding-effects.t`; `prove -Iperl
+  t/1419-isf-control-flow-effect-inventory.t
+  t/1421-isf-control-flow-effect-checks.t
+  t/1422-isf-control-flow-child-plan.t
+  t/1423-isf-control-flow-lifetime-checks.t
+  t/1424-isf-control-flow-domain-binding-effects.t`; `prove -Iperl
+  t/1250-isf-spec-focused-test-index-audit.t`; `./bin/ci-regression isf
+  --no-book` (Files=294, Tests=2133); `scripts/check_memory_architecture.sh`;
+  `knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl
+  t/1414-docs-relative-paths-audit.t`; `mdbook build docs/book`; and
+  `git diff --check` pass.
 - 2026-06-10 (`.4`): added private `plan_actor` / `plan_inventory` child-plan
   projection derived from the shadow effect list. The plan records local child
   start/done wiring requirements, generated child instance plans, and sync
@@ -300,5 +322,7 @@ Acceptance:
   `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.3: add shadow invariant checks`.
 - `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.4`: `00a9e859`
   `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.4: derive child plan from effects`.
-- `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.5`: this commit,
+- `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.5`: `3cfd6cc5`
   `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.5: refine lifetime proofs`.
+- `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.6`: this commit,
+  `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.6: model domain binding cdc effects`.

@@ -17,13 +17,15 @@ sub inventory_actor($self, $actor) {
     _validate_actor($actor);
 
     my %generated_child_targets = _generated_child_targets($actor);
+    my $domain_context = _domain_context($actor);
     my @transactions = map {
-        _inventory_transaction($_, \%generated_child_targets)
+        _inventory_transaction($_, \%generated_child_targets, $domain_context)
     } @{$actor->{transactions}};
 
     return {
         model                   => 'isf_control_flow_effects_v1',
         actor_name              => $actor->{actor_name},
+        domain_context          => _public_domain_context($domain_context),
         generated_child_targets => [sort keys %generated_child_targets],
         transactions            => \@transactions,
     };
@@ -70,6 +72,7 @@ sub plan_inventory($self, $inventory) {
     my @transactions = map { _plan_transaction($_) } @{$inventory->{transactions}};
     my @generated_instances = map { @{$_->{generated_instances}} } @transactions;
     my @local_child_wires = map { @{$_->{local_child_wires}} } @transactions;
+    my @activation_requirements = map { @{$_->{activation_requirements}} } @transactions;
     my @sync_points = map { @{$_->{sync_points}} } @transactions;
 
     return {
@@ -78,12 +81,14 @@ sub plan_inventory($self, $inventory) {
         generated_child_targets => $inventory->{generated_child_targets} || [],
         generated_instances     => \@generated_instances,
         local_child_wires       => \@local_child_wires,
+        activation_requirements => \@activation_requirements,
         sync_points             => \@sync_points,
         transactions            => \@transactions,
         summary                 => {
             transaction_count        => scalar(@transactions),
             generated_instance_count => scalar(@generated_instances),
             local_child_wire_count   => scalar(@local_child_wires),
+            activation_requirement_count => scalar(@activation_requirements),
             sync_point_count         => scalar(@sync_points),
         },
     };
@@ -98,7 +103,7 @@ sub _validate_actor($actor) {
         unless ref($actor->{transactions}) eq 'ARRAY';
 }
 
-sub _inventory_transaction($tx, $generated_child_targets) {
+sub _inventory_transaction($tx, $generated_child_targets, $domain_context) {
     confess "ControlFlowEffects transaction entry must be a hash reference\n"
         unless ref($tx) eq 'HASH';
     confess "ControlFlowEffects transaction is missing scalar name\n"
@@ -111,6 +116,8 @@ sub _inventory_transaction($tx, $generated_child_targets) {
     my %ctx = (
         transaction                      => $tx->{name},
         generated_child_targets          => $generated_child_targets || {},
+        domain_context                   => $domain_context || {},
+        transaction_domain               => _domain_for_entry($tx, ($domain_context || {})->{default_domain}),
         regions                          => \@regions,
         effects                          => \@effects,
         region_seq                       => 0,
@@ -133,6 +140,7 @@ sub _inventory_transaction($tx, $generated_child_targets) {
 
     return {
         name        => $tx->{name},
+        domain      => $ctx{transaction_domain},
         root_region => $root->{id},
         regions     => \@regions,
         effects     => \@effects,
@@ -358,6 +366,17 @@ sub _record_do_effect($ctx, $region, $clause, $label) {
     my $child = _format_expr($clause->[1]);
     my ($generated_child, $instance) = _do_instance($ctx, $clause, $label, $child);
     my $prefix = $generated_child ? $instance : $child;
+    my $domain_contract = _activation_domain_contract($ctx, $clause, $child, 'do');
+    my $binding_handoffs = _binding_handoffs($ctx, $clause, $child, 'do', $instance);
+    my $generated_top_requirements = _generated_top_requirements(
+        'do',
+        $generated_child,
+        $instance,
+        defined($prefix) ? "${prefix}_start" : undef,
+        defined($prefix) ? "${prefix}_done" : undef,
+        $binding_handoffs,
+        $domain_contract,
+    );
 
     _push_effect(
         $ctx,
@@ -374,8 +393,10 @@ sub _record_do_effect($ctx, $region, $clause, $label) {
         blocking       => 1,
         done_semantics => 'blocking_child_done_drain',
         parameterized  => _has_subclause($clause, 'params') ? 1 : 0,
-        domain         => _domain_from_clause($clause),
-        bindings       => _binding_summaries($clause),
+        domain         => $domain_contract->{authored_domain},
+        domain_contract => $domain_contract,
+        bindings       => $binding_handoffs,
+        generated_top_requirements => $generated_top_requirements,
     );
 }
 
@@ -383,6 +404,17 @@ sub _record_spawn_effect($ctx, $region, $clause, $label) {
     my $child = _format_expr($clause->[1]);
     my $instance = _spawn_instance_name($ctx->{transaction}, $clause);
     my $done_port = "${instance}_done";
+    my $domain_contract = _activation_domain_contract($ctx, $clause, $child, 'spawn');
+    my $binding_handoffs = _binding_handoffs($ctx, $clause, $child, 'spawn', $instance);
+    my $generated_top_requirements = _generated_top_requirements(
+        'spawn',
+        1,
+        $instance,
+        "${instance}_start",
+        $done_port,
+        $binding_handoffs,
+        $domain_contract,
+    );
 
     _push_effect(
         $ctx,
@@ -399,8 +431,10 @@ sub _record_spawn_effect($ctx, $region, $clause, $label) {
         blocking        => 0,
         done_semantics  => 'nonblocking_outstanding_until_sync',
         parameterized   => _has_subclause($clause, 'params') ? 1 : 0,
-        domain          => _domain_from_clause($clause),
-        bindings        => _binding_summaries($clause),
+        domain          => $domain_contract->{authored_domain},
+        domain_contract => $domain_contract,
+        bindings        => $binding_handoffs,
+        generated_top_requirements => $generated_top_requirements,
     );
 
     return $done_port;
@@ -440,7 +474,11 @@ sub _transaction_summary($regions, $effects) {
     my %region_kinds;
     my %effect_kinds;
     my %activation_kinds;
+    my %domain_relations;
+    my %cdc_requirements;
     my $backedge_count = 0;
+    my $binding_handoff_count = 0;
+    my $generated_top_requirement_count = 0;
     for my $region (@$regions) {
         $region_kinds{$region->{kind}}++;
         $backedge_count += scalar @{$region->{backedges} || []};
@@ -448,6 +486,14 @@ sub _transaction_summary($regions, $effects) {
     for my $effect (@$effects) {
         $effect_kinds{$effect->{kind}}++;
         $activation_kinds{$effect->{activation}}++ if defined $effect->{activation};
+        if (ref($effect->{domain_contract}) eq 'HASH') {
+            $domain_relations{$effect->{domain_contract}{relation}}++
+                if defined $effect->{domain_contract}{relation};
+            $cdc_requirements{$effect->{domain_contract}{cdc_requirement}}++
+                if defined $effect->{domain_contract}{cdc_requirement};
+        }
+        $binding_handoff_count += scalar @{$effect->{bindings} || []};
+        $generated_top_requirement_count += scalar @{$effect->{generated_top_requirements} || []};
     }
 
     return {
@@ -460,6 +506,10 @@ sub _transaction_summary($regions, $effects) {
         child_start_effects       => ($effect_kinds{child_start} || 0),
         child_done_observe_effects => ($effect_kinds{child_done_observe} || 0),
         child_done_drain_effects  => ($effect_kinds{child_done_drain} || 0),
+        domain_relations          => \%domain_relations,
+        cdc_requirements          => \%cdc_requirements,
+        binding_handoff_count     => $binding_handoff_count,
+        generated_top_requirement_count => $generated_top_requirement_count,
     };
 }
 
@@ -503,6 +553,7 @@ sub _plan_transaction($tx) {
     my @local_child_wires;
     my @generated_instances;
     my @sync_points;
+    my @activation_requirements;
 
     for my $effect (@{$tx->{effects} || []}) {
         next unless ref($effect) eq 'HASH';
@@ -517,8 +568,9 @@ sub _plan_transaction($tx) {
                 child       => $effect->{child},
                 start       => $effect->{start_signal},
                 done        => $effect->{done_signal},
+                domain_contract => $effect->{domain_contract},
+                bindings    => $effect->{bindings} || [],
             };
-            next;
         }
 
         if (($effect->{kind} // '') eq 'child_start' && $effect->{generated_child}) {
@@ -535,9 +587,26 @@ sub _plan_transaction($tx) {
                 done          => $effect->{done_signal},
                 parameterized => $effect->{parameterized} ? 1 : 0,
                 domain        => $effect->{domain},
+                domain_contract => $effect->{domain_contract},
                 bindings      => $effect->{bindings} || [],
+                generated_top_requirements => $effect->{generated_top_requirements} || [],
             };
-            next;
+        }
+
+        if (($effect->{kind} // '') eq 'child_start') {
+            push @activation_requirements, {
+                transaction   => $tx->{name},
+                effect_id     => $effect->{id},
+                region_id     => $effect->{region_id},
+                region_kind   => $effect->{region_kind},
+                context       => $effect->{context},
+                activation    => $effect->{activation},
+                child         => $effect->{child},
+                target_kind   => $effect->{target_kind},
+                domain_contract => $effect->{domain_contract},
+                bindings      => $effect->{bindings} || [],
+                generated_top_requirements => $effect->{generated_top_requirements} || [],
+            };
         }
 
         if (($effect->{kind} // '') eq 'child_done_observe'
@@ -560,10 +629,12 @@ sub _plan_transaction($tx) {
         name                => $tx->{name},
         local_child_wires   => \@local_child_wires,
         generated_instances => \@generated_instances,
+        activation_requirements => \@activation_requirements,
         sync_points         => \@sync_points,
         summary             => {
             local_child_wire_count   => scalar(@local_child_wires),
             generated_instance_count => scalar(@generated_instances),
+            activation_requirement_count => scalar(@activation_requirements),
             sync_point_count         => scalar(@sync_points),
         },
     };
@@ -619,6 +690,12 @@ sub _check_region_lifetime($tx, $region, $proofs, $violations) {
 
 sub _check_effect($tx, $effect, $region_by_id, $generated_instance_owner, $proofs, $violations) {
     my $activation = $effect->{activation} // '';
+    if ($effect->{kind} eq 'child_start') {
+        _check_activation_domain_contract($tx, $effect, $proofs, $violations);
+        _check_binding_handoffs($tx, $effect, $proofs, $violations);
+        _check_generated_top_requirements($tx, $effect, $proofs, $violations);
+    }
+
     if ($effect->{kind} eq 'child_start' && $activation eq 'do') {
         if ($effect->{blocking} && ($effect->{done_semantics} // '') eq 'blocking_child_done_drain') {
             _push_proof(
@@ -699,8 +776,67 @@ sub _check_effect($tx, $effect, $region_by_id, $generated_instance_owner, $proof
             message     => 'await_all drains the outstanding child completion set visible at that point',
         );
     }
+}
 
-    if (defined($effect->{domain}) && length($effect->{domain})) {
+sub _check_activation_domain_contract($tx, $effect, $proofs, $violations) {
+    my $contract = $effect->{domain_contract};
+    if (ref($contract) ne 'HASH') {
+        _push_violation(
+            $violations,
+            transaction => $tx->{name},
+            code        => 'activation_missing_domain_contract',
+            invariant   => 'explicit_domain_binding_cdc',
+            effect_id   => $effect->{id},
+            region_id   => $effect->{region_id},
+            child       => $effect->{child},
+            message     => 'child activation lacks an explicit domain/CDC contract in the effect inventory',
+        );
+        return;
+    }
+
+    if (!defined($contract->{child_domain})) {
+        _push_violation(
+            $violations,
+            transaction => $tx->{name},
+            code        => 'activation_target_domain_unknown',
+            invariant   => 'explicit_domain_binding_cdc',
+            effect_id   => $effect->{id},
+            region_id   => $effect->{region_id},
+            child       => $effect->{child},
+            caller_domain => $contract->{caller_domain},
+            message     => 'child activation target has no resolved transaction domain',
+        );
+        return;
+    }
+
+    if (defined($contract->{activation_domain}) && !$contract->{activation_domain_declared}) {
+        _push_violation(
+            $violations,
+            transaction => $tx->{name},
+            code        => 'activation_domain_unknown',
+            invariant   => 'explicit_domain_binding_cdc',
+            effect_id   => $effect->{id},
+            region_id   => $effect->{region_id},
+            child       => $effect->{child},
+            activation_domain => $contract->{activation_domain},
+            message     => 'activation domain metadata names a domain that is not declared in the actor domain context',
+        );
+    }
+
+    if (defined($contract->{authored_domain}) && ($contract->{activation_domain_relation} // '') ne 'same_domain') {
+        _push_violation(
+            $violations,
+            transaction => $tx->{name},
+            code        => 'activation_domain_metadata_must_match_caller',
+            invariant   => 'explicit_domain_binding_cdc',
+            effect_id   => $effect->{id},
+            region_id   => $effect->{region_id},
+            child       => $effect->{child},
+            caller_domain => $contract->{caller_domain},
+            activation_domain => $contract->{activation_domain},
+            message     => 'activation-site domain metadata is modeled as same-domain placement metadata, not an implicit CDC contract',
+        );
+    } elsif (defined($contract->{authored_domain})) {
         _push_proof(
             $proofs,
             transaction => $tx->{name},
@@ -708,9 +844,167 @@ sub _check_effect($tx, $effect, $region_by_id, $generated_instance_owner, $proof
             invariant   => 'explicit_domain_binding_cdc',
             effect_id   => $effect->{id},
             region_id   => $effect->{region_id},
-            domain      => $effect->{domain},
-            message     => 'activation domain metadata is explicit in the effect inventory',
+            child       => $effect->{child},
+            domain      => $contract->{authored_domain},
+            message     => 'activation domain metadata is explicit and same-domain in the effect inventory',
         );
+    }
+
+    my $relation = $contract->{relation} // '';
+    if ($relation eq 'same_domain') {
+        _push_proof(
+            $proofs,
+            transaction => $tx->{name},
+            code        => 'activation_target_is_same_domain',
+            invariant   => 'explicit_domain_binding_cdc',
+            effect_id   => $effect->{id},
+            region_id   => $effect->{region_id},
+            child       => $effect->{child},
+            caller_domain => $contract->{caller_domain},
+            child_domain  => $contract->{child_domain},
+            message     => 'child activation target is in the same domain as the caller',
+        );
+        return;
+    }
+
+    if ($relation eq 'cross_domain') {
+        my $requirement = $contract->{cdc_requirement} // '';
+        if ($requirement eq 'activation_crossing_declared') {
+            _push_proof(
+                $proofs,
+                transaction => $tx->{name},
+                code        => 'activation_crossing_covers_child_start',
+                invariant   => 'explicit_domain_binding_cdc',
+                effect_id   => $effect->{id},
+                region_id   => $effect->{region_id},
+                child       => $effect->{child},
+                caller_domain => $contract->{caller_domain},
+                child_domain  => $contract->{child_domain},
+                cdc_handoffs  => $contract->{cdc_handoffs},
+                message     => 'cross-domain blocking child activation is covered by an explicit activation crossing',
+            );
+        } elsif ($requirement eq 'unsupported_cross_domain_spawn') {
+            _push_violation(
+                $violations,
+                transaction => $tx->{name},
+                code        => 'cross_domain_spawn_requires_future_cdc_contract',
+                invariant   => 'explicit_domain_binding_cdc',
+                effect_id   => $effect->{id},
+                region_id   => $effect->{region_id},
+                child       => $effect->{child},
+                caller_domain => $contract->{caller_domain},
+                child_domain  => $contract->{child_domain},
+                message     => 'cross-domain spawn has no shipped CDC activation contract and remains fail-closed',
+            );
+        } else {
+            _push_violation(
+                $violations,
+                transaction => $tx->{name},
+                code        => 'cross_domain_activation_requires_activation_crossing',
+                invariant   => 'explicit_domain_binding_cdc',
+                effect_id   => $effect->{id},
+                region_id   => $effect->{region_id},
+                child       => $effect->{child},
+                caller_domain => $contract->{caller_domain},
+                child_domain  => $contract->{child_domain},
+                message     => 'cross-domain child activation requires an explicit activation crossing contract',
+            );
+        }
+    }
+}
+
+sub _check_binding_handoffs($tx, $effect, $proofs, $violations) {
+    for my $binding (@{$effect->{bindings} || []}) {
+        my $direction = $binding->{handoff_direction} // '';
+        if ($direction eq 'unknown') {
+            _push_violation(
+                $violations,
+                transaction => $tx->{name},
+                code        => 'binding_handoff_direction_unknown',
+                invariant   => 'explicit_domain_binding_cdc',
+                effect_id   => $effect->{id},
+                region_id   => $effect->{region_id},
+                child       => $effect->{child},
+                role        => $binding->{role},
+                child_port  => $binding->{child_port},
+                message     => 'activation binding role does not map to a typed handoff direction',
+            );
+            next;
+        }
+        _push_proof(
+            $proofs,
+            transaction => $tx->{name},
+            code        => 'binding_handoff_is_explicit',
+            invariant   => 'explicit_domain_binding_cdc',
+            effect_id   => $effect->{id},
+            region_id   => $effect->{region_id},
+            child       => $effect->{child},
+            role        => $binding->{role},
+            child_port  => $binding->{child_port},
+            actor_expr  => $binding->{actor_expr},
+            handoff_direction => $binding->{handoff_direction},
+            handoff_timing    => $binding->{handoff_timing},
+            parent_port       => $binding->{parent_port},
+            message     => 'activation binding is represented as a typed parent/child handoff',
+        );
+    }
+}
+
+sub _check_generated_top_requirements($tx, $effect, $proofs, $violations) {
+    for my $requirement (@{$effect->{generated_top_requirements} || []}) {
+        my $kind = $requirement->{kind} // '';
+        if ($kind eq 'start_done_handoff') {
+            _push_proof(
+                $proofs,
+                transaction => $tx->{name},
+                code        => 'generated_top_start_done_handoff_required',
+                invariant   => 'static_generated_instance_identity',
+                effect_id   => $effect->{id},
+                region_id   => $effect->{region_id},
+                child       => $effect->{child},
+                instance    => $requirement->{instance},
+                start_signal => $requirement->{start_signal},
+                done_signal  => $requirement->{done_signal},
+                message     => 'generated child activation has explicit generated-top start/done handoff requirements',
+            );
+            next;
+        }
+        if ($kind eq 'binding_handoff') {
+            _push_proof(
+                $proofs,
+                transaction => $tx->{name},
+                code        => 'generated_top_binding_handoff_required',
+                invariant   => 'explicit_domain_binding_cdc',
+                effect_id   => $effect->{id},
+                region_id   => $effect->{region_id},
+                child       => $effect->{child},
+                instance    => $requirement->{instance},
+                child_port  => $requirement->{child_port},
+                parent_port => $requirement->{parent_port},
+                handoff_direction => $requirement->{handoff_direction},
+                handoff_timing    => $requirement->{handoff_timing},
+                message     => 'generated child activation has explicit generated-top binding handoff requirements',
+            );
+            next;
+        }
+        if ($kind eq 'activation_start_cdc' || $kind eq 'activation_done_cdc') {
+            _push_proof(
+                $proofs,
+                transaction => $tx->{name},
+                code        => 'generated_top_activation_cdc_handoff_required',
+                invariant   => 'explicit_domain_binding_cdc',
+                effect_id   => $effect->{id},
+                region_id   => $effect->{region_id},
+                child       => $effect->{child},
+                cdc_kind    => $kind,
+                from_domain => $requirement->{from_domain},
+                to_domain   => $requirement->{to_domain},
+                signal      => $requirement->{signal},
+                instance    => $requirement->{instance},
+                message     => 'cross-domain activation has explicit generated-top CDC handoff requirements',
+            );
+            next;
+        }
     }
 }
 
@@ -766,6 +1060,318 @@ sub _push_proof($proofs, %proof) {
 
 sub _push_violation($violations, %violation) {
     push @$violations, { kind => 'violation', %violation };
+}
+
+sub _domain_context($actor) {
+    my $has_clock_domains = _actor_has_clock_domains($actor);
+    my $default_domain = $has_clock_domains ? $actor->{clock_domains}{default} : 'default';
+    my %declared_domains = _actor_declared_domain_names($actor, $default_domain);
+    my %transaction_domains;
+    my %transaction_ports;
+
+    for my $tx (@{$actor->{transactions} || []}) {
+        next unless ref($tx) eq 'HASH' && defined($tx->{name}) && !ref($tx->{name});
+        $transaction_domains{$tx->{name}} = _domain_for_entry($tx, $default_domain);
+        $transaction_ports{$tx->{name}} = _transaction_port_map($tx);
+    }
+
+    my %signal_domains = _actor_signal_domain_map($actor, $default_domain);
+    my @activation_crossings;
+    my %activation_crossing_by_key;
+    for my $crossing (@{$actor->{crossings} || []}) {
+        next unless ref($crossing) eq 'HASH' && ($crossing->{kind} // '') eq 'activation';
+        my $child = $crossing->{child};
+        my $src = $crossing->{from}{domain};
+        my $dst = $crossing->{to}{domain};
+        my $summary = {
+            kind               => 'activation',
+            child              => $child,
+            source_domain      => $src,
+            destination_domain => $dst,
+            start_signal       => "${child}_start",
+            done_signal        => "${child}_done",
+            start_instance     => "${child}_activation_start_cdc",
+            done_instance      => "${child}_activation_done_cdc",
+            outstanding_policy => 'single_outstanding_acknowledged',
+            payload            => 'none',
+        };
+        push @activation_crossings, $summary;
+        $activation_crossing_by_key{_activation_crossing_key($child, $src, $dst)} = $summary
+            if defined($child) && defined($src) && defined($dst);
+    }
+
+    return {
+        kind => $has_clock_domains && @{$actor->{clock_domains}{domains} || []} > 1
+            ? 'multi_domain'
+            : 'single_domain',
+        default_domain            => $default_domain,
+        declared_domains          => [sort keys %declared_domains],
+        declared_domain_map       => \%declared_domains,
+        transaction_domains       => \%transaction_domains,
+        transaction_ports         => \%transaction_ports,
+        signal_domains            => \%signal_domains,
+        activation_crossings      => \@activation_crossings,
+        activation_crossing_by_key => \%activation_crossing_by_key,
+    };
+}
+
+sub _public_domain_context($domain_context) {
+    return {
+        kind                 => $domain_context->{kind},
+        default_domain       => $domain_context->{default_domain},
+        declared_domains     => $domain_context->{declared_domains} || [],
+        transaction_domains  => $domain_context->{transaction_domains} || {},
+        activation_crossings => $domain_context->{activation_crossings} || [],
+    };
+}
+
+sub _actor_has_clock_domains($actor) {
+    return ref($actor->{clock_domains}) eq 'HASH'
+        && ref($actor->{clock_domains}{domains}) eq 'ARRAY'
+        && @{$actor->{clock_domains}{domains}};
+}
+
+sub _actor_declared_domain_names($actor, $default_domain) {
+    if (_actor_has_clock_domains($actor)) {
+        return map { $_->{name} => 1 } @{$actor->{clock_domains}{domains} || []};
+    }
+
+    my %domains = (defined($default_domain) ? ($default_domain => 1) : ());
+    for my $entry (
+        @{$actor->{interface}{inputs} || []},
+        @{$actor->{interface}{outputs} || []},
+        @{$actor->{storage} || []},
+        @{$actor->{transactions} || []},
+        @{$actor->{rules} || []},
+        @{$actor->{library_uses} || []},
+    ) {
+        next unless ref($entry) eq 'HASH';
+        my $domain = $entry->{domain};
+        $domains{$domain} = 1
+            if defined($domain) && !ref($domain) && length($domain);
+    }
+    for my $crossing (@{$actor->{crossings} || []}) {
+        next unless ref($crossing) eq 'HASH';
+        for my $endpoint (qw(from to)) {
+            my $domain = $crossing->{$endpoint}{domain};
+            $domains{$domain} = 1
+                if defined($domain) && !ref($domain) && length($domain);
+        }
+    }
+    return %domains;
+}
+
+sub _domain_for_entry($entry, $default_domain) {
+    return ref($entry) eq 'HASH' && defined($entry->{domain})
+        ? $entry->{domain}
+        : $default_domain;
+}
+
+sub _actor_signal_domain_map($actor, $default_domain) {
+    my %signals;
+    for my $input (@{$actor->{interface}{inputs} || []}) {
+        _register_signal_domain(\%signals, $input->{name}, _domain_for_entry($input, $default_domain), 'actor_input');
+    }
+    for my $output (@{$actor->{interface}{outputs} || []}) {
+        _register_signal_domain(\%signals, $output->{name}, _domain_for_entry($output, $default_domain), 'actor_output');
+    }
+    for my $storage (@{$actor->{storage} || []}) {
+        my $domain = _domain_for_entry($storage, $default_domain);
+        _register_signal_domain(\%signals, $storage->{name}, $domain, 'actor_storage');
+        for my $signal (@{$storage->{signals} || []}) {
+            _register_signal_domain(\%signals, $signal->{name}, $domain, 'actor_storage');
+        }
+    }
+    for my $crossing (@{$actor->{crossings} || []}) {
+        next unless ref($crossing) eq 'HASH' && ($crossing->{kind} // '') eq 'event';
+        _register_signal_domain(\%signals, $crossing->{from}{signal}, $crossing->{from}{domain}, 'crossing_request');
+        _register_signal_domain(\%signals, $crossing->{ready}{signal}, $crossing->{from}{domain}, 'crossing_ready');
+        _register_signal_domain(\%signals, $crossing->{to}{signal}, $crossing->{to}{domain}, 'crossing_pulse');
+    }
+    return %signals;
+}
+
+sub _register_signal_domain($signals, $name, $domain, $kind) {
+    return unless defined($name) && !ref($name) && length($name);
+    $signals->{$name} = {
+        domain => $domain,
+        kind   => $kind,
+    };
+}
+
+sub _transaction_port_map($tx) {
+    my %ports;
+    for my $direction (qw(inputs outputs)) {
+        my $role = $direction eq 'inputs' ? 'input' : 'output';
+        for my $port (@{($tx->{ports} || {})->{$direction} || []}) {
+            next unless ref($port) eq 'HASH' && defined($port->{name}) && !ref($port->{name});
+            $ports{$port->{name}} = {
+                direction => $role,
+                width     => $port->{width},
+            };
+        }
+    }
+    return \%ports;
+}
+
+sub _activation_crossing_key($child, $src, $dst) {
+    return join "\0", map { defined($_) ? $_ : '' } ($child, $src, $dst);
+}
+
+sub _activation_crossing_for($domain_context, $child, $src, $dst) {
+    return undef unless ref($domain_context) eq 'HASH';
+    return undef unless defined($child) && defined($src) && defined($dst);
+    return $domain_context->{activation_crossing_by_key}{_activation_crossing_key($child, $src, $dst)};
+}
+
+sub _activation_domain_contract($ctx, $clause, $child, $activation) {
+    my $domain_context = $ctx->{domain_context} || {};
+    my $caller_domain = $ctx->{transaction_domain};
+    my $child_domain = $domain_context->{transaction_domains}{$child};
+    my $authored_domain = _domain_from_clause($clause);
+    my $activation_domain = defined($authored_domain) ? $authored_domain : $caller_domain;
+    my $relation = !defined($caller_domain) || !defined($child_domain)
+        ? 'unknown_child_domain'
+        : $caller_domain eq $child_domain
+            ? 'same_domain'
+            : 'cross_domain';
+    my $activation_domain_relation = !defined($caller_domain) || !defined($activation_domain)
+        ? 'unknown_activation_domain'
+        : $caller_domain eq $activation_domain
+            ? 'same_domain'
+            : 'cross_domain';
+    my $declared_domain_map = $domain_context->{declared_domain_map} || {};
+    my $activation_domain_declared = defined($activation_domain) && $declared_domain_map->{$activation_domain} ? 1 : 0;
+    my $authored_domain_declared = defined($authored_domain) && $declared_domain_map->{$authored_domain} ? 1 : 0;
+    my $activation_crossing = _activation_crossing_for($domain_context, $child, $caller_domain, $child_domain);
+
+    my $cdc_requirement = 'none';
+    if ($relation eq 'cross_domain') {
+        if (($activation // '') eq 'do') {
+            $cdc_requirement = $activation_crossing
+                ? 'activation_crossing_declared'
+                : 'activation_crossing_required';
+        } else {
+            $cdc_requirement = 'unsupported_cross_domain_spawn';
+        }
+    }
+
+    my @cdc_handoffs;
+    if ($activation_crossing) {
+        @cdc_handoffs = (
+            {
+                kind        => 'activation_start_cdc',
+                from_domain => $activation_crossing->{source_domain},
+                to_domain   => $activation_crossing->{destination_domain},
+                signal      => $activation_crossing->{start_signal},
+                instance    => $activation_crossing->{start_instance},
+            },
+            {
+                kind        => 'activation_done_cdc',
+                from_domain => $activation_crossing->{destination_domain},
+                to_domain   => $activation_crossing->{source_domain},
+                signal      => $activation_crossing->{done_signal},
+                instance    => $activation_crossing->{done_instance},
+            },
+        );
+    }
+
+    return {
+        caller_domain              => $caller_domain,
+        child_domain               => $child_domain,
+        authored_domain            => $authored_domain,
+        authored_domain_declared   => $authored_domain_declared,
+        activation_domain          => $activation_domain,
+        activation_domain_declared => $activation_domain_declared,
+        relation                   => $relation,
+        activation_domain_relation => $activation_domain_relation,
+        cdc_requirement            => $cdc_requirement,
+        activation_crossing        => $activation_crossing ? { %$activation_crossing } : undef,
+        cdc_handoffs               => \@cdc_handoffs,
+    };
+}
+
+sub _binding_handoffs($ctx, $clause, $child, $activation, $instance) {
+    my @bindings;
+    return \@bindings unless ref($clause) eq 'ARRAY' && @$clause >= 3;
+
+    my $child_ports = $ctx->{domain_context}{transaction_ports}{$child} || {};
+    for my $subclause (@{$clause}[2 .. $#$clause]) {
+        next unless _is_clause($subclause);
+        next unless $subclause->[0] eq 'bind';
+        for my $binding (@{$subclause}[1 .. $#$subclause]) {
+            next unless ref($binding) eq 'ARRAY' && @$binding >= 3;
+            my $role = _format_expr($binding->[0]);
+            my $child_port = _format_expr($binding->[1]);
+            my $actor_expr = _format_expr($binding->[2]);
+            my $endpoint = _binding_actor_endpoint($ctx, $binding->[2]);
+            my $child_port_info = $child_ports->{$child_port} || {};
+            push @bindings, {
+                role                           => $role,
+                child_port                     => $child_port,
+                child_port_direction           => $child_port_info->{direction},
+                child_port_width               => $child_port_info->{width},
+                actor_expr                     => $actor_expr,
+                actor_endpoint_domain          => $endpoint->{domain},
+                actor_endpoint_kind            => $endpoint->{kind},
+                handoff_direction              => $role eq 'input' ? 'actor_to_child'
+                    : $role eq 'output' ? 'child_to_actor'
+                    : 'unknown',
+                handoff_timing                 => $role eq 'input' ? 'activation_region'
+                    : ($activation // '') eq 'do' ? 'done_guarded'
+                    : 'generated_live_handoff',
+                parent_port                    => defined($instance) ? "${instance}_${child_port}" : undef,
+                requires_generated_top_handoff => defined($instance) ? 1 : 0,
+            };
+        }
+    }
+    return \@bindings;
+}
+
+sub _binding_actor_endpoint($ctx, $expr) {
+    return {} if ref($expr);
+    return {} unless defined($expr);
+    my $signal_domains = $ctx->{domain_context}{signal_domains} || {};
+    return exists($signal_domains->{$expr})
+        ? $signal_domains->{$expr}
+        : {};
+}
+
+sub _generated_top_requirements($activation, $generated_child, $instance, $start_signal, $done_signal, $bindings, $domain_contract) {
+    my @requirements;
+    if ($generated_child) {
+        push @requirements, {
+            kind         => 'start_done_handoff',
+            activation   => $activation,
+            instance     => $instance,
+            start_signal => $start_signal,
+            done_signal  => $done_signal,
+        };
+    }
+    for my $binding (@{$bindings || []}) {
+        next unless $binding->{requires_generated_top_handoff};
+        push @requirements, {
+            kind              => 'binding_handoff',
+            activation        => $activation,
+            instance          => $instance,
+            role              => $binding->{role},
+            child_port        => $binding->{child_port},
+            parent_port       => $binding->{parent_port},
+            handoff_direction => $binding->{handoff_direction},
+            handoff_timing    => $binding->{handoff_timing},
+        };
+    }
+    for my $handoff (@{($domain_contract || {})->{cdc_handoffs} || []}) {
+        push @requirements, {
+            kind        => $handoff->{kind},
+            activation  => $activation,
+            from_domain => $handoff->{from_domain},
+            to_domain   => $handoff->{to_domain},
+            signal      => $handoff->{signal},
+            instance    => $handoff->{instance},
+        };
+    }
+    return \@requirements;
 }
 
 sub _generated_child_targets($actor) {
@@ -830,24 +1436,6 @@ sub _domain_from_clause($clause) {
         return _format_expr($subclause->[1]);
     }
     return undef;
-}
-
-sub _binding_summaries($clause) {
-    my @bindings;
-    return \@bindings unless ref($clause) eq 'ARRAY' && @$clause >= 3;
-    for my $subclause (@{$clause}[2 .. $#$clause]) {
-        next unless _is_clause($subclause);
-        next unless $subclause->[0] eq 'bind';
-        for my $binding (@{$subclause}[1 .. $#$subclause]) {
-            next unless ref($binding) eq 'ARRAY' && @$binding >= 3;
-            push @bindings, {
-                role       => _format_expr($binding->[0]),
-                child_port => _format_expr($binding->[1]),
-                actor_expr => _format_expr($binding->[2]),
-            };
-        }
-    }
-    return \@bindings;
 }
 
 sub _spawn_instance_name($transaction, $clause) {

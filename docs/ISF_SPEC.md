@@ -5802,6 +5802,7 @@ Focused tests:
 - [t/1421-isf-control-flow-effect-checks.t](../t/1421-isf-control-flow-effect-checks.t)
 - [t/1422-isf-control-flow-child-plan.t](../t/1422-isf-control-flow-child-plan.t)
 - [t/1423-isf-control-flow-lifetime-checks.t](../t/1423-isf-control-flow-lifetime-checks.t)
+- [t/1424-isf-control-flow-domain-binding-effects.t](../t/1424-isf-control-flow-domain-binding-effects.t)
 
 ## 12. Explicitly Deferred
 

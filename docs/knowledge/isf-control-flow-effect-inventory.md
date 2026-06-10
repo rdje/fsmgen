@@ -6,14 +6,15 @@ answers:
   - "where are ISF control-flow effect invariant checks implemented?"
   - "where is ISF child activation planning derived from effect inventory?"
   - "where are ISF outstanding child lifetime checks implemented?"
+  - "where are ISF activation domain, binding, and CDC effects modeled?"
   - "how does FSMGen model ISF regions and activation effects in shadow mode?"
   - "where are await_any observe versus await_all drain effects recorded?"
   - "what module owns the initial compositional control-flow activation model?"
 date: 2026-06-10
 status: current
-tags: [isf, control-flow, architecture, activation, scheduling]
-evidence: perl/FSM/Scheduler/ISF/ControlFlowEffects.pm; t/1419-isf-control-flow-effect-inventory.t; t/1421-isf-control-flow-effect-checks.t; t/1422-isf-control-flow-child-plan.t; t/1423-isf-control-flow-lifetime-checks.t; docs/tasks/ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.md; docs/decisions/0013-compositional-control-flow-activation-model.md
-reverify: prove -Iperl t/1419-isf-control-flow-effect-inventory.t t/1421-isf-control-flow-effect-checks.t t/1422-isf-control-flow-child-plan.t t/1423-isf-control-flow-lifetime-checks.t
+tags: [isf, control-flow, architecture, activation, scheduling, cdc]
+evidence: perl/FSM/Scheduler/ISF/ControlFlowEffects.pm; t/1419-isf-control-flow-effect-inventory.t; t/1421-isf-control-flow-effect-checks.t; t/1422-isf-control-flow-child-plan.t; t/1423-isf-control-flow-lifetime-checks.t; t/1424-isf-control-flow-domain-binding-effects.t; docs/tasks/ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.md; docs/decisions/0013-compositional-control-flow-activation-model.md
+reverify: prove -Iperl t/1419-isf-control-flow-effect-inventory.t t/1421-isf-control-flow-effect-checks.t t/1422-isf-control-flow-child-plan.t t/1423-isf-control-flow-lifetime-checks.t t/1424-isf-control-flow-domain-binding-effects.t
 ---
 
 The initial compositional ISF control-flow model lives in
@@ -42,3 +43,11 @@ that derives local child start/done wire requirements, generated child instance
 plans, and sync points from the same effect list. The projection is tested
 against current emitted `.fsm` / `_top` artifacts but is not yet used to drive
 lowering.
+
+The private child-start effects now also carry explicit activation domain
+contracts, binding handoff records, and generated-top/CDC requirements. The
+checker proves same-domain activations, covered cross-domain blocking `do`
+through declared activation crossings, generated-top binding handoffs, and CDC
+start/done handoffs; uncovered cross-domain `do` and cross-domain `spawn`
+remain private violations that mirror the existing fail-closed public
+validators.
