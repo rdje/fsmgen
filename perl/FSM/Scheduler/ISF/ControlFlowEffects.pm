@@ -29,6 +29,34 @@ sub inventory_actor($self, $actor) {
     };
 }
 
+sub check_actor($self, $actor) {
+    return $self->check_inventory($self->inventory_actor($actor));
+}
+
+sub check_inventory($self, $inventory) {
+    confess "ControlFlowEffects checker expects an inventory hash reference\n"
+        unless ref($inventory) eq 'HASH';
+    confess "ControlFlowEffects checker inventory is missing transactions array\n"
+        unless ref($inventory->{transactions}) eq 'ARRAY';
+
+    my @transactions = map { _check_transaction($_) } @{$inventory->{transactions}};
+    my $violation_count = 0;
+    my $proof_count = 0;
+    for my $tx (@transactions) {
+        $violation_count += $tx->{summary}{violation_count};
+        $proof_count     += $tx->{summary}{proof_count};
+    }
+
+    return {
+        model           => 'isf_control_flow_effect_checks_v1',
+        actor_name      => $inventory->{actor_name},
+        ok              => $violation_count == 0 ? 1 : 0,
+        proof_count     => $proof_count,
+        violation_count => $violation_count,
+        transactions    => \@transactions,
+    };
+}
+
 sub _validate_actor($actor) {
     confess "ControlFlowEffects inventory expects an actor hash reference\n"
         unless ref($actor) eq 'HASH';
@@ -401,6 +429,198 @@ sub _transaction_summary($regions, $effects) {
         child_done_observe_effects => ($effect_kinds{child_done_observe} || 0),
         child_done_drain_effects  => ($effect_kinds{child_done_drain} || 0),
     };
+}
+
+sub _check_transaction($tx) {
+    confess "ControlFlowEffects checker transaction entry must be a hash reference\n"
+        unless ref($tx) eq 'HASH';
+    confess "ControlFlowEffects checker transaction is missing scalar name\n"
+        unless defined($tx->{name}) && !ref($tx->{name});
+
+    my @proofs;
+    my @violations;
+    my %region_by_id = map { $_->{id} => $_ } @{$tx->{regions} || []};
+
+    for my $region (@{$tx->{regions} || []}) {
+        _check_region_lifetime($tx, $region, \@proofs, \@violations);
+    }
+
+    my %generated_instance_owner;
+    for my $effect (@{$tx->{effects} || []}) {
+        _check_effect($tx, $effect, \%region_by_id, \%generated_instance_owner, \@proofs, \@violations);
+    }
+
+    return {
+        name       => $tx->{name},
+        ok         => @violations ? 0 : 1,
+        proofs     => \@proofs,
+        violations => \@violations,
+        summary    => {
+            proof_count     => scalar(@proofs),
+            violation_count => scalar(@violations),
+        },
+    };
+}
+
+sub _check_region_lifetime($tx, $region, $proofs, $violations) {
+    my @outstanding = @{$region->{outstanding_on_exit} || []};
+    my @backedges = @{$region->{backedges} || []};
+
+    if (@outstanding) {
+        _push_violation(
+            $violations,
+            transaction            => $tx->{name},
+            code                   => 'outstanding_children_without_lifetime_proof',
+            invariant              => 'child_lifetime',
+            region_id              => $region->{id},
+            region_kind            => $region->{kind},
+            path                   => $region->{path},
+            outstanding_done_ports => [@outstanding],
+            message                => 'region exits or loops with outstanding child completions and no explicit lifetime proof',
+        );
+    } elsif (@backedges) {
+        for my $backedge (@backedges) {
+            _push_proof(
+                $proofs,
+                transaction => $tx->{name},
+                code        => 'backedge_has_no_outstanding_children',
+                invariant   => 'loop_backedge_dominance',
+                region_id   => $region->{id},
+                region_kind => $region->{kind},
+                path        => $region->{path},
+                backedge    => $backedge->{kind},
+                message     => 'loop/repeat backedge is reached with no outstanding child completions in the shadow effect inventory',
+            );
+        }
+    }
+}
+
+sub _check_effect($tx, $effect, $region_by_id, $generated_instance_owner, $proofs, $violations) {
+    my $activation = $effect->{activation} // '';
+    if ($effect->{kind} eq 'child_start' && $activation eq 'do') {
+        if ($effect->{blocking} && ($effect->{done_semantics} // '') eq 'blocking_child_done_drain') {
+            _push_proof(
+                $proofs,
+                transaction => $tx->{name},
+                code        => 'blocking_do_drains_child_done',
+                invariant   => 'child_lifetime',
+                effect_id   => $effect->{id},
+                region_id   => $effect->{region_id},
+                child       => $effect->{child},
+                done_signal => $effect->{done_signal},
+                message     => 'blocking do waits for its child done before control can advance',
+            );
+        } else {
+            _push_violation(
+                $violations,
+                transaction => $tx->{name},
+                code        => 'blocking_do_missing_done_drain',
+                invariant   => 'child_lifetime',
+                effect_id   => $effect->{id},
+                region_id   => $effect->{region_id},
+                child       => $effect->{child},
+                message     => 'blocking do lacks an explicit child-done drain effect',
+            );
+        }
+    }
+
+    if ($effect->{kind} eq 'child_start' && $effect->{generated_child}) {
+        _check_generated_instance_identity($tx, $effect, $generated_instance_owner, $proofs, $violations);
+    }
+
+    if ($effect->{kind} eq 'child_done_observe' && $activation eq 'await_any') {
+        _push_proof(
+            $proofs,
+            transaction                  => $tx->{name},
+            code                         => 'await_any_observes_without_full_drain',
+            invariant                    => 'await_any_observe_not_drain',
+            effect_id                    => $effect->{id},
+            region_id                    => $effect->{region_id},
+            done_ports                   => $effect->{done_ports},
+            remaining_outstanding_after  => $effect->{remaining_outstanding_after},
+            message                      => 'await_any is modeled as an observation; any multi-pending remainder must be drained by a later effect',
+        );
+    }
+
+    if ($effect->{kind} eq 'child_done_drain' && $activation eq 'await_all') {
+        _push_proof(
+            $proofs,
+            transaction => $tx->{name},
+            code        => 'await_all_drains_outstanding_children',
+            invariant   => 'child_lifetime',
+            effect_id   => $effect->{id},
+            region_id   => $effect->{region_id},
+            done_ports  => $effect->{done_ports},
+            message     => 'await_all drains the outstanding child completion set visible at that point',
+        );
+    }
+
+    if (defined($effect->{domain}) && length($effect->{domain})) {
+        _push_proof(
+            $proofs,
+            transaction => $tx->{name},
+            code        => 'activation_domain_is_explicit',
+            invariant   => 'explicit_domain_binding_cdc',
+            effect_id   => $effect->{id},
+            region_id   => $effect->{region_id},
+            domain      => $effect->{domain},
+            message     => 'activation domain metadata is explicit in the effect inventory',
+        );
+    }
+}
+
+sub _check_generated_instance_identity($tx, $effect, $generated_instance_owner, $proofs, $violations) {
+    my $instance = $effect->{instance};
+    if (!defined($instance) || ref($instance) || !length($instance)) {
+        _push_violation(
+            $violations,
+            transaction => $tx->{name},
+            code        => 'generated_child_missing_static_instance',
+            invariant   => 'static_generated_instance_identity',
+            effect_id   => $effect->{id},
+            region_id   => $effect->{region_id},
+            child       => $effect->{child},
+            message     => 'generated child activation lacks a deterministic static instance name',
+        );
+        return;
+    }
+
+    if (exists $generated_instance_owner->{$instance}) {
+        _push_violation(
+            $violations,
+            transaction => $tx->{name},
+            code        => 'duplicate_generated_child_instance',
+            invariant   => 'static_generated_instance_identity',
+            effect_id   => $effect->{id},
+            previous_effect_id => $generated_instance_owner->{$instance},
+            region_id   => $effect->{region_id},
+            instance    => $instance,
+            child       => $effect->{child},
+            message     => 'generated child activation instance names must be unique within a transaction inventory',
+        );
+        return;
+    }
+
+    $generated_instance_owner->{$instance} = $effect->{id};
+    _push_proof(
+        $proofs,
+        transaction => $tx->{name},
+        code        => 'generated_child_instance_is_static',
+        invariant   => 'static_generated_instance_identity',
+        effect_id   => $effect->{id},
+        region_id   => $effect->{region_id},
+        child       => $effect->{child},
+        instance    => $instance,
+        message     => 'generated child activation has a deterministic static instance name',
+    );
+}
+
+sub _push_proof($proofs, %proof) {
+    push @$proofs, { kind => 'proof', %proof };
+}
+
+sub _push_violation($violations, %violation) {
+    push @$violations, { kind => 'violation', %violation };
 }
 
 sub _generated_child_targets($actor) {

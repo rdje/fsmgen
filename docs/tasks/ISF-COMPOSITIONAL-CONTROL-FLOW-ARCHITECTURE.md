@@ -6,7 +6,7 @@ Roadmap lane: R14 / ISF compositional control-flow and activation architecture
 
 Created: 2026-06-10
 
-Current frontier: `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.3`
+Current frontier: `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.4`
 
 ## Goal
 
@@ -117,7 +117,7 @@ Acceptance:
 
 ### ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.3 — Effect-Aware Safety Checks
 
-Status: active
+Status: done
 
 Goal: Add invariant checks over the shadow effect graph while still preserving
 current behavior.
@@ -131,7 +131,7 @@ Acceptance:
 
 ### ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.4 — Child Discovery And Generated Instance Planning
 
-Status: pending
+Status: active
 
 Goal: Derive child-action discovery, local start/done wiring requirements, and
 generated-child instance planning from effects instead of parallel ad hoc walks.
@@ -236,10 +236,29 @@ Acceptance:
   `scripts/check_memory_architecture.sh`; `prove -Iperl
   t/1414-docs-relative-paths-audit.t`; `mdbook build docs/book`; and
   `git diff --check` pass.
+- 2026-06-10 (`.3`): added private `check_actor` / `check_inventory`
+  invariant checks over the shadow control-flow/effect inventory. The checker
+  returns structured proofs and violations for outstanding-child lifetime,
+  loop/repeat backedge dominance, `await_any` observe-not-drain semantics,
+  `await_all` drain proofs, blocking-`do` done drains, deterministic generated
+  instance identity, and explicit activation-domain metadata, without wiring
+  the checker into lowering or public reports. `perl -Iperl -c
+  perl/FSM/Scheduler/ISF/ControlFlowEffects.pm`; `perl -Iperl -c
+  t/1421-isf-control-flow-effect-checks.t`; `prove -Iperl
+  t/1421-isf-control-flow-effect-checks.t`; `prove -Iperl
+  t/1419-isf-control-flow-effect-inventory.t
+  t/1421-isf-control-flow-effect-checks.t`; `prove -Iperl
+  t/1250-isf-spec-focused-test-index-audit.t`; `./bin/ci-regression isf
+  --no-book` (Files=294, Tests=2133); `knowledge-map/scripts/check_knowledge_map.sh`;
+  `scripts/check_memory_architecture.sh`; `prove -Iperl
+  t/1414-docs-relative-paths-audit.t`; `mdbook build docs/book`; and
+  `git diff --check` pass.
 
 ## Commit Log
 
 - `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.1`: `2a3f71e6`
   `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.1: own uniform activation architecture`.
-- `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.2.1`: this commit,
+- `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.2.1`: `4f6cde86`
   `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.2.1: add shadow effect inventory`.
+- `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.3`: this commit,
+  `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.3: add shadow invariant checks`.
