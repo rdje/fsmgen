@@ -10,10 +10,10 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.1` (this commit) — activated the uniform control-flow/activation architecture owner and ADR `0013`; no code behavior changed.
-- active_work_unit: `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.2.1` — add the read-only transaction region/effect inventory in shadow mode before any validator widening.
-- recently_done: `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.1`; `ISF-SCHEDULING-BACKLOG-FRONTIER.3.1`; `ISF-SCHEDULING-BACKLOG-FRONTIER.2.1`; `ISF-SCHEDULING-BACKLOG-FRONTIER.1`; `CI-SHARED-DP-SURFACE-REPAIR.1`; `COMPOSITION-T84-NET-COUNT-REPAIR.1`; `MDBOOK-CODEBASE-SYNC-AUDIT-JUN07.1`; `BIN-FSMGEN-IMPORT-TREE-JUN07-REFRESH.1`; `DOC-PATH-RELATIVE-KNOWLEDGE-MAP.1`; `ARCHITECTURE-DEBT-FRONTIER.3`; `ARCHITECTURE-DEBT-FRONTIER.2.1`; `ARCHITECTURE-DEBT-FRONTIER.2`.
-- in_flight_uncommitted: none expected after the `.1` architecture ownership commit; unrelated untracked `fx/` intentionally left alone.
+- latest_commit: `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.2.1` (this commit) — added private shadow control-flow/effect inventory; no ISF lowering/report behavior widened.
+- active_work_unit: `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.3` — add effect-aware invariant checks over the shadow region/effect graph while preserving current behavior.
+- recently_done: `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.2.1`; `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.1`; `ISF-SCHEDULING-BACKLOG-FRONTIER.3.1`; `ISF-SCHEDULING-BACKLOG-FRONTIER.2.1`; `ISF-SCHEDULING-BACKLOG-FRONTIER.1`; `CI-SHARED-DP-SURFACE-REPAIR.1`; `COMPOSITION-T84-NET-COUNT-REPAIR.1`; `MDBOOK-CODEBASE-SYNC-AUDIT-JUN07.1`; `BIN-FSMGEN-IMPORT-TREE-JUN07-REFRESH.1`; `DOC-PATH-RELATIVE-KNOWLEDGE-MAP.1`; `ARCHITECTURE-DEBT-FRONTIER.3`; `ARCHITECTURE-DEBT-FRONTIER.2.1`.
+- in_flight_uncommitted: none expected after the `.2.1` commit; unrelated untracked `fx/` intentionally left alone.
 - blockers: none.
 
 ## Notes

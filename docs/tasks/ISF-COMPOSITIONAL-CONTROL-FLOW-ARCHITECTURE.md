@@ -6,7 +6,7 @@ Roadmap lane: R14 / ISF compositional control-flow and activation architecture
 
 Created: 2026-06-10
 
-Current frontier: `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.2.1`
+Current frontier: `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.3`
 
 ## Goal
 
@@ -91,14 +91,14 @@ Evidence:
 
 ### ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.2 — Shadow Typed Region/Effect Model
 
-Status: active
+Status: done
 
 Goal: Build the typed region/effect model in shadow mode, without changing
 accepted/rejected behavior.
 
 #### ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.2.1 — Initial Region/Effect Inventory
 
-Status: pending
+Status: done
 
 Goal: Add a read-only internal inventory for transaction control-flow regions
 and child-activation effects covering existing shipped control-flow forms.
@@ -117,7 +117,7 @@ Acceptance:
 
 ### ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.3 — Effect-Aware Safety Checks
 
-Status: pending
+Status: active
 
 Goal: Add invariant checks over the shadow effect graph while still preserving
 current behavior.
@@ -216,8 +216,30 @@ Acceptance:
   `scripts/check_memory_architecture.sh`,
   `knowledge-map/scripts/check_knowledge_map.sh`, `prove -Iperl
   t/1414-docs-relative-paths-audit.t`, and `git diff --check` pass.
+- 2026-06-10 (`.2.1`): added private
+  `FSM::Scheduler::ISF::ControlFlowEffects` shadow inventory for typed
+  transaction/`when`/`switch`/`while`/`until`/`repeat` regions, local/generated
+  child starts, spawn starts, `await_any` observe effects, `await_all` drain
+  effects, outstanding children at region exits, binding/domain metadata, and
+  deterministic generated-child instance names. It is not wired into lowering
+  or public reports, so accepted/rejected behavior is unchanged. `perl -Iperl
+  -c perl/FSM/Scheduler/ISF/ControlFlowEffects.pm`; `perl -Iperl -c
+  t/1419-isf-control-flow-effect-inventory.t`; `prove -Iperl
+  t/1419-isf-control-flow-effect-inventory.t`; `prove -Iperl
+  t/1379-isf-loop-contained-repeat-body-local-do.t
+  t/1383-isf-loop-and-deeper-repeat-body-spawn.t
+  t/1384-isf-loop-and-deeper-repeat-body-multi-pending-awaitany.t
+  t/1388-isf-when-body-local-do.t
+  t/1419-isf-control-flow-effect-inventory.t`; `prove -Iperl
+  t/1250-isf-spec-focused-test-index-audit.t`; `./bin/ci-regression isf
+  --no-book` (Files=294, Tests=2133); `knowledge-map/scripts/check_knowledge_map.sh`;
+  `scripts/check_memory_architecture.sh`; `prove -Iperl
+  t/1414-docs-relative-paths-audit.t`; `mdbook build docs/book`; and
+  `git diff --check` pass.
 
 ## Commit Log
 
-- `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.1`: this commit,
+- `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.1`: `2a3f71e6`
   `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.1: own uniform activation architecture`.
+- `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.2.1`: this commit,
+  `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.2.1: add shadow effect inventory`.
