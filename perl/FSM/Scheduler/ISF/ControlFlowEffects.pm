@@ -947,6 +947,43 @@ sub _check_binding_handoffs($tx, $effect, $proofs, $violations) {
             parent_port       => $binding->{parent_port},
             message     => 'activation binding is represented as a typed parent/child handoff',
         );
+
+        my $caller_domain = $binding->{caller_domain};
+        my $endpoint_domain = $binding->{actor_endpoint_domain};
+        next unless defined($caller_domain) && defined($endpoint_domain);
+        if ($caller_domain ne $endpoint_domain) {
+            _push_violation(
+                $violations,
+                transaction => $tx->{name},
+                code        => 'binding_endpoint_domain_mismatch',
+                invariant   => 'explicit_domain_binding_cdc',
+                effect_id   => $effect->{id},
+                region_id   => $effect->{region_id},
+                child       => $effect->{child},
+                role        => $binding->{role},
+                child_port  => $binding->{child_port},
+                actor_expr  => $binding->{actor_expr},
+                caller_domain => $caller_domain,
+                actor_endpoint_domain => $endpoint_domain,
+                message     => 'activation binding endpoint is not in the caller transaction domain',
+            );
+            next;
+        }
+        _push_proof(
+            $proofs,
+            transaction => $tx->{name},
+            code        => 'binding_endpoint_is_same_domain',
+            invariant   => 'explicit_domain_binding_cdc',
+            effect_id   => $effect->{id},
+            region_id   => $effect->{region_id},
+            child       => $effect->{child},
+            role        => $binding->{role},
+            child_port  => $binding->{child_port},
+            actor_expr  => $binding->{actor_expr},
+            caller_domain => $caller_domain,
+            actor_endpoint_domain => $endpoint_domain,
+            message     => 'activation binding endpoint is in the caller transaction domain',
+        );
     }
 }
 
@@ -1314,6 +1351,7 @@ sub _binding_handoffs($ctx, $clause, $child, $activation, $instance) {
                 actor_expr                     => $actor_expr,
                 actor_endpoint_domain          => $endpoint->{domain},
                 actor_endpoint_kind            => $endpoint->{kind},
+                caller_domain                  => $ctx->{transaction_domain},
                 handoff_direction              => $role eq 'input' ? 'actor_to_child'
                     : $role eq 'output' ? 'child_to_actor'
                     : 'unknown',

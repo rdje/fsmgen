@@ -2796,9 +2796,11 @@ sub _validate_transaction_clause_domain_refs {
         }
         for my $binding (_activation_bindings_from_clause($clause, $tx->{name}, $label)->@*) {
             if ($binding->{role} eq 'input') {
-                _validate_domain_expr_reads($binding->{actor_expr}, $domain, $signal_domains, $local_signals, $constants, "$context $keyword input binding '$binding->{port}'");
+                _validate_domain_expr_reads($binding->{actor_expr}, $domain, $signal_domains, $local_signals, $constants, "$context $keyword input binding '$binding->{port}'")
+                    unless _control_flow_effects_prove_binding_endpoint_domain($actor, $tx->{name}, $target, 'input', $binding->{port}, $binding->{actor_expr});
             } else {
-                _validate_domain_signal_access($binding->{actor_signal}, 'write', $domain, $signal_domains, $local_signals, $constants, "$context $keyword output binding '$binding->{port}'");
+                _validate_domain_signal_access($binding->{actor_signal}, 'write', $domain, $signal_domains, $local_signals, $constants, "$context $keyword output binding '$binding->{port}'")
+                    unless _control_flow_effects_prove_binding_endpoint_domain($actor, $tx->{name}, $target, 'output', $binding->{port}, $binding->{actor_signal});
             }
         }
         return 1;
@@ -2941,6 +2943,30 @@ sub _control_flow_effects_prove_activation_domain_metadata($actor, $transaction_
             next unless ($proof->{code} // '') eq 'activation_domain_is_explicit';
             next unless ($proof->{child} // '') eq $target;
             next unless ($proof->{domain} // '') eq $activation_domain;
+            return 1;
+        }
+    }
+    return 0;
+}
+
+sub _control_flow_effects_prove_binding_endpoint_domain($actor, $transaction_name, $target, $role, $child_port, $actor_endpoint) {
+    return 0 unless defined($transaction_name) && !ref($transaction_name);
+    return 0 unless defined($target) && !ref($target);
+    return 0 unless defined($role) && !ref($role);
+    return 0 unless defined($child_port) && !ref($child_port);
+    return 0 unless defined($actor_endpoint);
+    my $actor_expr = ref($actor_endpoint) ? _format_isf_expr($actor_endpoint) : $actor_endpoint;
+    return 0 if ref($actor_expr) || !defined($actor_expr);
+
+    my $check = _control_flow_effect_check($actor);
+    for my $tx (@{$check->{transactions} || []}) {
+        next unless ($tx->{name} // '') eq $transaction_name;
+        for my $proof (@{$tx->{proofs} || []}) {
+            next unless ($proof->{code} // '') eq 'binding_endpoint_is_same_domain';
+            next unless ($proof->{child} // '') eq $target;
+            next unless ($proof->{role} // '') eq $role;
+            next unless ($proof->{child_port} // '') eq $child_port;
+            next unless ($proof->{actor_expr} // '') eq $actor_expr;
             return 1;
         }
     }
