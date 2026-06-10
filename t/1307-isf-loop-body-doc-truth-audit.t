@@ -59,6 +59,16 @@ for my $path (@loop_docs) {
     );
     like(
         $content,
+        qr/while.*when.*repeat.*local.*do/si,
+        "$path documents the shipped while-then-when repeat-body local do subset",
+    );
+    like(
+        $content,
+        qr/until.*nested.*when.*deferred/si,
+        "$path documents the remaining until-then-when repeat-body deferral",
+    );
+    like(
+        $content,
         qr/repeat(?:-body| body).*generated.*do.*params/s,
         "$path documents the shipped repeat-body generated do static-parameter subset",
     );

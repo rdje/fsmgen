@@ -960,7 +960,10 @@ A plain local `(do child)` and a same-domain generated `(do child (params ...))`
 `(repeat ...)` that sits directly in a single `(while ...)` or `(until ...)`
 body, plus the same plain-local and same-domain-generated `do` at deeper branch
 nesting (`when⁺ → repeat`, `switch → when⁺ → repeat`), are part of the shipped
-repeat-body subset. The basic loop-contained/deeper-nested `spawn` + same-body
+repeat-body subset. The first loop-plus-branch repeat-body activation is also
+shipped for plain local `while -> when -> repeat -> do`; generated `do`,
+spawn, `until -> when`, nested `switch`, and extra loop nesting in that family
+remain deferred. The basic loop-contained/deeper-nested `spawn` + same-body
 drain subset and multi-pending `await_any` with a later same-body `await_all`
 drain are also shipped at lowering + composition-planning level. Deeper-nested
 cross-domain repeat-body `do`, cross-domain `spawn`, undrained spawn forms,

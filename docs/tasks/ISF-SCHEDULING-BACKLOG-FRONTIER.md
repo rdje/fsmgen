@@ -6,7 +6,7 @@ Roadmap lane: R14 / ISF scheduling, activation, CDC, ATL, actor-network, and gen
 
 Created: 2026-06-10
 
-Current frontier: `ISF-SCHEDULING-BACKLOG-FRONTIER.3.1`
+Current frontier: `ISF-SCHEDULING-BACKLOG-FRONTIER.4.1`
 
 ## Goal
 
@@ -132,7 +132,7 @@ Evidence:
 
 ### ISF-SCHEDULING-BACKLOG-FRONTIER.3 — Deeper Nested Repeat-Body `do` / `spawn`
 
-Status: active
+Status: done
 
 Goal: Extend or close the remaining deeper/general nested repeat-body child
 activation combinations beyond the currently covered local, generated, loop,
@@ -147,7 +147,7 @@ Acceptance:
 
 #### ISF-SCHEDULING-BACKLOG-FRONTIER.3.1 — Loop-Then-When Repeat Local `do`
 
-Status: pending
+Status: done
 
 Goal: Implement or close the first loop-plus-branch repeat-body activation
 shape: a plain local `(do child)` inside a `(repeat ...)` reached through one
@@ -168,9 +168,21 @@ Acceptance:
 - Sync `docs/book/src/13d-control-flow.md`, the feature backlog, and public
   audits/spec text impacted by the result.
 
+Evidence:
+
+- `while -> when -> repeat -> plain local do` now lowers and gates the local
+  child start/done handshake through the existing repeat schedule.
+- Generated `do` in the same loop-plus-branch shape stays fail-closed with a
+  targeted loop-plus-branch diagnostic; `until -> when`, spawned, CDC, nested
+  switch, and extra-loop variants remain outside this leaf.
+- `docs/book/src/13d-control-flow.md`,
+  `docs/book/src/13k-isf-feature-support-matrix.md`,
+  `docs/book/src/14-feature-backlog.md`, `docs/ISF_SPEC.md`, and
+  `docs/knowledge/isf-while-when-repeat-local-do.md` are synced.
+
 ### ISF-SCHEDULING-BACKLOG-FRONTIER.4 — Outstanding-Child Lifetime Rules
 
-Status: pending
+Status: active
 
 Goal: Define and implement exact outstanding-child lifetime semantics beyond
 the current repeat re-entry drain rule.
@@ -181,6 +193,25 @@ Acceptance:
   completion, parent-exit drain, or explicit detach.
 - Prove behavior under local and generated child activation where applicable.
 - Document the resulting hardware scheduling contract.
+
+#### ISF-SCHEDULING-BACKLOG-FRONTIER.4.1 — Outstanding-Child Lifetime First Slice
+
+Status: pending
+
+Goal: Select and implement the first exact lifetime rule beyond the current
+mandatory repeat re-entry drain model, or close the first candidate with a
+targeted diagnostic if the hardware contract is not yet safe.
+
+Acceptance:
+
+- Audit current outstanding generated-child diagnostics around undrained spawn
+  and multi-pending `await_any` without a later drain.
+- Select one precise behavior before source edits, such as explicit detach,
+  parent-exit drain, generation-tagged completion, or a sharper fail-closed
+  diagnostic for a named shape.
+- Prove no regression to repeat re-entry freshness, generated-child done-set
+  handling, and already shipped same-body drain paths.
+- Sync the book/spec/backlog wording for the chosen rule.
 
 ### ISF-SCHEDULING-BACKLOG-FRONTIER.5 — Repeated/Nested ATL Triggers And Waits
 
@@ -248,9 +279,31 @@ Acceptance:
   t/1305-isf-book-feature-matrix-audit.t
   t/1256-feature-backlog-status-audit.t`, `mdbook build docs/book`,
   `scripts/check_memory_architecture.sh`, and `git diff --check` pass.
+- 2026-06-10 (`.3.1`): shipped `while -> when -> repeat -> plain local do`;
+  generated/spawn/CDC/`until -> when` variants remain fail-closed.
+  `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c
+  t/1374-isf-loop-contained-repeat-body-activation-diagnostic.t`; `perl
+  -Iperl -c t/1375-isf-deeper-nested-repeat-body-activation-diagnostic.t`;
+  `perl -Iperl -c t/1379-isf-loop-contained-repeat-body-local-do.t`; and
+  `prove -Iperl t/1374-isf-loop-contained-repeat-body-activation-diagnostic.t
+  t/1375-isf-deeper-nested-repeat-body-activation-diagnostic.t
+  t/1379-isf-loop-contained-repeat-body-local-do.t
+  t/1380-isf-loop-contained-repeat-body-generated-do.t
+  t/1381-isf-deeper-nested-repeat-body-local-do.t
+  t/1382-isf-deeper-nested-repeat-body-generated-do.t
+  t/1383-isf-loop-and-deeper-repeat-body-spawn.t
+  t/1384-isf-loop-and-deeper-repeat-body-multi-pending-awaitany.t
+  t/1305-isf-book-feature-matrix-audit.t
+  t/1307-isf-loop-body-doc-truth-audit.t
+  t/1256-feature-backlog-status-audit.t` pass. Broad gates also pass:
+  `./bin/ci-regression isf --no-book` (Files=294, Tests=2133), `mdbook
+  build docs/book`, `knowledge-map/scripts/check_knowledge_map.sh`,
+  `scripts/check_memory_architecture.sh`, and `git diff --check`.
 
 ## Commit Log
 
 - `ISF-SCHEDULING-BACKLOG-FRONTIER.1`: `0cf6722c
   ISF-SCHEDULING-BACKLOG-FRONTIER.1: track scheduling backlog`
-- Pending: `ISF-SCHEDULING-BACKLOG-FRONTIER.2.1`.
+- `ISF-SCHEDULING-BACKLOG-FRONTIER.2.1`: `fedfde19
+  ISF-SCHEDULING-BACKLOG-FRONTIER.2.1: close direct on override boundary`
+- Pending: `ISF-SCHEDULING-BACKLOG-FRONTIER.3.1`.

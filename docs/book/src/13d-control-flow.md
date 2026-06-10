@@ -615,9 +615,23 @@ re-runs the repeat block or returns to the loop check. So
 `N` times per loop iteration"; `(until ...)` applies the post-test form of the
 same shape.
 
-This subset is intentionally narrow. The repeat must sit **directly** in a
-single loop body — a repeat reached through an extra `(when ...)`/`(switch ...)`
-ancestor, or through more than one loop, stays deferred (see below).
+This subset is intentionally narrow. The repeat may sit **directly** in a
+single loop body, and the first loop-plus-branch widening also accepts a plain
+local `(do child)` when one `while` body contains one nested `when` body whose
+body contains the repeat:
+
+```text
+(while c1
+  (when c2
+    (repeat N
+      (do worker))))        ;; shipped: plain local do only
+```
+
+The `while` guard enters the nested `when`; the `when` guard enters
+`repeat_init`; the local `do` waits for the worker's fresh done pulse before
+`repeat_check` can either re-run the worker or return to the `while` re-test.
+Generated `do`, `spawn`, cross-domain, `(bind ...)`, `(domain ...)`, `until`
+plus nested `when`, nested `switch`, and extra loop nesting stay deferred.
 
 ### Loop-contained repeat-body generated `do`
 
@@ -696,9 +710,10 @@ later `(await_all done)` the outstanding children trip the drain requirement
 above. A **cross-domain** generated `do` stays deferred (`cross-domain repeat-body do
 remains deferred`); bindings or domain metadata without static `(params ...)`
 emit `repeat-body generated do bindings require static '(params ...)'
-overrides`. A repeat wrapped by both a loop and a branch (for example
-`(while c1 (when c2 (repeat ...)))`) still routes through
-`Transaction 'parent': loop-contained repeat-body do remains deferred`.
+overrides`. The only shipped loop-plus-branch repeat-body activation is the
+plain local `while -> when -> repeat -> do` shape above; generated `do`,
+spawn, `until -> when`, nested `switch`, and extra loop nesting still route
+through the loop-contained/deeper-nested deferral diagnostics.
 
 The multi-pending observation + later-drain shape lowers like this:
 

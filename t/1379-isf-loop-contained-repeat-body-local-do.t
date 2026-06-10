@@ -13,8 +13,10 @@ use FSM::Scheduler::ISF;
 # Locks scheduler-frontier #1: a plain local (do child) inside a (repeat N ...)
 # that sits directly in one (while ...)/(until ...) body now lowers cleanly.
 # This is a validator gate relaxation; the lowering reuses the proven top-level
-# repeat structure (repeat_init -> blocking-do -> repeat_check). spawn,
-# generated do, and deeper nesting stay deferred.
+# repeat structure (repeat_init -> blocking-do -> repeat_check). The first
+# loop-plus-branch widening accepts while -> when -> repeat -> local do only;
+# spawn, generated do, until-plus-branch, and broader deeper nesting stay
+# deferred.
 #
 # Tree: ISF-LOOP-CONTAINED-REPEAT-BODY-LOCAL-DO-LOWERING
 
@@ -94,9 +96,9 @@ ISF
 
 # NOTE: same-domain generated do (t/1380) and the basic spawn + same-body
 # (await_all done) subset (t/1383) in a loop-contained repeat are now SUPPORTED.
-# This subtest covers deferrals that remain: an UNDRAINED spawn, and a repeat
-# reached through an extra branch ancestor.
-subtest 'undrained loop-contained repeat-body spawn and deeper nesting stay deferred' => sub {
+# This subtest covers deferrals that remain plus the first loop-plus-branch
+# local-do widening.
+subtest 'undrained spawn stays deferred; while-then-when repeat local do lowers' => sub {
     # An undrained spawn (no same-body await_all/await_any) stays deferred.
     my $spawn = <<'ISF';
 (actor while_repeat_spawn
@@ -119,7 +121,6 @@ ISF
     like($@, qr/Transaction 'parent': loop-contained repeat-body spawn requires same-body '\(await_all done\)' or single-pending '\(await_any done\)'/,
         'an undrained spawn in a loop-contained repeat stays deferred');
 
-    # when-inside-while local do stays deferred via the loop-contained diagnostic
     my $when_in_while = <<'ISF';
 (actor while_when_repeat_do
   (clock clk)
@@ -137,10 +138,42 @@ ISF
   (transaction worker
     (complete done)))
 ISF
-    my $ok3 = eval { parse_lower($when_in_while, 'when-in-while.isf'); 1 };
-    ok(!$ok3, 'when-inside-while repeat-body local do is rejected');
+    my $result = eval { parse_lower($when_in_while, 'when-in-while.isf') };
+    ok($result, 'while-then-when repeat-body local do lowers cleanly') or diag($@);
+    my $fsm = $result->{files}{'while_when_repeat_do.fsm'};
+
+    like($fsm, qr/\(parent_while_entry_\d+\b.*?\?c1.*?->\s*parent_when_\d+.*?->\s*parent_done_\d+/s,
+        'while entry tests c1: true enters the nested when, false exits to done');
+    like($fsm, qr/\(parent_when_\d+\b.*?\?c2.*?->\s*parent_repeat_init_\d+/s,
+        'nested when tests c2 and enters repeat_init when true');
+    like($fsm, qr/\(parent_repeat_init_\d+\b.*?\(<=\s*\(parent_cnt loops\)\)/s,
+        'nested repeat_init seeds parent_cnt from loops');
+    like($fsm, qr/\(parent_do_\d+\b.*?\(=\s*\(worker_start 1\)\).*?\(<worker_done.*?->\s*parent_repeat_check_\d+/s,
+        'nested local do asserts worker_start, awaits worker_done, then repeat_check');
+    like($fsm, qr/\(parent_repeat_check_\d+\b.*?\(--\s*parent_cnt\).*?\(!=0\s*\(->\s*parent_do_\d+\)\).*?\(=0\s*\(->\s*parent_while_check_\d+\)\)/s,
+        'repeat_check drains the local do before either re-running or returning to while_check');
+
+    my $until_when = <<'ISF';
+(actor until_when_repeat_do
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start) (input c1) (input c2) (input loops (width 3))
+    (output done))
+  (transaction parent
+    (on start)
+    (until c1
+      (when c2
+        (repeat loops
+          (do worker))))
+    (complete done))
+  (transaction worker
+    (complete done)))
+ISF
+    my $ok4 = eval { parse_lower($until_when, 'until-when.isf'); 1 };
+    ok(!$ok4, 'until-then-when repeat-body local do remains rejected');
     like($@, qr/Transaction 'parent': loop-contained repeat-body do remains deferred/,
-        'a repeat reached through when-inside-while stays deferred (not a single direct loop body)');
+        'the loop-plus-branch widening is limited to while-then-when');
 };
 
 done_testing();

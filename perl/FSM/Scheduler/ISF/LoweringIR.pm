@@ -1734,6 +1734,18 @@ sub _child_action_refs_from_transaction_clauses {
                     };
                     next;
                 }
+                if ($keyword eq 'while' && $body_clause->[0] eq 'when') {
+                    _push_nested_branch_repeat_refs(
+                        \@refs,
+                        [@{$body_clause}[2 .. $#$body_clause]],
+                        'when body',
+                        \$repeat_do_ordinal,
+                        $options,
+                        $actor,
+                        $tx_name,
+                    );
+                    next;
+                }
                 next unless $body_clause->[0] eq 'repeat';
                 my $static_zero_repeat = _repeat_clause_is_static_zero_for_refs($body_clause, $actor, $tx_name);
                 next if $options->{skip_static_zero_repeats} && $static_zero_repeat;
@@ -6721,6 +6733,7 @@ sub _validate_repeat_body_spawn_subset {
     my $loop_body_repeat = ($label eq 'while body' || $label eq 'until body')
         && (_context_depths_match_exactly($context_depths, { while => 1 })
             || _context_depths_match_exactly($context_depths, { until => 1 }));
+    my $while_then_when_repeat = _repeat_body_context_is_while_then_when($label, $context_depths) ? 1 : 0;
     # A repeat reached through deeper branch nesting (when+ -> repeat,
     # switch -> when+ -> repeat). Returns 0 for loop-contained and top-level/
     # single-branch contexts, so this is exactly the deeper branch case.
@@ -6835,7 +6848,7 @@ sub _validate_repeat_body_spawn_subset {
             # branch). A repeat reached through a loop ancestor (loop-contained)
             # routes through the loop-contained deferral. ($deeper_nested_repeat
             # is computed once at function scope.)
-            if (!($top_level_repeat || $when_body_repeat || $switch_branch_repeat || $loop_body_repeat)) {
+            if (!($top_level_repeat || $when_body_repeat || $switch_branch_repeat || $loop_body_repeat || $while_then_when_repeat)) {
                 confess "Transaction '$tn': loop-contained repeat-body do remains deferred\n"
                     if _repeat_body_context_is_loop_contained($context_depths);
                 confess "Transaction '$tn': repeat-body do is supported only for top-level repeat clauses, top-level when-body nested repeat clauses, or top-level switch-branch nested repeat clauses\n"
@@ -6874,6 +6887,9 @@ sub _validate_repeat_body_spawn_subset {
                 if ($top_level_repeat || $loop_body_repeat || $deeper_nested_repeat) && $uses_bindings && !$uses_generated_params;
             confess "Transaction '$tn': repeat-body generated do domain metadata requires static '(params ...)' overrides in the current generated blocking-do subset\n"
                 if ($top_level_repeat || $loop_body_repeat || $deeper_nested_repeat) && $uses_domain && !$uses_generated_params;
+            confess "Transaction '$tn': while-then-when repeat-body do supports only plain local '(do child)' in the current loop-plus-branch subset\n"
+                if $while_then_when_repeat
+                    && ($uses_generated_params || $uses_bindings || $uses_domain || $generated_do);
             if (@pending_spawns) {
                 my $plain_local_do = !$uses_generated_params && !$uses_bindings && !$uses_domain && !$generated_do;
                 my $plain_generated_child_do = !$uses_generated_params && !$uses_bindings && !$uses_domain && $generated_do;
@@ -7221,6 +7237,12 @@ sub _repeat_body_context_is_deeper_nested {
         return 0;
     }
     return 0;
+}
+
+sub _repeat_body_context_is_while_then_when {
+    my ($label, $context_depths) = @_;
+    return 0 unless defined($label) && $label eq 'when body';
+    return _context_depths_match_exactly($context_depths, { while => 1, when => 1 }) ? 1 : 0;
 }
 
 sub _validate_loop_clause {

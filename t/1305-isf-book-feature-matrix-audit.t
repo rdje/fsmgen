@@ -214,6 +214,7 @@ my @required_examples = (
     'top-level monitor arm states',
     'loop decision states',
     'top-level repeat-body local blocking do',
+    'plain local `while -> when -> repeat -> do`',
     'top-level when-body nested repeat local do',
     'top-level switch-branch nested repeat local do',
     'top-level when-body nested repeat generated spawns with optional static params, bind handoffs, same-domain domain metadata, source-order samples, same-body await_all, single-pending same-body await_any when exactly one generated child is pending, and multi-pending same-body await_any with mandatory same-body await_all drain',

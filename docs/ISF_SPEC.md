@@ -2632,6 +2632,14 @@ Current lowering:
   `(bind ...)`/`(domain NAME)` when static params are present) inside a
   `(repeat ...)` directly in a single `(while ...)`/`(until ...)` body; a
   generated `do` instantiates its child in the `_top` composition. A further
+  shipped loop-plus-branch subset accepts a plain local `(do child)` inside a
+  `(repeat ...)` reached through `while -> when -> repeat`; the `while` guard
+  enters the nested `when`, the `when` guard enters `repeat_init`, the local
+  `do` waits for the child transaction's fresh done pulse, and the repeat
+  check returns to the `while` re-test after the repeat body drains. Generated
+  `do`, `spawn`, cross-domain, `(bind ...)`, `(domain ...)`, `until -> when`,
+  nested `switch`, and extra loop nesting in this loop-plus-branch family
+  remain fail-closed. A further
   shipped subset accepts a plain local `(do child)` and a same-domain generated
   `(do child (params ...))` inside a `(repeat ...)` reached through deeper
   branch nesting (`when⁺ → repeat`, `switch → when⁺ → repeat`); the generated

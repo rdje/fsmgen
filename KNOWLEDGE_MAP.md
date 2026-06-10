@@ -3,7 +3,7 @@
 > **AUTO-GENERATED — DO NOT EDIT.** Regenerate with `knowledge-map/scripts/gen_knowledge_map.sh`.
 > Source of truth = YAML front-matter in: `docs/knowledge docs/decisions`. Edit the fact files, never this map.
 > A fact is any `.md` whose front-matter has a non-empty `answers:` list.
-> **45** facts · **368** question keys.
+> **46** facts · **372** question keys.
 
 ## Questions → fact
 
@@ -25,6 +25,7 @@
 - "can embedders select structured generation?" -> [flattened-generation-mode-boundary](docs/knowledge/flattened-generation-mode-boundary.md) · 2026-06-05 · reverify: `prove -Iperl t/375-hdl-generator-facade-contract.t t/414-hdl-generator-facade-constructor-option-name-boundary-audit.t t/297-capability-manifest.t`
 - "can package roots generate VHDL packages?" -> [direct-vhdl-scaffold](docs/knowledge/direct-vhdl-scaffold.md) · 2026-06-07 · reverify: `prove -Iperl t/1420-vhdl-direct-backend-scaffold.t t/386-hdl-generator-facade-target-language-boundary-audit.t t/114-composition-target-support-diagnostics.t t/313-hdl-external-validation-contract.t t/308-systemverilog-external-validation.t`
 - "can the Knowledge Map contain absolute local paths?" -> [doc-paths-relative-to-repo-root](docs/knowledge/doc-paths-relative-to-repo-root.md) · 2026-06-07 · reverify: `prove -Iperl t/1414-docs-relative-paths-audit.t`
+- "can while -> when -> repeat -> do lower in ISF?" -> [isf-while-when-repeat-local-do](docs/knowledge/isf-while-when-repeat-local-do.md) · 2026-06-10 · reverify: `prove -Iperl t/1374-isf-loop-contained-repeat-body-activation-diagnostic.t t/1375-isf-deeper-nested-repeat-body-activation-diagnostic.t t/1379-isf-loop-contained-repeat-body-local-do.t t/1305-isf-book-feature-matrix-audit.t t/1307-isf-loop-body-doc-truth-audit.t`
 - "do aggregate parameters support equality or inequality?" -> [aggregate-parameter-comparison](docs/knowledge/aggregate-parameter-comparison.md) · 2026-06-05 · reverify: `prove -Iperl t/30-language-contract-symbol-definitions.t t/51-language-contract-symbol-definition-boundary.t t/88-rtlif-typed-port-contract.t t/91-composition-multi-rtl-children.t t/292-composition-generated-child-parameter-overrides.t`
 - "do package roots generate HDL directly?" -> [direct-vhdl-scaffold](docs/knowledge/direct-vhdl-scaffold.md) · 2026-06-07 · reverify: `prove -Iperl t/1420-vhdl-direct-backend-scaffold.t t/386-hdl-generator-facade-target-language-boundary-audit.t t/114-composition-target-support-diagnostics.t t/313-hdl-external-validation-contract.t t/308-systemverilog-external-validation.t`
 - "does --language vhdl work for APB/C4 composition tops?" -> [direct-vhdl-scaffold](docs/knowledge/direct-vhdl-scaffold.md) · 2026-06-07 · reverify: `prove -Iperl t/1420-vhdl-direct-backend-scaffold.t t/386-hdl-generator-facade-target-language-boundary-audit.t t/114-composition-target-support-diagnostics.t t/313-hdl-external-validation-contract.t t/308-systemverilog-external-validation.t`
@@ -41,6 +42,7 @@
 - "does ISF (within …) support a lower bound / a range / F[min,max]?" -> [isf-bounded-window-min](docs/knowledge/isf-bounded-window-min.md) · 2026-06-04 · reverify: `prove -Iperl t/1418-isf-property-window-range.t`
 - "does ISF support $past in assertions?" -> [isf-sampled-value-predicates](docs/knowledge/isf-sampled-value-predicates.md) · 2026-06-05 · reverify: `prove -Iperl t/1417-isf-property-sampled-value.t`
 - "does ISF support $stable / $rose / $fell / $changed?" -> [isf-sampled-value-predicates](docs/knowledge/isf-sampled-value-predicates.md) · 2026-06-05 · reverify: `prove -Iperl t/1417-isf-property-sampled-value.t`
+- "does ISF support local do inside a repeat under while then when?" -> [isf-while-when-repeat-local-do](docs/knowledge/isf-while-when-repeat-local-do.md) · 2026-06-10 · reverify: `prove -Iperl t/1374-isf-loop-contained-repeat-body-activation-diagnostic.t t/1375-isf-deeper-nested-repeat-body-activation-diagnostic.t t/1379-isf-loop-contained-repeat-body-local-do.t t/1305-isf-book-feature-matrix-audit.t t/1307-isf-loop-body-doc-truth-audit.t`
 - "does ISF validate the assert condition or pass it through?" -> [isf-property-grammar-location](docs/knowledge/isf-property-grammar-location.md) · 2026-06-05 · reverify: `grep -n "sub parse_check_property" perl/FSM/Adapter/FSMGenFull/Parser.pm`
 - "does VHDL package declaration/emission ship?" -> [direct-vhdl-scaffold](docs/knowledge/direct-vhdl-scaffold.md) · 2026-06-07 · reverify: `prove -Iperl t/1420-vhdl-direct-backend-scaffold.t t/386-hdl-generator-facade-target-language-boundary-audit.t t/114-composition-target-support-diagnostics.t t/313-hdl-external-validation-contract.t t/308-systemverilog-external-validation.t`
 - "does adding a schedule-report key need a schema_version bump?" -> [isf-schedule-report-additive-keys](docs/knowledge/isf-schedule-report-additive-keys.md) · 2026-06-03 · reverify: `prove -Iperl t/1116-isf-public-schedule-report-key-family-audit.t t/1227-isf-schedule-report-freeze-boundary.t`
@@ -238,6 +240,7 @@
 - "is full-width inference still closed?" -> [isf-full-width-inference-terminal](docs/knowledge/isf-full-width-inference-terminal.md) · 2026-06-05 · reverify: `prove -Iperl t/1385-isf-multi-unknown-width-fail-closed-terminal.t t/1344-isf-assemble-static-part-widths.t t/1101-isf-extract-slices.t`
 - "is generation_result_snapshot a direct embedding child?" -> [generation-result-snapshot-embedding-child](docs/knowledge/generation-result-snapshot-embedding-child.md) · 2026-06-05 · reverify: `prove -Iperl t/321-embedding-contract.t t/297-capability-manifest.t t/358-capability-manifest-runtime-contract-audit.t t/437-embedding-section-defensive-copy-boundary-audit.t t/632-serializable-generation-result-snapshot.t`
 - "is generic_fifo supported?" -> [generic-fifo-template-boundary](docs/knowledge/generic-fifo-template-boundary.md) · 2026-06-05 · reverify: `prove -Iperl t/248-regression-corpus-accounting.t t/249-regression-corpus-classified-behavior.t t/300-check-json-regression-corpus.t t/304-normalized-semantic-json-regression-corpus.t t/41-language-contract-top-level-source-kind-boundary.t`
+- "is loop-plus-branch repeat-body local do shipped?" -> [isf-while-when-repeat-local-do](docs/knowledge/isf-while-when-repeat-local-do.md) · 2026-06-10 · reverify: `prove -Iperl t/1374-isf-loop-contained-repeat-body-activation-diagnostic.t t/1375-isf-deeper-nested-repeat-body-activation-diagnostic.t t/1379-isf-loop-contained-repeat-body-local-do.t t/1305-isf-book-feature-matrix-audit.t t/1307-isf-loop-body-doc-truth-audit.t`
 - "is lte_digital_rf supported?" -> [lte-digital-rf-multi-rtl-boundary](docs/knowledge/lte-digital-rf-multi-rtl-boundary.md) · 2026-06-05 · reverify: `prove -Iperl t/248-regression-corpus-accounting.t t/249-regression-corpus-classified-behavior.t t/300-check-json-regression-corpus.t t/304-normalized-semantic-json-regression-corpus.t`
 - "is non-flattened generation supported?" -> [flattened-generation-mode-boundary](docs/knowledge/flattened-generation-mode-boundary.md) · 2026-06-05 · reverify: `prove -Iperl t/375-hdl-generator-facade-contract.t t/414-hdl-generator-facade-constructor-option-name-boundary-audit.t t/297-capability-manifest.t`
 - "is the ISF schedule report schema frozen or can it grow?" -> [isf-schedule-report-additive-keys](docs/knowledge/isf-schedule-report-additive-keys.md) · 2026-06-03 · reverify: `prove -Iperl t/1116-isf-public-schedule-report-key-family-audit.t t/1227-isf-schedule-report-freeze-boundary.t`
@@ -363,6 +366,7 @@
 - "where is the verilator-simulable vs formal-only (ifndef SYNTHESIS / ifdef FORMAL) split decided?" -> [isf-property-grammar-location](docs/knowledge/isf-property-grammar-location.md) · 2026-06-05 · reverify: `grep -n "sub parse_check_property" perl/FSM/Adapter/FSMGenFull/Parser.pm`
 - "which book chapter covers ISF temporal properties, trigger anchors, monitors?" -> [isf-verification-book-map](docs/knowledge/isf-verification-book-map.md) · 2026-06-05 · reverify: `grep -rln "assert\|monitor\|=>\|sampled-value" docs/book/src/13d-control-flow.md docs/book/src/13k-isf-feature-support-matrix.md`
 - "which composition VHDL subset is shipped?" -> [direct-vhdl-scaffold](docs/knowledge/direct-vhdl-scaffold.md) · 2026-06-07 · reverify: `prove -Iperl t/1420-vhdl-direct-backend-scaffold.t t/386-hdl-generator-facade-target-language-boundary-audit.t t/114-composition-target-support-diagnostics.t t/313-hdl-external-validation-contract.t t/308-systemverilog-external-validation.t`
+- "which loop-plus-branch repeat-body do subset is supported?" -> [isf-while-when-repeat-local-do](docs/knowledge/isf-while-when-repeat-local-do.md) · 2026-06-10 · reverify: `prove -Iperl t/1374-isf-loop-contained-repeat-body-activation-diagnostic.t t/1375-isf-deeper-nested-repeat-body-activation-diagnostic.t t/1379-isf-loop-contained-repeat-body-local-do.t t/1305-isf-book-feature-matrix-audit.t t/1307-isf-loop-body-doc-truth-audit.t`
 - "which mdBook chapters do I update when I add an ISF verification feature?" -> [isf-verification-book-map](docs/knowledge/isf-verification-book-map.md) · 2026-06-05 · reverify: `grep -rln "assert\|monitor\|=>\|sampled-value" docs/book/src/13d-control-flow.md docs/book/src/13k-isf-feature-support-matrix.md`
 - "which module parses ISF / lowers ISF / emits the schedule report?" -> [isf-lowering-pipeline](docs/knowledge/isf-lowering-pipeline.md) · 2026-06-03 · reverify: `grep -rln "package FSM::Scheduler::ISF" perl/FSM/Scheduler/ISF*`
 - "why did prove exit with code 137?" -> [full-test-suite-invocation](docs/knowledge/full-test-suite-invocation.md) · 2026-06-03 · reverify: `prove -j4 -Iperl t/`
@@ -539,6 +543,15 @@ _Where the ISF verification/property surface is documented in the book_
 - **evidence:** `docs/book/src/13d-control-flow.md; docs/book/src/13k-isf-feature-support-matrix.md; t/1376-isf-book-example-lowering-audit.t; t/1305-isf-book-feature-matrix-audit.t`
 - **reverify:** `grep -rln "assert\|monitor\|=>\|sampled-value" docs/book/src/13d-control-flow.md docs/book/src/13k-isf-feature-support-matrix.md`
 - **source:** [`docs/knowledge/isf-verification-book-map.md`](docs/knowledge/isf-verification-book-map.md)
+
+### isf-while-when-repeat-local-do
+_ISF while-then-when repeat-body local do support_
+
+- **answers:** does ISF support local do inside a repeat under while then when? | can while -> when -> repeat -> do lower in ISF? | is loop-plus-branch repeat-body local do shipped? | which loop-plus-branch repeat-body do subset is supported?
+- **date:** 2026-06-10 · **status:** current
+- **evidence:** `perl/FSM/Scheduler/ISF/LoweringIR.pm; t/1379-isf-loop-contained-repeat-body-local-do.t; t/1374-isf-loop-contained-repeat-body-activation-diagnostic.t; t/1375-isf-deeper-nested-repeat-body-activation-diagnostic.t; docs/book/src/13d-control-flow.md; docs/book/src/13k-isf-feature-support-matrix.md; docs/ISF_SPEC.md`
+- **reverify:** `prove -Iperl t/1374-isf-loop-contained-repeat-body-activation-diagnostic.t t/1375-isf-deeper-nested-repeat-body-activation-diagnostic.t t/1379-isf-loop-contained-repeat-body-local-do.t t/1305-isf-book-feature-matrix-audit.t t/1307-isf-loop-body-doc-truth-audit.t`
+- **source:** [`docs/knowledge/isf-while-when-repeat-local-do.md`](docs/knowledge/isf-while-when-repeat-local-do.md)
 
 ### loop-early-exit-target-hook
 _Mid-loop exit/continue targets come from loop_exit_target computed in _link_states_

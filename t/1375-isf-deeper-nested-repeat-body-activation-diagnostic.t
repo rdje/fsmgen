@@ -120,14 +120,13 @@ ISF
     );
 };
 
-# A plain local (do child) directly inside a single (while ...)/(until ...)
-# -contained repeat now lowers (see t/1379). When a loop AND branch nesting
-# both wrap the repeat, the loop-contained diagnostic still wins over the
-# deeper-nested one — this negative control pins that precedence.
-subtest 'loop-contained diagnostic still fires first (negative control)' => sub {
+# A plain local (do child) in the first loop-plus-branch while -> when -> repeat
+# shape now lowers (see t/1379). The generated-do variant remains outside that
+# slice and pins the loop-plus-branch diagnostic instead of a deeper-branch one.
+subtest 'loop-plus-branch generated-do diagnostic still fires first' => sub {
     assert_lower_rejected(
         <<'ISF',
-(actor while_when_repeat_do_probe
+(actor while_when_repeat_generated_do_probe
   (clock clk)
   (reset rst_n)
   (interface
@@ -138,13 +137,14 @@ subtest 'loop-contained diagnostic still fires first (negative control)' => sub 
     (while c1
       (when c2
         (repeat loops
-          (do worker))))
+          (do worker (params (W 8))))))
     (complete done))
   (transaction worker
+    (params (W 4))
     (complete done)))
 ISF
-        qr/Transaction 'parent': loop-contained repeat-body do remains deferred/,
-        'a repeat wrapped by both a loop and a when still routes through the loop-contained diagnostic first',
+        qr/Transaction 'parent': while-then-when repeat-body do supports only plain local '\(do child\)'/,
+        'a generated repeat-body do wrapped by both a loop and a when still routes through the loop-plus-branch diagnostic first',
     );
 };
 

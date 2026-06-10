@@ -10,10 +10,10 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `ISF-SCHEDULING-BACKLOG-FRONTIER.2.1` (this commit) — closed direct `(on ...)` activation overrides as the shipped fail-closed entry-guard boundary, added labeled-entry regression coverage, and synced the book/spec wording.
-- active_work_unit: `ISF-SCHEDULING-BACKLOG-FRONTIER.3.1` — implement or close the narrow `while -> when -> repeat -> local do` loop-plus-branch repeat-body activation slice; generated/spawn/CDC/extra-loop variants remain out of scope unless explicitly proven.
-- recently_done: `ISF-SCHEDULING-BACKLOG-FRONTIER.2.1`; `ISF-SCHEDULING-BACKLOG-FRONTIER.1`; `CI-SHARED-DP-SURFACE-REPAIR.1`; `COMPOSITION-T84-NET-COUNT-REPAIR.1`; `MDBOOK-CODEBASE-SYNC-AUDIT-JUN07.1`; `BIN-FSMGEN-IMPORT-TREE-JUN07-REFRESH.1`; `DOC-PATH-RELATIVE-KNOWLEDGE-MAP.1`; `ARCHITECTURE-DEBT-FRONTIER.3`; `ARCHITECTURE-DEBT-FRONTIER.2.1`; `ARCHITECTURE-DEBT-FRONTIER.2`; `ARCHITECTURE-DEBT-FRONTIER.1`; `BACKEND-API-VALIDATION-FRONTIER.132`.
-- in_flight_uncommitted: none expected after the direct-on boundary commit; unrelated untracked `fx/` intentionally left alone.
+- latest_commit: `ISF-SCHEDULING-BACKLOG-FRONTIER.3.1` (this commit) — shipped the narrow `while -> when -> repeat -> plain local do` loop-plus-branch repeat-body activation subset with generated/spawn/CDC/`until -> when` variants still fail-closed.
+- active_work_unit: `ISF-SCHEDULING-BACKLOG-FRONTIER.4.1` — select and implement or close the first exact outstanding-child lifetime rule beyond mandatory repeat re-entry drain.
+- recently_done: `ISF-SCHEDULING-BACKLOG-FRONTIER.3.1`; `ISF-SCHEDULING-BACKLOG-FRONTIER.2.1`; `ISF-SCHEDULING-BACKLOG-FRONTIER.1`; `CI-SHARED-DP-SURFACE-REPAIR.1`; `COMPOSITION-T84-NET-COUNT-REPAIR.1`; `MDBOOK-CODEBASE-SYNC-AUDIT-JUN07.1`; `BIN-FSMGEN-IMPORT-TREE-JUN07-REFRESH.1`; `DOC-PATH-RELATIVE-KNOWLEDGE-MAP.1`; `ARCHITECTURE-DEBT-FRONTIER.3`; `ARCHITECTURE-DEBT-FRONTIER.2.1`; `ARCHITECTURE-DEBT-FRONTIER.2`; `ARCHITECTURE-DEBT-FRONTIER.1`.
+- in_flight_uncommitted: none expected after the `.3.1` commit; unrelated untracked `fx/` intentionally left alone.
 - blockers: none.
 
 ## Notes

@@ -13,12 +13,13 @@ use FSM::Scheduler::ISF;
 # A plain local (do child) AND a same-domain generated (do child (params ...))
 # directly inside a single (while ...)/(until ...)-contained repeat now LOWER
 # (see t/1379 and t/1380). The loop-contained do deferral now applies only to a
-# repeat reached through an additional branch/loop ancestor, and to a
-# cross-domain generated do (its own cross-domain diagnostic).
-subtest 'loop-contained repeat-body do still defers through extra nesting' => sub {
+# generated repeat reached through the first loop-plus-branch shape, through
+# broader loop/branch ancestors, and to a cross-domain generated do (its own
+# cross-domain diagnostic).
+subtest 'loop-plus-branch generated repeat-body do still defers' => sub {
     assert_lower_rejected(
         <<'ISF',
-(actor while_when_repeat_do_probe
+(actor while_when_repeat_generated_do_probe
   (clock clk)
   (reset rst_n)
   (interface
@@ -29,13 +30,14 @@ subtest 'loop-contained repeat-body do still defers through extra nesting' => su
     (while c1
       (when c2
         (repeat loops
-          (do worker))))
+          (do worker (params (W 8))))))
     (complete done))
   (transaction worker
+    (params (W 4))
     (complete done)))
 ISF
-        qr/Transaction 'parent': loop-contained repeat-body do remains deferred/,
-        'a repeat reached through when-inside-while still routes through the loop-contained diagnostic',
+        qr/Transaction 'parent': while-then-when repeat-body do supports only plain local '\(do child\)'/,
+        'generated do in while-then-when repeat-body still routes through the loop-plus-branch diagnostic',
     );
 
     assert_lower_rejected(

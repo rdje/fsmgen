@@ -723,10 +723,13 @@ loop-contained repeat (lowering + composition parity with the top-level
 repeat-body spawn). An undrained loop-contained spawn fails closed
 (`loop-contained repeat-body spawn requires same-body '(await_all done)' or
 single-pending '(await_any done)'`), a multi-pending `(await_any done)` is
-deferred (`loop-contained repeat-body multi-pending '(await_any done)' remains
-deferred`), and a cross-domain generated `do` fails closed (`cross-domain
-repeat-body do remains deferred`); a repeat reached through an additional loop
-ancestor still emits `loop-contained repeat-body do remains deferred`. A plain
+accepted only as an observation point when a later same-body `(await_all done)`
+drains the same outstanding children, and a cross-domain generated `do` fails
+closed (`cross-domain repeat-body do remains deferred`). A plain local
+`(do child)` inside `while -> when -> repeat` now also lowers (`t/1379`);
+generated `do`, `spawn`, `until -> when`, nested `switch`, and extra loop
+nesting in that loop-plus-branch family still emit the loop-contained or
+deeper-nested deferral diagnostics. A plain
 local `(do child)` (`t/1381`), a same-domain generated `(do child (params ...))`
 (`t/1382`), and the basic spawn + drain subset (`t/1383`) at deeper branch
 nesting (`when⁺ → repeat`, `switch → when⁺ → repeat`) also lower; a
