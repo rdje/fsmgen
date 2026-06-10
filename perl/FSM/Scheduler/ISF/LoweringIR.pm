@@ -2791,7 +2791,7 @@ sub _validate_transaction_clause_domain_refs {
                     $domain,
                     $activation_domain,
                     'activation',
-                );
+                ) unless _control_flow_effects_prove_activation_domain_metadata($actor, $tx->{name}, $target, $activation_domain);
             }
         }
         for my $binding (_activation_bindings_from_clause($clause, $tx->{name}, $label)->@*) {
@@ -2923,6 +2923,24 @@ sub _control_flow_effects_prove_same_domain_activation($actor, $transaction_name
         for my $proof (@{$tx->{proofs} || []}) {
             next unless ($proof->{code} // '') eq 'activation_target_is_same_domain';
             next unless ($proof->{child} // '') eq $target;
+            return 1;
+        }
+    }
+    return 0;
+}
+
+sub _control_flow_effects_prove_activation_domain_metadata($actor, $transaction_name, $target, $activation_domain) {
+    return 0 unless defined($transaction_name) && !ref($transaction_name);
+    return 0 unless defined($target) && !ref($target);
+    return 0 unless defined($activation_domain) && !ref($activation_domain);
+
+    my $check = _control_flow_effect_check($actor);
+    for my $tx (@{$check->{transactions} || []}) {
+        next unless ($tx->{name} // '') eq $transaction_name;
+        for my $proof (@{$tx->{proofs} || []}) {
+            next unless ($proof->{code} // '') eq 'activation_domain_is_explicit';
+            next unless ($proof->{child} // '') eq $target;
+            next unless ($proof->{domain} // '') eq $activation_domain;
             return 1;
         }
     }

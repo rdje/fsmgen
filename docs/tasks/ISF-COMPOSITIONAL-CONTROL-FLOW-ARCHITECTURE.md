@@ -6,7 +6,7 @@ Roadmap lane: R14 / ISF compositional control-flow and activation architecture
 
 Created: 2026-06-10
 
-Current frontier: `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.7.3`
+Current frontier: `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.7.4`
 
 ## Goal
 
@@ -230,10 +230,36 @@ Result:
 
 #### ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.7.3 — Next Validator Gate Selection
 
-Status: active
+Status: done
 
 Goal: Select and migrate the next narrow validator gate after same-domain
 target validation, still preserving public behavior unless one exact
+combination is explicitly selected for widening.
+
+Acceptance:
+
+- The selected gate has positive and negative fixtures before migration.
+- The region/effect checker owns the proof or violation used by the migrated
+  decision.
+- Existing accepted/rejected behavior remains stable unless this leaf records
+  an exact newly accepted combination before implementation.
+
+Result:
+
+- Selected the activation-instance `(domain NAME)` metadata validator check for
+  `do` and `spawn` clauses.
+- The validator now skips the direct metadata-domain comparison only when
+  `ControlFlowEffects` proves `activation_domain_is_explicit` for the same
+  transaction, child, and authored domain.
+- A proof for one authored domain does not hide a mismatched metadata site for
+  the same child; mismatches keep their existing public diagnostic.
+
+#### ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.7.4 — Next Validator Gate Selection
+
+Status: active
+
+Goal: Select and migrate the next narrow validator gate after activation-domain
+metadata validation, still preserving public behavior unless one exact
 combination is explicitly selected for widening.
 
 Acceptance:
@@ -390,6 +416,35 @@ Acceptance:
   `knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl
   t/1414-docs-relative-paths-audit.t`; `mdbook build docs/book`; and
   `git diff --check` pass.
+- 2026-06-10 (`.7.3`): migrated the activation-instance domain metadata
+  validator decision for `do`/`spawn` clauses from a direct same-domain
+  comparison to the `ControlFlowEffects` proof
+  `activation_domain_is_explicit`, matched by transaction, child, and authored
+  domain. Mismatched metadata still falls through to the existing public
+  diagnostic, including when the same child has another good metadata proof.
+  `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c
+  t/1427-isf-control-flow-activation-domain-validator-effect-migration.t`;
+  `prove -Iperl
+  t/1427-isf-control-flow-activation-domain-validator-effect-migration.t`;
+  `prove -Iperl t/1247-isf-clock-domain-partition.t
+  t/1387-isf-cross-domain-activation-handshake-lowering.t
+  t/1425-isf-control-flow-validator-effect-migration.t
+  t/1426-isf-control-flow-same-domain-validator-effect-migration.t
+  t/1427-isf-control-flow-activation-domain-validator-effect-migration.t`;
+  `prove -Iperl t/1419-isf-control-flow-effect-inventory.t
+  t/1421-isf-control-flow-effect-checks.t
+  t/1422-isf-control-flow-child-plan.t
+  t/1423-isf-control-flow-lifetime-checks.t
+  t/1424-isf-control-flow-domain-binding-effects.t
+  t/1425-isf-control-flow-validator-effect-migration.t
+  t/1426-isf-control-flow-same-domain-validator-effect-migration.t
+  t/1427-isf-control-flow-activation-domain-validator-effect-migration.t`;
+  `prove -Iperl t/1215-isf-spawn-parameter-binding.t`; `prove -Iperl
+  t/1250-isf-spec-focused-test-index-audit.t`; `./bin/ci-regression isf
+  --no-book` (Files=294, Tests=2133); `scripts/check_memory_architecture.sh`;
+  `knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl
+  t/1414-docs-relative-paths-audit.t`; `mdbook build docs/book`; and
+  `git diff --check` pass.
 - 2026-06-10 (`.4`): added private `plan_actor` / `plan_inventory` child-plan
   projection derived from the shadow effect list. The plan records local child
   start/done wiring requirements, generated child instance plans, and sync
@@ -441,5 +496,7 @@ Acceptance:
   `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.6: model domain binding cdc effects`.
 - `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.7.1`: `d392930d`,
   `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.7.1: route xdomain do through effects`.
-- `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.7.2`: this commit,
+- `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.7.2`: `002a79d8`,
   `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.7.2: route same-domain activations through effects`.
+- `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.7.3`: this commit,
+  `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.7.3: route activation domains through effects`.

@@ -5805,6 +5805,7 @@ Focused tests:
 - [t/1424-isf-control-flow-domain-binding-effects.t](../t/1424-isf-control-flow-domain-binding-effects.t)
 - [t/1425-isf-control-flow-validator-effect-migration.t](../t/1425-isf-control-flow-validator-effect-migration.t)
 - [t/1426-isf-control-flow-same-domain-validator-effect-migration.t](../t/1426-isf-control-flow-same-domain-validator-effect-migration.t)
+- [t/1427-isf-control-flow-activation-domain-validator-effect-migration.t](../t/1427-isf-control-flow-activation-domain-validator-effect-migration.t)
 
 ## 12. Explicitly Deferred
 
