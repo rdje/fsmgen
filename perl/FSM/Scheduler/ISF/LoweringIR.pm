@@ -7,9 +7,13 @@ use feature qw(signatures postderef);
 no warnings 'experimental::signatures';
 use POSIX qw(log);
 use Carp qw(confess);
+use Scalar::Util qw(refaddr);
 use FSM::Package::IntegerLiteralSupport;
+use FSM::Scheduler::ISF::ControlFlowEffects;
 
 sub new($class, %args) { bless { debug => ($args{debug} // 0) }, $class }
+
+my %CONTROL_FLOW_EFFECT_CHECK_CACHE;
 
 my %SUPPORTED_TRANSACTION_CLAUSES = (
     transaction => {
@@ -2773,7 +2777,7 @@ sub _validate_transaction_clause_domain_refs {
             || ($label // '') eq 'until body';
         my $covered_activation = $keyword eq 'do'
             && $covered_activation_label
-            && _activation_crossing_covers($actor, $domain, $transaction_domains->{$target}, $target);
+            && _control_flow_effects_prove_activation_crossing($actor, $tx->{name}, $target);
         if (!$covered_activation) {
             _validate_same_domain_target(
                 "$context $keyword target '$target'",
@@ -2873,6 +2877,32 @@ sub _validate_same_domain_target {
         if $target_domain ne $owner_domain;
 
     return 1;
+}
+
+sub _control_flow_effect_check($actor) {
+    my $key = refaddr($actor);
+    confess "ISF control-flow effect check cache expects an actor hash reference\n"
+        unless defined($key);
+    return $CONTROL_FLOW_EFFECT_CHECK_CACHE{$key}
+        if exists $CONTROL_FLOW_EFFECT_CHECK_CACHE{$key};
+    return $CONTROL_FLOW_EFFECT_CHECK_CACHE{$key} =
+        FSM::Scheduler::ISF::ControlFlowEffects->new()->check_actor($actor);
+}
+
+sub _control_flow_effects_prove_activation_crossing($actor, $transaction_name, $target) {
+    return 0 unless defined($transaction_name) && !ref($transaction_name);
+    return 0 unless defined($target) && !ref($target);
+
+    my $check = _control_flow_effect_check($actor);
+    for my $tx (@{$check->{transactions} || []}) {
+        next unless ($tx->{name} // '') eq $transaction_name;
+        for my $proof (@{$tx->{proofs} || []}) {
+            next unless ($proof->{code} // '') eq 'activation_crossing_covers_child_start';
+            next unless ($proof->{child} // '') eq $target;
+            return 1;
+        }
+    }
+    return 0;
 }
 
 # True when the actor declares an `(activation child (from SRC)(to DEST))`

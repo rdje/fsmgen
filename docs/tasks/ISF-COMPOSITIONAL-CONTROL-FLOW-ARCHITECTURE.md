@@ -6,7 +6,7 @@ Roadmap lane: R14 / ISF compositional control-flow and activation architecture
 
 Created: 2026-06-10
 
-Current frontier: `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.7`
+Current frontier: `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.7.2`
 
 ## Goal
 
@@ -183,6 +183,39 @@ Acceptance:
 - Existing positive and negative fixtures stay behaviorally stable except for
   the intentionally selected newly accepted combinations.
 
+#### ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.7.1 — Cross-Domain Activation Coverage Gate
+
+Status: done
+
+Goal: Route the transaction-domain validator decision that permits a covered
+cross-domain blocking `(do child)` through the effect checker proof instead of
+a direct crossing lookup.
+
+Acceptance:
+
+- The same-domain validator skips its failure only when
+  `ControlFlowEffects` proves `activation_crossing_covers_child_start` for the
+  caller/child pair.
+- Existing covered cross-domain blocking `do` fixtures still lower.
+- Existing uncovered cross-domain `do`, cross-domain `spawn`, and deeper
+  placement diagnostics stay stable.
+- No new cross-domain activation shape is accepted in this leaf.
+
+#### ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.7.2 — Next Validator Gate Selection
+
+Status: active
+
+Goal: Select and migrate the next narrow validator gate that can be proven by
+the current region/effect model without broad behavior widening.
+
+Acceptance:
+
+- The selected gate has positive and negative fixtures before migration.
+- The effect checker already exposes the proof or violation needed for the
+  decision, or the leaf first adds that proof in shadow mode.
+- Public diagnostics and accepted/rejected behavior remain stable unless the
+  leaf explicitly selects one newly accepted combination.
+
 ### ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.8 — Combination Enablement
 
 Status: pending
@@ -277,6 +310,31 @@ Acceptance:
   `knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl
   t/1414-docs-relative-paths-audit.t`; `mdbook build docs/book`; and
   `git diff --check` pass.
+- 2026-06-10 (`.7.1`): migrated the transaction-domain validator decision for
+  covered cross-domain blocking `do` from a direct activation-crossing lookup
+  to the `ControlFlowEffects` proof
+  `activation_crossing_covers_child_start`. The existing activation-crossing
+  placement gate remains in force, so uncovered `do`, cross-domain `spawn`,
+  and deeper unsupported placements keep their prior diagnostics; no new
+  source shape is accepted. `perl -Iperl -c
+  perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c
+  t/1425-isf-control-flow-validator-effect-migration.t`; `prove -Iperl
+  t/1425-isf-control-flow-validator-effect-migration.t`; `prove -Iperl
+  t/1247-isf-clock-domain-partition.t
+  t/1387-isf-cross-domain-activation-handshake-lowering.t
+  t/1425-isf-control-flow-validator-effect-migration.t`; `prove -Iperl
+  t/1215-isf-spawn-parameter-binding.t`; `prove -Iperl
+  t/1419-isf-control-flow-effect-inventory.t
+  t/1421-isf-control-flow-effect-checks.t
+  t/1422-isf-control-flow-child-plan.t
+  t/1423-isf-control-flow-lifetime-checks.t
+  t/1424-isf-control-flow-domain-binding-effects.t
+  t/1425-isf-control-flow-validator-effect-migration.t`; `prove -Iperl
+  t/1250-isf-spec-focused-test-index-audit.t`; and `./bin/ci-regression isf
+  --no-book` (Files=294, Tests=2133); `scripts/check_memory_architecture.sh`;
+  `knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl
+  t/1414-docs-relative-paths-audit.t`; `mdbook build docs/book`; and
+  `git diff --check` pass.
 - 2026-06-10 (`.4`): added private `plan_actor` / `plan_inventory` child-plan
   projection derived from the shadow effect list. The plan records local child
   start/done wiring requirements, generated child instance plans, and sync
@@ -324,5 +382,7 @@ Acceptance:
   `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.4: derive child plan from effects`.
 - `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.5`: `3cfd6cc5`
   `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.5: refine lifetime proofs`.
-- `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.6`: this commit,
+- `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.6`: `1d61afc7`
   `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.6: model domain binding cdc effects`.
+- `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.7.1`: this commit,
+  `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.7.1: route xdomain do through effects`.

@@ -7,14 +7,15 @@ answers:
   - "where is ISF child activation planning derived from effect inventory?"
   - "where are ISF outstanding child lifetime checks implemented?"
   - "where are ISF activation domain, binding, and CDC effects modeled?"
+  - "which validator path first consumes the ISF control-flow effect checker?"
   - "how does FSMGen model ISF regions and activation effects in shadow mode?"
   - "where are await_any observe versus await_all drain effects recorded?"
   - "what module owns the initial compositional control-flow activation model?"
 date: 2026-06-10
 status: current
 tags: [isf, control-flow, architecture, activation, scheduling, cdc]
-evidence: perl/FSM/Scheduler/ISF/ControlFlowEffects.pm; t/1419-isf-control-flow-effect-inventory.t; t/1421-isf-control-flow-effect-checks.t; t/1422-isf-control-flow-child-plan.t; t/1423-isf-control-flow-lifetime-checks.t; t/1424-isf-control-flow-domain-binding-effects.t; docs/tasks/ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.md; docs/decisions/0013-compositional-control-flow-activation-model.md
-reverify: prove -Iperl t/1419-isf-control-flow-effect-inventory.t t/1421-isf-control-flow-effect-checks.t t/1422-isf-control-flow-child-plan.t t/1423-isf-control-flow-lifetime-checks.t t/1424-isf-control-flow-domain-binding-effects.t
+evidence: perl/FSM/Scheduler/ISF/ControlFlowEffects.pm; perl/FSM/Scheduler/ISF/LoweringIR.pm; t/1419-isf-control-flow-effect-inventory.t; t/1421-isf-control-flow-effect-checks.t; t/1422-isf-control-flow-child-plan.t; t/1423-isf-control-flow-lifetime-checks.t; t/1424-isf-control-flow-domain-binding-effects.t; t/1425-isf-control-flow-validator-effect-migration.t; docs/tasks/ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.md; docs/decisions/0013-compositional-control-flow-activation-model.md
+reverify: prove -Iperl t/1419-isf-control-flow-effect-inventory.t t/1421-isf-control-flow-effect-checks.t t/1422-isf-control-flow-child-plan.t t/1423-isf-control-flow-lifetime-checks.t t/1424-isf-control-flow-domain-binding-effects.t t/1425-isf-control-flow-validator-effect-migration.t
 ---
 
 The initial compositional ISF control-flow model lives in
@@ -51,3 +52,10 @@ through declared activation crossings, generated-top binding handoffs, and CDC
 start/done handoffs; uncovered cross-domain `do` and cross-domain `spawn`
 remain private violations that mirror the existing fail-closed public
 validators.
+
+`LoweringIR` now consumes the first effect-checker proof in a production
+validator path: covered cross-domain blocking `do` skips the same-domain target
+failure only when `ControlFlowEffects` proves
+`activation_crossing_covers_child_start`. The existing activation-crossing
+placement gate remains in force, so deeper unsupported placements and
+cross-domain `spawn` still fail closed with their prior diagnostics.
