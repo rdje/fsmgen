@@ -10,10 +10,10 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.4` (this commit) — derived private child discovery/generated instance planning from shadow effects; no emitted artifacts consume it yet.
-- active_work_unit: `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.5` — move outstanding-child lifetime rules into the shadow effect checker while preserving current behavior.
-- recently_done: `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.4`; `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.3`; `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.2.1`; `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.1`; `ISF-SCHEDULING-BACKLOG-FRONTIER.3.1`; `ISF-SCHEDULING-BACKLOG-FRONTIER.2.1`; `ISF-SCHEDULING-BACKLOG-FRONTIER.1`; `CI-SHARED-DP-SURFACE-REPAIR.1`; `COMPOSITION-T84-NET-COUNT-REPAIR.1`; `MDBOOK-CODEBASE-SYNC-AUDIT-JUN07.1`; `BIN-FSMGEN-IMPORT-TREE-JUN07-REFRESH.1`; `DOC-PATH-RELATIVE-KNOWLEDGE-MAP.1`.
-- in_flight_uncommitted: none expected after the `.4` commit; unrelated untracked `fx/` intentionally left alone.
+- latest_commit: `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.5` (this commit) — refined private outstanding-child lifetime proofs and violations; public lowering/diagnostics unchanged.
+- active_work_unit: `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.6` — model binding handoffs, domain ownership, and CDC activation requirements as explicit effects.
+- recently_done: `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.5`; `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.4`; `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.3`; `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.2.1`; `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.1`; `ISF-SCHEDULING-BACKLOG-FRONTIER.3.1`; `ISF-SCHEDULING-BACKLOG-FRONTIER.2.1`; `ISF-SCHEDULING-BACKLOG-FRONTIER.1`; `CI-SHARED-DP-SURFACE-REPAIR.1`; `COMPOSITION-T84-NET-COUNT-REPAIR.1`; `MDBOOK-CODEBASE-SYNC-AUDIT-JUN07.1`; `BIN-FSMGEN-IMPORT-TREE-JUN07-REFRESH.1`.
+- in_flight_uncommitted: none expected after the `.5` commit; unrelated untracked `fx/` intentionally left alone.
 - blockers: none.
 
 ## Notes

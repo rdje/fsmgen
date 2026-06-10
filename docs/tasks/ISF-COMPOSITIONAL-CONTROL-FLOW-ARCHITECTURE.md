@@ -6,7 +6,7 @@ Roadmap lane: R14 / ISF compositional control-flow and activation architecture
 
 Created: 2026-06-10
 
-Current frontier: `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.5`
+Current frontier: `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.6`
 
 ## Goal
 
@@ -144,7 +144,7 @@ Acceptance:
 
 ### ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.5 — Outstanding-Child Lifetime Contract
 
-Status: active
+Status: done
 
 Goal: Move outstanding-child lifetime rules into the effect checker.
 
@@ -157,7 +157,7 @@ Acceptance:
 
 ### ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.6 — Domain, Binding, And CDC Effects
 
-Status: pending
+Status: active
 
 Goal: Model binding handoffs, domain ownership, and CDC activation requirements
 as explicit effects.
@@ -236,6 +236,25 @@ Acceptance:
   `scripts/check_memory_architecture.sh`; `prove -Iperl
   t/1414-docs-relative-paths-audit.t`; `mdbook build docs/book`; and
   `git diff --check` pass.
+- 2026-06-10 (`.5`): refined the private lifetime checker so live
+  outstanding children on loop/repeat backedges report
+  `backedge_has_live_outstanding_children`, while live children at non-loop
+  exits report `region_exit_has_live_outstanding_children`. Added explicit
+  `await_any` lifetime proofs for single-pending completion and multi-pending
+  later-drain obligations. Public lowering/diagnostics remain unchanged.
+  `perl -Iperl -c perl/FSM/Scheduler/ISF/ControlFlowEffects.pm`; `perl
+  -Iperl -c t/1423-isf-control-flow-lifetime-checks.t`; `prove -Iperl
+  t/1421-isf-control-flow-effect-checks.t
+  t/1423-isf-control-flow-lifetime-checks.t`; `prove -Iperl
+  t/1419-isf-control-flow-effect-inventory.t
+  t/1421-isf-control-flow-effect-checks.t
+  t/1422-isf-control-flow-child-plan.t
+  t/1423-isf-control-flow-lifetime-checks.t`; `prove -Iperl
+  t/1250-isf-spec-focused-test-index-audit.t`; `./bin/ci-regression isf
+  --no-book` (Files=294, Tests=2133); `knowledge-map/scripts/check_knowledge_map.sh`;
+  `scripts/check_memory_architecture.sh`; `prove -Iperl
+  t/1414-docs-relative-paths-audit.t`; `mdbook build docs/book`; and
+  `git diff --check` pass.
 - 2026-06-10 (`.4`): added private `plan_actor` / `plan_inventory` child-plan
   projection derived from the shadow effect list. The plan records local child
   start/done wiring requirements, generated child instance plans, and sync
@@ -279,5 +298,7 @@ Acceptance:
   `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.2.1: add shadow effect inventory`.
 - `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.3`: `b06197e4`
   `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.3: add shadow invariant checks`.
-- `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.4`: this commit,
+- `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.4`: `00a9e859`
   `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.4: derive child plan from effects`.
+- `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.5`: this commit,
+  `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.5: refine lifetime proofs`.

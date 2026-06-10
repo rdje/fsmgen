@@ -104,10 +104,11 @@ ISF
     ok(!$check->{ok}, 'checker rejects the undrained spawn shape');
     is($check->{violation_count}, 1, 'one invariant violation explains the missing proof');
     my $tx = transaction_check($check, 'parent');
-    my $violation = first_violation($tx, 'outstanding_children_without_lifetime_proof');
-    ok($violation, 'outstanding lifetime violation recorded');
-    is($violation->{invariant}, 'child_lifetime', 'violation is attached to the child lifetime invariant');
+    my $violation = first_violation($tx, 'backedge_has_live_outstanding_children');
+    ok($violation, 'backedge lifetime violation recorded');
+    is($violation->{invariant}, 'loop_backedge_dominance', 'violation is attached to the loop-backedge invariant');
     is($violation->{region_kind}, 'repeat', 'violation is located at the repeat region');
+    is($violation->{backedge}, 'repeat_check_nonzero', 'violation names the repeat backedge');
     is_deeply($violation->{outstanding_done_ports}, ['w0_done'], 'violation names the undrained child done port');
 
     my $ok = eval { FSM::Scheduler::ISF->new()->lower($actor); 1 };

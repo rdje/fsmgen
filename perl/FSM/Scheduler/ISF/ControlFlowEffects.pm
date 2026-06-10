@@ -573,17 +573,32 @@ sub _check_region_lifetime($tx, $region, $proofs, $violations) {
     my @outstanding = @{$region->{outstanding_on_exit} || []};
     my @backedges = @{$region->{backedges} || []};
 
-    if (@outstanding) {
+    if (@outstanding && @backedges) {
+        for my $backedge (@backedges) {
+            _push_violation(
+                $violations,
+                transaction            => $tx->{name},
+                code                   => 'backedge_has_live_outstanding_children',
+                invariant              => 'loop_backedge_dominance',
+                region_id              => $region->{id},
+                region_kind            => $region->{kind},
+                path                   => $region->{path},
+                backedge               => $backedge->{kind},
+                outstanding_done_ports => [@outstanding],
+                message                => 'loop/repeat backedge can re-enter while child completions remain outstanding',
+            );
+        }
+    } elsif (@outstanding) {
         _push_violation(
             $violations,
             transaction            => $tx->{name},
-            code                   => 'outstanding_children_without_lifetime_proof',
+            code                   => 'region_exit_has_live_outstanding_children',
             invariant              => 'child_lifetime',
             region_id              => $region->{id},
             region_kind            => $region->{kind},
             path                   => $region->{path},
             outstanding_done_ports => [@outstanding],
-            message                => 'region exits or loops with outstanding child completions and no explicit lifetime proof',
+            message                => 'region exits with outstanding child completions and no explicit lifetime proof',
         );
     } elsif (@backedges) {
         for my $backedge (@backedges) {
@@ -647,6 +662,29 @@ sub _check_effect($tx, $effect, $region_by_id, $generated_instance_owner, $proof
             remaining_outstanding_after  => $effect->{remaining_outstanding_after},
             message                      => 'await_any is modeled as an observation; any multi-pending remainder must be drained by a later effect',
         );
+        if ($effect->{single_pending_equivalent_drain}) {
+            _push_proof(
+                $proofs,
+                transaction => $tx->{name},
+                code        => 'await_any_single_pending_completes_outstanding_set',
+                invariant   => 'child_lifetime',
+                effect_id   => $effect->{id},
+                region_id   => $effect->{region_id},
+                done_ports  => $effect->{done_ports},
+                message     => 'single-pending await_any observes the only outstanding child, so no child remains live after the observation',
+            );
+        } elsif (@{$effect->{remaining_outstanding_after} || []}) {
+            _push_proof(
+                $proofs,
+                transaction                 => $tx->{name},
+                code                        => 'await_any_multi_pending_requires_later_drain',
+                invariant                   => 'child_lifetime',
+                effect_id                   => $effect->{id},
+                region_id                   => $effect->{region_id},
+                remaining_outstanding_after => $effect->{remaining_outstanding_after},
+                message                     => 'multi-pending await_any leaves outstanding children that require a later drain proof before re-entry',
+            );
+        }
     }
 
     if ($effect->{kind} eq 'child_done_drain' && $activation eq 'await_all') {
