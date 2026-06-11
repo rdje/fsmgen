@@ -115,7 +115,7 @@ ISF
         'missing drain keeps the pending-spawn do gate because no await_all proof exists');
 };
 
-subtest 'multi-pending await_any after the local do remains outside the await_all contract' => sub {
+subtest 'multi-pending await_any after the local do drains through later await_all' => sub {
     my $actor = parse_actor(actor_for_body('until_multi_pending_spawn_local_do_await_any', <<'ISF'), 'until-multi-pending-spawn-local-do-await-any');
 (until cond
   (repeat loops
@@ -127,9 +127,10 @@ subtest 'multi-pending await_any after the local do remains outside the await_al
 ISF
 
     my ($lowered, $err) = lower_actor($actor);
-    ok(!$lowered, 'multi-pending post-do await_any remains rejected');
-    like($err, qr/loop-contained repeat-body local do while generated spawns are pending requires same-body '\(await_all done\)' drain; '\(await_any done\)' after the do remains deferred/,
-        'multi-pending await_any path keeps the post-do await_any gate');
+    ok($lowered, 'multi-pending post-do await_any now lowers with a later await_all drain') or diag($err);
+    my $fsm = $lowered->{files}{'until_multi_pending_spawn_local_do_await_any.fsm'};
+    like($fsm, qr/\(parent_await_any_\d+\b.*?<w0_done\s*\(->\s*parent_await_all_\d+\).*?<w1_done\s*\(->\s*parent_await_all_\d+\)/s,
+        'post-do await_any observes either spawned done pulse before the await_all drain');
 };
 
 subtest 'until-contained multi-pending spawn across local do lowers through effect proofs' => sub {

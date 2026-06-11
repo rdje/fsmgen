@@ -2674,12 +2674,12 @@ Current lowering:
   `while`- or `until`-contained single-pending variant may use post-`do`
   `(await_any done)` instead when the effect checker proves
   `await_any_single_pending_completes_outstanding_set` for that spawned
-  instance. The `while`-contained two-spawn variant may also use post-`do`
-  multi-pending `(await_any done)` as an observation point when a later
-  same-body `(await_all done)` drains both pending generated children before
-  repeat and loop re-entry. The matching `until` post-`do` multi-pending
-  `await_any`, fan-outs beyond four, generated-do, and wider post-`do`
-  multi-pending `await_any` variants remain fail-closed.
+  instance. The `while`- or body-first `until`-contained two-spawn variant may
+  also use post-`do` multi-pending `(await_any done)` as an observation point
+  when a later same-body `(await_all done)` drains both pending generated
+  children before repeat and loop re-entry. Fan-outs beyond four,
+  generated-do, and wider post-`do` multi-pending `await_any` variants remain
+  fail-closed.
   Repeats directly inside a top-level
   `when` body also accept one or more generated
   `(spawn child as inst [(params ...)] [(bind ...)] [(domain NAME)])` sites

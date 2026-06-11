@@ -7294,8 +7294,10 @@ sub _validate_repeat_body_spawn_subset {
                 unless @pending_spawns;
             my $selected_loop_local_do_before_post_await_any =
                 $pending_loop_local_do_before_drain
-                && $label eq 'while body'
-                && _context_depths_match_exactly($context_depths, { while => 1 })
+                && (($label eq 'while body'
+                        && _context_depths_match_exactly($context_depths, { while => 1 }))
+                    || ($label eq 'until body'
+                        && _context_depths_match_exactly($context_depths, { until => 1 })))
                 && $keyword eq 'await_any'
                 && @pending_spawns == 2
                 && !$awaiting_multi_pending_drain;
