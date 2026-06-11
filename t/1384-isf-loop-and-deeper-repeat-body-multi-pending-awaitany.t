@@ -83,7 +83,7 @@ ISF
     ok(exists $result->{files}{'worker.fsm'}, 'deeper-nested: spawned child emitted');
 };
 
-subtest 'a multi-pending await_any WITHOUT a later await_all stays deferred (drain requirement)' => sub {
+subtest 'a loop-contained multi-pending await_any WITHOUT a later await_all names the missing drain proof' => sub {
     my $undrained = <<'ISF';
 (actor mp_undrained
   (clock clk)
@@ -104,8 +104,56 @@ subtest 'a multi-pending await_any WITHOUT a later await_all stays deferred (dra
 ISF
     my $ok = eval { parse_lower($undrained, 'mp-undrained.isf'); 1 };
     ok(!$ok, 'an undrained multi-pending await_any is rejected');
-    like($@, qr/loop-contained repeat-body spawn requires same-body '\(await_all done\)' or single-pending '\(await_any done\)'/,
-        'the outstanding children trip the drain-requirement diagnostic');
+    like($@, qr/loop-contained repeat-body multi-pending await_any requires later same-body '\(await_all done\)' before the repeat check can loop/,
+        'the outstanding children trip the multi-pending await_any drain diagnostic');
+};
+
+subtest 'top-level and deeper-nested multi-pending await_any missing-drain diagnostics are specific' => sub {
+    my $top_level = <<'ISF';
+(actor mp_top_undrained
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start) (input loops (width 3))
+    (output done))
+  (transaction parent
+    (on start)
+    (repeat loops
+      (spawn worker as w0)
+      (spawn worker as w1)
+      (await_any done))
+    (complete done))
+  (transaction worker
+    (complete done)))
+ISF
+    my $top_ok = eval { parse_lower($top_level, 'mp-top-undrained.isf'); 1 };
+    ok(!$top_ok, 'a top-level undrained multi-pending await_any is rejected');
+    like($@, qr/repeat-body multi-pending await_any requires later same-body '\(await_all done\)' before the repeat check can loop/,
+        'top-level diagnostic names await_any as observation-only');
+
+    my $deeper = <<'ISF';
+(actor mp_deeper_undrained
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start) (input c1) (input c2) (input loops (width 3))
+    (output done))
+  (transaction parent
+    (on start)
+    (when c1
+      (when c2
+        (repeat loops
+          (spawn worker as w0)
+          (spawn worker as w1)
+          (await_any done))))
+    (complete done))
+  (transaction worker
+    (complete done)))
+ISF
+    my $deeper_ok = eval { parse_lower($deeper, 'mp-deeper-undrained.isf'); 1 };
+    ok(!$deeper_ok, 'a deeper-nested undrained multi-pending await_any is rejected');
+    like($@, qr/deeper-nested repeat-body multi-pending await_any requires later same-body '\(await_all done\)' before the repeat check can loop/,
+        'deeper-nested diagnostic names await_any as observation-only');
 };
 
 done_testing();

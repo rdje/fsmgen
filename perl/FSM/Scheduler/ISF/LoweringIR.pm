@@ -7427,10 +7427,16 @@ sub _validate_repeat_body_spawn_subset {
         if $switch_branch_repeat && $awaiting_multi_pending_drain;
     confess "Transaction '$tn': switch-branch nested repeat spawn requires same-body '(await_all done)' or single-pending '(await_any done)' before the nested repeat check can loop\n"
         if $switch_branch_repeat && @pending_spawns;
+    confess "Transaction '$tn': repeat-body multi-pending await_any requires later same-body '(await_all done)' before the repeat check can loop\n"
+        if $top_level_repeat && $awaiting_multi_pending_drain;
     confess "Transaction '$tn': repeat-body spawn requires same-body '(await_all done)' before the repeat check can loop\n"
         if $top_level_repeat && @pending_spawns;
+    confess "Transaction '$tn': loop-contained repeat-body multi-pending await_any requires later same-body '(await_all done)' before the repeat check can loop\n"
+        if $loop_body_repeat && $awaiting_multi_pending_drain;
     confess "Transaction '$tn': loop-contained repeat-body spawn requires same-body '(await_all done)' or single-pending '(await_any done)' before the repeat check can loop\n"
         if $loop_body_repeat && @pending_spawns;
+    confess "Transaction '$tn': deeper-nested repeat-body multi-pending await_any requires later same-body '(await_all done)' before the repeat check can loop\n"
+        if $deeper_nested_repeat && $awaiting_multi_pending_drain;
     confess "Transaction '$tn': deeper-nested repeat-body spawn requires same-body '(await_all done)' or single-pending '(await_any done)' before the repeat check can loop\n"
         if $deeper_nested_repeat && @pending_spawns;
 

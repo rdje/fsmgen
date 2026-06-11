@@ -6,7 +6,7 @@ Roadmap lane: R14 / ISF scheduling, activation, CDC, ATL, actor-network, and gen
 
 Created: 2026-06-10
 
-Current frontier: `ISF-SCHEDULING-BACKLOG-FRONTIER.4.1`
+Current frontier: `ISF-SCHEDULING-BACKLOG-FRONTIER.4.2`
 
 ## Goal
 
@@ -196,7 +196,7 @@ Acceptance:
 
 #### ISF-SCHEDULING-BACKLOG-FRONTIER.4.1 — Outstanding-Child Lifetime First Slice
 
-Status: pending
+Status: done
 
 Goal: Select and implement the first exact lifetime rule beyond the current
 mandatory repeat re-entry drain model, or close the first candidate with a
@@ -219,6 +219,54 @@ Acceptance:
 - Prove no regression to repeat re-entry freshness, generated-child done-set
   handling, and already shipped same-body drain paths.
 - Sync the book/spec/backlog wording for the chosen rule.
+
+Selection:
+
+- Candidate behavior: multi-pending repeat-body `(await_any done)` without a
+  later same-body `(await_all done)` remains fail-closed. The first lifetime
+  slice will not add detach, parent-exit drain, or generation-tagged
+  completion semantics because the current generated-child handoff model has
+  no per-activation generation tag, cancellation handshake, or detached-child
+  ownership surface.
+- Implementation target: sharpen the public diagnostics for the named missing
+  lifetime proof so authors see that `await_any` is observation-only and that
+  the same body must still drain the exact outstanding set with `await_all`.
+  Plain undrained spawns keep their existing same-body drain diagnostic.
+
+Result:
+
+- Kept multi-pending repeat-body `(await_any done)` without a later same-body
+  `(await_all done)` fail-closed; no detach, parent-exit drain, cancellation,
+  or generation-tagged completion semantics were introduced.
+- Public diagnostics now distinguish plain undrained spawn from observation-only
+  `await_any` missing-drain failures. Top-level repeat, loop-contained repeat,
+  and deeper-nested repeat each name the missing later same-body `await_all`
+  proof for multi-pending `await_any`.
+- Focused coverage locks the new loop-contained, top-level, and deeper-nested
+  diagnostic strings while preserving already shipped same-body drain paths and
+  repeat/loop backedge freshness proofs.
+- The mdBook, feature backlog, live ISF spec, downstream handoff, public
+  interface contract, Knowledge Map fact card, task index, and `MEMORY.md` are
+  synced to the sharper fail-closed contract.
+
+#### ISF-SCHEDULING-BACKLOG-FRONTIER.4.2 — Next Outstanding-Child Lifetime Candidate Selection
+
+Status: pending
+
+Goal: Select the next precise outstanding-child lifetime candidate after the
+multi-pending `await_any` diagnostic slice.
+
+Acceptance:
+
+- Audit explicit detach, parent-exit drain, cancellation, and
+  generation-tagged completion against the current generated-child handoff
+  model.
+- Select one behavior or fail-closed diagnostic target before source edits.
+- If a behavior is accepted, prove restart-before-drain safety, repeat/loop
+  backedge freshness, generated-child done-set ownership, and public docs/spec
+  alignment.
+- If no behavior is safe in this slice, record the exact missing hardware
+  contract and close the candidate with a targeted diagnostic/doc update.
 
 ### ISF-SCHEDULING-BACKLOG-FRONTIER.5 — Repeated/Nested ATL Triggers And Waits
 
@@ -306,6 +354,30 @@ Acceptance:
   `./bin/ci-regression isf --no-book` (Files=294, Tests=2133), `mdbook
   build docs/book`, `knowledge-map/scripts/check_knowledge_map.sh`,
   `scripts/check_memory_architecture.sh`, and `git diff --check`.
+- 2026-06-11 (`.4.1`): selected the multi-pending repeat-body `await_any`
+  missing-drain case as the first outstanding-child lifetime slice and kept it
+  fail-closed because no detach, parent-exit drain, cancellation, or
+  generation-tagged completion contract exists. The public validator now emits
+  a specific diagnostic for multi-pending `await_any` without a later same-body
+  `await_all` in top-level, loop-contained, and deeper-nested repeat contexts;
+  plain undrained spawn keeps its previous drain diagnostic. `perl -Iperl -c
+  perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c
+  t/1384-isf-loop-and-deeper-repeat-body-multi-pending-awaitany.t`; `perl
+  -Iperl -c t/1423-isf-control-flow-lifetime-checks.t`; `prove -Iperl
+  t/1383-isf-loop-and-deeper-repeat-body-spawn.t
+  t/1384-isf-loop-and-deeper-repeat-body-multi-pending-awaitany.t
+  t/1423-isf-control-flow-lifetime-checks.t`; `prove -Iperl
+  t/1419-isf-control-flow-effect-inventory.t
+  t/1421-isf-control-flow-effect-checks.t
+  t/1432-isf-loop-pending-spawn-local-do-effect-widening.t
+  t/1433-isf-until-pending-spawn-local-do-effect-widening.t
+  t/1434-isf-while-pending-spawn-local-do-awaitany-effect-widening.t`;
+  `prove -Iperl t/1250-isf-spec-focused-test-index-audit.t
+  t/1305-isf-book-feature-matrix-audit.t
+  t/1307-isf-loop-body-doc-truth-audit.t`; `prove -Iperl
+  t/1376-isf-book-example-lowering-audit.t`; `mdbook build docs/book`;
+  `knowledge-map/scripts/check_knowledge_map.sh`;
+  `scripts/check_memory_architecture.sh`; and `git diff --check` pass.
 
 ## Commit Log
 
@@ -315,3 +387,5 @@ Acceptance:
   ISF-SCHEDULING-BACKLOG-FRONTIER.2.1: close direct on override boundary`
 - `ISF-SCHEDULING-BACKLOG-FRONTIER.3.1`: `9c87ecc4
   ISF-SCHEDULING-BACKLOG-FRONTIER.3.1: ship while-when repeat local do`
+- `ISF-SCHEDULING-BACKLOG-FRONTIER.4.1`: this commit,
+  `ISF-SCHEDULING-BACKLOG-FRONTIER.4.1: sharpen await_any lifetime diagnostics`.

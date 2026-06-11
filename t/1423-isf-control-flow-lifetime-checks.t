@@ -106,8 +106,8 @@ ISF
 
     my $ok = eval { FSM::Scheduler::ISF->new()->lower($actor); 1 };
     ok(!$ok, 'existing lowering remains fail-closed for undrained multi-pending await_any');
-    like($@, qr/loop-contained repeat-body spawn requires same-body '\(await_all done\)' or single-pending '\(await_any done\)'/,
-        'public behavior remains owned by the existing validator');
+    like($@, qr/loop-contained repeat-body multi-pending await_any requires later same-body '\(await_all done\)' before the repeat check can loop/,
+        'public behavior reports the missing later drain proof');
 };
 
 subtest 'loop-body undrained spawn is a loop-backedge lifetime violation in shadow checks' => sub {

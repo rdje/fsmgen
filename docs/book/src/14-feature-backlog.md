@@ -744,7 +744,12 @@ repeat-body spawn). An undrained loop-contained spawn fails closed
 (`loop-contained repeat-body spawn requires same-body '(await_all done)' or
 single-pending '(await_any done)'`), a multi-pending `(await_any done)` is
 accepted only as an observation point when a later same-body `(await_all done)`
-drains the same outstanding children, and a cross-domain generated `do` fails
+drains the same outstanding children. Without that later drain, the diagnostic
+names the missing lifetime proof
+(`loop-contained repeat-body multi-pending await_any requires later same-body
+'(await_all done)' before the repeat check can loop`; top-level and
+deeper-nested forms use the matching context prefix). A cross-domain generated
+`do` fails
 closed (`cross-domain repeat-body do remains deferred`). A `while`- or
 body-first `until`-contained repeat may keep one or more generated spawns
 pending across one plain local blocking `(do child)` when a later same-body

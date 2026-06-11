@@ -1159,10 +1159,12 @@ These widened local-do fanout paths are checked by
 and [t/1434-isf-while-pending-spawn-local-do-awaitany-effect-widening.t](../t/1434-isf-while-pending-spawn-local-do-awaitany-effect-widening.t).
 An undrained loop-contained
 spawn emits `loop-contained repeat-body spawn requires same-body '(await_all
-done)' or single-pending '(await_any done)'` (a multi-pending `(await_any done)`
-without a later `(await_all done)` trips this same drain requirement), a
-loop-contained cross-domain generated `do` emits `cross-domain repeat-body do
-remains deferred`, and a repeat reached through an additional loop ancestor
+done)' or single-pending '(await_any done)'`. A multi-pending `(await_any done)`
+without a later `(await_all done)` emits `loop-contained repeat-body
+multi-pending await_any requires later same-body '(await_all done)' before the
+repeat check can loop` (top-level and deeper-nested forms use their matching
+context prefixes), a loop-contained cross-domain generated `do` emits
+`cross-domain repeat-body do remains deferred`, and a repeat reached through an additional loop ancestor
 emits `loop-contained repeat-body do remains deferred`; these are checked by
 [t/1374-isf-loop-contained-repeat-body-activation-diagnostic.t](../t/1374-isf-loop-contained-repeat-body-activation-diagnostic.t),
 [t/1380-isf-loop-contained-repeat-body-generated-do.t](../t/1380-isf-loop-contained-repeat-body-generated-do.t),

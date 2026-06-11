@@ -1129,8 +1129,11 @@ children observed by an `await_any`) is supported as an observation point when
 a later same-body `(await_all done)` drains the outstanding children before the
 repeat check — for example `(spawn a)(spawn b)(await_any done)(await_all done)`
 — matching the top-level / when-body / switch-branch behavior; without the
-later `(await_all done)` the outstanding children trip the drain requirement
-above. A **cross-domain** generated `do` stays deferred (`cross-domain repeat-body do
+later `(await_all done)`, the diagnostic names the missing proof:
+`loop-contained repeat-body multi-pending await_any requires later same-body
+'(await_all done)' before the repeat check can loop` (with `repeat-body` and
+`deeper-nested` context variants). A **cross-domain** generated `do` stays
+deferred (`cross-domain repeat-body do
 remains deferred`); bindings or domain metadata without static `(params ...)`
 emit `repeat-body generated do bindings require static '(params ...)'
 overrides`. The only shipped loop-plus-branch repeat-body activation is the

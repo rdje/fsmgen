@@ -160,12 +160,12 @@ ISF
 ISF
     # A multi-pending (await_any done) followed by a later (await_all done) is
     # now supported (see t/1384); an UNDRAINED multi-pending await_any (no later
-    # await_all) trips the drain requirement -- outstanding children at the
-    # repeat check.
+    # await_all) trips the specific await_any drain requirement -- outstanding
+    # children at the repeat check.
     my $ok2 = eval { parse_lower($multi, 'multi.isf'); 1 };
     ok(!$ok2, 'an undrained multi-pending await_any in a loop-contained repeat is rejected');
-    like($@, qr/loop-contained repeat-body spawn requires same-body '\(await_all done\)' or single-pending '\(await_any done\)'/,
-        'an undrained multi-pending await_any trips the drain-requirement diagnostic');
+    like($@, qr/loop-contained repeat-body multi-pending await_any requires later same-body '\(await_all done\)' before the repeat check can loop/,
+        'an undrained multi-pending await_any trips the specific drain-requirement diagnostic');
 };
 
 done_testing();

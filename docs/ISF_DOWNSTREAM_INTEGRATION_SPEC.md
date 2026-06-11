@@ -1323,9 +1323,11 @@ Rules:
   cross-domain activation, and unrelated deeper placements remain fail-closed.
   Inside a loop-contained repeat, an undrained spawn emits `loop-contained
   repeat-body spawn requires same-body '(await_all done)' or single-pending
-  '(await_any done)'` (a multi-pending `(await_any done)` without a later
-  `(await_all done)` trips this same drain requirement), and a cross-domain
-  generated `do` emits `cross-domain repeat-body do remains deferred`
+  '(await_any done)'`. A multi-pending `(await_any done)` without a later
+  `(await_all done)` emits `loop-contained repeat-body multi-pending await_any
+  requires later same-body '(await_all done)' before the repeat check can loop`
+  (top-level and deeper-nested forms use their matching context prefixes), and
+  a cross-domain generated `do` emits `cross-domain repeat-body do remains deferred`
   (bindings/domain without static `(params ...)` emit the
   bindings/domain-require-params diagnostic); a repeat reached through an
   additional loop ancestor still emits `loop-contained repeat-body do remains

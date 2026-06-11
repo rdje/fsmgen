@@ -10,10 +10,10 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.9` (this commit) — simplified the activation support matrix from enumerated combinations to construction rules.
-- active_work_unit: `ISF-SCHEDULING-BACKLOG-FRONTIER.4.1` — resume outstanding-child lifetime work from the scheduling backlog frontier.
-- recently_done: `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.9`; `.8.33`; `.8.32`; `.8.31`; `.8.30`. Older completed slices are in the task tree and git history.
-- in_flight_uncommitted: none expected after the `.9` commit; unrelated untracked `fx/` intentionally left alone.
+- latest_commit: `ISF-SCHEDULING-BACKLOG-FRONTIER.4.1` (this commit) — sharpened the multi-pending `await_any` missing-drain lifetime diagnostic without widening detach/parent-exit/generation-tag semantics.
+- active_work_unit: `ISF-SCHEDULING-BACKLOG-FRONTIER.4.2` — select the next exact outstanding-child lifetime candidate.
+- recently_done: `ISF-SCHEDULING-BACKLOG-FRONTIER.4.1`; `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.9`; `.8.33`; `.8.32`; `.8.31`. Older completed slices are in the task tree and git history.
+- in_flight_uncommitted: none expected after the `.4.1` commit; unrelated untracked `fx/` intentionally left alone.
 - blockers: none.
 
 ## Notes

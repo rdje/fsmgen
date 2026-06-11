@@ -2653,10 +2653,14 @@ Current lowering:
   top-level / when-body / switch-branch). Inside a loop-contained or
   deeper-nested repeat, an undrained spawn stays deferred
   (`loop-contained`/`deeper-nested repeat-body spawn requires same-body
-  '(await_all done)' or single-pending '(await_any done)'`) — a multi-pending
-  `(await_any done)` without a later `(await_all done)` trips that same drain
-  requirement — and a cross-domain generated `do` stays deferred (`cross-domain
-  repeat-body do remains deferred`).
+  '(await_all done)' or single-pending '(await_any done)'`). A multi-pending
+  `(await_any done)` without a later `(await_all done)` remains fail-closed
+  with a diagnostic that names the missing proof, for example
+  `loop-contained repeat-body multi-pending await_any requires later same-body
+  '(await_all done)' before the repeat check can loop`; top-level and
+  deeper-nested forms use their matching context prefixes. A cross-domain
+  generated `do` stays deferred (`cross-domain repeat-body do remains
+  deferred`).
   A `while`- or body-first `until`-contained repeat may also keep one or more
   generated spawns pending across one plain local blocking `(do child)` when a
   later same-body `(await_all done)` drains the exact spawned-child set before

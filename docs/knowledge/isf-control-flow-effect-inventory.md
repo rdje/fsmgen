@@ -10,6 +10,7 @@ answers:
   - "which validator path first consumes the ISF control-flow effect checker?"
   - "how does FSMGen model ISF regions and activation effects in shadow mode?"
   - "where are await_any observe versus await_all drain effects recorded?"
+  - "what diagnostic reports multi-pending await_any without a later await_all drain?"
   - "what module owns the initial compositional control-flow activation model?"
   - "which behavior widening first consumes compositional repeat lifetime proofs?"
   - "which behavior widening consumes single-pending await_any lifetime proofs?"
@@ -17,8 +18,8 @@ answers:
 date: 2026-06-11
 status: current
 tags: [isf, control-flow, architecture, activation, scheduling, cdc]
-evidence: perl/FSM/Scheduler/ISF/ControlFlowEffects.pm; perl/FSM/Scheduler/ISF/LoweringIR.pm; t/1419-isf-control-flow-effect-inventory.t; t/1421-isf-control-flow-effect-checks.t; t/1422-isf-control-flow-child-plan.t; t/1423-isf-control-flow-lifetime-checks.t; t/1424-isf-control-flow-domain-binding-effects.t; t/1425-isf-control-flow-validator-effect-migration.t; t/1426-isf-control-flow-same-domain-validator-effect-migration.t; t/1427-isf-control-flow-activation-domain-validator-effect-migration.t; t/1428-isf-control-flow-binding-endpoint-validator-effect-migration.t; t/1429-isf-control-flow-binding-expression-validator-effect-migration.t; t/1430-isf-control-flow-rule-trigger-validator-effect-migration.t; t/1431-isf-control-flow-rule-trigger-binding-validator-effect-migration.t; t/1432-isf-loop-pending-spawn-local-do-effect-widening.t; t/1433-isf-until-pending-spawn-local-do-effect-widening.t; t/1434-isf-while-pending-spawn-local-do-awaitany-effect-widening.t; docs/tasks/ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.md; docs/decisions/0013-compositional-control-flow-activation-model.md
-reverify: prove -Iperl t/1419-isf-control-flow-effect-inventory.t t/1421-isf-control-flow-effect-checks.t t/1422-isf-control-flow-child-plan.t t/1423-isf-control-flow-lifetime-checks.t t/1424-isf-control-flow-domain-binding-effects.t t/1425-isf-control-flow-validator-effect-migration.t t/1426-isf-control-flow-same-domain-validator-effect-migration.t t/1427-isf-control-flow-activation-domain-validator-effect-migration.t t/1428-isf-control-flow-binding-endpoint-validator-effect-migration.t t/1429-isf-control-flow-binding-expression-validator-effect-migration.t t/1430-isf-control-flow-rule-trigger-validator-effect-migration.t t/1431-isf-control-flow-rule-trigger-binding-validator-effect-migration.t t/1432-isf-loop-pending-spawn-local-do-effect-widening.t t/1433-isf-until-pending-spawn-local-do-effect-widening.t t/1434-isf-while-pending-spawn-local-do-awaitany-effect-widening.t
+evidence: perl/FSM/Scheduler/ISF/ControlFlowEffects.pm; perl/FSM/Scheduler/ISF/LoweringIR.pm; t/1383-isf-loop-and-deeper-repeat-body-spawn.t; t/1384-isf-loop-and-deeper-repeat-body-multi-pending-awaitany.t; t/1419-isf-control-flow-effect-inventory.t; t/1421-isf-control-flow-effect-checks.t; t/1422-isf-control-flow-child-plan.t; t/1423-isf-control-flow-lifetime-checks.t; t/1424-isf-control-flow-domain-binding-effects.t; t/1425-isf-control-flow-validator-effect-migration.t; t/1426-isf-control-flow-same-domain-validator-effect-migration.t; t/1427-isf-control-flow-activation-domain-validator-effect-migration.t; t/1428-isf-control-flow-binding-endpoint-validator-effect-migration.t; t/1429-isf-control-flow-binding-expression-validator-effect-migration.t; t/1430-isf-control-flow-rule-trigger-validator-effect-migration.t; t/1431-isf-control-flow-rule-trigger-binding-validator-effect-migration.t; t/1432-isf-loop-pending-spawn-local-do-effect-widening.t; t/1433-isf-until-pending-spawn-local-do-effect-widening.t; t/1434-isf-while-pending-spawn-local-do-awaitany-effect-widening.t; docs/tasks/ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.md; docs/decisions/0013-compositional-control-flow-activation-model.md
+reverify: prove -Iperl t/1383-isf-loop-and-deeper-repeat-body-spawn.t t/1384-isf-loop-and-deeper-repeat-body-multi-pending-awaitany.t t/1419-isf-control-flow-effect-inventory.t t/1421-isf-control-flow-effect-checks.t t/1422-isf-control-flow-child-plan.t t/1423-isf-control-flow-lifetime-checks.t t/1424-isf-control-flow-domain-binding-effects.t t/1425-isf-control-flow-validator-effect-migration.t t/1426-isf-control-flow-same-domain-validator-effect-migration.t t/1427-isf-control-flow-activation-domain-validator-effect-migration.t t/1428-isf-control-flow-binding-endpoint-validator-effect-migration.t t/1429-isf-control-flow-binding-expression-validator-effect-migration.t t/1430-isf-control-flow-rule-trigger-validator-effect-migration.t t/1431-isf-control-flow-rule-trigger-binding-validator-effect-migration.t t/1432-isf-loop-pending-spawn-local-do-effect-widening.t t/1433-isf-until-pending-spawn-local-do-effect-widening.t t/1434-isf-while-pending-spawn-local-do-awaitany-effect-widening.t
 ---
 
 The initial compositional ISF control-flow model lives in
@@ -122,3 +123,11 @@ drain, records a later-drain obligation, and the following `await_all` drains
 the exact same outstanding set before repeat and surrounding loop re-entry.
 Generated `do` while spawned children are pending, missing later drains,
 cross-domain activation, and unrelated deeper placements remain fail-closed.
+Public diagnostics now distinguish a plain undrained spawn from a multi-pending
+`await_any` observation without the required later drain: top-level repeat
+emits `repeat-body multi-pending await_any requires later same-body
+'(await_all done)' before the repeat check can loop`, loop-contained repeat
+prefixes that with `loop-contained`, and deeper branch-contained repeat
+prefixes it with `deeper-nested`. Existing top-level `when` and `switch`
+branch diagnostics already name the nested-repeat multi-pending `await_any`
+missing-drain requirement.
