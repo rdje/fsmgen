@@ -6,7 +6,7 @@ Roadmap lane: R14 / ISF scheduling, activation, CDC, ATL, actor-network, and gen
 
 Created: 2026-06-10
 
-Current frontier: `ISF-SCHEDULING-BACKLOG-FRONTIER.5.1`
+Current frontier: `ISF-SCHEDULING-BACKLOG-FRONTIER.5.2`
 
 ## Goal
 
@@ -340,7 +340,7 @@ Acceptance:
 
 #### ISF-SCHEDULING-BACKLOG-FRONTIER.5.1 — Repeated/Nested ATL First Slice Selection
 
-Status: pending
+Status: done
 
 Goal: Select the first exact repeated or nested ATL trigger/wait pattern for
 implementation or targeted fail-closed closure.
@@ -354,6 +354,44 @@ Acceptance:
   schedule report stability, and book/spec sync.
 - If the pattern remains unsafe, record the exact missing ordering/lifetime
   contract and close it with a targeted diagnostic/doc update.
+
+Result:
+
+- Audited the shipped ATL trigger/wait surface in the parser, lowering IR,
+  fixtures, public contract, live spec, and mdBook. Top-level nested
+  waits/triggers already fail closed with targeted diagnostics. Trigger-batch
+  multi-event waits already lower only when one contiguous temporary trigger
+  batch is followed by contiguous source-ordered waits to distinct triggered
+  actor instances and no ATL data movement is in the segment.
+- Selected the repeated actor-event wait after a temporary trigger batch as
+  the first exact `.5` implementation candidate. A source shape such as a
+  trigger batch followed by `(await writer.done)` and `(await writer.ready)`
+  for the same triggered actor remains unsafe to accept because the current
+  ATL handoff model has no event re-arm, per-event generation tag, or
+  repeated-wait lifetime contract proving that the second wait observes a new
+  child event rather than the same external handoff level.
+- The next implementation leaf is `.5.2`, which will keep repeated
+  trigger-batch actor-event waits fail-closed and replace the broad
+  multi-event wait fallback with a targeted diagnostic and synced docs/tests.
+
+#### ISF-SCHEDULING-BACKLOG-FRONTIER.5.2 — Repeated Trigger-Batch Event-Wait Diagnostic
+
+Status: pending
+
+Goal: Keep repeated actor-event waits after a temporary trigger batch
+fail-closed, but diagnose them as a missing event re-arm/lifetime contract
+rather than only the broad multi-event wait subset failure.
+
+Acceptance:
+
+- Detect a temporary trigger batch followed by multiple top-level event waits
+  that target the same triggered actor instance.
+- Preserve the accepted source-ordered multi-event wait chain to distinct
+  triggered actor instances.
+- Preserve existing nested wait/trigger diagnostics and non-batch multi-wait
+  fail-closed behavior.
+- Sync the parser tests, mdBook, live specs/contracts, and Knowledge Map with
+  the sharper repeated-wait boundary.
 
 ### ISF-SCHEDULING-BACKLOG-FRONTIER.6 — Fan-In/Fan-Out Event Joins
 
