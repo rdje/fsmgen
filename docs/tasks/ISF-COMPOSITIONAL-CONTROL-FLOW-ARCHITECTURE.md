@@ -6,7 +6,7 @@ Roadmap lane: R14 / ISF compositional control-flow and activation architecture
 
 Created: 2026-06-10
 
-Current frontier: `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.7.5`
+Current frontier: `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.7.6`
 
 ## Goal
 
@@ -283,11 +283,38 @@ Result:
 
 #### ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.7.5 — Next Validator Gate Selection
 
-Status: active
+Status: done
 
 Goal: Select and migrate the next narrow validator gate after binding endpoint
 domain validation, still preserving public behavior unless one exact
 combination is explicitly selected for widening.
+
+Acceptance:
+
+- The selected gate has positive and negative fixtures before migration.
+- The region/effect checker owns the proof or violation used by the migrated
+  decision.
+- Existing accepted/rejected behavior remains stable unless this leaf records
+  an exact newly accepted combination before implementation.
+
+Result:
+
+- Selected recursive input binding expression endpoint validation.
+- The effect checker now records known actor-signal endpoints inside input
+  binding list expressions, proving
+  `binding_expression_endpoints_are_same_domain` or reporting
+  `binding_expression_endpoint_domain_mismatch`.
+- The public validator skips the recursive input binding expression read walk
+  only for the all-same-domain proof; literals, unknowns, and mixed-domain
+  expressions keep the previous validator behavior and diagnostics.
+
+#### ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.7.6 — Next Validator Gate Selection
+
+Status: active
+
+Goal: Select and migrate the next narrow validator gate after input binding
+expression endpoint validation, still preserving public behavior unless one
+exact combination is explicitly selected for widening.
 
 Acceptance:
 
@@ -505,6 +532,42 @@ Acceptance:
   `knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl
   t/1414-docs-relative-paths-audit.t`; `mdbook build docs/book`; and
   `git diff --check` pass.
+- 2026-06-10 (`.7.5`): added recursive actor-signal endpoint summaries for
+  input binding list expressions and checker proof/violation codes
+  `binding_expression_endpoints_are_same_domain` and
+  `binding_expression_endpoint_domain_mismatch`. The validator now skips the
+  recursive input-binding expression read walk only when the checker proves the
+  whole expression's known signal endpoints are same-domain; mixed-domain
+  expressions still fall through to the existing public read diagnostic.
+  `perl -Iperl -c perl/FSM/Scheduler/ISF/ControlFlowEffects.pm`; `perl
+  -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c
+  t/1429-isf-control-flow-binding-expression-validator-effect-migration.t`;
+  `prove -Iperl
+  t/1429-isf-control-flow-binding-expression-validator-effect-migration.t`;
+  `prove -Iperl t/1241-isf-transaction-port-bindings.t
+  t/1247-isf-clock-domain-partition.t
+  t/1387-isf-cross-domain-activation-handshake-lowering.t
+  t/1425-isf-control-flow-validator-effect-migration.t
+  t/1426-isf-control-flow-same-domain-validator-effect-migration.t
+  t/1427-isf-control-flow-activation-domain-validator-effect-migration.t
+  t/1428-isf-control-flow-binding-endpoint-validator-effect-migration.t
+  t/1429-isf-control-flow-binding-expression-validator-effect-migration.t`;
+  `prove -Iperl t/1419-isf-control-flow-effect-inventory.t
+  t/1421-isf-control-flow-effect-checks.t
+  t/1422-isf-control-flow-child-plan.t
+  t/1423-isf-control-flow-lifetime-checks.t
+  t/1424-isf-control-flow-domain-binding-effects.t
+  t/1425-isf-control-flow-validator-effect-migration.t
+  t/1426-isf-control-flow-same-domain-validator-effect-migration.t
+  t/1427-isf-control-flow-activation-domain-validator-effect-migration.t
+  t/1428-isf-control-flow-binding-endpoint-validator-effect-migration.t
+  t/1429-isf-control-flow-binding-expression-validator-effect-migration.t`;
+  `prove -Iperl t/1215-isf-spawn-parameter-binding.t`; `prove -Iperl
+  t/1250-isf-spec-focused-test-index-audit.t`; `./bin/ci-regression isf
+  --no-book` (Files=294, Tests=2133); `scripts/check_memory_architecture.sh`;
+  `knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl
+  t/1414-docs-relative-paths-audit.t`; `mdbook build docs/book`; and
+  `git diff --check` pass.
 - 2026-06-10 (`.4`): added private `plan_actor` / `plan_inventory` child-plan
   projection derived from the shadow effect list. The plan records local child
   start/done wiring requirements, generated child instance plans, and sync
@@ -560,5 +623,7 @@ Acceptance:
   `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.7.2: route same-domain activations through effects`.
 - `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.7.3`: `a849e1fd`,
   `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.7.3: route activation domains through effects`.
-- `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.7.4`: this commit,
+- `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.7.4`: `211bffda`,
   `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.7.4: route binding endpoints through effects`.
+- `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.7.5`: this commit,
+  `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.7.5: route binding expressions through effects`.

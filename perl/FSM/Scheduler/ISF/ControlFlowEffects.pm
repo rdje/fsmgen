@@ -949,6 +949,49 @@ sub _check_binding_handoffs($tx, $effect, $proofs, $violations) {
         );
 
         my $caller_domain = $binding->{caller_domain};
+        my $expr_endpoints = $binding->{actor_expr_endpoints} || [];
+        if (defined($caller_domain) && ($binding->{role} // '') eq 'input' && @$expr_endpoints) {
+            my @mismatched = grep {
+                defined($_->{domain}) && $_->{domain} ne $caller_domain
+            } @$expr_endpoints;
+            if (@mismatched) {
+                for my $endpoint (@mismatched) {
+                    _push_violation(
+                        $violations,
+                        transaction => $tx->{name},
+                        code        => 'binding_expression_endpoint_domain_mismatch',
+                        invariant   => 'explicit_domain_binding_cdc',
+                        effect_id   => $effect->{id},
+                        region_id   => $effect->{region_id},
+                        child       => $effect->{child},
+                        role        => $binding->{role},
+                        child_port  => $binding->{child_port},
+                        actor_expr  => $binding->{actor_expr},
+                        endpoint    => $endpoint->{expr},
+                        caller_domain => $caller_domain,
+                        actor_endpoint_domain => $endpoint->{domain},
+                        message     => 'activation input binding expression endpoint is not in the caller transaction domain',
+                    );
+                }
+            } else {
+                _push_proof(
+                    $proofs,
+                    transaction => $tx->{name},
+                    code        => 'binding_expression_endpoints_are_same_domain',
+                    invariant   => 'explicit_domain_binding_cdc',
+                    effect_id   => $effect->{id},
+                    region_id   => $effect->{region_id},
+                    child       => $effect->{child},
+                    role        => $binding->{role},
+                    child_port  => $binding->{child_port},
+                    actor_expr  => $binding->{actor_expr},
+                    endpoints   => $expr_endpoints,
+                    caller_domain => $caller_domain,
+                    message     => 'activation input binding expression endpoints are in the caller transaction domain',
+                );
+            }
+        }
+
         my $endpoint_domain = $binding->{actor_endpoint_domain};
         next unless defined($caller_domain) && defined($endpoint_domain);
         if ($caller_domain ne $endpoint_domain) {
@@ -1342,6 +1385,7 @@ sub _binding_handoffs($ctx, $clause, $child, $activation, $instance) {
             my $child_port = _format_expr($binding->[1]);
             my $actor_expr = _format_expr($binding->[2]);
             my $endpoint = _binding_actor_endpoint($ctx, $binding->[2]);
+            my $expr_endpoints = _binding_actor_expr_endpoints($ctx, $binding->[2]);
             my $child_port_info = $child_ports->{$child_port} || {};
             push @bindings, {
                 role                           => $role,
@@ -1351,6 +1395,7 @@ sub _binding_handoffs($ctx, $clause, $child, $activation, $instance) {
                 actor_expr                     => $actor_expr,
                 actor_endpoint_domain          => $endpoint->{domain},
                 actor_endpoint_kind            => $endpoint->{kind},
+                actor_expr_endpoints           => $expr_endpoints,
                 caller_domain                  => $ctx->{transaction_domain},
                 handoff_direction              => $role eq 'input' ? 'actor_to_child'
                     : $role eq 'output' ? 'child_to_actor'
@@ -1373,6 +1418,28 @@ sub _binding_actor_endpoint($ctx, $expr) {
     return exists($signal_domains->{$expr})
         ? $signal_domains->{$expr}
         : {};
+}
+
+sub _binding_actor_expr_endpoints($ctx, $expr) {
+    return [] unless defined($expr);
+    if (!ref($expr)) {
+        return [] unless _is_hdl_identifier($expr);
+        my $endpoint = _binding_actor_endpoint($ctx, $expr);
+        return [] unless defined($endpoint->{domain});
+        return [{
+            expr   => _format_expr($expr),
+            domain => $endpoint->{domain},
+            kind   => $endpoint->{kind},
+        }];
+    }
+    return [] unless ref($expr) eq 'ARRAY';
+
+    my @endpoints;
+    for my $index (0 .. $#$expr) {
+        next if $index == 0 && defined($expr->[$index]) && !ref($expr->[$index]);
+        push @endpoints, @{_binding_actor_expr_endpoints($ctx, $expr->[$index])};
+    }
+    return \@endpoints;
 }
 
 sub _generated_top_requirements($activation, $generated_child, $instance, $start_signal, $done_signal, $bindings, $domain_contract) {
@@ -1504,6 +1571,10 @@ sub _format_expr($expr) {
     return undef unless defined $expr;
     return "$expr" unless ref($expr) eq 'ARRAY';
     return '(' . join(' ', map { defined($_) ? _format_expr($_) : 'undef' } @$expr) . ')';
+}
+
+sub _is_hdl_identifier($value) {
+    return defined($value) && !ref($value) && $value =~ /\A[A-Za-z_]\w*\z/;
 }
 
 1;

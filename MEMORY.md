@@ -10,10 +10,10 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.7.4` (this commit) — routed simple activation binding endpoint domain validation through effect-checker proofs; public accepted/rejected behavior unchanged.
-- active_work_unit: `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.7.5` — select and migrate the next narrow validator gate after binding endpoint domain validation.
-- recently_done: `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.7.4`; `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.7.3`; `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.7.2`; `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.7.1`; `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.6`; `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.5`; `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.4`; `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.3`; `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.2.1`; `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.1`; `ISF-SCHEDULING-BACKLOG-FRONTIER.3.1`.
-- in_flight_uncommitted: none expected after the `.7.4` commit; unrelated untracked `fx/` intentionally left alone.
+- latest_commit: `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.7.5` (this commit) — routed input binding expression endpoint domain validation through effect-checker proofs; public accepted/rejected behavior unchanged.
+- active_work_unit: `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.7.6` — select and migrate the next narrow validator gate after input binding expression endpoint validation.
+- recently_done: `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.7.5`; `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.7.4`; `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.7.3`; `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.7.2`; `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.7.1`; `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.6`; `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.5`; `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.4`; `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.3`; `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.2.1`; `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.1`.
+- in_flight_uncommitted: none expected after the `.7.5` commit; unrelated untracked `fx/` intentionally left alone.
 - blockers: none.
 
 ## Notes

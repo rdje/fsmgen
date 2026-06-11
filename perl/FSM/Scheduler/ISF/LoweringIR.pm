@@ -2962,7 +2962,9 @@ sub _control_flow_effects_prove_binding_endpoint_domain($actor, $transaction_nam
     for my $tx (@{$check->{transactions} || []}) {
         next unless ($tx->{name} // '') eq $transaction_name;
         for my $proof (@{$tx->{proofs} || []}) {
-            next unless ($proof->{code} // '') eq 'binding_endpoint_is_same_domain';
+            my $code = $proof->{code} // '';
+            next unless $code eq 'binding_endpoint_is_same_domain'
+                || ($role eq 'input' && $code eq 'binding_expression_endpoints_are_same_domain');
             next unless ($proof->{child} // '') eq $target;
             next unless ($proof->{role} // '') eq $role;
             next unless ($proof->{child_port} // '') eq $child_port;

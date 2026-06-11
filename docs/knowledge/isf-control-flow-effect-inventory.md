@@ -14,8 +14,8 @@ answers:
 date: 2026-06-10
 status: current
 tags: [isf, control-flow, architecture, activation, scheduling, cdc]
-evidence: perl/FSM/Scheduler/ISF/ControlFlowEffects.pm; perl/FSM/Scheduler/ISF/LoweringIR.pm; t/1419-isf-control-flow-effect-inventory.t; t/1421-isf-control-flow-effect-checks.t; t/1422-isf-control-flow-child-plan.t; t/1423-isf-control-flow-lifetime-checks.t; t/1424-isf-control-flow-domain-binding-effects.t; t/1425-isf-control-flow-validator-effect-migration.t; t/1426-isf-control-flow-same-domain-validator-effect-migration.t; t/1427-isf-control-flow-activation-domain-validator-effect-migration.t; t/1428-isf-control-flow-binding-endpoint-validator-effect-migration.t; docs/tasks/ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.md; docs/decisions/0013-compositional-control-flow-activation-model.md
-reverify: prove -Iperl t/1419-isf-control-flow-effect-inventory.t t/1421-isf-control-flow-effect-checks.t t/1422-isf-control-flow-child-plan.t t/1423-isf-control-flow-lifetime-checks.t t/1424-isf-control-flow-domain-binding-effects.t t/1425-isf-control-flow-validator-effect-migration.t t/1426-isf-control-flow-same-domain-validator-effect-migration.t t/1427-isf-control-flow-activation-domain-validator-effect-migration.t t/1428-isf-control-flow-binding-endpoint-validator-effect-migration.t
+evidence: perl/FSM/Scheduler/ISF/ControlFlowEffects.pm; perl/FSM/Scheduler/ISF/LoweringIR.pm; t/1419-isf-control-flow-effect-inventory.t; t/1421-isf-control-flow-effect-checks.t; t/1422-isf-control-flow-child-plan.t; t/1423-isf-control-flow-lifetime-checks.t; t/1424-isf-control-flow-domain-binding-effects.t; t/1425-isf-control-flow-validator-effect-migration.t; t/1426-isf-control-flow-same-domain-validator-effect-migration.t; t/1427-isf-control-flow-activation-domain-validator-effect-migration.t; t/1428-isf-control-flow-binding-endpoint-validator-effect-migration.t; t/1429-isf-control-flow-binding-expression-validator-effect-migration.t; docs/tasks/ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.md; docs/decisions/0013-compositional-control-flow-activation-model.md
+reverify: prove -Iperl t/1419-isf-control-flow-effect-inventory.t t/1421-isf-control-flow-effect-checks.t t/1422-isf-control-flow-child-plan.t t/1423-isf-control-flow-lifetime-checks.t t/1424-isf-control-flow-domain-binding-effects.t t/1425-isf-control-flow-validator-effect-migration.t t/1426-isf-control-flow-same-domain-validator-effect-migration.t t/1427-isf-control-flow-activation-domain-validator-effect-migration.t t/1428-isf-control-flow-binding-endpoint-validator-effect-migration.t t/1429-isf-control-flow-binding-expression-validator-effect-migration.t
 ---
 
 The initial compositional ISF control-flow model lives in
@@ -74,3 +74,9 @@ proofs or `binding_endpoint_domain_mismatch` violations. The public validator
 skips the direct binding endpoint domain walk only for those same-domain
 endpoint proofs; expression bindings and cross-domain endpoints keep the prior
 validator behavior.
+Input binding list expressions are represented as recursive endpoint facts too:
+`binding_expression_endpoints_are_same_domain` proves every known actor-signal
+endpoint in the expression is in the caller domain, while
+`binding_expression_endpoint_domain_mismatch` records cross-domain expression
+endpoints. The validator skips the recursive input-binding expression read walk
+only for the all-same-domain proof.
