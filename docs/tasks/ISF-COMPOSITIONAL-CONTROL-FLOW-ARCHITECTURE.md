@@ -6,7 +6,7 @@ Roadmap lane: R14 / ISF compositional control-flow and activation architecture
 
 Created: 2026-06-10
 
-Current frontier: `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.8.19`
+Current frontier: `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.8.20`
 
 ## Goal
 
@@ -1080,7 +1080,7 @@ Result:
 
 #### ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.8.19 — Next Effect-Proven Combination Selection
 
-Status: active
+Status: done
 
 Goal: Select the next narrow behavior-widening combination that can be accepted
 by construction through the migrated region/effect checker after the
@@ -1097,6 +1097,51 @@ Acceptance:
   combination.
 - mdBook, downstream spec, task tree, and Knowledge Map are updated if the
   selected combination changes public behavior.
+
+Result:
+
+- Selected the body-first `until` twin of the just-shipped `.8.18` shape as
+  the next implementation slice:
+  `(until cond (repeat n (spawn worker as w0) (spawn worker as w1) (spawn worker as w2) (spawn worker as w3) (do helper) (await_all done)))`.
+- The source/backlog anchor is the user-facing boundary added by `.8.18`:
+  the mdBook, specs, backlog, and Knowledge Map all state that `while`
+  four-spawn is shipped while the body-first `until` four-spawn twin remains
+  deferred.
+- Existing focused coverage in
+  `t/1433-isf-until-pending-spawn-local-do-effect-widening.t` proves the
+  selected `until` shape has clean `until` and `repeat` backedges, static
+  generated-spawn instances `w0`/`w1`/`w2`/`w3`, generated-top start/done
+  handoff requirements for all four instances, a local `helper` drain, and an
+  `await_all` drain for `w0_done,w1_done,w2_done,w3_done`; public lowering
+  still rejects the source at the pending-spawn `do` gate before the
+  implementation leaf.
+- Multi-pending post-`do` `await_any`, generated `do`, and fan-outs beyond
+  four remain outside the selected next implementation leaf.
+
+#### ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.8.20 — Until-Contained Four-Pending Pending-Spawn Local Do AwaitAll
+
+Status: active
+
+Goal: Accept the selected body-first `until` repeat-body sequence where four
+generated `spawn` clauses remain pending across a local blocking `do`, then a
+same-body `await_all` drains all four spawned children before repeat and
+`until` re-entry.
+
+Acceptance:
+
+- The public validator permits only the selected same-domain `until` shape when
+  `ControlFlowEffects` proves clean repeat/`until` backedges, deterministic
+  generated-top handoffs and static instances for all pending generated
+  spawns, a local blocking-`do` done drain, and an `await_all` drain over the
+  exact outstanding spawned done-port set.
+- Existing accepted one-, two-, three-, and `while` four-spawn local-`do`
+  `await_all` fixtures plus single-pending `await_any` fixtures remain
+  accepted.
+- Generated `do`, cross-domain activation, missing final sync, post-`do`
+  multi-pending `await_any`, fan-outs beyond four, and unrelated deeper
+  nesting remain fail-closed.
+- The mdBook, downstream integration spec, live ISF spec/indexes, task tree,
+  and Knowledge Map are updated for the new public behavior.
 
 ### ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.9 — Public Contract And Documentation Simplification
 
@@ -1830,6 +1875,20 @@ Acceptance:
   t/1414-docs-relative-paths-audit.t`; `mdbook build docs/book`; `git diff
   --check`; and `./bin/ci-regression isf --no-book` (Files=294, Tests=2133)
   pass.
+- 2026-06-11 (`.8.19`): selected the body-first `until` four-spawn
+  pending-spawn local blocking `do` plus same-body `await_all` combination for
+  the next implementation leaf:
+  `(until cond (repeat n (spawn worker as w0) (spawn worker as w1) (spawn worker as w2) (spawn worker as w3) (do helper) (await_all done)))`.
+  The existing focused `until` coverage proves clean `until`/`repeat`
+  backedges, static `w0`/`w1`/`w2`/`w3` identities, generated-top start/done
+  handoff requirements for all four instances, a local `helper` drain, and an
+  `await_all` drain for `w0_done,w1_done,w2_done,w3_done`; public lowering
+  still rejects it at the pending-spawn `do` gate before the implementation
+  leaf. `prove -Iperl
+  t/1433-isf-until-pending-spawn-local-do-effect-widening.t`,
+  `scripts/check_memory_architecture.sh`,
+  `knowledge-map/scripts/check_knowledge_map.sh`, `prove -Iperl
+  t/1414-docs-relative-paths-audit.t`, and `git diff --check` pass.
 - 2026-06-10 (`.4`): added private `plan_actor` / `plan_inventory` child-plan
   projection derived from the shadow effect list. The plan records local child
   start/done wiring requirements, generated child instance plans, and sync
@@ -1929,3 +1988,5 @@ Acceptance:
   `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.8.17: select wider pending-spawn local-do fanout`.
 - `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.8.18`: this commit,
   `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.8.18: accept while four-spawn local-do fanout`.
+- `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.8.19`: this commit,
+  `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.8.19: select until four-spawn local-do fanout`.
