@@ -232,6 +232,45 @@ ISF
     like($top, qr/\(\?fsmc:w2 worker\b/s, 'generated top instantiates w2');
 };
 
+subtest 'until-contained four-pending spawn across local do remains outside public widening' => sub {
+    my $actor = parse_actor(actor_for_body('until_four_pending_spawn_local_do', <<'ISF'), 'until-four-pending-spawn-local-do');
+(until cond
+  (repeat loops
+    (spawn worker as w0)
+    (spawn worker as w1)
+    (spawn worker as w2)
+    (spawn worker as w3)
+    (do helper)
+    (await_all done)))
+ISF
+
+    my $check = check_actor($actor);
+    ok($check->{ok}, 'effect checker proves the until four-pending local-do shape');
+    my $tx = transaction_check($check, 'parent');
+    my $backedges = proofs($tx, 'backedge_has_no_outstanding_children');
+    ok((grep { ($_->{region_kind} // '') eq 'until' && ($_->{backedge} // '') eq 'until_retest' } @$backedges),
+        'until backedge has no outstanding child for the four-pending shape');
+    ok((grep { ($_->{region_kind} // '') eq 'repeat' && ($_->{backedge} // '') eq 'repeat_check_nonzero' } @$backedges),
+        'repeat backedge has no outstanding child for the four-pending shape');
+    for my $index (0 .. 3) {
+        my $inst = "w$index";
+        my $done = "${inst}_done";
+        ok((grep { ($_->{instance} // '') eq $inst } @{proofs($tx, 'generated_child_instance_is_static')}),
+            "$inst spawned child instance identity is static");
+        ok((grep { ($_->{instance} // '') eq $inst && ($_->{done_signal} // '') eq $done } @{proofs($tx, 'generated_top_start_done_handoff_required')}),
+            "$inst generated-top handoff is explicit");
+    }
+    ok((grep { ($_->{child} // '') eq 'helper' } @{proofs($tx, 'blocking_do_drains_child_done')}),
+        'local blocking do drains helper before the four-way await_all');
+    ok((grep { join(',', @{$_->{done_ports} || []}) eq 'w0_done,w1_done,w2_done,w3_done' } @{proofs($tx, 'await_all_drains_outstanding_children')}),
+        'await_all drains all four pending spawned children');
+
+    my ($lowered, $err) = lower_actor($actor);
+    ok(!$lowered, 'public lowering still rejects the until four-pending local-do sequence');
+    like($err, qr/repeat-body do cannot appear while repeat-body spawn clauses are pending/,
+        'until four-pending local-do remains behind the pending-spawn do gate');
+};
+
 subtest 'multi-pending missing final drain remains fail-closed' => sub {
     my $actor = parse_actor(actor_for_body('until_multi_pending_spawn_local_do_undrained', <<'ISF'), 'until-multi-pending-spawn-local-do-undrained');
 (until cond

@@ -6,7 +6,7 @@ Roadmap lane: R14 / ISF compositional control-flow and activation architecture
 
 Created: 2026-06-10
 
-Current frontier: `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.8.18`
+Current frontier: `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.8.19`
 
 ## Goal
 
@@ -1039,7 +1039,7 @@ Result:
 
 #### ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.8.18 — While-Contained Four-Pending Pending-Spawn Local Do AwaitAll
 
-Status: active
+Status: done
 
 Goal: Accept the selected while-contained repeat-body sequence where four
 generated `spawn` clauses remain pending across a local blocking `do`, then a
@@ -1061,6 +1061,42 @@ Acceptance:
   four, and unrelated deeper nesting remain fail-closed.
 - The mdBook, downstream integration spec, live ISF spec/indexes, task tree,
   and Knowledge Map are updated for the new public behavior.
+
+Result:
+
+- Public lowering now accepts the exact
+  `(while cond (repeat n (spawn worker as w0) (spawn worker as w1) (spawn worker as w2) (spawn worker as w3) (do helper) (await_all done)))`
+  shape when the migrated effect checker proves all four generated-spawn
+  handoffs, the local `helper` drain, the exact four-child `await_all` drain,
+  and clean `repeat`/`while` backedges.
+- Focused tests cover the new accepted `while` four-spawn lowering path and
+  lock the effect-clean `until` four-spawn analogue behind the public gate.
+- Existing one-, two-, and three-spawn `while`/`until` local-`do` `await_all`
+  fixtures and single-pending post-`do` `await_any` fixtures remain accepted.
+- User-facing docs, downstream handoff specs, the support matrix, backlog, and
+  the Knowledge Map fact card now state the one-sided four-spawn boundary:
+  `while` four-spawn is shipped; `until` four-spawn, fan-outs beyond four,
+  generated `do`, and multi-pending post-`do` `await_any` remain fail-closed.
+
+#### ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.8.19 — Next Effect-Proven Combination Selection
+
+Status: active
+
+Goal: Select the next narrow behavior-widening combination that can be accepted
+by construction through the migrated region/effect checker after the
+while-contained four-spawn pending-spawn local-`do` `await_all` slice.
+
+Acceptance:
+
+- The selected combination is named before implementation and has a clear
+  backlog/user-facing source.
+- The effect checker proves lifetime, activation target/domain, binding, CDC,
+  generated-instance, and report/doc invariants for the selected shape before
+  any public validator widening.
+- Existing accepted/rejected behavior stays stable outside the named
+  combination.
+- mdBook, downstream spec, task tree, and Knowledge Map are updated if the
+  selected combination changes public behavior.
 
 ### ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.9 — Public Contract And Documentation Simplification
 
@@ -1757,6 +1793,43 @@ Acceptance:
   `scripts/check_memory_architecture.sh`,
   `knowledge-map/scripts/check_knowledge_map.sh`, `prove -Iperl
   t/1414-docs-relative-paths-audit.t`, and `git diff --check` pass.
+- 2026-06-11 (`.8.18`): accepted the selected while-contained four-spawn
+  pending-spawn local blocking `do` plus same-body `await_all` shape by
+  widening only the public `while`/four-spawn selector that consumes the
+  existing effect proof. Added focused coverage for the accepted `while`
+  four-spawn path and the effect-clean but still rejected `until` four-spawn
+  analogue. Synced the mdBook control-flow chapter, support matrix, backlog,
+  live ISF spec, downstream integration spec, and Knowledge Map fact card to
+  the new boundary. `perl -Iperl -c
+  perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c
+  t/1432-isf-loop-pending-spawn-local-do-effect-widening.t`; `perl -Iperl -c
+  t/1433-isf-until-pending-spawn-local-do-effect-widening.t`; `prove -Iperl
+  t/1432-isf-loop-pending-spawn-local-do-effect-widening.t
+  t/1433-isf-until-pending-spawn-local-do-effect-widening.t
+  t/1434-isf-while-pending-spawn-local-do-awaitany-effect-widening.t`;
+  `prove -Iperl t/1250-isf-spec-focused-test-index-audit.t
+  t/1305-isf-book-feature-matrix-audit.t
+  t/1307-isf-loop-body-doc-truth-audit.t`; `prove -Iperl
+  t/1376-isf-book-example-lowering-audit.t
+  t/1377-book-fsm-example-generation-audit.t`; `prove -Iperl
+  t/1419-isf-control-flow-effect-inventory.t
+  t/1421-isf-control-flow-effect-checks.t
+  t/1424-isf-control-flow-domain-binding-effects.t
+  t/1425-isf-control-flow-validator-effect-migration.t
+  t/1426-isf-control-flow-same-domain-validator-effect-migration.t
+  t/1427-isf-control-flow-activation-domain-validator-effect-migration.t
+  t/1428-isf-control-flow-binding-endpoint-validator-effect-migration.t
+  t/1429-isf-control-flow-binding-expression-validator-effect-migration.t
+  t/1430-isf-control-flow-rule-trigger-validator-effect-migration.t
+  t/1431-isf-control-flow-rule-trigger-binding-validator-effect-migration.t
+  t/1432-isf-loop-pending-spawn-local-do-effect-widening.t
+  t/1433-isf-until-pending-spawn-local-do-effect-widening.t
+  t/1434-isf-while-pending-spawn-local-do-awaitany-effect-widening.t`;
+  `knowledge-map/scripts/check_knowledge_map.sh`;
+  `scripts/check_memory_architecture.sh`; `prove -Iperl
+  t/1414-docs-relative-paths-audit.t`; `mdbook build docs/book`; `git diff
+  --check`; and `./bin/ci-regression isf --no-book` (Files=294, Tests=2133)
+  pass.
 - 2026-06-10 (`.4`): added private `plan_actor` / `plan_inventory` child-plan
   projection derived from the shadow effect list. The plan records local child
   start/done wiring requirements, generated child instance plans, and sync
@@ -1854,3 +1927,5 @@ Acceptance:
   `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.8.16: accept until wider pending-spawn local-do fanout`.
 - `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.8.17`: this commit,
   `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.8.17: select wider pending-spawn local-do fanout`.
+- `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.8.18`: this commit,
+  `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.8.18: accept while four-spawn local-do fanout`.

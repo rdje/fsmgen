@@ -7204,6 +7204,10 @@ sub _validate_repeat_body_spawn_subset {
                     && (
                         $loop_pending_spawn_count == 2
                         || $loop_pending_spawn_count == 3
+                        || (
+                            $pending_spawn_local_do_loop_kind eq 'while'
+                            && $loop_pending_spawn_count == 4
+                        )
                     );
                 my $allowed_loop_pending_spawn_local_do =
                     $loop_body_repeat

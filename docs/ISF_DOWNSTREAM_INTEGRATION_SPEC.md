@@ -1319,10 +1319,13 @@ Rules:
   `while`- or `until`-contained `await_all` variant may also keep exactly
   three generated spawns pending across that local blocking `do` when the
   later same-body `(await_all done)` drains all three before repeat and loop
-  re-entry. The
+  re-entry. The `while`-contained `await_all` variant may also keep exactly
+  four generated spawns pending across that local blocking `do` when the later
+  same-body `(await_all done)` drains all four before repeat and loop
+  re-entry; the body-first `until` four-spawn twin remains deferred. The
   `while`- or `until`-contained single-pending variant may use post-`do`
   `(await_any done)` instead when the effect checker proves that the
-  observation completes the outstanding set. Fan-outs beyond three,
+  observation completes the outstanding set. Fan-outs beyond four,
   generated-do, and multi-pending post-`do` `await_any` variants remain
   fail-closed.
   Inside a loop-contained repeat, an undrained spawn emits `loop-contained

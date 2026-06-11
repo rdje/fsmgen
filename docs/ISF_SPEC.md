@@ -2667,11 +2667,14 @@ Current lowering:
   `while`- or `until`-contained `await_all` variant may also keep exactly
   three generated spawns pending across that local blocking `do` when the
   later same-body `(await_all done)` drains all three before repeat and loop
-  re-entry. The
+  re-entry. The `while`-contained `await_all` variant may also keep exactly
+  four generated spawns pending across that local blocking `do` when the later
+  same-body `(await_all done)` drains all four before repeat and loop
+  re-entry; the body-first `until` four-spawn twin remains deferred. The
   `while`- or `until`-contained single-pending variant may use post-`do`
   `(await_any done)` instead when the effect checker proves
   `await_any_single_pending_completes_outstanding_set` for that spawned
-  instance. Fan-outs beyond three, generated-do, and multi-pending post-`do`
+  instance. Fan-outs beyond four, generated-do, and multi-pending post-`do`
   `await_any` variants remain fail-closed.
   Repeats directly inside a top-level
   `when` body also accept one or more generated

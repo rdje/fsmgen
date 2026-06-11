@@ -207,6 +207,57 @@ ISF
     like($top, qr/\(\?fsmc:w2 worker\b/s, 'generated top instantiates w2');
 };
 
+subtest 'while-contained four-pending spawn across local do lowers through effect proofs' => sub {
+    my $multi = parse_actor(actor_for_body('while_four_pending_spawn_local_do', <<'ISF'), 'while-four-pending-spawn-local-do');
+(while cond
+  (repeat loops
+    (spawn worker as w0)
+    (spawn worker as w1)
+    (spawn worker as w2)
+    (spawn worker as w3)
+    (do helper)
+    (await_all done)))
+ISF
+
+    my ($multi_lowered, $multi_err) = lower_actor($multi);
+    my $check = check_actor($multi);
+    ok($check->{ok}, 'effect checker accepts the selected while four-pending local-do shape');
+    my $tx = transaction_check($check, 'parent');
+    my $backedges = proofs($tx, 'backedge_has_no_outstanding_children');
+    ok((grep { ($_->{region_kind} // '') eq 'while' && ($_->{backedge} // '') eq 'while_retest' } @$backedges),
+        'while backedge has no outstanding child for the four-pending shape');
+    ok((grep { ($_->{region_kind} // '') eq 'repeat' && ($_->{backedge} // '') eq 'repeat_check_nonzero' } @$backedges),
+        'repeat backedge has no outstanding child for the four-pending shape');
+    for my $index (0 .. 3) {
+        my $inst = "w$index";
+        my $done = "${inst}_done";
+        ok((grep { ($_->{instance} // '') eq $inst } @{proofs($tx, 'generated_child_instance_is_static')}),
+            "$inst spawned child instance identity is static");
+        ok((grep { ($_->{instance} // '') eq $inst && ($_->{done_signal} // '') eq $done } @{proofs($tx, 'generated_top_start_done_handoff_required')}),
+            "$inst generated-top handoff is explicit");
+    }
+    ok((grep { ($_->{child} // '') eq 'helper' } @{proofs($tx, 'blocking_do_drains_child_done')}),
+        'local blocking do drains helper before the four-way await_all');
+    ok((grep { join(',', @{$_->{done_ports} || []}) eq 'w0_done,w1_done,w2_done,w3_done' } @{proofs($tx, 'await_all_drains_outstanding_children')}),
+        'await_all drains all four pending spawned children');
+
+    ok($multi_lowered, 'public lowering accepts the selected while four-pending local-do sequence') or diag($multi_err);
+    my $fsm = $multi_lowered->{files}{'while_four_pending_spawn_local_do.fsm'};
+    like($fsm, qr/\(parent_spawn_\d+\b.*?\(=\s*\(w0_start>\s*1\)\).*?->\s*parent_spawn_\d+.*?\(=\s*\(w1_start>\s*1\)\).*?->\s*parent_spawn_\d+.*?\(=\s*\(w2_start>\s*1\)\).*?->\s*parent_spawn_\d+.*?\(=\s*\(w3_start>\s*1\)\).*?->\s*parent_do_\d+/s,
+        'all four spawned children start before the local do');
+    like($fsm, qr/\(parent_do_\d+\b.*?\(=\s*\(helper_start\s*1\)\).*?<helper_done.*?->\s*parent_await_all_\d+/s,
+        'local do waits for helper_done before draining all four spawned children');
+    like($fsm, qr/\(parent_await_all_\d+\b.*?->\s*parent_repeat_check_\d+\s*<\(&\s*w0_done\s*w1_done\s*w2_done\s*w3_done\)/s,
+        'await_all drains w0_done, w1_done, w2_done, and w3_done before repeat_check');
+    like($fsm, qr/\(parent_repeat_check_\d+\b.*?\(--\s*parent_cnt\).*?\(!=0\s*\(->\s*parent_spawn_\d+\)\).*?\(=0\s*\(->\s*parent_while_check_\d+\)\)/s,
+        'repeat re-entry returns to the first spawn only after the four-pending drain');
+    my $top = $multi_lowered->{files}{'while_four_pending_spawn_local_do_top.fsm'};
+    like($top, qr/\(\?fsmc:w0 worker\b/s, 'generated top instantiates w0');
+    like($top, qr/\(\?fsmc:w1 worker\b/s, 'generated top instantiates w1');
+    like($top, qr/\(\?fsmc:w2 worker\b/s, 'generated top instantiates w2');
+    like($top, qr/\(\?fsmc:w3 worker\b/s, 'generated top instantiates w3');
+};
+
 subtest 'multi-pending missing final drain remains fail-closed' => sub {
     my $actor = parse_actor(actor_for_body('while_multi_pending_spawn_local_do_undrained', <<'ISF'), 'while-multi-pending-spawn-local-do-undrained');
 (while cond
