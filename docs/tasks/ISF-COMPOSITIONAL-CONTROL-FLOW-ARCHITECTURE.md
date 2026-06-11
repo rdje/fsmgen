@@ -6,7 +6,7 @@ Roadmap lane: R14 / ISF compositional control-flow and activation architecture
 
 Created: 2026-06-10
 
-Current frontier: `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.8.25`
+Current frontier: `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.8.26`
 
 ## Goal
 
@@ -1339,7 +1339,7 @@ Result:
 
 #### ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.8.25 — Next Effect-Proven Combination Selection
 
-Status: active
+Status: done
 
 Goal: Select the next narrow behavior-widening combination that can be accepted
 by construction through the migrated region/effect checker after the
@@ -1357,6 +1357,57 @@ Acceptance:
   combination.
 - mdBook, downstream spec, task tree, and Knowledge Map are updated if the
   selected combination changes public behavior.
+
+Result:
+
+- Selected the `while`-contained three-spawn post-`do` multi-pending
+  `await_any` observation plus later `await_all` drain as the next
+  implementation slice:
+  `(while cond (repeat n (spawn worker as w0) (spawn worker as w1) (spawn worker as w2) (do helper) (await_any done) (await_all done)))`.
+- The source/backlog anchor is the still-public deferred wider post-`do`
+  multi-pending `await_any` boundary in the mdBook, specs, backlog, and
+  Knowledge Map after `.8.24`.
+- A read-only effect-checker probe proves the selected `while` shape has clean
+  `while` and `repeat` backedges, static generated-spawn instances
+  `w0`/`w1`/`w2`, generated-top start/done handoff requirements for
+  `w0_done`/`w1_done`/`w2_done`, same-domain activation targets for all
+  spawns and `helper`, a local `helper` drain,
+  `await_any_observes_without_full_drain` over `w0_done,w1_done,w2_done`,
+  `await_any_multi_pending_requires_later_drain`, and a later `await_all`
+  drain for `w0_done,w1_done,w2_done`; public lowering still rejects the
+  source at the post-`do` multi-pending `await_any` gate before the
+  implementation leaf.
+- The matching body-first `until` three-spawn post-`do` multi-pending
+  `await_any`, generated `do`, fan-outs beyond four, and missing later
+  `await_all` remain outside the selected next implementation leaf.
+
+#### ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.8.26 — While-Contained Three-Spawn Post-Do Multi-Pending AwaitAny Then AwaitAll
+
+Status: active
+
+Goal: Accept the selected `while` repeat-body sequence where three generated
+`spawn` clauses remain pending across a local blocking `do`, a post-`do`
+multi-pending `await_any` observes one of the pending done pulses, and a later
+same-body `await_all` drains the full outstanding set before repeat and
+`while` re-entry.
+
+Acceptance:
+
+- The public validator permits only the selected same-domain `while`
+  three-spawn shape when `ControlFlowEffects` proves clean repeat/`while`
+  backedges, deterministic generated-top handoffs and static instances for all
+  pending generated spawns, a local blocking-`do` done drain, a post-`do`
+  multi-pending `await_any` observation with a later-drain obligation, and an
+  `await_all` drain over the exact outstanding spawned done-port set.
+- Existing accepted one-, two-, three-, and four-spawn local-`do` `await_all`
+  fixtures plus single-pending post-`do` `await_any` fixtures and the shipped
+  `while`/`until` two-spawn post-`do` multi-pending `await_any` fixtures
+  remain accepted.
+- The matching `until` three-spawn post-`do` multi-pending `await_any`,
+  generated `do`, cross-domain activation, missing final `await_all`, wider
+  fan-outs, and unrelated deeper nesting remain fail-closed.
+- The mdBook, downstream integration spec, live ISF spec/indexes, task tree,
+  and Knowledge Map are updated for the new public behavior.
 
 ### ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.9 — Public Contract And Documentation Simplification
 
@@ -2244,6 +2295,23 @@ Acceptance:
   `mdbook build docs/book`; `knowledge-map/scripts/check_knowledge_map.sh`;
   `scripts/check_memory_architecture.sh`; `git diff --check`; and
   `./bin/ci-regression isf --no-book` (Files=294, Tests=2133) pass.
+- 2026-06-11 (`.8.25`): selected the `while` three-spawn local blocking `do`
+  plus post-`do` multi-pending `await_any` observation and later same-body
+  `await_all` drain combination for the next implementation leaf:
+  `(while cond (repeat n (spawn worker as w0) (spawn worker as w1) (spawn worker as w2) (do helper) (await_any done) (await_all done)))`.
+  A read-only `perl -Iperl` probe confirms the private effect checker proves
+  clean `while`/`repeat` backedges, static `w0`/`w1`/`w2` identities,
+  generated-top start/done handoff requirements for all three instances,
+  same-domain activation targets, a local `helper` drain,
+  `await_any_observes_without_full_drain` over `w0_done,w1_done,w2_done`,
+  `await_any_multi_pending_requires_later_drain`, and a later `await_all`
+  drain for `w0_done,w1_done,w2_done`; public lowering still rejects it at the
+  post-`do` multi-pending `await_any` gate before the implementation leaf.
+  `prove -Iperl
+  t/1434-isf-while-pending-spawn-local-do-awaitany-effect-widening.t`,
+  `scripts/check_memory_architecture.sh`,
+  `knowledge-map/scripts/check_knowledge_map.sh`, `prove -Iperl
+  t/1414-docs-relative-paths-audit.t`, and `git diff --check` pass.
 - 2026-06-10 (`.4`): added private `plan_actor` / `plan_inventory` child-plan
   projection derived from the shadow effect list. The plan records local child
   start/done wiring requirements, generated child instance plans, and sync
@@ -2355,3 +2423,5 @@ Acceptance:
   `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.8.23: select until post-do awaitany local-do fanout`.
 - `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.8.24`: this commit,
   `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.8.24: accept until post-do awaitany local-do fanout`.
+- `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.8.25`: this commit,
+  `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.8.25: select wider post-do awaitany local-do fanout`.
