@@ -232,7 +232,7 @@ ISF
     like($top, qr/\(\?fsmc:w2 worker\b/s, 'generated top instantiates w2');
 };
 
-subtest 'until-contained four-pending spawn across local do remains outside public widening' => sub {
+subtest 'until-contained four-pending spawn across local do lowers through effect proofs' => sub {
     my $actor = parse_actor(actor_for_body('until_four_pending_spawn_local_do', <<'ISF'), 'until-four-pending-spawn-local-do');
 (until cond
   (repeat loops
@@ -266,9 +266,48 @@ ISF
         'await_all drains all four pending spawned children');
 
     my ($lowered, $err) = lower_actor($actor);
-    ok(!$lowered, 'public lowering still rejects the until four-pending local-do sequence');
+    ok($lowered, 'public lowering accepts the selected until four-pending local-do sequence') or diag($err);
+    my $fsm = $lowered->{files}{'until_four_pending_spawn_local_do.fsm'};
+    like($fsm, qr/\(parent_spawn_\d+\b.*?\(=\s*\(w0_start>\s*1\)\).*?->\s*parent_spawn_\d+.*?\(=\s*\(w1_start>\s*1\)\).*?->\s*parent_spawn_\d+.*?\(=\s*\(w2_start>\s*1\)\).*?->\s*parent_spawn_\d+.*?\(=\s*\(w3_start>\s*1\)\).*?->\s*parent_do_\d+/s,
+        'all four spawned children start before the local do');
+    like($fsm, qr/\(parent_do_\d+\b.*?\(=\s*\(helper_start\s*1\)\).*?<helper_done.*?->\s*parent_await_all_\d+/s,
+        'local do waits for helper_done before draining all four spawned children');
+    like($fsm, qr/\(parent_await_all_\d+\b.*?->\s*parent_repeat_check_\d+\s*<\(&\s*w0_done\s*w1_done\s*w2_done\s*w3_done\)/s,
+        'await_all drains w0_done, w1_done, w2_done, and w3_done before repeat_check');
+    like($fsm, qr/\(parent_repeat_check_\d+\b.*?\(--\s*parent_cnt\).*?\(!=0\s*\(->\s*parent_spawn_\d+\)\).*?\(=0\s*\(->\s*parent_until_check_\d+\)\)/s,
+        'repeat re-entry returns to the first spawn only after the four-pending drain');
+    like($fsm, qr/\(parent_until_check_\d+\b.*?\(=1\s*\(->\s*parent_done_\d+\)\).*?\(=0\s*\(->\s*parent_repeat_init_\d+\)\)/s,
+        'until check exits when true and otherwise re-enters the repeat');
+    my $top = $lowered->{files}{'until_four_pending_spawn_local_do_top.fsm'};
+    like($top, qr/\(\?fsmc:w0 worker\b/s, 'generated top instantiates w0');
+    like($top, qr/\(\?fsmc:w1 worker\b/s, 'generated top instantiates w1');
+    like($top, qr/\(\?fsmc:w2 worker\b/s, 'generated top instantiates w2');
+    like($top, qr/\(\?fsmc:w3 worker\b/s, 'generated top instantiates w3');
+};
+
+subtest 'until-contained five-pending spawn across local do remains fail-closed' => sub {
+    my $actor = parse_actor(actor_for_body('until_five_pending_spawn_local_do', <<'ISF'), 'until-five-pending-spawn-local-do');
+(until cond
+  (repeat loops
+    (spawn worker as w0)
+    (spawn worker as w1)
+    (spawn worker as w2)
+    (spawn worker as w3)
+    (spawn worker as w4)
+    (do helper)
+    (await_all done)))
+ISF
+
+    my $check = check_actor($actor);
+    ok($check->{ok}, 'effect checker can prove the until five-pending local-do shape');
+    my $tx = transaction_check($check, 'parent');
+    ok((grep { join(',', @{$_->{done_ports} || []}) eq 'w0_done,w1_done,w2_done,w3_done,w4_done' } @{proofs($tx, 'await_all_drains_outstanding_children')}),
+        'await_all drains all five pending spawned children in the private proof');
+
+    my ($lowered, $err) = lower_actor($actor);
+    ok(!$lowered, 'public lowering still rejects fan-outs beyond four');
     like($err, qr/repeat-body do cannot appear while repeat-body spawn clauses are pending/,
-        'until four-pending local-do remains behind the pending-spawn do gate');
+        'five-pending local-do remains behind the bounded public gate');
 };
 
 subtest 'multi-pending missing final drain remains fail-closed' => sub {
