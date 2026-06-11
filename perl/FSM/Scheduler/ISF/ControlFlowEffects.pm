@@ -22,7 +22,7 @@ sub inventory_actor($self, $actor) {
         _inventory_transaction($_, \%generated_child_targets, $domain_context)
     } @{$actor->{transactions}};
     my @rules = map {
-        _inventory_rule($_, $domain_context)
+        _inventory_rule($_, $domain_context, \%generated_child_targets)
     } @{$actor->{rules} || []};
 
     return {
@@ -154,7 +154,7 @@ sub _inventory_transaction($tx, $generated_child_targets, $domain_context) {
     };
 }
 
-sub _inventory_rule($rule, $domain_context) {
+sub _inventory_rule($rule, $domain_context, $generated_child_targets) {
     confess "ControlFlowEffects rule entry must be a hash reference\n"
         unless ref($rule) eq 'HASH';
     confess "ControlFlowEffects rule is missing scalar name\n"
@@ -163,6 +163,7 @@ sub _inventory_rule($rule, $domain_context) {
     my $rule_domain = _domain_for_entry($rule, ($domain_context || {})->{default_domain});
     my @effects;
     my $effect_seq = 0;
+    my %trigger_ordinals;
 
     for my $action (@{$rule->{actions} || []}) {
         next unless _is_clause($action);
@@ -170,12 +171,45 @@ sub _inventory_rule($rule, $domain_context) {
         my $target = $action->[1];
         next unless defined($target) && !ref($target);
         my $contract = _rule_trigger_domain_contract($domain_context, $rule_domain, $target);
+        my $generated_child = ref($generated_child_targets) eq 'HASH' && $generated_child_targets->{$target} ? 1 : 0;
+        my ($trigger_ordinal, $instance);
+        if ($generated_child) {
+            my $key = "$rule->{name}\0$target";
+            $trigger_ordinal = $trigger_ordinals{$key}++;
+            $instance = _generated_rule_trigger_instance_name($rule->{name}, $target, $trigger_ordinal);
+        }
+        my $binding_handoffs = _binding_handoffs(
+            {
+                domain_context     => $domain_context || {},
+                transaction_domain => $rule_domain,
+            },
+            $action,
+            $target,
+            'trigger',
+            $instance,
+        );
+        my $generated_top_requirements = _generated_top_requirements(
+            'trigger',
+            $generated_child,
+            $instance,
+            defined($instance) ? "${instance}_start" : undef,
+            defined($instance) ? "${instance}_done" : undef,
+            $binding_handoffs,
+            $contract,
+        );
         push @effects, {
-            id              => $rule->{name} . '.rule_effect.' . $effect_seq++,
-            rule            => $rule->{name},
-            kind            => 'rule_trigger',
-            target          => $target,
-            domain_contract => $contract,
+            id                         => $rule->{name} . '.rule_effect.' . $effect_seq++,
+            rule                       => $rule->{name},
+            kind                       => 'rule_trigger',
+            target                     => $target,
+            generated_child            => $generated_child,
+            instance                   => $instance,
+            trigger_ordinal            => $trigger_ordinal,
+            start_signal               => defined($instance) ? "${instance}_start" : "${target}_start",
+            done_signal                => defined($instance) ? "${instance}_done" : "${target}_done",
+            domain_contract            => $contract,
+            bindings                   => $binding_handoffs,
+            generated_top_requirements => $generated_top_requirements,
         };
     }
 
@@ -597,6 +631,7 @@ sub _check_rule($rule) {
         next unless ref($effect) eq 'HASH';
         if (($effect->{kind} // '') eq 'rule_trigger') {
             _check_rule_trigger_domain_contract($rule, $effect, \@proofs, \@violations);
+            _check_rule_trigger_binding_handoffs($rule, $effect, \@proofs, \@violations);
         }
     }
 
@@ -1017,17 +1052,40 @@ sub _check_rule_trigger_domain_contract($rule, $effect, $proofs, $violations) {
 }
 
 sub _check_binding_handoffs($tx, $effect, $proofs, $violations) {
+    _check_binding_handoffs_for_owner(
+        {
+            transaction => $tx->{name},
+            region_id   => $effect->{region_id},
+        },
+        $effect,
+        $proofs,
+        $violations,
+    );
+}
+
+sub _check_rule_trigger_binding_handoffs($rule, $effect, $proofs, $violations) {
+    _check_binding_handoffs_for_owner(
+        {
+            rule => $rule->{name},
+        },
+        $effect,
+        $proofs,
+        $violations,
+    );
+}
+
+sub _check_binding_handoffs_for_owner($owner_fields, $effect, $proofs, $violations) {
+    my $child = $effect->{child} // $effect->{target};
     for my $binding (@{$effect->{bindings} || []}) {
         my $direction = $binding->{handoff_direction} // '';
         if ($direction eq 'unknown') {
             _push_violation(
                 $violations,
-                transaction => $tx->{name},
+                %$owner_fields,
                 code        => 'binding_handoff_direction_unknown',
                 invariant   => 'explicit_domain_binding_cdc',
                 effect_id   => $effect->{id},
-                region_id   => $effect->{region_id},
-                child       => $effect->{child},
+                child       => $child,
                 role        => $binding->{role},
                 child_port  => $binding->{child_port},
                 message     => 'activation binding role does not map to a typed handoff direction',
@@ -1036,12 +1094,11 @@ sub _check_binding_handoffs($tx, $effect, $proofs, $violations) {
         }
         _push_proof(
             $proofs,
-            transaction => $tx->{name},
+            %$owner_fields,
             code        => 'binding_handoff_is_explicit',
             invariant   => 'explicit_domain_binding_cdc',
             effect_id   => $effect->{id},
-            region_id   => $effect->{region_id},
-            child       => $effect->{child},
+            child       => $child,
             role        => $binding->{role},
             child_port  => $binding->{child_port},
             actor_expr  => $binding->{actor_expr},
@@ -1061,12 +1118,11 @@ sub _check_binding_handoffs($tx, $effect, $proofs, $violations) {
                 for my $endpoint (@mismatched) {
                     _push_violation(
                         $violations,
-                        transaction => $tx->{name},
+                        %$owner_fields,
                         code        => 'binding_expression_endpoint_domain_mismatch',
                         invariant   => 'explicit_domain_binding_cdc',
                         effect_id   => $effect->{id},
-                        region_id   => $effect->{region_id},
-                        child       => $effect->{child},
+                        child       => $child,
                         role        => $binding->{role},
                         child_port  => $binding->{child_port},
                         actor_expr  => $binding->{actor_expr},
@@ -1079,12 +1135,11 @@ sub _check_binding_handoffs($tx, $effect, $proofs, $violations) {
             } else {
                 _push_proof(
                     $proofs,
-                    transaction => $tx->{name},
+                    %$owner_fields,
                     code        => 'binding_expression_endpoints_are_same_domain',
                     invariant   => 'explicit_domain_binding_cdc',
                     effect_id   => $effect->{id},
-                    region_id   => $effect->{region_id},
-                    child       => $effect->{child},
+                    child       => $child,
                     role        => $binding->{role},
                     child_port  => $binding->{child_port},
                     actor_expr  => $binding->{actor_expr},
@@ -1100,12 +1155,11 @@ sub _check_binding_handoffs($tx, $effect, $proofs, $violations) {
         if ($caller_domain ne $endpoint_domain) {
             _push_violation(
                 $violations,
-                transaction => $tx->{name},
+                %$owner_fields,
                 code        => 'binding_endpoint_domain_mismatch',
                 invariant   => 'explicit_domain_binding_cdc',
                 effect_id   => $effect->{id},
-                region_id   => $effect->{region_id},
-                child       => $effect->{child},
+                child       => $child,
                 role        => $binding->{role},
                 child_port  => $binding->{child_port},
                 actor_expr  => $binding->{actor_expr},
@@ -1117,12 +1171,11 @@ sub _check_binding_handoffs($tx, $effect, $proofs, $violations) {
         }
         _push_proof(
             $proofs,
-            transaction => $tx->{name},
+            %$owner_fields,
             code        => 'binding_endpoint_is_same_domain',
             invariant   => 'explicit_domain_binding_cdc',
             effect_id   => $effect->{id},
-            region_id   => $effect->{region_id},
-            child       => $effect->{child},
+            child       => $child,
             role        => $binding->{role},
             child_port  => $binding->{child_port},
             actor_expr  => $binding->{actor_expr},
@@ -1521,9 +1574,11 @@ sub _binding_handoffs($ctx, $clause, $child, $activation, $instance) {
                 handoff_direction              => $role eq 'input' ? 'actor_to_child'
                     : $role eq 'output' ? 'child_to_actor'
                     : 'unknown',
-                handoff_timing                 => $role eq 'input' ? 'activation_region'
-                    : ($activation // '') eq 'do' ? 'done_guarded'
-                    : 'generated_live_handoff',
+                handoff_timing                 => $role eq 'input'
+                    ? (($activation // '') eq 'trigger' ? 'trigger_payload' : 'activation_region')
+                    : (($activation // '') eq 'do' || ($activation // '') eq 'trigger')
+                        ? 'done_guarded'
+                        : 'generated_live_handoff',
                 parent_port                    => defined($instance) ? "${instance}_${child_port}" : undef,
                 requires_generated_top_handoff => defined($instance) ? 1 : 0,
             };
@@ -1604,6 +1659,15 @@ sub _generated_child_targets($actor) {
     my %targets;
     for my $tx (@{$actor->{transactions} || []}) {
         _collect_generated_child_targets_from_clauses(\%targets, $tx->{clauses});
+    }
+    for my $rule (@{$actor->{rules} || []}) {
+        for my $action (@{$rule->{actions} || []}) {
+            next unless _is_clause($action);
+            next unless ($action->[0] // '') eq 'trigger';
+            my $target = _format_expr($action->[1]);
+            $targets{$target} = 1 if _has_subclause($action, 'params')
+                && defined($target) && length($target);
+        }
     }
     return %targets;
 }
@@ -1686,6 +1750,10 @@ sub _generated_repeat_do_instance_name($owner, $child, $ordinal) {
 
 sub _generated_conditional_do_instance_name($owner, $child, $ordinal) {
     return "${owner}_${child}_cond_do_$ordinal";
+}
+
+sub _generated_rule_trigger_instance_name($rule, $target, $ordinal) {
+    return "${rule}_${target}_trigger_$ordinal";
 }
 
 sub _format_expr($expr) {

@@ -2532,6 +2532,13 @@ sub _validate_rule_domain_refs($self, $actor, $signal_domains, $transaction_doma
                             \%local_signals,
                             $constants,
                             "rule '$rule->{name}' trigger input binding '$binding->{port}'",
+                        ) unless _control_flow_effects_prove_rule_trigger_binding_endpoint_domain(
+                            $actor,
+                            $rule->{name},
+                            $target,
+                            'input',
+                            $binding->{port},
+                            $binding->{actor_expr},
                         );
                     } else {
                         _validate_domain_signal_access(
@@ -2542,6 +2549,13 @@ sub _validate_rule_domain_refs($self, $actor, $signal_domains, $transaction_doma
                             \%local_signals,
                             $constants,
                             "rule '$rule->{name}' trigger output binding '$binding->{port}'",
+                        ) unless _control_flow_effects_prove_rule_trigger_binding_endpoint_domain(
+                            $actor,
+                            $rule->{name},
+                            $target,
+                            'output',
+                            $binding->{port},
+                            $binding->{actor_signal},
                         );
                     }
                 }
@@ -2985,6 +2999,32 @@ sub _control_flow_effects_prove_rule_trigger_target($actor, $rule_name, $target)
         for my $proof (@{$rule->{proofs} || []}) {
             next unless ($proof->{code} // '') eq 'rule_trigger_target_is_same_domain';
             next unless ($proof->{target} // '') eq $target;
+            return 1;
+        }
+    }
+    return 0;
+}
+
+sub _control_flow_effects_prove_rule_trigger_binding_endpoint_domain($actor, $rule_name, $target, $role, $child_port, $actor_endpoint) {
+    return 0 unless defined($rule_name) && !ref($rule_name);
+    return 0 unless defined($target) && !ref($target);
+    return 0 unless defined($role) && !ref($role);
+    return 0 unless defined($child_port) && !ref($child_port);
+    return 0 unless defined($actor_endpoint);
+    my $actor_expr = ref($actor_endpoint) ? _format_isf_expr($actor_endpoint) : $actor_endpoint;
+    return 0 if ref($actor_expr) || !defined($actor_expr);
+
+    my $check = _control_flow_effect_check($actor);
+    for my $rule (@{$check->{rules} || []}) {
+        next unless ($rule->{name} // '') eq $rule_name;
+        for my $proof (@{$rule->{proofs} || []}) {
+            my $code = $proof->{code} // '';
+            next unless $code eq 'binding_endpoint_is_same_domain'
+                || ($role eq 'input' && $code eq 'binding_expression_endpoints_are_same_domain');
+            next unless ($proof->{child} // '') eq $target;
+            next unless ($proof->{role} // '') eq $role;
+            next unless ($proof->{child_port} // '') eq $child_port;
+            next unless ($proof->{actor_expr} // '') eq $actor_expr;
             return 1;
         }
     }

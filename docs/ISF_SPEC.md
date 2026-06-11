@@ -5809,6 +5809,7 @@ Focused tests:
 - [t/1428-isf-control-flow-binding-endpoint-validator-effect-migration.t](../t/1428-isf-control-flow-binding-endpoint-validator-effect-migration.t)
 - [t/1429-isf-control-flow-binding-expression-validator-effect-migration.t](../t/1429-isf-control-flow-binding-expression-validator-effect-migration.t)
 - [t/1430-isf-control-flow-rule-trigger-validator-effect-migration.t](../t/1430-isf-control-flow-rule-trigger-validator-effect-migration.t)
+- [t/1431-isf-control-flow-rule-trigger-binding-validator-effect-migration.t](../t/1431-isf-control-flow-rule-trigger-binding-validator-effect-migration.t)
 
 ## 12. Explicitly Deferred
 

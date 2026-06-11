@@ -6,7 +6,7 @@ Roadmap lane: R14 / ISF compositional control-flow and activation architecture
 
 Created: 2026-06-10
 
-Current frontier: `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.7.7`
+Current frontier: `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.8.1`
 
 ## Goal
 
@@ -336,7 +336,7 @@ Result:
 
 #### ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.7.7 — Next Validator Gate Selection
 
-Status: active
+Status: done
 
 Goal: Select and migrate the next narrow validator gate after rule-trigger
 target domain validation, still preserving public behavior unless one exact
@@ -350,9 +350,22 @@ Acceptance:
 - Existing accepted/rejected behavior remains stable unless this leaf records
   an exact newly accepted combination before implementation.
 
+Result:
+
+- Selected rule-trigger binding endpoint and input-expression domain
+  validation after rule-trigger target domain validation.
+- The effect checker now inventories rule-trigger binding handoffs, including
+  generated trigger instances, and proves same-domain binding endpoints or
+  input-expression endpoints at rule scope.
+- The public rule validator skips its direct binding domain walk only for those
+  same-domain rule-trigger binding proofs. Cross-domain rule-trigger input
+  expressions and generated output bindings keep their previous public
+  clock-domain diagnostics; direct/local rule-trigger output bindings remain
+  fail-closed.
+
 ### ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.8 — Combination Enablement
 
-Status: pending
+Status: active
 
 Goal: Use the migrated checker to accept broader combinations by construction.
 
@@ -362,6 +375,25 @@ Acceptance:
   model proves safety.
 - Book/spec examples describe the general rule, not a growing list of special
   cases.
+
+#### ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.8.1 — First Effect-Proven Combination Selection
+
+Status: active
+
+Goal: Select the first narrow behavior-widening combination that can be accepted
+by construction through the migrated region/effect checker.
+
+Acceptance:
+
+- The selected combination is named before implementation and has a clear
+  backlog/user-facing source.
+- The effect checker proves lifetime, activation target/domain, binding, CDC,
+  generated-instance, and report/doc invariants for the selected shape before
+  any public validator widening.
+- Existing accepted/rejected behavior stays stable outside the named
+  combination.
+- mdBook, downstream spec, task tree, and Knowledge Map are updated if the
+  selected combination changes public behavior.
 
 ### ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.9 — Public Contract And Documentation Simplification
 
@@ -594,6 +626,46 @@ Acceptance:
   `knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl
   t/1414-docs-relative-paths-audit.t`; `mdbook build docs/book`; and
   `git diff --check` pass.
+- 2026-06-11 (`.7.7`): added rule-trigger binding handoffs to
+  `ControlFlowEffects`, including generated rule-trigger instance identity for
+  parameterized/defaulted generated triggers. The public rule validator now
+  skips rule-trigger binding endpoint and input-expression domain walks only
+  when the checker proves the same-domain binding at rule scope. Cross-domain
+  rule-trigger input expressions and generated output bindings keep their
+  previous public clock-domain diagnostics; direct/local rule-trigger output
+  bindings remain fail-closed. `perl -Iperl -c
+  perl/FSM/Scheduler/ISF/ControlFlowEffects.pm`; `perl -Iperl -c
+  perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c
+  t/1431-isf-control-flow-rule-trigger-binding-validator-effect-migration.t`;
+  `prove -Iperl
+  t/1431-isf-control-flow-rule-trigger-binding-validator-effect-migration.t
+  t/1430-isf-control-flow-rule-trigger-validator-effect-migration.t
+  t/1428-isf-control-flow-binding-endpoint-validator-effect-migration.t
+  t/1429-isf-control-flow-binding-expression-validator-effect-migration.t`;
+  `prove -Iperl t/1241-isf-transaction-port-bindings.t
+  t/1242-isf-port-binding-conflict-semantics.t
+  t/1243-isf-port-binding-schedule-report.t
+  t/1248-isf-rule-trigger-parameter-binding.t
+  t/1431-isf-control-flow-rule-trigger-binding-validator-effect-migration.t`;
+  `prove -Iperl t/1419-isf-control-flow-effect-inventory.t
+  t/1421-isf-control-flow-effect-checks.t
+  t/1422-isf-control-flow-child-plan.t
+  t/1423-isf-control-flow-lifetime-checks.t
+  t/1424-isf-control-flow-domain-binding-effects.t
+  t/1425-isf-control-flow-validator-effect-migration.t
+  t/1426-isf-control-flow-same-domain-validator-effect-migration.t
+  t/1427-isf-control-flow-activation-domain-validator-effect-migration.t
+  t/1428-isf-control-flow-binding-endpoint-validator-effect-migration.t
+  t/1429-isf-control-flow-binding-expression-validator-effect-migration.t
+  t/1430-isf-control-flow-rule-trigger-validator-effect-migration.t
+  t/1431-isf-control-flow-rule-trigger-binding-validator-effect-migration.t`;
+  `prove -Iperl t/1250-isf-spec-focused-test-index-audit.t`; and rerun
+  `./bin/ci-regression isf --no-book` pass (Files=294, Tests=2133) after the
+  first broad run identified the intentionally added `t/1431...` test needed
+  the `docs/ISF_SPEC.md` focused-test index entry. `knowledge-map/scripts/check_knowledge_map.sh`;
+  `scripts/check_memory_architecture.sh`; `prove -Iperl
+  t/1414-docs-relative-paths-audit.t`; `mdbook build docs/book`; and
+  `git diff --check` pass.
 - 2026-06-10 (`.4`): added private `plan_actor` / `plan_inventory` child-plan
   projection derived from the shadow effect list. The plan records local child
   start/done wiring requirements, generated child instance plans, and sync
@@ -653,5 +725,7 @@ Acceptance:
   `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.7.4: route binding endpoints through effects`.
 - `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.7.5`: `5386e913`,
   `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.7.5: route binding expressions through effects`.
-- `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.7.6`: this commit,
+- `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.7.6`: `44459c7d`,
   `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.7.6: route rule trigger targets through effects`.
+- `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.7.7`: this commit,
+  `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.7.7: route rule trigger bindings through effects`.
