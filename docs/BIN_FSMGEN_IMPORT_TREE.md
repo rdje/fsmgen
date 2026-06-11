@@ -11,15 +11,15 @@ Use it to keep one current, high-signal picture of:
 Refresh this document at the start of a later session whenever the effective entrypoint/import-tree architecture has moved enough that this note is no longer honest.
 
 Current baseline:
-- Reviewed on `2026-06-07`.
-- Startup bootstrap refreshed again on `2026-06-07`; the live static trace
+- Reviewed on `2026-06-12`.
+- Startup bootstrap refreshed again on `2026-06-12`; the live static trace
   still includes the R14 `.isf` intent-scheduling path and now also reaches the
   bounded direct/composition VHDL backend owners. The project-owned closure
   counts and selected line-count measurements below were refreshed from source
-  after the recent backend/API and bootstrap-maintenance work.
+  after the ATL generated-top helper extraction.
 - Scope is the project-owned transitive `FSM::...` tree reachable from [bin/fsmgen](bin/fsmgen).
 - Perl core and non-project helper modules are treated as support dependencies, not as part of the architectural map.
-- Static trace from [bin/fsmgen](bin/fsmgen) currently reaches `198` project files total, `197` `.pm` packages.
+- Static trace from [bin/fsmgen](bin/fsmgen) currently reaches `200` project files total, `199` `.pm` packages.
 - The R14 `.isf` front door is reachable from [bin/fsmgen](bin/fsmgen)
   through conditional runtime requires of [perl/FSM/Adapter/ISF.pm](perl/FSM/Adapter/ISF.pm)
   and [perl/FSM/Scheduler/ISF.pm](perl/FSM/Scheduler/ISF.pm). That path lowers
@@ -66,6 +66,13 @@ For `.isf` inputs, [bin/fsmgen](bin/fsmgen) first asks
 [perl/FSM/Scheduler/ISF.pm](perl/FSM/Scheduler/ISF.pm) to parse, lower, and
 optionally report the schedule before the ordinary `.fsm` pipeline sees the
 generated source.
+
+The ATL generated-top path now has a first private helper owner:
+[perl/FSM/Scheduler/ISF/ATLGeneratedTop.pm](perl/FSM/Scheduler/ISF/ATLGeneratedTop.pm)
+owns generated-top schedule-report projection and data-link child-interface
+marking. Generated-top selection, route validation, scheduler state lowering,
+artifact emission, and public report shape remain owned by the existing ISF
+lowering/emitter path.
 
 The best current architecture in the tree is the newer composition/forward-IR/backend-emitter slice:
 - [perl/FSM/IR/IntentHIR.pm](perl/FSM/IR/IntentHIR.pm)
@@ -246,8 +253,8 @@ This is the current static measurement view behind the qualitative assessment
 above.
 
 Reachable package-family counts from [bin/fsmgen](bin/fsmgen):
-- total reachable project files: `198`
-- reachable `.pm` packages: `197`
+- total reachable project files: `200`
+- reachable `.pm` packages: `199`
 - `Support`: `65`
 - `Composition`: `36`
 - `HDL`: `33`
@@ -256,7 +263,7 @@ Reachable package-family counts from [bin/fsmgen](bin/fsmgen):
 - `Adapter`: `8`
 - `IR`: `7`
 - `Pipeline`: `5`
-- `Scheduler`: `5`
+- `Scheduler`: `7`
 - `Backend`: `4`
 - `Extension`: `3`
 - `AST`: `1`
@@ -270,10 +277,11 @@ Current thin-coordinator / public-surface assembler line counts:
 - [perl/FSM/Composition/GenerationOrchestrator.pm](perl/FSM/Composition/GenerationOrchestrator.pm): `509`
 - [perl/FSM/HDL/FlattenedDT.pm](perl/FSM/HDL/FlattenedDT.pm): `178`
 - [perl/FSM/Adapter/ISF.pm](perl/FSM/Adapter/ISF.pm): `100`
-- [perl/FSM/Adapter/ISF/Parser.pm](perl/FSM/Adapter/ISF/Parser.pm): `9529`
+- [perl/FSM/Adapter/ISF/Parser.pm](perl/FSM/Adapter/ISF/Parser.pm): `9678`
 - [perl/FSM/Adapter/ISF/LispishAdapter.pm](perl/FSM/Adapter/ISF/LispishAdapter.pm): `99`
 - [perl/FSM/Scheduler/ISF.pm](perl/FSM/Scheduler/ISF.pm): `591`
-- [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm): `12266`
+- [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm): `12657`
+- [perl/FSM/Scheduler/ISF/ATLGeneratedTop.pm](perl/FSM/Scheduler/ISF/ATLGeneratedTop.pm): `95`
 - [perl/FSM/Scheduler/ISF/Emitter/FSM.pm](perl/FSM/Scheduler/ISF/Emitter/FSM.pm): `547`
 - [perl/FSM/Scheduler/ISF/Emitter/CompositionTop.pm](perl/FSM/Scheduler/ISF/Emitter/CompositionTop.pm): `499`
 - [perl/FSM/Scheduler/ISF/Emitter/JSON.pm](perl/FSM/Scheduler/ISF/Emitter/JSON.pm): `1053`
@@ -293,8 +301,8 @@ Current thin-coordinator / public-surface assembler line counts:
 - [perl/FSM/Support/NormalizedSemanticReport.pm](perl/FSM/Support/NormalizedSemanticReport.pm): `383`
 
 Current largest reachable files by line count:
-- [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm): `12266`
-- [perl/FSM/Adapter/ISF/Parser.pm](perl/FSM/Adapter/ISF/Parser.pm): `9529`
+- [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm): `12657`
+- [perl/FSM/Adapter/ISF/Parser.pm](perl/FSM/Adapter/ISF/Parser.pm): `9678`
 - [perl/FSM/Adapter/FSMGenFull/Parser.pm](perl/FSM/Adapter/FSMGenFull/Parser.pm): `3906`
 - [perl/FSM/Support/RegressionCorpus.pm](perl/FSM/Support/RegressionCorpus.pm): `2497`
 - [perl/FSM/CoreAST.pm](perl/FSM/CoreAST.pm): `2431`
@@ -316,6 +324,9 @@ Interpretation:
   is now the largest reachable file by a wide margin after the recent
   transaction, library, composition, storage, dynamic-wait, data-operation,
   resource, report-metadata, and repeat-body child-activation expansion work,
+  even though ATL generated-top report projection and data-link child-interface
+  marking now have a private helper owner in
+  [perl/FSM/Scheduler/ISF/ATLGeneratedTop.pm](perl/FSM/Scheduler/ISF/ATLGeneratedTop.pm),
 - the R14 ISF parser
   [perl/FSM/Adapter/ISF/Parser.pm](perl/FSM/Adapter/ISF/Parser.pm)
   is now the second largest reachable file after the same public syntax
@@ -394,6 +405,7 @@ bin/fsmgen
      -> FSM::Adapter::ISF::LispishAdapter
   -> FSM::Scheduler::ISF
      -> FSM::Scheduler::ISF::LoweringIR
+     -> FSM::Scheduler::ISF::ATLGeneratedTop
      -> FSM::Scheduler::ISF::Emitter::FSM
      -> FSM::Scheduler::ISF::Emitter::JSON
   -> scheduled .fsm source
@@ -499,6 +511,7 @@ Important distinction:
 - [perl/FSM/Adapter/ISF/LispishAdapter.pm](perl/FSM/Adapter/ISF/LispishAdapter.pm)
 - [perl/FSM/Scheduler/ISF.pm](perl/FSM/Scheduler/ISF.pm)
 - [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
+- [perl/FSM/Scheduler/ISF/ATLGeneratedTop.pm](perl/FSM/Scheduler/ISF/ATLGeneratedTop.pm)
 - [perl/FSM/Scheduler/ISF/Emitter/FSM.pm](perl/FSM/Scheduler/ISF/Emitter/FSM.pm)
 - [perl/FSM/Scheduler/ISF/Emitter/CompositionTop.pm](perl/FSM/Scheduler/ISF/Emitter/CompositionTop.pm)
 - [perl/FSM/Scheduler/ISF/Emitter/JSON.pm](perl/FSM/Scheduler/ISF/Emitter/JSON.pm)
@@ -1244,7 +1257,10 @@ It behaves like a hook system, not a competing architecture.
   wait edge-splitting, pending-sample materialization, generated-child/library
   handoff, storage/bank access, resource arbitration, transaction-port
   report metadata, and report provenance that future ISF work should look for
-  bounded helper-owner extractions when a behavior family becomes stable.
+  bounded helper-owner extractions when a behavior family becomes stable. The
+  first ATL generated-top helper extraction now owns schedule-report projection
+  and data-link child-interface marking in
+  [perl/FSM/Scheduler/ISF/ATLGeneratedTop.pm](perl/FSM/Scheduler/ISF/ATLGeneratedTop.pm).
 - [perl/FSM/Adapter/ISF/Parser.pm](perl/FSM/Adapter/ISF/Parser.pm) is now the
   second largest reachable file. Its growth is active syntax delivery, but the
   parser has enough stable subfamilies now that future behavior slices should

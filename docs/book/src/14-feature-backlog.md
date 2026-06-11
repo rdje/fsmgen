@@ -4307,9 +4307,15 @@ Completed backend/API frontier leaf
 after `.131.1` shipped direct VHDL non-signed vector positive numeric-literal
 literal-literal modulo, the supported-smoke `.fsm` corpus passed under
 `--language vhdl`, and `ghdl` remained unavailable. Completed selector leaf
-`ARCHITECTURE-DEBT-FRONTIER.3` deferred ISF parser/lowerer extraction until a
-stable family is proven by a future exact owner; active PNT is exhausted with
-no proposed task tree queued. Completed implementation leaf
+`ARCHITECTURE-DEBT-FRONTIER.3` deferred broad ISF parser/lowerer extraction
+until a stable family is proven by a future exact owner. The first exact
+private lowerer extraction is now shipped by
+`ISF-ATL-GENERATED-TOP-PLANNER-EXTRACTION.2`: `FSM::Scheduler::ISF::ATLGeneratedTop`
+owns ATL generated-top schedule-report projection and data-link
+child-interface marking without changing public reports, generated artifacts,
+or HDL behavior. Broader parser/lowerer extraction remains deferred behind
+future exact owners; active PNT is exhausted with no proposed task tree queued.
+Completed implementation leaf
 `ARCHITECTURE-DEBT-FRONTIER.2.1`
 projects direct backend storage/helper declaration-plan entries into
 `structural_rtl_ir.nets[]` without rerouting HDL emission or claiming generated
