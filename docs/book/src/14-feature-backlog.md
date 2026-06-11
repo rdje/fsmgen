@@ -2249,7 +2249,10 @@ ISF actor/network syntax into protocol/platform intent inference.
 
 ### IAL2 Protocol And Platform Intent Exploration
 
-Status: backlog.
+Status: active exploration; no IAL2 source or lowering implementation is selected.
+
+Task-tree owner:
+[IAL2-PROTOCOL-PLATFORM-INTENT-EXPLORATION](../../tasks/IAL2-PROTOCOL-PLATFORM-INTENT-EXPLORATION.md).
 
 Goal: decide whether an intent layer above current ISF has enough independent
 semantic value to exist.
@@ -4314,7 +4317,9 @@ private lowerer extraction is now shipped by
 owns ATL generated-top schedule-report projection and data-link
 child-interface marking without changing public reports, generated artifacts,
 or HDL behavior. Broader parser/lowerer extraction remains deferred behind
-future exact owners; active PNT is exhausted with no proposed task tree queued.
+future exact owners. Active PNT has moved to
+`IAL2-PROTOCOL-PLATFORM-INTENT-EXPLORATION.2`, a non-code evaluation of
+protocol/platform intent before any IAL2 source or lowering implementation.
 Completed implementation leaf
 `ARCHITECTURE-DEBT-FRONTIER.2.1`
 projects direct backend storage/helper declaration-plan entries into
