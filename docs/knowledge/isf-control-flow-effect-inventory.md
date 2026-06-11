@@ -114,5 +114,12 @@ The public validator permits them only when the effect checker proves all
 generated spawn instances are static and wired, the local `do` drains its
 child, `await_all` drains the exact outstanding spawned done set, and the
 repeat plus surrounding loop backedges have no outstanding child completions.
-Fan-outs beyond four, generated-do, and multi-pending post-do `await_any`
-variants remain fail-closed.
+The next consumer is the while-contained two-spawn post-do multi-pending
+`await_any` observation followed by a later same-body `await_all` drain. The
+public validator permits that shape only when the effect checker proves the
+post-do `await_any` observes the pending generated done set without full drain,
+records a later-drain obligation, and the following `await_all` drains the
+exact same outstanding set before repeat and `while` re-entry. The matching
+body-first `until` post-do multi-pending `await_any`, fan-outs beyond four,
+generated-do, and wider post-do multi-pending `await_any` variants remain
+fail-closed.
