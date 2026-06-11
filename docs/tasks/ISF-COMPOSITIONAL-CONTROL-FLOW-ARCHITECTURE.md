@@ -1,12 +1,12 @@
 # ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE
 
-Status: active
+Status: done
 
 Roadmap lane: R14 / ISF compositional control-flow and activation architecture
 
 Created: 2026-06-10
 
-Current frontier: `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.9`
+Current frontier: complete
 
 ## Goal
 
@@ -178,7 +178,7 @@ Acceptance:
 
 ### ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.7 — Validator Migration
 
-Status: active
+Status: done
 
 Goal: Replace syntax-path allow-list decisions with region/effect proof
 decisions incrementally.
@@ -372,7 +372,7 @@ Result:
 
 ### ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.8 — Combination Enablement
 
-Status: active
+Status: done
 
 Goal: Use the migrated checker to accept broader combinations by construction.
 
@@ -1779,7 +1779,7 @@ Result:
 
 ### ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.9 — Public Contract And Documentation Simplification
 
-Status: active
+Status: done
 
 Goal: Convert user-facing docs from enumerated combination lists to
 construction rules once the architecture supports it.
@@ -1788,6 +1788,22 @@ Acceptance:
 
 - mdBook explains the compositional rule and the remaining explicit limits.
 - Support matrix, spec, audits, and knowledge cards reflect the new contract.
+
+Result:
+
+- Replaced the user-facing support-matrix activation catalog with a
+  construction-rule description for blocking `do`, generated `spawn`,
+  `await_any`, and `await_all` across the documented top-level, repeat,
+  branch/loop, loop-contained, deeper branch-contained, and top-level
+  `when`/`switch` nested-repeat contexts.
+- Split generated `spawn` into its own concise support-matrix row so the
+  public contract distinguishes blocking activation from spawned generated
+  children while sharing the same exact same-body drain rule.
+- Replaced the branch-contained repeat audit marker catalog with a compact
+  construction-rule marker set, and updated the feature-matrix audit to assert
+  rule wording instead of enumerating every accepted syntax spelling.
+- The compositional control-flow architecture tree is complete; the next active
+  owned frontier is `ISF-SCHEDULING-BACKLOG-FRONTIER.4.1`.
 
 ## Verification Log
 
@@ -2904,6 +2920,16 @@ Acceptance:
   `mdbook build docs/book`; `./bin/ci-regression isf --no-book` (Files=294,
   Tests=2133); `knowledge-map/scripts/check_knowledge_map.sh`;
   `scripts/check_memory_architecture.sh`; and `git diff --check` pass.
+- 2026-06-11 (`.9`): simplified the public support-matrix contract from an
+  enumerated activation-combination catalog to construction rules for blocking
+  `do`, generated `spawn`, `await_any`, and `await_all`. The mdBook now names
+  the exact lifetime/drain rule and remaining fail-closed boundaries, while
+  the feature-matrix audit keys on rule markers instead of each syntax
+  spelling. `perl -Iperl -c t/1305-isf-book-feature-matrix-audit.t`;
+  `prove -Iperl t/1305-isf-book-feature-matrix-audit.t`; `prove -Iperl
+  t/1376-isf-book-example-lowering-audit.t`; `mdbook build docs/book`;
+  `knowledge-map/scripts/check_knowledge_map.sh`;
+  `scripts/check_memory_architecture.sh`; and `git diff --check` pass.
 - 2026-06-10 (`.4`): added private `plan_actor` / `plan_inventory` child-plan
   projection derived from the shadow effect list. The plan records local child
   start/done wiring requirements, generated child instance plans, and sync
@@ -3033,3 +3059,5 @@ Acceptance:
   `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.8.32: audit depth-neutral scheduler gates`.
 - `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.8.33`: this commit,
   `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.8.33: generalize loop-contained fanout proofs`.
+- `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.9`: this commit,
+  `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.9: simplify activation support matrix`.

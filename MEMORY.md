@@ -10,10 +10,10 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.8.33` (this commit) — removed the loop-contained fanout cap by exact effect proofs and synced public docs/specs.
-- active_work_unit: `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.9` — simplify public contract docs from enumerated combination lists to construction rules.
-- recently_done: `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.8.33`; `.8.32`; `.8.31`; `.8.30`; `.8.29`. Older completed slices are in the task tree and git history.
-- in_flight_uncommitted: none expected after the `.8.33` commit; unrelated untracked `fx/` intentionally left alone.
+- latest_commit: `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.9` (this commit) — simplified the activation support matrix from enumerated combinations to construction rules.
+- active_work_unit: `ISF-SCHEDULING-BACKLOG-FRONTIER.4.1` — resume outstanding-child lifetime work from the scheduling backlog frontier.
+- recently_done: `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.9`; `.8.33`; `.8.32`; `.8.31`; `.8.30`. Older completed slices are in the task tree and git history.
+- in_flight_uncommitted: none expected after the `.9` commit; unrelated untracked `fx/` intentionally left alone.
 - blockers: none.
 
 ## Notes
