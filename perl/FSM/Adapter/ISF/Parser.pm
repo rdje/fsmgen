@@ -3520,11 +3520,71 @@ sub _validate_selected_atl_event_wait_count {
         \@transaction_body_triggers,
         $data_movements,
     );
+    if (my $repeated_wait = _selected_atl_temporary_trigger_batch_repeated_event_wait(
+        $actor,
+        $event_waits,
+        \@transaction_body_triggers,
+        $data_movements,
+    )) {
+        my $transaction = $repeated_wait->{transaction} // 'unknown';
+        my $target = $repeated_wait->{target}
+            // (($repeated_wait->{instance} // 'actor') . '.' . ($repeated_wait->{event} // 'event'));
+        my $instance = $repeated_wait->{instance} // 'actor';
+        confess "Error: transaction '$transaction' ATL actor event wait '(await $target)' repeats triggered actor instance '$instance' after a temporary trigger batch; repeated actor-event waits require an event re-arm or per-event generation/lifetime contract, so this subset remains fail-closed\n";
+    }
 
     my $wait = $waits[1];
     my $transaction = $wait->{transaction} // 'unknown';
     my $target = $wait->{target} // (($wait->{instance} // 'actor') . '.' . ($wait->{event} // 'event'));
     confess "Error: transaction '$transaction' ATL actor event wait '(await $target)' exceeds the current multi-event wait subset; multiple event waits require distinct triggered actor instances, one temporary trigger batch, contiguous source-ordered waits after the batch, and no ATL data movement; fan-in, fan-out, repeated waits, non-batch waits, and payload waits remain deferred\n";
+}
+
+sub _selected_atl_temporary_trigger_batch_repeated_event_wait {
+    my ($actor, $event_waits, $transaction_triggers, $data_movements) = @_;
+    my @waits = @{$event_waits || []};
+    my @triggers = _atl_transaction_body_triggers($transaction_triggers);
+    return undef unless @waits > 1
+        && @triggers > 1
+        && !@{$data_movements || []};
+
+    my $network = $actor->{actor_network} || {};
+    my @associations = @{$network->{association_schedules} || []};
+    return undef unless @associations == 1;
+    my $association = $associations[0];
+    return undef unless ($association->{kind} // '') eq 'temporary_trigger_batch';
+
+    my $transaction = $association->{owner_transaction};
+    return undef unless defined($transaction) && !ref($transaction) && length($transaction);
+    for my $trigger (@triggers) {
+        return undef unless ($trigger->{owner_transaction} // '') eq $transaction;
+    }
+    for my $wait (@waits) {
+        return undef unless ($wait->{transaction} // '') eq $transaction;
+    }
+
+    my %batch_members = map { $_ => 1 } @{$association->{members} || []};
+    return undef unless keys(%batch_members);
+    return undef if grep { !defined($_->{_clause_index}) } (@triggers, @waits);
+
+    my @trigger_indices = sort { $a <=> $b } map { $_->{_clause_index} } @triggers;
+    my @ordered_waits = sort { $a->{_clause_index} <=> $b->{_clause_index} } @waits;
+    my @wait_indices = map { $_->{_clause_index} } @ordered_waits;
+    for my $idx (1 .. $#trigger_indices) {
+        return undef unless $trigger_indices[$idx] == $trigger_indices[$idx - 1] + 1;
+    }
+    for my $idx (1 .. $#wait_indices) {
+        return undef unless $wait_indices[$idx] == $wait_indices[$idx - 1] + 1;
+    }
+    return undef unless $wait_indices[0] == $trigger_indices[-1] + 1;
+
+    my %waited_instances;
+    for my $wait (@ordered_waits) {
+        my $instance = $wait->{instance} // '';
+        return undef unless $batch_members{$instance};
+        return $wait if $waited_instances{$instance}++;
+    }
+
+    return undef;
 }
 
 sub _selected_atl_temporary_trigger_batch_multi_event_wait_shape {

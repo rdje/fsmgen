@@ -1704,7 +1704,9 @@ accepted subset requires contiguous top-level waits, distinct triggered actor
 instances, and no ATL data movement in the same transaction segment. It is
 not a hidden same-cycle join and does not claim repeated waits, event
 payloads, event fan-out, generated-child route coupling, group endpoints,
-CDC, or ready/backpressure.
+CDC, or ready/backpressure. Repeated waits to the same triggered actor after
+a trigger batch fail closed with a diagnostic that names the missing event
+re-arm or per-event generation/lifetime contract.
 
 The ATL source-root boundary is shipped before generated child resolution. A
 sibling top-level `(actor ...)` root in the same `.isf` source fails closed
@@ -2200,9 +2202,9 @@ declarations and compact `(NAME : ACTOR_TYPE)` aliases, library-qualified
 resolved child artifacts, and report-only static group declarations plus
 compact `(concurrent NAME ACTOR...)` aliases recorded as `actor_network`
 metadata. Parent transactions can use selected child trigger/event handoffs,
-one bounded temporary trigger batch followed by source-ordered event waits,
-and selected generated-child data routes written with existing drive-body
-`(sink source)` movement syntax.
+one bounded temporary trigger batch followed by source-ordered event waits to
+distinct triggered actors, and selected generated-child data routes written
+with existing drive-body `(sink source)` movement syntax.
 
 Resolved ATL child `.fsm` files and bounded generated ATL tops are shipped for
 the documented one-child/two-child resolved-child trigger/event and data-route

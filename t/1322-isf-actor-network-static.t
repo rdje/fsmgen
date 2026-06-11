@@ -1531,8 +1531,8 @@ ISF
     (await writer.ready)
     (complete done)))
 ISF
-        qr/ATL actor event wait '\(await writer\.done\)' exceeds the current multi-event wait subset/,
-        'temporary trigger batch plus repeated target waits still fails closed before scheduled emission',
+        qr/ATL actor event wait '\(await writer\.ready\)' repeats triggered actor instance 'writer' after a temporary trigger batch; repeated actor-event waits require an event re-arm or per-event generation\/lifetime contract/,
+        'temporary trigger batch plus repeated target waits names the missing event re-arm contract',
     );
 
     parse_fails_like(

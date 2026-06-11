@@ -2653,13 +2653,17 @@ hidden same-cycle join. Schedule reports expose waits through
 `external_handoff`. Nested event waits, repeated actor waits, hidden fan-in or
 fan-out event joins, event payloads, cross-clock actor events, concurrent
 group events, and waits outside the selected generated-top/source-order
-shapes remain fail-closed/deferred.
+shapes remain fail-closed/deferred. When a temporary trigger batch is followed
+by multiple waits to the same triggered actor instance, the diagnostic names
+the missing event re-arm or per-event generation/lifetime contract instead of
+advertising a hidden repeated-wait behavior.
 Existing unqualified local `(await signal)` and rule-level
 `(trigger transaction)` behavior remains unchanged, and dotted enum-looking
 names outside actor-network instances keep their prior diagnostics.
 Regression coverage includes the accepted temporary trigger-batch multi-event
 wait fixture and negative repeated-wait boundaries; repeated waits fail before
-scheduled `.fsm` emission with the multi-event wait diagnostic.
+scheduled `.fsm` emission, with trigger-batch repeated waits receiving the
+targeted event re-arm/lifetime diagnostic.
 The current qualified actor-trigger subset is one top-level transaction-body
 `(trigger actor.transaction)` for a static actor instance, plus the exact
 same-cycle temporary trigger batch described above. It also includes one

@@ -6,7 +6,7 @@ Roadmap lane: R14 / ISF scheduling, activation, CDC, ATL, actor-network, and gen
 
 Created: 2026-06-10
 
-Current frontier: `ISF-SCHEDULING-BACKLOG-FRONTIER.5.2`
+Current frontier: `ISF-SCHEDULING-BACKLOG-FRONTIER.6.1`
 
 ## Goal
 
@@ -327,7 +327,7 @@ Result:
 
 ### ISF-SCHEDULING-BACKLOG-FRONTIER.5 — Repeated/Nested ATL Triggers And Waits
 
-Status: active
+Status: done
 
 Goal: Extend ATL trigger/wait lowering for repeated and nested transaction
 flows without breaking existing single-trigger behavior.
@@ -376,7 +376,7 @@ Result:
 
 #### ISF-SCHEDULING-BACKLOG-FRONTIER.5.2 — Repeated Trigger-Batch Event-Wait Diagnostic
 
-Status: pending
+Status: done
 
 Goal: Keep repeated actor-event waits after a temporary trigger batch
 fail-closed, but diagnose them as a missing event re-arm/lifetime contract
@@ -393,9 +393,25 @@ Acceptance:
 - Sync the parser tests, mdBook, live specs/contracts, and Knowledge Map with
   the sharper repeated-wait boundary.
 
+Result:
+
+- Kept repeated actor-event waits after a temporary trigger batch fail-closed.
+  The parser now detects the contiguous trigger-batch plus repeated wait
+  instance shape before the broad multi-event wait fallback.
+- The diagnostic names the repeated wait itself and states that repeated
+  actor-event waits require an event re-arm or per-event generation/lifetime
+  contract. The accepted distinct-triggered-actor multi-wait chain,
+  non-batch multi-wait fallback, and nested wait/trigger diagnostics are
+  preserved.
+- Focused fixture coverage proves the accepted trigger-batch multi-event wait
+  form still lowers, while the repeated-wait fixture now expects the targeted
+  event re-arm/lifetime diagnostic.
+- The mdBook, live ISF spec, downstream handoff, public interface contract,
+  Knowledge Map fact card, task index, and `MEMORY.md` are synced.
+
 ### ISF-SCHEDULING-BACKLOG-FRONTIER.6 — Fan-In/Fan-Out Event Joins
 
-Status: pending
+Status: active
 
 Goal: Add or close exact fan-in/fan-out event join semantics across the ISF
 event/trigger surfaces.
@@ -406,6 +422,23 @@ Acceptance:
   named events or child completions.
 - Prove deterministic lowering and failure behavior for malformed joins.
 - Document example use cases and limits.
+
+#### ISF-SCHEDULING-BACKLOG-FRONTIER.6.1 — Event Join First Slice Selection
+
+Status: pending
+
+Goal: Select the first exact fan-in/fan-out event-join source shape for
+implementation or targeted fail-closed closure.
+
+Acceptance:
+
+- Audit current local sync, child completion sync, ATL event wait, and
+  trigger-batch diagnostics for all-of/any-of event joins.
+- Select one precise source pattern before implementation.
+- If the pattern is accepted, prove deterministic lowering, malformed-shape
+  failure behavior, report/doc stability, and mdBook examples.
+- If the pattern remains unsafe, record the missing ordering/lifetime/storage
+  contract and close it with a targeted diagnostic/doc update.
 
 ### ISF-SCHEDULING-BACKLOG-FRONTIER.7 — Actor-Network And Group Scheduling
 

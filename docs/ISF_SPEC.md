@@ -967,7 +967,9 @@ work, actor-event fan-in/fan-out joins, payload waits, generated child event
 wiring, route coupling, CDC, ready/backpressure, and permanent actor grouping
 remain fail-closed/deferred. Focused negative coverage in
 [t/1322-isf-actor-network-static.t](../t/1322-isf-actor-network-static.t)
-keeps repeated actor waits outside the selected shape.
+keeps repeated actor waits outside the selected shape, and trigger-batch
+repeated waits now name the missing event re-arm or per-event
+generation/lifetime contract.
 
 The ATL resolved-child fixture is shipped as
 [isf/atl_resolved_child_pipeline.isf](../isf/atl_resolved_child_pipeline.isf).
@@ -4525,9 +4527,13 @@ Each entry has `transaction`, `context`, `instance`, `event`, `signal`, and
 `source`; the current `source` value is `external_handoff`.
 
 The rest of the event boundary remains fail-closed. FSMGen rejects multiple
-actor-event waits, nested actor-event waits, event handoff signal conflicts,
-and actor-event waits on `(clock-domains ...)` actors with ATL-specific
-diagnostics when the qualifier names a declared static actor instance.
+actor-event waits outside the selected generated-top or trigger-batch
+multi-wait shapes, nested actor-event waits, repeated waits to one triggered
+actor after a trigger batch, event handoff signal conflicts, and actor-event
+waits on `(clock-domains ...)` actors with ATL-specific diagnostics when the
+qualifier names a declared static actor instance. The repeated trigger-batch
+wait diagnostic names the missing event re-arm or per-event
+generation/lifetime contract.
 Existing unqualified local behavior remains unchanged: `(await signal)` is
 still a local transaction wait, and rule-level `(trigger transaction)` still
 targets a local transaction. Dotted enum-looking names that do not name a
@@ -5192,9 +5198,10 @@ three contiguous source-ordered waits on `reader.done`, `filter.done`, and
 scheduled `.fsm` structure with one trigger-batch state followed by three
 explicit wait states and the default await timeout state, and plain plus
 strict HDL generation. It stays inside the shipped parent-handoff subset and
-does not claim hidden actor-event fan-in/fan-out joins, payload waits,
-generated ATL child event wiring, data movement coupling, CDC, or permanent
-actor grouping.
+does not claim hidden actor-event fan-in/fan-out joins, repeated waits to one
+triggered actor, payload waits, generated ATL child event wiring, data
+movement coupling, CDC, or permanent actor grouping. Repeated trigger-batch
+waits fail closed with the event re-arm/lifetime diagnostic.
 The [isf/atl_resolved_child_pipeline.isf](../isf/atl_resolved_child_pipeline.isf)
 fixture now has file-backed ATL resolved-child coverage for one same-source
 library actor export, one resolved `(instance worker of

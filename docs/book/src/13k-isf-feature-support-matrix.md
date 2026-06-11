@@ -378,7 +378,9 @@ compatibility group-schedule metadata, empty data movement, strict schedule
 JSON parity, scheduled `.fsm` structure including the default await timeout
 state, and plain plus strict HDL generation without claiming hidden
 actor-event fan-in joins, repeated waits, payload waits, data movement
-coupling, CDC, ready/backpressure, or permanent actor grouping.
+coupling, CDC, ready/backpressure, or permanent actor grouping. Repeated
+waits to the same triggered actor after a trigger batch fail closed with the
+event re-arm/lifetime diagnostic.
 
 The ATL resolved-child generated-top fixture is file-backed in the `isf`
 regression tier for the first parent/child wiring subset. It uses

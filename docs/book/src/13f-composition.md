@@ -764,6 +764,9 @@ parent-handoff orchestration, not a hidden same-cycle join. Repeated waits,
 non-batch waits, interleaved parent work, event payloads, generated child
 completion joins, data movement coupling, CDC, ready/backpressure, compact
 aliases, and permanent actor grouping remain outside the shipped subset.
+When repeated waits target the same triggered actor after a trigger batch,
+FSMGen fails before `.fsm` emission and names the missing event re-arm or
+per-event generation/lifetime contract.
 
 The shipped ATL source-root safety boundary rejects a second top-level
 `(actor ...)` root in the same `.isf` file. That sibling root is not yet a
@@ -1480,8 +1483,10 @@ waits on that input, and schedule JSON records the wait under
 
 The event producer is external in this subset. FSMGen still does not resolve
 the actor type, emit an ATL child `.fsm`, generate an ATL top, trigger actor
-transactions, carry event payloads, or support fan-in/fan-out, multiple waits,
-nested waits, cross-clock actor events, or concurrent group events.
+transactions, carry event payloads, or support fan-in/fan-out, unselected
+multi-wait forms, repeated waits to one triggered actor, nested waits,
+cross-clock actor events, or concurrent group events. Repeated trigger-batch
+waits fail closed with the event re-arm/lifetime diagnostic.
 
 Unqualified local forms keep their existing meaning: `(await signal)` waits
 on a local transaction signal, and rule-level `(trigger transaction)` triggers

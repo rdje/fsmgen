@@ -2654,6 +2654,8 @@ inside the multi-wait segment, fan-in/fan-out event joins, event payloads,
 cross-clock actor events, concurrent group events, or source that relies on
 generated ATL child artifacts or generated ATL top event wiring until the
 corresponding support is documented here and advertised in the manifest.
+Repeated waits after a temporary trigger batch fail closed with a diagnostic
+that names the missing event re-arm or per-event generation/lifetime contract.
 
 Existing unqualified local forms are unchanged: `(await signal)` remains a
 local transaction wait, and rule-level `(trigger transaction)` remains a
@@ -2664,8 +2666,8 @@ prior diagnostics.
 
 The regression suite specifically covers the accepted source-ordered
 multi-event wait form through `isf/atl_trigger_batch_multi_wait_pipeline.isf`
-and keeps repeated target waits outside that subset with the current
-multi-event wait diagnostic.
+and keeps repeated target waits outside that subset with the targeted
+event re-arm/lifetime diagnostic.
 
 Current actor-transaction trigger handoff subset: downstream producers may
 emit a top-level transaction-body `(trigger actor.transaction)` against a
@@ -3805,7 +3807,9 @@ empty data movement, and plain plus strict HDL generation for
 It intentionally remains sequential parent-handoff orchestration and does not
 claim hidden same-cycle actor-event joins, repeated waits to one actor, event
 payloads, generated ATL child event wiring, data route coupling, CDC,
-ready/backpressure, or permanent actor grouping.
+ready/backpressure, or permanent actor grouping. Repeated waits to one
+triggered actor fail closed until an event re-arm or per-event lifetime
+contract exists.
 
 The ATL resolved-child fixture is covered by
 `t/1330-isf-atl-resolved-child-fixture-coverage.t`, which proves strict
