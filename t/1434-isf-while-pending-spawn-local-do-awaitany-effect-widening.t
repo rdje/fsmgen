@@ -127,8 +127,8 @@ ISF
 
     my ($lowered, $err) = lower_actor($actor);
     ok(!$lowered, 'multi-pending await_any after local do remains rejected');
-    like($err, qr/repeat-body do cannot appear while repeat-body spawn clauses are pending/,
-        'multi-pending variant keeps the pending-spawn do gate before the selected single-pending proof can apply');
+    like($err, qr/loop-contained repeat-body local do while generated spawns are pending requires same-body '\(await_all done\)' drain; '\(await_any done\)' after the do remains deferred/,
+        'multi-pending variant keeps the post-do await_any gate');
 };
 
 subtest 'missing final sync remains fail-closed' => sub {

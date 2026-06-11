@@ -13,6 +13,7 @@ answers:
   - "what module owns the initial compositional control-flow activation model?"
   - "which behavior widening first consumes compositional repeat lifetime proofs?"
   - "which behavior widening consumes single-pending await_any lifetime proofs?"
+  - "which behavior widening consumes multi-pending await_all local-do lifetime proofs?"
 date: 2026-06-11
 status: current
 tags: [isf, control-flow, architecture, activation, scheduling, cdc]
@@ -106,5 +107,11 @@ The next consumer is the while-contained single-pending
 `spawn -> local blocking do -> await_any` shape. The public validator permits
 it only when the same proofs hold and `ControlFlowEffects` additionally proves
 `await_any_single_pending_completes_outstanding_set` for the spawned done port.
-The matching `until` post-do `await_any`, multi-pending, generated-do, and
+The next consumer is the while-contained two-spawn
+`spawn -> spawn -> local blocking do -> await_all` shape. The public validator
+permits it only when the effect checker proves both generated spawn instances
+are static and wired, the local `do` drains its child, `await_all` drains the
+exact `w0_done,w1_done` set, and the repeat plus `while` backedges have no
+outstanding child completions. The matching `until` post-do `await_any`,
+`until` multi-pending local-do, wider multi-pending local-do, generated-do, and
 multi-pending post-do `await_any` variants remain fail-closed.

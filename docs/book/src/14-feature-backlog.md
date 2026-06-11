@@ -25,15 +25,18 @@ this chapter:
   (`t/1379`), a same-domain generated `(do child (params ...))` (`t/1380`, child
   instantiated in the `_top`), and the basic `spawn` + same-body `(await_all
   done)`/single-pending `(await_any done)` subset (`t/1383`) inside a
-  `(repeat ...)` directly in a single `(while ...)`/`(until ...)` body now lower;
-  undrained / multi-pending spawn and cross-domain generated `do` stay deferred.
+  `(repeat ...)` directly in a single `(while ...)`/`(until ...)` body now lower.
+  Multi-pending `(await_any done)` with later same-body `(await_all done)` and
+  the documented pending-spawn local-`do` drain shapes also lower; undrained,
+  cross-domain, and unstated wider local-`do` variants stay deferred.
 - **Deeper-nested repeat-body `do`/`spawn`**: a plain local `(do child)`
   (`t/1381`), a same-domain generated `(do child (params ...))` (`t/1382`), and
-  the basic spawn + drain subset (`t/1383`) at deeper branch nesting (`when⁺ →
-  repeat`, `switch → when⁺ → repeat`) now lower; undrained / multi-pending spawn
-  and cross-domain generated `do` stay deferred.
+  the basic spawn + drain subset (`t/1383`) plus multi-pending `(await_any done)`
+  with later same-body `(await_all done)` (`t/1384`) at deeper branch nesting
+  (`when⁺ → repeat`, `switch → when⁺ → repeat`) now lower; undrained and
+  cross-domain generated `do` stay deferred.
 - **Book example correctness build gate**: every `lisp`-tagged book
-  example must parse + lower (`t/1376`). Current state: 40
+  example must parse + lower (`t/1376`). Current state: 68
   complete fixtures lower cleanly.
 - **Cookbook ISF recipes**: `docs/book/src/12-cookbook.md` now
   carries recipes 9-13 covering basic actor, spawn, parameterized
@@ -729,10 +732,14 @@ closed (`cross-domain repeat-body do remains deferred`). A `while`- or
 `until`-contained repeat may now keep exactly one generated spawn pending
 across one plain local blocking `(do child)` when a later same-body
 `(await_all done)` drains that spawned instance before repeat and the
-surrounding loop re-entry. The `while`-contained single-pending variant may
-also use post-`do` `(await_any done)` as that final sync. The matching `until`
-post-`do` `await_any`, multi-pending, generated-do, and multi-pending
-post-`do` `await_any` variants remain fail-closed. A plain local
+surrounding loop re-entry. The `while`-contained `await_all` variant may also
+keep exactly two generated spawns pending across that local blocking `do` when
+the later same-body drain covers both spawned children before repeat and
+`while` re-entry. The `while`-contained single-pending variant may also use
+post-`do` `(await_any done)` as that final sync. The matching `until`
+post-`do` `await_any`, `until` multi-pending local-`do`, wider multi-pending
+local-`do`, generated-do, and multi-pending post-`do` `await_any` variants
+remain fail-closed. A plain local
 `(do child)` inside `while -> when -> repeat` now also lowers (`t/1379`);
 generated `do`, `spawn`, `until -> when`, nested `switch`, and extra loop
 nesting in that loop-plus-branch family still emit the loop-contained or

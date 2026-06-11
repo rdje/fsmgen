@@ -3031,15 +3031,19 @@ sub _control_flow_effects_prove_rule_trigger_binding_endpoint_domain($actor, $ru
     return 0;
 }
 
-sub _control_flow_effects_prove_loop_repeat_pending_spawn_local_do_drain($actor, $transaction_name, $loop_kind, $spawn_instance, $do_child, $options) {
+sub _control_flow_effects_prove_loop_repeat_pending_spawn_local_do_drain($actor, $transaction_name, $loop_kind, $spawn_instances, $do_child, $options) {
     return 0 unless defined($transaction_name) && !ref($transaction_name);
     return 0 unless defined($loop_kind) && !ref($loop_kind) && ($loop_kind eq 'while' || $loop_kind eq 'until');
-    return 0 unless defined($spawn_instance) && !ref($spawn_instance) && length($spawn_instance);
+    my @spawn_instances = ref($spawn_instances) eq 'ARRAY' ? @$spawn_instances : ($spawn_instances);
+    return 0 unless @spawn_instances;
+    for my $spawn_instance (@spawn_instances) {
+        return 0 unless defined($spawn_instance) && !ref($spawn_instance) && length($spawn_instance);
+    }
     return 0 unless defined($do_child) && !ref($do_child) && length($do_child);
     $options = {} unless ref($options) eq 'HASH';
 
     my $loop_backedge = "${loop_kind}_retest";
-    my $done_port = "${spawn_instance}_done";
+    my @done_ports = map { "${_}_done" } @spawn_instances;
     my $allow_single_pending_await_any = $options->{allow_single_pending_await_any} ? 1 : 0;
     my $check = _control_flow_effect_check($actor);
     return 0 unless $check->{ok};
@@ -3063,25 +3067,40 @@ sub _control_flow_effects_prove_loop_repeat_pending_spawn_local_do_drain($actor,
         } @proofs;
 
         for my $region_id (sort keys %repeat_region_ids) {
-            my ($spawn_effect_id) = map { $_->{effect_id} } grep {
-                ($_->{region_id} // '') eq $region_id
-                    && ($_->{code} // '') eq 'generated_top_start_done_handoff_required'
-                    && ($_->{instance} // '') eq $spawn_instance
-                    && ($_->{done_signal} // '') eq $done_port
-                    && defined($_->{effect_id})
-            } @proofs;
-            next unless defined($spawn_effect_id);
-            next unless grep {
-                ($_->{region_id} // '') eq $region_id
-                    && ($_->{code} // '') eq 'generated_child_instance_is_static'
-                    && ($_->{instance} // '') eq $spawn_instance
-                    && ($_->{effect_id} // '') eq $spawn_effect_id
-            } @proofs;
-            next unless grep {
-                ($_->{region_id} // '') eq $region_id
-                    && ($_->{code} // '') eq 'activation_target_is_same_domain'
-                    && ($_->{effect_id} // '') eq $spawn_effect_id
-            } @proofs;
+            my $all_spawns_proven = 1;
+            for my $i (0 .. $#spawn_instances) {
+                my $spawn_instance = $spawn_instances[$i];
+                my $done_port = $done_ports[$i];
+                my ($spawn_effect_id) = map { $_->{effect_id} } grep {
+                    ($_->{region_id} // '') eq $region_id
+                        && ($_->{code} // '') eq 'generated_top_start_done_handoff_required'
+                        && ($_->{instance} // '') eq $spawn_instance
+                        && ($_->{done_signal} // '') eq $done_port
+                        && defined($_->{effect_id})
+                } @proofs;
+                if (!defined($spawn_effect_id)) {
+                    $all_spawns_proven = 0;
+                    last;
+                }
+                if (!grep {
+                    ($_->{region_id} // '') eq $region_id
+                        && ($_->{code} // '') eq 'generated_child_instance_is_static'
+                        && ($_->{instance} // '') eq $spawn_instance
+                        && ($_->{effect_id} // '') eq $spawn_effect_id
+                } @proofs) {
+                    $all_spawns_proven = 0;
+                    last;
+                }
+                if (!grep {
+                    ($_->{region_id} // '') eq $region_id
+                        && ($_->{code} // '') eq 'activation_target_is_same_domain'
+                        && ($_->{effect_id} // '') eq $spawn_effect_id
+                } @proofs) {
+                    $all_spawns_proven = 0;
+                    last;
+                }
+            }
+            next unless $all_spawns_proven;
 
             my ($do_effect_id) = map { $_->{effect_id} } grep {
                 ($_->{region_id} // '') eq $region_id
@@ -3099,9 +3118,9 @@ sub _control_flow_effects_prove_loop_repeat_pending_spawn_local_do_drain($actor,
             next unless grep {
                 ($_->{region_id} // '') eq $region_id
                     && (($_->{code} // '') eq 'await_all_drains_outstanding_children'
-                        || ($allow_single_pending_await_any
+                        || (@spawn_instances == 1 && $allow_single_pending_await_any
                             && ($_->{code} // '') eq 'await_any_single_pending_completes_outstanding_set'))
-                    && _effect_done_ports_match($_->{done_ports}, [$done_port])
+                    && _effect_done_ports_match($_->{done_ports}, \@done_ports)
             } @proofs;
             return 1;
         }
@@ -7178,21 +7197,26 @@ sub _validate_repeat_body_spawn_subset {
                     $label eq 'while body' ? 'while' :
                     $label eq 'until body' ? 'until' :
                     undef;
+                my $loop_pending_spawn_count = scalar @pending_spawns;
+                my $selected_while_multi_pending_local_do =
+                    defined($pending_spawn_local_do_loop_kind)
+                    && $pending_spawn_local_do_loop_kind eq 'while'
+                    && $loop_pending_spawn_count == 2;
                 my $allowed_loop_pending_spawn_local_do =
                     $loop_body_repeat
                     && defined($pending_spawn_local_do_loop_kind)
                     && $plain_local_do
-                    && @pending_spawns == 1
+                    && ($loop_pending_spawn_count == 1 || $selected_while_multi_pending_local_do)
                     && !$awaiting_multi_pending_drain
                     && !$pending_loop_local_do_before_drain
                     && _control_flow_effects_prove_loop_repeat_pending_spawn_local_do_drain(
                         $actor,
                         $tn,
                         $pending_spawn_local_do_loop_kind,
-                        $pending_spawns[0],
+                        \@pending_spawns,
                         $target,
                         {
-                            allow_single_pending_await_any => $pending_spawn_local_do_loop_kind eq 'while',
+                            allow_single_pending_await_any => $loop_pending_spawn_count == 1 && $pending_spawn_local_do_loop_kind eq 'while',
                         },
                     );
                 my $allowed_pending_do = $plain_local_do
