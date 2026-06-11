@@ -6,7 +6,7 @@ Roadmap lane: R14 / ISF compositional control-flow and activation architecture
 
 Created: 2026-06-10
 
-Current frontier: `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.8.32`
+Current frontier: `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.8.33`
 
 ## Goal
 
@@ -1681,7 +1681,7 @@ Result:
 
 #### ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.8.32 — Depth-Neutrality Audit
 
-Status: active
+Status: done
 
 Goal: Audit current scheduler depth/fanout allow-list cuts against the
 depth-neutral architecture target and select the smallest next implementation
@@ -1698,6 +1698,67 @@ Acceptance:
 - Do not widen public behavior in this audit slice.
 - Update task tree, `MEMORY.md`, and any user-facing backlog wording needed to
   keep the architecture target recoverable after a session loss.
+
+Result:
+
+- Audited the active `.isf` public path (`bin/fsmgen` -> `FSM::Adapter::ISF`
+  -> `FSM::Scheduler::ISF` -> `LoweringIR` / emitters) plus the
+  `ControlFlowEffects` proof model, focused tests `t/1419`-`t/1434`, and the
+  mdBook control-flow/backlog wording.
+- True hardware/resource constraints are the outstanding-child lifetime rules
+  on repeat/loop backedges, `await_any` as observation rather than full drain,
+  deterministic static generated-child instance identity, generated-top
+  start/done/binding handoffs, explicit same-domain binding/domain contracts,
+  and explicit CDC contracts. Cross-domain `spawn`, payload CDC, implicit CDC
+  inference, dynamic per-iteration hardware creation, and runtime-mutable
+  child specialization remain real missing contracts, not depth-only cuts.
+- Transitional migration cuts are the hand-coded context labels and depth
+  shape checks in `_validate_repeat_body_spawn_subset`, including exact
+  top-level/branch/loop classifications, the loop-plus-branch
+  `while -> when -> repeat` plain-local-only island, nested `switch` /
+  extra-loop / `until -> when` deferrals, branch-contained generated-activation
+  case splits, and the loop-contained one/two/three/four fanout gates for
+  pending-spawn local `do` plus post-`do` multi-pending `await_any`.
+- The most direct next implementation leaf is not another fixed five-spawn
+  selection. It is a proof-generalization leaf that removes the arbitrary
+  four-spawn loop-contained fanout gate by consuming exact
+  `ControlFlowEffects` proofs for every pending generated spawn, the local
+  blocking `do`, any post-`do` `await_any` observation, the later exact
+  `await_all` drain, and the enclosing repeat/loop backedges.
+- No public behavior changed in this audit slice; current fail-closed
+  diagnostics and public boundaries remain in force until `.8.33` implements
+  the selected proof-generalization leaf.
+
+#### ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.8.33 — Loop-Contained Fanout Proof Generalization
+
+Status: active
+
+Goal: Remove the arbitrary four-spawn fanout cap for loop-contained
+pending-spawn local blocking `do` shapes by admitting fanout through exact
+region/effect proofs instead of another enumerated fixed-width syntax gate.
+
+Acceptance:
+
+- The validator admits loop-contained pending-spawn local blocking `do`
+  fanouts only when `ControlFlowEffects` proves clean repeat and enclosing
+  `while`/body-first `until` backedges, deterministic static generated
+  instances and generated-top start/done handoffs for every pending spawn, a
+  local blocking-`do` drain, and an exact drain of the pending spawned-child
+  set.
+- Both same-body `await_all` and post-`do` multi-pending `await_any` followed
+  by same-body `await_all` consume the exact outstanding set by proof, with no
+  public cap at four pending spawned children.
+- Generated `do` while spawned children are pending, cross-domain activation,
+  binding/CDC inference, missing later `await_all`, loop-plus-branch generated
+  activation, nested `switch`, extra loop nesting, and unrelated deeper
+  placements remain fail-closed.
+- Focused coverage converts the current five-spawn loop-contained local-`do`
+  negatives to proof-gated positives and adds a wider negative that fails
+  because a real invariant is missing, not because of an arbitrary fanout
+  number.
+- The mdBook control-flow chapter, support matrix, backlog, live ISF spec,
+  downstream integration spec, Knowledge Map/task facts, task tree, and
+  `MEMORY.md` are synced if public behavior changes.
 
 ### ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.9 — Public Contract And Documentation Simplification
 
@@ -2759,6 +2820,34 @@ Acceptance:
   `scripts/check_memory_architecture.sh`;
   `knowledge-map/scripts/check_knowledge_map.sh`; `git diff --check`; and
   `git diff --cached --check` pass.
+- 2026-06-11 (`.8.32`): completed the depth-neutrality audit. The audit
+  separates hard hardware contracts (outstanding-child lifetime,
+  `await_any` observation vs drain, static generated identity/top wiring,
+  explicit binding/domain/CDC contracts, no implicit cross-domain spawn or
+  dynamic per-iteration hardware) from migration cuts (context-label depth
+  allow-lists, loop-plus-branch islands, branch generated-activation case
+  splits, and exact one/two/three/four loop-contained fanout gates). The next
+  owner is `.8.33`, which removes the loop-contained four-spawn fanout cap by
+  exact region/effect proof rather than adding a five-spawn allow-list. No
+  public behavior changed. `scripts/check_memory_architecture.sh`;
+  `knowledge-map/scripts/check_knowledge_map.sh`; `git diff --check`;
+  `mdbook build docs/book`; `prove -Iperl
+  t/1376-isf-book-example-lowering-audit.t`; and `prove -Iperl
+  t/1419-isf-control-flow-effect-inventory.t
+  t/1421-isf-control-flow-effect-checks.t
+  t/1422-isf-control-flow-child-plan.t
+  t/1423-isf-control-flow-lifetime-checks.t
+  t/1424-isf-control-flow-domain-binding-effects.t
+  t/1425-isf-control-flow-validator-effect-migration.t
+  t/1426-isf-control-flow-same-domain-validator-effect-migration.t
+  t/1427-isf-control-flow-activation-domain-validator-effect-migration.t
+  t/1428-isf-control-flow-binding-endpoint-validator-effect-migration.t
+  t/1429-isf-control-flow-binding-expression-validator-effect-migration.t
+  t/1430-isf-control-flow-rule-trigger-validator-effect-migration.t
+  t/1431-isf-control-flow-rule-trigger-binding-validator-effect-migration.t
+  t/1432-isf-loop-pending-spawn-local-do-effect-widening.t
+  t/1433-isf-until-pending-spawn-local-do-effect-widening.t
+  t/1434-isf-while-pending-spawn-local-do-awaitany-effect-widening.t` pass.
 - 2026-06-10 (`.4`): added private `plan_actor` / `plan_inventory` child-plan
   projection derived from the shadow effect list. The plan records local child
   start/done wiring requirements, generated child instance plans, and sync
@@ -2884,3 +2973,5 @@ Acceptance:
   `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.8.30: accept four-spawn post-do awaitany fanout`.
 - `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.8.31`: this commit,
   `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.8.31: select depth-neutral scheduler target`.
+- `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.8.32`: this commit,
+  `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.8.32: audit depth-neutral scheduler gates`.

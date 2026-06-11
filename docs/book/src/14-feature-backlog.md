@@ -42,6 +42,17 @@ this chapter:
   lifetime, loop backedge, binding/domain, generated-instance, and CDC
   invariants. Current bounded depth/fanout allow-lists remain migration cuts,
   not the target public contract.
+- **Depth-neutrality audit boundary**: current hard requirements are the
+  child-lifetime and loop-backedge proofs, `await_any` observation versus
+  `await_all` drain semantics, deterministic generated-child identity,
+  generated-top handoffs, explicit same-domain binding/domain contracts, and
+  explicit CDC contracts. Cross-domain `spawn`, implicit CDC, payload CDC, and
+  dynamic per-iteration hardware remain real missing contracts. By contrast,
+  the exact one/two/three/four fanout gates, loop-plus-branch plain-local-only
+  island, nested `switch` / extra-loop deferrals, and generated-activation
+  case splits are migration cuts. The next implementation owner is to remove
+  the loop-contained four-spawn fanout cap by exact region/effect proof, not
+  by adding a five-spawn allow-list.
 - **Book example correctness build gate**: every `lisp`-tagged book
   example must parse + lower (`t/1376`). Current state: 72
   complete fixtures lower cleanly.
