@@ -114,11 +114,11 @@ The public validator permits them only when the effect checker proves all
 generated spawn instances are static and wired, the local `do` drains its
 child, `await_all` drains the exact outstanding spawned done set, and the
 repeat plus surrounding loop backedges have no outstanding child completions.
-The public validator also permits while- and body-first until-contained two-
-and three-spawn post-do multi-pending `await_any` observations followed by a
-later same-body `await_all` drain. It permits those shapes only when the effect
-checker proves the post-do `await_any` observes the pending generated done set
-without full drain, records a later-drain obligation, and the following
-`await_all` drains the exact same outstanding set before repeat and surrounding
-loop re-entry. Generated-do and four-or-wider post-do multi-pending
-`await_any` variants remain fail-closed.
+The public validator also permits while- and body-first until-contained two-,
+three-, and four-spawn post-do multi-pending `await_any` observations followed
+by a later same-body `await_all` drain. It permits those shapes only when the
+effect checker proves the post-do `await_any` observes the pending generated
+done set without full drain, records a later-drain obligation, and the
+following `await_all` drains the exact same outstanding set before repeat and
+surrounding loop re-entry. Generated-do and five-or-wider post-do
+multi-pending `await_any` variants remain fail-closed.

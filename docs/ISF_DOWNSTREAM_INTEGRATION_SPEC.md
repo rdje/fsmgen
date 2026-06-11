@@ -1326,10 +1326,10 @@ Rules:
   `while`- or `until`-contained single-pending variant may use post-`do`
   `(await_any done)` instead when the effect checker proves that the
   observation completes the outstanding set. The `while`- or body-first
-  `until`-contained two- and three-spawn variants may also use post-`do`
+  `until`-contained two-, three-, and four-spawn variants may also use post-`do`
   multi-pending `(await_any done)` as an observation point when a later
   same-body `(await_all done)` drains the same pending generated children
-  before repeat and loop re-entry. Generated-do and four-or-wider post-`do`
+  before repeat and loop re-entry. Generated-do and five-or-wider post-`do`
   multi-pending `await_any` variants remain fail-closed.
   Inside a loop-contained repeat, an undrained spawn emits `loop-contained
   repeat-body spawn requires same-body '(await_all done)' or single-pending
