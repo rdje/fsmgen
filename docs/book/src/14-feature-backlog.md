@@ -36,7 +36,7 @@ this chapter:
   (`when⁺ → repeat`, `switch → when⁺ → repeat`) now lower; undrained and
   cross-domain generated `do` stay deferred.
 - **Book example correctness build gate**: every `lisp`-tagged book
-  example must parse + lower (`t/1376`). Current state: 68
+  example must parse + lower (`t/1376`). Current state: 69
   complete fixtures lower cleanly.
 - **Cookbook ISF recipes**: `docs/book/src/12-cookbook.md` now
   carries recipes 9-13 covering basic actor, spawn, parameterized
@@ -732,14 +732,13 @@ closed (`cross-domain repeat-body do remains deferred`). A `while`- or
 `until`-contained repeat may now keep exactly one generated spawn pending
 across one plain local blocking `(do child)` when a later same-body
 `(await_all done)` drains that spawned instance before repeat and the
-surrounding loop re-entry. The `while`-contained `await_all` variant may also
-keep exactly two generated spawns pending across that local blocking `do` when
-the later same-body drain covers both spawned children before repeat and
-`while` re-entry. The `while`-contained single-pending variant may also use
-post-`do` `(await_any done)` as that final sync. The matching `until`
-post-`do` `await_any`, `until` multi-pending local-`do`, wider multi-pending
-local-`do`, generated-do, and multi-pending post-`do` `await_any` variants
-remain fail-closed. A plain local
+surrounding loop re-entry. The `while`- or `until`-contained `await_all`
+variant may also keep exactly two generated spawns pending across that local
+blocking `do` when the later same-body drain covers both spawned children
+before repeat and loop re-entry. The `while`-contained single-pending variant
+may also use post-`do` `(await_any done)` as that final sync. The matching
+`until` post-`do` `await_any`, wider multi-pending local-`do`, generated-do,
+and multi-pending post-`do` `await_any` variants remain fail-closed. A plain local
 `(do child)` inside `while -> when -> repeat` now also lowers (`t/1379`);
 generated `do`, `spawn`, `until -> when`, nested `switch`, and extra loop
 nesting in that loop-plus-branch family still emit the loop-contained or

@@ -7198,15 +7198,15 @@ sub _validate_repeat_body_spawn_subset {
                     $label eq 'until body' ? 'until' :
                     undef;
                 my $loop_pending_spawn_count = scalar @pending_spawns;
-                my $selected_while_multi_pending_local_do =
+                my $selected_loop_multi_pending_local_do =
                     defined($pending_spawn_local_do_loop_kind)
-                    && $pending_spawn_local_do_loop_kind eq 'while'
+                    && ($pending_spawn_local_do_loop_kind eq 'while' || $pending_spawn_local_do_loop_kind eq 'until')
                     && $loop_pending_spawn_count == 2;
                 my $allowed_loop_pending_spawn_local_do =
                     $loop_body_repeat
                     && defined($pending_spawn_local_do_loop_kind)
                     && $plain_local_do
-                    && ($loop_pending_spawn_count == 1 || $selected_while_multi_pending_local_do)
+                    && ($loop_pending_spawn_count == 1 || $selected_loop_multi_pending_local_do)
                     && !$awaiting_multi_pending_drain
                     && !$pending_loop_local_do_before_drain
                     && _control_flow_effects_prove_loop_repeat_pending_spawn_local_do_drain(
