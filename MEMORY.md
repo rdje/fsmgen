@@ -10,10 +10,10 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `ISF-SCHEDULING-BACKLOG-FRONTIER.7.1` (this commit) — selected source-authored ATL `group.name` endpoints as the next fail-closed diagnostic slice.
-- active_work_unit: `ISF-SCHEDULING-BACKLOG-FRONTIER.7.2` — keep ATL group endpoints fail-closed with targeted scheduling/wiring diagnostics.
-- recently_done: `ISF-SCHEDULING-BACKLOG-FRONTIER.7.1`; `.6.2`; `.6.1`; `.5.2`; `.5.1`. Older completed slices are in the task tree and git history.
-- in_flight_uncommitted: none expected after the `.7.1` commit; unrelated untracked `fx/` intentionally left alone.
+- latest_commit: `ISF-SCHEDULING-BACKLOG-FRONTIER.7.2` (this commit) — kept source-authored ATL `group.name` endpoints fail-closed with a targeted diagnostic.
+- active_work_unit: `ISF-SCHEDULING-BACKLOG-FRONTIER.8.1` — select the next generated-child top widening source surface.
+- recently_done: `ISF-SCHEDULING-BACKLOG-FRONTIER.7.2`; `.7.1`; `.6.2`; `.6.1`; `.5.2`. Older completed slices are in the task tree and git history.
+- in_flight_uncommitted: none expected after the `.7.2` commit; unrelated untracked `fx/` intentionally left alone.
 - blockers: none.
 
 ## Notes

@@ -4377,6 +4377,13 @@ handoff, and report-only group metadata subsets implemented so far:
   Drive body pairs keep the existing `(sink source)` order. The widened
   endpoint names are `pins.name`, `actor.port`, `actor.transaction`,
   `actor.event`, and `group.name`.
+- Source-authored `group.name` ATL endpoints are still unsupported when the
+  qualifier names a declared static group. Transaction-body `(trigger
+  group.name)`, `(await group.name)`, `(await_all group.name)`, `(await_any
+  group.name)`, and rule-action `(trigger group.name)` fail with the ATL
+  group-endpoint diagnostic, which names the missing group-level trigger
+  arbitration/fanout, event aggregation, storage/lifetime, and generated-child
+  wiring semantics.
 - No top-level `connect`, `transfer`, or `move` movement clause is part of
   ATL v0. Movement remains temporal intent placed by drive-call timing, not a
   permanent actor-to-actor wire.
@@ -4541,10 +4548,11 @@ child completion, not qualified actor-event all-of/any-of joins.
 Existing unqualified local behavior remains unchanged: `(await signal)` is
 still a local transaction wait, and rule-level `(trigger transaction)` still
 targets a local transaction. Dotted enum-looking names that do not name a
-static actor instance keep their prior diagnostics. Event fan-in/fan-out,
-event payloads, cross-clock actor events, concurrent group events, generated
-ATL top wiring, child event-source wiring, and route muxes remain deferred
-unless a later leaf explicitly widens this surface.
+static actor instance or static group keep their prior diagnostics; dotted
+names that do name a static group fail with the ATL group-endpoint diagnostic.
+Event fan-in/fan-out, event payloads, cross-clock actor events, concurrent
+group events, generated ATL top wiring, child event-source wiring, and route
+muxes remain deferred unless a later leaf explicitly widens this surface.
 
 The current actor-transaction trigger subset is also narrower than full child
 orchestration. It accepts a top-level transaction-body
@@ -4566,9 +4574,11 @@ semantics remain unshipped.
 Nested triggers, repeated triggers to the same actor instance, repeated
 rule-action qualified triggers, generated handoff signal conflicts, trigger
 fan-in/fan-out, cross-clock actor triggers, rule-action trigger payloads or
-bindings, and broader concurrent group behavior remain deferred unless a
-later leaf explicitly widens this surface. Schedule JSON reports accepted
-triggers through `actor_network.transaction_triggers[]`.
+bindings, source-authored `group.name` triggers, and broader concurrent group
+behavior remain deferred unless a later leaf explicitly widens this surface.
+Rule-action `group.name` triggers use the same ATL group-endpoint diagnostic
+as transaction-body group triggers. Schedule JSON reports accepted triggers
+through `actor_network.transaction_triggers[]`.
 
 The current generated-artifact contract is explicit: the parent scheduled
 `.fsm` may include the selected one-bit actor-event handoff input, selected

@@ -2825,6 +2825,8 @@ sub _validate_deferred_atl_drive_sink_expression_candidates($self, $actor) {
 sub _validate_actor_atl_reserved_qualified_forms($self, $actor) {
     my %actor_instances = map { $_->{name} => 1 }
         @{(($actor->{actor_network} || {})->{instances}) || []};
+    my %actor_groups = map { $_->{name} => 1 }
+        @{(($actor->{actor_network} || {})->{groups}) || []};
     my %declared_signals = _actor_declared_signal_names($actor);
     my @event_waits;
     my @transaction_triggers;
@@ -2866,6 +2868,7 @@ sub _validate_actor_atl_reserved_qualified_forms($self, $actor) {
                 allow_event_wait    => 1,
                 allow_actor_trigger => 1,
                 allow_data_movement_drive_call => 1,
+                actor_groups        => \%actor_groups,
             },
         );
     }
@@ -2881,6 +2884,9 @@ sub _validate_actor_atl_reserved_qualified_forms($self, $actor) {
             }
             next unless $head eq 'trigger';
             my $target = $action->[1];
+            if (_is_qualified_atl_group_endpoint_token($target, \%actor_groups, \%actor_instances)) {
+                _confess_atl_group_endpoint_unsupported("rule '$rule_name'", _format_isf_expr($action), $target);
+            }
             next unless _is_qualified_atl_endpoint_token($target, \%actor_instances);
             _accept_rule_action_atl_transaction_trigger(
                 $action,
@@ -2985,6 +2991,7 @@ sub _validate_transaction_atl_reserved_qualified_forms {
     $drives ||= {};
     $data_movement_drives ||= {};
     $options ||= {};
+    my $actor_groups = $options->{actor_groups} || {};
 
     for my $clause_index (0 .. $#$clauses) {
         my $clause = $clauses->[$clause_index];
@@ -2996,6 +3003,16 @@ sub _validate_transaction_atl_reserved_qualified_forms {
             confess "Error: $context '($head ...)' is reserved for FSMGen internal ATL lowering and is not source syntax\n";
         }
 
+        if ($head eq 'await_all' || $head eq 'await_any') {
+            my @group_targets = _qualified_atl_group_endpoint_tokens(
+                [ @{$clause}[1 .. $#$clause] ],
+                $actor_groups,
+                $actor_instances,
+            );
+            _confess_atl_group_endpoint_unsupported($context, _format_isf_expr($clause), @group_targets)
+                if @group_targets;
+        }
+
         if (($head eq 'await_all' || $head eq 'await_any')
             && _contains_qualified_atl_endpoint_token($clause, $actor_instances))
         {
@@ -3005,6 +3022,10 @@ sub _validate_transaction_atl_reserved_qualified_forms {
             my $target_list = join(', ', @targets);
             my $form = _format_isf_expr($clause);
             confess "Error: $context ATL actor event join '$form' is not supported in the current subset; sync clause '$head' cannot join qualified actor events ($target_list). Use sequential top-level '(await actor.event)' waits in the shipped ATL subset; hidden all-of/any-of actor-event joins require event latch/storage and per-event lifetime semantics\n";
+        }
+
+        if ($head eq 'await' && _is_qualified_atl_group_endpoint_token($clause->[1], $actor_groups, $actor_instances)) {
+            _confess_atl_group_endpoint_unsupported($context, _format_isf_expr($clause), $clause->[1]);
         }
 
         if ($head eq 'await' && _is_qualified_atl_endpoint_token($clause->[1], $actor_instances)) {
@@ -3022,6 +3043,10 @@ sub _validate_transaction_atl_reserved_qualified_forms {
                 next;
             }
             confess "Error: $context ATL actor event wait '(await $target)' is reserved for top-level transaction bodies only in the current subset; nested actor-event waits remain deferred\n";
+        }
+
+        if ($head eq 'trigger' && _is_qualified_atl_group_endpoint_token($clause->[1], $actor_groups, $actor_instances)) {
+            _confess_atl_group_endpoint_unsupported($context, _format_isf_expr($clause), $clause->[1]);
         }
 
         if ($head eq 'trigger' && _is_qualified_atl_endpoint_token($clause->[1], $actor_instances)) {
@@ -3071,6 +3096,7 @@ sub _validate_transaction_atl_reserved_qualified_forms {
                     allow_event_wait    => 0,
                     allow_actor_trigger => 0,
                     allow_data_movement_drive_call => 0,
+                    actor_groups        => $actor_groups,
                 },
             );
             next;
@@ -3094,6 +3120,7 @@ sub _validate_transaction_atl_reserved_qualified_forms {
                         allow_event_wait    => 0,
                         allow_actor_trigger => 0,
                         allow_data_movement_drive_call => 0,
+                        actor_groups        => $actor_groups,
                     },
                 );
             }
@@ -4617,6 +4644,48 @@ sub _is_qualified_atl_endpoint_token {
     return defined($instance) ? 1 : 0;
 }
 
+sub _is_qualified_atl_group_endpoint_token {
+    my ($token, $actor_groups, $actor_instances) = @_;
+    my ($group) = _parse_qualified_atl_group_endpoint_token($token, $actor_groups, $actor_instances);
+    return defined($group) ? 1 : 0;
+}
+
+sub _qualified_atl_group_endpoint_tokens {
+    my ($value, $actor_groups, $actor_instances) = @_;
+    my @tokens;
+
+    if (defined($value) && !ref($value)) {
+        push @tokens, $value
+            if _is_qualified_atl_group_endpoint_token($value, $actor_groups, $actor_instances);
+    }
+    elsif (ref($value) eq 'ARRAY') {
+        for my $item (@$value) {
+            push @tokens, _qualified_atl_group_endpoint_tokens($item, $actor_groups, $actor_instances);
+        }
+    }
+
+    my %seen;
+    return grep { !$seen{$_}++ } @tokens;
+}
+
+sub _confess_atl_group_endpoint_unsupported {
+    my ($context, $form, @targets) = @_;
+    my @groups = map {
+        my ($group) = split /\./, $_, 2;
+        $group;
+    } @targets;
+    my %seen_group;
+    @groups = grep { defined($_) && length($_) && !$seen_group{$_}++ } @groups;
+
+    my $target_text = join(', ', @targets);
+    my $group_text = join(', ', @groups);
+    my $endpoint_text = @targets == 1
+        ? "group-qualified endpoint '$target_text' names static concurrent group '$group_text'"
+        : "group-qualified endpoints ($target_text) name static concurrent groups ($group_text)";
+
+    confess "Error: $context ATL group endpoint '$form' is not supported in the current subset; $endpoint_text. Group endpoints require group-level trigger arbitration/fanout, event aggregation, storage/lifetime, and generated-child wiring semantics\n";
+}
+
 sub _contains_qualified_atl_endpoint_token {
     my ($value, $actor_instances) = @_;
     return _is_qualified_atl_endpoint_token($value, $actor_instances)
@@ -4658,6 +4727,15 @@ sub _parse_qualified_atl_endpoint_token {
     return unless defined($token) && !ref($token);
     return unless $token =~ /\A([A-Za-z_][A-Za-z0-9_]*)\.([A-Za-z_][A-Za-z0-9_]*)\z/;
     return unless ref($actor_instances) eq 'HASH' && $actor_instances->{$1};
+    return ($1, $2);
+}
+
+sub _parse_qualified_atl_group_endpoint_token {
+    my ($token, $actor_groups, $actor_instances) = @_;
+    return unless defined($token) && !ref($token);
+    return unless $token =~ /\A([A-Za-z_][A-Za-z0-9_]*)\.([A-Za-z_][A-Za-z0-9_]*)\z/;
+    return if ref($actor_instances) eq 'HASH' && $actor_instances->{$1};
+    return unless ref($actor_groups) eq 'HASH' && $actor_groups->{$1};
     return ($1, $2);
 }
 

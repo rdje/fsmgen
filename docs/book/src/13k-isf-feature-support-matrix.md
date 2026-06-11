@@ -181,6 +181,16 @@ Malformed or width-mismatched generated-child actor-to-actor route shapes
 still fail closed with targeted diagnostics before FSMGen infers remapping,
 storage, muxing, payload adaptation, fan-in/fan-out, or backpressure behavior.
 
+Current ATL group endpoint boundary: `group.name` is reserved but still
+unsupported source syntax. When the qualifier names a declared static group,
+transaction-body `(trigger group.name)`, `(await group.name)`,
+`(await_all group.name)`, `(await_any group.name)`, and rule-action
+`(trigger group.name)` fail closed with the ATL group-endpoint diagnostic.
+The missing contract is group-level trigger arbitration/fanout, event
+aggregation, storage/lifetime, and generated-child wiring semantics. Dotted
+names that do not name a static group keep the existing enum-member
+diagnostics.
+
 ## Examples By Family
 
 ### CLI Entrypoints

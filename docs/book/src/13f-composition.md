@@ -574,6 +574,14 @@ recover the source spelling. By itself, either declaration names a static
 review set; it does not run actors concurrently, infer dependencies, insert
 storage or muxes, emit child artifacts, or cross clock domains.
 
+Source-authored group endpoints remain fail-closed. If `pipeline` names a
+static group, forms such as `(trigger pipeline.capture)`, `(await
+pipeline.done)`, `(await_all pipeline.done)`, `(await_any pipeline.done)`, or
+a rule action `(trigger pipeline.capture)` fail before scheduled `.fsm`
+emission with the ATL group-endpoint diagnostic. The missing contract is
+group-level trigger arbitration/fanout, event aggregation, storage/lifetime,
+and generated-child wiring semantics.
+
 The accepted temporary trigger batch does not require a group declaration:
 
 ```lisp
@@ -1485,8 +1493,10 @@ The event producer is external in this subset. FSMGen still does not resolve
 the actor type, emit an ATL child `.fsm`, generate an ATL top, trigger actor
 transactions, carry event payloads, or support fan-in/fan-out, unselected
 multi-wait forms, repeated waits to one triggered actor, nested waits,
-cross-clock actor events, or concurrent group events. Repeated trigger-batch
-waits fail closed with the event re-arm/lifetime diagnostic.
+cross-clock actor events, or concurrent group events. Source-authored
+`group.name` event waits fail closed with the ATL group-endpoint diagnostic.
+Repeated trigger-batch waits fail closed with the event re-arm/lifetime
+diagnostic.
 `await_all` and `await_any` remain generated-child completion sync forms in
 this surface; source that tries to use them as actor-event all-of/any-of joins
 with operands such as `reader.done` and `writer.done` fails closed with the
@@ -1495,7 +1505,7 @@ ATL event-join diagnostic.
 Unqualified local forms keep their existing meaning: `(await signal)` waits
 on a local transaction signal, and rule-level `(trigger transaction)` triggers
 a local transaction. Dotted enum-looking names that do not name a static
-actor instance keep their prior diagnostics.
+actor instance or static group keep their prior diagnostics.
 
 The current qualified trigger behavior is the matching parent-handoff subset.
 
@@ -1513,7 +1523,8 @@ start pulse to an actor instance, add ready/backpressure, carry trigger
 payloads, or support rule-level qualified triggers, nested triggers, repeated
 triggers to the same actor instance, generated handoff signal conflicts,
 fan-in/fan-out, cross-clock actor triggers, or broader concurrent group
-behavior.
+behavior. Source-authored `group.name` triggers, including rule-action group
+triggers, fail closed with the ATL group-endpoint diagnostic.
 
 Until those later leaves ship, `actor_network` remains discovery metadata
 plus selected event-wait, transaction-trigger, and exact trigger-batch

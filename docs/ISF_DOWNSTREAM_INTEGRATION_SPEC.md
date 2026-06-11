@@ -2604,6 +2604,14 @@ capability manifest and this handoff:
   coupling, hidden same-cycle event joins, storage/mux insertion, CDC,
   compact movement aliases, and broader fan-in/fan-out.
 
+  If a source endpoint qualifier names a declared static group, authored
+  `group.name` forms are rejected before generic enum-member handling.
+  Transaction-body `(trigger group.name)`, `(await group.name)`, `(await_all
+  group.name)`, `(await_any group.name)`, and rule-action
+  `(trigger group.name)` fail with the ATL group-endpoint diagnostic. The
+  missing downstream contract is group-level trigger arbitration/fanout, event
+  aggregation, storage/lifetime, and generated-child wiring semantics.
+
 ### 12.5.3. Static Groups Versus Task-Scoped Associations
 
 Static group declarations are review metadata unless a later leaf explicitly
@@ -2665,8 +2673,9 @@ Existing unqualified local forms are unchanged: `(await signal)` remains a
 local transaction wait, and rule-level `(trigger transaction)` remains a
 local transaction trigger.
 
-Dotted enum-looking names that do not name a static actor instance keep their
-prior diagnostics.
+Dotted enum-looking names that do not name a static actor instance or static
+group keep their prior diagnostics. Dotted names that do name a static group
+fail with the ATL group-endpoint diagnostic.
 
 The regression suite specifically covers the accepted source-ordered
 multi-event wait form through `isf/atl_trigger_batch_multi_wait_pipeline.isf`
@@ -2698,7 +2707,9 @@ payloads or bindings, ready/backpressure assumptions, cross-clock actor
 triggers, concurrent group endpoints, or source that relies on generated ATL
 child artifacts or generated ATL top wiring outside the explicitly shipped
 resolved-child subset until the corresponding support is documented here and
-advertised in the manifest.
+advertised in the manifest. Rule-action `group.name` triggers remain in that
+unsupported group-endpoint category and use the same targeted diagnostic as
+transaction-body group triggers.
 
 The generated-child actor-to-actor route now has focused generated-handoff
 collision coverage. Downstream producers should treat parent-declared

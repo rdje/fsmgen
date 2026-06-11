@@ -1605,6 +1605,14 @@ group form and keeps group behavior report-only. Runtime group scheduling,
 group endpoints, group handoff routing, generated HDL behavior, and compact
 movement syntax remain later leaves.
 
+Source-authored `group.name` endpoints now have a targeted fail-closed
+boundary. If the qualifier names a declared static group, transaction-body
+`(trigger group.name)`, `(await group.name)`, `(await_all group.name)`,
+`(await_any group.name)`, and rule-action `(trigger group.name)` fail with an
+ATL group-endpoint diagnostic. Accepting those forms still requires a later
+contract for group-level trigger arbitration/fanout, event aggregation,
+storage/lifetime, and generated-child wiring semantics.
+
 The compact `(NAME : ACTOR_TYPE)` instance alias is now shipped by
 `ISF-ATL-COMPACT-INSTANCE-ALIAS`. It is only a readability alias for verbose
 `(instance NAME of ACTOR_TYPE)` static instance declarations. Verbose

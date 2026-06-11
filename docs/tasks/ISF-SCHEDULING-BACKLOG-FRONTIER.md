@@ -6,7 +6,7 @@ Roadmap lane: R14 / ISF scheduling, activation, CDC, ATL, actor-network, and gen
 
 Created: 2026-06-10
 
-Current frontier: `ISF-SCHEDULING-BACKLOG-FRONTIER.7.2`
+Current frontier: `ISF-SCHEDULING-BACKLOG-FRONTIER.8.1`
 
 ## Goal
 
@@ -493,7 +493,7 @@ Result:
 
 ### ISF-SCHEDULING-BACKLOG-FRONTIER.7 — Actor-Network And Group Scheduling
 
-Status: active
+Status: done
 
 Goal: Broaden actor-network and group scheduling only through exact, testable
 increments.
@@ -554,7 +554,7 @@ Result:
 
 #### ISF-SCHEDULING-BACKLOG-FRONTIER.7.2 — ATL Group Endpoint Diagnostic
 
-Status: pending
+Status: done
 
 Goal: Keep source-authored group-qualified ATL endpoints fail-closed while
 replacing generic enum-member diagnostics with a targeted missing group
@@ -575,9 +575,26 @@ Acceptance:
 - Sync parser tests, mdBook, live specs/contracts, and Knowledge Map with the
   fail-closed group endpoint boundary.
 
+Result:
+
+- Kept source-authored ATL group endpoints fail-closed. The parser now detects
+  `group.name` operands when the qualifier names a declared static group from
+  either verbose `(group ...)` or compact `(concurrent ...)` syntax.
+- Transaction-body `(trigger group.name)`, `(await group.name)`,
+  `(await_all group.name)`, `(await_any group.name)`, and rule-action
+  `(trigger group.name)` now fail before generic dotted enum-member handling
+  with a diagnostic naming the missing group-level trigger
+  arbitration/fanout, event aggregation, storage/lifetime, and generated-child
+  wiring semantics.
+- Accepted instance-qualified actor triggers, actor waits, temporary trigger
+  batches, report-only group metadata, generated-top exclusions, and dotted
+  enum-member diagnostics for non-group qualifiers are preserved.
+- The mdBook, live ISF spec, downstream handoff, public interface contract,
+  Knowledge Map fact card, task index, and `MEMORY.md` are synced.
+
 ### ISF-SCHEDULING-BACKLOG-FRONTIER.8 — Generated-Child Top Surface Widening
 
-Status: pending
+Status: active
 
 Goal: Cover generated-child top surfaces beyond the currently documented spawn,
 generated `do`, and rule-trigger cases.
@@ -587,6 +604,28 @@ Acceptance:
 - Select one generated-child source surface before implementation.
 - Prove naming, interface, and completion semantics.
 - Document how the surface relates to existing generated child activation.
+
+#### ISF-SCHEDULING-BACKLOG-FRONTIER.8.1 — Generated-Child Top First Slice Selection
+
+Status: pending
+
+Goal: Select the first exact generated-child top source surface beyond the
+currently covered spawn, generated `do`, rule-trigger, one-child, two-child,
+and selected generated-child data-route cases.
+
+Acceptance:
+
+- Audit current generated-child top lowering for spawn, generated `do`,
+  rule-action triggers, one-child trigger/event tops, two-child trigger/event
+  tops, generated-child pin ingress/egress, and selected actor-to-actor data
+  routes.
+- Select one precise generated-child top widening source pattern before
+  implementation.
+- If the pattern is accepted, prove generated artifact naming, interface
+  wiring, completion semantics, schedule-report stability, and mdBook/spec
+  examples.
+- If the pattern remains unsafe, record the missing naming/interface/lifetime
+  contract and close it with a targeted diagnostic/doc update.
 
 ## Verification Log
 
@@ -708,6 +747,21 @@ Acceptance:
   `scripts/check_memory_architecture.sh`;
   `knowledge-map/scripts/check_knowledge_map.sh`; and `git diff --check`
   pass.
+- 2026-06-11 (`.7.2`): kept source-authored `group.name` ATL endpoints
+  fail-closed with a targeted group endpoint diagnostic. `perl -Iperl -c
+  perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c
+  t/1322-isf-actor-network-static.t`; `prove -Iperl
+  t/1322-isf-actor-network-static.t
+  t/1329-isf-atl-trigger-batch-wait-fixture-coverage.t
+  t/1305-isf-book-feature-matrix-audit.t
+  t/1332-isf-atl-doc-status-audit.t
+  t/1250-isf-spec-focused-test-index-audit.t
+  t/1376-isf-book-example-lowering-audit.t
+  t/1112-isf-public-interface-contract.t
+  t/1113-isf-public-interface-contract-json-roundtrip-audit.t
+  t/1114-isf-public-interface-contract-defensive-copy-audit.t`; `mdbook
+  build docs/book`; `knowledge-map/scripts/check_knowledge_map.sh`;
+  `scripts/check_memory_architecture.sh`; and `git diff --check` pass.
 
 ## Commit Log
 
@@ -731,5 +785,7 @@ Acceptance:
   ISF-SCHEDULING-BACKLOG-FRONTIER.6.1: select ATL event-join diagnostic`
 - `ISF-SCHEDULING-BACKLOG-FRONTIER.6.2`: `00fedc78
   ISF-SCHEDULING-BACKLOG-FRONTIER.6.2: diagnose ATL event joins`
-- `ISF-SCHEDULING-BACKLOG-FRONTIER.7.1`: this commit,
-  `ISF-SCHEDULING-BACKLOG-FRONTIER.7.1: select ATL group endpoint diagnostic`.
+- `ISF-SCHEDULING-BACKLOG-FRONTIER.7.1`: `5ef59da2
+  ISF-SCHEDULING-BACKLOG-FRONTIER.7.1: select ATL group endpoint diagnostic`
+- `ISF-SCHEDULING-BACKLOG-FRONTIER.7.2`: this commit,
+  `ISF-SCHEDULING-BACKLOG-FRONTIER.7.2: diagnose ATL group endpoints`.

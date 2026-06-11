@@ -744,6 +744,91 @@ ISF
 
     parse_fails_like(
         <<'ISF',
+(actor group_endpoint_trigger
+  (clock clk)
+  (interface (input start) (output done))
+  (instance reader of packet_reader)
+  (instance writer of packet_writer)
+  (group pipeline (members reader writer) (mode concurrent))
+  (transaction run
+    (on start)
+    (trigger pipeline.capture)
+    (complete done)))
+ISF
+        qr/ATL group endpoint '\(trigger pipeline\.capture\)' is not supported in the current subset; group-qualified endpoint 'pipeline\.capture' names static concurrent group 'pipeline'.*group-level trigger arbitration\/fanout, event aggregation, storage\/lifetime, and generated-child wiring semantics/,
+        'group-qualified transaction triggers fail closed with the targeted group endpoint diagnostic',
+    );
+
+    parse_fails_like(
+        <<'ISF',
+(actor compact_group_endpoint_await
+  (clock clk)
+  (interface (input start) (output done))
+  (instance reader of packet_reader)
+  (instance writer of packet_writer)
+  (concurrent pipeline reader writer)
+  (transaction run
+    (on start)
+    (await pipeline.done)
+    (complete done)))
+ISF
+        qr/ATL group endpoint '\(await pipeline\.done\)' is not supported in the current subset; group-qualified endpoint 'pipeline\.done' names static concurrent group 'pipeline'/,
+        'compact concurrent aliases also keep group-qualified waits fail-closed',
+    );
+
+    parse_fails_like(
+        <<'ISF',
+(actor group_endpoint_await_all
+  (clock clk)
+  (interface (input start) (output done))
+  (instance reader of packet_reader)
+  (instance writer of packet_writer)
+  (group pipeline (members reader writer) (mode concurrent))
+  (transaction run
+    (on start)
+    (await_all pipeline.done)
+    (complete done)))
+ISF
+        qr/ATL group endpoint '\(await_all pipeline\.done\)' is not supported in the current subset/,
+        'await_all group endpoints fail closed before generic dotted enum diagnostics',
+    );
+
+    parse_fails_like(
+        <<'ISF',
+(actor group_endpoint_await_any
+  (clock clk)
+  (interface (input start) (output done))
+  (instance reader of packet_reader)
+  (instance writer of packet_writer)
+  (group pipeline (members reader writer) (mode concurrent))
+  (transaction run
+    (on start)
+    (await_any pipeline.done)
+    (complete done)))
+ISF
+        qr/ATL group endpoint '\(await_any pipeline\.done\)' is not supported in the current subset/,
+        'await_any group endpoints fail closed before generic dotted enum diagnostics',
+    );
+
+    parse_fails_like(
+        <<'ISF',
+(actor non_group_dotted_endpoint
+  (clock clk)
+  (interface (input start) (output done))
+  (instance reader of packet_reader)
+  (instance writer of packet_writer)
+  (group pipeline (members reader writer) (mode concurrent))
+  (transaction run
+    (on start)
+    (trigger missing_group.capture)
+    (complete done)))
+ISF
+        qr/references enum member 'missing_group\.capture'/,
+        'dotted names that do not name a static group keep the enum-member diagnostic path',
+    );
+
+    parse_fails_like(
+        <<'ISF',
 (actor concurrent_alias_single_member
   (clock clk)
   (interface (input start) (output done))
@@ -1708,6 +1793,23 @@ ISF
 ISF
         qr/ATL actor transaction trigger '\(trigger reader\.capture\)' does not accept payloads, binds, or nested clauses in the current subset/,
         'rule-level qualified actor trigger payloads fail closed',
+    );
+
+    parse_fails_like(
+        <<'ISF',
+(actor group_endpoint_rule_trigger
+  (clock clk)
+  (interface (input start) (output done))
+  (instance reader of packet_reader)
+  (instance writer of packet_writer)
+  (group pipeline (members reader writer) (mode concurrent))
+  (transaction local
+    (complete done))
+  (rule kick start
+    (trigger pipeline.capture)))
+ISF
+        qr/rule 'kick' ATL group endpoint '\(trigger pipeline\.capture\)' is not supported in the current subset/,
+        'rule-level group-qualified triggers fail closed with the group endpoint diagnostic',
     );
 
     parse_fails_like(

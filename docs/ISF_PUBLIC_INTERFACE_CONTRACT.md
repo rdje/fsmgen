@@ -2623,7 +2623,14 @@ member names an already declared direct static actor instance. Compact
 metadata surface and report `declaration: "concurrent_alias"` instead of the
 verbose form's `declaration: "group"`. Group entries also keep
 `source: "actor_body"` and `scheduling: "metadata_only"` in this subset. No
-public group endpoint behavior is implemented yet.
+public group endpoint behavior is implemented yet. Source-authored group
+endpoints now fail closed before generic dotted enum-member handling when the
+qualifier names a declared static group: transaction-body `(trigger
+group.name)`, `(await group.name)`, `(await_all group.name)`, `(await_any
+group.name)`, and rule-action `(trigger group.name)` report the ATL
+group-endpoint diagnostic. The diagnostic names the missing group-level
+trigger arbitration/fanout, event aggregation, storage/lifetime, and
+generated-child wiring semantics.
 The first public multi-actor trigger scheduling contract is a same-cycle
 external trigger batch over existing top-level transaction-body
 `(trigger actor.transaction)` clauses. The batch is a task-scoped temporary
@@ -2663,7 +2670,8 @@ diagnostic; `await_all`/`await_any` remain generated-child completion sync
 forms, not qualified actor-event all-of/any-of joins.
 Existing unqualified local `(await signal)` and rule-level
 `(trigger transaction)` behavior remains unchanged, and dotted enum-looking
-names outside actor-network instances keep their prior diagnostics.
+names outside actor-network instances and static groups keep their prior
+diagnostics.
 Regression coverage includes the accepted temporary trigger-batch multi-event
 wait fixture and negative repeated-wait boundaries; repeated waits fail before
 scheduled `.fsm` emission, with trigger-batch repeated waits receiving the
@@ -2687,6 +2695,8 @@ reports expose this through `actor_network.transaction_triggers[]` entries
 with `owner_transaction`, `context`, `instance`, `target_transaction`,
 `signal`, and `sink` keys, where `sink` is currently `external_handoff`; rule
 actions use `context: "rule_action"` and have no owning transaction.
+Rule-action `group.name` triggers remain unsupported and use the same ATL
+group-endpoint diagnostic as transaction-body group triggers.
 Actor roots may also carry parser-validated clock-domain declarations through
 a singleton `(clock-domains ...)` clause. That field is not a required actor
 shell key, but the advertised value-shape string records that `clock_domains`
