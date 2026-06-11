@@ -99,7 +99,7 @@ ISF
         'generated top still instantiates the spawned child');
 };
 
-subtest 'until analogue remains outside the selected while-only await_any slice' => sub {
+subtest 'until-contained pending spawn across local do may sync with single-pending await_any' => sub {
     my $actor = parse_actor(actor_for_body('until_pending_spawn_local_do_await_any', <<'ISF'), 'until-pending-spawn-local-do-await-any');
 (until cond
   (repeat loops
@@ -108,10 +108,38 @@ subtest 'until analogue remains outside the selected while-only await_any slice'
     (await_any done)))
 ISF
 
+    my $check = check_actor($actor);
+    ok($check->{ok}, 'effect checker accepts the selected until single-pending await_any shape');
+    my $tx = transaction_check($check, 'parent');
+    my $backedges = proofs($tx, 'backedge_has_no_outstanding_children');
+    ok((grep { ($_->{region_kind} // '') eq 'until' && ($_->{backedge} // '') eq 'until_retest' } @$backedges),
+        'until backedge has no outstanding child');
+    ok((grep { ($_->{region_kind} // '') eq 'repeat' && ($_->{backedge} // '') eq 'repeat_check_nonzero' } @$backedges),
+        'repeat backedge has no outstanding child');
+    ok((grep { ($_->{instance} // '') eq 'w0' } @{proofs($tx, 'generated_child_instance_is_static')}),
+        'spawned child instance identity is static');
+    ok((grep { ($_->{instance} // '') eq 'w0' && ($_->{done_signal} // '') eq 'w0_done' } @{proofs($tx, 'generated_top_start_done_handoff_required')}),
+        'spawned child generated-top handoff is explicit');
+    ok((grep { ($_->{child} // '') eq 'helper' } @{proofs($tx, 'blocking_do_drains_child_done')}),
+        'local blocking do drains its own child');
+    ok((grep { join(',', @{$_->{done_ports} || []}) eq 'w0_done' } @{proofs($tx, 'await_any_single_pending_completes_outstanding_set')}),
+        'single-pending await_any completes the outstanding spawn set');
+
     my ($lowered, $err) = lower_actor($actor);
-    ok(!$lowered, 'until post-do await_any remains rejected');
-    like($err, qr/repeat-body do cannot appear while repeat-body spawn clauses are pending/,
-        'until analogue keeps the pending-spawn do gate');
+    ok($lowered, 'public lowering accepts the effect-proven until await_any sequence') or diag($err);
+    my $fsm = $lowered->{files}{'until_pending_spawn_local_do_await_any.fsm'};
+    like($fsm, qr/\(parent_spawn_\d+\b.*?\(=\s*\(w0_start>\s*1\)\).*?->\s*parent_do_\d+/s,
+        'spawn starts w0 before the local do');
+    like($fsm, qr/\(parent_do_\d+\b.*?\(=\s*\(helper_start\s*1\)\).*?<helper_done.*?->\s*parent_await_any_\d+/s,
+        'local do waits for helper_done before await_any');
+    like($fsm, qr/\(parent_await_any_\d+\b.*?<w0_done\s*\(->\s*parent_repeat_check_\d+\)/s,
+        'await_any observes w0_done before repeat_check');
+    like($fsm, qr/\(parent_repeat_check_\d+\b.*?\(--\s*parent_cnt\).*?\(!=0\s*\(->\s*parent_spawn_\d+\)\).*?\(=0\s*\(->\s*parent_until_check_\d+\)\)/s,
+        'repeat re-entry returns to the spawn only after the single-pending await_any');
+    like($fsm, qr/\(parent_until_check_\d+\b.*?\(=1\s*\(->\s*parent_done_\d+\)\).*?\(=0\s*\(->\s*parent_repeat_init_\d+\)\)/s,
+        'until check exits when true and otherwise re-enters the repeat');
+    like($lowered->{files}{'until_pending_spawn_local_do_await_any_top.fsm'}, qr/\(\?fsmc:w0 worker\b/s,
+        'generated top still instantiates the spawned child');
 };
 
 subtest 'multi-pending await_any after local do remains rejected' => sub {

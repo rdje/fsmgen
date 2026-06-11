@@ -103,15 +103,16 @@ validator permits those shapes only when `ControlFlowEffects` proves the
 generated spawn instance is static and wired, the local `do` drains its child,
 `await_all` drains the pending spawn, and the repeat plus surrounding
 `while`/`until` backedges have no outstanding child completions.
-The next consumer is the while-contained single-pending
-`spawn -> local blocking do -> await_any` shape. The public validator permits
-it only when the same proofs hold and `ControlFlowEffects` additionally proves
-`await_any_single_pending_completes_outstanding_set` for the spawned done port.
+The next consumers are the while- and until-contained single-pending
+`spawn -> local blocking do -> await_any` shapes. The public validator permits
+them only when the same proofs hold and `ControlFlowEffects` additionally
+proves `await_any_single_pending_completes_outstanding_set` for the spawned
+done port.
 The next consumers are the while- and until-contained two-spawn
 `spawn -> spawn -> local blocking do -> await_all` shapes. The public validator
 permits them only when the effect checker proves both generated spawn instances
 are static and wired, the local `do` drains its child, `await_all` drains the
 exact `w0_done,w1_done` set, and the repeat plus surrounding loop backedges
-have no outstanding child completions. The matching `until` post-do
-`await_any`, wider multi-pending local-do, generated-do, and multi-pending
-post-do `await_any` variants remain fail-closed.
+have no outstanding child completions. Wider multi-pending local-do,
+generated-do, and multi-pending post-do `await_any` variants remain
+fail-closed.

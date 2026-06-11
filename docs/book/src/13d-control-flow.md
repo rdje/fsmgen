@@ -796,9 +796,10 @@ The body-first `until` form uses the same two-spawn drain contract:
     (complete done)))
 ```
 
-For the `while`-contained form with exactly one pending generated spawn,
+For the loop-contained form with exactly one pending generated spawn,
 single-pending `(await_any done)` may also be the post-`do` sync because it
-observes the only outstanding generated child before repeat and loop re-entry:
+observes the only outstanding generated child before repeat and loop re-entry.
+The `while` form is:
 
 ```lisp
 (actor while_repeat_spawn_do_await_any
@@ -821,17 +822,40 @@ observes the only outstanding generated child before repeat and loop re-entry:
     (complete done)))
 ```
 
-The validator accepts this shape only when the compositional effect checker
-proves the generated spawn has deterministic top wiring, the local `do` waits
-for its own fresh done pulse, and the later `await_all` drains the exact
-pending spawned-child set before both the repeat and surrounding loop
-backedges (`while_retest` or `until_retest`). The multi-pending local-`do`
-variant is currently the exact two-spawn `await_all` shape shown above for
-`while` and `until`. For the `while`-only single-pending `await_any` variant, the effect
-checker must instead prove `await_any_single_pending_completes_outstanding_set`.
-The matching `until` + post-`do` `await_any` shape, wider multi-pending
-local-`do` fan-out, generated `do`, and multi-pending post-`do` `await_any`
-stay fail-closed for now.
+The body-first `until` form uses the same single-pending observe contract:
+
+```lisp
+(actor until_repeat_spawn_do_await_any
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start) (input cond) (input loops (width 3))
+    (output done))
+  (transaction parent
+    (on start)
+    (until cond
+      (repeat loops
+        (spawn worker as w0)
+        (do helper)          ;; waits for helper_done; w0 remains pending
+        (await_any done)))   ;; single pending: observes w0_done before repeat_check
+    (complete done))
+  (transaction worker
+    (complete done))
+  (transaction helper
+    (complete done)))
+```
+
+The validator accepts the `await_all` shapes only when the compositional effect
+checker proves each generated spawn has deterministic top wiring, the local
+`do` waits for its own fresh done pulse, and the later `await_all` drains the
+exact pending spawned-child set before both the repeat and surrounding loop
+backedges (`while_retest` or `until_retest`). The single-pending
+`await_any` shapes instead require
+`await_any_single_pending_completes_outstanding_set` for the one pending
+spawned child. The multi-pending local-`do` variant is currently the exact
+two-spawn `await_all` shape shown above for `while` and `until`; wider
+multi-pending local-`do` fan-out, generated `do`, and multi-pending post-`do`
+`await_any` stay fail-closed for now.
 
 An **undrained** spawn (no same-body `await_all`/single-pending `await_any`
 before the repeat check) stays deferred: `Transaction 'parent': loop-contained

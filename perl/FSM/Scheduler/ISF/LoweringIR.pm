@@ -7216,7 +7216,7 @@ sub _validate_repeat_body_spawn_subset {
                         \@pending_spawns,
                         $target,
                         {
-                            allow_single_pending_await_any => $loop_pending_spawn_count == 1 && $pending_spawn_local_do_loop_kind eq 'while',
+                            allow_single_pending_await_any => $loop_pending_spawn_count == 1,
                         },
                     );
                 my $allowed_pending_do = $plain_local_do

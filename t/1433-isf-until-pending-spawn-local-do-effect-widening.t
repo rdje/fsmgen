@@ -115,19 +115,21 @@ ISF
         'missing drain keeps the pending-spawn do gate because no await_all proof exists');
 };
 
-subtest 'await_any after the local do remains outside the await_all contract' => sub {
-    my $actor = parse_actor(actor_for_body('until_pending_spawn_local_do_await_any', <<'ISF'), 'until-pending-spawn-local-do-await-any');
+subtest 'multi-pending await_any after the local do remains outside the await_all contract' => sub {
+    my $actor = parse_actor(actor_for_body('until_multi_pending_spawn_local_do_await_any', <<'ISF'), 'until-multi-pending-spawn-local-do-await-any');
 (until cond
   (repeat loops
     (spawn worker as w0)
+    (spawn worker as w1)
     (do helper)
-    (await_any done)))
+    (await_any done)
+    (await_all done)))
 ISF
 
     my ($lowered, $err) = lower_actor($actor);
-    ok(!$lowered, 'post-do await_any remains rejected for this slice');
-    like($err, qr/repeat-body do cannot appear while repeat-body spawn clauses are pending/,
-        'await_any path keeps the pending-spawn do gate because no await_all proof exists');
+    ok(!$lowered, 'multi-pending post-do await_any remains rejected');
+    like($err, qr/loop-contained repeat-body local do while generated spawns are pending requires same-body '\(await_all done\)' drain; '\(await_any done\)' after the do remains deferred/,
+        'multi-pending await_any path keeps the post-do await_any gate');
 };
 
 subtest 'until-contained multi-pending spawn across local do lowers through effect proofs' => sub {
