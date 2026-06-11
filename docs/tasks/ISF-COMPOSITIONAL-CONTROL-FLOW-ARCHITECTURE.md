@@ -6,7 +6,7 @@ Roadmap lane: R14 / ISF compositional control-flow and activation architecture
 
 Created: 2026-06-10
 
-Current frontier: `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.7.6`
+Current frontier: `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.7.7`
 
 ## Goal
 
@@ -310,11 +310,37 @@ Result:
 
 #### ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.7.6 — Next Validator Gate Selection
 
-Status: active
+Status: done
 
 Goal: Select and migrate the next narrow validator gate after input binding
 expression endpoint validation, still preserving public behavior unless one
 exact combination is explicitly selected for widening.
+
+Acceptance:
+
+- The selected gate has positive and negative fixtures before migration.
+- The region/effect checker owns the proof or violation used by the migrated
+  decision.
+- Existing accepted/rejected behavior remains stable unless this leaf records
+  an exact newly accepted combination before implementation.
+
+Result:
+
+- Selected rule-trigger target domain validation for local transaction triggers.
+- The effect checker now inventories rule trigger effects, proving
+  `rule_trigger_target_is_same_domain` or reporting
+  `rule_trigger_target_domain_mismatch`.
+- The public rule validator skips its direct target-domain comparison only for
+  the same-domain proof; cross-domain rule triggers keep their previous public
+  clock-domain diagnostic.
+
+#### ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.7.7 — Next Validator Gate Selection
+
+Status: active
+
+Goal: Select and migrate the next narrow validator gate after rule-trigger
+target domain validation, still preserving public behavior unless one exact
+combination is explicitly selected for widening.
 
 Acceptance:
 
@@ -625,5 +651,7 @@ Acceptance:
   `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.7.3: route activation domains through effects`.
 - `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.7.4`: `211bffda`,
   `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.7.4: route binding endpoints through effects`.
-- `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.7.5`: this commit,
+- `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.7.5`: `5386e913`,
   `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.7.5: route binding expressions through effects`.
+- `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.7.6`: this commit,
+  `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.7.6: route rule trigger targets through effects`.

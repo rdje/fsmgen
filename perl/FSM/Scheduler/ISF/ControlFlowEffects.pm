@@ -21,6 +21,9 @@ sub inventory_actor($self, $actor) {
     my @transactions = map {
         _inventory_transaction($_, \%generated_child_targets, $domain_context)
     } @{$actor->{transactions}};
+    my @rules = map {
+        _inventory_rule($_, $domain_context)
+    } @{$actor->{rules} || []};
 
     return {
         model                   => 'isf_control_flow_effects_v1',
@@ -28,6 +31,7 @@ sub inventory_actor($self, $actor) {
         domain_context          => _public_domain_context($domain_context),
         generated_child_targets => [sort keys %generated_child_targets],
         transactions            => \@transactions,
+        rules                   => \@rules,
     };
 }
 
@@ -42,11 +46,12 @@ sub check_inventory($self, $inventory) {
         unless ref($inventory->{transactions}) eq 'ARRAY';
 
     my @transactions = map { _check_transaction($_) } @{$inventory->{transactions}};
+    my @rules = map { _check_rule($_) } @{$inventory->{rules} || []};
     my $violation_count = 0;
     my $proof_count = 0;
-    for my $tx (@transactions) {
-        $violation_count += $tx->{summary}{violation_count};
-        $proof_count     += $tx->{summary}{proof_count};
+    for my $checked (@transactions, @rules) {
+        $violation_count += $checked->{summary}{violation_count};
+        $proof_count     += $checked->{summary}{proof_count};
     }
 
     return {
@@ -56,6 +61,7 @@ sub check_inventory($self, $inventory) {
         proof_count     => $proof_count,
         violation_count => $violation_count,
         transactions    => \@transactions,
+        rules           => \@rules,
     };
 }
 
@@ -145,6 +151,41 @@ sub _inventory_transaction($tx, $generated_child_targets, $domain_context) {
         regions     => \@regions,
         effects     => \@effects,
         summary     => _transaction_summary(\@regions, \@effects),
+    };
+}
+
+sub _inventory_rule($rule, $domain_context) {
+    confess "ControlFlowEffects rule entry must be a hash reference\n"
+        unless ref($rule) eq 'HASH';
+    confess "ControlFlowEffects rule is missing scalar name\n"
+        unless defined($rule->{name}) && !ref($rule->{name});
+
+    my $rule_domain = _domain_for_entry($rule, ($domain_context || {})->{default_domain});
+    my @effects;
+    my $effect_seq = 0;
+
+    for my $action (@{$rule->{actions} || []}) {
+        next unless _is_clause($action);
+        next unless ($action->[0] // '') eq 'trigger';
+        my $target = $action->[1];
+        next unless defined($target) && !ref($target);
+        my $contract = _rule_trigger_domain_contract($domain_context, $rule_domain, $target);
+        push @effects, {
+            id              => $rule->{name} . '.rule_effect.' . $effect_seq++,
+            rule            => $rule->{name},
+            kind            => 'rule_trigger',
+            target          => $target,
+            domain_contract => $contract,
+        };
+    }
+
+    return {
+        name    => $rule->{name},
+        domain  => $rule_domain,
+        effects => \@effects,
+        summary => {
+            effect_count => scalar(@effects),
+        },
     };
 }
 
@@ -544,6 +585,33 @@ sub _check_transaction($tx) {
     };
 }
 
+sub _check_rule($rule) {
+    confess "ControlFlowEffects checker rule entry must be a hash reference\n"
+        unless ref($rule) eq 'HASH';
+    confess "ControlFlowEffects checker rule is missing scalar name\n"
+        unless defined($rule->{name}) && !ref($rule->{name});
+
+    my @proofs;
+    my @violations;
+    for my $effect (@{$rule->{effects} || []}) {
+        next unless ref($effect) eq 'HASH';
+        if (($effect->{kind} // '') eq 'rule_trigger') {
+            _check_rule_trigger_domain_contract($rule, $effect, \@proofs, \@violations);
+        }
+    }
+
+    return {
+        name       => $rule->{name},
+        ok         => @violations ? 0 : 1,
+        proofs     => \@proofs,
+        violations => \@violations,
+        summary    => {
+            proof_count     => scalar(@proofs),
+            violation_count => scalar(@violations),
+        },
+    };
+}
+
 sub _plan_transaction($tx) {
     confess "ControlFlowEffects planner transaction entry must be a hash reference\n"
         unless ref($tx) eq 'HASH';
@@ -910,6 +978,41 @@ sub _check_activation_domain_contract($tx, $effect, $proofs, $violations) {
                 message     => 'cross-domain child activation requires an explicit activation crossing contract',
             );
         }
+    }
+}
+
+sub _check_rule_trigger_domain_contract($rule, $effect, $proofs, $violations) {
+    my $contract = $effect->{domain_contract};
+    return unless ref($contract) eq 'HASH';
+
+    my $relation = $contract->{relation} // '';
+    if ($relation eq 'same_domain') {
+        _push_proof(
+            $proofs,
+            rule        => $rule->{name},
+            code        => 'rule_trigger_target_is_same_domain',
+            invariant   => 'explicit_domain_binding_cdc',
+            effect_id   => $effect->{id},
+            target      => $effect->{target},
+            rule_domain => $contract->{rule_domain},
+            target_domain => $contract->{target_domain},
+            message     => 'rule trigger target is in the same domain as the triggering rule',
+        );
+        return;
+    }
+
+    if ($relation eq 'cross_domain') {
+        _push_violation(
+            $violations,
+            rule        => $rule->{name},
+            code        => 'rule_trigger_target_domain_mismatch',
+            invariant   => 'explicit_domain_binding_cdc',
+            effect_id   => $effect->{id},
+            target      => $effect->{target},
+            rule_domain => $contract->{rule_domain},
+            target_domain => $contract->{target_domain},
+            message     => 'rule trigger target is not in the rule domain and has no shipped CDC trigger contract',
+        );
     }
 }
 
@@ -1368,6 +1471,24 @@ sub _activation_domain_contract($ctx, $clause, $child, $activation) {
         cdc_requirement            => $cdc_requirement,
         activation_crossing        => $activation_crossing ? { %$activation_crossing } : undef,
         cdc_handoffs               => \@cdc_handoffs,
+    };
+}
+
+sub _rule_trigger_domain_contract($domain_context, $rule_domain, $target) {
+    my $target_domain = ($domain_context || {})->{transaction_domains}{$target};
+    my $relation = !defined($rule_domain) || !defined($target_domain)
+        ? 'unknown_target_domain'
+        : $rule_domain eq $target_domain
+            ? 'same_domain'
+            : 'cross_domain';
+
+    return {
+        rule_domain   => $rule_domain,
+        target_domain => $target_domain,
+        relation      => $relation,
+        cdc_requirement => $relation eq 'cross_domain'
+            ? 'unsupported_rule_trigger_cross_domain'
+            : 'none',
     };
 }
 

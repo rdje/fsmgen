@@ -11,11 +11,11 @@ answers:
   - "how does FSMGen model ISF regions and activation effects in shadow mode?"
   - "where are await_any observe versus await_all drain effects recorded?"
   - "what module owns the initial compositional control-flow activation model?"
-date: 2026-06-10
+date: 2026-06-11
 status: current
 tags: [isf, control-flow, architecture, activation, scheduling, cdc]
-evidence: perl/FSM/Scheduler/ISF/ControlFlowEffects.pm; perl/FSM/Scheduler/ISF/LoweringIR.pm; t/1419-isf-control-flow-effect-inventory.t; t/1421-isf-control-flow-effect-checks.t; t/1422-isf-control-flow-child-plan.t; t/1423-isf-control-flow-lifetime-checks.t; t/1424-isf-control-flow-domain-binding-effects.t; t/1425-isf-control-flow-validator-effect-migration.t; t/1426-isf-control-flow-same-domain-validator-effect-migration.t; t/1427-isf-control-flow-activation-domain-validator-effect-migration.t; t/1428-isf-control-flow-binding-endpoint-validator-effect-migration.t; t/1429-isf-control-flow-binding-expression-validator-effect-migration.t; docs/tasks/ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.md; docs/decisions/0013-compositional-control-flow-activation-model.md
-reverify: prove -Iperl t/1419-isf-control-flow-effect-inventory.t t/1421-isf-control-flow-effect-checks.t t/1422-isf-control-flow-child-plan.t t/1423-isf-control-flow-lifetime-checks.t t/1424-isf-control-flow-domain-binding-effects.t t/1425-isf-control-flow-validator-effect-migration.t t/1426-isf-control-flow-same-domain-validator-effect-migration.t t/1427-isf-control-flow-activation-domain-validator-effect-migration.t t/1428-isf-control-flow-binding-endpoint-validator-effect-migration.t t/1429-isf-control-flow-binding-expression-validator-effect-migration.t
+evidence: perl/FSM/Scheduler/ISF/ControlFlowEffects.pm; perl/FSM/Scheduler/ISF/LoweringIR.pm; t/1419-isf-control-flow-effect-inventory.t; t/1421-isf-control-flow-effect-checks.t; t/1422-isf-control-flow-child-plan.t; t/1423-isf-control-flow-lifetime-checks.t; t/1424-isf-control-flow-domain-binding-effects.t; t/1425-isf-control-flow-validator-effect-migration.t; t/1426-isf-control-flow-same-domain-validator-effect-migration.t; t/1427-isf-control-flow-activation-domain-validator-effect-migration.t; t/1428-isf-control-flow-binding-endpoint-validator-effect-migration.t; t/1429-isf-control-flow-binding-expression-validator-effect-migration.t; t/1430-isf-control-flow-rule-trigger-validator-effect-migration.t; docs/tasks/ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.md; docs/decisions/0013-compositional-control-flow-activation-model.md
+reverify: prove -Iperl t/1419-isf-control-flow-effect-inventory.t t/1421-isf-control-flow-effect-checks.t t/1422-isf-control-flow-child-plan.t t/1423-isf-control-flow-lifetime-checks.t t/1424-isf-control-flow-domain-binding-effects.t t/1425-isf-control-flow-validator-effect-migration.t t/1426-isf-control-flow-same-domain-validator-effect-migration.t t/1427-isf-control-flow-activation-domain-validator-effect-migration.t t/1428-isf-control-flow-binding-endpoint-validator-effect-migration.t t/1429-isf-control-flow-binding-expression-validator-effect-migration.t t/1430-isf-control-flow-rule-trigger-validator-effect-migration.t
 ---
 
 The initial compositional ISF control-flow model lives in
@@ -80,3 +80,10 @@ endpoint in the expression is in the caller domain, while
 `binding_expression_endpoint_domain_mismatch` records cross-domain expression
 endpoints. The validator skips the recursive input-binding expression read walk
 only for the all-same-domain proof.
+Rule-trigger target domains are represented in the same effect checker as rule
+effects. `rule_trigger_target_is_same_domain` proves a local rule trigger points
+at a transaction in the rule domain, while
+`rule_trigger_target_domain_mismatch` records a cross-domain local trigger
+target. The public rule validator skips its direct target-domain comparison only
+for the same-domain proof; cross-domain rule triggers keep the existing public
+clock-domain diagnostic.

@@ -2522,7 +2522,7 @@ sub _validate_rule_domain_refs($self, $actor, $signal_domains, $transaction_doma
                     $domain,
                     $transaction_domains->{$target},
                     'transaction',
-                );
+                ) unless _control_flow_effects_prove_rule_trigger_target($actor, $rule->{name}, $target);
                 for my $binding (_activation_bindings_from_clause($action, $rule->{name}, 'rule trigger')->@*) {
                     if ($binding->{role} eq 'input') {
                         _validate_domain_expr_reads(
@@ -2969,6 +2969,22 @@ sub _control_flow_effects_prove_binding_endpoint_domain($actor, $transaction_nam
             next unless ($proof->{role} // '') eq $role;
             next unless ($proof->{child_port} // '') eq $child_port;
             next unless ($proof->{actor_expr} // '') eq $actor_expr;
+            return 1;
+        }
+    }
+    return 0;
+}
+
+sub _control_flow_effects_prove_rule_trigger_target($actor, $rule_name, $target) {
+    return 0 unless defined($rule_name) && !ref($rule_name);
+    return 0 unless defined($target) && !ref($target);
+
+    my $check = _control_flow_effect_check($actor);
+    for my $rule (@{$check->{rules} || []}) {
+        next unless ($rule->{name} // '') eq $rule_name;
+        for my $proof (@{$rule->{proofs} || []}) {
+            next unless ($proof->{code} // '') eq 'rule_trigger_target_is_same_domain';
+            next unless ($proof->{target} // '') eq $target;
             return 1;
         }
     }
