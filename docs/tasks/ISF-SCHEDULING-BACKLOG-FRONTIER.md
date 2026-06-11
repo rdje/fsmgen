@@ -6,7 +6,7 @@ Roadmap lane: R14 / ISF scheduling, activation, CDC, ATL, actor-network, and gen
 
 Created: 2026-06-10
 
-Current frontier: `ISF-SCHEDULING-BACKLOG-FRONTIER.8.1`
+Current frontier: `ISF-SCHEDULING-BACKLOG-FRONTIER.8.2`
 
 ## Goal
 
@@ -607,7 +607,7 @@ Acceptance:
 
 #### ISF-SCHEDULING-BACKLOG-FRONTIER.8.1 — Generated-Child Top First Slice Selection
 
-Status: pending
+Status: done
 
 Goal: Select the first exact generated-child top source surface beyond the
 currently covered spawn, generated `do`, rule-trigger, one-child, two-child,
@@ -626,6 +626,65 @@ Acceptance:
   examples.
 - If the pattern remains unsafe, record the missing naming/interface/lifetime
   contract and close it with a targeted diagnostic/doc update.
+
+Result:
+
+- Audited generated-composition tops for spawned/generated children and their
+  schedule-report metadata (`generated_composition`), including the shipped
+  spawn fixture and generated-top handoff coverage.
+- Audited ATL resolved-child generated tops: one-child trigger/event, one-child
+  scalar/vector/multi/mixed pin ingress, one-child scalar/vector/multi/mixed
+  pin egress, two-child sequential trigger/event, and selected two-child
+  actor-to-actor data routes are already covered by file-backed fixtures and
+  strict generated-top HDL checks.
+- Reproduced the resolved rule-action trigger edge. A rule action
+  `(trigger worker.process)` against a resolved child currently emits the
+  parent and child scheduled `.fsm` artifacts, records a `rule_action`
+  trigger with `sink: "external_handoff"`, and emits no generated ATL top.
+  That remains unsafe as the first `.8` widening because a rule-action
+  generated top would need a fire-and-forget child lifetime, ready/backpressure,
+  or completion observation contract before wiring the child start internally.
+- Reproduced the resolved-child temporary trigger-batch edge. A source with two
+  resolved children, contiguous `(trigger reader.capture)` /
+  `(trigger writer.emit)` clauses, and source-ordered waits to both children
+  currently fails in lowering with the broad generated-child wiring versus
+  temporary association/group schedule diagnostic.
+- Selected `.8.2` as the first exact generated-child top widening surface:
+  two resolved children, one contiguous same-cycle trigger batch, explicit
+  source-ordered child event waits, no static group declaration, and no ATL
+  data movement. The implementation leaf may either ship that generated top or
+  replace the broad lowerer rejection with a targeted diagnostic naming the
+  missing same-cycle child-start fanout, wait ordering, and lifetime/storage
+  contract if the wiring proves unsafe.
+
+#### ISF-SCHEDULING-BACKLOG-FRONTIER.8.2 — Resolved-Child Trigger-Batch Generated Top
+
+Status: pending
+
+Goal: Implement or close the first generated-child top widening surface that
+combines resolved child wiring with the shipped temporary trigger-batch
+scheduling subset.
+
+Acceptance:
+
+- Reproduce the current lowerer rejection for two resolved children with one
+  contiguous transaction-body trigger batch followed by source-ordered waits
+  to both triggered children.
+- If implementation is viable, emit parent, both resolved child `.fsm`
+  artifacts, and one generated ATL top that wires the same-cycle parent start
+  handoffs into both children and wires each child event back to the parent
+  wait handoff.
+- If implementation is viable, prove schedule-report stability for
+  `transaction_triggers[]`, `event_waits[]`, `association_schedules[]`,
+  `group_schedules[]`, and `generated_tops[]`, plus strict outdir and plain
+  and strict generated-top HDL.
+- Keep static group declarations, data movement coupling, repeated child
+  activations/waits, non-source-ordered waits, nested waits/triggers, CDC,
+  payloads, ready/backpressure, and route mux/storage outside this leaf unless
+  explicitly proven.
+- If implementation is unsafe, replace the broad lowerer rejection with a
+  targeted diagnostic and sync parser/lowering tests, mdBook, specs, and
+  Knowledge Map.
 
 ## Verification Log
 
@@ -762,6 +821,11 @@ Acceptance:
   t/1114-isf-public-interface-contract-defensive-copy-audit.t`; `mdbook
   build docs/book`; `knowledge-map/scripts/check_knowledge_map.sh`;
   `scripts/check_memory_architecture.sh`; and `git diff --check` pass.
+- 2026-06-11 (`.8.1`): audited generated-composition and ATL resolved-child
+  generated-top surfaces. Selected `.8.2` to implement or target-close the
+  two-resolved-child temporary trigger-batch generated top. `scripts/check_memory_architecture.sh`;
+  `knowledge-map/scripts/check_knowledge_map.sh`; and `git diff --check`
+  pass.
 
 ## Commit Log
 
@@ -787,5 +851,7 @@ Acceptance:
   ISF-SCHEDULING-BACKLOG-FRONTIER.6.2: diagnose ATL event joins`
 - `ISF-SCHEDULING-BACKLOG-FRONTIER.7.1`: `5ef59da2
   ISF-SCHEDULING-BACKLOG-FRONTIER.7.1: select ATL group endpoint diagnostic`
-- `ISF-SCHEDULING-BACKLOG-FRONTIER.7.2`: this commit,
-  `ISF-SCHEDULING-BACKLOG-FRONTIER.7.2: diagnose ATL group endpoints`.
+- `ISF-SCHEDULING-BACKLOG-FRONTIER.7.2`: `8e13e597
+  ISF-SCHEDULING-BACKLOG-FRONTIER.7.2: diagnose ATL group endpoints`
+- `ISF-SCHEDULING-BACKLOG-FRONTIER.8.1`: this commit,
+  `ISF-SCHEDULING-BACKLOG-FRONTIER.8.1: select trigger-batch generated top`.
