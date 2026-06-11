@@ -1227,6 +1227,28 @@ to `writer_done`. Schedule JSON keeps the existing actor-network families and
 uses `actor_network.generated_tops[].children[]` for the per-child generated
 top wiring records.
 
+The selected resolved-child trigger-batch generated-top subset is shipped by
+[isf/atl_two_child_trigger_batch_pipeline.isf](../isf/atl_two_child_trigger_batch_pipeline.isf).
+The parent declares the same resolved `reader` and `writer` children, emits
+contiguous `(trigger reader.capture)` and `(trigger writer.emit)` clauses in
+one same-cycle temporary trigger batch, awaits `reader.done`, awaits
+`writer.done`, and completes. Lowering emits parent, reader, writer, and
+generated top `.fsm` artifacts. The parent pulses `reader_capture_start` and
+`writer_emit_start` in one `run_atl_trigger_batch_1` state, then preserves
+the waits as source-ordered sequential wait states. The generated top wires
+both child start handoffs and both child event handoffs exactly like the
+sequential two-child top. Schedule JSON preserves the individual
+`actor_network.transaction_triggers[]` and `actor_network.event_waits[]`
+records, preserves the task-scoped temporary association evidence in
+`actor_network.association_schedules[]`, preserves the schema-version-1
+compatibility view in `actor_network.group_schedules[]`, and reports one
+generated top with `kind:
+"resolved_children_trigger_batch_event_sequence"`. Static group declarations,
+data movement coupled to the trigger batch, repeated child activations or
+waits, non-source-ordered waits, nested waits/triggers, CDC, payload
+protocols, ready/backpressure, route mux/storage, recursive actor networks,
+and permanent actor grouping remain deferred for this generated-top family.
+
 The first positive generated-child actor-to-actor data route through that
 two-child top is shipped by
 [isf/atl_two_child_data_pipeline.isf](../isf/atl_two_child_data_pipeline.isf).
@@ -1251,8 +1273,8 @@ internal. Schedule JSON reports the route through existing
 the top through existing `actor_network.generated_tops[]` `children[]`
 metadata. Route mux/storage, fan-in/fan-out, CDC/reset remapping,
 ready/backpressure, payload protocols beyond exact-width handoff wiring,
-repeated triggers, trigger batches, groups, recursive actor networks, and
-permanent actor grouping remain deferred.
+repeated triggers, trigger-batch plus data movement coupling, groups,
+recursive actor networks, and permanent actor grouping remain deferred.
 
 The exact-width vector extension of that same two-child route shape is shipped
 by

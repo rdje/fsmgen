@@ -1,12 +1,13 @@
 # ISF-SCHEDULING-BACKLOG-FRONTIER
 
-Status: active
+Status: done
 
 Roadmap lane: R14 / ISF scheduling, activation, CDC, ATL, actor-network, and generated-child surfaces
 
 Created: 2026-06-10
 
-Current frontier: `ISF-SCHEDULING-BACKLOG-FRONTIER.8.2`
+Current frontier: complete (`.8.2`; resolved-child trigger-batch generated top
+shipped; no active next leaf remains in this tree)
 
 ## Goal
 
@@ -594,7 +595,7 @@ Result:
 
 ### ISF-SCHEDULING-BACKLOG-FRONTIER.8 — Generated-Child Top Surface Widening
 
-Status: active
+Status: done
 
 Goal: Cover generated-child top surfaces beyond the currently documented spawn,
 generated `do`, and rule-trigger cases.
@@ -659,7 +660,7 @@ Result:
 
 #### ISF-SCHEDULING-BACKLOG-FRONTIER.8.2 — Resolved-Child Trigger-Batch Generated Top
 
-Status: pending
+Status: done
 
 Goal: Implement or close the first generated-child top widening surface that
 combines resolved child wiring with the shipped temporary trigger-batch
@@ -685,6 +686,33 @@ Acceptance:
 - If implementation is unsafe, replace the broad lowerer rejection with a
   targeted diagnostic and sync parser/lowering tests, mdBook, specs, and
   Knowledge Map.
+
+Result:
+
+- Shipped the selected generated top for
+  `isf/atl_two_child_trigger_batch_pipeline.isf`: two resolved children, one
+  contiguous same-cycle transaction-body trigger batch, source-ordered waits
+  to both triggered children, no static group declaration, and no ATL data
+  movement.
+- Lowering now allows exactly that temporary association/group schedule
+  metadata with generated child wiring and reports generated top kind
+  `resolved_children_trigger_batch_event_sequence`; other temporary
+  schedule metadata combined with generated child wiring still fails closed
+  with a targeted diagnostic.
+- The parent `.fsm` emits one `run_atl_trigger_batch_1` state that pulses
+  both child start handoffs, then waits for `reader_done` and `writer_done`
+  in source order. The lower result emits parent, reader child, writer child,
+  and generated top `.fsm` artifacts.
+- `t/1330-isf-atl-resolved-child-fixture-coverage.t` proves in-memory
+  lowering, strict schedule JSON parity, strict outdir emission, and plain
+  plus strict generated-top HDL for the trigger-batch fixture.
+- mdBook, `docs/ISF_SPEC.md`, `docs/ISF_PUBLIC_INTERFACE_CONTRACT.md`,
+  `docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md`, Knowledge Map, task index, and
+  `MEMORY.md` are synced. Static group declarations, data movement coupling,
+  repeated child activations/waits, non-source-ordered waits, nested
+  waits/triggers, CDC, payloads, ready/backpressure, route mux/storage,
+  recursive actor networks, and permanent actor grouping remain deferred to
+  future exact owner leaves.
 
 ## Verification Log
 
@@ -826,6 +854,24 @@ Acceptance:
   two-resolved-child temporary trigger-batch generated top. `scripts/check_memory_architecture.sh`;
   `knowledge-map/scripts/check_knowledge_map.sh`; and `git diff --check`
   pass.
+- 2026-06-11 (`.8.2`): shipped the selected two-resolved-child temporary
+  trigger-batch generated top. `perl -Iperl -c
+  perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c
+  t/1330-isf-atl-resolved-child-fixture-coverage.t`; `prove -Iperl
+  t/1330-isf-atl-resolved-child-fixture-coverage.t`; `prove -Iperl
+  t/1322-isf-actor-network-static.t
+  t/1329-isf-atl-trigger-batch-wait-fixture-coverage.t
+  t/1330-isf-atl-resolved-child-fixture-coverage.t
+  t/1305-isf-book-feature-matrix-audit.t
+  t/1332-isf-atl-doc-status-audit.t
+  t/1250-isf-spec-focused-test-index-audit.t
+  t/1376-isf-book-example-lowering-audit.t
+  t/1112-isf-public-interface-contract.t
+  t/1113-isf-public-interface-contract-json-roundtrip-audit.t
+  t/1114-isf-public-interface-contract-defensive-copy-audit.t` (Files=10,
+  Tests=385); `mdbook build docs/book`;
+  `knowledge-map/scripts/check_knowledge_map.sh`;
+  `scripts/check_memory_architecture.sh`; and `git diff --check` pass.
 
 ## Commit Log
 
@@ -853,5 +899,7 @@ Acceptance:
   ISF-SCHEDULING-BACKLOG-FRONTIER.7.1: select ATL group endpoint diagnostic`
 - `ISF-SCHEDULING-BACKLOG-FRONTIER.7.2`: `8e13e597
   ISF-SCHEDULING-BACKLOG-FRONTIER.7.2: diagnose ATL group endpoints`
-- `ISF-SCHEDULING-BACKLOG-FRONTIER.8.1`: this commit,
-  `ISF-SCHEDULING-BACKLOG-FRONTIER.8.1: select trigger-batch generated top`.
+- `ISF-SCHEDULING-BACKLOG-FRONTIER.8.1`: `c2ab03f8
+  ISF-SCHEDULING-BACKLOG-FRONTIER.8.1: select trigger-batch generated top`
+- `ISF-SCHEDULING-BACKLOG-FRONTIER.8.2`: this commit,
+  `ISF-SCHEDULING-BACKLOG-FRONTIER.8.2: ship trigger-batch generated top`.

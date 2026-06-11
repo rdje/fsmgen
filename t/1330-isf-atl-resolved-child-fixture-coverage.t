@@ -70,6 +70,11 @@ my $two_child_isf_file = File::Spec->catfile(
     'isf',
     'atl_two_child_pipeline.isf',
 );
+my $two_child_trigger_batch_isf_file = File::Spec->catfile(
+    $repo_root,
+    'isf',
+    'atl_two_child_trigger_batch_pipeline.isf',
+);
 my $two_child_data_isf_file = File::Spec->catfile(
     $repo_root,
     'isf',
@@ -809,6 +814,91 @@ subtest 'ATL two-child fixture lowers sequential trigger/event handoffs through 
     assert_two_child_report_shape($report);
 };
 
+subtest 'ATL two-child trigger-batch fixture lowers same-cycle trigger handoffs through one generated top' => sub {
+    my ($files, $report) = lower_atl_fixture($two_child_trigger_batch_isf_file);
+
+    is_deeply(
+        sorted([keys %$files]),
+        [
+            'atl_two_child_trigger_batch_pipeline.fsm',
+            'atl_two_child_trigger_batch_pipeline__reader.fsm',
+            'atl_two_child_trigger_batch_pipeline__writer.fsm',
+            'atl_two_child_trigger_batch_pipeline_top.fsm',
+        ],
+        'two-child trigger-batch lowering emits exactly the parent, two resolved children, and generated ATL top FSM artifacts',
+    );
+
+    my $parent = $files->{'atl_two_child_trigger_batch_pipeline.fsm'};
+    like($parent, qr/\A\(\?fsm:atl_two_child_trigger_batch_pipeline\b/,
+        'two-child trigger-batch parent uses the fixture module name');
+    like($parent, qr/\(reader_capture_start 1\)/,
+        'two-child trigger-batch parent exposes the reader trigger handoff output');
+    like($parent, qr/\(reader_done 1\)/,
+        'two-child trigger-batch parent exposes the reader event handoff input');
+    like($parent, qr/\(writer_emit_start 1\)/,
+        'two-child trigger-batch parent exposes the writer trigger handoff output');
+    like($parent, qr/\(writer_done 1\)/,
+        'two-child trigger-batch parent exposes the writer event handoff input');
+    like($parent, qr/\brun_atl_trigger_batch_1\b/,
+        'two-child trigger-batch parent contains one same-cycle trigger batch state');
+    like($parent, qr/\brun_await_2\b/,
+        'two-child trigger-batch parent contains the reader await state');
+    like($parent, qr/\brun_await_3\b/,
+        'two-child trigger-batch parent contains the writer await state');
+    unlike($parent, qr/\brun_atl_trigger_3\b/,
+        'two-child trigger-batch parent does not split the writer handoff into a later trigger state');
+    like($parent, qr/\(run_atl_trigger_batch_1\s+\(<1 \(reader_capture_start> 1\)\)\s+\(<1 \(writer_emit_start> 1\)\)\s+\(-> run_await_2\)\s+\)/s,
+        'trigger-batch state pulses both child starts before the first wait');
+    like($parent, qr/\(<reader_done\s+\(-> run_await_3\)\s+\)/,
+        'reader await state advances to the writer wait');
+    like($parent, qr/\(<writer_done\s+\(-> run_done_4\)\s+\)/,
+        'writer await state advances to completion');
+
+    my $reader = $files->{'atl_two_child_trigger_batch_pipeline__reader.fsm'};
+    like($reader, qr/\A\(\?fsm:atl_two_child_trigger_batch_pipeline__reader\b/,
+        'trigger-batch reader child uses the resolved reader module name');
+    like($reader, qr/\(capture_start 1\)/,
+        'trigger-batch reader child keeps its authored capture_start input');
+    like($reader, qr/\(done 1\)/, 'trigger-batch reader child keeps its authored done output');
+    like($reader, qr/\bcapture_idle_0\b/,
+        'trigger-batch reader child keeps its capture transaction entry state');
+
+    my $writer = $files->{'atl_two_child_trigger_batch_pipeline__writer.fsm'};
+    like($writer, qr/\A\(\?fsm:atl_two_child_trigger_batch_pipeline__writer\b/,
+        'trigger-batch writer child uses the resolved writer module name');
+    like($writer, qr/\(emit_start 1\)/,
+        'trigger-batch writer child keeps its authored emit_start input');
+    like($writer, qr/\(done 1\)/, 'trigger-batch writer child keeps its authored done output');
+    like($writer, qr/\bemit_idle_0\b/,
+        'trigger-batch writer child keeps its emit transaction entry state');
+
+    my $top = $files->{'atl_two_child_trigger_batch_pipeline_top.fsm'};
+    like($top, qr/\A\(\?top:atl_two_child_trigger_batch_pipeline_top\b/,
+        'two-child trigger-batch generated top uses the fixture top module name');
+    like($top, qr/\(\?ports:public_io\s+clk\s+rst_n\s+start\s+done>\s+\)/s,
+        'two-child trigger-batch generated top exposes only parent public pins plus clock/reset');
+    like($top, qr/\(\?fsmc:atl_two_child_trigger_batch_pipeline atl_two_child_trigger_batch_pipeline\)/,
+        'two-child trigger-batch generated top instantiates the scheduled parent');
+    like($top, qr/\(\?fsmc:reader atl_two_child_trigger_batch_pipeline__reader\)/,
+        'two-child trigger-batch generated top instantiates the resolved reader child');
+    like($top, qr/\(\?fsmc:writer atl_two_child_trigger_batch_pipeline__writer\)/,
+        'two-child trigger-batch generated top instantiates the resolved writer child');
+    like($top, qr/\(start atl_two_child_trigger_batch_pipeline\.start\)/,
+        'two-child trigger-batch generated top wires top start into the parent');
+    like($top, qr/\(atl_two_child_trigger_batch_pipeline\.done done\)/,
+        'two-child trigger-batch generated top wires parent done to the top output');
+    like($top, qr/\(atl_two_child_trigger_batch_pipeline\.reader_capture_start reader\.capture_start\)/,
+        'two-child trigger-batch generated top wires parent reader trigger handoff to the reader transaction start input');
+    like($top, qr/\(reader\.done atl_two_child_trigger_batch_pipeline\.reader_done\)/,
+        'two-child trigger-batch generated top wires reader event pulse to the parent event handoff input');
+    like($top, qr/\(atl_two_child_trigger_batch_pipeline\.writer_emit_start writer\.emit_start\)/,
+        'two-child trigger-batch generated top wires parent writer trigger handoff to the writer transaction start input');
+    like($top, qr/\(writer\.done atl_two_child_trigger_batch_pipeline\.writer_done\)/,
+        'two-child trigger-batch generated top wires writer event pulse to the parent event handoff input');
+
+    assert_two_child_trigger_batch_report_shape($report);
+};
+
 subtest 'ATL two-child data fixture lowers a scalar generated-child actor-to-actor route' => sub {
     my ($files, $report) = lower_atl_fixture($two_child_data_isf_file);
 
@@ -1320,6 +1410,28 @@ subtest 'ATL two-child fixture strict schedule JSON matches the in-process repor
     );
 };
 
+subtest 'ATL two-child trigger-batch fixture strict schedule JSON matches the in-process report' => sub {
+    my (undef, $in_process_report) = lower_atl_fixture($two_child_trigger_batch_isf_file);
+    my ($success, $stdout, $stderr) = run_cli(
+        [
+            './bin/fsmgen',
+            '--strict',
+            '--quiet',
+            '--emit-schedule-json',
+            $two_child_trigger_batch_isf_file,
+        ],
+        'two-child trigger-batch strict schedule JSON generation',
+    );
+
+    ok($success, 'strict schedule JSON generation succeeds for the ATL two-child trigger-batch fixture');
+    is($stderr, '', 'two-child trigger-batch strict schedule JSON generation keeps stderr clean');
+    is_deeply(
+        decode_json($stdout),
+        $in_process_report,
+        'two-child trigger-batch strict schedule JSON generation matches the in-process report',
+    );
+};
+
 subtest 'ATL two-child data fixture strict schedule JSON matches the in-process report' => sub {
     my (undef, $in_process_report) = lower_atl_fixture($two_child_data_isf_file);
     my ($success, $stdout, $stderr) = run_cli(
@@ -1689,6 +1801,31 @@ subtest 'ATL two-child fixture strict outdir lowering writes the generated top' 
     );
 };
 
+subtest 'ATL two-child trigger-batch fixture strict outdir lowering writes the generated top' => sub {
+    my $dir = tempdir(CLEANUP => 1);
+    my ($success, $stdout, $stderr) = run_cli(
+        [
+            './bin/fsmgen',
+            '--strict',
+            '--quiet',
+            '--outdir',
+            $dir,
+            $two_child_trigger_batch_isf_file,
+        ],
+        'two-child trigger-batch strict outdir lowering',
+    );
+
+    ok($success, 'strict outdir lowering succeeds for the ATL two-child trigger-batch fixture');
+    like($stdout, qr/Wrote: .*atl_two_child_trigger_batch_pipeline_top\.fsm/,
+        'two-child trigger-batch strict outdir lowering reports the written generated top');
+    is($stderr, '', 'two-child trigger-batch strict outdir lowering keeps stderr clean');
+    is_deeply(
+        sorted([fsm_basenames_in($dir)]),
+        expected_fsm_basenames_for_source($two_child_trigger_batch_isf_file),
+        'two-child trigger-batch strict outdir lowering writes the parent, resolved children, and generated top files',
+    );
+};
+
 subtest 'ATL two-child data fixture strict outdir lowering writes the generated top' => sub {
     my $dir = tempdir(CLEANUP => 1);
     my ($success, $stdout, $stderr) = run_cli(
@@ -2040,6 +2177,30 @@ subtest 'ATL two-child fixture reaches generated-top HDL generation' => sub {
     );
 
     assert_two_child_generated_top_hdl($strict, 'two-child strict HDL');
+};
+
+subtest 'ATL two-child trigger-batch fixture reaches generated-top HDL generation' => sub {
+    my $plain_dir = tempdir(CLEANUP => 1);
+    my $plain_hdl = File::Spec->catfile($plain_dir, 'atl_two_child_trigger_batch_pipeline_plain.sv');
+    my $plain = generate_hdl(
+        $plain_hdl,
+        [],
+        'two-child trigger-batch plain HDL generation',
+        $two_child_trigger_batch_isf_file,
+    );
+
+    assert_two_child_trigger_batch_generated_top_hdl($plain, 'two-child trigger-batch plain HDL');
+
+    my $strict_dir = tempdir(CLEANUP => 1);
+    my $strict_hdl = File::Spec->catfile($strict_dir, 'atl_two_child_trigger_batch_pipeline_strict.sv');
+    my $strict = generate_hdl(
+        $strict_hdl,
+        ['--strict'],
+        'two-child trigger-batch strict HDL generation',
+        $two_child_trigger_batch_isf_file,
+    );
+
+    assert_two_child_trigger_batch_generated_top_hdl($strict, 'two-child trigger-batch strict HDL');
 };
 
 subtest 'ATL two-child data fixture reaches generated-top HDL generation' => sub {
@@ -4388,6 +4549,198 @@ sub assert_two_child_report_shape {
     );
 }
 
+sub assert_two_child_trigger_batch_report_shape {
+    my ($report) = @_;
+
+    is($report->{source}, 'atl_two_child_trigger_batch_pipeline.isf',
+        'two-child trigger-batch schedule report names the fixture');
+    is($report->{scheduled_fsm}, 'atl_two_child_trigger_batch_pipeline.fsm',
+        'two-child trigger-batch schedule report names the scheduled parent FSM');
+    is($report->{inputs}, 3, 'two-child trigger-batch report input count includes start and both event handoffs');
+    is($report->{outputs}, 3, 'two-child trigger-batch report output count includes done and both trigger handoffs');
+    is($report->{port_count}, 6,
+        'two-child trigger-batch report port count includes public and generated handoff ports');
+    is($report->{state_count}, 6,
+        'two-child trigger-batch report state count includes one batch state, two waits, done, idle, and timeout');
+    is_deeply($report->{compile_issues}, [], 'two-child trigger-batch schedule report has no compile issues');
+    is_deeply($report->{dt_blocks}, [], 'two-child trigger-batch schedule report has no drive bodies');
+    is_deeply(
+        $report->{transactions},
+        [
+            {
+                name => 'run',
+                count => 6,
+                states => [qw(
+                  run_idle_0
+                  run_atl_trigger_batch_1
+                  run_await_2
+                  run_await_3
+                  run_done_4
+                  run_timeout
+                )],
+            },
+        ],
+        'two-child trigger-batch schedule report records same-cycle trigger batch then source-ordered waits',
+    );
+
+    my $actor_network = $report->{actor_network};
+    is($actor_network->{kind}, 'static_declaration', 'two-child trigger-batch actor network kind');
+    is_deeply(
+        $actor_network->{instances},
+        [
+            {
+                name            => 'reader',
+                actor_type      => 'pkt_lib.packet_reader',
+                declaration     => 'actor',
+                type_resolution => 'library_actor_export',
+                library         => 'common.packet',
+                alias           => 'pkt_lib',
+                export          => 'packet_reader',
+                module          => 'atl_two_child_trigger_batch_pipeline__reader',
+                scheduled_fsm   => 'atl_two_child_trigger_batch_pipeline__reader.fsm',
+            },
+            {
+                name            => 'writer',
+                actor_type      => 'pkt_lib.packet_writer',
+                declaration     => 'actor',
+                type_resolution => 'library_actor_export',
+                library         => 'common.packet',
+                alias           => 'pkt_lib',
+                export          => 'packet_writer',
+                module          => 'atl_two_child_trigger_batch_pipeline__writer',
+                scheduled_fsm   => 'atl_two_child_trigger_batch_pipeline__writer.fsm',
+            },
+        ],
+        'two-child trigger-batch report records both resolved child actor metadata entries',
+    );
+    is_deeply($actor_network->{groups}, [], 'two-child trigger-batch fixture has no permanent static group');
+    is_deeply(
+        $actor_network->{generated_tops},
+        [
+            {
+                kind                 => 'resolved_children_trigger_batch_event_sequence',
+                top_module           => 'atl_two_child_trigger_batch_pipeline_top',
+                top_fsm              => 'atl_two_child_trigger_batch_pipeline_top.fsm',
+                parent_module        => 'atl_two_child_trigger_batch_pipeline',
+                parent_scheduled_fsm => 'atl_two_child_trigger_batch_pipeline.fsm',
+                clock                => 'clk',
+                reset                => 'rst_n',
+                children             => [
+                    {
+                        instance             => 'reader',
+                        child_module         => 'atl_two_child_trigger_batch_pipeline__reader',
+                        child_scheduled_fsm  => 'atl_two_child_trigger_batch_pipeline__reader.fsm',
+                        target_transaction   => 'capture',
+                        trigger_parent_port  => 'reader_capture_start',
+                        trigger_child_port   => 'capture_start',
+                        event                => 'done',
+                        event_parent_port    => 'reader_done',
+                        event_child_port     => 'done',
+                    },
+                    {
+                        instance             => 'writer',
+                        child_module         => 'atl_two_child_trigger_batch_pipeline__writer',
+                        child_scheduled_fsm  => 'atl_two_child_trigger_batch_pipeline__writer.fsm',
+                        target_transaction   => 'emit',
+                        trigger_parent_port  => 'writer_emit_start',
+                        trigger_child_port   => 'emit_start',
+                        event                => 'done',
+                        event_parent_port    => 'writer_done',
+                        event_child_port     => 'done',
+                    },
+                ],
+            },
+        ],
+        'two-child trigger-batch report records one generated ATL top with per-child wiring metadata',
+    );
+    is_deeply($actor_network->{data_movements}, [],
+        'two-child trigger-batch fixture does not use ATL data movement');
+    is_deeply(
+        $actor_network->{association_schedules},
+        [
+            {
+                association         => 'run_trigger_batch',
+                kind                => 'temporary_trigger_batch',
+                lifetime            => 'task_scoped',
+                owner_transaction   => 'run',
+                context             => 'transaction_body',
+                members             => [qw(reader writer)],
+                target_transactions => [qw(capture emit)],
+                signals             => [qw(reader_capture_start writer_emit_start)],
+                schedule            => 'same_cycle_external_trigger_batch',
+                dependency_policy   => 'transaction_body_distinct_instances',
+                storage             => 'none',
+                source              => 'parent_trigger_state',
+                sink                => 'external_handoff',
+            },
+        ],
+        'two-child trigger-batch report records the canonical temporary association schedule',
+    );
+    is_deeply(
+        $actor_network->{group_schedules},
+        [
+            {
+                group               => 'run_trigger_batch',
+                owner_transaction   => 'run',
+                context             => 'transaction_body',
+                members             => [qw(reader writer)],
+                target_transactions => [qw(capture emit)],
+                signals             => [qw(reader_capture_start writer_emit_start)],
+                schedule            => 'same_cycle_external_trigger_batch',
+                dependency_policy   => 'transaction_body_distinct_instances',
+                storage             => 'none',
+                source              => 'parent_trigger_state',
+                sink                => 'external_handoff',
+            },
+        ],
+        'two-child trigger-batch report preserves compatibility group schedule evidence',
+    );
+    is_deeply(
+        $actor_network->{transaction_triggers},
+        [
+            {
+                owner_transaction  => 'run',
+                context            => 'transaction_body',
+                instance           => 'reader',
+                target_transaction => 'capture',
+                signal             => 'reader_capture_start',
+                sink               => 'external_handoff',
+            },
+            {
+                owner_transaction  => 'run',
+                context            => 'transaction_body',
+                instance           => 'writer',
+                target_transaction => 'emit',
+                signal             => 'writer_emit_start',
+                sink               => 'external_handoff',
+            },
+        ],
+        'two-child trigger-batch report records both transaction trigger handoffs',
+    );
+    is_deeply(
+        $actor_network->{event_waits},
+        [
+            {
+                transaction => 'run',
+                context     => 'transaction_body',
+                instance    => 'reader',
+                event       => 'done',
+                signal      => 'reader_done',
+                source      => 'external_handoff',
+            },
+            {
+                transaction => 'run',
+                context     => 'transaction_body',
+                instance    => 'writer',
+                event       => 'done',
+                signal      => 'writer_done',
+                source      => 'external_handoff',
+            },
+        ],
+        'two-child trigger-batch report records source-ordered event wait handoffs',
+    );
+}
+
 sub assert_two_child_data_report_shape {
     my ($report) = @_;
 
@@ -5464,6 +5817,43 @@ sub assert_two_child_generated_top_hdl {
         "$label connects the parent writer event handoff input to the internal writer event link");
 }
 
+sub assert_two_child_trigger_batch_generated_top_hdl {
+    my ($hdl, $label) = @_;
+
+    like($hdl, qr/\bmodule\s+atl_two_child_trigger_batch_pipeline_top\b/,
+        "$label contains the generated ATL top module");
+    like($hdl, qr/\bmodule\s+atl_two_child_trigger_batch_pipeline\b/,
+        "$label contains the scheduled parent module");
+    like($hdl, qr/\bmodule\s+atl_two_child_trigger_batch_pipeline__reader\b/,
+        "$label contains the resolved reader child module");
+    like($hdl, qr/\bmodule\s+atl_two_child_trigger_batch_pipeline__writer\b/,
+        "$label contains the resolved writer child module");
+    like($hdl, qr/\bwire\s+comp_link_atl_two_child_trigger_batch_pipeline_reader_capture_start\b/,
+        "$label declares the parent-to-reader trigger link");
+    like($hdl, qr/\bwire\s+comp_link_reader_done\b/,
+        "$label declares the reader-to-parent event link");
+    like($hdl, qr/\bwire\s+comp_link_atl_two_child_trigger_batch_pipeline_writer_emit_start\b/,
+        "$label declares the parent-to-writer trigger link");
+    like($hdl, qr/\bwire\s+comp_link_writer_done\b/,
+        "$label declares the writer-to-parent event link");
+    like($hdl, qr/\.reader_capture_start\(comp_link_atl_two_child_trigger_batch_pipeline_reader_capture_start\)/,
+        "$label connects the parent reader trigger handoff to the internal reader trigger link");
+    like($hdl, qr/\.capture_start\(comp_link_atl_two_child_trigger_batch_pipeline_reader_capture_start\)/,
+        "$label connects the reader capture start input to the internal reader trigger link");
+    like($hdl, qr/\.done\(comp_link_reader_done\)/,
+        "$label connects the reader done output to the internal reader event link");
+    like($hdl, qr/\.reader_done\(comp_link_reader_done\)/,
+        "$label connects the parent reader event handoff input to the internal reader event link");
+    like($hdl, qr/\.writer_emit_start\(comp_link_atl_two_child_trigger_batch_pipeline_writer_emit_start\)/,
+        "$label connects the parent writer trigger handoff to the internal writer trigger link");
+    like($hdl, qr/\.emit_start\(comp_link_atl_two_child_trigger_batch_pipeline_writer_emit_start\)/,
+        "$label connects the writer emit start input to the internal writer trigger link");
+    like($hdl, qr/\.done\(comp_link_writer_done\)/,
+        "$label connects the writer done output to the internal writer event link");
+    like($hdl, qr/\.writer_done\(comp_link_writer_done\)/,
+        "$label connects the parent writer event handoff input to the internal writer event link");
+}
+
 sub assert_two_child_data_generated_top_hdl {
     my ($hdl, $label) = @_;
 
@@ -6370,6 +6760,7 @@ sub expected_fsm_basenames_for_source {
     $filename =~ s/\.isf\z//;
 
     if ($filename eq 'atl_two_child_pipeline'
+        || $filename eq 'atl_two_child_trigger_batch_pipeline'
         || $filename eq 'atl_two_child_data_pipeline'
         || $filename eq 'atl_two_child_vector_data_pipeline'
         || $filename eq 'atl_two_child_multi_data_pipeline')

@@ -10,10 +10,10 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `ISF-SCHEDULING-BACKLOG-FRONTIER.8.1` (this commit) — selected resolved-child temporary trigger batches as the next generated-top slice.
-- active_work_unit: `ISF-SCHEDULING-BACKLOG-FRONTIER.8.2` — implement or target-close the resolved-child trigger-batch generated top.
-- recently_done: `ISF-SCHEDULING-BACKLOG-FRONTIER.8.1`; `.7.2`; `.7.1`; `.6.2`; `.6.1`. Older completed slices are in the task tree and git history.
-- in_flight_uncommitted: none expected after the `.8.1` commit; unrelated untracked `fx/` intentionally left alone.
+- latest_commit: `ISF-SCHEDULING-BACKLOG-FRONTIER.8.2` (this commit) — shipped the selected resolved-child trigger-batch generated top.
+- active_work_unit: none. `ISF-SCHEDULING-BACKLOG-FRONTIER` is complete through `.8.2`; no proposed task tree is queued.
+- recently_done: `ISF-SCHEDULING-BACKLOG-FRONTIER.8.2`; `.8.1`; `.7.2`; `.7.1`; `.6.2`. Older completed slices are in the task tree and git history.
+- in_flight_uncommitted: none expected after the `.8.2` commit; unrelated untracked `fx/` intentionally left alone.
 - blockers: none.
 
 ## Notes

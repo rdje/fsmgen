@@ -1142,6 +1142,29 @@ Schedule JSON keeps the same actor-network families and uses
 `actor_network.generated_tops[].children[]` for the per-child generated-top
 wiring records.
 
+The first resolved-child trigger-batch generated top is also shipped as
+`isf/atl_two_child_trigger_batch_pipeline.isf`.
+
+It keeps the same resolved `reader` and `writer` child modules, but the
+parent transaction emits contiguous `(trigger reader.capture)` and `(trigger
+writer.emit)` clauses before waiting on `reader.done` and then `writer.done`.
+Lowering emits parent, reader, writer, and generated top `.fsm` artifacts.
+The parent uses one `run_atl_trigger_batch_1` state that pulses both
+`reader_capture_start` and `writer_emit_start` in the same cycle, then
+preserves the authored waits as source-ordered sequential wait states.
+
+Schedule JSON records the same individual `transaction_triggers[]` and
+`event_waits[]` entries as parent-handoff trigger-batch sources, keeps the
+task-scoped temporary association in `association_schedules[]`, keeps the
+schema-version-1 compatibility evidence in `group_schedules[]`, and advertises
+the generated top with `kind:
+"resolved_children_trigger_batch_event_sequence"` under
+`actor_network.generated_tops[]`. Static group declarations, data movement
+coupled to the trigger batch, repeated child activations or waits,
+non-source-ordered waits, nested waits/triggers, CDC, payload protocols,
+ready/backpressure, route mux/storage, recursive actor networks, and permanent
+actor grouping remain outside this generated-top subset.
+
 The first one-bit generated-child actor-to-actor route through that two-child
 top is also shipped as `isf/atl_two_child_data_pipeline.isf`.
 
@@ -1156,8 +1179,8 @@ handoff output, drives `writer_payload` from `reader_payload` only for the
 `actor_network.generated_tops[]` with `children[]`. Fan-in/fan-out, broader
 route data wiring, route mux/storage, CDC/reset remapping, ready/backpressure,
 payload protocols beyond exact-width handoff wiring, repeated triggers,
-trigger batches, groups, recursive actor networks, and permanent actor
-grouping remain unavailable.
+trigger-batch plus data movement coupling, groups, recursive actor networks,
+and permanent actor grouping remain unavailable.
 
 The exact-width vector extension of the same route is shipped as
 `isf/atl_two_child_vector_data_pipeline.isf`.

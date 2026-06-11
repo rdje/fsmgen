@@ -261,8 +261,17 @@ sub _select_atl_generated_top_instances($self, $actor, $child_irs) {
 
     confess "$context cannot combine generated child wiring with static group metadata in the current subset\n"
         if @{$network->{groups} || []};
-    confess "$context cannot combine generated child wiring with temporary association or group schedules in the current subset\n"
-        if @{$network->{association_schedules} || []} || @{$network->{group_schedules} || []};
+    my $has_temporary_schedule_metadata =
+        @{$network->{association_schedules} || []} || @{$network->{group_schedules} || []};
+    my $uses_selected_trigger_batch_top = _is_selected_atl_trigger_batch_generated_top(
+        $network,
+        \@resolutions,
+        \@triggers,
+        \@event_waits,
+        \@data_movements,
+    );
+    confess "$context cannot combine generated child wiring with temporary association or group schedules except for the selected two-resolved-child temporary trigger-batch generated top; that subset requires exactly two resolved children, one same-cycle transaction-body trigger batch, source-ordered waits to both triggered children, no static group metadata, and no ATL data movement\n"
+        if $has_temporary_schedule_metadata && !$uses_selected_trigger_batch_top;
 
     my $top_module = "${actor_name}_top";
     confess "$context generated top module '$top_module' conflicts with a generated child module\n"
@@ -296,7 +305,9 @@ sub _select_atl_generated_top_instances($self, $actor, $child_irs) {
         }
 
         return ({
-            kind                 => 'resolved_children_trigger_event_sequence',
+            kind                 => $uses_selected_trigger_batch_top
+                ? 'resolved_children_trigger_batch_event_sequence'
+                : 'resolved_children_trigger_event_sequence',
             top_module           => $top_module,
             top_fsm              => "$top_module.fsm",
             parent_module        => $actor_name,
@@ -513,6 +524,69 @@ sub _select_atl_generated_top_instances($self, $actor, $child_irs) {
         clock                => $actor->{clock},
         reset                => ref($actor->{reset}) eq 'HASH' ? $actor->{reset}{name} : undef,
     });
+}
+
+sub _is_selected_atl_trigger_batch_generated_top {
+    my ($network, $resolutions, $triggers, $event_waits, $data_movements) = @_;
+    my @associations = @{($network || {})->{association_schedules} || []};
+    my @group_schedules = @{($network || {})->{group_schedules} || []};
+    return 0 unless @associations == 1 && @group_schedules == 1;
+    return 0 unless ref($resolutions) eq 'ARRAY' && @$resolutions == 2;
+    return 0 unless ref($triggers) eq 'ARRAY' && @$triggers == 2;
+    return 0 unless ref($event_waits) eq 'ARRAY' && @$event_waits == 2;
+    return 0 if ref($data_movements) eq 'ARRAY' && @$data_movements;
+
+    my $association = $associations[0];
+    my $group_schedule = $group_schedules[0];
+    return 0 unless ref($association) eq 'HASH' && ref($group_schedule) eq 'HASH';
+    return 0 unless ($association->{kind} // '') eq 'temporary_trigger_batch';
+    return 0 unless ($association->{lifetime} // '') eq 'task_scoped';
+    return 0 unless ($group_schedule->{group} // '') eq ($association->{association} // '');
+
+    for my $entry ($association, $group_schedule) {
+        return 0 unless ($entry->{context} // '') eq 'transaction_body';
+        return 0 unless ($entry->{schedule} // '') eq 'same_cycle_external_trigger_batch';
+        return 0 unless ($entry->{storage} // '') eq 'none';
+        return 0 unless ($entry->{source} // '') eq 'parent_trigger_state';
+        return 0 unless ($entry->{sink} // '') eq 'external_handoff';
+    }
+
+    my @trigger_instances = map { $_->{instance} // '' } @$triggers;
+    my @trigger_targets = map { $_->{target_transaction} // '' } @$triggers;
+    my @trigger_signals = map { $_->{signal} // '' } @$triggers;
+    my @event_instances = map { $_->{instance} // '' } @$event_waits;
+    my @schedule_members = @{$association->{members} || []};
+    my @schedule_targets = @{$association->{target_transactions} || []};
+    my @schedule_signals = @{$association->{signals} || []};
+    return 0 unless join("\0", @trigger_instances) eq join("\0", @event_instances);
+    return 0 unless join("\0", @trigger_instances) eq join("\0", @schedule_members);
+    return 0 unless join("\0", @trigger_targets) eq join("\0", @schedule_targets);
+    return 0 unless join("\0", @trigger_signals) eq join("\0", @schedule_signals);
+
+    for my $entry ($group_schedule) {
+        return 0 unless join("\0", @trigger_instances) eq join("\0", @{$entry->{members} || []});
+        return 0 unless join("\0", @trigger_targets) eq join("\0", @{$entry->{target_transactions} || []});
+        return 0 unless join("\0", @trigger_signals) eq join("\0", @{$entry->{signals} || []});
+    }
+
+    my %owner_transactions = map { ($_->{owner_transaction} // '') => 1 } @$triggers;
+    return 0 unless keys(%owner_transactions) == 1;
+    my ($owner_transaction) = keys %owner_transactions;
+    return 0 if $owner_transaction eq '';
+    return 0 unless ($association->{owner_transaction} // '') eq $owner_transaction;
+    return 0 unless ($group_schedule->{owner_transaction} // '') eq $owner_transaction;
+
+    for my $trigger (@$triggers) {
+        return 0 unless ($trigger->{context} // '') eq 'transaction_body';
+        return 0 unless ($trigger->{sink} // '') eq 'external_handoff';
+    }
+    for my $wait (@$event_waits) {
+        return 0 unless ($wait->{transaction} // '') eq $owner_transaction;
+        return 0 unless ($wait->{context} // '') eq 'transaction_body';
+        return 0 unless ($wait->{source} // '') eq 'external_handoff';
+    }
+
+    return 1;
 }
 
 sub _atl_two_child_data_route_clause_indices($context, $transaction, $child_specs, $data_movements) {

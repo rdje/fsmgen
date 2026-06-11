@@ -1878,6 +1878,16 @@ Lowering emits parent, both children, and one generated top; schedule JSON
 records the generated-top child wiring under
 `actor_network.generated_tops[].children[]`.
 
+The selected resolved-child trigger-batch generated-top case is also shipped
+as `isf/atl_two_child_trigger_batch_pipeline.isf`. It keeps two resolved
+children and no data movement, emits one same-cycle parent trigger-batch state
+for `reader.capture` and `writer.emit`, waits on `reader.done` and
+`writer.done` in source order, and writes parent, both children, and one
+generated top. Schedule JSON preserves `transaction_triggers[]`,
+`event_waits[]`, `association_schedules[]`, and `group_schedules[]`, then
+advertises the generated top with kind
+`resolved_children_trigger_batch_event_sequence`.
+
 The first one-bit generated-child actor-to-actor route through that two-child
 top is now shipped as `isf/atl_two_child_data_pipeline.isf`. The source uses
 `(writer.payload reader.payload)` in a named drive body, called after
@@ -1905,9 +1915,10 @@ separate handoff signals, generated child interface roles for both scalar
 paths, and generated-top wiring for both paths.
 
 Fan-in/fan-out data routing, mux/storage, CDC/reset remapping,
-ready/backpressure, payload protocols, repeated triggers, trigger batches,
-groups, recursive actor networks, cross-transaction continuation, and
-permanent actor grouping remain backlog.
+ready/backpressure, payload protocols, repeated triggers, broader
+trigger-batch combinations including data movement coupling, groups,
+recursive actor networks, cross-transaction continuation, and permanent actor
+grouping remain backlog.
 
 The shipped hardening does not widen that support. It locks focused
 fail-closed coverage for missing or wrong-direction child payload ports and

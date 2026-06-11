@@ -216,6 +216,15 @@ writer, and generated top `.fsm` artifacts, strict schedule JSON parity,
 plain plus strict HDL generation, and per-child generated-top wiring metadata
 under `actor_network.generated_tops[].children[]`.
 The same focused coverage now covers
+[isf/atl_two_child_trigger_batch_pipeline.isf](../isf/atl_two_child_trigger_batch_pipeline.isf),
+the selected resolved-child trigger-batch generated-top subset. It proves the
+same parent/reader/writer/top artifact family, one same-cycle parent trigger
+batch, source-ordered waits to both triggered children, strict schedule JSON
+parity for `transaction_triggers[]`, `event_waits[]`,
+`association_schedules[]`, `group_schedules[]`, and
+`generated_tops[]`, strict outdir emission, and plain plus strict generated
+top HDL.
+The same focused coverage now covers
 [isf/atl_two_child_data_pipeline.isf](../isf/atl_two_child_data_pipeline.isf),
 the first one-bit generated-child actor-to-actor data route through that
 two-child top. Public consumers should read the route from
@@ -890,6 +899,13 @@ handoffs with no data movement; its generated-top entry uses `children[]`
 records advertised through
 `schedule_report_actor_network_generated_top_multi_child_keys` and
 `schedule_report_actor_network_generated_top_child_keys`. The first
+resolved-child trigger-batch generated top is shipped for exactly two
+resolved children, one same-cycle temporary trigger batch, source-ordered
+waits to both triggered children, no static group declaration, and no ATL data
+movement; it reuses the same multi-child generated-top child-key surface and
+adds generated-top kind `resolved_children_trigger_batch_event_sequence` while
+preserving public trigger, wait, association, and compatibility schedule
+records. The first
 generated-child actor-to-actor route through that two-child top is also
 shipped for `(writer.payload reader.payload)` when the parent transaction is
 ordered as source trigger, source event wait, drive call, sink trigger, and
@@ -2650,11 +2666,14 @@ parent-handoff subset supports one declared static actor instance and lowers
 to a generated one-bit parent event handoff input named `actor_event`; for
 example, `reader.done` lowers through `reader_done`. The generated-top subset
 also uses these event wait records for the selected one-child and two-child
-resolved-library forms. A temporary trigger batch may also be followed by a
-contiguous source-ordered chain of multiple top-level waits when each wait
-targets a distinct triggered actor instance and no ATL data movement is in
-that transaction segment; the waits remain sequential scheduled states, not a
-hidden same-cycle join. Schedule reports expose waits through
+resolved-library forms, including the selected two-child trigger-batch
+generated top. A temporary trigger batch may also be followed by a contiguous
+source-ordered chain of multiple top-level waits when each wait targets a
+distinct triggered actor instance and no ATL data movement is in that
+transaction segment; the waits remain sequential scheduled states, not a
+hidden same-cycle join. In the selected resolved-child trigger-batch generated
+top, those parent event handoffs are wired internally from the generated child
+event outputs. Schedule reports expose waits through
 `actor_network.event_waits[]` entries with `transaction`, `context`,
 `instance`, `event`, `signal`, and `source` keys, where `source` is currently
 `external_handoff`. Nested event waits, repeated actor waits, hidden fan-in or
@@ -2685,9 +2704,9 @@ named `actor_transaction_start`. For example, `reader.capture` lowers through
 `reader_capture_start`, and rule action `worker.process` lowers through
 `worker_process_start`; the scheduled parent `.fsm` pulses that output at the
 transaction trigger point or in the guarded rule DT. The trigger sink is
-external until broader actor type resolution, ATL child generation, generated
-ATL tops, trigger payloads, and ready/backpressure semantics ship. Nested
-qualified triggers, repeated triggers to the same instance, repeated
+external for parent-handoff-only sources; in selected generated-top sources
+the generated top wires that handoff into the resolved child transaction start
+input. Nested qualified triggers, repeated triggers to the same instance, repeated
 rule-action qualified triggers, generated handoff signal conflicts,
 fan-in/fan-out, cross-clock actor triggers, rule-action trigger payloads or
 bindings, and broader concurrent group behavior remain deferred. Schedule

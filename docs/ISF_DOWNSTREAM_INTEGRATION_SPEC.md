@@ -3006,6 +3006,23 @@ Downstream consumers should read the resolved child metadata from
 `actor_network.event_waits[]`, and the generated-top discovery plus per-child
 wiring metadata from `actor_network.generated_tops[].children[]`.
 
+The selected resolved-child trigger-batch generated-top slice is also
+shipped: `isf/atl_two_child_trigger_batch_pipeline.isf` emits parent, reader,
+writer, and generated top `.fsm` artifacts for one contiguous same-cycle
+trigger batch over `reader.capture` and `writer.emit`, followed by
+source-ordered waits on `reader.done` and `writer.done`.
+
+Downstream producers may emit that exact form only when there are exactly two
+resolved children, no static group declaration, no ATL data movement in the
+transaction segment, and no repeated child activations or waits. Downstream
+consumers should read trigger evidence from
+`actor_network.transaction_triggers[]`, wait evidence from
+`actor_network.event_waits[]`, task-scoped temporary association evidence from
+`actor_network.association_schedules[]`, schema-version-1 compatibility
+schedule evidence from `actor_network.group_schedules[]`, and generated-top
+discovery from `actor_network.generated_tops[]` with kind
+`resolved_children_trigger_batch_event_sequence`.
+
 The first generated-child actor-to-actor route through that generated top is
 shipped by `isf/atl_two_child_data_pipeline.isf`.
 
@@ -3062,9 +3079,9 @@ public `data_links` key is exposed.
 Downstream producers must still treat broader actor-to-actor generated-child
 routes, fan-in/fan-out source or sink sets, width adaptation, route
 mux/storage, CDC/reset remapping, ready/backpressure, payload protocols,
-recursive actor networks, repeated triggers, trigger batches, groups,
-cross-transaction continuation, and permanent actor grouping as deferred. A
-shipped route segment fails closed if
+recursive actor networks, repeated triggers, trigger-batch plus data movement
+coupling, groups, cross-transaction continuation, and permanent actor grouping
+as deferred. A shipped route segment fails closed if
 its drive calls do not follow the source event wait and precede the sink
 trigger.
 
