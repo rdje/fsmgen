@@ -6,7 +6,7 @@ Roadmap lane: R14 / ISF scheduling, activation, CDC, ATL, actor-network, and gen
 
 Created: 2026-06-10
 
-Current frontier: `ISF-SCHEDULING-BACKLOG-FRONTIER.6.1`
+Current frontier: `ISF-SCHEDULING-BACKLOG-FRONTIER.6.2`
 
 ## Goal
 
@@ -425,7 +425,7 @@ Acceptance:
 
 #### ISF-SCHEDULING-BACKLOG-FRONTIER.6.1 — Event Join First Slice Selection
 
-Status: pending
+Status: done
 
 Goal: Select the first exact fan-in/fan-out event-join source shape for
 implementation or targeted fail-closed closure.
@@ -439,6 +439,43 @@ Acceptance:
   failure behavior, report/doc stability, and mdBook examples.
 - If the pattern remains unsafe, record the missing ordering/lifetime/storage
   contract and close it with a targeted diagnostic/doc update.
+
+Result:
+
+- Audited current join-adjacent surfaces. Generated-child completion joins
+  already ship through `(await_all done)` over the current outstanding child
+  done set, and `(await_any done)` is accepted only for the documented
+  single-pending drain or multi-pending observation followed by same-body
+  `(await_all done)` drain.
+- ATL trigger-batch multi-event waits are not event joins: they lower as
+  explicit source-ordered sequential wait states to distinct triggered actors.
+  Hidden same-cycle all-of/any-of actor-event joins remain deferred.
+- Selected the first exact event-join closure: source that tries to spell an
+  ATL event join with sync clauses such as `(await_all reader.done
+  writer.done)` or `(await_any reader.done writer.done)` remains unsafe to
+  accept because there is no event latch/storage, same-cycle join operator,
+  or per-event lifetime contract. The current path falls through to generic
+  enum/sync diagnostics, so `.6.2` will keep it fail-closed with a targeted
+  ATL event-join diagnostic.
+
+#### ISF-SCHEDULING-BACKLOG-FRONTIER.6.2 — ATL Sync-Clause Event-Join Diagnostic
+
+Status: pending
+
+Goal: Keep `await_all`/`await_any` clauses that try to join qualified ATL
+actor events fail-closed, while replacing generic enum/sync messages with a
+targeted missing event-join contract diagnostic.
+
+Acceptance:
+
+- Detect transaction-body `await_all` or `await_any` clauses that carry one or
+  more qualified static actor event operands such as `reader.done`.
+- Preserve accepted generated-child completion sync through `(await_all done)`
+  and the existing single-pending/multi-pending `(await_any done)` contracts.
+- Preserve accepted sequential ATL multi-event waits after a temporary trigger
+  batch; do not collapse them into a hidden same-cycle join.
+- Sync parser/lowering tests, mdBook, live specs/contracts, and Knowledge Map
+  with the fail-closed ATL event-join boundary.
 
 ### ISF-SCHEDULING-BACKLOG-FRONTIER.7 — Actor-Network And Group Scheduling
 
