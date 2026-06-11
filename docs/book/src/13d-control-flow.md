@@ -847,8 +847,9 @@ The body-first `until` form supports the same three-spawn drain contract:
     (complete done)))
 ```
 
-The `while` form also supports exactly four pending generated spawns across
-the local blocking `do`:
+The following four-spawn `while` form is a representative wider fanout: the
+proof rule has no public fanout cap when the later `await_all` drains the exact
+pending generated-child set.
 
 ```lisp
 (actor while_repeat_four_spawn_do_drain
@@ -874,7 +875,7 @@ the local blocking `do`:
     (complete done)))
 ```
 
-The body-first `until` form supports the same four-spawn drain contract:
+The body-first `until` form supports the same proof-backed drain contract:
 
 ```lisp
 (actor until_repeat_four_spawn_do_drain
@@ -949,12 +950,12 @@ The body-first `until` form uses the same single-pending observe contract:
     (complete done)))
 ```
 
-The `while` and body-first `until` forms also support exactly two pending
-generated spawns across the local blocking `do` when a post-`do` multi-pending
+The `while` and body-first `until` forms also support multi-pending generated
+spawns across the local blocking `do` when a post-`do` multi-pending
 `(await_any done)` observes one generated child and a later same-body
-`(await_all done)` drains both before repeat and loop re-entry. The `while`
-form also supports the same contract for exactly three and exactly four
-pending generated spawns:
+`(await_all done)` drains the exact pending set before repeat and loop re-entry.
+The examples below show the two-, three-, and four-spawn spellings; wider sets
+use the same proof rule.
 
 ```lisp
 (actor while_repeat_multi_spawn_do_await_any_then_all
@@ -1028,8 +1029,8 @@ pending generated spawns:
     (complete done)))
 ```
 
-The body-first `until` spelling uses the same observation-then-drain contract,
-including the three- and four-spawn forms:
+The body-first `until` spelling uses the same observation-then-drain contract.
+These examples show the two-, three-, and four-spawn forms:
 
 ```lisp
 (actor until_repeat_multi_spawn_do_await_any_then_all
@@ -1110,13 +1111,14 @@ exact pending spawned-child set before both the repeat and surrounding loop
 backedges (`while_retest` or `until_retest`). The single-pending
 `await_any` shapes instead require
 `await_any_single_pending_completes_outstanding_set` for the one pending
-spawned child. The multi-pending local-`do` variant is currently the exact
-two- and three-spawn `await_all` shapes shown above for `while` and `until`,
-plus the exact four-spawn `await_all` shapes shown above for `while` and
-`until`, plus the exact `while` and body-first `until` two-, three-, and
-four-spawn post-`do` `await_any` plus later `await_all` shapes shown above.
-Generated `do` and five-or-wider post-`do` multi-pending `await_any` shapes stay
-fail-closed for now.
+spawned child. The multi-pending local-`do` variant is proof-generalized for
+`while` and body-first `until`: any finite set of generated spawns may remain
+pending across one plain local `do` when a same-body `await_all` drains the
+exact set, and post-`do` multi-pending `await_any` may observe that set only
+when a later same-body `await_all` drains the same children before repeat and
+loop re-entry. Generated `do` while spawned children are pending, missing later
+drains, cross-domain activation, and unrelated deeper placements stay
+fail-closed.
 
 An **undrained** spawn (no same-body `await_all`/single-pending `await_any`
 before the repeat check) stays deferred: `Transaction 'parent': loop-contained

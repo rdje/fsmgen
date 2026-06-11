@@ -2657,29 +2657,19 @@ Current lowering:
   `(await_any done)` without a later `(await_all done)` trips that same drain
   requirement — and a cross-domain generated `do` stays deferred (`cross-domain
   repeat-body do remains deferred`).
-  A `while`- or `until`-contained repeat may also keep exactly one generated
-  spawn pending across one plain local blocking `(do child)` when a later
-  same-body `(await_all done)` drains that spawned instance before repeat and
-  the surrounding loop re-entry. The `while`- or `until`-contained `await_all`
-  variant may also keep exactly two generated spawns pending across one plain
-  local blocking `(do child)` when the later same-body `(await_all done)`
-  drains both spawned instances before repeat and loop re-entry. The
-  `while`- or `until`-contained `await_all` variant may also keep exactly
-  three generated spawns pending across that local blocking `do` when the
-  later same-body `(await_all done)` drains all three before repeat and loop
-  re-entry. The `while`- or `until`-contained `await_all` variant may also keep
-  exactly four generated spawns pending across that local blocking `do` when
-  the later same-body `(await_all done)` drains all four before repeat and loop
-  re-entry. The
+  A `while`- or body-first `until`-contained repeat may also keep one or more
+  generated spawns pending across one plain local blocking `(do child)` when a
+  later same-body `(await_all done)` drains the exact spawned-child set before
+  repeat and the surrounding loop re-entry. The
   `while`- or `until`-contained single-pending variant may use post-`do`
   `(await_any done)` instead when the effect checker proves
   `await_any_single_pending_completes_outstanding_set` for that spawned
-  instance. The `while`- or body-first `until`-contained two-, three-, and
-  four-spawn variants may also use post-`do` multi-pending
-  `(await_any done)` as an observation point when a later same-body
-  `(await_all done)` drains the same pending generated children before repeat
-  and loop re-entry. Generated-do and five-or-wider post-`do` multi-pending
-  `await_any` variants remain fail-closed.
+  instance. Multi-pending post-`do` `(await_any done)` is accepted as an
+  observation point only when a later same-body `(await_all done)` drains the
+  same pending generated children before repeat and loop re-entry; this rule
+  has no public fanout cap. Generated `do` while spawned children are pending,
+  missing later drains, cross-domain activation, and unrelated deeper placements
+  remain fail-closed.
   Repeats directly inside a top-level
   `when` body also accept one or more generated
   `(spawn child as inst [(params ...)] [(bind ...)] [(domain NAME)])` sites

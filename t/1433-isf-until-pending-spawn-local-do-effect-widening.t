@@ -286,7 +286,7 @@ ISF
     like($top, qr/\(\?fsmc:w3 worker\b/s, 'generated top instantiates w3');
 };
 
-subtest 'until-contained five-pending spawn across local do remains fail-closed' => sub {
+subtest 'until-contained five-pending spawn across local do lowers through generalized effect proofs' => sub {
     my $actor = parse_actor(actor_for_body('until_five_pending_spawn_local_do', <<'ISF'), 'until-five-pending-spawn-local-do');
 (until cond
   (repeat loops
@@ -303,12 +303,15 @@ ISF
     ok($check->{ok}, 'effect checker can prove the until five-pending local-do shape');
     my $tx = transaction_check($check, 'parent');
     ok((grep { join(',', @{$_->{done_ports} || []}) eq 'w0_done,w1_done,w2_done,w3_done,w4_done' } @{proofs($tx, 'await_all_drains_outstanding_children')}),
-        'await_all drains all five pending spawned children in the private proof');
+        'await_all drains all five pending spawned children');
 
     my ($lowered, $err) = lower_actor($actor);
-    ok(!$lowered, 'public lowering still rejects fan-outs beyond four');
-    like($err, qr/repeat-body do cannot appear while repeat-body spawn clauses are pending/,
-        'five-pending local-do remains behind the bounded public gate');
+    ok($lowered, 'public lowering accepts the proof-generalized until five-pending local-do sequence') or diag($err);
+    my $fsm = $lowered->{files}{'until_five_pending_spawn_local_do.fsm'};
+    like($fsm, qr/\(parent_await_all_\d+\b.*?->\s*parent_repeat_check_\d+\s*<\(&\s*w0_done\s*w1_done\s*w2_done\s*w3_done\s*w4_done\)/s,
+        'await_all drains all five done ports before repeat_check');
+    my $top = $lowered->{files}{'until_five_pending_spawn_local_do_top.fsm'};
+    like($top, qr/\(\?fsmc:w4 worker\b/s, 'generated top instantiates the fifth spawned child');
 };
 
 subtest 'multi-pending missing final drain remains fail-closed' => sub {

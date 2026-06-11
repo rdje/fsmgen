@@ -7201,11 +7201,7 @@ sub _validate_repeat_body_spawn_subset {
                 my $selected_loop_multi_pending_local_do =
                     defined($pending_spawn_local_do_loop_kind)
                     && ($pending_spawn_local_do_loop_kind eq 'while' || $pending_spawn_local_do_loop_kind eq 'until')
-                    && (
-                        $loop_pending_spawn_count == 2
-                        || $loop_pending_spawn_count == 3
-                        || $loop_pending_spawn_count == 4
-                    );
+                    && $loop_pending_spawn_count > 1;
                 my $allowed_loop_pending_spawn_local_do =
                     $loop_body_repeat
                     && defined($pending_spawn_local_do_loop_kind)
@@ -7296,10 +7292,10 @@ sub _validate_repeat_body_spawn_subset {
                 $pending_loop_local_do_before_drain
                 && (($label eq 'while body'
                         && _context_depths_match_exactly($context_depths, { while => 1 })
-                        && (@pending_spawns == 2 || @pending_spawns == 3 || @pending_spawns == 4))
+                        && @pending_spawns > 1)
                     || ($label eq 'until body'
                         && _context_depths_match_exactly($context_depths, { until => 1 })
-                        && (@pending_spawns == 2 || @pending_spawns == 3 || @pending_spawns == 4)))
+                        && @pending_spawns > 1))
                 && $keyword eq 'await_any'
                 && !$awaiting_multi_pending_drain;
             confess "Transaction '$tn': loop-contained repeat-body local do while generated spawns are pending requires same-body '(await_all done)' drain; '(await_any done)' after the do remains deferred\n"

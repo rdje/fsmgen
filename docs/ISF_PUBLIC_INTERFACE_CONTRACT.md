@@ -1147,7 +1147,17 @@ deeper-nested repeat (lowering + composition parity with the top-level
 repeat-body spawn; the full-HDL composition-wiring limitation is pre-existing
 and applies equally there). A multi-pending `(await_any done)` followed by a
 later same-body `(await_all done)` drain is also supported in these contexts
-(as at top-level / when-body / switch-branch). An undrained loop-contained
+(as at top-level / when-body / switch-branch). A `while`- or body-first
+`until`-contained repeat may also keep one or more generated spawns pending
+across one plain local `(do child)` when effect proofs establish the local child
+drain, deterministic generated-child handoffs, clean repeat/loop backedges, and
+a later exact same-body `await_all` drain; a post-`do` multi-pending
+`await_any` observation is accepted only when that later exact drain follows.
+These widened local-do fanout paths are checked by
+[t/1432-isf-loop-pending-spawn-local-do-effect-widening.t](../t/1432-isf-loop-pending-spawn-local-do-effect-widening.t),
+[t/1433-isf-until-pending-spawn-local-do-effect-widening.t](../t/1433-isf-until-pending-spawn-local-do-effect-widening.t),
+and [t/1434-isf-while-pending-spawn-local-do-awaitany-effect-widening.t](../t/1434-isf-while-pending-spawn-local-do-awaitany-effect-widening.t).
+An undrained loop-contained
 spawn emits `loop-contained repeat-body spawn requires same-body '(await_all
 done)' or single-pending '(await_any done)'` (a multi-pending `(await_any done)`
 without a later `(await_all done)` trips this same drain requirement), a

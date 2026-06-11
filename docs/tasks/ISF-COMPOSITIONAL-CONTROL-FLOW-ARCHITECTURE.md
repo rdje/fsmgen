@@ -6,7 +6,7 @@ Roadmap lane: R14 / ISF compositional control-flow and activation architecture
 
 Created: 2026-06-10
 
-Current frontier: `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.8.33`
+Current frontier: `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.9`
 
 ## Goal
 
@@ -1731,7 +1731,7 @@ Result:
 
 #### ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.8.33 — Loop-Contained Fanout Proof Generalization
 
-Status: active
+Status: done
 
 Goal: Remove the arbitrary four-spawn fanout cap for loop-contained
 pending-spawn local blocking `do` shapes by admitting fanout through exact
@@ -1760,9 +1760,26 @@ Acceptance:
   downstream integration spec, Knowledge Map/task facts, task tree, and
   `MEMORY.md` are synced if public behavior changes.
 
+Result:
+
+- Removed the arbitrary four-spawn validator cap for loop-contained
+  pending-spawn local blocking `do` by letting the existing
+  `ControlFlowEffects` exact-set proofs decide the accepted public shape.
+- Same-body `await_all` and post-`do` multi-pending `await_any` followed by a
+  same-body `await_all` now accept wider `while` and body-first `until`
+  fanouts when every pending spawned child is proven static/wired and drained
+  before repeat/loop re-entry.
+- Focused coverage converts the five-spawn `while`/`until` local-`do` fanout
+  cases to positives and keeps a six-spawn post-`do` `await_any` without a
+  later `await_all` fail-closed on the real missing-drain invariant.
+- The mdBook, live ISF spec, public-interface contract, downstream integration
+  spec, Knowledge Map fact card, task index, and `MEMORY.md` now describe the
+  proof-generalized boundary instead of an exact one/two/three/four fanout
+  list.
+
 ### ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.9 — Public Contract And Documentation Simplification
 
-Status: pending
+Status: active
 
 Goal: Convert user-facing docs from enumerated combination lists to
 construction rules once the architecture supports it.
@@ -2848,6 +2865,45 @@ Acceptance:
   t/1432-isf-loop-pending-spawn-local-do-effect-widening.t
   t/1433-isf-until-pending-spawn-local-do-effect-widening.t
   t/1434-isf-while-pending-spawn-local-do-awaitany-effect-widening.t` pass.
+- 2026-06-11 (`.8.33`): removed the arbitrary four-spawn cap for
+  loop-contained pending-spawn local blocking `do` by consuming exact
+  `ControlFlowEffects` proofs for every pending generated spawn, the local
+  child drain, post-`do` `await_any` observations, later exact `await_all`
+  drains, and repeat/loop backedges. Converted five-spawn `while`/`until`
+  local-`do` and post-`do` multi-pending `await_any` cases to positives, kept a
+  six-spawn no-later-`await_all` case fail-closed on the missing-drain
+  invariant, and synced the mdBook, live specs, downstream contract, public
+  interface contract, and Knowledge Map fact card. `perl -Iperl -c
+  perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c
+  t/1432-isf-loop-pending-spawn-local-do-effect-widening.t
+  t/1433-isf-until-pending-spawn-local-do-effect-widening.t
+  t/1434-isf-while-pending-spawn-local-do-awaitany-effect-widening.t`;
+  `prove -Iperl t/1432-isf-loop-pending-spawn-local-do-effect-widening.t
+  t/1433-isf-until-pending-spawn-local-do-effect-widening.t
+  t/1434-isf-while-pending-spawn-local-do-awaitany-effect-widening.t`;
+  `prove -Iperl t/1250-isf-spec-focused-test-index-audit.t
+  t/1305-isf-book-feature-matrix-audit.t
+  t/1307-isf-loop-body-doc-truth-audit.t`; `prove -Iperl
+  t/1376-isf-book-example-lowering-audit.t
+  t/1377-book-fsm-example-generation-audit.t`; `prove -Iperl
+  t/1419-isf-control-flow-effect-inventory.t
+  t/1421-isf-control-flow-effect-checks.t
+  t/1422-isf-control-flow-child-plan.t
+  t/1423-isf-control-flow-lifetime-checks.t
+  t/1424-isf-control-flow-domain-binding-effects.t
+  t/1425-isf-control-flow-validator-effect-migration.t
+  t/1426-isf-control-flow-same-domain-validator-effect-migration.t
+  t/1427-isf-control-flow-activation-domain-validator-effect-migration.t
+  t/1428-isf-control-flow-binding-endpoint-validator-effect-migration.t
+  t/1429-isf-control-flow-binding-expression-validator-effect-migration.t
+  t/1430-isf-control-flow-rule-trigger-validator-effect-migration.t
+  t/1431-isf-control-flow-rule-trigger-binding-validator-effect-migration.t
+  t/1432-isf-loop-pending-spawn-local-do-effect-widening.t
+  t/1433-isf-until-pending-spawn-local-do-effect-widening.t
+  t/1434-isf-while-pending-spawn-local-do-awaitany-effect-widening.t`;
+  `mdbook build docs/book`; `./bin/ci-regression isf --no-book` (Files=294,
+  Tests=2133); `knowledge-map/scripts/check_knowledge_map.sh`;
+  `scripts/check_memory_architecture.sh`; and `git diff --check` pass.
 - 2026-06-10 (`.4`): added private `plan_actor` / `plan_inventory` child-plan
   projection derived from the shadow effect list. The plan records local child
   start/done wiring requirements, generated child instance plans, and sync
@@ -2975,3 +3031,5 @@ Acceptance:
   `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.8.31: select depth-neutral scheduler target`.
 - `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.8.32`: this commit,
   `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.8.32: audit depth-neutral scheduler gates`.
+- `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.8.33`: this commit,
+  `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.8.33: generalize loop-contained fanout proofs`.

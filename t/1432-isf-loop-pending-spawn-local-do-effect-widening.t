@@ -258,6 +258,34 @@ ISF
     like($top, qr/\(\?fsmc:w3 worker\b/s, 'generated top instantiates w3');
 };
 
+subtest 'while-contained five-pending spawn across local do lowers through generalized effect proofs' => sub {
+    my $multi = parse_actor(actor_for_body('while_five_pending_spawn_local_do', <<'ISF'), 'while-five-pending-spawn-local-do');
+(while cond
+  (repeat loops
+    (spawn worker as w0)
+    (spawn worker as w1)
+    (spawn worker as w2)
+    (spawn worker as w3)
+    (spawn worker as w4)
+    (do helper)
+    (await_all done)))
+ISF
+
+    my ($multi_lowered, $multi_err) = lower_actor($multi);
+    my $check = check_actor($multi);
+    ok($check->{ok}, 'effect checker accepts the generalized while five-pending local-do shape');
+    my $tx = transaction_check($check, 'parent');
+    ok((grep { join(',', @{$_->{done_ports} || []}) eq 'w0_done,w1_done,w2_done,w3_done,w4_done' } @{proofs($tx, 'await_all_drains_outstanding_children')}),
+        'await_all drains all five pending spawned children');
+
+    ok($multi_lowered, 'public lowering accepts the proof-generalized while five-pending local-do sequence') or diag($multi_err);
+    my $fsm = $multi_lowered->{files}{'while_five_pending_spawn_local_do.fsm'};
+    like($fsm, qr/\(parent_await_all_\d+\b.*?->\s*parent_repeat_check_\d+\s*<\(&\s*w0_done\s*w1_done\s*w2_done\s*w3_done\s*w4_done\)/s,
+        'await_all drains all five done ports before repeat_check');
+    my $top = $multi_lowered->{files}{'while_five_pending_spawn_local_do_top.fsm'};
+    like($top, qr/\(\?fsmc:w4 worker\b/s, 'generated top instantiates the fifth spawned child');
+};
+
 subtest 'multi-pending missing final drain remains fail-closed' => sub {
     my $actor = parse_actor(actor_for_body('while_multi_pending_spawn_local_do_undrained', <<'ISF'), 'while-multi-pending-spawn-local-do-undrained');
 (while cond

@@ -40,7 +40,7 @@ this chapter:
   `while -> do -> spawn -> call -> do -> while -> spawn -> spawn -> do -> do`
   are valid in principle when typed region/effect proofs establish child
   lifetime, loop backedge, binding/domain, generated-instance, and CDC
-  invariants. Current bounded depth/fanout allow-lists remain migration cuts,
+  invariants. Current bounded depth/context allow-lists remain migration cuts,
   not the target public contract.
 - **Depth-neutrality audit boundary**: current hard requirements are the
   child-lifetime and loop-backedge proofs, `await_any` observation versus
@@ -48,13 +48,12 @@ this chapter:
   generated-top handoffs, explicit same-domain binding/domain contracts, and
   explicit CDC contracts. Cross-domain `spawn`, implicit CDC, payload CDC, and
   dynamic per-iteration hardware remain real missing contracts. By contrast,
-  the exact one/two/three/four fanout gates, loop-plus-branch plain-local-only
-  island, nested `switch` / extra-loop deferrals, and generated-activation
-  case splits are migration cuts. The next implementation owner is to remove
-  the loop-contained four-spawn fanout cap by exact region/effect proof, not
-  by adding a five-spawn allow-list.
+  the former exact one/two/three/four loop-contained fanout gate has been
+  replaced by exact-set proof consumption; the loop-plus-branch
+  plain-local-only island, nested `switch` / extra-loop deferrals, and
+  generated-activation case splits remain migration cuts.
 - **Book example correctness build gate**: every `lisp`-tagged book
-  example must parse + lower (`t/1376`). Current state: 72
+  example must parse + lower (`t/1376`). Current state: 80
   complete fixtures lower cleanly.
 - **Cookbook ISF recipes**: `docs/book/src/12-cookbook.md` now
   carries recipes 9-13 covering basic actor, spawn, parameterized
@@ -747,26 +746,16 @@ single-pending '(await_any done)'`), a multi-pending `(await_any done)` is
 accepted only as an observation point when a later same-body `(await_all done)`
 drains the same outstanding children, and a cross-domain generated `do` fails
 closed (`cross-domain repeat-body do remains deferred`). A `while`- or
-`until`-contained repeat may now keep exactly one generated spawn pending
-across one plain local blocking `(do child)` when a later same-body
-`(await_all done)` drains that spawned instance before repeat and the
-surrounding loop re-entry. The `while`- or `until`-contained `await_all`
-variant may also keep exactly two generated spawns pending across that local
-blocking `do` when the later same-body drain covers both spawned children
-before repeat and loop re-entry. The `while`- or `until`-contained
-`await_all` variant may also keep exactly three generated spawns pending
-across that local blocking `do` when the later same-body drain covers all
-three before repeat and loop re-entry. The `while`- or `until`-contained
-`await_all` variant may also keep exactly four generated spawns pending across
-that local blocking `do` when the later same-body drain covers all four before
-repeat and loop re-entry.
-The `while`- or `until`-contained
-single-pending variant may also use post-`do` `(await_any done)` as that final
-sync. The `while`- or body-first `until`-contained two-, three-, and four-spawn
-variants may also use post-`do` multi-pending `(await_any done)` as an
-observation point when a later same-body `(await_all done)` drains the same
-pending generated children before repeat and loop re-entry. Generated-do and
-five-or-wider post-`do` multi-pending `await_any` variants remain fail-closed.
+body-first `until`-contained repeat may keep one or more generated spawns
+pending across one plain local blocking `(do child)` when a later same-body
+`(await_all done)` drains the exact spawned-child set before repeat and the
+surrounding loop re-entry. The single-pending variant may also use post-`do`
+`(await_any done)` as that final sync. Multi-pending post-`do`
+`(await_any done)` is accepted as an observation point only when a later
+same-body `(await_all done)` drains the same pending generated children before
+repeat and loop re-entry; this rule has no public fanout cap. Generated `do`
+while spawned children are pending, missing later drains, cross-domain
+activation, and unrelated deeper placements remain fail-closed.
 A plain local
 `(do child)` inside `while -> when -> repeat` now also lowers (`t/1379`);
 generated `do`, `spawn`, `until -> when`, nested `switch`, and extra loop

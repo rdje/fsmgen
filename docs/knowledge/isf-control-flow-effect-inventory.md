@@ -108,17 +108,17 @@ The next consumers are the while- and until-contained single-pending
 them only when the same proofs hold and `ControlFlowEffects` additionally
 proves `await_any_single_pending_completes_outstanding_set` for the spawned
 done port.
-The next consumers are the while- and until-contained two-, three-, and
-four-spawn `spawn -> ... -> local blocking do -> await_all` fan-out shapes.
-The public validator permits them only when the effect checker proves all
-generated spawn instances are static and wired, the local `do` drains its
-child, `await_all` drains the exact outstanding spawned done set, and the
+The next consumers are the while- and body-first until-contained multi-spawn
+`spawn -> ... -> local blocking do -> await_all` fan-out shapes. The public
+validator permits them with no public fanout cap only when the effect checker
+proves all generated spawn instances are static and wired, the local `do` drains
+its child, `await_all` drains the exact outstanding spawned done set, and the
 repeat plus surrounding loop backedges have no outstanding child completions.
-The public validator also permits while- and body-first until-contained two-,
-three-, and four-spawn post-do multi-pending `await_any` observations followed
-by a later same-body `await_all` drain. It permits those shapes only when the
-effect checker proves the post-do `await_any` observes the pending generated
-done set without full drain, records a later-drain obligation, and the
-following `await_all` drains the exact same outstanding set before repeat and
-surrounding loop re-entry. Generated-do and five-or-wider post-do
-multi-pending `await_any` variants remain fail-closed.
+The public validator also permits while- and body-first until-contained
+post-do multi-pending `await_any` observations followed by a later same-body
+`await_all` drain. It permits those shapes only when the effect checker proves
+the post-do `await_any` observes the pending generated done set without full
+drain, records a later-drain obligation, and the following `await_all` drains
+the exact same outstanding set before repeat and surrounding loop re-entry.
+Generated `do` while spawned children are pending, missing later drains,
+cross-domain activation, and unrelated deeper placements remain fail-closed.

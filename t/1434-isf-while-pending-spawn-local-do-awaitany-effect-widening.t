@@ -293,7 +293,7 @@ ISF
     like($top, qr/\(\?fsmc:w3 worker\b/s, 'generated top instantiates four-spawn while w3');
 };
 
-subtest 'while-contained five-spawn multi-pending await_any after local do remains fail-closed' => sub {
+subtest 'while-contained five-spawn multi-pending await_any after local do drains through later await_all' => sub {
     my $actor = parse_actor(actor_for_body('while_five_spawn_multi_pending_spawn_local_do_await_any', <<'ISF'), 'while-five-spawn-multi-pending-spawn-local-do-await-any');
 (while cond
   (repeat loops
@@ -307,10 +307,21 @@ subtest 'while-contained five-spawn multi-pending await_any after local do remai
     (await_all done)))
 ISF
 
+    my $check = check_actor($actor);
+    ok($check->{ok}, 'effect checker proves the five-spawn while post-do multi-pending await_any shape');
+    my $tx = transaction_check($check, 'parent');
+    ok((grep { join(',', @{$_->{done_ports} || []}) eq 'w0_done,w1_done,w2_done,w3_done,w4_done' } @{proofs($tx, 'await_any_observes_without_full_drain')}),
+        'five-spawn while post-do await_any observes all five pending spawned children without full drain');
+    ok((grep { join(',', @{$_->{done_ports} || []}) eq 'w0_done,w1_done,w2_done,w3_done,w4_done' } @{proofs($tx, 'await_all_drains_outstanding_children')}),
+        'five-spawn while later await_all drains all five pending spawned children');
+
     my ($lowered, $err) = lower_actor($actor);
-    ok(!$lowered, 'public lowering still rejects the five-spawn while post-do multi-pending await_any sequence');
-    like($err, qr/repeat-body do cannot appear while repeat-body spawn clauses are pending; wait for spawned children before blocking do/,
-        'five-spawn while shape remains behind the wider local-do fanout gate');
+    ok($lowered, 'public lowering accepts the proof-generalized five-spawn while post-do await_any sequence') or diag($err);
+    my $fsm = $lowered->{files}{'while_five_spawn_multi_pending_spawn_local_do_await_any.fsm'};
+    like($fsm, qr/\(parent_await_any_\d+\b.*?<w0_done\s*\(->\s*parent_await_all_\d+\).*?<w1_done\s*\(->\s*parent_await_all_\d+\).*?<w2_done\s*\(->\s*parent_await_all_\d+\).*?<w3_done\s*\(->\s*parent_await_all_\d+\).*?<w4_done\s*\(->\s*parent_await_all_\d+\)/s,
+        'five-spawn while await_any observes any spawned done pulse before the await_all drain');
+    like($fsm, qr/\(parent_await_all_\d+\b.*?->\s*parent_repeat_check_\d+\s*<\(&\s*w0_done\s*w1_done\s*w2_done\s*w3_done\s*w4_done\)/s,
+        'while later await_all drains all five done ports before repeat_check');
 };
 
 subtest 'until-contained multi-pending await_any after local do drains through later await_all' => sub {
@@ -470,7 +481,7 @@ ISF
     like($top, qr/\(\?fsmc:w3 worker\b/s, 'generated top instantiates four-spawn until w3');
 };
 
-subtest 'until-contained five-spawn multi-pending await_any after local do remains fail-closed' => sub {
+subtest 'until-contained five-spawn multi-pending await_any after local do drains through later await_all' => sub {
     my $actor = parse_actor(actor_for_body('until_five_spawn_multi_pending_spawn_local_do_await_any', <<'ISF'), 'until-five-spawn-multi-pending-spawn-local-do-await-any');
 (until cond
   (repeat loops
@@ -484,10 +495,41 @@ subtest 'until-contained five-spawn multi-pending await_any after local do remai
     (await_all done)))
 ISF
 
+    my $check = check_actor($actor);
+    ok($check->{ok}, 'effect checker proves the five-spawn until post-do multi-pending await_any shape');
+    my $tx = transaction_check($check, 'parent');
+    ok((grep { join(',', @{$_->{done_ports} || []}) eq 'w0_done,w1_done,w2_done,w3_done,w4_done' } @{proofs($tx, 'await_any_observes_without_full_drain')}),
+        'five-spawn until post-do await_any observes all five pending spawned children without full drain');
+    ok((grep { join(',', @{$_->{done_ports} || []}) eq 'w0_done,w1_done,w2_done,w3_done,w4_done' } @{proofs($tx, 'await_all_drains_outstanding_children')}),
+        'five-spawn until later await_all drains all five pending spawned children');
+
     my ($lowered, $err) = lower_actor($actor);
-    ok(!$lowered, 'public lowering still rejects the five-spawn until post-do multi-pending await_any sequence');
+    ok($lowered, 'public lowering accepts the proof-generalized five-spawn until post-do await_any sequence') or diag($err);
+    my $fsm = $lowered->{files}{'until_five_spawn_multi_pending_spawn_local_do_await_any.fsm'};
+    like($fsm, qr/\(parent_await_any_\d+\b.*?<w0_done\s*\(->\s*parent_await_all_\d+\).*?<w1_done\s*\(->\s*parent_await_all_\d+\).*?<w2_done\s*\(->\s*parent_await_all_\d+\).*?<w3_done\s*\(->\s*parent_await_all_\d+\).*?<w4_done\s*\(->\s*parent_await_all_\d+\)/s,
+        'five-spawn until await_any observes any spawned done pulse before the await_all drain');
+    like($fsm, qr/\(parent_await_all_\d+\b.*?->\s*parent_repeat_check_\d+\s*<\(&\s*w0_done\s*w1_done\s*w2_done\s*w3_done\s*w4_done\)/s,
+        'until later await_all drains all five done ports before repeat_check');
+};
+
+subtest 'six-spawn post-do await_any without later await_all remains fail-closed' => sub {
+    my $actor = parse_actor(actor_for_body('while_six_spawn_multi_pending_spawn_local_do_await_any_undrained', <<'ISF'), 'while-six-spawn-multi-pending-spawn-local-do-await-any-undrained');
+(while cond
+  (repeat loops
+    (spawn worker as w0)
+    (spawn worker as w1)
+    (spawn worker as w2)
+    (spawn worker as w3)
+    (spawn worker as w4)
+    (spawn worker as w5)
+    (do helper)
+    (await_any done)))
+ISF
+
+    my ($lowered, $err) = lower_actor($actor);
+    ok(!$lowered, 'missing later await_all remains rejected even for generalized fanout');
     like($err, qr/repeat-body do cannot appear while repeat-body spawn clauses are pending; wait for spawned children before blocking do/,
-        'five-spawn until shape remains behind the wider local-do fanout gate');
+        'the remaining rejection is the missing-drain invariant, not a fanout cap');
 };
 
 subtest 'missing final sync remains fail-closed' => sub {
