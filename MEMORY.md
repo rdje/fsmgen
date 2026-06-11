@@ -10,10 +10,10 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `ISF-SCHEDULING-BACKLOG-FRONTIER.4.1` (this commit) — sharpened the multi-pending `await_any` missing-drain lifetime diagnostic without widening detach/parent-exit/generation-tag semantics.
-- active_work_unit: `ISF-SCHEDULING-BACKLOG-FRONTIER.4.2` — select the next exact outstanding-child lifetime candidate.
-- recently_done: `ISF-SCHEDULING-BACKLOG-FRONTIER.4.1`; `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.9`; `.8.33`; `.8.32`; `.8.31`. Older completed slices are in the task tree and git history.
-- in_flight_uncommitted: none expected after the `.4.1` commit; unrelated untracked `fx/` intentionally left alone.
+- latest_commit: `ISF-SCHEDULING-BACKLOG-FRONTIER.4.2` (this commit) — selected repeat parent-exit drain after generated spawn as the next targeted fail-closed lifetime diagnostic.
+- active_work_unit: `ISF-SCHEDULING-BACKLOG-FRONTIER.4.3` — keep repeat parent-exit drain fail-closed with a targeted diagnostic.
+- recently_done: `ISF-SCHEDULING-BACKLOG-FRONTIER.4.2`; `.4.1`; `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.9`; `.8.33`; `.8.32`. Older completed slices are in the task tree and git history.
+- in_flight_uncommitted: none expected after the `.4.2` commit; unrelated untracked `fx/` intentionally left alone.
 - blockers: none.
 
 ## Notes

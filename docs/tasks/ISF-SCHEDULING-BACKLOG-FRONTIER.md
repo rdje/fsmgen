@@ -6,7 +6,7 @@ Roadmap lane: R14 / ISF scheduling, activation, CDC, ATL, actor-network, and gen
 
 Created: 2026-06-10
 
-Current frontier: `ISF-SCHEDULING-BACKLOG-FRONTIER.4.2`
+Current frontier: `ISF-SCHEDULING-BACKLOG-FRONTIER.4.3`
 
 ## Goal
 
@@ -251,7 +251,7 @@ Result:
 
 #### ISF-SCHEDULING-BACKLOG-FRONTIER.4.2 — Next Outstanding-Child Lifetime Candidate Selection
 
-Status: pending
+Status: done
 
 Goal: Select the next precise outstanding-child lifetime candidate after the
 multi-pending `await_any` diagnostic slice.
@@ -267,6 +267,44 @@ Acceptance:
   alignment.
 - If no behavior is safe in this slice, record the exact missing hardware
   contract and close the candidate with a targeted diagnostic/doc update.
+
+Result:
+
+- Audited the next lifetime candidates against the current generated-child
+  handoff model. Authored `(detach ...)` and `(cancel ...)` clauses already
+  fail closed as unsupported transaction clauses; duplicate generated spawn
+  instance names already fail before lowering, so those are not the next
+  highest-value diagnostic target.
+- Selected parent-exit drain after a repeat-body spawn as the next exact
+  candidate: a source shape such as `(repeat loops (spawn worker as w0))
+  (await_all done)` still cannot be accepted safely because the generated-child
+  done set is scoped inside the repeat body and there is no cross-region
+  ownership proof that prevents repeat re-entry before drain.
+- The next implementation leaf is `.4.3`, which will keep that parent-exit
+  drain candidate fail-closed and make the diagnostic explicitly say that
+  repeat-body spawned children must be drained in the same repeat body before
+  the repeat check can loop.
+
+#### ISF-SCHEDULING-BACKLOG-FRONTIER.4.3 — Repeat Parent-Exit Drain Diagnostic
+
+Status: pending
+
+Goal: Keep repeat-body spawned children fail-closed when an author attempts to
+drain them after the repeat exits, and replace the generic same-body drain
+message with a targeted parent-exit drain diagnostic for that shape.
+
+Acceptance:
+
+- Detect a repeat-body generated `spawn` that has no same-body sync while a
+  following transaction-body `await_all` or multi-pending `await_any` appears
+  to drain after the repeat exits.
+- Preserve the existing accepted same-body `await_all`, single-pending
+  `await_any`, and multi-pending `await_any` plus later same-body `await_all`
+  paths.
+- Preserve the existing plain undrained-spawn diagnostic when no later
+  parent-body sync exists.
+- Sync mdBook/spec/downstream/public-contract wording for the sharper
+  fail-closed parent-exit drain contract.
 
 ### ISF-SCHEDULING-BACKLOG-FRONTIER.5 — Repeated/Nested ATL Triggers And Waits
 
@@ -378,6 +416,14 @@ Acceptance:
   t/1376-isf-book-example-lowering-audit.t`; `mdbook build docs/book`;
   `knowledge-map/scripts/check_knowledge_map.sh`;
   `scripts/check_memory_architecture.sh`; and `git diff --check` pass.
+- 2026-06-11 (`.4.2`): audited explicit detach, cancellation, duplicate
+  generated instance restart, parent-exit drain, and generation-tagged
+  completion candidates. `(detach ...)` and `(cancel ...)` already fail as
+  unsupported clauses, duplicate spawn instance names already fail before
+  lowering, and generation-tagged completion still lacks a hardware contract.
+  Selected `.4.3` to keep parent-exit drain after a repeat-body spawn
+  fail-closed with a targeted diagnostic. `scripts/check_memory_architecture.sh`;
+  `knowledge-map/scripts/check_knowledge_map.sh`; and `git diff --check` pass.
 
 ## Commit Log
 
@@ -389,3 +435,5 @@ Acceptance:
   ISF-SCHEDULING-BACKLOG-FRONTIER.3.1: ship while-when repeat local do`
 - `ISF-SCHEDULING-BACKLOG-FRONTIER.4.1`: this commit,
   `ISF-SCHEDULING-BACKLOG-FRONTIER.4.1: sharpen await_any lifetime diagnostics`.
+- `ISF-SCHEDULING-BACKLOG-FRONTIER.4.2`: this commit,
+  `ISF-SCHEDULING-BACKLOG-FRONTIER.4.2: select repeat parent-exit drain diagnostic`.
