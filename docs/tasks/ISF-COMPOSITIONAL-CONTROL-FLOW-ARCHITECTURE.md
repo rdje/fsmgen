@@ -6,7 +6,7 @@ Roadmap lane: R14 / ISF compositional control-flow and activation architecture
 
 Created: 2026-06-10
 
-Current frontier: `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.8.3`
+Current frontier: `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.8.4`
 
 ## Goal
 
@@ -455,7 +455,7 @@ Result:
 
 #### ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.8.3 — Next Effect-Proven Combination Selection
 
-Status: active
+Status: done
 
 Goal: Select the next narrow behavior-widening combination that can be accepted
 by construction through the migrated region/effect checker after the
@@ -472,6 +472,50 @@ Acceptance:
   combination.
 - mdBook, downstream spec, task tree, and Knowledge Map are updated if the
   selected combination changes public behavior.
+
+Result:
+
+- Selected the until-contained repeat-body pending-spawn local blocking `do`
+  analogue:
+  `(until cond (repeat n (spawn worker as w0) (do helper) (await_all done)))`.
+- Source/backlog anchor: the `.8.2` public behavior intentionally left the
+  matching `until` shape deferred, and
+  `ISF-SCHEDULING-BACKLOG-FRONTIER.4.1` asks for exact outstanding-child
+  lifetime rules beyond one-off repeat re-entry drain gates.
+- Current public behavior rejects the shape at the existing handcrafted
+  `_validate_repeat_body_spawn_subset` pending-spawn `do` gate with:
+  `repeat-body do cannot appear while repeat-body spawn clauses are pending`.
+- The effect checker already proves the required invariants for the exact
+  shape: no outstanding children at the repeat and `until` backedges,
+  same-domain activation targets for the generated spawn and local `do`,
+  static generated-spawn instance identity and generated-top start/done
+  handoff, local blocking-`do` done drain, and final `await_all` drain of the
+  pending spawned child.
+
+#### ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.8.4 — Until-Contained Pending-Spawn Local Do
+
+Status: active
+
+Goal: Accept the selected until-contained repeat-body sequence where a
+generated `spawn` remains pending across a local blocking `do`, then a
+same-body `await_all` drains the spawned child before repeat and `until`
+re-entry.
+
+Acceptance:
+
+- The public validator permits only the selected same-domain `until` shape when
+  `ControlFlowEffects` proves the repeat/loop backedges have no outstanding
+  children, the generated spawn has deterministic top wiring, the local
+  blocking `do` drains its own child, and the later `await_all` drains the
+  pending spawn.
+- Existing accepted loop-contained repeat-body spawn, local-do, and the
+  while-contained pending-spawn local-`do` fixtures remain accepted.
+- Missing final drain, multi-pending spawned children across the local `do`,
+  generated `do` while pending in this loop-contained shape, cross-domain
+  activation, post-`do` `await_any`, and unrelated deeper nesting remain
+  fail-closed with stable or sharper diagnostics.
+- The mdBook, downstream integration spec, live ISF spec/indexes, task tree,
+  and Knowledge Map are updated for the new public behavior.
 
 ### ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.9 — Public Contract And Documentation Simplification
 
@@ -790,6 +834,19 @@ Acceptance:
   t/1414-docs-relative-paths-audit.t`; `mdbook build docs/book`; `git diff
   --check`; and `./bin/ci-regression isf --no-book` (Files=294, Tests=2133)
   pass.
+- 2026-06-11 (`.8.3`): selected the until-contained analogue of the `.8.2`
+  behavior widening:
+  `(until cond (repeat n (spawn worker as w0) (do helper) (await_all done)))`.
+  A read-only probe confirmed `ControlFlowEffects` already emits
+  `backedge_has_no_outstanding_children` for `until_retest` and
+  `repeat_check_nonzero`, same-domain activation proofs for the spawn and
+  local `do`, static generated instance / generated-top start-done handoff
+  proofs for `w0`, a local blocking-`do` drain proof for `helper`, and an
+  `await_all_drains_outstanding_children` proof for `w0_done`; public lowering
+  still rejects the source at the existing pending-spawn `do` gate before the
+  implementation leaf. `scripts/check_memory_architecture.sh`;
+  `knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl
+  t/1414-docs-relative-paths-audit.t`; and `git diff --check` pass.
 - 2026-06-10 (`.4`): added private `plan_actor` / `plan_inventory` child-plan
   projection derived from the shadow effect list. The plan records local child
   start/done wiring requirements, generated child instance plans, and sync
@@ -855,5 +912,7 @@ Acceptance:
   `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.7.7: route rule trigger bindings through effects`.
 - `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.8.1`: `37099c8f`,
   `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.8.1: select pending-spawn local-do widening`.
-- `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.8.2`: this commit,
+- `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.8.2`: `6f5e2e82`,
   `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.8.2: accept while pending-spawn local-do`.
+- `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.8.3`: this commit,
+  `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.8.3: select until pending-spawn local-do`.
