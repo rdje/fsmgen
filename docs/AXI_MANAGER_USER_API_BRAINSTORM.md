@@ -17,6 +17,27 @@ durable project documentation instead of leaving it only in the session log.
 This is not a shipped feature. It does not select syntax, parser behavior,
 lowering behavior, generated `.fsm`, HDL, or validation fixtures.
 
+## IAL2 Surface Boundary
+
+The IAL2 file surface must remain protocol/platform-generic. AXI manager work
+should be one IAL2 vocabulary candidate, not an AXI-only file type.
+Protocol-specific extensions such as `.axi` are rejected because the same
+IAL2 layer must be able to cover AXI, CHI, ACE, AHB, APB, ATB, and future
+protocol families.
+
+The exact extension spelling remains open. Current candidates are `.pif`
+for Protocol Intent Format, `.ppi` for Protocol/Platform Intent, and `.ppif`
+for Protocol/Platform Intent Format.
+
+Any future AXI manager IAL2 source must lower through reviewable IAL1 before
+IAL0:
+
+```text
+IAL2 -> IAL1 / .isf -> IAL0 / .fsm -> HDL
+```
+
+Direct IAL2-to-`.fsm` lowering is not allowed.
+
 ## Core Principle
 
 The future AXI manager should be a protocol-aware transaction service, not a

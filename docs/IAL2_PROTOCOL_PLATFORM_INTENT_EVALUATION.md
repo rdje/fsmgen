@@ -23,12 +23,31 @@ FSMGen currently uses these intent-layer meanings:
 - IAL1 is `.isf`: scheduling intent over actors, transactions, rules, waits,
   drives, resources, generated children, constraints, and selected clock-domain
   metadata, lowered into reviewable IAL0 `.fsm`.
-- IAL2 is not shipped. It should exist only if it owns semantics above
-  individual IAL1 transactions.
+- IAL2 is not shipped. Its future file surface must be protocol/platform
+  generic. It should exist only if it owns semantics above individual IAL1
+  transactions.
 
 ATL remains IAL1 while authors explicitly write actor/network `.isf` syntax.
 Compact aliases, wrappers, macros, and nicer spellings are not IAL2 by
 themselves.
+
+IAL2 must apply to protocol families such as AXI, CHI, ACE, AHB, APB, ATB,
+and future protocols, as well as platform intent above protocol-specific
+transactions. Protocol-specific extensions such as `.axi` are rejected. A
+future IAL2 file may select an internal protocol or platform vocabulary
+without changing the generic file surface.
+
+The exact extension spelling remains open. Current candidates are `.pif`
+for Protocol Intent Format, `.ppi` for Protocol/Platform Intent, and `.ppif`
+for Protocol/Platform Intent Format.
+
+The required lowering chain is:
+
+```text
+IAL2 -> IAL1 / .isf -> IAL0 / .fsm -> HDL
+```
+
+Direct `IAL2 -> IAL0` lowering is forbidden.
 
 ## Minimum IAL2 Semantic Contract
 
@@ -103,8 +122,8 @@ residue.
 A future IAL2 implementation leaf is justified only if a bounded candidate can
 prove all of the following:
 
-- One source intent object lowers to reviewable IAL1 source or an equivalent
-  structured intermediate plus IAL0 `.fsm`.
+- One source intent object lowers to reviewable IAL1 `.isf` before any IAL0
+  `.fsm` exists.
 - The same source object emits a capture/evaluation report with source anchors,
   abstractions, residue, and generated artifact links.
 - At least one scheduler-visible choice is made from the protocol/platform
@@ -134,4 +153,8 @@ contract, report contract, lowering artifacts, and validation gates are all
 specified first. The completed AXI Valid-Ready evidence inventory is enough to
 justify a later design/probe leaf, but it still does not select IAL2 syntax,
 parser behavior, lowering behavior, generated `.fsm`, HDL, or reusable library
-artifacts.
+artifacts. Decision
+[0014](decisions/0014-protocol-platform-intent-surface-and-layered-lowering.md)
+records the protocol/platform-generic IAL2 file-surface direction, the open
+`.pif`/`.ppi`/`.ppif` extension candidates, and the mandatory
+`IAL2 -> IAL1 -> IAL0` lowering chain.

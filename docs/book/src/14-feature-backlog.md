@@ -2263,7 +2263,20 @@ semantic value to exist.
 Current boundary: FSMGen names `.fsm` as Intent Abstraction Layer 0 (`IAL0`)
 and current `.isf` as Intent Abstraction Layer 1 (`IAL1`). A future `IAL2`
 would need to justify itself with semantics above individual transactions, not
-only syntax convenience. The first worthwhile areas to investigate are
+only syntax convenience. Its file surface must be protocol/platform-generic:
+protocol-specific extensions such as `.axi` are rejected because the same
+surface must cover AXI, CHI, ACE, AHB, APB, ATB, and future protocol families.
+A future IAL2 file may select a protocol or platform vocabulary inside the
+file without changing the extension.
+
+The exact extension spelling remains open. Current candidates are `.pif`
+(Protocol Intent Format), `.ppi` (Protocol/Platform Intent), and `.ppif`
+(Protocol/Platform Intent Format).
+
+The mandatory lowering chain is `IAL2 -> IAL1/.isf -> IAL0/.fsm -> HDL`.
+Direct `IAL2 -> IAL0` lowering is forbidden.
+
+The first worthwhile areas to investigate are
 reusable protocol-level intent objects, such as APB/AXI transaction templates,
 and platform/resource mapping decisions that choose among legal ISF schedules
 or resource allocations. Aliases, macros, wrappers, and sugar without a
@@ -2308,6 +2321,12 @@ treated as verification-only and unable to claim guaranteed AXI correctness.
 The next prerequisite is not implementation; it is a source-anchored
 extraction of the exact AXI transaction concurrency, ID, ordering,
 interleaving, and response matching rules from the tracked AXI specification.
+
+Protocol/platform surface decision:
+[0014-protocol-platform-intent-surface-and-layered-lowering](../../decisions/0014-protocol-platform-intent-surface-and-layered-lowering.md)
+records the generic future IAL2 file-surface direction, the open
+`.pif`/`.ppi`/`.ppif` extension candidates, and the required
+`IAL2 -> IAL1 -> IAL0` lowering chain.
 
 ### ISF Enum, Type, And Aggregate Parity
 

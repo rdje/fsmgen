@@ -10,9 +10,9 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `AXI-MANAGER-USER-API-BRAINSTORM-CAPTURE.1` — captured the AXI manager user-facing IAL2 API direction.
-- active_work_unit: none; no active or proposed PNT-eligible task tree remains after `AXI-MANAGER-USER-API-BRAINSTORM-CAPTURE.1`.
-- recently_done: `AXI-MANAGER-USER-API-BRAINSTORM-CAPTURE.1`; `AXI-VALID-READY-INTENT-PROBE.2`; `.1`; `AXI-SPEC-LOCAL-REFERENCE-IMPORT.1`; `IAL2-PROTOCOL-PLATFORM-INTENT-EXPLORATION.2`. Older completed slices are in the task tree and git history.
+- latest_commit: `IAL2-PROTOCOL-PLATFORM-SURFACE-DECISION-CAPTURE.1` — recorded generic IAL2 file-surface candidates (`.pif`, `.ppi`, `.ppif`) and locked `IAL2 -> IAL1 -> IAL0` lowering.
+- active_work_unit: none; no active or proposed PNT-eligible task tree remains after `IAL2-PROTOCOL-PLATFORM-SURFACE-DECISION-CAPTURE.1`.
+- recently_done: `IAL2-PROTOCOL-PLATFORM-SURFACE-DECISION-CAPTURE.1`; `AXI-MANAGER-USER-API-BRAINSTORM-CAPTURE.1`; `AXI-VALID-READY-INTENT-PROBE.2`; `.1`; `AXI-SPEC-LOCAL-REFERENCE-IMPORT.1`. Older completed slices are in the task tree and git history.
 - in_flight_uncommitted: none for owned work; unrelated untracked `fx/` intentionally left alone.
 - blockers: none.
 
