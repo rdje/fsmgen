@@ -76,6 +76,7 @@ first.
 | `ISF-REMAINING-BROAD-FRONTIER` | `done` | `R14` | complete (`.1`-`.12`; broad remaining ISF/R14 frontier exhausted: ATL/IAL2/parity/resource/priority/port/temporal/report/CDC/full-width surfaces either shipped, synced, or deferred to future exact owners) | [docs/tasks/ISF-REMAINING-BROAD-FRONTIER.md](docs/tasks/ISF-REMAINING-BROAD-FRONTIER.md) |
 | `BACKEND-API-VALIDATION-FRONTIER` | `done` | Backends And Validation / Embedding And Public APIs | complete through `BACKEND-API-VALIDATION-FRONTIER.132`; all supported-smoke `.fsm` entries pass under `--language vhdl`, GHDL remains unavailable, and broad backend/API work is behind future exact owners | [docs/tasks/BACKEND-API-VALIDATION-FRONTIER.md](docs/tasks/BACKEND-API-VALIDATION-FRONTIER.md) |
 | `ARCHITECTURE-DEBT-FRONTIER` | `done` | architecture | complete through `.3`; direct structural internal declaration nets shipped in `.2.1`, and ISF parser/lowerer extraction remains deferred until a stable family is proven by a future exact owner | [docs/tasks/ARCHITECTURE-DEBT-FRONTIER.md](docs/tasks/ARCHITECTURE-DEBT-FRONTIER.md) |
+| `ISF-ATL-GENERATED-TOP-PLANNER-EXTRACTION` | `active` | architecture backlog | current frontier (`.2`; extract private ATL generated-top report projection and child-interface marking helpers without behavior drift) | [docs/tasks/ISF-ATL-GENERATED-TOP-PLANNER-EXTRACTION.md](docs/tasks/ISF-ATL-GENERATED-TOP-PLANNER-EXTRACTION.md) |
 
 ## Proposed Task Trees
 
