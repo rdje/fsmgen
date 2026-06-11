@@ -2664,11 +2664,15 @@ Current lowering:
   variant may also keep exactly two generated spawns pending across one plain
   local blocking `(do child)` when the later same-body `(await_all done)`
   drains both spawned instances before repeat and loop re-entry. The
+  `while`-contained `await_all` variant may also keep exactly three generated
+  spawns pending across that local blocking `do` when the later same-body
+  `(await_all done)` drains all three before repeat and `while` re-entry. The
   `while`- or `until`-contained single-pending variant may use post-`do`
   `(await_any done)` instead when the effect checker proves
   `await_any_single_pending_completes_outstanding_set` for that spawned
-  instance. Wider multi-pending local-`do`, generated-do, and multi-pending
-  post-`do` `await_any` variants remain fail-closed.
+  instance. The matching `until` three-spawn shape, fan-outs beyond three,
+  generated-do, and multi-pending post-`do` `await_any` variants remain
+  fail-closed.
   Repeats directly inside a top-level
   `when` body also accept one or more generated
   `(spawn child as inst [(params ...)] [(bind ...)] [(domain NAME)])` sites

@@ -109,10 +109,11 @@ them only when the same proofs hold and `ControlFlowEffects` additionally
 proves `await_any_single_pending_completes_outstanding_set` for the spawned
 done port.
 The next consumers are the while- and until-contained two-spawn
-`spawn -> spawn -> local blocking do -> await_all` shapes. The public validator
-permits them only when the effect checker proves both generated spawn instances
+`spawn -> spawn -> local blocking do -> await_all` shapes plus the
+while-contained three-spawn `await_all` fan-out shape. The public validator
+permits them only when the effect checker proves all generated spawn instances
 are static and wired, the local `do` drains its child, `await_all` drains the
-exact `w0_done,w1_done` set, and the repeat plus surrounding loop backedges
-have no outstanding child completions. Wider multi-pending local-do,
-generated-do, and multi-pending post-do `await_any` variants remain
-fail-closed.
+exact outstanding spawned done set, and the repeat plus surrounding loop
+backedges have no outstanding child completions. The matching `until`
+three-spawn shape, fan-outs beyond three, generated-do, and multi-pending
+post-do `await_any` variants remain fail-closed.

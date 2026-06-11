@@ -181,6 +181,25 @@ ISF
     like($top, qr/\(\?fsmc:w1 worker\b/s, 'generated top instantiates w1');
 };
 
+subtest 'until-contained three-pending spawn across local do remains fail-closed' => sub {
+    my $actor = parse_actor(actor_for_body('until_three_pending_spawn_local_do', <<'ISF'), 'until-three-pending-spawn-local-do');
+(until cond
+  (repeat loops
+    (spawn worker as w0)
+    (spawn worker as w1)
+    (spawn worker as w2)
+    (do helper)
+    (await_all done)))
+ISF
+
+    my $check = check_actor($actor);
+    ok($check->{ok}, 'effect checker can prove the until three-pending shape');
+    my ($lowered, $err) = lower_actor($actor);
+    ok(!$lowered, 'public lowering still rejects the until three-pending local-do sequence');
+    like($err, qr/repeat-body do cannot appear while repeat-body spawn clauses are pending/,
+        'until three-pending shape remains outside the selected while-only widening');
+};
+
 subtest 'multi-pending missing final drain remains fail-closed' => sub {
     my $actor = parse_actor(actor_for_body('until_multi_pending_spawn_local_do_undrained', <<'ISF'), 'until-multi-pending-spawn-local-do-undrained');
 (until cond
