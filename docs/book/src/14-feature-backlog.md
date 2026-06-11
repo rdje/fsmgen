@@ -744,11 +744,10 @@ that local blocking `do` when the later same-body drain covers all four before
 repeat and loop re-entry.
 The `while`- or `until`-contained
 single-pending variant may also use post-`do` `(await_any done)` as that final
-sync. The `while`-contained two- and three-spawn variants and body-first
-`until`-contained two-spawn variant may also use post-`do` multi-pending
-`(await_any done)` as an observation point when a later same-body
-`(await_all done)` drains the same pending generated children before repeat
-and loop re-entry. Body-first `until` three-spawn, generated-do, and
+sync. The `while`- or body-first `until`-contained two- and three-spawn
+variants may also use post-`do` multi-pending `(await_any done)` as an
+observation point when a later same-body `(await_all done)` drains the same
+pending generated children before repeat and loop re-entry. Generated-do and
 four-or-wider post-`do` multi-pending `await_any` variants remain fail-closed.
 A plain local
 `(do child)` inside `while -> when -> repeat` now also lowers (`t/1379`);

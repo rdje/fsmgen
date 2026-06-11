@@ -2674,11 +2674,10 @@ Current lowering:
   `while`- or `until`-contained single-pending variant may use post-`do`
   `(await_any done)` instead when the effect checker proves
   `await_any_single_pending_completes_outstanding_set` for that spawned
-  instance. The `while`-contained two- and three-spawn variants and body-first
-  `until`-contained two-spawn variant may also use post-`do` multi-pending
-  `(await_any done)` as an observation point when a later same-body
-  `(await_all done)` drains the same pending generated children before repeat
-  and loop re-entry. Body-first `until` three-spawn, generated-do, and
+  instance. The `while`- or body-first `until`-contained two- and three-spawn
+  variants may also use post-`do` multi-pending `(await_any done)` as an
+  observation point when a later same-body `(await_all done)` drains the same
+  pending generated children before repeat and loop re-entry. Generated-do and
   four-or-wider post-`do` multi-pending `await_any` variants remain
   fail-closed.
   Repeats directly inside a top-level

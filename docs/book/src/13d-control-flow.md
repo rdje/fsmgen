@@ -1003,7 +1003,8 @@ spawns:
     (complete done)))
 ```
 
-The body-first `until` spelling uses the same observation-then-drain contract:
+The body-first `until` spelling uses the same observation-then-drain contract,
+including the three-spawn form:
 
 ```lisp
 (actor until_repeat_multi_spawn_do_await_any_then_all
@@ -1028,6 +1029,30 @@ The body-first `until` spelling uses the same observation-then-drain contract:
     (complete done)))
 ```
 
+```lisp
+(actor until_repeat_three_spawn_do_await_any_then_all
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start) (input cond) (input loops (width 3))
+    (output done))
+  (transaction parent
+    (on start)
+    (until cond
+      (repeat loops
+        (spawn worker as w0)
+        (spawn worker as w1)
+        (spawn worker as w2)
+        (do helper)          ;; waits for helper_done; w0/w1/w2 remain pending
+        (await_any done)     ;; observes any generated child done pulse
+        (await_all done)))   ;; drains all three before repeat_check / re-entry
+    (complete done))
+  (transaction worker
+    (complete done))
+  (transaction helper
+    (complete done)))
+```
+
 The validator accepts the `await_all` shapes only when the compositional effect
 checker proves each generated spawn has deterministic top wiring, the local
 `do` waits for its own fresh done pulse, and the later `await_all` drains the
@@ -1038,11 +1063,10 @@ backedges (`while_retest` or `until_retest`). The single-pending
 spawned child. The multi-pending local-`do` variant is currently the exact
 two- and three-spawn `await_all` shapes shown above for `while` and `until`,
 plus the exact four-spawn `await_all` shapes shown above for `while` and
-`until`, plus the exact `while` two- and three-spawn post-`do` `await_any`
-plus later `await_all` shapes and the exact body-first `until` two-spawn
-post-`do` `await_any` plus later `await_all` shape shown above. Body-first
-`until` three-spawn, generated `do`, and four-or-wider post-`do`
-multi-pending `await_any` shapes stay fail-closed for now.
+`until`, plus the exact `while` and body-first `until` two- and three-spawn
+post-`do` `await_any` plus later `await_all` shapes shown above. Generated
+`do` and four-or-wider post-`do` multi-pending `await_any` shapes stay
+fail-closed for now.
 
 An **undrained** spawn (no same-body `await_all`/single-pending `await_any`
 before the repeat check) stays deferred: `Transaction 'parent': loop-contained

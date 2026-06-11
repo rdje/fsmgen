@@ -7299,7 +7299,7 @@ sub _validate_repeat_body_spawn_subset {
                         && (@pending_spawns == 2 || @pending_spawns == 3))
                     || ($label eq 'until body'
                         && _context_depths_match_exactly($context_depths, { until => 1 })
-                        && @pending_spawns == 2))
+                        && (@pending_spawns == 2 || @pending_spawns == 3)))
                 && $keyword eq 'await_any'
                 && !$awaiting_multi_pending_drain;
             confess "Transaction '$tn': loop-contained repeat-body local do while generated spawns are pending requires same-body '(await_all done)' drain; '(await_any done)' after the do remains deferred\n"
