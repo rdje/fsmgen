@@ -725,7 +725,12 @@ repeat-body spawn). An undrained loop-contained spawn fails closed
 single-pending '(await_any done)'`), a multi-pending `(await_any done)` is
 accepted only as an observation point when a later same-body `(await_all done)`
 drains the same outstanding children, and a cross-domain generated `do` fails
-closed (`cross-domain repeat-body do remains deferred`). A plain local
+closed (`cross-domain repeat-body do remains deferred`). A `while`-contained
+repeat may now keep exactly one generated spawn pending across one plain local
+blocking `(do child)` when a later same-body `(await_all done)` drains that
+spawned instance before repeat and `while` re-entry; the matching `until`,
+multi-pending, generated-do, and post-do `await_any` variants remain
+fail-closed. A plain local
 `(do child)` inside `while -> when -> repeat` now also lowers (`t/1379`);
 generated `do`, `spawn`, `until -> when`, nested `switch`, and extra loop
 nesting in that loop-plus-branch family still emit the loop-contained or

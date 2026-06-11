@@ -11,11 +11,12 @@ answers:
   - "how does FSMGen model ISF regions and activation effects in shadow mode?"
   - "where are await_any observe versus await_all drain effects recorded?"
   - "what module owns the initial compositional control-flow activation model?"
+  - "which behavior widening first consumes compositional repeat lifetime proofs?"
 date: 2026-06-11
 status: current
 tags: [isf, control-flow, architecture, activation, scheduling, cdc]
-evidence: perl/FSM/Scheduler/ISF/ControlFlowEffects.pm; perl/FSM/Scheduler/ISF/LoweringIR.pm; t/1419-isf-control-flow-effect-inventory.t; t/1421-isf-control-flow-effect-checks.t; t/1422-isf-control-flow-child-plan.t; t/1423-isf-control-flow-lifetime-checks.t; t/1424-isf-control-flow-domain-binding-effects.t; t/1425-isf-control-flow-validator-effect-migration.t; t/1426-isf-control-flow-same-domain-validator-effect-migration.t; t/1427-isf-control-flow-activation-domain-validator-effect-migration.t; t/1428-isf-control-flow-binding-endpoint-validator-effect-migration.t; t/1429-isf-control-flow-binding-expression-validator-effect-migration.t; t/1430-isf-control-flow-rule-trigger-validator-effect-migration.t; t/1431-isf-control-flow-rule-trigger-binding-validator-effect-migration.t; docs/tasks/ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.md; docs/decisions/0013-compositional-control-flow-activation-model.md
-reverify: prove -Iperl t/1419-isf-control-flow-effect-inventory.t t/1421-isf-control-flow-effect-checks.t t/1422-isf-control-flow-child-plan.t t/1423-isf-control-flow-lifetime-checks.t t/1424-isf-control-flow-domain-binding-effects.t t/1425-isf-control-flow-validator-effect-migration.t t/1426-isf-control-flow-same-domain-validator-effect-migration.t t/1427-isf-control-flow-activation-domain-validator-effect-migration.t t/1428-isf-control-flow-binding-endpoint-validator-effect-migration.t t/1429-isf-control-flow-binding-expression-validator-effect-migration.t t/1430-isf-control-flow-rule-trigger-validator-effect-migration.t t/1431-isf-control-flow-rule-trigger-binding-validator-effect-migration.t
+evidence: perl/FSM/Scheduler/ISF/ControlFlowEffects.pm; perl/FSM/Scheduler/ISF/LoweringIR.pm; t/1419-isf-control-flow-effect-inventory.t; t/1421-isf-control-flow-effect-checks.t; t/1422-isf-control-flow-child-plan.t; t/1423-isf-control-flow-lifetime-checks.t; t/1424-isf-control-flow-domain-binding-effects.t; t/1425-isf-control-flow-validator-effect-migration.t; t/1426-isf-control-flow-same-domain-validator-effect-migration.t; t/1427-isf-control-flow-activation-domain-validator-effect-migration.t; t/1428-isf-control-flow-binding-endpoint-validator-effect-migration.t; t/1429-isf-control-flow-binding-expression-validator-effect-migration.t; t/1430-isf-control-flow-rule-trigger-validator-effect-migration.t; t/1431-isf-control-flow-rule-trigger-binding-validator-effect-migration.t; t/1432-isf-loop-pending-spawn-local-do-effect-widening.t; docs/tasks/ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.md; docs/decisions/0013-compositional-control-flow-activation-model.md
+reverify: prove -Iperl t/1419-isf-control-flow-effect-inventory.t t/1421-isf-control-flow-effect-checks.t t/1422-isf-control-flow-child-plan.t t/1423-isf-control-flow-lifetime-checks.t t/1424-isf-control-flow-domain-binding-effects.t t/1425-isf-control-flow-validator-effect-migration.t t/1426-isf-control-flow-same-domain-validator-effect-migration.t t/1427-isf-control-flow-activation-domain-validator-effect-migration.t t/1428-isf-control-flow-binding-endpoint-validator-effect-migration.t t/1429-isf-control-flow-binding-expression-validator-effect-migration.t t/1430-isf-control-flow-rule-trigger-validator-effect-migration.t t/1431-isf-control-flow-rule-trigger-binding-validator-effect-migration.t t/1432-isf-loop-pending-spawn-local-do-effect-widening.t
 ---
 
 The initial compositional ISF control-flow model lives in
@@ -94,3 +95,10 @@ instances, and proves `binding_endpoint_is_same_domain` or
 bindings. The public rule validator skips its direct binding domain walk only
 for those proofs; cross-domain rule-trigger input expressions and generated
 output bindings keep the existing public clock-domain diagnostics.
+The first behavior-widening consumer is the while-contained repeat sequence
+`spawn -> local blocking do -> await_all`. The public validator permits that
+shape only when `ControlFlowEffects` proves the generated spawn instance is
+static and wired, the local `do` drains its child, `await_all` drains the
+pending spawn, and the repeat/while backedges have no outstanding child
+completions. The matching `until`, multi-pending, generated-do, and post-do
+`await_any` variants remain fail-closed.

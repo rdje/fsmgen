@@ -3031,6 +3031,96 @@ sub _control_flow_effects_prove_rule_trigger_binding_endpoint_domain($actor, $ru
     return 0;
 }
 
+sub _control_flow_effects_prove_while_repeat_pending_spawn_local_do_drain($actor, $transaction_name, $spawn_instance, $do_child) {
+    return 0 unless defined($transaction_name) && !ref($transaction_name);
+    return 0 unless defined($spawn_instance) && !ref($spawn_instance) && length($spawn_instance);
+    return 0 unless defined($do_child) && !ref($do_child) && length($do_child);
+
+    my $done_port = "${spawn_instance}_done";
+    my $check = _control_flow_effect_check($actor);
+    return 0 unless $check->{ok};
+
+    for my $tx (@{$check->{transactions} || []}) {
+        next unless ($tx->{name} // '') eq $transaction_name;
+        my @proofs = @{$tx->{proofs} || []};
+        my $has_while_backedge_proof = grep {
+            ($_->{code} // '') eq 'backedge_has_no_outstanding_children'
+                && ($_->{region_kind} // '') eq 'while'
+                && ($_->{backedge} // '') eq 'while_retest'
+        } @proofs;
+        next unless $has_while_backedge_proof;
+
+        my %repeat_region_ids = map { $_->{region_id} => 1 } grep {
+            defined($_->{region_id})
+                && ($_->{code} // '') eq 'backedge_has_no_outstanding_children'
+                && ($_->{region_kind} // '') eq 'repeat'
+                && ($_->{backedge} // '') eq 'repeat_check_nonzero'
+                && _effect_path_matches($_->{path}, [qw(transaction while repeat)])
+        } @proofs;
+
+        for my $region_id (sort keys %repeat_region_ids) {
+            my ($spawn_effect_id) = map { $_->{effect_id} } grep {
+                ($_->{region_id} // '') eq $region_id
+                    && ($_->{code} // '') eq 'generated_top_start_done_handoff_required'
+                    && ($_->{instance} // '') eq $spawn_instance
+                    && ($_->{done_signal} // '') eq $done_port
+                    && defined($_->{effect_id})
+            } @proofs;
+            next unless defined($spawn_effect_id);
+            next unless grep {
+                ($_->{region_id} // '') eq $region_id
+                    && ($_->{code} // '') eq 'generated_child_instance_is_static'
+                    && ($_->{instance} // '') eq $spawn_instance
+                    && ($_->{effect_id} // '') eq $spawn_effect_id
+            } @proofs;
+            next unless grep {
+                ($_->{region_id} // '') eq $region_id
+                    && ($_->{code} // '') eq 'activation_target_is_same_domain'
+                    && ($_->{effect_id} // '') eq $spawn_effect_id
+            } @proofs;
+
+            my ($do_effect_id) = map { $_->{effect_id} } grep {
+                ($_->{region_id} // '') eq $region_id
+                    && ($_->{code} // '') eq 'blocking_do_drains_child_done'
+                    && ($_->{child} // '') eq $do_child
+                    && defined($_->{effect_id})
+            } @proofs;
+            next unless defined($do_effect_id);
+            next unless grep {
+                ($_->{region_id} // '') eq $region_id
+                    && ($_->{code} // '') eq 'activation_target_is_same_domain'
+                    && ($_->{child} // '') eq $do_child
+                    && ($_->{effect_id} // '') eq $do_effect_id
+            } @proofs;
+            next unless grep {
+                ($_->{region_id} // '') eq $region_id
+                    && ($_->{code} // '') eq 'await_all_drains_outstanding_children'
+                    && _effect_done_ports_match($_->{done_ports}, [$done_port])
+            } @proofs;
+            return 1;
+        }
+    }
+    return 0;
+}
+
+sub _effect_path_matches($actual, $expected) {
+    return 0 unless ref($actual) eq 'ARRAY' && ref($expected) eq 'ARRAY';
+    return 0 unless @$actual == @$expected;
+    for my $i (0 .. $#$expected) {
+        return 0 unless defined($actual->[$i]) && $actual->[$i] eq $expected->[$i];
+    }
+    return 1;
+}
+
+sub _effect_done_ports_match($actual, $expected) {
+    return 0 unless ref($actual) eq 'ARRAY' && ref($expected) eq 'ARRAY';
+    return 0 unless @$actual == @$expected;
+    for my $i (0 .. $#$expected) {
+        return 0 unless defined($actual->[$i]) && $actual->[$i] eq $expected->[$i];
+    }
+    return 1;
+}
+
 # True when the actor declares an `(activation child (from SRC)(to DEST))`
 # crossing that owns a cross-domain `(do child)` from `$caller_domain` into
 # `$target_domain`. Such a `(do)` is routed through the two CDC synchronizers
@@ -6877,6 +6967,7 @@ sub _validate_repeat_body_spawn_subset {
     my $spawn_after_local_do_before_drain = 0;
     my $spawn_after_generated_do_before_drain = 0;
     my $spawn_after_generated_do_kind_before_drain;
+    my $pending_loop_local_do_before_drain = 0;
     my $top_level_repeat = $label eq 'transaction body';
     my $when_body_repeat = $label eq 'when body'
         && _context_depths_match_exactly($context_depths, { when => 1 });
@@ -6911,6 +7002,8 @@ sub _validate_repeat_body_spawn_subset {
         next unless defined($keyword) && !ref($keyword);
 
         if ($keyword eq 'spawn') {
+            confess "Transaction '$tn': loop-contained repeat-body spawn cannot follow local do while generated spawns are pending; drain with same-body '(await_all done)' before spawning again\n"
+                if $pending_loop_local_do_before_drain;
             # A repeat directly in a single while/until body ($loop_body_repeat),
             # or reached through deeper branch nesting ($deeper_nested_repeat),
             # supports the basic spawn + same-body '(await_all done)' (or
@@ -7075,6 +7168,19 @@ sub _validate_repeat_body_spawn_subset {
                     ($when_body_repeat || $switch_branch_repeat)
                     && $static_domain_generated_do
                     && $awaiting_multi_pending_drain;
+                my $allowed_while_pending_spawn_local_do =
+                    $loop_body_repeat
+                    && $label eq 'while body'
+                    && $plain_local_do
+                    && @pending_spawns == 1
+                    && !$awaiting_multi_pending_drain
+                    && !$pending_loop_local_do_before_drain
+                    && _control_flow_effects_prove_while_repeat_pending_spawn_local_do_drain(
+                        $actor,
+                        $tn,
+                        $pending_spawns[0],
+                        $target,
+                    );
                 my $allowed_pending_do = $plain_local_do
                     || (defined $pending_generated_do_label && $plain_generated_child_do)
                     || $allowed_static_parameter_generated_do
@@ -7111,16 +7217,22 @@ sub _validate_repeat_body_spawn_subset {
                     if defined $pending_generated_do_label && !$awaiting_multi_pending_drain && !$allowed_pending_do;
                 confess "Transaction '$tn': $pending_local_do_label nested repeat do while generated spawns are pending supports only local plain '(do child)' in the current subset\n"
                     if !defined $pending_generated_do_label && defined $pending_local_do_label && !$awaiting_multi_pending_drain && !$allowed_pending_do;
+                my $allowed_branch_pending_do =
+                    defined($pending_local_do_label)
+                    && $allowed_pending_do
+                    && (!$awaiting_multi_pending_drain
+                        || $allowed_local_do_after_multi_pending_await_any
+                        || $allowed_generated_child_do_after_multi_pending_await_any
+                        || $allowed_static_parameter_generated_do_after_multi_pending_await_any
+                        || $allowed_static_bound_generated_do_after_multi_pending_await_any
+                        || $allowed_static_domain_generated_do_after_multi_pending_await_any);
                 confess "Transaction '$tn': repeat-body do cannot appear while repeat-body spawn clauses are pending; wait for spawned children before blocking do\n"
-                    unless defined $pending_local_do_label
-                        && $allowed_pending_do
-                        && (!$awaiting_multi_pending_drain
-                            || $allowed_local_do_after_multi_pending_await_any
-                            || $allowed_generated_child_do_after_multi_pending_await_any
-                            || $allowed_static_parameter_generated_do_after_multi_pending_await_any
-                            || $allowed_static_bound_generated_do_after_multi_pending_await_any
-                            || $allowed_static_domain_generated_do_after_multi_pending_await_any);
-                $pending_local_do_before_drain = 1 if $plain_local_do;
+                    unless $allowed_branch_pending_do || $allowed_while_pending_spawn_local_do;
+                if ($allowed_while_pending_spawn_local_do) {
+                    $pending_loop_local_do_before_drain = 1;
+                } else {
+                    $pending_local_do_before_drain = 1 if $plain_local_do;
+                }
                 if ($plain_generated_child_do || $allowed_static_parameter_generated_do || $allowed_static_bound_generated_do || $allowed_static_domain_generated_do) {
                     $pending_generated_do_before_drain = 1;
                     $pending_generated_do_kind_before_drain = $plain_generated_child_do
@@ -7138,6 +7250,9 @@ sub _validate_repeat_body_spawn_subset {
         if ($keyword eq 'await_all' || $keyword eq 'await_any') {
             confess "Transaction '$tn': repeat-body $keyword is supported only after repeat-body spawn clauses\n"
                 unless @pending_spawns;
+            confess "Transaction '$tn': loop-contained repeat-body local do while generated spawns are pending requires same-body '(await_all done)' drain; '(await_any done)' after the do remains deferred\n"
+                if $pending_loop_local_do_before_drain
+                    && $keyword eq 'await_any';
             my $allowed_local_spawn_after_do_before_post_await_any =
                 defined($pending_local_do_label)
                 && $spawn_after_local_do_before_drain
@@ -7243,10 +7358,13 @@ sub _validate_repeat_body_spawn_subset {
             $spawn_after_local_do_before_drain = 0;
             $spawn_after_generated_do_before_drain = 0;
             $spawn_after_generated_do_kind_before_drain = undef;
+            $pending_loop_local_do_before_drain = 0;
             next;
         }
     }
 
+    confess "Transaction '$tn': loop-contained repeat-body local do while generated spawns are pending requires later same-body '(await_all done)' before the repeat check can loop\n"
+        if $pending_loop_local_do_before_drain && @pending_spawns;
     confess "Transaction '$tn': $pending_local_do_label nested repeat local do while generated spawns are pending requires later same-body '(await_all done)' before the nested repeat check can loop\n"
         if defined $pending_local_do_label && $pending_local_do_before_drain && @pending_spawns;
     confess "Transaction '$tn': $pending_generated_do_label nested repeat $pending_generated_do_kind_before_drain while generated spawns are pending requires later same-body '(await_all done)' before the nested repeat check can loop\n"

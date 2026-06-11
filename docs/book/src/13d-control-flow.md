@@ -697,6 +697,38 @@ subset; the full-HDL `--check-json` path has a pre-existing composition-wiring
 limitation that applies equally to the top-level case — see
 `docs/COMPOSITION_SCOPE.md`.)
 
+A `while`-contained repeat may also keep exactly one generated spawn pending
+across one plain local blocking `do`, provided the same repeat body then reaches
+`(await_all done)` before the repeat check can loop:
+
+```lisp
+(actor while_repeat_spawn_do_drain
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start) (input cond) (input loops (width 3))
+    (output done))
+  (transaction parent
+    (on start)
+    (while cond
+      (repeat loops
+        (spawn worker as w0)
+        (do helper)          ;; waits for helper_done; w0 remains pending
+        (await_all done)))   ;; drains w0 before repeat_check / loop re-entry
+    (complete done))
+  (transaction worker
+    (complete done))
+  (transaction helper
+    (complete done)))
+```
+
+The validator accepts this shape only when the compositional effect checker
+proves the generated spawn has deterministic top wiring, the local `do` waits
+for its own fresh done pulse, and the later `await_all` drains the pending
+spawn before both the repeat and `while` backedges. The matching `until` shape,
+multi-pending spawned children across the local `do`, generated `do`, and
+post-`do` `await_any` stay fail-closed for now.
+
 An **undrained** spawn (no same-body `await_all`/single-pending `await_any`
 before the repeat check) stays deferred: `Transaction 'parent': loop-contained
 repeat-body spawn requires same-body '(await_all done)' or single-pending
@@ -865,9 +897,10 @@ prior-observation forms preserve declared ownership metadata on the
 generated do instance across both observations.
 
 Broader outstanding-child semantics, generated or spawned nested activation
-beyond the documented top-level branch-contained generated do cases and
-branch-contained spawned cases, `stage`, `contract`, nested `while`, and
-nested `until` forms remain outside the
+beyond the documented top-level branch-contained generated do cases,
+branch-contained spawned cases, and the while-contained single-spawn local-do
+plus later-drain shape above, `stage`, `contract`, nested `while`, and nested
+`until` forms remain outside the
 shipped repeat-body subset.
 
 Unsupported nested forms now fail closed during lowering instead of
