@@ -1487,6 +1487,10 @@ transactions, carry event payloads, or support fan-in/fan-out, unselected
 multi-wait forms, repeated waits to one triggered actor, nested waits,
 cross-clock actor events, or concurrent group events. Repeated trigger-batch
 waits fail closed with the event re-arm/lifetime diagnostic.
+`await_all` and `await_any` remain generated-child completion sync forms in
+this surface; source that tries to use them as actor-event all-of/any-of joins
+with operands such as `reader.done` and `writer.done` fails closed with the
+ATL event-join diagnostic.
 
 Unqualified local forms keep their existing meaning: `(await signal)` waits
 on a local transaction signal, and rule-level `(trigger transaction)` triggers

@@ -2656,6 +2656,10 @@ generated ATL child artifacts or generated ATL top event wiring until the
 corresponding support is documented here and advertised in the manifest.
 Repeated waits after a temporary trigger batch fail closed with a diagnostic
 that names the missing event re-arm or per-event generation/lifetime contract.
+Downstream producers must also not spell actor-event all-of/any-of joins with
+`await_all` or `await_any` qualified operands; those sync clauses remain
+generated-child completion forms in the shipped surface and now fail with a
+targeted ATL event-join diagnostic when they carry actor events.
 
 Existing unqualified local forms are unchanged: `(await signal)` remains a
 local transaction wait, and rule-level `(trigger transaction)` remains a

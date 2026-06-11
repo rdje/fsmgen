@@ -2656,7 +2656,11 @@ group events, and waits outside the selected generated-top/source-order
 shapes remain fail-closed/deferred. When a temporary trigger batch is followed
 by multiple waits to the same triggered actor instance, the diagnostic names
 the missing event re-arm or per-event generation/lifetime contract instead of
-advertising a hidden repeated-wait behavior.
+advertising a hidden repeated-wait behavior. Sync-clause spellings such as
+`(await_all reader.done writer.done)` or
+`(await_any reader.done writer.done)` also fail closed with an ATL event-join
+diagnostic; `await_all`/`await_any` remain generated-child completion sync
+forms, not qualified actor-event all-of/any-of joins.
 Existing unqualified local `(await signal)` and rule-level
 `(trigger transaction)` behavior remains unchanged, and dotted enum-looking
 names outside actor-network instances keep their prior diagnostics.

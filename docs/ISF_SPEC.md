@@ -4533,7 +4533,11 @@ actor after a trigger batch, event handoff signal conflicts, and actor-event
 waits on `(clock-domains ...)` actors with ATL-specific diagnostics when the
 qualifier names a declared static actor instance. The repeated trigger-batch
 wait diagnostic names the missing event re-arm or per-event
-generation/lifetime contract.
+generation/lifetime contract. Sync-clause attempts such as
+`(await_all reader.done writer.done)` or
+`(await_any reader.done writer.done)` fail closed with an ATL event-join
+diagnostic because `await_all`/`await_any` currently synchronize generated
+child completion, not qualified actor-event all-of/any-of joins.
 Existing unqualified local behavior remains unchanged: `(await signal)` is
 still a local transaction wait, and rule-level `(trigger transaction)` still
 targets a local transaction. Dotted enum-looking names that do not name a

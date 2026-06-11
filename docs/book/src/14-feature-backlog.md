@@ -1706,7 +1706,10 @@ not a hidden same-cycle join and does not claim repeated waits, event
 payloads, event fan-out, generated-child route coupling, group endpoints,
 CDC, or ready/backpressure. Repeated waits to the same triggered actor after
 a trigger batch fail closed with a diagnostic that names the missing event
-re-arm or per-event generation/lifetime contract.
+re-arm or per-event generation/lifetime contract. `await_all`/`await_any`
+clauses with qualified actor-event operands fail closed too; those sync forms
+remain generated-child completion joins until an explicit actor-event join
+contract adds event latch/storage and lifetime semantics.
 
 The ATL source-root boundary is shipped before generated child resolution. A
 sibling top-level `(actor ...)` root in the same `.isf` source fails closed

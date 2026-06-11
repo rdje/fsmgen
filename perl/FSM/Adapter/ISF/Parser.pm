@@ -2996,6 +2996,17 @@ sub _validate_transaction_atl_reserved_qualified_forms {
             confess "Error: $context '($head ...)' is reserved for FSMGen internal ATL lowering and is not source syntax\n";
         }
 
+        if (($head eq 'await_all' || $head eq 'await_any')
+            && _contains_qualified_atl_endpoint_token($clause, $actor_instances))
+        {
+            my @targets = grep {
+                defined($_) && !ref($_) && _is_qualified_atl_endpoint_token($_, $actor_instances)
+            } @{$clause}[1 .. $#$clause];
+            my $target_list = join(', ', @targets);
+            my $form = _format_isf_expr($clause);
+            confess "Error: $context ATL actor event join '$form' is not supported in the current subset; sync clause '$head' cannot join qualified actor events ($target_list). Use sequential top-level '(await actor.event)' waits in the shipped ATL subset; hidden all-of/any-of actor-event joins require event latch/storage and per-event lifetime semantics\n";
+        }
+
         if ($head eq 'await' && _is_qualified_atl_endpoint_token($clause->[1], $actor_instances)) {
             my $target = $clause->[1];
             if ($options->{allow_event_wait}) {

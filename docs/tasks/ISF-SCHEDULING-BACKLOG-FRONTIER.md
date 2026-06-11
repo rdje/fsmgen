@@ -6,7 +6,7 @@ Roadmap lane: R14 / ISF scheduling, activation, CDC, ATL, actor-network, and gen
 
 Created: 2026-06-10
 
-Current frontier: `ISF-SCHEDULING-BACKLOG-FRONTIER.6.2`
+Current frontier: `ISF-SCHEDULING-BACKLOG-FRONTIER.7.1`
 
 ## Goal
 
@@ -411,7 +411,7 @@ Result:
 
 ### ISF-SCHEDULING-BACKLOG-FRONTIER.6 — Fan-In/Fan-Out Event Joins
 
-Status: active
+Status: done
 
 Goal: Add or close exact fan-in/fan-out event join semantics across the ISF
 event/trigger surfaces.
@@ -460,7 +460,7 @@ Result:
 
 #### ISF-SCHEDULING-BACKLOG-FRONTIER.6.2 — ATL Sync-Clause Event-Join Diagnostic
 
-Status: pending
+Status: done
 
 Goal: Keep `await_all`/`await_any` clauses that try to join qualified ATL
 actor events fail-closed, while replacing generic enum/sync messages with a
@@ -477,9 +477,23 @@ Acceptance:
 - Sync parser/lowering tests, mdBook, live specs/contracts, and Knowledge Map
   with the fail-closed ATL event-join boundary.
 
+Result:
+
+- Kept sync-clause ATL actor-event joins fail-closed. The parser now catches
+  `await_all`/`await_any` clauses that carry qualified static actor event
+  operands before the generic dotted enum-member path.
+- The diagnostic names the authored sync clause and qualified event operands,
+  states that those sync forms cannot join actor events, and records the
+  missing event latch/storage and per-event lifetime semantics.
+- Existing generated-child completion sync through `(await_all done)`,
+  documented `(await_any done)` contracts, and sequential ATL multi-event
+  waits after a temporary trigger batch are preserved.
+- The mdBook, live ISF spec, downstream handoff, public interface contract,
+  Knowledge Map fact card, task index, and `MEMORY.md` are synced.
+
 ### ISF-SCHEDULING-BACKLOG-FRONTIER.7 — Actor-Network And Group Scheduling
 
-Status: pending
+Status: active
 
 Goal: Broaden actor-network and group scheduling only through exact, testable
 increments.
@@ -489,6 +503,24 @@ Acceptance:
 - Select one scheduling primitive or grouping rule before implementation.
 - Prove arbitration, ordering, or CDC behavior as applicable.
 - Keep actor-network docs aligned with generated HDL behavior.
+
+#### ISF-SCHEDULING-BACKLOG-FRONTIER.7.1 — Actor-Network Scheduling First Slice Selection
+
+Status: pending
+
+Goal: Select the first exact actor-network or group-scheduling source shape
+for implementation or targeted fail-closed closure.
+
+Acceptance:
+
+- Audit current static group metadata, temporary trigger-batch scheduling,
+  generated-top child wiring, and multi-instance fail-closed diagnostics.
+- Select one precise actor-network/group scheduling source pattern before
+  implementation.
+- If the pattern is accepted, prove schedule report stability, generated
+  artifacts or absence thereof, and mdBook/spec examples.
+- If the pattern remains unsafe, record the missing scheduling/wiring/storage
+  contract and close it with a targeted diagnostic/doc update.
 
 ### ISF-SCHEDULING-BACKLOG-FRONTIER.8 — Generated-Child Top Surface Widening
 

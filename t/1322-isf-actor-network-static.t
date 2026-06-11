@@ -1515,6 +1515,42 @@ ISF
 
     parse_fails_like(
         <<'ISF',
+(actor qualified_event_await_all_join
+  (clock clk)
+  (interface (input start) (output done))
+  (instance reader of packet_reader)
+  (instance writer of packet_writer)
+  (transaction run
+    (on start)
+    (trigger reader.capture)
+    (trigger writer.emit)
+    (await_all reader.done writer.done)
+    (complete done)))
+ISF
+        qr/ATL actor event join '\(await_all reader\.done writer\.done\)' is not supported in the current subset; sync clause 'await_all' cannot join qualified actor events \(reader\.done, writer\.done\)/,
+        'await_all over qualified actor events fails closed with the ATL event-join diagnostic',
+    );
+
+    parse_fails_like(
+        <<'ISF',
+(actor qualified_event_await_any_join
+  (clock clk)
+  (interface (input start) (output done))
+  (instance reader of packet_reader)
+  (instance writer of packet_writer)
+  (transaction run
+    (on start)
+    (trigger reader.capture)
+    (trigger writer.emit)
+    (await_any reader.done writer.done)
+    (complete done)))
+ISF
+        qr/ATL actor event join '\(await_any reader\.done writer\.done\)' is not supported in the current subset; sync clause 'await_any' cannot join qualified actor events \(reader\.done, writer\.done\)/,
+        'await_any over qualified actor events fails closed with the ATL event-join diagnostic',
+    );
+
+    parse_fails_like(
+        <<'ISF',
 (actor trigger_batch_repeated_event_waits
   (clock clk)
   (interface (input start) (output done))
