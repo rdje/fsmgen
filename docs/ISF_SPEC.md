@@ -2660,8 +2660,12 @@ Current lowering:
   A `while`- or `until`-contained repeat may also keep exactly one generated
   spawn pending across one plain local blocking `(do child)` when a later
   same-body `(await_all done)` drains that spawned instance before repeat and
-  the surrounding loop re-entry. Multi-pending, generated-do, and post-do
-  `await_any` variants remain fail-closed.
+  the surrounding loop re-entry. The `while`-contained single-pending variant
+  may use post-`do` `(await_any done)` instead when the effect checker proves
+  `await_any_single_pending_completes_outstanding_set` for that spawned
+  instance. The matching `until` post-`do` `await_any`, multi-pending,
+  generated-do, and multi-pending post-`do` `await_any` variants remain
+  fail-closed.
   Repeats directly inside a top-level
   `when` body also accept one or more generated
   `(spawn child as inst [(params ...)] [(bind ...)] [(domain NAME)])` sites
@@ -5817,6 +5821,7 @@ Focused tests:
 - [t/1431-isf-control-flow-rule-trigger-binding-validator-effect-migration.t](../t/1431-isf-control-flow-rule-trigger-binding-validator-effect-migration.t)
 - [t/1432-isf-loop-pending-spawn-local-do-effect-widening.t](../t/1432-isf-loop-pending-spawn-local-do-effect-widening.t)
 - [t/1433-isf-until-pending-spawn-local-do-effect-widening.t](../t/1433-isf-until-pending-spawn-local-do-effect-widening.t)
+- [t/1434-isf-while-pending-spawn-local-do-awaitany-effect-widening.t](../t/1434-isf-while-pending-spawn-local-do-awaitany-effect-widening.t)
 
 ## 12. Explicitly Deferred
 

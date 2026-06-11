@@ -6,7 +6,7 @@ Roadmap lane: R14 / ISF compositional control-flow and activation architecture
 
 Created: 2026-06-10
 
-Current frontier: `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.8.6`
+Current frontier: `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.8.7`
 
 ## Goal
 
@@ -573,7 +573,7 @@ Result:
 
 #### ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.8.6 — While-Contained Pending-Spawn Local Do Single-Pending AwaitAny
 
-Status: active
+Status: done
 
 Goal: Accept the selected while-contained repeat-body sequence where a
 generated `spawn` remains pending across a local blocking `do`, then a
@@ -594,6 +594,41 @@ Acceptance:
   nesting remain fail-closed with stable or sharper diagnostics.
 - The mdBook, downstream integration spec, live ISF spec/indexes, task tree,
   and Knowledge Map are updated for the new public behavior.
+
+Result:
+
+- Shipped the selected while-contained subset:
+  `(while cond (repeat n (spawn worker as w0) (do helper) (await_any done)))`.
+- The validator now permits post-`do` `await_any` in this loop-contained
+  pending-spawn local-`do` family only for the selected while-contained
+  single-pending shape, when `ControlFlowEffects` proves
+  `await_any_single_pending_completes_outstanding_set` for the spawned done
+  port.
+- The matching `until` post-`do` `await_any`, multi-pending post-`do`
+  `await_any`, missing final sync, generated `do`, and unrelated deeper
+  nesting remain fail-closed.
+- User-facing docs, downstream handoff, live spec index, and the Knowledge Map
+  fact card were synced for the new public behavior.
+
+#### ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.8.7 — Next Effect-Proven Combination Selection
+
+Status: active
+
+Goal: Select the next narrow behavior-widening combination that can be accepted
+by construction through the migrated region/effect checker after the
+while-contained single-pending post-`do` `await_any` slice.
+
+Acceptance:
+
+- The selected combination is named before implementation and has a clear
+  backlog/user-facing source.
+- The effect checker proves lifetime, activation target/domain, binding, CDC,
+  generated-instance, and report/doc invariants for the selected shape before
+  any public validator widening.
+- Existing accepted/rejected behavior stays stable outside the named
+  combination.
+- mdBook, downstream spec, task tree, and Knowledge Map are updated if the
+  selected combination changes public behavior.
 
 ### ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.9 — Public Contract And Documentation Simplification
 
@@ -982,6 +1017,51 @@ Acceptance:
   selected `.8.6` slice. `scripts/check_memory_architecture.sh`;
   `knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl
   t/1414-docs-relative-paths-audit.t`; and `git diff --check` pass.
+- 2026-06-11 (`.8.6`): accepted the selected while-contained repeat-body
+  pending-spawn local blocking `do` shape with single-pending post-`do`
+  `await_any` through the effect checker. The validator permits that sync only
+  when `ControlFlowEffects` proves
+  `await_any_single_pending_completes_outstanding_set`; the `until` analogue,
+  multi-pending post-`do` `await_any`, missing final sync, generated `do`, and
+  unrelated deeper nesting remain fail-closed. `perl -Iperl -c
+  perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c
+  t/1432-isf-loop-pending-spawn-local-do-effect-widening.t`; `perl -Iperl -c
+  t/1434-isf-while-pending-spawn-local-do-awaitany-effect-widening.t`; `prove
+  -Iperl t/1432-isf-loop-pending-spawn-local-do-effect-widening.t
+  t/1433-isf-until-pending-spawn-local-do-effect-widening.t
+  t/1434-isf-while-pending-spawn-local-do-awaitany-effect-widening.t`; `prove
+  -Iperl t/1432-isf-loop-pending-spawn-local-do-effect-widening.t
+  t/1433-isf-until-pending-spawn-local-do-effect-widening.t
+  t/1434-isf-while-pending-spawn-local-do-awaitany-effect-widening.t
+  t/1379-isf-loop-contained-repeat-body-local-do.t
+  t/1383-isf-loop-and-deeper-repeat-body-spawn.t
+  t/1384-isf-loop-and-deeper-repeat-body-multi-pending-awaitany.t
+  t/1423-isf-control-flow-lifetime-checks.t`; `prove -Iperl
+  t/1250-isf-spec-focused-test-index-audit.t
+  t/1305-isf-book-feature-matrix-audit.t
+  t/1307-isf-loop-body-doc-truth-audit.t`; `prove -Iperl
+  t/1376-isf-book-example-lowering-audit.t`; `prove -Iperl
+  t/1377-book-fsm-example-generation-audit.t`; `prove -Iperl
+  t/1419-isf-control-flow-effect-inventory.t
+  t/1421-isf-control-flow-effect-checks.t
+  t/1422-isf-control-flow-child-plan.t
+  t/1423-isf-control-flow-lifetime-checks.t
+  t/1424-isf-control-flow-domain-binding-effects.t
+  t/1425-isf-control-flow-validator-effect-migration.t
+  t/1426-isf-control-flow-same-domain-validator-effect-migration.t
+  t/1427-isf-control-flow-activation-domain-validator-effect-migration.t
+  t/1428-isf-control-flow-binding-endpoint-validator-effect-migration.t
+  t/1429-isf-control-flow-binding-expression-validator-effect-migration.t
+  t/1430-isf-control-flow-rule-trigger-validator-effect-migration.t
+  t/1431-isf-control-flow-rule-trigger-binding-validator-effect-migration.t
+  t/1432-isf-loop-pending-spawn-local-do-effect-widening.t
+  t/1433-isf-until-pending-spawn-local-do-effect-widening.t
+  t/1434-isf-while-pending-spawn-local-do-awaitany-effect-widening.t`;
+  `scripts/check_memory_architecture.sh`;
+  `knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl
+  t/1414-docs-relative-paths-audit.t`; `mdbook build docs/book`; `git diff
+  --check`; and `./bin/ci-regression isf --no-book` (Files=294, Tests=2133)
+  pass.
 - 2026-06-10 (`.4`): added private `plan_actor` / `plan_inventory` child-plan
   projection derived from the shadow effect list. The plan records local child
   start/done wiring requirements, generated child instance plans, and sync
@@ -1053,5 +1133,7 @@ Acceptance:
   `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.8.3: select until pending-spawn local-do`.
 - `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.8.4`: `76125081`,
   `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.8.4: accept until pending-spawn local-do`.
-- `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.8.5`: this commit,
+- `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.8.5`: `0822d796`,
   `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.8.5: select pending-spawn awaitany local-do`.
+- `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.8.6`: this commit,
+  `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.8.6: accept pending-spawn awaitany local-do`.

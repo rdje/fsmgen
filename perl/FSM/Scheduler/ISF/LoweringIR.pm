@@ -3031,14 +3031,16 @@ sub _control_flow_effects_prove_rule_trigger_binding_endpoint_domain($actor, $ru
     return 0;
 }
 
-sub _control_flow_effects_prove_loop_repeat_pending_spawn_local_do_drain($actor, $transaction_name, $loop_kind, $spawn_instance, $do_child) {
+sub _control_flow_effects_prove_loop_repeat_pending_spawn_local_do_drain($actor, $transaction_name, $loop_kind, $spawn_instance, $do_child, $options) {
     return 0 unless defined($transaction_name) && !ref($transaction_name);
     return 0 unless defined($loop_kind) && !ref($loop_kind) && ($loop_kind eq 'while' || $loop_kind eq 'until');
     return 0 unless defined($spawn_instance) && !ref($spawn_instance) && length($spawn_instance);
     return 0 unless defined($do_child) && !ref($do_child) && length($do_child);
+    $options = {} unless ref($options) eq 'HASH';
 
     my $loop_backedge = "${loop_kind}_retest";
     my $done_port = "${spawn_instance}_done";
+    my $allow_single_pending_await_any = $options->{allow_single_pending_await_any} ? 1 : 0;
     my $check = _control_flow_effect_check($actor);
     return 0 unless $check->{ok};
 
@@ -3096,7 +3098,9 @@ sub _control_flow_effects_prove_loop_repeat_pending_spawn_local_do_drain($actor,
             } @proofs;
             next unless grep {
                 ($_->{region_id} // '') eq $region_id
-                    && ($_->{code} // '') eq 'await_all_drains_outstanding_children'
+                    && (($_->{code} // '') eq 'await_all_drains_outstanding_children'
+                        || ($allow_single_pending_await_any
+                            && ($_->{code} // '') eq 'await_any_single_pending_completes_outstanding_set'))
                     && _effect_done_ports_match($_->{done_ports}, [$done_port])
             } @proofs;
             return 1;
@@ -7187,6 +7191,9 @@ sub _validate_repeat_body_spawn_subset {
                         $pending_spawn_local_do_loop_kind,
                         $pending_spawns[0],
                         $target,
+                        {
+                            allow_single_pending_await_any => $pending_spawn_local_do_loop_kind eq 'while',
+                        },
                     );
                 my $allowed_pending_do = $plain_local_do
                     || (defined $pending_generated_do_label && $plain_generated_child_do)
@@ -7259,7 +7266,8 @@ sub _validate_repeat_body_spawn_subset {
                 unless @pending_spawns;
             confess "Transaction '$tn': loop-contained repeat-body local do while generated spawns are pending requires same-body '(await_all done)' drain; '(await_any done)' after the do remains deferred\n"
                 if $pending_loop_local_do_before_drain
-                    && $keyword eq 'await_any';
+                    && $keyword eq 'await_any'
+                    && @pending_spawns != 1;
             my $allowed_local_spawn_after_do_before_post_await_any =
                 defined($pending_local_do_label)
                 && $spawn_after_local_do_before_drain

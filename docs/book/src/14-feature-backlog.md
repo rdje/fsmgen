@@ -729,8 +729,10 @@ closed (`cross-domain repeat-body do remains deferred`). A `while`- or
 `until`-contained repeat may now keep exactly one generated spawn pending
 across one plain local blocking `(do child)` when a later same-body
 `(await_all done)` drains that spawned instance before repeat and the
-surrounding loop re-entry; multi-pending, generated-do, and post-do
-`await_any` variants remain fail-closed. A plain local
+surrounding loop re-entry. The `while`-contained single-pending variant may
+also use post-`do` `(await_any done)` as that final sync. The matching `until`
+post-`do` `await_any`, multi-pending, generated-do, and multi-pending
+post-`do` `await_any` variants remain fail-closed. A plain local
 `(do child)` inside `while -> when -> repeat` now also lowers (`t/1379`);
 generated `do`, `spawn`, `until -> when`, nested `switch`, and extra loop
 nesting in that loop-plus-branch family still emit the loop-contained or

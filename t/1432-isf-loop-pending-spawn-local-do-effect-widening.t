@@ -111,21 +111,6 @@ ISF
         'missing drain keeps the existing pending-spawn do gate because no await_all proof exists');
 };
 
-subtest 'await_any after the local do does not widen the selected await_all contract' => sub {
-    my $actor = parse_actor(actor_for_body('while_pending_spawn_local_do_await_any', <<'ISF'), 'while-pending-spawn-local-do-await-any');
-(while cond
-  (repeat loops
-    (spawn worker as w0)
-    (do helper)
-    (await_any done)))
-ISF
-
-    my ($lowered, $err) = lower_actor($actor);
-    ok(!$lowered, 'post-do await_any remains rejected for this slice');
-    like($err, qr/repeat-body do cannot appear while repeat-body spawn clauses are pending/,
-        'await_any path keeps the existing pending-spawn do gate because no await_all proof exists');
-};
-
 subtest 'multi-pending variant remains outside the exact single-pending slice' => sub {
     my $multi = parse_actor(actor_for_body('while_multi_pending_spawn_local_do', <<'ISF'), 'while-multi-pending-spawn-local-do');
 (while cond
