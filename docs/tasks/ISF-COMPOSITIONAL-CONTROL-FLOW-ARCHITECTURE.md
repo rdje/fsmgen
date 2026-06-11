@@ -6,7 +6,7 @@ Roadmap lane: R14 / ISF compositional control-flow and activation architecture
 
 Created: 2026-06-10
 
-Current frontier: `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.8.13`
+Current frontier: `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.8.14`
 
 ## Goal
 
@@ -843,7 +843,7 @@ Result:
 
 #### ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.8.13 — Next Effect-Proven Combination Selection
 
-Status: active
+Status: done
 
 Goal: Select the next narrow behavior-widening combination that can be accepted
 by construction through the migrated region/effect checker after the
@@ -860,6 +860,48 @@ Acceptance:
   combination.
 - mdBook, downstream spec, task tree, and Knowledge Map are updated if the
   selected combination changes public behavior.
+
+Result:
+
+- Selected the next implementation slice:
+  `(while cond (repeat n (spawn worker as w0) (spawn worker as w1) (spawn worker as w2) (do helper) (await_all done)))`.
+- The source/backlog anchor is the shipped two-spawn `while`/`until`
+  pending-spawn local-`do` `await_all` behavior and the documented
+  fail-closed wider fan-out neighbor.
+- A read-only effect-checker probe proves the selected `while` shape has clean
+  `while` and `repeat` backedges, static generated-spawn instances
+  `w0`/`w1`/`w2`, generated-top start/done handoff requirements for
+  `w0_done`/`w1_done`/`w2_done`, same-domain activation targets for all spawns
+  and `helper`, a blocking `do` drain for `helper_done`, and an `await_all`
+  drain for `w0_done,w1_done,w2_done`.
+- The `until` three-spawn analogue, generated `do`, cross-domain activation,
+  post-`do` multi-pending `await_any`, missing final sync, wider fan-outs
+  beyond three, and unrelated deeper nesting remain outside the selected next
+  implementation leaf.
+
+#### ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.8.14 — While-Contained Three-Pending Pending-Spawn Local Do AwaitAll
+
+Status: active
+
+Goal: Accept the selected while-contained repeat-body sequence where three
+generated `spawn` clauses remain pending across a local blocking `do`, then a
+same-body `await_all` drains all three spawned children before repeat and
+`while` re-entry.
+
+Acceptance:
+
+- The public validator permits only the selected same-domain `while` shape when
+  `ControlFlowEffects` proves clean repeat/`while` backedges, deterministic
+  generated-top handoffs and static instances for all pending generated
+  spawns, a local blocking-`do` done drain, and an `await_all` drain over the
+  exact outstanding spawned done-port set.
+- Existing accepted one- and two-spawn `while`/`until` local-`do` `await_all`
+  fixtures plus single-pending `await_any` fixtures remain accepted.
+- The `until` three-spawn analogue, generated `do`, cross-domain activation,
+  missing final sync, post-`do` multi-pending `await_any`, wider fan-outs
+  beyond three, and unrelated deeper nesting remain fail-closed.
+- The mdBook, downstream integration spec, live ISF spec/indexes, task tree,
+  and Knowledge Map are updated for the new public behavior.
 
 ### ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.9 — Public Contract And Documentation Simplification
 
@@ -1446,6 +1488,18 @@ Acceptance:
   `./bin/ci-regression isf --no-book` (Files=294, Tests=2133);
   `scripts/check_memory_architecture.sh`; `prove -Iperl
   t/1414-docs-relative-paths-audit.t`; and `git diff --check` pass.
+- 2026-06-11 (`.8.13`): selected the while-contained three-spawn
+  pending-spawn local blocking `do` plus same-body `await_all` combination for
+  the next implementation leaf:
+  `(while cond (repeat n (spawn worker as w0) (spawn worker as w1) (spawn worker as w2) (do helper) (await_all done)))`.
+  A read-only effect-checker probe proves clean `while`/`repeat` backedges,
+  static `w0`/`w1`/`w2` identities, generated-top start/done handoff
+  requirements for `w0_done`/`w1_done`/`w2_done`, a local `helper` drain, and
+  an `await_all` drain for `w0_done,w1_done,w2_done`; public lowering still
+  rejects the source at the existing pending-spawn `do` gate before the
+  implementation leaf. `scripts/check_memory_architecture.sh`,
+  `knowledge-map/scripts/check_knowledge_map.sh`, `prove -Iperl
+  t/1414-docs-relative-paths-audit.t`, and `git diff --check` pass.
 - 2026-06-10 (`.4`): added private `plan_actor` / `plan_inventory` child-plan
   projection derived from the shadow effect list. The plan records local child
   start/done wiring requirements, generated child instance plans, and sync
@@ -1531,5 +1585,7 @@ Acceptance:
   `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.8.10: accept until multi-pending local-do`.
 - `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.8.11`: `36713bcf`,
   `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.8.11: select until pending-spawn awaitany local-do`.
-- `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.8.12`: this commit,
+- `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.8.12`: `0a753ca1`,
   `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.8.12: accept until pending-spawn awaitany local-do`.
+- `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.8.13`: this commit,
+  `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.8.13: select wider pending-spawn local-do fanout`.
