@@ -6,7 +6,7 @@ Roadmap lane: R14 / ISF compositional control-flow and activation architecture
 
 Created: 2026-06-10
 
-Current frontier: `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.8.31`
+Current frontier: `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.8.32`
 
 ## Goal
 
@@ -20,6 +20,13 @@ report/doc surfaces.
 The target end state is "support combinations by construction": a new
 combination is accepted because the region/effect contracts prove the hardware
 invariants, not because a hand-written allow-list names that exact syntax path.
+
+Depth is not a semantic limit. The scheduler architecture must not encode an
+arbitrary maximum combination depth; deep mixed constructs such as
+`while -> do -> spawn -> call -> do -> while -> spawn -> spawn -> do -> do`
+are valid in principle when the typed region/effect contracts prove the
+hardware invariants. Temporary bounded depth or fanout cuts are migration
+checkpoints, not the target contract.
 
 ## Hardware Invariants
 
@@ -1634,7 +1641,7 @@ Result:
 
 #### ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.8.31 — Next Effect-Proven Combination Selection
 
-Status: active
+Status: done
 
 Goal: Select the next narrow behavior-widening combination that can be accepted
 by construction through the migrated region/effect checker after the
@@ -1651,6 +1658,46 @@ Acceptance:
   combination.
 - mdBook, downstream spec, task tree, and Knowledge Map are updated if the
   selected combination changes public behavior.
+
+Result:
+
+- Selected the scheduler depth-neutrality requirement as the next architecture
+  slice before any further behavior widening. The end state is that nesting
+  depth and mixed construct sequence length are bounded by proven hardware
+  invariants and practical hardware/resource constraints, not by scheduler
+  allow-list depth.
+- Captured the concrete theoretical shape
+  `while -> do -> spawn -> call -> do -> while -> spawn -> spawn -> do -> do`
+  as representative evidence that arbitrary mixed-depth composition must be
+  planned through typed region/effect contracts rather than another enumerated
+  syntax sequence.
+- No public behavior changes in this selection slice. The mdBook backlog now
+  records arbitrary mixed-depth scheduler composition as an architectural
+  target/future-work item, without claiming the current implementation ships
+  unbounded depth.
+- `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.8.32` now owns the exact
+  follow-up audit/planning slice before any source/test/config behavior
+  change.
+
+#### ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.8.32 — Depth-Neutrality Audit
+
+Status: active
+
+Goal: Audit current scheduler depth/fanout allow-list cuts against the
+depth-neutral architecture target and select the smallest next implementation
+leaf that removes an arbitrary depth gate by proof, not by enumerating another
+fixed syntax chain.
+
+Acceptance:
+
+- Identify the current public fail-closed gates that are depth or chain-shape
+  limits rather than hardware invariant limits.
+- Separate true hardware/resource constraints from transitional migration cuts.
+- Name one narrow next implementation leaf that can consume existing or
+  extended region/effect proofs without changing unrelated behavior.
+- Do not widen public behavior in this audit slice.
+- Update task tree, `MEMORY.md`, and any user-facing backlog wording needed to
+  keep the architecture target recoverable after a session loss.
 
 ### ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.9 — Public Contract And Documentation Simplification
 
@@ -2699,6 +2746,19 @@ Acceptance:
   `mdbook build docs/book`; `knowledge-map/scripts/check_knowledge_map.sh`;
   `scripts/check_memory_architecture.sh`; `git diff --check`; and
   `./bin/ci-regression isf --no-book` (Files=294, Tests=2133) pass.
+- 2026-06-11 (`.8.31`): selected depth-neutral scheduler composition as the
+  next architecture target after the four-spawn post-`do` `await_any` fanout
+  slices. The target contract is that deep mixed construct chains, including
+  representative shapes like
+  `while -> do -> spawn -> call -> do -> while -> spawn -> spawn -> do -> do`,
+  are limited by proven hardware invariants and practical hardware/resource
+  constraints rather than scheduler allow-list depth. This selection slice
+  records the requirement in the architecture task tree and mdBook backlog,
+  advances the active owner to `.8.32` for an audit/planning slice, and changes
+  no public lowering behavior. `mdbook build docs/book`;
+  `scripts/check_memory_architecture.sh`;
+  `knowledge-map/scripts/check_knowledge_map.sh`; `git diff --check`; and
+  `git diff --cached --check` pass.
 - 2026-06-10 (`.4`): added private `plan_actor` / `plan_inventory` child-plan
   projection derived from the shadow effect list. The plan records local child
   start/done wiring requirements, generated child instance plans, and sync
@@ -2822,3 +2882,5 @@ Acceptance:
   `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.8.29: select four-spawn post-do awaitany fanout`.
 - `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.8.30`: this commit,
   `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.8.30: accept four-spawn post-do awaitany fanout`.
+- `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.8.31`: this commit,
+  `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.8.31: select depth-neutral scheduler target`.

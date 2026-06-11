@@ -35,6 +35,13 @@ this chapter:
   with later same-body `(await_all done)` (`t/1384`) at deeper branch nesting
   (`when⁺ → repeat`, `switch → when⁺ → repeat`) now lower; undrained and
   cross-domain generated `do` stay deferred.
+- **Depth-neutral scheduler target**: the intended compositional scheduler
+  contract has no arbitrary nesting-depth limit. Deep mixed chains such as
+  `while -> do -> spawn -> call -> do -> while -> spawn -> spawn -> do -> do`
+  are valid in principle when typed region/effect proofs establish child
+  lifetime, loop backedge, binding/domain, generated-instance, and CDC
+  invariants. Current bounded depth/fanout allow-lists remain migration cuts,
+  not the target public contract.
 - **Book example correctness build gate**: every `lisp`-tagged book
   example must parse + lower (`t/1376`). Current state: 72
   complete fixtures lower cleanly.
