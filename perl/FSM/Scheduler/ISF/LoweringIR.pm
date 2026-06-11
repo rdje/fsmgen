@@ -3031,11 +3031,13 @@ sub _control_flow_effects_prove_rule_trigger_binding_endpoint_domain($actor, $ru
     return 0;
 }
 
-sub _control_flow_effects_prove_while_repeat_pending_spawn_local_do_drain($actor, $transaction_name, $spawn_instance, $do_child) {
+sub _control_flow_effects_prove_loop_repeat_pending_spawn_local_do_drain($actor, $transaction_name, $loop_kind, $spawn_instance, $do_child) {
     return 0 unless defined($transaction_name) && !ref($transaction_name);
+    return 0 unless defined($loop_kind) && !ref($loop_kind) && ($loop_kind eq 'while' || $loop_kind eq 'until');
     return 0 unless defined($spawn_instance) && !ref($spawn_instance) && length($spawn_instance);
     return 0 unless defined($do_child) && !ref($do_child) && length($do_child);
 
+    my $loop_backedge = "${loop_kind}_retest";
     my $done_port = "${spawn_instance}_done";
     my $check = _control_flow_effect_check($actor);
     return 0 unless $check->{ok};
@@ -3043,19 +3045,19 @@ sub _control_flow_effects_prove_while_repeat_pending_spawn_local_do_drain($actor
     for my $tx (@{$check->{transactions} || []}) {
         next unless ($tx->{name} // '') eq $transaction_name;
         my @proofs = @{$tx->{proofs} || []};
-        my $has_while_backedge_proof = grep {
+        my $has_loop_backedge_proof = grep {
             ($_->{code} // '') eq 'backedge_has_no_outstanding_children'
-                && ($_->{region_kind} // '') eq 'while'
-                && ($_->{backedge} // '') eq 'while_retest'
+                && ($_->{region_kind} // '') eq $loop_kind
+                && ($_->{backedge} // '') eq $loop_backedge
         } @proofs;
-        next unless $has_while_backedge_proof;
+        next unless $has_loop_backedge_proof;
 
         my %repeat_region_ids = map { $_->{region_id} => 1 } grep {
             defined($_->{region_id})
                 && ($_->{code} // '') eq 'backedge_has_no_outstanding_children'
                 && ($_->{region_kind} // '') eq 'repeat'
                 && ($_->{backedge} // '') eq 'repeat_check_nonzero'
-                && _effect_path_matches($_->{path}, [qw(transaction while repeat)])
+                && _effect_path_matches($_->{path}, ['transaction', $loop_kind, 'repeat'])
         } @proofs;
 
         for my $region_id (sort keys %repeat_region_ids) {
@@ -7168,16 +7170,21 @@ sub _validate_repeat_body_spawn_subset {
                     ($when_body_repeat || $switch_branch_repeat)
                     && $static_domain_generated_do
                     && $awaiting_multi_pending_drain;
-                my $allowed_while_pending_spawn_local_do =
+                my $pending_spawn_local_do_loop_kind =
+                    $label eq 'while body' ? 'while' :
+                    $label eq 'until body' ? 'until' :
+                    undef;
+                my $allowed_loop_pending_spawn_local_do =
                     $loop_body_repeat
-                    && $label eq 'while body'
+                    && defined($pending_spawn_local_do_loop_kind)
                     && $plain_local_do
                     && @pending_spawns == 1
                     && !$awaiting_multi_pending_drain
                     && !$pending_loop_local_do_before_drain
-                    && _control_flow_effects_prove_while_repeat_pending_spawn_local_do_drain(
+                    && _control_flow_effects_prove_loop_repeat_pending_spawn_local_do_drain(
                         $actor,
                         $tn,
+                        $pending_spawn_local_do_loop_kind,
                         $pending_spawns[0],
                         $target,
                     );
@@ -7227,8 +7234,8 @@ sub _validate_repeat_body_spawn_subset {
                         || $allowed_static_bound_generated_do_after_multi_pending_await_any
                         || $allowed_static_domain_generated_do_after_multi_pending_await_any);
                 confess "Transaction '$tn': repeat-body do cannot appear while repeat-body spawn clauses are pending; wait for spawned children before blocking do\n"
-                    unless $allowed_branch_pending_do || $allowed_while_pending_spawn_local_do;
-                if ($allowed_while_pending_spawn_local_do) {
+                    unless $allowed_branch_pending_do || $allowed_loop_pending_spawn_local_do;
+                if ($allowed_loop_pending_spawn_local_do) {
                     $pending_loop_local_do_before_drain = 1;
                 } else {
                     $pending_local_do_before_drain = 1 if $plain_local_do;

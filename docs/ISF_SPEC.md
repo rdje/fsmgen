@@ -2657,10 +2657,10 @@ Current lowering:
   `(await_any done)` without a later `(await_all done)` trips that same drain
   requirement — and a cross-domain generated `do` stays deferred (`cross-domain
   repeat-body do remains deferred`).
-  A `while`-contained repeat may also keep exactly one generated spawn pending
-  across one plain local blocking `(do child)` when a later same-body
-  `(await_all done)` drains that spawned instance before repeat and `while`
-  re-entry. The matching `until`, multi-pending, generated-do, and post-do
+  A `while`- or `until`-contained repeat may also keep exactly one generated
+  spawn pending across one plain local blocking `(do child)` when a later
+  same-body `(await_all done)` drains that spawned instance before repeat and
+  the surrounding loop re-entry. Multi-pending, generated-do, and post-do
   `await_any` variants remain fail-closed.
   Repeats directly inside a top-level
   `when` body also accept one or more generated
@@ -5816,6 +5816,7 @@ Focused tests:
 - [t/1430-isf-control-flow-rule-trigger-validator-effect-migration.t](../t/1430-isf-control-flow-rule-trigger-validator-effect-migration.t)
 - [t/1431-isf-control-flow-rule-trigger-binding-validator-effect-migration.t](../t/1431-isf-control-flow-rule-trigger-binding-validator-effect-migration.t)
 - [t/1432-isf-loop-pending-spawn-local-do-effect-widening.t](../t/1432-isf-loop-pending-spawn-local-do-effect-widening.t)
+- [t/1433-isf-until-pending-spawn-local-do-effect-widening.t](../t/1433-isf-until-pending-spawn-local-do-effect-widening.t)
 
 ## 12. Explicitly Deferred
 

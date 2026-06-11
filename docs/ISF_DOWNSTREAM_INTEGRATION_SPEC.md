@@ -1309,10 +1309,10 @@ Rules:
   full-HDL composition-wiring limitation applies). A multi-pending
   `(await_any done)` followed by a later same-body `(await_all done)` drain is
   also supported in these contexts (as at top-level / when-body / switch-branch).
-  A `while`-contained repeat may also keep exactly one generated spawn pending
-  across one plain local blocking `(do child)` when a later same-body
-  `(await_all done)` drains that spawned instance before repeat and `while`
-  re-entry; the matching `until`, multi-pending, generated-do, and post-do
+  A `while`- or `until`-contained repeat may also keep exactly one generated
+  spawn pending across one plain local blocking `(do child)` when a later
+  same-body `(await_all done)` drains that spawned instance before repeat and
+  the surrounding loop re-entry; multi-pending, generated-do, and post-do
   `await_any` variants remain fail-closed.
   Inside a loop-contained repeat, an undrained spawn emits `loop-contained
   repeat-body spawn requires same-body '(await_all done)' or single-pending

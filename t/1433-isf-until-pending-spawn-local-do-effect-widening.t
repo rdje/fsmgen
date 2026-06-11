@@ -60,9 +60,9 @@ sub actor_for_body {
 ISF
 }
 
-subtest 'while-contained pending spawn across local do lowers through effect proofs' => sub {
-    my $actor = parse_actor(actor_for_body('while_pending_spawn_local_do', <<'ISF'), 'while-pending-spawn-local-do');
-(while cond
+subtest 'until-contained pending spawn across local do lowers through effect proofs' => sub {
+    my $actor = parse_actor(actor_for_body('until_pending_spawn_local_do', <<'ISF'), 'until-pending-spawn-local-do');
+(until cond
   (repeat loops
     (spawn worker as w0)
     (do helper)
@@ -70,11 +70,13 @@ subtest 'while-contained pending spawn across local do lowers through effect pro
 ISF
 
     my $check = check_actor($actor);
-    ok($check->{ok}, 'effect checker accepts the selected pending-spawn local-do shape');
+    ok($check->{ok}, 'effect checker accepts the selected until pending-spawn local-do shape');
     my $tx = transaction_check($check, 'parent');
     my $backedges = proofs($tx, 'backedge_has_no_outstanding_children');
-    ok((grep { ($_->{region_kind} // '') eq 'while' } @$backedges), 'while backedge has no outstanding child');
-    ok((grep { ($_->{region_kind} // '') eq 'repeat' } @$backedges), 'repeat backedge has no outstanding child');
+    ok((grep { ($_->{region_kind} // '') eq 'until' && ($_->{backedge} // '') eq 'until_retest' } @$backedges),
+        'until backedge has no outstanding child');
+    ok((grep { ($_->{region_kind} // '') eq 'repeat' && ($_->{backedge} // '') eq 'repeat_check_nonzero' } @$backedges),
+        'repeat backedge has no outstanding child');
     ok((grep { ($_->{instance} // '') eq 'w0' } @{proofs($tx, 'generated_child_instance_is_static')}),
         'spawned child instance identity is static');
     ok((grep { ($_->{child} // '') eq 'helper' } @{proofs($tx, 'blocking_do_drains_child_done')}),
@@ -83,23 +85,25 @@ ISF
         'await_all drains the pending spawned child');
 
     my ($lowered, $err) = lower_actor($actor);
-    ok($lowered, 'public lowering accepts the effect-proven sequence') or diag($err);
-    my $fsm = $lowered->{files}{'while_pending_spawn_local_do.fsm'};
+    ok($lowered, 'public lowering accepts the effect-proven until sequence') or diag($err);
+    my $fsm = $lowered->{files}{'until_pending_spawn_local_do.fsm'};
     like($fsm, qr/\(parent_spawn_\d+\b.*?\(=\s*\(w0_start>\s*1\)\).*?->\s*parent_do_\d+/s,
         'spawn starts w0 before the local do');
     like($fsm, qr/\(parent_do_\d+\b.*?\(=\s*\(helper_start\s*1\)\).*?<helper_done.*?->\s*parent_await_all_\d+/s,
         'local do waits for helper_done before await_all');
     like($fsm, qr/\(parent_await_all_\d+\b.*?->\s*parent_repeat_check_\d+\s*<w0_done/s,
         'await_all drains w0_done before repeat_check');
-    like($fsm, qr/\(parent_repeat_check_\d+\b.*?\(--\s*parent_cnt\).*?\(!=0\s*\(->\s*parent_spawn_\d+\)\).*?\(=0\s*\(->\s*parent_while_check_\d+\)\)/s,
+    like($fsm, qr/\(parent_repeat_check_\d+\b.*?\(--\s*parent_cnt\).*?\(!=0\s*\(->\s*parent_spawn_\d+\)\).*?\(=0\s*\(->\s*parent_until_check_\d+\)\)/s,
         'repeat re-entry returns to the spawn only after the drain');
-    like($lowered->{files}{'while_pending_spawn_local_do_top.fsm'}, qr/\(\?fsmc:w0 worker\b/s,
+    like($fsm, qr/\(parent_until_check_\d+\b.*?\(=1\s*\(->\s*parent_done_\d+\)\).*?\(=0\s*\(->\s*parent_repeat_init_\d+\)\)/s,
+        'until check exits when true and otherwise re-enters the repeat');
+    like($lowered->{files}{'until_pending_spawn_local_do_top.fsm'}, qr/\(\?fsmc:w0 worker\b/s,
         'generated top still instantiates the spawned child');
 };
 
-subtest 'missing final drain remains fail-closed with a targeted lifetime diagnostic' => sub {
-    my $actor = parse_actor(actor_for_body('while_pending_spawn_local_do_undrained', <<'ISF'), 'while-pending-spawn-local-do-undrained');
-(while cond
+subtest 'missing final drain remains fail-closed before public widening' => sub {
+    my $actor = parse_actor(actor_for_body('until_pending_spawn_local_do_undrained', <<'ISF'), 'until-pending-spawn-local-do-undrained');
+(until cond
   (repeat loops
     (spawn worker as w0)
     (do helper)))
@@ -108,12 +112,12 @@ ISF
     my ($lowered, $err) = lower_actor($actor);
     ok(!$lowered, 'missing await_all drain is still rejected');
     like($err, qr/repeat-body do cannot appear while repeat-body spawn clauses are pending/,
-        'missing drain keeps the existing pending-spawn do gate because no await_all proof exists');
+        'missing drain keeps the pending-spawn do gate because no await_all proof exists');
 };
 
-subtest 'await_any after the local do does not widen the selected await_all contract' => sub {
-    my $actor = parse_actor(actor_for_body('while_pending_spawn_local_do_await_any', <<'ISF'), 'while-pending-spawn-local-do-await-any');
-(while cond
+subtest 'await_any after the local do remains outside the await_all contract' => sub {
+    my $actor = parse_actor(actor_for_body('until_pending_spawn_local_do_await_any', <<'ISF'), 'until-pending-spawn-local-do-await-any');
+(until cond
   (repeat loops
     (spawn worker as w0)
     (do helper)
@@ -123,12 +127,12 @@ ISF
     my ($lowered, $err) = lower_actor($actor);
     ok(!$lowered, 'post-do await_any remains rejected for this slice');
     like($err, qr/repeat-body do cannot appear while repeat-body spawn clauses are pending/,
-        'await_any path keeps the existing pending-spawn do gate because no await_all proof exists');
+        'await_any path keeps the pending-spawn do gate because no await_all proof exists');
 };
 
-subtest 'multi-pending variant remains outside the exact single-pending slice' => sub {
-    my $multi = parse_actor(actor_for_body('while_multi_pending_spawn_local_do', <<'ISF'), 'while-multi-pending-spawn-local-do');
-(while cond
+subtest 'multi-pending spawn across local do remains rejected' => sub {
+    my $actor = parse_actor(actor_for_body('until_multi_pending_spawn_local_do', <<'ISF'), 'until-multi-pending-spawn-local-do');
+(until cond
   (repeat loops
     (spawn worker as w0)
     (spawn worker as w1)
@@ -136,10 +140,10 @@ subtest 'multi-pending variant remains outside the exact single-pending slice' =
     (await_all done)))
 ISF
 
-    my ($multi_lowered, $multi_err) = lower_actor($multi);
-    ok(!$multi_lowered, 'multi-pending spawn across local do remains rejected');
-    like($multi_err, qr/repeat-body do cannot appear while repeat-body spawn clauses are pending/,
-        'multi-pending variant keeps the existing broad pending-spawn do gate');
+    my ($lowered, $err) = lower_actor($actor);
+    ok(!$lowered, 'multi-pending spawn across local do remains rejected');
+    like($err, qr/repeat-body do cannot appear while repeat-body spawn clauses are pending/,
+        'multi-pending variant keeps the pending-spawn do gate');
 };
 
 done_testing();

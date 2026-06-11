@@ -697,9 +697,9 @@ subset; the full-HDL `--check-json` path has a pre-existing composition-wiring
 limitation that applies equally to the top-level case — see
 `docs/COMPOSITION_SCOPE.md`.)
 
-A `while`-contained repeat may also keep exactly one generated spawn pending
-across one plain local blocking `do`, provided the same repeat body then reaches
-`(await_all done)` before the repeat check can loop:
+A `while`- or `until`-contained repeat may also keep exactly one generated
+spawn pending across one plain local blocking `do`, provided the same repeat
+body then reaches `(await_all done)` before the repeat check can loop:
 
 ```lisp
 (actor while_repeat_spawn_do_drain
@@ -722,12 +722,35 @@ across one plain local blocking `do`, provided the same repeat body then reaches
     (complete done)))
 ```
 
+The matching body-first `until` form uses the same contract:
+
+```lisp
+(actor until_repeat_spawn_do_drain
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start) (input cond) (input loops (width 3))
+    (output done))
+  (transaction parent
+    (on start)
+    (until cond
+      (repeat loops
+        (spawn worker as w0)
+        (do helper)          ;; waits for helper_done; w0 remains pending
+        (await_all done)))   ;; drains w0 before repeat_check / until re-entry
+    (complete done))
+  (transaction worker
+    (complete done))
+  (transaction helper
+    (complete done)))
+```
+
 The validator accepts this shape only when the compositional effect checker
 proves the generated spawn has deterministic top wiring, the local `do` waits
 for its own fresh done pulse, and the later `await_all` drains the pending
-spawn before both the repeat and `while` backedges. The matching `until` shape,
-multi-pending spawned children across the local `do`, generated `do`, and
-post-`do` `await_any` stay fail-closed for now.
+spawn before both the repeat and surrounding loop backedges (`while_retest` or
+`until_retest`). Multi-pending spawned children across the local `do`,
+generated `do`, and post-`do` `await_any` stay fail-closed for now.
 
 An **undrained** spawn (no same-body `await_all`/single-pending `await_any`
 before the repeat check) stays deferred: `Transaction 'parent': loop-contained
