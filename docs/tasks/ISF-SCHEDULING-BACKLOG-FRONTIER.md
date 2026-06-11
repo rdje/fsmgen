@@ -6,7 +6,7 @@ Roadmap lane: R14 / ISF scheduling, activation, CDC, ATL, actor-network, and gen
 
 Created: 2026-06-10
 
-Current frontier: `ISF-SCHEDULING-BACKLOG-FRONTIER.7.1`
+Current frontier: `ISF-SCHEDULING-BACKLOG-FRONTIER.7.2`
 
 ## Goal
 
@@ -506,7 +506,7 @@ Acceptance:
 
 #### ISF-SCHEDULING-BACKLOG-FRONTIER.7.1 — Actor-Network Scheduling First Slice Selection
 
-Status: pending
+Status: done
 
 Goal: Select the first exact actor-network or group-scheduling source shape
 for implementation or targeted fail-closed closure.
@@ -521,6 +521,59 @@ Acceptance:
   artifacts or absence thereof, and mdBook/spec examples.
 - If the pattern remains unsafe, record the missing scheduling/wiring/storage
   contract and close it with a targeted diagnostic/doc update.
+
+Result:
+
+- Audited the shipped actor-network and group-scheduling surfaces. Static
+  groups remain report-only metadata with `scheduling: "metadata_only"` unless
+  one contiguous transaction-body trigger batch targets distinct actor
+  instances; that accepted batch reports canonical
+  `association_schedules[]` evidence and compatibility `group_schedules[]`
+  evidence, emits only the parent scheduled `.fsm`, and emits no child
+  artifacts or generated top.
+- Reverified that a static group declaration does not force a schedule for one
+  actor trigger: `(trigger writer.capture)` parses with the declared group
+  present, records only the per-target `transaction_triggers[]` entry, keeps
+  `association_schedules[]` and `group_schedules[]` empty, and lowers to the
+  parent scheduled `.fsm`.
+- Audited generated-top child wiring exclusions: generated ATL tops cannot be
+  combined with static group metadata, temporary associations, or group
+  schedules in the current subset. Broader multi-instance scheduling without a
+  selected primitive remains fail-closed.
+- Selected source-authored group endpoints such as `(trigger pipeline.capture)`,
+  `(await pipeline.done)`, and sync-clause operands like
+  `(await_all pipeline.done)` as the first exact `.7` closure. These forms
+  already fail closed, but currently through generic dotted enum-member
+  diagnostics. They remain unsafe to accept because the current hardware
+  contract has no group-level trigger arbitration, per-member fanout mapping,
+  group-event aggregation, event latch/storage, or generated-child wiring
+  semantics.
+- The next implementation leaf is `.7.2`, which will keep group-qualified ATL
+  endpoints fail-closed and replace the generic enum-member path with a
+  targeted group endpoint diagnostic and synced docs/tests.
+
+#### ISF-SCHEDULING-BACKLOG-FRONTIER.7.2 — ATL Group Endpoint Diagnostic
+
+Status: pending
+
+Goal: Keep source-authored group-qualified ATL endpoints fail-closed while
+replacing generic enum-member diagnostics with a targeted missing group
+scheduling/wiring contract diagnostic.
+
+Acceptance:
+
+- Detect transaction-body `(trigger group.name)`, `(await group.name)`, and
+  sync-clause operands such as `(await_all group.name)` / `(await_any
+  group.name)` when the qualifier names a declared static group from either
+  verbose `(group ...)` or compact `(concurrent ...)` syntax.
+- Preserve accepted instance-qualified actor triggers, actor waits, temporary
+  trigger batches, report-only group metadata, generated-top exclusions, and
+  enum-member diagnostics outside the group-endpoint surface.
+- Fail with a targeted diagnostic that names the group endpoint and states the
+  missing group-level arbitration/fanout, event aggregation, storage/lifetime,
+  and generated-child wiring contract.
+- Sync parser tests, mdBook, live specs/contracts, and Knowledge Map with the
+  fail-closed group endpoint boundary.
 
 ### ISF-SCHEDULING-BACKLOG-FRONTIER.8 — Generated-Child Top Surface Widening
 
@@ -623,6 +676,38 @@ Acceptance:
   `prove -Iperl t/1376-isf-book-example-lowering-audit.t`; `mdbook build
   docs/book`; `knowledge-map/scripts/check_knowledge_map.sh`;
   `scripts/check_memory_architecture.sh`; and `git diff --check` pass.
+- 2026-06-11 (`.5.1`): audited nested ATL trigger/wait handling, temporary
+  trigger-batch multi-event waits, and trigger-batch diagnostics. Selected
+  repeated actor-event waits after a temporary trigger batch as the first
+  exact `.5` fail-closed closure. `scripts/check_memory_architecture.sh`;
+  `knowledge-map/scripts/check_knowledge_map.sh`; and `git diff --check`
+  pass.
+- 2026-06-11 (`.5.2`): kept repeated actor-event waits after a temporary
+  trigger batch fail-closed with a targeted event re-arm/lifetime diagnostic.
+  `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -c t/1322*`;
+  `prove -Iperl t/1322 t/1329 t/1305 t/1332 t/1250 t/1376 t/1112 t/1113
+  t/1114`; `mdbook build docs/book`;
+  `knowledge-map/scripts/check_knowledge_map.sh`;
+  `scripts/check_memory_architecture.sh`; and `git diff --check` pass.
+- 2026-06-11 (`.6.1`): audited local sync, generated-child completion sync,
+  ATL event waits, and trigger-batch multi-event waits. Selected
+  sync-clause qualified actor-event joins such as `(await_all reader.done
+  writer.done)` as the first `.6` fail-closed closure.
+  `scripts/check_memory_architecture.sh`;
+  `knowledge-map/scripts/check_knowledge_map.sh`; and `git diff --check`
+  pass.
+- 2026-06-11 (`.6.2`): kept `await_all`/`await_any` ATL actor-event joins
+  fail-closed with a targeted event-latch/storage diagnostic. `prove -Iperl
+  t/1322 t/1329 t/1305 t/1332 t/1250 t/1376 t/1112 t/1113 t/1114`;
+  `mdbook build docs/book`; `knowledge-map/scripts/check_knowledge_map.sh`;
+  `scripts/check_memory_architecture.sh`; and `git diff --check` pass.
+- 2026-06-11 (`.7.1`): audited static group metadata, temporary trigger
+  batches, generated-top child wiring exclusions, multi-instance diagnostics,
+  and group-qualified endpoint probes. Selected `.7.2` to keep
+  `group.name` ATL endpoints fail-closed with a targeted diagnostic.
+  `scripts/check_memory_architecture.sh`;
+  `knowledge-map/scripts/check_knowledge_map.sh`; and `git diff --check`
+  pass.
 
 ## Commit Log
 
@@ -632,9 +717,19 @@ Acceptance:
   ISF-SCHEDULING-BACKLOG-FRONTIER.2.1: close direct on override boundary`
 - `ISF-SCHEDULING-BACKLOG-FRONTIER.3.1`: `9c87ecc4
   ISF-SCHEDULING-BACKLOG-FRONTIER.3.1: ship while-when repeat local do`
-- `ISF-SCHEDULING-BACKLOG-FRONTIER.4.1`: this commit,
-  `ISF-SCHEDULING-BACKLOG-FRONTIER.4.1: sharpen await_any lifetime diagnostics`.
-- `ISF-SCHEDULING-BACKLOG-FRONTIER.4.2`: this commit,
-  `ISF-SCHEDULING-BACKLOG-FRONTIER.4.2: select repeat parent-exit drain diagnostic`.
-- `ISF-SCHEDULING-BACKLOG-FRONTIER.4.3`: this commit,
-  `ISF-SCHEDULING-BACKLOG-FRONTIER.4.3: diagnose repeat parent-exit drains`.
+- `ISF-SCHEDULING-BACKLOG-FRONTIER.4.1`: `54c93ffb
+  ISF-SCHEDULING-BACKLOG-FRONTIER.4.1: sharpen await_any lifetime diagnostics`
+- `ISF-SCHEDULING-BACKLOG-FRONTIER.4.2`: `b351c6ce
+  ISF-SCHEDULING-BACKLOG-FRONTIER.4.2: select repeat parent-exit drain diagnostic`
+- `ISF-SCHEDULING-BACKLOG-FRONTIER.4.3`: `1cf371f2
+  ISF-SCHEDULING-BACKLOG-FRONTIER.4.3: diagnose repeat parent-exit drains`
+- `ISF-SCHEDULING-BACKLOG-FRONTIER.5.1`: `616d9c9d
+  ISF-SCHEDULING-BACKLOG-FRONTIER.5.1: select repeated ATL wait diagnostic`
+- `ISF-SCHEDULING-BACKLOG-FRONTIER.5.2`: `171147bd
+  ISF-SCHEDULING-BACKLOG-FRONTIER.5.2: diagnose repeated ATL waits`
+- `ISF-SCHEDULING-BACKLOG-FRONTIER.6.1`: `3cc4f4f0
+  ISF-SCHEDULING-BACKLOG-FRONTIER.6.1: select ATL event-join diagnostic`
+- `ISF-SCHEDULING-BACKLOG-FRONTIER.6.2`: `00fedc78
+  ISF-SCHEDULING-BACKLOG-FRONTIER.6.2: diagnose ATL event joins`
+- `ISF-SCHEDULING-BACKLOG-FRONTIER.7.1`: this commit,
+  `ISF-SCHEDULING-BACKLOG-FRONTIER.7.1: select ATL group endpoint diagnostic`.
