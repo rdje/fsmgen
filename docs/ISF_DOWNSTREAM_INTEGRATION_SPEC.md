@@ -1325,12 +1325,13 @@ Rules:
   re-entry. The
   `while`- or `until`-contained single-pending variant may use post-`do`
   `(await_any done)` instead when the effect checker proves that the
-  observation completes the outstanding set. The `while`- or body-first
-  `until`-contained two-spawn variant may also use post-`do` multi-pending
-  `(await_any done)` as an observation point when a later same-body
-  `(await_all done)` drains both pending generated children before repeat and
-  loop re-entry. Fan-outs beyond four, generated-do, and wider post-`do`
-  multi-pending `await_any` variants remain fail-closed.
+  observation completes the outstanding set. The `while`-contained two- and
+  three-spawn variants and body-first `until`-contained two-spawn variant may
+  also use post-`do` multi-pending `(await_any done)` as an observation point
+  when a later same-body `(await_all done)` drains the same pending generated
+  children before repeat and loop re-entry. Body-first `until` three-spawn,
+  generated-do, and four-or-wider post-`do` multi-pending `await_any` variants
+  remain fail-closed.
   Inside a loop-contained repeat, an undrained spawn emits `loop-contained
   repeat-body spawn requires same-body '(await_all done)' or single-pending
   '(await_any done)'` (a multi-pending `(await_any done)` without a later
