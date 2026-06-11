@@ -44,7 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE` | `active` | `R14` | current frontier (`.8.15`; select the next behavior-widening combination proven by the effect checker) | [docs/tasks/ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.md](docs/tasks/ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.md) |
+| `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE` | `active` | `R14` | current frontier (`.8.16`; accept the until-contained three-spawn pending-spawn local-do await_all subset) | [docs/tasks/ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.md](docs/tasks/ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.md) |
 | `ISF-SCHEDULING-BACKLOG-FRONTIER` | `active` | `R14` | current frontier (`.4.1`; outstanding-child lifetime work is pending and will be resumed through the compositional architecture effect-checker path) | [docs/tasks/ISF-SCHEDULING-BACKLOG-FRONTIER.md](docs/tasks/ISF-SCHEDULING-BACKLOG-FRONTIER.md) |
 | `CI-SHARED-DP-SURFACE-REPAIR` | `done` | CI/composition contract integrity | complete (`.1`; repaired reproduced GitHub run `27086344097` composition shared-datapath surface and stale contract fixture failures; focused cluster, contract tests, quick regression, mdBook, Knowledge Map, memory, path, and diff gates pass) | [docs/tasks/CI-SHARED-DP-SURFACE-REPAIR.md](docs/tasks/CI-SHARED-DP-SURFACE-REPAIR.md) |
 | `COMPOSITION-T84-NET-COUNT-REPAIR` | `done` | composition/test integrity | complete (`.1`; `t/84` now proves the explicit child-to-child carrier and accepts documented `shared_dp_unused_*` sink nets; quick suite passes) | [docs/tasks/COMPOSITION-T84-NET-COUNT-REPAIR.md](docs/tasks/COMPOSITION-T84-NET-COUNT-REPAIR.md) |
