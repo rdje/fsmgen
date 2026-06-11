@@ -2282,6 +2282,11 @@ The repo-local tracked raw AXI reference for future bounded probes is
 It is evidence for future task-tree-owned protocol-intent work, not a shipped
 PDF/spec extraction capability.
 
+Active probe:
+[AXI-VALID-READY-INTENT-PROBE](../../tasks/AXI-VALID-READY-INTENT-PROBE.md)
+will extract the first valid/ready source-anchor evidence inventory without
+selecting parser, lowering, `.fsm`, or HDL implementation behavior.
+
 ### ISF Enum, Type, And Aggregate Parity
 
 Status: shipped bounded surface; broader enum target/operator and aggregate
@@ -4335,8 +4340,9 @@ child-interface marking without changing public reports, generated artifacts,
 or HDL behavior. Broader parser/lowerer extraction remains deferred behind
 future exact owners. Completed selection/evaluation leaves
 `IAL2-PROTOCOL-PLATFORM-INTENT-EXPLORATION.1` and `.2` found IAL2
-design/probe ready but not implementation ready; no active or proposed PNT
-task tree remains.
+design/probe ready but not implementation ready. Active PNT has moved to
+`AXI-VALID-READY-INTENT-PROBE.2`, a source-anchor evidence inventory with no
+parser/lowering implementation selected.
 Completed implementation leaf
 `ARCHITECTURE-DEBT-FRONTIER.2.1`
 projects direct backend storage/helper declaration-plan entries into

@@ -10,10 +10,10 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `AXI-SPEC-LOCAL-REFERENCE-IMPORT.1` (this commit) — tracked the provided AXI spec PDF as a repo-local reference artifact.
-- active_work_unit: none. `AXI-SPEC-LOCAL-REFERENCE-IMPORT` is complete through `.1`; no proposed task tree is queued.
+- latest_commit: `AXI-SPEC-LOCAL-REFERENCE-IMPORT.1` (`fd8232fe`) — tracked the provided AXI spec PDF as a repo-local reference artifact.
+- active_work_unit: `AXI-VALID-READY-INTENT-PROBE.1` (selection slice) — selected the bounded AXI valid/ready source-anchor probe; next frontier is `.2`.
 - recently_done: `AXI-SPEC-LOCAL-REFERENCE-IMPORT.1`; `IAL2-PROTOCOL-PLATFORM-INTENT-EXPLORATION.2`; `.1`; `ISF-ATL-GENERATED-TOP-PLANNER-EXTRACTION.2`; `.1`. Older completed slices are in the task tree and git history.
-- in_flight_uncommitted: none expected after the `.1` commit; unrelated untracked `fx/` intentionally left alone.
+- in_flight_uncommitted: selection-only task-tree/index/README/mdBook/MEMORY edits for `AXI-VALID-READY-INTENT-PROBE.1`; unrelated untracked `fx/` intentionally left alone.
 - blockers: none.
 
 ## Notes
