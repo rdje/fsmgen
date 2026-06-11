@@ -168,4 +168,42 @@ ISF
         'an undrained multi-pending await_any trips the specific drain-requirement diagnostic');
 };
 
+subtest 'parent-body sync after repeat cannot drain repeat-body spawned children' => sub {
+    my $await_all = <<'ISF';
+(actor repeat_parent_await_all
+  (clock clk)
+  (reset rst_n)
+  (interface (input start) (input loops (width 3)) (output done))
+  (transaction parent
+    (on start)
+    (repeat loops
+      (spawn worker as w0))
+    (await_all done)
+    (complete done))
+  (transaction worker (complete done)))
+ISF
+    my $all_ok = eval { parse_lower($await_all, 'repeat-parent-await-all.isf'); 1 };
+    ok(!$all_ok, 'parent-body await_all after repeat does not drain repeat-body spawn');
+    like($@, qr/repeat-body spawn cannot be drained by parent-body '\(await_all done\)' after the repeat exits; use same-body '\(await_all done\)' before the repeat check can loop/,
+        'parent-exit await_all diagnostic names the same-body requirement');
+
+    my $await_any = <<'ISF';
+(actor repeat_parent_await_any
+  (clock clk)
+  (reset rst_n)
+  (interface (input start) (input loops (width 3)) (output done))
+  (transaction parent
+    (on start)
+    (repeat loops
+      (spawn worker as w0))
+    (await_any done)
+    (complete done))
+  (transaction worker (complete done)))
+ISF
+    my $any_ok = eval { parse_lower($await_any, 'repeat-parent-await-any.isf'); 1 };
+    ok(!$any_ok, 'parent-body await_any after repeat does not drain repeat-body spawn');
+    like($@, qr/repeat-body spawn cannot be drained by parent-body '\(await_any done\)' after the repeat exits; use same-body '\(await_all done\)' before the repeat check can loop/,
+        'parent-exit await_any diagnostic names the same-body requirement');
+};
+
 done_testing();

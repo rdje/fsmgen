@@ -5452,7 +5452,8 @@ sub _validate_supported_transaction_clauses {
     my $allowed = $SUPPORTED_TRANSACTION_CLAUSES{$context} || {};
     my $label = $TRANSACTION_CONTEXT_LABEL{$context} || $context;
 
-    for my $clause (@$clauses) {
+    for (my $clause_index = 0; $clause_index < @$clauses; $clause_index++) {
+        my $clause = $clauses->[$clause_index];
         confess "Transaction '$tn': transaction clauses must be list forms in $label\n"
             unless ref($clause) eq 'ARRAY';
         next unless @$clause;
@@ -5490,7 +5491,20 @@ sub _validate_supported_transaction_clauses {
             _validate_supported_transaction_clauses([@{$clause}[2 .. $#$clause]], $tn, 'when', \%next_depths, $generated_children, $actor);
         } elsif ($keyword eq 'repeat') {
             _validate_repeat_clause($clause, $tn, $label);
-            _validate_repeat_body_spawn_subset($clause, $tn, $label, $context_depths, $generated_children, $actor)
+            my $parent_exit_sync_after_repeat = $context eq 'transaction'
+                ? _next_transaction_body_sync_after($clauses, $clause_index)
+                : undef;
+            _validate_repeat_body_spawn_subset(
+                $clause,
+                $tn,
+                $label,
+                $context_depths,
+                $generated_children,
+                $actor,
+                {
+                    parent_exit_sync_after_repeat => $parent_exit_sync_after_repeat,
+                },
+            )
                 unless ref($actor) eq 'HASH' && _is_static_zero_repeat_count($clause->[1], $actor, $tn);
             _validate_supported_transaction_clauses([@{$clause}[2 .. $#$clause]], $tn, 'repeat', $context_depths, $generated_children, $actor);
         } elsif ($keyword eq 'while' || $keyword eq 'until') {
@@ -5512,6 +5526,28 @@ sub _validate_supported_transaction_clauses {
             }
         }
     }
+}
+
+sub _next_transaction_body_sync_after {
+    my ($clauses, $clause_index) = @_;
+    return undef unless ref($clauses) eq 'ARRAY';
+
+    for my $later (@{$clauses}[$clause_index + 1 .. $#$clauses]) {
+        next unless ref($later) eq 'ARRAY' && @$later;
+        my $keyword = $later->[0];
+        next unless defined($keyword) && !ref($keyword);
+        next unless $keyword eq 'await_all' || $keyword eq 'await_any';
+        my $signal = defined($later->[1]) && !ref($later->[1]) && length($later->[1])
+            ? $later->[1]
+            : 'done';
+        return {
+            keyword => $keyword,
+            signal  => $signal,
+            form    => "($keyword $signal)",
+        };
+    }
+
+    return undef;
 }
 
 sub _validate_on_clause {
@@ -6981,9 +7017,11 @@ sub _validate_repeat_clause {
 }
 
 sub _validate_repeat_body_spawn_subset {
-    my ($clause, $tn, $label, $context_depths, $generated_children, $actor) = @_;
+    my ($clause, $tn, $label, $context_depths, $generated_children, $actor, $options) = @_;
     $context_depths ||= {};
     $generated_children ||= {};
+    $options ||= {};
+    my $parent_exit_sync_after_repeat = $options->{parent_exit_sync_after_repeat};
     my @pending_spawns;
     my $awaiting_multi_pending_drain = 0;
     my $pending_local_do_before_drain = 0;
@@ -7427,8 +7465,12 @@ sub _validate_repeat_body_spawn_subset {
         if $switch_branch_repeat && $awaiting_multi_pending_drain;
     confess "Transaction '$tn': switch-branch nested repeat spawn requires same-body '(await_all done)' or single-pending '(await_any done)' before the nested repeat check can loop\n"
         if $switch_branch_repeat && @pending_spawns;
+    confess "Transaction '$tn': repeat-body multi-pending await_any cannot be drained by parent-body '$parent_exit_sync_after_repeat->{form}' after the repeat exits; use same-body '(await_all done)' before the repeat check can loop\n"
+        if $top_level_repeat && $awaiting_multi_pending_drain && $parent_exit_sync_after_repeat;
     confess "Transaction '$tn': repeat-body multi-pending await_any requires later same-body '(await_all done)' before the repeat check can loop\n"
         if $top_level_repeat && $awaiting_multi_pending_drain;
+    confess "Transaction '$tn': repeat-body spawn cannot be drained by parent-body '$parent_exit_sync_after_repeat->{form}' after the repeat exits; use same-body '(await_all done)' before the repeat check can loop\n"
+        if $top_level_repeat && @pending_spawns && $parent_exit_sync_after_repeat;
     confess "Transaction '$tn': repeat-body spawn requires same-body '(await_all done)' before the repeat check can loop\n"
         if $top_level_repeat && @pending_spawns;
     confess "Transaction '$tn': loop-contained repeat-body multi-pending await_any requires later same-body '(await_all done)' before the repeat check can loop\n"

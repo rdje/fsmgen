@@ -11,6 +11,7 @@ answers:
   - "how does FSMGen model ISF regions and activation effects in shadow mode?"
   - "where are await_any observe versus await_all drain effects recorded?"
   - "what diagnostic reports multi-pending await_any without a later await_all drain?"
+  - "what diagnostic reports parent-body sync after repeat cannot drain repeat-body spawn?"
   - "what module owns the initial compositional control-flow activation model?"
   - "which behavior widening first consumes compositional repeat lifetime proofs?"
   - "which behavior widening consumes single-pending await_any lifetime proofs?"
@@ -131,3 +132,9 @@ prefixes that with `loop-contained`, and deeper branch-contained repeat
 prefixes it with `deeper-nested`. Existing top-level `when` and `switch`
 branch diagnostics already name the nested-repeat multi-pending `await_any`
 missing-drain requirement.
+They also distinguish parent-exit drain attempts from same-body drains:
+`repeat-body spawn cannot be drained by parent-body '(await_all done)' after
+the repeat exits; use same-body '(await_all done)' before the repeat check can
+loop` (with the authored parent-body sync form in the message). The diagnostic
+keeps the broader parent-exit drain lifetime model fail-closed until a
+cross-region ownership proof exists.

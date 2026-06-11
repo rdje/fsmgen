@@ -1124,7 +1124,12 @@ An **undrained** spawn (no same-body `await_all`/single-pending `await_any`
 before the repeat check) stays deferred: `Transaction 'parent': loop-contained
 repeat-body spawn requires same-body '(await_all done)' or single-pending
 '(await_any done)' before the repeat check can loop` (and the `deeper-nested
-...` form). A **multi-pending** `(await_any done)` (two or more outstanding
+...` form). A parent-body `(await_all done)` or `(await_any done)` after the
+repeat exits is not a drain for repeat-body spawned children; the diagnostic
+uses `repeat-body spawn cannot be drained by parent-body '(await_all done)'
+after the repeat exits; use same-body '(await_all done)' before the repeat
+check can loop` (with the authored sync form in the message). A
+**multi-pending** `(await_any done)` (two or more outstanding
 children observed by an `await_any`) is supported as an observation point when
 a later same-body `(await_all done)` drains the outstanding children before the
 repeat check — for example `(spawn a)(spawn b)(await_any done)(await_all done)`

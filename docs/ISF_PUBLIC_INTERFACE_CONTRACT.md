@@ -1159,12 +1159,17 @@ These widened local-do fanout paths are checked by
 and [t/1434-isf-while-pending-spawn-local-do-awaitany-effect-widening.t](../t/1434-isf-while-pending-spawn-local-do-awaitany-effect-widening.t).
 An undrained loop-contained
 spawn emits `loop-contained repeat-body spawn requires same-body '(await_all
-done)' or single-pending '(await_any done)'`. A multi-pending `(await_any done)`
-without a later `(await_all done)` emits `loop-contained repeat-body
-multi-pending await_any requires later same-body '(await_all done)' before the
-repeat check can loop` (top-level and deeper-nested forms use their matching
-context prefixes), a loop-contained cross-domain generated `do` emits
-`cross-domain repeat-body do remains deferred`, and a repeat reached through an additional loop ancestor
+done)' or single-pending '(await_any done)'`. A parent-body sync after the
+repeat exits is not a valid drain for repeat-body spawned children; it emits
+`repeat-body spawn cannot be drained by parent-body '(await_all done)' after
+the repeat exits; use same-body '(await_all done)' before the repeat check can
+loop` (with the authored sync form in the message). A multi-pending
+`(await_any done)` without a later `(await_all done)` emits
+`loop-contained repeat-body multi-pending await_any requires later same-body
+'(await_all done)' before the repeat check can loop` (top-level and
+deeper-nested forms use their matching context prefixes), a loop-contained
+cross-domain generated `do` emits `cross-domain repeat-body do remains
+deferred`, and a repeat reached through an additional loop ancestor
 emits `loop-contained repeat-body do remains deferred`; these are checked by
 [t/1374-isf-loop-contained-repeat-body-activation-diagnostic.t](../t/1374-isf-loop-contained-repeat-body-activation-diagnostic.t),
 [t/1380-isf-loop-contained-repeat-body-generated-do.t](../t/1380-isf-loop-contained-repeat-body-generated-do.t),

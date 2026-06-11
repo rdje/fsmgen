@@ -2653,9 +2653,13 @@ Current lowering:
   top-level / when-body / switch-branch). Inside a loop-contained or
   deeper-nested repeat, an undrained spawn stays deferred
   (`loop-contained`/`deeper-nested repeat-body spawn requires same-body
-  '(await_all done)' or single-pending '(await_any done)'`). A multi-pending
-  `(await_any done)` without a later `(await_all done)` remains fail-closed
-  with a diagnostic that names the missing proof, for example
+  '(await_all done)' or single-pending '(await_any done)'`). A parent-body sync
+  after the repeat exits is not a valid drain for repeat-body spawned children;
+  it emits `repeat-body spawn cannot be drained by parent-body '(await_all
+  done)' after the repeat exits; use same-body '(await_all done)' before the
+  repeat check can loop` (with the authored sync form in the message). A
+  multi-pending `(await_any done)` without a later `(await_all done)` remains
+  fail-closed with a diagnostic that names the missing proof, for example
   `loop-contained repeat-body multi-pending await_any requires later same-body
   '(await_all done)' before the repeat check can loop`; top-level and
   deeper-nested forms use their matching context prefixes. A cross-domain

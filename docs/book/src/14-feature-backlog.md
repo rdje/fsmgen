@@ -742,7 +742,11 @@ single-pending `(await_any done)`) subset (`t/1383`) also lowers in a
 loop-contained repeat (lowering + composition parity with the top-level
 repeat-body spawn). An undrained loop-contained spawn fails closed
 (`loop-contained repeat-body spawn requires same-body '(await_all done)' or
-single-pending '(await_any done)'`), a multi-pending `(await_any done)` is
+single-pending '(await_any done)'`). A parent-body sync after the repeat exits
+does not drain repeat-body spawned children; it fails closed with
+`repeat-body spawn cannot be drained by parent-body '(await_all done)' after
+the repeat exits; use same-body '(await_all done)' before the repeat check can
+loop` (or the authored parent-body sync form). A multi-pending `(await_any done)` is
 accepted only as an observation point when a later same-body `(await_all done)`
 drains the same outstanding children. Without that later drain, the diagnostic
 names the missing lifetime proof

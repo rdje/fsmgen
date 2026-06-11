@@ -6,7 +6,7 @@ Roadmap lane: R14 / ISF scheduling, activation, CDC, ATL, actor-network, and gen
 
 Created: 2026-06-10
 
-Current frontier: `ISF-SCHEDULING-BACKLOG-FRONTIER.4.3`
+Current frontier: `ISF-SCHEDULING-BACKLOG-FRONTIER.5.1`
 
 ## Goal
 
@@ -182,7 +182,7 @@ Evidence:
 
 ### ISF-SCHEDULING-BACKLOG-FRONTIER.4 — Outstanding-Child Lifetime Rules
 
-Status: active
+Status: done
 
 Goal: Define and implement exact outstanding-child lifetime semantics beyond
 the current repeat re-entry drain rule.
@@ -287,7 +287,7 @@ Result:
 
 #### ISF-SCHEDULING-BACKLOG-FRONTIER.4.3 — Repeat Parent-Exit Drain Diagnostic
 
-Status: pending
+Status: done
 
 Goal: Keep repeat-body spawned children fail-closed when an author attempts to
 drain them after the repeat exits, and replace the generic same-body drain
@@ -306,9 +306,28 @@ Acceptance:
 - Sync mdBook/spec/downstream/public-contract wording for the sharper
   fail-closed parent-exit drain contract.
 
+Result:
+
+- Kept repeat-body parent-exit drain fail-closed. A parent-body `await_all` or
+  `await_any` after a top-level repeat exits is now diagnosed as an invalid
+  drain for repeat-body spawned children, rather than looking like the same
+  plain undrained-spawn case.
+- The diagnostic states that repeat-body spawned children must be drained by a
+  same-body `await_all` before the repeat check can loop; the authored
+  parent-body sync form is included in the message.
+- Focused coverage locks parent-body `await_all`/`await_any` after an
+  undrained repeat-body spawn and parent-body `await_all` after a
+  multi-pending repeat-body `await_any` observation.
+- The mdBook, feature backlog, support matrix, live ISF spec, downstream
+  handoff, public interface contract, Knowledge Map fact card, task index, and
+  `MEMORY.md` are synced. This closes the current outstanding-child lifetime
+  branch; detach/cancel, parent-exit drain, and generation-tagged completion
+  remain fail-closed until a future exact owner adds the missing hardware
+  contracts.
+
 ### ISF-SCHEDULING-BACKLOG-FRONTIER.5 — Repeated/Nested ATL Triggers And Waits
 
-Status: pending
+Status: active
 
 Goal: Extend ATL trigger/wait lowering for repeated and nested transaction
 flows without breaking existing single-trigger behavior.
@@ -318,6 +337,23 @@ Acceptance:
 - Select one exact repeated or nested ATL pattern before implementation.
 - Prove trigger pulse ordering and wait completion with focused tests.
 - Sync ATL and control-flow book examples.
+
+#### ISF-SCHEDULING-BACKLOG-FRONTIER.5.1 — Repeated/Nested ATL First Slice Selection
+
+Status: pending
+
+Goal: Select the first exact repeated or nested ATL trigger/wait pattern for
+implementation or targeted fail-closed closure.
+
+Acceptance:
+
+- Audit current ATL trigger/wait diagnostics and fixtures for repeated and
+  nested transaction flows.
+- Select one precise source pattern before source edits.
+- If the pattern is accepted, prove trigger pulse ordering, wait completion,
+  schedule report stability, and book/spec sync.
+- If the pattern remains unsafe, record the exact missing ordering/lifetime
+  contract and close it with a targeted diagnostic/doc update.
 
 ### ISF-SCHEDULING-BACKLOG-FRONTIER.6 — Fan-In/Fan-Out Event Joins
 
@@ -424,6 +460,29 @@ Acceptance:
   Selected `.4.3` to keep parent-exit drain after a repeat-body spawn
   fail-closed with a targeted diagnostic. `scripts/check_memory_architecture.sh`;
   `knowledge-map/scripts/check_knowledge_map.sh`; and `git diff --check` pass.
+- 2026-06-11 (`.4.3`): kept parent-exit drain after repeat-body generated
+  spawn fail-closed and added a targeted diagnostic for parent-body
+  `await_all`/`await_any` after a repeat exits. The diagnostic tells authors to
+  drain spawned children with same-body `await_all` before the repeat check can
+  loop, and multi-pending `await_any` observations keep the same same-body
+  drain requirement. `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`;
+  `perl -Iperl -c
+  t/1384-isf-loop-and-deeper-repeat-body-multi-pending-awaitany.t`; `perl
+  -Iperl -c t/1305-isf-book-feature-matrix-audit.t`; `prove -Iperl
+  t/1383-isf-loop-and-deeper-repeat-body-spawn.t
+  t/1384-isf-loop-and-deeper-repeat-body-multi-pending-awaitany.t`; `prove
+  -Iperl t/1305-isf-book-feature-matrix-audit.t
+  t/1307-isf-loop-body-doc-truth-audit.t
+  t/1250-isf-spec-focused-test-index-audit.t`; `prove -Iperl
+  t/1419-isf-control-flow-effect-inventory.t
+  t/1421-isf-control-flow-effect-checks.t
+  t/1423-isf-control-flow-lifetime-checks.t
+  t/1432-isf-loop-pending-spawn-local-do-effect-widening.t
+  t/1433-isf-until-pending-spawn-local-do-effect-widening.t
+  t/1434-isf-while-pending-spawn-local-do-awaitany-effect-widening.t`;
+  `prove -Iperl t/1376-isf-book-example-lowering-audit.t`; `mdbook build
+  docs/book`; `knowledge-map/scripts/check_knowledge_map.sh`;
+  `scripts/check_memory_architecture.sh`; and `git diff --check` pass.
 
 ## Commit Log
 
@@ -437,3 +496,5 @@ Acceptance:
   `ISF-SCHEDULING-BACKLOG-FRONTIER.4.1: sharpen await_any lifetime diagnostics`.
 - `ISF-SCHEDULING-BACKLOG-FRONTIER.4.2`: this commit,
   `ISF-SCHEDULING-BACKLOG-FRONTIER.4.2: select repeat parent-exit drain diagnostic`.
+- `ISF-SCHEDULING-BACKLOG-FRONTIER.4.3`: this commit,
+  `ISF-SCHEDULING-BACKLOG-FRONTIER.4.3: diagnose repeat parent-exit drains`.

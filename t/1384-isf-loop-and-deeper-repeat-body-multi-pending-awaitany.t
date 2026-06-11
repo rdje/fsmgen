@@ -156,4 +156,29 @@ ISF
         'deeper-nested diagnostic names await_any as observation-only');
 };
 
+subtest 'parent-body sync cannot drain a repeat-body multi-pending await_any observation' => sub {
+    my $parent_exit = <<'ISF';
+(actor mp_parent_exit_undrained
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start) (input loops (width 3))
+    (output done))
+  (transaction parent
+    (on start)
+    (repeat loops
+      (spawn worker as w0)
+      (spawn worker as w1)
+      (await_any done))
+    (await_all done)
+    (complete done))
+  (transaction worker
+    (complete done)))
+ISF
+    my $ok = eval { parse_lower($parent_exit, 'mp-parent-exit-undrained.isf'); 1 };
+    ok(!$ok, 'parent-body await_all after repeat does not drain repeat-body multi-pending await_any');
+    like($@, qr/repeat-body multi-pending await_any cannot be drained by parent-body '\(await_all done\)' after the repeat exits; use same-body '\(await_all done\)' before the repeat check can loop/,
+        'multi-pending parent-exit diagnostic names the same-body drain requirement');
+};
+
 done_testing();

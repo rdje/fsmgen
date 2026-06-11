@@ -1323,11 +1323,15 @@ Rules:
   cross-domain activation, and unrelated deeper placements remain fail-closed.
   Inside a loop-contained repeat, an undrained spawn emits `loop-contained
   repeat-body spawn requires same-body '(await_all done)' or single-pending
-  '(await_any done)'`. A multi-pending `(await_any done)` without a later
-  `(await_all done)` emits `loop-contained repeat-body multi-pending await_any
-  requires later same-body '(await_all done)' before the repeat check can loop`
-  (top-level and deeper-nested forms use their matching context prefixes), and
-  a cross-domain generated `do` emits `cross-domain repeat-body do remains deferred`
+  '(await_any done)'`. A parent-body sync after the repeat exits is not a
+  valid drain for repeat-body spawned children; it emits `repeat-body spawn
+  cannot be drained by parent-body '(await_all done)' after the repeat exits;
+  use same-body '(await_all done)' before the repeat check can loop` (with the
+  authored sync form in the message). A multi-pending `(await_any done)`
+  without a later `(await_all done)` emits `loop-contained repeat-body
+  multi-pending await_any requires later same-body '(await_all done)' before
+  the repeat check can loop` (top-level and deeper-nested forms use their
+  matching context prefixes), and a cross-domain generated `do` emits `cross-domain repeat-body do remains deferred`
   (bindings/domain without static `(params ...)` emit the
   bindings/domain-require-params diagnostic); a repeat reached through an
   additional loop ancestor still emits `loop-contained repeat-body do remains

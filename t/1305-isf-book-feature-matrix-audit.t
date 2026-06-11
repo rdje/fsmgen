@@ -279,7 +279,7 @@ my @required_non_claims = (
     'parameterized route drive definitions',
     'route drive-call actual arguments',
     'Missing same-body drains, cross-domain activation without an explicit crossing, deeper branch/loop nesting, implicit CDC, dynamic generated-child specialization, and broader outstanding-child lifetime semantics remain fail-closed',
-    'Missing drains, cross-domain `spawn`, dynamic per-iteration specialization, implicit CDC, and broader generated-child lifetime semantics remain fail-closed',
+    'Missing drains, parent-body sync after repeat exit, cross-domain `spawn`, dynamic per-iteration specialization, implicit CDC, and broader generated-child lifetime semantics remain fail-closed',
     'Raw parser actor hashes',
     'VHDL is recognized as a target family',
 );
