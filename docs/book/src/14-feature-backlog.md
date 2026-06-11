@@ -2249,10 +2249,13 @@ ISF actor/network syntax into protocol/platform intent inference.
 
 ### IAL2 Protocol And Platform Intent Exploration
 
-Status: active exploration; no IAL2 source or lowering implementation is selected.
+Status: evaluated; no IAL2 source or lowering implementation is selected.
 
 Task-tree owner:
 [IAL2-PROTOCOL-PLATFORM-INTENT-EXPLORATION](../../tasks/IAL2-PROTOCOL-PLATFORM-INTENT-EXPLORATION.md).
+
+Evaluation note:
+[IAL2_PROTOCOL_PLATFORM_INTENT_EVALUATION](../../IAL2_PROTOCOL_PLATFORM_INTENT_EVALUATION.md).
 
 Goal: decide whether an intent layer above current ISF has enough independent
 semantic value to exist.
@@ -2265,6 +2268,14 @@ reusable protocol-level intent objects, such as APB/AXI transaction templates,
 and platform/resource mapping decisions that choose among legal ISF schedules
 or resource allocations. Aliases, macros, wrappers, and sugar without a
 distinct runtime model should stay inside IAL1 or remain out of the language.
+
+Current evaluation: IAL2 is design/probe ready, not implementation ready. A
+future implementation leaf must first specify a bounded protocol/platform
+intent object, its source/capture report contract, its IAL1/IAL0 lowering
+artifacts, and focused validation gates. The first plausible probe is a
+valid/ready protocol-intent object derived from the AXI intent-capture case
+study; a hand-written reusable `.fsm` or `.isf` library alone is useful but not
+enough to justify IAL2.
 
 ### ISF Enum, Type, And Aggregate Parity
 
@@ -4317,9 +4328,10 @@ private lowerer extraction is now shipped by
 owns ATL generated-top schedule-report projection and data-link
 child-interface marking without changing public reports, generated artifacts,
 or HDL behavior. Broader parser/lowerer extraction remains deferred behind
-future exact owners. Active PNT has moved to
-`IAL2-PROTOCOL-PLATFORM-INTENT-EXPLORATION.2`, a non-code evaluation of
-protocol/platform intent before any IAL2 source or lowering implementation.
+future exact owners. Completed selection/evaluation leaves
+`IAL2-PROTOCOL-PLATFORM-INTENT-EXPLORATION.1` and `.2` found IAL2
+design/probe ready but not implementation ready; no active or proposed PNT
+task tree remains.
 Completed implementation leaf
 `ARCHITECTURE-DEBT-FRONTIER.2.1`
 projects direct backend storage/helper declaration-plan entries into

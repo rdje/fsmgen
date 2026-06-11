@@ -1,0 +1,116 @@
+# IAL2 Protocol And Platform Intent Evaluation
+
+Status: evaluation complete; no IAL2 implementation selected.
+
+Task tree:
+[docs/tasks/IAL2-PROTOCOL-PLATFORM-INTENT-EXPLORATION.md](tasks/IAL2-PROTOCOL-PLATFORM-INTENT-EXPLORATION.md).
+
+## Purpose
+
+This note records the first non-code evaluation of whether FSMGen should grow
+an intent layer above current `.isf` / IAL1.
+
+The question is not whether another syntax would be convenient. The question
+is whether an IAL2 layer would carry independent hardware semantics that are
+not already expressible as explicit IAL1 actor/network scheduling.
+
+## Layer Boundary
+
+FSMGen currently uses these intent-layer meanings:
+
+- IAL0 is `.fsm`: explicit cycle-authored hardware intent and the semantic
+  audit artifact before HDL.
+- IAL1 is `.isf`: scheduling intent over actors, transactions, rules, waits,
+  drives, resources, generated children, constraints, and selected clock-domain
+  metadata, lowered into reviewable IAL0 `.fsm`.
+- IAL2 is not shipped. It should exist only if it owns semantics above
+  individual IAL1 transactions.
+
+ATL remains IAL1 while authors explicitly write actor/network `.isf` syntax.
+Compact aliases, wrappers, macros, and nicer spellings are not IAL2 by
+themselves.
+
+## Minimum IAL2 Semantic Contract
+
+An IAL2 candidate must provide all of these before implementation work is
+justified:
+
+- A named protocol/platform intent object whose meaning is larger than one
+  explicit actor transaction.
+- Source identity and source anchors when the object came from a protocol,
+  TRM, design note, or platform contract.
+- A role model: participating actors, endpoints, transport channels, and
+  hierarchy boundaries.
+- Interface and phase facts before generated states are chosen.
+- Persistent-state requirements justified by protocol/platform rules.
+- Scheduler-visible choices that IAL1 source would otherwise require the user
+  to spell manually, such as arbitration, buffering, legal ordering, resource
+  placement, or selected schedule families.
+- Invariants, gates, assertions, and liveness assumptions captured with the
+  implementation intent.
+- An abstraction/residue log that distinguishes confident recovery, heuristic
+  inference, explicit simplification, unresolved ambiguity, and unsupported
+  behavior.
+- A lowering report that maps the IAL2 object into IAL1 and IAL0 artifacts so
+  the chosen cycle behavior remains reviewable.
+
+If a proposed feature cannot satisfy that contract, it should stay IAL1 or
+remain out of the language.
+
+## First Evidence To Inspect
+
+The AXI intent-capture case study is the strongest available evidence because
+it already has a staged method, an actor-first decomposition, assertion-ledger
+discipline, explicit abstraction logging, and a first emitted reusable
+`valid_ready_channel_tx_rx`-style transport actor.
+
+The first bounded IAL2 probe should not start with a full AXI manager or an
+interconnect. It should inspect the reusable valid/ready transport contract
+because that is the smallest candidate with real protocol semantics:
+
+- It has channel roles rather than only local signals.
+- It has phase and gate structure around valid/ready firing.
+- It carries stability, causality, and liveness-with-assumptions obligations.
+- It can lower into an IAL1 actor or actor pair plus IAL0 `.fsm` artifacts.
+- It can produce a capture/residue report from the same source evidence.
+
+If the valid/ready contract only becomes a hand-written reusable `.fsm`
+library, that is useful but not IAL2. It becomes an IAL2 candidate only if a
+source intent object can generate or configure the IAL1/IAL0 artifacts while
+preserving source anchors, semantic roles, assertions, abstractions, and
+residue.
+
+## Go Criteria For A Future Implementation Leaf
+
+A future IAL2 implementation leaf is justified only if a bounded candidate can
+prove all of the following:
+
+- One source intent object lowers to reviewable IAL1 source or an equivalent
+  structured intermediate plus IAL0 `.fsm`.
+- The same source object emits a capture/evaluation report with source anchors,
+  abstractions, residue, and generated artifact links.
+- At least one scheduler-visible choice is made from the protocol/platform
+  semantics rather than copied from explicit IAL1 syntax.
+- The generated artifacts are small enough to validate with focused tests.
+- The user-facing mdBook can explain the behavior without asking users to read
+  internal Perl code.
+
+## No-Go Criteria
+
+IAL2 should stay deferred if the candidate is only:
+
+- a macro expansion for existing `.isf` syntax,
+- a compact alias for explicit ATL forms,
+- a wrapper around one transaction with no independent runtime model,
+- a prompt-only spec-to-code workflow without source anchoring and residue,
+- or a reusable `.fsm`/`.isf` library asset that does not preserve a higher
+  protocol/platform contract.
+
+## Current Conclusion
+
+IAL2 is design/probe ready, not implementation ready.
+
+The next implementation must be another exact task-tree leaf, and it should
+start with a bounded valid/ready protocol-intent object only if the source
+contract, report contract, lowering artifacts, and validation gates are all
+specified first.

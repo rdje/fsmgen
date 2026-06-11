@@ -10,10 +10,10 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-PROTOCOL-PLATFORM-INTENT-EXPLORATION.1` (this commit) — selected the first non-code IAL2 protocol/platform intent exploration boundary.
-- active_work_unit: `IAL2-PROTOCOL-PLATFORM-INTENT-EXPLORATION.2` — write the first protocol/platform intent evaluation note before any IAL2 source or lowering implementation.
-- recently_done: `IAL2-PROTOCOL-PLATFORM-INTENT-EXPLORATION.1`; `ISF-ATL-GENERATED-TOP-PLANNER-EXTRACTION.2`; `.1`; `ISF-SCHEDULING-BACKLOG-FRONTIER.8.2`; `.8.1`. Older completed slices are in the task tree and git history.
-- in_flight_uncommitted: selection-only task-tree/index/README/mdBook/MEMORY edits for `IAL2-PROTOCOL-PLATFORM-INTENT-EXPLORATION.1`; unrelated untracked `fx/` intentionally left alone.
+- latest_commit: `IAL2-PROTOCOL-PLATFORM-INTENT-EXPLORATION.2` (this commit) — wrote the first non-code IAL2 protocol/platform intent evaluation and selected no implementation leaf.
+- active_work_unit: none. `IAL2-PROTOCOL-PLATFORM-INTENT-EXPLORATION` is complete through `.2`; no proposed task tree is queued.
+- recently_done: `IAL2-PROTOCOL-PLATFORM-INTENT-EXPLORATION.2`; `.1`; `ISF-ATL-GENERATED-TOP-PLANNER-EXTRACTION.2`; `.1`; `ISF-SCHEDULING-BACKLOG-FRONTIER.8.2`. Older completed slices are in the task tree and git history.
+- in_flight_uncommitted: none expected after the `.2` commit; unrelated untracked `fx/` intentionally left alone.
 - blockers: none.
 
 ## Notes
