@@ -822,6 +822,31 @@ the local blocking `do`:
     (complete done)))
 ```
 
+The body-first `until` form supports the same three-spawn drain contract:
+
+```lisp
+(actor until_repeat_three_spawn_do_drain
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start) (input cond) (input loops (width 3))
+    (output done))
+  (transaction parent
+    (on start)
+    (until cond
+      (repeat loops
+        (spawn worker as w0)
+        (spawn worker as w1)
+        (spawn worker as w2)
+        (do helper)          ;; waits for helper_done; w0/w1/w2 remain pending
+        (await_all done)))   ;; drains all three before re-entry
+    (complete done))
+  (transaction worker
+    (complete done))
+  (transaction helper
+    (complete done)))
+```
+
 For the loop-contained form with exactly one pending generated spawn,
 single-pending `(await_any done)` may also be the post-`do` sync because it
 observes the only outstanding generated child before repeat and loop re-entry.
@@ -879,9 +904,8 @@ backedges (`while_retest` or `until_retest`). The single-pending
 `await_any` shapes instead require
 `await_any_single_pending_completes_outstanding_set` for the one pending
 spawned child. The multi-pending local-`do` variant is currently the exact
-two-spawn `await_all` shape shown above for `while` and `until`, plus the
-exact three-spawn `while` shape shown above. The matching three-spawn `until`
-shape, fan-outs beyond three, generated `do`, and multi-pending post-`do`
+two- and three-spawn `await_all` shapes shown above for `while` and `until`.
+Fan-outs beyond three, generated `do`, and multi-pending post-`do`
 `await_any` stay fail-closed for now.
 
 An **undrained** spawn (no same-body `await_all`/single-pending `await_any`
