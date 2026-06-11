@@ -78,6 +78,7 @@ first.
 | `ARCHITECTURE-DEBT-FRONTIER` | `done` | architecture | complete through `.3`; direct structural internal declaration nets shipped in `.2.1`, and ISF parser/lowerer extraction remains deferred until a stable family is proven by a future exact owner | [docs/tasks/ARCHITECTURE-DEBT-FRONTIER.md](docs/tasks/ARCHITECTURE-DEBT-FRONTIER.md) |
 | `ISF-ATL-GENERATED-TOP-PLANNER-EXTRACTION` | `done` | architecture backlog | complete (`.2`; extracted private ATL generated-top report projection and child-interface marking helpers without behavior drift; no active next leaf remains in this tree) | [docs/tasks/ISF-ATL-GENERATED-TOP-PLANNER-EXTRACTION.md](docs/tasks/ISF-ATL-GENERATED-TOP-PLANNER-EXTRACTION.md) |
 | `IAL2-PROTOCOL-PLATFORM-INTENT-EXPLORATION` | `done` | IAL2 horizon exploration | complete (`.2`; wrote the first non-code protocol/platform intent evaluation note and selected no IAL2 source/lowering implementation; no active next leaf remains in this tree) | [docs/tasks/IAL2-PROTOCOL-PLATFORM-INTENT-EXPLORATION.md](docs/tasks/IAL2-PROTOCOL-PLATFORM-INTENT-EXPLORATION.md) |
+| `AXI-SPEC-LOCAL-REFERENCE-IMPORT` | `done` | IAL2 horizon exploration | complete (`.1`; copied and documented the provided AXI spec PDF reference artifact; no active next leaf remains in this tree) | [docs/tasks/AXI-SPEC-LOCAL-REFERENCE-IMPORT.md](docs/tasks/AXI-SPEC-LOCAL-REFERENCE-IMPORT.md) |
 
 ## Proposed Task Trees
 

@@ -64,6 +64,11 @@ it already has a staged method, an actor-first decomposition, assertion-ledger
 discipline, explicit abstraction logging, and a first emitted reusable
 `valid_ready_channel_tx_rx`-style transport actor.
 
+The current repo-local raw reference artifact for that evidence is
+`docs/vendor/arm/amba/axi/IHI0022_L_2025-08_AMBA_AXI_Protocol_Specification.pdf`
+with SHA-256
+`20aa5f946df5fa97053689d705959b1ef6a90a88f845fa3b686a53311f680ac1`.
+
 The first bounded IAL2 probe should not start with a full AXI manager or an
 interconnect. It should inspect the reusable valid/ready transport contract
 because that is the smallest candidate with real protocol semantics:

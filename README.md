@@ -510,6 +510,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/REGRESSION_CORPUS.md` — human-readable companion to the machine-checked support and regression catalog.
 - `docs/INTENT_CAPTURE_AXI_CASE_STUDY.md` — AXI intent-capture case-study notes for future high-level synthesis work.
 - `docs/IAL2_PROTOCOL_PLATFORM_INTENT_EVALUATION.md` — first non-code IAL2 protocol/platform intent evaluation and go/no-go criteria.
+- `docs/vendor/arm/amba/axi/IHI0022_L_2025-08_AMBA_AXI_Protocol_Specification.pdf` — tracked repo-local raw AXI protocol specification reference for future task-tree-owned IAL2 probes.
 - `docs/FEATURE_BACKLOG.md` — repo-level pointer to the canonical mdBook backlog for deferred/not-fully-shipped user-visible features.
 - `docs/VHDL_SCOPE.md` — scoped VHDL backend plan and shipped direct-root scaffold boundary.
 - `CHANGES.md` — persistent technical change history.

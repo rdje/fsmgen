@@ -40,6 +40,11 @@ Normalized source material:
 - `md/IHI0022L_amba_axi_protocol_spec.md`
 - `md/IHI0022L_amba_axi_protocol_spec/IHI0022L_amba_axi_protocol_spec_meta.json`
 
+Repo-local reference artifact:
+- `docs/vendor/arm/amba/axi/IHI0022_L_2025-08_AMBA_AXI_Protocol_Specification.pdf`
+- SHA-256:
+  `20aa5f946df5fa97053689d705959b1ef6a90a88f845fa3b686a53311f680ac1`
+
 ## What The AXI Workspace Already Proves
 
 This AXI workspace is not just a prompt and a few ideas. It is already a

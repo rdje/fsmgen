@@ -2277,6 +2277,11 @@ valid/ready protocol-intent object derived from the AXI intent-capture case
 study; a hand-written reusable `.fsm` or `.isf` library alone is useful but not
 enough to justify IAL2.
 
+The repo-local tracked raw AXI reference for future bounded probes is
+`docs/vendor/arm/amba/axi/IHI0022_L_2025-08_AMBA_AXI_Protocol_Specification.pdf`.
+It is evidence for future task-tree-owned protocol-intent work, not a shipped
+PDF/spec extraction capability.
+
 ### ISF Enum, Type, And Aggregate Parity
 
 Status: shipped bounded surface; broader enum target/operator and aggregate
