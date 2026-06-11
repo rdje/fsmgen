@@ -2284,8 +2284,15 @@ PDF/spec extraction capability.
 
 Active probe:
 [AXI-VALID-READY-INTENT-PROBE](../../tasks/AXI-VALID-READY-INTENT-PROBE.md)
-will extract the first valid/ready source-anchor evidence inventory without
+extracted the first valid/ready source-anchor evidence inventory without
 selecting parser, lowering, `.fsm`, or HDL implementation behavior.
+
+Evidence note:
+[AXI_VALID_READY_INTENT_PROBE](../../AXI_VALID_READY_INTENT_PROBE.md)
+records the AXI Valid-Ready anchors, source facts, inferred candidate model,
+explicit abstractions, unsupported residue, and no-implementation status. It
+is evidence for a future task-tree-owned IAL2 design/probe leaf, not a shipped
+PDF/spec extraction capability and not an IAL2 implementation.
 
 ### ISF Enum, Type, And Aggregate Parity
 

@@ -69,6 +69,11 @@ The current repo-local raw reference artifact for that evidence is
 with SHA-256
 `20aa5f946df5fa97053689d705959b1ef6a90a88f845fa3b686a53311f680ac1`.
 
+The first curated repo-local source-anchor inventory is
+[docs/AXI_VALID_READY_INTENT_PROBE.md](AXI_VALID_READY_INTENT_PROBE.md). It
+records the AXI Valid-Ready anchors, inferred candidate model, explicit
+abstractions, unsupported residue, and current no-implementation status.
+
 The first bounded IAL2 probe should not start with a full AXI manager or an
 interconnect. It should inspect the reusable valid/ready transport contract
 because that is the smallest candidate with real protocol semantics:
@@ -118,4 +123,7 @@ IAL2 is design/probe ready, not implementation ready.
 The next implementation must be another exact task-tree leaf, and it should
 start with a bounded valid/ready protocol-intent object only if the source
 contract, report contract, lowering artifacts, and validation gates are all
-specified first.
+specified first. The completed AXI Valid-Ready evidence inventory is enough to
+justify a later design/probe leaf, but it still does not select IAL2 syntax,
+parser behavior, lowering behavior, generated `.fsm`, HDL, or reusable library
+artifacts.

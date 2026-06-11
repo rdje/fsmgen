@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `AXI-VALID-READY-INTENT-PROBE`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `IAL2 horizon exploration`
 - Created: `2026-06-12`
 - Last updated: `2026-06-12`
@@ -39,7 +39,7 @@ lowering, or HDL implementation behavior yet.
 ## Task Tree
 
 - ID: `AXI-VALID-READY-INTENT-PROBE`
-  Status: `active`
+  Status: `done`
   Goal: `Evaluate valid/ready transport as the smallest AXI-derived IAL2 evidence object.`
   Children: `AXI-VALID-READY-INTENT-PROBE.1`,
   `AXI-VALID-READY-INTENT-PROBE.2`
@@ -52,18 +52,18 @@ lowering, or HDL implementation behavior yet.
   Commit: `AXI-VALID-READY-INTENT-PROBE.1: select source-anchor probe`
 
 - ID: `AXI-VALID-READY-INTENT-PROBE.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Extract the first AXI valid/ready source-anchor evidence inventory.`
   Acceptance: `Use the tracked AXI PDF reference to produce a repo-local, reviewable evidence note for valid/ready transport semantics, including source anchors, classification of facts vs inference vs abstraction/residue, and explicit no-implementation status.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `pdfinfo docs/vendor/arm/amba/axi/IHI0022_L_2025-08_AMBA_AXI_Protocol_Specification.pdf`; `pdftotext -layout -enc UTF-8 docs/vendor/arm/amba/axi/IHI0022_L_2025-08_AMBA_AXI_Protocol_Specification.pdf <temporary-text-output>`; rendered and visually checked write/read dependency diagram pages for figures `A2.5` and `A2.6`; `mdbook build docs/book`; `prove -Iperl t/1256-feature-backlog-status-audit.t t/1303-isf-public-live-book-paths-audit.t t/1414-docs-relative-paths-audit.t`; `scripts/check_memory_architecture.sh`; `knowledge-map/scripts/check_knowledge_map.sh`; `git diff --check`
+  Commit: `AXI-VALID-READY-INTENT-PROBE.2: record valid-ready evidence`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
 | 1 | `AXI-VALID-READY-INTENT-PROBE.1` | `done` | The IAL2 evaluation identifies valid/ready as the smallest plausible AXI-derived protocol-intent probe, and the AXI PDF is now tracked locally. |
-| 2 | `AXI-VALID-READY-INTENT-PROBE.2` | `pending` | Source-anchor evidence must exist before any IAL2 source contract or lowering behavior can be considered. |
+| 2 | `AXI-VALID-READY-INTENT-PROBE.2` | `done` | Source-anchor evidence now exists before any IAL2 source contract or lowering behavior can be considered. |
 
 ## Decisions
 
@@ -74,11 +74,16 @@ lowering, or HDL implementation behavior yet.
 - `2026-06-12`: Keep `.2` as evidence extraction only. Any parser/lowering,
   reusable library, generated `.fsm`, or HDL behavior needs a later exact
   task-tree leaf after the evidence note exists.
+- `2026-06-12`: Completed `.2` as
+  [docs/AXI_VALID_READY_INTENT_PROBE.md](../AXI_VALID_READY_INTENT_PROBE.md).
+  The note is a curated inventory, not a tracked raw text extraction, and it
+  preserves no-implementation status.
 
 ## Open Questions
 
-- Whether the evidence note should preserve a generated plaintext extraction
-  artifact, or only a curated source-anchor note, remains open for `.2`.
+- None for this tree. A future design/probe tree must decide whether to create
+  an IAL2 source object contract and how to preserve any additional source
+  extraction artifacts.
 
 ## Blockers
 
@@ -89,15 +94,19 @@ lowering, or HDL implementation behavior yet.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-06-12` | `.1` | `pdfinfo docs/vendor/arm/amba/axi/IHI0022_L_2025-08_AMBA_AXI_Protocol_Specification.pdf`; `mdbook build docs/book`; `prove -Iperl t/1256-feature-backlog-status-audit.t t/1303-isf-public-live-book-paths-audit.t t/1414-docs-relative-paths-audit.t`; `scripts/check_memory_architecture.sh`; `knowledge-map/scripts/check_knowledge_map.sh`; `git diff --check` | pass |
+| `2026-06-12` | `.2` | `pdfinfo docs/vendor/arm/amba/axi/IHI0022_L_2025-08_AMBA_AXI_Protocol_Specification.pdf`; `pdftotext -layout -enc UTF-8 docs/vendor/arm/amba/axi/IHI0022_L_2025-08_AMBA_AXI_Protocol_Specification.pdf <temporary-text-output>`; rendered and visually checked figures `A2.5` and `A2.6`; `mdbook build docs/book`; `prove -Iperl t/1256-feature-backlog-status-audit.t t/1303-isf-public-live-book-paths-audit.t t/1414-docs-relative-paths-audit.t`; `scripts/check_memory_architecture.sh`; `knowledge-map/scripts/check_knowledge_map.sh`; `git diff --check` | pass |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `.1` | `AXI-VALID-READY-INTENT-PROBE.1: select source-anchor probe` | Pending selection commit; local PDF is 320 pages, unencrypted, and text-extractable. |
-| `.2` | `pending` | Pending evidence inventory. |
+| `.1` | `AXI-VALID-READY-INTENT-PROBE.1: select source-anchor probe` | Selected the non-code source-anchor evidence leaf; local PDF is 320 pages, unencrypted, and text-extractable. |
+| `.2` | `AXI-VALID-READY-INTENT-PROBE.2: record valid-ready evidence` | Records source anchors, fact/inference/abstraction/residue classification, and no-implementation status. |
 
 ## Changelog
 
 - `2026-06-12`: Created active task tree, completed selection leaf `.1`, and
   activated evidence leaf `.2`.
+- `2026-06-12`: Completed `.2`, recorded the curated AXI Valid-Ready evidence
+  inventory, added a Knowledge Map signpost, and closed the tree with no
+  implementation selected.

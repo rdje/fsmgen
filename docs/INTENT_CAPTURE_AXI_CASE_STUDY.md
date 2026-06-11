@@ -45,6 +45,11 @@ Repo-local reference artifact:
 - SHA-256:
   `20aa5f946df5fa97053689d705959b1ef6a90a88f845fa3b686a53311f680ac1`
 
+Repo-local curated evidence:
+- `docs/AXI_VALID_READY_INTENT_PROBE.md` records the first bounded
+  Valid-Ready source-anchor inventory, including source facts, inferred rules,
+  explicit abstractions, unsupported residue, and the no-implementation status.
+
 ## What The AXI Workspace Already Proves
 
 This AXI workspace is not just a prompt and a few ideas. It is already a
