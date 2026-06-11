@@ -74,6 +74,14 @@ The first curated repo-local source-anchor inventory is
 records the AXI Valid-Ready anchors, inferred candidate model, explicit
 abstractions, unsupported residue, and current no-implementation status.
 
+The first captured user-facing AXI manager API brainstorm is
+[docs/AXI_MANAGER_USER_API_BRAINSTORM.md](AXI_MANAGER_USER_API_BRAINSTORM.md).
+It shapes the possible IAL2 surface around a protocol-aware AXI transaction
+manager: Easy mode as conventions over configuration rather than a reduced
+subset, Power mode as structured override capability, and supervised Raw mode
+as lower-level channel control that still normally passes through the same
+AXI rule engine.
+
 The first bounded IAL2 probe should not start with a full AXI manager or an
 interconnect. It should inspect the reusable valid/ready transport contract
 because that is the smallest candidate with real protocol semantics:

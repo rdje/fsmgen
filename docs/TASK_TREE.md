@@ -80,6 +80,7 @@ first.
 | `IAL2-PROTOCOL-PLATFORM-INTENT-EXPLORATION` | `done` | IAL2 horizon exploration | complete (`.2`; wrote the first non-code protocol/platform intent evaluation note and selected no IAL2 source/lowering implementation; no active next leaf remains in this tree) | [docs/tasks/IAL2-PROTOCOL-PLATFORM-INTENT-EXPLORATION.md](docs/tasks/IAL2-PROTOCOL-PLATFORM-INTENT-EXPLORATION.md) |
 | `AXI-SPEC-LOCAL-REFERENCE-IMPORT` | `done` | IAL2 horizon exploration | complete (`.1`; copied and documented the provided AXI spec PDF reference artifact; no active next leaf remains in this tree) | [docs/tasks/AXI-SPEC-LOCAL-REFERENCE-IMPORT.md](docs/tasks/AXI-SPEC-LOCAL-REFERENCE-IMPORT.md) |
 | `AXI-VALID-READY-INTENT-PROBE` | `done` | IAL2 horizon exploration | complete (`.2`; recorded the first AXI Valid-Ready source-anchor evidence inventory, with no parser/lowering implementation selected) | [docs/tasks/AXI-VALID-READY-INTENT-PROBE.md](docs/tasks/AXI-VALID-READY-INTENT-PROBE.md) |
+| `AXI-MANAGER-USER-API-BRAINSTORM-CAPTURE` | `done` | IAL2 horizon exploration | complete (`.1`; captured the AXI manager Easy/Power/supervised Raw IAL2 user-facing API direction, with no implementation selected) | [docs/tasks/AXI-MANAGER-USER-API-BRAINSTORM-CAPTURE.md](docs/tasks/AXI-MANAGER-USER-API-BRAINSTORM-CAPTURE.md) |
 
 ## Proposed Task Trees
 

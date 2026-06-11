@@ -2294,6 +2294,21 @@ explicit abstractions, unsupported residue, and no-implementation status. It
 is evidence for a future task-tree-owned IAL2 design/probe leaf, not a shipped
 PDF/spec extraction capability and not an IAL2 implementation.
 
+User-facing AXI manager brainstorm:
+[AXI_MANAGER_USER_API_BRAINSTORM](../../AXI_MANAGER_USER_API_BRAINSTORM.md)
+captures the intended IAL2 surface direction for a future AXI manager. Easy
+mode is conventions over configuration, not a reduced subset: users submit
+logical reads/writes and the manager owns AXI legality, outstanding windows,
+IDs, ordering, interleaving where permitted, response matching, backpressure,
+and clear full/acceptance/status feedback. Power mode exposes structured
+overrides while preserving manager enforcement. Raw channel access should
+normally be supervised by the same AXI rule engine, with any unsafe bypass
+treated as verification-only and unable to claim guaranteed AXI correctness.
+
+The next prerequisite is not implementation; it is a source-anchored
+extraction of the exact AXI transaction concurrency, ID, ordering,
+interleaving, and response matching rules from the tracked AXI specification.
+
 ### ISF Enum, Type, And Aggregate Parity
 
 Status: shipped bounded surface; broader enum target/operator and aggregate
