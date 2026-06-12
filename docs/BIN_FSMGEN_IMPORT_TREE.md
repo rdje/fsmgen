@@ -857,7 +857,9 @@ Current layer meaning:
 - `StructuralRTLIR`: netlist-like structure plus typed connectivity
 - `StructuralRTLIRBuilder`: bounded structural-IR construction for both
   direct-root generated modules and composition tops, from either
-  generated-module analysis or an already-built composition plan
+  generated-module analysis or an already-built composition plan; direct roots
+  now include declaration-only storage/helper nets plus top-level
+  state/standalone-DT enable wires in that structural summary
 - `ConnectionExpr`: typed actual-connection AST and binding-summary/query helpers
 
 IR audit checkpoint:
@@ -1165,7 +1167,8 @@ It behaves like a hook system, not a competing architecture.
   than leaving output-drive-family and standalone-DT lowered-target assembly
   inline in `HDLGenerator`.
 - `StructuralRTLIRBuilder` now also owns the direct-root structural summary
-  rather than leaving module-boundary and implicit-system-port structural
+  rather than leaving module-boundary, implicit-system-port, declaration-only
+  storage/helper net, and top-level state/standalone-DT enable-wire structural
   assembly inline in `HDLGenerator`.
 - `GeneratedModuleEmitter` now also owns the bounded direct generated-module
   backend family rather than leaving backend-method selection, direct HDL

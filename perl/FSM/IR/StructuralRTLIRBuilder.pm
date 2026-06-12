@@ -104,7 +104,7 @@ sub build_from_generated_module_info ($class, %args) {
         ),
         target_language => $target_language,
         ports => \@ports,
-        nets => _direct_internal_declaration_nets(
+        nets => _direct_structural_nets(
             fsm_module => $fsm_module,
             hdl_generator => $hdl_generator,
         ),
@@ -258,6 +258,25 @@ sub _clone ($value) {
     return $value;
 }
 
+sub _direct_structural_nets (%args) {
+    my @entries = (
+        @{_direct_internal_declaration_nets(%args)},
+        @{_direct_top_enable_nets(%args)},
+    );
+
+    my %seen;
+    my @deduped;
+    for my $entry (@entries) {
+        next unless ref($entry) eq 'HASH';
+        my $name = $entry->{name};
+        next unless defined($name) && length($name);
+        next if $seen{$name}++;
+        push @deduped, $entry;
+    }
+
+    return \@deduped;
+}
+
 sub _direct_internal_declaration_nets (%args) {
     my $fsm_module = $args{fsm_module};
     my $hdl_generator = $args{hdl_generator};
@@ -293,6 +312,34 @@ sub _direct_internal_declaration_nets (%args) {
             $declaration_plan->{aux_declared_type_spec},
         ),
     ];
+}
+
+sub _direct_top_enable_nets (%args) {
+    my $hdl_generator = $args{hdl_generator};
+    return [] unless ref($hdl_generator);
+
+    my @entries;
+    for my $state_name (sort keys %{$hdl_generator->{state_enables} || {}}) {
+        push @entries, _direct_one_bit_enable_net("${state_name}_en");
+    }
+
+    for my $dt_name (sort keys %{$hdl_generator->{dt_enables} || {}}) {
+        my $clean_name = $dt_name;
+        $clean_name =~ s/^-//;
+        push @entries, _direct_one_bit_enable_net("${clean_name}_en");
+    }
+
+    return \@entries;
+}
+
+sub _direct_one_bit_enable_net ($name) {
+    return {
+        name => $name,
+        width => 1,
+        signed => 0,
+        source => undef,
+        targets => [],
+    };
 }
 
 sub _direct_net_entries_from_declarations (

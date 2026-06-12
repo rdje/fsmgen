@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `R11-DIRECT-BACKEND-COORDINATION-FRONTIER`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R11`
 - Created: `2026-06-12`
 - Last updated: `2026-06-12`
@@ -52,7 +52,7 @@ test behavior changes.
 ## Task Tree
 
 - ID: `R11-DIRECT-BACKEND-COORDINATION-FRONTIER`
-  Status: `active`
+  Status: `done`
   Goal: `Select the next exact R11 direct-backend coordination slice from current evidence.`
   Children: `R11-DIRECT-BACKEND-COORDINATION-FRONTIER.1`,
     `R11-DIRECT-BACKEND-COORDINATION-FRONTIER.2`
@@ -65,18 +65,18 @@ test behavior changes.
   Commit: `R11-DIRECT-BACKEND-COORDINATION-FRONTIER.1: select direct enable nets`
 
 - ID: `R11-DIRECT-BACKEND-COORDINATION-FRONTIER.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Project top-level direct state and standalone-DT enable wires into direct StructuralRTLIR nets.`
   Acceptance: `Direct-root structural_rtl_ir.nets[] includes existing declaration-only storage/helper nets plus one-bit top-level state/standalone-DT enable wires derived from the already-prepared state_enables and dt_enables registries; the slice does not claim DT-specific/LHS WEN/EN wires, assignment connectivity, instances, links, auxiliary assignments, or reroute HDL emission.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `passed`
+  Commit: `R11-DIRECT-BACKEND-COORDINATION-FRONTIER.2: project direct enable nets`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
 | 1 | `R11-DIRECT-BACKEND-COORDINATION-FRONTIER.1` | `done` | Selected the next exact direct StructuralRTLIR convergence slice from current evidence. |
-| 2 | `R11-DIRECT-BACKEND-COORDINATION-FRONTIER.2` | `pending` | The previous direct structural slice explicitly left generated enable wires outside `structural_rtl_ir.nets[]`; top-level state/DT enable wires are already stable one-bit facts derived by `EnableSupport` and can be projected without rerouting HDL emission. |
+| 2 | `R11-DIRECT-BACKEND-COORDINATION-FRONTIER.2` | `done` | Projected top-level direct state/standalone-DT enable wires into direct `structural_rtl_ir.nets[]`; no active next leaf remains in this tree. |
 
 ## Decisions
 
@@ -87,6 +87,11 @@ test behavior changes.
   project only top-level direct state/standalone-DT enable wires into direct
   `structural_rtl_ir.nets[]`. The slice deliberately does not claim
   DT-specific/LHS WEN/EN wires or assignment connectivity.
+- `2026-06-12`: Implementation leaf `.2` shipped that bounded projection from
+  the already-prepared direct backend `state_enables` and `dt_enables`
+  registries. DT-specific/LHS WEN/EN wires, assignment connectivity,
+  instances, links, auxiliary assignments, and HDL emission rerouting remain
+  outside this tree.
 
 ## Open Questions
 
@@ -101,13 +106,14 @@ test behavior changes.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-06-12` | `R11-DIRECT-BACKEND-COORDINATION-FRONTIER.1` | Evidence review: `ROADMAP_V2.md`; `ROADMAP_STATUS.md`; `docs/BIN_FSMGEN_IMPORT_TREE.md`; `docs/tasks/ARCHITECTURE-DEBT-FRONTIER.md`; `docs/tasks/IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.md`; `perl/FSM/IR/StructuralRTLIRBuilder.pm`; `perl/FSM/Synthesis/EnableGraph/EnableSupport.pm`; `perl/FSM/Support/NormalizedSemanticStructuralRTLIRContract.pm`; `t/1333-direct-structural-rtl-ir-projection.t`; `t/206-enable-graph-enable-support.t`; `t/293-systemverilog-post-flattening-assembly-support.t`; `perl -Iperl -c perl/FSM/IR/StructuralRTLIRBuilder.pm`; `perl -Iperl -c perl/FSM/Synthesis/EnableGraph/EnableSupport.pm`; `prove -Iperl t/1333-direct-structural-rtl-ir-projection.t t/206-enable-graph-enable-support.t t/293-systemverilog-post-flattening-assembly-support.t`; `scripts/check_memory_architecture.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `git --no-pager diff --check` | `passed`; selected `.2` |
+| `2026-06-12` | `R11-DIRECT-BACKEND-COORDINATION-FRONTIER.2` | `perl -Iperl -c perl/FSM/IR/StructuralRTLIRBuilder.pm`; `perl -Iperl -c perl/FSM/Support/NormalizedSemanticStructuralRTLIRContract.pm`; `perl -Iperl -c t/1333-direct-structural-rtl-ir-projection.t`; `perl -Iperl -c t/163-forward-structural-rtl-ir-surface.t`; `perl -Iperl -c t/624-hdl-generator-stateful-direct-structural-rtl-ir-alias-boundary-audit.t`; `prove -Iperl t/1333-direct-structural-rtl-ir-projection.t t/163-forward-structural-rtl-ir-surface.t t/624-hdl-generator-stateful-direct-structural-rtl-ir-alias-boundary-audit.t`; `prove -Iperl t/341-normalized-semantic-structural-rtl-ir-contract.t t/334-normalized-semantic-forward-ir-contract.t t/297-capability-manifest.t t/442-normalized-semantic-payload-contract-defensive-copy-boundary-audit.t t/443-normalized-semantic-report-contract-defensive-copy-boundary-audit.t`; `prove -Iperl t/206-enable-graph-enable-support.t t/293-systemverilog-post-flattening-assembly-support.t`; `prove -Iperl t/303-normalized-semantic-json-supported-corpus.t t/304-normalized-semantic-json-regression-corpus.t`; `mdbook build docs/book`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1303-isf-public-live-book-paths-audit.t t/1414-docs-relative-paths-audit.t`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `git --no-pager diff --check` | `passed` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `R11-DIRECT-BACKEND-COORDINATION-FRONTIER.1` | `R11-DIRECT-BACKEND-COORDINATION-FRONTIER.1: select direct enable nets` | Selector/audit slice. |
-| `R11-DIRECT-BACKEND-COORDINATION-FRONTIER.2` | `pending` | `pending` |
+| `R11-DIRECT-BACKEND-COORDINATION-FRONTIER.2` | `R11-DIRECT-BACKEND-COORDINATION-FRONTIER.2: project direct enable nets` | Implementation slice. |
 
 ## Changelog
 
@@ -118,3 +124,7 @@ test behavior changes.
 - `2026-06-12`: Completed selector leaf `.1`; activated `.2` for top-level
   direct state/standalone-DT enable-wire projection into direct
   `StructuralRTLIR` nets.
+- `2026-06-12`: Completed `.2`; direct `StructuralRTLIR` nets now include
+  declaration-only storage/helper entries plus top-level state/standalone-DT
+  enable-wire entries, while DT-specific/LHS WEN/EN wires and assignment
+  connectivity stay deferred behind future exact owners.

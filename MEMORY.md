@@ -10,9 +10,9 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `HEAD` — `R11-DIRECT-BACKEND-COORDINATION-FRONTIER.1: select direct enable nets`.
-- active_work_unit: `R11-DIRECT-BACKEND-COORDINATION-FRONTIER.2`; next action is to project top-level direct state/standalone-DT enable wires into direct `StructuralRTLIR` nets without rerouting HDL emission.
-- recently_done: `R11-DIRECT-BACKEND-COORDINATION-FRONTIER.1`; `BIN-FSMGEN-IMPORT-TREE-JUN12-REFRESH.1`; `TASK-TREE-HYPHENATED-STATUS-DRIFT-REPAIR.1`; `TASK-TREE-STALE-STATUS-DRIFT-REPAIR.1`; `IAL2-PPIF-BUNDLE-HDL-ENTRY-FIRST-SLICE.1`; `IAL2-PPIF-BUNDLE-HDL-ENTRY-SELECTION.1`; `IAL2-PPIF-BUNDLE-SEMANTIC-JSON-FIRST-SLICE.1`; `IAL2-PPIF-VALID-READY-BUNDLE-FIRST-SLICE.1`. Older completed slices are in the task tree and git history.
+- latest_commit: `HEAD` — `R11-DIRECT-BACKEND-COORDINATION-FRONTIER.2: project direct enable nets`.
+- active_work_unit: none; next action is to pick the next task-tree-owned PNT slice from current evidence before any further source/test/config change.
+- recently_done: `R11-DIRECT-BACKEND-COORDINATION-FRONTIER.2`; `R11-DIRECT-BACKEND-COORDINATION-FRONTIER.1`; `BIN-FSMGEN-IMPORT-TREE-JUN12-REFRESH.1`; `TASK-TREE-HYPHENATED-STATUS-DRIFT-REPAIR.1`; `TASK-TREE-STALE-STATUS-DRIFT-REPAIR.1`; `IAL2-PPIF-BUNDLE-HDL-ENTRY-FIRST-SLICE.1`; `IAL2-PPIF-BUNDLE-HDL-ENTRY-SELECTION.1`; `IAL2-PPIF-BUNDLE-SEMANTIC-JSON-FIRST-SLICE.1`. Older completed slices are in the task tree and git history.
 - in_flight_uncommitted: none; unrelated untracked `fx/` intentionally left alone.
 - blockers: none.
 

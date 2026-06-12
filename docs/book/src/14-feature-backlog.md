@@ -2252,8 +2252,10 @@ ISF actor/network syntax into protocol/platform intent inference.
 Status: first bounded IAL2 implementation and `.ppif` parser/CLI surface
 shipped; broader IAL2 remains backlog.
 
-Task-tree owner:
+Historical task-tree record:
 [IAL2-PROTOCOL-PLATFORM-INTENT-EXPLORATION](../../tasks/IAL2-PROTOCOL-PLATFORM-INTENT-EXPLORATION.md).
+That tree is closed; future IAL2 behavior changes need a new task-tree leaf
+before implementation.
 
 Evaluation note:
 [IAL2_PROTOCOL_PLATFORM_INTENT_EVALUATION](../../IAL2_PROTOCOL_PLATFORM_INTENT_EVALUATION.md).
@@ -4589,8 +4591,13 @@ path for one AXI Valid-Ready source object.
 Completed implementation leaf
 `ARCHITECTURE-DEBT-FRONTIER.2.1`
 projects direct backend storage/helper declaration-plan entries into
-`structural_rtl_ir.nets[]` without rerouting HDL emission or claiming generated
-enable wires and direct assignment connectivity. Completed
+`structural_rtl_ir.nets[]` without rerouting HDL emission. Completed
+implementation leaf
+`R11-DIRECT-BACKEND-COORDINATION-FRONTIER.2`
+projects top-level direct state and standalone-DT enable wires into
+`structural_rtl_ir.nets[]` without claiming DT-specific/LHS WEN/EN wires,
+assignment connectivity, instances, links, auxiliary assignments, or rerouting
+HDL emission. Completed
 implementation leaf
 `BACKEND-API-VALIDATION-FRONTIER.131.1` lowers an 8-bit non-signed
 `REM = (% 2 3)` fixture into

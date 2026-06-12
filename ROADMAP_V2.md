@@ -1166,10 +1166,12 @@ The first honest `R11` slices are now:
 - Forward-IR note: the matching direct-root structural-builder counterpart is
   now active too: bounded direct-root `StructuralRTLIR` construction now also
   lives in `FSM::IR::StructuralRTLIRBuilder`, so `HDLGenerator` no longer owns
-  direct-root module-boundary and implicit-system-port structural assembly
-  inline either; the next honest seam is now the remaining direct-path backend
-  residue or a broader facade split rather than one more direct structural
-  helper.
+  direct-root module-boundary, implicit-system-port, declaration-only
+  storage/helper net, or top-level state/standalone-DT enable-wire structural
+  assembly inline either. DT-specific/LHS WEN/EN wires and assignment
+  connectivity remain a later exact direct StructuralRTLIR owner; the next
+  honest seam is now the remaining direct-path backend residue or a broader
+  facade split rather than one more direct structural helper.
 - Forward-IR note: that next direct-path backend-owner split is now active
   too: bounded direct generated-module backend execution, backend statistics,
   and standalone-DT assertion postprocessing now live in
