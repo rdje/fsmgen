@@ -58,7 +58,7 @@ parsing emitted HDL text.
   Goal: `Populate generated-enable source/target connectivity on direct StructuralRTLIR nets.`
   Acceptance: `Direct structural_rtl_ir.nets[] entries for generated-enable assignment-record LHS nets carry structured source objects, and direct net entries that feed another generated-enable assignment-record RHS carry structured target entries; public contracts, docs, Knowledge Map, and tests are synced without changing HDL emission.`
   Verification: `passed`
-  Commit: `R11-DIRECT-STRUCTURAL-NET-CONNECTIVITY.2: populate direct net connectivity`
+  Commit: `055dfb2e R11-DIRECT-STRUCTURAL-NET-CONNECTIVITY.2: populate direct net connectivity`
 
 ## Current Frontier
 
@@ -108,7 +108,7 @@ parsing emitted HDL text.
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `R11-DIRECT-STRUCTURAL-NET-CONNECTIVITY.1` | `a0c28479 R11-DIRECT-STRUCTURAL-NET-CONNECTIVITY.1: select direct net connectivity` | Selected the generated-enable assignment-record connectivity schema and opened `.2`. |
-| `R11-DIRECT-STRUCTURAL-NET-CONNECTIVITY.2` | `R11-DIRECT-STRUCTURAL-NET-CONNECTIVITY.2: populate direct net connectivity` | Populated generated-enable assignment-record source/target connectivity on direct structural nets without changing HDL emission. |
+| `R11-DIRECT-STRUCTURAL-NET-CONNECTIVITY.2` | `055dfb2e R11-DIRECT-STRUCTURAL-NET-CONNECTIVITY.2: populate direct net connectivity` | Populated generated-enable assignment-record source/target connectivity on direct structural nets without changing HDL emission. |
 
 ## Changelog
 

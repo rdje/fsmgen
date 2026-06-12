@@ -115,6 +115,7 @@ first.
 | `R11-DIRECT-STRUCTURAL-AUX-ASSIGNMENTS` | `done` | `R11` | complete (`.2`; projected already-rendered direct generated enable assignment lines into `StructuralRTLIR.auxiliary_assignments[]` without changing HDL emission) | [docs/tasks/R11-DIRECT-STRUCTURAL-AUX-ASSIGNMENTS.md](docs/tasks/R11-DIRECT-STRUCTURAL-AUX-ASSIGNMENTS.md) |
 | `R11-DIRECT-STRUCTURAL-ASSIGNMENT-RECORDS` | `done` | `R11` | complete (`.2`; projected direct generated enable assignments into machine-readable `StructuralRTLIR.assignment_records[]` while retaining scalar auxiliary compatibility) | [docs/tasks/R11-DIRECT-STRUCTURAL-ASSIGNMENT-RECORDS.md](docs/tasks/R11-DIRECT-STRUCTURAL-ASSIGNMENT-RECORDS.md) |
 | `R11-DIRECT-STRUCTURAL-NET-CONNECTIVITY` | `done` | `R11` | complete (`.2`; populated generated-enable assignment-record source/target connectivity on direct `StructuralRTLIR.nets[]` without changing HDL emission) | [docs/tasks/R11-DIRECT-STRUCTURAL-NET-CONNECTIVITY.md](docs/tasks/R11-DIRECT-STRUCTURAL-NET-CONNECTIVITY.md) |
+| `R11-DIRECT-STRUCTURAL-HDL-REROUTING` | `active` | `R11` | current frontier (`.2`; reroute direct generated-enable continuous assignment emission through `StructuralRTLIR` without full direct module reroute) | [docs/tasks/R11-DIRECT-STRUCTURAL-HDL-REROUTING.md](docs/tasks/R11-DIRECT-STRUCTURAL-HDL-REROUTING.md) |
 
 ## Proposed Task Trees
 
@@ -123,7 +124,6 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Proposed first leaf | File |
 | --- | --- | --- | --- | --- |
-| `R11-DIRECT-STRUCTURAL-HDL-REROUTING` | `proposed` | `R11` | `.1` audit direct HDL emission parity prerequisites and select the first StructuralRTLIR-rerouted HDL slice | [docs/tasks/R11-DIRECT-STRUCTURAL-HDL-REROUTING.md](docs/tasks/R11-DIRECT-STRUCTURAL-HDL-REROUTING.md) |
 
 ## Completed Task Trees
 
