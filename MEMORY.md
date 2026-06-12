@@ -10,9 +10,9 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `AXI-IAL2-VALID-READY-GENERATOR-FIRST-SLICE.1` — shipped the first in-process AXI Valid-Ready IAL2 generator slice.
+- latest_commit: `IAL2-PUBLIC-PPIF-SURFACE-SELECTION.1` — selected `.ppif` as the first public generic IAL2 file surface.
 - active_work_unit: none; next PNT action is to select/create the next roadmap-aligned task-tree owner before any implementation changes.
-- recently_done: `AXI-IAL2-VALID-READY-GENERATOR-FIRST-SLICE.1`; `AXI-IAL2-VALID-READY-READINESS-AUDIT.1`; `AXI-IAL2-FIRST-IMPLEMENTATION-SUBSET-SELECTION.1`; `PDF-EXTRACTION-WORKFLOW-CAPTURE.1`; `AXI-MANAGER-RULE-MATRIX-DESIGN-PROBE.1`; `AXI-ID-ORDERING-RULE-EVIDENCE-PROBE.1`; `IAL2-PROFILE-EXTENSION-REFINEMENT-CAPTURE.1`; `IAL2-PROTOCOL-PLATFORM-SURFACE-DECISION-CAPTURE.1`. Older completed slices are in the task tree and git history.
+- recently_done: `IAL2-PUBLIC-PPIF-SURFACE-SELECTION.1`; `AXI-IAL2-VALID-READY-GENERATOR-FIRST-SLICE.1`; `AXI-IAL2-VALID-READY-READINESS-AUDIT.1`; `AXI-IAL2-FIRST-IMPLEMENTATION-SUBSET-SELECTION.1`; `PDF-EXTRACTION-WORKFLOW-CAPTURE.1`; `AXI-MANAGER-RULE-MATRIX-DESIGN-PROBE.1`; `AXI-ID-ORDERING-RULE-EVIDENCE-PROBE.1`; `IAL2-PROFILE-EXTENSION-REFINEMENT-CAPTURE.1`. Older completed slices are in the task tree and git history.
 - in_flight_uncommitted: none for tracked files once the current commit workflow lands; unrelated untracked `fx/` intentionally left alone.
 - blockers: none.
 

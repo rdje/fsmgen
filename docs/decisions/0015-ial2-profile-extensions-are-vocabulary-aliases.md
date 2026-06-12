@@ -4,6 +4,7 @@
 - Type: architecture
 - Status: accepted
 - Refines: `docs/decisions/0014-protocol-platform-intent-surface-and-layered-lowering.md`
+- Complemented by: `docs/decisions/0016-ppif-is-first-public-ial2-container.md`
 
 ## Context
 
@@ -23,6 +24,7 @@ IAL2 remains one architectural layer.
 
 Generic protocol/platform containers such as `.pif`, `.ppi`, or `.ppif`
 remain valid candidates for the broad IAL2 file surface.
+Decision `0016` later selects `.ppif` as the first public generic container.
 
 Protocol-specific extensions may also be accepted later as vocabulary/profile
 aliases. For example, a future `.axi` file can be equivalent to a generic IAL2

@@ -2,7 +2,7 @@
 
 - Date: 2026-06-12
 - Type: architecture
-- Status: refined by `docs/decisions/0015-ial2-profile-extensions-are-vocabulary-aliases.md`
+- Status: refined by `docs/decisions/0015-ial2-profile-extensions-are-vocabulary-aliases.md`; first generic suffix selected by `docs/decisions/0016-ppif-is-first-public-ial2-container.md`
 
 ## Context
 
@@ -41,9 +41,10 @@ IAL2 -> IAL1 / .isf -> IAL0 / .fsm -> HDL
 Direct IAL2-to-IAL0 lowering is forbidden. Direct IAL2-to-`.fsm`
 generation is also forbidden, even as a shortcut.
 
-The exact generic extension name remains open among `.pif`, `.ppi`, `.ppif`,
-or a future explicitly accepted generic variant. Protocol-profile extensions
-are addressed by decision `0015`.
+The exact generic extension name was left open here among `.pif`, `.ppi`,
+`.ppif`, or a future explicitly accepted generic variant. Decision `0016`
+selects `.ppif` as the first public generic IAL2 suffix.
+Protocol-profile extensions are addressed by decision `0015`.
 
 ## Consequences
 

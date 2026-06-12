@@ -1,7 +1,7 @@
 # AXI IAL2 Valid-Ready Generator First Slice
 
-Status: first in-process generator slice shipped; no public IAL2 CLI suffix is
-shipped.
+Status: first in-process generator slice shipped; `.ppif` is selected as the
+first public IAL2 file suffix, but no public IAL2 parser/CLI suffix is shipped.
 
 Task tree:
 [docs/tasks/AXI-IAL2-VALID-READY-GENERATOR-FIRST-SLICE.md](tasks/AXI-IAL2-VALID-READY-GENERATOR-FIRST-SLICE.md).

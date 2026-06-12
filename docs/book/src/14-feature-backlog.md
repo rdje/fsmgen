@@ -2267,9 +2267,9 @@ only syntax convenience. Its generic file surface must be
 protocol/platform-generic, and a future IAL2 file may select a protocol or
 platform vocabulary inside the file.
 
-The exact extension spelling remains open. Current candidates are `.pif`
-(Protocol Intent Format), `.ppi` (Protocol/Platform Intent), and `.ppif`
-(Protocol/Platform Intent Format).
+Decision `0016` selects `.ppif` (Protocol/Platform Intent Format) as the first
+public generic IAL2 file suffix. Earlier candidates `.pif` and `.ppi` are not
+first implementation suffixes.
 
 Protocol-specific extensions such as `.axi`, `.chi`, `.ace`, `.ahb`, `.apb`,
 `.atb`, `.smbus`, or `.i2s` may also be accepted later as vocabulary/profile
@@ -2395,9 +2395,35 @@ overrides while preserving manager enforcement. Raw channel access should
 normally be supervised by the same AXI rule engine, with any unsafe bypass
 treated as verification-only and unable to claim guaranteed AXI correctness.
 
-The next prerequisite is a later exact owner for either public IAL2 file
-syntax/suffix support or the next protocol rule subset. Public `.pif`, `.ppi`,
-`.ppif`, `.axi`, and full AXI manager behavior remain unshipped.
+Public file-surface decision:
+[decision 0016](../../decisions/0016-ppif-is-first-public-ial2-container.md)
+selects `.ppif` as the first generic IAL2 file suffix and records the first
+public Valid-Ready source shape. Parser/CLI support for `.ppif` is still
+unshipped and requires a later exact owner. Public `.pif`, `.ppi`, `.axi`, and
+full AXI manager behavior also remain unshipped.
+
+First selected `.ppif` shape:
+
+```text
+(protocol-platform-intent axi_aw_valid_ready
+  (profile axi4)
+  (source
+    (object axi-valid-ready-aw)
+    (anchor (document IHI0022_L_2025-08) (section A3.2.1) (page A3-40)))
+  (valid-ready-channel axi_aw
+    (channel AW)
+    (role manager-to-subordinate)
+    (clock clk)
+    (reset (rst_n active_low async))
+    (valid awvalid)
+    (ready awready)
+    (payload
+      (awaddr width 32)
+      (awlen width 8))))
+```
+
+The next prerequisite is a later exact owner for either `.ppif` parser/CLI
+support or the next protocol rule subset.
 
 PDF extraction workflow:
 [PDF_EXTRACTION_WORKFLOW](../../PDF_EXTRACTION_WORKFLOW.md)
@@ -2412,7 +2438,9 @@ Protocol/platform surface decision:
 [0014-protocol-platform-intent-surface-and-layered-lowering](../../decisions/0014-protocol-platform-intent-surface-and-layered-lowering.md)
 records the generic future IAL2 file-surface direction, the open
 `.pif`/`.ppi`/`.ppif` extension candidates, and the required
-`IAL2 -> IAL1 -> IAL0` lowering chain.
+`IAL2 -> IAL1 -> IAL0` lowering chain. Decision
+[0016-ppif-is-first-public-ial2-container](../../decisions/0016-ppif-is-first-public-ial2-container.md)
+selects `.ppif` as the first public generic IAL2 suffix.
 
 Profile-extension refinement:
 [0015-ial2-profile-extensions-are-vocabulary-aliases](../../decisions/0015-ial2-profile-extensions-are-vocabulary-aliases.md)
