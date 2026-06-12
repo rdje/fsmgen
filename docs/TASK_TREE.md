@@ -98,6 +98,7 @@ first.
 | `PPIF-SEMANTIC-JSON-FOCUSED-COVERAGE` | `done` | IAL2 horizon exploration / Embedding And Public APIs | complete (`.1`; locked focused PPIF semantic JSON source-identity coverage) | [docs/tasks/PPIF-SEMANTIC-JSON-FOCUSED-COVERAGE.md](docs/tasks/PPIF-SEMANTIC-JSON-FOCUSED-COVERAGE.md) |
 | `PPIF-SEMANTIC-JSON-CLI-DOC-EXAMPLE` | `done` | IAL2 horizon exploration / Embedding And Public APIs | complete (`.1`; documented `.ppif --emit-semantic-json` usage) | [docs/tasks/PPIF-SEMANTIC-JSON-CLI-DOC-EXAMPLE.md](docs/tasks/PPIF-SEMANTIC-JSON-CLI-DOC-EXAMPLE.md) |
 | `PPIF-SOURCE-INTENT-NAME-REPORT` | `done` | IAL2 horizon exploration | complete (`.1`; preserved `.ppif` top-level intent name in reports) | [docs/tasks/PPIF-SOURCE-INTENT-NAME-REPORT.md](docs/tasks/PPIF-SOURCE-INTENT-NAME-REPORT.md) |
+| `LANGUAGE-SURFACE-FILE-CLI-MODES` | `done` | Embedding And Public APIs | complete (`.1`; advertised supported CLI modes per shipped file suffix) | [docs/tasks/LANGUAGE-SURFACE-FILE-CLI-MODES.md](docs/tasks/LANGUAGE-SURFACE-FILE-CLI-MODES.md) |
 
 ## Proposed Task Trees
 

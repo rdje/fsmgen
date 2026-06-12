@@ -113,6 +113,7 @@ sub language_surface_file_surface_entry_keys {
             role
             lowers_to
             generated_review_artifacts
+            supported_cli_modes
             sample_path
             current_boundary
         ),

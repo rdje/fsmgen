@@ -19,6 +19,8 @@ use FSM::Support::LanguageSurfaceContract qw(
     language_surface_declarations_keys
     language_surface_default_mode_compatibility_keys
     language_surface_expressions_keys
+    language_surface_file_surface_entry_keys
+    language_surface_file_surfaces_keys
     language_surface_nested_presence_key_map
     language_surface_public_top_level_keys
     language_surface_strict_mode_keys
@@ -53,6 +55,16 @@ subtest 'contract exposes the bounded language-surface section' => sub {
         $contract->{strict_mode_presence_keys},
         language_surface_strict_mode_keys(),
         'contract publishes the bounded strict-mode keys',
+    );
+    is_deeply(
+        $contract->{file_surfaces_presence_keys},
+        language_surface_file_surfaces_keys(),
+        'contract publishes the bounded file-surfaces keys',
+    );
+    is_deeply(
+        $contract->{file_surface_entry_presence_keys},
+        language_surface_file_surface_entry_keys(),
+        'contract publishes the bounded file-surface entry keys',
     );
     is_deeply(
         $contract->{default_mode_compatibility_presence_keys},
@@ -113,6 +125,20 @@ subtest 'in-process capability manifest language surface conforms to the bounded
         $surface->{strict_mode},
         language_surface_strict_mode_keys(),
         'strict-mode section keeps bounded keys',
+    );
+    assert_keys_present(
+        $surface->{file_surfaces},
+        language_surface_file_surfaces_keys(),
+        'file-surfaces section keeps bounded keys',
+    );
+    is_deeply(
+        $surface->{file_surfaces}{entry_presence_keys},
+        language_surface_file_surface_entry_keys(),
+        'file-surfaces section advertises bounded entry keys',
+    );
+    assert_file_surface_entries_conform(
+        $surface->{file_surfaces}{entries},
+        'file-surface entries keep bounded keys',
     );
     assert_keys_present(
         $surface->{default_mode_compatibility},
@@ -184,6 +210,20 @@ subtest 'CLI capability manifest keeps the bounded language-surface contract' =>
         'CLI language-surface section keeps the grouped first nested key-family map',
     );
     assert_keys_present(
+        $surface->{file_surfaces},
+        language_surface_file_surfaces_keys(),
+        'CLI file-surfaces section keeps bounded keys',
+    );
+    is_deeply(
+        $surface->{file_surfaces}{entry_presence_keys},
+        language_surface_file_surface_entry_keys(),
+        'CLI file-surfaces section advertises bounded entry keys',
+    );
+    assert_file_surface_entries_conform(
+        $surface->{file_surfaces}{entries},
+        'CLI file-surface entries keep bounded keys',
+    );
+    assert_keys_present(
         $surface->{expressions},
         language_surface_expressions_keys(),
         'CLI expressions section keeps bounded keys',
@@ -213,4 +253,16 @@ sub assert_list_contains {
     my ($values, $expected, $label) = @_;
     my %seen = map { $_ => 1 } @{$values || []};
     ok($seen{$expected}, $label);
+}
+
+sub assert_file_surface_entries_conform {
+    my ($entries, $label) = @_;
+    for my $entry (@{$entries || []}) {
+        my $suffix = $entry->{suffix} || '<missing suffix>';
+        assert_keys_present(
+            $entry,
+            language_surface_file_surface_entry_keys(),
+            "$label for $suffix",
+        );
+    }
 }

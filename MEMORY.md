@@ -10,9 +10,9 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `HEAD` — `PPIF-SOURCE-INTENT-NAME-REPORT.1: report PPIF intent names`.
+- latest_commit: `HEAD` — `LANGUAGE-SURFACE-FILE-CLI-MODES.1: advertise file CLI modes`.
 - active_work_unit: none; next action is to pick the next eligible task-tree leaf from `docs/TASK_TREE.md`.
-- recently_done: `PPIF-SOURCE-INTENT-NAME-REPORT.1`; `PPIF-SEMANTIC-JSON-CLI-DOC-EXAMPLE.1`; `PPIF-SEMANTIC-JSON-FOCUSED-COVERAGE.1`; `NORMALIZED-SEMANTIC-PUBLIC-SOURCE-IDENTITY.1`; `CHECK-JSON-PUBLIC-SOURCE-IDENTITY.1`; `IAL2-PPIF-LANGUAGE-SURFACE-MANIFEST.1`; `IAL2-PPIF-RUNNABLE-SAMPLE-FIXTURE.1`; `IAL2-PPIF-PARSER-CLI-FIRST-SLICE.1`. Older completed slices are in the task tree and git history.
+- recently_done: `LANGUAGE-SURFACE-FILE-CLI-MODES.1`; `PPIF-SOURCE-INTENT-NAME-REPORT.1`; `PPIF-SEMANTIC-JSON-CLI-DOC-EXAMPLE.1`; `PPIF-SEMANTIC-JSON-FOCUSED-COVERAGE.1`; `NORMALIZED-SEMANTIC-PUBLIC-SOURCE-IDENTITY.1`; `CHECK-JSON-PUBLIC-SOURCE-IDENTITY.1`; `IAL2-PPIF-LANGUAGE-SURFACE-MANIFEST.1`; `IAL2-PPIF-RUNNABLE-SAMPLE-FIXTURE.1`. Older completed slices are in the task tree and git history.
 - in_flight_uncommitted: none; unrelated untracked `fx/` intentionally left alone.
 - blockers: none.
 

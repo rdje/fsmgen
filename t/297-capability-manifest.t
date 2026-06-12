@@ -2742,6 +2742,10 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
         ['.isf', '.fsm'],
         'manifest records .ppif generated review artifacts',
     );
+    my %ppif_cli_modes = map { $_ => 1 } @{$file_surface_by_suffix{'.ppif'}{supported_cli_modes} || []};
+    ok($ppif_cli_modes{'--emit-schedule-json'}, 'manifest records .ppif schedule-report CLI mode');
+    ok($ppif_cli_modes{'--emit-semantic-json'}, 'manifest records .ppif semantic JSON CLI mode');
+    ok($ppif_cli_modes{'--check --json / --check-json'}, 'manifest records .ppif check JSON CLI mode');
     is(
         $file_surface_by_suffix{'.ppif'}{sample_path},
         'ppif/axi_aw_valid_ready.ppif',
