@@ -48,7 +48,7 @@ path before reopening VHDL backend or VHDL rerouting work.
 - ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER`
   Status: `active`
   Goal: `Make IAL2 feature-complete on the SystemVerilog-backed path before VHDL work resumes.`
-  Children: `IAL2-FEATURE-COMPLETENESS-FRONTIER.1, IAL2-FEATURE-COMPLETENESS-FRONTIER.2, IAL2-FEATURE-COMPLETENESS-FRONTIER.3, IAL2-FEATURE-COMPLETENESS-FRONTIER.4, IAL2-FEATURE-COMPLETENESS-FRONTIER.5, IAL2-FEATURE-COMPLETENESS-FRONTIER.6, IAL2-FEATURE-COMPLETENESS-FRONTIER.7, IAL2-FEATURE-COMPLETENESS-FRONTIER.8, IAL2-FEATURE-COMPLETENESS-FRONTIER.9, IAL2-FEATURE-COMPLETENESS-FRONTIER.10, IAL2-FEATURE-COMPLETENESS-FRONTIER.11, IAL2-FEATURE-COMPLETENESS-FRONTIER.12, IAL2-FEATURE-COMPLETENESS-FRONTIER.13, IAL2-FEATURE-COMPLETENESS-FRONTIER.14, IAL2-FEATURE-COMPLETENESS-FRONTIER.15, IAL2-FEATURE-COMPLETENESS-FRONTIER.16, IAL2-FEATURE-COMPLETENESS-FRONTIER.17, IAL2-FEATURE-COMPLETENESS-FRONTIER.18, IAL2-FEATURE-COMPLETENESS-FRONTIER.19, IAL2-FEATURE-COMPLETENESS-FRONTIER.20, IAL2-FEATURE-COMPLETENESS-FRONTIER.21, IAL2-FEATURE-COMPLETENESS-FRONTIER.22, IAL2-FEATURE-COMPLETENESS-FRONTIER.23, IAL2-FEATURE-COMPLETENESS-FRONTIER.24, IAL2-FEATURE-COMPLETENESS-FRONTIER.25, IAL2-FEATURE-COMPLETENESS-FRONTIER.26, IAL2-FEATURE-COMPLETENESS-FRONTIER.27, IAL2-FEATURE-COMPLETENESS-FRONTIER.28, IAL2-FEATURE-COMPLETENESS-FRONTIER.29, IAL2-FEATURE-COMPLETENESS-FRONTIER.30, IAL2-FEATURE-COMPLETENESS-FRONTIER.31, IAL2-FEATURE-COMPLETENESS-FRONTIER.32, IAL2-FEATURE-COMPLETENESS-FRONTIER.33, IAL2-FEATURE-COMPLETENESS-FRONTIER.34, IAL2-FEATURE-COMPLETENESS-FRONTIER.35, IAL2-FEATURE-COMPLETENESS-FRONTIER.36, IAL2-FEATURE-COMPLETENESS-FRONTIER.37`
+  Children: `IAL2-FEATURE-COMPLETENESS-FRONTIER.1, IAL2-FEATURE-COMPLETENESS-FRONTIER.2, IAL2-FEATURE-COMPLETENESS-FRONTIER.3, IAL2-FEATURE-COMPLETENESS-FRONTIER.4, IAL2-FEATURE-COMPLETENESS-FRONTIER.5, IAL2-FEATURE-COMPLETENESS-FRONTIER.6, IAL2-FEATURE-COMPLETENESS-FRONTIER.7, IAL2-FEATURE-COMPLETENESS-FRONTIER.8, IAL2-FEATURE-COMPLETENESS-FRONTIER.9, IAL2-FEATURE-COMPLETENESS-FRONTIER.10, IAL2-FEATURE-COMPLETENESS-FRONTIER.11, IAL2-FEATURE-COMPLETENESS-FRONTIER.12, IAL2-FEATURE-COMPLETENESS-FRONTIER.13, IAL2-FEATURE-COMPLETENESS-FRONTIER.14, IAL2-FEATURE-COMPLETENESS-FRONTIER.15, IAL2-FEATURE-COMPLETENESS-FRONTIER.16, IAL2-FEATURE-COMPLETENESS-FRONTIER.17, IAL2-FEATURE-COMPLETENESS-FRONTIER.18, IAL2-FEATURE-COMPLETENESS-FRONTIER.19, IAL2-FEATURE-COMPLETENESS-FRONTIER.20, IAL2-FEATURE-COMPLETENESS-FRONTIER.21, IAL2-FEATURE-COMPLETENESS-FRONTIER.22, IAL2-FEATURE-COMPLETENESS-FRONTIER.23, IAL2-FEATURE-COMPLETENESS-FRONTIER.24, IAL2-FEATURE-COMPLETENESS-FRONTIER.25, IAL2-FEATURE-COMPLETENESS-FRONTIER.26, IAL2-FEATURE-COMPLETENESS-FRONTIER.27, IAL2-FEATURE-COMPLETENESS-FRONTIER.28, IAL2-FEATURE-COMPLETENESS-FRONTIER.29, IAL2-FEATURE-COMPLETENESS-FRONTIER.30, IAL2-FEATURE-COMPLETENESS-FRONTIER.31, IAL2-FEATURE-COMPLETENESS-FRONTIER.32, IAL2-FEATURE-COMPLETENESS-FRONTIER.33, IAL2-FEATURE-COMPLETENESS-FRONTIER.34, IAL2-FEATURE-COMPLETENESS-FRONTIER.35, IAL2-FEATURE-COMPLETENESS-FRONTIER.36, IAL2-FEATURE-COMPLETENESS-FRONTIER.37, IAL2-FEATURE-COMPLETENESS-FRONTIER.38`
 
 - ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER.1`
   Status: `done`
@@ -303,9 +303,16 @@ path before reopening VHDL backend or VHDL rerouting work.
   Commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.36: select AXI read response demux`
 
 - ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER.37`
-  Status: `pending`
+  Status: `done`
   Goal: `Audit AXI read response-demux readiness after generated same-ID avoidance.`
   Acceptance: `The audit reads shipped write response-demux behavior, same-ID avoidance, read ID-family/transaction/auto-ID lifecycle substrate, AXI read response/interleaving evidence, PPIF parser constraints, IAL1 rule-pulse/assertion/lowering support, SystemVerilog reachability, mdBook, roadmap, and Knowledge Map; decides whether a bounded read RID response-demux implementation can be selected directly, requires parser/report metadata first, needs an IAL1/IAL0/SystemVerilog prerequisite, or must defer behind read-data interleaving/reassembly or burst/last-beat ownership; records exact public syntax/report expectations, generated .isf/.fsm/HDL boundaries, diagnostics, validation gates, residue, rollback, docs, and VHDL deferral before behavior changes.`
+  Verification: `Read the shipped write response-demux behavior, generated same-ID avoidance, read ID-family/transaction/auto-ID lifecycle substrate, parser and generator response_demux write-only constraints, IAL1 rule-pulse support, AXI read response/interleaving evidence, current response-demux report, mdBook, roadmap, and Knowledge Map. Selected .38 as a public contract-selection slice for bounded read response demux before parser/report metadata, generated .isf/.fsm/HDL behavior, read-data interleaving/reassembly, burst/last-beat, per-ID queue, full-manager, or VHDL changes.`
+  Commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.37: audit AXI read response demux`
+
+- ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER.38`
+  Status: `pending`
+  Goal: `Select the bounded AXI read response-demux public contract.`
+  Acceptance: `The selector chooses the exact additive public syntax for a read response-demux arm or records why it must defer; decides whether the first scope is single-beat/non-burst only, whether response-event must equal top-level read-complete, whether response-event means raw accepted R-channel transfer or transaction-level last-beat completion, whether positive-width read id_families/read transactions/read auto_id_lifecycle metadata are required, whether transaction-completion generated reclassifies read completion names as generated pulse outputs only under explicit opt-in, the report key shape, diagnostics, generated artifact boundaries, validation gates, residue, rollback, docs, and VHDL deferral; no parser/generator/HDL behavior changes occur in the selector slice.`
   Verification: `pending`
   Commit: `pending`
 
@@ -313,7 +320,7 @@ path before reopening VHDL backend or VHDL rerouting work.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.37` | `pending` | `.36` selected read response-demux readiness after same-ID avoidance; the audit must bound `RID` response matching before read-data interleaving, bursts, full-manager, or VHDL work. |
+| 1 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.38` | `pending` | `.37` selected public contract selection for bounded read response demux before parser/report metadata or behavior changes. |
 
 ## Decisions
 
@@ -681,6 +688,13 @@ path before reopening VHDL backend or VHDL rerouting work.
   IAL1/IAL0/SystemVerilog prerequisite, or must defer behind read-data
   interleaving/reassembly or burst ownership. Read-data interleaving, bursts,
   per-ID queues, full-manager behavior, and VHDL remain residue.
+- `2026-06-12`: `.37` audited read response-demux readiness and selected
+  `.38`, a public contract-selection slice, before parser/report metadata or
+  generated behavior. The contract must define the bounded single-beat or
+  non-burst scope, read `response-event` semantics, whether top-level
+  `read-complete` is the raw accepted response event, required read
+  ID-family/transaction/auto-ID lifecycle metadata, generated completion
+  ownership, report shape, diagnostics, residue, rollback, and VHDL deferral.
 - `2026-06-12`: User clarified the backend strategy: FSMGen is currently Perl
   5, but IAL0/IAL1/IAL2 and the mdBook must remain backend-language-neutral
   contracts for future Rust, Rust/Wasm, browser-capable JavaScript, and
@@ -781,6 +795,8 @@ path before reopening VHDL backend or VHDL rerouting work.
 | `2026-06-12` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.35` | `perl -Iperl -c perl/FSM/IAL2/ProtocolIntent/AxiManagerCapacityStatus.pm`; `perl -Iperl -c t/1437-axi-ial2-manager-capacity-status-generator.t`; `perl -Iperl -c t/1436-ial2-ppif-parser-cli.t`; `prove -Iperl t/1437-axi-ial2-manager-capacity-status-generator.t`; `prove -Iperl t/1436-ial2-ppif-parser-cli.t`; `./bin/fsmgen --emit-schedule-json ppif/axi_manager_capacity_status_response_demux.ppif`; `./bin/fsmgen --quiet --verify-hdl ppif/axi_manager_capacity_status_response_demux.ppif`; `prove -Iperl t/297-capability-manifest.t t/317-language-surface-contract.t t/301-check-json-supported-corpus.t t/303-normalized-semantic-json-supported-corpus.t`; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `mdbook build docs/book`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `git --no-pager diff --check`; stale-current-frontier and stale-residue searches | Passed. |
 | `2026-06-12` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.36` | `docs/AXI_IAL2_MANAGER_SAME_ID_ORDERING_FIRST_SLICE.md`; `docs/AXI_IAL2_MANAGER_WRITE_RESPONSE_DEMUX_BEHAVIOR_FIRST_SLICE.md`; `docs/AXI_IAL2_MANAGER_AUTO_ID_RESIDUE_ALIGNMENT_FIRST_SLICE.md`; `docs/AXI_ID_ORDERING_RULE_EVIDENCE_PROBE.md`; `docs/AXI_MANAGER_RULE_MATRIX_DESIGN_PROBE.md`; `docs/book/src/14-feature-backlog.md`; `docs/knowledge/ial2-feature-completeness-next-slice.md`; `docs/knowledge/ial2-axi-manager-same-id-ordering-first-slice.md`; `ppif/axi_manager_capacity_status_response_demux.ppif`; `perl/FSM/IAL2/ProtocolIntent/AxiManagerCapacityStatus.pm`; `perl/FSM/Adapter/IAL2/PPIF.pm`; `t/1437-axi-ial2-manager-capacity-status-generator.t`; `t/1436-ial2-ppif-parser-cli.t`; `./bin/fsmgen --emit-schedule-json ppif/axi_manager_capacity_status_response_demux.ppif`; `docs/AXI_IAL2_MANAGER_READ_RESPONSE_DEMUX_SELECTION.md`; `README.md`; `ROADMAP_V2.md`; `docs/TASK_TREE.md`; `MEMORY.md` | Selected `.37`, read response-demux readiness after generated same-ID avoidance. |
 | `2026-06-12` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.36` | `bash knowledge-map/scripts/gen_knowledge_map.sh`; `mdbook build docs/book`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `git --no-pager diff --check`; stale-current-frontier search; read response-demux selector fact-card reverify `rg` | Passed. |
+| `2026-06-12` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.37` | `docs/AXI_IAL2_MANAGER_READ_RESPONSE_DEMUX_SELECTION.md`; `docs/AXI_IAL2_MANAGER_WRITE_RESPONSE_DEMUX_BEHAVIOR_FIRST_SLICE.md`; `docs/AXI_IAL2_MANAGER_SAME_ID_ORDERING_FIRST_SLICE.md`; `docs/AXI_IAL2_MANAGER_AUTO_ID_REQUEST_ID_DRIVE_FIRST_SLICE.md`; `docs/AXI_IAL2_MANAGER_AUTO_ID_RESIDUE_ALIGNMENT_FIRST_SLICE.md`; `docs/AXI_ID_ORDERING_RULE_EVIDENCE_PROBE.md`; `docs/AXI_MANAGER_RULE_MATRIX_DESIGN_PROBE.md`; `docs/knowledge/ial1-rule-pulse-action.md`; `perl/FSM/Adapter/IAL2/PPIF.pm`; `perl/FSM/IAL2/ProtocolIntent/AxiManagerCapacityStatus.pm`; `t/1436-ial2-ppif-parser-cli.t`; `t/1437-axi-ial2-manager-capacity-status-generator.t`; `ppif/axi_manager_capacity_status_response_demux.ppif`; `./bin/fsmgen --emit-schedule-json ppif/axi_manager_capacity_status_response_demux.ppif`; `docs/AXI_IAL2_MANAGER_READ_RESPONSE_DEMUX_READINESS_AUDIT.md`; `docs/book/src/14-feature-backlog.md`; `README.md`; `ROADMAP_V2.md`; `docs/TASK_TREE.md`; `MEMORY.md` | Selected `.38`, bounded read response-demux public contract selection before parser/report metadata or behavior changes. |
+| `2026-06-12` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.37` | `bash knowledge-map/scripts/gen_knowledge_map.sh`; `mdbook build docs/book`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `git --no-pager diff --check`; read response-demux readiness fact-card reverify `rg`; stale-current-frontier search | Passed. |
 
 ## Commit Log
 
@@ -822,6 +838,7 @@ path before reopening VHDL backend or VHDL rerouting work.
 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.34` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.34: audit AXI same-ID readiness` | Selected bounded auto-ID same-ID avoidance assertions/report metadata and advanced the frontier to `.35`. |
 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.35` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.35: ship AXI same-ID avoidance` | Shipped generated auto-ID same-ID avoidance assertions/report metadata and advanced the frontier to `.36`. |
 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.36` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.36: select AXI read response demux` | Selected read response-demux readiness and advanced the frontier to `.37`. |
+| `IAL2-FEATURE-COMPLETENESS-FRONTIER.37` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.37: audit AXI read response demux` | Selected bounded read response-demux public contract selection and advanced the frontier to `.38`. |
 
 ## Changelog
 
@@ -941,3 +958,6 @@ path before reopening VHDL backend or VHDL rerouting work.
 - `2026-06-12`: Completed `.36` selector, chose read response-demux readiness
   after generated auto-ID same-ID avoidance, and advanced the frontier to
   `.37`.
+- `2026-06-12`: Completed `.37` readiness audit, selected bounded read
+  response-demux public contract selection before parser/report metadata or
+  generated behavior, and advanced the frontier to `.38`.

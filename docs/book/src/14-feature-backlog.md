@@ -3150,6 +3150,18 @@ accepted single-beat read response event, whether explicit read
 out-of-scope read-data interleaving/reassembly, burst/last-beat, per-ID queue,
 full-manager, and VHDL work.
 
+Read response-demux readiness audit:
+[AXI_IAL2_MANAGER_READ_RESPONSE_DEMUX_READINESS_AUDIT](../../AXI_IAL2_MANAGER_READ_RESPONSE_DEMUX_READINESS_AUDIT.md)
+selects `.38`, a public contract-selection slice. The audit found that the
+current parser and generator are intentionally write-shaped for
+`response-demux`, while the substrate already has read ID-family metadata,
+read transaction metadata, read-capable auto-ID lifecycle state, concrete
+`ARID`/`RID` assertion reachability, and IAL1 rule-owned pulse actions. The
+contract still has to decide whether the first read demux scope is
+single-beat/non-burst, what `response-event` means, whether it must equal
+top-level `read-complete`, and whether read `auto-id-lifecycle` metadata is
+mandatory before any parser/report or generated behavior changes.
+
 Response-demux behavior readiness audit:
 [AXI_IAL2_MANAGER_WRITE_RESPONSE_DEMUX_BEHAVIOR_READINESS_AUDIT](../../AXI_IAL2_MANAGER_WRITE_RESPONSE_DEMUX_BEHAVIOR_READINESS_AUDIT.md)
 concluded that generated write `BID` demux should not be implemented directly
@@ -3291,11 +3303,12 @@ transaction-envelope/static-validation subset, and the readiness audit for its
 additive static/report implementation boundary. The optional static
 `(transactions ...)` implementation slice and the additive transaction event
 dispatch/fan-in slice are now also shipped, and the active frontier is
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.37`, auditing bounded AXI read `RID`
-response-demux readiness after generated write `BID` demux and generated
-auto-ID same-ID avoidance. Read-data interleaving/reassembly, bursts, per-ID
-queues, full-manager behavior, and VHDL remain out of scope for that readiness
-audit unless it selects a later exact owner.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.38`, selecting the bounded AXI read
+response-demux public contract after `.37` concluded the contract must be
+explicit before parser/report metadata or generated behavior. Read-data
+interleaving/reassembly, bursts, per-ID queues, full-manager behavior, and
+VHDL remain out of scope for that contract selector unless it selects a later
+exact owner.
 Additional `.ppif` objects/clauses and profile aliases remain future
 exact-owner work, and they must not jump ahead of the active selector unless
 that selector records why.
@@ -5521,6 +5534,9 @@ bounded auto-ID same-ID avoidance assertions/report metadata and advances the
 active frontier to `.36`.
 Completed selector leaf `IAL2-FEATURE-COMPLETENESS-FRONTIER.36` selects read
 `RID` response-demux readiness and advances the active frontier to `.37`.
+Completed readiness audit leaf `IAL2-FEATURE-COMPLETENESS-FRONTIER.37`
+selects bounded read response-demux public contract selection and advances
+the active frontier to `.38`.
 Completed implementation leaf
 `ARCHITECTURE-DEBT-FRONTIER.2.1`
 projects direct backend storage/helper declaration-plan entries into
