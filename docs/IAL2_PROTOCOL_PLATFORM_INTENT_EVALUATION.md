@@ -242,6 +242,11 @@ checks to `.fsm` `+assert` carriers, emit verification-only SystemVerilog
 assertions, and report `id_response_rule_engine` metadata. Auto-ID
 allocation, ID release, response demux, ordering, bursts, queued/blocking
 policy, aliases, full AXI manager behavior, and VHDL remain residue.
+The next selected subset is
+[AXI_IAL2_MANAGER_AUTO_ID_LIFECYCLE_SELECTION](AXI_IAL2_MANAGER_AUTO_ID_LIFECYCLE_SELECTION.md):
+readiness-audit request-ID drive, ID busy/free state, completion release,
+diagnostics, report shape, and substrate readiness before any auto-ID
+allocation implementation.
 Public `.pif`, `.ppi`, `.axi`, protocol-profile aliases, ID allocation,
 ordering, response matching, bursts, queued/blocking policy, and full AXI
 manager behavior remain unshipped until exact owners select and implement

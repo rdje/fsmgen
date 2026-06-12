@@ -1,6 +1,6 @@
 ---
 id: ial2-feature-completeness-next-slice
-title: IAL2 feature completeness next slice is the post concrete-ID selector
+title: IAL2 feature completeness next slice is auto-ID lifecycle readiness
 answers:
   - "what is the next IAL2 feature completeness slice?"
   - "what comes after PPIF Valid-Ready bundles?"
@@ -10,18 +10,18 @@ answers:
 date: 2026-06-12
 status: current
 tags: [ial2, axi, manager, feature-completeness, task-tree]
-evidence: docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; docs/AXI_IAL2_MANAGER_CONCRETE_ID_ASSERTIONS_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_ID_RESPONSE_RULE_ENGINE_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_ID_RESPONSE_RULE_ENGINE_SELECTION.md; docs/AXI_IAL2_MANAGER_TRANSACTION_EVENT_DISPATCH_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_TRANSACTION_EVENT_DISPATCH_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_TRANSACTION_EVENT_DISPATCH_SELECTION.md; docs/AXI_IAL2_MANAGER_TRANSACTION_ENVELOPE_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_TRANSACTION_ENVELOPE_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_TRANSACTION_ENVELOPE_SELECTION.md; docs/AXI_IAL2_MANAGER_ID_FAMILY_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_ID_FAMILY_SUBSET_SELECTION.md; docs/AXI_IAL2_MANAGER_ID_FAMILY_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_CAPACITY_STATUS_SUBSET_SELECTION.md; docs/AXI_MANAGER_RULE_MATRIX_DESIGN_PROBE.md; docs/AXI_MANAGER_USER_API_BRAINSTORM.md; docs/AXI_ID_ORDERING_RULE_EVIDENCE_PROBE.md; docs/book/src/14-feature-backlog.md; README.md; ROADMAP_V2.md
-reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.19|next IAL2 feature-completeness selector|concrete transaction ID|concrete-ID|id_response_rule_engine|response demux' docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md docs/AXI_IAL2_MANAGER_CONCRETE_ID_ASSERTIONS_FIRST_SLICE.md docs/book/src/14-feature-backlog.md README.md ROADMAP_V2.md
+evidence: docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; docs/AXI_IAL2_MANAGER_AUTO_ID_LIFECYCLE_SELECTION.md; docs/AXI_IAL2_MANAGER_CONCRETE_ID_ASSERTIONS_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_ID_RESPONSE_RULE_ENGINE_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_ID_RESPONSE_RULE_ENGINE_SELECTION.md; docs/AXI_IAL2_MANAGER_TRANSACTION_EVENT_DISPATCH_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_TRANSACTION_EVENT_DISPATCH_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_TRANSACTION_EVENT_DISPATCH_SELECTION.md; docs/AXI_IAL2_MANAGER_TRANSACTION_ENVELOPE_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_TRANSACTION_ENVELOPE_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_TRANSACTION_ENVELOPE_SELECTION.md; docs/AXI_IAL2_MANAGER_ID_FAMILY_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_ID_FAMILY_SUBSET_SELECTION.md; docs/AXI_IAL2_MANAGER_ID_FAMILY_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_CAPACITY_STATUS_SUBSET_SELECTION.md; docs/AXI_MANAGER_RULE_MATRIX_DESIGN_PROBE.md; docs/AXI_MANAGER_USER_API_BRAINSTORM.md; docs/AXI_ID_ORDERING_RULE_EVIDENCE_PROBE.md; docs/book/src/14-feature-backlog.md; README.md; ROADMAP_V2.md
+reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.20|auto-ID lifecycle|request-ID drive|ID busy/free|completion release|auto-ID allocation' docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md docs/AXI_IAL2_MANAGER_AUTO_ID_LIFECYCLE_SELECTION.md docs/book/src/14-feature-backlog.md README.md ROADMAP_V2.md
 ---
 
 After the shipped Valid-Ready, bundle, capacity/status, ID-family metadata,
 transaction-envelope metadata, transaction event dispatch, and concrete
 transaction ID assertion IAL2 surfaces, the next active leaf is
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.19`.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.20`.
 
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.19` is a selector. It must choose the next
-exact IAL2 behavior subset or required IAL1/IAL0/SystemVerilog prerequisite
-before any further behavior changes.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.20` is a readiness audit for AXI manager
+auto-ID lifecycle and request-ID drive before any auto-ID allocation behavior
+changes.
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.12` shipped the bounded AXI manager
 machine-readable AST/structural logical read/write transaction-envelope
@@ -57,7 +57,12 @@ including generated ID inputs, `.fsm` `+assert` carriers, verification-only
 SystemVerilog assertions, `id_response_rule_engine` report metadata, and
 fail-closed duplicate concrete-event diagnostics.
 
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.19` selected auto-ID lifecycle/readiness as
+the next exact subset. The `.20` audit must resolve request-ID drive direction,
+ID busy/free state, completion release, no-ID-available diagnostics, report
+shape, and IAL1/IAL0/SystemVerilog substrate readiness.
+
 The full AXI manager is not implemented yet. ID allocation, ordering, response
 matching, bursts, queued/blocking policy, `.pif`/`.ppi`/`.axi` aliases, and
-VHDL remain future exact-owner work; they should not jump ahead of the `.19`
-selector unless that selector records a stronger reason.
+VHDL remain future exact-owner work; they should not jump ahead of the `.20`
+readiness audit unless that audit records a stronger reason.

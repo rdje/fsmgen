@@ -17,16 +17,21 @@ reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER|IAL2 feature completeness|IA
 The current feature-completeness priority is IAL2 on the
 SystemVerilog-backed path.
 
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.19` owns the next PNT frontier: select
-the next exact IAL2 feature-completeness slice after `.18` shipped concrete
-transaction ID request/response assertions. The selected next slice must be
-recorded before any further behavior change.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.20` owns the next PNT frontier:
+readiness-audit AXI manager auto-ID lifecycle and request-ID drive after `.18`
+shipped concrete transaction ID request/response assertions and `.19` selected
+the next subset.
 
 Completed `.18` shipped generated ID inputs, `.fsm` `+assert` carriers,
 verification-only SystemVerilog assertions, `id_response_rule_engine` report
 metadata, and duplicate concrete-event diagnostics while leaving auto-ID
 allocation, ID release, response demux, ordering, burst, queued-policy, alias,
 full-manager, and VHDL behavior as residue.
+
+Completed `.19` selected the auto-ID lifecycle audit before any allocation
+behavior change. The audit must resolve request-ID drive direction, ID
+busy/free state, completion release, diagnostics, report shape, and substrate
+readiness.
 
 Selected IAL2 work may include required IAL1 or IAL0/SV support, but only when
 those prerequisites are explicit, task-tree owned, documented, and

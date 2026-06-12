@@ -34,3 +34,7 @@ and explicit residue.
 Auto-ID allocation, ID release, same-ID ordering, generated response demux,
 bursts, queued/blocking policy, aliases, full AXI manager behavior, and VHDL
 remain future exact-owner work.
+
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.19` selected auto-ID lifecycle/request-ID
+drive readiness as the next subset, owned by
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.20`.

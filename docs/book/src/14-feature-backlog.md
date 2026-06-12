@@ -2295,8 +2295,11 @@ IAL1 inputs, lower assertion-only checks to `.fsm` `+assert` carriers, emit
 verification-only SystemVerilog assertions, and report
 `id_response_rule_engine` metadata. Auto-ID allocation, ID release, response
 demux, ordering, bursts, queued policy, aliases, full-manager behavior, and
-VHDL remain residue. The active leaf is `.19`, the next IAL2
-feature-completeness selector after concrete ID assertions.
+VHDL remain residue. The next selector chose AXI manager auto-ID
+lifecycle/request-ID drive readiness as the next subset. The active leaf is
+`.20`, the readiness audit for request-ID drive, ID busy/free state,
+completion release, report shape, diagnostics, and IAL1/IAL0/SystemVerilog
+substrate before any auto-ID allocation behavior changes.
 Selected IAL2 slices may include explicit IAL1 or
 IAL0/SystemVerilog prerequisites when those prerequisites are needed for
 clean, reviewable lowering.
@@ -2851,6 +2854,36 @@ The shipped scope still excludes automatic ID allocation, ID release, same-ID
 ordering queues, different-ID read-data interleaving/reassembly, burst and
 last-beat tracking, payload binding, queued/blocking policy, generated
 response demux, full AXI manager syntax, profile aliases, and VHDL.
+
+Next AXI manager subset: auto-ID lifecycle readiness:
+[AXI_IAL2_MANAGER_AUTO_ID_LIFECYCLE_SELECTION](../../AXI_IAL2_MANAGER_AUTO_ID_LIFECYCLE_SELECTION.md)
+selects the next frontier after shipped concrete ID assertions. Auto-ID
+transactions are still report-only. The next readiness audit must decide
+whether the existing `manager-capacity-status` object and current
+IAL1/IAL0/SystemVerilog substrate can honestly own request-ID drive, ID
+busy/free state, completion release, no-ID-available diagnostics, and report
+metadata, or whether a narrower request-ID output/storage prerequisite must
+ship first.
+
+The selected audit starts from the existing syntax:
+
+```text
+(id-families
+  (write (width 4) (request-id axi0_awid) (response-id axi0_bid))
+  (read (width 4) (request-id axi0_arid) (response-id axi0_rid)))
+
+(transactions
+  (write w0 (tag wr0) (request axi0_w0_request) (completion axi0_w0_complete) (id auto))
+  (read  r0 (tag rd0) (request axi0_r0_request) (completion axi0_r0_complete) (id auto)))
+```
+
+The audit must resolve whether request ID signals become generated outputs for
+auto-ID transactions, how chosen IDs are stored and released, and how the
+report distinguishes generated request-ID drive, ID state, release rules,
+assertions, assumptions, and residue. Full ID allocation algorithms, same-ID
+ordering queues, generated response demux, read-data interleaving/reassembly,
+bursts, queued/blocking policy, full AXI manager syntax, aliases, and VHDL
+remain unshipped.
 
 First implementation subset selection:
 [AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION](../../AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md)
@@ -5148,7 +5181,9 @@ audit leaf `IAL2-FEATURE-COMPLETENESS-FRONTIER.17` selects additive concrete
 transaction ID assertions and advances the sequence to `.18`. Completed
 implementation leaf `IAL2-FEATURE-COMPLETENESS-FRONTIER.18` ships concrete
 transaction ID request/response assertions and advances the active frontier to
-`.19`, the next IAL2 feature-completeness selector.
+`.19`. Completed selector leaf `IAL2-FEATURE-COMPLETENESS-FRONTIER.19`
+selects auto-ID lifecycle/request-ID drive readiness and advances the active
+frontier to `.20`.
 Completed implementation leaf
 `ARCHITECTURE-DEBT-FRONTIER.2.1`
 projects direct backend storage/helper declaration-plan entries into

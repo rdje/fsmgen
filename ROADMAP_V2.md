@@ -954,14 +954,17 @@ Priority note:
   ID request/response assertions as the first implementation boundary; that
   concrete-ID assertion slice is now shipped with generated ID inputs, `.fsm`
   `+assert` carriers, verification-only SystemVerilog assertions, and
-  `id_response_rule_engine` report metadata.
+  `id_response_rule_engine` report metadata; the next selected subset is AXI
+  manager auto-ID lifecycle/request-ID drive readiness before any auto-ID
+  allocation, ID release, response demux, ordering, burst, queued-policy,
+  alias, full-manager, or VHDL behavior changes.
 
 ## Current intent
 The active immediate feature-completeness lane is IAL2 on the
 SystemVerilog-backed lowering path; see
 [docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md](docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md).
-The current frontier is the next IAL2 feature-completeness selector after
-the shipped AXI manager concrete transaction ID assertion slice.
+The current frontier is AXI manager auto-ID lifecycle/request-ID drive
+readiness after the shipped concrete transaction ID assertion slice.
 The shipped public capacity/status source accepts one
 `(manager-capacity-status NAME ...)` object under
 `(protocol-platform-intent ...)`, `(profile axi4)`, and top-level source
@@ -992,8 +995,10 @@ selected a narrow concrete transaction ID assertion boundary: generated IAL1
 can declare used ID-family request/response ID signals, emit assertion-only
 transaction checks through `.fsm` `+assert` carriers, and reach the existing
 SystemVerilog assertion emitter path without a separate substrate prerequisite.
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.18` shipped that boundary, and
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.19` is the active selector frontier.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.18` shipped that boundary. Completed
+selector `.19` chose auto-ID lifecycle/request-ID drive readiness, and
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.20` is the active readiness-audit
+frontier.
 Auto-ID allocation, ID release, response demux, ordering, bursts, queued
 policy, aliases, full-manager behavior, and VHDL remain residue.
 
