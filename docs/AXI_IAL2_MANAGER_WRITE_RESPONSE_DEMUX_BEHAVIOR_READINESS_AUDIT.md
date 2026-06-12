@@ -19,9 +19,10 @@ IAL2-FEATURE-COMPLETENESS-FRONTIER.29
 
 That leaf is now shipped. It adds a minimal rule-owned one-cycle pulse action
 for IAL1, intended first for generated IAL2 response-demux completion outputs.
-The next behavior owner is `IAL2-FEATURE-COMPLETENESS-FRONTIER.30`, which can
-stay on the required `IAL2 -> IAL1 -> IAL0 -> SystemVerilog` path without
-direct IAL2 to IAL0 or backend shortcuts.
+The behavior owner `IAL2-FEATURE-COMPLETENESS-FRONTIER.30` is now shipped and
+stays on the required `IAL2 -> IAL1 -> IAL0 -> SystemVerilog` path without
+direct IAL2 to IAL0 or backend shortcuts. See
+[docs/AXI_IAL2_MANAGER_WRITE_RESPONSE_DEMUX_BEHAVIOR_FIRST_SLICE.md](AXI_IAL2_MANAGER_WRITE_RESPONSE_DEMUX_BEHAVIOR_FIRST_SLICE.md).
 
 ## Evidence Read
 
@@ -147,8 +148,8 @@ Shipped first-slice constraints:
 
 ## Later Response-Demux Behavior Boundary
 
-After shipped `.29`, `.30` can bound generated write response-demux behavior
-as follows:
+After shipped `.29`, `.30` bounded and shipped generated write response-demux
+behavior as follows:
 
 - add the write response ID signal, such as `axi0_bid`, as a generated IAL1
   input with the declared write ID width;

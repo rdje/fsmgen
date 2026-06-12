@@ -1046,11 +1046,18 @@ before generated demux behavior: write transaction completion names under
 flopped rule assignments. Completed implementation leaf
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.29` shipped bounded IAL1 `(pulse TARGET)`
 rule actions for scalar outputs and scalar storage variables, lowering through
-`<1` pulse-domain assignments with focused parser/lowerer/HDL coverage. The
-active frontier is `IAL2-FEATURE-COMPLETENESS-FRONTIER.30`, implementing
-generated write `BID` response-demux behavior before same-ID ordering,
-read-data interleaving/reassembly, bursts, queued policy, aliases,
-full-manager behavior, or VHDL changes.
+`<1` pulse-domain assignments with focused parser/lowerer/HDL coverage.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.30` shipped generated write `BID`
+response-demux behavior for explicit `response-demux` contracts: `BID` is a
+generated IAL1 input, transaction completion names are generated pulse outputs,
+guarded demux rules pulse those completions, capacity and auto-ID release
+consume the generated completion pulses, response assertions cover
+unmatched/inactive and ambiguous matches, and reports remove generated write
+demux residue. The active frontier is
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.31`, selecting the next exact IAL2
+feature-completeness slice before same-ID ordering, read-data
+interleaving/reassembly, bursts, queued policy, aliases, full-manager behavior,
+or VHDL changes.
 
 The first honest `R11` slices are now:
 1. keep widening convention-first composition only where the child-side evidence is still deterministic,

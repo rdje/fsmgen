@@ -7,7 +7,8 @@ Task tree:
 
 This slice implements the parser/report metadata boundary selected by
 [docs/AXI_IAL2_MANAGER_WRITE_RESPONSE_DEMUX_CONTRACT_SELECTION.md](AXI_IAL2_MANAGER_WRITE_RESPONSE_DEMUX_CONTRACT_SELECTION.md).
-Generated write `BID` demux behavior remains a later owner.
+The behavior follow-up is now shipped by
+[docs/AXI_IAL2_MANAGER_WRITE_RESPONSE_DEMUX_BEHAVIOR_FIRST_SLICE.md](AXI_IAL2_MANAGER_WRITE_RESPONSE_DEMUX_BEHAVIOR_FIRST_SLICE.md).
 
 ## Shipped Public Syntax
 
@@ -63,7 +64,7 @@ environment inputs.
 
 ## Generated Behavior
 
-This slice is intentionally metadata-only. It does not change generated
+This metadata slice was intentionally metadata-only. It did not change generated
 `.isf`, generated `.fsm`, or HDL behavior.
 
 For the shipped sample, `axi0_bid` is not yet added as an IAL1 input by
@@ -155,4 +156,5 @@ Follow-up: `IAL2-FEATURE-COMPLETENESS-FRONTIER.28` completed the behavior
 readiness audit and selected `IAL2-FEATURE-COMPLETENESS-FRONTIER.29` as a
 small IAL1 prerequisite. `.29` is now shipped: generated write `BID` demux
 completion names can lower as rule-owned `(pulse TARGET)` one-cycle pulses.
-The next owner is `.30`, generated write `BID` response-demux behavior.
+`.30` is now shipped as generated write `BID` response-demux behavior; see
+[docs/AXI_IAL2_MANAGER_WRITE_RESPONSE_DEMUX_BEHAVIOR_FIRST_SLICE.md](AXI_IAL2_MANAGER_WRITE_RESPONSE_DEMUX_BEHAVIOR_FIRST_SLICE.md).

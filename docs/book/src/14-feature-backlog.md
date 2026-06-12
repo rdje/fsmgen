@@ -2317,8 +2317,9 @@ behavior unchanged. Completed readiness audit `.28` concludes that generated
 write `BID` demux completion names need an IAL1 rule-owned one-cycle pulse
 action first. Completed implementation leaf `.29` ships bounded IAL1
 `(pulse target)` rule actions that lower as `<1` pulse-domain assignments.
-The active leaf is `.30`, implementing generated write `BID` response-demux
-behavior through those pulse completions.
+Completed implementation leaf `.30` ships generated write `BID`
+response-demux behavior through those pulse completions. The active leaf is
+`.31`, selecting the next exact IAL2 feature-completeness slice.
 Selected IAL2 slices may include explicit IAL1 or
 IAL0/SystemVerilog prerequisites when those prerequisites are needed for
 clean, reviewable lowering.
@@ -2989,10 +2990,13 @@ bounded slice. `transaction-completion generated` means write transaction
 opt-in clause. Without `response-demux`, completion names remain authored
 inputs as they do today.
 
-Shipped write response-demux metadata first slice:
+Shipped write response-demux first slices:
 [AXI_IAL2_MANAGER_WRITE_RESPONSE_DEMUX_METADATA_FIRST_SLICE](../../AXI_IAL2_MANAGER_WRITE_RESPONSE_DEMUX_METADATA_FIRST_SLICE.md)
 ships parser/report metadata and static validation for the selected explicit
-opt-in. The checked-in sample is:
+opt-in. The behavior follow-up:
+[AXI_IAL2_MANAGER_WRITE_RESPONSE_DEMUX_BEHAVIOR_FIRST_SLICE](../../AXI_IAL2_MANAGER_WRITE_RESPONSE_DEMUX_BEHAVIOR_FIRST_SLICE.md)
+now generates bounded write `BID` response-demux behavior for the same source
+shape. The checked-in sample is:
 
 ```text
 ppif/axi_manager_capacity_status_response_demux.ppif
@@ -3002,33 +3006,61 @@ Useful commands:
 
 ```bash
 ./bin/fsmgen --emit-schedule-json ppif/axi_manager_capacity_status_response_demux.ppif
+./bin/fsmgen --outdir generated ppif/axi_manager_capacity_status_response_demux.ppif
+./bin/fsmgen --quiet --verify-hdl ppif/axi_manager_capacity_status_response_demux.ppif
 ./bin/fsmgen --strict --check --json ppif/axi_manager_capacity_status_response_demux.ppif
 ./bin/fsmgen --strict --emit-semantic-json ppif/axi_manager_capacity_status_response_demux.ppif
 ```
+
+Generated IAL1 declares the raw write response event and `BID` as inputs,
+declares each transaction completion as a generated pulse output, and emits
+one demux rule per auto-ID write transaction:
+
+```text
+(input axi0_write_complete)
+(input axi0_bid (width 4))
+(output axi0_w0_complete)
+
+(rule axi0_w0_response_demux
+  (& axi0_write_complete axi0_w0_auto_id_busy_q
+     (== axi0_bid axi0_w0_auto_id_q))
+  (pulse axi0_w0_complete))
+```
+
+The generated `.fsm` lowers each demux completion through `<1` pulse-domain
+assignments. The existing write capacity matrix and auto-ID release rules use
+the generated completion pulse fan-in, so capacity and selected-ID release are
+driven by the demuxed completion names rather than authored completion inputs.
 
 The report additively emits:
 
 ```text
 response_demux:
   mode: bounded_write_bid_demux_contract
-  generated_behavior: false
+  generated_behavior: true
   write:
     response_event: axi0_write_complete
     response_id_signal: axi0_bid
     response_id_direction: generated_input
     transaction_completion_source: generated_demux
     auto_transactions: [w0, w1]
+    generated_rules: [axi0_w0_response_demux, axi0_w1_response_demux]
+    generated_completion_signals: [axi0_w0_complete, axi0_w1_complete]
+    generated_assertions:
+      - axi0_write_response_demux_active_match
+      - axi0_w0_w1_write_response_demux_unique_match
   residue:
-    - generated_write_bid_demux
     - read_response_demux
     - same_id_ordering
     - read_data_interleaving
     - bursts
 ```
 
-This slice does not yet add `axi0_bid` as an IAL1 input for response demux
-and does not emit generated demux rules. The follow-up readiness audit records
-the lowering prerequisite before generated behavior changes.
+The generated assertion transaction checks that every accepted write response
+matches an active auto-ID write transaction and that no accepted write response
+matches more than one active auto-ID write transaction. The
+`id_response_rule_engine` residue removes `response_demux` for this explicit
+write demux behavior; same-ID ordering remains residue.
 
 Response-demux behavior readiness audit:
 [AXI_IAL2_MANAGER_WRITE_RESPONSE_DEMUX_BEHAVIOR_READINESS_AUDIT](../../AXI_IAL2_MANAGER_WRITE_RESPONSE_DEMUX_BEHAVIOR_READINESS_AUDIT.md)
@@ -3037,8 +3069,12 @@ on top of ordinary IAL1 rule assignments. Transaction completion names are
 one-cycle completion pulses, while existing IAL1 `(set ...)` and shorthand
 rule actions lower as sticky flopped assignments. That prerequisite is now
 shipped as a bounded rule-owned `(pulse target)` action that lowers through the
-existing delayed-pulse path. The selected next frontier is generated write
-`BID` demux behavior using those pulse completions.
+existing delayed-pulse path. The generated write `BID` demux behavior is now
+shipped through that pulse-completion path.
+
+Read `RID` response demux, same-ID response ordering queues, read-data
+interleaving/reassembly, bursts, queued/blocking policy, profile aliases, full
+AXI manager behavior, and VHDL remain future exact-owner work.
 
 First implementation subset selection:
 [AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION](../../AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md)
@@ -5375,6 +5411,9 @@ rule-pulse prerequisite before generated response-demux completion rules ship.
 Completed implementation leaf `IAL2-FEATURE-COMPLETENESS-FRONTIER.29` ships
 that bounded `(pulse target)` rule action and selects `.30` for generated
 write `BID` response-demux behavior.
+Completed implementation leaf `IAL2-FEATURE-COMPLETENESS-FRONTIER.30` ships
+generated write `BID` response-demux behavior and selects `.31` as the next
+exact IAL2 feature-completeness selector.
 Completed implementation leaf
 `ARCHITECTURE-DEBT-FRONTIER.2.1`
 projects direct backend storage/helper declaration-plan entries into

@@ -5,6 +5,7 @@ answers:
   - "what did IAL2-FEATURE-COMPLETENESS-FRONTIER.27 ship?"
   - "is response-demux parser/report metadata implemented?"
   - "does response-demux generate BID demux behavior yet?"
+  - "where is the generated response-demux behavior recorded?"
   - "what is the response_demux report shape?"
 date: 2026-06-12
 status: current
@@ -38,3 +39,8 @@ or emit generated demux rules.
 The runnable public sample is
 `ppif/axi_manager_capacity_status_response_demux.ppif`, with support
 accounting entry `intent.ppif_axi_manager_capacity_status_response_demux`.
+
+Historical note: `.27` was metadata-only. The generated write `BID`
+response-demux behavior was later shipped by
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.30`; see
+`docs/knowledge/ial2-axi-manager-write-response-demux-behavior-first-slice.md`.

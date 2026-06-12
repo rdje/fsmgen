@@ -214,28 +214,22 @@ subtest 'PPIF adapter parses AXI manager auto-ID lifecycle behavior' => sub {
     is_deeply($result->{report}{id_response_rule_engine}{id_signal_inputs}, [qw(axi0_arid axi0_rid)], 'auto-ID lifecycle keeps response ID inputs tied to concrete checks only');
 };
 
-subtest 'PPIF adapter parses AXI manager write response-demux metadata' => sub {
+subtest 'PPIF adapter parses AXI manager write response-demux behavior' => sub {
     my $sample_path = sample_capacity_response_demux_ppif_path();
     ok(-f $sample_path, 'tracked runnable PPIF capacity/status response-demux sample exists');
 
-    my $base = FSM::Adapter::IAL2::PPIF->new()->parse_source(sample_capacity_auto_id_lifecycle_ppif(), sample_capacity_auto_id_lifecycle_ppif_path());
     my $result = FSM::Adapter::IAL2::PPIF->new()->parse_source(sample_capacity_response_demux_ppif(), $sample_path);
 
     is($result->{kind}, 'protocol_intent.axi_manager_capacity_status', 'response-demux sample still uses the capacity/status generator');
     is($result->{report}{source_object}{id}, 'axi-manager-capacity-status-response-demux', 'response-demux source object id is preserved');
     is($result->{report}{source_object}{intent_name}, 'axi_manager_capacity_status_response_demux', 'response-demux source intent name is preserved');
-    is(
-        $result->{generated_ial1}{text},
-        $base->{generated_ial1}{text},
-        'response-demux metadata leaves generated IAL1 unchanged in this slice',
-    );
-    is_deeply(
-        $result->{generated_ial0}{files},
-        $base->{generated_ial0}{files},
-        'response-demux metadata leaves generated IAL0 unchanged in this slice',
-    );
-    unlike($result->{generated_ial1}{text}, qr/\(input axi0_bid\b/, 'response-demux metadata does not add BID input before the behavior slice');
+    like($result->{generated_ial1}{text}, qr/\(input axi0_bid \(width 4\)\)/, 'response-demux generated IAL1 declares BID input');
+    unlike($result->{generated_ial1}{text}, qr/\(input axi0_w0_complete\b/, 'response-demux generated IAL1 does not declare generated completion as input');
+    like($result->{generated_ial1}{text}, qr/\(output axi0_w0_complete\)/, 'response-demux generated IAL1 declares generated completion output');
+    like($result->{generated_ial1}{text}, qr/\(rule axi0_w0_response_demux\b[\s\S]*\(pulse axi0_w0_complete\)\)/, 'response-demux generated IAL1 emits w0 pulse rule');
+    like($result->{generated_ial0}{files}{'axi0_capacity_status.fsm'}, qr/\(-axi0_w0_response_demux\b[\s\S]*\(<1 \(axi0_w0_complete> 1\)\)/, 'response-demux generated IAL0 emits w0 completion pulse');
     assert_write_response_demux_report($result->{report}{response_demux}, 'adapter report');
+    is_deeply($result->{report}{id_response_rule_engine}{residue}, [qw(same_id_ordering)], 'adapter report removes response_demux from ID/response residue');
 };
 
 subtest 'PPIF adapter diagnostics fail closed before generation claims' => sub {
@@ -534,6 +528,21 @@ subtest 'CLI emits IAL2 report JSON for AXI manager auto-ID lifecycle behavior .
     is_deeply($report->{id_response_rule_engine}{id_signal_inputs}, [qw(axi0_arid axi0_rid)], 'CLI report keeps auto-ID response ID signals out until concrete response checks need them');
 };
 
+subtest 'CLI emits IAL2 report JSON for AXI manager response-demux behavior .ppif' => sub {
+    my ($success, undef, undef, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--emit-schedule-json', sample_capacity_response_demux_ppif_path()],
+    );
+
+    ok($success, '--emit-schedule-json succeeds for capacity/status response-demux .ppif');
+    is(join('', @{$stderr_buf || []}), '', 'capacity/status response-demux report keeps stderr clean');
+    my $report = decode_json(join('', @{$stdout_buf || []}));
+    is($report->{schema}, 'fsmgen.ial2.protocol_intent.axi_manager_capacity_status.v1', 'CLI keeps the capacity/status report schema');
+    is($report->{source_object}{intent_name}, 'axi_manager_capacity_status_response_demux', 'response-demux report carries the PPIF top-level intent name');
+    assert_write_response_demux_report($report->{response_demux}, 'CLI report');
+    is_deeply($report->{id_response_rule_engine}{residue}, [qw(same_id_ordering)], 'CLI report removes response demux from ID/response residue');
+    is_deeply($report->{generated_artifacts}{ial0}{files}, ['axi0_capacity_status.fsm'], 'response-demux behavior keeps the generated .fsm artifact name stable');
+};
+
 subtest 'CLI --verify-hdl accepts AXI manager auto-ID lifecycle behavior .ppif' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $hdl = File::Spec->catfile($tempdir, 'axi_auto_id_lifecycle.sv');
@@ -547,6 +556,23 @@ subtest 'CLI --verify-hdl accepts AXI manager auto-ID lifecycle behavior .ppif' 
     ok(-f $hdl, 'auto-ID lifecycle --output writes generated HDL');
     like(slurp($hdl), qr/\boutput\s+reg\s+\[3:0\]\s+axi0_awid\b/, 'auto-ID lifecycle HDL exposes generated AWID output');
     like(slurp($hdl), qr/\breg\s+\[3:0\]\s+axi0_w0_auto_id_q\b/, 'auto-ID lifecycle HDL exposes selected-ID state');
+};
+
+subtest 'CLI --verify-hdl accepts AXI manager response-demux behavior .ppif' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $hdl = File::Spec->catfile($tempdir, 'axi_response_demux.sv');
+
+    my ($success, undef, undef, undef, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--quiet', '--verify-hdl', '--output', $hdl, sample_capacity_response_demux_ppif_path()],
+    );
+
+    ok($success, 'capacity/status response-demux --verify-hdl succeeds');
+    is(join('', @{$stderr_buf || []}), '', 'capacity/status response-demux --verify-hdl keeps stderr clean');
+    ok(-f $hdl, 'response-demux --output writes generated HDL');
+    my $sv = slurp($hdl);
+    like($sv, qr/\binput\s+(?:wire\s+)?\[3:0\]\s+axi0_bid\b/, 'response-demux HDL exposes generated BID input');
+    like($sv, qr/\boutput\s+reg\s+axi0_w0_complete\b/, 'response-demux HDL exposes generated completion output');
+    like($sv, qr/axi0_write_complete\s*&\s*axi0_w0_auto_id_busy_q\s*&\s*\(axi0_bid\s*==\s*axi0_w0_auto_id_q\)/, 'response-demux HDL lowers the BID match guard');
 };
 
 subtest 'CLI --outdir materializes generated .isf, .fsm, and HDL for .ppif' => sub {
@@ -1310,16 +1336,23 @@ sub assert_write_auto_id_lifecycle_report {
 sub assert_write_response_demux_report {
     my ($demux, $owner) = @_;
     is($demux->{mode}, 'bounded_write_bid_demux_contract', "$owner marks bounded write BID-demux contract mode");
-    ok(!$demux->{generated_behavior}, "$owner keeps generated behavior false in this slice");
+    ok($demux->{generated_behavior}, "$owner marks generated behavior true");
     is($demux->{write}{response_event}, 'axi0_write_complete', "$owner reports the write response event");
     is($demux->{write}{response_id_signal}, 'axi0_bid', "$owner reports the write response ID signal");
     is($demux->{write}{response_id_direction}, 'generated_input', "$owner reports response ID direction as generated input");
     is($demux->{write}{transaction_completion_source}, 'generated_demux', "$owner reports generated transaction-completion ownership");
     is_deeply($demux->{write}{auto_transactions}, [qw(w0 w1)], "$owner reports write auto-ID transactions in source order");
+    is_deeply($demux->{write}{generated_rules}, [qw(axi0_w0_response_demux axi0_w1_response_demux)], "$owner reports generated demux rules");
+    is_deeply($demux->{write}{generated_completion_signals}, [qw(axi0_w0_complete axi0_w1_complete)], "$owner reports generated completion pulse signals");
+    is_deeply(
+        $demux->{write}{generated_assertions},
+        [qw(axi0_write_response_demux_active_match axi0_w0_w1_write_response_demux_unique_match)],
+        "$owner reports generated response-demux assertions",
+    );
     is_deeply(
         $demux->{residue},
-        [qw(generated_write_bid_demux read_response_demux same_id_ordering read_data_interleaving bursts)],
-        "$owner reports behavior still owned by later response-demux slices",
+        [qw(read_response_demux same_id_ordering read_data_interleaving bursts)],
+        "$owner removes generated write BID demux from response-demux residue",
     );
 }
 

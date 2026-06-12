@@ -8,8 +8,9 @@ metadata slice selected here. See
 [docs/AXI_IAL2_MANAGER_WRITE_RESPONSE_DEMUX_METADATA_FIRST_SLICE.md](AXI_IAL2_MANAGER_WRITE_RESPONSE_DEMUX_METADATA_FIRST_SLICE.md).
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.28` then audited generated behavior and
 selected `IAL2-FEATURE-COMPLETENESS-FRONTIER.29` as the IAL1 rule-pulse
-prerequisite. `.29` is now shipped; generated write `BID` demux behavior
-remains future work under `IAL2-FEATURE-COMPLETENESS-FRONTIER.30`.
+prerequisite. `.29` is now shipped, and `.30` shipped generated write `BID`
+demux behavior. See
+[docs/AXI_IAL2_MANAGER_WRITE_RESPONSE_DEMUX_BEHAVIOR_FIRST_SLICE.md](AXI_IAL2_MANAGER_WRITE_RESPONSE_DEMUX_BEHAVIOR_FIRST_SLICE.md).
 
 Task tree:
 [docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md](tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md).
@@ -84,30 +85,34 @@ syntax behavior-bearing by itself. The opt-in clause is required.
 ## Report Contract
 
 Add an additive `response_demux` report key. The first parser/report slice
-should report the contract without generated behavior:
+reported the contract without generated behavior in `.27`; the current
+behavior-bearing `.30` shape is:
 
 ```text
 response_demux:
   mode: bounded_write_bid_demux_contract
-  generated_behavior: false
+  generated_behavior: true
   write:
     response_event: axi0_write_complete
     response_id_signal: axi0_bid
     response_id_direction: generated_input
     transaction_completion_source: generated_demux
     auto_transactions: [w0, w1]
+    generated_rules: [axi0_w0_response_demux, axi0_w1_response_demux]
+    generated_completion_signals: [axi0_w0_complete, axi0_w1_complete]
+    generated_assertions:
+      - axi0_write_response_demux_active_match
+      - axi0_w0_w1_write_response_demux_unique_match
   residue:
-    - generated_write_bid_demux
     - read_response_demux
     - same_id_ordering
     - read_data_interleaving
     - bursts
 ```
 
-When generated behavior ships later, the same key should switch
-`generated_behavior` to true and add generated rule, generated completion
-signal, unmatched-response assertion, inactive-response assertion, and
-ambiguous-match assertion metadata.
+Historical note: `.27` reported `generated_behavior: false` and carried
+`generated_write_bid_demux` as residue. `.30` shipped generated write `BID`
+demux behavior and removed that residue.
 
 ## Generated Artifact Boundary
 
@@ -124,12 +129,13 @@ validation only. It should:
 - keep mdBook, roadmap, task tree, Knowledge Map, and memory in the same
   commit.
 
-Generated write `BID` demux behavior should be a later owner after the public
-contract is parsed, reported, tested, and documented.
+Generated write `BID` demux behavior was intentionally left to a later owner
+after the public contract was parsed, reported, tested, and documented. That
+later owner is now shipped by `IAL2-FEATURE-COMPLETENESS-FRONTIER.30`.
 
-## Future Behavior Contract
+## Behavior Contract Shipped By `.30`
 
-The later behavior-bearing slice should use these fixed semantics:
+The behavior-bearing slice uses these fixed semantics:
 
 - declare the write response ID signal (`BID`) as a generated IAL1 input;
 - treat `response-event` as the raw write response accepted event;
@@ -178,7 +184,6 @@ The parser/report implementation should run at least:
 
 Still out of scope after this selector until later exact owners:
 
-- generated write `BID` demux rules;
 - read `RID` demux;
 - read-data interleaving or reassembly;
 - same-ID ordering queues;

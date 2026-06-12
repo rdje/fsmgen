@@ -396,29 +396,61 @@ subtest 'auto-ID lifecycle generates bounded request-ID drive behavior' => sub {
     like($sv_assertions, qr/axi0 write auto ID requests are mutually exclusive/, 'SystemVerilog assertion backend emits same-family mutual-exclusion check');
 };
 
-subtest 'response-demux contract reports bounded write metadata without generated behavior' => sub {
-    my $base = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_auto_id_lifecycle());
+subtest 'response-demux contract generates bounded write BID demux behavior' => sub {
     my $result = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_response_demux());
+    my $isf = $result->{generated_ial1}{text};
 
-    is(
-        $result->{generated_ial1}{text},
-        $base->{generated_ial1}{text},
-        'response-demux metadata does not alter generated IAL1 text in this slice',
+    like($isf, qr/\(input axi0_write_complete\)/, 'response-demux declares the raw write response event as an input');
+    like($isf, qr/\(input axi0_bid \(width 4\)\)/, 'response-demux declares BID as a generated-width IAL1 input');
+    unlike($isf, qr/\(input axi0_w0_complete\b/, 'response-demux does not treat w0 completion as an authored event input');
+    unlike($isf, qr/\(input axi0_w1_complete\b/, 'response-demux does not treat w1 completion as an authored event input');
+    like($isf, qr/\(output axi0_w0_complete\)/, 'response-demux exposes w0 completion as a generated pulse output');
+    like($isf, qr/\(output axi0_w1_complete\)/, 'response-demux exposes w1 completion as a generated pulse output');
+    like(
+        $isf,
+        qr/\(rule axi0_w0_response_demux \(& axi0_write_complete axi0_w0_auto_id_busy_q \(== axi0_bid axi0_w0_auto_id_q\)\)\s+\(pulse axi0_w0_complete\)\)/,
+        'response-demux emits a guarded pulse rule for w0',
     );
-    is_deeply(
-        $result->{generated_ial0}{files},
-        $base->{generated_ial0}{files},
-        'response-demux metadata does not alter generated IAL0 text in this slice',
+    like(
+        $isf,
+        qr/\(rule axi0_w1_response_demux \(& axi0_write_complete axi0_w1_auto_id_busy_q \(== axi0_bid axi0_w1_auto_id_q\)\)\s+\(pulse axi0_w1_complete\)\)/,
+        'response-demux emits a guarded pulse rule for w1',
     );
+    like($isf, qr/"axi0 write response matches active auto-ID transaction"/, 'response-demux emits unmatched/inactive response assertion');
+    like($isf, qr/"axi0 write response matches at most one auto-ID transaction"/, 'response-demux emits ambiguous-match assertion');
 
-    unlike($result->{generated_ial1}{text}, qr/\(input axi0_bid\b/, 'response-demux metadata does not yet add BID as an IAL1 input');
-    unlike($result->{generated_ial1}{text}, qr/response_demux/, 'response-demux metadata does not add generated demux rules');
+    my $fsm = $result->{generated_ial0}{files}{'axi0_capacity_status.fsm'};
+    like($fsm, qr/\(\+size[\s\S]*\(axi0_bid 4\)/, 'scheduled .fsm declares BID width');
+    like(
+        $fsm,
+        qr/\(-axi0_w0_response_demux\s+<\(& axi0_write_complete axi0_w0_auto_id_busy_q \(== axi0_bid axi0_w0_auto_id_q\)\)[\s\S]*\(<1 \(axi0_w0_complete> 1\)\)/,
+        'scheduled .fsm lowers w0 demux completion as a one-cycle pulse',
+    );
+    like(
+        $fsm,
+        qr/\(-axi0_w1_response_demux\s+<\(& axi0_write_complete axi0_w1_auto_id_busy_q \(== axi0_bid axi0_w1_auto_id_q\)\)[\s\S]*\(<1 \(axi0_w1_complete> 1\)\)/,
+        'scheduled .fsm lowers w1 demux completion as a one-cycle pulse',
+    );
+    like($fsm, qr/\(-axi0_w0_auto_id_release\s+<\(& axi0_w0_complete axi0_w0_auto_id_busy_q\)/, 'auto-ID release remains driven by generated w0 completion pulse');
+    like($fsm, qr/\(-write_complete_only_occ1\s+<\(& \(! \(\| axi0_w0_request axi0_w1_request\)\) \(\| axi0_w0_complete axi0_w1_complete\)/, 'write capacity release remains driven by generated completion pulse fan-in');
+
     assert_write_response_demux_report($result->{report}{response_demux}, 'generator report');
     is_deeply(
         $result->{report}{id_response_rule_engine}{residue},
-        [qw(same_id_ordering response_demux)],
-        'ID/response rule-engine still treats response demux behavior as residue',
+        [qw(same_id_ordering)],
+        'ID/response rule-engine removes response demux behavior from residue',
     );
+
+    my $hdl = hdl_for('axi0_capacity_status', $fsm);
+    like($hdl, qr/\binput\s+(?:wire\s+)?\[3:0\]\s+axi0_bid\b/, 'SystemVerilog declares BID as a 4-bit input');
+    like($hdl, qr/\boutput\s+reg\s+axi0_w0_complete\b/, 'SystemVerilog declares generated w0 completion output');
+    like($hdl, qr/\boutput\s+reg\s+axi0_w1_complete\b/, 'SystemVerilog declares generated w1 completion output');
+    like($hdl, qr/axi0_write_complete\s*&\s*axi0_w0_auto_id_busy_q\s*&\s*\(axi0_bid\s*==\s*axi0_w0_auto_id_q\)/, 'SystemVerilog lowers the w0 BID demux guard');
+    like($hdl, qr/axi0_w0_complete_pulse_delay_pipe\s*<=\s*axi0_w0_complete_1_en;/, 'SystemVerilog lowers w0 completion as delayed pulse logic');
+
+    my $sv_assertions = sv_assertion_block_for_result($result);
+    like($sv_assertions, qr/axi0 write response matches active auto-ID transaction/, 'assertion backend emits active-match response-demux assertion');
+    like($sv_assertions, qr/axi0 write response matches at most one auto-ID transaction/, 'assertion backend emits unique-match response-demux assertion');
 };
 
 subtest 'schedule report and HDL expose generated storage and status surface' => sub {
@@ -676,16 +708,23 @@ sub sample_contract_with_response_demux {
 sub assert_write_response_demux_report {
     my ($demux, $owner) = @_;
     is($demux->{mode}, 'bounded_write_bid_demux_contract', "$owner marks bounded write BID-demux contract mode");
-    ok(!$demux->{generated_behavior}, "$owner keeps generated behavior false in this slice");
+    ok($demux->{generated_behavior}, "$owner marks generated behavior true");
     is($demux->{write}{response_event}, 'axi0_write_complete', "$owner reports the write response event");
     is($demux->{write}{response_id_signal}, 'axi0_bid', "$owner reports the write response ID signal");
     is($demux->{write}{response_id_direction}, 'generated_input', "$owner reports response ID direction as generated input");
     is($demux->{write}{transaction_completion_source}, 'generated_demux', "$owner reports generated transaction-completion ownership");
     is_deeply($demux->{write}{auto_transactions}, [qw(w0 w1)], "$owner reports write auto-ID transactions in source order");
+    is_deeply($demux->{write}{generated_rules}, [qw(axi0_w0_response_demux axi0_w1_response_demux)], "$owner reports generated demux rules");
+    is_deeply($demux->{write}{generated_completion_signals}, [qw(axi0_w0_complete axi0_w1_complete)], "$owner reports generated completion pulse signals");
+    is_deeply(
+        $demux->{write}{generated_assertions},
+        [qw(axi0_write_response_demux_active_match axi0_w0_w1_write_response_demux_unique_match)],
+        "$owner reports generated response-demux assertions",
+    );
     is_deeply(
         $demux->{residue},
-        [qw(generated_write_bid_demux read_response_demux same_id_ordering read_data_interleaving bursts)],
-        "$owner reports behavior still owned by later response-demux slices",
+        [qw(read_response_demux same_id_ordering read_data_interleaving bursts)],
+        "$owner removes generated write BID demux from response-demux residue",
     );
 }
 
