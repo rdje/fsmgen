@@ -10,8 +10,8 @@ answers:
 date: 2026-06-12
 status: current
 tags: [ial2, axi, manager, read-data, bursts, rlast, interleaving, per-id, selector, task-tree]
-evidence: docs/AXI_IAL2_MANAGER_POST_READ_DEMUX_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_READ_DATA_BURST_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_READ_RESPONSE_DEMUX_BEHAVIOR_FIRST_SLICE.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; docs/book/src/14-feature-backlog.md; README.md; ROADMAP_V2.md
-reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.42|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.43|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.44|POST_READ_DEMUX_NEXT_SLICE_SELECTION|READ_DATA_BURST_READINESS_AUDIT' docs/AXI_IAL2_MANAGER_POST_READ_DEMUX_NEXT_SLICE_SELECTION.md docs/AXI_IAL2_MANAGER_READ_DATA_BURST_READINESS_AUDIT.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md docs/book/src/14-feature-backlog.md README.md ROADMAP_V2.md
+evidence: docs/AXI_IAL2_MANAGER_POST_READ_DEMUX_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_READ_DATA_BURST_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_READ_DATA_CONTRACT_SELECTION.md; docs/AXI_IAL2_MANAGER_READ_RESPONSE_DEMUX_BEHAVIOR_FIRST_SLICE.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; docs/book/src/14-feature-backlog.md; README.md; ROADMAP_V2.md
+reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.42|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.43|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.44|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.45|POST_READ_DEMUX_NEXT_SLICE_SELECTION|READ_DATA_CONTRACT_SELECTION' docs/AXI_IAL2_MANAGER_POST_READ_DEMUX_NEXT_SLICE_SELECTION.md docs/AXI_IAL2_MANAGER_READ_DATA_BURST_READINESS_AUDIT.md docs/AXI_IAL2_MANAGER_READ_DATA_CONTRACT_SELECTION.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md docs/book/src/14-feature-backlog.md README.md ROADMAP_V2.md
 ---
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.42` selected
@@ -28,7 +28,11 @@ selected `IAL2-FEATURE-COMPLETENESS-FRONTIER.44` as the bounded public
 read-data payload/status contract selector before parser/report metadata or
 generated behavior changes.
 
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.44` later selected
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.45`, parser/report metadata and static
+validation for explicit bounded single-beat `read-data` syntax.
+
 No parser, generator, `.isf`, `.fsm`, HDL, check JSON, or semantic JSON
-behavior changed in `.42` or `.43`. Full-manager behavior, profile aliases,
-queued/blocking policy, direct backend lowering, and VHDL remain deferred
-unless a later exact owner selects them.
+behavior changed in `.42`, `.43`, or `.44`. Full-manager behavior, profile
+aliases, queued/blocking policy, direct backend lowering, and VHDL remain
+deferred unless a later exact owner selects them.

@@ -3320,6 +3320,30 @@ public source syntax, report artifacts, target binding semantics, and
 interleaving/burst residue policy. Parser/report metadata and generated
 behavior changes stay out of `.43`.
 
+Read-data payload/status contract selection:
+[AXI_IAL2_MANAGER_READ_DATA_CONTRACT_SELECTION](../../AXI_IAL2_MANAGER_READ_DATA_CONTRACT_SELECTION.md)
+selects `.45`, parser/report metadata and static validation for the first
+bounded `read-data` source contract:
+
+```text
+(read-data
+  (read
+    (capture-scope single-beat)
+    (completion-source response-demux)
+    (data-signal axi0_rdata (width 32))
+    (status-signal axi0_rresp (width 2))
+    (interleaving single-beat-by-rid)
+    (transaction r0
+      (data-output axi0_r0_rdata)
+      (status-output axi0_r0_rresp))))
+```
+
+The generated read response-demux completion pulse is the validity strobe for
+the selected transaction's data/status outputs. The first contract does not
+observe `RLAST`, does not assemble bursts, and does not perform multi-beat
+read-data reassembly. Parser/report metadata is next; generated
+`RDATA`/`RRESP` capture behavior remains a later exact owner.
+
 Response-demux behavior readiness audit:
 [AXI_IAL2_MANAGER_WRITE_RESPONSE_DEMUX_BEHAVIOR_READINESS_AUDIT](../../AXI_IAL2_MANAGER_WRITE_RESPONSE_DEMUX_BEHAVIOR_READINESS_AUDIT.md)
 concluded that generated write `BID` demux should not be implemented directly
@@ -3330,10 +3354,10 @@ shipped as a bounded rule-owned `(pulse target)` action that lowers through the
 existing delayed-pulse path. The generated write `BID` demux behavior is now
 shipped through that pulse-completion path.
 
-Bounded read-data payload/status contract selection, same-ID response ordering
-queues, read-data interleaving/reassembly, bursts, queued/blocking policy,
-profile aliases, full AXI manager behavior, and VHDL remain future exact-owner
-work.
+Parser/report implementation for bounded read-data payload/status, generated
+data-capture behavior, same-ID response ordering queues, read-data
+interleaving/reassembly, bursts, queued/blocking policy, profile aliases, full
+AXI manager behavior, and VHDL remain future exact-owner work.
 
 First implementation subset selection:
 [AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION](../../AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md)
@@ -3462,10 +3486,10 @@ transaction-envelope/static-validation subset, and the readiness audit for its
 additive static/report implementation boundary. The optional static
 `(transactions ...)` implementation slice and the additive transaction event
 dispatch/fan-in slice are now also shipped, and the active frontier is
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.44`, selecting the bounded public
-read-data payload/status contract after `.43` audited read-data payload,
-burst/`RLAST`, and per-ID readiness. Future behavior owners must keep the
-reviewable `IAL2 -> IAL1 -> IAL0 -> SystemVerilog` path; read-data
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.45`, implementing parser/report metadata
+and static validation for the bounded public read-data payload/status contract
+selected by `.44`. Future behavior owners must keep the reviewable
+`IAL2 -> IAL1 -> IAL0 -> SystemVerilog` path; read-data
 interleaving/reassembly, bursts, per-ID queues, full-manager behavior, and VHDL
 remain out of scope unless a later exact owner selects them.
 Additional `.ppif` objects/clauses and profile aliases remain future
