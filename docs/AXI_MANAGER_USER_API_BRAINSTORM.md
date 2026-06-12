@@ -8,6 +8,9 @@ Task tree:
 Related source-anchor inventory:
 [docs/AXI_VALID_READY_INTENT_PROBE.md](AXI_VALID_READY_INTENT_PROBE.md).
 
+Related ID/order evidence inventory:
+[docs/AXI_ID_ORDERING_RULE_EVIDENCE_PROBE.md](AXI_ID_ORDERING_RULE_EVIDENCE_PROBE.md).
+
 ## Purpose
 
 This note captures a user-facing IAL2 surface direction for a future AXI
@@ -209,11 +212,27 @@ The rule engine likely needs:
 - generated assertions,
 - and a source-anchor/report contract for defaults, assumptions, and residue.
 
+## ID/Ordering Evidence Boundary
+
+The first source-anchored ID/order inventory is now recorded in
+[docs/AXI_ID_ORDERING_RULE_EVIDENCE_PROBE.md](AXI_ID_ORDERING_RULE_EVIDENCE_PROBE.md).
+It confirms the high-level API direction without selecting syntax or lowering:
+Easy mode can remain fully concurrent if the manager owns source-anchored ID
+allocation, outstanding scoreboards, same-ID ordering, response matching,
+read-data interleaving policy, and clear flow-control feedback.
+
+The evidence also sharpens the boundary. A future manager design must not
+treat "same ID" as a blanket serialization rule or "different ID" as an
+unconditional freedom rule; the source anchors qualify ordering by channel,
+destination, location/region, memory type, component role, and transaction
+class.
+
 ## Source-Anchor Boundary
 
-The exact AXI ID, ordering, interleaving, outstanding, and response rules must
-not be designed from memory. A future task-tree leaf must extract those rules
-from the tracked AXI specification and classify each rule as one of:
+The remaining exact AXI ID, ordering, interleaving, outstanding, and response
+rules must not be designed from memory. Future task-tree leaves must continue
+extracting those rules from the tracked AXI specification and classify each
+rule as one of:
 
 - statically enforceable at IAL2 authoring time,
 - enforceable by generated scheduler/scoreboard behavior,
@@ -222,8 +241,8 @@ from the tracked AXI specification and classify each rule as one of:
 - unsupported residue,
 - or an explicit simplification selected by the user.
 
-Only after that source-anchored rule inventory exists can the AXI manager API
-be promoted from brainstorm to design.
+Only after the remaining source-anchored rule matrix exists can the AXI
+manager API be promoted from brainstorm to design.
 
 ## Current Conclusion
 
@@ -233,6 +252,6 @@ overrides, and supervised raw access for advanced cases. The manager should be
 the AXI expert so users do not have to internalize every concurrency and ID
 rule to stay legal.
 
-The next technical prerequisite is an exact, source-anchored extraction of AXI
-transaction concurrency, ID, ordering, interleaving, and response matching
-rules. No implementation is selected by this note.
+The next technical prerequisite is no longer the first evidence extraction; it
+is a later exact design/rule-matrix leaf that turns the source anchors into a
+bounded rule-engine proposal. No implementation is selected by this note.

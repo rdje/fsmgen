@@ -57,22 +57,24 @@ documentation and the mdBook, without selecting implementation behavior.
 ## Decisions
 
 - `2026-06-12`: Capture this as a design/backlog note, not a behavior-bearing
-  implementation selection. The next technical prerequisite remains a
-  source-anchored AXI ID/order/concurrency rule extraction.
+  implementation selection. The next technical prerequisite was a
+  source-anchored AXI ID/order/concurrency rule extraction, later recorded by
+  `AXI-ID-ORDERING-RULE-EVIDENCE-PROBE.1`.
 - `2026-06-12`: Shape the capture explicitly as future IAL2 user-facing
   surface direction: Easy, Power, and supervised Raw are API levels on one AXI
   rule engine, not separate legality regimes.
 
 ## Open Questions
 
-- The exact AXI ID, same-ID ordering, different-ID interleaving, write/read
-  concurrency, and response matching rules remain to be extracted from the
-  tracked AXI spec before any AXI manager design can be selected.
+- The first AXI ID/order/concurrency evidence inventory is now recorded by
+  `AXI-ID-ORDERING-RULE-EVIDENCE-PROBE.1`. A full source-anchored rule matrix
+  still needs a future exact owner before any AXI manager design can be
+  selected.
 
 ## Blockers
 
-- None for capture. Future implementation is blocked on source-anchored AXI
-  rule extraction and a new exact task-tree owner.
+- None for capture. Future implementation is blocked on a source-anchored AXI
+  rule-matrix design/probe and a new exact task-tree owner.
 
 ## Verification Log
 

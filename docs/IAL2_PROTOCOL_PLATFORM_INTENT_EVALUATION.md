@@ -105,6 +105,16 @@ subset, Power mode as structured override capability, and supervised Raw mode
 as lower-level channel control that still normally passes through the same
 AXI rule engine.
 
+The first curated AXI ID/order/concurrency source-anchor inventory is
+[docs/AXI_ID_ORDERING_RULE_EVIDENCE_PROBE.md](AXI_ID_ORDERING_RULE_EVIDENCE_PROBE.md).
+It records the first source anchors for IDs, outstanding concurrency,
+same-ID ordering, response matching, read-data interleaving, write-data
+sequencing, interconnect ID remapping, and explicit residue. It confirms that
+a future Easy-mode AXI manager can remain concurrent only if a source-anchored
+rule engine owns ID allocation/validation, per-ID outstanding scoreboards,
+response matching, interleaving policy, and clear capacity or ordering
+feedback.
+
 The first bounded IAL2 probe should not start with a full AXI manager or an
 interconnect. It should inspect the reusable valid/ready transport contract
 because that is the smallest candidate with real protocol semantics:
@@ -157,7 +167,9 @@ contract, report contract, lowering artifacts, and validation gates are all
 specified first. The completed AXI Valid-Ready evidence inventory is enough to
 justify a later design/probe leaf, but it still does not select IAL2 syntax,
 parser behavior, lowering behavior, generated `.fsm`, HDL, or reusable library
-artifacts. Decision
+artifacts. The completed AXI ID/order/concurrency evidence inventory is enough
+to justify a later AXI manager rule-matrix design/probe leaf, but likewise
+does not select IAL2 syntax, lowering, or HDL behavior. Decision
 [0014](decisions/0014-protocol-platform-intent-surface-and-layered-lowering.md)
 records the protocol/platform-generic IAL2 file-surface direction, the open
 `.pif`/`.ppi`/`.ppif` extension candidates, and the mandatory

@@ -2310,6 +2310,17 @@ explicit abstractions, unsupported residue, and no-implementation status. It
 is evidence for a future task-tree-owned IAL2 design/probe leaf, not a shipped
 PDF/spec extraction capability and not an IAL2 implementation.
 
+ID/order evidence note:
+[AXI_ID_ORDERING_RULE_EVIDENCE_PROBE](../../AXI_ID_ORDERING_RULE_EVIDENCE_PROBE.md)
+records the first AXI ID/order/concurrency source anchors for future manager
+rule-engine work. The note covers ID families, outstanding transactions,
+same-ID response ordering, response matching through `BID`/`RID`,
+read-data interleaving, write-data sequencing, interconnect ID remapping, and
+explicit residue. It confirms that Easy mode should not be reduced to
+one-transaction-at-a-time behavior; concurrency belongs in the manager, backed
+by source-anchored ID allocation, ordering, matching, interleaving, and
+capacity-feedback rules.
+
 User-facing AXI manager brainstorm:
 [AXI_MANAGER_USER_API_BRAINSTORM](../../AXI_MANAGER_USER_API_BRAINSTORM.md)
 captures the intended IAL2 surface direction for a future AXI manager. Easy
@@ -2322,8 +2333,8 @@ normally be supervised by the same AXI rule engine, with any unsafe bypass
 treated as verification-only and unable to claim guaranteed AXI correctness.
 
 The next prerequisite is not implementation; it is a source-anchored
-extraction of the exact AXI transaction concurrency, ID, ordering,
-interleaving, and response matching rules from the tracked AXI specification.
+rule-matrix design/probe leaf that turns the captured valid/ready and
+ID/order evidence into a bounded future AXI manager rule-engine proposal.
 
 Protocol/platform surface decision:
 [0014-protocol-platform-intent-surface-and-layered-lowering](../../decisions/0014-protocol-platform-intent-surface-and-layered-lowering.md)
