@@ -5,8 +5,10 @@ implemented by
 [docs/IAL2_PPIF_VALID_READY_BUNDLE_FIRST_SLICE.md](IAL2_PPIF_VALID_READY_BUNDLE_FIRST_SLICE.md),
 and aggregate semantic JSON is implemented by
 [docs/IAL2_PPIF_BUNDLE_SEMANTIC_JSON_FIRST_SLICE.md](IAL2_PPIF_BUNDLE_SEMANTIC_JSON_FIRST_SLICE.md).
-The future HDL entry contract is selected by
-[docs/IAL2_PPIF_BUNDLE_HDL_ENTRY_SELECTION.md](IAL2_PPIF_BUNDLE_HDL_ENTRY_SELECTION.md).
+The HDL entry contract is selected by
+[docs/IAL2_PPIF_BUNDLE_HDL_ENTRY_SELECTION.md](IAL2_PPIF_BUNDLE_HDL_ENTRY_SELECTION.md)
+and first implemented by
+[docs/IAL2_PPIF_BUNDLE_HDL_ENTRY_FIRST_SLICE.md](IAL2_PPIF_BUNDLE_HDL_ENTRY_FIRST_SLICE.md).
 
 Task tree:
 [docs/tasks/IAL2-PPIF-VALID-READY-BUNDLE-CONTRACT-SELECTION.md](tasks/IAL2-PPIF-VALID-READY-BUNDLE-CONTRACT-SELECTION.md).
@@ -34,11 +36,11 @@ The selected contract is:
 - no direct `.ppif -> .fsm` shortcut and no hidden multi-actor `.isf` file are
   introduced.
 
-The current implementation keeps default HDL generation fail-closed for
-multi-channel bundles until a later owner selects a wrapper/top actor or
-explicit HDL entry rule. Report emission, check JSON, review-artifact
-materialization, and aggregate semantic JSON are implemented before wrapper HDL
-exists.
+The current implementation selects an aggregate wrapper/top `.fsm` as the HDL
+entry for the tracked AW/W Valid-Ready bundle sample. Report emission, check
+JSON, review-artifact materialization, aggregate semantic JSON, default
+SystemVerilog generation, and `--verify-hdl` are implemented for that bounded
+shape.
 
 ## Source Shape
 
@@ -167,8 +169,8 @@ Each `channels[]` entry records:
 - channel-local unsupported residue.
 
 `generated_artifacts` contains aggregate `ial1.items[]` and `ial0.items[]`
-arrays. A top-level HDL entry is absent until a future owner selects a wrapper
-or explicit entry-selection rule.
+arrays. The current bounded HDL entry is an aggregate wrapper/top `.fsm`
+selected by `generated_artifacts.hdl_entry`.
 
 `unsupported_residue` remains explicit for bundle-level omissions. AXI
 transaction IDs, outstanding-window scheduling, response matching, bursts,
@@ -177,17 +179,17 @@ outside this bundle monitor contract.
 
 ## CLI Contract
 
-Future multi-channel `.ppif` behavior should follow these rules:
+Multi-channel `.ppif` behavior follows these rules:
 
 - `--emit-schedule-json` emits the aggregate IAL2 bundle report and writes no
   files.
-- `--outdir DIR` writes every generated channel `.isf` and generated `.fsm`
-  review artifact using stable per-channel names.
-- default HDL generation for a multi-channel bundle remains fail-closed until
-  a wrapper/top actor or explicit HDL entry-selection owner lands.
+- `--outdir DIR` writes every generated channel `.isf`, generated channel
+  `.fsm`, and aggregate wrapper/top `.fsm` review artifact.
+- default HDL generation for the tracked AW/W bundle uses the aggregate
+  wrapper/top entry.
+- `--verify-hdl` validates that aggregate wrapper/top HDL.
 - `--check --json` may report successful PPIF bundle parsing/lowering if all
-  generated channel artifacts are internally valid, but must disclose that no
-  aggregate HDL entry was selected when wrapper HDL is still deferred.
+  generated channel artifacts are internally valid.
 - `--emit-semantic-json` emits an aggregate PPIF bundle semantic root with
   `semantic.module.source_root_kind = ppif_bundle` and a
   `semantic.protocol_intent_bundle` child, rather than returning one arbitrary
@@ -199,10 +201,10 @@ the authored intent and create review drift.
 
 ## Implementation Prerequisites
 
-The bounded behavior leaves implement the report/check/outdir and aggregate
-semantic JSON subsets of this selection. Future widening leaves still need the
-remaining parts of this contract when adding bundle HDL entry selection or
-broader AXI manager behavior:
+The bounded behavior leaves implement the report/check/outdir, aggregate
+semantic JSON, and aggregate wrapper/top HDL entry subsets of this selection.
+Future widening leaves still need the remaining parts of this contract when
+adding broader AXI manager behavior:
 
 - parser changes for repeated `valid-ready-channel` clauses and optional
   channel-local `source` clauses;
@@ -211,7 +213,7 @@ broader AXI manager behavior:
   API;
 - aggregate report construction with stable `channels[]` and artifact arrays;
 - CLI handling for aggregate report mode, review-artifact materialization,
-  aggregate semantic JSON, and fail-closed default HDL modes;
+  aggregate semantic JSON, and wrapper/top HDL modes;
 - focused tests that prove the current single-object behavior still works; and
 - mdBook examples that state which bundle CLI modes are shipped by each future
   code leaf.
@@ -220,6 +222,6 @@ broader AXI manager behavior:
 
 Users can use the shipped one-channel `.ppif` path today. Users can also use
 the bounded multi-channel bundle path for aggregate reports, check JSON,
-aggregate semantic JSON, and generated `.isf`/`.fsm` review artifacts. Default
-bundle HDL generation remains unsupported and fail closed until the selected
-aggregate wrapper/top entry contract is implemented.
+aggregate semantic JSON, generated `.isf`/`.fsm` review artifacts, aggregate
+wrapper/top SystemVerilog generation, and `--verify-hdl` on the tracked AW/W
+bundle shape.

@@ -706,7 +706,9 @@ if ($fsm_file =~ /\.ppif$/i) {
             exit 0;
         }
 
-        if ($verify_hdl) {
+        my $files = $ppif_result->{generated_ial0}{files} || {};
+        my $entry_basename = $ppif_result->{report}{generated_artifacts}{hdl_entry}{entry_artifact};
+        if (!defined($entry_basename) || !exists $files->{$entry_basename}) {
             my $display_error = emit_machine_failure_if_requested(
                 input => $fsm_input,
                 source_file => $public_source_file,
@@ -714,13 +716,18 @@ if ($fsm_file =~ /\.ppif$/i) {
                 strict_mode => $strict_mode,
                 emit_semantic_json => $emit_semantic_json,
                 check_json_mode => $check_json_mode,
-                message => "PPIF multi-channel bundle cannot run --verify-hdl until a bundle HDL entry owner is selected\n",
+                message => "PPIF multi-channel bundle emitted no aggregate wrapper/top HDL entry artifact\n",
             );
             die $display_error;
         }
 
         my $dir = $outdir || undef;
-        if ($dir) {
+        if (!$dir) {
+            my ($fh, $tmp_path) = File::Temp::tempfile(SUFFIX => '.fsm');
+            print $fh $files->{$entry_basename};
+            close $fh;
+            $fsm_file = $tmp_path;
+        } else {
             mkdir $dir unless -d $dir;
 
             for my $item (@{$ppif_result->{generated_ial1}{items} || []}) {
@@ -731,7 +738,6 @@ if ($fsm_file =~ /\.ppif$/i) {
                 print "Wrote: $isf_path\n" unless $machine_json_mode;
             }
 
-            my $files = $ppif_result->{generated_ial0}{files} || {};
             for my $fname (sort keys %$files) {
                 my $path = File::Spec->catfile($dir, $fname);
                 open my $fh, '>', $path or die "Cannot write $path: $!\n";
@@ -740,77 +746,67 @@ if ($fsm_file =~ /\.ppif$/i) {
                 print "Wrote: $path\n" unless $machine_json_mode;
             }
 
-            unless ($machine_json_mode) {
-                print "=== IAL2 Protocol/Platform Intent Bundle ===\n\n";
-                print "Source: " . $ppif_result->{report}{source_object}{id} . "\n";
-                print "Channels: " . scalar(@{$ppif_result->{report}{channels} || []}) . "\n";
-                print "Generated review artifacts in: $dir\n";
-                print "HDL entry: deferred until a wrapper/top actor or explicit entry-selection owner lands\n\n"
-                    unless $quiet;
-            }
-            exit 0;
+            $fsm_file = File::Spec->catfile($dir, $entry_basename);
         }
 
-        my $display_error = emit_machine_failure_if_requested(
-            input => $fsm_input,
-            source_file => $public_source_file,
-            target_language => $target_language,
-            strict_mode => $strict_mode,
-            emit_semantic_json => $emit_semantic_json,
-            check_json_mode => $check_json_mode,
-            message => "PPIF multi-channel bundle emits multiple generated .fsm roots; use --emit-schedule-json or --outdir for review artifacts until a bundle HDL entry owner is selected\n",
-        );
-        die $display_error;
-    }
-
-    $isf_schedule_report = $ppif_result->{generated_ial1_schedule_report};
-    my $files = $ppif_result->{generated_ial0}{files};
-    my $artifact_files = $ppif_result->{report}{generated_artifacts}{ial0}{files} || [];
-    my $entry_basename = $artifact_files->[0];
-    if (!defined $entry_basename || !exists $files->{$entry_basename}) {
-        my $display_error = emit_machine_failure_if_requested(
-            input => $fsm_input,
-            source_file => ($check_json_mode ? $public_source_file : $fsm_file),
-            target_language => $target_language,
-            strict_mode => $strict_mode,
-            emit_semantic_json => $emit_semantic_json,
-            check_json_mode => $check_json_mode,
-            message => "PPIF lowering emitted no generated .fsm entry artifact\n",
-        );
-        die $display_error;
-    }
-
-    my $dir = $outdir || undef;
-    if (!$dir && scalar(keys %$files) == 1) {
-        my ($fh, $tmp_path) = File::Temp::tempfile(SUFFIX => '.fsm');
-        print $fh $files->{$entry_basename};
-        close $fh;
-        $fsm_file = $tmp_path;
+        unless ($machine_json_mode) {
+            print "=== IAL2 Protocol/Platform Intent Bundle ===\n\n";
+            print "Source: " . $ppif_result->{report}{source_object}{id} . "\n";
+            print "Channels: " . scalar(@{$ppif_result->{report}{channels} || []}) . "\n";
+            print "Generated review artifacts in: $dir\n" if $dir;
+            print "HDL entry: " . $entry_basename . "\n" if $dir && !$quiet;
+            print "Lowered aggregate HDL entry to: $fsm_file\n\n" unless $quiet;
+        }
     } else {
-        $dir ||= '.';
-        mkdir $dir unless -d $dir;
-
-        my $isf_path = File::Spec->catfile($dir, $ppif_result->{generated_ial1}{name});
-        open my $isf_fh, '>', $isf_path or die "Cannot write $isf_path: $!\n";
-        print $isf_fh $ppif_result->{generated_ial1}{text};
-        close $isf_fh;
-        print "Wrote: $isf_path\n" unless $machine_json_mode;
-
-        for my $fname (sort keys %$files) {
-            my $path = File::Spec->catfile($dir, $fname);
-            open my $fh, '>', $path or die "Cannot write $path: $!\n";
-            print $fh $files->{$fname};
-            close $fh;
-            print "Wrote: $path\n" unless $machine_json_mode;
+        $isf_schedule_report = $ppif_result->{generated_ial1_schedule_report};
+        my $files = $ppif_result->{generated_ial0}{files};
+        my $artifact_files = $ppif_result->{report}{generated_artifacts}{ial0}{files} || [];
+        my $entry_basename = $artifact_files->[0];
+        if (!defined $entry_basename || !exists $files->{$entry_basename}) {
+            my $display_error = emit_machine_failure_if_requested(
+                input => $fsm_input,
+                source_file => ($check_json_mode ? $public_source_file : $fsm_file),
+                target_language => $target_language,
+                strict_mode => $strict_mode,
+                emit_semantic_json => $emit_semantic_json,
+                check_json_mode => $check_json_mode,
+                message => "PPIF lowering emitted no generated .fsm entry artifact\n",
+            );
+            die $display_error;
         }
-        $fsm_file = File::Spec->catfile($dir, $entry_basename);
-    }
 
-    unless ($machine_json_mode) {
-        print "=== IAL2 Protocol/Platform Intent ===\n\n";
-        print "Source: " . $ppif_result->{report}{source_object}{id} . "\n";
-        print "Generated IAL1: " . $ppif_result->{generated_ial1}{name} . "\n";
-        print "Lowered to: $fsm_file\n\n" unless $quiet;
+        my $dir = $outdir || undef;
+        if (!$dir && scalar(keys %$files) == 1) {
+            my ($fh, $tmp_path) = File::Temp::tempfile(SUFFIX => '.fsm');
+            print $fh $files->{$entry_basename};
+            close $fh;
+            $fsm_file = $tmp_path;
+        } else {
+            $dir ||= '.';
+            mkdir $dir unless -d $dir;
+
+            my $isf_path = File::Spec->catfile($dir, $ppif_result->{generated_ial1}{name});
+            open my $isf_fh, '>', $isf_path or die "Cannot write $isf_path: $!\n";
+            print $isf_fh $ppif_result->{generated_ial1}{text};
+            close $isf_fh;
+            print "Wrote: $isf_path\n" unless $machine_json_mode;
+
+            for my $fname (sort keys %$files) {
+                my $path = File::Spec->catfile($dir, $fname);
+                open my $fh, '>', $path or die "Cannot write $path: $!\n";
+                print $fh $files->{$fname};
+                close $fh;
+                print "Wrote: $path\n" unless $machine_json_mode;
+            }
+            $fsm_file = File::Spec->catfile($dir, $entry_basename);
+        }
+
+        unless ($machine_json_mode) {
+            print "=== IAL2 Protocol/Platform Intent ===\n\n";
+            print "Source: " . $ppif_result->{report}{source_object}{id} . "\n";
+            print "Generated IAL1: " . $ppif_result->{generated_ial1}{name} . "\n";
+            print "Lowered to: $fsm_file\n\n" unless $quiet;
+        }
     }
 }
 

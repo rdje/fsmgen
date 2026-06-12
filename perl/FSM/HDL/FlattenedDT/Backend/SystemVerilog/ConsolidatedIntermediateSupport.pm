@@ -347,6 +347,101 @@ sub sync_consolidated_signals_to_registry ($self, $all_intermediate_signals) {
     }
 }
 
+=head2 prune_sampled_value_intermediate_chains
+
+Remove intermediate signals whose only valid SystemVerilog context is a
+clocked assertion property. Sampled-value functions are legal in the SVA
+property text rendered for checks, but not as unclocked combinational helper
+assignments.
+
+=cut
+
+sub prune_sampled_value_intermediate_chains ($self, $all_intermediate_signals) {
+    return 0 unless $all_intermediate_signals && ref($all_intermediate_signals) eq 'HASH';
+
+    my %removed;
+    my $changed = 1;
+    while ($changed) {
+        $changed = 0;
+
+        for my $signal_name (sort keys %$all_intermediate_signals) {
+            next if $removed{$signal_name};
+
+            my $signal_info = $all_intermediate_signals->{$signal_name} || {};
+            my $expression = $self->_intermediate_signal_expression_text($signal_info);
+            my @dependencies = $self->_intermediate_signal_dependencies($signal_info);
+
+            my $should_remove =
+                   $self->_expression_has_sampled_value_function($expression)
+                || scalar(grep { $removed{$_} } @dependencies)
+                || $self->_expression_mentions_removed_signal($expression, \%removed);
+
+            next unless $should_remove;
+
+            $removed{$signal_name} = 1;
+            $changed = 1;
+            fsm_debug("CONSOL_INTER_SIG: [PRUNE] '$signal_name' removed from combinational helpers because it depends on a sampled-value property expression", 3);
+        }
+    }
+
+    delete @{$all_intermediate_signals}{keys %removed} if %removed;
+    return scalar keys %removed;
+}
+
+sub _intermediate_signal_expression_text ($self, $signal_info) {
+    return '' unless $signal_info && ref($signal_info) eq 'HASH';
+
+    my @parts;
+    for my $key (qw(rendered_expression expression)) {
+        push @parts, $signal_info->{$key}
+            if defined($signal_info->{$key}) && $signal_info->{$key} ne '';
+    }
+
+    for my $key (qw(runtime_ast ast driving_ast defining_ast)) {
+        my $ast = $signal_info->{$key};
+        next unless $ast && blessed($ast) && $ast->can('to_systemverilog');
+
+        my $rendered = eval { $ast->to_systemverilog() };
+        push @parts, $rendered
+            if defined($rendered) && $rendered ne '' && !$@;
+    }
+
+    return join(' ', @parts);
+}
+
+sub _intermediate_signal_dependencies ($self, $signal_info) {
+    return () unless $signal_info && ref($signal_info) eq 'HASH';
+
+    my @dependencies;
+    for my $key (qw(dependency_signal_names dependencies referenced_signal_names referenced_intermediate_signals)) {
+        my $value = $signal_info->{$key};
+        if ($value && ref($value) eq 'ARRAY') {
+            push @dependencies, @$value;
+        } elsif ($value && ref($value) eq 'HASH') {
+            push @dependencies, keys %$value;
+        }
+    }
+
+    my %seen;
+    return grep { defined($_) && $_ ne '' && !$seen{$_}++ } @dependencies;
+}
+
+sub _expression_has_sampled_value_function ($self, $expression) {
+    return 0 unless defined($expression) && $expression ne '';
+    return $expression =~ /\$(?:past|stable|changed|rose|fell)\s*\(/ ? 1 : 0;
+}
+
+sub _expression_mentions_removed_signal ($self, $expression, $removed_signals) {
+    return 0 unless defined($expression) && $expression ne '';
+    return 0 unless $removed_signals && ref($removed_signals) eq 'HASH';
+
+    for my $removed_signal (keys %$removed_signals) {
+        return 1 if $expression =~ /(?<![A-Za-z0-9_])\Q$removed_signal\E(?![A-Za-z0-9_])/;
+    }
+
+    return 0;
+}
+
 =head2 collect_consolidated_intermediate_signals
 
 Build the consolidated intermediate-signal set for the direct backend by
@@ -380,6 +475,10 @@ sub collect_consolidated_intermediate_signals ($self, $fsm_module) {
     $self->sync_consolidated_signals_to_registry(\%all_intermediate_signals);
     $ctx->{backend_sv_consolidated_intermediate_normalization_support}
         ->normalize_consolidated_intermediate_metadata(\%all_intermediate_signals);
+    my $pruned_count = $self->prune_sampled_value_intermediate_chains(\%all_intermediate_signals);
+    fsm_debug("CONSOL_INTER_SIG: [PRUNE] Removed $pruned_count sampled-value intermediate helper(s)", 3)
+        if $pruned_count;
+    $ctx->{intermediate_signals} = {};
     $self->sync_consolidated_signals_to_registry(\%all_intermediate_signals);
 
     return \%all_intermediate_signals;
@@ -419,5 +518,10 @@ consolidated signal set.
 Builds the fully merged consolidated signal set, then asks the extracted
 normalization owner to prepare the runtime metadata that the downstream
 selection, planning, and emission owners consume.
+
+=head2 prune_sampled_value_intermediate_chains
+
+Removes SVA sampled-value helper chains from the general combinational
+intermediate-signal set before wire declarations and assigns are emitted.
 
 =cut

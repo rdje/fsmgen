@@ -142,8 +142,9 @@ documented in
 [docs/IAL2_PPIF_VALID_READY_BUNDLE_FIRST_SLICE.md](IAL2_PPIF_VALID_READY_BUNDLE_FIRST_SLICE.md).
 Aggregate semantic JSON for that bundle is documented in
 [docs/IAL2_PPIF_BUNDLE_SEMANTIC_JSON_FIRST_SLICE.md](IAL2_PPIF_BUNDLE_SEMANTIC_JSON_FIRST_SLICE.md).
+The aggregate wrapper/top HDL entry is documented in
+[docs/IAL2_PPIF_BUNDLE_HDL_ENTRY_FIRST_SLICE.md](IAL2_PPIF_BUNDLE_HDL_ENTRY_FIRST_SLICE.md).
 
 The implemented bundle behavior does not claim AXI five-channel manager
 behavior, transaction concurrency, ID ordering, outstanding-window scheduling,
-response matching, bursts, channel dependency enforcement, wrapper/top actor
-HDL generation, or default bundle HDL generation.
+response matching, bursts, or channel dependency enforcement.

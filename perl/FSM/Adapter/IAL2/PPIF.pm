@@ -363,11 +363,21 @@ sub _generate_bundle($generator, $bundle) {
         };
     }
 
+    my $hdl_entry = _build_bundle_hdl_entry(
+        bundle          => $bundle,
+        ial0_items      => \@ial0_items,
+        channel_reports => \@channel_reports,
+        fsm_files       => \%all_fsm_files,
+    );
+    $all_fsm_files{$hdl_entry->{entry_artifact}} = $hdl_entry->{text};
+    push @ial0_items, $hdl_entry->{ial0_item};
+
     my $report = _build_bundle_report(
         bundle          => $bundle,
         ial1_items      => \@ial1_items,
         ial0_items      => \@ial0_items,
         channel_reports => \@channel_reports,
+        hdl_entry       => $hdl_entry->{report_entry},
     );
 
     return {
@@ -393,6 +403,7 @@ sub _build_bundle_report(%args) {
     my @ial1_items = @{$args{ial1_items} || []};
     my @ial0_items = @{$args{ial0_items} || []};
     my @channel_reports = @{$args{channel_reports} || []};
+    my $hdl_entry = $args{hdl_entry};
 
     my @channels;
     my $inherited_source_count = 0;
@@ -462,21 +473,228 @@ sub _build_bundle_report(%args) {
                 items  => _clone_jsonish(\@ial0_items),
             },
             hdl_entry => {
-                selected => 0,
-                reason   => 'multi-channel PPIF bundle has no wrapper/top actor or explicit HDL entry selection in this slice',
+                defined($hdl_entry)
+                    ? %$hdl_entry
+                    : (
+                        selected => 0,
+                        reason   => 'multi-channel PPIF bundle has no wrapper/top actor or explicit HDL entry selection in this slice',
+                    ),
             },
         },
         unsupported_residue => [
-            {
-                id     => 'bundle_hdl_entry',
-                detail => 'Default HDL generation remains fail-closed until a wrapper/top actor or explicit entry-selection owner lands.',
-            },
             {
                 id     => 'axi_manager_concurrency',
                 detail => 'Transaction IDs, outstanding windows, bursts, response matching, and channel dependency rules remain outside this monitor-only bundle slice.',
             },
         ],
     };
+}
+
+sub _build_bundle_hdl_entry(%args) {
+    my $bundle = $args{bundle};
+    my @ial0_items = @{$args{ial0_items} || []};
+    my @channel_reports = @{$args{channel_reports} || []};
+    my $fsm_files = $args{fsm_files} || {};
+
+    my $module_name = _sanitized_hdl_identifier($bundle->{intent_name}, 'protocol-platform-intent name');
+    my $entry_artifact = "$module_name.fsm";
+    confess "Error: .ppif Valid-Ready bundle generated duplicate aggregate .fsm artifact '$entry_artifact'\n"
+        if exists $fsm_files->{$entry_artifact};
+
+    my ($clock, $reset) = _shared_bundle_system_ports(\@channel_reports);
+    my @port_specs = _bundle_wrapper_port_specs($clock, $reset, \@channel_reports);
+    my @channel_entry_artifacts = map { $_->{entry_artifact} } @ial0_items;
+
+    my @lines = (
+        "(?top:$module_name",
+        "  (?ports:public_io",
+        (map { "    " . _composition_port_token($_) } @port_specs),
+        "  )",
+        (map {
+            my $child = $_;
+            $child =~ s/\.fsm\z//;
+            "  (?fsmc:$child)"
+        } @channel_entry_artifacts),
+        ")",
+        "",
+    );
+
+    for my $artifact (@channel_entry_artifacts) {
+        confess "Error: .ppif Valid-Ready bundle is missing generated child .fsm artifact '$artifact'\n"
+            unless exists $fsm_files->{$artifact};
+        push @lines, $fsm_files->{$artifact};
+        push @lines, "";
+    }
+
+    return {
+        entry_artifact => $entry_artifact,
+        text           => join("\n", @lines),
+        ial0_item      => {
+            object_name     => $bundle->{intent_name},
+            channel         => 'bundle',
+            kind            => 'aggregate_wrapper_top',
+            format          => 'fsm',
+            files           => [$entry_artifact],
+            entry_artifact  => $entry_artifact,
+            child_artifacts => \@channel_entry_artifacts,
+        },
+        report_entry   => {
+            selected        => 1,
+            kind            => 'aggregate_wrapper_top',
+            format          => 'fsm',
+            module_name     => $module_name,
+            entry_artifact  => $entry_artifact,
+            child_artifacts => \@channel_entry_artifacts,
+            port_policy     => {
+                shared_system_ports => {
+                    clock => $clock,
+                    reset => _clone_jsonish($reset),
+                },
+                data_binding => 'composition_c4_declared_connect_by_name',
+            },
+        },
+    };
+}
+
+sub _shared_bundle_system_ports($channel_reports) {
+    confess "Error: .ppif Valid-Ready bundle requires at least two channel reports before wrapper generation\n"
+        unless ref($channel_reports) eq 'ARRAY' && @$channel_reports >= 2;
+
+    my $first_bindings = $channel_reports->[0]{valid_ready_channel_report}{bindings} || {};
+    my $clock = $first_bindings->{clock};
+    my $reset = $first_bindings->{reset};
+    confess "Error: .ppif Valid-Ready bundle wrapper requires channel clock metadata\n"
+        unless defined($clock) && !ref($clock) && length($clock);
+    confess "Error: .ppif Valid-Ready bundle wrapper requires channel reset metadata\n"
+        unless ref($reset) eq 'HASH';
+
+    for my $entry (@$channel_reports) {
+        my $bindings = $entry->{valid_ready_channel_report}{bindings} || {};
+        my $object_name = $entry->{object_name} // '<unknown>';
+        confess "Error: .ppif Valid-Ready bundle wrapper requires shared clock '$clock'; channel '$object_name' uses '$bindings->{clock}'\n"
+            unless defined($bindings->{clock}) && !ref($bindings->{clock}) && $bindings->{clock} eq $clock;
+        confess "Error: .ppif Valid-Ready bundle wrapper requires shared reset '$reset->{signal}'; channel '$object_name' has incompatible reset policy\n"
+            unless _same_reset_policy($reset, $bindings->{reset});
+    }
+
+    return ($clock, _clone_jsonish($reset));
+}
+
+sub _same_reset_policy($left, $right) {
+    return 0 unless ref($left) eq 'HASH' && ref($right) eq 'HASH';
+    for my $field (qw(signal active_low async)) {
+        return 0 unless defined($left->{$field}) && defined($right->{$field});
+        return 0 unless $left->{$field} eq $right->{$field};
+    }
+    return 1;
+}
+
+sub _bundle_wrapper_port_specs($clock, $reset, $channel_reports) {
+    my @ports;
+    my %seen;
+    _push_bundle_wrapper_port(\@ports, \%seen, {
+        name      => $clock,
+        direction => 'input',
+        width     => 1,
+        system    => 'clock',
+    });
+    _push_bundle_wrapper_port(\@ports, \%seen, {
+        name      => $reset->{signal},
+        direction => 'input',
+        width     => 1,
+        system    => 'reset',
+    });
+
+    for my $entry (@$channel_reports) {
+        my $object_name = $entry->{object_name} // '<unknown>';
+        my $report = $entry->{valid_ready_channel_report} || {};
+        my $bindings = $report->{bindings} || {};
+        my $entry_artifact = $report->{generated_artifacts}{ial0}{files}[0];
+        confess "Error: .ppif Valid-Ready bundle channel '$object_name' is missing its generated .fsm entry artifact\n"
+            unless defined($entry_artifact) && !ref($entry_artifact) && $entry_artifact =~ /\.fsm\z/;
+        my $child_module = $entry_artifact;
+        $child_module =~ s/\.fsm\z//;
+
+        _push_bundle_wrapper_port(\@ports, \%seen, {
+            name      => $bindings->{valid},
+            direction => 'input',
+            width     => 1,
+            source    => "$object_name valid",
+        });
+        _push_bundle_wrapper_port(\@ports, \%seen, {
+            name      => $bindings->{ready},
+            direction => 'input',
+            width     => 1,
+            source    => "$object_name ready",
+        });
+        for my $payload (@{$bindings->{payload} || []}) {
+            _push_bundle_wrapper_port(\@ports, \%seen, {
+                name      => $payload->{name},
+                direction => 'input',
+                width     => $payload->{width},
+                source    => "$object_name payload",
+            });
+        }
+        _push_bundle_wrapper_port(\@ports, \%seen, {
+            name      => "${child_module}_done",
+            direction => 'output',
+            width     => 1,
+            source    => "$object_name generated done",
+        });
+    }
+
+    return @ports;
+}
+
+sub _push_bundle_wrapper_port($ports, $seen, $spec) {
+    my $name = $spec->{name};
+    confess "Error: .ppif Valid-Ready bundle wrapper encountered a missing port name\n"
+        unless defined($name) && !ref($name) && length($name);
+    confess "Error: .ppif Valid-Ready bundle wrapper port '$name' is not an HDL identifier\n"
+        unless $name =~ /\A[A-Za-z_][A-Za-z0-9_]*\z/;
+
+    my $width = $spec->{width};
+    confess "Error: .ppif Valid-Ready bundle wrapper port '$name' has invalid width '$width'\n"
+        unless defined($width) && !ref($width) && $width =~ /\A[1-9][0-9]*\z/;
+    $spec->{width} = int($width);
+
+    if (exists $seen->{$name}) {
+        my $prior = $seen->{$name};
+        confess "Error: .ppif Valid-Ready bundle wrapper port '$name' conflicts between $prior->{source} and $spec->{source}\n"
+            unless ($prior->{system} // '') && ($spec->{system} // '') && $prior->{system} eq $spec->{system};
+        return;
+    }
+
+    $spec->{source} //= $spec->{system} // 'unknown source';
+    $seen->{$name} = $spec;
+    push @$ports, $spec;
+}
+
+sub _composition_port_token($spec) {
+    my $name = $spec->{name};
+    my $width = $spec->{width};
+    if ($spec->{system}) {
+        return $width == 1 ? $name : "$name<$width";
+    }
+
+    my $direction = $spec->{direction};
+    confess "Error: .ppif Valid-Ready bundle wrapper port '$name' has unsupported direction '$direction'\n"
+        unless $direction eq 'input' || $direction eq 'output';
+    my $arrow = $direction eq 'output' ? '>' : '<';
+    return $width == 1 ? "=$name$arrow" : "=$name$arrow$width";
+}
+
+sub _sanitized_hdl_identifier($value, $label) {
+    confess "Error: .ppif Valid-Ready bundle wrapper requires scalar $label\n"
+        unless defined($value) && !ref($value) && length($value);
+    my $identifier = $value;
+    $identifier =~ s/[^A-Za-z0-9_]+/_/g;
+    $identifier =~ s/\A_+//;
+    $identifier =~ s/_+\z//;
+    $identifier = "ppif_$identifier" unless $identifier =~ /\A[A-Za-z_]/;
+    confess "Error: .ppif Valid-Ready bundle wrapper could not derive an HDL identifier from $label '$value'\n"
+        unless $identifier =~ /\A[A-Za-z_][A-Za-z0-9_]*\z/;
+    return $identifier;
 }
 
 sub _clone_jsonish($value) {

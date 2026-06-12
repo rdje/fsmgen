@@ -8,6 +8,9 @@ Task tree:
 Contract selection:
 [docs/IAL2_PPIF_VALID_READY_BUNDLE_CONTRACT_SELECTION.md](IAL2_PPIF_VALID_READY_BUNDLE_CONTRACT_SELECTION.md).
 
+Later HDL entry implementation:
+[docs/IAL2_PPIF_BUNDLE_HDL_ENTRY_FIRST_SLICE.md](IAL2_PPIF_BUNDLE_HDL_ENTRY_FIRST_SLICE.md).
+
 Runnable sample:
 [ppif/axi_aw_w_valid_ready_bundle.ppif](../ppif/axi_aw_w_valid_ready_bundle.ppif).
 
@@ -23,8 +26,9 @@ Each channel still lowers independently through the required chain:
 .ppif / IAL2 -> generated .isf / IAL1 -> generated .fsm / IAL0
 ```
 
-The bundle path does not select a wrapper/top actor and does not perform
-direct `.ppif` to `.fsm` lowering.
+The original bundle report/review-artifact slice did not select a wrapper/top
+actor. The later HDL entry slice now adds a generated aggregate wrapper/top
+`.fsm`, while still avoiding direct `.ppif` to `.fsm` lowering.
 
 ## Source Shape
 
@@ -91,14 +95,15 @@ The stable first-slice bundle fields include:
   target-channel metadata, bindings, generated artifacts, transfer-fire
   condition, generated assertions, and channel-local residue;
 - `generated_artifacts.ial1.items[]`: generated `.isf` review artifacts;
-- `generated_artifacts.ial0.items[]`: generated `.fsm` review artifacts; and
-- `generated_artifacts.hdl_entry`: explicit evidence that no bundle HDL entry
-  is selected in this slice.
+- `generated_artifacts.ial0.items[]`: generated channel `.fsm` review
+  artifacts plus the aggregate wrapper/top `.fsm`; and
+- `generated_artifacts.hdl_entry`: the selected aggregate wrapper/top HDL
+  entry and its per-channel child artifacts.
 
 ## CLI Behavior
 
-`--outdir` materializes every generated channel `.isf` and `.fsm` review
-artifact, then stops before HDL generation:
+`--outdir` materializes every generated channel `.isf`, generated channel
+`.fsm`, and aggregate wrapper/top `.fsm` review artifact before HDL generation:
 
 ```bash
 ./bin/fsmgen --outdir generated ppif/axi_aw_w_valid_ready_bundle.ppif
@@ -111,6 +116,7 @@ generated/axi_aw_valid_ready_monitor.isf
 generated/axi_aw_valid_ready_monitor.fsm
 generated/axi_w_valid_ready_monitor.isf
 generated/axi_w_valid_ready_monitor.fsm
+generated/axi_aw_w_valid_ready_bundle.fsm
 ```
 
 `--check --json` succeeds when the bundle parses and all generated
@@ -124,17 +130,17 @@ The check report keeps `source.resolved_path` on the public `.ppif` input and
 reports the channel count through the bounded result summary. No HDL is
 emitted by check mode.
 
-Default HDL generation fails closed for a bundle:
+Default HDL generation now uses the aggregate wrapper/top:
 
 ```bash
-./bin/fsmgen ppif/axi_aw_w_valid_ready_bundle.ppif
+./bin/fsmgen --output bundle.sv ppif/axi_aw_w_valid_ready_bundle.ppif
 ```
 
-The diagnostic tells the user to use `--emit-schedule-json` or `--outdir`
-until a bundle HDL entry owner is selected.
+`--verify-hdl` also uses that aggregate wrapper/top:
 
-`--verify-hdl` also fails closed for a bundle, including with `--outdir`,
-because no bundle HDL entry exists to verify yet.
+```bash
+./bin/fsmgen --outdir generated --output bundle.sv --verify-hdl ppif/axi_aw_w_valid_ready_bundle.ppif
+```
 
 Aggregate normalized semantic JSON was added by the later bounded semantic
 slice:
@@ -144,7 +150,8 @@ slice:
 ```
 
 It emits an aggregate PPIF bundle semantic root rather than selecting one
-generated channel `.fsm`. See
+generated channel `.fsm`, and now records the selected aggregate wrapper/top
+entry. See
 [docs/IAL2_PPIF_BUNDLE_SEMANTIC_JSON_FIRST_SLICE.md](IAL2_PPIF_BUNDLE_SEMANTIC_JSON_FIRST_SLICE.md).
 The single-channel `.ppif` semantic JSON behavior remains unchanged.
 
@@ -152,8 +159,8 @@ The single-channel `.ppif` semantic JSON behavior remains unchanged.
 
 This slice is monitor-only. It does not implement a full AXI manager, AXI
 transaction IDs, outstanding-window scheduling, response matching, bursts,
-cross-channel dependency rules, wrapper/top actor generation, default bundle
-HDL generation, platform placement clauses, or protocol-profile suffix aliases.
+cross-channel dependency rules, platform placement clauses, or protocol-profile
+suffix aliases.
 
 ## Validation
 
@@ -161,5 +168,5 @@ Focused coverage lives in
 [t/1436-ial2-ppif-parser-cli.t](../t/1436-ial2-ppif-parser-cli.t). It proves
 the existing single-channel path still works and covers the bundle parser,
 bundle report, review-artifact materialization, check JSON, default HDL
-fail-closed diagnostic, aggregate semantic JSON, and duplicate
-channel-object-name rejection.
+generation, aggregate semantic JSON, `--verify-hdl`, sampled-value verifier
+hygiene, and duplicate channel-object-name rejection.

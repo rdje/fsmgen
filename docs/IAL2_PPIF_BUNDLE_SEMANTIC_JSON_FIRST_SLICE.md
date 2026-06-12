@@ -9,6 +9,9 @@ Task tree:
 Builds on:
 [docs/IAL2_PPIF_VALID_READY_BUNDLE_FIRST_SLICE.md](IAL2_PPIF_VALID_READY_BUNDLE_FIRST_SLICE.md).
 
+Later HDL entry implementation:
+[docs/IAL2_PPIF_BUNDLE_HDL_ENTRY_FIRST_SLICE.md](IAL2_PPIF_BUNDLE_HDL_ENTRY_FIRST_SLICE.md).
+
 Runnable sample:
 [ppif/axi_aw_w_valid_ready_bundle.ppif](../ppif/axi_aw_w_valid_ready_bundle.ppif).
 
@@ -51,8 +54,9 @@ The bounded first-slice fields are:
   count;
 - `channels[]`: per-channel source, target-channel, binding, generated
   artifact, transfer-fire, assertion, and residue metadata;
-- `generated_artifacts`: generated `.isf` and `.fsm` review artifact summaries
-  plus the explicit unselected HDL entry; and
+- `generated_artifacts`: generated `.isf`, generated channel `.fsm`, and
+  aggregate wrapper/top `.fsm` review artifact summaries plus the selected
+  HDL entry; and
 - `generated_ial1_schedule_reports[]`: per-channel schedule-report presence
   summaries.
 
@@ -63,11 +67,10 @@ optional `protocol_intent_bundle` child.
 
 ## Still Deferred
 
-Default bundle HDL generation and `--verify-hdl` still fail closed because no
-wrapper/top actor or explicit bundle HDL entry has been selected. Full AXI
-manager behavior remains outside this semantic export: transaction IDs,
-outstanding windows, bursts, responses, ordering, and cross-channel dependency
-rules are still residue.
+Default bundle HDL generation and `--verify-hdl` are shipped by the later
+aggregate wrapper/top implementation. Full AXI manager behavior remains
+outside this semantic export: transaction IDs, outstanding windows, bursts,
+responses, ordering, and cross-channel dependency rules are still residue.
 
 Single-channel `.ppif` semantic JSON is unchanged: it still lowers through the
 generated `.fsm` path and reports the generated `.fsm` as the semantic root.

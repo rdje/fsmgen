@@ -32,5 +32,6 @@ channel-level evidence.
 report and review-artifact path. `--emit-schedule-json`, `--outdir`, and
 `--check --json` work for a bundle. `IAL2-PPIF-BUNDLE-SEMANTIC-JSON-FIRST-SLICE.1`
 adds aggregate semantic JSON with `semantic.module.source_root_kind =
-ppif_bundle`. Default bundle HDL generation still fails closed until a
-wrapper/top actor or entry-selection owner lands.
+ppif_bundle`. `IAL2-PPIF-BUNDLE-HDL-ENTRY-FIRST-SLICE.1` adds the selected
+aggregate wrapper/top HDL entry and `--verify-hdl` support for the tracked AW/W
+bundle sample.

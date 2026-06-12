@@ -1,6 +1,6 @@
 # IAL2 PPIF Bundle HDL Entry Selection
 
-Status: selected future HDL entry contract; no implementation in this slice.
+Status: selected HDL entry contract; first bounded implementation is shipped.
 
 Task tree:
 [docs/tasks/IAL2-PPIF-BUNDLE-HDL-ENTRY-SELECTION.md](tasks/IAL2-PPIF-BUNDLE-HDL-ENTRY-SELECTION.md).
@@ -11,13 +11,16 @@ Builds on:
 - [docs/IAL2_PPIF_VALID_READY_BUNDLE_FIRST_SLICE.md](IAL2_PPIF_VALID_READY_BUNDLE_FIRST_SLICE.md)
 - [docs/IAL2_PPIF_BUNDLE_SEMANTIC_JSON_FIRST_SLICE.md](IAL2_PPIF_BUNDLE_SEMANTIC_JSON_FIRST_SLICE.md)
 
+Implemented first by:
+[docs/IAL2_PPIF_BUNDLE_HDL_ENTRY_FIRST_SLICE.md](IAL2_PPIF_BUNDLE_HDL_ENTRY_FIRST_SLICE.md).
+
 ## Selection
 
-Future default HDL generation for a multi-channel `.ppif` Valid-Ready bundle
-must use an aggregate wrapper/top entry. It must not select the first generated
-channel `.fsm` as the HDL root.
+Default HDL generation for a multi-channel `.ppif` Valid-Ready bundle now uses
+an aggregate wrapper/top entry. It must not select the first generated channel
+`.fsm` as the HDL root.
 
-The selected future contract is:
+The selected contract is:
 
 - keep every authored `valid-ready-channel` as its own generated channel
   monitor;
@@ -47,7 +50,7 @@ matching, or cross-channel dependency enforcement.
 
 ## CLI Consequences
 
-A future implementation leaf should keep the current non-HDL modes stable:
+The first implementation keeps the non-HDL modes stable:
 
 - `--emit-schedule-json` continues to emit the aggregate bundle report.
 - `--check --json` continues to validate parsing/lowering and report aggregate
@@ -55,12 +58,12 @@ A future implementation leaf should keep the current non-HDL modes stable:
 - `--emit-semantic-json` continues to emit the aggregate PPIF bundle semantic
   root without writing HDL.
 
-For HDL modes, the future implementation should change behavior only after the
-aggregate wrapper review artifacts exist:
+For HDL modes, the current implementation uses the aggregate wrapper review
+artifact:
 
-- default generation may write the aggregate wrapper HDL root;
-- `--verify-hdl` may verify that aggregate wrapper HDL root;
-- `--outdir` should materialize every per-channel review artifact and the
+- default generation writes the aggregate wrapper HDL root;
+- `--verify-hdl` verifies that aggregate wrapper HDL root;
+- `--outdir` materializes every per-channel review artifact and the
   aggregate wrapper review artifacts; and
 - no mode may silently hide or drop any generated channel monitor.
 

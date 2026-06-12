@@ -14,16 +14,16 @@
 Implement the first bounded multi-channel `.ppif` Valid-Ready bundle behavior
 under the selected aggregate contract: parse multiple `valid-ready-channel`
 objects, generate per-channel review artifacts, emit an aggregate IAL2 report,
-and keep default HDL/aggregate semantic modes fail-closed until a wrapper or
-entry-selection owner lands.
+and keep default HDL/aggregate semantic modes fail-closed in this slice. Later
+owners shipped aggregate semantic JSON and the aggregate wrapper/top HDL entry.
 
 ## Non-Goals
 
 - Do not implement AXI manager transactions, transaction IDs, ordering rules,
   bursts, response matching, outstanding-window scheduling, or channel
   dependency enforcement.
-- Do not implement a wrapper/top actor or aggregate HDL entry.
-- Do not implement aggregate normalized semantic JSON.
+- Do not implement a wrapper/top actor or aggregate HDL entry in this slice.
+- Do not implement aggregate normalized semantic JSON in this slice.
 - Do not accept `.pif`, `.ppi`, `.axi`, or protocol-profile suffix aliases.
 - Do not change the shipped single-channel `.ppif` result/report behavior.
 
@@ -35,9 +35,10 @@ entry-selection owner lands.
   no direct `.ppif -> .fsm` path is introduced.
 - `--emit-schedule-json` emits the aggregate IAL2 bundle report.
 - `--outdir` materializes every generated channel `.isf` and `.fsm` review
-  artifact, then stops before HDL with an explicit bundle-review message.
+  artifact, then stops before HDL with an explicit bundle-review message in
+  this slice.
 - Default HDL generation and multi-channel `--emit-semantic-json` fail closed
-  with targeted diagnostics.
+  with targeted diagnostics in this slice; later owners shipped both behaviors.
 - The existing single-channel `.ppif` behavior and tests remain unchanged.
 - Focused parser/CLI tests, mdBook, Knowledge Map, memory, path, and diff
   gates pass.

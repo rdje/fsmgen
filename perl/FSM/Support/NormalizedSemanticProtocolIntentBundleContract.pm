@@ -38,8 +38,8 @@ sub build_normalized_semantic_protocol_intent_bundle_contract {
         schedule_report_entry_keys => normalized_semantic_protocol_intent_bundle_schedule_report_entry_keys(),
         guidance => [
             'Use this optional semantic payload child only when semantic.module.source_root_kind is ppif_bundle.',
-            'The bundle object summarizes the aggregate IAL2 protocol/platform intent and generated review artifacts without selecting a wrapper HDL entry.',
-            'Per-channel generated .isf and .fsm artifacts remain reviewable roots; this contract does not make any one generated .fsm the aggregate semantic top.',
+            'The bundle object summarizes the aggregate IAL2 protocol/platform intent, generated review artifacts, and selected aggregate wrapper HDL entry.',
+            'Per-channel generated .isf and .fsm artifacts remain reviewable roots; the aggregate wrapper/top .fsm is the selected HDL entry, not any one generated channel root.',
         ],
     };
 }

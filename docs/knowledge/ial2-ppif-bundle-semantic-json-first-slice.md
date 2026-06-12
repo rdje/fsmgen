@@ -10,7 +10,7 @@ answers:
 date: 2026-06-12
 status: current
 tags: [ial2, ppif, bundle, normalized-semantic-json, public-api]
-evidence: docs/IAL2_PPIF_BUNDLE_SEMANTIC_JSON_FIRST_SLICE.md; ppif/axi_aw_w_valid_ready_bundle.ppif; bin/fsmgen; perl/FSM/Support/NormalizedSemanticProtocolIntentBundleContract.pm; perl/FSM/Support/RegressionCorpus.pm; t/1436-ial2-ppif-parser-cli.t; t/303-normalized-semantic-json-supported-corpus.t; docs/tasks/IAL2-PPIF-BUNDLE-SEMANTIC-JSON-FIRST-SLICE.md
+evidence: docs/IAL2_PPIF_BUNDLE_SEMANTIC_JSON_FIRST_SLICE.md; docs/IAL2_PPIF_BUNDLE_HDL_ENTRY_FIRST_SLICE.md; ppif/axi_aw_w_valid_ready_bundle.ppif; bin/fsmgen; perl/FSM/Support/NormalizedSemanticProtocolIntentBundleContract.pm; perl/FSM/Support/RegressionCorpus.pm; t/1436-ial2-ppif-parser-cli.t; t/303-normalized-semantic-json-supported-corpus.t; docs/tasks/IAL2-PPIF-BUNDLE-SEMANTIC-JSON-FIRST-SLICE.md; docs/tasks/IAL2-PPIF-BUNDLE-HDL-ENTRY-FIRST-SLICE.md
 reverify: prove -Iperl t/1436-ial2-ppif-parser-cli.t t/303-normalized-semantic-json-supported-corpus.t
 ---
 
@@ -23,5 +23,5 @@ Multi-channel `.ppif` Valid-Ready bundles now support
 The bundle semantic export does not pick one generated channel `.fsm` as the
 root. It reports the bundle schema, channel list, generated `.isf`/`.fsm`
 review artifact summaries, per-channel schedule-report presence, and the
-explicitly unselected HDL entry. The support-accounting corpus entry is
-`intent.ppif_axi_aw_w_valid_ready_bundle`.
+selected aggregate wrapper/top HDL entry. The support-accounting corpus entry
+is `intent.ppif_axi_aw_w_valid_ready_bundle`.

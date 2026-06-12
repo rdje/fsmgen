@@ -55,10 +55,18 @@ subtest 'PPIF adapter parses a multi-channel Valid-Ready bundle' => sub {
     );
     is_deeply(
         sorted([keys %{$result->{generated_ial0}{files}}]),
-        [qw(axi_aw_valid_ready_monitor.fsm axi_w_valid_ready_monitor.fsm)],
-        'bundle exposes both generated IAL0 artifacts',
+        [qw(axi_aw_valid_ready_monitor.fsm axi_aw_w_valid_ready_bundle.fsm axi_w_valid_ready_monitor.fsm)],
+        'bundle exposes both channel IAL0 artifacts plus the aggregate wrapper/top artifact',
     );
-    is($result->{report}{generated_artifacts}{hdl_entry}{selected}, 0, 'bundle reports no selected HDL entry');
+    my $hdl_entry = $result->{report}{generated_artifacts}{hdl_entry};
+    is($hdl_entry->{selected}, 1, 'bundle reports a selected HDL entry');
+    is($hdl_entry->{kind}, 'aggregate_wrapper_top', 'bundle selects the aggregate wrapper/top entry kind');
+    is($hdl_entry->{entry_artifact}, 'axi_aw_w_valid_ready_bundle.fsm', 'bundle HDL entry points at the wrapper/top .fsm');
+    is_deeply(
+        $hdl_entry->{child_artifacts},
+        [qw(axi_aw_valid_ready_monitor.fsm axi_w_valid_ready_monitor.fsm)],
+        'bundle HDL entry keeps per-channel child artifacts listed',
+    );
     is($result->{report}{channels}[0]{source_attribution}{scope}, 'channel', 'channel-local source attribution is reported');
 };
 
@@ -110,7 +118,8 @@ subtest 'CLI emits IAL2 bundle report JSON for multi-channel .ppif' => sub {
         [qw(axi_aw axi_w)],
         'CLI bundle report preserves channel order',
     );
-    is($report->{generated_artifacts}{hdl_entry}{selected}, 0, 'CLI bundle report records no HDL entry selection');
+    is($report->{generated_artifacts}{hdl_entry}{selected}, 1, 'CLI bundle report records selected HDL entry');
+    is($report->{generated_artifacts}{hdl_entry}{entry_artifact}, 'axi_aw_w_valid_ready_bundle.fsm', 'CLI bundle report names wrapper/top entry artifact');
 };
 
 subtest 'CLI emits IAL2 report JSON for .ppif without writing HDL' => sub {
@@ -146,7 +155,7 @@ subtest 'CLI --outdir materializes generated .isf, .fsm, and HDL for .ppif' => s
     like(slurp($hdl), qr/\bmodule\s+axi_aw_valid_ready_monitor\b/, 'generated HDL contains the monitor module');
 };
 
-subtest 'CLI --outdir materializes bundle review artifacts and stops before HDL' => sub {
+subtest 'CLI --outdir materializes bundle review artifacts and HDL' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $bundle_path = sample_bundle_ppif_path();
     my $outdir = File::Spec->catdir($tempdir, 'out');
@@ -162,7 +171,10 @@ subtest 'CLI --outdir materializes bundle review artifacts and stops before HDL'
     ok(-f File::Spec->catfile($outdir, 'axi_w_valid_ready_monitor.isf'), 'bundle --outdir writes W generated .isf');
     ok(-f File::Spec->catfile($outdir, 'axi_aw_valid_ready_monitor.fsm'), 'bundle --outdir writes AW generated .fsm');
     ok(-f File::Spec->catfile($outdir, 'axi_w_valid_ready_monitor.fsm'), 'bundle --outdir writes W generated .fsm');
-    ok(!-e $hdl, 'bundle --outdir does not write HDL before entry selection exists');
+    ok(-f File::Spec->catfile($outdir, 'axi_aw_w_valid_ready_bundle.fsm'), 'bundle --outdir writes aggregate wrapper/top .fsm');
+    ok(-f $hdl, 'bundle --output writes aggregate wrapper/top HDL');
+    like(slurp(File::Spec->catfile($outdir, 'axi_aw_w_valid_ready_bundle.fsm')), qr/\(\?top:axi_aw_w_valid_ready_bundle\b/, 'aggregate wrapper/top .fsm is inspectable text');
+    like(slurp($hdl), qr/\bmodule\s+axi_aw_w_valid_ready_bundle\b/, 'bundle HDL contains the aggregate wrapper/top module');
 };
 
 subtest 'CLI check JSON and semantic JSON accept .ppif public source identity' => sub {
@@ -221,8 +233,9 @@ subtest 'CLI check JSON and semantic JSON accept .ppif public source identity' =
     ok(!decode_json(join('', @{$alias_stdout || []}))->{success}, '.pif alias check JSON reports failure');
 };
 
-subtest 'CLI bundle unsupported modes are explicit' => sub {
+subtest 'CLI bundle HDL modes use aggregate wrapper entry' => sub {
     my $bundle_path = sample_bundle_ppif_path();
+    my $tempdir = tempdir(CLEANUP => 1);
 
     my ($check_success, undef, undef, $check_stdout, $check_stderr) = run(
         command => ['./bin/fsmgen', '--strict', '--check', '--json', $bundle_path],
@@ -233,15 +246,19 @@ subtest 'CLI bundle unsupported modes are explicit' => sub {
     ok($check_report->{success}, 'bundle check JSON reports success');
     is($check_report->{result}{composition_child_count}, 2, 'bundle check JSON discloses channel count as child-count summary');
 
+    my $default_hdl = File::Spec->catfile($tempdir, 'default-bundle.sv');
     my ($default_success, undef, undef, undef, $default_stderr) = run(
-        command => ['./bin/fsmgen', $bundle_path],
+        command => ['./bin/fsmgen', '--quiet', '--output', $default_hdl, $bundle_path],
     );
-    ok(!$default_success, 'bundle default HDL generation fails closed');
-    like(
-        join('', @{$default_stderr || []}),
-        qr/multi-channel bundle emits multiple generated \.fsm roots/,
-        'bundle default HDL diagnostic names the missing entry-selection owner',
-    );
+    ok($default_success, 'bundle default HDL generation succeeds through the aggregate wrapper/top');
+    is(join('', @{$default_stderr || []}), '', 'bundle default HDL generation keeps stderr clean');
+    ok(-f $default_hdl, 'bundle default HDL writes the requested output file');
+    my $default_hdl_text = slurp($default_hdl);
+    like($default_hdl_text, qr/\bmodule\s+axi_aw_w_valid_ready_bundle\b/, 'bundle default HDL contains the wrapper/top module');
+    like($default_hdl_text, qr/\baxi_aw_valid_ready_monitor\s+axi_aw_valid_ready_monitor\b/, 'bundle default HDL instantiates the AW child');
+    like($default_hdl_text, qr/\baxi_w_valid_ready_monitor\s+axi_w_valid_ready_monitor\b/, 'bundle default HDL instantiates the W child');
+    unlike($default_hdl_text, qr/\bassign\s+functioncall_expr\b/, 'sampled-value helpers are not emitted as unclocked combinational assigns');
+    like($default_hdl_text, qr/\$past\(awvalid\)/, 'sampled-value property text stays inline in assertions');
 
     my ($semantic_success, undef, undef, $semantic_stdout, $semantic_stderr) = run(
         command => ['./bin/fsmgen', '--strict', '--emit-semantic-json', $bundle_path],
@@ -279,10 +296,9 @@ subtest 'CLI bundle unsupported modes are explicit' => sub {
         'bundle semantic child preserves channel order',
     );
     is($bundle_semantic->{generated_ial1_schedule_report_count}, 2, 'bundle semantic child records per-channel schedule report count');
-    ok(
-        !$bundle_semantic->{generated_artifacts}{hdl_entry}{selected},
-        'bundle semantic child keeps HDL entry unselected',
-    );
+    ok($bundle_semantic->{generated_artifacts}{hdl_entry}{selected}, 'bundle semantic child selects the HDL entry');
+    is($bundle_semantic->{generated_artifacts}{hdl_entry}{kind}, 'aggregate_wrapper_top', 'bundle semantic child records wrapper/top entry kind');
+    is($bundle_semantic->{generated_artifacts}{hdl_entry}{entry_artifact}, 'axi_aw_w_valid_ready_bundle.fsm', 'bundle semantic child records wrapper/top entry artifact');
     is_deeply(
         [map { $_->{name} } @{$bundle_semantic->{generated_artifacts}{ial1}{items} || []}],
         ['axi_aw_valid_ready_monitor.isf', 'axi_w_valid_ready_monitor.isf'],
@@ -290,20 +306,19 @@ subtest 'CLI bundle unsupported modes are explicit' => sub {
     );
     is_deeply(
         [map { $_->{entry_artifact} } @{$bundle_semantic->{generated_artifacts}{ial0}{items} || []}],
-        ['axi_aw_valid_ready_monitor.fsm', 'axi_w_valid_ready_monitor.fsm'],
-        'bundle semantic child lists generated IAL0 review artifacts',
+        ['axi_aw_valid_ready_monitor.fsm', 'axi_w_valid_ready_monitor.fsm', 'axi_aw_w_valid_ready_bundle.fsm'],
+        'bundle semantic child lists generated IAL0 review artifacts plus wrapper/top',
     );
 
-    my $verify_outdir = File::Spec->catdir(tempdir(CLEANUP => 1), 'verify-out');
+    my $verify_outdir = File::Spec->catdir($tempdir, 'verify-out');
+    my $verify_hdl = File::Spec->catfile($tempdir, 'verify-bundle.sv');
     my ($verify_success, undef, undef, undef, $verify_stderr) = run(
-        command => ['./bin/fsmgen', '--outdir', $verify_outdir, '--verify-hdl', $bundle_path],
+        command => ['./bin/fsmgen', '--quiet', '--outdir', $verify_outdir, '--output', $verify_hdl, '--verify-hdl', $bundle_path],
     );
-    ok(!$verify_success, 'bundle --verify-hdl fails closed before wrapper HDL exists');
-    like(
-        join('', @{$verify_stderr || []}),
-        qr/cannot run --verify-hdl until a bundle HDL entry owner is selected/,
-        'bundle --verify-hdl diagnostic names missing HDL entry owner',
-    );
+    ok($verify_success, 'bundle --verify-hdl validates the aggregate wrapper/top HDL');
+    is(join('', @{$verify_stderr || []}), '', 'bundle --verify-hdl keeps stderr clean');
+    ok(-f $verify_hdl, 'bundle --verify-hdl writes the requested HDL output');
+    ok(-f File::Spec->catfile($verify_outdir, 'axi_aw_w_valid_ready_bundle.fsm'), 'bundle --verify-hdl keeps wrapper/top review artifact in --outdir');
 };
 
 done_testing();

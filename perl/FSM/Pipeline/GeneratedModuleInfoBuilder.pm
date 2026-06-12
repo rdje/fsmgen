@@ -18,6 +18,7 @@ use v5.20;
 use strict;
 use warnings;
 use Carp qw(confess);
+use Scalar::Util qw(blessed);
 use feature qw(signatures);
 no warnings 'experimental::signatures';
 
@@ -74,29 +75,30 @@ sub build_from_fsm_module ($class, %args) {
 # ISF-PROPERTY-IMPLICATION: render a check condition to SV. A plain boolean is a CoreAST
 # expression (-> to_systemverilog); a temporal property is a tagged combinator tree over boolean
 # leaves (-> SVA property operators). Returns undef if any leaf cannot render.
-sub _render_check_condition_sv ($cond) {
+sub _render_check_condition_sv ($cond, $seen = undef) {
+    $seen //= {};
     if (ref($cond) eq 'HASH' && $cond->{__property__}) {
         my $op = $cond->{op} // '';
         if ($op eq 'implies_overlap') {
-            my $a = _render_check_condition_sv($cond->{antecedent});
-            my $b = _render_check_condition_sv($cond->{consequent});
+            my $a = _render_check_condition_sv($cond->{antecedent}, $seen);
+            my $b = _render_check_condition_sv($cond->{consequent}, $seen);
             return undef unless defined($a) && length($a) && defined($b) && length($b);
             return "($a) |-> ($b)";
         }
         if ($op eq 'after_event') {
             # event trigger: anchor the consequent to the rising edge of the trigger signal.
-            my $t = _render_check_condition_sv($cond->{trigger});
-            my $b = _render_check_condition_sv($cond->{consequent});
+            my $t = _render_check_condition_sv($cond->{trigger}, $seen);
+            my $b = _render_check_condition_sv($cond->{consequent}, $seen);
             return undef unless defined($t) && length($t) && defined($b) && length($b);
             return "\$rose($t) |-> ($b)";
         }
         if ($op eq 'next') {
-            my $x = _render_check_condition_sv($cond->{operand});
+            my $x = _render_check_condition_sv($cond->{operand}, $seen);
             return undef unless defined($x) && length($x);
             return "##1 ($x)";
         }
         if ($op eq 'within') {
-            my $x = _render_check_condition_sv($cond->{operand});
+            my $x = _render_check_condition_sv($cond->{operand}, $seen);
             return undef unless defined($x) && length($x);
             # ISF-PROPERTY-WINDOW-RANGE: explicit lower bound (defaults to 1 for `(within X N)`).
             my $lower = $cond->{lower} // 1;
@@ -105,13 +107,37 @@ sub _render_check_condition_sv ($cond) {
         if ($op eq 'sampled_value') {
             # ISF-PROPERTY-SAMPLED-VALUE: $stable/$changed/$rose/$fell(SIG). Boolean sampled-value
             # function over a leaf — not a `##` sequence, so it stays verilator-simulable.
-            my $x = _render_check_condition_sv($cond->{operand});
+            my $x = _render_check_condition_sv($cond->{operand}, $seen);
             return undef unless defined($x) && length($x);
             return "$cond->{fn}($x)";
         }
         return undef;
     }
+
+    if (blessed($cond) && $cond->isa('FSM::CoreAST::SignalRef')) {
+        my $signal = $cond->signal;
+        if (blessed($signal) && _check_signal_ref_should_inline($signal)) {
+            my $name = $signal->name;
+            return $name if $seen->{$name}++;
+            my $driving_ast = $signal->driving_ast;
+            my $rendered = _render_check_condition_sv($driving_ast, $seen)
+                if blessed($driving_ast) || ref($driving_ast);
+            --$seen->{$name};
+            return $rendered if defined($rendered) && length($rendered);
+        }
+    }
+
     return eval { $cond->to_systemverilog() };
+}
+
+sub _check_signal_ref_should_inline ($signal) {
+    return 0 unless blessed($signal);
+    return 0 unless $signal->can('driving_ast') && defined $signal->driving_ast;
+    return 1 if $signal->can('get_attribute') && $signal->get_attribute('is_intermediate');
+    return 1 if $signal->can('get_attribute') && (($signal->get_attribute('signal_role') // '') eq 'INTERNAL_INTERMEDIATE');
+    return 1 if $signal->can('is_intermediate') && $signal->is_intermediate
+        && $signal->can('name') && $signal->name =~ /\Aintermediate_/;
+    return 0;
 }
 
 # A property that uses a delayed consequent (`next` -> ##1, `within` -> ##[1:N]) is formal-only:
