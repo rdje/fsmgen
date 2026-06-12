@@ -256,6 +256,9 @@ use FSM::Support::NormalizedSemanticPayloadContract qw(
     normalized_semantic_payload_symbol_contract_type_state_model_extension_keys
     normalized_semantic_payload_symbol_contract_keys
 );
+use FSM::Support::NormalizedSemanticProtocolIntentBundleContract qw(
+    normalized_semantic_protocol_intent_bundle_contract_source
+);
 
 subtest 'contract exposes the bounded normalized semantic payload object' => sub {
     my $contract = build_normalized_semantic_payload_contract();
@@ -298,7 +301,7 @@ subtest 'contract exposes the bounded normalized semantic payload object' => sub
     );
     is_deeply(
         normalized_semantic_payload_optional_child_presence_keys(),
-        [qw(composition symbol_contract)],
+        [qw(composition protocol_intent_bundle symbol_contract)],
         'optional semantic child key list stays bounded and ordered',
     );
     is_deeply(
@@ -311,6 +314,7 @@ subtest 'contract exposes the bounded normalized semantic payload object' => sub
             forward_ir => normalized_semantic_forward_ir_contract_source(),
             symbol_contract => normalized_semantic_symbol_contract_source(),
             composition => normalized_semantic_composition_contract_source(),
+            protocol_intent_bundle => normalized_semantic_protocol_intent_bundle_contract_source(),
         },
         'contract publishes the bounded semantic-payload nested-contract ownership map',
     );

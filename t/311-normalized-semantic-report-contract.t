@@ -2171,10 +2171,11 @@ subtest 'successful direct semantic JSON conforms to the bounded contract' => su
     }
 
     ok(!exists $decoded->{semantic}{composition}, 'direct success omits optional composition payload');
+    ok(!exists $decoded->{semantic}{protocol_intent_bundle}, 'direct success omits optional protocol-intent bundle payload');
     ok(!exists $decoded->{semantic}{symbol_contract}, 'direct success omits optional symbol-contract payload');
     is_deeply(
         normalized_semantic_success_semantic_optional_child_presence_keys(),
-        [qw(composition symbol_contract)],
+        [qw(composition protocol_intent_bundle symbol_contract)],
         'optional semantic child key list stays bounded and ordered',
     );
     ok(!$decoded->{generated_output}{emitted}, 'direct success still records no HDL emission');
