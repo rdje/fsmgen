@@ -950,7 +950,8 @@ Priority note:
   OR/negated-OR guard conflict proof; the next selected subset is AXI manager
   ID/response rule-engine readiness before any ID allocation, response
   matching, ordering, burst, queued-policy, alias, full-manager, or VHDL
-  behavior changes.
+  behavior changes; the readiness audit selected additive concrete transaction
+  ID request/response assertions as the first implementation boundary.
 
 ## Current intent
 The active immediate feature-completeness lane is IAL2 on the
@@ -983,9 +984,13 @@ inputs, preserves scalar one-event compatibility, generates OR fan-in guards
 for multi-event groups, widens the IAL1 guard-conflict proof for bounded
 OR/negated-OR generated guards, and reports additive
 `transaction_event_dispatch` metadata. `IAL2-FEATURE-COMPLETENESS-FRONTIER.17`
-must now audit whether the first ID/response behavior can honestly extend that
-object through the current IAL1/IAL0/SystemVerilog substrate, or whether a
-narrower prerequisite is required first.
+selected a narrow concrete transaction ID assertion boundary: generated IAL1
+can declare used ID-family request/response ID signals, emit assertion-only
+transaction checks through `.fsm` `+assert` carriers, and reach the existing
+SystemVerilog assertion emitter path without a separate substrate prerequisite.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.18` is the active implementation frontier.
+Auto-ID allocation, ID release, response demux, ordering, bursts, queued
+policy, aliases, full-manager behavior, and VHDL remain residue.
 
 The first honest `R11` slices are now:
 1. keep widening convention-first composition only where the child-side evidence is still deterministic,

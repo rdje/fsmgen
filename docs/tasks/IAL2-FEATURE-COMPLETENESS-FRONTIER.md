@@ -48,7 +48,7 @@ path before reopening VHDL backend or VHDL rerouting work.
 - ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER`
   Status: `active`
   Goal: `Make IAL2 feature-complete on the SystemVerilog-backed path before VHDL work resumes.`
-  Children: `IAL2-FEATURE-COMPLETENESS-FRONTIER.1, IAL2-FEATURE-COMPLETENESS-FRONTIER.2, IAL2-FEATURE-COMPLETENESS-FRONTIER.3, IAL2-FEATURE-COMPLETENESS-FRONTIER.4, IAL2-FEATURE-COMPLETENESS-FRONTIER.5, IAL2-FEATURE-COMPLETENESS-FRONTIER.6, IAL2-FEATURE-COMPLETENESS-FRONTIER.7, IAL2-FEATURE-COMPLETENESS-FRONTIER.8, IAL2-FEATURE-COMPLETENESS-FRONTIER.9, IAL2-FEATURE-COMPLETENESS-FRONTIER.10, IAL2-FEATURE-COMPLETENESS-FRONTIER.11, IAL2-FEATURE-COMPLETENESS-FRONTIER.12, IAL2-FEATURE-COMPLETENESS-FRONTIER.13, IAL2-FEATURE-COMPLETENESS-FRONTIER.14, IAL2-FEATURE-COMPLETENESS-FRONTIER.15, IAL2-FEATURE-COMPLETENESS-FRONTIER.16, IAL2-FEATURE-COMPLETENESS-FRONTIER.17`
+  Children: `IAL2-FEATURE-COMPLETENESS-FRONTIER.1, IAL2-FEATURE-COMPLETENESS-FRONTIER.2, IAL2-FEATURE-COMPLETENESS-FRONTIER.3, IAL2-FEATURE-COMPLETENESS-FRONTIER.4, IAL2-FEATURE-COMPLETENESS-FRONTIER.5, IAL2-FEATURE-COMPLETENESS-FRONTIER.6, IAL2-FEATURE-COMPLETENESS-FRONTIER.7, IAL2-FEATURE-COMPLETENESS-FRONTIER.8, IAL2-FEATURE-COMPLETENESS-FRONTIER.9, IAL2-FEATURE-COMPLETENESS-FRONTIER.10, IAL2-FEATURE-COMPLETENESS-FRONTIER.11, IAL2-FEATURE-COMPLETENESS-FRONTIER.12, IAL2-FEATURE-COMPLETENESS-FRONTIER.13, IAL2-FEATURE-COMPLETENESS-FRONTIER.14, IAL2-FEATURE-COMPLETENESS-FRONTIER.15, IAL2-FEATURE-COMPLETENESS-FRONTIER.16, IAL2-FEATURE-COMPLETENESS-FRONTIER.17, IAL2-FEATURE-COMPLETENESS-FRONTIER.18`
 
 - ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER.1`
   Status: `done`
@@ -163,9 +163,16 @@ path before reopening VHDL backend or VHDL rerouting work.
   Commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.16: select AXI ID response readiness`
 
 - ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER.17`
-  Status: `pending`
+  Status: `done`
   Goal: `Audit readiness for the AXI manager ID/response rule-engine slice.`
   Acceptance: `The audit reads the shipped capacity/status, ID-family, transaction-envelope, and transaction-event-dispatch generator and .ppif surfaces; AXI ID/order evidence and rule matrix; IAL1 input-width, storage, guard/action expression, equality, report, and SystemVerilog lowering substrate; support accounting; diagnostics; public JSON surfaces; mdBook; roadmap; and prior residue. It decides whether the first ID/response rule-engine implementation can extend the existing manager-capacity-status object, should select a narrower concrete-ID validation/matching boundary, requires an IAL1/IAL0/SV prerequisite first, or must be deferred behind another exact owner; records exact public syntax/report expectations, generated .isf/.fsm/HDL impacts, diagnostics, validation gates, residue, rollback, and next implementation owner before behavior changes.`
+  Verification: `Audited the shipped ID-family, transaction-envelope, and transaction event dispatch surfaces; IAL1 width-bearing inputs, immediate assertions, equality/implication expressions, assertion-only transactions, generated .fsm +assert carriers, and SystemVerilog assertion emitter path; selected an additive concrete transaction ID assertion implementation boundary with no separate IAL1/IAL0/SystemVerilog prerequisite first.`
+  Commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.17: audit AXI ID response readiness`
+
+- ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER.18`
+  Status: `pending`
+  Goal: `Implement the additive AXI manager concrete transaction ID assertion slice.`
+  Acceptance: `The capacity/status generator emits concrete-ID request/response assertions for transactions with concrete requested IDs; declares the used positive-width ID-family request/response ID signals as generated IAL1 inputs; preserves capacity/status rule matrix behavior and samples without concrete ID assertions; generated .fsm exposes +assert carriers and ID signal +size entries; SystemVerilog emits verification-only concrete ID assertions through the existing assertion backend; report JSON additively emits ID/response rule-engine metadata; auto-ID allocation, ID release, same-ID ordering, response demux, bursts, queued/blocking policy, aliases, full manager syntax, and VHDL remain residue; focused generator, PPIF/CLI, check JSON, semantic JSON, mdBook, Knowledge Map, and memory are synced.`
   Verification: `pending`
   Commit: `pending`
 
@@ -173,7 +180,7 @@ path before reopening VHDL backend or VHDL rerouting work.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.17` | `pending` | `.16` selected AXI manager ID/response rule-engine readiness; the next safe step is auditing substrate and implementation boundaries before behavior changes. |
+| 1 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.18` | `pending` | `.17` selected additive concrete transaction ID assertions as the first ID/response implementation boundary; the next safe step is implementation. |
 
 ## Decisions
 
@@ -412,6 +419,18 @@ path before reopening VHDL backend or VHDL rerouting work.
   manager ID/response rule-engine boundary before any ID allocation, response
   matching, ordering, burst, queued-policy, alias, full-manager, or VHDL
   behavior changes.
+- `2026-06-12`: Readiness audit `.17` selected an additive concrete
+  transaction ID assertion implementation boundary under the existing
+  `manager-capacity-status` object. No separate IAL1, IAL0, or SystemVerilog
+  prerequisite is required first for this narrow slice: IAL1 supports
+  width-bearing ID inputs, equality/implication assertion expressions,
+  assertion-only transactions that emit `.fsm` `+assert` carriers without
+  synthetic start/done ports, and the existing SystemVerilog assertion emitter
+  path can render the concrete-ID property.
+- `2026-06-12`: `.18` is selected as the next leaf: implement concrete
+  transaction ID request/response assertions before any auto-ID allocation,
+  ID release, response demux, ordering, burst, queued-policy, alias,
+  full-manager, or VHDL behavior changes.
 - `2026-06-12`: User clarified the backend strategy: FSMGen is currently Perl
   5, but IAL0/IAL1/IAL2 and the mdBook must remain backend-language-neutral
   contracts for future Rust, Rust/Wasm, browser-capable JavaScript, and
@@ -470,6 +489,8 @@ path before reopening VHDL backend or VHDL rerouting work.
 | `2026-06-12` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.15` | `bash knowledge-map/scripts/gen_knowledge_map.sh`; `prove -Iperl t/297-capability-manifest.t t/317-language-surface-contract.t t/301-check-json-supported-corpus.t t/303-normalized-semantic-json-supported-corpus.t`; `mdbook build docs/book`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `git --no-pager diff --check`; first-slice fact-card reverify `rg`; next-slice fact-card reverify `rg`; readiness fact-card reverify `rg`; selection fact-card reverify `rg`; stale-frontier wording search `rg` | Passed. |
 | `2026-06-12` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.16` | `docs/AXI_IAL2_MANAGER_ID_RESPONSE_RULE_ENGINE_SELECTION.md`; `docs/AXI_IAL2_MANAGER_TRANSACTION_EVENT_DISPATCH_FIRST_SLICE.md`; `docs/AXI_IAL2_MANAGER_ID_FAMILY_FIRST_SLICE.md`; `docs/AXI_IAL2_MANAGER_TRANSACTION_ENVELOPE_FIRST_SLICE.md`; `docs/AXI_MANAGER_RULE_MATRIX_DESIGN_PROBE.md`; `docs/AXI_ID_ORDERING_RULE_EVIDENCE_PROBE.md`; `docs/ISF_SPEC.md`; `docs/book/src/13a-actor-interface.md`; `docs/book/src/13k-isf-feature-support-matrix.md`; `perl/FSM/IAL2/ProtocolIntent/AxiManagerCapacityStatus.pm`; `perl/FSM/Adapter/IAL2/PPIF.pm`; `t/1437-axi-ial2-manager-capacity-status-generator.t`; `t/1436-ial2-ppif-parser-cli.t`; `docs/book/src/14-feature-backlog.md`; `README.md`; `ROADMAP_V2.md` | Selected AXI manager ID/response rule-engine readiness as the next exact subset and advanced the frontier to `.17`. |
 | `2026-06-12` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.16` | `bash knowledge-map/scripts/gen_knowledge_map.sh`; `mdbook build docs/book`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `git --no-pager diff --check`; ID/response selection fact-card reverify `rg`; next-slice fact-card reverify `rg`; stale-current-frontier wording search `rg` | Passed. |
+| `2026-06-12` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.17` | `docs/AXI_IAL2_MANAGER_ID_RESPONSE_RULE_ENGINE_READINESS_AUDIT.md`; `docs/AXI_IAL2_MANAGER_ID_RESPONSE_RULE_ENGINE_SELECTION.md`; `docs/AXI_IAL2_MANAGER_TRANSACTION_EVENT_DISPATCH_FIRST_SLICE.md`; `docs/AXI_IAL2_MANAGER_ID_FAMILY_FIRST_SLICE.md`; `docs/AXI_IAL2_MANAGER_TRANSACTION_ENVELOPE_FIRST_SLICE.md`; `docs/AXI_MANAGER_RULE_MATRIX_DESIGN_PROBE.md`; `docs/AXI_ID_ORDERING_RULE_EVIDENCE_PROBE.md`; `perl/FSM/IAL2/ProtocolIntent/AxiManagerCapacityStatus.pm`; `perl/FSM/Adapter/IAL2/PPIF.pm`; `docs/book/src/13k-isf-feature-support-matrix.md`; `t/1410-isf-assert-carrier.t`; `t/1411-isf-assert-emit.t`; temporary `.isf -> .fsm` concrete-ID assertion probe; temporary assertion-only transaction probe; temporary `FSMGenFull -> GeneratedModuleInfoBuilder -> GeneratedModuleEmitter` SystemVerilog assertion probe | Selected additive concrete transaction ID request/response assertions as the first ID/response implementation boundary and advanced the frontier to `.18`. |
+| `2026-06-12` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.17` | `bash knowledge-map/scripts/gen_knowledge_map.sh`; `mdbook build docs/book`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `git --no-pager diff --check`; concrete-ID readiness fact-card reverify `rg`; next-slice fact-card reverify `rg`; stale-current-frontier wording search `rg` | Passed. |
 
 ## Commit Log
 
@@ -491,7 +512,8 @@ path before reopening VHDL backend or VHDL rerouting work.
 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.14` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.14: audit AXI transaction dispatch readiness` | Selected the additive implementation boundary and advanced the frontier to `.15`. |
 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.15` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.15: ship AXI transaction event dispatch` | Shipped additive transaction event dispatch/fan-in and advanced the frontier to `.16`. |
 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.16` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.16: select AXI ID response readiness` | Selected AXI manager ID/response rule-engine readiness and advanced the frontier to `.17`. |
-| `IAL2-FEATURE-COMPLETENESS-FRONTIER.17` | `pending` | `pending` |
+| `IAL2-FEATURE-COMPLETENESS-FRONTIER.17` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.17: audit AXI ID response readiness` | Selected additive concrete transaction ID assertions and advanced the frontier to `.18`. |
+| `IAL2-FEATURE-COMPLETENESS-FRONTIER.18` | `pending` | `pending` |
 
 ## Changelog
 
@@ -545,3 +567,6 @@ path before reopening VHDL backend or VHDL rerouting work.
 - `2026-06-12`: Completed `.16` selector, chose AXI manager ID/response
   rule-engine readiness as the next exact subset, and advanced the frontier to
   `.17` readiness audit before behavior changes.
+- `2026-06-12`: Completed `.17` readiness audit, selected additive concrete
+  transaction ID assertions as the first ID/response implementation boundary,
+  and advanced the frontier to `.18`.

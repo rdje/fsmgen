@@ -229,7 +229,12 @@ OR/negated-OR generated guards, reaches SystemVerilog, and additively reports
 [AXI_IAL2_MANAGER_ID_RESPONSE_RULE_ENGINE_SELECTION](AXI_IAL2_MANAGER_ID_RESPONSE_RULE_ENGINE_SELECTION.md):
 readiness-audit whether the first ID/response behavior can extend the existing
 `manager-capacity-status` object through current IAL1/IAL0/SystemVerilog
-substrate, or whether a narrower prerequisite is needed first.
+substrate, or whether a narrower prerequisite is needed first. The readiness
+audit
+[AXI_IAL2_MANAGER_ID_RESPONSE_RULE_ENGINE_READINESS_AUDIT](AXI_IAL2_MANAGER_ID_RESPONSE_RULE_ENGINE_READINESS_AUDIT.md)
+selects additive concrete transaction ID request/response assertions as the
+first implementation boundary with no separate IAL1/IAL0/SystemVerilog
+prerequisite.
 Public `.pif`, `.ppi`, `.axi`, protocol-profile aliases, ID allocation,
 ordering, response matching, bursts, queued/blocking policy, and full AXI
 manager behavior remain unshipped until exact owners select and implement

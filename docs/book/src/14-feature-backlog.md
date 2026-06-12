@@ -2290,9 +2290,11 @@ existing IAL1/IAL0/SystemVerilog path carries the behavior, and schedule JSON
 additively reports `transaction_event_dispatch` metadata. The active frontier
 is AXI manager ID/response rule-engine readiness: before any ID allocation,
 response matching, ordering, burst, queued-policy, alias, full-manager, or VHDL
-behavior changes, the next leaf must audit whether the first ID/response
-behavior can extend the existing capacity/status object through current
-IAL1/IAL0/SystemVerilog substrate or needs a narrower prerequisite first.
+behavior changes, the readiness audit selected additive concrete transaction
+ID request/response assertions as the first implementation boundary. The
+active leaf is `.18`, which must keep auto-ID allocation, ID release, response
+demux, ordering, bursts, queued policy, aliases, full-manager behavior, and
+VHDL as residue.
 Selected IAL2 slices may include explicit IAL1 or
 IAL0/SystemVerilog prerequisites when those prerequisites are needed for
 clean, reviewable lowering.
@@ -2766,6 +2768,10 @@ leaf is not an implementation permission slip; it is a readiness audit that
 must decide whether the first ID/response behavior can extend the existing
 `manager-capacity-status` object through current IAL1/IAL0/SystemVerilog
 substrate or whether a narrower prerequisite is needed first.
+The readiness audit:
+[AXI_IAL2_MANAGER_ID_RESPONSE_RULE_ENGINE_READINESS_AUDIT](../../AXI_IAL2_MANAGER_ID_RESPONSE_RULE_ENGINE_READINESS_AUDIT.md)
+selects additive concrete transaction ID request/response assertions as the
+first implementation boundary.
 
 The audit starts from the existing machine-readable ID-family and transaction
 metadata:
@@ -2786,11 +2792,20 @@ path is enough for bounded ID equality checks, whether actor-owned scalar
 storage is enough for a first in-flight ID state, whether automatic ID
 allocation is honest in the first behavior slice, and whether response
 matching should be generated scheduler behavior, generated runtime assertions,
-report-only classification, or a combination. The selected scope still
-excludes full ID allocation algorithms, same-ID ordering queues, different-ID
-read-data interleaving/reassembly, burst and last-beat tracking, payload
-binding, queued/blocking policy, full AXI manager syntax, profile aliases, and
-VHDL.
+report-only classification, or a combination. The audit conclusion is narrower
+than full matching: for transactions with concrete `(id (value N))`, the next
+implementation should declare the used request/response ID signals as IAL1
+inputs and emit assertion-only checks such as:
+
+```text
+(assert (=> axi0_r0_request (== axi0_arid 3)) "r0 request ID matches concrete ID")
+(assert (=> axi0_r0_complete (== axi0_rid 3)) "r0 response ID matches concrete ID")
+```
+
+The selected scope still excludes automatic ID allocation, ID release,
+same-ID ordering queues, different-ID read-data interleaving/reassembly, burst
+and last-beat tracking, payload binding, queued/blocking policy, generated
+response demux, full AXI manager syntax, profile aliases, and VHDL.
 
 First implementation subset selection:
 [AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION](../../AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md)
@@ -5083,8 +5098,10 @@ boundary and advances the sequence to `.15`. Completed implementation leaf
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.15` ships transaction event dispatch and
 direction fan-in and advances the sequence to `.16`. Completed selector leaf
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.16` selects AXI manager ID/response
-rule-engine readiness and advances the active frontier to `.17` readiness
-audit.
+rule-engine readiness and advances the sequence to `.17`. Completed readiness
+audit leaf `IAL2-FEATURE-COMPLETENESS-FRONTIER.17` selects additive concrete
+transaction ID assertions and advances the active frontier to `.18`
+implementation.
 Completed implementation leaf
 `ARCHITECTURE-DEBT-FRONTIER.2.1`
 projects direct backend storage/helper declaration-plan entries into
