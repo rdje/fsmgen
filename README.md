@@ -121,8 +121,10 @@ manager behavior remain unshipped. Mandatory lowering remains
 `IAL2 -> IAL1 -> IAL0`. IAL2 feature completeness on the
 SystemVerilog-backed path is now the active priority under
 `IAL2-FEATURE-COMPLETENESS-FRONTIER`, including any explicitly selected IAL1
-or IAL0/SV prerequisites needed for IAL2 to lower cleanly. VHDL backend/reroute
-work stays deferred until that path is feature complete.
+or IAL0/SV prerequisites needed for IAL2 to lower cleanly. The active next
+IAL2 leaf is the first AXI manager rule-subset selection/pre-code contract
+after the shipped Valid-Ready single/bundle surfaces; VHDL backend/reroute
+work stays deferred until the SV-backed IAL path is feature complete.
 The project objective is robust, traceable FSM-to-HDL generation with clear assignment semantics, optimization via AST factorization, and behavior-preserving refactoring toward a modular architecture.
 
 ## Fast ramp-up order

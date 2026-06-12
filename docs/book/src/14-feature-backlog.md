@@ -2261,9 +2261,11 @@ before implementation.
 
 Active frontier:
 [IAL2-FEATURE-COMPLETENESS-FRONTIER](../../tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md)
-owns the next IAL2 feature-completeness selector. Selected IAL2 slices may
-include explicit IAL1 or IAL0/SystemVerilog prerequisites when those
-prerequisites are needed for clean, reviewable lowering.
+owns the next IAL2 feature-completeness work. Its first selector audited the
+shipped `.ppif` Valid-Ready single/bundle surface and moved the frontier to
+the first AXI manager rule-subset selection/pre-code contract. Selected IAL2
+slices may include explicit IAL1 or IAL0/SystemVerilog prerequisites when
+those prerequisites are needed for clean, reviewable lowering.
 
 Evaluation note:
 [IAL2_PROTOCOL_PLATFORM_INTENT_EVALUATION](../../IAL2_PROTOCOL_PLATFORM_INTENT_EVALUATION.md).
@@ -2461,9 +2463,10 @@ generated `.fsm`. The capability manifest now advertises this file-layer stack
 under `language_surface.file_surfaces`, including the `.ppif` sample path,
 first-slice alias exclusions, and `supported_cli_modes[]` entries for
 `--emit-schedule-json`, `--check --json` / `--check-json`, and
-`--emit-semantic-json`. The next prerequisite is a later exact owner for
-additional `.ppif` objects/clauses, profile aliases, or the next protocol rule
-subset.
+`--emit-semantic-json`. The active next prerequisite is the first AXI manager
+rule-subset selection/pre-code contract. Additional `.ppif` objects/clauses
+and profile aliases remain future exact-owner work, but they should not jump
+ahead of the manager rule subset unless a later selector records why.
 
 Multi-channel `.ppif` bundle support:
 [IAL2_PPIF_MULTI_VALID_READY_READINESS](../../IAL2_PPIF_MULTI_VALID_READY_READINESS.md)

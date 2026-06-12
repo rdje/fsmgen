@@ -896,13 +896,16 @@ Priority note:
 - the current feature-completeness priority is IAL2 on the SystemVerilog-backed
   lowering path, tracked by
   [docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md](docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md);
-  selected IAL2 work may include explicit IAL1 or IAL0/SV prerequisites when
-  needed for clean lowering.
+  the active next leaf selects the first post-Valid-Ready AXI manager rule
+  subset and pre-code contract, and selected IAL2 work may include explicit
+  IAL1 or IAL0/SV prerequisites when needed for clean lowering.
 
 ## Current intent
 The active immediate feature-completeness lane is IAL2 on the
 SystemVerilog-backed lowering path; see
 [docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md](docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md).
+The current frontier is the first AXI manager rule-subset selection after the
+shipped Valid-Ready single/bundle `.ppif` surfaces.
 
 The first honest `R11` slices are now:
 1. keep widening convention-first composition only where the child-side evidence is still deterministic,
