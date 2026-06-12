@@ -87,15 +87,16 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 26. `docs/AXI_MANAGER_USER_API_BRAINSTORM.md`: captured AXI manager user-facing API direction for future IAL2 work.
 27. `docs/AXI_ID_ORDERING_RULE_EVIDENCE_PROBE.md`: first AXI ID/order/concurrency source-anchor evidence inventory for future IAL2 manager rule-engine work.
 28. `docs/AXI_MANAGER_RULE_MATRIX_DESIGN_PROBE.md`: first AXI manager source-to-rule responsibility matrix for future IAL2 work.
-29. `docs/decisions/0014-protocol-platform-intent-surface-and-layered-lowering.md`: generic IAL2 file-surface candidates and layered lowering decision.
-30. `docs/decisions/0015-ial2-profile-extensions-are-vocabulary-aliases.md`: IAL2 protocol-profile extension refinement.
-31. `docs/FEATURE_BACKLOG.md`: pointer to the canonical mdBook feature backlog for deferred/not-fully-shipped user-visible work.
-32. `CHANGES.md`: chronological technical changes.
-33. `DEVELOPMENT_NOTES.md`: design rationale and decisions.
-34. `MEMORY.md`: continuity/handoff state.
-35. `LIVE_ACHIEVEMENT_STATUS.md`: latest completed roadmap-aligned slice.
-36. `WARP.md`: repository-specific agent/development guidance.
-37. `.agents/workflows/commit.md`: automation-oriented commit workflow description.
+29. `docs/PDF_EXTRACTION_WORKFLOW.md`: portable workflow for source-anchored PDF text, table, diagram, and image extraction.
+30. `docs/decisions/0014-protocol-platform-intent-surface-and-layered-lowering.md`: generic IAL2 file-surface candidates and layered lowering decision.
+31. `docs/decisions/0015-ial2-profile-extensions-are-vocabulary-aliases.md`: IAL2 protocol-profile extension refinement.
+32. `docs/FEATURE_BACKLOG.md`: pointer to the canonical mdBook feature backlog for deferred/not-fully-shipped user-visible work.
+33. `CHANGES.md`: chronological technical changes.
+34. `DEVELOPMENT_NOTES.md`: design rationale and decisions.
+35. `MEMORY.md`: continuity/handoff state.
+36. `LIVE_ACHIEVEMENT_STATUS.md`: latest completed roadmap-aligned slice.
+37. `WARP.md`: repository-specific agent/development guidance.
+38. `.agents/workflows/commit.md`: automation-oriented commit workflow description.
 
 ## Documentation index (all `.md` files in this repo)
 - `README.md` — single entry point and navigation hub.
@@ -521,6 +522,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/AXI_MANAGER_USER_API_BRAINSTORM.md` — captured AXI manager user-facing API direction for future IAL2 work.
 - `docs/AXI_ID_ORDERING_RULE_EVIDENCE_PROBE.md` — first bounded AXI ID/order/concurrency source-anchor evidence inventory for future IAL2 manager rule-engine work.
 - `docs/AXI_MANAGER_RULE_MATRIX_DESIGN_PROBE.md` — first bounded AXI manager source-to-rule responsibility matrix for future IAL2 work.
+- `docs/PDF_EXTRACTION_WORKFLOW.md` — portable workflow for task-owned source-anchored PDF text, table, diagram, and image extraction.
 - `docs/decisions/0014-protocol-platform-intent-surface-and-layered-lowering.md` — generic IAL2 file-surface candidates and layered lowering decision.
 - `docs/decisions/0015-ial2-profile-extensions-are-vocabulary-aliases.md` — IAL2 protocol-profile extension refinement.
 - `docs/vendor/arm/amba/axi/IHI0022_L_2025-08_AMBA_AXI_Protocol_Specification.pdf` — tracked repo-local raw AXI protocol specification reference for future task-tree-owned IAL2 probes.

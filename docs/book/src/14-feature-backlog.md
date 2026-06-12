@@ -2345,6 +2345,15 @@ The next prerequisite is still not implementation by default; it is an exact
 implementation-selection leaf that chooses one bounded shipped subset and its
 IAL2-to-IAL1-to-IAL0 lowering and validation contract.
 
+PDF extraction workflow:
+[PDF_EXTRACTION_WORKFLOW](../../PDF_EXTRACTION_WORKFLOW.md)
+documents the reusable source-anchored PDF extraction approach used for the
+AXI evidence work. It covers task-tree ownership, metadata/hash checks, text
+extraction, table handling, diagram/image rendering, visual QA,
+troubleshooting, cleanup, validation, copyright hygiene, and the rule that
+future flow improvements must update that document in the same task-owned
+slice.
+
 Protocol/platform surface decision:
 [0014-protocol-platform-intent-surface-and-layered-lowering](../../decisions/0014-protocol-platform-intent-surface-and-layered-lowering.md)
 records the generic future IAL2 file-surface direction, the open
