@@ -2279,10 +2279,13 @@ metadata and unchanged generated `.isf`, generated `.fsm`, and HDL behavior.
 The next AXI manager subset is selected as a machine-readable AST/structural
 logical read/write transaction envelope and static-validation contract; the
 readiness audit selects an additive optional `(transactions ...)` static/report
-metadata extension under the existing `manager-capacity-status` object. The
-active frontier implements that bounded metadata slice. Selected IAL2 slices
-may include explicit IAL1 or IAL0/SystemVerilog prerequisites when those
-prerequisites are needed for clean, reviewable lowering.
+metadata extension under the existing `manager-capacity-status` object. That
+optional transaction-envelope metadata slice is now shipped with a separate
+sample, structural report entries, check JSON and semantic JSON source
+identity, and unchanged generated `.isf`, generated `.fsm`, and HDL behavior.
+The active frontier selects the next IAL2 feature-completeness slice. Selected
+IAL2 slices may include explicit IAL1 or IAL0/SystemVerilog prerequisites
+when those prerequisites are needed for clean, reviewable lowering.
 
 Evaluation note:
 [IAL2_PROTOCOL_PLATFORM_INTENT_EVALUATION](../../IAL2_PROTOCOL_PLATFORM_INTENT_EVALUATION.md).
@@ -2294,10 +2297,11 @@ Current boundary: FSMGen names `.fsm` as Intent Abstraction Layer 0 (`IAL0`)
 and current `.isf` as Intent Abstraction Layer 1 (`IAL1`). `IAL2` now has a
 first bounded shipped surface for one AXI Valid-Ready protocol intent object,
 multi-channel Valid-Ready bundles, and one AXI manager capacity/status shell
-through public `.ppif`. Broader IAL2 still must justify itself with semantics
-above individual transactions, not only syntax convenience. Its generic file
-surface remains protocol/platform-generic, and an IAL2 file may select a
-protocol or platform vocabulary inside the file.
+through public `.ppif`, including optional static ID-family metadata and
+optional static transaction-envelope metadata. Broader IAL2 still must justify
+itself with semantics above individual transactions, not only syntax
+convenience. Its generic file surface remains protocol/platform-generic, and
+an IAL2 file may select a protocol or platform vocabulary inside the file.
 
 IAL0, IAL1, IAL2, and this book describe backend-language-neutral contracts,
 not Perl-only implementation APIs. The current Perl 5 codebase is the
@@ -2330,10 +2334,10 @@ Current evaluation: IAL2 now has a first in-process behavior-bearing slice for
 an AXI Valid-Ready contract object, a first public `.ppif` parser/CLI slice for
 that same object shape, multi-channel Valid-Ready bundle behavior, and a public
 `.ppif` AXI manager capacity/status shell with reviewable generated `.isf` and
-`.fsm` artifacts. Future implementation leaves must choose exact owners for
-the next protocol rule subset, additional `.ppif` syntax, or aliases; a
-hand-written reusable `.fsm` or `.isf` library alone is useful but not enough
-to justify IAL2.
+`.fsm` artifacts plus optional ID-family and transaction-envelope metadata.
+Future implementation leaves must choose exact owners for the next protocol
+rule subset, additional `.ppif` syntax, or aliases; a hand-written reusable
+`.fsm` or `.isf` library alone is useful but not enough to justify IAL2.
 
 The repo-local tracked raw AXI reference for future bounded probes is
 `docs/vendor/arm/amba/axi/IHI0022_L_2025-08_AMBA_AXI_Protocol_Specification.pdf`.
@@ -2628,11 +2632,47 @@ direction-level abstract events:
     (id (value 3))))
 ```
 
-The active `.12` frontier implements that bounded static/report metadata
-slice. It still does not implement ID allocation algorithms, dynamic user-ID
-validation while issuing, same-ID ordering queues, different-ID interleaving,
-`BID`/`RID` response matching, bursts, queued/blocking policy, per-transaction
-event ports, profile aliases, full AXI manager behavior, or VHDL.
+First transaction-envelope `.ppif` slice:
+[AXI_IAL2_MANAGER_TRANSACTION_ENVELOPE_FIRST_SLICE](../../AXI_IAL2_MANAGER_TRANSACTION_ENVELOPE_FIRST_SLICE.md)
+ships that boundary as the optional `(transactions ...)` clause under the
+existing capacity/status object:
+
+```text
+(transactions
+  (write w0
+    (tag wr0)
+    (request axi0_write_submit)
+    (completion axi0_write_complete)
+    (id auto))
+  (read r0
+    (tag rd0)
+    (request axi0_read_submit)
+    (completion axi0_read_complete)
+    (id (value 3))))
+```
+
+Runnable sample:
+
+```bash
+./bin/fsmgen --emit-schedule-json ppif/axi_manager_capacity_status_transaction_envelope.ppif
+./bin/fsmgen --outdir generated ppif/axi_manager_capacity_status_transaction_envelope.ppif
+./bin/fsmgen --strict --check --json ppif/axi_manager_capacity_status_transaction_envelope.ppif
+./bin/fsmgen --strict --emit-semantic-json ppif/axi_manager_capacity_status_transaction_envelope.ppif
+./bin/fsmgen --outdir generated --verify-hdl ppif/axi_manager_capacity_status_transaction_envelope.ppif
+```
+
+The support-accounting entry is
+`intent.ppif_axi_manager_capacity_status_transaction_envelope`. Schedule JSON
+keeps schema `fsmgen.ial2.protocol_intent.axi_manager_capacity_status.v1` and
+additively emits `transactions[]` entries with `name`, `kind`, `tag`,
+`request_event`, `completion_event`, `id`, and `source_anchors`. Concrete IDs
+report `policy: concrete`, `value`, `family`, `family_width`, and `fits`.
+The same `axi0_capacity_status.isf`, `axi0_capacity_status.fsm`, and
+SystemVerilog module are produced with or without `transactions`. It still
+does not implement ID allocation algorithms, dynamic user-ID validation while
+issuing, same-ID ordering queues, different-ID interleaving, `BID`/`RID`
+response matching, bursts, queued/blocking policy, per-transaction event
+ports, profile aliases, full AXI manager behavior, or VHDL.
 
 First implementation subset selection:
 [AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION](../../AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md)
@@ -2758,10 +2798,11 @@ first-slice alias exclusions, and `supported_cli_modes[]` entries for
 `manager-capacity-status` `.ppif` syntax, optional static `(id-families ...)`
 metadata, a selector for the next logical read/write
 transaction-envelope/static-validation subset, and the readiness audit for its
-additive static/report implementation boundary. Additional `.ppif`
-objects/clauses and profile aliases remain future exact-owner work, and they
-must not jump ahead of the active transaction-envelope implementation leaf
-unless a later selector records why.
+additive static/report implementation boundary. The optional static
+`(transactions ...)` implementation slice is now also shipped. Additional
+`.ppif` objects/clauses and profile aliases remain future exact-owner work,
+and they must not jump ahead of the active selector unless that selector
+records why.
 
 Multi-channel `.ppif` bundle support:
 [IAL2_PPIF_MULTI_VALID_READY_READINESS](../../IAL2_PPIF_MULTI_VALID_READY_READINESS.md)
@@ -4911,7 +4952,9 @@ metadata for that object. Completed selector leaf
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.10` selects the logical read/write
 transaction-envelope/static-validation subset. Completed readiness audit leaf
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.11` selects the additive implementation
-boundary and advances the active frontier to `.12`, the implementation slice.
+boundary. Completed implementation leaf `IAL2-FEATURE-COMPLETENESS-FRONTIER.12`
+ships optional `(transactions ...)` metadata for that object and advances the
+active frontier to `.13`, the next IAL2 feature-completeness selector.
 Completed implementation leaf
 `ARCHITECTURE-DEBT-FRONTIER.2.1`
 projects direct backend storage/helper declaration-plan entries into

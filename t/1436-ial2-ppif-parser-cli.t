@@ -125,6 +125,39 @@ subtest 'PPIF adapter parses optional AXI manager ID-family metadata' => sub {
     );
 };
 
+subtest 'PPIF adapter parses optional AXI manager transaction-envelope metadata' => sub {
+    my $sample_path = sample_capacity_transaction_ppif_path();
+    ok(-f $sample_path, 'tracked runnable PPIF capacity/status transaction-envelope sample exists');
+
+    my $base = FSM::Adapter::IAL2::PPIF->new()->parse_source(sample_capacity_ppif(), sample_capacity_ppif_path());
+    my $result = FSM::Adapter::IAL2::PPIF->new()->parse_source(sample_capacity_transaction_ppif(), $sample_path);
+
+    is($result->{kind}, 'protocol_intent.axi_manager_capacity_status', 'transaction sample still uses the capacity/status generator');
+    is($result->{report}{source_object}{id}, 'axi-manager-capacity-status-transaction-envelope', 'transaction source object id is preserved');
+    is($result->{report}{source_object}{intent_name}, 'axi_manager_capacity_status_transaction_envelope', 'transaction source intent name is preserved');
+    is($result->{report}{transactions}[0]{kind}, 'write', 'write transaction kind is reported');
+    is($result->{report}{transactions}[0]{name}, 'w0', 'write transaction name is reported');
+    is($result->{report}{transactions}[0]{tag}, 'wr0', 'write transaction tag is reported');
+    is_deeply($result->{report}{transactions}[0]{id}, { policy => 'auto' }, 'write transaction reports auto ID policy');
+    is($result->{report}{transactions}[1]{kind}, 'read', 'read transaction kind is reported');
+    is($result->{report}{transactions}[1]{request_event}, 'axi0_read_submit', 'read request event is reported as a structural field');
+    is($result->{report}{transactions}[1]{completion_event}, 'axi0_read_complete', 'read completion event is reported as a structural field');
+    is($result->{report}{transactions}[1]{id}{policy}, 'concrete', 'read transaction reports concrete ID policy');
+    is($result->{report}{transactions}[1]{id}{value}, 3, 'read transaction reports concrete ID value');
+    is($result->{report}{transactions}[1]{id}{family}, 'read', 'read transaction reports matching ID family');
+    ok(scalar(@{$result->{report}{transactions}[1]{source_anchors} || []}) >= 6, 'transaction report carries source anchors');
+    is(
+        $result->{generated_ial1}{text},
+        $base->{generated_ial1}{text},
+        'transaction metadata does not change generated IAL1',
+    );
+    is_deeply(
+        $result->{generated_ial0}{files},
+        $base->{generated_ial0}{files},
+        'transaction metadata does not change generated IAL0',
+    );
+};
+
 subtest 'PPIF adapter diagnostics fail closed before generation claims' => sub {
     my @cases = (
         ['missing profile',
@@ -175,6 +208,27 @@ subtest 'PPIF adapter diagnostics fail closed before generation claims' => sub {
         ['positive-width manager ID-family missing signal',
             capacity_ppif_with_objects(manager_capacity_object_with_id_families('(read (width 4) (request-id arid)) (write (width 4) (request-id awid) (response-id bid))')),
             qr/positive width requires \(response-id \.\.\.\)/],
+        ['unsupported manager transaction kind',
+            capacity_ppif_with_objects(manager_capacity_object_with_transactions('(burst b0 (tag x) (request axi0_read_submit) (completion axi0_read_complete) (id auto))')),
+            qr/unsupported transaction kind '\(burst \.\.\.\)'/],
+        ['duplicate manager transaction tag',
+            capacity_ppif_with_objects(manager_capacity_object_with_transactions('(write w0 (tag same) (request axi0_write_submit) (completion axi0_write_complete) (id auto)) (read r0 (tag same) (request axi0_read_submit) (completion axi0_read_complete) (id auto))')),
+            qr/duplicate transaction tag 'same'/],
+        ['manager transaction wrong direction event',
+            capacity_ppif_with_objects(manager_capacity_object_with_id_families_and_transactions(
+                '(write (width 4) (request-id awid) (response-id bid)) (read (width 4) (request-id arid) (response-id rid))',
+                '(write w0 (tag wr0) (request axi0_read_submit) (completion axi0_write_complete) (id auto))',
+            )),
+            qr/write request_event must reference existing direction-level event 'axi0_write_submit'/],
+        ['manager transaction malformed id',
+            capacity_ppif_with_objects(manager_capacity_object_with_transactions('(write w0 (tag wr0) (request axi0_write_submit) (completion axi0_write_complete) (id (policy auto)))')),
+            qr/requires \(id auto\) or \(id \(value N\)\)/],
+        ['manager transaction concrete ID too wide',
+            capacity_ppif_with_objects(manager_capacity_object_with_id_families_and_transactions(
+                '(write (width 4) (request-id awid) (response-id bid)) (read (width 4) (request-id arid) (response-id rid))',
+                '(read r0 (tag rd0) (request axi0_read_submit) (completion axi0_read_complete) (id (value 16)))',
+            )),
+            qr/concrete read ID value 16 does not fit width 4/],
     );
 
     for my $case (@cases) {
@@ -253,6 +307,26 @@ subtest 'CLI emits IAL2 report JSON for AXI manager ID-family metadata .ppif' =>
     is($report->{id_families}{write}{request_id_signal}, 'axi0_awid', 'CLI report carries write request ID signal');
     is($report->{id_families}{read}{response_id_signal}, 'axi0_rid', 'CLI report carries read response ID signal');
     is_deeply($report->{generated_artifacts}{ial0}{files}, ['axi0_capacity_status.fsm'], 'ID-family metadata leaves generated .fsm artifact unchanged');
+};
+
+subtest 'CLI emits IAL2 report JSON for AXI manager transaction-envelope metadata .ppif' => sub {
+    my ($success, undef, undef, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--emit-schedule-json', sample_capacity_transaction_ppif_path()],
+    );
+
+    ok($success, '--emit-schedule-json succeeds for capacity/status transaction-envelope .ppif');
+    is(join('', @{$stderr_buf || []}), '', 'capacity/status transaction-envelope report keeps stderr clean');
+    my $report = decode_json(join('', @{$stdout_buf || []}));
+    is($report->{schema}, 'fsmgen.ial2.protocol_intent.axi_manager_capacity_status.v1', 'CLI keeps the capacity/status report schema');
+    is($report->{source_object}{intent_name}, 'axi_manager_capacity_status_transaction_envelope', 'transaction-envelope report carries the PPIF top-level intent name');
+    is($report->{transactions}[0]{kind}, 'write', 'CLI report carries write transaction kind');
+    is($report->{transactions}[0]{id}{policy}, 'auto', 'CLI report carries write auto ID policy');
+    is($report->{transactions}[1]{kind}, 'read', 'CLI report carries read transaction kind');
+    is($report->{transactions}[1]{id}{policy}, 'concrete', 'CLI report carries read concrete ID policy');
+    is($report->{transactions}[1]{id}{value}, 3, 'CLI report carries read concrete ID value');
+    is($report->{transactions}[1]{id}{family_width}, 4, 'CLI report carries read concrete ID family width');
+    ok($report->{transactions}[1]{id}{fits}, 'CLI report marks the read concrete ID as fitting');
+    is_deeply($report->{generated_artifacts}{ial0}{files}, ['axi0_capacity_status.fsm'], 'transaction metadata leaves generated .fsm artifact unchanged');
 };
 
 subtest 'CLI --outdir materializes generated .isf, .fsm, and HDL for .ppif' => sub {
@@ -463,6 +537,50 @@ subtest 'CLI check JSON and semantic JSON support-account ID-family .ppif separa
     );
 };
 
+subtest 'CLI check JSON and semantic JSON support-account transaction-envelope .ppif separately' => sub {
+    my $transaction_path = sample_capacity_transaction_ppif_path();
+    my ($success, undef, undef, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--strict', '--check', '--json', $transaction_path],
+    );
+    ok($success, 'capacity/status transaction-envelope --check --json succeeds');
+    is(join('', @{$stderr_buf || []}), '', 'capacity/status transaction-envelope --check --json keeps stderr clean');
+    my $check_report = decode_json(join('', @{$stdout_buf || []}));
+    ok($check_report->{success}, 'capacity/status transaction-envelope check JSON reports success');
+    is(
+        $check_report->{source}{resolved_path},
+        File::Spec->rel2abs($transaction_path),
+        'capacity/status transaction-envelope check JSON reports the public .ppif source path',
+    );
+    is(
+        $check_report->{support_accounting}{entry_id},
+        'intent.ppif_axi_manager_capacity_status_transaction_envelope',
+        'capacity/status transaction-envelope check JSON support accounting names the PPIF corpus entry',
+    );
+
+    my ($semantic_success, undef, undef, $semantic_stdout, $semantic_stderr) = run(
+        command => ['./bin/fsmgen', '--strict', '--emit-semantic-json', $transaction_path],
+    );
+    ok($semantic_success, 'capacity/status transaction-envelope --emit-semantic-json succeeds');
+    is(join('', @{$semantic_stderr || []}), '', 'capacity/status transaction-envelope --emit-semantic-json keeps stderr clean');
+    my $semantic_report = decode_json(join('', @{$semantic_stdout || []}));
+    ok($semantic_report->{success}, 'capacity/status transaction-envelope semantic JSON reports success');
+    is(
+        $semantic_report->{source}{resolved_path},
+        File::Spec->rel2abs($transaction_path),
+        'capacity/status transaction-envelope semantic JSON reports the public .ppif source path',
+    );
+    is(
+        $semantic_report->{support_accounting}{entry_id},
+        'intent.ppif_axi_manager_capacity_status_transaction_envelope',
+        'capacity/status transaction-envelope semantic JSON support accounting names the PPIF corpus entry',
+    );
+    is(
+        $semantic_report->{semantic}{module}{name},
+        'axi0_capacity_status',
+        'capacity/status transaction-envelope semantic JSON records the unchanged generated module',
+    );
+};
+
 subtest 'CLI bundle HDL modes use aggregate wrapper entry' => sub {
     my $bundle_path = sample_bundle_ppif_path();
     my $tempdir = tempdir(CLEANUP => 1);
@@ -569,6 +687,10 @@ sub sample_capacity_id_family_ppif_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_id_family.ppif');
 }
 
+sub sample_capacity_transaction_ppif_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_transaction_envelope.ppif');
+}
+
 sub sample_ppif {
     return slurp(sample_ppif_path());
 }
@@ -583,6 +705,10 @@ sub sample_capacity_ppif {
 
 sub sample_capacity_id_family_ppif {
     return slurp(sample_capacity_id_family_ppif_path());
+}
+
+sub sample_capacity_transaction_ppif {
+    return slurp(sample_capacity_transaction_ppif_path());
 }
 
 sub capacity_ppif_with_objects {
@@ -654,6 +780,20 @@ sub manager_capacity_object_with_id_families {
     my ($families) = @_;
     my $object = manager_capacity_object();
     $object =~ s/\)\z/\n    (id-families $families))/;
+    return $object;
+}
+
+sub manager_capacity_object_with_transactions {
+    my ($transactions) = @_;
+    my $object = manager_capacity_object();
+    $object =~ s/\)\z/\n    (transactions $transactions))/;
+    return $object;
+}
+
+sub manager_capacity_object_with_id_families_and_transactions {
+    my ($families, $transactions) = @_;
+    my $object = manager_capacity_object();
+    $object =~ s/\)\z/\n    (id-families $families)\n    (transactions $transactions))/;
     return $object;
 }
 

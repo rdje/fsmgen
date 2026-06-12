@@ -295,6 +295,8 @@ sub _parse_manager_capacity_status($body, $source_label) {
             $contract{status} = _parse_manager_capacity_status_outputs(\@items, $source_label, $name);
         } elsif ($head eq 'id-families') {
             $contract{id_families} = _parse_manager_capacity_id_families(\@items, $source_label, $name);
+        } elsif ($head eq 'transactions') {
+            $contract{transactions} = _parse_manager_capacity_transactions(\@items, $source_label, $name);
         } else {
             confess "Error: .ppif (manager-capacity-status $name ...) has unsupported clause '($head ...)'\n";
         }
@@ -423,6 +425,91 @@ sub _manager_capacity_id_width($value, $source_label, $name, $family) {
     confess "Error: .ppif (manager-capacity-status $name (id-families ($family (width ...)))) width must be an integer in 0..32\n"
         if ref($value) || !defined($value) || $value !~ /\A(?:0|[1-9][0-9]*)\z/ || $value > 32;
     return int($value);
+}
+
+sub _parse_manager_capacity_transactions($items, $source_label, $name) {
+    confess "Error: .ppif (manager-capacity-status $name (transactions ...)) requires at least one transaction clause\n"
+        unless @$items;
+
+    my @transactions;
+    my (%seen_names, %seen_tags);
+    for my $clause (@$items) {
+        my ($kind, @body) = _clause_parts($clause, $source_label);
+        confess "Error: .ppif (manager-capacity-status $name (transactions ...)) has unsupported transaction kind '($kind ...)'\n"
+            unless $kind =~ /\A(?:read|write)\z/;
+        my $transaction = _parse_manager_capacity_transaction($kind, \@body, $source_label, $name);
+        confess "Error: .ppif (manager-capacity-status $name (transactions ...)) has duplicate transaction name '$transaction->{name}'\n"
+            if $seen_names{$transaction->{name}}++;
+        confess "Error: .ppif (manager-capacity-status $name (transactions ...)) has duplicate transaction tag '$transaction->{tag}'\n"
+            if $seen_tags{$transaction->{tag}}++;
+        push @transactions, $transaction;
+    }
+
+    return \@transactions;
+}
+
+sub _parse_manager_capacity_transaction($kind, $items, $source_label, $name) {
+    confess "Error: .ppif (manager-capacity-status $name (transactions ($kind ...))) requires a scalar transaction name\n"
+        unless @$items >= 1 && !ref($items->[0]) && length($items->[0]);
+
+    my $transaction_name = $items->[0];
+    my %transaction = (
+        kind => $kind,
+        name => $transaction_name,
+    );
+    my %seen;
+    for my $clause (@{$items}[1 .. $#$items]) {
+        my ($head, @body) = _clause_parts($clause, $source_label);
+        confess "Error: .ppif (manager-capacity-status $name (transactions ($kind $transaction_name ...))) has duplicate ($head ...) clause\n"
+            if $seen{$head}++;
+
+        if ($head =~ /\A(?:tag|request|completion)\z/) {
+            confess "Error: .ppif (manager-capacity-status $name (transactions ($kind $transaction_name ($head ...)))) requires exactly one scalar value\n"
+                unless @body == 1 && !ref($body[0]);
+            $transaction{_manager_capacity_transaction_key($head)} = $body[0];
+        } elsif ($head eq 'id') {
+            $transaction{id} = _parse_manager_capacity_transaction_id(\@body, $source_label, $name, $kind, $transaction_name);
+        } else {
+            confess "Error: .ppif (manager-capacity-status $name (transactions ($kind $transaction_name ...))) has unsupported clause '($head ...)'\n";
+        }
+    }
+
+    for my $required (qw(tag request_event completion_event id)) {
+        my $clause = $required;
+        $clause =~ s/_event\z//;
+        confess "Error: .ppif (manager-capacity-status $name (transactions ($kind $transaction_name ...))) is missing required ($clause ...) clause\n"
+            unless exists $transaction{$required};
+    }
+
+    return \%transaction;
+}
+
+sub _manager_capacity_transaction_key($clause_name) {
+    my %map = (
+        'tag'        => 'tag',
+        'request'    => 'request_event',
+        'completion' => 'completion_event',
+    );
+    return $map{$clause_name} if exists $map{$clause_name};
+    confess "Internal error: unknown manager capacity/status transaction PPIF clause '$clause_name'\n";
+}
+
+sub _parse_manager_capacity_transaction_id($items, $source_label, $name, $kind, $transaction_name) {
+    confess "Error: .ppif (manager-capacity-status $name (transactions ($kind $transaction_name (id ...)))) requires (id auto) or (id (value N))\n"
+        unless @$items == 1;
+
+    my $id = $items->[0];
+    return { policy => 'auto' }
+        if !ref($id) && $id eq 'auto';
+
+    confess "Error: .ppif (manager-capacity-status $name (transactions ($kind $transaction_name (id ...)))) requires (id auto) or (id (value N))\n"
+        unless ref($id) eq 'ARRAY' && @$id == 2 && ($id->[0] // '') eq 'value' && !ref($id->[1]);
+
+    my $value = $id->[1];
+    confess "Error: .ppif (manager-capacity-status $name (transactions ($kind $transaction_name (id (value ...))))) value must be an unsigned integer\n"
+        unless defined($value) && $value =~ /\A(?:0|[1-9][0-9]*)\z/;
+
+    return { value => int($value) };
 }
 
 sub _parse_reset($items, $source_label) {

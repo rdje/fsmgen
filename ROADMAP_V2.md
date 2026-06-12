@@ -940,15 +940,18 @@ Priority note:
   the next subset is selected as a logical read/write transaction envelope and
   static-validation contract; the readiness audit selects an additive optional
   `(transactions ...)` static/report metadata extension under that same object;
-  the active next leaf implements that bounded metadata slice.
+  the public `.ppif` transaction-envelope metadata slice is now shipped with
+  structured report metadata and unchanged generated `.isf`, `.fsm`, and HDL
+  behavior; the active next leaf selects the following IAL2 feature-completeness
+  subset.
 
 ## Current intent
 The active immediate feature-completeness lane is IAL2 on the
 SystemVerilog-backed lowering path; see
 [docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md](docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md).
-The current frontier is the implementation slice for the selected AXI manager
-logical read/write transaction-envelope/static-validation metadata after the
-shipped readiness audit. The shipped
+The current frontier is the selector for the next IAL2 feature-completeness
+slice after the shipped AXI manager logical read/write
+transaction-envelope/static-validation metadata. The shipped
 public capacity/status source accepts one
 `(manager-capacity-status NAME ...)` object under
 `(protocol-platform-intent ...)`, `(profile axi4)`, and top-level source
@@ -960,13 +963,13 @@ zero-width absence semantics, static diagnostics, and report metadata, without
 changing generated `.isf`, generated `.fsm`, or HDL behavior. ID allocation,
 ordering, response matching, bursts, queued/blocking policy, profile aliases,
 and full AXI manager behavior remain task-tree-owned residue. The selected
-next transaction-envelope subset is the machine-readable AST/structural place
-for future logical read/write transaction names, tags, request/completion event
-bindings, and optional requested-ID static validation. The first
-implementation is selected as additive static/report metadata with request and
-completion bindings limited to existing direction-level abstract events so
-generated `.isf`, generated `.fsm`, and HDL behavior remain unchanged before
-dynamic manager behavior is claimed.
+transaction-envelope subset is now shipped as optional `(transactions ...)`
+metadata: machine-readable AST/structural logical read/write transaction
+names, tags, request/completion event bindings, and optional requested-ID
+static validation against declared ID-family widths. Request and completion
+bindings are limited to existing direction-level abstract events, so generated
+`.isf`, generated `.fsm`, and HDL behavior remain unchanged before dynamic
+manager behavior is claimed.
 
 The first honest `R11` slices are now:
 1. keep widening convention-first composition only where the child-side evidence is still deterministic,

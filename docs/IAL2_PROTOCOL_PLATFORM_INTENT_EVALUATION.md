@@ -204,7 +204,11 @@ the readiness audit
 [AXI_IAL2_MANAGER_TRANSACTION_ENVELOPE_READINESS_AUDIT](AXI_IAL2_MANAGER_TRANSACTION_ENVELOPE_READINESS_AUDIT.md)
 selects an additive optional `(transactions ...)` static/report metadata
 extension under that existing object, with generated `.isf`, generated `.fsm`,
-and HDL behavior unchanged for the first implementation.
+and HDL behavior unchanged for the first implementation. That first
+transaction-envelope slice is shipped in
+[AXI_IAL2_MANAGER_TRANSACTION_ENVELOPE_FIRST_SLICE](AXI_IAL2_MANAGER_TRANSACTION_ENVELOPE_FIRST_SLICE.md)
+with a separate `.ppif` sample, structural report metadata, support
+accounting, check JSON, and semantic JSON source identity.
 Public `.pif`, `.ppi`, `.axi`, protocol-profile aliases, ID allocation,
 ordering, response matching, bursts, queued/blocking policy, and full AXI
 manager behavior remain unshipped and need later exact owners.

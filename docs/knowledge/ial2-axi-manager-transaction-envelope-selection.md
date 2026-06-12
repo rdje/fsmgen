@@ -11,8 +11,8 @@ answers:
 date: 2026-06-12
 status: current
 tags: [ial2, axi, manager, transaction-envelope, task-tree]
-evidence: docs/AXI_IAL2_MANAGER_TRANSACTION_ENVELOPE_SELECTION.md; docs/AXI_IAL2_MANAGER_TRANSACTION_ENVELOPE_READINESS_AUDIT.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; docs/book/src/14-feature-backlog.md; README.md; ROADMAP_V2.md
-reverify: rg -n 'transaction-envelope|transaction envelope|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.10|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.11|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.12|machine-readable|AST/structural|requested-ID|transactions' docs/AXI_IAL2_MANAGER_TRANSACTION_ENVELOPE_SELECTION.md docs/AXI_IAL2_MANAGER_TRANSACTION_ENVELOPE_READINESS_AUDIT.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md docs/book/src/14-feature-backlog.md README.md ROADMAP_V2.md
+evidence: docs/AXI_IAL2_MANAGER_TRANSACTION_ENVELOPE_SELECTION.md; docs/AXI_IAL2_MANAGER_TRANSACTION_ENVELOPE_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_TRANSACTION_ENVELOPE_FIRST_SLICE.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; docs/book/src/14-feature-backlog.md; README.md; ROADMAP_V2.md
+reverify: rg -n 'transaction-envelope|transaction envelope|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.10|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.11|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.12|machine-readable|AST/structural|requested-ID|transactions' docs/AXI_IAL2_MANAGER_TRANSACTION_ENVELOPE_SELECTION.md docs/AXI_IAL2_MANAGER_TRANSACTION_ENVELOPE_READINESS_AUDIT.md docs/AXI_IAL2_MANAGER_TRANSACTION_ENVELOPE_FIRST_SLICE.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md docs/book/src/14-feature-backlog.md README.md ROADMAP_V2.md
 ---
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.10` selected the next AXI manager subset:
@@ -28,4 +28,4 @@ report metadata.
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.11` selected the first implementation
 boundary: add optional static/report `(transactions ...)` metadata under the
 existing `manager-capacity-status` object. `IAL2-FEATURE-COMPLETENESS-FRONTIER.12`
-is the active implementation leaf for that bounded slice.
+shipped that bounded metadata slice.

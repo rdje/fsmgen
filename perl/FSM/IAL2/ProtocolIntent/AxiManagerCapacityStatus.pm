@@ -128,14 +128,22 @@ sub _normalize_contract($raw) {
     my $id_families = exists($raw->{id_families})
         ? _normalize_id_families($raw->{id_families})
         : undef;
+    my $transactions = exists($raw->{transactions})
+        ? _normalize_transactions(
+            raw_transactions => $raw->{transactions},
+            events           => \%events,
+            id_families      => $id_families,
+        )
+        : undef;
 
     _reject_forbidden_or_duplicate_names(
-        clock       => $clock,
-        reset       => $reset->{signal},
-        events      => \%events,
-        status      => $status,
-        storage     => \%storage,
-        id_families => $id_families,
+        clock        => $clock,
+        reset        => $reset->{signal},
+        events       => \%events,
+        status       => $status,
+        storage      => \%storage,
+        id_families  => $id_families,
+        transactions => $transactions,
     );
 
     my $source = ref($raw->{source}) eq 'HASH' ? $raw->{source} : {};
@@ -163,6 +171,7 @@ sub _normalize_contract($raw) {
         events            => \%events,
         status_outputs    => $status,
         id_families       => $id_families,
+        transactions      => $transactions,
         storage           => \%storage,
         widths            => \%widths,
         intent_name       => $intent_name,
@@ -175,7 +184,7 @@ sub _reject_unsupported_top_level_fields($raw) {
     my %allowed = map { $_ => 1 } qw(
         actor_name clock intent_name name protocol read_complete read_max_pending
         read_submit reset source source_object_id status submit_policy id_families
-        write_complete write_max_pending write_submit
+        transactions write_complete write_max_pending write_submit
     );
 
     for my $field (sort keys %$raw) {
@@ -334,6 +343,126 @@ sub _integer_0_to_32($value, $field) {
     return int($value);
 }
 
+sub _normalize_transactions(%args) {
+    my $raw_transactions = $args{raw_transactions};
+    confess "AXI manager capacity/status IAL2 contract field 'transactions' must be an array reference\n"
+        unless ref($raw_transactions) eq 'ARRAY';
+    confess "AXI manager capacity/status IAL2 contract field 'transactions' requires at least one transaction\n"
+        unless @$raw_transactions;
+
+    my @normalized;
+    my (%seen_names, %seen_tags);
+    for my $index (0 .. $#$raw_transactions) {
+        my $transaction = _normalize_transaction(
+            raw_transaction => $raw_transactions->[$index],
+            index           => $index,
+            events          => $args{events},
+            id_families     => $args{id_families},
+        );
+        confess "AXI manager capacity/status IAL2 contract transactions[$index] duplicates transaction name '$transaction->{name}'\n"
+            if $seen_names{$transaction->{name}}++;
+        confess "AXI manager capacity/status IAL2 contract transactions[$index] duplicates transaction tag '$transaction->{tag}'\n"
+            if $seen_tags{$transaction->{tag}}++;
+        push @normalized, $transaction;
+    }
+
+    return \@normalized;
+}
+
+sub _normalize_transaction(%args) {
+    my $raw = $args{raw_transaction};
+    my $index = $args{index};
+    confess "AXI manager capacity/status IAL2 contract transactions[$index] must be a hash reference\n"
+        unless ref($raw) eq 'HASH';
+
+    my %allowed = map { $_ => 1 } qw(kind name tag request_event completion_event id);
+    for my $field (sort keys %$raw) {
+        confess "AXI manager capacity/status IAL2 contract transactions[$index] unsupported field '$field'\n"
+            unless $allowed{$field};
+    }
+
+    for my $field (qw(kind name tag request_event completion_event id)) {
+        confess "AXI manager capacity/status IAL2 contract transactions[$index] is missing required field '$field'\n"
+            unless exists $raw->{$field};
+    }
+
+    my $kind = lc _nonempty_scalar($raw->{kind}, "transactions[$index].kind");
+    confess "AXI manager capacity/status IAL2 contract transactions[$index].kind must be read or write\n"
+        unless $kind =~ /\A(?:read|write)\z/;
+
+    my $name = _identifier_value($raw->{name}, "transactions[$index].name");
+    my $tag = _identifier_value($raw->{tag}, "transactions[$index].tag");
+    my $request_event = _identifier_value($raw->{request_event}, "transactions[$index].request_event");
+    my $completion_event = _identifier_value($raw->{completion_event}, "transactions[$index].completion_event");
+
+    my $expected_request = $kind eq 'read' ? $args{events}{read_submit} : $args{events}{write_submit};
+    my $expected_completion = $kind eq 'read' ? $args{events}{read_complete} : $args{events}{write_complete};
+    confess "AXI manager capacity/status IAL2 contract transactions[$index] $kind request_event must reference existing direction-level event '$expected_request'\n"
+        unless $request_event eq $expected_request;
+    confess "AXI manager capacity/status IAL2 contract transactions[$index] $kind completion_event must reference existing direction-level event '$expected_completion'\n"
+        unless $completion_event eq $expected_completion;
+
+    return {
+        kind             => $kind,
+        name             => $name,
+        tag              => $tag,
+        request_event    => $request_event,
+        completion_event => $completion_event,
+        id               => _normalize_transaction_id($raw->{id}, $kind, $index, $args{id_families}),
+    };
+}
+
+sub _normalize_transaction_id($raw_id, $kind, $index, $id_families) {
+    confess "AXI manager capacity/status IAL2 contract transactions[$index].id must be a hash reference\n"
+        unless ref($raw_id) eq 'HASH';
+
+    my %allowed = map { $_ => 1 } qw(policy value);
+    for my $field (sort keys %$raw_id) {
+        confess "AXI manager capacity/status IAL2 contract transactions[$index].id unsupported field '$field'\n"
+            unless $allowed{$field};
+    }
+
+    if (exists $raw_id->{policy}) {
+        confess "AXI manager capacity/status IAL2 contract transactions[$index].id policy must be auto\n"
+            unless !ref($raw_id->{policy}) && $raw_id->{policy} eq 'auto';
+        confess "AXI manager capacity/status IAL2 contract transactions[$index].id auto policy must not include value\n"
+            if exists $raw_id->{value};
+        return { policy => 'auto' };
+    }
+
+    confess "AXI manager capacity/status IAL2 contract transactions[$index].id requires policy auto or concrete value\n"
+        unless exists $raw_id->{value};
+
+    my $value = _unsigned_integer($raw_id->{value}, "transactions[$index].id.value");
+    confess "AXI manager capacity/status IAL2 contract transactions[$index] concrete ID requires id_families metadata\n"
+        unless ref($id_families) eq 'HASH';
+
+    my $family = $id_families->{$kind};
+    confess "AXI manager capacity/status IAL2 contract transactions[$index] concrete $kind ID requires a declared $kind ID family\n"
+        unless ref($family) eq 'HASH';
+    confess "AXI manager capacity/status IAL2 contract transactions[$index] concrete $kind ID is not allowed when $kind ID-family width is 0\n"
+        unless $family->{present};
+
+    my $width = $family->{width};
+    my $limit = 2 ** $width;
+    confess "AXI manager capacity/status IAL2 contract transactions[$index] concrete $kind ID value $value does not fit width $width\n"
+        if $value >= $limit;
+
+    return {
+        policy       => 'concrete',
+        value        => $value,
+        family       => $kind,
+        family_width => $width,
+        fits         => 1,
+    };
+}
+
+sub _unsigned_integer($value, $field) {
+    confess "AXI manager capacity/status IAL2 contract field '$field' must be an unsigned integer\n"
+        if ref($value) || !defined($value) || $value !~ /\A(?:0|[1-9][0-9]*)\z/;
+    return int($value);
+}
+
 sub _reject_forbidden_or_duplicate_names(%args) {
     my %seen;
     my @groups = (
@@ -345,6 +474,8 @@ sub _reject_forbidden_or_duplicate_names(%args) {
     );
     push @groups, [id_families => _id_family_signal_names($args{id_families})]
         if defined $args{id_families};
+    push @groups, [transactions => _transaction_names_and_tags($args{transactions})]
+        if defined $args{transactions};
 
     for my $group (@groups) {
         my ($kind, $names) = @$group;
@@ -355,6 +486,17 @@ sub _reject_forbidden_or_duplicate_names(%args) {
                 if $seen{$name}++;
         }
     }
+}
+
+sub _transaction_names_and_tags($transactions) {
+    my @names;
+    return \@names unless ref($transactions) eq 'ARRAY';
+
+    for my $transaction (@$transactions) {
+        push @names, $transaction->{name}, $transaction->{tag};
+    }
+
+    return \@names;
 }
 
 sub _id_family_signal_names($id_families) {
@@ -576,6 +718,9 @@ sub _build_report(%args) {
         (defined $contract->{id_families}
             ? (id_families => _report_id_families($contract))
             : ()),
+        (defined $contract->{transactions}
+            ? (transactions => _report_transactions($contract))
+            : ()),
         abstract_events => _clone_jsonish($contract->{events}),
         submit_policy => $contract->{submit_policy},
         generated_artifacts => {
@@ -640,6 +785,8 @@ sub _build_report(%args) {
             'id_families read/write widths must be integers in 0..32',
             'positive-width ID families require request and response ID signal names; zero-width ID families reject ID signal names',
             'ID-family signal names must be unique and must not collide with clock, reset, submit events, complete events, status outputs, or generated storage names',
+            'if supplied, transactions must declare unique names and tags, read/write kind, direction-level request/completion event bindings, and id policy/value',
+            'concrete transaction ID values require a present matching ID family and must fit its declared width',
         ],
         unsupported_residue => [
             {
@@ -648,7 +795,7 @@ sub _build_report(%args) {
             },
             {
                 id     => 'axi_id_ordering_and_response_matching',
-                detail => 'ID allocation, per-transaction user ID validation, same-ID ordering, different-ID interleaving, BID/RID response matching, and burst/last-beat tracking remain outside this capacity/status shell.',
+                detail => 'ID allocation, dynamic user-ID validation while issuing work, same-ID ordering, different-ID interleaving, BID/RID response matching, and burst/last-beat tracking remain outside this capacity/status shell.',
             },
             {
                 id     => 'profile_aliases_and_full_manager_behavior',
@@ -659,6 +806,35 @@ sub _build_report(%args) {
                 detail => 'VHDL backend and reroute behavior remains deferred until the SystemVerilog-backed IAL path is feature complete.',
             },
         ],
+    };
+}
+
+sub _report_transactions($contract) {
+    my $source_anchors = $contract->{source_anchors};
+    return [
+        map {
+            {
+                name             => $_->{name},
+                kind             => $_->{kind},
+                tag              => $_->{tag},
+                request_event    => $_->{request_event},
+                completion_event => $_->{completion_event},
+                id               => _report_transaction_id($_->{id}),
+                source_anchors   => _clone_jsonish($source_anchors),
+            }
+        } @{$contract->{transactions} || []}
+    ];
+}
+
+sub _report_transaction_id($id) {
+    return { policy => 'auto' } if ($id->{policy} // '') eq 'auto';
+
+    return {
+        policy       => 'concrete',
+        value        => $id->{value},
+        family       => $id->{family},
+        family_width => $id->{family_width},
+        fits         => $id->{fits} ? JSON::PP::true : JSON::PP::false,
     };
 }
 

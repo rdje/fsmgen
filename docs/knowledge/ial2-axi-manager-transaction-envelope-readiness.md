@@ -9,8 +9,8 @@ answers:
 date: 2026-06-12
 status: current
 tags: [ial2, axi, manager, transaction-envelope, readiness, task-tree]
-evidence: docs/AXI_IAL2_MANAGER_TRANSACTION_ENVELOPE_READINESS_AUDIT.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; docs/book/src/14-feature-backlog.md; README.md; ROADMAP_V2.md
-reverify: rg -n 'Readiness Conclusion|Selected Implementation Boundary|transactions|manager-capacity-status|generated `.isf`|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.12' docs/AXI_IAL2_MANAGER_TRANSACTION_ENVELOPE_READINESS_AUDIT.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md docs/book/src/14-feature-backlog.md README.md ROADMAP_V2.md
+evidence: docs/AXI_IAL2_MANAGER_TRANSACTION_ENVELOPE_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_TRANSACTION_ENVELOPE_FIRST_SLICE.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; docs/book/src/14-feature-backlog.md; README.md; ROADMAP_V2.md
+reverify: rg -n 'Readiness Conclusion|Selected Implementation Boundary|transactions|manager-capacity-status|generated `.isf`|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.12' docs/AXI_IAL2_MANAGER_TRANSACTION_ENVELOPE_READINESS_AUDIT.md docs/AXI_IAL2_MANAGER_TRANSACTION_ENVELOPE_FIRST_SLICE.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md docs/book/src/14-feature-backlog.md README.md ROADMAP_V2.md
 ---
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.11` selects the first AXI transaction
@@ -24,3 +24,6 @@ No IAL1, IAL0, or SystemVerilog prerequisite is required for the first slice
 because transaction request/completion bindings are constrained to the
 existing direction-level abstract events and generated `.isf`, generated
 `.fsm`, and HDL behavior remain unchanged.
+
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.12` implemented this boundary as the
+first shipped transaction-envelope metadata slice.

@@ -163,6 +163,47 @@ subtest 'optional ID-family metadata is report-only and statically validated' =>
     ok(!exists $zero_report->{id_families}{write}{response_id_signal}, 'zero-width write family omits response ID signal');
 };
 
+subtest 'optional transaction-envelope metadata is structural and report-only' => sub {
+    my $base = generate_sample();
+    my $with_transactions = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_transactions());
+
+    is(
+        $with_transactions->{generated_ial1}{text},
+        $base->{generated_ial1}{text},
+        'transaction-envelope metadata does not alter generated IAL1 text',
+    );
+    is_deeply(
+        $with_transactions->{generated_ial0}{files},
+        $base->{generated_ial0}{files},
+        'transaction-envelope metadata does not alter generated IAL0 text',
+    );
+
+    my $transactions = $with_transactions->{report}{transactions};
+    is(scalar(@$transactions), 2, 'report publishes two transaction-envelope entries');
+    is($transactions->[0]{kind}, 'write', 'write transaction kind is reported');
+    is($transactions->[0]{name}, 'w0', 'write transaction name is reported');
+    is($transactions->[0]{tag}, 'wr0', 'write transaction tag is reported');
+    is($transactions->[0]{request_event}, 'axi0_write_submit', 'write request event is structural metadata');
+    is($transactions->[0]{completion_event}, 'axi0_write_complete', 'write completion event is structural metadata');
+    is_deeply($transactions->[0]{id}, { policy => 'auto' }, 'write transaction reports auto ID policy');
+
+    is($transactions->[1]{kind}, 'read', 'read transaction kind is reported');
+    is($transactions->[1]{name}, 'r0', 'read transaction name is reported');
+    is($transactions->[1]{tag}, 'rd0', 'read transaction tag is reported');
+    is($transactions->[1]{request_event}, 'axi0_read_submit', 'read request event is structural metadata');
+    is($transactions->[1]{completion_event}, 'axi0_read_complete', 'read completion event is structural metadata');
+    is($transactions->[1]{id}{policy}, 'concrete', 'read transaction reports concrete ID policy');
+    is($transactions->[1]{id}{value}, 3, 'read transaction reports concrete ID value');
+    is($transactions->[1]{id}{family}, 'read', 'read transaction reports matching ID family');
+    is($transactions->[1]{id}{family_width}, 4, 'read transaction reports matching ID family width');
+    ok($transactions->[1]{id}{fits}, 'read transaction reports concrete ID as fitting the family width');
+    is_deeply(
+        $transactions->[1]{source_anchors},
+        sample_contract()->{source}{anchors},
+        'transaction report carries source anchors',
+    );
+};
+
 subtest 'schedule report and HDL expose generated storage and status surface' => sub {
     my $result = generate_sample();
     my $report = $result->{generated_ial1_schedule_report};
@@ -210,6 +251,12 @@ subtest 'malformed contract objects fail closed and no direct lower-to-fsm entry
         ['ID-family positive width missing response signal', sub { my $c = sample_contract_with_id_families(); delete $c->{id_families}{write}{response_id_signal}; $c }, qr/id_families\.write positive width requires field 'response_id_signal'/],
         ['ID-family zero width with signal', sub { my $c = sample_contract_with_id_families(); $c->{id_families}{read}{width} = 0; delete $c->{id_families}{read}{response_id_signal}; $c }, qr/id_families\.read zero width must not include field 'request_id_signal'/],
         ['ID-family signal collision', sub { my $c = sample_contract_with_id_families(); $c->{id_families}{write}{request_id_signal} = 'clk'; $c }, qr/duplicates signal 'clk'/],
+        ['transactions not array', sub { my $c = sample_contract_with_id_families(); $c->{transactions} = {}; $c }, qr/field 'transactions' must be an array reference/],
+        ['duplicate transaction tag', sub { my $c = sample_contract_with_transactions(); $c->{transactions}[1]{tag} = 'wr0'; $c }, qr/duplicates transaction tag 'wr0'/],
+        ['write transaction bound to read event', sub { my $c = sample_contract_with_transactions(); $c->{transactions}[0]{request_event} = 'axi0_read_submit'; $c }, qr/write request_event must reference existing direction-level event 'axi0_write_submit'/],
+        ['concrete transaction ID without family metadata', sub { my $c = sample_contract(); $c->{transactions} = [sample_contract_with_transactions()->{transactions}[1]]; $c }, qr/concrete ID requires id_families metadata/],
+        ['concrete transaction ID too wide', sub { my $c = sample_contract_with_transactions(); $c->{transactions}[1]{id}{value} = 16; $c }, qr/concrete read ID value 16 does not fit width 4/],
+        ['concrete transaction ID with zero-width family', sub { my $c = sample_contract_with_transactions(); $c->{id_families}{read} = { width => 0 }; $c }, qr/concrete read ID is not allowed when read ID-family width is 0/],
         ['bad source anchors', sub { my $c = sample_contract(); $c->{source}{anchors} = {}; $c }, qr/source\.anchors must be an array reference/],
     );
 
@@ -276,6 +323,29 @@ sub sample_contract_with_id_families {
             response_id_signal => 'axi0_rid',
         },
     };
+    return $contract;
+}
+
+sub sample_contract_with_transactions {
+    my $contract = sample_contract_with_id_families();
+    $contract->{transactions} = [
+        {
+            kind             => 'write',
+            name             => 'w0',
+            tag              => 'wr0',
+            request_event    => 'axi0_write_submit',
+            completion_event => 'axi0_write_complete',
+            id               => { policy => 'auto' },
+        },
+        {
+            kind             => 'read',
+            name             => 'r0',
+            tag              => 'rd0',
+            request_event    => 'axi0_read_submit',
+            completion_event => 'axi0_read_complete',
+            id               => { value => 3 },
+        },
+    ];
     return $contract;
 }
 
