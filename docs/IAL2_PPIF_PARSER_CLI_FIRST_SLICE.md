@@ -68,6 +68,12 @@ Run check mode with machine-readable diagnostics:
 ./bin/fsmgen --strict --check --json ppif/axi_aw_valid_ready.ppif
 ```
 
+Emit normalized semantic JSON without writing HDL:
+
+```bash
+./bin/fsmgen --strict --emit-semantic-json ppif/axi_aw_valid_ready.ppif
+```
+
 For the checked-in sample, successful check JSON and normalized semantic JSON
 keep `source.resolved_path` on `ppif/axi_aw_valid_ready.ppif` rather than on
 the temporary generated `.fsm`, and their report-level `support_accounting`
@@ -134,6 +140,7 @@ Focused coverage lives in
 - CLI `--emit-schedule-json` emits the IAL2 report,
 - CLI `--outdir` writes generated `.isf`, generated `.fsm`, and HDL,
 - CLI `--strict --check --json` accepts `.ppif`,
+- CLI `--strict --emit-semantic-json` accepts `.ppif`,
 - successful `.ppif` check JSON and normalized semantic JSON keep public
   source identity and matched
   support accounting,

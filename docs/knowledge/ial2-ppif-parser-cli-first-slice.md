@@ -33,6 +33,12 @@ The first runnable checked-in sample is `ppif/axi_aw_valid_ready.ppif`.
 The capability manifest advertises `.ppif` under
 `language_surface.file_surfaces`, where it is marked as IAL2 and documented as
 lowering through generated `.isf` before generated `.fsm`.
+Run `./bin/fsmgen --emit-schedule-json ppif/axi_aw_valid_ready.ppif` for the
+IAL2 source-anchor/residue report, `./bin/fsmgen --outdir generated
+ppif/axi_aw_valid_ready.ppif` for review artifacts plus HDL,
+`./bin/fsmgen --strict --check --json ppif/axi_aw_valid_ready.ppif` for check
+JSON, and `./bin/fsmgen --strict --emit-semantic-json
+ppif/axi_aw_valid_ready.ppif` for normalized semantic JSON.
 Successful `.ppif` check JSON and normalized semantic JSON keep
 `source.resolved_path` on the resolved `.ppif` input and match the PPIF sample
 support-accounting entry. The normalized semantic payload still describes the
