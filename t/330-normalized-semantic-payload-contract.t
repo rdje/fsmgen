@@ -91,6 +91,10 @@ use FSM::Support::NormalizedSemanticForwardIRContract qw(
     normalized_semantic_forward_ir_lowered_rtl_ir_selector_conflict_target_entry_keys
     normalized_semantic_forward_ir_lowered_rtl_ir_standalone_dt_multi_drive_assertion_keys
     normalized_semantic_forward_ir_lowered_rtl_ir_standalone_dt_multi_drive_target_entry_keys
+    normalized_semantic_forward_ir_structural_rtl_ir_assignment_record_entry_keys
+    normalized_semantic_forward_ir_structural_rtl_ir_assignment_record_lhs_entry_keys
+    normalized_semantic_forward_ir_structural_rtl_ir_assignment_record_provenance_entry_keys
+    normalized_semantic_forward_ir_structural_rtl_ir_assignment_record_rhs_entry_keys
     normalized_semantic_forward_ir_structural_rtl_ir_auxiliary_assignment_entry_value_kinds
     normalized_semantic_forward_ir_structural_rtl_ir_auxiliary_assignment_entry_value_meaning
     normalized_semantic_forward_ir_structural_rtl_ir_contract_source
@@ -222,6 +226,10 @@ use FSM::Support::NormalizedSemanticPayloadContract qw(
     normalized_semantic_payload_forward_ir_lowered_rtl_ir_selector_conflict_target_entry_keys
     normalized_semantic_payload_forward_ir_lowered_rtl_ir_standalone_dt_multi_drive_assertion_keys
     normalized_semantic_payload_forward_ir_lowered_rtl_ir_standalone_dt_multi_drive_target_entry_keys
+    normalized_semantic_payload_forward_ir_structural_rtl_ir_assignment_record_entry_keys
+    normalized_semantic_payload_forward_ir_structural_rtl_ir_assignment_record_lhs_entry_keys
+    normalized_semantic_payload_forward_ir_structural_rtl_ir_assignment_record_provenance_entry_keys
+    normalized_semantic_payload_forward_ir_structural_rtl_ir_assignment_record_rhs_entry_keys
     normalized_semantic_payload_forward_ir_structural_rtl_ir_auxiliary_assignment_entry_value_kinds
     normalized_semantic_payload_forward_ir_structural_rtl_ir_auxiliary_assignment_entry_value_meaning
     normalized_semantic_payload_forward_ir_structural_rtl_ir_declared_link_entry_keys
@@ -499,6 +507,34 @@ subtest 'contract exposes the bounded normalized semantic payload object' => sub
         normalized_semantic_payload_forward_ir_structural_rtl_ir_auxiliary_assignment_entry_value_kinds(),
         'grouped semantic-payload family map publishes structural-rtl-ir auxiliary-assignment entry value kinds',
     );
+    for my $case (
+        [
+            forward_ir_structural_rtl_ir_assignment_record_entry_keys =>
+                normalized_semantic_payload_forward_ir_structural_rtl_ir_assignment_record_entry_keys(),
+            'assignment-record entry',
+        ],
+        [
+            forward_ir_structural_rtl_ir_assignment_record_lhs_entry_keys =>
+                normalized_semantic_payload_forward_ir_structural_rtl_ir_assignment_record_lhs_entry_keys(),
+            'assignment-record lhs',
+        ],
+        [
+            forward_ir_structural_rtl_ir_assignment_record_rhs_entry_keys =>
+                normalized_semantic_payload_forward_ir_structural_rtl_ir_assignment_record_rhs_entry_keys(),
+            'assignment-record rhs',
+        ],
+        [
+            forward_ir_structural_rtl_ir_assignment_record_provenance_entry_keys =>
+                normalized_semantic_payload_forward_ir_structural_rtl_ir_assignment_record_provenance_entry_keys(),
+            'assignment-record provenance',
+        ],
+    ) {
+        is_deeply(
+            $contract->{presence_key_family_map}{$case->[0]},
+            $case->[1],
+            "grouped semantic-payload family map publishes structural-rtl-ir $case->[2] keys",
+        );
+    }
     is_deeply(
         $contract->{presence_key_family_map}{forward_ir_structural_rtl_ir_port_entry_keys},
         normalized_semantic_payload_forward_ir_structural_rtl_ir_port_entry_keys(),

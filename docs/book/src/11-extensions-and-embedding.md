@@ -2183,9 +2183,10 @@ The nested `semantic.forward_ir.structural_rtl_ir` summary inside that branch
 now also has its own bounded nested-object contract:
 [perl/FSM/Support/NormalizedSemanticStructuralRTLIRContract.pm](perl/FSM/Support/NormalizedSemanticStructuralRTLIRContract.pm)
 owns the current structural-RTL shell keys shared by direct and composition
-roots, plus bounded `auxiliary_assignments[]` scalar-string assignment-line
-entries, bounded `ports[]` core entry keys, composition-top port extension
-keys, bounded `nets[]` entry keys, and bounded `declared_links[]` plus
+roots, plus bounded `assignment_records[]` generated-enable entry keys,
+bounded `auxiliary_assignments[]` scalar-string compatibility values, bounded
+`ports[]` core entry keys, composition-top port extension keys, bounded
+`nets[]` entry keys, and bounded `declared_links[]` plus
 `resolved_links[]` entry keys, plus bounded shallow `instances[]` and nested
 `instances[].interface_ports[]` entry keys, plus nested
 `instances[].parameter_overrides[]` core, raw-value-extension, and
@@ -2197,17 +2198,21 @@ internal storage/helper nets projected from the backend internal declaration
 plan plus generated enable wires projected from the already-prepared direct
 backend enable registries and assignment analysis. These entries preserve
 width, signedness, state-model, and declared-type metadata where available.
-`structural_rtl_ir.auxiliary_assignments[]` now includes the already-rendered
-generated enable assignment lines as scalar strings. Direct instances, links,
-parsed assignment records, and direct net source/target connectivity remain
+`structural_rtl_ir.assignment_records[]` now includes machine-readable
+generated enable assignment records with structured `lhs`, `rhs`, rendered
+SystemVerilog text, and provenance. The `rhs` payload carries both rendered
+expression text and the JSON-safe AST shape available from the direct backend.
+`structural_rtl_ir.auxiliary_assignments[]` mirrors those rendered lines as
+scalar strings for compatibility. Direct instances, links, direct net
+source/target connectivity, and HDL rerouting through `StructuralRTLIR` remain
 outside the direct-root structural projection.
 
 That same owner now also publishes a grouped `presence_key_family_map` so
 embedders can discover the bounded structural-RTL shell summary and
 collection key families, including auxiliary-assignment scalar-string value
-kinds, structural port, net, link, instance shallow, nested instance
-interface-port, nested instance parameter-override, and nested instance
-port-binding key families,
+kinds, assignment-record structural key families, structural port, net, link,
+instance shallow, nested instance interface-port, nested instance
+parameter-override, and nested instance port-binding key families,
 from one place instead of collecting the individual key-family lists separately.
 
 The nested `semantic.forward_ir.intent_hir` summary inside that branch now

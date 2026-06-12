@@ -859,8 +859,8 @@ Current layer meaning:
   direct-root generated modules and composition tops, from either
   generated-module analysis or an already-built composition plan; direct roots
   now include declaration-only storage/helper nets, generated enable wires, and
-  generated enable assignment-line auxiliary assignments in that structural
-  summary
+  generated enable assignment records plus scalar compatibility
+  auxiliary-assignment lines in that structural summary
 - `ConnectionExpr`: typed actual-connection AST and binding-summary/query helpers
 
 IR audit checkpoint:
@@ -899,8 +899,8 @@ IR audit checkpoint:
 - `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.2` selected that guard: focused
   regression coverage for direct `structural_rtl_ir` identity/source/target
   and port projection parity, before later R11 slices widened direct nets and
-  generated enable assignment-line auxiliary assignments without rerouting
-  direct HDL emission.
+  generated enable assignment records plus scalar compatibility
+  auxiliary-assignment lines without rerouting direct HDL emission.
 - `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.3` added the guard in
   [t/1333-direct-structural-rtl-ir-projection.t](../t/1333-direct-structural-rtl-ir-projection.t).
   Direct HDL emission still goes through `GeneratedModuleEmitter ->
@@ -1170,8 +1170,8 @@ It behaves like a hook system, not a competing architecture.
 - `StructuralRTLIRBuilder` now also owns the direct-root structural summary
   rather than leaving module-boundary, implicit-system-port, declaration-only
   storage/helper net, generated enable-wire structural, and generated
-  enable-assignment-line auxiliary
-  assembly inline in `HDLGenerator`.
+  enable-assignment-record and scalar auxiliary-assignment mirror assembly
+  inline in `HDLGenerator`.
 - `GeneratedModuleEmitter` now also owns the bounded direct generated-module
   backend family rather than leaving backend-method selection, direct HDL
   emission, backend statistics, and standalone-DT assertion postprocessing
@@ -1349,6 +1349,7 @@ It already carries:
 - instances
 - declared links
 - resolved links
+- assignment records
 - auxiliary assignments
 - typed connection expressions
 - query helpers over top ports and child endpoints

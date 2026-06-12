@@ -135,6 +135,99 @@ FSM
         ],
         'direct structural_rtl_ir projects generated enable assignment lines as scalar auxiliary assignments',
     );
+    is($structural->{assignment_record_count}, 5, 'direct structural_rtl_ir counts generated enable assignment records');
+    is_deeply(
+        [map { $_->{rendered} } @{$structural->{assignment_records} || []}],
+        $structural->{auxiliary_assignments},
+        'direct assignment records render the scalar auxiliary-assignment compatibility mirror',
+    );
+    is_deeply(
+        record_by_lhs($structural, 'idle_en'),
+        {
+            kind => 'continuous_assign',
+            lhs => {
+                kind => 'signal_ref',
+                name => 'idle_en',
+            },
+            rhs => {
+                kind => 'expression',
+                language => 'systemverilog',
+                text => 'current_state == IDLE',
+                ast => {
+                    kind => 'binary_op',
+                    class => 'FSM::AST::BinaryOp',
+                    operator => '==',
+                    left => {
+                        kind => 'signal_ref',
+                        class => 'FSM::AST::SignalRef',
+                        name => 'current_state',
+                    },
+                    right => {
+                        kind => 'literal',
+                        class => 'FSM::AST::Literal',
+                        value => 'IDLE',
+                    },
+                },
+            },
+            rendered => '  assign idle_en = current_state == IDLE;',
+            provenance => {
+                family => 'generated_enable',
+                role => 'top_state_enable',
+                state_name => 'idle',
+            },
+        },
+        'direct assignment records expose the state enable as structured AST/provenance data',
+    );
+    is_deeply(
+        record_by_lhs($structural, 'idle_data_out_payload_en'),
+        {
+            kind => 'continuous_assign',
+            lhs => {
+                kind => 'signal_ref',
+                name => 'idle_data_out_payload_en',
+            },
+            rhs => {
+                kind => 'expression',
+                language => 'systemverilog',
+                text => 'idle_en & request',
+                ast => {
+                    kind => 'binary_op',
+                    class => 'FSM::AST::BinaryOp',
+                    operator => '&&',
+                    left => {
+                        kind => 'signal_ref',
+                        class => 'FSM::AST::SignalRef',
+                        name => 'idle_en',
+                    },
+                    right => {
+                        kind => 'binary_op',
+                        class => 'FSM::AST::BinaryOp',
+                        operator => '!=',
+                        left => {
+                            kind => 'signal_ref',
+                            class => 'FSM::AST::SignalRef',
+                            name => 'request',
+                        },
+                        right => {
+                            kind => 'literal',
+                            class => 'FSM::AST::Literal',
+                            value => '0',
+                        },
+                    },
+                },
+            },
+            rendered => '  assign idle_data_out_payload_en = idle_en & request;  // data_out <- payload',
+            provenance => {
+                family => 'generated_enable',
+                role => 'dt_specific_enable',
+                dt_name => 'idle',
+                lhs_signal => 'data_out',
+                rhs_value => 'payload',
+                dte_gate_signal => 'idle_en',
+            },
+        },
+        'direct assignment records expose DT-specific enables without parsing HDL strings',
+    );
     is_deeply($structural->{instances}, [], 'direct structural_rtl_ir does not claim direct instances yet');
     is_deeply($structural->{declared_links}, [], 'direct structural_rtl_ir does not claim direct declared links yet');
     is_deeply($structural->{resolved_links}, [], 'direct structural_rtl_ir does not claim direct resolved links yet');
@@ -290,6 +383,12 @@ FSM
         'direct structural_rtl_ir projects typed fixture generated enable assignments',
     );
     is($structural->{auxiliary_assignment_count}, 8, 'direct structural_rtl_ir counts typed fixture enable assignment lines');
+    is($structural->{assignment_record_count}, 8, 'direct structural_rtl_ir counts typed fixture enable assignment records');
+    is_deeply(
+        [map { $_->{rendered} } @{$structural->{assignment_records} || []}],
+        $structural->{auxiliary_assignments},
+        'typed fixture assignment records render the scalar assignment compatibility mirror',
+    );
     is_deeply($structural->{instances}, [], 'direct structural_rtl_ir still does not claim direct instances');
     is_deeply($structural->{declared_links}, [], 'direct structural_rtl_ir still does not claim direct declared links');
     is_deeply($structural->{resolved_links}, [], 'direct structural_rtl_ir still does not claim direct resolved links');
@@ -412,9 +511,71 @@ FSM
         'direct structural_rtl_ir projects state, standalone-DT, DT-specific, and LHS-level enable assignments',
     );
     is($structural->{auxiliary_assignment_count}, 6, 'direct structural_rtl_ir counts the DT enable assignment lines');
+    is($structural->{assignment_record_count}, 6, 'direct structural_rtl_ir counts the DT enable assignment records');
+    is_deeply(
+        record_by_lhs($structural, 'watch_en'),
+        {
+            kind => 'continuous_assign',
+            lhs => {
+                kind => 'signal_ref',
+                name => 'watch_en',
+            },
+            rhs => {
+                kind => 'expression',
+                language => 'systemverilog',
+                text => 'A',
+                ast => {
+                    kind => 'binary_op',
+                    class => 'FSM::CoreAST::BinaryOp',
+                    operator => '!=',
+                    left => {
+                        kind => 'signal_ref',
+                        class => 'FSM::CoreAST::SignalRef',
+                        name => 'A',
+                    },
+                    right => {
+                        kind => 'literal',
+                        class => 'FSM::CoreAST::Literal',
+                        value => '0',
+                        radix => 'decimal',
+                    },
+                },
+            },
+            rendered => '  assign watch_en = A;',
+            provenance => {
+                family => 'generated_enable',
+                role => 'standalone_dt_enable',
+                dt_name => '-watch',
+                clean_dt_name => 'watch',
+            },
+        },
+        'direct assignment records expose standalone-DT enables as structured records',
+    );
+    is_deeply(
+        record_by_lhs($structural, 'watch_watch_1_en')->{provenance},
+        {
+            family => 'generated_enable',
+            role => 'dt_specific_enable',
+            dt_name => '-watch',
+            lhs_signal => 'WATCH',
+            rhs_value => '1',
+            dte_gate_signal => 'watch_en',
+        },
+        'direct assignment records preserve standalone-DT specific enable provenance',
+    );
 };
 
 done_testing();
+
+sub record_by_lhs {
+    my ($structural, $lhs) = @_;
+    my ($record) = grep {
+        ref($_) eq 'HASH'
+            && ref($_->{lhs}) eq 'HASH'
+            && (($_->{lhs}{name} // '') eq $lhs)
+    } @{$structural->{assignment_records} || []};
+    return $record;
+}
 
 sub expected_ports_from_module_info {
     my ($module_info) = @_;

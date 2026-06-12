@@ -671,8 +671,11 @@ available.
 
 Composition top-output helper assignments surface separately under
 `semantic.forward_ir.structural_rtl_ir.auxiliary_assignments[]`. Those entries
-are scalar strings containing the generated SystemVerilog assignment line, not
-parsed `lhs`/`rhs` records.
+remain scalar strings containing the generated SystemVerilog assignment line.
+Direct generated-enable roots now also expose machine-readable
+`semantic.forward_ir.structural_rtl_ir.assignment_records[]` entries, but that
+direct assignment-record surface is separate from the composition helper-line
+mirror.
 
 VHDL generic-map lowering is still a future backend follow-up tracked in
 [Feature Backlog](14-feature-backlog.md).

@@ -8,6 +8,10 @@ use JSON::PP ();
 
 our @EXPORT_OK = qw(
     build_normalized_semantic_structural_rtl_ir_contract
+    normalized_semantic_structural_rtl_ir_assignment_record_entry_keys
+    normalized_semantic_structural_rtl_ir_assignment_record_lhs_entry_keys
+    normalized_semantic_structural_rtl_ir_assignment_record_provenance_entry_keys
+    normalized_semantic_structural_rtl_ir_assignment_record_rhs_entry_keys
     normalized_semantic_structural_rtl_ir_auxiliary_assignment_entry_value_kinds
     normalized_semantic_structural_rtl_ir_auxiliary_assignment_entry_value_meaning
     normalized_semantic_structural_rtl_ir_collection_presence_keys
@@ -57,6 +61,14 @@ sub build_normalized_semantic_structural_rtl_ir_contract {
             normalized_semantic_structural_rtl_ir_auxiliary_assignment_entry_value_kinds(),
         auxiliary_assignment_entry_value_meaning =>
             normalized_semantic_structural_rtl_ir_auxiliary_assignment_entry_value_meaning(),
+        assignment_record_entry_keys =>
+            normalized_semantic_structural_rtl_ir_assignment_record_entry_keys(),
+        assignment_record_lhs_entry_keys =>
+            normalized_semantic_structural_rtl_ir_assignment_record_lhs_entry_keys(),
+        assignment_record_rhs_entry_keys =>
+            normalized_semantic_structural_rtl_ir_assignment_record_rhs_entry_keys(),
+        assignment_record_provenance_entry_keys =>
+            normalized_semantic_structural_rtl_ir_assignment_record_provenance_entry_keys(),
         port_entry_keys => normalized_semantic_structural_rtl_ir_port_entry_keys(),
         port_composition_extension_keys =>
             normalized_semantic_structural_rtl_ir_port_composition_extension_keys(),
@@ -94,7 +106,8 @@ sub build_normalized_semantic_structural_rtl_ir_contract {
             'The instance parameter-override value-metadata extension key family describes optional resolved type, packed-width, and matched declaration-default metadata on parameter overrides where the value resolver and child/interface declaration validation provide it.',
             'The instance port-binding entry key family describes the current nested `instances[].port_bindings[]` core entry schema emitted by composition tops.',
             'The instance port-binding typed-extension key family describes optional `connection_type_spec` metadata on typed structural instance bindings.',
-            'The auxiliary-assignment entry value-kind family describes the current `auxiliary_assignments[]` scalar string entries emitted by composition tops and by direct roots for already-rendered generated enable assignment lines, without parsing assignment text into unstable lhs/rhs records.',
+            'The assignment-record key families describe the preferred machine-readable `assignment_records[]` entries emitted by direct roots for generated enable assignments, including structured lhs, rhs AST/text, rendered SystemVerilog, and provenance metadata.',
+            'The auxiliary-assignment entry value-kind family describes the compatibility `auxiliary_assignments[]` scalar string mirror emitted by composition tops and direct roots; direct downstream consumers should prefer `assignment_records[]` when present.',
             'Use the grouped presence_key_family_map to discover the bounded structural-RTL shell summary and collection key families without collecting those key-family lists separately.',
         ],
     };
@@ -107,6 +120,8 @@ sub normalized_semantic_structural_rtl_ir_contract_source {
 sub normalized_semantic_structural_rtl_ir_presence_keys {
     return [
         qw(
+            assignment_record_count
+            assignment_records
             auxiliary_assignment_count
             auxiliary_assignments
             declared_link_count
@@ -129,6 +144,7 @@ sub normalized_semantic_structural_rtl_ir_presence_keys {
 sub normalized_semantic_structural_rtl_ir_summary_presence_keys {
     return [
         qw(
+            assignment_record_count
             auxiliary_assignment_count
             declared_link_count
             instance_count
@@ -145,6 +161,7 @@ sub normalized_semantic_structural_rtl_ir_summary_presence_keys {
 sub normalized_semantic_structural_rtl_ir_collection_presence_keys {
     return [
         qw(
+            assignment_records
             auxiliary_assignments
             declared_links
             instances
@@ -160,7 +177,23 @@ sub normalized_semantic_structural_rtl_ir_auxiliary_assignment_entry_value_kinds
 }
 
 sub normalized_semantic_structural_rtl_ir_auxiliary_assignment_entry_value_meaning {
-    return 'generated SystemVerilog continuous assignment line text';
+    return 'compatibility SystemVerilog continuous assignment line text; prefer assignment_records[] when present';
+}
+
+sub normalized_semantic_structural_rtl_ir_assignment_record_entry_keys {
+    return [qw(kind lhs provenance rendered rhs)];
+}
+
+sub normalized_semantic_structural_rtl_ir_assignment_record_lhs_entry_keys {
+    return [qw(kind name)];
+}
+
+sub normalized_semantic_structural_rtl_ir_assignment_record_rhs_entry_keys {
+    return [qw(ast kind language text)];
+}
+
+sub normalized_semantic_structural_rtl_ir_assignment_record_provenance_entry_keys {
+    return [qw(clean_dt_name dt_name dte_gate_signal family lhs_signal rhs_value role state_name)];
 }
 
 sub normalized_semantic_structural_rtl_ir_port_entry_keys {
@@ -258,6 +291,14 @@ sub normalized_semantic_structural_rtl_ir_presence_key_family_map {
         collection_presence_keys => normalized_semantic_structural_rtl_ir_collection_presence_keys(),
         auxiliary_assignment_entry_value_kinds =>
             normalized_semantic_structural_rtl_ir_auxiliary_assignment_entry_value_kinds(),
+        assignment_record_entry_keys =>
+            normalized_semantic_structural_rtl_ir_assignment_record_entry_keys(),
+        assignment_record_lhs_entry_keys =>
+            normalized_semantic_structural_rtl_ir_assignment_record_lhs_entry_keys(),
+        assignment_record_rhs_entry_keys =>
+            normalized_semantic_structural_rtl_ir_assignment_record_rhs_entry_keys(),
+        assignment_record_provenance_entry_keys =>
+            normalized_semantic_structural_rtl_ir_assignment_record_provenance_entry_keys(),
         port_entry_keys => normalized_semantic_structural_rtl_ir_port_entry_keys(),
         port_composition_extension_keys =>
             normalized_semantic_structural_rtl_ir_port_composition_extension_keys(),

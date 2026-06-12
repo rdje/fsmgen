@@ -299,6 +299,8 @@ FSM
     );
     is($structural_rtl_ir->{auxiliary_assignment_count}, 0, 'structural_rtl_ir reports auxiliary assignment count');
     is_deeply($structural_rtl_ir->{auxiliary_assignments}, [], 'structural_rtl_ir preserves explicit empty auxiliary assignments');
+    is($structural_rtl_ir->{assignment_record_count}, 0, 'structural_rtl_ir reports assignment record count');
+    is_deeply($structural_rtl_ir->{assignment_records}, [], 'structural_rtl_ir preserves explicit empty assignment records');
     is(
         $module_info->{composition_child_count},
         $structural_rtl_ir->{instance_count},

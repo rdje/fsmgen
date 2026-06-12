@@ -4517,8 +4517,9 @@ existing bounded contracts. The
 nested `instances[].interface_ports[]` plus `instances[].port_bindings[]`
 core and typed-extension entry keys. It now also advertises
 `instances[].parameter_overrides[]` core, raw-value-extension, and
-value-metadata-extension entry keys, and advertises `auxiliary_assignments[]`
-as scalar string assignment-line entries. The `semantic.composition` contract
+value-metadata-extension entry keys, advertises `assignment_records[]`
+generated-enable structural entries, and advertises `auxiliary_assignments[]`
+as scalar-string compatibility entries. The `semantic.composition` contract
 now also advertises `children[].parameter_overrides[]` and
 `generated_children[].parameter_overrides[]` as aliases of those same
 structural instance parameter-override core, raw-value-extension, and
@@ -4608,7 +4609,13 @@ implementation leaf
 `R11-DIRECT-STRUCTURAL-AUX-ASSIGNMENTS.2`
 projects already-rendered direct generated enable assignment lines into
 `structural_rtl_ir.auxiliary_assignments[]` as scalar strings without claiming
-parsed assignment records, direct net connectivity, instances, links, or
+assignment records, direct net connectivity, instances, links, or rerouting
+HDL emission. Completed
+implementation leaf
+`R11-DIRECT-STRUCTURAL-ASSIGNMENT-RECORDS.2`
+projects those generated enable assignments into
+`structural_rtl_ir.assignment_records[]` as machine-readable records while
+retaining `auxiliary_assignments[]` as the compatibility mirror and without
 rerouting HDL emission. Completed
 implementation leaf
 `BACKEND-API-VALIDATION-FRONTIER.131.1` lowers an 8-bit non-signed

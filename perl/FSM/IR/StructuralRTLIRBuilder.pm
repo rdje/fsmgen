@@ -96,6 +96,10 @@ sub build_from_generated_module_info ($class, %args) {
         $seen_ports{$system_contract->{reset}} = 1;
     }
 
+    my $assignment_records = _direct_structural_assignment_records(
+        hdl_generator => $hdl_generator,
+    );
+
     return FSM::IR::StructuralRTLIR->new(
         module_name => ($module_info->{module_name} // ''),
         source_root_kind => (
@@ -109,7 +113,9 @@ sub build_from_generated_module_info ($class, %args) {
             hdl_generator => $hdl_generator,
         ),
         instances => [],
+        assignment_records => $assignment_records,
         auxiliary_assignments => _direct_structural_auxiliary_assignments(
+            assignment_records => $assignment_records,
             hdl_generator => $hdl_generator,
         ),
     );
@@ -224,6 +230,7 @@ sub build_from_composition_plan ($class, $composition_plan, $target_language = '
                 }
             } @{$composition_plan->resolved_links || []}
         ],
+        assignment_records => [],
         auxiliary_assignments => [@{$composition_plan->auxiliary_assignments || []}],
     );
 }
@@ -245,6 +252,7 @@ sub coerce ($class, $structural_rtl_ir, $default_target_language = 'systemverilo
         instances => ($structural_rtl_ir_hash->{instances} || []),
         declared_links => ($structural_rtl_ir_hash->{declared_links} || []),
         resolved_links => ($structural_rtl_ir_hash->{resolved_links} || []),
+        assignment_records => ($structural_rtl_ir_hash->{assignment_records} || []),
         auxiliary_assignments => ($structural_rtl_ir_hash->{auxiliary_assignments} || []),
     );
 }
@@ -366,6 +374,15 @@ sub _direct_assignment_enable_nets (%args) {
 }
 
 sub _direct_structural_auxiliary_assignments (%args) {
+    my $assignment_records = $args{assignment_records};
+    if (ref($assignment_records) eq 'ARRAY') {
+        return [
+            map { $_->{rendered} }
+            grep { ref($_) eq 'HASH' && defined($_->{rendered}) && length($_->{rendered}) }
+            @$assignment_records
+        ];
+    }
+
     my $hdl_generator = $args{hdl_generator};
     return [] unless ref($hdl_generator);
 
@@ -423,6 +440,287 @@ sub _direct_assignment_lines_from_blocks (@blocks) {
     }
 
     return \@assignments;
+}
+
+sub _direct_structural_assignment_records (%args) {
+    my $hdl_generator = $args{hdl_generator};
+    return [] unless ref($hdl_generator);
+
+    my $ast_support = $hdl_generator->{enable_graph_ast_support};
+    my $enable_support = $hdl_generator->{enable_graph_enable_support};
+    my @records;
+
+    for my $state_name (sort keys %{$hdl_generator->{state_enables} || {}}) {
+        push @records, _direct_assignment_record(
+            lhs => "${state_name}_en",
+            rhs_ast => $hdl_generator->{state_enables}{$state_name},
+            ast_support => $ast_support,
+            provenance => {
+                family => 'generated_enable',
+                role => 'top_state_enable',
+                state_name => $state_name,
+            },
+        );
+    }
+
+    for my $dt_name (sort keys %{$hdl_generator->{dt_enables} || {}}) {
+        my $clean_name = $dt_name;
+        $clean_name =~ s/^-//;
+        push @records, _direct_assignment_record(
+            lhs => "${clean_name}_en",
+            rhs_ast => $hdl_generator->{dt_enables}{$dt_name},
+            ast_support => $ast_support,
+            provenance => {
+                family => 'generated_enable',
+                role => 'standalone_dt_enable',
+                dt_name => $dt_name,
+                clean_dt_name => $clean_name,
+            },
+        );
+    }
+
+    my $assignment_analysis = $hdl_generator->{assignment_analysis};
+    return [grep { defined $_ } @records]
+        unless ref($assignment_analysis) eq 'HASH';
+
+    if (ref($enable_support) && $enable_support->can('build_boundary_gated_dt_enable_ast')) {
+        my %dt_to_lhs_enables;
+        for my $lhs (sort keys %$assignment_analysis) {
+            my $lhs_analysis = $assignment_analysis->{$lhs};
+            next unless ref($lhs_analysis) eq 'HASH';
+
+            for my $rhs (sort keys %{$lhs_analysis->{rhs_groups} || {}}) {
+                my $rhs_group = $lhs_analysis->{rhs_groups}{$rhs};
+                next unless ref($rhs_group) eq 'HASH';
+
+                for my $dt_enable_info (@{$rhs_group->{dt_specific_enables} || []}) {
+                    next unless ref($dt_enable_info) eq 'HASH';
+                    my $dt_name = $dt_enable_info->{dt};
+                    next unless defined($dt_name) && length($dt_name);
+
+                    push @{$dt_to_lhs_enables{$dt_name}{$lhs}}, {
+                        %$dt_enable_info,
+                        rhs => $rhs,
+                    };
+                }
+            }
+        }
+
+        for my $dt_name (sort keys %dt_to_lhs_enables) {
+            for my $lhs (sort keys %{$dt_to_lhs_enables{$dt_name}}) {
+                for my $enable_info (@{$dt_to_lhs_enables{$dt_name}{$lhs}}) {
+                    my $rhs = $enable_info->{rhs};
+                    my $rhs_ast = $enable_support->build_boundary_gated_dt_enable_ast($enable_info);
+                    push @records, _direct_assignment_record(
+                        lhs => $enable_info->{enable_name},
+                        rhs_ast => $rhs_ast,
+                        ast_support => $ast_support,
+                        comment => "$lhs <- $rhs",
+                        provenance => {
+                            family => 'generated_enable',
+                            role => 'dt_specific_enable',
+                            dt_name => $dt_name,
+                            lhs_signal => $lhs,
+                            rhs_value => $rhs,
+                            dte_gate_signal => $enable_info->{dte_gate_signal},
+                        },
+                    );
+                }
+            }
+        }
+    }
+
+    for my $lhs (sort keys %$assignment_analysis) {
+        my $lhs_analysis = $assignment_analysis->{$lhs};
+        next unless ref($lhs_analysis) eq 'HASH';
+
+        for my $rhs (sort keys %{$lhs_analysis->{rhs_groups} || {}}) {
+            my $rhs_group = $lhs_analysis->{rhs_groups}{$rhs};
+            next unless ref($rhs_group) eq 'HASH';
+
+            my $lhs_enable = $rhs_group->{lhs_level_enable};
+            next unless ref($lhs_enable) eq 'HASH' && defined($lhs_enable->{name});
+
+            push @records, _direct_assignment_record(
+                lhs => $lhs_enable->{name},
+                rhs_ast => $lhs_enable->{ast},
+                ast_support => $ast_support,
+                provenance => {
+                    family => 'generated_enable',
+                    role => 'lhs_level_enable',
+                    lhs_signal => $lhs,
+                    rhs_value => $rhs,
+                },
+            );
+        }
+    }
+
+    return [grep { defined $_ } @records];
+}
+
+sub _direct_assignment_record (%args) {
+    my $lhs = $args{lhs};
+    return undef unless defined($lhs) && length($lhs);
+
+    my $rhs_text = _direct_ast_to_systemverilog(
+        ast => $args{rhs_ast},
+        ast_support => $args{ast_support},
+    );
+    my $rendered = "  assign $lhs = $rhs_text;";
+    $rendered .= "  // $args{comment}"
+        if defined($args{comment}) && length($args{comment});
+
+    return {
+        kind => 'continuous_assign',
+        lhs => {
+            kind => 'signal_ref',
+            name => $lhs,
+        },
+        rhs => {
+            kind => 'expression',
+            language => 'systemverilog',
+            text => $rhs_text,
+            ast => _direct_ast_record($args{rhs_ast}),
+        },
+        rendered => $rendered,
+        provenance => _clone($args{provenance} || {}),
+    };
+}
+
+sub _direct_ast_to_systemverilog (%args) {
+    my $ast = $args{ast};
+    return "1'b1" unless defined($ast);
+    return $ast unless ref($ast);
+
+    my $ast_support = $args{ast_support};
+    if (blessed($ast) && ref($ast_support) && $ast_support->can('ast_to_systemverilog')) {
+        return $ast_support->ast_to_systemverilog($ast);
+    }
+
+    return $ast->to_systemverilog
+        if blessed($ast) && $ast->can('to_systemverilog');
+
+    return "$ast";
+}
+
+sub _direct_ast_record ($ast) {
+    return {
+        kind => 'scalar_expression',
+        value => $ast,
+    } unless ref($ast);
+
+    return {
+        kind => 'null_expression',
+    } unless blessed($ast);
+
+    my $class = ref($ast);
+
+    if ($ast->can('operator') && $ast->can('left') && $ast->can('right')) {
+        return {
+            kind => 'binary_op',
+            class => $class,
+            operator => $ast->operator,
+            left => _direct_ast_record($ast->left),
+            right => _direct_ast_record($ast->right),
+        };
+    }
+
+    if ($ast->can('operator') && $ast->can('operand')) {
+        return {
+            kind => 'unary_op',
+            class => $class,
+            operator => $ast->operator,
+            operand => _direct_ast_record($ast->operand),
+        };
+    }
+
+    if ($ast->isa('FSM::CoreAST::AggregateRef')) {
+        my $signal = $ast->signal;
+        return {
+            kind => 'aggregate_ref',
+            class => $class,
+            signal => _direct_signal_name($signal),
+            path => _direct_json_clone($ast->path),
+            width => $ast->can('width') ? $ast->width : undef,
+            type_spec => $ast->can('type_spec') ? _direct_json_clone($ast->type_spec) : undef,
+        };
+    }
+
+    if ($ast->isa('FSM::CoreAST::ParameterRef')) {
+        return {
+            kind => 'parameter_ref',
+            class => $class,
+            name => $ast->name,
+            width => $ast->can('width') ? $ast->width : undef,
+            type_spec => $ast->can('type_spec') ? _direct_json_clone($ast->type_spec) : undef,
+            default_value_text => $ast->can('default_value_text') ? $ast->default_value_text : undef,
+            value_info => $ast->can('value_info') ? _direct_json_clone($ast->value_info) : undef,
+        };
+    }
+
+    if ($ast->isa('FSM::AST::SignalRef') || $ast->isa('FSM::CoreAST::SignalRef') || $ast->can('signal_name')) {
+        my $entry = {
+            kind => 'signal_ref',
+            class => $class,
+            name => _direct_ast_signal_name($ast),
+        };
+        $entry->{slice} = _direct_json_clone($ast->slice)
+            if $ast->can('slice') && defined($ast->slice);
+        return $entry;
+    }
+
+    if ($ast->isa('FSM::AST::Literal') || $ast->isa('FSM::CoreAST::Literal') || $ast->isa('FSM::AST::LogicalConstant')) {
+        my $entry = {
+            kind => $ast->isa('FSM::AST::LogicalConstant') ? 'logical_constant' : 'literal',
+            class => $class,
+            value => _direct_json_scalar($ast->value),
+        };
+        $entry->{width} = $ast->width if $ast->can('width') && defined($ast->width);
+        $entry->{radix} = $ast->radix if $ast->can('radix') && defined($ast->radix);
+        return $entry;
+    }
+
+    return {
+        kind => 'opaque_ast',
+        class => $class,
+        text => eval { $ast->to_systemverilog } || undef,
+    };
+}
+
+sub _direct_ast_signal_name ($ast) {
+    return undef unless blessed($ast);
+    return $ast->signal_name if $ast->can('signal_name') && defined($ast->signal_name);
+    return $ast->name if $ast->can('name') && defined($ast->name);
+    return _direct_signal_name($ast->signal)
+        if $ast->can('signal') && blessed($ast->signal);
+    return eval { $ast->to_systemverilog };
+}
+
+sub _direct_signal_name ($signal) {
+    return undef unless defined($signal);
+    return $signal->name if blessed($signal) && $signal->can('name');
+    return "$signal";
+}
+
+sub _direct_json_clone ($value) {
+    return undef unless defined $value;
+    return _direct_json_scalar($value) if blessed($value);
+
+    if (ref($value) eq 'HASH') {
+        return { map { $_ => _direct_json_clone($value->{$_}) } sort keys %$value };
+    }
+
+    if (ref($value) eq 'ARRAY') {
+        return [ map { _direct_json_clone($_) } @$value ];
+    }
+
+    return $value;
+}
+
+sub _direct_json_scalar ($value) {
+    return undef unless defined $value;
+    return "$value" if blessed($value);
+    return $value;
 }
 
 sub _direct_one_bit_enable_net ($name) {

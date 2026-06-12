@@ -118,6 +118,40 @@ FSM
         ],
         'structural_rtl_ir preserves direct generated enable assignment lines',
     );
+    is($structural_rtl_ir->{assignment_record_count}, 3, 'bounded direct structural_rtl_ir reports direct enable assignment records');
+    is_deeply(
+        [map { $_->{rendered} } @{$structural_rtl_ir->{assignment_records} || []}],
+        $structural_rtl_ir->{auxiliary_assignments},
+        'direct assignment records render the scalar assignment compatibility mirror',
+    );
+    is_deeply(
+        $structural_rtl_ir->{assignment_records}[2],
+        {
+            kind => 'continuous_assign',
+            lhs => {
+                kind => 'signal_ref',
+                name => 'out_in_en',
+            },
+            rhs => {
+                kind => 'expression',
+                language => 'systemverilog',
+                text => 'IDLE_out_in_en',
+                ast => {
+                    kind => 'signal_ref',
+                    class => 'FSM::AST::SignalRef',
+                    name => 'IDLE_out_in_en',
+                },
+            },
+            rendered => '  assign out_in_en = IDLE_out_in_en;',
+            provenance => {
+                family => 'generated_enable',
+                role => 'lhs_level_enable',
+                lhs_signal => 'OUT',
+                rhs_value => 'IN',
+            },
+        },
+        'structural_rtl_ir exposes LHS-level direct enable assignment records as structured data',
+    );
     is($structural_rtl_ir->{instance_count}, 0, 'bounded direct structural_rtl_ir keeps instance count empty at this slice');
     is($structural_rtl_ir->{auxiliary_assignment_count}, 3, 'bounded direct structural_rtl_ir reports direct enable assignment lines');
 };

@@ -52,6 +52,22 @@ subtest 'StructuralRTLIR constructor and collection accessors return caller-owne
             origin_kind => 'wiring',
         },
     ];
+    my $assignment_records = [
+        {
+            kind => 'continuous_assign',
+            lhs => {
+                kind => 'signal_ref',
+                name => 'status',
+            },
+            rhs => {
+                kind => 'expression',
+                ast => {
+                    kind => 'signal_ref',
+                    name => 'child_a_status',
+                },
+            },
+        },
+    ];
     my $auxiliary_assignments = [
         {
             lhs => 'status',
@@ -71,6 +87,7 @@ subtest 'StructuralRTLIR constructor and collection accessors return caller-owne
         instances => $instances,
         declared_links => $declared_links,
         resolved_links => $resolved_links,
+        assignment_records => $assignment_records,
         auxiliary_assignments => $auxiliary_assignments,
     );
 
@@ -79,6 +96,7 @@ subtest 'StructuralRTLIR constructor and collection accessors return caller-owne
     $instances->[0]{interface_ports}[0]{name} = 'mutated_after_constructor';
     $declared_links->[0]{source} = 'mutated_after_constructor';
     $resolved_links->[0]{origin_kind} = 'mutated_after_constructor';
+    $assignment_records->[0]{rhs}{ast}{name} = 'mutated_after_constructor';
     $auxiliary_assignments->[0]{rhs}{signal} = 'mutated_after_constructor';
 
     my $first_ports = $structural_rtl_ir->ports;
@@ -86,6 +104,7 @@ subtest 'StructuralRTLIR constructor and collection accessors return caller-owne
     my $first_instances = $structural_rtl_ir->instances;
     my $first_declared_links = $structural_rtl_ir->declared_links;
     my $first_resolved_links = $structural_rtl_ir->resolved_links;
+    my $first_assignment_records = $structural_rtl_ir->assignment_records;
     my $first_auxiliary_assignments = $structural_rtl_ir->auxiliary_assignments;
 
     $first_ports->[0]{declared_type_spec}{kind} = 'mutated_after_accessor';
@@ -93,6 +112,7 @@ subtest 'StructuralRTLIR constructor and collection accessors return caller-owne
     $first_instances->[0]{interface_ports}[0]{direction} = 'mutated_after_accessor';
     $first_declared_links->[0]{target} = 'mutated_after_accessor';
     $first_resolved_links->[0]{source} = 'mutated_after_accessor';
+    $first_assignment_records->[0]{rhs}{ast}{name} = 'mutated_after_accessor';
     $first_auxiliary_assignments->[0]{rhs}{signal} = 'mutated_after_accessor';
 
     is_deeply(
@@ -155,6 +175,26 @@ subtest 'StructuralRTLIR constructor and collection accessors return caller-owne
             },
         ],
         'resolved_links is isolated from constructor and accessor mutation',
+    );
+    is_deeply(
+        $structural_rtl_ir->assignment_records,
+        [
+            {
+                kind => 'continuous_assign',
+                lhs => {
+                    kind => 'signal_ref',
+                    name => 'status',
+                },
+                rhs => {
+                    kind => 'expression',
+                    ast => {
+                        kind => 'signal_ref',
+                        name => 'child_a_status',
+                    },
+                },
+            },
+        ],
+        'assignment_records is isolated from constructor and accessor mutation',
     );
     is_deeply(
         $structural_rtl_ir->auxiliary_assignments,

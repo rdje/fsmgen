@@ -60,6 +60,10 @@ use FSM::Support::NormalizedSemanticLoweredRTLIRContract qw(
     normalized_semantic_lowered_rtl_ir_standalone_dt_multi_drive_target_entry_keys
 );
 use FSM::Support::NormalizedSemanticStructuralRTLIRContract qw(
+    normalized_semantic_structural_rtl_ir_assignment_record_entry_keys
+    normalized_semantic_structural_rtl_ir_assignment_record_lhs_entry_keys
+    normalized_semantic_structural_rtl_ir_assignment_record_provenance_entry_keys
+    normalized_semantic_structural_rtl_ir_assignment_record_rhs_entry_keys
     normalized_semantic_structural_rtl_ir_auxiliary_assignment_entry_value_kinds
     normalized_semantic_structural_rtl_ir_auxiliary_assignment_entry_value_meaning
     normalized_semantic_structural_rtl_ir_contract_source
@@ -133,6 +137,10 @@ our @EXPORT_OK = qw(
     normalized_semantic_forward_ir_lowered_rtl_ir_standalone_dt_multi_drive_assertion_keys
     normalized_semantic_forward_ir_lowered_rtl_ir_standalone_dt_multi_drive_target_entry_keys
     normalized_semantic_forward_ir_presence_key_family_map
+    normalized_semantic_forward_ir_structural_rtl_ir_assignment_record_entry_keys
+    normalized_semantic_forward_ir_structural_rtl_ir_assignment_record_lhs_entry_keys
+    normalized_semantic_forward_ir_structural_rtl_ir_assignment_record_provenance_entry_keys
+    normalized_semantic_forward_ir_structural_rtl_ir_assignment_record_rhs_entry_keys
     normalized_semantic_forward_ir_structural_rtl_ir_auxiliary_assignment_entry_value_kinds
     normalized_semantic_forward_ir_structural_rtl_ir_auxiliary_assignment_entry_value_meaning
     normalized_semantic_forward_ir_structural_rtl_ir_contract_source
@@ -279,6 +287,14 @@ sub build_normalized_semantic_forward_ir_contract {
             normalized_semantic_forward_ir_structural_rtl_ir_auxiliary_assignment_entry_value_kinds(),
         structural_rtl_ir_auxiliary_assignment_entry_value_meaning =>
             normalized_semantic_forward_ir_structural_rtl_ir_auxiliary_assignment_entry_value_meaning(),
+        structural_rtl_ir_assignment_record_entry_keys =>
+            normalized_semantic_forward_ir_structural_rtl_ir_assignment_record_entry_keys(),
+        structural_rtl_ir_assignment_record_lhs_entry_keys =>
+            normalized_semantic_forward_ir_structural_rtl_ir_assignment_record_lhs_entry_keys(),
+        structural_rtl_ir_assignment_record_rhs_entry_keys =>
+            normalized_semantic_forward_ir_structural_rtl_ir_assignment_record_rhs_entry_keys(),
+        structural_rtl_ir_assignment_record_provenance_entry_keys =>
+            normalized_semantic_forward_ir_structural_rtl_ir_assignment_record_provenance_entry_keys(),
         structural_rtl_ir_net_entry_keys =>
             normalized_semantic_forward_ir_structural_rtl_ir_net_entry_keys(),
         structural_rtl_ir_declared_link_entry_keys =>
@@ -446,6 +462,14 @@ sub normalized_semantic_forward_ir_presence_key_family_map {
             normalized_semantic_forward_ir_lowered_rtl_ir_composition_shared_datapath_assertion_keys(),
         structural_rtl_ir_auxiliary_assignment_entry_value_kinds =>
             normalized_semantic_forward_ir_structural_rtl_ir_auxiliary_assignment_entry_value_kinds(),
+        structural_rtl_ir_assignment_record_entry_keys =>
+            normalized_semantic_forward_ir_structural_rtl_ir_assignment_record_entry_keys(),
+        structural_rtl_ir_assignment_record_lhs_entry_keys =>
+            normalized_semantic_forward_ir_structural_rtl_ir_assignment_record_lhs_entry_keys(),
+        structural_rtl_ir_assignment_record_rhs_entry_keys =>
+            normalized_semantic_forward_ir_structural_rtl_ir_assignment_record_rhs_entry_keys(),
+        structural_rtl_ir_assignment_record_provenance_entry_keys =>
+            normalized_semantic_forward_ir_structural_rtl_ir_assignment_record_provenance_entry_keys(),
         structural_rtl_ir_port_entry_keys =>
             normalized_semantic_forward_ir_structural_rtl_ir_port_entry_keys(),
         structural_rtl_ir_port_composition_extension_keys =>
@@ -675,6 +699,22 @@ sub normalized_semantic_forward_ir_structural_rtl_ir_auxiliary_assignment_entry_
 
 sub normalized_semantic_forward_ir_structural_rtl_ir_auxiliary_assignment_entry_value_meaning {
     return normalized_semantic_structural_rtl_ir_auxiliary_assignment_entry_value_meaning();
+}
+
+sub normalized_semantic_forward_ir_structural_rtl_ir_assignment_record_entry_keys {
+    return normalized_semantic_structural_rtl_ir_assignment_record_entry_keys();
+}
+
+sub normalized_semantic_forward_ir_structural_rtl_ir_assignment_record_lhs_entry_keys {
+    return normalized_semantic_structural_rtl_ir_assignment_record_lhs_entry_keys();
+}
+
+sub normalized_semantic_forward_ir_structural_rtl_ir_assignment_record_rhs_entry_keys {
+    return normalized_semantic_structural_rtl_ir_assignment_record_rhs_entry_keys();
+}
+
+sub normalized_semantic_forward_ir_structural_rtl_ir_assignment_record_provenance_entry_keys {
+    return normalized_semantic_structural_rtl_ir_assignment_record_provenance_entry_keys();
 }
 
 sub normalized_semantic_forward_ir_structural_rtl_ir_port_entry_keys {

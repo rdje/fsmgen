@@ -8,8 +8,9 @@ FSM::IR::StructuralRTLIR - Explicit forward structural RTL connectivity summary
 
 Represents the netlist-like structural layer in the forward compiler. This
 package owns explicit ports, nets, instances, declared links, resolved links,
-auxiliary assignments, and the current typed actual-connection summaries that
-the backend emitter and composition reporting surfaces consume.
+assignment records, auxiliary assignments, and the current typed
+actual-connection summaries that the backend emitter and composition reporting
+surfaces consume.
 
 =cut
 
@@ -34,6 +35,7 @@ sub new ($class, %args) {
         instances => _clone($args{instances} || []),
         declared_links => _clone($args{declared_links} || []),
         resolved_links => _clone($args{resolved_links} || []),
+        assignment_records => _clone($args{assignment_records} || []),
         auxiliary_assignments => _clone($args{auxiliary_assignments} || []),
     }, $class;
 }
@@ -46,6 +48,7 @@ sub nets ($self) { return _clone($self->{nets}) }
 sub instances ($self) { return _clone($self->{instances}) }
 sub declared_links ($self) { return _clone($self->{declared_links}) }
 sub resolved_links ($self) { return _clone($self->{resolved_links}) }
+sub assignment_records ($self) { return _clone($self->{assignment_records}) }
 sub auxiliary_assignments ($self) { return _clone($self->{auxiliary_assignments}) }
 
 sub port_metadata ($self) {
@@ -215,6 +218,7 @@ sub as_hashref ($self) {
     my $instances = _clone($self->instances || []);
     my $declared_links = _clone($self->declared_links || []);
     my $resolved_links = _clone($self->resolved_links || []);
+    my $assignment_records = _clone($self->assignment_records || []);
     my $auxiliary_assignments = _clone($self->auxiliary_assignments || []);
 
     return {
@@ -231,6 +235,8 @@ sub as_hashref ($self) {
         declared_links => $declared_links,
         resolved_link_count => scalar(@$resolved_links),
         resolved_links => $resolved_links,
+        assignment_record_count => scalar(@$assignment_records),
+        assignment_records => $assignment_records,
         auxiliary_assignment_count => scalar(@$auxiliary_assignments),
         auxiliary_assignments => $auxiliary_assignments,
     };
@@ -294,6 +300,10 @@ Returns the explicit structural declared wiring list.
 =head2 resolved_links
 
 Returns the explicit structural resolved connectivity list.
+
+=head2 assignment_records
+
+Returns the explicit structural assignment-record list.
 
 =head2 auxiliary_assignments
 

@@ -231,6 +231,10 @@ use FSM::Support::NormalizedSemanticReportContract qw(
     normalized_semantic_forward_ir_lowered_rtl_ir_selector_conflict_target_entry_keys
     normalized_semantic_forward_ir_lowered_rtl_ir_standalone_dt_multi_drive_assertion_keys
     normalized_semantic_forward_ir_lowered_rtl_ir_standalone_dt_multi_drive_target_entry_keys
+    normalized_semantic_forward_ir_structural_rtl_ir_assignment_record_entry_keys
+    normalized_semantic_forward_ir_structural_rtl_ir_assignment_record_lhs_entry_keys
+    normalized_semantic_forward_ir_structural_rtl_ir_assignment_record_provenance_entry_keys
+    normalized_semantic_forward_ir_structural_rtl_ir_assignment_record_rhs_entry_keys
     normalized_semantic_forward_ir_structural_rtl_ir_auxiliary_assignment_entry_value_kinds
     normalized_semantic_forward_ir_structural_rtl_ir_auxiliary_assignment_entry_value_meaning
     normalized_semantic_forward_ir_structural_rtl_ir_declared_link_entry_keys
@@ -1620,6 +1624,34 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
         normalized_semantic_forward_ir_structural_rtl_ir_auxiliary_assignment_entry_value_meaning(),
         'manifest records normalized semantic structural-rtl-ir auxiliary-assignment entry value meaning',
     );
+    for my $case (
+        [
+            success_forward_ir_structural_rtl_ir_assignment_record_entry_keys =>
+                normalized_semantic_forward_ir_structural_rtl_ir_assignment_record_entry_keys(),
+            'assignment-record entry',
+        ],
+        [
+            success_forward_ir_structural_rtl_ir_assignment_record_lhs_entry_keys =>
+                normalized_semantic_forward_ir_structural_rtl_ir_assignment_record_lhs_entry_keys(),
+            'assignment-record lhs',
+        ],
+        [
+            success_forward_ir_structural_rtl_ir_assignment_record_rhs_entry_keys =>
+                normalized_semantic_forward_ir_structural_rtl_ir_assignment_record_rhs_entry_keys(),
+            'assignment-record rhs',
+        ],
+        [
+            success_forward_ir_structural_rtl_ir_assignment_record_provenance_entry_keys =>
+                normalized_semantic_forward_ir_structural_rtl_ir_assignment_record_provenance_entry_keys(),
+            'assignment-record provenance',
+        ],
+    ) {
+        is_deeply(
+            $manifest->{semantic_exports}{normalized_semantic_json}{$case->[0]},
+            $case->[1],
+            "manifest records exact normalized semantic structural-rtl-ir $case->[2] keys",
+        );
+    }
     is_deeply(
         $manifest->{semantic_exports}{normalized_semantic_json}{success_forward_ir_structural_rtl_ir_port_entry_keys},
         normalized_semantic_forward_ir_structural_rtl_ir_port_entry_keys(),

@@ -113,7 +113,7 @@ first.
 | `NORMALIZED-SEMANTIC-PROTOCOL-BUNDLE-CONTRACT-DRIFT` | `done` | `Embedding And Public APIs / IAL2` | complete (`.1`; repaired stale optional-child contract test expectations for already-shipped `semantic.protocol_intent_bundle`) | [docs/tasks/NORMALIZED-SEMANTIC-PROTOCOL-BUNDLE-CONTRACT-DRIFT.md](docs/tasks/NORMALIZED-SEMANTIC-PROTOCOL-BUNDLE-CONTRACT-DRIFT.md) |
 | `R11-DIRECT-STRUCTURAL-WEN-EN-NETS` | `done` | `R11` | complete (`.1`; projected direct DT-specific and LHS-level WEN/EN wires into `StructuralRTLIR` nets without claiming assignment connectivity) | [docs/tasks/R11-DIRECT-STRUCTURAL-WEN-EN-NETS.md](docs/tasks/R11-DIRECT-STRUCTURAL-WEN-EN-NETS.md) |
 | `R11-DIRECT-STRUCTURAL-AUX-ASSIGNMENTS` | `done` | `R11` | complete (`.2`; projected already-rendered direct generated enable assignment lines into `StructuralRTLIR.auxiliary_assignments[]` without changing HDL emission) | [docs/tasks/R11-DIRECT-STRUCTURAL-AUX-ASSIGNMENTS.md](docs/tasks/R11-DIRECT-STRUCTURAL-AUX-ASSIGNMENTS.md) |
-| `R11-DIRECT-STRUCTURAL-ASSIGNMENT-RECORDS` | `active` | `R11` | current frontier (`.2`; project direct generated enable assignments into machine-readable `StructuralRTLIR.assignment_records[]`) | [docs/tasks/R11-DIRECT-STRUCTURAL-ASSIGNMENT-RECORDS.md](docs/tasks/R11-DIRECT-STRUCTURAL-ASSIGNMENT-RECORDS.md) |
+| `R11-DIRECT-STRUCTURAL-ASSIGNMENT-RECORDS` | `done` | `R11` | complete (`.2`; projected direct generated enable assignments into machine-readable `StructuralRTLIR.assignment_records[]` while retaining scalar auxiliary compatibility) | [docs/tasks/R11-DIRECT-STRUCTURAL-ASSIGNMENT-RECORDS.md](docs/tasks/R11-DIRECT-STRUCTURAL-ASSIGNMENT-RECORDS.md) |
 
 ## Proposed Task Trees
 
