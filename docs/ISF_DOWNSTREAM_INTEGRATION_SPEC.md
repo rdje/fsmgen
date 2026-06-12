@@ -3714,17 +3714,22 @@ The fixture above remains a `rule_slot` fixture; it does not claim
 weighted, token bucket, interface-bundle, named-drive, child-instance, or
 broader round-robin resource support.
 
-The stage/contract fixture is covered by
-`t/1317-isf-stage-contract-fixture-coverage.t`, which proves strict schedule
-JSON parity, scheduled `.fsm` structure, plain and strict HDL generation,
-sampled payload handoff, ready/valid barrier metadata, bounded eventual
-contract metadata, temporal monitor storage roles, SystemVerilog sticky-fail
-assertion projection, and delayed completion pulse behavior.
+The ready/valid stage and assertion-property surfaces are covered by the live
+stage and property tests: `t/1179-isf-phase-stage-boundary.t`,
+`t/1223-isf-stage-lowering.t`, `t/1252-isf-actor-phase-stage-report.t`,
+`t/1410-isf-assert-carrier.t`, `t/1411-isf-assert-emit.t`,
+`t/1412-isf-property-implication.t`,
+`t/1417-isf-property-sampled-value.t`, and
+`t/1418-isf-property-window-range.t`. Together they cover ready/valid stage
+lowering, phase/stage report projection, assertion carriers, SystemVerilog
+assertion emission, implication properties, sampled-value properties, and
+window-range property parsing/lowering.
 
-This fixture covers the shipped top-level `ready_valid_barrier` stage and
-`bounded_eventually` temporal contract subset; it does not claim nested
-stages, nested contracts, stage-local compute, expression contracts, min/max
-windows, or broader temporal operators.
+This coverage proves the shipped top-level ready/valid stage substrate and
+assertion-property path; it does not claim nested stages, nested contracts,
+stage-local compute, full AXI Valid-Ready protocol monitoring, source-anchor
+IAL2 reports, min/max temporal monitor implementation, or broader temporal
+operators.
 
 The FIFO datapath fixture is covered by
 `t/1319-isf-fifo-datapath-fixture-coverage.t`, which proves strict schedule

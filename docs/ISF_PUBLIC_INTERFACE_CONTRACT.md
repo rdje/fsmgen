@@ -151,13 +151,17 @@ delayed completion pulse behavior covered. Focused resource tests additionally
 cover bounded `rule_slot`/`round_robin` and
 `transaction_start`/`round_robin` grants, generated pointer storage metadata,
 report projection, and fail-closed unsupported round-robin combinations.
-The stage/contract fixture is checked by
-[t/1317-isf-stage-contract-fixture-coverage.t](../t/1317-isf-stage-contract-fixture-coverage.t)
-to keep file-backed schedule JSON, scheduled `.fsm`, plain HDL generation,
-strict HDL generation, sampled payload handoff, ready/valid barrier metadata,
-bounded eventual contract metadata, temporal monitor storage roles,
-SystemVerilog sticky-fail assertion projection, and delayed completion pulse
-behavior covered.
+The ready/valid stage path is checked by
+[t/1179-isf-phase-stage-boundary.t](../t/1179-isf-phase-stage-boundary.t)
+and [t/1223-isf-stage-lowering.t](../t/1223-isf-stage-lowering.t), and
+actor-level phase/stage report metadata is checked by
+[t/1252-isf-actor-phase-stage-report.t](../t/1252-isf-actor-phase-stage-report.t).
+The assertion/property path used by bounded-eventually monitors is checked by
+[t/1410-isf-assert-carrier.t](../t/1410-isf-assert-carrier.t),
+[t/1411-isf-assert-emit.t](../t/1411-isf-assert-emit.t),
+[t/1412-isf-property-implication.t](../t/1412-isf-property-implication.t),
+[t/1417-isf-property-sampled-value.t](../t/1417-isf-property-sampled-value.t),
+and [t/1418-isf-property-window-range.t](../t/1418-isf-property-window-range.t).
 The FIFO datapath fixture is checked by
 [t/1319-isf-fifo-datapath-fixture-coverage.t](../t/1319-isf-fifo-datapath-fixture-coverage.t)
 to keep file-backed strict schedule JSON, scheduled `.fsm`, bounded
@@ -342,8 +346,10 @@ single-clock-domain ISF model; they do not advertise CDC or interacting
 clock-domain semantics.
 The current APB schedule report is checked against the advertised key families
 by [t/1116-isf-public-schedule-report-key-family-audit.t](../t/1116-isf-public-schedule-report-key-family-audit.t).
-The shipped stage/contract report projection is checked by
-[t/1225-isf-stage-contract-schedule-report.t](../t/1225-isf-stage-contract-schedule-report.t).
+The shipped stage report projection is covered by the ready/valid stage and
+schedule-report metadata tests, including
+[t/1223-isf-stage-lowering.t](../t/1223-isf-stage-lowering.t) and
+[t/1140-isf-public-schedule-report-metadata-audit.t](../t/1140-isf-public-schedule-report-metadata-audit.t).
 The advertised schedule-report metadata itself is checked by
 [t/1140-isf-public-schedule-report-metadata-audit.t](../t/1140-isf-public-schedule-report-metadata-audit.t)
 to keep key families, grouped family maps, ordering, multi-file scope, and

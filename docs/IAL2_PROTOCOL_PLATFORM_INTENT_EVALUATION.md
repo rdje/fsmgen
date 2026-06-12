@@ -182,9 +182,12 @@ specified first. The completed AXI Valid-Ready evidence inventory is enough to
 justify a later design/probe leaf, but it still does not select IAL2 syntax,
 parser behavior, lowering behavior, generated `.fsm`, HDL, or reusable library
 artifacts. The completed AXI ID/order/concurrency evidence inventory, rule
-matrix, and first-subset selection are enough to justify a later
-Valid-Ready-channel implementation leaf, but likewise do not select final IAL2
-syntax, lowering code, or HDL behavior.
+matrix, first-subset selection, and
+[AXI_IAL2_VALID_READY_READINESS_AUDIT](AXI_IAL2_VALID_READY_READINESS_AUDIT.md)
+are enough to justify a later narrow Valid-Ready generator implementation
+leaf. That future leaf should emit reviewable `.isf` before `.fsm` and should
+not add public IAL2 CLI suffixes or full AXI manager behavior in the same
+slice.
 Decision
 [0014](decisions/0014-protocol-platform-intent-surface-and-layered-lowering.md)
 records the protocol/platform-generic IAL2 file-surface direction, the open

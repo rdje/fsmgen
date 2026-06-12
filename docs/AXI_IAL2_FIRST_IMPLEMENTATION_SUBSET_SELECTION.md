@@ -120,6 +120,10 @@ cycle-explicit. It should expose:
 
 ## Report Contract
 
+The readiness audit
+[docs/AXI_IAL2_VALID_READY_READINESS_AUDIT.md](AXI_IAL2_VALID_READY_READINESS_AUDIT.md)
+maps the current code and report owners that must implement this contract.
+
 The future implementation must emit or expose a report that includes:
 
 - source object identity,

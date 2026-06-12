@@ -2337,6 +2337,15 @@ first safe AXI-derived IAL2 implementation subset. It is intentionally not the
 full AXI manager; it must first prove reviewable `IAL2 -> IAL1/.isf ->
 IAL0/.fsm -> HDL` lowering, source-anchor reporting, and explicit residue.
 
+Implementation readiness audit:
+[AXI_IAL2_VALID_READY_READINESS_AUDIT](../../AXI_IAL2_VALID_READY_READINESS_AUDIT.md)
+maps the existing code/test/docs/report owners for that future subset. The
+safe first code slice should be an in-process IAL2/protocol-intent generator
+that emits reviewable `.isf`, then uses the existing `FSM::Adapter::ISF` and
+`FSM::Scheduler::ISF` path to emit reviewable `.fsm`. The audit explicitly
+defers public `.pif`/`.ppi`/`.ppif`/`.axi` CLI suffix support and the full AXI
+manager until later owners.
+
 User-facing AXI manager brainstorm:
 [AXI_MANAGER_USER_API_BRAINSTORM](../../AXI_MANAGER_USER_API_BRAINSTORM.md)
 captures the intended IAL2 surface direction for a future AXI manager. Easy
@@ -2348,9 +2357,10 @@ overrides while preserving manager enforcement. Raw channel access should
 normally be supervised by the same AXI rule engine, with any unsafe bypass
 treated as verification-only and unable to claim guaranteed AXI correctness.
 
-The next prerequisite is a later exact implementation leaf for that selected
-Valid-Ready channel contract/monitor subset. It must still choose final syntax,
-lowering code, tests, reports, and mdBook examples before any behavior ships.
+The next prerequisite is a later exact implementation leaf for the selected
+Valid-Ready channel contract/monitor generator. It must still choose the
+internal source object shape, generated `.isf` artifact, IAL2 report contract,
+tests, and mdBook examples before any behavior ships.
 
 PDF extraction workflow:
 [PDF_EXTRACTION_WORKFLOW](../../PDF_EXTRACTION_WORKFLOW.md)
