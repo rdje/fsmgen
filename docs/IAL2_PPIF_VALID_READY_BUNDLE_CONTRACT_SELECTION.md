@@ -5,6 +5,8 @@ implemented by
 [docs/IAL2_PPIF_VALID_READY_BUNDLE_FIRST_SLICE.md](IAL2_PPIF_VALID_READY_BUNDLE_FIRST_SLICE.md),
 and aggregate semantic JSON is implemented by
 [docs/IAL2_PPIF_BUNDLE_SEMANTIC_JSON_FIRST_SLICE.md](IAL2_PPIF_BUNDLE_SEMANTIC_JSON_FIRST_SLICE.md).
+The future HDL entry contract is selected by
+[docs/IAL2_PPIF_BUNDLE_HDL_ENTRY_SELECTION.md](IAL2_PPIF_BUNDLE_HDL_ENTRY_SELECTION.md).
 
 Task tree:
 [docs/tasks/IAL2-PPIF-VALID-READY-BUNDLE-CONTRACT-SELECTION.md](tasks/IAL2-PPIF-VALID-READY-BUNDLE-CONTRACT-SELECTION.md).
@@ -219,4 +221,5 @@ broader AXI manager behavior:
 Users can use the shipped one-channel `.ppif` path today. Users can also use
 the bounded multi-channel bundle path for aggregate reports, check JSON,
 aggregate semantic JSON, and generated `.isf`/`.fsm` review artifacts. Default
-bundle HDL generation remains unsupported and fail closed.
+bundle HDL generation remains unsupported and fail closed until the selected
+aggregate wrapper/top entry contract is implemented.

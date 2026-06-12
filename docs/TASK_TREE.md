@@ -104,6 +104,7 @@ first.
 | `IAL2-PPIF-VALID-READY-BUNDLE-CONTRACT-SELECTION` | `done` | IAL2 horizon exploration | complete (`.1`; selected the future multi Valid-Ready `.ppif` aggregate bundle source/report/artifact/CLI contract before behavior changes) | [docs/tasks/IAL2-PPIF-VALID-READY-BUNDLE-CONTRACT-SELECTION.md](docs/tasks/IAL2-PPIF-VALID-READY-BUNDLE-CONTRACT-SELECTION.md) |
 | `IAL2-PPIF-VALID-READY-BUNDLE-FIRST-SLICE` | `done` | IAL2 horizon exploration | complete (`.1`; shipped bounded multi-channel `.ppif` bundle report/review-artifact behavior while default HDL/semantic modes fail closed) | [docs/tasks/IAL2-PPIF-VALID-READY-BUNDLE-FIRST-SLICE.md](docs/tasks/IAL2-PPIF-VALID-READY-BUNDLE-FIRST-SLICE.md) |
 | `IAL2-PPIF-BUNDLE-SEMANTIC-JSON-FIRST-SLICE` | `done` | IAL2 horizon exploration / Embedding And Public APIs | complete (`.1`; shipped aggregate bundle semantic JSON without selecting wrapper HDL or one generated `.fsm` as the root) | [docs/tasks/IAL2-PPIF-BUNDLE-SEMANTIC-JSON-FIRST-SLICE.md](docs/tasks/IAL2-PPIF-BUNDLE-SEMANTIC-JSON-FIRST-SLICE.md) |
+| `IAL2-PPIF-BUNDLE-HDL-ENTRY-SELECTION` | `done` | IAL2 horizon exploration | complete (`.1`; selected aggregate wrapper/top as the future HDL entry and rejected first-channel root selection) | [docs/tasks/IAL2-PPIF-BUNDLE-HDL-ENTRY-SELECTION.md](docs/tasks/IAL2-PPIF-BUNDLE-HDL-ENTRY-SELECTION.md) |
 
 ## Proposed Task Trees
 

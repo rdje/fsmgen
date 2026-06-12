@@ -96,17 +96,18 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 35. `docs/IAL2_PPIF_VALID_READY_BUNDLE_CONTRACT_SELECTION.md`: selected future aggregate bundle contract for multi-channel `.ppif` Valid-Ready support.
 36. `docs/IAL2_PPIF_VALID_READY_BUNDLE_FIRST_SLICE.md`: shipped bounded multi-channel `.ppif` Valid-Ready bundle report/review-artifact behavior.
 37. `docs/IAL2_PPIF_BUNDLE_SEMANTIC_JSON_FIRST_SLICE.md`: shipped aggregate semantic JSON for multi-channel `.ppif` bundles.
-38. `docs/PDF_EXTRACTION_WORKFLOW.md`: portable workflow for source-anchored PDF text, table, diagram, and image extraction.
-39. `docs/decisions/0014-protocol-platform-intent-surface-and-layered-lowering.md`: generic IAL2 file-surface candidates and layered lowering decision.
-40. `docs/decisions/0015-ial2-profile-extensions-are-vocabulary-aliases.md`: IAL2 protocol-profile extension refinement.
-41. `docs/decisions/0017-ppif-valid-ready-bundle-contract.md`: future multi-channel `.ppif` bundle contract decision.
-42. `docs/FEATURE_BACKLOG.md`: pointer to the canonical mdBook feature backlog for deferred/not-fully-shipped user-visible work.
-43. `CHANGES.md`: chronological technical changes.
-44. `DEVELOPMENT_NOTES.md`: design rationale and decisions.
-45. `MEMORY.md`: continuity/handoff state.
-46. `LIVE_ACHIEVEMENT_STATUS.md`: latest completed roadmap-aligned slice.
-47. `WARP.md`: repository-specific agent/development guidance.
-48. `.agents/workflows/commit.md`: automation-oriented commit workflow description.
+38. `docs/IAL2_PPIF_BUNDLE_HDL_ENTRY_SELECTION.md`: selected future aggregate wrapper/top HDL entry contract for multi-channel `.ppif` bundles.
+39. `docs/PDF_EXTRACTION_WORKFLOW.md`: portable workflow for source-anchored PDF text, table, diagram, and image extraction.
+40. `docs/decisions/0014-protocol-platform-intent-surface-and-layered-lowering.md`: generic IAL2 file-surface candidates and layered lowering decision.
+41. `docs/decisions/0015-ial2-profile-extensions-are-vocabulary-aliases.md`: IAL2 protocol-profile extension refinement.
+42. `docs/decisions/0017-ppif-valid-ready-bundle-contract.md`: future multi-channel `.ppif` bundle contract decision.
+43. `docs/FEATURE_BACKLOG.md`: pointer to the canonical mdBook feature backlog for deferred/not-fully-shipped user-visible work.
+44. `CHANGES.md`: chronological technical changes.
+45. `DEVELOPMENT_NOTES.md`: design rationale and decisions.
+46. `MEMORY.md`: continuity/handoff state.
+47. `LIVE_ACHIEVEMENT_STATUS.md`: latest completed roadmap-aligned slice.
+48. `WARP.md`: repository-specific agent/development guidance.
+49. `.agents/workflows/commit.md`: automation-oriented commit workflow description.
 
 ## Documentation index (all `.md` files in this repo)
 - `README.md` — single entry point and navigation hub.

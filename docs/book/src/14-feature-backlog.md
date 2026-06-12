@@ -2478,6 +2478,10 @@ multi-actor `.isf` file and forbids "first channel wins" HDL selection.
 Default HDL for a multi-channel bundle remains fail-closed until a future
 wrapper/top actor or explicit entry-selection owner lands. Aggregate semantic
 JSON is now an aggregate PPIF bundle root, not one generated channel root.
+The future HDL entry contract is selected in
+[IAL2_PPIF_BUNDLE_HDL_ENTRY_SELECTION](../../IAL2_PPIF_BUNDLE_HDL_ENTRY_SELECTION.md):
+bundle HDL must use an aggregate wrapper/top entry with reviewable generated
+IAL1 and IAL0 artifacts, not "first channel wins" root selection.
 
 Runnable bundle commands:
 
