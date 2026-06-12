@@ -976,9 +976,10 @@ Priority note:
 The active immediate feature-completeness lane is IAL2 on the
 SystemVerilog-backed lowering path; see
 [docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md](docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md).
-The current frontier audits AXI same-ID ordering readiness after generated AXI
-write `BID` response-demux behavior, auto-ID lifecycle residue alignment, and
-the shipped IAL1 rule-owned `(pulse TARGET)` prerequisite.
+The current frontier implements bounded AXI auto-ID same-ID avoidance
+assertions and report metadata after generated AXI write `BID`
+response-demux behavior, auto-ID lifecycle residue alignment, and the shipped
+IAL1 rule-owned `(pulse TARGET)` prerequisite.
 The shipped public capacity/status source accepts one
 `(manager-capacity-status NAME ...)` object under
 `(protocol-platform-intent ...)`, `(profile axi4)`, and top-level source
@@ -1060,13 +1061,17 @@ that generated demux pulses drive auto-ID release. Completed implementation
 leaf `IAL2-FEATURE-COMPLETENESS-FRONTIER.32` aligns that report residue:
 explicit generated write demux reports `auto_id_lifecycle.residue:
 [same_id_ordering]`, while non-demux lifecycle samples keep their response
-demux residue. The active frontier is
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.34`, auditing AXI same-ID ordering
-readiness before same-ID ordering behavior, read-data interleaving/reassembly,
-bursts, queued policy, aliases, full-manager behavior, or VHDL changes.
-Completed selector `IAL2-FEATURE-COMPLETENESS-FRONTIER.33` chose that audit
-because `same_id_ordering` is now the common remaining ID/auto-ID/write-demux
-residue after generated write demux and auto-ID residue alignment.
+demux residue. Completed selector `IAL2-FEATURE-COMPLETENESS-FRONTIER.33`
+chose a same-ID ordering readiness audit because `same_id_ordering` is now the
+common remaining ID/auto-ID/write-demux residue after generated write demux
+and auto-ID residue alignment. Completed
+readiness audit `IAL2-FEATURE-COMPLETENESS-FRONTIER.34` selected
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.35` as a bounded generated
+auto-ID same-ID avoidance assertion/report slice. That first boundary should
+make the existing unique-active selected-ID invariant explicit before per-ID
+issue-order queues, authored concrete-ID same-ID ordering, read `RID` demux,
+read-data interleaving/reassembly, bursts, queued policy, aliases,
+full-manager behavior, or VHDL changes.
 
 The first honest `R11` slices are now:
 1. keep widening convention-first composition only where the child-side evidence is still deterministic,

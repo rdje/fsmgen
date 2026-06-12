@@ -48,7 +48,7 @@ path before reopening VHDL backend or VHDL rerouting work.
 - ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER`
   Status: `active`
   Goal: `Make IAL2 feature-complete on the SystemVerilog-backed path before VHDL work resumes.`
-  Children: `IAL2-FEATURE-COMPLETENESS-FRONTIER.1, IAL2-FEATURE-COMPLETENESS-FRONTIER.2, IAL2-FEATURE-COMPLETENESS-FRONTIER.3, IAL2-FEATURE-COMPLETENESS-FRONTIER.4, IAL2-FEATURE-COMPLETENESS-FRONTIER.5, IAL2-FEATURE-COMPLETENESS-FRONTIER.6, IAL2-FEATURE-COMPLETENESS-FRONTIER.7, IAL2-FEATURE-COMPLETENESS-FRONTIER.8, IAL2-FEATURE-COMPLETENESS-FRONTIER.9, IAL2-FEATURE-COMPLETENESS-FRONTIER.10, IAL2-FEATURE-COMPLETENESS-FRONTIER.11, IAL2-FEATURE-COMPLETENESS-FRONTIER.12, IAL2-FEATURE-COMPLETENESS-FRONTIER.13, IAL2-FEATURE-COMPLETENESS-FRONTIER.14, IAL2-FEATURE-COMPLETENESS-FRONTIER.15, IAL2-FEATURE-COMPLETENESS-FRONTIER.16, IAL2-FEATURE-COMPLETENESS-FRONTIER.17, IAL2-FEATURE-COMPLETENESS-FRONTIER.18, IAL2-FEATURE-COMPLETENESS-FRONTIER.19, IAL2-FEATURE-COMPLETENESS-FRONTIER.20, IAL2-FEATURE-COMPLETENESS-FRONTIER.21, IAL2-FEATURE-COMPLETENESS-FRONTIER.22, IAL2-FEATURE-COMPLETENESS-FRONTIER.23, IAL2-FEATURE-COMPLETENESS-FRONTIER.24, IAL2-FEATURE-COMPLETENESS-FRONTIER.25, IAL2-FEATURE-COMPLETENESS-FRONTIER.26, IAL2-FEATURE-COMPLETENESS-FRONTIER.27, IAL2-FEATURE-COMPLETENESS-FRONTIER.28, IAL2-FEATURE-COMPLETENESS-FRONTIER.29, IAL2-FEATURE-COMPLETENESS-FRONTIER.30, IAL2-FEATURE-COMPLETENESS-FRONTIER.31, IAL2-FEATURE-COMPLETENESS-FRONTIER.32, IAL2-FEATURE-COMPLETENESS-FRONTIER.33, IAL2-FEATURE-COMPLETENESS-FRONTIER.34`
+  Children: `IAL2-FEATURE-COMPLETENESS-FRONTIER.1, IAL2-FEATURE-COMPLETENESS-FRONTIER.2, IAL2-FEATURE-COMPLETENESS-FRONTIER.3, IAL2-FEATURE-COMPLETENESS-FRONTIER.4, IAL2-FEATURE-COMPLETENESS-FRONTIER.5, IAL2-FEATURE-COMPLETENESS-FRONTIER.6, IAL2-FEATURE-COMPLETENESS-FRONTIER.7, IAL2-FEATURE-COMPLETENESS-FRONTIER.8, IAL2-FEATURE-COMPLETENESS-FRONTIER.9, IAL2-FEATURE-COMPLETENESS-FRONTIER.10, IAL2-FEATURE-COMPLETENESS-FRONTIER.11, IAL2-FEATURE-COMPLETENESS-FRONTIER.12, IAL2-FEATURE-COMPLETENESS-FRONTIER.13, IAL2-FEATURE-COMPLETENESS-FRONTIER.14, IAL2-FEATURE-COMPLETENESS-FRONTIER.15, IAL2-FEATURE-COMPLETENESS-FRONTIER.16, IAL2-FEATURE-COMPLETENESS-FRONTIER.17, IAL2-FEATURE-COMPLETENESS-FRONTIER.18, IAL2-FEATURE-COMPLETENESS-FRONTIER.19, IAL2-FEATURE-COMPLETENESS-FRONTIER.20, IAL2-FEATURE-COMPLETENESS-FRONTIER.21, IAL2-FEATURE-COMPLETENESS-FRONTIER.22, IAL2-FEATURE-COMPLETENESS-FRONTIER.23, IAL2-FEATURE-COMPLETENESS-FRONTIER.24, IAL2-FEATURE-COMPLETENESS-FRONTIER.25, IAL2-FEATURE-COMPLETENESS-FRONTIER.26, IAL2-FEATURE-COMPLETENESS-FRONTIER.27, IAL2-FEATURE-COMPLETENESS-FRONTIER.28, IAL2-FEATURE-COMPLETENESS-FRONTIER.29, IAL2-FEATURE-COMPLETENESS-FRONTIER.30, IAL2-FEATURE-COMPLETENESS-FRONTIER.31, IAL2-FEATURE-COMPLETENESS-FRONTIER.32, IAL2-FEATURE-COMPLETENESS-FRONTIER.33, IAL2-FEATURE-COMPLETENESS-FRONTIER.34, IAL2-FEATURE-COMPLETENESS-FRONTIER.35`
 
 - ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER.1`
   Status: `done`
@@ -282,9 +282,16 @@ path before reopening VHDL backend or VHDL rerouting work.
   Commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.33: select AXI same-ID readiness`
 
 - ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER.34`
-  Status: `pending`
+  Status: `done`
   Goal: `Audit AXI same-ID ordering readiness after generated write response demux.`
   Acceptance: `The audit reads AXI same-ID ordering evidence, the rule matrix, shipped auto-ID lifecycle request-ID drive, generated write BID response-demux behavior, residue-aligned reports, IAL1/IAL0/SystemVerilog storage/rule/assertion substrate, diagnostics, mdBook, roadmap, and Knowledge Map; decides whether the first same-ID ordering step should be static/report classification, generated assertions, allocator constraints, per-ID issue-order queues/scoreboards, or a smaller IAL1/IAL0/SystemVerilog prerequisite; records exact scope, non-goals, report/public syntax expectations, generated artifact expectations, diagnostics, validation gates, residue, rollback, docs, and VHDL deferral before behavior changes.`
+  Verification: `Read the AXI same-ID ordering evidence, rule matrix, .33 selector, shipped auto-ID request-ID drive behavior, generated write BID response-demux behavior, residue-aligned reports, current response-demux schedule JSON, IAL1 rule/assertion/resource substrate, focused tests, mdBook, roadmap, and Knowledge Map. Concluded no IAL1/IAL0/SystemVerilog prerequisite is needed for the first bounded same-ID step. Selected .35 to formalize generated auto-ID same-ID avoidance with pairwise active-ID assertions and machine-readable same_id_ordering report metadata before per-ID queues or read-side behavior.`
+  Commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.34: audit AXI same-ID readiness`
+
+- ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER.35`
+  Status: `pending`
+  Goal: `Implement bounded AXI auto-ID same-ID avoidance assertions and report metadata.`
+  Acceptance: `For generated auto-id-lifecycle families, the capacity/status generator emits pairwise runtime assertions proving active auto-ID transaction states do not share the same selected ID; report JSON additively emits machine-readable same_id_ordering metadata with avoid_same_id_concurrency strategy, covered families, generated assertion names, source anchors, and residue; generated auto-ID lifecycle and generated write response-demux report residue remove same_id_ordering only for the covered auto-ID write-demux subset while id_response_rule_engine remains honest for concrete-ID same-ID cases; public .ppif syntax remains unchanged; generated .isf/.fsm/SystemVerilog, focused generator and PPIF/CLI tests, check JSON/semantic JSON gates, mdBook, Knowledge Map, roadmap, task tree, and memory stay synced; per-ID issue-order queues/scoreboards, authored concrete-ID same-ID ordering, read RID demux, read-data interleaving/reassembly, bursts, queued/blocking policy, aliases, full-manager behavior, and VHDL remain residue.`
   Verification: `pending`
   Commit: `pending`
 
@@ -292,7 +299,7 @@ path before reopening VHDL backend or VHDL rerouting work.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.34` | `pending` | `.33` selected same-ID ordering readiness as the next exact slice because same_id_ordering is now the shared remaining ID/auto-ID/write-demux residue after .32. |
+| 1 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.35` | `pending` | `.34` selected bounded auto-ID same-ID avoidance assertions and report metadata as the first same-ID implementation boundary; no IAL1/IAL0/SystemVerilog prerequisite is needed. |
 
 ## Decisions
 
@@ -641,6 +648,13 @@ path before reopening VHDL backend or VHDL rerouting work.
   `.34` will audit same-ID ordering readiness before selecting assertions,
   allocator constraints, per-ID queues/scoreboards, or a smaller substrate
   prerequisite.
+- `2026-06-12`: `.34` audited same-ID ordering readiness. The first bounded
+  implementation should formalize the existing generated auto-ID unique-active
+  selected-ID invariant as same-ID ordering by avoidance, using pairwise
+  assertions and machine-readable `same_id_ordering` report metadata. Full
+  per-ID issue-order queues, authored concrete-ID same-ID ordering, read
+  response demux, read-data interleaving, bursts, queued policy, aliases,
+  full-manager behavior, and VHDL remain residue.
 - `2026-06-12`: User clarified the backend strategy: FSMGen is currently Perl
   5, but IAL0/IAL1/IAL2 and the mdBook must remain backend-language-neutral
   contracts for future Rust, Rust/Wasm, browser-capable JavaScript, and
@@ -735,6 +749,8 @@ path before reopening VHDL backend or VHDL rerouting work.
 | `2026-06-12` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.32` | `perl -Iperl -c perl/FSM/IAL2/ProtocolIntent/AxiManagerCapacityStatus.pm`; `perl -Iperl -c t/1437-axi-ial2-manager-capacity-status-generator.t`; `perl -Iperl -c t/1436-ial2-ppif-parser-cli.t`; `prove -Iperl t/1437-axi-ial2-manager-capacity-status-generator.t`; `./bin/fsmgen --emit-schedule-json ppif/axi_manager_capacity_status_response_demux.ppif`; `prove -Iperl t/1436-ial2-ppif-parser-cli.t`; `./bin/fsmgen --quiet --verify-hdl ppif/axi_manager_capacity_status_response_demux.ppif`; `prove -Iperl t/297-capability-manifest.t t/317-language-surface-contract.t t/301-check-json-supported-corpus.t t/303-normalized-semantic-json-supported-corpus.t`; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `mdbook build docs/book`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `git --no-pager diff --check`; stale-current-frontier search | Passed. |
 | `2026-06-12` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.33` | `./bin/fsmgen --emit-schedule-json ppif/axi_manager_capacity_status_response_demux.ppif`; `docs/AXI_ID_ORDERING_RULE_EVIDENCE_PROBE.md`; `docs/AXI_MANAGER_RULE_MATRIX_DESIGN_PROBE.md`; `docs/AXI_IAL2_MANAGER_AUTO_ID_RESIDUE_ALIGNMENT_FIRST_SLICE.md`; `docs/AXI_IAL2_MANAGER_WRITE_RESPONSE_DEMUX_BEHAVIOR_FIRST_SLICE.md`; `docs/book/src/14-feature-backlog.md`; `ROADMAP_V2.md`; `perl/FSM/IAL2/ProtocolIntent/AxiManagerCapacityStatus.pm`; `docs/AXI_IAL2_MANAGER_SAME_ID_ORDERING_READINESS_SELECTION.md`; `docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md`; `docs/TASK_TREE.md`; `MEMORY.md` | Selected `.34`, same-ID ordering readiness after generated write response-demux behavior and report-residue alignment. |
 | `2026-06-12` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.33` | `bash knowledge-map/scripts/gen_knowledge_map.sh`; `mdbook build docs/book`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `git --no-pager diff --check`; stale-current-frontier search | Passed. |
+| `2026-06-12` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.34` | `docs/AXI_ID_ORDERING_RULE_EVIDENCE_PROBE.md`; `docs/AXI_MANAGER_RULE_MATRIX_DESIGN_PROBE.md`; `docs/AXI_IAL2_MANAGER_SAME_ID_ORDERING_READINESS_SELECTION.md`; `docs/AXI_IAL2_MANAGER_AUTO_ID_REQUEST_ID_DRIVE_FIRST_SLICE.md`; `docs/AXI_IAL2_MANAGER_WRITE_RESPONSE_DEMUX_BEHAVIOR_FIRST_SLICE.md`; `docs/AXI_IAL2_MANAGER_AUTO_ID_RESIDUE_ALIGNMENT_FIRST_SLICE.md`; `docs/book/src/13g-rules.md`; `docs/book/src/14-feature-backlog.md`; `ROADMAP_V2.md`; `perl/FSM/IAL2/ProtocolIntent/AxiManagerCapacityStatus.pm`; `t/1437-axi-ial2-manager-capacity-status-generator.t`; `t/1436-ial2-ppif-parser-cli.t`; `./bin/fsmgen --emit-schedule-json ppif/axi_manager_capacity_status_response_demux.ppif`; `docs/AXI_IAL2_MANAGER_SAME_ID_ORDERING_READINESS_AUDIT.md`; `docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md`; `docs/TASK_TREE.md`; `MEMORY.md` | Selected `.35`, bounded auto-ID same-ID avoidance assertions and report metadata before per-ID queues or read-side behavior. |
+| `2026-06-12` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.34` | `bash knowledge-map/scripts/gen_knowledge_map.sh`; `mdbook build docs/book`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `git --no-pager diff --check`; stale-current-frontier search | Passed. |
 
 ## Commit Log
 
@@ -773,6 +789,7 @@ path before reopening VHDL backend or VHDL rerouting work.
 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.31` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.31: select AXI residue alignment` | Selected auto-ID lifecycle report-residue alignment and advanced the frontier to `.32`. |
 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.32` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.32: align AXI auto-ID residue` | Shipped auto-ID lifecycle report-residue alignment and advanced the frontier to `.33`. |
 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.33` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.33: select AXI same-ID readiness` | Selected same-ID ordering readiness and advanced the frontier to `.34`. |
+| `IAL2-FEATURE-COMPLETENESS-FRONTIER.34` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.34: audit AXI same-ID readiness` | Selected bounded auto-ID same-ID avoidance assertions/report metadata and advanced the frontier to `.35`. |
 
 ## Changelog
 
@@ -883,3 +900,6 @@ path before reopening VHDL backend or VHDL rerouting work.
   advanced the frontier to `.33`, the next IAL2 feature-completeness selector.
 - `2026-06-12`: Completed `.33` selector, chose AXI same-ID ordering
   readiness as the next exact slice, and advanced the frontier to `.34`.
+- `2026-06-12`: Completed `.34` readiness audit, selected bounded auto-ID
+  same-ID avoidance assertions/report metadata, and advanced the frontier to
+  `.35`.

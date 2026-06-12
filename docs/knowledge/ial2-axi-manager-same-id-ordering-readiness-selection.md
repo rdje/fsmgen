@@ -23,11 +23,10 @@ residue-alignment note, mdBook, roadmap, and generator report residue. After
 generated write `BID` demux and auto-ID residue alignment, `same_id_ordering`
 is the common remaining ID/auto-ID/write-demux residue.
 
-Same-ID ordering is not implemented by `.33`. The `.34` readiness audit must
-choose the first exact owner before behavior changes: static/report
-classification, generated assertions, allocator constraints, per-ID
-issue-order queues or scoreboards, or a smaller IAL1/IAL0/SystemVerilog
-prerequisite.
+Same-ID ordering is not implemented by `.33`. The follow-up `.34` readiness
+audit selected `.35`: bounded generated auto-ID same-ID avoidance assertions
+and machine-readable `same_id_ordering` report metadata before per-ID queues
+or read-side behavior.
 
 Read `RID` response demux, read-data interleaving/reassembly, bursts,
 queued/blocking policy, profile aliases, full-manager syntax, and VHDL remain

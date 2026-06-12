@@ -10,9 +10,9 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `HEAD after commit` — `IAL2-FEATURE-COMPLETENESS-FRONTIER.33: select AXI same-ID readiness`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.34` pending; next action is to audit AXI same-ID ordering readiness after generated write response demux.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.33`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.32`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.31`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.30`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.29`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.28`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.27`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.26`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.25`. Older completed slices are in the task tree and git history.
+- latest_commit: `HEAD after commit` — `IAL2-FEATURE-COMPLETENESS-FRONTIER.34: audit AXI same-ID readiness`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.35` pending; next action is to implement bounded auto-ID same-ID avoidance assertions/report metadata.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.34`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.33`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.32`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.31`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.30`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.29`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.28`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.27`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.26`. Older completed slices are in the task tree and git history.
 - in_flight_uncommitted: none; unrelated untracked `fx/` intentionally left alone.
 - blockers: none.
 
