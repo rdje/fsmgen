@@ -10,9 +10,9 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `HEAD after commit` — `IAL2-FEATURE-COMPLETENESS-FRONTIER.30: ship AXI response demux behavior`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.31` pending; next action is to select the next exact IAL2 feature-completeness slice after generated AXI write BID response-demux behavior.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.30`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.29`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.28`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.27`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.26`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.25`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.24`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.23`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.22`. Older completed slices are in the task tree and git history.
+- latest_commit: `HEAD after commit` — `IAL2-FEATURE-COMPLETENESS-FRONTIER.31: select AXI residue alignment`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.32` pending; next action is to align `auto_id_lifecycle.residue` after generated AXI write BID response-demux behavior.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.31`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.30`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.29`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.28`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.27`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.26`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.25`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.24`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.23`. Older completed slices are in the task tree and git history.
 - in_flight_uncommitted: none; unrelated untracked `fx/` intentionally left alone.
 - blockers: none.
 

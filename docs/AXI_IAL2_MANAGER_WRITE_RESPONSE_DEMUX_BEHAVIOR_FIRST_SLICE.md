@@ -76,6 +76,11 @@ The `id_response_rule_engine.residue` also removes `response_demux` when the
 explicit write response-demux behavior is present; same-ID ordering remains
 residue.
 
+Follow-up selector `.31` found one remaining report-contract alignment issue:
+`auto_id_lifecycle.residue` still lists `response_demux` even though generated
+demux completion pulses now drive auto-ID release. `.32` owns that narrow
+report cleanup before larger ordering or read-response behavior.
+
 ## Runnable Sample
 
 The checked-in sample is:

@@ -1053,11 +1053,13 @@ generated IAL1 input, transaction completion names are generated pulse outputs,
 guarded demux rules pulse those completions, capacity and auto-ID release
 consume the generated completion pulses, response assertions cover
 unmatched/inactive and ambiguous matches, and reports remove generated write
-demux residue. The active frontier is
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.31`, selecting the next exact IAL2
-feature-completeness slice before same-ID ordering, read-data
-interleaving/reassembly, bursts, queued policy, aliases, full-manager behavior,
-or VHDL changes.
+demux residue. Completed selector
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.31` found the post-`.30` report still
+lists `response_demux` under `auto_id_lifecycle.residue`, which is stale now
+that generated demux pulses drive auto-ID release. The active frontier is
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.32`, aligning that report residue before
+same-ID ordering, read-data interleaving/reassembly, bursts, queued policy,
+aliases, full-manager behavior, or VHDL changes.
 
 The first honest `R11` slices are now:
 1. keep widening convention-first composition only where the child-side evidence is still deterministic,

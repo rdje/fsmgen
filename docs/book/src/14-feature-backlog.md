@@ -2318,8 +2318,9 @@ write `BID` demux completion names need an IAL1 rule-owned one-cycle pulse
 action first. Completed implementation leaf `.29` ships bounded IAL1
 `(pulse target)` rule actions that lower as `<1` pulse-domain assignments.
 Completed implementation leaf `.30` ships generated write `BID`
-response-demux behavior through those pulse completions. The active leaf is
-`.31`, selecting the next exact IAL2 feature-completeness slice.
+response-demux behavior through those pulse completions. Completed selector
+`.31` selects `.32` to align `auto_id_lifecycle.residue` with that shipped
+behavior before larger ordering/read-response work. The active leaf is `.32`.
 Selected IAL2 slices may include explicit IAL1 or
 IAL0/SystemVerilog prerequisites when those prerequisites are needed for
 clean, reviewable lowering.
@@ -3061,6 +3062,13 @@ matches an active auto-ID write transaction and that no accepted write response
 matches more than one active auto-ID write transaction. The
 `id_response_rule_engine` residue removes `response_demux` for this explicit
 write demux behavior; same-ID ordering remains residue.
+
+Post-demux selector:
+[AXI_IAL2_MANAGER_POST_RESPONSE_DEMUX_RESIDUE_ALIGNMENT_SELECTION](../../AXI_IAL2_MANAGER_POST_RESPONSE_DEMUX_RESIDUE_ALIGNMENT_SELECTION.md)
+selects the next narrow slice, `.32`, to align `auto_id_lifecycle.residue`
+with this shipped behavior. The selected follow-up is report-contract cleanup
+only: remove stale `response_demux` residue when explicit generated write
+demux is present, without changing generated `.isf`, `.fsm`, or HDL behavior.
 
 Response-demux behavior readiness audit:
 [AXI_IAL2_MANAGER_WRITE_RESPONSE_DEMUX_BEHAVIOR_READINESS_AUDIT](../../AXI_IAL2_MANAGER_WRITE_RESPONSE_DEMUX_BEHAVIOR_READINESS_AUDIT.md)
@@ -5414,6 +5422,9 @@ write `BID` response-demux behavior.
 Completed implementation leaf `IAL2-FEATURE-COMPLETENESS-FRONTIER.30` ships
 generated write `BID` response-demux behavior and selects `.31` as the next
 exact IAL2 feature-completeness selector.
+Completed selector leaf `IAL2-FEATURE-COMPLETENESS-FRONTIER.31` selects `.32`
+to align `auto_id_lifecycle.residue` after generated write `BID` response
+demux before larger ordering/read-response work.
 Completed implementation leaf
 `ARCHITECTURE-DEBT-FRONTIER.2.1`
 projects direct backend storage/helper declaration-plan entries into

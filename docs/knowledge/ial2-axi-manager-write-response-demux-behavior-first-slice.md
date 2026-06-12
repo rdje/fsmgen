@@ -43,6 +43,9 @@ residue for read response demux, same-ID ordering, read-data interleaving, and
 bursts. `id_response_rule_engine.residue` no longer includes `response_demux`
 when explicit write demux behavior is present.
 
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.31` selected `.32` to align the remaining
+`auto_id_lifecycle.residue` report entry with this shipped behavior.
+
 VHDL, read `RID` demux, same-ID response ordering queues, read-data
 interleaving/reassembly, bursts, queued/blocking policy, profile aliases, and
 full AXI manager behavior remain future exact-owner work.
