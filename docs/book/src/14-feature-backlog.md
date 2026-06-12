@@ -2305,8 +2305,11 @@ selector `.21` chose an explicit optional `(auto-id-lifecycle (write (pool
 that parser/report metadata and static-validation slice with unchanged
 generated `.isf`, `.fsm`, and HDL behavior. Completed implementation leaf
 `.23` ships bounded request-ID drive behavior for explicit auto-ID lifecycle
-families. The active leaf is `.24`, selecting the next exact IAL2
-feature-completeness slice after that shipped behavior.
+families. Completed selector `.24` chooses AXI generated response-demux
+readiness as the next exact subset. The active leaf is `.25`, auditing
+response-channel `BID`/`RID` ownership and completion-event direction before
+response matching, same-ID ordering, read-data interleaving/reassembly, burst,
+queued-policy, alias, full-manager, or VHDL behavior changes.
 Selected IAL2 slices may include explicit IAL1 or
 IAL0/SystemVerilog prerequisites when those prerequisites are needed for
 clean, reviewable lowering.
@@ -2941,6 +2944,15 @@ ordering queues, generated response demux, read-data interleaving/reassembly,
 bursts, queued/blocking policy, full AXI manager syntax, aliases, and VHDL
 remain unshipped.
 
+Selected next AXI manager subset:
+[AXI_IAL2_MANAGER_RESPONSE_DEMUX_SELECTION](../../AXI_IAL2_MANAGER_RESPONSE_DEMUX_SELECTION.md)
+selects generated response-demux readiness as the next exact slice after
+bounded auto-ID request-ID drive. The audit must resolve response-channel
+`BID`/`RID` ownership, response handshake/completion-event direction, generated
+demux completion signals, report shape, and IAL1/IAL0/SystemVerilog substrate
+before any response matching, same-ID ordering, read-data interleaving, burst,
+queued-policy, alias, full-manager, or VHDL behavior changes.
+
 First implementation subset selection:
 [AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION](../../AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md)
 selects a source-anchored AXI Valid-Ready channel contract/monitor as the
@@ -3067,8 +3079,9 @@ metadata, a selector for the next logical read/write
 transaction-envelope/static-validation subset, and the readiness audit for its
 additive static/report implementation boundary. The optional static
 `(transactions ...)` implementation slice and the additive transaction event
-dispatch/fan-in slice are now also shipped, with the next frontier selecting
-the next exact IAL2 feature-completeness step.
+dispatch/fan-in slice are now also shipped, and the current frontier audits
+AXI generated response-demux readiness after the shipped bounded auto-ID
+request-ID drive behavior.
 Additional `.ppif` objects/clauses and profile aliases remain future
 exact-owner work, and they must not jump ahead of the active selector unless
 that selector records why.
@@ -5251,8 +5264,10 @@ without generated `.isf`, `.fsm`, or HDL behavior changes, and selected `.23`
 as bounded request-ID drive behavior.
 Completed implementation leaf `IAL2-FEATURE-COMPLETENESS-FRONTIER.23` ships
 bounded request-ID drive behavior for explicit auto-ID lifecycle families and
-advances the active frontier to `.24`, selecting the next exact IAL2
-feature-completeness slice.
+selected `.24` as the next exact IAL2 feature-completeness selector.
+Completed selector leaf
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.24` selects AXI generated response-demux
+readiness and advances the active frontier to `.25`.
 Completed implementation leaf
 `ARCHITECTURE-DEBT-FRONTIER.2.1`
 projects direct backend storage/helper declaration-plan entries into
