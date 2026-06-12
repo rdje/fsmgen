@@ -9,10 +9,15 @@ use FindBin;
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::Adapter::ISF;
+use FSM::Adapter::FSMGenFull;
+use FSM::Backend::GeneratedModuleEmitter;
 use FSM::HDL::FlattenedDT;
 use FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus;
+use FSM::IR::IntentHIRBuilder;
+use FSM::Pipeline::GeneratedModuleInfoBuilder;
 use FSM::Pipeline::SourceFrontend;
 use FSM::Scheduler::ISF;
+use Lispish;
 
 subtest 'AXI manager capacity/status generator emits reviewable IAL1 before IAL0' => sub {
     my $result = generate_sample();
@@ -163,19 +168,37 @@ subtest 'optional ID-family metadata is report-only and statically validated' =>
     ok(!exists $zero_report->{id_families}{write}{response_id_signal}, 'zero-width write family omits response ID signal');
 };
 
-subtest 'optional transaction-envelope metadata is structural and report-only' => sub {
-    my $base = generate_sample();
+subtest 'optional transaction-envelope metadata emits concrete ID assertions' => sub {
     my $with_transactions = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_transactions());
+    my $isf = $with_transactions->{generated_ial1}{text};
 
-    is(
-        $with_transactions->{generated_ial1}{text},
-        $base->{generated_ial1}{text},
-        'transaction-envelope metadata does not alter generated IAL1 text',
+    like($isf, qr/\(input axi0_arid \(width 4\)\)/, 'concrete read request ID signal is generated as an IAL1 input');
+    like($isf, qr/\(input axi0_rid \(width 4\)\)/, 'concrete read response ID signal is generated as an IAL1 input');
+    unlike($isf, qr/\(input axi0_awid\b/, 'auto-ID write request signal is not generated as an unused input');
+    unlike($isf, qr/\(input axi0_bid\b/, 'auto-ID write response signal is not generated as an unused input');
+    like($isf, qr/\(transaction axi0_id_response_checks/, 'generated IAL1 adds an assertion-only concrete ID transaction');
+    like(
+        $isf,
+        qr/\(assert \(=> axi0_read_submit \(== axi0_arid 3\)\) "axi0 r0 request ID matches concrete ID"\)/,
+        'generated IAL1 asserts the concrete request ID when the read request fires',
     );
-    is_deeply(
-        $with_transactions->{generated_ial0}{files},
-        $base->{generated_ial0}{files},
-        'transaction-envelope metadata does not alter generated IAL0 text',
+    like(
+        $isf,
+        qr/\(assert \(=> axi0_read_complete \(== axi0_rid 3\)\) "axi0 r0 response ID matches concrete ID"\)/,
+        'generated IAL1 asserts the concrete response ID when the read response fires',
+    );
+
+    my $fsm = $with_transactions->{generated_ial0}{files}{'axi0_capacity_status.fsm'};
+    like($fsm, qr/\(\+size[\s\S]*\(axi0_arid 4\)[\s\S]*\(axi0_rid 4\)/, 'generated IAL0 sizes the concrete ID assertion inputs');
+    like(
+        $fsm,
+        qr/\(\+assert[\s\S]*\(axi0_id_response_checks_assert_0 assert \(=> axi0_read_submit \(== axi0_arid 3\)\) "axi0 r0 request ID matches concrete ID"\)/,
+        'generated IAL0 carries the request ID assertion',
+    );
+    like(
+        $fsm,
+        qr/\(\+assert[\s\S]*\(axi0_id_response_checks_assert_1 assert \(=> axi0_read_complete \(== axi0_rid 3\)\) "axi0 r0 response ID matches concrete ID"\)/,
+        'generated IAL0 carries the response ID assertion',
     );
 
     my $transactions = $with_transactions->{report}{transactions};
@@ -202,6 +225,37 @@ subtest 'optional transaction-envelope metadata is structural and report-only' =
         sample_contract()->{source}{anchors},
         'transaction report carries source anchors',
     );
+
+    my $engine = $with_transactions->{report}{id_response_rule_engine};
+    is($engine->{mode}, 'concrete_id_assertions', 'report exposes concrete-ID assertion mode');
+    is_deeply($engine->{id_signal_inputs}, [qw(axi0_arid axi0_rid)], 'report lists only the used concrete-ID inputs');
+    is(scalar(@{$engine->{checks}}), 2, 'report exposes request and response concrete-ID checks');
+    is_deeply(
+        [map { $_->{phase} } @{$engine->{checks}}],
+        [qw(request response)],
+        'report orders concrete-ID checks by request then response',
+    );
+    is_deeply(
+        [map { $_->{id_signal} } @{$engine->{checks}}],
+        [qw(axi0_arid axi0_rid)],
+        'report binds concrete-ID checks to request and response ID signals',
+    );
+    is_deeply(
+        [map { $_->{id_value} } @{$engine->{checks}}],
+        [3, 3],
+        'report binds both concrete-ID checks to the concrete transaction ID value',
+    );
+    is_deeply(
+        $engine->{residue},
+        [qw(auto_id_allocation id_release same_id_ordering response_demux)],
+        'report keeps dynamic ID behavior as residue',
+    );
+
+    my $sv_assertions = sv_assertion_block_for_result($with_transactions);
+    my $request_assert = 'assert property (@(posedge clk) disable iff (!rst_n) ((axi0_read_submit) |-> (axi0_arid == 3))) else $error("axi0 r0 request ID matches concrete ID");';
+    my $response_assert = 'assert property (@(posedge clk) disable iff (!rst_n) ((axi0_read_complete) |-> (axi0_rid == 3))) else $error("axi0 r0 response ID matches concrete ID");';
+    like($sv_assertions, qr/\Q$request_assert\E/, 'SystemVerilog assertion backend emits the request concrete-ID property');
+    like($sv_assertions, qr/\Q$response_assert\E/, 'SystemVerilog assertion backend emits the response concrete-ID property');
 };
 
 subtest 'transaction event dispatch fans per-transaction events into capacity rules' => sub {
@@ -211,7 +265,10 @@ subtest 'transaction event dispatch fans per-transaction events into capacity ru
     like($isf, qr/\(input axi0_w0_request\)/, 'generated IAL1 declares first write transaction request event');
     like($isf, qr/\(input axi0_w1_request\)/, 'generated IAL1 declares second write transaction request event');
     like($isf, qr/\(input axi0_r0_request\)/, 'generated IAL1 declares read transaction request event');
+    like($isf, qr/\(input axi0_arid \(width 4\)\)/, 'generated IAL1 declares concrete read request ID input');
+    like($isf, qr/\(input axi0_rid \(width 4\)\)/, 'generated IAL1 declares concrete read response ID input');
     unlike($isf, qr/\(input axi0_write_submit\)/, 'generated IAL1 omits unused legacy write submit event');
+    unlike($isf, qr/\(input axi0_awid\b/, 'generated IAL1 omits auto-ID write request ID input');
     like(
         $isf,
         qr/\(rule write_submit_only_occ0 \(& \(\| axi0_w0_request axi0_w1_request\) \(! \(\| axi0_w0_complete axi0_w1_complete\)\) \(== axi0_pending_writes_q 0\)\)/,
@@ -243,10 +300,25 @@ subtest 'transaction event dispatch fans per-transaction events into capacity ru
     is_deeply($direction{read}{request_events}, ['axi0_r0_request'], 'report lists scalar read request event');
     is($direction{read}{request_fanin}, 'axi0_r0_request', 'report keeps scalar read request fan-in');
 
+    my $engine = $result->{report}{id_response_rule_engine};
+    is($engine->{mode}, 'concrete_id_assertions', 'dispatch report also exposes concrete-ID assertion mode');
+    is_deeply($engine->{id_signal_inputs}, [qw(axi0_arid axi0_rid)], 'dispatch report lists concrete-ID inputs');
+    is_deeply(
+        [map { $_->{event} } @{$engine->{checks}}],
+        [qw(axi0_r0_request axi0_r0_complete)],
+        'dispatch report binds concrete-ID assertions to per-transaction events',
+    );
+
     my $hdl = hdl_for('axi0_capacity_status', $fsm);
     like($hdl, qr/\binput\s+(?:wire\s+)?axi0_w0_request\b/, 'generated SystemVerilog declares transaction event input');
     like($hdl, qr/\baxi0_w0_request\s*\|\s*axi0_w1_request\b/, 'generated SystemVerilog lowers request OR fan-in');
     like($hdl, qr/\baxi0_w0_complete\s*\|\s*axi0_w1_complete\b/, 'generated SystemVerilog lowers completion OR fan-in');
+
+    my $sv_assertions = sv_assertion_block_for_result($result);
+    my $request_assert = 'assert property (@(posedge clk) disable iff (!rst_n) ((axi0_r0_request) |-> (axi0_arid == 3))) else $error("axi0 r0 request ID matches concrete ID");';
+    my $response_assert = 'assert property (@(posedge clk) disable iff (!rst_n) ((axi0_r0_complete) |-> (axi0_rid == 3))) else $error("axi0 r0 response ID matches concrete ID");';
+    like($sv_assertions, qr/\Q$request_assert\E/, 'assertion backend emits the per-transaction request concrete-ID property');
+    like($sv_assertions, qr/\Q$response_assert\E/, 'assertion backend emits the per-transaction response concrete-ID property');
 };
 
 subtest 'schedule report and HDL expose generated storage and status surface' => sub {
@@ -304,6 +376,18 @@ subtest 'malformed contract objects fail closed and no direct lower-to-fsm entry
         ['concrete transaction ID without family metadata', sub { my $c = sample_contract(); $c->{transactions} = [sample_contract_with_transactions()->{transactions}[1]]; $c }, qr/concrete ID requires id_families metadata/],
         ['concrete transaction ID too wide', sub { my $c = sample_contract_with_transactions(); $c->{transactions}[1]{id}{value} = 16; $c }, qr/concrete read ID value 16 does not fit width 4/],
         ['concrete transaction ID with zero-width family', sub { my $c = sample_contract_with_transactions(); $c->{id_families}{read} = { width => 0 }; $c }, qr/concrete read ID is not allowed when read ID-family width is 0/],
+        ['duplicate concrete ID assertion event', sub {
+            my $c = sample_contract_with_transactions();
+            push @{$c->{transactions}}, {
+                kind             => 'read',
+                name             => 'r1',
+                tag              => 'rd1',
+                request_event    => 'axi0_read_submit',
+                completion_event => 'axi0_read_complete',
+                id               => { value => 4 },
+            };
+            $c;
+        }, qr/concrete ID assertions require unique request events; event 'axi0_read_submit' is shared by transactions 'r0' and 'r1'/],
         ['bad source anchors', sub { my $c = sample_contract(); $c->{source}{anchors} = {}; $c }, qr/source\.anchors must be an array reference/],
     );
 
@@ -455,6 +539,28 @@ sub hdl_for {
     ok($fsm_module, 'capacity/status scheduled .fsm parses through the normal .fsm frontend');
 
     return FSM::HDL::FlattenedDT->new(debug => 0)->generate_systemverilog($fsm_module);
+}
+
+sub sv_assertion_block_for_result {
+    my ($result) = @_;
+    my ($fsm_name) = sort keys %{$result->{generated_ial0}{files}};
+    (my $module_name = $fsm_name) =~ s/\.fsm\z//;
+
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $fsm_path = File::Spec->catfile($tempdir, $fsm_name);
+    write_file($fsm_path, $result->{generated_ial0}{files}{$fsm_name});
+
+    my $module = FSM::Adapter::FSMGenFull->new(debug => 0)->parse_fsm(Lispish::multi($fsm_path));
+    my $intent = FSM::IR::IntentHIRBuilder->build_from_fsm_module(fsm_module => $module);
+    my $info = FSM::Pipeline::GeneratedModuleInfoBuilder->build_from_fsm_module(
+        fsm_module => $module,
+        intent_hir => $intent,
+    );
+
+    return join("\n", FSM::Backend::GeneratedModuleEmitter->immediate_assertion_runtime_lines(
+        module_info     => $info,
+        target_language => 'systemverilog',
+    ));
 }
 
 sub write_file {

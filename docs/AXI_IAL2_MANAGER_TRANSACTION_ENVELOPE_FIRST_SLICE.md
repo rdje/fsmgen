@@ -143,11 +143,17 @@ transactions:
 
 ## Generated Artifact Boundary
 
-This slice is static metadata only. It does not change generated `.isf`,
-generated `.fsm`, or SystemVerilog HDL behavior. The same generated
-`axi0_capacity_status.isf`, `axi0_capacity_status.fsm`, and
-`axi0_capacity_status` SystemVerilog module are produced with or without
-`transactions`.
+At the time this slice shipped, transaction-envelope data was static metadata
+only. The later concrete-ID assertion slice now makes transactions with
+concrete `(id (value N))` behavior-bearing: generated `.isf` declares the used
+ID-family request/response signals, generated `.fsm` carries `+assert`
+entries, and SystemVerilog emits verification-only concrete-ID assertions.
+Transactions that use `(id auto)` remain report-only until a later allocator
+slice ships.
+
+See
+[docs/AXI_IAL2_MANAGER_CONCRETE_ID_ASSERTIONS_FIRST_SLICE.md](AXI_IAL2_MANAGER_CONCRETE_ID_ASSERTIONS_FIRST_SLICE.md)
+for the current generated artifact boundary.
 
 ## Diagnostics
 
@@ -174,3 +180,7 @@ interleaving, `BID`/`RID` response matching, bursts, queued/blocking policy,
 address/data/control payload binding, per-transaction event ports, dynamic
 dispatch, transaction classes, profile aliases, full AXI manager behavior, or
 VHDL backend/reroute work.
+
+Concrete transaction ID request/response assertions are no longer residue;
+they are shipped by
+[docs/AXI_IAL2_MANAGER_CONCRETE_ID_ASSERTIONS_FIRST_SLICE.md](AXI_IAL2_MANAGER_CONCRETE_ID_ASSERTIONS_FIRST_SLICE.md).

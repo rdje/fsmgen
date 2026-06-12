@@ -129,7 +129,6 @@ subtest 'PPIF adapter parses optional AXI manager transaction-envelope metadata'
     my $sample_path = sample_capacity_transaction_ppif_path();
     ok(-f $sample_path, 'tracked runnable PPIF capacity/status transaction-envelope sample exists');
 
-    my $base = FSM::Adapter::IAL2::PPIF->new()->parse_source(sample_capacity_ppif(), sample_capacity_ppif_path());
     my $result = FSM::Adapter::IAL2::PPIF->new()->parse_source(sample_capacity_transaction_ppif(), $sample_path);
 
     is($result->{kind}, 'protocol_intent.axi_manager_capacity_status', 'transaction sample still uses the capacity/status generator');
@@ -146,15 +145,24 @@ subtest 'PPIF adapter parses optional AXI manager transaction-envelope metadata'
     is($result->{report}{transactions}[1]{id}{value}, 3, 'read transaction reports concrete ID value');
     is($result->{report}{transactions}[1]{id}{family}, 'read', 'read transaction reports matching ID family');
     ok(scalar(@{$result->{report}{transactions}[1]{source_anchors} || []}) >= 6, 'transaction report carries source anchors');
-    is(
+    like($result->{generated_ial1}{text}, qr/\(input axi0_arid \(width 4\)\)/, 'transaction generated IAL1 declares concrete read request ID input');
+    like($result->{generated_ial1}{text}, qr/\(input axi0_rid \(width 4\)\)/, 'transaction generated IAL1 declares concrete read response ID input');
+    like(
         $result->{generated_ial1}{text},
-        $base->{generated_ial1}{text},
-        'transaction metadata does not change generated IAL1',
+        qr/\(assert \(=> axi0_read_submit \(== axi0_arid 3\)\) "axi0 r0 request ID matches concrete ID"\)/,
+        'transaction generated IAL1 asserts the concrete read request ID',
     );
+    like(
+        $result->{generated_ial0}{files}{'axi0_capacity_status.fsm'},
+        qr/\(\+assert[\s\S]*\(axi0_id_response_checks_assert_1 assert \(=> axi0_read_complete \(== axi0_rid 3\)\)/,
+        'transaction generated IAL0 carries concrete read response ID assertion',
+    );
+    is($result->{report}{id_response_rule_engine}{mode}, 'concrete_id_assertions', 'transaction report exposes concrete-ID assertion engine');
+    is_deeply($result->{report}{id_response_rule_engine}{id_signal_inputs}, [qw(axi0_arid axi0_rid)], 'transaction report lists used concrete-ID inputs');
     is_deeply(
-        $result->{generated_ial0}{files},
-        $base->{generated_ial0}{files},
-        'transaction metadata does not change generated IAL0',
+        [map { $_->{event} } @{$result->{report}{id_response_rule_engine}{checks}}],
+        [qw(axi0_read_submit axi0_read_complete)],
+        'transaction report binds concrete-ID checks to direction-level events',
     );
 };
 
@@ -168,12 +176,20 @@ subtest 'PPIF adapter parses AXI manager transaction event dispatch' => sub {
     is($result->{report}{source_object}{id}, 'axi-manager-capacity-status-transaction-event-dispatch', 'dispatch source object id is preserved');
     is($result->{report}{source_object}{intent_name}, 'axi_manager_capacity_status_transaction_event_dispatch', 'dispatch source intent name is preserved');
     like($result->{generated_ial1}{text}, qr/\(input axi0_w0_request\)/, 'dispatch generated IAL1 declares first write transaction request input');
+    like($result->{generated_ial1}{text}, qr/\(input axi0_arid \(width 4\)\)/, 'dispatch generated IAL1 declares concrete read request ID input');
+    like($result->{generated_ial1}{text}, qr/\(input axi0_rid \(width 4\)\)/, 'dispatch generated IAL1 declares concrete read response ID input');
     like($result->{generated_ial1}{text}, qr/\(rule write_submit_only_occ0 \(& \(\| axi0_w0_request axi0_w1_request\)/, 'dispatch generated IAL1 uses write request OR fan-in');
     my %direction = map { $_->{direction} => $_ } @{$result->{report}{transaction_event_dispatch}{directions}};
     is($result->{report}{transaction_event_dispatch}{mode}, 'per_transaction_event_fanin', 'dispatch report marks fan-in mode');
     is_deeply($direction{write}{request_events}, [qw(axi0_w0_request axi0_w1_request)], 'dispatch report lists write request events');
     is($direction{write}{request_fanin}, '(| axi0_w0_request axi0_w1_request)', 'dispatch report carries write request fan-in expression');
     is($direction{read}{request_fanin}, 'axi0_r0_request', 'dispatch report keeps scalar read request fan-in');
+    is($result->{report}{id_response_rule_engine}{mode}, 'concrete_id_assertions', 'dispatch report exposes concrete-ID assertion engine');
+    is_deeply(
+        [map { $_->{event} } @{$result->{report}{id_response_rule_engine}{checks}}],
+        [qw(axi0_r0_request axi0_r0_complete)],
+        'dispatch report binds concrete-ID checks to per-transaction events',
+    );
 };
 
 subtest 'PPIF adapter diagnostics fail closed before generation claims' => sub {
@@ -253,6 +269,12 @@ subtest 'PPIF adapter diagnostics fail closed before generation claims' => sub {
                 '(read r0 (tag rd0) (request axi0_read_submit) (completion axi0_read_complete) (id (value 16)))',
             )),
             qr/concrete read ID value 16 does not fit width 4/],
+        ['manager transaction duplicate concrete ID assertion event',
+            capacity_ppif_with_objects(manager_capacity_object_with_id_families_and_transactions(
+                '(write (width 4) (request-id awid) (response-id bid)) (read (width 4) (request-id arid) (response-id rid))',
+                '(read r0 (tag rd0) (request axi0_read_submit) (completion axi0_read_complete) (id (value 3))) (read r1 (tag rd1) (request axi0_read_submit) (completion axi0_read_complete) (id (value 4)))',
+            )),
+            qr/concrete ID assertions require unique request events; event 'axi0_read_submit' is shared by transactions 'r0' and 'r1'/],
     );
 
     for my $case (@cases) {
@@ -350,7 +372,14 @@ subtest 'CLI emits IAL2 report JSON for AXI manager transaction-envelope metadat
     is($report->{transactions}[1]{id}{value}, 3, 'CLI report carries read concrete ID value');
     is($report->{transactions}[1]{id}{family_width}, 4, 'CLI report carries read concrete ID family width');
     ok($report->{transactions}[1]{id}{fits}, 'CLI report marks the read concrete ID as fitting');
-    is_deeply($report->{generated_artifacts}{ial0}{files}, ['axi0_capacity_status.fsm'], 'transaction metadata leaves generated .fsm artifact unchanged');
+    is($report->{id_response_rule_engine}{mode}, 'concrete_id_assertions', 'CLI report exposes concrete-ID assertion mode');
+    is_deeply($report->{id_response_rule_engine}{id_signal_inputs}, [qw(axi0_arid axi0_rid)], 'CLI report lists concrete-ID assertion inputs');
+    is_deeply(
+        [map { $_->{phase} } @{$report->{id_response_rule_engine}{checks}}],
+        [qw(request response)],
+        'CLI report exposes request and response concrete-ID checks',
+    );
+    is_deeply($report->{generated_artifacts}{ial0}{files}, ['axi0_capacity_status.fsm'], 'transaction metadata keeps the generated .fsm artifact name stable');
 };
 
 subtest 'CLI emits IAL2 report JSON for AXI manager transaction event dispatch .ppif' => sub {
@@ -368,6 +397,12 @@ subtest 'CLI emits IAL2 report JSON for AXI manager transaction event dispatch .
     is_deeply($direction{write}{request_events}, [qw(axi0_w0_request axi0_w1_request)], 'CLI report carries write request fan-in events');
     is($direction{write}{completion_fanin}, '(| axi0_w0_complete axi0_w1_complete)', 'CLI report carries write completion fan-in expression');
     is($direction{read}{request_fanin}, 'axi0_r0_request', 'CLI report carries scalar read request fan-in');
+    is($report->{id_response_rule_engine}{mode}, 'concrete_id_assertions', 'CLI dispatch report exposes concrete-ID assertion mode');
+    is_deeply(
+        [map { $_->{event} } @{$report->{id_response_rule_engine}{checks}}],
+        [qw(axi0_r0_request axi0_r0_complete)],
+        'CLI dispatch report binds concrete-ID checks to per-transaction events',
+    );
 };
 
 subtest 'CLI --outdir materializes generated .isf, .fsm, and HDL for .ppif' => sub {
@@ -422,9 +457,16 @@ subtest 'CLI --outdir and --verify-hdl materialize transaction dispatch review a
     my $fsm = slurp(File::Spec->catfile($outdir, 'axi0_capacity_status.fsm'));
     my $sv = slurp($hdl);
     like($isf, qr/\(input axi0_w0_request\)/, 'transaction dispatch --outdir writes generated .isf with transaction event input');
+    like($isf, qr/\(input axi0_arid \(width 4\)\)/, 'transaction dispatch --outdir writes generated .isf with request ID input');
+    like($isf, qr/\(assert \(=> axi0_r0_request \(== axi0_arid 3\)\)/, 'transaction dispatch --outdir writes generated .isf with concrete request ID assertion');
     like($fsm, qr/\(-write_submit_only_occ0\s+<\(& \(\| axi0_w0_request axi0_w1_request\)/, 'transaction dispatch --outdir writes generated .fsm with OR fan-in guard');
+    like($fsm, qr/\(\+assert[\s\S]*\(axi0_id_response_checks_assert_1 assert \(=> axi0_r0_complete \(== axi0_rid 3\)\)/, 'transaction dispatch --outdir writes generated .fsm with concrete response ID assertion');
     like($sv, qr/\bmodule\s+axi0_capacity_status\b/, 'transaction dispatch HDL contains the generated module');
     like($sv, qr/\baxi0_w0_request\s*\|\s*axi0_w1_request\b/, 'transaction dispatch HDL lowers request OR fan-in');
+    my $request_assert = 'assert property (@(posedge clk) disable iff (!rst_n) ((axi0_r0_request) |-> (axi0_arid == 3))) else $error("axi0 r0 request ID matches concrete ID");';
+    my $response_assert = 'assert property (@(posedge clk) disable iff (!rst_n) ((axi0_r0_complete) |-> (axi0_rid == 3))) else $error("axi0 r0 response ID matches concrete ID");';
+    like($sv, qr/\Q$request_assert\E/, 'transaction dispatch HDL emits the concrete request ID assertion');
+    like($sv, qr/\Q$response_assert\E/, 'transaction dispatch HDL emits the concrete response ID assertion');
 };
 
 subtest 'CLI --outdir materializes bundle review artifacts and HDL' => sub {

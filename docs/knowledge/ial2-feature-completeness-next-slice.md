@@ -1,6 +1,6 @@
 ---
 id: ial2-feature-completeness-next-slice
-title: IAL2 feature completeness next slice is concrete ID assertions
+title: IAL2 feature completeness next slice is the post concrete-ID selector
 answers:
   - "what is the next IAL2 feature completeness slice?"
   - "what comes after PPIF Valid-Ready bundles?"
@@ -10,18 +10,18 @@ answers:
 date: 2026-06-12
 status: current
 tags: [ial2, axi, manager, feature-completeness, task-tree]
-evidence: docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; docs/AXI_IAL2_MANAGER_ID_RESPONSE_RULE_ENGINE_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_ID_RESPONSE_RULE_ENGINE_SELECTION.md; docs/AXI_IAL2_MANAGER_TRANSACTION_EVENT_DISPATCH_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_TRANSACTION_EVENT_DISPATCH_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_TRANSACTION_EVENT_DISPATCH_SELECTION.md; docs/AXI_IAL2_MANAGER_TRANSACTION_ENVELOPE_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_TRANSACTION_ENVELOPE_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_TRANSACTION_ENVELOPE_SELECTION.md; docs/AXI_IAL2_MANAGER_ID_FAMILY_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_ID_FAMILY_SUBSET_SELECTION.md; docs/AXI_IAL2_MANAGER_ID_FAMILY_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_CAPACITY_STATUS_SUBSET_SELECTION.md; docs/AXI_MANAGER_RULE_MATRIX_DESIGN_PROBE.md; docs/AXI_MANAGER_USER_API_BRAINSTORM.md; docs/AXI_ID_ORDERING_RULE_EVIDENCE_PROBE.md; docs/book/src/14-feature-backlog.md; README.md; ROADMAP_V2.md
-reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.18|concrete transaction ID|concrete-ID|ID/response rule-engine|\\+assert|response demux' docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md docs/AXI_IAL2_MANAGER_ID_RESPONSE_RULE_ENGINE_READINESS_AUDIT.md docs/book/src/14-feature-backlog.md README.md ROADMAP_V2.md
+evidence: docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; docs/AXI_IAL2_MANAGER_CONCRETE_ID_ASSERTIONS_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_ID_RESPONSE_RULE_ENGINE_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_ID_RESPONSE_RULE_ENGINE_SELECTION.md; docs/AXI_IAL2_MANAGER_TRANSACTION_EVENT_DISPATCH_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_TRANSACTION_EVENT_DISPATCH_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_TRANSACTION_EVENT_DISPATCH_SELECTION.md; docs/AXI_IAL2_MANAGER_TRANSACTION_ENVELOPE_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_TRANSACTION_ENVELOPE_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_TRANSACTION_ENVELOPE_SELECTION.md; docs/AXI_IAL2_MANAGER_ID_FAMILY_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_ID_FAMILY_SUBSET_SELECTION.md; docs/AXI_IAL2_MANAGER_ID_FAMILY_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_CAPACITY_STATUS_SUBSET_SELECTION.md; docs/AXI_MANAGER_RULE_MATRIX_DESIGN_PROBE.md; docs/AXI_MANAGER_USER_API_BRAINSTORM.md; docs/AXI_ID_ORDERING_RULE_EVIDENCE_PROBE.md; docs/book/src/14-feature-backlog.md; README.md; ROADMAP_V2.md
+reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.19|next IAL2 feature-completeness selector|concrete transaction ID|concrete-ID|id_response_rule_engine|response demux' docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md docs/AXI_IAL2_MANAGER_CONCRETE_ID_ASSERTIONS_FIRST_SLICE.md docs/book/src/14-feature-backlog.md README.md ROADMAP_V2.md
 ---
 
 After the shipped Valid-Ready, bundle, capacity/status, ID-family metadata,
-transaction-envelope metadata, and transaction event dispatch IAL2 surfaces,
-the next active leaf is `IAL2-FEATURE-COMPLETENESS-FRONTIER.18`.
+transaction-envelope metadata, transaction event dispatch, and concrete
+transaction ID assertion IAL2 surfaces, the next active leaf is
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.19`.
 
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.18` implements additive concrete
-transaction ID request/response assertions before any auto-ID allocation,
-ID release, response demux, ordering, burst, queued-policy, alias,
-full-manager, or VHDL behavior changes.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.19` is a selector. It must choose the next
+exact IAL2 behavior subset or required IAL1/IAL0/SystemVerilog prerequisite
+before any further behavior changes.
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.12` shipped the bounded AXI manager
 machine-readable AST/structural logical read/write transaction-envelope
@@ -52,8 +52,12 @@ request/response ID signals, assertion-only transaction content emits `.fsm`
 `+assert` carriers, and SystemVerilog assertions emit through the existing
 assertion backend.
 
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.18` shipped that implementation boundary,
+including generated ID inputs, `.fsm` `+assert` carriers, verification-only
+SystemVerilog assertions, `id_response_rule_engine` report metadata, and
+fail-closed duplicate concrete-event diagnostics.
+
 The full AXI manager is not implemented yet. ID allocation, ordering, response
 matching, bursts, queued/blocking policy, `.pif`/`.ppi`/`.axi` aliases, and
-VHDL remain future exact-owner work; they should not jump ahead of the `.18`
-concrete-ID assertion implementation unless that implementation records a
-stronger reason.
+VHDL remain future exact-owner work; they should not jump ahead of the `.19`
+selector unless that selector records a stronger reason.

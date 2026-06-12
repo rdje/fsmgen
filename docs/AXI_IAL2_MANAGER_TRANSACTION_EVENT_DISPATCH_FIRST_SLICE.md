@@ -119,6 +119,12 @@ The generated `.fsm` preserves those guard expressions, and the
 SystemVerilog backend lowers the OR fan-ins through the existing expression
 path.
 
+The later concrete-ID assertion slice now also uses this event provenance.
+When a transaction has `(id (value N))`, generated assertions bind to the
+per-transaction request and completion events, for example `axi0_r0_request`
+and `axi0_r0_complete`, while the capacity/status rule matrix keeps the same
+fan-in behavior.
+
 This slice also widens the IAL1 rule-conflict proof enough to understand the
 bounded OR/negated-OR guard shape used by the generated rule matrix. That keeps
 the generated idle, submit-only, complete-only, and submit+complete rules
@@ -183,6 +189,9 @@ transaction_event_dispatch:
 
 Existing `transactions[]` entries remain structural metadata with `name`,
 `kind`, `tag`, `request_event`, `completion_event`, `id`, and source anchors.
+Concrete-ID transactions now also add `id_response_rule_engine` report metadata
+as described in
+[docs/AXI_IAL2_MANAGER_CONCRETE_ID_ASSERTIONS_FIRST_SLICE.md](AXI_IAL2_MANAGER_CONCRETE_ID_ASSERTIONS_FIRST_SLICE.md).
 
 ## Diagnostics
 
@@ -212,3 +221,7 @@ burst and last-beat tracking, address/data/control payload binding,
 transaction-specific completion routing beyond event provenance,
 queued/blocking policy, profile aliases, full AXI manager syntax, `.pif`,
 `.ppi`, `.axi`, or VHDL backend/reroute behavior.
+
+Concrete transaction ID request/response assertions are shipped by
+[docs/AXI_IAL2_MANAGER_CONCRETE_ID_ASSERTIONS_FIRST_SLICE.md](AXI_IAL2_MANAGER_CONCRETE_ID_ASSERTIONS_FIRST_SLICE.md);
+auto-ID allocation and generated response demux remain residue.

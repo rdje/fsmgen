@@ -7,12 +7,13 @@ answers:
   - "what sample covers AXI transaction event dispatch?"
   - "what does transaction_event_dispatch report?"
   - "does AXI transaction event dispatch implement ID allocation?"
+  - "do concrete ID assertions use per-transaction dispatch events?"
   - "does IAL1 support the OR fan-in guards for AXI transaction events?"
 date: 2026-06-12
 status: current
 tags: [ial2, ial1, axi, manager, transaction-envelope, event-dispatch, systemverilog]
-evidence: docs/AXI_IAL2_MANAGER_TRANSACTION_EVENT_DISPATCH_FIRST_SLICE.md; ppif/axi_manager_capacity_status_transaction_event_dispatch.ppif; perl/FSM/IAL2/ProtocolIntent/AxiManagerCapacityStatus.pm; perl/FSM/Scheduler/ISF/LoweringIR.pm; perl/FSM/Support/RegressionCorpus.pm; perl/FSM/Support/LanguageSurfaceSection.pm; t/1437-axi-ial2-manager-capacity-status-generator.t; t/1436-ial2-ppif-parser-cli.t; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/book/src/14-feature-backlog.md; README.md; ROADMAP_V2.md
-reverify: rg -n 'transaction_event_dispatch|per_transaction_event_fanin|axi_manager_capacity_status_transaction_event_dispatch|bounded OR|OR fan-in|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.15' docs/AXI_IAL2_MANAGER_TRANSACTION_EVENT_DISPATCH_FIRST_SLICE.md ppif/axi_manager_capacity_status_transaction_event_dispatch.ppif perl/FSM/IAL2/ProtocolIntent/AxiManagerCapacityStatus.pm perl/FSM/Scheduler/ISF/LoweringIR.pm t/1437-axi-ial2-manager-capacity-status-generator.t t/1436-ial2-ppif-parser-cli.t docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/book/src/14-feature-backlog.md README.md ROADMAP_V2.md
+evidence: docs/AXI_IAL2_MANAGER_TRANSACTION_EVENT_DISPATCH_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_CONCRETE_ID_ASSERTIONS_FIRST_SLICE.md; ppif/axi_manager_capacity_status_transaction_event_dispatch.ppif; perl/FSM/IAL2/ProtocolIntent/AxiManagerCapacityStatus.pm; perl/FSM/Scheduler/ISF/LoweringIR.pm; perl/FSM/Support/RegressionCorpus.pm; perl/FSM/Support/LanguageSurfaceSection.pm; t/1437-axi-ial2-manager-capacity-status-generator.t; t/1436-ial2-ppif-parser-cli.t; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/book/src/14-feature-backlog.md; README.md; ROADMAP_V2.md
+reverify: rg -n 'transaction_event_dispatch|per_transaction_event_fanin|axi_manager_capacity_status_transaction_event_dispatch|bounded OR|OR fan-in|id_response_rule_engine|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.15|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.18' docs/AXI_IAL2_MANAGER_TRANSACTION_EVENT_DISPATCH_FIRST_SLICE.md docs/AXI_IAL2_MANAGER_CONCRETE_ID_ASSERTIONS_FIRST_SLICE.md ppif/axi_manager_capacity_status_transaction_event_dispatch.ppif perl/FSM/IAL2/ProtocolIntent/AxiManagerCapacityStatus.pm perl/FSM/Scheduler/ISF/LoweringIR.pm t/1437-axi-ial2-manager-capacity-status-generator.t t/1436-ial2-ppif-parser-cli.t docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/book/src/14-feature-backlog.md README.md ROADMAP_V2.md
 ---
 
 AXI manager transaction event dispatch is shipped under the existing public
@@ -34,9 +35,13 @@ emits `transaction_event_dispatch` with mode
 `per_transaction_event_fanin`, per-direction request/completion event lists,
 and request/completion fan-in expressions.
 
+Concrete-ID assertions now use those per-transaction events when present: the
+dispatch sample binds read ID checks to `axi0_r0_request` and
+`axi0_r0_complete` and reports them under `id_response_rule_engine`.
+
 This slice also widened the IAL1 rule-conflict proof to understand the bounded
 OR/negated-OR generated guard shape used by the capacity/status matrix.
 
-It does not implement ID allocation, dynamic user-ID validation, response
-matching, ordering, interleaving, bursts, queued/blocking policy, full AXI
-manager syntax, aliases, or VHDL.
+It does not implement ID allocation, dynamic user-ID validation, generated
+response demux, ordering, interleaving, bursts, queued/blocking policy, full
+AXI manager syntax, aliases, or VHDL.

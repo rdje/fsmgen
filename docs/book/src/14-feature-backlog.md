@@ -2282,19 +2282,21 @@ readiness audit selects an additive optional `(transactions ...)` static/report
 metadata extension under the existing `manager-capacity-status` object. That
 optional transaction-envelope metadata slice is now shipped with a separate
 sample, structural report entries, check JSON and semantic JSON source
-identity, and unchanged generated `.isf`, generated `.fsm`, and HDL behavior.
+identity, and initially unchanged generated `.isf`, generated `.fsm`, and HDL
+behavior.
 The transaction event dispatch and direction fan-in slice is now shipped for
 that same object. Distinct per-transaction request/completion events become
 generated IAL1 inputs, multi-event direction groups use OR fan-in guards, the
 existing IAL1/IAL0/SystemVerilog path carries the behavior, and schedule JSON
-additively reports `transaction_event_dispatch` metadata. The active frontier
-is AXI manager ID/response rule-engine readiness: before any ID allocation,
-response matching, ordering, burst, queued-policy, alias, full-manager, or VHDL
-behavior changes, the readiness audit selected additive concrete transaction
-ID request/response assertions as the first implementation boundary. The
-active leaf is `.18`, which must keep auto-ID allocation, ID release, response
+additively reports `transaction_event_dispatch` metadata. The concrete
+transaction ID assertion slice is now shipped: transactions with concrete
+requested IDs declare used ID-family request/response ID signals as generated
+IAL1 inputs, lower assertion-only checks to `.fsm` `+assert` carriers, emit
+verification-only SystemVerilog assertions, and report
+`id_response_rule_engine` metadata. Auto-ID allocation, ID release, response
 demux, ordering, bursts, queued policy, aliases, full-manager behavior, and
-VHDL as residue.
+VHDL remain residue. The active leaf is `.19`, the next IAL2
+feature-completeness selector after concrete ID assertions.
 Selected IAL2 slices may include explicit IAL1 or
 IAL0/SystemVerilog prerequisites when those prerequisites are needed for
 clean, reviewable lowering.
@@ -2311,10 +2313,11 @@ first bounded shipped surface for one AXI Valid-Ready protocol intent object,
 multi-channel Valid-Ready bundles, and one AXI manager capacity/status shell
 through public `.ppif`, including optional static ID-family metadata and
 optional structural transaction-envelope metadata with per-transaction event
-dispatch/fan-in. Broader IAL2 still must justify itself with semantics above
-individual transactions, not only syntax convenience. Its generic file surface
-remains protocol/platform-generic, and an IAL2 file may select a protocol or
-platform vocabulary inside the file.
+dispatch/fan-in plus concrete transaction ID request/response assertions.
+Broader IAL2 still must justify itself with semantics above individual
+transactions, not only syntax convenience. Its generic file surface remains
+protocol/platform-generic, and an IAL2 file may select a protocol or platform
+vocabulary inside the file.
 
 IAL0, IAL1, IAL2, and this book describe backend-language-neutral contracts,
 not Perl-only implementation APIs. The current Perl 5 codebase is the
@@ -2347,7 +2350,9 @@ Current evaluation: IAL2 now has a first in-process behavior-bearing slice for
 an AXI Valid-Ready contract object, a first public `.ppif` parser/CLI slice for
 that same object shape, multi-channel Valid-Ready bundle behavior, and a public
 `.ppif` AXI manager capacity/status shell with reviewable generated `.isf` and
-`.fsm` artifacts plus optional ID-family and transaction-envelope metadata.
+`.fsm` artifacts plus optional ID-family metadata, transaction-envelope
+metadata, per-transaction event dispatch/fan-in, and concrete transaction ID
+request/response assertions.
 Future implementation leaves must choose exact owners for the next protocol
 rule subset, additional `.ppif` syntax, or aliases; a hand-written reusable
 `.fsm` or `.isf` library alone is useful but not enough to justify IAL2.
@@ -2680,12 +2685,16 @@ keeps schema `fsmgen.ial2.protocol_intent.axi_manager_capacity_status.v1` and
 additively emits `transactions[]` entries with `name`, `kind`, `tag`,
 `request_event`, `completion_event`, `id`, and `source_anchors`. Concrete IDs
 report `policy: concrete`, `value`, `family`, `family_width`, and `fits`.
-The same `axi0_capacity_status.isf`, `axi0_capacity_status.fsm`, and
-SystemVerilog module are produced with or without `transactions`. It still
-does not implement ID allocation algorithms, dynamic user-ID validation while
-issuing, same-ID ordering queues, different-ID interleaving, `BID`/`RID`
-response matching, bursts, queued/blocking policy, per-transaction event
-ports, profile aliases, full AXI manager behavior, or VHDL.
+At the time the transaction-envelope slice shipped, generated artifacts were
+unchanged. The later concrete-ID assertion slice now makes concrete
+`(id (value N))` transactions behavior-bearing: generated `.isf` declares the
+used ID-family request/response ID signals, generated `.fsm` carries `+assert`
+entries, and SystemVerilog emits verification-only assertions. Auto-ID
+transactions remain report-only until an allocator slice ships. The manager
+still does not implement ID allocation algorithms, dynamic user-ID validation
+while issuing, same-ID ordering queues, different-ID interleaving, generated
+`BID`/`RID` response demux, bursts, queued/blocking policy, profile aliases,
+full AXI manager behavior, or VHDL.
 
 First transaction-event dispatch `.ppif` slice:
 [AXI_IAL2_MANAGER_TRANSACTION_EVENT_DISPATCH_SELECTION](../../AXI_IAL2_MANAGER_TRANSACTION_EVENT_DISPATCH_SELECTION.md)
@@ -2755,11 +2764,15 @@ Generated `.isf` declares the transaction events as inputs and keeps scalar
 one-event compatibility for directions with one transaction event. Multi-event
 groups lower as OR fan-in guards, the generated `.fsm` preserves those guard
 expressions, and SystemVerilog emits the equivalent OR expressions through the
-existing backend. The IAL1 rule-conflict proof now understands the bounded
-OR/negated-OR guard shape used by this generated rule matrix. This slice does
-not implement or claim ID allocation, `BID`/`RID` response matching, same-ID
-ordering, interleaving, bursts, payload binding, queued/blocking policy,
-profile aliases, full AXI manager behavior, or VHDL.
+existing backend. Concrete-ID transactions now also use this event provenance:
+request/response ID assertions bind to per-transaction events such as
+`axi0_r0_request` and `axi0_r0_complete`, while the capacity/status rule
+matrix keeps the same fan-in behavior. The IAL1 rule-conflict proof now
+understands the bounded OR/negated-OR guard shape used by this generated rule
+matrix. This slice does
+not implement or claim ID allocation, generated `BID`/`RID` response demux,
+same-ID ordering, interleaving, bursts, payload binding, queued/blocking
+policy, profile aliases, full AXI manager behavior, or VHDL.
 
 Next AXI manager subset: ID/response rule-engine readiness:
 [AXI_IAL2_MANAGER_ID_RESPONSE_RULE_ENGINE_SELECTION](../../AXI_IAL2_MANAGER_ID_RESPONSE_RULE_ENGINE_SELECTION.md)
@@ -2773,8 +2786,11 @@ The readiness audit:
 selects additive concrete transaction ID request/response assertions as the
 first implementation boundary.
 
-The audit starts from the existing machine-readable ID-family and transaction
-metadata:
+Concrete transaction ID assertion first slice:
+[AXI_IAL2_MANAGER_CONCRETE_ID_ASSERTIONS_FIRST_SLICE](../../AXI_IAL2_MANAGER_CONCRETE_ID_ASSERTIONS_FIRST_SLICE.md)
+ships that boundary without adding new public syntax. Existing machine-readable
+ID-family and transaction metadata now become behavior-bearing when a
+transaction uses concrete `(id (value N))`:
 
 ```text
 (id-families
@@ -2786,25 +2802,54 @@ metadata:
   (read  r0 (tag rd0) (request axi0_r0_request) (completion axi0_r0_complete) (id (value 3))))
 ```
 
-Expected audit questions include whether positive-width ID-family signals must
-become generated IAL1 inputs, whether the current rule guard/action expression
-path is enough for bounded ID equality checks, whether actor-owned scalar
-storage is enough for a first in-flight ID state, whether automatic ID
-allocation is honest in the first behavior slice, and whether response
-matching should be generated scheduler behavior, generated runtime assertions,
-report-only classification, or a combination. The audit conclusion is narrower
-than full matching: for transactions with concrete `(id (value N))`, the next
-implementation should declare the used request/response ID signals as IAL1
-inputs and emit assertion-only checks such as:
+Generated `.isf` declares the used ID-family request/response signals and emits
+assertion-only checks:
 
 ```text
-(assert (=> axi0_r0_request (== axi0_arid 3)) "r0 request ID matches concrete ID")
-(assert (=> axi0_r0_complete (== axi0_rid 3)) "r0 response ID matches concrete ID")
+(input axi0_arid (width 4))
+(input axi0_rid (width 4))
+
+(transaction axi0_id_response_checks
+  (assert (=> axi0_r0_request (== axi0_arid 3))
+          "axi0 r0 request ID matches concrete ID")
+  (assert (=> axi0_r0_complete (== axi0_rid 3))
+          "axi0 r0 response ID matches concrete ID"))
 ```
 
-The selected scope still excludes automatic ID allocation, ID release,
-same-ID ordering queues, different-ID read-data interleaving/reassembly, burst
-and last-beat tracking, payload binding, queued/blocking policy, generated
+The generated `.fsm` carries `+size` entries for the used ID signals and
+`+assert` carriers. SystemVerilog emits verification-only concurrent
+properties through the existing assertion backend. Schedule JSON additively
+emits:
+
+```text
+id_response_rule_engine:
+  mode: concrete_id_assertions
+  id_signal_inputs:
+    - axi0_arid
+    - axi0_rid
+  checks:
+    - transaction: r0
+      phase: request
+      event: axi0_r0_request
+      id_signal: axi0_arid
+      id_value: 3
+      enforcement: runtime_assertion
+    - transaction: r0
+      phase: response
+      event: axi0_r0_complete
+      id_signal: axi0_rid
+      id_value: 3
+      enforcement: runtime_assertion
+  residue:
+    - auto_id_allocation
+    - id_release
+    - same_id_ordering
+    - response_demux
+```
+
+The shipped scope still excludes automatic ID allocation, ID release, same-ID
+ordering queues, different-ID read-data interleaving/reassembly, burst and
+last-beat tracking, payload binding, queued/blocking policy, generated
 response demux, full AXI manager syntax, profile aliases, and VHDL.
 
 First implementation subset selection:
@@ -5100,8 +5145,10 @@ direction fan-in and advances the sequence to `.16`. Completed selector leaf
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.16` selects AXI manager ID/response
 rule-engine readiness and advances the sequence to `.17`. Completed readiness
 audit leaf `IAL2-FEATURE-COMPLETENESS-FRONTIER.17` selects additive concrete
-transaction ID assertions and advances the active frontier to `.18`
-implementation.
+transaction ID assertions and advances the sequence to `.18`. Completed
+implementation leaf `IAL2-FEATURE-COMPLETENESS-FRONTIER.18` ships concrete
+transaction ID request/response assertions and advances the active frontier to
+`.19`, the next IAL2 feature-completeness selector.
 Completed implementation leaf
 `ARCHITECTURE-DEBT-FRONTIER.2.1`
 projects direct backend storage/helper declaration-plan entries into

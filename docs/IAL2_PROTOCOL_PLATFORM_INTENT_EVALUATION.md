@@ -234,7 +234,14 @@ audit
 [AXI_IAL2_MANAGER_ID_RESPONSE_RULE_ENGINE_READINESS_AUDIT](AXI_IAL2_MANAGER_ID_RESPONSE_RULE_ENGINE_READINESS_AUDIT.md)
 selects additive concrete transaction ID request/response assertions as the
 first implementation boundary with no separate IAL1/IAL0/SystemVerilog
-prerequisite.
+prerequisite. The implementation slice is shipped in
+[AXI_IAL2_MANAGER_CONCRETE_ID_ASSERTIONS_FIRST_SLICE](AXI_IAL2_MANAGER_CONCRETE_ID_ASSERTIONS_FIRST_SLICE.md):
+transactions with concrete requested IDs now declare used ID-family
+request/response ID signals as generated IAL1 inputs, lower assertion-only
+checks to `.fsm` `+assert` carriers, emit verification-only SystemVerilog
+assertions, and report `id_response_rule_engine` metadata. Auto-ID
+allocation, ID release, response demux, ordering, bursts, queued/blocking
+policy, aliases, full AXI manager behavior, and VHDL remain residue.
 Public `.pif`, `.ppi`, `.axi`, protocol-profile aliases, ID allocation,
 ordering, response matching, bursts, queued/blocking policy, and full AXI
 manager behavior remain unshipped until exact owners select and implement

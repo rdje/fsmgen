@@ -941,8 +941,8 @@ Priority note:
   static-validation contract; the readiness audit selects an additive optional
   `(transactions ...)` static/report metadata extension under that same object;
   the public `.ppif` transaction-envelope metadata slice is now shipped with
-  structured report metadata and unchanged generated `.isf`, `.fsm`, and HDL
-  behavior; the transaction event dispatch and direction fan-in readiness audit
+  structured report metadata and initially unchanged generated `.isf`, `.fsm`,
+  and HDL behavior; the transaction event dispatch and direction fan-in readiness audit
   selected an additive implementation boundary with no separate pre-slice
   IAL1/IAL0/SystemVerilog prerequisite, and that dispatch/fan-in slice is now
   shipped with generated transaction-event inputs, OR fan-in guards, additive
@@ -951,14 +951,17 @@ Priority note:
   ID/response rule-engine readiness before any ID allocation, response
   matching, ordering, burst, queued-policy, alias, full-manager, or VHDL
   behavior changes; the readiness audit selected additive concrete transaction
-  ID request/response assertions as the first implementation boundary.
+  ID request/response assertions as the first implementation boundary; that
+  concrete-ID assertion slice is now shipped with generated ID inputs, `.fsm`
+  `+assert` carriers, verification-only SystemVerilog assertions, and
+  `id_response_rule_engine` report metadata.
 
 ## Current intent
 The active immediate feature-completeness lane is IAL2 on the
 SystemVerilog-backed lowering path; see
 [docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md](docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md).
-The current frontier is AXI manager ID/response rule-engine readiness after
-the shipped AXI manager transaction event dispatch and direction fan-in slice.
+The current frontier is the next IAL2 feature-completeness selector after
+the shipped AXI manager concrete transaction ID assertion slice.
 The shipped public capacity/status source accepts one
 `(manager-capacity-status NAME ...)` object under
 `(protocol-platform-intent ...)`, `(profile axi4)`, and top-level source
@@ -974,9 +977,10 @@ transaction-envelope subset is now shipped as optional `(transactions ...)`
 metadata: machine-readable AST/structural logical read/write transaction
 names, tags, request/completion event bindings, and optional requested-ID
 static validation against declared ID-family widths. Request and completion
-bindings are limited to existing direction-level abstract events, so generated
-`.isf`, generated `.fsm`, and HDL behavior remain unchanged before dynamic
-manager behavior is claimed. The completed readiness audit verified that
+bindings may use direction-level or per-transaction events. Transactions with
+concrete requested IDs now generate ID request/response assertions; auto-ID
+transactions remain report-only before an allocator is selected. The completed
+readiness audit verified that
 distinct per-transaction request/completion events can fan into the existing
 read/write capacity/status rule matrices through the current
 IAL1/IAL0/SystemVerilog path. That slice now declares unique transaction event
@@ -988,7 +992,8 @@ selected a narrow concrete transaction ID assertion boundary: generated IAL1
 can declare used ID-family request/response ID signals, emit assertion-only
 transaction checks through `.fsm` `+assert` carriers, and reach the existing
 SystemVerilog assertion emitter path without a separate substrate prerequisite.
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.18` is the active implementation frontier.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.18` shipped that boundary, and
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.19` is the active selector frontier.
 Auto-ID allocation, ID release, response demux, ordering, bursts, queued
 policy, aliases, full-manager behavior, and VHDL remain residue.
 

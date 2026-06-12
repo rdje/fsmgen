@@ -80,7 +80,7 @@ sub build_language_surface_section {
                         '--verify-hdl',
                     ],
                     sample_path => 'ppif/axi_aw_valid_ready.ppif',
-                    current_boundary => 'one-channel Valid-Ready sources and one-object AXI manager capacity/status sources with optional static ID-family metadata, structural transaction-envelope metadata, and per-transaction event dispatch/fan-in can emit HDL and semantic JSON; multi-channel Valid-Ready bundles emit aggregate reports, check JSON, semantic JSON, and review artifacts while ID allocation, ordering, response matching, bursts, aliases, platform clauses, and full AXI manager behavior remain deferred',
+                    current_boundary => 'one-channel Valid-Ready sources and one-object AXI manager capacity/status sources with optional static ID-family metadata, structural transaction-envelope metadata, per-transaction event dispatch/fan-in, and concrete transaction ID request/response assertions can emit HDL and semantic JSON; multi-channel Valid-Ready bundles emit aggregate reports, check JSON, semantic JSON, and review artifacts while auto-ID allocation, ID release, ordering, response demux, bursts, aliases, platform clauses, and full AXI manager behavior remain deferred',
                 },
             ],
             unsupported_first_slice_aliases => [qw(.pif .ppi .axi .chi .ace .ahb .apb .atb)],

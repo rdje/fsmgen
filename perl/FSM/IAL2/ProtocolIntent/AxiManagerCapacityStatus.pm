@@ -139,6 +139,10 @@ sub _normalize_contract($raw) {
         events       => \%events,
         transactions => $transactions,
     );
+    my $id_response_rule_engine = _build_id_response_rule_engine(
+        id_families  => $id_families,
+        transactions => $transactions,
+    );
     my $event_inputs = _effective_event_inputs(
         events                     => \%events,
         transaction_event_dispatch => $transaction_event_dispatch,
@@ -183,6 +187,7 @@ sub _normalize_contract($raw) {
         id_families       => $id_families,
         transactions      => $transactions,
         transaction_event_dispatch => $transaction_event_dispatch,
+        id_response_rule_engine => $id_response_rule_engine,
         storage           => \%storage,
         widths            => \%widths,
         intent_name       => $intent_name,
@@ -569,6 +574,66 @@ sub _effective_event_inputs(%args) {
     return _abstract_event_names($args{events});
 }
 
+sub _build_id_response_rule_engine(%args) {
+    my $transactions = $args{transactions};
+    my $id_families = $args{id_families};
+    return undef unless ref($transactions) eq 'ARRAY' && ref($id_families) eq 'HASH';
+
+    my @checks;
+    my @id_signal_inputs;
+    my %seen_concrete_event;
+    for my $transaction (@$transactions) {
+        my $id = $transaction->{id};
+        next unless ref($id) eq 'HASH' && ($id->{policy} // '') eq 'concrete';
+
+        my $family = $id_families->{$transaction->{kind}};
+        confess "Internal error: concrete AXI transaction ID missing normalized ID family\n"
+            unless ref($family) eq 'HASH' && $family->{present};
+
+        for my $phase_spec (
+            [request  => 'request_event'    => 'request_id_signal'],
+            [response => 'completion_event' => 'response_id_signal'],
+        ) {
+            my ($phase, $event_field, $signal_field) = @$phase_spec;
+            my $id_signal = $family->{$signal_field};
+            my $event = $transaction->{$event_field};
+            my $event_key = "$phase\0$event";
+            if (my $previous = $seen_concrete_event{$event_key}) {
+                confess "AXI manager capacity/status IAL2 contract concrete ID assertions require unique $phase events; event '$event' is shared by transactions '$previous->{transaction}' and '$transaction->{name}'\n";
+            }
+            $seen_concrete_event{$event_key} = {
+                transaction => $transaction->{name},
+            };
+            push @id_signal_inputs, $id_signal;
+            push @checks, {
+                transaction => $transaction->{name},
+                tag         => $transaction->{tag},
+                kind        => $transaction->{kind},
+                phase       => $phase,
+                event       => $event,
+                id_signal   => $id_signal,
+                id_value    => $id->{value},
+                family_width => $id->{family_width},
+                enforcement => 'runtime_assertion',
+                assertion_name => "$transaction->{name}_${phase}_id_matches",
+            };
+        }
+    }
+
+    return undef unless @checks;
+    return {
+        mode => 'concrete_id_assertions',
+        id_signal_inputs => _unique_preserving(\@id_signal_inputs),
+        checks => \@checks,
+        residue => [
+            'auto_id_allocation',
+            'id_release',
+            'same_id_ordering',
+            'response_demux',
+        ],
+    };
+}
+
 sub _reject_forbidden_or_duplicate_names(%args) {
     my $event_names = _unique_preserving([
         @{_abstract_event_names($args{events})},
@@ -702,13 +767,18 @@ sub _emit_isf($contract) {
         full_output => $contract->{status_outputs}{write_full},
         can_accept_output => $contract->{status_outputs}{write_can_accept},
     );
+    my $interface_inputs = _unique_preserving([
+        @{$contract->{event_inputs}},
+        @{_id_response_signal_inputs($contract)},
+    ]);
+    my @id_response_assertions = _id_response_assertion_transaction_lines($contract);
 
     return join("\n",
         "(actor $contract->{actor_name}",
         "  (clock $contract->{clock})",
         "  $reset",
         "  (interface",
-        (map { "    (input $_)" } @{$contract->{event_inputs}}),
+        (map { _input_line($contract, $_) } @$interface_inputs),
         "    (output $contract->{status_outputs}{read_can_accept})",
         "    (output $contract->{status_outputs}{write_can_accept})",
         "    (output $contract->{status_outputs}{read_full})",
@@ -722,12 +792,60 @@ sub _emit_isf($contract) {
         "    (var $contract->{storage}{pending_reads} (width $read_width))",
         "    (var $contract->{storage}{pending_writes} (width $write_width)))",
         "",
+        @id_response_assertions,
+        (@id_response_assertions ? ("") : ()),
         @read_rules,
         "",
         @write_rules,
         ")",
         "",
     );
+}
+
+sub _id_response_signal_inputs($contract) {
+    my $engine = $contract->{id_response_rule_engine};
+    return [] unless ref($engine) eq 'HASH';
+    return $engine->{id_signal_inputs} || [];
+}
+
+sub _input_line($contract, $name) {
+    my $width = _id_signal_input_width($contract, $name);
+    return "    (input $name)" if !defined($width) || $width == 1;
+    return "    (input $name (width $width))";
+}
+
+sub _id_signal_input_width($contract, $name) {
+    my $families = $contract->{id_families};
+    return undef unless ref($families) eq 'HASH';
+    for my $family (qw(read write)) {
+        my $entry = $families->{$family} || {};
+        next unless $entry->{present};
+        return $entry->{width}
+            if ($entry->{request_id_signal} // '') eq $name
+            || ($entry->{response_id_signal} // '') eq $name;
+    }
+    return undef;
+}
+
+sub _id_response_assertion_transaction_lines($contract) {
+    my $engine = $contract->{id_response_rule_engine};
+    return () unless ref($engine) eq 'HASH' && @{$engine->{checks} || []};
+
+    my @lines = ("  (transaction $contract->{name}_id_response_checks");
+    for my $check (@{$engine->{checks}}) {
+        my $message = "$contract->{name} $check->{transaction} $check->{phase} ID matches concrete ID";
+        push @lines,
+            "    (assert (=> $check->{event} (== $check->{id_signal} $check->{id_value})) "
+            . _quoted_isf_string($message) . ")";
+    }
+    push @lines, "  )";
+    return @lines;
+}
+
+sub _quoted_isf_string($value) {
+    $value =~ s/\\/\\\\/g;
+    $value =~ s/"/\\"/g;
+    return "\"$value\"";
 }
 
 sub _effective_direction_events($contract, $direction) {
@@ -861,6 +979,9 @@ sub _build_report(%args) {
         (defined $contract->{transaction_event_dispatch}
             ? (transaction_event_dispatch => _report_transaction_event_dispatch($contract))
             : ()),
+        (defined $contract->{id_response_rule_engine}
+            ? (id_response_rule_engine => _report_id_response_rule_engine($contract))
+            : ()),
         abstract_events => _clone_jsonish($contract->{events}),
         submit_policy => $contract->{submit_policy},
         generated_artifacts => {
@@ -928,6 +1049,8 @@ sub _build_report(%args) {
             'if supplied, transactions must declare unique names and tags, read/write kind, identifier request/completion event bindings, and id policy/value',
             'transaction event dispatch rejects opposite-direction direction-level event bindings and duplicate per-direction request/completion event names when per-transaction dispatch is used',
             'concrete transaction ID values require a present matching ID family and must fit its declared width',
+            'concrete transaction ID assertions require unique request/response events per concrete transaction',
+            'concrete transaction ID values generate request/response ID equality assertions against the declared ID-family signals',
         ],
         unsupported_residue => [
             {
@@ -936,7 +1059,7 @@ sub _build_report(%args) {
             },
             {
                 id     => 'axi_id_ordering_and_response_matching',
-                detail => 'ID allocation, dynamic user-ID validation while issuing work, same-ID ordering, different-ID interleaving, BID/RID response matching, and burst/last-beat tracking remain outside this capacity/status shell.',
+                detail => 'Concrete transaction ID request/response assertions are supported; automatic ID allocation, dynamic user-ID arbitration while issuing work, ID release, same-ID ordering, different-ID interleaving, generated BID/RID response demux, and burst/last-beat tracking remain outside this capacity/status shell.',
             },
             {
                 id     => 'profile_aliases_and_full_manager_behavior',
@@ -947,6 +1070,16 @@ sub _build_report(%args) {
                 detail => 'VHDL backend and reroute behavior remains deferred until the SystemVerilog-backed IAL path is feature complete.',
             },
         ],
+    };
+}
+
+sub _report_id_response_rule_engine($contract) {
+    my $engine = $contract->{id_response_rule_engine};
+    return {
+        mode => $engine->{mode},
+        checks => _clone_jsonish($engine->{checks}),
+        id_signal_inputs => _clone_jsonish($engine->{id_signal_inputs}),
+        residue => _clone_jsonish($engine->{residue}),
     };
 }
 

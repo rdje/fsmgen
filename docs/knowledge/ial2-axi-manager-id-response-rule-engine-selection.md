@@ -10,8 +10,8 @@ answers:
 date: 2026-06-12
 status: current
 tags: [ial2, axi, manager, id, response-matching, task-tree]
-evidence: docs/AXI_IAL2_MANAGER_ID_RESPONSE_RULE_ENGINE_SELECTION.md; docs/AXI_IAL2_MANAGER_ID_RESPONSE_RULE_ENGINE_READINESS_AUDIT.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; docs/AXI_IAL2_MANAGER_TRANSACTION_EVENT_DISPATCH_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_ID_FAMILY_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_TRANSACTION_ENVELOPE_FIRST_SLICE.md; docs/AXI_MANAGER_RULE_MATRIX_DESIGN_PROBE.md; docs/AXI_ID_ORDERING_RULE_EVIDENCE_PROBE.md; docs/book/src/14-feature-backlog.md; README.md; ROADMAP_V2.md
-reverify: rg -n 'ID/response rule-engine|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.17|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.18|concrete transaction ID|response matching|BID|RID|id_families|transaction_event_dispatch' docs/AXI_IAL2_MANAGER_ID_RESPONSE_RULE_ENGINE_SELECTION.md docs/AXI_IAL2_MANAGER_ID_RESPONSE_RULE_ENGINE_READINESS_AUDIT.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md docs/book/src/14-feature-backlog.md README.md ROADMAP_V2.md
+evidence: docs/AXI_IAL2_MANAGER_ID_RESPONSE_RULE_ENGINE_SELECTION.md; docs/AXI_IAL2_MANAGER_ID_RESPONSE_RULE_ENGINE_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_CONCRETE_ID_ASSERTIONS_FIRST_SLICE.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; docs/AXI_IAL2_MANAGER_TRANSACTION_EVENT_DISPATCH_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_ID_FAMILY_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_TRANSACTION_ENVELOPE_FIRST_SLICE.md; docs/AXI_MANAGER_RULE_MATRIX_DESIGN_PROBE.md; docs/AXI_ID_ORDERING_RULE_EVIDENCE_PROBE.md; docs/book/src/14-feature-backlog.md; README.md; ROADMAP_V2.md
+reverify: rg -n 'ID/response rule-engine|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.17|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.18|concrete transaction ID|id_response_rule_engine|response matching|BID|RID|id_families|transaction_event_dispatch' docs/AXI_IAL2_MANAGER_ID_RESPONSE_RULE_ENGINE_SELECTION.md docs/AXI_IAL2_MANAGER_ID_RESPONSE_RULE_ENGINE_READINESS_AUDIT.md docs/AXI_IAL2_MANAGER_CONCRETE_ID_ASSERTIONS_FIRST_SLICE.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md docs/book/src/14-feature-backlog.md README.md ROADMAP_V2.md
 ---
 
 After transaction event dispatch shipped, the next selected AXI manager subset
@@ -27,9 +27,9 @@ owner.
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.17` selected
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.18` as the concrete transaction ID
-assertion implementation owner. The implementation should verify concrete
-request/response ID signals against authored transaction ID values through the
-existing IAL1 `+assert` and SystemVerilog assertion path.
+assertion implementation owner. `.18` shipped concrete request/response ID
+assertions through the existing IAL1 `+assert` and SystemVerilog assertion
+path and reports `id_response_rule_engine` metadata.
 
 This is not an implementation claim. ID allocation, dynamic user-ID validation,
 ID release, same-ID ordering, different-ID interleaving, `BID`/`RID` response
