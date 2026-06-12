@@ -105,7 +105,7 @@ parsing HDL text.
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `R11-DIRECT-STRUCTURAL-ASSIGNMENT-RECORDS.1` | `379abab7 R11-DIRECT-STRUCTURAL-ASSIGNMENT-RECORDS.1: select direct assignment records` | Selected the structural assignment-record scope and proposed separate owners for direct net connectivity and direct HDL rerouting. |
-| `R11-DIRECT-STRUCTURAL-ASSIGNMENT-RECORDS.2` | `pending` | `pending` |
+| `R11-DIRECT-STRUCTURAL-ASSIGNMENT-RECORDS.2` | `f4b4e562 R11-DIRECT-STRUCTURAL-ASSIGNMENT-RECORDS.2: project direct assignment records` | Projected direct generated enable assignments into machine-readable structural records while retaining scalar auxiliary compatibility. |
 
 ## Changelog
 
