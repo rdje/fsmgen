@@ -153,6 +153,6 @@ instances of one logical transaction, queued/blocking policy, full AXI manager
 syntax, `.pif`, `.ppi`, `.axi`, and VHDL backend/reroute behavior remain
 future exact-owner work.
 
-Next selected owner: `IAL2-FEATURE-COMPLETENESS-FRONTIER.40`, a readiness
-audit for generated read `RID` response-demux behavior after this parser/report
-metadata is shipped.
+Follow-on: `IAL2-FEATURE-COMPLETENESS-FRONTIER.40` completed the generated
+read `RID` response-demux behavior readiness audit. The active behavior owner
+is `IAL2-FEATURE-COMPLETENESS-FRONTIER.41`.

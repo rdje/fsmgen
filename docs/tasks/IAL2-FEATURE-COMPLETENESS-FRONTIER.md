@@ -48,7 +48,7 @@ path before reopening VHDL backend or VHDL rerouting work.
 - ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER`
   Status: `active`
   Goal: `Make IAL2 feature-complete on the SystemVerilog-backed path before VHDL work resumes.`
-  Children: `IAL2-FEATURE-COMPLETENESS-FRONTIER.1, IAL2-FEATURE-COMPLETENESS-FRONTIER.2, IAL2-FEATURE-COMPLETENESS-FRONTIER.3, IAL2-FEATURE-COMPLETENESS-FRONTIER.4, IAL2-FEATURE-COMPLETENESS-FRONTIER.5, IAL2-FEATURE-COMPLETENESS-FRONTIER.6, IAL2-FEATURE-COMPLETENESS-FRONTIER.7, IAL2-FEATURE-COMPLETENESS-FRONTIER.8, IAL2-FEATURE-COMPLETENESS-FRONTIER.9, IAL2-FEATURE-COMPLETENESS-FRONTIER.10, IAL2-FEATURE-COMPLETENESS-FRONTIER.11, IAL2-FEATURE-COMPLETENESS-FRONTIER.12, IAL2-FEATURE-COMPLETENESS-FRONTIER.13, IAL2-FEATURE-COMPLETENESS-FRONTIER.14, IAL2-FEATURE-COMPLETENESS-FRONTIER.15, IAL2-FEATURE-COMPLETENESS-FRONTIER.16, IAL2-FEATURE-COMPLETENESS-FRONTIER.17, IAL2-FEATURE-COMPLETENESS-FRONTIER.18, IAL2-FEATURE-COMPLETENESS-FRONTIER.19, IAL2-FEATURE-COMPLETENESS-FRONTIER.20, IAL2-FEATURE-COMPLETENESS-FRONTIER.21, IAL2-FEATURE-COMPLETENESS-FRONTIER.22, IAL2-FEATURE-COMPLETENESS-FRONTIER.23, IAL2-FEATURE-COMPLETENESS-FRONTIER.24, IAL2-FEATURE-COMPLETENESS-FRONTIER.25, IAL2-FEATURE-COMPLETENESS-FRONTIER.26, IAL2-FEATURE-COMPLETENESS-FRONTIER.27, IAL2-FEATURE-COMPLETENESS-FRONTIER.28, IAL2-FEATURE-COMPLETENESS-FRONTIER.29, IAL2-FEATURE-COMPLETENESS-FRONTIER.30, IAL2-FEATURE-COMPLETENESS-FRONTIER.31, IAL2-FEATURE-COMPLETENESS-FRONTIER.32, IAL2-FEATURE-COMPLETENESS-FRONTIER.33, IAL2-FEATURE-COMPLETENESS-FRONTIER.34, IAL2-FEATURE-COMPLETENESS-FRONTIER.35, IAL2-FEATURE-COMPLETENESS-FRONTIER.36, IAL2-FEATURE-COMPLETENESS-FRONTIER.37, IAL2-FEATURE-COMPLETENESS-FRONTIER.38, IAL2-FEATURE-COMPLETENESS-FRONTIER.39, IAL2-FEATURE-COMPLETENESS-FRONTIER.40`
+  Children: `IAL2-FEATURE-COMPLETENESS-FRONTIER.1, IAL2-FEATURE-COMPLETENESS-FRONTIER.2, IAL2-FEATURE-COMPLETENESS-FRONTIER.3, IAL2-FEATURE-COMPLETENESS-FRONTIER.4, IAL2-FEATURE-COMPLETENESS-FRONTIER.5, IAL2-FEATURE-COMPLETENESS-FRONTIER.6, IAL2-FEATURE-COMPLETENESS-FRONTIER.7, IAL2-FEATURE-COMPLETENESS-FRONTIER.8, IAL2-FEATURE-COMPLETENESS-FRONTIER.9, IAL2-FEATURE-COMPLETENESS-FRONTIER.10, IAL2-FEATURE-COMPLETENESS-FRONTIER.11, IAL2-FEATURE-COMPLETENESS-FRONTIER.12, IAL2-FEATURE-COMPLETENESS-FRONTIER.13, IAL2-FEATURE-COMPLETENESS-FRONTIER.14, IAL2-FEATURE-COMPLETENESS-FRONTIER.15, IAL2-FEATURE-COMPLETENESS-FRONTIER.16, IAL2-FEATURE-COMPLETENESS-FRONTIER.17, IAL2-FEATURE-COMPLETENESS-FRONTIER.18, IAL2-FEATURE-COMPLETENESS-FRONTIER.19, IAL2-FEATURE-COMPLETENESS-FRONTIER.20, IAL2-FEATURE-COMPLETENESS-FRONTIER.21, IAL2-FEATURE-COMPLETENESS-FRONTIER.22, IAL2-FEATURE-COMPLETENESS-FRONTIER.23, IAL2-FEATURE-COMPLETENESS-FRONTIER.24, IAL2-FEATURE-COMPLETENESS-FRONTIER.25, IAL2-FEATURE-COMPLETENESS-FRONTIER.26, IAL2-FEATURE-COMPLETENESS-FRONTIER.27, IAL2-FEATURE-COMPLETENESS-FRONTIER.28, IAL2-FEATURE-COMPLETENESS-FRONTIER.29, IAL2-FEATURE-COMPLETENESS-FRONTIER.30, IAL2-FEATURE-COMPLETENESS-FRONTIER.31, IAL2-FEATURE-COMPLETENESS-FRONTIER.32, IAL2-FEATURE-COMPLETENESS-FRONTIER.33, IAL2-FEATURE-COMPLETENESS-FRONTIER.34, IAL2-FEATURE-COMPLETENESS-FRONTIER.35, IAL2-FEATURE-COMPLETENESS-FRONTIER.36, IAL2-FEATURE-COMPLETENESS-FRONTIER.37, IAL2-FEATURE-COMPLETENESS-FRONTIER.38, IAL2-FEATURE-COMPLETENESS-FRONTIER.39, IAL2-FEATURE-COMPLETENESS-FRONTIER.40, IAL2-FEATURE-COMPLETENESS-FRONTIER.41`
 
 - ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER.1`
   Status: `done`
@@ -324,9 +324,16 @@ path before reopening VHDL backend or VHDL rerouting work.
   Commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.39: ship AXI read response demux metadata`
 
 - ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER.40`
-  Status: `pending`
+  Status: `done`
   Goal: `Audit generated AXI read RID response-demux behavior readiness after parser/report metadata.`
   Acceptance: `The audit reads the shipped read response-demux parser/report metadata, generated write BID response-demux behavior, IAL1 rule-pulse support, read auto-ID lifecycle state, read transaction fan-in/capacity release behavior, same-ID avoidance metadata, AXI read response/interleaving evidence, SystemVerilog reachability, focused tests, mdBook, roadmap, and Knowledge Map; decides whether generated read RID demux behavior can be implemented directly, requires an IAL1/IAL0/SystemVerilog prerequisite, must first adjust read completion fan-in/auto-ID release semantics, or must defer behind read-data interleaving/reassembly or burst/last-beat ownership; records exact generated .isf/.fsm/HDL boundary, report additions, diagnostics, validation gates, rollback, residue, docs, and VHDL deferral before behavior changes.`
+  Verification: `Read the shipped read response-demux parser/report metadata, generated write BID response-demux behavior, IAL1 rule-pulse support, read auto-ID lifecycle state, read transaction fan-in/capacity release behavior, same-ID avoidance metadata, AXI read response/interleaving evidence, SystemVerilog reachability, focused tests, mdBook, roadmap, and Knowledge Map. Concluded that bounded single-beat generated read RID response-demux behavior can be implemented directly with no new IAL1/IAL0/SystemVerilog prerequisite; selected .41 as the behavior leaf that generalizes response-demux helpers to read/write families and owns the generated read completion fan-in/auto-ID release shift.`
+  Commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.40: audit AXI read response demux behavior`
+
+- ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER.41`
+  Status: `pending`
+  Goal: `Implement bounded generated AXI read RID response-demux behavior.`
+  Acceptance: `The generator emits single-beat read RID response-demux behavior for explicit read response-demux contracts by adding the read response ID signal as a generated input, reclassifying selected read transaction completion names as generated pulse outputs, excluding those generated completion names from authored event inputs, keeping the raw read response event as the response input, emitting one IAL1 (pulse COMPLETION) demux rule per read auto-ID transaction, emitting read active-match and unique-match assertions, preserving generated write BID demux behavior and mixed read/write contracts, driving read capacity release and auto-ID release from the generated completion pulses, reporting per-family read generated rules/completion signals/assertions and residue alignment, updating runnable sample/support accounting/focused tests/check JSON/semantic JSON/docs/mdBook/Knowledge Map/memory, passing --verify-hdl on the read sample, and keeping read-data interleaving/reassembly, bursts/RLAST, per-ID queues, queued/blocking policy, full-manager behavior, direct backend lowering, and VHDL out of scope.`
   Verification: `pending`
   Commit: `pending`
 
@@ -334,7 +341,7 @@ path before reopening VHDL backend or VHDL rerouting work.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.40` | `pending` | `.39` shipped read response-demux parser/report metadata while generated read behavior remains unchanged; behavior readiness must be audited before rules, pulses, or HDL are generated. |
+| 1 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.41` | `pending` | `.40` concluded bounded single-beat generated read RID response-demux behavior can be implemented directly with no new IAL1/IAL0/SystemVerilog prerequisite. |
 
 ## Decisions
 
@@ -727,6 +734,17 @@ path before reopening VHDL backend or VHDL rerouting work.
   `generated_read_rid_demux` residue. Generated read `.isf`, `.fsm`, and HDL
   behavior remains unchanged. `.40` is selected as a readiness audit before
   generated read `RID` response-demux behavior.
+- `2026-06-12`: `.40` audited generated read `RID` response-demux behavior
+  readiness after the read parser/report metadata slice. It found no new
+  IAL1, IAL0, or SystemVerilog prerequisite: the shipped IAL1 `(pulse TARGET)`
+  action and the existing write demux path can carry the bounded single-beat
+  read demux. `.41` will implement generated read behavior by making
+  response-demux helpers family-aware, reclassifying selected read transaction
+  completion names as generated pulse outputs under the explicit opt-in, and
+  keeping raw top-level `read-complete` as the accepted read-response input.
+  Read-data interleaving/reassembly, bursts/`RLAST`, per-ID queues,
+  queued/blocking policy, full-manager behavior, direct backend lowering, and
+  VHDL remain residue.
 - `2026-06-12`: User clarified the backend strategy: FSMGen is currently Perl
   5, but IAL0/IAL1/IAL2 and the mdBook must remain backend-language-neutral
   contracts for future Rust, Rust/Wasm, browser-capable JavaScript, and
@@ -833,6 +851,8 @@ path before reopening VHDL backend or VHDL rerouting work.
 | `2026-06-12` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.38` | `bash knowledge-map/scripts/gen_knowledge_map.sh`; `mdbook build docs/book`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `git --no-pager diff --check`; read response-demux contract fact-card reverify `rg`; stale-current-frontier search | Passed; stale `.38` matches are historical advancement notes only. |
 | `2026-06-12` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.39` | `perl/FSM/Adapter/IAL2/PPIF.pm`; `perl/FSM/IAL2/ProtocolIntent/AxiManagerCapacityStatus.pm`; `perl/FSM/Support/RegressionCorpus.pm`; `perl/FSM/Support/LanguageSurfaceSection.pm`; `t/1437-axi-ial2-manager-capacity-status-generator.t`; `t/1436-ial2-ppif-parser-cli.t`; `ppif/axi_manager_capacity_status_read_response_demux.ppif`; `docs/AXI_IAL2_MANAGER_READ_RESPONSE_DEMUX_METADATA_FIRST_SLICE.md`; `docs/AXI_IAL2_MANAGER_READ_RESPONSE_DEMUX_CONTRACT_SELECTION.md`; `docs/book/src/14-feature-backlog.md`; `README.md`; `ROADMAP_V2.md`; `docs/TASK_TREE.md`; `MEMORY.md` | Shipped read response-demux parser/report metadata and static validation; selected `.40`, generated read RID response-demux behavior readiness audit. |
 | `2026-06-12` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.39` | `perl -Iperl -c perl/FSM/Adapter/IAL2/PPIF.pm`; `perl -Iperl -c perl/FSM/IAL2/ProtocolIntent/AxiManagerCapacityStatus.pm`; `perl -Iperl -c perl/FSM/Support/RegressionCorpus.pm`; `perl -Iperl -c perl/FSM/Support/LanguageSurfaceSection.pm`; `perl -Iperl -c t/1437-axi-ial2-manager-capacity-status-generator.t`; `perl -Iperl -c t/1436-ial2-ppif-parser-cli.t`; `prove -Iperl t/1437-axi-ial2-manager-capacity-status-generator.t`; `prove -Iperl t/1436-ial2-ppif-parser-cli.t`; `./bin/fsmgen --quiet --verify-hdl ppif/axi_manager_capacity_status_read_response_demux.ppif`; `prove -Iperl t/297-capability-manifest.t t/317-language-surface-contract.t t/301-check-json-supported-corpus.t t/303-normalized-semantic-json-supported-corpus.t`; `mdbook build docs/book`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `git --no-pager diff --check`; read response-demux fact-card reverify; stale-current-frontier search | Passed; mixed read/write response-demux arm regressions cover the public parser and generator, and stale `.39` frontier matches are historical advancement notes only. |
+| `2026-06-12` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.40` | `docs/AXI_IAL2_MANAGER_READ_RESPONSE_DEMUX_BEHAVIOR_READINESS_AUDIT.md`; `docs/AXI_IAL2_MANAGER_READ_RESPONSE_DEMUX_METADATA_FIRST_SLICE.md`; `docs/AXI_IAL2_MANAGER_WRITE_RESPONSE_DEMUX_BEHAVIOR_FIRST_SLICE.md`; `docs/AXI_IAL2_MANAGER_WRITE_RESPONSE_DEMUX_BEHAVIOR_READINESS_AUDIT.md`; `docs/AXI_IAL2_MANAGER_AUTO_ID_REQUEST_ID_DRIVE_FIRST_SLICE.md`; `docs/AXI_IAL2_MANAGER_SAME_ID_ORDERING_FIRST_SLICE.md`; `docs/AXI_ID_ORDERING_RULE_EVIDENCE_PROBE.md`; `docs/AXI_MANAGER_RULE_MATRIX_DESIGN_PROBE.md`; `docs/book/src/13g-rules.md`; `docs/book/src/14-feature-backlog.md`; `perl/FSM/IAL2/ProtocolIntent/AxiManagerCapacityStatus.pm`; `perl/FSM/Adapter/IAL2/PPIF.pm`; `ppif/axi_manager_capacity_status_read_response_demux.ppif`; `./bin/fsmgen --emit-schedule-json ppif/axi_manager_capacity_status_read_response_demux.ppif`; `README.md`; `ROADMAP_V2.md`; `docs/TASK_TREE.md`; `MEMORY.md`; Knowledge Map cards | Selected `.41`, bounded generated single-beat read RID response-demux behavior. No new IAL1/IAL0/SystemVerilog prerequisite is required; the implementation leaf owns family-aware demux helpers, generated read completion pulse outputs/rules/assertions, and read capacity/auto-ID release on generated completion pulses. |
+| `2026-06-12` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.40` | `bash knowledge-map/scripts/gen_knowledge_map.sh`; `mdbook build docs/book`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `git --no-pager diff --check`; new read response-demux behavior readiness fact-card reverify `rg`; next-slice fact-card reverify `rg`; metadata fact-card reverify `rg`; contract-selection fact-card reverify `rg`; stale-current-frontier search | Passed; stale `.40` matches are historical advancement notes or `.40` owner references, not active-frontier claims. |
 
 ## Commit Log
 
@@ -877,6 +897,7 @@ path before reopening VHDL backend or VHDL rerouting work.
 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.37` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.37: audit AXI read response demux` | Selected bounded read response-demux public contract selection and advanced the frontier to `.38`. |
 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.38` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.38: select AXI read response demux contract` | Selected explicit `response-scope single-beat` read response-demux syntax and advanced the frontier to `.39`. |
 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.39` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.39: ship AXI read response demux metadata` | Shipped read response-demux parser/report metadata and advanced the frontier to `.40`. |
+| `IAL2-FEATURE-COMPLETENESS-FRONTIER.40` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.40: audit AXI read response demux behavior` | Selected bounded generated read RID response-demux behavior and advanced the frontier to `.41`. |
 
 ## Changelog
 
@@ -1007,3 +1028,7 @@ path before reopening VHDL backend or VHDL rerouting work.
   parser/report metadata and static validation without generated read behavior,
   and advanced the frontier to `.40`, generated read `RID` response-demux
   behavior readiness audit.
+- `2026-06-12`: Completed `.40` readiness audit, concluded bounded generated
+  single-beat read `RID` response-demux behavior can be implemented directly,
+  and advanced the frontier to `.41`, the generated read behavior
+  implementation slice.

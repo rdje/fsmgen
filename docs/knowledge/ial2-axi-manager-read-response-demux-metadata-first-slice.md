@@ -9,8 +9,8 @@ answers:
 date: 2026-06-12
 status: current
 tags: [ial2, axi, manager, read-response, response-demux, rid, metadata, parser, task-tree]
-evidence: docs/AXI_IAL2_MANAGER_READ_RESPONSE_DEMUX_METADATA_FIRST_SLICE.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; ppif/axi_manager_capacity_status_read_response_demux.ppif; perl/FSM/Adapter/IAL2/PPIF.pm; perl/FSM/IAL2/ProtocolIntent/AxiManagerCapacityStatus.pm; t/1437-axi-ial2-manager-capacity-status-generator.t; t/1436-ial2-ppif-parser-cli.t; docs/book/src/14-feature-backlog.md; README.md; ROADMAP_V2.md
-reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.39|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.40|response_demux\\.read|generated_read_rid_demux|axi_manager_capacity_status_read_response_demux' docs/AXI_IAL2_MANAGER_READ_RESPONSE_DEMUX_METADATA_FIRST_SLICE.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md ppif/axi_manager_capacity_status_read_response_demux.ppif docs/book/src/14-feature-backlog.md README.md ROADMAP_V2.md
+evidence: docs/AXI_IAL2_MANAGER_READ_RESPONSE_DEMUX_METADATA_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_READ_RESPONSE_DEMUX_BEHAVIOR_READINESS_AUDIT.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; ppif/axi_manager_capacity_status_read_response_demux.ppif; perl/FSM/Adapter/IAL2/PPIF.pm; perl/FSM/IAL2/ProtocolIntent/AxiManagerCapacityStatus.pm; t/1437-axi-ial2-manager-capacity-status-generator.t; t/1436-ial2-ppif-parser-cli.t; docs/book/src/14-feature-backlog.md; README.md; ROADMAP_V2.md
+reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.39|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.40|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.41|response_demux\\.read|generated_read_rid_demux|axi_manager_capacity_status_read_response_demux' docs/AXI_IAL2_MANAGER_READ_RESPONSE_DEMUX_METADATA_FIRST_SLICE.md docs/AXI_IAL2_MANAGER_READ_RESPONSE_DEMUX_BEHAVIOR_READINESS_AUDIT.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md ppif/axi_manager_capacity_status_read_response_demux.ppif docs/book/src/14-feature-backlog.md README.md ROADMAP_V2.md
 ---
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.39` shipped parser/report metadata and
@@ -32,6 +32,7 @@ rules are emitted, and HDL behavior is unchanged. The checked-in sample is
 `ppif/axi_manager_capacity_status_read_response_demux.ppif`; support
 accounting uses `intent.ppif_axi_manager_capacity_status_read_response_demux`.
 
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.40` is next: audit generated read `RID`
-response-demux behavior readiness before any read demux rules, pulses,
-assertions, or HDL are generated.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.40` later audited generated read `RID`
+response-demux behavior readiness and selected direct bounded single-beat
+implementation. `IAL2-FEATURE-COMPLETENESS-FRONTIER.41` is the next
+behavior owner.

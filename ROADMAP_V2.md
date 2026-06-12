@@ -982,9 +982,11 @@ by `.38`. The selected read arm requires `(response-scope single-beat)`,
 treats top-level `read-complete` as the raw accepted single-beat read response
 event under explicit opt-in, reports structural `response_demux.read`
 metadata with `generated_behavior: false`, and keeps generated read `.isf`,
-`.fsm`, and HDL behavior unchanged until a later behavior owner. The current
-frontier is `IAL2-FEATURE-COMPLETENESS-FRONTIER.40`, a readiness audit for
-generated read `RID` response-demux behavior.
+`.fsm`, and HDL behavior unchanged through `.39`. Readiness audit `.40`
+concluded that bounded single-beat generated read `RID` response-demux
+behavior can be implemented directly with no new IAL1/IAL0/SystemVerilog
+prerequisite. The current frontier is
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.41`, the generated read behavior slice.
 The shipped public capacity/status source accepts one
 `(manager-capacity-status NAME ...)` object under
 `(protocol-platform-intent ...)`, `(profile axi4)`, and top-level source
@@ -1093,9 +1095,11 @@ auto-ID-lifecycle requirements, and generated completion ownership only under
 the opt-in. `.39` shipped parser/report metadata, static validation, a
 runnable read-demux `.ppif` sample, check JSON/semantic JSON support
 accounting, and `response_demux.read.generated_behavior: false` while leaving
-generated read `.isf`, `.fsm`, and HDL behavior unchanged. `.40` is the active
-read behavior readiness audit. Read-data interleaving, bursts, per-ID queues,
-full-manager behavior, and VHDL remain residue.
+generated read `.isf`, `.fsm`, and HDL behavior unchanged. `.40` audited read
+behavior readiness and selected `.41`, bounded generated single-beat read
+`RID` response-demux behavior, with no new IAL1/IAL0/SystemVerilog
+prerequisite. Read-data interleaving, bursts, per-ID queues, full-manager
+behavior, and VHDL remain residue.
 
 The first honest `R11` slices are now:
 1. keep widening convention-first composition only where the child-side evidence is still deterministic,

@@ -10,9 +10,9 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `HEAD after commit` — `IAL2-FEATURE-COMPLETENESS-FRONTIER.39: ship AXI read response demux metadata`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.40` pending; next action is to audit generated read `RID` response-demux behavior readiness after the shipped parser/report metadata, before any read demux rules, pulses, or HDL behavior are generated.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.39`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.38`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.37`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.36`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.35`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.34`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.33`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.32`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.31`. Older completed slices are in the task tree and git history.
+- latest_commit: `HEAD after commit` — `IAL2-FEATURE-COMPLETENESS-FRONTIER.40: audit AXI read response demux behavior`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.41` pending; next action is to implement bounded generated single-beat read `RID` response-demux behavior by making response-demux helpers family-aware, adding the read response ID as a generated input, emitting generated read completion pulse outputs/rules/assertions, and keeping capacity/auto-ID release on those generated pulses.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.40`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.39`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.38`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.37`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.36`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.35`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.34`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.33`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.32`. Older completed slices are in the task tree and git history.
 - in_flight_uncommitted: none; unrelated untracked `fx/` intentionally left alone.
 - blockers: none.
 
