@@ -17,10 +17,13 @@ reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER|IAL2 feature completeness|IA
 The current feature-completeness priority is IAL2 on the
 SystemVerilog-backed path.
 
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.1` owns the next PNT selector. It must audit
-the shipped `.ppif`/Valid-Ready surfaces, identify missing IAL2
-feature-completeness work, and select the next exact slice before behavior
-changes. The selected IAL2 work may include required IAL1 or IAL0/SV support,
-but only when those prerequisites are explicit, task-tree owned, documented,
-and regression-backed. VHDL backend/reroute work remains deferred until the
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.15` owns the next PNT implementation
+frontier: additive AXI manager transaction event dispatch and direction fan-in
+under the existing `manager-capacity-status` object. The completed `.14`
+readiness audit selected that boundary with no separate IAL1, IAL0, or
+SystemVerilog prerequisite first.
+
+Selected IAL2 work may include required IAL1 or IAL0/SV support, but only when
+those prerequisites are explicit, task-tree owned, documented, and
+regression-backed. VHDL backend/reroute work remains deferred until the
 SV-backed IAL0/IAL1/IAL2 path is feature complete.

@@ -942,15 +942,16 @@ Priority note:
   `(transactions ...)` static/report metadata extension under that same object;
   the public `.ppif` transaction-envelope metadata slice is now shipped with
   structured report metadata and unchanged generated `.isf`, `.fsm`, and HDL
-  behavior; the next prerequisite is selected as transaction event dispatch
-  and direction fan-in, with readiness audit next.
+  behavior; the transaction event dispatch and direction fan-in readiness audit
+  selected an additive implementation boundary with no separate
+  IAL1/IAL0/SystemVerilog prerequisite first.
 
 ## Current intent
 The active immediate feature-completeness lane is IAL2 on the
 SystemVerilog-backed lowering path; see
 [docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md](docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md).
-The current frontier is the readiness audit for AXI manager transaction event
-dispatch and direction fan-in after the shipped logical read/write
+The current frontier is the additive implementation of AXI manager transaction
+event dispatch and direction fan-in after the shipped logical read/write
 transaction-envelope/static-validation metadata. The shipped
 public capacity/status source accepts one
 `(manager-capacity-status NAME ...)` object under
@@ -969,11 +970,14 @@ names, tags, request/completion event bindings, and optional requested-ID
 static validation against declared ID-family widths. Request and completion
 bindings are limited to existing direction-level abstract events, so generated
 `.isf`, generated `.fsm`, and HDL behavior remain unchanged before dynamic
-manager behavior is claimed. The selected next subset audits whether distinct
-per-transaction request/completion events can fan into the existing read/write
-capacity/status rule matrices through the current IAL1/IAL0/SystemVerilog
-path. ID allocation and response matching remain behind that event-provenance
-prerequisite.
+manager behavior is claimed. The completed readiness audit verified that
+distinct per-transaction request/completion events can fan into the existing
+read/write capacity/status rule matrices through the current
+IAL1/IAL0/SystemVerilog path. The implementation frontier is to declare those
+unique event inputs, preserve scalar one-event compatibility, generate OR
+fan-in guards for multi-event groups, and report additive
+`transaction_event_dispatch` metadata. ID allocation and response matching
+remain behind that event-provenance prerequisite.
 
 The first honest `R11` slices are now:
 1. keep widening convention-first composition only where the child-side evidence is still deterministic,

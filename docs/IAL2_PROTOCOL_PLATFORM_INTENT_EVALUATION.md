@@ -212,7 +212,14 @@ accounting, check JSON, and semantic JSON source identity. The next selected
 manager prerequisite is transaction event dispatch and direction fan-in in
 [AXI_IAL2_MANAGER_TRANSACTION_EVENT_DISPATCH_SELECTION](AXI_IAL2_MANAGER_TRANSACTION_EVENT_DISPATCH_SELECTION.md),
 because ID allocation and response matching need per-transaction request and
-completion provenance before generated dynamic behavior is claimed.
+completion provenance before generated dynamic behavior is claimed. The
+readiness audit
+[AXI_IAL2_MANAGER_TRANSACTION_EVENT_DISPATCH_READINESS_AUDIT](AXI_IAL2_MANAGER_TRANSACTION_EVENT_DISPATCH_READINESS_AUDIT.md)
+selects an additive implementation boundary under the existing
+`manager-capacity-status` object: distinct per-transaction request/completion
+events can fan into the current read/write capacity/status rule matrices
+through existing IAL1/IAL0/SystemVerilog lowering, with no separate substrate
+prerequisite first.
 Public `.pif`, `.ppi`, `.axi`, protocol-profile aliases, ID allocation,
 ordering, response matching, bursts, queued/blocking policy, and full AXI
 manager behavior remain unshipped and need later exact owners.
