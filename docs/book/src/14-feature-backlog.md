@@ -3174,6 +3174,62 @@ positive-width read ID-family metadata, read transaction metadata, and explicit
 read `auto-id-lifecycle` metadata. Generated read `RID` demux rules and read
 completion pulses remain future behavior.
 
+Read response-demux metadata first slice:
+[AXI_IAL2_MANAGER_READ_RESPONSE_DEMUX_METADATA_FIRST_SLICE](../../AXI_IAL2_MANAGER_READ_RESPONSE_DEMUX_METADATA_FIRST_SLICE.md)
+ships the `.39` parser/report implementation. Public `.ppif` sources may now
+use one `read` arm, one `write` arm, or both under `response-demux`. The read
+arm is structural metadata only in this slice:
+
+```text
+(response-demux
+  (read
+    (response-event axi0_read_complete)
+    (response-scope single-beat)
+    (transaction-completion generated)))
+```
+
+The checked-in sample is:
+
+```text
+ppif/axi_manager_capacity_status_read_response_demux.ppif
+```
+
+Useful commands:
+
+```bash
+./bin/fsmgen --emit-schedule-json ppif/axi_manager_capacity_status_read_response_demux.ppif
+./bin/fsmgen --strict --check --json ppif/axi_manager_capacity_status_read_response_demux.ppif
+./bin/fsmgen --strict --emit-semantic-json ppif/axi_manager_capacity_status_read_response_demux.ppif
+```
+
+The schedule report now includes:
+
+```text
+response_demux:
+  mode: bounded_response_demux_contract
+  generated_behavior: false
+  read:
+    mode: bounded_read_rid_demux_contract
+    generated_behavior: false
+    response_event: axi0_read_complete
+    response_event_role: raw_accepted_read_response
+    response_scope: single_beat
+    response_id_signal: axi0_rid
+    response_id_direction: generated_input
+    transaction_completion_source: generated_demux
+    auto_transactions: [r0, r1]
+  residue:
+    - generated_read_rid_demux
+    - read_data_interleaving
+    - bursts
+```
+
+Generated read demux behavior is unchanged: the read transaction completion
+events remain authored inputs, `RID` is not added to generated IAL1 by response
+demux, no read completion outputs are emitted, and no read response-demux rules
+or HDL logic are generated. The support-accounting entry is
+`intent.ppif_axi_manager_capacity_status_read_response_demux`.
+
 Response-demux behavior readiness audit:
 [AXI_IAL2_MANAGER_WRITE_RESPONSE_DEMUX_BEHAVIOR_READINESS_AUDIT](../../AXI_IAL2_MANAGER_WRITE_RESPONSE_DEMUX_BEHAVIOR_READINESS_AUDIT.md)
 concluded that generated write `BID` demux should not be implemented directly
@@ -3316,12 +3372,12 @@ transaction-envelope/static-validation subset, and the readiness audit for its
 additive static/report implementation boundary. The optional static
 `(transactions ...)` implementation slice and the additive transaction event
 dispatch/fan-in slice are now also shipped, and the active frontier is
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.39`, implementing parser/report metadata
-and static validation for the bounded AXI read response-demux contract selected
-by `.38`. Generated read `.isf`, `.fsm`, and HDL behavior remain unchanged in
-that next slice; read-data interleaving/reassembly, bursts, per-ID queues,
-full-manager behavior, and VHDL remain out of scope unless a later exact owner
-selects them.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.40`, auditing generated read `RID`
+response-demux behavior readiness after `.39` shipped parser/report metadata
+and static validation. Generated read `.isf`, `.fsm`, and HDL behavior remain
+unchanged until a later exact behavior owner selects them; read-data
+interleaving/reassembly, bursts, per-ID queues, full-manager behavior, and VHDL
+remain out of scope unless a later exact owner selects them.
 Additional `.ppif` objects/clauses and profile aliases remain future
 exact-owner work, and they must not jump ahead of the active selector unless
 that selector records why.
@@ -5553,6 +5609,9 @@ the active frontier to `.38`.
 Completed selector leaf `IAL2-FEATURE-COMPLETENESS-FRONTIER.38` selects
 explicit `(response-scope single-beat)` read response-demux syntax and advances
 the active frontier to `.39`.
+Completed implementation leaf `IAL2-FEATURE-COMPLETENESS-FRONTIER.39` ships
+read response-demux parser/report metadata and static validation while keeping
+generated read behavior unchanged, and advances the active frontier to `.40`.
 Completed implementation leaf
 `ARCHITECTURE-DEBT-FRONTIER.2.1`
 projects direct backend storage/helper declaration-plan entries into

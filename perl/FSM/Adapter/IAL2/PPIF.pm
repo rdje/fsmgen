@@ -569,21 +569,20 @@ sub _parse_manager_capacity_auto_id_pool($items, $name, $family) {
 }
 
 sub _parse_manager_capacity_response_demux($items, $source_label, $name) {
-    confess "Error: .ppif (manager-capacity-status $name (response-demux ...)) requires a write family clause\n"
+    confess "Error: .ppif (manager-capacity-status $name (response-demux ...)) requires at least one read/write family clause\n"
         unless @$items;
 
     my %families;
     for my $clause (@$items) {
         my ($family, @body) = _clause_parts($clause, $source_label);
-        confess "Error: .ppif (manager-capacity-status $name (response-demux ...)) has unsupported family clause '($family ...)'; this slice supports (write ...) only\n"
-            unless $family eq 'write';
-        confess "Error: .ppif (manager-capacity-status $name (response-demux ...)) has duplicate (write ...) family clause\n"
-            if exists $families{write};
-        $families{write} = _parse_manager_capacity_response_demux_write(\@body, $source_label, $name);
+        confess "Error: .ppif (manager-capacity-status $name (response-demux ...)) has unsupported family clause '($family ...)'; this slice supports (read ...) and (write ...)\n"
+            unless $family =~ /\A(?:read|write)\z/;
+        confess "Error: .ppif (manager-capacity-status $name (response-demux ...)) has duplicate ($family ...) family clause\n"
+            if exists $families{$family};
+        $families{$family} = $family eq 'write'
+            ? _parse_manager_capacity_response_demux_write(\@body, $source_label, $name)
+            : _parse_manager_capacity_response_demux_read(\@body, $source_label, $name);
     }
-
-    confess "Error: .ppif (manager-capacity-status $name (response-demux ...)) requires a write family clause\n"
-        unless exists $families{write};
 
     return \%families;
 }
@@ -611,6 +610,39 @@ sub _parse_manager_capacity_response_demux_write($items, $source_label, $name) {
     confess "Error: .ppif (manager-capacity-status $name (response-demux (write ...))) is missing required (transaction-completion ...) clause\n"
         unless exists $entry{transaction_completion};
     confess "Error: .ppif (manager-capacity-status $name (response-demux (write (transaction-completion ...)))) supports only generated in this slice\n"
+        unless $entry{transaction_completion} eq 'generated';
+
+    return \%entry;
+}
+
+sub _parse_manager_capacity_response_demux_read($items, $source_label, $name) {
+    my %allowed = (
+        'response-event'         => 'response_event',
+        'response-scope'         => 'response_scope',
+        'transaction-completion' => 'transaction_completion',
+    );
+    my %entry;
+
+    for my $clause (@$items) {
+        my ($head, @body) = _clause_parts($clause, $source_label);
+        confess "Error: .ppif (manager-capacity-status $name (response-demux (read ...))) has unsupported clause '($head ...)'\n"
+            unless exists $allowed{$head};
+        confess "Error: .ppif (manager-capacity-status $name (response-demux (read ...))) has duplicate ($head ...) clause\n"
+            if exists $entry{$allowed{$head}};
+        confess "Error: .ppif (manager-capacity-status $name (response-demux (read ($head ...)))) requires exactly one scalar value\n"
+            unless @body == 1 && !ref($body[0]);
+        $entry{$allowed{$head}} = $body[0];
+    }
+
+    confess "Error: .ppif (manager-capacity-status $name (response-demux (read ...))) is missing required (response-event ...) clause\n"
+        unless exists $entry{response_event};
+    confess "Error: .ppif (manager-capacity-status $name (response-demux (read ...))) is missing required (response-scope ...) clause\n"
+        unless exists $entry{response_scope};
+    confess "Error: .ppif (manager-capacity-status $name (response-demux (read ...))) is missing required (transaction-completion ...) clause\n"
+        unless exists $entry{transaction_completion};
+    confess "Error: .ppif (manager-capacity-status $name (response-demux (read (response-scope ...)))) supports only single-beat in this slice\n"
+        unless $entry{response_scope} eq 'single-beat';
+    confess "Error: .ppif (manager-capacity-status $name (response-demux (read (transaction-completion ...)))) supports only generated in this slice\n"
         unless $entry{transaction_completion} eq 'generated';
 
     return \%entry;

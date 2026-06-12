@@ -668,11 +668,11 @@ sub _normalize_response_demux(%args) {
         unless ref($raw) eq 'HASH';
 
     for my $family (sort keys %$raw) {
-        confess "AXI manager capacity/status IAL2 contract response_demux has unsupported family '$family'; this slice supports write only\n"
-            unless $family eq 'write';
+        confess "AXI manager capacity/status IAL2 contract response_demux has unsupported family '$family'; supported families: read, write\n"
+            unless $family =~ /\A(?:read|write)\z/;
     }
-    confess "AXI manager capacity/status IAL2 contract response_demux requires a write family in this slice\n"
-        unless exists $raw->{write};
+    confess "AXI manager capacity/status IAL2 contract response_demux requires at least one read/write family\n"
+        unless exists($raw->{read}) || exists($raw->{write});
     confess "AXI manager capacity/status IAL2 contract response_demux requires id_families metadata\n"
         unless ref($args{id_families}) eq 'HASH';
     confess "AXI manager capacity/status IAL2 contract response_demux requires transactions metadata\n"
@@ -680,33 +680,63 @@ sub _normalize_response_demux(%args) {
     confess "AXI manager capacity/status IAL2 contract response_demux requires auto_id_lifecycle metadata\n"
         unless ref($args{auto_id_lifecycle}) eq 'HASH';
 
-    my $write_family = $args{id_families}{write};
-    confess "AXI manager capacity/status IAL2 contract response_demux.write requires a declared write ID family\n"
-        unless ref($write_family) eq 'HASH';
-    confess "AXI manager capacity/status IAL2 contract response_demux.write requires positive write ID-family width\n"
-        unless $write_family->{present};
+    my %normalized;
+    my $generated_behavior = 0;
+    if (exists $raw->{write}) {
+        my $write_family = $args{id_families}{write};
+        confess "AXI manager capacity/status IAL2 contract response_demux.write requires a declared write ID family\n"
+            unless ref($write_family) eq 'HASH';
+        confess "AXI manager capacity/status IAL2 contract response_demux.write requires positive write ID-family width\n"
+            unless $write_family->{present};
 
-    my $write_lifecycle = _auto_id_lifecycle_family_by_name($args{auto_id_lifecycle}, 'write');
-    confess "AXI manager capacity/status IAL2 contract response_demux.write requires write auto_id_lifecycle metadata\n"
-        unless ref($write_lifecycle) eq 'HASH';
-    confess "AXI manager capacity/status IAL2 contract response_demux.write requires at least one write auto-ID transaction\n"
-        unless @{$write_lifecycle->{auto_transactions} || []};
+        my $write_lifecycle = _auto_id_lifecycle_family_by_name($args{auto_id_lifecycle}, 'write');
+        confess "AXI manager capacity/status IAL2 contract response_demux.write requires write auto_id_lifecycle metadata\n"
+            unless ref($write_lifecycle) eq 'HASH';
+        confess "AXI manager capacity/status IAL2 contract response_demux.write requires at least one write auto-ID transaction\n"
+            unless @{$write_lifecycle->{auto_transactions} || []};
 
-    return {
-        mode               => 'bounded_write_bid_demux_contract',
-        generated_behavior => 1,
-        write              => _normalize_response_demux_write(
+        $normalized{write} = _normalize_response_demux_write(
             raw_write       => $raw->{write},
             events          => $args{events},
             write_family    => $write_family,
             write_lifecycle => $write_lifecycle,
-        ),
-        residue => [
-            'read_response_demux',
-            'same_id_ordering',
-            'read_data_interleaving',
-            'bursts',
-        ],
+        );
+        $generated_behavior = 1;
+    }
+
+    if (exists $raw->{read}) {
+        my $read_family = $args{id_families}{read};
+        confess "AXI manager capacity/status IAL2 contract response_demux.read requires a declared read ID family\n"
+            unless ref($read_family) eq 'HASH';
+        confess "AXI manager capacity/status IAL2 contract response_demux.read requires positive read ID-family width\n"
+            unless $read_family->{present};
+
+        my $read_lifecycle = _auto_id_lifecycle_family_by_name($args{auto_id_lifecycle}, 'read');
+        confess "AXI manager capacity/status IAL2 contract response_demux.read requires read auto_id_lifecycle metadata\n"
+            unless ref($read_lifecycle) eq 'HASH';
+        confess "AXI manager capacity/status IAL2 contract response_demux.read requires at least one read auto-ID transaction\n"
+            unless @{$read_lifecycle->{auto_transactions} || []};
+
+        $normalized{read} = _normalize_response_demux_read(
+            raw_read       => $raw->{read},
+            events         => $args{events},
+            read_family    => $read_family,
+            read_lifecycle => $read_lifecycle,
+        );
+    }
+
+    my $mode = exists($normalized{read})
+        ? 'bounded_response_demux_contract'
+        : 'bounded_write_bid_demux_contract';
+    my @residue = exists($normalized{read})
+        ? qw(generated_read_rid_demux read_data_interleaving bursts)
+        : qw(read_response_demux same_id_ordering read_data_interleaving bursts);
+
+    return {
+        mode               => $mode,
+        generated_behavior => $generated_behavior,
+        %normalized,
+        residue => \@residue,
     };
 }
 
@@ -747,12 +777,72 @@ sub _normalize_response_demux_write(%args) {
     }
 
     return {
+        mode                         => 'bounded_write_bid_demux_contract',
+        generated_behavior           => 1,
         response_event                => $response_event,
         response_id_signal            => $args{write_family}{response_id_signal},
         response_id_direction         => 'generated_input',
         transaction_completion_source => 'generated_demux',
         auto_transactions             => _clone_jsonish($args{write_lifecycle}{auto_transactions}),
         generated_completion_signals  => _clone_jsonish(\@completion_signals),
+    };
+}
+
+sub _normalize_response_demux_read(%args) {
+    my $raw = $args{raw_read};
+    confess "AXI manager capacity/status IAL2 contract response_demux.read must be a hash reference\n"
+        unless ref($raw) eq 'HASH';
+
+    my %allowed = map { $_ => 1 } qw(response_event response_scope transaction_completion);
+    for my $field (sort keys %$raw) {
+        confess "AXI manager capacity/status IAL2 contract response_demux.read unsupported field '$field'\n"
+            unless $allowed{$field};
+    }
+    confess "AXI manager capacity/status IAL2 contract response_demux.read is missing required field 'response_event'\n"
+        unless exists $raw->{response_event};
+    confess "AXI manager capacity/status IAL2 contract response_demux.read is missing required field 'response_scope'\n"
+        unless exists $raw->{response_scope};
+    confess "AXI manager capacity/status IAL2 contract response_demux.read is missing required field 'transaction_completion'\n"
+        unless exists $raw->{transaction_completion};
+
+    my $response_event = _identifier_value(
+        _nonempty_scalar($raw->{response_event}, 'response_demux.read.response_event'),
+        'response_demux.read.response_event',
+    );
+    my $expected_event = $args{events}{read_complete};
+    confess "AXI manager capacity/status IAL2 contract response_demux.read.response_event must equal read_complete event '$expected_event' in this slice\n"
+        unless $response_event eq $expected_event;
+
+    my $response_scope = _nonempty_scalar(
+        $raw->{response_scope},
+        'response_demux.read.response_scope',
+    );
+    confess "AXI manager capacity/status IAL2 contract response_demux.read.response_scope must be single-beat in this slice\n"
+        unless $response_scope eq 'single-beat';
+
+    my $transaction_completion = _nonempty_scalar(
+        $raw->{transaction_completion},
+        'response_demux.read.transaction_completion',
+    );
+    confess "AXI manager capacity/status IAL2 contract response_demux.read.transaction_completion must be generated in this slice\n"
+        unless $transaction_completion eq 'generated';
+
+    my @completion_signals = map { $_->{completion_event} } @{$args{read_lifecycle}{transaction_state} || []};
+    for my $completion_signal (@completion_signals) {
+        confess "AXI manager capacity/status IAL2 contract response_demux.read generated transaction completion signal '$completion_signal' must be distinct from response_event '$response_event'\n"
+            if $completion_signal eq $response_event;
+    }
+
+    return {
+        mode                         => 'bounded_read_rid_demux_contract',
+        generated_behavior           => 0,
+        response_event                => $response_event,
+        response_event_role           => 'raw_accepted_read_response',
+        response_scope                => 'single_beat',
+        response_id_signal            => $args{read_family}{response_id_signal},
+        response_id_direction         => 'generated_input',
+        transaction_completion_source => 'generated_demux',
+        auto_transactions             => _clone_jsonish($args{read_lifecycle}{auto_transactions}),
     };
 }
 
@@ -915,7 +1005,10 @@ sub _response_demux_generated_completion_signal_map($response_demux) {
     my %generated;
     return %generated unless ref($response_demux) eq 'HASH';
 
-    for my $signal (@{$response_demux->{write}{generated_completion_signals} || []}) {
+    my $write = $response_demux->{write};
+    return %generated unless ref($write) eq 'HASH' && $write->{generated_behavior};
+
+    for my $signal (@{$write->{generated_completion_signals} || []}) {
         $generated{$signal} = 1;
     }
     return %generated;
@@ -923,7 +1016,9 @@ sub _response_demux_generated_completion_signal_map($response_demux) {
 
 sub _response_demux_response_event_inputs($response_demux) {
     return () unless ref($response_demux) eq 'HASH';
-    return ($response_demux->{write}{response_event});
+    my $write = $response_demux->{write};
+    return () unless ref($write) eq 'HASH' && $write->{generated_behavior};
+    return ($write->{response_event});
 }
 
 sub _build_id_response_rule_engine(%args) {
@@ -1076,7 +1171,9 @@ sub _auto_id_generated_signal_names($auto_id_lifecycle) {
 
 sub _response_demux_generated_signal_names($response_demux) {
     return [] unless ref($response_demux) eq 'HASH';
-    return _clone_jsonish($response_demux->{write}{generated_completion_signals} || []);
+    my $write = $response_demux->{write};
+    return [] unless ref($write) eq 'HASH' && $write->{generated_behavior};
+    return _clone_jsonish($write->{generated_completion_signals} || []);
 }
 
 sub _normalize_source_anchors($anchors) {
@@ -1206,6 +1303,7 @@ sub _id_response_signal_inputs($contract) {
 sub _response_demux_response_id_inputs($contract) {
     my $demux = $contract->{response_demux};
     return () unless ref($demux) eq 'HASH' && $demux->{generated_behavior};
+    return () unless ref($demux->{write}) eq 'HASH' && $demux->{write}{generated_behavior};
     return ($demux->{write}{response_id_signal});
 }
 
@@ -1471,6 +1569,7 @@ sub _auto_id_rule($name, $guard, $assignments) {
 sub _response_demux_write_transaction_states($contract) {
     my $demux = $contract->{response_demux};
     return () unless ref($demux) eq 'HASH';
+    return () unless ref($demux->{write}) eq 'HASH' && $demux->{write}{generated_behavior};
 
     my $write_lifecycle = _auto_id_lifecycle_family_by_name($contract->{auto_id_lifecycle}, 'write');
     return () unless ref($write_lifecycle) eq 'HASH';
@@ -1804,9 +1903,11 @@ sub _build_report(%args) {
             'auto_id_lifecycle pools are bounded to 1..4 unique values per family and must fit the declared positive ID width',
             'auto_id_lifecycle generates first-free request-ID drive, per-transaction busy/selected-ID state, completion-event release, no-ID assertions, inactive-completion assertions, and same-family request mutual-exclusion assertions',
             'same_id_ordering for generated auto-ID families is enforced by avoiding same-ID concurrency through allocator free-ID guards plus pairwise active selected-ID assertions',
-            'response_demux requires id_families, transactions, and write auto_id_lifecycle metadata',
-            'response_demux supports write only in this slice, requires response_event equal to write_complete, and generates bounded write BID demux behavior for explicit opt-in contracts',
-            'response_demux transaction_completion must be generated, making transaction completion names generated demux pulse outputs instead of authored completion-event inputs',
+            'response_demux requires id_families, transactions, and selected-family auto_id_lifecycle metadata',
+            'response_demux.write requires response_event equal to write_complete and generates bounded write BID demux behavior for explicit opt-in contracts',
+            'response_demux.read requires response_event equal to read_complete, response_scope single_beat, read ID-family metadata, read transactions, and read auto_id_lifecycle metadata',
+            'response_demux.read reports metadata only in this slice; generated read RID demux rules, generated read completion pulse outputs, and HDL behavior remain residue',
+            'response_demux transaction_completion must be generated, making selected transaction completion names generated demux pulse outputs only under explicit opt-in contracts',
         ],
         unsupported_residue => [
             {
@@ -1815,7 +1916,7 @@ sub _build_report(%args) {
             },
             {
                 id     => 'axi_id_ordering_and_response_matching',
-                detail => 'Concrete transaction ID request/response assertions, explicit bounded auto-ID request-ID drive plus completion-event release, generated auto-ID same-ID avoidance, and generated write BID response demux are supported; dynamic user-ID arbitration while issuing multiple same-family requests in one cycle, per-ID same-ID response queues, different-ID interleaving, read RID response demux behavior, and burst/last-beat tracking remain outside this capacity/status shell.',
+                detail => 'Concrete transaction ID request/response assertions, explicit bounded auto-ID request-ID drive plus completion-event release, generated auto-ID same-ID avoidance, generated write BID response demux, and read RID response-demux parser/report metadata are supported; dynamic user-ID arbitration while issuing multiple same-family requests in one cycle, per-ID same-ID response queues, different-ID interleaving, generated read RID response-demux behavior, and burst/last-beat tracking remain outside this capacity/status shell.',
             },
             {
                 id     => 'profile_aliases_and_full_manager_behavior',
@@ -1834,7 +1935,11 @@ sub _report_auto_id_lifecycle($contract) {
     $lifecycle->{generated_behavior} = $contract->{auto_id_lifecycle}{generated_behavior}
         ? JSON::PP::true
         : JSON::PP::false;
-    if (ref($contract->{response_demux}) eq 'HASH' && $contract->{response_demux}{generated_behavior}) {
+    if (
+        ref($contract->{response_demux}) eq 'HASH'
+        && $contract->{response_demux}{generated_behavior}
+        && !exists($contract->{response_demux}{read})
+    ) {
         $lifecycle->{residue} = [
             grep { $_ ne 'response_demux' }
             @{$lifecycle->{residue} || []}
@@ -1854,6 +1959,12 @@ sub _report_response_demux($contract) {
     $demux->{generated_behavior} = $contract->{response_demux}{generated_behavior}
         ? JSON::PP::true
         : JSON::PP::false;
+    for my $family (qw(write read)) {
+        next unless ref($demux->{$family}) eq 'HASH' && exists $demux->{$family}{generated_behavior};
+        $demux->{$family}{generated_behavior} = $contract->{response_demux}{$family}{generated_behavior}
+            ? JSON::PP::true
+            : JSON::PP::false;
+    }
     if ($contract->{response_demux}{generated_behavior}) {
         my $artifacts = _response_demux_generated_artifacts($contract);
         $demux->{write}{generated_rules} = $artifacts->{rules};
@@ -1911,7 +2022,11 @@ sub _report_id_response_rule_engine($contract) {
     if (ref($contract->{auto_id_lifecycle}) eq 'HASH' && $contract->{auto_id_lifecycle}{generated_behavior}) {
         @residue = grep { $_ ne 'auto_id_allocation' && $_ ne 'id_release' } @residue;
     }
-    if (ref($contract->{response_demux}) eq 'HASH' && $contract->{response_demux}{generated_behavior}) {
+    if (
+        ref($contract->{response_demux}) eq 'HASH'
+        && $contract->{response_demux}{generated_behavior}
+        && !exists($contract->{response_demux}{read})
+    ) {
         @residue = grep { $_ ne 'response_demux' } @residue;
     }
     return {

@@ -976,13 +976,15 @@ Priority note:
 The active immediate feature-completeness lane is IAL2 on the
 SystemVerilog-backed lowering path; see
 [docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md](docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md).
-The current frontier is `IAL2-FEATURE-COMPLETENESS-FRONTIER.39`,
-implementing parser/report metadata and static validation for the bounded AXI
-read response-demux public contract selected by `.38`. The selected read arm
-requires `(response-scope single-beat)`, treats top-level `read-complete` as
-the raw accepted single-beat read response event under explicit opt-in, and
-keeps generated read `.isf`, `.fsm`, and HDL behavior unchanged until a later
-behavior owner.
+The parser/report metadata slice `IAL2-FEATURE-COMPLETENESS-FRONTIER.39` is
+now shipped for the bounded AXI read response-demux public contract selected
+by `.38`. The selected read arm requires `(response-scope single-beat)`,
+treats top-level `read-complete` as the raw accepted single-beat read response
+event under explicit opt-in, reports structural `response_demux.read`
+metadata with `generated_behavior: false`, and keeps generated read `.isf`,
+`.fsm`, and HDL behavior unchanged until a later behavior owner. The current
+frontier is `IAL2-FEATURE-COMPLETENESS-FRONTIER.40`, a readiness audit for
+generated read `RID` response-demux behavior.
 The shipped public capacity/status source accepts one
 `(manager-capacity-status NAME ...)` object under
 `(protocol-platform-intent ...)`, `(profile axi4)`, and top-level source
@@ -1088,9 +1090,12 @@ selector `.38` chose an explicit read arm with mandatory
 `(response-scope single-beat)`, response-event equality with top-level
 `read-complete`, positive-width read ID-family/read transaction/read
 auto-ID-lifecycle requirements, and generated completion ownership only under
-the opt-in. `.39` is the active parser/report metadata implementation. Read-data
-interleaving, bursts, per-ID queues, full-manager behavior, and VHDL remain
-residue.
+the opt-in. `.39` shipped parser/report metadata, static validation, a
+runnable read-demux `.ppif` sample, check JSON/semantic JSON support
+accounting, and `response_demux.read.generated_behavior: false` while leaving
+generated read `.isf`, `.fsm`, and HDL behavior unchanged. `.40` is the active
+read behavior readiness audit. Read-data interleaving, bursts, per-ID queues,
+full-manager behavior, and VHDL remain residue.
 
 The first honest `R11` slices are now:
 1. keep widening convention-first composition only where the child-side evidence is still deterministic,

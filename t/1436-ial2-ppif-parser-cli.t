@@ -238,6 +238,56 @@ subtest 'PPIF adapter parses AXI manager write response-demux behavior' => sub {
     is_deeply($result->{report}{id_response_rule_engine}{residue}, [qw(same_id_ordering)], 'adapter report removes response_demux from ID/response residue');
 };
 
+subtest 'PPIF adapter parses AXI manager read response-demux metadata' => sub {
+    my $sample_path = sample_capacity_read_response_demux_ppif_path();
+    ok(-f $sample_path, 'tracked runnable PPIF capacity/status read response-demux sample exists');
+
+    my $base = FSM::Adapter::IAL2::PPIF->new()->parse_source(sample_capacity_read_response_demux_base_ppif(), "$sample_path.base");
+    my $result = FSM::Adapter::IAL2::PPIF->new()->parse_source(sample_capacity_read_response_demux_ppif(), $sample_path);
+
+    is($result->{kind}, 'protocol_intent.axi_manager_capacity_status', 'read response-demux sample still uses the capacity/status generator');
+    is($result->{report}{source_object}{id}, 'axi-manager-capacity-status-read-response-demux', 'read response-demux source object id is preserved');
+    is($result->{report}{source_object}{intent_name}, 'axi_manager_capacity_status_read_response_demux', 'read response-demux source intent name is preserved');
+    is($result->{generated_ial1}{text}, $base->{generated_ial1}{text}, 'read response-demux metadata does not alter generated IAL1');
+    is_deeply($result->{generated_ial0}{files}, $base->{generated_ial0}{files}, 'read response-demux metadata does not alter generated IAL0');
+    like($result->{generated_ial1}{text}, qr/\(input axi0_r0_complete\)/, 'read completion remains an authored input before behavior ships');
+    unlike($result->{generated_ial1}{text}, qr/\(input axi0_rid\b/, 'read response ID is not generated as an input before behavior ships');
+    unlike($result->{generated_ial1}{text}, qr/\(output axi0_r0_complete\b/, 'read completion output is not generated before behavior ships');
+    unlike($result->{generated_ial1}{text}, qr/\(rule axi0_r0_response_demux\b/, 'read demux rule is not generated before behavior ships');
+    assert_read_response_demux_report($result->{report}{response_demux}, 'adapter report');
+    is_deeply($result->{report}{auto_id_lifecycle}{residue}, [qw(response_demux)], 'adapter report keeps read response demux as behavior residue');
+};
+
+subtest 'PPIF adapter parses mixed AXI manager response-demux arms' => sub {
+    my $source = capacity_ppif_with_objects(
+        manager_capacity_object_with_mixed_response_demux(
+            '(write (response-event axi0_write_complete) (transaction-completion generated)) ' .
+            '(read (response-event axi0_read_complete) (response-scope single-beat) (transaction-completion generated))',
+        ),
+    );
+    my $result = FSM::Adapter::IAL2::PPIF->new()->parse_source($source, 'mixed-response-demux.ppif');
+    my $isf = $result->{generated_ial1}{text};
+    my $demux = $result->{report}{response_demux};
+
+    like($isf, qr/\(input bid \(width 4\)\)/, 'mixed response-demux generated IAL1 declares BID input');
+    like($isf, qr/\(output axi0_w0_complete\)/, 'mixed response-demux generated IAL1 declares write completion output');
+    like($isf, qr/\(rule axi0_w0_response_demux\b[\s\S]*\(pulse axi0_w0_complete\)\)/, 'mixed response-demux generated IAL1 emits write pulse rule');
+    unlike($isf, qr/\(input axi0_rid\b/, 'mixed response-demux keeps RID metadata-only before read behavior ships');
+    unlike($isf, qr/\(output axi0_r0_complete\b/, 'mixed response-demux does not generate read completion output yet');
+    unlike($isf, qr/\(rule axi0_r0_response_demux\b/, 'mixed response-demux does not emit read demux rule yet');
+
+    is($demux->{mode}, 'bounded_response_demux_contract', 'mixed response-demux report uses combined mode');
+    ok($demux->{generated_behavior}, 'mixed response-demux report keeps top-level generated behavior true for write behavior');
+    is($demux->{write}{mode}, 'bounded_write_bid_demux_contract', 'mixed response-demux report keeps write mode');
+    ok($demux->{write}{generated_behavior}, 'mixed response-demux report keeps write generated behavior true');
+    is_deeply($demux->{write}{auto_transactions}, [qw(w0 w1)], 'mixed response-demux report keeps write auto transactions');
+    is($demux->{read}{mode}, 'bounded_read_rid_demux_contract', 'mixed response-demux report adds read mode');
+    ok(!$demux->{read}{generated_behavior}, 'mixed response-demux report keeps read generated behavior false');
+    is_deeply($demux->{read}{auto_transactions}, [qw(r0 r1)], 'mixed response-demux report keeps read auto transactions');
+    is_deeply($demux->{residue}, [qw(generated_read_rid_demux read_data_interleaving bursts)], 'mixed response-demux report keeps generated read demux residue');
+    is_deeply($result->{report}{auto_id_lifecycle}{residue}, [qw(response_demux)], 'mixed response-demux report keeps lifecycle response_demux residue until read behavior ships');
+};
+
 subtest 'PPIF adapter diagnostics fail closed before generation claims' => sub {
     my @cases = (
         ['missing profile',
@@ -362,11 +412,14 @@ subtest 'PPIF adapter diagnostics fail closed before generation claims' => sub {
             capacity_ppif_with_objects(manager_capacity_object_with_duplicate_response_demux()),
             qr/duplicate \(response-demux \.\.\.\) clause/],
         ['unsupported manager response-demux family',
-            capacity_ppif_with_objects(manager_capacity_object_with_response_demux('(read (response-event axi0_read_complete) (transaction-completion generated))')),
-            qr/unsupported family clause '\(read \.\.\.\)'; this slice supports \(write \.\.\.\) only/],
+            capacity_ppif_with_objects(manager_capacity_object_with_response_demux('(address (response-event axi0_read_complete) (transaction-completion generated))')),
+            qr/unsupported family clause '\(address \.\.\.\)'; this slice supports \(read \.\.\.\) and \(write \.\.\.\)/],
         ['duplicate manager response-demux write family',
             capacity_ppif_with_objects(manager_capacity_object_with_response_demux('(write (response-event axi0_write_complete) (transaction-completion generated)) (write (response-event axi0_write_complete) (transaction-completion generated))')),
             qr/duplicate \(write \.\.\.\) family clause/],
+        ['duplicate manager response-demux read family',
+            capacity_ppif_with_objects(manager_capacity_object_with_read_response_demux('(read (response-event axi0_read_complete) (response-scope single-beat) (transaction-completion generated)) (read (response-event axi0_read_complete) (response-scope single-beat) (transaction-completion generated))')),
+            qr/duplicate \(read \.\.\.\) family clause/],
         ['missing manager response-demux response event',
             capacity_ppif_with_objects(manager_capacity_object_with_response_demux('(write (transaction-completion generated))')),
             qr/is missing required \(response-event \.\.\.\) clause/],
@@ -376,9 +429,24 @@ subtest 'PPIF adapter diagnostics fail closed before generation claims' => sub {
         ['unsupported manager response-demux completion ownership',
             capacity_ppif_with_objects(manager_capacity_object_with_response_demux('(write (response-event axi0_write_complete) (transaction-completion authored))')),
             qr/supports only generated in this slice/],
+        ['missing manager read response-demux response scope',
+            capacity_ppif_with_objects(manager_capacity_object_with_read_response_demux('(read (response-event axi0_read_complete) (transaction-completion generated))')),
+            qr/is missing required \(response-scope \.\.\.\) clause/],
+        ['duplicate manager read response-demux response scope',
+            capacity_ppif_with_objects(manager_capacity_object_with_read_response_demux('(read (response-event axi0_read_complete) (response-scope single-beat) (response-scope single-beat) (transaction-completion generated))')),
+            qr/duplicate \(response-scope \.\.\.\) clause/],
+        ['unsupported manager read response-demux response scope',
+            capacity_ppif_with_objects(manager_capacity_object_with_read_response_demux('(read (response-event axi0_read_complete) (response-scope burst-last) (transaction-completion generated))')),
+            qr/supports only single-beat in this slice/],
+        ['unsupported manager read response-demux completion ownership',
+            capacity_ppif_with_objects(manager_capacity_object_with_read_response_demux('(read (response-event axi0_read_complete) (response-scope single-beat) (transaction-completion authored))')),
+            qr/supports only generated in this slice/],
         ['manager response-demux event mismatch',
             capacity_ppif_with_objects(manager_capacity_object_with_response_demux('(write (response-event axi0_other_write_complete) (transaction-completion generated))')),
             qr/response_demux\.write\.response_event must equal write_complete event 'axi0_write_complete'/],
+        ['manager read response-demux event mismatch',
+            capacity_ppif_with_objects(manager_capacity_object_with_read_response_demux('(read (response-event axi0_other_read_complete) (response-scope single-beat) (transaction-completion generated))')),
+            qr/response_demux\.read\.response_event must equal read_complete event 'axi0_read_complete'/],
         ['manager response-demux without ID-family metadata',
             capacity_ppif_with_objects(manager_capacity_object_with_response_demux_only('(write (response-event axi0_write_complete) (transaction-completion generated))')),
             qr/response_demux requires id_families metadata/],
@@ -550,6 +618,21 @@ subtest 'CLI emits IAL2 report JSON for AXI manager response-demux behavior .ppi
     is_deeply($report->{auto_id_lifecycle}{residue}, [], 'CLI report removes response_demux and same-ID residue from auto-ID lifecycle residue');
     is_deeply($report->{id_response_rule_engine}{residue}, [qw(same_id_ordering)], 'CLI report removes response demux from ID/response residue');
     is_deeply($report->{generated_artifacts}{ial0}{files}, ['axi0_capacity_status.fsm'], 'response-demux behavior keeps the generated .fsm artifact name stable');
+};
+
+subtest 'CLI emits IAL2 report JSON for AXI manager read response-demux metadata .ppif' => sub {
+    my ($success, undef, undef, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--emit-schedule-json', sample_capacity_read_response_demux_ppif_path()],
+    );
+
+    ok($success, '--emit-schedule-json succeeds for capacity/status read response-demux .ppif');
+    is(join('', @{$stderr_buf || []}), '', 'capacity/status read response-demux report keeps stderr clean');
+    my $report = decode_json(join('', @{$stdout_buf || []}));
+    is($report->{schema}, 'fsmgen.ial2.protocol_intent.axi_manager_capacity_status.v1', 'CLI keeps the capacity/status report schema');
+    is($report->{source_object}{intent_name}, 'axi_manager_capacity_status_read_response_demux', 'read response-demux report carries the PPIF top-level intent name');
+    assert_read_response_demux_report($report->{response_demux}, 'CLI report');
+    is_deeply($report->{auto_id_lifecycle}{residue}, [qw(response_demux)], 'CLI report keeps generated read demux behavior as auto-ID lifecycle residue');
+    is_deeply($report->{generated_artifacts}{ial0}{files}, ['axi0_capacity_status.fsm'], 'read response-demux metadata keeps the generated .fsm artifact name stable');
 };
 
 subtest 'CLI --verify-hdl accepts AXI manager auto-ID lifecycle behavior .ppif' => sub {
@@ -995,6 +1078,50 @@ subtest 'CLI check JSON and semantic JSON support-account response-demux .ppif s
     );
 };
 
+subtest 'CLI check JSON and semantic JSON support-account read response-demux .ppif separately' => sub {
+    my $demux_path = sample_capacity_read_response_demux_ppif_path();
+    my ($success, undef, undef, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--strict', '--check', '--json', $demux_path],
+    );
+    ok($success, 'capacity/status read response-demux --check --json succeeds');
+    is(join('', @{$stderr_buf || []}), '', 'capacity/status read response-demux --check --json keeps stderr clean');
+    my $check_report = decode_json(join('', @{$stdout_buf || []}));
+    ok($check_report->{success}, 'capacity/status read response-demux check JSON reports success');
+    is(
+        $check_report->{source}{resolved_path},
+        File::Spec->rel2abs($demux_path),
+        'capacity/status read response-demux check JSON reports the public .ppif source path',
+    );
+    is(
+        $check_report->{support_accounting}{entry_id},
+        'intent.ppif_axi_manager_capacity_status_read_response_demux',
+        'capacity/status read response-demux check JSON support accounting names the PPIF corpus entry',
+    );
+
+    my ($semantic_success, undef, undef, $semantic_stdout, $semantic_stderr) = run(
+        command => ['./bin/fsmgen', '--strict', '--emit-semantic-json', $demux_path],
+    );
+    ok($semantic_success, 'capacity/status read response-demux --emit-semantic-json succeeds');
+    is(join('', @{$semantic_stderr || []}), '', 'capacity/status read response-demux --emit-semantic-json keeps stderr clean');
+    my $semantic_report = decode_json(join('', @{$semantic_stdout || []}));
+    ok($semantic_report->{success}, 'capacity/status read response-demux semantic JSON reports success');
+    is(
+        $semantic_report->{source}{resolved_path},
+        File::Spec->rel2abs($demux_path),
+        'capacity/status read response-demux semantic JSON reports the public .ppif source path',
+    );
+    is(
+        $semantic_report->{support_accounting}{entry_id},
+        'intent.ppif_axi_manager_capacity_status_read_response_demux',
+        'capacity/status read response-demux semantic JSON support accounting names the PPIF corpus entry',
+    );
+    is(
+        $semantic_report->{semantic}{module}{name},
+        'axi0_capacity_status',
+        'capacity/status read response-demux semantic JSON records the unchanged generated module',
+    );
+};
+
 subtest 'CLI bundle HDL modes use aggregate wrapper entry' => sub {
     my $bundle_path = sample_bundle_ppif_path();
     my $tempdir = tempdir(CLEANUP => 1);
@@ -1117,6 +1244,10 @@ sub sample_capacity_response_demux_ppif_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_response_demux.ppif');
 }
 
+sub sample_capacity_read_response_demux_ppif_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_read_response_demux.ppif');
+}
+
 sub sample_ppif {
     return slurp(sample_ppif_path());
 }
@@ -1147,6 +1278,18 @@ sub sample_capacity_auto_id_lifecycle_ppif {
 
 sub sample_capacity_response_demux_ppif {
     return slurp(sample_capacity_response_demux_ppif_path());
+}
+
+sub sample_capacity_read_response_demux_ppif {
+    return slurp(sample_capacity_read_response_demux_ppif_path());
+}
+
+sub sample_capacity_read_response_demux_base_ppif {
+    my $source = sample_capacity_read_response_demux_ppif();
+    $source =~ s/\n    \(response-demux\n      \(read\n        \(response-event axi0_read_complete\)\n        \(response-scope single-beat\)\n        \(transaction-completion generated\)\)\)//;
+    $source =~ s/axi_manager_capacity_status_read_response_demux/axi_manager_capacity_status_read_response_demux_base/;
+    $source =~ s/axi-manager-capacity-status-read-response-demux/axi-manager-capacity-status-read-response-demux-base/;
+    return $source;
 }
 
 sub capacity_ppif_with_objects {
@@ -1286,6 +1429,28 @@ sub manager_capacity_object_with_response_demux {
     return $object;
 }
 
+sub manager_capacity_object_with_read_response_demux {
+    my ($demux) = @_;
+    my $object = manager_capacity_object_with_id_families_transactions_and_auto_id_lifecycle(
+        default_manager_id_families(),
+        default_manager_read_auto_transactions(),
+        '(read (pool 0 1))',
+    );
+    $object =~ s/\)\z/\n    (response-demux $demux))/;
+    return $object;
+}
+
+sub manager_capacity_object_with_mixed_response_demux {
+    my ($demux) = @_;
+    my $object = manager_capacity_object_with_id_families_transactions_and_auto_id_lifecycle(
+        default_manager_id_families(),
+        default_manager_mixed_auto_transactions(),
+        '(write (pool 0 1)) (read (pool 0 1))',
+    );
+    $object =~ s/\)\z/\n    (response-demux $demux))/;
+    return $object;
+}
+
 sub manager_capacity_object_with_duplicate_response_demux {
     my $object = manager_capacity_object_with_auto_id_lifecycle('(write (pool 0 1))');
     $object =~ s/\)\z/\n    (response-demux (write (response-event axi0_write_complete) (transaction-completion generated)))\n    (response-demux (write (response-event axi0_write_complete) (transaction-completion generated))))/;
@@ -1304,6 +1469,22 @@ sub manager_capacity_object_with_id_families_transactions_and_response_demux {
     my $object = manager_capacity_object_with_id_families_and_transactions($families, $transactions);
     $object =~ s/\)\z/\n    (response-demux $demux))/;
     return $object;
+}
+
+sub default_manager_read_auto_transactions {
+    return join(' ',
+        '(read r0 (tag rd0) (request axi0_r0_request) (completion axi0_r0_complete) (id auto))',
+        '(read r1 (tag rd1) (request axi0_r1_request) (completion axi0_r1_complete) (id auto))',
+    );
+}
+
+sub default_manager_mixed_auto_transactions {
+    return join(' ',
+        '(write w0 (tag wr0) (request axi0_w0_request) (completion axi0_w0_complete) (id auto))',
+        '(write w1 (tag wr1) (request axi0_w1_request) (completion axi0_w1_complete) (id auto))',
+        '(read r0 (tag rd0) (request axi0_r0_request) (completion axi0_r0_complete) (id auto))',
+        '(read r1 (tag rd1) (request axi0_r1_request) (completion axi0_r1_complete) (id auto))',
+    );
 }
 
 sub assert_write_auto_id_lifecycle_report {
@@ -1362,6 +1543,29 @@ sub assert_write_response_demux_report {
         $demux->{residue},
         [qw(read_response_demux read_data_interleaving bursts)],
         "$owner removes generated write BID demux and covered same-ID avoidance from response-demux residue",
+    );
+}
+
+sub assert_read_response_demux_report {
+    my ($demux, $owner) = @_;
+    is($demux->{mode}, 'bounded_response_demux_contract', "$owner marks bounded response-demux contract mode");
+    ok(!$demux->{generated_behavior}, "$owner keeps top-level generated behavior false for read-only metadata");
+    is($demux->{read}{mode}, 'bounded_read_rid_demux_contract', "$owner marks bounded read RID-demux contract mode");
+    ok(!$demux->{read}{generated_behavior}, "$owner marks read generated behavior false");
+    is($demux->{read}{response_event}, 'axi0_read_complete', "$owner reports the raw read response event");
+    is($demux->{read}{response_event_role}, 'raw_accepted_read_response', "$owner reports the read response-event role");
+    is($demux->{read}{response_scope}, 'single_beat', "$owner reports single-beat read response scope");
+    is($demux->{read}{response_id_signal}, 'axi0_rid', "$owner reports the read response ID signal");
+    is($demux->{read}{response_id_direction}, 'generated_input', "$owner reports read response ID direction as generated input");
+    is($demux->{read}{transaction_completion_source}, 'generated_demux', "$owner reports generated read transaction-completion ownership");
+    is_deeply($demux->{read}{auto_transactions}, [qw(r0 r1)], "$owner reports read auto-ID transactions in source order");
+    ok(!exists $demux->{read}{generated_rules}, "$owner does not report read generated rules yet");
+    ok(!exists $demux->{read}{generated_completion_signals}, "$owner does not report read generated completion outputs yet");
+    ok(!exists $demux->{read}{generated_assertions}, "$owner does not report read generated assertions yet");
+    is_deeply(
+        $demux->{residue},
+        [qw(generated_read_rid_demux read_data_interleaving bursts)],
+        "$owner reports generated read RID demux behavior as residue",
     );
 }
 
