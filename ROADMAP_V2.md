@@ -897,17 +897,19 @@ Priority note:
   lowering path, tracked by
   [docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md](docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md);
   the first post-Valid-Ready AXI manager rule subset is now selected as
-  outstanding-capacity plus acceptance/status feedback, and the active next
-  leaf audits implementation readiness and any required IAL1 or IAL0/SV
-  prerequisites before behavior changes.
+  outstanding-capacity plus acceptance/status feedback, the readiness audit
+  found no IAL1 or IAL0/SV prerequisite blocker for an in-process generator,
+  and the active next leaf implements that first generator slice before public
+  `.ppif` syntax.
 
 ## Current intent
 The active immediate feature-completeness lane is IAL2 on the
 SystemVerilog-backed lowering path; see
 [docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md](docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md).
-The current frontier is the readiness audit for the selected AXI manager
-capacity/status subset after the shipped Valid-Ready single/bundle `.ppif`
-surfaces.
+The current frontier is the first in-process generator for the selected AXI
+manager capacity/status subset after the shipped Valid-Ready single/bundle
+`.ppif` surfaces. Public capacity/status `.ppif` syntax remains deferred until
+that generator proves the generated `.isf` and `.fsm` review-artifact path.
 
 The first honest `R11` slices are now:
 1. keep widening convention-first composition only where the child-side evidence is still deterministic,

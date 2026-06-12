@@ -2265,10 +2265,13 @@ owns the next IAL2 feature-completeness work. Its first selector audited the
 shipped `.ppif` Valid-Ready single/bundle surface and moved the frontier to
 the first AXI manager rule-subset selection/pre-code contract. That selector
 chose outstanding-capacity plus acceptance/status feedback as the first
-post-Valid-Ready manager subset. The active frontier is now the readiness
-audit for that subset before behavior changes. Selected IAL2 slices may
-include explicit IAL1 or IAL0/SystemVerilog prerequisites when those
-prerequisites are needed for clean, reviewable lowering.
+post-Valid-Ready manager subset. The completed readiness audit for that subset
+found no IAL1 or IAL0/SystemVerilog prerequisite blocker and selected an
+in-process generator as the first behavior-bearing capacity/status slice
+before public `.ppif` syntax. The active frontier is that in-process generator
+slice. Selected IAL2 slices may include explicit IAL1 or
+IAL0/SystemVerilog prerequisites when those prerequisites are needed for clean,
+reviewable lowering.
 
 Evaluation note:
 [IAL2_PROTOCOL_PLATFORM_INTENT_EVALUATION](../../IAL2_PROTOCOL_PLATFORM_INTENT_EVALUATION.md).
@@ -2357,8 +2360,23 @@ generated `.isf` and `.fsm` review artifacts before SystemVerilog HDL. It is
 not a shipped behavior yet and does not claim ID allocation, ordering,
 interleaving, response matching, burst assembly, channel expansion,
 `blocking`/`queued` policy behavior, profile aliases, or VHDL backend work.
-The next task-tree leaf must audit implementation readiness before any
-manager behavior changes.
+The readiness audit below selected the first implementation boundary before
+any manager behavior changes.
+
+Capacity/status readiness audit:
+[AXI_IAL2_MANAGER_CAPACITY_STATUS_READINESS_AUDIT](../../AXI_IAL2_MANAGER_CAPACITY_STATUS_READINESS_AUDIT.md)
+finds that existing IAL1 actor storage, status-output, rule/update, scheduled
+`.fsm`, and SystemVerilog generation surfaces can carry the first
+capacity/status shell. The selected first implementation boundary is an
+in-process IAL2 generator, tentatively
+`FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus`, not public `.ppif`
+syntax. The generator should accept a structured contract hash with explicit
+read/write `max-pending` depths, `submit_policy => try`, abstract submit and
+completion events, namespaced status outputs, and source anchors for `A1.1`,
+`A1.2`, and `A5.1`. It must emit reviewable generated `.isf` before generated
+`.fsm`, then use the existing SystemVerilog path. Public `.ppif`
+capacity/status syntax, profile aliases, IDs, ordering, response matching,
+bursts, queued/blocking policies, and VHDL remain future exact-owner work.
 
 First implementation subset selection:
 [AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION](../../AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md)
@@ -2480,11 +2498,11 @@ generated `.fsm`. The capability manifest now advertises this file-layer stack
 under `language_surface.file_surfaces`, including the `.ppif` sample path,
 first-slice alias exclusions, and `supported_cli_modes[]` entries for
 `--emit-schedule-json`, `--check --json` / `--check-json`, and
-`--emit-semantic-json`. The active next prerequisite is the readiness audit
-for the selected AXI manager capacity/status subset. Additional `.ppif`
-objects/clauses and profile aliases remain future exact-owner work, but they
-should not jump ahead of the manager capacity/status readiness and
-implementation path unless a later selector records why.
+`--emit-semantic-json`. The active next prerequisite is the first in-process
+generator for the selected AXI manager capacity/status subset. Additional
+`.ppif` objects/clauses and profile aliases remain future exact-owner work,
+but they should not jump ahead of the manager capacity/status implementation
+path unless a later selector records why.
 
 Multi-channel `.ppif` bundle support:
 [IAL2_PPIF_MULTI_VALID_READY_READINESS](../../IAL2_PPIF_MULTI_VALID_READY_READINESS.md)
