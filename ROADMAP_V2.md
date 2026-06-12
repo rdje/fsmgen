@@ -947,15 +947,18 @@ Priority note:
   IAL1/IAL0/SystemVerilog prerequisite, and that dispatch/fan-in slice is now
   shipped with generated transaction-event inputs, OR fan-in guards, additive
   `transaction_event_dispatch` report metadata, and the needed bounded IAL1
-  OR/negated-OR guard conflict proof.
+  OR/negated-OR guard conflict proof; the next selected subset is AXI manager
+  ID/response rule-engine readiness before any ID allocation, response
+  matching, ordering, burst, queued-policy, alias, full-manager, or VHDL
+  behavior changes.
 
 ## Current intent
 The active immediate feature-completeness lane is IAL2 on the
 SystemVerilog-backed lowering path; see
 [docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md](docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md).
-The current frontier is the next IAL2 feature-completeness selector after the
-shipped AXI manager transaction event dispatch and direction fan-in slice. The
-shipped public capacity/status source accepts one
+The current frontier is AXI manager ID/response rule-engine readiness after
+the shipped AXI manager transaction event dispatch and direction fan-in slice.
+The shipped public capacity/status source accepts one
 `(manager-capacity-status NAME ...)` object under
 `(protocol-platform-intent ...)`, `(profile axi4)`, and top-level source
 anchors, and works through schedule JSON, generated `.isf`/`.fsm` review
@@ -979,8 +982,10 @@ IAL1/IAL0/SystemVerilog path. That slice now declares unique transaction event
 inputs, preserves scalar one-event compatibility, generates OR fan-in guards
 for multi-event groups, widens the IAL1 guard-conflict proof for bounded
 OR/negated-OR generated guards, and reports additive
-`transaction_event_dispatch` metadata. ID allocation and response matching
-remain behind that shipped event-provenance prerequisite.
+`transaction_event_dispatch` metadata. `IAL2-FEATURE-COMPLETENESS-FRONTIER.17`
+must now audit whether the first ID/response behavior can honestly extend that
+object through the current IAL1/IAL0/SystemVerilog substrate, or whether a
+narrower prerequisite is required first.
 
 The first honest `R11` slices are now:
 1. keep widening convention-first composition only where the child-side evidence is still deterministic,

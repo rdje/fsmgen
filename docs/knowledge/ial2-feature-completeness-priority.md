@@ -17,10 +17,11 @@ reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER|IAL2 feature completeness|IA
 The current feature-completeness priority is IAL2 on the
 SystemVerilog-backed path.
 
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.16` owns the next PNT frontier: select
-the next exact IAL2 feature-completeness slice after shipped AXI manager
-transaction event dispatch and direction fan-in. The completed `.15` slice
-shipped event provenance, OR fan-in guards, additive
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.17` owns the next PNT frontier:
+readiness-audit the AXI manager ID/response rule-engine boundary before any ID
+allocation, response matching, ordering, burst, queued-policy, alias,
+full-manager, or VHDL behavior changes. The completed `.16` selector chose
+that audit after `.15` shipped event provenance, OR fan-in guards, additive
 `transaction_event_dispatch` report metadata, and bounded IAL1 OR/negated-OR
 guard conflict proof support.
 

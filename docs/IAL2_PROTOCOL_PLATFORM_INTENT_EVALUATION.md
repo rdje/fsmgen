@@ -225,10 +225,15 @@ it declares unique transaction events as generated IAL1 inputs, preserves
 scalar one-event compatibility, emits OR fan-in guards for multi-event
 direction groups, widens the IAL1 guard-conflict proof for bounded
 OR/negated-OR generated guards, reaches SystemVerilog, and additively reports
-`transaction_event_dispatch` metadata.
+`transaction_event_dispatch` metadata. The next selected subset is
+[AXI_IAL2_MANAGER_ID_RESPONSE_RULE_ENGINE_SELECTION](AXI_IAL2_MANAGER_ID_RESPONSE_RULE_ENGINE_SELECTION.md):
+readiness-audit whether the first ID/response behavior can extend the existing
+`manager-capacity-status` object through current IAL1/IAL0/SystemVerilog
+substrate, or whether a narrower prerequisite is needed first.
 Public `.pif`, `.ppi`, `.axi`, protocol-profile aliases, ID allocation,
 ordering, response matching, bursts, queued/blocking policy, and full AXI
-manager behavior remain unshipped and need later exact owners.
+manager behavior remain unshipped until exact owners select and implement
+them.
 Decision
 [0014](decisions/0014-protocol-platform-intent-surface-and-layered-lowering.md)
 records the protocol/platform-generic IAL2 file-surface direction and the
