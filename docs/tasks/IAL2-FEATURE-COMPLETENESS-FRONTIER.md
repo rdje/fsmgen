@@ -44,7 +44,7 @@ path before reopening VHDL backend or VHDL rerouting work.
 - ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER`
   Status: `active`
   Goal: `Make IAL2 feature-complete on the SystemVerilog-backed path before VHDL work resumes.`
-  Children: `IAL2-FEATURE-COMPLETENESS-FRONTIER.1, IAL2-FEATURE-COMPLETENESS-FRONTIER.2, IAL2-FEATURE-COMPLETENESS-FRONTIER.3, IAL2-FEATURE-COMPLETENESS-FRONTIER.4, IAL2-FEATURE-COMPLETENESS-FRONTIER.5, IAL2-FEATURE-COMPLETENESS-FRONTIER.6, IAL2-FEATURE-COMPLETENESS-FRONTIER.7`
+  Children: `IAL2-FEATURE-COMPLETENESS-FRONTIER.1, IAL2-FEATURE-COMPLETENESS-FRONTIER.2, IAL2-FEATURE-COMPLETENESS-FRONTIER.3, IAL2-FEATURE-COMPLETENESS-FRONTIER.4, IAL2-FEATURE-COMPLETENESS-FRONTIER.5, IAL2-FEATURE-COMPLETENESS-FRONTIER.6, IAL2-FEATURE-COMPLETENESS-FRONTIER.7, IAL2-FEATURE-COMPLETENESS-FRONTIER.8`
 
 - ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER.1`
   Status: `done`
@@ -89,9 +89,16 @@ path before reopening VHDL backend or VHDL rerouting work.
   Commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.6: ship AXI capacity PPIF parser`
 
 - ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER.7`
-  Status: `pending`
+  Status: `done`
   Goal: `Select the next AXI manager behavior subset after the shipped capacity/status .ppif slice.`
   Acceptance: `The selector reads the AXI manager rule matrix, ID/order evidence, shipped Valid-Ready surfaces, shipped capacity/status generator and .ppif parser, IAL1/IAL0/SV substrate, public diagnostics, support accounting, mdBook, and tests; chooses the next exact source-anchored AXI manager behavior subset or records a required IAL1/IAL0/SV prerequisite first; documents scope, non-goals, public syntax expectations, generated .isf/.fsm review artifact expectations, report/check/semantic JSON impacts, validation gates, residue, rollback boundary, and next implementation owner before behavior changes.`
+  Verification: `Selected AXI manager ID-family declaration and static validation as the next subset after capacity/status, anchored to A5.1/A5.1.1/A5.5/A5.6; documented read/write ID width and signal-pair expectations, zero-width absence semantics, static diagnostics, report contract, generated artifact boundary, explicit residue, validation gates, and selected .8 as the readiness audit before implementation.`
+  Commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.7: select AXI ID family slice`
+
+- ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER.8`
+  Status: `pending`
+  Goal: `Audit readiness for the AXI manager ID-family/static-validation implementation slice.`
+  Acceptance: `The audit reads the shipped capacity/status generator, PPIF parser, public sample, support-accounting corpus, report/check/semantic JSON surfaces, IAL1/IAL0/SystemVerilog paths, identifier/name-collision helpers, mdBook, and focused tests; decides whether the selected ID-family subset should be implemented as an additive capacity/status extension, a new manager object, or a prerequisite IAL1/IAL0/SV substrate slice; records exact implementation boundary, public syntax, report schema/versioning, diagnostics, validation gates, docs, residue, and rollback before behavior changes.`
   Verification: `pending`
   Commit: `pending`
 
@@ -99,7 +106,7 @@ path before reopening VHDL backend or VHDL rerouting work.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.7` | `pending` | `.6` shipped the public capacity/status parser/CLI slice; the next safe step is a selector for the next AXI manager behavior subset or required prerequisite. |
+| 1 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.8` | `pending` | `.7` selected ID-family declaration and static validation; the next safe step is a readiness audit before parser/generator behavior changes. |
 
 ## Decisions
 
@@ -228,13 +235,23 @@ path before reopening VHDL backend or VHDL rerouting work.
   behavior changes. IDs, ordering, response matching, bursts, channel
   expansion, queued/blocking policy, and full manager behavior remain residue
   until the selector narrows the next owner.
+- `2026-06-12`: `.7` selected AXI manager ID-family declaration and static
+  validation as the next subset after capacity/status. The subset owns
+  separate read/write ID-family widths, request/response ID signal-pair
+  metadata, zero-width absence semantics, static diagnostics, source anchors,
+  report metadata, and explicit residue. It does not yet own ID allocation,
+  per-transaction user-ID validation, ordering queues, interleaving, `BID`/`RID`
+  response matching, bursts, queued/blocking policy, profile aliases, or VHDL.
+- `2026-06-12`: `.8` is selected as the next leaf: readiness-audit the
+  ID-family/static-validation implementation boundary and decide whether it
+  should extend the existing capacity/status object, introduce a broader
+  manager object, or require an IAL1/IAL0/SV prerequisite first.
 
 ## Open Questions
 
-- The next AXI manager behavior subset after capacity/status is not yet
-  selected. Candidate areas include ID allocation/validation, same-ID
-  ordering, different-ID interleaving, response matching, burst/last-beat
-  tracking, or a prerequisite IAL1/IAL0/SV substrate slice.
+- The exact implementation boundary for ID-family/static-validation remains
+  open until `.8`: additive capacity/status extension, broader manager object,
+  or prerequisite IAL1/IAL0/SV substrate.
 
 ## Blockers
 
@@ -256,6 +273,8 @@ path before reopening VHDL backend or VHDL rerouting work.
 | `2026-06-12` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.5` | `bash knowledge-map/scripts/gen_knowledge_map.sh`; `mdbook build docs/book`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `git --no-pager diff --check`; PPIF syntax fact-card reverify `rg`; generator fact-card reverify `prove -Iperl t/1437-axi-ial2-manager-capacity-status-generator.t` | Passed. |
 | `2026-06-12` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.6` | `perl -Iperl -c perl/FSM/Adapter/IAL2/PPIF.pm`; `perl -Iperl -c t/1436-ial2-ppif-parser-cli.t`; `perl -Iperl -c perl/FSM/Support/RegressionCorpus.pm`; `perl -Iperl -c perl/FSM/Support/LanguageSurfaceSection.pm`; `prove -Iperl t/1436-ial2-ppif-parser-cli.t`; `prove -Iperl t/1437-axi-ial2-manager-capacity-status-generator.t t/1436-ial2-ppif-parser-cli.t t/297-capability-manifest.t t/317-language-surface-contract.t t/301-check-json-supported-corpus.t t/303-normalized-semantic-json-supported-corpus.t` | Passed. |
 | `2026-06-12` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.6` | `bash knowledge-map/scripts/gen_knowledge_map.sh`; `mdbook build docs/book`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `git --no-pager diff --check`; PPIF first-slice fact-card reverify `prove -Iperl t/1436-ial2-ppif-parser-cli.t`; PPIF syntax fact-card reverify `rg`; generator fact-card reverify `prove -Iperl t/1437-axi-ial2-manager-capacity-status-generator.t` | Passed. |
+| `2026-06-12` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.7` | `KNOWLEDGE_MAP.md`; `docs/AXI_MANAGER_RULE_MATRIX_DESIGN_PROBE.md`; `docs/AXI_ID_ORDERING_RULE_EVIDENCE_PROBE.md`; `docs/AXI_MANAGER_USER_API_BRAINSTORM.md`; `docs/AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md`; `docs/IAL2_PROTOCOL_PLATFORM_INTENT_EVALUATION.md`; `docs/AXI_IAL2_MANAGER_CAPACITY_STATUS_SUBSET_SELECTION.md`; `perl/FSM/IAL2/ProtocolIntent/AxiManagerCapacityStatus.pm`; `perl/FSM/Adapter/IAL2/PPIF.pm`; `t/1437-axi-ial2-manager-capacity-status-generator.t`; `t/1436-ial2-ppif-parser-cli.t`; `docs/book/src/14-feature-backlog.md`; `README.md`; `ROADMAP_V2.md` | Selected ID-family declaration/static validation and advanced the frontier to `.8` readiness audit. |
+| `2026-06-12` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.7` | `bash knowledge-map/scripts/gen_knowledge_map.sh`; `mdbook build docs/book`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `git --no-pager diff --check`; ID-family fact-card reverify `rg`; IAL2 next-slice fact-card reverify `rg` | Passed. |
 
 ## Commit Log
 
@@ -267,7 +286,8 @@ path before reopening VHDL backend or VHDL rerouting work.
 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.4` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.4: ship AXI manager capacity generator` | Shipped the in-process capacity/status generator, focused tests, docs, mdBook sync, and advanced the frontier to `.5`. |
 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.5` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.5: select AXI capacity PPIF syntax` | Selected the public capacity/status `.ppif` syntax/readiness boundary and advanced the frontier to `.6`. |
 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.6` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.6: ship AXI capacity PPIF parser` | Shipped the public capacity/status `.ppif` parser/CLI sample, support-accounting entry, source-identity checks, docs, mdBook sync, and advanced the frontier to `.7`. |
-| `IAL2-FEATURE-COMPLETENESS-FRONTIER.7` | `pending` | `pending` |
+| `IAL2-FEATURE-COMPLETENESS-FRONTIER.7` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.7: select AXI ID family slice` | Selected the ID-family/static-validation subset and advanced the frontier to `.8`. |
+| `IAL2-FEATURE-COMPLETENESS-FRONTIER.8` | `pending` | `pending` |
 
 ## Changelog
 
@@ -289,3 +309,6 @@ path before reopening VHDL backend or VHDL rerouting work.
 - `2026-06-12`: Completed `.6` public `.ppif` capacity/status parser/CLI
   implementation and advanced the frontier to `.7`, the next AXI manager
   behavior-subset selector.
+- `2026-06-12`: Completed `.7` next-subset selector, chose AXI ID-family
+  declaration/static validation, and advanced the frontier to `.8` readiness
+  audit.

@@ -185,8 +185,14 @@ source-anchor/residue report. Decision
 as the first public generic IAL2 file suffix, and
 [IAL2_PPIF_PARSER_CLI_FIRST_SLICE](IAL2_PPIF_PARSER_CLI_FIRST_SLICE.md)
 ships the first parser/CLI path for exactly one
-`(valid-ready-channel ...)` object per `.ppif` file. Public `.pif`, `.ppi`,
-`.axi`, protocol-profile aliases, multiple-object `.ppif` files, and full AXI
+`(valid-ready-channel ...)` object per `.ppif` file. The AXI manager
+capacity/status shell is now also public through
+[AXI_IAL2_MANAGER_CAPACITY_STATUS_PPIF_FIRST_SLICE](AXI_IAL2_MANAGER_CAPACITY_STATUS_PPIF_FIRST_SLICE.md),
+and the next selected manager subset is ID-family declaration/static
+validation in
+[AXI_IAL2_MANAGER_ID_FAMILY_SUBSET_SELECTION](AXI_IAL2_MANAGER_ID_FAMILY_SUBSET_SELECTION.md).
+Public `.pif`, `.ppi`, `.axi`, protocol-profile aliases, ID allocation,
+ordering, response matching, bursts, queued/blocking policy, and full AXI
 manager behavior remain unshipped and need later exact owners.
 Decision
 [0014](decisions/0014-protocol-platform-intent-surface-and-layered-lowering.md)

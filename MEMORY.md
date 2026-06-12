@@ -10,9 +10,9 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `HEAD after commit` — `IAL2-FEATURE-COMPLETENESS-FRONTIER.6: ship AXI capacity PPIF parser`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.7` pending; next action is to select the next AXI manager behavior subset or required IAL1/IAL0/SV prerequisite after the shipped public capacity/status `.ppif` parser/CLI slice.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.6`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.5`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.4`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.3`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.2`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.1`; `R11-DIRECT-STRUCTURAL-VHDL-REROUTING.1`; `R11-DIRECT-STRUCTURAL-FULL-HDL-REROUTING.1`; `R11-DIRECT-STRUCTURAL-INSTANCES-LINKS.1`. Older completed slices are in the task tree and git history.
+- latest_commit: `HEAD after commit` — `IAL2-FEATURE-COMPLETENESS-FRONTIER.7: select AXI ID family slice`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.8` pending; next action is to audit readiness for the AXI manager ID-family/static-validation implementation slice and decide additive capacity/status extension vs broader manager object vs prerequisite substrate.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.7`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.6`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.5`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.4`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.3`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.2`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.1`; `R11-DIRECT-STRUCTURAL-VHDL-REROUTING.1`; `R11-DIRECT-STRUCTURAL-FULL-HDL-REROUTING.1`. Older completed slices are in the task tree and git history.
 - in_flight_uncommitted: none; unrelated untracked `fx/` intentionally left alone.
 - blockers: none.
 

@@ -2272,10 +2272,11 @@ before public `.ppif` syntax. That in-process generator is now shipped. The
 public `.ppif` capacity/status parser/CLI first slice is now shipped for one
 manager object with sample, manifest, support-accounting, semantic JSON, check
 JSON, generated review artifacts, HDL, `--verify-hdl`, mdBook, and focused
-diagnostics. The active frontier is a selector for the next AXI manager
-behavior subset or required prerequisite. Selected IAL2 slices may include
-explicit IAL1 or IAL0/SystemVerilog prerequisites when those prerequisites are
-needed for clean, reviewable lowering.
+diagnostics. The next AXI manager subset is selected as ID-family declaration
+and static validation; the active frontier is a readiness audit for that
+implementation boundary. Selected IAL2 slices may include explicit IAL1 or
+IAL0/SystemVerilog prerequisites when those prerequisites are needed for
+clean, reviewable lowering.
 
 Evaluation note:
 [IAL2_PROTOCOL_PLATFORM_INTENT_EVALUATION](../../IAL2_PROTOCOL_PLATFORM_INTENT_EVALUATION.md).
@@ -2505,6 +2506,27 @@ public `.ppif` source path. The first public slice rejects mixed
 `valid-ready-channel` plus `manager-capacity-status` files, multiple manager
 objects, IDs, ordering, response matching, bursts, queued/blocking policy,
 profile aliases, and VHDL behavior.
+
+Next AXI manager subset: ID-family/static-validation:
+[AXI_IAL2_MANAGER_ID_FAMILY_SUBSET_SELECTION](../../AXI_IAL2_MANAGER_ID_FAMILY_SUBSET_SELECTION.md)
+selects the next bounded subset after capacity/status. The subset owns
+separate read/write ID-family declarations, zero-width absence semantics,
+static signal-pair validation, source anchors, and report metadata. The
+selected semantic shape is:
+
+```text
+(id-families
+  (write (width 4) (request-id AWID) (response-id BID))
+  (read  (width 4) (request-id ARID) (response-id RID)))
+```
+
+The active `.8` frontier is a readiness audit before any parser or generator
+behavior changes. That audit must decide whether this is an additive
+capacity/status extension, a broader manager object, or a prerequisite
+IAL1/IAL0/SystemVerilog slice. ID allocation, per-transaction ID validation,
+same-ID ordering, different-ID interleaving, `BID`/`RID` response matching,
+bursts, queued/blocking policies, profile aliases, and VHDL remain future
+task-tree-owned residue.
 
 First implementation subset selection:
 [AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION](../../AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md)
@@ -4772,8 +4794,9 @@ first in-process AXI manager capacity/status generator. Completed selector
 leaf `IAL2-FEATURE-COMPLETENESS-FRONTIER.5` selects the public
 `manager-capacity-status` `.ppif` syntax. Completed implementation leaf
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.6` ships that public parser/CLI first
-slice and advances the active frontier to `.7`, the next AXI manager
-behavior-subset selector.
+slice. Completed selector leaf `IAL2-FEATURE-COMPLETENESS-FRONTIER.7`
+selects AXI ID-family declaration/static validation and advances the active
+frontier to `.8`, its readiness audit.
 Completed implementation leaf
 `ARCHITECTURE-DEBT-FRONTIER.2.1`
 projects direct backend storage/helper declaration-plan entries into

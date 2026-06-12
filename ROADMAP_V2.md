@@ -902,22 +902,26 @@ Priority note:
   generator is shipped as
   `FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus`, the public `.ppif`
   parser/CLI first slice is shipped for exactly one
-  `manager-capacity-status` object, and the active next leaf selects the next
-  AXI manager behavior subset or required prerequisite.
+  `manager-capacity-status` object, the next subset is selected as ID-family
+  declaration/static validation, and the active next leaf audits readiness for
+  that implementation boundary.
 
 ## Current intent
 The active immediate feature-completeness lane is IAL2 on the
 SystemVerilog-backed lowering path; see
 [docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md](docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md).
-The current frontier is a selector for the next AXI manager behavior subset or
-required prerequisite after the shipped capacity/status `.ppif` slice. The
-shipped public capacity/status source accepts one
+The current frontier is a readiness audit for the selected AXI manager
+ID-family/static-validation subset after the shipped capacity/status `.ppif`
+slice. The shipped public capacity/status source accepts one
 `(manager-capacity-status NAME ...)` object under
 `(protocol-platform-intent ...)`, `(profile axi4)`, and top-level source
 anchors, and works through schedule JSON, generated `.isf`/`.fsm` review
 artifacts, HDL, `--verify-hdl`, check JSON, and normalized semantic JSON.
-IDs, ordering, response matching, bursts, queued/blocking policy, profile
-aliases, and full AXI manager behavior remain task-tree-owned residue.
+The selected next subset owns separate read/write ID-family widths,
+request/response ID signal-pair metadata, zero-width absence semantics, static
+diagnostics, and report metadata. ID allocation, ordering, response matching,
+bursts, queued/blocking policy, profile aliases, and full AXI manager behavior
+remain task-tree-owned residue.
 
 The first honest `R11` slices are now:
 1. keep widening convention-first composition only where the child-side evidence is still deterministic,
