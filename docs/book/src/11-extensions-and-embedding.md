@@ -2207,8 +2207,12 @@ assignment-record drivers and structured `targets[]` entries when another
 generated-enable assignment record consumes that direct net on its RHS.
 `structural_rtl_ir.auxiliary_assignments[]` mirrors those rendered lines as
 scalar strings for compatibility. Direct port dependency connectivity,
-output-drive/always-block consumers, instances, links, and HDL rerouting
-through `StructuralRTLIR` remain outside the direct-root structural projection.
+output-drive/always-block consumers, instances, links, full direct module
+rerouting, and VHDL rerouting through `StructuralRTLIR` remain outside the
+direct-root structural projection. The direct SystemVerilog top
+state/standalone-DT generated-enable condition block is now rerouted through
+`StructuralRTLIR` assignment records by an explicit backend marker handoff; the
+markers are removed before final HDL is returned.
 
 That same owner now also publishes a grouped `presence_key_family_map` so
 embedders can discover the bounded structural-RTL shell summary and

@@ -122,6 +122,11 @@ FSM
         ],
         'structural_rtl_ir preserves direct generated enable assignment lines',
     );
+    unlike(
+        $result->{hdl_code},
+        qr/FSMGEN_STRUCTURAL_RTLIR_ENABLE_ASSIGNMENTS_(?:BEGIN|END)/,
+        'pipeline direct HDL does not leak internal StructuralRTLIR reroute markers',
+    );
     is($structural_rtl_ir->{assignment_record_count}, 3, 'bounded direct structural_rtl_ir reports direct enable assignment records');
     is_deeply(
         [map { $_->{rendered} } @{$structural_rtl_ir->{assignment_records} || []}],

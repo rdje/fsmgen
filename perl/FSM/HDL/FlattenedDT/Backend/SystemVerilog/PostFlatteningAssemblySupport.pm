@@ -46,6 +46,11 @@ no warnings 'experimental::signatures';
 
 use FSM::Debug;
 
+use constant STRUCTURAL_RTLIR_ENABLE_ASSIGNMENTS_BEGIN_MARKER =>
+    'FSMGEN_STRUCTURAL_RTLIR_ENABLE_ASSIGNMENTS_BEGIN';
+use constant STRUCTURAL_RTLIR_ENABLE_ASSIGNMENTS_END_MARKER =>
+    'FSMGEN_STRUCTURAL_RTLIR_ENABLE_ASSIGNMENTS_END';
+
 =head2 new
 
 Construct one post-flattening SystemVerilog assembly owner bound to a specific
@@ -78,7 +83,10 @@ sub generate_systemverilog_module ($self, $fsm_module) {
     $hdl .= $ctx->{backend_sv_scaffold}->generate_state_register($fsm_module);
     $hdl .= $ctx->{backend_sv_internal_decl}->generate_internal_signal_declarations($fsm_module);
     fsm_debug("Step 2 - Basic HDL structure generated", 3);
-    $hdl .= $ctx->{enable_graph_enable_support}->generate_enable_conditions($fsm_module);
+    my $enable_conditions = $ctx->{enable_graph_enable_support}->generate_enable_conditions($fsm_module);
+    $hdl .= $ctx->{structural_rtlir_enable_assignment_markers}
+        ? $self->marked_structural_rtlir_enable_assignment_block($enable_conditions)
+        : $enable_conditions;
     fsm_debug("Step 3 - Enable conditions generated", 3);
 
     $hdl .= $consolidated_intermediate_hdl;
@@ -104,6 +112,21 @@ sub prepare_consolidated_intermediate_stage ($self, $fsm_module) {
 
     return $ctx->{backend_sv_consolidated_intermediate_stage_support}
         ->generate_consolidated_intermediate_block($fsm_module);
+}
+
+sub marked_structural_rtlir_enable_assignment_block ($self, $enable_conditions) {
+    return ''
+        . '  // ' . STRUCTURAL_RTLIR_ENABLE_ASSIGNMENTS_BEGIN_MARKER . "\n"
+        . ($enable_conditions // '')
+        . '  // ' . STRUCTURAL_RTLIR_ENABLE_ASSIGNMENTS_END_MARKER . "\n";
+}
+
+sub structural_rtlir_enable_assignments_begin_marker ($class) {
+    return STRUCTURAL_RTLIR_ENABLE_ASSIGNMENTS_BEGIN_MARKER;
+}
+
+sub structural_rtlir_enable_assignments_end_marker ($class) {
+    return STRUCTURAL_RTLIR_ENABLE_ASSIGNMENTS_END_MARKER;
 }
 
 1;

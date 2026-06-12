@@ -96,6 +96,81 @@ FSM
     );
 };
 
+subtest 'generated module emitter reroutes a marked generated-enable block from StructuralRTLIR' => sub {
+    my $hdl = join(
+        '',
+        "module sample;\n",
+        "  // FSMGEN_STRUCTURAL_RTLIR_ENABLE_ASSIGNMENTS_BEGIN\n",
+        "  assign stale_en = stale;\n",
+        "  // FSMGEN_STRUCTURAL_RTLIR_ENABLE_ASSIGNMENTS_END\n",
+        "endmodule\n",
+    );
+
+    my $rerouted = FSM::Backend::GeneratedModuleEmitter
+        ->reroute_generated_enable_assignments_through_structural_rtl_ir(
+            hdl_code => $hdl,
+            target_language => 'systemverilog',
+            structural_rtl_ir => {
+                assignment_records => [
+                    {
+                        rendered => '  assign fresh_en = fresh;',
+                        provenance => {
+                            family => 'generated_enable',
+                            role => 'top_state_enable',
+                        },
+                    },
+                    {
+                        rendered => '  assign final_en = fresh_en;',
+                        provenance => {
+                            family => 'generated_enable',
+                            role => 'standalone_dt_enable',
+                        },
+                    },
+                ],
+            },
+        );
+
+    is(
+        $rerouted,
+        join(
+            '',
+            "module sample;\n",
+            "  // State and DT Enable Conditions\n",
+            "  assign fresh_en = fresh;\n",
+            "  assign final_en = fresh_en;\n",
+            "\n",
+            "endmodule\n",
+        ),
+        'reroute helper replaces only the explicit marked block with StructuralRTLIR assignments',
+    );
+
+    my $error;
+    eval {
+        FSM::Backend::GeneratedModuleEmitter
+            ->reroute_generated_enable_assignments_through_structural_rtl_ir(
+                hdl_code => "module sample;\n  assign stale_en = stale;\nendmodule\n",
+                target_language => 'systemverilog',
+                structural_rtl_ir => {
+                    assignment_records => [
+                        {
+                            rendered => '  assign fresh_en = fresh;',
+                            provenance => {
+                                family => 'generated_enable',
+                                role => 'top_state_enable',
+                            },
+                        },
+                    ],
+                },
+            );
+        1;
+    } or $error = $@;
+    like(
+        $error,
+        qr/expected one marked block/,
+        'reroute helper refuses to parse unmarked HDL text',
+    );
+};
+
 done_testing();
 
 sub new_pipeline {

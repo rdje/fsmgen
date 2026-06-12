@@ -24,6 +24,7 @@ no warnings 'experimental::signatures';
 
 use FSM::Debug;
 use FSM::HDL::FlattenedDT;
+use FSM::HDL::FlattenedDT::Backend::SystemVerilog::PostFlatteningAssemblySupport;
 
 sub emit_from_fsm_module ($class, %args) {
     my $fsm_module = $args{fsm_module}
@@ -35,6 +36,8 @@ sub emit_from_fsm_module ($class, %args) {
     fsm_debug("Generating HDL code", 1);
 
     my $hdl_generator = FSM::HDL::FlattenedDT->new(debug => ($debug_level > 0));
+    $hdl_generator->{structural_rtlir_enable_assignment_markers} =
+        $args{structural_rtlir_enable_assignment_markers} ? 1 : 0;
     my $generator_method = $class->generator_method_for_target($target_language);
 
     fsm_debug("Using generator method: $generator_method", 1);
@@ -58,6 +61,58 @@ sub emit_from_fsm_module ($class, %args) {
         generator_method => $generator_method,
         statistics => $class->statistics_from_generator($hdl_generator),
     };
+}
+
+sub reroute_generated_enable_assignments_through_structural_rtl_ir ($class, %args) {
+    my $hdl_code = $args{hdl_code};
+    return $hdl_code unless defined $hdl_code;
+
+    my $target_language = $args{target_language} // 'systemverilog';
+    return $hdl_code unless $target_language =~ /^(?:systemverilog|sv)$/;
+
+    my $structural_rtl_ir = $args{structural_rtl_ir};
+    my $structural = ref($structural_rtl_ir) eq 'HASH'
+        ? $structural_rtl_ir
+        : (ref($structural_rtl_ir) && $structural_rtl_ir->can('as_hashref'))
+            ? $structural_rtl_ir->as_hashref
+            : {};
+    my @assignments = $class->top_generated_enable_assignment_lines_from_structural_rtl_ir($structural);
+
+    my $begin = FSM::HDL::FlattenedDT::Backend::SystemVerilog::PostFlatteningAssemblySupport
+        ->structural_rtlir_enable_assignments_begin_marker;
+    my $end = FSM::HDL::FlattenedDT::Backend::SystemVerilog::PostFlatteningAssemblySupport
+        ->structural_rtlir_enable_assignments_end_marker;
+    my $pattern = qr{
+        ^[ \t]*//[ \t]*\Q$begin\E[^\n]*\n
+        .*?
+        ^[ \t]*//[ \t]*\Q$end\E[^\n]*\n?
+    }msx;
+
+    my $replacement = "  // State and DT Enable Conditions\n"
+        . join('', map { "$_\n" } @assignments)
+        . "\n";
+    my $replace_count = ($hdl_code =~ s/$pattern/$replacement/g);
+    confess "StructuralRTLIR generated-enable assignment reroute expected one marked block, found $replace_count"
+        unless $replace_count == 1;
+
+    return $hdl_code;
+}
+
+sub top_generated_enable_assignment_lines_from_structural_rtl_ir ($class, $structural) {
+    return () unless ref($structural) eq 'HASH';
+
+    my @lines;
+    for my $record (@{$structural->{assignment_records} || []}) {
+        next unless ref($record) eq 'HASH';
+        my $provenance = $record->{provenance};
+        next unless ref($provenance) eq 'HASH';
+        next unless ($provenance->{family} // '') eq 'generated_enable';
+        next unless ($provenance->{role} // '') =~ /^(?:top_state_enable|standalone_dt_enable)$/;
+        next unless defined($record->{rendered}) && length($record->{rendered});
+        push @lines, $record->{rendered};
+    }
+
+    return @lines;
 }
 
 sub generator_method_for_target ($class, $target_language = 'systemverilog') {

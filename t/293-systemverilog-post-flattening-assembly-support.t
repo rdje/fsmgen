@@ -209,6 +209,29 @@ subtest 'post-flattening assembly prepares consolidated stage before declaration
     );
 };
 
+subtest 'post-flattening assembly can mark the generated-enable block for structural reroute' => sub {
+    my @events;
+    my $ctx = {
+        structural_rtlir_enable_assignment_markers         => 1,
+        backend_sv_consolidated_intermediate_stage_support => Local::SequenceStageSupport->new(\@events),
+        backend_sv_scaffold                              => Local::SequenceScaffold->new(\@events),
+        backend_sv_internal_decl                         => Local::SequenceInternalDecl->new(\@events),
+        enable_graph_enable_support                      => Local::SequenceEnableSupport->new(\@events),
+        backend_sv_generation_tail_support               => Local::SequenceTailSupport->new(\@events),
+    };
+    my $assembly_support = FSM::HDL::FlattenedDT::Backend::SystemVerilog::PostFlatteningAssemblySupport->new(
+        flattened_dt => $ctx,
+    );
+
+    my $hdl = $assembly_support->generate_systemverilog_module(bless({}, 'Local::FakeFSMModule'));
+
+    like(
+        $hdl,
+        qr/FSMGEN_STRUCTURAL_RTLIR_ENABLE_ASSIGNMENTS_BEGIN\nENABLES\n  \/\/ FSMGEN_STRUCTURAL_RTLIR_ENABLE_ASSIGNMENTS_END/,
+        'assembly can wrap generated-enable assignments in explicit structural reroute markers',
+    );
+};
+
 done_testing();
 
 sub parse_fsm_module {

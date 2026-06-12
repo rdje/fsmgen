@@ -115,7 +115,7 @@ first.
 | `R11-DIRECT-STRUCTURAL-AUX-ASSIGNMENTS` | `done` | `R11` | complete (`.2`; projected already-rendered direct generated enable assignment lines into `StructuralRTLIR.auxiliary_assignments[]` without changing HDL emission) | [docs/tasks/R11-DIRECT-STRUCTURAL-AUX-ASSIGNMENTS.md](docs/tasks/R11-DIRECT-STRUCTURAL-AUX-ASSIGNMENTS.md) |
 | `R11-DIRECT-STRUCTURAL-ASSIGNMENT-RECORDS` | `done` | `R11` | complete (`.2`; projected direct generated enable assignments into machine-readable `StructuralRTLIR.assignment_records[]` while retaining scalar auxiliary compatibility) | [docs/tasks/R11-DIRECT-STRUCTURAL-ASSIGNMENT-RECORDS.md](docs/tasks/R11-DIRECT-STRUCTURAL-ASSIGNMENT-RECORDS.md) |
 | `R11-DIRECT-STRUCTURAL-NET-CONNECTIVITY` | `done` | `R11` | complete (`.2`; populated generated-enable assignment-record source/target connectivity on direct `StructuralRTLIR.nets[]` without changing HDL emission) | [docs/tasks/R11-DIRECT-STRUCTURAL-NET-CONNECTIVITY.md](docs/tasks/R11-DIRECT-STRUCTURAL-NET-CONNECTIVITY.md) |
-| `R11-DIRECT-STRUCTURAL-HDL-REROUTING` | `active` | `R11` | current frontier (`.2`; reroute direct generated-enable continuous assignment emission through `StructuralRTLIR` without full direct module reroute) | [docs/tasks/R11-DIRECT-STRUCTURAL-HDL-REROUTING.md](docs/tasks/R11-DIRECT-STRUCTURAL-HDL-REROUTING.md) |
+| `R11-DIRECT-STRUCTURAL-HDL-REROUTING` | `done` | `R11` | complete (`.2`; rerouted direct SystemVerilog top state/standalone-DT generated-enable condition emission through `StructuralRTLIR` without full direct module reroute) | [docs/tasks/R11-DIRECT-STRUCTURAL-HDL-REROUTING.md](docs/tasks/R11-DIRECT-STRUCTURAL-HDL-REROUTING.md) |
 
 ## Proposed Task Trees
 

@@ -4626,6 +4626,13 @@ generated-enable assignment-record RHS, while leaving direct port dependency
 connectivity, output-drive consumers, instances, links, and HDL rerouting
 deferred. Completed
 implementation leaf
+`R11-DIRECT-STRUCTURAL-HDL-REROUTING.2`
+reroutes the direct SystemVerilog top state/standalone-DT generated-enable
+condition block through `StructuralRTLIR` assignment records by using explicit
+backend markers that are removed before final HDL is returned. Full direct
+module rerouting, VHDL rerouting, direct port dependency connectivity,
+output-drive consumers, and instances/links remain deferred. Completed
+implementation leaf
 `BACKEND-API-VALIDATION-FRONTIER.131.1` lowers an 8-bit non-signed
 `REM = (% 2 3)` fixture into
 `REM <= std_logic_vector(resize(to_unsigned(2, 8) mod to_unsigned(3, 8), 8));`.

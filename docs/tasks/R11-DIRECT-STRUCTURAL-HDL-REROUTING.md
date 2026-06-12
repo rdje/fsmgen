@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `R11-DIRECT-STRUCTURAL-HDL-REROUTING`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R11`
 - Created: `2026-06-12`
 - Last updated: `2026-06-12`
@@ -43,7 +43,7 @@ semantics without relying on parallel string-only generation paths.
 ## Task Tree
 
 - ID: `R11-DIRECT-STRUCTURAL-HDL-REROUTING`
-  Status: `active`
+  Status: `done`
   Goal: `Reroute selected direct HDL emission through StructuralRTLIR.`
   Children: `R11-DIRECT-STRUCTURAL-HDL-REROUTING.1`, `R11-DIRECT-STRUCTURAL-HDL-REROUTING.2`
 
@@ -52,30 +52,30 @@ semantics without relying on parallel string-only generation paths.
   Goal: `Audit direct HDL emission parity prerequisites and select the first StructuralRTLIR-rerouted HDL slice.`
   Acceptance: `A readiness/selection slice records the first reroute target, required structural fields, validation matrix, rollback boundary, and documentation targets before any HDL rerouting code changes.`
   Verification: `passed`
-  Commit: `R11-DIRECT-STRUCTURAL-HDL-REROUTING.1: select direct HDL reroute target`
+  Commit: `262bfc8c R11-DIRECT-STRUCTURAL-HDL-REROUTING.1: select direct HDL reroute target`
 
 - ID: `R11-DIRECT-STRUCTURAL-HDL-REROUTING.2`
-  Status: `pending`
-  Goal: `Reroute direct generated-enable continuous assignment emission through StructuralRTLIR.`
-  Acceptance: `The direct SystemVerilog generated-enable assignment block is emitted from StructuralRTLIR assignment records or their scalar compatibility mirror through an explicit handoff path; output HDL for focused fixtures remains equivalent; no unmarked HDL parsing, full module reroute, VHDL reroute, instances/links reroute, or compatibility-surface removal occurs.`
-  Verification: `pending`
-  Commit: `pending`
+  Status: `done`
+  Goal: `Reroute direct top generated-enable condition emission through StructuralRTLIR.`
+  Acceptance: `The direct SystemVerilog top state/standalone-DT generated-enable condition block is emitted from StructuralRTLIR assignment records through an explicit marker handoff path; output HDL for focused fixtures remains equivalent; no unmarked HDL parsing, full module reroute, VHDL reroute, instances/links reroute, DT-specific/LHS enable reroute, or compatibility-surface removal occurs.`
+  Verification: `passed`
+  Commit: `R11-DIRECT-STRUCTURAL-HDL-REROUTING.2: reroute top enable HDL`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `R11-DIRECT-STRUCTURAL-HDL-REROUTING.2` | `pending` | The selected first reroute target is the direct generated-enable continuous assignment block, because that block is represented structurally by assignment records and scalar compatibility lines while the rest of direct module emission still requires backend-only always-block/output-drive state. |
+| 1 | `R11-DIRECT-STRUCTURAL-HDL-REROUTING.2` | `done` | Rerouted the direct SystemVerilog top state/standalone-DT generated-enable condition block through `StructuralRTLIR`; no active next leaf remains in this tree. |
 
 ## Decisions
 
 - `2026-06-12`: Track HDL rerouting through `StructuralRTLIR` as its own R11
   tree so it is planned explicitly and not conflated with assignment records or
   source/target connectivity.
-- `2026-06-12`: Select generated-enable continuous assignment emission as the
-  first reroute target. Full direct module emission remains unsafe because
-  direct output-drive/always-block bodies are not yet represented by
-  `StructuralRTLIR`.
+- `2026-06-12`: Select the top state/standalone-DT generated-enable condition
+  block as the first reroute target. Full direct module emission remains
+  unsafe because direct output-drive/always-block bodies are not yet
+  represented by `StructuralRTLIR`.
 - `2026-06-12`: `.2` must use an explicit direct-backend handoff or explicit
   generated-enable assignment block markers. It must not parse unmarked HDL
   text to find assignments.
@@ -93,14 +93,14 @@ semantics without relying on parallel string-only generation paths.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-06-12` | `R11-DIRECT-STRUCTURAL-HDL-REROUTING.1` | Selection audit/read of `docs/tasks/R11-DIRECT-STRUCTURAL-HDL-REROUTING.md`; `docs/tasks/R11-DIRECT-STRUCTURAL-NET-CONNECTIVITY.md`; `docs/TASK_TREE.md`; `README.md`; `ROADMAP_V2.md`; `perl/FSM/Pipeline/DirectGenerationOrchestrator.pm`; `perl/FSM/Backend/GeneratedModuleEmitter.pm`; `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/PostFlatteningAssemblySupport.pm`; `perl/FSM/Backend/VerilogFamily/StructuralRTLIREmitter.pm`; `perl/FSM/IR/StructuralRTLIRBuilder.pm`; `t/1333-direct-structural-rtl-ir-projection.t`; `t/293-systemverilog-post-flattening-assembly-support.t`; `scripts/check_memory_architecture.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `git --no-pager diff --check` | `passed`; selected `.2` |
-| `2026-06-12` | `R11-DIRECT-STRUCTURAL-HDL-REROUTING.2` | `pending` | `pending` |
+| `2026-06-12` | `R11-DIRECT-STRUCTURAL-HDL-REROUTING.2` | `perl -Iperl -c perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/PostFlatteningAssemblySupport.pm`; `perl -Iperl -c perl/FSM/Backend/GeneratedModuleEmitter.pm`; `perl -Iperl -c perl/FSM/Pipeline/DirectGenerationOrchestrator.pm`; `prove -Iperl t/293-systemverilog-post-flattening-assembly-support.t t/194-generated-module-emitter.t t/163-forward-structural-rtl-ir-surface.t t/1333-direct-structural-rtl-ir-projection.t t/624-hdl-generator-stateful-direct-structural-rtl-ir-alias-boundary-audit.t t/190-pipeline-direct-generation-orchestrator.t t/196-generated-module-info-builder.t t/198-systemverilog-scaffold-emitter.t t/199-systemverilog-internal-declaration-emitter.t`; `mdbook build docs/book`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl t/303-normalized-semantic-json-supported-corpus.t t/304-normalized-semantic-json-regression-corpus.t`; `scripts/check_memory_architecture.sh`; `git --no-pager diff --check` | `passed` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `R11-DIRECT-STRUCTURAL-HDL-REROUTING.1` | `R11-DIRECT-STRUCTURAL-HDL-REROUTING.1: select direct HDL reroute target` | Selected direct generated-enable continuous assignment emission as the first reroute target and opened `.2`. |
-| `R11-DIRECT-STRUCTURAL-HDL-REROUTING.2` | `pending` | `pending` |
+| `R11-DIRECT-STRUCTURAL-HDL-REROUTING.1` | `262bfc8c R11-DIRECT-STRUCTURAL-HDL-REROUTING.1: select direct HDL reroute target` | Selected direct generated-enable continuous assignment emission as the first reroute target and opened `.2`. |
+| `R11-DIRECT-STRUCTURAL-HDL-REROUTING.2` | `R11-DIRECT-STRUCTURAL-HDL-REROUTING.2: reroute top enable HDL` | Rerouted the direct SystemVerilog top state/standalone-DT generated-enable condition block through `StructuralRTLIR` assignment records. |
 
 ## Changelog
 
@@ -108,3 +108,6 @@ semantics without relying on parallel string-only generation paths.
 - `2026-06-12`: Activated `.1`, selected generated-enable continuous
   assignment emission as the first direct StructuralRTLIR reroute target, and
   opened implementation frontier `.2`.
+- `2026-06-12`: Completed `.2`; direct SystemVerilog top state/standalone-DT
+  generated-enable condition emission now uses an explicit StructuralRTLIR
+  marker handoff and final HDL does not expose the internal markers.

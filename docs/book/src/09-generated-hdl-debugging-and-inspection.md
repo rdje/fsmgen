@@ -310,9 +310,12 @@ compatibility mirror for those rendered assignment lines. Generated-enable net
 entries also carry structured `source` objects for assignment-record drivers
 and structured `targets[]` entries when another generated-enable assignment
 record consumes that direct net on its RHS. Direct port dependency
-connectivity, output-drive/always-block consumers, instances/links, and HDL
-rerouting through `StructuralRTLIR` remain outside that direct structural
-projection.
+connectivity, output-drive/always-block consumers, instances/links, full
+direct module rerouting, and VHDL rerouting through `StructuralRTLIR` remain
+outside that direct structural projection. The direct SystemVerilog top
+state/standalone-DT generated-enable condition block is now rerouted through
+`StructuralRTLIR` assignment records by an explicit backend marker handoff; the
+markers are removed before final HDL is returned.
 
 `module_info` is a compatibility/result surface. It mirrors useful forward-IR,
 analysis, and planning facts for existing callers, but it is not a second

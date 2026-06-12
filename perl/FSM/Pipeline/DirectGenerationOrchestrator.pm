@@ -57,6 +57,7 @@ sub generate_from_source ($class, %args) {
         fsm_module => $fsm_module,
         target_language => ($pipeline->{target_language} // 'systemverilog'),
         debug_level => ($pipeline->{debug_level} // 0),
+        structural_rtlir_enable_assignment_markers => 1,
     );
     $pipeline->{hdl_generator} = $backend_result->{hdl_generator};
 
@@ -73,8 +74,14 @@ sub generate_from_source ($class, %args) {
         hdl_generator => $pipeline->{hdl_generator},
     );
     $module_info->{structural_rtl_ir} = $structural_rtl_ir->as_hashref;
+    my $structural_rerouted_hdl_code =
+        FSM::Backend::GeneratedModuleEmitter->reroute_generated_enable_assignments_through_structural_rtl_ir(
+            hdl_code => $backend_result->{hdl_code},
+            structural_rtl_ir => $module_info->{structural_rtl_ir},
+            target_language => ($pipeline->{target_language} // 'systemverilog'),
+        );
     my $hdl_code = FSM::Backend::GeneratedModuleEmitter->augment_with_runtime_assertions(
-        hdl_code => $backend_result->{hdl_code},
+        hdl_code => $structural_rerouted_hdl_code,
         module_info => $module_info,
         target_language => ($pipeline->{target_language} // 'systemverilog'),
     );
