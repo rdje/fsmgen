@@ -228,7 +228,10 @@ release on those generated completion pulses. Schedule JSON reports
 signals, assertions, and read-demux residue removed. Selector `.42` chose
 `.43` as the next readiness audit over the interdependent read-data payload,
 burst/`RLAST`, and per-ID ordering/reassembly residues after generated read
-demux. The current frontier is `IAL2-FEATURE-COMPLETENESS-FRONTIER.43`.
+demux. Audit `.43` concluded that the bounded public read-data payload/status
+contract must be selected before parser/report metadata or generated behavior
+changes. The current frontier is
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.44`.
 Full-manager behavior, profile aliases, queued/blocking policy, direct
 backend lowering, and VHDL remain residue. VHDL remains behind SV-backed IAL
 feature completeness.
@@ -790,6 +793,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/AXI_IAL2_MANAGER_READ_RESPONSE_DEMUX_BEHAVIOR_READINESS_AUDIT.md` — readiness audit selecting bounded generated single-beat read `RID` response-demux behavior before implementation.
 - `docs/AXI_IAL2_MANAGER_READ_RESPONSE_DEMUX_BEHAVIOR_FIRST_SLICE.md` — shipped bounded generated single-beat read `RID` response-demux behavior for explicit read response-demux contracts.
 - `docs/AXI_IAL2_MANAGER_POST_READ_DEMUX_NEXT_SLICE_SELECTION.md` — selected read-data payload, burst/`RLAST`, and per-ID ordering/reassembly readiness as the next AXI manager IAL2 audit after generated read demux.
+- `docs/AXI_IAL2_MANAGER_READ_DATA_BURST_READINESS_AUDIT.md` — readiness audit selecting bounded public read-data payload/status contract selection before parser/report or generated behavior changes.
 - `docs/AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md` — selected first AXI-derived IAL2 implementation subset and pre-code contract.
 - `docs/AXI_IAL2_VALID_READY_READINESS_AUDIT.md` — code/test/docs/report owner map for a future AXI Valid-Ready IAL2 implementation slice.
 - `docs/AXI_IAL2_VALID_READY_GENERATOR_FIRST_SLICE.md` — first in-process AXI Valid-Ready IAL2 generator slice and report surface.

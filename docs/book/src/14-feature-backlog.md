@@ -3310,6 +3310,16 @@ authored concrete-ID same-ID ordering needs queues or a fail-closed rule. Full
 manager behavior, profile aliases, queued/blocking policy, direct backend
 lowering, and VHDL remain deferred.
 
+Read-data/burst readiness audit:
+[AXI_IAL2_MANAGER_READ_DATA_BURST_READINESS_AUDIT](../../AXI_IAL2_MANAGER_READ_DATA_BURST_READINESS_AUDIT.md)
+selects `.44` as the bounded public read-data payload/status contract
+selector. The audit concluded that a likely single-beat payload/status subset
+can be layered on the shipped generated read `RID` demux with the existing
+IAL1/IAL0/SystemVerilog data-path substrate, but FSMGen must first select the
+public source syntax, report artifacts, target binding semantics, and
+interleaving/burst residue policy. Parser/report metadata and generated
+behavior changes stay out of `.43`.
+
 Response-demux behavior readiness audit:
 [AXI_IAL2_MANAGER_WRITE_RESPONSE_DEMUX_BEHAVIOR_READINESS_AUDIT](../../AXI_IAL2_MANAGER_WRITE_RESPONSE_DEMUX_BEHAVIOR_READINESS_AUDIT.md)
 concluded that generated write `BID` demux should not be implemented directly
@@ -3320,7 +3330,7 @@ shipped as a bounded rule-owned `(pulse target)` action that lowers through the
 existing delayed-pulse path. The generated write `BID` demux behavior is now
 shipped through that pulse-completion path.
 
-Generated read `RID` response-demux behavior, same-ID response ordering
+Bounded read-data payload/status contract selection, same-ID response ordering
 queues, read-data interleaving/reassembly, bursts, queued/blocking policy,
 profile aliases, full AXI manager behavior, and VHDL remain future exact-owner
 work.
@@ -3452,11 +3462,10 @@ transaction-envelope/static-validation subset, and the readiness audit for its
 additive static/report implementation boundary. The optional static
 `(transactions ...)` implementation slice and the additive transaction event
 dispatch/fan-in slice are now also shipped, and the active frontier is
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.43`, auditing read-data payload,
-burst/`RLAST`, and per-ID readiness after `.42` selected that next dependency
-cluster. Future behavior
-owners must keep the reviewable `IAL2 -> IAL1 -> IAL0 -> SystemVerilog` path;
-read-data
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.44`, selecting the bounded public
+read-data payload/status contract after `.43` audited read-data payload,
+burst/`RLAST`, and per-ID readiness. Future behavior owners must keep the
+reviewable `IAL2 -> IAL1 -> IAL0 -> SystemVerilog` path; read-data
 interleaving/reassembly, bursts, per-ID queues, full-manager behavior, and VHDL
 remain out of scope unless a later exact owner selects them.
 Additional `.ppif` objects/clauses and profile aliases remain future

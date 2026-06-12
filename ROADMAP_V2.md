@@ -986,8 +986,11 @@ metadata with `generated_behavior: false`, and keeps generated read `.isf`,
 concluded that bounded single-beat generated read `RID` response-demux
 behavior can be implemented directly with no new IAL1/IAL0/SystemVerilog
 prerequisite. `.41` now ships that generated read behavior, and `.42` selected
-read-data payload, burst/`RLAST`, and per-ID readiness as the next audit. The
-current frontier is `IAL2-FEATURE-COMPLETENESS-FRONTIER.43`.
+read-data payload, burst/`RLAST`, and per-ID readiness as the next audit.
+Audit `.43` concluded that the bounded public read-data payload/status
+contract must be selected before parser/report metadata or generated behavior
+changes. The current frontier is
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.44`.
 The shipped public capacity/status source accepts one
 `(manager-capacity-status NAME ...)` object under
 `(protocol-platform-intent ...)`, `(profile axi4)`, and top-level source
@@ -1108,9 +1111,11 @@ read capacity plus auto-ID release driven by generated completion pulses. The
 report marks `response_demux.read.generated_behavior: true` and leaves only
 read-data interleaving and burst residue in that demux arm. `.42` selected
 `.43` as a readiness audit for read-data payload, burst/`RLAST`, and per-ID
-ordering/reassembly ownership after generated read demux. Full-manager
-behavior, profile aliases, queued/blocking policy, direct backend lowering,
-and VHDL remain residue.
+ordering/reassembly ownership after generated read demux. `.43` selected
+`.44`, the bounded public read-data payload/status contract selector, before
+parser/report metadata or generated behavior changes. Full-manager behavior,
+profile aliases, queued/blocking policy, direct backend lowering, and VHDL
+remain residue.
 
 The first honest `R11` slices are now:
 1. keep widening convention-first composition only where the child-side evidence is still deterministic,
