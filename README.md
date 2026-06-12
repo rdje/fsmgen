@@ -185,9 +185,9 @@ no-ID-available and illegal same-family simultaneous requests, and
 `auto_id_lifecycle.generated_behavior` is true. Same-ID ordering, generated
 response demux, read-data interleaving/reassembly, bursts, queued policy,
 aliases, full-manager behavior, and VHDL remain residue. The current frontier
-is `IAL2-FEATURE-COMPLETENESS-FRONTIER.25`, auditing AXI generated
-response-demux readiness after bounded auto-ID request-ID drive. VHDL remains
-behind SV-backed IAL feature completeness.
+is `IAL2-FEATURE-COMPLETENESS-FRONTIER.26`, selecting the bounded AXI write
+response-demux public contract before parser/report or generated behavior
+changes. VHDL remains behind SV-backed IAL feature completeness.
 The project objective is robust, traceable FSM-to-HDL generation with clear assignment semantics, optimization via AST factorization, and behavior-preserving refactoring toward a modular architecture.
 
 ## Fast ramp-up order
@@ -242,11 +242,12 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 49. `docs/AXI_IAL2_MANAGER_AUTO_ID_LIFECYCLE_METADATA_FIRST_SLICE.md`: shipped additive `.ppif` auto-ID lifecycle parser/report metadata for one AXI manager capacity/status object.
 50. `docs/AXI_IAL2_MANAGER_AUTO_ID_REQUEST_ID_DRIVE_FIRST_SLICE.md`: shipped bounded auto-ID request-ID drive behavior for explicit lifecycle families.
 51. `docs/AXI_IAL2_MANAGER_RESPONSE_DEMUX_SELECTION.md`: selected AXI manager generated response-demux readiness after bounded auto-ID request-ID drive.
-52. `docs/AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md`: selected first AXI-derived IAL2 implementation subset and pre-code contract.
-53. `docs/AXI_IAL2_VALID_READY_READINESS_AUDIT.md`: code/test/docs/report owner map for the future AXI Valid-Ready IAL2 implementation.
-54. `docs/AXI_IAL2_VALID_READY_GENERATOR_FIRST_SLICE.md`: first in-process AXI Valid-Ready IAL2 generator slice and report surface.
-55. `docs/decisions/0016-ppif-is-first-public-ial2-container.md`: selects `.ppif` as the first public generic IAL2 file surface.
-56. `docs/IAL2_PPIF_PARSER_CLI_FIRST_SLICE.md`: first public `.ppif` parser/CLI slice for one AXI Valid-Ready source object.
+52. `docs/AXI_IAL2_MANAGER_RESPONSE_DEMUX_READINESS_AUDIT.md`: readiness audit selecting bounded write response-demux public contract before implementation.
+53. `docs/AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md`: selected first AXI-derived IAL2 implementation subset and pre-code contract.
+54. `docs/AXI_IAL2_VALID_READY_READINESS_AUDIT.md`: code/test/docs/report owner map for the future AXI Valid-Ready IAL2 implementation.
+55. `docs/AXI_IAL2_VALID_READY_GENERATOR_FIRST_SLICE.md`: first in-process AXI Valid-Ready IAL2 generator slice and report surface.
+56. `docs/decisions/0016-ppif-is-first-public-ial2-container.md`: selects `.ppif` as the first public generic IAL2 file surface.
+57. `docs/IAL2_PPIF_PARSER_CLI_FIRST_SLICE.md`: first public `.ppif` parser/CLI slice for one AXI Valid-Ready source object.
 56. `docs/IAL2_PPIF_MULTI_VALID_READY_READINESS.md`: readiness map for future multi-channel `.ppif` Valid-Ready support.
 57. `docs/IAL2_PPIF_VALID_READY_BUNDLE_CONTRACT_SELECTION.md`: selected future aggregate bundle contract for multi-channel `.ppif` Valid-Ready support.
 58. `docs/IAL2_PPIF_VALID_READY_BUNDLE_FIRST_SLICE.md`: shipped bounded multi-channel `.ppif` Valid-Ready bundle report/review-artifact behavior.
@@ -713,6 +714,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/AXI_IAL2_MANAGER_AUTO_ID_LIFECYCLE_METADATA_FIRST_SLICE.md` — shipped additive `.ppif` auto-ID lifecycle parser/report metadata for one AXI manager capacity/status object.
 - `docs/AXI_IAL2_MANAGER_AUTO_ID_REQUEST_ID_DRIVE_FIRST_SLICE.md` — shipped bounded auto-ID request-ID drive behavior for explicit lifecycle families.
 - `docs/AXI_IAL2_MANAGER_RESPONSE_DEMUX_SELECTION.md` — selected AXI manager generated response-demux readiness after bounded auto-ID request-ID drive.
+- `docs/AXI_IAL2_MANAGER_RESPONSE_DEMUX_READINESS_AUDIT.md` — readiness audit selecting bounded write response-demux public contract before implementation.
 - `docs/AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md` — selected first AXI-derived IAL2 implementation subset and pre-code contract.
 - `docs/AXI_IAL2_VALID_READY_READINESS_AUDIT.md` — code/test/docs/report owner map for a future AXI Valid-Ready IAL2 implementation slice.
 - `docs/AXI_IAL2_VALID_READY_GENERATOR_FIRST_SLICE.md` — first in-process AXI Valid-Ready IAL2 generator slice and report surface.

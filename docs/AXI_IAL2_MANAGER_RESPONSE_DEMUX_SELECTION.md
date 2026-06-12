@@ -1,7 +1,7 @@
 # AXI IAL2 Manager Response Demux Selection
 
-Status: selected next readiness-audit subset; no parser, generator, HDL, or
-CLI behavior changed by this note.
+Status: selected readiness-audit subset. Later readiness audit `.25` selected
+bounded write response-demux public contract selection as the next prerequisite.
 
 Task tree:
 [docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md](tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md).
@@ -169,8 +169,8 @@ not require reverting parser, generator, HDL, CLI, sample, or test behavior.
 
 ## Selected Next Leaf
 
-Proceed with `IAL2-FEATURE-COMPLETENESS-FRONTIER.25`: readiness-audit AXI
-manager generated response demux after bounded auto-ID request-ID drive,
-before implementing response matching, same-ID ordering, read-data
-interleaving/reassembly, burst, queued-policy, alias, full-manager, or VHDL
-behavior.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.25` completed this readiness audit and
+selected `IAL2-FEATURE-COMPLETENESS-FRONTIER.26`: choose the bounded AXI write
+response-demux public contract before parser/report implementation, generated
+response matching, same-ID ordering, read-data interleaving/reassembly, burst,
+queued-policy, alias, full-manager, or VHDL behavior.

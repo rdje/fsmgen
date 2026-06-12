@@ -2306,10 +2306,12 @@ that parser/report metadata and static-validation slice with unchanged
 generated `.isf`, `.fsm`, and HDL behavior. Completed implementation leaf
 `.23` ships bounded request-ID drive behavior for explicit auto-ID lifecycle
 families. Completed selector `.24` chooses AXI generated response-demux
-readiness as the next exact subset. The active leaf is `.25`, auditing
-response-channel `BID`/`RID` ownership and completion-event direction before
-response matching, same-ID ordering, read-data interleaving/reassembly, burst,
-queued-policy, alias, full-manager, or VHDL behavior changes.
+readiness as the next exact subset. Completed readiness audit `.25` selects a
+bounded write `BID` response-demux public contract selector first, because
+existing transaction `completion` names are authored inputs and must not be
+silently reinterpreted as generated demux signals. The active leaf is `.26`,
+selecting that public contract before parser/report or generated behavior
+changes.
 Selected IAL2 slices may include explicit IAL1 or
 IAL0/SystemVerilog prerequisites when those prerequisites are needed for
 clean, reviewable lowering.
@@ -2952,6 +2954,15 @@ bounded auto-ID request-ID drive. The audit must resolve response-channel
 demux completion signals, report shape, and IAL1/IAL0/SystemVerilog substrate
 before any response matching, same-ID ordering, read-data interleaving, burst,
 queued-policy, alias, full-manager, or VHDL behavior changes.
+
+Response-demux readiness audit:
+[AXI_IAL2_MANAGER_RESPONSE_DEMUX_READINESS_AUDIT](../../AXI_IAL2_MANAGER_RESPONSE_DEMUX_READINESS_AUDIT.md)
+selects a bounded write `BID` response-demux public-contract step before
+parser/report or generated behavior changes. The audit finds no obvious
+IAL1/IAL0/SystemVerilog blocker for a narrow write demux once the contract is
+explicit, but the source must first define response accepted event naming,
+transaction completion ownership, generated demux signal naming, diagnostics,
+and report shape.
 
 First implementation subset selection:
 [AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION](../../AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md)
@@ -5267,7 +5278,10 @@ bounded request-ID drive behavior for explicit auto-ID lifecycle families and
 selected `.24` as the next exact IAL2 feature-completeness selector.
 Completed selector leaf
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.24` selects AXI generated response-demux
-readiness and advances the active frontier to `.25`.
+readiness and selected `.25` as the readiness audit. Completed readiness audit
+leaf `IAL2-FEATURE-COMPLETENESS-FRONTIER.25` selects bounded write
+response-demux public contract selection and advances the active frontier to
+`.26`.
 Completed implementation leaf
 `ARCHITECTURE-DEBT-FRONTIER.2.1`
 projects direct backend storage/helper declaration-plan entries into
