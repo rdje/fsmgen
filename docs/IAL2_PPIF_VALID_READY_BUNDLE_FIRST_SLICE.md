@@ -136,23 +136,24 @@ until a bundle HDL entry owner is selected.
 `--verify-hdl` also fails closed for a bundle, including with `--outdir`,
 because no bundle HDL entry exists to verify yet.
 
-Aggregate normalized semantic JSON also fails closed:
+Aggregate normalized semantic JSON was added by the later bounded semantic
+slice:
 
 ```bash
 ./bin/fsmgen --strict --emit-semantic-json ppif/axi_aw_w_valid_ready_bundle.ppif
 ```
 
-The failure is machine-readable JSON and states that aggregate semantic JSON
-needs a later owner. The single-channel `.ppif` semantic JSON behavior remains
-unchanged.
+It emits an aggregate PPIF bundle semantic root rather than selecting one
+generated channel `.fsm`. See
+[docs/IAL2_PPIF_BUNDLE_SEMANTIC_JSON_FIRST_SLICE.md](IAL2_PPIF_BUNDLE_SEMANTIC_JSON_FIRST_SLICE.md).
+The single-channel `.ppif` semantic JSON behavior remains unchanged.
 
 ## Boundaries
 
 This slice is monitor-only. It does not implement a full AXI manager, AXI
 transaction IDs, outstanding-window scheduling, response matching, bursts,
 cross-channel dependency rules, wrapper/top actor generation, default bundle
-HDL generation, aggregate semantic JSON, platform placement clauses, or
-protocol-profile suffix aliases.
+HDL generation, platform placement clauses, or protocol-profile suffix aliases.
 
 ## Validation
 
@@ -160,5 +161,5 @@ Focused coverage lives in
 [t/1436-ial2-ppif-parser-cli.t](../t/1436-ial2-ppif-parser-cli.t). It proves
 the existing single-channel path still works and covers the bundle parser,
 bundle report, review-artifact materialization, check JSON, default HDL
-fail-closed diagnostic, semantic JSON fail-closed diagnostic, and duplicate
+fail-closed diagnostic, aggregate semantic JSON, and duplicate
 channel-object-name rejection.

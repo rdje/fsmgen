@@ -80,7 +80,7 @@ sub build_language_surface_section {
                         '--verify-hdl',
                     ],
                     sample_path => 'ppif/axi_aw_valid_ready.ppif',
-                    current_boundary => 'one Valid-Ready source object with profile axi4; aliases, multiple objects, platform clauses, and full AXI manager behavior are deferred',
+                    current_boundary => 'one-channel Valid-Ready sources can emit HDL and semantic JSON; multi-channel Valid-Ready bundles emit aggregate reports, check JSON, semantic JSON, and review artifacts while bundle HDL, aliases, platform clauses, and full AXI manager behavior remain deferred',
                 },
             ],
             unsupported_first_slice_aliases => [qw(.pif .ppi .axi .chi .ace .ahb .apb .atb)],

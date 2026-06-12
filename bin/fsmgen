@@ -211,6 +211,102 @@ sub emit_machine_failure_if_requested {
     return $display_error;
 }
 
+sub ppif_bundle_module_name {
+    my ($ppif_result) = @_;
+    my $source = $ppif_result->{report}{source_object} || {};
+    return $source->{intent_name}
+        || $source->{id}
+        || 'ppif_valid_ready_bundle';
+}
+
+sub build_ppif_bundle_semantic_export {
+    my ($ppif_result, $target_language) = @_;
+
+    my $report = $ppif_result->{report} || {};
+    my $module_name = ppif_bundle_module_name($ppif_result);
+    my $channel_count = scalar(@{$report->{channels} || []});
+    my $source_root_kind = 'ppif_bundle';
+
+    my $module_info = {
+        module_name => $module_name,
+        source_root_kind => $source_root_kind,
+        target_language => $target_language || 'systemverilog',
+        state_count => 0,
+        regular_state_count => 0,
+        regular_state_names => [],
+        standalone_dt_count => 0,
+        standalone_dt_names => [],
+        signal_count => 0,
+        signal_names => [],
+        parameter_count => 0,
+        parameter_names => [],
+        requires_implicit_system_ports => 0,
+        composition_child_count => $channel_count,
+    };
+
+    my $semantic_stub = {
+        module_name => $module_name,
+        source_root_kind => $source_root_kind,
+        state_count => 0,
+        signal_count => 0,
+        bundle_channel_count => $channel_count,
+    };
+
+    my $result = {
+        module_info => $module_info,
+        source_info => {
+            kind => $source_root_kind,
+            header => $report->{schema},
+        },
+        intent_hir => { %$semantic_stub },
+        lowered_rtl_ir => {
+            %$semantic_stub,
+            target_language => $target_language || 'systemverilog',
+        },
+        structural_rtl_ir => {
+            %$semantic_stub,
+            target_language => $target_language || 'systemverilog',
+        },
+        protocol_intent_bundle => build_ppif_bundle_semantic_payload($ppif_result),
+    };
+
+    return ($result, $module_info);
+}
+
+sub build_ppif_bundle_semantic_payload {
+    my ($ppif_result) = @_;
+
+    my $report = $ppif_result->{report} || {};
+    my @schedule_reports = map {
+        my $schedule = $_->{report} || {};
+        {
+            object_name => $_->{object_name},
+            channel => $_->{channel},
+            schema => $schedule->{schema},
+        }
+    } @{$ppif_result->{generated_ial1_schedule_reports} || []};
+
+    return {
+        schema => $report->{schema},
+        mode => $report->{mode},
+        source_object => clone_jsonish($report->{source_object}),
+        bundle => clone_jsonish($report->{bundle}),
+        channels => clone_jsonish($report->{channels} || []),
+        generated_artifacts => clone_jsonish($report->{generated_artifacts}),
+        generated_ial1_schedule_report_count => scalar(@schedule_reports),
+        generated_ial1_schedule_reports => \@schedule_reports,
+        unsupported_residue => clone_jsonish($report->{unsupported_residue} || []),
+    };
+}
+
+sub clone_jsonish {
+    my ($value) = @_;
+    return undef unless defined $value;
+    return [map { clone_jsonish($_) } @$value] if ref($value) eq 'ARRAY';
+    return { map { $_ => clone_jsonish($value->{$_}) } sort keys %$value } if ref($value) eq 'HASH';
+    return $value;
+}
+
 # Command line options
 my $debug_level = 0;  # Numeric compatibility mode (0..4)
 my $help = 0;
@@ -576,16 +672,20 @@ if ($fsm_file =~ /\.ppif$/i) {
 
     if (($ppif_result->{kind} // '') eq 'protocol_intent.valid_ready_bundle') {
         if ($emit_semantic_json) {
-            my $display_error = emit_machine_failure_if_requested(
+            my ($semantic_result, $module_info) = build_ppif_bundle_semantic_export(
+                $ppif_result,
+                $target_language,
+            );
+            my $report = build_normalized_semantic_success_report(
                 input => $fsm_input,
                 source_file => $public_source_file,
                 target_language => $target_language,
                 strict_mode => $strict_mode,
-                emit_semantic_json => $emit_semantic_json,
-                check_json_mode => $check_json_mode,
-                message => "PPIF multi-channel bundle normalized semantic JSON remains unsupported until an aggregate semantic owner is selected\n",
+                result => $semantic_result,
+                module_info => $module_info,
             );
-            die $display_error;
+            print JSON::PP->new->ascii->canonical->pretty->encode($report);
+            exit 0;
         }
 
         if ($check_json_mode) {
@@ -595,9 +695,8 @@ if ($fsm_file =~ /\.ppif$/i) {
                 target_language => $target_language,
                 strict_mode => $strict_mode,
                 module_info => {
-                    module_name => ($ppif_result->{report}{source_object}{intent_name}
-                        || $ppif_result->{report}{source_object}{id}
-                        || 'ppif_valid_ready_bundle'),
+                    module_name => ppif_bundle_module_name($ppif_result),
+                    source_root_kind => 'ppif_bundle',
                     state_count => 0,
                     signal_count => 0,
                     composition_child_count => scalar(@{$ppif_result->{report}{channels} || []}),

@@ -103,6 +103,9 @@ use FSM::Support::NormalizedSemanticPayloadContract qw(
     normalized_semantic_payload_optional_child_presence_keys
     normalized_semantic_payload_presence_key_family_map
     normalized_semantic_payload_presence_keys
+    normalized_semantic_payload_protocol_intent_bundle_channel_entry_keys
+    normalized_semantic_payload_protocol_intent_bundle_keys
+    normalized_semantic_payload_protocol_intent_bundle_schedule_report_entry_keys
     normalized_semantic_payload_signal_analysis_entry_keys
     normalized_semantic_payload_signal_analysis_keys
     normalized_semantic_payload_symbol_contract_constant_list_value_extension_keys
@@ -169,6 +172,18 @@ subtest 'normalized semantic payload helper builders return fresh nested structu
         {
             label => 'optional_child_presence_keys',
             build => \&normalized_semantic_payload_optional_child_presence_keys,
+        },
+        {
+            label => 'protocol_intent_bundle_keys',
+            build => \&normalized_semantic_payload_protocol_intent_bundle_keys,
+        },
+        {
+            label => 'protocol_intent_bundle_channel_entry_keys',
+            build => \&normalized_semantic_payload_protocol_intent_bundle_channel_entry_keys,
+        },
+        {
+            label => 'protocol_intent_bundle_schedule_report_entry_keys',
+            build => \&normalized_semantic_payload_protocol_intent_bundle_schedule_report_entry_keys,
         },
         {
             label => 'forward_ir_nested_contract_source_map',
@@ -596,10 +611,14 @@ subtest 'fresh normalized semantic grouped maps stay aligned with helper familie
     is_deeply($nested_map->{forward_ir}, normalized_semantic_payload_forward_ir_keys(), 'forward-IR nested map entry matches helper');
     is_deeply($nested_map->{symbol_contract}, normalized_semantic_payload_symbol_contract_keys(), 'symbol-contract nested map entry matches helper');
     is_deeply($nested_map->{composition}, normalized_semantic_payload_composition_keys(), 'composition nested map entry matches helper');
+    is_deeply($nested_map->{protocol_intent_bundle}, normalized_semantic_payload_protocol_intent_bundle_keys(), 'protocol-intent bundle nested map entry matches helper');
 
     my $family_map = normalized_semantic_payload_presence_key_family_map();
     is_deeply($family_map->{public_presence_keys}, normalized_semantic_payload_presence_keys(), 'public presence family entry matches helper');
     is_deeply($family_map->{optional_child_presence_keys}, normalized_semantic_payload_optional_child_presence_keys(), 'optional child family entry matches helper');
+    is_deeply($family_map->{protocol_intent_bundle_presence_keys}, normalized_semantic_payload_protocol_intent_bundle_keys(), 'protocol-intent bundle presence family matches helper');
+    is_deeply($family_map->{protocol_intent_bundle_channel_entry_keys}, normalized_semantic_payload_protocol_intent_bundle_channel_entry_keys(), 'protocol-intent bundle channel-entry family matches helper');
+    is_deeply($family_map->{protocol_intent_bundle_schedule_report_entry_keys}, normalized_semantic_payload_protocol_intent_bundle_schedule_report_entry_keys(), 'protocol-intent bundle schedule-report family matches helper');
     is_deeply($family_map->{composition_child_entry_keys}, normalized_semantic_payload_composition_child_entry_keys(), 'composition child entry family matches helper');
     is_deeply($family_map->{composition_child_parameter_override_entry_keys}, normalized_semantic_payload_composition_child_parameter_override_entry_keys(), 'composition child parameter-override core entry family matches helper');
     is_deeply($family_map->{composition_child_parameter_override_raw_value_extension_keys}, normalized_semantic_payload_composition_child_parameter_override_raw_value_extension_keys(), 'composition child parameter-override raw-value extension family matches helper');

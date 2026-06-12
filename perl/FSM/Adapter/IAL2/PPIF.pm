@@ -472,10 +472,6 @@ sub _build_bundle_report(%args) {
                 detail => 'Default HDL generation remains fail-closed until a wrapper/top actor or explicit entry-selection owner lands.',
             },
             {
-                id     => 'bundle_semantic_json',
-                detail => 'Aggregate normalized semantic JSON remains fail-closed until a dedicated aggregate semantic owner lands.',
-            },
-            {
                 id     => 'axi_manager_concurrency',
                 detail => 'Transaction IDs, outstanding windows, bursts, response matching, and channel dependency rules remain outside this monitor-only bundle slice.',
             },

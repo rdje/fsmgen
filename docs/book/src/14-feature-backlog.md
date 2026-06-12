@@ -2407,7 +2407,8 @@ shipped by
 Public `.pif`, `.ppi`, `.axi`, protocol-profile aliases, and full AXI manager
 behavior remain unshipped. Multi-channel `.ppif` Valid-Ready bundle
 report/review-artifact behavior is now shipped in the bounded slice below;
-bundle HDL and aggregate semantic JSON remain deferred.
+aggregate semantic JSON is shipped as a bundle semantic root; bundle HDL
+remains deferred.
 
 First selected `.ppif` shape, checked in as
 `ppif/axi_aw_valid_ready.ppif`:
@@ -2462,8 +2463,10 @@ is documented in
 [IAL2_PPIF_VALID_READY_BUNDLE_FIRST_SLICE](../../IAL2_PPIF_VALID_READY_BUNDLE_FIRST_SLICE.md).
 It accepts multiple unique Valid-Ready channel objects, emits the
 `fsmgen.ial2.protocol_intent.valid_ready_bundle.v1` report, writes per-channel
-generated `.isf`/`.fsm` review artifacts with `--outdir`, and keeps
-`IAL2 -> IAL1 -> IAL0` intact.
+generated `.isf`/`.fsm` review artifacts with `--outdir`, supports aggregate
+normalized semantic JSON, and keeps `IAL2 -> IAL1 -> IAL0` intact.
+The semantic JSON slice is documented in
+[IAL2_PPIF_BUNDLE_SEMANTIC_JSON_FIRST_SLICE](../../IAL2_PPIF_BUNDLE_SEMANTIC_JSON_FIRST_SLICE.md).
 
 Selected future bundle contract:
 [IAL2_PPIF_VALID_READY_BUNDLE_CONTRACT_SELECTION](../../IAL2_PPIF_VALID_READY_BUNDLE_CONTRACT_SELECTION.md)
@@ -2472,9 +2475,9 @@ and decision
 select an aggregate PPIF bundle report over per-channel generated `.isf` and
 `.fsm` review artifacts. The shipped first bundle slice avoids a hidden
 multi-actor `.isf` file and forbids "first channel wins" HDL selection.
-Default HDL and aggregate semantic JSON for a multi-channel bundle remain
-fail-closed until a future wrapper/top actor or explicit entry-selection owner
-lands.
+Default HDL for a multi-channel bundle remains fail-closed until a future
+wrapper/top actor or explicit entry-selection owner lands. Aggregate semantic
+JSON is now an aggregate PPIF bundle root, not one generated channel root.
 
 Runnable bundle commands:
 
@@ -2482,7 +2485,13 @@ Runnable bundle commands:
 ./bin/fsmgen --emit-schedule-json ppif/axi_aw_w_valid_ready_bundle.ppif
 ./bin/fsmgen --outdir generated ppif/axi_aw_w_valid_ready_bundle.ppif
 ./bin/fsmgen --strict --check --json ppif/axi_aw_w_valid_ready_bundle.ppif
+./bin/fsmgen --strict --emit-semantic-json ppif/axi_aw_w_valid_ready_bundle.ppif
 ```
+
+The semantic export uses `semantic.module.source_root_kind = ppif_bundle` and
+adds `semantic.protocol_intent_bundle`, including the bundle schema,
+channel list, generated `.isf`/`.fsm` review artifact summaries, per-channel
+schedule-report presence, and the explicit unselected HDL entry.
 
 PDF extraction workflow:
 [PDF_EXTRACTION_WORKFLOW](../../PDF_EXTRACTION_WORKFLOW.md)

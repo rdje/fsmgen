@@ -130,11 +130,11 @@ The public `.ppif` surface does not support `.pif`, `.ppi`, `.axi`, `.chi`,
 `.ace`, `.ahb`, `.apb`, `.atb`, or other aliases. Those remain future
 exact-owner decisions.
 
-The bounded bundle slice supports multiple unique Valid-Ready channel objects
-for aggregate IAL2 reports and generated review artifacts only. It still does
-not support platform placement clauses, a full AXI manager, transaction IDs,
-outstanding-window scheduling, response matching, bursts, channel dependency
-rules, wrapper/top actor HDL generation, aggregate semantic JSON, or a direct
+The bounded bundle slices support multiple unique Valid-Ready channel objects
+for aggregate IAL2 reports, check JSON, aggregate semantic JSON, and generated
+review artifacts. They still do not support platform placement clauses, a full
+AXI manager, transaction IDs, outstanding-window scheduling, response matching,
+bursts, channel dependency rules, wrapper/top actor HDL generation, or a direct
 `.ppif` to `.fsm` shortcut.
 
 ## Validation

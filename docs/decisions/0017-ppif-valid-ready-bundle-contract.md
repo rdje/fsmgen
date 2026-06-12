@@ -55,8 +55,10 @@ as the HDL or semantic entry.
   channel-specific evidence.
 - `--emit-schedule-json` can expose the aggregate bundle report before wrapper
   HDL exists.
-- Default HDL generation and aggregate semantic JSON remain separate future
-  decisions unless the implementation owner selects them explicitly.
+- Default HDL generation remains a separate future decision unless the
+  implementation owner selects it explicitly. Aggregate semantic JSON is now
+  selected as an aggregate PPIF bundle semantic root, not as a generated-channel
+  root.
 - Full AXI manager behavior, transaction IDs, outstanding windows, response
   matching, bursts, and cross-channel dependency rules remain outside this
   Valid-Ready bundle monitor contract.
@@ -66,5 +68,7 @@ as the HDL or semantic entry.
 `IAL2-PPIF-VALID-READY-BUNDLE-FIRST-SLICE.1` implements the bounded
 report/review-artifact subset of this contract. Multi-channel `.ppif` bundles
 now emit `valid_ready_bundle.v1` reports, write per-channel generated `.isf`
-and `.fsm` artifacts with `--outdir`, and keep default HDL generation plus
-aggregate semantic JSON fail-closed.
+and `.fsm` artifacts with `--outdir`, and keep default HDL generation
+fail-closed. `IAL2-PPIF-BUNDLE-SEMANTIC-JSON-FIRST-SLICE.1` adds aggregate
+semantic JSON under `semantic.protocol_intent_bundle` without selecting wrapper
+HDL or one generated `.fsm` root.

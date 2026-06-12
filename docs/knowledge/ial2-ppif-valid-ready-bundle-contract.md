@@ -27,8 +27,9 @@ single-object `.ppif` result shape remains stable until an explicit
 compatibility owner changes it.
 
 `IAL2-PPIF-VALID-READY-BUNDLE-FIRST-SLICE.1` ships the bounded report,
-`--outdir`, and `--check --json` subset for this contract. The selected
-contract forbids arbitrary "first channel wins" HDL or semantic selection.
-Default HDL generation and aggregate semantic JSON for a multi-channel bundle
-remain fail-closed until a future wrapper/top actor, explicit entry-selection,
-or aggregate semantic owner lands.
+`--outdir`, and `--check --json` subset for this contract.
+`IAL2-PPIF-BUNDLE-SEMANTIC-JSON-FIRST-SLICE.1` ships aggregate semantic JSON
+under `semantic.protocol_intent_bundle`. The selected contract forbids
+arbitrary "first channel wins" HDL or semantic selection. Default HDL
+generation for a multi-channel bundle remains fail-closed until a future
+wrapper/top actor or explicit entry-selection owner lands.

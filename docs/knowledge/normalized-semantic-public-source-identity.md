@@ -19,7 +19,14 @@ shipped `isf/apb_requester.isf` and `ppif/axi_aw_valid_ready.ppif` examples
 both keep their `.isf`/`.ppif` path in `source.resolved_path` and have matched
 support-accounting entries.
 
-The semantic payload still describes the generated `.fsm` root that enters the
-semantic pipeline, so those lowered-input entries expect
-`semantic.module.source_root_kind` and `semantic.forward_ir.intent_hir.source_root_kind`
-to remain `fsm`.
+For single-root lowered inputs, the semantic payload still describes the
+generated `.fsm` root that enters the semantic pipeline, so the shipped
+`isf/apb_requester.isf` and one-channel `ppif/axi_aw_valid_ready.ppif`
+entries expect `semantic.module.source_root_kind` and
+`semantic.forward_ir.intent_hir.source_root_kind` to remain `fsm`.
+
+The multi-channel `ppif/axi_aw_w_valid_ready_bundle.ppif` entry is different:
+it is an aggregate IAL2 semantic export. It keeps the public `.ppif` path, but
+uses `semantic.module.source_root_kind = ppif_bundle` and exposes
+`semantic.protocol_intent_bundle` instead of selecting one generated `.fsm`
+channel as the root.

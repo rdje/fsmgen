@@ -137,7 +137,14 @@ sub assert_check_json_acceptance {
     is($decoded->{result}{module_name}, $expected_module,
         "$entry->{id} records checked module/top name through $args{owner}");
 
-    if ($entry->{source_kind} eq 'composition') {
+    if (defined $entry->{expected_check_composition_child_count}) {
+        is(
+            $decoded->{result}{composition_child_count},
+            $entry->{expected_check_composition_child_count},
+            "$entry->{id} records expected aggregate child count through $args{owner}",
+        );
+    }
+    elsif ($entry->{source_kind} eq 'composition') {
         is(
             $decoded->{result}{composition_child_count},
             $entry->{expected_instance_count},

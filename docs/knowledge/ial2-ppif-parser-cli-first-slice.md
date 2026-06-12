@@ -55,5 +55,5 @@ Unsupported aliases remain unsupported. `.pif`, `.ppi`, `.axi`,
 protocol-specific aliases, platform placement clauses, and full AXI manager
 behavior all require later exact owners. A later bounded bundle slice now
 supports multiple unique `valid-ready-channel` objects for aggregate IAL2
-reports and generated review artifacts; default bundle HDL generation and
-aggregate semantic JSON remain fail-closed.
+reports, generated review artifacts, check JSON, and aggregate semantic JSON;
+default bundle HDL generation remains fail-closed.

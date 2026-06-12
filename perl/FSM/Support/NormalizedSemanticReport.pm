@@ -138,6 +138,11 @@ sub _semantic_contract {
             : $intent_hir->{explicit_system_contract}
     );
     my $symbol_contract = _public_value($module_info->{symbol_contract} || $intent_hir->{symbol_contract});
+    my $protocol_intent_bundle = _public_value(
+        exists $result->{protocol_intent_bundle}
+            ? $result->{protocol_intent_bundle}
+            : $module_info->{protocol_intent_bundle}
+    );
 
     my $module = _module_contract(
         module_info => $module_info,
@@ -171,6 +176,8 @@ sub _semantic_contract {
         if defined $symbol_contract;
     $semantic{composition} = $composition
         if defined $composition;
+    $semantic{protocol_intent_bundle} = $protocol_intent_bundle
+        if defined $protocol_intent_bundle;
 
     return \%semantic;
 }

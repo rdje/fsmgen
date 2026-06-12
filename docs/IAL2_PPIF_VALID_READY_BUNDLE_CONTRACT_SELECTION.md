@@ -1,8 +1,10 @@
 # IAL2 PPIF Valid-Ready Bundle Contract Selection
 
-Status: contract selection slice. The bounded report/review-artifact subset of
-this contract is implemented by
-[docs/IAL2_PPIF_VALID_READY_BUNDLE_FIRST_SLICE.md](IAL2_PPIF_VALID_READY_BUNDLE_FIRST_SLICE.md).
+Status: contract selection slice. The bounded report/review-artifact subset is
+implemented by
+[docs/IAL2_PPIF_VALID_READY_BUNDLE_FIRST_SLICE.md](IAL2_PPIF_VALID_READY_BUNDLE_FIRST_SLICE.md),
+and aggregate semantic JSON is implemented by
+[docs/IAL2_PPIF_BUNDLE_SEMANTIC_JSON_FIRST_SLICE.md](IAL2_PPIF_BUNDLE_SEMANTIC_JSON_FIRST_SLICE.md).
 
 Task tree:
 [docs/tasks/IAL2-PPIF-VALID-READY-BUNDLE-CONTRACT-SELECTION.md](tasks/IAL2-PPIF-VALID-READY-BUNDLE-CONTRACT-SELECTION.md).
@@ -30,10 +32,11 @@ The selected contract is:
 - no direct `.ppif -> .fsm` shortcut and no hidden multi-actor `.isf` file are
   introduced.
 
-The first implementation keeps default HDL generation fail-closed for
+The current implementation keeps default HDL generation fail-closed for
 multi-channel bundles until a later owner selects a wrapper/top actor or
-explicit HDL entry rule. Report emission, check JSON, and review-artifact
-materialization are implemented before wrapper HDL exists.
+explicit HDL entry rule. Report emission, check JSON, review-artifact
+materialization, and aggregate semantic JSON are implemented before wrapper HDL
+exists.
 
 ## Source Shape
 
@@ -183,9 +186,10 @@ Future multi-channel `.ppif` behavior should follow these rules:
 - `--check --json` may report successful PPIF bundle parsing/lowering if all
   generated channel artifacts are internally valid, but must disclose that no
   aggregate HDL entry was selected when wrapper HDL is still deferred.
-- `--emit-semantic-json` remains single-root for the currently shipped path; a
-  multi-channel bundle must fail closed or wait for an aggregate semantic JSON
-  owner rather than returning one arbitrary channel.
+- `--emit-semantic-json` emits an aggregate PPIF bundle semantic root with
+  `semantic.module.source_root_kind = ppif_bundle` and a
+  `semantic.protocol_intent_bundle` child, rather than returning one arbitrary
+  channel.
 
 This contract deliberately avoids "first channel wins" behavior. Selecting an
 arbitrary generated `.fsm` as the HDL or semantic entry would hide the rest of
@@ -193,9 +197,9 @@ the authored intent and create review drift.
 
 ## Implementation Prerequisites
 
-The bounded first behavior leaf implements the report/check/outdir subset of
-this selection. Future widening leaves still need the remaining parts of this
-contract when adding bundle HDL entry selection, aggregate semantic JSON, or
+The bounded behavior leaves implement the report/check/outdir and aggregate
+semantic JSON subsets of this selection. Future widening leaves still need the
+remaining parts of this contract when adding bundle HDL entry selection or
 broader AXI manager behavior:
 
 - parser changes for repeated `valid-ready-channel` clauses and optional
@@ -204,8 +208,8 @@ broader AXI manager behavior:
   `ValidReadyChannel` generator per channel without changing its single-object
   API;
 - aggregate report construction with stable `channels[]` and artifact arrays;
-- CLI handling for aggregate report mode, review-artifact materialization, and
-  fail-closed default HDL/semantic modes;
+- CLI handling for aggregate report mode, review-artifact materialization,
+  aggregate semantic JSON, and fail-closed default HDL modes;
 - focused tests that prove the current single-object behavior still works; and
 - mdBook examples that state which bundle CLI modes are shipped by each future
   code leaf.
@@ -213,6 +217,6 @@ broader AXI manager behavior:
 ## Current User-Facing State
 
 Users can use the shipped one-channel `.ppif` path today. Users can also use
-the bounded multi-channel bundle path for aggregate reports, check JSON, and
-generated `.isf`/`.fsm` review artifacts. Default bundle HDL generation and
-aggregate semantic JSON remain unsupported and fail closed.
+the bounded multi-channel bundle path for aggregate reports, check JSON,
+aggregate semantic JSON, and generated `.isf`/`.fsm` review artifacts. Default
+bundle HDL generation remains unsupported and fail closed.

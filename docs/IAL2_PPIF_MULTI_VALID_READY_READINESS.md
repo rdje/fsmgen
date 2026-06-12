@@ -140,8 +140,10 @@ Users can continue to use the shipped single-object `.ppif` path documented in
 They can also use the bounded multi-channel bundle report/review-artifact path
 documented in
 [docs/IAL2_PPIF_VALID_READY_BUNDLE_FIRST_SLICE.md](IAL2_PPIF_VALID_READY_BUNDLE_FIRST_SLICE.md).
+Aggregate semantic JSON for that bundle is documented in
+[docs/IAL2_PPIF_BUNDLE_SEMANTIC_JSON_FIRST_SLICE.md](IAL2_PPIF_BUNDLE_SEMANTIC_JSON_FIRST_SLICE.md).
 
 The implemented bundle behavior does not claim AXI five-channel manager
 behavior, transaction concurrency, ID ordering, outstanding-window scheduling,
 response matching, bursts, channel dependency enforcement, wrapper/top actor
-HDL generation, or aggregate semantic JSON.
+HDL generation, or default bundle HDL generation.

@@ -3083,8 +3083,13 @@ entry must succeed through `--strict --emit-semantic-json`, while preserving
 matched support-accounting identity, expected module/top identity, sanitized
 forward-IR projections, and no HDL emission.
 For lowered public inputs, `source.resolved_path` stays on the original `.isf`
-or `.ppif` path while the semantic payload continues to describe the generated
-`.fsm` root that actually enters the semantic pipeline.
+or `.ppif` path. Single-root `.isf` and one-channel `.ppif` semantic payloads
+continue to describe the generated `.fsm` root that actually enters the
+semantic pipeline. Multi-channel `.ppif` bundles instead report
+`semantic.module.source_root_kind = ppif_bundle` and publish the aggregate
+`semantic.protocol_intent_bundle` child, including channel metadata and
+generated review-artifact summaries without selecting one generated `.fsm` as
+the root.
 
 Rejected corpus entries are covered too.
 

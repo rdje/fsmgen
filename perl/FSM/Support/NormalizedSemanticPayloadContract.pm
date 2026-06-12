@@ -112,6 +112,12 @@ use FSM::Support::NormalizedSemanticModuleContract qw(
     normalized_semantic_module_optional_metric_keys
     normalized_semantic_module_presence_keys
 );
+use FSM::Support::NormalizedSemanticProtocolIntentBundleContract qw(
+    normalized_semantic_protocol_intent_bundle_channel_entry_keys
+    normalized_semantic_protocol_intent_bundle_contract_source
+    normalized_semantic_protocol_intent_bundle_presence_keys
+    normalized_semantic_protocol_intent_bundle_schedule_report_entry_keys
+);
 use FSM::Support::NormalizedSemanticSignalAnalysisContract qw(
     normalized_semantic_signal_analysis_contract_source
     normalized_semantic_signal_analysis_entry_presence_keys
@@ -149,6 +155,9 @@ our @EXPORT_OK = qw(
     normalized_semantic_payload_forward_ir_nested_contract_source_map
     normalized_semantic_payload_forward_ir_nested_presence_key_map
     normalized_semantic_payload_presence_keys
+    normalized_semantic_payload_protocol_intent_bundle_channel_entry_keys
+    normalized_semantic_payload_protocol_intent_bundle_keys
+    normalized_semantic_payload_protocol_intent_bundle_schedule_report_entry_keys
     normalized_semantic_payload_forward_ir_keys
     normalized_semantic_payload_forward_ir_intent_hir_keys
     normalized_semantic_payload_forward_ir_intent_hir_composition_child_entry_keys
@@ -289,6 +298,7 @@ sub build_normalized_semantic_payload_contract {
             forward_ir => normalized_semantic_forward_ir_contract_source(),
             symbol_contract => normalized_semantic_symbol_contract_source(),
             composition => normalized_semantic_composition_contract_source(),
+            protocol_intent_bundle => normalized_semantic_protocol_intent_bundle_contract_source(),
         },
         nested_presence_key_map => normalized_semantic_payload_nested_presence_key_map(),
         presence_key_family_map => normalized_semantic_payload_presence_key_family_map(),
@@ -327,6 +337,12 @@ sub build_normalized_semantic_payload_contract {
         symbol_contract_type_record_extension_keys =>
             normalized_semantic_payload_symbol_contract_type_record_extension_keys(),
         composition_contract_source => normalized_semantic_composition_contract_source(),
+        protocol_intent_bundle_contract_source => normalized_semantic_protocol_intent_bundle_contract_source(),
+        protocol_intent_bundle_presence_keys => normalized_semantic_payload_protocol_intent_bundle_keys(),
+        protocol_intent_bundle_channel_entry_keys =>
+            normalized_semantic_payload_protocol_intent_bundle_channel_entry_keys(),
+        protocol_intent_bundle_schedule_report_entry_keys =>
+            normalized_semantic_payload_protocol_intent_bundle_schedule_report_entry_keys(),
         explicit_system_contract_presence_keys => normalized_semantic_payload_explicit_system_contract_keys(),
         signal_analysis_presence_keys => normalized_semantic_payload_signal_analysis_keys(),
         signal_analysis_entry_presence_keys => normalized_semantic_payload_signal_analysis_entry_keys(),
@@ -534,7 +550,8 @@ sub build_normalized_semantic_payload_contract {
             'The nested `forward_ir.structural_rtl_ir` object shell stays bounded through FSM::Support::NormalizedSemanticStructuralRTLIRContract.',
             'The optional nested `symbol_contract` object stays bounded through FSM::Support::NormalizedSemanticSymbolContract.',
             'The optional nested `composition` object stays bounded through FSM::Support::NormalizedSemanticCompositionContract.',
-            'The same owner still advertises the nested `explicit_system_contract`, `signal_analysis`, shared signal-analysis entry, `system_contract`, `forward_ir`, nested `forward_ir.intent_hir`, nested `forward_ir.lowered_rtl_ir`, nested `forward_ir.structural_rtl_ir`, and optional `symbol_contract` plus `composition` key lists so payload widening stays deliberate and regression-backed.',
+            'The optional nested `protocol_intent_bundle` object stays bounded through FSM::Support::NormalizedSemanticProtocolIntentBundleContract.',
+            'The same owner still advertises the nested `explicit_system_contract`, `signal_analysis`, shared signal-analysis entry, `system_contract`, `forward_ir`, nested `forward_ir.intent_hir`, nested `forward_ir.lowered_rtl_ir`, nested `forward_ir.structural_rtl_ir`, and optional `symbol_contract`, `composition`, plus `protocol_intent_bundle` key lists so payload widening stays deliberate and regression-backed.',
         ],
     };
 }
@@ -555,6 +572,7 @@ sub normalized_semantic_payload_optional_child_presence_keys {
     return [
         qw(
             composition
+            protocol_intent_bundle
             symbol_contract
         ),
     ];
@@ -569,6 +587,7 @@ sub normalized_semantic_payload_nested_presence_key_map {
         forward_ir => normalized_semantic_payload_forward_ir_keys(),
         symbol_contract => normalized_semantic_payload_symbol_contract_keys(),
         composition => normalized_semantic_payload_composition_keys(),
+        protocol_intent_bundle => normalized_semantic_payload_protocol_intent_bundle_keys(),
     };
 }
 
@@ -576,6 +595,11 @@ sub normalized_semantic_payload_presence_key_family_map {
     return {
         public_presence_keys => normalized_semantic_payload_presence_keys(),
         optional_child_presence_keys => normalized_semantic_payload_optional_child_presence_keys(),
+        protocol_intent_bundle_presence_keys => normalized_semantic_payload_protocol_intent_bundle_keys(),
+        protocol_intent_bundle_channel_entry_keys =>
+            normalized_semantic_payload_protocol_intent_bundle_channel_entry_keys(),
+        protocol_intent_bundle_schedule_report_entry_keys =>
+            normalized_semantic_payload_protocol_intent_bundle_schedule_report_entry_keys(),
         module_optional_metric_keys => normalized_semantic_module_optional_metric_keys(),
         signal_analysis_entry_presence_keys => normalized_semantic_payload_signal_analysis_entry_keys(),
         symbol_contract_constant_value_entry_keys =>
@@ -766,6 +790,18 @@ sub normalized_semantic_payload_presence_key_family_map {
         composition_shared_datapath_assertion_keys =>
             normalized_semantic_payload_composition_shared_datapath_assertion_keys(),
     };
+}
+
+sub normalized_semantic_payload_protocol_intent_bundle_keys {
+    return normalized_semantic_protocol_intent_bundle_presence_keys();
+}
+
+sub normalized_semantic_payload_protocol_intent_bundle_channel_entry_keys {
+    return normalized_semantic_protocol_intent_bundle_channel_entry_keys();
+}
+
+sub normalized_semantic_payload_protocol_intent_bundle_schedule_report_entry_keys {
+    return normalized_semantic_protocol_intent_bundle_schedule_report_entry_keys();
 }
 
 sub normalized_semantic_payload_forward_ir_keys {

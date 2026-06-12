@@ -27,7 +27,8 @@ write every generated channel `.isf` and `.fsm` review artifact, then stop
 before HDL. Run `./bin/fsmgen --strict --check --json
 ppif/axi_aw_w_valid_ready_bundle.ppif` for check JSON.
 
-Default HDL generation, `--verify-hdl`, and `--emit-semantic-json` for a
-multi-channel bundle fail closed until future wrapper/top actor, explicit
-entry-selection, and aggregate semantic JSON owners land. The existing
-single-channel `.ppif` HDL and semantic JSON behavior remains unchanged.
+Default HDL generation and `--verify-hdl` for a multi-channel bundle fail
+closed until future wrapper/top actor or explicit entry-selection owners land.
+Aggregate semantic JSON now works through the later bundle semantic JSON
+slice. The existing single-channel `.ppif` HDL and semantic JSON behavior
+remains unchanged.

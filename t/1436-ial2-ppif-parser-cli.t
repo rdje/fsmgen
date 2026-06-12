@@ -246,14 +246,52 @@ subtest 'CLI bundle unsupported modes are explicit' => sub {
     my ($semantic_success, undef, undef, $semantic_stdout, $semantic_stderr) = run(
         command => ['./bin/fsmgen', '--strict', '--emit-semantic-json', $bundle_path],
     );
-    ok(!$semantic_success, 'bundle semantic JSON fails closed');
-    is(join('', @{$semantic_stderr || []}), '', 'bundle semantic JSON emits machine-readable failure on stdout');
+    ok($semantic_success, 'bundle semantic JSON succeeds without HDL emission');
+    is(join('', @{$semantic_stderr || []}), '', 'bundle semantic JSON keeps stderr clean');
     my $semantic_report = decode_json(join('', @{$semantic_stdout || []}));
-    ok(!$semantic_report->{success}, 'bundle semantic JSON report is a failure');
-    like(
-        $semantic_report->{diagnostics}[0]{message},
-        qr/multi-channel bundle normalized semantic JSON remains unsupported/,
-        'bundle semantic JSON diagnostic names aggregate semantic deferral',
+    ok($semantic_report->{success}, 'bundle semantic JSON report is successful');
+    is(
+        $semantic_report->{source}{resolved_path},
+        File::Spec->rel2abs($bundle_path),
+        'bundle semantic JSON reports the public .ppif source path',
+    );
+    is(
+        $semantic_report->{support_accounting}{entry_id},
+        'intent.ppif_axi_aw_w_valid_ready_bundle',
+        'bundle semantic JSON support accounting names the bundle corpus entry',
+    );
+    is(
+        $semantic_report->{semantic}{module}{source_root_kind},
+        'ppif_bundle',
+        'bundle semantic JSON uses an aggregate PPIF bundle semantic root',
+    );
+    is(
+        $semantic_report->{semantic}{module}{composition_child_count},
+        2,
+        'bundle semantic JSON reports the channel count as aggregate children',
+    );
+    my $bundle_semantic = $semantic_report->{semantic}{protocol_intent_bundle};
+    is($bundle_semantic->{schema}, 'fsmgen.ial2.protocol_intent.valid_ready_bundle.v1', 'bundle semantic child records schema');
+    is($bundle_semantic->{bundle}{channel_count}, 2, 'bundle semantic child records channel count');
+    is_deeply(
+        $bundle_semantic->{bundle}{channel_object_names},
+        ['axi_aw', 'axi_w'],
+        'bundle semantic child preserves channel order',
+    );
+    is($bundle_semantic->{generated_ial1_schedule_report_count}, 2, 'bundle semantic child records per-channel schedule report count');
+    ok(
+        !$bundle_semantic->{generated_artifacts}{hdl_entry}{selected},
+        'bundle semantic child keeps HDL entry unselected',
+    );
+    is_deeply(
+        [map { $_->{name} } @{$bundle_semantic->{generated_artifacts}{ial1}{items} || []}],
+        ['axi_aw_valid_ready_monitor.isf', 'axi_w_valid_ready_monitor.isf'],
+        'bundle semantic child lists generated IAL1 review artifacts',
+    );
+    is_deeply(
+        [map { $_->{entry_artifact} } @{$bundle_semantic->{generated_artifacts}{ial0}{items} || []}],
+        ['axi_aw_valid_ready_monitor.fsm', 'axi_w_valid_ready_monitor.fsm'],
+        'bundle semantic child lists generated IAL0 review artifacts',
     );
 
     my $verify_outdir = File::Spec->catdir(tempdir(CLEANUP => 1), 'verify-out');

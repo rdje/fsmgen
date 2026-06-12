@@ -158,7 +158,15 @@ sub assert_semantic_json_acceptance {
     is(ref($forward_ir->{lowered_rtl_ir}), 'HASH',
         "$entry->{id} exposes sanitized lowered RTL IR through $args{owner}");
 
-    if ($entry->{source_kind} eq 'composition') {
+    if (defined $entry->{expected_semantic_composition_child_count}) {
+        ok($semantic->{composition}, "$entry->{id} exposes aggregate composition metadata through $args{owner}");
+        is(
+            $semantic->{composition}{child_count},
+            $entry->{expected_semantic_composition_child_count},
+            "$entry->{id} records expected aggregate child count through $args{owner}",
+        );
+    }
+    elsif ($entry->{source_kind} eq 'composition') {
         ok($semantic->{composition}, "$entry->{id} exposes composition metadata through $args{owner}");
         is(
             $semantic->{composition}{child_count},

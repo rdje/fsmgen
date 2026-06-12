@@ -2753,8 +2753,8 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
     );
     like(
         $file_surface_by_suffix{'.ppif'}{current_boundary},
-        qr/one Valid-Ready source object/,
-        'manifest keeps the first PPIF boundary explicit',
+        qr/multi-channel Valid-Ready bundles emit aggregate reports/,
+        'manifest keeps the current PPIF boundary explicit',
     );
     my %unsupported_aliases = map { $_ => 1 } @{$manifest->{language_surface}{file_surfaces}{unsupported_first_slice_aliases}};
     ok($unsupported_aliases{'.pif'}, 'manifest keeps .pif unsupported in the first PPIF slice');
