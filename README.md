@@ -127,11 +127,15 @@ now shipped as `FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus`; it
 accepts a structured AXI4 manager contract, emits generated `.isf` before
 `.fsm`, reaches SystemVerilog through the existing IAL1/IAL0 path, and reports
 schema `fsmgen.ial2.protocol_intent.axi_manager_capacity_status.v1`. The
-active next IAL2 leaf selects the public `.ppif` capacity/status syntax and
-readiness boundary; IDs, ordering, response matching, bursts, queued/blocking
-policy, profile aliases, and VHDL backend/reroute work stay deferred until
-explicit owners select them, and VHDL remains behind SV-backed IAL feature
-completeness.
+public `.ppif` capacity/status syntax is now selected as one
+`(manager-capacity-status NAME ...)` object under
+`(protocol-platform-intent ...)`, `(profile axi4)`, and top-level source
+anchors. The active next IAL2 leaf implements that public parser/CLI first
+slice, including sample, support-accounting, manifest, check JSON, semantic
+JSON, generated review artifacts, mdBook, and tests; IDs, ordering, response
+matching, bursts, queued/blocking policy, profile aliases, and VHDL
+backend/reroute work stay deferred until explicit owners select them, and VHDL
+remains behind SV-backed IAL feature completeness.
 The project objective is robust, traceable FSM-to-HDL generation with clear assignment semantics, optimization via AST factorization, and behavior-preserving refactoring toward a modular architecture.
 
 ## Fast ramp-up order
@@ -166,28 +170,29 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 29. `docs/AXI_IAL2_MANAGER_CAPACITY_STATUS_SUBSET_SELECTION.md`: selected the first post-Valid-Ready AXI manager subset: outstanding-capacity plus acceptance/status feedback.
 30. `docs/AXI_IAL2_MANAGER_CAPACITY_STATUS_READINESS_AUDIT.md`: readiness audit for the selected AXI manager capacity/status subset and first in-process generator boundary.
 31. `docs/AXI_IAL2_MANAGER_CAPACITY_STATUS_GENERATOR_FIRST_SLICE.md`: first in-process AXI manager capacity/status generator slice and report surface.
-32. `docs/AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md`: selected first AXI-derived IAL2 implementation subset and pre-code contract.
-33. `docs/AXI_IAL2_VALID_READY_READINESS_AUDIT.md`: code/test/docs/report owner map for the future AXI Valid-Ready IAL2 implementation.
-34. `docs/AXI_IAL2_VALID_READY_GENERATOR_FIRST_SLICE.md`: first in-process AXI Valid-Ready IAL2 generator slice and report surface.
-35. `docs/decisions/0016-ppif-is-first-public-ial2-container.md`: selects `.ppif` as the first public generic IAL2 file surface.
-36. `docs/IAL2_PPIF_PARSER_CLI_FIRST_SLICE.md`: first public `.ppif` parser/CLI slice for one AXI Valid-Ready source object.
-37. `docs/IAL2_PPIF_MULTI_VALID_READY_READINESS.md`: readiness map for future multi-channel `.ppif` Valid-Ready support.
-38. `docs/IAL2_PPIF_VALID_READY_BUNDLE_CONTRACT_SELECTION.md`: selected future aggregate bundle contract for multi-channel `.ppif` Valid-Ready support.
-39. `docs/IAL2_PPIF_VALID_READY_BUNDLE_FIRST_SLICE.md`: shipped bounded multi-channel `.ppif` Valid-Ready bundle report/review-artifact behavior.
-40. `docs/IAL2_PPIF_BUNDLE_SEMANTIC_JSON_FIRST_SLICE.md`: shipped aggregate semantic JSON for multi-channel `.ppif` bundles.
-41. `docs/IAL2_PPIF_BUNDLE_HDL_ENTRY_SELECTION.md`: selected aggregate wrapper/top HDL entry contract for multi-channel `.ppif` bundles.
-42. `docs/IAL2_PPIF_BUNDLE_HDL_ENTRY_FIRST_SLICE.md`: shipped aggregate wrapper/top HDL entry for the tracked multi-channel `.ppif` bundle.
-43. `docs/PDF_EXTRACTION_WORKFLOW.md`: portable workflow for source-anchored PDF text, table, diagram, and image extraction.
-44. `docs/decisions/0014-protocol-platform-intent-surface-and-layered-lowering.md`: generic IAL2 file-surface candidates and layered lowering decision.
-45. `docs/decisions/0015-ial2-profile-extensions-are-vocabulary-aliases.md`: IAL2 protocol-profile extension refinement.
-46. `docs/decisions/0017-ppif-valid-ready-bundle-contract.md`: future multi-channel `.ppif` bundle contract decision.
-47. `docs/FEATURE_BACKLOG.md`: pointer to the canonical mdBook feature backlog for deferred/not-fully-shipped user-visible work.
-48. `CHANGES.md`: chronological technical changes.
-49. `DEVELOPMENT_NOTES.md`: design rationale and decisions.
-50. `MEMORY.md`: continuity/handoff state.
-51. `LIVE_ACHIEVEMENT_STATUS.md`: latest completed roadmap-aligned slice.
-52. `WARP.md`: repository-specific agent/development guidance.
-53. `.agents/workflows/commit.md`: automation-oriented commit workflow description.
+32. `docs/AXI_IAL2_MANAGER_CAPACITY_STATUS_PPIF_SYNTAX_SELECTION.md`: selected public `.ppif` syntax/readiness boundary for one AXI manager capacity/status object.
+33. `docs/AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md`: selected first AXI-derived IAL2 implementation subset and pre-code contract.
+34. `docs/AXI_IAL2_VALID_READY_READINESS_AUDIT.md`: code/test/docs/report owner map for the future AXI Valid-Ready IAL2 implementation.
+35. `docs/AXI_IAL2_VALID_READY_GENERATOR_FIRST_SLICE.md`: first in-process AXI Valid-Ready IAL2 generator slice and report surface.
+36. `docs/decisions/0016-ppif-is-first-public-ial2-container.md`: selects `.ppif` as the first public generic IAL2 file surface.
+37. `docs/IAL2_PPIF_PARSER_CLI_FIRST_SLICE.md`: first public `.ppif` parser/CLI slice for one AXI Valid-Ready source object.
+38. `docs/IAL2_PPIF_MULTI_VALID_READY_READINESS.md`: readiness map for future multi-channel `.ppif` Valid-Ready support.
+39. `docs/IAL2_PPIF_VALID_READY_BUNDLE_CONTRACT_SELECTION.md`: selected future aggregate bundle contract for multi-channel `.ppif` Valid-Ready support.
+40. `docs/IAL2_PPIF_VALID_READY_BUNDLE_FIRST_SLICE.md`: shipped bounded multi-channel `.ppif` Valid-Ready bundle report/review-artifact behavior.
+41. `docs/IAL2_PPIF_BUNDLE_SEMANTIC_JSON_FIRST_SLICE.md`: shipped aggregate semantic JSON for multi-channel `.ppif` bundles.
+42. `docs/IAL2_PPIF_BUNDLE_HDL_ENTRY_SELECTION.md`: selected aggregate wrapper/top HDL entry contract for multi-channel `.ppif` bundles.
+43. `docs/IAL2_PPIF_BUNDLE_HDL_ENTRY_FIRST_SLICE.md`: shipped aggregate wrapper/top HDL entry for the tracked multi-channel `.ppif` bundle.
+44. `docs/PDF_EXTRACTION_WORKFLOW.md`: portable workflow for source-anchored PDF text, table, diagram, and image extraction.
+45. `docs/decisions/0014-protocol-platform-intent-surface-and-layered-lowering.md`: generic IAL2 file-surface candidates and layered lowering decision.
+46. `docs/decisions/0015-ial2-profile-extensions-are-vocabulary-aliases.md`: IAL2 protocol-profile extension refinement.
+47. `docs/decisions/0017-ppif-valid-ready-bundle-contract.md`: future multi-channel `.ppif` bundle contract decision.
+48. `docs/FEATURE_BACKLOG.md`: pointer to the canonical mdBook feature backlog for deferred/not-fully-shipped user-visible work.
+49. `CHANGES.md`: chronological technical changes.
+50. `DEVELOPMENT_NOTES.md`: design rationale and decisions.
+51. `MEMORY.md`: continuity/handoff state.
+52. `LIVE_ACHIEVEMENT_STATUS.md`: latest completed roadmap-aligned slice.
+53. `WARP.md`: repository-specific agent/development guidance.
+54. `.agents/workflows/commit.md`: automation-oriented commit workflow description.
 
 ## Documentation index (all `.md` files in this repo)
 - `README.md` — single entry point and navigation hub.
@@ -616,6 +621,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/AXI_IAL2_MANAGER_CAPACITY_STATUS_SUBSET_SELECTION.md` — selected the first post-Valid-Ready AXI manager subset: outstanding-capacity plus acceptance/status feedback.
 - `docs/AXI_IAL2_MANAGER_CAPACITY_STATUS_READINESS_AUDIT.md` — readiness audit for the selected AXI manager capacity/status subset and first in-process generator boundary.
 - `docs/AXI_IAL2_MANAGER_CAPACITY_STATUS_GENERATOR_FIRST_SLICE.md` — first in-process AXI manager capacity/status generator slice and report surface.
+- `docs/AXI_IAL2_MANAGER_CAPACITY_STATUS_PPIF_SYNTAX_SELECTION.md` — selected public `.ppif` syntax/readiness boundary for one AXI manager capacity/status object.
 - `docs/AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md` — selected first AXI-derived IAL2 implementation subset and pre-code contract.
 - `docs/AXI_IAL2_VALID_READY_READINESS_AUDIT.md` — code/test/docs/report owner map for a future AXI Valid-Ready IAL2 implementation slice.
 - `docs/AXI_IAL2_VALID_READY_GENERATOR_FIRST_SLICE.md` — first in-process AXI Valid-Ready IAL2 generator slice and report surface.

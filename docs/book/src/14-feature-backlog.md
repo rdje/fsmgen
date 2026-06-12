@@ -2269,11 +2269,12 @@ post-Valid-Ready manager subset. The completed readiness audit for that subset
 found no IAL1 or IAL0/SystemVerilog prerequisite blocker and selected an
 in-process generator as the first behavior-bearing capacity/status slice
 before public `.ppif` syntax. That in-process generator is now shipped. The
-active frontier is selecting the public `.ppif` capacity/status syntax and
-readiness boundary before parser/CLI, sample, manifest, support-accounting,
-semantic JSON, or check JSON behavior changes. Selected IAL2 slices may
-include explicit IAL1 or IAL0/SystemVerilog prerequisites when those
-prerequisites are needed for clean, reviewable lowering.
+public `.ppif` capacity/status syntax/readiness boundary is now selected. The
+active frontier is implementing the first public parser/CLI slice with sample,
+manifest, support-accounting, semantic JSON, check JSON, generated review
+artifacts, mdBook, and focused diagnostics. Selected IAL2 slices may include
+explicit IAL1 or IAL0/SystemVerilog prerequisites when those prerequisites are
+needed for clean, reviewable lowering.
 
 Evaluation note:
 [IAL2_PROTOCOL_PLATFORM_INTENT_EVALUATION](../../IAL2_PROTOCOL_PLATFORM_INTENT_EVALUATION.md).
@@ -2439,9 +2440,53 @@ The IAL2 report schema is
 source anchors, generated artifact names, read/write capacity metadata,
 status-output bindings, abstract-event bindings, generated rule summaries,
 assumptions, enforced static rules, and explicit residue. Public `.ppif`
-capacity/status syntax, profile aliases, IDs, ordering, response matching,
-bursts, queued/blocking policy, HDL blocked-reason outputs, and VHDL remain
-future exact-owner work.
+parser/CLI behavior, profile aliases, IDs, ordering, response matching, bursts,
+queued/blocking policy, HDL blocked-reason outputs, and VHDL remain future
+exact-owner work.
+
+Public capacity/status `.ppif` syntax selection:
+[AXI_IAL2_MANAGER_CAPACITY_STATUS_PPIF_SYNTAX_SELECTION](../../AXI_IAL2_MANAGER_CAPACITY_STATUS_PPIF_SYNTAX_SELECTION.md)
+selects the next public source shape. The selected syntax is one
+`manager-capacity-status` object under the generic PPIF root:
+
+```text
+(protocol-platform-intent axi0_capacity_status
+  (profile axi4)
+  (source
+    (object axi-manager-capacity-status)
+    (anchor (document IHI0022_L_2025-08) (section A1.1) (page A1-1))
+    (anchor (document IHI0022_L_2025-08) (section A1.2) (page A1-1))
+    (anchor (document IHI0022_L_2025-08) (section A5.1) (page A5-1)))
+  (manager-capacity-status axi0
+    (clock clk)
+    (reset (rst_n active_low async))
+    (read-max-pending 4)
+    (write-max-pending 2)
+    (submit-policy try)
+    (read-submit axi0_read_submit)
+    (read-complete axi0_read_complete)
+    (write-submit axi0_write_submit)
+    (write-complete axi0_write_complete)
+    (status
+      (read-can-accept axi0_read_can_accept)
+      (write-can-accept axi0_write_can_accept)
+      (read-full axi0_read_full)
+      (write-full axi0_write_full)
+      (pending-reads axi0_pending_reads)
+      (pending-writes axi0_pending_writes)
+      (read-slots-available axi0_read_slots_available)
+      (write-slots-available axi0_write_slots_available))))
+```
+
+This is selected future syntax, not a shipped parser yet. The active `.6`
+implementation leaf must add the parser/CLI path, runnable sample,
+support-accounting entry, capability/language-surface manifest update, check
+JSON and semantic JSON public source identity, generated `.isf`/`.fsm`
+artifact materialization, default HDL/`--verify-hdl`, diagnostics, docs, and
+tests in one slice. The first public slice must reject mixed
+`valid-ready-channel` plus `manager-capacity-status` files, multiple manager
+objects, IDs, ordering, response matching, bursts, queued/blocking policy,
+profile aliases, and VHDL behavior.
 
 First implementation subset selection:
 [AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION](../../AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md)
@@ -2563,11 +2608,12 @@ generated `.fsm`. The capability manifest now advertises this file-layer stack
 under `language_surface.file_surfaces`, including the `.ppif` sample path,
 first-slice alias exclusions, and `supported_cli_modes[]` entries for
 `--emit-schedule-json`, `--check --json` / `--check-json`, and
-`--emit-semantic-json`. The active next prerequisite is selecting the public
-`.ppif` syntax/readiness boundary for the shipped in-process AXI manager
-capacity/status generator. Additional `.ppif` objects/clauses and profile
-aliases remain future exact-owner work, but they should not jump ahead of the
-capacity/status public-syntax selector unless a later selector records why.
+`--emit-semantic-json`. The active next prerequisite is implementing the
+selected public `.ppif` parser/CLI slice for the shipped in-process AXI
+manager capacity/status generator. Additional `.ppif` objects/clauses and
+profile aliases remain future exact-owner work, but they should not jump ahead
+of the capacity/status public parser/CLI slice unless a later selector records
+why.
 
 Multi-channel `.ppif` bundle support:
 [IAL2_PPIF_MULTI_VALID_READY_READINESS](../../IAL2_PPIF_MULTI_VALID_READY_READINESS.md)
@@ -4704,8 +4750,10 @@ generator. Completed implementation leaf
 `IAL2-PPIF-PARSER-CLI-FIRST-SLICE.1` ships the first public `.ppif` parser/CLI
 path for one AXI Valid-Ready source object.
 Completed implementation leaf `IAL2-FEATURE-COMPLETENESS-FRONTIER.4` ships the
-first in-process AXI manager capacity/status generator and keeps public
-capacity/status `.ppif` syntax behind the active `.5` selector.
+first in-process AXI manager capacity/status generator. Completed selector
+leaf `IAL2-FEATURE-COMPLETENESS-FRONTIER.5` selects the public
+`manager-capacity-status` `.ppif` syntax and keeps parser/CLI behavior behind
+the active `.6` implementation leaf.
 Completed implementation leaf
 `ARCHITECTURE-DEBT-FRONTIER.2.1`
 projects direct backend storage/helper declaration-plan entries into

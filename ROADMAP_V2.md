@@ -900,20 +900,22 @@ Priority note:
   outstanding-capacity plus acceptance/status feedback, the readiness audit
   found no IAL1 or IAL0/SV prerequisite blocker, the first in-process
   generator is shipped as
-  `FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus`, and the active next
-  leaf selects the public `.ppif` capacity/status syntax and readiness
-  boundary before parser/CLI behavior changes.
+  `FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus`, the public `.ppif`
+  syntax/readiness boundary is selected, and the active next leaf implements
+  the first public parser/CLI slice for exactly one
+  `manager-capacity-status` object.
 
 ## Current intent
 The active immediate feature-completeness lane is IAL2 on the
 SystemVerilog-backed lowering path; see
 [docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md](docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md).
-The current frontier is public `.ppif` syntax/readiness selection for the
-selected AXI manager capacity/status subset, after the in-process generator
-proved the generated `.isf` and `.fsm` review-artifact path. Parser/CLI
-behavior, public samples, support-accounting, semantic JSON, check JSON, and
-manifest changes remain deferred until that selector records the exact
-boundary.
+The current frontier is the public `.ppif` parser/CLI first slice for the
+selected AXI manager capacity/status subset. The selector chose one
+`(manager-capacity-status NAME ...)` object under
+`(protocol-platform-intent ...)`, `(profile axi4)`, and top-level source
+anchors. Parser/CLI behavior, public sample, support-accounting, semantic
+JSON, check JSON, manifest updates, mdBook sync, and focused diagnostics must
+ship together in that implementation leaf.
 
 The first honest `R11` slices are now:
 1. keep widening convention-first composition only where the child-side evidence is still deterministic,
