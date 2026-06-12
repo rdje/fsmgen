@@ -58,21 +58,25 @@ subtest 'stateful facade reuse returns fresh direct structural_rtl_ir containers
             },
             {
                 name => 'idle_en',
-                source => undef,
-                targets => [],
+                source => assignment_source('idle_en', 'top_state_enable'),
+                targets => [
+                    assignment_target('idle_out_1_en', 'dt_specific_enable'),
+                ],
                 width => 1,
                 signed => 0,
             },
             {
                 name => 'idle_out_1_en',
-                source => undef,
-                targets => [],
+                source => assignment_source('idle_out_1_en', 'dt_specific_enable'),
+                targets => [
+                    assignment_target('out_1_en', 'lhs_level_enable'),
+                ],
                 width => 1,
                 signed => 0,
             },
             {
                 name => 'out_1_en',
-                source => undef,
+                source => assignment_source('out_1_en', 'lhs_level_enable'),
                 targets => [],
                 width => 1,
                 signed => 0,
@@ -97,6 +101,28 @@ subtest 'stateful facade reuse returns fresh direct structural_rtl_ir containers
 };
 
 done_testing();
+
+sub assignment_source {
+    my ($assignment_lhs, $role) = @_;
+    return {
+        kind => 'assignment_record_driver',
+        assignment_lhs => $assignment_lhs,
+        assignment_kind => 'continuous_assign',
+        family => 'generated_enable',
+        role => $role,
+    };
+}
+
+sub assignment_target {
+    my ($assignment_lhs, $role) = @_;
+    return {
+        kind => 'assignment_record_rhs_dependency',
+        assignment_lhs => $assignment_lhs,
+        assignment_kind => 'continuous_assign',
+        family => 'generated_enable',
+        role => $role,
+    };
+}
 
 sub write_direct_fixture {
     my $tempdir = tempdir(CLEANUP => 1);

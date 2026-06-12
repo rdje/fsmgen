@@ -109,6 +109,7 @@ sub build_from_generated_module_info ($class, %args) {
         target_language => $target_language,
         ports => \@ports,
         nets => _direct_structural_nets(
+            assignment_records => $assignment_records,
             fsm_module => $fsm_module,
             hdl_generator => $hdl_generator,
         ),
@@ -284,6 +285,11 @@ sub _direct_structural_nets (%args) {
         next if $seen{$name}++;
         push @deduped, $entry;
     }
+
+    _direct_apply_assignment_record_connectivity(
+        nets => \@deduped,
+        assignment_records => $args{assignment_records},
+    );
 
     return \@deduped;
 }
@@ -585,6 +591,101 @@ sub _direct_assignment_record (%args) {
         rendered => $rendered,
         provenance => _clone($args{provenance} || {}),
     };
+}
+
+sub _direct_apply_assignment_record_connectivity (%args) {
+    my $nets = $args{nets};
+    my $assignment_records = $args{assignment_records};
+    return unless ref($nets) eq 'ARRAY' && ref($assignment_records) eq 'ARRAY';
+
+    my %nets_by_name;
+    for my $net (@$nets) {
+        next unless ref($net) eq 'HASH';
+        my $name = $net->{name};
+        next unless defined($name) && length($name);
+        $net->{targets} = [] unless ref($net->{targets}) eq 'ARRAY';
+        $nets_by_name{$name} = $net;
+    }
+
+    my %target_seen;
+    for my $record (@$assignment_records) {
+        next unless ref($record) eq 'HASH';
+        my $lhs = _direct_assignment_record_lhs_name($record);
+        next unless defined($lhs) && length($lhs);
+
+        if (my $driven_net = $nets_by_name{$lhs}) {
+            $driven_net->{source} = _direct_assignment_record_connectivity_endpoint(
+                record => $record,
+                kind => 'assignment_record_driver',
+            );
+        }
+
+        for my $dependency (_direct_assignment_record_rhs_signal_refs($record)) {
+            next if $dependency eq $lhs;
+            my $source_net = $nets_by_name{$dependency};
+            next unless ref($source_net) eq 'HASH';
+
+            my $target = _direct_assignment_record_connectivity_endpoint(
+                record => $record,
+                kind => 'assignment_record_rhs_dependency',
+            );
+            my $target_key = join "\0", $dependency, map { $target->{$_} // '' }
+                qw(kind assignment_lhs assignment_kind family role);
+            next if $target_seen{$target_key}++;
+            push @{$source_net->{targets}}, $target;
+        }
+    }
+}
+
+sub _direct_assignment_record_lhs_name ($record) {
+    return undef unless ref($record) eq 'HASH' && ref($record->{lhs}) eq 'HASH';
+    return $record->{lhs}{name};
+}
+
+sub _direct_assignment_record_connectivity_endpoint (%args) {
+    my $record = $args{record} || {};
+    my $provenance = ref($record->{provenance}) eq 'HASH' ? $record->{provenance} : {};
+    return {
+        kind => $args{kind},
+        assignment_lhs => _direct_assignment_record_lhs_name($record),
+        assignment_kind => $record->{kind},
+        family => $provenance->{family},
+        role => $provenance->{role},
+    };
+}
+
+sub _direct_assignment_record_rhs_signal_refs ($record) {
+    return () unless ref($record) eq 'HASH';
+    my $rhs = $record->{rhs};
+    return () unless ref($rhs) eq 'HASH';
+
+    my %seen;
+    _direct_collect_ast_signal_refs($rhs->{ast}, \%seen);
+    return sort keys %seen;
+}
+
+sub _direct_collect_ast_signal_refs ($node, $seen) {
+    return unless defined($node);
+
+    if (ref($node) eq 'ARRAY') {
+        _direct_collect_ast_signal_refs($_, $seen) for @$node;
+        return;
+    }
+
+    return unless ref($node) eq 'HASH';
+
+    if (($node->{kind} // '') eq 'signal_ref' && defined($node->{name}) && length($node->{name})) {
+        $seen->{$node->{name}} = 1;
+    }
+
+    if (($node->{kind} // '') eq 'aggregate_ref' && defined($node->{signal}) && length($node->{signal})) {
+        $seen->{$node->{signal}} = 1;
+    }
+
+    for my $key (sort keys %$node) {
+        next if $key eq 'class' || $key eq 'kind' || $key eq 'name' || $key eq 'signal';
+        _direct_collect_ast_signal_refs($node->{$key}, $seen);
+    }
 }
 
 sub _direct_ast_to_systemverilog (%args) {

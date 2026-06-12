@@ -2202,17 +2202,21 @@ width, signedness, state-model, and declared-type metadata where available.
 generated enable assignment records with structured `lhs`, `rhs`, rendered
 SystemVerilog text, and provenance. The `rhs` payload carries both rendered
 expression text and the JSON-safe AST shape available from the direct backend.
+Generated-enable net entries also carry structured `source` objects for
+assignment-record drivers and structured `targets[]` entries when another
+generated-enable assignment record consumes that direct net on its RHS.
 `structural_rtl_ir.auxiliary_assignments[]` mirrors those rendered lines as
-scalar strings for compatibility. Direct instances, links, direct net
-source/target connectivity, and HDL rerouting through `StructuralRTLIR` remain
-outside the direct-root structural projection.
+scalar strings for compatibility. Direct port dependency connectivity,
+output-drive/always-block consumers, instances, links, and HDL rerouting
+through `StructuralRTLIR` remain outside the direct-root structural projection.
 
 That same owner now also publishes a grouped `presence_key_family_map` so
 embedders can discover the bounded structural-RTL shell summary and
 collection key families, including auxiliary-assignment scalar-string value
-kinds, assignment-record structural key families, structural port, net, link,
-instance shallow, nested instance interface-port, nested instance
-parameter-override, and nested instance port-binding key families,
+kinds, assignment-record structural key families, structural port, net,
+generated-enable net source/target connectivity, link, instance shallow,
+nested instance interface-port, nested instance parameter-override, and nested
+instance port-binding key families,
 from one place instead of collecting the individual key-family lists separately.
 
 The nested `semantic.forward_ir.intent_hir` summary inside that branch now

@@ -89,21 +89,25 @@ FSM
                 name => 'IDLE_en',
                 width => 1,
                 signed => 0,
-                source => undef,
-                targets => [],
+                source => assignment_source('IDLE_en', 'top_state_enable'),
+                targets => [
+                    assignment_target('IDLE_out_in_en', 'dt_specific_enable'),
+                ],
             },
             {
                 name => 'IDLE_out_in_en',
                 width => 1,
                 signed => 0,
-                source => undef,
-                targets => [],
+                source => assignment_source('IDLE_out_in_en', 'dt_specific_enable'),
+                targets => [
+                    assignment_target('out_in_en', 'lhs_level_enable'),
+                ],
             },
             {
                 name => 'out_in_en',
                 width => 1,
                 signed => 0,
-                source => undef,
+                source => assignment_source('out_in_en', 'lhs_level_enable'),
                 targets => [],
             },
         ],
@@ -157,6 +161,28 @@ FSM
 };
 
 done_testing();
+
+sub assignment_source {
+    my ($assignment_lhs, $role) = @_;
+    return {
+        kind => 'assignment_record_driver',
+        assignment_lhs => $assignment_lhs,
+        assignment_kind => 'continuous_assign',
+        family => 'generated_enable',
+        role => $role,
+    };
+}
+
+sub assignment_target {
+    my ($assignment_lhs, $role) = @_;
+    return {
+        kind => 'assignment_record_rhs_dependency',
+        assignment_lhs => $assignment_lhs,
+        assignment_kind => 'continuous_assign',
+        family => 'generated_enable',
+        role => $role,
+    };
+}
 
 sub write_fsm {
     my ($filename, $content) = @_;

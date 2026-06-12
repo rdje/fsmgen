@@ -94,10 +94,13 @@ FSM
             name => 'idle_en',
             width => 1,
             signed => 0,
-            source => undef,
-            targets => [],
+            source => assignment_source('idle_en', 'top_state_enable'),
+            targets => [
+                assignment_target('idle_data_out_payload_en', 'dt_specific_enable'),
+                assignment_target('idle_ready_1_en', 'dt_specific_enable'),
+            ],
         },
-        'direct structural_rtl_ir records the one-bit top-level state enable wire',
+        'direct structural_rtl_ir records the one-bit top-level state enable wire connectivity',
     );
     is_deeply(
         $nets_by_name{data_out_q},
@@ -284,10 +287,13 @@ FSM
             name => 'idle_en',
             width => 1,
             signed => 0,
-            source => undef,
-            targets => [],
+            source => assignment_source('idle_en', 'top_state_enable'),
+            targets => [
+                assignment_target('idle_out_in_en', 'dt_specific_enable'),
+                assignment_target('idle_next_state_run_en', 'dt_specific_enable'),
+            ],
         },
-        'direct structural_rtl_ir records the idle state enable wire',
+        'direct structural_rtl_ir records the idle state enable wire connectivity',
     );
     is_deeply(
         $nets_by_name{run_en},
@@ -295,10 +301,12 @@ FSM
             name => 'run_en',
             width => 1,
             signed => 0,
-            source => undef,
-            targets => [],
+            source => assignment_source('run_en', 'top_state_enable'),
+            targets => [
+                assignment_target('run_flag_1_en', 'dt_specific_enable'),
+            ],
         },
-        'direct structural_rtl_ir records the run state enable wire',
+        'direct structural_rtl_ir records the run state enable wire connectivity',
     );
     is_deeply(
         $nets_by_name{FLAG},
@@ -436,10 +444,12 @@ FSM
             name => 'idle_en',
             width => 1,
             signed => 0,
-            source => undef,
-            targets => [],
+            source => assignment_source('idle_en', 'top_state_enable'),
+            targets => [
+                assignment_target('idle_out1_1_en', 'dt_specific_enable'),
+            ],
         },
-        'direct structural_rtl_ir records the guarded regular-state top-level enable wire',
+        'direct structural_rtl_ir records the guarded regular-state top-level enable wire connectivity',
     );
     is_deeply(
         $nets_by_name{watch_en},
@@ -447,10 +457,12 @@ FSM
             name => 'watch_en',
             width => 1,
             signed => 0,
-            source => undef,
-            targets => [],
+            source => assignment_source('watch_en', 'standalone_dt_enable'),
+            targets => [
+                assignment_target('watch_watch_1_en', 'dt_specific_enable'),
+            ],
         },
-        'direct structural_rtl_ir records the standalone-DT top-level enable wire',
+        'direct structural_rtl_ir records the standalone-DT top-level enable wire connectivity',
     );
     is_deeply(
         $nets_by_name{idle_out1_1_en},
@@ -458,10 +470,12 @@ FSM
             name => 'idle_out1_1_en',
             width => 1,
             signed => 0,
-            source => undef,
-            targets => [],
+            source => assignment_source('idle_out1_1_en', 'dt_specific_enable'),
+            targets => [
+                assignment_target('out1_1_en', 'lhs_level_enable'),
+            ],
         },
-        'direct structural_rtl_ir records the regular-state DT-specific WEN/EN wire',
+        'direct structural_rtl_ir records the regular-state DT-specific WEN/EN wire connectivity',
     );
     is_deeply(
         $nets_by_name{out1_1_en},
@@ -469,10 +483,10 @@ FSM
             name => 'out1_1_en',
             width => 1,
             signed => 0,
-            source => undef,
+            source => assignment_source('out1_1_en', 'lhs_level_enable'),
             targets => [],
         },
-        'direct structural_rtl_ir records the regular-state LHS-level WEN/EN wire',
+        'direct structural_rtl_ir records the regular-state LHS-level WEN/EN wire connectivity',
     );
     is_deeply(
         $nets_by_name{watch_watch_1_en},
@@ -480,10 +494,12 @@ FSM
             name => 'watch_watch_1_en',
             width => 1,
             signed => 0,
-            source => undef,
-            targets => [],
+            source => assignment_source('watch_watch_1_en', 'dt_specific_enable'),
+            targets => [
+                assignment_target('watch_1_en', 'lhs_level_enable'),
+            ],
         },
-        'direct structural_rtl_ir records the standalone-DT DT-specific WEN/EN wire',
+        'direct structural_rtl_ir records the standalone-DT DT-specific WEN/EN wire connectivity',
     );
     is_deeply(
         $nets_by_name{watch_1_en},
@@ -491,10 +507,10 @@ FSM
             name => 'watch_1_en',
             width => 1,
             signed => 0,
-            source => undef,
+            source => assignment_source('watch_1_en', 'lhs_level_enable'),
             targets => [],
         },
-        'direct structural_rtl_ir records the standalone-DT LHS-level WEN/EN wire',
+        'direct structural_rtl_ir records the standalone-DT LHS-level WEN/EN wire connectivity',
     );
     like($result->{hdl_code}, qr/\bassign\s+idle_en\s+=\s+\(current_state\s+==\s+IDLE\)\s+\|\s+EXTRA;/, 'generated HDL emits the guarded state enable wire assignment');
     like($result->{hdl_code}, qr/\bassign\s+watch_en\s+=\s+A;/, 'generated HDL emits the standalone-DT enable wire assignment');
@@ -575,6 +591,28 @@ sub record_by_lhs {
             && (($_->{lhs}{name} // '') eq $lhs)
     } @{$structural->{assignment_records} || []};
     return $record;
+}
+
+sub assignment_source {
+    my ($assignment_lhs, $role) = @_;
+    return {
+        kind => 'assignment_record_driver',
+        assignment_lhs => $assignment_lhs,
+        assignment_kind => 'continuous_assign',
+        family => 'generated_enable',
+        role => $role,
+    };
+}
+
+sub assignment_target {
+    my ($assignment_lhs, $role) = @_;
+    return {
+        kind => 'assignment_record_rhs_dependency',
+        assignment_lhs => $assignment_lhs,
+        assignment_kind => 'continuous_assign',
+        family => 'generated_enable',
+        role => $role,
+    };
 }
 
 sub expected_ports_from_module_info {

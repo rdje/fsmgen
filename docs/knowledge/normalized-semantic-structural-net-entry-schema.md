@@ -22,12 +22,16 @@ with declaration-only internal storage/helper nets projected from the backend
 internal declaration plan plus generated enable wires projected from the
 already-prepared direct backend enable registries and assignment analysis.
 Those direct entries preserve width, signedness, state-model, and declared-type
-metadata where available, but their `source` remains null and `targets`
-remains empty. Direct generated enable assignments live under
-`assignment_records[]`, and the scalar rendered-line mirror remains under
-`auxiliary_assignments[]`. Direct instances, links, net source/target
-connectivity, and HDL rerouting through `StructuralRTLIR` remain outside this
-net entry projection.
+metadata where available. Generated-enable net entries can also carry a
+structured `source` object when an `assignment_records[]` entry drives that
+net, plus structured `targets[]` entries when another generated-enable
+assignment record consumes that direct net in its RHS AST. Direct generated
+enable assignments live under `assignment_records[]`, and the scalar
+rendered-line mirror remains under `auxiliary_assignments[]`. Direct port
+dependency connectivity, output-drive/always-block consumers, instances,
+links, and HDL rerouting through `StructuralRTLIR` remain outside this net
+entry projection.
 
-Payload/report contracts and the capability manifest inherit the net key list
-through the normalized semantic contract helper chain.
+Payload/report contracts and the capability manifest inherit the net,
+net-source, and net-target key lists through the normalized semantic contract
+helper chain.

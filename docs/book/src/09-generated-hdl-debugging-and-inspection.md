@@ -306,9 +306,13 @@ enable continuous-assignment records with structured `lhs`, `rhs`, rendered
 SystemVerilog text, and provenance. The `rhs` entry carries a normalized
 expression AST when the direct backend already has one. The older
 `structural_rtl_ir.auxiliary_assignments[]` field remains as the scalar-string
-compatibility mirror for those rendered assignment lines. Direct net
-source/target connectivity and HDL rerouting through `StructuralRTLIR` remain
-outside that direct structural projection.
+compatibility mirror for those rendered assignment lines. Generated-enable net
+entries also carry structured `source` objects for assignment-record drivers
+and structured `targets[]` entries when another generated-enable assignment
+record consumes that direct net on its RHS. Direct port dependency
+connectivity, output-drive/always-block consumers, instances/links, and HDL
+rerouting through `StructuralRTLIR` remain outside that direct structural
+projection.
 
 `module_info` is a compatibility/result surface. It mirrors useful forward-IR,
 analysis, and planning facts for existing callers, but it is not a second

@@ -26,6 +26,8 @@ our @EXPORT_OK = qw(
     normalized_semantic_structural_rtl_ir_instance_port_binding_typed_extension_keys
     normalized_semantic_structural_rtl_ir_link_entry_keys
     normalized_semantic_structural_rtl_ir_net_entry_keys
+    normalized_semantic_structural_rtl_ir_net_source_entry_keys
+    normalized_semantic_structural_rtl_ir_net_target_entry_keys
     normalized_semantic_structural_rtl_ir_presence_key_family_map
     normalized_semantic_structural_rtl_ir_presence_keys
     normalized_semantic_structural_rtl_ir_port_composition_extension_keys
@@ -73,6 +75,8 @@ sub build_normalized_semantic_structural_rtl_ir_contract {
         port_composition_extension_keys =>
             normalized_semantic_structural_rtl_ir_port_composition_extension_keys(),
         net_entry_keys => normalized_semantic_structural_rtl_ir_net_entry_keys(),
+        net_source_entry_keys => normalized_semantic_structural_rtl_ir_net_source_entry_keys(),
+        net_target_entry_keys => normalized_semantic_structural_rtl_ir_net_target_entry_keys(),
         declared_link_entry_keys =>
             normalized_semantic_structural_rtl_ir_declared_link_entry_keys(),
         resolved_link_entry_keys =>
@@ -97,7 +101,7 @@ sub build_normalized_semantic_structural_rtl_ir_contract {
             'The bounded public promise covers the current structural-RTL summary shared by direct roots and composition tops.',
             'The port entry key families describe the current `ports[]` entry schema shared by direct roots and composition tops.',
             'The net entry key family describes the current `nets[]` entry schema emitted by composition tops and by direct roots for declaration-only storage/helper nets plus generated enable wires projected from already-prepared direct backend state.',
-            'Direct-root structural nets claim only declaration-only storage/helper entries and generated enable-wire entries in this bounded slice; those direct entries use a null source and an empty targets array.',
+            'The net source/target entry key families describe structured generated-enable assignment-record connectivity on direct-root nets where the selected source or target is known from `assignment_records[]`; other direct entries keep a null source and empty targets array.',
             'The declared/resolved link entry key families describe the current `declared_links[]` and `resolved_links[]` entry schema emitted by composition tops.',
             'The instance entry key family describes the current shallow `instances[]` entry schema emitted by composition tops without freezing nested instance binding arrays.',
             'The instance interface-port entry key family describes the current nested `instances[].interface_ports[]` entry schema emitted by composition tops.',
@@ -228,6 +232,14 @@ sub normalized_semantic_structural_rtl_ir_net_entry_keys {
     ];
 }
 
+sub normalized_semantic_structural_rtl_ir_net_source_entry_keys {
+    return [qw(assignment_kind assignment_lhs family kind role)];
+}
+
+sub normalized_semantic_structural_rtl_ir_net_target_entry_keys {
+    return [qw(assignment_kind assignment_lhs family kind role)];
+}
+
 sub normalized_semantic_structural_rtl_ir_link_entry_keys {
     return [
         qw(
@@ -303,6 +315,8 @@ sub normalized_semantic_structural_rtl_ir_presence_key_family_map {
         port_composition_extension_keys =>
             normalized_semantic_structural_rtl_ir_port_composition_extension_keys(),
         net_entry_keys => normalized_semantic_structural_rtl_ir_net_entry_keys(),
+        net_source_entry_keys => normalized_semantic_structural_rtl_ir_net_source_entry_keys(),
+        net_target_entry_keys => normalized_semantic_structural_rtl_ir_net_target_entry_keys(),
         declared_link_entry_keys =>
             normalized_semantic_structural_rtl_ir_declared_link_entry_keys(),
         resolved_link_entry_keys =>

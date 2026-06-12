@@ -153,6 +153,8 @@ use FSM::Support::NormalizedSemanticReportContract qw(
     normalized_semantic_forward_ir_structural_rtl_ir_instance_port_binding_entry_keys
     normalized_semantic_forward_ir_structural_rtl_ir_instance_port_binding_typed_extension_keys
     normalized_semantic_forward_ir_structural_rtl_ir_net_entry_keys
+    normalized_semantic_forward_ir_structural_rtl_ir_net_source_entry_keys
+    normalized_semantic_forward_ir_structural_rtl_ir_net_target_entry_keys
     normalized_semantic_forward_ir_structural_rtl_ir_port_composition_extension_keys
     normalized_semantic_forward_ir_structural_rtl_ir_port_entry_keys
     normalized_semantic_forward_ir_structural_rtl_ir_resolved_link_entry_keys
@@ -265,6 +267,8 @@ use FSM::Support::NormalizedSemanticPayloadContract qw(
     normalized_semantic_payload_forward_ir_structural_rtl_ir_instance_port_binding_entry_keys
     normalized_semantic_payload_forward_ir_structural_rtl_ir_instance_port_binding_typed_extension_keys
     normalized_semantic_payload_forward_ir_structural_rtl_ir_net_entry_keys
+    normalized_semantic_payload_forward_ir_structural_rtl_ir_net_source_entry_keys
+    normalized_semantic_payload_forward_ir_structural_rtl_ir_net_target_entry_keys
     normalized_semantic_payload_forward_ir_structural_rtl_ir_port_composition_extension_keys
     normalized_semantic_payload_forward_ir_structural_rtl_ir_port_entry_keys
     normalized_semantic_payload_forward_ir_structural_rtl_ir_resolved_link_entry_keys
@@ -1048,6 +1052,16 @@ subtest 'contract exposes the bounded normalized semantic surface' => sub {
         'contract publishes the bounded forward-ir structural-rtl-ir net entry key list',
     );
     is_deeply(
+        $contract->{success_forward_ir_structural_rtl_ir_net_source_entry_keys},
+        normalized_semantic_forward_ir_structural_rtl_ir_net_source_entry_keys(),
+        'contract publishes the bounded forward-ir structural-rtl-ir net source entry key list',
+    );
+    is_deeply(
+        $contract->{success_forward_ir_structural_rtl_ir_net_target_entry_keys},
+        normalized_semantic_forward_ir_structural_rtl_ir_net_target_entry_keys(),
+        'contract publishes the bounded forward-ir structural-rtl-ir net target entry key list',
+    );
+    is_deeply(
         $contract->{success_forward_ir_structural_rtl_ir_declared_link_entry_keys},
         normalized_semantic_forward_ir_structural_rtl_ir_declared_link_entry_keys(),
         'contract publishes the bounded forward-ir structural-rtl-ir declared-link entry key list',
@@ -1252,6 +1266,16 @@ subtest 'contract exposes the bounded normalized semantic surface' => sub {
         $contract->{presence_key_family_map}{success_forward_ir_structural_rtl_ir_net_entry_keys},
         normalized_semantic_forward_ir_structural_rtl_ir_net_entry_keys(),
         'report presence family map publishes structural-rtl-ir net entry keys',
+    );
+    is_deeply(
+        $contract->{presence_key_family_map}{success_forward_ir_structural_rtl_ir_net_source_entry_keys},
+        normalized_semantic_forward_ir_structural_rtl_ir_net_source_entry_keys(),
+        'report presence family map publishes structural-rtl-ir net source entry keys',
+    );
+    is_deeply(
+        $contract->{presence_key_family_map}{success_forward_ir_structural_rtl_ir_net_target_entry_keys},
+        normalized_semantic_forward_ir_structural_rtl_ir_net_target_entry_keys(),
+        'report presence family map publishes structural-rtl-ir net target entry keys',
     );
     is_deeply(
         $contract->{presence_key_family_map}{success_forward_ir_structural_rtl_ir_declared_link_entry_keys},
@@ -1468,6 +1492,16 @@ subtest 'contract exposes the bounded normalized semantic surface' => sub {
         normalized_semantic_payload_forward_ir_structural_rtl_ir_net_entry_keys(),
         normalized_semantic_forward_ir_structural_rtl_ir_net_entry_keys(),
         'semantic payload forward-ir structural-rtl-ir net entry keys map to the nested structural-rtl-ir owner',
+    );
+    is_deeply(
+        normalized_semantic_payload_forward_ir_structural_rtl_ir_net_source_entry_keys(),
+        normalized_semantic_forward_ir_structural_rtl_ir_net_source_entry_keys(),
+        'semantic payload forward-ir structural-rtl-ir net source entry keys map to the nested structural-rtl-ir owner',
+    );
+    is_deeply(
+        normalized_semantic_payload_forward_ir_structural_rtl_ir_net_target_entry_keys(),
+        normalized_semantic_forward_ir_structural_rtl_ir_net_target_entry_keys(),
+        'semantic payload forward-ir structural-rtl-ir net target entry keys map to the nested structural-rtl-ir owner',
     );
     is_deeply(
         normalized_semantic_payload_forward_ir_structural_rtl_ir_declared_link_entry_keys(),
@@ -2271,6 +2305,24 @@ subtest 'successful direct semantic JSON conforms to the bounded contract' => su
     ok(
         ref($direct_assignment_record->{rhs}{ast}) eq 'HASH',
         'direct success structural-rtl-ir assignment record rhs carries a structured AST object',
+    );
+    my ($direct_source_net) = grep {
+        ref($_) eq 'HASH' && ref($_->{source}) eq 'HASH'
+    } @{$direct_structural->{nets} || []};
+    ok($direct_source_net, 'direct success structural-rtl-ir includes at least one net with structured source connectivity');
+    assert_keys_present(
+        $direct_source_net->{source},
+        normalized_semantic_forward_ir_structural_rtl_ir_net_source_entry_keys(),
+        'direct success structural-rtl-ir net source keeps bounded keys',
+    );
+    my ($direct_target_net) = grep {
+        ref($_) eq 'HASH' && ref($_->{targets}) eq 'ARRAY' && @{$_->{targets}}
+    } @{$direct_structural->{nets} || []};
+    ok($direct_target_net, 'direct success structural-rtl-ir includes at least one net with structured target connectivity');
+    assert_keys_present(
+        $direct_target_net->{targets}[0],
+        normalized_semantic_forward_ir_structural_rtl_ir_net_target_entry_keys(),
+        'direct success structural-rtl-ir net target keeps bounded keys',
     );
     my $direct_port = $decoded->{semantic}{forward_ir}{structural_rtl_ir}{ports}[0];
     ok($direct_port, 'direct success structural-rtl-ir includes at least one port entry');

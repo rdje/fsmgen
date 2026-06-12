@@ -138,6 +138,8 @@ use FSM::Support::NormalizedSemanticPayloadContract qw(
     normalized_semantic_payload_forward_ir_structural_rtl_ir_instance_port_binding_entry_keys
     normalized_semantic_payload_forward_ir_structural_rtl_ir_instance_port_binding_typed_extension_keys
     normalized_semantic_payload_forward_ir_structural_rtl_ir_net_entry_keys
+    normalized_semantic_payload_forward_ir_structural_rtl_ir_net_source_entry_keys
+    normalized_semantic_payload_forward_ir_structural_rtl_ir_net_target_entry_keys
     normalized_semantic_payload_forward_ir_structural_rtl_ir_port_composition_extension_keys
     normalized_semantic_payload_forward_ir_structural_rtl_ir_port_entry_keys
     normalized_semantic_payload_forward_ir_structural_rtl_ir_resolved_link_entry_keys
@@ -294,6 +296,8 @@ our @EXPORT_OK = qw(
     normalized_semantic_forward_ir_structural_rtl_ir_instance_port_binding_entry_keys
     normalized_semantic_forward_ir_structural_rtl_ir_instance_port_binding_typed_extension_keys
     normalized_semantic_forward_ir_structural_rtl_ir_net_entry_keys
+    normalized_semantic_forward_ir_structural_rtl_ir_net_source_entry_keys
+    normalized_semantic_forward_ir_structural_rtl_ir_net_target_entry_keys
     normalized_semantic_forward_ir_structural_rtl_ir_port_composition_extension_keys
     normalized_semantic_forward_ir_structural_rtl_ir_port_entry_keys
     normalized_semantic_forward_ir_structural_rtl_ir_resolved_link_entry_keys
@@ -531,6 +535,10 @@ sub build_normalized_semantic_report_contract {
             normalized_semantic_forward_ir_structural_rtl_ir_assignment_record_provenance_entry_keys(),
         success_forward_ir_structural_rtl_ir_net_entry_keys =>
             normalized_semantic_forward_ir_structural_rtl_ir_net_entry_keys(),
+        success_forward_ir_structural_rtl_ir_net_source_entry_keys =>
+            normalized_semantic_forward_ir_structural_rtl_ir_net_source_entry_keys(),
+        success_forward_ir_structural_rtl_ir_net_target_entry_keys =>
+            normalized_semantic_forward_ir_structural_rtl_ir_net_target_entry_keys(),
         success_forward_ir_structural_rtl_ir_declared_link_entry_keys =>
             normalized_semantic_forward_ir_structural_rtl_ir_declared_link_entry_keys(),
         success_forward_ir_structural_rtl_ir_resolved_link_entry_keys =>
@@ -651,7 +659,7 @@ sub build_normalized_semantic_report_contract {
             'The selector-conflict target, rhs-enable-family, and assertion key families document the current nested `semantic.forward_ir.lowered_rtl_ir.selector_conflict_targets` entry schemas without freezing unrelated lowered-RTL payloads.',
             'The standalone-DT multi-drive target and assertion key families document the current nested `semantic.forward_ir.lowered_rtl_ir.standalone_dt_multi_drive_targets` entry schemas without freezing unrelated lowered-RTL payloads.',
             'The composition shared-datapath candidate key families document the current nested `semantic.forward_ir.lowered_rtl_ir.composition_shared_datapath_candidates` entry schemas, including contributor drive-intent projections and their rhs-enable-family entries, without freezing unrelated lowered-RTL payloads.',
-            'The structural auxiliary-assignment value-kind, port, net, declared/resolved link, instance shallow, nested instance interface-port, nested instance parameter-override, and nested instance port-binding entry key families document the current nested `semantic.forward_ir.structural_rtl_ir.auxiliary_assignments`, `semantic.forward_ir.structural_rtl_ir.ports`, `semantic.forward_ir.structural_rtl_ir.nets`, `semantic.forward_ir.structural_rtl_ir.declared_links`, `semantic.forward_ir.structural_rtl_ir.resolved_links`, `semantic.forward_ir.structural_rtl_ir.instances`, `semantic.forward_ir.structural_rtl_ir.instances[].interface_ports`, `semantic.forward_ir.structural_rtl_ir.instances[].parameter_overrides`, and `semantic.forward_ir.structural_rtl_ir.instances[].port_bindings` entry schemas without freezing unrelated structural-RTL payloads.',
+            'The structural auxiliary-assignment value-kind, assignment-record, port, net, generated-enable net source/target, declared/resolved link, instance shallow, nested instance interface-port, nested instance parameter-override, and nested instance port-binding entry key families document the current nested `semantic.forward_ir.structural_rtl_ir.auxiliary_assignments`, `semantic.forward_ir.structural_rtl_ir.assignment_records`, `semantic.forward_ir.structural_rtl_ir.ports`, `semantic.forward_ir.structural_rtl_ir.nets`, `semantic.forward_ir.structural_rtl_ir.declared_links`, `semantic.forward_ir.structural_rtl_ir.resolved_links`, `semantic.forward_ir.structural_rtl_ir.instances`, `semantic.forward_ir.structural_rtl_ir.instances[].interface_ports`, `semantic.forward_ir.structural_rtl_ir.instances[].parameter_overrides`, and `semantic.forward_ir.structural_rtl_ir.instances[].port_bindings` entry schemas without freezing unrelated structural-RTL payloads.',
             'The composition child and generated-child entry key families document the current nested `semantic.composition.children` and `semantic.composition.generated_children` shallow entry schemas; `semantic.composition.children[].parameter_overrides[]` and `semantic.composition.generated_children[].parameter_overrides[]` delegate to the bounded structural instance parameter-override schema owner.',
             'The composition standalone-DT child entry key families document the current nested `semantic.composition.standalone_dt_children` shallow entry schemas, enable-family metadata, and nested standalone-DT multi-drive target metadata without freezing delegated child IR internals or duplicating the lowered-RTL assertion owner.',
             'The composition shared-datapath alias key families document the current nested `semantic.composition.shared_datapath_candidates` entries by reusing the bounded lowered-RTL shared-datapath candidate schema owner.',
@@ -838,6 +846,10 @@ sub normalized_semantic_presence_key_family_map {
             normalized_semantic_forward_ir_structural_rtl_ir_assignment_record_provenance_entry_keys(),
         success_forward_ir_structural_rtl_ir_net_entry_keys =>
             normalized_semantic_forward_ir_structural_rtl_ir_net_entry_keys(),
+        success_forward_ir_structural_rtl_ir_net_source_entry_keys =>
+            normalized_semantic_forward_ir_structural_rtl_ir_net_source_entry_keys(),
+        success_forward_ir_structural_rtl_ir_net_target_entry_keys =>
+            normalized_semantic_forward_ir_structural_rtl_ir_net_target_entry_keys(),
         success_forward_ir_structural_rtl_ir_declared_link_entry_keys =>
             normalized_semantic_forward_ir_structural_rtl_ir_declared_link_entry_keys(),
         success_forward_ir_structural_rtl_ir_resolved_link_entry_keys =>
@@ -1215,6 +1227,14 @@ sub normalized_semantic_forward_ir_structural_rtl_ir_port_composition_extension_
 
 sub normalized_semantic_forward_ir_structural_rtl_ir_net_entry_keys {
     return normalized_semantic_payload_forward_ir_structural_rtl_ir_net_entry_keys();
+}
+
+sub normalized_semantic_forward_ir_structural_rtl_ir_net_source_entry_keys {
+    return normalized_semantic_payload_forward_ir_structural_rtl_ir_net_source_entry_keys();
+}
+
+sub normalized_semantic_forward_ir_structural_rtl_ir_net_target_entry_keys {
+    return normalized_semantic_payload_forward_ir_structural_rtl_ir_net_target_entry_keys();
 }
 
 sub normalized_semantic_forward_ir_structural_rtl_ir_declared_link_entry_keys {

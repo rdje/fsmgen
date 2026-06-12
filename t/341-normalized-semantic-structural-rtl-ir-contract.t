@@ -28,6 +28,8 @@ use FSM::Support::NormalizedSemanticStructuralRTLIRContract qw(
     normalized_semantic_structural_rtl_ir_instance_port_binding_typed_extension_keys
     normalized_semantic_structural_rtl_ir_link_entry_keys
     normalized_semantic_structural_rtl_ir_net_entry_keys
+    normalized_semantic_structural_rtl_ir_net_source_entry_keys
+    normalized_semantic_structural_rtl_ir_net_target_entry_keys
     normalized_semantic_structural_rtl_ir_presence_key_family_map
     normalized_semantic_structural_rtl_ir_presence_keys
     normalized_semantic_structural_rtl_ir_port_composition_extension_keys
@@ -153,6 +155,26 @@ subtest 'contract exposes the bounded normalized semantic structural-rtl-ir obje
         'structural-rtl-ir net entry keys stay exact and ordered',
     );
     is_deeply(
+        $contract->{net_source_entry_keys},
+        normalized_semantic_structural_rtl_ir_net_source_entry_keys(),
+        'contract publishes the bounded structural-rtl-ir net source entry key family',
+    );
+    is_deeply(
+        normalized_semantic_structural_rtl_ir_net_source_entry_keys(),
+        [qw(assignment_kind assignment_lhs family kind role)],
+        'structural-rtl-ir net source entry keys stay exact and ordered',
+    );
+    is_deeply(
+        $contract->{net_target_entry_keys},
+        normalized_semantic_structural_rtl_ir_net_target_entry_keys(),
+        'contract publishes the bounded structural-rtl-ir net target entry key family',
+    );
+    is_deeply(
+        normalized_semantic_structural_rtl_ir_net_target_entry_keys(),
+        [qw(assignment_kind assignment_lhs family kind role)],
+        'structural-rtl-ir net target entry keys stay exact and ordered',
+    );
+    is_deeply(
         normalized_semantic_structural_rtl_ir_link_entry_keys(),
         [qw(origin_kind raw_token source target)],
         'structural-rtl-ir shared link entry keys stay exact and ordered',
@@ -266,6 +288,16 @@ subtest 'contract exposes the bounded normalized semantic structural-rtl-ir obje
         $contract->{presence_key_family_map}{net_entry_keys},
         normalized_semantic_structural_rtl_ir_net_entry_keys(),
         'grouped structural-rtl-ir family map publishes net entry keys',
+    );
+    is_deeply(
+        $contract->{presence_key_family_map}{net_source_entry_keys},
+        normalized_semantic_structural_rtl_ir_net_source_entry_keys(),
+        'grouped structural-rtl-ir family map publishes net source entry keys',
+    );
+    is_deeply(
+        $contract->{presence_key_family_map}{net_target_entry_keys},
+        normalized_semantic_structural_rtl_ir_net_target_entry_keys(),
+        'grouped structural-rtl-ir family map publishes net target entry keys',
     );
     is_deeply(
         $contract->{presence_key_family_map}{declared_link_entry_keys},

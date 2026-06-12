@@ -105,6 +105,8 @@ use FSM::Support::NormalizedSemanticForwardIRContract qw(
     normalized_semantic_forward_ir_structural_rtl_ir_instance_port_binding_entry_keys
     normalized_semantic_forward_ir_structural_rtl_ir_instance_port_binding_typed_extension_keys
     normalized_semantic_forward_ir_structural_rtl_ir_net_entry_keys
+    normalized_semantic_forward_ir_structural_rtl_ir_net_source_entry_keys
+    normalized_semantic_forward_ir_structural_rtl_ir_net_target_entry_keys
     normalized_semantic_forward_ir_structural_rtl_ir_port_composition_extension_keys
     normalized_semantic_forward_ir_structural_rtl_ir_port_entry_keys
     normalized_semantic_forward_ir_structural_rtl_ir_presence_keys
@@ -226,6 +228,8 @@ our @EXPORT_OK = qw(
     normalized_semantic_payload_forward_ir_structural_rtl_ir_instance_port_binding_entry_keys
     normalized_semantic_payload_forward_ir_structural_rtl_ir_instance_port_binding_typed_extension_keys
     normalized_semantic_payload_forward_ir_structural_rtl_ir_net_entry_keys
+    normalized_semantic_payload_forward_ir_structural_rtl_ir_net_source_entry_keys
+    normalized_semantic_payload_forward_ir_structural_rtl_ir_net_target_entry_keys
     normalized_semantic_payload_forward_ir_structural_rtl_ir_port_composition_extension_keys
     normalized_semantic_payload_forward_ir_structural_rtl_ir_port_entry_keys
     normalized_semantic_payload_forward_ir_structural_rtl_ir_resolved_link_entry_keys
@@ -468,6 +472,10 @@ sub build_normalized_semantic_payload_contract {
             normalized_semantic_payload_forward_ir_structural_rtl_ir_assignment_record_provenance_entry_keys(),
         forward_ir_structural_rtl_ir_net_entry_keys =>
             normalized_semantic_payload_forward_ir_structural_rtl_ir_net_entry_keys(),
+        forward_ir_structural_rtl_ir_net_source_entry_keys =>
+            normalized_semantic_payload_forward_ir_structural_rtl_ir_net_source_entry_keys(),
+        forward_ir_structural_rtl_ir_net_target_entry_keys =>
+            normalized_semantic_payload_forward_ir_structural_rtl_ir_net_target_entry_keys(),
         forward_ir_structural_rtl_ir_declared_link_entry_keys =>
             normalized_semantic_payload_forward_ir_structural_rtl_ir_declared_link_entry_keys(),
         forward_ir_structural_rtl_ir_resolved_link_entry_keys =>
@@ -557,7 +565,7 @@ sub build_normalized_semantic_payload_contract {
             'Use the grouped selector-conflict entry key families to inspect `forward_ir.lowered_rtl_ir.selector_conflict_targets` without binding to unrelated lowered-RTL internals.',
             'Use the grouped standalone-DT multi-drive entry key families to inspect `forward_ir.lowered_rtl_ir.standalone_dt_multi_drive_targets` without binding to unrelated lowered-RTL internals.',
             'Use the grouped composition shared-datapath candidate key families to inspect `forward_ir.lowered_rtl_ir.composition_shared_datapath_candidates`, including contributor drive-intent projections and their rhs-enable-family entries, without binding to unrelated lowered-RTL internals.',
-            'Use the grouped structural auxiliary-assignment value-kind, port, net, declared/resolved link, instance shallow, nested instance interface-port, nested instance parameter-override, and nested instance port-binding entry families to inspect `forward_ir.structural_rtl_ir.auxiliary_assignments`, `forward_ir.structural_rtl_ir.ports`, `forward_ir.structural_rtl_ir.nets`, `forward_ir.structural_rtl_ir.declared_links`, `forward_ir.structural_rtl_ir.resolved_links`, `forward_ir.structural_rtl_ir.instances`, `forward_ir.structural_rtl_ir.instances[].interface_ports`, `forward_ir.structural_rtl_ir.instances[].parameter_overrides`, and `forward_ir.structural_rtl_ir.instances[].port_bindings` without binding to unrelated structural-RTL collections.',
+            'Use the grouped structural auxiliary-assignment value-kind, assignment-record, port, net, generated-enable net source/target, declared/resolved link, instance shallow, nested instance interface-port, nested instance parameter-override, and nested instance port-binding entry families to inspect `forward_ir.structural_rtl_ir.auxiliary_assignments`, `forward_ir.structural_rtl_ir.assignment_records`, `forward_ir.structural_rtl_ir.ports`, `forward_ir.structural_rtl_ir.nets`, `forward_ir.structural_rtl_ir.declared_links`, `forward_ir.structural_rtl_ir.resolved_links`, `forward_ir.structural_rtl_ir.instances`, `forward_ir.structural_rtl_ir.instances[].interface_ports`, `forward_ir.structural_rtl_ir.instances[].parameter_overrides`, and `forward_ir.structural_rtl_ir.instances[].port_bindings` without binding to unrelated structural-RTL collections.',
             'Use the grouped composition child and generated-child entry families to inspect `composition.children` and `composition.generated_children` shallow entries while delegating child IR summaries plus child/generated-child parameter-override metadata to their existing owners.',
             'Use the grouped composition standalone-DT child entry families to inspect `composition.standalone_dt_children` shallow entries, their enable-family metadata, and nested standalone-DT multi-drive target metadata while delegating child IR summaries and multi-drive assertions to their existing owners.',
             'Use the grouped composition shared-datapath alias key families to inspect `composition.shared_datapath_candidates` entries through the same bounded lowered-RTL shared-datapath candidate owner.',
@@ -750,6 +758,10 @@ sub normalized_semantic_payload_presence_key_family_map {
             normalized_semantic_payload_forward_ir_structural_rtl_ir_port_composition_extension_keys(),
         forward_ir_structural_rtl_ir_net_entry_keys =>
             normalized_semantic_payload_forward_ir_structural_rtl_ir_net_entry_keys(),
+        forward_ir_structural_rtl_ir_net_source_entry_keys =>
+            normalized_semantic_payload_forward_ir_structural_rtl_ir_net_source_entry_keys(),
+        forward_ir_structural_rtl_ir_net_target_entry_keys =>
+            normalized_semantic_payload_forward_ir_structural_rtl_ir_net_target_entry_keys(),
         forward_ir_structural_rtl_ir_declared_link_entry_keys =>
             normalized_semantic_payload_forward_ir_structural_rtl_ir_declared_link_entry_keys(),
         forward_ir_structural_rtl_ir_resolved_link_entry_keys =>
@@ -1074,6 +1086,14 @@ sub normalized_semantic_payload_forward_ir_structural_rtl_ir_port_composition_ex
 
 sub normalized_semantic_payload_forward_ir_structural_rtl_ir_net_entry_keys {
     return normalized_semantic_forward_ir_structural_rtl_ir_net_entry_keys();
+}
+
+sub normalized_semantic_payload_forward_ir_structural_rtl_ir_net_source_entry_keys {
+    return normalized_semantic_forward_ir_structural_rtl_ir_net_source_entry_keys();
+}
+
+sub normalized_semantic_payload_forward_ir_structural_rtl_ir_net_target_entry_keys {
+    return normalized_semantic_forward_ir_structural_rtl_ir_net_target_entry_keys();
 }
 
 sub normalized_semantic_payload_forward_ir_structural_rtl_ir_declared_link_entry_keys {

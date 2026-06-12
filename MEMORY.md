@@ -10,9 +10,9 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `HEAD` — `R11-DIRECT-STRUCTURAL-NET-CONNECTIVITY.1: select direct net connectivity`.
-- active_work_unit: `R11-DIRECT-STRUCTURAL-NET-CONNECTIVITY.2`; next action is to populate generated-enable assignment-record source/target connectivity on direct `StructuralRTLIR.nets[]` without changing HDL emission.
-- recently_done: `R11-DIRECT-STRUCTURAL-NET-CONNECTIVITY.1`; `R11-DIRECT-STRUCTURAL-ASSIGNMENT-RECORDS.2`; `R11-DIRECT-STRUCTURAL-ASSIGNMENT-RECORDS.1`; `R11-DIRECT-STRUCTURAL-AUX-ASSIGNMENTS.2`; `R11-DIRECT-STRUCTURAL-AUX-ASSIGNMENTS.1`; `R11-DIRECT-STRUCTURAL-WEN-EN-NETS.1`; `NORMALIZED-SEMANTIC-PROTOCOL-BUNDLE-CONTRACT-DRIFT.1`; `R11-DIRECT-BACKEND-COORDINATION-FRONTIER.2`; `R11-DIRECT-BACKEND-COORDINATION-FRONTIER.1`. Older completed slices are in the task tree and git history.
+- latest_commit: `HEAD` — `R11-DIRECT-STRUCTURAL-NET-CONNECTIVITY.2: populate direct net connectivity`.
+- active_work_unit: none; next action is to pick the next roadmap-aligned task-tree-owned PNT slice. The proposed R11 HDL rerouting tree remains tracked under `docs/tasks/R11-DIRECT-STRUCTURAL-HDL-REROUTING.md`.
+- recently_done: `R11-DIRECT-STRUCTURAL-NET-CONNECTIVITY.2`; `R11-DIRECT-STRUCTURAL-NET-CONNECTIVITY.1`; `R11-DIRECT-STRUCTURAL-ASSIGNMENT-RECORDS.2`; `R11-DIRECT-STRUCTURAL-ASSIGNMENT-RECORDS.1`; `R11-DIRECT-STRUCTURAL-AUX-ASSIGNMENTS.2`; `R11-DIRECT-STRUCTURAL-AUX-ASSIGNMENTS.1`; `R11-DIRECT-STRUCTURAL-WEN-EN-NETS.1`; `NORMALIZED-SEMANTIC-PROTOCOL-BUNDLE-CONTRACT-DRIFT.1`; `R11-DIRECT-BACKEND-COORDINATION-FRONTIER.2`. Older completed slices are in the task tree and git history.
 - in_flight_uncommitted: none; unrelated untracked `fx/` intentionally left alone.
 - blockers: none.
 
