@@ -2324,7 +2324,8 @@ behavior before larger ordering/read-response work. Completed implementation
 leaf `.32` ships that report-residue alignment. Completed selector `.33`
 selects `.34` as the AXI same-ID ordering readiness audit. Completed
 readiness audit `.34` selects `.35` as the bounded auto-ID same-ID avoidance
-assertion/report slice. The active leaf is `.35`.
+assertion/report slice. Completed implementation leaf `.35` ships that
+boundary and advances the active leaf to `.36`, the next selector.
 Selected IAL2 slices may include explicit IAL1 or
 IAL0/SystemVerilog prerequisites when those prerequisites are needed for
 clean, reviewable lowering.
@@ -2926,8 +2927,9 @@ with `generated_behavior: true`, `request_id_direction: generated_output`,
 `response_id_direction: generated_input`, `allocator: first_free_pool_order`,
 `transaction_lifetime: single_active`, and `transaction_state[]` entries that
 name generated selected-ID storage, busy storage, allocation rules, release
-rules, and assertion carriers. Its residue is now `same_id_ordering` and
-`response_demux`.
+rules, and assertion carriers. Its residue is now `response_demux`; the later
+same-ID avoidance slice below removed the covered generated auto-ID same-ID
+residue.
 
 The checked-in sample is:
 
@@ -3056,7 +3058,6 @@ response_demux:
       - axi0_w0_w1_write_response_demux_unique_match
   residue:
     - read_response_demux
-    - same_id_ordering
     - read_data_interleaving
     - bursts
 ```
@@ -3065,7 +3066,7 @@ The generated assertion transaction checks that every accepted write response
 matches an active auto-ID write transaction and that no accepted write response
 matches more than one active auto-ID write transaction. The
 `id_response_rule_engine` residue removes `response_demux` for this explicit
-write demux behavior; same-ID ordering remains residue.
+write demux behavior; concrete/per-ID same-ID ordering remains residue there.
 
 Post-demux selector:
 [AXI_IAL2_MANAGER_POST_RESPONSE_DEMUX_RESIDUE_ALIGNMENT_SELECTION](../../AXI_IAL2_MANAGER_POST_RESPONSE_DEMUX_RESIDUE_ALIGNMENT_SELECTION.md)
@@ -3073,16 +3074,17 @@ selects the next narrow slice, `.32`, to align `auto_id_lifecycle.residue`
 with this shipped behavior. That implementation is now shipped:
 [AXI_IAL2_MANAGER_AUTO_ID_RESIDUE_ALIGNMENT_FIRST_SLICE](../../AXI_IAL2_MANAGER_AUTO_ID_RESIDUE_ALIGNMENT_FIRST_SLICE.md)
 documents the report-contract cleanup. Explicit generated write demux now
-reports `auto_id_lifecycle.residue: [same_id_ordering]`, without changing
-generated `.isf`, `.fsm`, or HDL behavior.
+removes `response_demux` from `auto_id_lifecycle.residue`; the later same-ID
+avoidance slice below removes the covered same-ID residue for generated
+auto-ID write demux.
 
 Same-ID ordering readiness selector:
 [AXI_IAL2_MANAGER_SAME_ID_ORDERING_READINESS_SELECTION](../../AXI_IAL2_MANAGER_SAME_ID_ORDERING_READINESS_SELECTION.md)
 selects `.34` as a readiness audit before same-ID ordering implementation or
-prerequisite changes. The selector found `same_id_ordering` is now the common
+prerequisite changes. At selector time, `same_id_ordering` was the common
 remaining ID/auto-ID/write-demux residue after generated write `BID` demux and
-auto-ID residue alignment. The audit must decide whether the first same-ID
-ordering step is static/report classification, generated assertions, allocator
+auto-ID residue alignment. The audit decided whether the first same-ID ordering
+step should be static/report classification, generated assertions, allocator
 constraints, per-ID issue-order queues/scoreboards, or a smaller
 IAL1/IAL0/SystemVerilog prerequisite.
 
@@ -3097,6 +3099,37 @@ active transactions sharing an ID. Authored concrete-ID same-ID ordering,
 per-ID response queues, read `RID` demux, read-data interleaving/reassembly,
 bursts, queued/blocking policy, aliases, full-manager behavior, and VHDL
 remain future exact-owner work.
+
+Same-ID ordering first slice:
+[AXI_IAL2_MANAGER_SAME_ID_ORDERING_FIRST_SLICE](../../AXI_IAL2_MANAGER_SAME_ID_ORDERING_FIRST_SLICE.md)
+ships that bounded generated auto-ID same-ID avoidance boundary. Generated
+auto-ID families now get pairwise active selected-ID assertions, and reports
+add:
+
+```text
+same_id_ordering:
+  mode: auto_id_same_id_avoidance
+  generated_behavior: true
+  strategy: avoid_same_id_concurrency
+  families:
+    - family: write
+      enforcement: allocator_free_id_guard
+      assertion_enforcement: runtime_assertion
+      response_demux_covered: true
+      generated_assertions:
+        - axi0_w0_w1_auto_id_unique_active_id
+  residue:
+    - concrete_id_same_id_ordering
+    - per_id_issue_order_queues
+    - read_response_demux
+    - read_data_interleaving
+    - bursts
+```
+
+For the response-demux sample, `auto_id_lifecycle.residue` is now empty and
+`response_demux.residue` is `[read_response_demux, read_data_interleaving,
+bursts]`. `id_response_rule_engine.residue` still keeps `same_id_ordering`
+for authored concrete-ID same-ID cases and future per-ID queues.
 
 Response-demux behavior readiness audit:
 [AXI_IAL2_MANAGER_WRITE_RESPONSE_DEMUX_BEHAVIOR_READINESS_AUDIT](../../AXI_IAL2_MANAGER_WRITE_RESPONSE_DEMUX_BEHAVIOR_READINESS_AUDIT.md)
@@ -5461,6 +5494,9 @@ same-ID ordering readiness and advanced the frontier to `.34`.
 Completed readiness audit leaf `IAL2-FEATURE-COMPLETENESS-FRONTIER.34`
 selects bounded auto-ID same-ID avoidance assertions/report metadata and
 advances the active frontier to `.35`.
+Completed implementation leaf `IAL2-FEATURE-COMPLETENESS-FRONTIER.35` ships
+bounded auto-ID same-ID avoidance assertions/report metadata and advances the
+active frontier to `.36`.
 Completed implementation leaf
 `ARCHITECTURE-DEBT-FRONTIER.2.1`
 projects direct backend storage/helper declaration-plan entries into

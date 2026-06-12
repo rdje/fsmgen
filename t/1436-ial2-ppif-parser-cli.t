@@ -208,9 +208,12 @@ subtest 'PPIF adapter parses AXI manager auto-ID lifecycle behavior' => sub {
     like($result->{generated_ial1}{text}, qr/\(priority axi0_w0_auto_id_alloc_0 over axi0_w0_auto_id_alloc_1\)/, 'auto-ID lifecycle emits allocation priority edges');
     like($result->{generated_ial1}{text}, qr/\(rule axi0_w0_auto_id_alloc_0\b[\s\S]*\(axi0_awid 0\)\)/, 'auto-ID lifecycle emits allocation rule for pool ID 0');
     like($result->{generated_ial1}{text}, qr/\(rule axi0_w0_auto_id_release\b[\s\S]*\(axi0_w0_auto_id_busy_q 0\)\)/, 'auto-ID lifecycle emits completion release rule');
+    like($result->{generated_ial1}{text}, qr/"axi0 write auto ID active selected IDs are unique"/, 'auto-ID lifecycle emits same-ID avoidance assertion');
     like($result->{generated_ial0}{files}{'axi0_capacity_status.fsm'}, qr/\(\+size[\s\S]*\(axi0_awid 4\)/, 'auto-ID lifecycle scheduled .fsm carries AWID width');
     like($result->{generated_ial0}{files}{'axi0_capacity_status.fsm'}, qr/\(\+assert[\s\S]*axi0 w0 auto ID available/, 'auto-ID lifecycle scheduled .fsm carries runtime assertions');
+    like($result->{generated_ial0}{files}{'axi0_capacity_status.fsm'}, qr/\(\+assert[\s\S]*axi0 write auto ID active selected IDs are unique/, 'auto-ID lifecycle scheduled .fsm carries same-ID avoidance assertions');
     assert_write_auto_id_lifecycle_report($result->{report}{auto_id_lifecycle}, 'adapter report');
+    assert_same_id_ordering_report($result->{report}{same_id_ordering}, 'adapter report', 0);
     is_deeply($result->{report}{id_response_rule_engine}{id_signal_inputs}, [qw(axi0_arid axi0_rid)], 'auto-ID lifecycle keeps response ID inputs tied to concrete checks only');
 };
 
@@ -227,9 +230,11 @@ subtest 'PPIF adapter parses AXI manager write response-demux behavior' => sub {
     unlike($result->{generated_ial1}{text}, qr/\(input axi0_w0_complete\b/, 'response-demux generated IAL1 does not declare generated completion as input');
     like($result->{generated_ial1}{text}, qr/\(output axi0_w0_complete\)/, 'response-demux generated IAL1 declares generated completion output');
     like($result->{generated_ial1}{text}, qr/\(rule axi0_w0_response_demux\b[\s\S]*\(pulse axi0_w0_complete\)\)/, 'response-demux generated IAL1 emits w0 pulse rule');
+    like($result->{generated_ial1}{text}, qr/"axi0 write auto ID active selected IDs are unique"/, 'response-demux generated IAL1 keeps same-ID avoidance assertion');
     like($result->{generated_ial0}{files}{'axi0_capacity_status.fsm'}, qr/\(-axi0_w0_response_demux\b[\s\S]*\(<1 \(axi0_w0_complete> 1\)\)/, 'response-demux generated IAL0 emits w0 completion pulse');
     assert_write_response_demux_report($result->{report}{response_demux}, 'adapter report');
-    is_deeply($result->{report}{auto_id_lifecycle}{residue}, [qw(same_id_ordering)], 'adapter report removes response_demux from auto-ID lifecycle residue');
+    assert_same_id_ordering_report($result->{report}{same_id_ordering}, 'adapter report', 1);
+    is_deeply($result->{report}{auto_id_lifecycle}{residue}, [], 'adapter report removes response_demux and same-ID residue from auto-ID lifecycle residue');
     is_deeply($result->{report}{id_response_rule_engine}{residue}, [qw(same_id_ordering)], 'adapter report removes response_demux from ID/response residue');
 };
 
@@ -525,6 +530,7 @@ subtest 'CLI emits IAL2 report JSON for AXI manager auto-ID lifecycle behavior .
     is($report->{schema}, 'fsmgen.ial2.protocol_intent.axi_manager_capacity_status.v1', 'CLI keeps the capacity/status report schema');
     is($report->{source_object}{intent_name}, 'axi_manager_capacity_status_auto_id_lifecycle', 'auto-ID lifecycle report carries the PPIF top-level intent name');
     assert_write_auto_id_lifecycle_report($report->{auto_id_lifecycle}, 'CLI report');
+    assert_same_id_ordering_report($report->{same_id_ordering}, 'CLI report', 0);
     is_deeply($report->{generated_artifacts}{ial0}{files}, ['axi0_capacity_status.fsm'], 'auto-ID lifecycle behavior keeps the generated .fsm artifact name stable');
     is_deeply($report->{id_response_rule_engine}{id_signal_inputs}, [qw(axi0_arid axi0_rid)], 'CLI report keeps auto-ID response ID signals out until concrete response checks need them');
 };
@@ -540,7 +546,8 @@ subtest 'CLI emits IAL2 report JSON for AXI manager response-demux behavior .ppi
     is($report->{schema}, 'fsmgen.ial2.protocol_intent.axi_manager_capacity_status.v1', 'CLI keeps the capacity/status report schema');
     is($report->{source_object}{intent_name}, 'axi_manager_capacity_status_response_demux', 'response-demux report carries the PPIF top-level intent name');
     assert_write_response_demux_report($report->{response_demux}, 'CLI report');
-    is_deeply($report->{auto_id_lifecycle}{residue}, [qw(same_id_ordering)], 'CLI report removes response_demux from auto-ID lifecycle residue');
+    assert_same_id_ordering_report($report->{same_id_ordering}, 'CLI report', 1);
+    is_deeply($report->{auto_id_lifecycle}{residue}, [], 'CLI report removes response_demux and same-ID residue from auto-ID lifecycle residue');
     is_deeply($report->{id_response_rule_engine}{residue}, [qw(same_id_ordering)], 'CLI report removes response demux from ID/response residue');
     is_deeply($report->{generated_artifacts}{ial0}{files}, ['axi0_capacity_status.fsm'], 'response-demux behavior keeps the generated .fsm artifact name stable');
 };
@@ -1306,8 +1313,8 @@ sub assert_write_auto_id_lifecycle_report {
     is($lifecycle->{max_pool_entries_per_family}, 4, "$owner publishes the bounded pool-entry cap");
     is_deeply(
         $lifecycle->{residue},
-        [qw(same_id_ordering response_demux)],
-        "$owner lists only unshipped ordering/demux behavior as residue",
+        [qw(response_demux)],
+        "$owner lists only unshipped response-demux behavior as auto-ID lifecycle residue",
     );
     is(scalar(@{$lifecycle->{families}}), 1, "$owner publishes one lifecycle family");
     my $write = $lifecycle->{families}[0];
@@ -1353,9 +1360,37 @@ sub assert_write_response_demux_report {
     );
     is_deeply(
         $demux->{residue},
-        [qw(read_response_demux same_id_ordering read_data_interleaving bursts)],
-        "$owner removes generated write BID demux from response-demux residue",
+        [qw(read_response_demux read_data_interleaving bursts)],
+        "$owner removes generated write BID demux and covered same-ID avoidance from response-demux residue",
     );
+}
+
+sub assert_same_id_ordering_report {
+    my ($ordering, $owner, $response_demux_covered) = @_;
+    is($ordering->{mode}, 'auto_id_same_id_avoidance', "$owner marks same-ID avoidance mode");
+    ok($ordering->{generated_behavior}, "$owner marks same-ID ordering generated behavior true");
+    is($ordering->{strategy}, 'avoid_same_id_concurrency', "$owner reports same-ID avoidance strategy");
+    is_deeply(
+        $ordering->{residue},
+        [qw(concrete_id_same_id_ordering per_id_issue_order_queues read_response_demux read_data_interleaving bursts)],
+        "$owner reports broader same-ID ordering residue",
+    );
+    ok(@{$ordering->{source_anchors}}, "$owner carries source anchors into same-ID ordering metadata");
+    is(scalar(@{$ordering->{families}}), 1, "$owner reports one same-ID ordering family");
+    my $write = $ordering->{families}[0];
+    is($write->{family}, 'write', "$owner reports the write same-ID family");
+    is($write->{strategy}, 'avoid_same_id_concurrency', "$owner reports family same-ID avoidance strategy");
+    is($write->{enforcement}, 'allocator_free_id_guard', "$owner reports allocator free-ID enforcement");
+    is($write->{assertion_enforcement}, 'runtime_assertion', "$owner reports runtime assertion enforcement");
+    if ($response_demux_covered) {
+        ok($write->{response_demux_covered}, "$owner reports response-demux coverage");
+    } else {
+        ok(!$write->{response_demux_covered}, "$owner reports response-demux coverage");
+    }
+    is_deeply($write->{auto_transactions}, [qw(w0 w1)], "$owner reports covered auto-ID transactions");
+    is_deeply($write->{selected_id_signals}, [qw(axi0_w0_auto_id_q axi0_w1_auto_id_q)], "$owner reports selected-ID signals");
+    is_deeply($write->{busy_signals}, [qw(axi0_w0_auto_id_busy_q axi0_w1_auto_id_busy_q)], "$owner reports busy signals");
+    is_deeply($write->{generated_assertions}, [qw(axi0_w0_w1_auto_id_unique_active_id)], "$owner reports same-ID avoidance assertion");
 }
 
 sub write_file {

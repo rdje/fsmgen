@@ -18,12 +18,12 @@ selected by `.31`.
 
 When explicit `response_demux.generated_behavior` is true, FSMGen now removes
 `response_demux` from `auto_id_lifecycle.residue`, because generated demux
-completion pulses drive auto-ID release. The checked-in response-demux sample
-now reports:
+completion pulses drive auto-ID release. After the later `.35` same-ID
+avoidance slice, the checked-in response-demux sample now reports:
 
 ```text
 auto_id_lifecycle.residue:
-  - same_id_ordering
+  []
 ```
 
 Samples without generated response-demux behavior keep their existing
@@ -36,3 +36,7 @@ The follow-up selector `IAL2-FEATURE-COMPLETENESS-FRONTIER.33` chose
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.34`, AXI same-ID ordering readiness,
 because `same_id_ordering` is now the shared remaining ID/auto-ID/write-demux
 residue.
+
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.35` then shipped generated auto-ID
+same-ID avoidance assertions/report metadata and removed the covered
+same-ID residue from the generated auto-ID lifecycle and write-demux reports.

@@ -191,6 +191,12 @@ sub _normalize_contract($raw) {
     my $anchors = exists($source->{anchors})
         ? _normalize_source_anchors($source->{anchors})
         : [];
+    my $same_id_ordering = _build_same_id_ordering(
+        manager_name     => $name,
+        source_anchors    => $anchors,
+        auto_id_lifecycle => $auto_id_lifecycle,
+        response_demux    => $response_demux,
+    );
 
     return {
         name              => $name,
@@ -208,6 +214,7 @@ sub _normalize_contract($raw) {
         transactions      => $transactions,
         auto_id_lifecycle => $auto_id_lifecycle,
         response_demux    => $response_demux,
+        same_id_ordering  => $same_id_ordering,
         transaction_event_dispatch => $transaction_event_dispatch,
         id_response_rule_engine => $id_response_rule_engine,
         storage           => \%storage,
@@ -757,6 +764,53 @@ sub _auto_id_lifecycle_family_by_name($auto_id_lifecycle, $family_name) {
     return undef;
 }
 
+sub _build_same_id_ordering(%args) {
+    my $lifecycle = $args{auto_id_lifecycle};
+    return undef unless ref($lifecycle) eq 'HASH' && $lifecycle->{generated_behavior};
+
+    my %response_demux_family = _same_id_response_demux_covered_families($args{response_demux});
+    my @families;
+    for my $family (@{$lifecycle->{families} || []}) {
+        my @states = @{$family->{transaction_state} || []};
+        next unless @states > 1;
+        push @families, {
+            family                  => $family->{family},
+            strategy                => 'avoid_same_id_concurrency',
+            enforcement             => 'allocator_free_id_guard',
+            assertion_enforcement   => 'runtime_assertion',
+            response_demux_covered  => $response_demux_family{$family->{family}} ? 1 : 0,
+            auto_transactions       => _clone_jsonish($family->{auto_transactions}),
+            selected_id_signals     => [map { $_->{selected_id_signal} } @states],
+            busy_signals            => [map { $_->{busy_signal} } @states],
+            generated_assertions    => [
+                map { $_->{name} }
+                _same_id_ordering_assertion_specs_for_family($family, $args{manager_name})
+            ],
+        };
+    }
+
+    return undef unless @families;
+    return {
+        mode               => 'auto_id_same_id_avoidance',
+        generated_behavior => 1,
+        strategy           => 'avoid_same_id_concurrency',
+        source_anchors     => _clone_jsonish($args{source_anchors} || []),
+        families           => \@families,
+        residue            => [
+            'concrete_id_same_id_ordering',
+            'per_id_issue_order_queues',
+            'read_response_demux',
+            'read_data_interleaving',
+            'bursts',
+        ],
+    };
+}
+
+sub _same_id_response_demux_covered_families($response_demux) {
+    return () unless ref($response_demux) eq 'HASH' && $response_demux->{generated_behavior};
+    return (write => 1);
+}
+
 sub _build_transaction_event_dispatch(%args) {
     my $transactions = $args{transactions};
     return undef unless ref($transactions) eq 'ARRAY';
@@ -1094,8 +1148,9 @@ sub _emit_isf($contract) {
     ]);
     my @id_response_assertions = _id_response_assertion_transaction_lines($contract);
     my @response_demux_assertions = _response_demux_assertion_transaction_lines($contract);
+    my @same_id_ordering_assertions = _same_id_ordering_assertion_transaction_lines($contract);
     my @auto_id_assertions = _auto_id_lifecycle_assertion_transaction_lines($contract);
-    my @assertion_transactions = (@id_response_assertions, @response_demux_assertions, @auto_id_assertions);
+    my @assertion_transactions = (@id_response_assertions, @response_demux_assertions, @same_id_ordering_assertions, @auto_id_assertions);
     my @auto_id_priorities = _auto_id_lifecycle_priority_lines($contract);
     my @response_demux_rules = _response_demux_rule_lines($contract);
     my @auto_id_rules = _auto_id_lifecycle_rule_lines($contract);
@@ -1275,6 +1330,52 @@ sub _auto_id_lifecycle_assertion_transaction_lines($contract) {
     }
     push @lines, "  )";
     return @lines;
+}
+
+sub _same_id_ordering_assertion_transaction_lines($contract) {
+    my @assertions = _same_id_ordering_assertion_specs($contract);
+    return () unless @assertions;
+
+    my @lines = ("  (transaction $contract->{name}_same_id_ordering_checks");
+    for my $assertion (@assertions) {
+        push @lines,
+            "    (assert $assertion->{condition} " . _quoted_isf_string($assertion->{message}) . ")";
+    }
+    push @lines, "  )";
+    return @lines;
+}
+
+sub _same_id_ordering_assertion_specs($contract) {
+    my $lifecycle = $contract->{auto_id_lifecycle};
+    return () unless ref($lifecycle) eq 'HASH' && $lifecycle->{generated_behavior};
+
+    my @assertions;
+    for my $family (@{$lifecycle->{families} || []}) {
+        push @assertions, _same_id_ordering_assertion_specs_for_family($family, $contract->{name});
+    }
+    return @assertions;
+}
+
+sub _same_id_ordering_assertion_specs_for_family($family, $manager_name) {
+    my @states = @{$family->{transaction_state} || []};
+    my $name_prefix = defined($manager_name) && length($manager_name) ? "${manager_name}_" : '';
+    my $message_prefix = defined($manager_name) && length($manager_name) ? "$manager_name " : '';
+    my @assertions;
+    for my $left_index (0 .. $#states) {
+        for my $right_index ($left_index + 1 .. $#states) {
+            my $left = $states[$left_index];
+            my $right = $states[$right_index];
+            push @assertions, {
+                name      => "$name_prefix$left->{transaction}_$right->{transaction}_auto_id_unique_active_id",
+                condition => _implies_expr(
+                    _and_expr($left->{busy_signal}, $right->{busy_signal}),
+                    _not_expr(_eq_expr($left->{selected_id_signal}, $right->{selected_id_signal})),
+                ),
+                message   => "$message_prefix$family->{family} auto ID active selected IDs are unique",
+            };
+        }
+    }
+    return @assertions;
 }
 
 sub _auto_id_lifecycle_priority_lines($contract) {
@@ -1620,6 +1721,9 @@ sub _build_report(%args) {
         (defined $contract->{response_demux}
             ? (response_demux => _report_response_demux($contract))
             : ()),
+        (defined $contract->{same_id_ordering}
+            ? (same_id_ordering => _report_same_id_ordering($contract))
+            : ()),
         (defined $contract->{transaction_event_dispatch}
             ? (transaction_event_dispatch => _report_transaction_event_dispatch($contract))
             : ()),
@@ -1699,6 +1803,7 @@ sub _build_report(%args) {
             'auto_id_lifecycle listed families must have at least one auto-ID transaction in that family',
             'auto_id_lifecycle pools are bounded to 1..4 unique values per family and must fit the declared positive ID width',
             'auto_id_lifecycle generates first-free request-ID drive, per-transaction busy/selected-ID state, completion-event release, no-ID assertions, inactive-completion assertions, and same-family request mutual-exclusion assertions',
+            'same_id_ordering for generated auto-ID families is enforced by avoiding same-ID concurrency through allocator free-ID guards plus pairwise active selected-ID assertions',
             'response_demux requires id_families, transactions, and write auto_id_lifecycle metadata',
             'response_demux supports write only in this slice, requires response_event equal to write_complete, and generates bounded write BID demux behavior for explicit opt-in contracts',
             'response_demux transaction_completion must be generated, making transaction completion names generated demux pulse outputs instead of authored completion-event inputs',
@@ -1710,7 +1815,7 @@ sub _build_report(%args) {
             },
             {
                 id     => 'axi_id_ordering_and_response_matching',
-                detail => 'Concrete transaction ID request/response assertions, explicit bounded auto-ID request-ID drive plus completion-event release, and generated write BID response demux are supported; dynamic user-ID arbitration while issuing multiple same-family requests in one cycle, same-ID ordering, different-ID interleaving, read RID response demux behavior, and burst/last-beat tracking remain outside this capacity/status shell.',
+                detail => 'Concrete transaction ID request/response assertions, explicit bounded auto-ID request-ID drive plus completion-event release, generated auto-ID same-ID avoidance, and generated write BID response demux are supported; dynamic user-ID arbitration while issuing multiple same-family requests in one cycle, per-ID same-ID response queues, different-ID interleaving, read RID response demux behavior, and burst/last-beat tracking remain outside this capacity/status shell.',
             },
             {
                 id     => 'profile_aliases_and_full_manager_behavior',
@@ -1735,6 +1840,12 @@ sub _report_auto_id_lifecycle($contract) {
             @{$lifecycle->{residue} || []}
         ];
     }
+    if (ref($contract->{same_id_ordering}) eq 'HASH' && $contract->{same_id_ordering}{generated_behavior}) {
+        $lifecycle->{residue} = [
+            grep { $_ ne 'same_id_ordering' }
+            @{$lifecycle->{residue} || []}
+        ];
+    }
     return $lifecycle;
 }
 
@@ -1749,7 +1860,35 @@ sub _report_response_demux($contract) {
         $demux->{write}{generated_completion_signals} = $artifacts->{completion_signals};
         $demux->{write}{generated_assertions} = $artifacts->{assertions};
     }
+    if (_same_id_ordering_covers_response_demux_family($contract, 'write')) {
+        $demux->{residue} = [
+            grep { $_ ne 'same_id_ordering' }
+            @{$demux->{residue} || []}
+        ];
+    }
     return $demux;
+}
+
+sub _same_id_ordering_covers_response_demux_family($contract, $family_name) {
+    my $ordering = $contract->{same_id_ordering};
+    return 0 unless ref($ordering) eq 'HASH' && $ordering->{generated_behavior};
+    for my $family (@{$ordering->{families} || []}) {
+        return 1 if ($family->{family} // '') eq $family_name && $family->{response_demux_covered};
+    }
+    return 0;
+}
+
+sub _report_same_id_ordering($contract) {
+    my $ordering = _clone_jsonish($contract->{same_id_ordering});
+    $ordering->{generated_behavior} = $contract->{same_id_ordering}{generated_behavior}
+        ? JSON::PP::true
+        : JSON::PP::false;
+    for my $family (@{$ordering->{families} || []}) {
+        $family->{response_demux_covered} = $family->{response_demux_covered}
+            ? JSON::PP::true
+            : JSON::PP::false;
+    }
+    return $ordering;
 }
 
 sub _response_demux_generated_artifacts($contract) {

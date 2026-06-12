@@ -23,8 +23,7 @@ Current report shape for the checked-in response-demux sample:
 ```text
 auto_id_lifecycle:
   generated_behavior: true
-  residue:
-    - same_id_ordering
+  residue: []
 
 id_response_rule_engine:
   residue:
@@ -34,10 +33,13 @@ response_demux:
   generated_behavior: true
   residue:
     - read_response_demux
-    - same_id_ordering
     - read_data_interleaving
     - bursts
 ```
+
+`.32` removed only `response_demux` from `auto_id_lifecycle.residue`. The
+later `.35` same-ID avoidance slice removed the covered generated auto-ID
+same-ID residue shown in the current report shape above.
 
 Samples without generated response-demux behavior keep their existing
 `auto_id_lifecycle.residue` entry for `response_demux`, because their
@@ -58,6 +60,7 @@ Focused generator and PPIF/CLI tests cover the aligned report shape.
 
 ## Residue
 
-Same-ID ordering, read `RID` response demux, read-data interleaving/reassembly,
-bursts, queued/blocking policy, profile aliases, full AXI manager behavior,
-and VHDL backend/reroute behavior remain future exact-owner work.
+Concrete/per-ID same-ID ordering, read `RID` response demux, read-data
+interleaving/reassembly, bursts, queued/blocking policy, profile aliases, full
+AXI manager behavior, and VHDL backend/reroute behavior remain future
+exact-owner work.

@@ -337,6 +337,7 @@ subtest 'auto-ID lifecycle generates bounded request-ID drive behavior' => sub {
     like($isf, qr/\(rule axi0_w0_auto_id_release \(& axi0_w0_complete axi0_w0_auto_id_busy_q\)[\s\S]*\(axi0_w0_auto_id_busy_q 0\)\)/, 'auto-ID lifecycle releases w0 busy state on completion');
     like($isf, qr/"axi0 w0 auto ID available"/, 'auto-ID lifecycle emits no-ID-available runtime assertion');
     like($isf, qr/"axi0 write auto ID requests are mutually exclusive"/, 'auto-ID lifecycle emits same-family request mutual-exclusion assertion');
+    like($isf, qr/"axi0 write auto ID active selected IDs are unique"/, 'auto-ID lifecycle emits same-ID avoidance runtime assertion');
 
     my $fsm = $result->{generated_ial0}{files}{'axi0_capacity_status.fsm'};
     like($fsm, qr/\(\+size[\s\S]*\(axi0_awid 4\)/, 'scheduled .fsm declares AWID width');
@@ -351,8 +352,8 @@ subtest 'auto-ID lifecycle generates bounded request-ID drive behavior' => sub {
     is($lifecycle->{max_pool_entries_per_family}, 4, 'report publishes the bounded pool-entry cap');
     is_deeply(
         $lifecycle->{residue},
-        [qw(same_id_ordering response_demux)],
-        'report removes shipped request-ID drive and release behavior from residue',
+        [qw(response_demux)],
+        'report removes shipped request-ID drive, release, and same-ID avoidance behavior from residue',
     );
     is(scalar(@{$lifecycle->{families}}), 1, 'report publishes only the listed lifecycle family');
     my $write = $lifecycle->{families}[0];
@@ -383,6 +384,8 @@ subtest 'auto-ID lifecycle generates bounded request-ID drive behavior' => sub {
     is_deeply($engine->{id_signal_inputs}, [qw(axi0_arid axi0_rid)], 'auto-ID lifecycle leaves response ID inputs to concrete checks only');
     is_deeply($engine->{residue}, [qw(same_id_ordering response_demux)], 'ID/response rule-engine residue reflects shipped auto-ID lifecycle behavior');
 
+    assert_same_id_ordering_report($result->{report}{same_id_ordering}, 'generator report', 0);
+
     my $priority = $result->{generated_ial1_schedule_report}{priority_resolutions};
     ok((grep { ($_->{target} // '') eq 'axi0_awid' && ($_->{winner} // '') eq 'axi0_w0_auto_id_alloc_0' } @$priority), 'schedule report records generated allocation priority for AWID');
 
@@ -394,6 +397,7 @@ subtest 'auto-ID lifecycle generates bounded request-ID drive behavior' => sub {
     my $sv_assertions = sv_assertion_block_for_result($result);
     like($sv_assertions, qr/axi0 w0 auto ID available/, 'SystemVerilog assertion backend emits the no-ID-available check');
     like($sv_assertions, qr/axi0 write auto ID requests are mutually exclusive/, 'SystemVerilog assertion backend emits same-family mutual-exclusion check');
+    like($sv_assertions, qr/axi0 write auto ID active selected IDs are unique/, 'SystemVerilog assertion backend emits same-ID avoidance check');
 };
 
 subtest 'response-demux contract generates bounded write BID demux behavior' => sub {
@@ -418,6 +422,7 @@ subtest 'response-demux contract generates bounded write BID demux behavior' => 
     );
     like($isf, qr/"axi0 write response matches active auto-ID transaction"/, 'response-demux emits unmatched/inactive response assertion');
     like($isf, qr/"axi0 write response matches at most one auto-ID transaction"/, 'response-demux emits ambiguous-match assertion');
+    like($isf, qr/"axi0 write auto ID active selected IDs are unique"/, 'response-demux keeps same-ID avoidance assertion');
 
     my $fsm = $result->{generated_ial0}{files}{'axi0_capacity_status.fsm'};
     like($fsm, qr/\(\+size[\s\S]*\(axi0_bid 4\)/, 'scheduled .fsm declares BID width');
@@ -435,10 +440,11 @@ subtest 'response-demux contract generates bounded write BID demux behavior' => 
     like($fsm, qr/\(-write_complete_only_occ1\s+<\(& \(! \(\| axi0_w0_request axi0_w1_request\)\) \(\| axi0_w0_complete axi0_w1_complete\)/, 'write capacity release remains driven by generated completion pulse fan-in');
 
     assert_write_response_demux_report($result->{report}{response_demux}, 'generator report');
+    assert_same_id_ordering_report($result->{report}{same_id_ordering}, 'generator report', 1);
     is_deeply(
         $result->{report}{auto_id_lifecycle}{residue},
-        [qw(same_id_ordering)],
-        'auto-ID lifecycle report removes response_demux residue when generated demux drives release',
+        [],
+        'auto-ID lifecycle report removes response_demux and same-ID residue when generated demux and same-ID avoidance are covered',
     );
     is_deeply(
         $result->{report}{id_response_rule_engine}{residue},
@@ -456,6 +462,7 @@ subtest 'response-demux contract generates bounded write BID demux behavior' => 
     my $sv_assertions = sv_assertion_block_for_result($result);
     like($sv_assertions, qr/axi0 write response matches active auto-ID transaction/, 'assertion backend emits active-match response-demux assertion');
     like($sv_assertions, qr/axi0 write response matches at most one auto-ID transaction/, 'assertion backend emits unique-match response-demux assertion');
+    like($sv_assertions, qr/axi0 write auto ID active selected IDs are unique/, 'assertion backend emits same-ID avoidance assertion');
 };
 
 subtest 'schedule report and HDL expose generated storage and status surface' => sub {
@@ -728,9 +735,37 @@ sub assert_write_response_demux_report {
     );
     is_deeply(
         $demux->{residue},
-        [qw(read_response_demux same_id_ordering read_data_interleaving bursts)],
-        "$owner removes generated write BID demux from response-demux residue",
+        [qw(read_response_demux read_data_interleaving bursts)],
+        "$owner removes generated write BID demux and covered same-ID avoidance from response-demux residue",
     );
+}
+
+sub assert_same_id_ordering_report {
+    my ($ordering, $owner, $response_demux_covered) = @_;
+    is($ordering->{mode}, 'auto_id_same_id_avoidance', "$owner marks same-ID avoidance mode");
+    ok($ordering->{generated_behavior}, "$owner marks same-ID ordering generated behavior true");
+    is($ordering->{strategy}, 'avoid_same_id_concurrency', "$owner reports the avoidance strategy");
+    is_deeply(
+        $ordering->{residue},
+        [qw(concrete_id_same_id_ordering per_id_issue_order_queues read_response_demux read_data_interleaving bursts)],
+        "$owner reports broader same-ID ordering residue",
+    );
+    ok(@{$ordering->{source_anchors}}, "$owner carries source anchors into same-ID ordering metadata");
+    is(scalar(@{$ordering->{families}}), 1, "$owner reports one same-ID ordering family");
+    my $write = $ordering->{families}[0];
+    is($write->{family}, 'write', "$owner reports the write same-ID family");
+    is($write->{strategy}, 'avoid_same_id_concurrency', "$owner reports the family strategy");
+    is($write->{enforcement}, 'allocator_free_id_guard', "$owner reports allocator free-ID enforcement");
+    is($write->{assertion_enforcement}, 'runtime_assertion', "$owner reports runtime assertion enforcement");
+    if ($response_demux_covered) {
+        ok($write->{response_demux_covered}, "$owner reports response-demux coverage");
+    } else {
+        ok(!$write->{response_demux_covered}, "$owner reports response-demux coverage");
+    }
+    is_deeply($write->{auto_transactions}, [qw(w0 w1)], "$owner reports same-ID covered transactions");
+    is_deeply($write->{selected_id_signals}, [qw(axi0_w0_auto_id_q axi0_w1_auto_id_q)], "$owner reports selected-ID signals");
+    is_deeply($write->{busy_signals}, [qw(axi0_w0_auto_id_busy_q axi0_w1_auto_id_busy_q)], "$owner reports busy signals");
+    is_deeply($write->{generated_assertions}, [qw(axi0_w0_w1_auto_id_unique_active_id)], "$owner reports same-ID avoidance assertion");
 }
 
 sub assert_actor_storage {

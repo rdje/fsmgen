@@ -16,6 +16,8 @@ reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.34|IAL2-FEATURE-COMPLETENE
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.34` selected
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.35`: bounded generated auto-ID same-ID
 avoidance assertions and machine-readable `same_id_ordering` report metadata.
+That implementation has now shipped; see
+`docs/AXI_IAL2_MANAGER_SAME_ID_ORDERING_FIRST_SLICE.md`.
 
 The readiness audit found no IAL1/IAL0/SystemVerilog prerequisite for the
 first same-ID slice. Existing generated auto-ID state, rule guards, assertion

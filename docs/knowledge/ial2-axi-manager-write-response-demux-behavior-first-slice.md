@@ -39,13 +39,18 @@ The report keeps schema
 `fsmgen.ial2.protocol_intent.axi_manager_capacity_status.v1` and now sets
 `response_demux.generated_behavior: true`. The report also lists generated
 demux rules, generated completion signals, active/unique-match assertions, and
-residue for read response demux, same-ID ordering, read-data interleaving, and
-bursts. `id_response_rule_engine.residue` no longer includes `response_demux`
-when explicit write demux behavior is present.
+residue for read response demux, read-data interleaving, and bursts. The later
+same-ID avoidance slice removed `same_id_ordering` from the covered generated
+write-demux residue. `id_response_rule_engine.residue` no longer includes
+`response_demux` when explicit write demux behavior is present.
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.31` selected `.32` to align the remaining
 `auto_id_lifecycle.residue` report entry with this shipped behavior, and `.32`
 has now shipped that cleanup.
+
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.35` later added generated auto-ID
+same-ID avoidance assertions and report metadata for the covered generated
+write auto-ID path.
 
 VHDL, read `RID` demux, same-ID response ordering queues, read-data
 interleaving/reassembly, bursts, queued/blocking policy, profile aliases, and

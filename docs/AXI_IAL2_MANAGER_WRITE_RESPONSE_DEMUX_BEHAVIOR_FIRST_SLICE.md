@@ -67,19 +67,22 @@ response_demux:
       - axi0_w0_w1_write_response_demux_unique_match
   residue:
     - read_response_demux
-    - same_id_ordering
     - read_data_interleaving
     - bursts
 ```
 
 The `id_response_rule_engine.residue` also removes `response_demux` when the
-explicit write response-demux behavior is present; same-ID ordering remains
-residue.
+explicit write response-demux behavior is present; concrete/per-ID same-ID
+ordering remains residue there.
 
 Follow-up selector `.31` found one remaining report-contract alignment issue:
 `auto_id_lifecycle.residue` still lists `response_demux` even though generated
 demux completion pulses now drive auto-ID release. `.32` shipped that narrow
 report cleanup before larger ordering or read-response behavior.
+Follow-up implementation `.35` then added generated auto-ID same-ID avoidance
+assertions and machine-readable `same_id_ordering` report metadata; for the
+covered generated write auto-ID path, `response_demux.residue` no longer lists
+`same_id_ordering`.
 
 ## Runnable Sample
 
@@ -101,7 +104,7 @@ Useful commands:
 
 ## Residue
 
-This slice does not implement read `RID` response demux, same-ID response
-ordering queues, read-data interleaving/reassembly, bursts, queued/blocking
-policy, profile aliases, full AXI manager behavior, or VHDL backend/reroute
-behavior.
+This slice does not implement read `RID` response demux, per-ID same-ID
+response ordering queues, authored concrete-ID same-ID ordering, read-data
+interleaving/reassembly, bursts, queued/blocking policy, profile aliases, full
+AXI manager behavior, or VHDL backend/reroute behavior.
