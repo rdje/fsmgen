@@ -131,7 +131,11 @@ protocol-intent generator that produces:
 The first implementation should be in-process first, before CLI extension
 work. CLI suffix support for `.pif`, `.ppi`, `.ppif`, or future profile
 aliases is a public surface and should be a later exact owner after the
-generated IAL1 and report contract are stable.
+generated IAL1 and report contract are stable. That later owner is now present
+for the first `.ppif` subset only:
+[IAL2_PPIF_PARSER_CLI_FIRST_SLICE](IAL2_PPIF_PARSER_CLI_FIRST_SLICE.md).
+`.pif`, `.ppi`, profile aliases, and broader `.ppif` objects remain outside
+this readiness audit's first-implementation boundary.
 
 The generated IAL1 should prefer existing assertion/property syntax for
 Valid-Ready safety checks. A future owner must still decide the exact generated
@@ -186,8 +190,9 @@ residue for:
 - valid-hold and payload-stability checks use the existing assertion/property
   path or are explicitly deferred,
 - source anchors and unsupported residue appear in the IAL2 report,
-- public CLI suffixes remain unavailable until a dedicated CLI owner selects
-  them,
+- public CLI suffixes remain unavailable in the first in-process generator
+  slice; the later `IAL2-PPIF-PARSER-CLI-FIRST-SLICE.1` owner ships `.ppif`
+  only,
 - direct IAL2-to-`.fsm` lowering is rejected or structurally impossible.
 
 Useful existing regression owners include:

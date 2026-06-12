@@ -90,6 +90,7 @@ first.
 | `AXI-IAL2-VALID-READY-READINESS-AUDIT` | `done` | IAL2 horizon exploration | complete (`.1`; mapped code/test/docs/report owners and safe first implementation boundaries before behavior changes) | [docs/tasks/AXI-IAL2-VALID-READY-READINESS-AUDIT.md](docs/tasks/AXI-IAL2-VALID-READY-READINESS-AUDIT.md) |
 | `AXI-IAL2-VALID-READY-GENERATOR-FIRST-SLICE` | `done` | IAL2 horizon exploration | complete (`.1`; added the in-process AXI Valid-Ready generator, report, tests, and docs without public CLI suffix support) | [docs/tasks/AXI-IAL2-VALID-READY-GENERATOR-FIRST-SLICE.md](docs/tasks/AXI-IAL2-VALID-READY-GENERATOR-FIRST-SLICE.md) |
 | `IAL2-PUBLIC-PPIF-SURFACE-SELECTION` | `done` | IAL2 horizon exploration | complete (`.1`; selected `.ppif` as the generic public IAL2 file surface and recorded the first Valid-Ready syntax boundary before parser/CLI code) | [docs/tasks/IAL2-PUBLIC-PPIF-SURFACE-SELECTION.md](docs/tasks/IAL2-PUBLIC-PPIF-SURFACE-SELECTION.md) |
+| `IAL2-PPIF-PARSER-CLI-FIRST-SLICE` | `done` | IAL2 horizon exploration | complete (`.1`; added the first public `.ppif` parser/CLI path for one Valid-Ready contract, preserving `.ppif -> generated .isf -> generated .fsm`) | [docs/tasks/IAL2-PPIF-PARSER-CLI-FIRST-SLICE.md](docs/tasks/IAL2-PPIF-PARSER-CLI-FIRST-SLICE.md) |
 
 ## Proposed Task Trees
 

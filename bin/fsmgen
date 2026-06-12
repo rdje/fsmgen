@@ -47,11 +47,11 @@ sub resolve_fsm_file {
     # Cases 1 & 2: No slash - search in FSMLIB paths and current directory
     my $target_filename;
     
-    # Case 1: Bare name (no .fsm or .isf extension) - append .fsm
-    if ($fsm_input !~ /\.(?:fsm|isf)\z/i) {
+    # Case 1: Bare name (no .fsm, .isf, or .ppif extension) - append .fsm
+    if ($fsm_input !~ /\.(?:fsm|isf|ppif)\z/i) {
         $target_filename = "$fsm_input.fsm";
     } else {
-        # Case 2: Already has .fsm or .isf extension
+        # Case 2: Already has .fsm, .isf, or .ppif extension
         $target_filename = $fsm_input;
     }
     
@@ -312,6 +312,8 @@ Arguments:
   fsm_file        FSM file specification - one of:
                   • bare_name         - searches explicit --path roots, FSMLIB, then current directory
                   • bare_name.fsm     - searches explicit --path roots, FSMLIB, then current directory
+                  • bare_name.isf     - lowers IAL1 intent scheduling to .fsm before HDL
+                  • bare_name.ppif    - lowers IAL2 protocol/platform intent to .isf, then .fsm before HDL
                   • relative/path.fsm - uses relative path (no FSMLIB search)
                   • /absolute/path.fsm - uses absolute path (no FSMLIB search)
 
@@ -535,6 +537,93 @@ if ($@) {
 # Convert to absolute path for consistency
 $fsm_file = File::Spec->rel2abs($fsm_file);
 
+# PPIF pipeline: if input is .ppif, lower through generated .isf to .fsm first
+if ($fsm_file =~ /\.ppif$/i) {
+    require FSM::Adapter::IAL2::PPIF;
+    require File::Temp;
+
+    my $adapter = FSM::Adapter::IAL2::PPIF->new();
+    my $ppif_result = eval { $adapter->parse_file($fsm_file); };
+
+    if ($@) {
+        my $display_error = normalize_cli_error_text($@);
+        if ($emit_semantic_json) {
+            my $report = build_normalized_semantic_failure_report(
+                input => $fsm_input, source_file => $fsm_file,
+                target_language => $target_language, strict_mode => $strict_mode,
+                message => $display_error,
+            );
+            print JSON::PP->new->ascii->canonical->pretty->encode($report);
+            exit 1;
+        }
+        if ($check_json_mode) {
+            my $report = build_check_failure_report(
+                input => $fsm_input, source_file => $fsm_file,
+                target_language => $target_language, strict_mode => $strict_mode,
+                message => $display_error,
+            );
+            print JSON::PP->new->ascii->canonical->pretty->encode($report);
+            exit 1;
+        }
+        die $display_error;
+    }
+
+    if ($emit_schedule_json) {
+        print JSON::PP->new->ascii->canonical->pretty->encode($ppif_result->{report});
+        exit 0;
+    }
+
+    $isf_schedule_report = $ppif_result->{generated_ial1_schedule_report};
+    my $files = $ppif_result->{generated_ial0}{files};
+    my $artifact_files = $ppif_result->{report}{generated_artifacts}{ial0}{files} || [];
+    my $entry_basename = $artifact_files->[0];
+    if (!defined $entry_basename || !exists $files->{$entry_basename}) {
+        my $display_error = emit_machine_failure_if_requested(
+            input => $fsm_input,
+            source_file => $fsm_file,
+            target_language => $target_language,
+            strict_mode => $strict_mode,
+            emit_semantic_json => $emit_semantic_json,
+            check_json_mode => $check_json_mode,
+            message => "PPIF lowering emitted no generated .fsm entry artifact\n",
+        );
+        die $display_error;
+    }
+
+    my $dir = $outdir || undef;
+    if (!$dir && scalar(keys %$files) == 1) {
+        my ($fh, $tmp_path) = File::Temp::tempfile(SUFFIX => '.fsm');
+        print $fh $files->{$entry_basename};
+        close $fh;
+        $fsm_file = $tmp_path;
+    } else {
+        $dir ||= '.';
+        mkdir $dir unless -d $dir;
+
+        my $isf_path = File::Spec->catfile($dir, $ppif_result->{generated_ial1}{name});
+        open my $isf_fh, '>', $isf_path or die "Cannot write $isf_path: $!\n";
+        print $isf_fh $ppif_result->{generated_ial1}{text};
+        close $isf_fh;
+        print "Wrote: $isf_path\n" unless $machine_json_mode;
+
+        for my $fname (sort keys %$files) {
+            my $path = File::Spec->catfile($dir, $fname);
+            open my $fh, '>', $path or die "Cannot write $path: $!\n";
+            print $fh $files->{$fname};
+            close $fh;
+            print "Wrote: $path\n" unless $machine_json_mode;
+        }
+        $fsm_file = File::Spec->catfile($dir, $entry_basename);
+    }
+
+    unless ($machine_json_mode) {
+        print "=== IAL2 Protocol/Platform Intent ===\n\n";
+        print "Source: " . $ppif_result->{report}{source_object}{id} . "\n";
+        print "Generated IAL1: " . $ppif_result->{generated_ial1}{name} . "\n";
+        print "Lowered to: $fsm_file\n\n" unless $quiet;
+    }
+}
+
 # ISF pipeline: if input is .isf, lower to .fsm first
 if ($fsm_file =~ /\.isf$/i) {
     require FSM::Adapter::ISF;
@@ -664,7 +753,7 @@ if (!$check_mode && !$emit_semantic_json && !$output_file) {
     } else {
         # Bare name or name.fsm provided - extract bare name
         $fsm_bare_name = $fsm_input;
-        $fsm_bare_name =~ s/\.fsm$//i;  # Remove .fsm extension if present
+        $fsm_bare_name =~ s/\.(?:fsm|isf|ppif)$//i;  # Remove source extension if present
     }
     
     # Generate output file in current working directory

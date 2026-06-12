@@ -1,6 +1,7 @@
 # IAL2 Protocol And Platform Intent Evaluation
 
-Status: evaluation complete; no IAL2 implementation selected.
+Status: evaluation complete; first bounded IAL2 implementation and `.ppif`
+parser/CLI slices shipped.
 
 Task tree:
 [docs/tasks/IAL2-PROTOCOL-PLATFORM-INTENT-EXPLORATION.md](tasks/IAL2-PROTOCOL-PLATFORM-INTENT-EXPLORATION.md).
@@ -23,9 +24,9 @@ FSMGen currently uses these intent-layer meanings:
 - IAL1 is `.isf`: scheduling intent over actors, transactions, rules, waits,
   drives, resources, generated children, constraints, and selected clock-domain
   metadata, lowered into reviewable IAL0 `.fsm`.
-- IAL2 is not shipped. Its future file surface must be protocol/platform
-  generic. It should exist only if it owns semantics above individual IAL1
-  transactions.
+- IAL2 now has a first bounded shipped surface for one AXI Valid-Ready
+  protocol intent object. Broader IAL2 remains protocol/platform-generic and
+  should grow only where it owns semantics above individual IAL1 transactions.
 
 ATL remains IAL1 while authors explicitly write actor/network `.isf` syntax.
 Compact aliases, wrappers, macros, and nicer spellings are not IAL2 by
@@ -181,9 +182,12 @@ It accepts one AXI Valid-Ready contract object, emits reviewable `.isf`, lowers
 through the existing IAL1 path to reviewable `.fsm`, and returns a
 source-anchor/residue report. Decision
 [0016](decisions/0016-ppif-is-first-public-ial2-container.md) selects `.ppif`
-as the first public generic IAL2 file suffix, but parser/CLI support remains
-unshipped. Protocol-profile aliases and full AXI manager behavior also remain
-unshipped and need later exact owners.
+as the first public generic IAL2 file suffix, and
+[IAL2_PPIF_PARSER_CLI_FIRST_SLICE](IAL2_PPIF_PARSER_CLI_FIRST_SLICE.md)
+ships the first parser/CLI path for exactly one
+`(valid-ready-channel ...)` object per `.ppif` file. Public `.pif`, `.ppi`,
+`.axi`, protocol-profile aliases, multiple-object `.ppif` files, and full AXI
+manager behavior remain unshipped and need later exact owners.
 Decision
 [0014](decisions/0014-protocol-platform-intent-surface-and-layered-lowering.md)
 records the protocol/platform-generic IAL2 file-surface direction and the

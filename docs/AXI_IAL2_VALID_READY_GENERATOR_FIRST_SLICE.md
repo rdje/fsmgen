@@ -1,7 +1,8 @@
 # AXI IAL2 Valid-Ready Generator First Slice
 
-Status: first in-process generator slice shipped; `.ppif` is selected as the
-first public IAL2 file suffix, but no public IAL2 parser/CLI suffix is shipped.
+Status: first in-process generator slice shipped. The separate
+[IAL2_PPIF_PARSER_CLI_FIRST_SLICE](IAL2_PPIF_PARSER_CLI_FIRST_SLICE.md)
+documents the first public `.ppif` parser/CLI slice built on this generator.
 
 Task tree:
 [docs/tasks/AXI-IAL2-VALID-READY-GENERATOR-FIRST-SLICE.md](tasks/AXI-IAL2-VALID-READY-GENERATOR-FIRST-SLICE.md).
@@ -21,9 +22,10 @@ for one AXI Valid-Ready channel contract. It is intentionally narrow:
 - existing `FSM::Scheduler::ISF` lower/report path,
 - source-anchor/residue report returned by the IAL2 generator.
 
-It does not add `.pif`, `.ppi`, `.ppif`, `.axi`, or any other CLI/file suffix.
-It does not add a public IAL2 parser and does not implement the full AXI
-manager.
+It originally did not add `.pif`, `.ppi`, `.ppif`, `.axi`, or any other
+CLI/file suffix. Public `.ppif` support is now shipped by a later exact owner;
+`.pif`, `.ppi`, `.axi`, other aliases, and the full AXI manager remain outside
+this in-process generator slice.
 
 ## In-Process API
 

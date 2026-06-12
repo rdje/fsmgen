@@ -2249,7 +2249,8 @@ ISF actor/network syntax into protocol/platform intent inference.
 
 ### IAL2 Protocol And Platform Intent Exploration
 
-Status: evaluated; no IAL2 source or lowering implementation is selected.
+Status: first bounded IAL2 implementation and `.ppif` parser/CLI surface
+shipped; broader IAL2 remains backlog.
 
 Task-tree owner:
 [IAL2-PROTOCOL-PLATFORM-INTENT-EXPLORATION](../../tasks/IAL2-PROTOCOL-PLATFORM-INTENT-EXPLORATION.md).
@@ -2261,11 +2262,12 @@ Goal: decide whether an intent layer above current ISF has enough independent
 semantic value to exist.
 
 Current boundary: FSMGen names `.fsm` as Intent Abstraction Layer 0 (`IAL0`)
-and current `.isf` as Intent Abstraction Layer 1 (`IAL1`). A future `IAL2`
-would need to justify itself with semantics above individual transactions, not
-only syntax convenience. Its generic file surface must be
-protocol/platform-generic, and a future IAL2 file may select a protocol or
-platform vocabulary inside the file.
+and current `.isf` as Intent Abstraction Layer 1 (`IAL1`). `IAL2` now has a
+first bounded shipped surface for one AXI Valid-Ready protocol intent object.
+Broader IAL2 still must justify itself with semantics above individual
+transactions, not only syntax convenience. Its generic file surface remains
+protocol/platform-generic, and an IAL2 file may select a protocol or platform
+vocabulary inside the file.
 
 Decision `0016` selects `.ppif` (Protocol/Platform Intent Format) as the first
 public generic IAL2 file suffix. Earlier candidates `.pif` and `.ppi` are not
@@ -2286,10 +2288,11 @@ or resource allocations. Aliases, macros, wrappers, and sugar without a
 distinct runtime model should stay inside IAL1 or remain out of the language.
 
 Current evaluation: IAL2 now has a first in-process behavior-bearing slice for
-an AXI Valid-Ready contract object. It is still not a public file syntax or CLI
-surface. Future implementation leaves must choose exact owners for public
-syntax/suffix support or the next protocol rule subset; a hand-written reusable
-`.fsm` or `.isf` library alone is useful but not enough to justify IAL2.
+an AXI Valid-Ready contract object and a first public `.ppif` parser/CLI slice
+for that same object shape. Future implementation leaves must choose exact
+owners for additional `.ppif` syntax, aliases, or the next protocol rule
+subset; a hand-written reusable `.fsm` or `.isf` library alone is useful but
+not enough to justify IAL2.
 
 The repo-local tracked raw AXI reference for future bounded probes is
 `docs/vendor/arm/amba/axi/IHI0022_L_2025-08_AMBA_AXI_Protocol_Specification.pdf`.
@@ -2398,9 +2401,11 @@ treated as verification-only and unable to claim guaranteed AXI correctness.
 Public file-surface decision:
 [decision 0016](../../decisions/0016-ppif-is-first-public-ial2-container.md)
 selects `.ppif` as the first generic IAL2 file suffix and records the first
-public Valid-Ready source shape. Parser/CLI support for `.ppif` is still
-unshipped and requires a later exact owner. Public `.pif`, `.ppi`, `.axi`, and
-full AXI manager behavior also remain unshipped.
+public Valid-Ready source shape. The first parser/CLI slice for `.ppif` is now
+shipped by
+[IAL2_PPIF_PARSER_CLI_FIRST_SLICE](../../IAL2_PPIF_PARSER_CLI_FIRST_SLICE.md).
+Public `.pif`, `.ppi`, `.axi`, multiple-object `.ppif` files, and full AXI
+manager behavior remain unshipped.
 
 First selected `.ppif` shape:
 
@@ -2422,8 +2427,19 @@ First selected `.ppif` shape:
       (awlen width 8))))
 ```
 
-The next prerequisite is a later exact owner for either `.ppif` parser/CLI
-support or the next protocol rule subset.
+CLI examples for the shipped first public slice:
+
+```bash
+./bin/fsmgen --emit-schedule-json path/to/axi_aw.ppif
+./bin/fsmgen --outdir generated path/to/axi_aw.ppif
+./bin/fsmgen --strict --check --json path/to/axi_aw.ppif
+```
+
+The `.ppif` path always lowers through generated `.isf` before generated
+`.fsm`. `--outdir` writes both review artifacts before the HDL path runs.
+`--emit-schedule-json` emits the IAL2 source-anchor/residue report for the
+source object. The next prerequisite is a later exact owner for additional
+`.ppif` objects/clauses, profile aliases, or the next protocol rule subset.
 
 PDF extraction workflow:
 [PDF_EXTRACTION_WORKFLOW](../../PDF_EXTRACTION_WORKFLOW.md)
@@ -4502,7 +4518,9 @@ future exact owners. Completed selection/evaluation leaves
 `IAL2-PROTOCOL-PLATFORM-INTENT-EXPLORATION.1` and `.2` found IAL2
 design/probe ready. Completed implementation leaf
 `AXI-IAL2-VALID-READY-GENERATOR-FIRST-SLICE.1` ships the first in-process IAL2
-generator while public parser and CLI suffix support remain deferred.
+generator. Completed implementation leaf
+`IAL2-PPIF-PARSER-CLI-FIRST-SLICE.1` ships the first public `.ppif` parser/CLI
+path for one AXI Valid-Ready source object.
 Completed implementation leaf
 `ARCHITECTURE-DEBT-FRONTIER.2.1`
 projects direct backend storage/helper declaration-plan entries into
