@@ -966,14 +966,19 @@ Priority note:
   advanced the frontier to parser/report metadata before generated request-ID
   drive behavior; that parser/report metadata slice is now shipped with a
   runnable sample, support accounting, static validation, and unchanged
-  generated `.isf`, `.fsm`, and HDL behavior.
+  generated `.isf`, `.fsm`, and HDL behavior; the first bounded request-ID
+  drive behavior slice is now shipped for explicit lifecycle families, with
+  generated request-ID outputs, selected-ID/busy state, first-free allocation
+  rules, completion-event release rules, runtime assertions, and
+  `auto_id_lifecycle.generated_behavior: true`.
 
 ## Current intent
 The active immediate feature-completeness lane is IAL2 on the
 SystemVerilog-backed lowering path; see
 [docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md](docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md).
-The current frontier is bounded AXI auto-ID request-ID drive behavior after
-the shipped auto-id-lifecycle parser/report metadata slice.
+The current frontier is the selector for the next exact IAL2
+feature-completeness slice after shipped bounded AXI auto-ID request-ID drive
+behavior.
 The shipped public capacity/status source accepts one
 `(manager-capacity-status NAME ...)` object under
 `(protocol-platform-intent ...)`, `(profile axi4)`, and top-level source
@@ -1014,9 +1019,15 @@ bounded public auto-ID pool/request-ID drive contract first, and
 metadata frontier with `auto_id_lifecycle` report metadata, a separate public
 sample, check JSON and semantic JSON support accounting, and unchanged
 generated `.isf`, `.fsm`, and HDL behavior. `IAL2-FEATURE-COMPLETENESS-FRONTIER.23`
-is the active bounded request-ID drive behavior frontier.
-Auto-ID allocation, ID release, response demux, ordering, bursts, queued
-policy, aliases, full-manager behavior, and VHDL remain residue.
+shipped bounded request-ID drive behavior for explicit lifecycle families:
+request ID signals become generated outputs, selected-ID/busy state is
+generated per auto transaction, allocation uses first-free pool order,
+completion events release selected IDs, and runtime assertions cover
+no-ID-available plus illegal same-family simultaneous requests. The active
+frontier is `IAL2-FEATURE-COMPLETENESS-FRONTIER.24`, selecting the next exact
+IAL2 feature-completeness slice. Same-ID ordering, response demux, read-data
+interleaving/reassembly, bursts, queued policy, aliases, full-manager
+behavior, and VHDL remain residue.
 
 The first honest `R11` slices are now:
 1. keep widening convention-first composition only where the child-side evidence is still deterministic,

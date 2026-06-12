@@ -2301,10 +2301,12 @@ audit `.20` concluded that the IAL1/IAL0/SystemVerilog substrate can carry a
 bounded scalar request-ID lifecycle, but auto-ID allocation must not be
 inferred directly from ID width or existing `(id auto)` syntax. Completed
 selector `.21` chose an explicit optional `(auto-id-lifecycle (write (pool
-...)) (read (pool ...)))` clause. Completed implementation leaf `.22` ships
+...)) (read (pool ...)))` clause. Completed implementation leaf `.22` shipped
 that parser/report metadata and static-validation slice with unchanged
-generated `.isf`, `.fsm`, and HDL behavior. The active leaf is `.23`, bounded
-request-ID drive behavior for explicit auto-ID lifecycle families.
+generated `.isf`, `.fsm`, and HDL behavior. Completed implementation leaf
+`.23` ships bounded request-ID drive behavior for explicit auto-ID lifecycle
+families. The active leaf is `.24`, selecting the next exact IAL2
+feature-completeness slice after that shipped behavior.
 Selected IAL2 slices may include explicit IAL1 or
 IAL0/SystemVerilog prerequisites when those prerequisites are needed for
 clean, reviewable lowering.
@@ -2361,8 +2363,8 @@ that same object shape, multi-channel Valid-Ready bundle behavior, and a public
 `.fsm` artifacts plus optional ID-family metadata, transaction-envelope
 metadata, per-transaction event dispatch/fan-in, and concrete transaction ID
 request/response assertions. It also ships optional auto-ID lifecycle
-bounded-pool parser/report metadata with unchanged generated `.isf`, `.fsm`,
-and HDL behavior before the next request-ID drive owner.
+bounded-pool parser/report metadata plus bounded request-ID drive behavior
+for explicit lifecycle families.
 Future implementation leaves must choose exact owners for the next protocol
 rule subset, additional `.ppif` syntax, or aliases; a hand-written reusable
 `.fsm` or `.isf` library alone is useful but not enough to justify IAL2.
@@ -2857,18 +2859,25 @@ id_response_rule_engine:
     - response_demux
 ```
 
-The shipped scope still excludes automatic ID allocation, ID release, same-ID
-ordering queues, different-ID read-data interleaving/reassembly, burst and
-last-beat tracking, payload binding, queued/blocking policy, generated
-response demux, full AXI manager syntax, profile aliases, and VHDL.
+The shipped scope now includes bounded automatic request-ID allocation and
+completion-event ID release only when the explicit `auto-id-lifecycle` clause
+is present. Same-ID ordering queues, different-ID read-data
+interleaving/reassembly, burst and last-beat tracking, payload binding,
+queued/blocking policy, generated response demux, full AXI manager syntax,
+profile aliases, and VHDL remain unshipped.
 
-Shipped AXI manager subset: auto-id-lifecycle parser/report metadata:
+Shipped AXI manager subset: auto-id-lifecycle request-ID drive:
+[AXI_IAL2_MANAGER_AUTO_ID_REQUEST_ID_DRIVE_FIRST_SLICE](../../AXI_IAL2_MANAGER_AUTO_ID_REQUEST_ID_DRIVE_FIRST_SLICE.md)
+ships bounded request-ID drive behavior for the explicit lifecycle contract.
+The earlier
 [AXI_IAL2_MANAGER_AUTO_ID_LIFECYCLE_METADATA_FIRST_SLICE](../../AXI_IAL2_MANAGER_AUTO_ID_LIFECYCLE_METADATA_FIRST_SLICE.md)
-implements the explicit bounded-pool syntax selected by
+implements the parser/report metadata boundary for the same syntax selected by
 [AXI_IAL2_MANAGER_AUTO_ID_POOL_CONTRACT_SELECTION](../../AXI_IAL2_MANAGER_AUTO_ID_POOL_CONTRACT_SELECTION.md).
 Auto-ID transactions are still report-only unless the opt-in clause is
-present, and this first metadata slice keeps generated `.isf`, `.fsm`, and HDL
-behavior unchanged.
+present. With the clause present, request ID signals such as `axi0_awid`
+become generated outputs, per-auto-transaction selected-ID/busy state is
+generated, first-free allocation and completion release rules lower through
+`.fsm`, and SystemVerilog declares the request ID and state registers.
 
 The selected audit starts from the existing syntax:
 
@@ -2891,13 +2900,16 @@ The selected opt-in syntax is:
 ```
 
 Without that clause, existing `(id auto)` transactions remain
-structural/report-only metadata. With that clause, the shipped parser/report
-slice validates positive-width ID families, one to four unique pool values per
+structural/report-only metadata. With that clause, the shipped implementation
+validates positive-width ID families, one to four unique pool values per
 family, values inside the declared width, and at least one auto-ID transaction
 in each listed family. The structural report adds `auto_id_lifecycle` metadata
-with `generated_behavior: false`, `request_id_direction: generated_output`,
+with `generated_behavior: true`, `request_id_direction: generated_output`,
 `response_id_direction: generated_input`, `allocator: first_free_pool_order`,
-and `transaction_lifetime: single_active`.
+`transaction_lifetime: single_active`, and `transaction_state[]` entries that
+name generated selected-ID storage, busy storage, allocation rules, release
+rules, and assertion carriers. Its residue is now `same_id_ordering` and
+`response_demux`.
 
 The checked-in sample is:
 
@@ -2909,6 +2921,8 @@ Useful commands:
 
 ```bash
 ./bin/fsmgen --emit-schedule-json ppif/axi_manager_capacity_status_auto_id_lifecycle.ppif
+./bin/fsmgen --outdir generated ppif/axi_manager_capacity_status_auto_id_lifecycle.ppif
+./bin/fsmgen --quiet --verify-hdl ppif/axi_manager_capacity_status_auto_id_lifecycle.ppif
 ./bin/fsmgen --strict --check --json ppif/axi_manager_capacity_status_auto_id_lifecycle.ppif
 ./bin/fsmgen --strict --emit-semantic-json ppif/axi_manager_capacity_status_auto_id_lifecycle.ppif
 ```
@@ -2919,12 +2933,13 @@ Its support-accounting entry is:
 intent.ppif_axi_manager_capacity_status_auto_id_lifecycle
 ```
 
-Future generated behavior will use request ID outputs for `AWID`/`ARID`,
-response ID inputs for `BID`/`RID`, first-free allocation in author pool order,
-single-active logical transactions, and completion-event release. Full ID
-allocation implementation, same-ID ordering queues, generated response demux,
-read-data interleaving/reassembly, bursts, queued/blocking policy, full AXI
-manager syntax, aliases, and VHDL remain unshipped.
+The generated behavior uses request ID outputs for `AWID`/`ARID`, keeps
+response ID inputs such as `BID`/`RID` absent unless concrete checks require
+them, allocates first-free IDs in author pool order, enforces single-active
+logical auto transactions, and releases IDs on completion events. Same-ID
+ordering queues, generated response demux, read-data interleaving/reassembly,
+bursts, queued/blocking policy, full AXI manager syntax, aliases, and VHDL
+remain unshipped.
 
 First implementation subset selection:
 [AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION](../../AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md)
@@ -5232,8 +5247,12 @@ selects explicit optional `auto-id-lifecycle` bounded-pool syntax and advances
 the active frontier to `.22`, parser/report metadata and static validation.
 Completed implementation leaf `IAL2-FEATURE-COMPLETENESS-FRONTIER.22` ships
 public `auto-id-lifecycle` parser/report metadata and static validation
-without generated `.isf`, `.fsm`, or HDL behavior changes, and advances the
-active frontier to `.23`, bounded request-ID drive behavior.
+without generated `.isf`, `.fsm`, or HDL behavior changes, and selected `.23`
+as bounded request-ID drive behavior.
+Completed implementation leaf `IAL2-FEATURE-COMPLETENESS-FRONTIER.23` ships
+bounded request-ID drive behavior for explicit auto-ID lifecycle families and
+advances the active frontier to `.24`, selecting the next exact IAL2
+feature-completeness slice.
 Completed implementation leaf
 `ARCHITECTURE-DEBT-FRONTIER.2.1`
 projects direct backend storage/helper declaration-plan entries into

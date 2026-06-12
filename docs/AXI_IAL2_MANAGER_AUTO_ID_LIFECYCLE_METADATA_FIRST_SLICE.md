@@ -5,6 +5,11 @@ Status: shipped for the public `.ppif` AXI manager capacity/status object.
 Task tree:
 [docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md](tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md).
 
+Historical note: this `.22` slice shipped parser/report metadata only. The
+later `.23` slice ships bounded request-ID drive behavior for the same public
+syntax; see
+[docs/AXI_IAL2_MANAGER_AUTO_ID_REQUEST_ID_DRIVE_FIRST_SLICE.md](AXI_IAL2_MANAGER_AUTO_ID_REQUEST_ID_DRIVE_FIRST_SLICE.md).
+
 This slice implements the parser/report metadata boundary selected by
 [docs/AXI_IAL2_MANAGER_AUTO_ID_POOL_CONTRACT_SELECTION.md](AXI_IAL2_MANAGER_AUTO_ID_POOL_CONTRACT_SELECTION.md).
 

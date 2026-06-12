@@ -4,10 +4,7 @@ title: AXI manager auto-ID lifecycle metadata is shipped
 answers:
   - "is AXI auto-ID lifecycle metadata shipped?"
   - "what sample covers AXI auto-ID lifecycle metadata?"
-  - "does auto-id-lifecycle change generated HDL?"
-  - "what does auto_id_lifecycle report?"
   - "what support-accounting entry covers auto-id-lifecycle?"
-  - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.23?"
 date: 2026-06-12
 status: current
 tags: [ial2, axi, manager, id, auto-id, ppif, task-tree]
@@ -42,5 +39,8 @@ This slice does not change generated `.isf`, `.fsm`, or HDL behavior. Existing
 `(id auto)` transactions remain structural/report-only when the clause is
 absent.
 
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.23` owns the next step: implement the
-bounded auto-ID request-ID drive behavior for the explicit lifecycle contract.
+Later `IAL2-FEATURE-COMPLETENESS-FRONTIER.23` changes the current behavior for
+sources with the explicit lifecycle clause: bounded request-ID drive is now
+generated and `auto_id_lifecycle.generated_behavior` is true. See the
+`ial2-axi-manager-auto-id-request-id-drive-first-slice` fact for current
+generated behavior.

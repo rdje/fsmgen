@@ -165,7 +165,8 @@ generated IAL1 inputs, lower assertion-only checks to `.fsm` `+assert`
 carriers, emit verification-only SystemVerilog assertions, and report
 `id_response_rule_engine` metadata. Auto-ID allocation, ID release, response
 demux, ordering, bursts, queued policy, aliases, full-manager behavior, and
-VHDL remain residue. The AXI manager auto-ID lifecycle readiness audit is now
+VHDL remained residue before the explicit lifecycle work. The AXI manager
+auto-ID lifecycle readiness audit is now
 complete: the current IAL1/IAL0/SystemVerilog substrate can carry a bounded
 scalar request-ID lifecycle, but auto-ID allocation must not be inferred
 directly from ID width or existing `(id auto)` syntax. The bounded contract is
@@ -174,11 +175,19 @@ now selected as an explicit optional `(auto-id-lifecycle (write (pool ...))
 `(id auto)` remains structural/report-only when that clause is absent. That
 parser/report metadata and static-validation slice is now shipped with
 `auto_id_lifecycle` report metadata, a runnable `.ppif` sample, support
-accounting, check JSON, semantic JSON, and unchanged generated `.isf`, `.fsm`,
-and HDL behavior. The current frontier is
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.23`, implementing bounded request-ID
-drive behavior for explicit auto-ID lifecycle families. VHDL remains behind
-SV-backed IAL feature completeness.
+accounting, check JSON, semantic JSON, and initially unchanged generated
+`.isf`, `.fsm`, and HDL behavior. Bounded request-ID drive behavior is now
+shipped for explicit auto-ID lifecycle families: request ID signals become
+generated IAL1 outputs, per-auto-transaction selected-ID/busy state is
+generated, deterministic first-free allocation and completion-event release
+rules lower through `.fsm` to SystemVerilog, runtime assertions cover
+no-ID-available and illegal same-family simultaneous requests, and
+`auto_id_lifecycle.generated_behavior` is true. Same-ID ordering, generated
+response demux, read-data interleaving/reassembly, bursts, queued policy,
+aliases, full-manager behavior, and VHDL remain residue. The current frontier
+is `IAL2-FEATURE-COMPLETENESS-FRONTIER.24`, selecting the next exact IAL2
+feature-completeness slice. VHDL remains behind SV-backed IAL feature
+completeness.
 The project objective is robust, traceable FSM-to-HDL generation with clear assignment semantics, optimization via AST factorization, and behavior-preserving refactoring toward a modular architecture.
 
 ## Fast ramp-up order
@@ -231,18 +240,19 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 47. `docs/AXI_IAL2_MANAGER_AUTO_ID_LIFECYCLE_READINESS_AUDIT.md`: readiness audit selecting bounded auto-ID pool/request-ID drive contract selection before implementation.
 48. `docs/AXI_IAL2_MANAGER_AUTO_ID_POOL_CONTRACT_SELECTION.md`: selected explicit optional `auto-id-lifecycle` bounded-pool syntax before parser/report implementation.
 49. `docs/AXI_IAL2_MANAGER_AUTO_ID_LIFECYCLE_METADATA_FIRST_SLICE.md`: shipped additive `.ppif` auto-ID lifecycle parser/report metadata for one AXI manager capacity/status object.
-50. `docs/AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md`: selected first AXI-derived IAL2 implementation subset and pre-code contract.
-51. `docs/AXI_IAL2_VALID_READY_READINESS_AUDIT.md`: code/test/docs/report owner map for the future AXI Valid-Ready IAL2 implementation.
-52. `docs/AXI_IAL2_VALID_READY_GENERATOR_FIRST_SLICE.md`: first in-process AXI Valid-Ready IAL2 generator slice and report surface.
-53. `docs/decisions/0016-ppif-is-first-public-ial2-container.md`: selects `.ppif` as the first public generic IAL2 file surface.
-54. `docs/IAL2_PPIF_PARSER_CLI_FIRST_SLICE.md`: first public `.ppif` parser/CLI slice for one AXI Valid-Ready source object.
-55. `docs/IAL2_PPIF_MULTI_VALID_READY_READINESS.md`: readiness map for future multi-channel `.ppif` Valid-Ready support.
-56. `docs/IAL2_PPIF_VALID_READY_BUNDLE_CONTRACT_SELECTION.md`: selected future aggregate bundle contract for multi-channel `.ppif` Valid-Ready support.
-57. `docs/IAL2_PPIF_VALID_READY_BUNDLE_FIRST_SLICE.md`: shipped bounded multi-channel `.ppif` Valid-Ready bundle report/review-artifact behavior.
-58. `docs/IAL2_PPIF_BUNDLE_SEMANTIC_JSON_FIRST_SLICE.md`: shipped aggregate semantic JSON for multi-channel `.ppif` bundles.
-59. `docs/IAL2_PPIF_BUNDLE_HDL_ENTRY_SELECTION.md`: selected aggregate wrapper/top HDL entry contract for multi-channel `.ppif` bundles.
-60. `docs/IAL2_PPIF_BUNDLE_HDL_ENTRY_FIRST_SLICE.md`: shipped aggregate wrapper/top HDL entry for the tracked multi-channel `.ppif` bundle.
-61. `docs/PDF_EXTRACTION_WORKFLOW.md`: portable workflow for source-anchored PDF text, table, diagram, and image extraction.
+50. `docs/AXI_IAL2_MANAGER_AUTO_ID_REQUEST_ID_DRIVE_FIRST_SLICE.md`: shipped bounded auto-ID request-ID drive behavior for explicit lifecycle families.
+51. `docs/AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md`: selected first AXI-derived IAL2 implementation subset and pre-code contract.
+52. `docs/AXI_IAL2_VALID_READY_READINESS_AUDIT.md`: code/test/docs/report owner map for the future AXI Valid-Ready IAL2 implementation.
+53. `docs/AXI_IAL2_VALID_READY_GENERATOR_FIRST_SLICE.md`: first in-process AXI Valid-Ready IAL2 generator slice and report surface.
+54. `docs/decisions/0016-ppif-is-first-public-ial2-container.md`: selects `.ppif` as the first public generic IAL2 file surface.
+55. `docs/IAL2_PPIF_PARSER_CLI_FIRST_SLICE.md`: first public `.ppif` parser/CLI slice for one AXI Valid-Ready source object.
+56. `docs/IAL2_PPIF_MULTI_VALID_READY_READINESS.md`: readiness map for future multi-channel `.ppif` Valid-Ready support.
+57. `docs/IAL2_PPIF_VALID_READY_BUNDLE_CONTRACT_SELECTION.md`: selected future aggregate bundle contract for multi-channel `.ppif` Valid-Ready support.
+58. `docs/IAL2_PPIF_VALID_READY_BUNDLE_FIRST_SLICE.md`: shipped bounded multi-channel `.ppif` Valid-Ready bundle report/review-artifact behavior.
+59. `docs/IAL2_PPIF_BUNDLE_SEMANTIC_JSON_FIRST_SLICE.md`: shipped aggregate semantic JSON for multi-channel `.ppif` bundles.
+60. `docs/IAL2_PPIF_BUNDLE_HDL_ENTRY_SELECTION.md`: selected aggregate wrapper/top HDL entry contract for multi-channel `.ppif` bundles.
+61. `docs/IAL2_PPIF_BUNDLE_HDL_ENTRY_FIRST_SLICE.md`: shipped aggregate wrapper/top HDL entry for the tracked multi-channel `.ppif` bundle.
+62. `docs/PDF_EXTRACTION_WORKFLOW.md`: portable workflow for source-anchored PDF text, table, diagram, and image extraction.
 62. `docs/decisions/0014-protocol-platform-intent-surface-and-layered-lowering.md`: generic IAL2 file-surface candidates and layered lowering decision.
 63. `docs/decisions/0015-ial2-profile-extensions-are-vocabulary-aliases.md`: IAL2 protocol-profile extension refinement.
 64. `docs/decisions/0017-ppif-valid-ready-bundle-contract.md`: future multi-channel `.ppif` bundle contract decision.
@@ -700,6 +710,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/AXI_IAL2_MANAGER_AUTO_ID_LIFECYCLE_READINESS_AUDIT.md` — readiness audit selecting bounded auto-ID pool/request-ID drive contract selection before implementation.
 - `docs/AXI_IAL2_MANAGER_AUTO_ID_POOL_CONTRACT_SELECTION.md` — selected explicit optional `auto-id-lifecycle` bounded-pool syntax before parser/report implementation.
 - `docs/AXI_IAL2_MANAGER_AUTO_ID_LIFECYCLE_METADATA_FIRST_SLICE.md` — shipped additive `.ppif` auto-ID lifecycle parser/report metadata for one AXI manager capacity/status object.
+- `docs/AXI_IAL2_MANAGER_AUTO_ID_REQUEST_ID_DRIVE_FIRST_SLICE.md` — shipped bounded auto-ID request-ID drive behavior for explicit lifecycle families.
 - `docs/AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md` — selected first AXI-derived IAL2 implementation subset and pre-code contract.
 - `docs/AXI_IAL2_VALID_READY_READINESS_AUDIT.md` — code/test/docs/report owner map for a future AXI Valid-Ready IAL2 implementation slice.
 - `docs/AXI_IAL2_VALID_READY_GENERATOR_FIRST_SLICE.md` — first in-process AXI Valid-Ready IAL2 generator slice and report surface.
@@ -715,7 +726,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `ppif/axi_manager_capacity_status_id_family.ppif` — checked-in runnable `.ppif` sample for static AXI manager ID-family metadata.
 - `ppif/axi_manager_capacity_status_transaction_envelope.ppif` — checked-in runnable `.ppif` sample for AXI manager transaction-envelope metadata and concrete direction-level ID assertions.
 - `ppif/axi_manager_capacity_status_transaction_event_dispatch.ppif` — checked-in runnable `.ppif` sample for AXI manager transaction event dispatch/fan-in and concrete per-transaction ID assertions.
-- `ppif/axi_manager_capacity_status_auto_id_lifecycle.ppif` — checked-in runnable `.ppif` sample for AXI manager auto-ID lifecycle bounded-pool report metadata.
+- `ppif/axi_manager_capacity_status_auto_id_lifecycle.ppif` — checked-in runnable `.ppif` sample for AXI manager auto-ID lifecycle bounded-pool request-ID drive behavior.
 - `docs/PDF_EXTRACTION_WORKFLOW.md` — portable workflow for task-owned source-anchored PDF text, table, diagram, and image extraction.
 - `docs/decisions/0014-protocol-platform-intent-surface-and-layered-lowering.md` — generic IAL2 file-surface candidates and layered lowering decision.
 - `docs/decisions/0015-ial2-profile-extensions-are-vocabulary-aliases.md` — IAL2 protocol-profile extension refinement.

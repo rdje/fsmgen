@@ -10,8 +10,8 @@ answers:
 date: 2026-06-12
 status: current
 tags: [ial2, axi, manager, id, auto-id, ppif, task-tree]
-evidence: docs/AXI_IAL2_MANAGER_AUTO_ID_POOL_CONTRACT_SELECTION.md; docs/AXI_IAL2_MANAGER_AUTO_ID_LIFECYCLE_READINESS_AUDIT.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; docs/book/src/14-feature-backlog.md; README.md; ROADMAP_V2.md
-reverify: rg -n 'auto-id-lifecycle|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.22|generated_behavior: false|request_id_direction: generated_output|response_id_direction: generated_input|Existing \\(id auto\\) transactions remain structural/report-only' docs/AXI_IAL2_MANAGER_AUTO_ID_POOL_CONTRACT_SELECTION.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md docs/book/src/14-feature-backlog.md README.md ROADMAP_V2.md
+evidence: docs/AXI_IAL2_MANAGER_AUTO_ID_POOL_CONTRACT_SELECTION.md; docs/AXI_IAL2_MANAGER_AUTO_ID_REQUEST_ID_DRIVE_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_AUTO_ID_LIFECYCLE_READINESS_AUDIT.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; docs/book/src/14-feature-backlog.md; README.md; ROADMAP_V2.md
+reverify: rg -n 'auto-id-lifecycle|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.22|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.23|generated_behavior: true|request_id_direction: generated_output|response_id_direction: generated_input|Existing \\(id auto\\) transactions remain structural/report-only|bounded request-ID drive' docs/AXI_IAL2_MANAGER_AUTO_ID_POOL_CONTRACT_SELECTION.md docs/AXI_IAL2_MANAGER_AUTO_ID_REQUEST_ID_DRIVE_FIRST_SLICE.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md docs/book/src/14-feature-backlog.md README.md ROADMAP_V2.md
 ---
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.21` selected an explicit bounded
@@ -29,13 +29,14 @@ Existing `(id auto)` transactions do not become behavior-bearing
 automatically. Without `auto-id-lifecycle`, they remain structural/report-only
 metadata.
 
-For future generated behavior, request ID signals are manager-owned generated
-outputs (`AWID`/`ARID`) and response ID signals remain generated inputs
-(`BID`/`RID`). The selected allocator is deterministic first-free in author
-pool order, with single-active logical transactions and completion-event
-release.
+Request ID signals are manager-owned generated outputs (`AWID`/`ARID`) and
+response ID signals remain generated inputs (`BID`/`RID`). The selected and now
+partially shipped allocator is deterministic first-free in author pool order,
+with single-active logical transactions and completion-event release.
 
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.22` owns the next step: implement the
-additive public `.ppif` parser/report metadata slice for the selected
-`auto-id-lifecycle` contract, with static validation and no generated `.isf`,
-`.fsm`, or HDL behavior changes.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.22` shipped the additive public `.ppif`
+parser/report metadata slice for the selected `auto-id-lifecycle` contract,
+with static validation and no generated `.isf`, `.fsm`, or HDL behavior
+changes. `IAL2-FEATURE-COMPLETENESS-FRONTIER.23` then shipped bounded
+request-ID drive behavior for explicit lifecycle families; same-ID ordering
+and response demux remain residue.

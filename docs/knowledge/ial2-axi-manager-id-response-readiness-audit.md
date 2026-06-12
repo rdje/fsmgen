@@ -6,7 +6,6 @@ answers:
   - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.18?"
   - "can AXI concrete ID checks be implemented now?"
   - "does AXI ID readiness require an IAL1 prerequisite?"
-  - "are AXI automatic IDs allocated now?"
 date: 2026-06-12
 status: current
 tags: [ial2, ial1, axi, manager, id, assertions, task-tree]
@@ -26,6 +25,9 @@ generated IAL1 inputs and emits assertion-only transaction checks through
 No separate IAL1, IAL0, or SystemVerilog prerequisite is required for that
 exact concrete-ID assertion slice.
 
-Automatic ID allocation, ID release, same-ID ordering, different-ID
-interleaving, generated response demux, bursts, queued/blocking policy,
-profile aliases, full AXI manager syntax, and VHDL remain residue.
+At the `.18` concrete-ID assertion boundary, automatic ID allocation, ID
+release, same-ID ordering, different-ID interleaving, generated response
+demux, bursts, queued/blocking policy, profile aliases, full AXI manager
+syntax, and VHDL remained residue. Later `.23` ships bounded request-ID drive
+and completion-event release for explicit `auto-id-lifecycle` families; the
+other listed surfaces remain future exact-owner work.

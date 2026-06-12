@@ -70,6 +70,8 @@ sub render_consolidated_intermediate_assignments ($self, $prepared_block) {
     for my $signal_name (@{$sorted_signals}) {
         my $signal_info = $filtered_signals->{$signal_name};
         my $source = $signal_info->{source};
+        $source = 'derived_expression'
+            unless defined($source) && length($source);
 
         my $expression = $recovery_support->render_intermediate_signal_expression($signal_name, $signal_info);
         unless (defined($expression) && $expression ne '') {

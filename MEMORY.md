@@ -10,9 +10,9 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `HEAD after commit` — `IAL2-FEATURE-COMPLETENESS-FRONTIER.22: ship AXI auto-ID lifecycle metadata`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.23` pending; next action is to implement bounded request-ID drive behavior for explicit AXI auto-ID lifecycle families.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.22`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.21`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.20`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.19`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.18`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.17`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.16`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.15`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.14`. Older completed slices are in the task tree and git history.
+- latest_commit: `HEAD after commit` — `IAL2-FEATURE-COMPLETENESS-FRONTIER.23: ship AXI auto-ID request drive`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.24` pending; next action is to select the next exact IAL2 feature-completeness slice after bounded AXI auto-ID request-ID drive.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.23`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.22`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.21`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.20`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.19`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.18`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.17`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.16`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.15`. Older completed slices are in the task tree and git history.
 - in_flight_uncommitted: none; unrelated untracked `fx/` intentionally left alone.
 - blockers: none.
 

@@ -4,7 +4,6 @@ title: AXI manager auto-ID lifecycle readiness is selected
 answers:
   - "what comes after AXI concrete ID assertions?"
   - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.20?"
-  - "is AXI auto-ID allocation implemented now?"
   - "what must happen before AXI auto-ID allocation?"
   - "why is request-ID drive readiness next?"
 date: 2026-06-12
@@ -25,8 +24,11 @@ can carry a bounded scalar request-ID lifecycle, but the public contract must
 first select a bounded auto-ID pool/request-ID drive boundary. Width and
 existing `(id auto)` syntax alone are not a reviewable allocation policy.
 
-Auto-ID allocation is not implemented now.
+At the time of the `.20` readiness audit, auto-ID allocation was not
+implemented.
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.21` selected explicit optional
 `auto-id-lifecycle` bounded-pool syntax. `IAL2-FEATURE-COMPLETENESS-FRONTIER.22`
-owns parser/report metadata before any request-ID output, allocation, release,
-response demux, ordering, or VHDL behavior change.
+shipped parser/report metadata before request-ID output behavior.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.23` later shipped bounded request-ID drive
+and completion-event release for explicit lifecycle families; response demux,
+ordering, and VHDL remain future exact-owner work.

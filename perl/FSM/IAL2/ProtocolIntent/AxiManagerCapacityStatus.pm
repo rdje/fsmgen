@@ -138,6 +138,7 @@ sub _normalize_contract($raw) {
     my $auto_id_lifecycle = exists($raw->{auto_id_lifecycle})
         ? _normalize_auto_id_lifecycle(
             raw_lifecycle => $raw->{auto_id_lifecycle},
+            manager_name   => $name,
             id_families   => $id_families,
             transactions  => $transactions,
         )
@@ -164,6 +165,7 @@ sub _normalize_contract($raw) {
         storage      => \%storage,
         id_families  => $id_families,
         transactions => $transactions,
+        auto_id_lifecycle => $auto_id_lifecycle,
     );
 
     my $source = ref($raw->{source}) eq 'HASH' ? $raw->{source} : {};
@@ -511,7 +513,9 @@ sub _normalize_auto_id_lifecycle(%args) {
         push @families, _normalize_auto_id_lifecycle_family(
             raw_family => $raw->{$family},
             family => $family,
+            manager_name => $args{manager_name},
             id_families => $args{id_families},
+            transactions => $args{transactions},
             auto_transactions_by_family => $auto_transactions_by_family,
         );
     }
@@ -521,12 +525,10 @@ sub _normalize_auto_id_lifecycle(%args) {
 
     return {
         mode                         => 'bounded_pool_contract',
-        generated_behavior           => 0,
+        generated_behavior           => 1,
         max_pool_entries_per_family  => 4,
         families                     => \@families,
         residue                      => [
-            'generated_request_id_drive',
-            'id_release_rules',
             'same_id_ordering',
             'response_demux',
         ],
@@ -558,6 +560,13 @@ sub _normalize_auto_id_lifecycle_family(%args) {
         unless @$auto_transactions;
 
     my $pool = _normalize_auto_id_pool($raw->{pool}, $family, $id_family->{width});
+    my $transaction_state = _auto_id_lifecycle_transaction_state(
+        manager_name  => $args{manager_name},
+        family        => $family,
+        transactions  => $args{transactions},
+        auto_transactions => $auto_transactions,
+        pool          => $pool,
+    );
     return {
         family                    => $family,
         request_id_signal         => $id_family->{request_id_signal},
@@ -570,7 +579,33 @@ sub _normalize_auto_id_lifecycle_family(%args) {
         release                   => 'transaction_completion_event',
         no_id_available           => 'runtime_assertion',
         auto_transactions         => _clone_jsonish($auto_transactions),
+        transaction_state         => $transaction_state,
     };
+}
+
+sub _auto_id_lifecycle_transaction_state(%args) {
+    my %transaction_by_name = map { $_->{name} => $_ } @{$args{transactions}};
+    return [
+        map {
+            my $transaction = $transaction_by_name{$_};
+            confess "Internal error: auto-ID lifecycle transaction '$_' is missing from normalized transactions\n"
+                unless ref($transaction) eq 'HASH';
+            my $prefix = "$args{manager_name}_$_";
+            +{
+                transaction        => $_,
+                request_event      => $transaction->{request_event},
+                completion_event   => $transaction->{completion_event},
+                selected_id_signal => "${prefix}_auto_id_q",
+                busy_signal        => "${prefix}_auto_id_busy_q",
+                allocation_rules   => [
+                    map { "${prefix}_auto_id_alloc_$_" } @{$args{pool}},
+                ],
+                release_rule       => "${prefix}_auto_id_release",
+                no_id_assertion    => "${prefix}_auto_id_available",
+                completion_assertion => "${prefix}_auto_id_completion_active",
+            }
+        } @{$args{auto_transactions}}
+    ];
 }
 
 sub _auto_transactions_by_family($transactions) {
@@ -779,6 +814,8 @@ sub _reject_forbidden_or_duplicate_names(%args) {
         if defined $args{id_families};
     push @groups, [transactions => _transaction_names_and_tags($args{transactions})]
         if defined $args{transactions};
+    push @groups, [auto_id_lifecycle => _auto_id_generated_signal_names($args{auto_id_lifecycle})]
+        if defined $args{auto_id_lifecycle};
 
     for my $group (@groups) {
         my ($kind, $names) = @$group;
@@ -828,6 +865,19 @@ sub _id_family_signal_names($id_families) {
         my $entry = $id_families->{$family} || {};
         next unless $entry->{present};
         push @names, $entry->{request_id_signal}, $entry->{response_id_signal};
+    }
+
+    return \@names;
+}
+
+sub _auto_id_generated_signal_names($auto_id_lifecycle) {
+    my @names;
+    return \@names unless ref($auto_id_lifecycle) eq 'HASH';
+
+    for my $family (@{$auto_id_lifecycle->{families} || []}) {
+        for my $state (@{$family->{transaction_state} || []}) {
+            push @names, $state->{selected_id_signal}, $state->{busy_signal};
+        }
     }
 
     return \@names;
@@ -900,6 +950,16 @@ sub _emit_isf($contract) {
         @{_id_response_signal_inputs($contract)},
     ]);
     my @id_response_assertions = _id_response_assertion_transaction_lines($contract);
+    my @auto_id_assertions = _auto_id_lifecycle_assertion_transaction_lines($contract);
+    my @assertion_transactions = (@id_response_assertions, @auto_id_assertions);
+    my @auto_id_priorities = _auto_id_lifecycle_priority_lines($contract);
+    my @auto_id_rules = _auto_id_lifecycle_rule_lines($contract);
+    my @storage_lines = (
+        "    (var $contract->{storage}{pending_reads} (width $read_width))",
+        "    (var $contract->{storage}{pending_writes} (width $write_width))",
+        _auto_id_lifecycle_storage_lines($contract),
+    );
+    $storage_lines[-1] .= ")";
 
     return join("\n",
         "(actor $contract->{actor_name}",
@@ -915,13 +975,17 @@ sub _emit_isf($contract) {
         _width_output_line($contract->{status_outputs}{pending_writes}, $write_width),
         _width_output_line($contract->{status_outputs}{read_slots_available}, $read_width),
         _width_output_line($contract->{status_outputs}{write_slots_available}, $write_width),
+        _auto_id_lifecycle_request_output_lines($contract),
         "  )",
         "  (storage",
-        "    (var $contract->{storage}{pending_reads} (width $read_width))",
-        "    (var $contract->{storage}{pending_writes} (width $write_width)))",
+        @storage_lines,
         "",
-        @id_response_assertions,
-        (@id_response_assertions ? ("") : ()),
+        @auto_id_priorities,
+        (@auto_id_priorities ? ("") : ()),
+        @assertion_transactions,
+        (@assertion_transactions ? ("") : ()),
+        @auto_id_rules,
+        (@auto_id_rules ? ("") : ()),
         @read_rules,
         "",
         @write_rules,
@@ -968,6 +1032,185 @@ sub _id_response_assertion_transaction_lines($contract) {
     }
     push @lines, "  )";
     return @lines;
+}
+
+sub _auto_id_lifecycle_request_output_lines($contract) {
+    my $lifecycle = $contract->{auto_id_lifecycle};
+    return () unless ref($lifecycle) eq 'HASH';
+
+    return map {
+        _width_output_line($_->{request_id_signal}, _auto_id_family_width($contract, $_->{family}))
+    } @{$lifecycle->{families} || []};
+}
+
+sub _auto_id_lifecycle_storage_lines($contract) {
+    my $lifecycle = $contract->{auto_id_lifecycle};
+    return () unless ref($lifecycle) eq 'HASH';
+
+    my @lines;
+    for my $family (@{$lifecycle->{families} || []}) {
+        my $width = _auto_id_family_width($contract, $family->{family});
+        for my $state (@{$family->{transaction_state} || []}) {
+            push @lines,
+                "    (var $state->{selected_id_signal} (width $width))",
+                "    (var $state->{busy_signal} (width 1))";
+        }
+    }
+    return @lines;
+}
+
+sub _auto_id_lifecycle_assertion_transaction_lines($contract) {
+    my $lifecycle = $contract->{auto_id_lifecycle};
+    return () unless ref($lifecycle) eq 'HASH';
+
+    my @assertions;
+    for my $family (@{$lifecycle->{families} || []}) {
+        for my $state (@{$family->{transaction_state} || []}) {
+            my $available = _auto_id_available_expr($family, $state);
+            push @assertions, [
+                $state->{no_id_assertion},
+                _implies_expr($state->{request_event}, $available),
+                "$contract->{name} $state->{transaction} auto ID available",
+            ];
+            push @assertions, [
+                $state->{completion_assertion},
+                _implies_expr($state->{completion_event}, $state->{busy_signal}),
+                "$contract->{name} $state->{transaction} completion releases active auto ID",
+            ];
+        }
+
+        my @states = @{$family->{transaction_state} || []};
+        for my $left_index (0 .. $#states) {
+            for my $right_index ($left_index + 1 .. $#states) {
+                my $left = $states[$left_index];
+                my $right = $states[$right_index];
+                push @assertions, [
+                    "$contract->{name}_$left->{transaction}_$right->{transaction}_auto_id_mutual_exclusion",
+                    _implies_expr($left->{request_event}, _not_expr($right->{request_event})),
+                    "$contract->{name} $family->{family} auto ID requests are mutually exclusive",
+                ];
+            }
+        }
+    }
+    return () unless @assertions;
+
+    my @lines = ("  (transaction $contract->{name}_auto_id_lifecycle_checks");
+    for my $assertion (@assertions) {
+        my ($name, $condition, $message) = @$assertion;
+        push @lines,
+            "    (assert $condition " . _quoted_isf_string($message) . ")";
+    }
+    push @lines, "  )";
+    return @lines;
+}
+
+sub _auto_id_lifecycle_priority_lines($contract) {
+    my $lifecycle = $contract->{auto_id_lifecycle};
+    return () unless ref($lifecycle) eq 'HASH';
+
+    my @lines;
+    for my $family (@{$lifecycle->{families} || []}) {
+        my @allocation_rules = map { @{$_->{allocation_rules} || []} } @{$family->{transaction_state} || []};
+        for my $index (0 .. $#allocation_rules - 1) {
+            push @lines, "  (priority $allocation_rules[$index] over $allocation_rules[$index + 1])";
+        }
+    }
+    return @lines;
+}
+
+sub _auto_id_lifecycle_rule_lines($contract) {
+    my $lifecycle = $contract->{auto_id_lifecycle};
+    return () unless ref($lifecycle) eq 'HASH';
+
+    my @lines;
+    for my $family (@{$lifecycle->{families} || []}) {
+        for my $state (@{$family->{transaction_state} || []}) {
+            my @earlier_free_exprs;
+            my $rule_index = 0;
+            for my $id (@{$family->{pool}}) {
+                my $free = _auto_id_free_expr($family, $id);
+                my $guard = _and_expr(
+                    $state->{request_event},
+                    _not_expr($state->{busy_signal}),
+                    $free,
+                    map { _not_expr($_) } @earlier_free_exprs,
+                );
+                push @lines, _auto_id_rule(
+                    $state->{allocation_rules}[$rule_index],
+                    $guard,
+                    [
+                        [$state->{selected_id_signal}, $id],
+                        [$state->{busy_signal}, 1],
+                        [$family->{request_id_signal}, $id],
+                    ],
+                );
+                push @earlier_free_exprs, $free;
+                ++$rule_index;
+            }
+
+            push @lines, _auto_id_rule(
+                $state->{release_rule},
+                _and_expr($state->{completion_event}, $state->{busy_signal}),
+                [
+                    [$state->{busy_signal}, 0],
+                ],
+            );
+        }
+    }
+
+    return @lines;
+}
+
+sub _auto_id_rule($name, $guard, $assignments) {
+    my @lines = ("  (rule $name $guard");
+    for my $index (0 .. $#$assignments) {
+        my ($lhs, $rhs) = @{$assignments->[$index]};
+        my $suffix = $index == $#$assignments ? ')' : '';
+        push @lines, "    ($lhs $rhs)$suffix";
+    }
+    return @lines;
+}
+
+sub _auto_id_available_expr($family, $state) {
+    return _and_expr(
+        _not_expr($state->{busy_signal}),
+        _or_expr(map { _auto_id_free_expr($family, $_) } @{$family->{pool}}),
+    );
+}
+
+sub _auto_id_free_expr($family, $id) {
+    return _and_expr(
+        map {
+            _or_expr(
+                _not_expr($_->{busy_signal}),
+                _not_expr("(== $_->{selected_id_signal} $id)"),
+            )
+        } @{$family->{transaction_state} || []}
+    );
+}
+
+sub _auto_id_family_width($contract, $family) {
+    return $contract->{id_families}{$family}{width};
+}
+
+sub _and_expr(@terms) {
+    return '1' unless @terms;
+    return $terms[0] if @terms == 1;
+    return "(& " . join(' ', @terms) . ")";
+}
+
+sub _or_expr(@terms) {
+    return '0' unless @terms;
+    return $terms[0] if @terms == 1;
+    return "(| " . join(' ', @terms) . ")";
+}
+
+sub _not_expr($term) {
+    return "(! $term)";
+}
+
+sub _implies_expr($antecedent, $consequent) {
+    return "(=> $antecedent $consequent)";
 }
 
 sub _quoted_isf_string($value) {
@@ -1185,6 +1428,7 @@ sub _build_report(%args) {
             'auto_id_lifecycle requires id_families and transactions metadata',
             'auto_id_lifecycle listed families must have at least one auto-ID transaction in that family',
             'auto_id_lifecycle pools are bounded to 1..4 unique values per family and must fit the declared positive ID width',
+            'auto_id_lifecycle generates first-free request-ID drive, per-transaction busy/selected-ID state, completion-event release, no-ID assertions, inactive-completion assertions, and same-family request mutual-exclusion assertions',
         ],
         unsupported_residue => [
             {
@@ -1193,7 +1437,7 @@ sub _build_report(%args) {
             },
             {
                 id     => 'axi_id_ordering_and_response_matching',
-                detail => 'Concrete transaction ID request/response assertions and auto-ID lifecycle metadata reports are supported; generated request-ID drive, dynamic user-ID arbitration while issuing work, ID release, same-ID ordering, different-ID interleaving, generated BID/RID response demux, and burst/last-beat tracking remain outside this capacity/status shell.',
+                detail => 'Concrete transaction ID request/response assertions and explicit bounded auto-ID request-ID drive plus completion-event release are supported; dynamic user-ID arbitration while issuing multiple same-family requests in one cycle, same-ID ordering, different-ID interleaving, generated BID/RID response demux, and burst/last-beat tracking remain outside this capacity/status shell.',
             },
             {
                 id     => 'profile_aliases_and_full_manager_behavior',
@@ -1209,17 +1453,23 @@ sub _build_report(%args) {
 
 sub _report_auto_id_lifecycle($contract) {
     my $lifecycle = _clone_jsonish($contract->{auto_id_lifecycle});
-    $lifecycle->{generated_behavior} = JSON::PP::false;
+    $lifecycle->{generated_behavior} = $contract->{auto_id_lifecycle}{generated_behavior}
+        ? JSON::PP::true
+        : JSON::PP::false;
     return $lifecycle;
 }
 
 sub _report_id_response_rule_engine($contract) {
     my $engine = $contract->{id_response_rule_engine};
+    my @residue = @{$engine->{residue} || []};
+    if (ref($contract->{auto_id_lifecycle}) eq 'HASH' && $contract->{auto_id_lifecycle}{generated_behavior}) {
+        @residue = grep { $_ ne 'auto_id_allocation' && $_ ne 'id_release' } @residue;
+    }
     return {
         mode => $engine->{mode},
         checks => _clone_jsonish($engine->{checks}),
         id_signal_inputs => _clone_jsonish($engine->{id_signal_inputs}),
-        residue => _clone_jsonish($engine->{residue}),
+        residue => _clone_jsonish(\@residue),
     };
 }
 

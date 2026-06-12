@@ -321,33 +321,38 @@ subtest 'transaction event dispatch fans per-transaction events into capacity ru
     like($sv_assertions, qr/\Q$response_assert\E/, 'assertion backend emits the per-transaction response concrete-ID property');
 };
 
-subtest 'auto-ID lifecycle metadata reports bounded pool contract without changing generated behavior' => sub {
-    my $dispatch = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_transaction_event_dispatch());
+subtest 'auto-ID lifecycle generates bounded request-ID drive behavior' => sub {
     my $result = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_auto_id_lifecycle());
     my $isf = $result->{generated_ial1}{text};
 
-    is(
-        $result->{generated_ial1}{text},
-        $dispatch->{generated_ial1}{text},
-        'auto-ID lifecycle metadata does not change generated IAL1 text in the metadata slice',
-    );
-    is_deeply(
-        $result->{generated_ial0}{files},
-        $dispatch->{generated_ial0}{files},
-        'auto-ID lifecycle metadata does not change generated IAL0 text in the metadata slice',
-    );
-    unlike($isf, qr/\(output axi0_awid\b/, 'metadata slice does not drive generated write request ID yet');
-    unlike($isf, qr/\(input axi0_awid\b/, 'metadata slice does not treat generated write request ID as an input');
-    unlike($isf, qr/\(input axi0_bid\b/, 'metadata slice does not add unused write response ID input');
+    like($isf, qr/\(output axi0_awid \(width 4\)\)/, 'auto-ID lifecycle drives the write request ID as a generated output');
+    unlike($isf, qr/\(input axi0_awid\b/, 'auto-ID lifecycle does not treat generated write request ID as an input');
+    unlike($isf, qr/\(input axi0_bid\b/, 'auto-ID lifecycle does not add unused write response ID input');
+    like($isf, qr/\(var axi0_w0_auto_id_q \(width 4\)\)/, 'auto-ID lifecycle declares selected-ID state for w0');
+    like($isf, qr/\(var axi0_w0_auto_id_busy_q \(width 1\)\)/, 'auto-ID lifecycle declares busy state for w0');
+    like($isf, qr/\(var axi0_w1_auto_id_q \(width 4\)\)/, 'auto-ID lifecycle declares selected-ID state for w1');
+    like($isf, qr/\(priority axi0_w0_auto_id_alloc_0 over axi0_w0_auto_id_alloc_1\)/, 'auto-ID lifecycle emits generated priority for first-free pool order');
+    like($isf, qr/\(rule axi0_w0_auto_id_alloc_0\b[\s\S]*\(axi0_w0_auto_id_q 0\)[\s\S]*\(axi0_w0_auto_id_busy_q 1\)[\s\S]*\(axi0_awid 0\)\)/, 'auto-ID lifecycle allocates pool ID 0 to w0');
+    like($isf, qr/\(rule axi0_w0_auto_id_alloc_1\b[\s\S]*\(axi0_w0_auto_id_q 1\)[\s\S]*\(axi0_awid 1\)\)/, 'auto-ID lifecycle allocates pool ID 1 to w0 when earlier IDs are unavailable');
+    like($isf, qr/\(rule axi0_w0_auto_id_release \(& axi0_w0_complete axi0_w0_auto_id_busy_q\)[\s\S]*\(axi0_w0_auto_id_busy_q 0\)\)/, 'auto-ID lifecycle releases w0 busy state on completion');
+    like($isf, qr/"axi0 w0 auto ID available"/, 'auto-ID lifecycle emits no-ID-available runtime assertion');
+    like($isf, qr/"axi0 write auto ID requests are mutually exclusive"/, 'auto-ID lifecycle emits same-family request mutual-exclusion assertion');
+
+    my $fsm = $result->{generated_ial0}{files}{'axi0_capacity_status.fsm'};
+    like($fsm, qr/\(\+size[\s\S]*\(axi0_awid 4\)/, 'scheduled .fsm declares AWID width');
+    like($fsm, qr/\(\+size[\s\S]*\(axi0_w0_auto_id_q 4\)/, 'scheduled .fsm declares selected-ID storage width');
+    like($fsm, qr/\(-axi0_w0_auto_id_alloc_0\b[\s\S]*\(<- \(axi0_awid> 0\)\)/, 'scheduled .fsm drives AWID from allocation rule');
+    like($fsm, qr/\(-axi0_w0_auto_id_release\b[\s\S]*\(<- \(axi0_w0_auto_id_busy_q 0\)\)/, 'scheduled .fsm lowers completion release rule');
+    like($fsm, qr/\(\+assert[\s\S]*axi0 w0 auto ID available/, 'scheduled .fsm carries auto-ID runtime assertions');
 
     my $lifecycle = $result->{report}{auto_id_lifecycle};
     is($lifecycle->{mode}, 'bounded_pool_contract', 'report marks bounded-pool auto-ID lifecycle mode');
-    ok(!$lifecycle->{generated_behavior}, 'report explicitly marks generated behavior as false');
+    ok($lifecycle->{generated_behavior}, 'report marks generated behavior true');
     is($lifecycle->{max_pool_entries_per_family}, 4, 'report publishes the bounded pool-entry cap');
     is_deeply(
         $lifecycle->{residue},
-        [qw(generated_request_id_drive id_release_rules same_id_ordering response_demux)],
-        'report keeps generated request-ID drive and lifecycle behavior as residue',
+        [qw(same_id_ordering response_demux)],
+        'report removes shipped request-ID drive and release behavior from residue',
     );
     is(scalar(@{$lifecycle->{families}}), 1, 'report publishes only the listed lifecycle family');
     my $write = $lifecycle->{families}[0];
@@ -360,8 +365,35 @@ subtest 'auto-ID lifecycle metadata reports bounded pool contract without changi
     is($write->{allocator}, 'first_free_pool_order', 'allocator contract is reported');
     is($write->{transaction_lifetime}, 'single_active', 'transaction lifetime contract is reported');
     is($write->{release}, 'transaction_completion_event', 'release contract is reported');
-    is($write->{no_id_available}, 'runtime_assertion', 'no-ID behavior is reported as future runtime assertion');
+    is($write->{no_id_available}, 'runtime_assertion', 'no-ID behavior is reported as a generated runtime assertion');
     is_deeply($write->{auto_transactions}, [qw(w0 w1)], 'write lifecycle lists auto-ID transactions in source order');
+    is_deeply(
+        [map { $_->{selected_id_signal} } @{$write->{transaction_state}}],
+        [qw(axi0_w0_auto_id_q axi0_w1_auto_id_q)],
+        'report lists generated selected-ID state per auto transaction',
+    );
+    is_deeply(
+        $write->{transaction_state}[0]{allocation_rules},
+        [qw(axi0_w0_auto_id_alloc_0 axi0_w0_auto_id_alloc_1)],
+        'report lists generated allocation rules per pool value',
+    );
+    is($write->{transaction_state}[0]{release_rule}, 'axi0_w0_auto_id_release', 'report lists generated release rule');
+
+    my $engine = $result->{report}{id_response_rule_engine};
+    is_deeply($engine->{id_signal_inputs}, [qw(axi0_arid axi0_rid)], 'auto-ID lifecycle leaves response ID inputs to concrete checks only');
+    is_deeply($engine->{residue}, [qw(same_id_ordering response_demux)], 'ID/response rule-engine residue reflects shipped auto-ID lifecycle behavior');
+
+    my $priority = $result->{generated_ial1_schedule_report}{priority_resolutions};
+    ok((grep { ($_->{target} // '') eq 'axi0_awid' && ($_->{winner} // '') eq 'axi0_w0_auto_id_alloc_0' } @$priority), 'schedule report records generated allocation priority for AWID');
+
+    my $hdl = hdl_for('axi0_capacity_status', $fsm);
+    like($hdl, qr/\boutput\s+reg\s+\[3:0\]\s+axi0_awid\b/, 'SystemVerilog declares AWID as a generated 4-bit output');
+    like($hdl, qr/\breg\s+\[3:0\]\s+axi0_w0_auto_id_q\b/, 'SystemVerilog declares selected-ID state');
+    like($hdl, qr/\breg\s+axi0_w0_auto_id_busy_q\b/, 'SystemVerilog declares busy state');
+
+    my $sv_assertions = sv_assertion_block_for_result($result);
+    like($sv_assertions, qr/axi0 w0 auto ID available/, 'SystemVerilog assertion backend emits the no-ID-available check');
+    like($sv_assertions, qr/axi0 write auto ID requests are mutually exclusive/, 'SystemVerilog assertion backend emits same-family mutual-exclusion check');
 };
 
 subtest 'schedule report and HDL expose generated storage and status surface' => sub {

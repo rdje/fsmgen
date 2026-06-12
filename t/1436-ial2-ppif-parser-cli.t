@@ -192,32 +192,26 @@ subtest 'PPIF adapter parses AXI manager transaction event dispatch' => sub {
     );
 };
 
-subtest 'PPIF adapter parses AXI manager auto-ID lifecycle metadata' => sub {
+subtest 'PPIF adapter parses AXI manager auto-ID lifecycle behavior' => sub {
     my $sample_path = sample_capacity_auto_id_lifecycle_ppif_path();
     ok(-f $sample_path, 'tracked runnable PPIF capacity/status auto-ID lifecycle sample exists');
 
-    my $dispatch = FSM::Adapter::IAL2::PPIF->new()->parse_source(
-        sample_capacity_transaction_dispatch_ppif(),
-        sample_capacity_transaction_dispatch_ppif_path(),
-    );
     my $result = FSM::Adapter::IAL2::PPIF->new()->parse_source(sample_capacity_auto_id_lifecycle_ppif(), $sample_path);
 
     is($result->{kind}, 'protocol_intent.axi_manager_capacity_status', 'auto-ID lifecycle sample still uses the capacity/status generator');
     is($result->{report}{source_object}{id}, 'axi-manager-capacity-status-auto-id-lifecycle', 'auto-ID lifecycle source object id is preserved');
     is($result->{report}{source_object}{intent_name}, 'axi_manager_capacity_status_auto_id_lifecycle', 'auto-ID lifecycle source intent name is preserved');
-    is(
-        $result->{generated_ial1}{text},
-        $dispatch->{generated_ial1}{text},
-        'auto-ID lifecycle metadata does not change generated IAL1 text',
-    );
-    is_deeply(
-        $result->{generated_ial0}{files},
-        $dispatch->{generated_ial0}{files},
-        'auto-ID lifecycle metadata does not change generated IAL0 text',
-    );
-    unlike($result->{generated_ial1}{text}, qr/\(output axi0_awid\b/, 'auto-ID lifecycle metadata does not drive AWID yet');
-    unlike($result->{generated_ial1}{text}, qr/\(input axi0_awid\b/, 'auto-ID lifecycle metadata does not treat AWID as an input');
+    like($result->{generated_ial1}{text}, qr/\(output axi0_awid \(width 4\)\)/, 'auto-ID lifecycle drives AWID as a generated output');
+    unlike($result->{generated_ial1}{text}, qr/\(input axi0_awid\b/, 'auto-ID lifecycle does not treat AWID as an input');
+    unlike($result->{generated_ial1}{text}, qr/\(input axi0_bid\b/, 'auto-ID lifecycle does not add unused BID input');
+    like($result->{generated_ial1}{text}, qr/\(var axi0_w0_auto_id_q \(width 4\)\)/, 'auto-ID lifecycle declares w0 selected-ID state');
+    like($result->{generated_ial1}{text}, qr/\(priority axi0_w0_auto_id_alloc_0 over axi0_w0_auto_id_alloc_1\)/, 'auto-ID lifecycle emits allocation priority edges');
+    like($result->{generated_ial1}{text}, qr/\(rule axi0_w0_auto_id_alloc_0\b[\s\S]*\(axi0_awid 0\)\)/, 'auto-ID lifecycle emits allocation rule for pool ID 0');
+    like($result->{generated_ial1}{text}, qr/\(rule axi0_w0_auto_id_release\b[\s\S]*\(axi0_w0_auto_id_busy_q 0\)\)/, 'auto-ID lifecycle emits completion release rule');
+    like($result->{generated_ial0}{files}{'axi0_capacity_status.fsm'}, qr/\(\+size[\s\S]*\(axi0_awid 4\)/, 'auto-ID lifecycle scheduled .fsm carries AWID width');
+    like($result->{generated_ial0}{files}{'axi0_capacity_status.fsm'}, qr/\(\+assert[\s\S]*axi0 w0 auto ID available/, 'auto-ID lifecycle scheduled .fsm carries runtime assertions');
     assert_write_auto_id_lifecycle_report($result->{report}{auto_id_lifecycle}, 'adapter report');
+    is_deeply($result->{report}{id_response_rule_engine}{id_signal_inputs}, [qw(axi0_arid axi0_rid)], 'auto-ID lifecycle keeps response ID inputs tied to concrete checks only');
 };
 
 subtest 'PPIF adapter diagnostics fail closed before generation claims' => sub {
@@ -470,7 +464,7 @@ subtest 'CLI emits IAL2 report JSON for AXI manager transaction event dispatch .
     );
 };
 
-subtest 'CLI emits IAL2 report JSON for AXI manager auto-ID lifecycle metadata .ppif' => sub {
+subtest 'CLI emits IAL2 report JSON for AXI manager auto-ID lifecycle behavior .ppif' => sub {
     my ($success, undef, undef, $stdout_buf, $stderr_buf) = run(
         command => ['./bin/fsmgen', '--emit-schedule-json', sample_capacity_auto_id_lifecycle_ppif_path()],
     );
@@ -481,7 +475,23 @@ subtest 'CLI emits IAL2 report JSON for AXI manager auto-ID lifecycle metadata .
     is($report->{schema}, 'fsmgen.ial2.protocol_intent.axi_manager_capacity_status.v1', 'CLI keeps the capacity/status report schema');
     is($report->{source_object}{intent_name}, 'axi_manager_capacity_status_auto_id_lifecycle', 'auto-ID lifecycle report carries the PPIF top-level intent name');
     assert_write_auto_id_lifecycle_report($report->{auto_id_lifecycle}, 'CLI report');
-    is_deeply($report->{generated_artifacts}{ial0}{files}, ['axi0_capacity_status.fsm'], 'auto-ID lifecycle metadata keeps the generated .fsm artifact name stable');
+    is_deeply($report->{generated_artifacts}{ial0}{files}, ['axi0_capacity_status.fsm'], 'auto-ID lifecycle behavior keeps the generated .fsm artifact name stable');
+    is_deeply($report->{id_response_rule_engine}{id_signal_inputs}, [qw(axi0_arid axi0_rid)], 'CLI report keeps auto-ID response ID signals out until concrete response checks need them');
+};
+
+subtest 'CLI --verify-hdl accepts AXI manager auto-ID lifecycle behavior .ppif' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $hdl = File::Spec->catfile($tempdir, 'axi_auto_id_lifecycle.sv');
+
+    my ($success, undef, undef, undef, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--quiet', '--verify-hdl', '--output', $hdl, sample_capacity_auto_id_lifecycle_ppif_path()],
+    );
+
+    ok($success, 'capacity/status auto-ID lifecycle --verify-hdl succeeds');
+    is(join('', @{$stderr_buf || []}), '', 'capacity/status auto-ID lifecycle --verify-hdl keeps stderr clean');
+    ok(-f $hdl, 'auto-ID lifecycle --output writes generated HDL');
+    like(slurp($hdl), qr/\boutput\s+reg\s+\[3:0\]\s+axi0_awid\b/, 'auto-ID lifecycle HDL exposes generated AWID output');
+    like(slurp($hdl), qr/\breg\s+\[3:0\]\s+axi0_w0_auto_id_q\b/, 'auto-ID lifecycle HDL exposes selected-ID state');
 };
 
 subtest 'CLI --outdir materializes generated .isf, .fsm, and HDL for .ppif' => sub {
@@ -1130,12 +1140,12 @@ sub manager_capacity_object_with_duplicate_auto_id_lifecycle {
 sub assert_write_auto_id_lifecycle_report {
     my ($lifecycle, $owner) = @_;
     is($lifecycle->{mode}, 'bounded_pool_contract', "$owner marks bounded-pool auto-ID lifecycle mode");
-    ok(!$lifecycle->{generated_behavior}, "$owner marks generated behavior false");
+    ok($lifecycle->{generated_behavior}, "$owner marks generated behavior true");
     is($lifecycle->{max_pool_entries_per_family}, 4, "$owner publishes the bounded pool-entry cap");
     is_deeply(
         $lifecycle->{residue},
-        [qw(generated_request_id_drive id_release_rules same_id_ordering response_demux)],
-        "$owner lists generated lifecycle behavior as residue",
+        [qw(same_id_ordering response_demux)],
+        "$owner lists only unshipped ordering/demux behavior as residue",
     );
     is(scalar(@{$lifecycle->{families}}), 1, "$owner publishes one lifecycle family");
     my $write = $lifecycle->{families}[0];
@@ -1150,6 +1160,17 @@ sub assert_write_auto_id_lifecycle_report {
     is($write->{release}, 'transaction_completion_event', "$owner reports the release contract");
     is($write->{no_id_available}, 'runtime_assertion', "$owner reports the no-ID behavior");
     is_deeply($write->{auto_transactions}, [qw(w0 w1)], "$owner reports auto-ID transactions in source order");
+    is_deeply(
+        [map { $_->{selected_id_signal} } @{$write->{transaction_state}}],
+        [qw(axi0_w0_auto_id_q axi0_w1_auto_id_q)],
+        "$owner reports generated selected-ID state",
+    );
+    is_deeply(
+        $write->{transaction_state}[0]{allocation_rules},
+        [qw(axi0_w0_auto_id_alloc_0 axi0_w0_auto_id_alloc_1)],
+        "$owner reports generated allocation rules",
+    );
+    is($write->{transaction_state}[0]{release_rule}, 'axi0_w0_auto_id_release', "$owner reports generated release rule");
 }
 
 sub write_file {
