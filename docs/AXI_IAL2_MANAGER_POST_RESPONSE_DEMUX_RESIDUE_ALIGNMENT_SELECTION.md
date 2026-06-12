@@ -3,6 +3,11 @@
 This note records the selector outcome for
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.31`.
 
+Implementation follow-up:
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.32` shipped the selected report-contract
+alignment. See
+[docs/AXI_IAL2_MANAGER_AUTO_ID_RESIDUE_ALIGNMENT_FIRST_SLICE.md](AXI_IAL2_MANAGER_AUTO_ID_RESIDUE_ALIGNMENT_FIRST_SLICE.md).
+
 ## Inputs Read
 
 The selector reviewed the shipped IAL2 AXI manager path through generated
@@ -105,6 +110,6 @@ git --no-pager diff --check
 
 ## Rollback Boundary
 
-The `.32` implementation should be a report-contract cleanup only. If it
-touches generated IAL1, IAL0, or HDL behavior, split that work into a separate
-task-tree leaf before proceeding.
+The `.32` implementation shipped as report-contract cleanup only. Any future
+generated IAL1, IAL0, or HDL behavior beyond this report alignment requires a
+separate task-tree leaf before proceeding.

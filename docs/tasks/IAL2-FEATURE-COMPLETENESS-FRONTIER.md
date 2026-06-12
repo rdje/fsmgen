@@ -48,7 +48,7 @@ path before reopening VHDL backend or VHDL rerouting work.
 - ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER`
   Status: `active`
   Goal: `Make IAL2 feature-complete on the SystemVerilog-backed path before VHDL work resumes.`
-  Children: `IAL2-FEATURE-COMPLETENESS-FRONTIER.1, IAL2-FEATURE-COMPLETENESS-FRONTIER.2, IAL2-FEATURE-COMPLETENESS-FRONTIER.3, IAL2-FEATURE-COMPLETENESS-FRONTIER.4, IAL2-FEATURE-COMPLETENESS-FRONTIER.5, IAL2-FEATURE-COMPLETENESS-FRONTIER.6, IAL2-FEATURE-COMPLETENESS-FRONTIER.7, IAL2-FEATURE-COMPLETENESS-FRONTIER.8, IAL2-FEATURE-COMPLETENESS-FRONTIER.9, IAL2-FEATURE-COMPLETENESS-FRONTIER.10, IAL2-FEATURE-COMPLETENESS-FRONTIER.11, IAL2-FEATURE-COMPLETENESS-FRONTIER.12, IAL2-FEATURE-COMPLETENESS-FRONTIER.13, IAL2-FEATURE-COMPLETENESS-FRONTIER.14, IAL2-FEATURE-COMPLETENESS-FRONTIER.15, IAL2-FEATURE-COMPLETENESS-FRONTIER.16, IAL2-FEATURE-COMPLETENESS-FRONTIER.17, IAL2-FEATURE-COMPLETENESS-FRONTIER.18, IAL2-FEATURE-COMPLETENESS-FRONTIER.19, IAL2-FEATURE-COMPLETENESS-FRONTIER.20, IAL2-FEATURE-COMPLETENESS-FRONTIER.21, IAL2-FEATURE-COMPLETENESS-FRONTIER.22, IAL2-FEATURE-COMPLETENESS-FRONTIER.23, IAL2-FEATURE-COMPLETENESS-FRONTIER.24, IAL2-FEATURE-COMPLETENESS-FRONTIER.25, IAL2-FEATURE-COMPLETENESS-FRONTIER.26, IAL2-FEATURE-COMPLETENESS-FRONTIER.27, IAL2-FEATURE-COMPLETENESS-FRONTIER.28, IAL2-FEATURE-COMPLETENESS-FRONTIER.29, IAL2-FEATURE-COMPLETENESS-FRONTIER.30, IAL2-FEATURE-COMPLETENESS-FRONTIER.31, IAL2-FEATURE-COMPLETENESS-FRONTIER.32`
+  Children: `IAL2-FEATURE-COMPLETENESS-FRONTIER.1, IAL2-FEATURE-COMPLETENESS-FRONTIER.2, IAL2-FEATURE-COMPLETENESS-FRONTIER.3, IAL2-FEATURE-COMPLETENESS-FRONTIER.4, IAL2-FEATURE-COMPLETENESS-FRONTIER.5, IAL2-FEATURE-COMPLETENESS-FRONTIER.6, IAL2-FEATURE-COMPLETENESS-FRONTIER.7, IAL2-FEATURE-COMPLETENESS-FRONTIER.8, IAL2-FEATURE-COMPLETENESS-FRONTIER.9, IAL2-FEATURE-COMPLETENESS-FRONTIER.10, IAL2-FEATURE-COMPLETENESS-FRONTIER.11, IAL2-FEATURE-COMPLETENESS-FRONTIER.12, IAL2-FEATURE-COMPLETENESS-FRONTIER.13, IAL2-FEATURE-COMPLETENESS-FRONTIER.14, IAL2-FEATURE-COMPLETENESS-FRONTIER.15, IAL2-FEATURE-COMPLETENESS-FRONTIER.16, IAL2-FEATURE-COMPLETENESS-FRONTIER.17, IAL2-FEATURE-COMPLETENESS-FRONTIER.18, IAL2-FEATURE-COMPLETENESS-FRONTIER.19, IAL2-FEATURE-COMPLETENESS-FRONTIER.20, IAL2-FEATURE-COMPLETENESS-FRONTIER.21, IAL2-FEATURE-COMPLETENESS-FRONTIER.22, IAL2-FEATURE-COMPLETENESS-FRONTIER.23, IAL2-FEATURE-COMPLETENESS-FRONTIER.24, IAL2-FEATURE-COMPLETENESS-FRONTIER.25, IAL2-FEATURE-COMPLETENESS-FRONTIER.26, IAL2-FEATURE-COMPLETENESS-FRONTIER.27, IAL2-FEATURE-COMPLETENESS-FRONTIER.28, IAL2-FEATURE-COMPLETENESS-FRONTIER.29, IAL2-FEATURE-COMPLETENESS-FRONTIER.30, IAL2-FEATURE-COMPLETENESS-FRONTIER.31, IAL2-FEATURE-COMPLETENESS-FRONTIER.32, IAL2-FEATURE-COMPLETENESS-FRONTIER.33`
 
 - ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER.1`
   Status: `done`
@@ -268,9 +268,16 @@ path before reopening VHDL backend or VHDL rerouting work.
   Commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.31: select AXI residue alignment`
 
 - ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER.32`
-  Status: `pending`
+  Status: `done`
   Goal: `Align AXI auto-ID lifecycle report residue after generated write BID response-demux behavior.`
   Acceptance: `When explicit response_demux.generated_behavior is true, the capacity/status report removes response_demux from auto_id_lifecycle.residue because generated demux completion pulses now drive auto-ID release; samples without generated response-demux keep existing residue; generated .isf, .fsm, and SystemVerilog HDL text remain unchanged; focused generator and PPIF/CLI tests prove report shape, no generated-artifact drift, and unchanged out-of-scope same-ID ordering, read RID demux, read-data interleaving, bursts, queued/blocking policy, aliases, full-manager, and VHDL residue; docs/mdBook/Knowledge Map/roadmap/memory stay synced.`
+  Verification: `FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus now removes response_demux from the emitted auto_id_lifecycle.residue only when explicit response_demux.generated_behavior is true. Plain auto-ID lifecycle reports keep response_demux residue. Focused generator and PPIF/CLI tests prove the aligned report shape while generated response-demux .isf/.fsm/SystemVerilog behavior remains covered by the existing .30 checks; docs, mdBook, Knowledge Map, roadmap, and memory were synced.`
+  Commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.32: align AXI auto-ID residue`
+
+- ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER.33`
+  Status: `pending`
+  Goal: `Select the next IAL2 feature-completeness slice after auto-ID response-demux residue alignment.`
+  Acceptance: `The selector reads the shipped IAL2 Valid-Ready, bundle, AXI manager capacity/status, ID-family, transaction-envelope, transaction-event-dispatch, concrete-ID assertion, auto-ID lifecycle, request-ID drive, write response-demux behavior, and residue-aligned report surfaces; reads current AXI manager residue, generated .isf/.fsm/SystemVerilog artifacts, diagnostics, mdBook, roadmap, and Knowledge Map; chooses one next exact IAL2 behavior subset or prerequisite before any behavior changes; records scope, non-goals, public syntax/report expectations, generated artifact expectations, diagnostics, validation gates, residue, rollback, docs, and VHDL deferral.`
   Verification: `pending`
   Commit: `pending`
 
@@ -278,7 +285,7 @@ path before reopening VHDL backend or VHDL rerouting work.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.32` | `pending` | `.31` found stale `response_demux` residue under `auto_id_lifecycle` after generated write BID demux shipped, so report-contract alignment comes before larger ordering or read-response behavior. |
+| 1 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.33` | `pending` | `.32` aligned auto-ID lifecycle report residue after generated write BID response-demux behavior, so the next exact IAL2 feature-completeness slice must be selected before further behavior changes. |
 
 ## Decisions
 
@@ -615,6 +622,12 @@ path before reopening VHDL backend or VHDL rerouting work.
   even though generated demux pulses now drive auto-ID release. `.32` is a
   narrow report-contract cleanup before same-ID ordering, read `RID` demux,
   interleaving, burst, alias, full-manager, or VHDL work.
+- `2026-06-12`: `.32` shipped the selected report-contract cleanup.
+  Explicit generated write response-demux contracts now remove
+  `response_demux` from `auto_id_lifecycle.residue`; non-demux lifecycle
+  samples keep that residue. `.33` is selected as the next leaf: choose the
+  next exact IAL2 feature-completeness slice before any further behavior
+  changes.
 - `2026-06-12`: User clarified the backend strategy: FSMGen is currently Perl
   5, but IAL0/IAL1/IAL2 and the mdBook must remain backend-language-neutral
   contracts for future Rust, Rust/Wasm, browser-capable JavaScript, and
@@ -705,6 +718,8 @@ path before reopening VHDL backend or VHDL rerouting work.
 | `2026-06-12` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.30` | `perl -Iperl -c perl/FSM/IAL2/ProtocolIntent/AxiManagerCapacityStatus.pm`; `perl -Iperl -c perl/FSM/Support/LanguageSurfaceSection.pm`; `perl -Iperl -c t/1437-axi-ial2-manager-capacity-status-generator.t`; `perl -Iperl -c t/1436-ial2-ppif-parser-cli.t`; `prove -Iperl t/1437-axi-ial2-manager-capacity-status-generator.t`; `prove -Iperl t/1436-ial2-ppif-parser-cli.t`; `./bin/fsmgen --quiet --verify-hdl ppif/axi_manager_capacity_status_response_demux.ppif`; `prove -Iperl t/297-capability-manifest.t t/317-language-surface-contract.t t/301-check-json-supported-corpus.t t/303-normalized-semantic-json-supported-corpus.t`; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `mdbook build docs/book`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `git --no-pager diff --check`; stale-current-frontier search | Passed. |
 | `2026-06-12` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.31` | `docs/AXI_IAL2_MANAGER_WRITE_RESPONSE_DEMUX_BEHAVIOR_FIRST_SLICE.md`; `docs/AXI_IAL2_MANAGER_WRITE_RESPONSE_DEMUX_BEHAVIOR_READINESS_AUDIT.md`; `docs/AXI_IAL2_MANAGER_WRITE_RESPONSE_DEMUX_METADATA_FIRST_SLICE.md`; `docs/AXI_IAL2_MANAGER_WRITE_RESPONSE_DEMUX_CONTRACT_SELECTION.md`; `docs/AXI_ID_ORDERING_RULE_EVIDENCE_PROBE.md`; `docs/AXI_MANAGER_RULE_MATRIX_DESIGN_PROBE.md`; `docs/book/src/14-feature-backlog.md`; `ROADMAP_V2.md`; `perl/FSM/IAL2/ProtocolIntent/AxiManagerCapacityStatus.pm`; `ppif/axi_manager_capacity_status_response_demux.ppif`; `./bin/fsmgen --emit-schedule-json ppif/axi_manager_capacity_status_response_demux.ppif`; `docs/AXI_IAL2_MANAGER_POST_RESPONSE_DEMUX_RESIDUE_ALIGNMENT_SELECTION.md` | Selected `.32`, auto-ID lifecycle report-residue alignment after generated write BID response-demux behavior. |
 | `2026-06-12` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.31` | `bash knowledge-map/scripts/gen_knowledge_map.sh`; `mdbook build docs/book`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `git --no-pager diff --check`; stale-current-frontier search | Passed. |
+| `2026-06-12` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.32` | `perl/FSM/IAL2/ProtocolIntent/AxiManagerCapacityStatus.pm`; `t/1437-axi-ial2-manager-capacity-status-generator.t`; `t/1436-ial2-ppif-parser-cli.t`; `ppif/axi_manager_capacity_status_response_demux.ppif`; `docs/AXI_IAL2_MANAGER_AUTO_ID_RESIDUE_ALIGNMENT_FIRST_SLICE.md`; `docs/AXI_IAL2_MANAGER_POST_RESPONSE_DEMUX_RESIDUE_ALIGNMENT_SELECTION.md`; `docs/book/src/14-feature-backlog.md`; `docs/knowledge/ial2-axi-manager-auto-id-residue-alignment-first-slice.md`; `docs/knowledge/ial2-feature-completeness-next-slice.md`; `README.md`; `ROADMAP_V2.md`; `docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md`; `docs/TASK_TREE.md`; `MEMORY.md` | Shipped auto-ID lifecycle report-residue alignment after generated write BID response-demux behavior and advanced the frontier to `.33`. |
+| `2026-06-12` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.32` | `perl -Iperl -c perl/FSM/IAL2/ProtocolIntent/AxiManagerCapacityStatus.pm`; `perl -Iperl -c t/1437-axi-ial2-manager-capacity-status-generator.t`; `perl -Iperl -c t/1436-ial2-ppif-parser-cli.t`; `prove -Iperl t/1437-axi-ial2-manager-capacity-status-generator.t`; `./bin/fsmgen --emit-schedule-json ppif/axi_manager_capacity_status_response_demux.ppif`; `prove -Iperl t/1436-ial2-ppif-parser-cli.t`; `./bin/fsmgen --quiet --verify-hdl ppif/axi_manager_capacity_status_response_demux.ppif`; `prove -Iperl t/297-capability-manifest.t t/317-language-surface-contract.t t/301-check-json-supported-corpus.t t/303-normalized-semantic-json-supported-corpus.t`; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `mdbook build docs/book`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `git --no-pager diff --check`; stale-current-frontier search | Passed. |
 
 ## Commit Log
 
@@ -741,6 +756,7 @@ path before reopening VHDL backend or VHDL rerouting work.
 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.29` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.29: ship IAL1 rule pulse action` | Shipped bounded IAL1 rule-owned pulse actions and advanced the frontier to `.30`. |
 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.30` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.30: ship AXI response demux behavior` | Shipped generated AXI write BID response-demux behavior and advanced the frontier to `.31`. |
 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.31` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.31: select AXI residue alignment` | Selected auto-ID lifecycle report-residue alignment and advanced the frontier to `.32`. |
+| `IAL2-FEATURE-COMPLETENESS-FRONTIER.32` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.32: align AXI auto-ID residue` | Shipped auto-ID lifecycle report-residue alignment and advanced the frontier to `.33`. |
 
 ## Changelog
 
@@ -846,3 +862,6 @@ path before reopening VHDL backend or VHDL rerouting work.
 - `2026-06-12`: Completed `.31` selector, chose auto-ID lifecycle
   report-residue alignment after generated write `BID` response demux, and
   advanced the frontier to `.32`.
+- `2026-06-12`: Completed `.32` implementation, aligned
+  `auto_id_lifecycle.residue` for generated write `BID` response demux, and
+  advanced the frontier to `.33`, the next IAL2 feature-completeness selector.

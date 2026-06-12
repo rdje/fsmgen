@@ -44,7 +44,8 @@ bursts. `id_response_rule_engine.residue` no longer includes `response_demux`
 when explicit write demux behavior is present.
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.31` selected `.32` to align the remaining
-`auto_id_lifecycle.residue` report entry with this shipped behavior.
+`auto_id_lifecycle.residue` report entry with this shipped behavior, and `.32`
+has now shipped that cleanup.
 
 VHDL, read `RID` demux, same-ID response ordering queues, read-data
 interleaving/reassembly, bursts, queued/blocking policy, profile aliases, and

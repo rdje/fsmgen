@@ -229,6 +229,7 @@ subtest 'PPIF adapter parses AXI manager write response-demux behavior' => sub {
     like($result->{generated_ial1}{text}, qr/\(rule axi0_w0_response_demux\b[\s\S]*\(pulse axi0_w0_complete\)\)/, 'response-demux generated IAL1 emits w0 pulse rule');
     like($result->{generated_ial0}{files}{'axi0_capacity_status.fsm'}, qr/\(-axi0_w0_response_demux\b[\s\S]*\(<1 \(axi0_w0_complete> 1\)\)/, 'response-demux generated IAL0 emits w0 completion pulse');
     assert_write_response_demux_report($result->{report}{response_demux}, 'adapter report');
+    is_deeply($result->{report}{auto_id_lifecycle}{residue}, [qw(same_id_ordering)], 'adapter report removes response_demux from auto-ID lifecycle residue');
     is_deeply($result->{report}{id_response_rule_engine}{residue}, [qw(same_id_ordering)], 'adapter report removes response_demux from ID/response residue');
 };
 
@@ -539,6 +540,7 @@ subtest 'CLI emits IAL2 report JSON for AXI manager response-demux behavior .ppi
     is($report->{schema}, 'fsmgen.ial2.protocol_intent.axi_manager_capacity_status.v1', 'CLI keeps the capacity/status report schema');
     is($report->{source_object}{intent_name}, 'axi_manager_capacity_status_response_demux', 'response-demux report carries the PPIF top-level intent name');
     assert_write_response_demux_report($report->{response_demux}, 'CLI report');
+    is_deeply($report->{auto_id_lifecycle}{residue}, [qw(same_id_ordering)], 'CLI report removes response_demux from auto-ID lifecycle residue');
     is_deeply($report->{id_response_rule_engine}{residue}, [qw(same_id_ordering)], 'CLI report removes response demux from ID/response residue');
     is_deeply($report->{generated_artifacts}{ial0}{files}, ['axi0_capacity_status.fsm'], 'response-demux behavior keeps the generated .fsm artifact name stable');
 };

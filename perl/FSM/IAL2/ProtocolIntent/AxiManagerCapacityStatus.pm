@@ -1729,6 +1729,12 @@ sub _report_auto_id_lifecycle($contract) {
     $lifecycle->{generated_behavior} = $contract->{auto_id_lifecycle}{generated_behavior}
         ? JSON::PP::true
         : JSON::PP::false;
+    if (ref($contract->{response_demux}) eq 'HASH' && $contract->{response_demux}{generated_behavior}) {
+        $lifecycle->{residue} = [
+            grep { $_ ne 'response_demux' }
+            @{$lifecycle->{residue} || []}
+        ];
+    }
     return $lifecycle;
 }
 

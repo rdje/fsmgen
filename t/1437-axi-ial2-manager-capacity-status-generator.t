@@ -436,6 +436,11 @@ subtest 'response-demux contract generates bounded write BID demux behavior' => 
 
     assert_write_response_demux_report($result->{report}{response_demux}, 'generator report');
     is_deeply(
+        $result->{report}{auto_id_lifecycle}{residue},
+        [qw(same_id_ordering)],
+        'auto-ID lifecycle report removes response_demux residue when generated demux drives release',
+    );
+    is_deeply(
         $result->{report}{id_response_rule_engine}{residue},
         [qw(same_id_ordering)],
         'ID/response rule-engine removes response demux behavior from residue',

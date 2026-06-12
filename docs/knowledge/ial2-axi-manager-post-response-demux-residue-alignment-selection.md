@@ -27,6 +27,9 @@ generated write demux completion pulses drive auto-ID release.
 present, while proving generated `.isf`, `.fsm`, and SystemVerilog behavior do
 not change.
 
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.32` has now shipped that selected cleanup.
+See `docs/knowledge/ial2-axi-manager-auto-id-residue-alignment-first-slice.md`.
+
 Same-ID ordering, read `RID` demux, read-data interleaving/reassembly, bursts,
 queued/blocking policy, profile aliases, full-manager syntax, and VHDL remain
 future exact-owner work after this cleanup.
