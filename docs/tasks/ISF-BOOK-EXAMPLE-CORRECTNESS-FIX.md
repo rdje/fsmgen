@@ -54,21 +54,21 @@ the book to lower cleanly to FSM.
 ## Task Tree
 
 - ID: `ISF-BOOK-EXAMPLE-CORRECTNESS-FIX`
-  Status: `pending`
+  Status: `done`
   Goal: `Fix the 14 broken ISF examples identified in the audit addendum.`
   Children:
     `ISF-BOOK-EXAMPLE-CORRECTNESS-FIX.1`,
     `ISF-BOOK-EXAMPLE-CORRECTNESS-FIX.2`
 
 - ID: `ISF-BOOK-EXAMPLE-CORRECTNESS-FIX.1`
-  Status: `pending`
+  Status: `done`
   Goal: `Select the example-correctness fix slice.`
   Acceptance: `Task tree exists.`
   Verification: `mdbook build docs/book; git diff --check`
   Commit: `pending`
 
 - ID: `ISF-BOOK-EXAMPLE-CORRECTNESS-FIX.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Ship the fixes for all 14 broken blocks plus the intentional fail-closed marker.`
   Acceptance: `Re-run audit reports zero unintended parse failures; audits still pass.`
   Verification: `prove -Iperl t/1305 t/1307 t/1332; mdbook build docs/book; git diff --check`

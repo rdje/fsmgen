@@ -59,21 +59,21 @@ list).
 ## Task Tree
 
 - ID: `ISF-COOKBOOK-RECIPES-G1`
-  Status: `pending`
+  Status: `done`
   Goal: `Address audit gap G1 by adding ISF recipes to the cookbook chapter.`
   Children:
     `ISF-COOKBOOK-RECIPES-G1.1`,
     `ISF-COOKBOOK-RECIPES-G1.2`
 
 - ID: `ISF-COOKBOOK-RECIPES-G1.1`
-  Status: `pending`
+  Status: `done`
   Goal: `Select the cookbook ISF recipes slice; record scope and recipe list.`
   Acceptance: `Task tree exists and is committed before any cookbook change.`
   Verification: `mdbook build docs/book; git diff --check`
   Commit: `pending`
 
 - ID: `ISF-COOKBOOK-RECIPES-G1.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Ship the five ISF cookbook recipes plus live-doc updates.`
   Acceptance: `Five recipes added, each parses/lowers; audits still pass.`
   Verification: `prove -Iperl t/1305 t/1307 t/1332; mdbook build docs/book; git diff --check`

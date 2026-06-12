@@ -69,7 +69,7 @@ documentation tree.
 ## Task Tree
 
 - ID: `ISF-CHILD-ACTIVATION-CLAUSE-CONTEXT-DOC`
-  Status: `active`
+  Status: `done`
   Goal: `Document the do/spawn clause-context limitation + rationale in the mdBook.`
   Children: `.1` (select), `.2` (book note + cross-ref)
 

@@ -65,21 +65,21 @@ learn exactly which deferred feature is blocking their override.
 ## Task Tree
 
 - ID: `ISF-TIMING-PARAM-ACTIVATION-OVERRIDE-DIAGNOSTIC-PRECISION`
-  Status: `pending`
+  Status: `done`
   Goal: `Split the static-timing override gate into four sub-axis-specific gates with targeted diagnostics.`
   Children:
     `ISF-TIMING-PARAM-ACTIVATION-OVERRIDE-DIAGNOSTIC-PRECISION.1`,
     `ISF-TIMING-PARAM-ACTIVATION-OVERRIDE-DIAGNOSTIC-PRECISION.2`
 
 - ID: `ISF-TIMING-PARAM-ACTIVATION-OVERRIDE-DIAGNOSTIC-PRECISION.1`
-  Status: `pending`
+  Status: `done`
   Goal: `Select the sub-axis diagnostic-precision slice; record scope, sub-axes covered, regression target, and doc-sync targets.`
   Acceptance: `Task tree exists and is committed before any validator change.`
   Verification: `mdbook build docs/book; git diff --check`
   Commit: `pending`
 
 - ID: `ISF-TIMING-PARAM-ACTIVATION-OVERRIDE-DIAGNOSTIC-PRECISION.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Ship per-sub-axis gates at the two activation-override sites plus regression t/1373 plus t/1369/t/1370 refresh plus doc updates.`
   Acceptance: `Each sub-axis emits its targeted diagnostic at all three keyword sites; same-value paths unchanged; t/1373 passes; ISF CI passes.`
   Verification: `prove -Iperl t/1369 t/1370 t/1373 t/1250; ./bin/ci-regression isf --no-book; mdbook build docs/book; git diff --check`

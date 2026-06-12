@@ -53,21 +53,21 @@ audit set and runs under `./bin/ci-regression isf`.
 ## Task Tree
 
 - ID: `ISF-BOOK-EXAMPLE-LOWERING-BUILD-GATE`
-  Status: `pending`
+  Status: `done`
   Goal: `Add build-gate regression for book lisp-block lowering.`
   Children:
     `ISF-BOOK-EXAMPLE-LOWERING-BUILD-GATE.1`,
     `ISF-BOOK-EXAMPLE-LOWERING-BUILD-GATE.2`
 
 - ID: `ISF-BOOK-EXAMPLE-LOWERING-BUILD-GATE.1`
-  Status: `pending`
+  Status: `done`
   Goal: `Select the slice.`
   Acceptance: `Task tree exists.`
   Verification: `mdbook build docs/book; git diff --check`
   Commit: `pending`
 
 - ID: `ISF-BOOK-EXAMPLE-LOWERING-BUILD-GATE.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Ship the audit test plus focused-tests registration plus live-doc updates.`
   Acceptance: `t/1376 passes; full ISF CI includes it; audits still pass.`
   Verification: `prove -Iperl t/1376 t/1305 t/1307 t/1332; ./bin/ci-regression isf --no-book; mdbook build docs/book; git diff --check`

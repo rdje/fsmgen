@@ -63,21 +63,21 @@ relevant wording and test references to both docs.
 ## Task Tree
 
 - ID: `ISF-DOWNSTREAM-CONTRACT-HANDOFF-SYNC`
-  Status: `pending`
+  Status: `done`
   Goal: `Sync downstream/contract handoff docs with the recent diagnostic surface.`
   Children:
     `ISF-DOWNSTREAM-CONTRACT-HANDOFF-SYNC.1`,
     `ISF-DOWNSTREAM-CONTRACT-HANDOFF-SYNC.2`
 
 - ID: `ISF-DOWNSTREAM-CONTRACT-HANDOFF-SYNC.1`
-  Status: `pending`
+  Status: `done`
   Goal: `Select the slice.`
   Acceptance: `Task tree exists.`
   Verification: `mdbook build docs/book; git diff --check`
   Commit: `pending`
 
 - ID: `ISF-DOWNSTREAM-CONTRACT-HANDOFF-SYNC.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Ship the contract and SPECFORGE doc updates plus live-doc syncs.`
   Acceptance: `Both docs mention t/1372-t/1376 and the new diagnostic wording; audits still pass.`
   Verification: `prove -Iperl t/1305 t/1307 t/1332 t/1376; mdbook build docs/book; git diff --check`

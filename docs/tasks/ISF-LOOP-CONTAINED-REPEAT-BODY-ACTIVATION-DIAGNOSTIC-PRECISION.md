@@ -64,21 +64,21 @@ remains backlog.
 ## Task Tree
 
 - ID: `ISF-LOOP-CONTAINED-REPEAT-BODY-ACTIVATION-DIAGNOSTIC-PRECISION`
-  Status: `pending`
+  Status: `done`
   Goal: `Ship the targeted loop-contained repeat-body activation diagnostic without changing accepted behavior.`
   Children:
     `ISF-LOOP-CONTAINED-REPEAT-BODY-ACTIVATION-DIAGNOSTIC-PRECISION.1`,
     `ISF-LOOP-CONTAINED-REPEAT-BODY-ACTIVATION-DIAGNOSTIC-PRECISION.2`
 
 - ID: `ISF-LOOP-CONTAINED-REPEAT-BODY-ACTIVATION-DIAGNOSTIC-PRECISION.1`
-  Status: `pending`
+  Status: `done`
   Goal: `Select the targeted loop-contained diagnostic slice; record scope, helper plan, regression target, and doc-sync targets.`
   Acceptance: `Task tree exists and is committed before any validator change.`
   Verification: `mdbook build docs/book; git diff --check`
   Commit: `pending`
 
 - ID: `ISF-LOOP-CONTAINED-REPEAT-BODY-ACTIVATION-DIAGNOSTIC-PRECISION.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Ship the targeted diagnostic at the two unsupported repeat-body subset entry points (do, spawn) plus regression t/1374 plus doc updates.`
   Acceptance: `Loop-contained repeat-body do/spawn now produces the targeted diagnostic; other unsupported nested-repeat cases unchanged; t/1374 passes; ISF CI passes.`
   Verification: `prove -Iperl t/1215 t/1374 t/1250; ./bin/ci-regression isf --no-book; mdbook build docs/book; git diff --check`

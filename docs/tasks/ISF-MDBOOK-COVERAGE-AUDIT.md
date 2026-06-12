@@ -51,13 +51,13 @@ report's prioritized list.
 ## Task Tree
 
 - ID: `ISF-MDBOOK-COVERAGE-AUDIT`
-  Status: `pending`
+  Status: `done`
   Goal: `Produce a comprehensive mdBook coverage audit report.`
   Children:
     `ISF-MDBOOK-COVERAGE-AUDIT.1`
 
 - ID: `ISF-MDBOOK-COVERAGE-AUDIT.1`
-  Status: `pending`
+  Status: `done`
   Goal: `Inventory the codebase rejection paths and accept paths, cross-reference against book chapters, and publish the audit report with a prioritized slice queue.`
   Acceptance: `Audit document exists at docs/audits/ISF-MDBOOK-COVERAGE-AUDIT-2026-05-27.md and live docs are synchronized.`
   Verification: `mdbook build docs/book; git diff --check`

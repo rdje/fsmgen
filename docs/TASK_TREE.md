@@ -106,6 +106,7 @@ first.
 | `IAL2-PPIF-BUNDLE-SEMANTIC-JSON-FIRST-SLICE` | `done` | IAL2 horizon exploration / Embedding And Public APIs | complete (`.1`; shipped aggregate bundle semantic JSON without choosing one generated channel `.fsm` as the root) | [docs/tasks/IAL2-PPIF-BUNDLE-SEMANTIC-JSON-FIRST-SLICE.md](docs/tasks/IAL2-PPIF-BUNDLE-SEMANTIC-JSON-FIRST-SLICE.md) |
 | `IAL2-PPIF-BUNDLE-HDL-ENTRY-SELECTION` | `done` | IAL2 horizon exploration | complete (`.1`; selected aggregate wrapper/top as the HDL entry contract and rejected first-channel root selection) | [docs/tasks/IAL2-PPIF-BUNDLE-HDL-ENTRY-SELECTION.md](docs/tasks/IAL2-PPIF-BUNDLE-HDL-ENTRY-SELECTION.md) |
 | `IAL2-PPIF-BUNDLE-HDL-ENTRY-FIRST-SLICE` | `done` | IAL2 horizon exploration | complete (`.1`; shipped aggregate wrapper/top `.fsm` entry, default SystemVerilog generation, and `--verify-hdl` for the tracked AW/W PPIF bundle sample) | [docs/tasks/IAL2-PPIF-BUNDLE-HDL-ENTRY-FIRST-SLICE.md](docs/tasks/IAL2-PPIF-BUNDLE-HDL-ENTRY-FIRST-SLICE.md) |
+| `TASK-TREE-STALE-STATUS-DRIFT-REPAIR` | `done` | `infra/continuity` | complete (`.1`; normalized stale active/pending/proposed markers in completed task-tree files so exhausted PNT recovery is unambiguous) | [docs/tasks/TASK-TREE-STALE-STATUS-DRIFT-REPAIR.md](docs/tasks/TASK-TREE-STALE-STATUS-DRIFT-REPAIR.md) |
 
 ## Proposed Task Trees
 

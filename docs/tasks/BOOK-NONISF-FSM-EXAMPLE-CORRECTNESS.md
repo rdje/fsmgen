@@ -119,21 +119,21 @@ demotion, all 11 remaining gate-eligible `lisp` `.fsm` blocks pass
 ## Task Tree
 
 - ID: `BOOK-NONISF-FSM-EXAMPLE-CORRECTNESS`
-  Status: `pending`
+  Status: `done`
   Goal: `Make every lisp-tagged non-ISF book example copy-paste runnable, gate it, and honestly demote multi-file schematics to text.`
   Children:
     `BOOK-NONISF-FSM-EXAMPLE-CORRECTNESS.1`,
     `BOOK-NONISF-FSM-EXAMPLE-CORRECTNESS.2`
 
 - ID: `BOOK-NONISF-FSM-EXAMPLE-CORRECTNESS.1`
-  Status: `pending`
+  Status: `done`
   Goal: `Select the slice; record scope (16 blocks), plan, and deferred follow-up.`
   Acceptance: `Task tree exists and is committed before any book or test change.`
   Verification: `mdbook build docs/book; git diff --check`
   Commit: `pending`
 
 - ID: `BOOK-NONISF-FSM-EXAMPLE-CORRECTNESS.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Convert the 16 blocks to text; add t/1377 build gate; verify standalone non-ISF lisp examples all pass --check.`
   Acceptance: `t/1377 passes with 0 failures; mdBook clean; live docs synced.`
   Verification: `prove -Iperl t/1377; mdbook build docs/book; git diff --check`

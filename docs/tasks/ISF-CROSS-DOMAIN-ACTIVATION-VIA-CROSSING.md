@@ -153,7 +153,7 @@ authors cannot name them; the `activation` kind is the right abstraction.)
 ## Task Tree
 
 - ID: `ISF-CROSS-DOMAIN-ACTIVATION-VIA-CROSSING`
-  Status: `active`
+  Status: `done`
   Goal: `Cross-domain (do)/(spawn) through a declared (crossings (activation ...)) with CDC-synchronized start/done.`
   Children: `.1` (select), `.2` (parse+declare-validate, fail-closed), `.3` (handshake-port lowering machinery, behind guard), `.4` (dual-CDC top emission, behind guard), `.5` (integration: validator-accept + CDC routing + remove guard, together), `.6` (book docs + runnable example), `.7` (schedule-report metadata + downstream/contract/SPECFORGE)
 

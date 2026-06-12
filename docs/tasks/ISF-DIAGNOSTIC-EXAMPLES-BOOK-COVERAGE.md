@@ -69,21 +69,21 @@ Targeted diagnostics covered by this slice:
 ## Task Tree
 
 - ID: `ISF-DIAGNOSTIC-EXAMPLES-BOOK-COVERAGE`
-  Status: `pending`
+  Status: `done`
   Goal: `Add user-facing book examples for the seven targeted diagnostics shipped this session.`
   Children:
     `ISF-DIAGNOSTIC-EXAMPLES-BOOK-COVERAGE.1`,
     `ISF-DIAGNOSTIC-EXAMPLES-BOOK-COVERAGE.2`
 
 - ID: `ISF-DIAGNOSTIC-EXAMPLES-BOOK-COVERAGE.1`
-  Status: `pending`
+  Status: `done`
   Goal: `Select the coverage slice; record scope and target chapters.`
   Acceptance: `Task tree exists and is committed before any book change.`
   Verification: `mdbook build docs/book; git diff --check`
   Commit: `pending`
 
 - ID: `ISF-DIAGNOSTIC-EXAMPLES-BOOK-COVERAGE.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Ship the seven book examples plus live-doc updates.`
   Acceptance: `Each diagnostic has a source-shape example, verbatim diagnostic, and deferred-lane sentence in the appropriate chapter; audits still pass.`
   Verification: `prove -Iperl t/1305 t/1307 t/1332; mdbook build docs/book; git diff --check`

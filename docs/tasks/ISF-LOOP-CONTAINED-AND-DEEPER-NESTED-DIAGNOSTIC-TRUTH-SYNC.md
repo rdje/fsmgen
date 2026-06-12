@@ -47,21 +47,21 @@ deferrals in passing.
 ## Task Tree
 
 - ID: `ISF-LOOP-CONTAINED-AND-DEEPER-NESTED-DIAGNOSTIC-TRUTH-SYNC`
-  Status: `pending`
+  Status: `done`
   Goal: `Synchronize book chapters with the new targeted diagnostics.`
   Children:
     `ISF-LOOP-CONTAINED-AND-DEEPER-NESTED-DIAGNOSTIC-TRUTH-SYNC.1`,
     `ISF-LOOP-CONTAINED-AND-DEEPER-NESTED-DIAGNOSTIC-TRUTH-SYNC.2`
 
 - ID: `ISF-LOOP-CONTAINED-AND-DEEPER-NESTED-DIAGNOSTIC-TRUTH-SYNC.1`
-  Status: `pending`
+  Status: `done`
   Goal: `Select the truth-sync slice; record scope and target chapters.`
   Acceptance: `Task tree exists and is committed before any book change.`
   Verification: `mdbook build docs/book; git diff --check`
   Commit: `pending`
 
 - ID: `ISF-LOOP-CONTAINED-AND-DEEPER-NESTED-DIAGNOSTIC-TRUTH-SYNC.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Ship the synchronized book prose plus live-doc updates.`
   Acceptance: `Each of the four target chapters mentions the new targeted diagnostics; audits still pass.`
   Verification: `prove -Iperl t/1305 t/1307 t/1332; mdbook build docs/book; git diff --check`

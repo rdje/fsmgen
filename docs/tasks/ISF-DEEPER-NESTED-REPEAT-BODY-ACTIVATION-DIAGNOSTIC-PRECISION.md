@@ -69,21 +69,21 @@ any future shape not yet classified.
 ## Task Tree
 
 - ID: `ISF-DEEPER-NESTED-REPEAT-BODY-ACTIVATION-DIAGNOSTIC-PRECISION`
-  Status: `pending`
+  Status: `done`
   Goal: `Ship the targeted deeper-nested repeat-body activation diagnostic without changing accepted behavior.`
   Children:
     `ISF-DEEPER-NESTED-REPEAT-BODY-ACTIVATION-DIAGNOSTIC-PRECISION.1`,
     `ISF-DEEPER-NESTED-REPEAT-BODY-ACTIVATION-DIAGNOSTIC-PRECISION.2`
 
 - ID: `ISF-DEEPER-NESTED-REPEAT-BODY-ACTIVATION-DIAGNOSTIC-PRECISION.1`
-  Status: `pending`
+  Status: `done`
   Goal: `Select the targeted deeper-nested diagnostic slice; record scope, helper plan, regression target, and doc-sync targets.`
   Acceptance: `Task tree exists and is committed before any validator change.`
   Verification: `mdbook build docs/book; git diff --check`
   Commit: `pending`
 
 - ID: `ISF-DEEPER-NESTED-REPEAT-BODY-ACTIVATION-DIAGNOSTIC-PRECISION.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Ship the targeted diagnostic at the two repeat-body subset entry points plus t/1375 plus t/1215 refresh plus doc updates.`
   Acceptance: `Deeper-nested repeat-body do/spawn produces the targeted diagnostic; loop-contained unchanged; t/1375 passes; ISF CI passes.`
   Verification: `prove -Iperl t/1215 t/1374 t/1375; ./bin/ci-regression isf --no-book; mdbook build docs/book; git diff --check`

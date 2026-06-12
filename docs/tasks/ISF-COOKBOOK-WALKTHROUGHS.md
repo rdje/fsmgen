@@ -50,21 +50,21 @@ each recipe so the reader learns the syntax by reading the example.
 ## Task Tree
 
 - ID: `ISF-COOKBOOK-WALKTHROUGHS`
-  Status: `pending`
+  Status: `done`
   Goal: `Add clause-by-clause walkthroughs to cookbook recipes 9-13.`
   Children:
     `ISF-COOKBOOK-WALKTHROUGHS.1`,
     `ISF-COOKBOOK-WALKTHROUGHS.2`
 
 - ID: `ISF-COOKBOOK-WALKTHROUGHS.1`
-  Status: `pending`
+  Status: `done`
   Goal: `Select the cookbook walkthroughs slice.`
   Acceptance: `Task tree exists.`
   Verification: `mdbook build docs/book; git diff --check`
   Commit: `pending`
 
 - ID: `ISF-COOKBOOK-WALKTHROUGHS.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Ship the walkthroughs for recipes 9-13 plus live-doc updates.`
   Acceptance: `Each recipe has a clause walkthrough; audits still pass.`
   Verification: `prove -Iperl t/1305 t/1307 t/1332; mdbook build docs/book; git diff --check`

@@ -39,21 +39,21 @@ naming every top-level clause used.
 ## Task Tree
 
 - ID: `ISF-G7-13D-ACCEPT-PATH-EXAMPLES`
-  Status: `pending`
+  Status: `done`
   Goal: `Add 4 accept-path control-flow examples to 13d.`
   Children:
     `ISF-G7-13D-ACCEPT-PATH-EXAMPLES.1`,
     `ISF-G7-13D-ACCEPT-PATH-EXAMPLES.2`
 
 - ID: `ISF-G7-13D-ACCEPT-PATH-EXAMPLES.1`
-  Status: `pending`
+  Status: `done`
   Goal: `Select.`
   Acceptance: `Task tree committed.`
   Verification: `mdbook build docs/book; git diff --check`
   Commit: `pending`
 
 - ID: `ISF-G7-13D-ACCEPT-PATH-EXAMPLES.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Ship the four examples plus walkthroughs.`
   Acceptance: `prove t/1376 passes with 24 fixtures (was 20); audits pass.`
   Verification: `prove -Iperl t/1305 t/1307 t/1332 t/1376; mdbook build docs/book; git diff --check`

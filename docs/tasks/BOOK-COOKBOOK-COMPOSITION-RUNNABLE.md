@@ -75,21 +75,21 @@ form the demoted schematics had used.
 ## Task Tree
 
 - ID: `BOOK-COOKBOOK-COMPOSITION-RUNNABLE`
-  Status: `pending`
+  Status: `done`
   Goal: `Upgrade cookbook composition recipes 3/4/5 to verified inline-runnable lisp examples.`
   Children:
     `BOOK-COOKBOOK-COMPOSITION-RUNNABLE.1`,
     `BOOK-COOKBOOK-COMPOSITION-RUNNABLE.2`
 
 - ID: `BOOK-COOKBOOK-COMPOSITION-RUNNABLE.1`
-  Status: `pending`
+  Status: `done`
   Goal: `Select the slice; record verified patterns and scope.`
   Acceptance: `Task tree committed before any book change.`
   Verification: `mdbook build docs/book; git diff --check`
   Commit: `pending`
 
 - ID: `BOOK-COOKBOOK-COMPOSITION-RUNNABLE.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Replace recipes 3/4/5 with verified runnable lisp + walkthroughs; re-run t/1377 + book-audit family.`
   Acceptance: `t/1377 standalone count increases with 0 failures; audits green.`
   Verification: `prove -Iperl t/1377 t/1376 t/1305 t/1307 t/1332; mdbook build docs/book; git diff --check`

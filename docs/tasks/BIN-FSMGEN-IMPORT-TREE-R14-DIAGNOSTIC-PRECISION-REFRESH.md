@@ -53,13 +53,13 @@ module file was added.
 ## Task Tree
 
 - ID: `BIN-FSMGEN-IMPORT-TREE-R14-DIAGNOSTIC-PRECISION-REFRESH`
-  Status: `pending`
+  Status: `done`
   Goal: `Refresh import-tree LoweringIR.pm line count after diagnostic-precision slices.`
   Children:
     `BIN-FSMGEN-IMPORT-TREE-R14-DIAGNOSTIC-PRECISION-REFRESH.1`
 
 - ID: `BIN-FSMGEN-IMPORT-TREE-R14-DIAGNOSTIC-PRECISION-REFRESH.1`
-  Status: `pending`
+  Status: `done`
   Goal: `Update both occurrences of the LoweringIR.pm line count from 11144 to 11309 and synchronize live docs.`
   Acceptance: `Both occurrences in BIN_FSMGEN_IMPORT_TREE.md updated; topology unchanged; live docs synchronized.`
   Verification: `wc -l perl/FSM/Scheduler/ISF/LoweringIR.pm bin/fsmgen; mdbook build docs/book; git diff --check`

@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-DATA-OP-ACTIVATION-OVERRIDE-WIDTH-GATE`
-- Status: `pending`
+- Status: `done`
 - Roadmap lane: `R14`
 - Created: `2026-05-27`
 - Last updated: `2026-05-27`

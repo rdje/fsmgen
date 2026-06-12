@@ -70,19 +70,19 @@ Total: 4 new examples (1 + 2 + 1).
 ## Task Tree
 
 - ID: `ISF-DIAGNOSTIC-EXAMPLES-G3`
-  Status: `pending`
+  Status: `done`
   Goal: `Address audit gap G3 by adding examples for the three remaining "remains deferred" template families.`
   Children: `ISF-DIAGNOSTIC-EXAMPLES-G3.1`, `ISF-DIAGNOSTIC-EXAMPLES-G3.2`
 
 - ID: `ISF-DIAGNOSTIC-EXAMPLES-G3.1`
-  Status: `pending`
+  Status: `done`
   Goal: `Select the slice.`
   Acceptance: `Task tree exists.`
   Verification: `mdbook build docs/book; git diff --check`
   Commit: `pending`
 
 - ID: `ISF-DIAGNOSTIC-EXAMPLES-G3.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Ship the four representative examples plus live-doc updates.`
   Acceptance: `Each family is exampled; audits still pass.`
   Verification: `audit script; prove -Iperl t/1305 t/1307 t/1332; mdbook build docs/book; git diff --check`
