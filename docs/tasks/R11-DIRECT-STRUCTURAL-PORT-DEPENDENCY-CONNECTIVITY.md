@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `R11-DIRECT-STRUCTURAL-PORT-DEPENDENCY-CONNECTIVITY`
-- Status: `proposed`
+- Status: `active`
 - Roadmap lane: `R11`
 - Created: `2026-06-12`
 - Last updated: `2026-06-12`
@@ -17,13 +17,14 @@ first safe slice.
 
 ## Non-Goals
 
-- Do not change behavior while this tree remains `proposed`.
 - Do not claim generated-enable assignment-record source/target connectivity;
   that shipped under `R11-DIRECT-STRUCTURAL-NET-CONNECTIVITY`.
 - Do not include output-drive/always-block consumers, direct instances/links,
   full direct module rerouting, or VHDL rerouting unless a later activated leaf
   explicitly widens this tree.
 - Do not use raw HDL-string parsing as the connectivity contract.
+- Do not add output-port driver/source connectivity in the first selected
+  implementation slice; output-drive consumers have their own proposed owner.
 
 ## Acceptance Criteria
 
@@ -39,14 +40,22 @@ first safe slice.
 ## Task Tree
 
 - ID: `R11-DIRECT-STRUCTURAL-PORT-DEPENDENCY-CONNECTIVITY`
-  Status: `proposed`
+  Status: `active`
   Goal: `Represent direct port dependency connectivity in StructuralRTLIR.`
-  Children: `R11-DIRECT-STRUCTURAL-PORT-DEPENDENCY-CONNECTIVITY.1`
+  Children: `R11-DIRECT-STRUCTURAL-PORT-DEPENDENCY-CONNECTIVITY.1`,
+    `R11-DIRECT-STRUCTURAL-PORT-DEPENDENCY-CONNECTIVITY.2`
 
 - ID: `R11-DIRECT-STRUCTURAL-PORT-DEPENDENCY-CONNECTIVITY.1`
-  Status: `pending`
+  Status: `done`
   Goal: `Select the first direct port dependency connectivity slice.`
   Acceptance: `The selector records source facts, target structural schema, focused fixtures, validation gates, rollback boundary, and docs/contracts to update before any behavior-bearing direct port dependency connectivity change.`
+  Verification: `passed`
+  Commit: `R11-DIRECT-STRUCTURAL-PORT-DEPENDENCY-CONNECTIVITY.1: select direct input port targets`
+
+- ID: `R11-DIRECT-STRUCTURAL-PORT-DEPENDENCY-CONNECTIVITY.2`
+  Status: `pending`
+  Goal: `Populate direct input-port generated-enable RHS target connectivity.`
+  Acceptance: `Direct input ports consumed by generated-enable assignment-record RHS ASTs expose structured target connectivity on their structural port entries; the target endpoint shape reuses the generated-enable assignment-record target keys; output-port source/driver connectivity, output-drive/always-block consumers, direct instances/links, and HDL emission remain unchanged.`
   Verification: `pending`
   Commit: `pending`
 
@@ -54,34 +63,44 @@ first safe slice.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `R11-DIRECT-STRUCTURAL-PORT-DEPENDENCY-CONNECTIVITY.1` | `pending` | Proposed owner only; activate only when the roadmap/PNT flow selects direct port dependency connectivity. |
+| 1 | `R11-DIRECT-STRUCTURAL-PORT-DEPENDENCY-CONNECTIVITY.1` | `done` | Selected direct input-port generated-enable RHS target connectivity as the first safe port dependency slice. |
+| 2 | `R11-DIRECT-STRUCTURAL-PORT-DEPENDENCY-CONNECTIVITY.2` | `pending` | Direct assignment-record ASTs already expose input-port RHS refs, but the current connectivity pass only maps refs that are also direct nets. |
 
 ## Decisions
 
 - `2026-06-12`: Track direct port dependency connectivity separately from
   generated-enable net source/target connectivity and output-drive consumers
   so the future schema can stay reviewable and machine-readable.
+- `2026-06-12`: Selector `.1` chose a narrow machine-readable input-port
+  target slice: when a direct input port appears in a generated-enable
+  assignment-record RHS AST, the structural port entry should expose the
+  assignment-record consumer as a structured target. Output-port source
+  connectivity remains deferred to the output-consumer owner.
 
 ## Open Questions
 
-- None blocking while proposed.
+- None for the selected `.2` scope.
 
 ## Blockers
 
-- Not active.
+- None.
 
 ## Verification Log
 
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
-| `2026-06-12` | `R11-DIRECT-STRUCTURAL-PORT-DEPENDENCY-CONNECTIVITY.1` | `pending` | `pending` |
+| `2026-06-12` | `R11-DIRECT-STRUCTURAL-PORT-DEPENDENCY-CONNECTIVITY.1` | Evidence review: `KNOWLEDGE_MAP.md`; `docs/knowledge/normalized-semantic-structural-port-entry-schema.md`; `docs/knowledge/normalized-semantic-structural-net-entry-schema.md`; `docs/tasks/R11-DIRECT-STRUCTURAL-PORT-DEPENDENCY-CONNECTIVITY.md`; `perl/FSM/IR/StructuralRTLIRBuilder.pm`; `perl/FSM/Support/NormalizedSemanticStructuralRTLIRContract.pm`; `t/1333-direct-structural-rtl-ir-projection.t`; `t/163-forward-structural-rtl-ir-surface.t`; `t/341-normalized-semantic-structural-rtl-ir-contract.t`; `scripts/check_memory_architecture.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `git --no-pager diff --check` | `passed`; selected `.2` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `R11-DIRECT-STRUCTURAL-PORT-DEPENDENCY-CONNECTIVITY.1` | `pending` | `pending` |
+| `R11-DIRECT-STRUCTURAL-PORT-DEPENDENCY-CONNECTIVITY.1` | `R11-DIRECT-STRUCTURAL-PORT-DEPENDENCY-CONNECTIVITY.1: select direct input port targets` | Selector slice. |
+| `R11-DIRECT-STRUCTURAL-PORT-DEPENDENCY-CONNECTIVITY.2` | `pending` | `pending` |
 
 ## Changelog
 
 - `2026-06-12`: Created proposed owner tree.
+- `2026-06-12`: Activated selector `.1`, selected direct input-port
+  generated-enable RHS target connectivity as `.2`, and left output-port
+  source/driver connectivity to the output-consumer owner.
