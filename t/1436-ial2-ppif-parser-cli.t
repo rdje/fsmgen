@@ -33,14 +33,43 @@ subtest 'PPIF adapter parses the selected Valid-Ready source shape' => sub {
     is($result->{report}{layering}{direct_ial2_to_ial0}, 0, 'direct IAL2-to-IAL0 remains forbidden');
 };
 
+subtest 'PPIF adapter parses a multi-channel Valid-Ready bundle' => sub {
+    my $sample_path = sample_bundle_ppif_path();
+    ok(-f $sample_path, 'tracked runnable PPIF bundle sample exists');
+
+    my $result = FSM::Adapter::IAL2::PPIF->new()->parse_source(sample_bundle_ppif(), $sample_path);
+
+    is($result->{layer}, 'IAL2', 'bundle adapter result stays IAL2');
+    is($result->{kind}, 'protocol_intent.valid_ready_bundle', 'adapter returns the aggregate bundle kind');
+    is($result->{report}{schema}, 'fsmgen.ial2.protocol_intent.valid_ready_bundle.v1', 'bundle report schema is selected');
+    is($result->{report}{bundle}{channel_count}, 2, 'bundle report counts both channels');
+    is_deeply(
+        [map { $_->{object_name} } @{$result->{report}{channels}}],
+        [qw(axi_aw axi_w)],
+        'bundle report preserves source channel order',
+    );
+    is_deeply(
+        [map { $_->{name} } @{$result->{generated_ial1}{items}}],
+        [qw(axi_aw_valid_ready_monitor.isf axi_w_valid_ready_monitor.isf)],
+        'bundle exposes one generated IAL1 artifact per channel',
+    );
+    is_deeply(
+        sorted([keys %{$result->{generated_ial0}{files}}]),
+        [qw(axi_aw_valid_ready_monitor.fsm axi_w_valid_ready_monitor.fsm)],
+        'bundle exposes both generated IAL0 artifacts',
+    );
+    is($result->{report}{generated_artifacts}{hdl_entry}{selected}, 0, 'bundle reports no selected HDL entry');
+    is($result->{report}{channels}[0]{source_attribution}{scope}, 'channel', 'channel-local source attribution is reported');
+};
+
 subtest 'PPIF adapter diagnostics fail closed before generation claims' => sub {
     my @cases = (
         ['missing profile',
             '(protocol-platform-intent p (source (object o) (anchor (document d) (section s) (page p))) (valid-ready-channel axi_aw (channel AW) (role manager-to-subordinate) (clock clk) (reset (rst_n active_low async)) (valid awvalid) (ready awready) (payload (awaddr width 32))))',
             qr/missing required \(profile \.\.\.\) clause/],
-        ['duplicate channel object',
-            '(protocol-platform-intent p (profile axi4) (source (object o) (anchor (document d) (section s) (page p))) (valid-ready-channel a (channel AW) (role manager-to-subordinate) (clock clk) (reset (rst_n active_low async)) (valid v) (ready r) (payload (x width 1))) (valid-ready-channel b (channel W) (role manager-to-subordinate) (clock clk) (reset (rst_n active_low async)) (valid v2) (ready r2) (payload (x2 width 1))))',
-            qr/supports exactly one \(valid-ready-channel \.\.\.\) object/],
+        ['duplicate channel object name',
+            '(protocol-platform-intent p (profile axi4) (source (object o) (anchor (document d) (section s) (page p))) (valid-ready-channel a (channel AW) (role manager-to-subordinate) (clock clk) (reset (rst_n active_low async)) (valid v) (ready r) (payload (x width 1))) (valid-ready-channel a (channel W) (role manager-to-subordinate) (clock clk) (reset (rst_n active_low async)) (valid v2) (ready r2) (payload (x2 width 1))))',
+            qr/duplicate valid-ready-channel object name 'a'/],
         ['bad reset tuple',
             '(protocol-platform-intent p (profile axi4) (source (object o) (anchor (document d) (section s) (page p))) (valid-ready-channel a (channel AW) (role manager-to-subordinate) (clock clk) (reset (rst_n async)) (valid v) (ready r) (payload (x width 1))))',
             qr/reset tuple must include exactly one of active_low or active_high/],
@@ -61,6 +90,27 @@ subtest 'PPIF adapter diagnostics fail closed before generation claims' => sub {
         ok(!$ok, "$label is rejected");
         like($@, $pattern, "$label diagnostic is targeted");
     }
+};
+
+subtest 'CLI emits IAL2 bundle report JSON for multi-channel .ppif' => sub {
+    my $bundle_path = sample_bundle_ppif_path();
+
+    my ($success, undef, undef, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--emit-schedule-json', $bundle_path],
+    );
+
+    ok($success, '--emit-schedule-json succeeds for a multi-channel .ppif bundle');
+    is(join('', @{$stderr_buf || []}), '', 'bundle report keeps stderr clean');
+    my $report = decode_json(join('', @{$stdout_buf || []}));
+    is($report->{schema}, 'fsmgen.ial2.protocol_intent.valid_ready_bundle.v1', 'CLI emits the bundle report schema');
+    is($report->{source_object}{intent_name}, 'axi_aw_w_valid_ready_bundle', 'bundle report carries the PPIF top-level intent name');
+    is($report->{bundle}{channel_count}, 2, 'bundle report carries channel count');
+    is_deeply(
+        [map { $_->{object_name} } @{$report->{channels}}],
+        [qw(axi_aw axi_w)],
+        'CLI bundle report preserves channel order',
+    );
+    is($report->{generated_artifacts}{hdl_entry}{selected}, 0, 'CLI bundle report records no HDL entry selection');
 };
 
 subtest 'CLI emits IAL2 report JSON for .ppif without writing HDL' => sub {
@@ -94,6 +144,25 @@ subtest 'CLI --outdir materializes generated .isf, .fsm, and HDL for .ppif' => s
     ok(-f $hdl, '--output writes generated HDL');
     like(slurp(File::Spec->catfile($outdir, 'axi_aw_valid_ready_monitor.isf')), qr/\(protocol-platform-intent\b|\(actor axi_aw_valid_ready_monitor\b/, 'generated .isf is inspectable text');
     like(slurp($hdl), qr/\bmodule\s+axi_aw_valid_ready_monitor\b/, 'generated HDL contains the monitor module');
+};
+
+subtest 'CLI --outdir materializes bundle review artifacts and stops before HDL' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $bundle_path = sample_bundle_ppif_path();
+    my $outdir = File::Spec->catdir($tempdir, 'out');
+    my $hdl = File::Spec->catfile($tempdir, 'bundle.sv');
+
+    my ($success, undef, undef, undef, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--quiet', '--outdir', $outdir, '--output', $hdl, $bundle_path],
+    );
+
+    ok($success, 'bundle --outdir succeeds');
+    is(join('', @{$stderr_buf || []}), '', 'bundle --outdir keeps stderr clean');
+    ok(-f File::Spec->catfile($outdir, 'axi_aw_valid_ready_monitor.isf'), 'bundle --outdir writes AW generated .isf');
+    ok(-f File::Spec->catfile($outdir, 'axi_w_valid_ready_monitor.isf'), 'bundle --outdir writes W generated .isf');
+    ok(-f File::Spec->catfile($outdir, 'axi_aw_valid_ready_monitor.fsm'), 'bundle --outdir writes AW generated .fsm');
+    ok(-f File::Spec->catfile($outdir, 'axi_w_valid_ready_monitor.fsm'), 'bundle --outdir writes W generated .fsm');
+    ok(!-e $hdl, 'bundle --outdir does not write HDL before entry selection exists');
 };
 
 subtest 'CLI check JSON and semantic JSON accept .ppif public source identity' => sub {
@@ -152,14 +221,69 @@ subtest 'CLI check JSON and semantic JSON accept .ppif public source identity' =
     ok(!decode_json(join('', @{$alias_stdout || []}))->{success}, '.pif alias check JSON reports failure');
 };
 
+subtest 'CLI bundle unsupported modes are explicit' => sub {
+    my $bundle_path = sample_bundle_ppif_path();
+
+    my ($check_success, undef, undef, $check_stdout, $check_stderr) = run(
+        command => ['./bin/fsmgen', '--strict', '--check', '--json', $bundle_path],
+    );
+    ok($check_success, 'bundle --check --json succeeds without HDL emission');
+    is(join('', @{$check_stderr || []}), '', 'bundle --check --json keeps stderr clean');
+    my $check_report = decode_json(join('', @{$check_stdout || []}));
+    ok($check_report->{success}, 'bundle check JSON reports success');
+    is($check_report->{result}{composition_child_count}, 2, 'bundle check JSON discloses channel count as child-count summary');
+
+    my ($default_success, undef, undef, undef, $default_stderr) = run(
+        command => ['./bin/fsmgen', $bundle_path],
+    );
+    ok(!$default_success, 'bundle default HDL generation fails closed');
+    like(
+        join('', @{$default_stderr || []}),
+        qr/multi-channel bundle emits multiple generated \.fsm roots/,
+        'bundle default HDL diagnostic names the missing entry-selection owner',
+    );
+
+    my ($semantic_success, undef, undef, $semantic_stdout, $semantic_stderr) = run(
+        command => ['./bin/fsmgen', '--strict', '--emit-semantic-json', $bundle_path],
+    );
+    ok(!$semantic_success, 'bundle semantic JSON fails closed');
+    is(join('', @{$semantic_stderr || []}), '', 'bundle semantic JSON emits machine-readable failure on stdout');
+    my $semantic_report = decode_json(join('', @{$semantic_stdout || []}));
+    ok(!$semantic_report->{success}, 'bundle semantic JSON report is a failure');
+    like(
+        $semantic_report->{diagnostics}[0]{message},
+        qr/multi-channel bundle normalized semantic JSON remains unsupported/,
+        'bundle semantic JSON diagnostic names aggregate semantic deferral',
+    );
+
+    my $verify_outdir = File::Spec->catdir(tempdir(CLEANUP => 1), 'verify-out');
+    my ($verify_success, undef, undef, undef, $verify_stderr) = run(
+        command => ['./bin/fsmgen', '--outdir', $verify_outdir, '--verify-hdl', $bundle_path],
+    );
+    ok(!$verify_success, 'bundle --verify-hdl fails closed before wrapper HDL exists');
+    like(
+        join('', @{$verify_stderr || []}),
+        qr/cannot run --verify-hdl until a bundle HDL entry owner is selected/,
+        'bundle --verify-hdl diagnostic names missing HDL entry owner',
+    );
+};
+
 done_testing();
 
 sub sample_ppif_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_aw_valid_ready.ppif');
 }
 
+sub sample_bundle_ppif_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_aw_w_valid_ready_bundle.ppif');
+}
+
 sub sample_ppif {
     return slurp(sample_ppif_path());
+}
+
+sub sample_bundle_ppif {
+    return slurp(sample_bundle_ppif_path());
 }
 
 sub write_file {

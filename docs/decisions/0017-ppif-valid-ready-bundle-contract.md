@@ -47,7 +47,7 @@ as the HDL or semantic entry.
 
 - The current single-object `.ppif` result and report schema remain stable
   until an explicit compatibility owner changes them.
-- Future multi-object `.ppif` support needs a new aggregate result shape with
+- Multi-object `.ppif` support uses an aggregate result shape with
   `generated_ial1.items[]`, `generated_ial0.items[]`, `channels[]`, and
   aggregate artifact reporting.
 - Channel-local source anchors may refine the required top-level source object;
@@ -60,3 +60,11 @@ as the HDL or semantic entry.
 - Full AXI manager behavior, transaction IDs, outstanding windows, response
   matching, bursts, and cross-channel dependency rules remain outside this
   Valid-Ready bundle monitor contract.
+
+## Implementation Note
+
+`IAL2-PPIF-VALID-READY-BUNDLE-FIRST-SLICE.1` implements the bounded
+report/review-artifact subset of this contract. Multi-channel `.ppif` bundles
+now emit `valid_ready_bundle.v1` reports, write per-channel generated `.isf`
+and `.fsm` artifacts with `--outdir`, and keep default HDL generation plus
+aggregate semantic JSON fail-closed.

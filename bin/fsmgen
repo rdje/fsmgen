@@ -574,6 +574,96 @@ if ($fsm_file =~ /\.ppif$/i) {
         exit 0;
     }
 
+    if (($ppif_result->{kind} // '') eq 'protocol_intent.valid_ready_bundle') {
+        if ($emit_semantic_json) {
+            my $display_error = emit_machine_failure_if_requested(
+                input => $fsm_input,
+                source_file => $public_source_file,
+                target_language => $target_language,
+                strict_mode => $strict_mode,
+                emit_semantic_json => $emit_semantic_json,
+                check_json_mode => $check_json_mode,
+                message => "PPIF multi-channel bundle normalized semantic JSON remains unsupported until an aggregate semantic owner is selected\n",
+            );
+            die $display_error;
+        }
+
+        if ($check_json_mode) {
+            my $report = build_check_success_report(
+                input => $fsm_input,
+                source_file => $public_source_file,
+                target_language => $target_language,
+                strict_mode => $strict_mode,
+                module_info => {
+                    module_name => ($ppif_result->{report}{source_object}{intent_name}
+                        || $ppif_result->{report}{source_object}{id}
+                        || 'ppif_valid_ready_bundle'),
+                    state_count => 0,
+                    signal_count => 0,
+                    composition_child_count => scalar(@{$ppif_result->{report}{channels} || []}),
+                },
+            );
+            print JSON::PP->new->ascii->canonical->pretty->encode($report);
+            exit 0;
+        }
+
+        if ($verify_hdl) {
+            my $display_error = emit_machine_failure_if_requested(
+                input => $fsm_input,
+                source_file => $public_source_file,
+                target_language => $target_language,
+                strict_mode => $strict_mode,
+                emit_semantic_json => $emit_semantic_json,
+                check_json_mode => $check_json_mode,
+                message => "PPIF multi-channel bundle cannot run --verify-hdl until a bundle HDL entry owner is selected\n",
+            );
+            die $display_error;
+        }
+
+        my $dir = $outdir || undef;
+        if ($dir) {
+            mkdir $dir unless -d $dir;
+
+            for my $item (@{$ppif_result->{generated_ial1}{items} || []}) {
+                my $isf_path = File::Spec->catfile($dir, $item->{name});
+                open my $isf_fh, '>', $isf_path or die "Cannot write $isf_path: $!\n";
+                print $isf_fh $item->{text};
+                close $isf_fh;
+                print "Wrote: $isf_path\n" unless $machine_json_mode;
+            }
+
+            my $files = $ppif_result->{generated_ial0}{files} || {};
+            for my $fname (sort keys %$files) {
+                my $path = File::Spec->catfile($dir, $fname);
+                open my $fh, '>', $path or die "Cannot write $path: $!\n";
+                print $fh $files->{$fname};
+                close $fh;
+                print "Wrote: $path\n" unless $machine_json_mode;
+            }
+
+            unless ($machine_json_mode) {
+                print "=== IAL2 Protocol/Platform Intent Bundle ===\n\n";
+                print "Source: " . $ppif_result->{report}{source_object}{id} . "\n";
+                print "Channels: " . scalar(@{$ppif_result->{report}{channels} || []}) . "\n";
+                print "Generated review artifacts in: $dir\n";
+                print "HDL entry: deferred until a wrapper/top actor or explicit entry-selection owner lands\n\n"
+                    unless $quiet;
+            }
+            exit 0;
+        }
+
+        my $display_error = emit_machine_failure_if_requested(
+            input => $fsm_input,
+            source_file => $public_source_file,
+            target_language => $target_language,
+            strict_mode => $strict_mode,
+            emit_semantic_json => $emit_semantic_json,
+            check_json_mode => $check_json_mode,
+            message => "PPIF multi-channel bundle emits multiple generated .fsm roots; use --emit-schedule-json or --outdir for review artifacts until a bundle HDL entry owner is selected\n",
+        );
+        die $display_error;
+    }
+
     $isf_schedule_report = $ppif_result->{generated_ial1_schedule_report};
     my $files = $ppif_result->{generated_ial0}{files};
     my $artifact_files = $ppif_result->{report}{generated_artifacts}{ial0}{files} || [];

@@ -1,7 +1,8 @@
 # IAL2 PPIF Valid-Ready Bundle Contract Selection
 
-Status: contract selection only. No parser, generator, CLI, report, HDL, or
-test behavior changes in this slice.
+Status: contract selection slice. The bounded report/review-artifact subset of
+this contract is implemented by
+[docs/IAL2_PPIF_VALID_READY_BUNDLE_FIRST_SLICE.md](IAL2_PPIF_VALID_READY_BUNDLE_FIRST_SLICE.md).
 
 Task tree:
 [docs/tasks/IAL2-PPIF-VALID-READY-BUNDLE-CONTRACT-SELECTION.md](tasks/IAL2-PPIF-VALID-READY-BUNDLE-CONTRACT-SELECTION.md).
@@ -14,7 +15,7 @@ Readiness prerequisite:
 
 ## Selection
 
-Future multi-object `.ppif` Valid-Ready support shall use an aggregate
+Multi-object `.ppif` Valid-Ready support uses an aggregate
 **bundle contract** over per-channel generated artifacts.
 
 The selected contract is:
@@ -29,12 +30,12 @@ The selected contract is:
 - no direct `.ppif -> .fsm` shortcut and no hidden multi-actor `.isf` file are
   introduced.
 
-The first future implementation may keep default HDL generation fail-closed
-for multi-channel bundles until a later owner selects a wrapper/top actor or
-explicit HDL entry rule. Report emission and review-artifact materialization
-can still be selected before wrapper HDL exists.
+The first implementation keeps default HDL generation fail-closed for
+multi-channel bundles until a later owner selects a wrapper/top actor or
+explicit HDL entry rule. Report emission, check JSON, and review-artifact
+materialization are implemented before wrapper HDL exists.
 
-## Future Source Shape
+## Source Shape
 
 The future source remains Lispish and protocol/platform-generic:
 
@@ -192,7 +193,10 @@ the authored intent and create review drift.
 
 ## Implementation Prerequisites
 
-A future behavior leaf can implement this selection only after it defines:
+The bounded first behavior leaf implements the report/check/outdir subset of
+this selection. Future widening leaves still need the remaining parts of this
+contract when adding bundle HDL entry selection, aggregate semantic JSON, or
+broader AXI manager behavior:
 
 - parser changes for repeated `valid-ready-channel` clauses and optional
   channel-local `source` clauses;
@@ -203,12 +207,12 @@ A future behavior leaf can implement this selection only after it defines:
 - CLI handling for aggregate report mode, review-artifact materialization, and
   fail-closed default HDL/semantic modes;
 - focused tests that prove the current single-object behavior still works; and
-- mdBook examples that state which bundle CLI modes are shipped by that future
+- mdBook examples that state which bundle CLI modes are shipped by each future
   code leaf.
 
 ## Current User-Facing State
 
-Users can use the shipped one-channel `.ppif` path today. A `.ppif` file with
-multiple `valid-ready-channel` objects remains unsupported and fails closed.
-This contract selection defines the intended future bundle shape; it does not
-ship the behavior.
+Users can use the shipped one-channel `.ppif` path today. Users can also use
+the bounded multi-channel bundle path for aggregate reports, check JSON, and
+generated `.isf`/`.fsm` review artifacts. Default bundle HDL generation and
+aggregate semantic JSON remain unsupported and fail closed.

@@ -2404,8 +2404,10 @@ selects `.ppif` as the first generic IAL2 file suffix and records the first
 public Valid-Ready source shape. The first parser/CLI slice for `.ppif` is now
 shipped by
 [IAL2_PPIF_PARSER_CLI_FIRST_SLICE](../../IAL2_PPIF_PARSER_CLI_FIRST_SLICE.md).
-Public `.pif`, `.ppi`, `.axi`, multiple-object `.ppif` files, and full AXI
-manager behavior remain unshipped.
+Public `.pif`, `.ppi`, `.axi`, protocol-profile aliases, and full AXI manager
+behavior remain unshipped. Multi-channel `.ppif` Valid-Ready bundle
+report/review-artifact behavior is now shipped in the bounded slice below;
+bundle HDL and aggregate semantic JSON remain deferred.
 
 First selected `.ppif` shape, checked in as
 `ppif/axi_aw_valid_ready.ppif`:
@@ -2452,25 +2454,35 @@ first-slice alias exclusions, and `supported_cli_modes[]` entries for
 additional `.ppif` objects/clauses, profile aliases, or the next protocol rule
 subset.
 
-Multi-channel `.ppif` readiness:
+Multi-channel `.ppif` bundle support:
 [IAL2_PPIF_MULTI_VALID_READY_READINESS](../../IAL2_PPIF_MULTI_VALID_READY_READINESS.md)
-records why accepting multiple `(valid-ready-channel ...)` objects is not just
-a parser change. The current adapter, generator result shape, CLI artifact
-selection, ISF single-actor parser contract, and source-anchor model all assume
-one Valid-Ready object. A future implementation leaf must first choose an
-aggregate result/report/source-artifact contract, or an ISF wrapper/top actor
-contract, before changing the duplicate-channel fail-closed behavior. Until
-then, multi-object `.ppif` files remain unshipped.
+records why accepting multiple `(valid-ready-channel ...)` objects required an
+aggregate contract rather than a parser-only change. The bounded implementation
+is documented in
+[IAL2_PPIF_VALID_READY_BUNDLE_FIRST_SLICE](../../IAL2_PPIF_VALID_READY_BUNDLE_FIRST_SLICE.md).
+It accepts multiple unique Valid-Ready channel objects, emits the
+`fsmgen.ial2.protocol_intent.valid_ready_bundle.v1` report, writes per-channel
+generated `.isf`/`.fsm` review artifacts with `--outdir`, and keeps
+`IAL2 -> IAL1 -> IAL0` intact.
 
 Selected future bundle contract:
 [IAL2_PPIF_VALID_READY_BUNDLE_CONTRACT_SELECTION](../../IAL2_PPIF_VALID_READY_BUNDLE_CONTRACT_SELECTION.md)
 and decision
 [0017-ppif-valid-ready-bundle-contract](../../decisions/0017-ppif-valid-ready-bundle-contract.md)
 select an aggregate PPIF bundle report over per-channel generated `.isf` and
-`.fsm` review artifacts. That future contract avoids a hidden multi-actor
-`.isf` file and forbids "first channel wins" HDL selection. Default HDL and
-aggregate semantic JSON for a multi-channel bundle remain fail-closed until a
-future wrapper/top actor or explicit entry-selection owner lands.
+`.fsm` review artifacts. The shipped first bundle slice avoids a hidden
+multi-actor `.isf` file and forbids "first channel wins" HDL selection.
+Default HDL and aggregate semantic JSON for a multi-channel bundle remain
+fail-closed until a future wrapper/top actor or explicit entry-selection owner
+lands.
+
+Runnable bundle commands:
+
+```bash
+./bin/fsmgen --emit-schedule-json ppif/axi_aw_w_valid_ready_bundle.ppif
+./bin/fsmgen --outdir generated ppif/axi_aw_w_valid_ready_bundle.ppif
+./bin/fsmgen --strict --check --json ppif/axi_aw_w_valid_ready_bundle.ppif
+```
 
 PDF extraction workflow:
 [PDF_EXTRACTION_WORKFLOW](../../PDF_EXTRACTION_WORKFLOW.md)

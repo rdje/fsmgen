@@ -1,7 +1,8 @@
 # IAL2 PPIF Multi Valid-Ready Readiness
 
-Status: readiness/contract-mapping slice. No parser, generator, CLI, report,
-HDL, or test behavior changes in this slice.
+Status: readiness/contract-mapping slice. The bounded report/review-artifact
+bundle behavior identified by this readiness work is now implemented by
+[docs/IAL2_PPIF_VALID_READY_BUNDLE_FIRST_SLICE.md](IAL2_PPIF_VALID_READY_BUNDLE_FIRST_SLICE.md).
 
 Task tree:
 [docs/tasks/IAL2-PPIF-MULTI-VALID-READY-READINESS.md](tasks/IAL2-PPIF-MULTI-VALID-READY-READINESS.md).
@@ -136,10 +137,11 @@ The next implementation leaf should define, before code changes:
 
 Users can continue to use the shipped single-object `.ppif` path documented in
 [docs/IAL2_PPIF_PARSER_CLI_FIRST_SLICE.md](IAL2_PPIF_PARSER_CLI_FIRST_SLICE.md).
-Multiple Valid-Ready channel objects in one `.ppif` file remain unshipped and
-fail closed.
+They can also use the bounded multi-channel bundle report/review-artifact path
+documented in
+[docs/IAL2_PPIF_VALID_READY_BUNDLE_FIRST_SLICE.md](IAL2_PPIF_VALID_READY_BUNDLE_FIRST_SLICE.md).
 
-This readiness slice is a contract map for the next task-tree owner. It does
-not claim AXI five-channel manager behavior, transaction concurrency, ID
-ordering, outstanding-window scheduling, response matching, bursts, or channel
-dependency enforcement.
+The implemented bundle behavior does not claim AXI five-channel manager
+behavior, transaction concurrency, ID ordering, outstanding-window scheduling,
+response matching, bursts, channel dependency enforcement, wrapper/top actor
+HDL generation, or aggregate semantic JSON.

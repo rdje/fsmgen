@@ -11,10 +11,14 @@ Implementation:
 Runnable sample:
 [`ppif/axi_aw_valid_ready.ppif`](../ppif/axi_aw_valid_ready.ppif).
 
+Later bounded bundle slice:
+[docs/IAL2_PPIF_VALID_READY_BUNDLE_FIRST_SLICE.md](IAL2_PPIF_VALID_READY_BUNDLE_FIRST_SLICE.md).
+
 ## Scope
 
-This slice makes `.ppif` the first public file-backed IAL2 surface. It supports
-one source object per file. The checked-in sample above uses this exact shape:
+This slice made `.ppif` the first public file-backed IAL2 surface. It supports
+one Valid-Ready channel object per file. The checked-in sample above uses this
+exact shape:
 
 ```text
 (protocol-platform-intent axi_aw_valid_ready
@@ -91,10 +95,12 @@ and `.ppif`; the `.ppif` entry records IAL2, generated `.isf` before generated
 `.fsm`, the sample path, and the unsupported first-slice aliases.
 
 Malformed `.ppif` source fails closed before claiming generated behavior. The
-first slice rejects missing profile/source/channel clauses, duplicate
-`valid-ready-channel` objects, malformed reset tuples, unsupported payload
-width syntax, and generator-level contract errors such as invalid signal names
-or non-positive payload widths.
+first slice rejects missing profile/source/channel clauses, malformed reset
+tuples, unsupported payload width syntax, and generator-level contract errors
+such as invalid signal names or non-positive payload widths. A later bounded
+bundle slice accepts multiple unique `valid-ready-channel` objects for
+aggregate report/review-artifact modes; duplicate channel object names still
+fail closed.
 
 ## Report Surface
 
@@ -120,14 +126,16 @@ IAL2 source-anchor/residue report, not the nested IAL1 schedule report.
 
 ## Boundaries
 
-The first public slice does not support `.pif`, `.ppi`, `.axi`, `.chi`, `.ace`,
-`.ahb`, `.apb`, `.atb`, or other aliases. Those remain future exact-owner
-decisions.
+The public `.ppif` surface does not support `.pif`, `.ppi`, `.axi`, `.chi`,
+`.ace`, `.ahb`, `.apb`, `.atb`, or other aliases. Those remain future
+exact-owner decisions.
 
-It also does not support multiple `.ppif` objects per file, platform placement
-clauses, a full AXI manager, transaction IDs, outstanding-window scheduling,
-response matching, bursts, channel dependency rules, or a direct `.ppif` to
-`.fsm` shortcut.
+The bounded bundle slice supports multiple unique Valid-Ready channel objects
+for aggregate IAL2 reports and generated review artifacts only. It still does
+not support platform placement clauses, a full AXI manager, transaction IDs,
+outstanding-window scheduling, response matching, bursts, channel dependency
+rules, wrapper/top actor HDL generation, aggregate semantic JSON, or a direct
+`.ppif` to `.fsm` shortcut.
 
 ## Validation
 

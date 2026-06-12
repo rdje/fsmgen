@@ -14,8 +14,8 @@ evidence: docs/IAL2_PPIF_VALID_READY_BUNDLE_CONTRACT_SELECTION.md; docs/decision
 reverify: rg -n "valid_ready_bundle.v1|generated_ial1 =|generated_ial0 =|first channel wins|aggregate bundle" docs/IAL2_PPIF_VALID_READY_BUNDLE_CONTRACT_SELECTION.md docs/decisions/0017-ppif-valid-ready-bundle-contract.md
 ---
 
-Future multi-channel `.ppif` Valid-Ready support should use an aggregate
-bundle contract over per-channel generated artifacts. Each
+Multi-channel `.ppif` Valid-Ready support uses an aggregate bundle contract
+over per-channel generated artifacts. Each
 `valid-ready-channel` object remains one channel-level intent object and emits
 its own reviewable generated `.isf` actor plus generated `.fsm` artifacts.
 
@@ -26,7 +26,9 @@ should expose arrays such as `generated_ial1.items[]`,
 single-object `.ppif` result shape remains stable until an explicit
 compatibility owner changes it.
 
-The selected contract forbids arbitrary "first channel wins" HDL or semantic
-selection. Default HDL generation and aggregate semantic JSON for a
-multi-channel bundle remain fail-closed until a future wrapper/top actor or
-explicit entry-selection owner lands.
+`IAL2-PPIF-VALID-READY-BUNDLE-FIRST-SLICE.1` ships the bounded report,
+`--outdir`, and `--check --json` subset for this contract. The selected
+contract forbids arbitrary "first channel wins" HDL or semantic selection.
+Default HDL generation and aggregate semantic JSON for a multi-channel bundle
+remain fail-closed until a future wrapper/top actor, explicit entry-selection,
+or aggregate semantic owner lands.

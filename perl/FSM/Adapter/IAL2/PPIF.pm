@@ -52,7 +52,10 @@ sub parse_source($self, @args) {
         unless ref($root) eq 'ARRAY' && ($root->[0] // '') eq 'protocol-platform-intent';
 
     my $contract = _contract_from_root($root, $source_label);
-    return FSM::IAL2::ProtocolIntent::ValidReadyChannel->new(debug => $self->{debug})->generate($contract);
+    my $generator = FSM::IAL2::ProtocolIntent::ValidReadyChannel->new(debug => $self->{debug});
+    return _generate_bundle($generator, $contract)
+        if _is_bundle_contract($contract);
+    return $generator->generate($contract);
 }
 
 sub _validate_constructor_receiver($class) {
@@ -96,7 +99,8 @@ sub _contract_from_root($root, $source_label) {
     my (undef, $intent_name, @clauses) = @$root;
     _require_scalar($intent_name, "protocol-platform-intent name", $source_label);
 
-    my ($profile, $source, $channel);
+    my ($profile, $source);
+    my @channels;
     for my $clause (@clauses) {
         my ($head, @body) = _clause_parts($clause, $source_label);
         if ($head eq 'profile') {
@@ -110,9 +114,7 @@ sub _contract_from_root($root, $source_label) {
                 if defined $source;
             $source = _parse_source_clause(\@body, $source_label);
         } elsif ($head eq 'valid-ready-channel') {
-            confess "Error: .ppif source '$source_label' supports exactly one (valid-ready-channel ...) object in this slice\n"
-                if defined $channel;
-            $channel = _parse_valid_ready_channel(\@body, $source_label);
+            push @channels, _parse_valid_ready_channel(\@body, $source_label);
         } else {
             confess "Error: .ppif source '$source_label' has unsupported top-level clause '($head ...)'\n";
         }
@@ -123,13 +125,43 @@ sub _contract_from_root($root, $source_label) {
     confess "Error: .ppif source '$source_label' is missing required (source ...) clause\n"
         unless defined $source;
     confess "Error: .ppif source '$source_label' is missing required (valid-ready-channel ...) clause\n"
-        unless defined $channel;
+        unless @channels;
+
+    my %seen_channel_names;
+    for my $channel (@channels) {
+        confess "Error: .ppif source '$source_label' has duplicate valid-ready-channel object name '$channel->{name}'\n"
+            if $seen_channel_names{$channel->{name}}++;
+    }
+
+    if (@channels == 1) {
+        my %channel = %{$channels[0]};
+        my $channel_source = delete($channel{source}) // $source;
+        return {
+            %channel,
+            intent_name => $intent_name,
+            protocol    => $profile,
+            source      => $channel_source,
+        };
+    }
+
+    my @bundle_channels;
+    for my $channel (@channels) {
+        my %channel = %$channel;
+        my $channel_source = exists($channel{source}) ? delete($channel{source}) : undef;
+        push @bundle_channels, {
+            %channel,
+            protocol           => $profile,
+            source             => $channel_source // $source,
+            source_attribution => defined($channel_source) ? 'channel' : 'inherited',
+        };
+    }
 
     return {
-        %$channel,
+        kind        => 'valid_ready_bundle',
         intent_name => $intent_name,
         protocol    => $profile,
         source      => $source,
+        channels    => \@bundle_channels,
     };
 }
 
@@ -203,6 +235,8 @@ sub _parse_valid_ready_channel($body, $source_label) {
             confess "Error: .ppif ($head ...) requires exactly one scalar value\n"
                 unless @items == 1 && !ref($items[0]);
             $contract{$head} = $items[0];
+        } elsif ($head eq 'source') {
+            $contract{source} = _parse_source_clause(\@items, $source_label);
         } elsif ($head eq 'reset') {
             $contract{reset} = _parse_reset(\@items, $source_label);
         } elsif ($head eq 'payload') {
@@ -269,6 +303,191 @@ sub _parse_payload($items, $source_label) {
 sub _require_scalar($value, $label, $source_label) {
     confess "Error: .ppif source '$source_label' requires scalar $label\n"
         unless defined($value) && !ref($value) && length($value);
+}
+
+sub _is_bundle_contract($contract) {
+    return ref($contract) eq 'HASH'
+        && ($contract->{kind} // '') eq 'valid_ready_bundle';
+}
+
+sub _generate_bundle($generator, $bundle) {
+    my @channels = @{$bundle->{channels} || []};
+    confess "Error: .ppif Valid-Ready bundle requires at least two channels\n"
+        unless @channels >= 2;
+
+    my (@ial1_items, @ial0_items, @schedule_reports, @channel_reports);
+    my %all_fsm_files;
+
+    for my $channel (@channels) {
+        my %contract = %$channel;
+        $contract{intent_name} = $bundle->{intent_name};
+        my $result = $generator->generate(\%contract);
+        my $report = $result->{report};
+        my $object_name = $channel->{name};
+        my $family = $report->{target_channel}{family};
+
+        push @ial1_items, {
+            object_name => $object_name,
+            channel     => $family,
+            format      => $result->{generated_ial1}{format},
+            name        => $result->{generated_ial1}{name},
+            text        => $result->{generated_ial1}{text},
+        };
+
+        my @fsm_names = sort keys %{$result->{generated_ial0}{files} || {}};
+        for my $fsm_name (@fsm_names) {
+            confess "Error: .ppif Valid-Ready bundle generated duplicate .fsm artifact '$fsm_name'\n"
+                if exists $all_fsm_files{$fsm_name};
+            $all_fsm_files{$fsm_name} = $result->{generated_ial0}{files}{$fsm_name};
+        }
+
+        my $entry_artifact = $report->{generated_artifacts}{ial0}{files}[0];
+        push @ial0_items, {
+            object_name    => $object_name,
+            channel        => $family,
+            format         => 'fsm',
+            files          => \@fsm_names,
+            entry_artifact => $entry_artifact,
+        };
+
+        push @schedule_reports, {
+            object_name => $object_name,
+            channel     => $family,
+            report      => _clone_jsonish($result->{generated_ial1_schedule_report}),
+        };
+
+        push @channel_reports, {
+            object_name             => $object_name,
+            source_attribution      => $channel->{source_attribution},
+            valid_ready_channel_report => _clone_jsonish($report),
+        };
+    }
+
+    my $report = _build_bundle_report(
+        bundle          => $bundle,
+        ial1_items      => \@ial1_items,
+        ial0_items      => \@ial0_items,
+        channel_reports => \@channel_reports,
+    );
+
+    return {
+        layer => 'IAL2',
+        kind  => 'protocol_intent.valid_ready_bundle',
+        mode  => $report->{mode},
+        generated_ial1 => {
+            format => 'isf',
+            items  => \@ial1_items,
+        },
+        generated_ial0 => {
+            format => 'fsm',
+            items  => \@ial0_items,
+            files  => \%all_fsm_files,
+        },
+        generated_ial1_schedule_reports => \@schedule_reports,
+        report => $report,
+    };
+}
+
+sub _build_bundle_report(%args) {
+    my $bundle = $args{bundle};
+    my @ial1_items = @{$args{ial1_items} || []};
+    my @ial0_items = @{$args{ial0_items} || []};
+    my @channel_reports = @{$args{channel_reports} || []};
+
+    my @channels;
+    my $inherited_source_count = 0;
+    for my $entry (@channel_reports) {
+        my $channel_report = $entry->{valid_ready_channel_report};
+        my $source_scope = $entry->{source_attribution} eq 'channel' ? 'channel' : 'inherited';
+        ++$inherited_source_count if $source_scope eq 'inherited';
+
+        push @channels, {
+            object_name => $entry->{object_name},
+            source_object => _clone_jsonish($channel_report->{source_object}),
+            source_attribution => {
+                scope => $source_scope,
+                ($source_scope eq 'inherited'
+                    ? (inherited_from => $bundle->{source}{object_id})
+                    : ()),
+            },
+            target_channel => _clone_jsonish($channel_report->{target_channel}),
+            bindings => _clone_jsonish($channel_report->{bindings}),
+            generated_artifacts => _clone_jsonish($channel_report->{generated_artifacts}),
+            transfer_fire_condition => $channel_report->{transfer_fire_condition},
+            generated_runtime_assertions => _clone_jsonish($channel_report->{generated_runtime_assertions}),
+            unsupported_residue => _clone_jsonish($channel_report->{unsupported_residue}),
+        };
+    }
+
+    my %source_object = (
+        id      => $bundle->{source}{object_id},
+        anchors => _clone_jsonish($bundle->{source}{anchors}),
+    );
+    $source_object{intent_name} = $bundle->{intent_name}
+        if defined($bundle->{intent_name}) && length($bundle->{intent_name});
+
+    return {
+        schema => 'fsmgen.ial2.protocol_intent.valid_ready_bundle.v1',
+        mode   => 'monitor-only-bundle',
+        layering => {
+            source_layer          => 'IAL2',
+            generated_ial1_format => 'isf',
+            generated_ial0_format => 'fsm',
+            direct_ial2_to_ial0   => 0,
+        },
+        source_object => \%source_object,
+        bundle => {
+            protocol               => $bundle->{protocol},
+            channel_count          => scalar(@channels),
+            channel_object_names   => [map { $_->{object_name} } @channels],
+            inherited_source_count => $inherited_source_count,
+        },
+        channels => \@channels,
+        generated_artifacts => {
+            ial1 => {
+                format => 'isf',
+                items  => [
+                    map {
+                        {
+                            object_name => $_->{object_name},
+                            channel     => $_->{channel},
+                            name        => $_->{name},
+                            format      => $_->{format},
+                        }
+                    } @ial1_items
+                ],
+            },
+            ial0 => {
+                format => 'fsm',
+                items  => _clone_jsonish(\@ial0_items),
+            },
+            hdl_entry => {
+                selected => 0,
+                reason   => 'multi-channel PPIF bundle has no wrapper/top actor or explicit HDL entry selection in this slice',
+            },
+        },
+        unsupported_residue => [
+            {
+                id     => 'bundle_hdl_entry',
+                detail => 'Default HDL generation remains fail-closed until a wrapper/top actor or explicit entry-selection owner lands.',
+            },
+            {
+                id     => 'bundle_semantic_json',
+                detail => 'Aggregate normalized semantic JSON remains fail-closed until a dedicated aggregate semantic owner lands.',
+            },
+            {
+                id     => 'axi_manager_concurrency',
+                detail => 'Transaction IDs, outstanding windows, bursts, response matching, and channel dependency rules remain outside this monitor-only bundle slice.',
+            },
+        ],
+    };
+}
+
+sub _clone_jsonish($value) {
+    return undef unless defined $value;
+    return [map { _clone_jsonish($_) } @$value] if ref($value) eq 'ARRAY';
+    return { map { $_ => _clone_jsonish($value->{$_}) } sort keys %$value } if ref($value) eq 'HASH';
+    return $value;
 }
 
 1;

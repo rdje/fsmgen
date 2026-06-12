@@ -51,6 +51,9 @@ Successful `.ppif` check JSON and normalized semantic JSON keep
 support-accounting entry. The normalized semantic payload still describes the
 generated `.fsm` semantic root.
 
-Unsupported aliases remain unsupported in this first slice. `.pif`, `.ppi`,
-`.axi`, protocol-specific aliases, multiple PPIF objects, and full AXI manager
-behavior all require later exact owners.
+Unsupported aliases remain unsupported. `.pif`, `.ppi`, `.axi`,
+protocol-specific aliases, platform placement clauses, and full AXI manager
+behavior all require later exact owners. A later bounded bundle slice now
+supports multiple unique `valid-ready-channel` objects for aggregate IAL2
+reports and generated review artifacts; default bundle HDL generation and
+aggregate semantic JSON remain fail-closed.
