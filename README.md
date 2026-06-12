@@ -721,6 +721,10 @@ unless `--emit-schedule-json` is requested.
 For `.isf` inputs, `--check --json` and `--check-json` emit structured
 `success: false` JSON for parser, lowering, report-building, and downstream
 semantic check failures instead of leaving stdout empty.
+For successful `.isf` and `.ppif` inputs that lower through generated `.fsm`
+temporaries, public check JSON keeps `source.resolved_path` on the original
+resolved `.isf`/`.ppif` file and can match support accounting against those
+public source paths.
 
 The bounded machine-readable surfaces are backed by support accounting:
 `--check --json` is corpus-covered across supported, strict-supported, and

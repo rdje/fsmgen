@@ -101,7 +101,20 @@ subtest 'CLI check JSON accepts .ppif and keeps unsupported aliases rejected' =>
     );
     ok($success, '--check --json succeeds for .ppif');
     is(join('', @{$stderr_buf || []}), '', '--check --json keeps stderr clean for .ppif');
-    ok(decode_json(join('', @{$stdout_buf || []}))->{success}, 'check JSON reports success');
+    my $check_report = decode_json(join('', @{$stdout_buf || []}));
+    ok($check_report->{success}, 'check JSON reports success');
+    is(
+        $check_report->{source}{resolved_path},
+        File::Spec->rel2abs(sample_ppif_path()),
+        'check JSON reports the public .ppif source path, not the generated .fsm temporary',
+    );
+    ok($check_report->{support_accounting}{matched}, 'check JSON support accounting matches the PPIF sample');
+    is(
+        $check_report->{support_accounting}{entry_id},
+        'intent.ppif_axi_aw_valid_ready',
+        'check JSON support accounting names the PPIF corpus entry',
+    );
+    is($check_report->{support_accounting}{source_kind}, 'ppif', 'check JSON support accounting records PPIF source kind');
 
     my $pif_path = File::Spec->catfile($tempdir, 'sample.pif');
     write_file($pif_path, sample_ppif());

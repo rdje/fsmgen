@@ -2989,6 +2989,10 @@ corpus entry by resolved source path, the report-level `support_accounting`
 object gives embedders the matched entry id, family, coverage, classification,
 source kind, and `strict_supported` marker.
 
+For public inputs that lower through generated `.fsm` intermediates, such as
+`.isf` and `.ppif`, check JSON matches and reports the original resolved public
+input path rather than the temporary generated `.fsm` path.
+
 Successful user sources outside the
 corpus report `matched: false` instead of claiming catalog support they do not
 yet have.

@@ -9,11 +9,12 @@ answers:
   - "what PPIF syntax is supported first?"
   - "where is the first runnable .ppif sample?"
   - "does the capability manifest advertise .ppif?"
+  - "does .ppif check JSON keep the .ppif source path?"
 date: 2026-06-12
 status: current
 tags: [ial2, ppif, parser, cli, valid-ready]
-evidence: docs/IAL2_PPIF_PARSER_CLI_FIRST_SLICE.md; ppif/axi_aw_valid_ready.ppif; perl/FSM/Adapter/IAL2/PPIF.pm; perl/FSM/Support/LanguageSurfaceSection.pm; perl/FSM/Support/LanguageSurfaceContract.pm; bin/fsmgen; t/1436-ial2-ppif-parser-cli.t; t/297-capability-manifest.t; docs/tasks/IAL2-PPIF-PARSER-CLI-FIRST-SLICE.md
-reverify: prove -Iperl t/1436-ial2-ppif-parser-cli.t t/1435-axi-ial2-valid-ready-generator.t t/297-capability-manifest.t
+evidence: docs/IAL2_PPIF_PARSER_CLI_FIRST_SLICE.md; ppif/axi_aw_valid_ready.ppif; perl/FSM/Adapter/IAL2/PPIF.pm; perl/FSM/Support/LanguageSurfaceSection.pm; perl/FSM/Support/LanguageSurfaceContract.pm; bin/fsmgen; t/1436-ial2-ppif-parser-cli.t; t/297-capability-manifest.t; t/301-check-json-supported-corpus.t; docs/tasks/IAL2-PPIF-PARSER-CLI-FIRST-SLICE.md
+reverify: prove -Iperl t/1436-ial2-ppif-parser-cli.t t/1435-axi-ial2-valid-ready-generator.t t/297-capability-manifest.t t/301-check-json-supported-corpus.t
 ---
 
 `.ppif` is now accepted by `bin/fsmgen` as the first public IAL2 file surface.
@@ -31,6 +32,8 @@ The first runnable checked-in sample is `ppif/axi_aw_valid_ready.ppif`.
 The capability manifest advertises `.ppif` under
 `language_surface.file_surfaces`, where it is marked as IAL2 and documented as
 lowering through generated `.isf` before generated `.fsm`.
+Successful `.ppif` check JSON keeps `source.resolved_path` on the resolved
+`.ppif` input and matches the PPIF sample support-accounting entry.
 
 Unsupported aliases remain unsupported in this first slice. `.pif`, `.ppi`,
 `.axi`, protocol-specific aliases, multiple PPIF objects, and full AXI manager

@@ -536,6 +536,7 @@ if ($@) {
 
 # Convert to absolute path for consistency
 $fsm_file = File::Spec->rel2abs($fsm_file);
+my $public_source_file = $fsm_file;
 
 # PPIF pipeline: if input is .ppif, lower through generated .isf to .fsm first
 if ($fsm_file =~ /\.ppif$/i) {
@@ -580,7 +581,7 @@ if ($fsm_file =~ /\.ppif$/i) {
     if (!defined $entry_basename || !exists $files->{$entry_basename}) {
         my $display_error = emit_machine_failure_if_requested(
             input => $fsm_input,
-            source_file => $fsm_file,
+            source_file => ($check_json_mode ? $public_source_file : $fsm_file),
             target_language => $target_language,
             strict_mode => $strict_mode,
             emit_semantic_json => $emit_semantic_json,
@@ -668,7 +669,7 @@ if ($fsm_file =~ /\.isf$/i) {
     if ($@) {
         my $display_error = emit_machine_failure_if_requested(
             input => $fsm_input,
-            source_file => $fsm_file,
+            source_file => ($check_json_mode ? $public_source_file : $fsm_file),
             target_language => $target_language,
             strict_mode => $strict_mode,
             emit_semantic_json => $emit_semantic_json,
@@ -681,7 +682,7 @@ if ($fsm_file =~ /\.isf$/i) {
     if ($@) {
         my $display_error = emit_machine_failure_if_requested(
             input => $fsm_input,
-            source_file => $fsm_file,
+            source_file => ($check_json_mode ? $public_source_file : $fsm_file),
             target_language => $target_language,
             strict_mode => $strict_mode,
             emit_semantic_json => $emit_semantic_json,
@@ -701,7 +702,7 @@ if ($fsm_file =~ /\.isf$/i) {
     if (!defined $entry_basename) {
         my $display_error = emit_machine_failure_if_requested(
             input => $fsm_input,
-            source_file => $fsm_file,
+            source_file => ($check_json_mode ? $public_source_file : $fsm_file),
             target_language => $target_language,
             strict_mode => $strict_mode,
             emit_semantic_json => $emit_semantic_json,
@@ -794,7 +795,7 @@ if ($@) {
     if ($emit_semantic_json) {
         my $report = build_normalized_semantic_failure_report(
             input => $fsm_input,
-            source_file => $fsm_file,
+            source_file => ($check_json_mode ? $public_source_file : $fsm_file),
             target_language => $target_language,
             strict_mode => $strict_mode,
             message => $display_error,
@@ -805,7 +806,7 @@ if ($@) {
     if ($check_json_mode) {
         my $report = build_check_failure_report(
             input => $fsm_input,
-            source_file => $fsm_file,
+            source_file => ($check_json_mode ? $public_source_file : $fsm_file),
             target_language => $target_language,
             strict_mode => $strict_mode,
             message => $display_error,
@@ -902,7 +903,7 @@ if ($emit_semantic_json) {
 if ($check_json_mode) {
     my $report = build_check_success_report(
         input => $fsm_input,
-        source_file => $fsm_file,
+        source_file => $public_source_file,
         target_language => $target_language,
         strict_mode => $strict_mode,
         module_info => $result->{module_info},

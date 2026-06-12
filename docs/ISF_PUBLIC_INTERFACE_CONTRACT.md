@@ -2928,6 +2928,9 @@ check JSON failure surface for parser, lowering, schedule-report, and
 downstream semantic check failures. These failures exit nonzero, write
 `success: false` JSON to stdout, keep stderr clean for the machine-readable
 mode, and preserve the normalized diagnostic text in `diagnostics[0].message`.
+Successful `.isf` check JSON keeps `source.resolved_path` on the resolved
+`.isf` input path, not on the temporary scheduled `.fsm` artifact, and the
+public `isf/apb_requester.isf` fixture is support-accounting matched.
 
 ## Lower Result
 
