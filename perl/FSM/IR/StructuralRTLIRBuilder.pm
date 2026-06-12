@@ -262,6 +262,7 @@ sub _direct_structural_nets (%args) {
     my @entries = (
         @{_direct_internal_declaration_nets(%args)},
         @{_direct_top_enable_nets(%args)},
+        @{_direct_assignment_enable_nets(%args)},
     );
 
     my %seen;
@@ -332,7 +333,38 @@ sub _direct_top_enable_nets (%args) {
     return \@entries;
 }
 
+sub _direct_assignment_enable_nets (%args) {
+    my $hdl_generator = $args{hdl_generator};
+    return [] unless ref($hdl_generator);
+
+    my $assignment_analysis = $hdl_generator->{assignment_analysis};
+    return [] unless ref($assignment_analysis) eq 'HASH';
+
+    my @entries;
+    for my $lhs (sort keys %$assignment_analysis) {
+        my $lhs_analysis = $assignment_analysis->{$lhs};
+        next unless ref($lhs_analysis) eq 'HASH';
+
+        for my $rhs (sort keys %{$lhs_analysis->{rhs_groups} || {}}) {
+            my $rhs_group = $lhs_analysis->{rhs_groups}{$rhs};
+            next unless ref($rhs_group) eq 'HASH';
+
+            for my $dt_enable (@{$rhs_group->{dt_specific_enables} || []}) {
+                next unless ref($dt_enable) eq 'HASH';
+                push @entries, _direct_one_bit_enable_net($dt_enable->{enable_name});
+            }
+
+            my $lhs_enable = $rhs_group->{lhs_level_enable};
+            push @entries, _direct_one_bit_enable_net($lhs_enable->{name})
+                if ref($lhs_enable) eq 'HASH';
+        }
+    }
+
+    return \@entries;
+}
+
 sub _direct_one_bit_enable_net ($name) {
+    return undef unless defined($name) && length($name);
     return {
         name => $name,
         width => 1,

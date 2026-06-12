@@ -4599,6 +4599,12 @@ projects top-level direct state and standalone-DT enable wires into
 assignment connectivity, instances, links, auxiliary assignments, or rerouting
 HDL emission. Completed
 implementation leaf
+`R11-DIRECT-STRUCTURAL-WEN-EN-NETS.1`
+projects direct DT-specific and LHS-level WEN/EN wires into
+`structural_rtl_ir.nets[]` as declaration-only one-bit nets without claiming
+assignment connectivity, instances, links, auxiliary assignments, or rerouting
+HDL emission. Completed
+implementation leaf
 `BACKEND-API-VALIDATION-FRONTIER.131.1` lowers an 8-bit non-signed
 `REM = (% 2 3)` fixture into
 `REM <= std_logic_vector(resize(to_unsigned(2, 8) mod to_unsigned(3, 8), 8));`.

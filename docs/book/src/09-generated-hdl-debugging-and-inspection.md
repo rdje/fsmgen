@@ -299,10 +299,10 @@ forward-IR projections exposed to users and tools. They are sanitized
 projections of internal IR objects, not raw mutable compiler objects.
 For direct roots, `structural_rtl_ir.nets[]` includes declaration-only
 internal storage/helper nets from the backend declaration plan, preserving
-width and typed metadata where available, plus top-level state and
-standalone-DT enable wires from the already-prepared direct backend enable
-registries. DT-specific/LHS WEN/EN wires and direct assignment connectivity
-remain outside that direct structural projection.
+width and typed metadata where available, plus generated enable wires from the
+already-prepared direct backend enable registries and assignment analysis.
+Direct assignment connectivity remains outside that direct structural
+projection.
 
 `module_info` is a compatibility/result surface. It mirrors useful forward-IR,
 analysis, and planning facts for existing callers, but it is not a second

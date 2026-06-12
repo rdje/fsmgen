@@ -2194,11 +2194,11 @@ core and typed-extension entry keys.
 
 For direct roots, `structural_rtl_ir.nets[]` now includes declaration-only
 internal storage/helper nets projected from the backend internal declaration
-plan plus top-level state and standalone-DT enable wires projected from the
-already-prepared direct backend enable registries. These entries preserve
+plan plus generated enable wires projected from the already-prepared direct
+backend enable registries and assignment analysis. These entries preserve
 width, signedness, state-model, and declared-type metadata where available.
-They intentionally do not include DT-specific/LHS WEN/EN wires, direct
-instances, links, auxiliary assignments, or assignment connectivity.
+They intentionally do not include direct instances, links, auxiliary
+assignments, or assignment connectivity.
 
 That same owner now also publishes a grouped `presence_key_family_map` so
 embedders can discover the bounded structural-RTL shell summary and

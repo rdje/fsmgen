@@ -85,8 +85,8 @@ FSM
     my %nets_by_name = map { $_->{name} => $_ } @{$structural->{nets} || []};
     is_deeply(
         [sort keys %nets_by_name],
-        [qw(data_out_q idle_en ready_q)],
-        'direct structural_rtl_ir projects direct mux-helper declaration nets plus the top-level state enable wire',
+        [qw(data_out_payload_en data_out_q idle_data_out_payload_en idle_en idle_ready_1_en ready_1_en ready_q)],
+        'direct structural_rtl_ir projects direct mux-helper declaration nets plus state and assignment enable wires',
     );
     is_deeply(
         $nets_by_name{idle_en},
@@ -132,7 +132,7 @@ FSM
         [],
         'direct structural_rtl_ir does not claim direct auxiliary assignments yet',
     );
-    is($structural->{net_count}, 3, 'direct structural_rtl_ir net_count matches helper declarations plus top-level state enable wire');
+    is($structural->{net_count}, 7, 'direct structural_rtl_ir net_count matches helper declarations plus state and assignment enable wires');
     is($structural->{instance_count}, 0, 'direct structural_rtl_ir instance_count remains zero');
     is($structural->{declared_link_count}, 0, 'direct structural_rtl_ir declared_link_count remains zero');
     is($structural->{resolved_link_count}, 0, 'direct structural_rtl_ir resolved_link_count remains zero');
@@ -176,8 +176,8 @@ FSM
 
     is_deeply(
         [sort keys %nets_by_name],
-        [qw(FLAG OUT OUT_q idle_en run_en)],
-        'direct structural_rtl_ir projects internal storage/helper declarations plus top-level state enable wires',
+        [qw(FLAG OUT OUT_q flag_1_en idle_en idle_next_state_run_en idle_out_in_en next_state_run_en out_in_en run_en run_flag_1_en)],
+        'direct structural_rtl_ir projects internal storage/helper declarations plus state and assignment enable wires',
     );
     is_deeply(
         $nets_by_name{idle_en},
@@ -268,7 +268,7 @@ FSM
         },
         'direct structural_rtl_ir preserves typed metadata on helper nets',
     );
-    is($structural->{net_count}, 5, 'direct structural_rtl_ir net_count matches internal storage/helper declarations plus top-level state enable wires');
+    is($structural->{net_count}, 11, 'direct structural_rtl_ir net_count matches internal storage/helper declarations plus state and assignment enable wires');
     is_deeply($structural->{instances}, [], 'direct structural_rtl_ir still does not claim direct instances');
     is_deeply($structural->{declared_links}, [], 'direct structural_rtl_ir still does not claim direct declared links');
     is_deeply($structural->{resolved_links}, [], 'direct structural_rtl_ir still does not claim direct resolved links');
@@ -333,8 +333,50 @@ FSM
         },
         'direct structural_rtl_ir records the standalone-DT top-level enable wire',
     );
-    ok(!exists $nets_by_name{idle_out1_1_en}, 'direct structural_rtl_ir still does not claim DT-specific WEN/EN wires');
-    ok(!exists $nets_by_name{out1_1_en}, 'direct structural_rtl_ir still does not claim LHS-level WEN/EN wires');
+    is_deeply(
+        $nets_by_name{idle_out1_1_en},
+        {
+            name => 'idle_out1_1_en',
+            width => 1,
+            signed => 0,
+            source => undef,
+            targets => [],
+        },
+        'direct structural_rtl_ir records the regular-state DT-specific WEN/EN wire',
+    );
+    is_deeply(
+        $nets_by_name{out1_1_en},
+        {
+            name => 'out1_1_en',
+            width => 1,
+            signed => 0,
+            source => undef,
+            targets => [],
+        },
+        'direct structural_rtl_ir records the regular-state LHS-level WEN/EN wire',
+    );
+    is_deeply(
+        $nets_by_name{watch_watch_1_en},
+        {
+            name => 'watch_watch_1_en',
+            width => 1,
+            signed => 0,
+            source => undef,
+            targets => [],
+        },
+        'direct structural_rtl_ir records the standalone-DT DT-specific WEN/EN wire',
+    );
+    is_deeply(
+        $nets_by_name{watch_1_en},
+        {
+            name => 'watch_1_en',
+            width => 1,
+            signed => 0,
+            source => undef,
+            targets => [],
+        },
+        'direct structural_rtl_ir records the standalone-DT LHS-level WEN/EN wire',
+    );
     like($result->{hdl_code}, qr/\bassign\s+idle_en\s+=\s+\(current_state\s+==\s+IDLE\)\s+\|\s+EXTRA;/, 'generated HDL emits the guarded state enable wire assignment');
     like($result->{hdl_code}, qr/\bassign\s+watch_en\s+=\s+A;/, 'generated HDL emits the standalone-DT enable wire assignment');
     is_deeply(

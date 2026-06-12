@@ -58,6 +58,20 @@ subtest 'stateful facade reuse returns fresh direct structural_rtl_ir containers
                 width => 1,
                 signed => 0,
             },
+            {
+                name => 'idle_out_1_en',
+                source => undef,
+                targets => [],
+                width => 1,
+                signed => 0,
+            },
+            {
+                name => 'out_1_en',
+                source => undef,
+                targets => [],
+                width => 1,
+                signed => 0,
+            },
         ],
         'later generation on the same facade does not inherit caller mutation of direct structural_rtl_ir declaration/enable nets',
     );

@@ -111,6 +111,7 @@ first.
 | `BIN-FSMGEN-IMPORT-TREE-JUN12-REFRESH` | `done` | bootstrap architecture maintenance | complete (`.1`; refreshed stale live `bin/fsmgen` import-tree counts, PPIF/IAL2 reachability, and measured line-count drift after protocol-intent bundle growth) | [docs/tasks/BIN-FSMGEN-IMPORT-TREE-JUN12-REFRESH.md](docs/tasks/BIN-FSMGEN-IMPORT-TREE-JUN12-REFRESH.md) |
 | `R11-DIRECT-BACKEND-COORDINATION-FRONTIER` | `done` | `R11` | complete (`.2`; projected top-level direct state/standalone-DT enable wires into direct `StructuralRTLIR` nets without rerouting HDL emission) | [docs/tasks/R11-DIRECT-BACKEND-COORDINATION-FRONTIER.md](docs/tasks/R11-DIRECT-BACKEND-COORDINATION-FRONTIER.md) |
 | `NORMALIZED-SEMANTIC-PROTOCOL-BUNDLE-CONTRACT-DRIFT` | `done` | `Embedding And Public APIs / IAL2` | complete (`.1`; repaired stale optional-child contract test expectations for already-shipped `semantic.protocol_intent_bundle`) | [docs/tasks/NORMALIZED-SEMANTIC-PROTOCOL-BUNDLE-CONTRACT-DRIFT.md](docs/tasks/NORMALIZED-SEMANTIC-PROTOCOL-BUNDLE-CONTRACT-DRIFT.md) |
+| `R11-DIRECT-STRUCTURAL-WEN-EN-NETS` | `done` | `R11` | complete (`.1`; projected direct DT-specific and LHS-level WEN/EN wires into `StructuralRTLIR` nets without claiming assignment connectivity) | [docs/tasks/R11-DIRECT-STRUCTURAL-WEN-EN-NETS.md](docs/tasks/R11-DIRECT-STRUCTURAL-WEN-EN-NETS.md) |
 
 ## Proposed Task Trees
 
