@@ -2285,20 +2285,18 @@ and platform/resource mapping decisions that choose among legal ISF schedules
 or resource allocations. Aliases, macros, wrappers, and sugar without a
 distinct runtime model should stay inside IAL1 or remain out of the language.
 
-Current evaluation: IAL2 is design/probe ready, not implementation ready. A
-future implementation leaf must first specify a bounded protocol/platform
-intent object, its source/capture report contract, its IAL1/IAL0 lowering
-artifacts, and focused validation gates. The first plausible probe is a
-valid/ready protocol-intent object derived from the AXI intent-capture case
-study; a hand-written reusable `.fsm` or `.isf` library alone is useful but not
-enough to justify IAL2.
+Current evaluation: IAL2 now has a first in-process behavior-bearing slice for
+an AXI Valid-Ready contract object. It is still not a public file syntax or CLI
+surface. Future implementation leaves must choose exact owners for public
+syntax/suffix support or the next protocol rule subset; a hand-written reusable
+`.fsm` or `.isf` library alone is useful but not enough to justify IAL2.
 
 The repo-local tracked raw AXI reference for future bounded probes is
 `docs/vendor/arm/amba/axi/IHI0022_L_2025-08_AMBA_AXI_Protocol_Specification.pdf`.
 It is evidence for future task-tree-owned protocol-intent work, not a shipped
 PDF/spec extraction capability.
 
-Active probe:
+Completed evidence probe:
 [AXI-VALID-READY-INTENT-PROBE](../../tasks/AXI-VALID-READY-INTENT-PROBE.md)
 extracted the first valid/ready source-anchor evidence inventory without
 selecting parser, lowering, `.fsm`, or HDL implementation behavior.
@@ -2339,12 +2337,52 @@ IAL0/.fsm -> HDL` lowering, source-anchor reporting, and explicit residue.
 
 Implementation readiness audit:
 [AXI_IAL2_VALID_READY_READINESS_AUDIT](../../AXI_IAL2_VALID_READY_READINESS_AUDIT.md)
-maps the existing code/test/docs/report owners for that future subset. The
-safe first code slice should be an in-process IAL2/protocol-intent generator
+mapped the existing code/test/docs/report owners for the first implementation
+subset. It selected the in-process IAL2/protocol-intent generator boundary
 that emits reviewable `.isf`, then uses the existing `FSM::Adapter::ISF` and
 `FSM::Scheduler::ISF` path to emit reviewable `.fsm`. The audit explicitly
-defers public `.pif`/`.ppi`/`.ppif`/`.axi` CLI suffix support and the full AXI
-manager until later owners.
+deferred public `.pif`/`.ppi`/`.ppif`/`.axi` CLI suffix support and the full
+AXI manager until later owners.
+
+First in-process generator slice:
+[AXI_IAL2_VALID_READY_GENERATOR_FIRST_SLICE](../../AXI_IAL2_VALID_READY_GENERATOR_FIRST_SLICE.md)
+ships the first behavior-bearing IAL2 protocol-intent entrypoint. It is not a
+file parser and not a CLI suffix. It is an in-process API:
+
+```perl
+use FSM::IAL2::ProtocolIntent::ValidReadyChannel;
+
+my $result = FSM::IAL2::ProtocolIntent::ValidReadyChannel->new()->generate({
+    name     => 'axi_aw',
+    protocol => 'axi4',
+    channel  => 'AW',
+    role     => 'manager-to-subordinate',
+    clock    => 'clk',
+    reset    => { signal => 'rst_n', active_low => 1, async => 1 },
+    valid    => 'awvalid',
+    ready    => 'awready',
+    payload  => [
+        { name => 'awaddr', width => 32 },
+        { name => 'awlen',  width => 8 },
+    ],
+    source => {
+        object_id => 'axi-valid-ready-aw',
+        anchors => [
+            { document => 'IHI0022_L_2025-08', section => 'A3.2.1', page => 'A3-40' },
+        ],
+    },
+});
+```
+
+The result exposes `generated_ial1.text` before `generated_ial0.files`. The
+generated `.isf` parses through `FSM::Adapter::ISF`, lowers through
+`FSM::Scheduler::ISF`, and emits assertion carriers for the first owned safety
+subset: prior-cycle stalled `VALID` remains asserted, and each payload/control
+signal remains stable after a prior-cycle stall. The IAL2 report includes
+source anchors, generated artifact names, bindings, `VALID && READY` as the
+transfer/fire condition, generated assertions, assumptions, enforced static
+rules, and explicit residue for reset-during-reset behavior, READY
+independence, and full AXI manager concurrency.
 
 User-facing AXI manager brainstorm:
 [AXI_MANAGER_USER_API_BRAINSTORM](../../AXI_MANAGER_USER_API_BRAINSTORM.md)
@@ -2357,10 +2395,9 @@ overrides while preserving manager enforcement. Raw channel access should
 normally be supervised by the same AXI rule engine, with any unsafe bypass
 treated as verification-only and unable to claim guaranteed AXI correctness.
 
-The next prerequisite is a later exact implementation leaf for the selected
-Valid-Ready channel contract/monitor generator. It must still choose the
-internal source object shape, generated `.isf` artifact, IAL2 report contract,
-tests, and mdBook examples before any behavior ships.
+The next prerequisite is a later exact owner for either public IAL2 file
+syntax/suffix support or the next protocol rule subset. Public `.pif`, `.ppi`,
+`.ppif`, `.axi`, and full AXI manager behavior remain unshipped.
 
 PDF extraction workflow:
 [PDF_EXTRACTION_WORKFLOW](../../PDF_EXTRACTION_WORKFLOW.md)
@@ -4435,9 +4472,9 @@ child-interface marking without changing public reports, generated artifacts,
 or HDL behavior. Broader parser/lowerer extraction remains deferred behind
 future exact owners. Completed selection/evaluation leaves
 `IAL2-PROTOCOL-PLATFORM-INTENT-EXPLORATION.1` and `.2` found IAL2
-design/probe ready but not implementation ready. Active PNT has moved to
-`AXI-VALID-READY-INTENT-PROBE.2`, a source-anchor evidence inventory with no
-parser/lowering implementation selected.
+design/probe ready. Completed implementation leaf
+`AXI-IAL2-VALID-READY-GENERATOR-FIRST-SLICE.1` ships the first in-process IAL2
+generator while public parser and CLI suffix support remain deferred.
 Completed implementation leaf
 `ARCHITECTURE-DEBT-FRONTIER.2.1`
 projects direct backend storage/helper declaration-plan entries into

@@ -1,6 +1,8 @@
 # AXI IAL2 First Implementation Subset Selection
 
-Status: first implementation subset selected; no code implementation shipped.
+Status: first implementation subset selected; first in-process generator slice
+shipped in
+[docs/AXI_IAL2_VALID_READY_GENERATOR_FIRST_SLICE.md](AXI_IAL2_VALID_READY_GENERATOR_FIRST_SLICE.md).
 
 Task tree:
 [docs/tasks/AXI-IAL2-FIRST-IMPLEMENTATION-SUBSET-SELECTION.md](tasks/AXI-IAL2-FIRST-IMPLEMENTATION-SUBSET-SELECTION.md).
@@ -16,11 +18,11 @@ Inputs:
 ## Purpose
 
 This note selects the first safe AXI-derived IAL2 implementation subset and
-defines the pre-code contract a future implementation leaf must satisfy.
+defined the pre-code contract for the first implementation leaf.
 
-It does not implement anything. It does not select final syntax spelling,
-parser internals, lowering code, generated `.isf`, generated `.fsm`, HDL, test
-files, or CLI behavior.
+This selection note itself did not implement behavior. The follow-on first
+slice implements an in-process generator while public syntax spelling, parser
+internals, CLI behavior, and full AXI manager behavior remain later work.
 
 ## Selected First Subset
 
@@ -123,8 +125,11 @@ cycle-explicit. It should expose:
 The readiness audit
 [docs/AXI_IAL2_VALID_READY_READINESS_AUDIT.md](AXI_IAL2_VALID_READY_READINESS_AUDIT.md)
 maps the current code and report owners that must implement this contract.
+The first in-process implementation slice
+[docs/AXI_IAL2_VALID_READY_GENERATOR_FIRST_SLICE.md](AXI_IAL2_VALID_READY_GENERATOR_FIRST_SLICE.md)
+ships this report surface for one AXI Valid-Ready contract object.
 
-The future implementation must emit or expose a report that includes:
+The implementation report emits:
 
 - source object identity,
 - source PDF anchor list,
@@ -139,14 +144,14 @@ The future implementation must emit or expose a report that includes:
 - unsupported residue,
 - and whether the result is monitor-only, assertion-only, or behavior-bearing.
 
-## Focused Validation Required Later
+## Focused Validation
 
-The first implementation leaf must add tests for:
+The first implementation leaf adds focused tests for:
 
-- accepted valid/ready handshake,
-- `VALID` held until handshake,
-- payload/control stability while `VALID` is asserted and `READY` is low,
-- reset-low valid behavior when the selected source contract owns reset,
+- `VALID && READY` reported as the transfer/fire condition,
+- `VALID` held after a prior-cycle stall,
+- payload/control stability after a prior-cycle stall,
+- reset-low valid behavior reported as explicit unsupported residue,
 - generated IAL1 before generated IAL0,
 - report source anchors and residue,
 - fail-closed missing `VALID`, `READY`, clock, reset, or payload bindings,
@@ -174,9 +179,9 @@ source of the broader target.
 
 ## Current Conclusion
 
-The first shipped AXI-derived IAL2 subset should be a source-anchored
-Valid-Ready channel contract/monitor, not the full AXI manager. This is the
-right first implementation because it proves the IAL2 layer, the mandatory
+The first shipped AXI-derived IAL2 subset is a source-anchored in-process
+Valid-Ready channel contract/monitor generator, not the full AXI manager. This
+first implementation proves the IAL2 layer, the mandatory
 `IAL2 -> IAL1 -> IAL0` lowering chain, and the source-anchor/report discipline
 with a small enough blast radius to validate thoroughly.
 

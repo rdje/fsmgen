@@ -171,9 +171,10 @@ A later code slice should be considered safe only if it can stay this small:
 The first implementation should not add a public file suffix, not promise a
 full AXI manager, not generate ID/order behavior, and not bypass IAL1.
 
-## Focused Validation Needed Later
+## Focused Validation Mapped For First Implementation
 
-The future implementation leaf should add focused tests for:
+The first implementation leaf was expected to add focused tests or explicit
+residue for:
 
 - generated `.isf` exists before generated `.fsm`,
 - generated `.isf` is accepted by `FSM::Adapter::ISF`,
@@ -191,6 +192,7 @@ The future implementation leaf should add focused tests for:
 
 Useful existing regression owners include:
 
+- `t/1435-axi-ial2-valid-ready-generator.t`
 - `t/1135-isf-public-entrypoint-metadata-audit.t`
 - `t/1136-isf-public-cli-option-metadata-audit.t`
 - `t/1117-isf-public-lower-result-files-audit.t`
@@ -230,9 +232,11 @@ aligned.
 
 ## Current Conclusion
 
-The codebase is ready for a narrow, in-process AXI Valid-Ready IAL2 generator
+The codebase was ready for a narrow, in-process AXI Valid-Ready IAL2 generator
 slice that emits reviewable `.isf`, uses the existing `.isf` parser/lowerer to
-produce `.fsm`, and emits a separate source-anchor/residue report.
+produce `.fsm`, and emits a separate source-anchor/residue report. The first
+such slice is now recorded in
+[docs/AXI_IAL2_VALID_READY_GENERATOR_FIRST_SLICE.md](AXI_IAL2_VALID_READY_GENERATOR_FIRST_SLICE.md).
 
 It is not ready for a public `.pif`/`.ppi`/`.ppif`/`.axi` CLI surface or a full
 AXI manager in the same slice. Those require later owners after the generated

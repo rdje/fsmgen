@@ -173,21 +173,14 @@ IAL2 should stay deferred if the candidate is only:
 
 ## Current Conclusion
 
-IAL2 is design/probe ready, not implementation ready.
-
-The next implementation must be another exact task-tree leaf, and it should
-start with a bounded valid/ready protocol-intent object only if the source
-contract, report contract, lowering artifacts, and validation gates are all
-specified first. The completed AXI Valid-Ready evidence inventory is enough to
-justify a later design/probe leaf, but it still does not select IAL2 syntax,
-parser behavior, lowering behavior, generated `.fsm`, HDL, or reusable library
-artifacts. The completed AXI ID/order/concurrency evidence inventory, rule
-matrix, first-subset selection, and
-[AXI_IAL2_VALID_READY_READINESS_AUDIT](AXI_IAL2_VALID_READY_READINESS_AUDIT.md)
-are enough to justify a later narrow Valid-Ready generator implementation
-leaf. That future leaf should emit reviewable `.isf` before `.fsm` and should
-not add public IAL2 CLI suffixes or full AXI manager behavior in the same
-slice.
+IAL2 is no longer purely design/probe-only: the first in-process
+behavior-bearing slice is
+[AXI_IAL2_VALID_READY_GENERATOR_FIRST_SLICE](AXI_IAL2_VALID_READY_GENERATOR_FIRST_SLICE.md).
+It accepts one AXI Valid-Ready contract object, emits reviewable `.isf`, lowers
+through the existing IAL1 path to reviewable `.fsm`, and returns a
+source-anchor/residue report. Public IAL2 file syntax, public CLI suffixes,
+protocol-profile aliases, and full AXI manager behavior remain unshipped and
+need later exact owners.
 Decision
 [0014](decisions/0014-protocol-platform-intent-surface-and-layered-lowering.md)
 records the protocol/platform-generic IAL2 file-surface direction, the open

@@ -3,7 +3,7 @@
 > **AUTO-GENERATED — DO NOT EDIT.** Regenerate with `knowledge-map/scripts/gen_knowledge_map.sh`.
 > Source of truth = YAML front-matter in: `docs/knowledge docs/decisions`. Edit the fact files, never this map.
 > A fact is any `.md` whose front-matter has a non-empty `answers:` list.
-> **60** facts · **451** question keys.
+> **61** facts · **456** question keys.
 
 ## Questions → fact
 
@@ -48,6 +48,8 @@
 - "does .rtlif support aggregate generic comparison defaults?" -> [aggregate-parameter-comparison](docs/knowledge/aggregate-parameter-comparison.md) · 2026-06-05 · reverify: `prove -Iperl t/30-language-contract-symbol-definitions.t t/51-language-contract-symbol-definition-boundary.t t/88-rtlif-typed-port-contract.t t/91-composition-multi-rtl-children.t t/292-composition-generated-child-parameter-overrides.t`
 - "does ?pkg generate HDL directly?" -> [direct-vhdl-scaffold](docs/knowledge/direct-vhdl-scaffold.md) · 2026-06-07 · reverify: `prove -Iperl t/1420-vhdl-direct-backend-scaffold.t t/386-hdl-generator-facade-target-language-boundary-audit.t t/114-composition-target-support-diagnostics.t t/313-hdl-external-validation-contract.t t/308-systemverilog-external-validation.t`
 - "does AXI Easy mode need to support multiple pending transactions?" -> [axi-id-ordering-rule-evidence](docs/knowledge/axi-id-ordering-rule-evidence.md) · 2026-06-12 · reverify: `rg -n "A5\\.1|A5\\.3|A5\\.5|A5\\.6|B3 Summary" docs/AXI_ID_ORDERING_RULE_EVIDENCE_PROBE.md`
+- "does AXI Valid-Ready IAL2 have a public CLI suffix?" -> [axi-ial2-valid-ready-generator-first-slice](docs/knowledge/axi-ial2-valid-ready-generator-first-slice.md) · 2026-06-12 · reverify: `prove -Iperl t/1435-axi-ial2-valid-ready-generator.t`
+- "does AXI Valid-Ready IAL2 lower directly to .fsm?" -> [axi-ial2-valid-ready-generator-first-slice](docs/knowledge/axi-ial2-valid-ready-generator-first-slice.md) · 2026-06-12 · reverify: `prove -Iperl t/1435-axi-ial2-valid-ready-generator.t`
 - "does FSMGen emit VHDL packages?" -> [direct-vhdl-scaffold](docs/knowledge/direct-vhdl-scaffold.md) · 2026-06-07 · reverify: `prove -Iperl t/1420-vhdl-direct-backend-scaffold.t t/386-hdl-generator-facade-target-language-boundary-audit.t t/114-composition-target-support-diagnostics.t t/313-hdl-external-validation-contract.t t/308-systemverilog-external-validation.t`
 - "does FSMGen require ABC for Yosys validation?" -> [abc-discovery-validation-boundary](docs/knowledge/abc-discovery-validation-boundary.md) · 2026-06-06 · reverify: `prove -Iperl t/313-hdl-external-validation-contract.t t/297-capability-manifest.t t/308-systemverilog-external-validation.t`
 - "does HDLGenerator accept generation_mode?" -> [flattened-generation-mode-boundary](docs/knowledge/flattened-generation-mode-boundary.md) · 2026-06-05 · reverify: `prove -Iperl t/375-hdl-generator-facade-contract.t t/414-hdl-generator-facade-constructor-option-name-boundary-audit.t t/297-capability-manifest.t`
@@ -232,6 +234,7 @@
 - "how do I express a min>1 bounded window / lower bound in an ISF assertion?" -> [isf-bounded-window-min](docs/knowledge/isf-bounded-window-min.md) · 2026-06-04 · reverify: `prove -Iperl t/1418-isf-property-window-range.t`
 - "how do I run the full test suite?" -> [full-test-suite-invocation](docs/knowledge/full-test-suite-invocation.md) · 2026-06-03 · reverify: `prove -j4 -Iperl t/`
 - "how do I say 'ack between 2 and 5 cycles after req' in ISF?" -> [isf-bounded-window-min](docs/knowledge/isf-bounded-window-min.md) · 2026-06-04 · reverify: `prove -Iperl t/1418-isf-property-window-range.t`
+- "how do I use the AXI Valid-Ready IAL2 generator?" -> [axi-ial2-valid-ready-generator-first-slice](docs/knowledge/axi-ial2-valid-ready-generator-first-slice.md) · 2026-06-12 · reverify: `prove -Iperl t/1435-axi-ial2-valid-ready-generator.t`
 - "how do I write a stability or edge property in an assert/assume/cover?" -> [isf-sampled-value-predicates](docs/knowledge/isf-sampled-value-predicates.md) · 2026-06-05 · reverify: `prove -Iperl t/1417-isf-property-sampled-value.t`
 - "how do aggregate comparison parameters lower to HDL?" -> [aggregate-parameter-comparison](docs/knowledge/aggregate-parameter-comparison.md) · 2026-06-05 · reverify: `prove -Iperl t/30-language-contract-symbol-definitions.t t/51-language-contract-symbol-definition-boundary.t t/88-rtlif-typed-port-contract.t t/91-composition-multi-rtl-children.t t/292-composition-generated-child-parameter-overrides.t`
 - "how do embedders discover optional semantic children?" -> [normalized-semantic-optional-children](docs/knowledge/normalized-semantic-optional-children.md) · 2026-06-05 · reverify: `prove -Iperl t/330-normalized-semantic-payload-contract.t t/311-normalized-semantic-report-contract.t t/442-normalized-semantic-payload-contract-defensive-copy-boundary-audit.t t/443-normalized-semantic-report-contract-defensive-copy-boundary-audit.t t/297-capability-manifest.t`
@@ -256,6 +259,7 @@
 - "is AXI valid/ready implemented as IAL2?" -> [axi-valid-ready-source-anchors](docs/knowledge/axi-valid-ready-source-anchors.md) · 2026-06-12 · reverify: `rg -n "A2\\.3|A2\\.3\\.1|A2\\.3\\.2\\.1|A2\\.3\\.2\\.2" docs/AXI_VALID_READY_INTENT_PROBE.md`
 - "is GHDL validation active?" -> [direct-vhdl-scaffold](docs/knowledge/direct-vhdl-scaffold.md) · 2026-06-07 · reverify: `prove -Iperl t/1420-vhdl-direct-backend-scaffold.t t/386-hdl-generator-facade-target-language-boundary-audit.t t/114-composition-target-support-diagnostics.t t/313-hdl-external-validation-contract.t t/308-systemverilog-external-validation.t`
 - "is VHDL still not implemented?" -> [direct-vhdl-scaffold](docs/knowledge/direct-vhdl-scaffold.md) · 2026-06-07 · reverify: `prove -Iperl t/1420-vhdl-direct-backend-scaffold.t t/386-hdl-generator-facade-target-language-boundary-audit.t t/114-composition-target-support-diagnostics.t t/313-hdl-external-validation-contract.t t/308-systemverilog-external-validation.t`
+- "is any IAL2 implementation shipped?" -> [axi-ial2-valid-ready-generator-first-slice](docs/knowledge/axi-ial2-valid-ready-generator-first-slice.md) · 2026-06-12 · reverify: `prove -Iperl t/1435-axi-ial2-valid-ready-generator.t`
 - "is apb_tb in external validation smoke?" -> [composition-shared-datapath-export-sinks](docs/knowledge/composition-shared-datapath-export-sinks.md) · 2026-06-05 · reverify: `prove -Iperl t/247-protocol-fixture-regression-smoke.t t/146-composition-shared-datapath-lifted-register-runtime.t t/147-composition-shared-datapath-internal-lifted-register-runtime.t t/308-systemverilog-external-validation.t`
 - "is composition VHDL supported?" -> [direct-vhdl-scaffold](docs/knowledge/direct-vhdl-scaffold.md) · 2026-06-07 · reverify: `prove -Iperl t/1420-vhdl-direct-backend-scaffold.t t/386-hdl-generator-facade-target-language-boundary-audit.t t/114-composition-target-support-diagnostics.t t/313-hdl-external-validation-contract.t t/308-systemverilog-external-validation.t`
 - "is full-width inference still closed?" -> [isf-full-width-inference-terminal](docs/knowledge/isf-full-width-inference-terminal.md) · 2026-06-05 · reverify: `prove -Iperl t/1385-isf-multi-unknown-width-fail-closed-terminal.t t/1344-isf-assemble-static-part-widths.t t/1101-isf-extract-slices.t`
@@ -314,6 +318,7 @@
 - "what is the command to run all the Perl tests?" -> [full-test-suite-invocation](docs/knowledge/full-test-suite-invocation.md) · 2026-06-03 · reverify: `prove -j4 -Iperl t/`
 - "what is the default generation mode?" -> [flattened-generation-mode-boundary](docs/knowledge/flattened-generation-mode-boundary.md) · 2026-06-05 · reverify: `prove -Iperl t/375-hdl-generator-facade-contract.t t/414-hdl-generator-facade-constructor-option-name-boundary-audit.t t/297-capability-manifest.t`
 - "what is the first AXI-derived IAL2 implementation subset?" -> [axi-ial2-first-implementation-subset](docs/knowledge/axi-ial2-first-implementation-subset.md) · 2026-06-12 · reverify: `rg -n "Selected First Subset|Required IAL1 Artifact Shape|Required IAL0 Artifact Shape|Explicit Residue" docs/AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md`
+- "what is the first shipped AXI-derived IAL2 implementation?" -> [axi-ial2-valid-ready-generator-first-slice](docs/knowledge/axi-ial2-valid-ready-generator-first-slice.md) · 2026-06-12 · reverify: `prove -Iperl t/1435-axi-ial2-valid-ready-generator.t`
 - "what is the generic_fifo ?define boundary?" -> [generic-fifo-template-boundary](docs/knowledge/generic-fifo-template-boundary.md) · 2026-06-05 · reverify: `prove -Iperl t/248-regression-corpus-accounting.t t/249-regression-corpus-classified-behavior.t t/300-check-json-regression-corpus.t t/304-normalized-semantic-json-regression-corpus.t t/41-language-contract-top-level-source-kind-boundary.t`
 - "what is the lte_digital_rf ?rtl boundary?" -> [lte-digital-rf-multi-rtl-boundary](docs/knowledge/lte-digital-rf-multi-rtl-boundary.md) · 2026-06-05 · reverify: `prove -Iperl t/248-regression-corpus-accounting.t t/249-regression-corpus-classified-behavior.t t/300-check-json-regression-corpus.t t/304-normalized-semantic-json-regression-corpus.t`
 - "what is the normalized semantic structural auxiliary assignment entry schema?" -> [normalized-semantic-structural-auxiliary-assignment-entry-schema](docs/knowledge/normalized-semantic-structural-auxiliary-assignment-entry-schema.md) · 2026-06-06 · reverify: `prove -Iperl t/341-normalized-semantic-structural-rtl-ir-contract.t t/334-normalized-semantic-forward-ir-contract.t t/330-normalized-semantic-payload-contract.t t/311-normalized-semantic-report-contract.t t/297-capability-manifest.t t/442-normalized-semantic-payload-contract-defensive-copy-boundary-audit.t t/443-normalized-semantic-report-contract-defensive-copy-boundary-audit.t`
@@ -487,6 +492,15 @@ _AXI-derived IAL2 first implementation subset selection_
 - **evidence:** `docs/AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md; docs/AXI_VALID_READY_INTENT_PROBE.md; docs/AXI_MANAGER_RULE_MATRIX_DESIGN_PROBE.md; docs/tasks/AXI-IAL2-FIRST-IMPLEMENTATION-SUBSET-SELECTION.md`
 - **reverify:** `rg -n "Selected First Subset|Required IAL1 Artifact Shape|Required IAL0 Artifact Shape|Explicit Residue" docs/AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md`
 - **source:** [`docs/knowledge/axi-ial2-first-implementation-subset.md`](docs/knowledge/axi-ial2-first-implementation-subset.md)
+
+### axi-ial2-valid-ready-generator-first-slice
+_AXI IAL2 Valid-Ready generator first slice_
+
+- **answers:** is any IAL2 implementation shipped? | what is the first shipped AXI-derived IAL2 implementation? | how do I use the AXI Valid-Ready IAL2 generator? | does AXI Valid-Ready IAL2 lower directly to .fsm? | does AXI Valid-Ready IAL2 have a public CLI suffix?
+- **date:** 2026-06-12 · **status:** current
+- **evidence:** `docs/AXI_IAL2_VALID_READY_GENERATOR_FIRST_SLICE.md; perl/FSM/IAL2/ProtocolIntent/ValidReadyChannel.pm; t/1435-axi-ial2-valid-ready-generator.t; docs/tasks/AXI-IAL2-VALID-READY-GENERATOR-FIRST-SLICE.md`
+- **reverify:** `prove -Iperl t/1435-axi-ial2-valid-ready-generator.t`
+- **source:** [`docs/knowledge/axi-ial2-valid-ready-generator-first-slice.md`](docs/knowledge/axi-ial2-valid-ready-generator-first-slice.md)
 
 ### axi-ial2-valid-ready-readiness-audit
 _AXI IAL2 Valid-Ready implementation readiness audit_

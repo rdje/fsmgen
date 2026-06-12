@@ -88,6 +88,7 @@ first.
 | `PDF-EXTRACTION-WORKFLOW-CAPTURE` | `done` | documentation / workflow portability | complete (`.1`; wrote and tracked the portable PDF extraction workflow, including future flow-update policy) | [docs/tasks/PDF-EXTRACTION-WORKFLOW-CAPTURE.md](docs/tasks/PDF-EXTRACTION-WORKFLOW-CAPTURE.md) |
 | `AXI-IAL2-FIRST-IMPLEMENTATION-SUBSET-SELECTION` | `done` | IAL2 horizon exploration | complete (`.1`; selected the AXI Valid-Ready channel contract/monitor as the first AXI-derived IAL2 implementation subset and pre-code contract) | [docs/tasks/AXI-IAL2-FIRST-IMPLEMENTATION-SUBSET-SELECTION.md](docs/tasks/AXI-IAL2-FIRST-IMPLEMENTATION-SUBSET-SELECTION.md) |
 | `AXI-IAL2-VALID-READY-READINESS-AUDIT` | `done` | IAL2 horizon exploration | complete (`.1`; mapped code/test/docs/report owners and safe first implementation boundaries before behavior changes) | [docs/tasks/AXI-IAL2-VALID-READY-READINESS-AUDIT.md](docs/tasks/AXI-IAL2-VALID-READY-READINESS-AUDIT.md) |
+| `AXI-IAL2-VALID-READY-GENERATOR-FIRST-SLICE` | `done` | IAL2 horizon exploration | complete (`.1`; added the in-process AXI Valid-Ready generator, report, tests, and docs without public CLI suffix support) | [docs/tasks/AXI-IAL2-VALID-READY-GENERATOR-FIRST-SLICE.md](docs/tasks/AXI-IAL2-VALID-READY-GENERATOR-FIRST-SLICE.md) |
 
 ## Proposed Task Trees
 
