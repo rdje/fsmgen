@@ -32,10 +32,11 @@ implementation:
   until direct behavior-body/state-update/output/assertion regions have exact
   structural ownership.
 - `R11-DIRECT-STRUCTURAL-VHDL-REROUTING` owns direct VHDL rerouting through
-  `StructuralRTLIR`.
+  `StructuralRTLIR`; selector `.1` deferred VHDL backend/reroute work until
+  the SystemVerilog-backed IAL0/IAL1/IAL2 path is feature complete.
 
-The remaining not-yet-implemented owner tree for direct VHDL rerouting is
-proposed, not implementation-active. Broader/full direct SystemVerilog
+Direct VHDL rerouting is not implementation-active; it is deferred behind
+SV-backed IAL feature completeness. Broader/full direct SystemVerilog
 rerouting is deferred behind structural prerequisites. Any broader direct
 output-drive and always-block body-consumer modeling also needs an exact
 activated leaf before code, test, source, generated-artifact, or config

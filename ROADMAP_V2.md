@@ -425,7 +425,7 @@ First shipped `R11` slice now in tree:
   - and the active composition-top emitter now walks that structural layer instead of re-reading only `FSM::Composition::Plan` state directly during top-module dumping.
 - The next structural widening step is now also shipped:
   - direct generated `?fsm` / `?dt` results now expose a bounded structural module-interface slice through `structural_rtl_ir`,
-  - that direct-root structural slice currently covers explicit module ports, declaration-only storage/helper nets, generated enable-wire nets, generated enable assignment records, scalar compatibility auxiliary-assignment lines, generated-enable assignment-record source/target connectivity on direct nets, direct input-port generated-enable RHS target connectivity, direct output-port source summaries from lowered output-drive families, and direct SystemVerilog top state/standalone-DT generated-enable condition emission rerouted through `StructuralRTLIR`; broader output-drive/always-block body consumers remain future exact work, selector `R11-DIRECT-STRUCTURAL-FULL-HDL-REROUTING.1` deferred broader/full direct SystemVerilog rerouting until direct behavior-body/state-update/output/assertion regions have exact structural ownership, direct VHDL rerouting remains proposed under `R11-DIRECT-STRUCTURAL-VHDL-REROUTING`, and selector `R11-DIRECT-STRUCTURAL-INSTANCES-LINKS.1` confirmed direct roots intentionally keep empty instance/link arrays and populated instances/links remain composition-top structural facts,
+  - that direct-root structural slice currently covers explicit module ports, declaration-only storage/helper nets, generated enable-wire nets, generated enable assignment records, scalar compatibility auxiliary-assignment lines, generated-enable assignment-record source/target connectivity on direct nets, direct input-port generated-enable RHS target connectivity, direct output-port source summaries from lowered output-drive families, and direct SystemVerilog top state/standalone-DT generated-enable condition emission rerouted through `StructuralRTLIR`; broader output-drive/always-block body consumers remain future exact work, selector `R11-DIRECT-STRUCTURAL-FULL-HDL-REROUTING.1` deferred broader/full direct SystemVerilog rerouting until direct behavior-body/state-update/output/assertion regions have exact structural ownership, selector `R11-DIRECT-STRUCTURAL-VHDL-REROUTING.1` deferred direct VHDL backend/reroute work until the SystemVerilog-backed IAL0/IAL1/IAL2 path is feature complete, and selector `R11-DIRECT-STRUCTURAL-INSTANCES-LINKS.1` confirmed direct roots intentionally keep empty instance/link arrays and populated instances/links remain composition-top structural facts,
   - and realized generated-child export surfaces now preserve that same child `structural_rtl_ir` beside `intent_hir` and `lowered_rtl_ir`.
 - The next structural-consumption step is now also shipped:
   - realized generated-child interface planning now consumes `structural_rtl_ir` as its first boundary source of truth instead of rebuilding child ports only from signal analysis,
@@ -889,10 +889,20 @@ Deliverable themes (preserved from former R14):
 
 Prerequisite:
 - a second backend multiplies ambiguity if the language contract is still
-  gray; promote this only after the active lanes are genuinely stable.
+  gray; promote this only after the SystemVerilog-backed IAL0, IAL1, and IAL2
+  path is feature complete and the active lanes are genuinely stable.
+
+Priority note:
+- the current feature-completeness priority is IAL2 on the SystemVerilog-backed
+  lowering path, tracked by
+  [docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md](docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md);
+  selected IAL2 work may include explicit IAL1 or IAL0/SV prerequisites when
+  needed for clean lowering.
 
 ## Current intent
-The active immediate lane is `R14` (Intent Scheduling — `.isf` format and lowering compiler).
+The active immediate feature-completeness lane is IAL2 on the
+SystemVerilog-backed lowering path; see
+[docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md](docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md).
 
 The first honest `R11` slices are now:
 1. keep widening convention-first composition only where the child-side evidence is still deterministic,
@@ -1176,8 +1186,9 @@ The first honest `R11` slices are now:
   remain later exact work, broader/full direct SystemVerilog rerouting was
   deferred by `R11-DIRECT-STRUCTURAL-FULL-HDL-REROUTING.1` until direct
   behavior-body/state-update/output/assertion regions have exact structural
-  ownership, and VHDL rerouting through `StructuralRTLIR` remains proposed
-  under `R11-DIRECT-STRUCTURAL-VHDL-REROUTING`; direct instances/links were selected
+  ownership, and VHDL rerouting through `StructuralRTLIR` is deferred by
+  `R11-DIRECT-STRUCTURAL-VHDL-REROUTING.1` until the SystemVerilog-backed
+  IAL0/IAL1/IAL2 path is feature complete; direct instances/links were selected
   as intentionally empty for direct roots by
   `R11-DIRECT-STRUCTURAL-INSTANCES-LINKS.1`. The next honest seam
   is now the remaining direct-path backend

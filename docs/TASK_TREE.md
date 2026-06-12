@@ -44,6 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
+| `IAL2-FEATURE-COMPLETENESS-FRONTIER` | `active` | `IAL2 / SV-backed feature completeness` | `.1` audit shipped IAL2 surface and select the next exact feature-completeness slice, including any required IAL1/IAL0/SV prerequisites | [docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md](docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md) |
 | `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE` | `done` | `R14` | complete (`.9`; simplified public contract docs from enumerated activation lists to construction rules; next executable frontier is `ISF-SCHEDULING-BACKLOG-FRONTIER.4.1`) | [docs/tasks/ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.md](docs/tasks/ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.md) |
 | `ISF-SCHEDULING-BACKLOG-FRONTIER` | `done` | `R14` | complete (`.8.2`; shipped resolved-child trigger-batch generated top; no active next leaf remains in this tree) | [docs/tasks/ISF-SCHEDULING-BACKLOG-FRONTIER.md](docs/tasks/ISF-SCHEDULING-BACKLOG-FRONTIER.md) |
 | `CI-SHARED-DP-SURFACE-REPAIR` | `done` | CI/composition contract integrity | complete (`.1`; repaired reproduced GitHub run `27086344097` composition shared-datapath surface and stale contract fixture failures; focused cluster, contract tests, quick regression, mdBook, Knowledge Map, memory, path, and diff gates pass) | [docs/tasks/CI-SHARED-DP-SURFACE-REPAIR.md](docs/tasks/CI-SHARED-DP-SURFACE-REPAIR.md) |
@@ -121,6 +122,7 @@ first.
 | `R11-DIRECT-STRUCTURAL-OUTPUT-CONSUMERS` | `done` | `R11` | complete (`.2`; populated direct output-port source summaries from lowered output-drive families) | [docs/tasks/R11-DIRECT-STRUCTURAL-OUTPUT-CONSUMERS.md](docs/tasks/R11-DIRECT-STRUCTURAL-OUTPUT-CONSUMERS.md) |
 | `R11-DIRECT-STRUCTURAL-INSTANCES-LINKS` | `done` | `R11` | complete (`.1`; selected an empty direct-root instance/link contract and left populated instances/links with composition-top structural IR) | [docs/tasks/R11-DIRECT-STRUCTURAL-INSTANCES-LINKS.md](docs/tasks/R11-DIRECT-STRUCTURAL-INSTANCES-LINKS.md) |
 | `R11-DIRECT-STRUCTURAL-FULL-HDL-REROUTING` | `deferred` | `R11` | deferred (`.1`; no broader direct SystemVerilog reroute is safe until direct behavior-body structural prerequisites exist) | [docs/tasks/R11-DIRECT-STRUCTURAL-FULL-HDL-REROUTING.md](docs/tasks/R11-DIRECT-STRUCTURAL-FULL-HDL-REROUTING.md) |
+| `R11-DIRECT-STRUCTURAL-VHDL-REROUTING` | `deferred` | `R11` | deferred (`.1`; no VHDL backend/reroute target selection before SV-backed IAL0/IAL1/IAL2 feature completeness) | [docs/tasks/R11-DIRECT-STRUCTURAL-VHDL-REROUTING.md](docs/tasks/R11-DIRECT-STRUCTURAL-VHDL-REROUTING.md) |
 
 ## Proposed Task Trees
 
@@ -129,7 +131,6 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Proposed first leaf | File |
 | --- | --- | --- | --- | --- |
-| `R11-DIRECT-STRUCTURAL-VHDL-REROUTING` | `proposed` | `R11` | `.1` select the first direct VHDL StructuralRTLIR reroute target | [docs/tasks/R11-DIRECT-STRUCTURAL-VHDL-REROUTING.md](docs/tasks/R11-DIRECT-STRUCTURAL-VHDL-REROUTING.md) |
 
 ## Completed Task Trees
 

@@ -10,9 +10,9 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `HEAD after commit` — `R11-DIRECT-STRUCTURAL-FULL-HDL-REROUTING.1: defer full direct reroute`.
-- active_work_unit: none; `R11-DIRECT-STRUCTURAL-FULL-HDL-REROUTING` is deferred through selector `.1`, and the next action is to PNT-select the next roadmap-aligned task-tree frontier before any further change.
-- recently_done: `R11-DIRECT-STRUCTURAL-FULL-HDL-REROUTING.1`; `R11-DIRECT-STRUCTURAL-INSTANCES-LINKS.1`; `R11-DIRECT-STRUCTURAL-OUTPUT-CONSUMERS.2`; `R11-DIRECT-STRUCTURAL-OUTPUT-CONSUMERS.1`; `R11-DIRECT-STRUCTURAL-PORT-DEPENDENCY-CONNECTIVITY.2`; `R11-DIRECT-STRUCTURAL-PORT-DEPENDENCY-CONNECTIVITY.1`; `R11-DIRECT-STRUCTURAL-REMAINING-OWNER-COVERAGE.1`; `R11-DIRECT-STRUCTURAL-HDL-REROUTING.2`; `R11-DIRECT-STRUCTURAL-HDL-REROUTING.1`. Older completed slices are in the task tree and git history.
+- latest_commit: `HEAD after commit` — `R11-DIRECT-STRUCTURAL-VHDL-REROUTING.1: defer VHDL behind SV IAL completion`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.1` pending; next action is to audit shipped IAL2 capabilities and select the next exact SV-backed feature-completeness slice, including any required IAL1/IAL0/SV prerequisites before behavior changes.
+- recently_done: `R11-DIRECT-STRUCTURAL-VHDL-REROUTING.1`; `R11-DIRECT-STRUCTURAL-FULL-HDL-REROUTING.1`; `R11-DIRECT-STRUCTURAL-INSTANCES-LINKS.1`; `R11-DIRECT-STRUCTURAL-OUTPUT-CONSUMERS.2`; `R11-DIRECT-STRUCTURAL-OUTPUT-CONSUMERS.1`; `R11-DIRECT-STRUCTURAL-PORT-DEPENDENCY-CONNECTIVITY.2`; `R11-DIRECT-STRUCTURAL-PORT-DEPENDENCY-CONNECTIVITY.1`; `R11-DIRECT-STRUCTURAL-REMAINING-OWNER-COVERAGE.1`; `R11-DIRECT-STRUCTURAL-HDL-REROUTING.2`. Older completed slices are in the task tree and git history.
 - in_flight_uncommitted: none; unrelated untracked `fx/` intentionally left alone.
 - blockers: none.
 

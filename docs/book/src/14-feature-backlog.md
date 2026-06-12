@@ -2250,12 +2250,20 @@ ISF actor/network syntax into protocol/platform intent inference.
 ### IAL2 Protocol And Platform Intent Exploration
 
 Status: first bounded IAL2 implementation and `.ppif` parser/CLI surface
-shipped; broader IAL2 remains backlog.
+shipped; broader IAL2 remains backlog. IAL2 feature completeness on the
+SystemVerilog-backed path is the current priority before VHDL backend/reroute
+work resumes.
 
 Historical task-tree record:
 [IAL2-PROTOCOL-PLATFORM-INTENT-EXPLORATION](../../tasks/IAL2-PROTOCOL-PLATFORM-INTENT-EXPLORATION.md).
 That tree is closed; future IAL2 behavior changes need a new task-tree leaf
 before implementation.
+
+Active frontier:
+[IAL2-FEATURE-COMPLETENESS-FRONTIER](../../tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md)
+owns the next IAL2 feature-completeness selector. Selected IAL2 slices may
+include explicit IAL1 or IAL0/SystemVerilog prerequisites when those
+prerequisites are needed for clean, reviewable lowering.
 
 Evaluation note:
 [IAL2_PROTOCOL_PLATFORM_INTENT_EVALUATION](../../IAL2_PROTOCOL_PLATFORM_INTENT_EVALUATION.md).
@@ -4641,8 +4649,9 @@ backend markers that are removed before final HDL is returned. Full direct
 module rerouting is deferred by selector
 `R11-DIRECT-STRUCTURAL-FULL-HDL-REROUTING.1` until direct behavior-body,
 state-update, output, and assertion regions have exact structural ownership.
-VHDL rerouting remains deferred under proposed owner tree
-`R11-DIRECT-STRUCTURAL-VHDL-REROUTING`. Completed selector leaf
+VHDL backend/reroute work is deferred by selector
+`R11-DIRECT-STRUCTURAL-VHDL-REROUTING.1` until the SystemVerilog-backed
+IAL0/IAL1/IAL2 path is feature complete. Completed selector leaf
 `R11-DIRECT-STRUCTURAL-INSTANCES-LINKS.1` confirms direct roots intentionally
 keep empty instance/link arrays, with populated instances and links remaining
 composition-top structural facts. Completed

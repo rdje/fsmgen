@@ -101,8 +101,9 @@ instances and links remain a composition-top structural contract. Selector
 `R11-DIRECT-STRUCTURAL-FULL-HDL-REROUTING.1` deferred broader/full direct
 SystemVerilog rerouting through `StructuralRTLIR` until direct behavior-body,
 state-update, output, and assertion regions have exact structural ownership.
-Direct VHDL rerouting through `StructuralRTLIR` remains tracked by proposed
-owner tree `R11-DIRECT-STRUCTURAL-VHDL-REROUTING`. The first exact private ISF
+Direct VHDL backend/reroute work through `StructuralRTLIR` is deferred by
+`R11-DIRECT-STRUCTURAL-VHDL-REROUTING.1` until the SystemVerilog-backed
+IAL0/IAL1/IAL2 path is feature complete. The first exact private ISF
 lowerer extraction is shipped as `FSM::Scheduler::ISF::ATLGeneratedTop` for
 ATL generated-top report projection and data-link child-interface marking;
 broader parser/lowerer extraction remains deferred behind future exact owners. IAL2
@@ -117,7 +118,11 @@ check JSON, aggregate semantic JSON, generated `.isf`/`.fsm` review artifacts,
 and an aggregate wrapper/top SystemVerilog HDL entry with `--verify-hdl`
 support for the tracked AW/W sample. `.pif`/`.ppi`/`.axi` aliases and full AXI
 manager behavior remain unshipped. Mandatory lowering remains
-`IAL2 -> IAL1 -> IAL0`.
+`IAL2 -> IAL1 -> IAL0`. IAL2 feature completeness on the
+SystemVerilog-backed path is now the active priority under
+`IAL2-FEATURE-COMPLETENESS-FRONTIER`, including any explicitly selected IAL1
+or IAL0/SV prerequisites needed for IAL2 to lower cleanly. VHDL backend/reroute
+work stays deferred until that path is feature complete.
 The project objective is robust, traceable FSM-to-HDL generation with clear assignment semantics, optimization via AST factorization, and behavior-preserving refactoring toward a modular architecture.
 
 ## Fast ramp-up order
@@ -933,9 +938,10 @@ instances and links remain a composition-top structural contract. Selector
 `R11-DIRECT-STRUCTURAL-FULL-HDL-REROUTING.1` confirms broader/full direct
 SystemVerilog rerouting through `StructuralRTLIR` is still outside that
 projection until direct behavior-body, state-update, output, and assertion
-regions are structurally owned. Direct VHDL rerouting remains outside the
-projection under proposed owner tree
-`R11-DIRECT-STRUCTURAL-VHDL-REROUTING`.
+regions are structurally owned. Direct VHDL backend/reroute work remains
+outside the projection and is deferred by
+`R11-DIRECT-STRUCTURAL-VHDL-REROUTING.1` until the SystemVerilog-backed
+IAL0/IAL1/IAL2 path is feature complete.
 The nested `semantic.forward_ir.intent_hir` summary inside that branch now
 also has its own bounded owner for the current intent-hir shell plus the
 current composition-only extension keys. For composition roots, that same owner
@@ -1138,9 +1144,10 @@ keep empty instance/link arrays and no direct implementation leaf is warranted
 today. Completed selector leaf
 `R11-DIRECT-STRUCTURAL-FULL-HDL-REROUTING.1` defers broader/full direct
 SystemVerilog rerouting until direct behavior-body, state-update, output, and
-assertion regions have exact structural ownership. Proposed owner tree
-`R11-DIRECT-STRUCTURAL-VHDL-REROUTING` owns the direct VHDL rerouting gap
-before future implementation. Completed
+assertion regions have exact structural ownership. Completed selector leaf
+`R11-DIRECT-STRUCTURAL-VHDL-REROUTING.1` defers direct VHDL backend/reroute
+work until the SystemVerilog-backed IAL0/IAL1/IAL2 path is feature complete.
+Completed
 implementation leaf `ARCHITECTURE-DEBT-FRONTIER.2.1` projects direct backend
 storage/helper declaration-plan entries into `structural_rtl_ir.nets[]`
 without rerouting HDL emission. The shipped literal-literal positive modulo
