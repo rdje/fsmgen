@@ -1,9 +1,10 @@
 ---
 id: ial2-feature-completeness-next-slice
-title: IAL2 feature completeness next slice is read response-demux contract selection
+title: IAL2 feature completeness next slice is read response-demux parser metadata
 answers:
   - "what is the next IAL2 feature completeness slice?"
   - "what comes after auto-ID lifecycle residue alignment?"
+  - "what comes after IAL2-FEATURE-COMPLETENESS-FRONTIER.38?"
   - "what comes after IAL2-FEATURE-COMPLETENESS-FRONTIER.37?"
   - "what comes after IAL2-FEATURE-COMPLETENESS-FRONTIER.36?"
   - "what comes after IAL2-FEATURE-COMPLETENESS-FRONTIER.35?"
@@ -15,8 +16,8 @@ answers:
 date: 2026-06-12
 status: current
 tags: [ial2, axi, manager, read-response, response-demux, auto-id, same-id, feature-completeness, task-tree]
-evidence: docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; docs/AXI_IAL2_MANAGER_READ_RESPONSE_DEMUX_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_READ_RESPONSE_DEMUX_SELECTION.md; docs/AXI_IAL2_MANAGER_SAME_ID_ORDERING_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_SAME_ID_ORDERING_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_SAME_ID_ORDERING_READINESS_SELECTION.md; docs/AXI_IAL2_MANAGER_AUTO_ID_RESIDUE_ALIGNMENT_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_POST_RESPONSE_DEMUX_RESIDUE_ALIGNMENT_SELECTION.md; docs/AXI_IAL2_MANAGER_WRITE_RESPONSE_DEMUX_BEHAVIOR_FIRST_SLICE.md; docs/book/src/14-feature-backlog.md; README.md; ROADMAP_V2.md
-reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.38|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.37|read response-demux|contract-selection|AXI_IAL2_MANAGER_READ_RESPONSE_DEMUX_READINESS_AUDIT' docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md docs/AXI_IAL2_MANAGER_READ_RESPONSE_DEMUX_READINESS_AUDIT.md docs/book/src/14-feature-backlog.md README.md ROADMAP_V2.md
+evidence: docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; docs/AXI_IAL2_MANAGER_READ_RESPONSE_DEMUX_CONTRACT_SELECTION.md; docs/AXI_IAL2_MANAGER_READ_RESPONSE_DEMUX_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_READ_RESPONSE_DEMUX_SELECTION.md; docs/AXI_IAL2_MANAGER_SAME_ID_ORDERING_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_SAME_ID_ORDERING_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_SAME_ID_ORDERING_READINESS_SELECTION.md; docs/AXI_IAL2_MANAGER_AUTO_ID_RESIDUE_ALIGNMENT_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_POST_RESPONSE_DEMUX_RESIDUE_ALIGNMENT_SELECTION.md; docs/AXI_IAL2_MANAGER_WRITE_RESPONSE_DEMUX_BEHAVIOR_FIRST_SLICE.md; docs/book/src/14-feature-backlog.md; README.md; ROADMAP_V2.md
+reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.39|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.38|response-scope single-beat|read response-demux|AXI_IAL2_MANAGER_READ_RESPONSE_DEMUX_CONTRACT_SELECTION' docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md docs/AXI_IAL2_MANAGER_READ_RESPONSE_DEMUX_CONTRACT_SELECTION.md docs/book/src/14-feature-backlog.md README.md ROADMAP_V2.md
 ---
 
 After the shipped Valid-Ready, bundle, capacity/status, ID-family metadata,
@@ -25,7 +26,7 @@ transaction ID assertion, auto-ID lifecycle metadata, bounded auto-ID
 request-ID drive, write response-demux metadata, IAL1 rule-pulse action,
 generated write `BID` response-demux behavior, auto-ID lifecycle
 report-residue alignment, and generated auto-ID same-ID avoidance, the next
-active leaf is `IAL2-FEATURE-COMPLETENESS-FRONTIER.38`.
+active leaf is `IAL2-FEATURE-COMPLETENESS-FRONTIER.39`.
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.32` aligned the emitted report for
 explicit generated write response demux. At that point,
@@ -63,6 +64,13 @@ contract-selection slice, because the first read demux contract must decide
 single-beat/non-burst scope, `response-event` semantics, read metadata
 requirements, diagnostics, report shape, and residue before parser/report
 metadata or behavior changes.
+
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.38` selected that public contract:
+`(response-demux (read (response-event EVENT) (response-scope single-beat)
+(transaction-completion generated)))`. The next leaf,
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.39`, must implement parser/report metadata
+and static validation for that read arm while keeping generated read `.isf`,
+`.fsm`, and HDL behavior unchanged.
 
 The full AXI manager is not implemented yet. Per-ID same-ID response queues,
 authored concrete-ID same-ID ordering, read `RID` demux, read-data

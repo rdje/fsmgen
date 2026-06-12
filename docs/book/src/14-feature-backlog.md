@@ -3141,6 +3141,7 @@ additive read arm under the existing `response-demux` clause:
 (response-demux
   (read
     (response-event axi0_read_complete)
+    (response-scope single-beat)
     (transaction-completion generated)))
 ```
 
@@ -3162,6 +3163,17 @@ single-beat/non-burst, what `response-event` means, whether it must equal
 top-level `read-complete`, and whether read `auto-id-lifecycle` metadata is
 mandatory before any parser/report or generated behavior changes.
 
+Read response-demux contract selection:
+[AXI_IAL2_MANAGER_READ_RESPONSE_DEMUX_CONTRACT_SELECTION](../../AXI_IAL2_MANAGER_READ_RESPONSE_DEMUX_CONTRACT_SELECTION.md)
+selects `.39`, parser/report metadata and static validation for the read arm.
+The selected public syntax requires `(response-scope single-beat)`, so the
+first read response-demux contract is explicitly non-burst/single-beat.
+`response-event` must equal top-level `read-complete` and means the raw
+accepted read response transfer under the opt-in. Read demux also requires
+positive-width read ID-family metadata, read transaction metadata, and explicit
+read `auto-id-lifecycle` metadata. Generated read `RID` demux rules and read
+completion pulses remain future behavior.
+
 Response-demux behavior readiness audit:
 [AXI_IAL2_MANAGER_WRITE_RESPONSE_DEMUX_BEHAVIOR_READINESS_AUDIT](../../AXI_IAL2_MANAGER_WRITE_RESPONSE_DEMUX_BEHAVIOR_READINESS_AUDIT.md)
 concluded that generated write `BID` demux should not be implemented directly
@@ -3172,9 +3184,10 @@ shipped as a bounded rule-owned `(pulse target)` action that lowers through the
 existing delayed-pulse path. The generated write `BID` demux behavior is now
 shipped through that pulse-completion path.
 
-Read `RID` response demux, same-ID response ordering queues, read-data
-interleaving/reassembly, bursts, queued/blocking policy, profile aliases, full
-AXI manager behavior, and VHDL remain future exact-owner work.
+Generated read `RID` response-demux behavior, same-ID response ordering
+queues, read-data interleaving/reassembly, bursts, queued/blocking policy,
+profile aliases, full AXI manager behavior, and VHDL remain future exact-owner
+work.
 
 First implementation subset selection:
 [AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION](../../AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md)
@@ -3303,12 +3316,12 @@ transaction-envelope/static-validation subset, and the readiness audit for its
 additive static/report implementation boundary. The optional static
 `(transactions ...)` implementation slice and the additive transaction event
 dispatch/fan-in slice are now also shipped, and the active frontier is
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.38`, selecting the bounded AXI read
-response-demux public contract after `.37` concluded the contract must be
-explicit before parser/report metadata or generated behavior. Read-data
-interleaving/reassembly, bursts, per-ID queues, full-manager behavior, and
-VHDL remain out of scope for that contract selector unless it selects a later
-exact owner.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.39`, implementing parser/report metadata
+and static validation for the bounded AXI read response-demux contract selected
+by `.38`. Generated read `.isf`, `.fsm`, and HDL behavior remain unchanged in
+that next slice; read-data interleaving/reassembly, bursts, per-ID queues,
+full-manager behavior, and VHDL remain out of scope unless a later exact owner
+selects them.
 Additional `.ppif` objects/clauses and profile aliases remain future
 exact-owner work, and they must not jump ahead of the active selector unless
 that selector records why.
@@ -5537,6 +5550,9 @@ Completed selector leaf `IAL2-FEATURE-COMPLETENESS-FRONTIER.36` selects read
 Completed readiness audit leaf `IAL2-FEATURE-COMPLETENESS-FRONTIER.37`
 selects bounded read response-demux public contract selection and advances
 the active frontier to `.38`.
+Completed selector leaf `IAL2-FEATURE-COMPLETENESS-FRONTIER.38` selects
+explicit `(response-scope single-beat)` read response-demux syntax and advances
+the active frontier to `.39`.
 Completed implementation leaf
 `ARCHITECTURE-DEBT-FRONTIER.2.1`
 projects direct backend storage/helper declaration-plan entries into

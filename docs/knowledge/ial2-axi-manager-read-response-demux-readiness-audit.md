@@ -9,8 +9,8 @@ answers:
 date: 2026-06-12
 status: current
 tags: [ial2, axi, manager, read-response, response-demux, rid, contract, task-tree]
-evidence: docs/AXI_IAL2_MANAGER_READ_RESPONSE_DEMUX_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_READ_RESPONSE_DEMUX_SELECTION.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; perl/FSM/Adapter/IAL2/PPIF.pm; perl/FSM/IAL2/ProtocolIntent/AxiManagerCapacityStatus.pm; docs/book/src/14-feature-backlog.md; README.md; ROADMAP_V2.md
-reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.37|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.38|read response-demux|contract-selection|single-beat|response-event' docs/AXI_IAL2_MANAGER_READ_RESPONSE_DEMUX_READINESS_AUDIT.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md docs/book/src/14-feature-backlog.md README.md ROADMAP_V2.md
+evidence: docs/AXI_IAL2_MANAGER_READ_RESPONSE_DEMUX_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_READ_RESPONSE_DEMUX_CONTRACT_SELECTION.md; docs/AXI_IAL2_MANAGER_READ_RESPONSE_DEMUX_SELECTION.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; perl/FSM/Adapter/IAL2/PPIF.pm; perl/FSM/IAL2/ProtocolIntent/AxiManagerCapacityStatus.pm; docs/book/src/14-feature-backlog.md; README.md; ROADMAP_V2.md
+reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.37|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.38|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.39|read response-demux|response-scope single-beat|AXI_IAL2_MANAGER_READ_RESPONSE_DEMUX_CONTRACT_SELECTION' docs/AXI_IAL2_MANAGER_READ_RESPONSE_DEMUX_READINESS_AUDIT.md docs/AXI_IAL2_MANAGER_READ_RESPONSE_DEMUX_CONTRACT_SELECTION.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md docs/book/src/14-feature-backlog.md README.md ROADMAP_V2.md
 ---
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.37` decided not to implement read `RID`
@@ -29,3 +29,5 @@ single-beat/non-burst only.
 `.38` must select the exact bounded read response-demux contract, metadata
 requirements, report shape, diagnostics, generated artifact boundary, residue,
 and VHDL deferral before parser/report metadata or generated behavior changes.
+It is now complete: `.38` selected required `(response-scope single-beat)` and
+advanced the frontier to `.39`, parser/report metadata and static validation.

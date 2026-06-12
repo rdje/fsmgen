@@ -976,13 +976,13 @@ Priority note:
 The active immediate feature-completeness lane is IAL2 on the
 SystemVerilog-backed lowering path; see
 [docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md](docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md).
-The current frontier is `IAL2-FEATURE-COMPLETENESS-FRONTIER.38`, selecting the
-bounded AXI read response-demux public contract after `.37` concluded the
-contract must be explicit before parser/report metadata or behavior changes.
-The active contract selection must define the single-beat/non-burst boundary,
-read `response-event` semantics, metadata requirements, report shape,
-diagnostics, residue, and VHDL deferral before any read `RID` demux behavior
-is implemented.
+The current frontier is `IAL2-FEATURE-COMPLETENESS-FRONTIER.39`,
+implementing parser/report metadata and static validation for the bounded AXI
+read response-demux public contract selected by `.38`. The selected read arm
+requires `(response-scope single-beat)`, treats top-level `read-complete` as
+the raw accepted single-beat read response event under explicit opt-in, and
+keeps generated read `.isf`, `.fsm`, and HDL behavior unchanged until a later
+behavior owner.
 The shipped public capacity/status source accepts one
 `(manager-capacity-status NAME ...)` object under
 `(protocol-platform-intent ...)`, `(profile axi4)`, and top-level source
@@ -1082,12 +1082,15 @@ machine-readable `same_id_ordering` metadata, covered generated write demux
 residue removes `same_id_ordering`, and `.36` selected read response-demux
 readiness as the next exact slice. Completed audit `.37` found that bounded
 read `RID` response matching should not jump directly to implementation or
-parser/report metadata: the public contract must first say whether the slice is
-single-beat/non-burst, what `response-event` means, whether it must equal
-top-level `read-complete`, and what read ID-family/transaction/auto-ID
-lifecycle metadata is required. `.38` is the active contract selector.
-Read-data interleaving, bursts, per-ID queues, full-manager behavior, and VHDL
-remain residue.
+parser/report metadata: the public contract had to define read response scope,
+event meaning, metadata requirements, diagnostics, and residue first. Completed
+selector `.38` chose an explicit read arm with mandatory
+`(response-scope single-beat)`, response-event equality with top-level
+`read-complete`, positive-width read ID-family/read transaction/read
+auto-ID-lifecycle requirements, and generated completion ownership only under
+the opt-in. `.39` is the active parser/report metadata implementation. Read-data
+interleaving, bursts, per-ID queues, full-manager behavior, and VHDL remain
+residue.
 
 The first honest `R11` slices are now:
 1. keep widening convention-first composition only where the child-side evidence is still deterministic,
