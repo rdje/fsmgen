@@ -976,10 +976,11 @@ Priority note:
 The active immediate feature-completeness lane is IAL2 on the
 SystemVerilog-backed lowering path; see
 [docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md](docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md).
-The current frontier selects the next exact IAL2 feature-completeness slice
-after bounded AXI auto-ID same-ID avoidance assertions/report metadata,
-generated AXI write `BID` response-demux behavior, auto-ID lifecycle residue
-alignment, and the shipped IAL1 rule-owned `(pulse TARGET)` prerequisite.
+The current frontier is `IAL2-FEATURE-COMPLETENESS-FRONTIER.37`, a readiness
+audit for bounded AXI read `RID` response demux after bounded AXI auto-ID
+same-ID avoidance assertions/report metadata, generated AXI write `BID`
+response-demux behavior, auto-ID lifecycle residue alignment, and the shipped
+IAL1 rule-owned `(pulse TARGET)` prerequisite.
 The shipped public capacity/status source accepts one
 `(manager-capacity-status NAME ...)` object under
 `(protocol-platform-intent ...)`, `(profile axi4)`, and top-level source
@@ -1076,8 +1077,13 @@ full-manager behavior, or VHDL changes. Completed implementation leaf
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.35` now ships that boundary: generated
 auto-ID families get pairwise active selected-ID assertions, reports add
 machine-readable `same_id_ordering` metadata, covered generated write demux
-residue removes `same_id_ordering`, and `.36` is the next selector before
-further behavior changes.
+residue removes `same_id_ordering`, and `.36` selected read response-demux
+readiness as the next exact slice. Active leaf `.37` must decide whether
+bounded read `RID` response matching can be isolated safely, needs
+parser/report metadata first, needs an IAL1/IAL0/SystemVerilog prerequisite,
+or must defer behind read-data interleaving/reassembly or burst/last-beat
+ownership. Read-data interleaving, bursts, per-ID queues, full-manager
+behavior, and VHDL remain residue.
 
 The first honest `R11` slices are now:
 1. keep widening convention-first composition only where the child-side evidence is still deterministic,
