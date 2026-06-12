@@ -2313,9 +2313,10 @@ silently reinterpreted as generated demux signals. Completed selector `.26`
 chooses explicit write-only `(response-demux ...)` syntax. Completed
 implementation leaf `.27` ships parser/report metadata and static validation
 for that explicit opt-in while keeping generated `.isf`, `.fsm`, and HDL
-behavior unchanged. The active leaf is `.28`, auditing generated write `BID`
-demux behavior readiness against the current IAL1/IAL0/SystemVerilog lowering
-semantics before behavior changes.
+behavior unchanged. Completed readiness audit `.28` concludes that generated
+write `BID` demux completion names need an IAL1 rule-owned one-cycle pulse
+action first. The active leaf is `.29`, implementing that minimal rule-pulse
+prerequisite before generated response-demux behavior changes.
 Selected IAL2 slices may include explicit IAL1 or
 IAL0/SystemVerilog prerequisites when those prerequisites are needed for
 clean, reviewable lowering.
@@ -3024,8 +3025,18 @@ response_demux:
 ```
 
 This slice does not yet add `axi0_bid` as an IAL1 input for response demux
-and does not emit generated demux rules. The next frontier audits how the
-behavior should lower before implementing it.
+and does not emit generated demux rules. The follow-up readiness audit records
+the lowering prerequisite before generated behavior changes.
+
+Response-demux behavior readiness audit:
+[AXI_IAL2_MANAGER_WRITE_RESPONSE_DEMUX_BEHAVIOR_READINESS_AUDIT](../../AXI_IAL2_MANAGER_WRITE_RESPONSE_DEMUX_BEHAVIOR_READINESS_AUDIT.md)
+concluded that generated write `BID` demux should not be implemented directly
+on top of ordinary IAL1 rule assignments. Transaction completion names are
+one-cycle completion pulses, while existing IAL1 `(set ...)` and shorthand
+rule actions lower as sticky flopped assignments. The selected next frontier is
+a small IAL1 prerequisite: add a bounded rule-owned `(pulse TARGET)` action
+that lowers through the existing delayed-pulse path before generated demux
+rules emit transaction completions.
 
 First implementation subset selection:
 [AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION](../../AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md)
@@ -5349,8 +5360,10 @@ selects explicit write-only response-demux syntax and advances the active
 frontier to `.27`. Completed implementation leaf
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.27` ships parser/report metadata and
 static validation for that syntax, adds the response-demux sample and support
-accounting entry, and advances the active frontier to `.28`, generated write
-response-demux behavior readiness.
+accounting entry, and selected completed `.28` for generated write
+response-demux behavior readiness. Completed readiness audit leaf
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.28` selects `.29` as the minimal IAL1
+rule-pulse prerequisite before generated response-demux completion rules ship.
 Completed implementation leaf
 `ARCHITECTURE-DEBT-FRONTIER.2.1`
 projects direct backend storage/helper declaration-plan entries into

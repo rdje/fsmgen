@@ -1039,9 +1039,13 @@ static validation for that explicit opt-in, including a runnable
 accounting, `response_demux.generated_behavior: false`, generated
 transaction-completion ownership in the report, focused diagnostics, check
 JSON and semantic JSON coverage, and unchanged generated `.isf`, `.fsm`, and
-HDL behavior. The active frontier is
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.28`, auditing generated write `BID` demux
-behavior readiness before generated response matching, same-ID ordering,
+HDL behavior. Completed readiness audit
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.28` selected a small IAL1 prerequisite
+before generated demux behavior: write transaction completion names under
+`response-demux` must lower as one-cycle pulse actions, not ordinary sticky
+flopped rule assignments. The active frontier is
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.29`, implementing that minimal IAL1
+rule-pulse action before generated response matching, same-ID ordering,
 read-data interleaving/reassembly, bursts, queued policy, aliases,
 full-manager behavior, or VHDL changes.
 

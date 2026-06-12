@@ -151,7 +151,8 @@ last-beat tracking, address/data/control payload binding, queued/blocking
 policy, profile aliases, full AXI manager syntax, `.pif`, `.ppi`, `.axi`, or
 VHDL backend/reroute behavior.
 
-The next task-tree frontier is
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.28`, a readiness audit for generated write
-`BID` demux behavior against the current IAL1/IAL0/SystemVerilog lowering
-semantics.
+Follow-up: `IAL2-FEATURE-COMPLETENESS-FRONTIER.28` completed the behavior
+readiness audit and selected `IAL2-FEATURE-COMPLETENESS-FRONTIER.29` as a
+small IAL1 prerequisite. Generated write `BID` demux completion names must be
+one-cycle pulses, so the next implementation owner is a bounded IAL1
+rule-owned `(pulse TARGET)` action before generated demux rules ship.

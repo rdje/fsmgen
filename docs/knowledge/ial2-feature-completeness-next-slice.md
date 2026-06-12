@@ -1,28 +1,38 @@
 ---
 id: ial2-feature-completeness-next-slice
-title: IAL2 feature completeness next slice audits generated write response-demux behavior
+title: IAL2 feature completeness next slice implements the IAL1 rule-pulse prerequisite
 answers:
   - "what is the next IAL2 feature completeness slice?"
   - "what comes after PPIF Valid-Ready bundles?"
   - "is the full AXI manager implemented after Valid-Ready?"
   - "should .axi aliases come before AXI manager rules?"
   - "what must happen before implementing AXI manager behavior?"
+  - "what must happen before generated AXI write BID demux behavior?"
 date: 2026-06-12
 status: current
-tags: [ial2, axi, manager, feature-completeness, task-tree]
-evidence: docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; docs/AXI_IAL2_MANAGER_WRITE_RESPONSE_DEMUX_METADATA_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_WRITE_RESPONSE_DEMUX_CONTRACT_SELECTION.md; docs/AXI_IAL2_MANAGER_RESPONSE_DEMUX_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_RESPONSE_DEMUX_SELECTION.md; docs/AXI_IAL2_MANAGER_AUTO_ID_REQUEST_ID_DRIVE_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_AUTO_ID_LIFECYCLE_METADATA_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_AUTO_ID_POOL_CONTRACT_SELECTION.md; docs/AXI_IAL2_MANAGER_AUTO_ID_LIFECYCLE_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_AUTO_ID_LIFECYCLE_SELECTION.md; docs/AXI_IAL2_MANAGER_CONCRETE_ID_ASSERTIONS_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_ID_RESPONSE_RULE_ENGINE_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_ID_RESPONSE_RULE_ENGINE_SELECTION.md; docs/AXI_IAL2_MANAGER_TRANSACTION_EVENT_DISPATCH_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_TRANSACTION_EVENT_DISPATCH_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_TRANSACTION_EVENT_DISPATCH_SELECTION.md; docs/AXI_IAL2_MANAGER_TRANSACTION_ENVELOPE_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_TRANSACTION_ENVELOPE_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_TRANSACTION_ENVELOPE_SELECTION.md; docs/AXI_IAL2_MANAGER_ID_FAMILY_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_ID_FAMILY_SUBSET_SELECTION.md; docs/AXI_IAL2_MANAGER_ID_FAMILY_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_CAPACITY_STATUS_SUBSET_SELECTION.md; docs/AXI_MANAGER_RULE_MATRIX_DESIGN_PROBE.md; docs/AXI_MANAGER_USER_API_BRAINSTORM.md; docs/AXI_ID_ORDERING_RULE_EVIDENCE_PROBE.md; docs/book/src/14-feature-backlog.md; README.md; ROADMAP_V2.md
-reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.28|generated write BID demux|response_demux|generated_behavior: false|transaction-completion generated' docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md docs/AXI_IAL2_MANAGER_WRITE_RESPONSE_DEMUX_METADATA_FIRST_SLICE.md docs/book/src/14-feature-backlog.md README.md ROADMAP_V2.md
+tags: [ial2, axi, manager, response-demux, feature-completeness, task-tree]
+evidence: docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; docs/AXI_IAL2_MANAGER_WRITE_RESPONSE_DEMUX_BEHAVIOR_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_WRITE_RESPONSE_DEMUX_METADATA_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_WRITE_RESPONSE_DEMUX_CONTRACT_SELECTION.md; docs/AXI_IAL2_MANAGER_RESPONSE_DEMUX_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_RESPONSE_DEMUX_SELECTION.md; docs/AXI_IAL2_MANAGER_AUTO_ID_REQUEST_ID_DRIVE_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_AUTO_ID_LIFECYCLE_METADATA_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_AUTO_ID_POOL_CONTRACT_SELECTION.md; docs/AXI_IAL2_MANAGER_AUTO_ID_LIFECYCLE_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_AUTO_ID_LIFECYCLE_SELECTION.md; docs/AXI_IAL2_MANAGER_CONCRETE_ID_ASSERTIONS_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_ID_RESPONSE_RULE_ENGINE_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_ID_RESPONSE_RULE_ENGINE_SELECTION.md; docs/AXI_IAL2_MANAGER_TRANSACTION_EVENT_DISPATCH_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_TRANSACTION_EVENT_DISPATCH_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_TRANSACTION_EVENT_DISPATCH_SELECTION.md; docs/AXI_IAL2_MANAGER_TRANSACTION_ENVELOPE_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_TRANSACTION_ENVELOPE_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_TRANSACTION_ENVELOPE_SELECTION.md; docs/AXI_IAL2_MANAGER_ID_FAMILY_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_ID_FAMILY_SUBSET_SELECTION.md; docs/AXI_IAL2_MANAGER_ID_FAMILY_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_CAPACITY_STATUS_SUBSET_SELECTION.md; docs/AXI_MANAGER_RULE_MATRIX_DESIGN_PROBE.md; docs/AXI_MANAGER_USER_API_BRAINSTORM.md; docs/AXI_ID_ORDERING_RULE_EVIDENCE_PROBE.md; docs/book/src/14-feature-backlog.md; README.md; ROADMAP_V2.md
+reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.29|rule-pulse|pulse TARGET|generated response-demux completion|one-cycle pulse' docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md docs/AXI_IAL2_MANAGER_WRITE_RESPONSE_DEMUX_BEHAVIOR_READINESS_AUDIT.md docs/book/src/14-feature-backlog.md README.md ROADMAP_V2.md
 ---
 
 After the shipped Valid-Ready, bundle, capacity/status, ID-family metadata,
 transaction-envelope metadata, transaction event dispatch, concrete
 transaction ID assertion, auto-ID lifecycle metadata, and bounded auto-ID
 request-ID drive and write response-demux metadata IAL2 surfaces, the next
-active leaf is `IAL2-FEATURE-COMPLETENESS-FRONTIER.28`.
+active leaf is `IAL2-FEATURE-COMPLETENESS-FRONTIER.29`.
 
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.28` audits generated AXI write `BID`
-response-demux behavior against the shipped parser/report contract and the
-current IAL1/IAL0/SystemVerilog lowering semantics before behavior changes.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.29` implements the minimal IAL1
+rule-owned one-cycle pulse action prerequisite for generated AXI write `BID`
+response-demux completions. The selected public IAL1 shape is:
+
+```text
+(rule NAME GUARD
+  (pulse TARGET))
+```
+
+That action must lower through the existing delayed-pulse path, participate in
+pulse-domain rule conflict analysis, and be documented as a pulse action, not
+as a sticky data assignment.
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.12` shipped the bounded AXI manager
 machine-readable AST/structural logical read/write transaction-envelope
@@ -106,8 +116,16 @@ static validation for that selected contract, including
 accounting, focused generator and PPIF/CLI tests, and unchanged generated
 `.isf`, `.fsm`, and HDL behavior.
 
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.28` completed the generated behavior
+readiness audit. It concluded that generated write `BID` demux should not be
+implemented directly next because response-demux transaction completion names
+must be one-cycle completion pulses, while existing IAL1 rule actions
+`(set port expr)` and `(port expr)` lower as sticky flopped assignments. `.28`
+selected `.29` as the bounded IAL1 rule-pulse prerequisite before generated
+demux rules emit transaction completions.
+
 The full AXI manager is not implemented yet. ID allocation, ordering, response
 matching, bursts, queued/blocking policy, `.pif`/`.ppi`/`.axi` aliases, and
-VHDL remain future exact-owner work; they should not jump ahead of the `.28`
-generated write response-demux readiness audit unless that audit records a
-stronger reason.
+VHDL remain future exact-owner work; they should not jump ahead of the `.29`
+IAL1 rule-pulse prerequisite and the later generated write response-demux
+behavior owner.

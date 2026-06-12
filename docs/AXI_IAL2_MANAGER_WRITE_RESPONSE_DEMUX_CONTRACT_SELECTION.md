@@ -6,7 +6,10 @@ behavior changed by this note.
 Follow-up: `IAL2-FEATURE-COMPLETENESS-FRONTIER.27` shipped the parser/report
 metadata slice selected here. See
 [docs/AXI_IAL2_MANAGER_WRITE_RESPONSE_DEMUX_METADATA_FIRST_SLICE.md](AXI_IAL2_MANAGER_WRITE_RESPONSE_DEMUX_METADATA_FIRST_SLICE.md).
-Generated write `BID` demux behavior remains future work.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.28` then audited generated behavior and
+selected `IAL2-FEATURE-COMPLETENESS-FRONTIER.29` as the IAL1 rule-pulse
+prerequisite. Generated write `BID` demux behavior remains future work until
+that pulse action exists.
 
 Task tree:
 [docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md](tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md).
