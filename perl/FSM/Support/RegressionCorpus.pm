@@ -60,6 +60,7 @@ my @REGRESSION_CORPUS = (
         source_kind => 'isf',
         strict_supported => 1,
         expected_module_name => 'apb_requester',
+        expected_semantic_source_root_kind => 'fsm',
     },
     {
         id => 'intent.ppif_axi_aw_valid_ready',
@@ -70,6 +71,7 @@ my @REGRESSION_CORPUS = (
         source_kind => 'ppif',
         strict_supported => 1,
         expected_module_name => 'axi_aw_valid_ready_monitor',
+        expected_semantic_source_root_kind => 'fsm',
     },
     {
         id => 'feature.partial_lhs_with_size',

@@ -68,10 +68,11 @@ Run check mode with machine-readable diagnostics:
 ./bin/fsmgen --strict --check --json ppif/axi_aw_valid_ready.ppif
 ```
 
-For the checked-in sample, successful check JSON keeps `source.resolved_path`
-on `ppif/axi_aw_valid_ready.ppif` rather than on the temporary generated
-`.fsm`, and its report-level `support_accounting` object matches the PPIF
-sample corpus entry with source kind `ppif`.
+For the checked-in sample, successful check JSON and normalized semantic JSON
+keep `source.resolved_path` on `ppif/axi_aw_valid_ready.ppif` rather than on
+the temporary generated `.fsm`, and their report-level `support_accounting`
+objects match the PPIF sample corpus entry with source kind `ppif`. The
+normalized semantic payload still describes the generated `.fsm` semantic root.
 
 Discover the shipped file suffix stack:
 
@@ -133,7 +134,8 @@ Focused coverage lives in
 - CLI `--emit-schedule-json` emits the IAL2 report,
 - CLI `--outdir` writes generated `.isf`, generated `.fsm`, and HDL,
 - CLI `--strict --check --json` accepts `.ppif`,
-- successful `.ppif` check JSON keeps public source identity and matched
+- successful `.ppif` check JSON and normalized semantic JSON keep public
+  source identity and matched
   support accounting,
 - `--capability-manifest` advertises `.ppif` under
   `language_surface.file_surfaces`,

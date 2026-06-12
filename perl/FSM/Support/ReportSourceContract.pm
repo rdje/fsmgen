@@ -51,7 +51,7 @@ sub build_report_source_contract {
         reused_across_public_reports => JSON::PP::true,
         guidance => [
             q{Treat this contract as the bounded nested `source` object shared by the public check JSON and normalized semantic JSON report surfaces.},
-            'The current shared object records the caller-facing input string plus the resolved source path used by the pipeline.',
+            'The current shared object records the caller-facing input string plus the caller-facing resolved source path represented by the public report.',
             'Use the grouped presence_key_family_map to discover the bounded source input and resolution key families without collecting those key-family lists separately.',
             'Widen this nested object only when both public report surfaces and their manifest advertisement need the same additional field.',
         ],

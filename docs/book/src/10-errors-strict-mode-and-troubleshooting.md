@@ -366,10 +366,12 @@ source kind, and `strict_supported` marker. Successful files outside the corpus
 keep the same object shape but report `matched: false`.
 
 For public sources that lower through generated `.fsm` intermediates, such as
-`.isf` and `.ppif`, successful check JSON keeps `source.resolved_path` on the
-original resolved public input path. The generated `.fsm` remains an internal
-review/lowering artifact unless the command explicitly writes it through
-`--outdir`.
+`.isf` and `.ppif`, successful check JSON and normalized semantic JSON keep
+`source.resolved_path` on the original resolved public input path and match
+support accounting against that public path. The normalized semantic payload
+still describes the generated `.fsm` semantic root. The generated `.fsm`
+remains an internal review/lowering artifact unless the command explicitly
+writes it through `--outdir`.
 
 ## Backend Expectations
 

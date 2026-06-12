@@ -182,6 +182,9 @@ sub expected_module_for_entry {
 
 sub expected_root_kind_for_entry {
     my ($entry) = @_;
+    return $entry->{expected_semantic_source_root_kind}
+        if defined $entry->{expected_semantic_source_root_kind};
+
     return $entry->{source_kind} eq 'composition'
         ? 'top'
         : $entry->{source_kind};
