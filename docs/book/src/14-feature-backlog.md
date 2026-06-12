@@ -2462,6 +2462,16 @@ aggregate result/report/source-artifact contract, or an ISF wrapper/top actor
 contract, before changing the duplicate-channel fail-closed behavior. Until
 then, multi-object `.ppif` files remain unshipped.
 
+Selected future bundle contract:
+[IAL2_PPIF_VALID_READY_BUNDLE_CONTRACT_SELECTION](../../IAL2_PPIF_VALID_READY_BUNDLE_CONTRACT_SELECTION.md)
+and decision
+[0017-ppif-valid-ready-bundle-contract](../../decisions/0017-ppif-valid-ready-bundle-contract.md)
+select an aggregate PPIF bundle report over per-channel generated `.isf` and
+`.fsm` review artifacts. That future contract avoids a hidden multi-actor
+`.isf` file and forbids "first channel wins" HDL selection. Default HDL and
+aggregate semantic JSON for a multi-channel bundle remain fail-closed until a
+future wrapper/top actor or explicit entry-selection owner lands.
+
 PDF extraction workflow:
 [PDF_EXTRACTION_WORKFLOW](../../PDF_EXTRACTION_WORKFLOW.md)
 documents the reusable source-anchored PDF extraction approach used for the

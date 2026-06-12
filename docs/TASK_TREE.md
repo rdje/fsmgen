@@ -101,6 +101,7 @@ first.
 | `LANGUAGE-SURFACE-FILE-CLI-MODES` | `done` | Embedding And Public APIs | complete (`.1`; advertised supported CLI modes per shipped file suffix) | [docs/tasks/LANGUAGE-SURFACE-FILE-CLI-MODES.md](docs/tasks/LANGUAGE-SURFACE-FILE-CLI-MODES.md) |
 | `PPIF-FEATURE-BACKLOG-CLI-MODES-SYNC` | `done` | IAL2 horizon exploration / mdBook truth sync | complete (`.1`; synced feature-backlog IAL2 section with `.ppif` manifest CLI-mode metadata) | [docs/tasks/PPIF-FEATURE-BACKLOG-CLI-MODES-SYNC.md](docs/tasks/PPIF-FEATURE-BACKLOG-CLI-MODES-SYNC.md) |
 | `IAL2-PPIF-MULTI-VALID-READY-READINESS` | `done` | IAL2 horizon exploration | complete (`.1`; mapped current single-object `.ppif` assumptions and the required aggregate contract before any future multi-channel parser/generator behavior change) | [docs/tasks/IAL2-PPIF-MULTI-VALID-READY-READINESS.md](docs/tasks/IAL2-PPIF-MULTI-VALID-READY-READINESS.md) |
+| `IAL2-PPIF-VALID-READY-BUNDLE-CONTRACT-SELECTION` | `done` | IAL2 horizon exploration | complete (`.1`; selected the future multi Valid-Ready `.ppif` aggregate bundle source/report/artifact/CLI contract before behavior changes) | [docs/tasks/IAL2-PPIF-VALID-READY-BUNDLE-CONTRACT-SELECTION.md](docs/tasks/IAL2-PPIF-VALID-READY-BUNDLE-CONTRACT-SELECTION.md) |
 
 ## Proposed Task Trees
 

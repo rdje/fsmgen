@@ -93,16 +93,18 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 32. `docs/decisions/0016-ppif-is-first-public-ial2-container.md`: selects `.ppif` as the first public generic IAL2 file surface.
 33. `docs/IAL2_PPIF_PARSER_CLI_FIRST_SLICE.md`: first public `.ppif` parser/CLI slice for one AXI Valid-Ready source object.
 34. `docs/IAL2_PPIF_MULTI_VALID_READY_READINESS.md`: readiness map for future multi-channel `.ppif` Valid-Ready support.
-35. `docs/PDF_EXTRACTION_WORKFLOW.md`: portable workflow for source-anchored PDF text, table, diagram, and image extraction.
-36. `docs/decisions/0014-protocol-platform-intent-surface-and-layered-lowering.md`: generic IAL2 file-surface candidates and layered lowering decision.
-37. `docs/decisions/0015-ial2-profile-extensions-are-vocabulary-aliases.md`: IAL2 protocol-profile extension refinement.
-38. `docs/FEATURE_BACKLOG.md`: pointer to the canonical mdBook feature backlog for deferred/not-fully-shipped user-visible work.
-39. `CHANGES.md`: chronological technical changes.
-40. `DEVELOPMENT_NOTES.md`: design rationale and decisions.
-41. `MEMORY.md`: continuity/handoff state.
-42. `LIVE_ACHIEVEMENT_STATUS.md`: latest completed roadmap-aligned slice.
-43. `WARP.md`: repository-specific agent/development guidance.
-44. `.agents/workflows/commit.md`: automation-oriented commit workflow description.
+35. `docs/IAL2_PPIF_VALID_READY_BUNDLE_CONTRACT_SELECTION.md`: selected future aggregate bundle contract for multi-channel `.ppif` Valid-Ready support.
+36. `docs/PDF_EXTRACTION_WORKFLOW.md`: portable workflow for source-anchored PDF text, table, diagram, and image extraction.
+37. `docs/decisions/0014-protocol-platform-intent-surface-and-layered-lowering.md`: generic IAL2 file-surface candidates and layered lowering decision.
+38. `docs/decisions/0015-ial2-profile-extensions-are-vocabulary-aliases.md`: IAL2 protocol-profile extension refinement.
+39. `docs/decisions/0017-ppif-valid-ready-bundle-contract.md`: future multi-channel `.ppif` bundle contract decision.
+40. `docs/FEATURE_BACKLOG.md`: pointer to the canonical mdBook feature backlog for deferred/not-fully-shipped user-visible work.
+41. `CHANGES.md`: chronological technical changes.
+42. `DEVELOPMENT_NOTES.md`: design rationale and decisions.
+43. `MEMORY.md`: continuity/handoff state.
+44. `LIVE_ACHIEVEMENT_STATUS.md`: latest completed roadmap-aligned slice.
+45. `WARP.md`: repository-specific agent/development guidance.
+46. `.agents/workflows/commit.md`: automation-oriented commit workflow description.
 
 ## Documentation index (all `.md` files in this repo)
 - `README.md` — single entry point and navigation hub.
@@ -533,11 +535,13 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/AXI_IAL2_VALID_READY_GENERATOR_FIRST_SLICE.md` — first in-process AXI Valid-Ready IAL2 generator slice and report surface.
 - `docs/IAL2_PPIF_PARSER_CLI_FIRST_SLICE.md` — first public `.ppif` parser/CLI slice for one AXI Valid-Ready source object.
 - `docs/IAL2_PPIF_MULTI_VALID_READY_READINESS.md` — readiness map for future multi-channel `.ppif` Valid-Ready support.
+- `docs/IAL2_PPIF_VALID_READY_BUNDLE_CONTRACT_SELECTION.md` — selected future aggregate bundle contract for multi-channel `.ppif` Valid-Ready support.
 - `ppif/axi_aw_valid_ready.ppif` — first checked-in runnable `.ppif` sample for the public IAL2 Valid-Ready CLI surface.
 - `docs/PDF_EXTRACTION_WORKFLOW.md` — portable workflow for task-owned source-anchored PDF text, table, diagram, and image extraction.
 - `docs/decisions/0014-protocol-platform-intent-surface-and-layered-lowering.md` — generic IAL2 file-surface candidates and layered lowering decision.
 - `docs/decisions/0015-ial2-profile-extensions-are-vocabulary-aliases.md` — IAL2 protocol-profile extension refinement.
 - `docs/decisions/0016-ppif-is-first-public-ial2-container.md` — selects `.ppif` as the first public generic IAL2 file surface.
+- `docs/decisions/0017-ppif-valid-ready-bundle-contract.md` — future multi-channel `.ppif` bundle contract decision.
 - `docs/vendor/arm/amba/axi/IHI0022_L_2025-08_AMBA_AXI_Protocol_Specification.pdf` — tracked repo-local raw AXI protocol specification reference for future task-tree-owned IAL2 probes.
 - `docs/FEATURE_BACKLOG.md` — repo-level pointer to the canonical mdBook backlog for deferred/not-fully-shipped user-visible features.
 - `docs/VHDL_SCOPE.md` — scoped VHDL backend plan and shipped direct-root scaffold boundary.
