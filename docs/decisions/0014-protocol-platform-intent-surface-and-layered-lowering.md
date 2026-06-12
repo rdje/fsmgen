@@ -2,7 +2,7 @@
 
 - Date: 2026-06-12
 - Type: architecture
-- Status: accepted-partial
+- Status: refined by `docs/decisions/0015-ial2-profile-extensions-are-vocabulary-aliases.md`
 
 ## Context
 
@@ -24,8 +24,9 @@ are:
 
 ## Decision
 
-Future IAL2 must use a protocol/platform-generic file surface. Do not use
-protocol-specific IAL2 extensions such as `.axi`.
+Future IAL2 must use a protocol/platform-generic file surface. This decision
+defines the generic container direction; protocol-profile extension aliases
+are addressed by decision `0015`.
 
 A future IAL2 file can declare or select a protocol vocabulary inside the file,
 but the file surface itself remains generic enough for protocol and platform
@@ -37,20 +38,22 @@ The mandatory lowering chain is:
 IAL2 -> IAL1 / .isf -> IAL0 / .fsm -> HDL
 ```
 
-Direct `IAL2 -> IAL0` lowering is forbidden. Direct IAL2-to-`.fsm`
+Direct IAL2-to-IAL0 lowering is forbidden. Direct IAL2-to-`.fsm`
 generation is also forbidden, even as a shortcut.
 
-The exact extension name remains open among `.pif`, `.ppi`, `.ppif`, or a
-future explicitly accepted generic variant. Protocol-specific names remain
-out of bounds.
+The exact generic extension name remains open among `.pif`, `.ppi`, `.ppif`,
+or a future explicitly accepted generic variant. Protocol-profile extensions
+are addressed by decision `0015`.
 
 ## Consequences
 
 - `.isf` remains IAL1 and should not become a mixed IAL1/IAL2 container.
 - Future IAL2 tooling must emit or preserve reviewable IAL1 before IAL0
   exists.
-- Protocol vocabulary can be selected inside the IAL2 file, but extension,
-  tooling identity, and documentation must remain protocol/platform-generic.
+- Protocol vocabulary can be selected inside the IAL2 file, but the generic
+  extension, tooling identity, and documentation must remain
+  protocol/platform-generic. Decision `0015` later refines the model to allow
+  future protocol-profile extension aliases over the same IAL2 layer.
 - AXI manager work is one IAL2 vocabulary candidate, not a language boundary.
 - Any future implementation requires a new exact task-tree owner for parser,
   diagnostics, lowering, emitted IAL1, emitted IAL0, reports, tests, and

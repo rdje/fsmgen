@@ -19,15 +19,19 @@ lowering behavior, generated `.fsm`, HDL, or validation fixtures.
 
 ## IAL2 Surface Boundary
 
-The IAL2 file surface must remain protocol/platform-generic. AXI manager work
-should be one IAL2 vocabulary candidate, not an AXI-only file type.
-Protocol-specific extensions such as `.axi` are rejected because the same
-IAL2 layer must be able to cover AXI, CHI, ACE, AHB, APB, ATB, and future
-protocol families.
+The generic IAL2 file surface must remain protocol/platform-generic. AXI
+manager work should be one IAL2 vocabulary candidate, not a separate semantic
+layer.
 
 The exact extension spelling remains open. Current candidates are `.pif`
 for Protocol Intent Format, `.ppi` for Protocol/Platform Intent, and `.ppif`
 for Protocol/Platform Intent Format.
+
+Protocol-specific extensions such as `.axi`, `.chi`, `.ace`, `.ahb`, `.apb`,
+`.atb`, `.smbus`, or `.i2s` may also be accepted later as profile aliases
+that imply a vocabulary. If `.axi` exists later, it must behave like a generic
+IAL2 file that selected an AXI profile internally; it must not become a
+separate layer or a direct path to `.fsm`.
 
 Any future AXI manager IAL2 source must lower through reviewable IAL1 before
 IAL0:

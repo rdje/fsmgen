@@ -33,13 +33,17 @@ themselves.
 
 IAL2 must apply to protocol families such as AXI, CHI, ACE, AHB, APB, ATB,
 and future protocols, as well as platform intent above protocol-specific
-transactions. Protocol-specific extensions such as `.axi` are rejected. A
-future IAL2 file may select an internal protocol or platform vocabulary
-without changing the generic file surface.
+transactions. A future IAL2 file may select an internal protocol or platform
+vocabulary without changing the generic file surface.
 
 The exact extension spelling remains open. Current candidates are `.pif`
 for Protocol Intent Format, `.ppi` for Protocol/Platform Intent, and `.ppif`
 for Protocol/Platform Intent Format.
+
+Protocol-specific extensions such as `.axi`, `.chi`, `.ace`, `.ahb`, `.apb`,
+`.atb`, `.smbus`, or `.i2s` may also be accepted later as vocabulary/profile
+aliases over the same IAL2 model. They are not separate semantic layers and
+do not get direct-lowering privileges.
 
 The required lowering chain is:
 
@@ -157,4 +161,7 @@ artifacts. Decision
 [0014](decisions/0014-protocol-platform-intent-surface-and-layered-lowering.md)
 records the protocol/platform-generic IAL2 file-surface direction, the open
 `.pif`/`.ppi`/`.ppif` extension candidates, and the mandatory
-`IAL2 -> IAL1 -> IAL0` lowering chain.
+`IAL2 -> IAL1 -> IAL0` lowering chain. Decision
+[0015](decisions/0015-ial2-profile-extensions-are-vocabulary-aliases.md)
+refines that model: protocol-specific file extensions can be future
+vocabulary/profile aliases, but not separate layers.

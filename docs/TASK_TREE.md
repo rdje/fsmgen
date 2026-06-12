@@ -82,6 +82,7 @@ first.
 | `AXI-VALID-READY-INTENT-PROBE` | `done` | IAL2 horizon exploration | complete (`.2`; recorded the first AXI Valid-Ready source-anchor evidence inventory, with no parser/lowering implementation selected) | [docs/tasks/AXI-VALID-READY-INTENT-PROBE.md](docs/tasks/AXI-VALID-READY-INTENT-PROBE.md) |
 | `AXI-MANAGER-USER-API-BRAINSTORM-CAPTURE` | `done` | IAL2 horizon exploration | complete (`.1`; captured the AXI manager Easy/Power/supervised Raw IAL2 user-facing API direction, with no implementation selected) | [docs/tasks/AXI-MANAGER-USER-API-BRAINSTORM-CAPTURE.md](docs/tasks/AXI-MANAGER-USER-API-BRAINSTORM-CAPTURE.md) |
 | `IAL2-PROTOCOL-PLATFORM-SURFACE-DECISION-CAPTURE` | `done` | IAL2 horizon exploration | complete (`.1`; recorded protocol/platform-generic IAL2 surface candidates and forbids direct IAL2-to-IAL0 lowering) | [docs/tasks/IAL2-PROTOCOL-PLATFORM-SURFACE-DECISION-CAPTURE.md](docs/tasks/IAL2-PROTOCOL-PLATFORM-SURFACE-DECISION-CAPTURE.md) |
+| `IAL2-PROFILE-EXTENSION-REFINEMENT-CAPTURE` | `done` | IAL2 horizon exploration | complete (`.1`; refined IAL2 file-surface guidance so protocol-specific extensions may be future vocabulary/profile aliases, not separate layers) | [docs/tasks/IAL2-PROFILE-EXTENSION-REFINEMENT-CAPTURE.md](docs/tasks/IAL2-PROFILE-EXTENSION-REFINEMENT-CAPTURE.md) |
 
 ## Proposed Task Trees
 

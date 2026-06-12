@@ -2263,15 +2263,18 @@ semantic value to exist.
 Current boundary: FSMGen names `.fsm` as Intent Abstraction Layer 0 (`IAL0`)
 and current `.isf` as Intent Abstraction Layer 1 (`IAL1`). A future `IAL2`
 would need to justify itself with semantics above individual transactions, not
-only syntax convenience. Its file surface must be protocol/platform-generic:
-protocol-specific extensions such as `.axi` are rejected because the same
-surface must cover AXI, CHI, ACE, AHB, APB, ATB, and future protocol families.
-A future IAL2 file may select a protocol or platform vocabulary inside the
-file without changing the extension.
+only syntax convenience. Its generic file surface must be
+protocol/platform-generic, and a future IAL2 file may select a protocol or
+platform vocabulary inside the file.
 
 The exact extension spelling remains open. Current candidates are `.pif`
 (Protocol Intent Format), `.ppi` (Protocol/Platform Intent), and `.ppif`
 (Protocol/Platform Intent Format).
+
+Protocol-specific extensions such as `.axi`, `.chi`, `.ace`, `.ahb`, `.apb`,
+`.atb`, `.smbus`, or `.i2s` may also be accepted later as vocabulary/profile
+aliases over the same IAL2 model. They are not separate layers and do not get
+direct-lowering privileges.
 
 The mandatory lowering chain is `IAL2 -> IAL1/.isf -> IAL0/.fsm -> HDL`.
 Direct `IAL2 -> IAL0` lowering is forbidden.
@@ -2327,6 +2330,11 @@ Protocol/platform surface decision:
 records the generic future IAL2 file-surface direction, the open
 `.pif`/`.ppi`/`.ppif` extension candidates, and the required
 `IAL2 -> IAL1 -> IAL0` lowering chain.
+
+Profile-extension refinement:
+[0015-ial2-profile-extensions-are-vocabulary-aliases](../../decisions/0015-ial2-profile-extensions-are-vocabulary-aliases.md)
+records that protocol-specific extensions may be accepted later as profile
+aliases, not separate semantic layers.
 
 ### ISF Enum, Type, And Aggregate Parity
 
