@@ -107,6 +107,7 @@ first.
 | `IAL2-PPIF-BUNDLE-HDL-ENTRY-SELECTION` | `done` | IAL2 horizon exploration | complete (`.1`; selected aggregate wrapper/top as the HDL entry contract and rejected first-channel root selection) | [docs/tasks/IAL2-PPIF-BUNDLE-HDL-ENTRY-SELECTION.md](docs/tasks/IAL2-PPIF-BUNDLE-HDL-ENTRY-SELECTION.md) |
 | `IAL2-PPIF-BUNDLE-HDL-ENTRY-FIRST-SLICE` | `done` | IAL2 horizon exploration | complete (`.1`; shipped aggregate wrapper/top `.fsm` entry, default SystemVerilog generation, and `--verify-hdl` for the tracked AW/W PPIF bundle sample) | [docs/tasks/IAL2-PPIF-BUNDLE-HDL-ENTRY-FIRST-SLICE.md](docs/tasks/IAL2-PPIF-BUNDLE-HDL-ENTRY-FIRST-SLICE.md) |
 | `TASK-TREE-STALE-STATUS-DRIFT-REPAIR` | `done` | `infra/continuity` | complete (`.1`; normalized stale active/pending/proposed markers in completed task-tree files so exhausted PNT recovery is unambiguous) | [docs/tasks/TASK-TREE-STALE-STATUS-DRIFT-REPAIR.md](docs/tasks/TASK-TREE-STALE-STATUS-DRIFT-REPAIR.md) |
+| `TASK-TREE-HYPHENATED-STATUS-DRIFT-REPAIR` | `done` | `infra/continuity` | complete (`.1`; normalized the stale hyphenated `in-progress` marker in completed `ISF-TRIGGER-ANCHOR` metadata and hardened the status-drift fact recheck) | [docs/tasks/TASK-TREE-HYPHENATED-STATUS-DRIFT-REPAIR.md](docs/tasks/TASK-TREE-HYPHENATED-STATUS-DRIFT-REPAIR.md) |
 
 ## Proposed Task Trees
 

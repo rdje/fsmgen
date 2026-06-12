@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-TRIGGER-ANCHOR`
-- Status: `in-progress`
+- Status: `done`
 - Roadmap lane: `R14` (ISF — verification intent)
 - Created: `2026-06-02`
 - Last updated: `2026-06-02`
