@@ -122,6 +122,13 @@ responsibility classes: static checks, generated scheduler/scoreboard
 behavior, runtime assertions, environment assumptions, and unsupported
 residue. It remains design/probe evidence only.
 
+The selected first AXI-derived IAL2 implementation subset is
+[docs/AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md](AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md):
+a source-anchored AXI Valid-Ready channel contract/monitor. That future
+implementation is intentionally smaller than the full manager so it can prove
+the mandatory `IAL2 -> IAL1 -> IAL0` lowering chain, source-anchor reporting,
+and residue discipline first.
+
 The first bounded IAL2 probe should not start with a full AXI manager or an
 interconnect. It should inspect the reusable valid/ready transport contract
 because that is the smallest candidate with real protocol semantics:
@@ -174,9 +181,10 @@ contract, report contract, lowering artifacts, and validation gates are all
 specified first. The completed AXI Valid-Ready evidence inventory is enough to
 justify a later design/probe leaf, but it still does not select IAL2 syntax,
 parser behavior, lowering behavior, generated `.fsm`, HDL, or reusable library
-artifacts. The completed AXI ID/order/concurrency evidence inventory and rule
-matrix are enough to justify a later AXI manager implementation-selection
-leaf, but likewise do not select IAL2 syntax, lowering, or HDL behavior.
+artifacts. The completed AXI ID/order/concurrency evidence inventory, rule
+matrix, and first-subset selection are enough to justify a later
+Valid-Ready-channel implementation leaf, but likewise do not select final IAL2
+syntax, lowering code, or HDL behavior.
 Decision
 [0014](decisions/0014-protocol-platform-intent-surface-and-layered-lowering.md)
 records the protocol/platform-generic IAL2 file-surface direction, the open

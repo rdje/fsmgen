@@ -14,6 +14,9 @@ Related ID/order evidence inventory:
 Related rule-matrix design/probe:
 [docs/AXI_MANAGER_RULE_MATRIX_DESIGN_PROBE.md](AXI_MANAGER_RULE_MATRIX_DESIGN_PROBE.md).
 
+Related first implementation subset selection:
+[docs/AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md](AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md).
+
 ## Purpose
 
 This note captures a user-facing IAL2 surface direction for a future AXI
@@ -262,7 +265,7 @@ overrides, and supervised raw access for advanced cases. The manager should be
 the AXI expert so users do not have to internalize every concurrency and ID
 rule to stay legal.
 
-The next technical prerequisite is no longer the first rule-matrix proposal; it
-is a later exact implementation-selection leaf that chooses a bounded shipped
-subset, source surface, IAL1/IAL0 lowering contract, report contract, and
-focused tests. No implementation is selected by this note.
+The first implementation subset selection is now recorded separately: a
+source-anchored AXI Valid-Ready channel contract/monitor should prove the
+IAL2-to-IAL1-to-IAL0 chain before the full manager is attempted. No
+implementation is selected by this brainstorm note.

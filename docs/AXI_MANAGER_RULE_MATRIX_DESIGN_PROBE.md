@@ -12,6 +12,9 @@ Inputs:
 - [docs/AXI_MANAGER_USER_API_BRAINSTORM.md](AXI_MANAGER_USER_API_BRAINSTORM.md)
 - [docs/IAL2_PROTOCOL_PLATFORM_INTENT_EVALUATION.md](IAL2_PROTOCOL_PLATFORM_INTENT_EVALUATION.md)
 
+Related implementation-subset selection:
+[docs/AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md](AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md).
+
 ## Purpose
 
 This note converts the captured AXI source evidence into a first rule
@@ -95,6 +98,8 @@ concurrency easy without hiding AXI legality. The manager should own IDs,
 outstanding windows, ordering queues, response matching, interleaving policy,
 and flow-control feedback across Easy, Power, and supervised Raw levels.
 
-The next step is still not implementation by default. A later exact owner must
-choose a first shipped subset and define the IAL2-to-IAL1-to-IAL0 lowering and
-validation contract before code or tests change.
+The first implementation subset is now selected in
+[docs/AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md](AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md):
+a source-anchored AXI Valid-Ready channel contract/monitor that proves the
+IAL2-to-IAL1-to-IAL0 chain before the full manager is attempted. Code and
+tests still require a later exact implementation owner.

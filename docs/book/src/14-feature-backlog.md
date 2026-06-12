@@ -2330,6 +2330,13 @@ assertions, environment assumptions, or unsupported residue. It still selects
 no source syntax, parser, lowering, `.isf`, `.fsm`, HDL, assertion text, queue
 default, or ID allocation algorithm.
 
+First implementation subset selection:
+[AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION](../../AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md)
+selects a source-anchored AXI Valid-Ready channel contract/monitor as the
+first safe AXI-derived IAL2 implementation subset. It is intentionally not the
+full AXI manager; it must first prove reviewable `IAL2 -> IAL1/.isf ->
+IAL0/.fsm -> HDL` lowering, source-anchor reporting, and explicit residue.
+
 User-facing AXI manager brainstorm:
 [AXI_MANAGER_USER_API_BRAINSTORM](../../AXI_MANAGER_USER_API_BRAINSTORM.md)
 captures the intended IAL2 surface direction for a future AXI manager. Easy
@@ -2341,9 +2348,9 @@ overrides while preserving manager enforcement. Raw channel access should
 normally be supervised by the same AXI rule engine, with any unsafe bypass
 treated as verification-only and unable to claim guaranteed AXI correctness.
 
-The next prerequisite is still not implementation by default; it is an exact
-implementation-selection leaf that chooses one bounded shipped subset and its
-IAL2-to-IAL1-to-IAL0 lowering and validation contract.
+The next prerequisite is a later exact implementation leaf for that selected
+Valid-Ready channel contract/monitor subset. It must still choose final syntax,
+lowering code, tests, reports, and mdBook examples before any behavior ships.
 
 PDF extraction workflow:
 [PDF_EXTRACTION_WORKFLOW](../../PDF_EXTRACTION_WORKFLOW.md)

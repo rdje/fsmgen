@@ -86,6 +86,7 @@ first.
 | `AXI-ID-ORDERING-RULE-EVIDENCE-PROBE` | `done` | IAL2 horizon exploration | complete (`.1`; recorded the first AXI ID/order/concurrency source-anchor evidence inventory, with no parser/lowering/HDL implementation selected) | [docs/tasks/AXI-ID-ORDERING-RULE-EVIDENCE-PROBE.md](docs/tasks/AXI-ID-ORDERING-RULE-EVIDENCE-PROBE.md) |
 | `AXI-MANAGER-RULE-MATRIX-DESIGN-PROBE` | `done` | IAL2 horizon exploration | complete (`.1`; classified captured AXI evidence into a first future manager rule matrix, with no implementation selected) | [docs/tasks/AXI-MANAGER-RULE-MATRIX-DESIGN-PROBE.md](docs/tasks/AXI-MANAGER-RULE-MATRIX-DESIGN-PROBE.md) |
 | `PDF-EXTRACTION-WORKFLOW-CAPTURE` | `done` | documentation / workflow portability | complete (`.1`; wrote and tracked the portable PDF extraction workflow, including future flow-update policy) | [docs/tasks/PDF-EXTRACTION-WORKFLOW-CAPTURE.md](docs/tasks/PDF-EXTRACTION-WORKFLOW-CAPTURE.md) |
+| `AXI-IAL2-FIRST-IMPLEMENTATION-SUBSET-SELECTION` | `done` | IAL2 horizon exploration | complete (`.1`; selected the AXI Valid-Ready channel contract/monitor as the first AXI-derived IAL2 implementation subset and pre-code contract) | [docs/tasks/AXI-IAL2-FIRST-IMPLEMENTATION-SUBSET-SELECTION.md](docs/tasks/AXI-IAL2-FIRST-IMPLEMENTATION-SUBSET-SELECTION.md) |
 
 ## Proposed Task Trees
 
