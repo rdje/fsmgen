@@ -109,8 +109,17 @@ FSM
         ],
         'structural_rtl_ir projects the direct output helper and generated enable declaration-only nets',
     );
+    is_deeply(
+        $structural_rtl_ir->{auxiliary_assignments},
+        [
+            '  assign IDLE_en = current_state == IDLE;',
+            q{  assign IDLE_out_in_en = IDLE_en & 1'b1;  // OUT <- IN},
+            '  assign out_in_en = IDLE_out_in_en;',
+        ],
+        'structural_rtl_ir preserves direct generated enable assignment lines',
+    );
     is($structural_rtl_ir->{instance_count}, 0, 'bounded direct structural_rtl_ir keeps instance count empty at this slice');
-    is($structural_rtl_ir->{auxiliary_assignment_count}, 0, 'bounded direct structural_rtl_ir keeps auxiliary assignment count empty at this slice');
+    is($structural_rtl_ir->{auxiliary_assignment_count}, 3, 'bounded direct structural_rtl_ir reports direct enable assignment lines');
 };
 
 done_testing();

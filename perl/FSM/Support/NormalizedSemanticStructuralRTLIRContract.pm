@@ -85,7 +85,7 @@ sub build_normalized_semantic_structural_rtl_ir_contract {
             'The bounded public promise covers the current structural-RTL summary shared by direct roots and composition tops.',
             'The port entry key families describe the current `ports[]` entry schema shared by direct roots and composition tops.',
             'The net entry key family describes the current `nets[]` entry schema emitted by composition tops and by direct roots for declaration-only storage/helper nets plus generated enable wires projected from already-prepared direct backend state.',
-            'Direct-root structural nets claim only declaration-only storage/helper entries and generated enable-wire entries in this bounded slice; they do not claim assignment connectivity, and those direct entries use a null source and an empty targets array.',
+            'Direct-root structural nets claim only declaration-only storage/helper entries and generated enable-wire entries in this bounded slice; those direct entries use a null source and an empty targets array.',
             'The declared/resolved link entry key families describe the current `declared_links[]` and `resolved_links[]` entry schema emitted by composition tops.',
             'The instance entry key family describes the current shallow `instances[]` entry schema emitted by composition tops without freezing nested instance binding arrays.',
             'The instance interface-port entry key family describes the current nested `instances[].interface_ports[]` entry schema emitted by composition tops.',
@@ -94,7 +94,7 @@ sub build_normalized_semantic_structural_rtl_ir_contract {
             'The instance parameter-override value-metadata extension key family describes optional resolved type, packed-width, and matched declaration-default metadata on parameter overrides where the value resolver and child/interface declaration validation provide it.',
             'The instance port-binding entry key family describes the current nested `instances[].port_bindings[]` core entry schema emitted by composition tops.',
             'The instance port-binding typed-extension key family describes optional `connection_type_spec` metadata on typed structural instance bindings.',
-            'The auxiliary-assignment entry value-kind family describes the current `auxiliary_assignments[]` scalar string entries emitted by composition tops without parsing assignment text into unstable lhs/rhs records.',
+            'The auxiliary-assignment entry value-kind family describes the current `auxiliary_assignments[]` scalar string entries emitted by composition tops and by direct roots for already-rendered generated enable assignment lines, without parsing assignment text into unstable lhs/rhs records.',
             'Use the grouped presence_key_family_map to discover the bounded structural-RTL shell summary and collection key families without collecting those key-family lists separately.',
         ],
     };

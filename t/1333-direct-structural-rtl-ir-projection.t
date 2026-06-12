@@ -124,19 +124,25 @@ FSM
     like($result->{hdl_code}, qr/\bassign\s+idle_en\s+=\s+current_state\s+==\s+IDLE;/, 'generated HDL emits the top-level state enable wire assignment');
     like($result->{hdl_code}, qr/\breg\s+\[7:0\]\s+data_out_q;/, 'generated HDL declares the data_out_q helper net');
     like($result->{hdl_code}, qr/\breg\s+ready_q;/, 'generated HDL declares the ready_q helper net');
+    is_deeply(
+        $structural->{auxiliary_assignments},
+        [
+            '  assign idle_en = current_state == IDLE;',
+            '  assign idle_data_out_payload_en = idle_en & request;  // data_out <- payload',
+            '  assign idle_ready_1_en = idle_en & request;  // ready <- 1',
+            '  assign data_out_payload_en = idle_data_out_payload_en;',
+            '  assign ready_1_en = idle_ready_1_en;',
+        ],
+        'direct structural_rtl_ir projects generated enable assignment lines as scalar auxiliary assignments',
+    );
     is_deeply($structural->{instances}, [], 'direct structural_rtl_ir does not claim direct instances yet');
     is_deeply($structural->{declared_links}, [], 'direct structural_rtl_ir does not claim direct declared links yet');
     is_deeply($structural->{resolved_links}, [], 'direct structural_rtl_ir does not claim direct resolved links yet');
-    is_deeply(
-        $structural->{auxiliary_assignments},
-        [],
-        'direct structural_rtl_ir does not claim direct auxiliary assignments yet',
-    );
     is($structural->{net_count}, 7, 'direct structural_rtl_ir net_count matches helper declarations plus state and assignment enable wires');
     is($structural->{instance_count}, 0, 'direct structural_rtl_ir instance_count remains zero');
     is($structural->{declared_link_count}, 0, 'direct structural_rtl_ir declared_link_count remains zero');
     is($structural->{resolved_link_count}, 0, 'direct structural_rtl_ir resolved_link_count remains zero');
-    is($structural->{auxiliary_assignment_count}, 0, 'direct structural_rtl_ir auxiliary_assignment_count remains zero');
+    is($structural->{auxiliary_assignment_count}, 5, 'direct structural_rtl_ir auxiliary_assignment_count matches generated enable assignment lines');
 };
 
 subtest 'direct structural_rtl_ir projects typed internal storage declaration nets' => sub {
@@ -269,10 +275,24 @@ FSM
         'direct structural_rtl_ir preserves typed metadata on helper nets',
     );
     is($structural->{net_count}, 11, 'direct structural_rtl_ir net_count matches internal storage/helper declarations plus state and assignment enable wires');
+    is_deeply(
+        $structural->{auxiliary_assignments},
+        [
+            '  assign idle_en = current_state == IDLE;',
+            '  assign run_en = current_state == RUN;',
+            q{  assign idle_out_in_en = idle_en & 1'b1;  // OUT <- IN},
+            q{  assign idle_next_state_run_en = idle_en & 1'b1;  // next_state <- RUN},
+            q{  assign run_flag_1_en = run_en & 1'b1;  // FLAG <- 1},
+            '  assign flag_1_en = run_flag_1_en;',
+            '  assign out_in_en = idle_out_in_en;',
+            '  assign next_state_run_en = idle_next_state_run_en;',
+        ],
+        'direct structural_rtl_ir projects typed fixture generated enable assignments',
+    );
+    is($structural->{auxiliary_assignment_count}, 8, 'direct structural_rtl_ir counts typed fixture enable assignment lines');
     is_deeply($structural->{instances}, [], 'direct structural_rtl_ir still does not claim direct instances');
     is_deeply($structural->{declared_links}, [], 'direct structural_rtl_ir still does not claim direct declared links');
     is_deeply($structural->{resolved_links}, [], 'direct structural_rtl_ir still does not claim direct resolved links');
-    is_deeply($structural->{auxiliary_assignments}, [], 'direct structural_rtl_ir still does not claim direct assignments');
     like($result->{hdl_code}, qr/\blogic\s+signed\s+\[7:0\]\s+OUT;/, 'generated HDL declares the typed internal storage net');
     like($result->{hdl_code}, qr/\blogic\s+signed\s+\[7:0\]\s+OUT_q;/, 'generated HDL declares the typed helper net');
 };
@@ -381,9 +401,17 @@ FSM
     like($result->{hdl_code}, qr/\bassign\s+watch_en\s+=\s+A;/, 'generated HDL emits the standalone-DT enable wire assignment');
     is_deeply(
         $structural->{auxiliary_assignments},
-        [],
-        'direct structural_rtl_ir still does not claim assignment connectivity',
+        [
+            '  assign idle_en = (current_state == IDLE) | EXTRA;',
+            '  assign watch_en = A;',
+            q{  assign watch_watch_1_en = watch_en & 1'b1;  // WATCH <- 1},
+            '  assign idle_out1_1_en = idle_en & A;  // OUT1 <- 1',
+            '  assign out1_1_en = idle_out1_1_en;',
+            '  assign watch_1_en = watch_watch_1_en;',
+        ],
+        'direct structural_rtl_ir projects state, standalone-DT, DT-specific, and LHS-level enable assignments',
     );
+    is($structural->{auxiliary_assignment_count}, 6, 'direct structural_rtl_ir counts the DT enable assignment lines');
 };
 
 done_testing();

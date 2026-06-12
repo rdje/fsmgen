@@ -10,10 +10,10 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `HEAD` — `R11-DIRECT-STRUCTURAL-WEN-EN-NETS.1: project direct wen/en nets`.
-- active_work_unit: `R11-DIRECT-STRUCTURAL-AUX-ASSIGNMENTS.2`; next action is to project already-rendered direct enable assignment lines into direct `StructuralRTLIR.auxiliary_assignments[]` without changing HDL emission.
-- recently_done: `R11-DIRECT-STRUCTURAL-AUX-ASSIGNMENTS.1`; `R11-DIRECT-STRUCTURAL-WEN-EN-NETS.1`; `NORMALIZED-SEMANTIC-PROTOCOL-BUNDLE-CONTRACT-DRIFT.1`; `R11-DIRECT-BACKEND-COORDINATION-FRONTIER.2`; `R11-DIRECT-BACKEND-COORDINATION-FRONTIER.1`; `BIN-FSMGEN-IMPORT-TREE-JUN12-REFRESH.1`; `TASK-TREE-HYPHENATED-STATUS-DRIFT-REPAIR.1`; `TASK-TREE-STALE-STATUS-DRIFT-REPAIR.1`. Older completed slices are in the task tree and git history.
-- in_flight_uncommitted: task-tree selector docs for `R11-DIRECT-STRUCTURAL-AUX-ASSIGNMENTS.1`; unrelated untracked `fx/` intentionally left alone.
+- latest_commit: `HEAD` — `R11-DIRECT-STRUCTURAL-AUX-ASSIGNMENTS.2: project direct enable auxiliary assignments`.
+- active_work_unit: none; next action is to pick the next task-tree-owned PNT slice from current evidence before any further source/test/config change.
+- recently_done: `R11-DIRECT-STRUCTURAL-AUX-ASSIGNMENTS.2`; `R11-DIRECT-STRUCTURAL-AUX-ASSIGNMENTS.1`; `R11-DIRECT-STRUCTURAL-WEN-EN-NETS.1`; `NORMALIZED-SEMANTIC-PROTOCOL-BUNDLE-CONTRACT-DRIFT.1`; `R11-DIRECT-BACKEND-COORDINATION-FRONTIER.2`; `R11-DIRECT-BACKEND-COORDINATION-FRONTIER.1`; `BIN-FSMGEN-IMPORT-TREE-JUN12-REFRESH.1`; `TASK-TREE-HYPHENATED-STATUS-DRIFT-REPAIR.1`. Older completed slices are in the task tree and git history.
+- in_flight_uncommitted: none; unrelated untracked `fx/` intentionally left alone.
 - blockers: none.
 
 ## Notes

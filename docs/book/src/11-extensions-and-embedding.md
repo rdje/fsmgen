@@ -2197,8 +2197,10 @@ internal storage/helper nets projected from the backend internal declaration
 plan plus generated enable wires projected from the already-prepared direct
 backend enable registries and assignment analysis. These entries preserve
 width, signedness, state-model, and declared-type metadata where available.
-They intentionally do not include direct instances, links, auxiliary
-assignments, or assignment connectivity.
+`structural_rtl_ir.auxiliary_assignments[]` now includes the already-rendered
+generated enable assignment lines as scalar strings. Direct instances, links,
+parsed assignment records, and direct net source/target connectivity remain
+outside the direct-root structural projection.
 
 That same owner now also publishes a grouped `presence_key_family_map` so
 embedders can discover the bounded structural-RTL shell summary and

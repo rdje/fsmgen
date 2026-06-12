@@ -29,6 +29,7 @@ subtest 'stateful facade reuse returns fresh direct structural_rtl_ir containers
     $first->{structural_rtl_ir}{module_name} = 'mutated_first_structural_rtl_ir';
     $first->{structural_rtl_ir}{ports}[0]{name} = 'mutated_first_output';
     push @{$first->{structural_rtl_ir}{nets}}, { name => 'mutated_first_net' };
+    push @{$first->{structural_rtl_ir}{auxiliary_assignments}}, '  assign mutated_first_enable = 1;';
 
     my $second = $pipeline->generate_hdl_from_file($fsm_path);
     is(
@@ -74,6 +75,15 @@ subtest 'stateful facade reuse returns fresh direct structural_rtl_ir containers
             },
         ],
         'later generation on the same facade does not inherit caller mutation of direct structural_rtl_ir declaration/enable nets',
+    );
+    is_deeply(
+        $second->{structural_rtl_ir}{auxiliary_assignments},
+        [
+            '  assign idle_en = current_state == IDLE;',
+            q{  assign idle_out_1_en = idle_en & 1'b1;  // OUT <- 1},
+            '  assign out_1_en = idle_out_1_en;',
+        ],
+        'later generation on the same facade does not inherit caller mutation of direct structural_rtl_ir enable assignment lines',
     );
 };
 

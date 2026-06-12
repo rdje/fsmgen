@@ -301,8 +301,10 @@ For direct roots, `structural_rtl_ir.nets[]` includes declaration-only
 internal storage/helper nets from the backend declaration plan, preserving
 width and typed metadata where available, plus generated enable wires from the
 already-prepared direct backend enable registries and assignment analysis.
-Direct assignment connectivity remains outside that direct structural
-projection.
+`structural_rtl_ir.auxiliary_assignments[]` includes the already-rendered
+generated enable assignment lines as scalar strings. Parsed direct assignment
+records and direct net source/target connectivity remain outside that direct
+structural projection.
 
 `module_info` is a compatibility/result surface. It mirrors useful forward-IR,
 analysis, and planning facts for existing callers, but it is not a second

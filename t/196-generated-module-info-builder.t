@@ -81,6 +81,7 @@ FSM
         module_info => $module_info,
         fsm_module => $fsm_module,
         target_language => 'systemverilog',
+        hdl_generator => $backend_result->{hdl_generator},
     );
     $module_info->{structural_rtl_ir} = $structural_rtl_ir->as_hashref;
 

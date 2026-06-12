@@ -425,7 +425,7 @@ First shipped `R11` slice now in tree:
   - and the active composition-top emitter now walks that structural layer instead of re-reading only `FSM::Composition::Plan` state directly during top-module dumping.
 - The next structural widening step is now also shipped:
   - direct generated `?fsm` / `?dt` results now expose a bounded structural module-interface slice through `structural_rtl_ir`,
-  - that direct-root structural slice currently covers explicit module ports plus empty nets/instances/auxiliary structure,
+  - that direct-root structural slice currently covers explicit module ports, declaration-only storage/helper nets, generated enable-wire nets, and generated enable assignment-line auxiliary assignments while direct instances/links and parsed assignment connectivity remain future exact work,
   - and realized generated-child export surfaces now preserve that same child `structural_rtl_ir` beside `intent_hir` and `lowered_rtl_ir`.
 - The next structural-consumption step is now also shipped:
   - realized generated-child interface planning now consumes `structural_rtl_ir` as its first boundary source of truth instead of rebuilding child ports only from signal analysis,
@@ -1167,9 +1167,9 @@ The first honest `R11` slices are now:
   now active too: bounded direct-root `StructuralRTLIR` construction now also
   lives in `FSM::IR::StructuralRTLIRBuilder`, so `HDLGenerator` no longer owns
   direct-root module-boundary, implicit-system-port, declaration-only
-  storage/helper net, or generated enable-wire structural assembly inline
-  either. Direct assignment connectivity remains a later exact direct
-  StructuralRTLIR owner; the next honest seam is now the remaining direct-path
+  storage/helper net, generated enable-wire structural assembly, or generated
+  enable assignment-line projection inline either. Parsed direct assignment
+  connectivity remains a later exact direct StructuralRTLIR owner; the next honest seam is now the remaining direct-path
   backend residue or a broader facade split rather than one more direct
   structural helper.
 - Forward-IR note: that next direct-path backend-owner split is now active

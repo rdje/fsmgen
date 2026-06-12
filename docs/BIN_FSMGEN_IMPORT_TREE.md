@@ -858,8 +858,9 @@ Current layer meaning:
 - `StructuralRTLIRBuilder`: bounded structural-IR construction for both
   direct-root generated modules and composition tops, from either
   generated-module analysis or an already-built composition plan; direct roots
-  now include declaration-only storage/helper nets plus generated enable wires
-  in that structural summary
+  now include declaration-only storage/helper nets, generated enable wires, and
+  generated enable assignment-line auxiliary assignments in that structural
+  summary
 - `ConnectionExpr`: typed actual-connection AST and binding-summary/query helpers
 
 IR audit checkpoint:
@@ -897,9 +898,9 @@ IR audit checkpoint:
   guard rather than an emission reroute.
 - `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.2` selected that guard: focused
   regression coverage for direct `structural_rtl_ir` identity/source/target
-  and port projection parity, while keeping direct nets, instances, and
-  auxiliary assignments empty until a later behavior-bearing slice widens the
-  model.
+  and port projection parity, before later R11 slices widened direct nets and
+  generated enable assignment-line auxiliary assignments without rerouting
+  direct HDL emission.
 - `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.3` added the guard in
   [t/1333-direct-structural-rtl-ir-projection.t](../t/1333-direct-structural-rtl-ir-projection.t).
   Direct HDL emission still goes through `GeneratedModuleEmitter ->
@@ -1168,7 +1169,8 @@ It behaves like a hook system, not a competing architecture.
   inline in `HDLGenerator`.
 - `StructuralRTLIRBuilder` now also owns the direct-root structural summary
   rather than leaving module-boundary, implicit-system-port, declaration-only
-  storage/helper net, and generated enable-wire structural
+  storage/helper net, generated enable-wire structural, and generated
+  enable-assignment-line auxiliary
   assembly inline in `HDLGenerator`.
 - `GeneratedModuleEmitter` now also owns the bounded direct generated-module
   backend family rather than leaving backend-method selection, direct HDL

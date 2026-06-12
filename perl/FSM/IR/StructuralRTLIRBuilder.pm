@@ -109,7 +109,9 @@ sub build_from_generated_module_info ($class, %args) {
             hdl_generator => $hdl_generator,
         ),
         instances => [],
-        auxiliary_assignments => [],
+        auxiliary_assignments => _direct_structural_auxiliary_assignments(
+            hdl_generator => $hdl_generator,
+        ),
     );
 }
 
@@ -361,6 +363,66 @@ sub _direct_assignment_enable_nets (%args) {
     }
 
     return \@entries;
+}
+
+sub _direct_structural_auxiliary_assignments (%args) {
+    my $hdl_generator = $args{hdl_generator};
+    return [] unless ref($hdl_generator);
+
+    my $enable_support = $hdl_generator->{enable_graph_enable_support};
+    return [] unless ref($enable_support)
+        && $enable_support->can('generate_enable_conditions')
+        && $enable_support->can('generate_dt_enables_from_analysis')
+        && $enable_support->can('generate_lhs_enables_from_analysis');
+
+    my @rendered_blocks = _with_preserved_referenced_intermediate_signals(
+        $hdl_generator,
+        sub {
+            return (
+                $enable_support->generate_enable_conditions(),
+                $enable_support->generate_dt_enables_from_analysis(),
+                $enable_support->generate_lhs_enables_from_analysis(),
+            );
+        },
+    );
+
+    return _direct_assignment_lines_from_blocks(@rendered_blocks);
+}
+
+sub _with_preserved_referenced_intermediate_signals ($hdl_generator, $callback) {
+    my $had_original = exists $hdl_generator->{referenced_intermediate_signals};
+    my $original = _clone($hdl_generator->{referenced_intermediate_signals});
+    my @result;
+
+    my $ok = eval {
+        @result = $callback->();
+        1;
+    };
+    my $error = $@;
+
+    if ($had_original) {
+        $hdl_generator->{referenced_intermediate_signals} = $original;
+    } else {
+        delete $hdl_generator->{referenced_intermediate_signals};
+    }
+
+    die $error unless $ok;
+    return @result;
+}
+
+sub _direct_assignment_lines_from_blocks (@blocks) {
+    my @assignments;
+
+    for my $block (@blocks) {
+        next unless defined($block) && !ref($block);
+
+        for my $line (split /\n/, $block) {
+            next unless $line =~ /\A\s*assign\s+\S+\s*=/;
+            push @assignments, $line;
+        }
+    }
+
+    return \@assignments;
 }
 
 sub _direct_one_bit_enable_net ($name) {
