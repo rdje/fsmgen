@@ -531,6 +531,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/AXI_IAL2_VALID_READY_READINESS_AUDIT.md` — code/test/docs/report owner map for a future AXI Valid-Ready IAL2 implementation slice.
 - `docs/AXI_IAL2_VALID_READY_GENERATOR_FIRST_SLICE.md` — first in-process AXI Valid-Ready IAL2 generator slice and report surface.
 - `docs/IAL2_PPIF_PARSER_CLI_FIRST_SLICE.md` — first public `.ppif` parser/CLI slice for one AXI Valid-Ready source object.
+- `ppif/axi_aw_valid_ready.ppif` — first checked-in runnable `.ppif` sample for the public IAL2 Valid-Ready CLI surface.
 - `docs/PDF_EXTRACTION_WORKFLOW.md` — portable workflow for task-owned source-anchored PDF text, table, diagram, and image extraction.
 - `docs/decisions/0014-protocol-platform-intent-surface-and-layered-lowering.md` — generic IAL2 file-surface candidates and layered lowering decision.
 - `docs/decisions/0015-ial2-profile-extensions-are-vocabulary-aliases.md` — IAL2 protocol-profile extension refinement.
@@ -632,6 +633,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 
 ### Input, tests, and support
 - `fsm/` — sample/input `.fsm` files.
+- `ppif/` — sample/input `.ppif` files for shipped IAL2 public surfaces.
 - `t/` — regression and behavior tests.
 - `docs/` — user and technical docs.
 - `generated/` — generated parser/output artifacts.
@@ -646,6 +648,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 ./bin/fsmgen --verify-hdl --output /tmp/lte_dif_pmaster.sv fsm/lte_dif_pmaster.fsm
 ./bin/fsmgen --strict isf/apb_requester.isf
 ./bin/fsmgen --emit-schedule-json isf/i2c_master.isf
+./bin/fsmgen --emit-schedule-json ppif/axi_aw_valid_ready.ppif
 ```
 
 ## Documentation quick preview

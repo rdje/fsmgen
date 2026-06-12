@@ -13,7 +13,10 @@ use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 use FSM::Adapter::IAL2::PPIF;
 
 subtest 'PPIF adapter parses the selected Valid-Ready source shape' => sub {
-    my $result = FSM::Adapter::IAL2::PPIF->new()->parse_source(sample_ppif(), 'inline.ppif');
+    my $sample_path = sample_ppif_path();
+    ok(-f $sample_path, 'tracked runnable PPIF sample exists');
+
+    my $result = FSM::Adapter::IAL2::PPIF->new()->parse_source(sample_ppif(), $sample_path);
 
     is($result->{layer}, 'IAL2', 'adapter returns an IAL2 result');
     is($result->{generated_ial1}{name}, 'axi_aw_valid_ready_monitor.isf', 'adapter exposes generated IAL1 artifact');
@@ -60,9 +63,8 @@ subtest 'PPIF adapter diagnostics fail closed before generation claims' => sub {
 };
 
 subtest 'CLI emits IAL2 report JSON for .ppif without writing HDL' => sub {
-    my $path = write_ppif(tempdir(CLEANUP => 1));
     my ($success, undef, undef, $stdout_buf, $stderr_buf) = run(
-        command => ['./bin/fsmgen', '--emit-schedule-json', $path],
+        command => ['./bin/fsmgen', '--emit-schedule-json', sample_ppif_path()],
     );
 
     ok($success, '--emit-schedule-json succeeds for .ppif');
@@ -76,12 +78,11 @@ subtest 'CLI emits IAL2 report JSON for .ppif without writing HDL' => sub {
 
 subtest 'CLI --outdir materializes generated .isf, .fsm, and HDL for .ppif' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
-    my $path = write_ppif($tempdir);
     my $outdir = File::Spec->catdir($tempdir, 'out');
     my $hdl = File::Spec->catfile($tempdir, 'axi_aw.sv');
 
     my ($success, undef, undef, undef, $stderr_buf) = run(
-        command => ['./bin/fsmgen', '--quiet', '--outdir', $outdir, '--output', $hdl, $path],
+        command => ['./bin/fsmgen', '--quiet', '--outdir', $outdir, '--output', $hdl, sample_ppif_path()],
     );
 
     ok($success, 'CLI generation succeeds for .ppif');
@@ -95,9 +96,8 @@ subtest 'CLI --outdir materializes generated .isf, .fsm, and HDL for .ppif' => s
 
 subtest 'CLI check JSON accepts .ppif and keeps unsupported aliases rejected' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
-    my $ppif_path = write_ppif($tempdir);
     my ($success, undef, undef, $stdout_buf, $stderr_buf) = run(
-        command => ['./bin/fsmgen', '--strict', '--check', '--json', $ppif_path],
+        command => ['./bin/fsmgen', '--strict', '--check', '--json', sample_ppif_path()],
     );
     ok($success, '--check --json succeeds for .ppif');
     is(join('', @{$stderr_buf || []}), '', '--check --json keeps stderr clean for .ppif');
@@ -114,31 +114,12 @@ subtest 'CLI check JSON accepts .ppif and keeps unsupported aliases rejected' =>
 
 done_testing();
 
-sub sample_ppif {
-    return <<'PPIF';
-(protocol-platform-intent axi_aw_valid_ready
-  (profile axi4)
-  (source
-    (object axi-valid-ready-aw)
-    (anchor (document IHI0022_L_2025-08) (section A3.2.1) (page A3-40)))
-  (valid-ready-channel axi_aw
-    (channel AW)
-    (role manager-to-subordinate)
-    (clock clk)
-    (reset (rst_n active_low async))
-    (valid awvalid)
-    (ready awready)
-    (payload
-      (awaddr width 32)
-      (awlen width 8))))
-PPIF
+sub sample_ppif_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_aw_valid_ready.ppif');
 }
 
-sub write_ppif {
-    my ($dir) = @_;
-    my $path = File::Spec->catfile($dir, 'sample.ppif');
-    write_file($path, sample_ppif());
-    return $path;
+sub sample_ppif {
+    return slurp(sample_ppif_path());
 }
 
 sub write_file {

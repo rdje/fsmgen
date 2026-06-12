@@ -8,10 +8,13 @@ Task tree:
 Implementation:
 `FSM::Adapter::IAL2::PPIF` plus the `.ppif` branch in `bin/fsmgen`.
 
+Runnable sample:
+[`ppif/axi_aw_valid_ready.ppif`](../ppif/axi_aw_valid_ready.ppif).
+
 ## Scope
 
 This slice makes `.ppif` the first public file-backed IAL2 surface. It supports
-one source object per file:
+one source object per file. The checked-in sample above uses this exact shape:
 
 ```text
 (protocol-platform-intent axi_aw_valid_ready
@@ -47,13 +50,13 @@ Direct `.ppif` to `.fsm` lowering is not exposed.
 Emit the IAL2 source-anchor/residue report without writing HDL:
 
 ```bash
-./bin/fsmgen --emit-schedule-json path/to/axi_aw.ppif
+./bin/fsmgen --emit-schedule-json ppif/axi_aw_valid_ready.ppif
 ```
 
 Materialize the generated review artifacts and HDL:
 
 ```bash
-./bin/fsmgen --outdir generated path/to/axi_aw.ppif
+./bin/fsmgen --outdir generated ppif/axi_aw_valid_ready.ppif
 ```
 
 That writes the generated `.isf` and generated `.fsm` files into `generated/`,
@@ -62,7 +65,7 @@ then feeds the selected generated `.fsm` into the existing HDL path.
 Run check mode with machine-readable diagnostics:
 
 ```bash
-./bin/fsmgen --strict --check --json path/to/axi_aw.ppif
+./bin/fsmgen --strict --check --json ppif/axi_aw_valid_ready.ppif
 ```
 
 Malformed `.ppif` source fails closed before claiming generated behavior. The
@@ -109,6 +112,8 @@ Focused coverage lives in
 [t/1436-ial2-ppif-parser-cli.t](../t/1436-ial2-ppif-parser-cli.t). It proves:
 
 - the adapter parses the decision-0016 Valid-Ready source shape,
+- the checked-in `ppif/axi_aw_valid_ready.ppif` sample is the canonical
+  runnable first-slice example,
 - unsupported or malformed PPIF source fails closed,
 - CLI `--emit-schedule-json` emits the IAL2 report,
 - CLI `--outdir` writes generated `.isf`, generated `.fsm`, and HDL,

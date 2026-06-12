@@ -7,10 +7,11 @@ answers:
   - "does .ppif emit generated .isf before .fsm?"
   - "are .pif .ppi .axi supported?"
   - "what PPIF syntax is supported first?"
+  - "where is the first runnable .ppif sample?"
 date: 2026-06-12
 status: current
 tags: [ial2, ppif, parser, cli, valid-ready]
-evidence: docs/IAL2_PPIF_PARSER_CLI_FIRST_SLICE.md; perl/FSM/Adapter/IAL2/PPIF.pm; bin/fsmgen; t/1436-ial2-ppif-parser-cli.t; docs/tasks/IAL2-PPIF-PARSER-CLI-FIRST-SLICE.md
+evidence: docs/IAL2_PPIF_PARSER_CLI_FIRST_SLICE.md; ppif/axi_aw_valid_ready.ppif; perl/FSM/Adapter/IAL2/PPIF.pm; bin/fsmgen; t/1436-ial2-ppif-parser-cli.t; docs/tasks/IAL2-PPIF-PARSER-CLI-FIRST-SLICE.md
 reverify: prove -Iperl t/1436-ial2-ppif-parser-cli.t t/1435-axi-ial2-valid-ready-generator.t
 ---
 
@@ -24,6 +25,8 @@ IAL2 Valid-Ready contract, emits generated `.isf`, lowers that generated `.isf`
 through the existing IAL1 scheduler to generated `.fsm`, and then uses the
 normal HDL path. `--outdir` materializes both generated review artifacts.
 `--emit-schedule-json` emits the IAL2 source-anchor/residue report.
+
+The first runnable checked-in sample is `ppif/axi_aw_valid_ready.ppif`.
 
 Unsupported aliases remain unsupported in this first slice. `.pif`, `.ppi`,
 `.axi`, protocol-specific aliases, multiple PPIF objects, and full AXI manager

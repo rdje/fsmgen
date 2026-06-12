@@ -3,7 +3,7 @@
 > **AUTO-GENERATED — DO NOT EDIT.** Regenerate with `knowledge-map/scripts/gen_knowledge_map.sh`.
 > Source of truth = YAML front-matter in: `docs/knowledge docs/decisions`. Edit the fact files, never this map.
 > A fact is any `.md` whose front-matter has a non-empty `answers:` list.
-> **63** facts · **466** question keys.
+> **63** facts · **467** question keys.
 
 ## Questions → fact
 
@@ -448,6 +448,7 @@
 - "where is the ISF verification / assert / assume / cover surface documented?" -> [isf-verification-book-map](docs/knowledge/isf-verification-book-map.md) · 2026-06-05 · reverify: `grep -rln "assert\|monitor\|=>\|sampled-value" docs/book/src/13d-control-flow.md docs/book/src/13k-isf-feature-support-matrix.md`
 - "where is the clean hook for ISF loop early-exit?" -> [loop-early-exit-target-hook](docs/knowledge/loop-early-exit-target-hook.md) · 2026-06-03 · reverify: `grep -n "loop_exit_target" perl/FSM/Scheduler/ISF/LoweringIR.pm`
 - "where is the first AXI IAL2 implementation selection documented?" -> [axi-ial2-first-implementation-subset](docs/knowledge/axi-ial2-first-implementation-subset.md) · 2026-06-12 · reverify: `rg -n "Selected First Subset|Required IAL1 Artifact Shape|Required IAL0 Artifact Shape|Explicit Residue" docs/AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md`
+- "where is the first runnable .ppif sample?" -> [ial2-ppif-parser-cli-first-slice](docs/knowledge/ial2-ppif-parser-cli-first-slice.md) · 2026-06-12 · reverify: `prove -Iperl t/1436-ial2-ppif-parser-cli.t t/1435-axi-ial2-valid-ready-generator.t`
 - "where is the verilator-simulable vs formal-only (ifndef SYNTHESIS / ifdef FORMAL) split decided?" -> [isf-property-grammar-location](docs/knowledge/isf-property-grammar-location.md) · 2026-06-05 · reverify: `grep -n "sub parse_check_property" perl/FSM/Adapter/FSMGenFull/Parser.pm`
 - "which ISF fixture ships the resolved-child trigger-batch generated top?" -> [isf-atl-trigger-batch-generated-top](docs/knowledge/isf-atl-trigger-batch-generated-top.md) · 2026-06-11 · reverify: `prove -Iperl t/1330-isf-atl-resolved-child-fixture-coverage.t`
 - "which behavior widening consumes multi-pending await_all local-do lifetime proofs?" -> [isf-control-flow-effect-inventory](docs/knowledge/isf-control-flow-effect-inventory.md) · 2026-06-11 · reverify: `prove -Iperl t/1383-isf-loop-and-deeper-repeat-body-spawn.t t/1384-isf-loop-and-deeper-repeat-body-multi-pending-awaitany.t t/1419-isf-control-flow-effect-inventory.t t/1421-isf-control-flow-effect-checks.t t/1422-isf-control-flow-child-plan.t t/1423-isf-control-flow-lifetime-checks.t t/1424-isf-control-flow-domain-binding-effects.t t/1425-isf-control-flow-validator-effect-migration.t t/1426-isf-control-flow-same-domain-validator-effect-migration.t t/1427-isf-control-flow-activation-domain-validator-effect-migration.t t/1428-isf-control-flow-binding-endpoint-validator-effect-migration.t t/1429-isf-control-flow-binding-expression-validator-effect-migration.t t/1430-isf-control-flow-rule-trigger-validator-effect-migration.t t/1431-isf-control-flow-rule-trigger-binding-validator-effect-migration.t t/1432-isf-loop-pending-spawn-local-do-effect-widening.t t/1433-isf-until-pending-spawn-local-do-effect-widening.t t/1434-isf-while-pending-spawn-local-do-awaitany-effect-widening.t`
@@ -632,9 +633,9 @@ _generic_fifo remains an expected failure at the legacy template boundary_
 ### ial2-ppif-parser-cli-first-slice
 _IAL2 .ppif parser and CLI first slice_
 
-- **answers:** is .ppif supported by the CLI? | how do I run a .ppif file? | does .ppif emit generated .isf before .fsm? | are .pif .ppi .axi supported? | what PPIF syntax is supported first?
+- **answers:** is .ppif supported by the CLI? | how do I run a .ppif file? | does .ppif emit generated .isf before .fsm? | are .pif .ppi .axi supported? | what PPIF syntax is supported first? | where is the first runnable .ppif sample?
 - **date:** 2026-06-12 · **status:** current
-- **evidence:** `docs/IAL2_PPIF_PARSER_CLI_FIRST_SLICE.md; perl/FSM/Adapter/IAL2/PPIF.pm; bin/fsmgen; t/1436-ial2-ppif-parser-cli.t; docs/tasks/IAL2-PPIF-PARSER-CLI-FIRST-SLICE.md`
+- **evidence:** `docs/IAL2_PPIF_PARSER_CLI_FIRST_SLICE.md; ppif/axi_aw_valid_ready.ppif; perl/FSM/Adapter/IAL2/PPIF.pm; bin/fsmgen; t/1436-ial2-ppif-parser-cli.t; docs/tasks/IAL2-PPIF-PARSER-CLI-FIRST-SLICE.md`
 - **reverify:** `prove -Iperl t/1436-ial2-ppif-parser-cli.t t/1435-axi-ial2-valid-ready-generator.t`
 - **source:** [`docs/knowledge/ial2-ppif-parser-cli-first-slice.md`](docs/knowledge/ial2-ppif-parser-cli-first-slice.md)
 

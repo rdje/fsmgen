@@ -2407,7 +2407,8 @@ shipped by
 Public `.pif`, `.ppi`, `.axi`, multiple-object `.ppif` files, and full AXI
 manager behavior remain unshipped.
 
-First selected `.ppif` shape:
+First selected `.ppif` shape, checked in as
+`ppif/axi_aw_valid_ready.ppif`:
 
 ```text
 (protocol-platform-intent axi_aw_valid_ready
@@ -2430,9 +2431,9 @@ First selected `.ppif` shape:
 CLI examples for the shipped first public slice:
 
 ```bash
-./bin/fsmgen --emit-schedule-json path/to/axi_aw.ppif
-./bin/fsmgen --outdir generated path/to/axi_aw.ppif
-./bin/fsmgen --strict --check --json path/to/axi_aw.ppif
+./bin/fsmgen --emit-schedule-json ppif/axi_aw_valid_ready.ppif
+./bin/fsmgen --outdir generated ppif/axi_aw_valid_ready.ppif
+./bin/fsmgen --strict --check --json ppif/axi_aw_valid_ready.ppif
 ```
 
 The `.ppif` path always lowers through generated `.isf` before generated
