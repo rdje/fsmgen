@@ -2321,6 +2321,15 @@ one-transaction-at-a-time behavior; concurrency belongs in the manager, backed
 by source-anchored ID allocation, ordering, matching, interleaving, and
 capacity-feedback rules.
 
+Rule-matrix design/probe:
+[AXI_MANAGER_RULE_MATRIX_DESIGN_PROBE](../../AXI_MANAGER_RULE_MATRIX_DESIGN_PROBE.md)
+maps the captured Valid-Ready and ID/order evidence into a first future AXI
+manager rule responsibility matrix. It classifies candidate responsibilities
+as static authoring checks, generated scheduler/scoreboard behavior, runtime
+assertions, environment assumptions, or unsupported residue. It still selects
+no source syntax, parser, lowering, `.isf`, `.fsm`, HDL, assertion text, queue
+default, or ID allocation algorithm.
+
 User-facing AXI manager brainstorm:
 [AXI_MANAGER_USER_API_BRAINSTORM](../../AXI_MANAGER_USER_API_BRAINSTORM.md)
 captures the intended IAL2 surface direction for a future AXI manager. Easy
@@ -2332,9 +2341,9 @@ overrides while preserving manager enforcement. Raw channel access should
 normally be supervised by the same AXI rule engine, with any unsafe bypass
 treated as verification-only and unable to claim guaranteed AXI correctness.
 
-The next prerequisite is not implementation; it is a source-anchored
-rule-matrix design/probe leaf that turns the captured valid/ready and
-ID/order evidence into a bounded future AXI manager rule-engine proposal.
+The next prerequisite is still not implementation by default; it is an exact
+implementation-selection leaf that chooses one bounded shipped subset and its
+IAL2-to-IAL1-to-IAL0 lowering and validation contract.
 
 Protocol/platform surface decision:
 [0014-protocol-platform-intent-surface-and-layered-lowering](../../decisions/0014-protocol-platform-intent-surface-and-layered-lowering.md)

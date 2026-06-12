@@ -115,6 +115,13 @@ rule engine owns ID allocation/validation, per-ID outstanding scoreboards,
 response matching, interleaving policy, and clear capacity or ordering
 feedback.
 
+The first bounded AXI manager rule responsibility matrix is
+[docs/AXI_MANAGER_RULE_MATRIX_DESIGN_PROBE.md](AXI_MANAGER_RULE_MATRIX_DESIGN_PROBE.md).
+It maps the captured Valid-Ready and ID/order evidence to future rule-engine
+responsibility classes: static checks, generated scheduler/scoreboard
+behavior, runtime assertions, environment assumptions, and unsupported
+residue. It remains design/probe evidence only.
+
 The first bounded IAL2 probe should not start with a full AXI manager or an
 interconnect. It should inspect the reusable valid/ready transport contract
 because that is the smallest candidate with real protocol semantics:
@@ -167,9 +174,10 @@ contract, report contract, lowering artifacts, and validation gates are all
 specified first. The completed AXI Valid-Ready evidence inventory is enough to
 justify a later design/probe leaf, but it still does not select IAL2 syntax,
 parser behavior, lowering behavior, generated `.fsm`, HDL, or reusable library
-artifacts. The completed AXI ID/order/concurrency evidence inventory is enough
-to justify a later AXI manager rule-matrix design/probe leaf, but likewise
-does not select IAL2 syntax, lowering, or HDL behavior. Decision
+artifacts. The completed AXI ID/order/concurrency evidence inventory and rule
+matrix are enough to justify a later AXI manager implementation-selection
+leaf, but likewise do not select IAL2 syntax, lowering, or HDL behavior.
+Decision
 [0014](decisions/0014-protocol-platform-intent-surface-and-layered-lowering.md)
 records the protocol/platform-generic IAL2 file-surface direction, the open
 `.pif`/`.ppi`/`.ppif` extension candidates, and the mandatory

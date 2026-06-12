@@ -11,6 +11,9 @@ Source artifact:
 Source SHA-256:
 `20aa5f946df5fa97053689d705959b1ef6a90a88f845fa3b686a53311f680ac1`
 
+Related rule-matrix design/probe:
+[docs/AXI_MANAGER_RULE_MATRIX_DESIGN_PROBE.md](AXI_MANAGER_RULE_MATRIX_DESIGN_PROBE.md).
+
 ## Purpose
 
 This note records the first bounded source-anchor inventory for AXI
@@ -180,6 +183,8 @@ manager owns the low-level ID, ordering, outstanding, interleaving, and
 response-matching obligations.
 
 Easy mode can still expose AXI concurrency if it is backed by the same
-source-anchored rule engine as Power and supervised Raw modes. The next work
-must still be a new exact task-tree leaf before any IAL2 syntax, lowering, or
-HDL behavior is selected.
+source-anchored rule engine as Power and supervised Raw modes. The first rule
+responsibility matrix is now recorded in
+[docs/AXI_MANAGER_RULE_MATRIX_DESIGN_PROBE.md](AXI_MANAGER_RULE_MATRIX_DESIGN_PROBE.md).
+Any IAL2 syntax, lowering, or HDL behavior still requires a later exact
+implementation-selection owner.

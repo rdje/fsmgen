@@ -11,6 +11,9 @@ Related source-anchor inventory:
 Related ID/order evidence inventory:
 [docs/AXI_ID_ORDERING_RULE_EVIDENCE_PROBE.md](AXI_ID_ORDERING_RULE_EVIDENCE_PROBE.md).
 
+Related rule-matrix design/probe:
+[docs/AXI_MANAGER_RULE_MATRIX_DESIGN_PROBE.md](AXI_MANAGER_RULE_MATRIX_DESIGN_PROBE.md).
+
 ## Purpose
 
 This note captures a user-facing IAL2 surface direction for a future AXI
@@ -212,6 +215,13 @@ The rule engine likely needs:
 - generated assertions,
 - and a source-anchor/report contract for defaults, assumptions, and residue.
 
+The first bounded rule responsibility matrix is recorded in
+[docs/AXI_MANAGER_RULE_MATRIX_DESIGN_PROBE.md](AXI_MANAGER_RULE_MATRIX_DESIGN_PROBE.md).
+It classifies the captured Valid-Ready and ID/order evidence into static
+checks, generated scheduler/scoreboard behavior, runtime assertions,
+environment assumptions, and unsupported residue. It is still a design/probe,
+not an implementation.
+
 ## ID/Ordering Evidence Boundary
 
 The first source-anchored ID/order inventory is now recorded in
@@ -252,6 +262,7 @@ overrides, and supervised raw access for advanced cases. The manager should be
 the AXI expert so users do not have to internalize every concurrency and ID
 rule to stay legal.
 
-The next technical prerequisite is no longer the first evidence extraction; it
-is a later exact design/rule-matrix leaf that turns the source anchors into a
-bounded rule-engine proposal. No implementation is selected by this note.
+The next technical prerequisite is no longer the first rule-matrix proposal; it
+is a later exact implementation-selection leaf that chooses a bounded shipped
+subset, source surface, IAL1/IAL0 lowering contract, report contract, and
+focused tests. No implementation is selected by this note.
