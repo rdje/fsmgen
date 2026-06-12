@@ -21,7 +21,8 @@ implementation:
   dependency connectivity; its first input-port generated-enable RHS target
   slice is complete.
 - `R11-DIRECT-STRUCTURAL-OUTPUT-CONSUMERS` owns direct output-drive and
-  always-block consumer connectivity.
+  always-block consumer connectivity; its first direct output-port source
+  summary slice is selected and active.
 - `R11-DIRECT-STRUCTURAL-INSTANCES-LINKS` owns the direct instances/links
   structural contract question.
 - `R11-DIRECT-STRUCTURAL-FULL-HDL-REROUTING` owns broader direct SystemVerilog
@@ -29,6 +30,7 @@ implementation:
 - `R11-DIRECT-STRUCTURAL-VHDL-REROUTING` owns direct VHDL rerouting through
   `StructuralRTLIR`.
 
-The remaining not-yet-implemented owners are proposed, not
-implementation-active. A future PNT slice must activate the relevant selector
-leaf before code, test, source, generated-artifact, or config changes.
+The remaining not-yet-implemented owner trees for instances/links and broader
+rerouting are proposed, not implementation-active. A future PNT slice must
+activate the relevant selector leaf before code, test, source,
+generated-artifact, or config changes.

@@ -4628,17 +4628,19 @@ implementation leaf
 `R11-DIRECT-STRUCTURAL-PORT-DEPENDENCY-CONNECTIVITY.2`
 populates direct input-port generated-enable RHS target connectivity on
 `structural_rtl_ir.ports[]`, while leaving output-port source/driver
-connectivity and HDL emission unchanged. Completed
+connectivity and HDL emission unchanged. Active selector leaf
+`R11-DIRECT-STRUCTURAL-OUTPUT-CONSUMERS.1`
+chose direct output-port source summaries from lowered output-drive families
+as the next implementation slice, while leaving broader always-block body
+consumer modeling and HDL emission unchanged. Completed
 implementation leaf
 `R11-DIRECT-STRUCTURAL-HDL-REROUTING.2`
 reroutes the direct SystemVerilog top state/standalone-DT generated-enable
 condition block through `StructuralRTLIR` assignment records by using explicit
 backend markers that are removed before final HDL is returned. Full direct
-module rerouting, VHDL rerouting, output-drive consumers, and instances/links
-remain deferred under proposed
+module rerouting, VHDL rerouting, and instances/links remain deferred under proposed
 owner trees `R11-DIRECT-STRUCTURAL-FULL-HDL-REROUTING`,
 `R11-DIRECT-STRUCTURAL-VHDL-REROUTING`,
-`R11-DIRECT-STRUCTURAL-OUTPUT-CONSUMERS`, and
 `R11-DIRECT-STRUCTURAL-INSTANCES-LINKS`. Completed
 implementation leaf
 `BACKEND-API-VALIDATION-FRONTIER.131.1` lowers an 8-bit non-signed
