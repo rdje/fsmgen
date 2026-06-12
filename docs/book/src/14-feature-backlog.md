@@ -2309,9 +2309,10 @@ families. Completed selector `.24` chooses AXI generated response-demux
 readiness as the next exact subset. Completed readiness audit `.25` selects a
 bounded write `BID` response-demux public contract selector first, because
 existing transaction `completion` names are authored inputs and must not be
-silently reinterpreted as generated demux signals. The active leaf is `.26`,
-selecting that public contract before parser/report or generated behavior
-changes.
+silently reinterpreted as generated demux signals. Completed selector `.26`
+chooses explicit write-only `(response-demux ...)` syntax. The active leaf is
+`.27`, implementing parser/report metadata and static validation before
+generated demux behavior changes.
 Selected IAL2 slices may include explicit IAL1 or
 IAL0/SystemVerilog prerequisites when those prerequisites are needed for
 clean, reviewable lowering.
@@ -2963,6 +2964,24 @@ IAL1/IAL0/SystemVerilog blocker for a narrow write demux once the contract is
 explicit, but the source must first define response accepted event naming,
 transaction completion ownership, generated demux signal naming, diagnostics,
 and report shape.
+
+Write response-demux contract selection:
+[AXI_IAL2_MANAGER_WRITE_RESPONSE_DEMUX_CONTRACT_SELECTION](../../AXI_IAL2_MANAGER_WRITE_RESPONSE_DEMUX_CONTRACT_SELECTION.md)
+selects the first public response-demux syntax:
+
+```text
+(response-demux
+  (write
+    (response-event axi0_write_complete)
+    (transaction-completion generated)))
+```
+
+This first contract is write-only. `response-event` names the raw write
+response accepted event and must equal top-level `write-complete` in the first
+bounded slice. `transaction-completion generated` means write transaction
+`completion` names become generated demux signals only under this explicit
+opt-in clause. Without `response-demux`, completion names remain authored
+inputs as they do today.
 
 First implementation subset selection:
 [AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION](../../AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md)
@@ -5280,8 +5299,10 @@ Completed selector leaf
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.24` selects AXI generated response-demux
 readiness and selected `.25` as the readiness audit. Completed readiness audit
 leaf `IAL2-FEATURE-COMPLETENESS-FRONTIER.25` selects bounded write
-response-demux public contract selection and advances the active frontier to
-`.26`.
+response-demux public contract selection and selected `.26` as the contract
+selector. Completed selector leaf `IAL2-FEATURE-COMPLETENESS-FRONTIER.26`
+selects explicit write-only response-demux syntax and advances the active
+frontier to `.27`.
 Completed implementation leaf
 `ARCHITECTURE-DEBT-FRONTIER.2.1`
 projects direct backend storage/helper declaration-plan entries into

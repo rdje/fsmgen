@@ -9,8 +9,8 @@ answers:
 date: 2026-06-12
 status: current
 tags: [ial2, axi, manager, response-demux, readiness, task-tree]
-evidence: docs/AXI_IAL2_MANAGER_RESPONSE_DEMUX_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_RESPONSE_DEMUX_SELECTION.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; docs/book/src/14-feature-backlog.md; README.md; ROADMAP_V2.md
-reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.25|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.26|write response-demux public contract|completion names are authored inputs|BID' docs/AXI_IAL2_MANAGER_RESPONSE_DEMUX_READINESS_AUDIT.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md docs/book/src/14-feature-backlog.md README.md ROADMAP_V2.md
+evidence: docs/AXI_IAL2_MANAGER_RESPONSE_DEMUX_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_WRITE_RESPONSE_DEMUX_CONTRACT_SELECTION.md; docs/AXI_IAL2_MANAGER_RESPONSE_DEMUX_SELECTION.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; docs/book/src/14-feature-backlog.md; README.md; ROADMAP_V2.md
+reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.25|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.26|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.27|write response-demux public contract|completion names are authored inputs|transaction-completion generated|BID' docs/AXI_IAL2_MANAGER_RESPONSE_DEMUX_READINESS_AUDIT.md docs/AXI_IAL2_MANAGER_WRITE_RESPONSE_DEMUX_CONTRACT_SELECTION.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md docs/book/src/14-feature-backlog.md README.md ROADMAP_V2.md
 ---
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.25` concluded that generated response
@@ -27,6 +27,7 @@ direction-level completion event, not explicitly a `BVALID && BREADY`
 response-channel event. FSMGen must not silently reinterpret those names as
 generated demux signals.
 
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.26` owns selection of the bounded AXI write
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.26` selected the bounded AXI write
 response-demux public contract before parser/report or generated behavior
-changes.
+changes. `IAL2-FEATURE-COMPLETENESS-FRONTIER.27` owns the parser/report
+metadata implementation.

@@ -1,7 +1,7 @@
 # AXI IAL2 Manager Response Demux Readiness Audit
 
-Status: contract-selection boundary selected; no parser, generator, HDL, or
-CLI behavior changed by this note.
+Status: contract-selection boundary selected. Later selector `.26` chose the
+explicit write-only `response-demux` public syntax.
 
 Task tree:
 [docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md](tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md).
@@ -163,7 +163,8 @@ behavior.
 
 ## Selected Next Leaf
 
-Proceed with `IAL2-FEATURE-COMPLETENESS-FRONTIER.26`: select the bounded AXI
-write response-demux public contract before generated response matching,
-same-ID ordering, read-data interleaving/reassembly, burst, queued-policy,
-alias, full-manager, or VHDL behavior changes.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.26` completed the contract selector and
+selected explicit write-only `response-demux` syntax. Proceed with
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.27`: implement parser/report metadata and
+static validation first, with generated `.isf`, `.fsm`, and HDL behavior
+unchanged.

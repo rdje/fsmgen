@@ -976,8 +976,9 @@ Priority note:
 The active immediate feature-completeness lane is IAL2 on the
 SystemVerilog-backed lowering path; see
 [docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md](docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md).
-The current frontier selects the bounded AXI write response-demux public
-contract after shipped bounded AXI auto-ID request-ID drive behavior.
+The current frontier implements parser/report metadata for the bounded AXI
+write response-demux public contract after shipped bounded AXI auto-ID
+request-ID drive behavior.
 The shipped public capacity/status source accepts one
 `(manager-capacity-status NAME ...)` object under
 `(protocol-platform-intent ...)`, `(profile axi4)`, and top-level source
@@ -1027,11 +1028,14 @@ selector `.24` chose AXI generated response-demux readiness as the next exact
 subset. Completed readiness audit `.25` selected a bounded write `BID`
 response-demux public contract selector first, because existing transaction
 `completion` names are authored inputs and must not be silently reinterpreted
-as generated demux signals. The active frontier is
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.26`, selecting that public contract before
-parser/report implementation or generated response matching, same-ID ordering,
-read-data interleaving/reassembly, bursts, queued policy, aliases,
-full-manager behavior, or VHDL changes.
+as generated demux signals. Completed selector `.26` chose explicit optional
+write-only `(response-demux (write (response-event EVENT)
+(transaction-completion generated)))` syntax. In the first bounded contract,
+`EVENT` must equal top-level `write-complete`, and read `RID` demux remains
+future work. The active frontier is `IAL2-FEATURE-COMPLETENESS-FRONTIER.27`,
+implementing parser/report metadata and static validation before generated
+response matching, same-ID ordering, read-data interleaving/reassembly,
+bursts, queued policy, aliases, full-manager behavior, or VHDL changes.
 
 The first honest `R11` slices are now:
 1. keep widening convention-first composition only where the child-side evidence is still deterministic,

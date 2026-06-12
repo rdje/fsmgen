@@ -9,8 +9,8 @@ answers:
 date: 2026-06-12
 status: current
 tags: [ial2, axi, manager, response-demux, id, task-tree]
-evidence: docs/AXI_IAL2_MANAGER_RESPONSE_DEMUX_SELECTION.md; docs/AXI_IAL2_MANAGER_RESPONSE_DEMUX_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_AUTO_ID_REQUEST_ID_DRIVE_FIRST_SLICE.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; docs/book/src/14-feature-backlog.md; README.md; ROADMAP_V2.md
-reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.24|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.25|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.26|response-demux readiness|write response-demux public contract|BID|RID|completion-event direction' docs/AXI_IAL2_MANAGER_RESPONSE_DEMUX_SELECTION.md docs/AXI_IAL2_MANAGER_RESPONSE_DEMUX_READINESS_AUDIT.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md docs/book/src/14-feature-backlog.md README.md ROADMAP_V2.md
+evidence: docs/AXI_IAL2_MANAGER_RESPONSE_DEMUX_SELECTION.md; docs/AXI_IAL2_MANAGER_RESPONSE_DEMUX_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_WRITE_RESPONSE_DEMUX_CONTRACT_SELECTION.md; docs/AXI_IAL2_MANAGER_AUTO_ID_REQUEST_ID_DRIVE_FIRST_SLICE.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; docs/book/src/14-feature-backlog.md; README.md; ROADMAP_V2.md
+reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.24|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.25|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.26|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.27|response-demux readiness|write response-demux public contract|transaction-completion generated|BID|RID|completion-event direction' docs/AXI_IAL2_MANAGER_RESPONSE_DEMUX_SELECTION.md docs/AXI_IAL2_MANAGER_RESPONSE_DEMUX_READINESS_AUDIT.md docs/AXI_IAL2_MANAGER_WRITE_RESPONSE_DEMUX_CONTRACT_SELECTION.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md docs/book/src/14-feature-backlog.md README.md ROADMAP_V2.md
 ---
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.24` selected AXI manager generated
@@ -28,8 +28,8 @@ the source contract exists, but existing transaction `completion` names are
 authored inputs and must not be silently reinterpreted as generated demux
 signals.
 
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.26` owns the public contract selection for
-bounded write response demux.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.26` selected the public contract for
+bounded write response demux, and `.27` owns parser/report metadata.
 
 Same-ID ordering, read-data interleaving/reassembly, bursts, queued policy,
 aliases, full-manager syntax, and VHDL remain future exact-owner work until
