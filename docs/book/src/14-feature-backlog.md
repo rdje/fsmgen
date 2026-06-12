@@ -2297,9 +2297,10 @@ verification-only SystemVerilog assertions, and report
 demux, ordering, bursts, queued policy, aliases, full-manager behavior, and
 VHDL remain residue. The next selector chose AXI manager auto-ID
 lifecycle/request-ID drive readiness as the next subset. The active leaf is
-`.20`, the readiness audit for request-ID drive, ID busy/free state,
-completion release, report shape, diagnostics, and IAL1/IAL0/SystemVerilog
-substrate before any auto-ID allocation behavior changes.
+`.21`, the bounded auto-ID pool/request-ID drive contract selector. Completed
+readiness audit `.20` concluded that the IAL1/IAL0/SystemVerilog substrate can
+carry a bounded scalar request-ID lifecycle, but auto-ID allocation must not be
+inferred directly from ID width or existing `(id auto)` syntax.
 Selected IAL2 slices may include explicit IAL1 or
 IAL0/SystemVerilog prerequisites when those prerequisites are needed for
 clean, reviewable lowering.
@@ -2855,15 +2856,13 @@ ordering queues, different-ID read-data interleaving/reassembly, burst and
 last-beat tracking, payload binding, queued/blocking policy, generated
 response demux, full AXI manager syntax, profile aliases, and VHDL.
 
-Next AXI manager subset: auto-ID lifecycle readiness:
-[AXI_IAL2_MANAGER_AUTO_ID_LIFECYCLE_SELECTION](../../AXI_IAL2_MANAGER_AUTO_ID_LIFECYCLE_SELECTION.md)
-selects the next frontier after shipped concrete ID assertions. Auto-ID
-transactions are still report-only. The next readiness audit must decide
-whether the existing `manager-capacity-status` object and current
-IAL1/IAL0/SystemVerilog substrate can honestly own request-ID drive, ID
-busy/free state, completion release, no-ID-available diagnostics, and report
-metadata, or whether a narrower request-ID output/storage prerequisite must
-ship first.
+Next AXI manager subset: bounded auto-ID pool/request-ID drive contract:
+[AXI_IAL2_MANAGER_AUTO_ID_LIFECYCLE_READINESS_AUDIT](../../AXI_IAL2_MANAGER_AUTO_ID_LIFECYCLE_READINESS_AUDIT.md)
+concludes the readiness audit after shipped concrete ID assertions. Auto-ID
+transactions are still report-only. The substrate can carry a bounded scalar
+request-ID lifecycle, but the public contract must first define the legal
+auto-ID pool and request-ID drive behavior; width and `(id auto)` alone are not
+a reviewable allocation policy.
 
 The selected audit starts from the existing syntax:
 
@@ -2877,10 +2876,13 @@ The selected audit starts from the existing syntax:
   (read  r0 (tag rd0) (request axi0_r0_request) (completion axi0_r0_complete) (id auto)))
 ```
 
-The audit must resolve whether request ID signals become generated outputs for
-auto-ID transactions, how chosen IDs are stored and released, and how the
-report distinguishes generated request-ID drive, ID state, release rules,
-assertions, assumptions, and residue. Full ID allocation algorithms, same-ID
+The next contract selector must resolve whether existing `(id auto)` becomes
+behavior-bearing only with an explicit bounded pool or whether an additive
+`auto-id-lifecycle`/`auto-id-pool` clause is required. It must also define
+which request ID signals become generated outputs, which response ID signals
+remain inputs, how selected IDs and busy/free state are stored, how completion
+events release IDs before response demux exists, and how the structural report
+adds `auto_id_lifecycle` metadata. Full ID allocation implementation, same-ID
 ordering queues, generated response demux, read-data interleaving/reassembly,
 bursts, queued/blocking policy, full AXI manager syntax, aliases, and VHDL
 remain unshipped.
@@ -5183,7 +5185,10 @@ implementation leaf `IAL2-FEATURE-COMPLETENESS-FRONTIER.18` ships concrete
 transaction ID request/response assertions and advances the active frontier to
 `.19`. Completed selector leaf `IAL2-FEATURE-COMPLETENESS-FRONTIER.19`
 selects auto-ID lifecycle/request-ID drive readiness and advances the active
-frontier to `.20`.
+frontier to `.20`. Completed readiness audit leaf
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.20` selects bounded auto-ID
+pool/request-ID drive contract selection and advances the active frontier to
+`.21`.
 Completed implementation leaf
 `ARCHITECTURE-DEBT-FRONTIER.2.1`
 projects direct backend storage/helper declaration-plan entries into

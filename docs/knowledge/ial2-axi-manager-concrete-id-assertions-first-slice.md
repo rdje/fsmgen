@@ -37,4 +37,6 @@ remain future exact-owner work.
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.19` selected auto-ID lifecycle/request-ID
 drive readiness as the next subset, owned by
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.20`.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.20`. That audit has completed and selected
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.21`, bounded auto-ID pool/request-ID drive
+contract selection, before any auto-ID allocation behavior changes.

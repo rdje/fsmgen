@@ -17,10 +17,9 @@ reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER|IAL2 feature completeness|IA
 The current feature-completeness priority is IAL2 on the
 SystemVerilog-backed path.
 
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.20` owns the next PNT frontier:
-readiness-audit AXI manager auto-ID lifecycle and request-ID drive after `.18`
-shipped concrete transaction ID request/response assertions and `.19` selected
-the next subset.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.21` owns the next PNT frontier: select the
+bounded AXI auto-ID pool/request-ID drive contract after `.20` completed the
+auto-ID lifecycle readiness audit.
 
 Completed `.18` shipped generated ID inputs, `.fsm` `+assert` carriers,
 verification-only SystemVerilog assertions, `id_response_rule_engine` report
@@ -29,9 +28,10 @@ allocation, ID release, response demux, ordering, burst, queued-policy, alias,
 full-manager, and VHDL behavior as residue.
 
 Completed `.19` selected the auto-ID lifecycle audit before any allocation
-behavior change. The audit must resolve request-ID drive direction, ID
-busy/free state, completion release, diagnostics, report shape, and substrate
-readiness.
+behavior change. Completed `.20` concluded that the substrate can carry a
+bounded scalar request-ID lifecycle, but width and existing `(id auto)` syntax
+alone are not a reviewable allocation policy. `.21` must select the bounded
+pool/request-ID drive contract before behavior changes.
 
 Selected IAL2 work may include required IAL1 or IAL0/SV support, but only when
 those prerequisites are explicit, task-tree owned, documented, and
