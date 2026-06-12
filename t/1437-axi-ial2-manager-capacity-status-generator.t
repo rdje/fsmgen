@@ -204,6 +204,51 @@ subtest 'optional transaction-envelope metadata is structural and report-only' =
     );
 };
 
+subtest 'transaction event dispatch fans per-transaction events into capacity rules' => sub {
+    my $result = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_transaction_event_dispatch());
+    my $isf = $result->{generated_ial1}{text};
+
+    like($isf, qr/\(input axi0_w0_request\)/, 'generated IAL1 declares first write transaction request event');
+    like($isf, qr/\(input axi0_w1_request\)/, 'generated IAL1 declares second write transaction request event');
+    like($isf, qr/\(input axi0_r0_request\)/, 'generated IAL1 declares read transaction request event');
+    unlike($isf, qr/\(input axi0_write_submit\)/, 'generated IAL1 omits unused legacy write submit event');
+    like(
+        $isf,
+        qr/\(rule write_submit_only_occ0 \(& \(\| axi0_w0_request axi0_w1_request\) \(! \(\| axi0_w0_complete axi0_w1_complete\)\) \(== axi0_pending_writes_q 0\)\)/,
+        'write submit-only guard uses OR fan-in for multi-transaction request and completion events',
+    );
+    like(
+        $isf,
+        qr/\(rule read_submit_only_occ0 \(& axi0_r0_request \(! axi0_r0_complete\) \(== axi0_pending_reads_q 0\)\)/,
+        'single read transaction keeps scalar guard compatibility',
+    );
+
+    my $fsm = $result->{generated_ial0}{files}{'axi0_capacity_status.fsm'};
+    like(
+        $fsm,
+        qr/\(-write_submit_only_occ0\s+<\(& \(\| axi0_w0_request axi0_w1_request\) \(! \(\| axi0_w0_complete axi0_w1_complete\)\) \(== axi0_pending_writes_q 0\)\)/,
+        'generated IAL0 preserves the write OR fan-in guard',
+    );
+
+    my $dispatch = $result->{report}{transaction_event_dispatch};
+    is($dispatch->{mode}, 'per_transaction_event_fanin', 'report marks transaction event fan-in mode');
+    my %direction = map { $_->{direction} => $_ } @{$dispatch->{directions}};
+    is_deeply(
+        $direction{write}{request_events},
+        [qw(axi0_w0_request axi0_w1_request)],
+        'report lists write request fan-in events',
+    );
+    is($direction{write}{request_fanin}, '(| axi0_w0_request axi0_w1_request)', 'report exposes write request fan-in expression');
+    is($direction{write}{completion_fanin}, '(| axi0_w0_complete axi0_w1_complete)', 'report exposes write completion fan-in expression');
+    is_deeply($direction{read}{request_events}, ['axi0_r0_request'], 'report lists scalar read request event');
+    is($direction{read}{request_fanin}, 'axi0_r0_request', 'report keeps scalar read request fan-in');
+
+    my $hdl = hdl_for('axi0_capacity_status', $fsm);
+    like($hdl, qr/\binput\s+(?:wire\s+)?axi0_w0_request\b/, 'generated SystemVerilog declares transaction event input');
+    like($hdl, qr/\baxi0_w0_request\s*\|\s*axi0_w1_request\b/, 'generated SystemVerilog lowers request OR fan-in');
+    like($hdl, qr/\baxi0_w0_complete\s*\|\s*axi0_w1_complete\b/, 'generated SystemVerilog lowers completion OR fan-in');
+};
+
 subtest 'schedule report and HDL expose generated storage and status surface' => sub {
     my $result = generate_sample();
     my $report = $result->{generated_ial1_schedule_report};
@@ -253,7 +298,9 @@ subtest 'malformed contract objects fail closed and no direct lower-to-fsm entry
         ['ID-family signal collision', sub { my $c = sample_contract_with_id_families(); $c->{id_families}{write}{request_id_signal} = 'clk'; $c }, qr/duplicates signal 'clk'/],
         ['transactions not array', sub { my $c = sample_contract_with_id_families(); $c->{transactions} = {}; $c }, qr/field 'transactions' must be an array reference/],
         ['duplicate transaction tag', sub { my $c = sample_contract_with_transactions(); $c->{transactions}[1]{tag} = 'wr0'; $c }, qr/duplicates transaction tag 'wr0'/],
-        ['write transaction bound to read event', sub { my $c = sample_contract_with_transactions(); $c->{transactions}[0]{request_event} = 'axi0_read_submit'; $c }, qr/write request_event must reference existing direction-level event 'axi0_write_submit'/],
+        ['write transaction bound to read direction-level event', sub { my $c = sample_contract_with_transactions(); $c->{transactions}[0]{request_event} = 'axi0_read_submit'; $c }, qr/write request_event must not reference read direction-level event 'axi0_read_submit'/],
+        ['duplicate write dispatch request event', sub { my $c = sample_contract_with_transaction_event_dispatch(); $c->{transactions}[1]{request_event} = 'axi0_w0_request'; $c }, qr/write request_event 'axi0_w0_request' is reused by transactions 'w0' and 'w1' while using per-transaction dispatch/],
+        ['transaction event collides with status output', sub { my $c = sample_contract_with_transaction_event_dispatch(); $c->{transactions}[2]{request_event} = 'axi0_read_full'; $c }, qr/duplicates signal 'axi0_read_full'/],
         ['concrete transaction ID without family metadata', sub { my $c = sample_contract(); $c->{transactions} = [sample_contract_with_transactions()->{transactions}[1]]; $c }, qr/concrete ID requires id_families metadata/],
         ['concrete transaction ID too wide', sub { my $c = sample_contract_with_transactions(); $c->{transactions}[1]{id}{value} = 16; $c }, qr/concrete read ID value 16 does not fit width 4/],
         ['concrete transaction ID with zero-width family', sub { my $c = sample_contract_with_transactions(); $c->{id_families}{read} = { width => 0 }; $c }, qr/concrete read ID is not allowed when read ID-family width is 0/],
@@ -343,6 +390,39 @@ sub sample_contract_with_transactions {
             tag              => 'rd0',
             request_event    => 'axi0_read_submit',
             completion_event => 'axi0_read_complete',
+            id               => { value => 3 },
+        },
+    ];
+    return $contract;
+}
+
+sub sample_contract_with_transaction_event_dispatch {
+    my $contract = sample_contract_with_id_families();
+    $contract->{intent_name} = 'axi_manager_capacity_status_transaction_event_dispatch';
+    $contract->{source}{object_id} = 'axi-manager-capacity-status-transaction-event-dispatch';
+    $contract->{transactions} = [
+        {
+            kind             => 'write',
+            name             => 'w0',
+            tag              => 'wr0',
+            request_event    => 'axi0_w0_request',
+            completion_event => 'axi0_w0_complete',
+            id               => { policy => 'auto' },
+        },
+        {
+            kind             => 'write',
+            name             => 'w1',
+            tag              => 'wr1',
+            request_event    => 'axi0_w1_request',
+            completion_event => 'axi0_w1_complete',
+            id               => { policy => 'auto' },
+        },
+        {
+            kind             => 'read',
+            name             => 'r0',
+            tag              => 'rd0',
+            request_event    => 'axi0_r0_request',
+            completion_event => 'axi0_r0_complete',
             id               => { value => 3 },
         },
     ];

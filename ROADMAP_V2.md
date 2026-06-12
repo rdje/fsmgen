@@ -943,17 +943,19 @@ Priority note:
   the public `.ppif` transaction-envelope metadata slice is now shipped with
   structured report metadata and unchanged generated `.isf`, `.fsm`, and HDL
   behavior; the transaction event dispatch and direction fan-in readiness audit
-  selected an additive implementation boundary with no separate
-  IAL1/IAL0/SystemVerilog prerequisite first.
+  selected an additive implementation boundary with no separate pre-slice
+  IAL1/IAL0/SystemVerilog prerequisite, and that dispatch/fan-in slice is now
+  shipped with generated transaction-event inputs, OR fan-in guards, additive
+  `transaction_event_dispatch` report metadata, and the needed bounded IAL1
+  OR/negated-OR guard conflict proof.
 
 ## Current intent
 The active immediate feature-completeness lane is IAL2 on the
 SystemVerilog-backed lowering path; see
 [docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md](docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md).
-The current frontier is the additive implementation of AXI manager transaction
-event dispatch and direction fan-in after the shipped logical read/write
-transaction-envelope/static-validation metadata. The shipped
-public capacity/status source accepts one
+The current frontier is the next IAL2 feature-completeness selector after the
+shipped AXI manager transaction event dispatch and direction fan-in slice. The
+shipped public capacity/status source accepts one
 `(manager-capacity-status NAME ...)` object under
 `(protocol-platform-intent ...)`, `(profile axi4)`, and top-level source
 anchors, and works through schedule JSON, generated `.isf`/`.fsm` review
@@ -973,11 +975,12 @@ bindings are limited to existing direction-level abstract events, so generated
 manager behavior is claimed. The completed readiness audit verified that
 distinct per-transaction request/completion events can fan into the existing
 read/write capacity/status rule matrices through the current
-IAL1/IAL0/SystemVerilog path. The implementation frontier is to declare those
-unique event inputs, preserve scalar one-event compatibility, generate OR
-fan-in guards for multi-event groups, and report additive
+IAL1/IAL0/SystemVerilog path. That slice now declares unique transaction event
+inputs, preserves scalar one-event compatibility, generates OR fan-in guards
+for multi-event groups, widens the IAL1 guard-conflict proof for bounded
+OR/negated-OR generated guards, and reports additive
 `transaction_event_dispatch` metadata. ID allocation and response matching
-remain behind that event-provenance prerequisite.
+remain behind that shipped event-provenance prerequisite.
 
 The first honest `R11` slices are now:
 1. keep widening convention-first composition only where the child-side evidence is still deterministic,

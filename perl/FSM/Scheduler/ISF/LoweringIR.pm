@@ -10282,24 +10282,7 @@ sub _guard_literal_terms {
 sub _merge_literal_term_sets {
     my @sets = grep { defined $_ } @_;
     return undef unless @sets;
-
-    my %merged;
-    for my $terms (@sets) {
-        next unless ref($terms) eq 'HASH';
-        return { __unsat => 1 } if $terms->{__unsat};
-        for my $signal (sort keys %$terms) {
-            next if $signal eq '__unsat';
-            if (exists($merged{$signal})) {
-                return { __unsat => 1 }
-                    if $signal =~ /\Aeq:/ && $merged{$signal} ne $terms->{$signal};
-                return { __unsat => 1 }
-                    if $signal !~ /\Aeq:/ && $merged{$signal} != $terms->{$signal};
-            }
-            $merged{$signal} = $terms->{$signal};
-        }
-    }
-
-    return \%merged;
+    return _merge_condition_term_sets(@sets);
 }
 
 sub _condition_literal_terms {
@@ -10321,23 +10304,20 @@ sub _condition_literal_terms {
     return undef unless defined($head) && !ref($head);
 
     if ($head eq '&') {
-        my %merged;
+        return _merge_condition_term_sets(
+            grep { defined $_ }
+            map { _condition_literal_terms($_) } @{$condition}[1 .. $#$condition]
+        );
+    }
+
+    if ($head eq '|') {
+        my @alternatives;
         for my $operand (@{$condition}[1 .. $#$condition]) {
             my $terms = _condition_literal_terms($operand);
-            next unless defined $terms;
-            return { __unsat => 1 } if $terms->{__unsat};
-            for my $signal (sort keys %$terms) {
-                next if $signal eq '__unsat';
-                if (exists($merged{$signal})) {
-                    return { __unsat => 1 }
-                        if $signal =~ /\Aeq:/ && $merged{$signal} ne $terms->{$signal};
-                    return { __unsat => 1 }
-                        if $signal !~ /\Aeq:/ && $merged{$signal} != $terms->{$signal};
-                }
-                $merged{$signal} = $terms->{$signal};
-            }
+            return undef unless defined $terms;
+            push @alternatives, @{_satisfying_term_alternatives($terms)};
         }
-        return \%merged;
+        return _terms_from_alternatives(\@alternatives);
     }
 
     if (($head eq '==' || $head eq '=') && @$condition == 3) {
@@ -10353,6 +10333,16 @@ sub _condition_literal_terms {
         return { $operand => 0 }
             if defined($operand) && !ref($operand) && _is_condition_signal_term($operand);
         if (ref($operand) eq 'ARRAY'
+            && @$operand >= 2
+            && defined($operand->[0])
+            && !ref($operand->[0])
+            && $operand->[0] eq '|') {
+            return _condition_literal_terms([
+                '&',
+                map { ['!', $_] } @{$operand}[1 .. $#$operand],
+            ]);
+        }
+        if (ref($operand) eq 'ARRAY'
             && @$operand == 2
             && defined($operand->[0])
             && !ref($operand->[0])
@@ -10366,6 +10356,64 @@ sub _condition_literal_terms {
     }
 
     return undef;
+}
+
+sub _merge_condition_term_sets {
+    my @sets = grep { defined $_ } @_;
+    return undef unless @sets;
+
+    my @merged_alternatives = ({});
+    for my $terms (@sets) {
+        next unless ref($terms) eq 'HASH';
+        my $alternatives = _satisfying_term_alternatives($terms);
+        return { __unsat => 1 } unless @$alternatives;
+
+        my @next;
+        for my $left (@merged_alternatives) {
+            for my $right (@$alternatives) {
+                my $merged = _merge_term_maps($left, $right);
+                push @next, $merged if defined $merged;
+            }
+        }
+        return { __unsat => 1 } unless @next;
+        @merged_alternatives = @next;
+    }
+
+    return _terms_from_alternatives(\@merged_alternatives);
+}
+
+sub _merge_term_maps {
+    my ($left, $right) = @_;
+    my %merged = %{$left || {}};
+
+    for my $signal (sort keys %{$right || {}}) {
+        next if $signal eq '__unsat' || $signal eq '__dnf';
+        if (exists($merged{$signal})) {
+            return undef
+                if $signal =~ /\Aeq:/ && $merged{$signal} ne $right->{$signal};
+            return undef
+                if $signal !~ /\Aeq:/ && $merged{$signal} != $right->{$signal};
+        }
+        $merged{$signal} = $right->{$signal};
+    }
+
+    return \%merged;
+}
+
+sub _satisfying_term_alternatives {
+    my ($terms) = @_;
+    return [] unless ref($terms) eq 'HASH';
+    return [] if $terms->{__unsat};
+    return $terms->{__dnf} if ref($terms->{__dnf}) eq 'ARRAY';
+    return [$terms];
+}
+
+sub _terms_from_alternatives {
+    my ($alternatives) = @_;
+    my @satisfying = grep { ref($_) eq 'HASH' && !$_->{__unsat} } @{$alternatives || []};
+    return { __unsat => 1 } unless @satisfying;
+    return $satisfying[0] if @satisfying == 1;
+    return { __dnf => \@satisfying };
 }
 
 sub _condition_term_value {
@@ -10389,10 +10437,24 @@ sub _condition_terms_prove_disjoint {
     my $right_terms = $right->{condition_terms};
 
     return 0 unless ref($left_terms) eq 'HASH' && ref($right_terms) eq 'HASH';
-    return 1 if $left_terms->{__unsat} || $right_terms->{__unsat};
 
+    my $left_alternatives = _satisfying_term_alternatives($left_terms);
+    my $right_alternatives = _satisfying_term_alternatives($right_terms);
+    return 1 unless @$left_alternatives && @$right_alternatives;
+
+    for my $left_terms (@$left_alternatives) {
+        for my $right_terms (@$right_alternatives) {
+            return 0 unless _term_maps_prove_disjoint($left_terms, $right_terms);
+        }
+    }
+
+    return 1;
+}
+
+sub _term_maps_prove_disjoint {
+    my ($left_terms, $right_terms) = @_;
     for my $signal (sort keys %$left_terms) {
-        next if $signal eq '__unsat';
+        next if $signal eq '__unsat' || $signal eq '__dnf';
         next unless exists $right_terms->{$signal};
         return 1 if $signal =~ /\Aeq:/ && $left_terms->{$signal} ne $right_terms->{$signal};
         return 1 if $signal !~ /\Aeq:/ && $left_terms->{$signal} != $right_terms->{$signal};

@@ -153,15 +153,17 @@ to existing direction-level abstract events. That optional `(transactions ...)`
 public `.ppif` extension is now shipped for the existing capacity/status
 object with machine-readable AST/structural report metadata, a separate
 sample, support accounting, check JSON, semantic JSON source identity, and
-unchanged generated `.isf`, `.fsm`, and HDL behavior. The active frontier is
-the additive implementation of transaction event dispatch and direction
-fan-in. The readiness audit verified that distinct per-transaction
-request/completion events can fan into the existing read/write capacity/status
-rule matrices through current IAL1/IAL0/SystemVerilog lowering with no
-separate substrate prerequisite first. ID allocation algorithms, ordering
-queues, response matching, bursts, queued/blocking policy, profile aliases,
-and VHDL backend/reroute work stay deferred until explicit owners select them,
-and VHDL remains behind SV-backed IAL feature completeness.
+unchanged generated `.isf`, `.fsm`, and HDL behavior. Transaction event
+dispatch and direction fan-in are now shipped for that same object: distinct
+per-transaction request/completion events become generated IAL1 inputs, write
+or read directions with multiple transaction events use OR fan-in guards, the
+existing IAL1/IAL0/SystemVerilog path carries the behavior, and schedule JSON
+additively reports `transaction_event_dispatch` metadata. The active frontier
+is the next IAL2 feature-completeness selector after shipped event
+provenance. ID allocation algorithms, ordering queues, response matching,
+bursts, queued/blocking policy, profile aliases, and VHDL backend/reroute work
+stay deferred until explicit owners select them, and VHDL remains behind
+SV-backed IAL feature completeness.
 The project objective is robust, traceable FSM-to-HDL generation with clear assignment semantics, optimization via AST factorization, and behavior-preserving refactoring toward a modular architecture.
 
 ## Fast ramp-up order
@@ -206,13 +208,14 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 39. `docs/AXI_IAL2_MANAGER_TRANSACTION_ENVELOPE_FIRST_SLICE.md`: shipped additive `.ppif` transaction-envelope metadata slice for one AXI manager capacity/status object.
 40. `docs/AXI_IAL2_MANAGER_TRANSACTION_EVENT_DISPATCH_SELECTION.md`: selected the next prerequisite: transaction event dispatch and direction fan-in.
 41. `docs/AXI_IAL2_MANAGER_TRANSACTION_EVENT_DISPATCH_READINESS_AUDIT.md`: readiness audit for additive per-transaction event dispatch and direction fan-in.
-42. `docs/AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md`: selected first AXI-derived IAL2 implementation subset and pre-code contract.
-43. `docs/AXI_IAL2_VALID_READY_READINESS_AUDIT.md`: code/test/docs/report owner map for the future AXI Valid-Ready IAL2 implementation.
-44. `docs/AXI_IAL2_VALID_READY_GENERATOR_FIRST_SLICE.md`: first in-process AXI Valid-Ready IAL2 generator slice and report surface.
-45. `docs/decisions/0016-ppif-is-first-public-ial2-container.md`: selects `.ppif` as the first public generic IAL2 file surface.
-46. `docs/IAL2_PPIF_PARSER_CLI_FIRST_SLICE.md`: first public `.ppif` parser/CLI slice for one AXI Valid-Ready source object.
-47. `docs/IAL2_PPIF_MULTI_VALID_READY_READINESS.md`: readiness map for future multi-channel `.ppif` Valid-Ready support.
-48. `docs/IAL2_PPIF_VALID_READY_BUNDLE_CONTRACT_SELECTION.md`: selected future aggregate bundle contract for multi-channel `.ppif` Valid-Ready support.
+42. `docs/AXI_IAL2_MANAGER_TRANSACTION_EVENT_DISPATCH_FIRST_SLICE.md`: shipped additive `.ppif` transaction event dispatch/fan-in slice for one AXI manager capacity/status object.
+43. `docs/AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md`: selected first AXI-derived IAL2 implementation subset and pre-code contract.
+44. `docs/AXI_IAL2_VALID_READY_READINESS_AUDIT.md`: code/test/docs/report owner map for the future AXI Valid-Ready IAL2 implementation.
+45. `docs/AXI_IAL2_VALID_READY_GENERATOR_FIRST_SLICE.md`: first in-process AXI Valid-Ready IAL2 generator slice and report surface.
+46. `docs/decisions/0016-ppif-is-first-public-ial2-container.md`: selects `.ppif` as the first public generic IAL2 file surface.
+47. `docs/IAL2_PPIF_PARSER_CLI_FIRST_SLICE.md`: first public `.ppif` parser/CLI slice for one AXI Valid-Ready source object.
+48. `docs/IAL2_PPIF_MULTI_VALID_READY_READINESS.md`: readiness map for future multi-channel `.ppif` Valid-Ready support.
+49. `docs/IAL2_PPIF_VALID_READY_BUNDLE_CONTRACT_SELECTION.md`: selected future aggregate bundle contract for multi-channel `.ppif` Valid-Ready support.
 49. `docs/IAL2_PPIF_VALID_READY_BUNDLE_FIRST_SLICE.md`: shipped bounded multi-channel `.ppif` Valid-Ready bundle report/review-artifact behavior.
 50. `docs/IAL2_PPIF_BUNDLE_SEMANTIC_JSON_FIRST_SLICE.md`: shipped aggregate semantic JSON for multi-channel `.ppif` bundles.
 51. `docs/IAL2_PPIF_BUNDLE_HDL_ENTRY_SELECTION.md`: selected aggregate wrapper/top HDL entry contract for multi-channel `.ppif` bundles.
@@ -667,6 +670,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/AXI_IAL2_MANAGER_TRANSACTION_ENVELOPE_FIRST_SLICE.md` — shipped additive `.ppif` transaction-envelope metadata slice for one AXI manager capacity/status object.
 - `docs/AXI_IAL2_MANAGER_TRANSACTION_EVENT_DISPATCH_SELECTION.md` — selected the next prerequisite: transaction event dispatch and direction fan-in.
 - `docs/AXI_IAL2_MANAGER_TRANSACTION_EVENT_DISPATCH_READINESS_AUDIT.md` — readiness audit for additive per-transaction event dispatch and direction fan-in.
+- `docs/AXI_IAL2_MANAGER_TRANSACTION_EVENT_DISPATCH_FIRST_SLICE.md` — shipped additive `.ppif` transaction event dispatch/fan-in slice for one AXI manager capacity/status object.
 - `docs/AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md` — selected first AXI-derived IAL2 implementation subset and pre-code contract.
 - `docs/AXI_IAL2_VALID_READY_READINESS_AUDIT.md` — code/test/docs/report owner map for a future AXI Valid-Ready IAL2 implementation slice.
 - `docs/AXI_IAL2_VALID_READY_GENERATOR_FIRST_SLICE.md` — first in-process AXI Valid-Ready IAL2 generator slice and report surface.
@@ -681,6 +685,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `ppif/axi_aw_w_valid_ready_bundle.ppif` — checked-in runnable multi-channel `.ppif` bundle sample for aggregate report/review-artifact modes.
 - `ppif/axi_manager_capacity_status_id_family.ppif` — checked-in runnable `.ppif` sample for static AXI manager ID-family metadata.
 - `ppif/axi_manager_capacity_status_transaction_envelope.ppif` — checked-in runnable `.ppif` sample for static AXI manager transaction-envelope metadata.
+- `ppif/axi_manager_capacity_status_transaction_event_dispatch.ppif` — checked-in runnable `.ppif` sample for AXI manager transaction event dispatch/fan-in.
 - `docs/PDF_EXTRACTION_WORKFLOW.md` — portable workflow for task-owned source-anchored PDF text, table, diagram, and image extraction.
 - `docs/decisions/0014-protocol-platform-intent-surface-and-layered-lowering.md` — generic IAL2 file-surface candidates and layered lowering decision.
 - `docs/decisions/0015-ial2-profile-extensions-are-vocabulary-aliases.md` — IAL2 protocol-profile extension refinement.

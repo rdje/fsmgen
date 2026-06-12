@@ -135,11 +135,20 @@ sub _normalize_contract($raw) {
             id_families      => $id_families,
         )
         : undef;
+    my $transaction_event_dispatch = _build_transaction_event_dispatch(
+        events       => \%events,
+        transactions => $transactions,
+    );
+    my $event_inputs = _effective_event_inputs(
+        events                     => \%events,
+        transaction_event_dispatch => $transaction_event_dispatch,
+    );
 
     _reject_forbidden_or_duplicate_names(
         clock        => $clock,
         reset        => $reset->{signal},
         events       => \%events,
+        event_inputs => $event_inputs,
         status       => $status,
         storage      => \%storage,
         id_families  => $id_families,
@@ -169,9 +178,11 @@ sub _normalize_contract($raw) {
         read_max_pending  => $read_max_pending,
         write_max_pending => $write_max_pending,
         events            => \%events,
+        event_inputs      => $event_inputs,
         status_outputs    => $status,
         id_families       => $id_families,
         transactions      => $transactions,
+        transaction_event_dispatch => $transaction_event_dispatch,
         storage           => \%storage,
         widths            => \%widths,
         intent_name       => $intent_name,
@@ -395,12 +406,13 @@ sub _normalize_transaction(%args) {
     my $request_event = _identifier_value($raw->{request_event}, "transactions[$index].request_event");
     my $completion_event = _identifier_value($raw->{completion_event}, "transactions[$index].completion_event");
 
-    my $expected_request = $kind eq 'read' ? $args{events}{read_submit} : $args{events}{write_submit};
-    my $expected_completion = $kind eq 'read' ? $args{events}{read_complete} : $args{events}{write_complete};
-    confess "AXI manager capacity/status IAL2 contract transactions[$index] $kind request_event must reference existing direction-level event '$expected_request'\n"
-        unless $request_event eq $expected_request;
-    confess "AXI manager capacity/status IAL2 contract transactions[$index] $kind completion_event must reference existing direction-level event '$expected_completion'\n"
-        unless $completion_event eq $expected_completion;
+    my $opposite_kind = $kind eq 'read' ? 'write' : 'read';
+    my $opposite_request = $kind eq 'read' ? $args{events}{write_submit} : $args{events}{read_submit};
+    my $opposite_completion = $kind eq 'read' ? $args{events}{write_complete} : $args{events}{read_complete};
+    confess "AXI manager capacity/status IAL2 contract transactions[$index] $kind request_event must not reference $opposite_kind direction-level event '$opposite_request'\n"
+        if $request_event eq $opposite_request;
+    confess "AXI manager capacity/status IAL2 contract transactions[$index] $kind completion_event must not reference $opposite_kind direction-level event '$opposite_completion'\n"
+        if $completion_event eq $opposite_completion;
 
     return {
         kind             => $kind,
@@ -463,12 +475,110 @@ sub _unsigned_integer($value, $field) {
     return int($value);
 }
 
+sub _build_transaction_event_dispatch(%args) {
+    my $transactions = $args{transactions};
+    return undef unless ref($transactions) eq 'ARRAY';
+
+    _validate_transaction_event_roles(
+        events       => $args{events},
+        transactions => $transactions,
+    );
+
+    my %dispatch = (mode => 'per_transaction_event_fanin');
+    for my $direction (qw(read write)) {
+        my @direction_transactions = grep { $_->{kind} eq $direction } @$transactions;
+        my $request_events = @direction_transactions
+            ? _unique_preserving([map { $_->{request_event} } @direction_transactions])
+            : [_direction_level_event($args{events}, $direction, 'request')];
+        my $completion_events = @direction_transactions
+            ? _unique_preserving([map { $_->{completion_event} } @direction_transactions])
+            : [_direction_level_event($args{events}, $direction, 'completion')];
+
+        $dispatch{$direction} = {
+            request_events    => $request_events,
+            completion_events => $completion_events,
+            request_fanin     => _fanin_expression($request_events),
+            completion_fanin  => _fanin_expression($completion_events),
+        };
+    }
+
+    return \%dispatch;
+}
+
+sub _validate_transaction_event_roles(%args) {
+    my $events = $args{events};
+    my $transactions = $args{transactions};
+    my %role_by_event;
+
+    for my $transaction (@$transactions) {
+        for my $phase (qw(request completion)) {
+            my $field = "${phase}_event";
+            my $event = $transaction->{$field};
+            my $role = "$transaction->{kind} $phase";
+            confess "AXI manager capacity/status IAL2 contract transaction event '$event' cannot be reused for both $role_by_event{$event} and $role roles\n"
+                if exists($role_by_event{$event}) && $role_by_event{$event} ne $role;
+            $role_by_event{$event} = $role;
+        }
+    }
+
+    for my $direction (qw(read write)) {
+        my @direction_transactions = grep { $_->{kind} eq $direction } @$transactions;
+        for my $phase (qw(request completion)) {
+            my $field = "${phase}_event";
+            my $direction_event = _direction_level_event($events, $direction, $phase);
+            my $uses_distinct_event = grep { $_->{$field} ne $direction_event } @direction_transactions;
+            next unless $uses_distinct_event;
+
+            my %seen_by_transaction;
+            for my $transaction (@direction_transactions) {
+                my $event = $transaction->{$field};
+                confess "AXI manager capacity/status IAL2 contract $direction ${field} '$event' is reused by transactions '$seen_by_transaction{$event}' and '$transaction->{name}' while using per-transaction dispatch\n"
+                    if exists $seen_by_transaction{$event};
+                $seen_by_transaction{$event} = $transaction->{name};
+            }
+        }
+    }
+}
+
+sub _direction_level_event($events, $direction, $phase) {
+    return $events->{read_submit} if $direction eq 'read' && $phase eq 'request';
+    return $events->{read_complete} if $direction eq 'read' && $phase eq 'completion';
+    return $events->{write_submit} if $direction eq 'write' && $phase eq 'request';
+    return $events->{write_complete} if $direction eq 'write' && $phase eq 'completion';
+    confess "Internal error: unknown AXI manager event direction/phase '$direction/$phase'\n";
+}
+
+sub _fanin_expression($events) {
+    confess "Internal error: AXI manager fan-in requires at least one event\n"
+        unless ref($events) eq 'ARRAY' && @$events;
+    return $events->[0] if @$events == 1;
+    return "(| " . join(' ', @$events) . ")";
+}
+
+sub _effective_event_inputs(%args) {
+    my $dispatch = $args{transaction_event_dispatch};
+    if (ref($dispatch) eq 'HASH') {
+        my @inputs;
+        for my $direction (qw(read write)) {
+            push @inputs, @{$dispatch->{$direction}{request_events}};
+            push @inputs, @{$dispatch->{$direction}{completion_events}};
+        }
+        return _unique_preserving(\@inputs);
+    }
+
+    return _abstract_event_names($args{events});
+}
+
 sub _reject_forbidden_or_duplicate_names(%args) {
+    my $event_names = _unique_preserving([
+        @{_abstract_event_names($args{events})},
+        @{$args{event_inputs} || []},
+    ]);
     my %seen;
     my @groups = (
         [clock   => [$args{clock}]],
         [reset   => [$args{reset}]],
-        [events  => [values %{$args{events}}]],
+        [events  => $event_names],
         [status  => [values %{$args{status}}]],
         [storage => [values %{$args{storage}}]],
     );
@@ -488,6 +598,15 @@ sub _reject_forbidden_or_duplicate_names(%args) {
     }
 }
 
+sub _abstract_event_names($events) {
+    return [
+        $events->{read_submit},
+        $events->{read_complete},
+        $events->{write_submit},
+        $events->{write_complete},
+    ];
+}
+
 sub _transaction_names_and_tags($transactions) {
     my @names;
     return \@names unless ref($transactions) eq 'ARRAY';
@@ -497,6 +616,15 @@ sub _transaction_names_and_tags($transactions) {
     }
 
     return \@names;
+}
+
+sub _unique_preserving($values) {
+    my (%seen, @unique);
+    for my $value (@$values) {
+        next if $seen{$value}++;
+        push @unique, $value;
+    }
+    return \@unique;
 }
 
 sub _id_family_signal_names($id_families) {
@@ -550,10 +678,12 @@ sub _emit_isf($contract) {
     my $read_width = $contract->{widths}{pending_reads};
     my $write_width = $contract->{widths}{pending_writes};
     my $reset = _reset_clause($contract->{reset});
+    my $read_events = _effective_direction_events($contract, 'read');
+    my $write_events = _effective_direction_events($contract, 'write');
     my @read_rules = _direction_rules(
         direction => 'read',
-        submit => $contract->{events}{read_submit},
-        complete => $contract->{events}{read_complete},
+        submit => $read_events->{request_fanin},
+        complete => $read_events->{completion_fanin},
         max_pending => $contract->{read_max_pending},
         storage => $contract->{storage}{pending_reads},
         pending_output => $contract->{status_outputs}{pending_reads},
@@ -563,8 +693,8 @@ sub _emit_isf($contract) {
     );
     my @write_rules = _direction_rules(
         direction => 'write',
-        submit => $contract->{events}{write_submit},
-        complete => $contract->{events}{write_complete},
+        submit => $write_events->{request_fanin},
+        complete => $write_events->{completion_fanin},
         max_pending => $contract->{write_max_pending},
         storage => $contract->{storage}{pending_writes},
         pending_output => $contract->{status_outputs}{pending_writes},
@@ -578,10 +708,7 @@ sub _emit_isf($contract) {
         "  (clock $contract->{clock})",
         "  $reset",
         "  (interface",
-        "    (input $contract->{events}{read_submit})",
-        "    (input $contract->{events}{read_complete})",
-        "    (input $contract->{events}{write_submit})",
-        "    (input $contract->{events}{write_complete})",
+        (map { "    (input $_)" } @{$contract->{event_inputs}}),
         "    (output $contract->{status_outputs}{read_can_accept})",
         "    (output $contract->{status_outputs}{write_can_accept})",
         "    (output $contract->{status_outputs}{read_full})",
@@ -601,6 +728,16 @@ sub _emit_isf($contract) {
         ")",
         "",
     );
+}
+
+sub _effective_direction_events($contract, $direction) {
+    my $dispatch = $contract->{transaction_event_dispatch};
+    return $dispatch->{$direction} if ref($dispatch) eq 'HASH';
+
+    return {
+        request_fanin    => _direction_level_event($contract->{events}, $direction, 'request'),
+        completion_fanin => _direction_level_event($contract->{events}, $direction, 'completion'),
+    };
 }
 
 sub _reset_clause($reset) {
@@ -721,6 +858,9 @@ sub _build_report(%args) {
         (defined $contract->{transactions}
             ? (transactions => _report_transactions($contract))
             : ()),
+        (defined $contract->{transaction_event_dispatch}
+            ? (transaction_event_dispatch => _report_transaction_event_dispatch($contract))
+            : ()),
         abstract_events => _clone_jsonish($contract->{events}),
         submit_policy => $contract->{submit_policy},
         generated_artifacts => {
@@ -785,7 +925,8 @@ sub _build_report(%args) {
             'id_families read/write widths must be integers in 0..32',
             'positive-width ID families require request and response ID signal names; zero-width ID families reject ID signal names',
             'ID-family signal names must be unique and must not collide with clock, reset, submit events, complete events, status outputs, or generated storage names',
-            'if supplied, transactions must declare unique names and tags, read/write kind, direction-level request/completion event bindings, and id policy/value',
+            'if supplied, transactions must declare unique names and tags, read/write kind, identifier request/completion event bindings, and id policy/value',
+            'transaction event dispatch rejects opposite-direction direction-level event bindings and duplicate per-direction request/completion event names when per-transaction dispatch is used',
             'concrete transaction ID values require a present matching ID family and must fit its declared width',
         ],
         unsupported_residue => [
@@ -805,6 +946,26 @@ sub _build_report(%args) {
                 id     => 'vhdl_backend_or_reroute',
                 detail => 'VHDL backend and reroute behavior remains deferred until the SystemVerilog-backed IAL path is feature complete.',
             },
+        ],
+    };
+}
+
+sub _report_transaction_event_dispatch($contract) {
+    my $dispatch = $contract->{transaction_event_dispatch};
+    return {
+        mode => $dispatch->{mode},
+        directions => [
+            map {
+                my $direction = $_;
+                my $entry = $dispatch->{$direction};
+                +{
+                    direction         => $direction,
+                    request_events    => _clone_jsonish($entry->{request_events}),
+                    completion_events => _clone_jsonish($entry->{completion_events}),
+                    request_fanin     => $entry->{request_fanin},
+                    completion_fanin  => $entry->{completion_fanin},
+                }
+            } qw(write read)
         ],
     };
 }

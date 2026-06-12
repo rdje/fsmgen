@@ -219,7 +219,13 @@ selects an additive implementation boundary under the existing
 `manager-capacity-status` object: distinct per-transaction request/completion
 events can fan into the current read/write capacity/status rule matrices
 through existing IAL1/IAL0/SystemVerilog lowering, with no separate substrate
-prerequisite first.
+prerequisite first. The first implementation slice is shipped in
+[AXI_IAL2_MANAGER_TRANSACTION_EVENT_DISPATCH_FIRST_SLICE](AXI_IAL2_MANAGER_TRANSACTION_EVENT_DISPATCH_FIRST_SLICE.md):
+it declares unique transaction events as generated IAL1 inputs, preserves
+scalar one-event compatibility, emits OR fan-in guards for multi-event
+direction groups, widens the IAL1 guard-conflict proof for bounded
+OR/negated-OR generated guards, reaches SystemVerilog, and additively reports
+`transaction_event_dispatch` metadata.
 Public `.pif`, `.ppi`, `.axi`, protocol-profile aliases, ID allocation,
 ordering, response matching, bursts, queued/blocking policy, and full AXI
 manager behavior remain unshipped and need later exact owners.

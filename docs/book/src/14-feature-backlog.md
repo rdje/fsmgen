@@ -2283,14 +2283,15 @@ metadata extension under the existing `manager-capacity-status` object. That
 optional transaction-envelope metadata slice is now shipped with a separate
 sample, structural report entries, check JSON and semantic JSON source
 identity, and unchanged generated `.isf`, generated `.fsm`, and HDL behavior.
-The transaction event dispatch and direction fan-in readiness audit is now
-complete. It selects an additive implementation boundary: distinct
-per-transaction request/completion events can feed the current capacity/status
-rules through existing IAL1/IAL0/SystemVerilog lowering with no separate
-substrate prerequisite first. The active frontier is the implementation slice
-for that dispatch/fan-in behavior. Selected IAL2 slices may include explicit
-IAL1 or IAL0/SystemVerilog prerequisites when those prerequisites are needed
-for clean, reviewable lowering.
+The transaction event dispatch and direction fan-in slice is now shipped for
+that same object. Distinct per-transaction request/completion events become
+generated IAL1 inputs, multi-event direction groups use OR fan-in guards, the
+existing IAL1/IAL0/SystemVerilog path carries the behavior, and schedule JSON
+additively reports `transaction_event_dispatch` metadata. The active frontier
+is the next IAL2 feature-completeness selector after shipped event
+provenance. Selected IAL2 slices may include explicit IAL1 or
+IAL0/SystemVerilog prerequisites when those prerequisites are needed for
+clean, reviewable lowering.
 
 Evaluation note:
 [IAL2_PROTOCOL_PLATFORM_INTENT_EVALUATION](../../IAL2_PROTOCOL_PLATFORM_INTENT_EVALUATION.md).
@@ -2303,10 +2304,11 @@ and current `.isf` as Intent Abstraction Layer 1 (`IAL1`). `IAL2` now has a
 first bounded shipped surface for one AXI Valid-Ready protocol intent object,
 multi-channel Valid-Ready bundles, and one AXI manager capacity/status shell
 through public `.ppif`, including optional static ID-family metadata and
-optional static transaction-envelope metadata. Broader IAL2 still must justify
-itself with semantics above individual transactions, not only syntax
-convenience. Its generic file surface remains protocol/platform-generic, and
-an IAL2 file may select a protocol or platform vocabulary inside the file.
+optional structural transaction-envelope metadata with per-transaction event
+dispatch/fan-in. Broader IAL2 still must justify itself with semantics above
+individual transactions, not only syntax convenience. Its generic file surface
+remains protocol/platform-generic, and an IAL2 file may select a protocol or
+platform vocabulary inside the file.
 
 IAL0, IAL1, IAL2, and this book describe backend-language-neutral contracts,
 not Perl-only implementation APIs. The current Perl 5 codebase is the
@@ -2679,16 +2681,17 @@ issuing, same-ID ordering queues, different-ID interleaving, `BID`/`RID`
 response matching, bursts, queued/blocking policy, per-transaction event
 ports, profile aliases, full AXI manager behavior, or VHDL.
 
-Next AXI manager prerequisite: transaction event dispatch:
+First transaction-event dispatch `.ppif` slice:
 [AXI_IAL2_MANAGER_TRANSACTION_EVENT_DISPATCH_SELECTION](../../AXI_IAL2_MANAGER_TRANSACTION_EVENT_DISPATCH_SELECTION.md)
-selects the next prerequisite before ID allocation or response matching. The
-current `(transactions ...)` slice records stable logical transactions but
-requires each one to bind to the existing direction-level abstract events. The
+selected the prerequisite before ID allocation or response matching. The
 readiness audit:
 [AXI_IAL2_MANAGER_TRANSACTION_EVENT_DISPATCH_READINESS_AUDIT](../../AXI_IAL2_MANAGER_TRANSACTION_EVENT_DISPATCH_READINESS_AUDIT.md)
-selects an additive implementation boundary. Distinct per-transaction request
-and completion events can fan into the read/write capacity/status rule
-matrices through the current IAL1/IAL0/SystemVerilog path:
+selected an additive implementation boundary. The first implementation slice:
+[AXI_IAL2_MANAGER_TRANSACTION_EVENT_DISPATCH_FIRST_SLICE](../../AXI_IAL2_MANAGER_TRANSACTION_EVENT_DISPATCH_FIRST_SLICE.md)
+ships that behavior under the existing optional `(transactions ...)` clause.
+Distinct per-transaction request and completion events now fan into the
+read/write capacity/status rule matrices through the current
+IAL1/IAL0/SystemVerilog path:
 
 ```text
 (transactions
@@ -2704,15 +2707,53 @@ matrices through the current IAL1/IAL0/SystemVerilog path:
     (id (value 3))))
 ```
 
-This is selected before ID allocation because a future allocator, per-ID busy
-reason, ordering queue, or response matcher needs to know which logical
-transaction requested or completed. The implementation frontier is to declare
-the unique event inputs, preserve scalar one-event compatibility, generate OR
-fan-in guards for multi-event groups, and report additive
-`transaction_event_dispatch` metadata. It does not implement or claim ID
-allocation, `BID`/`RID` response matching, same-ID ordering, interleaving,
-bursts, payload binding, queued/blocking policy, profile aliases, full AXI
-manager behavior, or VHDL.
+Runnable sample:
+
+```bash
+./bin/fsmgen --emit-schedule-json ppif/axi_manager_capacity_status_transaction_event_dispatch.ppif
+./bin/fsmgen --outdir generated ppif/axi_manager_capacity_status_transaction_event_dispatch.ppif
+./bin/fsmgen --strict --check --json ppif/axi_manager_capacity_status_transaction_event_dispatch.ppif
+./bin/fsmgen --strict --emit-semantic-json ppif/axi_manager_capacity_status_transaction_event_dispatch.ppif
+./bin/fsmgen --outdir generated --verify-hdl ppif/axi_manager_capacity_status_transaction_event_dispatch.ppif
+```
+
+The support-accounting entry is
+`intent.ppif_axi_manager_capacity_status_transaction_event_dispatch`.
+Schedule JSON keeps schema
+`fsmgen.ial2.protocol_intent.axi_manager_capacity_status.v1` and additively
+emits:
+
+```text
+transaction_event_dispatch:
+  mode: per_transaction_event_fanin
+  directions:
+    - direction: write
+      request_events:
+        - axi0_w0_request
+        - axi0_w1_request
+      completion_events:
+        - axi0_w0_complete
+        - axi0_w1_complete
+      request_fanin: "(| axi0_w0_request axi0_w1_request)"
+      completion_fanin: "(| axi0_w0_complete axi0_w1_complete)"
+    - direction: read
+      request_events:
+        - axi0_r0_request
+      completion_events:
+        - axi0_r0_complete
+      request_fanin: axi0_r0_request
+      completion_fanin: axi0_r0_complete
+```
+
+Generated `.isf` declares the transaction events as inputs and keeps scalar
+one-event compatibility for directions with one transaction event. Multi-event
+groups lower as OR fan-in guards, the generated `.fsm` preserves those guard
+expressions, and SystemVerilog emits the equivalent OR expressions through the
+existing backend. The IAL1 rule-conflict proof now understands the bounded
+OR/negated-OR guard shape used by this generated rule matrix. This slice does
+not implement or claim ID allocation, `BID`/`RID` response matching, same-ID
+ordering, interleaving, bursts, payload binding, queued/blocking policy,
+profile aliases, full AXI manager behavior, or VHDL.
 
 First implementation subset selection:
 [AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION](../../AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md)
@@ -2839,12 +2880,12 @@ first-slice alias exclusions, and `supported_cli_modes[]` entries for
 metadata, a selector for the next logical read/write
 transaction-envelope/static-validation subset, and the readiness audit for its
 additive static/report implementation boundary. The optional static
-`(transactions ...)` implementation slice is now also shipped, and the next
-prerequisite readiness audit selects additive transaction event dispatch and
-direction fan-in as the implementation frontier.
+`(transactions ...)` implementation slice and the additive transaction event
+dispatch/fan-in slice are now also shipped, with the next frontier selecting
+the next exact IAL2 feature-completeness step.
 Additional `.ppif` objects/clauses and profile aliases remain future
-exact-owner work, and they must not jump ahead of the active dispatch/fan-in
-implementation unless that slice records why.
+exact-owner work, and they must not jump ahead of the active selector unless
+that selector records why.
 
 Multi-channel `.ppif` bundle support:
 [IAL2_PPIF_MULTI_VALID_READY_READINESS](../../IAL2_PPIF_MULTI_VALID_READY_READINESS.md)
@@ -5001,8 +5042,10 @@ selector leaf `IAL2-FEATURE-COMPLETENESS-FRONTIER.13` selects transaction
 event dispatch and direction fan-in and advances the sequence to `.14`
 readiness audit. Completed readiness audit leaf
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.14` selects the additive implementation
-boundary and advances the active frontier to `.15`, the transaction event
-dispatch and direction fan-in implementation slice.
+boundary and advances the sequence to `.15`. Completed implementation leaf
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.15` ships transaction event dispatch and
+direction fan-in and advances the active frontier to `.16`, the next IAL2
+feature-completeness selector.
 Completed implementation leaf
 `ARCHITECTURE-DEBT-FRONTIER.2.1`
 projects direct backend storage/helper declaration-plan entries into

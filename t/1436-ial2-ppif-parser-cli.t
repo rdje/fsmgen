@@ -158,6 +158,24 @@ subtest 'PPIF adapter parses optional AXI manager transaction-envelope metadata'
     );
 };
 
+subtest 'PPIF adapter parses AXI manager transaction event dispatch' => sub {
+    my $sample_path = sample_capacity_transaction_dispatch_ppif_path();
+    ok(-f $sample_path, 'tracked runnable PPIF capacity/status transaction-event dispatch sample exists');
+
+    my $result = FSM::Adapter::IAL2::PPIF->new()->parse_source(sample_capacity_transaction_dispatch_ppif(), $sample_path);
+
+    is($result->{kind}, 'protocol_intent.axi_manager_capacity_status', 'dispatch sample still uses the capacity/status generator');
+    is($result->{report}{source_object}{id}, 'axi-manager-capacity-status-transaction-event-dispatch', 'dispatch source object id is preserved');
+    is($result->{report}{source_object}{intent_name}, 'axi_manager_capacity_status_transaction_event_dispatch', 'dispatch source intent name is preserved');
+    like($result->{generated_ial1}{text}, qr/\(input axi0_w0_request\)/, 'dispatch generated IAL1 declares first write transaction request input');
+    like($result->{generated_ial1}{text}, qr/\(rule write_submit_only_occ0 \(& \(\| axi0_w0_request axi0_w1_request\)/, 'dispatch generated IAL1 uses write request OR fan-in');
+    my %direction = map { $_->{direction} => $_ } @{$result->{report}{transaction_event_dispatch}{directions}};
+    is($result->{report}{transaction_event_dispatch}{mode}, 'per_transaction_event_fanin', 'dispatch report marks fan-in mode');
+    is_deeply($direction{write}{request_events}, [qw(axi0_w0_request axi0_w1_request)], 'dispatch report lists write request events');
+    is($direction{write}{request_fanin}, '(| axi0_w0_request axi0_w1_request)', 'dispatch report carries write request fan-in expression');
+    is($direction{read}{request_fanin}, 'axi0_r0_request', 'dispatch report keeps scalar read request fan-in');
+};
+
 subtest 'PPIF adapter diagnostics fail closed before generation claims' => sub {
     my @cases = (
         ['missing profile',
@@ -219,7 +237,13 @@ subtest 'PPIF adapter diagnostics fail closed before generation claims' => sub {
                 '(write (width 4) (request-id awid) (response-id bid)) (read (width 4) (request-id arid) (response-id rid))',
                 '(write w0 (tag wr0) (request axi0_read_submit) (completion axi0_write_complete) (id auto))',
             )),
-            qr/write request_event must reference existing direction-level event 'axi0_write_submit'/],
+            qr/write request_event must not reference read direction-level event 'axi0_read_submit'/],
+        ['manager transaction duplicate dispatch request event',
+            capacity_ppif_with_objects(manager_capacity_object_with_id_families_and_transactions(
+                '(write (width 4) (request-id awid) (response-id bid)) (read (width 4) (request-id arid) (response-id rid))',
+                '(write w0 (tag wr0) (request axi0_w0_request) (completion axi0_w0_complete) (id auto)) (write w1 (tag wr1) (request axi0_w0_request) (completion axi0_w1_complete) (id auto))',
+            )),
+            qr/write request_event 'axi0_w0_request' is reused by transactions 'w0' and 'w1' while using per-transaction dispatch/],
         ['manager transaction malformed id',
             capacity_ppif_with_objects(manager_capacity_object_with_transactions('(write w0 (tag wr0) (request axi0_write_submit) (completion axi0_write_complete) (id (policy auto)))')),
             qr/requires \(id auto\) or \(id \(value N\)\)/],
@@ -329,6 +353,23 @@ subtest 'CLI emits IAL2 report JSON for AXI manager transaction-envelope metadat
     is_deeply($report->{generated_artifacts}{ial0}{files}, ['axi0_capacity_status.fsm'], 'transaction metadata leaves generated .fsm artifact unchanged');
 };
 
+subtest 'CLI emits IAL2 report JSON for AXI manager transaction event dispatch .ppif' => sub {
+    my ($success, undef, undef, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--emit-schedule-json', sample_capacity_transaction_dispatch_ppif_path()],
+    );
+
+    ok($success, '--emit-schedule-json succeeds for capacity/status transaction-event dispatch .ppif');
+    is(join('', @{$stderr_buf || []}), '', 'capacity/status transaction-event dispatch report keeps stderr clean');
+    my $report = decode_json(join('', @{$stdout_buf || []}));
+    is($report->{schema}, 'fsmgen.ial2.protocol_intent.axi_manager_capacity_status.v1', 'CLI keeps the capacity/status report schema');
+    is($report->{source_object}{intent_name}, 'axi_manager_capacity_status_transaction_event_dispatch', 'dispatch report carries the PPIF top-level intent name');
+    my %direction = map { $_->{direction} => $_ } @{$report->{transaction_event_dispatch}{directions}};
+    is($report->{transaction_event_dispatch}{mode}, 'per_transaction_event_fanin', 'CLI report marks transaction event fan-in mode');
+    is_deeply($direction{write}{request_events}, [qw(axi0_w0_request axi0_w1_request)], 'CLI report carries write request fan-in events');
+    is($direction{write}{completion_fanin}, '(| axi0_w0_complete axi0_w1_complete)', 'CLI report carries write completion fan-in expression');
+    is($direction{read}{request_fanin}, 'axi0_r0_request', 'CLI report carries scalar read request fan-in');
+};
+
 subtest 'CLI --outdir materializes generated .isf, .fsm, and HDL for .ppif' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $outdir = File::Spec->catdir($tempdir, 'out');
@@ -364,6 +405,26 @@ subtest 'CLI --outdir and --verify-hdl materialize capacity/status review artifa
     like(slurp(File::Spec->catfile($outdir, 'axi0_capacity_status.isf')), qr/\(actor axi0_capacity_status\b/, 'capacity/status generated .isf is inspectable text');
     like(slurp($hdl), qr/\bmodule\s+axi0_capacity_status\b/, 'capacity/status HDL contains the generated module');
     like(slurp($hdl), qr/\baxi0_read_can_accept\b/, 'capacity/status HDL contains the namespaced read can_accept status');
+};
+
+subtest 'CLI --outdir and --verify-hdl materialize transaction dispatch review artifacts and HDL' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $outdir = File::Spec->catdir($tempdir, 'out');
+    my $hdl = File::Spec->catfile($tempdir, 'axi_dispatch.sv');
+
+    my ($success, undef, undef, undef, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--quiet', '--outdir', $outdir, '--output', $hdl, '--verify-hdl', sample_capacity_transaction_dispatch_ppif_path()],
+    );
+
+    ok($success, 'transaction dispatch CLI generation and --verify-hdl succeed');
+    is(join('', @{$stderr_buf || []}), '', 'transaction dispatch generation keeps stderr clean');
+    my $isf = slurp(File::Spec->catfile($outdir, 'axi0_capacity_status.isf'));
+    my $fsm = slurp(File::Spec->catfile($outdir, 'axi0_capacity_status.fsm'));
+    my $sv = slurp($hdl);
+    like($isf, qr/\(input axi0_w0_request\)/, 'transaction dispatch --outdir writes generated .isf with transaction event input');
+    like($fsm, qr/\(-write_submit_only_occ0\s+<\(& \(\| axi0_w0_request axi0_w1_request\)/, 'transaction dispatch --outdir writes generated .fsm with OR fan-in guard');
+    like($sv, qr/\bmodule\s+axi0_capacity_status\b/, 'transaction dispatch HDL contains the generated module');
+    like($sv, qr/\baxi0_w0_request\s*\|\s*axi0_w1_request\b/, 'transaction dispatch HDL lowers request OR fan-in');
 };
 
 subtest 'CLI --outdir materializes bundle review artifacts and HDL' => sub {
@@ -581,6 +642,50 @@ subtest 'CLI check JSON and semantic JSON support-account transaction-envelope .
     );
 };
 
+subtest 'CLI check JSON and semantic JSON support-account transaction-event dispatch .ppif separately' => sub {
+    my $dispatch_path = sample_capacity_transaction_dispatch_ppif_path();
+    my ($success, undef, undef, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--strict', '--check', '--json', $dispatch_path],
+    );
+    ok($success, 'capacity/status transaction-event dispatch --check --json succeeds');
+    is(join('', @{$stderr_buf || []}), '', 'capacity/status transaction-event dispatch --check --json keeps stderr clean');
+    my $check_report = decode_json(join('', @{$stdout_buf || []}));
+    ok($check_report->{success}, 'capacity/status transaction-event dispatch check JSON reports success');
+    is(
+        $check_report->{source}{resolved_path},
+        File::Spec->rel2abs($dispatch_path),
+        'capacity/status transaction-event dispatch check JSON reports the public .ppif source path',
+    );
+    is(
+        $check_report->{support_accounting}{entry_id},
+        'intent.ppif_axi_manager_capacity_status_transaction_event_dispatch',
+        'capacity/status transaction-event dispatch check JSON support accounting names the PPIF corpus entry',
+    );
+
+    my ($semantic_success, undef, undef, $semantic_stdout, $semantic_stderr) = run(
+        command => ['./bin/fsmgen', '--strict', '--emit-semantic-json', $dispatch_path],
+    );
+    ok($semantic_success, 'capacity/status transaction-event dispatch --emit-semantic-json succeeds');
+    is(join('', @{$semantic_stderr || []}), '', 'capacity/status transaction-event dispatch --emit-semantic-json keeps stderr clean');
+    my $semantic_report = decode_json(join('', @{$semantic_stdout || []}));
+    ok($semantic_report->{success}, 'capacity/status transaction-event dispatch semantic JSON reports success');
+    is(
+        $semantic_report->{source}{resolved_path},
+        File::Spec->rel2abs($dispatch_path),
+        'capacity/status transaction-event dispatch semantic JSON reports the public .ppif source path',
+    );
+    is(
+        $semantic_report->{support_accounting}{entry_id},
+        'intent.ppif_axi_manager_capacity_status_transaction_event_dispatch',
+        'capacity/status transaction-event dispatch semantic JSON support accounting names the PPIF corpus entry',
+    );
+    is(
+        $semantic_report->{semantic}{module}{name},
+        'axi0_capacity_status',
+        'capacity/status transaction-event dispatch semantic JSON records the generated module',
+    );
+};
+
 subtest 'CLI bundle HDL modes use aggregate wrapper entry' => sub {
     my $bundle_path = sample_bundle_ppif_path();
     my $tempdir = tempdir(CLEANUP => 1);
@@ -691,6 +796,10 @@ sub sample_capacity_transaction_ppif_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_transaction_envelope.ppif');
 }
 
+sub sample_capacity_transaction_dispatch_ppif_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_transaction_event_dispatch.ppif');
+}
+
 sub sample_ppif {
     return slurp(sample_ppif_path());
 }
@@ -709,6 +818,10 @@ sub sample_capacity_id_family_ppif {
 
 sub sample_capacity_transaction_ppif {
     return slurp(sample_capacity_transaction_ppif_path());
+}
+
+sub sample_capacity_transaction_dispatch_ppif {
+    return slurp(sample_capacity_transaction_dispatch_ppif_path());
 }
 
 sub capacity_ppif_with_objects {

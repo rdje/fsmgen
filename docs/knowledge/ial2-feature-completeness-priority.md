@@ -17,11 +17,12 @@ reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER|IAL2 feature completeness|IA
 The current feature-completeness priority is IAL2 on the
 SystemVerilog-backed path.
 
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.15` owns the next PNT implementation
-frontier: additive AXI manager transaction event dispatch and direction fan-in
-under the existing `manager-capacity-status` object. The completed `.14`
-readiness audit selected that boundary with no separate IAL1, IAL0, or
-SystemVerilog prerequisite first.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.16` owns the next PNT frontier: select
+the next exact IAL2 feature-completeness slice after shipped AXI manager
+transaction event dispatch and direction fan-in. The completed `.15` slice
+shipped event provenance, OR fan-in guards, additive
+`transaction_event_dispatch` report metadata, and bounded IAL1 OR/negated-OR
+guard conflict proof support.
 
 Selected IAL2 work may include required IAL1 or IAL0/SV support, but only when
 those prerequisites are explicit, task-tree owned, documented, and
