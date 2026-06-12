@@ -199,9 +199,7 @@ The generated behavior readiness audit concluded that write `BID` demux needed
 a small IAL1 prerequisite first: generated transaction completion names must
 be one-cycle pulse actions, not sticky flopped rule assignments. That
 prerequisite is now shipped as bounded IAL1 `(pulse TARGET)` rule actions that
-lower as `<1` pulse-domain assignments. Read `RID` response demux, same-ID
-ordering, read-data interleaving/reassembly, bursts, queued policy, aliases,
-full-manager behavior, and VHDL remain behind future exact owners. The
+lower as `<1` pulse-domain assignments. The
 post-demux report alignment follow-up is now shipped:
 `auto_id_lifecycle.residue` removes stale `response_demux` residue when
 generated write `BID` demux drives auto-ID release. The first bounded
@@ -221,11 +219,15 @@ the read arm requires `response-event`, `response-scope single-beat`, and
 read-demux sample is covered by check JSON, semantic JSON, and support
 accounting. Readiness audit `.40` concluded that bounded single-beat generated
 read `RID` response-demux behavior can be implemented directly with no new
-IAL1/IAL0/SystemVerilog prerequisite. The current frontier is
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.41`, the generated read behavior slice:
-make response-demux helpers family-aware, add `RID` as a generated input,
-emit generated read completion pulse outputs/rules/assertions, and keep
-capacity release plus auto-ID release on those generated completion pulses.
+IAL1/IAL0/SystemVerilog prerequisite. The generated behavior slice `.41` is
+now shipped: response-demux helpers are family-aware, the generator adds
+`RID` as a generated input, emits generated read completion pulse
+outputs/rules/assertions, and keeps read capacity release plus read auto-ID
+release on those generated completion pulses. Schedule JSON reports
+`response_demux.read.generated_behavior` true with generated rules, completion
+signals, assertions, and read-demux residue removed. The current frontier is
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.42`, the selector for the next
+SV-backed IAL2 feature-completeness slice after generated read response demux.
 Read-data interleaving/reassembly, bursts, per-ID queues, full-manager
 behavior, and VHDL remain residue. VHDL remains behind SV-backed IAL feature
 completeness.
@@ -785,6 +787,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/AXI_IAL2_MANAGER_READ_RESPONSE_DEMUX_CONTRACT_SELECTION.md` — selected explicit `response-scope single-beat` read response-demux syntax before parser/report implementation.
 - `docs/AXI_IAL2_MANAGER_READ_RESPONSE_DEMUX_METADATA_FIRST_SLICE.md` — shipped read response-demux parser/report metadata and static validation without generated read behavior.
 - `docs/AXI_IAL2_MANAGER_READ_RESPONSE_DEMUX_BEHAVIOR_READINESS_AUDIT.md` — readiness audit selecting bounded generated single-beat read `RID` response-demux behavior before implementation.
+- `docs/AXI_IAL2_MANAGER_READ_RESPONSE_DEMUX_BEHAVIOR_FIRST_SLICE.md` — shipped bounded generated single-beat read `RID` response-demux behavior for explicit read response-demux contracts.
 - `docs/AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md` — selected first AXI-derived IAL2 implementation subset and pre-code contract.
 - `docs/AXI_IAL2_VALID_READY_READINESS_AUDIT.md` — code/test/docs/report owner map for a future AXI Valid-Ready IAL2 implementation slice.
 - `docs/AXI_IAL2_VALID_READY_GENERATOR_FIRST_SLICE.md` — first in-process AXI Valid-Ready IAL2 generator slice and report surface.
@@ -801,7 +804,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `ppif/axi_manager_capacity_status_transaction_envelope.ppif` — checked-in runnable `.ppif` sample for AXI manager transaction-envelope metadata and concrete direction-level ID assertions.
 - `ppif/axi_manager_capacity_status_transaction_event_dispatch.ppif` — checked-in runnable `.ppif` sample for AXI manager transaction event dispatch/fan-in and concrete per-transaction ID assertions.
 - `ppif/axi_manager_capacity_status_auto_id_lifecycle.ppif` — checked-in runnable `.ppif` sample for AXI manager auto-ID lifecycle bounded-pool request-ID drive behavior.
-- `ppif/axi_manager_capacity_status_read_response_demux.ppif` — checked-in runnable `.ppif` sample for AXI manager read response-demux parser/report metadata without generated read demux behavior.
+- `ppif/axi_manager_capacity_status_read_response_demux.ppif` — checked-in runnable `.ppif` sample for AXI manager read response-demux generated single-beat `RID` behavior.
 - `docs/PDF_EXTRACTION_WORKFLOW.md` — portable workflow for task-owned source-anchored PDF text, table, diagram, and image extraction.
 - `docs/decisions/0014-protocol-platform-intent-surface-and-layered-lowering.md` — generic IAL2 file-surface candidates and layered lowering decision.
 - `docs/decisions/0015-ial2-profile-extensions-are-vocabulary-aliases.md` — IAL2 protocol-profile extension refinement.

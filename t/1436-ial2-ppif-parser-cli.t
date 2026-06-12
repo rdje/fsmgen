@@ -238,24 +238,25 @@ subtest 'PPIF adapter parses AXI manager write response-demux behavior' => sub {
     is_deeply($result->{report}{id_response_rule_engine}{residue}, [qw(same_id_ordering)], 'adapter report removes response_demux from ID/response residue');
 };
 
-subtest 'PPIF adapter parses AXI manager read response-demux metadata' => sub {
+subtest 'PPIF adapter parses AXI manager read response-demux behavior' => sub {
     my $sample_path = sample_capacity_read_response_demux_ppif_path();
     ok(-f $sample_path, 'tracked runnable PPIF capacity/status read response-demux sample exists');
 
-    my $base = FSM::Adapter::IAL2::PPIF->new()->parse_source(sample_capacity_read_response_demux_base_ppif(), "$sample_path.base");
     my $result = FSM::Adapter::IAL2::PPIF->new()->parse_source(sample_capacity_read_response_demux_ppif(), $sample_path);
 
     is($result->{kind}, 'protocol_intent.axi_manager_capacity_status', 'read response-demux sample still uses the capacity/status generator');
     is($result->{report}{source_object}{id}, 'axi-manager-capacity-status-read-response-demux', 'read response-demux source object id is preserved');
     is($result->{report}{source_object}{intent_name}, 'axi_manager_capacity_status_read_response_demux', 'read response-demux source intent name is preserved');
-    is($result->{generated_ial1}{text}, $base->{generated_ial1}{text}, 'read response-demux metadata does not alter generated IAL1');
-    is_deeply($result->{generated_ial0}{files}, $base->{generated_ial0}{files}, 'read response-demux metadata does not alter generated IAL0');
-    like($result->{generated_ial1}{text}, qr/\(input axi0_r0_complete\)/, 'read completion remains an authored input before behavior ships');
-    unlike($result->{generated_ial1}{text}, qr/\(input axi0_rid\b/, 'read response ID is not generated as an input before behavior ships');
-    unlike($result->{generated_ial1}{text}, qr/\(output axi0_r0_complete\b/, 'read completion output is not generated before behavior ships');
-    unlike($result->{generated_ial1}{text}, qr/\(rule axi0_r0_response_demux\b/, 'read demux rule is not generated before behavior ships');
+    like($result->{generated_ial1}{text}, qr/\(input axi0_read_complete\)/, 'read response-demux generated IAL1 declares the raw read response event');
+    like($result->{generated_ial1}{text}, qr/\(input axi0_rid \(width 4\)\)/, 'read response-demux generated IAL1 declares RID input');
+    unlike($result->{generated_ial1}{text}, qr/\(input axi0_r0_complete\b/, 'read response-demux generated IAL1 does not declare generated completion as input');
+    like($result->{generated_ial1}{text}, qr/\(output axi0_r0_complete\)/, 'read response-demux generated IAL1 declares generated completion output');
+    like($result->{generated_ial1}{text}, qr/\(rule axi0_r0_response_demux\b[\s\S]*\(pulse axi0_r0_complete\)\)/, 'read response-demux generated IAL1 emits r0 pulse rule');
+    like($result->{generated_ial1}{text}, qr/"axi0 read auto ID active selected IDs are unique"/, 'read response-demux generated IAL1 keeps same-ID avoidance assertion');
+    like($result->{generated_ial0}{files}{'axi0_capacity_status.fsm'}, qr/\(-axi0_r0_response_demux\b[\s\S]*\(<1 \(axi0_r0_complete> 1\)\)/, 'read response-demux generated IAL0 emits r0 completion pulse');
     assert_read_response_demux_report($result->{report}{response_demux}, 'adapter report');
-    is_deeply($result->{report}{auto_id_lifecycle}{residue}, [qw(response_demux)], 'adapter report keeps read response demux as behavior residue');
+    assert_same_id_ordering_report($result->{report}{same_id_ordering}, 'adapter report', 1, 'read');
+    is_deeply($result->{report}{auto_id_lifecycle}{residue}, [], 'adapter report removes response_demux and same-ID residue from read auto-ID lifecycle residue');
 };
 
 subtest 'PPIF adapter parses mixed AXI manager response-demux arms' => sub {
@@ -272,20 +273,26 @@ subtest 'PPIF adapter parses mixed AXI manager response-demux arms' => sub {
     like($isf, qr/\(input bid \(width 4\)\)/, 'mixed response-demux generated IAL1 declares BID input');
     like($isf, qr/\(output axi0_w0_complete\)/, 'mixed response-demux generated IAL1 declares write completion output');
     like($isf, qr/\(rule axi0_w0_response_demux\b[\s\S]*\(pulse axi0_w0_complete\)\)/, 'mixed response-demux generated IAL1 emits write pulse rule');
-    unlike($isf, qr/\(input axi0_rid\b/, 'mixed response-demux keeps RID metadata-only before read behavior ships');
-    unlike($isf, qr/\(output axi0_r0_complete\b/, 'mixed response-demux does not generate read completion output yet');
-    unlike($isf, qr/\(rule axi0_r0_response_demux\b/, 'mixed response-demux does not emit read demux rule yet');
+    like($isf, qr/\(input rid \(width 4\)\)/, 'mixed response-demux generated IAL1 declares RID input');
+    like($isf, qr/\(output axi0_r0_complete\)/, 'mixed response-demux generated IAL1 declares read completion output');
+    like($isf, qr/\(rule axi0_r0_response_demux\b[\s\S]*\(pulse axi0_r0_complete\)\)/, 'mixed response-demux generated IAL1 emits read pulse rule');
 
     is($demux->{mode}, 'bounded_response_demux_contract', 'mixed response-demux report uses combined mode');
-    ok($demux->{generated_behavior}, 'mixed response-demux report keeps top-level generated behavior true for write behavior');
+    ok($demux->{generated_behavior}, 'mixed response-demux report keeps top-level generated behavior true');
     is($demux->{write}{mode}, 'bounded_write_bid_demux_contract', 'mixed response-demux report keeps write mode');
     ok($demux->{write}{generated_behavior}, 'mixed response-demux report keeps write generated behavior true');
     is_deeply($demux->{write}{auto_transactions}, [qw(w0 w1)], 'mixed response-demux report keeps write auto transactions');
     is($demux->{read}{mode}, 'bounded_read_rid_demux_contract', 'mixed response-demux report adds read mode');
-    ok(!$demux->{read}{generated_behavior}, 'mixed response-demux report keeps read generated behavior false');
+    ok($demux->{read}{generated_behavior}, 'mixed response-demux report marks read generated behavior true');
     is_deeply($demux->{read}{auto_transactions}, [qw(r0 r1)], 'mixed response-demux report keeps read auto transactions');
-    is_deeply($demux->{residue}, [qw(generated_read_rid_demux read_data_interleaving bursts)], 'mixed response-demux report keeps generated read demux residue');
-    is_deeply($result->{report}{auto_id_lifecycle}{residue}, [qw(response_demux)], 'mixed response-demux report keeps lifecycle response_demux residue until read behavior ships');
+    is_deeply($demux->{read}{generated_rules}, [qw(axi0_r0_response_demux axi0_r1_response_demux)], 'mixed response-demux report lists generated read rules');
+    is_deeply($demux->{read}{generated_completion_signals}, [qw(axi0_r0_complete axi0_r1_complete)], 'mixed response-demux report lists generated read completion signals');
+    is_deeply($demux->{residue}, [qw(read_data_interleaving bursts)], 'mixed response-demux report keeps only read data/interleaving and burst residue');
+    is_deeply($result->{report}{auto_id_lifecycle}{residue}, [], 'mixed response-demux report removes lifecycle response_demux residue after both families are covered');
+    my %same_id_families = map { $_->{family} => $_ } @{$result->{report}{same_id_ordering}{families}};
+    is_deeply(sorted([keys %same_id_families]), [qw(read write)], 'mixed same-ID report carries write and read families');
+    assert_same_id_ordering_family($same_id_families{write}, 'adapter report mixed write', 'write', 1);
+    assert_same_id_ordering_family($same_id_families{read}, 'adapter report mixed read', 'read', 1);
 };
 
 subtest 'PPIF adapter diagnostics fail closed before generation claims' => sub {
@@ -620,7 +627,7 @@ subtest 'CLI emits IAL2 report JSON for AXI manager response-demux behavior .ppi
     is_deeply($report->{generated_artifacts}{ial0}{files}, ['axi0_capacity_status.fsm'], 'response-demux behavior keeps the generated .fsm artifact name stable');
 };
 
-subtest 'CLI emits IAL2 report JSON for AXI manager read response-demux metadata .ppif' => sub {
+subtest 'CLI emits IAL2 report JSON for AXI manager read response-demux behavior .ppif' => sub {
     my ($success, undef, undef, $stdout_buf, $stderr_buf) = run(
         command => ['./bin/fsmgen', '--emit-schedule-json', sample_capacity_read_response_demux_ppif_path()],
     );
@@ -631,8 +638,9 @@ subtest 'CLI emits IAL2 report JSON for AXI manager read response-demux metadata
     is($report->{schema}, 'fsmgen.ial2.protocol_intent.axi_manager_capacity_status.v1', 'CLI keeps the capacity/status report schema');
     is($report->{source_object}{intent_name}, 'axi_manager_capacity_status_read_response_demux', 'read response-demux report carries the PPIF top-level intent name');
     assert_read_response_demux_report($report->{response_demux}, 'CLI report');
-    is_deeply($report->{auto_id_lifecycle}{residue}, [qw(response_demux)], 'CLI report keeps generated read demux behavior as auto-ID lifecycle residue');
-    is_deeply($report->{generated_artifacts}{ial0}{files}, ['axi0_capacity_status.fsm'], 'read response-demux metadata keeps the generated .fsm artifact name stable');
+    assert_same_id_ordering_report($report->{same_id_ordering}, 'CLI report', 1, 'read');
+    is_deeply($report->{auto_id_lifecycle}{residue}, [], 'CLI report removes generated read demux behavior from auto-ID lifecycle residue');
+    is_deeply($report->{generated_artifacts}{ial0}{files}, ['axi0_capacity_status.fsm'], 'read response-demux behavior keeps the generated .fsm artifact name stable');
 };
 
 subtest 'CLI --verify-hdl accepts AXI manager auto-ID lifecycle behavior .ppif' => sub {
@@ -665,6 +673,23 @@ subtest 'CLI --verify-hdl accepts AXI manager response-demux behavior .ppif' => 
     like($sv, qr/\binput\s+(?:wire\s+)?\[3:0\]\s+axi0_bid\b/, 'response-demux HDL exposes generated BID input');
     like($sv, qr/\boutput\s+reg\s+axi0_w0_complete\b/, 'response-demux HDL exposes generated completion output');
     like($sv, qr/axi0_write_complete\s*&\s*axi0_w0_auto_id_busy_q\s*&\s*\(axi0_bid\s*==\s*axi0_w0_auto_id_q\)/, 'response-demux HDL lowers the BID match guard');
+};
+
+subtest 'CLI --verify-hdl accepts AXI manager read response-demux behavior .ppif' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $hdl = File::Spec->catfile($tempdir, 'axi_read_response_demux.sv');
+
+    my ($success, undef, undef, undef, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--quiet', '--verify-hdl', '--output', $hdl, sample_capacity_read_response_demux_ppif_path()],
+    );
+
+    ok($success, 'capacity/status read response-demux --verify-hdl succeeds');
+    is(join('', @{$stderr_buf || []}), '', 'capacity/status read response-demux --verify-hdl keeps stderr clean');
+    ok(-f $hdl, 'read response-demux --output writes generated HDL');
+    my $sv = slurp($hdl);
+    like($sv, qr/\binput\s+(?:wire\s+)?\[3:0\]\s+axi0_rid\b/, 'read response-demux HDL exposes generated RID input');
+    like($sv, qr/\boutput\s+reg\s+axi0_r0_complete\b/, 'read response-demux HDL exposes generated completion output');
+    like($sv, qr/axi0_read_complete\s*&\s*axi0_r0_auto_id_busy_q\s*&\s*\(axi0_rid\s*==\s*axi0_r0_auto_id_q\)/, 'read response-demux HDL lowers the RID match guard');
 };
 
 subtest 'CLI --outdir materializes generated .isf, .fsm, and HDL for .ppif' => sub {
@@ -1118,7 +1143,7 @@ subtest 'CLI check JSON and semantic JSON support-account read response-demux .p
     is(
         $semantic_report->{semantic}{module}{name},
         'axi0_capacity_status',
-        'capacity/status read response-demux semantic JSON records the unchanged generated module',
+        'capacity/status read response-demux semantic JSON records the generated module',
     );
 };
 
@@ -1549,9 +1574,9 @@ sub assert_write_response_demux_report {
 sub assert_read_response_demux_report {
     my ($demux, $owner) = @_;
     is($demux->{mode}, 'bounded_response_demux_contract', "$owner marks bounded response-demux contract mode");
-    ok(!$demux->{generated_behavior}, "$owner keeps top-level generated behavior false for read-only metadata");
+    ok($demux->{generated_behavior}, "$owner marks top-level generated behavior true for read demux");
     is($demux->{read}{mode}, 'bounded_read_rid_demux_contract', "$owner marks bounded read RID-demux contract mode");
-    ok(!$demux->{read}{generated_behavior}, "$owner marks read generated behavior false");
+    ok($demux->{read}{generated_behavior}, "$owner marks read generated behavior true");
     is($demux->{read}{response_event}, 'axi0_read_complete', "$owner reports the raw read response event");
     is($demux->{read}{response_event_role}, 'raw_accepted_read_response', "$owner reports the read response-event role");
     is($demux->{read}{response_scope}, 'single_beat', "$owner reports single-beat read response scope");
@@ -1559,42 +1584,66 @@ sub assert_read_response_demux_report {
     is($demux->{read}{response_id_direction}, 'generated_input', "$owner reports read response ID direction as generated input");
     is($demux->{read}{transaction_completion_source}, 'generated_demux', "$owner reports generated read transaction-completion ownership");
     is_deeply($demux->{read}{auto_transactions}, [qw(r0 r1)], "$owner reports read auto-ID transactions in source order");
-    ok(!exists $demux->{read}{generated_rules}, "$owner does not report read generated rules yet");
-    ok(!exists $demux->{read}{generated_completion_signals}, "$owner does not report read generated completion outputs yet");
-    ok(!exists $demux->{read}{generated_assertions}, "$owner does not report read generated assertions yet");
+    is_deeply($demux->{read}{generated_rules}, [qw(axi0_r0_response_demux axi0_r1_response_demux)], "$owner reports generated read demux rules");
+    is_deeply($demux->{read}{generated_completion_signals}, [qw(axi0_r0_complete axi0_r1_complete)], "$owner reports generated read completion pulse signals");
     is_deeply(
-        $demux->{residue},
-        [qw(generated_read_rid_demux read_data_interleaving bursts)],
-        "$owner reports generated read RID demux behavior as residue",
+        $demux->{read}{generated_assertions},
+        [qw(axi0_read_response_demux_active_match axi0_r0_r1_read_response_demux_unique_match)],
+        "$owner reports generated read response-demux assertions",
     );
+    is_deeply($demux->{residue}, [qw(read_data_interleaving bursts)], "$owner removes generated read RID demux behavior from residue");
 }
 
 sub assert_same_id_ordering_report {
-    my ($ordering, $owner, $response_demux_covered) = @_;
+    my ($ordering, $owner, $response_demux_covered, $family_name) = @_;
+    $family_name //= 'write';
     is($ordering->{mode}, 'auto_id_same_id_avoidance', "$owner marks same-ID avoidance mode");
     ok($ordering->{generated_behavior}, "$owner marks same-ID ordering generated behavior true");
     is($ordering->{strategy}, 'avoid_same_id_concurrency', "$owner reports same-ID avoidance strategy");
+    my @residue = qw(concrete_id_same_id_ordering per_id_issue_order_queues);
+    push @residue, 'read_response_demux' unless $family_name eq 'read' && $response_demux_covered;
+    push @residue, qw(read_data_interleaving bursts);
     is_deeply(
         $ordering->{residue},
-        [qw(concrete_id_same_id_ordering per_id_issue_order_queues read_response_demux read_data_interleaving bursts)],
+        \@residue,
         "$owner reports broader same-ID ordering residue",
     );
     ok(@{$ordering->{source_anchors}}, "$owner carries source anchors into same-ID ordering metadata");
     is(scalar(@{$ordering->{families}}), 1, "$owner reports one same-ID ordering family");
-    my $write = $ordering->{families}[0];
-    is($write->{family}, 'write', "$owner reports the write same-ID family");
-    is($write->{strategy}, 'avoid_same_id_concurrency', "$owner reports family same-ID avoidance strategy");
-    is($write->{enforcement}, 'allocator_free_id_guard', "$owner reports allocator free-ID enforcement");
-    is($write->{assertion_enforcement}, 'runtime_assertion', "$owner reports runtime assertion enforcement");
+    assert_same_id_ordering_family($ordering->{families}[0], $owner, $family_name, $response_demux_covered);
+}
+
+sub assert_same_id_ordering_family {
+    my ($family, $owner, $family_name, $response_demux_covered) = @_;
+    my %expected = (
+        write => {
+            auto_transactions   => [qw(w0 w1)],
+            selected_id_signals => [qw(axi0_w0_auto_id_q axi0_w1_auto_id_q)],
+            busy_signals        => [qw(axi0_w0_auto_id_busy_q axi0_w1_auto_id_busy_q)],
+            generated_assertions => [qw(axi0_w0_w1_auto_id_unique_active_id)],
+        },
+        read => {
+            auto_transactions   => [qw(r0 r1)],
+            selected_id_signals => [qw(axi0_r0_auto_id_q axi0_r1_auto_id_q)],
+            busy_signals        => [qw(axi0_r0_auto_id_busy_q axi0_r1_auto_id_busy_q)],
+            generated_assertions => [qw(axi0_r0_r1_auto_id_unique_active_id)],
+        },
+    );
+    my $expect = $expected{$family_name};
+
+    is($family->{family}, $family_name, "$owner reports the $family_name same-ID family");
+    is($family->{strategy}, 'avoid_same_id_concurrency', "$owner reports family same-ID avoidance strategy");
+    is($family->{enforcement}, 'allocator_free_id_guard', "$owner reports allocator free-ID enforcement");
+    is($family->{assertion_enforcement}, 'runtime_assertion', "$owner reports runtime assertion enforcement");
     if ($response_demux_covered) {
-        ok($write->{response_demux_covered}, "$owner reports response-demux coverage");
+        ok($family->{response_demux_covered}, "$owner reports response-demux coverage");
     } else {
-        ok(!$write->{response_demux_covered}, "$owner reports response-demux coverage");
+        ok(!$family->{response_demux_covered}, "$owner reports response-demux coverage");
     }
-    is_deeply($write->{auto_transactions}, [qw(w0 w1)], "$owner reports covered auto-ID transactions");
-    is_deeply($write->{selected_id_signals}, [qw(axi0_w0_auto_id_q axi0_w1_auto_id_q)], "$owner reports selected-ID signals");
-    is_deeply($write->{busy_signals}, [qw(axi0_w0_auto_id_busy_q axi0_w1_auto_id_busy_q)], "$owner reports busy signals");
-    is_deeply($write->{generated_assertions}, [qw(axi0_w0_w1_auto_id_unique_active_id)], "$owner reports same-ID avoidance assertion");
+    is_deeply($family->{auto_transactions}, $expect->{auto_transactions}, "$owner reports covered auto-ID transactions");
+    is_deeply($family->{selected_id_signals}, $expect->{selected_id_signals}, "$owner reports selected-ID signals");
+    is_deeply($family->{busy_signals}, $expect->{busy_signals}, "$owner reports busy signals");
+    is_deeply($family->{generated_assertions}, $expect->{generated_assertions}, "$owner reports same-ID avoidance assertion");
 }
 
 sub write_file {

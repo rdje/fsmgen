@@ -465,37 +465,66 @@ subtest 'response-demux contract generates bounded write BID demux behavior' => 
     like($sv_assertions, qr/axi0 write auto ID active selected IDs are unique/, 'assertion backend emits same-ID avoidance assertion');
 };
 
-subtest 'read response-demux contract reports metadata without generated read behavior' => sub {
-    my $base = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_read_auto_id_lifecycle());
+subtest 'read response-demux contract generates bounded read RID demux behavior' => sub {
     my $result = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_read_response_demux());
     my $isf = $result->{generated_ial1}{text};
 
-    is(
+    like($isf, qr/\(input axi0_read_complete\)/, 'read response-demux declares the raw read response event as an input');
+    like($isf, qr/\(input axi0_rid \(width 4\)\)/, 'read response-demux declares RID as a generated-width IAL1 input');
+    unlike($isf, qr/\(input axi0_r0_complete\b/, 'read response-demux does not treat r0 completion as an authored event input');
+    unlike($isf, qr/\(input axi0_r1_complete\b/, 'read response-demux does not treat r1 completion as an authored event input');
+    like($isf, qr/\(output axi0_r0_complete\)/, 'read response-demux exposes r0 completion as a generated pulse output');
+    like($isf, qr/\(output axi0_r1_complete\)/, 'read response-demux exposes r1 completion as a generated pulse output');
+    like(
         $isf,
-        $base->{generated_ial1}{text},
-        'read response-demux metadata does not alter generated IAL1 text in this slice',
+        qr/\(rule axi0_r0_response_demux \(& axi0_read_complete axi0_r0_auto_id_busy_q \(== axi0_rid axi0_r0_auto_id_q\)\)\s+\(pulse axi0_r0_complete\)\)/,
+        'read response-demux emits a guarded pulse rule for r0',
     );
-    is_deeply(
-        $result->{generated_ial0}{files},
-        $base->{generated_ial0}{files},
-        'read response-demux metadata does not alter generated IAL0 files in this slice',
+    like(
+        $isf,
+        qr/\(rule axi0_r1_response_demux \(& axi0_read_complete axi0_r1_auto_id_busy_q \(== axi0_rid axi0_r1_auto_id_q\)\)\s+\(pulse axi0_r1_complete\)\)/,
+        'read response-demux emits a guarded pulse rule for r1',
     );
+    like($isf, qr/"axi0 read response matches active auto-ID transaction"/, 'read response-demux emits unmatched/inactive response assertion');
+    like($isf, qr/"axi0 read response matches at most one auto-ID transaction"/, 'read response-demux emits ambiguous-match assertion');
+    like($isf, qr/"axi0 read auto ID active selected IDs are unique"/, 'read response-demux keeps same-ID avoidance assertion');
 
-    like($isf, qr/\(input axi0_r0_complete\)/, 'read transaction completion remains an authored input until behavior ships');
-    unlike($isf, qr/\(input axi0_read_complete\b/, 'raw read response event is not added to generated IAL1 before behavior ships');
-    unlike($isf, qr/\(input axi0_rid\b/, 'read response ID signal is metadata-only before behavior ships');
-    unlike($isf, qr/\(output axi0_r0_complete\b/, 'read transaction completion is not emitted as a generated output yet');
-    unlike($isf, qr/\(rule axi0_r0_response_demux\b/, 'read response-demux rules are not generated yet');
+    my $fsm = $result->{generated_ial0}{files}{'axi0_capacity_status.fsm'};
+    like($fsm, qr/\(\+size[\s\S]*\(axi0_rid 4\)/, 'scheduled .fsm declares RID width');
+    like(
+        $fsm,
+        qr/\(-axi0_r0_response_demux\s+<\(& axi0_read_complete axi0_r0_auto_id_busy_q \(== axi0_rid axi0_r0_auto_id_q\)\)[\s\S]*\(<1 \(axi0_r0_complete> 1\)\)/,
+        'scheduled .fsm lowers r0 demux completion as a one-cycle pulse',
+    );
+    like(
+        $fsm,
+        qr/\(-axi0_r1_response_demux\s+<\(& axi0_read_complete axi0_r1_auto_id_busy_q \(== axi0_rid axi0_r1_auto_id_q\)\)[\s\S]*\(<1 \(axi0_r1_complete> 1\)\)/,
+        'scheduled .fsm lowers r1 demux completion as a one-cycle pulse',
+    );
+    like($fsm, qr/\(-axi0_r0_auto_id_release\s+<\(& axi0_r0_complete axi0_r0_auto_id_busy_q\)/, 'auto-ID release is driven by generated r0 completion pulse');
+    like($fsm, qr/\(-read_complete_only_occ1\s+<\(& \(! \(\| axi0_r0_request axi0_r1_request\)\) \(\| axi0_r0_complete axi0_r1_complete\)/, 'read capacity release is driven by generated completion pulse fan-in');
 
     assert_read_response_demux_report($result->{report}{response_demux}, 'generator report');
+    assert_same_id_ordering_report($result->{report}{same_id_ordering}, 'generator report', 1, 'read');
     is_deeply(
         $result->{report}{auto_id_lifecycle}{residue},
-        [qw(response_demux)],
-        'read response-demux metadata keeps response_demux as auto-ID lifecycle behavior residue',
+        [],
+        'read auto-ID lifecycle report removes response_demux and same-ID residue when generated demux and same-ID avoidance are covered',
     );
+
+    my $hdl = hdl_for('axi0_capacity_status', $fsm);
+    like($hdl, qr/\binput\s+(?:wire\s+)?\[3:0\]\s+axi0_rid\b/, 'SystemVerilog declares RID as a 4-bit input');
+    like($hdl, qr/\boutput\s+reg\s+axi0_r0_complete\b/, 'SystemVerilog declares generated r0 completion output');
+    like($hdl, qr/\boutput\s+reg\s+axi0_r1_complete\b/, 'SystemVerilog declares generated r1 completion output');
+    like($hdl, qr/axi0_read_complete\s*&\s*axi0_r0_auto_id_busy_q\s*&\s*\(axi0_rid\s*==\s*axi0_r0_auto_id_q\)/, 'SystemVerilog lowers the r0 RID demux guard');
+
+    my $sv_assertions = sv_assertion_block_for_result($result);
+    like($sv_assertions, qr/axi0 read response matches active auto-ID transaction/, 'assertion backend emits active-match read response-demux assertion');
+    like($sv_assertions, qr/axi0 read response matches at most one auto-ID transaction/, 'assertion backend emits unique-match read response-demux assertion');
+    like($sv_assertions, qr/axi0 read auto ID active selected IDs are unique/, 'assertion backend emits read same-ID avoidance assertion');
 };
 
-subtest 'mixed read/write response-demux keeps write behavior and read metadata' => sub {
+subtest 'mixed read/write response-demux keeps write behavior and adds read behavior' => sub {
     my $result = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_mixed_response_demux());
     my $isf = $result->{generated_ial1}{text};
     my $demux = $result->{report}{response_demux};
@@ -503,28 +532,40 @@ subtest 'mixed read/write response-demux keeps write behavior and read metadata'
     like($isf, qr/\(input axi0_bid \(width 4\)\)/, 'mixed response-demux still declares BID for write behavior');
     like($isf, qr/\(output axi0_w0_complete\)/, 'mixed response-demux still exposes write completion as a generated output');
     like($isf, qr/\(rule axi0_w0_response_demux\b[\s\S]*\(pulse axi0_w0_complete\)\)/, 'mixed response-demux still emits write pulse rules');
-    unlike($isf, qr/\(input axi0_rid\b/, 'mixed response-demux keeps RID metadata-only before read behavior ships');
-    unlike($isf, qr/\(output axi0_r0_complete\b/, 'mixed response-demux does not generate read completion outputs yet');
-    unlike($isf, qr/\(rule axi0_r0_response_demux\b/, 'mixed response-demux does not emit read demux rules yet');
+    like($isf, qr/\(input axi0_rid \(width 4\)\)/, 'mixed response-demux declares RID for read behavior');
+    like($isf, qr/\(output axi0_r0_complete\)/, 'mixed response-demux exposes read completion as a generated output');
+    like($isf, qr/\(rule axi0_r0_response_demux\b[\s\S]*\(pulse axi0_r0_complete\)\)/, 'mixed response-demux emits read pulse rules');
 
     is($demux->{mode}, 'bounded_response_demux_contract', 'mixed report uses the combined response-demux contract mode');
-    ok($demux->{generated_behavior}, 'mixed report keeps top-level generated behavior true because write demux behavior ships');
+    ok($demux->{generated_behavior}, 'mixed report keeps top-level generated behavior true');
     is($demux->{write}{mode}, 'bounded_write_bid_demux_contract', 'mixed report keeps write BID-demux mode');
     ok($demux->{write}{generated_behavior}, 'mixed report keeps write generated behavior true');
     is_deeply($demux->{write}{auto_transactions}, [qw(w0 w1)], 'mixed report keeps write auto transactions');
-    is($demux->{read}{mode}, 'bounded_read_rid_demux_contract', 'mixed report adds read RID-demux metadata');
-    ok(!$demux->{read}{generated_behavior}, 'mixed report keeps read generated behavior false');
+    is_deeply($demux->{write}{generated_rules}, [qw(axi0_w0_response_demux axi0_w1_response_demux)], 'mixed report lists generated write demux rules');
+    is($demux->{read}{mode}, 'bounded_read_rid_demux_contract', 'mixed report keeps read RID-demux mode');
+    ok($demux->{read}{generated_behavior}, 'mixed report marks read generated behavior true');
     is_deeply($demux->{read}{auto_transactions}, [qw(r0 r1)], 'mixed report keeps read auto transactions');
+    is_deeply($demux->{read}{generated_rules}, [qw(axi0_r0_response_demux axi0_r1_response_demux)], 'mixed report lists generated read demux rules');
+    is_deeply($demux->{read}{generated_completion_signals}, [qw(axi0_r0_complete axi0_r1_complete)], 'mixed report lists generated read completion signals');
+    is_deeply(
+        $demux->{read}{generated_assertions},
+        [qw(axi0_read_response_demux_active_match axi0_r0_r1_read_response_demux_unique_match)],
+        'mixed report lists generated read demux assertions',
+    );
     is_deeply(
         $demux->{residue},
-        [qw(generated_read_rid_demux read_data_interleaving bursts)],
-        'mixed report keeps generated read RID demux behavior as residue',
+        [qw(read_data_interleaving bursts)],
+        'mixed report keeps only read data/interleaving and burst residue',
     );
     is_deeply(
         $result->{report}{auto_id_lifecycle}{residue},
-        [qw(response_demux)],
-        'mixed report keeps response_demux lifecycle residue because read behavior is still unshipped',
+        [],
+        'mixed report removes response_demux lifecycle residue after both generated families are covered',
     );
+    my %same_id_families = map { $_->{family} => $_ } @{$result->{report}{same_id_ordering}{families}};
+    is_deeply(sorted([keys %same_id_families]), [qw(read write)], 'mixed same-ID report carries write and read families');
+    assert_same_id_ordering_family($same_id_families{write}, 'generator report mixed write', 'write', 1);
+    assert_same_id_ordering_family($same_id_families{read}, 'generator report mixed read', 'read', 1);
 };
 
 subtest 'schedule report and HDL expose generated storage and status surface' => sub {
@@ -920,9 +961,9 @@ sub assert_write_response_demux_report {
 sub assert_read_response_demux_report {
     my ($demux, $owner) = @_;
     is($demux->{mode}, 'bounded_response_demux_contract', "$owner marks bounded response-demux contract mode");
-    ok(!$demux->{generated_behavior}, "$owner keeps top-level generated behavior false for read-only metadata");
+    ok($demux->{generated_behavior}, "$owner marks top-level generated behavior true for read demux");
     is($demux->{read}{mode}, 'bounded_read_rid_demux_contract', "$owner marks bounded read RID-demux contract mode");
-    ok(!$demux->{read}{generated_behavior}, "$owner marks read generated behavior false");
+    ok($demux->{read}{generated_behavior}, "$owner marks read generated behavior true");
     is($demux->{read}{response_event}, 'axi0_read_complete', "$owner reports the raw read response event");
     is($demux->{read}{response_event_role}, 'raw_accepted_read_response', "$owner reports the read response-event role");
     is($demux->{read}{response_scope}, 'single_beat', "$owner reports single-beat read response scope");
@@ -930,42 +971,70 @@ sub assert_read_response_demux_report {
     is($demux->{read}{response_id_direction}, 'generated_input', "$owner reports read response ID direction as generated input");
     is($demux->{read}{transaction_completion_source}, 'generated_demux', "$owner reports generated read transaction-completion ownership");
     is_deeply($demux->{read}{auto_transactions}, [qw(r0 r1)], "$owner reports read auto-ID transactions in source order");
-    ok(!exists $demux->{read}{generated_rules}, "$owner does not report read generated rules yet");
-    ok(!exists $demux->{read}{generated_completion_signals}, "$owner does not report read generated completion outputs yet");
-    ok(!exists $demux->{read}{generated_assertions}, "$owner does not report read generated assertions yet");
+    is_deeply($demux->{read}{generated_rules}, [qw(axi0_r0_response_demux axi0_r1_response_demux)], "$owner reports generated read demux rules");
+    is_deeply($demux->{read}{generated_completion_signals}, [qw(axi0_r0_complete axi0_r1_complete)], "$owner reports generated read completion pulse signals");
+    is_deeply(
+        $demux->{read}{generated_assertions},
+        [qw(axi0_read_response_demux_active_match axi0_r0_r1_read_response_demux_unique_match)],
+        "$owner reports generated read response-demux assertions",
+    );
     is_deeply(
         $demux->{residue},
-        [qw(generated_read_rid_demux read_data_interleaving bursts)],
-        "$owner reports generated read RID demux behavior as residue",
+        [qw(read_data_interleaving bursts)],
+        "$owner removes generated read RID demux behavior from residue",
     );
 }
 
 sub assert_same_id_ordering_report {
-    my ($ordering, $owner, $response_demux_covered) = @_;
+    my ($ordering, $owner, $response_demux_covered, $family_name) = @_;
+    $family_name //= 'write';
     is($ordering->{mode}, 'auto_id_same_id_avoidance', "$owner marks same-ID avoidance mode");
     ok($ordering->{generated_behavior}, "$owner marks same-ID ordering generated behavior true");
     is($ordering->{strategy}, 'avoid_same_id_concurrency', "$owner reports the avoidance strategy");
+    my @residue = qw(concrete_id_same_id_ordering per_id_issue_order_queues);
+    push @residue, 'read_response_demux' unless $family_name eq 'read' && $response_demux_covered;
+    push @residue, qw(read_data_interleaving bursts);
     is_deeply(
         $ordering->{residue},
-        [qw(concrete_id_same_id_ordering per_id_issue_order_queues read_response_demux read_data_interleaving bursts)],
+        \@residue,
         "$owner reports broader same-ID ordering residue",
     );
     ok(@{$ordering->{source_anchors}}, "$owner carries source anchors into same-ID ordering metadata");
     is(scalar(@{$ordering->{families}}), 1, "$owner reports one same-ID ordering family");
-    my $write = $ordering->{families}[0];
-    is($write->{family}, 'write', "$owner reports the write same-ID family");
-    is($write->{strategy}, 'avoid_same_id_concurrency', "$owner reports the family strategy");
-    is($write->{enforcement}, 'allocator_free_id_guard', "$owner reports allocator free-ID enforcement");
-    is($write->{assertion_enforcement}, 'runtime_assertion', "$owner reports runtime assertion enforcement");
+    assert_same_id_ordering_family($ordering->{families}[0], $owner, $family_name, $response_demux_covered);
+}
+
+sub assert_same_id_ordering_family {
+    my ($family, $owner, $family_name, $response_demux_covered) = @_;
+    my %expected = (
+        write => {
+            auto_transactions   => [qw(w0 w1)],
+            selected_id_signals => [qw(axi0_w0_auto_id_q axi0_w1_auto_id_q)],
+            busy_signals        => [qw(axi0_w0_auto_id_busy_q axi0_w1_auto_id_busy_q)],
+            generated_assertions => [qw(axi0_w0_w1_auto_id_unique_active_id)],
+        },
+        read => {
+            auto_transactions   => [qw(r0 r1)],
+            selected_id_signals => [qw(axi0_r0_auto_id_q axi0_r1_auto_id_q)],
+            busy_signals        => [qw(axi0_r0_auto_id_busy_q axi0_r1_auto_id_busy_q)],
+            generated_assertions => [qw(axi0_r0_r1_auto_id_unique_active_id)],
+        },
+    );
+    my $expect = $expected{$family_name};
+
+    is($family->{family}, $family_name, "$owner reports the $family_name same-ID family");
+    is($family->{strategy}, 'avoid_same_id_concurrency', "$owner reports the family strategy");
+    is($family->{enforcement}, 'allocator_free_id_guard', "$owner reports allocator free-ID enforcement");
+    is($family->{assertion_enforcement}, 'runtime_assertion', "$owner reports runtime assertion enforcement");
     if ($response_demux_covered) {
-        ok($write->{response_demux_covered}, "$owner reports response-demux coverage");
+        ok($family->{response_demux_covered}, "$owner reports response-demux coverage");
     } else {
-        ok(!$write->{response_demux_covered}, "$owner reports response-demux coverage");
+        ok(!$family->{response_demux_covered}, "$owner reports response-demux coverage");
     }
-    is_deeply($write->{auto_transactions}, [qw(w0 w1)], "$owner reports same-ID covered transactions");
-    is_deeply($write->{selected_id_signals}, [qw(axi0_w0_auto_id_q axi0_w1_auto_id_q)], "$owner reports selected-ID signals");
-    is_deeply($write->{busy_signals}, [qw(axi0_w0_auto_id_busy_q axi0_w1_auto_id_busy_q)], "$owner reports busy signals");
-    is_deeply($write->{generated_assertions}, [qw(axi0_w0_w1_auto_id_unique_active_id)], "$owner reports same-ID avoidance assertion");
+    is_deeply($family->{auto_transactions}, $expect->{auto_transactions}, "$owner reports same-ID covered transactions");
+    is_deeply($family->{selected_id_signals}, $expect->{selected_id_signals}, "$owner reports selected-ID signals");
+    is_deeply($family->{busy_signals}, $expect->{busy_signals}, "$owner reports busy signals");
+    is_deeply($family->{generated_assertions}, $expect->{generated_assertions}, "$owner reports same-ID avoidance assertion");
 }
 
 sub assert_actor_storage {

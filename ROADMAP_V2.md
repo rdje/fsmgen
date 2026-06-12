@@ -985,8 +985,9 @@ metadata with `generated_behavior: false`, and keeps generated read `.isf`,
 `.fsm`, and HDL behavior unchanged through `.39`. Readiness audit `.40`
 concluded that bounded single-beat generated read `RID` response-demux
 behavior can be implemented directly with no new IAL1/IAL0/SystemVerilog
-prerequisite. The current frontier is
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.41`, the generated read behavior slice.
+prerequisite. `.41` now ships that generated read behavior. The current
+frontier is `IAL2-FEATURE-COMPLETENESS-FRONTIER.42`, the selector for the next
+SV-backed IAL2 feature-completeness slice after generated read demux.
 The shipped public capacity/status source accepts one
 `(manager-capacity-status NAME ...)` object under
 `(protocol-platform-intent ...)`, `(profile axi4)`, and top-level source
@@ -995,9 +996,10 @@ artifacts, HDL, `--verify-hdl`, check JSON, and normalized semantic JSON.
 That source now accepts optional `(id-families ...)` metadata: separate
 read/write ID-family widths, request/response ID signal-pair metadata,
 zero-width absence semantics, static diagnostics, and report metadata, without
-changing generated `.isf`, generated `.fsm`, or HDL behavior. ID allocation,
-ordering, response matching, bursts, queued/blocking policy, profile aliases,
-and full AXI manager behavior remain task-tree-owned residue. The selected
+changing generated `.isf`, generated `.fsm`, or HDL behavior. Broader ID
+allocation, ordering, response matching, bursts, queued/blocking policy,
+profile aliases, and full AXI manager behavior remain task-tree-owned residue.
+The selected
 transaction-envelope subset is now shipped as optional `(transactions ...)`
 metadata: machine-readable AST/structural logical read/write transaction
 names, tags, request/completion event bindings, and optional requested-ID
@@ -1098,8 +1100,16 @@ accounting, and `response_demux.read.generated_behavior: false` while leaving
 generated read `.isf`, `.fsm`, and HDL behavior unchanged. `.40` audited read
 behavior readiness and selected `.41`, bounded generated single-beat read
 `RID` response-demux behavior, with no new IAL1/IAL0/SystemVerilog
-prerequisite. Read-data interleaving, bursts, per-ID queues, full-manager
-behavior, and VHDL remain residue.
+prerequisite. `.41` now ships that behavior: generated IAL1 adds `RID` as a
+response input, reclassifies selected read transaction completions as
+generated pulse outputs, emits one guarded read demux rule per auto-ID read
+transaction, emits read active-match and unique-match assertions, and keeps
+read capacity plus auto-ID release driven by generated completion pulses. The
+report marks `response_demux.read.generated_behavior: true` and leaves only
+read-data interleaving and burst residue in that demux arm. `.42` is the next
+selector for the next SV-backed IAL2 feature-completeness slice. Read-data
+interleaving, bursts, per-ID queues, full-manager behavior, and VHDL remain
+residue.
 
 The first honest `R11` slices are now:
 1. keep widening convention-first composition only where the child-side evidence is still deterministic,

@@ -681,7 +681,6 @@ sub _normalize_response_demux(%args) {
         unless ref($args{auto_id_lifecycle}) eq 'HASH';
 
     my %normalized;
-    my $generated_behavior = 0;
     if (exists $raw->{write}) {
         my $write_family = $args{id_families}{write};
         confess "AXI manager capacity/status IAL2 contract response_demux.write requires a declared write ID family\n"
@@ -701,7 +700,6 @@ sub _normalize_response_demux(%args) {
             write_family    => $write_family,
             write_lifecycle => $write_lifecycle,
         );
-        $generated_behavior = 1;
     }
 
     if (exists $raw->{read}) {
@@ -729,12 +727,12 @@ sub _normalize_response_demux(%args) {
         ? 'bounded_response_demux_contract'
         : 'bounded_write_bid_demux_contract';
     my @residue = exists($normalized{read})
-        ? qw(generated_read_rid_demux read_data_interleaving bursts)
+        ? qw(read_data_interleaving bursts)
         : qw(read_response_demux same_id_ordering read_data_interleaving bursts);
 
     return {
         mode               => $mode,
-        generated_behavior => $generated_behavior,
+        generated_behavior => 1,
         %normalized,
         residue => \@residue,
     };
@@ -835,7 +833,7 @@ sub _normalize_response_demux_read(%args) {
 
     return {
         mode                         => 'bounded_read_rid_demux_contract',
-        generated_behavior           => 0,
+        generated_behavior           => 1,
         response_event                => $response_event,
         response_event_role           => 'raw_accepted_read_response',
         response_scope                => 'single_beat',
@@ -843,6 +841,7 @@ sub _normalize_response_demux_read(%args) {
         response_id_direction         => 'generated_input',
         transaction_completion_source => 'generated_demux',
         auto_transactions             => _clone_jsonish($args{read_lifecycle}{auto_transactions}),
+        generated_completion_signals  => _clone_jsonish(\@completion_signals),
     };
 }
 
@@ -898,7 +897,11 @@ sub _build_same_id_ordering(%args) {
 
 sub _same_id_response_demux_covered_families($response_demux) {
     return () unless ref($response_demux) eq 'HASH' && $response_demux->{generated_behavior};
-    return (write => 1);
+    return map { $_ => 1 }
+        grep {
+            ref($response_demux->{$_}) eq 'HASH'
+            && $response_demux->{$_}{generated_behavior}
+        } qw(write read);
 }
 
 sub _build_transaction_event_dispatch(%args) {
@@ -1005,20 +1008,23 @@ sub _response_demux_generated_completion_signal_map($response_demux) {
     my %generated;
     return %generated unless ref($response_demux) eq 'HASH';
 
-    my $write = $response_demux->{write};
-    return %generated unless ref($write) eq 'HASH' && $write->{generated_behavior};
-
-    for my $signal (@{$write->{generated_completion_signals} || []}) {
-        $generated{$signal} = 1;
+    for my $family (qw(write read)) {
+        my $entry = $response_demux->{$family};
+        next unless ref($entry) eq 'HASH' && $entry->{generated_behavior};
+        for my $signal (@{$entry->{generated_completion_signals} || []}) {
+            $generated{$signal} = 1;
+        }
     }
     return %generated;
 }
 
 sub _response_demux_response_event_inputs($response_demux) {
     return () unless ref($response_demux) eq 'HASH';
-    my $write = $response_demux->{write};
-    return () unless ref($write) eq 'HASH' && $write->{generated_behavior};
-    return ($write->{response_event});
+    return map { $response_demux->{$_}{response_event} }
+        grep {
+            ref($response_demux->{$_}) eq 'HASH'
+            && $response_demux->{$_}{generated_behavior}
+        } qw(write read);
 }
 
 sub _build_id_response_rule_engine(%args) {
@@ -1171,9 +1177,13 @@ sub _auto_id_generated_signal_names($auto_id_lifecycle) {
 
 sub _response_demux_generated_signal_names($response_demux) {
     return [] unless ref($response_demux) eq 'HASH';
-    my $write = $response_demux->{write};
-    return [] unless ref($write) eq 'HASH' && $write->{generated_behavior};
-    return _clone_jsonish($write->{generated_completion_signals} || []);
+    my @signals;
+    for my $family (qw(write read)) {
+        my $entry = $response_demux->{$family};
+        next unless ref($entry) eq 'HASH' && $entry->{generated_behavior};
+        push @signals, @{$entry->{generated_completion_signals} || []};
+    }
+    return _clone_jsonish(\@signals);
 }
 
 sub _normalize_source_anchors($anchors) {
@@ -1303,8 +1313,13 @@ sub _id_response_signal_inputs($contract) {
 sub _response_demux_response_id_inputs($contract) {
     my $demux = $contract->{response_demux};
     return () unless ref($demux) eq 'HASH' && $demux->{generated_behavior};
-    return () unless ref($demux->{write}) eq 'HASH' && $demux->{write}{generated_behavior};
-    return ($demux->{write}{response_id_signal});
+    return @{_unique_preserving([
+        map { $demux->{$_}{response_id_signal} }
+        grep {
+            ref($demux->{$_}) eq 'HASH'
+            && $demux->{$_}{generated_behavior}
+        } qw(write read)
+    ])};
 }
 
 sub _input_line($contract, $name) {
@@ -1366,7 +1381,13 @@ sub _auto_id_lifecycle_request_output_lines($contract) {
 sub _response_demux_completion_output_lines($contract) {
     my $demux = $contract->{response_demux};
     return () unless ref($demux) eq 'HASH' && $demux->{generated_behavior};
-    return map { _width_output_line($_, 1) } @{$demux->{write}{generated_completion_signals} || []};
+    return map { _width_output_line($_, 1) } @{_unique_preserving([
+        map { @{$demux->{$_}{generated_completion_signals} || []} }
+        grep {
+            ref($demux->{$_}) eq 'HASH'
+            && $demux->{$_}{generated_behavior}
+        } qw(write read)
+    ])};
 }
 
 sub _auto_id_lifecycle_storage_lines($contract) {
@@ -1538,7 +1559,7 @@ sub _response_demux_rule_lines($contract) {
     return () unless ref($demux) eq 'HASH' && $demux->{generated_behavior};
 
     my @lines;
-    for my $state (_response_demux_write_transaction_states($contract)) {
+    for my $state (_response_demux_transaction_states($contract)) {
         push @lines, _response_demux_rule(
             _response_demux_rule_name($contract, $state),
             _response_demux_guard_expr($contract, $state),
@@ -1566,16 +1587,21 @@ sub _auto_id_rule($name, $guard, $assignments) {
     return @lines;
 }
 
-sub _response_demux_write_transaction_states($contract) {
+sub _response_demux_transaction_states($contract) {
+    return map { _response_demux_transaction_states_for_family($contract, $_) } qw(write read);
+}
+
+sub _response_demux_transaction_states_for_family($contract, $family_name) {
     my $demux = $contract->{response_demux};
     return () unless ref($demux) eq 'HASH';
-    return () unless ref($demux->{write}) eq 'HASH' && $demux->{write}{generated_behavior};
+    return () unless ref($demux->{$family_name}) eq 'HASH' && $demux->{$family_name}{generated_behavior};
 
-    my $write_lifecycle = _auto_id_lifecycle_family_by_name($contract->{auto_id_lifecycle}, 'write');
-    return () unless ref($write_lifecycle) eq 'HASH';
+    my $lifecycle = _auto_id_lifecycle_family_by_name($contract->{auto_id_lifecycle}, $family_name);
+    return () unless ref($lifecycle) eq 'HASH';
 
-    my %wanted = map { $_ => 1 } @{$demux->{write}{auto_transactions} || []};
-    return grep { $wanted{$_->{transaction}} } @{$write_lifecycle->{transaction_state} || []};
+    my %wanted = map { $_ => 1 } @{$demux->{$family_name}{auto_transactions} || []};
+    return map { +{ family => $family_name, %$_ } }
+        grep { $wanted{$_->{transaction}} } @{$lifecycle->{transaction_state} || []};
 }
 
 sub _response_demux_rule_name($contract, $state) {
@@ -1584,18 +1610,20 @@ sub _response_demux_rule_name($contract, $state) {
 
 sub _response_demux_guard_expr($contract, $state) {
     my $demux = $contract->{response_demux};
+    my $family = $state->{family};
     return _and_expr(
-        $demux->{write}{response_event},
+        $demux->{$family}{response_event},
         $state->{busy_signal},
-        _eq_expr($demux->{write}{response_id_signal}, $state->{selected_id_signal}),
+        _eq_expr($demux->{$family}{response_id_signal}, $state->{selected_id_signal}),
     );
 }
 
 sub _response_demux_match_expr($contract, $state) {
     my $demux = $contract->{response_demux};
+    my $family = $state->{family};
     return _and_expr(
         $state->{busy_signal},
-        _eq_expr($demux->{write}{response_id_signal}, $state->{selected_id_signal}),
+        _eq_expr($demux->{$family}{response_id_signal}, $state->{selected_id_signal}),
     );
 }
 
@@ -1603,14 +1631,19 @@ sub _response_demux_assertion_specs($contract) {
     my $demux = $contract->{response_demux};
     return () unless ref($demux) eq 'HASH' && $demux->{generated_behavior};
 
-    my @states = _response_demux_write_transaction_states($contract);
+    return map { _response_demux_assertion_specs_for_family($contract, $_) } qw(write read);
+}
+
+sub _response_demux_assertion_specs_for_family($contract, $family) {
+    my $demux = $contract->{response_demux};
+    my @states = _response_demux_transaction_states_for_family($contract, $family);
     return () unless @states;
 
     my @matches = map { _response_demux_match_expr($contract, $_) } @states;
     my @assertions = ({
-        name      => "$contract->{name}_write_response_demux_active_match",
-        condition => _implies_expr($demux->{write}{response_event}, _or_expr(@matches)),
-        message   => "$contract->{name} write response matches active auto-ID transaction",
+        name      => "$contract->{name}_${family}_response_demux_active_match",
+        condition => _implies_expr($demux->{$family}{response_event}, _or_expr(@matches)),
+        message   => "$contract->{name} $family response matches active auto-ID transaction",
     });
 
     for my $left_index (0 .. $#states) {
@@ -1618,15 +1651,15 @@ sub _response_demux_assertion_specs($contract) {
             my $left = $states[$left_index];
             my $right = $states[$right_index];
             push @assertions, {
-                name      => "$contract->{name}_$left->{transaction}_$right->{transaction}_write_response_demux_unique_match",
+                name      => "$contract->{name}_$left->{transaction}_$right->{transaction}_${family}_response_demux_unique_match",
                 condition => _implies_expr(
-                    $demux->{write}{response_event},
+                    $demux->{$family}{response_event},
                     _not_expr(_and_expr(
                         _response_demux_match_expr($contract, $left),
                         _response_demux_match_expr($contract, $right),
                     )),
                 ),
-                message   => "$contract->{name} write response matches at most one auto-ID transaction",
+                message   => "$contract->{name} $family response matches at most one auto-ID transaction",
             };
         }
     }
@@ -1906,7 +1939,7 @@ sub _build_report(%args) {
             'response_demux requires id_families, transactions, and selected-family auto_id_lifecycle metadata',
             'response_demux.write requires response_event equal to write_complete and generates bounded write BID demux behavior for explicit opt-in contracts',
             'response_demux.read requires response_event equal to read_complete, response_scope single_beat, read ID-family metadata, read transactions, and read auto_id_lifecycle metadata',
-            'response_demux.read reports metadata only in this slice; generated read RID demux rules, generated read completion pulse outputs, and HDL behavior remain residue',
+            'response_demux.read generates bounded single-beat read RID demux behavior for explicit opt-in contracts',
             'response_demux transaction_completion must be generated, making selected transaction completion names generated demux pulse outputs only under explicit opt-in contracts',
         ],
         unsupported_residue => [
@@ -1916,7 +1949,7 @@ sub _build_report(%args) {
             },
             {
                 id     => 'axi_id_ordering_and_response_matching',
-                detail => 'Concrete transaction ID request/response assertions, explicit bounded auto-ID request-ID drive plus completion-event release, generated auto-ID same-ID avoidance, generated write BID response demux, and read RID response-demux parser/report metadata are supported; dynamic user-ID arbitration while issuing multiple same-family requests in one cycle, per-ID same-ID response queues, different-ID interleaving, generated read RID response-demux behavior, and burst/last-beat tracking remain outside this capacity/status shell.',
+                detail => 'Concrete transaction ID request/response assertions, explicit bounded auto-ID request-ID drive plus completion-event release, generated auto-ID same-ID avoidance, generated write BID response demux, and generated single-beat read RID response demux are supported; dynamic user-ID arbitration while issuing multiple same-family requests in one cycle, per-ID same-ID response queues, different-ID interleaving, read-data interleaving/reassembly, and burst/last-beat tracking remain outside this capacity/status shell.',
             },
             {
                 id     => 'profile_aliases_and_full_manager_behavior',
@@ -1936,9 +1969,7 @@ sub _report_auto_id_lifecycle($contract) {
         ? JSON::PP::true
         : JSON::PP::false;
     if (
-        ref($contract->{response_demux}) eq 'HASH'
-        && $contract->{response_demux}{generated_behavior}
-        && !exists($contract->{response_demux}{read})
+        _response_demux_covers_auto_id_lifecycle($contract)
     ) {
         $lifecycle->{residue} = [
             grep { $_ ne 'response_demux' }
@@ -1966,10 +1997,14 @@ sub _report_response_demux($contract) {
             : JSON::PP::false;
     }
     if ($contract->{response_demux}{generated_behavior}) {
-        my $artifacts = _response_demux_generated_artifacts($contract);
-        $demux->{write}{generated_rules} = $artifacts->{rules};
-        $demux->{write}{generated_completion_signals} = $artifacts->{completion_signals};
-        $demux->{write}{generated_assertions} = $artifacts->{assertions};
+        for my $family (qw(write read)) {
+            next unless ref($contract->{response_demux}{$family}) eq 'HASH'
+                && $contract->{response_demux}{$family}{generated_behavior};
+            my $artifacts = _response_demux_generated_artifacts($contract, $family);
+            $demux->{$family}{generated_rules} = $artifacts->{rules};
+            $demux->{$family}{generated_completion_signals} = $artifacts->{completion_signals};
+            $demux->{$family}{generated_assertions} = $artifacts->{assertions};
+        }
     }
     if (_same_id_ordering_covers_response_demux_family($contract, 'write')) {
         $demux->{residue} = [
@@ -1999,21 +2034,41 @@ sub _report_same_id_ordering($contract) {
             ? JSON::PP::true
             : JSON::PP::false;
     }
+    if (_same_id_ordering_covers_response_demux_family($contract, 'read')) {
+        $ordering->{residue} = [
+            grep { $_ ne 'read_response_demux' }
+            @{$ordering->{residue} || []}
+        ];
+    }
     return $ordering;
 }
 
-sub _response_demux_generated_artifacts($contract) {
+sub _response_demux_generated_artifacts($contract, $family) {
     return {
         rules => [
             map { _response_demux_rule_name($contract, $_) }
-            _response_demux_write_transaction_states($contract)
+            _response_demux_transaction_states_for_family($contract, $family)
         ],
-        completion_signals => _clone_jsonish($contract->{response_demux}{write}{generated_completion_signals} || []),
+        completion_signals => _clone_jsonish($contract->{response_demux}{$family}{generated_completion_signals} || []),
         assertions => [
             map { $_->{name} }
-            _response_demux_assertion_specs($contract)
+            _response_demux_assertion_specs_for_family($contract, $family)
         ],
     };
+}
+
+sub _response_demux_covers_auto_id_lifecycle($contract) {
+    my $demux = $contract->{response_demux};
+    my $lifecycle = $contract->{auto_id_lifecycle};
+    return 0 unless ref($demux) eq 'HASH' && $demux->{generated_behavior};
+    return 0 unless ref($lifecycle) eq 'HASH' && $lifecycle->{generated_behavior};
+
+    for my $family (@{$lifecycle->{families} || []}) {
+        my $family_name = $family->{family};
+        return 0 unless ref($demux->{$family_name}) eq 'HASH'
+            && $demux->{$family_name}{generated_behavior};
+    }
+    return 1;
 }
 
 sub _report_id_response_rule_engine($contract) {
@@ -2023,9 +2078,7 @@ sub _report_id_response_rule_engine($contract) {
         @residue = grep { $_ ne 'auto_id_allocation' && $_ ne 'id_release' } @residue;
     }
     if (
-        ref($contract->{response_demux}) eq 'HASH'
-        && $contract->{response_demux}{generated_behavior}
-        && !exists($contract->{response_demux}{read})
+        _response_demux_covers_auto_id_lifecycle($contract)
     ) {
         @residue = grep { $_ ne 'response_demux' } @residue;
     }

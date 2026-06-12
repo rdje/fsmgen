@@ -3176,9 +3176,9 @@ completion pulses remain future behavior.
 
 Read response-demux metadata first slice:
 [AXI_IAL2_MANAGER_READ_RESPONSE_DEMUX_METADATA_FIRST_SLICE](../../AXI_IAL2_MANAGER_READ_RESPONSE_DEMUX_METADATA_FIRST_SLICE.md)
-ships the `.39` parser/report implementation. Public `.ppif` sources may now
-use one `read` arm, one `write` arm, or both under `response-demux`. The read
-arm is structural metadata only in this slice:
+ships the historical `.39` parser/report implementation. Public `.ppif`
+sources may use one `read` arm, one `write` arm, or both under
+`response-demux`:
 
 ```text
 (response-demux
@@ -3202,7 +3202,7 @@ Useful commands:
 ./bin/fsmgen --strict --emit-semantic-json ppif/axi_manager_capacity_status_read_response_demux.ppif
 ```
 
-The schedule report now includes:
+At `.39`, the schedule report included:
 
 ```text
 response_demux:
@@ -3224,23 +3224,79 @@ response_demux:
     - bursts
 ```
 
-Generated read demux behavior is unchanged: the read transaction completion
-events remain authored inputs, `RID` is not added to generated IAL1 by response
-demux, no read completion outputs are emitted, and no read response-demux rules
-or HDL logic are generated. The support-accounting entry is
+At `.39`, generated read demux behavior was unchanged: the read transaction
+completion events remained authored inputs, `RID` was not added to generated
+IAL1 by response demux, no read completion outputs were emitted, and no read
+response-demux rules or HDL logic were generated. The support-accounting entry is
 `intent.ppif_axi_manager_capacity_status_read_response_demux`.
+
+That paragraph describes the `.39` boundary. The generated behavior shipped
+later in `.41` without changing the public source syntax.
 
 Read response-demux behavior readiness audit:
 [AXI_IAL2_MANAGER_READ_RESPONSE_DEMUX_BEHAVIOR_READINESS_AUDIT](../../AXI_IAL2_MANAGER_READ_RESPONSE_DEMUX_BEHAVIOR_READINESS_AUDIT.md)
-selects `.41`, bounded generated single-beat read `RID` response-demux
+selected `.41`, bounded generated single-beat read `RID` response-demux
 behavior. The audit found no new IAL1, IAL0, or SystemVerilog prerequisite:
 the existing IAL1 `(pulse TARGET)` action and the shipped write demux path can
-carry the read demux. The implementation leaf must make response-demux helpers
-family-aware, add `RID` as a generated input, emit generated read completion
-pulse outputs/rules/assertions, and keep capacity release plus auto-ID release
-on those generated completion pulses. Read-data interleaving/reassembly,
-bursts/`RLAST`, per-ID queues, queued/blocking policy, full-manager behavior,
-direct backend lowering, and VHDL remain future exact-owner work.
+carry the read demux.
+
+Read response-demux behavior first slice:
+[AXI_IAL2_MANAGER_READ_RESPONSE_DEMUX_BEHAVIOR_FIRST_SLICE](../../AXI_IAL2_MANAGER_READ_RESPONSE_DEMUX_BEHAVIOR_FIRST_SLICE.md)
+ships the `.41` generated behavior. For the checked-in sample:
+
+```text
+(input axi0_read_complete)
+(input axi0_rid (width 4))
+(output axi0_r0_complete)
+(output axi0_r1_complete)
+
+(rule axi0_r0_response_demux
+  (& axi0_read_complete axi0_r0_auto_id_busy_q
+     (== axi0_rid axi0_r0_auto_id_q))
+  (pulse axi0_r0_complete))
+```
+
+The raw `read-complete` event remains the accepted single-beat read response
+input. `RID` is a generated response-ID input. The selected logical read
+transaction completion names are generated one-cycle pulse outputs, not
+authored event inputs, and read capacity release plus read auto-ID release
+consume those pulses.
+
+The schedule report now includes:
+
+```text
+response_demux:
+  mode: bounded_response_demux_contract
+  generated_behavior: true
+  read:
+    mode: bounded_read_rid_demux_contract
+    generated_behavior: true
+    response_event: axi0_read_complete
+    response_event_role: raw_accepted_read_response
+    response_scope: single_beat
+    response_id_signal: axi0_rid
+    response_id_direction: generated_input
+    transaction_completion_source: generated_demux
+    generated_rules: [axi0_r0_response_demux, axi0_r1_response_demux]
+    generated_completion_signals: [axi0_r0_complete, axi0_r1_complete]
+    generated_assertions:
+      - axi0_read_response_demux_active_match
+      - axi0_r0_r1_read_response_demux_unique_match
+  residue:
+    - read_data_interleaving
+    - bursts
+```
+
+Useful behavior checks:
+
+```bash
+./bin/fsmgen --emit-schedule-json ppif/axi_manager_capacity_status_read_response_demux.ppif
+./bin/fsmgen --quiet --verify-hdl ppif/axi_manager_capacity_status_read_response_demux.ppif
+```
+
+Read-data interleaving/reassembly, bursts/`RLAST`, per-ID queues,
+queued/blocking policy, full-manager behavior, direct backend lowering, and
+VHDL remain future exact-owner work.
 
 Response-demux behavior readiness audit:
 [AXI_IAL2_MANAGER_WRITE_RESPONSE_DEMUX_BEHAVIOR_READINESS_AUDIT](../../AXI_IAL2_MANAGER_WRITE_RESPONSE_DEMUX_BEHAVIOR_READINESS_AUDIT.md)
@@ -3384,10 +3440,11 @@ transaction-envelope/static-validation subset, and the readiness audit for its
 additive static/report implementation boundary. The optional static
 `(transactions ...)` implementation slice and the additive transaction event
 dispatch/fan-in slice are now also shipped, and the active frontier is
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.41`, implementing bounded generated
-single-beat read `RID` response-demux behavior after `.40` concluded no new
-IAL1/IAL0/SystemVerilog prerequisite is required. The behavior owner must keep
-the reviewable `IAL2 -> IAL1 -> IAL0 -> SystemVerilog` path; read-data
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.42`, selecting the next exact
+SV-backed IAL2 feature-completeness slice after `.41` shipped bounded
+generated single-beat read `RID` response-demux behavior. Future behavior
+owners must keep the reviewable `IAL2 -> IAL1 -> IAL0 -> SystemVerilog` path;
+read-data
 interleaving/reassembly, bursts, per-ID queues, full-manager behavior, and VHDL
 remain out of scope unless a later exact owner selects them.
 Additional `.ppif` objects/clauses and profile aliases remain future

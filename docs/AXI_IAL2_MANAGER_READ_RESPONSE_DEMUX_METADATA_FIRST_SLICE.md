@@ -7,8 +7,12 @@ Owner: `IAL2-FEATURE-COMPLETENESS-FRONTIER.39`.
 Task tree:
 [docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md](tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md).
 
-This slice implements the parser/report metadata boundary selected by
+Historical note: this `.39` slice implemented the parser/report metadata
+boundary selected by
 [docs/AXI_IAL2_MANAGER_READ_RESPONSE_DEMUX_CONTRACT_SELECTION.md](AXI_IAL2_MANAGER_READ_RESPONSE_DEMUX_CONTRACT_SELECTION.md).
+Generated read `RID` response-demux behavior shipped later in
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.41`; see
+[docs/AXI_IAL2_MANAGER_READ_RESPONSE_DEMUX_BEHAVIOR_FIRST_SLICE.md](AXI_IAL2_MANAGER_READ_RESPONSE_DEMUX_BEHAVIOR_FIRST_SLICE.md).
 
 ## Shipped Public Syntax
 
@@ -76,7 +80,7 @@ Schedule/report JSON keeps the existing schema:
 fsmgen.ial2.protocol_intent.axi_manager_capacity_status.v1
 ```
 
-For a read-only metadata slice, `response_demux` now reports:
+At `.39`, for a read-only metadata slice, `response_demux` reported:
 
 ```text
 response_demux:
@@ -100,14 +104,15 @@ response_demux:
     - bursts
 ```
 
-For mixed write/read contracts, the existing write arm keeps generated write
-`BID` demux behavior while the read arm reports `generated_behavior: false`.
-Per-family generated behavior prevents a mixed contract from implying generated
-read `RID` demux before that behavior is task-owned.
+For mixed write/read contracts at `.39`, the existing write arm kept generated
+write `BID` demux behavior while the read arm reported
+`generated_behavior: false`. Per-family generated behavior prevented a mixed
+contract from implying generated read `RID` demux before that behavior was
+task-owned.
 
 ## Generated Behavior
 
-This slice intentionally does not generate read `RID` demux behavior.
+This `.39` slice intentionally did not generate read `RID` demux behavior.
 
 For the checked-in read sample:
 
@@ -117,8 +122,8 @@ For the checked-in read sample:
 - no read response-demux rules, read demux assertions, `.fsm` pulse rules, or
   HDL logic are emitted by this slice.
 
-The metadata exists so the later behavior owner can implement generated read
-`RID` matching without changing the public source syntax again.
+The metadata existed so the later behavior owner could implement generated
+read `RID` matching without changing the public source syntax again.
 
 ## Runnable Sample
 
@@ -146,13 +151,16 @@ intent.ppif_axi_manager_capacity_status_read_response_demux
 ## Explicit Residue
 
 Generated read `RID` demux rules, generated read transaction completion
-pulses, unmatched/inactive read response assertions, ambiguous read match
-assertions, read-data interleaving/reassembly, burst or last-beat tracking,
-per-ID response queues, authored concrete-ID same-ID ordering, repeated
-instances of one logical transaction, queued/blocking policy, full AXI manager
-syntax, `.pif`, `.ppi`, `.axi`, and VHDL backend/reroute behavior remain
-future exact-owner work.
+pulses, unmatched/inactive read response assertions, and ambiguous read match
+assertions shipped later in `IAL2-FEATURE-COMPLETENESS-FRONTIER.41`.
+Read-data interleaving/reassembly, burst or last-beat tracking, per-ID
+response queues, authored concrete-ID same-ID ordering, repeated instances of
+one logical transaction, queued/blocking policy, full AXI manager syntax,
+`.pif`, `.ppi`, `.axi`, and VHDL backend/reroute behavior remain future
+exact-owner work.
 
 Follow-on: `IAL2-FEATURE-COMPLETENESS-FRONTIER.40` completed the generated
-read `RID` response-demux behavior readiness audit. The active behavior owner
-is `IAL2-FEATURE-COMPLETENESS-FRONTIER.41`.
+read `RID` response-demux behavior readiness audit, and
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.41` shipped bounded generated single-beat
+read `RID` response-demux behavior. The next selector is
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.42`.

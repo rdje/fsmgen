@@ -228,3 +228,9 @@ This `.40` slice changes only documentation, task-tree, mdBook, roadmap,
 Memory, and Knowledge Map state. Rolling it back returns the active frontier
 to generated read `RID` response-demux behavior readiness and leaves shipped
 parser/report metadata untouched.
+
+## Follow-On
+
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.41` shipped the selected bounded generated
+single-beat read `RID` response-demux behavior. See
+[docs/AXI_IAL2_MANAGER_READ_RESPONSE_DEMUX_BEHAVIOR_FIRST_SLICE.md](AXI_IAL2_MANAGER_READ_RESPONSE_DEMUX_BEHAVIOR_FIRST_SLICE.md).
