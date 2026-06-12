@@ -27,6 +27,7 @@ subtest 'PPIF adapter parses the selected Valid-Ready source shape' => sub {
         'adapter exposes generated IAL0 .fsm file map',
     );
     is($result->{report}{source_object}{id}, 'axi-valid-ready-aw', 'source object id is preserved');
+    is($result->{report}{source_object}{intent_name}, 'axi_aw_valid_ready', 'source intent name is preserved');
     is($result->{report}{target_channel}{protocol}, 'axi4', 'profile maps to generator protocol');
     is($result->{report}{target_channel}{family}, 'AW', 'channel maps to target channel family');
     is($result->{report}{layering}{direct_ial2_to_ial0}, 0, 'direct IAL2-to-IAL0 remains forbidden');
@@ -71,6 +72,7 @@ subtest 'CLI emits IAL2 report JSON for .ppif without writing HDL' => sub {
     is(join('', @{$stderr_buf || []}), '', '--emit-schedule-json keeps stderr clean');
     my $report = decode_json(join('', @{$stdout_buf || []}));
     is($report->{schema}, 'fsmgen.ial2.protocol_intent.valid_ready_channel.v1', 'CLI emits the IAL2 report schema');
+    is($report->{source_object}{intent_name}, 'axi_aw_valid_ready', 'CLI report carries the PPIF top-level intent name');
     is($report->{generated_artifacts}{ial1}{name}, 'axi_aw_valid_ready_monitor.isf', 'CLI report names generated .isf');
     is_deeply($report->{generated_artifacts}{ial0}{files}, ['axi_aw_valid_ready_monitor.fsm'], 'CLI report names generated .fsm');
     is($report->{transfer_fire_condition}, 'awvalid && awready', 'CLI report carries fire condition');

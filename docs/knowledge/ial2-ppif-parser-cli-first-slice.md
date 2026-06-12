@@ -11,6 +11,7 @@ answers:
   - "does the capability manifest advertise .ppif?"
   - "does .ppif check JSON keep the .ppif source path?"
   - "does .ppif semantic JSON keep the .ppif source path?"
+  - "does .ppif report the top-level protocol-platform-intent name?"
 date: 2026-06-12
 status: current
 tags: [ial2, ppif, parser, cli, valid-ready]
@@ -38,7 +39,9 @@ IAL2 source-anchor/residue report, `./bin/fsmgen --outdir generated
 ppif/axi_aw_valid_ready.ppif` for review artifacts plus HDL,
 `./bin/fsmgen --strict --check --json ppif/axi_aw_valid_ready.ppif` for check
 JSON, and `./bin/fsmgen --strict --emit-semantic-json
-ppif/axi_aw_valid_ready.ppif` for normalized semantic JSON.
+ppif/axi_aw_valid_ready.ppif` for normalized semantic JSON. The IAL2
+source-anchor/residue report preserves the authored top-level
+`protocol-platform-intent` name as `source_object.intent_name`.
 Successful `.ppif` check JSON and normalized semantic JSON keep
 `source.resolved_path` on the resolved `.ppif` input and match the PPIF sample
 support-accounting entry. The normalized semantic payload still describes the

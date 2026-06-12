@@ -97,6 +97,7 @@ first.
 | `NORMALIZED-SEMANTIC-PUBLIC-SOURCE-IDENTITY` | `done` | Embedding And Public APIs | complete (`.1`; preserved normalized semantic JSON source identity and support-accounting coverage for lowered `.isf`/`.ppif` public inputs) | [docs/tasks/NORMALIZED-SEMANTIC-PUBLIC-SOURCE-IDENTITY.md](docs/tasks/NORMALIZED-SEMANTIC-PUBLIC-SOURCE-IDENTITY.md) |
 | `PPIF-SEMANTIC-JSON-FOCUSED-COVERAGE` | `done` | IAL2 horizon exploration / Embedding And Public APIs | complete (`.1`; locked focused PPIF semantic JSON source-identity coverage) | [docs/tasks/PPIF-SEMANTIC-JSON-FOCUSED-COVERAGE.md](docs/tasks/PPIF-SEMANTIC-JSON-FOCUSED-COVERAGE.md) |
 | `PPIF-SEMANTIC-JSON-CLI-DOC-EXAMPLE` | `done` | IAL2 horizon exploration / Embedding And Public APIs | complete (`.1`; documented `.ppif --emit-semantic-json` usage) | [docs/tasks/PPIF-SEMANTIC-JSON-CLI-DOC-EXAMPLE.md](docs/tasks/PPIF-SEMANTIC-JSON-CLI-DOC-EXAMPLE.md) |
+| `PPIF-SOURCE-INTENT-NAME-REPORT` | `done` | IAL2 horizon exploration | complete (`.1`; preserved `.ppif` top-level intent name in reports) | [docs/tasks/PPIF-SOURCE-INTENT-NAME-REPORT.md](docs/tasks/PPIF-SOURCE-INTENT-NAME-REPORT.md) |
 
 ## Proposed Task Trees
 

@@ -105,7 +105,8 @@ include:
 - `schema`: `fsmgen.ial2.protocol_intent.valid_ready_channel.v1`,
 - `layering`: evidence that the source is IAL2, generated IAL1 is `.isf`,
   generated IAL0 is `.fsm`, and direct IAL2-to-IAL0 is false,
-- `source_object`: object id and source anchors,
+- `source_object`: authored top-level PPIF intent name, object id, and source
+  anchors,
 - `generated_artifacts`: generated `.isf` name and generated `.fsm` names,
 - `target_channel`: protocol, channel family, and role,
 - `bindings`: clock, reset, valid, ready, and payload bindings,
@@ -134,6 +135,7 @@ Focused coverage lives in
 [t/1436-ial2-ppif-parser-cli.t](../t/1436-ial2-ppif-parser-cli.t). It proves:
 
 - the adapter parses the decision-0016 Valid-Ready source shape,
+- the IAL2 report preserves the authored top-level PPIF intent name,
 - the checked-in `ppif/axi_aw_valid_ready.ppif` sample is the canonical
   runnable first-slice example,
 - unsupported or malformed PPIF source fails closed,

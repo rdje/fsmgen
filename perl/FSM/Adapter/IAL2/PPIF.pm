@@ -127,8 +127,9 @@ sub _contract_from_root($root, $source_label) {
 
     return {
         %$channel,
-        protocol => $profile,
-        source   => $source,
+        intent_name => $intent_name,
+        protocol    => $profile,
+        source      => $source,
     };
 }
 

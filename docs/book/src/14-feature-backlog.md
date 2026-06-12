@@ -2440,10 +2440,11 @@ CLI examples for the shipped first public slice:
 The `.ppif` path always lowers through generated `.isf` before generated
 `.fsm`. `--outdir` writes both review artifacts before the HDL path runs.
 `--emit-schedule-json` emits the IAL2 source-anchor/residue report for the
-source object. `--emit-semantic-json` emits the bounded normalized semantic
-report without writing HDL, while keeping `source.resolved_path` on the public
-`.ppif` path and leaving the semantic payload rooted at the generated `.fsm`.
-The capability manifest now advertises this file-layer stack under
+source object, including the authored top-level PPIF intent name
+`axi_aw_valid_ready`. `--emit-semantic-json` emits the bounded normalized
+semantic report without writing HDL, while keeping `source.resolved_path` on
+the public `.ppif` path and leaving the semantic payload rooted at the
+generated `.fsm`. The capability manifest now advertises this file-layer stack under
 `language_surface.file_surfaces`, including the `.ppif` sample path and the
 first-slice alias exclusions. The next prerequisite is a later exact owner for
 additional `.ppif` objects/clauses, profile aliases, or the next protocol rule

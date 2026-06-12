@@ -115,6 +115,9 @@ sub _normalize_contract($raw) {
     _reject_duplicate_interface_names($valid, $ready, $payload, "${actor_name}_done");
 
     my $source = ref($raw->{source}) eq 'HASH' ? $raw->{source} : {};
+    my $intent_name = exists($raw->{intent_name})
+        ? _nonempty_scalar($raw->{intent_name}, 'intent_name')
+        : undef;
     my $source_object_id = exists($raw->{source_object_id})
         ? _nonempty_scalar($raw->{source_object_id}, 'source_object_id')
         : exists($source->{object_id})
@@ -136,6 +139,7 @@ sub _normalize_contract($raw) {
         valid            => $valid,
         ready            => $ready,
         payload          => $payload,
+        intent_name      => $intent_name,
         source_object_id => $source_object_id,
         source_anchors   => $anchors,
     };
@@ -355,6 +359,13 @@ sub _build_report(%args) {
         ++$ordinal;
     }
 
+    my %source_object = (
+        id      => $contract->{source_object_id},
+        anchors => _clone_jsonish($contract->{source_anchors}),
+    );
+    $source_object{intent_name} = $contract->{intent_name}
+        if defined($contract->{intent_name}) && length($contract->{intent_name});
+
     return {
         schema => 'fsmgen.ial2.protocol_intent.valid_ready_channel.v1',
         mode   => 'monitor-only',
@@ -364,10 +375,7 @@ sub _build_report(%args) {
             generated_ial0_format => 'fsm',
             direct_ial2_to_ial0   => 0,
         },
-        source_object => {
-            id      => $contract->{source_object_id},
-            anchors => _clone_jsonish($contract->{source_anchors}),
-        },
+        source_object => \%source_object,
         generated_artifacts => {
             ial1 => {
                 name   => $args{isf_name},

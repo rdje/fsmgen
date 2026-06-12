@@ -3,7 +3,7 @@
 > **AUTO-GENERATED — DO NOT EDIT.** Regenerate with `knowledge-map/scripts/gen_knowledge_map.sh`.
 > Source of truth = YAML front-matter in: `docs/knowledge docs/decisions`. Edit the fact files, never this map.
 > A fact is any `.md` whose front-matter has a non-empty `answers:` list.
-> **65** facts · **477** question keys.
+> **65** facts · **478** question keys.
 
 ## Questions → fact
 
@@ -49,6 +49,7 @@
 - "does --verify-hdl run abc?" -> [abc-discovery-validation-boundary](docs/knowledge/abc-discovery-validation-boundary.md) · 2026-06-06 · reverify: `prove -Iperl t/313-hdl-external-validation-contract.t t/297-capability-manifest.t t/308-systemverilog-external-validation.t`
 - "does .ppif check JSON keep the .ppif source path?" -> [ial2-ppif-parser-cli-first-slice](docs/knowledge/ial2-ppif-parser-cli-first-slice.md) · 2026-06-12 · reverify: `prove -Iperl t/1436-ial2-ppif-parser-cli.t t/1435-axi-ial2-valid-ready-generator.t t/297-capability-manifest.t t/301-check-json-supported-corpus.t t/303-normalized-semantic-json-supported-corpus.t`
 - "does .ppif emit generated .isf before .fsm?" -> [ial2-ppif-parser-cli-first-slice](docs/knowledge/ial2-ppif-parser-cli-first-slice.md) · 2026-06-12 · reverify: `prove -Iperl t/1436-ial2-ppif-parser-cli.t t/1435-axi-ial2-valid-ready-generator.t t/297-capability-manifest.t t/301-check-json-supported-corpus.t t/303-normalized-semantic-json-supported-corpus.t`
+- "does .ppif report the top-level protocol-platform-intent name?" -> [ial2-ppif-parser-cli-first-slice](docs/knowledge/ial2-ppif-parser-cli-first-slice.md) · 2026-06-12 · reverify: `prove -Iperl t/1436-ial2-ppif-parser-cli.t t/1435-axi-ial2-valid-ready-generator.t t/297-capability-manifest.t t/301-check-json-supported-corpus.t t/303-normalized-semantic-json-supported-corpus.t`
 - "does .ppif semantic JSON keep the .ppif source path?" -> [ial2-ppif-parser-cli-first-slice](docs/knowledge/ial2-ppif-parser-cli-first-slice.md) · 2026-06-12 · reverify: `prove -Iperl t/1436-ial2-ppif-parser-cli.t t/1435-axi-ial2-valid-ready-generator.t t/297-capability-manifest.t t/301-check-json-supported-corpus.t t/303-normalized-semantic-json-supported-corpus.t`
 - "does .rtlif support aggregate generic comparison defaults?" -> [aggregate-parameter-comparison](docs/knowledge/aggregate-parameter-comparison.md) · 2026-06-05 · reverify: `prove -Iperl t/30-language-contract-symbol-definitions.t t/51-language-contract-symbol-definition-boundary.t t/88-rtlif-typed-port-contract.t t/91-composition-multi-rtl-children.t t/292-composition-generated-child-parameter-overrides.t`
 - "does ?pkg generate HDL directly?" -> [direct-vhdl-scaffold](docs/knowledge/direct-vhdl-scaffold.md) · 2026-06-07 · reverify: `prove -Iperl t/1420-vhdl-direct-backend-scaffold.t t/386-hdl-generator-facade-target-language-boundary-audit.t t/114-composition-target-support-diagnostics.t t/313-hdl-external-validation-contract.t t/308-systemverilog-external-validation.t`
@@ -652,7 +653,7 @@ _generic_fifo remains an expected failure at the legacy template boundary_
 ### ial2-ppif-parser-cli-first-slice
 _IAL2 .ppif parser and CLI first slice_
 
-- **answers:** is .ppif supported by the CLI? | how do I run a .ppif file? | does .ppif emit generated .isf before .fsm? | are .pif .ppi .axi supported? | what PPIF syntax is supported first? | where is the first runnable .ppif sample? | does the capability manifest advertise .ppif? | does .ppif check JSON keep the .ppif source path? | does .ppif semantic JSON keep the .ppif source path?
+- **answers:** is .ppif supported by the CLI? | how do I run a .ppif file? | does .ppif emit generated .isf before .fsm? | are .pif .ppi .axi supported? | what PPIF syntax is supported first? | where is the first runnable .ppif sample? | does the capability manifest advertise .ppif? | does .ppif check JSON keep the .ppif source path? | does .ppif semantic JSON keep the .ppif source path? | does .ppif report the top-level protocol-platform-intent name?
 - **date:** 2026-06-12 · **status:** current
 - **evidence:** `docs/IAL2_PPIF_PARSER_CLI_FIRST_SLICE.md; ppif/axi_aw_valid_ready.ppif; perl/FSM/Adapter/IAL2/PPIF.pm; perl/FSM/Support/LanguageSurfaceSection.pm; perl/FSM/Support/LanguageSurfaceContract.pm; bin/fsmgen; t/1436-ial2-ppif-parser-cli.t; t/297-capability-manifest.t; t/301-check-json-supported-corpus.t; t/303-normalized-semantic-json-supported-corpus.t; docs/tasks/IAL2-PPIF-PARSER-CLI-FIRST-SLICE.md`
 - **reverify:** `prove -Iperl t/1436-ial2-ppif-parser-cli.t t/1435-axi-ial2-valid-ready-generator.t t/297-capability-manifest.t t/301-check-json-supported-corpus.t t/303-normalized-semantic-json-supported-corpus.t`

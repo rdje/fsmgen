@@ -57,6 +57,7 @@ subtest 'report publishes source anchors, artifacts, bindings, assertions, assum
     is($report->{schema}, 'fsmgen.ial2.protocol_intent.valid_ready_channel.v1', 'report schema is versioned');
     is($report->{layering}{direct_ial2_to_ial0}, 0, 'report rejects direct IAL2-to-IAL0 lowering');
     is($report->{source_object}{id}, 'axi-valid-ready-aw', 'source object id is reported');
+    is($report->{source_object}{intent_name}, 'axi_aw_valid_ready', 'source intent name is reported when supplied');
     is_deeply(
         $report->{source_object}{anchors},
         [{ document => 'IHI0022_L_2025-08', section => 'A3.2.1', page => 'A3-40' }],
@@ -136,6 +137,7 @@ sub generate_sample {
 sub sample_contract {
     return {
         name     => 'axi_aw',
+        intent_name => 'axi_aw_valid_ready',
         protocol => 'axi4',
         channel  => 'AW',
         role     => 'manager-to-subordinate',
