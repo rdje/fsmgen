@@ -2276,9 +2276,11 @@ diagnostics. The next AXI manager subset is selected as ID-family declaration
 and static validation, and the additive optional `(id-families ...)` `.ppif`
 extension is now shipped for the existing capacity/status object with report
 metadata and unchanged generated `.isf`, generated `.fsm`, and HDL behavior.
-The active frontier is the next IAL2 feature-completeness selector. Selected
-IAL2 slices may include explicit IAL1 or IAL0/SystemVerilog prerequisites when
-those prerequisites are needed for clean, reviewable lowering.
+The next AXI manager subset is selected as a machine-readable AST/structural
+logical read/write transaction envelope and static-validation contract; the
+active frontier is its readiness audit. Selected IAL2 slices may include
+explicit IAL1 or IAL0/SystemVerilog prerequisites when those prerequisites are
+needed for clean, reviewable lowering.
 
 Evaluation note:
 [IAL2_PROTOCOL_PLATFORM_INTENT_EVALUATION](../../IAL2_PROTOCOL_PLATFORM_INTENT_EVALUATION.md).
@@ -2578,6 +2580,37 @@ allocation, per-transaction ID validation, same-ID ordering, different-ID
 interleaving, `BID`/`RID` response matching, bursts, queued/blocking policies,
 profile aliases, and VHDL remain future task-tree-owned residue.
 
+Next AXI manager subset: transaction envelope/static-validation:
+[AXI_IAL2_MANAGER_TRANSACTION_ENVELOPE_SELECTION](../../AXI_IAL2_MANAGER_TRANSACTION_ENVELOPE_SELECTION.md)
+selects the next bridge between static manager metadata and dynamic manager
+behavior. The selected subset is a machine-readable AST/structural logical
+read/write transaction envelope with stable transaction names, read/write kind,
+user-visible tags, request/completion event bindings, optional requested-ID
+policy or value, source anchors, report metadata, and explicit residue. The
+illustrative semantic shape is:
+
+```text
+(transactions
+  (write w0
+    (tag wr0)
+    (request axi0_write_submit)
+    (completion axi0_write_complete)
+    (id auto))
+  (read r0
+    (tag rd0)
+    (request axi0_read_submit)
+    (completion axi0_read_complete)
+    (id auto)))
+```
+
+The active `.11` frontier audits implementation readiness before behavior
+changes. It must decide whether the first implementation extends
+`manager-capacity-status`, introduces a broader manager object, or requires an
+IAL1/IAL0/SystemVerilog prerequisite first. This selector still does not
+implement ID allocation algorithms, same-ID ordering queues, different-ID
+interleaving, `BID`/`RID` response matching, bursts, queued/blocking policy,
+profile aliases, full AXI manager behavior, or VHDL.
+
 First implementation subset selection:
 [AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION](../../AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md)
 selects a source-anchored AXI Valid-Ready channel contract/monitor as the
@@ -2698,12 +2731,13 @@ generated `.fsm`. The capability manifest now advertises this file-layer stack
 under `language_surface.file_surfaces`, including the `.ppif` sample path,
 first-slice alias exclusions, and `supported_cli_modes[]` entries for
 `--emit-schedule-json`, `--check --json` / `--check-json`, and
-`--emit-semantic-json`. The active next prerequisite is implementing the
-selected public `.ppif` parser/CLI slice for the shipped in-process AXI
-manager capacity/status generator. Additional `.ppif` objects/clauses and
-profile aliases remain future exact-owner work, but they should not jump ahead
-of the capacity/status public parser/CLI slice unless a later selector records
-why.
+`--emit-semantic-json`. Later completed slices shipped public
+`manager-capacity-status` `.ppif` syntax, optional static `(id-families ...)`
+metadata, and a selector for the next logical read/write
+transaction-envelope/static-validation subset. Additional `.ppif`
+objects/clauses and profile aliases remain future exact-owner work, and they
+must not jump ahead of the active transaction-envelope readiness audit unless a
+later selector records why.
 
 Multi-channel `.ppif` bundle support:
 [IAL2_PPIF_MULTI_VALID_READY_READINESS](../../IAL2_PPIF_MULTI_VALID_READY_READINESS.md)
@@ -4849,8 +4883,10 @@ selects AXI ID-family declaration/static validation. Completed readiness audit
 leaf `IAL2-FEATURE-COMPLETENESS-FRONTIER.8` selects the additive
 capacity/status implementation boundary. Completed implementation leaf
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.9` ships optional `(id-families ...)`
-metadata for that object and advances the active frontier to `.10`, the next
-IAL2 feature-completeness selector.
+metadata for that object. Completed selector leaf
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.10` selects the logical read/write
+transaction-envelope/static-validation subset and advances the active frontier
+to `.11`, the readiness audit before implementation changes.
 Completed implementation leaf
 `ARCHITECTURE-DEBT-FRONTIER.2.1`
 projects direct backend storage/helper declaration-plan entries into

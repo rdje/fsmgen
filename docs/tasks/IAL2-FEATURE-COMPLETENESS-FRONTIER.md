@@ -48,7 +48,7 @@ path before reopening VHDL backend or VHDL rerouting work.
 - ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER`
   Status: `active`
   Goal: `Make IAL2 feature-complete on the SystemVerilog-backed path before VHDL work resumes.`
-  Children: `IAL2-FEATURE-COMPLETENESS-FRONTIER.1, IAL2-FEATURE-COMPLETENESS-FRONTIER.2, IAL2-FEATURE-COMPLETENESS-FRONTIER.3, IAL2-FEATURE-COMPLETENESS-FRONTIER.4, IAL2-FEATURE-COMPLETENESS-FRONTIER.5, IAL2-FEATURE-COMPLETENESS-FRONTIER.6, IAL2-FEATURE-COMPLETENESS-FRONTIER.7, IAL2-FEATURE-COMPLETENESS-FRONTIER.8, IAL2-FEATURE-COMPLETENESS-FRONTIER.9, IAL2-FEATURE-COMPLETENESS-FRONTIER.10`
+  Children: `IAL2-FEATURE-COMPLETENESS-FRONTIER.1, IAL2-FEATURE-COMPLETENESS-FRONTIER.2, IAL2-FEATURE-COMPLETENESS-FRONTIER.3, IAL2-FEATURE-COMPLETENESS-FRONTIER.4, IAL2-FEATURE-COMPLETENESS-FRONTIER.5, IAL2-FEATURE-COMPLETENESS-FRONTIER.6, IAL2-FEATURE-COMPLETENESS-FRONTIER.7, IAL2-FEATURE-COMPLETENESS-FRONTIER.8, IAL2-FEATURE-COMPLETENESS-FRONTIER.9, IAL2-FEATURE-COMPLETENESS-FRONTIER.10, IAL2-FEATURE-COMPLETENESS-FRONTIER.11`
 
 - ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER.1`
   Status: `done`
@@ -114,9 +114,16 @@ path before reopening VHDL backend or VHDL rerouting work.
   Commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.9: ship AXI ID family metadata`
 
 - ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER.10`
-  Status: `pending`
+  Status: `done`
   Goal: `Select the next IAL2 feature-completeness slice after the shipped AXI manager ID-family metadata.`
   Acceptance: `The selector reads the shipped Valid-Ready, bundle, capacity/status, and ID-family .ppif surfaces; AXI rule matrix/evidence notes; IAL1/IAL0/SystemVerilog substrate; support accounting; diagnostics; public JSON surfaces; mdBook; and roadmap. It chooses one next exact IAL2 behavior subset or a required IAL1/IAL0/SV prerequisite before behavior changes, records source anchors, public syntax/report expectations, generated .isf/.fsm/HDL boundaries, diagnostics, validation gates, residue, rollback, and next implementation owner.`
+  Verification: `Selected AXI manager logical read/write transaction-envelope/static validation as the next subset after shipped capacity/status and ID-family metadata; recorded source anchors, machine-readable AST/structural transaction roles, static validation expectations, report expectations, generated artifact boundary, explicit residue, and selected .11 as the readiness audit before implementation.`
+  Commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.10: select AXI transaction envelope slice`
+
+- ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER.11`
+  Status: `pending`
+  Goal: `Audit readiness for the AXI manager logical transaction-envelope/static-validation slice.`
+  Acceptance: `The audit reads the shipped capacity/status and ID-family generator/parser paths, PPIF samples, report/check/semantic JSON surfaces, IAL1/IAL0/SystemVerilog substrate, AXI rule matrix/evidence, diagnostics, support accounting, mdBook, and tests; decides whether the first transaction-envelope implementation should extend manager-capacity-status, introduce a broader manager object, or land an IAL1/IAL0/SV prerequisite first; records exact public syntax, in-process contract shape, report schema impacts, generated .isf/.fsm/HDL boundaries, diagnostics, validation gates, docs, residue, rollback, and next implementation owner before behavior changes.`
   Verification: `pending`
   Commit: `pending`
 
@@ -124,7 +131,7 @@ path before reopening VHDL backend or VHDL rerouting work.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.10` | `pending` | `.9` shipped the additive ID-family/static-validation metadata slice; the next safe step is selecting the next exact IAL2 feature-completeness slice before behavior changes. |
+| 1 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.11` | `pending` | `.10` selected the logical read/write transaction-envelope/static-validation subset; the next safe step is auditing implementation readiness before behavior changes. |
 
 ## Decisions
 
@@ -284,6 +291,18 @@ path before reopening VHDL backend or VHDL rerouting work.
 - `2026-06-12`: `.10` is selected as the next leaf: choose the next exact
   IAL2 feature-completeness slice or required IAL1/IAL0/SV prerequisite after
   shipped Valid-Ready, bundle, capacity/status, and ID-family metadata.
+- `2026-06-12`: `.10` selected AXI manager logical read/write transaction
+  envelope and static validation as the next subset. The subset owns
+  machine-readable AST/structural transaction names, read/write kind,
+  user-visible tags, request/completion event bindings, optional requested-ID
+  policy/fit validation against declared ID families, source anchors, report
+  metadata, and explicit residue. It does not yet own ID allocation algorithms,
+  same-ID ordering queues, different-ID interleaving, `BID`/`RID` response
+  matching, bursts, queued/blocking policy, profile aliases, or VHDL.
+- `2026-06-12`: `.11` is selected as the next leaf: audit readiness for the
+  transaction-envelope/static-validation implementation and decide whether it
+  extends `manager-capacity-status`, introduces a broader manager object, or
+  requires an IAL1/IAL0/SV prerequisite first.
 - `2026-06-12`: User clarified the backend strategy: FSMGen is currently Perl
   5, but IAL0/IAL1/IAL2 and the mdBook must remain backend-language-neutral
   contracts for future Rust, Rust/Wasm, browser-capable JavaScript, and
@@ -293,11 +312,11 @@ path before reopening VHDL backend or VHDL rerouting work.
 
 ## Open Questions
 
-- The broader full-manager object spelling remains open. `.9` intentionally
-  extended the existing capacity/status object additively; full transaction
-  verbs, ID allocation, ordering, response matching, bursts, queued/blocking
-  policy, and profile aliases remain future exact-owner work. `.10` must
-  select the next exact owner before any of those behavior changes.
+- The broader full-manager object spelling remains open. `.10` selected the
+  transaction-envelope/static-validation subset, but `.11` must decide the
+  exact implementation boundary before syntax or behavior changes. Full ID
+  allocation, ordering, response matching, bursts, queued/blocking policy, and
+  profile aliases remain future exact-owner work.
 
 ## Blockers
 
@@ -325,6 +344,8 @@ path before reopening VHDL backend or VHDL rerouting work.
 | `2026-06-12` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.8` | `bash knowledge-map/scripts/gen_knowledge_map.sh`; `mdbook build docs/book`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `git --no-pager diff --check`; ID-family readiness fact-card reverify `rg`; IAL2 next-slice fact-card reverify `rg` | Passed. |
 | `2026-06-12` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.9` | `perl -Iperl -c perl/FSM/IAL2/ProtocolIntent/AxiManagerCapacityStatus.pm`; `perl -Iperl -c perl/FSM/Adapter/IAL2/PPIF.pm`; `perl -Iperl -c perl/FSM/Support/RegressionCorpus.pm`; `perl -Iperl -c perl/FSM/Support/LanguageSurfaceSection.pm`; `prove -Iperl t/1437-axi-ial2-manager-capacity-status-generator.t`; `prove -Iperl t/1436-ial2-ppif-parser-cli.t` | Passed. |
 | `2026-06-12` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.9` | `bash knowledge-map/scripts/gen_knowledge_map.sh`; `prove -Iperl t/297-capability-manifest.t t/317-language-surface-contract.t t/301-check-json-supported-corpus.t t/303-normalized-semantic-json-supported-corpus.t`; `mdbook build docs/book`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `git --no-pager diff --check`; ID-family first-slice fact-card reverify `prove`; backend-neutral fact-card reverify `rg`; next-slice/readiness/subset fact-card reverify `rg` | Passed. |
+| `2026-06-12` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.10` | `KNOWLEDGE_MAP.md`; `docs/AXI_MANAGER_RULE_MATRIX_DESIGN_PROBE.md`; `docs/AXI_MANAGER_USER_API_BRAINSTORM.md`; `docs/AXI_ID_ORDERING_RULE_EVIDENCE_PROBE.md`; `docs/AXI_IAL2_MANAGER_CAPACITY_STATUS_PPIF_FIRST_SLICE.md`; `docs/AXI_IAL2_MANAGER_ID_FAMILY_FIRST_SLICE.md`; `perl/FSM/IAL2/ProtocolIntent/AxiManagerCapacityStatus.pm`; `perl/FSM/Adapter/IAL2/PPIF.pm`; `t/1436-ial2-ppif-parser-cli.t`; `t/1437-axi-ial2-manager-capacity-status-generator.t`; `docs/book/src/14-feature-backlog.md`; `README.md`; `ROADMAP_V2.md` | Selected AXI manager logical transaction-envelope/static validation with a machine-readable AST/structural contract and advanced the frontier to `.11` readiness audit. |
+| `2026-06-12` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.10` | `bash knowledge-map/scripts/gen_knowledge_map.sh`; `mdbook build docs/book`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `git --no-pager diff --check`; transaction-envelope fact-card reverify `rg`; next-slice fact-card reverify `rg`; stale-frontier wording search `rg` | Passed. |
 
 ## Commit Log
 
@@ -339,7 +360,8 @@ path before reopening VHDL backend or VHDL rerouting work.
 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.7` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.7: select AXI ID family slice` | Selected the ID-family/static-validation subset and advanced the frontier to `.8`. |
 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.8` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.8: audit AXI ID family readiness` | Selected the additive implementation boundary and advanced the frontier to `.9`. |
 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.9` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.9: ship AXI ID family metadata` | Shipped optional `(id-families ...)` metadata for the public capacity/status object and advanced the frontier to `.10`. |
-| `IAL2-FEATURE-COMPLETENESS-FRONTIER.10` | `pending` | `pending` |
+| `IAL2-FEATURE-COMPLETENESS-FRONTIER.10` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.10: select AXI transaction envelope slice` | Selected logical read/write transaction-envelope/static validation and advanced the frontier to `.11`. |
+| `IAL2-FEATURE-COMPLETENESS-FRONTIER.11` | `pending` | `pending` |
 
 ## Changelog
 
@@ -370,3 +392,6 @@ path before reopening VHDL backend or VHDL rerouting work.
 - `2026-06-12`: Completed `.9` implementation, shipped optional
   `(id-families ...)` public metadata for the capacity/status object, and
   advanced the frontier to `.10`, the next IAL2 feature-completeness selector.
+- `2026-06-12`: Completed `.10` selector, chose AXI manager logical
+  read/write transaction-envelope/static validation, and advanced the frontier
+  to `.11` readiness audit before implementation changes.

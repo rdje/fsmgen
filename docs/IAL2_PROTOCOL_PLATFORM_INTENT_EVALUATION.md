@@ -197,7 +197,11 @@ selected an additive optional `id_families` extension to the existing
 capacity/status object, and
 [AXI_IAL2_MANAGER_ID_FAMILY_FIRST_SLICE](AXI_IAL2_MANAGER_ID_FAMILY_FIRST_SLICE.md)
 ships that `.ppif` metadata/report slice without changing generated `.isf`,
-generated `.fsm`, or HDL behavior.
+generated `.fsm`, or HDL behavior. The next selected manager subset is the
+logical read/write transaction envelope and static-validation contract in
+[AXI_IAL2_MANAGER_TRANSACTION_ENVELOPE_SELECTION](AXI_IAL2_MANAGER_TRANSACTION_ENVELOPE_SELECTION.md);
+the active follow-on leaf audits implementation readiness before behavior
+changes.
 Public `.pif`, `.ppi`, `.axi`, protocol-profile aliases, ID allocation,
 ordering, response matching, bursts, queued/blocking policy, and full AXI
 manager behavior remain unshipped and need later exact owners.

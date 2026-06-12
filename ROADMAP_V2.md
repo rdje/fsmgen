@@ -937,13 +937,16 @@ Priority note:
   `manager-capacity-status` object, the next subset is selected as ID-family
   declaration/static validation, and the additive optional `(id-families ...)`
   public `.ppif` extension is shipped for the existing capacity/status object;
-  the active next leaf selects the next IAL2 feature-completeness slice.
+  the next subset is selected as a logical read/write transaction envelope and
+  static-validation contract; the active next leaf audits implementation
+  readiness for that envelope.
 
 ## Current intent
 The active immediate feature-completeness lane is IAL2 on the
 SystemVerilog-backed lowering path; see
 [docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md](docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md).
-The current frontier is the next IAL2 feature-completeness selector after the
+The current frontier is the readiness audit for the selected AXI manager
+logical read/write transaction-envelope/static-validation slice after the
 shipped AXI manager ID-family/static-validation metadata slice. The shipped
 public capacity/status source accepts one
 `(manager-capacity-status NAME ...)` object under
@@ -955,7 +958,11 @@ read/write ID-family widths, request/response ID signal-pair metadata,
 zero-width absence semantics, static diagnostics, and report metadata, without
 changing generated `.isf`, generated `.fsm`, or HDL behavior. ID allocation,
 ordering, response matching, bursts, queued/blocking policy, profile aliases,
-and full AXI manager behavior remain task-tree-owned residue.
+and full AXI manager behavior remain task-tree-owned residue. The selected
+next transaction-envelope subset is the machine-readable AST/structural place
+for future logical read/write transaction names, tags, request/completion event
+bindings, and optional requested-ID static validation before dynamic manager
+behavior is claimed.
 
 The first honest `R11` slices are now:
 1. keep widening convention-first composition only where the child-side evidence is still deterministic,
