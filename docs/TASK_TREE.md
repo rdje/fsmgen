@@ -108,6 +108,7 @@ first.
 | `IAL2-PPIF-BUNDLE-HDL-ENTRY-FIRST-SLICE` | `done` | IAL2 horizon exploration | complete (`.1`; shipped aggregate wrapper/top `.fsm` entry, default SystemVerilog generation, and `--verify-hdl` for the tracked AW/W PPIF bundle sample) | [docs/tasks/IAL2-PPIF-BUNDLE-HDL-ENTRY-FIRST-SLICE.md](docs/tasks/IAL2-PPIF-BUNDLE-HDL-ENTRY-FIRST-SLICE.md) |
 | `TASK-TREE-STALE-STATUS-DRIFT-REPAIR` | `done` | `infra/continuity` | complete (`.1`; normalized stale active/pending/proposed markers in completed task-tree files so exhausted PNT recovery is unambiguous) | [docs/tasks/TASK-TREE-STALE-STATUS-DRIFT-REPAIR.md](docs/tasks/TASK-TREE-STALE-STATUS-DRIFT-REPAIR.md) |
 | `TASK-TREE-HYPHENATED-STATUS-DRIFT-REPAIR` | `done` | `infra/continuity` | complete (`.1`; normalized the stale hyphenated `in-progress` marker in completed `ISF-TRIGGER-ANCHOR` metadata and hardened the status-drift fact recheck) | [docs/tasks/TASK-TREE-HYPHENATED-STATUS-DRIFT-REPAIR.md](docs/tasks/TASK-TREE-HYPHENATED-STATUS-DRIFT-REPAIR.md) |
+| `BIN-FSMGEN-IMPORT-TREE-JUN12-REFRESH` | `done` | bootstrap architecture maintenance | complete (`.1`; refreshed stale live `bin/fsmgen` import-tree counts, PPIF/IAL2 reachability, and measured line-count drift after protocol-intent bundle growth) | [docs/tasks/BIN-FSMGEN-IMPORT-TREE-JUN12-REFRESH.md](docs/tasks/BIN-FSMGEN-IMPORT-TREE-JUN12-REFRESH.md) |
 
 ## Proposed Task Trees
 

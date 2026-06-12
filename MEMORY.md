@@ -10,9 +10,9 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `HEAD` — `TASK-TREE-HYPHENATED-STATUS-DRIFT-REPAIR.1: normalize hyphenated task status`.
+- latest_commit: `HEAD` — `BIN-FSMGEN-IMPORT-TREE-JUN12-REFRESH.1: refresh import tree after PPIF growth`.
 - active_work_unit: none; next action is to pick the next eligible task-tree leaf from `docs/TASK_TREE.md`.
-- recently_done: `TASK-TREE-HYPHENATED-STATUS-DRIFT-REPAIR.1`; `TASK-TREE-STALE-STATUS-DRIFT-REPAIR.1`; `IAL2-PPIF-BUNDLE-HDL-ENTRY-FIRST-SLICE.1`; `IAL2-PPIF-BUNDLE-HDL-ENTRY-SELECTION.1`; `IAL2-PPIF-BUNDLE-SEMANTIC-JSON-FIRST-SLICE.1`; `IAL2-PPIF-VALID-READY-BUNDLE-FIRST-SLICE.1`; `IAL2-PPIF-VALID-READY-BUNDLE-CONTRACT-SELECTION.1`; `IAL2-PPIF-MULTI-VALID-READY-READINESS.1`. Older completed slices are in the task tree and git history.
+- recently_done: `BIN-FSMGEN-IMPORT-TREE-JUN12-REFRESH.1`; `TASK-TREE-HYPHENATED-STATUS-DRIFT-REPAIR.1`; `TASK-TREE-STALE-STATUS-DRIFT-REPAIR.1`; `IAL2-PPIF-BUNDLE-HDL-ENTRY-FIRST-SLICE.1`; `IAL2-PPIF-BUNDLE-HDL-ENTRY-SELECTION.1`; `IAL2-PPIF-BUNDLE-SEMANTIC-JSON-FIRST-SLICE.1`; `IAL2-PPIF-VALID-READY-BUNDLE-FIRST-SLICE.1`; `IAL2-PPIF-VALID-READY-BUNDLE-CONTRACT-SELECTION.1`. Older completed slices are in the task tree and git history.
 - in_flight_uncommitted: none; unrelated untracked `fx/` intentionally left alone.
 - blockers: none.
 
