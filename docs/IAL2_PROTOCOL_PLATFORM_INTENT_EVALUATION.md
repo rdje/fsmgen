@@ -190,7 +190,11 @@ capacity/status shell is now also public through
 [AXI_IAL2_MANAGER_CAPACITY_STATUS_PPIF_FIRST_SLICE](AXI_IAL2_MANAGER_CAPACITY_STATUS_PPIF_FIRST_SLICE.md),
 and the next selected manager subset is ID-family declaration/static
 validation in
-[AXI_IAL2_MANAGER_ID_FAMILY_SUBSET_SELECTION](AXI_IAL2_MANAGER_ID_FAMILY_SUBSET_SELECTION.md).
+[AXI_IAL2_MANAGER_ID_FAMILY_SUBSET_SELECTION](AXI_IAL2_MANAGER_ID_FAMILY_SUBSET_SELECTION.md);
+the readiness audit
+[AXI_IAL2_MANAGER_ID_FAMILY_READINESS_AUDIT](AXI_IAL2_MANAGER_ID_FAMILY_READINESS_AUDIT.md)
+selects an additive optional `id_families` extension to the existing
+capacity/status object as the active implementation boundary.
 Public `.pif`, `.ppi`, `.axi`, protocol-profile aliases, ID allocation,
 ordering, response matching, bursts, queued/blocking policy, and full AXI
 manager behavior remain unshipped and need later exact owners.

@@ -2273,10 +2273,11 @@ public `.ppif` capacity/status parser/CLI first slice is now shipped for one
 manager object with sample, manifest, support-accounting, semantic JSON, check
 JSON, generated review artifacts, HDL, `--verify-hdl`, mdBook, and focused
 diagnostics. The next AXI manager subset is selected as ID-family declaration
-and static validation; the active frontier is a readiness audit for that
-implementation boundary. Selected IAL2 slices may include explicit IAL1 or
-IAL0/SystemVerilog prerequisites when those prerequisites are needed for
-clean, reviewable lowering.
+and static validation; the readiness audit selected an additive optional
+`id_families` extension to the existing capacity/status object, and the active
+frontier is the focused implementation slice. Selected IAL2 slices may include
+explicit IAL1 or IAL0/SystemVerilog prerequisites when those prerequisites are
+needed for clean, reviewable lowering.
 
 Evaluation note:
 [IAL2_PROTOCOL_PLATFORM_INTENT_EVALUATION](../../IAL2_PROTOCOL_PLATFORM_INTENT_EVALUATION.md).
@@ -2520,13 +2521,16 @@ selected semantic shape is:
   (read  (width 4) (request-id ARID) (response-id RID)))
 ```
 
-The active `.8` frontier is a readiness audit before any parser or generator
-behavior changes. That audit must decide whether this is an additive
-capacity/status extension, a broader manager object, or a prerequisite
-IAL1/IAL0/SystemVerilog slice. ID allocation, per-transaction ID validation,
-same-ID ordering, different-ID interleaving, `BID`/`RID` response matching,
-bursts, queued/blocking policies, profile aliases, and VHDL remain future
-task-tree-owned residue.
+Readiness audit:
+[AXI_IAL2_MANAGER_ID_FAMILY_READINESS_AUDIT](../../AXI_IAL2_MANAGER_ID_FAMILY_READINESS_AUDIT.md)
+selects the implementation boundary. The first implementation should add an
+optional `(id-families ...)` clause under the existing
+`manager-capacity-status` object, emit additive report metadata, and leave
+generated `.isf`, generated `.fsm`, and HDL behavior unchanged. The active
+`.9` frontier implements that parser/generator/report/sample slice. ID
+allocation, per-transaction ID validation, same-ID ordering, different-ID
+interleaving, `BID`/`RID` response matching, bursts, queued/blocking policies,
+profile aliases, and VHDL remain future task-tree-owned residue.
 
 First implementation subset selection:
 [AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION](../../AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md)
@@ -4795,8 +4799,10 @@ leaf `IAL2-FEATURE-COMPLETENESS-FRONTIER.5` selects the public
 `manager-capacity-status` `.ppif` syntax. Completed implementation leaf
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.6` ships that public parser/CLI first
 slice. Completed selector leaf `IAL2-FEATURE-COMPLETENESS-FRONTIER.7`
-selects AXI ID-family declaration/static validation and advances the active
-frontier to `.8`, its readiness audit.
+selects AXI ID-family declaration/static validation. Completed readiness audit
+leaf `IAL2-FEATURE-COMPLETENESS-FRONTIER.8` selects the additive
+capacity/status implementation boundary and advances the active frontier to
+`.9`, its focused implementation slice.
 Completed implementation leaf
 `ARCHITECTURE-DEBT-FRONTIER.2.1`
 projects direct backend storage/helper declaration-plan entries into
