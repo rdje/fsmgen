@@ -200,8 +200,11 @@ ships that `.ppif` metadata/report slice without changing generated `.isf`,
 generated `.fsm`, or HDL behavior. The next selected manager subset is the
 logical read/write transaction envelope and static-validation contract in
 [AXI_IAL2_MANAGER_TRANSACTION_ENVELOPE_SELECTION](AXI_IAL2_MANAGER_TRANSACTION_ENVELOPE_SELECTION.md);
-the active follow-on leaf audits implementation readiness before behavior
-changes.
+the readiness audit
+[AXI_IAL2_MANAGER_TRANSACTION_ENVELOPE_READINESS_AUDIT](AXI_IAL2_MANAGER_TRANSACTION_ENVELOPE_READINESS_AUDIT.md)
+selects an additive optional `(transactions ...)` static/report metadata
+extension under that existing object, with generated `.isf`, generated `.fsm`,
+and HDL behavior unchanged for the first implementation.
 Public `.pif`, `.ppi`, `.axi`, protocol-profile aliases, ID allocation,
 ordering, response matching, bursts, queued/blocking policy, and full AXI
 manager behavior remain unshipped and need later exact owners.

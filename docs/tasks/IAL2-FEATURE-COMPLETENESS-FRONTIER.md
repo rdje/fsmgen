@@ -48,7 +48,7 @@ path before reopening VHDL backend or VHDL rerouting work.
 - ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER`
   Status: `active`
   Goal: `Make IAL2 feature-complete on the SystemVerilog-backed path before VHDL work resumes.`
-  Children: `IAL2-FEATURE-COMPLETENESS-FRONTIER.1, IAL2-FEATURE-COMPLETENESS-FRONTIER.2, IAL2-FEATURE-COMPLETENESS-FRONTIER.3, IAL2-FEATURE-COMPLETENESS-FRONTIER.4, IAL2-FEATURE-COMPLETENESS-FRONTIER.5, IAL2-FEATURE-COMPLETENESS-FRONTIER.6, IAL2-FEATURE-COMPLETENESS-FRONTIER.7, IAL2-FEATURE-COMPLETENESS-FRONTIER.8, IAL2-FEATURE-COMPLETENESS-FRONTIER.9, IAL2-FEATURE-COMPLETENESS-FRONTIER.10, IAL2-FEATURE-COMPLETENESS-FRONTIER.11`
+  Children: `IAL2-FEATURE-COMPLETENESS-FRONTIER.1, IAL2-FEATURE-COMPLETENESS-FRONTIER.2, IAL2-FEATURE-COMPLETENESS-FRONTIER.3, IAL2-FEATURE-COMPLETENESS-FRONTIER.4, IAL2-FEATURE-COMPLETENESS-FRONTIER.5, IAL2-FEATURE-COMPLETENESS-FRONTIER.6, IAL2-FEATURE-COMPLETENESS-FRONTIER.7, IAL2-FEATURE-COMPLETENESS-FRONTIER.8, IAL2-FEATURE-COMPLETENESS-FRONTIER.9, IAL2-FEATURE-COMPLETENESS-FRONTIER.10, IAL2-FEATURE-COMPLETENESS-FRONTIER.11, IAL2-FEATURE-COMPLETENESS-FRONTIER.12`
 
 - ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER.1`
   Status: `done`
@@ -121,9 +121,16 @@ path before reopening VHDL backend or VHDL rerouting work.
   Commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.10: select AXI transaction envelope slice`
 
 - ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER.11`
-  Status: `pending`
+  Status: `done`
   Goal: `Audit readiness for the AXI manager logical transaction-envelope/static-validation slice.`
   Acceptance: `The audit reads the shipped capacity/status and ID-family generator/parser paths, PPIF samples, report/check/semantic JSON surfaces, IAL1/IAL0/SystemVerilog substrate, AXI rule matrix/evidence, diagnostics, support accounting, mdBook, and tests; decides whether the first transaction-envelope implementation should extend manager-capacity-status, introduce a broader manager object, or land an IAL1/IAL0/SV prerequisite first; records exact public syntax, in-process contract shape, report schema impacts, generated .isf/.fsm/HDL boundaries, diagnostics, validation gates, docs, residue, rollback, and next implementation owner before behavior changes.`
+  Verification: `Selected an additive optional transactions extension under the existing manager-capacity-status object; no IAL1/IAL0/SV prerequisite is required for the first static/report metadata slice because transaction request/completion bindings must reference the existing direction-level abstract events; documented public syntax, in-process AST/structural contract shape, report impacts, unchanged generated artifact boundary, diagnostics, validation gates, residue, and selected .12 as the implementation owner.`
+  Commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.11: audit AXI transaction envelope readiness`
+
+- ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER.12`
+  Status: `pending`
+  Goal: `Implement the additive AXI manager transaction-envelope/static-validation metadata slice.`
+  Acceptance: `The capacity/status generator accepts optional structured transactions; PPIF accepts an optional (transactions ...) clause under one manager-capacity-status object; transactions normalize to machine-readable AST/structural entries with name, kind, tag, direction-level request/completion event bindings, and id policy/value; concrete IDs validate against declared ID-family width/presence; report JSON additively emits transactions without changing generated .isf/.fsm/HDL behavior; a separate public sample and support-accounting entry cover the feature; check JSON and semantic JSON preserve .ppif source identity; focused diagnostics, mdBook, docs, Knowledge Map, and memory are synced.`
   Verification: `pending`
   Commit: `pending`
 
@@ -131,7 +138,7 @@ path before reopening VHDL backend or VHDL rerouting work.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.11` | `pending` | `.10` selected the logical read/write transaction-envelope/static-validation subset; the next safe step is auditing implementation readiness before behavior changes. |
+| 1 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.12` | `pending` | `.11` selected an additive static/report metadata implementation boundary for the logical transaction envelope; the next safe step is implementing that bounded slice. |
 
 ## Decisions
 
@@ -303,6 +310,18 @@ path before reopening VHDL backend or VHDL rerouting work.
   transaction-envelope/static-validation implementation and decide whether it
   extends `manager-capacity-status`, introduces a broader manager object, or
   requires an IAL1/IAL0/SV prerequisite first.
+- `2026-06-12`: Readiness audit `.11` selected an additive optional
+  `(transactions ...)` extension under the existing `manager-capacity-status`
+  object. No IAL1, IAL0, or SystemVerilog prerequisite is required for the
+  first implementation because the selected slice is static/report metadata
+  and transaction request/completion bindings must reference the existing
+  direction-level abstract events, leaving generated `.isf`, generated
+  `.fsm`, and HDL behavior unchanged.
+- `2026-06-12`: `.12` is selected as the next leaf: implement the additive
+  transaction-envelope/static-validation metadata slice with public
+  `(transactions ...)` syntax, a separate sample/support-accounting entry,
+  report JSON `transactions`, fail-closed diagnostics, unchanged generated
+  artifacts, mdBook, Knowledge Map, and focused tests.
 - `2026-06-12`: User clarified the backend strategy: FSMGen is currently Perl
   5, but IAL0/IAL1/IAL2 and the mdBook must remain backend-language-neutral
   contracts for future Rust, Rust/Wasm, browser-capable JavaScript, and
@@ -312,11 +331,12 @@ path before reopening VHDL backend or VHDL rerouting work.
 
 ## Open Questions
 
-- The broader full-manager object spelling remains open. `.10` selected the
-  transaction-envelope/static-validation subset, but `.11` must decide the
-  exact implementation boundary before syntax or behavior changes. Full ID
-  allocation, ordering, response matching, bursts, queued/blocking policy, and
-  profile aliases remain future exact-owner work.
+- The broader full-manager object spelling remains open. `.11` selected the
+  first transaction-envelope implementation as an additive static/report
+  metadata extension under `manager-capacity-status`. Full ID allocation,
+  ordering, response matching, bursts, queued/blocking policy, dynamic
+  per-transaction behavior, broader `(axi-manager ...)` syntax, and profile
+  aliases remain future exact-owner work.
 
 ## Blockers
 
@@ -346,6 +366,8 @@ path before reopening VHDL backend or VHDL rerouting work.
 | `2026-06-12` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.9` | `bash knowledge-map/scripts/gen_knowledge_map.sh`; `prove -Iperl t/297-capability-manifest.t t/317-language-surface-contract.t t/301-check-json-supported-corpus.t t/303-normalized-semantic-json-supported-corpus.t`; `mdbook build docs/book`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `git --no-pager diff --check`; ID-family first-slice fact-card reverify `prove`; backend-neutral fact-card reverify `rg`; next-slice/readiness/subset fact-card reverify `rg` | Passed. |
 | `2026-06-12` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.10` | `KNOWLEDGE_MAP.md`; `docs/AXI_MANAGER_RULE_MATRIX_DESIGN_PROBE.md`; `docs/AXI_MANAGER_USER_API_BRAINSTORM.md`; `docs/AXI_ID_ORDERING_RULE_EVIDENCE_PROBE.md`; `docs/AXI_IAL2_MANAGER_CAPACITY_STATUS_PPIF_FIRST_SLICE.md`; `docs/AXI_IAL2_MANAGER_ID_FAMILY_FIRST_SLICE.md`; `perl/FSM/IAL2/ProtocolIntent/AxiManagerCapacityStatus.pm`; `perl/FSM/Adapter/IAL2/PPIF.pm`; `t/1436-ial2-ppif-parser-cli.t`; `t/1437-axi-ial2-manager-capacity-status-generator.t`; `docs/book/src/14-feature-backlog.md`; `README.md`; `ROADMAP_V2.md` | Selected AXI manager logical transaction-envelope/static validation with a machine-readable AST/structural contract and advanced the frontier to `.11` readiness audit. |
 | `2026-06-12` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.10` | `bash knowledge-map/scripts/gen_knowledge_map.sh`; `mdbook build docs/book`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `git --no-pager diff --check`; transaction-envelope fact-card reverify `rg`; next-slice fact-card reverify `rg`; stale-frontier wording search `rg` | Passed. |
+| `2026-06-12` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.11` | `perl/FSM/IAL2/ProtocolIntent/AxiManagerCapacityStatus.pm`; `perl/FSM/Adapter/IAL2/PPIF.pm`; `ppif/axi_manager_capacity_status_id_family.ppif`; `t/1437-axi-ial2-manager-capacity-status-generator.t`; `t/1436-ial2-ppif-parser-cli.t`; `docs/AXI_IAL2_MANAGER_TRANSACTION_ENVELOPE_SELECTION.md`; `docs/AXI_IAL2_MANAGER_ID_FAMILY_FIRST_SLICE.md`; `docs/AXI_IAL2_MANAGER_ID_FAMILY_READINESS_AUDIT.md`; `docs/book/src/14-feature-backlog.md`; `README.md`; `ROADMAP_V2.md` | Selected additive transaction-envelope implementation boundary and advanced the frontier to `.12`. |
+| `2026-06-12` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.11` | `bash knowledge-map/scripts/gen_knowledge_map.sh`; `mdbook build docs/book`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `git --no-pager diff --check`; transaction-envelope readiness fact-card reverify `rg`; next-slice fact-card reverify `rg`; stale-frontier wording search `rg` | Passed. |
 
 ## Commit Log
 
@@ -361,7 +383,8 @@ path before reopening VHDL backend or VHDL rerouting work.
 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.8` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.8: audit AXI ID family readiness` | Selected the additive implementation boundary and advanced the frontier to `.9`. |
 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.9` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.9: ship AXI ID family metadata` | Shipped optional `(id-families ...)` metadata for the public capacity/status object and advanced the frontier to `.10`. |
 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.10` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.10: select AXI transaction envelope slice` | Selected logical read/write transaction-envelope/static validation and advanced the frontier to `.11`. |
-| `IAL2-FEATURE-COMPLETENESS-FRONTIER.11` | `pending` | `pending` |
+| `IAL2-FEATURE-COMPLETENESS-FRONTIER.11` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.11: audit AXI transaction envelope readiness` | Selected the additive implementation boundary and advanced the frontier to `.12`. |
+| `IAL2-FEATURE-COMPLETENESS-FRONTIER.12` | `pending` | `pending` |
 
 ## Changelog
 
@@ -395,3 +418,6 @@ path before reopening VHDL backend or VHDL rerouting work.
 - `2026-06-12`: Completed `.10` selector, chose AXI manager logical
   read/write transaction-envelope/static validation, and advanced the frontier
   to `.11` readiness audit before implementation changes.
+- `2026-06-12`: Completed `.11` readiness audit, selected an additive
+  capacity/status transaction-envelope implementation boundary, and advanced
+  the frontier to `.12`.

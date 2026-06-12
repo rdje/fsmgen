@@ -938,16 +938,17 @@ Priority note:
   declaration/static validation, and the additive optional `(id-families ...)`
   public `.ppif` extension is shipped for the existing capacity/status object;
   the next subset is selected as a logical read/write transaction envelope and
-  static-validation contract; the active next leaf audits implementation
-  readiness for that envelope.
+  static-validation contract; the readiness audit selects an additive optional
+  `(transactions ...)` static/report metadata extension under that same object;
+  the active next leaf implements that bounded metadata slice.
 
 ## Current intent
 The active immediate feature-completeness lane is IAL2 on the
 SystemVerilog-backed lowering path; see
 [docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md](docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md).
-The current frontier is the readiness audit for the selected AXI manager
-logical read/write transaction-envelope/static-validation slice after the
-shipped AXI manager ID-family/static-validation metadata slice. The shipped
+The current frontier is the implementation slice for the selected AXI manager
+logical read/write transaction-envelope/static-validation metadata after the
+shipped readiness audit. The shipped
 public capacity/status source accepts one
 `(manager-capacity-status NAME ...)` object under
 `(protocol-platform-intent ...)`, `(profile axi4)`, and top-level source
@@ -961,8 +962,11 @@ ordering, response matching, bursts, queued/blocking policy, profile aliases,
 and full AXI manager behavior remain task-tree-owned residue. The selected
 next transaction-envelope subset is the machine-readable AST/structural place
 for future logical read/write transaction names, tags, request/completion event
-bindings, and optional requested-ID static validation before dynamic manager
-behavior is claimed.
+bindings, and optional requested-ID static validation. The first
+implementation is selected as additive static/report metadata with request and
+completion bindings limited to existing direction-level abstract events so
+generated `.isf`, generated `.fsm`, and HDL behavior remain unchanged before
+dynamic manager behavior is claimed.
 
 The first honest `R11` slices are now:
 1. keep widening convention-first composition only where the child-side evidence is still deterministic,
