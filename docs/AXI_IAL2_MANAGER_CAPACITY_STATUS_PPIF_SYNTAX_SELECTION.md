@@ -3,6 +3,10 @@
 Status: public `.ppif` capacity/status syntax selected; no parser, CLI, sample,
 manifest, check JSON, semantic JSON, or HDL behavior changed by this note.
 
+Follow-on implementation:
+[docs/AXI_IAL2_MANAGER_CAPACITY_STATUS_PPIF_FIRST_SLICE.md](AXI_IAL2_MANAGER_CAPACITY_STATUS_PPIF_FIRST_SLICE.md)
+shipped the first public parser/CLI slice for this selected syntax.
+
 Task tree:
 [docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md](tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md).
 

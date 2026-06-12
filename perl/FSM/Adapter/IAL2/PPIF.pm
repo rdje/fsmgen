@@ -10,6 +10,7 @@ no warnings 'experimental::signatures';
 
 use Lispish;
 use FSM::Adapter::ISF::LispishAdapter;
+use FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus;
 use FSM::IAL2::ProtocolIntent::ValidReadyChannel;
 
 sub new($class, @constructor_args) {
@@ -55,6 +56,8 @@ sub parse_source($self, @args) {
     my $generator = FSM::IAL2::ProtocolIntent::ValidReadyChannel->new(debug => $self->{debug});
     return _generate_bundle($generator, $contract)
         if _is_bundle_contract($contract);
+    return FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new(debug => $self->{debug})->generate($contract)
+        if _is_manager_capacity_status_contract($contract);
     return $generator->generate($contract);
 }
 
@@ -101,6 +104,7 @@ sub _contract_from_root($root, $source_label) {
 
     my ($profile, $source);
     my @channels;
+    my @managers;
     for my $clause (@clauses) {
         my ($head, @body) = _clause_parts($clause, $source_label);
         if ($head eq 'profile') {
@@ -115,6 +119,8 @@ sub _contract_from_root($root, $source_label) {
             $source = _parse_source_clause(\@body, $source_label);
         } elsif ($head eq 'valid-ready-channel') {
             push @channels, _parse_valid_ready_channel(\@body, $source_label);
+        } elsif ($head eq 'manager-capacity-status') {
+            push @managers, _parse_manager_capacity_status(\@body, $source_label);
         } else {
             confess "Error: .ppif source '$source_label' has unsupported top-level clause '($head ...)'\n";
         }
@@ -124,8 +130,21 @@ sub _contract_from_root($root, $source_label) {
         unless defined $profile;
     confess "Error: .ppif source '$source_label' is missing required (source ...) clause\n"
         unless defined $source;
-    confess "Error: .ppif source '$source_label' is missing required (valid-ready-channel ...) clause\n"
-        unless @channels;
+    confess "Error: .ppif source '$source_label' is missing required intent object clause, expected (valid-ready-channel ...) or (manager-capacity-status ...)\n"
+        unless @channels || @managers;
+    confess "Error: .ppif source '$source_label' cannot mix (valid-ready-channel ...) and (manager-capacity-status ...) objects in this slice\n"
+        if @channels && @managers;
+    confess "Error: .ppif source '$source_label' supports exactly one (manager-capacity-status ...) object in this slice\n"
+        if @managers > 1;
+
+    if (@managers == 1) {
+        return {
+            %{$managers[0]},
+            intent_name => $intent_name,
+            protocol    => $profile,
+            source      => $source,
+        };
+    }
 
     my %seen_channel_names;
     for my $channel (@channels) {
@@ -254,6 +273,83 @@ sub _parse_valid_ready_channel($body, $source_label) {
     return \%contract;
 }
 
+sub _parse_manager_capacity_status($body, $source_label) {
+    confess "Error: .ppif (manager-capacity-status ...) requires a scalar object name\n"
+        unless @$body >= 1 && !ref($body->[0]) && length($body->[0]);
+
+    my $name = $body->[0];
+    my %contract = (name => $name);
+    my %seen;
+    for my $clause (@{$body}[1 .. $#$body]) {
+        my ($head, @items) = _clause_parts($clause, $source_label);
+        confess "Error: .ppif (manager-capacity-status $name ...) has duplicate ($head ...) clause\n"
+            if $seen{$head}++;
+
+        if ($head =~ /\A(?:clock|read-submit|read-complete|write-submit|write-complete|submit-policy|read-max-pending|write-max-pending)\z/) {
+            confess "Error: .ppif (manager-capacity-status $name ($head ...)) requires exactly one scalar value\n"
+                unless @items == 1 && !ref($items[0]);
+            $contract{_manager_capacity_contract_key($head)} = $items[0];
+        } elsif ($head eq 'reset') {
+            $contract{reset} = _parse_reset(\@items, $source_label);
+        } elsif ($head eq 'status') {
+            $contract{status} = _parse_manager_capacity_status_outputs(\@items, $source_label, $name);
+        } else {
+            confess "Error: .ppif (manager-capacity-status $name ...) has unsupported clause '($head ...)'\n";
+        }
+    }
+
+    for my $required (qw(clock reset read_max_pending write_max_pending submit_policy read_submit read_complete write_submit write_complete)) {
+        my $clause = $required;
+        $clause =~ s/_/-/g;
+        confess "Error: .ppif (manager-capacity-status $name ...) is missing required ($clause ...) clause\n"
+            unless exists $contract{$required};
+    }
+
+    return \%contract;
+}
+
+sub _manager_capacity_contract_key($clause_name) {
+    my %map = (
+        'clock'             => 'clock',
+        'read-submit'       => 'read_submit',
+        'read-complete'     => 'read_complete',
+        'write-submit'      => 'write_submit',
+        'write-complete'    => 'write_complete',
+        'submit-policy'     => 'submit_policy',
+        'read-max-pending'  => 'read_max_pending',
+        'write-max-pending' => 'write_max_pending',
+    );
+    return $map{$clause_name} if exists $map{$clause_name};
+    confess "Internal error: unknown manager capacity/status PPIF clause '$clause_name'\n";
+}
+
+sub _parse_manager_capacity_status_outputs($items, $source_label, $name) {
+    my %allowed = (
+        'read-can-accept'       => 'read_can_accept',
+        'write-can-accept'      => 'write_can_accept',
+        'read-full'             => 'read_full',
+        'write-full'            => 'write_full',
+        'pending-reads'         => 'pending_reads',
+        'pending-writes'        => 'pending_writes',
+        'read-slots-available'  => 'read_slots_available',
+        'write-slots-available' => 'write_slots_available',
+    );
+    my %status;
+
+    for my $clause (@$items) {
+        my ($head, @body) = _clause_parts($clause, $source_label);
+        confess "Error: .ppif (manager-capacity-status $name (status ...)) has unsupported status clause '($head ...)'\n"
+            unless exists $allowed{$head};
+        confess "Error: .ppif (manager-capacity-status $name (status ...)) has duplicate ($head ...) clause\n"
+            if exists $status{$allowed{$head}};
+        confess "Error: .ppif (manager-capacity-status $name (status ($head ...))) requires exactly one scalar value\n"
+            unless @body == 1 && !ref($body[0]);
+        $status{$allowed{$head}} = $body[0];
+    }
+
+    return \%status;
+}
+
 sub _parse_reset($items, $source_label) {
     confess "Error: .ppif (reset ...) requires exactly one reset tuple\n"
         unless @$items == 1 && ref($items->[0]) eq 'ARRAY';
@@ -308,6 +404,14 @@ sub _require_scalar($value, $label, $source_label) {
 sub _is_bundle_contract($contract) {
     return ref($contract) eq 'HASH'
         && ($contract->{kind} // '') eq 'valid_ready_bundle';
+}
+
+sub _is_manager_capacity_status_contract($contract) {
+    return ref($contract) eq 'HASH'
+        && exists($contract->{read_max_pending})
+        && exists($contract->{write_max_pending})
+        && exists($contract->{read_submit})
+        && exists($contract->{write_submit});
 }
 
 sub _generate_bundle($generator, $bundle) {

@@ -10,7 +10,7 @@ answers:
 date: 2026-06-12
 status: current
 tags: [ial2, axi, manager, capacity, status, generator, isf, lowering]
-evidence: docs/AXI_IAL2_MANAGER_CAPACITY_STATUS_GENERATOR_FIRST_SLICE.md; perl/FSM/IAL2/ProtocolIntent/AxiManagerCapacityStatus.pm; t/1437-axi-ial2-manager-capacity-status-generator.t; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/book/src/14-feature-backlog.md
+evidence: docs/AXI_IAL2_MANAGER_CAPACITY_STATUS_GENERATOR_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_CAPACITY_STATUS_PPIF_FIRST_SLICE.md; perl/FSM/IAL2/ProtocolIntent/AxiManagerCapacityStatus.pm; t/1437-axi-ial2-manager-capacity-status-generator.t; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/book/src/14-feature-backlog.md
 reverify: prove -Iperl t/1437-axi-ial2-manager-capacity-status-generator.t
 ---
 
@@ -25,6 +25,7 @@ artifact.
 
 The report schema is
 `fsmgen.ial2.protocol_intent.axi_manager_capacity_status.v1`. The slice is a
-capacity/status shell only: public `.ppif` syntax, profile aliases, IDs,
-ordering, response matching, bursts, queued/blocking policy, and VHDL backend
-work remain future exact-owner residue.
+capacity/status shell only. A later slice has shipped the public `.ppif`
+parser/CLI path for this same shell, but profile aliases, IDs, ordering,
+response matching, bursts, queued/blocking policy, full AXI manager behavior,
+and VHDL backend work remain future exact-owner residue.

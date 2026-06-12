@@ -584,6 +584,10 @@ manifest output while keeping the exact file lists widenable.
 | `protocol.apb_completer` | [fsm/apb_completer.fsm](fsm/apb_completer.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
 | `protocol.amba_requester` | [fsm/amba_requester.fsm](fsm/amba_requester.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
 | `protocol.apb_tb` | [fsm/apb_tb.fsm](fsm/apb_tb.fsm) | `supported_smoke` | `composition_top_pipeline_cli` |
+| `intent.isf_apb_requester` | [isf/apb_requester.isf](isf/apb_requester.isf) | `supported_smoke` | `isf_pipeline_cli` |
+| `intent.ppif_axi_aw_valid_ready` | [ppif/axi_aw_valid_ready.ppif](ppif/axi_aw_valid_ready.ppif) | `supported_smoke` | `ial2_ppif_pipeline_cli` |
+| `intent.ppif_axi_aw_w_valid_ready_bundle` | [ppif/axi_aw_w_valid_ready_bundle.ppif](ppif/axi_aw_w_valid_ready_bundle.ppif) | `supported_smoke` | `ial2_ppif_bundle_pipeline_cli` |
+| `intent.ppif_axi_manager_capacity_status` | [ppif/axi_manager_capacity_status.ppif](ppif/axi_manager_capacity_status.ppif) | `supported_smoke` | `ial2_ppif_manager_capacity_status_pipeline_cli` |
 | `feature.partial_lhs_with_size` | [t/corpus/partial_lhs_with_size.fsm](t/corpus/partial_lhs_with_size.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
 | `feature.partial_lhs_inferred_width` | [t/corpus/partial_lhs_inferred_width.fsm](t/corpus/partial_lhs_inferred_width.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
 | `feature.direct_rhs_concat_pack` | [t/corpus/direct_rhs_concat_pack.fsm](t/corpus/direct_rhs_concat_pack.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |

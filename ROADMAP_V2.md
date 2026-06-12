@@ -901,21 +901,23 @@ Priority note:
   found no IAL1 or IAL0/SV prerequisite blocker, the first in-process
   generator is shipped as
   `FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus`, the public `.ppif`
-  syntax/readiness boundary is selected, and the active next leaf implements
-  the first public parser/CLI slice for exactly one
-  `manager-capacity-status` object.
+  parser/CLI first slice is shipped for exactly one
+  `manager-capacity-status` object, and the active next leaf selects the next
+  AXI manager behavior subset or required prerequisite.
 
 ## Current intent
 The active immediate feature-completeness lane is IAL2 on the
 SystemVerilog-backed lowering path; see
 [docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md](docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md).
-The current frontier is the public `.ppif` parser/CLI first slice for the
-selected AXI manager capacity/status subset. The selector chose one
+The current frontier is a selector for the next AXI manager behavior subset or
+required prerequisite after the shipped capacity/status `.ppif` slice. The
+shipped public capacity/status source accepts one
 `(manager-capacity-status NAME ...)` object under
 `(protocol-platform-intent ...)`, `(profile axi4)`, and top-level source
-anchors. Parser/CLI behavior, public sample, support-accounting, semantic
-JSON, check JSON, manifest updates, mdBook sync, and focused diagnostics must
-ship together in that implementation leaf.
+anchors, and works through schedule JSON, generated `.isf`/`.fsm` review
+artifacts, HDL, `--verify-hdl`, check JSON, and normalized semantic JSON.
+IDs, ordering, response matching, bursts, queued/blocking policy, profile
+aliases, and full AXI manager behavior remain task-tree-owned residue.
 
 The first honest `R11` slices are now:
 1. keep widening convention-first composition only where the child-side evidence is still deterministic,

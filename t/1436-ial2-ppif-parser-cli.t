@@ -70,6 +70,32 @@ subtest 'PPIF adapter parses a multi-channel Valid-Ready bundle' => sub {
     is($result->{report}{channels}[0]{source_attribution}{scope}, 'channel', 'channel-local source attribution is reported');
 };
 
+subtest 'PPIF adapter parses the AXI manager capacity/status source shape' => sub {
+    my $sample_path = sample_capacity_ppif_path();
+    ok(-f $sample_path, 'tracked runnable PPIF capacity/status sample exists');
+
+    my $result = FSM::Adapter::IAL2::PPIF->new()->parse_source(sample_capacity_ppif(), $sample_path);
+
+    is($result->{layer}, 'IAL2', 'capacity/status adapter result stays IAL2');
+    is($result->{kind}, 'protocol_intent.axi_manager_capacity_status', 'adapter returns the manager capacity/status kind');
+    is($result->{mode}, 'capacity-status-shell', 'adapter keeps the shell mode explicit');
+    is($result->{report}{schema}, 'fsmgen.ial2.protocol_intent.axi_manager_capacity_status.v1', 'capacity/status report schema is selected');
+    is($result->{report}{source_object}{id}, 'axi-manager-capacity-status', 'source object id is preserved');
+    is($result->{report}{source_object}{intent_name}, 'axi_manager_capacity_status', 'source intent name is preserved');
+    is($result->{report}{manager}{name}, 'axi0', 'manager object name is reported');
+    is($result->{report}{manager}{protocol}, 'axi4', 'profile maps to manager protocol');
+    is($result->{report}{capacity}{read}{max_pending}, 4, 'read pending capacity is reported');
+    is($result->{report}{capacity}{write}{max_pending}, 2, 'write pending capacity is reported');
+    is($result->{generated_ial1}{name}, 'axi0_capacity_status.isf', 'adapter exposes generated capacity/status IAL1 artifact');
+    like($result->{generated_ial1}{text}, qr/\A\(actor axi0_capacity_status\b/, 'generated capacity/status IAL1 is .isf text');
+    is_deeply(
+        sorted([keys %{$result->{generated_ial0}{files}}]),
+        ['axi0_capacity_status.fsm'],
+        'adapter exposes generated capacity/status IAL0 .fsm file map',
+    );
+    is($result->{report}{layering}{direct_ial2_to_ial0}, 0, 'direct IAL2-to-IAL0 remains forbidden for capacity/status');
+};
+
 subtest 'PPIF adapter diagnostics fail closed before generation claims' => sub {
     my @cases = (
         ['missing profile',
@@ -90,6 +116,21 @@ subtest 'PPIF adapter diagnostics fail closed before generation claims' => sub {
         ['bad payload width syntax',
             '(protocol-platform-intent p (profile axi4) (source (object o) (anchor (document d) (section s) (page p))) (valid-ready-channel a (channel AW) (role manager-to-subordinate) (clock clk) (reset (rst_n active_low async)) (valid v) (ready r) (payload (x bits 1))))',
             qr/payload entry 'x' supports only '\(width N\)'/],
+        ['mixed object families',
+            capacity_ppif_with_objects(valid_ready_object(), manager_capacity_object()),
+            qr/cannot mix \(valid-ready-channel \.\.\.\) and \(manager-capacity-status \.\.\.\) objects/],
+        ['multiple manager objects',
+            capacity_ppif_with_objects(manager_capacity_object('axi0'), manager_capacity_object('axi1')),
+            qr/supports exactly one \(manager-capacity-status \.\.\.\) object/],
+        ['missing manager read depth',
+            capacity_ppif_with_objects(manager_capacity_object_without('(read-max-pending 4)')),
+            qr/missing required \(read-max-pending \.\.\.\) clause/],
+        ['unsupported manager policy',
+            capacity_ppif_with_objects(manager_capacity_object_with('(submit-policy blocking)')),
+            qr/submit_policy must be try/],
+        ['unsupported manager status clause',
+            capacity_ppif_with_objects(manager_capacity_object_with_status('(can-accept cap_ok)')),
+            qr/unsupported status clause '\(can-accept \.\.\.\)'/],
     );
 
     for my $case (@cases) {
@@ -137,6 +178,22 @@ subtest 'CLI emits IAL2 report JSON for .ppif without writing HDL' => sub {
     is($report->{transfer_fire_condition}, 'awvalid && awready', 'CLI report carries fire condition');
 };
 
+subtest 'CLI emits IAL2 report JSON for AXI manager capacity/status .ppif' => sub {
+    my ($success, undef, undef, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--emit-schedule-json', sample_capacity_ppif_path()],
+    );
+
+    ok($success, '--emit-schedule-json succeeds for capacity/status .ppif');
+    is(join('', @{$stderr_buf || []}), '', 'capacity/status report keeps stderr clean');
+    my $report = decode_json(join('', @{$stdout_buf || []}));
+    is($report->{schema}, 'fsmgen.ial2.protocol_intent.axi_manager_capacity_status.v1', 'CLI emits the capacity/status report schema');
+    is($report->{source_object}{intent_name}, 'axi_manager_capacity_status', 'capacity/status report carries the PPIF top-level intent name');
+    is($report->{generated_artifacts}{ial1}{name}, 'axi0_capacity_status.isf', 'capacity/status report names generated .isf');
+    is_deeply($report->{generated_artifacts}{ial0}{files}, ['axi0_capacity_status.fsm'], 'capacity/status report names generated .fsm');
+    is($report->{capacity}{read}{max_pending}, 4, 'capacity/status report carries read capacity');
+    is($report->{status_outputs}{read_can_accept}, 'axi0_read_can_accept', 'capacity/status report carries namespaced status output');
+};
+
 subtest 'CLI --outdir materializes generated .isf, .fsm, and HDL for .ppif' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $outdir = File::Spec->catdir($tempdir, 'out');
@@ -153,6 +210,25 @@ subtest 'CLI --outdir materializes generated .isf, .fsm, and HDL for .ppif' => s
     ok(-f $hdl, '--output writes generated HDL');
     like(slurp(File::Spec->catfile($outdir, 'axi_aw_valid_ready_monitor.isf')), qr/\(protocol-platform-intent\b|\(actor axi_aw_valid_ready_monitor\b/, 'generated .isf is inspectable text');
     like(slurp($hdl), qr/\bmodule\s+axi_aw_valid_ready_monitor\b/, 'generated HDL contains the monitor module');
+};
+
+subtest 'CLI --outdir and --verify-hdl materialize capacity/status review artifacts and HDL' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $outdir = File::Spec->catdir($tempdir, 'out');
+    my $hdl = File::Spec->catfile($tempdir, 'axi_capacity.sv');
+
+    my ($success, undef, undef, undef, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--quiet', '--outdir', $outdir, '--output', $hdl, '--verify-hdl', sample_capacity_ppif_path()],
+    );
+
+    ok($success, 'capacity/status CLI generation and --verify-hdl succeed');
+    is(join('', @{$stderr_buf || []}), '', 'capacity/status generation keeps stderr clean');
+    ok(-f File::Spec->catfile($outdir, 'axi0_capacity_status.isf'), 'capacity/status --outdir writes generated .isf');
+    ok(-f File::Spec->catfile($outdir, 'axi0_capacity_status.fsm'), 'capacity/status --outdir writes generated .fsm');
+    ok(-f $hdl, 'capacity/status --output writes generated HDL');
+    like(slurp(File::Spec->catfile($outdir, 'axi0_capacity_status.isf')), qr/\(actor axi0_capacity_status\b/, 'capacity/status generated .isf is inspectable text');
+    like(slurp($hdl), qr/\bmodule\s+axi0_capacity_status\b/, 'capacity/status HDL contains the generated module');
+    like(slurp($hdl), qr/\baxi0_read_can_accept\b/, 'capacity/status HDL contains the namespaced read can_accept status');
 };
 
 subtest 'CLI --outdir materializes bundle review artifacts and HDL' => sub {
@@ -231,6 +307,55 @@ subtest 'CLI check JSON and semantic JSON accept .ppif public source identity' =
     );
     ok(!$alias_success, '.pif alias is not accepted in the first public slice');
     ok(!decode_json(join('', @{$alias_stdout || []}))->{success}, '.pif alias check JSON reports failure');
+};
+
+subtest 'CLI check JSON and semantic JSON accept capacity/status .ppif public source identity' => sub {
+    my ($success, undef, undef, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--strict', '--check', '--json', sample_capacity_ppif_path()],
+    );
+    ok($success, 'capacity/status --check --json succeeds for .ppif');
+    is(join('', @{$stderr_buf || []}), '', 'capacity/status --check --json keeps stderr clean');
+    my $check_report = decode_json(join('', @{$stdout_buf || []}));
+    ok($check_report->{success}, 'capacity/status check JSON reports success');
+    is(
+        $check_report->{source}{resolved_path},
+        File::Spec->rel2abs(sample_capacity_ppif_path()),
+        'capacity/status check JSON reports the public .ppif source path',
+    );
+    is(
+        $check_report->{support_accounting}{entry_id},
+        'intent.ppif_axi_manager_capacity_status',
+        'capacity/status check JSON support accounting names the PPIF corpus entry',
+    );
+    is($check_report->{support_accounting}{source_kind}, 'ppif', 'capacity/status check JSON records PPIF source kind');
+
+    my ($semantic_success, undef, undef, $semantic_stdout, $semantic_stderr) = run(
+        command => ['./bin/fsmgen', '--strict', '--emit-semantic-json', sample_capacity_ppif_path()],
+    );
+    ok($semantic_success, 'capacity/status --emit-semantic-json succeeds for .ppif');
+    is(join('', @{$semantic_stderr || []}), '', 'capacity/status --emit-semantic-json keeps stderr clean');
+    my $semantic_report = decode_json(join('', @{$semantic_stdout || []}));
+    ok($semantic_report->{success}, 'capacity/status semantic JSON reports success');
+    is(
+        $semantic_report->{source}{resolved_path},
+        File::Spec->rel2abs(sample_capacity_ppif_path()),
+        'capacity/status semantic JSON reports the public .ppif source path',
+    );
+    is(
+        $semantic_report->{support_accounting}{entry_id},
+        'intent.ppif_axi_manager_capacity_status',
+        'capacity/status semantic JSON support accounting names the PPIF corpus entry',
+    );
+    is(
+        $semantic_report->{semantic}{module}{source_root_kind},
+        'fsm',
+        'capacity/status semantic JSON payload still describes the generated .fsm semantic root',
+    );
+    is(
+        $semantic_report->{semantic}{module}{name},
+        'axi0_capacity_status',
+        'capacity/status semantic JSON records the generated capacity/status module',
+    );
 };
 
 subtest 'CLI bundle HDL modes use aggregate wrapper entry' => sub {
@@ -331,12 +456,85 @@ sub sample_bundle_ppif_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_aw_w_valid_ready_bundle.ppif');
 }
 
+sub sample_capacity_ppif_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status.ppif');
+}
+
 sub sample_ppif {
     return slurp(sample_ppif_path());
 }
 
 sub sample_bundle_ppif {
     return slurp(sample_bundle_ppif_path());
+}
+
+sub sample_capacity_ppif {
+    return slurp(sample_capacity_ppif_path());
+}
+
+sub capacity_ppif_with_objects {
+    my @objects = @_;
+    return join("\n",
+        '(protocol-platform-intent p',
+        '  (profile axi4)',
+        '  (source',
+        '    (object axi-manager-capacity-status)',
+        '    (anchor (document d) (section A1.1) (page p)))',
+        @objects,
+        ')',
+        '',
+    );
+}
+
+sub valid_ready_object {
+    return join("\n",
+        '  (valid-ready-channel axi_aw',
+        '    (channel AW)',
+        '    (role manager-to-subordinate)',
+        '    (clock clk)',
+        '    (reset (rst_n active_low async))',
+        '    (valid awvalid)',
+        '    (ready awready)',
+        '    (payload (awaddr width 32)))',
+    );
+}
+
+sub manager_capacity_object {
+    my ($name) = @_;
+    $name //= 'axi0';
+    return join("\n",
+        "  (manager-capacity-status $name",
+        '    (clock clk)',
+        '    (reset (rst_n active_low async))',
+        '    (read-max-pending 4)',
+        '    (write-max-pending 2)',
+        '    (submit-policy try)',
+        '    (read-submit axi0_read_submit)',
+        '    (read-complete axi0_read_complete)',
+        '    (write-submit axi0_write_submit)',
+        '    (write-complete axi0_write_complete))',
+    );
+}
+
+sub manager_capacity_object_without {
+    my ($line_to_remove) = @_;
+    my $object = manager_capacity_object();
+    $object =~ s/^\s*\Q$line_to_remove\E\n//m;
+    return $object;
+}
+
+sub manager_capacity_object_with {
+    my ($replacement) = @_;
+    my $object = manager_capacity_object();
+    $object =~ s/\(submit-policy try\)/$replacement/;
+    return $object;
+}
+
+sub manager_capacity_object_with_status {
+    my ($status_line) = @_;
+    my $object = manager_capacity_object();
+    $object =~ s/\)\z/\n    (status $status_line))/;
+    return $object;
 }
 
 sub write_file {
