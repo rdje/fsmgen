@@ -55,7 +55,64 @@ Use it first for objective, navigation, and where to find code/docs quickly.
 ## Project objective
 FSMGen compiles Lisp-like `.fsm` state machine specifications into synthesizable HDL, and now accepts `.isf` intent-scheduling sources that lower into explicit scheduled `.fsm` before HDL generation.
 Current primary target is SystemVerilog, with Verilog conversion support and a scoped direct-root VHDL scaffold for the accepted single-FSM subset, including delayed-pulse clock-branch lowering, generic-bearing direct-root module headers with typed scalar/vector sized-literal defaults, signed vector and signed scalar direct-root ports, scalar/vector two-state `bit` input-port and internal declaration lowering, signed scalar/vector, non-signed four-state `logic` input-port/internal declaration lowering, and vector `logic signed` internal declaration lowering, scalar and signed scalar addition/subtraction/multiplication RHS/chain lowering, vector numeric-literal addition/subtraction emitted by compound update/shorthand forms, same-width unsigned-style addition/subtraction/multiplication/division/modulo/XOR RHS/chain lowering, same-width signed vector addition/subtraction/multiplication/division/modulo RHS lowering for signed targets and operands, signed vector numeric-literal addition/subtraction/multiplication/division/modulo RHS lowering including signed vector negative decimal addition, subtraction, multiplication, division, and modulo literals, non-signed vector positive decimal multiplication/division/modulo literal lowering in signal-first, literal-first, and literal-literal order, non-signed vector negative decimal addition/subtraction/multiplication/division/modulo literal lowering, bounded generated AMBA wrap arithmetic for `fsm/amba_requester.fsm`, bounded non-signed vector, signed vector, and scalar output-port decimal literal assignment lowering including non-signed vector, signed vector, and scalar negative decimal literals, bounded direct aggregate-output packed-vector lowering, a bounded C3 external-RTL literal/concat composition VHDL structural top for `t/corpus/composition_intent_integer_literals.fsm`, bounded external-RTL scalar integer, scalar integer expression, one-bit sized bitstring, multi-bit sized bitstring, and resolved packed aggregate VHDL generic maps including resolved package-backed constants, a bounded C1 standalone-DT child composition VHDL passthrough top for `t/corpus/standalone_dtc_explicit_system_autowire.fsm`, bounded C1 standalone-DT scalar integer, scalar expression, one-bit sized bitstring, multi-bit sized bitstring, packed-list, and packed-map VHDL generic maps, a bounded C2 generated-FSM child composition VHDL scalar-autowire top for `t/corpus/implicit_composition_system_autowire.fsm`, bounded C2 generated-FSM scalar integer, scalar expression, one-bit sized bitstring, multi-bit sized bitstring, and resolved packed aggregate VHDL generic maps, and a bounded APB/C4 generated-FSM child composition VHDL top for `fsm/apb_tb.fsm` with scalar integer, scalar expression, one-bit sized bitstring, multi-bit sized bitstring, resolved packed aggregate, and resolved package-backed generic maps in the same APB/C4 shape.
-Scalar division/modulo, including signed scalar division/modulo, in the direct VHDL scaffold remains an explicit fail-closed boundary; full aggregate record/array VHDL, broader generated-FSM/C4 composition VHDL beyond the exact shipped fixtures, internal-net-heavy composition tops beyond APB, VHDL package declaration/emission, full composition VHDL parity, and generic-map families remain deferred outside these shipped sets: external-RTL scalar integer, scalar integer expression, one-bit sized bitstring, multi-bit sized bitstring literal/resolved-package-constant, and resolved packed aggregate actuals; standalone-DT scalar integer, scalar expression, one-bit sized bitstring, multi-bit sized bitstring, packed-list, and packed-map actuals; generated-FSM scalar integer, scalar expression, one-bit sized bitstring, multi-bit sized bitstring, and resolved packed aggregate actuals; and APB/C4 generated-FSM scalar integer, scalar expression, one-bit sized bitstring, multi-bit sized bitstring, resolved packed aggregate, and resolved package-backed actuals. External-RTL, standalone-DT, and generated-FSM aggregate actuals that do not lower to one packed literal are locked fail-closed by `BACKEND-API-VALIDATION-FRONTIER.97.1`, `BACKEND-API-VALIDATION-FRONTIER.98.1`, and `BACKEND-API-VALIDATION-FRONTIER.99.1`, not treated as record/array generic support; package-root direct HDL generation is locked fail-closed by `BACKEND-API-VALIDATION-FRONTIER.100.1`: `?pkg` roots remain import-only declaration containers, not standalone SystemVerilog or VHDL package HDL output roots. Declared aggregate structural VHDL ports/nets/types are locked fail-closed by `BACKEND-API-VALIDATION-FRONTIER.101.1` before record/array emission; GHDL validation remains blocked by `BACKEND-API-VALIDATION-FRONTIER.102.1` because `ghdl` is unavailable in the current environment. Direct roots now expose declaration-only internal storage/helper nets plus generated enable wires in `structural_rtl_ir.nets[]`, expose generated enable assignments in machine-readable `structural_rtl_ir.assignment_records[]` with structured `lhs`, `rhs`, rendered text, and provenance, populate generated-enable net `source`/`targets[]` connectivity from those assignment records, reroute the direct SystemVerilog top state/standalone-DT generated-enable condition block through `StructuralRTLIR`, and retain `structural_rtl_ir.auxiliary_assignments[]` as the scalar-string compatibility mirror; direct port dependency connectivity, output-drive consumers, instances/links, full direct module rerouting, and VHDL rerouting through `StructuralRTLIR` remain tracked separately. The first exact private ISF lowerer extraction is shipped as `FSM::Scheduler::ISF::ATLGeneratedTop` for ATL generated-top report projection and data-link child-interface marking; broader parser/lowerer extraction remains deferred behind future exact owners. IAL2 protocol/platform intent has its first behavior-bearing in-process generator slice: `FSM::IAL2::ProtocolIntent::ValidReadyChannel` accepts one AXI Valid-Ready contract object, emits reviewable `.isf`, lowers through existing IAL1 to reviewable `.fsm`, and returns a source-anchor/residue report. `.ppif` is the first public generic IAL2 file suffix and `bin/fsmgen` now accepts one `.ppif` Valid-Ready source object with the existing single-channel HDL/semantic path, plus bounded multi-channel Valid-Ready bundles for aggregate reports, check JSON, aggregate semantic JSON, generated `.isf`/`.fsm` review artifacts, and an aggregate wrapper/top SystemVerilog HDL entry with `--verify-hdl` support for the tracked AW/W sample. `.pif`/`.ppi`/`.axi` aliases and full AXI manager behavior remain unshipped. Mandatory lowering remains `IAL2 -> IAL1 -> IAL0`.
+Scalar division/modulo, including signed scalar division/modulo, in the direct
+VHDL scaffold remains an explicit fail-closed boundary; full aggregate
+record/array VHDL, broader generated-FSM/C4 composition VHDL beyond the exact
+shipped fixtures, internal-net-heavy composition tops beyond APB, VHDL package
+declaration/emission, full composition VHDL parity, and generic-map families
+remain deferred outside these shipped sets: external-RTL scalar integer,
+scalar integer expression, one-bit sized bitstring, multi-bit sized bitstring
+literal/resolved-package-constant, and resolved packed aggregate actuals;
+standalone-DT scalar integer, scalar expression, one-bit sized bitstring,
+multi-bit sized bitstring, packed-list, and packed-map actuals; generated-FSM
+scalar integer, scalar expression, one-bit sized bitstring, multi-bit sized
+bitstring, and resolved packed aggregate actuals; and APB/C4 generated-FSM
+scalar integer, scalar expression, one-bit sized bitstring, multi-bit sized
+bitstring, resolved packed aggregate, and resolved package-backed actuals.
+External-RTL, standalone-DT, and generated-FSM aggregate actuals that do not
+lower to one packed literal are locked fail-closed by
+`BACKEND-API-VALIDATION-FRONTIER.97.1`,
+`BACKEND-API-VALIDATION-FRONTIER.98.1`, and
+`BACKEND-API-VALIDATION-FRONTIER.99.1`, not treated as record/array generic
+support; package-root direct HDL generation is locked fail-closed by
+`BACKEND-API-VALIDATION-FRONTIER.100.1`: `?pkg` roots remain import-only
+declaration containers, not standalone SystemVerilog or VHDL package HDL
+output roots. Declared aggregate structural VHDL ports/nets/types are locked
+fail-closed by `BACKEND-API-VALIDATION-FRONTIER.101.1` before record/array
+emission; GHDL validation remains blocked by
+`BACKEND-API-VALIDATION-FRONTIER.102.1` because `ghdl` is unavailable in the
+current environment. Direct roots now expose declaration-only internal
+storage/helper nets plus generated enable wires in `structural_rtl_ir.nets[]`,
+expose generated enable assignments in machine-readable
+`structural_rtl_ir.assignment_records[]` with structured `lhs`, `rhs`,
+rendered text, and provenance, populate generated-enable net
+`source`/`targets[]` connectivity from those assignment records, reroute the
+direct SystemVerilog top state/standalone-DT generated-enable condition block
+through `StructuralRTLIR`, and retain
+`structural_rtl_ir.auxiliary_assignments[]` as the scalar-string compatibility
+mirror. Direct port dependency connectivity, output-drive consumers,
+instances/links, full direct module rerouting, and VHDL rerouting through
+`StructuralRTLIR` are tracked by proposed owner trees
+`R11-DIRECT-STRUCTURAL-PORT-DEPENDENCY-CONNECTIVITY`,
+`R11-DIRECT-STRUCTURAL-OUTPUT-CONSUMERS`,
+`R11-DIRECT-STRUCTURAL-INSTANCES-LINKS`,
+`R11-DIRECT-STRUCTURAL-FULL-HDL-REROUTING`, and
+`R11-DIRECT-STRUCTURAL-VHDL-REROUTING`. The first exact private ISF lowerer
+extraction is shipped as `FSM::Scheduler::ISF::ATLGeneratedTop` for ATL
+generated-top report projection and data-link child-interface marking; broader
+parser/lowerer extraction remains deferred behind future exact owners. IAL2
+protocol/platform intent has its first behavior-bearing in-process generator
+slice: `FSM::IAL2::ProtocolIntent::ValidReadyChannel` accepts one AXI
+Valid-Ready contract object, emits reviewable `.isf`, lowers through existing
+IAL1 to reviewable `.fsm`, and returns a source-anchor/residue report. `.ppif`
+is the first public generic IAL2 file suffix and `bin/fsmgen` now accepts one
+`.ppif` Valid-Ready source object with the existing single-channel HDL/semantic
+path, plus bounded multi-channel Valid-Ready bundles for aggregate reports,
+check JSON, aggregate semantic JSON, generated `.isf`/`.fsm` review artifacts,
+and an aggregate wrapper/top SystemVerilog HDL entry with `--verify-hdl`
+support for the tracked AW/W sample. `.pif`/`.ppi`/`.axi` aliases and full AXI
+manager behavior remain unshipped. Mandatory lowering remains
+`IAL2 -> IAL1 -> IAL0`.
 The project objective is robust, traceable FSM-to-HDL generation with clear assignment semantics, optimization via AST factorization, and behavior-preserving refactoring toward a modular architecture.
 
 ## Fast ramp-up order
@@ -858,7 +915,12 @@ those `StructuralRTLIR` assignment records by an explicit backend marker
 handoff that is removed before final HDL is returned. Direct port dependency
 connectivity, output-drive/always-block consumers, instances, links, full
 direct module rerouting, and VHDL rerouting through `StructuralRTLIR` remain
-outside that projection.
+outside that projection and are tracked by proposed owner trees
+`R11-DIRECT-STRUCTURAL-PORT-DEPENDENCY-CONNECTIVITY`,
+`R11-DIRECT-STRUCTURAL-OUTPUT-CONSUMERS`,
+`R11-DIRECT-STRUCTURAL-INSTANCES-LINKS`,
+`R11-DIRECT-STRUCTURAL-FULL-HDL-REROUTING`, and
+`R11-DIRECT-STRUCTURAL-VHDL-REROUTING`.
 The nested `semantic.forward_ir.intent_hir` summary inside that branch now
 also has its own bounded owner for the current intent-hir shell plus the
 current composition-only extension keys. For composition roots, that same owner
@@ -1042,7 +1104,20 @@ HDL emission. Completed implementation leaf
 `R11-DIRECT-STRUCTURAL-ASSIGNMENT-RECORDS.2` projects those same generated
 enable assignments into machine-readable `structural_rtl_ir.assignment_records[]`
 entries while retaining `auxiliary_assignments[]` as the compatibility mirror
-and without rerouting HDL emission. Completed
+and without rerouting HDL emission. Completed implementation leaf
+`R11-DIRECT-STRUCTURAL-NET-CONNECTIVITY.2` populates generated-enable direct
+net `source` objects for assignment-record drivers and `targets[]` entries for
+direct nets consumed by another generated-enable assignment-record RHS.
+Completed implementation leaf `R11-DIRECT-STRUCTURAL-HDL-REROUTING.2`
+reroutes the direct SystemVerilog top state/standalone-DT generated-enable
+condition block through `StructuralRTLIR` assignment records by using explicit
+backend markers that are removed before final HDL is returned. Proposed owner
+trees `R11-DIRECT-STRUCTURAL-PORT-DEPENDENCY-CONNECTIVITY`,
+`R11-DIRECT-STRUCTURAL-OUTPUT-CONSUMERS`,
+`R11-DIRECT-STRUCTURAL-INSTANCES-LINKS`,
+`R11-DIRECT-STRUCTURAL-FULL-HDL-REROUTING`, and
+`R11-DIRECT-STRUCTURAL-VHDL-REROUTING` own the remaining direct structural
+connectivity and rerouting gaps before future implementation. Completed
 implementation leaf `ARCHITECTURE-DEBT-FRONTIER.2.1` projects direct backend
 storage/helper declaration-plan entries into `structural_rtl_ir.nets[]`
 without rerouting HDL emission. The shipped literal-literal positive modulo

@@ -4631,7 +4631,12 @@ reroutes the direct SystemVerilog top state/standalone-DT generated-enable
 condition block through `StructuralRTLIR` assignment records by using explicit
 backend markers that are removed before final HDL is returned. Full direct
 module rerouting, VHDL rerouting, direct port dependency connectivity,
-output-drive consumers, and instances/links remain deferred. Completed
+output-drive consumers, and instances/links remain deferred under proposed
+owner trees `R11-DIRECT-STRUCTURAL-FULL-HDL-REROUTING`,
+`R11-DIRECT-STRUCTURAL-VHDL-REROUTING`,
+`R11-DIRECT-STRUCTURAL-PORT-DEPENDENCY-CONNECTIVITY`,
+`R11-DIRECT-STRUCTURAL-OUTPUT-CONSUMERS`, and
+`R11-DIRECT-STRUCTURAL-INSTANCES-LINKS`. Completed
 implementation leaf
 `BACKEND-API-VALIDATION-FRONTIER.131.1` lowers an 8-bit non-signed
 `REM = (% 2 3)` fixture into

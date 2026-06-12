@@ -312,7 +312,12 @@ and structured `targets[]` entries when another generated-enable assignment
 record consumes that direct net on its RHS. Direct port dependency
 connectivity, output-drive/always-block consumers, instances/links, full
 direct module rerouting, and VHDL rerouting through `StructuralRTLIR` remain
-outside that direct structural projection. The direct SystemVerilog top
+outside that direct structural projection and are tracked by proposed owner
+trees `R11-DIRECT-STRUCTURAL-PORT-DEPENDENCY-CONNECTIVITY`,
+`R11-DIRECT-STRUCTURAL-OUTPUT-CONSUMERS`,
+`R11-DIRECT-STRUCTURAL-INSTANCES-LINKS`,
+`R11-DIRECT-STRUCTURAL-FULL-HDL-REROUTING`, and
+`R11-DIRECT-STRUCTURAL-VHDL-REROUTING`. The direct SystemVerilog top
 state/standalone-DT generated-enable condition block is now rerouted through
 `StructuralRTLIR` assignment records by an explicit backend marker handoff; the
 markers are removed before final HDL is returned.

@@ -116,6 +116,7 @@ first.
 | `R11-DIRECT-STRUCTURAL-ASSIGNMENT-RECORDS` | `done` | `R11` | complete (`.2`; projected direct generated enable assignments into machine-readable `StructuralRTLIR.assignment_records[]` while retaining scalar auxiliary compatibility) | [docs/tasks/R11-DIRECT-STRUCTURAL-ASSIGNMENT-RECORDS.md](docs/tasks/R11-DIRECT-STRUCTURAL-ASSIGNMENT-RECORDS.md) |
 | `R11-DIRECT-STRUCTURAL-NET-CONNECTIVITY` | `done` | `R11` | complete (`.2`; populated generated-enable assignment-record source/target connectivity on direct `StructuralRTLIR.nets[]` without changing HDL emission) | [docs/tasks/R11-DIRECT-STRUCTURAL-NET-CONNECTIVITY.md](docs/tasks/R11-DIRECT-STRUCTURAL-NET-CONNECTIVITY.md) |
 | `R11-DIRECT-STRUCTURAL-HDL-REROUTING` | `done` | `R11` | complete (`.2`; rerouted direct SystemVerilog top state/standalone-DT generated-enable condition emission through `StructuralRTLIR` without full direct module reroute) | [docs/tasks/R11-DIRECT-STRUCTURAL-HDL-REROUTING.md](docs/tasks/R11-DIRECT-STRUCTURAL-HDL-REROUTING.md) |
+| `R11-DIRECT-STRUCTURAL-REMAINING-OWNER-COVERAGE` | `done` | `R11` | complete (`.1`; created exact proposed owners for remaining roadmap-named direct `StructuralRTLIR` gaps before any further implementation) | [docs/tasks/R11-DIRECT-STRUCTURAL-REMAINING-OWNER-COVERAGE.md](docs/tasks/R11-DIRECT-STRUCTURAL-REMAINING-OWNER-COVERAGE.md) |
 
 ## Proposed Task Trees
 
@@ -124,6 +125,11 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Proposed first leaf | File |
 | --- | --- | --- | --- | --- |
+| `R11-DIRECT-STRUCTURAL-PORT-DEPENDENCY-CONNECTIVITY` | `proposed` | `R11` | `.1` select the first direct port dependency connectivity schema and slice | [docs/tasks/R11-DIRECT-STRUCTURAL-PORT-DEPENDENCY-CONNECTIVITY.md](docs/tasks/R11-DIRECT-STRUCTURAL-PORT-DEPENDENCY-CONNECTIVITY.md) |
+| `R11-DIRECT-STRUCTURAL-OUTPUT-CONSUMERS` | `proposed` | `R11` | `.1` select the first direct output-drive/always-block consumer connectivity slice | [docs/tasks/R11-DIRECT-STRUCTURAL-OUTPUT-CONSUMERS.md](docs/tasks/R11-DIRECT-STRUCTURAL-OUTPUT-CONSUMERS.md) |
+| `R11-DIRECT-STRUCTURAL-INSTANCES-LINKS` | `proposed` | `R11` | `.1` select the direct instances/links structural contract | [docs/tasks/R11-DIRECT-STRUCTURAL-INSTANCES-LINKS.md](docs/tasks/R11-DIRECT-STRUCTURAL-INSTANCES-LINKS.md) |
+| `R11-DIRECT-STRUCTURAL-FULL-HDL-REROUTING` | `proposed` | `R11` | `.1` select the next broader direct SystemVerilog HDL reroute target | [docs/tasks/R11-DIRECT-STRUCTURAL-FULL-HDL-REROUTING.md](docs/tasks/R11-DIRECT-STRUCTURAL-FULL-HDL-REROUTING.md) |
+| `R11-DIRECT-STRUCTURAL-VHDL-REROUTING` | `proposed` | `R11` | `.1` select the first direct VHDL StructuralRTLIR reroute target | [docs/tasks/R11-DIRECT-STRUCTURAL-VHDL-REROUTING.md](docs/tasks/R11-DIRECT-STRUCTURAL-VHDL-REROUTING.md) |
 
 ## Completed Task Trees
 
