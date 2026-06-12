@@ -10,9 +10,9 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `HEAD after commit` — `R11-DIRECT-STRUCTURAL-OUTPUT-CONSUMERS.2: populate output port sources`.
-- active_work_unit: none; `R11-DIRECT-STRUCTURAL-OUTPUT-CONSUMERS` is complete through `.2`, and the next action is to PNT-select the next roadmap-aligned task-tree frontier before any further change.
-- recently_done: `R11-DIRECT-STRUCTURAL-OUTPUT-CONSUMERS.2`; `R11-DIRECT-STRUCTURAL-OUTPUT-CONSUMERS.1`; `R11-DIRECT-STRUCTURAL-PORT-DEPENDENCY-CONNECTIVITY.2`; `R11-DIRECT-STRUCTURAL-PORT-DEPENDENCY-CONNECTIVITY.1`; `R11-DIRECT-STRUCTURAL-REMAINING-OWNER-COVERAGE.1`; `R11-DIRECT-STRUCTURAL-HDL-REROUTING.2`; `R11-DIRECT-STRUCTURAL-HDL-REROUTING.1`; `R11-DIRECT-STRUCTURAL-NET-CONNECTIVITY.2`; `R11-DIRECT-STRUCTURAL-NET-CONNECTIVITY.1`. Older completed slices are in the task tree and git history.
+- latest_commit: `HEAD after commit` — `R11-DIRECT-STRUCTURAL-INSTANCES-LINKS.1: select empty direct links contract`.
+- active_work_unit: none; `R11-DIRECT-STRUCTURAL-INSTANCES-LINKS` is complete through `.1`, and the next action is to PNT-select the next roadmap-aligned task-tree frontier before any further change.
+- recently_done: `R11-DIRECT-STRUCTURAL-INSTANCES-LINKS.1`; `R11-DIRECT-STRUCTURAL-OUTPUT-CONSUMERS.2`; `R11-DIRECT-STRUCTURAL-OUTPUT-CONSUMERS.1`; `R11-DIRECT-STRUCTURAL-PORT-DEPENDENCY-CONNECTIVITY.2`; `R11-DIRECT-STRUCTURAL-PORT-DEPENDENCY-CONNECTIVITY.1`; `R11-DIRECT-STRUCTURAL-REMAINING-OWNER-COVERAGE.1`; `R11-DIRECT-STRUCTURAL-HDL-REROUTING.2`; `R11-DIRECT-STRUCTURAL-HDL-REROUTING.1`; `R11-DIRECT-STRUCTURAL-NET-CONNECTIVITY.2`. Older completed slices are in the task tree and git history.
 - in_flight_uncommitted: none; unrelated untracked `fx/` intentionally left alone.
 - blockers: none.
 

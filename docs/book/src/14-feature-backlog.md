@@ -4638,10 +4638,12 @@ implementation leaf
 reroutes the direct SystemVerilog top state/standalone-DT generated-enable
 condition block through `StructuralRTLIR` assignment records by using explicit
 backend markers that are removed before final HDL is returned. Full direct
-module rerouting, VHDL rerouting, and instances/links remain deferred under proposed
-owner trees `R11-DIRECT-STRUCTURAL-FULL-HDL-REROUTING`,
-`R11-DIRECT-STRUCTURAL-VHDL-REROUTING`,
-`R11-DIRECT-STRUCTURAL-INSTANCES-LINKS`. Completed
+module rerouting and VHDL rerouting remain deferred under proposed owner trees
+`R11-DIRECT-STRUCTURAL-FULL-HDL-REROUTING` and
+`R11-DIRECT-STRUCTURAL-VHDL-REROUTING`. Completed selector leaf
+`R11-DIRECT-STRUCTURAL-INSTANCES-LINKS.1` confirms direct roots intentionally
+keep empty instance/link arrays, with populated instances and links remaining
+composition-top structural facts. Completed
 implementation leaf
 `BACKEND-API-VALIDATION-FRONTIER.131.1` lowers an 8-bit non-signed
 `REM = (% 2 3)` fixture into

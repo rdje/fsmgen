@@ -24,14 +24,15 @@ implementation:
   always-block consumer connectivity; its compact direct output-port source
   summary slice is complete, while broader body-consumer modeling needs a
   future exact leaf before implementation.
-- `R11-DIRECT-STRUCTURAL-INSTANCES-LINKS` owns the direct instances/links
-  structural contract question.
+- `R11-DIRECT-STRUCTURAL-INSTANCES-LINKS` owned the direct instances/links
+  structural contract question; selector `.1` is complete and confirms direct
+  roots intentionally keep empty instance/link arrays.
 - `R11-DIRECT-STRUCTURAL-FULL-HDL-REROUTING` owns broader direct SystemVerilog
   rerouting through `StructuralRTLIR`.
 - `R11-DIRECT-STRUCTURAL-VHDL-REROUTING` owns direct VHDL rerouting through
   `StructuralRTLIR`.
 
-The remaining not-yet-implemented owner trees for instances/links and broader
-rerouting are proposed, not implementation-active. Any broader direct
-output-drive/always-block body-consumer modeling also needs an exact activated
-leaf before code, test, source, generated-artifact, or config changes.
+The remaining not-yet-implemented owner trees for broader rerouting are
+proposed, not implementation-active. Any broader direct output-drive and
+always-block body-consumer modeling also needs an exact activated leaf before
+code, test, source, generated-artifact, or config changes.

@@ -316,12 +316,13 @@ shape. Direct output ports whose names match bounded lowered output-drive
 families also carry a structured `source` summary with `kind`, `signal_name`,
 `multiplexer_type`, `driver_count`, `driver_blocks`, `rhs_values`,
 `driver_enable_signals`, and `family_enable_signals`. Broader
-output-drive/always-block body consumer modeling remains deferred.
-Instances/links, full direct module rerouting, and VHDL rerouting through
+output-drive/always-block body consumer modeling remains deferred. Direct
+instance/link selector `R11-DIRECT-STRUCTURAL-INSTANCES-LINKS.1` confirms
+direct roots intentionally keep `instances[]`, `declared_links[]`, and
+`resolved_links[]` empty; populated instances and links remain composition-top
+structural facts. Full direct module rerouting and VHDL rerouting through
 `StructuralRTLIR` remain outside that direct structural projection and are
-tracked by proposed owner trees
-`R11-DIRECT-STRUCTURAL-INSTANCES-LINKS`,
-`R11-DIRECT-STRUCTURAL-FULL-HDL-REROUTING`, and
+tracked by proposed owner trees `R11-DIRECT-STRUCTURAL-FULL-HDL-REROUTING` and
 `R11-DIRECT-STRUCTURAL-VHDL-REROUTING`. The direct SystemVerilog top
 state/standalone-DT generated-enable condition block is now rerouted through
 `StructuralRTLIR` assignment records by an explicit backend marker handoff; the

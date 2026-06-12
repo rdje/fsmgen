@@ -425,7 +425,7 @@ First shipped `R11` slice now in tree:
   - and the active composition-top emitter now walks that structural layer instead of re-reading only `FSM::Composition::Plan` state directly during top-module dumping.
 - The next structural widening step is now also shipped:
   - direct generated `?fsm` / `?dt` results now expose a bounded structural module-interface slice through `structural_rtl_ir`,
-  - that direct-root structural slice currently covers explicit module ports, declaration-only storage/helper nets, generated enable-wire nets, generated enable assignment records, scalar compatibility auxiliary-assignment lines, generated-enable assignment-record source/target connectivity on direct nets, direct input-port generated-enable RHS target connectivity, direct output-port source summaries from lowered output-drive families, and direct SystemVerilog top state/standalone-DT generated-enable condition emission rerouted through `StructuralRTLIR`; broader output-drive/always-block body consumers, direct instances/links, full direct module rerouting, and VHDL rerouting through `StructuralRTLIR` remain future exact work tracked by task trees including `R11-DIRECT-STRUCTURAL-INSTANCES-LINKS`, `R11-DIRECT-STRUCTURAL-FULL-HDL-REROUTING`, and `R11-DIRECT-STRUCTURAL-VHDL-REROUTING`,
+  - that direct-root structural slice currently covers explicit module ports, declaration-only storage/helper nets, generated enable-wire nets, generated enable assignment records, scalar compatibility auxiliary-assignment lines, generated-enable assignment-record source/target connectivity on direct nets, direct input-port generated-enable RHS target connectivity, direct output-port source summaries from lowered output-drive families, and direct SystemVerilog top state/standalone-DT generated-enable condition emission rerouted through `StructuralRTLIR`; broader output-drive/always-block body consumers, full direct module rerouting, and VHDL rerouting through `StructuralRTLIR` remain future exact work tracked by task trees including `R11-DIRECT-STRUCTURAL-FULL-HDL-REROUTING` and `R11-DIRECT-STRUCTURAL-VHDL-REROUTING`, while selector `R11-DIRECT-STRUCTURAL-INSTANCES-LINKS.1` confirmed direct roots intentionally keep empty instance/link arrays and populated instances/links remain composition-top structural facts,
   - and realized generated-child export surfaces now preserve that same child `structural_rtl_ir` beside `intent_hir` and `lowered_rtl_ir`.
 - The next structural-consumption step is now also shipped:
   - realized generated-child interface planning now consumes `structural_rtl_ir` as its first boundary source of truth instead of rebuilding child ports only from signal analysis,
@@ -1176,8 +1176,9 @@ The first honest `R11` slices are now:
   full direct module rerouting, and
   VHDL rerouting through `StructuralRTLIR` remain later exact owners tracked by
   `R11-DIRECT-STRUCTURAL-FULL-HDL-REROUTING` and
-  `R11-DIRECT-STRUCTURAL-VHDL-REROUTING`; direct instances/links are tracked
-  separately by `R11-DIRECT-STRUCTURAL-INSTANCES-LINKS`. The next honest seam
+  `R11-DIRECT-STRUCTURAL-VHDL-REROUTING`; direct instances/links were selected
+  as intentionally empty for direct roots by
+  `R11-DIRECT-STRUCTURAL-INSTANCES-LINKS.1`. The next honest seam
   is now the remaining direct-path backend
   residue or a broader facade split rather than one more direct structural
   helper.

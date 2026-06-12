@@ -94,10 +94,12 @@ output-port source summaries on `structural_rtl_ir.ports[]` from lowered
 output-drive families, and retain `structural_rtl_ir.auxiliary_assignments[]`
 as the scalar-string compatibility mirror. Broader output-drive/always-block
 body consumer modeling remains outside the compact source summary.
-Instances/links, full direct module rerouting, and VHDL rerouting through
-`StructuralRTLIR` are tracked by proposed owner trees
-`R11-DIRECT-STRUCTURAL-INSTANCES-LINKS`,
-`R11-DIRECT-STRUCTURAL-FULL-HDL-REROUTING`, and
+Direct instance/link selector `R11-DIRECT-STRUCTURAL-INSTANCES-LINKS.1`
+confirmed direct roots are leaf structural summaries and intentionally keep
+`instances[]`, `declared_links[]`, and `resolved_links[]` empty; populated
+instances and links remain a composition-top structural contract. Full direct
+module rerouting and VHDL rerouting through `StructuralRTLIR` remain tracked by
+proposed owner trees `R11-DIRECT-STRUCTURAL-FULL-HDL-REROUTING` and
 `R11-DIRECT-STRUCTURAL-VHDL-REROUTING`. The first exact private ISF lowerer
 extraction is shipped as `FSM::Scheduler::ISF::ATLGeneratedTop` for ATL
 generated-top report projection and data-link child-interface marking; broader
@@ -922,11 +924,13 @@ also expose a structured `source` summary on `structural_rtl_ir.ports[]` with
 `kind`, `signal_name`, `multiplexer_type`, `driver_count`, `driver_blocks`,
 `rhs_values`, `driver_enable_signals`, and `family_enable_signals`. Broader
 output-drive/always-block body consumer modeling remains outside that compact
-summary; instances, links, full direct module rerouting, and VHDL rerouting through
-`StructuralRTLIR` remain outside that projection and are tracked by proposed
-owner trees
-`R11-DIRECT-STRUCTURAL-INSTANCES-LINKS`,
-`R11-DIRECT-STRUCTURAL-FULL-HDL-REROUTING`, and
+summary. Direct instance/link selector
+`R11-DIRECT-STRUCTURAL-INSTANCES-LINKS.1` confirms direct roots intentionally
+keep `instances[]`, `declared_links[]`, and `resolved_links[]` empty; populated
+instances and links remain a composition-top structural contract. Full direct
+module rerouting and VHDL rerouting through `StructuralRTLIR` remain outside
+that projection and are tracked by proposed owner trees
+`R11-DIRECT-STRUCTURAL-FULL-HDL-REROUTING` and
 `R11-DIRECT-STRUCTURAL-VHDL-REROUTING`.
 The nested `semantic.forward_ir.intent_hir` summary inside that branch now
 also has its own bounded owner for the current intent-hir shell plus the
@@ -1124,11 +1128,12 @@ populates direct input-port generated-enable RHS target connectivity on
 `structural_rtl_ir.ports[]` without changing HDL emission. Completed
 implementation leaf `R11-DIRECT-STRUCTURAL-OUTPUT-CONSUMERS.2` populates
 direct output-port `source` summaries from lowered output-drive families
-without changing HDL emission. Proposed owner trees
-`R11-DIRECT-STRUCTURAL-INSTANCES-LINKS`,
-`R11-DIRECT-STRUCTURAL-FULL-HDL-REROUTING`, and
+without changing HDL emission. Completed selector leaf
+`R11-DIRECT-STRUCTURAL-INSTANCES-LINKS.1` confirms direct roots intentionally
+keep empty instance/link arrays and no direct implementation leaf is warranted
+today. Proposed owner trees `R11-DIRECT-STRUCTURAL-FULL-HDL-REROUTING` and
 `R11-DIRECT-STRUCTURAL-VHDL-REROUTING` own the remaining direct structural
-connectivity and rerouting gaps before future implementation. Completed
+rerouting gaps before future implementation. Completed
 implementation leaf `ARCHITECTURE-DEBT-FRONTIER.2.1` projects direct backend
 storage/helper declaration-plan entries into `structural_rtl_ir.nets[]`
 without rerouting HDL emission. The shipped literal-literal positive modulo
