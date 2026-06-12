@@ -153,6 +153,6 @@ VHDL backend/reroute behavior.
 
 Follow-up: `IAL2-FEATURE-COMPLETENESS-FRONTIER.28` completed the behavior
 readiness audit and selected `IAL2-FEATURE-COMPLETENESS-FRONTIER.29` as a
-small IAL1 prerequisite. Generated write `BID` demux completion names must be
-one-cycle pulses, so the next implementation owner is a bounded IAL1
-rule-owned `(pulse TARGET)` action before generated demux rules ship.
+small IAL1 prerequisite. `.29` is now shipped: generated write `BID` demux
+completion names can lower as rule-owned `(pulse TARGET)` one-cycle pulses.
+The next owner is `.30`, generated write `BID` response-demux behavior.

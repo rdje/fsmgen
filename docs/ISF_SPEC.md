@@ -2067,6 +2067,9 @@ Current lowering:
   outputs, `<-` and `<=` assignments drive sequential/flopped targets, and
   `<1` assignments request one-cycle delayed pulses whether they appear in a
   state DT `(state_name ...)` or a non-state DT `(-name ...)`.
+- Rule-owned `(pulse TARGET)` actions lower through that same `<1`
+  delayed-pulse family and remain pulse-domain assignments, not flopped data
+  writes.
 - The machine-readable ISF public contract advertises those operator families
   through `dt_assignment_operator_family_map`.
 - Adjacent drive calls are not merged. To drive several ports in the same
@@ -3800,10 +3803,11 @@ Current lowering:
   actor-shell rule-shape metadata.
 - Rule actions are structurally validated before the actor shell is returned.
   Supported action shapes are `(set port expr)`, `(port expr)`,
-  `(trigger transaction)`, and `(priority over other_rule)`. The explicit
-  setter and shorthand assignment shapes keep `port` scalar and allow `expr`
-  to use the same scalar-or-list `.fsm` RHS expression domain as transaction
-  `(set var expr)` and `(update var expr)`.
+  `(pulse target)`, `(trigger transaction)`, and
+  `(priority over other_rule)`. The explicit setter and shorthand assignment
+  shapes keep `port` scalar and allow `expr` to use the same scalar-or-list
+  `.fsm` RHS expression domain as transaction `(set var expr)` and
+  `(update var expr)`.
 - `(trigger transaction)` targets must name a declared transaction in the same
   actor. Forward references are accepted because the parser validates trigger
   targets after the full actor body is collected; missing targets fail before
@@ -3825,6 +3829,11 @@ Current lowering:
   inside the guarded non-state DT. They keep the existing `<-` rule
   data-assignment family and do not introduce combinational or D-input-named
   rule action operators.
+- `(pulse target)` actions target a scalar actor output or scalar actor
+  storage variable and lower as `<1 (target 1)` inside the guarded non-state
+  DT, using the normal `.fsm` output marker for output targets. They are
+  pulse-domain assignments, participate in pulse-compatible fan-in, and do
+  not create sticky flopped rule writes.
 - Same-target rule data writes now receive a best-effort compile-time conflict
   check before scheduled `.fsm` text is treated as valid. Two rules that drive
   the same target to incompatible values fail closed with

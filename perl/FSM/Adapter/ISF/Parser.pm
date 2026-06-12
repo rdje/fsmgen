@@ -367,6 +367,7 @@ sub _build_actor($self, $actor_ast, $source_label) {
     $self->_finalize_actor_transaction_port_widths($result);
     $self->_finalize_actor_type_references($result);
     $self->_validate_deferred_atl_drive_sink_expression_candidates($result);
+    $self->_validate_rule_pulse_targets($result);
     $self->_validate_actor_aggregate_storage_paths($result);
     $self->_validate_actor_atl_reserved_qualified_forms($result);
     $self->_validate_actor_enum_member_value_contexts($result);
@@ -5142,6 +5143,7 @@ sub _validate_rule_literal_zero_divisors {
             next;
         }
         next if $head eq 'priority';
+        next if $head eq 'pulse';
 
         if ($head eq 'set') {
             _validate_no_literal_zero_divisors(
@@ -5772,6 +5774,21 @@ sub _validate_rule_enum_member_value_contexts {
             && @$action
             && defined($action->[0])
             && !ref($action->[0])
+            && $action->[0] eq 'pulse')
+        {
+            _reject_enum_member_value_contexts(
+                $action->[1],
+                $actor,
+                $aggregate_roots,
+                "rule '$rule_name' pulse target",
+            ) if @$action >= 2;
+            next;
+        }
+
+        if (ref($action) eq 'ARRAY'
+            && @$action
+            && defined($action->[0])
+            && !ref($action->[0])
             && $action->[0] eq 'set')
         {
             _reject_enum_member_value_contexts(
@@ -6316,6 +6333,20 @@ sub _validate_rule_aggregate_storage_paths {
     );
 
     for my $action (@{$rule->{actions} || []}) {
+        if (ref($action) eq 'ARRAY'
+            && @$action
+            && defined($action->[0])
+            && !ref($action->[0])
+            && $action->[0] eq 'pulse')
+        {
+            _validate_aggregate_storage_leaf_write_target(
+                $action->[1],
+                $aggregate_roots,
+                "rule '$rule_name' pulse target",
+            ) if @$action >= 2;
+            next;
+        }
+
         if (ref($action) eq 'ARRAY'
             && @$action
             && defined($action->[0])
@@ -8940,6 +8971,12 @@ sub _parse_rule_action($self, $action, $rule_name) {
     if ($keyword eq 'priority') {
         return $self->_parse_rule_priority($action, $rule_name);
     }
+    if ($keyword eq 'pulse') {
+        confess "Error: rule '$rule_name' pulse action requires '(pulse target)'\n"
+            unless @$action == 2
+                && _is_hdl_identifier($action->[1]);
+        return 1;
+    }
     if ($keyword eq 'store') {
         confess "Error: rule '$rule_name' store action requires '(store <bank-name> <index> <value>)'\n"
             unless @$action == 4
@@ -9091,6 +9128,33 @@ sub _validate_rule_trigger_targets($self, $actor) {
                 unless defined($target)
                     && !ref($target)
                     && $transaction_names{$target};
+        }
+    }
+
+    return 1;
+}
+
+sub _validate_rule_pulse_targets($self, $actor) {
+    my $actor_name = $actor->{actor_name} // 'unknown';
+    my %valid_targets = map { $_->{name} => 'output' } @{$actor->{interface}{outputs} || []};
+
+    for my $entry (@{$actor->{storage} || []}) {
+        next unless ($entry->{kind} // '') eq 'var';
+        for my $signal (@{$entry->{signals} || []}) {
+            $valid_targets{$signal->{name}} = 'storage'
+                if defined($signal->{name}) && !ref($signal->{name});
+        }
+    }
+
+    for my $rule (@{$actor->{rules} || []}) {
+        my $rule_name = $rule->{name} // 'unknown';
+        for my $action (@{$rule->{actions} || []}) {
+            next unless ref($action) eq 'ARRAY' && @$action >= 2;
+            next unless defined($action->[0]) && !ref($action->[0]) && $action->[0] eq 'pulse';
+
+            my $target = $action->[1];
+            next if defined($target) && !ref($target) && $valid_targets{$target};
+            confess "Error: rule '$rule_name' pulse target '$target' in actor '$actor_name' must name a scalar output or storage var\n";
         }
     }
 

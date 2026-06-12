@@ -191,12 +191,14 @@ generated)))` opt-in syntax: the generator reports `response_demux` with
 `generated_behavior` false, `response_id_direction` `generated_input`,
 generated transaction-completion ownership, auto write transactions, and
 residue, while generated `.isf`, `.fsm`, and HDL behavior remain unchanged.
-The generated behavior readiness audit concluded that write `BID` demux needs
+The generated behavior readiness audit concluded that write `BID` demux needed
 a small IAL1 prerequisite first: generated transaction completion names must
-be one-cycle pulse actions, not sticky flopped rule assignments. The current
-frontier is `IAL2-FEATURE-COMPLETENESS-FRONTIER.29`, implementing that
-minimal IAL1 rule-pulse action before generated response-demux behavior
-changes. VHDL remains behind SV-backed IAL feature completeness.
+be one-cycle pulse actions, not sticky flopped rule assignments. That
+prerequisite is now shipped as bounded IAL1 `(pulse TARGET)` rule actions that
+lower as `<1` pulse-domain assignments. The current frontier is
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.30`, implementing generated AXI write
+`BID` response-demux behavior using those pulse completions. VHDL remains
+behind SV-backed IAL feature completeness.
 
 The project objective is robust, traceable FSM-to-HDL generation with clear assignment semantics, optimization via AST factorization, and behavior-preserving refactoring toward a modular architecture.
 

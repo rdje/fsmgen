@@ -976,9 +976,9 @@ Priority note:
 The active immediate feature-completeness lane is IAL2 on the
 SystemVerilog-backed lowering path; see
 [docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md](docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md).
-The current frontier audits generated AXI write `BID` response-demux behavior
-readiness after the shipped parser/report metadata slice, before generated
-demux behavior changes.
+The current frontier implements generated AXI write `BID` response-demux
+behavior after the shipped parser/report metadata slice and the shipped IAL1
+rule-owned `(pulse TARGET)` prerequisite.
 The shipped public capacity/status source accepts one
 `(manager-capacity-status NAME ...)` object under
 `(protocol-platform-intent ...)`, `(profile axi4)`, and top-level source
@@ -1043,9 +1043,12 @@ HDL behavior. Completed readiness audit
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.28` selected a small IAL1 prerequisite
 before generated demux behavior: write transaction completion names under
 `response-demux` must lower as one-cycle pulse actions, not ordinary sticky
-flopped rule assignments. The active frontier is
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.29`, implementing that minimal IAL1
-rule-pulse action before generated response matching, same-ID ordering,
+flopped rule assignments. Completed implementation leaf
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.29` shipped bounded IAL1 `(pulse TARGET)`
+rule actions for scalar outputs and scalar storage variables, lowering through
+`<1` pulse-domain assignments with focused parser/lowerer/HDL coverage. The
+active frontier is `IAL2-FEATURE-COMPLETENESS-FRONTIER.30`, implementing
+generated write `BID` response-demux behavior before same-ID ordering,
 read-data interleaving/reassembly, bursts, queued policy, aliases,
 full-manager behavior, or VHDL changes.
 

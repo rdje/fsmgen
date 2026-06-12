@@ -1,6 +1,6 @@
 ---
 id: ial2-feature-completeness-next-slice
-title: IAL2 feature completeness next slice implements the IAL1 rule-pulse prerequisite
+title: IAL2 feature completeness next slice implements generated AXI write BID response demux
 answers:
   - "what is the next IAL2 feature completeness slice?"
   - "what comes after PPIF Valid-Ready bundles?"
@@ -8,31 +8,36 @@ answers:
   - "should .axi aliases come before AXI manager rules?"
   - "what must happen before implementing AXI manager behavior?"
   - "what must happen before generated AXI write BID demux behavior?"
+  - "what comes after the IAL1 rule-pulse prerequisite?"
 date: 2026-06-12
 status: current
 tags: [ial2, axi, manager, response-demux, feature-completeness, task-tree]
 evidence: docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; docs/AXI_IAL2_MANAGER_WRITE_RESPONSE_DEMUX_BEHAVIOR_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_WRITE_RESPONSE_DEMUX_METADATA_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_WRITE_RESPONSE_DEMUX_CONTRACT_SELECTION.md; docs/AXI_IAL2_MANAGER_RESPONSE_DEMUX_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_RESPONSE_DEMUX_SELECTION.md; docs/AXI_IAL2_MANAGER_AUTO_ID_REQUEST_ID_DRIVE_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_AUTO_ID_LIFECYCLE_METADATA_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_AUTO_ID_POOL_CONTRACT_SELECTION.md; docs/AXI_IAL2_MANAGER_AUTO_ID_LIFECYCLE_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_AUTO_ID_LIFECYCLE_SELECTION.md; docs/AXI_IAL2_MANAGER_CONCRETE_ID_ASSERTIONS_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_ID_RESPONSE_RULE_ENGINE_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_ID_RESPONSE_RULE_ENGINE_SELECTION.md; docs/AXI_IAL2_MANAGER_TRANSACTION_EVENT_DISPATCH_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_TRANSACTION_EVENT_DISPATCH_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_TRANSACTION_EVENT_DISPATCH_SELECTION.md; docs/AXI_IAL2_MANAGER_TRANSACTION_ENVELOPE_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_TRANSACTION_ENVELOPE_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_TRANSACTION_ENVELOPE_SELECTION.md; docs/AXI_IAL2_MANAGER_ID_FAMILY_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_ID_FAMILY_SUBSET_SELECTION.md; docs/AXI_IAL2_MANAGER_ID_FAMILY_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_CAPACITY_STATUS_SUBSET_SELECTION.md; docs/AXI_MANAGER_RULE_MATRIX_DESIGN_PROBE.md; docs/AXI_MANAGER_USER_API_BRAINSTORM.md; docs/AXI_ID_ORDERING_RULE_EVIDENCE_PROBE.md; docs/book/src/14-feature-backlog.md; README.md; ROADMAP_V2.md
-reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.29|rule-pulse|pulse TARGET|generated response-demux completion|one-cycle pulse' docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md docs/AXI_IAL2_MANAGER_WRITE_RESPONSE_DEMUX_BEHAVIOR_READINESS_AUDIT.md docs/book/src/14-feature-backlog.md README.md ROADMAP_V2.md
+reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.30|generated AXI write `?BID`?|response-demux behavior|generated_behavior.*true|rule_pulse_action|pulse TARGET' docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md docs/AXI_IAL2_MANAGER_WRITE_RESPONSE_DEMUX_BEHAVIOR_READINESS_AUDIT.md docs/book/src/14-feature-backlog.md README.md ROADMAP_V2.md docs/ISF_SPEC.md docs/book/src/13g-rules.md
 ---
 
 After the shipped Valid-Ready, bundle, capacity/status, ID-family metadata,
 transaction-envelope metadata, transaction event dispatch, concrete
 transaction ID assertion, auto-ID lifecycle metadata, and bounded auto-ID
 request-ID drive and write response-demux metadata IAL2 surfaces, the next
-active leaf is `IAL2-FEATURE-COMPLETENESS-FRONTIER.29`.
+active leaf is `IAL2-FEATURE-COMPLETENESS-FRONTIER.30`.
 
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.29` implements the minimal IAL1
-rule-owned one-cycle pulse action prerequisite for generated AXI write `BID`
-response-demux completions. The selected public IAL1 shape is:
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.30` implements generated AXI write `BID`
+response-demux behavior using the shipped IAL1 rule-pulse prerequisite. The
+expected generated rule shape is:
 
 ```text
-(rule NAME GUARD
-  (pulse TARGET))
+(rule axi0_w0_response_demux
+  (& axi0_write_complete axi0_w0_auto_id_busy_q
+     (== axi0_bid axi0_w0_auto_id_q))
+  (pulse axi0_w0_complete))
 ```
 
-That action must lower through the existing delayed-pulse path, participate in
-pulse-domain rule conflict analysis, and be documented as a pulse action, not
-as a sticky data assignment.
+The slice should add the write response ID signal as a generated IAL1 input,
+treat transaction completion names as generated demux pulse outputs under the
+explicit response-demux contract, emit unmatched/inactive response assertions,
+set `response_demux.generated_behavior` to true, and keep read `RID`, ordering,
+bursts, queued policy, aliases, full-manager behavior, and VHDL out of scope.
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.12` shipped the bounded AXI manager
 machine-readable AST/structural logical read/write transaction-envelope
@@ -124,8 +129,14 @@ must be one-cycle completion pulses, while existing IAL1 rule actions
 selected `.29` as the bounded IAL1 rule-pulse prerequisite before generated
 demux rules emit transaction completions.
 
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.29` shipped that prerequisite. IAL1 now
+accepts bounded `(pulse TARGET)` rule actions for scalar outputs and scalar
+actor storage variables, validates malformed and invalid-target pulse actions,
+lowers them as `<1` delayed pulses with `rule_pulse_action` provenance, and
+classifies them as pulse-domain compatible fan-in rather than sticky data
+writes.
+
 The full AXI manager is not implemented yet. ID allocation, ordering, response
 matching, bursts, queued/blocking policy, `.pif`/`.ppi`/`.axi` aliases, and
-VHDL remain future exact-owner work; they should not jump ahead of the `.29`
-IAL1 rule-pulse prerequisite and the later generated write response-demux
-behavior owner.
+VHDL remain future exact-owner work; they should not jump ahead of the `.30`
+generated write response-demux behavior owner.

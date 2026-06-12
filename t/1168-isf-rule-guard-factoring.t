@@ -20,6 +20,7 @@ my $source = <<'ISF';
   (interface
     (input ready)
     (output valid)
+    (output pulse_seen)
     (output done))
   (transaction main_transfer
     (on main_transfer_start)
@@ -27,6 +28,7 @@ my $source = <<'ISF';
   (rule always_ready
     (when ready)
     (valid 1)
+    (pulse pulse_seen)
     (trigger main_transfer)))
 ISF
 
@@ -36,8 +38,8 @@ my $fsm = $result->{files}{'rule_guard_factoring.fsm'};
 
 like(
     $fsm,
-    qr/\(-always_ready\s+<ready\s+\(<- \(valid> 1\)\)\s+\(<1 \(always_ready_main_transfer 1\)\)\s+\)/s,
-    'rule DT emits its guard as the standalone-DT DTE with delayed-pulse trigger source assignment',
+    qr/\(-always_ready\s+<ready\s+\(<- \(valid> 1\)\)\s+\(<1 \(pulse_seen> 1\)\)\s+\(<1 \(always_ready_main_transfer 1\)\)\s+\)/s,
+    'rule DT emits its guard as the standalone-DT DTE with delayed-pulse pulse action and trigger source assignments',
 );
 like(
     $fsm,

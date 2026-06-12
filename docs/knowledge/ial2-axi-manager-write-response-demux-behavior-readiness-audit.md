@@ -6,11 +6,12 @@ answers:
   - "can generated AXI write BID demux be implemented directly now?"
   - "why does response demux need an IAL1 rule-pulse prerequisite?"
   - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.29?"
+  - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.30?"
 date: 2026-06-12
 status: current
 tags: [ial2, axi, manager, response-demux, ial1, task-tree]
 evidence: docs/AXI_IAL2_MANAGER_WRITE_RESPONSE_DEMUX_BEHAVIOR_READINESS_AUDIT.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; docs/book/src/14-feature-backlog.md; docs/AXI_IAL2_MANAGER_WRITE_RESPONSE_DEMUX_METADATA_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_WRITE_RESPONSE_DEMUX_CONTRACT_SELECTION.md; README.md; ROADMAP_V2.md; perl/FSM/Scheduler/ISF/LoweringIR.pm; perl/FSM/Scheduler/ISF/Emitter/FSM.pm; perl/FSM/IAL2/ProtocolIntent/AxiManagerCapacityStatus.pm
-reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.29|rule-pulse|pulse TARGET|sticky flopped|one-cycle pulse|response-demux completion' docs/AXI_IAL2_MANAGER_WRITE_RESPONSE_DEMUX_BEHAVIOR_READINESS_AUDIT.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md docs/book/src/14-feature-backlog.md README.md ROADMAP_V2.md
+reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.30|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.29|rule-pulse|pulse TARGET|sticky flopped|one-cycle pulse|response-demux completion' docs/AXI_IAL2_MANAGER_WRITE_RESPONSE_DEMUX_BEHAVIOR_READINESS_AUDIT.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md docs/book/src/14-feature-backlog.md README.md ROADMAP_V2.md
 ---
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.28` concluded that generated AXI write
@@ -37,22 +38,21 @@ remain pulse-shaped, matching the existing transaction completion lowering:
 (<1 (TARGET> 1))
 ```
 
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.29` is therefore the selected next leaf.
-It owns a minimal IAL1 rule-owned pulse action:
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.29` was therefore selected and is now
+shipped. It owns a minimal IAL1 rule-owned pulse action:
 
 ```text
 (rule NAME GUARD
   (pulse TARGET))
 ```
 
-The first slice must keep the action bounded to scalar actor outputs or
-actor-local generated scalar pulse signals accepted by the existing signal
-model, lower through the existing delayed-pulse family, participate in
-pulse-domain conflict analysis, and update the mdBook/spec/tests in the same
-slice.
+The shipped first slice keeps the action bounded to scalar actor outputs or
+scalar actor storage variables, lowers through the existing delayed-pulse
+family, participates in pulse-domain conflict analysis, and updates the
+mdBook/spec/tests in the same slice.
 
-After `.29`, a later generated response-demux behavior owner can add `axi0_bid`
-as a generated IAL1 input, emit one guarded demux pulse rule per auto-ID write
-transaction, add unmatched/inactive response assertions, set
-`response_demux.generated_behavior` to true, and remove
-`generated_write_bid_demux` from the report residue.
+After `.29`, `IAL2-FEATURE-COMPLETENESS-FRONTIER.30` owns generated
+response-demux behavior: add `axi0_bid` as a generated IAL1 input, emit one
+guarded demux pulse rule per auto-ID write transaction, add unmatched/inactive
+response assertions, set `response_demux.generated_behavior` to true, and
+remove `generated_write_bid_demux` from the report residue.

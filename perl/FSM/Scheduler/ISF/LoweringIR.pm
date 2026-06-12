@@ -2559,6 +2559,10 @@ sub _validate_rule_domain_refs($self, $actor, $signal_domains, $transaction_doma
                 next;
             }
             next if $keyword eq 'priority';
+            if ($keyword eq 'pulse') {
+                _validate_domain_signal_access($action->[1], 'write', $domain, $signal_domains, \%local_signals, $constants, "rule '$rule->{name}' pulse action");
+                next;
+            }
 
             if ($keyword eq 'set') {
                 _validate_domain_signal_access($action->[1], 'write', $domain, $signal_domains, \%local_signals, $constants, "rule '$rule->{name}' set action");
@@ -12063,6 +12067,13 @@ sub _build_rules {
                 };
             } elsif ($a0 eq 'priority') {
                 # Parsed metadata; arbitration enforcement is a later slice.
+            } elsif ($a0 eq 'pulse') {
+                push @a, {
+                    lhs         => $ac->[1],
+                    rhs         => 1,
+                    op          => '<1',
+                    source_kind => 'rule_pulse_action',
+                };
             } elsif ($a0 eq 'store' || $a0 eq 'load') {
                 my $spec = _parse_bank_access_for_lowering($ac, $actor, $widths, $r->{name}, 'rule');
                 push @a, _bank_access_assignments($spec);

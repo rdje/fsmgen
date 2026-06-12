@@ -8,8 +8,8 @@ metadata slice selected here. See
 [docs/AXI_IAL2_MANAGER_WRITE_RESPONSE_DEMUX_METADATA_FIRST_SLICE.md](AXI_IAL2_MANAGER_WRITE_RESPONSE_DEMUX_METADATA_FIRST_SLICE.md).
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.28` then audited generated behavior and
 selected `IAL2-FEATURE-COMPLETENESS-FRONTIER.29` as the IAL1 rule-pulse
-prerequisite. Generated write `BID` demux behavior remains future work until
-that pulse action exists.
+prerequisite. `.29` is now shipped; generated write `BID` demux behavior
+remains future work under `IAL2-FEATURE-COMPLETENESS-FRONTIER.30`.
 
 Task tree:
 [docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md](tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md).

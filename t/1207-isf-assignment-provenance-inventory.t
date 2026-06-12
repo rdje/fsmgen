@@ -27,6 +27,7 @@ my $source = <<'ISF';
     (complete done))
   (rule always_ready ready
     (valid 1)
+    (pulse done)
     (trigger main)))
 ISF
 
@@ -82,6 +83,17 @@ my $rule_trigger = find_record(
 is($rule_trigger->{owner}, 'always_ready', 'rule trigger source keeps rule ownership');
 is($rule_trigger->{operator}, '<1', 'rule trigger source is a delayed pulse');
 is($rule_trigger->{domain}, 'pulse', 'rule trigger source is classified as pulse domain');
+
+my $rule_pulse = find_record(
+    $ir,
+    target      => 'done',
+    source_kind => 'rule_pulse_action',
+);
+is($rule_pulse->{owner}, 'always_ready', 'rule pulse action is owned by the rule');
+is($rule_pulse->{owner_kind}, 'rule', 'rule pulse action owner kind is rule');
+is($rule_pulse->{operator}, '<1', 'rule pulse action uses delayed-pulse operator');
+is($rule_pulse->{domain}, 'pulse', 'rule pulse action is classified as pulse domain');
+is_deeply($rule_pulse->{activation}{dte_guard}, { port => 'ready' }, 'rule pulse action activation records rule DTE guard');
 
 my $fanin = find_record(
     $ir,

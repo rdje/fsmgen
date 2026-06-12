@@ -48,7 +48,7 @@ path before reopening VHDL backend or VHDL rerouting work.
 - ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER`
   Status: `active`
   Goal: `Make IAL2 feature-complete on the SystemVerilog-backed path before VHDL work resumes.`
-  Children: `IAL2-FEATURE-COMPLETENESS-FRONTIER.1, IAL2-FEATURE-COMPLETENESS-FRONTIER.2, IAL2-FEATURE-COMPLETENESS-FRONTIER.3, IAL2-FEATURE-COMPLETENESS-FRONTIER.4, IAL2-FEATURE-COMPLETENESS-FRONTIER.5, IAL2-FEATURE-COMPLETENESS-FRONTIER.6, IAL2-FEATURE-COMPLETENESS-FRONTIER.7, IAL2-FEATURE-COMPLETENESS-FRONTIER.8, IAL2-FEATURE-COMPLETENESS-FRONTIER.9, IAL2-FEATURE-COMPLETENESS-FRONTIER.10, IAL2-FEATURE-COMPLETENESS-FRONTIER.11, IAL2-FEATURE-COMPLETENESS-FRONTIER.12, IAL2-FEATURE-COMPLETENESS-FRONTIER.13, IAL2-FEATURE-COMPLETENESS-FRONTIER.14, IAL2-FEATURE-COMPLETENESS-FRONTIER.15, IAL2-FEATURE-COMPLETENESS-FRONTIER.16, IAL2-FEATURE-COMPLETENESS-FRONTIER.17, IAL2-FEATURE-COMPLETENESS-FRONTIER.18, IAL2-FEATURE-COMPLETENESS-FRONTIER.19, IAL2-FEATURE-COMPLETENESS-FRONTIER.20, IAL2-FEATURE-COMPLETENESS-FRONTIER.21, IAL2-FEATURE-COMPLETENESS-FRONTIER.22, IAL2-FEATURE-COMPLETENESS-FRONTIER.23, IAL2-FEATURE-COMPLETENESS-FRONTIER.24, IAL2-FEATURE-COMPLETENESS-FRONTIER.25, IAL2-FEATURE-COMPLETENESS-FRONTIER.26, IAL2-FEATURE-COMPLETENESS-FRONTIER.27, IAL2-FEATURE-COMPLETENESS-FRONTIER.28, IAL2-FEATURE-COMPLETENESS-FRONTIER.29`
+  Children: `IAL2-FEATURE-COMPLETENESS-FRONTIER.1, IAL2-FEATURE-COMPLETENESS-FRONTIER.2, IAL2-FEATURE-COMPLETENESS-FRONTIER.3, IAL2-FEATURE-COMPLETENESS-FRONTIER.4, IAL2-FEATURE-COMPLETENESS-FRONTIER.5, IAL2-FEATURE-COMPLETENESS-FRONTIER.6, IAL2-FEATURE-COMPLETENESS-FRONTIER.7, IAL2-FEATURE-COMPLETENESS-FRONTIER.8, IAL2-FEATURE-COMPLETENESS-FRONTIER.9, IAL2-FEATURE-COMPLETENESS-FRONTIER.10, IAL2-FEATURE-COMPLETENESS-FRONTIER.11, IAL2-FEATURE-COMPLETENESS-FRONTIER.12, IAL2-FEATURE-COMPLETENESS-FRONTIER.13, IAL2-FEATURE-COMPLETENESS-FRONTIER.14, IAL2-FEATURE-COMPLETENESS-FRONTIER.15, IAL2-FEATURE-COMPLETENESS-FRONTIER.16, IAL2-FEATURE-COMPLETENESS-FRONTIER.17, IAL2-FEATURE-COMPLETENESS-FRONTIER.18, IAL2-FEATURE-COMPLETENESS-FRONTIER.19, IAL2-FEATURE-COMPLETENESS-FRONTIER.20, IAL2-FEATURE-COMPLETENESS-FRONTIER.21, IAL2-FEATURE-COMPLETENESS-FRONTIER.22, IAL2-FEATURE-COMPLETENESS-FRONTIER.23, IAL2-FEATURE-COMPLETENESS-FRONTIER.24, IAL2-FEATURE-COMPLETENESS-FRONTIER.25, IAL2-FEATURE-COMPLETENESS-FRONTIER.26, IAL2-FEATURE-COMPLETENESS-FRONTIER.27, IAL2-FEATURE-COMPLETENESS-FRONTIER.28, IAL2-FEATURE-COMPLETENESS-FRONTIER.29, IAL2-FEATURE-COMPLETENESS-FRONTIER.30`
 
 - ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER.1`
   Status: `done`
@@ -247,9 +247,16 @@ path before reopening VHDL backend or VHDL rerouting work.
   Commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.28: audit AXI response demux behavior`
 
 - ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER.29`
-  Status: `pending`
+  Status: `done`
   Goal: `Implement the minimal IAL1 rule-pulse action prerequisite for generated AXI write response-demux completions.`
   Acceptance: `IAL1 accepts a bounded rule action (pulse TARGET) for scalar generated/event-style pulse targets; the ISF parser validates malformed pulse actions fail closed; the lowerer emits a one-cycle delayed-pulse .fsm assignment using the existing <1 pulse family rather than a sticky flopped rule assignment; rule-pulse actions participate in existing conflict analysis as pulse-domain assignments; focused tests prove parsing, scheduled .fsm, generated HDL reachability, and compatibility with existing rule trigger/priority behavior; docs/ISF spec/mdBook describe the pulse action as an IAL1 prerequisite for generated IAL2 response-demux completion signals; roadmap, task tree, Knowledge Map, and memory stay synced.`
+  Verification: `FSM::Adapter::ISF::Parser accepts bounded (pulse TARGET) rule actions, rejects malformed pulse actions and input/non-output/non-storage targets, and preserves the action in the rule shell. FSM::Scheduler::ISF::LoweringIR emits rule_pulse_action assignments as <1 pulse-domain records. Focused tests cover parser shape, scheduled .fsm/HDL reachability, assignment provenance, and compatible pulse fan-in with completion pulses. ISF spec and mdBook document the action as a one-cycle pulse prerequisite for generated response-demux completion outputs.`
+  Commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.29: ship IAL1 rule pulse action`
+
+- ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER.30`
+  Status: `pending`
+  Goal: `Implement generated AXI write BID response-demux behavior using IAL1 rule-pulse completions.`
+  Acceptance: `For explicit write response-demux contracts, the IAL2 generator adds the write response ID signal as a generated IAL1 input with the declared write ID width; treats transaction completion names as generated demux pulse outputs instead of authored event inputs; emits one guarded IAL1 rule per auto-ID write transaction using response_event && busy && BID == selected_id and (pulse COMPLETION); keeps capacity release and auto-ID release driven by those generated completion pulses; emits unmatched/inactive response assertions; reports generated demux rules/completion signals/assertions and response_demux.generated_behavior true while removing generated_write_bid_demux residue; focused generator/PPIF/CLI tests prove .isf/.fsm/SystemVerilog reachability, diagnostics, report shape, and unchanged out-of-scope read/order/burst/VHDL residue; docs/mdBook/Knowledge Map/memory stay synced.`
   Verification: `pending`
   Commit: `pending`
 
@@ -257,7 +264,7 @@ path before reopening VHDL backend or VHDL rerouting work.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.29` | `pending` | `.28` found generated response-demux completion signals need a rule-owned one-cycle pulse action in IAL1 before generated BID demux behavior can ship. |
+| 1 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.30` | `pending` | `.29` shipped the IAL1 rule-pulse prerequisite, so generated write BID response-demux behavior can now be implemented through the layered IAL2 -> IAL1 -> IAL0 -> SystemVerilog path. |
 
 ## Decisions
 
@@ -576,6 +583,11 @@ path before reopening VHDL backend or VHDL rerouting work.
   preserve the existing pulse-shaped completion contract. `.29` is selected as
   the next leaf: implement the minimal IAL1 rule-pulse prerequisite before the
   generated response-demux behavior slice.
+- `2026-06-12`: `.29` shipped bounded IAL1 `(pulse TARGET)` rule actions for
+  scalar actor outputs and scalar actor storage variables. They lower as `<1`
+  delayed pulses with `rule_pulse_action` provenance and participate in
+  pulse-domain compatible fan-in. `.30` is selected as the next leaf: implement
+  generated AXI write `BID` response-demux behavior using those pulse actions.
 - `2026-06-12`: User clarified the backend strategy: FSMGen is currently Perl
   5, but IAL0/IAL1/IAL2 and the mdBook must remain backend-language-neutral
   contracts for future Rust, Rust/Wasm, browser-capable JavaScript, and
@@ -660,6 +672,8 @@ path before reopening VHDL backend or VHDL rerouting work.
 | `2026-06-12` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.27` | `perl -Iperl -c perl/FSM/Support/RegressionCorpus.pm`; `perl -Iperl -c perl/FSM/Support/LanguageSurfaceSection.pm`; `./bin/fsmgen --quiet --verify-hdl ppif/axi_manager_capacity_status_response_demux.ppif`; `prove -Iperl t/297-capability-manifest.t t/317-language-surface-contract.t t/301-check-json-supported-corpus.t t/303-normalized-semantic-json-supported-corpus.t`; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `mdbook build docs/book`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `git --no-pager diff --check`; stale-current-frontier search | Passed. |
 | `2026-06-12` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.28` | `docs/AXI_IAL2_MANAGER_WRITE_RESPONSE_DEMUX_BEHAVIOR_READINESS_AUDIT.md`; `perl/FSM/IAL2/ProtocolIntent/AxiManagerCapacityStatus.pm`; `perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl/FSM/Scheduler/ISF/Emitter/FSM.pm`; `docs/AXI_IAL2_MANAGER_WRITE_RESPONSE_DEMUX_METADATA_FIRST_SLICE.md`; `docs/AXI_IAL2_MANAGER_WRITE_RESPONSE_DEMUX_CONTRACT_SELECTION.md`; `docs/AXI_IAL2_MANAGER_RESPONSE_DEMUX_READINESS_AUDIT.md`; `docs/book/src/14-feature-backlog.md`; `docs/knowledge/ial2-axi-manager-write-response-demux-behavior-readiness-audit.md`; `docs/knowledge/ial2-feature-completeness-next-slice.md`; `README.md`; `ROADMAP_V2.md`; `docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md`; `docs/TASK_TREE.md`; `MEMORY.md` | Audited generated write BID demux behavior readiness, found the missing IAL1 rule-pulse prerequisite, selected `.29`, and kept generated behavior unchanged. |
 | `2026-06-12` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.28` | `bash knowledge-map/scripts/gen_knowledge_map.sh`; `mdbook build docs/book`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `git --no-pager diff --check`; stale-current-frontier search | Passed. |
+| `2026-06-12` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.29` | `perl/FSM/Adapter/ISF/Parser.pm`; `perl/FSM/Scheduler/ISF/LoweringIR.pm`; `t/1181-isf-rule-action-boundary.t`; `t/1168-isf-rule-guard-factoring.t`; `t/1207-isf-assignment-provenance-inventory.t`; `t/1208-isf-compatible-fanin-classification.t`; `docs/ISF_SPEC.md`; `docs/book/src/13g-rules.md`; `docs/book/src/14-feature-backlog.md`; `docs/knowledge/ial1-rule-pulse-action.md`; `docs/knowledge/ial2-feature-completeness-next-slice.md`; `README.md`; `ROADMAP_V2.md`; `docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md`; `docs/TASK_TREE.md`; `MEMORY.md` | Shipped bounded IAL1 `(pulse TARGET)` rule actions as `<1` pulse-domain assignments with `rule_pulse_action` provenance, documented the public contract, and advanced the frontier to `.30`. |
+| `2026-06-12` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.29` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `prove -Iperl t/1181-isf-rule-action-boundary.t t/1168-isf-rule-guard-factoring.t t/1171-isf-rule-trigger-fanin.t t/1207-isf-assignment-provenance-inventory.t t/1208-isf-compatible-fanin-classification.t`; `prove -Iperl t/1209-isf-static-conflict-detection.t t/1214-isf-rejected-conflict-diagnostics.t t/1222-isf-rule-expression-conflict-report.t`; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `mdbook build docs/book`; `prove -Iperl t/1414-docs-relative-paths-audit.t t/1376-isf-book-example-lowering-audit.t`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `git --no-pager diff --check`; stale-current-frontier search | Passed. |
 
 ## Commit Log
 
@@ -693,6 +707,7 @@ path before reopening VHDL backend or VHDL rerouting work.
 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.26` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.26: select AXI write response demux contract` | Selected explicit write response-demux syntax and advanced the frontier to `.27`. |
 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.27` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.27: ship AXI response demux metadata` | Shipped public response-demux parser/report metadata and advanced the frontier to `.28`. |
 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.28` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.28: audit AXI response demux behavior` | Selected the minimal IAL1 rule-pulse prerequisite and advanced the frontier to `.29`. |
+| `IAL2-FEATURE-COMPLETENESS-FRONTIER.29` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.29: ship IAL1 rule pulse action` | Shipped bounded IAL1 rule-owned pulse actions and advanced the frontier to `.30`. |
 
 ## Changelog
 
@@ -788,3 +803,7 @@ path before reopening VHDL backend or VHDL rerouting work.
 - `2026-06-12`: Completed `.28` readiness audit, selected a minimal IAL1
   rule-owned one-cycle pulse action as the prerequisite for generated
   response-demux completion outputs, and advanced the frontier to `.29`.
+- `2026-06-12`: Completed `.29` implementation, shipped bounded IAL1
+  `(pulse TARGET)` rule actions through `<1` pulse-domain lowering, and
+  advanced the frontier to `.30`, generated AXI write `BID` response-demux
+  behavior.

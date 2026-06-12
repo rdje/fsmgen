@@ -63,6 +63,8 @@ whole record member or whole list member, still fail closed.
 **Actions**:
 - `(set port expr)` — explicit guarded flopped assignment when the condition holds
 - `(port expr)` — guarded flopped assignment when the condition holds
+- `(pulse target)` — guarded one-cycle delayed pulse on a scalar output or
+  scalar actor storage variable
 - `(trigger transaction)` — guarded one-cycle delayed pulse on a per-rule
   trigger source; generated fan-in drives the transaction start signal
 - `(priority over other_rule)` — a rule-local priority edge used by the
@@ -80,6 +82,12 @@ literal-zero, actor-constant-zero, and actor-parameter-zero division/modulo
 divisor operands before scheduled `.fsm` emission; dynamic scalar divisors
 lower unchanged and are not yet proven nonzero.
 
+`(pulse target)` is the bounded rule-owned pulse action. `target` must name a
+scalar actor output or scalar actor storage variable. The action lowers as a
+one-cycle delayed pulse through the same `<1` family as transaction
+completion, participates in pulse-domain compatible fan-in, and is not a
+sticky data assignment.
+
 `(trigger transaction)` must name a declared transaction in the same actor;
 forward references are accepted because validation happens after the full actor
 body is collected. `(priority over other_rule)` must name a declared rule in
@@ -91,6 +99,8 @@ all become the public parser `when` field. Scheduled `.fsm` emission writes
 that guard once in the DT header instead of repeating it on every assignment
 or wrapping the actions in a nested guard block. `(set port expr)` and ordinary
 `(port expr)` actions are flopped assignments selected by the guarded DT.
+`(pulse target)` actions are delayed-pulse assignments selected by the same
+guarded DT.
 
 `(trigger transaction)`
 uses `<1` on a generated
@@ -101,6 +111,7 @@ cycle.
 ```lisp
 (-always_ready <ready
   (<- (valid> 1))
+  (<1 (ready_pulse> 1))
   (<1 (always_ready_main_transfer 1))
 )
 

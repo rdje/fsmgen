@@ -11,17 +11,17 @@ slice. The current IAL1/IAL0/SystemVerilog substrate has almost everything the
 bounded demux needs, but generated transaction completion signals must be
 one-cycle completion pulses, not sticky flopped rule assignments.
 
-The next owner is a small IAL1 prerequisite:
+The selected small IAL1 prerequisite was:
 
 ```text
 IAL2-FEATURE-COMPLETENESS-FRONTIER.29
 ```
 
-That leaf should add a minimal rule-owned one-cycle pulse action for IAL1,
-intended first for generated IAL2 response-demux completion outputs. Once that
-exists, a later generated write response-demux behavior leaf can stay on the
-required `IAL2 -> IAL1 -> IAL0 -> SystemVerilog` path without direct IAL2 to
-IAL0 or backend shortcuts.
+That leaf is now shipped. It adds a minimal rule-owned one-cycle pulse action
+for IAL1, intended first for generated IAL2 response-demux completion outputs.
+The next behavior owner is `IAL2-FEATURE-COMPLETENESS-FRONTIER.30`, which can
+stay on the required `IAL2 -> IAL1 -> IAL0 -> SystemVerilog` path without
+direct IAL2 to IAL0 or backend shortcuts.
 
 ## Evidence Read
 
@@ -118,8 +118,8 @@ raw `.fsm` or HDL from IAL2 would violate the layered lowering decision.
 
 ## Selected Next Leaf
 
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.29` should implement a minimal IAL1 rule
-pulse action.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.29` implements a minimal IAL1 rule pulse
+action.
 
 The selected public IAL1 shape for that leaf is:
 
@@ -128,10 +128,9 @@ The selected public IAL1 shape for that leaf is:
   (pulse TARGET))
 ```
 
-First-slice constraints:
+Shipped first-slice constraints:
 
-- `TARGET` must be a scalar actor output or scalar actor-local generated
-  signal accepted by the existing IAL1 signal model.
+- `TARGET` must be a scalar actor output or scalar actor storage variable.
 - The action lowers to the same `.fsm` delayed-pulse operator family as
   transaction completion:
 
@@ -141,14 +140,14 @@ First-slice constraints:
 
   for actor outputs, or the equivalent non-output target token for actor-local
   generated pulse signals.
-- Rule-pulse actions must participate in existing rule conflict analysis as
+- Rule-pulse actions participate in existing rule conflict analysis as
   pulse-domain assignments, not as ordinary sticky data writes.
 - The mdBook, ISF spec, focused parser/lowerer tests, and relevant support
-  docs must describe the action as a pulse action, not as a data assignment.
+  docs describe the action as a pulse action, not as a data assignment.
 
 ## Later Response-Demux Behavior Boundary
 
-After `.29`, the generated write response-demux behavior slice can be bounded
+After shipped `.29`, `.30` can bound generated write response-demux behavior
 as follows:
 
 - add the write response ID signal, such as `axi0_bid`, as a generated IAL1

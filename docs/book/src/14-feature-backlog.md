@@ -2315,8 +2315,10 @@ implementation leaf `.27` ships parser/report metadata and static validation
 for that explicit opt-in while keeping generated `.isf`, `.fsm`, and HDL
 behavior unchanged. Completed readiness audit `.28` concludes that generated
 write `BID` demux completion names need an IAL1 rule-owned one-cycle pulse
-action first. The active leaf is `.29`, implementing that minimal rule-pulse
-prerequisite before generated response-demux behavior changes.
+action first. Completed implementation leaf `.29` ships bounded IAL1
+`(pulse target)` rule actions that lower as `<1` pulse-domain assignments.
+The active leaf is `.30`, implementing generated write `BID` response-demux
+behavior through those pulse completions.
 Selected IAL2 slices may include explicit IAL1 or
 IAL0/SystemVerilog prerequisites when those prerequisites are needed for
 clean, reviewable lowering.
@@ -3033,10 +3035,10 @@ Response-demux behavior readiness audit:
 concluded that generated write `BID` demux should not be implemented directly
 on top of ordinary IAL1 rule assignments. Transaction completion names are
 one-cycle completion pulses, while existing IAL1 `(set ...)` and shorthand
-rule actions lower as sticky flopped assignments. The selected next frontier is
-a small IAL1 prerequisite: add a bounded rule-owned `(pulse TARGET)` action
-that lowers through the existing delayed-pulse path before generated demux
-rules emit transaction completions.
+rule actions lower as sticky flopped assignments. That prerequisite is now
+shipped as a bounded rule-owned `(pulse target)` action that lowers through the
+existing delayed-pulse path. The selected next frontier is generated write
+`BID` demux behavior using those pulse completions.
 
 First implementation subset selection:
 [AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION](../../AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md)
@@ -3518,15 +3520,16 @@ arbitration policy, and broader resource arbitration remain backlog items.
 
 ### Expression-Valued Rule Assignments
 
-Status: shipped for ordinary flopped rule assignments.
+Status: shipped for ordinary flopped rule assignments and bounded rule-owned
+pulse actions.
 
 Goal: allow rule actions to assign expression values, not only scalar
 `(port value)` pairs.
 
 Current boundary: rule actions accept `(set port expr)`, `(port expr)`,
-`(trigger transaction)`, and `(priority over other_rule)`.
+`(pulse target)`, `(trigger transaction)`, and `(priority over other_rule)`.
 
-Trigger targets and priority targets remain scalar-only today.
+Pulse, trigger, and priority targets remain scalar-only today.
 
 `(set port expr)` is the canonical explicit setter; `(port expr)` remains
 shorthand.
@@ -3534,6 +3537,11 @@ shorthand.
 Both lower as flopped `<-` rule assignments under the rule DT DTE, where
 `expr` may be a scalar token or one list expression from the transaction
 `set`/`update`/`.fsm` RHS expression domain.
+
+`(pulse target)` lowers as a one-cycle delayed `<1` pulse under the same rule
+DT DTE. The target must be a scalar actor output or scalar actor storage
+variable. Rule pulses participate in pulse-domain compatible fan-in and remain
+distinct from sticky flopped rule assignments.
 
 Direct scalar rule assignment RHS values and scalar operands inside RHS
 expressions may use local or package-qualified enum members.
@@ -5364,6 +5372,9 @@ accounting entry, and selected completed `.28` for generated write
 response-demux behavior readiness. Completed readiness audit leaf
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.28` selects `.29` as the minimal IAL1
 rule-pulse prerequisite before generated response-demux completion rules ship.
+Completed implementation leaf `IAL2-FEATURE-COMPLETENESS-FRONTIER.29` ships
+that bounded `(pulse target)` rule action and selects `.30` for generated
+write `BID` response-demux behavior.
 Completed implementation leaf
 `ARCHITECTURE-DEBT-FRONTIER.2.1`
 projects direct backend storage/helper declaration-plan entries into

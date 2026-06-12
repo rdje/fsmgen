@@ -39,12 +39,16 @@ subtest 'valid rule actions preserve the public rule shell' => sub {
     (output valid)
     (output status)
     (output done))
+  (storage
+    (var local_pulse (width 1)))
   (transaction main
     (on start)
     (complete done))
   (rule always_ready ready
     (valid 1)
     (status (| ready error_seen))
+    (pulse done)
+    (pulse local_pulse)
     (trigger main)
     (priority over fallback))
   (rule fallback start
@@ -57,6 +61,8 @@ ISF
         [
             ['valid',   '1'],
             ['status', ['|', 'ready', 'error_seen']],
+            ['pulse',   'done'],
+            ['pulse',   'local_pulse'],
             ['trigger', 'main'],
             ['priority', 'over', 'fallback'],
         ],
@@ -144,6 +150,33 @@ ISF
   (transaction main (on start) (complete done))
   (rule bad ready
     (done (when ready 1))))
+ISF
+
+    assert_parse_rejected(<<'ISF', 'missing pulse target', qr/\AError: rule 'bad' pulse action requires '\(pulse target\)'/);
+(actor bad_rule_action
+  (clock clk)
+  (interface (input start) (input ready) (output done))
+  (transaction main (on start) (complete done))
+  (rule bad ready
+    (pulse)))
+ISF
+
+    assert_parse_rejected(<<'ISF', 'extra pulse operand', qr/\AError: rule 'bad' pulse action requires '\(pulse target\)'/);
+(actor bad_rule_action
+  (clock clk)
+  (interface (input start) (input ready) (output done))
+  (transaction main (on start) (complete done))
+  (rule bad ready
+    (pulse done extra)))
+ISF
+
+    assert_parse_rejected(<<'ISF', 'input pulse target', qr/\AError: rule 'bad' pulse target 'start' in actor 'bad_rule_action' must name a scalar output or storage var/);
+(actor bad_rule_action
+  (clock clk)
+  (interface (input start) (input ready) (output done))
+  (transaction main (on start) (complete done))
+  (rule bad ready
+    (pulse start)))
 ISF
 };
 

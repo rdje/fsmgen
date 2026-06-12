@@ -30,9 +30,11 @@ my $source = <<'ISF';
     (complete done))
   (rule r0 a
     (valid 1)
+    (pulse done)
     (trigger work))
   (rule r1 b
     (valid 1)
+    (pulse done)
     (trigger work)))
 ISF
 
@@ -75,8 +77,8 @@ is($pulse_done->{operator}, '<1', 'pulse fan-in group keeps pulse operator');
 is($pulse_done->{rhs}, '1', 'pulse fan-in group keeps pulse value');
 is_deeply(
     sorted_sources($pulse_done),
-    ['parent:complete_pulse:done', 'work:complete_pulse:done'],
-    'pulse fan-in group contains both completion pulses',
+    ['parent:complete_pulse:done', 'r0:rule_pulse_action:done', 'r1:rule_pulse_action:done', 'work:complete_pulse:done'],
+    'pulse fan-in group contains completion pulses and rule pulse actions',
 );
 
 my $trigger_work = find_group(
