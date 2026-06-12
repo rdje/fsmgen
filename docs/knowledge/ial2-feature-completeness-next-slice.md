@@ -1,8 +1,9 @@
 ---
 id: ial2-feature-completeness-next-slice
-title: IAL2 feature completeness next slice is post-read-demux selector
+title: IAL2 feature completeness next slice is read-data readiness audit
 answers:
   - "what is the next IAL2 feature completeness slice?"
+  - "what comes after IAL2-FEATURE-COMPLETENESS-FRONTIER.42?"
   - "what comes after IAL2-FEATURE-COMPLETENESS-FRONTIER.41?"
   - "what comes after IAL2-FEATURE-COMPLETENESS-FRONTIER.40?"
   - "what comes after IAL2-FEATURE-COMPLETENESS-FRONTIER.39?"
@@ -18,9 +19,9 @@ answers:
   - "what must happen before the next AXI manager behavior?"
 date: 2026-06-12
 status: current
-tags: [ial2, axi, manager, read-response, response-demux, rid, auto-id, same-id, feature-completeness, selector, task-tree]
-evidence: docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; docs/AXI_IAL2_MANAGER_READ_RESPONSE_DEMUX_BEHAVIOR_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_READ_RESPONSE_DEMUX_BEHAVIOR_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_READ_RESPONSE_DEMUX_METADATA_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_READ_RESPONSE_DEMUX_CONTRACT_SELECTION.md; docs/AXI_IAL2_MANAGER_READ_RESPONSE_DEMUX_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_READ_RESPONSE_DEMUX_SELECTION.md; docs/AXI_IAL2_MANAGER_SAME_ID_ORDERING_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_SAME_ID_ORDERING_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_SAME_ID_ORDERING_READINESS_SELECTION.md; docs/AXI_IAL2_MANAGER_AUTO_ID_RESIDUE_ALIGNMENT_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_POST_RESPONSE_DEMUX_RESIDUE_ALIGNMENT_SELECTION.md; docs/AXI_IAL2_MANAGER_WRITE_RESPONSE_DEMUX_BEHAVIOR_FIRST_SLICE.md; docs/book/src/14-feature-backlog.md; README.md; ROADMAP_V2.md
-reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.42|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.41|AXI_IAL2_MANAGER_READ_RESPONSE_DEMUX_BEHAVIOR_FIRST_SLICE|generated read.*RID|next SV-backed IAL2 feature-completeness slice' docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md docs/AXI_IAL2_MANAGER_READ_RESPONSE_DEMUX_BEHAVIOR_FIRST_SLICE.md docs/book/src/14-feature-backlog.md README.md ROADMAP_V2.md
+tags: [ial2, axi, manager, read-data, bursts, rlast, interleaving, per-id, feature-completeness, readiness, task-tree]
+evidence: docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; docs/AXI_IAL2_MANAGER_POST_READ_DEMUX_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_READ_RESPONSE_DEMUX_BEHAVIOR_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_READ_RESPONSE_DEMUX_BEHAVIOR_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_READ_RESPONSE_DEMUX_METADATA_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_READ_RESPONSE_DEMUX_CONTRACT_SELECTION.md; docs/AXI_IAL2_MANAGER_READ_RESPONSE_DEMUX_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_READ_RESPONSE_DEMUX_SELECTION.md; docs/AXI_IAL2_MANAGER_SAME_ID_ORDERING_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_SAME_ID_ORDERING_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_SAME_ID_ORDERING_READINESS_SELECTION.md; docs/AXI_IAL2_MANAGER_AUTO_ID_RESIDUE_ALIGNMENT_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_POST_RESPONSE_DEMUX_RESIDUE_ALIGNMENT_SELECTION.md; docs/AXI_IAL2_MANAGER_WRITE_RESPONSE_DEMUX_BEHAVIOR_FIRST_SLICE.md; docs/book/src/14-feature-backlog.md; README.md; ROADMAP_V2.md
+reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.43|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.42|AXI_IAL2_MANAGER_POST_READ_DEMUX_NEXT_SLICE_SELECTION|read-data payload|burst/`RLAST`|per-ID ordering/reassembly' docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md docs/AXI_IAL2_MANAGER_POST_READ_DEMUX_NEXT_SLICE_SELECTION.md docs/book/src/14-feature-backlog.md README.md ROADMAP_V2.md
 ---
 
 After the shipped Valid-Ready, bundle, capacity/status, ID-family metadata,
@@ -30,9 +31,9 @@ request-ID drive, write response-demux metadata, IAL1 rule-pulse action,
 generated write `BID` response-demux behavior, auto-ID lifecycle
 report-residue alignment, generated auto-ID same-ID avoidance, read
 response-demux contract selection, read response-demux parser/report metadata,
-read response-demux behavior readiness audit, and bounded generated
-single-beat read `RID` response-demux behavior, the next active leaf is
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.42`.
+read response-demux behavior readiness audit, bounded generated single-beat
+read `RID` response-demux behavior, and post-read-demux next-slice selection,
+the next active leaf is `IAL2-FEATURE-COMPLETENESS-FRONTIER.43`.
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.32` aligned the emitted report for
 explicit generated write response demux. At that point,
@@ -93,13 +94,12 @@ response-demux behavior by making response-demux helpers family-aware, adding
 outputs/rules/assertions, and keeping read capacity release plus auto-ID
 release driven by those generated completion pulses.
 
-The next leaf, `IAL2-FEATURE-COMPLETENESS-FRONTIER.42`, is a no-code selector
-for the next exact SV-backed IAL2 feature-completeness slice. It must choose
-between candidates such as read-data interleaving/reassembly, burst/`RLAST`
-ownership, per-ID queues, authored concrete-ID same-ID ordering,
-queued/blocking policy, profile aliases, full-manager behavior, another
-report/static-validation prerequisite, or a smaller IAL1/IAL0/SystemVerilog
-substrate slice before any implementation changes.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.42` selected
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.43` as a readiness audit for read-data
+payload, burst/`RLAST`, and per-ID ordering/reassembly ownership after
+generated read response demux. It selected an audit instead of direct
+implementation because payload capture, last-beat semantics, different-ID
+interleaving, and concrete-ID/per-ID ordering queues are coupled.
 
 The full AXI manager is not implemented yet. Bounded single-beat read `RID`
 demux is shipped, but per-ID same-ID response queues, authored concrete-ID

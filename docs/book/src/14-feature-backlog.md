@@ -3298,6 +3298,18 @@ Read-data interleaving/reassembly, bursts/`RLAST`, per-ID queues,
 queued/blocking policy, full-manager behavior, direct backend lowering, and
 VHDL remain future exact-owner work.
 
+Post-read-demux next-slice selection:
+[AXI_IAL2_MANAGER_POST_READ_DEMUX_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_READ_DEMUX_NEXT_SLICE_SELECTION.md)
+selects `.43` as a readiness audit for AXI read-data payload,
+burst/`RLAST`, and per-ID ordering/reassembly ownership. The selector chooses
+an audit rather than a direct implementation because the remaining read-side
+residue is interdependent: read-data payload capture needs a public structural
+shape, burst ownership changes what `read-complete` means, different-ID
+interleaving needs per-ID collection or an explicit issue constraint, and
+authored concrete-ID same-ID ordering needs queues or a fail-closed rule. Full
+manager behavior, profile aliases, queued/blocking policy, direct backend
+lowering, and VHDL remain deferred.
+
 Response-demux behavior readiness audit:
 [AXI_IAL2_MANAGER_WRITE_RESPONSE_DEMUX_BEHAVIOR_READINESS_AUDIT](../../AXI_IAL2_MANAGER_WRITE_RESPONSE_DEMUX_BEHAVIOR_READINESS_AUDIT.md)
 concluded that generated write `BID` demux should not be implemented directly
@@ -3440,9 +3452,9 @@ transaction-envelope/static-validation subset, and the readiness audit for its
 additive static/report implementation boundary. The optional static
 `(transactions ...)` implementation slice and the additive transaction event
 dispatch/fan-in slice are now also shipped, and the active frontier is
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.42`, selecting the next exact
-SV-backed IAL2 feature-completeness slice after `.41` shipped bounded
-generated single-beat read `RID` response-demux behavior. Future behavior
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.43`, auditing read-data payload,
+burst/`RLAST`, and per-ID readiness after `.42` selected that next dependency
+cluster. Future behavior
 owners must keep the reviewable `IAL2 -> IAL1 -> IAL0 -> SystemVerilog` path;
 read-data
 interleaving/reassembly, bursts, per-ID queues, full-manager behavior, and VHDL
