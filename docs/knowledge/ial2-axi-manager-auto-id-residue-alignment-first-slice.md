@@ -31,3 +31,8 @@ Samples without generated response-demux behavior keep their existing
 
 This slice is report-only. It does not change generated `.isf`, generated
 `.fsm`, or SystemVerilog HDL behavior.
+
+The follow-up selector `IAL2-FEATURE-COMPLETENESS-FRONTIER.33` chose
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.34`, AXI same-ID ordering readiness,
+because `same_id_ordering` is now the shared remaining ID/auto-ID/write-demux
+residue.

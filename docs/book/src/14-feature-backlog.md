@@ -2321,8 +2321,10 @@ Completed implementation leaf `.30` ships generated write `BID`
 response-demux behavior through those pulse completions. Completed selector
 `.31` selects `.32` to align `auto_id_lifecycle.residue` with that shipped
 behavior before larger ordering/read-response work. Completed implementation
-leaf `.32` ships that report-residue alignment. The active leaf is `.33`,
-selecting the next exact IAL2 feature-completeness slice.
+leaf `.32` ships that report-residue alignment. Completed selector `.33`
+selects `.34` as the AXI same-ID ordering readiness audit. The active leaf is
+`.34`, auditing same-ID ordering readiness before behavior or prerequisite
+changes.
 Selected IAL2 slices may include explicit IAL1 or
 IAL0/SystemVerilog prerequisites when those prerequisites are needed for
 clean, reviewable lowering.
@@ -3073,6 +3075,16 @@ with this shipped behavior. That implementation is now shipped:
 documents the report-contract cleanup. Explicit generated write demux now
 reports `auto_id_lifecycle.residue: [same_id_ordering]`, without changing
 generated `.isf`, `.fsm`, or HDL behavior.
+
+Same-ID ordering readiness selector:
+[AXI_IAL2_MANAGER_SAME_ID_ORDERING_READINESS_SELECTION](../../AXI_IAL2_MANAGER_SAME_ID_ORDERING_READINESS_SELECTION.md)
+selects `.34` as a readiness audit before same-ID ordering implementation or
+prerequisite changes. The selector found `same_id_ordering` is now the common
+remaining ID/auto-ID/write-demux residue after generated write `BID` demux and
+auto-ID residue alignment. The audit must decide whether the first same-ID
+ordering step is static/report classification, generated assertions, allocator
+constraints, per-ID issue-order queues/scoreboards, or a smaller
+IAL1/IAL0/SystemVerilog prerequisite.
 
 Response-demux behavior readiness audit:
 [AXI_IAL2_MANAGER_WRITE_RESPONSE_DEMUX_BEHAVIOR_READINESS_AUDIT](../../AXI_IAL2_MANAGER_WRITE_RESPONSE_DEMUX_BEHAVIOR_READINESS_AUDIT.md)
@@ -5432,6 +5444,8 @@ demux before larger ordering/read-response work.
 Completed implementation leaf `IAL2-FEATURE-COMPLETENESS-FRONTIER.32` ships
 that report-residue alignment and selects `.33` as the next exact IAL2
 feature-completeness selector.
+Completed selector leaf `IAL2-FEATURE-COMPLETENESS-FRONTIER.33` selects AXI
+same-ID ordering readiness and advances the active frontier to `.34`.
 Completed implementation leaf
 `ARCHITECTURE-DEBT-FRONTIER.2.1`
 projects direct backend storage/helper declaration-plan entries into
