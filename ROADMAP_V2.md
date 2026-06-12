@@ -964,14 +964,16 @@ Priority note:
   policy; the contract selector chose an explicit optional
   `(auto-id-lifecycle (write (pool ...)) (read (pool ...)))` clause and
   advanced the frontier to parser/report metadata before generated request-ID
-  drive behavior.
+  drive behavior; that parser/report metadata slice is now shipped with a
+  runnable sample, support accounting, static validation, and unchanged
+  generated `.isf`, `.fsm`, and HDL behavior.
 
 ## Current intent
 The active immediate feature-completeness lane is IAL2 on the
 SystemVerilog-backed lowering path; see
 [docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md](docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md).
-The current frontier is AXI auto-id-lifecycle parser/report metadata after the
-bounded contract selector.
+The current frontier is bounded AXI auto-ID request-ID drive behavior after
+the shipped auto-id-lifecycle parser/report metadata slice.
 The shipped public capacity/status source accepts one
 `(manager-capacity-status NAME ...)` object under
 `(protocol-platform-intent ...)`, `(profile axi4)`, and top-level source
@@ -1008,9 +1010,11 @@ readiness audit `.20` concluded that generated request-ID drive needs a
 bounded public auto-ID pool/request-ID drive contract first, and
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.21` selected explicit optional
 `auto-id-lifecycle` bounded-pool syntax, and
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.22` is the active parser/report metadata
-frontier. Generated `.isf`, `.fsm`, and HDL behavior must remain unchanged in
-that metadata slice.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.22` shipped the active parser/report
+metadata frontier with `auto_id_lifecycle` report metadata, a separate public
+sample, check JSON and semantic JSON support accounting, and unchanged
+generated `.isf`, `.fsm`, and HDL behavior. `IAL2-FEATURE-COMPLETENESS-FRONTIER.23`
+is the active bounded request-ID drive behavior frontier.
 Auto-ID allocation, ID release, response demux, ordering, bursts, queued
 policy, aliases, full-manager behavior, and VHDL remain residue.
 

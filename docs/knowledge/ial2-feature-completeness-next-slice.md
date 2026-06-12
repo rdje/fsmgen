@@ -1,6 +1,6 @@
 ---
 id: ial2-feature-completeness-next-slice
-title: IAL2 feature completeness next slice is auto-id-lifecycle parser/report metadata
+title: IAL2 feature completeness next slice is bounded auto-ID request-ID drive behavior
 answers:
   - "what is the next IAL2 feature completeness slice?"
   - "what comes after PPIF Valid-Ready bundles?"
@@ -10,19 +10,17 @@ answers:
 date: 2026-06-12
 status: current
 tags: [ial2, axi, manager, feature-completeness, task-tree]
-evidence: docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; docs/AXI_IAL2_MANAGER_AUTO_ID_POOL_CONTRACT_SELECTION.md; docs/AXI_IAL2_MANAGER_AUTO_ID_LIFECYCLE_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_AUTO_ID_LIFECYCLE_SELECTION.md; docs/AXI_IAL2_MANAGER_CONCRETE_ID_ASSERTIONS_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_ID_RESPONSE_RULE_ENGINE_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_ID_RESPONSE_RULE_ENGINE_SELECTION.md; docs/AXI_IAL2_MANAGER_TRANSACTION_EVENT_DISPATCH_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_TRANSACTION_EVENT_DISPATCH_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_TRANSACTION_EVENT_DISPATCH_SELECTION.md; docs/AXI_IAL2_MANAGER_TRANSACTION_ENVELOPE_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_TRANSACTION_ENVELOPE_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_TRANSACTION_ENVELOPE_SELECTION.md; docs/AXI_IAL2_MANAGER_ID_FAMILY_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_ID_FAMILY_SUBSET_SELECTION.md; docs/AXI_IAL2_MANAGER_ID_FAMILY_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_CAPACITY_STATUS_SUBSET_SELECTION.md; docs/AXI_MANAGER_RULE_MATRIX_DESIGN_PROBE.md; docs/AXI_MANAGER_USER_API_BRAINSTORM.md; docs/AXI_ID_ORDERING_RULE_EVIDENCE_PROBE.md; docs/book/src/14-feature-backlog.md; README.md; ROADMAP_V2.md
-reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.22|auto-id-lifecycle|generated_behavior: false|parser/report metadata|request_id_direction: generated_output' docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md docs/AXI_IAL2_MANAGER_AUTO_ID_POOL_CONTRACT_SELECTION.md docs/book/src/14-feature-backlog.md README.md ROADMAP_V2.md
+evidence: docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; docs/AXI_IAL2_MANAGER_AUTO_ID_LIFECYCLE_METADATA_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_AUTO_ID_POOL_CONTRACT_SELECTION.md; docs/AXI_IAL2_MANAGER_AUTO_ID_LIFECYCLE_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_AUTO_ID_LIFECYCLE_SELECTION.md; docs/AXI_IAL2_MANAGER_CONCRETE_ID_ASSERTIONS_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_ID_RESPONSE_RULE_ENGINE_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_ID_RESPONSE_RULE_ENGINE_SELECTION.md; docs/AXI_IAL2_MANAGER_TRANSACTION_EVENT_DISPATCH_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_TRANSACTION_EVENT_DISPATCH_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_TRANSACTION_EVENT_DISPATCH_SELECTION.md; docs/AXI_IAL2_MANAGER_TRANSACTION_ENVELOPE_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_TRANSACTION_ENVELOPE_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_TRANSACTION_ENVELOPE_SELECTION.md; docs/AXI_IAL2_MANAGER_ID_FAMILY_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_ID_FAMILY_SUBSET_SELECTION.md; docs/AXI_IAL2_MANAGER_ID_FAMILY_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_CAPACITY_STATUS_SUBSET_SELECTION.md; docs/AXI_MANAGER_RULE_MATRIX_DESIGN_PROBE.md; docs/AXI_MANAGER_USER_API_BRAINSTORM.md; docs/AXI_ID_ORDERING_RULE_EVIDENCE_PROBE.md; docs/book/src/14-feature-backlog.md; README.md; ROADMAP_V2.md
+reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.23|bounded request-ID drive|auto_id_lifecycle|generated_behavior: false|request-ID drive behavior' docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md docs/AXI_IAL2_MANAGER_AUTO_ID_LIFECYCLE_METADATA_FIRST_SLICE.md docs/book/src/14-feature-backlog.md README.md ROADMAP_V2.md
 ---
 
 After the shipped Valid-Ready, bundle, capacity/status, ID-family metadata,
-transaction-envelope metadata, transaction event dispatch, and concrete
-transaction ID assertion IAL2 surfaces, the next active leaf is
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.22`.
+transaction-envelope metadata, transaction event dispatch, concrete
+transaction ID assertion, and auto-ID lifecycle metadata IAL2 surfaces, the
+next active leaf is `IAL2-FEATURE-COMPLETENESS-FRONTIER.23`.
 
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.22` implements parser/report metadata and
-static validation for the selected explicit `auto-id-lifecycle` bounded-pool
-contract. Generated `.isf`, `.fsm`, and HDL behavior must remain unchanged in
-that slice.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.23` implements bounded request-ID drive
+behavior for explicit `auto_id_lifecycle` families.
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.12` shipped the bounded AXI manager
 machine-readable AST/structural logical read/write transaction-envelope
@@ -70,7 +68,13 @@ are not a reviewable allocation policy.
 `(auto-id-lifecycle (write (pool ...)) (read (pool ...)))` syntax. Existing
 `(id auto)` remains structural/report-only when that clause is absent.
 
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.22` shipped parser/report metadata and
+static validation for that selected contract, with a runnable `.ppif` sample,
+support accounting, `auto_id_lifecycle` report metadata, and unchanged
+generated `.isf`, `.fsm`, and HDL behavior.
+
 The full AXI manager is not implemented yet. ID allocation, ordering, response
 matching, bursts, queued/blocking policy, `.pif`/`.ppi`/`.axi` aliases, and
-VHDL remain future exact-owner work; they should not jump ahead of the `.22`
-parser/report metadata slice unless that slice records a stronger reason.
+VHDL remain future exact-owner work; they should not jump ahead of the `.23`
+bounded request-ID drive behavior slice unless that slice records a stronger
+reason.

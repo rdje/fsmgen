@@ -135,6 +135,13 @@ sub _normalize_contract($raw) {
             id_families      => $id_families,
         )
         : undef;
+    my $auto_id_lifecycle = exists($raw->{auto_id_lifecycle})
+        ? _normalize_auto_id_lifecycle(
+            raw_lifecycle => $raw->{auto_id_lifecycle},
+            id_families   => $id_families,
+            transactions  => $transactions,
+        )
+        : undef;
     my $transaction_event_dispatch = _build_transaction_event_dispatch(
         events       => \%events,
         transactions => $transactions,
@@ -186,6 +193,7 @@ sub _normalize_contract($raw) {
         status_outputs    => $status,
         id_families       => $id_families,
         transactions      => $transactions,
+        auto_id_lifecycle => $auto_id_lifecycle,
         transaction_event_dispatch => $transaction_event_dispatch,
         id_response_rule_engine => $id_response_rule_engine,
         storage           => \%storage,
@@ -198,9 +206,10 @@ sub _normalize_contract($raw) {
 
 sub _reject_unsupported_top_level_fields($raw) {
     my %allowed = map { $_ => 1 } qw(
-        actor_name clock intent_name name protocol read_complete read_max_pending
-        read_submit reset source source_object_id status submit_policy id_families
-        transactions write_complete write_max_pending write_submit
+        actor_name auto_id_lifecycle clock intent_name name protocol read_complete
+        read_max_pending read_submit reset source source_object_id status
+        submit_policy id_families transactions write_complete write_max_pending
+        write_submit
     );
 
     for my $field (sort keys %$raw) {
@@ -478,6 +487,125 @@ sub _unsigned_integer($value, $field) {
     confess "AXI manager capacity/status IAL2 contract field '$field' must be an unsigned integer\n"
         if ref($value) || !defined($value) || $value !~ /\A(?:0|[1-9][0-9]*)\z/;
     return int($value);
+}
+
+sub _normalize_auto_id_lifecycle(%args) {
+    my $raw = $args{raw_lifecycle};
+    confess "AXI manager capacity/status IAL2 contract field 'auto_id_lifecycle' must be a hash reference\n"
+        unless ref($raw) eq 'HASH';
+    confess "AXI manager capacity/status IAL2 contract auto_id_lifecycle requires id_families metadata\n"
+        unless ref($args{id_families}) eq 'HASH';
+    confess "AXI manager capacity/status IAL2 contract auto_id_lifecycle requires transactions metadata\n"
+        unless ref($args{transactions}) eq 'ARRAY';
+
+    my %allowed = map { $_ => 1 } qw(read write);
+    for my $family (sort keys %$raw) {
+        confess "AXI manager capacity/status IAL2 contract auto_id_lifecycle has unsupported family '$family'; supported families: read, write\n"
+            unless $allowed{$family};
+    }
+
+    my $auto_transactions_by_family = _auto_transactions_by_family($args{transactions});
+    my @families;
+    for my $family (qw(write read)) {
+        next unless exists $raw->{$family};
+        push @families, _normalize_auto_id_lifecycle_family(
+            raw_family => $raw->{$family},
+            family => $family,
+            id_families => $args{id_families},
+            auto_transactions_by_family => $auto_transactions_by_family,
+        );
+    }
+
+    confess "AXI manager capacity/status IAL2 contract auto_id_lifecycle requires at least one read/write family\n"
+        unless @families;
+
+    return {
+        mode                         => 'bounded_pool_contract',
+        generated_behavior           => 0,
+        max_pool_entries_per_family  => 4,
+        families                     => \@families,
+        residue                      => [
+            'generated_request_id_drive',
+            'id_release_rules',
+            'same_id_ordering',
+            'response_demux',
+        ],
+    };
+}
+
+sub _normalize_auto_id_lifecycle_family(%args) {
+    my $family = $args{family};
+    my $raw = $args{raw_family};
+    confess "AXI manager capacity/status IAL2 contract auto_id_lifecycle.$family must be a hash reference\n"
+        unless ref($raw) eq 'HASH';
+
+    my %allowed = map { $_ => 1 } qw(pool);
+    for my $field (sort keys %$raw) {
+        confess "AXI manager capacity/status IAL2 contract auto_id_lifecycle.$family unsupported field '$field'\n"
+            unless $allowed{$field};
+    }
+    confess "AXI manager capacity/status IAL2 contract auto_id_lifecycle.$family is missing required field 'pool'\n"
+        unless exists $raw->{pool};
+
+    my $id_family = $args{id_families}{$family};
+    confess "AXI manager capacity/status IAL2 contract auto_id_lifecycle.$family requires a declared $family ID family\n"
+        unless ref($id_family) eq 'HASH';
+    confess "AXI manager capacity/status IAL2 contract auto_id_lifecycle.$family requires positive ID-family width\n"
+        unless $id_family->{present};
+
+    my $auto_transactions = $args{auto_transactions_by_family}{$family} || [];
+    confess "AXI manager capacity/status IAL2 contract auto_id_lifecycle.$family requires at least one auto-ID transaction in the $family family\n"
+        unless @$auto_transactions;
+
+    my $pool = _normalize_auto_id_pool($raw->{pool}, $family, $id_family->{width});
+    return {
+        family                    => $family,
+        request_id_signal         => $id_family->{request_id_signal},
+        request_id_direction      => 'generated_output',
+        response_id_signal        => $id_family->{response_id_signal},
+        response_id_direction     => 'generated_input',
+        pool                      => $pool,
+        allocator                 => 'first_free_pool_order',
+        transaction_lifetime      => 'single_active',
+        release                   => 'transaction_completion_event',
+        no_id_available           => 'runtime_assertion',
+        auto_transactions         => _clone_jsonish($auto_transactions),
+    };
+}
+
+sub _auto_transactions_by_family($transactions) {
+    my %by_family = (
+        read  => [],
+        write => [],
+    );
+
+    for my $transaction (@$transactions) {
+        my $id = $transaction->{id};
+        next unless ref($id) eq 'HASH' && ($id->{policy} // '') eq 'auto';
+        push @{$by_family{$transaction->{kind}}}, $transaction->{name};
+    }
+
+    return \%by_family;
+}
+
+sub _normalize_auto_id_pool($raw_pool, $family, $width) {
+    confess "AXI manager capacity/status IAL2 contract auto_id_lifecycle.$family.pool must be an array reference\n"
+        unless ref($raw_pool) eq 'ARRAY';
+    confess "AXI manager capacity/status IAL2 contract auto_id_lifecycle.$family.pool supports 1..4 ID values in this slice\n"
+        unless @$raw_pool >= 1 && @$raw_pool <= 4;
+
+    my $limit = 2 ** $width;
+    my (%seen, @pool);
+    for my $index (0 .. $#$raw_pool) {
+        my $value = _unsigned_integer($raw_pool->[$index], "auto_id_lifecycle.$family.pool[$index]");
+        confess "AXI manager capacity/status IAL2 contract auto_id_lifecycle.$family.pool duplicates ID value $value\n"
+            if $seen{$value}++;
+        confess "AXI manager capacity/status IAL2 contract auto_id_lifecycle.$family.pool value $value does not fit width $width\n"
+            if $value >= $limit;
+        push @pool, $value;
+    }
+
+    return \@pool;
 }
 
 sub _build_transaction_event_dispatch(%args) {
@@ -976,6 +1104,9 @@ sub _build_report(%args) {
         (defined $contract->{transactions}
             ? (transactions => _report_transactions($contract))
             : ()),
+        (defined $contract->{auto_id_lifecycle}
+            ? (auto_id_lifecycle => _report_auto_id_lifecycle($contract))
+            : ()),
         (defined $contract->{transaction_event_dispatch}
             ? (transaction_event_dispatch => _report_transaction_event_dispatch($contract))
             : ()),
@@ -1051,6 +1182,9 @@ sub _build_report(%args) {
             'concrete transaction ID values require a present matching ID family and must fit its declared width',
             'concrete transaction ID assertions require unique request/response events per concrete transaction',
             'concrete transaction ID values generate request/response ID equality assertions against the declared ID-family signals',
+            'auto_id_lifecycle requires id_families and transactions metadata',
+            'auto_id_lifecycle listed families must have at least one auto-ID transaction in that family',
+            'auto_id_lifecycle pools are bounded to 1..4 unique values per family and must fit the declared positive ID width',
         ],
         unsupported_residue => [
             {
@@ -1059,7 +1193,7 @@ sub _build_report(%args) {
             },
             {
                 id     => 'axi_id_ordering_and_response_matching',
-                detail => 'Concrete transaction ID request/response assertions are supported; automatic ID allocation, dynamic user-ID arbitration while issuing work, ID release, same-ID ordering, different-ID interleaving, generated BID/RID response demux, and burst/last-beat tracking remain outside this capacity/status shell.',
+                detail => 'Concrete transaction ID request/response assertions and auto-ID lifecycle metadata reports are supported; generated request-ID drive, dynamic user-ID arbitration while issuing work, ID release, same-ID ordering, different-ID interleaving, generated BID/RID response demux, and burst/last-beat tracking remain outside this capacity/status shell.',
             },
             {
                 id     => 'profile_aliases_and_full_manager_behavior',
@@ -1071,6 +1205,12 @@ sub _build_report(%args) {
             },
         ],
     };
+}
+
+sub _report_auto_id_lifecycle($contract) {
+    my $lifecycle = _clone_jsonish($contract->{auto_id_lifecycle});
+    $lifecycle->{generated_behavior} = JSON::PP::false;
+    return $lifecycle;
 }
 
 sub _report_id_response_rule_engine($contract) {

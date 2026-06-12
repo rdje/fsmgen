@@ -297,6 +297,8 @@ sub _parse_manager_capacity_status($body, $source_label) {
             $contract{id_families} = _parse_manager_capacity_id_families(\@items, $source_label, $name);
         } elsif ($head eq 'transactions') {
             $contract{transactions} = _parse_manager_capacity_transactions(\@items, $source_label, $name);
+        } elsif ($head eq 'auto-id-lifecycle') {
+            $contract{auto_id_lifecycle} = _parse_manager_capacity_auto_id_lifecycle(\@items, $source_label, $name);
         } else {
             confess "Error: .ppif (manager-capacity-status $name ...) has unsupported clause '($head ...)'\n";
         }
@@ -510,6 +512,58 @@ sub _parse_manager_capacity_transaction_id($items, $source_label, $name, $kind, 
         unless defined($value) && $value =~ /\A(?:0|[1-9][0-9]*)\z/;
 
     return { value => int($value) };
+}
+
+sub _parse_manager_capacity_auto_id_lifecycle($items, $source_label, $name) {
+    confess "Error: .ppif (manager-capacity-status $name (auto-id-lifecycle ...)) requires read/write family clauses\n"
+        unless @$items;
+
+    my %families;
+    for my $clause (@$items) {
+        my ($family, @body) = _clause_parts($clause, $source_label);
+        confess "Error: .ppif (manager-capacity-status $name (auto-id-lifecycle ...)) has unsupported family clause '($family ...)'\n"
+            unless $family =~ /\A(?:read|write)\z/;
+        confess "Error: .ppif (manager-capacity-status $name (auto-id-lifecycle ...)) has duplicate ($family ...) family clause\n"
+            if exists $families{$family};
+        $families{$family} = _parse_manager_capacity_auto_id_lifecycle_family(\@body, $source_label, $name, $family);
+    }
+
+    return \%families;
+}
+
+sub _parse_manager_capacity_auto_id_lifecycle_family($items, $source_label, $name, $family) {
+    my %entry;
+    for my $clause (@$items) {
+        next unless defined $clause;
+        my ($head, @body) = _clause_parts($clause, $source_label);
+        confess "Error: .ppif (manager-capacity-status $name (auto-id-lifecycle ($family ...))) has unsupported clause '($head ...)'\n"
+            unless $head eq 'pool';
+        confess "Error: .ppif (manager-capacity-status $name (auto-id-lifecycle ($family ...))) has duplicate (pool ...) clause\n"
+            if exists $entry{pool};
+        $entry{pool} = _parse_manager_capacity_auto_id_pool(\@body, $name, $family);
+    }
+
+    confess "Error: .ppif (manager-capacity-status $name (auto-id-lifecycle ($family ...))) is missing required (pool ...) clause\n"
+        unless exists $entry{pool};
+
+    return \%entry;
+}
+
+sub _parse_manager_capacity_auto_id_pool($items, $name, $family) {
+    confess "Error: .ppif (manager-capacity-status $name (auto-id-lifecycle ($family (pool ...)))) pool supports 1..4 unsigned integer values\n"
+        unless @$items >= 1 && @$items <= 4;
+
+    my (%seen, @pool);
+    for my $value (@$items) {
+        confess "Error: .ppif (manager-capacity-status $name (auto-id-lifecycle ($family (pool ...)))) pool value must be an unsigned integer\n"
+            if ref($value) || !defined($value) || $value !~ /\A(?:0|[1-9][0-9]*)\z/;
+        my $id = int($value);
+        confess "Error: .ppif (manager-capacity-status $name (auto-id-lifecycle ($family (pool ...)))) pool duplicates ID value $id\n"
+            if $seen{$id}++;
+        push @pool, $id;
+    }
+
+    return \@pool;
 }
 
 sub _parse_reset($items, $source_label) {

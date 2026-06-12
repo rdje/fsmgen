@@ -321,6 +321,49 @@ subtest 'transaction event dispatch fans per-transaction events into capacity ru
     like($sv_assertions, qr/\Q$response_assert\E/, 'assertion backend emits the per-transaction response concrete-ID property');
 };
 
+subtest 'auto-ID lifecycle metadata reports bounded pool contract without changing generated behavior' => sub {
+    my $dispatch = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_transaction_event_dispatch());
+    my $result = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_auto_id_lifecycle());
+    my $isf = $result->{generated_ial1}{text};
+
+    is(
+        $result->{generated_ial1}{text},
+        $dispatch->{generated_ial1}{text},
+        'auto-ID lifecycle metadata does not change generated IAL1 text in the metadata slice',
+    );
+    is_deeply(
+        $result->{generated_ial0}{files},
+        $dispatch->{generated_ial0}{files},
+        'auto-ID lifecycle metadata does not change generated IAL0 text in the metadata slice',
+    );
+    unlike($isf, qr/\(output axi0_awid\b/, 'metadata slice does not drive generated write request ID yet');
+    unlike($isf, qr/\(input axi0_awid\b/, 'metadata slice does not treat generated write request ID as an input');
+    unlike($isf, qr/\(input axi0_bid\b/, 'metadata slice does not add unused write response ID input');
+
+    my $lifecycle = $result->{report}{auto_id_lifecycle};
+    is($lifecycle->{mode}, 'bounded_pool_contract', 'report marks bounded-pool auto-ID lifecycle mode');
+    ok(!$lifecycle->{generated_behavior}, 'report explicitly marks generated behavior as false');
+    is($lifecycle->{max_pool_entries_per_family}, 4, 'report publishes the bounded pool-entry cap');
+    is_deeply(
+        $lifecycle->{residue},
+        [qw(generated_request_id_drive id_release_rules same_id_ordering response_demux)],
+        'report keeps generated request-ID drive and lifecycle behavior as residue',
+    );
+    is(scalar(@{$lifecycle->{families}}), 1, 'report publishes only the listed lifecycle family');
+    my $write = $lifecycle->{families}[0];
+    is($write->{family}, 'write', 'write lifecycle family is reported');
+    is($write->{request_id_signal}, 'axi0_awid', 'write request ID signal is reported');
+    is($write->{request_id_direction}, 'generated_output', 'write request ID direction is generated output');
+    is($write->{response_id_signal}, 'axi0_bid', 'write response ID signal is reported');
+    is($write->{response_id_direction}, 'generated_input', 'write response ID direction is generated input');
+    is_deeply($write->{pool}, [0, 1], 'write lifecycle pool preserves author order');
+    is($write->{allocator}, 'first_free_pool_order', 'allocator contract is reported');
+    is($write->{transaction_lifetime}, 'single_active', 'transaction lifetime contract is reported');
+    is($write->{release}, 'transaction_completion_event', 'release contract is reported');
+    is($write->{no_id_available}, 'runtime_assertion', 'no-ID behavior is reported as future runtime assertion');
+    is_deeply($write->{auto_transactions}, [qw(w0 w1)], 'write lifecycle lists auto-ID transactions in source order');
+};
+
 subtest 'schedule report and HDL expose generated storage and status surface' => sub {
     my $result = generate_sample();
     my $report = $result->{generated_ial1_schedule_report};
@@ -388,6 +431,28 @@ subtest 'malformed contract objects fail closed and no direct lower-to-fsm entry
             };
             $c;
         }, qr/concrete ID assertions require unique request events; event 'axi0_read_submit' is shared by transactions 'r0' and 'r1'/],
+        ['auto lifecycle unsupported field', sub { my $c = sample_contract_with_auto_id_lifecycle(); $c->{auto_id_lifecycle}{write}{policy} = 'first-free'; $c }, qr/auto_id_lifecycle\.write unsupported field 'policy'/],
+        ['auto lifecycle without ID-family metadata', sub {
+            my $c = sample_contract();
+            $c->{transactions} = [
+                {
+                    kind             => 'write',
+                    name             => 'w0',
+                    tag              => 'wr0',
+                    request_event    => 'axi0_write_submit',
+                    completion_event => 'axi0_write_complete',
+                    id               => { policy => 'auto' },
+                },
+            ];
+            $c->{auto_id_lifecycle} = { write => { pool => [0] } };
+            $c;
+        }, qr/auto_id_lifecycle requires id_families metadata/],
+        ['auto lifecycle without transaction metadata', sub { my $c = sample_contract_with_id_families(); $c->{auto_id_lifecycle} = { write => { pool => [0] } }; $c }, qr/auto_id_lifecycle requires transactions metadata/],
+        ['auto lifecycle zero-width ID family', sub { my $c = sample_contract_with_auto_id_lifecycle(); $c->{id_families}{write} = { width => 0 }; $c }, qr/auto_id_lifecycle\.write requires positive ID-family width/],
+        ['auto lifecycle listed family without auto transaction', sub { my $c = sample_contract_with_auto_id_lifecycle(); $c->{auto_id_lifecycle} = { read => { pool => [0] } }; $c }, qr/auto_id_lifecycle\.read requires at least one auto-ID transaction in the read family/],
+        ['auto lifecycle pool too large', sub { my $c = sample_contract_with_auto_id_lifecycle(); $c->{auto_id_lifecycle}{write}{pool} = [0, 1, 2, 3, 4]; $c }, qr/auto_id_lifecycle\.write\.pool supports 1\.\.4 ID values/],
+        ['auto lifecycle duplicate pool value', sub { my $c = sample_contract_with_auto_id_lifecycle(); $c->{auto_id_lifecycle}{write}{pool} = [0, 0]; $c }, qr/auto_id_lifecycle\.write\.pool duplicates ID value 0/],
+        ['auto lifecycle pool value exceeds width', sub { my $c = sample_contract_with_auto_id_lifecycle(); $c->{id_families}{write}{width} = 1; $c->{auto_id_lifecycle}{write}{pool} = [2]; $c }, qr/auto_id_lifecycle\.write\.pool value 2 does not fit width 1/],
         ['bad source anchors', sub { my $c = sample_contract(); $c->{source}{anchors} = {}; $c }, qr/source\.anchors must be an array reference/],
     );
 
@@ -510,6 +575,18 @@ sub sample_contract_with_transaction_event_dispatch {
             id               => { value => 3 },
         },
     ];
+    return $contract;
+}
+
+sub sample_contract_with_auto_id_lifecycle {
+    my $contract = sample_contract_with_transaction_event_dispatch();
+    $contract->{intent_name} = 'axi_manager_capacity_status_auto_id_lifecycle';
+    $contract->{source}{object_id} = 'axi-manager-capacity-status-auto-id-lifecycle';
+    $contract->{auto_id_lifecycle} = {
+        write => {
+            pool => [0, 1],
+        },
+    };
     return $contract;
 }
 

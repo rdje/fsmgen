@@ -192,6 +192,34 @@ subtest 'PPIF adapter parses AXI manager transaction event dispatch' => sub {
     );
 };
 
+subtest 'PPIF adapter parses AXI manager auto-ID lifecycle metadata' => sub {
+    my $sample_path = sample_capacity_auto_id_lifecycle_ppif_path();
+    ok(-f $sample_path, 'tracked runnable PPIF capacity/status auto-ID lifecycle sample exists');
+
+    my $dispatch = FSM::Adapter::IAL2::PPIF->new()->parse_source(
+        sample_capacity_transaction_dispatch_ppif(),
+        sample_capacity_transaction_dispatch_ppif_path(),
+    );
+    my $result = FSM::Adapter::IAL2::PPIF->new()->parse_source(sample_capacity_auto_id_lifecycle_ppif(), $sample_path);
+
+    is($result->{kind}, 'protocol_intent.axi_manager_capacity_status', 'auto-ID lifecycle sample still uses the capacity/status generator');
+    is($result->{report}{source_object}{id}, 'axi-manager-capacity-status-auto-id-lifecycle', 'auto-ID lifecycle source object id is preserved');
+    is($result->{report}{source_object}{intent_name}, 'axi_manager_capacity_status_auto_id_lifecycle', 'auto-ID lifecycle source intent name is preserved');
+    is(
+        $result->{generated_ial1}{text},
+        $dispatch->{generated_ial1}{text},
+        'auto-ID lifecycle metadata does not change generated IAL1 text',
+    );
+    is_deeply(
+        $result->{generated_ial0}{files},
+        $dispatch->{generated_ial0}{files},
+        'auto-ID lifecycle metadata does not change generated IAL0 text',
+    );
+    unlike($result->{generated_ial1}{text}, qr/\(output axi0_awid\b/, 'auto-ID lifecycle metadata does not drive AWID yet');
+    unlike($result->{generated_ial1}{text}, qr/\(input axi0_awid\b/, 'auto-ID lifecycle metadata does not treat AWID as an input');
+    assert_write_auto_id_lifecycle_report($result->{report}{auto_id_lifecycle}, 'adapter report');
+};
+
 subtest 'PPIF adapter diagnostics fail closed before generation claims' => sub {
     my @cases = (
         ['missing profile',
@@ -275,6 +303,43 @@ subtest 'PPIF adapter diagnostics fail closed before generation claims' => sub {
                 '(read r0 (tag rd0) (request axi0_read_submit) (completion axi0_read_complete) (id (value 3))) (read r1 (tag rd1) (request axi0_read_submit) (completion axi0_read_complete) (id (value 4)))',
             )),
             qr/concrete ID assertions require unique request events; event 'axi0_read_submit' is shared by transactions 'r0' and 'r1'/],
+        ['duplicate manager auto-ID lifecycle clause',
+            capacity_ppif_with_objects(manager_capacity_object_with_duplicate_auto_id_lifecycle()),
+            qr/duplicate \(auto-id-lifecycle \.\.\.\) clause/],
+        ['unsupported manager auto-ID lifecycle family',
+            capacity_ppif_with_objects(manager_capacity_object_with_auto_id_lifecycle('(address (pool 0))')),
+            qr/unsupported family clause '\(address \.\.\.\)'/],
+        ['missing manager auto-ID lifecycle pool',
+            capacity_ppif_with_objects(manager_capacity_object_with_auto_id_lifecycle('(write)')),
+            qr/is missing required \(pool \.\.\.\) clause/],
+        ['duplicate manager auto-ID lifecycle pool clause',
+            capacity_ppif_with_objects(manager_capacity_object_with_auto_id_lifecycle('(write (pool 0) (pool 1))')),
+            qr/duplicate \(pool \.\.\.\) clause/],
+        ['bad manager auto-ID lifecycle pool value',
+            capacity_ppif_with_objects(manager_capacity_object_with_auto_id_lifecycle('(write (pool -1))')),
+            qr/pool value must be an unsigned integer/],
+        ['oversized manager auto-ID lifecycle pool',
+            capacity_ppif_with_objects(manager_capacity_object_with_auto_id_lifecycle('(write (pool 0 1 2 3 4))')),
+            qr/pool supports 1\.\.4 unsigned integer values/],
+        ['duplicate manager auto-ID lifecycle pool value',
+            capacity_ppif_with_objects(manager_capacity_object_with_auto_id_lifecycle('(write (pool 0 0))')),
+            qr/pool duplicates ID value 0/],
+        ['manager auto-ID lifecycle without ID families',
+            capacity_ppif_with_objects(manager_capacity_object_with_transactions_and_auto_id_lifecycle(
+                '(write w0 (tag wr0) (request axi0_write_submit) (completion axi0_write_complete) (id auto))',
+                '(write (pool 0))',
+            )),
+            qr/auto_id_lifecycle requires id_families metadata/],
+        ['manager auto-ID lifecycle listed family without auto transaction',
+            capacity_ppif_with_objects(manager_capacity_object_with_auto_id_lifecycle('(read (pool 0))')),
+            qr/auto_id_lifecycle\.read requires at least one auto-ID transaction in the read family/],
+        ['manager auto-ID lifecycle value exceeds width',
+            capacity_ppif_with_objects(manager_capacity_object_with_id_families_transactions_and_auto_id_lifecycle(
+                '(write (width 1) (request-id awid) (response-id bid)) (read (width 4) (request-id arid) (response-id rid))',
+                default_manager_transactions(),
+                '(write (pool 2))',
+            )),
+            qr/auto_id_lifecycle\.write\.pool value 2 does not fit width 1/],
     );
 
     for my $case (@cases) {
@@ -403,6 +468,20 @@ subtest 'CLI emits IAL2 report JSON for AXI manager transaction event dispatch .
         [qw(axi0_r0_request axi0_r0_complete)],
         'CLI dispatch report binds concrete-ID checks to per-transaction events',
     );
+};
+
+subtest 'CLI emits IAL2 report JSON for AXI manager auto-ID lifecycle metadata .ppif' => sub {
+    my ($success, undef, undef, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--emit-schedule-json', sample_capacity_auto_id_lifecycle_ppif_path()],
+    );
+
+    ok($success, '--emit-schedule-json succeeds for capacity/status auto-ID lifecycle .ppif');
+    is(join('', @{$stderr_buf || []}), '', 'capacity/status auto-ID lifecycle report keeps stderr clean');
+    my $report = decode_json(join('', @{$stdout_buf || []}));
+    is($report->{schema}, 'fsmgen.ial2.protocol_intent.axi_manager_capacity_status.v1', 'CLI keeps the capacity/status report schema');
+    is($report->{source_object}{intent_name}, 'axi_manager_capacity_status_auto_id_lifecycle', 'auto-ID lifecycle report carries the PPIF top-level intent name');
+    assert_write_auto_id_lifecycle_report($report->{auto_id_lifecycle}, 'CLI report');
+    is_deeply($report->{generated_artifacts}{ial0}{files}, ['axi0_capacity_status.fsm'], 'auto-ID lifecycle metadata keeps the generated .fsm artifact name stable');
 };
 
 subtest 'CLI --outdir materializes generated .isf, .fsm, and HDL for .ppif' => sub {
@@ -728,6 +807,50 @@ subtest 'CLI check JSON and semantic JSON support-account transaction-event disp
     );
 };
 
+subtest 'CLI check JSON and semantic JSON support-account auto-ID lifecycle .ppif separately' => sub {
+    my $lifecycle_path = sample_capacity_auto_id_lifecycle_ppif_path();
+    my ($success, undef, undef, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--strict', '--check', '--json', $lifecycle_path],
+    );
+    ok($success, 'capacity/status auto-ID lifecycle --check --json succeeds');
+    is(join('', @{$stderr_buf || []}), '', 'capacity/status auto-ID lifecycle --check --json keeps stderr clean');
+    my $check_report = decode_json(join('', @{$stdout_buf || []}));
+    ok($check_report->{success}, 'capacity/status auto-ID lifecycle check JSON reports success');
+    is(
+        $check_report->{source}{resolved_path},
+        File::Spec->rel2abs($lifecycle_path),
+        'capacity/status auto-ID lifecycle check JSON reports the public .ppif source path',
+    );
+    is(
+        $check_report->{support_accounting}{entry_id},
+        'intent.ppif_axi_manager_capacity_status_auto_id_lifecycle',
+        'capacity/status auto-ID lifecycle check JSON support accounting names the PPIF corpus entry',
+    );
+
+    my ($semantic_success, undef, undef, $semantic_stdout, $semantic_stderr) = run(
+        command => ['./bin/fsmgen', '--strict', '--emit-semantic-json', $lifecycle_path],
+    );
+    ok($semantic_success, 'capacity/status auto-ID lifecycle --emit-semantic-json succeeds');
+    is(join('', @{$semantic_stderr || []}), '', 'capacity/status auto-ID lifecycle --emit-semantic-json keeps stderr clean');
+    my $semantic_report = decode_json(join('', @{$semantic_stdout || []}));
+    ok($semantic_report->{success}, 'capacity/status auto-ID lifecycle semantic JSON reports success');
+    is(
+        $semantic_report->{source}{resolved_path},
+        File::Spec->rel2abs($lifecycle_path),
+        'capacity/status auto-ID lifecycle semantic JSON reports the public .ppif source path',
+    );
+    is(
+        $semantic_report->{support_accounting}{entry_id},
+        'intent.ppif_axi_manager_capacity_status_auto_id_lifecycle',
+        'capacity/status auto-ID lifecycle semantic JSON support accounting names the PPIF corpus entry',
+    );
+    is(
+        $semantic_report->{semantic}{module}{name},
+        'axi0_capacity_status',
+        'capacity/status auto-ID lifecycle semantic JSON records the generated module',
+    );
+};
+
 subtest 'CLI bundle HDL modes use aggregate wrapper entry' => sub {
     my $bundle_path = sample_bundle_ppif_path();
     my $tempdir = tempdir(CLEANUP => 1);
@@ -842,6 +965,10 @@ sub sample_capacity_transaction_dispatch_ppif_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_transaction_event_dispatch.ppif');
 }
 
+sub sample_capacity_auto_id_lifecycle_ppif_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_auto_id_lifecycle.ppif');
+}
+
 sub sample_ppif {
     return slurp(sample_ppif_path());
 }
@@ -864,6 +991,10 @@ sub sample_capacity_transaction_ppif {
 
 sub sample_capacity_transaction_dispatch_ppif {
     return slurp(sample_capacity_transaction_dispatch_ppif_path());
+}
+
+sub sample_capacity_auto_id_lifecycle_ppif {
+    return slurp(sample_capacity_auto_id_lifecycle_ppif_path());
 }
 
 sub capacity_ppif_with_objects {
@@ -950,6 +1081,75 @@ sub manager_capacity_object_with_id_families_and_transactions {
     my $object = manager_capacity_object();
     $object =~ s/\)\z/\n    (id-families $families)\n    (transactions $transactions))/;
     return $object;
+}
+
+sub default_manager_id_families {
+    return '(write (width 4) (request-id awid) (response-id bid)) (read (width 4) (request-id arid) (response-id rid))';
+}
+
+sub default_manager_transactions {
+    return join(' ',
+        '(write w0 (tag wr0) (request axi0_w0_request) (completion axi0_w0_complete) (id auto))',
+        '(write w1 (tag wr1) (request axi0_w1_request) (completion axi0_w1_complete) (id auto))',
+        '(read r0 (tag rd0) (request axi0_r0_request) (completion axi0_r0_complete) (id (value 3)))',
+    );
+}
+
+sub manager_capacity_object_with_id_families_transactions_and_auto_id_lifecycle {
+    my ($families, $transactions, $lifecycle) = @_;
+    my $object = manager_capacity_object_with_id_families_and_transactions($families, $transactions);
+    $object =~ s/\)\z/\n    (auto-id-lifecycle $lifecycle))/;
+    return $object;
+}
+
+sub manager_capacity_object_with_auto_id_lifecycle {
+    my ($lifecycle) = @_;
+    return manager_capacity_object_with_id_families_transactions_and_auto_id_lifecycle(
+        default_manager_id_families(),
+        default_manager_transactions(),
+        $lifecycle,
+    );
+}
+
+sub manager_capacity_object_with_transactions_and_auto_id_lifecycle {
+    my ($transactions, $lifecycle) = @_;
+    my $object = manager_capacity_object_with_transactions($transactions);
+    $object =~ s/\)\z/\n    (auto-id-lifecycle $lifecycle))/;
+    return $object;
+}
+
+sub manager_capacity_object_with_duplicate_auto_id_lifecycle {
+    my $object = manager_capacity_object_with_id_families_and_transactions(
+        default_manager_id_families(),
+        default_manager_transactions(),
+    );
+    $object =~ s/\)\z/\n    (auto-id-lifecycle (write (pool 0)))\n    (auto-id-lifecycle (write (pool 1))))/;
+    return $object;
+}
+
+sub assert_write_auto_id_lifecycle_report {
+    my ($lifecycle, $owner) = @_;
+    is($lifecycle->{mode}, 'bounded_pool_contract', "$owner marks bounded-pool auto-ID lifecycle mode");
+    ok(!$lifecycle->{generated_behavior}, "$owner marks generated behavior false");
+    is($lifecycle->{max_pool_entries_per_family}, 4, "$owner publishes the bounded pool-entry cap");
+    is_deeply(
+        $lifecycle->{residue},
+        [qw(generated_request_id_drive id_release_rules same_id_ordering response_demux)],
+        "$owner lists generated lifecycle behavior as residue",
+    );
+    is(scalar(@{$lifecycle->{families}}), 1, "$owner publishes one lifecycle family");
+    my $write = $lifecycle->{families}[0];
+    is($write->{family}, 'write', "$owner reports the write family");
+    is($write->{request_id_signal}, 'axi0_awid', "$owner reports the write request ID signal");
+    is($write->{request_id_direction}, 'generated_output', "$owner reports generated request ID direction");
+    is($write->{response_id_signal}, 'axi0_bid', "$owner reports the write response ID signal");
+    is($write->{response_id_direction}, 'generated_input', "$owner reports generated response ID direction");
+    is_deeply($write->{pool}, [0, 1], "$owner reports the write pool in author order");
+    is($write->{allocator}, 'first_free_pool_order', "$owner reports the allocator contract");
+    is($write->{transaction_lifetime}, 'single_active', "$owner reports the transaction lifetime contract");
+    is($write->{release}, 'transaction_completion_event', "$owner reports the release contract");
+    is($write->{no_id_available}, 'runtime_assertion', "$owner reports the no-ID behavior");
+    is_deeply($write->{auto_transactions}, [qw(w0 w1)], "$owner reports auto-ID transactions in source order");
 }
 
 sub write_file {
