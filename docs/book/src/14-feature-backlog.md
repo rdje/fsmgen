@@ -2283,9 +2283,12 @@ metadata extension under the existing `manager-capacity-status` object. That
 optional transaction-envelope metadata slice is now shipped with a separate
 sample, structural report entries, check JSON and semantic JSON source
 identity, and unchanged generated `.isf`, generated `.fsm`, and HDL behavior.
-The active frontier selects the next IAL2 feature-completeness slice. Selected
-IAL2 slices may include explicit IAL1 or IAL0/SystemVerilog prerequisites
-when those prerequisites are needed for clean, reviewable lowering.
+The next prerequisite is selected as transaction event dispatch and direction
+fan-in; the active frontier readiness-audits whether distinct per-transaction
+request/completion events can feed the current capacity/status rules through
+the existing IAL1/IAL0/SystemVerilog path. Selected IAL2 slices may include
+explicit IAL1 or IAL0/SystemVerilog prerequisites when those prerequisites are
+needed for clean, reviewable lowering.
 
 Evaluation note:
 [IAL2_PROTOCOL_PLATFORM_INTENT_EVALUATION](../../IAL2_PROTOCOL_PLATFORM_INTENT_EVALUATION.md).
@@ -2674,6 +2677,35 @@ issuing, same-ID ordering queues, different-ID interleaving, `BID`/`RID`
 response matching, bursts, queued/blocking policy, per-transaction event
 ports, profile aliases, full AXI manager behavior, or VHDL.
 
+Next AXI manager prerequisite: transaction event dispatch:
+[AXI_IAL2_MANAGER_TRANSACTION_EVENT_DISPATCH_SELECTION](../../AXI_IAL2_MANAGER_TRANSACTION_EVENT_DISPATCH_SELECTION.md)
+selects the next prerequisite before ID allocation or response matching. The
+current `(transactions ...)` slice records stable logical transactions but
+requires each one to bind to the existing direction-level abstract events. The
+next subset readiness-audits whether distinct per-transaction request and
+completion events can fan into the read/write capacity/status rule matrices:
+
+```text
+(transactions
+  (write w0
+    (tag wr0)
+    (request axi0_w0_request)
+    (completion axi0_w0_complete)
+    (id auto))
+  (read r0
+    (tag rd0)
+    (request axi0_r0_request)
+    (completion axi0_r0_complete)
+    (id (value 3))))
+```
+
+This is selected before ID allocation because a future allocator, per-ID busy
+reason, ordering queue, or response matcher needs to know which logical
+transaction requested or completed. The selection does not implement or claim
+ID allocation, `BID`/`RID` response matching, same-ID ordering, interleaving,
+bursts, payload binding, queued/blocking policy, profile aliases, full AXI
+manager behavior, or VHDL.
+
 First implementation subset selection:
 [AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION](../../AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md)
 selects a source-anchored AXI Valid-Ready channel contract/monitor as the
@@ -2799,10 +2831,11 @@ first-slice alias exclusions, and `supported_cli_modes[]` entries for
 metadata, a selector for the next logical read/write
 transaction-envelope/static-validation subset, and the readiness audit for its
 additive static/report implementation boundary. The optional static
-`(transactions ...)` implementation slice is now also shipped. Additional
-`.ppif` objects/clauses and profile aliases remain future exact-owner work,
-and they must not jump ahead of the active selector unless that selector
-records why.
+`(transactions ...)` implementation slice is now also shipped, and the next
+prerequisite is selected as transaction event dispatch and direction fan-in.
+Additional `.ppif` objects/clauses and profile aliases remain future
+exact-owner work, and they must not jump ahead of the active readiness audit
+unless that audit records why.
 
 Multi-channel `.ppif` bundle support:
 [IAL2_PPIF_MULTI_VALID_READY_READINESS](../../IAL2_PPIF_MULTI_VALID_READY_READINESS.md)
@@ -4954,7 +4987,10 @@ transaction-envelope/static-validation subset. Completed readiness audit leaf
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.11` selects the additive implementation
 boundary. Completed implementation leaf `IAL2-FEATURE-COMPLETENESS-FRONTIER.12`
 ships optional `(transactions ...)` metadata for that object and advances the
-active frontier to `.13`, the next IAL2 feature-completeness selector.
+frontier to `.13`, the next IAL2 feature-completeness selector. Completed
+selector leaf `IAL2-FEATURE-COMPLETENESS-FRONTIER.13` selects transaction
+event dispatch and direction fan-in and advances the active frontier to `.14`
+readiness audit.
 Completed implementation leaf
 `ARCHITECTURE-DEBT-FRONTIER.2.1`
 projects direct backend storage/helper declaration-plan entries into

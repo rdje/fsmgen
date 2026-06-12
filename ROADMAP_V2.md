@@ -942,15 +942,15 @@ Priority note:
   `(transactions ...)` static/report metadata extension under that same object;
   the public `.ppif` transaction-envelope metadata slice is now shipped with
   structured report metadata and unchanged generated `.isf`, `.fsm`, and HDL
-  behavior; the active next leaf selects the following IAL2 feature-completeness
-  subset.
+  behavior; the next prerequisite is selected as transaction event dispatch
+  and direction fan-in, with readiness audit next.
 
 ## Current intent
 The active immediate feature-completeness lane is IAL2 on the
 SystemVerilog-backed lowering path; see
 [docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md](docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md).
-The current frontier is the selector for the next IAL2 feature-completeness
-slice after the shipped AXI manager logical read/write
+The current frontier is the readiness audit for AXI manager transaction event
+dispatch and direction fan-in after the shipped logical read/write
 transaction-envelope/static-validation metadata. The shipped
 public capacity/status source accepts one
 `(manager-capacity-status NAME ...)` object under
@@ -969,7 +969,11 @@ names, tags, request/completion event bindings, and optional requested-ID
 static validation against declared ID-family widths. Request and completion
 bindings are limited to existing direction-level abstract events, so generated
 `.isf`, generated `.fsm`, and HDL behavior remain unchanged before dynamic
-manager behavior is claimed.
+manager behavior is claimed. The selected next subset audits whether distinct
+per-transaction request/completion events can fan into the existing read/write
+capacity/status rule matrices through the current IAL1/IAL0/SystemVerilog
+path. ID allocation and response matching remain behind that event-provenance
+prerequisite.
 
 The first honest `R11` slices are now:
 1. keep widening convention-first composition only where the child-side evidence is still deterministic,

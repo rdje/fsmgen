@@ -208,7 +208,11 @@ and HDL behavior unchanged for the first implementation. That first
 transaction-envelope slice is shipped in
 [AXI_IAL2_MANAGER_TRANSACTION_ENVELOPE_FIRST_SLICE](AXI_IAL2_MANAGER_TRANSACTION_ENVELOPE_FIRST_SLICE.md)
 with a separate `.ppif` sample, structural report metadata, support
-accounting, check JSON, and semantic JSON source identity.
+accounting, check JSON, and semantic JSON source identity. The next selected
+manager prerequisite is transaction event dispatch and direction fan-in in
+[AXI_IAL2_MANAGER_TRANSACTION_EVENT_DISPATCH_SELECTION](AXI_IAL2_MANAGER_TRANSACTION_EVENT_DISPATCH_SELECTION.md),
+because ID allocation and response matching need per-transaction request and
+completion provenance before generated dynamic behavior is claimed.
 Public `.pif`, `.ppi`, `.axi`, protocol-profile aliases, ID allocation,
 ordering, response matching, bursts, queued/blocking policy, and full AXI
 manager behavior remain unshipped and need later exact owners.

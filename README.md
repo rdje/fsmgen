@@ -154,8 +154,10 @@ public `.ppif` extension is now shipped for the existing capacity/status
 object with machine-readable AST/structural report metadata, a separate
 sample, support accounting, check JSON, semantic JSON source identity, and
 unchanged generated `.isf`, `.fsm`, and HDL behavior. The active frontier is
-the next IAL2 selector after the shipped transaction-envelope metadata. ID
-allocation algorithms, ordering queues, response matching, bursts,
+the readiness audit for transaction event dispatch and direction fan-in, the
+prerequisite that lets future generated behavior distinguish logical
+transaction requests/completions before ID allocation or response matching is
+claimed. ID allocation algorithms, ordering queues, response matching, bursts,
 queued/blocking policy, profile aliases, and VHDL backend/reroute work stay
 deferred until explicit owners select them, and VHDL remains behind SV-backed
 IAL feature completeness.
@@ -201,6 +203,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 37. `docs/AXI_IAL2_MANAGER_TRANSACTION_ENVELOPE_SELECTION.md`: selected the next AXI manager subset: logical read/write transaction envelope and static validation.
 38. `docs/AXI_IAL2_MANAGER_TRANSACTION_ENVELOPE_READINESS_AUDIT.md`: readiness audit for the additive transaction-envelope/static-validation implementation boundary.
 39. `docs/AXI_IAL2_MANAGER_TRANSACTION_ENVELOPE_FIRST_SLICE.md`: shipped additive `.ppif` transaction-envelope metadata slice for one AXI manager capacity/status object.
+40. `docs/AXI_IAL2_MANAGER_TRANSACTION_EVENT_DISPATCH_SELECTION.md`: selected the next prerequisite: transaction event dispatch and direction fan-in.
 39. `docs/AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md`: selected first AXI-derived IAL2 implementation subset and pre-code contract.
 40. `docs/AXI_IAL2_VALID_READY_READINESS_AUDIT.md`: code/test/docs/report owner map for the future AXI Valid-Ready IAL2 implementation.
 41. `docs/AXI_IAL2_VALID_READY_GENERATOR_FIRST_SLICE.md`: first in-process AXI Valid-Ready IAL2 generator slice and report surface.
@@ -660,6 +663,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/AXI_IAL2_MANAGER_TRANSACTION_ENVELOPE_SELECTION.md` — selected the next AXI manager subset: logical read/write transaction envelope and static validation.
 - `docs/AXI_IAL2_MANAGER_TRANSACTION_ENVELOPE_READINESS_AUDIT.md` — readiness audit for the additive transaction-envelope/static-validation implementation boundary.
 - `docs/AXI_IAL2_MANAGER_TRANSACTION_ENVELOPE_FIRST_SLICE.md` — shipped additive `.ppif` transaction-envelope metadata slice for one AXI manager capacity/status object.
+- `docs/AXI_IAL2_MANAGER_TRANSACTION_EVENT_DISPATCH_SELECTION.md` — selected the next prerequisite: transaction event dispatch and direction fan-in.
 - `docs/AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md` — selected first AXI-derived IAL2 implementation subset and pre-code contract.
 - `docs/AXI_IAL2_VALID_READY_READINESS_AUDIT.md` — code/test/docs/report owner map for a future AXI Valid-Ready IAL2 implementation slice.
 - `docs/AXI_IAL2_VALID_READY_GENERATOR_FIRST_SLICE.md` — first in-process AXI Valid-Ready IAL2 generator slice and report surface.
