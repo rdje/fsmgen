@@ -2273,11 +2273,12 @@ public `.ppif` capacity/status parser/CLI first slice is now shipped for one
 manager object with sample, manifest, support-accounting, semantic JSON, check
 JSON, generated review artifacts, HDL, `--verify-hdl`, mdBook, and focused
 diagnostics. The next AXI manager subset is selected as ID-family declaration
-and static validation; the readiness audit selected an additive optional
-`id_families` extension to the existing capacity/status object, and the active
-frontier is the focused implementation slice. Selected IAL2 slices may include
-explicit IAL1 or IAL0/SystemVerilog prerequisites when those prerequisites are
-needed for clean, reviewable lowering.
+and static validation, and the additive optional `(id-families ...)` `.ppif`
+extension is now shipped for the existing capacity/status object with report
+metadata and unchanged generated `.isf`, generated `.fsm`, and HDL behavior.
+The active frontier is the next IAL2 feature-completeness selector. Selected
+IAL2 slices may include explicit IAL1 or IAL0/SystemVerilog prerequisites when
+those prerequisites are needed for clean, reviewable lowering.
 
 Evaluation note:
 [IAL2_PROTOCOL_PLATFORM_INTENT_EVALUATION](../../IAL2_PROTOCOL_PLATFORM_INTENT_EVALUATION.md).
@@ -2293,6 +2294,15 @@ through public `.ppif`. Broader IAL2 still must justify itself with semantics
 above individual transactions, not only syntax convenience. Its generic file
 surface remains protocol/platform-generic, and an IAL2 file may select a
 protocol or platform vocabulary inside the file.
+
+IAL0, IAL1, IAL2, and this book describe backend-language-neutral contracts,
+not Perl-only implementation APIs. The current Perl 5 codebase is the
+reference implementation/oracle. Future Rust, Rust/Wasm, browser-capable
+JavaScript, and Dart/web implementations should preserve the same source
+syntax, generated review artifacts, reports, diagnostics, and HDL behavior
+through suitable host abstractions rather than creating parallel semantics. Decision
+[0018](../../decisions/0018-ial-contracts-are-backend-language-neutral.md)
+records this rule.
 
 Decision `0016` selects `.ppif` (Protocol/Platform Intent Format) as the first
 public generic IAL2 file suffix. Earlier candidates `.pif` and `.ppi` are not
@@ -2526,8 +2536,44 @@ Readiness audit:
 selects the implementation boundary. The first implementation should add an
 optional `(id-families ...)` clause under the existing
 `manager-capacity-status` object, emit additive report metadata, and leave
-generated `.isf`, generated `.fsm`, and HDL behavior unchanged. The active
-`.9` frontier implements that parser/generator/report/sample slice. ID
+generated `.isf`, generated `.fsm`, and HDL behavior unchanged.
+
+First ID-family `.ppif` slice:
+[AXI_IAL2_MANAGER_ID_FAMILY_FIRST_SLICE](../../AXI_IAL2_MANAGER_ID_FAMILY_FIRST_SLICE.md)
+ships that boundary as the optional `(id-families ...)` clause under the
+existing capacity/status object:
+
+```text
+(id-families
+  (write (width 4) (request-id axi0_awid) (response-id axi0_bid))
+  (read (width 4) (request-id axi0_arid) (response-id axi0_rid)))
+```
+
+The zero-width absence form is explicit:
+
+```text
+(id-families
+  (write (width 0))
+  (read (width 0)))
+```
+
+Runnable sample:
+
+```bash
+./bin/fsmgen --emit-schedule-json ppif/axi_manager_capacity_status_id_family.ppif
+./bin/fsmgen --outdir generated ppif/axi_manager_capacity_status_id_family.ppif
+./bin/fsmgen --strict --check --json ppif/axi_manager_capacity_status_id_family.ppif
+./bin/fsmgen --strict --emit-semantic-json ppif/axi_manager_capacity_status_id_family.ppif
+./bin/fsmgen --outdir generated --verify-hdl ppif/axi_manager_capacity_status_id_family.ppif
+```
+
+The support-accounting entry is
+`intent.ppif_axi_manager_capacity_status_id_family`. Schedule JSON keeps
+schema `fsmgen.ial2.protocol_intent.axi_manager_capacity_status.v1` and
+additively emits `id_families.write` and `id_families.read` with `width`,
+`present`, request/response signal names for positive widths, and source
+anchors. The same `axi0_capacity_status.isf`, `axi0_capacity_status.fsm`, and
+SystemVerilog module are produced with or without `id_families`. ID
 allocation, per-transaction ID validation, same-ID ordering, different-ID
 interleaving, `BID`/`RID` response matching, bursts, queued/blocking policies,
 profile aliases, and VHDL remain future task-tree-owned residue.
@@ -4801,8 +4847,10 @@ leaf `IAL2-FEATURE-COMPLETENESS-FRONTIER.5` selects the public
 slice. Completed selector leaf `IAL2-FEATURE-COMPLETENESS-FRONTIER.7`
 selects AXI ID-family declaration/static validation. Completed readiness audit
 leaf `IAL2-FEATURE-COMPLETENESS-FRONTIER.8` selects the additive
-capacity/status implementation boundary and advances the active frontier to
-`.9`, its focused implementation slice.
+capacity/status implementation boundary. Completed implementation leaf
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.9` ships optional `(id-families ...)`
+metadata for that object and advances the active frontier to `.10`, the next
+IAL2 feature-completeness selector.
 Completed implementation leaf
 `ARCHITECTURE-DEBT-FRONTIER.2.1`
 projects direct backend storage/helper declaration-plan entries into

@@ -10,8 +10,8 @@ answers:
 date: 2026-06-12
 status: current
 tags: [ial2, axi, manager, id-family, static-validation, task-tree]
-evidence: docs/AXI_IAL2_MANAGER_ID_FAMILY_SUBSET_SELECTION.md; docs/AXI_IAL2_MANAGER_ID_FAMILY_READINESS_AUDIT.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; docs/book/src/14-feature-backlog.md; README.md; ROADMAP_V2.md
-reverify: rg -n 'ID-family|id-families|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.8|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.9|A5\\.1|A5\\.1\\.1|A5\\.5|A5\\.6' docs/AXI_IAL2_MANAGER_ID_FAMILY_SUBSET_SELECTION.md docs/AXI_IAL2_MANAGER_ID_FAMILY_READINESS_AUDIT.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md docs/book/src/14-feature-backlog.md README.md ROADMAP_V2.md
+evidence: docs/AXI_IAL2_MANAGER_ID_FAMILY_SUBSET_SELECTION.md; docs/AXI_IAL2_MANAGER_ID_FAMILY_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_ID_FAMILY_FIRST_SLICE.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; docs/book/src/14-feature-backlog.md; README.md; ROADMAP_V2.md
+reverify: rg -n 'ID-family|id-families|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.8|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.9|A5\\.1|A5\\.1\\.1|A5\\.5|A5\\.6' docs/AXI_IAL2_MANAGER_ID_FAMILY_SUBSET_SELECTION.md docs/AXI_IAL2_MANAGER_ID_FAMILY_READINESS_AUDIT.md docs/AXI_IAL2_MANAGER_ID_FAMILY_FIRST_SLICE.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md docs/book/src/14-feature-backlog.md README.md ROADMAP_V2.md
 ---
 
 After the public AXI manager capacity/status `.ppif` first slice, the next
@@ -30,8 +30,9 @@ The selected semantic shape is equivalent to:
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.8` selected an additive optional
 `id_families` extension to the existing capacity/status object as the first
-implementation boundary. `IAL2-FEATURE-COMPLETENESS-FRONTIER.9` is the active
-implementation leaf. ID allocation, per-transaction user-ID validation,
-same-ID ordering, different-ID interleaving, `BID`/`RID` response matching,
-bursts, queued/blocking policy, profile aliases, full AXI manager behavior,
-and VHDL remain future exact-owner residue.
+implementation boundary. `IAL2-FEATURE-COMPLETENESS-FRONTIER.9` shipped that
+public `(id-families ...)` metadata/report slice. ID allocation,
+per-transaction user-ID validation, same-ID ordering, different-ID
+interleaving, `BID`/`RID` response matching, bursts, queued/blocking policy,
+profile aliases, full AXI manager behavior, and VHDL remain future exact-owner
+residue.

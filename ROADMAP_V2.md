@@ -749,11 +749,14 @@ Only then should the project seriously widen its long-term ambition into these h
 
 ### H1. Rust FSMGen
 Long-term goal:
-- create a Rust implementation of FSMGen.
+- create a Rust implementation of FSMGen, keeping Rust/Wasm as a plausible
+  future deployment target.
 
 Intent:
 - carry the mature language/tool contract into a stronger long-term systems implementation,
-- not to re-open the language-design phase in a second implementation prematurely.
+- not to re-open the language-design phase in a second implementation prematurely,
+- preserve IAL0/IAL1/IAL2 as backend-language-neutral contracts rather than
+  Perl-specific implementation APIs.
 
 Prerequisite:
 - the language contract, diagnostics contract, support accounting, and embedding surface must already be stable enough that a Rust implementation is an execution project, not a moving-target rewrite.
@@ -763,11 +766,40 @@ Initial execution guidance:
 - keep the Perl implementation as the reference/oracle while the Rust implementation grows beside it,
 - share one roadmap, one documentation set, one regression corpus, and one differential-test harness across both implementations,
 - and only consider splitting into a separate repository later if release cadence, contributor workflow, packaging, or ownership really diverge enough that a monorepo becomes friction rather than leverage.
+- avoid baking POSIX filesystem access, process spawning, Perl module loading,
+  or other host-only assumptions into the portable IAL contracts, so Rust/Wasm
+  and browser-hosted implementations can use suitable host abstractions.
 
 Rationale:
 - a same-repo start keeps the contract, fixtures, snapshots, and expected diagnostics physically close to both implementations,
 - it avoids submodule drift and cross-repository version skew while the Rust implementation is still proving semantic parity,
 - and it makes it much easier to treat the Perl codebase as a semantic reference instead of trying to maintain two partially decoupled moving targets.
+
+Architecture constraint:
+- [docs/decisions/0018-ial-contracts-are-backend-language-neutral.md](docs/decisions/0018-ial-contracts-are-backend-language-neutral.md)
+  records that IAL0/IAL1/IAL2 and the mdBook are portable contracts for the
+  current Perl reference implementation plus future Rust, Rust/Wasm, and
+  browser-capable JavaScript and Dart/web implementations.
+
+### H1b. Browser-Capable JavaScript FSMGen
+Long-term goal:
+- make FSMGen capable of running in a web browser through a JavaScript and/or
+  Wasm-hosted implementation.
+
+Intent:
+- expose the same public source, report, diagnostic, and HDL-generation
+  contracts through browser-appropriate host abstractions,
+- avoid designing a separate browser-only semantics layer.
+
+### H1c. Browser-Capable Dart FSMGen
+Long-term goal:
+- make FSMGen capable of running in a web browser through a Dart/web
+  implementation.
+
+Intent:
+- treat Dart as another implementation/runtime option for the same public IAL
+  contracts,
+- avoid designing Dart-only source, report, diagnostic, or lowering semantics.
 
 ### H2. Public project website
 Long-term goal:
@@ -903,28 +935,27 @@ Priority note:
   `FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus`, the public `.ppif`
   parser/CLI first slice is shipped for exactly one
   `manager-capacity-status` object, the next subset is selected as ID-family
-  declaration/static validation, the readiness audit selected an additive
-  optional `id_families` extension to the existing capacity/status object, and
-  the active next leaf implements that focused slice.
+  declaration/static validation, and the additive optional `(id-families ...)`
+  public `.ppif` extension is shipped for the existing capacity/status object;
+  the active next leaf selects the next IAL2 feature-completeness slice.
 
 ## Current intent
 The active immediate feature-completeness lane is IAL2 on the
 SystemVerilog-backed lowering path; see
 [docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md](docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md).
-The current frontier is the additive implementation slice for the selected AXI
-manager ID-family/static-validation subset after the shipped capacity/status
-`.ppif` slice. The shipped public capacity/status source accepts one
+The current frontier is the next IAL2 feature-completeness selector after the
+shipped AXI manager ID-family/static-validation metadata slice. The shipped
+public capacity/status source accepts one
 `(manager-capacity-status NAME ...)` object under
 `(protocol-platform-intent ...)`, `(profile axi4)`, and top-level source
 anchors, and works through schedule JSON, generated `.isf`/`.fsm` review
 artifacts, HDL, `--verify-hdl`, check JSON, and normalized semantic JSON.
-The selected implementation adds optional `id_families` metadata to that
-capacity/status object: separate read/write ID-family widths, request/response
-ID signal-pair metadata, zero-width absence semantics, static diagnostics, and
-report metadata, without changing generated `.isf`, generated `.fsm`, or HDL
-behavior. ID allocation, ordering, response matching, bursts, queued/blocking
-policy, profile aliases, and full AXI manager behavior remain task-tree-owned
-residue.
+That source now accepts optional `(id-families ...)` metadata: separate
+read/write ID-family widths, request/response ID signal-pair metadata,
+zero-width absence semantics, static diagnostics, and report metadata, without
+changing generated `.isf`, generated `.fsm`, or HDL behavior. ID allocation,
+ordering, response matching, bursts, queued/blocking policy, profile aliases,
+and full AXI manager behavior remain task-tree-owned residue.
 
 The first honest `R11` slices are now:
 1. keep widening convention-first composition only where the child-side evidence is still deterministic,

@@ -193,8 +193,11 @@ validation in
 [AXI_IAL2_MANAGER_ID_FAMILY_SUBSET_SELECTION](AXI_IAL2_MANAGER_ID_FAMILY_SUBSET_SELECTION.md);
 the readiness audit
 [AXI_IAL2_MANAGER_ID_FAMILY_READINESS_AUDIT](AXI_IAL2_MANAGER_ID_FAMILY_READINESS_AUDIT.md)
-selects an additive optional `id_families` extension to the existing
-capacity/status object as the active implementation boundary.
+selected an additive optional `id_families` extension to the existing
+capacity/status object, and
+[AXI_IAL2_MANAGER_ID_FAMILY_FIRST_SLICE](AXI_IAL2_MANAGER_ID_FAMILY_FIRST_SLICE.md)
+ships that `.ppif` metadata/report slice without changing generated `.isf`,
+generated `.fsm`, or HDL behavior.
 Public `.pif`, `.ppi`, `.axi`, protocol-profile aliases, ID allocation,
 ordering, response matching, bursts, queued/blocking policy, and full AXI
 manager behavior remain unshipped and need later exact owners.

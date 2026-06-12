@@ -96,6 +96,35 @@ subtest 'PPIF adapter parses the AXI manager capacity/status source shape' => su
     is($result->{report}{layering}{direct_ial2_to_ial0}, 0, 'direct IAL2-to-IAL0 remains forbidden for capacity/status');
 };
 
+subtest 'PPIF adapter parses optional AXI manager ID-family metadata' => sub {
+    my $sample_path = sample_capacity_id_family_ppif_path();
+    ok(-f $sample_path, 'tracked runnable PPIF capacity/status ID-family sample exists');
+
+    my $base = FSM::Adapter::IAL2::PPIF->new()->parse_source(sample_capacity_ppif(), sample_capacity_ppif_path());
+    my $result = FSM::Adapter::IAL2::PPIF->new()->parse_source(sample_capacity_id_family_ppif(), $sample_path);
+
+    is($result->{kind}, 'protocol_intent.axi_manager_capacity_status', 'ID-family sample still uses the capacity/status generator');
+    is($result->{report}{source_object}{id}, 'axi-manager-capacity-status-id-family', 'ID-family source object id is preserved');
+    is($result->{report}{source_object}{intent_name}, 'axi_manager_capacity_status_id_family', 'ID-family source intent name is preserved');
+    is($result->{report}{id_families}{write}{width}, 4, 'write ID-family width is reported');
+    ok($result->{report}{id_families}{write}{present}, 'write ID-family is present');
+    is($result->{report}{id_families}{write}{request_id_signal}, 'axi0_awid', 'write request ID signal is reported');
+    is($result->{report}{id_families}{write}{response_id_signal}, 'axi0_bid', 'write response ID signal is reported');
+    is($result->{report}{id_families}{read}{request_id_signal}, 'axi0_arid', 'read request ID signal is reported');
+    is($result->{report}{id_families}{read}{response_id_signal}, 'axi0_rid', 'read response ID signal is reported');
+    ok(scalar(@{$result->{report}{id_families}{read}{source_anchors} || []}) >= 6, 'ID-family report carries source anchors');
+    is(
+        $result->{generated_ial1}{text},
+        $base->{generated_ial1}{text},
+        'ID-family metadata does not change generated IAL1',
+    );
+    is_deeply(
+        $result->{generated_ial0}{files},
+        $base->{generated_ial0}{files},
+        'ID-family metadata does not change generated IAL0',
+    );
+};
+
 subtest 'PPIF adapter diagnostics fail closed before generation claims' => sub {
     my @cases = (
         ['missing profile',
@@ -131,6 +160,21 @@ subtest 'PPIF adapter diagnostics fail closed before generation claims' => sub {
         ['unsupported manager status clause',
             capacity_ppif_with_objects(manager_capacity_object_with_status('(can-accept cap_ok)')),
             qr/unsupported status clause '\(can-accept \.\.\.\)'/],
+        ['unsupported manager ID-family clause',
+            capacity_ppif_with_objects(manager_capacity_object_with_id_families('(address (width 4))')),
+            qr/unsupported family clause '\(address \.\.\.\)'/],
+        ['duplicate manager ID-family clause',
+            capacity_ppif_with_objects(manager_capacity_object_with_id_families('(read (width 4) (request-id arid) (response-id rid)) (read (width 4) (request-id arid2) (response-id rid2)) (write (width 4) (request-id awid) (response-id bid))')),
+            qr/duplicate \(read \.\.\.\) family clause/],
+        ['missing manager ID-family width',
+            capacity_ppif_with_objects(manager_capacity_object_with_id_families('(read (request-id arid) (response-id rid)) (write (width 4) (request-id awid) (response-id bid))')),
+            qr/\(read \.\.\.\)\)\) is missing required \(width \.\.\.\) clause/],
+        ['zero-width manager ID-family with signal',
+            capacity_ppif_with_objects(manager_capacity_object_with_id_families('(read (width 0) (request-id arid)) (write (width 0))')),
+            qr/zero width must not include \(request-id \.\.\.\)/],
+        ['positive-width manager ID-family missing signal',
+            capacity_ppif_with_objects(manager_capacity_object_with_id_families('(read (width 4) (request-id arid)) (write (width 4) (request-id awid) (response-id bid))')),
+            qr/positive width requires \(response-id \.\.\.\)/],
     );
 
     for my $case (@cases) {
@@ -192,6 +236,23 @@ subtest 'CLI emits IAL2 report JSON for AXI manager capacity/status .ppif' => su
     is_deeply($report->{generated_artifacts}{ial0}{files}, ['axi0_capacity_status.fsm'], 'capacity/status report names generated .fsm');
     is($report->{capacity}{read}{max_pending}, 4, 'capacity/status report carries read capacity');
     is($report->{status_outputs}{read_can_accept}, 'axi0_read_can_accept', 'capacity/status report carries namespaced status output');
+};
+
+subtest 'CLI emits IAL2 report JSON for AXI manager ID-family metadata .ppif' => sub {
+    my ($success, undef, undef, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--emit-schedule-json', sample_capacity_id_family_ppif_path()],
+    );
+
+    ok($success, '--emit-schedule-json succeeds for capacity/status ID-family .ppif');
+    is(join('', @{$stderr_buf || []}), '', 'capacity/status ID-family report keeps stderr clean');
+    my $report = decode_json(join('', @{$stdout_buf || []}));
+    is($report->{schema}, 'fsmgen.ial2.protocol_intent.axi_manager_capacity_status.v1', 'CLI keeps the capacity/status report schema');
+    is($report->{source_object}{intent_name}, 'axi_manager_capacity_status_id_family', 'ID-family report carries the PPIF top-level intent name');
+    is($report->{id_families}{write}{width}, 4, 'CLI report carries write ID width');
+    ok($report->{id_families}{write}{present}, 'CLI report marks write ID family present');
+    is($report->{id_families}{write}{request_id_signal}, 'axi0_awid', 'CLI report carries write request ID signal');
+    is($report->{id_families}{read}{response_id_signal}, 'axi0_rid', 'CLI report carries read response ID signal');
+    is_deeply($report->{generated_artifacts}{ial0}{files}, ['axi0_capacity_status.fsm'], 'ID-family metadata leaves generated .fsm artifact unchanged');
 };
 
 subtest 'CLI --outdir materializes generated .isf, .fsm, and HDL for .ppif' => sub {
@@ -358,6 +419,50 @@ subtest 'CLI check JSON and semantic JSON accept capacity/status .ppif public so
     );
 };
 
+subtest 'CLI check JSON and semantic JSON support-account ID-family .ppif separately' => sub {
+    my $id_family_path = sample_capacity_id_family_ppif_path();
+    my ($success, undef, undef, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--strict', '--check', '--json', $id_family_path],
+    );
+    ok($success, 'capacity/status ID-family --check --json succeeds');
+    is(join('', @{$stderr_buf || []}), '', 'capacity/status ID-family --check --json keeps stderr clean');
+    my $check_report = decode_json(join('', @{$stdout_buf || []}));
+    ok($check_report->{success}, 'capacity/status ID-family check JSON reports success');
+    is(
+        $check_report->{source}{resolved_path},
+        File::Spec->rel2abs($id_family_path),
+        'capacity/status ID-family check JSON reports the public .ppif source path',
+    );
+    is(
+        $check_report->{support_accounting}{entry_id},
+        'intent.ppif_axi_manager_capacity_status_id_family',
+        'capacity/status ID-family check JSON support accounting names the PPIF corpus entry',
+    );
+
+    my ($semantic_success, undef, undef, $semantic_stdout, $semantic_stderr) = run(
+        command => ['./bin/fsmgen', '--strict', '--emit-semantic-json', $id_family_path],
+    );
+    ok($semantic_success, 'capacity/status ID-family --emit-semantic-json succeeds');
+    is(join('', @{$semantic_stderr || []}), '', 'capacity/status ID-family --emit-semantic-json keeps stderr clean');
+    my $semantic_report = decode_json(join('', @{$semantic_stdout || []}));
+    ok($semantic_report->{success}, 'capacity/status ID-family semantic JSON reports success');
+    is(
+        $semantic_report->{source}{resolved_path},
+        File::Spec->rel2abs($id_family_path),
+        'capacity/status ID-family semantic JSON reports the public .ppif source path',
+    );
+    is(
+        $semantic_report->{support_accounting}{entry_id},
+        'intent.ppif_axi_manager_capacity_status_id_family',
+        'capacity/status ID-family semantic JSON support accounting names the PPIF corpus entry',
+    );
+    is(
+        $semantic_report->{semantic}{module}{name},
+        'axi0_capacity_status',
+        'capacity/status ID-family semantic JSON records the unchanged generated module',
+    );
+};
+
 subtest 'CLI bundle HDL modes use aggregate wrapper entry' => sub {
     my $bundle_path = sample_bundle_ppif_path();
     my $tempdir = tempdir(CLEANUP => 1);
@@ -460,6 +565,10 @@ sub sample_capacity_ppif_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status.ppif');
 }
 
+sub sample_capacity_id_family_ppif_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_id_family.ppif');
+}
+
 sub sample_ppif {
     return slurp(sample_ppif_path());
 }
@@ -470,6 +579,10 @@ sub sample_bundle_ppif {
 
 sub sample_capacity_ppif {
     return slurp(sample_capacity_ppif_path());
+}
+
+sub sample_capacity_id_family_ppif {
+    return slurp(sample_capacity_id_family_ppif_path());
 }
 
 sub capacity_ppif_with_objects {
@@ -534,6 +647,13 @@ sub manager_capacity_object_with_status {
     my ($status_line) = @_;
     my $object = manager_capacity_object();
     $object =~ s/\)\z/\n    (status $status_line))/;
+    return $object;
+}
+
+sub manager_capacity_object_with_id_families {
+    my ($families) = @_;
+    my $object = manager_capacity_object();
+    $object =~ s/\)\z/\n    (id-families $families))/;
     return $object;
 }
 

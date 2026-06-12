@@ -54,6 +54,13 @@ Use it first for objective, navigation, and where to find code/docs quickly.
 
 ## Project objective
 FSMGen compiles Lisp-like `.fsm` state machine specifications into synthesizable HDL, and now accepts `.isf` intent-scheduling sources that lower into explicit scheduled `.fsm` before HDL generation.
+FSMGen is currently implemented in Perl 5, but IAL0, IAL1, IAL2, their public
+file formats, reports, diagnostics, examples, and this mdBook-facing
+documentation are backend-language-neutral contracts. Future Rust, Rust/Wasm,
+browser-capable JavaScript, and Dart/web implementations should target those
+same observable contracts, with the Perl implementation serving as the current
+reference/oracle rather than the definition of the IAL layers; see
+[docs/decisions/0018-ial-contracts-are-backend-language-neutral.md](docs/decisions/0018-ial-contracts-are-backend-language-neutral.md).
 Current primary target is SystemVerilog, with Verilog conversion support and a scoped direct-root VHDL scaffold for the accepted single-FSM subset, including delayed-pulse clock-branch lowering, generic-bearing direct-root module headers with typed scalar/vector sized-literal defaults, signed vector and signed scalar direct-root ports, scalar/vector two-state `bit` input-port and internal declaration lowering, signed scalar/vector, non-signed four-state `logic` input-port/internal declaration lowering, and vector `logic signed` internal declaration lowering, scalar and signed scalar addition/subtraction/multiplication RHS/chain lowering, vector numeric-literal addition/subtraction emitted by compound update/shorthand forms, same-width unsigned-style addition/subtraction/multiplication/division/modulo/XOR RHS/chain lowering, same-width signed vector addition/subtraction/multiplication/division/modulo RHS lowering for signed targets and operands, signed vector numeric-literal addition/subtraction/multiplication/division/modulo RHS lowering including signed vector negative decimal addition, subtraction, multiplication, division, and modulo literals, non-signed vector positive decimal multiplication/division/modulo literal lowering in signal-first, literal-first, and literal-literal order, non-signed vector negative decimal addition/subtraction/multiplication/division/modulo literal lowering, bounded generated AMBA wrap arithmetic for `fsm/amba_requester.fsm`, bounded non-signed vector, signed vector, and scalar output-port decimal literal assignment lowering including non-signed vector, signed vector, and scalar negative decimal literals, bounded direct aggregate-output packed-vector lowering, a bounded C3 external-RTL literal/concat composition VHDL structural top for `t/corpus/composition_intent_integer_literals.fsm`, bounded external-RTL scalar integer, scalar integer expression, one-bit sized bitstring, multi-bit sized bitstring, and resolved packed aggregate VHDL generic maps including resolved package-backed constants, a bounded C1 standalone-DT child composition VHDL passthrough top for `t/corpus/standalone_dtc_explicit_system_autowire.fsm`, bounded C1 standalone-DT scalar integer, scalar expression, one-bit sized bitstring, multi-bit sized bitstring, packed-list, and packed-map VHDL generic maps, a bounded C2 generated-FSM child composition VHDL scalar-autowire top for `t/corpus/implicit_composition_system_autowire.fsm`, bounded C2 generated-FSM scalar integer, scalar expression, one-bit sized bitstring, multi-bit sized bitstring, and resolved packed aggregate VHDL generic maps, and a bounded APB/C4 generated-FSM child composition VHDL top for `fsm/apb_tb.fsm` with scalar integer, scalar expression, one-bit sized bitstring, multi-bit sized bitstring, resolved packed aggregate, and resolved package-backed generic maps in the same APB/C4 shape.
 Scalar division/modulo, including signed scalar division/modulo, in the direct
 VHDL scaffold remains an explicit fail-closed boundary; full aggregate
@@ -132,13 +139,14 @@ public `.ppif` capacity/status parser/CLI first slice is now shipped for one
 `(protocol-platform-intent ...)`, `(profile axi4)`, and top-level source
 anchors, with sample, support-accounting, check JSON, semantic JSON, generated
 review artifacts, default HDL, and `--verify-hdl` coverage. The next AXI
-manager subset is selected as ID-family declaration and static validation; the
-readiness audit selected an additive optional `id_families` extension to the
-existing capacity/status object, and the active IAL2 leaf implements that
-focused parser/generator/report/sample slice. ID allocation, ordering,
-response matching, bursts, queued/blocking policy, profile aliases, and VHDL
-backend/reroute work stay deferred until explicit owners select them, and VHDL
-remains behind SV-backed IAL feature completeness.
+manager subset is selected as ID-family declaration and static validation, and
+the additive optional `(id-families ...)` public `.ppif` extension is now
+shipped for the existing capacity/status object with report metadata, a
+separate sample, support accounting, check JSON, semantic JSON source identity,
+and unchanged generated `.isf`, `.fsm`, and HDL behavior. ID allocation,
+ordering, response matching, bursts, queued/blocking policy, profile aliases,
+and VHDL backend/reroute work stay deferred until explicit owners select them,
+and VHDL remains behind SV-backed IAL feature completeness.
 The project objective is robust, traceable FSM-to-HDL generation with clear assignment semantics, optimization via AST factorization, and behavior-preserving refactoring toward a modular architecture.
 
 ## Fast ramp-up order
@@ -177,28 +185,30 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 33. `docs/AXI_IAL2_MANAGER_CAPACITY_STATUS_PPIF_FIRST_SLICE.md`: first public `.ppif` parser/CLI slice for one AXI manager capacity/status object.
 34. `docs/AXI_IAL2_MANAGER_ID_FAMILY_SUBSET_SELECTION.md`: selected the next AXI manager subset: ID-family declaration and static validation.
 35. `docs/AXI_IAL2_MANAGER_ID_FAMILY_READINESS_AUDIT.md`: readiness audit for the additive ID-family/static-validation implementation boundary.
-36. `docs/AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md`: selected first AXI-derived IAL2 implementation subset and pre-code contract.
-37. `docs/AXI_IAL2_VALID_READY_READINESS_AUDIT.md`: code/test/docs/report owner map for the future AXI Valid-Ready IAL2 implementation.
-38. `docs/AXI_IAL2_VALID_READY_GENERATOR_FIRST_SLICE.md`: first in-process AXI Valid-Ready IAL2 generator slice and report surface.
-39. `docs/decisions/0016-ppif-is-first-public-ial2-container.md`: selects `.ppif` as the first public generic IAL2 file surface.
-40. `docs/IAL2_PPIF_PARSER_CLI_FIRST_SLICE.md`: first public `.ppif` parser/CLI slice for one AXI Valid-Ready source object.
-41. `docs/IAL2_PPIF_MULTI_VALID_READY_READINESS.md`: readiness map for future multi-channel `.ppif` Valid-Ready support.
-42. `docs/IAL2_PPIF_VALID_READY_BUNDLE_CONTRACT_SELECTION.md`: selected future aggregate bundle contract for multi-channel `.ppif` Valid-Ready support.
-43. `docs/IAL2_PPIF_VALID_READY_BUNDLE_FIRST_SLICE.md`: shipped bounded multi-channel `.ppif` Valid-Ready bundle report/review-artifact behavior.
-44. `docs/IAL2_PPIF_BUNDLE_SEMANTIC_JSON_FIRST_SLICE.md`: shipped aggregate semantic JSON for multi-channel `.ppif` bundles.
-45. `docs/IAL2_PPIF_BUNDLE_HDL_ENTRY_SELECTION.md`: selected aggregate wrapper/top HDL entry contract for multi-channel `.ppif` bundles.
-46. `docs/IAL2_PPIF_BUNDLE_HDL_ENTRY_FIRST_SLICE.md`: shipped aggregate wrapper/top HDL entry for the tracked multi-channel `.ppif` bundle.
-47. `docs/PDF_EXTRACTION_WORKFLOW.md`: portable workflow for source-anchored PDF text, table, diagram, and image extraction.
-48. `docs/decisions/0014-protocol-platform-intent-surface-and-layered-lowering.md`: generic IAL2 file-surface candidates and layered lowering decision.
-49. `docs/decisions/0015-ial2-profile-extensions-are-vocabulary-aliases.md`: IAL2 protocol-profile extension refinement.
-50. `docs/decisions/0017-ppif-valid-ready-bundle-contract.md`: future multi-channel `.ppif` bundle contract decision.
-51. `docs/FEATURE_BACKLOG.md`: pointer to the canonical mdBook feature backlog for deferred/not-fully-shipped user-visible work.
-52. `CHANGES.md`: chronological technical changes.
-53. `DEVELOPMENT_NOTES.md`: design rationale and decisions.
-54. `MEMORY.md`: continuity/handoff state.
-55. `LIVE_ACHIEVEMENT_STATUS.md`: latest completed roadmap-aligned slice.
-56. `WARP.md`: repository-specific agent/development guidance.
-57. `.agents/workflows/commit.md`: automation-oriented commit workflow description.
+36. `docs/AXI_IAL2_MANAGER_ID_FAMILY_FIRST_SLICE.md`: shipped additive `.ppif` ID-family metadata slice for one AXI manager capacity/status object.
+37. `docs/AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md`: selected first AXI-derived IAL2 implementation subset and pre-code contract.
+38. `docs/AXI_IAL2_VALID_READY_READINESS_AUDIT.md`: code/test/docs/report owner map for the future AXI Valid-Ready IAL2 implementation.
+39. `docs/AXI_IAL2_VALID_READY_GENERATOR_FIRST_SLICE.md`: first in-process AXI Valid-Ready IAL2 generator slice and report surface.
+40. `docs/decisions/0016-ppif-is-first-public-ial2-container.md`: selects `.ppif` as the first public generic IAL2 file surface.
+41. `docs/IAL2_PPIF_PARSER_CLI_FIRST_SLICE.md`: first public `.ppif` parser/CLI slice for one AXI Valid-Ready source object.
+42. `docs/IAL2_PPIF_MULTI_VALID_READY_READINESS.md`: readiness map for future multi-channel `.ppif` Valid-Ready support.
+43. `docs/IAL2_PPIF_VALID_READY_BUNDLE_CONTRACT_SELECTION.md`: selected future aggregate bundle contract for multi-channel `.ppif` Valid-Ready support.
+44. `docs/IAL2_PPIF_VALID_READY_BUNDLE_FIRST_SLICE.md`: shipped bounded multi-channel `.ppif` Valid-Ready bundle report/review-artifact behavior.
+45. `docs/IAL2_PPIF_BUNDLE_SEMANTIC_JSON_FIRST_SLICE.md`: shipped aggregate semantic JSON for multi-channel `.ppif` bundles.
+46. `docs/IAL2_PPIF_BUNDLE_HDL_ENTRY_SELECTION.md`: selected aggregate wrapper/top HDL entry contract for multi-channel `.ppif` bundles.
+47. `docs/IAL2_PPIF_BUNDLE_HDL_ENTRY_FIRST_SLICE.md`: shipped aggregate wrapper/top HDL entry for the tracked multi-channel `.ppif` bundle.
+48. `docs/PDF_EXTRACTION_WORKFLOW.md`: portable workflow for source-anchored PDF text, table, diagram, and image extraction.
+49. `docs/decisions/0014-protocol-platform-intent-surface-and-layered-lowering.md`: generic IAL2 file-surface candidates and layered lowering decision.
+50. `docs/decisions/0015-ial2-profile-extensions-are-vocabulary-aliases.md`: IAL2 protocol-profile extension refinement.
+51. `docs/decisions/0017-ppif-valid-ready-bundle-contract.md`: future multi-channel `.ppif` bundle contract decision.
+52. `docs/decisions/0018-ial-contracts-are-backend-language-neutral.md`: IAL contracts and mdBook stay backend-language-neutral for future Rust, Rust/Wasm, browser-capable JavaScript, and Dart/web parity.
+53. `docs/FEATURE_BACKLOG.md`: pointer to the canonical mdBook feature backlog for deferred/not-fully-shipped user-visible work.
+54. `CHANGES.md`: chronological technical changes.
+55. `DEVELOPMENT_NOTES.md`: design rationale and decisions.
+56. `MEMORY.md`: continuity/handoff state.
+57. `LIVE_ACHIEVEMENT_STATUS.md`: latest completed roadmap-aligned slice.
+58. `WARP.md`: repository-specific agent/development guidance.
+59. `.agents/workflows/commit.md`: automation-oriented commit workflow description.
 
 ## Documentation index (all `.md` files in this repo)
 - `README.md` — single entry point and navigation hub.
@@ -631,6 +641,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/AXI_IAL2_MANAGER_CAPACITY_STATUS_PPIF_FIRST_SLICE.md` — first public `.ppif` parser/CLI slice for one AXI manager capacity/status object.
 - `docs/AXI_IAL2_MANAGER_ID_FAMILY_SUBSET_SELECTION.md` — selected the next AXI manager subset: ID-family declaration and static validation.
 - `docs/AXI_IAL2_MANAGER_ID_FAMILY_READINESS_AUDIT.md` — readiness audit for the additive ID-family/static-validation implementation boundary.
+- `docs/AXI_IAL2_MANAGER_ID_FAMILY_FIRST_SLICE.md` — shipped additive `.ppif` ID-family metadata slice for one AXI manager capacity/status object.
 - `docs/AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md` — selected first AXI-derived IAL2 implementation subset and pre-code contract.
 - `docs/AXI_IAL2_VALID_READY_READINESS_AUDIT.md` — code/test/docs/report owner map for a future AXI Valid-Ready IAL2 implementation slice.
 - `docs/AXI_IAL2_VALID_READY_GENERATOR_FIRST_SLICE.md` — first in-process AXI Valid-Ready IAL2 generator slice and report surface.
@@ -643,11 +654,13 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_PPIF_BUNDLE_HDL_ENTRY_FIRST_SLICE.md` — shipped aggregate wrapper/top HDL entry for the tracked multi-channel `.ppif` bundle.
 - `ppif/axi_aw_valid_ready.ppif` — first checked-in runnable `.ppif` sample for the public IAL2 Valid-Ready CLI surface.
 - `ppif/axi_aw_w_valid_ready_bundle.ppif` — checked-in runnable multi-channel `.ppif` bundle sample for aggregate report/review-artifact modes.
+- `ppif/axi_manager_capacity_status_id_family.ppif` — checked-in runnable `.ppif` sample for static AXI manager ID-family metadata.
 - `docs/PDF_EXTRACTION_WORKFLOW.md` — portable workflow for task-owned source-anchored PDF text, table, diagram, and image extraction.
 - `docs/decisions/0014-protocol-platform-intent-surface-and-layered-lowering.md` — generic IAL2 file-surface candidates and layered lowering decision.
 - `docs/decisions/0015-ial2-profile-extensions-are-vocabulary-aliases.md` — IAL2 protocol-profile extension refinement.
 - `docs/decisions/0016-ppif-is-first-public-ial2-container.md` — selects `.ppif` as the first public generic IAL2 file surface.
 - `docs/decisions/0017-ppif-valid-ready-bundle-contract.md` — future multi-channel `.ppif` bundle contract decision.
+- `docs/decisions/0018-ial-contracts-are-backend-language-neutral.md` — IAL contracts and mdBook stay backend-language-neutral for future Rust, Rust/Wasm, browser-capable JavaScript, and Dart/web parity.
 - `docs/vendor/arm/amba/axi/IHI0022_L_2025-08_AMBA_AXI_Protocol_Specification.pdf` — tracked repo-local raw AXI protocol specification reference for future task-tree-owned IAL2 probes.
 - `docs/FEATURE_BACKLOG.md` — repo-level pointer to the canonical mdBook backlog for deferred/not-fully-shipped user-visible features.
 - `docs/VHDL_SCOPE.md` — scoped VHDL backend plan and shipped direct-root scaffold boundary.

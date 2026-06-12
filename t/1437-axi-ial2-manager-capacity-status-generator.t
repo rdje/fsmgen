@@ -117,10 +117,50 @@ subtest 'report publishes capacity, status outputs, source anchors, artifacts, a
     );
 
     my %residue = map { $_->{id} => 1 } @{$report->{unsupported_residue}};
-    ok($residue{public_ppif_capacity_status_syntax}, 'public PPIF capacity/status syntax remains residue');
     ok($residue{blocking_or_queued_policy}, 'blocking/queued policies remain residue');
     ok($residue{axi_id_ordering_and_response_matching}, 'ID/order/response behavior remains residue');
+    ok($residue{profile_aliases_and_full_manager_behavior}, 'profile aliases and full manager behavior remain residue');
     ok($residue{vhdl_backend_or_reroute}, 'VHDL remains residue');
+};
+
+subtest 'optional ID-family metadata is report-only and statically validated' => sub {
+    my $base = generate_sample();
+    my $with_ids = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_id_families());
+
+    is(
+        $with_ids->{generated_ial1}{text},
+        $base->{generated_ial1}{text},
+        'ID-family metadata does not alter generated IAL1 text',
+    );
+    is_deeply(
+        $with_ids->{generated_ial0}{files},
+        $base->{generated_ial0}{files},
+        'ID-family metadata does not alter generated IAL0 text',
+    );
+
+    my $id_families = $with_ids->{report}{id_families};
+    is_deeply([sort keys %$id_families], [qw(read write)], 'report publishes read/write ID-family entries');
+    is($id_families->{write}{width}, 4, 'write ID width is reported');
+    ok($id_families->{write}{present}, 'positive-width write ID family is present');
+    is($id_families->{write}{request_id_signal}, 'axi0_awid', 'write request ID signal is reported');
+    is($id_families->{write}{response_id_signal}, 'axi0_bid', 'write response ID signal is reported');
+    is($id_families->{read}{request_id_signal}, 'axi0_arid', 'read request ID signal is reported');
+    is($id_families->{read}{response_id_signal}, 'axi0_rid', 'read response ID signal is reported');
+    is_deeply(
+        $id_families->{write}{source_anchors},
+        sample_contract()->{source}{anchors},
+        'ID-family report carries source anchors',
+    );
+
+    my $zero_contract = sample_contract_with_id_families();
+    for my $family (qw(read write)) {
+        $zero_contract->{id_families}{$family} = { width => 0 };
+    }
+    my $zero_report = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate($zero_contract)->{report};
+    is($zero_report->{id_families}{read}{width}, 0, 'zero-width read family is reported');
+    ok(!$zero_report->{id_families}{read}{present}, 'zero-width read family is absent');
+    ok(!exists $zero_report->{id_families}{read}{request_id_signal}, 'zero-width read family omits request ID signal');
+    ok(!exists $zero_report->{id_families}{write}{response_id_signal}, 'zero-width write family omits response ID signal');
 };
 
 subtest 'schedule report and HDL expose generated storage and status surface' => sub {
@@ -166,6 +206,10 @@ subtest 'malformed contract objects fail closed and no direct lower-to-fsm entry
         ['duplicate status name', sub { my $c = sample_contract(); $c->{status}{write_full} = 'axi0_read_full'; $c }, qr/duplicates signal 'axi0_read_full'/],
         ['bare can_accept collision', sub { my $c = sample_contract(); $c->{status}{read_can_accept} = 'can_accept'; $c }, qr/collides with reserved scheduler signal 'can_accept'/],
         ['unsupported ID field', sub { my $c = sample_contract(); $c->{id_width} = 4; $c }, qr/unsupported field 'id_width'/],
+        ['ID-family width too large', sub { my $c = sample_contract_with_id_families(); $c->{id_families}{read}{width} = 33; $c }, qr/id_families\.read\.width.*0\.\.32/],
+        ['ID-family positive width missing response signal', sub { my $c = sample_contract_with_id_families(); delete $c->{id_families}{write}{response_id_signal}; $c }, qr/id_families\.write positive width requires field 'response_id_signal'/],
+        ['ID-family zero width with signal', sub { my $c = sample_contract_with_id_families(); $c->{id_families}{read}{width} = 0; delete $c->{id_families}{read}{response_id_signal}; $c }, qr/id_families\.read zero width must not include field 'request_id_signal'/],
+        ['ID-family signal collision', sub { my $c = sample_contract_with_id_families(); $c->{id_families}{write}{request_id_signal} = 'clk'; $c }, qr/duplicates signal 'clk'/],
         ['bad source anchors', sub { my $c = sample_contract(); $c->{source}{anchors} = {}; $c }, qr/source\.anchors must be an array reference/],
     );
 
@@ -216,6 +260,23 @@ sub sample_contract {
             ],
         },
     };
+}
+
+sub sample_contract_with_id_families {
+    my $contract = sample_contract();
+    $contract->{id_families} = {
+        write => {
+            width => 4,
+            request_id_signal => 'axi0_awid',
+            response_id_signal => 'axi0_bid',
+        },
+        read => {
+            width => 4,
+            request_id_signal => 'axi0_arid',
+            response_id_signal => 'axi0_rid',
+        },
+    };
+    return $contract;
 }
 
 sub assert_actor_storage {

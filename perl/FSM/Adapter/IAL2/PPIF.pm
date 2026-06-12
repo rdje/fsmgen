@@ -293,6 +293,8 @@ sub _parse_manager_capacity_status($body, $source_label) {
             $contract{reset} = _parse_reset(\@items, $source_label);
         } elsif ($head eq 'status') {
             $contract{status} = _parse_manager_capacity_status_outputs(\@items, $source_label, $name);
+        } elsif ($head eq 'id-families') {
+            $contract{id_families} = _parse_manager_capacity_id_families(\@items, $source_label, $name);
         } else {
             confess "Error: .ppif (manager-capacity-status $name ...) has unsupported clause '($head ...)'\n";
         }
@@ -348,6 +350,79 @@ sub _parse_manager_capacity_status_outputs($items, $source_label, $name) {
     }
 
     return \%status;
+}
+
+sub _parse_manager_capacity_id_families($items, $source_label, $name) {
+    confess "Error: .ppif (manager-capacity-status $name (id-families ...)) requires read/write family clauses\n"
+        unless @$items;
+
+    my %families;
+    for my $clause (@$items) {
+        my ($family, @body) = _clause_parts($clause, $source_label);
+        confess "Error: .ppif (manager-capacity-status $name (id-families ...)) has unsupported family clause '($family ...)'\n"
+            unless $family =~ /\A(?:read|write)\z/;
+        confess "Error: .ppif (manager-capacity-status $name (id-families ...)) has duplicate ($family ...) family clause\n"
+            if exists $families{$family};
+        $families{$family} = _parse_manager_capacity_id_family(\@body, $source_label, $name, $family);
+    }
+
+    for my $required (qw(read write)) {
+        confess "Error: .ppif (manager-capacity-status $name (id-families ...)) is missing required ($required ...) family clause\n"
+            unless exists $families{$required};
+    }
+
+    return \%families;
+}
+
+sub _parse_manager_capacity_id_family($items, $source_label, $name, $family) {
+    my %allowed = (
+        'width'       => 'width',
+        'request-id'  => 'request_id_signal',
+        'response-id' => 'response_id_signal',
+    );
+    my %entry;
+
+    for my $clause (@$items) {
+        my ($head, @body) = _clause_parts($clause, $source_label);
+        confess "Error: .ppif (manager-capacity-status $name (id-families ($family ...))) has unsupported clause '($head ...)'\n"
+            unless exists $allowed{$head};
+        confess "Error: .ppif (manager-capacity-status $name (id-families ($family ...))) has duplicate ($head ...) clause\n"
+            if exists $entry{$allowed{$head}};
+        confess "Error: .ppif (manager-capacity-status $name (id-families ($family ($head ...)))) requires exactly one scalar value\n"
+            unless @body == 1 && !ref($body[0]);
+        $entry{$allowed{$head}} = $body[0];
+    }
+
+    confess "Error: .ppif (manager-capacity-status $name (id-families ($family ...))) is missing required (width ...) clause\n"
+        unless exists $entry{width};
+    my $width = _manager_capacity_id_width($entry{width}, $source_label, $name, $family);
+
+    if ($width > 0) {
+        for my $required (qw(request_id_signal response_id_signal)) {
+            my $clause_name = $required;
+            $clause_name =~ s/_signal\z//;
+            $clause_name =~ s/_/-/g;
+            confess "Error: .ppif (manager-capacity-status $name (id-families ($family ...))) positive width requires ($clause_name ...)\n"
+                unless exists $entry{$required};
+        }
+    } else {
+        for my $forbidden (qw(request_id_signal response_id_signal)) {
+            my $clause_name = $forbidden;
+            $clause_name =~ s/_signal\z//;
+            $clause_name =~ s/_/-/g;
+            confess "Error: .ppif (manager-capacity-status $name (id-families ($family ...))) zero width must not include ($clause_name ...)\n"
+                if exists $entry{$forbidden};
+        }
+    }
+
+    $entry{width} = $width;
+    return \%entry;
+}
+
+sub _manager_capacity_id_width($value, $source_label, $name, $family) {
+    confess "Error: .ppif (manager-capacity-status $name (id-families ($family (width ...)))) width must be an integer in 0..32\n"
+        if ref($value) || !defined($value) || $value !~ /\A(?:0|[1-9][0-9]*)\z/ || $value > 32;
+    return int($value);
 }
 
 sub _parse_reset($items, $source_label) {
