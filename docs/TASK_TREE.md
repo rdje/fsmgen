@@ -95,6 +95,7 @@ first.
 | `IAL2-PPIF-LANGUAGE-SURFACE-MANIFEST` | `done` | IAL2 horizon exploration | complete (`.1`; advertised shipped `.fsm`/`.isf`/`.ppif` file surfaces in the capability manifest) | [docs/tasks/IAL2-PPIF-LANGUAGE-SURFACE-MANIFEST.md](docs/tasks/IAL2-PPIF-LANGUAGE-SURFACE-MANIFEST.md) |
 | `CHECK-JSON-PUBLIC-SOURCE-IDENTITY` | `done` | Embedding And Public APIs | complete (`.1`; preserved check JSON source identity and support-accounting coverage for lowered `.isf`/`.ppif` public inputs) | [docs/tasks/CHECK-JSON-PUBLIC-SOURCE-IDENTITY.md](docs/tasks/CHECK-JSON-PUBLIC-SOURCE-IDENTITY.md) |
 | `NORMALIZED-SEMANTIC-PUBLIC-SOURCE-IDENTITY` | `done` | Embedding And Public APIs | complete (`.1`; preserved normalized semantic JSON source identity and support-accounting coverage for lowered `.isf`/`.ppif` public inputs) | [docs/tasks/NORMALIZED-SEMANTIC-PUBLIC-SOURCE-IDENTITY.md](docs/tasks/NORMALIZED-SEMANTIC-PUBLIC-SOURCE-IDENTITY.md) |
+| `PPIF-SEMANTIC-JSON-FOCUSED-COVERAGE` | `done` | IAL2 horizon exploration / Embedding And Public APIs | complete (`.1`; locked focused PPIF semantic JSON source-identity coverage) | [docs/tasks/PPIF-SEMANTIC-JSON-FOCUSED-COVERAGE.md](docs/tasks/PPIF-SEMANTIC-JSON-FOCUSED-COVERAGE.md) |
 
 ## Proposed Task Trees
 

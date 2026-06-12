@@ -94,7 +94,7 @@ subtest 'CLI --outdir materializes generated .isf, .fsm, and HDL for .ppif' => s
     like(slurp($hdl), qr/\bmodule\s+axi_aw_valid_ready_monitor\b/, 'generated HDL contains the monitor module');
 };
 
-subtest 'CLI check JSON accepts .ppif and keeps unsupported aliases rejected' => sub {
+subtest 'CLI check JSON and semantic JSON accept .ppif public source identity' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my ($success, undef, undef, $stdout_buf, $stderr_buf) = run(
         command => ['./bin/fsmgen', '--strict', '--check', '--json', sample_ppif_path()],
@@ -115,6 +115,31 @@ subtest 'CLI check JSON accepts .ppif and keeps unsupported aliases rejected' =>
         'check JSON support accounting names the PPIF corpus entry',
     );
     is($check_report->{support_accounting}{source_kind}, 'ppif', 'check JSON support accounting records PPIF source kind');
+
+    my ($semantic_success, undef, undef, $semantic_stdout, $semantic_stderr) = run(
+        command => ['./bin/fsmgen', '--strict', '--emit-semantic-json', sample_ppif_path()],
+    );
+    ok($semantic_success, '--emit-semantic-json succeeds for .ppif');
+    is(join('', @{$semantic_stderr || []}), '', '--emit-semantic-json keeps stderr clean for .ppif');
+    my $semantic_report = decode_json(join('', @{$semantic_stdout || []}));
+    ok($semantic_report->{success}, 'semantic JSON reports success');
+    is(
+        $semantic_report->{source}{resolved_path},
+        File::Spec->rel2abs(sample_ppif_path()),
+        'semantic JSON reports the public .ppif source path, not the generated .fsm temporary',
+    );
+    ok($semantic_report->{support_accounting}{matched}, 'semantic JSON support accounting matches the PPIF sample');
+    is(
+        $semantic_report->{support_accounting}{entry_id},
+        'intent.ppif_axi_aw_valid_ready',
+        'semantic JSON support accounting names the PPIF corpus entry',
+    );
+    is($semantic_report->{support_accounting}{source_kind}, 'ppif', 'semantic JSON support accounting records PPIF source kind');
+    is(
+        $semantic_report->{semantic}{module}{source_root_kind},
+        'fsm',
+        'semantic JSON payload still describes the generated .fsm semantic root',
+    );
 
     my $pif_path = File::Spec->catfile($tempdir, 'sample.pif');
     write_file($pif_path, sample_ppif());
