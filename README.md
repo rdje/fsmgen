@@ -574,7 +574,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `perl/FSM/Support/EmbeddingContract.pm` — bounded manifest-facing contract for the `embedding` section's public top-level and nested contract-owner map.
 - `perl/FSM/Support/BackendValidationContract.pm` — bounded manifest-facing contract for the `backend_validation` section's public top-level and nested contract-owner map.
 - `perl/FSM/Support/DocumentationContract.pm` — bounded manifest-facing contract for the `documentation` section's public path-list keys.
-- `perl/FSM/Support/LanguageSurfaceContract.pm` — bounded manifest-facing contract for the `language_surface` section's public top-level and first nested key lists.
+- `perl/FSM/Support/LanguageSurfaceContract.pm` — bounded manifest-facing contract for the `language_surface` section's public top-level, first nested key lists, and file-surface discovery keys.
 - `perl/FSM/Support/ProducerContract.pm` — bounded manifest-facing contract for the `producer` section's public identity/build metadata keys.
 - `perl/FSM/Support/SemanticExportsContract.pm` — bounded manifest-facing contract for the `semantic_exports` section's public top-level and nested contract-owner map.
 - `perl/FSM/Support/CheckDiagnostics.pm` — bounded `--check --json` report builder and stable-code classifier.
@@ -649,6 +649,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 ./bin/fsmgen --strict isf/apb_requester.isf
 ./bin/fsmgen --emit-schedule-json isf/i2c_master.isf
 ./bin/fsmgen --emit-schedule-json ppif/axi_aw_valid_ready.ppif
+./bin/fsmgen --capability-manifest
 ```
 
 ## Documentation quick preview
@@ -1120,7 +1121,10 @@ still publishes the authored-surface summary, while
 [perl/FSM/Support/LanguageSurfaceContract.pm](perl/FSM/Support/LanguageSurfaceContract.pm)
 owns the bounded top-level and first nested section-key lists advertised
 through `language_surface.surface_contract` without pretending the whole
-authored language is frozen.
+authored language is frozen. The bounded `language_surface.file_surfaces`
+section advertises the shipped `.fsm`/`.isf`/`.ppif` file suffixes, including
+the `.ppif` first-slice rule that IAL2 lowers through generated `.isf` before
+generated `.fsm`.
 The manifest's `documentation` section now has the same split too:
 [perl/FSM/Support/CapabilityManifest.pm](perl/FSM/Support/CapabilityManifest.pm)
 still publishes the current doc pointers, while

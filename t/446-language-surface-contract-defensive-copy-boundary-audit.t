@@ -15,6 +15,8 @@ use FSM::Support::LanguageSurfaceContract qw(
     language_surface_declarations_keys
     language_surface_default_mode_compatibility_keys
     language_surface_expressions_keys
+    language_surface_file_surface_entry_keys
+    language_surface_file_surfaces_keys
     language_surface_nested_presence_key_map
     language_surface_public_top_level_keys
     language_surface_strict_mode_keys
@@ -50,6 +52,14 @@ subtest 'language surface helper builders return fresh nested structures' => sub
         {
             label => 'strict_mode_keys',
             build => \&language_surface_strict_mode_keys,
+        },
+        {
+            label => 'file_surfaces_keys',
+            build => \&language_surface_file_surfaces_keys,
+        },
+        {
+            label => 'file_surface_entry_keys',
+            build => \&language_surface_file_surface_entry_keys,
         },
         {
             label => 'default_mode_compatibility_keys',
@@ -92,6 +102,7 @@ subtest 'fresh language surface nested map stays aligned with helper families' =
     my $nested_map = language_surface_nested_presence_key_map();
 
     is_deeply($nested_map->{strict_mode}, language_surface_strict_mode_keys(), 'strict-mode nested map entry matches helper');
+    is_deeply($nested_map->{file_surfaces}, language_surface_file_surfaces_keys(), 'file-surfaces nested map entry matches helper');
     is_deeply(
         $nested_map->{default_mode_compatibility},
         language_surface_default_mode_compatibility_keys(),

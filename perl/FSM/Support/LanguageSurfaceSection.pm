@@ -6,7 +6,10 @@ use warnings;
 use Exporter 'import';
 use JSON::PP ();
 
-use FSM::Support::LanguageSurfaceContract qw(build_language_surface_contract);
+use FSM::Support::LanguageSurfaceContract qw(
+    build_language_surface_contract
+    language_surface_file_surface_entry_keys
+);
 
 our @EXPORT_OK = qw(
     build_language_surface_section
@@ -20,6 +23,45 @@ sub build_language_surface_section {
             canonical_direct_roots => [qw(?fsm ?dt ?mod)],
             canonical_composition_roots => [qw(?top ?rtlif ?pkg)],
             canonical_child_roots => [qw(?fsmc ?dtc ?rtl)],
+        },
+        file_surfaces => {
+            shipped_suffixes => [qw(.fsm .isf .ppif)],
+            layer_order => [qw(IAL2 IAL1 IAL0)],
+            direct_ial2_to_ial0_allowed => JSON::PP::false,
+            entry_presence_keys => language_surface_file_surface_entry_keys(),
+            entries => [
+                {
+                    suffix => '.fsm',
+                    intent_layer => 'IAL0',
+                    status => 'shipped',
+                    role => 'explicit cycle-authored review artifact and direct HDL input',
+                    lowers_to => [],
+                    generated_review_artifacts => [],
+                    sample_path => 'fsm/trial_0.fsm',
+                    current_boundary => 'direct authored .fsm input remains the IAL0 review artifact and HDL source path',
+                },
+                {
+                    suffix => '.isf',
+                    intent_layer => 'IAL1',
+                    status => 'shipped',
+                    role => 'Intent Scheduling Format source that lowers to reviewable .fsm before HDL',
+                    lowers_to => ['.fsm'],
+                    generated_review_artifacts => ['.fsm'],
+                    sample_path => 'isf/apb_requester.isf',
+                    current_boundary => 'shipped ISF parser/scheduler subsets lower through generated .fsm review artifacts',
+                },
+                {
+                    suffix => '.ppif',
+                    intent_layer => 'IAL2',
+                    status => 'shipped_first_slice',
+                    role => 'Protocol/Platform Intent Format source that lowers to generated .isf before generated .fsm',
+                    lowers_to => ['.isf', '.fsm'],
+                    generated_review_artifacts => ['.isf', '.fsm'],
+                    sample_path => 'ppif/axi_aw_valid_ready.ppif',
+                    current_boundary => 'one Valid-Ready source object with profile axi4; aliases, multiple objects, platform clauses, and full AXI manager behavior are deferred',
+                },
+            ],
+            unsupported_first_slice_aliases => [qw(.pif .ppi .axi .chi .ace .ahb .apb .atb)],
         },
         default_mode_compatibility => {
             accepted_but_not_canonical_for_generated_output => [

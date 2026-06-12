@@ -285,6 +285,7 @@ use FSM::Support::DiagnosticsContract qw(
 );
 use FSM::Support::LanguageSurfaceContract qw(
     language_surface_contract_source
+    language_surface_file_surface_entry_keys
     language_surface_nested_presence_key_map
 );
 use FSM::Support::ProducerContract qw(
@@ -2716,6 +2717,45 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
         scalar(@{$manifest->{language_surface}{surface_contract}{strict_mode_presence_keys} || []}) >= 5,
         'manifest advertises bounded strict-mode language-surface key presence',
     );
+    is_deeply(
+        $manifest->{language_surface}{file_surfaces}{entry_presence_keys},
+        language_surface_file_surface_entry_keys(),
+        'manifest advertises bounded file-surface entry key presence',
+    );
+    my %suffixes = map { $_ => 1 } @{$manifest->{language_surface}{file_surfaces}{shipped_suffixes}};
+    ok($suffixes{'.fsm'}, 'manifest advertises .fsm as a shipped file surface');
+    ok($suffixes{'.isf'}, 'manifest advertises .isf as a shipped file surface');
+    ok($suffixes{'.ppif'}, 'manifest advertises .ppif as a shipped file surface');
+    ok(
+        !$manifest->{language_surface}{file_surfaces}{direct_ial2_to_ial0_allowed},
+        'manifest states direct IAL2-to-IAL0 lowering is not allowed',
+    );
+    my %file_surface_by_suffix = map { $_->{suffix} => $_ } @{$manifest->{language_surface}{file_surfaces}{entries}};
+    is($file_surface_by_suffix{'.ppif'}{intent_layer}, 'IAL2', 'manifest marks .ppif as IAL2');
+    is_deeply(
+        $file_surface_by_suffix{'.ppif'}{lowers_to},
+        ['.isf', '.fsm'],
+        'manifest records .ppif lowering through .isf before .fsm',
+    );
+    is_deeply(
+        $file_surface_by_suffix{'.ppif'}{generated_review_artifacts},
+        ['.isf', '.fsm'],
+        'manifest records .ppif generated review artifacts',
+    );
+    is(
+        $file_surface_by_suffix{'.ppif'}{sample_path},
+        'ppif/axi_aw_valid_ready.ppif',
+        'manifest points at the first runnable PPIF sample',
+    );
+    like(
+        $file_surface_by_suffix{'.ppif'}{current_boundary},
+        qr/one Valid-Ready source object/,
+        'manifest keeps the first PPIF boundary explicit',
+    );
+    my %unsupported_aliases = map { $_ => 1 } @{$manifest->{language_surface}{file_surfaces}{unsupported_first_slice_aliases}};
+    ok($unsupported_aliases{'.pif'}, 'manifest keeps .pif unsupported in the first PPIF slice');
+    ok($unsupported_aliases{'.ppi'}, 'manifest keeps .ppi unsupported in the first PPIF slice');
+    ok($unsupported_aliases{'.axi'}, 'manifest keeps .axi unsupported in the first PPIF slice');
     is(
         $manifest->{language_surface}{surface_contract}{schema_version},
         1,

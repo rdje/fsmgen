@@ -41,6 +41,12 @@ It now also publishes a grouped `presence_key_family_map` so a downstream tool
 can discover the manifest-owned legacy `*_presence_keys` field families from
 one place instead of collecting those compatibility field lists one by one.
 
+The `language_surface.file_surfaces` section advertises the shipped public
+file suffixes: `.fsm` as IAL0, `.isf` as IAL1, and `.ppif` as the first IAL2
+file surface. The `.ppif` entry records that it lowers through generated
+`.isf` before generated `.fsm`, points at `ppif/axi_aw_valid_ready.ppif`, and
+keeps `.pif`, `.ppi`, `.axi`, and other aliases outside the first slice.
+
 The embedding section's `serializable_plan_reports` branch also advertises
 `public_top_level_presence_keys` and `json_safe_surface_keys`; both the
 standalone parent contract and the manifest-embedded branch are JSON-round-trip

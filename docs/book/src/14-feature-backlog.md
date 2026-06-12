@@ -2439,8 +2439,11 @@ CLI examples for the shipped first public slice:
 The `.ppif` path always lowers through generated `.isf` before generated
 `.fsm`. `--outdir` writes both review artifacts before the HDL path runs.
 `--emit-schedule-json` emits the IAL2 source-anchor/residue report for the
-source object. The next prerequisite is a later exact owner for additional
-`.ppif` objects/clauses, profile aliases, or the next protocol rule subset.
+source object. The capability manifest now advertises this file-layer stack
+under `language_surface.file_surfaces`, including the `.ppif` sample path and
+the first-slice alias exclusions. The next prerequisite is a later exact owner
+for additional `.ppif` objects/clauses, profile aliases, or the next protocol
+rule subset.
 
 PDF extraction workflow:
 [PDF_EXTRACTION_WORKFLOW](../../PDF_EXTRACTION_WORKFLOW.md)

@@ -12,6 +12,8 @@ my $sentinel = '__manifest_section_contract_mutation__';
 subtest 'manifest language-surface contract language family key lists rebuilds cleanly after caller mutation' => sub {
     my $first = build_capability_manifest();
     my $mutated = $first->{'language_surface'}{'surface_contract'};
+    mutate_structure($mutated->{'file_surfaces_presence_keys'});
+    mutate_structure($mutated->{'file_surface_entry_presence_keys'});
     mutate_structure($mutated->{'assignments_presence_keys'});
     mutate_structure($mutated->{'system_contracts_presence_keys'});
     mutate_structure($mutated->{'expressions_presence_keys'});
@@ -21,6 +23,8 @@ subtest 'manifest language-surface contract language family key lists rebuilds c
     my $second = build_capability_manifest();
     my $contract = $second->{'language_surface'}{'surface_contract'};
     my $expected = build_language_surface_contract();
+    is_deeply($contract->{'file_surfaces_presence_keys'}, $expected->{'file_surfaces_presence_keys'}, 'fresh manifest language-surface contract rebuilds clean file_surfaces_presence_keys');
+    is_deeply($contract->{'file_surface_entry_presence_keys'}, $expected->{'file_surface_entry_presence_keys'}, 'fresh manifest language-surface contract rebuilds clean file_surface_entry_presence_keys');
     is_deeply($contract->{'assignments_presence_keys'}, $expected->{'assignments_presence_keys'}, 'fresh manifest language-surface contract rebuilds clean assignments_presence_keys');
     is_deeply($contract->{'system_contracts_presence_keys'}, $expected->{'system_contracts_presence_keys'}, 'fresh manifest language-surface contract rebuilds clean system_contracts_presence_keys');
     is_deeply($contract->{'expressions_presence_keys'}, $expected->{'expressions_presence_keys'}, 'fresh manifest language-surface contract rebuilds clean expressions_presence_keys');

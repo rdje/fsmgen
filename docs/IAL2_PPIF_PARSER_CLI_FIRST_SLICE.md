@@ -68,6 +68,16 @@ Run check mode with machine-readable diagnostics:
 ./bin/fsmgen --strict --check --json ppif/axi_aw_valid_ready.ppif
 ```
 
+Discover the shipped file suffix stack:
+
+```bash
+./bin/fsmgen --capability-manifest
+```
+
+The manifest's `language_surface.file_surfaces` section lists `.fsm`, `.isf`,
+and `.ppif`; the `.ppif` entry records IAL2, generated `.isf` before generated
+`.fsm`, the sample path, and the unsupported first-slice aliases.
+
 Malformed `.ppif` source fails closed before claiming generated behavior. The
 first slice rejects missing profile/source/channel clauses, duplicate
 `valid-ready-channel` objects, malformed reset tuples, unsupported payload
@@ -118,4 +128,6 @@ Focused coverage lives in
 - CLI `--emit-schedule-json` emits the IAL2 report,
 - CLI `--outdir` writes generated `.isf`, generated `.fsm`, and HDL,
 - CLI `--strict --check --json` accepts `.ppif`,
+- `--capability-manifest` advertises `.ppif` under
+  `language_surface.file_surfaces`,
 - `.pif` remains unsupported in this first public slice.

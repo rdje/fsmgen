@@ -13,6 +13,8 @@ subtest 'manifest language-surface contract language family key lists survives J
     my $decoded = decode_json(encode_json(build_capability_manifest()));
     my $contract = $decoded->{'language_surface'}{'surface_contract'};
     my $expected = build_language_surface_contract();
+    is_deeply($contract->{'file_surfaces_presence_keys'}, $expected->{'file_surfaces_presence_keys'}, 'decoded manifest language-surface contract keeps file_surfaces_presence_keys');
+    is_deeply($contract->{'file_surface_entry_presence_keys'}, $expected->{'file_surface_entry_presence_keys'}, 'decoded manifest language-surface contract keeps file_surface_entry_presence_keys');
     is_deeply($contract->{'assignments_presence_keys'}, $expected->{'assignments_presence_keys'}, 'decoded manifest language-surface contract keeps assignments_presence_keys');
     is_deeply($contract->{'system_contracts_presence_keys'}, $expected->{'system_contracts_presence_keys'}, 'decoded manifest language-surface contract keeps system_contracts_presence_keys');
     is_deeply($contract->{'expressions_presence_keys'}, $expected->{'expressions_presence_keys'}, 'decoded manifest language-surface contract keeps expressions_presence_keys');

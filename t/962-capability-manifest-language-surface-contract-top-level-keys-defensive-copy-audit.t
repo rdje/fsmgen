@@ -14,6 +14,8 @@ subtest 'manifest language-surface contract top-level and mode key lists rebuild
     my $mutated = $first->{'language_surface'}{'surface_contract'};
     mutate_structure($mutated->{'public_top_level_presence_keys'});
     mutate_structure($mutated->{'strict_mode_presence_keys'});
+    mutate_structure($mutated->{'file_surfaces_presence_keys'});
+    mutate_structure($mutated->{'file_surface_entry_presence_keys'});
     mutate_structure($mutated->{'default_mode_compatibility_presence_keys'});
 
     my $second = build_capability_manifest();
@@ -21,6 +23,8 @@ subtest 'manifest language-surface contract top-level and mode key lists rebuild
     my $expected = build_language_surface_contract();
     is_deeply($contract->{'public_top_level_presence_keys'}, $expected->{'public_top_level_presence_keys'}, 'fresh manifest language-surface contract rebuilds clean public_top_level_presence_keys');
     is_deeply($contract->{'strict_mode_presence_keys'}, $expected->{'strict_mode_presence_keys'}, 'fresh manifest language-surface contract rebuilds clean strict_mode_presence_keys');
+    is_deeply($contract->{'file_surfaces_presence_keys'}, $expected->{'file_surfaces_presence_keys'}, 'fresh manifest language-surface contract rebuilds clean file_surfaces_presence_keys');
+    is_deeply($contract->{'file_surface_entry_presence_keys'}, $expected->{'file_surface_entry_presence_keys'}, 'fresh manifest language-surface contract rebuilds clean file_surface_entry_presence_keys');
     is_deeply($contract->{'default_mode_compatibility_presence_keys'}, $expected->{'default_mode_compatibility_presence_keys'}, 'fresh manifest language-surface contract rebuilds clean default_mode_compatibility_presence_keys');
 };
 done_testing();

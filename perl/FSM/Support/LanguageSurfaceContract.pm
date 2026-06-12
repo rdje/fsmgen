@@ -14,6 +14,8 @@ our @EXPORT_OK = qw(
     language_surface_declarations_keys
     language_surface_default_mode_compatibility_keys
     language_surface_expressions_keys
+    language_surface_file_surface_entry_keys
+    language_surface_file_surfaces_keys
     language_surface_nested_presence_key_map
     language_surface_public_top_level_keys
     language_surface_strict_mode_keys
@@ -41,6 +43,8 @@ sub build_language_surface_contract {
         },
         public_top_level_presence_keys => language_surface_public_top_level_keys(),
         strict_mode_presence_keys => language_surface_strict_mode_keys(),
+        file_surfaces_presence_keys => language_surface_file_surfaces_keys(),
+        file_surface_entry_presence_keys => language_surface_file_surface_entry_keys(),
         default_mode_compatibility_presence_keys => language_surface_default_mode_compatibility_keys(),
         assignments_presence_keys => language_surface_assignments_keys(),
         system_contracts_presence_keys => language_surface_system_contracts_keys(),
@@ -62,6 +66,7 @@ sub language_surface_public_top_level_keys {
     return [
         qw(
             strict_mode
+            file_surfaces
             default_mode_compatibility
             assignments
             system_contracts
@@ -82,6 +87,34 @@ sub language_surface_strict_mode_keys {
             canonical_direct_roots
             canonical_composition_roots
             canonical_child_roots
+        ),
+    ];
+}
+
+sub language_surface_file_surfaces_keys {
+    return [
+        qw(
+            shipped_suffixes
+            layer_order
+            direct_ial2_to_ial0_allowed
+            entry_presence_keys
+            entries
+            unsupported_first_slice_aliases
+        ),
+    ];
+}
+
+sub language_surface_file_surface_entry_keys {
+    return [
+        qw(
+            suffix
+            intent_layer
+            status
+            role
+            lowers_to
+            generated_review_artifacts
+            sample_path
+            current_boundary
         ),
     ];
 }
@@ -153,6 +186,7 @@ sub language_surface_composition_keys {
 sub language_surface_nested_presence_key_map {
     return {
         strict_mode => language_surface_strict_mode_keys(),
+        file_surfaces => language_surface_file_surfaces_keys(),
         default_mode_compatibility => language_surface_default_mode_compatibility_keys(),
         assignments => language_surface_assignments_keys(),
         system_contracts => language_surface_system_contracts_keys(),
