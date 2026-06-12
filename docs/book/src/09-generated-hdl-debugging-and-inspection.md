@@ -320,10 +320,12 @@ output-drive/always-block body consumer modeling remains deferred. Direct
 instance/link selector `R11-DIRECT-STRUCTURAL-INSTANCES-LINKS.1` confirms
 direct roots intentionally keep `instances[]`, `declared_links[]`, and
 `resolved_links[]` empty; populated instances and links remain composition-top
-structural facts. Full direct module rerouting and VHDL rerouting through
-`StructuralRTLIR` remain outside that direct structural projection and are
-tracked by proposed owner trees `R11-DIRECT-STRUCTURAL-FULL-HDL-REROUTING` and
-`R11-DIRECT-STRUCTURAL-VHDL-REROUTING`. The direct SystemVerilog top
+structural facts. Selector
+`R11-DIRECT-STRUCTURAL-FULL-HDL-REROUTING.1` deferred broader/full direct
+SystemVerilog rerouting through `StructuralRTLIR` until direct behavior-body,
+state-update, output, and assertion regions have exact structural ownership.
+Direct VHDL rerouting remains outside that projection under proposed owner
+tree `R11-DIRECT-STRUCTURAL-VHDL-REROUTING`. The direct SystemVerilog top
 state/standalone-DT generated-enable condition block is now rerouted through
 `StructuralRTLIR` assignment records by an explicit backend marker handoff; the
 markers are removed before final HDL is returned.

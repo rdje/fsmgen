@@ -97,13 +97,15 @@ body consumer modeling remains outside the compact source summary.
 Direct instance/link selector `R11-DIRECT-STRUCTURAL-INSTANCES-LINKS.1`
 confirmed direct roots are leaf structural summaries and intentionally keep
 `instances[]`, `declared_links[]`, and `resolved_links[]` empty; populated
-instances and links remain a composition-top structural contract. Full direct
-module rerouting and VHDL rerouting through `StructuralRTLIR` remain tracked by
-proposed owner trees `R11-DIRECT-STRUCTURAL-FULL-HDL-REROUTING` and
-`R11-DIRECT-STRUCTURAL-VHDL-REROUTING`. The first exact private ISF lowerer
-extraction is shipped as `FSM::Scheduler::ISF::ATLGeneratedTop` for ATL
-generated-top report projection and data-link child-interface marking; broader
-parser/lowerer extraction remains deferred behind future exact owners. IAL2
+instances and links remain a composition-top structural contract. Selector
+`R11-DIRECT-STRUCTURAL-FULL-HDL-REROUTING.1` deferred broader/full direct
+SystemVerilog rerouting through `StructuralRTLIR` until direct behavior-body,
+state-update, output, and assertion regions have exact structural ownership.
+Direct VHDL rerouting through `StructuralRTLIR` remains tracked by proposed
+owner tree `R11-DIRECT-STRUCTURAL-VHDL-REROUTING`. The first exact private ISF
+lowerer extraction is shipped as `FSM::Scheduler::ISF::ATLGeneratedTop` for
+ATL generated-top report projection and data-link child-interface marking;
+broader parser/lowerer extraction remains deferred behind future exact owners. IAL2
 protocol/platform intent has its first behavior-bearing in-process generator
 slice: `FSM::IAL2::ProtocolIntent::ValidReadyChannel` accepts one AXI
 Valid-Ready contract object, emits reviewable `.isf`, lowers through existing
@@ -927,10 +929,12 @@ output-drive/always-block body consumer modeling remains outside that compact
 summary. Direct instance/link selector
 `R11-DIRECT-STRUCTURAL-INSTANCES-LINKS.1` confirms direct roots intentionally
 keep `instances[]`, `declared_links[]`, and `resolved_links[]` empty; populated
-instances and links remain a composition-top structural contract. Full direct
-module rerouting and VHDL rerouting through `StructuralRTLIR` remain outside
-that projection and are tracked by proposed owner trees
-`R11-DIRECT-STRUCTURAL-FULL-HDL-REROUTING` and
+instances and links remain a composition-top structural contract. Selector
+`R11-DIRECT-STRUCTURAL-FULL-HDL-REROUTING.1` confirms broader/full direct
+SystemVerilog rerouting through `StructuralRTLIR` is still outside that
+projection until direct behavior-body, state-update, output, and assertion
+regions are structurally owned. Direct VHDL rerouting remains outside the
+projection under proposed owner tree
 `R11-DIRECT-STRUCTURAL-VHDL-REROUTING`.
 The nested `semantic.forward_ir.intent_hir` summary inside that branch now
 also has its own bounded owner for the current intent-hir shell plus the
@@ -1131,9 +1135,12 @@ direct output-port `source` summaries from lowered output-drive families
 without changing HDL emission. Completed selector leaf
 `R11-DIRECT-STRUCTURAL-INSTANCES-LINKS.1` confirms direct roots intentionally
 keep empty instance/link arrays and no direct implementation leaf is warranted
-today. Proposed owner trees `R11-DIRECT-STRUCTURAL-FULL-HDL-REROUTING` and
-`R11-DIRECT-STRUCTURAL-VHDL-REROUTING` own the remaining direct structural
-rerouting gaps before future implementation. Completed
+today. Completed selector leaf
+`R11-DIRECT-STRUCTURAL-FULL-HDL-REROUTING.1` defers broader/full direct
+SystemVerilog rerouting until direct behavior-body, state-update, output, and
+assertion regions have exact structural ownership. Proposed owner tree
+`R11-DIRECT-STRUCTURAL-VHDL-REROUTING` owns the direct VHDL rerouting gap
+before future implementation. Completed
 implementation leaf `ARCHITECTURE-DEBT-FRONTIER.2.1` projects direct backend
 storage/helper declaration-plan entries into `structural_rtl_ir.nets[]`
 without rerouting HDL emission. The shipped literal-literal positive modulo

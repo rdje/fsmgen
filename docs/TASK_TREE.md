@@ -120,6 +120,7 @@ first.
 | `R11-DIRECT-STRUCTURAL-PORT-DEPENDENCY-CONNECTIVITY` | `done` | `R11` | complete (`.2`; populated direct input-port generated-enable RHS target connectivity on `StructuralRTLIR.ports[]`) | [docs/tasks/R11-DIRECT-STRUCTURAL-PORT-DEPENDENCY-CONNECTIVITY.md](docs/tasks/R11-DIRECT-STRUCTURAL-PORT-DEPENDENCY-CONNECTIVITY.md) |
 | `R11-DIRECT-STRUCTURAL-OUTPUT-CONSUMERS` | `done` | `R11` | complete (`.2`; populated direct output-port source summaries from lowered output-drive families) | [docs/tasks/R11-DIRECT-STRUCTURAL-OUTPUT-CONSUMERS.md](docs/tasks/R11-DIRECT-STRUCTURAL-OUTPUT-CONSUMERS.md) |
 | `R11-DIRECT-STRUCTURAL-INSTANCES-LINKS` | `done` | `R11` | complete (`.1`; selected an empty direct-root instance/link contract and left populated instances/links with composition-top structural IR) | [docs/tasks/R11-DIRECT-STRUCTURAL-INSTANCES-LINKS.md](docs/tasks/R11-DIRECT-STRUCTURAL-INSTANCES-LINKS.md) |
+| `R11-DIRECT-STRUCTURAL-FULL-HDL-REROUTING` | `deferred` | `R11` | deferred (`.1`; no broader direct SystemVerilog reroute is safe until direct behavior-body structural prerequisites exist) | [docs/tasks/R11-DIRECT-STRUCTURAL-FULL-HDL-REROUTING.md](docs/tasks/R11-DIRECT-STRUCTURAL-FULL-HDL-REROUTING.md) |
 
 ## Proposed Task Trees
 
@@ -128,7 +129,6 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Proposed first leaf | File |
 | --- | --- | --- | --- | --- |
-| `R11-DIRECT-STRUCTURAL-FULL-HDL-REROUTING` | `proposed` | `R11` | `.1` select the next broader direct SystemVerilog HDL reroute target | [docs/tasks/R11-DIRECT-STRUCTURAL-FULL-HDL-REROUTING.md](docs/tasks/R11-DIRECT-STRUCTURAL-FULL-HDL-REROUTING.md) |
 | `R11-DIRECT-STRUCTURAL-VHDL-REROUTING` | `proposed` | `R11` | `.1` select the first direct VHDL StructuralRTLIR reroute target | [docs/tasks/R11-DIRECT-STRUCTURAL-VHDL-REROUTING.md](docs/tasks/R11-DIRECT-STRUCTURAL-VHDL-REROUTING.md) |
 
 ## Completed Task Trees

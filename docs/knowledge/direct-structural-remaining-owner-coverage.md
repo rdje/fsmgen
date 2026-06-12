@@ -28,11 +28,15 @@ implementation:
   structural contract question; selector `.1` is complete and confirms direct
   roots intentionally keep empty instance/link arrays.
 - `R11-DIRECT-STRUCTURAL-FULL-HDL-REROUTING` owns broader direct SystemVerilog
-  rerouting through `StructuralRTLIR`.
+  rerouting through `StructuralRTLIR`; selector `.1` deferred implementation
+  until direct behavior-body/state-update/output/assertion regions have exact
+  structural ownership.
 - `R11-DIRECT-STRUCTURAL-VHDL-REROUTING` owns direct VHDL rerouting through
   `StructuralRTLIR`.
 
-The remaining not-yet-implemented owner trees for broader rerouting are
-proposed, not implementation-active. Any broader direct output-drive and
-always-block body-consumer modeling also needs an exact activated leaf before
-code, test, source, generated-artifact, or config changes.
+The remaining not-yet-implemented owner tree for direct VHDL rerouting is
+proposed, not implementation-active. Broader/full direct SystemVerilog
+rerouting is deferred behind structural prerequisites. Any broader direct
+output-drive and always-block body-consumer modeling also needs an exact
+activated leaf before code, test, source, generated-artifact, or config
+changes.
