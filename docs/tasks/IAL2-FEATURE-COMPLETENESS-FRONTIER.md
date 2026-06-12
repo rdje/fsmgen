@@ -44,7 +44,7 @@ path before reopening VHDL backend or VHDL rerouting work.
 - ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER`
   Status: `active`
   Goal: `Make IAL2 feature-complete on the SystemVerilog-backed path before VHDL work resumes.`
-  Children: `IAL2-FEATURE-COMPLETENESS-FRONTIER.1, IAL2-FEATURE-COMPLETENESS-FRONTIER.2, IAL2-FEATURE-COMPLETENESS-FRONTIER.3, IAL2-FEATURE-COMPLETENESS-FRONTIER.4`
+  Children: `IAL2-FEATURE-COMPLETENESS-FRONTIER.1, IAL2-FEATURE-COMPLETENESS-FRONTIER.2, IAL2-FEATURE-COMPLETENESS-FRONTIER.3, IAL2-FEATURE-COMPLETENESS-FRONTIER.4, IAL2-FEATURE-COMPLETENESS-FRONTIER.5`
 
 - ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER.1`
   Status: `done`
@@ -68,9 +68,16 @@ path before reopening VHDL backend or VHDL rerouting work.
   Commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.3: audit AXI manager capacity readiness`
 
 - ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER.4`
-  Status: `pending`
+  Status: `done`
   Goal: `Implement the first in-process AXI manager capacity/status generator slice.`
   Acceptance: `A new in-process IAL2 generator accepts a structured AXI4 manager capacity/status contract with explicit read/write max-pending depths and try-policy abstract submit/complete events; emits reviewable generated .isf before generated .fsm; lowers through existing IAL1/IAL0 to SystemVerilog; reports schema fsmgen.ial2.protocol_intent.axi_manager_capacity_status.v1 with source anchors, generated artifacts, status outputs, capacity metadata, assumptions, static rules, and residue; rejects unsupported policies, ID/order/response/burst/channel-expansion requests, direct IAL2-to-IAL0 lowering, and name collisions; adds focused tests and mdBook/user-facing docs.`
+  Verification: `Added FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus and t/1437-axi-ial2-manager-capacity-status-generator.t; proved generated .isf before .fsm, existing IAL1/IAL0 lowering, SystemVerilog reachability, capacity/status rule matrix behavior, report schema, fail-closed diagnostics, docs, mdBook, Knowledge Map, memory, and hygiene gates.`
+  Commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.4: ship AXI manager capacity generator`
+
+- ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER.5`
+  Status: `pending`
+  Goal: `Select the public .ppif AXI manager capacity/status syntax and readiness boundary.`
+  Acceptance: `The selector/audit reads the shipped in-process capacity/status generator, PPIF parser/CLI paths, support-accounting corpus, capability/language-surface metadata, check JSON, semantic JSON, sample policy, mdBook, and focused tests; chooses the exact public .ppif manager object syntax and first parser/CLI slice boundary or records required prerequisites first; documents diagnostics, source-identity behavior, generated review artifacts, validation gates, residue, and rollback before any public parser behavior changes.`
   Verification: `pending`
   Commit: `pending`
 
@@ -78,7 +85,7 @@ path before reopening VHDL backend or VHDL rerouting work.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.4` | `pending` | `.3` found no IAL1/IAL0/SV blocker for an in-process capacity/status shell; the next safe step is the first behavior-bearing generator slice before public .ppif syntax. |
+| 1 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.5` | `pending` | `.4` shipped the in-process capacity/status shell; the next safe step is selecting the public `.ppif` syntax/readiness boundary before parser, CLI, sample, manifest, or source-identity behavior changes. |
 
 ## Decisions
 
@@ -173,15 +180,24 @@ path before reopening VHDL backend or VHDL rerouting work.
   status outputs, generated review artifacts, focused tests, mdBook sync, and
   fail-closed diagnostics for unsupported policies, IDs, ordering, response
   matching, bursts, channel expansion, and name collisions.
+- `2026-06-12`: `.4` shipped
+  `FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus` as the first
+  in-process AXI manager capacity/status generator. The generator accepts a
+  structured contract hash, emits generated `.isf` before `.fsm`, lowers
+  through existing IAL1/IAL0 to SystemVerilog, reports schema
+  `fsmgen.ial2.protocol_intent.axi_manager_capacity_status.v1`, and keeps
+  public `.ppif` syntax, IDs, ordering, response matching, bursts,
+  queued/blocking policy, and VHDL as explicit residue.
+- `2026-06-12`: `.5` is selected as the next leaf to choose the public
+  `.ppif` capacity/status syntax and readiness boundary before parser/CLI
+  code, samples, support-accounting, manifest, semantic JSON, or check JSON
+  behavior changes.
 
 ## Open Questions
 
-- `IAL2-FEATURE-COMPLETENESS-FRONTIER.4` must choose the exact Perl module
-  name for the in-process generator. The audit's tentative name is
-  `FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus`.
-- Public `.ppif` syntax for the capacity/status object remains an open future
-  owner after `.4` proves the in-process generator and generated
-  review-artifact path.
+- Public `.ppif` syntax for the capacity/status object remains an open exact
+  owner for `.5`; do not implement parser/CLI behavior until that selector
+  records the syntax, source identity, artifacts, and validation boundary.
 
 ## Blockers
 
@@ -197,6 +213,8 @@ path before reopening VHDL backend or VHDL rerouting work.
 | `2026-06-12` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.2` | `mdbook build docs/book`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `git --no-pager diff --check`; selector fact-card reverify `rg`; capacity/status fact-card reverify `rg` | Passed. |
 | `2026-06-12` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.3` | `perl/FSM/Adapter/IAL2/PPIF.pm`; `bin/fsmgen`; `perl/FSM/IAL2/ProtocolIntent/ValidReadyChannel.pm`; `perl/FSM/Adapter/ISF/Parser.pm`; `perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl/FSM/Scheduler/ISF/Emitter/FSM.pm`; `perl/FSM/Scheduler/ISF/Emitter/JSON.pm`; `perl/FSM/Support/RegressionCorpus.pm`; `perl/FSM/Support/LanguageSurfaceSection.pm`; `t/1232-isf-actor-storage-declarations.t`; `t/1235-isf-fifo-same-cycle-update-matrix.t`; `t/1435-axi-ial2-valid-ready-generator.t`; `t/1436-ial2-ppif-parser-cli.t`; `docs/book/src/13a-actor-interface.md`; `docs/book/src/13k-isf-feature-support-matrix.md`; `docs/ISF_SPEC.md`; `docs/book/src/14-feature-backlog.md`; `ROADMAP_V2.md`; `README.md` | Selected an in-process generator as the first capacity/status implementation boundary and advanced the frontier to `.4`. |
 | `2026-06-12` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.3` | `bash knowledge-map/scripts/gen_knowledge_map.sh`; `mdbook build docs/book`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `git --no-pager diff --check`; readiness fact-card reverify `rg`; capacity/status fact-card reverify `rg`; IAL2 priority fact-card reverify `rg` | Passed. |
+| `2026-06-12` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.4` | `perl -Iperl -c perl/FSM/IAL2/ProtocolIntent/AxiManagerCapacityStatus.pm`; `prove -Iperl t/1437-axi-ial2-manager-capacity-status-generator.t`; `prove -Iperl t/1435-axi-ial2-valid-ready-generator.t t/1235-isf-fifo-same-cycle-update-matrix.t t/1232-isf-actor-storage-declarations.t t/1437-axi-ial2-manager-capacity-status-generator.t` | Passed. |
+| `2026-06-12` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.4` | `bash knowledge-map/scripts/gen_knowledge_map.sh`; `mdbook build docs/book`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `git --no-pager diff --check`; capacity/status generator fact-card reverify `prove -Iperl t/1437-axi-ial2-manager-capacity-status-generator.t`; readiness fact-card reverify `rg`; IAL2 priority fact-card reverify `rg` | Passed. |
 
 ## Commit Log
 
@@ -205,7 +223,8 @@ path before reopening VHDL backend or VHDL rerouting work.
 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.1` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.1: select next IAL2 slice` | Audited shipped IAL2 surface and moved the frontier to first AXI manager rule-subset selection. |
 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.2` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.2: select AXI manager capacity slice` | Selected the first post-Valid-Ready AXI manager subset and advanced the frontier to `.3` readiness audit. |
 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.3` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.3: audit AXI manager capacity readiness` | Audited implementation readiness and advanced the frontier to `.4`, the in-process generator slice. |
-| `IAL2-FEATURE-COMPLETENESS-FRONTIER.4` | `pending` | `pending` |
+| `IAL2-FEATURE-COMPLETENESS-FRONTIER.4` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.4: ship AXI manager capacity generator` | Shipped the in-process capacity/status generator, focused tests, docs, mdBook sync, and advanced the frontier to `.5`. |
+| `IAL2-FEATURE-COMPLETENESS-FRONTIER.5` | `pending` | `pending` |
 
 ## Changelog
 
@@ -219,3 +238,6 @@ path before reopening VHDL backend or VHDL rerouting work.
 - `2026-06-12`: Completed `.3` readiness audit, selected an in-process
   capacity/status generator as the first behavior-bearing implementation
   boundary, and advanced the frontier to `.4`.
+- `2026-06-12`: Completed `.4` in-process generator slice and advanced the
+  frontier to `.5`, public `.ppif` capacity/status syntax/readiness
+  selection.

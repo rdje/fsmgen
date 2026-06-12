@@ -898,18 +898,22 @@ Priority note:
   [docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md](docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md);
   the first post-Valid-Ready AXI manager rule subset is now selected as
   outstanding-capacity plus acceptance/status feedback, the readiness audit
-  found no IAL1 or IAL0/SV prerequisite blocker for an in-process generator,
-  and the active next leaf implements that first generator slice before public
-  `.ppif` syntax.
+  found no IAL1 or IAL0/SV prerequisite blocker, the first in-process
+  generator is shipped as
+  `FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus`, and the active next
+  leaf selects the public `.ppif` capacity/status syntax and readiness
+  boundary before parser/CLI behavior changes.
 
 ## Current intent
 The active immediate feature-completeness lane is IAL2 on the
 SystemVerilog-backed lowering path; see
 [docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md](docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md).
-The current frontier is the first in-process generator for the selected AXI
-manager capacity/status subset after the shipped Valid-Ready single/bundle
-`.ppif` surfaces. Public capacity/status `.ppif` syntax remains deferred until
-that generator proves the generated `.isf` and `.fsm` review-artifact path.
+The current frontier is public `.ppif` syntax/readiness selection for the
+selected AXI manager capacity/status subset, after the in-process generator
+proved the generated `.isf` and `.fsm` review-artifact path. Parser/CLI
+behavior, public samples, support-accounting, semantic JSON, check JSON, and
+manifest changes remain deferred until that selector records the exact
+boundary.
 
 The first honest `R11` slices are now:
 1. keep widening convention-first composition only where the child-side evidence is still deterministic,
