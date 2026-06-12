@@ -44,7 +44,7 @@ path before reopening VHDL backend or VHDL rerouting work.
 - ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER`
   Status: `active`
   Goal: `Make IAL2 feature-complete on the SystemVerilog-backed path before VHDL work resumes.`
-  Children: `IAL2-FEATURE-COMPLETENESS-FRONTIER.1, IAL2-FEATURE-COMPLETENESS-FRONTIER.2`
+  Children: `IAL2-FEATURE-COMPLETENESS-FRONTIER.1, IAL2-FEATURE-COMPLETENESS-FRONTIER.2, IAL2-FEATURE-COMPLETENESS-FRONTIER.3`
 
 - ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER.1`
   Status: `done`
@@ -54,9 +54,16 @@ path before reopening VHDL backend or VHDL rerouting work.
   Commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.1: select next IAL2 slice`
 
 - ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Select the first post-Valid-Ready AXI manager rule subset and pre-code contract.`
   Acceptance: `The selector chooses one bounded source-anchored AXI manager subset from the rule matrix, records exact source anchors, authored .ppif/profile surface expectations, generated IAL1 .isf review artifact shape, generated IAL0 .fsm/HDL expectations, required IAL1 or IAL0/SV prerequisites, diagnostics/report contracts, mdBook/public contract updates, validation gates, explicit residue, and the rollback boundary before any manager behavior is implemented.`
+  Verification: `Selected the AXI manager outstanding-capacity and acceptance/status subset, anchored to A1.1/A1.2/A5.1; recorded authored .ppif/profile expectations, generated IAL1/IAL0 artifact shape, likely IAL1/IAL0/SV prerequisites, report/diagnostic contracts, mdBook sync, validation gates, residue, and docs-only rollback boundary.`
+  Commit: `pending`
+
+- ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER.3`
+  Status: `pending`
+  Goal: `Audit readiness for the AXI manager capacity/status implementation slice.`
+  Acceptance: `The audit reads the PPIF parser/generator, IAL2 Valid-Ready generator, IAL1 parser/lowerer/report emitters, IAL0/HDL emission surfaces, public contract metadata, and focused tests; decides whether the selected capacity/status subset can be implemented by existing IAL1 constructs or needs new IAL1/IAL0/SV prerequisites first; records exact implementation boundary, tests, report schema, mdBook updates, blockers, residue, and rollback before behavior changes.`
   Verification: `pending`
   Commit: `pending`
 
@@ -64,7 +71,7 @@ path before reopening VHDL backend or VHDL rerouting work.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.2` | `pending` | The shipped IAL2 surface is Valid-Ready single/bundle support; the largest feature-completeness gap is the full AXI manager, which needs a bounded rule-subset contract before behavior changes. |
+| 1 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.3` | `pending` | `.2` selected outstanding-capacity and acceptance/status as the first post-Valid-Ready AXI manager rule subset; the next safe step is a readiness audit before implementation changes. |
 
 ## Decisions
 
@@ -107,16 +114,53 @@ path before reopening VHDL backend or VHDL rerouting work.
   revert the `.1` selector edits, Knowledge Map fact card/map regeneration,
   README, roadmap, and mdBook wording. No code, parser, test, or generated HDL
   behavior is changed by `.1`.
+- `2026-06-12`: Selector `.2` chose the first post-Valid-Ready AXI manager
+  rule subset: outstanding transaction capacity plus acceptance/status
+  feedback. The exact source anchors are `A1.1`, `A1.2`, and `A5.1` from the
+  rule-matrix/evidence notes. The subset owns explicit read/write pending
+  capacity, `try`-style acceptance feedback, full/pending/slots status, and a
+  bounded blocked-reason vocabulary for capacity exhaustion. It does not yet
+  own ID allocation, ID validation, same-ID ordering, different-ID
+  interleaving, response matching, burst/last-beat tracking, channel expansion,
+  or `blocking`/`queued` policy behavior.
+- `2026-06-12`: `.2` authored surface expectation: a future `.ppif`
+  `(profile axi4)` manager object should require explicit read/write
+  `max-pending` depths before claiming multi-slot behavior, should avoid bare
+  `can_accept` collisions by emitting namespaced status outputs such as
+  `axi0_read_can_accept`, and should fail closed on unsupported policies or
+  ambiguous defaults instead of silently collapsing Easy mode to one
+  transaction at a time.
+- `2026-06-12`: `.2` generated artifact expectation: the future implementation
+  must emit a reviewable IAL1 `.isf` manager-capacity shell before IAL0. The
+  generated `.isf` should expose abstract read/write submit and completion
+  events, generated pending counters, capacity comparators, status outputs,
+  and optional capacity-only blocked-reason reporting. The generated IAL0
+  `.fsm`/SystemVerilog surface should make those counters and status outputs
+  explicit and must not claim full AXI channel, ID, ordering, or response
+  behavior.
+- `2026-06-12`: `.2` prerequisite expectation: the readiness audit must verify
+  whether existing `.ppif` parsing, IAL2 report generation, IAL1 constructs,
+  IAL0 emission, and SystemVerilog output can represent generated counters,
+  vector/numeric status ports, capacity-only block reasons, and namespaced
+  status signals without widening `.isf` with IAL2 source forms. Any missing
+  substrate becomes an explicit IAL1 or IAL0/SV prerequisite leaf before the
+  manager behavior leaf.
+- `2026-06-12`: `.2` selected `.3` as the next leaf: an implementation
+  readiness audit for the capacity/status subset. `.3` must not ship behavior;
+  it must map code/test/docs/report owners and choose the safe first
+  implementation boundary.
 
 ## Open Questions
 
-- `IAL2-FEATURE-COMPLETENESS-FRONTIER.2` must decide the exact first AXI
-  manager rule family. Candidate families include outstanding capacity and
-  status feedback, ID allocation/user-ID validation, same-ID ordering queues,
-  response matching, read-data interleaving policy, or write-data sequencing.
-- `.2` must also decide whether the selected subset can be expressed as a new
-  `.ppif` clause, an in-process manager object first, or a profile/vocabulary
-  shape that still lowers through reviewable `.isf` before `.fsm`.
+- `IAL2-FEATURE-COMPLETENESS-FRONTIER.3` must decide whether the first
+  capacity/status implementation can be a public `.ppif` object immediately or
+  whether an in-process generator/readiness slice must come first.
+- `.3` must decide whether capacity-only blocked-reason reporting should be
+  an HDL output, report-only metadata, or both for the first behavior-bearing
+  slice.
+- `.3` must decide whether abstract completion events are sufficient for the
+  first manager-capacity shell, or whether the implementation must first own a
+  narrower read-only or write-only capacity path.
 
 ## Blockers
 
@@ -128,17 +172,23 @@ path before reopening VHDL backend or VHDL rerouting work.
 | --- | --- | --- | --- |
 | `2026-06-12` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.1` | `README.md`; `MEMORY_ARCHITECTURE.md`; `COMMIT.md`; `docs/TASK_TREE.md`; decisions `0003`, `0005`, `0006`, `0007`, `0014`-`0017`; Knowledge Map IAL2/AXI fact cards; `docs/AXI_MANAGER_USER_API_BRAINSTORM.md`; `docs/AXI_MANAGER_RULE_MATRIX_DESIGN_PROBE.md`; `docs/AXI_ID_ORDERING_RULE_EVIDENCE_PROBE.md`; `docs/AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md`; `docs/AXI_IAL2_VALID_READY_READINESS_AUDIT.md`; `perl/FSM/IAL2/ProtocolIntent/ValidReadyChannel.pm`; `perl/FSM/Adapter/IAL2/PPIF.pm`; `bin/fsmgen`; `t/1436-ial2-ppif-parser-cli.t`; `docs/book/src/14-feature-backlog.md`; `ROADMAP_V2.md` | Selected `.2` as the next exact pre-code owner for the first AXI manager rule subset. |
 | `2026-06-12` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.1` | `mdbook build docs/book`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `git --no-pager diff --check`; selector fact-card reverify `rg` | Passed. |
-| `2026-06-12` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.2` | `pending` | `pending` |
+| `2026-06-12` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.2` | `docs/AXI_MANAGER_RULE_MATRIX_DESIGN_PROBE.md`; `docs/AXI_MANAGER_USER_API_BRAINSTORM.md`; `docs/book/src/13a-actor-interface.md`; `docs/ISF_SPEC.md`; `perl/FSM/Scheduler/ISF/LoweringIR.pm`; `docs/book/src/14-feature-backlog.md`; `README.md`; `ROADMAP_V2.md` | Selected outstanding-capacity and acceptance/status as the first post-Valid-Ready AXI manager subset and selected `.3` as the readiness-audit frontier. |
+| `2026-06-12` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.2` | `mdbook build docs/book`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `git --no-pager diff --check`; selector fact-card reverify `rg`; capacity/status fact-card reverify `rg` | Passed. |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.1` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.1: select next IAL2 slice` | Audited shipped IAL2 surface and moved the frontier to first AXI manager rule-subset selection. |
-| `IAL2-FEATURE-COMPLETENESS-FRONTIER.2` | `pending` | `pending` |
+| `IAL2-FEATURE-COMPLETENESS-FRONTIER.2` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.2: select AXI manager capacity slice` | Selected the first post-Valid-Ready AXI manager subset and advanced the frontier to `.3` readiness audit. |
+| `IAL2-FEATURE-COMPLETENESS-FRONTIER.3` | `pending` | `pending` |
 
 ## Changelog
 
 - `2026-06-12`: Created active IAL2 feature-completeness frontier.
 - `2026-06-12`: Completed `.1` selector and advanced frontier to `.2`, the
   first AXI manager rule-subset selection/pre-code contract.
+- `2026-06-12`: Completed `.2` selector, chose AXI manager
+  outstanding-capacity and acceptance/status as the first post-Valid-Ready
+  manager subset, and advanced the frontier to `.3` readiness audit before
+  implementation changes.

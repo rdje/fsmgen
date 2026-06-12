@@ -2263,9 +2263,12 @@ Active frontier:
 [IAL2-FEATURE-COMPLETENESS-FRONTIER](../../tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md)
 owns the next IAL2 feature-completeness work. Its first selector audited the
 shipped `.ppif` Valid-Ready single/bundle surface and moved the frontier to
-the first AXI manager rule-subset selection/pre-code contract. Selected IAL2
-slices may include explicit IAL1 or IAL0/SystemVerilog prerequisites when
-those prerequisites are needed for clean, reviewable lowering.
+the first AXI manager rule-subset selection/pre-code contract. That selector
+chose outstanding-capacity plus acceptance/status feedback as the first
+post-Valid-Ready manager subset. The active frontier is now the readiness
+audit for that subset before behavior changes. Selected IAL2 slices may
+include explicit IAL1 or IAL0/SystemVerilog prerequisites when those
+prerequisites are needed for clean, reviewable lowering.
 
 Evaluation note:
 [IAL2_PROTOCOL_PLATFORM_INTENT_EVALUATION](../../IAL2_PROTOCOL_PLATFORM_INTENT_EVALUATION.md).
@@ -2342,6 +2345,20 @@ as static authoring checks, generated scheduler/scoreboard behavior, runtime
 assertions, environment assumptions, or unsupported residue. It still selects
 no source syntax, parser, lowering, `.isf`, `.fsm`, HDL, assertion text, queue
 default, or ID allocation algorithm.
+
+First post-Valid-Ready manager subset:
+[AXI_IAL2_MANAGER_CAPACITY_STATUS_SUBSET_SELECTION](../../AXI_IAL2_MANAGER_CAPACITY_STATUS_SUBSET_SELECTION.md)
+selects outstanding transaction capacity plus acceptance/status feedback as
+the next AXI manager rule family. The selected source anchors are `A1.1`,
+`A1.2`, and `A5.1`. The subset is expected to expose explicit read/write
+`max-pending` depths, `try`-style acceptance feedback, full/pending/slots
+status, and a capacity-only blocked-reason vocabulary while preserving
+generated `.isf` and `.fsm` review artifacts before SystemVerilog HDL. It is
+not a shipped behavior yet and does not claim ID allocation, ordering,
+interleaving, response matching, burst assembly, channel expansion,
+`blocking`/`queued` policy behavior, profile aliases, or VHDL backend work.
+The next task-tree leaf must audit implementation readiness before any
+manager behavior changes.
 
 First implementation subset selection:
 [AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION](../../AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md)
@@ -2463,10 +2480,11 @@ generated `.fsm`. The capability manifest now advertises this file-layer stack
 under `language_surface.file_surfaces`, including the `.ppif` sample path,
 first-slice alias exclusions, and `supported_cli_modes[]` entries for
 `--emit-schedule-json`, `--check --json` / `--check-json`, and
-`--emit-semantic-json`. The active next prerequisite is the first AXI manager
-rule-subset selection/pre-code contract. Additional `.ppif` objects/clauses
-and profile aliases remain future exact-owner work, but they should not jump
-ahead of the manager rule subset unless a later selector records why.
+`--emit-semantic-json`. The active next prerequisite is the readiness audit
+for the selected AXI manager capacity/status subset. Additional `.ppif`
+objects/clauses and profile aliases remain future exact-owner work, but they
+should not jump ahead of the manager capacity/status readiness and
+implementation path unless a later selector records why.
 
 Multi-channel `.ppif` bundle support:
 [IAL2_PPIF_MULTI_VALID_READY_READINESS](../../IAL2_PPIF_MULTI_VALID_READY_READINESS.md)
