@@ -1,6 +1,6 @@
 ---
 id: direct-structural-remaining-owner-coverage
-title: Remaining direct StructuralRTLIR gaps have proposed task-tree owners
+title: Remaining direct StructuralRTLIR gaps have task-tree owners
 answers:
   - "who owns the remaining direct StructuralRTLIR gaps?"
   - "is direct port dependency connectivity task-tree tracked?"
@@ -14,11 +14,12 @@ evidence: docs/TASK_TREE.md; docs/tasks/R11-DIRECT-STRUCTURAL-REMAINING-OWNER-CO
 reverify: rg -n 'R11-DIRECT-STRUCTURAL-(PORT-DEPENDENCY-CONNECTIVITY|OUTPUT-CONSUMERS|INSTANCES-LINKS|FULL-HDL-REROUTING|VHDL-REROUTING)' docs/TASK_TREE.md docs/tasks ROADMAP_V2.md docs/book/src/14-feature-backlog.md
 ---
 
-The remaining direct `StructuralRTLIR` roadmap gaps are task-tree owned by
-proposed owner trees before implementation:
+The remaining direct `StructuralRTLIR` roadmap gaps are task-tree owned before
+implementation:
 
 - `R11-DIRECT-STRUCTURAL-PORT-DEPENDENCY-CONNECTIVITY` owns direct port
-  dependency connectivity.
+  dependency connectivity; its first input-port generated-enable RHS target
+  slice is complete.
 - `R11-DIRECT-STRUCTURAL-OUTPUT-CONSUMERS` owns direct output-drive and
   always-block consumer connectivity.
 - `R11-DIRECT-STRUCTURAL-INSTANCES-LINKS` owns the direct instances/links
@@ -28,6 +29,6 @@ proposed owner trees before implementation:
 - `R11-DIRECT-STRUCTURAL-VHDL-REROUTING` owns direct VHDL rerouting through
   `StructuralRTLIR`.
 
-They are proposed, not implementation-active. A future PNT slice must activate
-the relevant selector leaf before code, test, source, generated-artifact, or
-config changes.
+The remaining not-yet-implemented owners are proposed, not
+implementation-active. A future PNT slice must activate the relevant selector
+leaf before code, test, source, generated-artifact, or config changes.

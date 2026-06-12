@@ -105,6 +105,8 @@ use FSM::Support::NormalizedSemanticReportContract qw(
     normalized_semantic_forward_ir_structural_rtl_ir_net_entry_keys
     normalized_semantic_forward_ir_structural_rtl_ir_port_composition_extension_keys
     normalized_semantic_forward_ir_structural_rtl_ir_port_entry_keys
+    normalized_semantic_forward_ir_structural_rtl_ir_port_target_entry_keys
+    normalized_semantic_forward_ir_structural_rtl_ir_port_target_extension_keys
     normalized_semantic_forward_ir_structural_rtl_ir_resolved_link_entry_keys
     normalized_semantic_forward_ir_structural_rtl_ir_keys
     normalized_semantic_matched_failure_diagnostic_keys
@@ -444,6 +446,14 @@ subtest 'normalized semantic report helper builders return fresh nested structur
         {
             label => 'forward_ir_structural_rtl_ir_port_composition_extension_keys',
             build => \&normalized_semantic_forward_ir_structural_rtl_ir_port_composition_extension_keys,
+        },
+        {
+            label => 'forward_ir_structural_rtl_ir_port_target_extension_keys',
+            build => \&normalized_semantic_forward_ir_structural_rtl_ir_port_target_extension_keys,
+        },
+        {
+            label => 'forward_ir_structural_rtl_ir_port_target_entry_keys',
+            build => \&normalized_semantic_forward_ir_structural_rtl_ir_port_target_entry_keys,
         },
         {
             label => 'forward_ir_structural_rtl_ir_net_entry_keys',
@@ -938,6 +948,16 @@ subtest 'fresh normalized semantic report maps stay aligned with helper families
         $family_map->{success_forward_ir_structural_rtl_ir_port_composition_extension_keys},
         normalized_semantic_forward_ir_structural_rtl_ir_port_composition_extension_keys(),
         'structural-RTL port composition extension family matches helper',
+    );
+    is_deeply(
+        $family_map->{success_forward_ir_structural_rtl_ir_port_target_extension_keys},
+        normalized_semantic_forward_ir_structural_rtl_ir_port_target_extension_keys(),
+        'structural-RTL port target extension family matches helper',
+    );
+    is_deeply(
+        $family_map->{success_forward_ir_structural_rtl_ir_port_target_entry_keys},
+        normalized_semantic_forward_ir_structural_rtl_ir_port_target_entry_keys(),
+        'structural-RTL port target entry family matches helper',
     );
     is_deeply(
         $family_map->{success_forward_ir_structural_rtl_ir_net_entry_keys},

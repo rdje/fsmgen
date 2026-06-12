@@ -4512,7 +4512,8 @@ parameter-override schema owner. Contributor and child `intent_hir`,
 `lowered_rtl_ir`, and `structural_rtl_ir` summaries stay delegated to their
 existing bounded contracts. The
 `semantic.forward_ir.structural_rtl_ir` contract also advertises bounded
-`ports[]` core entry keys, composition-top port extension keys, and bounded
+`ports[]` core entry keys, direct-root input-port target extension/entry keys,
+composition-top port extension keys, and bounded
 `nets[]`, `declared_links[]`, `resolved_links[]`, shallow `instances[]`, and
 nested `instances[].interface_ports[]` plus `instances[].port_bindings[]`
 core and typed-extension entry keys. It now also advertises
@@ -4622,19 +4623,21 @@ implementation leaf
 `R11-DIRECT-STRUCTURAL-NET-CONNECTIVITY.2`
 populates generated-enable direct net `source` objects for assignment-record
 drivers and `targets[]` entries for direct nets consumed by another
-generated-enable assignment-record RHS, while leaving direct port dependency
-connectivity, output-drive consumers, instances, links, and HDL rerouting
-deferred. Completed
+generated-enable assignment-record RHS. Completed
+implementation leaf
+`R11-DIRECT-STRUCTURAL-PORT-DEPENDENCY-CONNECTIVITY.2`
+populates direct input-port generated-enable RHS target connectivity on
+`structural_rtl_ir.ports[]`, while leaving output-port source/driver
+connectivity and HDL emission unchanged. Completed
 implementation leaf
 `R11-DIRECT-STRUCTURAL-HDL-REROUTING.2`
 reroutes the direct SystemVerilog top state/standalone-DT generated-enable
 condition block through `StructuralRTLIR` assignment records by using explicit
 backend markers that are removed before final HDL is returned. Full direct
-module rerouting, VHDL rerouting, direct port dependency connectivity,
-output-drive consumers, and instances/links remain deferred under proposed
+module rerouting, VHDL rerouting, output-drive consumers, and instances/links
+remain deferred under proposed
 owner trees `R11-DIRECT-STRUCTURAL-FULL-HDL-REROUTING`,
 `R11-DIRECT-STRUCTURAL-VHDL-REROUTING`,
-`R11-DIRECT-STRUCTURAL-PORT-DEPENDENCY-CONNECTIVITY`,
 `R11-DIRECT-STRUCTURAL-OUTPUT-CONSUMERS`, and
 `R11-DIRECT-STRUCTURAL-INSTANCES-LINKS`. Completed
 implementation leaf

@@ -88,12 +88,12 @@ expose generated enable assignments in machine-readable
 rendered text, and provenance, populate generated-enable net
 `source`/`targets[]` connectivity from those assignment records, reroute the
 direct SystemVerilog top state/standalone-DT generated-enable condition block
-through `StructuralRTLIR`, and retain
+through `StructuralRTLIR`, populate direct input-port generated-enable RHS
+`targets[]` connectivity on `structural_rtl_ir.ports[]`, and retain
 `structural_rtl_ir.auxiliary_assignments[]` as the scalar-string compatibility
-mirror. Direct port dependency connectivity, output-drive consumers,
+mirror. Output-port source/driver connectivity, output-drive consumers,
 instances/links, full direct module rerouting, and VHDL rerouting through
-`StructuralRTLIR` are tracked by proposed owner trees
-`R11-DIRECT-STRUCTURAL-PORT-DEPENDENCY-CONNECTIVITY`,
+`StructuralRTLIR` are tracked by owner trees
 `R11-DIRECT-STRUCTURAL-OUTPUT-CONSUMERS`,
 `R11-DIRECT-STRUCTURAL-INSTANCES-LINKS`,
 `R11-DIRECT-STRUCTURAL-FULL-HDL-REROUTING`, and
@@ -658,7 +658,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `perl/FSM/Support/NormalizedSemanticExplicitSystemContract.pm` — bounded nested-object contract for the `semantic.explicit_system_contract` summary in successful public normalized semantic JSON when that authored explicit contract is preserved.
 - `perl/FSM/Support/NormalizedSemanticForwardIRContract.pm` — bounded nested-object contract for the `semantic.forward_ir` summary in successful public normalized semantic JSON.
 - `perl/FSM/Support/NormalizedSemanticLoweredRTLIRContract.pm` — bounded nested-object contract for the `semantic.forward_ir.lowered_rtl_ir` summary in successful public normalized semantic JSON, including output-drive, selector-conflict, standalone-DT multi-drive, and composition-only extension key families.
-- `perl/FSM/Support/NormalizedSemanticStructuralRTLIRContract.pm` — bounded nested-object contract for the `semantic.forward_ir.structural_rtl_ir` summary in successful public normalized semantic JSON, including bounded `assignment_records[]` structured generated-enable entries, bounded `auxiliary_assignments[]` scalar-string compatibility values, bounded `ports[]`, `nets[]`, generated-enable net `source`/`targets[]` connectivity entry keys, `declared_links[]`, `resolved_links[]`, shallow `instances[]`, nested `instances[].interface_ports[]`, nested `instances[].parameter_overrides[]` core plus optional raw-value/value-metadata extension keys, and nested `instances[].port_bindings[]` core plus typed-extension entry keys.
+- `perl/FSM/Support/NormalizedSemanticStructuralRTLIRContract.pm` — bounded nested-object contract for the `semantic.forward_ir.structural_rtl_ir` summary in successful public normalized semantic JSON, including bounded `assignment_records[]` structured generated-enable entries, bounded `auxiliary_assignments[]` scalar-string compatibility values, bounded `ports[]` core keys, direct input-port `targets[]` extension/entry keys, `nets[]`, generated-enable net `source`/`targets[]` connectivity entry keys, `declared_links[]`, `resolved_links[]`, shallow `instances[]`, nested `instances[].interface_ports[]`, nested `instances[].parameter_overrides[]` core plus optional raw-value/value-metadata extension keys, and nested `instances[].port_bindings[]` core plus typed-extension entry keys.
 - `perl/FSM/Support/NormalizedSemanticIntentHIRContract.pm` — bounded nested-object contract for the `semantic.forward_ir.intent_hir` summary in successful public normalized semantic JSON, including its composition-only extension keys and composition-child alias key families.
 - `perl/FSM/Support/NormalizedSemanticSignalAnalysisContract.pm` — bounded nested-object contract for the `semantic.signal_analysis` summary in successful public normalized semantic JSON, including the shared core signal-entry keys.
 - `perl/FSM/Support/NormalizedSemanticSystemContract.pm` — bounded nested-object contract for the `semantic.system_contract` summary in successful public normalized semantic JSON.
@@ -912,11 +912,13 @@ RHS. `structural_rtl_ir.auxiliary_assignments[]` mirrors those rendered lines
 as scalar strings for compatibility. The direct SystemVerilog top
 state/standalone-DT generated-enable condition block is now rerouted through
 those `StructuralRTLIR` assignment records by an explicit backend marker
-handoff that is removed before final HDL is returned. Direct port dependency
-connectivity, output-drive/always-block consumers, instances, links, full
-direct module rerouting, and VHDL rerouting through `StructuralRTLIR` remain
-outside that projection and are tracked by proposed owner trees
-`R11-DIRECT-STRUCTURAL-PORT-DEPENDENCY-CONNECTIVITY`,
+handoff that is removed before final HDL is returned. Direct input ports
+consumed by generated-enable assignment-record RHS ASTs now also expose
+structured `targets[]` entries on `structural_rtl_ir.ports[]` using the same
+assignment-record target endpoint shape as generated-enable net targets.
+Output-port source/driver connectivity, output-drive/always-block consumers,
+instances, links, full direct module rerouting, and VHDL rerouting through
+`StructuralRTLIR` remain outside that projection and are tracked by owner trees
 `R11-DIRECT-STRUCTURAL-OUTPUT-CONSUMERS`,
 `R11-DIRECT-STRUCTURAL-INSTANCES-LINKS`,
 `R11-DIRECT-STRUCTURAL-FULL-HDL-REROUTING`, and
@@ -1111,8 +1113,10 @@ direct nets consumed by another generated-enable assignment-record RHS.
 Completed implementation leaf `R11-DIRECT-STRUCTURAL-HDL-REROUTING.2`
 reroutes the direct SystemVerilog top state/standalone-DT generated-enable
 condition block through `StructuralRTLIR` assignment records by using explicit
-backend markers that are removed before final HDL is returned. Proposed owner
-trees `R11-DIRECT-STRUCTURAL-PORT-DEPENDENCY-CONNECTIVITY`,
+backend markers that are removed before final HDL is returned. Completed
+implementation leaf `R11-DIRECT-STRUCTURAL-PORT-DEPENDENCY-CONNECTIVITY.2`
+populates direct input-port generated-enable RHS target connectivity on
+`structural_rtl_ir.ports[]` without changing HDL emission. Proposed owner trees
 `R11-DIRECT-STRUCTURAL-OUTPUT-CONSUMERS`,
 `R11-DIRECT-STRUCTURAL-INSTANCES-LINKS`,
 `R11-DIRECT-STRUCTURAL-FULL-HDL-REROUTING`, and

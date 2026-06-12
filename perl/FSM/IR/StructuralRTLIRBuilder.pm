@@ -99,6 +99,10 @@ sub build_from_generated_module_info ($class, %args) {
     my $assignment_records = _direct_structural_assignment_records(
         hdl_generator => $hdl_generator,
     );
+    _direct_apply_assignment_record_port_targets(
+        ports => \@ports,
+        assignment_records => $assignment_records,
+    );
 
     return FSM::IR::StructuralRTLIR->new(
         module_name => ($module_info->{module_name} // ''),
@@ -633,6 +637,45 @@ sub _direct_apply_assignment_record_connectivity (%args) {
                 qw(kind assignment_lhs assignment_kind family role);
             next if $target_seen{$target_key}++;
             push @{$source_net->{targets}}, $target;
+        }
+    }
+}
+
+sub _direct_apply_assignment_record_port_targets (%args) {
+    my $ports = $args{ports};
+    my $assignment_records = $args{assignment_records};
+    return unless ref($ports) eq 'ARRAY' && ref($assignment_records) eq 'ARRAY';
+
+    my %input_ports_by_name;
+    for my $port (@$ports) {
+        next unless ref($port) eq 'HASH';
+        next unless ($port->{direction} // '') eq 'input';
+        my $name = $port->{name};
+        next unless defined($name) && length($name);
+        $input_ports_by_name{$name} = $port;
+    }
+
+    my %target_seen;
+    for my $record (@$assignment_records) {
+        next unless ref($record) eq 'HASH';
+        my $lhs = _direct_assignment_record_lhs_name($record);
+        next unless defined($lhs) && length($lhs);
+
+        for my $dependency (_direct_assignment_record_rhs_signal_refs($record)) {
+            next if $dependency eq $lhs;
+            my $input_port = $input_ports_by_name{$dependency};
+            next unless ref($input_port) eq 'HASH';
+
+            my $target = _direct_assignment_record_connectivity_endpoint(
+                record => $record,
+                kind => 'assignment_record_rhs_dependency',
+            );
+            my $target_key = join "\0", $dependency, map { $target->{$_} // '' }
+                qw(kind assignment_lhs assignment_kind family role);
+            next if $target_seen{$target_key}++;
+
+            $input_port->{targets} = [] unless ref($input_port->{targets}) eq 'ARRAY';
+            push @{$input_port->{targets}}, $target;
         }
     }
 }

@@ -309,11 +309,13 @@ expression AST when the direct backend already has one. The older
 compatibility mirror for those rendered assignment lines. Generated-enable net
 entries also carry structured `source` objects for assignment-record drivers
 and structured `targets[]` entries when another generated-enable assignment
-record consumes that direct net on its RHS. Direct port dependency
-connectivity, output-drive/always-block consumers, instances/links, full
-direct module rerouting, and VHDL rerouting through `StructuralRTLIR` remain
-outside that direct structural projection and are tracked by proposed owner
-trees `R11-DIRECT-STRUCTURAL-PORT-DEPENDENCY-CONNECTIVITY`,
+record consumes that direct net on its RHS. Direct input ports consumed by
+generated-enable assignment-record RHS ASTs also carry structured `targets[]`
+entries using that same generated-enable assignment-record target endpoint
+shape. Output-port source/driver connectivity, output-drive/always-block
+consumers, instances/links, full direct module rerouting, and VHDL rerouting
+through `StructuralRTLIR` remain outside that direct structural projection and
+are tracked by proposed owner trees
 `R11-DIRECT-STRUCTURAL-OUTPUT-CONSUMERS`,
 `R11-DIRECT-STRUCTURAL-INSTANCES-LINKS`,
 `R11-DIRECT-STRUCTURAL-FULL-HDL-REROUTING`, and

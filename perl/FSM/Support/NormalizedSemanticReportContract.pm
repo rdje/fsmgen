@@ -142,6 +142,8 @@ use FSM::Support::NormalizedSemanticPayloadContract qw(
     normalized_semantic_payload_forward_ir_structural_rtl_ir_net_target_entry_keys
     normalized_semantic_payload_forward_ir_structural_rtl_ir_port_composition_extension_keys
     normalized_semantic_payload_forward_ir_structural_rtl_ir_port_entry_keys
+    normalized_semantic_payload_forward_ir_structural_rtl_ir_port_target_entry_keys
+    normalized_semantic_payload_forward_ir_structural_rtl_ir_port_target_extension_keys
     normalized_semantic_payload_forward_ir_structural_rtl_ir_resolved_link_entry_keys
     normalized_semantic_payload_forward_ir_structural_rtl_ir_keys
     normalized_semantic_payload_system_contract_keys
@@ -300,6 +302,8 @@ our @EXPORT_OK = qw(
     normalized_semantic_forward_ir_structural_rtl_ir_net_target_entry_keys
     normalized_semantic_forward_ir_structural_rtl_ir_port_composition_extension_keys
     normalized_semantic_forward_ir_structural_rtl_ir_port_entry_keys
+    normalized_semantic_forward_ir_structural_rtl_ir_port_target_entry_keys
+    normalized_semantic_forward_ir_structural_rtl_ir_port_target_extension_keys
     normalized_semantic_forward_ir_structural_rtl_ir_resolved_link_entry_keys
     normalized_semantic_forward_ir_structural_rtl_ir_keys
     normalized_semantic_matched_failure_diagnostic_keys
@@ -561,6 +565,10 @@ sub build_normalized_semantic_report_contract {
             normalized_semantic_forward_ir_structural_rtl_ir_port_entry_keys(),
         success_forward_ir_structural_rtl_ir_port_composition_extension_keys =>
             normalized_semantic_forward_ir_structural_rtl_ir_port_composition_extension_keys(),
+        success_forward_ir_structural_rtl_ir_port_target_extension_keys =>
+            normalized_semantic_forward_ir_structural_rtl_ir_port_target_extension_keys(),
+        success_forward_ir_structural_rtl_ir_port_target_entry_keys =>
+            normalized_semantic_forward_ir_structural_rtl_ir_port_target_entry_keys(),
         success_symbol_contract_presence_keys => normalized_semantic_symbol_contract_keys(),
         symbol_contract_constant_value_entry_keys =>
             normalized_semantic_symbol_contract_constant_value_entry_keys(),
@@ -872,6 +880,10 @@ sub normalized_semantic_presence_key_family_map {
             normalized_semantic_forward_ir_structural_rtl_ir_port_entry_keys(),
         success_forward_ir_structural_rtl_ir_port_composition_extension_keys =>
             normalized_semantic_forward_ir_structural_rtl_ir_port_composition_extension_keys(),
+        success_forward_ir_structural_rtl_ir_port_target_extension_keys =>
+            normalized_semantic_forward_ir_structural_rtl_ir_port_target_extension_keys(),
+        success_forward_ir_structural_rtl_ir_port_target_entry_keys =>
+            normalized_semantic_forward_ir_structural_rtl_ir_port_target_entry_keys(),
         success_symbol_contract_presence_keys => normalized_semantic_symbol_contract_keys(),
         symbol_contract_constant_value_entry_keys =>
             normalized_semantic_symbol_contract_constant_value_entry_keys(),
@@ -1223,6 +1235,14 @@ sub normalized_semantic_forward_ir_structural_rtl_ir_port_entry_keys {
 
 sub normalized_semantic_forward_ir_structural_rtl_ir_port_composition_extension_keys {
     return normalized_semantic_payload_forward_ir_structural_rtl_ir_port_composition_extension_keys();
+}
+
+sub normalized_semantic_forward_ir_structural_rtl_ir_port_target_extension_keys {
+    return normalized_semantic_payload_forward_ir_structural_rtl_ir_port_target_extension_keys();
+}
+
+sub normalized_semantic_forward_ir_structural_rtl_ir_port_target_entry_keys {
+    return normalized_semantic_payload_forward_ir_structural_rtl_ir_port_target_entry_keys();
 }
 
 sub normalized_semantic_forward_ir_structural_rtl_ir_net_entry_keys {

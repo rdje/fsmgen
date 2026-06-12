@@ -72,6 +72,17 @@ FSM
         'direct structural_rtl_ir ports match generated module_info signal analysis plus system contract',
     );
     is($structural->{port_count}, scalar(keys %$expected_ports), 'direct structural_rtl_ir port_count matches expected ports');
+    my %ports_by_name = map { $_->{name} => $_ } @{$structural->{ports} || []};
+    is_deeply(
+        $ports_by_name{request}{targets},
+        [
+            assignment_target('idle_data_out_payload_en', 'dt_specific_enable'),
+            assignment_target('idle_ready_1_en', 'dt_specific_enable'),
+        ],
+        'direct structural_rtl_ir records generated-enable consumers on input port request',
+    );
+    ok(!exists $ports_by_name{payload}{targets}, 'direct structural_rtl_ir does not claim unused input-port targets');
+    ok(!exists $ports_by_name{ready}{targets}, 'direct structural_rtl_ir does not claim output-port target connectivity yet');
 
     my $header = extract_module_header($result->{hdl_code});
     for my $port_name (sort keys %$expected_ports) {

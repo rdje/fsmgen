@@ -2185,7 +2185,8 @@ now also has its own bounded nested-object contract:
 owns the current structural-RTL shell keys shared by direct and composition
 roots, plus bounded `assignment_records[]` generated-enable entry keys,
 bounded `auxiliary_assignments[]` scalar-string compatibility values, bounded
-`ports[]` core entry keys, composition-top port extension keys, bounded
+`ports[]` core entry keys, direct-root input-port target extension/entry keys,
+composition-top port extension keys, bounded
 `nets[]` entry keys, and bounded `declared_links[]` plus
 `resolved_links[]` entry keys, plus bounded shallow `instances[]` and nested
 `instances[].interface_ports[]` entry keys, plus nested
@@ -2204,13 +2205,15 @@ SystemVerilog text, and provenance. The `rhs` payload carries both rendered
 expression text and the JSON-safe AST shape available from the direct backend.
 Generated-enable net entries also carry structured `source` objects for
 assignment-record drivers and structured `targets[]` entries when another
-generated-enable assignment record consumes that direct net on its RHS.
+generated-enable assignment record consumes that direct net on its RHS. Direct
+input ports consumed by generated-enable assignment-record RHS ASTs carry
+structured `targets[]` entries using the same generated-enable assignment-record
+target endpoint shape.
 `structural_rtl_ir.auxiliary_assignments[]` mirrors those rendered lines as
-scalar strings for compatibility. Direct port dependency connectivity,
+scalar strings for compatibility. Output-port source/driver connectivity,
 output-drive/always-block consumers, instances, links, full direct module
 rerouting, and VHDL rerouting through `StructuralRTLIR` remain outside the
 direct-root structural projection and are tracked by proposed owner trees
-`R11-DIRECT-STRUCTURAL-PORT-DEPENDENCY-CONNECTIVITY`,
 `R11-DIRECT-STRUCTURAL-OUTPUT-CONSUMERS`,
 `R11-DIRECT-STRUCTURAL-INSTANCES-LINKS`,
 `R11-DIRECT-STRUCTURAL-FULL-HDL-REROUTING`, and
@@ -2222,10 +2225,11 @@ markers are removed before final HDL is returned.
 That same owner now also publishes a grouped `presence_key_family_map` so
 embedders can discover the bounded structural-RTL shell summary and
 collection key families, including auxiliary-assignment scalar-string value
-kinds, assignment-record structural key families, structural port, net,
-generated-enable net source/target connectivity, link, instance shallow,
-nested instance interface-port, nested instance parameter-override, and nested
-instance port-binding key families,
+kinds, assignment-record structural key families, structural port, direct
+input-port generated-enable target extension/entry keys, net, generated-enable
+net source/target connectivity, link, instance shallow, nested instance
+interface-port, nested instance parameter-override, and nested instance
+port-binding key families,
 from one place instead of collecting the individual key-family lists separately.
 
 The nested `semantic.forward_ir.intent_hir` summary inside that branch now

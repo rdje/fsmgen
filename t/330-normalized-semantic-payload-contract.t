@@ -111,6 +111,8 @@ use FSM::Support::NormalizedSemanticForwardIRContract qw(
     normalized_semantic_forward_ir_structural_rtl_ir_net_target_entry_keys
     normalized_semantic_forward_ir_structural_rtl_ir_port_composition_extension_keys
     normalized_semantic_forward_ir_structural_rtl_ir_port_entry_keys
+    normalized_semantic_forward_ir_structural_rtl_ir_port_target_entry_keys
+    normalized_semantic_forward_ir_structural_rtl_ir_port_target_extension_keys
     normalized_semantic_forward_ir_structural_rtl_ir_presence_keys
     normalized_semantic_forward_ir_structural_rtl_ir_resolved_link_entry_keys
     normalized_semantic_forward_ir_presence_keys
@@ -247,6 +249,8 @@ use FSM::Support::NormalizedSemanticPayloadContract qw(
     normalized_semantic_payload_forward_ir_structural_rtl_ir_net_target_entry_keys
     normalized_semantic_payload_forward_ir_structural_rtl_ir_port_composition_extension_keys
     normalized_semantic_payload_forward_ir_structural_rtl_ir_port_entry_keys
+    normalized_semantic_payload_forward_ir_structural_rtl_ir_port_target_entry_keys
+    normalized_semantic_payload_forward_ir_structural_rtl_ir_port_target_extension_keys
     normalized_semantic_payload_forward_ir_structural_rtl_ir_resolved_link_entry_keys
     normalized_semantic_payload_forward_ir_structural_rtl_ir_keys
     normalized_semantic_payload_presence_keys
@@ -548,6 +552,16 @@ subtest 'contract exposes the bounded normalized semantic payload object' => sub
         $contract->{presence_key_family_map}{forward_ir_structural_rtl_ir_port_composition_extension_keys},
         normalized_semantic_payload_forward_ir_structural_rtl_ir_port_composition_extension_keys(),
         'grouped semantic-payload family map publishes structural-rtl-ir port composition extension keys',
+    );
+    is_deeply(
+        $contract->{presence_key_family_map}{forward_ir_structural_rtl_ir_port_target_extension_keys},
+        normalized_semantic_payload_forward_ir_structural_rtl_ir_port_target_extension_keys(),
+        'grouped semantic-payload family map publishes structural-rtl-ir port target extension keys',
+    );
+    is_deeply(
+        $contract->{presence_key_family_map}{forward_ir_structural_rtl_ir_port_target_entry_keys},
+        normalized_semantic_payload_forward_ir_structural_rtl_ir_port_target_entry_keys(),
+        'grouped semantic-payload family map publishes structural-rtl-ir port target entry keys',
     );
     is_deeply(
         $contract->{presence_key_family_map}{forward_ir_structural_rtl_ir_net_entry_keys},
@@ -872,6 +886,16 @@ subtest 'contract exposes the bounded normalized semantic payload object' => sub
         'contract publishes the bounded forward-ir structural-rtl-ir port composition extension key list',
     );
     is_deeply(
+        $contract->{forward_ir_structural_rtl_ir_port_target_extension_keys},
+        normalized_semantic_payload_forward_ir_structural_rtl_ir_port_target_extension_keys(),
+        'contract publishes the bounded forward-ir structural-rtl-ir port target extension key list',
+    );
+    is_deeply(
+        $contract->{forward_ir_structural_rtl_ir_port_target_entry_keys},
+        normalized_semantic_payload_forward_ir_structural_rtl_ir_port_target_entry_keys(),
+        'contract publishes the bounded forward-ir structural-rtl-ir port target entry key list',
+    );
+    is_deeply(
         $contract->{forward_ir_structural_rtl_ir_net_entry_keys},
         normalized_semantic_payload_forward_ir_structural_rtl_ir_net_entry_keys(),
         'contract publishes the bounded forward-ir structural-rtl-ir net entry key list',
@@ -1078,6 +1102,16 @@ subtest 'contract exposes the bounded normalized semantic payload object' => sub
         normalized_semantic_payload_forward_ir_structural_rtl_ir_port_composition_extension_keys(),
         normalized_semantic_forward_ir_structural_rtl_ir_port_composition_extension_keys(),
         'semantic payload forward-ir structural-rtl-ir port composition extension keys map to the nested structural-rtl-ir owner',
+    );
+    is_deeply(
+        normalized_semantic_payload_forward_ir_structural_rtl_ir_port_target_extension_keys(),
+        normalized_semantic_forward_ir_structural_rtl_ir_port_target_extension_keys(),
+        'semantic payload forward-ir structural-rtl-ir port target extension keys map to the nested structural-rtl-ir owner',
+    );
+    is_deeply(
+        normalized_semantic_payload_forward_ir_structural_rtl_ir_port_target_entry_keys(),
+        normalized_semantic_forward_ir_structural_rtl_ir_port_target_entry_keys(),
+        'semantic payload forward-ir structural-rtl-ir port target entry keys map to the nested structural-rtl-ir owner',
     );
     is_deeply(
         normalized_semantic_payload_forward_ir_structural_rtl_ir_net_entry_keys(),

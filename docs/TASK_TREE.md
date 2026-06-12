@@ -117,7 +117,7 @@ first.
 | `R11-DIRECT-STRUCTURAL-NET-CONNECTIVITY` | `done` | `R11` | complete (`.2`; populated generated-enable assignment-record source/target connectivity on direct `StructuralRTLIR.nets[]` without changing HDL emission) | [docs/tasks/R11-DIRECT-STRUCTURAL-NET-CONNECTIVITY.md](docs/tasks/R11-DIRECT-STRUCTURAL-NET-CONNECTIVITY.md) |
 | `R11-DIRECT-STRUCTURAL-HDL-REROUTING` | `done` | `R11` | complete (`.2`; rerouted direct SystemVerilog top state/standalone-DT generated-enable condition emission through `StructuralRTLIR` without full direct module reroute) | [docs/tasks/R11-DIRECT-STRUCTURAL-HDL-REROUTING.md](docs/tasks/R11-DIRECT-STRUCTURAL-HDL-REROUTING.md) |
 | `R11-DIRECT-STRUCTURAL-REMAINING-OWNER-COVERAGE` | `done` | `R11` | complete (`.1`; created exact proposed owners for remaining roadmap-named direct `StructuralRTLIR` gaps before any further implementation) | [docs/tasks/R11-DIRECT-STRUCTURAL-REMAINING-OWNER-COVERAGE.md](docs/tasks/R11-DIRECT-STRUCTURAL-REMAINING-OWNER-COVERAGE.md) |
-| `R11-DIRECT-STRUCTURAL-PORT-DEPENDENCY-CONNECTIVITY` | `active` | `R11` | selected (`.2`; populate direct input-port generated-enable RHS target connectivity) | [docs/tasks/R11-DIRECT-STRUCTURAL-PORT-DEPENDENCY-CONNECTIVITY.md](docs/tasks/R11-DIRECT-STRUCTURAL-PORT-DEPENDENCY-CONNECTIVITY.md) |
+| `R11-DIRECT-STRUCTURAL-PORT-DEPENDENCY-CONNECTIVITY` | `done` | `R11` | complete (`.2`; populated direct input-port generated-enable RHS target connectivity on `StructuralRTLIR.ports[]`) | [docs/tasks/R11-DIRECT-STRUCTURAL-PORT-DEPENDENCY-CONNECTIVITY.md](docs/tasks/R11-DIRECT-STRUCTURAL-PORT-DEPENDENCY-CONNECTIVITY.md) |
 
 ## Proposed Task Trees
 
