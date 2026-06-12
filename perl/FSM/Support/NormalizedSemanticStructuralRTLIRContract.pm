@@ -32,6 +32,8 @@ our @EXPORT_OK = qw(
     normalized_semantic_structural_rtl_ir_presence_keys
     normalized_semantic_structural_rtl_ir_port_composition_extension_keys
     normalized_semantic_structural_rtl_ir_port_entry_keys
+    normalized_semantic_structural_rtl_ir_port_source_entry_keys
+    normalized_semantic_structural_rtl_ir_port_source_extension_keys
     normalized_semantic_structural_rtl_ir_port_target_entry_keys
     normalized_semantic_structural_rtl_ir_port_target_extension_keys
     normalized_semantic_structural_rtl_ir_resolved_link_entry_keys
@@ -76,6 +78,9 @@ sub build_normalized_semantic_structural_rtl_ir_contract {
         port_entry_keys => normalized_semantic_structural_rtl_ir_port_entry_keys(),
         port_composition_extension_keys =>
             normalized_semantic_structural_rtl_ir_port_composition_extension_keys(),
+        port_source_extension_keys =>
+            normalized_semantic_structural_rtl_ir_port_source_extension_keys(),
+        port_source_entry_keys => normalized_semantic_structural_rtl_ir_port_source_entry_keys(),
         port_target_extension_keys =>
             normalized_semantic_structural_rtl_ir_port_target_extension_keys(),
         port_target_entry_keys => normalized_semantic_structural_rtl_ir_port_target_entry_keys(),
@@ -105,6 +110,7 @@ sub build_normalized_semantic_structural_rtl_ir_contract {
             q{Treat this contract as the bounded nested `semantic.forward_ir.structural_rtl_ir` object used by successful public normalized semantic JSON reports.},
             'The bounded public promise covers the current structural-RTL summary shared by direct roots and composition tops.',
             'The port entry key families describe the current `ports[]` entry schema shared by direct roots and composition tops.',
+            'The port source extension key families describe optional direct-root output-port `source` entries derived from bounded lowered output-drive families.',
             'The port target extension key families describe optional direct-root input-port `targets[]` entries for generated-enable assignment-record RHS dependencies.',
             'The net entry key family describes the current `nets[]` entry schema emitted by composition tops and by direct roots for declaration-only storage/helper nets plus generated enable wires projected from already-prepared direct backend state.',
             'The net source/target entry key families describe structured generated-enable assignment-record connectivity on direct-root nets where the selected source or target is known from `assignment_records[]`; other direct entries keep a null source and empty targets array.',
@@ -227,6 +233,25 @@ sub normalized_semantic_structural_rtl_ir_port_composition_extension_keys {
     ];
 }
 
+sub normalized_semantic_structural_rtl_ir_port_source_extension_keys {
+    return [qw(source)];
+}
+
+sub normalized_semantic_structural_rtl_ir_port_source_entry_keys {
+    return [
+        qw(
+            driver_blocks
+            driver_count
+            driver_enable_signals
+            family_enable_signals
+            kind
+            multiplexer_type
+            rhs_values
+            signal_name
+        ),
+    ];
+}
+
 sub normalized_semantic_structural_rtl_ir_port_target_extension_keys {
     return [qw(targets)];
 }
@@ -328,6 +353,9 @@ sub normalized_semantic_structural_rtl_ir_presence_key_family_map {
         port_entry_keys => normalized_semantic_structural_rtl_ir_port_entry_keys(),
         port_composition_extension_keys =>
             normalized_semantic_structural_rtl_ir_port_composition_extension_keys(),
+        port_source_extension_keys =>
+            normalized_semantic_structural_rtl_ir_port_source_extension_keys(),
+        port_source_entry_keys => normalized_semantic_structural_rtl_ir_port_source_entry_keys(),
         port_target_extension_keys =>
             normalized_semantic_structural_rtl_ir_port_target_extension_keys(),
         port_target_entry_keys => normalized_semantic_structural_rtl_ir_port_target_entry_keys(),

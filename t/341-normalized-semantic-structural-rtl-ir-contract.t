@@ -34,6 +34,8 @@ use FSM::Support::NormalizedSemanticStructuralRTLIRContract qw(
     normalized_semantic_structural_rtl_ir_presence_keys
     normalized_semantic_structural_rtl_ir_port_composition_extension_keys
     normalized_semantic_structural_rtl_ir_port_entry_keys
+    normalized_semantic_structural_rtl_ir_port_source_entry_keys
+    normalized_semantic_structural_rtl_ir_port_source_extension_keys
     normalized_semantic_structural_rtl_ir_port_target_entry_keys
     normalized_semantic_structural_rtl_ir_port_target_extension_keys
     normalized_semantic_structural_rtl_ir_resolved_link_entry_keys
@@ -145,6 +147,26 @@ subtest 'contract exposes the bounded normalized semantic structural-rtl-ir obje
         normalized_semantic_structural_rtl_ir_port_composition_extension_keys(),
         [qw(binding_mode origin_kind)],
         'structural-rtl-ir port composition extension keys stay exact and ordered',
+    );
+    is_deeply(
+        $contract->{port_source_extension_keys},
+        normalized_semantic_structural_rtl_ir_port_source_extension_keys(),
+        'contract publishes the bounded structural-rtl-ir port source extension key family',
+    );
+    is_deeply(
+        normalized_semantic_structural_rtl_ir_port_source_extension_keys(),
+        [qw(source)],
+        'structural-rtl-ir port source extension keys stay exact and ordered',
+    );
+    is_deeply(
+        $contract->{port_source_entry_keys},
+        normalized_semantic_structural_rtl_ir_port_source_entry_keys(),
+        'contract publishes the bounded structural-rtl-ir port source entry key family',
+    );
+    is_deeply(
+        normalized_semantic_structural_rtl_ir_port_source_entry_keys(),
+        [qw(driver_blocks driver_count driver_enable_signals family_enable_signals kind multiplexer_type rhs_values signal_name)],
+        'structural-rtl-ir port source entry keys stay exact and ordered',
     );
     is_deeply(
         $contract->{port_target_extension_keys},
@@ -305,6 +327,16 @@ subtest 'contract exposes the bounded normalized semantic structural-rtl-ir obje
         $contract->{presence_key_family_map}{port_composition_extension_keys},
         normalized_semantic_structural_rtl_ir_port_composition_extension_keys(),
         'grouped structural-rtl-ir family map publishes port composition extension keys',
+    );
+    is_deeply(
+        $contract->{presence_key_family_map}{port_source_extension_keys},
+        normalized_semantic_structural_rtl_ir_port_source_extension_keys(),
+        'grouped structural-rtl-ir family map publishes port source extension keys',
+    );
+    is_deeply(
+        $contract->{presence_key_family_map}{port_source_entry_keys},
+        normalized_semantic_structural_rtl_ir_port_source_entry_keys(),
+        'grouped structural-rtl-ir family map publishes port source entry keys',
     );
     is_deeply(
         $contract->{presence_key_family_map}{port_target_extension_keys},

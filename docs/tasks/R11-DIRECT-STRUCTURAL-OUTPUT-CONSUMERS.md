@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `R11-DIRECT-STRUCTURAL-OUTPUT-CONSUMERS`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R11`
 - Created: `2026-06-12`
 - Last updated: `2026-06-12`
@@ -42,7 +42,7 @@ first safe slice.
 ## Task Tree
 
 - ID: `R11-DIRECT-STRUCTURAL-OUTPUT-CONSUMERS`
-  Status: `active`
+  Status: `done`
   Goal: `Represent direct output-drive and always-block consumers in StructuralRTLIR.`
   Children: `R11-DIRECT-STRUCTURAL-OUTPUT-CONSUMERS.1`,
     `R11-DIRECT-STRUCTURAL-OUTPUT-CONSUMERS.2`
@@ -55,18 +55,18 @@ first safe slice.
   Commit: `R11-DIRECT-STRUCTURAL-OUTPUT-CONSUMERS.1: select output port sources`
 
 - ID: `R11-DIRECT-STRUCTURAL-OUTPUT-CONSUMERS.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Populate direct output-port source summaries from lowered output-drive families.`
   Acceptance: `Direct output ports whose names match bounded LoweredRTLIR output_drive_families expose a structured source summary on their StructuralRTLIR port entries; the source is derived from structured LoweredRTLIR data, not rendered HDL text; the source summary includes kind, signal_name, multiplexer_type, driver_count, driver_blocks, rhs_values, driver_enable_signals, and family_enable_signals; nested rhs_enable_families, default/reset values, always-block body consumers, direct instances/links, and HDL emission remain unchanged.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `passed`
+  Commit: `R11-DIRECT-STRUCTURAL-OUTPUT-CONSUMERS.2: populate output port sources`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
 | 1 | `R11-DIRECT-STRUCTURAL-OUTPUT-CONSUMERS.1` | `done` | Selected a narrow output-port source summary derived from already-bounded LoweredRTLIR output-drive families. |
-| 2 | `R11-DIRECT-STRUCTURAL-OUTPUT-CONSUMERS.2` | `pending` | Existing direct normalized semantic JSON already exposes `lowered_rtl_ir.output_drive_families[]`; the first structural bridge should attach a compact source summary to matching direct output ports without changing HDL. |
+| 2 | `R11-DIRECT-STRUCTURAL-OUTPUT-CONSUMERS.2` | `done` | Populated compact direct output-port source summaries from bounded `lowered_rtl_ir.output_drive_families[]`; no active next leaf remains in this tree. |
 
 ## Decisions
 
@@ -78,6 +78,12 @@ first safe slice.
   existing bounded `LoweredRTLIR.output_drive_families[]` data and deliberately
   excludes nested `rhs_enable_families[]`, default/reset values, always-block
   body modeling, and HDL emission changes.
+- `2026-06-12`: Implementation `.2` populated direct output-port `source`
+  summaries with `kind`, `signal_name`, `multiplexer_type`, `driver_count`,
+  `driver_blocks`, `rhs_values`, `driver_enable_signals`, and
+  `family_enable_signals` from bounded lowered output-drive families. Broader
+  always-block body consumer modeling still needs a future exact leaf before
+  implementation.
 
 ## Open Questions
 
@@ -92,13 +98,14 @@ first safe slice.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-06-12` | `R11-DIRECT-STRUCTURAL-OUTPUT-CONSUMERS.1` | Evidence review: `KNOWLEDGE_MAP.md`; `docs/knowledge/normalized-semantic-output-drive-entry-schema.md`; `perl/FSM/IR/LoweredRTLIR.pm`; `perl/FSM/IR/LoweredRTLIRBuilder.pm`; `perl/FSM/Pipeline/GeneratedModuleInfoBuilder.pm`; `perl/FSM/IR/StructuralRTLIR.pm`; `perl/FSM/IR/StructuralRTLIRBuilder.pm`; `perl/FSM/Support/NormalizedSemanticLoweredRTLIRContract.pm`; `t/311-normalized-semantic-report-contract.t`; `fsm/apb_requester.fsm`; `scripts/check_memory_architecture.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `git --no-pager diff --check` | `passed`; selected `.2` |
+| `2026-06-12` | `R11-DIRECT-STRUCTURAL-OUTPUT-CONSUMERS.2` | `perl -Iperl -c perl/FSM/IR/StructuralRTLIRBuilder.pm`; `perl -Iperl -c perl/FSM/Support/NormalizedSemanticStructuralRTLIRContract.pm`; `perl -Iperl -c perl/FSM/Support/NormalizedSemanticForwardIRContract.pm`; `perl -Iperl -c perl/FSM/Support/NormalizedSemanticPayloadContract.pm`; `perl -Iperl -c perl/FSM/Support/NormalizedSemanticReportContract.pm`; `prove -Iperl t/1333-direct-structural-rtl-ir-projection.t t/163-forward-structural-rtl-ir-surface.t`; `prove -Iperl t/341-normalized-semantic-structural-rtl-ir-contract.t t/334-normalized-semantic-forward-ir-contract.t t/330-normalized-semantic-payload-contract.t t/311-normalized-semantic-report-contract.t t/297-capability-manifest.t t/442-normalized-semantic-payload-contract-defensive-copy-boundary-audit.t t/443-normalized-semantic-report-contract-defensive-copy-boundary-audit.t`; `mdbook build docs/book`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `prove -Iperl t/303-normalized-semantic-json-supported-corpus.t t/304-normalized-semantic-json-regression-corpus.t`; `scripts/check_memory_architecture.sh`; `git --no-pager diff --check` | `passed`; direct output-port source summaries populated |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `R11-DIRECT-STRUCTURAL-OUTPUT-CONSUMERS.1` | `R11-DIRECT-STRUCTURAL-OUTPUT-CONSUMERS.1: select output port sources` | Selector slice. |
-| `R11-DIRECT-STRUCTURAL-OUTPUT-CONSUMERS.2` | `pending` | `pending` |
+| `R11-DIRECT-STRUCTURAL-OUTPUT-CONSUMERS.2` | `R11-DIRECT-STRUCTURAL-OUTPUT-CONSUMERS.2: populate output port sources` | Populated direct output-port source summaries from lowered output-drive families. |
 
 ## Changelog
 
@@ -106,3 +113,7 @@ first safe slice.
 - `2026-06-12`: Activated selector `.1`, selected direct output-port source
   summaries derived from lowered output-drive families as `.2`, and left
   nested RHS-family/body modeling to later owner leaves.
+- `2026-06-12`: Completed `.2`; direct `StructuralRTLIR.ports[]` output
+  entries now carry compact `source` summaries from lowered output-drive
+  families while HDL emission and broader body-consumer modeling remain
+  unchanged.

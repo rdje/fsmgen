@@ -312,12 +312,14 @@ and structured `targets[]` entries when another generated-enable assignment
 record consumes that direct net on its RHS. Direct input ports consumed by
 generated-enable assignment-record RHS ASTs also carry structured `targets[]`
 entries using that same generated-enable assignment-record target endpoint
-shape. Direct output-port source summaries are selected but not yet shipped
-under active owner tree `R11-DIRECT-STRUCTURAL-OUTPUT-CONSUMERS`; broader
-output-drive/always-block consumers remain with that owner. Instances/links,
-full direct module rerouting, and VHDL rerouting through `StructuralRTLIR`
-remain outside that direct structural projection and are tracked by proposed
-owner trees
+shape. Direct output ports whose names match bounded lowered output-drive
+families also carry a structured `source` summary with `kind`, `signal_name`,
+`multiplexer_type`, `driver_count`, `driver_blocks`, `rhs_values`,
+`driver_enable_signals`, and `family_enable_signals`. Broader
+output-drive/always-block body consumer modeling remains deferred.
+Instances/links, full direct module rerouting, and VHDL rerouting through
+`StructuralRTLIR` remain outside that direct structural projection and are
+tracked by proposed owner trees
 `R11-DIRECT-STRUCTURAL-INSTANCES-LINKS`,
 `R11-DIRECT-STRUCTURAL-FULL-HDL-REROUTING`, and
 `R11-DIRECT-STRUCTURAL-VHDL-REROUTING`. The direct SystemVerilog top

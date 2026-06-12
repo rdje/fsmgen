@@ -250,6 +250,8 @@ use FSM::Support::NormalizedSemanticReportContract qw(
     normalized_semantic_forward_ir_structural_rtl_ir_net_target_entry_keys
     normalized_semantic_forward_ir_structural_rtl_ir_port_composition_extension_keys
     normalized_semantic_forward_ir_structural_rtl_ir_port_entry_keys
+    normalized_semantic_forward_ir_structural_rtl_ir_port_source_entry_keys
+    normalized_semantic_forward_ir_structural_rtl_ir_port_source_extension_keys
     normalized_semantic_forward_ir_structural_rtl_ir_port_target_entry_keys
     normalized_semantic_forward_ir_structural_rtl_ir_port_target_extension_keys
     normalized_semantic_forward_ir_structural_rtl_ir_resolved_link_entry_keys
@@ -1665,6 +1667,16 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
         $manifest->{semantic_exports}{normalized_semantic_json}{success_forward_ir_structural_rtl_ir_port_composition_extension_keys},
         normalized_semantic_forward_ir_structural_rtl_ir_port_composition_extension_keys(),
         'manifest records exact normalized semantic structural-rtl-ir port composition extension keys',
+    );
+    is_deeply(
+        $manifest->{semantic_exports}{normalized_semantic_json}{success_forward_ir_structural_rtl_ir_port_source_extension_keys},
+        normalized_semantic_forward_ir_structural_rtl_ir_port_source_extension_keys(),
+        'manifest records exact normalized semantic structural-rtl-ir port source extension keys',
+    );
+    is_deeply(
+        $manifest->{semantic_exports}{normalized_semantic_json}{success_forward_ir_structural_rtl_ir_port_source_entry_keys},
+        normalized_semantic_forward_ir_structural_rtl_ir_port_source_entry_keys(),
+        'manifest records exact normalized semantic structural-rtl-ir port source entry keys',
     );
     is_deeply(
         $manifest->{semantic_exports}{normalized_semantic_json}{success_forward_ir_structural_rtl_ir_port_target_extension_keys},

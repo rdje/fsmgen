@@ -89,13 +89,13 @@ rendered text, and provenance, populate generated-enable net
 `source`/`targets[]` connectivity from those assignment records, reroute the
 direct SystemVerilog top state/standalone-DT generated-enable condition block
 through `StructuralRTLIR`, populate direct input-port generated-enable RHS
-`targets[]` connectivity on `structural_rtl_ir.ports[]`, and retain
-`structural_rtl_ir.auxiliary_assignments[]` as the scalar-string compatibility
-mirror. Direct output-port source summaries are selected but not yet shipped
-under active owner tree `R11-DIRECT-STRUCTURAL-OUTPUT-CONSUMERS`, which also
-owns broader output-drive consumers. Instances/links, full direct module
-rerouting, and VHDL rerouting through `StructuralRTLIR` are tracked by proposed
-owner trees
+`targets[]` connectivity on `structural_rtl_ir.ports[]`, populate direct
+output-port source summaries on `structural_rtl_ir.ports[]` from lowered
+output-drive families, and retain `structural_rtl_ir.auxiliary_assignments[]`
+as the scalar-string compatibility mirror. Broader output-drive/always-block
+body consumer modeling remains outside the compact source summary.
+Instances/links, full direct module rerouting, and VHDL rerouting through
+`StructuralRTLIR` are tracked by proposed owner trees
 `R11-DIRECT-STRUCTURAL-INSTANCES-LINKS`,
 `R11-DIRECT-STRUCTURAL-FULL-HDL-REROUTING`, and
 `R11-DIRECT-STRUCTURAL-VHDL-REROUTING`. The first exact private ISF lowerer
@@ -917,10 +917,12 @@ handoff that is removed before final HDL is returned. Direct input ports
 consumed by generated-enable assignment-record RHS ASTs now also expose
 structured `targets[]` entries on `structural_rtl_ir.ports[]` using the same
 assignment-record target endpoint shape as generated-enable net targets.
-Direct output-port source summaries are selected but not yet shipped under
-active owner tree `R11-DIRECT-STRUCTURAL-OUTPUT-CONSUMERS`. Broader
-output-drive/always-block consumers remain with that active owner; instances,
-links, full direct module rerouting, and VHDL rerouting through
+Direct output ports whose names match bounded lowered output-drive families now
+also expose a structured `source` summary on `structural_rtl_ir.ports[]` with
+`kind`, `signal_name`, `multiplexer_type`, `driver_count`, `driver_blocks`,
+`rhs_values`, `driver_enable_signals`, and `family_enable_signals`. Broader
+output-drive/always-block body consumer modeling remains outside that compact
+summary; instances, links, full direct module rerouting, and VHDL rerouting through
 `StructuralRTLIR` remain outside that projection and are tracked by proposed
 owner trees
 `R11-DIRECT-STRUCTURAL-INSTANCES-LINKS`,
@@ -1119,10 +1121,10 @@ condition block through `StructuralRTLIR` assignment records by using explicit
 backend markers that are removed before final HDL is returned. Completed
 implementation leaf `R11-DIRECT-STRUCTURAL-PORT-DEPENDENCY-CONNECTIVITY.2`
 populates direct input-port generated-enable RHS target connectivity on
-`structural_rtl_ir.ports[]` without changing HDL emission. Active selector
-leaf `R11-DIRECT-STRUCTURAL-OUTPUT-CONSUMERS.1` chose direct output-port
-source summaries from lowered output-drive families as the next implementation
-slice. Proposed owner trees
+`structural_rtl_ir.ports[]` without changing HDL emission. Completed
+implementation leaf `R11-DIRECT-STRUCTURAL-OUTPUT-CONSUMERS.2` populates
+direct output-port `source` summaries from lowered output-drive families
+without changing HDL emission. Proposed owner trees
 `R11-DIRECT-STRUCTURAL-INSTANCES-LINKS`,
 `R11-DIRECT-STRUCTURAL-FULL-HDL-REROUTING`, and
 `R11-DIRECT-STRUCTURAL-VHDL-REROUTING` own the remaining direct structural

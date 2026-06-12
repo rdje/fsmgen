@@ -103,6 +103,10 @@ sub build_from_generated_module_info ($class, %args) {
         ports => \@ports,
         assignment_records => $assignment_records,
     );
+    _direct_apply_output_port_sources(
+        ports => \@ports,
+        module_info => $module_info,
+    );
 
     return FSM::IR::StructuralRTLIR->new(
         module_name => ($module_info->{module_name} // ''),
@@ -678,6 +682,65 @@ sub _direct_apply_assignment_record_port_targets (%args) {
             push @{$input_port->{targets}}, $target;
         }
     }
+}
+
+sub _direct_apply_output_port_sources (%args) {
+    my $ports = $args{ports};
+    my $module_info = $args{module_info};
+    return unless ref($ports) eq 'ARRAY' && ref($module_info) eq 'HASH';
+
+    my %output_ports_by_name;
+    for my $port (@$ports) {
+        next unless ref($port) eq 'HASH';
+        next unless ($port->{direction} // '') eq 'output';
+        my $name = $port->{name};
+        next unless defined($name) && length($name);
+        $output_ports_by_name{$name} = $port;
+    }
+
+    for my $family (@{_direct_output_drive_families_from_module_info($module_info)}) {
+        next unless ref($family) eq 'HASH';
+        my $signal_name = $family->{signal_name};
+        next unless defined($signal_name) && length($signal_name);
+        my $output_port = $output_ports_by_name{$signal_name};
+        next unless ref($output_port) eq 'HASH';
+        $output_port->{source} = _direct_output_port_source($family);
+    }
+}
+
+sub _direct_output_drive_families_from_module_info ($module_info) {
+    return [] unless ref($module_info) eq 'HASH';
+
+    my $lowered_rtl_ir = $module_info->{lowered_rtl_ir};
+    if (
+        ref($lowered_rtl_ir) eq 'HASH'
+        && ref($lowered_rtl_ir->{output_drive_families}) eq 'ARRAY'
+    ) {
+        return $lowered_rtl_ir->{output_drive_families};
+    }
+
+    return $module_info->{output_drive_families}
+        if ref($module_info->{output_drive_families}) eq 'ARRAY';
+
+    return [];
+}
+
+sub _direct_output_port_source ($family) {
+    return {
+        kind => 'lowered_output_drive_family',
+        signal_name => $family->{signal_name},
+        multiplexer_type => $family->{multiplexer_type},
+        driver_count => ($family->{driver_count} || 0),
+        driver_blocks => _direct_array_clone($family->{driver_blocks}),
+        rhs_values => _direct_array_clone($family->{rhs_values}),
+        driver_enable_signals => _direct_array_clone($family->{driver_enable_signals}),
+        family_enable_signals => _direct_array_clone($family->{family_enable_signals}),
+    };
+}
+
+sub _direct_array_clone ($value) {
+    return [] unless ref($value) eq 'ARRAY';
+    return [@$value];
 }
 
 sub _direct_assignment_record_lhs_name ($record) {

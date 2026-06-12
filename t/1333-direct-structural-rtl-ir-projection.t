@@ -83,6 +83,33 @@ FSM
     );
     ok(!exists $ports_by_name{payload}{targets}, 'direct structural_rtl_ir does not claim unused input-port targets');
     ok(!exists $ports_by_name{ready}{targets}, 'direct structural_rtl_ir does not claim output-port target connectivity yet');
+    ok(!exists $ports_by_name{request}{source}, 'direct structural_rtl_ir does not claim input-port source connectivity');
+    is_deeply(
+        $ports_by_name{ready}{source},
+        output_port_source(
+            signal_name => 'ready',
+            multiplexer_type => 'flop',
+            driver_count => 1,
+            driver_blocks => ['idle'],
+            rhs_values => ['1'],
+            driver_enable_signals => ['idle_ready_1_en'],
+            family_enable_signals => ['ready_1_en'],
+        ),
+        'direct structural_rtl_ir records a structured output-port source summary for ready',
+    );
+    is_deeply(
+        $ports_by_name{data_out}{source},
+        output_port_source(
+            signal_name => 'data_out',
+            multiplexer_type => 'flop',
+            driver_count => 1,
+            driver_blocks => ['idle'],
+            rhs_values => ['payload'],
+            driver_enable_signals => ['idle_data_out_payload_en'],
+            family_enable_signals => ['data_out_payload_en'],
+        ),
+        'direct structural_rtl_ir records a structured output-port source summary for data_out',
+    );
 
     my $header = extract_module_header($result->{hdl_code});
     for my $port_name (sort keys %$expected_ports) {
@@ -623,6 +650,20 @@ sub assignment_target {
         assignment_kind => 'continuous_assign',
         family => 'generated_enable',
         role => $role,
+    };
+}
+
+sub output_port_source {
+    my (%args) = @_;
+    return {
+        kind => 'lowered_output_drive_family',
+        signal_name => $args{signal_name},
+        multiplexer_type => $args{multiplexer_type},
+        driver_count => $args{driver_count},
+        driver_blocks => $args{driver_blocks},
+        rhs_values => $args{rhs_values},
+        driver_enable_signals => $args{driver_enable_signals},
+        family_enable_signals => $args{family_enable_signals},
     };
 }
 

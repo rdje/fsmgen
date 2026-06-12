@@ -74,6 +74,19 @@ FSM
         },
         'structural_rtl_ir preserves direct module boundary port metadata',
     );
+    is_deeply(
+        $ports_by_name{OUT}{source},
+        output_port_source(
+            signal_name => 'OUT',
+            multiplexer_type => 'flop',
+            driver_count => 1,
+            driver_blocks => ['IDLE'],
+            rhs_values => ['IN'],
+            driver_enable_signals => ['IDLE_out_in_en'],
+            family_enable_signals => ['out_in_en'],
+        ),
+        'structural_rtl_ir exposes a structured source summary for the direct output port',
+    );
     is($structural_rtl_ir->{net_count}, 4, 'bounded direct structural_rtl_ir reports helper plus generated enable net count');
     is_deeply(
         $structural_rtl_ir->{nets},
@@ -186,6 +199,20 @@ sub assignment_target {
         assignment_kind => 'continuous_assign',
         family => 'generated_enable',
         role => $role,
+    };
+}
+
+sub output_port_source {
+    my (%args) = @_;
+    return {
+        kind => 'lowered_output_drive_family',
+        signal_name => $args{signal_name},
+        multiplexer_type => $args{multiplexer_type},
+        driver_count => $args{driver_count},
+        driver_blocks => $args{driver_blocks},
+        rhs_values => $args{rhs_values},
+        driver_enable_signals => $args{driver_enable_signals},
+        family_enable_signals => $args{family_enable_signals},
     };
 }
 

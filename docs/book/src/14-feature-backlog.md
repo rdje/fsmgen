@@ -4627,12 +4627,12 @@ generated-enable assignment-record RHS. Completed
 implementation leaf
 `R11-DIRECT-STRUCTURAL-PORT-DEPENDENCY-CONNECTIVITY.2`
 populates direct input-port generated-enable RHS target connectivity on
-`structural_rtl_ir.ports[]`, while leaving output-port source/driver
-connectivity and HDL emission unchanged. Active selector leaf
-`R11-DIRECT-STRUCTURAL-OUTPUT-CONSUMERS.1`
-chose direct output-port source summaries from lowered output-drive families
-as the next implementation slice, while leaving broader always-block body
-consumer modeling and HDL emission unchanged. Completed
+`structural_rtl_ir.ports[]`, while leaving HDL emission unchanged. Completed
+implementation leaf
+`R11-DIRECT-STRUCTURAL-OUTPUT-CONSUMERS.2`
+populates direct output-port `source` summaries from lowered output-drive
+families, while leaving broader always-block body consumer modeling and HDL
+emission unchanged. Completed
 implementation leaf
 `R11-DIRECT-STRUCTURAL-HDL-REROUTING.2`
 reroutes the direct SystemVerilog top state/standalone-DT generated-enable

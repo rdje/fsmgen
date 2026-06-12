@@ -2210,10 +2210,12 @@ input ports consumed by generated-enable assignment-record RHS ASTs carry
 structured `targets[]` entries using the same generated-enable assignment-record
 target endpoint shape.
 `structural_rtl_ir.auxiliary_assignments[]` mirrors those rendered lines as
-scalar strings for compatibility. Direct output-port source summaries are
-selected but not yet shipped under active owner tree
-`R11-DIRECT-STRUCTURAL-OUTPUT-CONSUMERS`; broader output-drive/always-block
-consumers remain with that owner. Instances, links, full direct module
+scalar strings for compatibility. Direct output ports whose names match
+bounded lowered output-drive families carry a compact structured `source`
+summary with `kind`, `signal_name`, `multiplexer_type`, `driver_count`,
+`driver_blocks`, `rhs_values`, `driver_enable_signals`, and
+`family_enable_signals`. Broader output-drive/always-block body consumer
+modeling remains outside that compact summary. Instances, links, full direct module
 rerouting, and VHDL rerouting through `StructuralRTLIR` remain outside the
 direct-root structural projection and are tracked by proposed owner trees
 `R11-DIRECT-STRUCTURAL-INSTANCES-LINKS`,

@@ -84,6 +84,8 @@ use FSM::Support::NormalizedSemanticForwardIRContract qw(
     normalized_semantic_forward_ir_structural_rtl_ir_presence_keys
     normalized_semantic_forward_ir_structural_rtl_ir_port_composition_extension_keys
     normalized_semantic_forward_ir_structural_rtl_ir_port_entry_keys
+    normalized_semantic_forward_ir_structural_rtl_ir_port_source_entry_keys
+    normalized_semantic_forward_ir_structural_rtl_ir_port_source_extension_keys
     normalized_semantic_forward_ir_structural_rtl_ir_port_target_entry_keys
     normalized_semantic_forward_ir_structural_rtl_ir_port_target_extension_keys
     normalized_semantic_forward_ir_structural_rtl_ir_resolved_link_entry_keys
@@ -157,6 +159,8 @@ use FSM::Support::NormalizedSemanticPayloadContract qw(
     normalized_semantic_payload_forward_ir_structural_rtl_ir_net_target_entry_keys
     normalized_semantic_payload_forward_ir_structural_rtl_ir_port_composition_extension_keys
     normalized_semantic_payload_forward_ir_structural_rtl_ir_port_entry_keys
+    normalized_semantic_payload_forward_ir_structural_rtl_ir_port_source_entry_keys
+    normalized_semantic_payload_forward_ir_structural_rtl_ir_port_source_extension_keys
     normalized_semantic_payload_forward_ir_structural_rtl_ir_port_target_entry_keys
     normalized_semantic_payload_forward_ir_structural_rtl_ir_port_target_extension_keys
     normalized_semantic_payload_forward_ir_structural_rtl_ir_resolved_link_entry_keys
@@ -206,6 +210,8 @@ use FSM::Support::NormalizedSemanticReportContract qw(
     normalized_semantic_forward_ir_structural_rtl_ir_net_target_entry_keys
     normalized_semantic_forward_ir_structural_rtl_ir_port_composition_extension_keys
     normalized_semantic_forward_ir_structural_rtl_ir_port_entry_keys
+    normalized_semantic_forward_ir_structural_rtl_ir_port_source_entry_keys
+    normalized_semantic_forward_ir_structural_rtl_ir_port_source_extension_keys
     normalized_semantic_forward_ir_structural_rtl_ir_port_target_entry_keys
     normalized_semantic_forward_ir_structural_rtl_ir_port_target_extension_keys
     normalized_semantic_forward_ir_structural_rtl_ir_resolved_link_entry_keys
@@ -352,6 +358,16 @@ subtest 'contract exposes the bounded normalized semantic forward-IR object' => 
         $contract->{presence_key_family_map}{structural_rtl_ir_port_composition_extension_keys},
         normalized_semantic_forward_ir_structural_rtl_ir_port_composition_extension_keys(),
         'grouped forward-ir family map publishes structural-rtl-ir port composition extension keys',
+    );
+    is_deeply(
+        $contract->{presence_key_family_map}{structural_rtl_ir_port_source_extension_keys},
+        normalized_semantic_forward_ir_structural_rtl_ir_port_source_extension_keys(),
+        'grouped forward-ir family map publishes structural-rtl-ir port source extension keys',
+    );
+    is_deeply(
+        $contract->{presence_key_family_map}{structural_rtl_ir_port_source_entry_keys},
+        normalized_semantic_forward_ir_structural_rtl_ir_port_source_entry_keys(),
+        'grouped forward-ir family map publishes structural-rtl-ir port source entry keys',
     );
     is_deeply(
         $contract->{presence_key_family_map}{structural_rtl_ir_port_target_extension_keys},
@@ -781,6 +797,16 @@ subtest 'contract exposes the bounded normalized semantic forward-IR object' => 
         'contract publishes the bounded forward-ir structural-rtl-ir port composition extension key list',
     );
     is_deeply(
+        $contract->{structural_rtl_ir_port_source_extension_keys},
+        normalized_semantic_forward_ir_structural_rtl_ir_port_source_extension_keys(),
+        'contract publishes the bounded forward-ir structural-rtl-ir port source extension key list',
+    );
+    is_deeply(
+        $contract->{structural_rtl_ir_port_source_entry_keys},
+        normalized_semantic_forward_ir_structural_rtl_ir_port_source_entry_keys(),
+        'contract publishes the bounded forward-ir structural-rtl-ir port source entry key list',
+    );
+    is_deeply(
         $contract->{structural_rtl_ir_port_target_extension_keys},
         normalized_semantic_forward_ir_structural_rtl_ir_port_target_extension_keys(),
         'contract publishes the bounded forward-ir structural-rtl-ir port target extension key list',
@@ -1027,6 +1053,16 @@ subtest 'contract exposes the bounded normalized semantic forward-IR object' => 
         'semantic payload structural-rtl-ir port composition extension keys map to the nested structural-rtl-ir owner',
     );
     is_deeply(
+        normalized_semantic_payload_forward_ir_structural_rtl_ir_port_source_extension_keys(),
+        normalized_semantic_forward_ir_structural_rtl_ir_port_source_extension_keys(),
+        'semantic payload structural-rtl-ir port source extension keys map to the nested structural-rtl-ir owner',
+    );
+    is_deeply(
+        normalized_semantic_payload_forward_ir_structural_rtl_ir_port_source_entry_keys(),
+        normalized_semantic_forward_ir_structural_rtl_ir_port_source_entry_keys(),
+        'semantic payload structural-rtl-ir port source entry keys map to the nested structural-rtl-ir owner',
+    );
+    is_deeply(
         normalized_semantic_payload_forward_ir_structural_rtl_ir_port_target_extension_keys(),
         normalized_semantic_forward_ir_structural_rtl_ir_port_target_extension_keys(),
         'semantic payload structural-rtl-ir port target extension keys map to the nested structural-rtl-ir owner',
@@ -1251,6 +1287,16 @@ subtest 'contract exposes the bounded normalized semantic forward-IR object' => 
         normalized_semantic_forward_ir_structural_rtl_ir_port_composition_extension_keys(),
         normalized_semantic_forward_ir_structural_rtl_ir_port_composition_extension_keys(),
         'normalized semantic report structural-rtl-ir port composition extension keys map to the nested structural-rtl-ir owner',
+    );
+    is_deeply(
+        normalized_semantic_forward_ir_structural_rtl_ir_port_source_extension_keys(),
+        normalized_semantic_forward_ir_structural_rtl_ir_port_source_extension_keys(),
+        'normalized semantic report structural-rtl-ir port source extension keys map to the nested structural-rtl-ir owner',
+    );
+    is_deeply(
+        normalized_semantic_forward_ir_structural_rtl_ir_port_source_entry_keys(),
+        normalized_semantic_forward_ir_structural_rtl_ir_port_source_entry_keys(),
+        'normalized semantic report structural-rtl-ir port source entry keys map to the nested structural-rtl-ir owner',
     );
     is_deeply(
         normalized_semantic_forward_ir_structural_rtl_ir_net_entry_keys(),

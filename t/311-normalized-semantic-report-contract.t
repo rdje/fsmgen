@@ -157,6 +157,8 @@ use FSM::Support::NormalizedSemanticReportContract qw(
     normalized_semantic_forward_ir_structural_rtl_ir_net_target_entry_keys
     normalized_semantic_forward_ir_structural_rtl_ir_port_composition_extension_keys
     normalized_semantic_forward_ir_structural_rtl_ir_port_entry_keys
+    normalized_semantic_forward_ir_structural_rtl_ir_port_source_entry_keys
+    normalized_semantic_forward_ir_structural_rtl_ir_port_source_extension_keys
     normalized_semantic_forward_ir_structural_rtl_ir_port_target_entry_keys
     normalized_semantic_forward_ir_structural_rtl_ir_port_target_extension_keys
     normalized_semantic_forward_ir_structural_rtl_ir_resolved_link_entry_keys
@@ -273,6 +275,8 @@ use FSM::Support::NormalizedSemanticPayloadContract qw(
     normalized_semantic_payload_forward_ir_structural_rtl_ir_net_target_entry_keys
     normalized_semantic_payload_forward_ir_structural_rtl_ir_port_composition_extension_keys
     normalized_semantic_payload_forward_ir_structural_rtl_ir_port_entry_keys
+    normalized_semantic_payload_forward_ir_structural_rtl_ir_port_source_entry_keys
+    normalized_semantic_payload_forward_ir_structural_rtl_ir_port_source_extension_keys
     normalized_semantic_payload_forward_ir_structural_rtl_ir_port_target_entry_keys
     normalized_semantic_payload_forward_ir_structural_rtl_ir_port_target_extension_keys
     normalized_semantic_payload_forward_ir_structural_rtl_ir_resolved_link_entry_keys
@@ -1051,6 +1055,16 @@ subtest 'contract exposes the bounded normalized semantic surface' => sub {
         'contract publishes the bounded forward-ir structural-rtl-ir port composition extension key list',
     );
     is_deeply(
+        $contract->{success_forward_ir_structural_rtl_ir_port_source_extension_keys},
+        normalized_semantic_forward_ir_structural_rtl_ir_port_source_extension_keys(),
+        'contract publishes the bounded forward-ir structural-rtl-ir port source extension key list',
+    );
+    is_deeply(
+        $contract->{success_forward_ir_structural_rtl_ir_port_source_entry_keys},
+        normalized_semantic_forward_ir_structural_rtl_ir_port_source_entry_keys(),
+        'contract publishes the bounded forward-ir structural-rtl-ir port source entry key list',
+    );
+    is_deeply(
         $contract->{success_forward_ir_structural_rtl_ir_port_target_extension_keys},
         normalized_semantic_forward_ir_structural_rtl_ir_port_target_extension_keys(),
         'contract publishes the bounded forward-ir structural-rtl-ir port target extension key list',
@@ -1275,6 +1289,16 @@ subtest 'contract exposes the bounded normalized semantic surface' => sub {
         $contract->{presence_key_family_map}{success_forward_ir_structural_rtl_ir_port_composition_extension_keys},
         normalized_semantic_forward_ir_structural_rtl_ir_port_composition_extension_keys(),
         'report presence family map publishes structural-rtl-ir port composition extension keys',
+    );
+    is_deeply(
+        $contract->{presence_key_family_map}{success_forward_ir_structural_rtl_ir_port_source_extension_keys},
+        normalized_semantic_forward_ir_structural_rtl_ir_port_source_extension_keys(),
+        'report presence family map publishes structural-rtl-ir port source extension keys',
+    );
+    is_deeply(
+        $contract->{presence_key_family_map}{success_forward_ir_structural_rtl_ir_port_source_entry_keys},
+        normalized_semantic_forward_ir_structural_rtl_ir_port_source_entry_keys(),
+        'report presence family map publishes structural-rtl-ir port source entry keys',
     );
     is_deeply(
         $contract->{presence_key_family_map}{success_forward_ir_structural_rtl_ir_port_target_extension_keys},
@@ -1511,6 +1535,16 @@ subtest 'contract exposes the bounded normalized semantic surface' => sub {
         normalized_semantic_payload_forward_ir_structural_rtl_ir_port_composition_extension_keys(),
         normalized_semantic_forward_ir_structural_rtl_ir_port_composition_extension_keys(),
         'semantic payload forward-ir structural-rtl-ir port composition extension keys map to the nested structural-rtl-ir owner',
+    );
+    is_deeply(
+        normalized_semantic_payload_forward_ir_structural_rtl_ir_port_source_extension_keys(),
+        normalized_semantic_forward_ir_structural_rtl_ir_port_source_extension_keys(),
+        'semantic payload forward-ir structural-rtl-ir port source extension keys map to the nested structural-rtl-ir owner',
+    );
+    is_deeply(
+        normalized_semantic_payload_forward_ir_structural_rtl_ir_port_source_entry_keys(),
+        normalized_semantic_forward_ir_structural_rtl_ir_port_source_entry_keys(),
+        'semantic payload forward-ir structural-rtl-ir port source entry keys map to the nested structural-rtl-ir owner',
     );
     is_deeply(
         normalized_semantic_payload_forward_ir_structural_rtl_ir_port_target_extension_keys(),
@@ -2149,8 +2183,10 @@ sub intent_hir_alias_cases {
 
 my $ok_path = File::Spec->catfile($tempdir, 'semantic_contract_ok.fsm');
 my $bad_path = File::Spec->catfile($tempdir, 'semantic_contract_bad.fsm');
+my $source_path = File::Spec->catfile($tempdir, 'semantic_contract_output_source.fsm');
 my $ok_out_path = File::Spec->catfile($tempdir, 'semantic_contract_ok.sv');
 my $bad_out_path = File::Spec->catfile($tempdir, 'semantic_contract_bad.sv');
+my $source_out_path = File::Spec->catfile($tempdir, 'semantic_contract_output_source.sv');
 
 write_file(
     $ok_path,
@@ -2192,6 +2228,30 @@ write_file(
 
   (idle
     (OUT = SRC)
+  )
+)
+FSM
+);
+
+write_file(
+    $source_path,
+    <<'FSM'
+(?fsm:semantic_contract_output_source
+  (+system
+    (clock clk)
+    (areset rst_n)
+  )
+  (+size
+    (request 1)
+    (payload 8)
+    (ready 1)
+    (data_out 8)
+  )
+  (idle
+    (<request
+      (<= (ready> 1))
+      (<= (data_out> payload))
+    )
   )
 )
 FSM
@@ -2384,6 +2444,25 @@ subtest 'successful direct semantic JSON conforms to the bounded contract' => su
         $direct_target_port->{targets}[0],
         normalized_semantic_forward_ir_structural_rtl_ir_port_target_entry_keys(),
         'direct success structural-rtl-ir input-port target keeps bounded keys',
+    );
+    my $source_decoded = run_semantic_json(
+        ['./bin/fsmgen', '--strict', '--emit-semantic-json', '-o', $source_out_path, $source_path],
+        'strict semantic JSON succeeds for direct output-source sample',
+    );
+    my $source_structural = $source_decoded->{semantic}{forward_ir}{structural_rtl_ir};
+    my ($direct_source_port) = grep {
+        ref($_) eq 'HASH' && ref($_->{source}) eq 'HASH'
+    } @{$source_structural->{ports} || []};
+    ok($direct_source_port, 'direct success structural-rtl-ir includes at least one output port with structured source connectivity');
+    assert_keys_present(
+        $direct_source_port,
+        normalized_semantic_forward_ir_structural_rtl_ir_port_source_extension_keys(),
+        'direct success structural-rtl-ir output port keeps bounded source extension keys',
+    );
+    assert_keys_present(
+        $direct_source_port->{source},
+        normalized_semantic_forward_ir_structural_rtl_ir_port_source_entry_keys(),
+        'direct success structural-rtl-ir output-port source keeps bounded keys',
     );
     for my $key (@{normalized_semantic_forward_ir_intent_hir_optional_composition_keys() || []}) {
         ok(
