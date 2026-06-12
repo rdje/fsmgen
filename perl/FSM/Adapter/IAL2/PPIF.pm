@@ -299,6 +299,8 @@ sub _parse_manager_capacity_status($body, $source_label) {
             $contract{transactions} = _parse_manager_capacity_transactions(\@items, $source_label, $name);
         } elsif ($head eq 'auto-id-lifecycle') {
             $contract{auto_id_lifecycle} = _parse_manager_capacity_auto_id_lifecycle(\@items, $source_label, $name);
+        } elsif ($head eq 'response-demux') {
+            $contract{response_demux} = _parse_manager_capacity_response_demux(\@items, $source_label, $name);
         } else {
             confess "Error: .ppif (manager-capacity-status $name ...) has unsupported clause '($head ...)'\n";
         }
@@ -564,6 +566,54 @@ sub _parse_manager_capacity_auto_id_pool($items, $name, $family) {
     }
 
     return \@pool;
+}
+
+sub _parse_manager_capacity_response_demux($items, $source_label, $name) {
+    confess "Error: .ppif (manager-capacity-status $name (response-demux ...)) requires a write family clause\n"
+        unless @$items;
+
+    my %families;
+    for my $clause (@$items) {
+        my ($family, @body) = _clause_parts($clause, $source_label);
+        confess "Error: .ppif (manager-capacity-status $name (response-demux ...)) has unsupported family clause '($family ...)'; this slice supports (write ...) only\n"
+            unless $family eq 'write';
+        confess "Error: .ppif (manager-capacity-status $name (response-demux ...)) has duplicate (write ...) family clause\n"
+            if exists $families{write};
+        $families{write} = _parse_manager_capacity_response_demux_write(\@body, $source_label, $name);
+    }
+
+    confess "Error: .ppif (manager-capacity-status $name (response-demux ...)) requires a write family clause\n"
+        unless exists $families{write};
+
+    return \%families;
+}
+
+sub _parse_manager_capacity_response_demux_write($items, $source_label, $name) {
+    my %allowed = (
+        'response-event'         => 'response_event',
+        'transaction-completion' => 'transaction_completion',
+    );
+    my %entry;
+
+    for my $clause (@$items) {
+        my ($head, @body) = _clause_parts($clause, $source_label);
+        confess "Error: .ppif (manager-capacity-status $name (response-demux (write ...))) has unsupported clause '($head ...)'\n"
+            unless exists $allowed{$head};
+        confess "Error: .ppif (manager-capacity-status $name (response-demux (write ...))) has duplicate ($head ...) clause\n"
+            if exists $entry{$allowed{$head}};
+        confess "Error: .ppif (manager-capacity-status $name (response-demux (write ($head ...)))) requires exactly one scalar value\n"
+            unless @body == 1 && !ref($body[0]);
+        $entry{$allowed{$head}} = $body[0];
+    }
+
+    confess "Error: .ppif (manager-capacity-status $name (response-demux (write ...))) is missing required (response-event ...) clause\n"
+        unless exists $entry{response_event};
+    confess "Error: .ppif (manager-capacity-status $name (response-demux (write ...))) is missing required (transaction-completion ...) clause\n"
+        unless exists $entry{transaction_completion};
+    confess "Error: .ppif (manager-capacity-status $name (response-demux (write (transaction-completion ...)))) supports only generated in this slice\n"
+        unless $entry{transaction_completion} eq 'generated';
+
+    return \%entry;
 }
 
 sub _parse_reset($items, $source_label) {

@@ -2310,9 +2310,12 @@ readiness as the next exact subset. Completed readiness audit `.25` selects a
 bounded write `BID` response-demux public contract selector first, because
 existing transaction `completion` names are authored inputs and must not be
 silently reinterpreted as generated demux signals. Completed selector `.26`
-chooses explicit write-only `(response-demux ...)` syntax. The active leaf is
-`.27`, implementing parser/report metadata and static validation before
-generated demux behavior changes.
+chooses explicit write-only `(response-demux ...)` syntax. Completed
+implementation leaf `.27` ships parser/report metadata and static validation
+for that explicit opt-in while keeping generated `.isf`, `.fsm`, and HDL
+behavior unchanged. The active leaf is `.28`, auditing generated write `BID`
+demux behavior readiness against the current IAL1/IAL0/SystemVerilog lowering
+semantics before behavior changes.
 Selected IAL2 slices may include explicit IAL1 or
 IAL0/SystemVerilog prerequisites when those prerequisites are needed for
 clean, reviewable lowering.
@@ -2982,6 +2985,47 @@ bounded slice. `transaction-completion generated` means write transaction
 `completion` names become generated demux signals only under this explicit
 opt-in clause. Without `response-demux`, completion names remain authored
 inputs as they do today.
+
+Shipped write response-demux metadata first slice:
+[AXI_IAL2_MANAGER_WRITE_RESPONSE_DEMUX_METADATA_FIRST_SLICE](../../AXI_IAL2_MANAGER_WRITE_RESPONSE_DEMUX_METADATA_FIRST_SLICE.md)
+ships parser/report metadata and static validation for the selected explicit
+opt-in. The checked-in sample is:
+
+```text
+ppif/axi_manager_capacity_status_response_demux.ppif
+```
+
+Useful commands:
+
+```bash
+./bin/fsmgen --emit-schedule-json ppif/axi_manager_capacity_status_response_demux.ppif
+./bin/fsmgen --strict --check --json ppif/axi_manager_capacity_status_response_demux.ppif
+./bin/fsmgen --strict --emit-semantic-json ppif/axi_manager_capacity_status_response_demux.ppif
+```
+
+The report additively emits:
+
+```text
+response_demux:
+  mode: bounded_write_bid_demux_contract
+  generated_behavior: false
+  write:
+    response_event: axi0_write_complete
+    response_id_signal: axi0_bid
+    response_id_direction: generated_input
+    transaction_completion_source: generated_demux
+    auto_transactions: [w0, w1]
+  residue:
+    - generated_write_bid_demux
+    - read_response_demux
+    - same_id_ordering
+    - read_data_interleaving
+    - bursts
+```
+
+This slice does not yet add `axi0_bid` as an IAL1 input for response demux
+and does not emit generated demux rules. The next frontier audits how the
+behavior should lower before implementing it.
 
 First implementation subset selection:
 [AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION](../../AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md)
@@ -5302,7 +5346,11 @@ leaf `IAL2-FEATURE-COMPLETENESS-FRONTIER.25` selects bounded write
 response-demux public contract selection and selected `.26` as the contract
 selector. Completed selector leaf `IAL2-FEATURE-COMPLETENESS-FRONTIER.26`
 selects explicit write-only response-demux syntax and advances the active
-frontier to `.27`.
+frontier to `.27`. Completed implementation leaf
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.27` ships parser/report metadata and
+static validation for that syntax, adds the response-demux sample and support
+accounting entry, and advances the active frontier to `.28`, generated write
+response-demux behavior readiness.
 Completed implementation leaf
 `ARCHITECTURE-DEBT-FRONTIER.2.1`
 projects direct backend storage/helper declaration-plan entries into

@@ -3,6 +3,11 @@
 Status: selected bounded public contract; no parser, generator, HDL, or CLI
 behavior changed by this note.
 
+Follow-up: `IAL2-FEATURE-COMPLETENESS-FRONTIER.27` shipped the parser/report
+metadata slice selected here. See
+[docs/AXI_IAL2_MANAGER_WRITE_RESPONSE_DEMUX_METADATA_FIRST_SLICE.md](AXI_IAL2_MANAGER_WRITE_RESPONSE_DEMUX_METADATA_FIRST_SLICE.md).
+Generated write `BID` demux behavior remains future work.
+
 Task tree:
 [docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md](tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md).
 
@@ -168,9 +173,8 @@ The parser/report implementation should run at least:
 
 ## Residue
 
-Still out of scope after this selector:
+Still out of scope after this selector until later exact owners:
 
-- parser/report implementation of `response-demux`;
 - generated write `BID` demux rules;
 - read `RID` demux;
 - read-data interleaving or reassembly;

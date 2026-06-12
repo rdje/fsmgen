@@ -976,9 +976,9 @@ Priority note:
 The active immediate feature-completeness lane is IAL2 on the
 SystemVerilog-backed lowering path; see
 [docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md](docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md).
-The current frontier implements parser/report metadata for the bounded AXI
-write response-demux public contract after shipped bounded AXI auto-ID
-request-ID drive behavior.
+The current frontier audits generated AXI write `BID` response-demux behavior
+readiness after the shipped parser/report metadata slice, before generated
+demux behavior changes.
 The shipped public capacity/status source accepts one
 `(manager-capacity-status NAME ...)` object under
 `(protocol-platform-intent ...)`, `(profile axi4)`, and top-level source
@@ -1032,10 +1032,18 @@ as generated demux signals. Completed selector `.26` chose explicit optional
 write-only `(response-demux (write (response-event EVENT)
 (transaction-completion generated)))` syntax. In the first bounded contract,
 `EVENT` must equal top-level `write-complete`, and read `RID` demux remains
-future work. The active frontier is `IAL2-FEATURE-COMPLETENESS-FRONTIER.27`,
-implementing parser/report metadata and static validation before generated
-response matching, same-ID ordering, read-data interleaving/reassembly,
-bursts, queued policy, aliases, full-manager behavior, or VHDL changes.
+future work. Completed implementation leaf
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.27` shipped parser/report metadata and
+static validation for that explicit opt-in, including a runnable
+`ppif/axi_manager_capacity_status_response_demux.ppif` sample, support
+accounting, `response_demux.generated_behavior: false`, generated
+transaction-completion ownership in the report, focused diagnostics, check
+JSON and semantic JSON coverage, and unchanged generated `.isf`, `.fsm`, and
+HDL behavior. The active frontier is
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.28`, auditing generated write `BID` demux
+behavior readiness before generated response matching, same-ID ordering,
+read-data interleaving/reassembly, bursts, queued policy, aliases,
+full-manager behavior, or VHDL changes.
 
 The first honest `R11` slices are now:
 1. keep widening convention-first composition only where the child-side evidence is still deterministic,

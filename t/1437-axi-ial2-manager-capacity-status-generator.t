@@ -396,6 +396,31 @@ subtest 'auto-ID lifecycle generates bounded request-ID drive behavior' => sub {
     like($sv_assertions, qr/axi0 write auto ID requests are mutually exclusive/, 'SystemVerilog assertion backend emits same-family mutual-exclusion check');
 };
 
+subtest 'response-demux contract reports bounded write metadata without generated behavior' => sub {
+    my $base = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_auto_id_lifecycle());
+    my $result = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_response_demux());
+
+    is(
+        $result->{generated_ial1}{text},
+        $base->{generated_ial1}{text},
+        'response-demux metadata does not alter generated IAL1 text in this slice',
+    );
+    is_deeply(
+        $result->{generated_ial0}{files},
+        $base->{generated_ial0}{files},
+        'response-demux metadata does not alter generated IAL0 text in this slice',
+    );
+
+    unlike($result->{generated_ial1}{text}, qr/\(input axi0_bid\b/, 'response-demux metadata does not yet add BID as an IAL1 input');
+    unlike($result->{generated_ial1}{text}, qr/response_demux/, 'response-demux metadata does not add generated demux rules');
+    assert_write_response_demux_report($result->{report}{response_demux}, 'generator report');
+    is_deeply(
+        $result->{report}{id_response_rule_engine}{residue},
+        [qw(same_id_ordering response_demux)],
+        'ID/response rule-engine still treats response demux behavior as residue',
+    );
+};
+
 subtest 'schedule report and HDL expose generated storage and status surface' => sub {
     my $result = generate_sample();
     my $report = $result->{generated_ial1_schedule_report};
@@ -485,6 +510,19 @@ subtest 'malformed contract objects fail closed and no direct lower-to-fsm entry
         ['auto lifecycle pool too large', sub { my $c = sample_contract_with_auto_id_lifecycle(); $c->{auto_id_lifecycle}{write}{pool} = [0, 1, 2, 3, 4]; $c }, qr/auto_id_lifecycle\.write\.pool supports 1\.\.4 ID values/],
         ['auto lifecycle duplicate pool value', sub { my $c = sample_contract_with_auto_id_lifecycle(); $c->{auto_id_lifecycle}{write}{pool} = [0, 0]; $c }, qr/auto_id_lifecycle\.write\.pool duplicates ID value 0/],
         ['auto lifecycle pool value exceeds width', sub { my $c = sample_contract_with_auto_id_lifecycle(); $c->{id_families}{write}{width} = 1; $c->{auto_id_lifecycle}{write}{pool} = [2]; $c }, qr/auto_id_lifecycle\.write\.pool value 2 does not fit width 1/],
+        ['response demux unsupported family', sub { my $c = sample_contract_with_auto_id_lifecycle(); $c->{response_demux} = { read => {} }; $c }, qr/response_demux has unsupported family 'read'/],
+        ['response demux missing response event', sub { my $c = sample_contract_with_response_demux(); delete $c->{response_demux}{write}{response_event}; $c }, qr/response_demux\.write is missing required field 'response_event'/],
+        ['response demux invalid transaction completion mode', sub { my $c = sample_contract_with_response_demux(); $c->{response_demux}{write}{transaction_completion} = 'authored'; $c }, qr/response_demux\.write\.transaction_completion must be generated/],
+        ['response demux response event mismatch', sub { my $c = sample_contract_with_response_demux(); $c->{response_demux}{write}{response_event} = 'axi0_other_write_complete'; $c }, qr/response_demux\.write\.response_event must equal write_complete event 'axi0_write_complete'/],
+        ['response demux without ID-family metadata', sub { my $c = sample_contract(); $c->{response_demux} = { write => { response_event => 'axi0_write_complete', transaction_completion => 'generated' } }; $c }, qr/response_demux requires id_families metadata/],
+        ['response demux without transaction metadata', sub { my $c = sample_contract_with_id_families(); $c->{response_demux} = { write => { response_event => 'axi0_write_complete', transaction_completion => 'generated' } }; $c }, qr/response_demux requires transactions metadata/],
+        ['response demux without auto lifecycle metadata', sub { my $c = sample_contract_with_transactions(); $c->{response_demux} = { write => { response_event => 'axi0_write_complete', transaction_completion => 'generated' } }; $c }, qr/response_demux requires auto_id_lifecycle metadata/],
+        ['response demux without write auto lifecycle metadata', sub {
+            my $c = sample_contract_with_response_demux();
+            $c->{transactions}[2]{id} = { policy => 'auto' };
+            $c->{auto_id_lifecycle} = { read => { pool => [0] } };
+            $c;
+        }, qr/response_demux\.write requires write auto_id_lifecycle metadata/],
         ['bad source anchors', sub { my $c = sample_contract(); $c->{source}{anchors} = {}; $c }, qr/source\.anchors must be an array reference/],
     );
 
@@ -620,6 +658,35 @@ sub sample_contract_with_auto_id_lifecycle {
         },
     };
     return $contract;
+}
+
+sub sample_contract_with_response_demux {
+    my $contract = sample_contract_with_auto_id_lifecycle();
+    $contract->{intent_name} = 'axi_manager_capacity_status_response_demux';
+    $contract->{source}{object_id} = 'axi-manager-capacity-status-response-demux';
+    $contract->{response_demux} = {
+        write => {
+            response_event => 'axi0_write_complete',
+            transaction_completion => 'generated',
+        },
+    };
+    return $contract;
+}
+
+sub assert_write_response_demux_report {
+    my ($demux, $owner) = @_;
+    is($demux->{mode}, 'bounded_write_bid_demux_contract', "$owner marks bounded write BID-demux contract mode");
+    ok(!$demux->{generated_behavior}, "$owner keeps generated behavior false in this slice");
+    is($demux->{write}{response_event}, 'axi0_write_complete', "$owner reports the write response event");
+    is($demux->{write}{response_id_signal}, 'axi0_bid', "$owner reports the write response ID signal");
+    is($demux->{write}{response_id_direction}, 'generated_input', "$owner reports response ID direction as generated input");
+    is($demux->{write}{transaction_completion_source}, 'generated_demux', "$owner reports generated transaction-completion ownership");
+    is_deeply($demux->{write}{auto_transactions}, [qw(w0 w1)], "$owner reports write auto-ID transactions in source order");
+    is_deeply(
+        $demux->{residue},
+        [qw(generated_write_bid_demux read_response_demux same_id_ordering read_data_interleaving bursts)],
+        "$owner reports behavior still owned by later response-demux slices",
+    );
 }
 
 sub assert_actor_storage {
