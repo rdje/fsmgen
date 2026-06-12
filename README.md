@@ -92,16 +92,17 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 31. `docs/AXI_IAL2_VALID_READY_GENERATOR_FIRST_SLICE.md`: first in-process AXI Valid-Ready IAL2 generator slice and report surface.
 32. `docs/decisions/0016-ppif-is-first-public-ial2-container.md`: selects `.ppif` as the first public generic IAL2 file surface.
 33. `docs/IAL2_PPIF_PARSER_CLI_FIRST_SLICE.md`: first public `.ppif` parser/CLI slice for one AXI Valid-Ready source object.
-34. `docs/PDF_EXTRACTION_WORKFLOW.md`: portable workflow for source-anchored PDF text, table, diagram, and image extraction.
-35. `docs/decisions/0014-protocol-platform-intent-surface-and-layered-lowering.md`: generic IAL2 file-surface candidates and layered lowering decision.
-36. `docs/decisions/0015-ial2-profile-extensions-are-vocabulary-aliases.md`: IAL2 protocol-profile extension refinement.
-37. `docs/FEATURE_BACKLOG.md`: pointer to the canonical mdBook feature backlog for deferred/not-fully-shipped user-visible work.
-38. `CHANGES.md`: chronological technical changes.
-39. `DEVELOPMENT_NOTES.md`: design rationale and decisions.
-40. `MEMORY.md`: continuity/handoff state.
-41. `LIVE_ACHIEVEMENT_STATUS.md`: latest completed roadmap-aligned slice.
-42. `WARP.md`: repository-specific agent/development guidance.
-43. `.agents/workflows/commit.md`: automation-oriented commit workflow description.
+34. `docs/IAL2_PPIF_MULTI_VALID_READY_READINESS.md`: readiness map for future multi-channel `.ppif` Valid-Ready support.
+35. `docs/PDF_EXTRACTION_WORKFLOW.md`: portable workflow for source-anchored PDF text, table, diagram, and image extraction.
+36. `docs/decisions/0014-protocol-platform-intent-surface-and-layered-lowering.md`: generic IAL2 file-surface candidates and layered lowering decision.
+37. `docs/decisions/0015-ial2-profile-extensions-are-vocabulary-aliases.md`: IAL2 protocol-profile extension refinement.
+38. `docs/FEATURE_BACKLOG.md`: pointer to the canonical mdBook feature backlog for deferred/not-fully-shipped user-visible work.
+39. `CHANGES.md`: chronological technical changes.
+40. `DEVELOPMENT_NOTES.md`: design rationale and decisions.
+41. `MEMORY.md`: continuity/handoff state.
+42. `LIVE_ACHIEVEMENT_STATUS.md`: latest completed roadmap-aligned slice.
+43. `WARP.md`: repository-specific agent/development guidance.
+44. `.agents/workflows/commit.md`: automation-oriented commit workflow description.
 
 ## Documentation index (all `.md` files in this repo)
 - `README.md` — single entry point and navigation hub.
@@ -531,6 +532,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/AXI_IAL2_VALID_READY_READINESS_AUDIT.md` — code/test/docs/report owner map for a future AXI Valid-Ready IAL2 implementation slice.
 - `docs/AXI_IAL2_VALID_READY_GENERATOR_FIRST_SLICE.md` — first in-process AXI Valid-Ready IAL2 generator slice and report surface.
 - `docs/IAL2_PPIF_PARSER_CLI_FIRST_SLICE.md` — first public `.ppif` parser/CLI slice for one AXI Valid-Ready source object.
+- `docs/IAL2_PPIF_MULTI_VALID_READY_READINESS.md` — readiness map for future multi-channel `.ppif` Valid-Ready support.
 - `ppif/axi_aw_valid_ready.ppif` — first checked-in runnable `.ppif` sample for the public IAL2 Valid-Ready CLI surface.
 - `docs/PDF_EXTRACTION_WORKFLOW.md` — portable workflow for task-owned source-anchored PDF text, table, diagram, and image extraction.
 - `docs/decisions/0014-protocol-platform-intent-surface-and-layered-lowering.md` — generic IAL2 file-surface candidates and layered lowering decision.

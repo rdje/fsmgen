@@ -2452,6 +2452,16 @@ first-slice alias exclusions, and `supported_cli_modes[]` entries for
 additional `.ppif` objects/clauses, profile aliases, or the next protocol rule
 subset.
 
+Multi-channel `.ppif` readiness:
+[IAL2_PPIF_MULTI_VALID_READY_READINESS](../../IAL2_PPIF_MULTI_VALID_READY_READINESS.md)
+records why accepting multiple `(valid-ready-channel ...)` objects is not just
+a parser change. The current adapter, generator result shape, CLI artifact
+selection, ISF single-actor parser contract, and source-anchor model all assume
+one Valid-Ready object. A future implementation leaf must first choose an
+aggregate result/report/source-artifact contract, or an ISF wrapper/top actor
+contract, before changing the duplicate-channel fail-closed behavior. Until
+then, multi-object `.ppif` files remain unshipped.
+
 PDF extraction workflow:
 [PDF_EXTRACTION_WORKFLOW](../../PDF_EXTRACTION_WORKFLOW.md)
 documents the reusable source-anchored PDF extraction approach used for the
