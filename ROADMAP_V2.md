@@ -1027,10 +1027,13 @@ sample and structural report-only `response_demux.read` metadata with
 `generated_behavior: false`, while generated `.isf`, `.fsm`, and HDL behavior
 remain unchanged. Audit `.52` found no new IAL1/IAL0/SystemVerilog
 prerequisite and selected direct generated burst-last/`RLAST` completion
-behavior. The active frontier is `.53`: generate the `RLAST` input, reuse
-generated `RID` matching, pulse transaction completions only on matched last
-beats, move report/residue coverage, and keep read-data reassembly plus
-beat-count validation deferred.
+behavior. Slice `.53` ships that behavior: explicit burst-last read response
+demux now emits the raw response beat input, generated `RID` input, generated
+one-bit `RLAST` input, generated transaction completion pulse outputs,
+RLAST-gated response-demux rules, assertions, auto-ID lifecycle residue
+movement, same-ID coverage movement, and HDL reachability. The active frontier
+is `.54`, selecting the next exact AXI manager feature-completeness owner
+after generated `RLAST` completion behavior.
 The shipped public capacity/status source accepts one
 `(manager-capacity-status NAME ...)` object under
 `(protocol-platform-intent ...)`, `(profile axi4)`, and top-level source

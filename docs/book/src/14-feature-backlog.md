@@ -3543,6 +3543,43 @@ asserted. It should move the burst-last sample to
 coverage, and keep read-data reassembly, beat-count/`ARLEN` validation,
 per-beat outputs, per-ID queues, direct backend lowering, and VHDL deferred.
 
+`RLAST` completion behavior first slice:
+[AXI_IAL2_MANAGER_RLAST_COMPLETION_BEHAVIOR_FIRST_SLICE](../../AXI_IAL2_MANAGER_RLAST_COMPLETION_BEHAVIOR_FIRST_SLICE.md)
+ships generated burst-last completion behavior for explicit read
+`response-demux` contracts. The checked-in burst-last sample now emits
+generated `RID` and `RLAST` inputs, generated per-transaction completion pulse
+outputs, one `RLAST`-gated response-demux rule per read auto-ID transaction,
+active-match and unique-match assertions, auto-ID lifecycle residue movement,
+same-ID response-demux coverage movement, and HDL reachability.
+
+Generated IAL1 now includes:
+
+```text
+(input axi0_read_complete)
+(input axi0_rid (width 4))
+(input axi0_rlast)
+(output axi0_r0_complete)
+(output axi0_r1_complete)
+```
+
+The first generated last-beat rule is:
+
+```text
+(rule axi0_r0_response_demux
+  (& axi0_read_complete axi0_r0_auto_id_busy_q
+     (== axi0_rid axi0_r0_auto_id_q)
+     axi0_rlast)
+  (pulse axi0_r0_complete))
+```
+
+The schedule report marks `response_demux.generated_behavior: true`, removes
+`generated_burst_last_read_demux` residue, removes `response_demux` from
+`auto_id_lifecycle.residue`, and marks the read same-ID family
+`response_demux_covered: true`. Read-data reassembly, beat-count/`ARLEN`
+validation, per-beat outputs, per-ID queues, direct backend lowering, and VHDL
+remain deferred. The active frontier is the post-`RLAST` selector for the next
+exact AXI manager feature-completeness owner.
+
 First implementation subset selection:
 [AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION](../../AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md)
 selects a source-anchored AXI Valid-Ready channel contract/monitor as the
@@ -3681,9 +3718,10 @@ selection before parser/report metadata or generated behavior changes. The
 as an additive read response-demux contract. `.51` ships parser/report
 metadata and static validation for that contract with generated behavior
 unchanged. `.52` selects direct generated burst-last/`RLAST` completion
-behavior. The active frontier is `IAL2-FEATURE-COMPLETENESS-FRONTIER.53`,
-that behavior implementation. Future behavior owners must keep the reviewable
-`IAL2 -> IAL1 -> IAL0 -> SystemVerilog` path;
+behavior. `.53` ships that generated behavior. The active frontier is
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.54`, the selector for the next exact AXI
+manager feature-completeness owner. Future behavior owners must keep the
+reviewable `IAL2 -> IAL1 -> IAL0 -> SystemVerilog` path;
 read-data interleaving/reassembly, bursts, per-ID queues, full-manager
 behavior, and VHDL remain out of scope unless a later exact owner selects
 them.
@@ -5965,6 +6003,9 @@ completion behavior readiness.
 Completed readiness audit `IAL2-FEATURE-COMPLETENESS-FRONTIER.52` selects
 direct generated burst-last/`RLAST` completion behavior and advances the
 active frontier to `.53`.
+Completed implementation leaf `IAL2-FEATURE-COMPLETENESS-FRONTIER.53` ships
+generated burst-last/`RLAST` completion behavior and advances the active
+frontier to `.54`, the next AXI manager feature-completeness selector.
 Completed implementation leaf
 `ARCHITECTURE-DEBT-FRONTIER.2.1`
 projects direct backend storage/helper declaration-plan entries into

@@ -524,30 +524,41 @@ subtest 'read response-demux contract generates bounded read RID demux behavior'
     like($sv_assertions, qr/axi0 read auto ID active selected IDs are unique/, 'assertion backend emits read same-ID avoidance assertion');
 };
 
-subtest 'burst-last read response-demux metadata is accepted without generated RLAST behavior' => sub {
-    my $base = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_read_auto_id_lifecycle());
+subtest 'burst-last read response-demux generates RLAST-gated completion behavior' => sub {
     my $result = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_read_response_demux_burst_last());
     my $isf = $result->{generated_ial1}{text};
 
-    is($isf, $base->{generated_ial1}{text}, 'burst-last metadata leaves generated IAL1 unchanged from read auto-ID lifecycle');
-    is_deeply(
-        $result->{generated_ial0}{files},
-        $base->{generated_ial0}{files},
-        'burst-last metadata leaves generated IAL0 unchanged from read auto-ID lifecycle',
+    like($isf, qr/\(input axi0_read_complete\)/, 'burst-last behavior declares raw read response beat input');
+    like($isf, qr/\(input axi0_rid \(width 4\)\)/, 'burst-last behavior declares RID input');
+    like($isf, qr/\(input axi0_rlast\)/, 'burst-last behavior declares RLAST input');
+    unlike($isf, qr/\(input axi0_r0_complete\)/, 'burst-last behavior removes generated transaction completion from authored inputs');
+    like($isf, qr/\(output axi0_r0_complete\)/, 'burst-last behavior exposes generated transaction completion output');
+    like(
+        $isf,
+        qr/\(rule axi0_r0_response_demux \(& axi0_read_complete axi0_r0_auto_id_busy_q \(== axi0_rid axi0_r0_auto_id_q\) axi0_rlast\)\s+\(pulse axi0_r0_complete\)\)/s,
+        'burst-last behavior emits RLAST-gated r0 completion rule',
     );
-    unlike($isf, qr/\(input axi0_rlast\b/, 'burst-last metadata does not declare RLAST before generated behavior is owned');
-    unlike($isf, qr/\(input axi0_rid\b/, 'burst-last metadata does not declare RID before generated behavior is owned');
-    like($isf, qr/\(input axi0_r0_complete\)/, 'burst-last metadata keeps authored transaction completion input for deferred behavior');
-    unlike($isf, qr/\(output axi0_r0_complete\b/, 'burst-last metadata does not expose generated completion output yet');
-    unlike($isf, qr/\(rule axi0_r0_response_demux\b/, 'burst-last metadata does not emit response-demux rules yet');
+    like(
+        $isf,
+        qr/\(rule axi0_r1_response_demux \(& axi0_read_complete axi0_r1_auto_id_busy_q \(== axi0_rid axi0_r1_auto_id_q\) axi0_rlast\)\s+\(pulse axi0_r1_complete\)\)/s,
+        'burst-last behavior emits RLAST-gated r1 completion rule',
+    );
+
+    my $fsm = $result->{generated_ial0}{files}{'axi0_capacity_status.fsm'};
+    like($fsm, qr/axi0_rlast/, 'burst-last behavior lowers RLAST into generated IAL0');
+    like($fsm, qr/-axi0_r0_response_demux <\(& axi0_read_complete axi0_r0_auto_id_busy_q \(== axi0_rid axi0_r0_auto_id_q\) axi0_rlast\)/, 'burst-last behavior lowers RLAST-gated r0 rule to IAL0');
 
     assert_read_response_demux_burst_last_report($result->{report}{response_demux}, 'generator burst-last report');
-    assert_same_id_ordering_report($result->{report}{same_id_ordering}, 'generator burst-last report', 0, 'read');
+    assert_same_id_ordering_report($result->{report}{same_id_ordering}, 'generator burst-last report', 1, 'read');
     is_deeply(
         $result->{report}{auto_id_lifecycle}{residue},
-        [qw(response_demux)],
-        'burst-last metadata keeps response_demux residue until generated RLAST completion behavior ships',
+        [],
+        'burst-last behavior removes generated read demux from auto-ID lifecycle residue',
     );
+
+    my $sv_assertions = sv_assertion_block_for_result($result);
+    like($sv_assertions, qr/axi0 read response matches active auto-ID transaction/, 'assertion backend emits burst-last active-match assertion');
+    like($sv_assertions, qr/axi0 read response matches at most one auto-ID transaction/, 'assertion backend emits burst-last unique-match assertion');
 };
 
 subtest 'read-data contract generates single-beat capture behavior' => sub {
@@ -1126,10 +1137,10 @@ sub assert_read_response_demux_report {
 sub assert_read_response_demux_burst_last_report {
     my ($demux, $owner) = @_;
     is($demux->{mode}, 'bounded_response_demux_contract', "$owner marks bounded response-demux contract mode");
-    ok(!$demux->{generated_behavior}, "$owner marks top-level generated behavior false for burst-last metadata");
+    ok($demux->{generated_behavior}, "$owner marks top-level generated behavior true for burst-last behavior");
     my $read = $demux->{read};
     is($read->{mode}, 'bounded_read_rid_demux_contract', "$owner marks bounded read RID-demux contract mode");
-    ok(!$read->{generated_behavior}, "$owner marks read generated behavior false");
+    ok($read->{generated_behavior}, "$owner marks read generated behavior true");
     is($read->{response_event}, 'axi0_read_complete', "$owner reports the raw read response beat event");
     is($read->{response_event_role}, 'raw_accepted_read_response_beat', "$owner reports the beat-level response-event role");
     is($read->{response_scope}, 'burst_last', "$owner reports burst-last read response scope");
@@ -1145,12 +1156,16 @@ sub assert_read_response_demux_burst_last_report {
     is($read->{burst_length_validation}, 'not_generated', "$owner reports deferred burst length validation");
     is_deeply($read->{auto_transactions}, [qw(r0 r1)], "$owner reports read auto-ID transactions in source order");
     is_deeply($read->{generated_completion_signals}, [qw(axi0_r0_complete axi0_r1_complete)], "$owner reports selected transaction completion names");
-    ok(!exists $read->{generated_rules}, "$owner does not report generated read demux rules");
-    ok(!exists $read->{generated_assertions}, "$owner does not report generated read demux assertions");
+    is_deeply($read->{generated_rules}, [qw(axi0_r0_response_demux axi0_r1_response_demux)], "$owner reports generated burst-last read demux rules");
+    is_deeply(
+        $read->{generated_assertions},
+        [qw(axi0_read_response_demux_active_match axi0_r0_r1_read_response_demux_unique_match)],
+        "$owner reports generated burst-last read demux assertions",
+    );
     is_deeply(
         $demux->{residue},
-        [qw(generated_burst_last_read_demux read_data_interleaving bursts)],
-        "$owner reports deferred burst-last demux behavior and broader read residue",
+        [qw(read_data_interleaving bursts)],
+        "$owner removes generated burst-last demux residue and keeps broader read residue",
     );
 }
 

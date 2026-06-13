@@ -259,27 +259,29 @@ subtest 'PPIF adapter parses AXI manager read response-demux behavior' => sub {
     is_deeply($result->{report}{auto_id_lifecycle}{residue}, [], 'adapter report removes response_demux and same-ID residue from read auto-ID lifecycle residue');
 };
 
-subtest 'PPIF adapter parses AXI manager burst-last read response-demux metadata' => sub {
+subtest 'PPIF adapter parses AXI manager burst-last read response-demux behavior' => sub {
     my $sample_path = sample_capacity_read_response_demux_burst_last_ppif_path();
     ok(-f $sample_path, 'tracked runnable PPIF capacity/status burst-last read response-demux sample exists');
 
-    my $base = FSM::Adapter::IAL2::PPIF->new()->parse_source(sample_capacity_read_response_demux_base_ppif(), 'read-response-demux-base.ppif');
     my $result = FSM::Adapter::IAL2::PPIF->new()->parse_source(sample_capacity_read_response_demux_burst_last_ppif(), $sample_path);
     my $isf = $result->{generated_ial1}{text};
 
     is($result->{kind}, 'protocol_intent.axi_manager_capacity_status', 'burst-last read response-demux sample still uses the capacity/status generator');
     is($result->{report}{source_object}{id}, 'axi-manager-capacity-status-read-response-demux-burst-last', 'burst-last source object id is preserved');
     is($result->{report}{source_object}{intent_name}, 'axi_manager_capacity_status_read_response_demux_burst_last', 'burst-last source intent name is preserved');
-    is($isf, $base->{generated_ial1}{text}, 'burst-last metadata leaves generated IAL1 unchanged from read auto-ID lifecycle');
-    is_deeply(
-        $result->{generated_ial0}{files},
-        $base->{generated_ial0}{files},
-        'burst-last metadata leaves generated IAL0 unchanged from read auto-ID lifecycle',
+    like($isf, qr/\(input axi0_read_complete\)/, 'burst-last behavior declares raw read response beat input');
+    like($isf, qr/\(input axi0_rid \(width 4\)\)/, 'burst-last behavior declares RID input');
+    like($isf, qr/\(input axi0_rlast\)/, 'burst-last behavior declares RLAST input');
+    unlike($isf, qr/\(input axi0_r0_complete\)/, 'burst-last behavior removes generated transaction completion from authored inputs');
+    like($isf, qr/\(output axi0_r0_complete\)/, 'burst-last behavior exposes generated transaction completion output');
+    like(
+        $isf,
+        qr/\(rule axi0_r0_response_demux \(& axi0_read_complete axi0_r0_auto_id_busy_q \(== axi0_rid axi0_r0_auto_id_q\) axi0_rlast\)\s+\(pulse axi0_r0_complete\)\)/s,
+        'burst-last behavior emits RLAST-gated r0 completion rule',
     );
-    unlike($isf, qr/\(input axi0_rlast\b/, 'burst-last metadata does not declare RLAST before generated behavior is owned');
-    unlike($isf, qr/\(input axi0_rid\b/, 'burst-last metadata does not declare RID before generated behavior is owned');
     assert_read_response_demux_burst_last_report($result->{report}{response_demux}, 'adapter burst-last report');
-    is_deeply($result->{report}{auto_id_lifecycle}{residue}, [qw(response_demux)], 'adapter burst-last report keeps response_demux lifecycle residue');
+    assert_same_id_ordering_report($result->{report}{same_id_ordering}, 'adapter burst-last report', 1, 'read');
+    is_deeply($result->{report}{auto_id_lifecycle}{residue}, [], 'adapter burst-last report removes generated read demux from lifecycle residue');
 };
 
 subtest 'PPIF adapter parses AXI manager read-data behavior' => sub {
@@ -750,7 +752,7 @@ subtest 'CLI emits IAL2 report JSON for AXI manager read response-demux behavior
     is_deeply($report->{generated_artifacts}{ial0}{files}, ['axi0_capacity_status.fsm'], 'read response-demux behavior keeps the generated .fsm artifact name stable');
 };
 
-subtest 'CLI emits IAL2 report JSON for AXI manager burst-last read response-demux metadata .ppif' => sub {
+subtest 'CLI emits IAL2 report JSON for AXI manager burst-last read response-demux behavior .ppif' => sub {
     my ($success, undef, undef, $stdout_buf, $stderr_buf) = run(
         command => ['./bin/fsmgen', '--emit-schedule-json', sample_capacity_read_response_demux_burst_last_ppif_path()],
     );
@@ -761,8 +763,9 @@ subtest 'CLI emits IAL2 report JSON for AXI manager burst-last read response-dem
     is($report->{schema}, 'fsmgen.ial2.protocol_intent.axi_manager_capacity_status.v1', 'CLI keeps the capacity/status report schema');
     is($report->{source_object}{intent_name}, 'axi_manager_capacity_status_read_response_demux_burst_last', 'burst-last report carries the PPIF top-level intent name');
     assert_read_response_demux_burst_last_report($report->{response_demux}, 'CLI burst-last report');
-    is_deeply($report->{auto_id_lifecycle}{residue}, [qw(response_demux)], 'CLI burst-last report keeps response_demux lifecycle residue');
-    is_deeply($report->{generated_artifacts}{ial0}{files}, ['axi0_capacity_status.fsm'], 'burst-last metadata keeps the generated .fsm artifact name stable');
+    assert_same_id_ordering_report($report->{same_id_ordering}, 'CLI burst-last report', 1, 'read');
+    is_deeply($report->{auto_id_lifecycle}{residue}, [], 'CLI burst-last report removes generated read demux from lifecycle residue');
+    is_deeply($report->{generated_artifacts}{ial0}{files}, ['axi0_capacity_status.fsm'], 'burst-last behavior keeps the generated .fsm artifact name stable');
 };
 
 subtest 'CLI emits IAL2 report JSON for AXI manager read-data metadata .ppif' => sub {
@@ -1929,10 +1932,10 @@ sub assert_read_response_demux_report {
 sub assert_read_response_demux_burst_last_report {
     my ($demux, $owner) = @_;
     is($demux->{mode}, 'bounded_response_demux_contract', "$owner marks bounded response-demux contract mode");
-    ok(!$demux->{generated_behavior}, "$owner marks top-level generated behavior false for burst-last metadata");
+    ok($demux->{generated_behavior}, "$owner marks top-level generated behavior true for burst-last behavior");
     my $read = $demux->{read};
     is($read->{mode}, 'bounded_read_rid_demux_contract', "$owner marks bounded read RID-demux contract mode");
-    ok(!$read->{generated_behavior}, "$owner marks read generated behavior false");
+    ok($read->{generated_behavior}, "$owner marks read generated behavior true");
     is($read->{response_event}, 'axi0_read_complete', "$owner reports the raw read response beat event");
     is($read->{response_event_role}, 'raw_accepted_read_response_beat', "$owner reports the beat-level response-event role");
     is($read->{response_scope}, 'burst_last', "$owner reports burst-last read response scope");
@@ -1948,12 +1951,16 @@ sub assert_read_response_demux_burst_last_report {
     is($read->{burst_length_validation}, 'not_generated', "$owner reports deferred burst length validation");
     is_deeply($read->{auto_transactions}, [qw(r0 r1)], "$owner reports read auto-ID transactions in source order");
     is_deeply($read->{generated_completion_signals}, [qw(axi0_r0_complete axi0_r1_complete)], "$owner reports selected transaction completion names");
-    ok(!exists $read->{generated_rules}, "$owner does not report generated read demux rules");
-    ok(!exists $read->{generated_assertions}, "$owner does not report generated read demux assertions");
+    is_deeply($read->{generated_rules}, [qw(axi0_r0_response_demux axi0_r1_response_demux)], "$owner reports generated burst-last read demux rules");
+    is_deeply(
+        $read->{generated_assertions},
+        [qw(axi0_read_response_demux_active_match axi0_r0_r1_read_response_demux_unique_match)],
+        "$owner reports generated burst-last read demux assertions",
+    );
     is_deeply(
         $demux->{residue},
-        [qw(generated_burst_last_read_demux read_data_interleaving bursts)],
-        "$owner reports deferred burst-last demux behavior and broader read residue",
+        [qw(read_data_interleaving bursts)],
+        "$owner removes generated burst-last demux residue and keeps broader read residue",
     );
 }
 

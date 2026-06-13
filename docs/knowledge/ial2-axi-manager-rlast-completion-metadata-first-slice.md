@@ -37,7 +37,7 @@ that signal, and rejects the current single-beat `read-data` contract when it
 is paired with burst-last response demux.
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.52` audited readiness and selected direct
-generated burst-last/`RLAST` completion behavior. The next active slice is
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.53`: add generated `RLAST`/`RID` inputs,
-generated last-beat transaction completion pulses, assertions, report/residue
-movement, and HDL reachability while keeping read-data reassembly deferred.
+generated burst-last/`RLAST` completion behavior. `IAL2-FEATURE-COMPLETENESS-FRONTIER.53`
+shipped that behavior while keeping read-data reassembly deferred. The next
+active slice is `IAL2-FEATURE-COMPLETENESS-FRONTIER.54`: select the next AXI
+manager feature-completeness owner.

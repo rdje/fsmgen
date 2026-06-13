@@ -10,9 +10,9 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `HEAD after commit` — `IAL2-FEATURE-COMPLETENESS-FRONTIER.52: audit AXI RLAST behavior`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.53` pending; next action is to implement generated burst-last/`RLAST` completion behavior for the checked-in PPIF sample.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.52`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.51`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.50`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.49`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.48`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.47`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.46`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.45`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.44`. Older completed slices are in the task tree and git history.
+- latest_commit: `HEAD after commit` — `IAL2-FEATURE-COMPLETENESS-FRONTIER.53: ship AXI RLAST behavior`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.54` pending; next action is to select the next exact AXI manager feature-completeness owner after generated `RLAST` completion behavior.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.53`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.52`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.51`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.50`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.49`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.48`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.47`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.46`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.45`. Older completed slices are in the task tree and git history.
 - in_flight_uncommitted: none after this commit; unrelated untracked `fx/` intentionally left alone.
 - blockers: none.
 

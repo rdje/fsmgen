@@ -890,7 +890,7 @@ sub _normalize_response_demux_read(%args) {
 
     return {
         mode                         => 'bounded_read_rid_demux_contract',
-        generated_behavior           => 0,
+        generated_behavior           => 1,
         response_event                => $response_event,
         response_event_role           => 'raw_accepted_read_response_beat',
         response_scope                => 'burst_last',
@@ -1577,13 +1577,15 @@ sub _id_response_signal_inputs($contract) {
 sub _response_demux_response_id_inputs($contract) {
     my $demux = $contract->{response_demux};
     return () unless ref($demux) eq 'HASH' && $demux->{generated_behavior};
-    return @{_unique_preserving([
-        map { $demux->{$_}{response_id_signal} }
-        grep {
-            ref($demux->{$_}) eq 'HASH'
-            && $demux->{$_}{generated_behavior}
-        } qw(write read)
-    ])};
+    my @signals;
+    for my $family (qw(write read)) {
+        my $entry = $demux->{$family};
+        next unless ref($entry) eq 'HASH' && $entry->{generated_behavior};
+        push @signals, $entry->{response_id_signal};
+        push @signals, $entry->{last_signal}
+            if defined $entry->{last_signal};
+    }
+    return @{_unique_preserving(\@signals)};
 }
 
 sub _input_line($contract, $name) {
@@ -1594,6 +1596,8 @@ sub _input_line($contract, $name) {
 
 sub _input_width($contract, $name) {
     my $width = _id_signal_input_width($contract, $name);
+    return $width if defined $width;
+    $width = _response_demux_signal_input_width($contract, $name);
     return $width if defined $width;
     return _read_data_signal_input_width($contract, $name);
 }
@@ -1618,6 +1622,18 @@ sub _read_data_signal_input_width($contract, $name) {
     return undef unless ref($read) eq 'HASH';
     return $read->{data_signal_width} if ($read->{data_signal} // '') eq $name;
     return $read->{status_signal_width} if ($read->{status_signal} // '') eq $name;
+    return undef;
+}
+
+sub _response_demux_signal_input_width($contract, $name) {
+    my $demux = $contract->{response_demux};
+    return undef unless ref($demux) eq 'HASH' && $demux->{generated_behavior};
+    for my $family (qw(write read)) {
+        my $entry = $demux->{$family};
+        next unless ref($entry) eq 'HASH' && $entry->{generated_behavior};
+        return $entry->{last_signal_width}
+            if defined($entry->{last_signal}) && $entry->{last_signal} eq $name;
+    }
     return undef;
 }
 
@@ -1919,10 +1935,15 @@ sub _response_demux_rule_name($contract, $state) {
 sub _response_demux_guard_expr($contract, $state) {
     my $demux = $contract->{response_demux};
     my $family = $state->{family};
-    return _and_expr(
+    my @terms = (
         $demux->{$family}{response_event},
         $state->{busy_signal},
         _eq_expr($demux->{$family}{response_id_signal}, $state->{selected_id_signal}),
+    );
+    push @terms, $demux->{$family}{last_signal}
+        if defined $demux->{$family}{last_signal};
+    return _and_expr(
+        @terms,
     );
 }
 

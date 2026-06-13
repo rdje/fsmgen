@@ -40,6 +40,6 @@ authoritative last-beat marker for this boundary.
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.51` shipped parser/report metadata and
 static validation for this contract, with generated `.isf`, `.fsm`, and HDL
 behavior unchanged. `IAL2-FEATURE-COMPLETENESS-FRONTIER.52` selected direct
-generated behavior. The next active slice is
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.53`: implement generated burst-last
-`RLAST` completion pulses.
+generated behavior, and `IAL2-FEATURE-COMPLETENESS-FRONTIER.53` shipped
+generated burst-last `RLAST` completion pulses. The next active slice is
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.54`: select the next AXI manager owner.

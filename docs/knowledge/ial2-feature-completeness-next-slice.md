@@ -1,8 +1,9 @@
 ---
 id: ial2-feature-completeness-next-slice
-title: IAL2 feature completeness next slice is AXI RLAST behavior
+title: IAL2 feature completeness next slice is post-RLAST AXI selector
 answers:
   - "what is the next IAL2 feature completeness slice?"
+  - "what comes after IAL2-FEATURE-COMPLETENESS-FRONTIER.53?"
   - "what comes after IAL2-FEATURE-COMPLETENESS-FRONTIER.52?"
   - "what comes after IAL2-FEATURE-COMPLETENESS-FRONTIER.51?"
   - "what comes after IAL2-FEATURE-COMPLETENESS-FRONTIER.50?"
@@ -30,8 +31,8 @@ answers:
 date: 2026-06-13
 status: current
 tags: [ial2, axi, manager, read-data, rdata, rresp, capture, metadata, behavior, selector, bursts, rlast, completion, interleaving, per-id, contract, feature-completeness, task-tree]
-evidence: docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; docs/AXI_IAL2_MANAGER_RLAST_COMPLETION_BEHAVIOR_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_RLAST_COMPLETION_METADATA_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_RLAST_COMPLETION_CONTRACT_SELECTION.md; docs/AXI_IAL2_MANAGER_RLAST_COMPLETION_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_POST_READ_DATA_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_READ_DATA_BEHAVIOR_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_READ_DATA_CAPTURE_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_READ_DATA_METADATA_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_READ_DATA_CONTRACT_SELECTION.md; docs/AXI_IAL2_MANAGER_READ_DATA_BURST_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_POST_READ_DEMUX_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_READ_RESPONSE_DEMUX_BEHAVIOR_FIRST_SLICE.md; docs/book/src/14-feature-backlog.md; README.md; ROADMAP_V2.md
-reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.53|AXI_IAL2_MANAGER_RLAST_COMPLETION_BEHAVIOR_READINESS_AUDIT|generated burst-last|axi0_rlast' docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md docs/AXI_IAL2_MANAGER_RLAST_COMPLETION_BEHAVIOR_READINESS_AUDIT.md docs/book/src/14-feature-backlog.md README.md ROADMAP_V2.md
+evidence: docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; docs/AXI_IAL2_MANAGER_RLAST_COMPLETION_BEHAVIOR_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_RLAST_COMPLETION_BEHAVIOR_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_RLAST_COMPLETION_METADATA_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_RLAST_COMPLETION_CONTRACT_SELECTION.md; docs/AXI_IAL2_MANAGER_RLAST_COMPLETION_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_POST_READ_DATA_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_READ_DATA_BEHAVIOR_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_READ_DATA_CAPTURE_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_READ_DATA_METADATA_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_READ_DATA_CONTRACT_SELECTION.md; docs/AXI_IAL2_MANAGER_READ_DATA_BURST_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_POST_READ_DEMUX_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_READ_RESPONSE_DEMUX_BEHAVIOR_FIRST_SLICE.md; docs/book/src/14-feature-backlog.md; README.md; ROADMAP_V2.md
+reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.54|AXI_IAL2_MANAGER_RLAST_COMPLETION_BEHAVIOR_FIRST_SLICE|post-RLAST|next AXI manager' docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md docs/AXI_IAL2_MANAGER_RLAST_COMPLETION_BEHAVIOR_FIRST_SLICE.md docs/book/src/14-feature-backlog.md README.md ROADMAP_V2.md
 ---
 
 After the shipped Valid-Ready, bundle, capacity/status, ID-family metadata,
@@ -47,8 +48,9 @@ read-data/burst readiness audit, read-data contract selection, read-data
 parser/report metadata first slice, read-data capture readiness audit, and
 generated read-data capture behavior first slice, post-read-data selector, and
 AXI burst/`RLAST` readiness audit, burst-last contract selector,
-parser/report metadata first slice, and generated behavior readiness audit,
-the next active leaf is `IAL2-FEATURE-COMPLETENESS-FRONTIER.53`.
+parser/report metadata first slice, generated behavior readiness audit, and
+generated `RLAST` behavior first slice, the next active leaf is
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.54`.
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.47` shipped generated single-beat
 `RDATA`/`RRESP` capture behavior for explicit `read-data` contracts. The next
@@ -84,11 +86,13 @@ the current single-beat `read-data` contract, and keeps generated `.isf`,
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.52` audited generated burst-last/`RLAST`
 completion behavior readiness and found no new IAL1/IAL0/SystemVerilog
-prerequisite. The next active slice is
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.53`: implement generated `RLAST` input,
-generated `RID` matching, last-beat transaction completion pulse
-outputs/rules/assertions, report/residue movement, same-ID coverage movement,
-and HDL reachability for the burst-last sample.
+prerequisite. `IAL2-FEATURE-COMPLETENESS-FRONTIER.53` shipped generated
+`RLAST` input, generated `RID` matching, last-beat transaction completion
+pulse outputs/rules/assertions, report/residue movement, same-ID coverage
+movement, and HDL reachability for the burst-last sample. The next active
+slice is `IAL2-FEATURE-COMPLETENESS-FRONTIER.54`: select the next exact AXI
+manager feature-completeness owner after generated `RLAST` completion
+behavior.
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.32` aligned the emitted report for
 explicit generated write response demux. At that point,
@@ -193,8 +197,7 @@ The full AXI manager is not implemented yet. Bounded single-beat read `RID`
 demux and generated single-beat `RDATA`/`RRESP` capture are shipped. Per-ID
 same-ID response queues, authored concrete-ID same-ID ordering, read-data
 interleaving/reassembly, bursts, queued/blocking policy, profile aliases,
-full-manager syntax, and VHDL remain future exact-owner work. The `.52`
-readiness audit advanced to `.53`, direct generated burst-last/`RLAST`
-completion behavior.
+full-manager syntax, and VHDL remain future exact-owner work. The `.53`
+behavior slice advanced to `.54`, the post-`RLAST` selector.
 VHDL stays deferred until the SystemVerilog-backed IAL0/IAL1/IAL2 path is
 feature-complete enough to reopen backend parity.
