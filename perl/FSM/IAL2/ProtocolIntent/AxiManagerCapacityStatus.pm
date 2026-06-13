@@ -732,19 +732,31 @@ sub _normalize_response_demux(%args) {
         );
     }
 
+    my $generated_behavior = grep {
+        ref($normalized{$_}) eq 'HASH' && $normalized{$_}{generated_behavior}
+    } qw(write read);
     my $mode = exists($normalized{read})
         ? 'bounded_response_demux_contract'
         : 'bounded_write_bid_demux_contract';
-    my @residue = exists($normalized{read})
-        ? qw(read_data_interleaving bursts)
-        : qw(read_response_demux same_id_ordering read_data_interleaving bursts);
+    my @residue = _response_demux_residue(\%normalized);
 
     return {
         mode               => $mode,
-        generated_behavior => 1,
+        generated_behavior => $generated_behavior ? 1 : 0,
         %normalized,
         residue => \@residue,
     };
+}
+
+sub _response_demux_residue($normalized) {
+    return qw(read_response_demux same_id_ordering read_data_interleaving bursts)
+        unless exists $normalized->{read};
+
+    my $read = $normalized->{read};
+    return qw(read_data_interleaving bursts)
+        if ref($read) eq 'HASH' && $read->{generated_behavior};
+
+    return qw(generated_burst_last_read_demux read_data_interleaving bursts);
 }
 
 sub _normalize_response_demux_write(%args) {
@@ -800,7 +812,10 @@ sub _normalize_response_demux_read(%args) {
     confess "AXI manager capacity/status IAL2 contract response_demux.read must be a hash reference\n"
         unless ref($raw) eq 'HASH';
 
-    my %allowed = map { $_ => 1 } qw(response_event response_scope transaction_completion);
+    my %allowed = map { $_ => 1 } qw(
+        response_event response_scope last_signal last_signal_width
+        transaction_completion
+    );
     for my $field (sort keys %$raw) {
         confess "AXI manager capacity/status IAL2 contract response_demux.read unsupported field '$field'\n"
             unless $allowed{$field};
@@ -824,8 +839,8 @@ sub _normalize_response_demux_read(%args) {
         $raw->{response_scope},
         'response_demux.read.response_scope',
     );
-    confess "AXI manager capacity/status IAL2 contract response_demux.read.response_scope must be single-beat in this slice\n"
-        unless $response_scope eq 'single-beat';
+    confess "AXI manager capacity/status IAL2 contract response_demux.read.response_scope must be single-beat or burst-last in this slice\n"
+        unless $response_scope =~ /\A(?:single-beat|burst-last)\z/;
 
     my $transaction_completion = _nonempty_scalar(
         $raw->{transaction_completion},
@@ -840,15 +855,55 @@ sub _normalize_response_demux_read(%args) {
             if $completion_signal eq $response_event;
     }
 
+    if ($response_scope eq 'single-beat') {
+        confess "AXI manager capacity/status IAL2 contract response_demux.read.last_signal is only supported with response_scope burst-last\n"
+            if exists($raw->{last_signal}) || exists($raw->{last_signal_width});
+        return {
+            mode                         => 'bounded_read_rid_demux_contract',
+            generated_behavior           => 1,
+            response_event                => $response_event,
+            response_event_role           => 'raw_accepted_read_response',
+            response_scope                => 'single_beat',
+            response_id_signal            => $args{read_family}{response_id_signal},
+            response_id_direction         => 'generated_input',
+            transaction_completion_source => 'generated_demux',
+            auto_transactions             => _clone_jsonish($args{read_lifecycle}{auto_transactions}),
+            generated_completion_signals  => _clone_jsonish(\@completion_signals),
+        };
+    }
+
+    confess "AXI manager capacity/status IAL2 contract response_demux.read.response_scope burst-last requires field 'last_signal'\n"
+        unless exists $raw->{last_signal};
+    confess "AXI manager capacity/status IAL2 contract response_demux.read.response_scope burst-last requires field 'last_signal_width'\n"
+        unless exists $raw->{last_signal_width};
+
+    my $last_signal = _identifier_value(
+        _nonempty_scalar($raw->{last_signal}, 'response_demux.read.last_signal'),
+        'response_demux.read.last_signal',
+    );
+    my $last_signal_width = _positive_integer(
+        $raw->{last_signal_width},
+        'response_demux.read.last_signal_width',
+    );
+    confess "AXI manager capacity/status IAL2 contract response_demux.read.last_signal_width must be 1 in this slice\n"
+        unless $last_signal_width == 1;
+
     return {
         mode                         => 'bounded_read_rid_demux_contract',
-        generated_behavior           => 1,
+        generated_behavior           => 0,
         response_event                => $response_event,
-        response_event_role           => 'raw_accepted_read_response',
-        response_scope                => 'single_beat',
+        response_event_role           => 'raw_accepted_read_response_beat',
+        response_scope                => 'burst_last',
         response_id_signal            => $args{read_family}{response_id_signal},
         response_id_direction         => 'generated_input',
-        transaction_completion_source => 'generated_demux',
+        last_signal                   => $last_signal,
+        last_signal_direction         => 'generated_input',
+        last_signal_width             => $last_signal_width,
+        transaction_completion_source => 'generated_demux_last_beat',
+        transaction_completion_semantics => 'matched_rid_and_last_signal',
+        beat_valid_output             => 'none',
+        burst_length_source           => 'rlast_only',
+        burst_length_validation       => 'not_generated',
         auto_transactions             => _clone_jsonish($args{read_lifecycle}{auto_transactions}),
         generated_completion_signals  => _clone_jsonish(\@completion_signals),
     };
@@ -865,6 +920,13 @@ sub _normalize_read_data(%args) {
     }
     confess "AXI manager capacity/status IAL2 contract read_data requires a read family\n"
         unless exists $raw->{read};
+    if (
+        ref($args{response_demux}) eq 'HASH'
+        && ref($args{response_demux}{read}) eq 'HASH'
+        && ($args{response_demux}{read}{response_scope} // '') ne 'single_beat'
+    ) {
+        confess "AXI manager capacity/status IAL2 contract read_data requires response_demux.read.response_scope single_beat in this slice\n";
+    }
     confess "AXI manager capacity/status IAL2 contract read_data requires generated read response_demux metadata\n"
         unless ref($args{response_demux}) eq 'HASH'
             && ref($args{response_demux}{read}) eq 'HASH'
@@ -1260,7 +1322,7 @@ sub _reject_forbidden_or_duplicate_names(%args) {
         if defined $args{transactions};
     push @groups, [auto_id_lifecycle => _auto_id_generated_signal_names($args{auto_id_lifecycle})]
         if defined $args{auto_id_lifecycle};
-    push @groups, [response_demux => _response_demux_generated_signal_names($args{response_demux})]
+    push @groups, [response_demux => _response_demux_signal_names($args{response_demux})]
         if defined $args{response_demux};
     push @groups, [read_data => _read_data_signal_names($args{read_data})]
         if defined $args{read_data};
@@ -1331,13 +1393,16 @@ sub _auto_id_generated_signal_names($auto_id_lifecycle) {
     return \@names;
 }
 
-sub _response_demux_generated_signal_names($response_demux) {
+sub _response_demux_signal_names($response_demux) {
     return [] unless ref($response_demux) eq 'HASH';
     my @signals;
     for my $family (qw(write read)) {
         my $entry = $response_demux->{$family};
-        next unless ref($entry) eq 'HASH' && $entry->{generated_behavior};
-        push @signals, @{$entry->{generated_completion_signals} || []};
+        next unless ref($entry) eq 'HASH';
+        push @signals, $entry->{last_signal}
+            if defined $entry->{last_signal};
+        push @signals, @{$entry->{generated_completion_signals} || []}
+            if $entry->{generated_behavior};
     }
     return _clone_jsonish(\@signals);
 }
@@ -2184,10 +2249,11 @@ sub _build_report(%args) {
             'same_id_ordering for generated auto-ID families is enforced by avoiding same-ID concurrency through allocator free-ID guards plus pairwise active selected-ID assertions',
             'response_demux requires id_families, transactions, and selected-family auto_id_lifecycle metadata',
             'response_demux.write requires response_event equal to write_complete and generates bounded write BID demux behavior for explicit opt-in contracts',
-            'response_demux.read requires response_event equal to read_complete, response_scope single_beat, read ID-family metadata, read transactions, and read auto_id_lifecycle metadata',
-            'response_demux.read generates bounded single-beat read RID demux behavior for explicit opt-in contracts',
+            'response_demux.read requires response_event equal to read_complete, response_scope single_beat or burst_last, read ID-family metadata, read transactions, and read auto_id_lifecycle metadata',
+            'response_demux.read response_scope single_beat generates bounded single-beat read RID demux behavior for explicit opt-in contracts',
+            'response_demux.read response_scope burst_last requires one-bit last_signal metadata and remains report-only until generated RLAST completion behavior is explicitly owned',
             'response_demux transaction_completion must be generated, making selected transaction completion names generated demux pulse outputs only under explicit opt-in contracts',
-            'read_data requires generated read response_demux metadata and explicit single-beat capture/source policy',
+            'read_data requires generated single-beat read response_demux metadata and explicit single-beat capture/source policy',
             'read_data.read data width must be positive and status width must be 2',
             'read_data.read transaction outputs must exactly cover read response_demux auto transactions',
             'read_data generates bounded single-beat RDATA/RRESP capture inputs, outputs, and guarded assignments for explicit opt-in contracts',
@@ -2199,7 +2265,7 @@ sub _build_report(%args) {
             },
             {
                 id     => 'axi_id_ordering_and_response_matching',
-                detail => 'Concrete transaction ID request/response assertions, explicit bounded auto-ID request-ID drive plus completion-event release, generated auto-ID same-ID avoidance, generated write BID response demux, generated single-beat read RID response demux, and generated single-beat read-data RDATA/RRESP capture are supported; dynamic user-ID arbitration while issuing multiple same-family requests in one cycle, per-ID same-ID response queues, different-ID interleaving, read-data interleaving/reassembly, and burst/last-beat tracking remain outside this capacity/status shell.',
+                detail => 'Concrete transaction ID request/response assertions, explicit bounded auto-ID request-ID drive plus completion-event release, generated auto-ID same-ID avoidance, generated write BID response demux, generated single-beat read RID response demux, generated single-beat read-data RDATA/RRESP capture, and report-only burst-last RLAST response-demux metadata are supported; dynamic user-ID arbitration while issuing multiple same-family requests in one cycle, per-ID same-ID response queues, different-ID interleaving, read-data interleaving/reassembly, and generated burst/last-beat tracking remain outside this capacity/status shell.',
             },
             {
                 id     => 'profile_aliases_and_full_manager_behavior',

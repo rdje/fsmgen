@@ -524,6 +524,32 @@ subtest 'read response-demux contract generates bounded read RID demux behavior'
     like($sv_assertions, qr/axi0 read auto ID active selected IDs are unique/, 'assertion backend emits read same-ID avoidance assertion');
 };
 
+subtest 'burst-last read response-demux metadata is accepted without generated RLAST behavior' => sub {
+    my $base = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_read_auto_id_lifecycle());
+    my $result = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_read_response_demux_burst_last());
+    my $isf = $result->{generated_ial1}{text};
+
+    is($isf, $base->{generated_ial1}{text}, 'burst-last metadata leaves generated IAL1 unchanged from read auto-ID lifecycle');
+    is_deeply(
+        $result->{generated_ial0}{files},
+        $base->{generated_ial0}{files},
+        'burst-last metadata leaves generated IAL0 unchanged from read auto-ID lifecycle',
+    );
+    unlike($isf, qr/\(input axi0_rlast\b/, 'burst-last metadata does not declare RLAST before generated behavior is owned');
+    unlike($isf, qr/\(input axi0_rid\b/, 'burst-last metadata does not declare RID before generated behavior is owned');
+    like($isf, qr/\(input axi0_r0_complete\)/, 'burst-last metadata keeps authored transaction completion input for deferred behavior');
+    unlike($isf, qr/\(output axi0_r0_complete\b/, 'burst-last metadata does not expose generated completion output yet');
+    unlike($isf, qr/\(rule axi0_r0_response_demux\b/, 'burst-last metadata does not emit response-demux rules yet');
+
+    assert_read_response_demux_burst_last_report($result->{report}{response_demux}, 'generator burst-last report');
+    assert_same_id_ordering_report($result->{report}{same_id_ordering}, 'generator burst-last report', 0, 'read');
+    is_deeply(
+        $result->{report}{auto_id_lifecycle}{residue},
+        [qw(response_demux)],
+        'burst-last metadata keeps response_demux residue until generated RLAST completion behavior ships',
+    );
+};
+
 subtest 'read-data contract generates single-beat capture behavior' => sub {
     my $result = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_read_data());
     my $isf = $result->{generated_ial1}{text};
@@ -705,9 +731,14 @@ subtest 'malformed contract objects fail closed and no direct lower-to-fsm entry
         ['response demux invalid transaction completion mode', sub { my $c = sample_contract_with_response_demux(); $c->{response_demux}{write}{transaction_completion} = 'authored'; $c }, qr/response_demux\.write\.transaction_completion must be generated/],
         ['response demux response event mismatch', sub { my $c = sample_contract_with_response_demux(); $c->{response_demux}{write}{response_event} = 'axi0_other_write_complete'; $c }, qr/response_demux\.write\.response_event must equal write_complete event 'axi0_write_complete'/],
         ['read response demux missing scope', sub { my $c = sample_contract_with_read_response_demux(); delete $c->{response_demux}{read}{response_scope}; $c }, qr/response_demux\.read is missing required field 'response_scope'/],
-        ['read response demux unsupported scope', sub { my $c = sample_contract_with_read_response_demux(); $c->{response_demux}{read}{response_scope} = 'burst-last'; $c }, qr/response_demux\.read\.response_scope must be single-beat/],
+        ['read response demux unsupported scope', sub { my $c = sample_contract_with_read_response_demux(); $c->{response_demux}{read}{response_scope} = 'burst'; $c }, qr/response_demux\.read\.response_scope must be single-beat or burst-last/],
         ['read response demux response event mismatch', sub { my $c = sample_contract_with_read_response_demux(); $c->{response_demux}{read}{response_event} = 'axi0_other_read_complete'; $c }, qr/response_demux\.read\.response_event must equal read_complete event 'axi0_read_complete'/],
         ['read response demux invalid transaction completion mode', sub { my $c = sample_contract_with_read_response_demux(); $c->{response_demux}{read}{transaction_completion} = 'authored'; $c }, qr/response_demux\.read\.transaction_completion must be generated/],
+        ['read response demux burst-last missing last signal', sub { my $c = sample_contract_with_read_response_demux_burst_last(); delete $c->{response_demux}{read}{last_signal}; $c }, qr/burst-last requires field 'last_signal'/],
+        ['read response demux burst-last missing last signal width', sub { my $c = sample_contract_with_read_response_demux_burst_last(); delete $c->{response_demux}{read}{last_signal_width}; $c }, qr/burst-last requires field 'last_signal_width'/],
+        ['read response demux burst-last non-one-bit last signal', sub { my $c = sample_contract_with_read_response_demux_burst_last(); $c->{response_demux}{read}{last_signal_width} = 2; $c }, qr/last_signal_width must be 1/],
+        ['read response demux single-beat with last signal', sub { my $c = sample_contract_with_read_response_demux(); $c->{response_demux}{read}{last_signal} = 'axi0_rlast'; $c->{response_demux}{read}{last_signal_width} = 1; $c }, qr/last_signal is only supported with response_scope burst-last/],
+        ['read response demux last signal collides with response ID', sub { my $c = sample_contract_with_read_response_demux_burst_last(); $c->{response_demux}{read}{last_signal} = 'axi0_rid'; $c }, qr/duplicates signal 'axi0_rid'/],
         ['read response demux without read auto lifecycle metadata', sub {
             my $c = sample_contract_with_response_demux();
             $c->{response_demux} = {
@@ -725,6 +756,11 @@ subtest 'malformed contract objects fail closed and no direct lower-to-fsm entry
             $c->{read_data} = sample_contract_with_read_data()->{read_data};
             $c;
         }, qr/read_data requires generated read response_demux metadata/],
+        ['read data with burst-last response demux', sub {
+            my $c = sample_contract_with_read_response_demux_burst_last();
+            $c->{read_data} = sample_contract_with_read_data()->{read_data};
+            $c;
+        }, qr/read_data requires response_demux\.read\.response_scope single_beat/],
         ['read data unsupported capture scope', sub { my $c = sample_contract_with_read_data(); $c->{read_data}{read}{capture_scope} = 'burst'; $c }, qr/read_data\.read\.capture_scope must be single-beat/],
         ['read data unsupported completion source', sub { my $c = sample_contract_with_read_data(); $c->{read_data}{read}{completion_source} = 'read-complete'; $c }, qr/read_data\.read\.completion_source must be response-demux/],
         ['read data zero data width', sub { my $c = sample_contract_with_read_data(); $c->{read_data}{read}{data_width} = 0; $c }, qr/read_data\.read\.data_width.*positive integer/],
@@ -935,6 +971,22 @@ sub sample_contract_with_read_response_demux {
     return $contract;
 }
 
+sub sample_contract_with_read_response_demux_burst_last {
+    my $contract = sample_contract_with_read_auto_id_lifecycle();
+    $contract->{intent_name} = 'axi_manager_capacity_status_read_response_demux_burst_last';
+    $contract->{source}{object_id} = 'axi-manager-capacity-status-read-response-demux-burst-last';
+    $contract->{response_demux} = {
+        read => {
+            response_event => 'axi0_read_complete',
+            response_scope => 'burst-last',
+            last_signal => 'axi0_rlast',
+            last_signal_width => 1,
+            transaction_completion => 'generated',
+        },
+    };
+    return $contract;
+}
+
 sub sample_contract_with_read_data {
     my $contract = sample_contract_with_read_response_demux();
     $contract->{intent_name} = 'axi_manager_capacity_status_read_data';
@@ -1068,6 +1120,37 @@ sub assert_read_response_demux_report {
         $demux->{residue},
         [qw(read_data_interleaving bursts)],
         "$owner removes generated read RID demux behavior from residue",
+    );
+}
+
+sub assert_read_response_demux_burst_last_report {
+    my ($demux, $owner) = @_;
+    is($demux->{mode}, 'bounded_response_demux_contract', "$owner marks bounded response-demux contract mode");
+    ok(!$demux->{generated_behavior}, "$owner marks top-level generated behavior false for burst-last metadata");
+    my $read = $demux->{read};
+    is($read->{mode}, 'bounded_read_rid_demux_contract', "$owner marks bounded read RID-demux contract mode");
+    ok(!$read->{generated_behavior}, "$owner marks read generated behavior false");
+    is($read->{response_event}, 'axi0_read_complete', "$owner reports the raw read response beat event");
+    is($read->{response_event_role}, 'raw_accepted_read_response_beat', "$owner reports the beat-level response-event role");
+    is($read->{response_scope}, 'burst_last', "$owner reports burst-last read response scope");
+    is($read->{response_id_signal}, 'axi0_rid', "$owner reports the read response ID signal");
+    is($read->{response_id_direction}, 'generated_input', "$owner reports read response ID direction as generated input");
+    is($read->{last_signal}, 'axi0_rlast', "$owner reports the RLAST signal");
+    is($read->{last_signal_direction}, 'generated_input', "$owner reports RLAST direction as generated input");
+    is($read->{last_signal_width}, 1, "$owner reports one-bit RLAST width");
+    is($read->{transaction_completion_source}, 'generated_demux_last_beat', "$owner reports generated last-beat completion ownership");
+    is($read->{transaction_completion_semantics}, 'matched_rid_and_last_signal', "$owner reports last-beat completion semantics");
+    is($read->{beat_valid_output}, 'none', "$owner reports no separate beat-valid output");
+    is($read->{burst_length_source}, 'rlast_only', "$owner reports RLAST-only burst length source");
+    is($read->{burst_length_validation}, 'not_generated', "$owner reports deferred burst length validation");
+    is_deeply($read->{auto_transactions}, [qw(r0 r1)], "$owner reports read auto-ID transactions in source order");
+    is_deeply($read->{generated_completion_signals}, [qw(axi0_r0_complete axi0_r1_complete)], "$owner reports selected transaction completion names");
+    ok(!exists $read->{generated_rules}, "$owner does not report generated read demux rules");
+    ok(!exists $read->{generated_assertions}, "$owner does not report generated read demux assertions");
+    is_deeply(
+        $demux->{residue},
+        [qw(generated_burst_last_read_demux read_data_interleaving bursts)],
+        "$owner reports deferred burst-last demux behavior and broader read residue",
     );
 }
 

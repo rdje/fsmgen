@@ -621,6 +621,7 @@ sub _parse_manager_capacity_response_demux_read($items, $source_label, $name) {
     my %allowed = (
         'response-event'         => 'response_event',
         'response-scope'         => 'response_scope',
+        'last-signal'            => 'last_signal',
         'transaction-completion' => 'transaction_completion',
     );
     my %entry;
@@ -631,9 +632,15 @@ sub _parse_manager_capacity_response_demux_read($items, $source_label, $name) {
             unless exists $allowed{$head};
         confess "Error: .ppif (manager-capacity-status $name (response-demux (read ...))) has duplicate ($head ...) clause\n"
             if exists $entry{$allowed{$head}};
-        confess "Error: .ppif (manager-capacity-status $name (response-demux (read ($head ...)))) requires exactly one scalar value\n"
-            unless @body == 1 && !ref($body[0]);
-        $entry{$allowed{$head}} = $body[0];
+        if ($head eq 'last-signal') {
+            my ($signal, $width) = _parse_manager_capacity_response_demux_last_signal(\@body, $source_label, $name);
+            $entry{last_signal} = $signal;
+            $entry{last_signal_width} = $width;
+        } else {
+            confess "Error: .ppif (manager-capacity-status $name (response-demux (read ($head ...)))) requires exactly one scalar value\n"
+                unless @body == 1 && !ref($body[0]);
+            $entry{$allowed{$head}} = $body[0];
+        }
     }
 
     confess "Error: .ppif (manager-capacity-status $name (response-demux (read ...))) is missing required (response-event ...) clause\n"
@@ -642,12 +649,31 @@ sub _parse_manager_capacity_response_demux_read($items, $source_label, $name) {
         unless exists $entry{response_scope};
     confess "Error: .ppif (manager-capacity-status $name (response-demux (read ...))) is missing required (transaction-completion ...) clause\n"
         unless exists $entry{transaction_completion};
-    confess "Error: .ppif (manager-capacity-status $name (response-demux (read (response-scope ...)))) supports only single-beat in this slice\n"
-        unless $entry{response_scope} eq 'single-beat';
+    confess "Error: .ppif (manager-capacity-status $name (response-demux (read (response-scope ...)))) supports only single-beat or burst-last in this slice\n"
+        unless $entry{response_scope} =~ /\A(?:single-beat|burst-last)\z/;
+    confess "Error: .ppif (manager-capacity-status $name (response-demux (read ...))) single-beat response-scope must not include (last-signal ...)\n"
+        if $entry{response_scope} eq 'single-beat' && exists $entry{last_signal};
+    confess "Error: .ppif (manager-capacity-status $name (response-demux (read ...))) burst-last response-scope requires exactly one (last-signal NAME (width 1)) clause\n"
+        if $entry{response_scope} eq 'burst-last' && !exists $entry{last_signal};
     confess "Error: .ppif (manager-capacity-status $name (response-demux (read (transaction-completion ...)))) supports only generated in this slice\n"
         unless $entry{transaction_completion} eq 'generated';
 
     return \%entry;
+}
+
+sub _parse_manager_capacity_response_demux_last_signal($items, $source_label, $name) {
+    confess "Error: .ppif (manager-capacity-status $name (response-demux (read (last-signal ...)))) requires (NAME (width 1))\n"
+        unless @$items == 2 && !ref($items->[0]) && length($items->[0]) && ref($items->[1]) eq 'ARRAY';
+
+    my $signal = $items->[0];
+    my ($width_head, @width_body) = _clause_parts($items->[1], $source_label);
+    confess "Error: .ppif (manager-capacity-status $name (response-demux (read (last-signal ...)))) requires (NAME (width 1))\n"
+        unless $width_head eq 'width' && @width_body == 1 && !ref($width_body[0]);
+    my $width = $width_body[0];
+    confess "Error: .ppif (manager-capacity-status $name (response-demux (read (last-signal ...)))) width must be 1 in this slice\n"
+        unless defined($width) && $width =~ /\A[1-9][0-9]*\z/ && int($width) == 1;
+
+    return ($signal, int($width));
 }
 
 sub _parse_manager_capacity_read_data($items, $source_label, $name) {

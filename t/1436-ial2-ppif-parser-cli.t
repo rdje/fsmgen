@@ -259,6 +259,29 @@ subtest 'PPIF adapter parses AXI manager read response-demux behavior' => sub {
     is_deeply($result->{report}{auto_id_lifecycle}{residue}, [], 'adapter report removes response_demux and same-ID residue from read auto-ID lifecycle residue');
 };
 
+subtest 'PPIF adapter parses AXI manager burst-last read response-demux metadata' => sub {
+    my $sample_path = sample_capacity_read_response_demux_burst_last_ppif_path();
+    ok(-f $sample_path, 'tracked runnable PPIF capacity/status burst-last read response-demux sample exists');
+
+    my $base = FSM::Adapter::IAL2::PPIF->new()->parse_source(sample_capacity_read_response_demux_base_ppif(), 'read-response-demux-base.ppif');
+    my $result = FSM::Adapter::IAL2::PPIF->new()->parse_source(sample_capacity_read_response_demux_burst_last_ppif(), $sample_path);
+    my $isf = $result->{generated_ial1}{text};
+
+    is($result->{kind}, 'protocol_intent.axi_manager_capacity_status', 'burst-last read response-demux sample still uses the capacity/status generator');
+    is($result->{report}{source_object}{id}, 'axi-manager-capacity-status-read-response-demux-burst-last', 'burst-last source object id is preserved');
+    is($result->{report}{source_object}{intent_name}, 'axi_manager_capacity_status_read_response_demux_burst_last', 'burst-last source intent name is preserved');
+    is($isf, $base->{generated_ial1}{text}, 'burst-last metadata leaves generated IAL1 unchanged from read auto-ID lifecycle');
+    is_deeply(
+        $result->{generated_ial0}{files},
+        $base->{generated_ial0}{files},
+        'burst-last metadata leaves generated IAL0 unchanged from read auto-ID lifecycle',
+    );
+    unlike($isf, qr/\(input axi0_rlast\b/, 'burst-last metadata does not declare RLAST before generated behavior is owned');
+    unlike($isf, qr/\(input axi0_rid\b/, 'burst-last metadata does not declare RID before generated behavior is owned');
+    assert_read_response_demux_burst_last_report($result->{report}{response_demux}, 'adapter burst-last report');
+    is_deeply($result->{report}{auto_id_lifecycle}{residue}, [qw(response_demux)], 'adapter burst-last report keeps response_demux lifecycle residue');
+};
+
 subtest 'PPIF adapter parses AXI manager read-data behavior' => sub {
     my $sample_path = sample_capacity_read_data_ppif_path();
     ok(-f $sample_path, 'tracked runnable PPIF capacity/status read-data sample exists');
@@ -470,8 +493,23 @@ subtest 'PPIF adapter diagnostics fail closed before generation claims' => sub {
             capacity_ppif_with_objects(manager_capacity_object_with_read_response_demux('(read (response-event axi0_read_complete) (response-scope single-beat) (response-scope single-beat) (transaction-completion generated))')),
             qr/duplicate \(response-scope \.\.\.\) clause/],
         ['unsupported manager read response-demux response scope',
+            capacity_ppif_with_objects(manager_capacity_object_with_read_response_demux('(read (response-event axi0_read_complete) (response-scope burst) (transaction-completion generated))')),
+            qr/supports only single-beat or burst-last in this slice/],
+        ['missing manager burst-last read response-demux last signal',
             capacity_ppif_with_objects(manager_capacity_object_with_read_response_demux('(read (response-event axi0_read_complete) (response-scope burst-last) (transaction-completion generated))')),
-            qr/supports only single-beat in this slice/],
+            qr/burst-last response-scope requires exactly one \(last-signal NAME \(width 1\)\) clause/],
+        ['duplicate manager burst-last read response-demux last signal',
+            capacity_ppif_with_objects(manager_capacity_object_with_read_response_demux('(read (response-event axi0_read_complete) (response-scope burst-last) (last-signal rlast (width 1)) (last-signal rlast2 (width 1)) (transaction-completion generated))')),
+            qr/duplicate \(last-signal \.\.\.\) clause/],
+        ['bad-width manager burst-last read response-demux last signal',
+            capacity_ppif_with_objects(manager_capacity_object_with_read_response_demux('(read (response-event axi0_read_complete) (response-scope burst-last) (last-signal rlast (width 2)) (transaction-completion generated))')),
+            qr/width must be 1 in this slice/],
+        ['malformed manager burst-last read response-demux last signal',
+            capacity_ppif_with_objects(manager_capacity_object_with_read_response_demux('(read (response-event axi0_read_complete) (response-scope burst-last) (last-signal rlast) (transaction-completion generated))')),
+            qr/requires \(NAME \(width 1\)\)/],
+        ['manager single-beat read response-demux with last signal',
+            capacity_ppif_with_objects(manager_capacity_object_with_read_response_demux('(read (response-event axi0_read_complete) (response-scope single-beat) (last-signal rlast (width 1)) (transaction-completion generated))')),
+            qr/single-beat response-scope must not include \(last-signal \.\.\.\)/],
         ['unsupported manager read response-demux completion ownership',
             capacity_ppif_with_objects(manager_capacity_object_with_read_response_demux('(read (response-event axi0_read_complete) (response-scope single-beat) (transaction-completion authored))')),
             qr/supports only generated in this slice/],
@@ -527,6 +565,12 @@ subtest 'PPIF adapter diagnostics fail closed before generation claims' => sub {
         ['manager read-data without response-demux prerequisite',
             capacity_ppif_with_objects(manager_capacity_object_with_read_data_only(default_manager_read_data_clause())),
             qr/read_data requires generated read response_demux metadata/],
+        ['manager read-data with burst-last response-demux',
+            capacity_ppif_with_objects(manager_capacity_object_with_read_data_after_response_demux(
+                '(read (response-event axi0_read_complete) (response-scope burst-last) (last-signal rlast (width 1)) (transaction-completion generated))',
+                default_manager_read_data_clause(),
+            )),
+            qr/read_data requires response_demux\.read\.response_scope single_beat/],
     );
 
     for my $case (@cases) {
@@ -704,6 +748,21 @@ subtest 'CLI emits IAL2 report JSON for AXI manager read response-demux behavior
     assert_same_id_ordering_report($report->{same_id_ordering}, 'CLI report', 1, 'read');
     is_deeply($report->{auto_id_lifecycle}{residue}, [], 'CLI report removes generated read demux behavior from auto-ID lifecycle residue');
     is_deeply($report->{generated_artifacts}{ial0}{files}, ['axi0_capacity_status.fsm'], 'read response-demux behavior keeps the generated .fsm artifact name stable');
+};
+
+subtest 'CLI emits IAL2 report JSON for AXI manager burst-last read response-demux metadata .ppif' => sub {
+    my ($success, undef, undef, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--emit-schedule-json', sample_capacity_read_response_demux_burst_last_ppif_path()],
+    );
+
+    ok($success, '--emit-schedule-json succeeds for capacity/status burst-last read response-demux .ppif');
+    is(join('', @{$stderr_buf || []}), '', 'capacity/status burst-last read response-demux report keeps stderr clean');
+    my $report = decode_json(join('', @{$stdout_buf || []}));
+    is($report->{schema}, 'fsmgen.ial2.protocol_intent.axi_manager_capacity_status.v1', 'CLI keeps the capacity/status report schema');
+    is($report->{source_object}{intent_name}, 'axi_manager_capacity_status_read_response_demux_burst_last', 'burst-last report carries the PPIF top-level intent name');
+    assert_read_response_demux_burst_last_report($report->{response_demux}, 'CLI burst-last report');
+    is_deeply($report->{auto_id_lifecycle}{residue}, [qw(response_demux)], 'CLI burst-last report keeps response_demux lifecycle residue');
+    is_deeply($report->{generated_artifacts}{ial0}{files}, ['axi0_capacity_status.fsm'], 'burst-last metadata keeps the generated .fsm artifact name stable');
 };
 
 subtest 'CLI emits IAL2 report JSON for AXI manager read-data metadata .ppif' => sub {
@@ -1247,6 +1306,50 @@ subtest 'CLI check JSON and semantic JSON support-account read response-demux .p
     );
 };
 
+subtest 'CLI check JSON and semantic JSON support-account burst-last read response-demux .ppif separately' => sub {
+    my $demux_path = sample_capacity_read_response_demux_burst_last_ppif_path();
+    my ($success, undef, undef, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--strict', '--check', '--json', $demux_path],
+    );
+    ok($success, 'capacity/status burst-last read response-demux --check --json succeeds');
+    is(join('', @{$stderr_buf || []}), '', 'capacity/status burst-last read response-demux --check --json keeps stderr clean');
+    my $check_report = decode_json(join('', @{$stdout_buf || []}));
+    ok($check_report->{success}, 'capacity/status burst-last read response-demux check JSON reports success');
+    is(
+        $check_report->{source}{resolved_path},
+        File::Spec->rel2abs($demux_path),
+        'capacity/status burst-last read response-demux check JSON reports the public .ppif source path',
+    );
+    is(
+        $check_report->{support_accounting}{entry_id},
+        'intent.ppif_axi_manager_capacity_status_read_response_demux_burst_last',
+        'capacity/status burst-last read response-demux check JSON support accounting names the PPIF corpus entry',
+    );
+
+    my ($semantic_success, undef, undef, $semantic_stdout, $semantic_stderr) = run(
+        command => ['./bin/fsmgen', '--strict', '--emit-semantic-json', $demux_path],
+    );
+    ok($semantic_success, 'capacity/status burst-last read response-demux --emit-semantic-json succeeds');
+    is(join('', @{$semantic_stderr || []}), '', 'capacity/status burst-last read response-demux --emit-semantic-json keeps stderr clean');
+    my $semantic_report = decode_json(join('', @{$semantic_stdout || []}));
+    ok($semantic_report->{success}, 'capacity/status burst-last read response-demux semantic JSON reports success');
+    is(
+        $semantic_report->{source}{resolved_path},
+        File::Spec->rel2abs($demux_path),
+        'capacity/status burst-last read response-demux semantic JSON reports the public .ppif source path',
+    );
+    is(
+        $semantic_report->{support_accounting}{entry_id},
+        'intent.ppif_axi_manager_capacity_status_read_response_demux_burst_last',
+        'capacity/status burst-last read response-demux semantic JSON support accounting names the PPIF corpus entry',
+    );
+    is(
+        $semantic_report->{semantic}{module}{name},
+        'axi0_capacity_status',
+        'capacity/status burst-last read response-demux semantic JSON records the generated module',
+    );
+};
+
 subtest 'CLI check JSON and semantic JSON support-account read-data .ppif separately' => sub {
     my $read_data_path = sample_capacity_read_data_ppif_path();
     my ($success, undef, undef, $stdout_buf, $stderr_buf) = run(
@@ -1417,6 +1520,10 @@ sub sample_capacity_read_response_demux_ppif_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_read_response_demux.ppif');
 }
 
+sub sample_capacity_read_response_demux_burst_last_ppif_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_read_response_demux_burst_last.ppif');
+}
+
 sub sample_capacity_read_data_ppif_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_read_data.ppif');
 }
@@ -1455,6 +1562,10 @@ sub sample_capacity_response_demux_ppif {
 
 sub sample_capacity_read_response_demux_ppif {
     return slurp(sample_capacity_read_response_demux_ppif_path());
+}
+
+sub sample_capacity_read_response_demux_burst_last_ppif {
+    return slurp(sample_capacity_read_response_demux_burst_last_ppif_path());
 }
 
 sub sample_capacity_read_data_ppif {
@@ -1622,6 +1733,13 @@ sub manager_capacity_object_with_read_data {
     my $object = manager_capacity_object_with_read_response_demux(
         '(read (response-event axi0_read_complete) (response-scope single-beat) (transaction-completion generated))',
     );
+    $object =~ s/\)\z/\n    (read-data $read_data))/;
+    return $object;
+}
+
+sub manager_capacity_object_with_read_data_after_response_demux {
+    my ($demux, $read_data) = @_;
+    my $object = manager_capacity_object_with_read_response_demux($demux);
     $object =~ s/\)\z/\n    (read-data $read_data))/;
     return $object;
 }
@@ -1806,6 +1924,37 @@ sub assert_read_response_demux_report {
         "$owner reports generated read response-demux assertions",
     );
     is_deeply($demux->{residue}, [qw(read_data_interleaving bursts)], "$owner removes generated read RID demux behavior from residue");
+}
+
+sub assert_read_response_demux_burst_last_report {
+    my ($demux, $owner) = @_;
+    is($demux->{mode}, 'bounded_response_demux_contract', "$owner marks bounded response-demux contract mode");
+    ok(!$demux->{generated_behavior}, "$owner marks top-level generated behavior false for burst-last metadata");
+    my $read = $demux->{read};
+    is($read->{mode}, 'bounded_read_rid_demux_contract', "$owner marks bounded read RID-demux contract mode");
+    ok(!$read->{generated_behavior}, "$owner marks read generated behavior false");
+    is($read->{response_event}, 'axi0_read_complete', "$owner reports the raw read response beat event");
+    is($read->{response_event_role}, 'raw_accepted_read_response_beat', "$owner reports the beat-level response-event role");
+    is($read->{response_scope}, 'burst_last', "$owner reports burst-last read response scope");
+    is($read->{response_id_signal}, 'axi0_rid', "$owner reports the read response ID signal");
+    is($read->{response_id_direction}, 'generated_input', "$owner reports read response ID direction as generated input");
+    is($read->{last_signal}, 'axi0_rlast', "$owner reports the RLAST signal");
+    is($read->{last_signal_direction}, 'generated_input', "$owner reports RLAST direction as generated input");
+    is($read->{last_signal_width}, 1, "$owner reports one-bit RLAST width");
+    is($read->{transaction_completion_source}, 'generated_demux_last_beat', "$owner reports generated last-beat completion ownership");
+    is($read->{transaction_completion_semantics}, 'matched_rid_and_last_signal', "$owner reports last-beat completion semantics");
+    is($read->{beat_valid_output}, 'none', "$owner reports no separate beat-valid output");
+    is($read->{burst_length_source}, 'rlast_only', "$owner reports RLAST-only burst length source");
+    is($read->{burst_length_validation}, 'not_generated', "$owner reports deferred burst length validation");
+    is_deeply($read->{auto_transactions}, [qw(r0 r1)], "$owner reports read auto-ID transactions in source order");
+    is_deeply($read->{generated_completion_signals}, [qw(axi0_r0_complete axi0_r1_complete)], "$owner reports selected transaction completion names");
+    ok(!exists $read->{generated_rules}, "$owner does not report generated read demux rules");
+    ok(!exists $read->{generated_assertions}, "$owner does not report generated read demux assertions");
+    is_deeply(
+        $demux->{residue},
+        [qw(generated_burst_last_read_demux read_data_interleaving bursts)],
+        "$owner reports deferred burst-last demux behavior and broader read residue",
+    );
 }
 
 sub assert_read_data_report {

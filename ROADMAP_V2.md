@@ -1021,9 +1021,12 @@ completion as the generated last-beat pulse, publishes no per-transaction
 beat-valid output, uses `RLAST` rather than `ARLEN` or beat-count metadata for
 this first boundary, rejects the current single-beat `read-data` contract when
 paired with burst-last response demux, and leaves multi-beat read-data
-reassembly deferred. The active frontier is `.51`, parser/report metadata and
-static validation for that contract with generated `.isf`, `.fsm`, and HDL
-behavior unchanged.
+reassembly deferred. Slice `.51` ships parser/report metadata and static
+validation for that contract, including the support-accounted burst-last
+sample and structural report-only `response_demux.read` metadata with
+`generated_behavior: false`, while generated `.isf`, `.fsm`, and HDL behavior
+remain unchanged. The active frontier is `.52`, generated burst-last/`RLAST`
+completion behavior readiness before behavior changes.
 The shipped public capacity/status source accepts one
 `(manager-capacity-status NAME ...)` object under
 `(protocol-platform-intent ...)`, `(profile axi4)`, and top-level source

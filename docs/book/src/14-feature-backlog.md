@@ -3490,6 +3490,43 @@ single-beat `read-data` contract must be rejected when paired with
 `response-scope burst-last`. The next implementation owner is parser/report
 metadata and static validation only.
 
+`RLAST` completion metadata first slice:
+[AXI_IAL2_MANAGER_RLAST_COMPLETION_METADATA_FIRST_SLICE](../../AXI_IAL2_MANAGER_RLAST_COMPLETION_METADATA_FIRST_SLICE.md)
+ships that parser/report boundary. Public `.ppif` now accepts
+`response-scope burst-last` with exactly one width-1 `last-signal`, keeps
+`single-beat` syntax and behavior unchanged, and rejects malformed
+`last-signal` clauses, `last-signal` on `single-beat`, and the current
+single-beat `read-data` contract when paired with burst-last response demux.
+
+The checked-in runnable sample is:
+
+```text
+ppif/axi_manager_capacity_status_read_response_demux_burst_last.ppif
+```
+
+The schedule report marks the burst-last read demux as report-only:
+
+```text
+response_demux.generated_behavior: false
+response_demux.read.generated_behavior: false
+response_demux.read.response_scope: burst_last
+response_demux.read.last_signal: axi0_rlast
+response_demux.read.last_signal_width: 1
+response_demux.read.transaction_completion_source: generated_demux_last_beat
+response_demux.read.transaction_completion_semantics: matched_rid_and_last_signal
+response_demux.read.burst_length_source: rlast_only
+response_demux.read.burst_length_validation: not_generated
+response_demux.residue:
+  - generated_burst_last_read_demux
+  - read_data_interleaving
+  - bursts
+```
+
+Generated `.isf`, `.fsm`, and HDL behavior remain unchanged for this sample:
+no `RLAST` input, `RID` input, transaction completion outputs/rules, or
+burst-last assertions are generated yet. The active frontier is the generated
+burst-last/`RLAST` completion behavior readiness audit.
+
 First implementation subset selection:
 [AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION](../../AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md)
 selects a source-anchored AXI Valid-Ready channel contract/monitor as the
@@ -3625,11 +3662,11 @@ generated capture behavior, `.48` selects AXI burst/`RLAST` completion
 readiness, and `.49` selects public burst/`RLAST` completion contract
 selection before parser/report metadata or generated behavior changes. The
 `.50` selector chooses `response-scope burst-last` plus one-bit `last-signal`
-as an additive read response-demux contract. The active frontier is
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.51`, parser/report metadata and static
-validation for that contract with generated behavior unchanged. Future
-behavior owners must keep the reviewable `IAL2 -> IAL1 -> IAL0 ->
-SystemVerilog` path;
+as an additive read response-demux contract. `.51` ships parser/report
+metadata and static validation for that contract with generated behavior
+unchanged. The active frontier is `IAL2-FEATURE-COMPLETENESS-FRONTIER.52`,
+generated burst-last/`RLAST` completion behavior readiness. Future behavior
+owners must keep the reviewable `IAL2 -> IAL1 -> IAL0 -> SystemVerilog` path;
 read-data interleaving/reassembly, bursts, per-ID queues, full-manager
 behavior, and VHDL remain out of scope unless a later exact owner selects
 them.
@@ -5902,8 +5939,12 @@ metadata or generated behavior changes and advances the active frontier to
 `.50`.
 Completed selector leaf `IAL2-FEATURE-COMPLETENESS-FRONTIER.50` selects
 additive read `response-demux` syntax for `response-scope burst-last` with
-one-bit `last-signal` and advances the active frontier to `.51`, parser/report
-metadata and static validation.
+one-bit `last-signal` and selected `.51`, parser/report metadata and static
+validation.
+Completed implementation leaf `IAL2-FEATURE-COMPLETENESS-FRONTIER.51` ships
+report-only burst-last `RLAST` response-demux metadata and static validation
+and advances the active frontier to `.52`, generated burst-last/`RLAST`
+completion behavior readiness.
 Completed implementation leaf
 `ARCHITECTURE-DEBT-FRONTIER.2.1`
 projects direct backend storage/helper declaration-plan entries into
