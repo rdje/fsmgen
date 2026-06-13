@@ -157,9 +157,10 @@ exact-owner work.
 
 ## Next Owner
 
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.54` owns the post-`RLAST` selector for
-the next exact AXI manager feature-completeness slice. It must decide whether
-the next owner is multi-beat read-data reassembly, per-ID response queues,
-authored concrete-ID same-ID ordering, queued/blocking policy, profile
-aliases, full-manager behavior, another report/static-validation prerequisite,
-or a smaller IAL1/IAL0/SystemVerilog substrate slice.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.54` owned the post-`RLAST` selector and
+selected `IAL2-FEATURE-COMPLETENESS-FRONTIER.55`, a narrow report/static-text
+alignment slice. The selected repair must update generated schedule-report
+prose that still describes burst-last `RLAST` as report-only before larger
+multi-beat read-data reassembly, per-ID response queues, authored concrete-ID
+same-ID ordering, queued/blocking policy, profile aliases, full-manager
+behavior, direct backend lowering, or VHDL work resumes.

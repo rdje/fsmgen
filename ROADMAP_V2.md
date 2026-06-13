@@ -1032,8 +1032,11 @@ demux now emits the raw response beat input, generated `RID` input, generated
 one-bit `RLAST` input, generated transaction completion pulse outputs,
 RLAST-gated response-demux rules, assertions, auto-ID lifecycle residue
 movement, same-ID coverage movement, and HDL reachability. The active frontier
-is `.54`, selecting the next exact AXI manager feature-completeness owner
-after generated `RLAST` completion behavior.
+selector `.54` found one remaining report-contract drift: generated schedule
+report prose still describes burst-last `RLAST` metadata as report-only and
+generated burst/last-beat tracking as outside the capacity/status shell.
+The active frontier is `.55`, aligning that report/static text before larger
+AXI manager feature work.
 The shipped public capacity/status source accepts one
 `(manager-capacity-status NAME ...)` object under
 `(protocol-platform-intent ...)`, `(profile axi4)`, and top-level source

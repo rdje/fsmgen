@@ -33,6 +33,7 @@ This slice does not ship burst read-data reassembly, beat-count or `ARLEN`
 ownership, missing/extra beat validation, per-beat outputs, per-ID response
 queues, full-manager behavior, direct backend lowering, or VHDL.
 
-The next active slice is `IAL2-FEATURE-COMPLETENESS-FRONTIER.54`: select the
-next exact AXI manager feature-completeness owner after generated RLAST
-completion behavior.
+The immediate next slice after `.53` was
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.54`, the post-`RLAST` selector. It
+selected `.55`, narrow report/static-text alignment, after finding generated
+report prose that still described burst-last `RLAST` as report-only.
