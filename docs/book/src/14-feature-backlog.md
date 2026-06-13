@@ -3710,9 +3710,16 @@ read_data:
       - axi0_r1_read_data_capture
 ```
 
-The active frontier is `IAL2-FEATURE-COMPLETENESS-FRONTIER.61`, the selector
-for the next AXI manager feature-completeness owner after generated last-beat
-read-data capture.
+Post last-beat read-data next-slice selection:
+[AXI_IAL2_MANAGER_POST_LAST_BEAT_READ_DATA_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_LAST_BEAT_READ_DATA_NEXT_SLICE_SELECTION.md)
+selects public AXI burst read-data beat-count/depth contract selection as the
+next exact owner. Full multi-beat reassembly, per-beat outputs, `RRESP`
+aggregation, missing/extra beat validation, and per-ID reassembly all need an
+explicit expected-count/depth contract before behavior can be implemented
+honestly.
+
+The active frontier is `IAL2-FEATURE-COMPLETENESS-FRONTIER.62`, public AXI
+burst read-data beat-count/depth contract selection.
 
 First implementation subset selection:
 [AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION](../../AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md)
@@ -3860,9 +3867,9 @@ advances the frontier to `.58`, parser/report metadata and static validation.
 `.58` ships that metadata with generated behavior deferred and advances the
 frontier to `.59`, generated last-beat read-data capture readiness. `.59`
 selects direct generated last-beat capture behavior and hands off to `.60`.
-`.60` ships generated last-beat `RDATA`/`RRESP` capture
-behavior and advances the active frontier to `.61`, the next AXI manager
-feature-completeness selector.
+`.60` ships generated last-beat `RDATA`/`RRESP` capture behavior and hands off
+to selector `.61`. `.61` selects public AXI burst read-data beat-count/depth
+contract selection and advances the active frontier to `.62`.
 Future behavior owners must keep the reviewable
 `IAL2 -> IAL1 -> IAL0 -> SystemVerilog` path; read-data
 interleaving/reassembly, bursts, per-ID queues, full-manager behavior, and
@@ -6167,8 +6174,11 @@ Completed readiness-audit leaf `IAL2-FEATURE-COMPLETENESS-FRONTIER.59`
 selects direct generated last-beat read-data capture behavior and hands off to
 `.60`.
 Completed implementation leaf `IAL2-FEATURE-COMPLETENESS-FRONTIER.60` ships
-generated last-beat `RDATA`/`RRESP` capture behavior and advances the active
-frontier to `.61`.
+generated last-beat `RDATA`/`RRESP` capture behavior and hands off to selector
+`.61`.
+Completed selector leaf `IAL2-FEATURE-COMPLETENESS-FRONTIER.61` selects
+public AXI burst read-data beat-count/depth contract selection and advances the
+active frontier to `.62`.
 Completed implementation leaf
 `ARCHITECTURE-DEBT-FRONTIER.2.1`
 projects direct backend storage/helper declaration-plan entries into

@@ -1062,10 +1062,13 @@ can use the generated burst-last completion pulses from response demux. The
 inputs, per-transaction last-beat data/status outputs, normal guarded capture
 rules driven by generated burst-last completion pulses, generated `.fsm`
 assignments, HDL reachability, read_data generated artifact report lists, and
-residue movement. The active frontier is `.61`, the next AXI manager
-feature-completeness selector. Full multi-beat read-data reassembly, per-beat
-outputs, `RRESP` aggregation, `ARLEN`/beat-count validation, per-ID queues,
-direct backend lowering, and VHDL remain deferred.
+residue movement. Selector `.61` chose public AXI burst read-data
+beat-count/depth contract selection because full reassembly, per-beat
+outputs, `RRESP` aggregation, missing/extra beat validation, and per-ID
+reassembly need an explicit expected-count/depth contract first. The active
+frontier is `.62`, public AXI burst read-data beat-count/depth contract
+selection. Full multi-beat read-data reassembly, per-beat outputs, `RRESP`
+aggregation, per-ID queues, direct backend lowering, and VHDL remain deferred.
 The shipped public capacity/status source accepts one
 `(manager-capacity-status NAME ...)` object under
 `(protocol-platform-intent ...)`, `(profile axi4)`, and top-level source

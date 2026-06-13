@@ -7,6 +7,8 @@ answers:
   - "does the last-beat read-data sample emit RDATA and RRESP capture logic?"
   - "what comes after IAL2-FEATURE-COMPLETENESS-FRONTIER.60?"
   - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.61?"
+  - "what comes after IAL2-FEATURE-COMPLETENESS-FRONTIER.61?"
+  - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.62?"
 date: 2026-06-13
 status: current
 tags: [ial2, axi, manager, read-data, rdata, rresp, burst, rlast, last-beat, behavior, hdl, task-tree]
@@ -32,6 +34,8 @@ Deferred residue remains full multi-beat reassembly, per-beat outputs,
 `RRESP` aggregation, `ARLEN` or beat-count validation, per-ID queues, direct
 backend lowering, and VHDL.
 
-The active frontier is `IAL2-FEATURE-COMPLETENESS-FRONTIER.61`: select the
-next exact AXI manager feature-completeness owner after generated last-beat
-read-data capture.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.61` selected
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.62`: public AXI burst read-data
+beat-count/depth contract selection before full multi-beat reassembly,
+per-beat outputs, `RRESP` aggregation, missing/extra beat validation, or
+per-ID read-data queues.
