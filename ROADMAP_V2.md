@@ -1025,8 +1025,12 @@ reassembly deferred. Slice `.51` ships parser/report metadata and static
 validation for that contract, including the support-accounted burst-last
 sample and structural report-only `response_demux.read` metadata with
 `generated_behavior: false`, while generated `.isf`, `.fsm`, and HDL behavior
-remain unchanged. The active frontier is `.52`, generated burst-last/`RLAST`
-completion behavior readiness before behavior changes.
+remain unchanged. Audit `.52` found no new IAL1/IAL0/SystemVerilog
+prerequisite and selected direct generated burst-last/`RLAST` completion
+behavior. The active frontier is `.53`: generate the `RLAST` input, reuse
+generated `RID` matching, pulse transaction completions only on matched last
+beats, move report/residue coverage, and keep read-data reassembly plus
+beat-count validation deferred.
 The shipped public capacity/status source accepts one
 `(manager-capacity-status NAME ...)` object under
 `(protocol-platform-intent ...)`, `(profile axi4)`, and top-level source

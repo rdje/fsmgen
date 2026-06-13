@@ -7,11 +7,12 @@ answers:
   - "what PPIF sample covers AXI RLAST metadata?"
   - "can read-data be combined with burst-last response-demux?"
   - "what comes after IAL2-FEATURE-COMPLETENESS-FRONTIER.51?"
+  - "what comes after IAL2-FEATURE-COMPLETENESS-FRONTIER.52?"
 date: 2026-06-13
 status: current
 tags: [ial2, axi, manager, rlast, bursts, response-demux, metadata, ppif, task-tree]
-evidence: docs/AXI_IAL2_MANAGER_RLAST_COMPLETION_METADATA_FIRST_SLICE.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; ppif/axi_manager_capacity_status_read_response_demux_burst_last.ppif; perl/FSM/Adapter/IAL2/PPIF.pm; perl/FSM/IAL2/ProtocolIntent/AxiManagerCapacityStatus.pm; t/1436-ial2-ppif-parser-cli.t; t/1437-axi-ial2-manager-capacity-status-generator.t; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md
-reverify: prove -Iperl t/1437-axi-ial2-manager-capacity-status-generator.t t/1436-ial2-ppif-parser-cli.t
+evidence: docs/AXI_IAL2_MANAGER_RLAST_COMPLETION_METADATA_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_RLAST_COMPLETION_BEHAVIOR_READINESS_AUDIT.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; ppif/axi_manager_capacity_status_read_response_demux_burst_last.ppif; perl/FSM/Adapter/IAL2/PPIF.pm; perl/FSM/IAL2/ProtocolIntent/AxiManagerCapacityStatus.pm; t/1436-ial2-ppif-parser-cli.t; t/1437-axi-ial2-manager-capacity-status-generator.t; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md
+reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.53|AXI_IAL2_MANAGER_RLAST_COMPLETION_BEHAVIOR_READINESS_AUDIT|generated burst-last' docs/AXI_IAL2_MANAGER_RLAST_COMPLETION_BEHAVIOR_READINESS_AUDIT.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md README.md ROADMAP_V2.md docs/book/src/14-feature-backlog.md
 ---
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.51` ships parser/report metadata and
@@ -35,7 +36,8 @@ without exactly one width-1 `last-signal`, checks name collisions involving
 that signal, and rejects the current single-beat `read-data` contract when it
 is paired with burst-last response demux.
 
-The next active slice is `IAL2-FEATURE-COMPLETENESS-FRONTIER.52`: audit
-readiness for generated burst-last/`RLAST` completion behavior before adding
-generated `RLAST` inputs, generated last-beat transaction completion pulses,
-or assertions.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.52` audited readiness and selected direct
+generated burst-last/`RLAST` completion behavior. The next active slice is
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.53`: add generated `RLAST`/`RID` inputs,
+generated last-beat transaction completion pulses, assertions, report/residue
+movement, and HDL reachability while keeping read-data reassembly deferred.
