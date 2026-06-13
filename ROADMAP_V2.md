@@ -1048,11 +1048,17 @@ report residue movement is not selected yet. Selector `.57` chooses explicit
 last-beat read-data capture as the first bounded burst-side contract:
 `capture-scope last-beat`, `status-policy last-beat`, and
 `interleaving last-beat-by-rid`, paired only with generated
-`response_scope burst_last` response demux. The active frontier is `.58`,
-parser/report metadata and static validation for that contract. Full
-multi-beat read-data reassembly, per-beat outputs, `RRESP` aggregation,
-`ARLEN`/beat-count validation, per-ID queues, direct backend lowering, and
-VHDL remain deferred.
+`response_scope burst_last` response demux. Slice `.58` now ships
+parser/report metadata and static validation for that contract: the public
+`.ppif` parser accepts the last-beat read-data shape, requires generated
+burst-last read response-demux metadata, reports
+`bounded_last_beat_read_data_contract` with `generated_behavior: false`, adds
+a strict support-accounted sample, and keeps generated `.isf`, `.fsm`, HDL
+behavior, check JSON semantics, and existing single-beat read-data behavior
+unchanged. The active frontier is `.59`, the readiness audit for generated
+last-beat `RDATA`/`RRESP` capture behavior. Full multi-beat read-data
+reassembly, per-beat outputs, `RRESP` aggregation, `ARLEN`/beat-count
+validation, per-ID queues, direct backend lowering, and VHDL remain deferred.
 The shipped public capacity/status source accepts one
 `(manager-capacity-status NAME ...)` object under
 `(protocol-platform-intent ...)`, `(profile axi4)`, and top-level source

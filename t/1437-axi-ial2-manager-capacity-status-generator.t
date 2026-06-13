@@ -605,6 +605,20 @@ subtest 'read-data contract generates single-beat capture behavior' => sub {
     like($hdl, qr/axi0_r0_rresp_next\s*=\s*axi0_rresp\s*;/, 'SystemVerilog captures RRESP into r0 status output');
 };
 
+subtest 'last-beat read-data contract reports metadata without generated capture behavior' => sub {
+    my $burst_last = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_read_response_demux_burst_last());
+    my $result = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_read_data_last_beat());
+
+    is($result->{generated_ial1}{text}, $burst_last->{generated_ial1}{text}, 'last-beat read-data metadata keeps generated IAL1 unchanged from burst-last response demux');
+    is_deeply($result->{generated_ial0}{files}, $burst_last->{generated_ial0}{files}, 'last-beat read-data metadata keeps generated IAL0 unchanged from burst-last response demux');
+    unlike($result->{generated_ial1}{text}, qr/\(input axi0_rdata\b/, 'last-beat read-data metadata does not generate RDATA input yet');
+    unlike($result->{generated_ial1}{text}, qr/\(output axi0_r0_last_rdata\b/, 'last-beat read-data metadata does not generate last-beat data output yet');
+    unlike($result->{generated_ial1}{text}, qr/read_data_capture/, 'last-beat read-data metadata does not generate capture rules yet');
+
+    assert_read_response_demux_burst_last_report($result->{report}{response_demux}, 'generator last-beat read-data report');
+    assert_read_data_last_beat_report($result->{report}{read_data}, 'generator last-beat read-data report');
+};
+
 subtest 'mixed read/write response-demux keeps write behavior and adds read behavior' => sub {
     my $result = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_mixed_response_demux());
     my $isf = $result->{generated_ial1}{text};
@@ -773,10 +787,19 @@ subtest 'malformed contract objects fail closed and no direct lower-to-fsm entry
             $c->{read_data} = sample_contract_with_read_data()->{read_data};
             $c;
         }, qr/read_data requires response_demux\.read\.response_scope single_beat/],
-        ['read data unsupported capture scope', sub { my $c = sample_contract_with_read_data(); $c->{read_data}{read}{capture_scope} = 'burst'; $c }, qr/read_data\.read\.capture_scope must be single-beat/],
+        ['last-beat read data with single-beat response demux', sub {
+            my $c = sample_contract_with_read_data_last_beat();
+            $c->{response_demux} = sample_contract_with_read_response_demux()->{response_demux};
+            $c;
+        }, qr/capture_scope last-beat requires response_demux\.read\.response_scope burst_last/],
+        ['last-beat read data missing status policy', sub { my $c = sample_contract_with_read_data_last_beat(); delete $c->{read_data}{read}{status_policy}; $c }, qr/capture_scope last-beat requires status_policy last-beat/],
+        ['last-beat read data bad status policy', sub { my $c = sample_contract_with_read_data_last_beat(); $c->{read_data}{read}{status_policy} = 'aggregate'; $c }, qr/capture_scope last-beat requires status_policy last-beat/],
+        ['single-beat read data with status policy', sub { my $c = sample_contract_with_read_data(); $c->{read_data}{read}{status_policy} = 'last-beat'; $c }, qr/status_policy is only supported with capture_scope last-beat/],
+        ['read data unsupported capture scope', sub { my $c = sample_contract_with_read_data(); $c->{read_data}{read}{capture_scope} = 'burst'; $c }, qr/read_data\.read\.capture_scope must be single-beat or last-beat/],
         ['read data unsupported completion source', sub { my $c = sample_contract_with_read_data(); $c->{read_data}{read}{completion_source} = 'read-complete'; $c }, qr/read_data\.read\.completion_source must be response-demux/],
         ['read data zero data width', sub { my $c = sample_contract_with_read_data(); $c->{read_data}{read}{data_width} = 0; $c }, qr/read_data\.read\.data_width.*positive integer/],
         ['read data bad status width', sub { my $c = sample_contract_with_read_data(); $c->{read_data}{read}{status_width} = 1; $c }, qr/read_data\.read\.status_width must be 2/],
+        ['last-beat read data bad interleaving', sub { my $c = sample_contract_with_read_data_last_beat(); $c->{read_data}{read}{interleaving} = 'single-beat-by-rid'; $c }, qr/interleaving must be last-beat-by-rid for capture_scope last-beat/],
         ['read data unknown transaction', sub { my $c = sample_contract_with_read_data(); $c->{read_data}{read}{transactions}[0]{transaction} = 'r2'; $c }, qr/read_data\.read transaction 'r2' is not covered/],
         ['read data missing covered transaction', sub { my $c = sample_contract_with_read_data(); pop @{$c->{read_data}{read}{transactions}}; $c }, qr/read_data\.read transaction coverage is missing read response_demux auto transaction\(s\): r1/],
         ['read data output collision', sub { my $c = sample_contract_with_read_data(); $c->{read_data}{read}{transactions}[0]{data_output} = 'axi0_rid'; $c }, qr/duplicates signal 'axi0_rid'/],
@@ -1029,6 +1052,37 @@ sub sample_contract_with_read_data {
     return $contract;
 }
 
+sub sample_contract_with_read_data_last_beat {
+    my $contract = sample_contract_with_read_response_demux_burst_last();
+    $contract->{intent_name} = 'axi_manager_capacity_status_read_data_last_beat';
+    $contract->{source}{object_id} = 'axi-manager-capacity-status-read-data-last-beat';
+    $contract->{read_data} = {
+        read => {
+            capture_scope => 'last-beat',
+            completion_source => 'response-demux',
+            data_signal => 'axi0_rdata',
+            data_width => 32,
+            status_signal => 'axi0_rresp',
+            status_width => 2,
+            status_policy => 'last-beat',
+            interleaving => 'last-beat-by-rid',
+            transactions => [
+                {
+                    transaction => 'r0',
+                    data_output => 'axi0_r0_last_rdata',
+                    status_output => 'axi0_r0_last_rresp',
+                },
+                {
+                    transaction => 'r1',
+                    data_output => 'axi0_r1_last_rdata',
+                    status_output => 'axi0_r1_last_rresp',
+                },
+            ],
+        },
+    };
+    return $contract;
+}
+
 sub sample_contract_with_mixed_response_demux {
     my $contract = sample_contract_with_id_families();
     $contract->{intent_name} = 'axi_manager_capacity_status_mixed_response_demux';
@@ -1190,8 +1244,8 @@ sub assert_rlast_report_prose_alignment {
     ok($id_residue, "$owner reports AXI ID/order unsupported residue");
     like(
         $id_residue->{detail},
-        qr/generated burst-last RLAST response-demux completion are supported/,
-        "$owner reports generated burst-last RLAST completion as supported",
+        qr/generated burst-last RLAST response-demux completion, and structural last-beat read-data metadata are supported/,
+        "$owner reports generated burst-last RLAST completion and structural last-beat read-data metadata as supported",
     );
     my $stale_metadata = join('', 'report-only burst-last ', 'RLAST response-demux metadata');
     my $stale_tracking = join('', 'generated burst/last-beat tracking ', 'remain outside');
@@ -1263,6 +1317,44 @@ sub assert_read_data_report {
         $read_data->{residue},
         [qw(rlast_completion bursts multi_beat_read_data_reassembly)],
         "$owner reports only RLAST, burst, and reassembly residue",
+    );
+}
+
+sub assert_read_data_last_beat_report {
+    my ($read_data, $owner) = @_;
+    is($read_data->{mode}, 'bounded_last_beat_read_data_contract', "$owner marks bounded last-beat read-data contract mode");
+    ok(!$read_data->{generated_behavior}, "$owner marks generated behavior false");
+    my $read = $read_data->{read};
+    is($read->{capture_scope}, 'last_beat', "$owner reports last-beat capture scope");
+    is($read->{completion_source}, 'response_demux', "$owner reports response-demux completion source");
+    is($read->{completion_validity}, 'generated_read_response_demux_last_beat_completion_pulse', "$owner reports generated last-beat demux pulse validity");
+    is($read->{data_signal}, 'axi0_rdata', "$owner reports RDATA signal");
+    is($read->{data_signal_width}, 32, "$owner reports RDATA width");
+    is($read->{data_signal_direction}, 'generated_input', "$owner reports RDATA generated-input direction");
+    is($read->{status_signal}, 'axi0_rresp', "$owner reports RRESP signal");
+    is($read->{status_signal_width}, 2, "$owner reports RRESP width");
+    is($read->{status_signal_direction}, 'generated_input', "$owner reports RRESP generated-input direction");
+    is($read->{status_policy}, 'last_beat', "$owner reports last-beat status policy");
+    is($read->{status_aggregation}, 'none', "$owner reports no RRESP aggregation");
+    is($read->{interleaving_policy}, 'last_beat_by_rid', "$owner reports last-beat-by-RID interleaving policy");
+    is($read->{burst_length_source}, 'rlast_only', "$owner reports RLAST-only burst length source");
+    is($read->{burst_length_validation}, 'not_generated', "$owner reports deferred burst length validation");
+    is($read->{beat_storage}, 'none', "$owner reports no beat storage");
+    is($read->{valid_output}, 'none', "$owner reports no valid output");
+    is($read->{length_output}, 'none', "$owner reports no length output");
+    is_deeply([map { $_->{transaction} } @{$read->{transactions}}], [qw(r0 r1)], "$owner reports last-beat transaction bindings");
+    is_deeply([map { $_->{completion_signal} } @{$read->{transactions}}], [qw(axi0_r0_complete axi0_r1_complete)], "$owner binds validity to generated last-beat completion pulses");
+    is_deeply([map { $_->{data_output} } @{$read->{transactions}}], [qw(axi0_r0_last_rdata axi0_r1_last_rdata)], "$owner reports last-beat data outputs");
+    is_deeply([map { $_->{status_output} } @{$read->{transactions}}], [qw(axi0_r0_last_rresp axi0_r1_last_rresp)], "$owner reports last-beat status outputs");
+    is_deeply([map { $_->{data_width} } @{$read->{transactions}}], [32, 32], "$owner reports inherited last-beat data widths");
+    is_deeply([map { $_->{status_width} } @{$read->{transactions}}], [2, 2], "$owner reports inherited last-beat status widths");
+    ok(!exists $read->{generated_inputs}, "$owner omits generated inputs before behavior ships");
+    ok(!exists $read->{generated_outputs}, "$owner omits generated outputs before behavior ships");
+    ok(!exists $read->{generated_rules}, "$owner omits generated rules before behavior ships");
+    is_deeply(
+        $read_data->{residue},
+        [qw(generated_last_beat_read_data_capture multi_beat_read_data_reassembly per_beat_outputs rresp_aggregation arlen_or_beat_count_validation)],
+        "$owner reports last-beat read-data residue",
     );
 }
 

@@ -3618,9 +3618,56 @@ contract. The selected source shape is `capture-scope last-beat`,
 `read-data`, paired only with generated `response_scope burst_last` response
 demux. It captures only the last-beat `RDATA`/`RRESP` values and keeps full
 multi-beat reassembly, per-beat outputs, `RRESP` aggregation,
-`ARLEN`/beat-count validation, per-ID queues, and VHDL deferred. The active
-frontier is `IAL2-FEATURE-COMPLETENESS-FRONTIER.58`, parser/report metadata
-and static validation for that contract.
+`ARLEN`/beat-count validation, per-ID queues, and VHDL deferred.
+
+Last-beat read-data metadata first slice:
+[AXI_IAL2_MANAGER_LAST_BEAT_READ_DATA_METADATA_FIRST_SLICE](../../AXI_IAL2_MANAGER_LAST_BEAT_READ_DATA_METADATA_FIRST_SLICE.md)
+ships parser/report metadata and static validation for that selected contract.
+The public `.ppif` sample is
+`ppif/axi_manager_capacity_status_read_data_last_beat.ppif`:
+
+```text
+(read-data
+  (read
+    (capture-scope last-beat)
+    (completion-source response-demux)
+    (data-signal axi0_rdata (width 32))
+    (status-signal axi0_rresp (width 2))
+    (status-policy last-beat)
+    (interleaving last-beat-by-rid)
+    (transaction r0
+      (data-output axi0_r0_last_rdata)
+      (status-output axi0_r0_last_rresp))
+    (transaction r1
+      (data-output axi0_r1_last_rdata)
+      (status-output axi0_r1_last_rresp))))
+```
+
+The report marks this as structural metadata, not generated capture behavior:
+
+```text
+read_data:
+  mode: bounded_last_beat_read_data_contract
+  generated_behavior: false
+  read:
+    capture_scope: last_beat
+    completion_validity: generated_read_response_demux_last_beat_completion_pulse
+    status_policy: last_beat
+    status_aggregation: none
+    interleaving_policy: last_beat_by_rid
+    burst_length_source: rlast_only
+    beat_storage: none
+    valid_output: none
+    length_output: none
+```
+
+The slice requires generated read response-demux metadata with
+`response_scope burst_last`, support-accounts the new sample for strict check
+JSON and normalized semantic JSON, and keeps generated `.isf`, `.fsm`, HDL
+behavior, check JSON semantics, and existing single-beat read-data behavior
+unchanged. The active frontier is
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.59`, the readiness audit for generated
+last-beat `RDATA`/`RRESP` capture behavior.
 
 First implementation subset selection:
 [AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION](../../AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md)
@@ -3764,8 +3811,10 @@ behavior. `.53` ships that generated behavior. `.55` aligns the generated
 report prose with shipped `RLAST` behavior. `.56` selects `.57`, public AXI
 burst read-data contract selection, before parser/report metadata or generated
 behavior changes. `.57` selects explicit last-beat read-data capture and
-advances the active frontier to `.58`, parser/report metadata and static
-validation. Future behavior owners must keep the reviewable
+advances the frontier to `.58`, parser/report metadata and static validation.
+`.58` ships that metadata with generated behavior deferred and advances the
+active frontier to `.59`, generated last-beat read-data capture readiness.
+Future behavior owners must keep the reviewable
 `IAL2 -> IAL1 -> IAL0 -> SystemVerilog` path; read-data
 interleaving/reassembly, bursts, per-ID queues, full-manager behavior, and
 VHDL remain out of scope unless a later exact owner selects them.
@@ -6062,6 +6111,9 @@ public AXI burst read-data contract selection and hands off to selector
 Completed selector leaf `IAL2-FEATURE-COMPLETENESS-FRONTIER.57` selects
 explicit last-beat read-data parser/report metadata and advances the active
 frontier to `.58`.
+Completed implementation leaf `IAL2-FEATURE-COMPLETENESS-FRONTIER.58` ships
+parser/report metadata and static validation for explicit last-beat read-data
+capture and advances the active frontier to `.59`.
 Completed implementation leaf
 `ARCHITECTURE-DEBT-FRONTIER.2.1`
 projects direct backend storage/helper declaration-plan entries into

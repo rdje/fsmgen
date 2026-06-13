@@ -17,9 +17,8 @@ reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER|IAL2 feature completeness|IA
 The current feature-completeness priority is IAL2 on the
 SystemVerilog-backed path.
 
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.58` owns the next PNT frontier:
-implement parser/report metadata and static validation for explicit AXI
-last-beat read-data capture.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.59` owns the next PNT frontier: audit
+readiness for generated AXI last-beat read-data capture behavior.
 
 Completed `.47` shipped generated single-beat `RDATA`/`RRESP` capture
 behavior. Completed `.48` selected `.49` because the current public read-data
@@ -52,7 +51,10 @@ capture scope, output binding, beat-count/depth, `RRESP` aggregation,
 interleaving policy, diagnostics, and report residue movement. Completed
 `.57` selected explicit last-beat read-data capture as the first bounded
 burst-side contract and advanced the frontier to `.58`, parser/report
-metadata and static validation for that contract.
+metadata and static validation for that contract. Completed `.58` shipped
+that parser/report metadata, added a strict support-accounted last-beat sample,
+kept generated behavior false, and advanced the frontier to `.59`, generated
+last-beat read-data capture readiness.
 
 Selected IAL2 work may include required IAL1 or IAL0/SV support, but only when
 those prerequisites are explicit, task-tree owned, documented, and

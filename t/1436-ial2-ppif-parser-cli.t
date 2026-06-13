@@ -312,6 +312,25 @@ subtest 'PPIF adapter parses AXI manager read-data behavior' => sub {
     assert_read_data_report($result->{report}{read_data}, 'adapter report');
 };
 
+subtest 'PPIF adapter parses AXI manager last-beat read-data metadata' => sub {
+    my $sample_path = sample_capacity_read_data_last_beat_ppif_path();
+    ok(-f $sample_path, 'tracked runnable PPIF capacity/status last-beat read-data sample exists');
+
+    my $burst_last = FSM::Adapter::IAL2::PPIF->new()->parse_source(sample_capacity_read_response_demux_burst_last_ppif(), sample_capacity_read_response_demux_burst_last_ppif_path());
+    my $result = FSM::Adapter::IAL2::PPIF->new()->parse_source(sample_capacity_read_data_last_beat_ppif(), $sample_path);
+
+    is($result->{kind}, 'protocol_intent.axi_manager_capacity_status', 'last-beat read-data sample still uses the capacity/status generator');
+    is($result->{report}{source_object}{id}, 'axi-manager-capacity-status-read-data-last-beat', 'last-beat read-data source object id is preserved');
+    is($result->{report}{source_object}{intent_name}, 'axi_manager_capacity_status_read_data_last_beat', 'last-beat read-data source intent name is preserved');
+    is($result->{generated_ial1}{text}, $burst_last->{generated_ial1}{text}, 'last-beat read-data metadata keeps generated IAL1 unchanged from burst-last response demux');
+    is_deeply($result->{generated_ial0}{files}, $burst_last->{generated_ial0}{files}, 'last-beat read-data metadata keeps generated IAL0 unchanged from burst-last response demux');
+    unlike($result->{generated_ial1}{text}, qr/\(input axi0_rdata\b/, 'last-beat read-data PPIF does not generate RDATA input yet');
+    unlike($result->{generated_ial1}{text}, qr/\(output axi0_r0_last_rdata\b/, 'last-beat read-data PPIF does not generate last-beat data output yet');
+    unlike($result->{generated_ial1}{text}, qr/read_data_capture/, 'last-beat read-data PPIF does not generate capture rules yet');
+    assert_read_response_demux_burst_last_report($result->{report}{response_demux}, 'adapter last-beat read-data report');
+    assert_read_data_last_beat_report($result->{report}{read_data}, 'adapter last-beat read-data report');
+};
+
 subtest 'PPIF adapter parses mixed AXI manager response-demux arms' => sub {
     my $source = capacity_ppif_with_objects(
         manager_capacity_object_with_mixed_response_demux(
@@ -546,7 +565,7 @@ subtest 'PPIF adapter diagnostics fail closed before generation claims' => sub {
             qr/is missing required \(capture-scope \.\.\.\) clause/],
         ['unsupported manager read-data capture scope',
             capacity_ppif_with_objects(manager_capacity_object_with_read_data(read_data_clause_with('(capture-scope burst)'))),
-            qr/supports only single-beat in this slice/],
+            qr/supports only single-beat or last-beat in this slice/],
         ['unsupported manager read-data completion source',
             capacity_ppif_with_objects(manager_capacity_object_with_read_data(read_data_clause_with('(completion-source read-complete)'))),
             qr/supports only response-demux in this slice/],
@@ -558,7 +577,28 @@ subtest 'PPIF adapter diagnostics fail closed before generation claims' => sub {
             qr/status width must be 2 in this slice/],
         ['unsupported manager read-data interleaving',
             capacity_ppif_with_objects(manager_capacity_object_with_read_data(read_data_clause_with('(interleaving burst-by-rid)'))),
-            qr/supports only single-beat-by-rid in this slice/],
+            qr/supports only single-beat-by-rid with capture-scope single-beat/],
+        ['single-beat manager read-data with status policy',
+            capacity_ppif_with_objects(manager_capacity_object_with_read_data(read_data_clause_with('(status-policy last-beat)'))),
+            qr/status-policy .* only supported with capture-scope last-beat/],
+        ['last-beat manager read-data missing status policy',
+            capacity_ppif_with_objects(manager_capacity_object_with_read_data_after_response_demux(
+                '(read (response-event axi0_read_complete) (response-scope burst-last) (last-signal rlast (width 1)) (transaction-completion generated))',
+                last_beat_manager_read_data_clause_without_status_policy(),
+            )),
+            qr/capture-scope last-beat requires status-policy last-beat/],
+        ['last-beat manager read-data bad status policy',
+            capacity_ppif_with_objects(manager_capacity_object_with_read_data_after_response_demux(
+                '(read (response-event axi0_read_complete) (response-scope burst-last) (last-signal rlast (width 1)) (transaction-completion generated))',
+                last_beat_read_data_clause_with('(status-policy aggregate)'),
+            )),
+            qr/capture-scope last-beat requires status-policy last-beat/],
+        ['last-beat manager read-data bad interleaving',
+            capacity_ppif_with_objects(manager_capacity_object_with_read_data_after_response_demux(
+                '(read (response-event axi0_read_complete) (response-scope burst-last) (last-signal rlast (width 1)) (transaction-completion generated))',
+                last_beat_read_data_clause_with('(interleaving single-beat-by-rid)'),
+            )),
+            qr/supports only last-beat-by-rid with capture-scope last-beat/],
         ['explicit-width manager read-data output',
             capacity_ppif_with_objects(manager_capacity_object_with_read_data(read_data_clause_with('(transaction r0 (data-output r0_data (width 32)) (status-output r0_resp))'))),
             qr/requires exactly one scalar value/],
@@ -574,6 +614,9 @@ subtest 'PPIF adapter diagnostics fail closed before generation claims' => sub {
                 default_manager_read_data_clause(),
             )),
             qr/read_data requires response_demux\.read\.response_scope single_beat/],
+        ['last-beat manager read-data with single-beat response-demux',
+            capacity_ppif_with_objects(manager_capacity_object_with_read_data(last_beat_manager_read_data_clause())),
+            qr/capture_scope last-beat requires response_demux\.read\.response_scope burst_last/],
     );
 
     for my $case (@cases) {
@@ -783,6 +826,21 @@ subtest 'CLI emits IAL2 report JSON for AXI manager read-data metadata .ppif' =>
     assert_read_response_demux_report($report->{response_demux}, 'CLI read-data report');
     assert_read_data_report($report->{read_data}, 'CLI report');
     is_deeply($report->{generated_artifacts}{ial0}{files}, ['axi0_capacity_status.fsm'], 'read-data metadata keeps the generated .fsm artifact name stable');
+};
+
+subtest 'CLI emits IAL2 report JSON for AXI manager last-beat read-data metadata .ppif' => sub {
+    my ($success, undef, undef, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--emit-schedule-json', sample_capacity_read_data_last_beat_ppif_path()],
+    );
+
+    ok($success, '--emit-schedule-json succeeds for capacity/status last-beat read-data .ppif');
+    is(join('', @{$stderr_buf || []}), '', 'capacity/status last-beat read-data report keeps stderr clean');
+    my $report = decode_json(join('', @{$stdout_buf || []}));
+    is($report->{schema}, 'fsmgen.ial2.protocol_intent.axi_manager_capacity_status.v1', 'CLI keeps the capacity/status report schema');
+    is($report->{source_object}{intent_name}, 'axi_manager_capacity_status_read_data_last_beat', 'last-beat read-data report carries the PPIF top-level intent name');
+    assert_read_response_demux_burst_last_report($report->{response_demux}, 'CLI last-beat read-data report');
+    assert_read_data_last_beat_report($report->{read_data}, 'CLI last-beat read-data report');
+    is_deeply($report->{generated_artifacts}{ial0}{files}, ['axi0_capacity_status.fsm'], 'last-beat read-data metadata keeps the generated .fsm artifact name stable');
 };
 
 subtest 'CLI --verify-hdl accepts AXI manager auto-ID lifecycle behavior .ppif' => sub {
@@ -1399,6 +1457,50 @@ subtest 'CLI check JSON and semantic JSON support-account read-data .ppif separa
     );
 };
 
+subtest 'CLI check JSON and semantic JSON support-account last-beat read-data .ppif separately' => sub {
+    my $read_data_path = sample_capacity_read_data_last_beat_ppif_path();
+    my ($success, undef, undef, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--strict', '--check', '--json', $read_data_path],
+    );
+    ok($success, 'capacity/status last-beat read-data --check --json succeeds');
+    is(join('', @{$stderr_buf || []}), '', 'capacity/status last-beat read-data --check --json keeps stderr clean');
+    my $check_report = decode_json(join('', @{$stdout_buf || []}));
+    ok($check_report->{success}, 'capacity/status last-beat read-data check JSON reports success');
+    is(
+        $check_report->{source}{resolved_path},
+        File::Spec->rel2abs($read_data_path),
+        'capacity/status last-beat read-data check JSON reports the public .ppif source path',
+    );
+    is(
+        $check_report->{support_accounting}{entry_id},
+        'intent.ppif_axi_manager_capacity_status_read_data_last_beat',
+        'capacity/status last-beat read-data check JSON support accounting names the PPIF corpus entry',
+    );
+
+    my ($semantic_success, undef, undef, $semantic_stdout, $semantic_stderr) = run(
+        command => ['./bin/fsmgen', '--strict', '--emit-semantic-json', $read_data_path],
+    );
+    ok($semantic_success, 'capacity/status last-beat read-data --emit-semantic-json succeeds');
+    is(join('', @{$semantic_stderr || []}), '', 'capacity/status last-beat read-data --emit-semantic-json keeps stderr clean');
+    my $semantic_report = decode_json(join('', @{$semantic_stdout || []}));
+    ok($semantic_report->{success}, 'capacity/status last-beat read-data semantic JSON reports success');
+    is(
+        $semantic_report->{source}{resolved_path},
+        File::Spec->rel2abs($read_data_path),
+        'capacity/status last-beat read-data semantic JSON reports the public .ppif source path',
+    );
+    is(
+        $semantic_report->{support_accounting}{entry_id},
+        'intent.ppif_axi_manager_capacity_status_read_data_last_beat',
+        'capacity/status last-beat read-data semantic JSON support accounting names the PPIF corpus entry',
+    );
+    is(
+        $semantic_report->{semantic}{module}{name},
+        'axi0_capacity_status',
+        'capacity/status last-beat read-data semantic JSON records the unchanged generated module',
+    );
+};
+
 subtest 'CLI bundle HDL modes use aggregate wrapper entry' => sub {
     my $bundle_path = sample_bundle_ppif_path();
     my $tempdir = tempdir(CLEANUP => 1);
@@ -1533,6 +1635,10 @@ sub sample_capacity_read_data_ppif_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_read_data.ppif');
 }
 
+sub sample_capacity_read_data_last_beat_ppif_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_read_data_last_beat.ppif');
+}
+
 sub sample_ppif {
     return slurp(sample_ppif_path());
 }
@@ -1575,6 +1681,10 @@ sub sample_capacity_read_response_demux_burst_last_ppif {
 
 sub sample_capacity_read_data_ppif {
     return slurp(sample_capacity_read_data_ppif_path());
+}
+
+sub sample_capacity_read_data_last_beat_ppif {
+    return slurp(sample_capacity_read_data_last_beat_ppif_path());
 }
 
 sub sample_capacity_read_response_demux_base_ppif {
@@ -1830,6 +1940,47 @@ sub default_manager_read_data_clause {
     );
 }
 
+sub last_beat_manager_read_data_clause {
+    return join(' ',
+        '(read',
+        '(capture-scope last-beat)',
+        '(completion-source response-demux)',
+        '(data-signal rdata (width 32))',
+        '(status-signal rresp (width 2))',
+        '(status-policy last-beat)',
+        '(interleaving last-beat-by-rid)',
+        '(transaction r0 (data-output r0_last_data) (status-output r0_last_resp))',
+        '(transaction r1 (data-output r1_last_data) (status-output r1_last_resp))',
+        ')',
+    );
+}
+
+sub last_beat_manager_read_data_clause_without_status_policy {
+    my $clause = last_beat_manager_read_data_clause();
+    $clause =~ s/\s+\(status-policy last-beat\)//;
+    return $clause;
+}
+
+sub last_beat_read_data_clause_with {
+    my ($replacement) = @_;
+    my $clause = last_beat_manager_read_data_clause();
+    my ($head) = $replacement =~ /\A\((\S+)/;
+    my %default = (
+        'capture-scope'     => '(capture-scope last-beat)',
+        'completion-source' => '(completion-source response-demux)',
+        'data-signal'       => '(data-signal rdata (width 32))',
+        'status-signal'     => '(status-signal rresp (width 2))',
+        'status-policy'     => '(status-policy last-beat)',
+        'interleaving'      => '(interleaving last-beat-by-rid)',
+        'transaction'       => '(transaction r0 (data-output r0_last_data) (status-output r0_last_resp))',
+    );
+    die "Unknown last-beat read-data replacement clause '$replacement'\n"
+        unless defined $head && exists $default{$head};
+    my $target = quotemeta $default{$head};
+    $clause =~ s/$target/$replacement/;
+    return $clause;
+}
+
 sub read_data_clause_with {
     my ($replacement) = @_;
     my $clause = default_manager_read_data_clause();
@@ -1839,13 +1990,18 @@ sub read_data_clause_with {
         'completion-source' => '(completion-source response-demux)',
         'data-signal'       => '(data-signal rdata (width 32))',
         'status-signal'     => '(status-signal rresp (width 2))',
+        'status-policy'     => '(interleaving single-beat-by-rid)',
         'interleaving'      => '(interleaving single-beat-by-rid)',
         'transaction'       => '(transaction r0 (data-output r0_data) (status-output r0_resp))',
     );
     die "Unknown read-data replacement clause '$replacement'\n"
         unless defined $head && exists $default{$head};
     my $target = quotemeta $default{$head};
-    $clause =~ s/$target/$replacement/;
+    if ($head eq 'status-policy') {
+        $clause =~ s/$target/$replacement $default{'interleaving'}/;
+    } else {
+        $clause =~ s/$target/$replacement/;
+    }
     return $clause;
 }
 
@@ -1986,8 +2142,8 @@ sub assert_rlast_report_prose_alignment {
     ok($id_residue, "$owner reports AXI ID/order unsupported residue");
     like(
         $id_residue->{detail},
-        qr/generated burst-last RLAST response-demux completion are supported/,
-        "$owner reports generated burst-last RLAST completion as supported",
+        qr/generated burst-last RLAST response-demux completion, and structural last-beat read-data metadata are supported/,
+        "$owner reports generated burst-last RLAST completion and structural last-beat read-data metadata as supported",
     );
     my $stale_metadata = join('', 'report-only burst-last ', 'RLAST response-demux metadata');
     my $stale_tracking = join('', 'generated burst/last-beat tracking ', 'remain outside');
@@ -2059,6 +2215,44 @@ sub assert_read_data_report {
         $read_data->{residue},
         [qw(rlast_completion bursts multi_beat_read_data_reassembly)],
         "$owner reports only RLAST, burst, and reassembly residue",
+    );
+}
+
+sub assert_read_data_last_beat_report {
+    my ($read_data, $owner) = @_;
+    is($read_data->{mode}, 'bounded_last_beat_read_data_contract', "$owner marks bounded last-beat read-data contract mode");
+    ok(!$read_data->{generated_behavior}, "$owner marks generated behavior false");
+    my $read = $read_data->{read};
+    is($read->{capture_scope}, 'last_beat', "$owner reports last-beat capture scope");
+    is($read->{completion_source}, 'response_demux', "$owner reports response-demux completion source");
+    is($read->{completion_validity}, 'generated_read_response_demux_last_beat_completion_pulse', "$owner reports generated last-beat demux pulse validity");
+    is($read->{data_signal}, 'axi0_rdata', "$owner reports RDATA signal");
+    is($read->{data_signal_width}, 32, "$owner reports RDATA width");
+    is($read->{data_signal_direction}, 'generated_input', "$owner reports RDATA generated-input direction");
+    is($read->{status_signal}, 'axi0_rresp', "$owner reports RRESP signal");
+    is($read->{status_signal_width}, 2, "$owner reports RRESP width");
+    is($read->{status_signal_direction}, 'generated_input', "$owner reports RRESP generated-input direction");
+    is($read->{status_policy}, 'last_beat', "$owner reports last-beat status policy");
+    is($read->{status_aggregation}, 'none', "$owner reports no RRESP aggregation");
+    is($read->{interleaving_policy}, 'last_beat_by_rid', "$owner reports last-beat-by-RID interleaving policy");
+    is($read->{burst_length_source}, 'rlast_only', "$owner reports RLAST-only burst length source");
+    is($read->{burst_length_validation}, 'not_generated', "$owner reports deferred burst length validation");
+    is($read->{beat_storage}, 'none', "$owner reports no beat storage");
+    is($read->{valid_output}, 'none', "$owner reports no valid output");
+    is($read->{length_output}, 'none', "$owner reports no length output");
+    is_deeply([map { $_->{transaction} } @{$read->{transactions}}], [qw(r0 r1)], "$owner reports last-beat transaction bindings");
+    is_deeply([map { $_->{completion_signal} } @{$read->{transactions}}], [qw(axi0_r0_complete axi0_r1_complete)], "$owner binds validity to generated last-beat completion pulses");
+    is_deeply([map { $_->{data_output} } @{$read->{transactions}}], [qw(axi0_r0_last_rdata axi0_r1_last_rdata)], "$owner reports last-beat data outputs");
+    is_deeply([map { $_->{status_output} } @{$read->{transactions}}], [qw(axi0_r0_last_rresp axi0_r1_last_rresp)], "$owner reports last-beat status outputs");
+    is_deeply([map { $_->{data_width} } @{$read->{transactions}}], [32, 32], "$owner reports inherited last-beat data widths");
+    is_deeply([map { $_->{status_width} } @{$read->{transactions}}], [2, 2], "$owner reports inherited last-beat status widths");
+    ok(!exists $read->{generated_inputs}, "$owner omits generated inputs before behavior ships");
+    ok(!exists $read->{generated_outputs}, "$owner omits generated outputs before behavior ships");
+    ok(!exists $read->{generated_rules}, "$owner omits generated rules before behavior ships");
+    is_deeply(
+        $read_data->{residue},
+        [qw(generated_last_beat_read_data_capture multi_beat_read_data_reassembly per_beat_outputs rresp_aggregation arlen_or_beat_count_validation)],
+        "$owner reports last-beat read-data residue",
     );
 }
 

@@ -702,6 +702,7 @@ sub _parse_manager_capacity_read_data_read($items, $source_label, $name) {
         'completion-source' => 'completion_source',
         'data-signal'       => 'data_signal',
         'status-signal'     => 'status_signal',
+        'status-policy'     => 'status_policy',
         'interleaving'      => 'interleaving',
     );
     my %entry;
@@ -723,7 +724,7 @@ sub _parse_manager_capacity_read_data_read($items, $source_label, $name) {
         confess "Error: .ppif (manager-capacity-status $name (read-data (read ...))) has duplicate ($head ...) clause\n"
             if $seen{$head}++;
 
-        if ($head =~ /\A(?:capture-scope|completion-source|interleaving)\z/) {
+        if ($head =~ /\A(?:capture-scope|completion-source|status-policy|interleaving)\z/) {
             confess "Error: .ppif (manager-capacity-status $name (read-data (read ($head ...)))) requires exactly one scalar value\n"
                 unless @body == 1 && !ref($body[0]);
             $entry{$allowed{$head}} = $body[0];
@@ -758,12 +759,21 @@ sub _parse_manager_capacity_read_data_read($items, $source_label, $name) {
     }
     confess "Error: .ppif (manager-capacity-status $name (read-data (read ...))) requires at least one transaction clause\n"
         unless @transactions;
-    confess "Error: .ppif (manager-capacity-status $name (read-data (read (capture-scope ...)))) supports only single-beat in this slice\n"
-        unless $entry{capture_scope} eq 'single-beat';
+    confess "Error: .ppif (manager-capacity-status $name (read-data (read (capture-scope ...)))) supports only single-beat or last-beat in this slice\n"
+        unless $entry{capture_scope} eq 'single-beat' || $entry{capture_scope} eq 'last-beat';
     confess "Error: .ppif (manager-capacity-status $name (read-data (read (completion-source ...)))) supports only response-demux in this slice\n"
         unless $entry{completion_source} eq 'response-demux';
-    confess "Error: .ppif (manager-capacity-status $name (read-data (read (interleaving ...)))) supports only single-beat-by-rid in this slice\n"
-        unless $entry{interleaving} eq 'single-beat-by-rid';
+    if ($entry{capture_scope} eq 'single-beat') {
+        confess "Error: .ppif (manager-capacity-status $name (read-data (read (status-policy ...)))) is only supported with capture-scope last-beat in this slice\n"
+            if exists $entry{status_policy};
+        confess "Error: .ppif (manager-capacity-status $name (read-data (read (interleaving ...)))) supports only single-beat-by-rid with capture-scope single-beat in this slice\n"
+            unless $entry{interleaving} eq 'single-beat-by-rid';
+    } else {
+        confess "Error: .ppif (manager-capacity-status $name (read-data (read (status-policy ...)))) capture-scope last-beat requires status-policy last-beat in this slice\n"
+            unless exists($entry{status_policy}) && $entry{status_policy} eq 'last-beat';
+        confess "Error: .ppif (manager-capacity-status $name (read-data (read (interleaving ...)))) supports only last-beat-by-rid with capture-scope last-beat in this slice\n"
+            unless $entry{interleaving} eq 'last-beat-by-rid';
+    }
 
     $entry{transactions} = \@transactions;
     return \%entry;

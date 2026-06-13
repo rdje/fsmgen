@@ -1,8 +1,10 @@
 ---
 id: ial2-feature-completeness-next-slice
-title: IAL2 feature completeness next slice is AXI last-beat read-data metadata
+title: IAL2 feature completeness next slice is AXI last-beat read-data capture readiness
 answers:
   - "what is the next IAL2 feature completeness slice?"
+  - "what comes after IAL2-FEATURE-COMPLETENESS-FRONTIER.58?"
+  - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.59?"
   - "what comes after IAL2-FEATURE-COMPLETENESS-FRONTIER.57?"
   - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.58?"
   - "what comes after IAL2-FEATURE-COMPLETENESS-FRONTIER.56?"
@@ -37,8 +39,8 @@ answers:
 date: 2026-06-13
 status: current
 tags: [ial2, axi, manager, read-data, rdata, rresp, capture, metadata, behavior, selector, bursts, rlast, completion, interleaving, per-id, contract, feature-completeness, task-tree]
-evidence: docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; docs/AXI_IAL2_MANAGER_BURST_READ_DATA_CONTRACT_SELECTION.md; docs/AXI_IAL2_MANAGER_POST_RLAST_REPORT_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_RLAST_REPORT_ALIGNMENT_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_POST_RLAST_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_RLAST_COMPLETION_BEHAVIOR_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_RLAST_COMPLETION_BEHAVIOR_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_RLAST_COMPLETION_METADATA_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_RLAST_COMPLETION_CONTRACT_SELECTION.md; docs/AXI_IAL2_MANAGER_RLAST_COMPLETION_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_POST_READ_DATA_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_READ_DATA_BEHAVIOR_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_READ_DATA_CAPTURE_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_READ_DATA_METADATA_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_READ_DATA_CONTRACT_SELECTION.md; docs/AXI_IAL2_MANAGER_READ_DATA_BURST_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_POST_READ_DEMUX_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_READ_RESPONSE_DEMUX_BEHAVIOR_FIRST_SLICE.md; docs/book/src/14-feature-backlog.md; README.md; ROADMAP_V2.md
-reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.58|AXI_IAL2_MANAGER_BURST_READ_DATA_CONTRACT_SELECTION|capture-scope last-beat|bounded_last_beat_read_data_contract' docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md docs/AXI_IAL2_MANAGER_BURST_READ_DATA_CONTRACT_SELECTION.md docs/book/src/14-feature-backlog.md README.md ROADMAP_V2.md
+evidence: docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; docs/AXI_IAL2_MANAGER_LAST_BEAT_READ_DATA_METADATA_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_BURST_READ_DATA_CONTRACT_SELECTION.md; docs/AXI_IAL2_MANAGER_POST_RLAST_REPORT_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_RLAST_REPORT_ALIGNMENT_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_POST_RLAST_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_RLAST_COMPLETION_BEHAVIOR_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_RLAST_COMPLETION_BEHAVIOR_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_RLAST_COMPLETION_METADATA_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_RLAST_COMPLETION_CONTRACT_SELECTION.md; docs/AXI_IAL2_MANAGER_RLAST_COMPLETION_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_POST_READ_DATA_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_READ_DATA_BEHAVIOR_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_READ_DATA_CAPTURE_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_READ_DATA_METADATA_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_READ_DATA_CONTRACT_SELECTION.md; docs/AXI_IAL2_MANAGER_READ_DATA_BURST_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_POST_READ_DEMUX_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_READ_RESPONSE_DEMUX_BEHAVIOR_FIRST_SLICE.md; docs/book/src/14-feature-backlog.md; README.md; ROADMAP_V2.md
+reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.59|AXI_IAL2_MANAGER_LAST_BEAT_READ_DATA_METADATA_FIRST_SLICE|generated_last_beat_read_data_capture|last-beat read-data capture readiness' docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md docs/AXI_IAL2_MANAGER_LAST_BEAT_READ_DATA_METADATA_FIRST_SLICE.md docs/book/src/14-feature-backlog.md README.md ROADMAP_V2.md
 ---
 
 After the shipped Valid-Ready, bundle, capacity/status, ID-family metadata,
@@ -57,13 +59,14 @@ AXI burst/`RLAST` readiness audit, burst-last contract selector,
 parser/report metadata first slice, generated behavior readiness audit,
 generated `RLAST` behavior first slice, post-`RLAST` next-slice selector, and
 `RLAST` report-alignment first slice, and post-`RLAST` report next-slice
-selector, and burst read-data contract selector, the next active leaf is
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.58`.
+selector, burst read-data contract selector, and last-beat read-data
+metadata first slice, the next active leaf is
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.59`.
 
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.58` owns parser/report metadata and
-static validation for explicit last-beat read-data capture. It must parse and
-report the selected `capture-scope last-beat` contract without generated
-capture behavior.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.59` owns a readiness audit for generated
+last-beat read-data capture behavior. It must decide whether the existing
+IAL1/IAL0/SystemVerilog substrate can directly carry generated last-beat
+`RDATA`/`RRESP` capture, or whether a smaller prerequisite must land first.
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.47` shipped generated single-beat
 `RDATA`/`RRESP` capture behavior for explicit `read-data` contracts. The next
@@ -127,6 +130,16 @@ pulse as validity, requires `(status-policy last-beat)`, and leaves full
 multi-beat reassembly, per-beat outputs, `RRESP` aggregation, `ARLEN` or
 beat-count validation, per-ID queues, direct backend lowering, and VHDL
 deferred.
+
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.58` shipped that parser/report metadata
+and static validation. It accepts the last-beat `read-data` contract in public
+`.ppif`, adds `ppif/axi_manager_capacity_status_read_data_last_beat.ppif`,
+support-accounts the sample for strict check JSON and normalized semantic
+JSON, reports `bounded_last_beat_read_data_contract` with
+`generated_behavior: false`, and leaves
+`generated_last_beat_read_data_capture` as explicit residue. Generated `.isf`,
+`.fsm`, HDL behavior, check JSON semantics, and existing single-beat
+read-data behavior remain unchanged. The active frontier is `.59`.
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.32` aligned the emitted report for
 explicit generated write response demux. At that point,

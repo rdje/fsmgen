@@ -11,7 +11,7 @@ date: 2026-06-13
 status: current
 tags: [ial2, axi, manager, read-data, rdata, rresp, burst, rlast, last-beat, selector, task-tree]
 evidence: docs/AXI_IAL2_MANAGER_BURST_READ_DATA_CONTRACT_SELECTION.md; docs/AXI_IAL2_MANAGER_POST_RLAST_REPORT_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_RLAST_COMPLETION_BEHAVIOR_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_READ_DATA_BEHAVIOR_FIRST_SLICE.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; docs/book/src/14-feature-backlog.md; README.md; ROADMAP_V2.md
-reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.58|capture-scope last-beat|status-policy last-beat|bounded_last_beat_read_data_contract|last-beat-by-rid' docs/AXI_IAL2_MANAGER_BURST_READ_DATA_CONTRACT_SELECTION.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md docs/book/src/14-feature-backlog.md README.md ROADMAP_V2.md
+reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.58|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.59|capture-scope last-beat|status-policy last-beat|bounded_last_beat_read_data_contract|last-beat-by-rid' docs/AXI_IAL2_MANAGER_BURST_READ_DATA_CONTRACT_SELECTION.md docs/AXI_IAL2_MANAGER_LAST_BEAT_READ_DATA_METADATA_FIRST_SLICE.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md docs/book/src/14-feature-backlog.md README.md ROADMAP_V2.md
 ---
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.57` selected explicit last-beat
@@ -38,6 +38,8 @@ outputs, packed burst outputs, `RRESP` aggregation across all beats,
 `ARLEN`/beat-count validation, fixed-depth storage, per-ID response queues,
 direct backend lowering, and VHDL remain residue.
 
-`.58` owns parser/report metadata and static validation for this contract.
-Generated last-beat `RDATA`/`RRESP` capture behavior requires a later exact
-behavior owner.
+`.58` shipped parser/report metadata and static validation for this contract,
+including `ppif/axi_manager_capacity_status_read_data_last_beat.ppif` and
+report mode `bounded_last_beat_read_data_contract` with generated behavior
+false. Generated last-beat `RDATA`/`RRESP` capture behavior requires the
+active `.59` readiness audit before implementation.

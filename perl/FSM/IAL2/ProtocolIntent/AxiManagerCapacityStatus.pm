@@ -920,13 +920,6 @@ sub _normalize_read_data(%args) {
     }
     confess "AXI manager capacity/status IAL2 contract read_data requires a read family\n"
         unless exists $raw->{read};
-    if (
-        ref($args{response_demux}) eq 'HASH'
-        && ref($args{response_demux}{read}) eq 'HASH'
-        && ($args{response_demux}{read}{response_scope} // '') ne 'single_beat'
-    ) {
-        confess "AXI manager capacity/status IAL2 contract read_data requires response_demux.read.response_scope single_beat in this slice\n";
-    }
     confess "AXI manager capacity/status IAL2 contract read_data requires generated read response_demux metadata\n"
         unless ref($args{response_demux}) eq 'HASH'
             && ref($args{response_demux}{read}) eq 'HASH'
@@ -934,19 +927,44 @@ sub _normalize_read_data(%args) {
     confess "AXI manager capacity/status IAL2 contract read_data requires transactions metadata\n"
         unless ref($args{transactions}) eq 'ARRAY';
 
-    return {
-        mode               => 'bounded_single_beat_read_data_contract',
-        generated_behavior => 1,
-        read               => _normalize_read_data_read(
-            raw_read       => $raw->{read},
-            transactions   => $args{transactions},
-            response_demux => $args{response_demux}{read},
-        ),
-        residue => [
+    my $read = _normalize_read_data_read(
+        raw_read       => $raw->{read},
+        transactions   => $args{transactions},
+        response_demux => $args{response_demux}{read},
+    );
+    my $required_response_scope = $read->{capture_scope} eq 'last_beat'
+        ? 'burst_last'
+        : 'single_beat';
+    if (($args{response_demux}{read}{response_scope} // '') ne $required_response_scope) {
+        if ($required_response_scope eq 'single_beat') {
+            confess "AXI manager capacity/status IAL2 contract read_data requires response_demux.read.response_scope single_beat for capture_scope single-beat in this slice\n";
+        }
+        confess "AXI manager capacity/status IAL2 contract read_data.read capture_scope last-beat requires response_demux.read.response_scope burst_last in this slice\n";
+    }
+
+    my $generated_behavior = $read->{capture_scope} eq 'single_beat' ? 1 : 0;
+    my $mode = $generated_behavior
+        ? 'bounded_single_beat_read_data_contract'
+        : 'bounded_last_beat_read_data_contract';
+    my $residue = $generated_behavior
+        ? [
             'rlast_completion',
             'bursts',
             'multi_beat_read_data_reassembly',
-        ],
+        ]
+        : [
+            'generated_last_beat_read_data_capture',
+            'multi_beat_read_data_reassembly',
+            'per_beat_outputs',
+            'rresp_aggregation',
+            'arlen_or_beat_count_validation',
+        ];
+
+    return {
+        mode               => $mode,
+        generated_behavior => $generated_behavior,
+        read               => $read,
+        residue            => $residue,
     };
 }
 
@@ -957,7 +975,7 @@ sub _normalize_read_data_read(%args) {
 
     my %allowed = map { $_ => 1 } qw(
         capture_scope completion_source data_signal data_width status_signal
-        status_width interleaving transactions
+        status_width status_policy interleaving transactions
     );
     for my $field (sort keys %$raw) {
         confess "AXI manager capacity/status IAL2 contract read_data.read unsupported field '$field'\n"
@@ -970,16 +988,30 @@ sub _normalize_read_data_read(%args) {
     }
 
     my $capture_scope = _nonempty_scalar($raw->{capture_scope}, 'read_data.read.capture_scope');
-    confess "AXI manager capacity/status IAL2 contract read_data.read.capture_scope must be single-beat in this slice\n"
-        unless $capture_scope eq 'single-beat';
+    confess "AXI manager capacity/status IAL2 contract read_data.read.capture_scope must be single-beat or last-beat in this slice\n"
+        unless $capture_scope eq 'single-beat' || $capture_scope eq 'last-beat';
 
     my $completion_source = _nonempty_scalar($raw->{completion_source}, 'read_data.read.completion_source');
     confess "AXI manager capacity/status IAL2 contract read_data.read.completion_source must be response-demux in this slice\n"
         unless $completion_source eq 'response-demux';
 
+    my $status_policy = exists($raw->{status_policy})
+        ? _nonempty_scalar($raw->{status_policy}, 'read_data.read.status_policy')
+        : undef;
+    if ($capture_scope eq 'single-beat') {
+        confess "AXI manager capacity/status IAL2 contract read_data.read.status_policy is only supported with capture_scope last-beat in this slice\n"
+            if defined $status_policy;
+    } else {
+        confess "AXI manager capacity/status IAL2 contract read_data.read capture_scope last-beat requires status_policy last-beat in this slice\n"
+            unless defined $status_policy && $status_policy eq 'last-beat';
+    }
+
     my $interleaving = _nonempty_scalar($raw->{interleaving}, 'read_data.read.interleaving');
-    confess "AXI manager capacity/status IAL2 contract read_data.read.interleaving must be single-beat-by-rid in this slice\n"
-        unless $interleaving eq 'single-beat-by-rid';
+    my $required_interleaving = $capture_scope eq 'last-beat'
+        ? 'last-beat-by-rid'
+        : 'single-beat-by-rid';
+    confess "AXI manager capacity/status IAL2 contract read_data.read.interleaving must be $required_interleaving for capture_scope $capture_scope in this slice\n"
+        unless $interleaving eq $required_interleaving;
 
     my $data_signal = _identifier_value($raw->{data_signal}, 'read_data.read.data_signal');
     my $data_width = _positive_integer($raw->{data_width}, 'read_data.read.data_width');
@@ -1046,19 +1078,36 @@ sub _normalize_read_data_read(%args) {
     confess "AXI manager capacity/status IAL2 contract read_data.read transaction coverage is missing read response_demux auto transaction(s): " . join(', ', @missing) . "\n"
         if @missing;
 
-    return {
-        capture_scope        => 'single_beat',
+    my $normalized_capture_scope = $capture_scope eq 'last-beat' ? 'last_beat' : 'single_beat';
+    my $completion_validity = $capture_scope eq 'last-beat'
+        ? 'generated_read_response_demux_last_beat_completion_pulse'
+        : 'generated_read_response_demux_completion_pulse';
+    my %read = (
+        capture_scope        => $normalized_capture_scope,
         completion_source    => 'response_demux',
-        completion_validity  => 'generated_read_response_demux_completion_pulse',
+        completion_validity  => $completion_validity,
         data_signal          => $data_signal,
         data_signal_width    => $data_width,
         data_signal_direction => 'generated_input',
         status_signal        => $status_signal,
         status_signal_width  => $status_width,
         status_signal_direction => 'generated_input',
-        interleaving_policy  => 'single_beat_by_rid',
+        interleaving_policy  => $capture_scope eq 'last-beat' ? 'last_beat_by_rid' : 'single_beat_by_rid',
         transactions         => \@transactions,
-    };
+    );
+    if ($capture_scope eq 'last-beat') {
+        @read{qw(status_policy status_aggregation burst_length_source burst_length_validation beat_storage valid_output length_output)} = (
+            'last_beat',
+            'none',
+            'rlast_only',
+            'not_generated',
+            'none',
+            'none',
+            'none',
+        );
+    }
+
+    return \%read;
 }
 
 sub _auto_id_lifecycle_family_by_name($auto_id_lifecycle, $family_name) {
@@ -2274,10 +2323,10 @@ sub _build_report(%args) {
             'response_demux.read response_scope single_beat generates bounded single-beat read RID demux behavior for explicit opt-in contracts',
             'response_demux.read response_scope burst_last requires one-bit last_signal metadata and generates matched-RID-and-RLAST last-beat completion behavior for explicit opt-in contracts',
             'response_demux transaction_completion must be generated, making selected transaction completion names generated demux pulse outputs only under explicit opt-in contracts',
-            'read_data requires generated single-beat read response_demux metadata and explicit single-beat capture/source policy',
+            'read_data supports explicit generated single-beat capture metadata with response_scope single_beat and explicit report-only last-beat capture metadata with response_scope burst_last',
             'read_data.read data width must be positive and status width must be 2',
             'read_data.read transaction outputs must exactly cover read response_demux auto transactions',
-            'read_data generates bounded single-beat RDATA/RRESP capture inputs, outputs, and guarded assignments for explicit opt-in contracts',
+            'read_data generates bounded single-beat RDATA/RRESP capture inputs, outputs, and guarded assignments for explicit single-beat opt-in contracts; last-beat read-data capture is parser/report metadata only in this slice',
         ],
         unsupported_residue => [
             {
@@ -2286,7 +2335,7 @@ sub _build_report(%args) {
             },
             {
                 id     => 'axi_id_ordering_and_response_matching',
-                detail => 'Concrete transaction ID request/response assertions, explicit bounded auto-ID request-ID drive plus completion-event release, generated auto-ID same-ID avoidance, generated write BID response demux, generated single-beat read RID response demux, generated single-beat read-data RDATA/RRESP capture, and generated burst-last RLAST response-demux completion are supported; dynamic user-ID arbitration while issuing multiple same-family requests in one cycle, per-ID same-ID response queues, different-ID interleaving, read-data interleaving/reassembly, broader burst payload assembly, ARLEN or beat-count validation, and per-beat outputs remain outside this capacity/status shell.',
+                detail => 'Concrete transaction ID request/response assertions, explicit bounded auto-ID request-ID drive plus completion-event release, generated auto-ID same-ID avoidance, generated write BID response demux, generated single-beat read RID response demux, generated single-beat read-data RDATA/RRESP capture, generated burst-last RLAST response-demux completion, and structural last-beat read-data metadata are supported; dynamic user-ID arbitration while issuing multiple same-family requests in one cycle, per-ID same-ID response queues, different-ID interleaving, generated last-beat read-data capture, full read-data interleaving/reassembly, broader burst payload assembly, RRESP aggregation, ARLEN or beat-count validation, and per-beat outputs remain outside this capacity/status shell.',
             },
             {
                 id     => 'profile_aliases_and_full_manager_behavior',
