@@ -33,5 +33,5 @@ The immediate next slice after `.53` was
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.54`, the post-`RLAST` selector. It
 selected `.55`, narrow report/static-text alignment, after finding generated
 report prose that still described burst-last `RLAST` as report-only. `.55`
-shipped that alignment and advanced the frontier to `.56`, the next public
-AXI read-data/burst selector.
+shipped that alignment and advanced the frontier to `.56`; `.56` selected
+`.57`, public AXI burst read-data contract selection.

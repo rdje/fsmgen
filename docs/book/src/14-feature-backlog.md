@@ -3599,9 +3599,17 @@ ships that user-facing report repair. The schedule report now says
 completion behavior for explicit opt-in contracts, and the unsupported-residue
 prose now lists generated burst-last `RLAST` response-demux completion as
 supported. Public syntax, generated `.isf`, generated `.fsm`, HDL, support
-accounting, check JSON, and semantic JSON behavior are unchanged. The active
-frontier is `IAL2-FEATURE-COMPLETENESS-FRONTIER.56`, the selector for the
-next public AXI read-data/burst contract or readiness owner.
+accounting, check JSON, and semantic JSON behavior are unchanged.
+
+Post-`RLAST` report next-slice selection:
+[AXI_IAL2_MANAGER_POST_RLAST_REPORT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_RLAST_REPORT_NEXT_SLICE_SELECTION.md)
+selects public AXI burst read-data contract selection as the next owner. The
+selector keeps direct multi-beat read-data behavior deferred because the
+current `read-data` contract is single-beat-only, the burst-last sample has no
+`read_data` contract, and the public shape for capture scope, output binding,
+beat-count/depth, `RRESP` aggregation, interleaving, diagnostics, and report
+residue movement is not selected yet. The active frontier is
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.57`.
 
 First implementation subset selection:
 [AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION](../../AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md)
@@ -3741,10 +3749,11 @@ selection before parser/report metadata or generated behavior changes. The
 as an additive read response-demux contract. `.51` ships parser/report
 metadata and static validation for that contract with generated behavior
 unchanged. `.52` selects direct generated burst-last/`RLAST` completion
-behavior. `.53` ships that generated behavior. The active frontier is
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.56`, selected after `.55` aligned AXI
-`RLAST` report prose with generated behavior. Future behavior owners must keep
-the reviewable `IAL2 -> IAL1 -> IAL0 -> SystemVerilog` path; read-data
+behavior. `.53` ships that generated behavior. `.55` aligns the generated
+report prose with shipped `RLAST` behavior. `.56` selects `.57`, public AXI
+burst read-data contract selection, before parser/report metadata or generated
+behavior changes. Future behavior owners must keep the reviewable
+`IAL2 -> IAL1 -> IAL0 -> SystemVerilog` path; read-data
 interleaving/reassembly, bursts, per-ID queues, full-manager behavior, and
 VHDL remain out of scope unless a later exact owner selects them.
 Additional `.ppif` objects/clauses and profile aliases remain future
@@ -6032,8 +6041,11 @@ Completed selector leaf `IAL2-FEATURE-COMPLETENESS-FRONTIER.54` selects
 narrow AXI `RLAST` report/static-text alignment and advances the active
 frontier to `.55`.
 Completed implementation leaf `IAL2-FEATURE-COMPLETENESS-FRONTIER.55`
-aligns generated AXI `RLAST` report prose with shipped behavior and advances
-the active frontier to `.56`.
+aligns generated AXI `RLAST` report prose with shipped behavior and hands
+off to selector `.56`.
+Completed selector leaf `IAL2-FEATURE-COMPLETENESS-FRONTIER.56` selects
+public AXI burst read-data contract selection and advances the active
+frontier to `.57`.
 Completed implementation leaf
 `ARCHITECTURE-DEBT-FRONTIER.2.1`
 projects direct backend storage/helper declaration-plan entries into

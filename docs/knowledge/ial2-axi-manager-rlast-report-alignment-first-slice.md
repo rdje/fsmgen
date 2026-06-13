@@ -26,6 +26,6 @@ response-demux completion is listed as supported. The stale report-only
 `RLAST` wording and stale "generated burst/last-beat tracking remains outside"
 wording are no longer emitted by the report.
 
-The next active leaf is `IAL2-FEATURE-COMPLETENESS-FRONTIER.56`, which must
-select the next exact public contract/readiness step for combining generated
-`RLAST` completion with read-data behavior or another smaller prerequisite.
+The next selector after `.55` was `IAL2-FEATURE-COMPLETENESS-FRONTIER.56`.
+It selected `.57`, public AXI burst read-data contract selection, before any
+parser/report metadata or generated behavior changes for burst read-data.

@@ -33,6 +33,7 @@ Multi-beat read-data reassembly is not selected directly because the current
 public `read-data` contract remains single-beat and is still rejected when
 paired with `response_demux.read.response_scope burst_last`.
 
-The next active leaf after the alignment is
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.56`, the selector for the next public AXI
-read-data/burst contract or readiness owner.
+The next selector after the alignment was
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.56`. It selected `.57`, public AXI burst
+read-data contract selection, before parser/report metadata or generated
+burst read-data behavior.

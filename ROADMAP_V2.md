@@ -1038,9 +1038,13 @@ generated burst/last-beat tracking as outside the capacity/status shell.
 Slice `.55` aligns that report/static text: reports now say burst-last
 response-demux generates matched-`RID`-and-`RLAST` last-beat completion
 behavior, and list generated burst-last `RLAST` response-demux completion as
-supported. The active frontier is `.56`, selecting the next public AXI
-read-data/burst contract or readiness owner before larger AXI manager feature
-work.
+supported. Selector `.56` selects `.57`, public AXI burst read-data contract
+selection, before parser/report metadata or generated behavior. Direct
+multi-beat read-data behavior remains premature because the current
+`read-data` contract is single-beat-only, the burst-last sample has no
+`read_data` contract, and the public shape for burst capture scope, output
+binding, beat-count/depth, `RRESP` aggregation, interleaving, diagnostics, and
+report residue movement is not selected yet.
 The shipped public capacity/status source accepts one
 `(manager-capacity-status NAME ...)` object under
 `(protocol-platform-intent ...)`, `(profile axi4)`, and top-level source
