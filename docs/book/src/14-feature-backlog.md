@@ -3608,8 +3608,19 @@ selector keeps direct multi-beat read-data behavior deferred because the
 current `read-data` contract is single-beat-only, the burst-last sample has no
 `read_data` contract, and the public shape for capture scope, output binding,
 beat-count/depth, `RRESP` aggregation, interleaving, diagnostics, and report
-residue movement is not selected yet. The active frontier is
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.57`.
+residue movement is not selected yet.
+
+Burst read-data contract selection:
+[AXI_IAL2_MANAGER_BURST_READ_DATA_CONTRACT_SELECTION](../../AXI_IAL2_MANAGER_BURST_READ_DATA_CONTRACT_SELECTION.md)
+selects explicit last-beat read-data capture as the first bounded burst-side
+contract. The selected source shape is `capture-scope last-beat`,
+`status-policy last-beat`, and `interleaving last-beat-by-rid` under
+`read-data`, paired only with generated `response_scope burst_last` response
+demux. It captures only the last-beat `RDATA`/`RRESP` values and keeps full
+multi-beat reassembly, per-beat outputs, `RRESP` aggregation,
+`ARLEN`/beat-count validation, per-ID queues, and VHDL deferred. The active
+frontier is `IAL2-FEATURE-COMPLETENESS-FRONTIER.58`, parser/report metadata
+and static validation for that contract.
 
 First implementation subset selection:
 [AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION](../../AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md)
@@ -3752,7 +3763,9 @@ unchanged. `.52` selects direct generated burst-last/`RLAST` completion
 behavior. `.53` ships that generated behavior. `.55` aligns the generated
 report prose with shipped `RLAST` behavior. `.56` selects `.57`, public AXI
 burst read-data contract selection, before parser/report metadata or generated
-behavior changes. Future behavior owners must keep the reviewable
+behavior changes. `.57` selects explicit last-beat read-data capture and
+advances the active frontier to `.58`, parser/report metadata and static
+validation. Future behavior owners must keep the reviewable
 `IAL2 -> IAL1 -> IAL0 -> SystemVerilog` path; read-data
 interleaving/reassembly, bursts, per-ID queues, full-manager behavior, and
 VHDL remain out of scope unless a later exact owner selects them.
@@ -6044,8 +6057,11 @@ Completed implementation leaf `IAL2-FEATURE-COMPLETENESS-FRONTIER.55`
 aligns generated AXI `RLAST` report prose with shipped behavior and hands
 off to selector `.56`.
 Completed selector leaf `IAL2-FEATURE-COMPLETENESS-FRONTIER.56` selects
-public AXI burst read-data contract selection and advances the active
-frontier to `.57`.
+public AXI burst read-data contract selection and hands off to selector
+`.57`.
+Completed selector leaf `IAL2-FEATURE-COMPLETENESS-FRONTIER.57` selects
+explicit last-beat read-data parser/report metadata and advances the active
+frontier to `.58`.
 Completed implementation leaf
 `ARCHITECTURE-DEBT-FRONTIER.2.1`
 projects direct backend storage/helper declaration-plan entries into

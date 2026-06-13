@@ -39,3 +39,7 @@ demux, data/status/valid/length output binding shape, `ARLEN` or beat-count
 or fixed bounded-depth policy, `RRESP` aggregation, interleaving/per-ID queue
 policy, diagnostics, report keys, residue movement, validation gates,
 rollback, docs, Knowledge Map, and VHDL deferral.
+
+`.57` selected explicit last-beat read-data capture and advanced the frontier
+to `.58`, parser/report metadata and static validation. Full multi-beat
+reassembly remains deferred.
