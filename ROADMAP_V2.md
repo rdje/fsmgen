@@ -1007,6 +1007,14 @@ completion pulses, generated artifact report lists, and
 Selector `.48` chose `IAL2-FEATURE-COMPLETENESS-FRONTIER.49`, AXI
 burst/`RLAST` completion readiness, as the next exact prerequisite before
 multi-beat read-data reassembly or broader read-side manager behavior.
+Audit `.49` concluded that the existing IAL1/IAL0/SystemVerilog substrate is
+probably sufficient for a later bounded `RLAST` implementation, but the public
+contract must be selected first. The active frontier is
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.50`, a selector for `RLAST` signal
+ownership, burst length or beat-count metadata, beat-valid versus
+transaction-complete semantics, data/status capture granularity, diagnostics,
+report/residue movement, and generated artifact boundaries before
+parser/report metadata or HDL behavior changes.
 The shipped public capacity/status source accepts one
 `(manager-capacity-status NAME ...)` object under
 `(protocol-platform-intent ...)`, `(profile axi4)`, and top-level source
@@ -1137,6 +1145,8 @@ selected direct generated single-beat `RDATA`/`RRESP` capture behavior, and
 IAL1/IAL0/SystemVerilog prerequisite. `.48` selected `.49`, AXI
 burst/`RLAST` completion readiness, as the next exact prerequisite before
 multi-beat read-data reassembly or broader read-side manager behavior.
+`.49` selected `.50`, public burst/`RLAST` completion contract selection,
+before parser/report metadata or generated behavior changes.
 Full-manager
 behavior, profile aliases, queued/blocking policy, direct backend lowering,
 and VHDL remain residue.

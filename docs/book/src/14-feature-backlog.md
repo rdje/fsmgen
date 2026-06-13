@@ -3455,6 +3455,18 @@ Schedule JSON now reports `read_data.generated_behavior: true` with
 `read_data.residue` list removes `generated_read_data_capture` and retains
 `rlast_completion`, `bursts`, and `multi_beat_read_data_reassembly`.
 
+Burst/`RLAST` completion readiness audit:
+[AXI_IAL2_MANAGER_RLAST_COMPLETION_READINESS_AUDIT](../../AXI_IAL2_MANAGER_RLAST_COMPLETION_READINESS_AUDIT.md)
+selects public contract selection before parser/report metadata or generated
+behavior changes. The audit found no evident new IAL1/IAL0/SystemVerilog
+prerequisite for a later bounded implementation: width-bearing ports, scalar
+storage, guarded assignments, and one-cycle pulses already exist. What is
+missing is the public AXI contract. The next selector must define `RLAST`
+signal ownership, burst length or beat-count metadata, beat-valid versus
+transaction-complete semantics, data/status capture granularity, diagnostics,
+generated artifact boundaries, and report/residue movement before behavior can
+ship.
+
 First implementation subset selection:
 [AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION](../../AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md)
 selects a source-anchored AXI Valid-Ready channel contract/monitor as the
@@ -3585,11 +3597,15 @@ dispatch/fan-in slice are now also shipped, and `.45` ships parser/report
 metadata and static validation for the bounded public read-data payload/status
 contract selected by `.44`. `.46` audits generated read-data capture behavior
 readiness and selects `.47`, direct generated single-beat `RDATA`/`RRESP`
-capture, with no new IAL1/IAL0/SystemVerilog prerequisite. The active frontier
-is `IAL2-FEATURE-COMPLETENESS-FRONTIER.47`. Future behavior owners must keep
-the reviewable `IAL2 -> IAL1 -> IAL0 -> SystemVerilog` path; read-data
-interleaving/reassembly, bursts, per-ID queues, full-manager behavior, and
-VHDL remain out of scope unless a later exact owner selects them.
+capture, with no new IAL1/IAL0/SystemVerilog prerequisite. `.47` ships that
+generated capture behavior, `.48` selects AXI burst/`RLAST` completion
+readiness, and `.49` selects public burst/`RLAST` completion contract
+selection before parser/report metadata or generated behavior changes. The
+active frontier is `IAL2-FEATURE-COMPLETENESS-FRONTIER.50`. Future behavior
+owners must keep the reviewable `IAL2 -> IAL1 -> IAL0 -> SystemVerilog` path;
+read-data interleaving/reassembly, bursts, per-ID queues, full-manager
+behavior, and VHDL remain out of scope unless a later exact owner selects
+them.
 Additional `.ppif` objects/clauses and profile aliases remain future
 exact-owner work, and they must not jump ahead of the active selector unless
 that selector records why.
@@ -5853,6 +5869,10 @@ Completed selector leaf `IAL2-FEATURE-COMPLETENESS-FRONTIER.48` selects AXI
 burst/`RLAST` completion readiness as the next exact prerequisite after
 generated single-beat read-data capture and advances the active frontier to
 `.49`.
+Completed readiness audit `IAL2-FEATURE-COMPLETENESS-FRONTIER.49` selects
+public AXI burst/`RLAST` completion contract selection before parser/report
+metadata or generated behavior changes and advances the active frontier to
+`.50`.
 Completed implementation leaf
 `ARCHITECTURE-DEBT-FRONTIER.2.1`
 projects direct backend storage/helper declaration-plan entries into
