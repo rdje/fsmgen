@@ -549,6 +549,7 @@ subtest 'burst-last read response-demux generates RLAST-gated completion behavio
     like($fsm, qr/-axi0_r0_response_demux <\(& axi0_read_complete axi0_r0_auto_id_busy_q \(== axi0_rid axi0_r0_auto_id_q\) axi0_rlast\)/, 'burst-last behavior lowers RLAST-gated r0 rule to IAL0');
 
     assert_read_response_demux_burst_last_report($result->{report}{response_demux}, 'generator burst-last report');
+    assert_rlast_report_prose_alignment($result->{report}, 'generator burst-last report');
     assert_same_id_ordering_report($result->{report}{same_id_ordering}, 'generator burst-last report', 1, 'read');
     is_deeply(
         $result->{report}{auto_id_lifecycle}{residue},
@@ -1167,6 +1168,35 @@ sub assert_read_response_demux_burst_last_report {
         [qw(read_data_interleaving bursts)],
         "$owner removes generated burst-last demux residue and keeps broader read residue",
     );
+}
+
+sub assert_rlast_report_prose_alignment {
+    my ($report, $owner) = @_;
+    my @rules = @{$report->{enforced_static_rules} || []};
+    my $stale_rule = join('', 'remains report-only until generated ', 'RLAST completion behavior');
+    ok(
+        (grep { /response_scope burst_last requires one-bit last_signal metadata and generates matched-RID-and-RLAST last-beat completion behavior/ } @rules),
+        "$owner reports generated RLAST completion in static-rule prose",
+    );
+    ok(
+        !(grep { index($_, $stale_rule) >= 0 } @rules),
+        "$owner removes stale report-only RLAST static-rule prose",
+    );
+
+    my ($id_residue) = grep {
+        ref($_) eq 'HASH'
+            && ($_->{id} // '') eq 'axi_id_ordering_and_response_matching'
+    } @{$report->{unsupported_residue} || []};
+    ok($id_residue, "$owner reports AXI ID/order unsupported residue");
+    like(
+        $id_residue->{detail},
+        qr/generated burst-last RLAST response-demux completion are supported/,
+        "$owner reports generated burst-last RLAST completion as supported",
+    );
+    my $stale_metadata = join('', 'report-only burst-last ', 'RLAST response-demux metadata');
+    my $stale_tracking = join('', 'generated burst/last-beat tracking ', 'remain outside');
+    ok(index($id_residue->{detail}, $stale_metadata) < 0, "$owner removes stale report-only residue prose");
+    ok(index($id_residue->{detail}, $stale_tracking) < 0, "$owner removes stale burst tracking residue prose");
 }
 
 sub assert_read_data_report {

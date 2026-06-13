@@ -159,8 +159,7 @@ exact-owner work.
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.54` owned the post-`RLAST` selector and
 selected `IAL2-FEATURE-COMPLETENESS-FRONTIER.55`, a narrow report/static-text
-alignment slice. The selected repair must update generated schedule-report
-prose that still describes burst-last `RLAST` as report-only before larger
-multi-beat read-data reassembly, per-ID response queues, authored concrete-ID
-same-ID ordering, queued/blocking policy, profile aliases, full-manager
-behavior, direct backend lowering, or VHDL work resumes.
+alignment slice. `IAL2-FEATURE-COMPLETENESS-FRONTIER.55` shipped that repair
+and advanced the active frontier to `IAL2-FEATURE-COMPLETENESS-FRONTIER.56`,
+the selector for the next public AXI read-data/burst contract or readiness
+owner.

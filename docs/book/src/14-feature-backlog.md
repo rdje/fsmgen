@@ -3592,6 +3592,17 @@ alignment slice. Multi-beat read-data reassembly, per-ID queues, full-manager
 behavior, direct backend lowering, and VHDL remain deferred until that
 user-facing report drift is resolved.
 
+`RLAST` report alignment first slice:
+[AXI_IAL2_MANAGER_RLAST_REPORT_ALIGNMENT_FIRST_SLICE](../../AXI_IAL2_MANAGER_RLAST_REPORT_ALIGNMENT_FIRST_SLICE.md)
+ships that user-facing report repair. The schedule report now says
+`response_scope burst_last` generates matched-`RID`-and-`RLAST` last-beat
+completion behavior for explicit opt-in contracts, and the unsupported-residue
+prose now lists generated burst-last `RLAST` response-demux completion as
+supported. Public syntax, generated `.isf`, generated `.fsm`, HDL, support
+accounting, check JSON, and semantic JSON behavior are unchanged. The active
+frontier is `IAL2-FEATURE-COMPLETENESS-FRONTIER.56`, the selector for the
+next public AXI read-data/burst contract or readiness owner.
+
 First implementation subset selection:
 [AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION](../../AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md)
 selects a source-anchored AXI Valid-Ready channel contract/monitor as the
@@ -3731,12 +3742,11 @@ as an additive read response-demux contract. `.51` ships parser/report
 metadata and static validation for that contract with generated behavior
 unchanged. `.52` selects direct generated burst-last/`RLAST` completion
 behavior. `.53` ships that generated behavior. The active frontier is
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.55`, selected by `.54` as the narrow AXI
-`RLAST` report/static-text alignment slice after generated behavior. Future
-behavior owners must keep the reviewable `IAL2 -> IAL1 -> IAL0 ->
-SystemVerilog` path; read-data interleaving/reassembly, bursts, per-ID queues,
-full-manager behavior, and VHDL remain out of scope unless a later exact
-owner selects them.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.56`, selected after `.55` aligned AXI
+`RLAST` report prose with generated behavior. Future behavior owners must keep
+the reviewable `IAL2 -> IAL1 -> IAL0 -> SystemVerilog` path; read-data
+interleaving/reassembly, bursts, per-ID queues, full-manager behavior, and
+VHDL remain out of scope unless a later exact owner selects them.
 Additional `.ppif` objects/clauses and profile aliases remain future
 exact-owner work, and they must not jump ahead of the active selector unless
 that selector records why.
@@ -6021,6 +6031,9 @@ frontier to `.54`, the next AXI manager feature-completeness selector.
 Completed selector leaf `IAL2-FEATURE-COMPLETENESS-FRONTIER.54` selects
 narrow AXI `RLAST` report/static-text alignment and advances the active
 frontier to `.55`.
+Completed implementation leaf `IAL2-FEATURE-COMPLETENESS-FRONTIER.55`
+aligns generated AXI `RLAST` report prose with shipped behavior and advances
+the active frontier to `.56`.
 Completed implementation leaf
 `ARCHITECTURE-DEBT-FRONTIER.2.1`
 projects direct backend storage/helper declaration-plan entries into

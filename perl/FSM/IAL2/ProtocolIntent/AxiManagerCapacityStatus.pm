@@ -2272,7 +2272,7 @@ sub _build_report(%args) {
             'response_demux.write requires response_event equal to write_complete and generates bounded write BID demux behavior for explicit opt-in contracts',
             'response_demux.read requires response_event equal to read_complete, response_scope single_beat or burst_last, read ID-family metadata, read transactions, and read auto_id_lifecycle metadata',
             'response_demux.read response_scope single_beat generates bounded single-beat read RID demux behavior for explicit opt-in contracts',
-            'response_demux.read response_scope burst_last requires one-bit last_signal metadata and remains report-only until generated RLAST completion behavior is explicitly owned',
+            'response_demux.read response_scope burst_last requires one-bit last_signal metadata and generates matched-RID-and-RLAST last-beat completion behavior for explicit opt-in contracts',
             'response_demux transaction_completion must be generated, making selected transaction completion names generated demux pulse outputs only under explicit opt-in contracts',
             'read_data requires generated single-beat read response_demux metadata and explicit single-beat capture/source policy',
             'read_data.read data width must be positive and status width must be 2',
@@ -2286,7 +2286,7 @@ sub _build_report(%args) {
             },
             {
                 id     => 'axi_id_ordering_and_response_matching',
-                detail => 'Concrete transaction ID request/response assertions, explicit bounded auto-ID request-ID drive plus completion-event release, generated auto-ID same-ID avoidance, generated write BID response demux, generated single-beat read RID response demux, generated single-beat read-data RDATA/RRESP capture, and report-only burst-last RLAST response-demux metadata are supported; dynamic user-ID arbitration while issuing multiple same-family requests in one cycle, per-ID same-ID response queues, different-ID interleaving, read-data interleaving/reassembly, and generated burst/last-beat tracking remain outside this capacity/status shell.',
+                detail => 'Concrete transaction ID request/response assertions, explicit bounded auto-ID request-ID drive plus completion-event release, generated auto-ID same-ID avoidance, generated write BID response demux, generated single-beat read RID response demux, generated single-beat read-data RDATA/RRESP capture, and generated burst-last RLAST response-demux completion are supported; dynamic user-ID arbitration while issuing multiple same-family requests in one cycle, per-ID same-ID response queues, different-ID interleaving, read-data interleaving/reassembly, broader burst payload assembly, ARLEN or beat-count validation, and per-beat outputs remain outside this capacity/status shell.',
             },
             {
                 id     => 'profile_aliases_and_full_manager_behavior',

@@ -280,6 +280,7 @@ subtest 'PPIF adapter parses AXI manager burst-last read response-demux behavior
         'burst-last behavior emits RLAST-gated r0 completion rule',
     );
     assert_read_response_demux_burst_last_report($result->{report}{response_demux}, 'adapter burst-last report');
+    assert_rlast_report_prose_alignment($result->{report}, 'adapter burst-last report');
     assert_same_id_ordering_report($result->{report}{same_id_ordering}, 'adapter burst-last report', 1, 'read');
     is_deeply($result->{report}{auto_id_lifecycle}{residue}, [], 'adapter burst-last report removes generated read demux from lifecycle residue');
 };
@@ -763,6 +764,7 @@ subtest 'CLI emits IAL2 report JSON for AXI manager burst-last read response-dem
     is($report->{schema}, 'fsmgen.ial2.protocol_intent.axi_manager_capacity_status.v1', 'CLI keeps the capacity/status report schema');
     is($report->{source_object}{intent_name}, 'axi_manager_capacity_status_read_response_demux_burst_last', 'burst-last report carries the PPIF top-level intent name');
     assert_read_response_demux_burst_last_report($report->{response_demux}, 'CLI burst-last report');
+    assert_rlast_report_prose_alignment($report, 'CLI burst-last report');
     assert_same_id_ordering_report($report->{same_id_ordering}, 'CLI burst-last report', 1, 'read');
     is_deeply($report->{auto_id_lifecycle}{residue}, [], 'CLI burst-last report removes generated read demux from lifecycle residue');
     is_deeply($report->{generated_artifacts}{ial0}{files}, ['axi0_capacity_status.fsm'], 'burst-last behavior keeps the generated .fsm artifact name stable');
@@ -1962,6 +1964,35 @@ sub assert_read_response_demux_burst_last_report {
         [qw(read_data_interleaving bursts)],
         "$owner removes generated burst-last demux residue and keeps broader read residue",
     );
+}
+
+sub assert_rlast_report_prose_alignment {
+    my ($report, $owner) = @_;
+    my @rules = @{$report->{enforced_static_rules} || []};
+    my $stale_rule = join('', 'remains report-only until generated ', 'RLAST completion behavior');
+    ok(
+        (grep { /response_scope burst_last requires one-bit last_signal metadata and generates matched-RID-and-RLAST last-beat completion behavior/ } @rules),
+        "$owner reports generated RLAST completion in static-rule prose",
+    );
+    ok(
+        !(grep { index($_, $stale_rule) >= 0 } @rules),
+        "$owner removes stale report-only RLAST static-rule prose",
+    );
+
+    my ($id_residue) = grep {
+        ref($_) eq 'HASH'
+            && ($_->{id} // '') eq 'axi_id_ordering_and_response_matching'
+    } @{$report->{unsupported_residue} || []};
+    ok($id_residue, "$owner reports AXI ID/order unsupported residue");
+    like(
+        $id_residue->{detail},
+        qr/generated burst-last RLAST response-demux completion are supported/,
+        "$owner reports generated burst-last RLAST completion as supported",
+    );
+    my $stale_metadata = join('', 'report-only burst-last ', 'RLAST response-demux metadata');
+    my $stale_tracking = join('', 'generated burst/last-beat tracking ', 'remain outside');
+    ok(index($id_residue->{detail}, $stale_metadata) < 0, "$owner removes stale report-only residue prose");
+    ok(index($id_residue->{detail}, $stale_tracking) < 0, "$owner removes stale burst tracking residue prose");
 }
 
 sub assert_read_data_report {

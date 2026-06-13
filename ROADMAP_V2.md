@@ -1035,8 +1035,12 @@ movement, same-ID coverage movement, and HDL reachability. The active frontier
 selector `.54` found one remaining report-contract drift: generated schedule
 report prose still describes burst-last `RLAST` metadata as report-only and
 generated burst/last-beat tracking as outside the capacity/status shell.
-The active frontier is `.55`, aligning that report/static text before larger
-AXI manager feature work.
+Slice `.55` aligns that report/static text: reports now say burst-last
+response-demux generates matched-`RID`-and-`RLAST` last-beat completion
+behavior, and list generated burst-last `RLAST` response-demux completion as
+supported. The active frontier is `.56`, selecting the next public AXI
+read-data/burst contract or readiness owner before larger AXI manager feature
+work.
 The shipped public capacity/status source accepts one
 `(manager-capacity-status NAME ...)` object under
 `(protocol-platform-intent ...)`, `(profile axi4)`, and top-level source

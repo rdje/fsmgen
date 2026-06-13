@@ -111,6 +111,11 @@ per-beat outputs, per-ID queues, authored concrete-ID same-ID ordering,
 queued/blocking policy, profile aliases, full-manager behavior, direct
 backend lowering, and VHDL out of scope.
 
+Follow-up `IAL2-FEATURE-COMPLETENESS-FRONTIER.55` shipped this alignment in
+[docs/AXI_IAL2_MANAGER_RLAST_REPORT_ALIGNMENT_FIRST_SLICE.md](AXI_IAL2_MANAGER_RLAST_REPORT_ALIGNMENT_FIRST_SLICE.md)
+and advanced the frontier to `.56`, the next public AXI read-data/burst
+contract or readiness selector.
+
 ## Why Not Multi-Beat Read-Data Yet
 
 Multi-beat read-data reassembly remains the likely next feature cluster after
