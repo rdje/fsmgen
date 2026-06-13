@@ -1,11 +1,12 @@
 ---
 id: ial2-axi-manager-last-beat-read-data-metadata-first-slice
-title: AXI last-beat read-data metadata is parsed and reported without generated capture
+title: AXI last-beat read-data metadata is parsed and generated capture is now shipped
 answers:
   - "what did IAL2-FEATURE-COMPLETENESS-FRONTIER.58 ship?"
   - "is AXI last-beat read-data metadata supported?"
   - "what is ppif/axi_manager_capacity_status_read_data_last_beat.ppif?"
   - "does AXI last-beat RDATA capture generate behavior yet?"
+  - "what did IAL2-FEATURE-COMPLETENESS-FRONTIER.60 ship?"
   - "what comes after IAL2-FEATURE-COMPLETENESS-FRONTIER.58?"
   - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.59?"
   - "what comes after IAL2-FEATURE-COMPLETENESS-FRONTIER.59?"
@@ -29,8 +30,8 @@ with generated read response-demux metadata using `response_scope burst_last`:
 (interleaving last-beat-by-rid)
 ```
 
-The report mode is `bounded_last_beat_read_data_contract` with
-`generated_behavior: false`. It reports
+The initial `.58` report mode was `bounded_last_beat_read_data_contract` with
+`generated_behavior: false`. It reported
 `completion_validity: generated_read_response_demux_last_beat_completion_pulse`,
 `status_aggregation: none`, `burst_length_source: rlast_only`, no beat
 storage, no valid output, no length output, and residue including
@@ -42,8 +43,11 @@ The checked-in runnable sample is:
 ppif/axi_manager_capacity_status_read_data_last_beat.ppif
 ```
 
-Generated last-beat `RDATA`/`RRESP` capture behavior is not shipped yet.
-Generated `.isf`, `.fsm`, HDL behavior, check JSON semantics, and existing
-single-beat read-data behavior remain unchanged. `.59` audited readiness and
-selected direct generated last-beat capture behavior. The active frontier is
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.60`.
+`.59` audited readiness and selected direct generated last-beat capture
+behavior. `.60` then shipped generated last-beat `RDATA`/`RRESP` capture:
+generated inputs, per-transaction last-beat data/status outputs, guarded
+capture rules, `.fsm` assignments, HDL reachability, generated artifact
+reports, and read-data residue without
+`generated_last_beat_read_data_capture`. Existing single-beat read-data
+behavior remains supported. The active frontier is
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.61`.

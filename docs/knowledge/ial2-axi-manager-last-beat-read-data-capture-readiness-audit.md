@@ -24,8 +24,10 @@ capture rules, and generated-artifact report lists. The generated burst-last
 response-demux behavior already creates the last-beat completion pulses. The
 `.58` metadata contract binds each last-beat transaction to those pulses.
 
-The active frontier is `IAL2-FEATURE-COMPLETENESS-FRONTIER.60`: implement
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.60` used that readiness result to ship
 generated last-beat `RDATA`/`RRESP` capture behavior for the existing
-last-beat sample, while keeping full multi-beat reassembly, per-beat outputs,
-`RRESP` aggregation, `ARLEN`/beat-count validation, per-ID queues, direct
-backend lowering, and VHDL deferred.
+last-beat sample. The active frontier is
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.61`, which selects the next exact AXI
+manager feature-completeness owner while keeping full multi-beat reassembly,
+per-beat outputs, `RRESP` aggregation, `ARLEN`/beat-count validation, per-ID
+queues, direct backend lowering, and VHDL deferred until explicitly selected.

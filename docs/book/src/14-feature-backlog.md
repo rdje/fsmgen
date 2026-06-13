@@ -3674,8 +3674,45 @@ found no new IAL1/IAL0/SystemVerilog prerequisite: the existing read-data
 source-input, transaction-output, capture-rule, and generated-artifact helpers
 are already generic over the normalized read-data transaction list, and the
 `.58` metadata binds each transaction to its generated burst-last completion
-pulse. The active frontier is
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.60`, the generated behavior slice.
+pulse.
+
+Last-beat read-data behavior first slice:
+[AXI_IAL2_MANAGER_LAST_BEAT_READ_DATA_BEHAVIOR_FIRST_SLICE](../../AXI_IAL2_MANAGER_LAST_BEAT_READ_DATA_BEHAVIOR_FIRST_SLICE.md)
+ships generated last-beat `RDATA`/`RRESP` capture behavior. The last-beat
+sample now emits generated data/status inputs, per-transaction last-beat
+data/status outputs, and normal guarded capture rules driven by generated
+burst-last completion pulses:
+
+```text
+(rule axi0_r0_read_data_capture axi0_r0_complete
+  (axi0_r0_last_rdata axi0_rdata)
+  (axi0_r0_last_rresp axi0_rresp))
+```
+
+The schedule report marks the behavior as generated and lists the generated
+artifacts:
+
+```text
+read_data:
+  mode: bounded_last_beat_read_data_contract
+  generated_behavior: true
+  read:
+    generated_inputs:
+      - axi0_rdata
+      - axi0_rresp
+    generated_outputs:
+      - axi0_r0_last_rdata
+      - axi0_r0_last_rresp
+      - axi0_r1_last_rdata
+      - axi0_r1_last_rresp
+    generated_rules:
+      - axi0_r0_read_data_capture
+      - axi0_r1_read_data_capture
+```
+
+The active frontier is `IAL2-FEATURE-COMPLETENESS-FRONTIER.61`, the selector
+for the next AXI manager feature-completeness owner after generated last-beat
+read-data capture.
 
 First implementation subset selection:
 [AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION](../../AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md)
@@ -3822,8 +3859,10 @@ behavior changes. `.57` selects explicit last-beat read-data capture and
 advances the frontier to `.58`, parser/report metadata and static validation.
 `.58` ships that metadata with generated behavior deferred and advances the
 frontier to `.59`, generated last-beat read-data capture readiness. `.59`
-selects direct generated last-beat capture behavior and advances the active
-frontier to `.60`.
+selects direct generated last-beat capture behavior and hands off to `.60`.
+`.60` ships generated last-beat `RDATA`/`RRESP` capture
+behavior and advances the active frontier to `.61`, the next AXI manager
+feature-completeness selector.
 Future behavior owners must keep the reviewable
 `IAL2 -> IAL1 -> IAL0 -> SystemVerilog` path; read-data
 interleaving/reassembly, bursts, per-ID queues, full-manager behavior, and
@@ -6125,8 +6164,11 @@ Completed implementation leaf `IAL2-FEATURE-COMPLETENESS-FRONTIER.58` ships
 parser/report metadata and static validation for explicit last-beat read-data
 capture and hands off to readiness audit `.59`.
 Completed readiness-audit leaf `IAL2-FEATURE-COMPLETENESS-FRONTIER.59`
-selects direct generated last-beat read-data capture behavior and advances the
-active frontier to `.60`.
+selects direct generated last-beat read-data capture behavior and hands off to
+`.60`.
+Completed implementation leaf `IAL2-FEATURE-COMPLETENESS-FRONTIER.60` ships
+generated last-beat `RDATA`/`RRESP` capture behavior and advances the active
+frontier to `.61`.
 Completed implementation leaf
 `ARCHITECTURE-DEBT-FRONTIER.2.1`
 projects direct backend storage/helper declaration-plan entries into

@@ -605,18 +605,40 @@ subtest 'read-data contract generates single-beat capture behavior' => sub {
     like($hdl, qr/axi0_r0_rresp_next\s*=\s*axi0_rresp\s*;/, 'SystemVerilog captures RRESP into r0 status output');
 };
 
-subtest 'last-beat read-data contract reports metadata without generated capture behavior' => sub {
-    my $burst_last = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_read_response_demux_burst_last());
+subtest 'last-beat read-data contract generates capture behavior' => sub {
     my $result = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_read_data_last_beat());
+    my $isf = $result->{generated_ial1}{text};
+    my $fsm = $result->{generated_ial0}{files}{'axi0_capacity_status.fsm'};
 
-    is($result->{generated_ial1}{text}, $burst_last->{generated_ial1}{text}, 'last-beat read-data metadata keeps generated IAL1 unchanged from burst-last response demux');
-    is_deeply($result->{generated_ial0}{files}, $burst_last->{generated_ial0}{files}, 'last-beat read-data metadata keeps generated IAL0 unchanged from burst-last response demux');
-    unlike($result->{generated_ial1}{text}, qr/\(input axi0_rdata\b/, 'last-beat read-data metadata does not generate RDATA input yet');
-    unlike($result->{generated_ial1}{text}, qr/\(output axi0_r0_last_rdata\b/, 'last-beat read-data metadata does not generate last-beat data output yet');
-    unlike($result->{generated_ial1}{text}, qr/read_data_capture/, 'last-beat read-data metadata does not generate capture rules yet');
+    like($isf, qr/\(input axi0_rdata \(width 32\)\)/, 'last-beat read-data declares RDATA as a generated 32-bit input');
+    like($isf, qr/\(input axi0_rresp \(width 2\)\)/, 'last-beat read-data declares RRESP as a generated 2-bit input');
+    like($isf, qr/\(output axi0_r0_last_rdata \(width 32\)\)/, 'last-beat read-data declares r0 last data output with inherited width');
+    like($isf, qr/\(output axi0_r0_last_rresp \(width 2\)\)/, 'last-beat read-data declares r0 last status output with inherited width');
+    like(
+        $isf,
+        qr/\(rule axi0_r0_read_data_capture axi0_r0_complete\s+\(axi0_r0_last_rdata axi0_rdata\)\s+\(axi0_r0_last_rresp axi0_rresp\)\)/,
+        'last-beat read-data emits r0 capture assignments guarded by generated last-beat completion',
+    );
+    like(
+        $isf,
+        qr/\(rule axi0_r1_read_data_capture axi0_r1_complete\s+\(axi0_r1_last_rdata axi0_rdata\)\s+\(axi0_r1_last_rresp axi0_rresp\)\)/,
+        'last-beat read-data emits r1 capture assignments guarded by generated last-beat completion',
+    );
+    unlike($isf, qr/\(rule axi0_r0_read_data_capture\b[\s\S]*\(pulse axi0_r0_last_rdata\)/, 'last-beat read-data capture does not pulse payload outputs');
+    like($fsm, qr/\(-axi0_r0_read_data_capture\s+<axi0_r0_complete\s+\(<- \(axi0_r0_last_rdata> axi0_rdata\)\)\s+\(<- \(axi0_r0_last_rresp> axi0_rresp\)\)/, 'scheduled .fsm carries r0 last-beat capture assignments');
+    like($fsm, qr/\(-axi0_r1_read_data_capture\s+<axi0_r1_complete\s+\(<- \(axi0_r1_last_rdata> axi0_rdata\)\)\s+\(<- \(axi0_r1_last_rresp> axi0_rresp\)\)/, 'scheduled .fsm carries r1 last-beat capture assignments');
 
     assert_read_response_demux_burst_last_report($result->{report}{response_demux}, 'generator last-beat read-data report');
     assert_read_data_last_beat_report($result->{report}{read_data}, 'generator last-beat read-data report');
+
+    my $hdl = hdl_for('axi0_capacity_status', $fsm);
+    like($hdl, qr/\binput\s+(?:wire\s+)?\[31:0\]\s+axi0_rdata\b/, 'SystemVerilog declares last-beat RDATA input');
+    like($hdl, qr/\binput\s+(?:wire\s+)?\[1:0\]\s+axi0_rresp\b/, 'SystemVerilog declares last-beat RRESP input');
+    like($hdl, qr/\boutput\s+reg\s+\[31:0\]\s+axi0_r0_last_rdata\b/, 'SystemVerilog declares r0 last-beat data output');
+    like($hdl, qr/\boutput\s+reg\s+\[1:0\]\s+axi0_r0_last_rresp\b/, 'SystemVerilog declares r0 last-beat status output');
+    like($hdl, qr/assign\s+axi0_r0_read_data_capture_en\s*=\s*axi0_r0_complete\s*;/, 'SystemVerilog drives r0 last-beat capture from generated completion');
+    like($hdl, qr/axi0_r0_last_rdata_next\s*=\s*axi0_rdata\s*;/, 'SystemVerilog captures last-beat RDATA into r0 data output');
+    like($hdl, qr/axi0_r0_last_rresp_next\s*=\s*axi0_rresp\s*;/, 'SystemVerilog captures last-beat RRESP into r0 status output');
 };
 
 subtest 'mixed read/write response-demux keeps write behavior and adds read behavior' => sub {
@@ -1244,8 +1266,8 @@ sub assert_rlast_report_prose_alignment {
     ok($id_residue, "$owner reports AXI ID/order unsupported residue");
     like(
         $id_residue->{detail},
-        qr/generated burst-last RLAST response-demux completion, and structural last-beat read-data metadata are supported/,
-        "$owner reports generated burst-last RLAST completion and structural last-beat read-data metadata as supported",
+        qr/generated burst-last RLAST response-demux completion, structural last-beat read-data metadata, and generated last-beat read-data RDATA\/RRESP capture are supported/,
+        "$owner reports generated burst-last RLAST completion and generated last-beat read-data capture as supported",
     );
     my $stale_metadata = join('', 'report-only burst-last ', 'RLAST response-demux metadata');
     my $stale_tracking = join('', 'generated burst/last-beat tracking ', 'remain outside');
@@ -1323,7 +1345,7 @@ sub assert_read_data_report {
 sub assert_read_data_last_beat_report {
     my ($read_data, $owner) = @_;
     is($read_data->{mode}, 'bounded_last_beat_read_data_contract', "$owner marks bounded last-beat read-data contract mode");
-    ok(!$read_data->{generated_behavior}, "$owner marks generated behavior false");
+    ok($read_data->{generated_behavior}, "$owner marks generated behavior true");
     my $read = $read_data->{read};
     is($read->{capture_scope}, 'last_beat', "$owner reports last-beat capture scope");
     is($read->{completion_source}, 'response_demux', "$owner reports response-demux completion source");
@@ -1348,12 +1370,20 @@ sub assert_read_data_last_beat_report {
     is_deeply([map { $_->{status_output} } @{$read->{transactions}}], [qw(axi0_r0_last_rresp axi0_r1_last_rresp)], "$owner reports last-beat status outputs");
     is_deeply([map { $_->{data_width} } @{$read->{transactions}}], [32, 32], "$owner reports inherited last-beat data widths");
     is_deeply([map { $_->{status_width} } @{$read->{transactions}}], [2, 2], "$owner reports inherited last-beat status widths");
-    ok(!exists $read->{generated_inputs}, "$owner omits generated inputs before behavior ships");
-    ok(!exists $read->{generated_outputs}, "$owner omits generated outputs before behavior ships");
-    ok(!exists $read->{generated_rules}, "$owner omits generated rules before behavior ships");
+    is_deeply($read->{generated_inputs}, [qw(axi0_rdata axi0_rresp)], "$owner reports generated RDATA/RRESP inputs");
+    is_deeply(
+        $read->{generated_outputs},
+        [qw(axi0_r0_last_rdata axi0_r0_last_rresp axi0_r1_last_rdata axi0_r1_last_rresp)],
+        "$owner reports generated last-beat data/status outputs",
+    );
+    is_deeply(
+        $read->{generated_rules},
+        [qw(axi0_r0_read_data_capture axi0_r1_read_data_capture)],
+        "$owner reports generated last-beat capture rules",
+    );
     is_deeply(
         $read_data->{residue},
-        [qw(generated_last_beat_read_data_capture multi_beat_read_data_reassembly per_beat_outputs rresp_aggregation arlen_or_beat_count_validation)],
+        [qw(multi_beat_read_data_reassembly per_beat_outputs rresp_aggregation arlen_or_beat_count_validation)],
         "$owner reports last-beat read-data residue",
     );
 }

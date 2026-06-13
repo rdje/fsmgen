@@ -1058,10 +1058,14 @@ behavior, check JSON semantics, and existing single-beat read-data behavior
 unchanged. Readiness audit `.59` found no new IAL1/IAL0/SystemVerilog
 prerequisite because the existing read-data input/output/capture-rule helpers
 can use the generated burst-last completion pulses from response demux. The
-active frontier is `.60`, generated last-beat `RDATA`/`RRESP` capture
-behavior. Full multi-beat read-data reassembly, per-beat outputs, `RRESP`
-aggregation, `ARLEN`/beat-count validation, per-ID queues, direct backend
-lowering, and VHDL remain deferred.
+`.60` slice now ships that generated behavior: generated `RDATA`/`RRESP`
+inputs, per-transaction last-beat data/status outputs, normal guarded capture
+rules driven by generated burst-last completion pulses, generated `.fsm`
+assignments, HDL reachability, read_data generated artifact report lists, and
+residue movement. The active frontier is `.61`, the next AXI manager
+feature-completeness selector. Full multi-beat read-data reassembly, per-beat
+outputs, `RRESP` aggregation, `ARLEN`/beat-count validation, per-ID queues,
+direct backend lowering, and VHDL remain deferred.
 The shipped public capacity/status source accepts one
 `(manager-capacity-status NAME ...)` object under
 `(protocol-platform-intent ...)`, `(profile axi4)`, and top-level source

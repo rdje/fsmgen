@@ -40,7 +40,9 @@ direct backend lowering, and VHDL remain residue.
 
 `.58` shipped parser/report metadata and static validation for this contract,
 including `ppif/axi_manager_capacity_status_read_data_last_beat.ppif` and
-report mode `bounded_last_beat_read_data_contract` with generated behavior
-false. Generated last-beat `RDATA`/`RRESP` capture behavior requires the
-`.59` readiness audit before implementation; that audit selected `.60`,
-direct generated last-beat capture behavior.
+report mode `bounded_last_beat_read_data_contract`. `.59` audited readiness
+and selected direct generated last-beat capture behavior. `.60` shipped that
+generated behavior: `RDATA`/`RRESP` inputs, per-transaction last-beat
+data/status outputs, guarded capture rules, generated artifact reports, HDL
+reachability, and read-data residue without
+`generated_last_beat_read_data_capture`.

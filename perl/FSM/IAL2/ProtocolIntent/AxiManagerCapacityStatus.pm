@@ -942,18 +942,17 @@ sub _normalize_read_data(%args) {
         confess "AXI manager capacity/status IAL2 contract read_data.read capture_scope last-beat requires response_demux.read.response_scope burst_last in this slice\n";
     }
 
-    my $generated_behavior = $read->{capture_scope} eq 'single_beat' ? 1 : 0;
-    my $mode = $generated_behavior
+    my $last_beat_capture = $read->{capture_scope} eq 'last_beat';
+    my $mode = !$last_beat_capture
         ? 'bounded_single_beat_read_data_contract'
         : 'bounded_last_beat_read_data_contract';
-    my $residue = $generated_behavior
+    my $residue = !$last_beat_capture
         ? [
             'rlast_completion',
             'bursts',
             'multi_beat_read_data_reassembly',
         ]
         : [
-            'generated_last_beat_read_data_capture',
             'multi_beat_read_data_reassembly',
             'per_beat_outputs',
             'rresp_aggregation',
@@ -962,7 +961,7 @@ sub _normalize_read_data(%args) {
 
     return {
         mode               => $mode,
-        generated_behavior => $generated_behavior,
+        generated_behavior => 1,
         read               => $read,
         residue            => $residue,
     };
@@ -2323,10 +2322,10 @@ sub _build_report(%args) {
             'response_demux.read response_scope single_beat generates bounded single-beat read RID demux behavior for explicit opt-in contracts',
             'response_demux.read response_scope burst_last requires one-bit last_signal metadata and generates matched-RID-and-RLAST last-beat completion behavior for explicit opt-in contracts',
             'response_demux transaction_completion must be generated, making selected transaction completion names generated demux pulse outputs only under explicit opt-in contracts',
-            'read_data supports explicit generated single-beat capture metadata with response_scope single_beat and explicit report-only last-beat capture metadata with response_scope burst_last',
+            'read_data supports explicit generated single-beat capture behavior with response_scope single_beat and explicit generated last-beat capture behavior with response_scope burst_last',
             'read_data.read data width must be positive and status width must be 2',
             'read_data.read transaction outputs must exactly cover read response_demux auto transactions',
-            'read_data generates bounded single-beat RDATA/RRESP capture inputs, outputs, and guarded assignments for explicit single-beat opt-in contracts; last-beat read-data capture is parser/report metadata only in this slice',
+            'read_data generates bounded single-beat and last-beat RDATA/RRESP capture inputs, outputs, and guarded assignments for explicit opt-in contracts',
         ],
         unsupported_residue => [
             {
@@ -2335,7 +2334,7 @@ sub _build_report(%args) {
             },
             {
                 id     => 'axi_id_ordering_and_response_matching',
-                detail => 'Concrete transaction ID request/response assertions, explicit bounded auto-ID request-ID drive plus completion-event release, generated auto-ID same-ID avoidance, generated write BID response demux, generated single-beat read RID response demux, generated single-beat read-data RDATA/RRESP capture, generated burst-last RLAST response-demux completion, and structural last-beat read-data metadata are supported; dynamic user-ID arbitration while issuing multiple same-family requests in one cycle, per-ID same-ID response queues, different-ID interleaving, generated last-beat read-data capture, full read-data interleaving/reassembly, broader burst payload assembly, RRESP aggregation, ARLEN or beat-count validation, and per-beat outputs remain outside this capacity/status shell.',
+                detail => 'Concrete transaction ID request/response assertions, explicit bounded auto-ID request-ID drive plus completion-event release, generated auto-ID same-ID avoidance, generated write BID response demux, generated single-beat read RID response demux, generated single-beat read-data RDATA/RRESP capture, generated burst-last RLAST response-demux completion, structural last-beat read-data metadata, and generated last-beat read-data RDATA/RRESP capture are supported; dynamic user-ID arbitration while issuing multiple same-family requests in one cycle, per-ID same-ID response queues, different-ID interleaving, full read-data interleaving/reassembly, broader burst payload assembly, RRESP aggregation, ARLEN or beat-count validation, and per-beat outputs remain outside this capacity/status shell.',
             },
             {
                 id     => 'profile_aliases_and_full_manager_behavior',
