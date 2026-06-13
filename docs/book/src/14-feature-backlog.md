@@ -3665,9 +3665,17 @@ The slice requires generated read response-demux metadata with
 `response_scope burst_last`, support-accounts the new sample for strict check
 JSON and normalized semantic JSON, and keeps generated `.isf`, `.fsm`, HDL
 behavior, check JSON semantics, and existing single-beat read-data behavior
-unchanged. The active frontier is
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.59`, the readiness audit for generated
-last-beat `RDATA`/`RRESP` capture behavior.
+unchanged.
+
+Last-beat read-data capture readiness audit:
+[AXI_IAL2_MANAGER_LAST_BEAT_READ_DATA_CAPTURE_READINESS_AUDIT](../../AXI_IAL2_MANAGER_LAST_BEAT_READ_DATA_CAPTURE_READINESS_AUDIT.md)
+selects direct generated last-beat `RDATA`/`RRESP` capture behavior. The audit
+found no new IAL1/IAL0/SystemVerilog prerequisite: the existing read-data
+source-input, transaction-output, capture-rule, and generated-artifact helpers
+are already generic over the normalized read-data transaction list, and the
+`.58` metadata binds each transaction to its generated burst-last completion
+pulse. The active frontier is
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.60`, the generated behavior slice.
 
 First implementation subset selection:
 [AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION](../../AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md)
@@ -3813,7 +3821,9 @@ burst read-data contract selection, before parser/report metadata or generated
 behavior changes. `.57` selects explicit last-beat read-data capture and
 advances the frontier to `.58`, parser/report metadata and static validation.
 `.58` ships that metadata with generated behavior deferred and advances the
-active frontier to `.59`, generated last-beat read-data capture readiness.
+frontier to `.59`, generated last-beat read-data capture readiness. `.59`
+selects direct generated last-beat capture behavior and advances the active
+frontier to `.60`.
 Future behavior owners must keep the reviewable
 `IAL2 -> IAL1 -> IAL0 -> SystemVerilog` path; read-data
 interleaving/reassembly, bursts, per-ID queues, full-manager behavior, and
@@ -6113,7 +6123,10 @@ explicit last-beat read-data parser/report metadata and advances the active
 frontier to `.58`.
 Completed implementation leaf `IAL2-FEATURE-COMPLETENESS-FRONTIER.58` ships
 parser/report metadata and static validation for explicit last-beat read-data
-capture and advances the active frontier to `.59`.
+capture and hands off to readiness audit `.59`.
+Completed readiness-audit leaf `IAL2-FEATURE-COMPLETENESS-FRONTIER.59`
+selects direct generated last-beat read-data capture behavior and advances the
+active frontier to `.60`.
 Completed implementation leaf
 `ARCHITECTURE-DEBT-FRONTIER.2.1`
 projects direct backend storage/helper declaration-plan entries into

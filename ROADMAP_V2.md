@@ -1055,10 +1055,13 @@ burst-last read response-demux metadata, reports
 `bounded_last_beat_read_data_contract` with `generated_behavior: false`, adds
 a strict support-accounted sample, and keeps generated `.isf`, `.fsm`, HDL
 behavior, check JSON semantics, and existing single-beat read-data behavior
-unchanged. The active frontier is `.59`, the readiness audit for generated
-last-beat `RDATA`/`RRESP` capture behavior. Full multi-beat read-data
-reassembly, per-beat outputs, `RRESP` aggregation, `ARLEN`/beat-count
-validation, per-ID queues, direct backend lowering, and VHDL remain deferred.
+unchanged. Readiness audit `.59` found no new IAL1/IAL0/SystemVerilog
+prerequisite because the existing read-data input/output/capture-rule helpers
+can use the generated burst-last completion pulses from response demux. The
+active frontier is `.60`, generated last-beat `RDATA`/`RRESP` capture
+behavior. Full multi-beat read-data reassembly, per-beat outputs, `RRESP`
+aggregation, `ARLEN`/beat-count validation, per-ID queues, direct backend
+lowering, and VHDL remain deferred.
 The shipped public capacity/status source accepts one
 `(manager-capacity-status NAME ...)` object under
 `(protocol-platform-intent ...)`, `(profile axi4)`, and top-level source

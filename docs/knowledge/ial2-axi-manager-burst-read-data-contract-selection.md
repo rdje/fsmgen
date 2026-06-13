@@ -42,4 +42,5 @@ direct backend lowering, and VHDL remain residue.
 including `ppif/axi_manager_capacity_status_read_data_last_beat.ppif` and
 report mode `bounded_last_beat_read_data_contract` with generated behavior
 false. Generated last-beat `RDATA`/`RRESP` capture behavior requires the
-active `.59` readiness audit before implementation.
+`.59` readiness audit before implementation; that audit selected `.60`,
+direct generated last-beat capture behavior.
