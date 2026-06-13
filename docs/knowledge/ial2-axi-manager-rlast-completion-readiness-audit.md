@@ -24,6 +24,10 @@ beat-valid versus transaction-complete pulse semantics, data/status capture
 granularity, diagnostics, generated artifact boundaries, or report/residue
 movement.
 
+Completed `.50` selected additive read `response-demux` syntax for
+`response-scope burst-last` plus one-bit `last-signal`, then advanced the
+frontier to `.51`, parser/report metadata and static validation.
+
 No new IAL1/IAL0/SystemVerilog substrate prerequisite is evident for a later
 bounded implementation once the contract exists. Existing width-bearing ports,
 scalar storage, guarded rule assignments, and one-cycle pulses can likely

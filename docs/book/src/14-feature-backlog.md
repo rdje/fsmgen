@@ -3467,6 +3467,29 @@ transaction-complete semantics, data/status capture granularity, diagnostics,
 generated artifact boundaries, and report/residue movement before behavior can
 ship.
 
+`RLAST` completion contract selection:
+[AXI_IAL2_MANAGER_RLAST_COMPLETION_CONTRACT_SELECTION](../../AXI_IAL2_MANAGER_RLAST_COMPLETION_CONTRACT_SELECTION.md)
+selects an additive read `response-demux` scope:
+
+```text
+(response-demux
+  (read
+    (response-event axi0_read_complete)
+    (response-scope burst-last)
+    (last-signal axi0_rlast (width 1))
+    (transaction-completion generated)))
+```
+
+The shipped `single-beat` scope stays unchanged. In the selected
+`burst-last` contract, `response-event` remains the raw accepted read response
+beat, `last-signal` is a generated one-bit `RLAST` input, and the existing
+transaction `(completion NAME)` output is the generated last-beat completion
+pulse. The contract publishes no per-transaction beat-valid output, selects no
+burst length or `ARLEN` ownership, and does not extend `read-data`; the current
+single-beat `read-data` contract must be rejected when paired with
+`response-scope burst-last`. The next implementation owner is parser/report
+metadata and static validation only.
+
 First implementation subset selection:
 [AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION](../../AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md)
 selects a source-anchored AXI Valid-Ready channel contract/monitor as the
@@ -3601,8 +3624,12 @@ capture, with no new IAL1/IAL0/SystemVerilog prerequisite. `.47` ships that
 generated capture behavior, `.48` selects AXI burst/`RLAST` completion
 readiness, and `.49` selects public burst/`RLAST` completion contract
 selection before parser/report metadata or generated behavior changes. The
-active frontier is `IAL2-FEATURE-COMPLETENESS-FRONTIER.50`. Future behavior
-owners must keep the reviewable `IAL2 -> IAL1 -> IAL0 -> SystemVerilog` path;
+`.50` selector chooses `response-scope burst-last` plus one-bit `last-signal`
+as an additive read response-demux contract. The active frontier is
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.51`, parser/report metadata and static
+validation for that contract with generated behavior unchanged. Future
+behavior owners must keep the reviewable `IAL2 -> IAL1 -> IAL0 ->
+SystemVerilog` path;
 read-data interleaving/reassembly, bursts, per-ID queues, full-manager
 behavior, and VHDL remain out of scope unless a later exact owner selects
 them.
@@ -5873,6 +5900,10 @@ Completed readiness audit `IAL2-FEATURE-COMPLETENESS-FRONTIER.49` selects
 public AXI burst/`RLAST` completion contract selection before parser/report
 metadata or generated behavior changes and advances the active frontier to
 `.50`.
+Completed selector leaf `IAL2-FEATURE-COMPLETENESS-FRONTIER.50` selects
+additive read `response-demux` syntax for `response-scope burst-last` with
+one-bit `last-signal` and advances the active frontier to `.51`, parser/report
+metadata and static validation.
 Completed implementation leaf
 `ARCHITECTURE-DEBT-FRONTIER.2.1`
 projects direct backend storage/helper declaration-plan entries into

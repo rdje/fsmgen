@@ -1015,6 +1015,15 @@ ownership, burst length or beat-count metadata, beat-valid versus
 transaction-complete semantics, data/status capture granularity, diagnostics,
 report/residue movement, and generated artifact boundaries before
 parser/report metadata or HDL behavior changes.
+Selector `.50` chose an additive read `response-demux` contract:
+`response-scope burst-last` plus one-bit `last-signal`. It keeps transaction
+completion as the generated last-beat pulse, publishes no per-transaction
+beat-valid output, uses `RLAST` rather than `ARLEN` or beat-count metadata for
+this first boundary, rejects the current single-beat `read-data` contract when
+paired with burst-last response demux, and leaves multi-beat read-data
+reassembly deferred. The active frontier is `.51`, parser/report metadata and
+static validation for that contract with generated `.isf`, `.fsm`, and HDL
+behavior unchanged.
 The shipped public capacity/status source accepts one
 `(manager-capacity-status NAME ...)` object under
 `(protocol-platform-intent ...)`, `(profile axi4)`, and top-level source
@@ -1147,6 +1156,9 @@ burst/`RLAST` completion readiness, as the next exact prerequisite before
 multi-beat read-data reassembly or broader read-side manager behavior.
 `.49` selected `.50`, public burst/`RLAST` completion contract selection,
 before parser/report metadata or generated behavior changes.
+`.50` selected `.51`, parser/report metadata and static validation for the
+additive `response-scope burst-last` plus one-bit `last-signal` read
+response-demux contract, with generated behavior deferred.
 Full-manager
 behavior, profile aliases, queued/blocking policy, direct backend lowering,
 and VHDL remain residue.

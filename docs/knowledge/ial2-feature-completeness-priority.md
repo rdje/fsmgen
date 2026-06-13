@@ -17,13 +17,10 @@ reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER|IAL2 feature completeness|IA
 The current feature-completeness priority is IAL2 on the
 SystemVerilog-backed path.
 
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.50` owns the next PNT frontier: select the
-public AXI burst/`RLAST` completion contract after generated single-beat
-read-data capture. The selector must decide exact source syntax, `RLAST`
-signal ownership, burst length or beat-count metadata, beat-valid versus
-transaction-complete semantics, data/status capture granularity, diagnostics,
-generated artifact boundaries, and report/residue movement before behavior
-changes.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.51` owns the next PNT frontier:
+implement parser/report metadata and static validation for the selected
+bounded AXI `response-scope burst-last` plus one-bit `last-signal` contract,
+with generated `.isf`, `.fsm`, and HDL behavior unchanged.
 
 Completed `.47` shipped generated single-beat `RDATA`/`RRESP` capture
 behavior. Completed `.48` selected `.49` because the current public read-data
@@ -32,6 +29,11 @@ selected last-beat/completion contract before implementation.
 Completed `.49` selected `.50` because no new IAL1/IAL0/SystemVerilog
 substrate prerequisite is evident, but direct parser/report metadata or HDL
 behavior would be premature without the public burst/`RLAST` contract.
+Completed `.50` selected additive read `response-demux` syntax for
+`response-scope burst-last`; it keeps transaction completion as the generated
+last-beat pulse, publishes no per-transaction beat-valid output, uses `RLAST`
+rather than `ARLEN`/beat-count metadata for this first boundary, and leaves
+read-data reassembly deferred.
 
 Selected IAL2 work may include required IAL1 or IAL0/SV support, but only when
 those prerequisites are explicit, task-tree owned, documented, and
