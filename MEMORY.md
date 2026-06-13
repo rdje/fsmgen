@@ -10,9 +10,9 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `HEAD after commit` — `IAL2-FEATURE-COMPLETENESS-FRONTIER.47: ship AXI read data capture`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.48` pending; next action is to select the next SV-backed IAL2 feature-completeness slice after generated AXI read-data capture behavior.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.47`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.46`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.45`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.44`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.43`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.42`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.41`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.40`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.39`. Older completed slices are in the task tree and git history.
+- latest_commit: `HEAD after commit` — `IAL2-FEATURE-COMPLETENESS-FRONTIER.48: select AXI RLAST readiness`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.49` pending; next action is to audit AXI burst/RLAST completion readiness after generated single-beat read-data capture.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.48`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.47`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.46`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.45`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.44`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.43`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.42`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.41`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.40`. Older completed slices are in the task tree and git history.
 - in_flight_uncommitted: none; unrelated untracked `fx/` intentionally left alone.
 - blockers: none.
 

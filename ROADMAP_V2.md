@@ -1004,8 +1004,9 @@ ships that behavior: generated `RDATA`/`RRESP` inputs, per-transaction
 data/status outputs, normal guarded capture assignments under generated read
 completion pulses, generated artifact report lists, and
 `read_data.generated_behavior: true` with generated-capture residue removed.
-The current frontier is `IAL2-FEATURE-COMPLETENESS-FRONTIER.48`, selecting
-the next SV-backed IAL2 feature-completeness slice.
+Selector `.48` chose `IAL2-FEATURE-COMPLETENESS-FRONTIER.49`, AXI
+burst/`RLAST` completion readiness, as the next exact prerequisite before
+multi-beat read-data reassembly or broader read-side manager behavior.
 The shipped public capacity/status source accepts one
 `(manager-capacity-status NAME ...)` object under
 `(protocol-platform-intent ...)`, `(profile axi4)`, and top-level source
@@ -1133,7 +1134,10 @@ parser/report metadata or generated behavior changes. `.44` selected
 single-beat `read-data` syntax. `.45` shipped that metadata, `.46`
 selected direct generated single-beat `RDATA`/`RRESP` capture behavior, and
 `.47` shipped the generated capture implementation with no new
-IAL1/IAL0/SystemVerilog prerequisite. Full-manager
+IAL1/IAL0/SystemVerilog prerequisite. `.48` selected `.49`, AXI
+burst/`RLAST` completion readiness, as the next exact prerequisite before
+multi-beat read-data reassembly or broader read-side manager behavior.
+Full-manager
 behavior, profile aliases, queued/blocking policy, direct backend lowering,
 and VHDL remain residue.
 

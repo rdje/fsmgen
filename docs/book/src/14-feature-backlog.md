@@ -5849,6 +5849,10 @@ frontier to `.47`.
 Completed implementation leaf `IAL2-FEATURE-COMPLETENESS-FRONTIER.47` ships
 generated single-beat `RDATA`/`RRESP` capture behavior and advances the active
 frontier to `.48`.
+Completed selector leaf `IAL2-FEATURE-COMPLETENESS-FRONTIER.48` selects AXI
+burst/`RLAST` completion readiness as the next exact prerequisite after
+generated single-beat read-data capture and advances the active frontier to
+`.49`.
 Completed implementation leaf
 `ARCHITECTURE-DEBT-FRONTIER.2.1`
 projects direct backend storage/helper declaration-plan entries into

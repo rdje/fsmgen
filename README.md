@@ -246,8 +246,9 @@ read demux completion pulse. Slice `.47` now ships that behavior: explicit
 per-transaction data/status outputs, one normal guarded capture rule per read
 transaction, schedule JSON generated artifact lists, and
 `read_data.generated_behavior: true` with generated-capture residue removed.
-The current frontier is `IAL2-FEATURE-COMPLETENESS-FRONTIER.48`, selecting
-the next SV-backed IAL2 feature-completeness slice.
+Selector `.48` chose `IAL2-FEATURE-COMPLETENESS-FRONTIER.49`, AXI
+burst/`RLAST` completion readiness, as the next exact prerequisite before
+multi-beat read-data reassembly or broader read-side manager behavior.
 Full-manager behavior, profile aliases, queued/blocking policy, direct
 backend lowering, and VHDL remain residue. VHDL remains behind SV-backed IAL
 feature completeness.

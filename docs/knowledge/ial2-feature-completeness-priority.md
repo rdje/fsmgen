@@ -7,7 +7,7 @@ answers:
   - "what task owns IAL2 feature completeness?"
   - "what is the next IAL2 PNT frontier?"
   - "can IAL2 feature completion require new IAL1 features?"
-date: 2026-06-12
+date: 2026-06-13
 status: current
 tags: [ial2, ial1, ial0, systemverilog, roadmap, task-tree, feature-completeness]
 evidence: docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md; docs/tasks/R11-DIRECT-STRUCTURAL-VHDL-REROUTING.md
@@ -17,23 +17,16 @@ reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER|IAL2 feature completeness|IA
 The current feature-completeness priority is IAL2 on the
 SystemVerilog-backed path.
 
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.22` owns the next PNT frontier: implement
-parser/report metadata and static validation for the selected explicit
-`auto-id-lifecycle` bounded-pool contract.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.49` owns the next PNT frontier: audit AXI
+burst/`RLAST` completion readiness after generated single-beat read-data
+capture. The audit must decide whether the next owner is public contract
+selection, parser/report metadata, generated burst/`RLAST` behavior, or a
+smaller IAL1/IAL0/SystemVerilog prerequisite before behavior changes.
 
-Completed `.18` shipped generated ID inputs, `.fsm` `+assert` carriers,
-verification-only SystemVerilog assertions, `id_response_rule_engine` report
-metadata, and duplicate concrete-event diagnostics while leaving auto-ID
-allocation, ID release, response demux, ordering, burst, queued-policy, alias,
-full-manager, and VHDL behavior as residue.
-
-Completed `.19` selected the auto-ID lifecycle audit before any allocation
-behavior change. Completed `.20` concluded that the substrate can carry a
-bounded scalar request-ID lifecycle, but width and existing `(id auto)` syntax
-alone are not a reviewable allocation policy. Completed `.21` selected an
-explicit optional `(auto-id-lifecycle (write (pool ...)) (read (pool ...)))`
-contract. `.22` must parse/report that contract with generated `.isf`, `.fsm`,
-and HDL behavior unchanged.
+Completed `.47` shipped generated single-beat `RDATA`/`RRESP` capture
+behavior. Completed `.48` selected `.49` because the current public read-data
+surface is still single-beat and multi-beat read-data reassembly needs a
+selected last-beat/completion contract before implementation.
 
 Selected IAL2 work may include required IAL1 or IAL0/SV support, but only when
 those prerequisites are explicit, task-tree owned, documented, and
