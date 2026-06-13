@@ -1,8 +1,9 @@
 ---
 id: ial2-feature-completeness-next-slice
-title: IAL2 feature completeness next slice is read-data capture readiness
+title: IAL2 feature completeness next slice is read-data capture behavior
 answers:
   - "what is the next IAL2 feature completeness slice?"
+  - "what comes after IAL2-FEATURE-COMPLETENESS-FRONTIER.46?"
   - "what comes after IAL2-FEATURE-COMPLETENESS-FRONTIER.45?"
   - "what comes after IAL2-FEATURE-COMPLETENESS-FRONTIER.44?"
   - "what comes after IAL2-FEATURE-COMPLETENESS-FRONTIER.43?"
@@ -22,9 +23,9 @@ answers:
   - "what must happen before the next AXI manager behavior?"
 date: 2026-06-12
 status: current
-tags: [ial2, axi, manager, read-data, rdata, rresp, capture, bursts, rlast, interleaving, per-id, feature-completeness, task-tree]
-evidence: docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; docs/AXI_IAL2_MANAGER_READ_DATA_METADATA_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_READ_DATA_CONTRACT_SELECTION.md; docs/AXI_IAL2_MANAGER_READ_DATA_BURST_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_POST_READ_DEMUX_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_READ_RESPONSE_DEMUX_BEHAVIOR_FIRST_SLICE.md; docs/book/src/14-feature-backlog.md; README.md; ROADMAP_V2.md
-reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.46|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.45|AXI_IAL2_MANAGER_READ_DATA_METADATA_FIRST_SLICE|read_data|generated_read_data_capture|read-data' docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md docs/AXI_IAL2_MANAGER_READ_DATA_METADATA_FIRST_SLICE.md docs/book/src/14-feature-backlog.md README.md ROADMAP_V2.md
+tags: [ial2, axi, manager, read-data, rdata, rresp, capture, behavior, bursts, rlast, interleaving, per-id, feature-completeness, task-tree]
+evidence: docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; docs/AXI_IAL2_MANAGER_READ_DATA_CAPTURE_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_READ_DATA_METADATA_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_READ_DATA_CONTRACT_SELECTION.md; docs/AXI_IAL2_MANAGER_READ_DATA_BURST_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_POST_READ_DEMUX_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_READ_RESPONSE_DEMUX_BEHAVIOR_FIRST_SLICE.md; docs/book/src/14-feature-backlog.md; README.md; ROADMAP_V2.md
+reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.47|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.46|AXI_IAL2_MANAGER_READ_DATA_CAPTURE_READINESS_AUDIT|read_data|generated_read_data_capture|read-data capture' docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md docs/AXI_IAL2_MANAGER_READ_DATA_CAPTURE_READINESS_AUDIT.md docs/book/src/14-feature-backlog.md README.md ROADMAP_V2.md
 ---
 
 After the shipped Valid-Ready, bundle, capacity/status, ID-family metadata,
@@ -36,9 +37,9 @@ report-residue alignment, generated auto-ID same-ID avoidance, read
 response-demux contract selection, read response-demux parser/report metadata,
 read response-demux behavior readiness audit, bounded generated single-beat
 read `RID` response-demux behavior, post-read-demux next-slice selection, and
-read-data/burst readiness audit, read-data contract selection, and read-data
-parser/report metadata first slice, the next active leaf is
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.46`.
+read-data/burst readiness audit, read-data contract selection, read-data
+parser/report metadata first slice, and read-data capture readiness audit, the
+next active leaf is `IAL2-FEATURE-COMPLETENESS-FRONTIER.47`.
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.32` aligned the emitted report for
 explicit generated write response demux. At that point,
@@ -131,13 +132,22 @@ parser accepts one `read-data` read arm, the generator reports structural
 and focused tests prove generated `.isf`, `.fsm`, and HDL behavior remains
 unchanged from the read response-demux sample.
 
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.46` audited generated single-beat
+read-data capture behavior readiness after that metadata slice. It concluded
+that generated `RDATA`/`RRESP` capture can be implemented directly with no new
+IAL1, IAL0, or SystemVerilog prerequisite. Existing width-bearing IAL1
+inputs/outputs and normal guarded rule assignments can hold captured
+payload/status values under the generated read response-demux completion
+pulse.
+
 The full AXI manager is not implemented yet. Bounded single-beat read `RID`
-demux and structural read-data parser/report metadata are shipped, but
-generated read-data payload/status behavior, per-ID same-ID response queues,
+demux and structural read-data parser/report metadata are shipped, and `.47`
+is the selected generated read-data payload/status behavior owner. Per-ID
+same-ID response queues,
 authored concrete-ID same-ID ordering, read-data interleaving/reassembly,
 bursts, queued/blocking policy, profile aliases, full-manager syntax, and VHDL
-remain future exact-owner work. The `.46` audit must decide whether generated
-single-beat `RDATA`/`RRESP` capture can be implemented directly or needs a
-smaller IAL1/IAL0/SystemVerilog prerequisite first.
+remain future exact-owner work. The `.47` behavior leaf must keep generated
+capture single-beat/non-burst and preserve the reviewable
+`IAL2 -> IAL1 -> IAL0 -> SystemVerilog` lowering path.
 VHDL stays deferred until the SystemVerilog-backed IAL0/IAL1/IAL2 path is
 feature-complete enough to reopen backend parity.

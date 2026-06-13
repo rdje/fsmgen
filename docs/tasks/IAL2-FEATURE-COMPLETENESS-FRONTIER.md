@@ -48,7 +48,7 @@ path before reopening VHDL backend or VHDL rerouting work.
 - ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER`
   Status: `active`
   Goal: `Make IAL2 feature-complete on the SystemVerilog-backed path before VHDL work resumes.`
-  Children: `IAL2-FEATURE-COMPLETENESS-FRONTIER.1, IAL2-FEATURE-COMPLETENESS-FRONTIER.2, IAL2-FEATURE-COMPLETENESS-FRONTIER.3, IAL2-FEATURE-COMPLETENESS-FRONTIER.4, IAL2-FEATURE-COMPLETENESS-FRONTIER.5, IAL2-FEATURE-COMPLETENESS-FRONTIER.6, IAL2-FEATURE-COMPLETENESS-FRONTIER.7, IAL2-FEATURE-COMPLETENESS-FRONTIER.8, IAL2-FEATURE-COMPLETENESS-FRONTIER.9, IAL2-FEATURE-COMPLETENESS-FRONTIER.10, IAL2-FEATURE-COMPLETENESS-FRONTIER.11, IAL2-FEATURE-COMPLETENESS-FRONTIER.12, IAL2-FEATURE-COMPLETENESS-FRONTIER.13, IAL2-FEATURE-COMPLETENESS-FRONTIER.14, IAL2-FEATURE-COMPLETENESS-FRONTIER.15, IAL2-FEATURE-COMPLETENESS-FRONTIER.16, IAL2-FEATURE-COMPLETENESS-FRONTIER.17, IAL2-FEATURE-COMPLETENESS-FRONTIER.18, IAL2-FEATURE-COMPLETENESS-FRONTIER.19, IAL2-FEATURE-COMPLETENESS-FRONTIER.20, IAL2-FEATURE-COMPLETENESS-FRONTIER.21, IAL2-FEATURE-COMPLETENESS-FRONTIER.22, IAL2-FEATURE-COMPLETENESS-FRONTIER.23, IAL2-FEATURE-COMPLETENESS-FRONTIER.24, IAL2-FEATURE-COMPLETENESS-FRONTIER.25, IAL2-FEATURE-COMPLETENESS-FRONTIER.26, IAL2-FEATURE-COMPLETENESS-FRONTIER.27, IAL2-FEATURE-COMPLETENESS-FRONTIER.28, IAL2-FEATURE-COMPLETENESS-FRONTIER.29, IAL2-FEATURE-COMPLETENESS-FRONTIER.30, IAL2-FEATURE-COMPLETENESS-FRONTIER.31, IAL2-FEATURE-COMPLETENESS-FRONTIER.32, IAL2-FEATURE-COMPLETENESS-FRONTIER.33, IAL2-FEATURE-COMPLETENESS-FRONTIER.34, IAL2-FEATURE-COMPLETENESS-FRONTIER.35, IAL2-FEATURE-COMPLETENESS-FRONTIER.36, IAL2-FEATURE-COMPLETENESS-FRONTIER.37, IAL2-FEATURE-COMPLETENESS-FRONTIER.38, IAL2-FEATURE-COMPLETENESS-FRONTIER.39, IAL2-FEATURE-COMPLETENESS-FRONTIER.40, IAL2-FEATURE-COMPLETENESS-FRONTIER.41, IAL2-FEATURE-COMPLETENESS-FRONTIER.42, IAL2-FEATURE-COMPLETENESS-FRONTIER.43, IAL2-FEATURE-COMPLETENESS-FRONTIER.44, IAL2-FEATURE-COMPLETENESS-FRONTIER.45, IAL2-FEATURE-COMPLETENESS-FRONTIER.46`
+  Children: `IAL2-FEATURE-COMPLETENESS-FRONTIER.1, IAL2-FEATURE-COMPLETENESS-FRONTIER.2, IAL2-FEATURE-COMPLETENESS-FRONTIER.3, IAL2-FEATURE-COMPLETENESS-FRONTIER.4, IAL2-FEATURE-COMPLETENESS-FRONTIER.5, IAL2-FEATURE-COMPLETENESS-FRONTIER.6, IAL2-FEATURE-COMPLETENESS-FRONTIER.7, IAL2-FEATURE-COMPLETENESS-FRONTIER.8, IAL2-FEATURE-COMPLETENESS-FRONTIER.9, IAL2-FEATURE-COMPLETENESS-FRONTIER.10, IAL2-FEATURE-COMPLETENESS-FRONTIER.11, IAL2-FEATURE-COMPLETENESS-FRONTIER.12, IAL2-FEATURE-COMPLETENESS-FRONTIER.13, IAL2-FEATURE-COMPLETENESS-FRONTIER.14, IAL2-FEATURE-COMPLETENESS-FRONTIER.15, IAL2-FEATURE-COMPLETENESS-FRONTIER.16, IAL2-FEATURE-COMPLETENESS-FRONTIER.17, IAL2-FEATURE-COMPLETENESS-FRONTIER.18, IAL2-FEATURE-COMPLETENESS-FRONTIER.19, IAL2-FEATURE-COMPLETENESS-FRONTIER.20, IAL2-FEATURE-COMPLETENESS-FRONTIER.21, IAL2-FEATURE-COMPLETENESS-FRONTIER.22, IAL2-FEATURE-COMPLETENESS-FRONTIER.23, IAL2-FEATURE-COMPLETENESS-FRONTIER.24, IAL2-FEATURE-COMPLETENESS-FRONTIER.25, IAL2-FEATURE-COMPLETENESS-FRONTIER.26, IAL2-FEATURE-COMPLETENESS-FRONTIER.27, IAL2-FEATURE-COMPLETENESS-FRONTIER.28, IAL2-FEATURE-COMPLETENESS-FRONTIER.29, IAL2-FEATURE-COMPLETENESS-FRONTIER.30, IAL2-FEATURE-COMPLETENESS-FRONTIER.31, IAL2-FEATURE-COMPLETENESS-FRONTIER.32, IAL2-FEATURE-COMPLETENESS-FRONTIER.33, IAL2-FEATURE-COMPLETENESS-FRONTIER.34, IAL2-FEATURE-COMPLETENESS-FRONTIER.35, IAL2-FEATURE-COMPLETENESS-FRONTIER.36, IAL2-FEATURE-COMPLETENESS-FRONTIER.37, IAL2-FEATURE-COMPLETENESS-FRONTIER.38, IAL2-FEATURE-COMPLETENESS-FRONTIER.39, IAL2-FEATURE-COMPLETENESS-FRONTIER.40, IAL2-FEATURE-COMPLETENESS-FRONTIER.41, IAL2-FEATURE-COMPLETENESS-FRONTIER.42, IAL2-FEATURE-COMPLETENESS-FRONTIER.43, IAL2-FEATURE-COMPLETENESS-FRONTIER.44, IAL2-FEATURE-COMPLETENESS-FRONTIER.45, IAL2-FEATURE-COMPLETENESS-FRONTIER.46, IAL2-FEATURE-COMPLETENESS-FRONTIER.47`
 
 - ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER.1`
   Status: `done`
@@ -366,9 +366,16 @@ path before reopening VHDL backend or VHDL rerouting work.
   Commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.45: ship AXI read data metadata`
 
 - ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER.46`
-  Status: `pending`
+  Status: `done`
   Goal: `Audit generated AXI read-data capture behavior readiness after parser/report metadata.`
   Acceptance: `The audit reads the shipped read-data parser/report metadata, checked-in read-data PPIF sample and report, generated read RID response-demux behavior, transaction-event fan-in and generated completion pulses, auto-ID lifecycle release behavior, IAL1/IAL0/SystemVerilog data-path substrate, focused tests, mdBook, roadmap, and Knowledge Map; decides whether generated single-beat RDATA/RRESP capture can be implemented directly or needs a smaller IAL1/IAL0/SystemVerilog prerequisite first; records exact generated IAL1/.fsm/HDL boundaries, data/status input/output width ownership, capture-rule semantics, report updates, diagnostics, validation gates, residue movement, rollback, docs, and VHDL deferral before behavior changes.`
+  Verification: `Read the shipped read-data parser/report metadata, schedule JSON for ppif/axi_manager_capacity_status_read_data.ppif, generated read RID response-demux behavior, transaction completion fan-in, auto-ID release behavior, IAL1 width-bearing input/output and rule-assignment docs, generator ISF emission helpers, mdBook, roadmap, and Knowledge Map. Concluded generated single-beat RDATA/RRESP capture can be implemented directly with no new IAL1/IAL0/SystemVerilog prerequisite. Selected .47 to add generated data/status inputs, per-transaction outputs, guarded normal capture assignments, report artifacts, and residue alignment while keeping RLAST, bursts, multi-beat reassembly, full-manager behavior, direct backend lowering, and VHDL deferred.`
+  Commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.46: audit AXI read data capture`
+
+- ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER.47`
+  Status: `pending`
+  Goal: `Implement generated single-beat AXI read-data capture behavior.`
+  Acceptance: `For explicit read_data contracts with generated read response-demux, the generator adds the declared RDATA/RRESP signals as generated IAL1 inputs with declared widths; adds per-transaction data_output/status_output names as generated IAL1 outputs with inherited data/status widths; emits one guarded IAL1 capture rule per read-data transaction using the generated demux completion signal as guard and normal data/status assignments, not pulse actions; keeps read capacity release and auto-ID release driven by generated completion pulses; reports read_data.generated_behavior true with generated input/output/rule artifacts; removes generated_read_data_capture from read_data residue while retaining rlast_completion, bursts, and multi_beat_read_data_reassembly; focused generator and PPIF/CLI tests prove generated .isf/.fsm/SystemVerilog reachability, width preservation, check JSON/semantic JSON support, --verify-hdl, docs, mdBook, Knowledge Map, memory, and VHDL deferral.`
   Verification: `pending`
   Commit: `pending`
 
@@ -376,7 +383,7 @@ path before reopening VHDL backend or VHDL rerouting work.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.46` | `pending` | `.45` shipped parser/report metadata for the bounded single-beat read-data payload/status contract; generated data-capture behavior still needs a readiness audit before implementation. |
+| 1 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.47` | `pending` | `.46` concluded generated single-beat `RDATA`/`RRESP` capture can be implemented directly with no new IAL1/IAL0/SystemVerilog prerequisite. |
 
 ## Decisions
 
@@ -810,6 +817,23 @@ path before reopening VHDL backend or VHDL rerouting work.
   the generated read response-demux prerequisite. `.45` is selected to ship
   parser/report metadata and static validation first, with generated `.isf`,
   `.fsm`, and HDL behavior unchanged.
+- `2026-06-12`: `.45` shipped read-data parser/report metadata and static
+  validation for the bounded single-beat `RDATA`/`RRESP` contract. The public
+  `.ppif` parser accepts one structural `read-data` read arm, report JSON
+  publishes `read_data.generated_behavior: false` with source signals,
+  inherited output widths, transaction-bound output names, and
+  `generated_read_data_capture` residue, and generated `.isf`, `.fsm`, and HDL
+  behavior remains unchanged from the read response-demux sample. `.46` is
+  selected as the generated read-data capture behavior readiness audit.
+- `2026-06-12`: `.46` audited generated single-beat read-data capture behavior
+  readiness after the parser/report metadata slice. It found no new IAL1,
+  IAL0, or SystemVerilog prerequisite: existing width-bearing IAL1
+  inputs/outputs and normal guarded rule assignments can hold captured
+  payload/status values under the generated read demux completion pulse. `.47`
+  is selected to implement generated `RDATA`/`RRESP` capture behavior and
+  report `read_data.generated_behavior: true` while keeping `RLAST`, bursts,
+  multi-beat reassembly, full-manager behavior, direct backend lowering, and
+  VHDL deferred.
 - `2026-06-12`: User clarified the backend strategy: FSMGen is currently Perl
   5, but IAL0/IAL1/IAL2 and the mdBook must remain backend-language-neutral
   contracts for future Rust, Rust/Wasm, browser-capable JavaScript, and
@@ -928,6 +952,8 @@ path before reopening VHDL backend or VHDL rerouting work.
 | `2026-06-12` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.44` | `bash knowledge-map/scripts/gen_knowledge_map.sh`; `mdbook build docs/book`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `git --no-pager diff --check`; read-data contract fact-card reverify `rg`; next-slice fact-card reverify `rg`; stale-current-frontier search | Passed; no parser/generator/HDL behavior changed in the selector slice. |
 | `2026-06-12` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.45` | `perl/FSM/Adapter/IAL2/PPIF.pm`; `perl/FSM/IAL2/ProtocolIntent/AxiManagerCapacityStatus.pm`; `perl/FSM/Support/RegressionCorpus.pm`; `ppif/axi_manager_capacity_status_read_data.ppif`; `t/1437-axi-ial2-manager-capacity-status-generator.t`; `t/1436-ial2-ppif-parser-cli.t`; `docs/AXI_IAL2_MANAGER_READ_DATA_METADATA_FIRST_SLICE.md`; `docs/AXI_IAL2_MANAGER_READ_DATA_CONTRACT_SELECTION.md`; `docs/book/src/14-feature-backlog.md`; `README.md`; `ROADMAP_V2.md`; `docs/TASK_TREE.md`; `docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md`; `MEMORY.md`; `docs/knowledge/ial2-axi-manager-read-data-metadata-first-slice.md`; `docs/knowledge/ial2-feature-completeness-next-slice.md`; `KNOWLEDGE_MAP.md` | Shipped read-data parser/report metadata and static validation, checked-in runnable sample/support-accounting entry, proved generated .isf/.fsm/HDL behavior remains unchanged from read response-demux, and selected `.46`, generated read-data capture behavior readiness audit. |
 | `2026-06-12` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.45` | `perl -Iperl -c perl/FSM/Adapter/IAL2/PPIF.pm`; `perl -Iperl -c perl/FSM/IAL2/ProtocolIntent/AxiManagerCapacityStatus.pm`; `perl -Iperl -c perl/FSM/Support/RegressionCorpus.pm`; `perl -Iperl -c t/1437-axi-ial2-manager-capacity-status-generator.t`; `perl -Iperl -c t/1436-ial2-ppif-parser-cli.t`; `prove -Iperl t/1437-axi-ial2-manager-capacity-status-generator.t`; `prove -Iperl t/1436-ial2-ppif-parser-cli.t`; `prove -Iperl t/297-capability-manifest.t t/317-language-surface-contract.t t/301-check-json-supported-corpus.t t/303-normalized-semantic-json-supported-corpus.t`; `./bin/fsmgen --emit-schedule-json ppif/axi_manager_capacity_status_read_data.ppif`; `./bin/fsmgen --strict --check --json ppif/axi_manager_capacity_status_read_data.ppif`; `./bin/fsmgen --strict --emit-semantic-json ppif/axi_manager_capacity_status_read_data.ppif`; `./bin/fsmgen --quiet --verify-hdl ppif/axi_manager_capacity_status_read_data.ppif`; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `mdbook build docs/book`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `git --no-pager diff --check`; stale-current-frontier search | Passed. |
+| `2026-06-12` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.46` | `docs/AXI_IAL2_MANAGER_READ_DATA_CAPTURE_READINESS_AUDIT.md`; `docs/AXI_IAL2_MANAGER_READ_DATA_METADATA_FIRST_SLICE.md`; `docs/AXI_IAL2_MANAGER_READ_DATA_CONTRACT_SELECTION.md`; `docs/AXI_IAL2_MANAGER_READ_DATA_BURST_READINESS_AUDIT.md`; `docs/AXI_IAL2_MANAGER_READ_RESPONSE_DEMUX_BEHAVIOR_FIRST_SLICE.md`; `docs/AXI_ID_ORDERING_RULE_EVIDENCE_PROBE.md`; `docs/AXI_MANAGER_RULE_MATRIX_DESIGN_PROBE.md`; `docs/book/src/13g-rules.md`; `docs/ISF_SPEC.md`; `perl/FSM/IAL2/ProtocolIntent/AxiManagerCapacityStatus.pm`; `perl/FSM/Adapter/IAL2/PPIF.pm`; `ppif/axi_manager_capacity_status_read_data.ppif`; `./bin/fsmgen --emit-schedule-json ppif/axi_manager_capacity_status_read_data.ppif`; `README.md`; `ROADMAP_V2.md`; `docs/TASK_TREE.md`; `docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md`; `docs/book/src/14-feature-backlog.md`; `MEMORY.md`; Knowledge Map cards | Selected `.47`, generated single-beat AXI read-data capture behavior. No new IAL1/IAL0/SystemVerilog prerequisite is required; the implementation leaf owns generated RDATA/RRESP inputs, per-transaction outputs, normal guarded capture assignments, report artifacts, and residue alignment. |
+| `2026-06-12` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.46` | `./bin/fsmgen --emit-schedule-json ppif/axi_manager_capacity_status_read_data.ppif`; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `mdbook build docs/book`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `git --no-pager diff --check`; stale-current-frontier search | Passed; stale `.46` active-frontier search returned no matches. |
 
 ## Commit Log
 
@@ -978,6 +1004,7 @@ path before reopening VHDL backend or VHDL rerouting work.
 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.43` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.43: audit AXI read data readiness` | Selected bounded AXI read-data payload public contract selection and advanced the frontier to `.44`. |
 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.44` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.44: select AXI read data contract` | Selected parser/report metadata and static validation for bounded single-beat read-data payload/status and advanced the frontier to `.45`. |
 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.45` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.45: ship AXI read data metadata` | Shipped read-data parser/report metadata and static validation and advanced the frontier to `.46`. |
+| `IAL2-FEATURE-COMPLETENESS-FRONTIER.46` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.46: audit AXI read data capture` | Audited generated read-data capture readiness and advanced the frontier to `.47`. |
 
 ## Changelog
 
@@ -1129,3 +1156,6 @@ path before reopening VHDL backend or VHDL rerouting work.
   parser/report metadata and static validation with generated behavior still
   unchanged, and advanced the frontier to `.46`, generated read-data capture
   behavior readiness audit.
+- `2026-06-12`: Completed `.46` readiness audit, selected direct generated
+  single-beat read-data capture behavior with no new IAL1/IAL0/SystemVerilog
+  prerequisite, and advanced the frontier to `.47`.

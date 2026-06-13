@@ -10,9 +10,9 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `HEAD after commit` — `IAL2-FEATURE-COMPLETENESS-FRONTIER.45: ship AXI read data metadata`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.46` pending; next action is to audit generated single-beat AXI read-data capture behavior readiness after the shipped parser/report metadata.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.45`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.44`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.43`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.42`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.41`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.40`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.39`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.38`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.37`. Older completed slices are in the task tree and git history.
+- latest_commit: `HEAD after commit` — `IAL2-FEATURE-COMPLETENESS-FRONTIER.46: audit AXI read data capture`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.47` pending; next action is to implement generated single-beat AXI read-data capture behavior through the existing IAL2 -> IAL1 -> IAL0 -> SystemVerilog path.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.46`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.45`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.44`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.43`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.42`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.41`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.40`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.39`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.38`. Older completed slices are in the task tree and git history.
 - in_flight_uncommitted: none; unrelated untracked `fx/` intentionally left alone.
 - blockers: none.
 
