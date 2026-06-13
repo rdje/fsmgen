@@ -874,14 +874,13 @@ sub _normalize_read_data(%args) {
 
     return {
         mode               => 'bounded_single_beat_read_data_contract',
-        generated_behavior => 0,
+        generated_behavior => 1,
         read               => _normalize_read_data_read(
             raw_read       => $raw->{read},
             transactions   => $args{transactions},
             response_demux => $args{response_demux}{read},
         ),
         residue => [
-            'generated_read_data_capture',
             'rlast_completion',
             'bursts',
             'multi_beat_read_data_reassembly',
@@ -1358,6 +1357,29 @@ sub _read_data_signal_names($read_data) {
     return \@signals;
 }
 
+sub _read_data_source_inputs($contract) {
+    my $read_data = $contract->{read_data};
+    return () unless ref($read_data) eq 'HASH' && $read_data->{generated_behavior};
+    my $read = $read_data->{read};
+    return () unless ref($read) eq 'HASH';
+    return @{_unique_preserving([$read->{data_signal}, $read->{status_signal}])};
+}
+
+sub _read_data_output_lines($contract) {
+    my $read_data = $contract->{read_data};
+    return () unless ref($read_data) eq 'HASH' && $read_data->{generated_behavior};
+    my $read = $read_data->{read};
+    return () unless ref($read) eq 'HASH';
+
+    my @lines;
+    for my $transaction (@{$read->{transactions} || []}) {
+        push @lines,
+            _width_output_line($transaction->{data_output}, $transaction->{data_width}),
+            _width_output_line($transaction->{status_output}, $transaction->{status_width});
+    }
+    return @lines;
+}
+
 sub _normalize_source_anchors($anchors) {
     confess "AXI manager capacity/status IAL2 contract source.anchors must be an array reference\n"
         unless ref($anchors) eq 'ARRAY';
@@ -1424,6 +1446,7 @@ sub _emit_isf($contract) {
         @{$contract->{event_inputs}},
         @{_id_response_signal_inputs($contract)},
         _response_demux_response_id_inputs($contract),
+        _read_data_source_inputs($contract),
     ]);
     my @id_response_assertions = _id_response_assertion_transaction_lines($contract);
     my @response_demux_assertions = _response_demux_assertion_transaction_lines($contract);
@@ -1432,6 +1455,7 @@ sub _emit_isf($contract) {
     my @assertion_transactions = (@id_response_assertions, @response_demux_assertions, @same_id_ordering_assertions, @auto_id_assertions);
     my @auto_id_priorities = _auto_id_lifecycle_priority_lines($contract);
     my @response_demux_rules = _response_demux_rule_lines($contract);
+    my @read_data_capture_rules = _read_data_capture_rule_lines($contract);
     my @auto_id_rules = _auto_id_lifecycle_rule_lines($contract);
     my @storage_lines = (
         "    (var $contract->{storage}{pending_reads} (width $read_width))",
@@ -1456,6 +1480,7 @@ sub _emit_isf($contract) {
         _width_output_line($contract->{status_outputs}{write_slots_available}, $write_width),
         _auto_id_lifecycle_request_output_lines($contract),
         _response_demux_completion_output_lines($contract),
+        _read_data_output_lines($contract),
         "  )",
         "  (storage",
         @storage_lines,
@@ -1466,6 +1491,8 @@ sub _emit_isf($contract) {
         (@assertion_transactions ? ("") : ()),
         @response_demux_rules,
         (@response_demux_rules ? ("") : ()),
+        @read_data_capture_rules,
+        (@read_data_capture_rules ? ("") : ()),
         @auto_id_rules,
         (@auto_id_rules ? ("") : ()),
         @read_rules,
@@ -1495,9 +1522,15 @@ sub _response_demux_response_id_inputs($contract) {
 }
 
 sub _input_line($contract, $name) {
-    my $width = _id_signal_input_width($contract, $name);
+    my $width = _input_width($contract, $name);
     return "    (input $name)" if !defined($width) || $width == 1;
     return "    (input $name (width $width))";
+}
+
+sub _input_width($contract, $name) {
+    my $width = _id_signal_input_width($contract, $name);
+    return $width if defined $width;
+    return _read_data_signal_input_width($contract, $name);
 }
 
 sub _id_signal_input_width($contract, $name) {
@@ -1510,6 +1543,16 @@ sub _id_signal_input_width($contract, $name) {
             if ($entry->{request_id_signal} // '') eq $name
             || ($entry->{response_id_signal} // '') eq $name;
     }
+    return undef;
+}
+
+sub _read_data_signal_input_width($contract, $name) {
+    my $read_data = $contract->{read_data};
+    return undef unless ref($read_data) eq 'HASH' && $read_data->{generated_behavior};
+    my $read = $read_data->{read};
+    return undef unless ref($read) eq 'HASH';
+    return $read->{data_signal_width} if ($read->{data_signal} // '') eq $name;
+    return $read->{status_signal_width} if ($read->{status_signal} // '') eq $name;
     return undef;
 }
 
@@ -1747,6 +1790,34 @@ sub _response_demux_rule($name, $guard, $completion_signal) {
         "  (rule $name $guard",
         "    (pulse $completion_signal))",
     );
+}
+
+sub _read_data_capture_rule_lines($contract) {
+    my $read_data = $contract->{read_data};
+    return () unless ref($read_data) eq 'HASH' && $read_data->{generated_behavior};
+    my $read = $read_data->{read};
+    return () unless ref($read) eq 'HASH';
+
+    my @lines;
+    for my $transaction (@{$read->{transactions} || []}) {
+        push @lines, _read_data_capture_rule(
+            _read_data_capture_rule_name($contract, $transaction),
+            $transaction->{completion_signal},
+            [
+                [$transaction->{data_output},   $read->{data_signal}],
+                [$transaction->{status_output}, $read->{status_signal}],
+            ],
+        );
+    }
+    return @lines;
+}
+
+sub _read_data_capture_rule($name, $guard, $assignments) {
+    return _auto_id_rule($name, $guard, $assignments);
+}
+
+sub _read_data_capture_rule_name($contract, $transaction) {
+    return "$contract->{name}_$transaction->{transaction}_read_data_capture";
 }
 
 sub _auto_id_rule($name, $guard, $assignments) {
@@ -2119,7 +2190,7 @@ sub _build_report(%args) {
             'read_data requires generated read response_demux metadata and explicit single-beat capture/source policy',
             'read_data.read data width must be positive and status width must be 2',
             'read_data.read transaction outputs must exactly cover read response_demux auto transactions',
-            'read_data parser/report metadata is structural only; generated RDATA/RRESP capture remains residue',
+            'read_data generates bounded single-beat RDATA/RRESP capture inputs, outputs, and guarded assignments for explicit opt-in contracts',
         ],
         unsupported_residue => [
             {
@@ -2128,7 +2199,7 @@ sub _build_report(%args) {
             },
             {
                 id     => 'axi_id_ordering_and_response_matching',
-                detail => 'Concrete transaction ID request/response assertions, explicit bounded auto-ID request-ID drive plus completion-event release, generated auto-ID same-ID avoidance, generated write BID response demux, generated single-beat read RID response demux, and structural single-beat read-data parser/report metadata are supported; generated RDATA/RRESP capture, dynamic user-ID arbitration while issuing multiple same-family requests in one cycle, per-ID same-ID response queues, different-ID interleaving, read-data interleaving/reassembly, and burst/last-beat tracking remain outside this capacity/status shell.',
+                detail => 'Concrete transaction ID request/response assertions, explicit bounded auto-ID request-ID drive plus completion-event release, generated auto-ID same-ID avoidance, generated write BID response demux, generated single-beat read RID response demux, and generated single-beat read-data RDATA/RRESP capture are supported; dynamic user-ID arbitration while issuing multiple same-family requests in one cycle, per-ID same-ID response queues, different-ID interleaving, read-data interleaving/reassembly, and burst/last-beat tracking remain outside this capacity/status shell.',
             },
             {
                 id     => 'profile_aliases_and_full_manager_behavior',
@@ -2199,6 +2270,12 @@ sub _report_read_data($contract) {
     $read_data->{generated_behavior} = $contract->{read_data}{generated_behavior}
         ? JSON::PP::true
         : JSON::PP::false;
+    if ($contract->{read_data}{generated_behavior}) {
+        my $artifacts = _read_data_generated_artifacts($contract);
+        $read_data->{read}{generated_inputs} = $artifacts->{inputs};
+        $read_data->{read}{generated_outputs} = $artifacts->{outputs};
+        $read_data->{read}{generated_rules} = $artifacts->{rules};
+    }
     return $read_data;
 }
 
@@ -2240,6 +2317,22 @@ sub _response_demux_generated_artifacts($contract, $family) {
         assertions => [
             map { $_->{name} }
             _response_demux_assertion_specs_for_family($contract, $family)
+        ],
+    };
+}
+
+sub _read_data_generated_artifacts($contract) {
+    my $read_data = $contract->{read_data};
+    my $read = $read_data->{read};
+    return {
+        inputs => _clone_jsonish(_unique_preserving([$read->{data_signal}, $read->{status_signal}])),
+        outputs => [
+            map { ($_->{data_output}, $_->{status_output}) }
+            @{$read->{transactions} || []}
+        ],
+        rules => [
+            map { _read_data_capture_rule_name($contract, $_) }
+            @{$read->{transactions} || []}
         ],
     };
 }

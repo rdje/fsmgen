@@ -259,28 +259,29 @@ subtest 'PPIF adapter parses AXI manager read response-demux behavior' => sub {
     is_deeply($result->{report}{auto_id_lifecycle}{residue}, [], 'adapter report removes response_demux and same-ID residue from read auto-ID lifecycle residue');
 };
 
-subtest 'PPIF adapter parses AXI manager read-data metadata without generated artifact drift' => sub {
+subtest 'PPIF adapter parses AXI manager read-data behavior' => sub {
     my $sample_path = sample_capacity_read_data_ppif_path();
     ok(-f $sample_path, 'tracked runnable PPIF capacity/status read-data sample exists');
 
-    my $base = FSM::Adapter::IAL2::PPIF->new()->parse_source(sample_capacity_read_response_demux_ppif(), sample_capacity_read_response_demux_ppif_path());
     my $result = FSM::Adapter::IAL2::PPIF->new()->parse_source(sample_capacity_read_data_ppif(), $sample_path);
 
     is($result->{kind}, 'protocol_intent.axi_manager_capacity_status', 'read-data sample still uses the capacity/status generator');
     is($result->{report}{source_object}{id}, 'axi-manager-capacity-status-read-data', 'read-data source object id is preserved');
     is($result->{report}{source_object}{intent_name}, 'axi_manager_capacity_status_read_data', 'read-data source intent name is preserved');
-    is(
+    like($result->{generated_ial1}{text}, qr/\(input axi0_rdata \(width 32\)\)/, 'read-data PPIF generates RDATA input with declared width');
+    like($result->{generated_ial1}{text}, qr/\(input axi0_rresp \(width 2\)\)/, 'read-data PPIF generates RRESP input with declared width');
+    like($result->{generated_ial1}{text}, qr/\(output axi0_r0_rdata \(width 32\)\)/, 'read-data PPIF generates r0 data output with inherited width');
+    like($result->{generated_ial1}{text}, qr/\(output axi0_r0_rresp \(width 2\)\)/, 'read-data PPIF generates r0 status output with inherited width');
+    like(
         $result->{generated_ial1}{text},
-        $base->{generated_ial1}{text},
-        'read-data PPIF metadata leaves generated IAL1 text unchanged',
+        qr/\(rule axi0_r0_read_data_capture axi0_r0_complete\s+\(axi0_r0_rdata axi0_rdata\)\s+\(axi0_r0_rresp axi0_rresp\)\)/,
+        'read-data PPIF generates r0 normal capture rule',
     );
-    is_deeply(
-        $result->{generated_ial0}{files},
-        $base->{generated_ial0}{files},
-        'read-data PPIF metadata leaves generated IAL0 text unchanged',
+    like(
+        $result->{generated_ial0}{files}{'axi0_capacity_status.fsm'},
+        qr/\(-axi0_r0_read_data_capture\s+<axi0_r0_complete\s+\(<- \(axi0_r0_rdata> axi0_rdata\)\)\s+\(<- \(axi0_r0_rresp> axi0_rresp\)\)/,
+        'read-data PPIF lowers r0 capture rule into generated .fsm',
     );
-    unlike($result->{generated_ial1}{text}, qr/\(input axi0_rdata\b/, 'read-data PPIF does not generate RDATA input yet');
-    unlike($result->{generated_ial1}{text}, qr/\(output axi0_r0_rdata\b/, 'read-data PPIF does not generate transaction RDATA output yet');
     assert_read_response_demux_report($result->{report}{response_demux}, 'adapter read-data report');
     assert_read_data_report($result->{report}{read_data}, 'adapter report');
 };
@@ -769,7 +770,7 @@ subtest 'CLI --verify-hdl accepts AXI manager read response-demux behavior .ppif
     like($sv, qr/axi0_read_complete\s*&\s*axi0_r0_auto_id_busy_q\s*&\s*\(axi0_rid\s*==\s*axi0_r0_auto_id_q\)/, 'read response-demux HDL lowers the RID match guard');
 };
 
-subtest 'CLI --verify-hdl accepts AXI manager read-data metadata .ppif without data-capture drift' => sub {
+subtest 'CLI --verify-hdl accepts AXI manager read-data behavior .ppif' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $hdl = File::Spec->catfile($tempdir, 'axi_read_data.sv');
 
@@ -782,8 +783,13 @@ subtest 'CLI --verify-hdl accepts AXI manager read-data metadata .ppif without d
     ok(-f $hdl, 'read-data --output writes generated HDL');
     my $sv = slurp($hdl);
     like($sv, qr/\binput\s+(?:wire\s+)?\[3:0\]\s+axi0_rid\b/, 'read-data HDL keeps generated RID input from read response-demux');
-    unlike($sv, qr/\baxi0_rdata\b/, 'read-data metadata does not generate RDATA HDL yet');
-    unlike($sv, qr/\baxi0_r0_rdata\b/, 'read-data metadata does not generate transaction RDATA HDL yet');
+    like($sv, qr/\binput\s+(?:wire\s+)?\[31:0\]\s+axi0_rdata\b/, 'read-data HDL exposes generated RDATA input');
+    like($sv, qr/\binput\s+(?:wire\s+)?\[1:0\]\s+axi0_rresp\b/, 'read-data HDL exposes generated RRESP input');
+    like($sv, qr/\boutput\s+reg\s+\[31:0\]\s+axi0_r0_rdata\b/, 'read-data HDL exposes r0 captured data output');
+    like($sv, qr/\boutput\s+reg\s+\[1:0\]\s+axi0_r0_rresp\b/, 'read-data HDL exposes r0 captured status output');
+    like($sv, qr/assign\s+axi0_r0_read_data_capture_en\s*=\s*axi0_r0_complete\s*;/, 'read-data HDL guards r0 capture with generated completion');
+    like($sv, qr/axi0_r0_rdata_next\s*=\s*axi0_rdata\s*;/, 'read-data HDL captures RDATA into r0 data output');
+    like($sv, qr/axi0_r0_rresp_next\s*=\s*axi0_rresp\s*;/, 'read-data HDL captures RRESP into r0 status output');
 };
 
 subtest 'CLI --outdir materializes generated .isf, .fsm, and HDL for .ppif' => sub {
@@ -1805,7 +1811,7 @@ sub assert_read_response_demux_report {
 sub assert_read_data_report {
     my ($read_data, $owner) = @_;
     is($read_data->{mode}, 'bounded_single_beat_read_data_contract', "$owner marks bounded single-beat read-data contract mode");
-    ok(!$read_data->{generated_behavior}, "$owner marks generated behavior false");
+    ok($read_data->{generated_behavior}, "$owner marks generated behavior true");
     my $read = $read_data->{read};
     is($read->{capture_scope}, 'single_beat', "$owner reports single-beat capture scope");
     is($read->{completion_source}, 'response_demux', "$owner reports response-demux completion source");
@@ -1838,9 +1844,34 @@ sub assert_read_data_report {
         "$owner reports transaction status outputs",
     );
     is_deeply(
+        [map { $_->{data_width} } @{$read->{transactions}}],
+        [32, 32],
+        "$owner reports inherited transaction data widths",
+    );
+    is_deeply(
+        [map { $_->{status_width} } @{$read->{transactions}}],
+        [2, 2],
+        "$owner reports inherited transaction status widths",
+    );
+    is_deeply(
+        $read->{generated_inputs},
+        [qw(axi0_rdata axi0_rresp)],
+        "$owner reports generated read-data source inputs",
+    );
+    is_deeply(
+        $read->{generated_outputs},
+        [qw(axi0_r0_rdata axi0_r0_rresp axi0_r1_rdata axi0_r1_rresp)],
+        "$owner reports generated read-data capture outputs",
+    );
+    is_deeply(
+        $read->{generated_rules},
+        [qw(axi0_r0_read_data_capture axi0_r1_read_data_capture)],
+        "$owner reports generated read-data capture rules",
+    );
+    is_deeply(
         $read_data->{residue},
-        [qw(generated_read_data_capture rlast_completion bursts multi_beat_read_data_reassembly)],
-        "$owner reports generated capture and burst/reassembly residue",
+        [qw(rlast_completion bursts multi_beat_read_data_reassembly)],
+        "$owner reports only RLAST, burst, and reassembly residue",
     );
 }
 

@@ -524,33 +524,47 @@ subtest 'read response-demux contract generates bounded read RID demux behavior'
     like($sv_assertions, qr/axi0 read auto ID active selected IDs are unique/, 'assertion backend emits read same-ID avoidance assertion');
 };
 
-subtest 'read-data contract reports structural metadata without generated artifact drift' => sub {
-    my $base = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_read_response_demux());
+subtest 'read-data contract generates single-beat capture behavior' => sub {
     my $result = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_read_data());
     my $isf = $result->{generated_ial1}{text};
+    my $fsm = $result->{generated_ial0}{files}{'axi0_capacity_status.fsm'};
 
-    is(
+    like($isf, qr/\(input axi0_rdata \(width 32\)\)/, 'read-data behavior declares RDATA as a generated 32-bit input');
+    like($isf, qr/\(input axi0_rresp \(width 2\)\)/, 'read-data behavior declares RRESP as a generated 2-bit input');
+    like($isf, qr/\(output axi0_r0_rdata \(width 32\)\)/, 'read-data behavior declares r0 data output with inherited width');
+    like($isf, qr/\(output axi0_r0_rresp \(width 2\)\)/, 'read-data behavior declares r0 status output with inherited width');
+    like($isf, qr/\(output axi0_r1_rdata \(width 32\)\)/, 'read-data behavior declares r1 data output with inherited width');
+    like($isf, qr/\(output axi0_r1_rresp \(width 2\)\)/, 'read-data behavior declares r1 status output with inherited width');
+    like(
         $isf,
-        $base->{generated_ial1}{text},
-        'read-data parser/report metadata does not alter generated IAL1 text',
+        qr/\(rule axi0_r0_read_data_capture axi0_r0_complete\s+\(axi0_r0_rdata axi0_rdata\)\s+\(axi0_r0_rresp axi0_rresp\)\)/,
+        'read-data behavior emits r0 normal capture assignments guarded by generated completion',
     );
-    is_deeply(
-        $result->{generated_ial0}{files},
-        $base->{generated_ial0}{files},
-        'read-data parser/report metadata does not alter generated IAL0 text',
+    like(
+        $isf,
+        qr/\(rule axi0_r1_read_data_capture axi0_r1_complete\s+\(axi0_r1_rdata axi0_rdata\)\s+\(axi0_r1_rresp axi0_rresp\)\)/,
+        'read-data behavior emits r1 normal capture assignments guarded by generated completion',
     );
-    unlike($isf, qr/\(input axi0_rdata\b/, 'read-data metadata does not generate RDATA input yet');
-    unlike($isf, qr/\(input axi0_rresp\b/, 'read-data metadata does not generate RRESP input yet');
-    unlike($isf, qr/\(output axi0_r0_rdata\b/, 'read-data metadata does not generate transaction data output yet');
-    unlike($isf, qr/\(output axi0_r0_rresp\b/, 'read-data metadata does not generate transaction status output yet');
+    unlike($isf, qr/\(rule axi0_r0_read_data_capture\b[\s\S]*\(pulse axi0_r0_rdata\)/, 'read-data capture does not pulse payload outputs');
+    like($fsm, qr/\(-axi0_r0_read_data_capture\s+<axi0_r0_complete\s+\(<- \(axi0_r0_rdata> axi0_rdata\)\)\s+\(<- \(axi0_r0_rresp> axi0_rresp\)\)/, 'scheduled .fsm carries r0 capture assignments');
+    like($fsm, qr/\(-axi0_r1_read_data_capture\s+<axi0_r1_complete\s+\(<- \(axi0_r1_rdata> axi0_rdata\)\)\s+\(<- \(axi0_r1_rresp> axi0_rresp\)\)/, 'scheduled .fsm carries r1 capture assignments');
 
     assert_read_response_demux_report($result->{report}{response_demux}, 'generator read-data report');
     assert_read_data_report($result->{report}{read_data}, 'generator report');
     is_deeply(
         $result->{report}{response_demux}{residue},
         [qw(read_data_interleaving bursts)],
-        'read-data metadata keeps response-demux read-data/interleaving residue until generated capture ships',
+        'read-data behavior keeps broader response-demux interleaving and burst residue',
     );
+
+    my $hdl = hdl_for('axi0_capacity_status', $fsm);
+    like($hdl, qr/\binput\s+(?:wire\s+)?\[31:0\]\s+axi0_rdata\b/, 'SystemVerilog declares RDATA as a 32-bit input');
+    like($hdl, qr/\binput\s+(?:wire\s+)?\[1:0\]\s+axi0_rresp\b/, 'SystemVerilog declares RRESP as a 2-bit input');
+    like($hdl, qr/\boutput\s+reg\s+\[31:0\]\s+axi0_r0_rdata\b/, 'SystemVerilog declares r0 captured data output');
+    like($hdl, qr/\boutput\s+reg\s+\[1:0\]\s+axi0_r0_rresp\b/, 'SystemVerilog declares r0 captured status output');
+    like($hdl, qr/assign\s+axi0_r0_read_data_capture_en\s*=\s*axi0_r0_complete\s*;/, 'SystemVerilog drives r0 capture from generated completion');
+    like($hdl, qr/axi0_r0_rdata_next\s*=\s*axi0_rdata\s*;/, 'SystemVerilog captures RDATA into r0 data output');
+    like($hdl, qr/axi0_r0_rresp_next\s*=\s*axi0_rresp\s*;/, 'SystemVerilog captures RRESP into r0 status output');
 };
 
 subtest 'mixed read/write response-demux keeps write behavior and adds read behavior' => sub {
@@ -1060,7 +1074,7 @@ sub assert_read_response_demux_report {
 sub assert_read_data_report {
     my ($read_data, $owner) = @_;
     is($read_data->{mode}, 'bounded_single_beat_read_data_contract', "$owner marks bounded single-beat read-data contract mode");
-    ok(!$read_data->{generated_behavior}, "$owner marks generated behavior false");
+    ok($read_data->{generated_behavior}, "$owner marks generated behavior true");
     my $read = $read_data->{read};
     is($read->{capture_scope}, 'single_beat', "$owner reports single-beat capture scope");
     is($read->{completion_source}, 'response_demux', "$owner reports response-demux completion source");
@@ -1093,9 +1107,34 @@ sub assert_read_data_report {
         "$owner reports transaction status outputs",
     );
     is_deeply(
+        [map { $_->{data_width} } @{$read->{transactions}}],
+        [32, 32],
+        "$owner reports inherited transaction data widths",
+    );
+    is_deeply(
+        [map { $_->{status_width} } @{$read->{transactions}}],
+        [2, 2],
+        "$owner reports inherited transaction status widths",
+    );
+    is_deeply(
+        $read->{generated_inputs},
+        [qw(axi0_rdata axi0_rresp)],
+        "$owner reports generated read-data source inputs",
+    );
+    is_deeply(
+        $read->{generated_outputs},
+        [qw(axi0_r0_rdata axi0_r0_rresp axi0_r1_rdata axi0_r1_rresp)],
+        "$owner reports generated read-data capture outputs",
+    );
+    is_deeply(
+        $read->{generated_rules},
+        [qw(axi0_r0_read_data_capture axi0_r1_read_data_capture)],
+        "$owner reports generated read-data capture rules",
+    );
+    is_deeply(
         $read_data->{residue},
-        [qw(generated_read_data_capture rlast_completion bursts multi_beat_read_data_reassembly)],
-        "$owner reports generated capture and burst/reassembly residue",
+        [qw(rlast_completion bursts multi_beat_read_data_reassembly)],
+        "$owner reports only RLAST, burst, and reassembly residue",
     );
 }
 

@@ -1,8 +1,9 @@
 ---
 id: ial2-feature-completeness-next-slice
-title: IAL2 feature completeness next slice is read-data capture behavior
+title: IAL2 feature completeness next slice is post read-data-capture selection
 answers:
   - "what is the next IAL2 feature completeness slice?"
+  - "what comes after IAL2-FEATURE-COMPLETENESS-FRONTIER.47?"
   - "what comes after IAL2-FEATURE-COMPLETENESS-FRONTIER.46?"
   - "what comes after IAL2-FEATURE-COMPLETENESS-FRONTIER.45?"
   - "what comes after IAL2-FEATURE-COMPLETENESS-FRONTIER.44?"
@@ -23,9 +24,9 @@ answers:
   - "what must happen before the next AXI manager behavior?"
 date: 2026-06-12
 status: current
-tags: [ial2, axi, manager, read-data, rdata, rresp, capture, behavior, bursts, rlast, interleaving, per-id, feature-completeness, task-tree]
-evidence: docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; docs/AXI_IAL2_MANAGER_READ_DATA_CAPTURE_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_READ_DATA_METADATA_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_READ_DATA_CONTRACT_SELECTION.md; docs/AXI_IAL2_MANAGER_READ_DATA_BURST_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_POST_READ_DEMUX_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_READ_RESPONSE_DEMUX_BEHAVIOR_FIRST_SLICE.md; docs/book/src/14-feature-backlog.md; README.md; ROADMAP_V2.md
-reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.47|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.46|AXI_IAL2_MANAGER_READ_DATA_CAPTURE_READINESS_AUDIT|read_data|generated_read_data_capture|read-data capture' docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md docs/AXI_IAL2_MANAGER_READ_DATA_CAPTURE_READINESS_AUDIT.md docs/book/src/14-feature-backlog.md README.md ROADMAP_V2.md
+tags: [ial2, axi, manager, read-data, rdata, rresp, capture, behavior, selector, bursts, rlast, interleaving, per-id, feature-completeness, task-tree]
+evidence: docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; docs/AXI_IAL2_MANAGER_READ_DATA_BEHAVIOR_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_READ_DATA_CAPTURE_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_READ_DATA_METADATA_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_READ_DATA_CONTRACT_SELECTION.md; docs/AXI_IAL2_MANAGER_READ_DATA_BURST_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_POST_READ_DEMUX_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_READ_RESPONSE_DEMUX_BEHAVIOR_FIRST_SLICE.md; docs/book/src/14-feature-backlog.md; README.md; ROADMAP_V2.md
+reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.48|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.47|AXI_IAL2_MANAGER_READ_DATA_BEHAVIOR_FIRST_SLICE|read_data.generated_behavior: true|read-data capture' docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md docs/AXI_IAL2_MANAGER_READ_DATA_BEHAVIOR_FIRST_SLICE.md docs/book/src/14-feature-backlog.md README.md ROADMAP_V2.md
 ---
 
 After the shipped Valid-Ready, bundle, capacity/status, ID-family metadata,
@@ -38,8 +39,16 @@ response-demux contract selection, read response-demux parser/report metadata,
 read response-demux behavior readiness audit, bounded generated single-beat
 read `RID` response-demux behavior, post-read-demux next-slice selection, and
 read-data/burst readiness audit, read-data contract selection, read-data
-parser/report metadata first slice, and read-data capture readiness audit, the
-next active leaf is `IAL2-FEATURE-COMPLETENESS-FRONTIER.47`.
+parser/report metadata first slice, read-data capture readiness audit, and
+generated read-data capture behavior first slice, the next active leaf is
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.48`.
+
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.47` shipped generated single-beat
+`RDATA`/`RRESP` capture behavior for explicit `read-data` contracts. The next
+slice is a selector because the remaining read-side and full-manager work spans
+`RLAST`/bursts, multi-beat reassembly, per-ID queues, authored concrete-ID
+same-ID ordering, queued/blocking policy, aliases, full-manager behavior, and
+possible IAL1/IAL0/SystemVerilog prerequisites.
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.32` aligned the emitted report for
 explicit generated write response demux. At that point,

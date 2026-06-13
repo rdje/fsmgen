@@ -994,15 +994,18 @@ syntax for single-beat `RDATA`/`RRESP` capture, with generated read
 response-demux as the completion source and `RLAST`/bursts deferred. Slice
 `.45` now ships parser/report metadata and static validation for that contract:
 the public `.ppif` parser accepts one structural `read-data` read arm, the
-capacity/status report publishes `read_data.generated_behavior: false` with
-transaction-bound data/status outputs and generated-capture residue, the new
-read-data sample is support-accounted for check JSON and normalized semantic
-JSON, and generated `.isf`, `.fsm`, and SystemVerilog HDL behavior remain
-unchanged from the read response-demux sample. Readiness audit `.46`
+capacity/status report publishes transaction-bound data/status outputs, the
+new read-data sample is support-accounted for check JSON and normalized
+semantic JSON, and generated capture behavior was deferred to `.47`.
+Readiness audit `.46`
 concluded that generated single-beat read-data capture can be implemented
-directly with no new IAL1/IAL0/SystemVerilog prerequisite. The current
-frontier is `IAL2-FEATURE-COMPLETENESS-FRONTIER.47`, generated single-beat
-`RDATA`/`RRESP` capture behavior.
+directly with no new IAL1/IAL0/SystemVerilog prerequisite. Slice `.47` now
+ships that behavior: generated `RDATA`/`RRESP` inputs, per-transaction
+data/status outputs, normal guarded capture assignments under generated read
+completion pulses, generated artifact report lists, and
+`read_data.generated_behavior: true` with generated-capture residue removed.
+The current frontier is `IAL2-FEATURE-COMPLETENESS-FRONTIER.48`, selecting
+the next SV-backed IAL2 feature-completeness slice.
 The shipped public capacity/status source accepts one
 `(manager-capacity-status NAME ...)` object under
 `(protocol-platform-intent ...)`, `(profile axi4)`, and top-level source
@@ -1127,9 +1130,10 @@ ordering/reassembly ownership after generated read demux. `.43` selected
 `.44`, the bounded public read-data payload/status contract selector, before
 parser/report metadata or generated behavior changes. `.44` selected
 `.45`, parser/report metadata and static validation for explicit
-single-beat `read-data` syntax. `.45` shipped that metadata, and `.46`
-selected direct generated single-beat `RDATA`/`RRESP` capture behavior as
-`.47` with no new IAL1/IAL0/SystemVerilog prerequisite. Full-manager
+single-beat `read-data` syntax. `.45` shipped that metadata, `.46`
+selected direct generated single-beat `RDATA`/`RRESP` capture behavior, and
+`.47` shipped the generated capture implementation with no new
+IAL1/IAL0/SystemVerilog prerequisite. Full-manager
 behavior, profile aliases, queued/blocking policy, direct backend lowering,
 and VHDL remain residue.
 

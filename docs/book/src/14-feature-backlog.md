@@ -3353,7 +3353,7 @@ ppif/axi_manager_capacity_status_read_data.ppif
 ```
 
 The sample keeps the generated read `RID` response-demux behavior and adds the
-structural read-data AST. Schedule JSON reports:
+structural read-data AST. At the metadata boundary, schedule JSON reported:
 
 ```text
 read_data:
@@ -3370,12 +3370,10 @@ read_data:
     interleaving_policy: single_beat_by_rid
 ```
 
-The report also lists transaction-bound data/status outputs for `r0` and
-`r1`, each tied to the generated read-demux completion pulse. Generated
-`RDATA`/`RRESP` capture behavior is still not claimed: generated `.isf`,
-`.fsm`, and HDL remain unchanged from the read response-demux sample, and
-`read_data.residue` lists generated capture plus `RLAST`, burst, and
-multi-beat reassembly work.
+The report also listed transaction-bound data/status outputs for `r0` and
+`r1`, each tied to the generated read-demux completion pulse. The follow-up
+behavior slice below now claims generated `RDATA`/`RRESP` capture behavior for
+that same public contract.
 
 Response-demux behavior readiness audit:
 [AXI_IAL2_MANAGER_WRITE_RESPONSE_DEMUX_BEHAVIOR_READINESS_AUDIT](../../AXI_IAL2_MANAGER_WRITE_RESPONSE_DEMUX_BEHAVIOR_READINESS_AUDIT.md)
@@ -3387,9 +3385,12 @@ shipped as a bounded rule-owned `(pulse target)` action that lowers through the
 existing delayed-pulse path. The generated write `BID` demux behavior is now
 shipped through that pulse-completion path.
 
-Generated data-capture behavior, same-ID response ordering queues, read-data
-interleaving/reassembly, bursts, queued/blocking policy, profile aliases, full
-AXI manager behavior, and VHDL remain future exact-owner work.
+At the time of the write-demux readiness audit, generated data-capture
+behavior still needed a later exact owner. That owner is now shipped for the
+bounded single-beat `read-data` contract below. Same-ID response ordering
+queues, read-data interleaving/reassembly, bursts, queued/blocking policy,
+profile aliases, full AXI manager behavior, and VHDL remain future exact-owner
+work.
 
 Read-data capture readiness audit:
 [AXI_IAL2_MANAGER_READ_DATA_CAPTURE_READINESS_AUDIT](../../AXI_IAL2_MANAGER_READ_DATA_CAPTURE_READINESS_AUDIT.md)
@@ -3404,6 +3405,55 @@ payload/status outputs are held captured values, not one-cycle completion
 pulses. `RLAST`, bursts, multi-beat read-data reassembly, per-ID queues,
 full-manager behavior, direct backend lowering, and VHDL remain future
 exact-owner work.
+
+Read-data capture behavior first slice:
+[AXI_IAL2_MANAGER_READ_DATA_BEHAVIOR_FIRST_SLICE](../../AXI_IAL2_MANAGER_READ_DATA_BEHAVIOR_FIRST_SLICE.md)
+now ships generated single-beat `RDATA`/`RRESP` capture for explicit
+`read-data` contracts. The generated IAL1 review artifact declares
+width-bearing source inputs:
+
+```text
+(input axi0_rdata (width 32))
+(input axi0_rresp (width 2))
+```
+
+and transaction-bound capture outputs:
+
+```text
+(output axi0_r0_rdata (width 32))
+(output axi0_r0_rresp (width 2))
+```
+
+Each covered read transaction gets one normal guarded capture rule:
+
+```text
+(rule axi0_r0_read_data_capture axi0_r0_complete
+  (axi0_r0_rdata axi0_rdata)
+  (axi0_r0_rresp axi0_rresp))
+```
+
+The guard is the generated read response-demux completion pulse, while the
+payload/status assignments are ordinary held assignments. The generated `.fsm`
+contains the corresponding capture assignments:
+
+```text
+(-axi0_r0_read_data_capture <axi0_r0_complete
+  (<- (axi0_r0_rdata> axi0_rdata))
+  (<- (axi0_r0_rresp> axi0_rresp)))
+```
+
+SystemVerilog exposes `axi0_rdata` and `axi0_rresp` as inputs, exposes each
+transaction-bound captured payload/status as flopped outputs, and passes
+`--verify-hdl` for:
+
+```bash
+./bin/fsmgen --quiet --verify-hdl ppif/axi_manager_capacity_status_read_data.ppif
+```
+
+Schedule JSON now reports `read_data.generated_behavior: true` with
+`generated_inputs`, `generated_outputs`, and `generated_rules`. The
+`read_data.residue` list removes `generated_read_data_capture` and retains
+`rlast_completion`, `bursts`, and `multi_beat_read_data_reassembly`.
 
 First implementation subset selection:
 [AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION](../../AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md)
@@ -5796,6 +5846,9 @@ read-data capture behavior unchanged, and advances the active frontier to
 Completed readiness audit `IAL2-FEATURE-COMPLETENESS-FRONTIER.46` selects
 generated single-beat `RDATA`/`RRESP` capture behavior and advances the active
 frontier to `.47`.
+Completed implementation leaf `IAL2-FEATURE-COMPLETENESS-FRONTIER.47` ships
+generated single-beat `RDATA`/`RRESP` capture behavior and advances the active
+frontier to `.48`.
 Completed implementation leaf
 `ARCHITECTURE-DEBT-FRONTIER.2.1`
 projects direct backend storage/helper declaration-plan entries into

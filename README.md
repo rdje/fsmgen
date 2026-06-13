@@ -235,16 +235,19 @@ syntax for single-beat `RDATA`/`RRESP` capture, with generated read
 response-demux as the completion source and `RLAST`/bursts deferred. The
 `.45` slice now ships parser/report metadata and static validation for that
 read-data contract: `.ppif` accepts the structural `read-data` AST form,
-schedule JSON reports `read_data.generated_behavior: false`, check JSON and
-semantic JSON support-account the new sample, and generated `.isf`, `.fsm`,
-and HDL behavior remain unchanged from the read response-demux sample.
+check JSON and semantic JSON support-account the new sample, and generated
+behavior was initially deferred behind the `.46` readiness audit.
 Readiness audit `.46` concluded that generated single-beat `RDATA`/`RRESP`
 capture can be implemented directly with no new IAL1/IAL0/SystemVerilog
 prerequisite: existing width-bearing IAL1 inputs/outputs and normal guarded
 rule assignments can hold captured payload/status values under the generated
-read demux completion pulse. The current frontier is
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.47`, generated single-beat read-data
-capture behavior.
+read demux completion pulse. Slice `.47` now ships that behavior: explicit
+`read-data` contracts generate width-bearing `RDATA`/`RRESP` inputs,
+per-transaction data/status outputs, one normal guarded capture rule per read
+transaction, schedule JSON generated artifact lists, and
+`read_data.generated_behavior: true` with generated-capture residue removed.
+The current frontier is `IAL2-FEATURE-COMPLETENESS-FRONTIER.48`, selecting
+the next SV-backed IAL2 feature-completeness slice.
 Full-manager behavior, profile aliases, queued/blocking policy, direct
 backend lowering, and VHDL remain residue. VHDL remains behind SV-backed IAL
 feature completeness.
@@ -324,10 +327,11 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 70. `docs/AXI_IAL2_MANAGER_READ_DATA_CONTRACT_SELECTION.md`: selected explicit bounded `read-data` syntax for single-beat `RDATA`/`RRESP` metadata.
 71. `docs/AXI_IAL2_MANAGER_READ_DATA_METADATA_FIRST_SLICE.md`: shipped read-data parser/report metadata and static validation without generated data-capture behavior.
 72. `docs/AXI_IAL2_MANAGER_READ_DATA_CAPTURE_READINESS_AUDIT.md`: readiness audit selecting direct generated single-beat `RDATA`/`RRESP` capture behavior before implementation.
-73. `docs/AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md`: selected first AXI-derived IAL2 implementation subset and pre-code contract.
-74. `docs/AXI_IAL2_VALID_READY_READINESS_AUDIT.md`: code/test/docs/report owner map for the future AXI Valid-Ready IAL2 implementation.
-75. `docs/AXI_IAL2_VALID_READY_GENERATOR_FIRST_SLICE.md`: first in-process AXI Valid-Ready IAL2 generator slice and report surface.
-76. `docs/decisions/0016-ppif-is-first-public-ial2-container.md`: selects `.ppif` as the first public generic IAL2 file surface.
+73. `docs/AXI_IAL2_MANAGER_READ_DATA_BEHAVIOR_FIRST_SLICE.md`: shipped generated single-beat `RDATA`/`RRESP` capture behavior for explicit `read-data` contracts.
+74. `docs/AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md`: selected first AXI-derived IAL2 implementation subset and pre-code contract.
+75. `docs/AXI_IAL2_VALID_READY_READINESS_AUDIT.md`: code/test/docs/report owner map for the future AXI Valid-Ready IAL2 implementation.
+76. `docs/AXI_IAL2_VALID_READY_GENERATOR_FIRST_SLICE.md`: first in-process AXI Valid-Ready IAL2 generator slice and report surface.
+77. `docs/decisions/0016-ppif-is-first-public-ial2-container.md`: selects `.ppif` as the first public generic IAL2 file surface.
 77. `docs/IAL2_PPIF_PARSER_CLI_FIRST_SLICE.md`: first public `.ppif` parser/CLI slice for one AXI Valid-Ready source object.
 78. `docs/IAL2_PPIF_MULTI_VALID_READY_READINESS.md`: readiness map for future multi-channel `.ppif` Valid-Ready support.
 79. `docs/IAL2_PPIF_VALID_READY_BUNDLE_CONTRACT_SELECTION.md`: selected future aggregate bundle contract for multi-channel `.ppif` Valid-Ready support.
@@ -816,6 +820,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/AXI_IAL2_MANAGER_READ_DATA_CONTRACT_SELECTION.md` — selected bounded single-beat `read-data` syntax for `RDATA`/`RRESP` capture before parser/report implementation.
 - `docs/AXI_IAL2_MANAGER_READ_DATA_METADATA_FIRST_SLICE.md` — shipped structural `read_data` parser/report metadata and static validation without generated capture behavior.
 - `docs/AXI_IAL2_MANAGER_READ_DATA_CAPTURE_READINESS_AUDIT.md` — readiness audit selecting generated single-beat `RDATA`/`RRESP` capture behavior with no new IAL1/IAL0/SystemVerilog prerequisite.
+- `docs/AXI_IAL2_MANAGER_READ_DATA_BEHAVIOR_FIRST_SLICE.md` — shipped generated single-beat `RDATA`/`RRESP` capture behavior for explicit `read-data` contracts.
 - `docs/AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md` — selected first AXI-derived IAL2 implementation subset and pre-code contract.
 - `docs/AXI_IAL2_VALID_READY_READINESS_AUDIT.md` — code/test/docs/report owner map for a future AXI Valid-Ready IAL2 implementation slice.
 - `docs/AXI_IAL2_VALID_READY_GENERATOR_FIRST_SLICE.md` — first in-process AXI Valid-Ready IAL2 generator slice and report surface.

@@ -5,7 +5,6 @@ answers:
   - "what did IAL2-FEATURE-COMPLETENESS-FRONTIER.45 ship?"
   - "is AXI read-data metadata supported?"
   - "what does the read_data report contain?"
-  - "does read-data generate RDATA capture yet?"
   - "what is ppif/axi_manager_capacity_status_read_data.ppif?"
 date: 2026-06-12
 status: current
@@ -37,10 +36,11 @@ The public `.ppif` surface now accepts one optional `read-data` clause under
       (status-output axi0_r1_rresp))))
 ```
 
-The generator reports structural `read_data` metadata with
-`generated_behavior: false`. The report names the `RDATA` signal and width,
-the 2-bit `RRESP` signal, the generated read response-demux completion pulse
-as validity source, and transaction-bound data/status output names.
+At the `.45` metadata boundary, the generator reported structural
+`read_data` metadata with `generated_behavior: false`. The report named the
+`RDATA` signal and width, the 2-bit `RRESP` signal, the generated read
+response-demux completion pulse as validity source, and transaction-bound
+data/status output names.
 
 The checked-in runnable sample is:
 
@@ -48,11 +48,12 @@ The checked-in runnable sample is:
 ppif/axi_manager_capacity_status_read_data.ppif
 ```
 
-Generated `RDATA`/`RRESP` capture is not shipped yet. The `.45` tests prove
-the generated `.isf`, `.fsm`, and HDL behavior remains unchanged from the read
-response-demux sample. `read_data.residue` includes
+Generated `RDATA`/`RRESP` capture was not shipped in `.45`. The `.45` tests
+proved the generated `.isf`, `.fsm`, and HDL behavior remained unchanged from
+the read response-demux sample. At that boundary, `read_data.residue` included
 `generated_read_data_capture`, `rlast_completion`, `bursts`, and
 `multi_beat_read_data_reassembly`.
 
-The next leaf is `IAL2-FEATURE-COMPLETENESS-FRONTIER.46`, a readiness audit
-for generated single-beat read-data capture behavior.
+Generated capture is now shipped by `IAL2-FEATURE-COMPLETENESS-FRONTIER.47`;
+see `docs/knowledge/ial2-axi-manager-read-data-behavior-first-slice.md` for
+the current behavior contract.
