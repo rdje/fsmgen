@@ -152,6 +152,13 @@ sub _normalize_contract($raw) {
             auto_id_lifecycle  => $auto_id_lifecycle,
         )
         : undef;
+    my $read_data = exists($raw->{read_data})
+        ? _normalize_read_data(
+            raw_read_data  => $raw->{read_data},
+            transactions   => $transactions,
+            response_demux => $response_demux,
+        )
+        : undef;
     my $transaction_event_dispatch = _build_transaction_event_dispatch(
         events       => \%events,
         transactions => $transactions,
@@ -177,6 +184,7 @@ sub _normalize_contract($raw) {
         transactions => $transactions,
         auto_id_lifecycle => $auto_id_lifecycle,
         response_demux => $response_demux,
+        read_data => $read_data,
     );
 
     my $source = ref($raw->{source}) eq 'HASH' ? $raw->{source} : {};
@@ -214,6 +222,7 @@ sub _normalize_contract($raw) {
         transactions      => $transactions,
         auto_id_lifecycle => $auto_id_lifecycle,
         response_demux    => $response_demux,
+        read_data         => $read_data,
         same_id_ordering  => $same_id_ordering,
         transaction_event_dispatch => $transaction_event_dispatch,
         id_response_rule_engine => $id_response_rule_engine,
@@ -228,7 +237,7 @@ sub _normalize_contract($raw) {
 sub _reject_unsupported_top_level_fields($raw) {
     my %allowed = map { $_ => 1 } qw(
         actor_name auto_id_lifecycle clock intent_name name protocol read_complete
-        read_max_pending read_submit reset response_demux source source_object_id status
+        read_data read_max_pending read_submit reset response_demux source source_object_id status
         submit_policy id_families transactions write_complete write_max_pending
         write_submit
     );
@@ -845,6 +854,152 @@ sub _normalize_response_demux_read(%args) {
     };
 }
 
+sub _normalize_read_data(%args) {
+    my $raw = $args{raw_read_data};
+    confess "AXI manager capacity/status IAL2 contract field 'read_data' must be a hash reference\n"
+        unless ref($raw) eq 'HASH';
+
+    for my $family (sort keys %$raw) {
+        confess "AXI manager capacity/status IAL2 contract read_data has unsupported family '$family'; supported family: read\n"
+            unless $family eq 'read';
+    }
+    confess "AXI manager capacity/status IAL2 contract read_data requires a read family\n"
+        unless exists $raw->{read};
+    confess "AXI manager capacity/status IAL2 contract read_data requires generated read response_demux metadata\n"
+        unless ref($args{response_demux}) eq 'HASH'
+            && ref($args{response_demux}{read}) eq 'HASH'
+            && $args{response_demux}{read}{generated_behavior};
+    confess "AXI manager capacity/status IAL2 contract read_data requires transactions metadata\n"
+        unless ref($args{transactions}) eq 'ARRAY';
+
+    return {
+        mode               => 'bounded_single_beat_read_data_contract',
+        generated_behavior => 0,
+        read               => _normalize_read_data_read(
+            raw_read       => $raw->{read},
+            transactions   => $args{transactions},
+            response_demux => $args{response_demux}{read},
+        ),
+        residue => [
+            'generated_read_data_capture',
+            'rlast_completion',
+            'bursts',
+            'multi_beat_read_data_reassembly',
+        ],
+    };
+}
+
+sub _normalize_read_data_read(%args) {
+    my $raw = $args{raw_read};
+    confess "AXI manager capacity/status IAL2 contract read_data.read must be a hash reference\n"
+        unless ref($raw) eq 'HASH';
+
+    my %allowed = map { $_ => 1 } qw(
+        capture_scope completion_source data_signal data_width status_signal
+        status_width interleaving transactions
+    );
+    for my $field (sort keys %$raw) {
+        confess "AXI manager capacity/status IAL2 contract read_data.read unsupported field '$field'\n"
+            unless $allowed{$field};
+    }
+
+    for my $required (qw(capture_scope completion_source data_signal data_width status_signal status_width interleaving transactions)) {
+        confess "AXI manager capacity/status IAL2 contract read_data.read is missing required field '$required'\n"
+            unless exists $raw->{$required};
+    }
+
+    my $capture_scope = _nonempty_scalar($raw->{capture_scope}, 'read_data.read.capture_scope');
+    confess "AXI manager capacity/status IAL2 contract read_data.read.capture_scope must be single-beat in this slice\n"
+        unless $capture_scope eq 'single-beat';
+
+    my $completion_source = _nonempty_scalar($raw->{completion_source}, 'read_data.read.completion_source');
+    confess "AXI manager capacity/status IAL2 contract read_data.read.completion_source must be response-demux in this slice\n"
+        unless $completion_source eq 'response-demux';
+
+    my $interleaving = _nonempty_scalar($raw->{interleaving}, 'read_data.read.interleaving');
+    confess "AXI manager capacity/status IAL2 contract read_data.read.interleaving must be single-beat-by-rid in this slice\n"
+        unless $interleaving eq 'single-beat-by-rid';
+
+    my $data_signal = _identifier_value($raw->{data_signal}, 'read_data.read.data_signal');
+    my $data_width = _positive_integer($raw->{data_width}, 'read_data.read.data_width');
+    my $status_signal = _identifier_value($raw->{status_signal}, 'read_data.read.status_signal');
+    my $status_width = _positive_integer($raw->{status_width}, 'read_data.read.status_width');
+    confess "AXI manager capacity/status IAL2 contract read_data.read.status_width must be 2 in this slice\n"
+        unless $status_width == 2;
+
+    my $raw_transactions = $raw->{transactions};
+    confess "AXI manager capacity/status IAL2 contract read_data.read.transactions must be an array reference\n"
+        unless ref($raw_transactions) eq 'ARRAY';
+    confess "AXI manager capacity/status IAL2 contract read_data.read requires at least one transaction binding\n"
+        unless @$raw_transactions;
+
+    my %transaction_by_name = map { $_->{name} => $_ } @{$args{transactions}};
+    my @covered_transactions = @{$args{response_demux}{auto_transactions} || []};
+    my %covered = map { $_ => 1 } @covered_transactions;
+    my (%seen, @transactions);
+    for my $index (0 .. $#$raw_transactions) {
+        my $raw_transaction = $raw_transactions->[$index];
+        confess "AXI manager capacity/status IAL2 contract read_data.read.transactions[$index] must be a hash reference\n"
+            unless ref($raw_transaction) eq 'HASH';
+        my %transaction_allowed = map { $_ => 1 } qw(transaction data_output status_output);
+        for my $field (sort keys %$raw_transaction) {
+            confess "AXI manager capacity/status IAL2 contract read_data.read.transactions[$index] unsupported field '$field'\n"
+                unless $transaction_allowed{$field};
+        }
+        for my $required (qw(transaction data_output status_output)) {
+            confess "AXI manager capacity/status IAL2 contract read_data.read.transactions[$index] is missing required field '$required'\n"
+                unless exists $raw_transaction->{$required};
+        }
+
+        my $transaction_name = _identifier_value(
+            $raw_transaction->{transaction},
+            "read_data.read.transactions[$index].transaction",
+        );
+        confess "AXI manager capacity/status IAL2 contract read_data.read duplicates transaction '$transaction_name'\n"
+            if $seen{$transaction_name}++;
+        confess "AXI manager capacity/status IAL2 contract read_data.read transaction '$transaction_name' is not covered by generated read response_demux auto transactions\n"
+            unless $covered{$transaction_name};
+        my $transaction = $transaction_by_name{$transaction_name};
+        confess "AXI manager capacity/status IAL2 contract read_data.read transaction '$transaction_name' is missing from transactions metadata\n"
+            unless ref($transaction) eq 'HASH';
+        confess "AXI manager capacity/status IAL2 contract read_data.read transaction '$transaction_name' must be a read transaction\n"
+            unless ($transaction->{kind} // '') eq 'read';
+
+        push @transactions, {
+            transaction       => $transaction_name,
+            completion_signal => $transaction->{completion_event},
+            data_output       => _identifier_value(
+                $raw_transaction->{data_output},
+                "read_data.read.transactions[$index].data_output",
+            ),
+            status_output     => _identifier_value(
+                $raw_transaction->{status_output},
+                "read_data.read.transactions[$index].status_output",
+            ),
+            data_width        => $data_width,
+            status_width      => $status_width,
+        };
+    }
+
+    my @missing = grep { !$seen{$_} } @covered_transactions;
+    confess "AXI manager capacity/status IAL2 contract read_data.read transaction coverage is missing read response_demux auto transaction(s): " . join(', ', @missing) . "\n"
+        if @missing;
+
+    return {
+        capture_scope        => 'single_beat',
+        completion_source    => 'response_demux',
+        completion_validity  => 'generated_read_response_demux_completion_pulse',
+        data_signal          => $data_signal,
+        data_signal_width    => $data_width,
+        data_signal_direction => 'generated_input',
+        status_signal        => $status_signal,
+        status_signal_width  => $status_width,
+        status_signal_direction => 'generated_input',
+        interleaving_policy  => 'single_beat_by_rid',
+        transactions         => \@transactions,
+    };
+}
+
 sub _auto_id_lifecycle_family_by_name($auto_id_lifecycle, $family_name) {
     return undef unless ref($auto_id_lifecycle) eq 'HASH';
     for my $family (@{$auto_id_lifecycle->{families} || []}) {
@@ -1108,6 +1263,8 @@ sub _reject_forbidden_or_duplicate_names(%args) {
         if defined $args{auto_id_lifecycle};
     push @groups, [response_demux => _response_demux_generated_signal_names($args{response_demux})]
         if defined $args{response_demux};
+    push @groups, [read_data => _read_data_signal_names($args{read_data})]
+        if defined $args{read_data};
 
     for my $group (@groups) {
         my ($kind, $names) = @$group;
@@ -1184,6 +1341,21 @@ sub _response_demux_generated_signal_names($response_demux) {
         push @signals, @{$entry->{generated_completion_signals} || []};
     }
     return _clone_jsonish(\@signals);
+}
+
+sub _read_data_signal_names($read_data) {
+    return [] unless ref($read_data) eq 'HASH';
+
+    my @signals;
+    my $read = $read_data->{read};
+    if (ref($read) eq 'HASH') {
+        push @signals, grep { defined $_ } $read->{data_signal}, $read->{status_signal};
+        for my $transaction (@{$read->{transactions} || []}) {
+            push @signals, grep { defined $_ } $transaction->{data_output}, $transaction->{status_output};
+        }
+    }
+
+    return \@signals;
 }
 
 sub _normalize_source_anchors($anchors) {
@@ -1853,6 +2025,9 @@ sub _build_report(%args) {
         (defined $contract->{response_demux}
             ? (response_demux => _report_response_demux($contract))
             : ()),
+        (defined $contract->{read_data}
+            ? (read_data => _report_read_data($contract))
+            : ()),
         (defined $contract->{same_id_ordering}
             ? (same_id_ordering => _report_same_id_ordering($contract))
             : ()),
@@ -1941,6 +2116,10 @@ sub _build_report(%args) {
             'response_demux.read requires response_event equal to read_complete, response_scope single_beat, read ID-family metadata, read transactions, and read auto_id_lifecycle metadata',
             'response_demux.read generates bounded single-beat read RID demux behavior for explicit opt-in contracts',
             'response_demux transaction_completion must be generated, making selected transaction completion names generated demux pulse outputs only under explicit opt-in contracts',
+            'read_data requires generated read response_demux metadata and explicit single-beat capture/source policy',
+            'read_data.read data width must be positive and status width must be 2',
+            'read_data.read transaction outputs must exactly cover read response_demux auto transactions',
+            'read_data parser/report metadata is structural only; generated RDATA/RRESP capture remains residue',
         ],
         unsupported_residue => [
             {
@@ -1949,7 +2128,7 @@ sub _build_report(%args) {
             },
             {
                 id     => 'axi_id_ordering_and_response_matching',
-                detail => 'Concrete transaction ID request/response assertions, explicit bounded auto-ID request-ID drive plus completion-event release, generated auto-ID same-ID avoidance, generated write BID response demux, and generated single-beat read RID response demux are supported; dynamic user-ID arbitration while issuing multiple same-family requests in one cycle, per-ID same-ID response queues, different-ID interleaving, read-data interleaving/reassembly, and burst/last-beat tracking remain outside this capacity/status shell.',
+                detail => 'Concrete transaction ID request/response assertions, explicit bounded auto-ID request-ID drive plus completion-event release, generated auto-ID same-ID avoidance, generated write BID response demux, generated single-beat read RID response demux, and structural single-beat read-data parser/report metadata are supported; generated RDATA/RRESP capture, dynamic user-ID arbitration while issuing multiple same-family requests in one cycle, per-ID same-ID response queues, different-ID interleaving, read-data interleaving/reassembly, and burst/last-beat tracking remain outside this capacity/status shell.',
             },
             {
                 id     => 'profile_aliases_and_full_manager_behavior',
@@ -2013,6 +2192,14 @@ sub _report_response_demux($contract) {
         ];
     }
     return $demux;
+}
+
+sub _report_read_data($contract) {
+    my $read_data = _clone_jsonish($contract->{read_data});
+    $read_data->{generated_behavior} = $contract->{read_data}{generated_behavior}
+        ? JSON::PP::true
+        : JSON::PP::false;
+    return $read_data;
 }
 
 sub _same_id_ordering_covers_response_demux_family($contract, $family_name) {

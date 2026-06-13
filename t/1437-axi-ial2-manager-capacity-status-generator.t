@@ -524,6 +524,35 @@ subtest 'read response-demux contract generates bounded read RID demux behavior'
     like($sv_assertions, qr/axi0 read auto ID active selected IDs are unique/, 'assertion backend emits read same-ID avoidance assertion');
 };
 
+subtest 'read-data contract reports structural metadata without generated artifact drift' => sub {
+    my $base = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_read_response_demux());
+    my $result = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_read_data());
+    my $isf = $result->{generated_ial1}{text};
+
+    is(
+        $isf,
+        $base->{generated_ial1}{text},
+        'read-data parser/report metadata does not alter generated IAL1 text',
+    );
+    is_deeply(
+        $result->{generated_ial0}{files},
+        $base->{generated_ial0}{files},
+        'read-data parser/report metadata does not alter generated IAL0 text',
+    );
+    unlike($isf, qr/\(input axi0_rdata\b/, 'read-data metadata does not generate RDATA input yet');
+    unlike($isf, qr/\(input axi0_rresp\b/, 'read-data metadata does not generate RRESP input yet');
+    unlike($isf, qr/\(output axi0_r0_rdata\b/, 'read-data metadata does not generate transaction data output yet');
+    unlike($isf, qr/\(output axi0_r0_rresp\b/, 'read-data metadata does not generate transaction status output yet');
+
+    assert_read_response_demux_report($result->{report}{response_demux}, 'generator read-data report');
+    assert_read_data_report($result->{report}{read_data}, 'generator report');
+    is_deeply(
+        $result->{report}{response_demux}{residue},
+        [qw(read_data_interleaving bursts)],
+        'read-data metadata keeps response-demux read-data/interleaving residue until generated capture ships',
+    );
+};
+
 subtest 'mixed read/write response-demux keeps write behavior and adds read behavior' => sub {
     my $result = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_mixed_response_demux());
     my $isf = $result->{generated_ial1}{text};
@@ -676,6 +705,19 @@ subtest 'malformed contract objects fail closed and no direct lower-to-fsm entry
             };
             $c;
         }, qr/response_demux\.read requires read auto_id_lifecycle metadata/],
+        ['read data unsupported family', sub { my $c = sample_contract_with_read_response_demux(); $c->{read_data} = { write => {} }; $c }, qr/read_data has unsupported family 'write'/],
+        ['read data without read response demux', sub {
+            my $c = sample_contract_with_read_auto_id_lifecycle();
+            $c->{read_data} = sample_contract_with_read_data()->{read_data};
+            $c;
+        }, qr/read_data requires generated read response_demux metadata/],
+        ['read data unsupported capture scope', sub { my $c = sample_contract_with_read_data(); $c->{read_data}{read}{capture_scope} = 'burst'; $c }, qr/read_data\.read\.capture_scope must be single-beat/],
+        ['read data unsupported completion source', sub { my $c = sample_contract_with_read_data(); $c->{read_data}{read}{completion_source} = 'read-complete'; $c }, qr/read_data\.read\.completion_source must be response-demux/],
+        ['read data zero data width', sub { my $c = sample_contract_with_read_data(); $c->{read_data}{read}{data_width} = 0; $c }, qr/read_data\.read\.data_width.*positive integer/],
+        ['read data bad status width', sub { my $c = sample_contract_with_read_data(); $c->{read_data}{read}{status_width} = 1; $c }, qr/read_data\.read\.status_width must be 2/],
+        ['read data unknown transaction', sub { my $c = sample_contract_with_read_data(); $c->{read_data}{read}{transactions}[0]{transaction} = 'r2'; $c }, qr/read_data\.read transaction 'r2' is not covered/],
+        ['read data missing covered transaction', sub { my $c = sample_contract_with_read_data(); pop @{$c->{read_data}{read}{transactions}}; $c }, qr/read_data\.read transaction coverage is missing read response_demux auto transaction\(s\): r1/],
+        ['read data output collision', sub { my $c = sample_contract_with_read_data(); $c->{read_data}{read}{transactions}[0]{data_output} = 'axi0_rid'; $c }, qr/duplicates signal 'axi0_rid'/],
         ['response demux without ID-family metadata', sub { my $c = sample_contract(); $c->{response_demux} = { write => { response_event => 'axi0_write_complete', transaction_completion => 'generated' } }; $c }, qr/response_demux requires id_families metadata/],
         ['response demux without transaction metadata', sub { my $c = sample_contract_with_id_families(); $c->{response_demux} = { write => { response_event => 'axi0_write_complete', transaction_completion => 'generated' } }; $c }, qr/response_demux requires transactions metadata/],
         ['response demux without auto lifecycle metadata', sub { my $c = sample_contract_with_transactions(); $c->{response_demux} = { write => { response_event => 'axi0_write_complete', transaction_completion => 'generated' } }; $c }, qr/response_demux requires auto_id_lifecycle metadata/],
@@ -879,6 +921,36 @@ sub sample_contract_with_read_response_demux {
     return $contract;
 }
 
+sub sample_contract_with_read_data {
+    my $contract = sample_contract_with_read_response_demux();
+    $contract->{intent_name} = 'axi_manager_capacity_status_read_data';
+    $contract->{source}{object_id} = 'axi-manager-capacity-status-read-data';
+    $contract->{read_data} = {
+        read => {
+            capture_scope => 'single-beat',
+            completion_source => 'response-demux',
+            data_signal => 'axi0_rdata',
+            data_width => 32,
+            status_signal => 'axi0_rresp',
+            status_width => 2,
+            interleaving => 'single-beat-by-rid',
+            transactions => [
+                {
+                    transaction => 'r0',
+                    data_output => 'axi0_r0_rdata',
+                    status_output => 'axi0_r0_rresp',
+                },
+                {
+                    transaction => 'r1',
+                    data_output => 'axi0_r1_rdata',
+                    status_output => 'axi0_r1_rresp',
+                },
+            ],
+        },
+    };
+    return $contract;
+}
+
 sub sample_contract_with_mixed_response_demux {
     my $contract = sample_contract_with_id_families();
     $contract->{intent_name} = 'axi_manager_capacity_status_mixed_response_demux';
@@ -982,6 +1054,48 @@ sub assert_read_response_demux_report {
         $demux->{residue},
         [qw(read_data_interleaving bursts)],
         "$owner removes generated read RID demux behavior from residue",
+    );
+}
+
+sub assert_read_data_report {
+    my ($read_data, $owner) = @_;
+    is($read_data->{mode}, 'bounded_single_beat_read_data_contract', "$owner marks bounded single-beat read-data contract mode");
+    ok(!$read_data->{generated_behavior}, "$owner marks generated behavior false");
+    my $read = $read_data->{read};
+    is($read->{capture_scope}, 'single_beat', "$owner reports single-beat capture scope");
+    is($read->{completion_source}, 'response_demux', "$owner reports response-demux completion source");
+    is($read->{completion_validity}, 'generated_read_response_demux_completion_pulse', "$owner reports generated demux pulse validity");
+    is($read->{data_signal}, 'axi0_rdata', "$owner reports RDATA signal");
+    is($read->{data_signal_width}, 32, "$owner reports RDATA width");
+    is($read->{data_signal_direction}, 'generated_input', "$owner reports RDATA generated-input direction");
+    is($read->{status_signal}, 'axi0_rresp', "$owner reports RRESP status signal");
+    is($read->{status_signal_width}, 2, "$owner reports RRESP status width");
+    is($read->{status_signal_direction}, 'generated_input', "$owner reports RRESP generated-input direction");
+    is($read->{interleaving_policy}, 'single_beat_by_rid', "$owner reports single-beat-by-RID interleaving policy");
+    is_deeply(
+        [map { $_->{transaction} } @{$read->{transactions}}],
+        [qw(r0 r1)],
+        "$owner reports read-data transaction bindings in source order",
+    );
+    is_deeply(
+        [map { $_->{completion_signal} } @{$read->{transactions}}],
+        [qw(axi0_r0_complete axi0_r1_complete)],
+        "$owner binds read-data validity to generated demux completion pulses",
+    );
+    is_deeply(
+        [map { $_->{data_output} } @{$read->{transactions}}],
+        [qw(axi0_r0_rdata axi0_r1_rdata)],
+        "$owner reports transaction data outputs",
+    );
+    is_deeply(
+        [map { $_->{status_output} } @{$read->{transactions}}],
+        [qw(axi0_r0_rresp axi0_r1_rresp)],
+        "$owner reports transaction status outputs",
+    );
+    is_deeply(
+        $read_data->{residue},
+        [qw(generated_read_data_capture rlast_completion bursts multi_beat_read_data_reassembly)],
+        "$owner reports generated capture and burst/reassembly residue",
     );
 }
 

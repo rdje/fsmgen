@@ -259,6 +259,32 @@ subtest 'PPIF adapter parses AXI manager read response-demux behavior' => sub {
     is_deeply($result->{report}{auto_id_lifecycle}{residue}, [], 'adapter report removes response_demux and same-ID residue from read auto-ID lifecycle residue');
 };
 
+subtest 'PPIF adapter parses AXI manager read-data metadata without generated artifact drift' => sub {
+    my $sample_path = sample_capacity_read_data_ppif_path();
+    ok(-f $sample_path, 'tracked runnable PPIF capacity/status read-data sample exists');
+
+    my $base = FSM::Adapter::IAL2::PPIF->new()->parse_source(sample_capacity_read_response_demux_ppif(), sample_capacity_read_response_demux_ppif_path());
+    my $result = FSM::Adapter::IAL2::PPIF->new()->parse_source(sample_capacity_read_data_ppif(), $sample_path);
+
+    is($result->{kind}, 'protocol_intent.axi_manager_capacity_status', 'read-data sample still uses the capacity/status generator');
+    is($result->{report}{source_object}{id}, 'axi-manager-capacity-status-read-data', 'read-data source object id is preserved');
+    is($result->{report}{source_object}{intent_name}, 'axi_manager_capacity_status_read_data', 'read-data source intent name is preserved');
+    is(
+        $result->{generated_ial1}{text},
+        $base->{generated_ial1}{text},
+        'read-data PPIF metadata leaves generated IAL1 text unchanged',
+    );
+    is_deeply(
+        $result->{generated_ial0}{files},
+        $base->{generated_ial0}{files},
+        'read-data PPIF metadata leaves generated IAL0 text unchanged',
+    );
+    unlike($result->{generated_ial1}{text}, qr/\(input axi0_rdata\b/, 'read-data PPIF does not generate RDATA input yet');
+    unlike($result->{generated_ial1}{text}, qr/\(output axi0_r0_rdata\b/, 'read-data PPIF does not generate transaction RDATA output yet');
+    assert_read_response_demux_report($result->{report}{response_demux}, 'adapter read-data report');
+    assert_read_data_report($result->{report}{read_data}, 'adapter report');
+};
+
 subtest 'PPIF adapter parses mixed AXI manager response-demux arms' => sub {
     my $source = capacity_ppif_with_objects(
         manager_capacity_object_with_mixed_response_demux(
@@ -464,6 +490,42 @@ subtest 'PPIF adapter diagnostics fail closed before generation claims' => sub {
                 '(write (response-event axi0_write_complete) (transaction-completion generated))',
             )),
             qr/response_demux requires auto_id_lifecycle metadata/],
+        ['duplicate manager read-data clause',
+            capacity_ppif_with_objects(manager_capacity_object_with_duplicate_read_data()),
+            qr/duplicate \(read-data \.\.\.\) clause/],
+        ['unsupported manager read-data family',
+            capacity_ppif_with_objects(manager_capacity_object_with_read_data('(write (capture-scope single-beat))')),
+            qr/unsupported family clause '\(write \.\.\.\)'; this slice supports \(read \.\.\.\)/],
+        ['duplicate manager read-data read family',
+            capacity_ppif_with_objects(manager_capacity_object_with_read_data(default_manager_read_data_clause() . ' ' . default_manager_read_data_clause())),
+            qr/duplicate \(read \.\.\.\) family clause/],
+        ['missing manager read-data capture scope',
+            capacity_ppif_with_objects(manager_capacity_object_with_read_data('(read (completion-source response-demux) (data-signal rdata (width 32)) (status-signal rresp (width 2)) (interleaving single-beat-by-rid) (transaction r0 (data-output r0_data) (status-output r0_resp)) (transaction r1 (data-output r1_data) (status-output r1_resp)))')),
+            qr/is missing required \(capture-scope \.\.\.\) clause/],
+        ['unsupported manager read-data capture scope',
+            capacity_ppif_with_objects(manager_capacity_object_with_read_data(read_data_clause_with('(capture-scope burst)'))),
+            qr/supports only single-beat in this slice/],
+        ['unsupported manager read-data completion source',
+            capacity_ppif_with_objects(manager_capacity_object_with_read_data(read_data_clause_with('(completion-source read-complete)'))),
+            qr/supports only response-demux in this slice/],
+        ['zero-width manager read-data data signal',
+            capacity_ppif_with_objects(manager_capacity_object_with_read_data(read_data_clause_with('(data-signal rdata (width 0))'))),
+            qr/width must be a positive integer/],
+        ['bad-width manager read-data status signal',
+            capacity_ppif_with_objects(manager_capacity_object_with_read_data(read_data_clause_with('(status-signal rresp (width 1))'))),
+            qr/status width must be 2 in this slice/],
+        ['unsupported manager read-data interleaving',
+            capacity_ppif_with_objects(manager_capacity_object_with_read_data(read_data_clause_with('(interleaving burst-by-rid)'))),
+            qr/supports only single-beat-by-rid in this slice/],
+        ['explicit-width manager read-data output',
+            capacity_ppif_with_objects(manager_capacity_object_with_read_data(read_data_clause_with('(transaction r0 (data-output r0_data (width 32)) (status-output r0_resp))'))),
+            qr/requires exactly one scalar value/],
+        ['manager read-data unknown transaction',
+            capacity_ppif_with_objects(manager_capacity_object_with_read_data(read_data_clause_with('(transaction r2 (data-output r2_data) (status-output r2_resp))'))),
+            qr/read_data\.read transaction 'r2' is not covered/],
+        ['manager read-data without response-demux prerequisite',
+            capacity_ppif_with_objects(manager_capacity_object_with_read_data_only(default_manager_read_data_clause())),
+            qr/read_data requires generated read response_demux metadata/],
     );
 
     for my $case (@cases) {
@@ -643,6 +705,21 @@ subtest 'CLI emits IAL2 report JSON for AXI manager read response-demux behavior
     is_deeply($report->{generated_artifacts}{ial0}{files}, ['axi0_capacity_status.fsm'], 'read response-demux behavior keeps the generated .fsm artifact name stable');
 };
 
+subtest 'CLI emits IAL2 report JSON for AXI manager read-data metadata .ppif' => sub {
+    my ($success, undef, undef, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--emit-schedule-json', sample_capacity_read_data_ppif_path()],
+    );
+
+    ok($success, '--emit-schedule-json succeeds for capacity/status read-data .ppif');
+    is(join('', @{$stderr_buf || []}), '', 'capacity/status read-data report keeps stderr clean');
+    my $report = decode_json(join('', @{$stdout_buf || []}));
+    is($report->{schema}, 'fsmgen.ial2.protocol_intent.axi_manager_capacity_status.v1', 'CLI keeps the capacity/status report schema');
+    is($report->{source_object}{intent_name}, 'axi_manager_capacity_status_read_data', 'read-data report carries the PPIF top-level intent name');
+    assert_read_response_demux_report($report->{response_demux}, 'CLI read-data report');
+    assert_read_data_report($report->{read_data}, 'CLI report');
+    is_deeply($report->{generated_artifacts}{ial0}{files}, ['axi0_capacity_status.fsm'], 'read-data metadata keeps the generated .fsm artifact name stable');
+};
+
 subtest 'CLI --verify-hdl accepts AXI manager auto-ID lifecycle behavior .ppif' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $hdl = File::Spec->catfile($tempdir, 'axi_auto_id_lifecycle.sv');
@@ -690,6 +767,23 @@ subtest 'CLI --verify-hdl accepts AXI manager read response-demux behavior .ppif
     like($sv, qr/\binput\s+(?:wire\s+)?\[3:0\]\s+axi0_rid\b/, 'read response-demux HDL exposes generated RID input');
     like($sv, qr/\boutput\s+reg\s+axi0_r0_complete\b/, 'read response-demux HDL exposes generated completion output');
     like($sv, qr/axi0_read_complete\s*&\s*axi0_r0_auto_id_busy_q\s*&\s*\(axi0_rid\s*==\s*axi0_r0_auto_id_q\)/, 'read response-demux HDL lowers the RID match guard');
+};
+
+subtest 'CLI --verify-hdl accepts AXI manager read-data metadata .ppif without data-capture drift' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $hdl = File::Spec->catfile($tempdir, 'axi_read_data.sv');
+
+    my ($success, undef, undef, undef, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--quiet', '--verify-hdl', '--output', $hdl, sample_capacity_read_data_ppif_path()],
+    );
+
+    ok($success, 'capacity/status read-data --verify-hdl succeeds');
+    is(join('', @{$stderr_buf || []}), '', 'capacity/status read-data --verify-hdl keeps stderr clean');
+    ok(-f $hdl, 'read-data --output writes generated HDL');
+    my $sv = slurp($hdl);
+    like($sv, qr/\binput\s+(?:wire\s+)?\[3:0\]\s+axi0_rid\b/, 'read-data HDL keeps generated RID input from read response-demux');
+    unlike($sv, qr/\baxi0_rdata\b/, 'read-data metadata does not generate RDATA HDL yet');
+    unlike($sv, qr/\baxi0_r0_rdata\b/, 'read-data metadata does not generate transaction RDATA HDL yet');
 };
 
 subtest 'CLI --outdir materializes generated .isf, .fsm, and HDL for .ppif' => sub {
@@ -1147,6 +1241,50 @@ subtest 'CLI check JSON and semantic JSON support-account read response-demux .p
     );
 };
 
+subtest 'CLI check JSON and semantic JSON support-account read-data .ppif separately' => sub {
+    my $read_data_path = sample_capacity_read_data_ppif_path();
+    my ($success, undef, undef, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--strict', '--check', '--json', $read_data_path],
+    );
+    ok($success, 'capacity/status read-data --check --json succeeds');
+    is(join('', @{$stderr_buf || []}), '', 'capacity/status read-data --check --json keeps stderr clean');
+    my $check_report = decode_json(join('', @{$stdout_buf || []}));
+    ok($check_report->{success}, 'capacity/status read-data check JSON reports success');
+    is(
+        $check_report->{source}{resolved_path},
+        File::Spec->rel2abs($read_data_path),
+        'capacity/status read-data check JSON reports the public .ppif source path',
+    );
+    is(
+        $check_report->{support_accounting}{entry_id},
+        'intent.ppif_axi_manager_capacity_status_read_data',
+        'capacity/status read-data check JSON support accounting names the PPIF corpus entry',
+    );
+
+    my ($semantic_success, undef, undef, $semantic_stdout, $semantic_stderr) = run(
+        command => ['./bin/fsmgen', '--strict', '--emit-semantic-json', $read_data_path],
+    );
+    ok($semantic_success, 'capacity/status read-data --emit-semantic-json succeeds');
+    is(join('', @{$semantic_stderr || []}), '', 'capacity/status read-data --emit-semantic-json keeps stderr clean');
+    my $semantic_report = decode_json(join('', @{$semantic_stdout || []}));
+    ok($semantic_report->{success}, 'capacity/status read-data semantic JSON reports success');
+    is(
+        $semantic_report->{source}{resolved_path},
+        File::Spec->rel2abs($read_data_path),
+        'capacity/status read-data semantic JSON reports the public .ppif source path',
+    );
+    is(
+        $semantic_report->{support_accounting}{entry_id},
+        'intent.ppif_axi_manager_capacity_status_read_data',
+        'capacity/status read-data semantic JSON support accounting names the PPIF corpus entry',
+    );
+    is(
+        $semantic_report->{semantic}{module}{name},
+        'axi0_capacity_status',
+        'capacity/status read-data semantic JSON records the unchanged generated module',
+    );
+};
+
 subtest 'CLI bundle HDL modes use aggregate wrapper entry' => sub {
     my $bundle_path = sample_bundle_ppif_path();
     my $tempdir = tempdir(CLEANUP => 1);
@@ -1273,6 +1411,10 @@ sub sample_capacity_read_response_demux_ppif_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_read_response_demux.ppif');
 }
 
+sub sample_capacity_read_data_ppif_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_read_data.ppif');
+}
+
 sub sample_ppif {
     return slurp(sample_ppif_path());
 }
@@ -1307,6 +1449,10 @@ sub sample_capacity_response_demux_ppif {
 
 sub sample_capacity_read_response_demux_ppif {
     return slurp(sample_capacity_read_response_demux_ppif_path());
+}
+
+sub sample_capacity_read_data_ppif {
+    return slurp(sample_capacity_read_data_ppif_path());
 }
 
 sub sample_capacity_read_response_demux_base_ppif {
@@ -1465,6 +1611,35 @@ sub manager_capacity_object_with_read_response_demux {
     return $object;
 }
 
+sub manager_capacity_object_with_read_data {
+    my ($read_data) = @_;
+    my $object = manager_capacity_object_with_read_response_demux(
+        '(read (response-event axi0_read_complete) (response-scope single-beat) (transaction-completion generated))',
+    );
+    $object =~ s/\)\z/\n    (read-data $read_data))/;
+    return $object;
+}
+
+sub manager_capacity_object_with_duplicate_read_data {
+    my $object = manager_capacity_object_with_read_response_demux(
+        '(read (response-event axi0_read_complete) (response-scope single-beat) (transaction-completion generated))',
+    );
+    my $read_data = default_manager_read_data_clause();
+    $object =~ s/\)\z/\n    (read-data $read_data)\n    (read-data $read_data))/;
+    return $object;
+}
+
+sub manager_capacity_object_with_read_data_only {
+    my ($read_data) = @_;
+    my $object = manager_capacity_object_with_id_families_transactions_and_auto_id_lifecycle(
+        default_manager_id_families(),
+        default_manager_read_auto_transactions(),
+        '(read (pool 0 1))',
+    );
+    $object =~ s/\)\z/\n    (read-data $read_data))/;
+    return $object;
+}
+
 sub manager_capacity_object_with_mixed_response_demux {
     my ($demux) = @_;
     my $object = manager_capacity_object_with_id_families_transactions_and_auto_id_lifecycle(
@@ -1510,6 +1685,39 @@ sub default_manager_mixed_auto_transactions {
         '(read r0 (tag rd0) (request axi0_r0_request) (completion axi0_r0_complete) (id auto))',
         '(read r1 (tag rd1) (request axi0_r1_request) (completion axi0_r1_complete) (id auto))',
     );
+}
+
+sub default_manager_read_data_clause {
+    return join(' ',
+        '(read',
+        '(capture-scope single-beat)',
+        '(completion-source response-demux)',
+        '(data-signal rdata (width 32))',
+        '(status-signal rresp (width 2))',
+        '(interleaving single-beat-by-rid)',
+        '(transaction r0 (data-output r0_data) (status-output r0_resp))',
+        '(transaction r1 (data-output r1_data) (status-output r1_resp))',
+        ')',
+    );
+}
+
+sub read_data_clause_with {
+    my ($replacement) = @_;
+    my $clause = default_manager_read_data_clause();
+    my ($head) = $replacement =~ /\A\((\S+)/;
+    my %default = (
+        'capture-scope'     => '(capture-scope single-beat)',
+        'completion-source' => '(completion-source response-demux)',
+        'data-signal'       => '(data-signal rdata (width 32))',
+        'status-signal'     => '(status-signal rresp (width 2))',
+        'interleaving'      => '(interleaving single-beat-by-rid)',
+        'transaction'       => '(transaction r0 (data-output r0_data) (status-output r0_resp))',
+    );
+    die "Unknown read-data replacement clause '$replacement'\n"
+        unless defined $head && exists $default{$head};
+    my $target = quotemeta $default{$head};
+    $clause =~ s/$target/$replacement/;
+    return $clause;
 }
 
 sub assert_write_auto_id_lifecycle_report {
@@ -1592,6 +1800,48 @@ sub assert_read_response_demux_report {
         "$owner reports generated read response-demux assertions",
     );
     is_deeply($demux->{residue}, [qw(read_data_interleaving bursts)], "$owner removes generated read RID demux behavior from residue");
+}
+
+sub assert_read_data_report {
+    my ($read_data, $owner) = @_;
+    is($read_data->{mode}, 'bounded_single_beat_read_data_contract', "$owner marks bounded single-beat read-data contract mode");
+    ok(!$read_data->{generated_behavior}, "$owner marks generated behavior false");
+    my $read = $read_data->{read};
+    is($read->{capture_scope}, 'single_beat', "$owner reports single-beat capture scope");
+    is($read->{completion_source}, 'response_demux', "$owner reports response-demux completion source");
+    is($read->{completion_validity}, 'generated_read_response_demux_completion_pulse', "$owner reports generated demux pulse validity");
+    is($read->{data_signal}, 'axi0_rdata', "$owner reports RDATA signal");
+    is($read->{data_signal_width}, 32, "$owner reports RDATA width");
+    is($read->{data_signal_direction}, 'generated_input', "$owner reports RDATA generated-input direction");
+    is($read->{status_signal}, 'axi0_rresp', "$owner reports RRESP status signal");
+    is($read->{status_signal_width}, 2, "$owner reports RRESP status width");
+    is($read->{status_signal_direction}, 'generated_input', "$owner reports RRESP generated-input direction");
+    is($read->{interleaving_policy}, 'single_beat_by_rid', "$owner reports single-beat-by-RID interleaving policy");
+    is_deeply(
+        [map { $_->{transaction} } @{$read->{transactions}}],
+        [qw(r0 r1)],
+        "$owner reports read-data transaction bindings in source order",
+    );
+    is_deeply(
+        [map { $_->{completion_signal} } @{$read->{transactions}}],
+        [qw(axi0_r0_complete axi0_r1_complete)],
+        "$owner binds read-data validity to generated demux completion pulses",
+    );
+    is_deeply(
+        [map { $_->{data_output} } @{$read->{transactions}}],
+        [qw(axi0_r0_rdata axi0_r1_rdata)],
+        "$owner reports transaction data outputs",
+    );
+    is_deeply(
+        [map { $_->{status_output} } @{$read->{transactions}}],
+        [qw(axi0_r0_rresp axi0_r1_rresp)],
+        "$owner reports transaction status outputs",
+    );
+    is_deeply(
+        $read_data->{residue},
+        [qw(generated_read_data_capture rlast_completion bursts multi_beat_read_data_reassembly)],
+        "$owner reports generated capture and burst/reassembly residue",
+    );
 }
 
 sub assert_same_id_ordering_report {

@@ -991,9 +991,16 @@ Audit `.43` concluded that the bounded public read-data payload/status
 contract must be selected before parser/report metadata or generated behavior
 changes. Selector `.44` chose explicit bounded `(read-data (read ...))`
 syntax for single-beat `RDATA`/`RRESP` capture, with generated read
-response-demux as the completion source and `RLAST`/bursts deferred. The
-current frontier is `IAL2-FEATURE-COMPLETENESS-FRONTIER.45`, parser/report
-metadata and static validation for that read-data contract.
+response-demux as the completion source and `RLAST`/bursts deferred. Slice
+`.45` now ships parser/report metadata and static validation for that contract:
+the public `.ppif` parser accepts one structural `read-data` read arm, the
+capacity/status report publishes `read_data.generated_behavior: false` with
+transaction-bound data/status outputs and generated-capture residue, the new
+read-data sample is support-accounted for check JSON and normalized semantic
+JSON, and generated `.isf`, `.fsm`, and SystemVerilog HDL behavior remain
+unchanged from the read response-demux sample. The current frontier is
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.46`, generated single-beat read-data
+capture behavior readiness audit.
 The shipped public capacity/status source accepts one
 `(manager-capacity-status NAME ...)` object under
 `(protocol-platform-intent ...)`, `(profile axi4)`, and top-level source

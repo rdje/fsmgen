@@ -301,6 +301,8 @@ sub _parse_manager_capacity_status($body, $source_label) {
             $contract{auto_id_lifecycle} = _parse_manager_capacity_auto_id_lifecycle(\@items, $source_label, $name);
         } elsif ($head eq 'response-demux') {
             $contract{response_demux} = _parse_manager_capacity_response_demux(\@items, $source_label, $name);
+        } elsif ($head eq 'read-data') {
+            $contract{read_data} = _parse_manager_capacity_read_data(\@items, $source_label, $name);
         } else {
             confess "Error: .ppif (manager-capacity-status $name ...) has unsupported clause '($head ...)'\n";
         }
@@ -646,6 +648,146 @@ sub _parse_manager_capacity_response_demux_read($items, $source_label, $name) {
         unless $entry{transaction_completion} eq 'generated';
 
     return \%entry;
+}
+
+sub _parse_manager_capacity_read_data($items, $source_label, $name) {
+    confess "Error: .ppif (manager-capacity-status $name (read-data ...)) requires one read family clause\n"
+        unless @$items;
+
+    my %families;
+    for my $clause (@$items) {
+        my ($family, @body) = _clause_parts($clause, $source_label);
+        confess "Error: .ppif (manager-capacity-status $name (read-data ...)) has unsupported family clause '($family ...)'; this slice supports (read ...)\n"
+            unless $family eq 'read';
+        confess "Error: .ppif (manager-capacity-status $name (read-data ...)) has duplicate (read ...) family clause\n"
+            if exists $families{read};
+        $families{read} = _parse_manager_capacity_read_data_read(\@body, $source_label, $name);
+    }
+
+    confess "Error: .ppif (manager-capacity-status $name (read-data ...)) is missing required (read ...) family clause\n"
+        unless exists $families{read};
+
+    return \%families;
+}
+
+sub _parse_manager_capacity_read_data_read($items, $source_label, $name) {
+    my %allowed = (
+        'capture-scope'     => 'capture_scope',
+        'completion-source' => 'completion_source',
+        'data-signal'       => 'data_signal',
+        'status-signal'     => 'status_signal',
+        'interleaving'      => 'interleaving',
+    );
+    my %entry;
+    my @transactions;
+    my (%seen, %seen_transactions);
+
+    for my $clause (@$items) {
+        my ($head, @body) = _clause_parts($clause, $source_label);
+        if ($head eq 'transaction') {
+            my $transaction = _parse_manager_capacity_read_data_transaction(\@body, $source_label, $name);
+            confess "Error: .ppif (manager-capacity-status $name (read-data (read ...))) has duplicate transaction '$transaction->{transaction}'\n"
+                if $seen_transactions{$transaction->{transaction}}++;
+            push @transactions, $transaction;
+            next;
+        }
+
+        confess "Error: .ppif (manager-capacity-status $name (read-data (read ...))) has unsupported clause '($head ...)'\n"
+            unless exists $allowed{$head};
+        confess "Error: .ppif (manager-capacity-status $name (read-data (read ...))) has duplicate ($head ...) clause\n"
+            if $seen{$head}++;
+
+        if ($head =~ /\A(?:capture-scope|completion-source|interleaving)\z/) {
+            confess "Error: .ppif (manager-capacity-status $name (read-data (read ($head ...)))) requires exactly one scalar value\n"
+                unless @body == 1 && !ref($body[0]);
+            $entry{$allowed{$head}} = $body[0];
+        } elsif ($head eq 'data-signal') {
+            my ($signal, $width) = _parse_manager_capacity_read_data_signal_width(
+                $head,
+                \@body,
+                $source_label,
+                $name,
+            );
+            $entry{data_signal} = $signal;
+            $entry{data_width} = $width;
+        } elsif ($head eq 'status-signal') {
+            my ($signal, $width) = _parse_manager_capacity_read_data_signal_width(
+                $head,
+                \@body,
+                $source_label,
+                $name,
+            );
+            confess "Error: .ppif (manager-capacity-status $name (read-data (read (status-signal ...)))) status width must be 2 in this slice\n"
+                unless $width == 2;
+            $entry{status_signal} = $signal;
+            $entry{status_width} = $width;
+        }
+    }
+
+    for my $required (qw(capture_scope completion_source data_signal status_signal interleaving)) {
+        my $clause = $required;
+        $clause =~ s/_/-/g;
+        confess "Error: .ppif (manager-capacity-status $name (read-data (read ...))) is missing required ($clause ...) clause\n"
+            unless exists $entry{$required};
+    }
+    confess "Error: .ppif (manager-capacity-status $name (read-data (read ...))) requires at least one transaction clause\n"
+        unless @transactions;
+    confess "Error: .ppif (manager-capacity-status $name (read-data (read (capture-scope ...)))) supports only single-beat in this slice\n"
+        unless $entry{capture_scope} eq 'single-beat';
+    confess "Error: .ppif (manager-capacity-status $name (read-data (read (completion-source ...)))) supports only response-demux in this slice\n"
+        unless $entry{completion_source} eq 'response-demux';
+    confess "Error: .ppif (manager-capacity-status $name (read-data (read (interleaving ...)))) supports only single-beat-by-rid in this slice\n"
+        unless $entry{interleaving} eq 'single-beat-by-rid';
+
+    $entry{transactions} = \@transactions;
+    return \%entry;
+}
+
+sub _parse_manager_capacity_read_data_signal_width($head, $items, $source_label, $name) {
+    confess "Error: .ppif (manager-capacity-status $name (read-data (read ($head ...)))) requires (NAME (width N))\n"
+        unless @$items == 2 && !ref($items->[0]) && ref($items->[1]) eq 'ARRAY';
+
+    my $signal = $items->[0];
+    my ($width_head, @width_body) = _clause_parts($items->[1], $source_label);
+    confess "Error: .ppif (manager-capacity-status $name (read-data (read ($head ...)))) requires (NAME (width N))\n"
+        unless $width_head eq 'width' && @width_body == 1 && !ref($width_body[0]);
+    my $width = $width_body[0];
+    confess "Error: .ppif (manager-capacity-status $name (read-data (read ($head ...)))) width must be a positive integer\n"
+        unless defined($width) && $width =~ /\A[1-9][0-9]*\z/;
+
+    return ($signal, int($width));
+}
+
+sub _parse_manager_capacity_read_data_transaction($items, $source_label, $name) {
+    confess "Error: .ppif (manager-capacity-status $name (read-data (read (transaction ...)))) requires a scalar transaction name\n"
+        unless @$items >= 1 && !ref($items->[0]) && length($items->[0]);
+
+    my $transaction_name = $items->[0];
+    my %allowed = (
+        'data-output'   => 'data_output',
+        'status-output' => 'status_output',
+    );
+    my %transaction = (transaction => $transaction_name);
+    my %seen;
+    for my $clause (@{$items}[1 .. $#$items]) {
+        my ($head, @body) = _clause_parts($clause, $source_label);
+        confess "Error: .ppif (manager-capacity-status $name (read-data (read (transaction $transaction_name ...)))) has unsupported clause '($head ...)'\n"
+            unless exists $allowed{$head};
+        confess "Error: .ppif (manager-capacity-status $name (read-data (read (transaction $transaction_name ...)))) has duplicate ($head ...) clause\n"
+            if $seen{$head}++;
+        confess "Error: .ppif (manager-capacity-status $name (read-data (read (transaction $transaction_name ($head ...))))) requires exactly one scalar value\n"
+            unless @body == 1 && !ref($body[0]);
+        $transaction{$allowed{$head}} = $body[0];
+    }
+
+    for my $required (qw(data_output status_output)) {
+        my $clause = $required;
+        $clause =~ s/_/-/g;
+        confess "Error: .ppif (manager-capacity-status $name (read-data (read (transaction $transaction_name ...)))) is missing required ($clause ...) clause\n"
+            unless exists $transaction{$required};
+    }
+
+    return \%transaction;
 }
 
 sub _parse_reset($items, $source_label) {
