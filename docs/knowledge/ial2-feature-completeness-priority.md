@@ -17,9 +17,9 @@ reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER|IAL2 feature completeness|IA
 The current feature-completeness priority is IAL2 on the
 SystemVerilog-backed path.
 
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.62` owns the next PNT frontier: select
-the public AXI burst read-data beat-count/depth contract after generated
-last-beat `RDATA`/`RRESP` capture.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.63` owns the next PNT frontier: implement
+parser/report metadata and static validation for the selected AXI burst
+read-data ARLEN beat-count/depth contract.
 
 Completed `.47` shipped generated single-beat `RDATA`/`RRESP` capture
 behavior. Completed `.48` selected `.49` because the current public read-data
@@ -64,7 +64,9 @@ manager feature-completeness selector. Completed `.61` selected `.62`,
 public AXI burst read-data beat-count/depth contract selection, because full
 multi-beat reassembly, per-beat outputs, `RRESP` aggregation, missing/extra
 beat validation, and per-ID reassembly all need an explicit
-expected-count/depth contract first.
+expected-count/depth contract first. Completed `.62` selected an additive
+ARLEN-based `burst-length` contract and advanced the frontier to `.63`,
+parser/report metadata and static validation for that contract.
 
 Selected IAL2 work may include required IAL1 or IAL0/SV support, but only when
 those prerequisites are explicit, task-tree owned, documented, and

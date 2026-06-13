@@ -6,6 +6,8 @@ answers:
   - "what comes after generated last-beat read-data capture?"
   - "what comes after IAL2-FEATURE-COMPLETENESS-FRONTIER.61?"
   - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.62?"
+  - "what comes after IAL2-FEATURE-COMPLETENESS-FRONTIER.62?"
+  - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.63?"
   - "why is beat-count or depth selected before full read-data reassembly?"
 date: 2026-06-13
 status: current
@@ -24,8 +26,7 @@ aggregation, missing/extra beat validation, and per-ID reassembly need an
 explicit expected-count or bounded-depth contract before parser/report
 metadata or generated behavior can honestly ship.
 
-`.62` is still a selector slice. It must decide whether public syntax names
-`ARLEN`, an expected beat-count signal, fixed bounded depth, or a combination,
-and must define report keys, diagnostics, residue movement, validation gates,
-and follow-up owners without changing parser, generator, HDL, sample,
-support-accounting, check JSON, semantic JSON, or validation behavior.
+`.62` selected an ARLEN-based `burst-length` clause with width-8
+`axlen-plus-one` encoding, transaction-request capture, required `max-beats`,
+and report-only validation. The active frontier is `.63`, parser/report
+metadata and static validation for that contract.

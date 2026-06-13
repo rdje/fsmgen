@@ -1065,10 +1065,13 @@ assignments, HDL reachability, read_data generated artifact report lists, and
 residue movement. Selector `.61` chose public AXI burst read-data
 beat-count/depth contract selection because full reassembly, per-beat
 outputs, `RRESP` aggregation, missing/extra beat validation, and per-ID
-reassembly need an explicit expected-count/depth contract first. The active
-frontier is `.62`, public AXI burst read-data beat-count/depth contract
-selection. Full multi-beat read-data reassembly, per-beat outputs, `RRESP`
-aggregation, per-ID queues, direct backend lowering, and VHDL remain deferred.
+reassembly need an explicit expected-count/depth contract first. Selector
+`.62` chose an additive ARLEN-based `burst-length` contract with width-8
+`axlen-plus-one` encoding, transaction-request capture, required `max-beats`
+in range `1..256`, and report-only validation. The active frontier is `.63`,
+parser/report metadata and static validation for that contract. Full
+multi-beat read-data reassembly, per-beat outputs, `RRESP` aggregation,
+per-ID queues, direct backend lowering, and VHDL remain deferred.
 The shipped public capacity/status source accepts one
 `(manager-capacity-status NAME ...)` object under
 `(protocol-platform-intent ...)`, `(profile axi4)`, and top-level source
