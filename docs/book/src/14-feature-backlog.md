@@ -4714,8 +4714,34 @@ Response-demux residue removes `generated_same_id_queue_head_demux`, and the
 ID/response rule-engine residue removes `same_id_ordering` and
 `response_demux` for this covered shape.
 
-The implementation remains intentionally narrow. Write queue-head behavior,
-read `single-beat`, deeper or multiple duplicate-ID groups, same-family mixed
+Post same-ID queue behavior next-slice selection:
+[AXI_IAL2_MANAGER_POST_SAME_ID_QUEUE_BEHAVIOR_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_SAME_ID_QUEUE_BEHAVIOR_NEXT_SLICE_SELECTION.md)
+ships `IAL2-FEATURE-COMPLETENESS-FRONTIER.107`. The selector keeps the
+current read burst-last behavior unchanged and chooses the next implementation
+owner as `IAL2-FEATURE-COMPLETENESS-FRONTIER.108`: generated write-family
+concrete same-ID queue-head behavior for one duplicate concrete write-ID group,
+two write transactions, and computed depth `2`.
+
+The selected write queue-head match is the write analogue of the shipped read
+queue-head demux, without `RLAST`:
+
+```text
+axi0_write_complete
+&& axi0_bid == 4'd3
+&& axi0_write_id3_same_id_issue_order_slot0_w0_q
+```
+
+The future `.108` slice must generate compact one-hot write queue slots,
+finite write enqueue/dequeue/same-cycle update rules, generated write
+completion pulse outputs, queue-head `BID` demux rules, queue assertions, and
+report/residue movement only for that covered shape. Read `single-beat`,
+deeper or multiple queue groups, same-family mixed auto-ID, read-data
+consumption of concrete queue-head demux, direct backend lowering, and VHDL
+remain deferred.
+
+The shipped `.106` implementation remains intentionally narrow. Write
+queue-head behavior is selected as `.108` but not shipped yet; read
+`single-beat`, deeper or multiple duplicate-ID groups, same-family mixed
 auto-ID plus concrete queue-head demux, read-data consumption of concrete
 queue-head demux, direct backend lowering, and VHDL remain deferred.
 

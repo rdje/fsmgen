@@ -551,7 +551,13 @@ read `single-beat`, deeper or multiple groups, same-family mixed auto-ID,
 read-data consumption of concrete queue-head demux, direct backend, and VHDL
 remain deferred. The active frontier advances to
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.107`, the next same-ID queue behavior
-expansion audit/selector.
+expansion audit/selector. Selector `.107` chooses the next behavior owner as
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.108`: generated write-family concrete
+same-ID queue-head behavior for exactly one duplicate write-ID group of two
+transactions at depth 2. That next slice should reuse compact one-hot queue
+slots and queue-head `BID` demux, while keeping read `single-beat`, deeper or
+multiple groups, same-family mixed auto-ID, read-data consumption, direct
+backend, and VHDL deferred.
 The IAL2 factoring stance remains evidence-driven: keep AXI-specific same-ID
 ordering in the AXI vocabulary until another profile proves the same semantic
 need.

@@ -1313,15 +1313,21 @@ queue-head sample reports `response_demux.generated_behavior: true`,
 `same_id_ordering.generated_behavior: true`, `accepted_same_id_reuse: true`,
 and `generated_queue_behavior: true` for the covered read burst-last
 two-transaction depth-2 group only. The active frontier advances to `.107`,
-the next same-ID queue behavior expansion audit/selector.
+the next same-ID queue behavior expansion audit/selector. Selector `.107`
+chooses `.108` as the next behavior-bearing owner: generated write-family
+concrete same-ID queue-head behavior for one duplicate concrete write-ID group
+of two transactions at computed depth 2. Read `single-beat`,
+deeper/multiple groups, same-family mixed auto-ID, read-data consumption of
+concrete queue-head demux, direct backend, and VHDL remain deferred.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.
 Verification-code generation is captured as a separate future roadmap lane
 from the synthesizable RTL/HDL feature-completeness path.
-Packed burst outputs, accepted concrete-ID same-ID ordering behavior, per-ID
-queues, queued policy, profile aliases, full-manager behavior, direct backend
-lowering, and VHDL remain deferred.
+Packed burst outputs, read single-beat/write/deeper/multiple concrete same-ID
+queue variants beyond the selected `.108` boundary, per-ID queues, queued
+policy, profile aliases, full-manager behavior, direct backend lowering, and
+VHDL remain deferred.
 The shipped public capacity/status source accepts one
 `(manager-capacity-status NAME ...)` object under
 `(protocol-platform-intent ...)`, `(profile axi4)`, and top-level source
