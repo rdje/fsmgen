@@ -4166,8 +4166,26 @@ predicate removes `read_data_interleaving` only when generated read same-ID
 avoidance, generated burst-last read response demux, matched-read-beat
 counting, `multi_beat_by_rid`, per-transaction output banks, valid masks,
 length outputs, and generated multi-beat output-bank behavior are all present.
-The next active owner is `IAL2-FEATURE-COMPLETENESS-FRONTIER.83`, a selector
+The follow-up owner was `IAL2-FEATURE-COMPLETENESS-FRONTIER.83`, a selector
 for the remaining AXI manager residue owner.
+
+Post-interleaving alignment selector:
+[AXI_IAL2_MANAGER_POST_INTERLEAVING_ALIGNMENT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_INTERLEAVING_ALIGNMENT_NEXT_SLICE_SELECTION.md)
+selects `IAL2-FEATURE-COMPLETENESS-FRONTIER.84`, AXI burst payload/output
+readiness. After `.82`, `bursts` is the only remaining `response_demux`
+residue and is still present in `same_id_ordering`, while the public
+multi-beat sample already has burst-last `RLAST` demux, raw ARLEN capture,
+beat-count/RLAST runtime validation, per-beat output banks, valid masks,
+length outputs, and scalar aggregate `RRESP`.
+
+The `.84` audit must decide whether the shipped per-beat output bank is enough
+for bounded burst residue movement, whether a packed-burst public contract is
+required first, whether report/static text can move without behavior changes,
+or whether a lower-layer prerequisite comes first. Packed burst payload
+outputs, full burst assembly, authored concrete-ID same-ID ordering, per-ID
+queues, queued/blocking policy, profile aliases, full-manager behavior,
+verification-code generation, direct backend lowering, and VHDL remain
+deferred.
 
 First implementation subset selection:
 [AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION](../../AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md)

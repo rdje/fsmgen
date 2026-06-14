@@ -23,6 +23,6 @@ and `same_id_ordering.residue: [concrete_id_same_id_ordering,
 per_id_issue_order_queues, bursts]`; `read_data.residue` remains empty and
 `auto_id_lifecycle.residue` remains empty.
 
-Generated `.isf`, `.fsm`, and SystemVerilog behavior is unchanged. The next
-active leaf is `IAL2-FEATURE-COMPLETENESS-FRONTIER.83`, which selects the
-next AXI manager residue owner.
+Generated `.isf`, `.fsm`, and SystemVerilog behavior is unchanged. The
+follow-up leaf was `IAL2-FEATURE-COMPLETENESS-FRONTIER.83`, which selected
+AXI burst payload/output readiness as `.84`.

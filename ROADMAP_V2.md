@@ -1144,7 +1144,14 @@ leave only `bursts` in `response_demux.residue`, remove
 `read_data_interleaving` from `same_id_ordering.residue` for the covered
 generated auto-ID multi-beat-by-RID subset, preserve concrete-ID same-ID and
 per-ID queue residue, and keep generated `.isf`, `.fsm`, and SystemVerilog
-behavior unchanged. `.83` selects the next AXI manager residue owner.
+behavior unchanged. Selector `.83` chooses `.84`, AXI burst payload/output
+readiness, because `bursts` is now the only `response_demux` residue and
+remains shared with `same_id_ordering` while the public multi-beat sample
+already has burst-last `RLAST` demux, raw ARLEN capture, beat-count/RLAST
+runtime validation, per-beat output banks, valid masks, length outputs, and
+scalar aggregate `RRESP`. The `.84` audit must decide whether bounded burst
+residue can move, whether a packed-burst public contract is required first,
+or whether a lower-layer/prerequisite owner comes first.
 Verification-code generation is captured as a separate future roadmap lane
 from the synthesizable RTL/HDL feature-completeness path.
 Packed burst outputs, concrete-ID same-ID ordering, per-ID queues, queued
