@@ -1171,15 +1171,20 @@ Audit `.87` selects `.88`, conservative fail-closed static validation for
 multiple concrete-ID transactions in the same read or write response family
 that share one concrete ID value. Existing concrete-ID equality assertions do
 not prove same-ID response issue order, and an in-memory probe confirms the
-current generator accepts same-ID concrete pairs with unique events while
-leaving `same_id_ordering` as residue. AXI-specific same-ID ordering stays
-profile vocabulary for now; common IAL2 factoring remains evidence-driven and
-should be promoted only when multiple profiles need compatible semantics.
+pre-`.88` generator accepted same-ID concrete pairs with unique events while
+leaving `same_id_ordering` as residue. Implementation `.88` now rejects that
+unsupported same-family concrete-ID reuse with a fail-closed diagnostic while
+leaving currently valid single-concrete-ID samples behavior-stable. The next
+selector is `.89`, which should choose the next AXI manager
+feature-completeness owner from the remaining same-ID/per-ID queue residue.
+AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
+factoring remains evidence-driven and should be promoted only when multiple
+profiles need compatible semantics.
 Verification-code generation is captured as a separate future roadmap lane
 from the synthesizable RTL/HDL feature-completeness path.
-Packed burst outputs, concrete-ID same-ID ordering, per-ID queues, queued
-policy, profile aliases, full-manager behavior, direct backend lowering, and
-VHDL remain deferred.
+Packed burst outputs, accepted concrete-ID same-ID ordering behavior, per-ID
+queues, queued policy, profile aliases, full-manager behavior, direct backend
+lowering, and VHDL remain deferred.
 The shipped public capacity/status source accepts one
 `(manager-capacity-status NAME ...)` object under
 `(protocol-platform-intent ...)`, `(profile axi4)`, and top-level source

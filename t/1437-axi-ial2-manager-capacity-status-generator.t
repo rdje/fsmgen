@@ -869,6 +869,18 @@ subtest 'malformed contract objects fail closed and no direct lower-to-fsm entry
         ['concrete transaction ID without family metadata', sub { my $c = sample_contract(); $c->{transactions} = [sample_contract_with_transactions()->{transactions}[1]]; $c }, qr/concrete ID requires id_families metadata/],
         ['concrete transaction ID too wide', sub { my $c = sample_contract_with_transactions(); $c->{transactions}[1]{id}{value} = 16; $c }, qr/concrete read ID value 16 does not fit width 4/],
         ['concrete transaction ID with zero-width family', sub { my $c = sample_contract_with_transactions(); $c->{id_families}{read} = { width => 0 }; $c }, qr/concrete read ID is not allowed when read ID-family width is 0/],
+        ['concrete transaction same-family same-ID reuse', sub {
+            my $c = sample_contract_with_transaction_event_dispatch();
+            push @{$c->{transactions}}, {
+                kind             => 'read',
+                name             => 'r1',
+                tag              => 'rd1',
+                request_event    => 'axi0_r1_request',
+                completion_event => 'axi0_r1_complete',
+                id               => { value => 3 },
+            };
+            $c;
+        }, qr/concrete read ID value 3 is reused by transactions 'r0' and 'r1'; concrete same-ID reuse requires a selected same-ID ordering policy or per-ID issue-order queue/],
         ['duplicate concrete ID assertion event', sub {
             my $c = sample_contract_with_transactions();
             push @{$c->{transactions}}, {

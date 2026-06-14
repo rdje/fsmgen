@@ -4252,9 +4252,26 @@ validation for multiple concrete-ID transactions in the same read or write
 response family that use the same concrete ID value. Existing concrete-ID
 assertions prove request/response ID equality only; they do not prove same-ID
 response issue order without a per-ID issue-order record, queue, scoreboard, or
-selected static rejection rule. `.88` should reject unsupported authored
-same-ID reuse while leaving generated auto-ID same-ID avoidance and currently
-valid single-concrete-ID samples unchanged.
+selected static rejection rule.
+
+Concrete-ID same-ID static validation first slice:
+[AXI_IAL2_MANAGER_CONCRETE_ID_SAME_ID_STATIC_VALIDATION_FIRST_SLICE](../../AXI_IAL2_MANAGER_CONCRETE_ID_SAME_ID_STATIC_VALIDATION_FIRST_SLICE.md)
+ships `IAL2-FEATURE-COMPLETENESS-FRONTIER.88`. FSMGen now rejects unsupported
+same-family concrete-ID reuse before emitting concrete-ID equality assertions:
+
+```text
+AXI manager capacity/status IAL2 contract concrete read ID value 3 is reused by transactions 'r0' and 'r1'; concrete same-ID reuse requires a selected same-ID ordering policy or per-ID issue-order queue
+```
+
+Read and write ID families stay separate, duplicate concrete assertion event
+diagnostics keep their previous precedence, generated auto-ID same-ID avoidance
+is unchanged, and valid single-concrete-ID samples keep their generated
+`.isf`, `.fsm`, SystemVerilog, and schedule-report residue behavior. Accepted
+concrete-ID same-ID ordering behavior, per-ID issue-order queues, scoreboards,
+public same-ID reuse policy, full-manager behavior, direct backend lowering,
+and VHDL remain deferred. The next owner is
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.89`, a selector for the remaining AXI
+manager feature-completeness residue after this static validation.
 
 First implementation subset selection:
 [AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION](../../AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md)

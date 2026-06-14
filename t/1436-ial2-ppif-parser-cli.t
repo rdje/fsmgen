@@ -541,6 +541,12 @@ subtest 'PPIF adapter diagnostics fail closed before generation claims' => sub {
                 '(read r0 (tag rd0) (request axi0_read_submit) (completion axi0_read_complete) (id (value 16)))',
             )),
             qr/concrete read ID value 16 does not fit width 4/],
+        ['manager transaction concrete same-family same-ID reuse',
+            capacity_ppif_with_objects(manager_capacity_object_with_id_families_and_transactions(
+                '(write (width 4) (request-id awid) (response-id bid)) (read (width 4) (request-id arid) (response-id rid))',
+                '(read r0 (tag rd0) (request axi0_r0_request) (completion axi0_r0_complete) (id (value 3))) (read r1 (tag rd1) (request axi0_r1_request) (completion axi0_r1_complete) (id (value 3)))',
+            )),
+            qr/concrete read ID value 3 is reused by transactions 'r0' and 'r1'; concrete same-ID reuse requires a selected same-ID ordering policy or per-ID issue-order queue/],
         ['manager transaction duplicate concrete ID assertion event',
             capacity_ppif_with_objects(manager_capacity_object_with_id_families_and_transactions(
                 '(write (width 4) (request-id awid) (response-id bid)) (read (width 4) (request-id arid) (response-id rid))',

@@ -1589,6 +1589,7 @@ sub _build_id_response_rule_engine(%args) {
     my @checks;
     my @id_signal_inputs;
     my %seen_concrete_event;
+    my %seen_concrete_id;
     for my $transaction (@$transactions) {
         my $id = $transaction->{id};
         next unless ref($id) eq 'HASH' && ($id->{policy} // '') eq 'concrete';
@@ -1625,6 +1626,14 @@ sub _build_id_response_rule_engine(%args) {
                 assertion_name => "$transaction->{name}_${phase}_id_matches",
             };
         }
+
+        my $id_key = "$transaction->{kind}\0$id->{value}";
+        if (my $previous = $seen_concrete_id{$id_key}) {
+            confess "AXI manager capacity/status IAL2 contract concrete $transaction->{kind} ID value $id->{value} is reused by transactions '$previous->{transaction}' and '$transaction->{name}'; concrete same-ID reuse requires a selected same-ID ordering policy or per-ID issue-order queue\n";
+        }
+        $seen_concrete_id{$id_key} = {
+            transaction => $transaction->{name},
+        };
     }
 
     return undef unless @checks;

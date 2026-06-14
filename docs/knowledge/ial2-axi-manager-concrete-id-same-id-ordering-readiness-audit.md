@@ -6,7 +6,6 @@ answers:
   - "what did the concrete-ID same-ID ordering readiness audit select?"
   - "what comes after AXI concrete-ID same-ID ordering readiness?"
   - "should concrete-ID same-ID ordering implement per-ID queues next?"
-  - "does FSMGen currently allow two concrete transactions with the same AXI ID?"
 date: 2026-06-14
 status: current
 tags: [ial2, axi, manager, same-id, concrete-id, ordering, diagnostic, task-tree]
@@ -23,7 +22,12 @@ when their events are unique. The current concrete-ID assertion slice only
 checks request/response ID equality; it does not preserve same-ID response
 issue order.
 
-The selected next owner is `IAL2-FEATURE-COMPLETENESS-FRONTIER.88`,
+The selected next owner was `IAL2-FEATURE-COMPLETENESS-FRONTIER.88`,
 fail-closed static validation for multiple concrete-ID transactions in the
 same read or write response family that use the same concrete ID value. It
-should not implement per-ID issue-order queues first.
+did not implement per-ID issue-order queues first.
+
+That implementation is now shipped by
+`docs/AXI_IAL2_MANAGER_CONCRETE_ID_SAME_ID_STATIC_VALIDATION_FIRST_SLICE.md`;
+the current "does FSMGen allow this?" answer lives in
+`docs/knowledge/ial2-axi-manager-concrete-id-same-id-static-validation-first-slice.md`.
