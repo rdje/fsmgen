@@ -3972,14 +3972,41 @@ generated output lanes, valid/length outputs, output-init rules, and lane
 capture rules. `read_data.residue` is now only `rresp_aggregation`; scalar
 `RRESP` aggregation, per-ID queues, direct backend lowering, and VHDL remain
 deferred. Selector `IAL2-FEATURE-COMPLETENESS-FRONTIER.75` selects public
-scalar `RRESP` aggregation contract selection as the next exact owner. The
-active frontier is `IAL2-FEATURE-COMPLETENESS-FRONTIER.76`.
+scalar `RRESP` aggregation contract selection as the next exact owner. That
+selection advanced the frontier to `IAL2-FEATURE-COMPLETENESS-FRONTIER.76`.
 
 Post multi-beat output next-slice selection:
 [AXI_IAL2_MANAGER_POST_MULTI_BEAT_OUTPUT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTI_BEAT_OUTPUT_NEXT_SLICE_SELECTION.md)
 records the `.75` selector. It chooses public scalar `RRESP` aggregation
 contract selection before any parser/report metadata or generated behavior
 changes.
+
+RRESP aggregation contract selection:
+[AXI_IAL2_MANAGER_RRESP_AGGREGATION_CONTRACT_SELECTION](../../AXI_IAL2_MANAGER_RRESP_AGGREGATION_CONTRACT_SELECTION.md)
+records the `.76` selector. It chooses an additive read-level
+`(status-aggregation (policy worst-observed))` clause plus one
+transaction-local `(status-aggregate-output NAME)` binding per transaction:
+
+```text
+(read-data
+  (read
+    (capture-scope multi-beat)
+    (status-policy per-beat)
+    (status-aggregation
+      (policy worst-observed))
+    (transaction r0
+      (status-output-prefix axi0_r0_beat_rresp)
+      (status-aggregate-output axi0_r0_rresp))))
+```
+
+The normalized report spelling is `status_aggregation: worst_observed`.
+For the width-2 contract, the selected ordering is
+`OKAY < EXOKAY < SLVERR < DECERR` across every accepted matched read-data
+beat. Per-beat `RRESP` lanes stay mandatory, valid/length outputs stay
+unchanged, width-3 AXI responses remain deferred, and generated scalar
+aggregation behavior remains deferred to a later exact owner. The active
+frontier is `IAL2-FEATURE-COMPLETENESS-FRONTIER.77`, parser/report metadata
+and static validation for this selected contract.
 
 First implementation subset selection:
 [AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION](../../AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md)
@@ -6505,6 +6532,11 @@ frontier to `.75`, the next AXI manager feature-completeness selector.
 Completed selector `IAL2-FEATURE-COMPLETENESS-FRONTIER.75` selects public
 scalar `RRESP` aggregation contract selection and advances the active
 frontier to `.76`.
+Completed selector `IAL2-FEATURE-COMPLETENESS-FRONTIER.76` selects additive
+`(status-aggregation (policy worst-observed))` syntax, per-transaction
+`(status-aggregate-output NAME)` bindings, and advances the active frontier
+to `.77`, parser/report metadata and static validation for scalar `RRESP`
+aggregation.
 Completed implementation leaf
 `ARCHITECTURE-DEBT-FRONTIER.2.1`
 projects direct backend storage/helper declaration-plan entries into

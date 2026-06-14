@@ -10,9 +10,9 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `HEAD after commit` — `IAL2-FEATURE-COMPLETENESS-FRONTIER.75: select RRESP aggregation policy`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.76` pending; next action is to select the public AXI multi-beat scalar RRESP aggregation contract before parser/report metadata or generated behavior changes.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.75`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.74`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.73`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.72`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.71`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.70`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.69`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.68`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.67`. Older completed slices are in the task tree and git history.
+- latest_commit: `HEAD after commit` — `IAL2-FEATURE-COMPLETENESS-FRONTIER.76: select RRESP aggregation contract`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.77` pending; next action is parser/report metadata and static validation for the selected scalar `RRESP` aggregation contract.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.76`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.75`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.74`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.73`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.72`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.71`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.70`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.69`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.68`. Older completed slices are in the task tree and git history.
 - in_flight_uncommitted: none after this commit; unrelated untracked `fx/` intentionally left alone.
 - blockers: none.
 

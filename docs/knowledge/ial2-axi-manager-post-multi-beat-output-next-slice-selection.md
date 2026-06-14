@@ -5,7 +5,6 @@ answers:
   - "what did IAL2-FEATURE-COMPLETENESS-FRONTIER.75 select?"
   - "what comes after AXI multi-beat read-data output-bank behavior?"
   - "what is the next AXI manager slice after rresp_aggregation residue?"
-  - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.76?"
   - "should RRESP aggregation be selected before behavior?"
 date: 2026-06-14
 status: current
@@ -25,10 +24,10 @@ The selection is grounded in the live public multi-beat sample report:
 `read_data.read.multi_beat_reassembly_generated_behavior: true`, and
 `read_data.residue: [rresp_aggregation]`.
 
-`.76` is a selector. It must choose the public source/report contract for
-scalar `RRESP` aggregation, including policy semantics, scalar output
-binding, diagnostics, generated artifact boundaries, residue movement, docs,
-Knowledge Map updates, and VHDL deferral before parser/report metadata or
-generated behavior changes. Per-ID queues, authored concrete-ID same-ID
+`.76` was the selector for the public source/report contract for scalar
+`RRESP` aggregation. It selected the additive
+`(status-aggregation (policy worst-observed))` contract and advanced the
+frontier to `.77`, parser/report metadata and static validation before
+generated scalar behavior. Per-ID queues, authored concrete-ID same-ID
 ordering, queued/blocking policy, profile aliases, full-manager behavior,
 direct backend, and VHDL remain deferred.

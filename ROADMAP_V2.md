@@ -1111,8 +1111,14 @@ generated multi-beat artifact report fields. Schedule JSON reports
 `multi_beat_reassembly_generated_behavior: true` and reduces read-data
 residue to `rresp_aggregation`. Selector `.75` selects `.76`, public scalar
 `RRESP` aggregation contract selection, before parser/report metadata or
-generated behavior changes. Packed burst outputs, per-ID queues, direct
-backend lowering, and VHDL remain deferred.
+generated behavior changes. Selector `.76` selects additive scalar `RRESP`
+aggregation syntax: read-level `(status-aggregation (policy worst-observed))`
+plus transaction-local `(status-aggregate-output NAME)`, with normalized
+report spelling `worst_observed`. Per-beat status lanes remain mandatory,
+width-3 responses stay deferred, and `.77` now owns parser/report metadata
+and static validation before generated scalar aggregation behavior. Packed
+burst outputs, per-ID queues, direct backend lowering, and VHDL remain
+deferred.
 The shipped public capacity/status source accepts one
 `(manager-capacity-status NAME ...)` object under
 `(protocol-platform-intent ...)`, `(profile axi4)`, and top-level source
