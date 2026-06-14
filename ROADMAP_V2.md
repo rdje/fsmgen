@@ -1222,6 +1222,14 @@ parser/report support for `issue-order-queue`, with
 `implementation_status: selected_not_generated`, `accepted_same_id_reuse:
 false`, `generated_queue_behavior: false`, and duplicated concrete same-ID
 reuse still fail-closed until generated queue-head behavior ships.
+Implementation `.96` ships that metadata boundary: PPIF accepts
+`(concrete-id-reuse issue-order-queue)` under read/write `same-id-ordering`
+arms, schedule JSON reports `policy: issue_order_queue`,
+`implementation_status: selected_not_generated`,
+`accepted_same_id_reuse: false`, and `generated_queue_behavior: false`, and
+duplicated concrete same-ID transactions still fail closed with a
+selected-not-generated diagnostic. The new support-accounted sample is
+`ppif/axi_manager_capacity_status_same_id_issue_order_queue_policy.ppif`.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.

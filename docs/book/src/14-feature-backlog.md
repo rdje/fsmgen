@@ -4326,8 +4326,7 @@ one optional `same-id-ordering` clause under `manager-capacity-status`; each
 selected `read` or `write` family must contain exactly one
 `(concrete-id-reuse reject)` policy. Duplicate top-level clauses, duplicate
 family arms, duplicate policy clauses, missing policy clauses, unsupported
-families, and unsupported values such as `issue-order-queue` or `scoreboard`
-fail closed.
+families, and unsupported values such as `scoreboard` fail closed.
 
 The public sample is
 `ppif/axi_manager_capacity_status_same_id_reject_policy.ppif`. It reports the
@@ -4425,6 +4424,45 @@ spelling and report `implementation_status: selected_not_generated`,
 `accepted_same_id_reuse: false`, and `generated_queue_behavior: false`.
 Duplicated concrete same-ID transactions must still fail closed until
 generated queue-head behavior exists.
+
+Same-ID issue-order queue metadata first slice:
+[AXI_IAL2_MANAGER_SAME_ID_ISSUE_ORDER_QUEUE_METADATA_FIRST_SLICE](../../AXI_IAL2_MANAGER_SAME_ID_ISSUE_ORDER_QUEUE_METADATA_FIRST_SLICE.md)
+ships `IAL2-FEATURE-COMPLETENESS-FRONTIER.96`. The PPIF adapter now accepts
+`issue-order-queue` in the existing read/write `same-id-ordering`
+`concrete-id-reuse` arms while keeping `scoreboard` unsupported.
+
+The runnable sample is
+`ppif/axi_manager_capacity_status_same_id_issue_order_queue_policy.ppif`. It
+reports selected-not-generated metadata without changing generated `.isf`,
+`.fsm`, or SystemVerilog:
+
+```yaml
+same_id_ordering:
+  mode: concrete_id_reuse_policy
+  generated_behavior: false
+  concrete_id_reuse_policy:
+    read:
+      policy: issue_order_queue
+      enforcement: not_generated
+      implementation_status: selected_not_generated
+      accepted_same_id_reuse: false
+      generated_queue_behavior: false
+  residue:
+    - concrete_id_same_id_ordering
+    - per_id_issue_order_queues
+```
+
+Selecting `issue-order-queue` is not accepted same-ID reuse yet. If two
+concrete read transactions reuse ID value 3 under the selected read family,
+FSMGen still rejects the source:
+
+```text
+AXI manager capacity/status IAL2 contract concrete read ID value 3 is reused by transactions 'r0' and 'r1'; selected same-id-ordering.read concrete-id-reuse issue-order-queue policy is selected_not_generated, so concrete same-ID reuse remains unsupported until generated issue-order queue behavior ships
+```
+
+Generated queue-head behavior still needs admitted per-transaction enqueue
+guards, per-ID queue state, queue-head response demux, and queue-specific
+assertions before `accepted_same_id_reuse` can become true.
 
 First implementation subset selection:
 [AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION](../../AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md)

@@ -1442,8 +1442,16 @@ sub _normalize_same_id_ordering_policy_family($raw, $family) {
         $raw->{concrete_id_reuse},
         "same_id_ordering_policy.$family.concrete_id_reuse",
     );
-    confess "AXI manager capacity/status IAL2 contract same_id_ordering_policy.$family.concrete_id_reuse must be reject in this slice\n"
-        unless $policy eq 'reject';
+    confess "AXI manager capacity/status IAL2 contract same_id_ordering_policy.$family.concrete_id_reuse must be reject or issue-order-queue in this slice\n"
+        unless $policy =~ /\A(?:reject|issue-order-queue)\z/;
+
+    return {
+        policy                   => 'issue_order_queue',
+        implementation_status    => 'selected_not_generated',
+        enforcement              => 'not_generated',
+        accepted_same_id_reuse   => 0,
+        generated_queue_behavior => 0,
+    } if $policy eq 'issue-order-queue';
 
     return {
         policy                   => 'reject',
@@ -1711,6 +1719,9 @@ sub _build_id_response_rule_engine(%args) {
             );
             if (ref($same_id_policy) eq 'HASH' && ($same_id_policy->{policy} // '') eq 'reject') {
                 confess "AXI manager capacity/status IAL2 contract concrete $transaction->{kind} ID value $id->{value} is reused by transactions '$previous->{transaction}' and '$transaction->{name}'; selected same-id-ordering.$transaction->{kind} concrete-id-reuse reject policy rejects concrete same-ID reuse\n";
+            }
+            if (ref($same_id_policy) eq 'HASH' && ($same_id_policy->{policy} // '') eq 'issue_order_queue') {
+                confess "AXI manager capacity/status IAL2 contract concrete $transaction->{kind} ID value $id->{value} is reused by transactions '$previous->{transaction}' and '$transaction->{name}'; selected same-id-ordering.$transaction->{kind} concrete-id-reuse issue-order-queue policy is selected_not_generated, so concrete same-ID reuse remains unsupported until generated issue-order queue behavior ships\n";
             }
             confess "AXI manager capacity/status IAL2 contract concrete $transaction->{kind} ID value $id->{value} is reused by transactions '$previous->{transaction}' and '$transaction->{name}'; concrete same-ID reuse requires a selected same-ID ordering policy or per-ID issue-order queue\n";
         }
@@ -3145,7 +3156,7 @@ sub _build_report(%args) {
             'auto_id_lifecycle pools are bounded to 1..4 unique values per family and must fit the declared positive ID width',
             'auto_id_lifecycle generates first-free request-ID drive, per-transaction busy/selected-ID state, completion-event release, no-ID assertions, inactive-completion assertions, and same-family request mutual-exclusion assertions',
             'same_id_ordering for generated auto-ID families is enforced by avoiding same-ID concurrency through allocator free-ID guards plus pairwise active selected-ID assertions',
-            'same_id_ordering_policy accepts explicit read/write concrete-id-reuse reject policies and rejects unsupported issue-order-queue or scoreboard values until later owners select generated behavior',
+            'same_id_ordering_policy accepts explicit read/write concrete-id-reuse reject policies plus selected-not-generated issue-order-queue metadata, while scoreboard remains unsupported until later owners select generated behavior',
             'response_demux requires id_families, transactions, and selected-family auto_id_lifecycle metadata',
             'response_demux.write requires response_event equal to write_complete and generates bounded write BID demux behavior for explicit opt-in contracts',
             'response_demux.read requires response_event equal to read_complete, response_scope single_beat or burst_last, read ID-family metadata, read transactions, and read auto_id_lifecycle metadata',

@@ -10,8 +10,8 @@ answers:
 date: 2026-06-14
 status: current
 tags: [ial2, axi, manager, same-id, issue-order, queue, response-demux, task-tree]
-evidence: docs/AXI_IAL2_MANAGER_SAME_ID_ISSUE_ORDER_QUEUE_CONTRACT_SELECTION.md; docs/AXI_IAL2_MANAGER_SAME_ID_ISSUE_ORDER_QUEUE_BEHAVIOR_READINESS_AUDIT.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md
-reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\.94|IAL2-FEATURE-COMPLETENESS-FRONTIER\.95|IAL2-FEATURE-COMPLETENESS-FRONTIER\.96|issue-order-queue|issue_order_queue|selected_not_generated|queue-head response-demux|generated_queue_behavior' docs/AXI_IAL2_MANAGER_SAME_ID_ISSUE_ORDER_QUEUE_CONTRACT_SELECTION.md docs/AXI_IAL2_MANAGER_SAME_ID_ISSUE_ORDER_QUEUE_BEHAVIOR_READINESS_AUDIT.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md README.md ROADMAP_V2.md docs/book/src/14-feature-backlog.md
+evidence: docs/AXI_IAL2_MANAGER_SAME_ID_ISSUE_ORDER_QUEUE_CONTRACT_SELECTION.md; docs/AXI_IAL2_MANAGER_SAME_ID_ISSUE_ORDER_QUEUE_BEHAVIOR_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_SAME_ID_ISSUE_ORDER_QUEUE_METADATA_FIRST_SLICE.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md
+reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\.94|IAL2-FEATURE-COMPLETENESS-FRONTIER\.95|IAL2-FEATURE-COMPLETENESS-FRONTIER\.96|IAL2-FEATURE-COMPLETENESS-FRONTIER\.97|issue-order-queue|issue_order_queue|selected_not_generated|queue-head response-demux|generated_queue_behavior' docs/AXI_IAL2_MANAGER_SAME_ID_ISSUE_ORDER_QUEUE_CONTRACT_SELECTION.md docs/AXI_IAL2_MANAGER_SAME_ID_ISSUE_ORDER_QUEUE_BEHAVIOR_READINESS_AUDIT.md docs/AXI_IAL2_MANAGER_SAME_ID_ISSUE_ORDER_QUEUE_METADATA_FIRST_SLICE.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md README.md ROADMAP_V2.md docs/book/src/14-feature-backlog.md
 ---
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.94` selected the public AXI same-ID
@@ -55,3 +55,8 @@ generated queue-head behavior ships.
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.96`, metadata-first parser/report support
 for `issue-order-queue`, while duplicated concrete same-ID reuse remains
 fail-closed until generated queue-head behavior ships.
+
+`.96` shipped that metadata-first support and advanced the frontier to
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.97`, admitted per-transaction enqueue
+boundary readiness before queue-state or queue-head response-demux behavior
+changes.
