@@ -27,3 +27,7 @@ Concrete-ID samples still keep `same_id_ordering` under
 `.87` should decide whether a conservative concrete-ID same-ID constraint,
 report/static classification, public same-ID policy, or generated per-ID
 issue-order queue substrate must come first.
+
+That audit completed and selected `IAL2-FEATURE-COMPLETENESS-FRONTIER.88`,
+conservative fail-closed static validation for multiple concrete-ID
+transactions in the same response family that use the same concrete ID value.

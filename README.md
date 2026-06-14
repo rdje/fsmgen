@@ -395,8 +395,8 @@ multi-beat sample now reports `response_demux.residue: []` and
 `same_id_ordering.residue: [concrete_id_same_id_ordering,
 per_id_issue_order_queues]` while keeping `read_data.residue: []`.
 Generated `.isf`, `.fsm`, and SystemVerilog behavior is unchanged. The next
-selector is `IAL2-FEATURE-COMPLETENESS-FRONTIER.86`, which will choose the
-next AXI manager feature-completeness owner and carry the IAL2 factoring
+selector was `IAL2-FEATURE-COMPLETENESS-FRONTIER.86`, which chose the
+next AXI manager feature-completeness owner and carried the IAL2 factoring
 question: keep a small common semantic core only where reuse across multiple
 profiles is proven, and leave premature one-protocol abstractions in
 protocol/platform vocabularies until evidence justifies sharing.
@@ -404,9 +404,12 @@ Selector `.86` chooses `IAL2-FEATURE-COMPLETENESS-FRONTIER.87`, AXI
 concrete-ID same-ID ordering readiness. The public multi-beat sample now
 leaves only `concrete_id_same_id_ordering` and `per_id_issue_order_queues`
 under `same_id_ordering.residue`, while concrete-ID samples still keep
-`same_id_ordering` under `id_response_rule_engine.residue`. `.87` must decide
-whether a conservative concrete-ID constraint, report/static classification,
-public policy, or generated per-ID issue-order queue substrate comes first.
+`same_id_ordering` under `id_response_rule_engine.residue`. Audit `.87`
+selects `IAL2-FEATURE-COMPLETENESS-FRONTIER.88`, conservative fail-closed
+static validation for multiple concrete-ID transactions in the same read or
+write response family that share one concrete ID value. The next slice should
+reject that unsupported authored same-ID reuse before any per-ID queue,
+scoreboard, public same-ID policy, or full same-ID ordering behavior.
 The IAL2 factoring stance remains evidence-driven: keep AXI-specific same-ID
 ordering in the AXI vocabulary until another profile proves the same semantic
 need.
@@ -528,29 +531,30 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 109. `docs/AXI_IAL2_MANAGER_BURST_PAYLOAD_OUTPUT_READINESS_AUDIT.md`: audited bounded burst payload/output readiness and selected report/static `bursts` residue alignment.
 110. `docs/AXI_IAL2_MANAGER_BURST_RESIDUE_ALIGNMENT_FIRST_SLICE.md`: aligned broad `bursts` residue for the covered generated auto-ID multi-beat output-bank subset.
 111. `docs/AXI_IAL2_MANAGER_POST_BURST_RESIDUE_NEXT_SLICE_SELECTION.md`: selected AXI concrete-ID same-ID ordering readiness after bounded burst residue alignment.
-112. `docs/AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md`: selected first AXI-derived IAL2 implementation subset and pre-code contract.
-113. `docs/AXI_IAL2_VALID_READY_READINESS_AUDIT.md`: code/test/docs/report owner map for the future AXI Valid-Ready IAL2 implementation.
-114. `docs/AXI_IAL2_VALID_READY_GENERATOR_FIRST_SLICE.md`: first in-process AXI Valid-Ready IAL2 generator slice and report surface.
-115. `docs/decisions/0016-ppif-is-first-public-ial2-container.md`: selects `.ppif` as the first public generic IAL2 file surface.
-116. `docs/IAL2_PPIF_PARSER_CLI_FIRST_SLICE.md`: first public `.ppif` parser/CLI slice for one AXI Valid-Ready source object.
-117. `docs/IAL2_PPIF_MULTI_VALID_READY_READINESS.md`: readiness map for future multi-channel `.ppif` Valid-Ready support.
-118. `docs/IAL2_PPIF_VALID_READY_BUNDLE_CONTRACT_SELECTION.md`: selected future aggregate bundle contract for multi-channel `.ppif` Valid-Ready support.
-119. `docs/IAL2_PPIF_VALID_READY_BUNDLE_FIRST_SLICE.md`: shipped bounded multi-channel `.ppif` Valid-Ready bundle report/review-artifact behavior.
-120. `docs/IAL2_PPIF_BUNDLE_SEMANTIC_JSON_FIRST_SLICE.md`: shipped aggregate semantic JSON for multi-channel `.ppif` bundles.
-121. `docs/IAL2_PPIF_BUNDLE_HDL_ENTRY_SELECTION.md`: selected aggregate wrapper/top HDL entry contract for multi-channel `.ppif` bundles.
-122. `docs/IAL2_PPIF_BUNDLE_HDL_ENTRY_FIRST_SLICE.md`: shipped aggregate wrapper/top HDL entry for the tracked multi-channel `.ppif` bundle.
-123. `docs/PDF_EXTRACTION_WORKFLOW.md`: portable workflow for source-anchored PDF text, table, diagram, and image extraction.
-124. `docs/decisions/0014-protocol-platform-intent-surface-and-layered-lowering.md`: generic IAL2 file-surface candidates and layered lowering decision.
-125. `docs/decisions/0015-ial2-profile-extensions-are-vocabulary-aliases.md`: IAL2 protocol-profile extension refinement.
-126. `docs/decisions/0017-ppif-valid-ready-bundle-contract.md`: future multi-channel `.ppif` bundle contract decision.
-127. `docs/decisions/0018-ial-contracts-are-backend-language-neutral.md`: IAL contracts and mdBook stay backend-language-neutral for future Rust, Rust/Wasm, browser-capable JavaScript, and Dart/web parity.
-128. `docs/FEATURE_BACKLOG.md`: pointer to the canonical mdBook feature backlog for deferred/not-fully-shipped user-visible work.
-129. `CHANGES.md`: chronological technical changes.
-130. `DEVELOPMENT_NOTES.md`: design rationale and decisions.
-131. `MEMORY.md`: continuity/handoff state.
-132. `LIVE_ACHIEVEMENT_STATUS.md`: latest completed roadmap-aligned slice.
-133. `WARP.md`: repository-specific agent/development guidance.
-134. `.agents/workflows/commit.md`: automation-oriented commit workflow description.
+112. `docs/AXI_IAL2_MANAGER_CONCRETE_ID_SAME_ID_ORDERING_READINESS_AUDIT.md`: audited concrete-ID same-ID ordering readiness and selected fail-closed static validation.
+113. `docs/AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md`: selected first AXI-derived IAL2 implementation subset and pre-code contract.
+114. `docs/AXI_IAL2_VALID_READY_READINESS_AUDIT.md`: code/test/docs/report owner map for the future AXI Valid-Ready IAL2 implementation.
+115. `docs/AXI_IAL2_VALID_READY_GENERATOR_FIRST_SLICE.md`: first in-process AXI Valid-Ready IAL2 generator slice and report surface.
+116. `docs/decisions/0016-ppif-is-first-public-ial2-container.md`: selects `.ppif` as the first public generic IAL2 file surface.
+117. `docs/IAL2_PPIF_PARSER_CLI_FIRST_SLICE.md`: first public `.ppif` parser/CLI slice for one AXI Valid-Ready source object.
+118. `docs/IAL2_PPIF_MULTI_VALID_READY_READINESS.md`: readiness map for future multi-channel `.ppif` Valid-Ready support.
+119. `docs/IAL2_PPIF_VALID_READY_BUNDLE_CONTRACT_SELECTION.md`: selected future aggregate bundle contract for multi-channel `.ppif` Valid-Ready support.
+120. `docs/IAL2_PPIF_VALID_READY_BUNDLE_FIRST_SLICE.md`: shipped bounded multi-channel `.ppif` Valid-Ready bundle report/review-artifact behavior.
+121. `docs/IAL2_PPIF_BUNDLE_SEMANTIC_JSON_FIRST_SLICE.md`: shipped aggregate semantic JSON for multi-channel `.ppif` bundles.
+122. `docs/IAL2_PPIF_BUNDLE_HDL_ENTRY_SELECTION.md`: selected aggregate wrapper/top HDL entry contract for multi-channel `.ppif` bundles.
+123. `docs/IAL2_PPIF_BUNDLE_HDL_ENTRY_FIRST_SLICE.md`: shipped aggregate wrapper/top HDL entry for the tracked multi-channel `.ppif` bundle.
+124. `docs/PDF_EXTRACTION_WORKFLOW.md`: portable workflow for source-anchored PDF text, table, diagram, and image extraction.
+125. `docs/decisions/0014-protocol-platform-intent-surface-and-layered-lowering.md`: generic IAL2 file-surface candidates and layered lowering decision.
+126. `docs/decisions/0015-ial2-profile-extensions-are-vocabulary-aliases.md`: IAL2 protocol-profile extension refinement.
+127. `docs/decisions/0017-ppif-valid-ready-bundle-contract.md`: future multi-channel `.ppif` bundle contract decision.
+128. `docs/decisions/0018-ial-contracts-are-backend-language-neutral.md`: IAL contracts and mdBook stay backend-language-neutral for future Rust, Rust/Wasm, browser-capable JavaScript, and Dart/web parity.
+129. `docs/FEATURE_BACKLOG.md`: pointer to the canonical mdBook feature backlog for deferred/not-fully-shipped user-visible work.
+130. `CHANGES.md`: chronological technical changes.
+131. `DEVELOPMENT_NOTES.md`: design rationale and decisions.
+132. `MEMORY.md`: continuity/handoff state.
+133. `LIVE_ACHIEVEMENT_STATUS.md`: latest completed roadmap-aligned slice.
+134. `WARP.md`: repository-specific agent/development guidance.
+135. `.agents/workflows/commit.md`: automation-oriented commit workflow description.
 
 ## Documentation index (all `.md` files in this repo)
 - `README.md` — single entry point and navigation hub.
@@ -1059,6 +1063,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/AXI_IAL2_MANAGER_BURST_PAYLOAD_OUTPUT_READINESS_AUDIT.md` — audited bounded burst payload/output readiness and selected report/static `bursts` residue alignment.
 - `docs/AXI_IAL2_MANAGER_BURST_RESIDUE_ALIGNMENT_FIRST_SLICE.md` — aligned broad `bursts` residue for the covered generated auto-ID multi-beat output-bank subset.
 - `docs/AXI_IAL2_MANAGER_POST_BURST_RESIDUE_NEXT_SLICE_SELECTION.md` — selected AXI concrete-ID same-ID ordering readiness after bounded burst residue alignment.
+- `docs/AXI_IAL2_MANAGER_CONCRETE_ID_SAME_ID_ORDERING_READINESS_AUDIT.md` — audited concrete-ID same-ID ordering readiness and selected fail-closed static validation for unsupported authored same-ID reuse.
 - `docs/AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md` — selected first AXI-derived IAL2 implementation subset and pre-code contract.
 - `docs/AXI_IAL2_VALID_READY_READINESS_AUDIT.md` — code/test/docs/report owner map for a future AXI Valid-Ready IAL2 implementation slice.
 - `docs/AXI_IAL2_VALID_READY_GENERATOR_FIRST_SLICE.md` — first in-process AXI Valid-Ready IAL2 generator slice and report surface.

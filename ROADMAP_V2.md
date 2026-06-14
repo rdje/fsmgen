@@ -1167,11 +1167,14 @@ Selector `.86` chooses `.87`, AXI concrete-ID same-ID ordering readiness. The
 public multi-beat sample now leaves only `concrete_id_same_id_ordering` and
 `per_id_issue_order_queues` under `same_id_ordering.residue`; concrete-ID
 samples still keep `same_id_ordering` under `id_response_rule_engine.residue`.
-The next audit must decide whether a conservative concrete-ID same-ID
-constraint, report/static classification, public same-ID policy, or generated
-per-ID issue-order queue substrate comes first. AXI-specific same-ID ordering
-stays profile vocabulary for now; common IAL2 factoring remains evidence-driven
-and should be promoted only when multiple profiles need compatible semantics.
+Audit `.87` selects `.88`, conservative fail-closed static validation for
+multiple concrete-ID transactions in the same read or write response family
+that share one concrete ID value. Existing concrete-ID equality assertions do
+not prove same-ID response issue order, and an in-memory probe confirms the
+current generator accepts same-ID concrete pairs with unique events while
+leaving `same_id_ordering` as residue. AXI-specific same-ID ordering stays
+profile vocabulary for now; common IAL2 factoring remains evidence-driven and
+should be promoted only when multiple profiles need compatible semantics.
 Verification-code generation is captured as a separate future roadmap lane
 from the synthesizable RTL/HDL feature-completeness path.
 Packed burst outputs, concrete-ID same-ID ordering, per-ID queues, queued

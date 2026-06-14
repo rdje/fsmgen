@@ -4236,13 +4236,25 @@ readiness. The public multi-beat sample now leaves only
 `same_id_ordering.residue`, while concrete-ID samples still keep
 `same_id_ordering` under `id_response_rule_engine.residue`.
 
-`.87` must decide whether the next implementation can be a conservative
-concrete-ID same-ID constraint, report/static classification, public same-ID
-policy, or whether generated per-ID issue-order queue substrate is required
-first. The selector also records the IAL2 factoring stance: keep common IAL2
+`.87` was selected to decide whether the next implementation could be a
+conservative concrete-ID same-ID constraint, report/static classification,
+public same-ID policy, or whether generated per-ID issue-order queue substrate
+was required first. The selector also records the IAL2 factoring stance: keep common IAL2
 constructs to a small semantic core only when reuse is proven across multiple
 profiles. AXI same-ID ordering remains AXI profile vocabulary until another
 profile proves the same semantic need.
+
+Concrete-ID same-ID readiness audit:
+[AXI_IAL2_MANAGER_CONCRETE_ID_SAME_ID_ORDERING_READINESS_AUDIT](../../AXI_IAL2_MANAGER_CONCRETE_ID_SAME_ID_ORDERING_READINESS_AUDIT.md)
+ships `IAL2-FEATURE-COMPLETENESS-FRONTIER.87`. It selects
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.88`, conservative fail-closed static
+validation for multiple concrete-ID transactions in the same read or write
+response family that use the same concrete ID value. Existing concrete-ID
+assertions prove request/response ID equality only; they do not prove same-ID
+response issue order without a per-ID issue-order record, queue, scoreboard, or
+selected static rejection rule. `.88` should reject unsupported authored
+same-ID reuse while leaving generated auto-ID same-ID avoidance and currently
+valid single-concrete-ID samples unchanged.
 
 First implementation subset selection:
 [AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION](../../AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md)
