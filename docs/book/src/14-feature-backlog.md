@@ -4584,6 +4584,25 @@ queue state representation selection. Accepted concrete same-ID reuse,
 generated queue behavior, queue-head demux, direct backend lowering, and VHDL
 remain deferred.
 
+Same-ID issue-order queue state representation selection:
+[AXI_IAL2_MANAGER_SAME_ID_ISSUE_ORDER_QUEUE_STATE_REPRESENTATION_SELECTION](../../AXI_IAL2_MANAGER_SAME_ID_ISSUE_ORDER_QUEUE_STATE_REPRESENTATION_SELECTION.md)
+ships `IAL2-FEATURE-COMPLETENESS-FRONTIER.101`. The selected future
+representation is `compact_onehot_transaction_slots`: each generated queue is
+family-local and concrete-ID-value-local, uses compacted explicit slots, keeps
+slot `0` as the head, and stores one transaction identity bit per
+slot/transaction. Queue depth remains bounded by
+`min(max-pending, concrete transaction inventory)`.
+
+This representation stays inside the proven scalar IAL path. It avoids arrays,
+dynamic indexed left-hand sides, hidden unbounded queues, and pointer modulo
+arithmetic. Enqueue remains sourced only from admitted request pulses; dequeue
+is named as a future `queue_dequeue_event` produced by queue-head response
+demux. `.101` therefore does not select behavior implementation yet. It
+advances the active frontier to `IAL2-FEATURE-COMPLETENESS-FRONTIER.102`, AXI
+same-ID queue-head response-demux contract selection, because the existing
+public `response-demux` syntax and generated behavior are auto-ID-lifecycle
+oriented.
+
 First implementation subset selection:
 [AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION](../../AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md)
 selects a source-anchored AXI Valid-Ready channel contract/monitor as the

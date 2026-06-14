@@ -10,9 +10,9 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `HEAD after commit` — `IAL2-FEATURE-COMPLETENESS-FRONTIER.100: audit same-ID queue demux readiness`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.101` pending; next action is selecting the bounded AXI same-ID issue-order queue state representation before any queue-state behavior, queue-head response-demux, duplicate concrete same-ID acceptance, direct backend, or VHDL behavior change.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.100`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.99`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.98`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.97`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.96`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.95`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.94`; `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1`; `BIN-FSMGEN-IMPORT-TREE-JUN14-REFRESH.1`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.93`. Older completed slices are in the task tree and git history.
+- latest_commit: `HEAD after commit` — `IAL2-FEATURE-COMPLETENESS-FRONTIER.101: select same-ID queue state representation`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.102` pending; next action is selecting the AXI same-ID queue-head response-demux contract before any queue-state behavior, queue-head response-demux behavior, duplicate concrete same-ID acceptance, direct backend, or VHDL behavior change.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.101`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.100`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.99`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.98`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.97`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.96`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.95`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.94`; `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1`; `BIN-FSMGEN-IMPORT-TREE-JUN14-REFRESH.1`. Older completed slices are in the task tree and git history.
 - in_flight_uncommitted: none after this commit; unrelated untracked `fx/` intentionally left alone.
 - blockers: none.
 

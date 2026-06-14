@@ -492,6 +492,17 @@ queue state representation selection, to pin down grouping, bounds, storage
 shape, transaction identity encoding, diagnostics, assertions, report
 vocabulary, and the later implementation split before duplicate concrete
 same-ID reuse can be accepted.
+Selector `.101` chooses `compact_onehot_transaction_slots` as the future
+generated queue representation: family-local and concrete-ID-value-local
+compacted slots, slot `0` as head, one explicit transaction identity bit per
+slot/transaction, depth bounded by `min(max-pending, concrete transaction
+inventory)`, enqueue sourced only from admitted request pulses, and no arrays,
+dynamic indexed left-hand sides, hidden unbounded queues, or pointer modulo
+arithmetic. It also finds that implementation still needs a concrete same-ID
+queue-head response-demux source contract because the current
+`response-demux` syntax and implementation are auto-ID-lifecycle oriented.
+The active frontier is now `IAL2-FEATURE-COMPLETENESS-FRONTIER.102`, AXI
+same-ID queue-head response-demux contract selection.
 The IAL2 factoring stance remains evidence-driven: keep AXI-specific same-ID
 ordering in the AXI vocabulary until another profile proves the same semantic
 need.

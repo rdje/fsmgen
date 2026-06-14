@@ -1260,6 +1260,16 @@ the representation is selected. The active frontier advances to `.101`,
 bounded AXI same-ID issue-order queue state representation selection, before
 duplicate concrete same-ID reuse, generated queue behavior, queue-head demux,
 direct backend, or VHDL behavior can change.
+Selector `.101` chooses `compact_onehot_transaction_slots`: family-local and
+concrete-ID-value-local compacted slots, slot `0` as head, one explicit
+transaction identity bit per slot/transaction, and depth bounded by
+`min(max-pending, concrete transaction inventory)`. The representation avoids
+arrays, dynamic indexed left-hand sides, hidden unbounded queues, and pointer
+modulo arithmetic, and keeps enqueue sourced only from admitted request
+pulses. It also confirms implementation remains gated by a concrete same-ID
+queue-head response-demux source contract because current `response-demux`
+syntax and behavior require auto-ID lifecycle state. The active frontier
+advances to `.102`, AXI same-ID queue-head response-demux contract selection.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.

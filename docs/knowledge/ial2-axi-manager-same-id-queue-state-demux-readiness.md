@@ -9,8 +9,8 @@ answers:
 date: 2026-06-14
 status: current
 tags: [ial2, axi, manager, same-id, issue-order, queue, demux, readiness, task-tree]
-evidence: docs/AXI_IAL2_MANAGER_SAME_ID_ISSUE_ORDER_QUEUE_STATE_DEMUX_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_POST_ADMITTED_REQUEST_PULSES_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_SAME_ID_ISSUE_ORDER_QUEUE_ADMITTED_REQUEST_PULSES_FIRST_SLICE.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md
-reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.100|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.101|queue state representation|queue-head demux|accepted_same_id_reuse|generated_queue_behavior|auto-ID busy/selected-ID' docs/AXI_IAL2_MANAGER_SAME_ID_ISSUE_ORDER_QUEUE_STATE_DEMUX_READINESS_AUDIT.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md README.md ROADMAP_V2.md docs/book/src/14-feature-backlog.md
+evidence: docs/AXI_IAL2_MANAGER_SAME_ID_ISSUE_ORDER_QUEUE_STATE_DEMUX_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_SAME_ID_ISSUE_ORDER_QUEUE_STATE_REPRESENTATION_SELECTION.md; docs/AXI_IAL2_MANAGER_POST_ADMITTED_REQUEST_PULSES_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_SAME_ID_ISSUE_ORDER_QUEUE_ADMITTED_REQUEST_PULSES_FIRST_SLICE.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md
+reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.100|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.101|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.102|compact_onehot_transaction_slots|queue-head demux|accepted_same_id_reuse|generated_queue_behavior|auto-ID busy/selected-ID' docs/AXI_IAL2_MANAGER_SAME_ID_ISSUE_ORDER_QUEUE_STATE_DEMUX_READINESS_AUDIT.md docs/AXI_IAL2_MANAGER_SAME_ID_ISSUE_ORDER_QUEUE_STATE_REPRESENTATION_SELECTION.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md README.md ROADMAP_V2.md docs/book/src/14-feature-backlog.md
 ---
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.100` audits AXI same-ID
@@ -23,9 +23,8 @@ request pulses are generated, but `accepted_same_id_reuse` and
 still auto-ID busy/selected-ID matching, including the read burst-last path,
 so queue-head demux cannot ship before queue identity state exists.
 
-The next active leaf is `IAL2-FEATURE-COMPLETENESS-FRONTIER.101`, bounded AXI
-same-ID issue-order queue state representation selection. It must define the
-grouping, static bounds, storage shape, transaction identity encoding,
-enqueue/dequeue event names, diagnostics, assertions, report vocabulary, and
-later implementation split while keeping duplicate concrete same-ID reuse
-fail-closed.
+`.101` has since selected `compact_onehot_transaction_slots` and advanced the
+active frontier to `IAL2-FEATURE-COMPLETENESS-FRONTIER.102`, AXI same-ID
+queue-head response-demux contract selection. Duplicate concrete same-ID reuse
+remains fail-closed until the demux contract and later generated behavior
+ship.
