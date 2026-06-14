@@ -6542,6 +6542,27 @@ and regression-backed.
 
 ## Embedding And Public APIs
 
+### Semantic Introspection And MCP Adapter
+
+Status: proposed under
+[`SEMANTIC-INTROSPECTION-MCP-FRONTIER`](../../tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md).
+
+Goal: make FSMGen machine-controllable for LLM/AI automation by exposing stable
+semantic introspection APIs first, then optional MCP adapters over those APIs.
+
+Current boundary: FSMGen already has several machine-readable surfaces:
+`--capability-manifest`, `--check --json`, `--emit-semantic-json`,
+`--emit-schedule-json`, support accounting, stable diagnostics, generated
+artifact inventories, and mdBook/corpus examples. These are candidates for a
+future adapter, not proof that an MCP surface is shipped.
+
+The owner-capture slice records the scope and leaves implementation inactive.
+The first required implementation prerequisite is a no-code selector. It must choose the bounded
+resource/tool/prompt subset, schema/versioning policy, safety model,
+workspace/output restrictions, and whether the first adapter is CLI-driven,
+in-process, or service-backed. Raw private AST, scheduler, and lowering objects
+remain outside the public automation contract.
+
 ### Fully Frozen Programmatic Embedding API
 
 Status: backlog under `R13`.

@@ -976,6 +976,14 @@ Priority note:
 The active immediate feature-completeness lane is IAL2 on the
 SystemVerilog-backed lowering path; see
 [docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md](docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md).
+Future AI/LLM automation through MCP is now owned by the proposed
+[docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md](docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md)
+tree. That lane is not an implementation commitment yet: the owner-capture
+leaf recorded the scope, and the first selector leaf must select a stable
+semantic-introspection contract over existing capability
+manifest, check JSON, normalized semantic JSON, schedule JSON, diagnostics,
+support-accounting, and mdBook example surfaces before any MCP adapter,
+service API, or source behavior changes.
 The parser/report metadata slice `IAL2-FEATURE-COMPLETENESS-FRONTIER.39` is
 now shipped for the bounded AXI read response-demux public contract selected
 by `.38`. The selected read arm requires `(response-scope single-beat)`,
