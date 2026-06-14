@@ -1279,6 +1279,18 @@ uses `bounded_write_bid_queue_head_demux_contract`; read uses
 `burst-last` scope. Behavior remains selected-not-generated, and the active
 frontier advances to `.103`, parser/report metadata and static validation for
 the selected contract.
+Implementation `.103` ships selected-not-generated parser/report metadata and
+static validation for that contract. The new public sample
+`ppif/axi_manager_capacity_status_same_id_queue_head_response_demux.ppif`
+reports a duplicate concrete-ID read group under
+`same_id_issue_order_queues`, `transaction_completion_source:
+generated_queue_head_demux`, and `implementation_status:
+selected_not_generated`; generated queue state, queue-head demux rules,
+accepted same-ID reuse, generated queue behavior, direct backend, and VHDL
+remain unchanged. Same-family auto-ID demux plus concrete same-ID queue-head
+demux and read-data consumption of selected-not-generated queue-head demux
+fail closed. The active frontier advances to `.104`, generated same-ID queue
+state and queue-head behavior readiness.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.

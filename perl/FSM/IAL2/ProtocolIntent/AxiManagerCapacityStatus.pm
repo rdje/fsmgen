@@ -143,6 +143,9 @@ sub _normalize_contract($raw) {
             transactions  => $transactions,
         )
         : undef;
+    my $same_id_ordering_policy = exists($raw->{same_id_ordering_policy})
+        ? _normalize_same_id_ordering_policy($raw->{same_id_ordering_policy})
+        : undef;
     my $response_demux = exists($raw->{response_demux})
         ? _normalize_response_demux(
             raw_response_demux => $raw->{response_demux},
@@ -150,6 +153,9 @@ sub _normalize_contract($raw) {
             id_families        => $id_families,
             transactions       => $transactions,
             auto_id_lifecycle  => $auto_id_lifecycle,
+            same_id_ordering_policy => $same_id_ordering_policy,
+            read_max_pending   => $read_max_pending,
+            write_max_pending  => $write_max_pending,
         )
         : undef;
     my $read_data = exists($raw->{read_data})
@@ -159,9 +165,6 @@ sub _normalize_contract($raw) {
             transactions   => $transactions,
             response_demux => $response_demux,
         )
-        : undef;
-    my $same_id_ordering_policy = exists($raw->{same_id_ordering_policy})
-        ? _normalize_same_id_ordering_policy($raw->{same_id_ordering_policy})
         : undef;
     my $transaction_event_dispatch = _build_transaction_event_dispatch(
         events       => \%events,
@@ -181,6 +184,7 @@ sub _normalize_contract($raw) {
         id_families             => $id_families,
         transactions            => $transactions,
         same_id_ordering_policy => $same_id_ordering_policy,
+        response_demux          => $response_demux,
     );
     my $event_inputs = _effective_event_inputs(
         events                     => \%events,
@@ -706,8 +710,6 @@ sub _normalize_response_demux(%args) {
         unless ref($args{id_families}) eq 'HASH';
     confess "AXI manager capacity/status IAL2 contract response_demux requires transactions metadata\n"
         unless ref($args{transactions}) eq 'ARRAY';
-    confess "AXI manager capacity/status IAL2 contract response_demux requires auto_id_lifecycle metadata\n"
-        unless ref($args{auto_id_lifecycle}) eq 'HASH';
 
     my %normalized;
     if (exists $raw->{write}) {
@@ -718,16 +720,20 @@ sub _normalize_response_demux(%args) {
             unless $write_family->{present};
 
         my $write_lifecycle = _auto_id_lifecycle_family_by_name($args{auto_id_lifecycle}, 'write');
-        confess "AXI manager capacity/status IAL2 contract response_demux.write requires write auto_id_lifecycle metadata\n"
-            unless ref($write_lifecycle) eq 'HASH';
-        confess "AXI manager capacity/status IAL2 contract response_demux.write requires at least one write auto-ID transaction\n"
-            unless @{$write_lifecycle->{auto_transactions} || []};
+        my $queue_head_plan = _response_demux_queue_head_plan_for_family(
+            family_name             => 'write',
+            transactions            => $args{transactions},
+            same_id_ordering_policy => $args{same_id_ordering_policy},
+            max_pending             => $args{write_max_pending},
+            lifecycle               => $write_lifecycle,
+        );
 
         $normalized{write} = _normalize_response_demux_write(
             raw_write       => $raw->{write},
             events          => $args{events},
             write_family    => $write_family,
             write_lifecycle => $write_lifecycle,
+            queue_head_plan => $queue_head_plan,
         );
     }
 
@@ -739,16 +745,20 @@ sub _normalize_response_demux(%args) {
             unless $read_family->{present};
 
         my $read_lifecycle = _auto_id_lifecycle_family_by_name($args{auto_id_lifecycle}, 'read');
-        confess "AXI manager capacity/status IAL2 contract response_demux.read requires read auto_id_lifecycle metadata\n"
-            unless ref($read_lifecycle) eq 'HASH';
-        confess "AXI manager capacity/status IAL2 contract response_demux.read requires at least one read auto-ID transaction\n"
-            unless @{$read_lifecycle->{auto_transactions} || []};
+        my $queue_head_plan = _response_demux_queue_head_plan_for_family(
+            family_name             => 'read',
+            transactions            => $args{transactions},
+            same_id_ordering_policy => $args{same_id_ordering_policy},
+            max_pending             => $args{read_max_pending},
+            lifecycle               => $read_lifecycle,
+        );
 
         $normalized{read} = _normalize_response_demux_read(
             raw_read       => $raw->{read},
             events         => $args{events},
             read_family    => $read_family,
             read_lifecycle => $read_lifecycle,
+            queue_head_plan => $queue_head_plan,
         );
     }
 
@@ -769,6 +779,14 @@ sub _normalize_response_demux(%args) {
 }
 
 sub _response_demux_residue($normalized) {
+    if (_response_demux_has_queue_head_contract($normalized)) {
+        my @residue;
+        push @residue, 'read_response_demux'
+            unless exists $normalized->{read};
+        push @residue, qw(generated_same_id_queue_head_demux read_data_interleaving bursts);
+        return @residue;
+    }
+
     return qw(read_response_demux same_id_ordering read_data_interleaving bursts)
         unless exists $normalized->{read};
 
@@ -777,6 +795,100 @@ sub _response_demux_residue($normalized) {
         if ref($read) eq 'HASH' && $read->{generated_behavior};
 
     return qw(generated_burst_last_read_demux read_data_interleaving bursts);
+}
+
+sub _response_demux_has_queue_head_contract($response_demux) {
+    return 0 unless ref($response_demux) eq 'HASH';
+    for my $family (qw(write read)) {
+        my $entry = $response_demux->{$family};
+        return 1 if ref($entry) eq 'HASH'
+            && ($entry->{transaction_completion_source} // '') eq 'generated_queue_head_demux';
+    }
+    return 0;
+}
+
+sub _response_demux_family_has_queue_head_contract($response_demux, $family) {
+    return 0 unless ref($response_demux) eq 'HASH';
+    my $entry = $response_demux->{$family};
+    return ref($entry) eq 'HASH'
+        && ($entry->{transaction_completion_source} // '') eq 'generated_queue_head_demux';
+}
+
+sub _response_demux_queue_head_plan_for_family(%args) {
+    my $family_name = $args{family_name};
+    my $policy = _same_id_ordering_policy_for_family($args{same_id_ordering_policy}, $family_name);
+    my $queue_policy_selected = ref($policy) eq 'HASH'
+        && ($policy->{policy} // '') eq 'issue_order_queue';
+    my $lifecycle = $args{lifecycle};
+    my $has_auto_lifecycle = ref($lifecycle) eq 'HASH'
+        && @{$lifecycle->{auto_transactions} || []};
+
+    my $groups = _same_id_duplicate_concrete_groups(
+        transactions => $args{transactions},
+        family_name  => $family_name,
+        max_pending  => $args{max_pending},
+    );
+    my $has_duplicate_group = @$groups ? 1 : 0;
+
+    if ($queue_policy_selected && $has_duplicate_group) {
+        confess "AXI manager capacity/status IAL2 contract response_demux.$family_name does not support same-family auto_id_lifecycle plus concrete same-ID queue-head demux in this slice\n"
+            if $has_auto_lifecycle;
+        my @completion_signals;
+        my %wanted = map {
+            map { $_ => 1 } @{$_->{transactions} || []}
+        } @$groups;
+        for my $transaction (@{$args{transactions} || []}) {
+            next unless $wanted{$transaction->{name}};
+            push @completion_signals, $transaction->{completion_event};
+        }
+        return {
+            mode               => 'queue_head',
+            groups             => $groups,
+            completion_signals => \@completion_signals,
+        };
+    }
+
+    if ($has_auto_lifecycle) {
+        return {
+            mode      => 'auto_id',
+            lifecycle => $lifecycle,
+        };
+    }
+
+    if ($queue_policy_selected) {
+        confess "AXI manager capacity/status IAL2 contract response_demux.$family_name concrete same-ID queue-head demux requires at least one duplicate concrete $family_name ID group\n";
+    }
+
+    confess "AXI manager capacity/status IAL2 contract response_demux.$family_name requires $family_name auto_id_lifecycle metadata or selected same-id-ordering.$family_name concrete-id-reuse issue-order-queue with a duplicate concrete-ID group\n";
+}
+
+sub _same_id_duplicate_concrete_groups(%args) {
+    my @transactions = grep {
+        ($_->{kind} // '') eq $args{family_name}
+            && ref($_->{id}) eq 'HASH'
+            && ($_->{id}{policy} // '') eq 'concrete'
+    } @{$args{transactions} || []};
+
+    my (%by_id, @order);
+    for my $transaction (@transactions) {
+        my $id = $transaction->{id}{value};
+        push @order, $id unless exists $by_id{$id};
+        push @{$by_id{$id}}, $transaction;
+    }
+
+    my @groups;
+    for my $id (@order) {
+        my $group = $by_id{$id};
+        next unless @$group > 1;
+        my $depth = @$group < $args{max_pending} ? scalar(@$group) : $args{max_pending};
+        push @groups, {
+            concrete_id          => $id,
+            transactions         => [map { $_->{name} } @$group],
+            depth                => $depth,
+            dequeue_event_source => 'queue_head_response_demux',
+        };
+    }
+    return \@groups;
 }
 
 sub _normalize_response_demux_write(%args) {
@@ -809,11 +921,38 @@ sub _normalize_response_demux_write(%args) {
     confess "AXI manager capacity/status IAL2 contract response_demux.write.transaction_completion must be generated in this slice\n"
         unless $transaction_completion eq 'generated';
 
-    my @completion_signals = map { $_->{completion_event} } @{$args{write_lifecycle}{transaction_state} || []};
+    my $queue_head_plan = $args{queue_head_plan};
+    my $queue_head_selected = ref($queue_head_plan) eq 'HASH'
+        && ($queue_head_plan->{mode} // '') eq 'queue_head';
+    my @completion_signals = $queue_head_selected
+        ? @{$queue_head_plan->{completion_signals} || []}
+        : map { $_->{completion_event} } @{$args{write_lifecycle}{transaction_state} || []};
     for my $completion_signal (@completion_signals) {
         confess "AXI manager capacity/status IAL2 contract response_demux.write generated transaction completion signal '$completion_signal' must be distinct from response_event '$response_event'\n"
             if $completion_signal eq $response_event;
     }
+
+    if ($queue_head_selected) {
+        return {
+            mode                         => 'bounded_write_bid_queue_head_demux_contract',
+            generated_behavior           => 0,
+            implementation_status        => 'selected_not_generated',
+            response_event                => $response_event,
+            response_event_role           => 'raw_accepted_write_response',
+            response_id_signal            => $args{write_family}{response_id_signal},
+            response_id_direction         => 'generated_input',
+            transaction_completion_source => 'generated_queue_head_demux',
+            transaction_completion_semantics => 'matched_concrete_id_queue_head',
+            queue_state_representation    => 'compact_onehot_transaction_slots',
+            same_id_issue_order_queues    => _clone_jsonish($queue_head_plan->{groups}),
+            selected_completion_signals   => _clone_jsonish(\@completion_signals),
+        };
+    }
+
+    confess "AXI manager capacity/status IAL2 contract response_demux.write requires write auto_id_lifecycle metadata\n"
+        unless ref($args{write_lifecycle}) eq 'HASH';
+    confess "AXI manager capacity/status IAL2 contract response_demux.write requires at least one write auto-ID transaction\n"
+        unless @{$args{write_lifecycle}{auto_transactions} || []};
 
     return {
         mode                         => 'bounded_write_bid_demux_contract',
@@ -869,7 +1008,12 @@ sub _normalize_response_demux_read(%args) {
     confess "AXI manager capacity/status IAL2 contract response_demux.read.transaction_completion must be generated in this slice\n"
         unless $transaction_completion eq 'generated';
 
-    my @completion_signals = map { $_->{completion_event} } @{$args{read_lifecycle}{transaction_state} || []};
+    my $queue_head_plan = $args{queue_head_plan};
+    my $queue_head_selected = ref($queue_head_plan) eq 'HASH'
+        && ($queue_head_plan->{mode} // '') eq 'queue_head';
+    my @completion_signals = $queue_head_selected
+        ? @{$queue_head_plan->{completion_signals} || []}
+        : map { $_->{completion_event} } @{$args{read_lifecycle}{transaction_state} || []};
     for my $completion_signal (@completion_signals) {
         confess "AXI manager capacity/status IAL2 contract response_demux.read generated transaction completion signal '$completion_signal' must be distinct from response_event '$response_event'\n"
             if $completion_signal eq $response_event;
@@ -878,6 +1022,27 @@ sub _normalize_response_demux_read(%args) {
     if ($response_scope eq 'single-beat') {
         confess "AXI manager capacity/status IAL2 contract response_demux.read.last_signal is only supported with response_scope burst-last\n"
             if exists($raw->{last_signal}) || exists($raw->{last_signal_width});
+        if ($queue_head_selected) {
+            return {
+                mode                         => 'bounded_read_rid_queue_head_demux_contract',
+                generated_behavior           => 0,
+                implementation_status        => 'selected_not_generated',
+                response_event                => $response_event,
+                response_event_role           => 'raw_accepted_read_response',
+                response_scope                => 'single_beat',
+                response_id_signal            => $args{read_family}{response_id_signal},
+                response_id_direction         => 'generated_input',
+                transaction_completion_source => 'generated_queue_head_demux',
+                transaction_completion_semantics => 'matched_concrete_id_queue_head',
+                queue_state_representation    => 'compact_onehot_transaction_slots',
+                same_id_issue_order_queues    => _clone_jsonish($queue_head_plan->{groups}),
+                selected_completion_signals   => _clone_jsonish(\@completion_signals),
+            };
+        }
+        confess "AXI manager capacity/status IAL2 contract response_demux.read requires read auto_id_lifecycle metadata\n"
+            unless ref($args{read_lifecycle}) eq 'HASH';
+        confess "AXI manager capacity/status IAL2 contract response_demux.read requires at least one read auto-ID transaction\n"
+            unless @{$args{read_lifecycle}{auto_transactions} || []};
         return {
             mode                         => 'bounded_read_rid_demux_contract',
             generated_behavior           => 1,
@@ -907,6 +1072,32 @@ sub _normalize_response_demux_read(%args) {
     );
     confess "AXI manager capacity/status IAL2 contract response_demux.read.last_signal_width must be 1 in this slice\n"
         unless $last_signal_width == 1;
+
+    if ($queue_head_selected) {
+        return {
+            mode                         => 'bounded_read_rid_queue_head_demux_contract',
+            generated_behavior           => 0,
+            implementation_status        => 'selected_not_generated',
+            response_event                => $response_event,
+            response_event_role           => 'raw_accepted_read_response_beat',
+            response_scope                => 'burst_last',
+            response_id_signal            => $args{read_family}{response_id_signal},
+            response_id_direction         => 'generated_input',
+            last_signal                   => $last_signal,
+            last_signal_direction         => 'generated_input',
+            last_signal_width             => $last_signal_width,
+            transaction_completion_source => 'generated_queue_head_demux',
+            transaction_completion_semantics => 'matched_concrete_id_queue_head_and_last_signal',
+            queue_state_representation    => 'compact_onehot_transaction_slots',
+            same_id_issue_order_queues    => _clone_jsonish($queue_head_plan->{groups}),
+            selected_completion_signals   => _clone_jsonish(\@completion_signals),
+        };
+    }
+
+    confess "AXI manager capacity/status IAL2 contract response_demux.read requires read auto_id_lifecycle metadata\n"
+        unless ref($args{read_lifecycle}) eq 'HASH';
+    confess "AXI manager capacity/status IAL2 contract response_demux.read requires at least one read auto-ID transaction\n"
+        unless @{$args{read_lifecycle}{auto_transactions} || []};
 
     return {
         mode                         => 'bounded_read_rid_demux_contract',
@@ -940,6 +1131,10 @@ sub _normalize_read_data(%args) {
     }
     confess "AXI manager capacity/status IAL2 contract read_data requires a read family\n"
         unless exists $raw->{read};
+    confess "AXI manager capacity/status IAL2 contract read_data cannot consume selected-not-generated concrete same-ID queue-head response_demux.read metadata in this slice\n"
+        if ref($args{response_demux}) eq 'HASH'
+            && _response_demux_family_has_queue_head_contract($args{response_demux}, 'read')
+            && !$args{response_demux}{read}{generated_behavior};
     confess "AXI manager capacity/status IAL2 contract read_data requires generated read response_demux metadata\n"
         unless ref($args{response_demux}) eq 'HASH'
             && ref($args{response_demux}{read}) eq 'HASH'
@@ -1517,6 +1712,7 @@ sub _build_same_id_ordering(%args) {
         ? (concrete_id_reuse_policy => _same_id_ordering_policy_with_admitted_boundary(
             policy => $policy,
             admitted_request_boundary => $args{same_id_admitted_request_boundary},
+            response_demux => $args{response_demux},
         ))
         : ();
     if (!@families) {
@@ -1552,18 +1748,27 @@ sub _build_same_id_ordering(%args) {
 sub _same_id_ordering_policy_with_admitted_boundary(%args) {
     my $policy = _clone_jsonish($args{policy});
     my $boundary = $args{admitted_request_boundary};
-    return $policy unless ref($policy) eq 'HASH' && ref($boundary) eq 'HASH';
+    return $policy unless ref($policy) eq 'HASH';
 
     for my $family_name (qw(read write)) {
-        my $family = $boundary->{families}{$family_name};
-        next unless ref($family) eq 'HASH' && ref($policy->{$family_name}) eq 'HASH';
+        next unless ref($policy->{$family_name}) eq 'HASH';
 
-        my %admitted_boundary = %$family;
-        delete $admitted_boundary{family};
-        delete $admitted_boundary{assertions};
-        $policy->{$family_name}{enforcement} = 'admitted_request_boundary';
-        $policy->{$family_name}{implementation_status} = 'admitted_request_pulses_generated';
-        $policy->{$family_name}{admitted_request_boundary} = _clone_jsonish(\%admitted_boundary);
+        if (ref($boundary) eq 'HASH') {
+            my $family = $boundary->{families}{$family_name};
+            if (ref($family) eq 'HASH') {
+                my %admitted_boundary = %$family;
+                delete $admitted_boundary{family};
+                delete $admitted_boundary{assertions};
+                $policy->{$family_name}{enforcement} = 'admitted_request_boundary';
+                $policy->{$family_name}{implementation_status} = 'admitted_request_pulses_generated';
+                $policy->{$family_name}{admitted_request_boundary} = _clone_jsonish(\%admitted_boundary);
+            }
+        }
+
+        if (_response_demux_family_has_queue_head_contract($args{response_demux}, $family_name)) {
+            $policy->{$family_name}{response_demux_strategy} = 'queue_head_issue_order';
+            $policy->{$family_name}{response_demux_implementation_status} = 'selected_not_generated';
+        }
     }
 
     return $policy;
@@ -1757,6 +1962,10 @@ sub _build_id_response_rule_engine(%args) {
                 confess "AXI manager capacity/status IAL2 contract concrete $transaction->{kind} ID value $id->{value} is reused by transactions '$previous->{transaction}' and '$transaction->{name}'; selected same-id-ordering.$transaction->{kind} concrete-id-reuse reject policy rejects concrete same-ID reuse\n";
             }
             if (ref($same_id_policy) eq 'HASH' && ($same_id_policy->{policy} // '') eq 'issue_order_queue') {
+                next if _response_demux_family_has_queue_head_contract(
+                    $args{response_demux},
+                    $transaction->{kind},
+                );
                 confess "AXI manager capacity/status IAL2 contract concrete $transaction->{kind} ID value $id->{value} is reused by transactions '$previous->{transaction}' and '$transaction->{name}'; selected same-id-ordering.$transaction->{kind} concrete-id-reuse issue-order-queue policy is selected_not_generated, so concrete same-ID reuse remains unsupported until generated issue-order queue behavior ships\n";
             }
             confess "AXI manager capacity/status IAL2 contract concrete $transaction->{kind} ID value $id->{value} is reused by transactions '$previous->{transaction}' and '$transaction->{name}'; concrete same-ID reuse requires a selected same-ID ordering policy or per-ID issue-order queue\n";
@@ -3386,12 +3595,13 @@ sub _build_report(%args) {
             'auto_id_lifecycle generates first-free request-ID drive, per-transaction busy/selected-ID state, completion-event release, no-ID assertions, inactive-completion assertions, and same-family request mutual-exclusion assertions',
             'same_id_ordering for generated auto-ID families is enforced by avoiding same-ID concurrency through allocator free-ID guards plus pairwise active selected-ID assertions',
             'same_id_ordering_policy accepts explicit read/write concrete-id-reuse reject policies plus issue-order-queue admitted-request pulse generation, while accepted same-ID reuse, queue-head behavior, and scoreboard remain unsupported until later owners select generated behavior',
-            'response_demux requires id_families, transactions, and selected-family auto_id_lifecycle metadata',
+            'response_demux requires id_families, transactions, and either selected-family auto_id_lifecycle metadata or selected same-id-ordering concrete-id-reuse issue-order-queue metadata with a duplicate concrete-ID group',
             'response_demux.write requires response_event equal to write_complete and generates bounded write BID demux behavior for explicit opt-in contracts',
-            'response_demux.read requires response_event equal to read_complete, response_scope single_beat or burst_last, read ID-family metadata, read transactions, and read auto_id_lifecycle metadata',
+            'response_demux.read requires response_event equal to read_complete, response_scope single_beat or burst_last, read ID-family metadata, read transactions, and read auto_id_lifecycle metadata or selected concrete same-ID queue-head metadata',
             'response_demux.read response_scope single_beat generates bounded single-beat read RID demux behavior for explicit opt-in contracts',
             'response_demux.read response_scope burst_last requires one-bit last_signal metadata and generates matched-RID-and-RLAST last-beat completion behavior for explicit opt-in contracts',
-            'response_demux transaction_completion must be generated, making selected transaction completion names generated demux pulse outputs only under explicit opt-in contracts',
+            'response_demux transaction_completion must be generated; selected auto-ID families make transaction completion names generated demux pulse outputs, while selected concrete same-ID queue-head families report selected_not_generated metadata until queue state and queue-head demux behavior ship',
+            'concrete same-ID queue-head response_demux is selected only for a family with issue-order-queue policy, duplicate concrete-ID groups, no same-family auto_id_lifecycle demux, and no read_data consumption in this slice',
             'read_data supports explicit generated single-beat capture behavior with response_scope single_beat, explicit generated last-beat capture behavior with response_scope burst_last, and explicit generated multi-beat output-bank behavior with response_scope burst_last',
             'read_data.read data width must be positive and status width must be 2',
             'read_data.read optional burst_length metadata is accepted only for last-beat or multi-beat capture, source arlen, signal width 8, axlen-plus-one encoding, request capture, max_beats 1..256, report-only or runtime-assertion validation, generated raw-ARLEN capture, and generated beat-count/RLAST runtime assertions only for explicit runtime-assertion contracts; multi-beat capture requires runtime-assertion validation',
@@ -3406,7 +3616,7 @@ sub _build_report(%args) {
             },
             {
                 id     => 'axi_id_ordering_and_response_matching',
-                detail => 'Concrete transaction ID request/response assertions, explicit bounded auto-ID request-ID drive plus completion-event release, generated auto-ID same-ID avoidance, explicit static concrete-ID reuse reject policy metadata, issue-order-queue admitted-request pulse generation for selected concrete-ID families, generated write BID response demux, generated single-beat read RID response demux, generated single-beat read-data RDATA/RRESP capture, generated burst-last RLAST response-demux completion, structural last-beat read-data metadata, generated last-beat read-data RDATA/RRESP capture, generated raw-ARLEN burst-length capture, explicit runtime-assertion beat-count/RLAST validation, generated multi-beat read-data output-bank behavior for the covered auto-ID multi-beat-by-RID subset, bounded burst payload/output behavior through that per-beat output bank, and generated scalar RRESP aggregation behavior are supported; dynamic user-ID arbitration while issuing multiple same-family requests in one cycle, per-ID same-ID response queues, accepted concrete same-ID reuse, generated issue-order queue state/queue-head demux or scoreboard policies, authored/general different-ID interleaving outside the covered auto-ID subset, packed burst-vector outputs, alternate full burst payload assembly, and aggregate-only status output shapes remain outside this capacity/status shell.',
+                detail => 'Concrete transaction ID request/response assertions, explicit bounded auto-ID request-ID drive plus completion-event release, generated auto-ID same-ID avoidance, explicit static concrete-ID reuse reject policy metadata, issue-order-queue admitted-request pulse generation for selected concrete-ID families, selected-not-generated concrete same-ID queue-head response-demux metadata, generated write BID response demux, generated single-beat read RID response demux, generated single-beat read-data RDATA/RRESP capture, generated burst-last RLAST response-demux completion, structural last-beat read-data metadata, generated last-beat read-data RDATA/RRESP capture, generated raw-ARLEN burst-length capture, explicit runtime-assertion beat-count/RLAST validation, generated multi-beat read-data output-bank behavior for the covered auto-ID multi-beat-by-RID subset, bounded burst payload/output behavior through that per-beat output bank, and generated scalar RRESP aggregation behavior are supported; dynamic user-ID arbitration while issuing multiple same-family requests in one cycle, accepted concrete same-ID reuse, generated issue-order queue state/queue-head demux or scoreboard policies, read-data consumption of selected-not-generated concrete same-ID queue-head demux, authored/general different-ID interleaving outside the covered auto-ID subset, packed burst-vector outputs, alternate full burst payload assembly, and aggregate-only status output shapes remain outside this capacity/status shell.',
             },
             {
                 id     => 'profile_aliases_and_full_manager_behavior',

@@ -395,6 +395,30 @@ subtest 'same-ID issue-order queue admitted request pulses assert selected reque
     ok(!$read->{generated_queue_behavior}, 'admitted request pulses still do not claim queue behavior');
 };
 
+subtest 'same-ID queue-head response-demux reports selected metadata without generated behavior' => sub {
+    my $result = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_same_id_queue_head_response_demux());
+    my $isf = $result->{generated_ial1}{text};
+
+    like($isf, qr/\(var axi0_r0_admitted_request_pulse_q \(width 1\)\)/, 'queue-head selection keeps first admitted request pulse storage');
+    like($isf, qr/\(var axi0_r1_admitted_request_pulse_q \(width 1\)\)/, 'queue-head selection keeps second admitted request pulse storage');
+    unlike($isf, qr/\(output axi0_r0_complete\)/, 'selected-not-generated queue-head demux does not expose r0 completion as generated output');
+    unlike($isf, qr/\(output axi0_r1_complete\)/, 'selected-not-generated queue-head demux does not expose r1 completion as generated output');
+    unlike($isf, qr/\(rule axi0_r0_response_demux\b/, 'selected-not-generated queue-head demux emits no r0 response-demux rule');
+    unlike($isf, qr/\(rule axi0_r1_response_demux\b/, 'selected-not-generated queue-head demux emits no r1 response-demux rule');
+
+    assert_same_id_queue_head_response_demux_report($result->{report}{response_demux}, 'generator report');
+    my $read_policy = $result->{report}{same_id_ordering}{concrete_id_reuse_policy}{read};
+    is($read_policy->{response_demux_strategy}, 'queue_head_issue_order', 'same-ID policy reports queue-head response-demux strategy');
+    is($read_policy->{response_demux_implementation_status}, 'selected_not_generated', 'same-ID policy reports selected-not-generated response-demux status');
+    ok(!$read_policy->{accepted_same_id_reuse}, 'queue-head metadata still does not accept same-ID reuse');
+    ok(!$read_policy->{generated_queue_behavior}, 'queue-head metadata still does not claim queue behavior');
+    is_deeply(
+        $result->{report}{id_response_rule_engine}{residue},
+        [qw(auto_id_allocation id_release same_id_ordering response_demux)],
+        'selected queue-head metadata keeps generated queue-head behavior as ID/response residue',
+    );
+};
+
 subtest 'auto-ID lifecycle generates bounded request-ID drive behavior' => sub {
     my $result = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_auto_id_lifecycle());
     my $isf = $result->{generated_ial1}{text};
@@ -1039,7 +1063,36 @@ subtest 'malformed contract objects fail closed and no direct lower-to-fsm entry
                 },
             };
             $c;
-        }, qr/response_demux\.read requires read auto_id_lifecycle metadata/],
+        }, qr/response_demux\.read requires read auto_id_lifecycle metadata or selected same-id-ordering\.read concrete-id-reuse issue-order-queue with a duplicate concrete-ID group/],
+        ['same-ID queue-head response demux without duplicate concrete ID group', sub {
+            my $c = sample_contract_with_same_id_issue_order_queue_policy();
+            $c->{response_demux} = {
+                read => {
+                    response_event => 'axi0_read_complete',
+                    response_scope => 'single-beat',
+                    transaction_completion => 'generated',
+                },
+            };
+            $c;
+        }, qr/response_demux\.read concrete same-ID queue-head demux requires at least one duplicate concrete read ID group/],
+        ['same-ID queue-head response demux mixed with same-family auto lifecycle', sub {
+            my $c = sample_contract_with_same_id_queue_head_response_demux();
+            push @{$c->{transactions}}, {
+                kind             => 'read',
+                name             => 'r2',
+                tag              => 'rd2',
+                request_event    => 'axi0_r2_request',
+                completion_event => 'axi0_r2_complete',
+                id               => { policy => 'auto' },
+            };
+            $c->{auto_id_lifecycle} = { read => { pool => [0] } };
+            $c;
+        }, qr/response_demux\.read does not support same-family auto_id_lifecycle plus concrete same-ID queue-head demux/],
+        ['read data consuming selected-not-generated same-ID queue-head demux', sub {
+            my $c = sample_contract_with_same_id_queue_head_response_demux();
+            $c->{read_data} = sample_contract_with_read_data_burst_length()->{read_data};
+            $c;
+        }, qr/read_data cannot consume selected-not-generated concrete same-ID queue-head response_demux\.read metadata/],
         ['read data unsupported family', sub { my $c = sample_contract_with_read_response_demux(); $c->{read_data} = { write => {} }; $c }, qr/read_data has unsupported family 'write'/],
         ['read data without read response demux', sub {
             my $c = sample_contract_with_read_auto_id_lifecycle();
@@ -1090,13 +1143,13 @@ subtest 'malformed contract objects fail closed and no direct lower-to-fsm entry
         ['read data output collision', sub { my $c = sample_contract_with_read_data(); $c->{read_data}{read}{transactions}[0]{data_output} = 'axi0_rid'; $c }, qr/duplicates signal 'axi0_rid'/],
         ['response demux without ID-family metadata', sub { my $c = sample_contract(); $c->{response_demux} = { write => { response_event => 'axi0_write_complete', transaction_completion => 'generated' } }; $c }, qr/response_demux requires id_families metadata/],
         ['response demux without transaction metadata', sub { my $c = sample_contract_with_id_families(); $c->{response_demux} = { write => { response_event => 'axi0_write_complete', transaction_completion => 'generated' } }; $c }, qr/response_demux requires transactions metadata/],
-        ['response demux without auto lifecycle metadata', sub { my $c = sample_contract_with_transactions(); $c->{response_demux} = { write => { response_event => 'axi0_write_complete', transaction_completion => 'generated' } }; $c }, qr/response_demux requires auto_id_lifecycle metadata/],
+        ['response demux without auto lifecycle metadata', sub { my $c = sample_contract_with_transactions(); $c->{response_demux} = { write => { response_event => 'axi0_write_complete', transaction_completion => 'generated' } }; $c }, qr/response_demux\.write requires write auto_id_lifecycle metadata or selected same-id-ordering\.write concrete-id-reuse issue-order-queue with a duplicate concrete-ID group/],
         ['response demux without write auto lifecycle metadata', sub {
             my $c = sample_contract_with_response_demux();
             $c->{transactions}[2]{id} = { policy => 'auto' };
             $c->{auto_id_lifecycle} = { read => { pool => [0] } };
             $c;
-        }, qr/response_demux\.write requires write auto_id_lifecycle metadata/],
+        }, qr/response_demux\.write requires write auto_id_lifecycle metadata or selected same-id-ordering\.write concrete-id-reuse issue-order-queue with a duplicate concrete-ID group/],
         ['bad source anchors', sub { my $c = sample_contract(); $c->{source}{anchors} = {}; $c }, qr/source\.anchors must be an array reference/],
     );
 
@@ -1255,6 +1308,30 @@ sub sample_contract_with_same_id_issue_order_queue_policy_two_concrete_reads {
         request_event    => 'axi0_r1_request',
         completion_event => 'axi0_r1_complete',
         id               => { value => 4 },
+    };
+    return $contract;
+}
+
+sub sample_contract_with_same_id_queue_head_response_demux {
+    my $contract = sample_contract_with_same_id_issue_order_queue_policy();
+    $contract->{intent_name} = 'axi_manager_capacity_status_same_id_queue_head_response_demux';
+    $contract->{source}{object_id} = 'axi-manager-capacity-status-same-id-queue-head-response-demux';
+    push @{$contract->{transactions}}, {
+        kind             => 'read',
+        name             => 'r1',
+        tag              => 'rd1',
+        request_event    => 'axi0_r1_request',
+        completion_event => 'axi0_r1_complete',
+        id               => { value => 3 },
+    };
+    $contract->{response_demux} = {
+        read => {
+            response_event => 'axi0_read_complete',
+            response_scope => 'burst-last',
+            last_signal => 'axi0_rlast',
+            last_signal_width => 1,
+            transaction_completion => 'generated',
+        },
     };
     return $contract;
 }
@@ -1598,6 +1675,46 @@ sub assert_read_response_demux_burst_last_report {
     push @residue, 'read_data_interleaving' unless $multi_beat_by_rid_covered;
     push @residue, 'bursts' unless $bounded_burst_output_covered;
     is_deeply($demux->{residue}, \@residue, "$owner reports remaining read response-demux residue");
+}
+
+sub assert_same_id_queue_head_response_demux_report {
+    my ($demux, $owner) = @_;
+
+    is($demux->{mode}, 'bounded_response_demux_contract', "$owner marks bounded response-demux contract mode");
+    ok(!$demux->{generated_behavior}, "$owner marks top-level generated behavior false");
+    my $read = $demux->{read};
+    is($read->{mode}, 'bounded_read_rid_queue_head_demux_contract', "$owner marks queue-head read demux mode");
+    ok(!$read->{generated_behavior}, "$owner marks read generated behavior false");
+    is($read->{implementation_status}, 'selected_not_generated', "$owner reports selected-not-generated status");
+    is($read->{response_event}, 'axi0_read_complete', "$owner reports raw read response event");
+    is($read->{response_event_role}, 'raw_accepted_read_response_beat', "$owner reports beat-level response role");
+    is($read->{response_scope}, 'burst_last', "$owner reports burst-last scope");
+    is($read->{response_id_signal}, 'axi0_rid', "$owner reports RID signal");
+    is($read->{response_id_direction}, 'generated_input', "$owner reports RID direction");
+    is($read->{last_signal}, 'axi0_rlast', "$owner reports RLAST signal");
+    is($read->{last_signal_direction}, 'generated_input', "$owner reports RLAST direction");
+    is($read->{last_signal_width}, 1, "$owner reports one-bit RLAST");
+    is($read->{transaction_completion_source}, 'generated_queue_head_demux', "$owner reports queue-head transaction completion source");
+    is($read->{transaction_completion_semantics}, 'matched_concrete_id_queue_head_and_last_signal', "$owner reports queue-head last-beat semantics");
+    is($read->{queue_state_representation}, 'compact_onehot_transaction_slots', "$owner reports queue state representation");
+    is_deeply(
+        $read->{same_id_issue_order_queues},
+        [
+            {
+                concrete_id          => 3,
+                transactions         => [qw(r0 r1)],
+                depth                => 2,
+                dequeue_event_source => 'queue_head_response_demux',
+            },
+        ],
+        "$owner reports duplicate concrete-ID queue group",
+    );
+    is_deeply($read->{selected_completion_signals}, [qw(axi0_r0_complete axi0_r1_complete)], "$owner reports selected completion signal names");
+    is_deeply(
+        $demux->{residue},
+        [qw(generated_same_id_queue_head_demux read_data_interleaving bursts)],
+        "$owner reports selected queue-head demux behavior as residue",
+    );
 }
 
 sub assert_rlast_report_prose_alignment {

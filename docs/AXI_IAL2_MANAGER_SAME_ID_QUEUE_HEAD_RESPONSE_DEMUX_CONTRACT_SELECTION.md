@@ -250,23 +250,26 @@ The `.103` metadata/static-validation slice should fail closed for:
 - `read-data` attempting to consume selected-not-generated concrete same-ID
   queue-head demux.
 
-Duplicated concrete same-ID reuse must still fail closed until generated queue
-state and generated queue-head demux behavior ship together for the covered
-group.
+Generated accepted same-ID runtime behavior must still remain disabled until
+generated queue state and generated queue-head demux behavior ship together
+for the covered group. The `.103` follow-up may accept a duplicate concrete-ID
+group only as selected-not-generated metadata; it must not set
+`accepted_same_id_reuse: true` or `generated_queue_behavior: true`.
 
 ## Next Slice
 
-Select `IAL2-FEATURE-COMPLETENESS-FRONTIER.103`:
+Selected `IAL2-FEATURE-COMPLETENESS-FRONTIER.103`:
 
 ```text
 Ship AXI same-ID queue-head response-demux metadata.
 ```
 
-That slice should implement parser/report metadata and static validation for
-the selected contract, keep generated `.isf`, `.fsm`, SystemVerilog, accepted
+That slice implemented parser/report metadata and static validation for the
+selected contract, kept generated `.isf`, `.fsm`, SystemVerilog, accepted
 same-ID reuse, generated queue state, and queue-head demux behavior unchanged,
-and keep duplicated concrete same-ID reuse fail-closed with a
-selected-not-generated diagnostic.
+and accepted duplicate concrete-ID groups only as selected-not-generated
+queue-head metadata. Generated runtime acceptance remains deferred to
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.104` readiness and later behavior owners.
 
 ## Non-Goals
 

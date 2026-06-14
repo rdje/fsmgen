@@ -4620,6 +4620,32 @@ queue-head demux together for the covered group. `.102` advances the active
 frontier to `IAL2-FEATURE-COMPLETENESS-FRONTIER.103`, AXI same-ID queue-head
 response-demux metadata/static validation.
 
+Same-ID queue-head response-demux metadata first slice:
+[AXI_IAL2_MANAGER_SAME_ID_QUEUE_HEAD_RESPONSE_DEMUX_METADATA_FIRST_SLICE](../../AXI_IAL2_MANAGER_SAME_ID_QUEUE_HEAD_RESPONSE_DEMUX_METADATA_FIRST_SLICE.md)
+ships `IAL2-FEATURE-COMPLETENESS-FRONTIER.103`. FSMGen now accepts the
+selected-not-generated metadata contract when the same family has
+`concrete-id-reuse issue-order-queue`, at least one duplicate concrete-ID
+group, and no same-family auto-ID demux. The runnable sample is:
+
+```bash
+./bin/fsmgen --emit-schedule-json ppif/axi_manager_capacity_status_same_id_queue_head_response_demux.ppif
+```
+
+Its report includes `bounded_read_rid_queue_head_demux_contract`,
+`implementation_status: selected_not_generated`,
+`transaction_completion_source: generated_queue_head_demux`,
+`queue_state_representation: compact_onehot_transaction_slots`, and one
+`same_id_issue_order_queues` group for concrete ID `3` with transactions
+`r0` and `r1`. The same-ID policy also records
+`response_demux_strategy: queue_head_issue_order`.
+
+This is still not accepted same-ID runtime behavior:
+`accepted_same_id_reuse` and `generated_queue_behavior` remain false, no queue
+state or queue-head demux rules are generated, and read-data consumption of
+selected-not-generated queue-head demux fails closed. `.103` advances the
+active frontier to `IAL2-FEATURE-COMPLETENESS-FRONTIER.104`, generated
+same-ID queue state and queue-head behavior readiness.
+
 First implementation subset selection:
 [AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION](../../AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md)
 selects a source-anchored AXI Valid-Ready channel contract/monitor as the
