@@ -4550,6 +4550,21 @@ assertions ship. `.98` advances the active frontier to
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.99`, the post-admitted-request-pulse AXI
 manager selector.
 
+Post-admitted request pulses next slice selection:
+[AXI_IAL2_MANAGER_POST_ADMITTED_REQUEST_PULSES_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_ADMITTED_REQUEST_PULSES_NEXT_SLICE_SELECTION.md)
+ships `IAL2-FEATURE-COMPLETENESS-FRONTIER.99`. The selector keeps the next
+step as a readiness audit rather than direct queue-state implementation.
+Admitted request pulses name the enqueue boundary, but accepted same-ID reuse
+still requires bounded per-ID queue storage, enqueue/dequeue semantics,
+queue-head response demux, duplicate-ID validation changes, queue assertions,
+and report residue movement to be scoped together.
+
+`.99` selects `IAL2-FEATURE-COMPLETENESS-FRONTIER.100`, AXI same-ID
+issue-order queue state and queue-head demux readiness audit. That audit must
+decide whether the next safe owner is queue-state/enqueue/dequeue behavior,
+queue-head demux, report/static alignment, or a smaller helper prerequisite
+before any generated behavior changes.
+
 First implementation subset selection:
 [AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION](../../AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md)
 selects a source-anchored AXI Valid-Ready channel contract/monitor as the

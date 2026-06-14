@@ -60,7 +60,7 @@ for `issue-order-queue`, while duplicated concrete same-ID reuse remains
 fail-closed until generated queue-head behavior ships.
 
 `.96` shipped that metadata-first support. `.97` audited the admitted enqueue
-boundary. `.98` shipped admitted per-transaction request pulse generation and
-advanced the frontier to `IAL2-FEATURE-COMPLETENESS-FRONTIER.99`, the next
-AXI manager selector before queue-state or queue-head response-demux behavior
-changes.
+boundary. `.98` shipped admitted per-transaction request pulse generation.
+`.99` selected `IAL2-FEATURE-COMPLETENESS-FRONTIER.100`, AXI same-ID
+issue-order queue state and queue-head demux readiness audit, before
+queue-state or queue-head response-demux behavior changes.

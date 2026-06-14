@@ -1244,7 +1244,13 @@ generated pulse/rule/guard payload under the selected family. Duplicated
 concrete same-ID reuse, queue storage, dequeue rules, queue-head response
 demux, accepted same-ID reuse, direct backend, and VHDL remain deferred. The
 active frontier advances to `.99`, the post-admitted-request-pulse AXI
-manager selector.
+manager selector. Selector `.99` chooses `.100`, AXI same-ID issue-order queue
+state and queue-head demux readiness audit. Direct queue-state implementation
+is premature because admitted request pulses solve only the enqueue boundary;
+accepted same-ID reuse still needs bounded queue storage, enqueue/dequeue
+semantics, queue-head response demux, duplicate-ID validation changes,
+assertions, and residue movement to be audited together before generated
+behavior changes.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.

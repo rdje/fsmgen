@@ -11,8 +11,8 @@ answers:
 date: 2026-06-14
 status: current
 tags: [ial2, axi, manager, same-id, issue-order, queue, response-demux, task-tree]
-evidence: docs/AXI_IAL2_MANAGER_SAME_ID_ISSUE_ORDER_QUEUE_BEHAVIOR_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_SAME_ID_ISSUE_ORDER_QUEUE_METADATA_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_SAME_ID_ISSUE_ORDER_QUEUE_ADMITTED_ENQUEUE_BOUNDARY_AUDIT.md; docs/AXI_IAL2_MANAGER_SAME_ID_ISSUE_ORDER_QUEUE_ADMITTED_REQUEST_PULSES_FIRST_SLICE.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md
-reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\.95|IAL2-FEATURE-COMPLETENESS-FRONTIER\.96|IAL2-FEATURE-COMPLETENESS-FRONTIER\.97|IAL2-FEATURE-COMPLETENESS-FRONTIER\.98|IAL2-FEATURE-COMPLETENESS-FRONTIER\.99|issue-order-queue|selected_not_generated|admitted_request_boundary|accepted_same_id_reuse|generated_queue_behavior|admitted request' docs/AXI_IAL2_MANAGER_SAME_ID_ISSUE_ORDER_QUEUE_BEHAVIOR_READINESS_AUDIT.md docs/AXI_IAL2_MANAGER_SAME_ID_ISSUE_ORDER_QUEUE_METADATA_FIRST_SLICE.md docs/AXI_IAL2_MANAGER_SAME_ID_ISSUE_ORDER_QUEUE_ADMITTED_REQUEST_PULSES_FIRST_SLICE.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md README.md ROADMAP_V2.md docs/book/src/14-feature-backlog.md
+evidence: docs/AXI_IAL2_MANAGER_SAME_ID_ISSUE_ORDER_QUEUE_BEHAVIOR_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_SAME_ID_ISSUE_ORDER_QUEUE_METADATA_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_SAME_ID_ISSUE_ORDER_QUEUE_ADMITTED_ENQUEUE_BOUNDARY_AUDIT.md; docs/AXI_IAL2_MANAGER_SAME_ID_ISSUE_ORDER_QUEUE_ADMITTED_REQUEST_PULSES_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_POST_ADMITTED_REQUEST_PULSES_NEXT_SLICE_SELECTION.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md
+reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\.95|IAL2-FEATURE-COMPLETENESS-FRONTIER\.96|IAL2-FEATURE-COMPLETENESS-FRONTIER\.97|IAL2-FEATURE-COMPLETENESS-FRONTIER\.98|IAL2-FEATURE-COMPLETENESS-FRONTIER\.99|IAL2-FEATURE-COMPLETENESS-FRONTIER\.100|issue-order-queue|selected_not_generated|admitted_request_boundary|accepted_same_id_reuse|generated_queue_behavior|admitted request|queue-head demux' docs/AXI_IAL2_MANAGER_SAME_ID_ISSUE_ORDER_QUEUE_BEHAVIOR_READINESS_AUDIT.md docs/AXI_IAL2_MANAGER_SAME_ID_ISSUE_ORDER_QUEUE_METADATA_FIRST_SLICE.md docs/AXI_IAL2_MANAGER_SAME_ID_ISSUE_ORDER_QUEUE_ADMITTED_REQUEST_PULSES_FIRST_SLICE.md docs/AXI_IAL2_MANAGER_POST_ADMITTED_REQUEST_PULSES_NEXT_SLICE_SELECTION.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md README.md ROADMAP_V2.md docs/book/src/14-feature-backlog.md
 ---
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.95` audited AXI same-ID
@@ -34,5 +34,6 @@ queue-head behavior ships.
 
 `.96` shipped that metadata-first support. `.97` then audited the admitted
 enqueue boundary. `.98` shipped admitted per-transaction request pulse
-generation before queue state or queue-head demux behavior, and `.99` owns the
-next AXI manager selector.
+generation before queue state or queue-head demux behavior. `.99` selected
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.100`, AXI same-ID issue-order queue state
+and queue-head demux readiness audit, as the next active frontier.
