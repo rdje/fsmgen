@@ -11,8 +11,8 @@ answers:
 date: 2026-06-14
 status: current
 tags: [ial2, axi, manager, read-data, multi-beat, rresp, aggregation, readiness, task-tree]
-evidence: docs/AXI_IAL2_MANAGER_RRESP_AGGREGATION_BEHAVIOR_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_RRESP_AGGREGATION_METADATA_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_RRESP_AGGREGATION_CONTRACT_SELECTION.md; perl/FSM/IAL2/ProtocolIntent/AxiManagerCapacityStatus.pm; perl/FSM/Scheduler/ISF/LoweringIR.pm; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; docs/book/src/14-feature-backlog.md; README.md; ROADMAP_V2.md
-reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.78|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.79|generated_rresp_aggregation|status_aggregation_generated_behavior|STATUS_AGGREGATE_OUTPUT|agg < rresp|worst_observed' docs/AXI_IAL2_MANAGER_RRESP_AGGREGATION_BEHAVIOR_READINESS_AUDIT.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md docs/book/src/14-feature-backlog.md README.md ROADMAP_V2.md
+evidence: docs/AXI_IAL2_MANAGER_RRESP_AGGREGATION_BEHAVIOR_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_RRESP_AGGREGATION_BEHAVIOR_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_RRESP_AGGREGATION_METADATA_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_RRESP_AGGREGATION_CONTRACT_SELECTION.md; perl/FSM/IAL2/ProtocolIntent/AxiManagerCapacityStatus.pm; perl/FSM/Scheduler/ISF/LoweringIR.pm; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; docs/book/src/14-feature-backlog.md; README.md; ROADMAP_V2.md
+reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.78|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.79|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.80|generated_rresp_aggregation|status_aggregation_generated_behavior|STATUS_AGGREGATE_OUTPUT|agg < rresp|worst_observed' docs/AXI_IAL2_MANAGER_RRESP_AGGREGATION_BEHAVIOR_READINESS_AUDIT.md docs/AXI_IAL2_MANAGER_RRESP_AGGREGATION_BEHAVIOR_FIRST_SLICE.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md docs/book/src/14-feature-backlog.md README.md ROADMAP_V2.md
 ---
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.78` audited generated scalar AXI
@@ -30,5 +30,8 @@ The update must keep the same same-cycle boundary as generated output-bank
 capture: the guard includes `!request_event`, so request-time initialization
 and matched-beat update do not race in the same cycle.
 
-The next active leaf is `IAL2-FEATURE-COMPLETENESS-FRONTIER.79`, generated
-AXI multi-beat scalar `RRESP` aggregation behavior first slice.
+The immediate follow-up leaf was `IAL2-FEATURE-COMPLETENESS-FRONTIER.79`,
+generated AXI multi-beat scalar `RRESP` aggregation behavior first slice.
+That implementation is now complete; the active leaf is
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.80`, the next AXI manager
+feature-completeness selector.

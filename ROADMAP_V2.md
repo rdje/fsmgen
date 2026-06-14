@@ -1126,8 +1126,13 @@ finds no new IAL1/IAL0/SystemVerilog prerequisite for first generated width-2
 `worst_observed` scalar behavior: request-time `OKAY` initialization,
 matched-beat numeric max updates under the existing `!request_event`
 boundary, scalar aggregate outputs, report artifact movement, and
-`generated_rresp_aggregation` residue removal can ship directly. `.79` now
-owns generated scalar `RRESP` aggregation behavior first slice.
+`generated_rresp_aggregation` residue removal can ship directly.
+Implementation `.79` ships that behavior: generated scalar aggregate outputs,
+request-time `2'd0` initialization in the existing output-bank init rules,
+matched-beat max updates under `!request_event`, generated aggregate
+output/init/update report fields, and read-data residue with
+`generated_rresp_aggregation` removed. `.80` is now the active selector for
+the next AXI manager feature-completeness slice.
 Packed burst outputs, per-ID queues, direct backend lowering, and VHDL remain
 deferred.
 The shipped public capacity/status source accepts one

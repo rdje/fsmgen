@@ -1,7 +1,7 @@
 # AXI IAL2 Manager RRESP Aggregation Behavior Readiness Audit
 
-Status: shipped readiness audit; generated scalar aggregation behavior is
-selected for the next implementation slice.
+Status: shipped readiness audit; the selected generated scalar aggregation
+behavior shipped later in `IAL2-FEATURE-COMPLETENESS-FRONTIER.79`.
 
 Owner: `IAL2-FEATURE-COMPLETENESS-FRONTIER.78`.
 
@@ -30,10 +30,11 @@ SystemVerilog lowering are sufficient for the first width-2
 No source parser, generator, schedule report, `.isf`, `.fsm`, HDL, sample, or
 test behavior changes in this audit slice.
 
-## Behavior Selected For Next Slice
+## Behavior Selected For Follow-Up Slice
 
-The next behavior slice should generate one scalar status aggregate output per
-transaction that provided `(status-aggregate-output NAME)`:
+The follow-up behavior slice was selected to generate one scalar status
+aggregate output per transaction that provided `(status-aggregate-output
+NAME)`:
 
 ```text
 (output axi0_r0_rresp (width 2))
@@ -70,7 +71,7 @@ The assignment is:
 
 ## Same-Cycle Boundary
 
-The generated aggregate update must keep the same boundary used by the shipped
+The generated aggregate update keeps the same boundary used by the shipped
 multi-beat output-bank capture rules:
 
 ```text
@@ -102,15 +103,15 @@ The existing substrate covers the selected behavior:
   `(& matched (! req) (< agg rresp))` update lowered through the scheduler and
   reached SystemVerilog with the `agg < rresp` comparison intact.
 
-The implementation slice should still add focused regression coverage for the
-actual generated IAL2 path, because the probe validates the substrate shape
+The `.79` implementation slice added focused regression coverage for the
+actual generated IAL2 path, because the probe validated the substrate shape
 but not the production artifact lists, report fields, public sample, or
 residue movement.
 
 ## Report Boundary
 
-The next generated behavior slice should make these report movements together
-with the behavior:
+The `.79` generated behavior slice made these report movements together with
+the behavior:
 
 - set `status_aggregation_generated_behavior: true`;
 - keep `status_aggregation: worst_observed`;
@@ -158,6 +159,7 @@ The audit validation was:
 ## Rollback
 
 Reverting this audit removes only the readiness decision and the `.79`
-implementation owner. The `.77` parser/report metadata remains the latest
-shipped behavior, with `status_aggregation_generated_behavior: false` and
+implementation owner. As of the historical `.78` audit, the `.77`
+parser/report metadata remained the latest shipped behavior, with
+`status_aggregation_generated_behavior: false` and
 `read_data.residue: [generated_rresp_aggregation]`.

@@ -355,13 +355,16 @@ output names/widths, and narrows read-data residue to
 `generated_rresp_aggregation` while leaving generated `.isf`, `.fsm`, and HDL
 output-bank behavior unchanged. Audit `.78` finds no new
 IAL1/IAL0/SystemVerilog prerequisite for first generated width-2
-`worst_observed` scalar behavior: the next slice can emit scalar aggregate
-outputs, request-time `OKAY` initialization, matched-beat numeric max updates
-guarded by `!request_event`, report artifact movement, and
-`generated_rresp_aggregation` residue removal. Width-3 responses remain
-deferred, and the active frontier is
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.79`, generated scalar `RRESP`
-aggregation behavior first slice.
+`worst_observed` scalar behavior. Implementation `.79` ships that behavior:
+the multi-beat sample now emits width-2 scalar aggregate outputs such as
+`axi0_r0_rresp`, initializes them to `2'd0` on request in the existing
+output-bank init rule, updates them on matched accepted read-data beats when
+the current aggregate is less than the current `RRESP` under `!request_event`,
+reports generated aggregate output/init/update artifacts, and removes
+`generated_rresp_aggregation` from read-data residue. Width-3 responses
+remain deferred, and the active frontier is
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.80`, the next AXI manager
+feature-completeness selector after scalar `RRESP` aggregation behavior.
 Full-manager behavior, profile aliases, queued/blocking policy, direct
 backend lowering, and VHDL remain residue. VHDL remains behind SV-backed IAL
 feature completeness.

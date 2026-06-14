@@ -1248,7 +1248,7 @@ sub _normalize_read_data_read(%args) {
                 status_aggregate_output
                 status_aggregate_output_width
             )} = (
-                0,
+                1,
                 'per_transaction_scalar',
                 $status_width,
             );
@@ -1298,6 +1298,12 @@ sub _normalize_read_data_read(%args) {
                                 "$args{manager_name}_$transaction->{transaction}_read_beat_${_}_capture"
                             } 0 .. ($read{max_beats} - 1)
                         ];
+                        if (defined $status_aggregation) {
+                            $transaction->{status_aggregate_init_rule}
+                                = $transaction->{multi_beat_output_init_rule};
+                            $transaction->{status_aggregate_update_rule}
+                                = "$args{manager_name}_$transaction->{transaction}_rresp_aggregate";
+                        }
                     }
                 }
             }
@@ -1822,6 +1828,12 @@ sub _read_data_output_lines($contract) {
                     @{$transaction->{generated_data_outputs} || []}),
                 (map { _width_output_line($_, $transaction->{status_width}) }
                     @{$transaction->{generated_status_outputs} || []}),
+                (defined($transaction->{status_aggregate_output})
+                    ? (_width_output_line(
+                        $transaction->{status_aggregate_output},
+                        $transaction->{status_aggregate_output_width},
+                    ))
+                    : ()),
                 _width_output_line($transaction->{valid_mask_output}, $transaction->{valid_mask_width}),
                 _width_output_line($transaction->{length_output}, $transaction->{length_output_width});
         }
@@ -2462,6 +2474,19 @@ sub _read_data_capture_rule_lines($contract) {
                     ],
                 );
             }
+            if (defined($transaction->{status_aggregate_output})) {
+                push @lines, _read_data_capture_rule(
+                    _read_data_status_aggregate_update_rule_name($contract, $transaction),
+                    _and_expr(
+                        _read_data_matched_read_beat_expr($contract, $state),
+                        _not_expr($request_event),
+                        _lt_expr($transaction->{status_aggregate_output}, $read->{status_signal}),
+                    ),
+                    [
+                        [$transaction->{status_aggregate_output}, $read->{status_signal}],
+                    ],
+                );
+            }
         }
     }
     return @lines;
@@ -2487,6 +2512,12 @@ sub _read_data_multi_beat_capture_rule_name($contract, $transaction, $lane) {
     return "$contract->{name}_$transaction->{transaction}_read_beat_${lane}_capture";
 }
 
+sub _read_data_status_aggregate_update_rule_name($contract, $transaction) {
+    return $transaction->{status_aggregate_update_rule}
+        if defined $transaction->{status_aggregate_update_rule};
+    return "$contract->{name}_$transaction->{transaction}_rresp_aggregate";
+}
+
 sub _read_data_burst_length_capture_rule_name($contract, $transaction) {
     return $transaction->{burst_length_capture_rule}
         // "$contract->{name}_$transaction->{transaction}_burst_length_capture";
@@ -2500,6 +2531,10 @@ sub _read_data_multi_beat_output_init_assignments($transaction) {
     push @assignments, map {
         [$_, _sized_decimal_literal($transaction->{status_width}, 0)]
     } @{$transaction->{generated_status_outputs} || []};
+    push @assignments, [
+        $transaction->{status_aggregate_output},
+        _sized_decimal_literal($transaction->{status_aggregate_output_width}, 0),
+    ] if defined($transaction->{status_aggregate_output});
     push @assignments,
         [$transaction->{valid_mask_output}, _sized_binary_literal($transaction->{valid_mask_width}, '0')],
         [$transaction->{length_output}, _sized_decimal_literal($transaction->{length_output_width}, 0)];
@@ -3024,7 +3059,7 @@ sub _build_report(%args) {
             'read_data.read optional burst_length metadata is accepted only for last-beat or multi-beat capture, source arlen, signal width 8, axlen-plus-one encoding, request capture, max_beats 1..256, report-only or runtime-assertion validation, generated raw-ARLEN capture, and generated beat-count/RLAST runtime assertions only for explicit runtime-assertion contracts; multi-beat capture requires runtime-assertion validation',
             'read_data.read optional status_aggregation metadata is accepted only for multi-beat capture, policy worst-observed, status width 2, status_policy per-beat, runtime-assertion burst-length validation, and complete per-transaction status_aggregate_output bindings',
             'read_data.read transaction outputs must exactly cover read response_demux auto transactions',
-            'read_data generates bounded single-beat and last-beat RDATA/RRESP capture inputs, outputs, guarded assignments, raw-ARLEN burst-length capture storage/rules, beat-count/RLAST runtime assertions for explicit runtime-assertion contracts, and multi-beat output-bank data/status lanes, valid masks, length outputs, request-time clearing, and lane capture rules for explicit multi-beat contracts',
+            'read_data generates bounded single-beat and last-beat RDATA/RRESP capture inputs, outputs, guarded assignments, raw-ARLEN burst-length capture storage/rules, beat-count/RLAST runtime assertions for explicit runtime-assertion contracts, multi-beat output-bank data/status lanes, valid masks, length outputs, request-time clearing, lane capture rules, and scalar RRESP aggregation outputs/init/update rules for explicit multi-beat contracts',
         ],
         unsupported_residue => [
             {
@@ -3033,7 +3068,7 @@ sub _build_report(%args) {
             },
             {
                 id     => 'axi_id_ordering_and_response_matching',
-                detail => 'Concrete transaction ID request/response assertions, explicit bounded auto-ID request-ID drive plus completion-event release, generated auto-ID same-ID avoidance, generated write BID response demux, generated single-beat read RID response demux, generated single-beat read-data RDATA/RRESP capture, generated burst-last RLAST response-demux completion, structural last-beat read-data metadata, generated last-beat read-data RDATA/RRESP capture, generated raw-ARLEN burst-length capture, explicit runtime-assertion beat-count/RLAST validation, generated multi-beat read-data output-bank behavior, and scalar RRESP aggregation contract metadata are supported; dynamic user-ID arbitration while issuing multiple same-family requests in one cycle, per-ID same-ID response queues, different-ID interleaving, broader burst payload assembly, and generated scalar RRESP aggregation behavior remain outside this capacity/status shell.',
+                detail => 'Concrete transaction ID request/response assertions, explicit bounded auto-ID request-ID drive plus completion-event release, generated auto-ID same-ID avoidance, generated write BID response demux, generated single-beat read RID response demux, generated single-beat read-data RDATA/RRESP capture, generated burst-last RLAST response-demux completion, structural last-beat read-data metadata, generated last-beat read-data RDATA/RRESP capture, generated raw-ARLEN burst-length capture, explicit runtime-assertion beat-count/RLAST validation, generated multi-beat read-data output-bank behavior, and generated scalar RRESP aggregation behavior are supported; dynamic user-ID arbitration while issuing multiple same-family requests in one cycle, per-ID same-ID response queues, different-ID interleaving, and broader burst payload assembly remain outside this capacity/status shell.',
             },
             {
                 id     => 'profile_aliases_and_full_manager_behavior',
@@ -3127,6 +3162,11 @@ sub _report_read_data($contract) {
             $read_data->{read}{generated_multi_beat_length_outputs} = $artifacts->{multi_beat_length_outputs};
             $read_data->{read}{generated_multi_beat_output_init_rules} = $artifacts->{multi_beat_output_init_rules};
             $read_data->{read}{generated_multi_beat_capture_rules} = $artifacts->{multi_beat_capture_rules};
+        }
+        if ($contract->{read_data}{read}{status_aggregation_generated_behavior}) {
+            $read_data->{read}{generated_status_aggregate_outputs} = $artifacts->{status_aggregate_outputs};
+            $read_data->{read}{generated_status_aggregate_init_rules} = $artifacts->{status_aggregate_init_rules};
+            $read_data->{read}{generated_status_aggregate_update_rules} = $artifacts->{status_aggregate_update_rules};
         }
     }
     if (exists $read_data->{read}{burst_length_generated_behavior}) {
@@ -3237,6 +3277,7 @@ sub _read_data_generated_artifacts($contract) {
             (
                 @{$_->{generated_data_outputs} || []},
                 @{$_->{generated_status_outputs} || []},
+                (defined($_->{status_aggregate_output}) ? ($_->{status_aggregate_output}) : ()),
                 $_->{valid_mask_output},
                 $_->{length_output},
             )
@@ -3254,9 +3295,10 @@ sub _read_data_generated_artifacts($contract) {
         ? map {
             my $transaction = $_;
             my @outputs = @{$transaction->{generated_data_outputs} || []};
-            map {
+            my @capture_rules = map {
                 _read_data_multi_beat_capture_rule_name($contract, $transaction, $_)
-            } 0 .. $#outputs
+            } 0 .. $#outputs;
+            @capture_rules;
         } @{$read->{transactions} || []}
         : ();
     my @multi_beat_data_outputs = $multi_beat_payload_capture
@@ -3275,6 +3317,34 @@ sub _read_data_generated_artifacts($contract) {
         ? map { $_->{length_output} }
             @{$read->{transactions} || []}
         : ();
+    my @status_aggregate_outputs = $read->{status_aggregation_generated_behavior}
+        ? map { $_->{status_aggregate_output} }
+            grep { defined($_->{status_aggregate_output}) }
+            @{$read->{transactions} || []}
+        : ();
+    my @status_aggregate_init_rules = $read->{status_aggregation_generated_behavior}
+        ? map { $_->{status_aggregate_init_rule} // _read_data_multi_beat_output_init_rule_name($contract, $_) }
+            grep { defined($_->{status_aggregate_output}) }
+            @{$read->{transactions} || []}
+        : ();
+    my @status_aggregate_update_rules = $read->{status_aggregation_generated_behavior}
+        ? map { _read_data_status_aggregate_update_rule_name($contract, $_) }
+            grep { defined($_->{status_aggregate_output}) }
+            @{$read->{transactions} || []}
+        : ();
+    my @multi_beat_payload_rules = $multi_beat_payload_capture
+        ? map {
+            my $transaction = $_;
+            my @outputs = @{$transaction->{generated_data_outputs} || []};
+            my @capture_rules = map {
+                _read_data_multi_beat_capture_rule_name($contract, $transaction, $_)
+            } 0 .. $#outputs;
+            my @status_aggregate_rules = defined($transaction->{status_aggregate_output})
+                ? (_read_data_status_aggregate_update_rule_name($contract, $transaction))
+                : ();
+            (@capture_rules, @status_aggregate_rules);
+        } @{$read->{transactions} || []}
+        : ();
     return {
         inputs => _clone_jsonish(_unique_preserving([
             ($payload_capture ? ($read->{data_signal}, $read->{status_signal}) : ()),
@@ -3286,7 +3356,7 @@ sub _read_data_generated_artifacts($contract) {
             @burst_length_rules,
             @beat_count_rules,
             @multi_beat_output_init_rules,
-            @multi_beat_capture_rules,
+            @multi_beat_payload_rules,
         ],
         multi_beat_data_outputs => \@multi_beat_data_outputs,
         multi_beat_status_outputs => \@multi_beat_status_outputs,
@@ -3294,6 +3364,9 @@ sub _read_data_generated_artifacts($contract) {
         multi_beat_length_outputs => \@multi_beat_length_outputs,
         multi_beat_output_init_rules => \@multi_beat_output_init_rules,
         multi_beat_capture_rules => \@multi_beat_capture_rules,
+        status_aggregate_outputs => \@status_aggregate_outputs,
+        status_aggregate_init_rules => \@status_aggregate_init_rules,
+        status_aggregate_update_rules => \@status_aggregate_update_rules,
         burst_length_inputs => _clone_jsonish(\@burst_length_inputs),
         burst_length_storage => _clone_jsonish(\@burst_length_storage),
         burst_length_rules => [

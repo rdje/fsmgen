@@ -1,7 +1,8 @@
 # AXI IAL2 Manager RRESP Aggregation Metadata First Slice
 
 Status: shipped parser/report metadata and static validation; generated
-scalar aggregation behavior remains deferred.
+scalar aggregation behavior was deferred by this slice and later shipped in
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.79`.
 
 Owner: `IAL2-FEATURE-COMPLETENESS-FRONTIER.77`.
 
@@ -102,9 +103,9 @@ read_data:
 ```
 
 The residue changed from broad `rresp_aggregation` to
-`generated_rresp_aggregation`. That records that the public source/report
-contract is now understood, while request-time initialization and matched-beat
-aggregate update behavior still need a later exact owner.
+`generated_rresp_aggregation`. That recorded that the public source/report
+contract was understood by `.77`, while request-time initialization and
+matched-beat aggregate update behavior still needed a later exact owner.
 
 Multi-beat read-data contracts that omit `status-aggregation` remain valid.
 They continue to report `status_aggregation: none` and keep the broader
@@ -112,9 +113,9 @@ They continue to report `status_aggregation: none` and keep the broader
 
 ## Generated Behavior Boundary
 
-This slice does not emit scalar aggregate outputs, initialization rules, update
-rules, or aggregate artifact report lists. The generated output-bank behavior
-from `.74` remains the only multi-beat read-data payload behavior:
+This `.77` slice did not emit scalar aggregate outputs, initialization rules,
+update rules, or aggregate artifact report lists. The generated output-bank
+behavior from `.74` remained the only multi-beat read-data payload behavior:
 
 ```text
 (output axi0_r0_beat_rresp_0 (width 2))
@@ -122,15 +123,15 @@ from `.74` remains the only multi-beat read-data payload behavior:
 (output axi0_r0_read_beats (width 5))
 ```
 
-There is intentionally no generated output such as:
+There was intentionally no generated output such as:
 
 ```text
 (output axi0_r0_rresp (width 2))
 ```
 
 Existing generated `.fsm` and SystemVerilog output-bank behavior therefore
-remain reviewable and behavior-identical while the scalar aggregate contract is
-made visible to schedule/check/semantic consumers.
+remained reviewable and behavior-identical while the scalar aggregate contract
+was made visible to schedule/check/semantic consumers.
 
 ## Next Owner
 
@@ -140,11 +141,10 @@ The next exact owner is:
 IAL2-FEATURE-COMPLETENESS-FRONTIER.78
 ```
 
-`.78` should audit generated scalar `RRESP` aggregation readiness before
-behavior changes. It should decide whether the existing IAL1/IAL0/SystemVerilog
-substrate can emit request-time `OKAY` initialization, matched-beat
-worst-observed updates, artifact report lists, and residue removal directly, or
-whether a smaller IAL1/IAL0/SystemVerilog prerequisite is required first.
+`.78` audited generated scalar `RRESP` aggregation readiness before behavior
+changes and found no new IAL1/IAL0/SystemVerilog prerequisite. `.79` then
+shipped request-time `OKAY` initialization, matched-beat worst-observed
+updates, artifact report lists, and residue removal.
 
 Width-3 AXI responses, alternate aggregation policies, aggregate-only output
 shapes, packed burst outputs, per-ID queues, direct backend lowering, and VHDL

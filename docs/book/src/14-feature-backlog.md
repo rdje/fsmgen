@@ -4055,27 +4055,67 @@ records the `.78` readiness audit. It found no new IAL1, IAL0, or
 SystemVerilog prerequisite for first generated width-2 `worst_observed`
 behavior.
 
-The next implementation slice can emit one width-2 scalar aggregate output
-per read transaction, initialize it to `OKAY` on the transaction request, and
-update it on every accepted matched read-data beat when the current aggregate
-is less than the current `RRESP` signal:
+RRESP aggregation behavior first slice:
+[AXI_IAL2_MANAGER_RRESP_AGGREGATION_BEHAVIOR_FIRST_SLICE](../../AXI_IAL2_MANAGER_RRESP_AGGREGATION_BEHAVIOR_FIRST_SLICE.md)
+ships generated scalar aggregation behavior for the selected width-2
+`worst_observed` contract. The public multi-beat sample now emits one scalar
+aggregate output per read transaction:
 
 ```text
-(rule aggregate_init REQUEST_EVENT
-  (STATUS_AGGREGATE_OUTPUT 2'd0))
+(output axi0_r0_rresp (width 2))
+```
 
-(rule aggregate_update
-  (& MATCHED_READ_BEAT (! REQUEST_EVENT)
-     (< STATUS_AGGREGATE_OUTPUT RRESP_SIGNAL))
-  (STATUS_AGGREGATE_OUTPUT RRESP_SIGNAL))
+The existing output-bank initialization rule initializes the aggregate to
+`OKAY` on the transaction request:
+
+```text
+(rule axi0_r0_read_data_output_init axi0_r0_request
+  ...
+  (axi0_r0_rresp 2'd0)
+  ...)
+```
+
+Each transaction also gets a matched-beat update rule. The rule keeps the
+worst width-2 value observed so far:
+
+```text
+(rule axi0_r0_rresp_aggregate
+  (& MATCHED_READ_BEAT
+     (! axi0_r0_request)
+     (< axi0_r0_rresp axi0_rresp))
+  (axi0_r0_rresp axi0_rresp))
 ```
 
 The `! REQUEST_EVENT` boundary is mandatory. It keeps scalar aggregation
 aligned with the generated output-bank same-cycle request/response behavior.
-The active frontier is now `IAL2-FEATURE-COMPLETENESS-FRONTIER.79`,
-generated scalar `RRESP` aggregation behavior first slice. Width-3 responses,
-alternate policies, aggregate-only shapes, packed outputs, per-ID queues,
-direct backend lowering, and VHDL remain deferred.
+
+Schedule JSON now reports generated aggregate artifacts and no scalar
+aggregation residue for the selected contract:
+
+```text
+read_data:
+  residue: []
+  read:
+    status_aggregation: worst_observed
+    status_aggregation_generated_behavior: true
+    generated_status_aggregate_outputs:
+      - axi0_r0_rresp
+      - axi0_r1_rresp
+    generated_status_aggregate_init_rules:
+      - axi0_r0_read_data_output_init
+      - axi0_r1_read_data_output_init
+    generated_status_aggregate_update_rules:
+      - axi0_r0_rresp_aggregate
+      - axi0_r1_rresp_aggregate
+```
+
+No-aggregation multi-beat contracts remain valid and continue to report
+`status_aggregation: none` with `read_data.residue: [rresp_aggregation]`.
+The active frontier is now `IAL2-FEATURE-COMPLETENESS-FRONTIER.80`, the next
+AXI manager feature-completeness selector after scalar `RRESP` aggregation
+behavior. Width-3 responses, alternate policies, aggregate-only shapes,
+packed outputs, per-ID queues, direct backend lowering, and VHDL remain
+deferred.
 
 First implementation subset selection:
 [AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION](../../AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md)

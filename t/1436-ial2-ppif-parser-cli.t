@@ -391,14 +391,16 @@ subtest 'PPIF adapter parses AXI manager multi-beat read-data output-bank behavi
     like($isf, qr/\(var axi0_r0_expected_beats_q \(width 5\)\)/, 'multi-beat PPIF keeps expected-beat storage');
     like($isf, qr/\(output axi0_r0_beat_rdata_0 \(width 32\)\)/, 'multi-beat PPIF declares r0 beat 0 data output');
     like($isf, qr/\(output axi0_r0_beat_rresp_0 \(width 2\)\)/, 'multi-beat PPIF declares r0 beat 0 status output');
-    unlike($isf, qr/\(output axi0_r0_rresp \(width 2\)\)/, 'multi-beat PPIF does not generate scalar r0 aggregate output yet');
+    like($isf, qr/\(output axi0_r0_rresp \(width 2\)\)/, 'multi-beat PPIF declares scalar r0 aggregate status output');
     like($isf, qr/\(output axi0_r0_beat_valid \(width 16\)\)/, 'multi-beat PPIF declares r0 valid-mask output');
     like($isf, qr/\(output axi0_r0_read_beats \(width 5\)\)/, 'multi-beat PPIF declares r0 length output');
-    like($isf, qr/\(rule axi0_r0_read_data_output_init axi0_r0_request[\s\S]*\(axi0_r0_beat_rdata_0 32'd0\)[\s\S]*\(axi0_r0_beat_valid 16'b0\)[\s\S]*\(axi0_r0_read_beats 5'd0\)\)/, 'multi-beat PPIF clears output bank on request');
+    like($isf, qr/\(rule axi0_r0_read_data_output_init axi0_r0_request[\s\S]*\(axi0_r0_beat_rdata_0 32'd0\)[\s\S]*\(axi0_r0_rresp 2'd0\)[\s\S]*\(axi0_r0_beat_valid 16'b0\)[\s\S]*\(axi0_r0_read_beats 5'd0\)\)/, 'multi-beat PPIF clears output bank and initializes scalar aggregate on request');
     like($isf, qr/\(rule axi0_r0_read_beat_0_capture \(& \(& axi0_read_complete \(& axi0_r0_auto_id_busy_q \(== axi0_rid axi0_r0_auto_id_q\)\)\) \(! axi0_r0_request\) \(== axi0_r0_read_beat_count_q 5'd0\)\)[\s\S]*\(axi0_r0_beat_rdata_0 axi0_rdata\)[\s\S]*\(axi0_r0_beat_rresp_0 axi0_rresp\)[\s\S]*\(axi0_r0_beat_valid 16'b0000000000000001\)[\s\S]*\(axi0_r0_read_beats 5'd1\)\)/, 'multi-beat PPIF captures lane 0 with matched beat and current beat index');
+    like($isf, qr/\(rule axi0_r0_rresp_aggregate \(& \(& axi0_read_complete \(& axi0_r0_auto_id_busy_q \(== axi0_rid axi0_r0_auto_id_q\)\)\) \(! axi0_r0_request\) \(< axi0_r0_rresp axi0_rresp\)\)\s+\(axi0_r0_rresp axi0_rresp\)\)/, 'multi-beat PPIF updates scalar aggregate when the current beat RRESP is worse');
     like($fsm, qr/\(axi0_read_data_beat_count_checks_assert_0 assert \(=> axi0_r0_request \(< axi0_arlen 8'd16\)\)/, 'multi-beat PPIF lowers runtime validation assertions');
-    like($fsm, qr/\(-axi0_r0_read_data_output_init\s+<axi0_r0_request[\s\S]*\(<- \(axi0_r0_beat_rdata_0> 32'd0\)\)[\s\S]*\(<- \(axi0_r0_beat_valid> 16'b0\)\)[\s\S]*\(<- \(axi0_r0_read_beats> 5'd0\)\)/, 'multi-beat PPIF lowers output-bank clear rule');
+    like($fsm, qr/\(-axi0_r0_read_data_output_init\s+<axi0_r0_request[\s\S]*\(<- \(axi0_r0_beat_rdata_0> 32'd0\)\)[\s\S]*\(<- \(axi0_r0_rresp> 2'd0\)\)[\s\S]*\(<- \(axi0_r0_beat_valid> 16'b0\)\)[\s\S]*\(<- \(axi0_r0_read_beats> 5'd0\)\)/, 'multi-beat PPIF lowers output-bank clear and scalar aggregate init rule');
     like($fsm, qr/\(-axi0_r0_read_beat_0_capture\s+<\(& \(& axi0_read_complete \(& axi0_r0_auto_id_busy_q \(== axi0_rid axi0_r0_auto_id_q\)\)\) \(! axi0_r0_request\) \(== axi0_r0_read_beat_count_q 5'd0\)\)[\s\S]*\(<- \(axi0_r0_beat_rdata_0> axi0_rdata\)\)[\s\S]*\(<- \(axi0_r0_beat_rresp_0> axi0_rresp\)\)[\s\S]*\(<- \(axi0_r0_beat_valid> 16'b0000000000000001\)\)[\s\S]*\(<- \(axi0_r0_read_beats> 5'd1\)\)/, 'multi-beat PPIF lowers lane 0 payload capture rule');
+    like($fsm, qr/\(-axi0_r0_rresp_aggregate\s+<\(& \(& axi0_read_complete \(& axi0_r0_auto_id_busy_q \(== axi0_rid axi0_r0_auto_id_q\)\)\) \(! axi0_r0_request\) \(< axi0_r0_rresp axi0_rresp\)\)[\s\S]*\(<- \(axi0_r0_rresp> axi0_rresp\)\)/, 'multi-beat PPIF lowers scalar aggregate update rule');
     assert_read_response_demux_burst_last_report($result->{report}{response_demux}, 'adapter multi-beat read-data report');
     assert_read_data_multi_beat_report($result->{report}{read_data}, 'adapter multi-beat read-data report');
 };
@@ -2784,8 +2786,8 @@ sub assert_rlast_report_prose_alignment {
     ok($id_residue, "$owner reports AXI ID/order unsupported residue");
     like(
         $id_residue->{detail},
-        qr/generated burst-last RLAST response-demux completion, structural last-beat read-data metadata, generated last-beat read-data RDATA\/RRESP capture, generated raw-ARLEN burst-length capture, explicit runtime-assertion beat-count\/RLAST validation, generated multi-beat read-data output-bank behavior, and scalar RRESP aggregation contract metadata are supported/,
-        "$owner reports generated burst-last, last-beat, raw ARLEN, beat-count, multi-beat output-bank, and scalar aggregation metadata as supported",
+        qr/generated burst-last RLAST response-demux completion, structural last-beat read-data metadata, generated last-beat read-data RDATA\/RRESP capture, generated raw-ARLEN burst-length capture, explicit runtime-assertion beat-count\/RLAST validation, generated multi-beat read-data output-bank behavior, and generated scalar RRESP aggregation behavior are supported/,
+        "$owner reports generated burst-last, last-beat, raw ARLEN, beat-count, multi-beat output-bank, and scalar aggregation behavior as supported",
     );
     my $stale_metadata = join('', 'report-only burst-last ', 'RLAST response-demux metadata');
     my $stale_tracking = join('', 'generated burst/last-beat tracking ', 'remain outside');
@@ -3008,7 +3010,7 @@ sub assert_read_data_multi_beat_report {
     is($read->{status_signal_width}, 2, "$owner reports RRESP width metadata");
     is($read->{status_policy}, 'per_beat', "$owner reports per-beat status policy");
     is($read->{status_aggregation}, 'worst_observed', "$owner reports selected scalar RRESP aggregation policy");
-    ok(!$read->{status_aggregation_generated_behavior}, "$owner reports scalar RRESP aggregation behavior is not generated yet");
+    ok($read->{status_aggregation_generated_behavior}, "$owner reports generated scalar RRESP aggregation behavior");
     is($read->{status_aggregate_output}, 'per_transaction_scalar', "$owner reports per-transaction scalar RRESP aggregate shape");
     is($read->{status_aggregate_output_width}, 2, "$owner reports scalar RRESP aggregate width");
     is($read->{interleaving_policy}, 'multi_beat_by_rid', "$owner reports multi-beat-by-RID interleaving");
@@ -3039,14 +3041,17 @@ sub assert_read_data_multi_beat_report {
     my @multi_beat_outputs = (
         @r0_data_outputs,
         @r0_status_outputs,
-        qw(axi0_r0_beat_valid axi0_r0_read_beats),
+        qw(axi0_r0_rresp axi0_r0_beat_valid axi0_r0_read_beats),
         @r1_data_outputs,
         @r1_status_outputs,
-        qw(axi0_r1_beat_valid axi0_r1_read_beats),
+        qw(axi0_r1_rresp axi0_r1_beat_valid axi0_r1_read_beats),
     );
     my @r0_capture_rules = map { "axi0_r0_read_beat_${_}_capture" } 0 .. 15;
     my @r1_capture_rules = map { "axi0_r1_read_beat_${_}_capture" } 0 .. 15;
     my @multi_beat_capture_rules = (@r0_capture_rules, @r1_capture_rules);
+    my @status_aggregate_outputs = qw(axi0_r0_rresp axi0_r1_rresp);
+    my @status_aggregate_init_rules = qw(axi0_r0_read_data_output_init axi0_r1_read_data_output_init);
+    my @status_aggregate_update_rules = qw(axi0_r0_rresp_aggregate axi0_r1_rresp_aggregate);
 
     is_deeply([map { $_->{transaction} } @{$read->{transactions}}], [qw(r0 r1)], "$owner reports multi-beat transaction bindings");
     is_deeply([map { $_->{data_output_prefix} } @{$read->{transactions}}], [qw(axi0_r0_beat_rdata axi0_r1_beat_rdata)], "$owner reports data output prefixes");
@@ -3063,9 +3068,11 @@ sub assert_read_data_multi_beat_report {
     is_deeply([map { $_->{beat_count_storage} } @{$read->{transactions}}], [qw(axi0_r0_read_beat_count_q axi0_r1_read_beat_count_q)], "$owner reports beat-count storage");
     is_deeply([map { $_->{multi_beat_output_init_rule} } @{$read->{transactions}}], [qw(axi0_r0_read_data_output_init axi0_r1_read_data_output_init)], "$owner reports multi-beat output init rules");
     is_deeply($read->{transactions}[0]{multi_beat_capture_rules}, \@r0_capture_rules, "$owner reports r0 multi-beat capture rules");
+    is_deeply([map { $_->{status_aggregate_init_rule} } @{$read->{transactions}}], \@status_aggregate_init_rules, "$owner reports scalar aggregate init rule ownership");
+    is_deeply([map { $_->{status_aggregate_update_rule} } @{$read->{transactions}}], \@status_aggregate_update_rules, "$owner reports scalar aggregate update rules");
     is_deeply($read->{generated_inputs}, [qw(axi0_rdata axi0_rresp axi0_arlen)], "$owner reports generated payload and ARLEN inputs");
-    is_deeply($read->{generated_outputs}, \@multi_beat_outputs, "$owner reports generated output-bank outputs");
-    ok(!grep { /\Aaxi0_r[01]_rresp\z/ } @{$read->{generated_outputs}}, "$owner leaves scalar RRESP aggregate outputs out of generated behavior");
+    is_deeply($read->{generated_outputs}, \@multi_beat_outputs, "$owner reports generated output-bank and scalar aggregate outputs");
+    is_deeply($read->{generated_status_aggregate_outputs}, \@status_aggregate_outputs, "$owner reports generated scalar aggregate outputs");
     is_deeply($read->{generated_multi_beat_data_outputs}, [@r0_data_outputs, @r1_data_outputs], "$owner reports generated multi-beat data outputs");
     is_deeply($read->{generated_multi_beat_status_outputs}, [@r0_status_outputs, @r1_status_outputs], "$owner reports generated multi-beat status outputs");
     is_deeply($read->{generated_multi_beat_valid_outputs}, [qw(axi0_r0_beat_valid axi0_r1_beat_valid)], "$owner reports generated multi-beat valid-mask outputs");
@@ -3074,15 +3081,20 @@ sub assert_read_data_multi_beat_report {
     is_deeply($read->{generated_beat_count_rules}, [qw(axi0_r0_beat_count_init axi0_r0_read_beat_count axi0_r1_beat_count_init axi0_r1_read_beat_count)], "$owner reports generated beat-count rules");
     is_deeply($read->{generated_multi_beat_output_init_rules}, [qw(axi0_r0_read_data_output_init axi0_r1_read_data_output_init)], "$owner reports generated multi-beat output init rules");
     is_deeply($read->{generated_multi_beat_capture_rules}, \@multi_beat_capture_rules, "$owner reports generated multi-beat capture rules");
+    is_deeply($read->{generated_status_aggregate_init_rules}, \@status_aggregate_init_rules, "$owner reports generated scalar aggregate init rules");
+    is_deeply($read->{generated_status_aggregate_update_rules}, \@status_aggregate_update_rules, "$owner reports generated scalar aggregate update rules");
     is_deeply(
         $read->{generated_rules},
         [
             qw(axi0_r0_burst_length_capture axi0_r1_burst_length_capture axi0_r0_beat_count_init axi0_r0_read_beat_count axi0_r1_beat_count_init axi0_r1_read_beat_count axi0_r0_read_data_output_init axi0_r1_read_data_output_init),
-            @multi_beat_capture_rules,
+            @r0_capture_rules,
+            'axi0_r0_rresp_aggregate',
+            @r1_capture_rules,
+            'axi0_r1_rresp_aggregate',
         ],
-        "$owner reports generated rules with output init and per-lane capture rules",
+        "$owner reports generated rules with output init, per-lane capture, and scalar aggregate update rules",
     );
-    is_deeply($read_data->{residue}, [qw(generated_rresp_aggregation)], "$owner keeps generated scalar RRESP aggregation behavior as residue for multi-beat read-data");
+    is_deeply($read_data->{residue}, [], "$owner removes generated scalar RRESP aggregation behavior from read-data residue");
 }
 
 sub assert_same_id_ordering_report {
