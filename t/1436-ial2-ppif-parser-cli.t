@@ -258,18 +258,20 @@ subtest 'PPIF adapter parses AXI manager same-ID queue-head response-demux metad
     is($result->{report}{source_object}{intent_name}, 'axi_manager_capacity_status_same_id_queue_head_response_demux', 'same-ID queue-head demux source intent name is preserved');
     like($isf, qr/\(var axi0_r0_admitted_request_pulse_q \(width 1\)\)/, 'same-ID queue-head demux sample keeps r0 admitted request pulse');
     like($isf, qr/\(var axi0_r1_admitted_request_pulse_q \(width 1\)\)/, 'same-ID queue-head demux sample keeps r1 admitted request pulse');
-    unlike($isf, qr/\(rule axi0_r0_response_demux\b/, 'same-ID queue-head demux metadata emits no generated r0 response-demux rule');
-    unlike($isf, qr/\(output axi0_r0_complete\)/, 'same-ID queue-head demux metadata emits no generated r0 completion output');
+    like($isf, qr/\(var axi0_read_id3_same_id_issue_order_slot0_r0_q \(width 1\)\)/, 'same-ID queue-head demux sample declares generated queue slot state');
+    like($isf, qr/\(rule axi0_read_id3_same_id_issue_order_r0_dequeue_enqueue_r1\b/, 'same-ID queue-head demux sample emits generated queue transition rules');
+    like($isf, qr/\(rule axi0_r0_response_demux \(& axi0_read_complete \(== axi0_rid 4'd3\) axi0_rlast axi0_read_id3_same_id_issue_order_slot0_r0_q\)/, 'same-ID queue-head demux sample emits generated r0 response-demux rule');
+    like($isf, qr/\(output axi0_r0_complete\)/, 'same-ID queue-head demux sample emits generated r0 completion output');
     assert_same_id_queue_head_response_demux_report($result->{report}{response_demux}, 'adapter report');
     my $read_policy = $result->{report}{same_id_ordering}{concrete_id_reuse_policy}{read};
     is($read_policy->{response_demux_strategy}, 'queue_head_issue_order', 'adapter report marks queue-head demux strategy');
-    is($read_policy->{response_demux_implementation_status}, 'selected_not_generated', 'adapter report marks selected-not-generated response-demux status');
-    ok(!$read_policy->{accepted_same_id_reuse}, 'adapter report keeps same-ID reuse unaccepted');
-    ok(!$read_policy->{generated_queue_behavior}, 'adapter report keeps generated queue behavior false');
+    is($read_policy->{response_demux_implementation_status}, 'generated', 'adapter report marks generated response-demux status');
+    ok($read_policy->{accepted_same_id_reuse}, 'adapter report accepts same-ID reuse for the covered shape');
+    ok($read_policy->{generated_queue_behavior}, 'adapter report marks generated queue behavior true');
     is_deeply(
         $result->{report}{id_response_rule_engine}{residue},
-        [qw(auto_id_allocation id_release same_id_ordering response_demux)],
-        'same-ID queue-head demux metadata keeps generated behavior as ID/response residue',
+        [qw(auto_id_allocation id_release)],
+        'same-ID queue-head demux generated behavior removes same-ID and response-demux ID/response residue',
     );
 };
 
@@ -1138,8 +1140,10 @@ subtest 'CLI emits IAL2 report JSON for AXI manager same-ID queue-head response-
     assert_same_id_queue_head_response_demux_report($report->{response_demux}, 'CLI report');
     my $read_policy = $report->{same_id_ordering}{concrete_id_reuse_policy}{read};
     is($read_policy->{response_demux_strategy}, 'queue_head_issue_order', 'CLI report marks queue-head response-demux strategy');
-    is($read_policy->{response_demux_implementation_status}, 'selected_not_generated', 'CLI report marks selected-not-generated response-demux status');
-    is_deeply($report->{generated_artifacts}{ial0}{files}, ['axi0_capacity_status.fsm'], 'same-ID queue-head response-demux metadata keeps the generated .fsm artifact name stable');
+    is($read_policy->{response_demux_implementation_status}, 'generated', 'CLI report marks generated response-demux status');
+    ok($read_policy->{accepted_same_id_reuse}, 'CLI report accepts same-ID reuse for the covered shape');
+    ok($read_policy->{generated_queue_behavior}, 'CLI report marks generated queue behavior true');
+    is_deeply($report->{generated_artifacts}{ial0}{files}, ['axi0_capacity_status.fsm'], 'same-ID queue-head response-demux keeps the generated .fsm artifact name stable');
 };
 
 subtest 'CLI emits IAL2 report JSON for AXI manager auto-ID lifecycle behavior .ppif' => sub {
@@ -3530,11 +3534,11 @@ sub assert_same_id_queue_head_response_demux_report {
     my ($demux, $owner) = @_;
 
     is($demux->{mode}, 'bounded_response_demux_contract', "$owner marks bounded response-demux contract mode");
-    ok(!$demux->{generated_behavior}, "$owner marks top-level generated behavior false");
+    ok($demux->{generated_behavior}, "$owner marks top-level generated behavior true");
     my $read = $demux->{read};
     is($read->{mode}, 'bounded_read_rid_queue_head_demux_contract', "$owner marks queue-head read demux mode");
-    ok(!$read->{generated_behavior}, "$owner marks read generated behavior false");
-    is($read->{implementation_status}, 'selected_not_generated', "$owner reports selected-not-generated status");
+    ok($read->{generated_behavior}, "$owner marks read generated behavior true");
+    is($read->{implementation_status}, 'generated', "$owner reports generated status");
     is($read->{response_event}, 'axi0_read_complete', "$owner reports raw read response event");
     is($read->{response_event_role}, 'raw_accepted_read_response_beat', "$owner reports beat-level response role");
     is($read->{response_scope}, 'burst_last', "$owner reports burst-last scope");
@@ -3558,11 +3562,20 @@ sub assert_same_id_queue_head_response_demux_report {
         ],
         "$owner reports duplicate concrete-ID queue group",
     );
-    is_deeply($read->{selected_completion_signals}, [qw(axi0_r0_complete axi0_r1_complete)], "$owner reports selected completion signal names");
+    ok($read->{generated_queue_behavior}, "$owner reports generated queue behavior");
+    is($read->{generated_queue_behavior_boundary}, 'generated_read_burst_last_queue_head_demux', "$owner reports generated queue boundary");
+    ok(!exists($read->{selected_completion_signals}), "$owner no longer reports selected completion signal names");
+    is_deeply($read->{generated_completion_signals}, [qw(axi0_r0_complete axi0_r1_complete)], "$owner reports generated completion signal names");
+    is_deeply($read->{generated_rules}, [qw(axi0_r0_response_demux axi0_r1_response_demux)], "$owner reports generated response-demux rules");
+    is_deeply(
+        $read->{generated_assertions},
+        [qw(axi0_read_response_demux_active_match axi0_r0_r1_read_response_demux_unique_match)],
+        "$owner reports generated response-demux assertions",
+    );
     is_deeply(
         $demux->{residue},
-        [qw(generated_same_id_queue_head_demux read_data_interleaving bursts)],
-        "$owner reports selected queue-head demux behavior as residue",
+        [qw(read_data_interleaving bursts)],
+        "$owner removes generated queue-head demux behavior from residue",
     );
 }
 

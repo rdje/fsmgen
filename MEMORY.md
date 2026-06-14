@@ -10,9 +10,9 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `HEAD after commit` — `IAL2-FEATURE-COMPLETENESS-FRONTIER.105: select same-ID queue behavior first slice`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.106` pending; next action is implementing generated AXI same-ID read burst-last queue state and queue-head demux behavior for the selected two-transaction depth-2 sample shape.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.105`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.104`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.103`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.102`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.101`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.100`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.99`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.98`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.97`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.96`. Older completed slices are in the task tree and git history.
+- latest_commit: `HEAD after commit` — `IAL2-FEATURE-COMPLETENESS-FRONTIER.106: ship same-ID queue behavior`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.107` pending; next action is auditing/selecting the next AXI same-ID queue behavior expansion after the bounded read burst-last depth-2 queue-head implementation.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.106`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.105`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.104`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.103`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.102`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.101`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.100`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.99`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.98`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.97`. Older completed slices are in the task tree and git history.
 - in_flight_uncommitted: none after this commit; unrelated untracked `fx/` intentionally left alone.
 - blockers: none.
 

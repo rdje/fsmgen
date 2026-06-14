@@ -5,7 +5,6 @@ answers:
   - "what did IAL2-FEATURE-COMPLETENESS-FRONTIER.104 decide?"
   - "can FSMGen ship generated same-ID queue behavior directly after metadata?"
   - "does same-ID queue behavior need a new IAL1 prerequisite?"
-  - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.106?"
   - "what comes after same-ID queue-head demux metadata?"
 date: 2026-06-14
 status: current
@@ -29,7 +28,5 @@ queue-head demux, and queue-head demux needs queue-head transaction identity
 from queue state. Accepted concrete same-ID reuse must stay false until both
 sides ship together for a covered group.
 
-`.105` has since selected the first generated behavior boundary. The next
-active leaf is `IAL2-FEATURE-COMPLETENESS-FRONTIER.106`, generated AXI
-same-ID read burst-last queue state plus queue-head demux behavior for the
-two-transaction depth-2 sample shape.
+`.105` later selected the first generated behavior boundary, and `.106` has
+since shipped the bounded read burst-last depth-2 sample behavior.

@@ -4679,6 +4679,46 @@ transaction completion names become generated pulse outputs only for that
 shape. Wider shapes remain selected-not-generated or fail closed until later
 owners select them.
 
+Same-ID queue behavior first slice:
+[AXI_IAL2_MANAGER_SAME_ID_QUEUE_BEHAVIOR_FIRST_SLICE](../../AXI_IAL2_MANAGER_SAME_ID_QUEUE_BEHAVIOR_FIRST_SLICE.md)
+ships `IAL2-FEATURE-COMPLETENESS-FRONTIER.106`. FSMGen now generates
+runtime behavior for the selected public sample shape:
+
+```bash
+./bin/fsmgen --emit-schedule-json ppif/axi_manager_capacity_status_same_id_queue_head_response_demux.ppif
+```
+
+For that sample, the generated IAL1 exposes `axi0_r0_complete` and
+`axi0_r1_complete` as generated pulse outputs, treats `axi0_read_complete`,
+`axi0_rid`, and `axi0_rlast` as generated inputs, declares compact one-hot
+depth-2 queue slots for concrete read ID `3`, emits finite enqueue/dequeue and
+same-cycle dequeue/enqueue update rules, and emits queue-head response-demux
+rules:
+
+```lisp
+(rule axi0_r0_response_demux
+  (& axi0_read_complete (== axi0_rid 4'd3) axi0_rlast
+     axi0_read_id3_same_id_issue_order_slot0_r0_q)
+  (pulse axi0_r0_complete))
+```
+
+The schedule report now marks both `response_demux.generated_behavior` and
+`same_id_ordering.generated_behavior` true. The read concrete-ID reuse policy
+reports `enforcement: generated_issue_order_queue`,
+`implementation_status: generated_read_burst_last_queue_head_demux`,
+`accepted_same_id_reuse: true`, and `generated_queue_behavior: true`.
+
+The same-ID queue report lists the concrete ID, depth, transaction order, slot
+storage, enqueue pulses, generated update rules, and generated assertions.
+Response-demux residue removes `generated_same_id_queue_head_demux`, and the
+ID/response rule-engine residue removes `same_id_ordering` and
+`response_demux` for this covered shape.
+
+The implementation remains intentionally narrow. Write queue-head behavior,
+read `single-beat`, deeper or multiple duplicate-ID groups, same-family mixed
+auto-ID plus concrete queue-head demux, read-data consumption of concrete
+queue-head demux, direct backend lowering, and VHDL remain deferred.
+
 First implementation subset selection:
 [AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION](../../AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md)
 selects a source-anchored AXI Valid-Ready channel contract/monitor as the

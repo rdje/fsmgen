@@ -1,0 +1,40 @@
+---
+id: ial2-axi-manager-same-id-queue-behavior-first-slice
+title: Same-ID queue behavior first slice is generated for read burst-last depth-2
+answers:
+  - "what did IAL2-FEATURE-COMPLETENESS-FRONTIER.106 ship?"
+  - "is AXI same-ID queue-head response demux generated?"
+  - "what does the same-ID queue-head response-demux sample report?"
+  - "does FSMGen accept concrete same-ID reuse for the queue-head sample?"
+  - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.107?"
+date: 2026-06-14
+status: current
+tags: [ial2, axi, manager, same-id, issue-order, queue, response-demux, generated, task-tree]
+evidence: docs/AXI_IAL2_MANAGER_SAME_ID_QUEUE_BEHAVIOR_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_SAME_ID_QUEUE_BEHAVIOR_FIRST_SLICE_SELECTION.md; ppif/axi_manager_capacity_status_same_id_queue_head_response_demux.ppif; perl/FSM/IAL2/ProtocolIntent/AxiManagerCapacityStatus.pm; t/1437-axi-ial2-manager-capacity-status-generator.t; t/1436-ial2-ppif-parser-cli.t; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md
+reverify: env -u PERL5LIB ./bin/fsmgen --emit-schedule-json ppif/axi_manager_capacity_status_same_id_queue_head_response_demux.ppif | rg 'bounded_read_rid_queue_head_demux_contract|generated_read_burst_last_queue_head_demux|accepted_same_id_reuse|generated_queue_behavior|axi0_r0_response_demux|axi0_r1_response_demux'
+---
+
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.106` shipped the first generated AXI
+same-ID issue-order queue behavior.
+
+For the public sample
+`ppif/axi_manager_capacity_status_same_id_queue_head_response_demux.ppif`,
+FSMGen now generates read burst-last queue-head behavior for one duplicate
+concrete read-ID group with two transactions and depth `2`.
+
+The generated IAL1 uses compact one-hot queue state for concrete ID `3`,
+emits finite enqueue/dequeue and same-cycle dequeue/enqueue update rules,
+emits queue-head `RID`/`RLAST` response-demux rules for `r0` and `r1`, and
+exposes `axi0_r0_complete`/`axi0_r1_complete` as generated pulse outputs.
+
+Schedule JSON marks `response_demux.generated_behavior` and
+`same_id_ordering.generated_behavior` true. The read concrete-ID reuse policy
+reports `enforcement: generated_issue_order_queue`,
+`implementation_status: generated_read_burst_last_queue_head_demux`,
+`accepted_same_id_reuse: true`, and `generated_queue_behavior: true`.
+
+The active frontier after `.106` is `IAL2-FEATURE-COMPLETENESS-FRONTIER.107`,
+an audit/selector for the next same-ID queue behavior expansion. Write
+queue-head behavior, read `single-beat`, deeper or multiple duplicate-ID
+groups, same-family mixed auto-ID, read-data consumption, direct backend, and
+VHDL remain deferred.

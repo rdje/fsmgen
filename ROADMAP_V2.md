@@ -1305,7 +1305,15 @@ one duplicate concrete read-ID group, two read transactions, computed depth 2,
 generated compact one-hot queue state, and generated queue-head completion
 demux shipped together. Write queue-head behavior, read `single-beat`, deeper
 or multiple groups, same-family mixed auto-ID, read-data consumption, direct
-backend, and VHDL remain deferred.
+backend, and VHDL remain deferred. Implementation `.106` now ships that
+bounded shape: generated slot state, finite queue update rules, queue-head
+last-beat completion demux, generated completion outputs, queue integrity and
+response-demux assertions, and report/residue movement. The public same-ID
+queue-head sample reports `response_demux.generated_behavior: true`,
+`same_id_ordering.generated_behavior: true`, `accepted_same_id_reuse: true`,
+and `generated_queue_behavior: true` for the covered read burst-last
+two-transaction depth-2 group only. The active frontier advances to `.107`,
+the next same-ID queue behavior expansion audit/selector.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.

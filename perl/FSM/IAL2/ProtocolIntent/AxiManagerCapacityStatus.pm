@@ -158,14 +158,6 @@ sub _normalize_contract($raw) {
             write_max_pending  => $write_max_pending,
         )
         : undef;
-    my $read_data = exists($raw->{read_data})
-        ? _normalize_read_data(
-            raw_read_data  => $raw->{read_data},
-            manager_name   => $name,
-            transactions   => $transactions,
-            response_demux => $response_demux,
-        )
-        : undef;
     my $transaction_event_dispatch = _build_transaction_event_dispatch(
         events       => \%events,
         transactions => $transactions,
@@ -180,6 +172,26 @@ sub _normalize_contract($raw) {
         read_max_pending         => $read_max_pending,
         write_max_pending        => $write_max_pending,
     );
+    my $same_id_issue_order_queue_behavior = _build_same_id_issue_order_queue_behavior(
+        manager_name             => $name,
+        id_families              => $id_families,
+        transactions             => $transactions,
+        response_demux           => $response_demux,
+        same_id_ordering_policy  => $same_id_ordering_policy,
+        same_id_admitted_request_boundary => $same_id_admitted_request_boundary,
+    );
+    $response_demux = _response_demux_with_same_id_issue_order_queue_behavior(
+        response_demux => $response_demux,
+        behavior       => $same_id_issue_order_queue_behavior,
+    );
+    my $read_data = exists($raw->{read_data})
+        ? _normalize_read_data(
+            raw_read_data  => $raw->{read_data},
+            manager_name   => $name,
+            transactions   => $transactions,
+            response_demux => $response_demux,
+        )
+        : undef;
     my $id_response_rule_engine = _build_id_response_rule_engine(
         id_families             => $id_families,
         transactions            => $transactions,
@@ -205,6 +217,7 @@ sub _normalize_contract($raw) {
         response_demux => $response_demux,
         read_data => $read_data,
         same_id_admitted_request_boundary => $same_id_admitted_request_boundary,
+        same_id_issue_order_queue_behavior => $same_id_issue_order_queue_behavior,
     );
 
     my $source = ref($raw->{source}) eq 'HASH' ? $raw->{source} : {};
@@ -226,6 +239,7 @@ sub _normalize_contract($raw) {
         response_demux            => $response_demux,
         same_id_ordering_policy   => $same_id_ordering_policy,
         same_id_admitted_request_boundary => $same_id_admitted_request_boundary,
+        same_id_issue_order_queue_behavior => $same_id_issue_order_queue_behavior,
     );
 
     return {
@@ -248,6 +262,7 @@ sub _normalize_contract($raw) {
         same_id_ordering_policy => $same_id_ordering_policy,
         same_id_ordering  => $same_id_ordering,
         same_id_admitted_request_boundary => $same_id_admitted_request_boundary,
+        same_id_issue_order_queue_behavior => $same_id_issue_order_queue_behavior,
         transaction_event_dispatch => $transaction_event_dispatch,
         id_response_rule_engine => $id_response_rule_engine,
         storage           => \%storage,
@@ -1131,10 +1146,9 @@ sub _normalize_read_data(%args) {
     }
     confess "AXI manager capacity/status IAL2 contract read_data requires a read family\n"
         unless exists $raw->{read};
-    confess "AXI manager capacity/status IAL2 contract read_data cannot consume selected-not-generated concrete same-ID queue-head response_demux.read metadata in this slice\n"
+    confess "AXI manager capacity/status IAL2 contract read_data cannot consume concrete same-ID queue-head response_demux.read metadata in this slice\n"
         if ref($args{response_demux}) eq 'HASH'
-            && _response_demux_family_has_queue_head_contract($args{response_demux}, 'read')
-            && !$args{response_demux}{read}{generated_behavior};
+            && _response_demux_family_has_queue_head_contract($args{response_demux}, 'read');
     confess "AXI manager capacity/status IAL2 contract read_data requires generated read response_demux metadata\n"
         unless ref($args{response_demux}) eq 'HASH'
             && ref($args{response_demux}{read}) eq 'HASH'
@@ -1682,6 +1696,8 @@ sub _build_same_id_ordering(%args) {
     my $policy = $args{same_id_ordering_policy};
     my $has_policy = ref($policy) eq 'HASH' && (exists($policy->{read}) || exists($policy->{write}));
     my $lifecycle_generated = ref($lifecycle) eq 'HASH' && $lifecycle->{generated_behavior};
+    my $queue_generated = ref($args{same_id_issue_order_queue_behavior}) eq 'HASH'
+        && $args{same_id_issue_order_queue_behavior}{generated_behavior};
     my @families;
 
     if ($lifecycle_generated) {
@@ -1713,18 +1729,21 @@ sub _build_same_id_ordering(%args) {
             policy => $policy,
             admitted_request_boundary => $args{same_id_admitted_request_boundary},
             response_demux => $args{response_demux},
+            same_id_issue_order_queue_behavior => $args{same_id_issue_order_queue_behavior},
         ))
         : ();
     if (!@families) {
         return {
             mode               => 'concrete_id_reuse_policy',
-            generated_behavior => 0,
+            generated_behavior => $queue_generated ? 1 : 0,
             source_anchors     => _clone_jsonish($args{source_anchors} || []),
             @policy_entry,
-            residue            => [
-                'concrete_id_same_id_ordering',
-                'per_id_issue_order_queues',
-            ],
+            residue            => $queue_generated
+                ? ['per_id_issue_order_queues']
+                : [
+                    'concrete_id_same_id_ordering',
+                    'per_id_issue_order_queues',
+                ],
         };
     }
 
@@ -1748,6 +1767,7 @@ sub _build_same_id_ordering(%args) {
 sub _same_id_ordering_policy_with_admitted_boundary(%args) {
     my $policy = _clone_jsonish($args{policy});
     my $boundary = $args{admitted_request_boundary};
+    my $queue_behavior = $args{same_id_issue_order_queue_behavior};
     return $policy unless ref($policy) eq 'HASH';
 
     for my $family_name (qw(read write)) {
@@ -1768,6 +1788,19 @@ sub _same_id_ordering_policy_with_admitted_boundary(%args) {
         if (_response_demux_family_has_queue_head_contract($args{response_demux}, $family_name)) {
             $policy->{$family_name}{response_demux_strategy} = 'queue_head_issue_order';
             $policy->{$family_name}{response_demux_implementation_status} = 'selected_not_generated';
+        }
+
+        my $queue_family = _same_id_issue_order_queue_family_behavior($queue_behavior, $family_name);
+        if (ref($queue_family) eq 'HASH') {
+            $policy->{$family_name}{enforcement} = 'generated_issue_order_queue';
+            $policy->{$family_name}{implementation_status} = $queue_family->{implementation_status};
+            $policy->{$family_name}{accepted_same_id_reuse} = 1;
+            $policy->{$family_name}{generated_queue_behavior} = 1;
+            $policy->{$family_name}{queue_state_representation} = 'compact_onehot_transaction_slots';
+            $policy->{$family_name}{response_demux_strategy} = 'queue_head_issue_order';
+            $policy->{$family_name}{response_demux_implementation_status} = 'generated';
+            $policy->{$family_name}{generated_queues} =
+                _same_id_issue_order_queue_report_groups($queue_family);
         }
     }
 
@@ -2097,6 +2130,199 @@ sub _same_id_admitted_request_max_pending(%args) {
     confess "Internal error: unknown same-ID admitted request family '$args{family}'\n";
 }
 
+sub _build_same_id_issue_order_queue_behavior(%args) {
+    my $demux = $args{response_demux};
+    return undef unless ref($demux) eq 'HASH';
+    return undef unless _response_demux_family_has_queue_head_contract($demux, 'read');
+    return undef if _response_demux_family_has_queue_head_contract($demux, 'write');
+
+    my $read = $demux->{read};
+    return undef unless ref($read) eq 'HASH';
+    return undef unless !$read->{generated_behavior}
+        && ($read->{response_scope} // '') eq 'burst_last'
+        && ($read->{last_signal_width} // 0) == 1;
+
+    my $groups = $read->{same_id_issue_order_queues};
+    return undef unless ref($groups) eq 'ARRAY' && @$groups == 1;
+
+    my $group = $groups->[0];
+    return undef unless ref($group) eq 'HASH'
+        && ($group->{depth} // 0) == 2
+        && ref($group->{transactions}) eq 'ARRAY'
+        && @{$group->{transactions}} == 2;
+
+    my $policy = _same_id_ordering_policy_for_family($args{same_id_ordering_policy}, 'read');
+    return undef unless ref($policy) eq 'HASH'
+        && ($policy->{policy} // '') eq 'issue_order_queue';
+
+    my $boundary = $args{same_id_admitted_request_boundary};
+    return undef unless ref($boundary) eq 'HASH'
+        && ref($boundary->{families}{read}) eq 'HASH';
+
+    my $id_family = ref($args{id_families}) eq 'HASH' ? $args{id_families}{read} : undef;
+    return undef unless ref($id_family) eq 'HASH' && $id_family->{present};
+
+    my %transaction_by_name = map { $_->{name} => $_ } @{$args{transactions} || []};
+    my %pulse_by_transaction = map { $_->{transaction} => $_ }
+        @{$boundary->{families}{read}{generated_pulses} || []};
+    my @transactions;
+    for my $transaction_name (@{$group->{transactions}}) {
+        my $transaction = $transaction_by_name{$transaction_name};
+        my $pulse = $pulse_by_transaction{$transaction_name};
+        return undef unless ref($transaction) eq 'HASH'
+            && ($transaction->{kind} // '') eq 'read'
+            && ref($transaction->{id}) eq 'HASH'
+            && ($transaction->{id}{policy} // '') eq 'concrete'
+            && ($transaction->{id}{value} // -1) == ($group->{concrete_id} // -2)
+            && ref($pulse) eq 'HASH';
+        push @transactions, {
+            transaction    => $transaction->{name},
+            tag            => $transaction->{tag},
+            request_event  => $transaction->{request_event},
+            completion_event => $transaction->{completion_event},
+            admitted_pulse => $pulse->{pulse},
+        };
+    }
+
+    my $prefix = _same_id_issue_order_queue_group_prefix(
+        $args{manager_name},
+        'read',
+        $group->{concrete_id},
+    );
+    my %slot_signal;
+    my @storage;
+    for my $slot (0 .. 1) {
+        for my $transaction (@transactions) {
+            my $signal = "${prefix}_slot${slot}_$transaction->{transaction}_q";
+            $slot_signal{$slot}{$transaction->{transaction}} = $signal;
+            push @storage, $signal;
+        }
+    }
+
+    for my $transaction (@transactions) {
+        $transaction->{head_signal} = $slot_signal{0}{$transaction->{transaction}};
+        $transaction->{slot_signals} = [
+            map { $slot_signal{$_}{$transaction->{transaction}} } 0 .. 1
+        ];
+    }
+
+    my $queue_group = {
+        family                  => 'read',
+        implementation_status   => 'generated_read_burst_last_queue_head_demux',
+        concrete_id             => $group->{concrete_id},
+        concrete_id_literal     => _sized_decimal_literal($id_family->{width}, $group->{concrete_id}),
+        id_width                => $id_family->{width},
+        depth                   => 2,
+        queue_state_representation => 'compact_onehot_transaction_slots',
+        dequeue_event_source    => 'queue_head_response_demux',
+        response_event          => $read->{response_event},
+        response_id_signal      => $read->{response_id_signal},
+        last_signal             => $read->{last_signal},
+        prefix                  => $prefix,
+        transactions            => \@transactions,
+        slot_signals            => \%slot_signal,
+        storage                 => \@storage,
+    };
+    $queue_group->{transition_rules} = [
+        map { $_->{name} } _same_id_issue_order_queue_transition_specs($queue_group)
+    ];
+    $queue_group->{generated_assertions} = [
+        map { $_->{name} } _same_id_issue_order_queue_assertion_specs_for_group($queue_group)
+    ];
+
+    return {
+        mode               => 'bounded_same_id_issue_order_queue',
+        generated_behavior => 1,
+        families           => {
+            read => {
+                family                => 'read',
+                generated_behavior    => 1,
+                implementation_status => 'generated_read_burst_last_queue_head_demux',
+                groups                => [$queue_group],
+            },
+        },
+    };
+}
+
+sub _response_demux_with_same_id_issue_order_queue_behavior(%args) {
+    my $demux = $args{response_demux};
+    my $behavior = $args{behavior};
+    return $demux unless ref($demux) eq 'HASH'
+        && ref($behavior) eq 'HASH'
+        && $behavior->{generated_behavior};
+
+    my $updated = _clone_jsonish($demux);
+    for my $family_name (qw(read write)) {
+        my $family = $behavior->{families}{$family_name};
+        next unless ref($family) eq 'HASH' && $family->{generated_behavior};
+        my $entry = $updated->{$family_name};
+        next unless ref($entry) eq 'HASH';
+
+        $entry->{generated_behavior} = 1;
+        $entry->{implementation_status} = 'generated';
+        $entry->{generated_queue_behavior} = 1;
+        $entry->{generated_queue_behavior_boundary} = $family->{implementation_status};
+        $entry->{generated_completion_signals} = delete($entry->{selected_completion_signals}) || [];
+    }
+    my $generated_family_count = grep {
+        ref($updated->{$_}) eq 'HASH' && $updated->{$_}{generated_behavior}
+    } qw(write read);
+    $updated->{generated_behavior} = $generated_family_count ? 1 : 0;
+    $updated->{residue} = [
+        grep { $_ ne 'generated_same_id_queue_head_demux' }
+        @{$updated->{residue} || []}
+    ];
+    return $updated;
+}
+
+sub _same_id_issue_order_queue_family_behavior($behavior, $family_name) {
+    return undef unless ref($behavior) eq 'HASH' && $behavior->{generated_behavior};
+    my $family = $behavior->{families}{$family_name};
+    return ref($family) eq 'HASH' && $family->{generated_behavior} ? $family : undef;
+}
+
+sub _same_id_issue_order_queue_groups($behavior, $family_name) {
+    my $family = _same_id_issue_order_queue_family_behavior($behavior, $family_name);
+    return () unless ref($family) eq 'HASH';
+    return @{$family->{groups} || []};
+}
+
+sub _same_id_issue_order_queue_report_groups($family) {
+    return [] unless ref($family) eq 'HASH';
+
+    return [
+        map {
+            my $group = $_;
+            +{
+                family                  => $group->{family},
+                concrete_id             => $group->{concrete_id},
+                depth                   => $group->{depth},
+                queue_state_representation => $group->{queue_state_representation},
+                dequeue_event_source    => $group->{dequeue_event_source},
+                response_event          => $group->{response_event},
+                response_id_signal      => $group->{response_id_signal},
+                last_signal             => $group->{last_signal},
+                transactions            => [map { $_->{transaction} } @{$group->{transactions} || []}],
+                slot_storage            => _clone_jsonish($group->{storage}),
+                enqueue_pulses          => [
+                    map {
+                        +{
+                            transaction => $_->{transaction},
+                            pulse       => $_->{admitted_pulse},
+                        }
+                    } @{$group->{transactions} || []}
+                ],
+                generated_update_rules  => _clone_jsonish($group->{transition_rules}),
+                generated_assertions    => _clone_jsonish($group->{generated_assertions}),
+            }
+        } @{$family->{groups} || []}
+    ];
+}
+
+sub _same_id_issue_order_queue_group_prefix($manager_name, $family_name, $concrete_id) {
+    return "${manager_name}_${family_name}_id${concrete_id}_same_id_issue_order";
+}
+
 sub _same_id_admitted_request_guard_expr(%args) {
     return _and_expr(
         $args{request_event},
@@ -2145,6 +2371,8 @@ sub _reject_forbidden_or_duplicate_names(%args) {
         if defined $args{read_data};
     push @groups, [same_id_admitted_request_boundary => _same_id_admitted_request_signal_names($args{same_id_admitted_request_boundary})]
         if defined $args{same_id_admitted_request_boundary};
+    push @groups, [same_id_issue_order_queue_behavior => _same_id_issue_order_queue_signal_names($args{same_id_issue_order_queue_behavior})]
+        if defined $args{same_id_issue_order_queue_behavior};
 
     for my $group (@groups) {
         my ($kind, $names) = @$group;
@@ -2267,6 +2495,19 @@ sub _same_id_admitted_request_signal_names($boundary) {
         my $family = $boundary->{families}{$family_name};
         next unless ref($family) eq 'HASH';
         push @signals, map { $_->{pulse} } @{$family->{generated_pulses} || []};
+    }
+
+    return \@signals;
+}
+
+sub _same_id_issue_order_queue_signal_names($behavior) {
+    return [] unless ref($behavior) eq 'HASH';
+
+    my @signals;
+    for my $family_name (qw(write read)) {
+        for my $group (_same_id_issue_order_queue_groups($behavior, $family_name)) {
+            push @signals, @{$group->{storage} || []};
+        }
     }
 
     return \@signals;
@@ -2416,7 +2657,9 @@ sub _emit_isf($contract) {
         @auto_id_assertions,
     );
     my @auto_id_priorities = _auto_id_lifecycle_priority_lines($contract);
+    my @same_id_issue_order_queue_priorities = _same_id_issue_order_queue_priority_lines($contract);
     my @same_id_admitted_request_rules = _same_id_admitted_request_rule_lines($contract);
+    my @same_id_issue_order_queue_rules = _same_id_issue_order_queue_rule_lines($contract);
     my @response_demux_rules = _response_demux_rule_lines($contract);
     my @read_data_burst_length_capture_rules = _read_data_burst_length_capture_rule_lines($contract);
     my @read_data_beat_count_rules = _read_data_beat_count_rule_lines($contract);
@@ -2427,6 +2670,7 @@ sub _emit_isf($contract) {
         "    (var $contract->{storage}{pending_reads} (width $read_width))",
         "    (var $contract->{storage}{pending_writes} (width $write_width))",
         _same_id_admitted_request_storage_lines($contract),
+        _same_id_issue_order_queue_storage_lines($contract),
         _auto_id_lifecycle_storage_lines($contract),
         _read_data_burst_length_storage_lines($contract),
         _read_data_beat_count_storage_lines($contract),
@@ -2456,10 +2700,14 @@ sub _emit_isf($contract) {
         "",
         @auto_id_priorities,
         (@auto_id_priorities ? ("") : ()),
+        @same_id_issue_order_queue_priorities,
+        (@same_id_issue_order_queue_priorities ? ("") : ()),
         @assertion_transactions,
         (@assertion_transactions ? ("") : ()),
         @same_id_admitted_request_rules,
         (@same_id_admitted_request_rules ? ("") : ()),
+        @same_id_issue_order_queue_rules,
+        (@same_id_issue_order_queue_rules ? ("") : ()),
         @response_demux_rules,
         (@response_demux_rules ? ("") : ()),
         @read_data_burst_length_capture_rules,
@@ -2699,6 +2947,7 @@ sub _same_id_ordering_assertion_specs($contract) {
         }
     }
     push @assertions, _same_id_admitted_request_assertion_specs($contract);
+    push @assertions, _same_id_issue_order_queue_assertion_specs($contract);
     return @assertions;
 }
 
@@ -2711,6 +2960,19 @@ sub _same_id_admitted_request_assertion_specs($contract) {
         my $family = $boundary->{families}{$family_name};
         next unless ref($family) eq 'HASH';
         push @assertions, @{$family->{assertions} || []};
+    }
+    return @assertions;
+}
+
+sub _same_id_issue_order_queue_assertion_specs($contract) {
+    my $behavior = $contract->{same_id_issue_order_queue_behavior};
+    return () unless ref($behavior) eq 'HASH' && $behavior->{generated_behavior};
+
+    my @assertions;
+    for my $family_name (qw(write read)) {
+        for my $group (_same_id_issue_order_queue_groups($behavior, $family_name)) {
+            push @assertions, _same_id_issue_order_queue_assertion_specs_for_group($group);
+        }
     }
     return @assertions;
 }
@@ -2746,6 +3008,24 @@ sub _auto_id_lifecycle_priority_lines($contract) {
         my @allocation_rules = map { @{$_->{allocation_rules} || []} } @{$family->{transaction_state} || []};
         for my $index (0 .. $#allocation_rules - 1) {
             push @lines, "  (priority $allocation_rules[$index] over $allocation_rules[$index + 1])";
+        }
+    }
+    return @lines;
+}
+
+sub _same_id_issue_order_queue_priority_lines($contract) {
+    my $behavior = $contract->{same_id_issue_order_queue_behavior};
+    return () unless ref($behavior) eq 'HASH' && $behavior->{generated_behavior};
+
+    my @lines;
+    for my $family_name (qw(write read)) {
+        for my $group (_same_id_issue_order_queue_groups($behavior, $family_name)) {
+            my @rules = @{$group->{transition_rules} || []};
+            for my $left_index (0 .. $#rules) {
+                for my $right_index ($left_index + 1 .. $#rules) {
+                    push @lines, "  (priority $rules[$left_index] over $rules[$right_index])";
+                }
+            }
         }
     }
     return @lines;
@@ -2824,6 +3104,20 @@ sub _same_id_admitted_request_storage_lines($contract) {
     return map { "    (var $_ (width 1))" } @{_same_id_admitted_request_signal_names($boundary)};
 }
 
+sub _same_id_issue_order_queue_storage_lines($contract) {
+    my $behavior = $contract->{same_id_issue_order_queue_behavior};
+    return () unless ref($behavior) eq 'HASH' && $behavior->{generated_behavior};
+
+    my @signals;
+    for my $family_name (qw(write read)) {
+        for my $group (_same_id_issue_order_queue_groups($behavior, $family_name)) {
+            push @signals, @{$group->{storage} || []};
+        }
+    }
+
+    return map { "    (var $_ (width 1))" } @signals;
+}
+
 sub _same_id_admitted_request_rule_lines($contract) {
     my $boundary = $contract->{same_id_admitted_request_boundary};
     return () unless ref($boundary) eq 'HASH';
@@ -2849,6 +3143,250 @@ sub _same_id_admitted_request_rule($name, $guard, $pulse_signal) {
         "  (rule $name $guard",
         "    (pulse $pulse_signal))",
     );
+}
+
+sub _same_id_issue_order_queue_rule_lines($contract) {
+    my $behavior = $contract->{same_id_issue_order_queue_behavior};
+    return () unless ref($behavior) eq 'HASH' && $behavior->{generated_behavior};
+
+    my @lines;
+    for my $family_name (qw(write read)) {
+        for my $group (_same_id_issue_order_queue_groups($behavior, $family_name)) {
+            for my $transition (_same_id_issue_order_queue_transition_specs($group)) {
+                push @lines, _auto_id_rule(
+                    $transition->{name},
+                    $transition->{guard},
+                    _same_id_issue_order_queue_assignments($group, $transition->{to}),
+                );
+            }
+        }
+    }
+
+    return @lines;
+}
+
+sub _same_id_issue_order_queue_transition_specs($group) {
+    my ($t0, $t1) = @{$group->{transactions} || []};
+    return () unless ref($t0) eq 'HASH' && ref($t1) eq 'HASH';
+
+    my $n0 = $t0->{transaction};
+    my $n1 = $t1->{transaction};
+    my $e0 = $t0->{admitted_pulse};
+    my $e1 = $t1->{admitted_pulse};
+    my $m0 = _same_id_issue_order_queue_head_match_expr($group, $n0);
+    my $m1 = _same_id_issue_order_queue_head_match_expr($group, $n1);
+    my @specs = (
+        ["empty_enqueue_$n0"          => []        => [$n0]      => [$e0, _not_expr($e1), _not_expr($m0), _not_expr($m1)]],
+        ["empty_enqueue_$n1"          => []        => [$n1]      => [$e1, _not_expr($e0), _not_expr($m0), _not_expr($m1)]],
+        ["${n0}_dequeue"              => [$n0]     => []         => [$m0, _not_expr($m1), _not_expr($e0), _not_expr($e1)]],
+        ["${n1}_dequeue"              => [$n1]     => []         => [$m1, _not_expr($m0), _not_expr($e0), _not_expr($e1)]],
+        ["${n0}_enqueue_$n1"          => [$n0]     => [$n0, $n1] => [$e1, _not_expr($e0), _not_expr($m0), _not_expr($m1)]],
+        ["${n1}_enqueue_$n0"          => [$n1]     => [$n1, $n0] => [$e0, _not_expr($e1), _not_expr($m0), _not_expr($m1)]],
+        ["${n0}_dequeue_enqueue_$n0"  => [$n0]     => [$n0]      => [$m0, $e0, _not_expr($m1), _not_expr($e1)]],
+        ["${n0}_dequeue_enqueue_$n1"  => [$n0]     => [$n1]      => [$m0, $e1, _not_expr($m1), _not_expr($e0)]],
+        ["${n1}_dequeue_enqueue_$n0"  => [$n1]     => [$n0]      => [$m1, $e0, _not_expr($m0), _not_expr($e1)]],
+        ["${n1}_dequeue_enqueue_$n1"  => [$n1]     => [$n1]      => [$m1, $e1, _not_expr($m0), _not_expr($e0)]],
+        ["${n0}_${n1}_dequeue_$n0"    => [$n0,$n1] => [$n1]      => [$m0, _not_expr($m1), _not_expr($e0), _not_expr($e1)]],
+        ["${n1}_${n0}_dequeue_$n1"    => [$n1,$n0] => [$n0]      => [$m1, _not_expr($m0), _not_expr($e0), _not_expr($e1)]],
+        ["${n0}_${n1}_dequeue_enqueue_$n0" => [$n0,$n1] => [$n1,$n0] => [$m0, $e0, _not_expr($m1), _not_expr($e1)]],
+        ["${n1}_${n0}_dequeue_enqueue_$n1" => [$n1,$n0] => [$n0,$n1] => [$m1, $e1, _not_expr($m0), _not_expr($e0)]],
+    );
+
+    return map {
+        my ($suffix, $from, $to, $events) = @$_;
+        +{
+            name  => "$group->{prefix}_$suffix",
+            from  => $from,
+            to    => $to,
+            guard => _and_expr(
+                _same_id_issue_order_queue_state_expr($group, $from),
+                @$events,
+            ),
+        }
+    } @specs;
+}
+
+sub _same_id_issue_order_queue_assignments($group, $state) {
+    my %occupied;
+    for my $slot (0 .. $#$state) {
+        $occupied{$slot}{$state->[$slot]} = 1;
+    }
+
+    my @assignments;
+    for my $slot (0 .. 1) {
+        for my $transaction (@{$group->{transactions} || []}) {
+            my $name = $transaction->{transaction};
+            push @assignments, [
+                $group->{slot_signals}{$slot}{$name},
+                $occupied{$slot}{$name} ? 1 : 0,
+            ];
+        }
+    }
+    return \@assignments;
+}
+
+sub _same_id_issue_order_queue_state_expr($group, $state) {
+    my %occupied;
+    for my $slot (0 .. $#$state) {
+        $occupied{$slot}{$state->[$slot]} = 1;
+    }
+
+    my @terms;
+    for my $slot (0 .. 1) {
+        for my $transaction (@{$group->{transactions} || []}) {
+            my $name = $transaction->{transaction};
+            my $signal = $group->{slot_signals}{$slot}{$name};
+            push @terms, $occupied{$slot}{$name} ? $signal : _not_expr($signal);
+        }
+    }
+    return _and_expr(@terms);
+}
+
+sub _same_id_issue_order_queue_slot_any_expr($group, $slot) {
+    return _or_expr(map {
+        $group->{slot_signals}{$slot}{$_->{transaction}}
+    } @{$group->{transactions} || []});
+}
+
+sub _same_id_issue_order_queue_full_expr($group) {
+    return _and_expr(
+        _same_id_issue_order_queue_slot_any_expr($group, 0),
+        _same_id_issue_order_queue_slot_any_expr($group, 1),
+    );
+}
+
+sub _same_id_issue_order_queue_head_match_expr($group, $transaction_name) {
+    return _and_expr(
+        $group->{response_event},
+        _eq_expr($group->{response_id_signal}, $group->{concrete_id_literal}),
+        $group->{last_signal},
+        $group->{slot_signals}{0}{$transaction_name},
+    );
+}
+
+sub _same_id_issue_order_queue_active_match_expr($group, $transaction_name) {
+    return _and_expr(
+        _eq_expr($group->{response_id_signal}, $group->{concrete_id_literal}),
+        $group->{slot_signals}{0}{$transaction_name},
+    );
+}
+
+sub _same_id_issue_order_queue_response_antecedent_expr($group) {
+    return _and_expr(
+        $group->{response_event},
+        _eq_expr($group->{response_id_signal}, $group->{concrete_id_literal}),
+    );
+}
+
+sub _same_id_issue_order_queue_dequeue_expr($group) {
+    return _or_expr(map {
+        _same_id_issue_order_queue_head_match_expr($group, $_->{transaction})
+    } @{$group->{transactions} || []});
+}
+
+sub _same_id_issue_order_queue_remaining_after_dequeue_expr($group, $transaction_name) {
+    my $head_match = _same_id_issue_order_queue_head_match_expr($group, $transaction_name);
+    return _or_expr(
+        _and_expr(
+            $group->{slot_signals}{0}{$transaction_name},
+            _not_expr($head_match),
+        ),
+        $group->{slot_signals}{1}{$transaction_name},
+    );
+}
+
+sub _same_id_issue_order_queue_assertion_specs_for_group($group) {
+    my ($t0, $t1) = @{$group->{transactions} || []};
+    return () unless ref($t0) eq 'HASH' && ref($t1) eq 'HASH';
+
+    my $prefix = $group->{prefix};
+    my $slot0_any = _same_id_issue_order_queue_slot_any_expr($group, 0);
+    my $slot1_any = _same_id_issue_order_queue_slot_any_expr($group, 1);
+    my $dequeue = _same_id_issue_order_queue_dequeue_expr($group);
+    my $response_for_id = _same_id_issue_order_queue_response_antecedent_expr($group);
+    my @head_matches = map {
+        _same_id_issue_order_queue_head_match_expr($group, $_->{transaction})
+    } @{$group->{transactions} || []};
+    my @enqueue_pulses = map { $_->{admitted_pulse} } @{$group->{transactions} || []};
+
+    my @assertions = (
+        {
+            name      => "${prefix}_slot0_onehot0",
+            condition => _same_id_at_most_one_expr(
+                map { $group->{slot_signals}{0}{$_->{transaction}} } @{$group->{transactions}}
+            ),
+            message   => "$group->{family} same-ID issue-order queue slot 0 is one-hot-or-empty",
+        },
+        {
+            name      => "${prefix}_slot1_onehot0",
+            condition => _same_id_at_most_one_expr(
+                map { $group->{slot_signals}{1}{$_->{transaction}} } @{$group->{transactions}}
+            ),
+            message   => "$group->{family} same-ID issue-order queue slot 1 is one-hot-or-empty",
+        },
+        {
+            name      => "${prefix}_compact",
+            condition => _implies_expr($slot1_any, $slot0_any),
+            message   => "$group->{family} same-ID issue-order queue is compact",
+        },
+        {
+            name      => "${prefix}_enqueue_requires_space_or_dequeue",
+            condition => _implies_expr(
+                _or_expr(@enqueue_pulses),
+                _or_expr(_not_expr(_same_id_issue_order_queue_full_expr($group)), $dequeue),
+            ),
+            message   => "$group->{family} same-ID issue-order queue enqueue has space or selected dequeue",
+        },
+        {
+            name      => "${prefix}_response_requires_nonempty",
+            condition => _implies_expr($response_for_id, $slot0_any),
+            message   => "$group->{family} same-ID queue-head response requires a nonempty queue",
+        },
+        {
+            name      => "${prefix}_response_unique_head_match",
+            condition => _implies_expr(
+                $response_for_id,
+                _same_id_at_most_one_expr(@head_matches),
+            ),
+            message   => "$group->{family} same-ID queue-head response matches at most one head",
+        },
+        {
+            name      => "${prefix}_dequeue_requires_nonempty",
+            condition => _implies_expr($dequeue, $slot0_any),
+            message   => "$group->{family} same-ID issue-order queue dequeue requires a nonempty queue",
+        },
+        {
+            name      => "${prefix}_nonlast_no_dequeue",
+            condition => _implies_expr(
+                _and_expr($response_for_id, _not_expr($group->{last_signal})),
+                _not_expr($dequeue),
+            ),
+            message   => "$group->{family} same-ID non-last response beat does not dequeue",
+        },
+    );
+
+    for my $transaction (@{$group->{transactions} || []}) {
+        my $name = $transaction->{transaction};
+        push @assertions,
+            {
+                name      => "${prefix}_${name}_unique_slot",
+                condition => _not_expr(_and_expr(
+                    $group->{slot_signals}{0}{$name},
+                    $group->{slot_signals}{1}{$name},
+                )),
+                message   => "$group->{family} same-ID issue-order queue transaction $name appears in at most one slot",
+            },
+            {
+                name      => "${prefix}_${name}_no_duplicate_after_dequeue",
+                condition => _implies_expr(
+                    $transaction->{admitted_pulse},
+                    _not_expr(_same_id_issue_order_queue_remaining_after_dequeue_expr($group, $name)),
+                ),
+                message   => "$group->{family} same-ID issue-order queue enqueue for $name does not duplicate a remaining transaction",
+            };
+    }
+
+    return @assertions;
 }
 
 sub _read_data_burst_length_storage_lines($contract) {
@@ -3113,12 +3651,38 @@ sub _response_demux_transaction_states_for_family($contract, $family_name) {
     return () unless ref($demux) eq 'HASH';
     return () unless ref($demux->{$family_name}) eq 'HASH' && $demux->{$family_name}{generated_behavior};
 
+    my @queue_states = _same_id_issue_order_queue_response_states_for_family($contract, $family_name);
+    return @queue_states if @queue_states;
+
     my $lifecycle = _auto_id_lifecycle_family_by_name($contract->{auto_id_lifecycle}, $family_name);
     return () unless ref($lifecycle) eq 'HASH';
 
     my %wanted = map { $_ => 1 } @{$demux->{$family_name}{auto_transactions} || []};
     return map { +{ family => $family_name, %$_ } }
         grep { $wanted{$_->{transaction}} } @{$lifecycle->{transaction_state} || []};
+}
+
+sub _same_id_issue_order_queue_response_states_for_family($contract, $family_name) {
+    my $behavior = $contract->{same_id_issue_order_queue_behavior};
+    my @states;
+    for my $group (_same_id_issue_order_queue_groups($behavior, $family_name)) {
+        for my $transaction (@{$group->{transactions} || []}) {
+            push @states, {
+                family                  => $family_name,
+                response_demux_kind     => 'same_id_queue_head',
+                transaction             => $transaction->{transaction},
+                tag                     => $transaction->{tag},
+                completion_event        => $transaction->{completion_event},
+                head_signal             => $transaction->{head_signal},
+                concrete_id             => $group->{concrete_id},
+                concrete_id_literal     => $group->{concrete_id_literal},
+                queue_head_guard_expr   => _same_id_issue_order_queue_head_match_expr($group, $transaction->{transaction}),
+                queue_head_match_expr   => _same_id_issue_order_queue_active_match_expr($group, $transaction->{transaction}),
+                queue_response_antecedent_expr => _same_id_issue_order_queue_response_antecedent_expr($group),
+            };
+        }
+    }
+    return @states;
 }
 
 sub _read_data_runtime_assertion_enabled($read) {
@@ -3151,6 +3715,9 @@ sub _response_demux_rule_name($contract, $state) {
 }
 
 sub _response_demux_guard_expr($contract, $state) {
+    return $state->{queue_head_guard_expr}
+        if ($state->{response_demux_kind} // '') eq 'same_id_queue_head';
+
     my $demux = $contract->{response_demux};
     my $family = $state->{family};
     my @terms = (
@@ -3166,6 +3733,9 @@ sub _response_demux_guard_expr($contract, $state) {
 }
 
 sub _response_demux_match_expr($contract, $state) {
+    return $state->{queue_head_match_expr}
+        if ($state->{response_demux_kind} // '') eq 'same_id_queue_head';
+
     my $demux = $contract->{response_demux};
     my $family = $state->{family};
     return _and_expr(
@@ -3251,10 +3821,20 @@ sub _response_demux_assertion_specs_for_family($contract, $family) {
     return () unless @states;
 
     my @matches = map { _response_demux_match_expr($contract, $_) } @states;
+    my $queue_head = grep { ($_->{response_demux_kind} // '') eq 'same_id_queue_head' } @states;
+    my $antecedent = $queue_head
+        ? _or_expr(@{_unique_preserving([map { $_->{queue_response_antecedent_expr} } @states])})
+        : $demux->{$family}{response_event};
+    my $active_message = $queue_head
+        ? "$contract->{name} $family response matches nonempty same-ID queue head"
+        : "$contract->{name} $family response matches active auto-ID transaction";
+    my $unique_message = $queue_head
+        ? "$contract->{name} $family response matches at most one same-ID queue head"
+        : "$contract->{name} $family response matches at most one auto-ID transaction";
     my @assertions = ({
         name      => "$contract->{name}_${family}_response_demux_active_match",
-        condition => _implies_expr($demux->{$family}{response_event}, _or_expr(@matches)),
-        message   => "$contract->{name} $family response matches active auto-ID transaction",
+        condition => _implies_expr($antecedent, _or_expr(@matches)),
+        message   => $active_message,
     });
 
     for my $left_index (0 .. $#states) {
@@ -3264,13 +3844,13 @@ sub _response_demux_assertion_specs_for_family($contract, $family) {
             push @assertions, {
                 name      => "$contract->{name}_$left->{transaction}_$right->{transaction}_${family}_response_demux_unique_match",
                 condition => _implies_expr(
-                    $demux->{$family}{response_event},
+                    $antecedent,
                     _not_expr(_and_expr(
                         _response_demux_match_expr($contract, $left),
                         _response_demux_match_expr($contract, $right),
                     )),
                 ),
-                message   => "$contract->{name} $family response matches at most one auto-ID transaction",
+                message   => $unique_message,
             };
         }
     }
@@ -3594,14 +4174,14 @@ sub _build_report(%args) {
             'auto_id_lifecycle pools are bounded to 1..4 unique values per family and must fit the declared positive ID width',
             'auto_id_lifecycle generates first-free request-ID drive, per-transaction busy/selected-ID state, completion-event release, no-ID assertions, inactive-completion assertions, and same-family request mutual-exclusion assertions',
             'same_id_ordering for generated auto-ID families is enforced by avoiding same-ID concurrency through allocator free-ID guards plus pairwise active selected-ID assertions',
-            'same_id_ordering_policy accepts explicit read/write concrete-id-reuse reject policies plus issue-order-queue admitted-request pulse generation, while accepted same-ID reuse, queue-head behavior, and scoreboard remain unsupported until later owners select generated behavior',
+            'same_id_ordering_policy accepts explicit read/write concrete-id-reuse reject policies plus issue-order-queue admitted-request pulse generation, and generates bounded read burst-last depth-2 concrete same-ID queue state plus queue-head response demux for the selected public sample shape',
             'response_demux requires id_families, transactions, and either selected-family auto_id_lifecycle metadata or selected same-id-ordering concrete-id-reuse issue-order-queue metadata with a duplicate concrete-ID group',
             'response_demux.write requires response_event equal to write_complete and generates bounded write BID demux behavior for explicit opt-in contracts',
             'response_demux.read requires response_event equal to read_complete, response_scope single_beat or burst_last, read ID-family metadata, read transactions, and read auto_id_lifecycle metadata or selected concrete same-ID queue-head metadata',
             'response_demux.read response_scope single_beat generates bounded single-beat read RID demux behavior for explicit opt-in contracts',
             'response_demux.read response_scope burst_last requires one-bit last_signal metadata and generates matched-RID-and-RLAST last-beat completion behavior for explicit opt-in contracts',
-            'response_demux transaction_completion must be generated; selected auto-ID families make transaction completion names generated demux pulse outputs, while selected concrete same-ID queue-head families report selected_not_generated metadata until queue state and queue-head demux behavior ship',
-            'concrete same-ID queue-head response_demux is selected only for a family with issue-order-queue policy, duplicate concrete-ID groups, no same-family auto_id_lifecycle demux, and no read_data consumption in this slice',
+            'response_demux transaction_completion must be generated; selected auto-ID families make transaction completion names generated demux pulse outputs, while the bounded read burst-last depth-2 concrete same-ID queue-head shape also makes transaction completion names generated demux pulse outputs',
+            'concrete same-ID queue-head response_demux is generated only for the bounded read burst-last one-group two-transaction depth-2 shape with issue-order-queue policy, duplicate concrete-ID group, no same-family auto_id_lifecycle demux, and no read_data consumption in this slice',
             'read_data supports explicit generated single-beat capture behavior with response_scope single_beat, explicit generated last-beat capture behavior with response_scope burst_last, and explicit generated multi-beat output-bank behavior with response_scope burst_last',
             'read_data.read data width must be positive and status width must be 2',
             'read_data.read optional burst_length metadata is accepted only for last-beat or multi-beat capture, source arlen, signal width 8, axlen-plus-one encoding, request capture, max_beats 1..256, report-only or runtime-assertion validation, generated raw-ARLEN capture, and generated beat-count/RLAST runtime assertions only for explicit runtime-assertion contracts; multi-beat capture requires runtime-assertion validation',
@@ -3616,7 +4196,7 @@ sub _build_report(%args) {
             },
             {
                 id     => 'axi_id_ordering_and_response_matching',
-                detail => 'Concrete transaction ID request/response assertions, explicit bounded auto-ID request-ID drive plus completion-event release, generated auto-ID same-ID avoidance, explicit static concrete-ID reuse reject policy metadata, issue-order-queue admitted-request pulse generation for selected concrete-ID families, selected-not-generated concrete same-ID queue-head response-demux metadata, generated write BID response demux, generated single-beat read RID response demux, generated single-beat read-data RDATA/RRESP capture, generated burst-last RLAST response-demux completion, structural last-beat read-data metadata, generated last-beat read-data RDATA/RRESP capture, generated raw-ARLEN burst-length capture, explicit runtime-assertion beat-count/RLAST validation, generated multi-beat read-data output-bank behavior for the covered auto-ID multi-beat-by-RID subset, bounded burst payload/output behavior through that per-beat output bank, and generated scalar RRESP aggregation behavior are supported; dynamic user-ID arbitration while issuing multiple same-family requests in one cycle, accepted concrete same-ID reuse, generated issue-order queue state/queue-head demux or scoreboard policies, read-data consumption of selected-not-generated concrete same-ID queue-head demux, authored/general different-ID interleaving outside the covered auto-ID subset, packed burst-vector outputs, alternate full burst payload assembly, and aggregate-only status output shapes remain outside this capacity/status shell.',
+                detail => 'Concrete transaction ID request/response assertions, explicit bounded auto-ID request-ID drive plus completion-event release, generated auto-ID same-ID avoidance, explicit static concrete-ID reuse reject policy metadata, issue-order-queue admitted-request pulse generation for selected concrete-ID families, bounded read burst-last depth-2 concrete same-ID issue-order queue state plus queue-head response-demux behavior for the selected public sample shape, generated write BID response demux, generated single-beat read RID response demux, generated single-beat read-data RDATA/RRESP capture, generated burst-last RLAST response-demux completion, structural last-beat read-data metadata, generated last-beat read-data RDATA/RRESP capture, generated raw-ARLEN burst-length capture, explicit runtime-assertion beat-count/RLAST validation, generated multi-beat read-data output-bank behavior for the covered auto-ID multi-beat-by-RID subset, bounded burst payload/output behavior through that per-beat output bank, and generated scalar RRESP aggregation behavior are supported; dynamic user-ID arbitration while issuing multiple same-family requests in one cycle, write/single-beat/deeper/multiple-group concrete same-ID issue-order queues, generalized scoreboard policies, read-data consumption of concrete same-ID queue-head demux, authored/general different-ID interleaving outside the covered auto-ID subset, packed burst-vector outputs, alternate full burst payload assembly, and aggregate-only status output shapes remain outside this capacity/status shell.',
             },
             {
                 id     => 'profile_aliases_and_full_manager_behavior',
@@ -3757,6 +4337,12 @@ sub _report_read_data($contract) {
 }
 
 sub _same_id_ordering_covers_response_demux_family($contract, $family_name) {
+    return 1 if ref($contract->{same_id_issue_order_queue_behavior}) eq 'HASH'
+        && _same_id_issue_order_queue_family_behavior(
+            $contract->{same_id_issue_order_queue_behavior},
+            $family_name,
+        );
+
     my $ordering = $contract->{same_id_ordering};
     return 0 unless ref($ordering) eq 'HASH' && $ordering->{generated_behavior};
     for my $family (@{$ordering->{families} || []}) {
@@ -4065,6 +4651,10 @@ sub _report_id_response_rule_engine($contract) {
         _response_demux_covers_auto_id_lifecycle($contract)
     ) {
         @residue = grep { $_ ne 'response_demux' } @residue;
+    }
+    if (ref($contract->{same_id_issue_order_queue_behavior}) eq 'HASH'
+        && $contract->{same_id_issue_order_queue_behavior}{generated_behavior}) {
+        @residue = grep { $_ ne 'same_id_ordering' && $_ ne 'response_demux' } @residue;
     }
     return {
         mode => $engine->{mode},
