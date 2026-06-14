@@ -32,6 +32,6 @@ shape and reports lane names, valid-mask widths, length-output widths, and
 `multi_beat_reassembly_generated_behavior: false` without generating
 multi-beat payload storage or output behavior.
 
-The next selected leaf is `IAL2-FEATURE-COMPLETENESS-FRONTIER.73`, a
-readiness audit before generated multi-beat read-data reassembly/output
-behavior.
+The follow-up leaf `IAL2-FEATURE-COMPLETENESS-FRONTIER.73` completed a
+readiness audit and selected `IAL2-FEATURE-COMPLETENESS-FRONTIER.74`,
+generated multi-beat read-data output-bank behavior.

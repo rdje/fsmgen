@@ -3931,9 +3931,20 @@ boundary is intentionally narrow: existing burst-last response demux,
 raw-ARLEN capture, and beat-count/`RLAST` runtime validation still lower to
 `.isf`, `.fsm`, and SystemVerilog, but generated `RDATA`/`RRESP` payload
 inputs, per-beat output lanes, valid masks, length outputs, and payload
-capture/reassembly rules are not emitted yet. The active frontier is
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.73`, a readiness audit before generated
-multi-beat read-data reassembly/output behavior.
+capture/reassembly rules are not emitted yet.
+
+Multi-beat read-data output readiness audit:
+[AXI_IAL2_MANAGER_MULTI_BEAT_READ_DATA_REASSEMBLY_OUTPUT_READINESS_AUDIT](../../AXI_IAL2_MANAGER_MULTI_BEAT_READ_DATA_REASSEMBLY_OUTPUT_READINESS_AUDIT.md)
+finds no new IAL1, IAL0, or SystemVerilog prerequisite for the first
+generated output-bank behavior. The selected implementation boundary uses
+scalar generated lane outputs, treats the public output registers as the
+generated per-transaction beat storage, clears valid/length/lane outputs on
+request, captures each accepted beat under a matched-read-beat,
+`!request_event`, and current `beat_count_storage == lane_index` guard, and
+sets valid masks with constant prefix values. The active frontier is
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.74`, generated multi-beat read-data
+output-bank behavior. Scalar `RRESP` aggregation, per-ID queues, direct
+backend lowering, and VHDL remain deferred.
 
 First implementation subset selection:
 [AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION](../../AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md)
@@ -6450,6 +6461,9 @@ multi-beat read-data output-bank contract, adds
 generated lane names, valid-mask widths, length-output widths, and
 `multi_beat_reassembly_generated_behavior: false`, and advances the active
 frontier to `.73`, generated multi-beat read-data reassembly/output readiness.
+Completed audit `IAL2-FEATURE-COMPLETENESS-FRONTIER.73` finds no lower-layer
+prerequisite for first generated output-bank behavior and advances the active
+frontier to `.74`, generated multi-beat read-data output-bank behavior.
 Completed implementation leaf
 `ARCHITECTURE-DEBT-FRONTIER.2.1`
 projects direct backend storage/helper declaration-plan entries into

@@ -35,5 +35,6 @@ and beat-count/`RLAST` runtime-validation behavior. The slice does not emit
 generated `RDATA`/`RRESP` payload inputs, per-beat data/status outputs,
 valid masks, length outputs, or multi-beat payload capture/reassembly rules.
 
-The next active leaf is `IAL2-FEATURE-COMPLETENESS-FRONTIER.73`, a readiness
-audit before generated multi-beat read-data reassembly/output behavior.
+The follow-up leaf, `IAL2-FEATURE-COMPLETENESS-FRONTIER.73`, completed a
+readiness audit and selected `IAL2-FEATURE-COMPLETENESS-FRONTIER.74` for
+generated multi-beat read-data output-bank behavior.

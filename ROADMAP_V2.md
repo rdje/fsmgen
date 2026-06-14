@@ -1103,9 +1103,15 @@ static validation for that syntax, adds the support-accounted
 generated lane names, valid-mask widths, length-output widths, output-bank
 shape, and `multi_beat_reassembly_generated_behavior: false`, then advances
 the active frontier to `.73`, generated multi-beat read-data
-reassembly/output readiness. Packed burst outputs, scalar `RRESP`
-aggregation, generated reassembly behavior, per-ID queues, direct backend
-lowering, and VHDL remain deferred.
+reassembly/output readiness. Audit `.73` finds no new
+IAL1/IAL0/SystemVerilog prerequisite for the first generated output-bank
+behavior when it uses scalar lane outputs, public output registers as the
+generated beat storage, lane-specific guarded capture rules keyed by current
+beat count, constant prefix valid-mask values, and the existing
+matched-read-beat plus `!request_event` boundary. The active frontier is
+`.74`, generated multi-beat read-data output-bank behavior. Packed burst
+outputs, scalar `RRESP` aggregation, per-ID queues, direct backend lowering,
+and VHDL remain deferred.
 The shipped public capacity/status source accepts one
 `(manager-capacity-status NAME ...)` object under
 `(protocol-platform-intent ...)`, `(profile axi4)`, and top-level source
