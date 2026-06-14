@@ -1121,8 +1121,13 @@ now accepts `status-aggregation`, reports `status_aggregation` as
 `worst_observed`, marks `status_aggregation_generated_behavior: false`,
 reports per-transaction scalar aggregate output names/widths, and narrows
 read-data residue to `generated_rresp_aggregation` while preserving the
-existing generated output-bank `.isf`, `.fsm`, and HDL behavior. `.78` now
-owns generated scalar `RRESP` aggregation readiness before behavior changes.
+existing generated output-bank `.isf`, `.fsm`, and HDL behavior. Audit `.78`
+finds no new IAL1/IAL0/SystemVerilog prerequisite for first generated width-2
+`worst_observed` scalar behavior: request-time `OKAY` initialization,
+matched-beat numeric max updates under the existing `!request_event`
+boundary, scalar aggregate outputs, report artifact movement, and
+`generated_rresp_aggregation` residue removal can ship directly. `.79` now
+owns generated scalar `RRESP` aggregation behavior first slice.
 Packed burst outputs, per-ID queues, direct backend lowering, and VHDL remain
 deferred.
 The shipped public capacity/status source accepts one

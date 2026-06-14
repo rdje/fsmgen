@@ -4045,8 +4045,37 @@ masks, and length outputs; there is no generated scalar output such as:
 (output axi0_r0_rresp (width 2))
 ```
 
-The active frontier is `IAL2-FEATURE-COMPLETENESS-FRONTIER.78`, generated
-scalar `RRESP` aggregation readiness before behavior changes.
+The next frontier after `.77` was
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.78`, generated scalar `RRESP`
+aggregation readiness before behavior changes.
+
+RRESP aggregation behavior readiness:
+[AXI_IAL2_MANAGER_RRESP_AGGREGATION_BEHAVIOR_READINESS_AUDIT](../../AXI_IAL2_MANAGER_RRESP_AGGREGATION_BEHAVIOR_READINESS_AUDIT.md)
+records the `.78` readiness audit. It found no new IAL1, IAL0, or
+SystemVerilog prerequisite for first generated width-2 `worst_observed`
+behavior.
+
+The next implementation slice can emit one width-2 scalar aggregate output
+per read transaction, initialize it to `OKAY` on the transaction request, and
+update it on every accepted matched read-data beat when the current aggregate
+is less than the current `RRESP` signal:
+
+```text
+(rule aggregate_init REQUEST_EVENT
+  (STATUS_AGGREGATE_OUTPUT 2'd0))
+
+(rule aggregate_update
+  (& MATCHED_READ_BEAT (! REQUEST_EVENT)
+     (< STATUS_AGGREGATE_OUTPUT RRESP_SIGNAL))
+  (STATUS_AGGREGATE_OUTPUT RRESP_SIGNAL))
+```
+
+The `! REQUEST_EVENT` boundary is mandatory. It keeps scalar aggregation
+aligned with the generated output-bank same-cycle request/response behavior.
+The active frontier is now `IAL2-FEATURE-COMPLETENESS-FRONTIER.79`,
+generated scalar `RRESP` aggregation behavior first slice. Width-3 responses,
+alternate policies, aggregate-only shapes, packed outputs, per-ID queues,
+direct backend lowering, and VHDL remain deferred.
 
 First implementation subset selection:
 [AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION](../../AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md)
