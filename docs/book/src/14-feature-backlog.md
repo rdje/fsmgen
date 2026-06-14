@@ -3786,8 +3786,15 @@ Useful checks:
 ./bin/fsmgen --strict --emit-semantic-json ppif/axi_manager_capacity_status_read_data_burst_length.ppif
 ```
 
-The active frontier is `IAL2-FEATURE-COMPLETENESS-FRONTIER.64`, the next
-exact-owner selector after report-only burst-length metadata.
+Post burst-length metadata selector:
+[AXI_IAL2_MANAGER_POST_BURST_LENGTH_METADATA_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_BURST_LENGTH_METADATA_NEXT_SLICE_SELECTION.md)
+selects a readiness audit before generated ARLEN capture. Generated ARLEN
+capture is the next prerequisite before beat-count/RLAST validation or
+multi-beat reassembly, but it adds a new HDL input, generated storage, and
+request-event binding that must be audited before behavior changes.
+
+The active frontier is `IAL2-FEATURE-COMPLETENESS-FRONTIER.65`, generated
+AXI ARLEN burst-length capture readiness.
 
 First implementation subset selection:
 [AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION](../../AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md)
@@ -3941,7 +3948,9 @@ contract selection and hands off to `.62`. `.62` selects ARLEN-based
 `burst-length` parser/report metadata and static validation and advances the
 frontier to `.63`. `.63` ships that parser/report metadata and static
 validation with a support-accounted sample while keeping generated artifacts
-unchanged, then advances the active frontier to `.64`.
+unchanged, then advances the frontier to `.64`. `.64` selects generated
+ARLEN burst-length capture readiness and advances the active frontier to
+`.65`.
 Future behavior owners must keep the reviewable
 `IAL2 -> IAL1 -> IAL0 -> SystemVerilog` path; read-data
 interleaving/reassembly, bursts, per-ID queues, full-manager behavior, and
@@ -6256,7 +6265,10 @@ ARLEN-based `burst-length` parser/report metadata and static validation and
 advances the frontier to `.63`.
 Completed implementation leaf `IAL2-FEATURE-COMPLETENESS-FRONTIER.63` ships
 parser/report metadata and static validation for ARLEN-based `burst-length`
-contracts and advances the active frontier to `.64`.
+contracts and advances the frontier to `.64`.
+Completed selector leaf `IAL2-FEATURE-COMPLETENESS-FRONTIER.64` selects
+generated AXI ARLEN burst-length capture readiness and advances the active
+frontier to `.65`.
 Completed implementation leaf
 `ARCHITECTURE-DEBT-FRONTIER.2.1`
 projects direct backend storage/helper declaration-plan entries into

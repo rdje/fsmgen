@@ -30,5 +30,5 @@ metadata or generated behavior can honestly ship.
 `.62` selected an ARLEN-based `burst-length` clause with width-8
 `axlen-plus-one` encoding, transaction-request capture, required `max-beats`,
 and report-only validation. `.63` shipped parser/report metadata and static
-validation for that contract. The active frontier is `.64`, the next
-exact-owner selector after report-only burst-length metadata.
+validation for that contract. The `.64` selector then chose `.65`, generated
+ARLEN burst-length capture readiness, as the next active frontier.

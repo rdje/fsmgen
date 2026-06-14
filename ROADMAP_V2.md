@@ -1074,10 +1074,13 @@ accepts optional last-beat `read-data` `burst-length` metadata, reports
 ARLEN/max-beats fields with `burst_length_generated_behavior: false`, adds a
 support-accounted sample, keeps generated `.isf`, `.fsm`, and HDL behavior
 unchanged, and moves ARLEN work into explicit generated-capture and
-beat-count-validation residue. The active frontier is `.64`, the next
-exact-owner selector after report-only burst-length metadata. Full multi-beat
-read-data reassembly, per-beat outputs, `RRESP` aggregation, per-ID queues,
-direct backend lowering, and VHDL remain deferred.
+beat-count-validation residue. Selector `.64` chooses `.65`, a generated
+ARLEN burst-length capture readiness audit, because generated capture is the
+next prerequisite before validation/reassembly but adds a new HDL
+input/storage/request-event path that must be audited before behavior changes.
+Full multi-beat read-data reassembly, beat-count/RLAST validation, per-beat
+outputs, `RRESP` aggregation, per-ID queues, direct backend lowering, and VHDL
+remain deferred.
 The shipped public capacity/status source accepts one
 `(manager-capacity-status NAME ...)` object under
 `(protocol-platform-intent ...)`, `(profile axi4)`, and top-level source

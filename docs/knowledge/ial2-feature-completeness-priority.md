@@ -17,8 +17,8 @@ reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER|IAL2 feature completeness|IA
 The current feature-completeness priority is IAL2 on the
 SystemVerilog-backed path.
 
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.64` owns the next PNT frontier: select the
-next exact owner after report-only AXI burst read-data ARLEN beat-count/depth
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.65` owns the next PNT frontier: audit
+generated AXI ARLEN burst-length capture readiness after report-only
 metadata.
 
 Completed `.47` shipped generated single-beat `RDATA`/`RRESP` capture
@@ -69,7 +69,11 @@ ARLEN-based `burst-length` contract and advanced the frontier to `.63`,
 parser/report metadata and static validation for that contract. Completed
 `.63` shipped that parser/report metadata, added a support-accounted
 burst-length sample, kept generated artifacts unchanged, and advanced the
-frontier to `.64`, the next exact-owner selector.
+frontier to `.64`, the next exact-owner selector. Completed `.64` selected
+`.65`, generated ARLEN burst-length capture readiness, because generated
+capture is the next prerequisite before validation or reassembly but adds a
+new HDL input/storage/request-event path that must be audited before behavior
+changes.
 
 Selected IAL2 work may include required IAL1 or IAL0/SV support, but only when
 those prerequisites are explicit, task-tree owned, documented, and
