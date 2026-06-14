@@ -1081,10 +1081,13 @@ IAL1/IAL0/SystemVerilog substrate prerequisite and selected `.66`; `.66`
 ships generated raw-ARLEN capture with a width-8 `axi0_arlen` input,
 per-transaction raw-ARLEN storage, request-event guarded capture rules,
 `.fsm`/SystemVerilog lowering, and generated burst-length input/storage/rule
-report fields. The next active owner is `.67`, a beat-count/RLAST validation
-readiness audit. Full multi-beat read-data reassembly, beat indexing, payload
-storage, per-beat outputs, `RRESP` aggregation, per-ID queues, direct backend
-lowering, and VHDL remain deferred.
+report fields. Audit `.67` finds the IAL1/IAL0/SystemVerilog substrate ready
+for generated beat-count/RLAST validation, but preserves `validation
+report-only` as no-runtime-check behavior. The next active owner is `.68`,
+public beat-count/RLAST runtime-validation contract selection. Full multi-beat
+read-data reassembly, beat indexing, payload storage, per-beat outputs,
+`RRESP` aggregation, per-ID queues, direct backend lowering, and VHDL remain
+deferred.
 The shipped public capacity/status source accepts one
 `(manager-capacity-status NAME ...)` object under
 `(protocol-platform-intent ...)`, `(profile axi4)`, and top-level source

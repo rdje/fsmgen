@@ -17,8 +17,9 @@ reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER|IAL2 feature completeness|IA
 The current feature-completeness priority is IAL2 on the
 SystemVerilog-backed path.
 
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.67` owns the next PNT frontier: audit
-beat-count/RLAST validation readiness after generated raw-ARLEN capture.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.68` owns the next PNT frontier: select
+the public beat-count/RLAST runtime-validation contract while preserving
+`validation report-only` as no-runtime-check behavior.
 
 Completed `.47` shipped generated single-beat `RDATA`/`RRESP` capture
 behavior. Completed `.48` selected `.49` because the current public read-data
@@ -81,6 +82,11 @@ input/storage/rule report fields, and no `generated_burst_length_capture`
 residue. It selected `.67`, beat-count/RLAST validation readiness, before
 expected-beat arithmetic, validation counters, payload storage/reassembly,
 per-beat outputs, `RRESP` aggregation, direct backend lowering, or VHDL work.
+Completed `.67` found the IAL1/IAL0/SystemVerilog substrate ready for future
+generated validation after a public validation mode exists, but did not select
+direct behavior because the current public syntax says `validation
+report-only`. It selected `.68`, public beat-count/RLAST runtime-validation
+contract selection.
 
 Selected IAL2 work may include required IAL1 or IAL0/SV support, but only when
 those prerequisites are explicit, task-tree owned, documented, and

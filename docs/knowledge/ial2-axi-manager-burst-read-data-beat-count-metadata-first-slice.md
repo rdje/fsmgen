@@ -33,3 +33,6 @@ The `.64` selector chose `IAL2-FEATURE-COMPLETENESS-FRONTIER.65`, a
 readiness audit before generated ARLEN burst-length capture.
 Generated raw-ARLEN capture later shipped in
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.66`.
+The `.67` audit preserved `validation report-only` as no-runtime-check
+behavior and selected `.68`, public runtime-validation contract selection,
+before any generated beat-count/RLAST validation behavior.

@@ -3827,8 +3827,25 @@ read-data residue and leaves `generated_beat_count_validation`,
 `multi_beat_read_data_reassembly`, `per_beat_outputs`, and
 `rresp_aggregation` as explicit future owners.
 
-The active frontier is `IAL2-FEATURE-COMPLETENESS-FRONTIER.67`, a
-beat-count/RLAST validation readiness audit.
+Beat-count/RLAST validation readiness audit:
+[AXI_IAL2_MANAGER_BEAT_COUNT_RLAST_VALIDATION_READINESS_AUDIT](../../AXI_IAL2_MANAGER_BEAT_COUNT_RLAST_VALIDATION_READINESS_AUDIT.md)
+finds the IAL1/IAL0/SystemVerilog substrate ready for future generated
+validation after a public validation contract exists. Generated storage can
+carry `max-beats`-width expected-count and beat-count state, generated rules
+can assign arithmetic expressions, response-demux match expressions can
+identify every accepted matched read beat, and generated assertions already
+lower through clocked reset-disabled SystemVerilog properties. The audit does
+not select direct behavior because the existing public syntax says
+`validation report-only`, and that mode must remain no-runtime-check behavior.
+
+The active frontier is `IAL2-FEATURE-COMPLETENESS-FRONTIER.68`, public
+beat-count/RLAST runtime-validation contract selection. The expected public
+shape is an explicit generated validation mode, preserving
+`validation report-only` as report-only metadata:
+
+```text
+(validation runtime-assertion)
+```
 
 First implementation subset selection:
 [AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION](../../AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md)
@@ -6312,6 +6329,10 @@ generated raw-ARLEN capture behavior and advances the active frontier to
 Completed implementation leaf `IAL2-FEATURE-COMPLETENESS-FRONTIER.66` ships
 generated raw-ARLEN capture behavior and advances the active frontier to
 `.67`, beat-count/RLAST validation readiness.
+Completed audit leaf `IAL2-FEATURE-COMPLETENESS-FRONTIER.67` preserves
+`validation report-only` as no-runtime-check behavior, selects public
+beat-count/RLAST runtime-validation contract selection, and advances the
+active frontier to `.68`.
 Completed implementation leaf
 `ARCHITECTURE-DEBT-FRONTIER.2.1`
 projects direct backend storage/helper declaration-plan entries into
