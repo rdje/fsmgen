@@ -1214,7 +1214,14 @@ requires queue-head response demux before accepted same-ID reuse can be
 reported. It selects `.95`, AXI same-ID issue-order queue behavior readiness,
 because the current response-demux behavior is auto-ID-oriented and direct
 parser/report acceptance would be unsafe before the queue-head behavior split
-is audited.
+is audited. Audit `.95` finds generated queue-head behavior is not ready as a
+direct next slice: response demux is still selected-ID auto-ID matching,
+concrete transactions have no queue-head state, and queue enqueue needs an
+admitted per-transaction request boundary. It selects `.96`, metadata-first
+parser/report support for `issue-order-queue`, with
+`implementation_status: selected_not_generated`, `accepted_same_id_reuse:
+false`, `generated_queue_behavior: false`, and duplicated concrete same-ID
+reuse still fail-closed until generated queue-head behavior ships.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.

@@ -4412,6 +4412,20 @@ issue-order queue behavior readiness, because the current generated
 response-demux behavior is auto-ID-oriented and accepting duplicate
 concrete-ID transactions before queue-head demux exists would be ambiguous.
 
+Same-ID issue-order queue behavior readiness:
+[AXI_IAL2_MANAGER_SAME_ID_ISSUE_ORDER_QUEUE_BEHAVIOR_READINESS_AUDIT](../../AXI_IAL2_MANAGER_SAME_ID_ISSUE_ORDER_QUEUE_BEHAVIOR_READINESS_AUDIT.md)
+ships `IAL2-FEATURE-COMPLETENESS-FRONTIER.95`. Generated queue-head behavior
+is not the next safe slice: current response demux is auto-ID selected-ID
+matching, concrete transactions have no queue-head state, and queue enqueue
+needs an admitted per-transaction request boundary.
+
+The audit selects `IAL2-FEATURE-COMPLETENESS-FRONTIER.96`, metadata-first
+parser/report support for `issue-order-queue`. That slice may accept the
+spelling and report `implementation_status: selected_not_generated`,
+`accepted_same_id_reuse: false`, and `generated_queue_behavior: false`.
+Duplicated concrete same-ID transactions must still fail closed until
+generated queue-head behavior exists.
+
 First implementation subset selection:
 [AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION](../../AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md)
 selects a source-anchored AXI Valid-Ready channel contract/monitor as the

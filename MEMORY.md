@@ -10,9 +10,9 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `HEAD after commit` — `IAL2-FEATURE-COMPLETENESS-FRONTIER.94: select same-ID issue-order queue contract`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.95` pending; next action is auditing AXI same-ID issue-order queue behavior readiness before parser/report metadata or generated queue-head behavior.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.94`; `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1`; `BIN-FSMGEN-IMPORT-TREE-JUN14-REFRESH.1`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.93`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.92`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.91`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.90`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.89`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.88`. Older completed slices are in the task tree and git history.
+- latest_commit: `HEAD after commit` — `IAL2-FEATURE-COMPLETENESS-FRONTIER.95: audit same-ID queue behavior readiness`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.96` pending; next action is implementing metadata-first AXI same-ID `issue-order-queue` parser/report support while duplicated concrete same-ID reuse remains fail-closed.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.95`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.94`; `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1`; `BIN-FSMGEN-IMPORT-TREE-JUN14-REFRESH.1`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.93`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.92`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.91`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.90`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.89`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.88`. Older completed slices are in the task tree and git history.
 - in_flight_uncommitted: none after this commit; unrelated untracked `fx/` intentionally left alone.
 - blockers: none.
 
