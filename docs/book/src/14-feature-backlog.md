@@ -4646,6 +4646,25 @@ selected-not-generated queue-head demux fails closed. `.103` advances the
 active frontier to `IAL2-FEATURE-COMPLETENESS-FRONTIER.104`, generated
 same-ID queue state and queue-head behavior readiness.
 
+Same-ID queue behavior readiness audit:
+[AXI_IAL2_MANAGER_SAME_ID_QUEUE_BEHAVIOR_READINESS_AUDIT](../../AXI_IAL2_MANAGER_SAME_ID_QUEUE_BEHAVIOR_READINESS_AUDIT.md)
+ships `IAL2-FEATURE-COMPLETENESS-FRONTIER.104`. The audit confirms the
+existing lower layers can already carry the first bounded generated behavior
+shape: scalar storage, pulse actions, guarded rules, generated inputs and
+outputs, Boolean/equality guards, constants, and generated assertions.
+
+The audit still does not select direct runtime implementation. Queue state and
+queue-head demux must be specified and shipped together for any covered group:
+queue state needs a dequeue event from queue-head demux, and queue-head demux
+needs queue-head transaction identity from queue state. Until that behavior
+slice is selected and implemented, the `.103` sample remains
+selected-not-generated, with `accepted_same_id_reuse` and
+`generated_queue_behavior` false.
+
+`.104` advances the active frontier to
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.105`, first generated AXI same-ID queue
+state and queue-head behavior slice selection.
+
 First implementation subset selection:
 [AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION](../../AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md)
 selects a source-anchored AXI Valid-Ready channel contract/monitor as the

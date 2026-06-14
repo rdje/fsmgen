@@ -5,12 +5,12 @@ answers:
   - "what did IAL2-FEATURE-COMPLETENESS-FRONTIER.102 decide?"
   - "how is AXI same-ID queue-head response demux selected?"
   - "does same-ID queue-head demux add a new top-level clause?"
-  - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.103?"
+  - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.105?"
 date: 2026-06-14
 status: current
 tags: [ial2, axi, manager, same-id, issue-order, queue, response-demux, contract, task-tree]
-evidence: docs/AXI_IAL2_MANAGER_SAME_ID_QUEUE_HEAD_RESPONSE_DEMUX_CONTRACT_SELECTION.md; docs/AXI_IAL2_MANAGER_SAME_ID_QUEUE_HEAD_RESPONSE_DEMUX_METADATA_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_SAME_ID_ISSUE_ORDER_QUEUE_STATE_REPRESENTATION_SELECTION.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md
-reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.102|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.103|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.104|bounded_write_bid_queue_head_demux_contract|bounded_read_rid_queue_head_demux_contract|selected_not_generated|same-family auto-ID' docs/AXI_IAL2_MANAGER_SAME_ID_QUEUE_HEAD_RESPONSE_DEMUX_CONTRACT_SELECTION.md docs/AXI_IAL2_MANAGER_SAME_ID_QUEUE_HEAD_RESPONSE_DEMUX_METADATA_FIRST_SLICE.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md README.md ROADMAP_V2.md docs/book/src/14-feature-backlog.md
+evidence: docs/AXI_IAL2_MANAGER_SAME_ID_QUEUE_HEAD_RESPONSE_DEMUX_CONTRACT_SELECTION.md; docs/AXI_IAL2_MANAGER_SAME_ID_QUEUE_HEAD_RESPONSE_DEMUX_METADATA_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_SAME_ID_QUEUE_BEHAVIOR_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_SAME_ID_ISSUE_ORDER_QUEUE_STATE_REPRESENTATION_SELECTION.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md
+reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.102|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.103|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.104|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.105|bounded_write_bid_queue_head_demux_contract|bounded_read_rid_queue_head_demux_contract|selected_not_generated|same-family auto-ID' docs/AXI_IAL2_MANAGER_SAME_ID_QUEUE_HEAD_RESPONSE_DEMUX_CONTRACT_SELECTION.md docs/AXI_IAL2_MANAGER_SAME_ID_QUEUE_HEAD_RESPONSE_DEMUX_METADATA_FIRST_SLICE.md docs/AXI_IAL2_MANAGER_SAME_ID_QUEUE_BEHAVIOR_READINESS_AUDIT.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md README.md ROADMAP_V2.md docs/book/src/14-feature-backlog.md
 ---
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.102` selected the public/report contract
@@ -28,6 +28,7 @@ and `selected_not_generated` metadata until later behavior owners ship queue
 state plus queue-head demux.
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.103` has since shipped the
-selected-not-generated metadata/static validation and public sample. The next
-active leaf is `IAL2-FEATURE-COMPLETENESS-FRONTIER.104`, generated same-ID
-queue state and queue-head behavior readiness.
+selected-not-generated metadata/static validation and public sample. `.104`
+audited generated behavior readiness and selected
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.105`, first generated same-ID queue state
+and queue-head behavior slice selection.

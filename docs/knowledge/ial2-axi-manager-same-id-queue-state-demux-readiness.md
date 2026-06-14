@@ -6,11 +6,12 @@ answers:
   - "can FSMGen implement same-ID queue-head demux before queue state?"
   - "what comes after the same-ID queue readiness audit?"
   - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.101?"
+  - "what is the current same-ID queue behavior frontier?"
 date: 2026-06-14
 status: current
 tags: [ial2, axi, manager, same-id, issue-order, queue, demux, readiness, task-tree]
-evidence: docs/AXI_IAL2_MANAGER_SAME_ID_ISSUE_ORDER_QUEUE_STATE_DEMUX_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_SAME_ID_ISSUE_ORDER_QUEUE_STATE_REPRESENTATION_SELECTION.md; docs/AXI_IAL2_MANAGER_POST_ADMITTED_REQUEST_PULSES_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_SAME_ID_ISSUE_ORDER_QUEUE_ADMITTED_REQUEST_PULSES_FIRST_SLICE.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md
-reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.100|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.101|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.102|compact_onehot_transaction_slots|queue-head demux|accepted_same_id_reuse|generated_queue_behavior|auto-ID busy/selected-ID' docs/AXI_IAL2_MANAGER_SAME_ID_ISSUE_ORDER_QUEUE_STATE_DEMUX_READINESS_AUDIT.md docs/AXI_IAL2_MANAGER_SAME_ID_ISSUE_ORDER_QUEUE_STATE_REPRESENTATION_SELECTION.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md README.md ROADMAP_V2.md docs/book/src/14-feature-backlog.md
+evidence: docs/AXI_IAL2_MANAGER_SAME_ID_ISSUE_ORDER_QUEUE_STATE_DEMUX_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_SAME_ID_ISSUE_ORDER_QUEUE_STATE_REPRESENTATION_SELECTION.md; docs/AXI_IAL2_MANAGER_SAME_ID_QUEUE_BEHAVIOR_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_POST_ADMITTED_REQUEST_PULSES_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_SAME_ID_ISSUE_ORDER_QUEUE_ADMITTED_REQUEST_PULSES_FIRST_SLICE.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md
+reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.100|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.101|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.105|compact_onehot_transaction_slots|first generated AXI same-ID queue state and queue-head behavior slice|accepted_same_id_reuse|generated_queue_behavior|auto-ID busy/selected-ID' docs/AXI_IAL2_MANAGER_SAME_ID_ISSUE_ORDER_QUEUE_STATE_DEMUX_READINESS_AUDIT.md docs/AXI_IAL2_MANAGER_SAME_ID_ISSUE_ORDER_QUEUE_STATE_REPRESENTATION_SELECTION.md docs/AXI_IAL2_MANAGER_SAME_ID_QUEUE_BEHAVIOR_READINESS_AUDIT.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md README.md ROADMAP_V2.md docs/book/src/14-feature-backlog.md
 ---
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.100` audits AXI same-ID
@@ -23,8 +24,9 @@ request pulses are generated, but `accepted_same_id_reuse` and
 still auto-ID busy/selected-ID matching, including the read burst-last path,
 so queue-head demux cannot ship before queue identity state exists.
 
-`.101` has since selected `compact_onehot_transaction_slots` and advanced the
-active frontier to `IAL2-FEATURE-COMPLETENESS-FRONTIER.102`, AXI same-ID
-queue-head response-demux contract selection. Duplicate concrete same-ID reuse
-remains fail-closed until the demux contract and later generated behavior
-ship.
+`.101` has since selected `compact_onehot_transaction_slots`, `.102` selected
+the queue-head response-demux contract, `.103` shipped selected-not-generated
+metadata, and `.104` selected the next behavior-slice selector. The current
+active frontier is `IAL2-FEATURE-COMPLETENESS-FRONTIER.105`, first generated
+AXI same-ID queue state and queue-head behavior slice selection. Duplicate
+concrete same-ID reuse remains fail-closed until generated behavior ships.

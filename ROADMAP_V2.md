@@ -1290,7 +1290,16 @@ accepted same-ID reuse, generated queue behavior, direct backend, and VHDL
 remain unchanged. Same-family auto-ID demux plus concrete same-ID queue-head
 demux and read-data consumption of selected-not-generated queue-head demux
 fail closed. The active frontier advances to `.104`, generated same-ID queue
-state and queue-head behavior readiness.
+state and queue-head behavior readiness. Audit `.104` finds no obvious new
+IAL1/IAL0/SystemVerilog substrate prerequisite for the first bounded generated
+behavior slice, but queue state and queue-head demux remain behavior-coupled:
+queue state needs a dequeue event from queue-head demux, and queue-head demux
+needs queue-head transaction identity from queue state. Direct broad
+implementation is therefore too large. The active frontier advances to
+`.105`, first generated AXI same-ID queue state and queue-head behavior slice
+selection, before generated queue state, queue-head demux rules, accepted
+same-ID reuse, generated queue behavior, direct backend, or VHDL behavior
+changes.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.
