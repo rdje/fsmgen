@@ -199,13 +199,17 @@ The next exact owner is:
 IAL2-FEATURE-COMPLETENESS-FRONTIER.72
 ```
 
-`.72` owns parser/report metadata and static validation for the selected
-multi-beat read-data reassembly/output contract. It must not generate
+`.72` shipped parser/report metadata and static validation for the selected
+multi-beat read-data reassembly/output contract and added
+`ppif/axi_manager_capacity_status_read_data_multi_beat.ppif` as the
+support-accounted public sample. It intentionally did not generate
 multi-beat storage, output lanes, valid masks, length outputs, or reassembly
-rules yet. It may add a checked-in `.ppif` sample only if generated `.isf`,
-generated `.fsm`, HDL, support-accounting source identity, check JSON source
-identity, and normalized semantic JSON source identity remain controlled and
-explicitly verified.
+rules; generated behavior remains limited to the already shipped response
+demux, raw-ARLEN capture, and beat-count/`RLAST` runtime-validation
+artifacts.
+
+`.73` owns the next readiness audit before any generated multi-beat
+reassembly/output behavior.
 
 ## Future Behavior Boundary
 

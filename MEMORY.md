@@ -10,9 +10,9 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `HEAD after commit` — `IAL2-FEATURE-COMPLETENESS-FRONTIER.71: select multi-beat read-data contract`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.72` pending; next action is to implement parser/report metadata and static validation for the public AXI multi-beat read-data reassembly/output contract.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.71`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.70`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.69`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.68`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.67`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.66`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.65`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.64`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.63`. Older completed slices are in the task tree and git history.
+- latest_commit: `HEAD after commit` — `IAL2-FEATURE-COMPLETENESS-FRONTIER.72: ship multi-beat read-data metadata`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.73` pending; next action is to audit generated AXI multi-beat read-data reassembly/output behavior readiness before any generated storage, output lanes, capture rules, or HDL behavior changes.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.72`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.71`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.70`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.69`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.68`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.67`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.66`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.65`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.64`. Older completed slices are in the task tree and git history.
 - in_flight_uncommitted: none after this commit; unrelated untracked `fx/` intentionally left alone.
 - blockers: none.
 

@@ -762,8 +762,8 @@ sub _parse_manager_capacity_read_data_read($items, $source_label, $name) {
     }
     confess "Error: .ppif (manager-capacity-status $name (read-data (read ...))) requires at least one transaction clause\n"
         unless @transactions;
-    confess "Error: .ppif (manager-capacity-status $name (read-data (read (capture-scope ...)))) supports only single-beat or last-beat in this slice\n"
-        unless $entry{capture_scope} eq 'single-beat' || $entry{capture_scope} eq 'last-beat';
+    confess "Error: .ppif (manager-capacity-status $name (read-data (read (capture-scope ...)))) supports only single-beat, last-beat, or multi-beat in this slice\n"
+        unless $entry{capture_scope} =~ /\A(?:single-beat|last-beat|multi-beat)\z/;
     confess "Error: .ppif (manager-capacity-status $name (read-data (read (completion-source ...)))) supports only response-demux in this slice\n"
         unless $entry{completion_source} eq 'response-demux';
     if ($entry{capture_scope} eq 'single-beat') {
@@ -773,11 +773,23 @@ sub _parse_manager_capacity_read_data_read($items, $source_label, $name) {
             if exists $entry{burst_length};
         confess "Error: .ppif (manager-capacity-status $name (read-data (read (interleaving ...)))) supports only single-beat-by-rid with capture-scope single-beat in this slice\n"
             unless $entry{interleaving} eq 'single-beat-by-rid';
-    } else {
+        _validate_manager_capacity_read_data_legacy_transactions(\@transactions, $source_label, $name, 'single-beat');
+    } elsif ($entry{capture_scope} eq 'last-beat') {
         confess "Error: .ppif (manager-capacity-status $name (read-data (read (status-policy ...)))) capture-scope last-beat requires status-policy last-beat in this slice\n"
             unless exists($entry{status_policy}) && $entry{status_policy} eq 'last-beat';
         confess "Error: .ppif (manager-capacity-status $name (read-data (read (interleaving ...)))) supports only last-beat-by-rid with capture-scope last-beat in this slice\n"
             unless $entry{interleaving} eq 'last-beat-by-rid';
+        _validate_manager_capacity_read_data_legacy_transactions(\@transactions, $source_label, $name, 'last-beat');
+    } else {
+        confess "Error: .ppif (manager-capacity-status $name (read-data (read (status-policy ...)))) capture-scope multi-beat requires status-policy per-beat in this slice\n"
+            unless exists($entry{status_policy}) && $entry{status_policy} eq 'per-beat';
+        confess "Error: .ppif (manager-capacity-status $name (read-data (read (interleaving ...)))) supports only multi-beat-by-rid with capture-scope multi-beat in this slice\n"
+            unless $entry{interleaving} eq 'multi-beat-by-rid';
+        confess "Error: .ppif (manager-capacity-status $name (read-data (read (burst-length ...)))) capture-scope multi-beat requires burst-length metadata in this slice\n"
+            unless exists $entry{burst_length};
+        confess "Error: .ppif (manager-capacity-status $name (read-data (read (burst-length (validation ...))))) capture-scope multi-beat requires validation runtime-assertion in this slice\n"
+            unless $entry{burst_length}{validation} eq 'runtime-assertion';
+        _validate_manager_capacity_read_data_multi_beat_transactions(\@transactions, $source_label, $name);
     }
 
     $entry{transactions} = \@transactions;
@@ -874,8 +886,12 @@ sub _parse_manager_capacity_read_data_transaction($items, $source_label, $name) 
 
     my $transaction_name = $items->[0];
     my %allowed = (
-        'data-output'   => 'data_output',
-        'status-output' => 'status_output',
+        'data-output'          => 'data_output',
+        'status-output'        => 'status_output',
+        'data-output-prefix'   => 'data_output_prefix',
+        'status-output-prefix' => 'status_output_prefix',
+        'valid-mask-output'    => 'valid_mask_output',
+        'length-output'        => 'length_output',
     );
     my %transaction = (transaction => $transaction_name);
     my %seen;
@@ -890,14 +906,41 @@ sub _parse_manager_capacity_read_data_transaction($items, $source_label, $name) 
         $transaction{$allowed{$head}} = $body[0];
     }
 
-    for my $required (qw(data_output status_output)) {
-        my $clause = $required;
-        $clause =~ s/_/-/g;
-        confess "Error: .ppif (manager-capacity-status $name (read-data (read (transaction $transaction_name ...)))) is missing required ($clause ...) clause\n"
-            unless exists $transaction{$required};
-    }
-
     return \%transaction;
+}
+
+sub _validate_manager_capacity_read_data_legacy_transactions($transactions, $source_label, $name, $capture_scope) {
+    for my $transaction (@$transactions) {
+        for my $field (qw(data_output status_output)) {
+            my $clause = $field;
+            $clause =~ s/_/-/g;
+            confess "Error: .ppif (manager-capacity-status $name (read-data (read (transaction $transaction->{transaction} ...)))) capture-scope $capture_scope is missing required ($clause ...) clause\n"
+                unless exists $transaction->{$field};
+        }
+        for my $field (qw(data_output_prefix status_output_prefix valid_mask_output length_output)) {
+            next unless exists $transaction->{$field};
+            my $clause = $field;
+            $clause =~ s/_/-/g;
+            confess "Error: .ppif (manager-capacity-status $name (read-data (read (transaction $transaction->{transaction} ...)))) capture-scope $capture_scope does not support ($clause ...) clauses\n";
+        }
+    }
+}
+
+sub _validate_manager_capacity_read_data_multi_beat_transactions($transactions, $source_label, $name) {
+    for my $transaction (@$transactions) {
+        for my $field (qw(data_output status_output)) {
+            next unless exists $transaction->{$field};
+            my $clause = $field;
+            $clause =~ s/_/-/g;
+            confess "Error: .ppif (manager-capacity-status $name (read-data (read (transaction $transaction->{transaction} ...)))) capture-scope multi-beat does not support legacy ($clause ...) clauses\n";
+        }
+        for my $required (qw(data_output_prefix status_output_prefix valid_mask_output length_output)) {
+            my $clause = $required;
+            $clause =~ s/_/-/g;
+            confess "Error: .ppif (manager-capacity-status $name (read-data (read (transaction $transaction->{transaction} ...)))) capture-scope multi-beat is missing required ($clause ...) clause\n"
+                unless exists $transaction->{$required};
+        }
+    }
 }
 
 sub _parse_reset($items, $source_label) {

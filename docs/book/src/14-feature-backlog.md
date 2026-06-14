@@ -3882,9 +3882,58 @@ runtime assertions, `status-policy per-beat`, `interleaving
 multi-beat-by-rid`, and per-transaction data/status output prefixes,
 valid-mask outputs, and length outputs. The first selected output shape is a
 per-beat output bank, not a packed burst vector. Scalar `RRESP` aggregation
-and generated reassembly behavior remain deferred. The active frontier is
+and generated reassembly behavior remain deferred. The selector advanced the
+frontier to
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.72`, parser/report metadata and static
 validation for this public syntax.
+
+Multi-beat read-data metadata first slice:
+[AXI_IAL2_MANAGER_MULTI_BEAT_READ_DATA_METADATA_FIRST_SLICE](../../AXI_IAL2_MANAGER_MULTI_BEAT_READ_DATA_METADATA_FIRST_SLICE.md)
+ships parser/report metadata and static validation for the selected
+multi-beat output-bank syntax. The support-accounted sample is:
+
+```text
+ppif/axi_manager_capacity_status_read_data_multi_beat.ppif
+```
+
+The public source shape binds per-transaction output names by prefix and
+explicit valid/length outputs:
+
+```text
+(read-data
+  (read
+    (capture-scope multi-beat)
+    (completion-source response-demux)
+    (data-signal axi0_rdata (width 32))
+    (status-signal axi0_rresp (width 2))
+    (status-policy per-beat)
+    (interleaving multi-beat-by-rid)
+    (burst-length
+      (source arlen)
+      (signal axi0_arlen (width 8))
+      (encoding axlen-plus-one)
+      (capture request)
+      (max-beats 16)
+      (validation runtime-assertion))
+    (transaction r0
+      (data-output-prefix axi0_r0_beat_rdata)
+      (status-output-prefix axi0_r0_beat_rresp)
+      (valid-mask-output axi0_r0_beat_valid)
+      (length-output axi0_r0_read_beats))))
+```
+
+Schedule JSON reports `bounded_multi_beat_read_data_contract`, per-transaction
+generated lane names, valid-mask widths, length-output widths,
+`beat_match_source: response_demux_matched_read_beat`,
+`output_shape: per_beat_output_bank`, and
+`multi_beat_reassembly_generated_behavior: false`. The generated artifact
+boundary is intentionally narrow: existing burst-last response demux,
+raw-ARLEN capture, and beat-count/`RLAST` runtime validation still lower to
+`.isf`, `.fsm`, and SystemVerilog, but generated `RDATA`/`RRESP` payload
+inputs, per-beat output lanes, valid masks, length outputs, and payload
+capture/reassembly rules are not emitted yet. The active frontier is
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.73`, a readiness audit before generated
+multi-beat read-data reassembly/output behavior.
 
 First implementation subset selection:
 [AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION](../../AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md)
@@ -6394,6 +6443,13 @@ semantic JSON, or validation behavior changes.
 Completed selector `IAL2-FEATURE-COMPLETENESS-FRONTIER.71` advances the
 active frontier to `.72`, parser/report metadata and static validation for
 the selected public multi-beat read-data contract.
+Completed implementation `IAL2-FEATURE-COMPLETENESS-FRONTIER.72` ships
+parser/report metadata and static validation for the selected public
+multi-beat read-data output-bank contract, adds
+`ppif/axi_manager_capacity_status_read_data_multi_beat.ppif`, reports
+generated lane names, valid-mask widths, length-output widths, and
+`multi_beat_reassembly_generated_behavior: false`, and advances the active
+frontier to `.73`, generated multi-beat read-data reassembly/output readiness.
 Completed implementation leaf
 `ARCHITECTURE-DEBT-FRONTIER.2.1`
 projects direct backend storage/helper declaration-plan entries into

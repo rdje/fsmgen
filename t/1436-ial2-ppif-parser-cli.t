@@ -374,6 +374,28 @@ subtest 'PPIF adapter parses AXI manager runtime-assertion burst-length read-dat
     assert_read_data_burst_length_report($result->{report}{read_data}, 'adapter runtime-assertion burst-length read-data report', 'runtime_assertion');
 };
 
+subtest 'PPIF adapter parses AXI manager multi-beat read-data metadata' => sub {
+    my $sample_path = sample_capacity_read_data_multi_beat_ppif_path();
+    ok(-f $sample_path, 'tracked runnable PPIF capacity/status multi-beat read-data sample exists');
+
+    my $result = FSM::Adapter::IAL2::PPIF->new()->parse_source(sample_capacity_read_data_multi_beat_ppif(), $sample_path);
+    my $isf = $result->{generated_ial1}{text};
+    my $fsm = $result->{generated_ial0}{files}{'axi0_capacity_status.fsm'};
+
+    is($result->{kind}, 'protocol_intent.axi_manager_capacity_status', 'multi-beat sample still uses the capacity/status generator');
+    is($result->{report}{source_object}{id}, 'axi-manager-capacity-status-read-data-multi-beat', 'multi-beat source object id is preserved');
+    is($result->{report}{source_object}{intent_name}, 'axi_manager_capacity_status_read_data_multi_beat', 'multi-beat source intent name is preserved');
+    like($isf, qr/\(input axi0_arlen \(width 8\)\)/, 'multi-beat PPIF keeps generated ARLEN input');
+    like($isf, qr/\(var axi0_r0_expected_beats_q \(width 5\)\)/, 'multi-beat PPIF keeps expected-beat storage');
+    unlike($isf, qr/\(input axi0_rdata\b/, 'multi-beat PPIF does not generate RDATA input before reassembly behavior');
+    unlike($isf, qr/\(output axi0_r0_beat_rdata_0\b/, 'multi-beat PPIF does not generate per-beat data outputs yet');
+    unlike($isf, qr/\(rule axi0_r0_read_data_capture\b/, 'multi-beat PPIF does not generate payload capture rules yet');
+    like($fsm, qr/\(axi0_read_data_beat_count_checks_assert_0 assert \(=> axi0_r0_request \(< axi0_arlen 8'd16\)\)/, 'multi-beat PPIF lowers runtime validation assertions');
+    unlike($fsm, qr/axi0_r0_beat_rdata_0/, 'multi-beat PPIF keeps deferred lane outputs out of .fsm');
+    assert_read_response_demux_burst_last_report($result->{report}{response_demux}, 'adapter multi-beat read-data report');
+    assert_read_data_multi_beat_report($result->{report}{read_data}, 'adapter multi-beat read-data report');
+};
+
 subtest 'PPIF adapter parses mixed AXI manager response-demux arms' => sub {
     my $source = capacity_ppif_with_objects(
         manager_capacity_object_with_mixed_response_demux(
@@ -608,7 +630,7 @@ subtest 'PPIF adapter diagnostics fail closed before generation claims' => sub {
             qr/is missing required \(capture-scope \.\.\.\) clause/],
         ['unsupported manager read-data capture scope',
             capacity_ppif_with_objects(manager_capacity_object_with_read_data(read_data_clause_with('(capture-scope burst)'))),
-            qr/supports only single-beat or last-beat in this slice/],
+            qr/supports only single-beat, last-beat, or multi-beat in this slice/],
         ['unsupported manager read-data completion source',
             capacity_ppif_with_objects(manager_capacity_object_with_read_data(read_data_clause_with('(completion-source read-complete)'))),
             qr/supports only response-demux in this slice/],
@@ -645,6 +667,36 @@ subtest 'PPIF adapter diagnostics fail closed before generation claims' => sub {
         ['single-beat manager read-data with burst-length',
             capacity_ppif_with_objects(manager_capacity_object_with_read_data(read_data_clause_with_burst_length(default_manager_burst_length_clause()))),
             qr/burst-length .* only supported with capture-scope last-beat/],
+        ['multi-beat manager read-data with report-only burst-length validation',
+            capacity_ppif_with_objects(manager_capacity_object_with_read_data_after_response_demux(
+                '(read (response-event axi0_read_complete) (response-scope burst-last) (last-signal rlast (width 1)) (transaction-completion generated))',
+                multi_beat_manager_read_data_clause(default_manager_burst_length_clause()),
+            )),
+            qr/capture-scope multi-beat requires validation runtime-assertion/],
+        ['multi-beat manager read-data missing status policy',
+            capacity_ppif_with_objects(manager_capacity_object_with_read_data_after_response_demux(
+                '(read (response-event axi0_read_complete) (response-scope burst-last) (last-signal rlast (width 1)) (transaction-completion generated))',
+                multi_beat_read_data_clause_without('(status-policy per-beat)'),
+            )),
+            qr/capture-scope multi-beat requires status-policy per-beat/],
+        ['multi-beat manager read-data bad interleaving',
+            capacity_ppif_with_objects(manager_capacity_object_with_read_data_after_response_demux(
+                '(read (response-event axi0_read_complete) (response-scope burst-last) (last-signal rlast (width 1)) (transaction-completion generated))',
+                multi_beat_read_data_clause_with('(interleaving last-beat-by-rid)'),
+            )),
+            qr/supports only multi-beat-by-rid with capture-scope multi-beat/],
+        ['multi-beat manager read-data legacy transaction output',
+            capacity_ppif_with_objects(manager_capacity_object_with_read_data_after_response_demux(
+                '(read (response-event axi0_read_complete) (response-scope burst-last) (last-signal rlast (width 1)) (transaction-completion generated))',
+                multi_beat_read_data_clause_with('(transaction r0 (data-output r0_last_data) (status-output-prefix r0_beat_resp) (valid-mask-output r0_beat_valid) (length-output r0_read_beats))'),
+            )),
+            qr/capture-scope multi-beat does not support legacy \(data-output \.\.\.\) clauses/],
+        ['multi-beat manager read-data missing length output',
+            capacity_ppif_with_objects(manager_capacity_object_with_read_data_after_response_demux(
+                '(read (response-event axi0_read_complete) (response-scope burst-last) (last-signal rlast (width 1)) (transaction-completion generated))',
+                multi_beat_read_data_clause_with('(transaction r0 (data-output-prefix r0_beat_data) (status-output-prefix r0_beat_resp) (valid-mask-output r0_beat_valid))'),
+            )),
+            qr/capture-scope multi-beat is missing required \(length-output \.\.\.\) clause/],
         ['duplicate manager read-data burst-length',
             capacity_ppif_with_objects(manager_capacity_object_with_read_data_after_response_demux(
                 '(read (response-event axi0_read_complete) (response-scope burst-last) (last-signal rlast (width 1)) (transaction-completion generated))',
@@ -979,6 +1031,21 @@ subtest 'CLI emits IAL2 report JSON for AXI manager runtime-assertion burst-leng
     is_deeply($report->{generated_artifacts}{ial0}{files}, ['axi0_capacity_status.fsm'], 'runtime-assertion burst-length read-data metadata keeps the generated .fsm artifact name stable');
 };
 
+subtest 'CLI emits IAL2 report JSON for AXI manager multi-beat read-data metadata .ppif' => sub {
+    my ($success, undef, undef, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--emit-schedule-json', sample_capacity_read_data_multi_beat_ppif_path()],
+    );
+
+    ok($success, '--emit-schedule-json succeeds for capacity/status multi-beat read-data .ppif');
+    is(join('', @{$stderr_buf || []}), '', 'capacity/status multi-beat read-data report keeps stderr clean');
+    my $report = decode_json(join('', @{$stdout_buf || []}));
+    is($report->{schema}, 'fsmgen.ial2.protocol_intent.axi_manager_capacity_status.v1', 'CLI keeps the capacity/status report schema');
+    is($report->{source_object}{intent_name}, 'axi_manager_capacity_status_read_data_multi_beat', 'multi-beat read-data report carries the PPIF top-level intent name');
+    assert_read_response_demux_burst_last_report($report->{response_demux}, 'CLI multi-beat read-data report');
+    assert_read_data_multi_beat_report($report->{read_data}, 'CLI multi-beat read-data report');
+    is_deeply($report->{generated_artifacts}{ial0}{files}, ['axi0_capacity_status.fsm'], 'multi-beat read-data metadata keeps the generated .fsm artifact name stable');
+};
+
 subtest 'CLI --verify-hdl accepts AXI manager auto-ID lifecycle behavior .ppif' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $hdl = File::Spec->catfile($tempdir, 'axi_auto_id_lifecycle.sv');
@@ -1123,6 +1190,29 @@ subtest 'CLI --verify-hdl accepts AXI manager runtime-assertion burst-length rea
     like($sv, qr/assert property .*axi0_rlast.*axi0 r0 expected final read beat has RLAST/, 'runtime-assertion HDL emits r0 missing-RLAST assertion');
     like($sv, qr/axi0_r0_last_rdata_next\s*=\s*axi0_rdata\s*;/, 'runtime-assertion HDL still captures RDATA into r0 last data output');
     like($sv, qr/axi0_r0_last_rresp_next\s*=\s*axi0_rresp\s*;/, 'runtime-assertion HDL still captures RRESP into r0 last status output');
+};
+
+subtest 'CLI --verify-hdl accepts AXI manager multi-beat read-data metadata .ppif' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $hdl = File::Spec->catfile($tempdir, 'axi_multi_beat_read_data.sv');
+
+    my ($success, undef, undef, undef, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--quiet', '--verify-hdl', '--output', $hdl, sample_capacity_read_data_multi_beat_ppif_path()],
+    );
+
+    ok($success, 'capacity/status multi-beat read-data --verify-hdl succeeds');
+    is(join('', @{$stderr_buf || []}), '', 'capacity/status multi-beat read-data --verify-hdl keeps stderr clean');
+    ok(-f $hdl, 'multi-beat read-data --output writes generated HDL');
+    my $sv = slurp($hdl);
+    like($sv, qr/\binput\s+(?:wire\s+)?\[7:0\]\s+axi0_arlen\b/, 'multi-beat HDL exposes generated ARLEN input');
+    like($sv, qr/\breg\s+\[4:0\]\s+axi0_r0_expected_beats_q\b/, 'multi-beat HDL declares r0 expected-beat storage');
+    like($sv, qr/\breg\s+\[4:0\]\s+axi0_r0_read_beat_count_q\b/, 'multi-beat HDL declares r0 beat-count storage');
+    like($sv, qr/assert property .*axi0_arlen\s*<\s*8'd16.*axi0 r0 ARLEN is within configured max beats/, 'multi-beat HDL emits r0 ARLEN bound assertion');
+    unlike($sv, qr/\binput\s+(?:wire\s+)?\[31:0\]\s+axi0_rdata\b/, 'multi-beat HDL does not expose RDATA before reassembly behavior');
+    unlike($sv, qr/\binput\s+(?:wire\s+)?\[1:0\]\s+axi0_rresp\b/, 'multi-beat HDL does not expose RRESP before reassembly behavior');
+    unlike($sv, qr/\boutput\s+(?:reg\s+)?\[31:0\]\s+axi0_r0_beat_rdata_0\b/, 'multi-beat HDL does not expose data lanes yet');
+    unlike($sv, qr/\boutput\s+(?:reg\s+)?\[15:0\]\s+axi0_r0_beat_valid\b/, 'multi-beat HDL does not expose valid-mask outputs yet');
+    unlike($sv, qr/\boutput\s+(?:reg\s+)?\[4:0\]\s+axi0_r0_read_beats\b/, 'multi-beat HDL does not expose length outputs yet');
 };
 
 subtest 'CLI --outdir materializes generated .isf, .fsm, and HDL for .ppif' => sub {
@@ -1800,6 +1890,50 @@ subtest 'CLI check JSON and semantic JSON support-account runtime-assertion burs
     );
 };
 
+subtest 'CLI check JSON and semantic JSON support-account multi-beat read-data .ppif separately' => sub {
+    my $read_data_path = sample_capacity_read_data_multi_beat_ppif_path();
+    my ($success, undef, undef, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--strict', '--check', '--json', $read_data_path],
+    );
+    ok($success, 'capacity/status multi-beat read-data --check --json succeeds');
+    is(join('', @{$stderr_buf || []}), '', 'capacity/status multi-beat read-data --check --json keeps stderr clean');
+    my $check_report = decode_json(join('', @{$stdout_buf || []}));
+    ok($check_report->{success}, 'capacity/status multi-beat read-data check JSON reports success');
+    is(
+        $check_report->{source}{resolved_path},
+        File::Spec->rel2abs($read_data_path),
+        'capacity/status multi-beat read-data check JSON reports the public .ppif source path',
+    );
+    is(
+        $check_report->{support_accounting}{entry_id},
+        'intent.ppif_axi_manager_capacity_status_read_data_multi_beat',
+        'capacity/status multi-beat read-data check JSON support accounting names the PPIF corpus entry',
+    );
+
+    my ($semantic_success, undef, undef, $semantic_stdout, $semantic_stderr) = run(
+        command => ['./bin/fsmgen', '--strict', '--emit-semantic-json', $read_data_path],
+    );
+    ok($semantic_success, 'capacity/status multi-beat read-data --emit-semantic-json succeeds');
+    is(join('', @{$semantic_stderr || []}), '', 'capacity/status multi-beat read-data --emit-semantic-json keeps stderr clean');
+    my $semantic_report = decode_json(join('', @{$semantic_stdout || []}));
+    ok($semantic_report->{success}, 'capacity/status multi-beat read-data semantic JSON reports success');
+    is(
+        $semantic_report->{source}{resolved_path},
+        File::Spec->rel2abs($read_data_path),
+        'capacity/status multi-beat read-data semantic JSON reports the public .ppif source path',
+    );
+    is(
+        $semantic_report->{support_accounting}{entry_id},
+        'intent.ppif_axi_manager_capacity_status_read_data_multi_beat',
+        'capacity/status multi-beat read-data semantic JSON support accounting names the PPIF corpus entry',
+    );
+    is(
+        $semantic_report->{semantic}{module}{name},
+        'axi0_capacity_status',
+        'capacity/status multi-beat read-data semantic JSON records the unchanged generated module',
+    );
+};
+
 subtest 'CLI bundle HDL modes use aggregate wrapper entry' => sub {
     my $bundle_path = sample_bundle_ppif_path();
     my $tempdir = tempdir(CLEANUP => 1);
@@ -1946,6 +2080,10 @@ sub sample_capacity_read_data_burst_length_runtime_assertion_ppif_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_read_data_burst_length_runtime_assertion.ppif');
 }
 
+sub sample_capacity_read_data_multi_beat_ppif_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_read_data_multi_beat.ppif');
+}
+
 sub sample_ppif {
     return slurp(sample_ppif_path());
 }
@@ -2000,6 +2138,10 @@ sub sample_capacity_read_data_burst_length_ppif {
 
 sub sample_capacity_read_data_burst_length_runtime_assertion_ppif {
     return slurp(sample_capacity_read_data_burst_length_runtime_assertion_ppif_path());
+}
+
+sub sample_capacity_read_data_multi_beat_ppif {
+    return slurp(sample_capacity_read_data_multi_beat_ppif_path());
 }
 
 sub sample_capacity_read_response_demux_base_ppif {
@@ -2283,6 +2425,48 @@ sub last_beat_read_data_clause_with_burst_length {
     my $clause = last_beat_manager_read_data_clause();
     $clause =~ s/\s+\(transaction r0/ $burst_length (transaction r0/
         or die "Could not insert burst-length clause into last-beat read-data fixture\n";
+    return $clause;
+}
+
+sub multi_beat_manager_read_data_clause {
+    my ($burst_length) = @_;
+    $burst_length //= burst_length_clause_with('(validation runtime-assertion)');
+    return join(' ',
+        '(read',
+        '(capture-scope multi-beat)',
+        '(completion-source response-demux)',
+        '(data-signal rdata (width 32))',
+        '(status-signal rresp (width 2))',
+        '(status-policy per-beat)',
+        '(interleaving multi-beat-by-rid)',
+        $burst_length,
+        '(transaction r0 (data-output-prefix r0_beat_data) (status-output-prefix r0_beat_resp) (valid-mask-output r0_beat_valid) (length-output r0_read_beats))',
+        '(transaction r1 (data-output-prefix r1_beat_data) (status-output-prefix r1_beat_resp) (valid-mask-output r1_beat_valid) (length-output r1_read_beats))',
+        ')',
+    );
+}
+
+sub multi_beat_read_data_clause_without {
+    my ($clause_to_remove) = @_;
+    my $clause = multi_beat_manager_read_data_clause();
+    $clause =~ s/\s+\Q$clause_to_remove\E//
+        or die "Could not remove multi-beat read-data clause '$clause_to_remove'\n";
+    return $clause;
+}
+
+sub multi_beat_read_data_clause_with {
+    my ($replacement) = @_;
+    my $clause = multi_beat_manager_read_data_clause();
+    my ($head) = $replacement =~ /\A\((\S+)/;
+    my %default = (
+        'status-policy' => '(status-policy per-beat)',
+        'interleaving'  => '(interleaving multi-beat-by-rid)',
+        'transaction'   => '(transaction r0 (data-output-prefix r0_beat_data) (status-output-prefix r0_beat_resp) (valid-mask-output r0_beat_valid) (length-output r0_read_beats))',
+    );
+    die "Unknown multi-beat read-data replacement clause '$replacement'\n"
+        unless defined $head && exists $default{$head};
+    my $target = quotemeta $default{$head};
+    $clause =~ s/$target/$replacement/;
     return $clause;
 }
 
@@ -2727,6 +2911,64 @@ sub assert_read_data_burst_length_report {
         \@expected_residue,
         "$owner reports explicit burst-length residue",
     );
+}
+
+sub assert_read_data_multi_beat_report {
+    my ($read_data, $owner) = @_;
+
+    is($read_data->{mode}, 'bounded_multi_beat_read_data_contract', "$owner marks bounded multi-beat read-data contract mode");
+    ok($read_data->{generated_behavior}, "$owner keeps generated validation behavior true");
+    my $read = $read_data->{read};
+    is($read->{capture_scope}, 'multi_beat', "$owner reports multi-beat capture scope");
+    is($read->{completion_source}, 'response_demux', "$owner reports response-demux completion source");
+    is($read->{completion_validity}, 'generated_read_response_demux_last_beat_completion_pulse', "$owner reports generated last-beat demux pulse validity");
+    is($read->{data_signal}, 'axi0_rdata', "$owner reports RDATA signal metadata");
+    is($read->{data_signal_width}, 32, "$owner reports RDATA width metadata");
+    is($read->{status_signal}, 'axi0_rresp', "$owner reports RRESP signal metadata");
+    is($read->{status_signal_width}, 2, "$owner reports RRESP width metadata");
+    is($read->{status_policy}, 'per_beat', "$owner reports per-beat status policy");
+    is($read->{status_aggregation}, 'none', "$owner reports no scalar RRESP aggregation");
+    is($read->{interleaving_policy}, 'multi_beat_by_rid', "$owner reports multi-beat-by-RID interleaving");
+    is($read->{burst_length_source}, 'arlen_signal', "$owner reports ARLEN as the burst-length source");
+    is($read->{burst_length_signal}, 'axi0_arlen', "$owner reports the ARLEN signal");
+    is($read->{burst_length_signal_direction}, 'generated_input', "$owner reports ARLEN input direction");
+    is($read->{burst_length_signal_width}, 8, "$owner reports ARLEN width");
+    is($read->{burst_length_encoding}, 'axlen_plus_one', "$owner reports AXI LEN+1 encoding");
+    is($read->{burst_length_capture}, 'transaction_request', "$owner reports request-bound length capture");
+    is($read->{max_beats}, 16, "$owner reports max-beats");
+    ok($read->{burst_length_generated_behavior}, "$owner reports raw-ARLEN capture generation");
+    is($read->{burst_length_validation}, 'runtime_assertion', "$owner reports runtime validation");
+    ok($read->{beat_count_validation_generated_behavior}, "$owner reports generated beat-count validation behavior");
+    is($read->{expected_beat_count_encoding}, 'arlen_plus_one', "$owner reports expected beat-count encoding");
+    is($read->{beat_count_match_source}, 'response_demux_matched_read_beat', "$owner reports beat-count match source");
+    is($read->{beat_match_source}, 'response_demux_matched_read_beat', "$owner reports reassembly beat-match source");
+    is($read->{beat_count_width}, 5, "$owner reports beat-count width");
+    is($read->{beat_storage}, 'per_transaction_generated', "$owner reports selected beat-storage shape");
+    is($read->{output_shape}, 'per_beat_output_bank', "$owner reports per-beat output-bank shape");
+    is($read->{valid_output}, 'per_transaction_valid_mask', "$owner reports valid-mask output shape");
+    is($read->{length_output}, 'per_transaction_beat_count', "$owner reports length-output shape");
+    ok(!$read->{multi_beat_reassembly_generated_behavior}, "$owner reports deferred multi-beat reassembly behavior");
+    is_deeply([map { $_->{transaction} } @{$read->{transactions}}], [qw(r0 r1)], "$owner reports multi-beat transaction bindings");
+    is_deeply([map { $_->{data_output_prefix} } @{$read->{transactions}}], [qw(axi0_r0_beat_rdata axi0_r1_beat_rdata)], "$owner reports data output prefixes");
+    is_deeply([map { $_->{status_output_prefix} } @{$read->{transactions}}], [qw(axi0_r0_beat_rresp axi0_r1_beat_rresp)], "$owner reports status output prefixes");
+    is_deeply($read->{transactions}[0]{generated_data_outputs}, [map { "axi0_r0_beat_rdata_$_" } 0 .. 15], "$owner reports r0 generated data lane names");
+    is_deeply($read->{transactions}[0]{generated_status_outputs}, [map { "axi0_r0_beat_rresp_$_" } 0 .. 15], "$owner reports r0 generated status lane names");
+    is_deeply([map { $_->{valid_mask_output} } @{$read->{transactions}}], [qw(axi0_r0_beat_valid axi0_r1_beat_valid)], "$owner reports valid-mask outputs");
+    is_deeply([map { $_->{valid_mask_width} } @{$read->{transactions}}], [16, 16], "$owner reports valid-mask widths");
+    is_deeply([map { $_->{length_output} } @{$read->{transactions}}], [qw(axi0_r0_read_beats axi0_r1_read_beats)], "$owner reports length outputs");
+    is_deeply([map { $_->{length_output_width} } @{$read->{transactions}}], [5, 5], "$owner reports length-output widths");
+    is_deeply([map { $_->{expected_beat_count_storage} } @{$read->{transactions}}], [qw(axi0_r0_expected_beats_q axi0_r1_expected_beats_q)], "$owner reports expected-beat storage");
+    is_deeply([map { $_->{beat_count_storage} } @{$read->{transactions}}], [qw(axi0_r0_read_beat_count_q axi0_r1_read_beat_count_q)], "$owner reports beat-count storage");
+    is_deeply($read->{generated_inputs}, [qw(axi0_arlen)], "$owner reports only generated ARLEN input until payload reassembly ships");
+    is_deeply($read->{generated_outputs}, [], "$owner reports no generated payload outputs yet");
+    is_deeply($read->{generated_burst_length_storage}, [qw(axi0_r0_arlen_q axi0_r1_arlen_q)], "$owner reports generated burst-length storage");
+    is_deeply($read->{generated_beat_count_rules}, [qw(axi0_r0_beat_count_init axi0_r0_read_beat_count axi0_r1_beat_count_init axi0_r1_read_beat_count)], "$owner reports generated beat-count rules");
+    is_deeply(
+        $read->{generated_rules},
+        [qw(axi0_r0_burst_length_capture axi0_r1_burst_length_capture axi0_r0_beat_count_init axi0_r0_read_beat_count axi0_r1_beat_count_init axi0_r1_read_beat_count)],
+        "$owner reports generated rules without payload capture rules",
+    );
+    is_deeply($read_data->{residue}, [qw(multi_beat_read_data_reassembly per_beat_outputs rresp_aggregation)], "$owner keeps multi-beat behavior residue");
 }
 
 sub assert_same_id_ordering_report {

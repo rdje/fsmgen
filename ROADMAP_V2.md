@@ -1097,10 +1097,15 @@ reassembly/output contract selection. Selector `.71` chooses the first public
 multi-beat contract as `capture-scope multi-beat` with mandatory ARLEN
 `burst-length` runtime assertions, per-beat status, `multi-beat-by-rid`
 interleaving, per-transaction data/status output prefixes, valid-mask outputs,
-and length outputs, then advances the active frontier to `.72`, parser/report
-metadata and static validation for that syntax. Packed burst outputs, scalar
-`RRESP` aggregation, generated reassembly behavior, per-ID queues, direct
-backend lowering, and VHDL remain deferred.
+and length outputs. Implementation `.72` ships parser/report metadata and
+static validation for that syntax, adds the support-accounted
+`ppif/axi_manager_capacity_status_read_data_multi_beat.ppif` fixture, reports
+generated lane names, valid-mask widths, length-output widths, output-bank
+shape, and `multi_beat_reassembly_generated_behavior: false`, then advances
+the active frontier to `.73`, generated multi-beat read-data
+reassembly/output readiness. Packed burst outputs, scalar `RRESP`
+aggregation, generated reassembly behavior, per-ID queues, direct backend
+lowering, and VHDL remain deferred.
 The shipped public capacity/status source accepts one
 `(manager-capacity-status NAME ...)` object under
 `(protocol-platform-intent ...)`, `(profile axi4)`, and top-level source

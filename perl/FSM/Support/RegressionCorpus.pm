@@ -219,6 +219,17 @@ my @REGRESSION_CORPUS = (
         expected_semantic_source_root_kind => 'fsm',
     },
     {
+        id => 'intent.ppif_axi_manager_capacity_status_read_data_multi_beat',
+        relpath => 'ppif/axi_manager_capacity_status_read_data_multi_beat.ppif',
+        family => 'protocol_fixture',
+        classification => 'supported_smoke',
+        coverage => 'ial2_ppif_manager_capacity_status_read_data_multi_beat_pipeline_cli',
+        source_kind => 'ppif',
+        strict_supported => 1,
+        expected_module_name => 'axi0_capacity_status',
+        expected_semantic_source_root_kind => 'fsm',
+    },
+    {
         id => 'feature.partial_lhs_with_size',
         relpath => 't/corpus/partial_lhs_with_size.fsm',
         family => 'language_feature_fixture',
