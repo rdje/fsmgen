@@ -1109,10 +1109,10 @@ outputs, request-time output-bank clearing, lane capture rules guarded by
 matched read beat plus `!request_event` plus current beat-count equality, and
 generated multi-beat artifact report fields. Schedule JSON reports
 `multi_beat_reassembly_generated_behavior: true` and reduces read-data
-residue to `rresp_aggregation`. The active frontier is `.75`, the next AXI
-manager feature-completeness selector. Packed burst outputs, scalar `RRESP`
-aggregation, per-ID queues, direct backend lowering, and VHDL remain
-deferred.
+residue to `rresp_aggregation`. Selector `.75` selects `.76`, public scalar
+`RRESP` aggregation contract selection, before parser/report metadata or
+generated behavior changes. Packed burst outputs, per-ID queues, direct
+backend lowering, and VHDL remain deferred.
 The shipped public capacity/status source accepts one
 `(manager-capacity-status NAME ...)` object under
 `(protocol-platform-intent ...)`, `(profile axi4)`, and top-level source

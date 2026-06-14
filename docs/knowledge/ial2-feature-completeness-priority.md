@@ -114,7 +114,9 @@ outputs, length outputs, request-time output-bank clearing, and lane capture
 rules. Schedule JSON now reports
 `multi_beat_reassembly_generated_behavior: true` and read-data residue is
 reduced to `rresp_aggregation`. It advanced the frontier to `.75`, the next
-AXI manager feature-completeness selector.
+AXI manager feature-completeness selector. Completed `.75` selected `.76`,
+public scalar `RRESP` aggregation contract selection, before parser/report
+metadata or generated behavior changes.
 
 Selected IAL2 work may include required IAL1 or IAL0/SV support, but only when
 those prerequisites are explicit, task-tree owned, documented, and
