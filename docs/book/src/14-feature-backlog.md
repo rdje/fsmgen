@@ -4739,11 +4739,52 @@ deeper or multiple queue groups, same-family mixed auto-ID, read-data
 consumption of concrete queue-head demux, direct backend lowering, and VHDL
 remain deferred.
 
-The shipped `.106` implementation remains intentionally narrow. Write
-queue-head behavior is selected as `.108` but not shipped yet; read
+Write same-ID queue-head response-demux behavior:
+[AXI_IAL2_MANAGER_WRITE_SAME_ID_QUEUE_HEAD_RESPONSE_DEMUX_BEHAVIOR](../../AXI_IAL2_MANAGER_WRITE_SAME_ID_QUEUE_HEAD_RESPONSE_DEMUX_BEHAVIOR.md)
+ships `IAL2-FEATURE-COMPLETENESS-FRONTIER.108`. The public sample is:
+
+```bash
+./bin/fsmgen --emit-schedule-json ppif/axi_manager_capacity_status_write_same_id_queue_head_response_demux.ppif
+./bin/fsmgen --quiet --verify-hdl --output /tmp/fsmgen_write_same_id_queue_head_response_demux.sv ppif/axi_manager_capacity_status_write_same_id_queue_head_response_demux.ppif
+```
+
+The sample uses two write transactions, `w0` and `w1`, sharing concrete write
+ID `3`, selected write `concrete-id-reuse issue-order-queue`, and generated
+write response demux. FSMGen now emits admitted write enqueue pulses, compact
+one-hot depth-2 queue slots, finite queue update rules, generated write
+completion pulse outputs, queue-head `BID` demux rules, and queue/response
+assertions for that covered shape.
+
+The generated `w0` demux rule is:
+
+```lisp
+(rule axi0_w0_response_demux
+  (& axi0_write_complete (== axi0_bid 4'd3)
+     axi0_write_id3_same_id_issue_order_slot0_w0_q)
+  (pulse axi0_w0_complete))
+```
+
+The write response-demux report marks
+`generated_queue_behavior_boundary: generated_write_bid_queue_head_demux`.
+The write same-ID policy reports
+`implementation_status: generated_write_bid_queue_head_demux`,
+`accepted_same_id_reuse: true`, and `generated_queue_behavior: true`.
+Check JSON and normalized semantic JSON match support accounting entry
+`intent.ppif_axi_manager_capacity_status_write_same_id_queue_head_response_demux`.
+
+The `.108` HDL gate also repaired verification-only assertion emission:
+assertion condition rendering now inlines assertion-only intermediate
+expressions before appending SVA, so both the read and write queue-head public
+samples pass `--verify-hdl`.
+
+The shipped same-ID queue behavior remains intentionally narrow. Read
 `single-beat`, deeper or multiple duplicate-ID groups, same-family mixed
 auto-ID plus concrete queue-head demux, read-data consumption of concrete
-queue-head demux, direct backend lowering, and VHDL remain deferred.
+queue-head demux, generalized per-ID queues, direct backend lowering, and VHDL
+remain deferred.
+The active frontier advances to
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.109`, the next same-ID queue behavior
+expansion audit/selector before any broader queue-head behavior changes.
 
 First implementation subset selection:
 [AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION](../../AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md)

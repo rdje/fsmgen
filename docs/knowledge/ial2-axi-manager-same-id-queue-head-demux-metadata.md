@@ -23,12 +23,14 @@ It reports `bounded_read_rid_queue_head_demux_contract`,
 `queue_state_representation: compact_onehot_transaction_slots`, and one
 duplicate concrete-ID queue group for read transactions `r0` and `r1`.
 
-Generated queue state and queue-head demux rules are not shipped yet.
-`accepted_same_id_reuse` and `generated_queue_behavior` remain false, and
-read-data consumption of this selected-not-generated demux fails closed.
+At `.103` time, generated queue state and queue-head demux rules were not
+shipped yet. `accepted_same_id_reuse` and `generated_queue_behavior` remained
+false, and read-data consumption of this selected-not-generated demux failed
+closed.
 
 This fact is historical. `.106` has since shipped generated behavior for the
-bounded public read burst-last depth-2 same-ID queue-head sample shape.
+bounded public read burst-last depth-2 same-ID queue-head sample shape, and
+`.108` has since shipped generated write depth-2 queue-head `BID` demux.
 
 `.104` audited generated queue state and queue-head behavior readiness. It
 found no obvious new lower-layer substrate prerequisite, but direct broad

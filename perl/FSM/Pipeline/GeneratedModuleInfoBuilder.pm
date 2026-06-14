@@ -127,7 +127,118 @@ sub _render_check_condition_sv ($cond, $seen = undef) {
         }
     }
 
+    if (blessed($cond) && $cond->isa('FSM::CoreAST::BinaryOp')) {
+        unless (_check_condition_contains_inline_signal($cond)) {
+            my $rendered = eval { $cond->to_systemverilog() };
+            return $rendered if defined($rendered) && length($rendered);
+        }
+        my $left = _render_check_condition_sv($cond->left, $seen);
+        my $right = _render_check_condition_sv($cond->right, $seen);
+        return undef unless defined($left) && length($left)
+            && defined($right) && length($right);
+        return "{$left, $right}" if ($cond->operator // '') eq 'concat';
+        return "($left " . _check_sv_binary_operator($cond->operator) . " $right)";
+    }
+
+    if (blessed($cond) && $cond->isa('FSM::CoreAST::UnaryOp')) {
+        unless (_check_condition_contains_inline_signal($cond)) {
+            my $rendered = eval { $cond->to_systemverilog() };
+            return $rendered if defined($rendered) && length($rendered);
+        }
+        my $operand = _render_check_condition_sv($cond->operand, $seen);
+        return undef unless defined($operand) && length($operand);
+        return _check_sv_unary_operator($cond->operator) . "($operand)";
+    }
+
+    if (blessed($cond) && $cond->isa('FSM::CoreAST::Concatenation')) {
+        unless (_check_condition_contains_inline_signal($cond)) {
+            my $rendered = eval { $cond->to_systemverilog() };
+            return $rendered if defined($rendered) && length($rendered);
+        }
+        my @operands;
+        for my $operand (@{$cond->operands || []}) {
+            my $rendered = _render_check_condition_sv($operand, $seen);
+            return undef unless defined($rendered) && length($rendered);
+            push @operands, $rendered;
+        }
+        return '{' . join(', ', @operands) . '}';
+    }
+
+    if (blessed($cond) && $cond->isa('FSM::CoreAST::ConditionalExpression')) {
+        unless (_check_condition_contains_inline_signal($cond)) {
+            my $rendered = eval { $cond->to_systemverilog() };
+            return $rendered if defined($rendered) && length($rendered);
+        }
+        my $condition = _render_check_condition_sv($cond->condition, $seen);
+        my $true_expr = _render_check_condition_sv($cond->true_expr, $seen);
+        my $false_expr = _render_check_condition_sv($cond->false_expr, $seen);
+        return undef unless defined($condition) && length($condition)
+            && defined($true_expr) && length($true_expr)
+            && defined($false_expr) && length($false_expr);
+        return "($condition ? $true_expr : $false_expr)";
+    }
+
     return eval { $cond->to_systemverilog() };
+}
+
+sub _check_sv_binary_operator ($operator) {
+    my $info = FSM::CoreAST::BinaryOp->get_operator_info($operator);
+    return $info->{verilog} if ref($info) eq 'HASH' && defined $info->{verilog};
+    return $operator;
+}
+
+sub _check_sv_unary_operator ($operator) {
+    my %op_map = (
+        not => '~',
+        neg => '-',
+        pos => '+',
+    );
+    return $op_map{$operator} // $operator;
+}
+
+sub _check_condition_contains_inline_signal ($cond) {
+    return 0 unless ref($cond);
+
+    if (ref($cond) eq 'HASH') {
+        return 1 if _check_condition_contains_inline_signal($cond->{antecedent});
+        return 1 if _check_condition_contains_inline_signal($cond->{consequent});
+        return 1 if _check_condition_contains_inline_signal($cond->{operand});
+        return 1 if _check_condition_contains_inline_signal($cond->{trigger});
+        return 0;
+    }
+
+    return 0 unless blessed($cond);
+
+    if ($cond->isa('FSM::CoreAST::SignalRef')) {
+        my $signal = $cond->signal;
+        return blessed($signal) && _check_signal_ref_should_inline($signal) ? 1 : 0;
+    }
+
+    if ($cond->isa('FSM::CoreAST::BinaryOp')) {
+        return 1 if _check_condition_contains_inline_signal($cond->left);
+        return 1 if _check_condition_contains_inline_signal($cond->right);
+        return 0;
+    }
+
+    if ($cond->isa('FSM::CoreAST::UnaryOp')) {
+        return _check_condition_contains_inline_signal($cond->operand);
+    }
+
+    if ($cond->isa('FSM::CoreAST::Concatenation')) {
+        for my $operand (@{$cond->operands || []}) {
+            return 1 if _check_condition_contains_inline_signal($operand);
+        }
+        return 0;
+    }
+
+    if ($cond->isa('FSM::CoreAST::ConditionalExpression')) {
+        return 1 if _check_condition_contains_inline_signal($cond->condition);
+        return 1 if _check_condition_contains_inline_signal($cond->true_expr);
+        return 1 if _check_condition_contains_inline_signal($cond->false_expr);
+        return 0;
+    }
+
+    return 0;
 }
 
 sub _check_signal_ref_should_inline ($signal) {

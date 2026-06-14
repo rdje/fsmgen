@@ -436,6 +436,47 @@ subtest 'same-ID queue-head response-demux generates read queue state and comple
     );
 };
 
+subtest 'same-ID queue-head response-demux generates write queue state and completion demux' => sub {
+    my $result = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_same_id_write_queue_head_response_demux());
+    my $isf = $result->{generated_ial1}{text};
+
+    like($isf, qr/\(var axi0_w0_admitted_request_pulse_q \(width 1\)\)/, 'write queue-head selection keeps first admitted request pulse storage');
+    like($isf, qr/\(var axi0_w1_admitted_request_pulse_q \(width 1\)\)/, 'write queue-head selection keeps second admitted request pulse storage');
+    like($isf, qr/\(output axi0_w0_complete\)/, 'write queue-head demux exposes w0 completion as a generated output');
+    like($isf, qr/\(output axi0_w1_complete\)/, 'write queue-head demux exposes w1 completion as a generated output');
+    like($isf, qr/\(input axi0_write_complete\)/, 'raw write response becomes a generated demux input');
+    unlike($isf, qr/\(input axi0_w0_complete\)/, 'w0 completion is no longer an authored input');
+    unlike($isf, qr/\(input axi0_w1_complete\)/, 'w1 completion is no longer an authored input');
+    like($isf, qr/\(var axi0_write_id3_same_id_issue_order_slot0_w0_q \(width 1\)\)/, 'write queue-head demux declares slot0 w0 state');
+    like($isf, qr/\(var axi0_write_id3_same_id_issue_order_slot1_w1_q \(width 1\)\)/, 'write queue-head demux declares slot1 w1 state');
+    like($isf, qr/\(rule axi0_write_id3_same_id_issue_order_empty_enqueue_w0\b/, 'write queue-head demux emits empty enqueue w0 transition');
+    like($isf, qr/\(rule axi0_write_id3_same_id_issue_order_w0_dequeue_enqueue_w1\b/, 'write queue-head demux emits same-cycle dequeue/enqueue transition');
+    like($isf, qr/\(priority axi0_write_id3_same_id_issue_order_empty_enqueue_w0 over axi0_write_id3_same_id_issue_order_empty_enqueue_w1\)/, 'write queue-head transition priorities are emitted for lowerer conflict resolution');
+    like($isf, qr/\(rule axi0_w0_response_demux \(& axi0_write_complete \(== axi0_bid 4'd3\) axi0_write_id3_same_id_issue_order_slot0_w0_q\)/, 'write queue-head demux emits w0 response-demux rule without RLAST');
+    like($isf, qr/\(rule axi0_w1_response_demux \(& axi0_write_complete \(== axi0_bid 4'd3\) axi0_write_id3_same_id_issue_order_slot0_w1_q\)/, 'write queue-head demux emits w1 response-demux rule without RLAST');
+    like($isf, qr/write same-ID issue-order queue enqueue has space or selected dequeue/, 'write queue-head demux emits queue capacity assertion');
+    like($isf, qr/write same-ID issue-order queue enqueue for w1 does not duplicate a remaining transaction/, 'write queue-head demux emits duplicate-after-dequeue assertion');
+
+    assert_same_id_write_queue_head_response_demux_report($result->{report}{response_demux}, 'generator report');
+    my $write_policy = $result->{report}{same_id_ordering}{concrete_id_reuse_policy}{write};
+    is($write_policy->{response_demux_strategy}, 'queue_head_issue_order', 'same-ID write policy reports queue-head response-demux strategy');
+    is($write_policy->{response_demux_implementation_status}, 'generated', 'same-ID write policy reports generated response-demux status');
+    ok($write_policy->{accepted_same_id_reuse}, 'write queue-head behavior accepts same-ID reuse for the covered shape');
+    ok($write_policy->{generated_queue_behavior}, 'write queue-head behavior claims generated queue behavior');
+    is($write_policy->{enforcement}, 'generated_issue_order_queue', 'same-ID write policy reports generated issue-order queue enforcement');
+    is($write_policy->{implementation_status}, 'generated_write_bid_queue_head_demux', 'same-ID write policy reports the bounded generated implementation status');
+    is_deeply(
+        $result->{report}{same_id_ordering}{residue},
+        [qw(per_id_issue_order_queues)],
+        'generated write same-ID queue behavior leaves only broader per-ID queue residue',
+    );
+    is_deeply(
+        $result->{report}{id_response_rule_engine}{residue},
+        [qw(auto_id_allocation id_release)],
+        'generated write queue-head behavior removes same-ID and response-demux residue from ID/response report',
+    );
+};
+
 subtest 'auto-ID lifecycle generates bounded request-ID drive behavior' => sub {
     my $result = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_auto_id_lifecycle());
     my $isf = $result->{generated_ial1}{text};
@@ -1353,6 +1394,26 @@ sub sample_contract_with_same_id_queue_head_response_demux {
     return $contract;
 }
 
+sub sample_contract_with_same_id_write_queue_head_response_demux {
+    my $contract = sample_contract_with_transaction_event_dispatch();
+    $contract->{intent_name} = 'axi_manager_capacity_status_write_same_id_queue_head_response_demux';
+    $contract->{source}{object_id} = 'axi-manager-capacity-status-write-same-id-queue-head-response-demux';
+    $contract->{transactions}[0]{id} = { value => 3 };
+    $contract->{transactions}[1]{id} = { value => 3 };
+    $contract->{same_id_ordering_policy} = {
+        write => {
+            concrete_id_reuse => 'issue-order-queue',
+        },
+    };
+    $contract->{response_demux} = {
+        write => {
+            response_event => 'axi0_write_complete',
+            transaction_completion => 'generated',
+        },
+    };
+    return $contract;
+}
+
 sub sample_contract_with_auto_id_lifecycle {
     my $contract = sample_contract_with_transaction_event_dispatch();
     $contract->{intent_name} = 'axi_manager_capacity_status_auto_id_lifecycle';
@@ -1739,6 +1800,51 @@ sub assert_same_id_queue_head_response_demux_report {
     is_deeply(
         $demux->{residue},
         [qw(read_data_interleaving bursts)],
+        "$owner removes generated queue-head demux behavior from residue",
+    );
+}
+
+sub assert_same_id_write_queue_head_response_demux_report {
+    my ($demux, $owner) = @_;
+
+    is($demux->{mode}, 'bounded_write_bid_demux_contract', "$owner keeps write-only top-level response-demux mode");
+    ok($demux->{generated_behavior}, "$owner marks top-level generated behavior true");
+    my $write = $demux->{write};
+    is($write->{mode}, 'bounded_write_bid_queue_head_demux_contract', "$owner marks queue-head write demux mode");
+    ok($write->{generated_behavior}, "$owner marks write generated behavior true");
+    is($write->{implementation_status}, 'generated', "$owner reports generated status");
+    is($write->{response_event}, 'axi0_write_complete', "$owner reports raw write response event");
+    is($write->{response_event_role}, 'raw_accepted_write_response', "$owner reports write response role");
+    is($write->{response_id_signal}, 'axi0_bid', "$owner reports BID signal");
+    is($write->{response_id_direction}, 'generated_input', "$owner reports BID direction");
+    is($write->{transaction_completion_source}, 'generated_queue_head_demux', "$owner reports queue-head transaction completion source");
+    is($write->{transaction_completion_semantics}, 'matched_concrete_id_queue_head', "$owner reports queue-head write semantics");
+    is($write->{queue_state_representation}, 'compact_onehot_transaction_slots', "$owner reports queue state representation");
+    is_deeply(
+        $write->{same_id_issue_order_queues},
+        [
+            {
+                concrete_id          => 3,
+                transactions         => [qw(w0 w1)],
+                depth                => 2,
+                dequeue_event_source => 'queue_head_response_demux',
+            },
+        ],
+        "$owner reports duplicate concrete write-ID queue group",
+    );
+    ok($write->{generated_queue_behavior}, "$owner reports generated queue behavior");
+    is($write->{generated_queue_behavior_boundary}, 'generated_write_bid_queue_head_demux', "$owner reports generated write queue boundary");
+    ok(!exists($write->{selected_completion_signals}), "$owner no longer reports selected completion signal names");
+    is_deeply($write->{generated_completion_signals}, [qw(axi0_w0_complete axi0_w1_complete)], "$owner reports generated completion signal names");
+    is_deeply($write->{generated_rules}, [qw(axi0_w0_response_demux axi0_w1_response_demux)], "$owner reports generated queue-head demux rules");
+    is_deeply(
+        $write->{generated_assertions},
+        [qw(axi0_write_response_demux_active_match axi0_w0_w1_write_response_demux_unique_match)],
+        "$owner reports generated queue-head response-demux assertions",
+    );
+    is_deeply(
+        $demux->{residue},
+        [qw(read_response_demux read_data_interleaving bursts)],
         "$owner removes generated queue-head demux behavior from residue",
     );
 }
