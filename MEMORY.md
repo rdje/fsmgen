@@ -10,9 +10,9 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `HEAD after commit` — `IAL2-FEATURE-COMPLETENESS-FRONTIER.83: select burst payload readiness`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.84` pending; next action is auditing AXI burst payload/output readiness after read-data interleaving residue alignment.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.83`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.82`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.81`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.80`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.79`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.78`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.77`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.76`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.75`. Older completed slices are in the task tree and git history.
+- latest_commit: `HEAD after commit` — `IAL2-FEATURE-COMPLETENESS-FRONTIER.84: audit burst payload readiness`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.85` pending; next action is aligning AXI `bursts` residue for the covered generated auto-ID multi-beat output-bank subset.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.84`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.83`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.82`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.81`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.80`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.79`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.78`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.77`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.76`. Older completed slices are in the task tree and git history.
 - in_flight_uncommitted: none after this commit; unrelated untracked `fx/` intentionally left alone.
 - blockers: none.
 

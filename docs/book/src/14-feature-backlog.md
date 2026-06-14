@@ -4178,14 +4178,21 @@ multi-beat sample already has burst-last `RLAST` demux, raw ARLEN capture,
 beat-count/RLAST runtime validation, per-beat output banks, valid masks,
 length outputs, and scalar aggregate `RRESP`.
 
-The `.84` audit must decide whether the shipped per-beat output bank is enough
-for bounded burst residue movement, whether a packed-burst public contract is
-required first, whether report/static text can move without behavior changes,
-or whether a lower-layer prerequisite comes first. Packed burst payload
-outputs, full burst assembly, authored concrete-ID same-ID ordering, per-ID
-queues, queued/blocking policy, profile aliases, full-manager behavior,
-verification-code generation, direct backend lowering, and VHDL remain
-deferred.
+Burst payload/output readiness audit:
+[AXI_IAL2_MANAGER_BURST_PAYLOAD_OUTPUT_READINESS_AUDIT](../../AXI_IAL2_MANAGER_BURST_PAYLOAD_OUTPUT_READINESS_AUDIT.md)
+ships `IAL2-FEATURE-COMPLETENESS-FRONTIER.84`. The selected per-beat
+output-bank contract is already the bounded burst payload/output shape for the
+covered generated auto-ID multi-beat subset: generated burst-last response
+demux, raw ARLEN capture, runtime beat-count/RLAST validation,
+per-transaction data/status lanes, valid masks, length outputs, scalar status
+output, and generated same-ID avoidance are present.
+
+The next active owner is `IAL2-FEATURE-COMPLETENESS-FRONTIER.85`,
+report/static `bursts` residue alignment for that covered subset. Packed
+burst payload outputs, full burst assembly, aggregate-only status shapes,
+authored concrete-ID same-ID ordering, per-ID queues, queued/blocking policy,
+profile aliases, full-manager behavior, verification-code generation, direct
+backend lowering, and VHDL remain deferred.
 
 First implementation subset selection:
 [AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION](../../AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md)

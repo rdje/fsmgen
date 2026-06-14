@@ -25,7 +25,7 @@ multi-beat sample already has burst-last `RLAST` demux, raw ARLEN capture,
 beat-count/RLAST runtime validation, per-beat output banks, valid masks,
 length outputs, and scalar aggregate `RRESP`.
 
-`.84` must decide whether the shipped per-beat output-bank behavior is enough
-for bounded burst residue movement, whether a packed-burst public contract is
-required first, whether report/static text can move without behavior changes,
-or whether a lower-layer/prerequisite owner must come first.
+The follow-up `.84` audit found the shipped per-beat output-bank behavior is
+enough for bounded burst residue movement in the covered generated auto-ID
+multi-beat subset and selected `.85`, report/static `bursts` residue
+alignment. Packed/full burst assembly remains a separate deferred contract.

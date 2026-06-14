@@ -1149,9 +1149,11 @@ readiness, because `bursts` is now the only `response_demux` residue and
 remains shared with `same_id_ordering` while the public multi-beat sample
 already has burst-last `RLAST` demux, raw ARLEN capture, beat-count/RLAST
 runtime validation, per-beat output banks, valid masks, length outputs, and
-scalar aggregate `RRESP`. The `.84` audit must decide whether bounded burst
-residue can move, whether a packed-burst public contract is required first,
-or whether a lower-layer/prerequisite owner comes first.
+scalar aggregate `RRESP`. Audit `.84` selects `.85`, report/static `bursts`
+residue alignment for the covered generated auto-ID multi-beat output-bank
+subset, because the selected per-beat output bank is already the bounded burst
+payload/output shape for that subset. Packed/full burst assembly remains a
+separate deferred contract.
 Verification-code generation is captured as a separate future roadmap lane
 from the synthesizable RTL/HDL feature-completeness path.
 Packed burst outputs, concrete-ID same-ID ordering, per-ID queues, queued
