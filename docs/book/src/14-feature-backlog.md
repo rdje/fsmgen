@@ -3864,10 +3864,16 @@ assertion names such as `axi0_r0_arlen_within_max`,
 now include expected-beat storage, matched-read-beat counters, initialization
 and increment rules, ARLEN-bound, extra-beat, early-`RLAST`, and
 missing-final-`RLAST` assertions for `(validation runtime-assertion)` while
-`validation report-only` remains no-runtime-check behavior. The active
-frontier is `IAL2-FEATURE-COMPLETENESS-FRONTIER.70`, a selector for the next
-exact AXI manager feature-completeness owner after generated
-beat-count/RLAST validation.
+`validation report-only` remains no-runtime-check behavior.
+
+Post beat-count/RLAST validation next-slice selection:
+[AXI_IAL2_MANAGER_POST_BEAT_COUNT_RLAST_VALIDATION_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_BEAT_COUNT_RLAST_VALIDATION_NEXT_SLICE_SELECTION.md)
+selects `IAL2-FEATURE-COMPLETENESS-FRONTIER.71`, public AXI multi-beat
+read-data reassembly/output contract selection, as the active frontier. The
+selector keeps direct reassembly behavior deferred because the public
+source/report surface still needs beat storage, per-beat or packed outputs,
+length/valid outputs, all-beat `RRESP` aggregation, and different-ID/per-ID
+queue semantics selected first.
 
 First implementation subset selection:
 [AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION](../../AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md)
@@ -6369,7 +6375,11 @@ implementation slice.
 Completed implementation leaf `IAL2-FEATURE-COMPLETENESS-FRONTIER.69` ships
 generated beat-count/RLAST runtime validation for `(validation
 runtime-assertion)` burst-length contracts and advances the active frontier
-to `.70`, the next exact-owner selector.
+to `.70`, the next exact-owner selector. Completed selector
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.70` advances the active frontier to
+`.71`, public AXI multi-beat read-data reassembly/output contract selection,
+before parser, generator, HDL, sample, support-accounting, check JSON,
+semantic JSON, or validation behavior changes.
 Completed implementation leaf
 `ARCHITECTURE-DEBT-FRONTIER.2.1`
 projects direct backend storage/helper declaration-plan entries into
