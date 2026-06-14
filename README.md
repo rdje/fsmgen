@@ -503,6 +503,15 @@ queue-head response-demux source contract because the current
 `response-demux` syntax and implementation are auto-ID-lifecycle oriented.
 The active frontier is now `IAL2-FEATURE-COMPLETENESS-FRONTIER.102`, AXI
 same-ID queue-head response-demux contract selection.
+Selector `.102` reuses the existing `response-demux` read/write family arms
+for concrete same-ID queue-head demux, but only when the same family selects
+`concrete-id-reuse issue-order-queue`, has duplicate concrete-ID groups, and
+does not also require same-family auto-ID demux in the first contract. The
+selected report modes are `bounded_write_bid_queue_head_demux_contract` and
+`bounded_read_rid_queue_head_demux_contract`, both selected-not-generated
+until behavior ships. The active frontier is now
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.103`, AXI same-ID queue-head
+response-demux metadata/static validation.
 The IAL2 factoring stance remains evidence-driven: keep AXI-specific same-ID
 ordering in the AXI vocabulary until another profile proves the same semantic
 need.

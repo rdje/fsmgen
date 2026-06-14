@@ -1270,6 +1270,15 @@ pulses. It also confirms implementation remains gated by a concrete same-ID
 queue-head response-demux source contract because current `response-demux`
 syntax and behavior require auto-ID lifecycle state. The active frontier
 advances to `.102`, AXI same-ID queue-head response-demux contract selection.
+Selector `.102` reuses the existing public `response-demux` read/write arms
+for concrete same-ID queue-head demux when the same family selects
+`concrete-id-reuse issue-order-queue`, has duplicate concrete-ID groups, and
+does not also require same-family auto-ID demux in the first contract. Write
+uses `bounded_write_bid_queue_head_demux_contract`; read uses
+`bounded_read_rid_queue_head_demux_contract` for `single-beat` or
+`burst-last` scope. Behavior remains selected-not-generated, and the active
+frontier advances to `.103`, parser/report metadata and static validation for
+the selected contract.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.

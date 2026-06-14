@@ -9,8 +9,8 @@ answers:
 date: 2026-06-14
 status: current
 tags: [ial2, axi, manager, same-id, issue-order, queue, representation, task-tree]
-evidence: docs/AXI_IAL2_MANAGER_SAME_ID_ISSUE_ORDER_QUEUE_STATE_REPRESENTATION_SELECTION.md; docs/AXI_IAL2_MANAGER_SAME_ID_ISSUE_ORDER_QUEUE_STATE_DEMUX_READINESS_AUDIT.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md
-reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.101|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.102|compact_onehot_transaction_slots|queue-head response-demux contract|dynamic indexed|admitted request pulses' docs/AXI_IAL2_MANAGER_SAME_ID_ISSUE_ORDER_QUEUE_STATE_REPRESENTATION_SELECTION.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md README.md ROADMAP_V2.md docs/book/src/14-feature-backlog.md
+evidence: docs/AXI_IAL2_MANAGER_SAME_ID_ISSUE_ORDER_QUEUE_STATE_REPRESENTATION_SELECTION.md; docs/AXI_IAL2_MANAGER_SAME_ID_QUEUE_HEAD_RESPONSE_DEMUX_CONTRACT_SELECTION.md; docs/AXI_IAL2_MANAGER_SAME_ID_ISSUE_ORDER_QUEUE_STATE_DEMUX_READINESS_AUDIT.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md
+reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.101|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.102|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.103|compact_onehot_transaction_slots|queue-head response-demux metadata|dynamic indexed|admitted request pulses' docs/AXI_IAL2_MANAGER_SAME_ID_ISSUE_ORDER_QUEUE_STATE_REPRESENTATION_SELECTION.md docs/AXI_IAL2_MANAGER_SAME_ID_QUEUE_HEAD_RESPONSE_DEMUX_CONTRACT_SELECTION.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md README.md ROADMAP_V2.md docs/book/src/14-feature-backlog.md
 ---
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.101` selected
@@ -26,6 +26,6 @@ sides, hidden unbounded queues, and pointer modulo arithmetic.
 Enqueue remains sourced only from admitted request pulses. Dequeue is named as
 a future `queue_dequeue_event` from queue-head response demux.
 
-The next active leaf is `IAL2-FEATURE-COMPLETENESS-FRONTIER.102`, AXI
-same-ID queue-head response-demux contract selection, because existing
-`response-demux` syntax and generated behavior are auto-ID-lifecycle oriented.
+`.102` has since selected the concrete same-ID queue-head response-demux
+contract. The next active leaf is `IAL2-FEATURE-COMPLETENESS-FRONTIER.103`,
+AXI same-ID queue-head response-demux metadata/static validation.

@@ -4603,6 +4603,23 @@ same-ID queue-head response-demux contract selection, because the existing
 public `response-demux` syntax and generated behavior are auto-ID-lifecycle
 oriented.
 
+Same-ID queue-head response-demux contract selection:
+[AXI_IAL2_MANAGER_SAME_ID_QUEUE_HEAD_RESPONSE_DEMUX_CONTRACT_SELECTION](../../AXI_IAL2_MANAGER_SAME_ID_QUEUE_HEAD_RESPONSE_DEMUX_CONTRACT_SELECTION.md)
+ships `IAL2-FEATURE-COMPLETENESS-FRONTIER.102`. The selector reuses the
+existing `response-demux` read/write family arms for concrete same-ID
+queue-head demux rather than adding a new top-level clause. The queue-head
+interpretation is selected only when the same family selects
+`concrete-id-reuse issue-order-queue`, has duplicate concrete-ID groups, and
+does not also require same-family auto-ID demux in this first contract.
+
+The selected report modes are
+`bounded_write_bid_queue_head_demux_contract` and
+`bounded_read_rid_queue_head_demux_contract`. They remain
+selected-not-generated until later behavior ships generated queue state and
+queue-head demux together for the covered group. `.102` advances the active
+frontier to `IAL2-FEATURE-COMPLETENESS-FRONTIER.103`, AXI same-ID queue-head
+response-demux metadata/static validation.
+
 First implementation subset selection:
 [AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION](../../AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md)
 selects a source-anchored AXI Valid-Ready channel contract/monitor as the
