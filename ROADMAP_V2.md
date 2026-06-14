@@ -1181,7 +1181,10 @@ public same-ID reuse policy, concrete response-demux behavior, or report/static
 residue refinement ships. Audit `.90` selects `.91`, AXI same-ID reuse policy
 contract selection, because the missing prerequisite is not a smaller lowering
 feature but an explicit public source/report contract for reject, queue,
-stall/block, or scoreboard semantics.
+stall/block, or scoreboard semantics. Selector `.91` chooses an optional
+AXI-profile-local `same-id-ordering` clause with read/write
+`concrete-id-reuse reject` arms and selects `.92`, parser/report metadata plus
+static validation for that explicit reject policy.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.

@@ -30,5 +30,7 @@ applied this stance while selecting `.87`, `.87` kept it while selecting
 AXI-profile-local. `.89` kept per-ID issue-order queue readiness AXI-profile
 scoped by selecting an audit before any common IAL2 queue construct. `.90`
 kept same-ID reuse policy AXI-profile-local by selecting a public AXI policy
-contract before any common queue abstraction. Any future common construct
-should be promoted only after another profile proves compatible need.
+contract before any common queue abstraction. `.91` kept the selected
+`same-id-ordering` / `concrete-id-reuse reject` syntax AXI-profile-local. Any
+future common construct should be promoted only after another profile proves
+compatible need.

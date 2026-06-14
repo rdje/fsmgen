@@ -17,8 +17,9 @@ reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER|IAL2 feature completeness|IA
 The current feature-completeness priority is IAL2 on the
 SystemVerilog-backed path.
 
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.91` owns the next PNT frontier: selecting
-the AXI same-ID reuse policy contract before per-ID issue-order queues.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.92` owns the next PNT frontier:
+implementing parser/report metadata and static validation for explicit AXI
+same-ID reuse reject policy before per-ID issue-order queues.
 
 Completed `.47` shipped generated single-beat `RDATA`/`RRESP` capture
 behavior. Completed `.48` selected `.49` because the current public read-data
@@ -149,7 +150,10 @@ report/static residue refinement, and any smaller IAL1/IAL0/SystemVerilog
 prerequisites. Completed `.90` found no smaller lower-layer prerequisite and
 selected `.91`, public same-ID reuse policy contract selection, because the
 public source still must define reject, queue, stall/block, or scoreboard
-semantics before generated queue behavior.
+semantics before generated queue behavior. Completed `.91` selected optional
+AXI-profile-local `(same-id-ordering (read|write (concrete-id-reuse reject)))`
+syntax and advanced to `.92`, parser/report metadata plus static validation
+for explicit reject policy.
 
 Selected IAL2 work may include required IAL1 or IAL0/SV support, but only when
 those prerequisites are explicit, task-tree owned, documented, and

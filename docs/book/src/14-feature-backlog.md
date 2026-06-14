@@ -4298,6 +4298,27 @@ surface still lacks a same-ID reuse policy, and concrete-ID response demux
 cannot distinguish two same-ID transactions without selected issue-order
 state. Current residue remains honest.
 
+Same-ID reuse policy contract selection:
+[AXI_IAL2_MANAGER_SAME_ID_REUSE_POLICY_CONTRACT_SELECTION](../../AXI_IAL2_MANAGER_SAME_ID_REUSE_POLICY_CONTRACT_SELECTION.md)
+ships `IAL2-FEATURE-COMPLETENESS-FRONTIER.91`. It selects an optional
+AXI-profile-local top-level clause under `manager-capacity-status`:
+
+```lisp
+(same-id-ordering
+  (read
+    (concrete-id-reuse reject))
+  (write
+    (concrete-id-reuse reject)))
+```
+
+The first accepted policy is `reject`: it documents that authored concrete-ID
+same-ID reuse is intentionally rejected by public source policy and does not
+accept same-ID reuse, generate queues, or change HDL behavior for valid
+sources. Omitted policy preserves today's fail-closed diagnostic. The selector
+advances to `IAL2-FEATURE-COMPLETENESS-FRONTIER.92`, parser/report metadata
+and static validation for explicit reject policy before any
+`issue-order-queue` or `scoreboard` behavior.
+
 First implementation subset selection:
 [AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION](../../AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md)
 selects a source-anchored AXI Valid-Ready channel contract/monitor as the

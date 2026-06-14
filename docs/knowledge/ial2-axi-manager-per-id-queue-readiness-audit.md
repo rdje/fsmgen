@@ -31,3 +31,7 @@ The lower layers are not the immediate blocker: existing scalar storage,
 guarded rules, pulses, assertions, bank metadata, and FIFO-like update
 substrate are enough for a later bounded implementation once the public policy
 contract is selected.
+
+That contract is now selected. `.91` chose explicit `same-id-ordering`
+`concrete-id-reuse reject` syntax and advanced to `.92`, parser/report
+metadata plus static validation.
