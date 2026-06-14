@@ -1230,6 +1230,15 @@ arms, schedule JSON reports `policy: issue_order_queue`,
 duplicated concrete same-ID transactions still fail closed with a
 selected-not-generated diagnostic. The new support-accounted sample is
 `ppif/axi_manager_capacity_status_same_id_issue_order_queue_policy.ppif`.
+Audit `.97` selects the admitted per-transaction request boundary as the next
+safe prerequisite before queue state. Future admitted pulses must be derived
+from transaction request event, current capacity storage, family
+`max-pending`, and same-cycle completion fan-in rather than from the generated
+`can_accept` output value, and they must keep duplicated concrete same-ID
+reuse fail-closed until queue-head behavior exists. The active implementation
+owner is `.98`, admitted request pulse generation; queue storage, dequeue
+rules, queue-head response demux, accepted same-ID reuse, direct backend, and
+VHDL remain deferred.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.

@@ -4464,6 +4464,44 @@ Generated queue-head behavior still needs admitted per-transaction enqueue
 guards, per-ID queue state, queue-head response demux, and queue-specific
 assertions before `accepted_same_id_reuse` can become true.
 
+Same-ID issue-order queue admitted enqueue boundary audit:
+[AXI_IAL2_MANAGER_SAME_ID_ISSUE_ORDER_QUEUE_ADMITTED_ENQUEUE_BOUNDARY_AUDIT](../../AXI_IAL2_MANAGER_SAME_ID_ISSUE_ORDER_QUEUE_ADMITTED_ENQUEUE_BOUNDARY_AUDIT.md)
+ships `IAL2-FEATURE-COMPLETENESS-FRONTIER.97`. Queue state and queue-head
+response demux are still too broad for the next slice. The next safe
+prerequisite is a named admitted-request boundary per concrete transaction in
+selected `issue-order-queue` families.
+
+The audit selects `IAL2-FEATURE-COMPLETENESS-FRONTIER.98`, admitted request
+pulse generation. The future implementation must derive the pulse guard from
+the transaction request event, current direction pending storage, family
+`max-pending`, and same-cycle completion fan-in. It must not use the generated
+`can_accept` status output as the source of truth for queue enqueue.
+
+Expected report metadata stays under `same_id_ordering` and remains explicit
+that this is not generated queue behavior:
+
+```yaml
+same_id_ordering:
+  concrete_id_reuse_policy:
+    read:
+      policy: issue_order_queue
+      enforcement: admitted_request_boundary
+      implementation_status: admitted_request_pulses_generated
+      accepted_same_id_reuse: false
+      generated_queue_behavior: false
+      admitted_request_boundary:
+        guard_source: capacity_storage_and_completion_fanin
+        generated_pulses:
+          - transaction: r0
+            pulse: axi0_r0_admitted_request_pulse_q
+        generated_assertions:
+          - axi0_read_issue_order_queue_request_onehot0
+```
+
+Duplicated concrete same-ID reuse remains fail-closed until per-ID queue
+storage, enqueue/dequeue rules, queue-head response demux, and queue-specific
+assertions ship.
+
 First implementation subset selection:
 [AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION](../../AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md)
 selects a source-anchored AXI Valid-Ready channel contract/monitor as the

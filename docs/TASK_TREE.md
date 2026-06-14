@@ -44,7 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `IAL2-FEATURE-COMPLETENESS-FRONTIER` | `active` | `IAL2 / SV-backed feature completeness` | `.97` AXI same-ID issue-order queue admitted enqueue boundary audit | [docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md](docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md) |
+| `IAL2-FEATURE-COMPLETENESS-FRONTIER` | `active` | `IAL2 / SV-backed feature completeness` | `.98` AXI same-ID issue-order queue admitted request pulses | [docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md](docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md) |
 | `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE` | `done` | `R14` | complete (`.9`; simplified public contract docs from enumerated activation lists to construction rules; next executable frontier is `ISF-SCHEDULING-BACKLOG-FRONTIER.4.1`) | [docs/tasks/ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.md](docs/tasks/ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.md) |
 | `ISF-SCHEDULING-BACKLOG-FRONTIER` | `done` | `R14` | complete (`.8.2`; shipped resolved-child trigger-batch generated top; no active next leaf remains in this tree) | [docs/tasks/ISF-SCHEDULING-BACKLOG-FRONTIER.md](docs/tasks/ISF-SCHEDULING-BACKLOG-FRONTIER.md) |
 | `CI-SHARED-DP-SURFACE-REPAIR` | `done` | CI/composition contract integrity | complete (`.1`; repaired reproduced GitHub run `27086344097` composition shared-datapath surface and stale contract fixture failures; focused cluster, contract tests, quick regression, mdBook, Knowledge Map, memory, path, and diff gates pass) | [docs/tasks/CI-SHARED-DP-SURFACE-REPAIR.md](docs/tasks/CI-SHARED-DP-SURFACE-REPAIR.md) |
