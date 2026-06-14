@@ -26,7 +26,8 @@ so queue-head demux cannot ship before queue identity state exists.
 
 `.101` has since selected `compact_onehot_transaction_slots`, `.102` selected
 the queue-head response-demux contract, `.103` shipped selected-not-generated
-metadata, and `.104` selected the next behavior-slice selector. The current
-active frontier is `IAL2-FEATURE-COMPLETENESS-FRONTIER.105`, first generated
-AXI same-ID queue state and queue-head behavior slice selection. Duplicate
-concrete same-ID reuse remains fail-closed until generated behavior ships.
+metadata, `.104` selected the behavior-slice selector, and `.105` selected the
+first implementation boundary. The current active frontier is
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.106`, generated AXI same-ID read
+burst-last queue state and queue-head demux behavior. Duplicate concrete
+same-ID reuse remains fail-closed until generated behavior ships.

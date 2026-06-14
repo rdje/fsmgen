@@ -4665,6 +4665,20 @@ selected-not-generated, with `accepted_same_id_reuse` and
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.105`, first generated AXI same-ID queue
 state and queue-head behavior slice selection.
 
+Same-ID queue behavior first-slice selection:
+[AXI_IAL2_MANAGER_SAME_ID_QUEUE_BEHAVIOR_FIRST_SLICE_SELECTION](../../AXI_IAL2_MANAGER_SAME_ID_QUEUE_BEHAVIOR_FIRST_SLICE_SELECTION.md)
+ships `IAL2-FEATURE-COMPLETENESS-FRONTIER.105`. The first generated behavior
+implementation boundary is deliberately narrow: read family only, burst-last
+queue-head demux, one duplicate concrete read-ID group, two read transactions,
+computed depth `2`, no same-family auto-ID lifecycle, and no read-data
+consumption.
+
+The selected `.106` implementation must generate compact one-hot queue slots
+and queue-head response-demux completion rules together. Covered read
+transaction completion names become generated pulse outputs only for that
+shape. Wider shapes remain selected-not-generated or fail closed until later
+owners select them.
+
 First implementation subset selection:
 [AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION](../../AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md)
 selects a source-anchored AXI Valid-Ready channel contract/monitor as the

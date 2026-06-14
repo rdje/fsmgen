@@ -5,13 +5,13 @@ answers:
   - "what did IAL2-FEATURE-COMPLETENESS-FRONTIER.104 decide?"
   - "can FSMGen ship generated same-ID queue behavior directly after metadata?"
   - "does same-ID queue behavior need a new IAL1 prerequisite?"
-  - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.105?"
+  - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.106?"
   - "what comes after same-ID queue-head demux metadata?"
 date: 2026-06-14
 status: current
 tags: [ial2, axi, manager, same-id, issue-order, queue, response-demux, readiness, task-tree]
-evidence: docs/AXI_IAL2_MANAGER_SAME_ID_QUEUE_BEHAVIOR_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_SAME_ID_QUEUE_HEAD_RESPONSE_DEMUX_METADATA_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_SAME_ID_QUEUE_HEAD_RESPONSE_DEMUX_CONTRACT_SELECTION.md; docs/AXI_IAL2_MANAGER_SAME_ID_ISSUE_ORDER_QUEUE_STATE_REPRESENTATION_SELECTION.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md
-reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.104|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.105|no new IAL1/IAL0/SystemVerilog substrate prerequisite|first generated AXI same-ID queue state and queue-head behavior slice|queue state needs a queue-head-demux dequeue event|accepted_same_id_reuse|generated_queue_behavior' docs/AXI_IAL2_MANAGER_SAME_ID_QUEUE_BEHAVIOR_READINESS_AUDIT.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md README.md ROADMAP_V2.md docs/book/src/14-feature-backlog.md
+evidence: docs/AXI_IAL2_MANAGER_SAME_ID_QUEUE_BEHAVIOR_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_SAME_ID_QUEUE_BEHAVIOR_FIRST_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_SAME_ID_QUEUE_HEAD_RESPONSE_DEMUX_METADATA_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_SAME_ID_QUEUE_HEAD_RESPONSE_DEMUX_CONTRACT_SELECTION.md; docs/AXI_IAL2_MANAGER_SAME_ID_ISSUE_ORDER_QUEUE_STATE_REPRESENTATION_SELECTION.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md
+reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.104|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.105|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.106|no new IAL1/IAL0/SystemVerilog substrate prerequisite|generated AXI same-ID read burst-last queue state|queue state needs a queue-head-demux dequeue event|accepted_same_id_reuse|generated_queue_behavior' docs/AXI_IAL2_MANAGER_SAME_ID_QUEUE_BEHAVIOR_READINESS_AUDIT.md docs/AXI_IAL2_MANAGER_SAME_ID_QUEUE_BEHAVIOR_FIRST_SLICE_SELECTION.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md README.md ROADMAP_V2.md docs/book/src/14-feature-backlog.md
 ---
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.104` audited generated AXI same-ID queue
@@ -29,6 +29,7 @@ queue-head demux, and queue-head demux needs queue-head transaction identity
 from queue state. Accepted concrete same-ID reuse must stay false until both
 sides ship together for a covered group.
 
-The next active leaf is `IAL2-FEATURE-COMPLETENESS-FRONTIER.105`, which must
-select the first generated same-ID queue state plus queue-head behavior slice
-before runtime behavior changes.
+`.105` has since selected the first generated behavior boundary. The next
+active leaf is `IAL2-FEATURE-COMPLETENESS-FRONTIER.106`, generated AXI
+same-ID read burst-last queue state plus queue-head demux behavior for the
+two-transaction depth-2 sample shape.

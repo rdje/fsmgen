@@ -1299,7 +1299,13 @@ implementation is therefore too large. The active frontier advances to
 `.105`, first generated AXI same-ID queue state and queue-head behavior slice
 selection, before generated queue state, queue-head demux rules, accepted
 same-ID reuse, generated queue behavior, direct backend, or VHDL behavior
-changes.
+changes. Selector `.105` chooses `.106`, generated AXI same-ID read
+burst-last queue behavior for the existing public queue-head sample shape:
+one duplicate concrete read-ID group, two read transactions, computed depth 2,
+generated compact one-hot queue state, and generated queue-head completion
+demux shipped together. Write queue-head behavior, read `single-beat`, deeper
+or multiple groups, same-family mixed auto-ID, read-data consumption, direct
+backend, and VHDL remain deferred.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.
