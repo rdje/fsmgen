@@ -3838,14 +3838,30 @@ lower through clocked reset-disabled SystemVerilog properties. The audit does
 not select direct behavior because the existing public syntax says
 `validation report-only`, and that mode must remain no-runtime-check behavior.
 
-The active frontier is `IAL2-FEATURE-COMPLETENESS-FRONTIER.68`, public
-beat-count/RLAST runtime-validation contract selection. The expected public
-shape is an explicit generated validation mode, preserving
+Beat-count/RLAST runtime-validation contract selection:
+[AXI_IAL2_MANAGER_BEAT_COUNT_RLAST_RUNTIME_VALIDATION_CONTRACT_SELECTION](../../AXI_IAL2_MANAGER_BEAT_COUNT_RLAST_RUNTIME_VALIDATION_CONTRACT_SELECTION.md)
+selects an explicit generated-validation mode while preserving
 `validation report-only` as report-only metadata:
 
 ```text
 (validation runtime-assertion)
 ```
+
+The normalized report values are `report_only` and `runtime_assertion`.
+`runtime-assertion` is behavior-bearing: a later implementation must not
+accept the syntax unless it also emits the expected-count state, matched-beat
+counter state, generated rules, and runtime assertions. The selected future
+report shape includes `burst_length_validation: runtime_assertion`,
+`beat_count_validation_generated_behavior: true`,
+`expected_beat_count_encoding: arlen_plus_one`,
+`beat_count_match_source: response_demux_matched_read_beat`, generated
+expected-count storage, generated beat-count storage/rules, and generated
+assertion names such as `axi0_r0_arlen_within_max`,
+`axi0_r0_read_beat_before_expected_count`,
+`axi0_r0_rlast_on_expected_beat`, and
+`axi0_r0_expected_final_beat_has_rlast`. The active frontier is
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.69`, which owns parser support plus
+generated runtime validation behavior for this public contract.
 
 First implementation subset selection:
 [AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION](../../AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md)
@@ -4004,7 +4020,12 @@ ARLEN burst-length capture readiness and advances the frontier to `.65`.
 `.65` audits that readiness, finds no new substrate prerequisite, and
 advances the active frontier to `.66`. `.66` ships generated raw-ARLEN
 capture behavior and advances the active frontier to `.67`, beat-count/RLAST
-validation readiness.
+validation readiness. `.67` preserves `validation report-only` as
+no-runtime-check behavior and selects `.68`, public runtime-validation
+contract selection. `.68` selects `(validation runtime-assertion)` /
+`runtime_assertion`, preserves report-only behavior, and advances the active
+frontier to `.69`, the first generated beat-count/RLAST runtime-validation
+implementation slice.
 Future behavior owners must keep the reviewable
 `IAL2 -> IAL1 -> IAL0 -> SystemVerilog` path; read-data
 interleaving/reassembly, bursts, per-ID queues, full-manager behavior, and
@@ -6333,6 +6354,11 @@ Completed audit leaf `IAL2-FEATURE-COMPLETENESS-FRONTIER.67` preserves
 `validation report-only` as no-runtime-check behavior, selects public
 beat-count/RLAST runtime-validation contract selection, and advances the
 active frontier to `.68`.
+Completed selector leaf `IAL2-FEATURE-COMPLETENESS-FRONTIER.68` selects
+`(validation runtime-assertion)` / `runtime_assertion`, preserves
+`validation report-only` as report-only metadata, and advances the active
+frontier to `.69`, the first generated beat-count/RLAST runtime-validation
+implementation slice.
 Completed implementation leaf
 `ARCHITECTURE-DEBT-FRONTIER.2.1`
 projects direct backend storage/helper declaration-plan entries into

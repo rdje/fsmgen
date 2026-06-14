@@ -1,6 +1,6 @@
 ---
 id: ial2-feature-completeness-next-slice
-title: IAL2 feature completeness next slice is beat-count/RLAST runtime-validation contract selection
+title: IAL2 feature completeness next slice is beat-count/RLAST runtime-validation implementation
 answers:
   - "what is the next IAL2 feature completeness slice?"
   - "what comes after IAL2-FEATURE-COMPLETENESS-FRONTIER.59?"
@@ -21,6 +21,8 @@ answers:
   - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.67?"
   - "what comes after IAL2-FEATURE-COMPLETENESS-FRONTIER.67?"
   - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.68?"
+  - "what comes after IAL2-FEATURE-COMPLETENESS-FRONTIER.68?"
+  - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.69?"
   - "what comes after IAL2-FEATURE-COMPLETENESS-FRONTIER.58?"
   - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.59?"
   - "what comes after IAL2-FEATURE-COMPLETENESS-FRONTIER.57?"
@@ -54,11 +56,11 @@ answers:
   - "what comes after IAL2-FEATURE-COMPLETENESS-FRONTIER.32?"
   - "is the full AXI manager implemented after Valid-Ready?"
   - "what must happen before the next AXI manager behavior?"
-date: 2026-06-13
+date: 2026-06-14
 status: current
 tags: [ial2, axi, manager, read-data, rdata, rresp, capture, metadata, behavior, selector, bursts, rlast, completion, interleaving, per-id, contract, feature-completeness, task-tree]
-evidence: docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; docs/AXI_IAL2_MANAGER_BEAT_COUNT_RLAST_VALIDATION_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_ARLEN_CAPTURE_BEHAVIOR_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_ARLEN_CAPTURE_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_POST_BURST_LENGTH_METADATA_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_BURST_READ_DATA_BEAT_COUNT_METADATA_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_BURST_READ_DATA_BEAT_COUNT_CONTRACT_SELECTION.md; docs/AXI_IAL2_MANAGER_POST_LAST_BEAT_READ_DATA_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_LAST_BEAT_READ_DATA_BEHAVIOR_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_LAST_BEAT_READ_DATA_CAPTURE_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_LAST_BEAT_READ_DATA_METADATA_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_BURST_READ_DATA_CONTRACT_SELECTION.md; docs/AXI_IAL2_MANAGER_POST_RLAST_REPORT_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_RLAST_REPORT_ALIGNMENT_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_POST_RLAST_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_RLAST_COMPLETION_BEHAVIOR_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_RLAST_COMPLETION_BEHAVIOR_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_RLAST_COMPLETION_METADATA_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_RLAST_COMPLETION_CONTRACT_SELECTION.md; docs/AXI_IAL2_MANAGER_RLAST_COMPLETION_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_POST_READ_DATA_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_READ_DATA_BEHAVIOR_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_READ_DATA_CAPTURE_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_READ_DATA_METADATA_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_READ_DATA_CONTRACT_SELECTION.md; docs/AXI_IAL2_MANAGER_READ_DATA_BURST_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_POST_READ_DEMUX_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_READ_RESPONSE_DEMUX_BEHAVIOR_FIRST_SLICE.md; docs/book/src/14-feature-backlog.md; README.md; ROADMAP_V2.md
-reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.67|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.68|BEAT_COUNT_RLAST_VALIDATION_READINESS_AUDIT|validation report-only|runtime-validation contract' docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md docs/AXI_IAL2_MANAGER_BEAT_COUNT_RLAST_VALIDATION_READINESS_AUDIT.md docs/book/src/14-feature-backlog.md README.md ROADMAP_V2.md
+evidence: docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; docs/AXI_IAL2_MANAGER_BEAT_COUNT_RLAST_RUNTIME_VALIDATION_CONTRACT_SELECTION.md; docs/AXI_IAL2_MANAGER_BEAT_COUNT_RLAST_VALIDATION_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_ARLEN_CAPTURE_BEHAVIOR_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_ARLEN_CAPTURE_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_POST_BURST_LENGTH_METADATA_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_BURST_READ_DATA_BEAT_COUNT_METADATA_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_BURST_READ_DATA_BEAT_COUNT_CONTRACT_SELECTION.md; docs/AXI_IAL2_MANAGER_POST_LAST_BEAT_READ_DATA_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_LAST_BEAT_READ_DATA_BEHAVIOR_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_LAST_BEAT_READ_DATA_CAPTURE_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_LAST_BEAT_READ_DATA_METADATA_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_BURST_READ_DATA_CONTRACT_SELECTION.md; docs/AXI_IAL2_MANAGER_POST_RLAST_REPORT_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_RLAST_REPORT_ALIGNMENT_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_POST_RLAST_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_RLAST_COMPLETION_BEHAVIOR_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_RLAST_COMPLETION_BEHAVIOR_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_RLAST_COMPLETION_METADATA_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_RLAST_COMPLETION_CONTRACT_SELECTION.md; docs/AXI_IAL2_MANAGER_RLAST_COMPLETION_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_POST_READ_DATA_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_READ_DATA_BEHAVIOR_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_READ_DATA_CAPTURE_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_READ_DATA_METADATA_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_READ_DATA_CONTRACT_SELECTION.md; docs/AXI_IAL2_MANAGER_READ_DATA_BURST_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_POST_READ_DEMUX_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_READ_RESPONSE_DEMUX_BEHAVIOR_FIRST_SLICE.md; docs/book/src/14-feature-backlog.md; README.md; ROADMAP_V2.md
+reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.68|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.69|BEAT_COUNT_RLAST_RUNTIME_VALIDATION_CONTRACT_SELECTION|validation runtime-assertion|runtime_assertion' docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md docs/AXI_IAL2_MANAGER_BEAT_COUNT_RLAST_RUNTIME_VALIDATION_CONTRACT_SELECTION.md docs/book/src/14-feature-backlog.md README.md ROADMAP_V2.md
 ---
 
 After the shipped Valid-Ready, bundle, capacity/status, ID-family metadata,
@@ -83,8 +85,9 @@ last-beat read-data capture behavior first slice, post-last-beat
 read-data selector, burst read-data beat-count contract selector, and
 burst-length metadata first slice, post-burst-length metadata selector,
 ARLEN capture readiness audit, generated raw-ARLEN capture behavior first
-slice, and beat-count/RLAST validation readiness audit, the next active leaf
-is `IAL2-FEATURE-COMPLETENESS-FRONTIER.68`.
+slice, beat-count/RLAST validation readiness audit, and public
+runtime-validation contract selector, the next active leaf is
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.69`.
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.64` owns the selector after report-only
 ARLEN burst-length metadata. It selected
@@ -117,8 +120,12 @@ prerequisite for generated validation after a public validation mode exists:
 generated storage, expression assignments, response-demux match expressions,
 and clocked runtime assertions are available. It did not select direct
 behavior because `validation report-only` must remain no-runtime-check
-behavior. The next active leaf is `IAL2-FEATURE-COMPLETENESS-FRONTIER.68`,
-public beat-count/RLAST runtime-validation contract selection.
+behavior. `IAL2-FEATURE-COMPLETENESS-FRONTIER.68` selected
+`(validation runtime-assertion)` / `runtime_assertion`, preserved
+`validation report-only` / `report_only`, and required parser support plus
+generated runtime assertions to ship together. The next active leaf is
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.69`, the first implementation slice for
+the selected runtime-validation contract.
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.47` shipped generated single-beat
 `RDATA`/`RRESP` capture behavior for explicit `read-data` contracts. The next
