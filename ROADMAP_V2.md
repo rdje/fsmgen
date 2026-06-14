@@ -1192,7 +1192,13 @@ diagnostic, emits a policy-specific duplicate concrete-ID diagnostic for
 explicit `reject`, and leaves generated `.isf`, `.fsm`, and SystemVerilog
 unchanged for valid sources. It advances the frontier to `.93`, the next AXI
 manager selector before any accepted same-ID reuse, generated per-ID queue,
-or scoreboard behavior.
+or scoreboard behavior. Selector `.93` chooses `.94`, AXI same-ID issue-order
+queue policy contract selection, before parser/report metadata or generated
+queue behavior. That contract-selection leaf must define the public
+`issue-order-queue` spelling, read/write family scope, depth bounds,
+enqueue/dequeue semantics, queue-head response-demux expectations,
+diagnostics, report vocabulary, validation gates, and rollback boundary before
+accepted same-ID reuse can ship.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.

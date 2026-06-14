@@ -88,6 +88,6 @@ Focused validation for this slice includes:
 - `prove -Iperl t/297-capability-manifest.t t/301-check-json-supported-corpus.t t/303-normalized-semantic-json-supported-corpus.t`
 - `./bin/fsmgen --emit-schedule-json ppif/axi_manager_capacity_status_same_id_reject_policy.ppif`
 
-The next active frontier is `IAL2-FEATURE-COMPLETENESS-FRONTIER.93`, a
-selector for the next AXI manager feature-completeness owner after explicit
-same-ID reject policy.
+Follow-up selector `IAL2-FEATURE-COMPLETENESS-FRONTIER.93` chose
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.94`, AXI same-ID issue-order queue policy
+contract selection, before parser/report metadata or generated queue behavior.

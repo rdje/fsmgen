@@ -4361,11 +4361,28 @@ Explicit `reject` emits a policy-specific static validation diagnostic:
 AXI manager capacity/status IAL2 contract concrete read ID value 3 is reused by transactions 'r0' and 'r1'; selected same-id-ordering.read concrete-id-reuse reject policy rejects concrete same-ID reuse
 ```
 
-This advances the active frontier to
+This advanced the frontier to
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.93`, the next AXI manager selector before
 accepted same-ID reuse, generated per-ID issue-order queues, scoreboards,
 concrete-ID response demux, queued/blocking policy, full-manager behavior,
 direct backend lowering, or VHDL.
+
+Post same-ID reject policy selector:
+[AXI_IAL2_MANAGER_POST_SAME_ID_REJECT_POLICY_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_SAME_ID_REJECT_POLICY_NEXT_SLICE_SELECTION.md)
+ships `IAL2-FEATURE-COMPLETENESS-FRONTIER.93`. Live reports confirm `.92`
+is policy-only: the reject-policy sample reports
+`same_id_ordering.mode: concrete_id_reuse_policy`,
+`generated_behavior: false`, read policy `reject`, and
+`generated_queue_behavior: false`; generated auto-ID samples still avoid
+same-ID concurrency rather than accepting concrete-ID same-ID reuse.
+
+The selector advances the active frontier to
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.94`, public AXI same-ID issue-order queue
+policy contract selection. `.94` must define the `issue-order-queue` public
+source spelling, read/write family scope, queue depth bounds, enqueue/dequeue
+semantics, queue-head response-demux behavior, diagnostics, report vocabulary,
+validation gates, and rollback boundary before parser/report metadata or
+generated queue behavior can ship.
 
 First implementation subset selection:
 [AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION](../../AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md)
