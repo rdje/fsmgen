@@ -28,6 +28,7 @@ layer with leaky "common" constructs. `IAL2-FEATURE-COMPLETENESS-FRONTIER.86`
 applied this stance while selecting `.87`, `.87` kept it while selecting
 `.88`, and `.88` kept the shipped fail-closed concrete-ID same-ID diagnostic
 AXI-profile-local. `.89` kept per-ID issue-order queue readiness AXI-profile
-scoped by selecting an audit before any common IAL2 queue construct. Any
-future common construct should be promoted only after another profile proves
-compatible need.
+scoped by selecting an audit before any common IAL2 queue construct. `.90`
+kept same-ID reuse policy AXI-profile-local by selecting a public AXI policy
+contract before any common queue abstraction. Any future common construct
+should be promoted only after another profile proves compatible need.

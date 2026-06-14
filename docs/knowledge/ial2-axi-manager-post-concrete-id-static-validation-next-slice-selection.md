@@ -31,3 +31,6 @@ owner should be public same-ID reuse policy selection, generated queue or
 scoreboard substrate, concrete-ID response-demux prerequisites, report/static
 residue refinement, a smaller IAL1/IAL0/SystemVerilog prerequisite, or a
 deliberate deferral.
+
+That audit is now complete. `.90` selected `.91`, public same-ID reuse policy
+contract selection, before parser/report metadata or generated queue behavior.

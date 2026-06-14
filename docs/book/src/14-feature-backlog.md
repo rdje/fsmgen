@@ -4286,6 +4286,18 @@ behavior remains gated by public same-ID reuse policy, queue/scoreboard
 substrate, concrete response-demux prerequisites, report/static residue
 refinement, and any smaller IAL1/IAL0/SystemVerilog prerequisites.
 
+Per-ID issue-order queue readiness audit:
+[AXI_IAL2_MANAGER_PER_ID_QUEUE_READINESS_AUDIT](../../AXI_IAL2_MANAGER_PER_ID_QUEUE_READINESS_AUDIT.md)
+ships `IAL2-FEATURE-COMPLETENESS-FRONTIER.90`. It selects
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.91`, AXI same-ID reuse policy contract
+selection, before parser/report metadata or generated queue behavior. The
+audit finds that existing lower layers can carry bounded scalar or bank state,
+guarded rules, pulses, and assertions, so a smaller IAL1/IAL0/SystemVerilog
+prerequisite is not the next blocker. The public `.ppif` manager-capacity
+surface still lacks a same-ID reuse policy, and concrete-ID response demux
+cannot distinguish two same-ID transactions without selected issue-order
+state. Current residue remains honest.
+
 First implementation subset selection:
 [AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION](../../AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md)
 selects a source-anchored AXI Valid-Ready channel contract/monitor as the

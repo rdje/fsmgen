@@ -1178,7 +1178,10 @@ leaving currently valid single-concrete-ID samples behavior-stable. Selector
 `.89` chooses `.90`, AXI per-ID issue-order queue readiness, before any
 accepted concrete-ID same-ID reuse behavior, queue/scoreboard substrate,
 public same-ID reuse policy, concrete response-demux behavior, or report/static
-residue refinement ships.
+residue refinement ships. Audit `.90` selects `.91`, AXI same-ID reuse policy
+contract selection, because the missing prerequisite is not a smaller lowering
+feature but an explicit public source/report contract for reject, queue,
+stall/block, or scoreboard semantics.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.
