@@ -720,8 +720,8 @@ subtest 'multi-beat read-data contract generates output-bank payload behavior' =
     like($fsm, qr/\(-axi0_r0_read_beat_0_capture\s+<\(& \(& axi0_read_complete \(& axi0_r0_auto_id_busy_q \(== axi0_rid axi0_r0_auto_id_q\)\)\) \(! axi0_r0_request\) \(== axi0_r0_read_beat_count_q 5'd0\)\)[\s\S]*\(<- \(axi0_r0_beat_rdata_0> axi0_rdata\)\)[\s\S]*\(<- \(axi0_r0_beat_rresp_0> axi0_rresp\)\)[\s\S]*\(<- \(axi0_r0_beat_valid> 16'b0000000000000001\)\)[\s\S]*\(<- \(axi0_r0_read_beats> 5'd1\)\)/, 'scheduled .fsm captures lane 0 payload, valid mask, and length');
     like($fsm, qr/\(-axi0_r0_rresp_aggregate\s+<\(& \(& axi0_read_complete \(& axi0_r0_auto_id_busy_q \(== axi0_rid axi0_r0_auto_id_q\)\)\) \(! axi0_r0_request\) \(< axi0_r0_rresp axi0_rresp\)\)[\s\S]*\(<- \(axi0_r0_rresp> axi0_rresp\)\)/, 'scheduled .fsm updates scalar aggregate under matched-beat max guard');
 
-    assert_read_response_demux_burst_last_report($result->{report}{response_demux}, 'generator multi-beat report', 1);
-    assert_same_id_ordering_report($result->{report}{same_id_ordering}, 'generator multi-beat report', 1, 'read', 1);
+    assert_read_response_demux_burst_last_report($result->{report}{response_demux}, 'generator multi-beat report', 1, 1);
+    assert_same_id_ordering_report($result->{report}{same_id_ordering}, 'generator multi-beat report', 1, 'read', 1, 1);
     assert_read_data_multi_beat_report($result->{report}{read_data}, 'generator multi-beat report');
 
     my $hdl = hdl_for('axi0_capacity_status', $fsm);
@@ -759,8 +759,8 @@ subtest 'multi-beat read-data without scalar aggregation remains valid' => sub {
     ok(!exists($read->{status_aggregation_generated_behavior}), 'no-aggregation multi-beat contract has no scalar aggregation generated flag');
     ok(!exists($read->{status_aggregate_output}), 'no-aggregation multi-beat contract has no scalar aggregate output shape');
     is_deeply($read_data->{residue}, [qw(rresp_aggregation)], 'no-aggregation multi-beat contract keeps broad RRESP aggregation residue');
-    assert_read_response_demux_burst_last_report($result->{report}{response_demux}, 'generator no-aggregation multi-beat report', 1);
-    assert_same_id_ordering_report($result->{report}{same_id_ordering}, 'generator no-aggregation multi-beat report', 1, 'read', 1);
+    assert_read_response_demux_burst_last_report($result->{report}{response_demux}, 'generator no-aggregation multi-beat report', 1, 1);
+    assert_same_id_ordering_report($result->{report}{same_id_ordering}, 'generator no-aggregation multi-beat report', 1, 'read', 1, 1);
     my @r0_status_outputs = map { "axi0_r0_beat_rresp_$_" } 0 .. 15;
     my @r1_status_outputs = map { "axi0_r1_beat_rresp_$_" } 0 .. 15;
     is_deeply(
@@ -1417,7 +1417,7 @@ sub assert_read_response_demux_report {
 }
 
 sub assert_read_response_demux_burst_last_report {
-    my ($demux, $owner, $multi_beat_by_rid_covered) = @_;
+    my ($demux, $owner, $multi_beat_by_rid_covered, $bounded_burst_output_covered) = @_;
     is($demux->{mode}, 'bounded_response_demux_contract', "$owner marks bounded response-demux contract mode");
     ok($demux->{generated_behavior}, "$owner marks top-level generated behavior true for burst-last behavior");
     my $read = $demux->{read};
@@ -1444,7 +1444,9 @@ sub assert_read_response_demux_burst_last_report {
         [qw(axi0_read_response_demux_active_match axi0_r0_r1_read_response_demux_unique_match)],
         "$owner reports generated burst-last read demux assertions",
     );
-    my @residue = ($multi_beat_by_rid_covered ? () : ('read_data_interleaving'), 'bursts');
+    my @residue;
+    push @residue, 'read_data_interleaving' unless $multi_beat_by_rid_covered;
+    push @residue, 'bursts' unless $bounded_burst_output_covered;
     is_deeply($demux->{residue}, \@residue, "$owner reports remaining read response-demux residue");
 }
 
@@ -1468,8 +1470,8 @@ sub assert_rlast_report_prose_alignment {
     ok($id_residue, "$owner reports AXI ID/order unsupported residue");
     like(
         $id_residue->{detail},
-        qr/generated burst-last RLAST response-demux completion, structural last-beat read-data metadata, generated last-beat read-data RDATA\/RRESP capture, generated raw-ARLEN burst-length capture, explicit runtime-assertion beat-count\/RLAST validation, generated multi-beat read-data output-bank behavior for the covered auto-ID multi-beat-by-RID subset, and generated scalar RRESP aggregation behavior are supported/,
-        "$owner reports generated burst-last, last-beat, raw ARLEN, beat-count, multi-beat output-bank, and scalar aggregation behavior as supported",
+        qr/generated burst-last RLAST response-demux completion, structural last-beat read-data metadata, generated last-beat read-data RDATA\/RRESP capture, generated raw-ARLEN burst-length capture, explicit runtime-assertion beat-count\/RLAST validation, generated multi-beat read-data output-bank behavior for the covered auto-ID multi-beat-by-RID subset, bounded burst payload\/output behavior through that per-beat output bank, and generated scalar RRESP aggregation behavior are supported/,
+        "$owner reports generated burst-last, last-beat, raw ARLEN, beat-count, multi-beat output-bank, bounded burst output, and scalar aggregation behavior as supported",
     );
     my $stale_metadata = join('', 'report-only burst-last ', 'RLAST response-demux metadata');
     my $stale_tracking = join('', 'generated burst/last-beat tracking ', 'remain outside');
@@ -1790,7 +1792,7 @@ sub assert_read_data_multi_beat_report {
 }
 
 sub assert_same_id_ordering_report {
-    my ($ordering, $owner, $response_demux_covered, $family_name, $multi_beat_by_rid_covered) = @_;
+    my ($ordering, $owner, $response_demux_covered, $family_name, $multi_beat_by_rid_covered, $bounded_burst_output_covered) = @_;
     $family_name //= 'write';
     is($ordering->{mode}, 'auto_id_same_id_avoidance', "$owner marks same-ID avoidance mode");
     ok($ordering->{generated_behavior}, "$owner marks same-ID ordering generated behavior true");
@@ -1798,7 +1800,7 @@ sub assert_same_id_ordering_report {
     my @residue = qw(concrete_id_same_id_ordering per_id_issue_order_queues);
     push @residue, 'read_response_demux' unless $family_name eq 'read' && $response_demux_covered;
     push @residue, 'read_data_interleaving' unless $multi_beat_by_rid_covered;
-    push @residue, 'bursts';
+    push @residue, 'bursts' unless $bounded_burst_output_covered;
     is_deeply(
         $ordering->{residue},
         \@residue,

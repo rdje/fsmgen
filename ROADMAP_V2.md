@@ -1154,6 +1154,15 @@ residue alignment for the covered generated auto-ID multi-beat output-bank
 subset, because the selected per-beat output bank is already the bounded burst
 payload/output shape for that subset. Packed/full burst assembly remains a
 separate deferred contract.
+Implementation `.85` ships that alignment: the public multi-beat sample now
+reports `response_demux.residue: []` and `same_id_ordering.residue:
+[concrete_id_same_id_ordering, per_id_issue_order_queues]` while
+`read_data.residue` stays empty. Generated `.isf`, `.fsm`, and SystemVerilog
+behavior is unchanged. The active frontier is `.86`, the next AXI manager
+feature-completeness selector. `.86` should also carry the IAL2 factoring
+question: shared common IAL2 constructs should be kept to a small semantic
+core and only promoted from protocol/platform vocabularies after reuse is
+proven across multiple profiles.
 Verification-code generation is captured as a separate future roadmap lane
 from the synthesizable RTL/HDL feature-completeness path.
 Packed burst outputs, concrete-ID same-ID ordering, per-ID queues, queued

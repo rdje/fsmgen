@@ -10,16 +10,17 @@ answers:
 date: 2026-06-14
 status: current
 tags: [ial2, ial1, ial0, systemverilog, roadmap, task-tree, feature-completeness]
-evidence: docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; docs/AXI_IAL2_MANAGER_RRESP_AGGREGATION_CONTRACT_SELECTION.md; docs/AXI_IAL2_MANAGER_MULTI_BEAT_READ_DATA_OUTPUT_BANK_BEHAVIOR_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_MULTI_BEAT_READ_DATA_REASSEMBLY_OUTPUT_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_MULTI_BEAT_READ_DATA_METADATA_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_MULTI_BEAT_READ_DATA_REASSEMBLY_CONTRACT_SELECTION.md; docs/AXI_IAL2_MANAGER_POST_BEAT_COUNT_RLAST_VALIDATION_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_BEAT_COUNT_RLAST_RUNTIME_VALIDATION_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_BEAT_COUNT_RLAST_RUNTIME_VALIDATION_CONTRACT_SELECTION.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md; docs/tasks/R11-DIRECT-STRUCTURAL-VHDL-REROUTING.md
+evidence: docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; docs/AXI_IAL2_MANAGER_BURST_RESIDUE_ALIGNMENT_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_BURST_PAYLOAD_OUTPUT_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_READ_DATA_INTERLEAVING_RESIDUE_ALIGNMENT_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_RRESP_AGGREGATION_BEHAVIOR_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_RRESP_AGGREGATION_CONTRACT_SELECTION.md; docs/AXI_IAL2_MANAGER_MULTI_BEAT_READ_DATA_OUTPUT_BANK_BEHAVIOR_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_MULTI_BEAT_READ_DATA_REASSEMBLY_OUTPUT_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_MULTI_BEAT_READ_DATA_METADATA_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_MULTI_BEAT_READ_DATA_REASSEMBLY_CONTRACT_SELECTION.md; docs/AXI_IAL2_MANAGER_POST_BEAT_COUNT_RLAST_VALIDATION_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_BEAT_COUNT_RLAST_RUNTIME_VALIDATION_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_BEAT_COUNT_RLAST_RUNTIME_VALIDATION_CONTRACT_SELECTION.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md; docs/tasks/R11-DIRECT-STRUCTURAL-VHDL-REROUTING.md
 reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER|IAL2 feature completeness|IAL1/IAL0/SV prerequisites|VHDL backend/reroute' docs/TASK_TREE.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md README.md ROADMAP_V2.md docs/book/src/14-feature-backlog.md
 ---
 
 The current feature-completeness priority is IAL2 on the
 SystemVerilog-backed path.
 
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.77` owns the next PNT frontier:
-parser/report metadata and static validation for the selected scalar
-`RRESP` aggregation contract.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.86` owns the next PNT frontier: selecting
+the next AXI manager feature-completeness slice after bounded burst residue
+alignment, while carrying the IAL2 common-core vs protocol/platform vocabulary
+factoring question.
 
 Completed `.47` shipped generated single-beat `RDATA`/`RRESP` capture
 behavior. Completed `.48` selected `.49` because the current public read-data
@@ -121,6 +122,21 @@ metadata or generated behavior changes. Completed `.76` selected additive
 transaction-local `(status-aggregate-output NAME)` bindings, normalized
 report spelling `worst_observed`, and `.77` as parser/report metadata plus
 static validation before generated scalar behavior.
+Completed `.77` shipped scalar `RRESP` aggregation parser/report metadata and
+advanced to `.78`, generated scalar aggregation readiness. Completed `.78`
+selected direct width-2 `worst_observed` behavior, and `.79` shipped scalar
+aggregate outputs, request-time `2'd0` initialization, matched-beat max
+updates, and empty `read_data.residue` for the public multi-beat sample.
+Completed `.80` selected read-data interleaving/queue readiness. Completed
+`.81` found the covered generated auto-ID multi-beat-by-RID output-bank
+subset already has enough shipped behavior for read-data interleaving residue
+movement. Completed `.82` removed broad `read_data_interleaving` residue from
+`response_demux` and `same_id_ordering` for that covered subset. Completed
+`.83` selected burst payload/output readiness. Completed `.84` selected
+report/static `bursts` residue alignment because the per-beat output bank is
+already the bounded burst payload/output shape for the covered subset.
+Completed `.85` removed broad `bursts` residue from `response_demux` and
+`same_id_ordering` for that covered subset and advanced the frontier to `.86`.
 
 Selected IAL2 work may include required IAL1 or IAL0/SV support, but only when
 those prerequisites are explicit, task-tree owned, documented, and

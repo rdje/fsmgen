@@ -4187,12 +4187,45 @@ demux, raw ARLEN capture, runtime beat-count/RLAST validation,
 per-transaction data/status lanes, valid masks, length outputs, scalar status
 output, and generated same-ID avoidance are present.
 
-The next active owner is `IAL2-FEATURE-COMPLETENESS-FRONTIER.85`,
+The selected follow-up owner was `IAL2-FEATURE-COMPLETENESS-FRONTIER.85`,
 report/static `bursts` residue alignment for that covered subset. Packed
 burst payload outputs, full burst assembly, aggregate-only status shapes,
 authored concrete-ID same-ID ordering, per-ID queues, queued/blocking policy,
 profile aliases, full-manager behavior, verification-code generation, direct
 backend lowering, and VHDL remain deferred.
+
+Burst residue alignment:
+[AXI_IAL2_MANAGER_BURST_RESIDUE_ALIGNMENT_FIRST_SLICE](../../AXI_IAL2_MANAGER_BURST_RESIDUE_ALIGNMENT_FIRST_SLICE.md)
+ships `IAL2-FEATURE-COMPLETENESS-FRONTIER.85`. The public multi-beat sample
+now reports:
+
+```text
+read_data.residue: []
+auto_id_lifecycle.residue: []
+response_demux.residue: []
+same_id_ordering.residue:
+  - concrete_id_same_id_ordering
+  - per_id_issue_order_queues
+```
+
+Generated `.isf`, `.fsm`, and SystemVerilog behavior is unchanged. The report
+predicate removes `bursts` only when generated read same-ID avoidance,
+generated burst-last read response demux, ARLEN-derived expected beats,
+runtime beat-count/RLAST validation, matched-read-beat counting,
+`multi_beat_by_rid`, per-transaction output banks, full configured
+data/status lanes, valid masks, length outputs, and generated multi-beat
+output-bank behavior are all present. Scalar `RRESP` aggregation is not
+required for this movement because per-beat status lanes are generated.
+
+The next active owner is `IAL2-FEATURE-COMPLETENESS-FRONTIER.86`, the next
+AXI manager feature-completeness selector. It also carries the IAL2 factoring
+question: keep common IAL2 constructs to a small semantic core where reuse is
+proven across multiple profiles, and keep protocol/platform-specific
+vocabulary profile-local until evidence justifies promotion. Packed/full
+burst assembly, aggregate-only status shapes, authored concrete-ID same-ID
+ordering, per-ID queues, queued/blocking policy, profile aliases,
+full-manager behavior, verification-code generation, direct backend lowering,
+and VHDL remain deferred.
 
 First implementation subset selection:
 [AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION](../../AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md)

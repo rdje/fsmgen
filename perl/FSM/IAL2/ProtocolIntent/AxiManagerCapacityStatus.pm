@@ -3068,7 +3068,7 @@ sub _build_report(%args) {
             },
             {
                 id     => 'axi_id_ordering_and_response_matching',
-                detail => 'Concrete transaction ID request/response assertions, explicit bounded auto-ID request-ID drive plus completion-event release, generated auto-ID same-ID avoidance, generated write BID response demux, generated single-beat read RID response demux, generated single-beat read-data RDATA/RRESP capture, generated burst-last RLAST response-demux completion, structural last-beat read-data metadata, generated last-beat read-data RDATA/RRESP capture, generated raw-ARLEN burst-length capture, explicit runtime-assertion beat-count/RLAST validation, generated multi-beat read-data output-bank behavior for the covered auto-ID multi-beat-by-RID subset, and generated scalar RRESP aggregation behavior are supported; dynamic user-ID arbitration while issuing multiple same-family requests in one cycle, per-ID same-ID response queues, authored/general different-ID interleaving outside the covered auto-ID subset, and broader burst payload assembly remain outside this capacity/status shell.',
+                detail => 'Concrete transaction ID request/response assertions, explicit bounded auto-ID request-ID drive plus completion-event release, generated auto-ID same-ID avoidance, generated write BID response demux, generated single-beat read RID response demux, generated single-beat read-data RDATA/RRESP capture, generated burst-last RLAST response-demux completion, structural last-beat read-data metadata, generated last-beat read-data RDATA/RRESP capture, generated raw-ARLEN burst-length capture, explicit runtime-assertion beat-count/RLAST validation, generated multi-beat read-data output-bank behavior for the covered auto-ID multi-beat-by-RID subset, bounded burst payload/output behavior through that per-beat output bank, and generated scalar RRESP aggregation behavior are supported; dynamic user-ID arbitration while issuing multiple same-family requests in one cycle, per-ID same-ID response queues, authored/general different-ID interleaving outside the covered auto-ID subset, packed burst-vector outputs, alternate full burst payload assembly, and aggregate-only status output shapes remain outside this capacity/status shell.',
             },
             {
                 id     => 'profile_aliases_and_full_manager_behavior',
@@ -3134,6 +3134,12 @@ sub _report_response_demux($contract) {
     if (_read_data_covers_multi_beat_by_rid_interleaving($contract)) {
         $demux->{residue} = [
             grep { $_ ne 'read_data_interleaving' }
+            @{$demux->{residue} || []}
+        ];
+    }
+    if (_read_data_covers_bounded_multi_beat_burst_output($contract)) {
+        $demux->{residue} = [
+            grep { $_ ne 'bursts' }
             @{$demux->{residue} || []}
         ];
     }
@@ -3252,6 +3258,39 @@ sub _read_data_covers_multi_beat_by_rid_interleaving($contract) {
     return 1;
 }
 
+sub _read_data_covers_bounded_multi_beat_burst_output($contract) {
+    return 0 unless _read_data_covers_multi_beat_by_rid_interleaving($contract);
+
+    my $read = $contract->{read_data}{read};
+    return 0 unless ($read->{burst_length_source} // '') eq 'arlen_signal'
+        && ($read->{burst_length_validation} // '') eq 'runtime_assertion'
+        && ($read->{expected_beat_count_encoding} // '') eq 'arlen_plus_one'
+        && $read->{burst_length_generated_behavior}
+        && $read->{beat_count_validation_generated_behavior}
+        && $read->{multi_beat_reassembly_generated_behavior};
+
+    my $max_beats = $read->{max_beats} // 0;
+    return 0 unless $max_beats > 0;
+
+    my $transactions = $read->{transactions};
+    return 0 unless ref($transactions) eq 'ARRAY' && @{$transactions};
+
+    for my $transaction (@{$transactions}) {
+        return 0 unless ref($transaction) eq 'HASH'
+            && defined($transaction->{burst_length_storage})
+            && defined($transaction->{expected_beat_count_storage})
+            && defined($transaction->{beat_count_storage})
+            && defined($transaction->{valid_mask_output})
+            && defined($transaction->{length_output})
+            && ref($transaction->{generated_data_outputs}) eq 'ARRAY'
+            && @{$transaction->{generated_data_outputs}} == $max_beats
+            && ref($transaction->{generated_status_outputs}) eq 'ARRAY'
+            && @{$transaction->{generated_status_outputs}} == $max_beats;
+    }
+
+    return 1;
+}
+
 sub _report_same_id_ordering($contract) {
     my $ordering = _clone_jsonish($contract->{same_id_ordering});
     $ordering->{generated_behavior} = $contract->{same_id_ordering}{generated_behavior}
@@ -3271,6 +3310,12 @@ sub _report_same_id_ordering($contract) {
     if (_read_data_covers_multi_beat_by_rid_interleaving($contract)) {
         $ordering->{residue} = [
             grep { $_ ne 'read_data_interleaving' }
+            @{$ordering->{residue} || []}
+        ];
+    }
+    if (_read_data_covers_bounded_multi_beat_burst_output($contract)) {
+        $ordering->{residue} = [
+            grep { $_ ne 'bursts' }
             @{$ordering->{residue} || []}
         ];
     }

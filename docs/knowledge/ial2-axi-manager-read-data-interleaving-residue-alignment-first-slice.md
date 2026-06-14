@@ -18,10 +18,13 @@ reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.82|IAL2-FEATURE-COMPLETENE
 `read_data_interleaving` residue for the covered generated auto-ID
 multi-beat-by-RID subset.
 
-The public multi-beat sample now reports `response_demux.residue: [bursts]`
-and `same_id_ordering.residue: [concrete_id_same_id_ordering,
-per_id_issue_order_queues, bursts]`; `read_data.residue` remains empty and
-`auto_id_lifecycle.residue` remains empty.
+Immediately after `.82`, the public multi-beat sample reported
+`response_demux.residue: [bursts]` and `same_id_ordering.residue:
+[concrete_id_same_id_ordering, per_id_issue_order_queues, bursts]` while
+`read_data.residue` and `auto_id_lifecycle.residue` remained empty. Later
+`.85` removed that broad `bursts` residue for the same covered generated
+subset; see
+`docs/knowledge/ial2-axi-manager-burst-residue-alignment-first-slice.md`.
 
 Generated `.isf`, `.fsm`, and SystemVerilog behavior is unchanged. The
 follow-up leaf was `IAL2-FEATURE-COMPLETENESS-FRONTIER.83`, which selected
