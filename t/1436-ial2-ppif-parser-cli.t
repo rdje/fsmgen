@@ -343,15 +343,14 @@ subtest 'PPIF adapter parses AXI manager burst-length read-data metadata' => sub
     my $sample_path = sample_capacity_read_data_burst_length_ppif_path();
     ok(-f $sample_path, 'tracked runnable PPIF capacity/status burst-length read-data sample exists');
 
-    my $base = FSM::Adapter::IAL2::PPIF->new()->parse_source(sample_capacity_read_data_last_beat_ppif(), sample_capacity_read_data_last_beat_ppif_path());
     my $result = FSM::Adapter::IAL2::PPIF->new()->parse_source(sample_capacity_read_data_burst_length_ppif(), $sample_path);
 
     is($result->{kind}, 'protocol_intent.axi_manager_capacity_status', 'burst-length read-data sample still uses the capacity/status generator');
     is($result->{report}{source_object}{id}, 'axi-manager-capacity-status-read-data-burst-length', 'burst-length read-data source object id is preserved');
     is($result->{report}{source_object}{intent_name}, 'axi_manager_capacity_status_read_data_burst_length', 'burst-length read-data source intent name is preserved');
-    is($result->{generated_ial1}{text}, $base->{generated_ial1}{text}, 'burst-length metadata leaves generated IAL1 unchanged');
-    is_deeply($result->{generated_ial0}{files}, $base->{generated_ial0}{files}, 'burst-length metadata leaves generated IAL0 unchanged');
-    unlike($result->{generated_ial1}{text}, qr/\baxi0_arlen\b/, 'burst-length ARLEN signal is report-only in generated IAL1');
+    like($result->{generated_ial1}{text}, qr/\(input axi0_arlen \(width 8\)\)/, 'burst-length read-data PPIF generates a width-8 ARLEN input');
+    like($result->{generated_ial1}{text}, qr/\(rule axi0_r0_burst_length_capture axi0_r0_request\s+\(axi0_r0_arlen_q axi0_arlen\)\)/, 'burst-length read-data PPIF generates r0 raw ARLEN capture');
+    like($result->{generated_ial0}{files}{'axi0_capacity_status.fsm'}, qr/\(-axi0_r0_burst_length_capture\s+<axi0_r0_request\s+\(<- \(axi0_r0_arlen_q axi0_arlen\)\)\s+\)/, 'burst-length read-data PPIF lowers r0 raw ARLEN capture into generated .fsm');
     assert_read_response_demux_burst_last_report($result->{report}{response_demux}, 'adapter burst-length read-data report');
     assert_read_data_burst_length_report($result->{report}{read_data}, 'adapter burst-length read-data report');
 };
@@ -1052,7 +1051,13 @@ subtest 'CLI --verify-hdl accepts AXI manager burst-length read-data metadata .p
     is(join('', @{$stderr_buf || []}), '', 'capacity/status burst-length read-data --verify-hdl keeps stderr clean');
     ok(-f $hdl, 'burst-length read-data --output writes generated HDL');
     my $sv = slurp($hdl);
-    unlike($sv, qr/\baxi0_arlen\b/, 'burst-length ARLEN metadata is not emitted into HDL');
+    like($sv, qr/\binput\s+(?:wire\s+)?\[7:0\]\s+axi0_arlen\b/, 'burst-length read-data HDL exposes generated ARLEN input');
+    like($sv, qr/\breg\s+\[7:0\]\s+axi0_r0_arlen_q\b/, 'burst-length read-data HDL declares r0 raw ARLEN storage');
+    like($sv, qr/\breg\s+\[7:0\]\s+axi0_r1_arlen_q\b/, 'burst-length read-data HDL declares r1 raw ARLEN storage');
+    like($sv, qr/assign\s+axi0_r0_burst_length_capture_en\s*=\s*axi0_r0_request\s*;/, 'burst-length read-data HDL guards r0 ARLEN capture with request');
+    like($sv, qr/assign\s+axi0_r1_burst_length_capture_en\s*=\s*axi0_r1_request\s*;/, 'burst-length read-data HDL guards r1 ARLEN capture with request');
+    like($sv, qr/axi0_r0_arlen_q_next\s*=\s*axi0_arlen\s*;/, 'burst-length read-data HDL captures raw ARLEN into r0 storage');
+    like($sv, qr/axi0_r1_arlen_q_next\s*=\s*axi0_arlen\s*;/, 'burst-length read-data HDL captures raw ARLEN into r1 storage');
     like($sv, qr/\binput\s+(?:wire\s+)?\[3:0\]\s+axi0_rid\b/, 'burst-length read-data HDL keeps generated RID input from burst-last response-demux');
     like($sv, qr/\binput\s+(?:wire\s+)?axi0_rlast\b/, 'burst-length read-data HDL keeps generated RLAST input from burst-last response-demux');
     like($sv, qr/\binput\s+(?:wire\s+)?\[31:0\]\s+axi0_rdata\b/, 'burst-length read-data HDL exposes generated RDATA input');
@@ -2405,8 +2410,8 @@ sub assert_rlast_report_prose_alignment {
     ok($id_residue, "$owner reports AXI ID/order unsupported residue");
     like(
         $id_residue->{detail},
-        qr/generated burst-last RLAST response-demux completion, structural last-beat read-data metadata, generated last-beat read-data RDATA\/RRESP capture, and report-only ARLEN burst-length metadata are supported/,
-        "$owner reports generated burst-last RLAST completion, generated last-beat read-data capture, and ARLEN metadata as supported",
+        qr/generated burst-last RLAST response-demux completion, structural last-beat read-data metadata, generated last-beat read-data RDATA\/RRESP capture, and generated raw-ARLEN burst-length capture are supported/,
+        "$owner reports generated burst-last RLAST completion, generated last-beat read-data capture, and raw ARLEN capture as supported",
     );
     my $stale_metadata = join('', 'report-only burst-last ', 'RLAST response-demux metadata');
     my $stale_tracking = join('', 'generated burst/last-beat tracking ', 'remain outside');
@@ -2544,17 +2549,22 @@ sub assert_read_data_burst_length_report {
     is($read->{interleaving_policy}, 'last_beat_by_rid', "$owner reports last-beat-by-RID interleaving policy");
     is($read->{burst_length_source}, 'arlen_signal', "$owner reports ARLEN as the burst-length source");
     is($read->{burst_length_signal}, 'axi0_arlen', "$owner reports the ARLEN signal");
-    is($read->{burst_length_signal_direction}, 'generated_input', "$owner reports future generated input direction");
+    is($read->{burst_length_signal_direction}, 'generated_input', "$owner reports generated input direction");
     is($read->{burst_length_signal_width}, 8, "$owner reports ARLEN width");
     is($read->{burst_length_encoding}, 'axlen_plus_one', "$owner reports AXI LEN+1 encoding");
     is($read->{burst_length_capture}, 'transaction_request', "$owner reports request-bound length capture");
     is($read->{max_beats}, 16, "$owner reports max-beats");
-    ok(!$read->{burst_length_generated_behavior}, "$owner reports burst-length generation as false");
+    ok($read->{burst_length_generated_behavior}, "$owner reports burst-length generation as true");
     is($read->{burst_length_validation}, 'report_only', "$owner reports report-only validation");
     is($read->{beat_storage}, 'none', "$owner reports no beat storage");
     is($read->{valid_output}, 'none', "$owner reports no valid output");
     is($read->{length_output}, 'none', "$owner reports no length output");
-    is_deeply($read->{generated_inputs}, [qw(axi0_rdata axi0_rresp)], "$owner omits ARLEN from generated read-data inputs");
+    is_deeply([map { $_->{burst_length_storage} } @{$read->{transactions}}], [qw(axi0_r0_arlen_q axi0_r1_arlen_q)], "$owner reports per-transaction raw ARLEN storage");
+    is_deeply([map { $_->{burst_length_capture_rule} } @{$read->{transactions}}], [qw(axi0_r0_burst_length_capture axi0_r1_burst_length_capture)], "$owner reports per-transaction burst-length capture rules");
+    is_deeply($read->{generated_inputs}, [qw(axi0_rdata axi0_rresp axi0_arlen)], "$owner adds ARLEN to generated read-data inputs");
+    is_deeply($read->{generated_burst_length_inputs}, [qw(axi0_arlen)], "$owner reports generated burst-length input");
+    is_deeply($read->{generated_burst_length_storage}, [qw(axi0_r0_arlen_q axi0_r1_arlen_q)], "$owner reports generated burst-length storage");
+    is_deeply($read->{generated_burst_length_rules}, [qw(axi0_r0_burst_length_capture axi0_r1_burst_length_capture)], "$owner reports generated burst-length capture rules");
     is_deeply(
         $read->{generated_outputs},
         [qw(axi0_r0_last_rdata axi0_r0_last_rresp axi0_r1_last_rdata axi0_r1_last_rresp)],
@@ -2562,12 +2572,12 @@ sub assert_read_data_burst_length_report {
     );
     is_deeply(
         $read->{generated_rules},
-        [qw(axi0_r0_read_data_capture axi0_r1_read_data_capture)],
-        "$owner keeps generated last-beat capture rules stable",
+        [qw(axi0_r0_read_data_capture axi0_r1_read_data_capture axi0_r0_burst_length_capture axi0_r1_burst_length_capture)],
+        "$owner reports generated last-beat and burst-length capture rules",
     );
     is_deeply(
         $read_data->{residue},
-        [qw(generated_burst_length_capture generated_beat_count_validation multi_beat_read_data_reassembly per_beat_outputs rresp_aggregation)],
+        [qw(generated_beat_count_validation multi_beat_read_data_reassembly per_beat_outputs rresp_aggregation)],
         "$owner reports explicit burst-length residue",
     );
 }

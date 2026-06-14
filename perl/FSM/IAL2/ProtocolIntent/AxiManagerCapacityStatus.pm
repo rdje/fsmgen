@@ -155,6 +155,7 @@ sub _normalize_contract($raw) {
     my $read_data = exists($raw->{read_data})
         ? _normalize_read_data(
             raw_read_data  => $raw->{read_data},
+            manager_name   => $name,
             transactions   => $transactions,
             response_demux => $response_demux,
         )
@@ -929,6 +930,7 @@ sub _normalize_read_data(%args) {
 
     my $read = _normalize_read_data_read(
         raw_read       => $raw->{read},
+        manager_name   => $args{manager_name},
         transactions   => $args{transactions},
         response_demux => $args{response_demux}{read},
     );
@@ -954,7 +956,6 @@ sub _normalize_read_data(%args) {
         ]
         : ($read->{burst_length_source} || '') eq 'arlen_signal'
             ? [
-                'generated_burst_length_capture',
                 'generated_beat_count_validation',
                 'multi_beat_read_data_reassembly',
                 'per_beat_outputs',
@@ -1117,6 +1118,12 @@ sub _normalize_read_data_read(%args) {
         );
         if (ref($burst_length) eq 'HASH') {
             @read{sort keys %$burst_length} = @{$burst_length}{sort keys %$burst_length};
+            for my $transaction (@transactions) {
+                $transaction->{burst_length_storage}
+                    = "$args{manager_name}_$transaction->{transaction}_arlen_q";
+                $transaction->{burst_length_capture_rule}
+                    = "$args{manager_name}_$transaction->{transaction}_burst_length_capture";
+            }
         } else {
             @read{qw(burst_length_source burst_length_validation)} = (
                 'rlast_only',
@@ -1176,7 +1183,7 @@ sub _normalize_read_data_burst_length($raw) {
         burst_length_encoding           => 'axlen_plus_one',
         burst_length_capture            => 'transaction_request',
         max_beats                       => $max_beats,
-        burst_length_generated_behavior => 0,
+        burst_length_generated_behavior => 1,
         burst_length_validation         => 'report_only',
     };
 }
@@ -1537,7 +1544,12 @@ sub _read_data_signal_names($read_data) {
         push @signals, $read->{burst_length_signal}
             if defined $read->{burst_length_signal};
         for my $transaction (@{$read->{transactions} || []}) {
-            push @signals, grep { defined $_ } $transaction->{data_output}, $transaction->{status_output};
+            push @signals, grep { defined $_ }
+                $transaction->{data_output},
+                $transaction->{status_output};
+            push @signals, $transaction->{burst_length_storage}
+                if exists($transaction->{burst_length_storage})
+                    && defined($transaction->{burst_length_storage});
         }
     }
 
@@ -1549,7 +1561,10 @@ sub _read_data_source_inputs($contract) {
     return () unless ref($read_data) eq 'HASH' && $read_data->{generated_behavior};
     my $read = $read_data->{read};
     return () unless ref($read) eq 'HASH';
-    return @{_unique_preserving([$read->{data_signal}, $read->{status_signal}])};
+    my @inputs = ($read->{data_signal}, $read->{status_signal});
+    push @inputs, $read->{burst_length_signal}
+        if $read->{burst_length_generated_behavior};
+    return @{_unique_preserving(\@inputs)};
 }
 
 sub _read_data_output_lines($contract) {
@@ -1642,12 +1657,14 @@ sub _emit_isf($contract) {
     my @assertion_transactions = (@id_response_assertions, @response_demux_assertions, @same_id_ordering_assertions, @auto_id_assertions);
     my @auto_id_priorities = _auto_id_lifecycle_priority_lines($contract);
     my @response_demux_rules = _response_demux_rule_lines($contract);
+    my @read_data_burst_length_capture_rules = _read_data_burst_length_capture_rule_lines($contract);
     my @read_data_capture_rules = _read_data_capture_rule_lines($contract);
     my @auto_id_rules = _auto_id_lifecycle_rule_lines($contract);
     my @storage_lines = (
         "    (var $contract->{storage}{pending_reads} (width $read_width))",
         "    (var $contract->{storage}{pending_writes} (width $write_width))",
         _auto_id_lifecycle_storage_lines($contract),
+        _read_data_burst_length_storage_lines($contract),
     );
     $storage_lines[-1] .= ")";
 
@@ -1678,6 +1695,8 @@ sub _emit_isf($contract) {
         (@assertion_transactions ? ("") : ()),
         @response_demux_rules,
         (@response_demux_rules ? ("") : ()),
+        @read_data_burst_length_capture_rules,
+        (@read_data_burst_length_capture_rules ? ("") : ()),
         @read_data_capture_rules,
         (@read_data_capture_rules ? ("") : ()),
         @auto_id_rules,
@@ -1744,6 +1763,9 @@ sub _read_data_signal_input_width($contract, $name) {
     return undef unless ref($read) eq 'HASH';
     return $read->{data_signal_width} if ($read->{data_signal} // '') eq $name;
     return $read->{status_signal_width} if ($read->{status_signal} // '') eq $name;
+    return $read->{burst_length_signal_width}
+        if $read->{burst_length_generated_behavior}
+            && ($read->{burst_length_signal} // '') eq $name;
     return undef;
 }
 
@@ -1995,6 +2017,43 @@ sub _response_demux_rule($name, $guard, $completion_signal) {
     );
 }
 
+sub _read_data_burst_length_storage_lines($contract) {
+    my $read_data = $contract->{read_data};
+    return () unless ref($read_data) eq 'HASH' && $read_data->{generated_behavior};
+    my $read = $read_data->{read};
+    return () unless ref($read) eq 'HASH' && $read->{burst_length_generated_behavior};
+
+    return map {
+        "    (var $_->{burst_length_storage} (width $read->{burst_length_signal_width}))"
+    } @{$read->{transactions} || []};
+}
+
+sub _read_data_burst_length_capture_rule_lines($contract) {
+    my $read_data = $contract->{read_data};
+    return () unless ref($read_data) eq 'HASH' && $read_data->{generated_behavior};
+    my $read = $read_data->{read};
+    return () unless ref($read) eq 'HASH' && $read->{burst_length_generated_behavior};
+
+    my %request_by_transaction = map {
+        $_->{name} => $_->{request_event}
+    } grep { ($_->{kind} // '') eq 'read' } @{$contract->{transactions} || []};
+
+    my @lines;
+    for my $transaction (@{$read->{transactions} || []}) {
+        my $request_event = $request_by_transaction{$transaction->{transaction}};
+        confess "Internal error: read-data burst-length capture transaction '$transaction->{transaction}' has no read request event\n"
+            unless defined $request_event;
+        push @lines, _read_data_capture_rule(
+            _read_data_burst_length_capture_rule_name($contract, $transaction),
+            $request_event,
+            [
+                [$transaction->{burst_length_storage}, $read->{burst_length_signal}],
+            ],
+        );
+    }
+    return @lines;
+}
+
 sub _read_data_capture_rule_lines($contract) {
     my $read_data = $contract->{read_data};
     return () unless ref($read_data) eq 'HASH' && $read_data->{generated_behavior};
@@ -2021,6 +2080,11 @@ sub _read_data_capture_rule($name, $guard, $assignments) {
 
 sub _read_data_capture_rule_name($contract, $transaction) {
     return "$contract->{name}_$transaction->{transaction}_read_data_capture";
+}
+
+sub _read_data_burst_length_capture_rule_name($contract, $transaction) {
+    return $transaction->{burst_length_capture_rule}
+        // "$contract->{name}_$transaction->{transaction}_burst_length_capture";
 }
 
 sub _auto_id_rule($name, $guard, $assignments) {
@@ -2398,9 +2462,9 @@ sub _build_report(%args) {
             'response_demux transaction_completion must be generated, making selected transaction completion names generated demux pulse outputs only under explicit opt-in contracts',
             'read_data supports explicit generated single-beat capture behavior with response_scope single_beat and explicit generated last-beat capture behavior with response_scope burst_last',
             'read_data.read data width must be positive and status width must be 2',
-            'read_data.read optional burst_length metadata is accepted only for last-beat capture, source arlen, signal width 8, axlen-plus-one encoding, request capture, max_beats 1..256, and report-only validation',
+            'read_data.read optional burst_length metadata is accepted only for last-beat capture, source arlen, signal width 8, axlen-plus-one encoding, request capture, max_beats 1..256, report-only validation, and generated raw-ARLEN capture',
             'read_data.read transaction outputs must exactly cover read response_demux auto transactions',
-            'read_data generates bounded single-beat and last-beat RDATA/RRESP capture inputs, outputs, and guarded assignments for explicit opt-in contracts',
+            'read_data generates bounded single-beat and last-beat RDATA/RRESP capture inputs, outputs, guarded assignments, and raw-ARLEN burst-length capture storage/rules for explicit opt-in contracts',
         ],
         unsupported_residue => [
             {
@@ -2409,7 +2473,7 @@ sub _build_report(%args) {
             },
             {
                 id     => 'axi_id_ordering_and_response_matching',
-                detail => 'Concrete transaction ID request/response assertions, explicit bounded auto-ID request-ID drive plus completion-event release, generated auto-ID same-ID avoidance, generated write BID response demux, generated single-beat read RID response demux, generated single-beat read-data RDATA/RRESP capture, generated burst-last RLAST response-demux completion, structural last-beat read-data metadata, generated last-beat read-data RDATA/RRESP capture, and report-only ARLEN burst-length metadata are supported; dynamic user-ID arbitration while issuing multiple same-family requests in one cycle, per-ID same-ID response queues, different-ID interleaving, generated ARLEN capture, beat-count validation, full read-data interleaving/reassembly, broader burst payload assembly, RRESP aggregation, and per-beat outputs remain outside this capacity/status shell.',
+                detail => 'Concrete transaction ID request/response assertions, explicit bounded auto-ID request-ID drive plus completion-event release, generated auto-ID same-ID avoidance, generated write BID response demux, generated single-beat read RID response demux, generated single-beat read-data RDATA/RRESP capture, generated burst-last RLAST response-demux completion, structural last-beat read-data metadata, generated last-beat read-data RDATA/RRESP capture, and generated raw-ARLEN burst-length capture are supported; dynamic user-ID arbitration while issuing multiple same-family requests in one cycle, per-ID same-ID response queues, different-ID interleaving, beat-count validation, full read-data interleaving/reassembly, broader burst payload assembly, RRESP aggregation, and per-beat outputs remain outside this capacity/status shell.',
             },
             {
                 id     => 'profile_aliases_and_full_manager_behavior',
@@ -2485,6 +2549,11 @@ sub _report_read_data($contract) {
         $read_data->{read}{generated_inputs} = $artifacts->{inputs};
         $read_data->{read}{generated_outputs} = $artifacts->{outputs};
         $read_data->{read}{generated_rules} = $artifacts->{rules};
+        if ($contract->{read_data}{read}{burst_length_generated_behavior}) {
+            $read_data->{read}{generated_burst_length_inputs} = $artifacts->{burst_length_inputs};
+            $read_data->{read}{generated_burst_length_storage} = $artifacts->{burst_length_storage};
+            $read_data->{read}{generated_burst_length_rules} = $artifacts->{burst_length_rules};
+        }
     }
     if (exists $read_data->{read}{burst_length_generated_behavior}) {
         $read_data->{read}{burst_length_generated_behavior}
@@ -2540,15 +2609,34 @@ sub _response_demux_generated_artifacts($contract, $family) {
 sub _read_data_generated_artifacts($contract) {
     my $read_data = $contract->{read_data};
     my $read = $read_data->{read};
+    my @burst_length_inputs = $read->{burst_length_generated_behavior}
+        ? ($read->{burst_length_signal})
+        : ();
+    my @burst_length_storage = map { $_->{burst_length_storage} }
+        grep { exists($_->{burst_length_storage}) && defined $_->{burst_length_storage} }
+        @{$read->{transactions} || []};
+    my @burst_length_rules = map { _read_data_burst_length_capture_rule_name($contract, $_) }
+        grep { exists($_->{burst_length_capture_rule}) && defined $_->{burst_length_capture_rule} }
+        @{$read->{transactions} || []};
     return {
-        inputs => _clone_jsonish(_unique_preserving([$read->{data_signal}, $read->{status_signal}])),
+        inputs => _clone_jsonish(_unique_preserving([
+            $read->{data_signal},
+            $read->{status_signal},
+            @burst_length_inputs,
+        ])),
         outputs => [
             map { ($_->{data_output}, $_->{status_output}) }
             @{$read->{transactions} || []}
         ],
         rules => [
-            map { _read_data_capture_rule_name($contract, $_) }
-            @{$read->{transactions} || []}
+            (map { _read_data_capture_rule_name($contract, $_) }
+                @{$read->{transactions} || []}),
+            @burst_length_rules,
+        ],
+        burst_length_inputs => _clone_jsonish(\@burst_length_inputs),
+        burst_length_storage => _clone_jsonish(\@burst_length_storage),
+        burst_length_rules => [
+            @burst_length_rules,
         ],
     };
 }

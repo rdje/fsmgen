@@ -1071,16 +1071,18 @@ reassembly need an explicit expected-count/depth contract first. Selector
 in range `1..256`, and report-only validation. Slice `.63` ships
 parser/report metadata and static validation for that contract: `.ppif`
 accepts optional last-beat `read-data` `burst-length` metadata, reports
-ARLEN/max-beats fields with `burst_length_generated_behavior: false`, adds a
-support-accounted sample, keeps generated `.isf`, `.fsm`, and HDL behavior
-unchanged, and moves ARLEN work into explicit generated-capture and
-beat-count-validation residue. Selector `.64` chose `.65`, a generated ARLEN
-burst-length capture readiness audit, because generated capture is the next
-prerequisite before validation/reassembly but adds a new HDL
-input/storage/request-event path that must be audited before behavior changes.
-Audit `.65` found no new IAL1/IAL0/SystemVerilog substrate prerequisite and
-selected `.66`, generated raw-ARLEN capture behavior. Full multi-beat
-read-data reassembly, beat-count/RLAST validation, beat indexing, payload
+ARLEN/max-beats fields, adds a support-accounted sample, and moves ARLEN work
+into explicit generated-capture and beat-count-validation residue. Selector
+`.64` chose `.65`, a generated ARLEN burst-length capture readiness audit,
+because generated capture is the next prerequisite before
+validation/reassembly but adds a new HDL input/storage/request-event path that
+must be audited before behavior changes. Audit `.65` found no new
+IAL1/IAL0/SystemVerilog substrate prerequisite and selected `.66`; `.66`
+ships generated raw-ARLEN capture with a width-8 `axi0_arlen` input,
+per-transaction raw-ARLEN storage, request-event guarded capture rules,
+`.fsm`/SystemVerilog lowering, and generated burst-length input/storage/rule
+report fields. The next active owner is `.67`, a beat-count/RLAST validation
+readiness audit. Full multi-beat read-data reassembly, beat indexing, payload
 storage, per-beat outputs, `RRESP` aggregation, per-ID queues, direct backend
 lowering, and VHDL remain deferred.
 The shipped public capacity/status source accepts one

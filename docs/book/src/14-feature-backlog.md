@@ -3745,8 +3745,10 @@ ships the parser/report boundary for that contract. The public sample is:
 ppif/axi_manager_capacity_status_read_data_burst_length.ppif
 ```
 
-The sample keeps generated last-beat `RDATA`/`RRESP` capture behavior
-unchanged and records ARLEN beat-count metadata only in schedule JSON:
+The metadata slice introduced the public report fields for ARLEN beat-count
+metadata. The current generated behavior, shipped by
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.66`, keeps last-beat `RDATA`/`RRESP`
+capture behavior and also captures raw ARLEN at each transaction request:
 
 ```text
 read_data:
@@ -3758,24 +3760,40 @@ read_data:
     burst_length_encoding: axlen_plus_one
     burst_length_capture: transaction_request
     max_beats: 16
-    burst_length_generated_behavior: false
+    burst_length_generated_behavior: true
     burst_length_validation: report_only
     beat_storage: none
     valid_output: none
     length_output: none
+    generated_burst_length_inputs:
+      - axi0_arlen
+    generated_burst_length_storage:
+      - axi0_r0_arlen_q
+      - axi0_r1_arlen_q
+    generated_burst_length_rules:
+      - axi0_r0_burst_length_capture
+      - axi0_r1_burst_length_capture
 ```
 
-`axi0_arlen` is not emitted as a generated `.isf` input, `.fsm` signal, or HDL
-port yet. The generated artifact lists remain the last-beat capture artifacts:
+The generated IAL1 includes the ARLEN input, one raw-ARLEN storage variable
+per covered read transaction, and one request-event guarded capture rule per
+covered read transaction:
 
 ```text
-generated_inputs:
-  - axi0_rdata
-  - axi0_rresp
-generated_rules:
-  - axi0_r0_read_data_capture
-  - axi0_r1_read_data_capture
+(input axi0_arlen (width 8))
+
+(var axi0_r0_arlen_q (width 8))
+(var axi0_r1_arlen_q (width 8))
+
+(rule axi0_r0_burst_length_capture axi0_r0_request
+  (axi0_r0_arlen_q axi0_arlen))
+(rule axi0_r1_burst_length_capture axi0_r1_request
+  (axi0_r1_arlen_q axi0_arlen))
 ```
+
+The `.fsm` and SystemVerilog outputs lower the same raw-ARLEN capture
+behavior. The captured value is raw `ARLEN`; later beat-count validation will
+own the `ARLEN + 1` arithmetic implied by `axlen_plus_one`.
 
 Useful checks:
 
@@ -3801,8 +3819,16 @@ enough for a bounded raw-ARLEN capture slice. The selected behavior stores raw
 8-bit `ARLEN` per read transaction and leaves `ARLEN + 1` arithmetic,
 beat-count/RLAST validation, payload storage, and reassembly deferred.
 
-The active frontier is `IAL2-FEATURE-COMPLETENESS-FRONTIER.66`, generated
-raw-ARLEN burst-length capture behavior.
+ARLEN capture behavior first slice:
+[AXI_IAL2_MANAGER_ARLEN_CAPTURE_BEHAVIOR_FIRST_SLICE](../../AXI_IAL2_MANAGER_ARLEN_CAPTURE_BEHAVIOR_FIRST_SLICE.md)
+ships generated raw-ARLEN capture for opt-in last-beat read-data
+`burst-length` contracts. It removes `generated_burst_length_capture` from
+read-data residue and leaves `generated_beat_count_validation`,
+`multi_beat_read_data_reassembly`, `per_beat_outputs`, and
+`rresp_aggregation` as explicit future owners.
+
+The active frontier is `IAL2-FEATURE-COMPLETENESS-FRONTIER.67`, a
+beat-count/RLAST validation readiness audit.
 
 First implementation subset selection:
 [AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION](../../AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md)
@@ -3959,7 +3985,9 @@ validation with a support-accounted sample while keeping generated artifacts
 unchanged, then advances the frontier to `.64`. `.64` selects generated
 ARLEN burst-length capture readiness and advances the frontier to `.65`.
 `.65` audits that readiness, finds no new substrate prerequisite, and
-advances the active frontier to `.66`.
+advances the active frontier to `.66`. `.66` ships generated raw-ARLEN
+capture behavior and advances the active frontier to `.67`, beat-count/RLAST
+validation readiness.
 Future behavior owners must keep the reviewable
 `IAL2 -> IAL1 -> IAL0 -> SystemVerilog` path; read-data
 interleaving/reassembly, bursts, per-ID queues, full-manager behavior, and
@@ -6281,6 +6309,9 @@ frontier to `.65`.
 Completed audit leaf `IAL2-FEATURE-COMPLETENESS-FRONTIER.65` selects direct
 generated raw-ARLEN capture behavior and advances the active frontier to
 `.66`.
+Completed implementation leaf `IAL2-FEATURE-COMPLETENESS-FRONTIER.66` ships
+generated raw-ARLEN capture behavior and advances the active frontier to
+`.67`, beat-count/RLAST validation readiness.
 Completed implementation leaf
 `ARCHITECTURE-DEBT-FRONTIER.2.1`
 projects direct backend storage/helper declaration-plan entries into

@@ -305,16 +305,18 @@ Selector `.62` chooses an additive ARLEN-based `burst-length` contract:
 capture, required `max-beats` in range `1..256`, and `validation report-only`.
 Slice `.63` ships parser/report metadata and static validation for that
 contract: `.ppif` accepts optional last-beat `read-data` `burst-length`
-metadata, reports ARLEN/max-beats fields with
-`burst_length_generated_behavior: false`, adds a support-accounted sample,
-keeps generated `.isf`, `.fsm`, and HDL behavior unchanged, and splits vague
-beat-count residue into explicit future generated-capture and validation
-owners. Selector `.64` chooses a generated ARLEN burst-length capture
-readiness audit before behavior changes, and audit `.65` finds no new
-IAL1/IAL0/SystemVerilog substrate prerequisite for raw ARLEN capture. The
-active frontier is `IAL2-FEATURE-COMPLETENESS-FRONTIER.66`, generated
-raw-ARLEN capture behavior for opt-in last-beat read-data contracts. Larger
-multi-beat read-data reassembly, beat-count/RLAST validation, beat indexing,
+metadata, reports ARLEN/max-beats fields, adds a support-accounted sample,
+and splits vague beat-count residue into explicit generated-capture and
+validation owners. Selector `.64` chooses a generated ARLEN burst-length
+capture readiness audit before behavior changes, audit `.65` finds no new
+IAL1/IAL0/SystemVerilog substrate prerequisite for raw ARLEN capture, and
+implementation `.66` ships that behavior: `axi0_arlen` is a generated width-8
+input, each covered read transaction gets raw-ARLEN storage
+(`axi0_r0_arlen_q`, `axi0_r1_arlen_q`), request-event guarded capture rules,
+`.fsm`/SystemVerilog lowering, `burst_length_generated_behavior: true`, and
+generated burst-length input/storage/rule report fields. The active frontier
+is `IAL2-FEATURE-COMPLETENESS-FRONTIER.67`, a beat-count/RLAST validation
+readiness audit. Larger multi-beat read-data reassembly, beat indexing,
 payload storage, per-beat outputs, `RRESP` aggregation, per-ID queues,
 full-manager behavior, direct backend lowering, and VHDL work remain
 deferred.
@@ -415,29 +417,30 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 88. `docs/AXI_IAL2_MANAGER_BURST_READ_DATA_BEAT_COUNT_METADATA_FIRST_SLICE.md`: shipped parser/report metadata and static validation for ARLEN-based `burst-length` contracts.
 89. `docs/AXI_IAL2_MANAGER_POST_BURST_LENGTH_METADATA_NEXT_SLICE_SELECTION.md`: selected generated ARLEN burst-length capture readiness audit after report-only metadata.
 90. `docs/AXI_IAL2_MANAGER_ARLEN_CAPTURE_READINESS_AUDIT.md`: audited generated raw-ARLEN capture readiness and selected direct behavior.
-91. `docs/AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md`: selected first AXI-derived IAL2 implementation subset and pre-code contract.
-92. `docs/AXI_IAL2_VALID_READY_READINESS_AUDIT.md`: code/test/docs/report owner map for the future AXI Valid-Ready IAL2 implementation.
-93. `docs/AXI_IAL2_VALID_READY_GENERATOR_FIRST_SLICE.md`: first in-process AXI Valid-Ready IAL2 generator slice and report surface.
-94. `docs/decisions/0016-ppif-is-first-public-ial2-container.md`: selects `.ppif` as the first public generic IAL2 file surface.
-95. `docs/IAL2_PPIF_PARSER_CLI_FIRST_SLICE.md`: first public `.ppif` parser/CLI slice for one AXI Valid-Ready source object.
-96. `docs/IAL2_PPIF_MULTI_VALID_READY_READINESS.md`: readiness map for future multi-channel `.ppif` Valid-Ready support.
-97. `docs/IAL2_PPIF_VALID_READY_BUNDLE_CONTRACT_SELECTION.md`: selected future aggregate bundle contract for multi-channel `.ppif` Valid-Ready support.
-98. `docs/IAL2_PPIF_VALID_READY_BUNDLE_FIRST_SLICE.md`: shipped bounded multi-channel `.ppif` Valid-Ready bundle report/review-artifact behavior.
-99. `docs/IAL2_PPIF_BUNDLE_SEMANTIC_JSON_FIRST_SLICE.md`: shipped aggregate semantic JSON for multi-channel `.ppif` bundles.
-100. `docs/IAL2_PPIF_BUNDLE_HDL_ENTRY_SELECTION.md`: selected aggregate wrapper/top HDL entry contract for multi-channel `.ppif` bundles.
-101. `docs/IAL2_PPIF_BUNDLE_HDL_ENTRY_FIRST_SLICE.md`: shipped aggregate wrapper/top HDL entry for the tracked multi-channel `.ppif` bundle.
-102. `docs/PDF_EXTRACTION_WORKFLOW.md`: portable workflow for source-anchored PDF text, table, diagram, and image extraction.
-103. `docs/decisions/0014-protocol-platform-intent-surface-and-layered-lowering.md`: generic IAL2 file-surface candidates and layered lowering decision.
-104. `docs/decisions/0015-ial2-profile-extensions-are-vocabulary-aliases.md`: IAL2 protocol-profile extension refinement.
-105. `docs/decisions/0017-ppif-valid-ready-bundle-contract.md`: future multi-channel `.ppif` bundle contract decision.
-106. `docs/decisions/0018-ial-contracts-are-backend-language-neutral.md`: IAL contracts and mdBook stay backend-language-neutral for future Rust, Rust/Wasm, browser-capable JavaScript, and Dart/web parity.
-107. `docs/FEATURE_BACKLOG.md`: pointer to the canonical mdBook feature backlog for deferred/not-fully-shipped user-visible work.
-108. `CHANGES.md`: chronological technical changes.
-109. `DEVELOPMENT_NOTES.md`: design rationale and decisions.
-110. `MEMORY.md`: continuity/handoff state.
-111. `LIVE_ACHIEVEMENT_STATUS.md`: latest completed roadmap-aligned slice.
-112. `WARP.md`: repository-specific agent/development guidance.
-113. `.agents/workflows/commit.md`: automation-oriented commit workflow description.
+91. `docs/AXI_IAL2_MANAGER_ARLEN_CAPTURE_BEHAVIOR_FIRST_SLICE.md`: shipped generated raw-ARLEN capture behavior for opt-in last-beat read-data `burst-length` contracts.
+92. `docs/AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md`: selected first AXI-derived IAL2 implementation subset and pre-code contract.
+93. `docs/AXI_IAL2_VALID_READY_READINESS_AUDIT.md`: code/test/docs/report owner map for the future AXI Valid-Ready IAL2 implementation.
+94. `docs/AXI_IAL2_VALID_READY_GENERATOR_FIRST_SLICE.md`: first in-process AXI Valid-Ready IAL2 generator slice and report surface.
+95. `docs/decisions/0016-ppif-is-first-public-ial2-container.md`: selects `.ppif` as the first public generic IAL2 file surface.
+96. `docs/IAL2_PPIF_PARSER_CLI_FIRST_SLICE.md`: first public `.ppif` parser/CLI slice for one AXI Valid-Ready source object.
+97. `docs/IAL2_PPIF_MULTI_VALID_READY_READINESS.md`: readiness map for future multi-channel `.ppif` Valid-Ready support.
+98. `docs/IAL2_PPIF_VALID_READY_BUNDLE_CONTRACT_SELECTION.md`: selected future aggregate bundle contract for multi-channel `.ppif` Valid-Ready support.
+99. `docs/IAL2_PPIF_VALID_READY_BUNDLE_FIRST_SLICE.md`: shipped bounded multi-channel `.ppif` Valid-Ready bundle report/review-artifact behavior.
+100. `docs/IAL2_PPIF_BUNDLE_SEMANTIC_JSON_FIRST_SLICE.md`: shipped aggregate semantic JSON for multi-channel `.ppif` bundles.
+101. `docs/IAL2_PPIF_BUNDLE_HDL_ENTRY_SELECTION.md`: selected aggregate wrapper/top HDL entry contract for multi-channel `.ppif` bundles.
+102. `docs/IAL2_PPIF_BUNDLE_HDL_ENTRY_FIRST_SLICE.md`: shipped aggregate wrapper/top HDL entry for the tracked multi-channel `.ppif` bundle.
+103. `docs/PDF_EXTRACTION_WORKFLOW.md`: portable workflow for source-anchored PDF text, table, diagram, and image extraction.
+104. `docs/decisions/0014-protocol-platform-intent-surface-and-layered-lowering.md`: generic IAL2 file-surface candidates and layered lowering decision.
+105. `docs/decisions/0015-ial2-profile-extensions-are-vocabulary-aliases.md`: IAL2 protocol-profile extension refinement.
+106. `docs/decisions/0017-ppif-valid-ready-bundle-contract.md`: future multi-channel `.ppif` bundle contract decision.
+107. `docs/decisions/0018-ial-contracts-are-backend-language-neutral.md`: IAL contracts and mdBook stay backend-language-neutral for future Rust, Rust/Wasm, browser-capable JavaScript, and Dart/web parity.
+108. `docs/FEATURE_BACKLOG.md`: pointer to the canonical mdBook feature backlog for deferred/not-fully-shipped user-visible work.
+109. `CHANGES.md`: chronological technical changes.
+110. `DEVELOPMENT_NOTES.md`: design rationale and decisions.
+111. `MEMORY.md`: continuity/handoff state.
+112. `LIVE_ACHIEVEMENT_STATUS.md`: latest completed roadmap-aligned slice.
+113. `WARP.md`: repository-specific agent/development guidance.
+114. `.agents/workflows/commit.md`: automation-oriented commit workflow description.
 
 ## Documentation index (all `.md` files in this repo)
 - `README.md` — single entry point and navigation hub.
@@ -925,6 +928,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/AXI_IAL2_MANAGER_BURST_READ_DATA_BEAT_COUNT_METADATA_FIRST_SLICE.md` — shipped parser/report metadata and static validation for ARLEN-based `burst-length` contracts.
 - `docs/AXI_IAL2_MANAGER_POST_BURST_LENGTH_METADATA_NEXT_SLICE_SELECTION.md` — selected generated ARLEN burst-length capture readiness audit after report-only metadata.
 - `docs/AXI_IAL2_MANAGER_ARLEN_CAPTURE_READINESS_AUDIT.md` — audited generated raw-ARLEN capture readiness and selected direct behavior.
+- `docs/AXI_IAL2_MANAGER_ARLEN_CAPTURE_BEHAVIOR_FIRST_SLICE.md` — shipped generated raw-ARLEN capture behavior for opt-in last-beat read-data `burst-length` contracts.
 - `docs/AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md` — selected first AXI-derived IAL2 implementation subset and pre-code contract.
 - `docs/AXI_IAL2_VALID_READY_READINESS_AUDIT.md` — code/test/docs/report owner map for a future AXI Valid-Ready IAL2 implementation slice.
 - `docs/AXI_IAL2_VALID_READY_GENERATOR_FIRST_SLICE.md` — first in-process AXI Valid-Ready IAL2 generator slice and report surface.

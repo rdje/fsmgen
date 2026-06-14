@@ -9,8 +9,8 @@ answers:
 date: 2026-06-13
 status: current
 tags: [ial2, axi, manager, read-data, burst-length, arlen, capture, readiness, behavior, task-tree]
-evidence: docs/AXI_IAL2_MANAGER_ARLEN_CAPTURE_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_POST_BURST_LENGTH_METADATA_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_BURST_READ_DATA_BEAT_COUNT_METADATA_FIRST_SLICE.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; docs/book/src/14-feature-backlog.md; README.md; ROADMAP_V2.md
-reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.65|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.66|raw-ARLEN|ARLEN_CAPTURE_READINESS|generated raw-ARLEN' docs/AXI_IAL2_MANAGER_ARLEN_CAPTURE_READINESS_AUDIT.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md docs/book/src/14-feature-backlog.md README.md ROADMAP_V2.md
+evidence: docs/AXI_IAL2_MANAGER_ARLEN_CAPTURE_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_ARLEN_CAPTURE_BEHAVIOR_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_POST_BURST_LENGTH_METADATA_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_BURST_READ_DATA_BEAT_COUNT_METADATA_FIRST_SLICE.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; docs/book/src/14-feature-backlog.md; README.md; ROADMAP_V2.md
+reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.65|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.66|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.67|raw-ARLEN|ARLEN_CAPTURE_READINESS|generated raw-ARLEN' docs/AXI_IAL2_MANAGER_ARLEN_CAPTURE_READINESS_AUDIT.md docs/AXI_IAL2_MANAGER_ARLEN_CAPTURE_BEHAVIOR_FIRST_SLICE.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md docs/book/src/14-feature-backlog.md README.md ROADMAP_V2.md
 ---
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.65` audited generated AXI ARLEN
@@ -25,6 +25,6 @@ report artifact lists, and HDL lowering are sufficient.
 
 The selected behavior stores raw 8-bit `ARLEN` per covered read transaction,
 not `ARLEN + 1`. The report keeps `burst_length_encoding: axlen_plus_one` for
-later validation/reassembly owners, while `.66` remains limited to generated
+later validation/reassembly owners. `.66` shipped the generated
 input/storage/rule reachability and `generated_burst_length_capture` residue
-removal.
+removal, then selected `.67`, beat-count/RLAST validation readiness.

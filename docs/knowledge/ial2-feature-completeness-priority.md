@@ -17,9 +17,8 @@ reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER|IAL2 feature completeness|IA
 The current feature-completeness priority is IAL2 on the
 SystemVerilog-backed path.
 
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.66` owns the next PNT frontier:
-implement generated raw-ARLEN burst-length capture behavior for opt-in
-last-beat read-data contracts.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.67` owns the next PNT frontier: audit
+beat-count/RLAST validation readiness after generated raw-ARLEN capture.
 
 Completed `.47` shipped generated single-beat `RDATA`/`RRESP` capture
 behavior. Completed `.48` selected `.49` because the current public read-data
@@ -75,6 +74,13 @@ capture is the next prerequisite before validation or reassembly but adds a
 new HDL input/storage/request-event path that must be audited before behavior
 changes. Completed `.65` found no new IAL1/IAL0/SystemVerilog substrate
 prerequisite and selected `.66`, generated raw-ARLEN capture behavior.
+Completed `.66` shipped generated raw-ARLEN capture with a width-8
+`axi0_arlen` input, per-transaction raw-ARLEN storage, request-event guarded
+capture rules, `.fsm`/SystemVerilog lowering, generated burst-length
+input/storage/rule report fields, and no `generated_burst_length_capture`
+residue. It selected `.67`, beat-count/RLAST validation readiness, before
+expected-beat arithmetic, validation counters, payload storage/reassembly,
+per-beat outputs, `RRESP` aggregation, direct backend lowering, or VHDL work.
 
 Selected IAL2 work may include required IAL1 or IAL0/SV support, but only when
 those prerequisites are explicit, task-tree owned, documented, and
