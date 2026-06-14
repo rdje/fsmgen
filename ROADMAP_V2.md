@@ -1184,7 +1184,15 @@ feature but an explicit public source/report contract for reject, queue,
 stall/block, or scoreboard semantics. Selector `.91` chooses an optional
 AXI-profile-local `same-id-ordering` clause with read/write
 `concrete-id-reuse reject` arms and selects `.92`, parser/report metadata plus
-static validation for that explicit reject policy.
+static validation for that explicit reject policy. Implementation `.92` now
+accepts one optional `(same-id-ordering ...)` PPIF clause, emits additive
+`same_id_ordering.mode: concrete_id_reuse_policy` report metadata with
+`generated_queue_behavior: false`, preserves the `.88` omitted-policy
+diagnostic, emits a policy-specific duplicate concrete-ID diagnostic for
+explicit `reject`, and leaves generated `.isf`, `.fsm`, and SystemVerilog
+unchanged for valid sources. It advances the frontier to `.93`, the next AXI
+manager selector before any accepted same-ID reuse, generated per-ID queue,
+or scoreboard behavior.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.

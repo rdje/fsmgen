@@ -4319,6 +4319,54 @@ advances to `IAL2-FEATURE-COMPLETENESS-FRONTIER.92`, parser/report metadata
 and static validation for explicit reject policy before any
 `issue-order-queue` or `scoreboard` behavior.
 
+Same-ID reject policy first slice:
+[AXI_IAL2_MANAGER_SAME_ID_REJECT_POLICY_FIRST_SLICE](../../AXI_IAL2_MANAGER_SAME_ID_REJECT_POLICY_FIRST_SLICE.md)
+ships `IAL2-FEATURE-COMPLETENESS-FRONTIER.92`. The PPIF adapter now accepts
+one optional `same-id-ordering` clause under `manager-capacity-status`; each
+selected `read` or `write` family must contain exactly one
+`(concrete-id-reuse reject)` policy. Duplicate top-level clauses, duplicate
+family arms, duplicate policy clauses, missing policy clauses, unsupported
+families, and unsupported values such as `issue-order-queue` or `scoreboard`
+fail closed.
+
+The public sample is
+`ppif/axi_manager_capacity_status_same_id_reject_policy.ppif`. It reports the
+selected policy without claiming generated queue behavior:
+
+```yaml
+same_id_ordering:
+  mode: concrete_id_reuse_policy
+  generated_behavior: false
+  concrete_id_reuse_policy:
+    read:
+      policy: reject
+      enforcement: static_validation
+      accepted_same_id_reuse: false
+      generated_queue_behavior: false
+  residue:
+    - concrete_id_same_id_ordering
+    - per_id_issue_order_queues
+```
+
+Generated `.isf`, `.fsm`, and SystemVerilog stay unchanged for valid
+single-concrete-ID sources. Omitted policy preserves the `.88` diagnostic:
+
+```text
+AXI manager capacity/status IAL2 contract concrete read ID value 3 is reused by transactions 'r0' and 'r1'; concrete same-ID reuse requires a selected same-ID ordering policy or per-ID issue-order queue
+```
+
+Explicit `reject` emits a policy-specific static validation diagnostic:
+
+```text
+AXI manager capacity/status IAL2 contract concrete read ID value 3 is reused by transactions 'r0' and 'r1'; selected same-id-ordering.read concrete-id-reuse reject policy rejects concrete same-ID reuse
+```
+
+This advances the active frontier to
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.93`, the next AXI manager selector before
+accepted same-ID reuse, generated per-ID issue-order queues, scoreboards,
+concrete-ID response demux, queued/blocking policy, full-manager behavior,
+direct backend lowering, or VHDL.
+
 First implementation subset selection:
 [AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION](../../AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md)
 selects a source-anchored AXI Valid-Ready channel contract/monitor as the

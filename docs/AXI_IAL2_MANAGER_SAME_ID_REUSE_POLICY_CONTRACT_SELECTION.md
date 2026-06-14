@@ -14,6 +14,10 @@ It is documentation and task-tree state only. It does not change parser,
 generator, `.isf`, `.fsm`, SystemVerilog, sample, support-accounting, check
 JSON, semantic JSON, or validation behavior.
 
+Follow-through: `IAL2-FEATURE-COMPLETENESS-FRONTIER.92` shipped this selected
+contract in
+[`AXI_IAL2_MANAGER_SAME_ID_REJECT_POLICY_FIRST_SLICE.md`](AXI_IAL2_MANAGER_SAME_ID_REJECT_POLICY_FIRST_SLICE.md).
+
 ## Inputs Read
 
 - `docs/AXI_IAL2_MANAGER_PER_ID_QUEUE_READINESS_AUDIT.md`

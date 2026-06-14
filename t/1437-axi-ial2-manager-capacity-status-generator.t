@@ -321,6 +321,37 @@ subtest 'transaction event dispatch fans per-transaction events into capacity ru
     like($sv_assertions, qr/\Q$response_assert\E/, 'assertion backend emits the per-transaction response concrete-ID property');
 };
 
+subtest 'same-ID reject policy reports static concrete-ID reuse selection without generated queue behavior' => sub {
+    my $base = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_transaction_event_dispatch());
+    my $result = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_same_id_reject_policy());
+
+    is(
+        $result->{generated_ial1}{text},
+        $base->{generated_ial1}{text},
+        'same-ID reject policy metadata does not alter generated IAL1 text',
+    );
+    is_deeply(
+        $result->{generated_ial0}{files},
+        $base->{generated_ial0}{files},
+        'same-ID reject policy metadata does not alter generated IAL0 files',
+    );
+    unlike(
+        $result->{generated_ial1}{text},
+        qr/\bsame_id_ordering_checks\b/,
+        'policy-only same-ID selection does not generate auto-ID same-ID checks',
+    );
+
+    my $ordering = $result->{report}{same_id_ordering};
+    assert_same_id_reject_policy_report($ordering, 'generator report');
+    is($result->{report}{source_object}{id}, 'axi-manager-capacity-status-same-id-reject-policy', 'report preserves policy sample object id');
+    is($result->{report}{source_object}{intent_name}, 'axi_manager_capacity_status_same_id_reject_policy', 'report preserves policy sample intent name');
+    is_deeply(
+        $result->{report}{id_response_rule_engine}{residue},
+        [qw(auto_id_allocation id_release same_id_ordering response_demux)],
+        'policy-only selection keeps generated same-ID queue behavior as ID/response residue',
+    );
+};
+
 subtest 'auto-ID lifecycle generates bounded request-ID drive behavior' => sub {
     my $result = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_auto_id_lifecycle());
     my $isf = $result->{generated_ial1}{text};
@@ -881,6 +912,21 @@ subtest 'malformed contract objects fail closed and no direct lower-to-fsm entry
             };
             $c;
         }, qr/concrete read ID value 3 is reused by transactions 'r0' and 'r1'; concrete same-ID reuse requires a selected same-ID ordering policy or per-ID issue-order queue/],
+        ['same-ID policy unsupported family', sub { my $c = sample_contract_with_same_id_reject_policy(); $c->{same_id_ordering_policy} = { address => { concrete_id_reuse => 'reject' } }; $c }, qr/same_id_ordering_policy has unsupported family 'address'/],
+        ['same-ID policy missing concrete reuse clause', sub { my $c = sample_contract_with_same_id_reject_policy(); delete $c->{same_id_ordering_policy}{read}{concrete_id_reuse}; $c }, qr/same_id_ordering_policy\.read is missing required field 'concrete_id_reuse'/],
+        ['same-ID policy unsupported generated queue value', sub { my $c = sample_contract_with_same_id_reject_policy(); $c->{same_id_ordering_policy}{read}{concrete_id_reuse} = 'issue-order-queue'; $c }, qr/same_id_ordering_policy\.read\.concrete_id_reuse must be reject in this slice/],
+        ['same-ID policy explicit reject blocks concrete same-ID reuse', sub {
+            my $c = sample_contract_with_same_id_reject_policy();
+            push @{$c->{transactions}}, {
+                kind             => 'read',
+                name             => 'r1',
+                tag              => 'rd1',
+                request_event    => 'axi0_r1_request',
+                completion_event => 'axi0_r1_complete',
+                id               => { value => 3 },
+            };
+            $c;
+        }, qr/concrete read ID value 3 is reused by transactions 'r0' and 'r1'; selected same-id-ordering\.read concrete-id-reuse reject policy rejects concrete same-ID reuse/],
         ['duplicate concrete ID assertion event', sub {
             my $c = sample_contract_with_transactions();
             push @{$c->{transactions}}, {
@@ -1118,6 +1164,18 @@ sub sample_contract_with_transaction_event_dispatch {
             id               => { value => 3 },
         },
     ];
+    return $contract;
+}
+
+sub sample_contract_with_same_id_reject_policy {
+    my $contract = sample_contract_with_transaction_event_dispatch();
+    $contract->{intent_name} = 'axi_manager_capacity_status_same_id_reject_policy';
+    $contract->{source}{object_id} = 'axi-manager-capacity-status-same-id-reject-policy';
+    $contract->{same_id_ordering_policy} = {
+        read => {
+            concrete_id_reuse => 'reject',
+        },
+    };
     return $contract;
 }
 
@@ -1821,6 +1879,30 @@ sub assert_same_id_ordering_report {
     ok(@{$ordering->{source_anchors}}, "$owner carries source anchors into same-ID ordering metadata");
     is(scalar(@{$ordering->{families}}), 1, "$owner reports one same-ID ordering family");
     assert_same_id_ordering_family($ordering->{families}[0], $owner, $family_name, $response_demux_covered);
+}
+
+sub assert_same_id_reject_policy_report {
+    my ($ordering, $owner) = @_;
+
+    is($ordering->{mode}, 'concrete_id_reuse_policy', "$owner marks policy-only same-ID ordering mode");
+    ok(!$ordering->{generated_behavior}, "$owner marks policy-only generated behavior false");
+    ok(!exists($ordering->{families}), "$owner does not report generated same-ID avoidance families");
+    is_deeply(
+        $ordering->{residue},
+        [qw(concrete_id_same_id_ordering per_id_issue_order_queues)],
+        "$owner keeps concrete same-ID ordering and per-ID queues as residue",
+    );
+    ok(@{$ordering->{source_anchors}}, "$owner carries source anchors into policy metadata");
+    is_deeply(
+        [sort keys %{$ordering->{concrete_id_reuse_policy}}],
+        ['read'],
+        "$owner reports the selected read concrete-ID reuse policy",
+    );
+    my $read = $ordering->{concrete_id_reuse_policy}{read};
+    is($read->{policy}, 'reject', "$owner reports reject policy");
+    is($read->{enforcement}, 'static_validation', "$owner reports static validation enforcement");
+    ok(!$read->{accepted_same_id_reuse}, "$owner reports same-ID reuse is not accepted");
+    ok(!$read->{generated_queue_behavior}, "$owner reports no generated queue behavior");
 }
 
 sub assert_same_id_ordering_family {

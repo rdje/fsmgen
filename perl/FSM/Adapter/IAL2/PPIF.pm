@@ -301,6 +301,8 @@ sub _parse_manager_capacity_status($body, $source_label) {
             $contract{auto_id_lifecycle} = _parse_manager_capacity_auto_id_lifecycle(\@items, $source_label, $name);
         } elsif ($head eq 'response-demux') {
             $contract{response_demux} = _parse_manager_capacity_response_demux(\@items, $source_label, $name);
+        } elsif ($head eq 'same-id-ordering') {
+            $contract{same_id_ordering_policy} = _parse_manager_capacity_same_id_ordering(\@items, $source_label, $name);
         } elsif ($head eq 'read-data') {
             $contract{read_data} = _parse_manager_capacity_read_data(\@items, $source_label, $name);
         } else {
@@ -568,6 +570,45 @@ sub _parse_manager_capacity_auto_id_pool($items, $name, $family) {
     }
 
     return \@pool;
+}
+
+sub _parse_manager_capacity_same_id_ordering($items, $source_label, $name) {
+    confess "Error: .ppif (manager-capacity-status $name (same-id-ordering ...)) requires at least one read/write family clause\n"
+        unless @$items;
+
+    my %families;
+    for my $clause (@$items) {
+        my ($family, @body) = _clause_parts($clause, $source_label);
+        confess "Error: .ppif (manager-capacity-status $name (same-id-ordering ...)) has unsupported family clause '($family ...)'; this slice supports (read ...) and (write ...)\n"
+            unless $family =~ /\A(?:read|write)\z/;
+        confess "Error: .ppif (manager-capacity-status $name (same-id-ordering ...)) has duplicate ($family ...) family clause\n"
+            if exists $families{$family};
+        $families{$family} = _parse_manager_capacity_same_id_ordering_family(\@body, $source_label, $name, $family);
+    }
+
+    return \%families;
+}
+
+sub _parse_manager_capacity_same_id_ordering_family($items, $source_label, $name, $family) {
+    my %entry;
+    for my $clause (@$items) {
+        next unless defined $clause;
+        my ($head, @body) = _clause_parts($clause, $source_label);
+        confess "Error: .ppif (manager-capacity-status $name (same-id-ordering ($family ...))) has unsupported clause '($head ...)'\n"
+            unless $head eq 'concrete-id-reuse';
+        confess "Error: .ppif (manager-capacity-status $name (same-id-ordering ($family ...))) has duplicate (concrete-id-reuse ...) clause\n"
+            if exists $entry{concrete_id_reuse};
+        confess "Error: .ppif (manager-capacity-status $name (same-id-ordering ($family (concrete-id-reuse ...)))) requires exactly one scalar value\n"
+            unless @body == 1 && !ref($body[0]);
+        confess "Error: .ppif (manager-capacity-status $name (same-id-ordering ($family (concrete-id-reuse ...)))) supports only reject in this slice\n"
+            unless $body[0] eq 'reject';
+        $entry{concrete_id_reuse} = $body[0];
+    }
+
+    confess "Error: .ppif (manager-capacity-status $name (same-id-ordering ($family ...))) is missing required (concrete-id-reuse ...) clause\n"
+        unless exists $entry{concrete_id_reuse};
+
+    return \%entry;
 }
 
 sub _parse_manager_capacity_response_demux($items, $source_label, $name) {

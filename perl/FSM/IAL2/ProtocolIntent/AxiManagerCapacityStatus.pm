@@ -160,13 +160,17 @@ sub _normalize_contract($raw) {
             response_demux => $response_demux,
         )
         : undef;
+    my $same_id_ordering_policy = exists($raw->{same_id_ordering_policy})
+        ? _normalize_same_id_ordering_policy($raw->{same_id_ordering_policy})
+        : undef;
     my $transaction_event_dispatch = _build_transaction_event_dispatch(
         events       => \%events,
         transactions => $transactions,
     );
     my $id_response_rule_engine = _build_id_response_rule_engine(
-        id_families  => $id_families,
-        transactions => $transactions,
+        id_families             => $id_families,
+        transactions            => $transactions,
+        same_id_ordering_policy => $same_id_ordering_policy,
     );
     my $event_inputs = _effective_event_inputs(
         events                     => \%events,
@@ -201,10 +205,11 @@ sub _normalize_contract($raw) {
         ? _normalize_source_anchors($source->{anchors})
         : [];
     my $same_id_ordering = _build_same_id_ordering(
-        manager_name     => $name,
-        source_anchors    => $anchors,
-        auto_id_lifecycle => $auto_id_lifecycle,
-        response_demux    => $response_demux,
+        manager_name             => $name,
+        source_anchors            => $anchors,
+        auto_id_lifecycle         => $auto_id_lifecycle,
+        response_demux            => $response_demux,
+        same_id_ordering_policy   => $same_id_ordering_policy,
     );
 
     return {
@@ -224,6 +229,7 @@ sub _normalize_contract($raw) {
         auto_id_lifecycle => $auto_id_lifecycle,
         response_demux    => $response_demux,
         read_data         => $read_data,
+        same_id_ordering_policy => $same_id_ordering_policy,
         same_id_ordering  => $same_id_ordering,
         transaction_event_dispatch => $transaction_event_dispatch,
         id_response_rule_engine => $id_response_rule_engine,
@@ -239,7 +245,7 @@ sub _reject_unsupported_top_level_fields($raw) {
     my %allowed = map { $_ => 1 } qw(
         actor_name auto_id_lifecycle clock intent_name name protocol read_complete
         read_data read_max_pending read_submit reset response_demux source source_object_id status
-        submit_policy id_families transactions write_complete write_max_pending
+        same_id_ordering_policy submit_policy id_families transactions write_complete write_max_pending
         write_submit
     );
 
@@ -1399,6 +1405,54 @@ sub _normalize_read_data_burst_length($raw) {
     };
 }
 
+sub _normalize_same_id_ordering_policy($raw) {
+    confess "AXI manager capacity/status IAL2 contract field 'same_id_ordering_policy' must be a hash reference\n"
+        unless ref($raw) eq 'HASH';
+
+    my %allowed = map { $_ => 1 } qw(read write);
+    for my $family (sort keys %$raw) {
+        confess "AXI manager capacity/status IAL2 contract same_id_ordering_policy has unsupported family '$family'; supported families: read, write\n"
+            unless $allowed{$family};
+    }
+    confess "AXI manager capacity/status IAL2 contract same_id_ordering_policy requires at least one read/write family\n"
+        unless exists($raw->{read}) || exists($raw->{write});
+
+    my %normalized;
+    for my $family (qw(read write)) {
+        next unless exists $raw->{$family};
+        $normalized{$family} = _normalize_same_id_ordering_policy_family($raw->{$family}, $family);
+    }
+
+    return \%normalized;
+}
+
+sub _normalize_same_id_ordering_policy_family($raw, $family) {
+    confess "AXI manager capacity/status IAL2 contract same_id_ordering_policy.$family must be a hash reference\n"
+        unless ref($raw) eq 'HASH';
+
+    my %allowed = map { $_ => 1 } qw(concrete_id_reuse);
+    for my $field (sort keys %$raw) {
+        confess "AXI manager capacity/status IAL2 contract same_id_ordering_policy.$family unsupported field '$field'\n"
+            unless $allowed{$field};
+    }
+    confess "AXI manager capacity/status IAL2 contract same_id_ordering_policy.$family is missing required field 'concrete_id_reuse'\n"
+        unless exists $raw->{concrete_id_reuse};
+
+    my $policy = _nonempty_scalar(
+        $raw->{concrete_id_reuse},
+        "same_id_ordering_policy.$family.concrete_id_reuse",
+    );
+    confess "AXI manager capacity/status IAL2 contract same_id_ordering_policy.$family.concrete_id_reuse must be reject in this slice\n"
+        unless $policy eq 'reject';
+
+    return {
+        policy                   => 'reject',
+        enforcement              => 'static_validation',
+        accepted_same_id_reuse   => 0,
+        generated_queue_behavior => 0,
+    };
+}
+
 sub _auto_id_lifecycle_family_by_name($auto_id_lifecycle, $family_name) {
     return undef unless ref($auto_id_lifecycle) eq 'HASH';
     for my $family (@{$auto_id_lifecycle->{families} || []}) {
@@ -1409,36 +1463,58 @@ sub _auto_id_lifecycle_family_by_name($auto_id_lifecycle, $family_name) {
 
 sub _build_same_id_ordering(%args) {
     my $lifecycle = $args{auto_id_lifecycle};
-    return undef unless ref($lifecycle) eq 'HASH' && $lifecycle->{generated_behavior};
-
-    my %response_demux_family = _same_id_response_demux_covered_families($args{response_demux});
+    my $policy = $args{same_id_ordering_policy};
+    my $has_policy = ref($policy) eq 'HASH' && (exists($policy->{read}) || exists($policy->{write}));
+    my $lifecycle_generated = ref($lifecycle) eq 'HASH' && $lifecycle->{generated_behavior};
     my @families;
-    for my $family (@{$lifecycle->{families} || []}) {
-        my @states = @{$family->{transaction_state} || []};
-        next unless @states > 1;
-        push @families, {
-            family                  => $family->{family},
-            strategy                => 'avoid_same_id_concurrency',
-            enforcement             => 'allocator_free_id_guard',
-            assertion_enforcement   => 'runtime_assertion',
-            response_demux_covered  => $response_demux_family{$family->{family}} ? 1 : 0,
-            auto_transactions       => _clone_jsonish($family->{auto_transactions}),
-            selected_id_signals     => [map { $_->{selected_id_signal} } @states],
-            busy_signals            => [map { $_->{busy_signal} } @states],
-            generated_assertions    => [
-                map { $_->{name} }
-                _same_id_ordering_assertion_specs_for_family($family, $args{manager_name})
+
+    if ($lifecycle_generated) {
+        my %response_demux_family = _same_id_response_demux_covered_families($args{response_demux});
+        for my $family (@{$lifecycle->{families} || []}) {
+            my @states = @{$family->{transaction_state} || []};
+            next unless @states > 1;
+            push @families, {
+                family                  => $family->{family},
+                strategy                => 'avoid_same_id_concurrency',
+                enforcement             => 'allocator_free_id_guard',
+                assertion_enforcement   => 'runtime_assertion',
+                response_demux_covered  => $response_demux_family{$family->{family}} ? 1 : 0,
+                auto_transactions       => _clone_jsonish($family->{auto_transactions}),
+                selected_id_signals     => [map { $_->{selected_id_signal} } @states],
+                busy_signals            => [map { $_->{busy_signal} } @states],
+                generated_assertions    => [
+                    map { $_->{name} }
+                    _same_id_ordering_assertion_specs_for_family($family, $args{manager_name})
+                ],
+            };
+        }
+    }
+
+    return undef unless @families || $has_policy;
+
+    my @policy_entry = $has_policy
+        ? (concrete_id_reuse_policy => _clone_jsonish($policy))
+        : ();
+    if (!@families) {
+        return {
+            mode               => 'concrete_id_reuse_policy',
+            generated_behavior => 0,
+            source_anchors     => _clone_jsonish($args{source_anchors} || []),
+            @policy_entry,
+            residue            => [
+                'concrete_id_same_id_ordering',
+                'per_id_issue_order_queues',
             ],
         };
     }
 
-    return undef unless @families;
     return {
         mode               => 'auto_id_same_id_avoidance',
         generated_behavior => 1,
         strategy           => 'avoid_same_id_concurrency',
         source_anchors     => _clone_jsonish($args{source_anchors} || []),
         families           => \@families,
+        @policy_entry,
         residue            => [
             'concrete_id_same_id_ordering',
             'per_id_issue_order_queues',
@@ -1629,6 +1705,13 @@ sub _build_id_response_rule_engine(%args) {
 
         my $id_key = "$transaction->{kind}\0$id->{value}";
         if (my $previous = $seen_concrete_id{$id_key}) {
+            my $same_id_policy = _same_id_ordering_policy_for_family(
+                $args{same_id_ordering_policy},
+                $transaction->{kind},
+            );
+            if (ref($same_id_policy) eq 'HASH' && ($same_id_policy->{policy} // '') eq 'reject') {
+                confess "AXI manager capacity/status IAL2 contract concrete $transaction->{kind} ID value $id->{value} is reused by transactions '$previous->{transaction}' and '$transaction->{name}'; selected same-id-ordering.$transaction->{kind} concrete-id-reuse reject policy rejects concrete same-ID reuse\n";
+            }
             confess "AXI manager capacity/status IAL2 contract concrete $transaction->{kind} ID value $id->{value} is reused by transactions '$previous->{transaction}' and '$transaction->{name}'; concrete same-ID reuse requires a selected same-ID ordering policy or per-ID issue-order queue\n";
         }
         $seen_concrete_id{$id_key} = {
@@ -1648,6 +1731,11 @@ sub _build_id_response_rule_engine(%args) {
             'response_demux',
         ],
     };
+}
+
+sub _same_id_ordering_policy_for_family($policy, $family) {
+    return undef unless ref($policy) eq 'HASH';
+    return $policy->{$family};
 }
 
 sub _reject_forbidden_or_duplicate_names(%args) {
@@ -3057,6 +3145,7 @@ sub _build_report(%args) {
             'auto_id_lifecycle pools are bounded to 1..4 unique values per family and must fit the declared positive ID width',
             'auto_id_lifecycle generates first-free request-ID drive, per-transaction busy/selected-ID state, completion-event release, no-ID assertions, inactive-completion assertions, and same-family request mutual-exclusion assertions',
             'same_id_ordering for generated auto-ID families is enforced by avoiding same-ID concurrency through allocator free-ID guards plus pairwise active selected-ID assertions',
+            'same_id_ordering_policy accepts explicit read/write concrete-id-reuse reject policies and rejects unsupported issue-order-queue or scoreboard values until later owners select generated behavior',
             'response_demux requires id_families, transactions, and selected-family auto_id_lifecycle metadata',
             'response_demux.write requires response_event equal to write_complete and generates bounded write BID demux behavior for explicit opt-in contracts',
             'response_demux.read requires response_event equal to read_complete, response_scope single_beat or burst_last, read ID-family metadata, read transactions, and read auto_id_lifecycle metadata',
@@ -3077,7 +3166,7 @@ sub _build_report(%args) {
             },
             {
                 id     => 'axi_id_ordering_and_response_matching',
-                detail => 'Concrete transaction ID request/response assertions, explicit bounded auto-ID request-ID drive plus completion-event release, generated auto-ID same-ID avoidance, generated write BID response demux, generated single-beat read RID response demux, generated single-beat read-data RDATA/RRESP capture, generated burst-last RLAST response-demux completion, structural last-beat read-data metadata, generated last-beat read-data RDATA/RRESP capture, generated raw-ARLEN burst-length capture, explicit runtime-assertion beat-count/RLAST validation, generated multi-beat read-data output-bank behavior for the covered auto-ID multi-beat-by-RID subset, bounded burst payload/output behavior through that per-beat output bank, and generated scalar RRESP aggregation behavior are supported; dynamic user-ID arbitration while issuing multiple same-family requests in one cycle, per-ID same-ID response queues, authored/general different-ID interleaving outside the covered auto-ID subset, packed burst-vector outputs, alternate full burst payload assembly, and aggregate-only status output shapes remain outside this capacity/status shell.',
+                detail => 'Concrete transaction ID request/response assertions, explicit bounded auto-ID request-ID drive plus completion-event release, generated auto-ID same-ID avoidance, explicit static concrete-ID reuse reject policy metadata, generated write BID response demux, generated single-beat read RID response demux, generated single-beat read-data RDATA/RRESP capture, generated burst-last RLAST response-demux completion, structural last-beat read-data metadata, generated last-beat read-data RDATA/RRESP capture, generated raw-ARLEN burst-length capture, explicit runtime-assertion beat-count/RLAST validation, generated multi-beat read-data output-bank behavior for the covered auto-ID multi-beat-by-RID subset, bounded burst payload/output behavior through that per-beat output bank, and generated scalar RRESP aggregation behavior are supported; dynamic user-ID arbitration while issuing multiple same-family requests in one cycle, per-ID same-ID response queues, accepted concrete same-ID reuse, generated queue/scoreboard policies, authored/general different-ID interleaving outside the covered auto-ID subset, packed burst-vector outputs, alternate full burst payload assembly, and aggregate-only status output shapes remain outside this capacity/status shell.',
             },
             {
                 id     => 'profile_aliases_and_full_manager_behavior',
@@ -3309,6 +3398,18 @@ sub _report_same_id_ordering($contract) {
         $family->{response_demux_covered} = $family->{response_demux_covered}
             ? JSON::PP::true
             : JSON::PP::false;
+    }
+    if (ref($ordering->{concrete_id_reuse_policy}) eq 'HASH') {
+        for my $family_name (qw(read write)) {
+            next unless ref($ordering->{concrete_id_reuse_policy}{$family_name}) eq 'HASH';
+            my $policy = $ordering->{concrete_id_reuse_policy}{$family_name};
+            for my $field (qw(accepted_same_id_reuse generated_queue_behavior)) {
+                next unless exists $policy->{$field};
+                $policy->{$field} = $policy->{$field}
+                    ? JSON::PP::true
+                    : JSON::PP::false;
+            }
+        }
     }
     if (_same_id_ordering_covers_response_demux_family($contract, 'read')) {
         $ordering->{residue} = [

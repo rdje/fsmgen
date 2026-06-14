@@ -192,6 +192,34 @@ subtest 'PPIF adapter parses AXI manager transaction event dispatch' => sub {
     );
 };
 
+subtest 'PPIF adapter parses AXI manager same-ID reject policy metadata' => sub {
+    my $sample_path = sample_capacity_same_id_reject_policy_ppif_path();
+    ok(-f $sample_path, 'tracked runnable PPIF capacity/status same-ID reject policy sample exists');
+
+    my $base = FSM::Adapter::IAL2::PPIF->new()->parse_source(sample_capacity_transaction_dispatch_ppif(), sample_capacity_transaction_dispatch_ppif_path());
+    my $result = FSM::Adapter::IAL2::PPIF->new()->parse_source(sample_capacity_same_id_reject_policy_ppif(), $sample_path);
+
+    is($result->{kind}, 'protocol_intent.axi_manager_capacity_status', 'same-ID reject sample still uses the capacity/status generator');
+    is($result->{report}{source_object}{id}, 'axi-manager-capacity-status-same-id-reject-policy', 'same-ID reject source object id is preserved');
+    is($result->{report}{source_object}{intent_name}, 'axi_manager_capacity_status_same_id_reject_policy', 'same-ID reject source intent name is preserved');
+    is(
+        $result->{generated_ial1}{text},
+        $base->{generated_ial1}{text},
+        'same-ID reject policy metadata does not alter generated IAL1 text',
+    );
+    is_deeply(
+        $result->{generated_ial0}{files},
+        $base->{generated_ial0}{files},
+        'same-ID reject policy metadata does not alter generated IAL0 files',
+    );
+    assert_same_id_reject_policy_report($result->{report}{same_id_ordering}, 'adapter report');
+    is_deeply(
+        $result->{report}{id_response_rule_engine}{residue},
+        [qw(auto_id_allocation id_release same_id_ordering response_demux)],
+        'same-ID reject policy report keeps generated queue behavior as residue',
+    );
+};
+
 subtest 'PPIF adapter parses AXI manager auto-ID lifecycle behavior' => sub {
     my $sample_path = sample_capacity_auto_id_lifecycle_ppif_path();
     ok(-f $sample_path, 'tracked runnable PPIF capacity/status auto-ID lifecycle sample exists');
@@ -547,6 +575,34 @@ subtest 'PPIF adapter diagnostics fail closed before generation claims' => sub {
                 '(read r0 (tag rd0) (request axi0_r0_request) (completion axi0_r0_complete) (id (value 3))) (read r1 (tag rd1) (request axi0_r1_request) (completion axi0_r1_complete) (id (value 3)))',
             )),
             qr/concrete read ID value 3 is reused by transactions 'r0' and 'r1'; concrete same-ID reuse requires a selected same-ID ordering policy or per-ID issue-order queue/],
+        ['duplicate manager same-ID ordering clause',
+            capacity_ppif_with_objects(manager_capacity_object_with_duplicate_same_id_ordering()),
+            qr/duplicate \(same-id-ordering \.\.\.\) clause/],
+        ['unsupported manager same-ID ordering family',
+            capacity_ppif_with_objects(manager_capacity_object_with_same_id_ordering('(address (concrete-id-reuse reject))')),
+            qr/unsupported family clause '\(address \.\.\.\)'; this slice supports \(read \.\.\.\) and \(write \.\.\.\)/],
+        ['duplicate manager same-ID ordering read family',
+            capacity_ppif_with_objects(manager_capacity_object_with_same_id_ordering('(read (concrete-id-reuse reject)) (read (concrete-id-reuse reject))')),
+            qr/duplicate \(read \.\.\.\) family clause/],
+        ['missing manager same-ID ordering concrete reuse policy',
+            capacity_ppif_with_objects(manager_capacity_object_with_same_id_ordering('(read)')),
+            qr/is missing required \(concrete-id-reuse \.\.\.\) clause/],
+        ['duplicate manager same-ID ordering concrete reuse policy',
+            capacity_ppif_with_objects(manager_capacity_object_with_same_id_ordering('(read (concrete-id-reuse reject) (concrete-id-reuse reject))')),
+            qr/duplicate \(concrete-id-reuse \.\.\.\) clause/],
+        ['unsupported manager same-ID ordering queue policy',
+            capacity_ppif_with_objects(manager_capacity_object_with_same_id_ordering('(read (concrete-id-reuse issue-order-queue))')),
+            qr/supports only reject in this slice/],
+        ['unsupported manager same-ID ordering scoreboard policy',
+            capacity_ppif_with_objects(manager_capacity_object_with_same_id_ordering('(write (concrete-id-reuse scoreboard))')),
+            qr/supports only reject in this slice/],
+        ['manager same-ID ordering reject blocks concrete same-ID reuse',
+            capacity_ppif_with_objects(manager_capacity_object_with_id_families_transactions_and_same_id_ordering(
+                '(write (width 4) (request-id awid) (response-id bid)) (read (width 4) (request-id arid) (response-id rid))',
+                '(read r0 (tag rd0) (request axi0_r0_request) (completion axi0_r0_complete) (id (value 3))) (read r1 (tag rd1) (request axi0_r1_request) (completion axi0_r1_complete) (id (value 3)))',
+                '(read (concrete-id-reuse reject))',
+            )),
+            qr/concrete read ID value 3 is reused by transactions 'r0' and 'r1'; selected same-id-ordering\.read concrete-id-reuse reject policy rejects concrete same-ID reuse/],
         ['manager transaction duplicate concrete ID assertion event',
             capacity_ppif_with_objects(manager_capacity_object_with_id_families_and_transactions(
                 '(write (width 4) (request-id awid) (response-id bid)) (read (width 4) (request-id arid) (response-id rid))',
@@ -974,6 +1030,20 @@ subtest 'CLI emits IAL2 report JSON for AXI manager transaction event dispatch .
         [qw(axi0_r0_request axi0_r0_complete)],
         'CLI dispatch report binds concrete-ID checks to per-transaction events',
     );
+};
+
+subtest 'CLI emits IAL2 report JSON for AXI manager same-ID reject policy .ppif' => sub {
+    my ($success, undef, undef, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--emit-schedule-json', sample_capacity_same_id_reject_policy_ppif_path()],
+    );
+
+    ok($success, '--emit-schedule-json succeeds for capacity/status same-ID reject policy .ppif');
+    is(join('', @{$stderr_buf || []}), '', 'capacity/status same-ID reject policy report keeps stderr clean');
+    my $report = decode_json(join('', @{$stdout_buf || []}));
+    is($report->{schema}, 'fsmgen.ial2.protocol_intent.axi_manager_capacity_status.v1', 'CLI keeps the capacity/status report schema');
+    is($report->{source_object}{intent_name}, 'axi_manager_capacity_status_same_id_reject_policy', 'same-ID reject report carries the PPIF top-level intent name');
+    assert_same_id_reject_policy_report($report->{same_id_ordering}, 'CLI report');
+    is_deeply($report->{generated_artifacts}{ial0}{files}, ['axi0_capacity_status.fsm'], 'same-ID reject metadata keeps the generated .fsm artifact name stable');
 };
 
 subtest 'CLI emits IAL2 report JSON for AXI manager auto-ID lifecycle behavior .ppif' => sub {
@@ -1617,6 +1687,50 @@ subtest 'CLI check JSON and semantic JSON support-account transaction-event disp
     );
 };
 
+subtest 'CLI check JSON and semantic JSON support-account same-ID reject policy .ppif separately' => sub {
+    my $policy_path = sample_capacity_same_id_reject_policy_ppif_path();
+    my ($success, undef, undef, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--strict', '--check', '--json', $policy_path],
+    );
+    ok($success, 'capacity/status same-ID reject policy --check --json succeeds');
+    is(join('', @{$stderr_buf || []}), '', 'capacity/status same-ID reject policy --check --json keeps stderr clean');
+    my $check_report = decode_json(join('', @{$stdout_buf || []}));
+    ok($check_report->{success}, 'capacity/status same-ID reject policy check JSON reports success');
+    is(
+        $check_report->{source}{resolved_path},
+        File::Spec->rel2abs($policy_path),
+        'capacity/status same-ID reject policy check JSON reports the public .ppif source path',
+    );
+    is(
+        $check_report->{support_accounting}{entry_id},
+        'intent.ppif_axi_manager_capacity_status_same_id_reject_policy',
+        'capacity/status same-ID reject policy check JSON support accounting names the PPIF corpus entry',
+    );
+
+    my ($semantic_success, undef, undef, $semantic_stdout, $semantic_stderr) = run(
+        command => ['./bin/fsmgen', '--strict', '--emit-semantic-json', $policy_path],
+    );
+    ok($semantic_success, 'capacity/status same-ID reject policy --emit-semantic-json succeeds');
+    is(join('', @{$semantic_stderr || []}), '', 'capacity/status same-ID reject policy --emit-semantic-json keeps stderr clean');
+    my $semantic_report = decode_json(join('', @{$semantic_stdout || []}));
+    ok($semantic_report->{success}, 'capacity/status same-ID reject policy semantic JSON reports success');
+    is(
+        $semantic_report->{source}{resolved_path},
+        File::Spec->rel2abs($policy_path),
+        'capacity/status same-ID reject policy semantic JSON reports the public .ppif source path',
+    );
+    is(
+        $semantic_report->{support_accounting}{entry_id},
+        'intent.ppif_axi_manager_capacity_status_same_id_reject_policy',
+        'capacity/status same-ID reject policy semantic JSON support accounting names the PPIF corpus entry',
+    );
+    is(
+        $semantic_report->{semantic}{module}{name},
+        'axi0_capacity_status',
+        'capacity/status same-ID reject policy semantic JSON records the unchanged generated module',
+    );
+};
+
 subtest 'CLI check JSON and semantic JSON support-account auto-ID lifecycle .ppif separately' => sub {
     my $lifecycle_path = sample_capacity_auto_id_lifecycle_ppif_path();
     my ($success, undef, undef, $stdout_buf, $stderr_buf) = run(
@@ -2127,6 +2241,10 @@ sub sample_capacity_transaction_dispatch_ppif_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_transaction_event_dispatch.ppif');
 }
 
+sub sample_capacity_same_id_reject_policy_ppif_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_same_id_reject_policy.ppif');
+}
+
 sub sample_capacity_auto_id_lifecycle_ppif_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_auto_id_lifecycle.ppif');
 }
@@ -2185,6 +2303,10 @@ sub sample_capacity_transaction_ppif {
 
 sub sample_capacity_transaction_dispatch_ppif {
     return slurp(sample_capacity_transaction_dispatch_ppif_path());
+}
+
+sub sample_capacity_same_id_reject_policy_ppif {
+    return slurp(sample_capacity_same_id_reject_policy_ppif_path());
 }
 
 sub sample_capacity_auto_id_lifecycle_ppif {
@@ -2314,6 +2436,32 @@ sub manager_capacity_object_with_id_families_and_transactions {
     my ($families, $transactions) = @_;
     my $object = manager_capacity_object();
     $object =~ s/\)\z/\n    (id-families $families)\n    (transactions $transactions))/;
+    return $object;
+}
+
+sub manager_capacity_object_with_same_id_ordering {
+    my ($ordering) = @_;
+    my $object = manager_capacity_object_with_id_families_and_transactions(
+        default_manager_id_families(),
+        default_manager_transactions(),
+    );
+    $object =~ s/\)\z/\n    (same-id-ordering $ordering))/;
+    return $object;
+}
+
+sub manager_capacity_object_with_duplicate_same_id_ordering {
+    my $object = manager_capacity_object_with_id_families_and_transactions(
+        default_manager_id_families(),
+        default_manager_transactions(),
+    );
+    $object =~ s/\)\z/\n    (same-id-ordering (read (concrete-id-reuse reject)))\n    (same-id-ordering (write (concrete-id-reuse reject))))/;
+    return $object;
+}
+
+sub manager_capacity_object_with_id_families_transactions_and_same_id_ordering {
+    my ($families, $transactions, $ordering) = @_;
+    my $object = manager_capacity_object_with_id_families_and_transactions($families, $transactions);
+    $object =~ s/\)\z/\n    (same-id-ordering $ordering))/;
     return $object;
 }
 
@@ -3128,6 +3276,30 @@ sub assert_same_id_ordering_report {
     ok(@{$ordering->{source_anchors}}, "$owner carries source anchors into same-ID ordering metadata");
     is(scalar(@{$ordering->{families}}), 1, "$owner reports one same-ID ordering family");
     assert_same_id_ordering_family($ordering->{families}[0], $owner, $family_name, $response_demux_covered);
+}
+
+sub assert_same_id_reject_policy_report {
+    my ($ordering, $owner) = @_;
+
+    is($ordering->{mode}, 'concrete_id_reuse_policy', "$owner marks policy-only same-ID ordering mode");
+    ok(!$ordering->{generated_behavior}, "$owner marks policy-only generated behavior false");
+    ok(!exists($ordering->{families}), "$owner does not report generated same-ID avoidance families");
+    is_deeply(
+        $ordering->{residue},
+        [qw(concrete_id_same_id_ordering per_id_issue_order_queues)],
+        "$owner keeps concrete same-ID ordering and per-ID queues as residue",
+    );
+    ok(@{$ordering->{source_anchors}}, "$owner carries source anchors into policy metadata");
+    is_deeply(
+        [sort keys %{$ordering->{concrete_id_reuse_policy}}],
+        ['read'],
+        "$owner reports the selected read concrete-ID reuse policy",
+    );
+    my $read = $ordering->{concrete_id_reuse_policy}{read};
+    is($read->{policy}, 'reject', "$owner reports reject policy");
+    is($read->{enforcement}, 'static_validation', "$owner reports static validation enforcement");
+    ok(!$read->{accepted_same_id_reuse}, "$owner reports same-ID reuse is not accepted");
+    ok(!$read->{generated_queue_behavior}, "$owner reports no generated queue behavior");
 }
 
 sub assert_same_id_ordering_family {
