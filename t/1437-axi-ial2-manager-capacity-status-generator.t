@@ -352,25 +352,18 @@ subtest 'same-ID reject policy reports static concrete-ID reuse selection withou
     );
 };
 
-subtest 'same-ID issue-order queue policy reports selected-not-generated metadata without generated queue behavior' => sub {
-    my $base = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_transaction_event_dispatch());
+subtest 'same-ID issue-order queue policy generates admitted request pulses without generated queue behavior' => sub {
     my $result = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_same_id_issue_order_queue_policy());
+    my $isf = $result->{generated_ial1}{text};
 
-    is(
-        $result->{generated_ial1}{text},
-        $base->{generated_ial1}{text},
-        'same-ID issue-order queue policy metadata does not alter generated IAL1 text',
-    );
-    is_deeply(
-        $result->{generated_ial0}{files},
-        $base->{generated_ial0}{files},
-        'same-ID issue-order queue policy metadata does not alter generated IAL0 files',
-    );
+    like($isf, qr/\(var axi0_r0_admitted_request_pulse_q \(width 1\)\)/, 'same-ID issue-order queue declares internal admitted request pulse storage');
+    like($isf, qr/\(rule axi0_r0_admitted_request \(& axi0_r0_request \(\| \(< axi0_pending_reads_q 4\) axi0_r0_complete\)\)\s+\(pulse axi0_r0_admitted_request_pulse_q\)\)/, 'same-ID issue-order queue emits a capacity-derived admitted request pulse rule');
     unlike(
-        $result->{generated_ial1}{text},
+        $isf,
         qr/\bsame_id_ordering_checks\b/,
-        'metadata-only same-ID issue-order queue selection does not generate auto-ID same-ID checks',
+        'single selected concrete request does not need a same-ID request mutual-exclusion assertion',
     );
+    like($result->{generated_ial0}{files}{'axi0_capacity_status.fsm'}, qr/\(<1 \(axi0_r0_admitted_request_pulse_q 1\)\)/, 'scheduled .fsm lowers the admitted request pulse as a one-cycle pulse');
 
     my $ordering = $result->{report}{same_id_ordering};
     assert_same_id_issue_order_queue_policy_report($ordering, 'generator report');
@@ -379,8 +372,27 @@ subtest 'same-ID issue-order queue policy reports selected-not-generated metadat
     is_deeply(
         $result->{report}{id_response_rule_engine}{residue},
         [qw(auto_id_allocation id_release same_id_ordering response_demux)],
-        'metadata-only issue-order queue selection keeps generated queue behavior as ID/response residue',
+        'admitted-pulse issue-order queue selection keeps queue behavior as ID/response residue',
     );
+};
+
+subtest 'same-ID issue-order queue admitted request pulses assert selected request mutual exclusion' => sub {
+    my $result = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_same_id_issue_order_queue_policy_two_concrete_reads());
+    my $isf = $result->{generated_ial1}{text};
+
+    like($isf, qr/\(var axi0_r0_admitted_request_pulse_q \(width 1\)\)/, 'first concrete read gets an admitted request pulse storage var');
+    like($isf, qr/\(var axi0_r1_admitted_request_pulse_q \(width 1\)\)/, 'second concrete read gets an admitted request pulse storage var');
+    like($isf, qr/\(rule axi0_r0_admitted_request \(& axi0_r0_request \(\| \(< axi0_pending_reads_q 4\) \(\| axi0_r0_complete axi0_r1_complete\)\)\)/, 'first admitted request guard uses read completion fan-in');
+    like($isf, qr/\(rule axi0_r1_admitted_request \(& axi0_r1_request \(\| \(< axi0_pending_reads_q 4\) \(\| axi0_r0_complete axi0_r1_complete\)\)\)/, 'second admitted request guard uses read completion fan-in');
+    like($isf, qr/\(transaction axi0_same_id_ordering_checks\s+\(assert \(! \(& axi0_r0_request axi0_r1_request\)\) "axi0 read same-ID issue-order queue requests are mutually exclusive"\)/, 'two selected concrete read request events emit one runtime mutual-exclusion assertion');
+
+    my $read = $result->{report}{same_id_ordering}{concrete_id_reuse_policy}{read};
+    my $boundary = $read->{admitted_request_boundary};
+    is_deeply($boundary->{selected_request_events}, [qw(axi0_r0_request axi0_r1_request)], 'report lists selected request events in source order');
+    is_deeply([map { $_->{pulse} } @{$boundary->{generated_pulses}}], [qw(axi0_r0_admitted_request_pulse_q axi0_r1_admitted_request_pulse_q)], 'report lists generated admitted pulse storage names');
+    is_deeply($boundary->{generated_assertions}, [qw(axi0_read_issue_order_queue_request_onehot0)], 'report lists the generated request mutual-exclusion assertion');
+    ok(!$read->{accepted_same_id_reuse}, 'admitted request pulses still do not accept same-ID reuse');
+    ok(!$read->{generated_queue_behavior}, 'admitted request pulses still do not claim queue behavior');
 };
 
 subtest 'auto-ID lifecycle generates bounded request-ID drive behavior' => sub {
@@ -1234,6 +1246,19 @@ sub sample_contract_with_same_id_issue_order_queue_policy {
     return $contract;
 }
 
+sub sample_contract_with_same_id_issue_order_queue_policy_two_concrete_reads {
+    my $contract = sample_contract_with_same_id_issue_order_queue_policy();
+    push @{$contract->{transactions}}, {
+        kind             => 'read',
+        name             => 'r1',
+        tag              => 'rd1',
+        request_event    => 'axi0_r1_request',
+        completion_event => 'axi0_r1_complete',
+        id               => { value => 4 },
+    };
+    return $contract;
+}
+
 sub sample_contract_with_auto_id_lifecycle {
     my $contract = sample_contract_with_transaction_event_dispatch();
     $contract->{intent_name} = 'axi_manager_capacity_status_auto_id_lifecycle';
@@ -1950,8 +1975,26 @@ sub assert_same_id_issue_order_queue_policy_report {
 
     assert_same_id_reuse_policy_report($ordering, $owner, {
         policy                => 'issue_order_queue',
-        enforcement           => 'not_generated',
-        implementation_status => 'selected_not_generated',
+        enforcement           => 'admitted_request_boundary',
+        implementation_status => 'admitted_request_pulses_generated',
+        admitted_request_boundary => {
+            pending_storage         => 'axi0_pending_reads_q',
+            max_pending             => 4,
+            completion_fanin        => 'axi0_r0_complete',
+            selected_request_events => [qw(axi0_r0_request)],
+            generated_pulses        => [
+                {
+                    transaction   => 'r0',
+                    tag           => 'rd0',
+                    concrete_id   => 3,
+                    request_event => 'axi0_r0_request',
+                    pulse         => 'axi0_r0_admitted_request_pulse_q',
+                    rule          => 'axi0_r0_admitted_request',
+                    guard         => '(& axi0_r0_request (| (< axi0_pending_reads_q 4) axi0_r0_complete))',
+                },
+            ],
+            generated_assertions => [],
+        },
     });
 }
 
@@ -1982,6 +2025,30 @@ sub assert_same_id_reuse_policy_report {
     }
     ok(!$read->{accepted_same_id_reuse}, "$owner reports same-ID reuse is not accepted");
     ok(!$read->{generated_queue_behavior}, "$owner reports no generated queue behavior");
+    if (exists $expected->{admitted_request_boundary}) {
+        assert_same_id_admitted_request_boundary(
+            $read->{admitted_request_boundary},
+            $owner,
+            $expected->{admitted_request_boundary},
+        );
+    } else {
+        ok(!exists($read->{admitted_request_boundary}), "$owner omits admitted request boundary for policy");
+    }
+}
+
+sub assert_same_id_admitted_request_boundary {
+    my ($boundary, $owner, $expected) = @_;
+
+    is($boundary->{guard_source}, 'capacity_storage_and_completion_fanin', "$owner reports admitted guard source");
+    is($boundary->{pending_storage}, $expected->{pending_storage}, "$owner reports admitted guard pending storage");
+    is($boundary->{max_pending}, $expected->{max_pending}, "$owner reports admitted guard max-pending bound");
+    is($boundary->{completion_fanin}, $expected->{completion_fanin}, "$owner reports admitted guard completion fan-in");
+    is_deeply($boundary->{selected_request_events}, $expected->{selected_request_events}, "$owner reports selected request events");
+    is_deeply($boundary->{generated_assertions}, $expected->{generated_assertions}, "$owner reports admitted request assertions");
+    is_deeply($boundary->{generated_pulses}, $expected->{generated_pulses}, "$owner reports admitted request pulses");
+    for my $pulse (@{$boundary->{generated_pulses} || []}) {
+        unlike($pulse->{guard}, qr/can_accept/, "$owner admitted request guard does not consume can_accept");
+    }
 }
 
 sub assert_same_id_ordering_family {

@@ -220,31 +220,29 @@ subtest 'PPIF adapter parses AXI manager same-ID reject policy metadata' => sub 
     );
 };
 
-subtest 'PPIF adapter parses AXI manager same-ID issue-order queue policy metadata' => sub {
+subtest 'PPIF adapter parses AXI manager same-ID issue-order queue policy admitted request pulses' => sub {
     my $sample_path = sample_capacity_same_id_issue_order_queue_policy_ppif_path();
     ok(-f $sample_path, 'tracked runnable PPIF capacity/status same-ID issue-order queue policy sample exists');
 
-    my $base = FSM::Adapter::IAL2::PPIF->new()->parse_source(sample_capacity_transaction_dispatch_ppif(), sample_capacity_transaction_dispatch_ppif_path());
     my $result = FSM::Adapter::IAL2::PPIF->new()->parse_source(sample_capacity_same_id_issue_order_queue_policy_ppif(), $sample_path);
+    my $isf = $result->{generated_ial1}{text};
 
     is($result->{kind}, 'protocol_intent.axi_manager_capacity_status', 'same-ID issue-order queue sample still uses the capacity/status generator');
     is($result->{report}{source_object}{id}, 'axi-manager-capacity-status-same-id-issue-order-queue-policy', 'same-ID issue-order queue source object id is preserved');
     is($result->{report}{source_object}{intent_name}, 'axi_manager_capacity_status_same_id_issue_order_queue_policy', 'same-ID issue-order queue source intent name is preserved');
-    is(
-        $result->{generated_ial1}{text},
-        $base->{generated_ial1}{text},
-        'same-ID issue-order queue policy metadata does not alter generated IAL1 text',
-    );
+    like($isf, qr/\(var axi0_r0_admitted_request_pulse_q \(width 1\)\)/, 'same-ID issue-order queue sample declares admitted request pulse storage');
+    like($isf, qr/\(rule axi0_r0_admitted_request \(& axi0_r0_request \(\| \(< axi0_pending_reads_q 4\) axi0_r0_complete\)\)\s+\(pulse axi0_r0_admitted_request_pulse_q\)\)/, 'same-ID issue-order queue sample emits admitted request pulse rule');
     is_deeply(
-        $result->{generated_ial0}{files},
-        $base->{generated_ial0}{files},
-        'same-ID issue-order queue policy metadata does not alter generated IAL0 files',
+        sorted([keys %{$result->{generated_ial0}{files}}]),
+        ['axi0_capacity_status.fsm'],
+        'same-ID issue-order queue policy keeps the generated IAL0 artifact name stable',
     );
+    like($result->{generated_ial0}{files}{'axi0_capacity_status.fsm'}, qr/\(<1 \(axi0_r0_admitted_request_pulse_q 1\)\)/, 'same-ID issue-order queue sample lowers the admitted request pulse into IAL0');
     assert_same_id_issue_order_queue_policy_report($result->{report}{same_id_ordering}, 'adapter report');
     is_deeply(
         $result->{report}{id_response_rule_engine}{residue},
         [qw(auto_id_allocation id_release same_id_ordering response_demux)],
-        'same-ID issue-order queue policy report keeps generated queue behavior as residue',
+        'same-ID issue-order queue policy report keeps generated queue behavior as ID/response residue',
     );
 };
 
@@ -628,7 +626,7 @@ subtest 'PPIF adapter diagnostics fail closed before generation claims' => sub {
                 '(read (concrete-id-reuse reject))',
             )),
             qr/concrete read ID value 3 is reused by transactions 'r0' and 'r1'; selected same-id-ordering\.read concrete-id-reuse reject policy rejects concrete same-ID reuse/],
-        ['manager same-ID ordering issue-order queue remains selected-not-generated for concrete same-ID reuse',
+        ['manager same-ID ordering issue-order queue keeps duplicated concrete same-ID reuse fail-closed',
             capacity_ppif_with_objects(manager_capacity_object_with_id_families_transactions_and_same_id_ordering(
                 '(write (width 4) (request-id awid) (response-id bid)) (read (width 4) (request-id arid) (response-id rid))',
                 '(read r0 (tag rd0) (request axi0_r0_request) (completion axi0_r0_complete) (id (value 3))) (read r1 (tag rd1) (request axi0_r1_request) (completion axi0_r1_complete) (id (value 3)))',
@@ -3390,8 +3388,26 @@ sub assert_same_id_issue_order_queue_policy_report {
 
     assert_same_id_reuse_policy_report($ordering, $owner, {
         policy                => 'issue_order_queue',
-        enforcement           => 'not_generated',
-        implementation_status => 'selected_not_generated',
+        enforcement           => 'admitted_request_boundary',
+        implementation_status => 'admitted_request_pulses_generated',
+        admitted_request_boundary => {
+            pending_storage         => 'axi0_pending_reads_q',
+            max_pending             => 4,
+            completion_fanin        => 'axi0_r0_complete',
+            selected_request_events => [qw(axi0_r0_request)],
+            generated_pulses        => [
+                {
+                    transaction   => 'r0',
+                    tag           => 'rd0',
+                    concrete_id   => 3,
+                    request_event => 'axi0_r0_request',
+                    pulse         => 'axi0_r0_admitted_request_pulse_q',
+                    rule          => 'axi0_r0_admitted_request',
+                    guard         => '(& axi0_r0_request (| (< axi0_pending_reads_q 4) axi0_r0_complete))',
+                },
+            ],
+            generated_assertions => [],
+        },
     });
 }
 
@@ -3422,6 +3438,30 @@ sub assert_same_id_reuse_policy_report {
     }
     ok(!$read->{accepted_same_id_reuse}, "$owner reports same-ID reuse is not accepted");
     ok(!$read->{generated_queue_behavior}, "$owner reports no generated queue behavior");
+    if (exists $expected->{admitted_request_boundary}) {
+        assert_same_id_admitted_request_boundary(
+            $read->{admitted_request_boundary},
+            $owner,
+            $expected->{admitted_request_boundary},
+        );
+    } else {
+        ok(!exists($read->{admitted_request_boundary}), "$owner omits admitted request boundary for policy");
+    }
+}
+
+sub assert_same_id_admitted_request_boundary {
+    my ($boundary, $owner, $expected) = @_;
+
+    is($boundary->{guard_source}, 'capacity_storage_and_completion_fanin', "$owner reports admitted guard source");
+    is($boundary->{pending_storage}, $expected->{pending_storage}, "$owner reports admitted guard pending storage");
+    is($boundary->{max_pending}, $expected->{max_pending}, "$owner reports admitted guard max-pending bound");
+    is($boundary->{completion_fanin}, $expected->{completion_fanin}, "$owner reports admitted guard completion fan-in");
+    is_deeply($boundary->{selected_request_events}, $expected->{selected_request_events}, "$owner reports selected request events");
+    is_deeply($boundary->{generated_assertions}, $expected->{generated_assertions}, "$owner reports admitted request assertions");
+    is_deeply($boundary->{generated_pulses}, $expected->{generated_pulses}, "$owner reports admitted request pulses");
+    for my $pulse (@{$boundary->{generated_pulses} || []}) {
+        unlike($pulse->{guard}, qr/can_accept/, "$owner admitted request guard does not consume can_accept");
+    }
 }
 
 sub assert_same_id_ordering_family {

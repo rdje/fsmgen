@@ -4432,9 +4432,9 @@ ships `IAL2-FEATURE-COMPLETENESS-FRONTIER.96`. The PPIF adapter now accepts
 `concrete-id-reuse` arms while keeping `scoreboard` unsupported.
 
 The runnable sample is
-`ppif/axi_manager_capacity_status_same_id_issue_order_queue_policy.ppif`. It
-reports selected-not-generated metadata without changing generated `.isf`,
-`.fsm`, or SystemVerilog:
+`ppif/axi_manager_capacity_status_same_id_issue_order_queue_policy.ppif`. In
+the `.96` metadata-first slice it reported selected-not-generated metadata
+without changing generated `.isf`, `.fsm`, or SystemVerilog:
 
 ```yaml
 same_id_ordering:
@@ -4472,16 +4472,50 @@ prerequisite is a named admitted-request boundary per concrete transaction in
 selected `issue-order-queue` families.
 
 The audit selects `IAL2-FEATURE-COMPLETENESS-FRONTIER.98`, admitted request
-pulse generation. The future implementation must derive the pulse guard from
-the transaction request event, current direction pending storage, family
-`max-pending`, and same-cycle completion fan-in. It must not use the generated
-`can_accept` status output as the source of truth for queue enqueue.
+pulse generation. The implementation ships the first generated prerequisite
+for future queue state: one internal admitted-request pulse storage target and
+one pulse rule per concrete transaction in a selected `issue-order-queue`
+family. The pulse guard is derived from the transaction request event, current
+direction pending storage, family `max-pending`, and same-cycle completion
+fan-in. It does not use the generated `can_accept` status output as the source
+of truth for queue enqueue.
 
-Expected report metadata stays under `same_id_ordering` and remains explicit
+Same-ID issue-order queue admitted request pulses first slice:
+[AXI_IAL2_MANAGER_SAME_ID_ISSUE_ORDER_QUEUE_ADMITTED_REQUEST_PULSES_FIRST_SLICE](../../AXI_IAL2_MANAGER_SAME_ID_ISSUE_ORDER_QUEUE_ADMITTED_REQUEST_PULSES_FIRST_SLICE.md)
+ships `IAL2-FEATURE-COMPLETENESS-FRONTIER.98`. For the public sample, the
+generated `.isf` now includes the admitted boundary:
+
+```lisp
+(var axi0_r0_admitted_request_pulse_q (width 1))
+
+(rule axi0_r0_admitted_request
+  (& axi0_r0_request (| (< axi0_pending_reads_q 4) axi0_r0_complete))
+  (pulse axi0_r0_admitted_request_pulse_q))
+```
+
+The generated `.fsm` lowers the rule through the existing one-cycle delayed
+pulse action:
+
+```lisp
+(<1 (axi0_r0_admitted_request_pulse_q 1))
+```
+
+For a selected family with more than one concrete transaction, FSMGen emits a
+same-direction request mutual-exclusion assertion so the direction-level
+pending counter cannot admit multiple concrete identities in one cycle:
+
+```lisp
+(assert (! (& axi0_r0_request axi0_r1_request))
+  "axi0 read same-ID issue-order queue requests are mutually exclusive")
+```
+
+Current report metadata stays under `same_id_ordering` and remains explicit
 that this is not generated queue behavior:
 
 ```yaml
 same_id_ordering:
+  mode: concrete_id_reuse_policy
+  generated_behavior: false
   concrete_id_reuse_policy:
     read:
       policy: issue_order_queue
@@ -4491,16 +4525,30 @@ same_id_ordering:
       generated_queue_behavior: false
       admitted_request_boundary:
         guard_source: capacity_storage_and_completion_fanin
+        pending_storage: axi0_pending_reads_q
+        max_pending: 4
+        completion_fanin: axi0_r0_complete
+        selected_request_events:
+          - axi0_r0_request
         generated_pulses:
           - transaction: r0
+            tag: rd0
+            concrete_id: 3
+            request_event: axi0_r0_request
             pulse: axi0_r0_admitted_request_pulse_q
-        generated_assertions:
-          - axi0_read_issue_order_queue_request_onehot0
+            rule: axi0_r0_admitted_request
+            guard: (& axi0_r0_request (| (< axi0_pending_reads_q 4) axi0_r0_complete))
+        generated_assertions: []
+  residue:
+    - concrete_id_same_id_ordering
+    - per_id_issue_order_queues
 ```
 
 Duplicated concrete same-ID reuse remains fail-closed until per-ID queue
 storage, enqueue/dequeue rules, queue-head response demux, and queue-specific
-assertions ship.
+assertions ship. `.98` advances the active frontier to
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.99`, the post-admitted-request-pulse AXI
+manager selector.
 
 First implementation subset selection:
 [AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION](../../AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md)

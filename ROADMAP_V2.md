@@ -1231,14 +1231,20 @@ duplicated concrete same-ID transactions still fail closed with a
 selected-not-generated diagnostic. The new support-accounted sample is
 `ppif/axi_manager_capacity_status_same_id_issue_order_queue_policy.ppif`.
 Audit `.97` selects the admitted per-transaction request boundary as the next
-safe prerequisite before queue state. Future admitted pulses must be derived
-from transaction request event, current capacity storage, family
-`max-pending`, and same-cycle completion fan-in rather than from the generated
-`can_accept` output value, and they must keep duplicated concrete same-ID
-reuse fail-closed until queue-head behavior exists. The active implementation
-owner is `.98`, admitted request pulse generation; queue storage, dequeue
-rules, queue-head response demux, accepted same-ID reuse, direct backend, and
-VHDL remain deferred.
+safe prerequisite before queue state. Implementation `.98` ships that admitted
+request boundary: selected `issue-order-queue` families emit one internal
+admitted-request pulse storage target and one pulse rule per concrete
+transaction, guarded by the transaction request event, current capacity
+storage, family `max-pending`, and same-cycle completion fan-in rather than
+the generated `can_accept` output value. Schedule JSON reports
+`enforcement: admitted_request_boundary`,
+`implementation_status: admitted_request_pulses_generated`,
+`accepted_same_id_reuse: false`, `generated_queue_behavior: false`, and the
+generated pulse/rule/guard payload under the selected family. Duplicated
+concrete same-ID reuse, queue storage, dequeue rules, queue-head response
+demux, accepted same-ID reuse, direct backend, and VHDL remain deferred. The
+active frontier advances to `.99`, the post-admitted-request-pulse AXI
+manager selector.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.

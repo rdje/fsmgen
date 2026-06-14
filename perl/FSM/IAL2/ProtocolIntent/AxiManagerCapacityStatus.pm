@@ -167,6 +167,16 @@ sub _normalize_contract($raw) {
         events       => \%events,
         transactions => $transactions,
     );
+    my $same_id_admitted_request_boundary = _build_same_id_admitted_request_boundary(
+        manager_name             => $name,
+        id_families              => $id_families,
+        transactions             => $transactions,
+        same_id_ordering_policy  => $same_id_ordering_policy,
+        transaction_event_dispatch => $transaction_event_dispatch,
+        storage                  => \%storage,
+        read_max_pending         => $read_max_pending,
+        write_max_pending        => $write_max_pending,
+    );
     my $id_response_rule_engine = _build_id_response_rule_engine(
         id_families             => $id_families,
         transactions            => $transactions,
@@ -190,6 +200,7 @@ sub _normalize_contract($raw) {
         auto_id_lifecycle => $auto_id_lifecycle,
         response_demux => $response_demux,
         read_data => $read_data,
+        same_id_admitted_request_boundary => $same_id_admitted_request_boundary,
     );
 
     my $source = ref($raw->{source}) eq 'HASH' ? $raw->{source} : {};
@@ -210,6 +221,7 @@ sub _normalize_contract($raw) {
         auto_id_lifecycle         => $auto_id_lifecycle,
         response_demux            => $response_demux,
         same_id_ordering_policy   => $same_id_ordering_policy,
+        same_id_admitted_request_boundary => $same_id_admitted_request_boundary,
     );
 
     return {
@@ -231,6 +243,7 @@ sub _normalize_contract($raw) {
         read_data         => $read_data,
         same_id_ordering_policy => $same_id_ordering_policy,
         same_id_ordering  => $same_id_ordering,
+        same_id_admitted_request_boundary => $same_id_admitted_request_boundary,
         transaction_event_dispatch => $transaction_event_dispatch,
         id_response_rule_engine => $id_response_rule_engine,
         storage           => \%storage,
@@ -1501,7 +1514,10 @@ sub _build_same_id_ordering(%args) {
     return undef unless @families || $has_policy;
 
     my @policy_entry = $has_policy
-        ? (concrete_id_reuse_policy => _clone_jsonish($policy))
+        ? (concrete_id_reuse_policy => _same_id_ordering_policy_with_admitted_boundary(
+            policy => $policy,
+            admitted_request_boundary => $args{same_id_admitted_request_boundary},
+        ))
         : ();
     if (!@families) {
         return {
@@ -1531,6 +1547,26 @@ sub _build_same_id_ordering(%args) {
             'bursts',
         ],
     };
+}
+
+sub _same_id_ordering_policy_with_admitted_boundary(%args) {
+    my $policy = _clone_jsonish($args{policy});
+    my $boundary = $args{admitted_request_boundary};
+    return $policy unless ref($policy) eq 'HASH' && ref($boundary) eq 'HASH';
+
+    for my $family_name (qw(read write)) {
+        my $family = $boundary->{families}{$family_name};
+        next unless ref($family) eq 'HASH' && ref($policy->{$family_name}) eq 'HASH';
+
+        my %admitted_boundary = %$family;
+        delete $admitted_boundary{family};
+        delete $admitted_boundary{assertions};
+        $policy->{$family_name}{enforcement} = 'admitted_request_boundary';
+        $policy->{$family_name}{implementation_status} = 'admitted_request_pulses_generated';
+        $policy->{$family_name}{admitted_request_boundary} = _clone_jsonish(\%admitted_boundary);
+    }
+
+    return $policy;
 }
 
 sub _same_id_response_demux_covered_families($response_demux) {
@@ -1749,6 +1785,132 @@ sub _same_id_ordering_policy_for_family($policy, $family) {
     return $policy->{$family};
 }
 
+sub _build_same_id_admitted_request_boundary(%args) {
+    my $policy = $args{same_id_ordering_policy};
+    return undef unless ref($policy) eq 'HASH';
+
+    my %families;
+    for my $family_name (qw(write read)) {
+        my $policy_entry = _same_id_ordering_policy_for_family($policy, $family_name);
+        next unless ref($policy_entry) eq 'HASH'
+            && ($policy_entry->{policy} // '') eq 'issue_order_queue';
+
+        my $transactions = $args{transactions};
+        confess "AXI manager capacity/status IAL2 contract same-id-ordering.$family_name concrete-id-reuse issue-order-queue requires transactions metadata\n"
+            unless ref($transactions) eq 'ARRAY';
+
+        my $id_family = ref($args{id_families}) eq 'HASH' ? $args{id_families}{$family_name} : undef;
+        confess "AXI manager capacity/status IAL2 contract same-id-ordering.$family_name concrete-id-reuse issue-order-queue requires a declared $family_name ID family\n"
+            unless ref($id_family) eq 'HASH';
+        confess "AXI manager capacity/status IAL2 contract same-id-ordering.$family_name concrete-id-reuse issue-order-queue requires positive $family_name ID-family width\n"
+            unless $id_family->{present};
+
+        my @concrete_transactions = grep {
+            ($_->{kind} // '') eq $family_name
+                && ref($_->{id}) eq 'HASH'
+                && ($_->{id}{policy} // '') eq 'concrete'
+        } @$transactions;
+        confess "AXI manager capacity/status IAL2 contract same-id-ordering.$family_name concrete-id-reuse issue-order-queue requires at least one concrete $family_name transaction\n"
+            unless @concrete_transactions;
+
+        my %seen_request_event;
+        for my $transaction (@concrete_transactions) {
+            my $event = $transaction->{request_event};
+            confess "AXI manager capacity/status IAL2 contract same-id-ordering.$family_name concrete-id-reuse issue-order-queue admitted request pulses require unique $family_name request events; event '$event' is shared by transactions '$seen_request_event{$event}' and '$transaction->{name}'\n"
+                if exists $seen_request_event{$event};
+            $seen_request_event{$event} = $transaction->{name};
+        }
+
+        my $dispatch = $args{transaction_event_dispatch};
+        confess "Internal error: same-ID admitted request boundary requires transaction event dispatch metadata\n"
+            unless ref($dispatch) eq 'HASH' && ref($dispatch->{$family_name}) eq 'HASH';
+
+        my $pending_storage = _same_id_admitted_request_pending_storage(%args, family => $family_name);
+        my $max_pending = _same_id_admitted_request_max_pending(%args, family => $family_name);
+        my $completion_fanin = $dispatch->{$family_name}{completion_fanin};
+        my @pulses = map {
+            my $transaction = $_;
+            my $prefix = "$args{manager_name}_$transaction->{name}";
+            my $guard = _same_id_admitted_request_guard_expr(
+                request_event    => $transaction->{request_event},
+                pending_storage  => $pending_storage,
+                max_pending      => $max_pending,
+                completion_fanin => $completion_fanin,
+            );
+            +{
+                transaction   => $transaction->{name},
+                tag           => $transaction->{tag},
+                concrete_id   => $transaction->{id}{value},
+                request_event => $transaction->{request_event},
+                pulse         => "${prefix}_admitted_request_pulse_q",
+                rule          => "${prefix}_admitted_request",
+                guard         => $guard,
+            }
+        } @concrete_transactions;
+        my @selected_request_events = @{_unique_preserving([map { $_->{request_event} } @concrete_transactions])};
+        my @assertions = @selected_request_events > 1
+            ? ({
+                name      => "$args{manager_name}_${family_name}_issue_order_queue_request_onehot0",
+                condition => _same_id_at_most_one_expr(@selected_request_events),
+                message   => "$args{manager_name} $family_name same-ID issue-order queue requests are mutually exclusive",
+            })
+            : ();
+
+        $families{$family_name} = {
+            family                  => $family_name,
+            guard_source            => 'capacity_storage_and_completion_fanin',
+            pending_storage         => $pending_storage,
+            max_pending             => $max_pending,
+            completion_fanin        => $completion_fanin,
+            selected_request_events => \@selected_request_events,
+            generated_pulses        => \@pulses,
+            generated_assertions    => [map { $_->{name} } @assertions],
+            assertions              => \@assertions,
+        };
+    }
+
+    return undef unless %families;
+    return {
+        mode     => 'admitted_request_pulses',
+        families => \%families,
+    };
+}
+
+sub _same_id_admitted_request_pending_storage(%args) {
+    return $args{storage}{pending_reads} if $args{family} eq 'read';
+    return $args{storage}{pending_writes} if $args{family} eq 'write';
+    confess "Internal error: unknown same-ID admitted request family '$args{family}'\n";
+}
+
+sub _same_id_admitted_request_max_pending(%args) {
+    return $args{read_max_pending} if $args{family} eq 'read';
+    return $args{write_max_pending} if $args{family} eq 'write';
+    confess "Internal error: unknown same-ID admitted request family '$args{family}'\n";
+}
+
+sub _same_id_admitted_request_guard_expr(%args) {
+    return _and_expr(
+        $args{request_event},
+        _or_expr(
+            _lt_expr($args{pending_storage}, $args{max_pending}),
+            $args{completion_fanin},
+        ),
+    );
+}
+
+sub _same_id_at_most_one_expr(@terms) {
+    return '1' if @terms < 2;
+
+    my @overlaps;
+    for my $left_index (0 .. $#terms) {
+        for my $right_index ($left_index + 1 .. $#terms) {
+            push @overlaps, _and_expr($terms[$left_index], $terms[$right_index]);
+        }
+    }
+
+    return _not_expr(_or_expr(@overlaps));
+}
+
 sub _reject_forbidden_or_duplicate_names(%args) {
     my $event_names = _unique_preserving([
         @{_abstract_event_names($args{events})},
@@ -1772,6 +1934,8 @@ sub _reject_forbidden_or_duplicate_names(%args) {
         if defined $args{response_demux};
     push @groups, [read_data => _read_data_signal_names($args{read_data})]
         if defined $args{read_data};
+    push @groups, [same_id_admitted_request_boundary => _same_id_admitted_request_signal_names($args{same_id_admitted_request_boundary})]
+        if defined $args{same_id_admitted_request_boundary};
 
     for my $group (@groups) {
         my ($kind, $names) = @$group;
@@ -1881,6 +2045,19 @@ sub _read_data_signal_names($read_data) {
                 if exists($transaction->{beat_count_storage})
                     && defined($transaction->{beat_count_storage});
         }
+    }
+
+    return \@signals;
+}
+
+sub _same_id_admitted_request_signal_names($boundary) {
+    return [] unless ref($boundary) eq 'HASH';
+
+    my @signals;
+    for my $family_name (qw(write read)) {
+        my $family = $boundary->{families}{$family_name};
+        next unless ref($family) eq 'HASH';
+        push @signals, map { $_->{pulse} } @{$family->{generated_pulses} || []};
     }
 
     return \@signals;
@@ -2030,6 +2207,7 @@ sub _emit_isf($contract) {
         @auto_id_assertions,
     );
     my @auto_id_priorities = _auto_id_lifecycle_priority_lines($contract);
+    my @same_id_admitted_request_rules = _same_id_admitted_request_rule_lines($contract);
     my @response_demux_rules = _response_demux_rule_lines($contract);
     my @read_data_burst_length_capture_rules = _read_data_burst_length_capture_rule_lines($contract);
     my @read_data_beat_count_rules = _read_data_beat_count_rule_lines($contract);
@@ -2039,6 +2217,7 @@ sub _emit_isf($contract) {
     my @storage_lines = (
         "    (var $contract->{storage}{pending_reads} (width $read_width))",
         "    (var $contract->{storage}{pending_writes} (width $write_width))",
+        _same_id_admitted_request_storage_lines($contract),
         _auto_id_lifecycle_storage_lines($contract),
         _read_data_burst_length_storage_lines($contract),
         _read_data_beat_count_storage_lines($contract),
@@ -2070,6 +2249,8 @@ sub _emit_isf($contract) {
         (@auto_id_priorities ? ("") : ()),
         @assertion_transactions,
         (@assertion_transactions ? ("") : ()),
+        @same_id_admitted_request_rules,
+        (@same_id_admitted_request_rules ? ("") : ()),
         @response_demux_rules,
         (@response_demux_rules ? ("") : ()),
         @read_data_burst_length_capture_rules,
@@ -2302,11 +2483,25 @@ sub _same_id_ordering_assertion_transaction_lines($contract) {
 
 sub _same_id_ordering_assertion_specs($contract) {
     my $lifecycle = $contract->{auto_id_lifecycle};
-    return () unless ref($lifecycle) eq 'HASH' && $lifecycle->{generated_behavior};
+    my @assertions;
+    if (ref($lifecycle) eq 'HASH' && $lifecycle->{generated_behavior}) {
+        for my $family (@{$lifecycle->{families} || []}) {
+            push @assertions, _same_id_ordering_assertion_specs_for_family($family, $contract->{name});
+        }
+    }
+    push @assertions, _same_id_admitted_request_assertion_specs($contract);
+    return @assertions;
+}
+
+sub _same_id_admitted_request_assertion_specs($contract) {
+    my $boundary = $contract->{same_id_admitted_request_boundary};
+    return () unless ref($boundary) eq 'HASH';
 
     my @assertions;
-    for my $family (@{$lifecycle->{families} || []}) {
-        push @assertions, _same_id_ordering_assertion_specs_for_family($family, $contract->{name});
+    for my $family_name (qw(write read)) {
+        my $family = $boundary->{families}{$family_name};
+        next unless ref($family) eq 'HASH';
+        push @assertions, @{$family->{assertions} || []};
     }
     return @assertions;
 }
@@ -2410,6 +2605,40 @@ sub _response_demux_rule($name, $guard, $completion_signal) {
     return (
         "  (rule $name $guard",
         "    (pulse $completion_signal))",
+    );
+}
+
+sub _same_id_admitted_request_storage_lines($contract) {
+    my $boundary = $contract->{same_id_admitted_request_boundary};
+    return () unless ref($boundary) eq 'HASH';
+
+    return map { "    (var $_ (width 1))" } @{_same_id_admitted_request_signal_names($boundary)};
+}
+
+sub _same_id_admitted_request_rule_lines($contract) {
+    my $boundary = $contract->{same_id_admitted_request_boundary};
+    return () unless ref($boundary) eq 'HASH';
+
+    my @lines;
+    for my $family_name (qw(write read)) {
+        my $family = $boundary->{families}{$family_name};
+        next unless ref($family) eq 'HASH';
+        for my $pulse (@{$family->{generated_pulses} || []}) {
+            push @lines, _same_id_admitted_request_rule(
+                $pulse->{rule},
+                $pulse->{guard},
+                $pulse->{pulse},
+            );
+        }
+    }
+
+    return @lines;
+}
+
+sub _same_id_admitted_request_rule($name, $guard, $pulse_signal) {
+    return (
+        "  (rule $name $guard",
+        "    (pulse $pulse_signal))",
     );
 }
 
@@ -3156,7 +3385,7 @@ sub _build_report(%args) {
             'auto_id_lifecycle pools are bounded to 1..4 unique values per family and must fit the declared positive ID width',
             'auto_id_lifecycle generates first-free request-ID drive, per-transaction busy/selected-ID state, completion-event release, no-ID assertions, inactive-completion assertions, and same-family request mutual-exclusion assertions',
             'same_id_ordering for generated auto-ID families is enforced by avoiding same-ID concurrency through allocator free-ID guards plus pairwise active selected-ID assertions',
-            'same_id_ordering_policy accepts explicit read/write concrete-id-reuse reject policies plus selected-not-generated issue-order-queue metadata, while scoreboard remains unsupported until later owners select generated behavior',
+            'same_id_ordering_policy accepts explicit read/write concrete-id-reuse reject policies plus issue-order-queue admitted-request pulse generation, while accepted same-ID reuse, queue-head behavior, and scoreboard remain unsupported until later owners select generated behavior',
             'response_demux requires id_families, transactions, and selected-family auto_id_lifecycle metadata',
             'response_demux.write requires response_event equal to write_complete and generates bounded write BID demux behavior for explicit opt-in contracts',
             'response_demux.read requires response_event equal to read_complete, response_scope single_beat or burst_last, read ID-family metadata, read transactions, and read auto_id_lifecycle metadata',
@@ -3177,7 +3406,7 @@ sub _build_report(%args) {
             },
             {
                 id     => 'axi_id_ordering_and_response_matching',
-                detail => 'Concrete transaction ID request/response assertions, explicit bounded auto-ID request-ID drive plus completion-event release, generated auto-ID same-ID avoidance, explicit static concrete-ID reuse reject policy metadata, generated write BID response demux, generated single-beat read RID response demux, generated single-beat read-data RDATA/RRESP capture, generated burst-last RLAST response-demux completion, structural last-beat read-data metadata, generated last-beat read-data RDATA/RRESP capture, generated raw-ARLEN burst-length capture, explicit runtime-assertion beat-count/RLAST validation, generated multi-beat read-data output-bank behavior for the covered auto-ID multi-beat-by-RID subset, bounded burst payload/output behavior through that per-beat output bank, and generated scalar RRESP aggregation behavior are supported; dynamic user-ID arbitration while issuing multiple same-family requests in one cycle, per-ID same-ID response queues, accepted concrete same-ID reuse, generated queue/scoreboard policies, authored/general different-ID interleaving outside the covered auto-ID subset, packed burst-vector outputs, alternate full burst payload assembly, and aggregate-only status output shapes remain outside this capacity/status shell.',
+                detail => 'Concrete transaction ID request/response assertions, explicit bounded auto-ID request-ID drive plus completion-event release, generated auto-ID same-ID avoidance, explicit static concrete-ID reuse reject policy metadata, issue-order-queue admitted-request pulse generation for selected concrete-ID families, generated write BID response demux, generated single-beat read RID response demux, generated single-beat read-data RDATA/RRESP capture, generated burst-last RLAST response-demux completion, structural last-beat read-data metadata, generated last-beat read-data RDATA/RRESP capture, generated raw-ARLEN burst-length capture, explicit runtime-assertion beat-count/RLAST validation, generated multi-beat read-data output-bank behavior for the covered auto-ID multi-beat-by-RID subset, bounded burst payload/output behavior through that per-beat output bank, and generated scalar RRESP aggregation behavior are supported; dynamic user-ID arbitration while issuing multiple same-family requests in one cycle, per-ID same-ID response queues, accepted concrete same-ID reuse, generated issue-order queue state/queue-head demux or scoreboard policies, authored/general different-ID interleaving outside the covered auto-ID subset, packed burst-vector outputs, alternate full burst payload assembly, and aggregate-only status output shapes remain outside this capacity/status shell.',
             },
             {
                 id     => 'profile_aliases_and_full_manager_behavior',
