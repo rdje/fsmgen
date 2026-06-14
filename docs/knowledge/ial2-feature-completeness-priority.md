@@ -17,9 +17,9 @@ reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER|IAL2 feature completeness|IA
 The current feature-completeness priority is IAL2 on the
 SystemVerilog-backed path.
 
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.89` owns the next PNT frontier: selecting
-the next AXI manager feature-completeness owner after concrete-ID same-ID
-static validation.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.90` owns the next PNT frontier: auditing
+AXI per-ID issue-order queue readiness after concrete-ID same-ID static
+validation.
 
 Completed `.47` shipped generated single-beat `RDATA`/`RRESP` capture
 behavior. Completed `.48` selected `.49` because the current public read-data
@@ -142,7 +142,12 @@ be promoted only after compatible reuse is proven across multiple profiles.
 Completed `.87` selected `.88`, conservative fail-closed static validation for
 multiple concrete-ID transactions in the same response family sharing one
 concrete ID value, before any per-ID queue, scoreboard, public same-ID policy,
-or full same-ID ordering behavior.
+or full same-ID ordering behavior. Completed `.88` shipped that fail-closed
+static validation. Completed `.89` selected `.90`, AXI per-ID issue-order queue
+readiness, because direct queue behavior remains gated by public same-ID reuse
+policy, queue/scoreboard substrate, concrete response-demux prerequisites,
+report/static residue refinement, and any smaller IAL1/IAL0/SystemVerilog
+prerequisites.
 
 Selected IAL2 work may include required IAL1 or IAL0/SV support, but only when
 those prerequisites are explicit, task-tree owned, documented, and

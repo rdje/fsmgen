@@ -10,9 +10,9 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `HEAD after commit` — `IAL2-FEATURE-COMPLETENESS-FRONTIER.88: reject concrete same-ID reuse`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.89` pending; next action is selecting the next AXI manager feature-completeness owner after concrete-ID same-ID static validation.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.88`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.87`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.86`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.85`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.84`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.83`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.82`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.81`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.80`. Older completed slices are in the task tree and git history.
+- latest_commit: `HEAD after commit` — `IAL2-FEATURE-COMPLETENESS-FRONTIER.89: select per-ID queue readiness`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.90` pending; next action is auditing AXI per-ID issue-order queue readiness after concrete-ID same-ID static validation.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.89`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.88`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.87`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.86`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.85`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.84`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.83`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.82`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.81`. Older completed slices are in the task tree and git history.
 - in_flight_uncommitted: none after this commit; unrelated untracked `fx/` intentionally left alone.
 - blockers: none.
 

@@ -27,5 +27,7 @@ This avoids making IAL2 either all AXI-shaped vocabulary or an over-general
 layer with leaky "common" constructs. `IAL2-FEATURE-COMPLETENESS-FRONTIER.86`
 applied this stance while selecting `.87`, `.87` kept it while selecting
 `.88`, and `.88` kept the shipped fail-closed concrete-ID same-ID diagnostic
-AXI-profile-local. Any future common construct should be promoted only after
-another profile proves compatible need.
+AXI-profile-local. `.89` kept per-ID issue-order queue readiness AXI-profile
+scoped by selecting an audit before any common IAL2 queue construct. Any
+future common construct should be promoted only after another profile proves
+compatible need.

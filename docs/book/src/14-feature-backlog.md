@@ -4269,9 +4269,22 @@ is unchanged, and valid single-concrete-ID samples keep their generated
 `.isf`, `.fsm`, SystemVerilog, and schedule-report residue behavior. Accepted
 concrete-ID same-ID ordering behavior, per-ID issue-order queues, scoreboards,
 public same-ID reuse policy, full-manager behavior, direct backend lowering,
-and VHDL remain deferred. The next owner is
+and VHDL remain deferred. This advanced the frontier to
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.89`, a selector for the remaining AXI
 manager feature-completeness residue after this static validation.
+
+Post concrete-ID static validation selector:
+[AXI_IAL2_MANAGER_POST_CONCRETE_ID_STATIC_VALIDATION_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_CONCRETE_ID_STATIC_VALIDATION_NEXT_SLICE_SELECTION.md)
+ships `IAL2-FEATURE-COMPLETENESS-FRONTIER.89`. It selects
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.90`, AXI per-ID issue-order queue
+readiness, before any accepted concrete-ID same-ID reuse behavior or queue
+implementation. The selector records that post-`.88` residue is still honest:
+the public multi-beat sample still lists `concrete_id_same_id_ordering` and
+`per_id_issue_order_queues`, while concrete-ID samples still keep
+`same_id_ordering` under `id_response_rule_engine.residue`. Direct queue
+behavior remains gated by public same-ID reuse policy, queue/scoreboard
+substrate, concrete response-demux prerequisites, report/static residue
+refinement, and any smaller IAL1/IAL0/SystemVerilog prerequisites.
 
 First implementation subset selection:
 [AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION](../../AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md)

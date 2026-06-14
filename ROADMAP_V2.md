@@ -1174,9 +1174,11 @@ not prove same-ID response issue order, and an in-memory probe confirms the
 pre-`.88` generator accepted same-ID concrete pairs with unique events while
 leaving `same_id_ordering` as residue. Implementation `.88` now rejects that
 unsupported same-family concrete-ID reuse with a fail-closed diagnostic while
-leaving currently valid single-concrete-ID samples behavior-stable. The next
-selector is `.89`, which should choose the next AXI manager
-feature-completeness owner from the remaining same-ID/per-ID queue residue.
+leaving currently valid single-concrete-ID samples behavior-stable. Selector
+`.89` chooses `.90`, AXI per-ID issue-order queue readiness, before any
+accepted concrete-ID same-ID reuse behavior, queue/scoreboard substrate,
+public same-ID reuse policy, concrete response-demux behavior, or report/static
+residue refinement ships.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.
