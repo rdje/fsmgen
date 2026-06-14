@@ -1131,8 +1131,10 @@ Implementation `.79` ships that behavior: generated scalar aggregate outputs,
 request-time `2'd0` initialization in the existing output-bank init rules,
 matched-beat max updates under `!request_event`, generated aggregate
 output/init/update report fields, and read-data residue with
-`generated_rresp_aggregation` removed. `.80` is now the active selector for
-the next AXI manager feature-completeness slice.
+`generated_rresp_aggregation` removed. Selector `.80` chooses `.81`, AXI
+per-ID read-data interleaving and queue readiness, as the next exact audit.
+Verification-code generation is captured as a separate future roadmap lane
+from the synthesizable RTL/HDL feature-completeness path.
 Packed burst outputs, per-ID queues, direct backend lowering, and VHDL remain
 deferred.
 The shipped public capacity/status source accepts one

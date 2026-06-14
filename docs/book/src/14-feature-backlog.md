@@ -4111,11 +4111,23 @@ read_data:
 
 No-aggregation multi-beat contracts remain valid and continue to report
 `status_aggregation: none` with `read_data.residue: [rresp_aggregation]`.
-The active frontier is now `IAL2-FEATURE-COMPLETENESS-FRONTIER.80`, the next
-AXI manager feature-completeness selector after scalar `RRESP` aggregation
-behavior. Width-3 responses, alternate policies, aggregate-only shapes,
-packed outputs, per-ID queues, direct backend lowering, and VHDL remain
-deferred.
+
+Post-RRESP aggregation selector:
+[AXI_IAL2_MANAGER_POST_RRESP_AGGREGATION_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_RRESP_AGGREGATION_NEXT_SLICE_SELECTION.md)
+selects `IAL2-FEATURE-COMPLETENESS-FRONTIER.81`, AXI per-ID read-data
+interleaving and queue readiness. The live public multi-beat sample now has
+empty `read_data` and `auto_id_lifecycle` residue. Remaining AXI manager
+residue clusters around `response_demux` read-data interleaving/bursts and
+`same_id_ordering` concrete-ID same-ID ordering, per-ID issue queues,
+read-data interleaving, and bursts.
+
+Verification-code generation is a valid future FSMGEN target lane. It should
+be separate from the current synthesizable RTL path, so SV/UVM agents,
+monitors, scoreboards, protocol checkers, coverage, and reusable verification
+IP can use the full non-synthesizable target-language surface without
+weakening RTL lowering. Width-3 responses, alternate policies, aggregate-only
+shapes, packed outputs, per-ID queues, direct backend lowering, and VHDL
+remain deferred in the current RTL lane.
 
 First implementation subset selection:
 [AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION](../../AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md)
