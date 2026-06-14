@@ -355,6 +355,25 @@ subtest 'PPIF adapter parses AXI manager burst-length read-data metadata' => sub
     assert_read_data_burst_length_report($result->{report}{read_data}, 'adapter burst-length read-data report');
 };
 
+subtest 'PPIF adapter parses AXI manager runtime-assertion burst-length read-data metadata' => sub {
+    my $sample_path = sample_capacity_read_data_burst_length_runtime_assertion_ppif_path();
+    ok(-f $sample_path, 'tracked runnable PPIF capacity/status runtime-assertion burst-length read-data sample exists');
+
+    my $result = FSM::Adapter::IAL2::PPIF->new()->parse_source(sample_capacity_read_data_burst_length_runtime_assertion_ppif(), $sample_path);
+
+    is($result->{kind}, 'protocol_intent.axi_manager_capacity_status', 'runtime-assertion burst-length sample still uses the capacity/status generator');
+    is($result->{report}{source_object}{id}, 'axi-manager-capacity-status-read-data-burst-length-runtime-assertion', 'runtime-assertion burst-length source object id is preserved');
+    is($result->{report}{source_object}{intent_name}, 'axi_manager_capacity_status_read_data_burst_length_runtime_assertion', 'runtime-assertion burst-length source intent name is preserved');
+    like($result->{generated_ial1}{text}, qr/\(var axi0_r0_expected_beats_q \(width 5\)\)/, 'runtime-assertion PPIF generates r0 expected-beat storage');
+    like($result->{generated_ial1}{text}, qr/\(var axi0_r0_read_beat_count_q \(width 5\)\)/, 'runtime-assertion PPIF generates r0 beat-count storage');
+    like($result->{generated_ial1}{text}, qr/\(rule axi0_r0_beat_count_init axi0_r0_request\s+\(axi0_r0_expected_beats_q \(\+ axi0_arlen\[4:0\] 5'd1\)\)\s+\(axi0_r0_read_beat_count_q 0\)\)/, 'runtime-assertion PPIF generates r0 beat-count initialization');
+    like($result->{generated_ial1}{text}, qr/axi0 r0 RLAST appears only on the expected final read beat/, 'runtime-assertion PPIF generates r0 early-RLAST assertion');
+    like($result->{generated_ial0}{files}{'axi0_capacity_status.fsm'}, qr/\(axi0_read_data_beat_count_checks_assert_0 assert \(=> axi0_r0_request \(< axi0_arlen 8'd16\)\)/, 'runtime-assertion PPIF lowers r0 ARLEN bound assertion into generated .fsm');
+    like($result->{generated_ial0}{files}{'axi0_capacity_status.fsm'}, qr/\(<- \(axi0_r0_read_beat_count_q \(\+ axi0_r0_read_beat_count_q 5'd1\)\)\)/, 'runtime-assertion PPIF lowers r0 beat-count increment into generated .fsm');
+    assert_read_response_demux_burst_last_report($result->{report}{response_demux}, 'adapter runtime-assertion burst-length read-data report');
+    assert_read_data_burst_length_report($result->{report}{read_data}, 'adapter runtime-assertion burst-length read-data report', 'runtime_assertion');
+};
+
 subtest 'PPIF adapter parses mixed AXI manager response-demux arms' => sub {
     my $source = capacity_ppif_with_objects(
         manager_capacity_object_with_mixed_response_demux(
@@ -685,7 +704,7 @@ subtest 'PPIF adapter diagnostics fail closed before generation claims' => sub {
                 '(read (response-event axi0_read_complete) (response-scope burst-last) (last-signal rlast (width 1)) (transaction-completion generated))',
                 last_beat_read_data_clause_with_burst_length(burst_length_clause_with('(validation generated)')),
             )),
-            qr/supports only report-only in this slice/],
+            qr/supports only report-only or runtime-assertion in this slice/],
         ['explicit-width manager read-data output',
             capacity_ppif_with_objects(manager_capacity_object_with_read_data(read_data_clause_with('(transaction r0 (data-output r0_data (width 32)) (status-output r0_resp))'))),
             qr/requires exactly one scalar value/],
@@ -945,6 +964,21 @@ subtest 'CLI emits IAL2 report JSON for AXI manager burst-length read-data metad
     is_deeply($report->{generated_artifacts}{ial0}{files}, ['axi0_capacity_status.fsm'], 'burst-length read-data metadata keeps the generated .fsm artifact name stable');
 };
 
+subtest 'CLI emits IAL2 report JSON for AXI manager runtime-assertion burst-length read-data metadata .ppif' => sub {
+    my ($success, undef, undef, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--emit-schedule-json', sample_capacity_read_data_burst_length_runtime_assertion_ppif_path()],
+    );
+
+    ok($success, '--emit-schedule-json succeeds for capacity/status runtime-assertion burst-length read-data .ppif');
+    is(join('', @{$stderr_buf || []}), '', 'capacity/status runtime-assertion burst-length read-data report keeps stderr clean');
+    my $report = decode_json(join('', @{$stdout_buf || []}));
+    is($report->{schema}, 'fsmgen.ial2.protocol_intent.axi_manager_capacity_status.v1', 'CLI keeps the capacity/status report schema');
+    is($report->{source_object}{intent_name}, 'axi_manager_capacity_status_read_data_burst_length_runtime_assertion', 'runtime-assertion burst-length read-data report carries the PPIF top-level intent name');
+    assert_read_response_demux_burst_last_report($report->{response_demux}, 'CLI runtime-assertion burst-length read-data report');
+    assert_read_data_burst_length_report($report->{read_data}, 'CLI runtime-assertion burst-length read-data report', 'runtime_assertion');
+    is_deeply($report->{generated_artifacts}{ial0}{files}, ['axi0_capacity_status.fsm'], 'runtime-assertion burst-length read-data metadata keeps the generated .fsm artifact name stable');
+};
+
 subtest 'CLI --verify-hdl accepts AXI manager auto-ID lifecycle behavior .ppif' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $hdl = File::Spec->catfile($tempdir, 'axi_auto_id_lifecycle.sv');
@@ -1065,6 +1099,30 @@ subtest 'CLI --verify-hdl accepts AXI manager burst-length read-data metadata .p
     like($sv, qr/assign\s+axi0_r0_read_data_capture_en\s*=\s*axi0_r0_complete\s*;/, 'burst-length read-data HDL guards r0 capture with generated last-beat completion');
     like($sv, qr/axi0_r0_last_rdata_next\s*=\s*axi0_rdata\s*;/, 'burst-length read-data HDL captures RDATA into r0 last data output');
     like($sv, qr/axi0_r0_last_rresp_next\s*=\s*axi0_rresp\s*;/, 'burst-length read-data HDL captures RRESP into r0 last status output');
+};
+
+subtest 'CLI --verify-hdl accepts AXI manager runtime-assertion burst-length read-data metadata .ppif' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $hdl = File::Spec->catfile($tempdir, 'axi_runtime_assertion_burst_length_read_data.sv');
+
+    my ($success, undef, undef, undef, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--quiet', '--verify-hdl', '--output', $hdl, sample_capacity_read_data_burst_length_runtime_assertion_ppif_path()],
+    );
+
+    ok($success, 'capacity/status runtime-assertion burst-length read-data --verify-hdl succeeds');
+    is(join('', @{$stderr_buf || []}), '', 'capacity/status runtime-assertion burst-length read-data --verify-hdl keeps stderr clean');
+    ok(-f $hdl, 'runtime-assertion burst-length read-data --output writes generated HDL');
+    my $sv = slurp($hdl);
+    like($sv, qr/\binput\s+(?:wire\s+)?\[7:0\]\s+axi0_arlen\b/, 'runtime-assertion burst-length read-data HDL exposes generated ARLEN input');
+    like($sv, qr/\breg\s+\[4:0\]\s+axi0_r0_expected_beats_q\b/, 'runtime-assertion HDL declares r0 expected-beat storage');
+    like($sv, qr/\breg\s+\[4:0\]\s+axi0_r0_read_beat_count_q\b/, 'runtime-assertion HDL declares r0 beat-count storage');
+    like($sv, qr/axi0_r0_expected_beats_q_next\s*=\s*axi0_arlen\[4:0\]\s*\+\s*5'd1\s*;/, 'runtime-assertion HDL initializes r0 expected count from ARLEN+1');
+    like($sv, qr/axi0_r0_read_beat_count_q_next\s*=\s*axi0_r0_read_beat_count_q\s*\+\s*5'd1\s*;/, 'runtime-assertion HDL increments r0 beat count');
+    like($sv, qr/assert property .*axi0_arlen\s*<\s*8'd16.*axi0 r0 ARLEN is within configured max beats/, 'runtime-assertion HDL emits r0 ARLEN bound assertion');
+    like($sv, qr/assert property .*axi0_rlast.*axi0 r0 RLAST appears only on the expected final read beat/, 'runtime-assertion HDL emits r0 early-RLAST assertion');
+    like($sv, qr/assert property .*axi0_rlast.*axi0 r0 expected final read beat has RLAST/, 'runtime-assertion HDL emits r0 missing-RLAST assertion');
+    like($sv, qr/axi0_r0_last_rdata_next\s*=\s*axi0_rdata\s*;/, 'runtime-assertion HDL still captures RDATA into r0 last data output');
+    like($sv, qr/axi0_r0_last_rresp_next\s*=\s*axi0_rresp\s*;/, 'runtime-assertion HDL still captures RRESP into r0 last status output');
 };
 
 subtest 'CLI --outdir materializes generated .isf, .fsm, and HDL for .ppif' => sub {
@@ -1698,6 +1756,50 @@ subtest 'CLI check JSON and semantic JSON support-account burst-length read-data
     );
 };
 
+subtest 'CLI check JSON and semantic JSON support-account runtime-assertion burst-length read-data .ppif separately' => sub {
+    my $read_data_path = sample_capacity_read_data_burst_length_runtime_assertion_ppif_path();
+    my ($success, undef, undef, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--strict', '--check', '--json', $read_data_path],
+    );
+    ok($success, 'capacity/status runtime-assertion burst-length read-data --check --json succeeds');
+    is(join('', @{$stderr_buf || []}), '', 'capacity/status runtime-assertion burst-length read-data --check --json keeps stderr clean');
+    my $check_report = decode_json(join('', @{$stdout_buf || []}));
+    ok($check_report->{success}, 'capacity/status runtime-assertion burst-length read-data check JSON reports success');
+    is(
+        $check_report->{source}{resolved_path},
+        File::Spec->rel2abs($read_data_path),
+        'capacity/status runtime-assertion burst-length read-data check JSON reports the public .ppif source path',
+    );
+    is(
+        $check_report->{support_accounting}{entry_id},
+        'intent.ppif_axi_manager_capacity_status_read_data_burst_length_runtime_assertion',
+        'capacity/status runtime-assertion burst-length read-data check JSON support accounting names the PPIF corpus entry',
+    );
+
+    my ($semantic_success, undef, undef, $semantic_stdout, $semantic_stderr) = run(
+        command => ['./bin/fsmgen', '--strict', '--emit-semantic-json', $read_data_path],
+    );
+    ok($semantic_success, 'capacity/status runtime-assertion burst-length read-data --emit-semantic-json succeeds');
+    is(join('', @{$semantic_stderr || []}), '', 'capacity/status runtime-assertion burst-length read-data --emit-semantic-json keeps stderr clean');
+    my $semantic_report = decode_json(join('', @{$semantic_stdout || []}));
+    ok($semantic_report->{success}, 'capacity/status runtime-assertion burst-length read-data semantic JSON reports success');
+    is(
+        $semantic_report->{source}{resolved_path},
+        File::Spec->rel2abs($read_data_path),
+        'capacity/status runtime-assertion burst-length read-data semantic JSON reports the public .ppif source path',
+    );
+    is(
+        $semantic_report->{support_accounting}{entry_id},
+        'intent.ppif_axi_manager_capacity_status_read_data_burst_length_runtime_assertion',
+        'capacity/status runtime-assertion burst-length read-data semantic JSON support accounting names the PPIF corpus entry',
+    );
+    is(
+        $semantic_report->{semantic}{module}{name},
+        'axi0_capacity_status',
+        'capacity/status runtime-assertion burst-length read-data semantic JSON records the unchanged generated module',
+    );
+};
+
 subtest 'CLI bundle HDL modes use aggregate wrapper entry' => sub {
     my $bundle_path = sample_bundle_ppif_path();
     my $tempdir = tempdir(CLEANUP => 1);
@@ -1840,6 +1942,10 @@ sub sample_capacity_read_data_burst_length_ppif_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_read_data_burst_length.ppif');
 }
 
+sub sample_capacity_read_data_burst_length_runtime_assertion_ppif_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_read_data_burst_length_runtime_assertion.ppif');
+}
+
 sub sample_ppif {
     return slurp(sample_ppif_path());
 }
@@ -1890,6 +1996,10 @@ sub sample_capacity_read_data_last_beat_ppif {
 
 sub sample_capacity_read_data_burst_length_ppif {
     return slurp(sample_capacity_read_data_burst_length_ppif_path());
+}
+
+sub sample_capacity_read_data_burst_length_runtime_assertion_ppif {
+    return slurp(sample_capacity_read_data_burst_length_runtime_assertion_ppif_path());
 }
 
 sub sample_capacity_read_response_demux_base_ppif {
@@ -2410,7 +2520,7 @@ sub assert_rlast_report_prose_alignment {
     ok($id_residue, "$owner reports AXI ID/order unsupported residue");
     like(
         $id_residue->{detail},
-        qr/generated burst-last RLAST response-demux completion, structural last-beat read-data metadata, generated last-beat read-data RDATA\/RRESP capture, and generated raw-ARLEN burst-length capture are supported/,
+        qr/generated burst-last RLAST response-demux completion, structural last-beat read-data metadata, generated last-beat read-data RDATA\/RRESP capture, generated raw-ARLEN burst-length capture, and explicit runtime-assertion beat-count\/RLAST validation are supported/,
         "$owner reports generated burst-last RLAST completion, generated last-beat read-data capture, and raw ARLEN capture as supported",
     );
     my $stale_metadata = join('', 'report-only burst-last ', 'RLAST response-demux metadata');
@@ -2533,7 +2643,10 @@ sub assert_read_data_last_beat_report {
 }
 
 sub assert_read_data_burst_length_report {
-    my ($read_data, $owner) = @_;
+    my ($read_data, $owner, $validation) = @_;
+    $validation //= 'report_only';
+    my $runtime_validation = $validation eq 'runtime_assertion';
+
     is($read_data->{mode}, 'bounded_last_beat_read_data_contract', "$owner marks bounded last-beat read-data contract mode");
     ok($read_data->{generated_behavior}, "$owner keeps generated last-beat read-data behavior true");
     my $read = $read_data->{read};
@@ -2555,29 +2668,63 @@ sub assert_read_data_burst_length_report {
     is($read->{burst_length_capture}, 'transaction_request', "$owner reports request-bound length capture");
     is($read->{max_beats}, 16, "$owner reports max-beats");
     ok($read->{burst_length_generated_behavior}, "$owner reports burst-length generation as true");
-    is($read->{burst_length_validation}, 'report_only', "$owner reports report-only validation");
+    is($read->{burst_length_validation}, $validation, "$owner reports burst-length validation mode");
     is($read->{beat_storage}, 'none', "$owner reports no beat storage");
     is($read->{valid_output}, 'none', "$owner reports no valid output");
     is($read->{length_output}, 'none', "$owner reports no length output");
     is_deeply([map { $_->{burst_length_storage} } @{$read->{transactions}}], [qw(axi0_r0_arlen_q axi0_r1_arlen_q)], "$owner reports per-transaction raw ARLEN storage");
     is_deeply([map { $_->{burst_length_capture_rule} } @{$read->{transactions}}], [qw(axi0_r0_burst_length_capture axi0_r1_burst_length_capture)], "$owner reports per-transaction burst-length capture rules");
+    if ($runtime_validation) {
+        ok($read->{beat_count_validation_generated_behavior}, "$owner reports generated beat-count validation behavior");
+        is($read->{expected_beat_count_encoding}, 'arlen_plus_one', "$owner reports expected beat-count encoding");
+        is($read->{beat_count_match_source}, 'response_demux_matched_read_beat', "$owner reports matched read-beat source");
+        is($read->{beat_count_width}, 5, "$owner reports beat-count storage width");
+        is_deeply([map { $_->{expected_beat_count_storage} } @{$read->{transactions}}], [qw(axi0_r0_expected_beats_q axi0_r1_expected_beats_q)], "$owner reports per-transaction expected-beat storage");
+        is_deeply([map { $_->{beat_count_storage} } @{$read->{transactions}}], [qw(axi0_r0_read_beat_count_q axi0_r1_read_beat_count_q)], "$owner reports per-transaction beat-count storage");
+        is_deeply([map { $_->{beat_count_init_rule} } @{$read->{transactions}}], [qw(axi0_r0_beat_count_init axi0_r1_beat_count_init)], "$owner reports beat-count init rules");
+        is_deeply([map { $_->{beat_count_increment_rule} } @{$read->{transactions}}], [qw(axi0_r0_read_beat_count axi0_r1_read_beat_count)], "$owner reports beat-count increment rules");
+        is_deeply(
+            $read->{transactions}[0]{beat_count_assertions},
+            [qw(axi0_r0_arlen_within_max axi0_r0_read_beat_before_expected_count axi0_r0_rlast_on_expected_beat axi0_r0_expected_final_beat_has_rlast)],
+            "$owner reports r0 beat-count assertions",
+        );
+    } else {
+        ok(!exists $read->{beat_count_validation_generated_behavior}, "$owner keeps report-only validation free of beat-count behavior flag");
+        ok(!exists $read->{generated_beat_count_storage}, "$owner keeps report-only validation free of generated beat-count storage");
+    }
     is_deeply($read->{generated_inputs}, [qw(axi0_rdata axi0_rresp axi0_arlen)], "$owner adds ARLEN to generated read-data inputs");
     is_deeply($read->{generated_burst_length_inputs}, [qw(axi0_arlen)], "$owner reports generated burst-length input");
     is_deeply($read->{generated_burst_length_storage}, [qw(axi0_r0_arlen_q axi0_r1_arlen_q)], "$owner reports generated burst-length storage");
     is_deeply($read->{generated_burst_length_rules}, [qw(axi0_r0_burst_length_capture axi0_r1_burst_length_capture)], "$owner reports generated burst-length capture rules");
+    if ($runtime_validation) {
+        is_deeply($read->{generated_expected_beat_count_storage}, [qw(axi0_r0_expected_beats_q axi0_r1_expected_beats_q)], "$owner reports generated expected-beat storage");
+        is_deeply($read->{generated_beat_count_storage}, [qw(axi0_r0_read_beat_count_q axi0_r1_read_beat_count_q)], "$owner reports generated beat-count storage");
+        is_deeply($read->{generated_beat_count_rules}, [qw(axi0_r0_beat_count_init axi0_r0_read_beat_count axi0_r1_beat_count_init axi0_r1_read_beat_count)], "$owner reports generated beat-count rules");
+        is_deeply(
+            $read->{generated_beat_count_assertions},
+            [qw(axi0_r0_arlen_within_max axi0_r0_read_beat_before_expected_count axi0_r0_rlast_on_expected_beat axi0_r0_expected_final_beat_has_rlast axi0_r1_arlen_within_max axi0_r1_read_beat_before_expected_count axi0_r1_rlast_on_expected_beat axi0_r1_expected_final_beat_has_rlast)],
+            "$owner reports generated beat-count assertions",
+        );
+    }
     is_deeply(
         $read->{generated_outputs},
         [qw(axi0_r0_last_rdata axi0_r0_last_rresp axi0_r1_last_rdata axi0_r1_last_rresp)],
         "$owner keeps generated last-beat outputs stable",
     );
+    my @expected_rules = qw(axi0_r0_read_data_capture axi0_r1_read_data_capture axi0_r0_burst_length_capture axi0_r1_burst_length_capture);
+    push @expected_rules, qw(axi0_r0_beat_count_init axi0_r0_read_beat_count axi0_r1_beat_count_init axi0_r1_read_beat_count)
+        if $runtime_validation;
     is_deeply(
         $read->{generated_rules},
-        [qw(axi0_r0_read_data_capture axi0_r1_read_data_capture axi0_r0_burst_length_capture axi0_r1_burst_length_capture)],
+        \@expected_rules,
         "$owner reports generated last-beat and burst-length capture rules",
     );
+    my @expected_residue = $runtime_validation
+        ? qw(multi_beat_read_data_reassembly per_beat_outputs rresp_aggregation)
+        : qw(generated_beat_count_validation multi_beat_read_data_reassembly per_beat_outputs rresp_aggregation);
     is_deeply(
         $read_data->{residue},
-        [qw(generated_beat_count_validation multi_beat_read_data_reassembly per_beat_outputs rresp_aggregation)],
+        \@expected_residue,
         "$owner reports explicit burst-length residue",
     );
 }

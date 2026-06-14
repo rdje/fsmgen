@@ -832,8 +832,8 @@ sub _parse_manager_capacity_read_data_burst_length($items, $source_label, $name)
     confess "Error: .ppif (manager-capacity-status $name (read-data (read (burst-length (max-beats ...))))) max-beats must be an integer in 1..256\n"
         unless defined($entry{max_beats}) && $entry{max_beats} =~ /\A[1-9][0-9]*\z/ && int($entry{max_beats}) <= 256;
     $entry{max_beats} = int($entry{max_beats});
-    confess "Error: .ppif (manager-capacity-status $name (read-data (read (burst-length (validation ...))))) supports only report-only in this slice\n"
-        unless $entry{validation} eq 'report-only';
+    confess "Error: .ppif (manager-capacity-status $name (read-data (read (burst-length (validation ...))))) supports only report-only or runtime-assertion in this slice\n"
+        unless $entry{validation} eq 'report-only' || $entry{validation} eq 'runtime-assertion';
 
     return \%entry;
 }

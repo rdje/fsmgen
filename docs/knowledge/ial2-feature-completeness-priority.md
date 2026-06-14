@@ -10,17 +10,16 @@ answers:
 date: 2026-06-14
 status: current
 tags: [ial2, ial1, ial0, systemverilog, roadmap, task-tree, feature-completeness]
-evidence: docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; docs/AXI_IAL2_MANAGER_BEAT_COUNT_RLAST_RUNTIME_VALIDATION_CONTRACT_SELECTION.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md; docs/tasks/R11-DIRECT-STRUCTURAL-VHDL-REROUTING.md
+evidence: docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; docs/AXI_IAL2_MANAGER_BEAT_COUNT_RLAST_RUNTIME_VALIDATION_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_BEAT_COUNT_RLAST_RUNTIME_VALIDATION_CONTRACT_SELECTION.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md; docs/tasks/R11-DIRECT-STRUCTURAL-VHDL-REROUTING.md
 reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER|IAL2 feature completeness|IAL1/IAL0/SV prerequisites|VHDL backend/reroute' docs/TASK_TREE.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md README.md ROADMAP_V2.md docs/book/src/14-feature-backlog.md
 ---
 
 The current feature-completeness priority is IAL2 on the
 SystemVerilog-backed path.
 
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.69` owns the next PNT frontier:
-implement parser support plus generated beat-count/RLAST runtime assertions
-for `(validation runtime-assertion)` while preserving `validation
-report-only` behavior.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.70` owns the next PNT frontier: select
+the next exact AXI manager feature-completeness owner after generated
+beat-count/RLAST runtime validation.
 
 Completed `.47` shipped generated single-beat `RDATA`/`RRESP` capture
 behavior. Completed `.48` selected `.49` because the current public read-data
@@ -91,7 +90,9 @@ contract selection. Completed `.68` selected `(validation
 runtime-assertion)` / `runtime_assertion`, preserved `validation
 report-only` / `report_only`, and selected `.69` as the behavior-bearing
 implementation slice because the new runtime-validation spelling must not be
-accepted as metadata-only behavior.
+accepted as metadata-only behavior. Completed `.69` shipped that generated
+beat-count/RLAST runtime-validation behavior and advanced the frontier to
+`.70`, the next exact-owner selector.
 
 Selected IAL2 work may include required IAL1 or IAL0/SV support, but only when
 those prerequisites are explicit, task-tree owned, documented, and

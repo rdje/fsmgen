@@ -29,12 +29,12 @@ last-beat `RDATA`/`RRESP` capture remains intact.
 Schedule JSON reports `burst_length_generated_behavior: true`, generated
 burst-length input/storage/rule fields, general `generated_inputs` including
 `axi0_arlen`, and residue without `generated_burst_length_capture`.
-`burst_length_validation` remains `report_only`.
+`burst_length_validation` remains `report_only` for the report-only fixture.
 
 The stored value is raw `ARLEN`, not `ARLEN + 1`. The follow-up readiness
 audit, `IAL2-FEATURE-COMPLETENESS-FRONTIER.67`, found the lower layers ready
 for generated validation but preserved `validation report-only` as
 no-runtime-check behavior. Selector `.68` chose `(validation
-runtime-assertion)` / `runtime_assertion`, and the next selected leaf is
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.69`, the first implementation slice for
-that runtime-validation contract.
+runtime-assertion)` / `runtime_assertion`; `.69` then shipped generated
+beat-count/RLAST runtime validation for that mode and advanced the frontier to
+`.70`.

@@ -6,6 +6,10 @@ by this note.
 
 Owner: `IAL2-FEATURE-COMPLETENESS-FRONTIER.68`.
 
+Implementation status: `IAL2-FEATURE-COMPLETENESS-FRONTIER.69` later shipped
+the first behavior-bearing runtime-validation slice; see
+[docs/AXI_IAL2_MANAGER_BEAT_COUNT_RLAST_RUNTIME_VALIDATION_FIRST_SLICE.md](AXI_IAL2_MANAGER_BEAT_COUNT_RLAST_RUNTIME_VALIDATION_FIRST_SLICE.md).
+
 Task tree:
 [docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md](tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md).
 
@@ -242,18 +246,18 @@ rresp_aggregation
 later owner selects public output behavior. Runtime validation does not imply
 payload storage or reassembly.
 
-## Selected Next Owner
+## Selected Implementation Owner
 
-The next exact owner is:
+This selector chose the following implementation owner:
 
 ```text
 IAL2-FEATURE-COMPLETENESS-FRONTIER.69
 ```
 
-`.69` owns the first implementation slice for
-`(validation runtime-assertion)`. It should add parser support and generated
-runtime validation behavior together, because accepting the spelling without
-emitting the selected assertions would misrepresent the public contract.
+`.69` owns, and later shipped, the first implementation slice for
+`(validation runtime-assertion)`. It adds parser support and generated runtime
+validation behavior together, because accepting the spelling without emitting
+the selected assertions would misrepresent the public contract.
 
 ## Explicit Deferrals
 

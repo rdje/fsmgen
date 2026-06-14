@@ -320,9 +320,15 @@ validation, but preserves `validation report-only` as no-runtime-check
 behavior. Selector `.68` chooses `(validation runtime-assertion)` with
 normalized report value `runtime_assertion`, preserves
 `validation report-only` as no-runtime-check behavior, and requires parser
-support plus generated validation behavior to ship together. The active
-frontier is `IAL2-FEATURE-COMPLETENESS-FRONTIER.69`, the first generated
-beat-count/RLAST runtime-validation implementation slice. Larger
+support plus generated validation behavior to ship together. Implementation
+`.69` ships that first runtime-validation behavior: `.ppif` accepts
+`validation runtime-assertion`, the generator emits per-transaction
+expected-beat storage, matched-read-beat counters, initialization and
+increment rules, runtime assertions for ARLEN bounds, extra beats, early
+`RLAST`, and missing final `RLAST`, and schedule JSON reports generated
+beat-count validation artifacts while report-only behavior remains unchanged.
+The active frontier is `IAL2-FEATURE-COMPLETENESS-FRONTIER.70`, the selector
+for the next exact AXI manager feature-completeness owner. Larger
 multi-beat read-data reassembly, beat indexing, payload storage, per-beat
 outputs, `RRESP` aggregation, per-ID queues, full-manager behavior, direct
 backend lowering, and VHDL work remain deferred.
@@ -426,10 +432,11 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 91. `docs/AXI_IAL2_MANAGER_ARLEN_CAPTURE_BEHAVIOR_FIRST_SLICE.md`: shipped generated raw-ARLEN capture behavior for opt-in last-beat read-data `burst-length` contracts.
 92. `docs/AXI_IAL2_MANAGER_BEAT_COUNT_RLAST_VALIDATION_READINESS_AUDIT.md`: audited beat-count/RLAST validation readiness and selected public runtime-validation contract selection before behavior.
 93. `docs/AXI_IAL2_MANAGER_BEAT_COUNT_RLAST_RUNTIME_VALIDATION_CONTRACT_SELECTION.md`: selected `(validation runtime-assertion)` / `runtime_assertion` as the public beat-count/RLAST validation contract before behavior.
-94. `docs/AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md`: selected first AXI-derived IAL2 implementation subset and pre-code contract.
-95. `docs/AXI_IAL2_VALID_READY_READINESS_AUDIT.md`: code/test/docs/report owner map for the future AXI Valid-Ready IAL2 implementation.
-96. `docs/AXI_IAL2_VALID_READY_GENERATOR_FIRST_SLICE.md`: first in-process AXI Valid-Ready IAL2 generator slice and report surface.
-97. `docs/decisions/0016-ppif-is-first-public-ial2-container.md`: selects `.ppif` as the first public generic IAL2 file surface.
+94. `docs/AXI_IAL2_MANAGER_BEAT_COUNT_RLAST_RUNTIME_VALIDATION_FIRST_SLICE.md`: shipped generated beat-count/RLAST runtime validation for `(validation runtime-assertion)` burst-length contracts.
+95. `docs/AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md`: selected first AXI-derived IAL2 implementation subset and pre-code contract.
+96. `docs/AXI_IAL2_VALID_READY_READINESS_AUDIT.md`: code/test/docs/report owner map for the future AXI Valid-Ready IAL2 implementation.
+97. `docs/AXI_IAL2_VALID_READY_GENERATOR_FIRST_SLICE.md`: first in-process AXI Valid-Ready IAL2 generator slice and report surface.
+98. `docs/decisions/0016-ppif-is-first-public-ial2-container.md`: selects `.ppif` as the first public generic IAL2 file surface.
 98. `docs/IAL2_PPIF_PARSER_CLI_FIRST_SLICE.md`: first public `.ppif` parser/CLI slice for one AXI Valid-Ready source object.
 99. `docs/IAL2_PPIF_MULTI_VALID_READY_READINESS.md`: readiness map for future multi-channel `.ppif` Valid-Ready support.
 100. `docs/IAL2_PPIF_VALID_READY_BUNDLE_CONTRACT_SELECTION.md`: selected future aggregate bundle contract for multi-channel `.ppif` Valid-Ready support.
@@ -939,6 +946,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/AXI_IAL2_MANAGER_ARLEN_CAPTURE_BEHAVIOR_FIRST_SLICE.md` — shipped generated raw-ARLEN capture behavior for opt-in last-beat read-data `burst-length` contracts.
 - `docs/AXI_IAL2_MANAGER_BEAT_COUNT_RLAST_VALIDATION_READINESS_AUDIT.md` — audited beat-count/RLAST validation readiness and selected public runtime-validation contract selection before behavior.
 - `docs/AXI_IAL2_MANAGER_BEAT_COUNT_RLAST_RUNTIME_VALIDATION_CONTRACT_SELECTION.md` — selected `(validation runtime-assertion)` / `runtime_assertion` as the public beat-count/RLAST validation contract before behavior.
+- `docs/AXI_IAL2_MANAGER_BEAT_COUNT_RLAST_RUNTIME_VALIDATION_FIRST_SLICE.md` — shipped generated beat-count/RLAST runtime validation for `(validation runtime-assertion)` burst-length contracts.
 - `docs/AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md` — selected first AXI-derived IAL2 implementation subset and pre-code contract.
 - `docs/AXI_IAL2_VALID_READY_READINESS_AUDIT.md` — code/test/docs/report owner map for a future AXI Valid-Ready IAL2 implementation slice.
 - `docs/AXI_IAL2_VALID_READY_GENERATOR_FIRST_SLICE.md` — first in-process AXI Valid-Ready IAL2 generator slice and report surface.

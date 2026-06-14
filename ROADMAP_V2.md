@@ -1086,9 +1086,14 @@ for generated beat-count/RLAST validation, but preserves `validation
 report-only` as no-runtime-check behavior. Selector `.68` selects
 `(validation runtime-assertion)` with normalized report value
 `runtime_assertion`, preserves `validation report-only`, and requires parser
-support plus generated runtime assertions to ship together. The next active
-owner is `.69`, first generated beat-count/RLAST runtime-validation
-implementation. Full multi-beat
+support plus generated runtime assertions to ship together. Implementation
+`.69` ships that first generated beat-count/RLAST runtime-validation
+implementation: `.ppif` accepts `validation runtime-assertion`, generated
+IAL1/.fsm/SystemVerilog include expected-beat storage, matched-beat counters,
+runtime validation rules/assertions, and schedule JSON reports generated
+validation artifacts while `validation report-only` remains no-runtime-check
+behavior. The next active owner is `.70`, a selector for the next exact AXI
+manager feature-completeness slice. Full multi-beat
 read-data reassembly, beat indexing, payload storage, per-beat outputs,
 `RRESP` aggregation, per-ID queues, direct backend lowering, and VHDL remain
 deferred.
