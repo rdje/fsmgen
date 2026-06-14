@@ -4217,8 +4217,8 @@ data/status lanes, valid masks, length outputs, and generated multi-beat
 output-bank behavior are all present. Scalar `RRESP` aggregation is not
 required for this movement because per-beat status lanes are generated.
 
-The next active owner is `IAL2-FEATURE-COMPLETENESS-FRONTIER.86`, the next
-AXI manager feature-completeness selector. It also carries the IAL2 factoring
+The selected follow-up owner was `IAL2-FEATURE-COMPLETENESS-FRONTIER.86`, the
+next AXI manager feature-completeness selector. It also carried the IAL2 factoring
 question: keep common IAL2 constructs to a small semantic core where reuse is
 proven across multiple profiles, and keep protocol/platform-specific
 vocabulary profile-local until evidence justifies promotion. Packed/full
@@ -4226,6 +4226,23 @@ burst assembly, aggregate-only status shapes, authored concrete-ID same-ID
 ordering, per-ID queues, queued/blocking policy, profile aliases,
 full-manager behavior, verification-code generation, direct backend lowering,
 and VHDL remain deferred.
+
+Post-burst-residue selector:
+[AXI_IAL2_MANAGER_POST_BURST_RESIDUE_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_BURST_RESIDUE_NEXT_SLICE_SELECTION.md)
+ships `IAL2-FEATURE-COMPLETENESS-FRONTIER.86`. It selects
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.87`, AXI concrete-ID same-ID ordering
+readiness. The public multi-beat sample now leaves only
+`concrete_id_same_id_ordering` and `per_id_issue_order_queues` under
+`same_id_ordering.residue`, while concrete-ID samples still keep
+`same_id_ordering` under `id_response_rule_engine.residue`.
+
+`.87` must decide whether the next implementation can be a conservative
+concrete-ID same-ID constraint, report/static classification, public same-ID
+policy, or whether generated per-ID issue-order queue substrate is required
+first. The selector also records the IAL2 factoring stance: keep common IAL2
+constructs to a small semantic core only when reuse is proven across multiple
+profiles. AXI same-ID ordering remains AXI profile vocabulary until another
+profile proves the same semantic need.
 
 First implementation subset selection:
 [AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION](../../AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md)

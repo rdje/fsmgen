@@ -28,5 +28,6 @@ validation, matched-read-beat counting, per-transaction output banks, full
 configured data/status lane lists, valid masks, length outputs, and generated
 multi-beat output-bank behavior.
 
-The follow-up leaf is `IAL2-FEATURE-COMPLETENESS-FRONTIER.86`, the next AXI
-manager feature-completeness selector.
+The follow-up leaf was `IAL2-FEATURE-COMPLETENESS-FRONTIER.86`, which selected
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.87`, AXI concrete-ID same-ID ordering
+readiness.

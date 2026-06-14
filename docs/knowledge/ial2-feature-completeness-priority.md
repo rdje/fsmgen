@@ -17,10 +17,9 @@ reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER|IAL2 feature completeness|IA
 The current feature-completeness priority is IAL2 on the
 SystemVerilog-backed path.
 
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.86` owns the next PNT frontier: selecting
-the next AXI manager feature-completeness slice after bounded burst residue
-alignment, while carrying the IAL2 common-core vs protocol/platform vocabulary
-factoring question.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.87` owns the next PNT frontier: auditing
+AXI concrete-ID same-ID ordering readiness after bounded burst residue
+alignment.
 
 Completed `.47` shipped generated single-beat `RDATA`/`RRESP` capture
 behavior. Completed `.48` selected `.49` because the current public read-data
@@ -137,6 +136,9 @@ report/static `bursts` residue alignment because the per-beat output bank is
 already the bounded burst payload/output shape for the covered subset.
 Completed `.85` removed broad `bursts` residue from `response_demux` and
 `same_id_ordering` for that covered subset and advanced the frontier to `.86`.
+Completed `.86` selected AXI concrete-ID same-ID ordering readiness as `.87`
+and kept the IAL2 factoring stance evidence-driven: common constructs should
+be promoted only after compatible reuse is proven across multiple profiles.
 
 Selected IAL2 work may include required IAL1 or IAL0/SV support, but only when
 those prerequisites are explicit, task-tree owned, documented, and

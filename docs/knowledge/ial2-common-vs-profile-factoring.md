@@ -25,5 +25,6 @@ The current IAL2 factoring stance is a conservative hybrid:
 
 This avoids making IAL2 either all AXI-shaped vocabulary or an over-general
 layer with leaky "common" constructs. `IAL2-FEATURE-COMPLETENESS-FRONTIER.86`
-is the next owned selector and should carry this factoring question while
-choosing the next AXI manager slice.
+applied this stance while selecting `.87`: AXI concrete-ID same-ID ordering
+remains AXI profile vocabulary for now, and any future common construct should
+be promoted only after another profile proves compatible need.
