@@ -1139,6 +1139,12 @@ avoidance, matched-`RID` response demux, and independent per-transaction beat
 counters/output banks. It selects `.82`, report/static residue alignment that
 removes over-broad `read_data_interleaving` residue only for that covered
 generated subset before any new behavior.
+Implementation `.82` ships that alignment: public multi-beat reports now
+leave only `bursts` in `response_demux.residue`, remove
+`read_data_interleaving` from `same_id_ordering.residue` for the covered
+generated auto-ID multi-beat-by-RID subset, preserve concrete-ID same-ID and
+per-ID queue residue, and keep generated `.isf`, `.fsm`, and SystemVerilog
+behavior unchanged. `.83` selects the next AXI manager residue owner.
 Verification-code generation is captured as a separate future roadmap lane
 from the synthesizable RTL/HDL feature-completeness path.
 Packed burst outputs, concrete-ID same-ID ordering, per-ID queues, queued

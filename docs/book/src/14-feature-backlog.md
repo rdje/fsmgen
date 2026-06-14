@@ -4146,6 +4146,29 @@ broader `bursts`, queued/blocking policy, profile aliases, full-manager
 behavior, verification-code generation, direct backend lowering, and VHDL as
 deferred work.
 
+Read-data interleaving residue alignment:
+[AXI_IAL2_MANAGER_READ_DATA_INTERLEAVING_RESIDUE_ALIGNMENT_FIRST_SLICE](../../AXI_IAL2_MANAGER_READ_DATA_INTERLEAVING_RESIDUE_ALIGNMENT_FIRST_SLICE.md)
+ships `IAL2-FEATURE-COMPLETENESS-FRONTIER.82`. The public multi-beat sample
+now reports:
+
+```text
+read_data.residue: []
+auto_id_lifecycle.residue: []
+response_demux.residue: [bursts]
+same_id_ordering.residue:
+  - concrete_id_same_id_ordering
+  - per_id_issue_order_queues
+  - bursts
+```
+
+Generated `.isf`, `.fsm`, and SystemVerilog behavior is unchanged. The report
+predicate removes `read_data_interleaving` only when generated read same-ID
+avoidance, generated burst-last read response demux, matched-read-beat
+counting, `multi_beat_by_rid`, per-transaction output banks, valid masks,
+length outputs, and generated multi-beat output-bank behavior are all present.
+The next active owner is `IAL2-FEATURE-COMPLETENESS-FRONTIER.83`, a selector
+for the remaining AXI manager residue owner.
+
 First implementation subset selection:
 [AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION](../../AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md)
 selects a source-anchored AXI Valid-Ready channel contract/monitor as the

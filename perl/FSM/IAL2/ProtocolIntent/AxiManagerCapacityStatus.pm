@@ -3068,7 +3068,7 @@ sub _build_report(%args) {
             },
             {
                 id     => 'axi_id_ordering_and_response_matching',
-                detail => 'Concrete transaction ID request/response assertions, explicit bounded auto-ID request-ID drive plus completion-event release, generated auto-ID same-ID avoidance, generated write BID response demux, generated single-beat read RID response demux, generated single-beat read-data RDATA/RRESP capture, generated burst-last RLAST response-demux completion, structural last-beat read-data metadata, generated last-beat read-data RDATA/RRESP capture, generated raw-ARLEN burst-length capture, explicit runtime-assertion beat-count/RLAST validation, generated multi-beat read-data output-bank behavior, and generated scalar RRESP aggregation behavior are supported; dynamic user-ID arbitration while issuing multiple same-family requests in one cycle, per-ID same-ID response queues, different-ID interleaving, and broader burst payload assembly remain outside this capacity/status shell.',
+                detail => 'Concrete transaction ID request/response assertions, explicit bounded auto-ID request-ID drive plus completion-event release, generated auto-ID same-ID avoidance, generated write BID response demux, generated single-beat read RID response demux, generated single-beat read-data RDATA/RRESP capture, generated burst-last RLAST response-demux completion, structural last-beat read-data metadata, generated last-beat read-data RDATA/RRESP capture, generated raw-ARLEN burst-length capture, explicit runtime-assertion beat-count/RLAST validation, generated multi-beat read-data output-bank behavior for the covered auto-ID multi-beat-by-RID subset, and generated scalar RRESP aggregation behavior are supported; dynamic user-ID arbitration while issuing multiple same-family requests in one cycle, per-ID same-ID response queues, authored/general different-ID interleaving outside the covered auto-ID subset, and broader burst payload assembly remain outside this capacity/status shell.',
             },
             {
                 id     => 'profile_aliases_and_full_manager_behavior',
@@ -3128,6 +3128,12 @@ sub _report_response_demux($contract) {
     if (_same_id_ordering_covers_response_demux_family($contract, 'write')) {
         $demux->{residue} = [
             grep { $_ ne 'same_id_ordering' }
+            @{$demux->{residue} || []}
+        ];
+    }
+    if (_read_data_covers_multi_beat_by_rid_interleaving($contract)) {
+        $demux->{residue} = [
+            grep { $_ ne 'read_data_interleaving' }
             @{$demux->{residue} || []}
         ];
     }
@@ -3205,6 +3211,47 @@ sub _same_id_ordering_covers_response_demux_family($contract, $family_name) {
     return 0;
 }
 
+sub _read_data_covers_multi_beat_by_rid_interleaving($contract) {
+    return 0 unless ref($contract) eq 'HASH';
+    return 0 unless _same_id_ordering_covers_response_demux_family($contract, 'read');
+
+    my $demux = $contract->{response_demux};
+    return 0 unless ref($demux) eq 'HASH'
+        && $demux->{generated_behavior}
+        && ref($demux->{read}) eq 'HASH'
+        && $demux->{read}{generated_behavior}
+        && ($demux->{read}{response_scope} // '') eq 'burst_last';
+
+    my $read_data = $contract->{read_data};
+    return 0 unless ref($read_data) eq 'HASH' && $read_data->{generated_behavior};
+    my $read = $read_data->{read};
+    return 0 unless ref($read) eq 'HASH'
+        && ($read->{capture_scope} // '') eq 'multi_beat'
+        && ($read->{interleaving_policy} // '') eq 'multi_beat_by_rid'
+        && ($read->{completion_source} // '') eq 'response_demux'
+        && ($read->{beat_match_source} // '') eq 'response_demux_matched_read_beat'
+        && ($read->{beat_count_match_source} // '') eq 'response_demux_matched_read_beat'
+        && ($read->{beat_storage} // '') eq 'per_transaction_generated'
+        && ($read->{output_shape} // '') eq 'per_beat_output_bank'
+        && ($read->{valid_output} // '') eq 'per_transaction_valid_mask'
+        && ($read->{length_output} // '') eq 'per_transaction_beat_count'
+        && $read->{beat_count_validation_generated_behavior}
+        && $read->{multi_beat_reassembly_generated_behavior};
+
+    for my $transaction (@{$read->{transactions} || []}) {
+        return 0 unless ref($transaction) eq 'HASH'
+            && defined($transaction->{beat_count_storage})
+            && ref($transaction->{generated_data_outputs}) eq 'ARRAY'
+            && @{$transaction->{generated_data_outputs}}
+            && ref($transaction->{generated_status_outputs}) eq 'ARRAY'
+            && @{$transaction->{generated_status_outputs}}
+            && defined($transaction->{valid_mask_output})
+            && defined($transaction->{length_output});
+    }
+
+    return 1;
+}
+
 sub _report_same_id_ordering($contract) {
     my $ordering = _clone_jsonish($contract->{same_id_ordering});
     $ordering->{generated_behavior} = $contract->{same_id_ordering}{generated_behavior}
@@ -3218,6 +3265,12 @@ sub _report_same_id_ordering($contract) {
     if (_same_id_ordering_covers_response_demux_family($contract, 'read')) {
         $ordering->{residue} = [
             grep { $_ ne 'read_response_demux' }
+            @{$ordering->{residue} || []}
+        ];
+    }
+    if (_read_data_covers_multi_beat_by_rid_interleaving($contract)) {
+        $ordering->{residue} = [
+            grep { $_ ne 'read_data_interleaving' }
             @{$ordering->{residue} || []}
         ];
     }
