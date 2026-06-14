@@ -4782,9 +4782,20 @@ The shipped same-ID queue behavior remains intentionally narrow. Read
 auto-ID plus concrete queue-head demux, read-data consumption of concrete
 queue-head demux, generalized per-ID queues, direct backend lowering, and VHDL
 remain deferred.
-The active frontier advances to
+After `.108`, the frontier advanced to
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.109`, the next same-ID queue behavior
 expansion audit/selector before any broader queue-head behavior changes.
+
+Post-write same-ID queue behavior next-slice selection:
+[AXI_IAL2_MANAGER_POST_WRITE_SAME_ID_QUEUE_BEHAVIOR_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_WRITE_SAME_ID_QUEUE_BEHAVIOR_NEXT_SLICE_SELECTION.md)
+selects `IAL2-FEATURE-COMPLETENESS-FRONTIER.110` as the next bounded behavior
+slice. `.110` owns generated read `single-beat` concrete same-ID queue-head
+response demux for exactly one duplicate read-ID group of two transactions at
+depth 2. The generated head match should use the raw read response event,
+concrete `RID`, and compact slot-0 transaction bit, without `RLAST`.
+Read-data consumption, deeper or multiple duplicate-ID groups, same-family
+mixed auto-ID plus concrete queue-head demux, generalized per-ID queues,
+direct backend lowering, and VHDL remain deferred.
 
 First implementation subset selection:
 [AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION](../../AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md)

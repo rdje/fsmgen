@@ -1323,18 +1323,24 @@ outputs, queue-head `BID` demux rules, support-accounting coverage, and
 Verilator-clean generated SystemVerilog. Read `single-beat`, deeper/multiple
 groups, same-family mixed auto-ID, read-data consumption of concrete
 queue-head demux, direct backend, and VHDL remain deferred.
-The active frontier advances to `.109`, the next same-ID queue behavior
+After `.108`, the frontier advanced to `.109`, the same-ID queue behavior
 expansion audit/selector after shipped read burst-last and write depth-2
 queue-head behavior.
+Selector `.109` chooses `.110`, generated read `single-beat` concrete
+same-ID queue-head behavior for one duplicate read-ID group of two
+transactions at depth 2. The next slice should generate queue-head `RID`
+demux without `RLAST` and keep read-data consumption, deeper or multiple
+groups, same-family mixed auto-ID, generalized per-ID queues, direct backend,
+and VHDL deferred.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.
 Verification-code generation is captured as a separate future roadmap lane
 from the synthesizable RTL/HDL feature-completeness path.
-Packed burst outputs, read single-beat/deeper/multiple concrete same-ID queue
-variants beyond the shipped `.108` boundary, per-ID queues, queued policy,
-profile aliases, full-manager behavior, direct backend lowering, and VHDL
-remain deferred.
+Packed burst outputs, concrete same-ID queue variants beyond the selected
+`.110` read single-beat boundary, per-ID queues, queued policy, profile
+aliases, full-manager behavior, direct backend lowering, and VHDL remain
+deferred.
 The shipped public capacity/status source accepts one
 `(manager-capacity-status NAME ...)` object under
 `(protocol-platform-intent ...)`, `(profile axi4)`, and top-level source
