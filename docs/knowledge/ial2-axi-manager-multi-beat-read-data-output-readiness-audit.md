@@ -18,10 +18,11 @@ reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.73|IAL2-FEATURE-COMPLETENE
 read-data output-bank behavior readiness and found no new
 IAL1/IAL0/SystemVerilog prerequisite for the first generated behavior slice.
 
-The selected implementation boundary is `IAL2-FEATURE-COMPLETENESS-FRONTIER.74`.
-It should emit generated `RDATA`/`RRESP` inputs, scalar per-beat data/status
-output lanes, valid-mask outputs, length outputs, request-time output-bank
-clearing, and lane-specific capture rules.
+The selected implementation boundary was
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.74`. `.74` has since shipped generated
+`RDATA`/`RRESP` inputs, scalar per-beat data/status output lanes, valid-mask
+outputs, length outputs, request-time output-bank clearing, and lane-specific
+capture rules.
 
 The first behavior slice should use public output registers as the generated
 per-transaction beat storage. Each lane capture guard should combine the
@@ -30,6 +31,6 @@ response-demux matched-read-beat expression, `!request_event`, and current
 values, so no dynamic indexed LHS assignment, array output, or dynamic shift
 is required.
 
-When `.74` ships, `multi_beat_read_data_reassembly` and `per_beat_outputs`
-should leave residue for the multi-beat sample. Scalar `RRESP` aggregation,
-per-ID queues, direct backend lowering, and VHDL remain deferred.
+In `.74`, `multi_beat_read_data_reassembly` and `per_beat_outputs` left
+residue for the multi-beat sample. Scalar `RRESP` aggregation, per-ID queues,
+direct backend lowering, and VHDL remain deferred.

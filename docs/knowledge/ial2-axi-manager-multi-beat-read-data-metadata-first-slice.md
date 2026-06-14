@@ -1,10 +1,10 @@
 ---
 id: ial2-axi-manager-multi-beat-read-data-metadata-first-slice
-title: AXI multi-beat read-data metadata accepts output-bank syntax without payload generation
+title: AXI multi-beat read-data metadata accepted output-bank syntax before behavior shipped
 answers:
   - "what did IAL2-FEATURE-COMPLETENESS-FRONTIER.72 ship?"
   - "is capture-scope multi-beat accepted in PPIF?"
-  - "does the AXI multi-beat read-data sample generate per-beat outputs yet?"
+  - "when did the AXI multi-beat read-data sample start generating per-beat outputs?"
   - "what is ppif/axi_manager_capacity_status_read_data_multi_beat.ppif?"
   - "what comes after IAL2-FEATURE-COMPLETENESS-FRONTIER.72?"
 date: 2026-06-14
@@ -30,11 +30,14 @@ widths, `beat_match_source: response_demux_matched_read_beat`,
 `output_shape: per_beat_output_bank`, and
 `multi_beat_reassembly_generated_behavior: false`.
 
-Generated artifacts remain limited to existing response-demux, ARLEN capture,
-and beat-count/`RLAST` runtime-validation behavior. The slice does not emit
-generated `RDATA`/`RRESP` payload inputs, per-beat data/status outputs,
-valid masks, length outputs, or multi-beat payload capture/reassembly rules.
+As shipped in `.72`, generated artifacts remained limited to existing
+response-demux, ARLEN capture, and beat-count/`RLAST` runtime-validation
+behavior. That metadata slice did not emit generated `RDATA`/`RRESP` payload
+inputs, per-beat data/status outputs, valid masks, length outputs, or
+multi-beat payload capture/reassembly rules.
 
 The follow-up leaf, `IAL2-FEATURE-COMPLETENESS-FRONTIER.73`, completed a
 readiness audit and selected `IAL2-FEATURE-COMPLETENESS-FRONTIER.74` for
-generated multi-beat read-data output-bank behavior.
+generated multi-beat read-data output-bank behavior. `.74` has since shipped
+that behavior; see
+`docs/knowledge/ial2-axi-manager-multi-beat-read-data-output-bank-behavior.md`.

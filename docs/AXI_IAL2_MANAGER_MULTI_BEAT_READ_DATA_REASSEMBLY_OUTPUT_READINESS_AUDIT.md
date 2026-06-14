@@ -172,7 +172,7 @@ transaction-local.
 
 ## Residue Movement
 
-When `.74` ships, the multi-beat sample should move from:
+`.74` shipped this movement. The multi-beat sample moved from:
 
 ```text
 multi_beat_read_data_reassembly
@@ -204,8 +204,8 @@ axi0_r0_read_beat_1_capture
 axi0_r0_read_data_output_init
 ```
 
-If `.74` reuses the existing beat-count initialization rule for output-bank
-clearing, the report should still list the output initialization responsibility
+`.74` emits a dedicated request-time output initialization rule per covered
+transaction, and the report lists that output initialization responsibility
 explicitly so users can see that old lane values do not leak across requests.
 
 Schedule JSON should change only for the multi-beat behavior fields and

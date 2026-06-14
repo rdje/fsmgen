@@ -12,8 +12,8 @@ answers:
 date: 2026-06-14
 status: current
 tags: [ial2, axi, manager, read-data, burst, reassembly, per-beat, rresp, selector, task-tree]
-evidence: docs/AXI_IAL2_MANAGER_MULTI_BEAT_READ_DATA_REASSEMBLY_CONTRACT_SELECTION.md; docs/AXI_IAL2_MANAGER_MULTI_BEAT_READ_DATA_METADATA_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_POST_BEAT_COUNT_RLAST_VALIDATION_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_BEAT_COUNT_RLAST_RUNTIME_VALIDATION_FIRST_SLICE.md; ppif/axi_manager_capacity_status_read_data_multi_beat.ppif; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; docs/book/src/14-feature-backlog.md; README.md; ROADMAP_V2.md
-reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.71|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.72|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.73|MULTI_BEAT_READ_DATA_REASSEMBLY_CONTRACT_SELECTION|MULTI_BEAT_READ_DATA_METADATA_FIRST_SLICE|capture-scope multi-beat|per-beat output bank|runtime-assertion' docs/AXI_IAL2_MANAGER_MULTI_BEAT_READ_DATA_REASSEMBLY_CONTRACT_SELECTION.md docs/AXI_IAL2_MANAGER_MULTI_BEAT_READ_DATA_METADATA_FIRST_SLICE.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md docs/book/src/14-feature-backlog.md README.md ROADMAP_V2.md
+evidence: docs/AXI_IAL2_MANAGER_MULTI_BEAT_READ_DATA_REASSEMBLY_CONTRACT_SELECTION.md; docs/AXI_IAL2_MANAGER_MULTI_BEAT_READ_DATA_METADATA_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_MULTI_BEAT_READ_DATA_OUTPUT_BANK_BEHAVIOR_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_POST_BEAT_COUNT_RLAST_VALIDATION_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_BEAT_COUNT_RLAST_RUNTIME_VALIDATION_FIRST_SLICE.md; ppif/axi_manager_capacity_status_read_data_multi_beat.ppif; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; docs/book/src/14-feature-backlog.md; README.md; ROADMAP_V2.md
+reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.71|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.72|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.73|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.74|MULTI_BEAT_READ_DATA_REASSEMBLY_CONTRACT_SELECTION|MULTI_BEAT_READ_DATA_METADATA_FIRST_SLICE|MULTI_BEAT_READ_DATA_OUTPUT_BANK_BEHAVIOR_FIRST_SLICE|capture-scope multi-beat|per-beat output bank|runtime-assertion' docs/AXI_IAL2_MANAGER_MULTI_BEAT_READ_DATA_REASSEMBLY_CONTRACT_SELECTION.md docs/AXI_IAL2_MANAGER_MULTI_BEAT_READ_DATA_METADATA_FIRST_SLICE.md docs/AXI_IAL2_MANAGER_MULTI_BEAT_READ_DATA_OUTPUT_BANK_BEHAVIOR_FIRST_SLICE.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md docs/book/src/14-feature-backlog.md README.md ROADMAP_V2.md
 ---
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.71` selects the first public AXI
@@ -34,4 +34,7 @@ multi-beat payload storage or output behavior.
 
 The follow-up leaf `IAL2-FEATURE-COMPLETENESS-FRONTIER.73` completed a
 readiness audit and selected `IAL2-FEATURE-COMPLETENESS-FRONTIER.74`,
-generated multi-beat read-data output-bank behavior.
+generated multi-beat read-data output-bank behavior. `.74` has since shipped
+the selected behavior and schedule JSON now reports
+`multi_beat_reassembly_generated_behavior: true` with generated payload
+inputs, output-bank outputs, output-init rules, and per-lane capture rules.

@@ -957,10 +957,14 @@ sub _normalize_read_data(%args) {
         : $last_beat_capture
             ? 'bounded_last_beat_read_data_contract'
             : 'bounded_single_beat_read_data_contract';
+    my $multi_beat_generated = $multi_beat_capture
+        && ($read->{multi_beat_reassembly_generated_behavior} || 0);
     my $residue = $multi_beat_capture
         ? [
-            'multi_beat_read_data_reassembly',
-            'per_beat_outputs',
+            ($multi_beat_generated ? () : (
+                'multi_beat_read_data_reassembly',
+                'per_beat_outputs',
+            )),
             'rresp_aggregation',
         ]
         : !$last_beat_capture
@@ -1202,7 +1206,7 @@ sub _normalize_read_data_read(%args) {
             'per_beat_output_bank',
             'per_transaction_valid_mask',
             'per_transaction_beat_count',
-            0,
+            1,
         );
     }
     if ($capture_scope eq 'last-beat' || $capture_scope eq 'multi-beat') {
@@ -1241,6 +1245,15 @@ sub _normalize_read_data_read(%args) {
                         "$args{manager_name}_$transaction->{transaction}_rlast_on_expected_beat",
                         "$args{manager_name}_$transaction->{transaction}_expected_final_beat_has_rlast",
                     ];
+                    if ($capture_scope eq 'multi-beat') {
+                        $transaction->{multi_beat_output_init_rule}
+                            = "$args{manager_name}_$transaction->{transaction}_read_data_output_init";
+                        $transaction->{multi_beat_capture_rules} = [
+                            map {
+                                "$args{manager_name}_$transaction->{transaction}_read_beat_${_}_capture"
+                            } 0 .. ($read{max_beats} - 1)
+                        ];
+                    }
                 }
             }
         } else {
@@ -1692,8 +1705,19 @@ sub _read_data_signal_names($read_data) {
 }
 
 sub _read_data_payload_capture_enabled($read) {
+    return _read_data_scalar_payload_capture_enabled($read)
+        || _read_data_multi_beat_payload_capture_enabled($read);
+}
+
+sub _read_data_scalar_payload_capture_enabled($read) {
     return ref($read) eq 'HASH'
         && ($read->{capture_scope} // '') =~ /\A(?:single_beat|last_beat)\z/;
+}
+
+sub _read_data_multi_beat_payload_capture_enabled($read) {
+    return ref($read) eq 'HASH'
+        && ($read->{capture_scope} // '') eq 'multi_beat'
+        && ($read->{multi_beat_reassembly_generated_behavior} || 0);
 }
 
 sub _read_data_source_inputs($contract) {
@@ -1714,13 +1738,25 @@ sub _read_data_output_lines($contract) {
     return () unless ref($read_data) eq 'HASH' && $read_data->{generated_behavior};
     my $read = $read_data->{read};
     return () unless ref($read) eq 'HASH';
-    return () unless _read_data_payload_capture_enabled($read);
 
     my @lines;
-    for my $transaction (@{$read->{transactions} || []}) {
-        push @lines,
-            _width_output_line($transaction->{data_output}, $transaction->{data_width}),
-            _width_output_line($transaction->{status_output}, $transaction->{status_width});
+    if (_read_data_scalar_payload_capture_enabled($read)) {
+        for my $transaction (@{$read->{transactions} || []}) {
+            push @lines,
+                _width_output_line($transaction->{data_output}, $transaction->{data_width}),
+                _width_output_line($transaction->{status_output}, $transaction->{status_width});
+        }
+    }
+    if (_read_data_multi_beat_payload_capture_enabled($read)) {
+        for my $transaction (@{$read->{transactions} || []}) {
+            push @lines,
+                (map { _width_output_line($_, $transaction->{data_width}) }
+                    @{$transaction->{generated_data_outputs} || []}),
+                (map { _width_output_line($_, $transaction->{status_width}) }
+                    @{$transaction->{generated_status_outputs} || []}),
+                _width_output_line($transaction->{valid_mask_output}, $transaction->{valid_mask_width}),
+                _width_output_line($transaction->{length_output}, $transaction->{length_output_width});
+        }
     }
     return @lines;
 }
@@ -1809,6 +1845,7 @@ sub _emit_isf($contract) {
     my @response_demux_rules = _response_demux_rule_lines($contract);
     my @read_data_burst_length_capture_rules = _read_data_burst_length_capture_rule_lines($contract);
     my @read_data_beat_count_rules = _read_data_beat_count_rule_lines($contract);
+    my @read_data_multi_beat_output_init_rules = _read_data_multi_beat_output_init_rule_lines($contract);
     my @read_data_capture_rules = _read_data_capture_rule_lines($contract);
     my @auto_id_rules = _auto_id_lifecycle_rule_lines($contract);
     my @storage_lines = (
@@ -1851,6 +1888,8 @@ sub _emit_isf($contract) {
         (@read_data_burst_length_capture_rules ? ("") : ()),
         @read_data_beat_count_rules,
         (@read_data_beat_count_rules ? ("") : ()),
+        @read_data_multi_beat_output_init_rules,
+        (@read_data_multi_beat_output_init_rules ? ("") : ()),
         @read_data_capture_rules,
         (@read_data_capture_rules ? ("") : ()),
         @auto_id_rules,
@@ -2277,6 +2316,28 @@ sub _read_data_beat_count_rule_lines($contract) {
     return @lines;
 }
 
+sub _read_data_multi_beat_output_init_rule_lines($contract) {
+    my $read_data = $contract->{read_data};
+    return () unless ref($read_data) eq 'HASH' && $read_data->{generated_behavior};
+    my $read = $read_data->{read};
+    return () unless _read_data_multi_beat_payload_capture_enabled($read);
+
+    my %request_by_transaction = _read_data_request_events_by_transaction($contract);
+
+    my @lines;
+    for my $transaction (@{$read->{transactions} || []}) {
+        my $request_event = $request_by_transaction{$transaction->{transaction}};
+        confess "Internal error: multi-beat read-data output init transaction '$transaction->{transaction}' has no read request event\n"
+            unless defined $request_event;
+        push @lines, _read_data_capture_rule(
+            _read_data_multi_beat_output_init_rule_name($contract, $transaction),
+            $request_event,
+            _read_data_multi_beat_output_init_assignments($transaction),
+        );
+    }
+    return @lines;
+}
+
 sub _read_data_capture_rule_lines($contract) {
     my $read_data = $contract->{read_data};
     return () unless ref($read_data) eq 'HASH' && $read_data->{generated_behavior};
@@ -2285,15 +2346,55 @@ sub _read_data_capture_rule_lines($contract) {
     return () unless _read_data_payload_capture_enabled($read);
 
     my @lines;
-    for my $transaction (@{$read->{transactions} || []}) {
-        push @lines, _read_data_capture_rule(
-            _read_data_capture_rule_name($contract, $transaction),
-            $transaction->{completion_signal},
-            [
-                [$transaction->{data_output},   $read->{data_signal}],
-                [$transaction->{status_output}, $read->{status_signal}],
-            ],
-        );
+    if (_read_data_scalar_payload_capture_enabled($read)) {
+        for my $transaction (@{$read->{transactions} || []}) {
+            push @lines, _read_data_capture_rule(
+                _read_data_capture_rule_name($contract, $transaction),
+                $transaction->{completion_signal},
+                [
+                    [$transaction->{data_output},   $read->{data_signal}],
+                    [$transaction->{status_output}, $read->{status_signal}],
+                ],
+            );
+        }
+    }
+    if (_read_data_multi_beat_payload_capture_enabled($read)) {
+        my %request_by_transaction = _read_data_request_events_by_transaction($contract);
+        my %state_by_transaction = _read_data_response_states_by_transaction($contract);
+        for my $transaction (@{$read->{transactions} || []}) {
+            my $request_event = $request_by_transaction{$transaction->{transaction}};
+            confess "Internal error: multi-beat read-data capture transaction '$transaction->{transaction}' has no read request event\n"
+                unless defined $request_event;
+            my $state = $state_by_transaction{$transaction->{transaction}};
+            confess "Internal error: multi-beat read-data capture transaction '$transaction->{transaction}' has no read response-demux state\n"
+                unless ref($state) eq 'HASH';
+            confess "Internal error: multi-beat read-data capture transaction '$transaction->{transaction}' has no beat-count storage\n"
+                unless defined($transaction->{beat_count_storage});
+
+            my @data_outputs = @{$transaction->{generated_data_outputs} || []};
+            my @status_outputs = @{$transaction->{generated_status_outputs} || []};
+            for my $lane (0 .. $#data_outputs) {
+                confess "Internal error: multi-beat read-data capture transaction '$transaction->{transaction}' lane $lane has no status output\n"
+                    unless defined $status_outputs[$lane];
+                push @lines, _read_data_capture_rule(
+                    _read_data_multi_beat_capture_rule_name($contract, $transaction, $lane),
+                    _and_expr(
+                        _read_data_matched_read_beat_expr($contract, $state),
+                        _not_expr($request_event),
+                        _eq_expr(
+                            $transaction->{beat_count_storage},
+                            _sized_decimal_literal($read->{beat_count_width}, $lane),
+                        ),
+                    ),
+                    [
+                        [$data_outputs[$lane], $read->{data_signal}],
+                        [$status_outputs[$lane], $read->{status_signal}],
+                        [$transaction->{valid_mask_output}, _read_data_valid_prefix_mask_expr($transaction, $lane)],
+                        [$transaction->{length_output}, _sized_decimal_literal($transaction->{length_output_width}, $lane + 1)],
+                    ],
+                );
+            }
+        }
     }
     return @lines;
 }
@@ -2306,9 +2407,42 @@ sub _read_data_capture_rule_name($contract, $transaction) {
     return "$contract->{name}_$transaction->{transaction}_read_data_capture";
 }
 
+sub _read_data_multi_beat_output_init_rule_name($contract, $transaction) {
+    return $transaction->{multi_beat_output_init_rule}
+        // "$contract->{name}_$transaction->{transaction}_read_data_output_init";
+}
+
+sub _read_data_multi_beat_capture_rule_name($contract, $transaction, $lane) {
+    return $transaction->{multi_beat_capture_rules}[$lane]
+        if ref($transaction->{multi_beat_capture_rules}) eq 'ARRAY'
+            && defined($transaction->{multi_beat_capture_rules}[$lane]);
+    return "$contract->{name}_$transaction->{transaction}_read_beat_${lane}_capture";
+}
+
 sub _read_data_burst_length_capture_rule_name($contract, $transaction) {
     return $transaction->{burst_length_capture_rule}
         // "$contract->{name}_$transaction->{transaction}_burst_length_capture";
+}
+
+sub _read_data_multi_beat_output_init_assignments($transaction) {
+    my @assignments;
+    push @assignments, map {
+        [$_, _sized_decimal_literal($transaction->{data_width}, 0)]
+    } @{$transaction->{generated_data_outputs} || []};
+    push @assignments, map {
+        [$_, _sized_decimal_literal($transaction->{status_width}, 0)]
+    } @{$transaction->{generated_status_outputs} || []};
+    push @assignments,
+        [$transaction->{valid_mask_output}, _sized_binary_literal($transaction->{valid_mask_width}, '0')],
+        [$transaction->{length_output}, _sized_decimal_literal($transaction->{length_output_width}, 0)];
+    return \@assignments;
+}
+
+sub _read_data_valid_prefix_mask_expr($transaction, $lane) {
+    my $width = $transaction->{valid_mask_width};
+    my $ones = '1' x ($lane + 1);
+    my $zeros = '0' x ($width - length($ones));
+    return _sized_binary_literal($width, $zeros . $ones);
 }
 
 sub _auto_id_rule($name, $guard, $assignments) {
@@ -2577,6 +2711,10 @@ sub _sized_decimal_literal($width, $value) {
     return "${width}'d$value";
 }
 
+sub _sized_binary_literal($width, $bits) {
+    return "${width}'b$bits";
+}
+
 sub _implies_expr($antecedent, $consequent) {
     return "(=> $antecedent $consequent)";
 }
@@ -2813,11 +2951,11 @@ sub _build_report(%args) {
             'response_demux.read response_scope single_beat generates bounded single-beat read RID demux behavior for explicit opt-in contracts',
             'response_demux.read response_scope burst_last requires one-bit last_signal metadata and generates matched-RID-and-RLAST last-beat completion behavior for explicit opt-in contracts',
             'response_demux transaction_completion must be generated, making selected transaction completion names generated demux pulse outputs only under explicit opt-in contracts',
-            'read_data supports explicit generated single-beat capture behavior with response_scope single_beat, explicit generated last-beat capture behavior with response_scope burst_last, and behavior-neutral multi-beat output-bank metadata with response_scope burst_last',
+            'read_data supports explicit generated single-beat capture behavior with response_scope single_beat, explicit generated last-beat capture behavior with response_scope burst_last, and explicit generated multi-beat output-bank behavior with response_scope burst_last',
             'read_data.read data width must be positive and status width must be 2',
             'read_data.read optional burst_length metadata is accepted only for last-beat or multi-beat capture, source arlen, signal width 8, axlen-plus-one encoding, request capture, max_beats 1..256, report-only or runtime-assertion validation, generated raw-ARLEN capture, and generated beat-count/RLAST runtime assertions only for explicit runtime-assertion contracts; multi-beat capture requires runtime-assertion validation',
             'read_data.read transaction outputs must exactly cover read response_demux auto transactions',
-            'read_data generates bounded single-beat and last-beat RDATA/RRESP capture inputs, outputs, guarded assignments, and raw-ARLEN burst-length capture storage/rules for explicit opt-in contracts; multi-beat output-bank lane names, valid masks, and length outputs are reported as metadata until generated reassembly behavior ships',
+            'read_data generates bounded single-beat and last-beat RDATA/RRESP capture inputs, outputs, guarded assignments, raw-ARLEN burst-length capture storage/rules, beat-count/RLAST runtime assertions for explicit runtime-assertion contracts, and multi-beat output-bank data/status lanes, valid masks, length outputs, request-time clearing, and lane capture rules for explicit multi-beat contracts',
         ],
         unsupported_residue => [
             {
@@ -2826,7 +2964,7 @@ sub _build_report(%args) {
             },
             {
                 id     => 'axi_id_ordering_and_response_matching',
-                detail => 'Concrete transaction ID request/response assertions, explicit bounded auto-ID request-ID drive plus completion-event release, generated auto-ID same-ID avoidance, generated write BID response demux, generated single-beat read RID response demux, generated single-beat read-data RDATA/RRESP capture, generated burst-last RLAST response-demux completion, structural last-beat read-data metadata, generated last-beat read-data RDATA/RRESP capture, generated raw-ARLEN burst-length capture, and explicit runtime-assertion beat-count/RLAST validation are supported; behavior-neutral multi-beat read-data output-bank metadata is supported; dynamic user-ID arbitration while issuing multiple same-family requests in one cycle, per-ID same-ID response queues, different-ID interleaving, generated full read-data interleaving/reassembly, broader burst payload assembly, scalar RRESP aggregation, and generated per-beat outputs remain outside this capacity/status shell.',
+                detail => 'Concrete transaction ID request/response assertions, explicit bounded auto-ID request-ID drive plus completion-event release, generated auto-ID same-ID avoidance, generated write BID response demux, generated single-beat read RID response demux, generated single-beat read-data RDATA/RRESP capture, generated burst-last RLAST response-demux completion, structural last-beat read-data metadata, generated last-beat read-data RDATA/RRESP capture, generated raw-ARLEN burst-length capture, explicit runtime-assertion beat-count/RLAST validation, and generated multi-beat read-data output-bank behavior are supported; dynamic user-ID arbitration while issuing multiple same-family requests in one cycle, per-ID same-ID response queues, different-ID interleaving, broader burst payload assembly, and scalar RRESP aggregation remain outside this capacity/status shell.',
             },
             {
                 id     => 'profile_aliases_and_full_manager_behavior',
@@ -2913,6 +3051,14 @@ sub _report_read_data($contract) {
             $read_data->{read}{generated_beat_count_rules} = $artifacts->{beat_count_rules};
             $read_data->{read}{generated_beat_count_assertions} = $artifacts->{beat_count_assertions};
         }
+        if (_read_data_multi_beat_payload_capture_enabled($contract->{read_data}{read})) {
+            $read_data->{read}{generated_multi_beat_data_outputs} = $artifacts->{multi_beat_data_outputs};
+            $read_data->{read}{generated_multi_beat_status_outputs} = $artifacts->{multi_beat_status_outputs};
+            $read_data->{read}{generated_multi_beat_valid_outputs} = $artifacts->{multi_beat_valid_outputs};
+            $read_data->{read}{generated_multi_beat_length_outputs} = $artifacts->{multi_beat_length_outputs};
+            $read_data->{read}{generated_multi_beat_output_init_rules} = $artifacts->{multi_beat_output_init_rules};
+            $read_data->{read}{generated_multi_beat_capture_rules} = $artifacts->{multi_beat_capture_rules};
+        }
     }
     if (exists $read_data->{read}{burst_length_generated_behavior}) {
         $read_data->{read}{burst_length_generated_behavior}
@@ -2981,6 +3127,8 @@ sub _read_data_generated_artifacts($contract) {
     my $read_data = $contract->{read_data};
     my $read = $read_data->{read};
     my $payload_capture = _read_data_payload_capture_enabled($read);
+    my $scalar_payload_capture = _read_data_scalar_payload_capture_enabled($read);
+    my $multi_beat_payload_capture = _read_data_multi_beat_payload_capture_enabled($read);
     my @burst_length_inputs = $read->{burst_length_generated_behavior}
         ? ($read->{burst_length_signal})
         : ();
@@ -3005,12 +3153,51 @@ sub _read_data_generated_artifacts($contract) {
         } @{$read->{transactions} || []};
     my @beat_count_assertions = map { $_->{name} }
         _read_data_beat_count_assertion_specs($contract);
-    my @payload_outputs = $payload_capture
+    my @payload_outputs = $scalar_payload_capture
         ? map { ($_->{data_output}, $_->{status_output}) }
             @{$read->{transactions} || []}
         : ();
-    my @payload_rules = $payload_capture
+    if ($multi_beat_payload_capture) {
+        push @payload_outputs, map {
+            (
+                @{$_->{generated_data_outputs} || []},
+                @{$_->{generated_status_outputs} || []},
+                $_->{valid_mask_output},
+                $_->{length_output},
+            )
+        } @{$read->{transactions} || []};
+    }
+    my @payload_rules = $scalar_payload_capture
         ? map { _read_data_capture_rule_name($contract, $_) }
+            @{$read->{transactions} || []}
+        : ();
+    my @multi_beat_output_init_rules = $multi_beat_payload_capture
+        ? map { _read_data_multi_beat_output_init_rule_name($contract, $_) }
+            @{$read->{transactions} || []}
+        : ();
+    my @multi_beat_capture_rules = $multi_beat_payload_capture
+        ? map {
+            my $transaction = $_;
+            my @outputs = @{$transaction->{generated_data_outputs} || []};
+            map {
+                _read_data_multi_beat_capture_rule_name($contract, $transaction, $_)
+            } 0 .. $#outputs
+        } @{$read->{transactions} || []}
+        : ();
+    my @multi_beat_data_outputs = $multi_beat_payload_capture
+        ? map { @{$_->{generated_data_outputs} || []} }
+            @{$read->{transactions} || []}
+        : ();
+    my @multi_beat_status_outputs = $multi_beat_payload_capture
+        ? map { @{$_->{generated_status_outputs} || []} }
+            @{$read->{transactions} || []}
+        : ();
+    my @multi_beat_valid_outputs = $multi_beat_payload_capture
+        ? map { $_->{valid_mask_output} }
+            @{$read->{transactions} || []}
+        : ();
+    my @multi_beat_length_outputs = $multi_beat_payload_capture
+        ? map { $_->{length_output} }
             @{$read->{transactions} || []}
         : ();
     return {
@@ -3023,7 +3210,15 @@ sub _read_data_generated_artifacts($contract) {
             @payload_rules,
             @burst_length_rules,
             @beat_count_rules,
+            @multi_beat_output_init_rules,
+            @multi_beat_capture_rules,
         ],
+        multi_beat_data_outputs => \@multi_beat_data_outputs,
+        multi_beat_status_outputs => \@multi_beat_status_outputs,
+        multi_beat_valid_outputs => \@multi_beat_valid_outputs,
+        multi_beat_length_outputs => \@multi_beat_length_outputs,
+        multi_beat_output_init_rules => \@multi_beat_output_init_rules,
+        multi_beat_capture_rules => \@multi_beat_capture_rules,
         burst_length_inputs => _clone_jsonish(\@burst_length_inputs),
         burst_length_storage => _clone_jsonish(\@burst_length_storage),
         burst_length_rules => [

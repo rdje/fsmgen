@@ -1,7 +1,8 @@
 # AXI IAL2 Manager Multi-Beat Read-Data Metadata First Slice
 
-Status: implemented parser/report metadata and static validation; generated
-multi-beat reassembly/output behavior remains deferred.
+Status: implemented parser/report metadata and static validation in `.72`;
+generated multi-beat output-bank behavior later shipped in
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.74`.
 
 Owner: `IAL2-FEATURE-COMPLETENESS-FRONTIER.72`.
 
@@ -107,16 +108,21 @@ lane names `PREFIX_0` through `PREFIX_(max_beats - 1)`, valid-mask output
 and width, length output and width, ARLEN storage, expected-count storage,
 beat-count storage, and validation rules/assertions.
 
-Actual generated artifacts remain intentionally narrower than the selected
-public contract:
+As shipped in `.72`, generated artifacts remained intentionally narrower than
+the selected public contract:
 
 - generated inputs include `axi0_arlen`, plus existing `RID`/`RLAST` inputs
   from response demux;
 - generated storage/rules/assertions include raw-ARLEN capture and
   beat-count/`RLAST` runtime validation;
 - generated `RDATA`/`RRESP` payload inputs, per-beat data/status outputs,
-  valid masks, length outputs, and payload capture/reassembly rules are not
+  valid masks, length outputs, and payload capture/reassembly rules were not
   emitted yet.
+
+The later `.74` behavior slice emits those generated payload inputs,
+per-beat data/status outputs, valid masks, length outputs, request-time
+output-bank clearing, and lane capture rules. See
+[docs/AXI_IAL2_MANAGER_MULTI_BEAT_READ_DATA_OUTPUT_BANK_BEHAVIOR_FIRST_SLICE.md](AXI_IAL2_MANAGER_MULTI_BEAT_READ_DATA_OUTPUT_BANK_BEHAVIOR_FIRST_SLICE.md).
 
 `read_data.residue` remains:
 
@@ -151,10 +157,10 @@ The next exact owner is:
 IAL2-FEATURE-COMPLETENESS-FRONTIER.73
 ```
 
-`.73` owns a generated multi-beat read-data reassembly/output behavior
-readiness audit before adding storage, per-beat output lanes, valid masks,
-length outputs, capture rules, residue movement, direct backend behavior, or
-VHDL behavior.
+`.73` owned the generated multi-beat read-data reassembly/output behavior
+readiness audit, and `.74` shipped the first generated output-bank behavior
+slice. Scalar `RRESP` aggregation, per-ID queues, direct backend behavior,
+and VHDL behavior remain deferred.
 
 ## Rollback
 

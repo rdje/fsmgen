@@ -3926,12 +3926,8 @@ Schedule JSON reports `bounded_multi_beat_read_data_contract`, per-transaction
 generated lane names, valid-mask widths, length-output widths,
 `beat_match_source: response_demux_matched_read_beat`,
 `output_shape: per_beat_output_bank`, and
-`multi_beat_reassembly_generated_behavior: false`. The generated artifact
-boundary is intentionally narrow: existing burst-last response demux,
-raw-ARLEN capture, and beat-count/`RLAST` runtime validation still lower to
-`.isf`, `.fsm`, and SystemVerilog, but generated `RDATA`/`RRESP` payload
-inputs, per-beat output lanes, valid masks, length outputs, and payload
-capture/reassembly rules are not emitted yet.
+the public transaction output-bank shape. `.72` is the parser/report metadata
+boundary; generated output-bank behavior ships in `.74`.
 
 Multi-beat read-data output readiness audit:
 [AXI_IAL2_MANAGER_MULTI_BEAT_READ_DATA_REASSEMBLY_OUTPUT_READINESS_AUDIT](../../AXI_IAL2_MANAGER_MULTI_BEAT_READ_DATA_REASSEMBLY_OUTPUT_READINESS_AUDIT.md)
@@ -3941,10 +3937,43 @@ scalar generated lane outputs, treats the public output registers as the
 generated per-transaction beat storage, clears valid/length/lane outputs on
 request, captures each accepted beat under a matched-read-beat,
 `!request_event`, and current `beat_count_storage == lane_index` guard, and
-sets valid masks with constant prefix values. The active frontier is
+sets valid masks with constant prefix values. It selected
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.74`, generated multi-beat read-data
-output-bank behavior. Scalar `RRESP` aggregation, per-ID queues, direct
-backend lowering, and VHDL remain deferred.
+output-bank behavior.
+
+Multi-beat read-data output-bank behavior first slice:
+[AXI_IAL2_MANAGER_MULTI_BEAT_READ_DATA_OUTPUT_BANK_BEHAVIOR_FIRST_SLICE](../../AXI_IAL2_MANAGER_MULTI_BEAT_READ_DATA_OUTPUT_BANK_BEHAVIOR_FIRST_SLICE.md)
+ships generated output-bank behavior for the public multi-beat sample. The
+generated IAL1 review artifact now declares payload inputs such as:
+
+```text
+(input axi0_rdata (width 32))
+(input axi0_rresp (width 2))
+```
+
+It also declares per-transaction lane outputs, valid masks, and length
+outputs:
+
+```text
+(output axi0_r0_beat_rdata_0 (width 32))
+(output axi0_r0_beat_rresp_0 (width 2))
+(output axi0_r0_beat_valid (width 16))
+(output axi0_r0_read_beats (width 5))
+```
+
+Each read transaction gets a request-time output-bank clear rule and one lane
+capture rule per beat. Lane capture guards combine the response-demux
+matched-read-beat expression, `!request_event`, and
+`beat_count_storage == lane_index`; actions capture current `RDATA`/`RRESP`,
+write a constant prefix valid mask, and write `lane_index + 1` into the
+length output. Schedule JSON reports
+`multi_beat_reassembly_generated_behavior: true`, generated payload inputs,
+generated output lanes, valid/length outputs, output-init rules, and lane
+capture rules. `read_data.residue` is now only `rresp_aggregation`; scalar
+`RRESP` aggregation, per-ID queues, direct backend lowering, and VHDL remain
+deferred. The active frontier is
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.75`, the next AXI manager
+feature-completeness selector.
 
 First implementation subset selection:
 [AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION](../../AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md)
@@ -6458,12 +6487,15 @@ Completed implementation `IAL2-FEATURE-COMPLETENESS-FRONTIER.72` ships
 parser/report metadata and static validation for the selected public
 multi-beat read-data output-bank contract, adds
 `ppif/axi_manager_capacity_status_read_data_multi_beat.ppif`, reports
-generated lane names, valid-mask widths, length-output widths, and
-`multi_beat_reassembly_generated_behavior: false`, and advances the active
-frontier to `.73`, generated multi-beat read-data reassembly/output readiness.
+generated lane names, valid-mask widths, length-output widths, and output-bank
+shape, and advances the active frontier to `.73`, generated multi-beat
+read-data reassembly/output readiness.
 Completed audit `IAL2-FEATURE-COMPLETENESS-FRONTIER.73` finds no lower-layer
 prerequisite for first generated output-bank behavior and advances the active
 frontier to `.74`, generated multi-beat read-data output-bank behavior.
+Completed implementation `IAL2-FEATURE-COMPLETENESS-FRONTIER.74` ships
+generated multi-beat read-data output-bank behavior and advances the active
+frontier to `.75`, the next AXI manager feature-completeness selector.
 Completed implementation leaf
 `ARCHITECTURE-DEBT-FRONTIER.2.1`
 projects direct backend storage/helper declaration-plan entries into
