@@ -391,6 +391,7 @@ subtest 'PPIF adapter parses AXI manager multi-beat read-data output-bank behavi
     like($isf, qr/\(var axi0_r0_expected_beats_q \(width 5\)\)/, 'multi-beat PPIF keeps expected-beat storage');
     like($isf, qr/\(output axi0_r0_beat_rdata_0 \(width 32\)\)/, 'multi-beat PPIF declares r0 beat 0 data output');
     like($isf, qr/\(output axi0_r0_beat_rresp_0 \(width 2\)\)/, 'multi-beat PPIF declares r0 beat 0 status output');
+    unlike($isf, qr/\(output axi0_r0_rresp \(width 2\)\)/, 'multi-beat PPIF does not generate scalar r0 aggregate output yet');
     like($isf, qr/\(output axi0_r0_beat_valid \(width 16\)\)/, 'multi-beat PPIF declares r0 valid-mask output');
     like($isf, qr/\(output axi0_r0_read_beats \(width 5\)\)/, 'multi-beat PPIF declares r0 length output');
     like($isf, qr/\(rule axi0_r0_read_data_output_init axi0_r0_request[\s\S]*\(axi0_r0_beat_rdata_0 32'd0\)[\s\S]*\(axi0_r0_beat_valid 16'b0\)[\s\S]*\(axi0_r0_read_beats 5'd0\)\)/, 'multi-beat PPIF clears output bank on request');
@@ -400,6 +401,22 @@ subtest 'PPIF adapter parses AXI manager multi-beat read-data output-bank behavi
     like($fsm, qr/\(-axi0_r0_read_beat_0_capture\s+<\(& \(& axi0_read_complete \(& axi0_r0_auto_id_busy_q \(== axi0_rid axi0_r0_auto_id_q\)\)\) \(! axi0_r0_request\) \(== axi0_r0_read_beat_count_q 5'd0\)\)[\s\S]*\(<- \(axi0_r0_beat_rdata_0> axi0_rdata\)\)[\s\S]*\(<- \(axi0_r0_beat_rresp_0> axi0_rresp\)\)[\s\S]*\(<- \(axi0_r0_beat_valid> 16'b0000000000000001\)\)[\s\S]*\(<- \(axi0_r0_read_beats> 5'd1\)\)/, 'multi-beat PPIF lowers lane 0 payload capture rule');
     assert_read_response_demux_burst_last_report($result->{report}{response_demux}, 'adapter multi-beat read-data report');
     assert_read_data_multi_beat_report($result->{report}{read_data}, 'adapter multi-beat read-data report');
+};
+
+subtest 'PPIF adapter keeps no-aggregation multi-beat read-data valid' => sub {
+    my $source = capacity_ppif_with_objects(manager_capacity_object_with_read_data_after_response_demux(
+        '(read (response-event axi0_read_complete) (response-scope burst-last) (last-signal rlast (width 1)) (transaction-completion generated))',
+        multi_beat_read_data_clause_without_status_aggregation(),
+    ));
+    my $result = FSM::Adapter::IAL2::PPIF->new()->parse_source($source, 'multi-beat-no-aggregation.ppif');
+    my $read_data = $result->{report}{read_data};
+    my $read = $read_data->{read};
+
+    is($read->{status_aggregation}, 'none', 'adapter no-aggregation multi-beat contract keeps status_aggregation none');
+    ok(!exists($read->{status_aggregation_generated_behavior}), 'adapter no-aggregation multi-beat contract has no scalar aggregation generated flag');
+    ok(!exists($read->{status_aggregate_output}), 'adapter no-aggregation multi-beat contract has no scalar aggregate output shape');
+    is_deeply($read_data->{residue}, [qw(rresp_aggregation)], 'adapter no-aggregation multi-beat contract keeps broad RRESP aggregation residue');
+    is($read->{generated_multi_beat_status_outputs}[0], 'r0_beat_resp_0', 'adapter no-aggregation contract still reports generated per-beat status outputs');
 };
 
 subtest 'PPIF adapter parses mixed AXI manager response-demux arms' => sub {
@@ -652,6 +669,9 @@ subtest 'PPIF adapter diagnostics fail closed before generation claims' => sub {
         ['single-beat manager read-data with status policy',
             capacity_ppif_with_objects(manager_capacity_object_with_read_data(read_data_clause_with('(status-policy last-beat)'))),
             qr/status-policy .* only supported with capture-scope last-beat/],
+        ['single-beat manager read-data with status aggregation',
+            capacity_ppif_with_objects(manager_capacity_object_with_read_data(read_data_clause_with('(status-aggregation (policy worst-observed))'))),
+            qr/status-aggregation .* only supported with capture-scope multi-beat/],
         ['last-beat manager read-data missing status policy',
             capacity_ppif_with_objects(manager_capacity_object_with_read_data_after_response_demux(
                 '(read (response-event axi0_read_complete) (response-scope burst-last) (last-signal rlast (width 1)) (transaction-completion generated))',
@@ -664,6 +684,12 @@ subtest 'PPIF adapter diagnostics fail closed before generation claims' => sub {
                 last_beat_read_data_clause_with('(status-policy aggregate)'),
             )),
             qr/capture-scope last-beat requires status-policy last-beat/],
+        ['last-beat manager read-data with status aggregation',
+            capacity_ppif_with_objects(manager_capacity_object_with_read_data_after_response_demux(
+                '(read (response-event axi0_read_complete) (response-scope burst-last) (last-signal rlast (width 1)) (transaction-completion generated))',
+                last_beat_read_data_clause_with('(status-aggregation (policy worst-observed))'),
+            )),
+            qr/status-aggregation .* only supported with capture-scope multi-beat/],
         ['last-beat manager read-data bad interleaving',
             capacity_ppif_with_objects(manager_capacity_object_with_read_data_after_response_demux(
                 '(read (response-event axi0_read_complete) (response-scope burst-last) (last-signal rlast (width 1)) (transaction-completion generated))',
@@ -685,6 +711,24 @@ subtest 'PPIF adapter diagnostics fail closed before generation claims' => sub {
                 multi_beat_read_data_clause_without('(status-policy per-beat)'),
             )),
             qr/capture-scope multi-beat requires status-policy per-beat/],
+        ['multi-beat manager read-data bad status aggregation policy',
+            capacity_ppif_with_objects(manager_capacity_object_with_read_data_after_response_demux(
+                '(read (response-event axi0_read_complete) (response-scope burst-last) (last-signal rlast (width 1)) (transaction-completion generated))',
+                multi_beat_read_data_clause_with('(status-aggregation (policy last-beat))'),
+            )),
+            qr/status-aggregation .* supports only worst-observed/],
+        ['multi-beat manager read-data aggregate output without aggregation',
+            capacity_ppif_with_objects(manager_capacity_object_with_read_data_after_response_demux(
+                '(read (response-event axi0_read_complete) (response-scope burst-last) (last-signal rlast (width 1)) (transaction-completion generated))',
+                multi_beat_read_data_clause_without('(status-aggregation (policy worst-observed))'),
+            )),
+            qr/status-aggregate-output .* requires a read-level \(status-aggregation \.\.\.\) clause/],
+        ['multi-beat manager read-data missing aggregate output',
+            capacity_ppif_with_objects(manager_capacity_object_with_read_data_after_response_demux(
+                '(read (response-event axi0_read_complete) (response-scope burst-last) (last-signal rlast (width 1)) (transaction-completion generated))',
+                multi_beat_read_data_clause_with('(transaction r0 (data-output-prefix r0_beat_data) (status-output-prefix r0_beat_resp) (valid-mask-output r0_beat_valid) (length-output r0_read_beats))'),
+            )),
+            qr/capture-scope multi-beat is missing required \(status-aggregate-output \.\.\.\) clause/],
         ['multi-beat manager read-data bad interleaving',
             capacity_ppif_with_objects(manager_capacity_object_with_read_data_after_response_demux(
                 '(read (response-event axi0_read_complete) (response-scope burst-last) (last-signal rlast (width 1)) (transaction-completion generated))',
@@ -703,6 +747,12 @@ subtest 'PPIF adapter diagnostics fail closed before generation claims' => sub {
                 multi_beat_read_data_clause_with('(transaction r0 (data-output-prefix r0_beat_data) (status-output-prefix r0_beat_resp) (valid-mask-output r0_beat_valid))'),
             )),
             qr/capture-scope multi-beat is missing required \(length-output \.\.\.\) clause/],
+        ['multi-beat manager read-data aggregate output collision',
+            capacity_ppif_with_objects(manager_capacity_object_with_read_data_after_response_demux(
+                '(read (response-event axi0_read_complete) (response-scope burst-last) (last-signal rlast (width 1)) (transaction-completion generated))',
+                multi_beat_read_data_clause_with('(transaction r0 (data-output-prefix r0_beat_data) (status-output-prefix r0_beat_resp) (status-aggregate-output rid) (valid-mask-output r0_beat_valid) (length-output r0_read_beats))'),
+            )),
+            qr/duplicates signal 'rid'/],
         ['duplicate manager read-data burst-length',
             capacity_ppif_with_objects(manager_capacity_object_with_read_data_after_response_demux(
                 '(read (response-event axi0_read_complete) (response-scope burst-last) (last-signal rlast (width 1)) (transaction-completion generated))',
@@ -2451,10 +2501,11 @@ sub multi_beat_manager_read_data_clause {
         '(data-signal rdata (width 32))',
         '(status-signal rresp (width 2))',
         '(status-policy per-beat)',
+        '(status-aggregation (policy worst-observed))',
         '(interleaving multi-beat-by-rid)',
         $burst_length,
-        '(transaction r0 (data-output-prefix r0_beat_data) (status-output-prefix r0_beat_resp) (valid-mask-output r0_beat_valid) (length-output r0_read_beats))',
-        '(transaction r1 (data-output-prefix r1_beat_data) (status-output-prefix r1_beat_resp) (valid-mask-output r1_beat_valid) (length-output r1_read_beats))',
+        '(transaction r0 (data-output-prefix r0_beat_data) (status-output-prefix r0_beat_resp) (status-aggregate-output r0_resp) (valid-mask-output r0_beat_valid) (length-output r0_read_beats))',
+        '(transaction r1 (data-output-prefix r1_beat_data) (status-output-prefix r1_beat_resp) (status-aggregate-output r1_resp) (valid-mask-output r1_beat_valid) (length-output r1_read_beats))',
         ')',
     );
 }
@@ -2467,14 +2518,24 @@ sub multi_beat_read_data_clause_without {
     return $clause;
 }
 
+sub multi_beat_read_data_clause_without_status_aggregation {
+    my $clause = multi_beat_read_data_clause_without('(status-aggregation (policy worst-observed))');
+    $clause =~ s/\s+\(status-aggregate-output r0_resp\)//
+        or die "Could not remove r0 scalar aggregate output from multi-beat read-data fixture\n";
+    $clause =~ s/\s+\(status-aggregate-output r1_resp\)//
+        or die "Could not remove r1 scalar aggregate output from multi-beat read-data fixture\n";
+    return $clause;
+}
+
 sub multi_beat_read_data_clause_with {
     my ($replacement) = @_;
     my $clause = multi_beat_manager_read_data_clause();
     my ($head) = $replacement =~ /\A\((\S+)/;
     my %default = (
-        'status-policy' => '(status-policy per-beat)',
-        'interleaving'  => '(interleaving multi-beat-by-rid)',
-        'transaction'   => '(transaction r0 (data-output-prefix r0_beat_data) (status-output-prefix r0_beat_resp) (valid-mask-output r0_beat_valid) (length-output r0_read_beats))',
+        'status-policy'      => '(status-policy per-beat)',
+        'status-aggregation' => '(status-aggregation (policy worst-observed))',
+        'interleaving'       => '(interleaving multi-beat-by-rid)',
+        'transaction'        => '(transaction r0 (data-output-prefix r0_beat_data) (status-output-prefix r0_beat_resp) (status-aggregate-output r0_resp) (valid-mask-output r0_beat_valid) (length-output r0_read_beats))',
     );
     die "Unknown multi-beat read-data replacement clause '$replacement'\n"
         unless defined $head && exists $default{$head};
@@ -2546,13 +2607,18 @@ sub last_beat_read_data_clause_with {
         'data-signal'       => '(data-signal rdata (width 32))',
         'status-signal'     => '(status-signal rresp (width 2))',
         'status-policy'     => '(status-policy last-beat)',
+        'status-aggregation' => '(interleaving last-beat-by-rid)',
         'interleaving'      => '(interleaving last-beat-by-rid)',
         'transaction'       => '(transaction r0 (data-output r0_last_data) (status-output r0_last_resp))',
     );
     die "Unknown last-beat read-data replacement clause '$replacement'\n"
         unless defined $head && exists $default{$head};
     my $target = quotemeta $default{$head};
-    $clause =~ s/$target/$replacement/;
+    if ($head eq 'status-aggregation') {
+        $clause =~ s/$target/$replacement $default{'interleaving'}/;
+    } else {
+        $clause =~ s/$target/$replacement/;
+    }
     return $clause;
 }
 
@@ -2566,13 +2632,14 @@ sub read_data_clause_with {
         'data-signal'       => '(data-signal rdata (width 32))',
         'status-signal'     => '(status-signal rresp (width 2))',
         'status-policy'     => '(interleaving single-beat-by-rid)',
+        'status-aggregation' => '(interleaving single-beat-by-rid)',
         'interleaving'      => '(interleaving single-beat-by-rid)',
         'transaction'       => '(transaction r0 (data-output r0_data) (status-output r0_resp))',
     );
     die "Unknown read-data replacement clause '$replacement'\n"
         unless defined $head && exists $default{$head};
     my $target = quotemeta $default{$head};
-    if ($head eq 'status-policy') {
+    if ($head eq 'status-policy' || $head eq 'status-aggregation') {
         $clause =~ s/$target/$replacement $default{'interleaving'}/;
     } else {
         $clause =~ s/$target/$replacement/;
@@ -2717,8 +2784,8 @@ sub assert_rlast_report_prose_alignment {
     ok($id_residue, "$owner reports AXI ID/order unsupported residue");
     like(
         $id_residue->{detail},
-        qr/generated burst-last RLAST response-demux completion, structural last-beat read-data metadata, generated last-beat read-data RDATA\/RRESP capture, generated raw-ARLEN burst-length capture, explicit runtime-assertion beat-count\/RLAST validation, and generated multi-beat read-data output-bank behavior are supported/,
-        "$owner reports generated burst-last, last-beat, raw ARLEN, beat-count, and multi-beat output-bank behavior as supported",
+        qr/generated burst-last RLAST response-demux completion, structural last-beat read-data metadata, generated last-beat read-data RDATA\/RRESP capture, generated raw-ARLEN burst-length capture, explicit runtime-assertion beat-count\/RLAST validation, generated multi-beat read-data output-bank behavior, and scalar RRESP aggregation contract metadata are supported/,
+        "$owner reports generated burst-last, last-beat, raw ARLEN, beat-count, multi-beat output-bank, and scalar aggregation metadata as supported",
     );
     my $stale_metadata = join('', 'report-only burst-last ', 'RLAST response-demux metadata');
     my $stale_tracking = join('', 'generated burst/last-beat tracking ', 'remain outside');
@@ -2940,7 +3007,10 @@ sub assert_read_data_multi_beat_report {
     is($read->{status_signal}, 'axi0_rresp', "$owner reports RRESP signal metadata");
     is($read->{status_signal_width}, 2, "$owner reports RRESP width metadata");
     is($read->{status_policy}, 'per_beat', "$owner reports per-beat status policy");
-    is($read->{status_aggregation}, 'none', "$owner reports no scalar RRESP aggregation");
+    is($read->{status_aggregation}, 'worst_observed', "$owner reports selected scalar RRESP aggregation policy");
+    ok(!$read->{status_aggregation_generated_behavior}, "$owner reports scalar RRESP aggregation behavior is not generated yet");
+    is($read->{status_aggregate_output}, 'per_transaction_scalar', "$owner reports per-transaction scalar RRESP aggregate shape");
+    is($read->{status_aggregate_output_width}, 2, "$owner reports scalar RRESP aggregate width");
     is($read->{interleaving_policy}, 'multi_beat_by_rid', "$owner reports multi-beat-by-RID interleaving");
     is($read->{burst_length_source}, 'arlen_signal', "$owner reports ARLEN as the burst-length source");
     is($read->{burst_length_signal}, 'axi0_arlen', "$owner reports the ARLEN signal");
@@ -2981,6 +3051,8 @@ sub assert_read_data_multi_beat_report {
     is_deeply([map { $_->{transaction} } @{$read->{transactions}}], [qw(r0 r1)], "$owner reports multi-beat transaction bindings");
     is_deeply([map { $_->{data_output_prefix} } @{$read->{transactions}}], [qw(axi0_r0_beat_rdata axi0_r1_beat_rdata)], "$owner reports data output prefixes");
     is_deeply([map { $_->{status_output_prefix} } @{$read->{transactions}}], [qw(axi0_r0_beat_rresp axi0_r1_beat_rresp)], "$owner reports status output prefixes");
+    is_deeply([map { $_->{status_aggregate_output} } @{$read->{transactions}}], [qw(axi0_r0_rresp axi0_r1_rresp)], "$owner reports scalar RRESP aggregate outputs");
+    is_deeply([map { $_->{status_aggregate_output_width} } @{$read->{transactions}}], [2, 2], "$owner reports scalar RRESP aggregate output widths");
     is_deeply($read->{transactions}[0]{generated_data_outputs}, \@r0_data_outputs, "$owner reports r0 generated data lane names");
     is_deeply($read->{transactions}[0]{generated_status_outputs}, \@r0_status_outputs, "$owner reports r0 generated status lane names");
     is_deeply([map { $_->{valid_mask_output} } @{$read->{transactions}}], [qw(axi0_r0_beat_valid axi0_r1_beat_valid)], "$owner reports valid-mask outputs");
@@ -2993,6 +3065,7 @@ sub assert_read_data_multi_beat_report {
     is_deeply($read->{transactions}[0]{multi_beat_capture_rules}, \@r0_capture_rules, "$owner reports r0 multi-beat capture rules");
     is_deeply($read->{generated_inputs}, [qw(axi0_rdata axi0_rresp axi0_arlen)], "$owner reports generated payload and ARLEN inputs");
     is_deeply($read->{generated_outputs}, \@multi_beat_outputs, "$owner reports generated output-bank outputs");
+    ok(!grep { /\Aaxi0_r[01]_rresp\z/ } @{$read->{generated_outputs}}, "$owner leaves scalar RRESP aggregate outputs out of generated behavior");
     is_deeply($read->{generated_multi_beat_data_outputs}, [@r0_data_outputs, @r1_data_outputs], "$owner reports generated multi-beat data outputs");
     is_deeply($read->{generated_multi_beat_status_outputs}, [@r0_status_outputs, @r1_status_outputs], "$owner reports generated multi-beat status outputs");
     is_deeply($read->{generated_multi_beat_valid_outputs}, [qw(axi0_r0_beat_valid axi0_r1_beat_valid)], "$owner reports generated multi-beat valid-mask outputs");
@@ -3009,7 +3082,7 @@ sub assert_read_data_multi_beat_report {
         ],
         "$owner reports generated rules with output init and per-lane capture rules",
     );
-    is_deeply($read_data->{residue}, [qw(rresp_aggregation)], "$owner keeps only scalar RRESP aggregation residue for multi-beat read-data");
+    is_deeply($read_data->{residue}, [qw(generated_rresp_aggregation)], "$owner keeps generated scalar RRESP aggregation behavior as residue for multi-beat read-data");
 }
 
 sub assert_same_id_ordering_report {

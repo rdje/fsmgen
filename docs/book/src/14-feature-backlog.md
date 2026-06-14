@@ -3907,6 +3907,8 @@ explicit valid/length outputs:
     (data-signal axi0_rdata (width 32))
     (status-signal axi0_rresp (width 2))
     (status-policy per-beat)
+    (status-aggregation
+      (policy worst-observed))
     (interleaving multi-beat-by-rid)
     (burst-length
       (source arlen)
@@ -3918,6 +3920,7 @@ explicit valid/length outputs:
     (transaction r0
       (data-output-prefix axi0_r0_beat_rdata)
       (status-output-prefix axi0_r0_beat_rresp)
+      (status-aggregate-output axi0_r0_rresp)
       (valid-mask-output axi0_r0_beat_valid)
       (length-output axi0_r0_read_beats))))
 ```
@@ -4005,8 +4008,45 @@ For the width-2 contract, the selected ordering is
 beat. Per-beat `RRESP` lanes stay mandatory, valid/length outputs stay
 unchanged, width-3 AXI responses remain deferred, and generated scalar
 aggregation behavior remains deferred to a later exact owner. The active
-frontier is `IAL2-FEATURE-COMPLETENESS-FRONTIER.77`, parser/report metadata
-and static validation for this selected contract.
+frontier moved through `IAL2-FEATURE-COMPLETENESS-FRONTIER.77`, parser/report
+metadata and static validation for this selected contract.
+
+RRESP aggregation metadata first slice:
+[AXI_IAL2_MANAGER_RRESP_AGGREGATION_METADATA_FIRST_SLICE](../../AXI_IAL2_MANAGER_RRESP_AGGREGATION_METADATA_FIRST_SLICE.md)
+ships the parser/report metadata and static validation for the selected
+contract. The public multi-beat sample now accepts `status-aggregation` and
+per-transaction `status-aggregate-output` bindings, while generated `.isf`,
+`.fsm`, and SystemVerilog output-bank behavior remains unchanged. Schedule JSON
+reports the scalar aggregate contract as metadata:
+
+```text
+read_data:
+  mode: bounded_multi_beat_read_data_contract
+  residue:
+    - generated_rresp_aggregation
+  read:
+    status_policy: per_beat
+    status_aggregation: worst_observed
+    status_aggregation_generated_behavior: false
+    status_aggregate_output: per_transaction_scalar
+    status_aggregate_output_width: 2
+    transactions:
+      - transaction: r0
+        status_output_prefix: axi0_r0_beat_rresp
+        status_aggregate_output: axi0_r0_rresp
+        status_aggregate_output_width: 2
+```
+
+Generated scalar aggregate outputs are intentionally absent in this slice. The
+existing generated output-bank still exposes per-beat status lanes, valid
+masks, and length outputs; there is no generated scalar output such as:
+
+```text
+(output axi0_r0_rresp (width 2))
+```
+
+The active frontier is `IAL2-FEATURE-COMPLETENESS-FRONTIER.78`, generated
+scalar `RRESP` aggregation readiness before behavior changes.
 
 First implementation subset selection:
 [AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION](../../AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md)

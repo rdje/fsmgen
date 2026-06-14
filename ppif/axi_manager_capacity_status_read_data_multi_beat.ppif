@@ -47,6 +47,8 @@
         (data-signal axi0_rdata (width 32))
         (status-signal axi0_rresp (width 2))
         (status-policy per-beat)
+        (status-aggregation
+          (policy worst-observed))
         (interleaving multi-beat-by-rid)
         (burst-length
           (source arlen)
@@ -58,11 +60,13 @@
         (transaction r0
           (data-output-prefix axi0_r0_beat_rdata)
           (status-output-prefix axi0_r0_beat_rresp)
+          (status-aggregate-output axi0_r0_rresp)
           (valid-mask-output axi0_r0_beat_valid)
           (length-output axi0_r0_read_beats))
         (transaction r1
           (data-output-prefix axi0_r1_beat_rdata)
           (status-output-prefix axi0_r1_beat_rresp)
+          (status-aggregate-output axi0_r1_rresp)
           (valid-mask-output axi0_r1_beat_valid)
           (length-output axi0_r1_read_beats))))
     (status

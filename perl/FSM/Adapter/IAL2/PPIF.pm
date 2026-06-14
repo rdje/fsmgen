@@ -703,6 +703,7 @@ sub _parse_manager_capacity_read_data_read($items, $source_label, $name) {
         'data-signal'       => 'data_signal',
         'status-signal'     => 'status_signal',
         'status-policy'     => 'status_policy',
+        'status-aggregation' => 'status_aggregation',
         'interleaving'      => 'interleaving',
         'burst-length'      => 'burst_length',
     );
@@ -749,6 +750,8 @@ sub _parse_manager_capacity_read_data_read($items, $source_label, $name) {
                 unless $width == 2;
             $entry{status_signal} = $signal;
             $entry{status_width} = $width;
+        } elsif ($head eq 'status-aggregation') {
+            $entry{status_aggregation} = _parse_manager_capacity_read_data_status_aggregation(\@body, $source_label, $name);
         } elsif ($head eq 'burst-length') {
             $entry{burst_length} = _parse_manager_capacity_read_data_burst_length(\@body, $source_label, $name);
         }
@@ -771,12 +774,16 @@ sub _parse_manager_capacity_read_data_read($items, $source_label, $name) {
             if exists $entry{status_policy};
         confess "Error: .ppif (manager-capacity-status $name (read-data (read (burst-length ...)))) is only supported with capture-scope last-beat in this slice\n"
             if exists $entry{burst_length};
+        confess "Error: .ppif (manager-capacity-status $name (read-data (read (status-aggregation ...)))) is only supported with capture-scope multi-beat in this slice\n"
+            if exists $entry{status_aggregation};
         confess "Error: .ppif (manager-capacity-status $name (read-data (read (interleaving ...)))) supports only single-beat-by-rid with capture-scope single-beat in this slice\n"
             unless $entry{interleaving} eq 'single-beat-by-rid';
         _validate_manager_capacity_read_data_legacy_transactions(\@transactions, $source_label, $name, 'single-beat');
     } elsif ($entry{capture_scope} eq 'last-beat') {
         confess "Error: .ppif (manager-capacity-status $name (read-data (read (status-policy ...)))) capture-scope last-beat requires status-policy last-beat in this slice\n"
             unless exists($entry{status_policy}) && $entry{status_policy} eq 'last-beat';
+        confess "Error: .ppif (manager-capacity-status $name (read-data (read (status-aggregation ...)))) is only supported with capture-scope multi-beat in this slice\n"
+            if exists $entry{status_aggregation};
         confess "Error: .ppif (manager-capacity-status $name (read-data (read (interleaving ...)))) supports only last-beat-by-rid with capture-scope last-beat in this slice\n"
             unless $entry{interleaving} eq 'last-beat-by-rid';
         _validate_manager_capacity_read_data_legacy_transactions(\@transactions, $source_label, $name, 'last-beat');
@@ -789,10 +796,44 @@ sub _parse_manager_capacity_read_data_read($items, $source_label, $name) {
             unless exists $entry{burst_length};
         confess "Error: .ppif (manager-capacity-status $name (read-data (read (burst-length (validation ...))))) capture-scope multi-beat requires validation runtime-assertion in this slice\n"
             unless $entry{burst_length}{validation} eq 'runtime-assertion';
-        _validate_manager_capacity_read_data_multi_beat_transactions(\@transactions, $source_label, $name);
+        _validate_manager_capacity_read_data_multi_beat_transactions(
+            \@transactions,
+            $source_label,
+            $name,
+            exists $entry{status_aggregation},
+        );
     }
 
     $entry{transactions} = \@transactions;
+    return \%entry;
+}
+
+sub _parse_manager_capacity_read_data_status_aggregation($items, $source_label, $name) {
+    my %allowed = (
+        policy => 'policy',
+    );
+    my %entry;
+    my %seen;
+
+    confess "Error: .ppif (manager-capacity-status $name (read-data (read (status-aggregation ...)))) requires a (policy worst-observed) clause\n"
+        unless @$items;
+
+    for my $clause (@$items) {
+        my ($head, @body) = _clause_parts($clause, $source_label);
+        confess "Error: .ppif (manager-capacity-status $name (read-data (read (status-aggregation ...)))) has unsupported clause '($head ...)'\n"
+            unless exists $allowed{$head};
+        confess "Error: .ppif (manager-capacity-status $name (read-data (read (status-aggregation ...)))) has duplicate ($head ...) clause\n"
+            if $seen{$head}++;
+        confess "Error: .ppif (manager-capacity-status $name (read-data (read (status-aggregation ($head ...))))) requires exactly one scalar value\n"
+            unless @body == 1 && !ref($body[0]);
+        $entry{$allowed{$head}} = $body[0];
+    }
+
+    confess "Error: .ppif (manager-capacity-status $name (read-data (read (status-aggregation ...)))) is missing required (policy ...) clause\n"
+        unless exists $entry{policy};
+    confess "Error: .ppif (manager-capacity-status $name (read-data (read (status-aggregation (policy ...))))) supports only worst-observed in this slice\n"
+        unless $entry{policy} eq 'worst-observed';
+
     return \%entry;
 }
 
@@ -886,12 +927,13 @@ sub _parse_manager_capacity_read_data_transaction($items, $source_label, $name) 
 
     my $transaction_name = $items->[0];
     my %allowed = (
-        'data-output'          => 'data_output',
-        'status-output'        => 'status_output',
-        'data-output-prefix'   => 'data_output_prefix',
-        'status-output-prefix' => 'status_output_prefix',
-        'valid-mask-output'    => 'valid_mask_output',
-        'length-output'        => 'length_output',
+        'data-output'             => 'data_output',
+        'status-output'           => 'status_output',
+        'data-output-prefix'      => 'data_output_prefix',
+        'status-output-prefix'    => 'status_output_prefix',
+        'status-aggregate-output' => 'status_aggregate_output',
+        'valid-mask-output'       => 'valid_mask_output',
+        'length-output'           => 'length_output',
     );
     my %transaction = (transaction => $transaction_name);
     my %seen;
@@ -917,7 +959,7 @@ sub _validate_manager_capacity_read_data_legacy_transactions($transactions, $sou
             confess "Error: .ppif (manager-capacity-status $name (read-data (read (transaction $transaction->{transaction} ...)))) capture-scope $capture_scope is missing required ($clause ...) clause\n"
                 unless exists $transaction->{$field};
         }
-        for my $field (qw(data_output_prefix status_output_prefix valid_mask_output length_output)) {
+        for my $field (qw(data_output_prefix status_output_prefix status_aggregate_output valid_mask_output length_output)) {
             next unless exists $transaction->{$field};
             my $clause = $field;
             $clause =~ s/_/-/g;
@@ -926,7 +968,7 @@ sub _validate_manager_capacity_read_data_legacy_transactions($transactions, $sou
     }
 }
 
-sub _validate_manager_capacity_read_data_multi_beat_transactions($transactions, $source_label, $name) {
+sub _validate_manager_capacity_read_data_multi_beat_transactions($transactions, $source_label, $name, $has_status_aggregation) {
     for my $transaction (@$transactions) {
         for my $field (qw(data_output status_output)) {
             next unless exists $transaction->{$field};
@@ -934,7 +976,13 @@ sub _validate_manager_capacity_read_data_multi_beat_transactions($transactions, 
             $clause =~ s/_/-/g;
             confess "Error: .ppif (manager-capacity-status $name (read-data (read (transaction $transaction->{transaction} ...)))) capture-scope multi-beat does not support legacy ($clause ...) clauses\n";
         }
-        for my $required (qw(data_output_prefix status_output_prefix valid_mask_output length_output)) {
+        if (!$has_status_aggregation && exists $transaction->{status_aggregate_output}) {
+            confess "Error: .ppif (manager-capacity-status $name (read-data (read (transaction $transaction->{transaction} (status-aggregate-output ...))))) requires a read-level (status-aggregation ...) clause\n";
+        }
+        my @required = qw(data_output_prefix status_output_prefix valid_mask_output length_output);
+        push @required, 'status_aggregate_output'
+            if $has_status_aggregation;
+        for my $required (@required) {
             my $clause = $required;
             $clause =~ s/_/-/g;
             confess "Error: .ppif (manager-capacity-status $name (read-data (read (transaction $transaction->{transaction} ...)))) capture-scope multi-beat is missing required ($clause ...) clause\n"

@@ -959,13 +959,20 @@ sub _normalize_read_data(%args) {
             : 'bounded_single_beat_read_data_contract';
     my $multi_beat_generated = $multi_beat_capture
         && ($read->{multi_beat_reassembly_generated_behavior} || 0);
+    my @multi_beat_status_residue = !$multi_beat_capture
+        ? ()
+        : ($read->{status_aggregation} // 'none') eq 'none'
+            ? ('rresp_aggregation')
+            : $read->{status_aggregation_generated_behavior}
+                ? ()
+                : ('generated_rresp_aggregation');
     my $residue = $multi_beat_capture
         ? [
             ($multi_beat_generated ? () : (
                 'multi_beat_read_data_reassembly',
                 'per_beat_outputs',
             )),
-            'rresp_aggregation',
+            @multi_beat_status_residue,
         ]
         : !$last_beat_capture
         ? [
@@ -1004,7 +1011,8 @@ sub _normalize_read_data_read(%args) {
 
     my %allowed = map { $_ => 1 } qw(
         capture_scope completion_source data_signal data_width status_signal
-        status_width status_policy interleaving burst_length transactions
+        status_width status_policy status_aggregation interleaving burst_length
+        transactions
     );
     for my $field (sort keys %$raw) {
         confess "AXI manager capacity/status IAL2 contract read_data.read unsupported field '$field'\n"
@@ -1027,14 +1035,21 @@ sub _normalize_read_data_read(%args) {
     my $status_policy = exists($raw->{status_policy})
         ? _nonempty_scalar($raw->{status_policy}, 'read_data.read.status_policy')
         : undef;
+    my $status_aggregation = exists($raw->{status_aggregation})
+        ? _normalize_read_data_status_aggregation($raw->{status_aggregation})
+        : undef;
     if ($capture_scope eq 'single-beat') {
         confess "AXI manager capacity/status IAL2 contract read_data.read.status_policy is only supported with capture_scope last-beat or multi-beat in this slice\n"
             if defined $status_policy;
         confess "AXI manager capacity/status IAL2 contract read_data.read.burst_length is only supported with capture_scope last-beat or multi-beat in this slice\n"
             if exists $raw->{burst_length};
+        confess "AXI manager capacity/status IAL2 contract read_data.read.status_aggregation is only supported with capture_scope multi-beat in this slice\n"
+            if defined $status_aggregation;
     } elsif ($capture_scope eq 'last-beat') {
         confess "AXI manager capacity/status IAL2 contract read_data.read capture_scope last-beat requires status_policy last-beat in this slice\n"
             unless defined $status_policy && $status_policy eq 'last-beat';
+        confess "AXI manager capacity/status IAL2 contract read_data.read.status_aggregation is only supported with capture_scope multi-beat in this slice\n"
+            if defined $status_aggregation;
     } else {
         confess "AXI manager capacity/status IAL2 contract read_data.read capture_scope multi-beat requires status_policy per-beat in this slice\n"
             unless defined $status_policy && $status_policy eq 'per-beat';
@@ -1079,8 +1094,17 @@ sub _normalize_read_data_read(%args) {
         my $raw_transaction = $raw_transactions->[$index];
         confess "AXI manager capacity/status IAL2 contract read_data.read.transactions[$index] must be a hash reference\n"
             unless ref($raw_transaction) eq 'HASH';
+        if ($capture_scope ne 'multi-beat' && exists $raw_transaction->{status_aggregate_output}) {
+            confess "AXI manager capacity/status IAL2 contract read_data.read.transactions[$index].status_aggregate_output is only supported with capture_scope multi-beat in this slice\n";
+        }
+        if ($capture_scope eq 'multi-beat' && !defined($status_aggregation) && exists $raw_transaction->{status_aggregate_output}) {
+            confess "AXI manager capacity/status IAL2 contract read_data.read.transactions[$index].status_aggregate_output requires read_data.read.status_aggregation\n";
+        }
         my @transaction_fields = $capture_scope eq 'multi-beat'
-            ? qw(transaction data_output_prefix status_output_prefix valid_mask_output length_output)
+            ? (
+                qw(transaction data_output_prefix status_output_prefix valid_mask_output length_output),
+                (defined($status_aggregation) ? ('status_aggregate_output') : ()),
+            )
             : qw(transaction data_output status_output);
         my %transaction_allowed = map { $_ => 1 } @transaction_fields;
         for my $field (sort keys %$raw_transaction) {
@@ -1136,6 +1160,13 @@ sub _normalize_read_data_read(%args) {
                 "read_data.read.transactions[$index].length_output",
             );
             $normalized_transaction{length_output_width} = _counter_width($max_beats);
+            if (defined $status_aggregation) {
+                $normalized_transaction{status_aggregate_output} = _identifier_value(
+                    $raw_transaction->{status_aggregate_output},
+                    "read_data.read.transactions[$index].status_aggregate_output",
+                );
+                $normalized_transaction{status_aggregate_output_width} = $status_width;
+            }
         } else {
             $normalized_transaction{data_output} = _identifier_value(
                 $raw_transaction->{data_output},
@@ -1189,6 +1220,9 @@ sub _normalize_read_data_read(%args) {
             'none',
         );
     } elsif ($capture_scope eq 'multi-beat') {
+        my $normalized_status_aggregation = defined($status_aggregation)
+            ? $status_aggregation->{normalized_policy}
+            : 'none';
         @read{qw(
             status_policy
             status_aggregation
@@ -1200,7 +1234,7 @@ sub _normalize_read_data_read(%args) {
             multi_beat_reassembly_generated_behavior
         )} = (
             'per_beat',
-            'none',
+            $normalized_status_aggregation,
             'response_demux_matched_read_beat',
             'per_transaction_generated',
             'per_beat_output_bank',
@@ -1208,6 +1242,17 @@ sub _normalize_read_data_read(%args) {
             'per_transaction_beat_count',
             1,
         );
+        if (defined $status_aggregation) {
+            @read{qw(
+                status_aggregation_generated_behavior
+                status_aggregate_output
+                status_aggregate_output_width
+            )} = (
+                0,
+                'per_transaction_scalar',
+                $status_width,
+            );
+        }
     }
     if ($capture_scope eq 'last-beat' || $capture_scope eq 'multi-beat') {
         if (ref($burst_length) eq 'HASH') {
@@ -1269,6 +1314,28 @@ sub _normalize_read_data_read(%args) {
 
 sub _multi_beat_lane_names($prefix, $max_beats) {
     return [map { "${prefix}_$_" } 0 .. ($max_beats - 1)];
+}
+
+sub _normalize_read_data_status_aggregation($raw) {
+    confess "AXI manager capacity/status IAL2 contract read_data.read.status_aggregation must be a hash reference\n"
+        unless ref($raw) eq 'HASH';
+
+    my %allowed = map { $_ => 1 } qw(policy);
+    for my $field (sort keys %$raw) {
+        confess "AXI manager capacity/status IAL2 contract read_data.read.status_aggregation unsupported field '$field'\n"
+            unless $allowed{$field};
+    }
+    confess "AXI manager capacity/status IAL2 contract read_data.read.status_aggregation is missing required field 'policy'\n"
+        unless exists $raw->{policy};
+
+    my $policy = _nonempty_scalar($raw->{policy}, 'read_data.read.status_aggregation.policy');
+    confess "AXI manager capacity/status IAL2 contract read_data.read.status_aggregation.policy must be worst-observed in this slice\n"
+        unless $policy eq 'worst-observed';
+
+    return {
+        policy            => 'worst-observed',
+        normalized_policy => 'worst_observed',
+    };
 }
 
 sub _normalize_read_data_burst_length($raw) {
@@ -1685,6 +1752,7 @@ sub _read_data_signal_names($read_data) {
             push @signals, grep { defined $_ }
                 $transaction->{data_output},
                 $transaction->{status_output},
+                $transaction->{status_aggregate_output},
                 $transaction->{valid_mask_output},
                 $transaction->{length_output};
             push @signals, @{$transaction->{generated_data_outputs} || []};
@@ -2954,6 +3022,7 @@ sub _build_report(%args) {
             'read_data supports explicit generated single-beat capture behavior with response_scope single_beat, explicit generated last-beat capture behavior with response_scope burst_last, and explicit generated multi-beat output-bank behavior with response_scope burst_last',
             'read_data.read data width must be positive and status width must be 2',
             'read_data.read optional burst_length metadata is accepted only for last-beat or multi-beat capture, source arlen, signal width 8, axlen-plus-one encoding, request capture, max_beats 1..256, report-only or runtime-assertion validation, generated raw-ARLEN capture, and generated beat-count/RLAST runtime assertions only for explicit runtime-assertion contracts; multi-beat capture requires runtime-assertion validation',
+            'read_data.read optional status_aggregation metadata is accepted only for multi-beat capture, policy worst-observed, status width 2, status_policy per-beat, runtime-assertion burst-length validation, and complete per-transaction status_aggregate_output bindings',
             'read_data.read transaction outputs must exactly cover read response_demux auto transactions',
             'read_data generates bounded single-beat and last-beat RDATA/RRESP capture inputs, outputs, guarded assignments, raw-ARLEN burst-length capture storage/rules, beat-count/RLAST runtime assertions for explicit runtime-assertion contracts, and multi-beat output-bank data/status lanes, valid masks, length outputs, request-time clearing, and lane capture rules for explicit multi-beat contracts',
         ],
@@ -2964,7 +3033,7 @@ sub _build_report(%args) {
             },
             {
                 id     => 'axi_id_ordering_and_response_matching',
-                detail => 'Concrete transaction ID request/response assertions, explicit bounded auto-ID request-ID drive plus completion-event release, generated auto-ID same-ID avoidance, generated write BID response demux, generated single-beat read RID response demux, generated single-beat read-data RDATA/RRESP capture, generated burst-last RLAST response-demux completion, structural last-beat read-data metadata, generated last-beat read-data RDATA/RRESP capture, generated raw-ARLEN burst-length capture, explicit runtime-assertion beat-count/RLAST validation, and generated multi-beat read-data output-bank behavior are supported; dynamic user-ID arbitration while issuing multiple same-family requests in one cycle, per-ID same-ID response queues, different-ID interleaving, broader burst payload assembly, and scalar RRESP aggregation remain outside this capacity/status shell.',
+                detail => 'Concrete transaction ID request/response assertions, explicit bounded auto-ID request-ID drive plus completion-event release, generated auto-ID same-ID avoidance, generated write BID response demux, generated single-beat read RID response demux, generated single-beat read-data RDATA/RRESP capture, generated burst-last RLAST response-demux completion, structural last-beat read-data metadata, generated last-beat read-data RDATA/RRESP capture, generated raw-ARLEN burst-length capture, explicit runtime-assertion beat-count/RLAST validation, generated multi-beat read-data output-bank behavior, and scalar RRESP aggregation contract metadata are supported; dynamic user-ID arbitration while issuing multiple same-family requests in one cycle, per-ID same-ID response queues, different-ID interleaving, broader burst payload assembly, and generated scalar RRESP aggregation behavior remain outside this capacity/status shell.',
             },
             {
                 id     => 'profile_aliases_and_full_manager_behavior',
@@ -3075,6 +3144,12 @@ sub _report_read_data($contract) {
     if (exists $read_data->{read}{multi_beat_reassembly_generated_behavior}) {
         $read_data->{read}{multi_beat_reassembly_generated_behavior}
             = $contract->{read_data}{read}{multi_beat_reassembly_generated_behavior}
+                ? JSON::PP::true
+                : JSON::PP::false;
+    }
+    if (exists $read_data->{read}{status_aggregation_generated_behavior}) {
+        $read_data->{read}{status_aggregation_generated_behavior}
+            = $contract->{read_data}{read}{status_aggregation_generated_behavior}
                 ? JSON::PP::true
                 : JSON::PP::false;
     }

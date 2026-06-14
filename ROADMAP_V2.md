@@ -1115,9 +1115,15 @@ generated behavior changes. Selector `.76` selects additive scalar `RRESP`
 aggregation syntax: read-level `(status-aggregation (policy worst-observed))`
 plus transaction-local `(status-aggregate-output NAME)`, with normalized
 report spelling `worst_observed`. Per-beat status lanes remain mandatory,
-width-3 responses stay deferred, and `.77` now owns parser/report metadata
-and static validation before generated scalar aggregation behavior. Packed
-burst outputs, per-ID queues, direct backend lowering, and VHDL remain
+width-3 responses stay deferred. Implementation `.77` ships parser/report
+metadata and static validation for that contract: the public multi-beat sample
+now accepts `status-aggregation`, reports `status_aggregation` as
+`worst_observed`, marks `status_aggregation_generated_behavior: false`,
+reports per-transaction scalar aggregate output names/widths, and narrows
+read-data residue to `generated_rresp_aggregation` while preserving the
+existing generated output-bank `.isf`, `.fsm`, and HDL behavior. `.78` now
+owns generated scalar `RRESP` aggregation readiness before behavior changes.
+Packed burst outputs, per-ID queues, direct backend lowering, and VHDL remain
 deferred.
 The shipped public capacity/status source accepts one
 `(manager-capacity-status NAME ...)` object under

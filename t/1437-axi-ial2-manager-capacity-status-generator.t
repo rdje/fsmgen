@@ -708,6 +708,7 @@ subtest 'multi-beat read-data contract generates output-bank payload behavior' =
     like($isf, qr/axi0 r0 expected final read beat has RLAST/, 'multi-beat contract keeps RLAST validation assertions');
     like($isf, qr/\(output axi0_r0_beat_rdata_0 \(width 32\)\)/, 'multi-beat contract declares r0 beat 0 data output');
     like($isf, qr/\(output axi0_r0_beat_rresp_0 \(width 2\)\)/, 'multi-beat contract declares r0 beat 0 status output');
+    unlike($isf, qr/\(output axi0_r0_rresp \(width 2\)\)/, 'multi-beat contract does not generate scalar r0 aggregate output yet');
     like($isf, qr/\(output axi0_r0_beat_valid \(width 16\)\)/, 'multi-beat contract declares r0 valid-mask output');
     like($isf, qr/\(output axi0_r0_read_beats \(width 5\)\)/, 'multi-beat contract declares r0 length output');
     like($isf, qr/\(rule axi0_r0_read_data_output_init axi0_r0_request[\s\S]*\(axi0_r0_beat_rdata_0 32'd0\)[\s\S]*\(axi0_r0_beat_valid 16'b0\)[\s\S]*\(axi0_r0_read_beats 5'd0\)\)/, 'multi-beat contract clears output bank on request');
@@ -727,6 +728,7 @@ subtest 'multi-beat read-data contract generates output-bank payload behavior' =
     like($hdl, qr/\breg\s+\[4:0\]\s+axi0_r0_read_beat_count_q\b/, 'SystemVerilog keeps beat-count storage');
     like($hdl, qr/\boutput\s+reg\s+\[31:0\]\s+axi0_r0_beat_rdata_0\b/, 'SystemVerilog exposes per-beat data output');
     like($hdl, qr/\boutput\s+reg\s+\[1:0\]\s+axi0_r0_beat_rresp_0\b/, 'SystemVerilog exposes per-beat status output');
+    unlike($hdl, qr/\boutput\s+reg\s+\[1:0\]\s+axi0_r0_rresp\b/, 'SystemVerilog does not expose scalar r0 aggregate output yet');
     like($hdl, qr/\boutput\s+reg\s+\[15:0\]\s+axi0_r0_beat_valid\b/, 'SystemVerilog exposes valid-mask output');
     like($hdl, qr/\boutput\s+reg\s+\[4:0\]\s+axi0_r0_read_beats\b/, 'SystemVerilog exposes length output');
     like($hdl, qr/assign\s+axi0_r0_read_data_output_init_en\s*=\s*axi0_r0_request\s*;/, 'SystemVerilog drives output-bank clear from request');
@@ -735,6 +737,28 @@ subtest 'multi-beat read-data contract generates output-bank payload behavior' =
     like($hdl, qr/axi0_r0_beat_rdata_0_next\s*=\s*axi0_rdata\s*;/, 'SystemVerilog captures lane 0 data');
     like($hdl, qr/axi0_r0_beat_valid_next\s*=\s*16'b1\s*;/, 'SystemVerilog sets first valid-mask prefix');
     like($hdl, qr/axi0_r0_read_beats_next\s*=\s*5'd1\s*;/, 'SystemVerilog sets first length value');
+};
+
+subtest 'multi-beat read-data without scalar aggregation remains valid' => sub {
+    my $contract = sample_contract_with_read_data_multi_beat();
+    delete $contract->{read_data}{read}{status_aggregation};
+    delete $_->{status_aggregate_output} for @{$contract->{read_data}{read}{transactions}};
+
+    my $result = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate($contract);
+    my $read_data = $result->{report}{read_data};
+    my $read = $read_data->{read};
+
+    is($read->{status_aggregation}, 'none', 'no-aggregation multi-beat contract keeps status_aggregation none');
+    ok(!exists($read->{status_aggregation_generated_behavior}), 'no-aggregation multi-beat contract has no scalar aggregation generated flag');
+    ok(!exists($read->{status_aggregate_output}), 'no-aggregation multi-beat contract has no scalar aggregate output shape');
+    is_deeply($read_data->{residue}, [qw(rresp_aggregation)], 'no-aggregation multi-beat contract keeps broad RRESP aggregation residue');
+    my @r0_status_outputs = map { "axi0_r0_beat_rresp_$_" } 0 .. 15;
+    my @r1_status_outputs = map { "axi0_r1_beat_rresp_$_" } 0 .. 15;
+    is_deeply(
+        $read->{generated_multi_beat_status_outputs},
+        [@r0_status_outputs, @r1_status_outputs],
+        'no-aggregation multi-beat contract still reports generated per-beat status outputs',
+    );
 };
 
 subtest 'mixed read/write response-demux keeps write behavior and adds read behavior' => sub {
@@ -914,6 +938,7 @@ subtest 'malformed contract objects fail closed and no direct lower-to-fsm entry
         ['last-beat read data bad status policy', sub { my $c = sample_contract_with_read_data_last_beat(); $c->{read_data}{read}{status_policy} = 'aggregate'; $c }, qr/capture_scope last-beat requires status_policy last-beat/],
         ['single-beat read data with status policy', sub { my $c = sample_contract_with_read_data(); $c->{read_data}{read}{status_policy} = 'last-beat'; $c }, qr/status_policy is only supported with capture_scope last-beat/],
         ['single-beat read data with burst length', sub { my $c = sample_contract_with_read_data(); $c->{read_data}{read}{burst_length} = sample_contract_with_read_data_burst_length()->{read_data}{read}{burst_length}; $c }, qr/burst_length is only supported with capture_scope last-beat/],
+        ['single-beat read data with status aggregation', sub { my $c = sample_contract_with_read_data(); $c->{read_data}{read}{status_aggregation} = { policy => 'worst-observed' }; $c }, qr/status_aggregation is only supported with capture_scope multi-beat/],
         ['read data unsupported capture scope', sub { my $c = sample_contract_with_read_data(); $c->{read_data}{read}{capture_scope} = 'burst'; $c }, qr/read_data\.read\.capture_scope must be single-beat, last-beat, or multi-beat/],
         ['read data unsupported completion source', sub { my $c = sample_contract_with_read_data(); $c->{read_data}{read}{completion_source} = 'read-complete'; $c }, qr/read_data\.read\.completion_source must be response-demux/],
         ['read data zero data width', sub { my $c = sample_contract_with_read_data(); $c->{read_data}{read}{data_width} = 0; $c }, qr/read_data\.read\.data_width.*positive integer/],
@@ -929,11 +954,15 @@ subtest 'malformed contract objects fail closed and no direct lower-to-fsm entry
         ['multi-beat read data with report-only validation', sub { my $c = sample_contract_with_read_data_multi_beat(); $c->{read_data}{read}{burst_length}{validation} = 'report-only'; $c }, qr/capture_scope multi-beat requires burst_length\.validation runtime-assertion/],
         ['multi-beat read data with single-beat response demux', sub { my $c = sample_contract_with_read_data_multi_beat(); $c->{response_demux} = sample_contract_with_read_response_demux()->{response_demux}; $c }, qr/capture_scope multi-beat requires response_demux\.read\.response_scope burst_last/],
         ['multi-beat read data missing status policy', sub { my $c = sample_contract_with_read_data_multi_beat(); delete $c->{read_data}{read}{status_policy}; $c }, qr/capture_scope multi-beat requires status_policy per-beat/],
+        ['multi-beat read data bad status aggregation policy', sub { my $c = sample_contract_with_read_data_multi_beat(); $c->{read_data}{read}{status_aggregation}{policy} = 'last-beat'; $c }, qr/status_aggregation\.policy must be worst-observed/],
+        ['multi-beat read data aggregate output without aggregation', sub { my $c = sample_contract_with_read_data_multi_beat(); delete $c->{read_data}{read}{status_aggregation}; $c }, qr/status_aggregate_output requires read_data\.read\.status_aggregation/],
+        ['multi-beat read data missing status aggregate output', sub { my $c = sample_contract_with_read_data_multi_beat(); delete $c->{read_data}{read}{transactions}[0]{status_aggregate_output}; $c }, qr/read_data\.read\.transactions\[0\] is missing required field 'status_aggregate_output'/],
         ['multi-beat read data bad interleaving', sub { my $c = sample_contract_with_read_data_multi_beat(); $c->{read_data}{read}{interleaving} = 'last-beat-by-rid'; $c }, qr/interleaving must be multi-beat-by-rid for capture_scope multi-beat/],
         ['multi-beat read data legacy transaction output', sub { my $c = sample_contract_with_read_data_multi_beat(); $c->{read_data}{read}{transactions}[0]{data_output} = 'axi0_r0_last_rdata'; $c }, qr/read_data\.read\.transactions\[0\] unsupported field 'data_output'/],
         ['multi-beat read data missing valid mask', sub { my $c = sample_contract_with_read_data_multi_beat(); delete $c->{read_data}{read}{transactions}[0]{valid_mask_output}; $c }, qr/read_data\.read\.transactions\[0\] is missing required field 'valid_mask_output'/],
         ['multi-beat read data lane collision', sub { my $c = sample_contract_with_read_data_multi_beat(); $c->{read_data}{read}{transactions}[1]{data_output_prefix} = 'axi0_r0_beat_rdata'; $c }, qr/duplicates signal 'axi0_r0_beat_rdata_0'/],
         ['multi-beat read data valid-mask collision', sub { my $c = sample_contract_with_read_data_multi_beat(); $c->{read_data}{read}{transactions}[0]{valid_mask_output} = 'axi0_rid'; $c }, qr/duplicates signal 'axi0_rid'/],
+        ['multi-beat read data aggregate output collision', sub { my $c = sample_contract_with_read_data_multi_beat(); $c->{read_data}{read}{transactions}[0]{status_aggregate_output} = 'axi0_rid'; $c }, qr/duplicates signal 'axi0_rid'/],
         ['read data unknown transaction', sub { my $c = sample_contract_with_read_data(); $c->{read_data}{read}{transactions}[0]{transaction} = 'r2'; $c }, qr/read_data\.read transaction 'r2' is not covered/],
         ['read data missing covered transaction', sub { my $c = sample_contract_with_read_data(); pop @{$c->{read_data}{read}{transactions}}; $c }, qr/read_data\.read transaction coverage is missing read response_demux auto transaction\(s\): r1/],
         ['read data output collision', sub { my $c = sample_contract_with_read_data(); $c->{read_data}{read}{transactions}[0]{data_output} = 'axi0_rid'; $c }, qr/duplicates signal 'axi0_rid'/],
@@ -1247,21 +1276,26 @@ sub sample_contract_with_read_data_multi_beat {
     $contract->{source}{object_id} = 'axi-manager-capacity-status-read-data-multi-beat';
     $contract->{read_data}{read}{capture_scope} = 'multi-beat';
     $contract->{read_data}{read}{status_policy} = 'per-beat';
+    $contract->{read_data}{read}{status_aggregation} = {
+        policy => 'worst-observed',
+    };
     $contract->{read_data}{read}{interleaving} = 'multi-beat-by-rid';
     $contract->{read_data}{read}{transactions} = [
         {
-            transaction          => 'r0',
-            data_output_prefix   => 'axi0_r0_beat_rdata',
-            status_output_prefix => 'axi0_r0_beat_rresp',
-            valid_mask_output    => 'axi0_r0_beat_valid',
-            length_output        => 'axi0_r0_read_beats',
+            transaction             => 'r0',
+            data_output_prefix      => 'axi0_r0_beat_rdata',
+            status_output_prefix    => 'axi0_r0_beat_rresp',
+            status_aggregate_output => 'axi0_r0_rresp',
+            valid_mask_output       => 'axi0_r0_beat_valid',
+            length_output           => 'axi0_r0_read_beats',
         },
         {
-            transaction          => 'r1',
-            data_output_prefix   => 'axi0_r1_beat_rdata',
-            status_output_prefix => 'axi0_r1_beat_rresp',
-            valid_mask_output    => 'axi0_r1_beat_valid',
-            length_output        => 'axi0_r1_read_beats',
+            transaction             => 'r1',
+            data_output_prefix      => 'axi0_r1_beat_rdata',
+            status_output_prefix    => 'axi0_r1_beat_rresp',
+            status_aggregate_output => 'axi0_r1_rresp',
+            valid_mask_output       => 'axi0_r1_beat_valid',
+            length_output           => 'axi0_r1_read_beats',
         },
     ];
     return $contract;
@@ -1428,8 +1462,8 @@ sub assert_rlast_report_prose_alignment {
     ok($id_residue, "$owner reports AXI ID/order unsupported residue");
     like(
         $id_residue->{detail},
-        qr/generated burst-last RLAST response-demux completion, structural last-beat read-data metadata, generated last-beat read-data RDATA\/RRESP capture, generated raw-ARLEN burst-length capture, explicit runtime-assertion beat-count\/RLAST validation, and generated multi-beat read-data output-bank behavior are supported/,
-        "$owner reports generated burst-last, last-beat, raw ARLEN, beat-count, and multi-beat output-bank behavior as supported",
+        qr/generated burst-last RLAST response-demux completion, structural last-beat read-data metadata, generated last-beat read-data RDATA\/RRESP capture, generated raw-ARLEN burst-length capture, explicit runtime-assertion beat-count\/RLAST validation, generated multi-beat read-data output-bank behavior, and scalar RRESP aggregation contract metadata are supported/,
+        "$owner reports generated burst-last, last-beat, raw ARLEN, beat-count, multi-beat output-bank, and scalar aggregation metadata as supported",
     );
     my $stale_metadata = join('', 'report-only burst-last ', 'RLAST response-demux metadata');
     my $stale_tracking = join('', 'generated burst/last-beat tracking ', 'remain outside');
@@ -1649,7 +1683,10 @@ sub assert_read_data_multi_beat_report {
     is($read->{status_signal}, 'axi0_rresp', "$owner reports RRESP signal metadata");
     is($read->{status_signal_width}, 2, "$owner reports RRESP width metadata");
     is($read->{status_policy}, 'per_beat', "$owner reports per-beat status policy");
-    is($read->{status_aggregation}, 'none', "$owner reports no scalar RRESP aggregation");
+    is($read->{status_aggregation}, 'worst_observed', "$owner reports selected scalar RRESP aggregation policy");
+    ok(!$read->{status_aggregation_generated_behavior}, "$owner reports scalar RRESP aggregation behavior is not generated yet");
+    is($read->{status_aggregate_output}, 'per_transaction_scalar', "$owner reports per-transaction scalar RRESP aggregate shape");
+    is($read->{status_aggregate_output_width}, 2, "$owner reports scalar RRESP aggregate width");
     is($read->{interleaving_policy}, 'multi_beat_by_rid', "$owner reports multi-beat-by-RID interleaving");
     is($read->{burst_length_source}, 'arlen_signal', "$owner reports ARLEN as the burst-length source");
     is($read->{burst_length_signal}, 'axi0_arlen', "$owner reports the ARLEN signal");
@@ -1691,6 +1728,8 @@ sub assert_read_data_multi_beat_report {
     is_deeply([map { $_->{completion_signal} } @{$read->{transactions}}], [qw(axi0_r0_complete axi0_r1_complete)], "$owner binds bank validity to generated last-beat completion pulses");
     is_deeply([map { $_->{data_output_prefix} } @{$read->{transactions}}], [qw(axi0_r0_beat_rdata axi0_r1_beat_rdata)], "$owner reports data output prefixes");
     is_deeply([map { $_->{status_output_prefix} } @{$read->{transactions}}], [qw(axi0_r0_beat_rresp axi0_r1_beat_rresp)], "$owner reports status output prefixes");
+    is_deeply([map { $_->{status_aggregate_output} } @{$read->{transactions}}], [qw(axi0_r0_rresp axi0_r1_rresp)], "$owner reports scalar RRESP aggregate outputs");
+    is_deeply([map { $_->{status_aggregate_output_width} } @{$read->{transactions}}], [2, 2], "$owner reports scalar RRESP aggregate output widths");
     is_deeply($read->{transactions}[0]{generated_data_outputs}, \@r0_data_outputs, "$owner reports r0 generated data lane names");
     is_deeply($read->{transactions}[0]{generated_status_outputs}, \@r0_status_outputs, "$owner reports r0 generated status lane names");
     is_deeply([map { $_->{valid_mask_output} } @{$read->{transactions}}], [qw(axi0_r0_beat_valid axi0_r1_beat_valid)], "$owner reports valid-mask outputs");
@@ -1706,6 +1745,7 @@ sub assert_read_data_multi_beat_report {
     is_deeply($read->{transactions}[0]{multi_beat_capture_rules}, \@r0_capture_rules, "$owner reports r0 multi-beat capture rules");
     is_deeply($read->{generated_inputs}, [qw(axi0_rdata axi0_rresp axi0_arlen)], "$owner reports generated payload and ARLEN inputs");
     is_deeply($read->{generated_outputs}, \@multi_beat_outputs, "$owner reports generated output-bank outputs");
+    ok(!grep { /\Aaxi0_r[01]_rresp\z/ } @{$read->{generated_outputs}}, "$owner leaves scalar RRESP aggregate outputs out of generated behavior");
     is_deeply($read->{generated_multi_beat_data_outputs}, [@r0_data_outputs, @r1_data_outputs], "$owner reports generated multi-beat data outputs");
     is_deeply($read->{generated_multi_beat_status_outputs}, [@r0_status_outputs, @r1_status_outputs], "$owner reports generated multi-beat status outputs");
     is_deeply($read->{generated_multi_beat_valid_outputs}, [qw(axi0_r0_beat_valid axi0_r1_beat_valid)], "$owner reports generated multi-beat valid-mask outputs");
@@ -1728,8 +1768,8 @@ sub assert_read_data_multi_beat_report {
     );
     is_deeply(
         $read_data->{residue},
-        [qw(rresp_aggregation)],
-        "$owner keeps only scalar RRESP aggregation residue for multi-beat read-data",
+        [qw(generated_rresp_aggregation)],
+        "$owner keeps generated scalar RRESP aggregation behavior as residue for multi-beat read-data",
     );
 }
 
