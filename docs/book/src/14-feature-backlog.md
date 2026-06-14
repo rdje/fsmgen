@@ -3737,9 +3737,57 @@ The selected contract is metadata first: generated counters, storage,
 missing/extra beat validation, full reassembly, per-beat outputs, `RRESP`
 aggregation, and per-ID queues remain future exact-owner work.
 
-The active frontier is `IAL2-FEATURE-COMPLETENESS-FRONTIER.63`,
-parser/report metadata and static validation for the ARLEN beat-count/depth
-contract.
+Burst read-data beat-count metadata first slice:
+[AXI_IAL2_MANAGER_BURST_READ_DATA_BEAT_COUNT_METADATA_FIRST_SLICE](../../AXI_IAL2_MANAGER_BURST_READ_DATA_BEAT_COUNT_METADATA_FIRST_SLICE.md)
+ships the parser/report boundary for that contract. The public sample is:
+
+```text
+ppif/axi_manager_capacity_status_read_data_burst_length.ppif
+```
+
+The sample keeps generated last-beat `RDATA`/`RRESP` capture behavior
+unchanged and records ARLEN beat-count metadata only in schedule JSON:
+
+```text
+read_data:
+  generated_behavior: true
+  read:
+    burst_length_source: arlen_signal
+    burst_length_signal: axi0_arlen
+    burst_length_signal_width: 8
+    burst_length_encoding: axlen_plus_one
+    burst_length_capture: transaction_request
+    max_beats: 16
+    burst_length_generated_behavior: false
+    burst_length_validation: report_only
+    beat_storage: none
+    valid_output: none
+    length_output: none
+```
+
+`axi0_arlen` is not emitted as a generated `.isf` input, `.fsm` signal, or HDL
+port yet. The generated artifact lists remain the last-beat capture artifacts:
+
+```text
+generated_inputs:
+  - axi0_rdata
+  - axi0_rresp
+generated_rules:
+  - axi0_r0_read_data_capture
+  - axi0_r1_read_data_capture
+```
+
+Useful checks:
+
+```bash
+./bin/fsmgen --emit-schedule-json ppif/axi_manager_capacity_status_read_data_burst_length.ppif
+./bin/fsmgen --quiet --verify-hdl ppif/axi_manager_capacity_status_read_data_burst_length.ppif
+./bin/fsmgen --strict --check --json ppif/axi_manager_capacity_status_read_data_burst_length.ppif
+./bin/fsmgen --strict --emit-semantic-json ppif/axi_manager_capacity_status_read_data_burst_length.ppif
+```
+
+The active frontier is `IAL2-FEATURE-COMPLETENESS-FRONTIER.64`, the next
+exact-owner selector after report-only burst-length metadata.
 
 First implementation subset selection:
 [AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION](../../AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md)
@@ -3891,7 +3939,9 @@ selects direct generated last-beat capture behavior and hands off to `.60`.
 to selector `.61`. `.61` selects public AXI burst read-data beat-count/depth
 contract selection and hands off to `.62`. `.62` selects ARLEN-based
 `burst-length` parser/report metadata and static validation and advances the
-active frontier to `.63`.
+frontier to `.63`. `.63` ships that parser/report metadata and static
+validation with a support-accounted sample while keeping generated artifacts
+unchanged, then advances the active frontier to `.64`.
 Future behavior owners must keep the reviewable
 `IAL2 -> IAL1 -> IAL0 -> SystemVerilog` path; read-data
 interleaving/reassembly, bursts, per-ID queues, full-manager behavior, and
@@ -6203,7 +6253,10 @@ public AXI burst read-data beat-count/depth contract selection and hands off to
 `.62`.
 Completed selector leaf `IAL2-FEATURE-COMPLETENESS-FRONTIER.62` selects
 ARLEN-based `burst-length` parser/report metadata and static validation and
-advances the active frontier to `.63`.
+advances the frontier to `.63`.
+Completed implementation leaf `IAL2-FEATURE-COMPLETENESS-FRONTIER.63` ships
+parser/report metadata and static validation for ARLEN-based `burst-length`
+contracts and advances the active frontier to `.64`.
 Completed implementation leaf
 `ARCHITECTURE-DEBT-FRONTIER.2.1`
 projects direct backend storage/helper declaration-plan entries into

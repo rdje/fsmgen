@@ -704,6 +704,7 @@ sub _parse_manager_capacity_read_data_read($items, $source_label, $name) {
         'status-signal'     => 'status_signal',
         'status-policy'     => 'status_policy',
         'interleaving'      => 'interleaving',
+        'burst-length'      => 'burst_length',
     );
     my %entry;
     my @transactions;
@@ -748,6 +749,8 @@ sub _parse_manager_capacity_read_data_read($items, $source_label, $name) {
                 unless $width == 2;
             $entry{status_signal} = $signal;
             $entry{status_width} = $width;
+        } elsif ($head eq 'burst-length') {
+            $entry{burst_length} = _parse_manager_capacity_read_data_burst_length(\@body, $source_label, $name);
         }
     }
 
@@ -766,6 +769,8 @@ sub _parse_manager_capacity_read_data_read($items, $source_label, $name) {
     if ($entry{capture_scope} eq 'single-beat') {
         confess "Error: .ppif (manager-capacity-status $name (read-data (read (status-policy ...)))) is only supported with capture-scope last-beat in this slice\n"
             if exists $entry{status_policy};
+        confess "Error: .ppif (manager-capacity-status $name (read-data (read (burst-length ...)))) is only supported with capture-scope last-beat in this slice\n"
+            if exists $entry{burst_length};
         confess "Error: .ppif (manager-capacity-status $name (read-data (read (interleaving ...)))) supports only single-beat-by-rid with capture-scope single-beat in this slice\n"
             unless $entry{interleaving} eq 'single-beat-by-rid';
     } else {
@@ -777,6 +782,75 @@ sub _parse_manager_capacity_read_data_read($items, $source_label, $name) {
 
     $entry{transactions} = \@transactions;
     return \%entry;
+}
+
+sub _parse_manager_capacity_read_data_burst_length($items, $source_label, $name) {
+    my %allowed = (
+        'source'     => 'source',
+        'signal'     => 'signal',
+        'encoding'   => 'encoding',
+        'capture'    => 'capture',
+        'max-beats'  => 'max_beats',
+        'validation' => 'validation',
+    );
+    my %entry;
+    my %seen;
+
+    for my $clause (@$items) {
+        my ($head, @body) = _clause_parts($clause, $source_label);
+        confess "Error: .ppif (manager-capacity-status $name (read-data (read (burst-length ...)))) has unsupported clause '($head ...)'\n"
+            unless exists $allowed{$head};
+        confess "Error: .ppif (manager-capacity-status $name (read-data (read (burst-length ...)))) has duplicate ($head ...) clause\n"
+            if $seen{$head}++;
+
+        if ($head eq 'signal') {
+            my ($signal, $width) = _parse_manager_capacity_read_data_burst_length_signal(\@body, $source_label, $name);
+            $entry{signal} = $signal;
+            $entry{signal_width} = $width;
+        } else {
+            confess "Error: .ppif (manager-capacity-status $name (read-data (read (burst-length ($head ...))))) requires exactly one scalar value\n"
+                unless @body == 1 && !ref($body[0]);
+            $entry{$allowed{$head}} = $body[0];
+        }
+    }
+
+    for my $required (qw(source signal encoding capture max_beats validation)) {
+        my $clause = $required;
+        $clause =~ s/_/-/g;
+        confess "Error: .ppif (manager-capacity-status $name (read-data (read (burst-length ...)))) is missing required ($clause ...) clause\n"
+            unless exists $entry{$required};
+    }
+
+    confess "Error: .ppif (manager-capacity-status $name (read-data (read (burst-length (source ...))))) supports only arlen in this slice\n"
+        unless $entry{source} eq 'arlen';
+    confess "Error: .ppif (manager-capacity-status $name (read-data (read (burst-length (signal ...))))) width must be 8 for source arlen in this slice\n"
+        unless $entry{signal_width} == 8;
+    confess "Error: .ppif (manager-capacity-status $name (read-data (read (burst-length (encoding ...))))) supports only axlen-plus-one in this slice\n"
+        unless $entry{encoding} eq 'axlen-plus-one';
+    confess "Error: .ppif (manager-capacity-status $name (read-data (read (burst-length (capture ...))))) supports only request in this slice\n"
+        unless $entry{capture} eq 'request';
+    confess "Error: .ppif (manager-capacity-status $name (read-data (read (burst-length (max-beats ...))))) max-beats must be an integer in 1..256\n"
+        unless defined($entry{max_beats}) && $entry{max_beats} =~ /\A[1-9][0-9]*\z/ && int($entry{max_beats}) <= 256;
+    $entry{max_beats} = int($entry{max_beats});
+    confess "Error: .ppif (manager-capacity-status $name (read-data (read (burst-length (validation ...))))) supports only report-only in this slice\n"
+        unless $entry{validation} eq 'report-only';
+
+    return \%entry;
+}
+
+sub _parse_manager_capacity_read_data_burst_length_signal($items, $source_label, $name) {
+    confess "Error: .ppif (manager-capacity-status $name (read-data (read (burst-length (signal ...))))) requires (NAME (width 8))\n"
+        unless @$items == 2 && !ref($items->[0]) && length($items->[0]) && ref($items->[1]) eq 'ARRAY';
+
+    my $signal = $items->[0];
+    my ($width_head, @width_body) = _clause_parts($items->[1], $source_label);
+    confess "Error: .ppif (manager-capacity-status $name (read-data (read (burst-length (signal ...))))) requires (NAME (width 8))\n"
+        unless $width_head eq 'width' && @width_body == 1 && !ref($width_body[0]);
+    my $width = $width_body[0];
+    confess "Error: .ppif (manager-capacity-status $name (read-data (read (burst-length (signal ...))))) width must be a positive integer\n"
+        unless defined($width) && $width =~ /\A[1-9][0-9]*\z/;
+
+    return ($signal, int($width));
 }
 
 sub _parse_manager_capacity_read_data_signal_width($head, $items, $source_label, $name) {

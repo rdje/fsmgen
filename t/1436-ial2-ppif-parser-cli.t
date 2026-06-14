@@ -339,6 +339,23 @@ subtest 'PPIF adapter parses AXI manager last-beat read-data behavior' => sub {
     assert_read_data_last_beat_report($result->{report}{read_data}, 'adapter last-beat read-data report');
 };
 
+subtest 'PPIF adapter parses AXI manager burst-length read-data metadata' => sub {
+    my $sample_path = sample_capacity_read_data_burst_length_ppif_path();
+    ok(-f $sample_path, 'tracked runnable PPIF capacity/status burst-length read-data sample exists');
+
+    my $base = FSM::Adapter::IAL2::PPIF->new()->parse_source(sample_capacity_read_data_last_beat_ppif(), sample_capacity_read_data_last_beat_ppif_path());
+    my $result = FSM::Adapter::IAL2::PPIF->new()->parse_source(sample_capacity_read_data_burst_length_ppif(), $sample_path);
+
+    is($result->{kind}, 'protocol_intent.axi_manager_capacity_status', 'burst-length read-data sample still uses the capacity/status generator');
+    is($result->{report}{source_object}{id}, 'axi-manager-capacity-status-read-data-burst-length', 'burst-length read-data source object id is preserved');
+    is($result->{report}{source_object}{intent_name}, 'axi_manager_capacity_status_read_data_burst_length', 'burst-length read-data source intent name is preserved');
+    is($result->{generated_ial1}{text}, $base->{generated_ial1}{text}, 'burst-length metadata leaves generated IAL1 unchanged');
+    is_deeply($result->{generated_ial0}{files}, $base->{generated_ial0}{files}, 'burst-length metadata leaves generated IAL0 unchanged');
+    unlike($result->{generated_ial1}{text}, qr/\baxi0_arlen\b/, 'burst-length ARLEN signal is report-only in generated IAL1');
+    assert_read_response_demux_burst_last_report($result->{report}{response_demux}, 'adapter burst-length read-data report');
+    assert_read_data_burst_length_report($result->{report}{read_data}, 'adapter burst-length read-data report');
+};
+
 subtest 'PPIF adapter parses mixed AXI manager response-demux arms' => sub {
     my $source = capacity_ppif_with_objects(
         manager_capacity_object_with_mixed_response_demux(
@@ -607,6 +624,69 @@ subtest 'PPIF adapter diagnostics fail closed before generation claims' => sub {
                 last_beat_read_data_clause_with('(interleaving single-beat-by-rid)'),
             )),
             qr/supports only last-beat-by-rid with capture-scope last-beat/],
+        ['single-beat manager read-data with burst-length',
+            capacity_ppif_with_objects(manager_capacity_object_with_read_data(read_data_clause_with_burst_length(default_manager_burst_length_clause()))),
+            qr/burst-length .* only supported with capture-scope last-beat/],
+        ['duplicate manager read-data burst-length',
+            capacity_ppif_with_objects(manager_capacity_object_with_read_data_after_response_demux(
+                '(read (response-event axi0_read_complete) (response-scope burst-last) (last-signal rlast (width 1)) (transaction-completion generated))',
+                last_beat_read_data_clause_with_burst_length(default_manager_burst_length_clause() . ' ' . default_manager_burst_length_clause()),
+            )),
+            qr/duplicate \(burst-length \.\.\.\) clause/],
+        ['unsupported manager read-data burst-length subclause',
+            capacity_ppif_with_objects(manager_capacity_object_with_read_data_after_response_demux(
+                '(read (response-event axi0_read_complete) (response-scope burst-last) (last-signal rlast (width 1)) (transaction-completion generated))',
+                last_beat_read_data_clause_with_burst_length(burst_length_clause_with_extra('(depth 16)')),
+            )),
+            qr/burst-length .* unsupported clause '\(depth \.\.\.\)'/],
+        ['missing manager read-data burst-length source',
+            capacity_ppif_with_objects(manager_capacity_object_with_read_data_after_response_demux(
+                '(read (response-event axi0_read_complete) (response-scope burst-last) (last-signal rlast (width 1)) (transaction-completion generated))',
+                last_beat_read_data_clause_with_burst_length(burst_length_clause_without('(source arlen)')),
+            )),
+            qr/burst-length .* missing required \(source \.\.\.\) clause/],
+        ['unsupported manager read-data burst-length source',
+            capacity_ppif_with_objects(manager_capacity_object_with_read_data_after_response_demux(
+                '(read (response-event axi0_read_complete) (response-scope burst-last) (last-signal rlast (width 1)) (transaction-completion generated))',
+                last_beat_read_data_clause_with_burst_length(burst_length_clause_with('(source beat-count)')),
+            )),
+            qr/supports only arlen in this slice/],
+        ['bad-width manager read-data burst-length signal',
+            capacity_ppif_with_objects(manager_capacity_object_with_read_data_after_response_demux(
+                '(read (response-event axi0_read_complete) (response-scope burst-last) (last-signal rlast (width 1)) (transaction-completion generated))',
+                last_beat_read_data_clause_with_burst_length(burst_length_clause_with('(signal arlen (width 4))')),
+            )),
+            qr/width must be 8 for source arlen/],
+        ['malformed manager read-data burst-length signal',
+            capacity_ppif_with_objects(manager_capacity_object_with_read_data_after_response_demux(
+                '(read (response-event axi0_read_complete) (response-scope burst-last) (last-signal rlast (width 1)) (transaction-completion generated))',
+                last_beat_read_data_clause_with_burst_length(burst_length_clause_with('(signal arlen)')),
+            )),
+            qr/requires \(NAME \(width 8\)\)/],
+        ['unsupported manager read-data burst-length encoding',
+            capacity_ppif_with_objects(manager_capacity_object_with_read_data_after_response_demux(
+                '(read (response-event axi0_read_complete) (response-scope burst-last) (last-signal rlast (width 1)) (transaction-completion generated))',
+                last_beat_read_data_clause_with_burst_length(burst_length_clause_with('(encoding raw)')),
+            )),
+            qr/supports only axlen-plus-one in this slice/],
+        ['unsupported manager read-data burst-length capture',
+            capacity_ppif_with_objects(manager_capacity_object_with_read_data_after_response_demux(
+                '(read (response-event axi0_read_complete) (response-scope burst-last) (last-signal rlast (width 1)) (transaction-completion generated))',
+                last_beat_read_data_clause_with_burst_length(burst_length_clause_with('(capture response)')),
+            )),
+            qr/supports only request in this slice/],
+        ['bad manager read-data burst-length max-beats',
+            capacity_ppif_with_objects(manager_capacity_object_with_read_data_after_response_demux(
+                '(read (response-event axi0_read_complete) (response-scope burst-last) (last-signal rlast (width 1)) (transaction-completion generated))',
+                last_beat_read_data_clause_with_burst_length(burst_length_clause_with('(max-beats 257)')),
+            )),
+            qr/max-beats must be an integer in 1\.\.256/],
+        ['unsupported manager read-data burst-length validation',
+            capacity_ppif_with_objects(manager_capacity_object_with_read_data_after_response_demux(
+                '(read (response-event axi0_read_complete) (response-scope burst-last) (last-signal rlast (width 1)) (transaction-completion generated))',
+                last_beat_read_data_clause_with_burst_length(burst_length_clause_with('(validation generated)')),
+            )),
+            qr/supports only report-only in this slice/],
         ['explicit-width manager read-data output',
             capacity_ppif_with_objects(manager_capacity_object_with_read_data(read_data_clause_with('(transaction r0 (data-output r0_data (width 32)) (status-output r0_resp))'))),
             qr/requires exactly one scalar value/],
@@ -851,6 +931,21 @@ subtest 'CLI emits IAL2 report JSON for AXI manager last-beat read-data metadata
     is_deeply($report->{generated_artifacts}{ial0}{files}, ['axi0_capacity_status.fsm'], 'last-beat read-data metadata keeps the generated .fsm artifact name stable');
 };
 
+subtest 'CLI emits IAL2 report JSON for AXI manager burst-length read-data metadata .ppif' => sub {
+    my ($success, undef, undef, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--emit-schedule-json', sample_capacity_read_data_burst_length_ppif_path()],
+    );
+
+    ok($success, '--emit-schedule-json succeeds for capacity/status burst-length read-data .ppif');
+    is(join('', @{$stderr_buf || []}), '', 'capacity/status burst-length read-data report keeps stderr clean');
+    my $report = decode_json(join('', @{$stdout_buf || []}));
+    is($report->{schema}, 'fsmgen.ial2.protocol_intent.axi_manager_capacity_status.v1', 'CLI keeps the capacity/status report schema');
+    is($report->{source_object}{intent_name}, 'axi_manager_capacity_status_read_data_burst_length', 'burst-length read-data report carries the PPIF top-level intent name');
+    assert_read_response_demux_burst_last_report($report->{response_demux}, 'CLI burst-length read-data report');
+    assert_read_data_burst_length_report($report->{read_data}, 'CLI burst-length read-data report');
+    is_deeply($report->{generated_artifacts}{ial0}{files}, ['axi0_capacity_status.fsm'], 'burst-length read-data metadata keeps the generated .fsm artifact name stable');
+};
+
 subtest 'CLI --verify-hdl accepts AXI manager auto-ID lifecycle behavior .ppif' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $hdl = File::Spec->catfile($tempdir, 'axi_auto_id_lifecycle.sv');
@@ -943,6 +1038,28 @@ subtest 'CLI --verify-hdl accepts AXI manager last-beat read-data behavior .ppif
     like($sv, qr/assign\s+axi0_r0_read_data_capture_en\s*=\s*axi0_r0_complete\s*;/, 'last-beat read-data HDL guards r0 capture with generated last-beat completion');
     like($sv, qr/axi0_r0_last_rdata_next\s*=\s*axi0_rdata\s*;/, 'last-beat read-data HDL captures RDATA into r0 last data output');
     like($sv, qr/axi0_r0_last_rresp_next\s*=\s*axi0_rresp\s*;/, 'last-beat read-data HDL captures RRESP into r0 last status output');
+};
+
+subtest 'CLI --verify-hdl accepts AXI manager burst-length read-data metadata .ppif' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $hdl = File::Spec->catfile($tempdir, 'axi_burst_length_read_data.sv');
+
+    my ($success, undef, undef, undef, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--quiet', '--verify-hdl', '--output', $hdl, sample_capacity_read_data_burst_length_ppif_path()],
+    );
+
+    ok($success, 'capacity/status burst-length read-data --verify-hdl succeeds');
+    is(join('', @{$stderr_buf || []}), '', 'capacity/status burst-length read-data --verify-hdl keeps stderr clean');
+    ok(-f $hdl, 'burst-length read-data --output writes generated HDL');
+    my $sv = slurp($hdl);
+    unlike($sv, qr/\baxi0_arlen\b/, 'burst-length ARLEN metadata is not emitted into HDL');
+    like($sv, qr/\binput\s+(?:wire\s+)?\[3:0\]\s+axi0_rid\b/, 'burst-length read-data HDL keeps generated RID input from burst-last response-demux');
+    like($sv, qr/\binput\s+(?:wire\s+)?axi0_rlast\b/, 'burst-length read-data HDL keeps generated RLAST input from burst-last response-demux');
+    like($sv, qr/\binput\s+(?:wire\s+)?\[31:0\]\s+axi0_rdata\b/, 'burst-length read-data HDL exposes generated RDATA input');
+    like($sv, qr/\binput\s+(?:wire\s+)?\[1:0\]\s+axi0_rresp\b/, 'burst-length read-data HDL exposes generated RRESP input');
+    like($sv, qr/assign\s+axi0_r0_read_data_capture_en\s*=\s*axi0_r0_complete\s*;/, 'burst-length read-data HDL guards r0 capture with generated last-beat completion');
+    like($sv, qr/axi0_r0_last_rdata_next\s*=\s*axi0_rdata\s*;/, 'burst-length read-data HDL captures RDATA into r0 last data output');
+    like($sv, qr/axi0_r0_last_rresp_next\s*=\s*axi0_rresp\s*;/, 'burst-length read-data HDL captures RRESP into r0 last status output');
 };
 
 subtest 'CLI --outdir materializes generated .isf, .fsm, and HDL for .ppif' => sub {
@@ -1532,6 +1649,50 @@ subtest 'CLI check JSON and semantic JSON support-account last-beat read-data .p
     );
 };
 
+subtest 'CLI check JSON and semantic JSON support-account burst-length read-data .ppif separately' => sub {
+    my $read_data_path = sample_capacity_read_data_burst_length_ppif_path();
+    my ($success, undef, undef, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--strict', '--check', '--json', $read_data_path],
+    );
+    ok($success, 'capacity/status burst-length read-data --check --json succeeds');
+    is(join('', @{$stderr_buf || []}), '', 'capacity/status burst-length read-data --check --json keeps stderr clean');
+    my $check_report = decode_json(join('', @{$stdout_buf || []}));
+    ok($check_report->{success}, 'capacity/status burst-length read-data check JSON reports success');
+    is(
+        $check_report->{source}{resolved_path},
+        File::Spec->rel2abs($read_data_path),
+        'capacity/status burst-length read-data check JSON reports the public .ppif source path',
+    );
+    is(
+        $check_report->{support_accounting}{entry_id},
+        'intent.ppif_axi_manager_capacity_status_read_data_burst_length',
+        'capacity/status burst-length read-data check JSON support accounting names the PPIF corpus entry',
+    );
+
+    my ($semantic_success, undef, undef, $semantic_stdout, $semantic_stderr) = run(
+        command => ['./bin/fsmgen', '--strict', '--emit-semantic-json', $read_data_path],
+    );
+    ok($semantic_success, 'capacity/status burst-length read-data --emit-semantic-json succeeds');
+    is(join('', @{$semantic_stderr || []}), '', 'capacity/status burst-length read-data --emit-semantic-json keeps stderr clean');
+    my $semantic_report = decode_json(join('', @{$semantic_stdout || []}));
+    ok($semantic_report->{success}, 'capacity/status burst-length read-data semantic JSON reports success');
+    is(
+        $semantic_report->{source}{resolved_path},
+        File::Spec->rel2abs($read_data_path),
+        'capacity/status burst-length read-data semantic JSON reports the public .ppif source path',
+    );
+    is(
+        $semantic_report->{support_accounting}{entry_id},
+        'intent.ppif_axi_manager_capacity_status_read_data_burst_length',
+        'capacity/status burst-length read-data semantic JSON support accounting names the PPIF corpus entry',
+    );
+    is(
+        $semantic_report->{semantic}{module}{name},
+        'axi0_capacity_status',
+        'capacity/status burst-length read-data semantic JSON records the unchanged generated module',
+    );
+};
+
 subtest 'CLI bundle HDL modes use aggregate wrapper entry' => sub {
     my $bundle_path = sample_bundle_ppif_path();
     my $tempdir = tempdir(CLEANUP => 1);
@@ -1670,6 +1831,10 @@ sub sample_capacity_read_data_last_beat_ppif_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_read_data_last_beat.ppif');
 }
 
+sub sample_capacity_read_data_burst_length_ppif_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_read_data_burst_length.ppif');
+}
+
 sub sample_ppif {
     return slurp(sample_ppif_path());
 }
@@ -1716,6 +1881,10 @@ sub sample_capacity_read_data_ppif {
 
 sub sample_capacity_read_data_last_beat_ppif {
     return slurp(sample_capacity_read_data_last_beat_ppif_path());
+}
+
+sub sample_capacity_read_data_burst_length_ppif {
+    return slurp(sample_capacity_read_data_burst_length_ppif_path());
 }
 
 sub sample_capacity_read_response_demux_base_ppif {
@@ -1971,6 +2140,14 @@ sub default_manager_read_data_clause {
     );
 }
 
+sub read_data_clause_with_burst_length {
+    my ($burst_length) = @_;
+    my $clause = default_manager_read_data_clause();
+    $clause =~ s/\s+\(transaction r0/ $burst_length (transaction r0/
+        or die "Could not insert burst-length clause into read-data fixture\n";
+    return $clause;
+}
+
 sub last_beat_manager_read_data_clause {
     return join(' ',
         '(read',
@@ -1984,6 +2161,61 @@ sub last_beat_manager_read_data_clause {
         '(transaction r1 (data-output r1_last_data) (status-output r1_last_resp))',
         ')',
     );
+}
+
+sub last_beat_read_data_clause_with_burst_length {
+    my ($burst_length) = @_;
+    my $clause = last_beat_manager_read_data_clause();
+    $clause =~ s/\s+\(transaction r0/ $burst_length (transaction r0/
+        or die "Could not insert burst-length clause into last-beat read-data fixture\n";
+    return $clause;
+}
+
+sub default_manager_burst_length_clause {
+    return join(' ',
+        '(burst-length',
+        '(source arlen)',
+        '(signal arlen (width 8))',
+        '(encoding axlen-plus-one)',
+        '(capture request)',
+        '(max-beats 16)',
+        '(validation report-only)',
+        ')',
+    );
+}
+
+sub burst_length_clause_without {
+    my ($clause_to_remove) = @_;
+    my $clause = default_manager_burst_length_clause();
+    $clause =~ s/\s+\Q$clause_to_remove\E//
+        or die "Could not remove burst-length clause '$clause_to_remove'\n";
+    return $clause;
+}
+
+sub burst_length_clause_with {
+    my ($replacement) = @_;
+    my $clause = default_manager_burst_length_clause();
+    my ($head) = $replacement =~ /\A\((\S+)/;
+    my %default = (
+        'source'     => '(source arlen)',
+        'signal'     => '(signal arlen (width 8))',
+        'encoding'   => '(encoding axlen-plus-one)',
+        'capture'    => '(capture request)',
+        'max-beats'  => '(max-beats 16)',
+        'validation' => '(validation report-only)',
+    );
+    die "Unknown burst-length replacement clause '$replacement'\n"
+        unless defined $head && exists $default{$head};
+    my $target = quotemeta $default{$head};
+    $clause =~ s/$target/$replacement/;
+    return $clause;
+}
+
+sub burst_length_clause_with_extra {
+    my ($extra) = @_;
+    my $clause = default_manager_burst_length_clause();
+    $clause =~ s/\)\z/$extra)/;
+    return $clause;
 }
 
 sub last_beat_manager_read_data_clause_without_status_policy {
@@ -2173,8 +2405,8 @@ sub assert_rlast_report_prose_alignment {
     ok($id_residue, "$owner reports AXI ID/order unsupported residue");
     like(
         $id_residue->{detail},
-        qr/generated burst-last RLAST response-demux completion, structural last-beat read-data metadata, and generated last-beat read-data RDATA\/RRESP capture are supported/,
-        "$owner reports generated burst-last RLAST completion and generated last-beat read-data capture as supported",
+        qr/generated burst-last RLAST response-demux completion, structural last-beat read-data metadata, generated last-beat read-data RDATA\/RRESP capture, and report-only ARLEN burst-length metadata are supported/,
+        "$owner reports generated burst-last RLAST completion, generated last-beat read-data capture, and ARLEN metadata as supported",
     );
     my $stale_metadata = join('', 'report-only burst-last ', 'RLAST response-demux metadata');
     my $stale_tracking = join('', 'generated burst/last-beat tracking ', 'remain outside');
@@ -2292,6 +2524,51 @@ sub assert_read_data_last_beat_report {
         $read_data->{residue},
         [qw(multi_beat_read_data_reassembly per_beat_outputs rresp_aggregation arlen_or_beat_count_validation)],
         "$owner reports last-beat read-data residue",
+    );
+}
+
+sub assert_read_data_burst_length_report {
+    my ($read_data, $owner) = @_;
+    is($read_data->{mode}, 'bounded_last_beat_read_data_contract', "$owner marks bounded last-beat read-data contract mode");
+    ok($read_data->{generated_behavior}, "$owner keeps generated last-beat read-data behavior true");
+    my $read = $read_data->{read};
+    is($read->{capture_scope}, 'last_beat', "$owner reports last-beat capture scope");
+    is($read->{completion_source}, 'response_demux', "$owner reports response-demux completion source");
+    is($read->{completion_validity}, 'generated_read_response_demux_last_beat_completion_pulse', "$owner reports generated last-beat demux pulse validity");
+    is($read->{data_signal}, 'axi0_rdata', "$owner reports RDATA signal");
+    is($read->{data_signal_width}, 32, "$owner reports RDATA width");
+    is($read->{status_signal}, 'axi0_rresp', "$owner reports RRESP signal");
+    is($read->{status_signal_width}, 2, "$owner reports RRESP width");
+    is($read->{status_policy}, 'last_beat', "$owner reports last-beat status policy");
+    is($read->{status_aggregation}, 'none', "$owner reports no RRESP aggregation");
+    is($read->{interleaving_policy}, 'last_beat_by_rid', "$owner reports last-beat-by-RID interleaving policy");
+    is($read->{burst_length_source}, 'arlen_signal', "$owner reports ARLEN as the burst-length source");
+    is($read->{burst_length_signal}, 'axi0_arlen', "$owner reports the ARLEN signal");
+    is($read->{burst_length_signal_direction}, 'generated_input', "$owner reports future generated input direction");
+    is($read->{burst_length_signal_width}, 8, "$owner reports ARLEN width");
+    is($read->{burst_length_encoding}, 'axlen_plus_one', "$owner reports AXI LEN+1 encoding");
+    is($read->{burst_length_capture}, 'transaction_request', "$owner reports request-bound length capture");
+    is($read->{max_beats}, 16, "$owner reports max-beats");
+    ok(!$read->{burst_length_generated_behavior}, "$owner reports burst-length generation as false");
+    is($read->{burst_length_validation}, 'report_only', "$owner reports report-only validation");
+    is($read->{beat_storage}, 'none', "$owner reports no beat storage");
+    is($read->{valid_output}, 'none', "$owner reports no valid output");
+    is($read->{length_output}, 'none', "$owner reports no length output");
+    is_deeply($read->{generated_inputs}, [qw(axi0_rdata axi0_rresp)], "$owner omits ARLEN from generated read-data inputs");
+    is_deeply(
+        $read->{generated_outputs},
+        [qw(axi0_r0_last_rdata axi0_r0_last_rresp axi0_r1_last_rdata axi0_r1_last_rresp)],
+        "$owner keeps generated last-beat outputs stable",
+    );
+    is_deeply(
+        $read->{generated_rules},
+        [qw(axi0_r0_read_data_capture axi0_r1_read_data_capture)],
+        "$owner keeps generated last-beat capture rules stable",
+    );
+    is_deeply(
+        $read_data->{residue},
+        [qw(generated_burst_length_capture generated_beat_count_validation multi_beat_read_data_reassembly per_beat_outputs rresp_aggregation)],
+        "$owner reports explicit burst-length residue",
     );
 }
 

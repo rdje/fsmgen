@@ -8,6 +8,7 @@ answers:
   - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.62?"
   - "what comes after IAL2-FEATURE-COMPLETENESS-FRONTIER.62?"
   - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.63?"
+  - "what comes after IAL2-FEATURE-COMPLETENESS-FRONTIER.63?"
   - "why is beat-count or depth selected before full read-data reassembly?"
 date: 2026-06-13
 status: current
@@ -28,5 +29,6 @@ metadata or generated behavior can honestly ship.
 
 `.62` selected an ARLEN-based `burst-length` clause with width-8
 `axlen-plus-one` encoding, transaction-request capture, required `max-beats`,
-and report-only validation. The active frontier is `.63`, parser/report
-metadata and static validation for that contract.
+and report-only validation. `.63` shipped parser/report metadata and static
+validation for that contract. The active frontier is `.64`, the next
+exact-owner selector after report-only burst-length metadata.

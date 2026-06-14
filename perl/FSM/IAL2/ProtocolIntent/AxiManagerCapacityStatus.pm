@@ -952,12 +952,20 @@ sub _normalize_read_data(%args) {
             'bursts',
             'multi_beat_read_data_reassembly',
         ]
-        : [
-            'multi_beat_read_data_reassembly',
-            'per_beat_outputs',
-            'rresp_aggregation',
-            'arlen_or_beat_count_validation',
-        ];
+        : ($read->{burst_length_source} || '') eq 'arlen_signal'
+            ? [
+                'generated_burst_length_capture',
+                'generated_beat_count_validation',
+                'multi_beat_read_data_reassembly',
+                'per_beat_outputs',
+                'rresp_aggregation',
+            ]
+            : [
+                'multi_beat_read_data_reassembly',
+                'per_beat_outputs',
+                'rresp_aggregation',
+                'arlen_or_beat_count_validation',
+            ];
 
     return {
         mode               => $mode,
@@ -974,7 +982,7 @@ sub _normalize_read_data_read(%args) {
 
     my %allowed = map { $_ => 1 } qw(
         capture_scope completion_source data_signal data_width status_signal
-        status_width status_policy interleaving transactions
+        status_width status_policy interleaving burst_length transactions
     );
     for my $field (sort keys %$raw) {
         confess "AXI manager capacity/status IAL2 contract read_data.read unsupported field '$field'\n"
@@ -1000,6 +1008,8 @@ sub _normalize_read_data_read(%args) {
     if ($capture_scope eq 'single-beat') {
         confess "AXI manager capacity/status IAL2 contract read_data.read.status_policy is only supported with capture_scope last-beat in this slice\n"
             if defined $status_policy;
+        confess "AXI manager capacity/status IAL2 contract read_data.read.burst_length is only supported with capture_scope last-beat in this slice\n"
+            if exists $raw->{burst_length};
     } else {
         confess "AXI manager capacity/status IAL2 contract read_data.read capture_scope last-beat requires status_policy last-beat in this slice\n"
             unless defined $status_policy && $status_policy eq 'last-beat';
@@ -1018,6 +1028,9 @@ sub _normalize_read_data_read(%args) {
     my $status_width = _positive_integer($raw->{status_width}, 'read_data.read.status_width');
     confess "AXI manager capacity/status IAL2 contract read_data.read.status_width must be 2 in this slice\n"
         unless $status_width == 2;
+    my $burst_length = exists($raw->{burst_length})
+        ? _normalize_read_data_burst_length($raw->{burst_length})
+        : undef;
 
     my $raw_transactions = $raw->{transactions};
     confess "AXI manager capacity/status IAL2 contract read_data.read.transactions must be an array reference\n"
@@ -1095,18 +1108,77 @@ sub _normalize_read_data_read(%args) {
         transactions         => \@transactions,
     );
     if ($capture_scope eq 'last-beat') {
-        @read{qw(status_policy status_aggregation burst_length_source burst_length_validation beat_storage valid_output length_output)} = (
+        @read{qw(status_policy status_aggregation beat_storage valid_output length_output)} = (
             'last_beat',
             'none',
-            'rlast_only',
-            'not_generated',
             'none',
             'none',
             'none',
         );
+        if (ref($burst_length) eq 'HASH') {
+            @read{sort keys %$burst_length} = @{$burst_length}{sort keys %$burst_length};
+        } else {
+            @read{qw(burst_length_source burst_length_validation)} = (
+                'rlast_only',
+                'not_generated',
+            );
+        }
     }
 
     return \%read;
+}
+
+sub _normalize_read_data_burst_length($raw) {
+    confess "AXI manager capacity/status IAL2 contract read_data.read.burst_length must be a hash reference\n"
+        unless ref($raw) eq 'HASH';
+
+    my %allowed = map { $_ => 1 } qw(source signal signal_width encoding capture max_beats validation);
+    for my $field (sort keys %$raw) {
+        confess "AXI manager capacity/status IAL2 contract read_data.read.burst_length unsupported field '$field'\n"
+            unless $allowed{$field};
+    }
+
+    for my $required (qw(source signal signal_width encoding capture max_beats validation)) {
+        confess "AXI manager capacity/status IAL2 contract read_data.read.burst_length is missing required field '$required'\n"
+            unless exists $raw->{$required};
+    }
+
+    my $source = _nonempty_scalar($raw->{source}, 'read_data.read.burst_length.source');
+    confess "AXI manager capacity/status IAL2 contract read_data.read.burst_length.source must be arlen in this slice\n"
+        unless $source eq 'arlen';
+
+    my $signal = _identifier_value($raw->{signal}, 'read_data.read.burst_length.signal');
+    my $signal_width = _positive_integer($raw->{signal_width}, 'read_data.read.burst_length.signal_width');
+    confess "AXI manager capacity/status IAL2 contract read_data.read.burst_length.signal_width must be 8 for source arlen in this slice\n"
+        unless $signal_width == 8;
+
+    my $encoding = _nonempty_scalar($raw->{encoding}, 'read_data.read.burst_length.encoding');
+    confess "AXI manager capacity/status IAL2 contract read_data.read.burst_length.encoding must be axlen-plus-one in this slice\n"
+        unless $encoding eq 'axlen-plus-one';
+
+    my $capture = _nonempty_scalar($raw->{capture}, 'read_data.read.burst_length.capture');
+    confess "AXI manager capacity/status IAL2 contract read_data.read.burst_length.capture must be request in this slice\n"
+        unless $capture eq 'request';
+
+    my $max_beats = _positive_integer($raw->{max_beats}, 'read_data.read.burst_length.max_beats');
+    confess "AXI manager capacity/status IAL2 contract read_data.read.burst_length.max_beats must be in 1..256\n"
+        if $max_beats > 256;
+
+    my $validation = _nonempty_scalar($raw->{validation}, 'read_data.read.burst_length.validation');
+    confess "AXI manager capacity/status IAL2 contract read_data.read.burst_length.validation must be report-only in this slice\n"
+        unless $validation eq 'report-only';
+
+    return {
+        burst_length_source             => 'arlen_signal',
+        burst_length_signal             => $signal,
+        burst_length_signal_direction   => 'generated_input',
+        burst_length_signal_width       => $signal_width,
+        burst_length_encoding           => 'axlen_plus_one',
+        burst_length_capture            => 'transaction_request',
+        max_beats                       => $max_beats,
+        burst_length_generated_behavior => 0,
+        burst_length_validation         => 'report_only',
+    };
 }
 
 sub _auto_id_lifecycle_family_by_name($auto_id_lifecycle, $family_name) {
@@ -1462,6 +1534,8 @@ sub _read_data_signal_names($read_data) {
     my $read = $read_data->{read};
     if (ref($read) eq 'HASH') {
         push @signals, grep { defined $_ } $read->{data_signal}, $read->{status_signal};
+        push @signals, $read->{burst_length_signal}
+            if defined $read->{burst_length_signal};
         for my $transaction (@{$read->{transactions} || []}) {
             push @signals, grep { defined $_ } $transaction->{data_output}, $transaction->{status_output};
         }
@@ -2324,6 +2398,7 @@ sub _build_report(%args) {
             'response_demux transaction_completion must be generated, making selected transaction completion names generated demux pulse outputs only under explicit opt-in contracts',
             'read_data supports explicit generated single-beat capture behavior with response_scope single_beat and explicit generated last-beat capture behavior with response_scope burst_last',
             'read_data.read data width must be positive and status width must be 2',
+            'read_data.read optional burst_length metadata is accepted only for last-beat capture, source arlen, signal width 8, axlen-plus-one encoding, request capture, max_beats 1..256, and report-only validation',
             'read_data.read transaction outputs must exactly cover read response_demux auto transactions',
             'read_data generates bounded single-beat and last-beat RDATA/RRESP capture inputs, outputs, and guarded assignments for explicit opt-in contracts',
         ],
@@ -2334,7 +2409,7 @@ sub _build_report(%args) {
             },
             {
                 id     => 'axi_id_ordering_and_response_matching',
-                detail => 'Concrete transaction ID request/response assertions, explicit bounded auto-ID request-ID drive plus completion-event release, generated auto-ID same-ID avoidance, generated write BID response demux, generated single-beat read RID response demux, generated single-beat read-data RDATA/RRESP capture, generated burst-last RLAST response-demux completion, structural last-beat read-data metadata, and generated last-beat read-data RDATA/RRESP capture are supported; dynamic user-ID arbitration while issuing multiple same-family requests in one cycle, per-ID same-ID response queues, different-ID interleaving, full read-data interleaving/reassembly, broader burst payload assembly, RRESP aggregation, ARLEN or beat-count validation, and per-beat outputs remain outside this capacity/status shell.',
+                detail => 'Concrete transaction ID request/response assertions, explicit bounded auto-ID request-ID drive plus completion-event release, generated auto-ID same-ID avoidance, generated write BID response demux, generated single-beat read RID response demux, generated single-beat read-data RDATA/RRESP capture, generated burst-last RLAST response-demux completion, structural last-beat read-data metadata, generated last-beat read-data RDATA/RRESP capture, and report-only ARLEN burst-length metadata are supported; dynamic user-ID arbitration while issuing multiple same-family requests in one cycle, per-ID same-ID response queues, different-ID interleaving, generated ARLEN capture, beat-count validation, full read-data interleaving/reassembly, broader burst payload assembly, RRESP aggregation, and per-beat outputs remain outside this capacity/status shell.',
             },
             {
                 id     => 'profile_aliases_and_full_manager_behavior',
@@ -2410,6 +2485,12 @@ sub _report_read_data($contract) {
         $read_data->{read}{generated_inputs} = $artifacts->{inputs};
         $read_data->{read}{generated_outputs} = $artifacts->{outputs};
         $read_data->{read}{generated_rules} = $artifacts->{rules};
+    }
+    if (exists $read_data->{read}{burst_length_generated_behavior}) {
+        $read_data->{read}{burst_length_generated_behavior}
+            = $contract->{read_data}{read}{burst_length_generated_behavior}
+                ? JSON::PP::true
+                : JSON::PP::false;
     }
     return $read_data;
 }
