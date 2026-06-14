@@ -4384,6 +4384,34 @@ semantics, queue-head response-demux behavior, diagnostics, report vocabulary,
 validation gates, and rollback boundary before parser/report metadata or
 generated queue behavior can ship.
 
+Same-ID issue-order queue contract selection:
+[AXI_IAL2_MANAGER_SAME_ID_ISSUE_ORDER_QUEUE_CONTRACT_SELECTION](../../AXI_IAL2_MANAGER_SAME_ID_ISSUE_ORDER_QUEUE_CONTRACT_SELECTION.md)
+ships `IAL2-FEATURE-COMPLETENESS-FRONTIER.94`. It keeps the existing
+AXI-profile-local `same-id-ordering` shape and selects the family-local policy
+value:
+
+```lisp
+(same-id-ordering
+  (read
+    (concrete-id-reuse issue-order-queue))
+  (write
+    (concrete-id-reuse issue-order-queue)))
+```
+
+The first queue contract does not add a public `queue-depth` clause. Queue
+depth is bounded by the selected family's `max-pending` value and the number
+of concrete transactions in that family using the same ID. Later generated
+behavior must enqueue admitted transaction requests, keep a per-ID queue head,
+dequeue only on queue-head response completion, and route same-ID responses by
+queue-head transaction identity rather than ID-only matching. A metadata-only
+slice must not claim `accepted_same_id_reuse: true`; that report value is
+reserved for generated queue-head behavior.
+
+`.94` selects `IAL2-FEATURE-COMPLETENESS-FRONTIER.95`, AXI same-ID
+issue-order queue behavior readiness, because the current generated
+response-demux behavior is auto-ID-oriented and accepting duplicate
+concrete-ID transactions before queue-head demux exists would be ambiguous.
+
 First implementation subset selection:
 [AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION](../../AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md)
 selects a source-anchored AXI Valid-Ready channel contract/monitor as the

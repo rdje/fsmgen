@@ -1206,7 +1206,15 @@ queue behavior. That contract-selection leaf must define the public
 `issue-order-queue` spelling, read/write family scope, depth bounds,
 enqueue/dequeue semantics, queue-head response-demux expectations,
 diagnostics, report vocabulary, validation gates, and rollback boundary before
-accepted same-ID reuse can ship.
+accepted same-ID reuse can ship. Selector `.94` chooses family-local
+`(concrete-id-reuse issue-order-queue)` under the existing
+`same-id-ordering` clause, derives queue bounds from family `max-pending` and
+the concrete transaction inventory rather than a new source depth clause, and
+requires queue-head response demux before accepted same-ID reuse can be
+reported. It selects `.95`, AXI same-ID issue-order queue behavior readiness,
+because the current response-demux behavior is auto-ID-oriented and direct
+parser/report acceptance would be unsafe before the queue-head behavior split
+is audited.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.
