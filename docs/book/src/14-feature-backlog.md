@@ -3875,6 +3875,17 @@ source/report surface still needs beat storage, per-beat or packed outputs,
 length/valid outputs, all-beat `RRESP` aggregation, and different-ID/per-ID
 queue semantics selected first.
 
+Multi-beat read-data reassembly contract selection:
+[AXI_IAL2_MANAGER_MULTI_BEAT_READ_DATA_REASSEMBLY_CONTRACT_SELECTION](../../AXI_IAL2_MANAGER_MULTI_BEAT_READ_DATA_REASSEMBLY_CONTRACT_SELECTION.md)
+selects `capture-scope multi-beat` with mandatory ARLEN `burst-length`
+runtime assertions, `status-policy per-beat`, `interleaving
+multi-beat-by-rid`, and per-transaction data/status output prefixes,
+valid-mask outputs, and length outputs. The first selected output shape is a
+per-beat output bank, not a packed burst vector. Scalar `RRESP` aggregation
+and generated reassembly behavior remain deferred. The active frontier is
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.72`, parser/report metadata and static
+validation for this public syntax.
+
 First implementation subset selection:
 [AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION](../../AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md)
 selects a source-anchored AXI Valid-Ready channel contract/monitor as the
@@ -6380,6 +6391,9 @@ to `.70`, the next exact-owner selector. Completed selector
 `.71`, public AXI multi-beat read-data reassembly/output contract selection,
 before parser, generator, HDL, sample, support-accounting, check JSON,
 semantic JSON, or validation behavior changes.
+Completed selector `IAL2-FEATURE-COMPLETENESS-FRONTIER.71` advances the
+active frontier to `.72`, parser/report metadata and static validation for
+the selected public multi-beat read-data contract.
 Completed implementation leaf
 `ARCHITECTURE-DEBT-FRONTIER.2.1`
 projects direct backend storage/helper declaration-plan entries into

@@ -1093,13 +1093,14 @@ IAL1/.fsm/SystemVerilog include expected-beat storage, matched-beat counters,
 runtime validation rules/assertions, and schedule JSON reports generated
 validation artifacts while `validation report-only` remains no-runtime-check
 behavior. Selector `.70` chooses `.71`, public AXI multi-beat read-data
-reassembly/output contract selection, as the next active owner. Generated
-beat-count/RLAST validation proves expected-count checks, but the public
-source/report surface still needs an explicit contract for beat storage,
-per-beat or packed outputs, length/valid outputs, all-beat `RRESP`
-aggregation, and different-ID/per-ID queue semantics before behavior changes.
-Full multi-beat read-data reassembly behavior, per-ID queues, direct backend
-lowering, and VHDL remain deferred.
+reassembly/output contract selection. Selector `.71` chooses the first public
+multi-beat contract as `capture-scope multi-beat` with mandatory ARLEN
+`burst-length` runtime assertions, per-beat status, `multi-beat-by-rid`
+interleaving, per-transaction data/status output prefixes, valid-mask outputs,
+and length outputs, then advances the active frontier to `.72`, parser/report
+metadata and static validation for that syntax. Packed burst outputs, scalar
+`RRESP` aggregation, generated reassembly behavior, per-ID queues, direct
+backend lowering, and VHDL remain deferred.
 The shipped public capacity/status source accepts one
 `(manager-capacity-status NAME ...)` object under
 `(protocol-platform-intent ...)`, `(profile axi4)`, and top-level source
