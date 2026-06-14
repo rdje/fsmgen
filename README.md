@@ -481,6 +481,17 @@ only the enqueue boundary. Accepted same-ID reuse still needs bounded
 queue storage, enqueue/dequeue semantics, queue-head response demux,
 duplicate-ID validation changes, assertions, and residue movement to be
 audited together before generated behavior changes.
+Audit `.100` confirms the next behavior step should still not be direct
+queue-state or queue-head demux implementation. The selected same-ID sample
+reports admitted request pulses, but `accepted_same_id_reuse` and
+`generated_queue_behavior` remain false. Existing generated response demux is
+auto-ID busy/selected-ID matching, including the read burst-last path, so
+queue-head demux needs queue identity state first. The active frontier is now
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.101`, bounded AXI same-ID issue-order
+queue state representation selection, to pin down grouping, bounds, storage
+shape, transaction identity encoding, diagnostics, assertions, report
+vocabulary, and the later implementation split before duplicate concrete
+same-ID reuse can be accepted.
 The IAL2 factoring stance remains evidence-driven: keep AXI-specific same-ID
 ordering in the AXI vocabulary until another profile proves the same semantic
 need.

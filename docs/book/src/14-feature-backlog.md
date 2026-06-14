@@ -4565,6 +4565,25 @@ decide whether the next safe owner is queue-state/enqueue/dequeue behavior,
 queue-head demux, report/static alignment, or a smaller helper prerequisite
 before any generated behavior changes.
 
+Same-ID issue-order queue state and demux readiness audit:
+[AXI_IAL2_MANAGER_SAME_ID_ISSUE_ORDER_QUEUE_STATE_DEMUX_READINESS_AUDIT](../../AXI_IAL2_MANAGER_SAME_ID_ISSUE_ORDER_QUEUE_STATE_DEMUX_READINESS_AUDIT.md)
+ships `IAL2-FEATURE-COMPLETENESS-FRONTIER.100`. The audit confirms that
+admitted request pulses are only the enqueue boundary. The selected public
+same-ID sample still reports `accepted_same_id_reuse: false` and
+`generated_queue_behavior: false`, and existing generated response demux
+matches auto-ID busy/selected-ID state, including the read burst-last path.
+
+Queue-head response demux cannot ship before queue identity state exists:
+`BID` or `RID` selects the concrete ID queue, but the queue head selects the
+authored transaction. Direct queue-state behavior is also still too broad
+until grouping, bounds, storage shape, transaction identity encoding,
+enqueue/dequeue event names, diagnostics, assertions, and report vocabulary
+are selected. `.100` advances the active frontier to
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.101`, bounded AXI same-ID issue-order
+queue state representation selection. Accepted concrete same-ID reuse,
+generated queue behavior, queue-head demux, direct backend lowering, and VHDL
+remain deferred.
+
 First implementation subset selection:
 [AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION](../../AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md)
 selects a source-anchored AXI Valid-Ready channel contract/monitor as the

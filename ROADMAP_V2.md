@@ -1251,6 +1251,15 @@ accepted same-ID reuse still needs bounded queue storage, enqueue/dequeue
 semantics, queue-head response demux, duplicate-ID validation changes,
 assertions, and residue movement to be audited together before generated
 behavior changes.
+Audit `.100` confirms the existing generated response demux is still auto-ID
+busy/selected-ID matching, including the read burst-last path, while the
+selected same-ID sample still reports `accepted_same_id_reuse: false` and
+`generated_queue_behavior: false`. Queue-head demux therefore needs queue
+identity state first, and direct queue-state behavior remains too broad until
+the representation is selected. The active frontier advances to `.101`,
+bounded AXI same-ID issue-order queue state representation selection, before
+duplicate concrete same-ID reuse, generated queue behavior, queue-head demux,
+direct backend, or VHDL behavior can change.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.
