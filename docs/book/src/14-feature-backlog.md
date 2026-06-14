@@ -4129,6 +4129,23 @@ weakening RTL lowering. Width-3 responses, alternate policies, aggregate-only
 shapes, packed outputs, per-ID queues, direct backend lowering, and VHDL
 remain deferred in the current RTL lane.
 
+Read-data interleaving queue readiness audit:
+[AXI_IAL2_MANAGER_READ_DATA_INTERLEAVING_QUEUE_READINESS_AUDIT](../../AXI_IAL2_MANAGER_READ_DATA_INTERLEAVING_QUEUE_READINESS_AUDIT.md)
+selects `IAL2-FEATURE-COMPLETENESS-FRONTIER.82`, report/static residue
+alignment for the covered generated auto-ID multi-beat-by-RID subset. The
+current public multi-beat sample already has bounded generated
+`multi_beat_by_rid` output-bank behavior through generated same-ID avoidance,
+matched-`RID` response demux, independent per-transaction beat counters,
+output banks, valid masks, length outputs, and scalar aggregate status state.
+
+The next slice is not new queue behavior. It should remove over-broad
+`read_data_interleaving` residue from `response_demux` and
+`same_id_ordering` only for that covered generated auto-ID subset, while
+preserving `concrete_id_same_id_ordering`, `per_id_issue_order_queues`,
+broader `bursts`, queued/blocking policy, profile aliases, full-manager
+behavior, verification-code generation, direct backend lowering, and VHDL as
+deferred work.
+
 First implementation subset selection:
 [AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION](../../AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md)
 selects a source-anchored AXI Valid-Ready channel contract/monitor as the

@@ -10,9 +10,9 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `HEAD after commit` — `IAL2-FEATURE-COMPLETENESS-FRONTIER.80: select read-data interleaving readiness`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.81` pending; next action is auditing AXI per-ID read-data interleaving and queue readiness after scalar `RRESP` aggregation behavior.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.80`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.79`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.78`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.77`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.76`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.75`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.74`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.73`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.72`. Older completed slices are in the task tree and git history.
+- latest_commit: `HEAD after commit` — `IAL2-FEATURE-COMPLETENESS-FRONTIER.81: audit interleaving residue readiness`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.82` pending; next action is report/static residue alignment for the covered generated auto-ID multi-beat-by-RID read-data output-bank subset.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.81`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.80`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.79`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.78`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.77`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.76`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.75`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.74`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.73`. Older completed slices are in the task tree and git history.
 - in_flight_uncommitted: none after this commit; unrelated untracked `fx/` intentionally left alone.
 - blockers: none.
 

@@ -1133,10 +1133,17 @@ matched-beat max updates under `!request_event`, generated aggregate
 output/init/update report fields, and read-data residue with
 `generated_rresp_aggregation` removed. Selector `.80` chooses `.81`, AXI
 per-ID read-data interleaving and queue readiness, as the next exact audit.
+Audit `.81` finds the covered generated auto-ID multi-beat sample already has
+bounded `multi_beat_by_rid` output-bank behavior under generated same-ID
+avoidance, matched-`RID` response demux, and independent per-transaction beat
+counters/output banks. It selects `.82`, report/static residue alignment that
+removes over-broad `read_data_interleaving` residue only for that covered
+generated subset before any new behavior.
 Verification-code generation is captured as a separate future roadmap lane
 from the synthesizable RTL/HDL feature-completeness path.
-Packed burst outputs, per-ID queues, direct backend lowering, and VHDL remain
-deferred.
+Packed burst outputs, concrete-ID same-ID ordering, per-ID queues, queued
+policy, profile aliases, full-manager behavior, direct backend lowering, and
+VHDL remain deferred.
 The shipped public capacity/status source accepts one
 `(manager-capacity-status NAME ...)` object under
 `(protocol-platform-intent ...)`, `(profile axi4)`, and top-level source
