@@ -4834,9 +4834,16 @@ Check JSON and normalized semantic JSON match support accounting entry
 After `.110`, read-data consumption of concrete queue-head demux, deeper or
 multiple duplicate-ID groups, same-family mixed auto-ID plus concrete
 queue-head demux, generalized per-ID queues, direct backend lowering, and VHDL
-remain deferred. The active frontier advances to
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.111`, the post-read-single-beat same-ID
-queue behavior audit/selector.
+remain deferred. Selector `.111`
+[AXI_IAL2_MANAGER_POST_READ_SINGLE_BEAT_SAME_ID_QUEUE_BEHAVIOR_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_READ_SINGLE_BEAT_SAME_ID_QUEUE_BEHAVIOR_NEXT_SLICE_SELECTION.md)
+chooses `IAL2-FEATURE-COMPLETENESS-FRONTIER.112`, AXI read-data consumption
+of generated concrete same-ID queue-head demux readiness. Existing generated
+read-data capture consumes generated auto-ID read response-demux completion
+pulses, but current normalization still fail-closes when `read_data` consumes
+concrete queue-head read demux. `.112` must decide whether the first safe
+behavior slice can be bounded to read single-beat queue-head demux plus
+single-beat `RDATA`/`RRESP` capture, or whether metadata/report alignment is
+required first.
 
 First implementation subset selection:
 [AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION](../../AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md)

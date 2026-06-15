@@ -1337,8 +1337,14 @@ completion pulse outputs, queue-head `RID` demux rules without `RLAST`,
 support-accounting coverage, and Verilator-clean generated SystemVerilog.
 Read-data consumption, deeper or multiple groups, same-family mixed auto-ID,
 generalized per-ID queues, direct backend, and VHDL remain deferred. The
-frontier advances to `.111`, the post-read-single-beat same-ID queue behavior
-audit/selector.
+`.111` selector chooses `.112`, AXI read-data consumption of generated
+concrete same-ID queue-head demux readiness. The existing generated
+read-data path captures `RDATA`/`RRESP` from generated auto-ID read
+response-demux completion pulses, but current normalization still rejects
+`read_data` when the read response-demux source is generated concrete
+queue-head demux. `.112` must decide whether the first safe behavior slice can
+be bounded to read single-beat queue-head demux plus single-beat read-data
+capture, or whether parser/report/static metadata alignment is required first.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.
