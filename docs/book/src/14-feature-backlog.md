@@ -4951,12 +4951,60 @@ generalized per-ID queues, direct backend lowering, and VHDL remain deferred.
 Post queue-head last-beat read-data selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_LAST_BEAT_READ_DATA_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_LAST_BEAT_READ_DATA_NEXT_SLICE_SELECTION.md)
 selects generated raw-`ARLEN` burst-length capture for the bounded
-queue-head last-beat read-data shape as `.117`. That next implementation is
-expected to add a public support-accounted sample that combines the `.115`
-queue-head last-beat capture shape with report-only `burst-length` metadata,
-generating `axi0_arlen`, per-transaction raw-`ARLEN` storage, and
-request-guarded burst-length capture rules while preserving the queue-head
-last-beat completion-validity report value.
+queue-head last-beat read-data shape as `.117`.
+
+Queue-head burst-length behavior:
+[AXI_IAL2_MANAGER_QUEUE_HEAD_BURST_LENGTH_BEHAVIOR](../../AXI_IAL2_MANAGER_QUEUE_HEAD_BURST_LENGTH_BEHAVIOR.md)
+ships that selected report-only raw-`ARLEN` capture behavior for the bounded
+read burst-last concrete same-ID queue-head last-beat read-data shape:
+
+```bash
+./bin/fsmgen --emit-schedule-json ppif/axi_manager_capacity_status_read_last_beat_same_id_queue_head_burst_length.ppif
+./bin/fsmgen --quiet --verify-hdl --output /tmp/fsmgen_read_last_beat_same_id_queue_head_burst_length.sv ppif/axi_manager_capacity_status_read_last_beat_same_id_queue_head_burst_length.ppif
+```
+
+The generated burst-length capture is request-bound:
+
+```text
+rule axi0_r0_burst_length_capture:
+  guard: axi0_r0_request
+  assignments:
+    axi0_r0_arlen_q <- axi0_arlen
+```
+
+The queue-head last-beat payload capture remains completion-bound:
+
+```text
+rule axi0_r0_read_data_capture:
+  guard: axi0_r0_complete
+  assignments:
+    axi0_r0_last_rdata <- axi0_rdata
+    axi0_r0_last_rresp <- axi0_rresp
+```
+
+The queue-head burst-length report keeps the queue-head last-beat
+completion-validity value and adds generated burst-length fields:
+
+```text
+read_data.read.completion_validity:
+  generated_queue_head_response_demux_last_beat_completion_pulse
+read_data.read.burst_length_source: arlen_signal
+read_data.read.burst_length_signal: axi0_arlen
+read_data.read.burst_length_validation: report_only
+read_data.read.burst_length_generated_behavior: true
+read_data.read.generated_burst_length_storage:
+  - axi0_r0_arlen_q
+  - axi0_r1_arlen_q
+read_data.read.generated_burst_length_rules:
+  - axi0_r0_burst_length_capture
+  - axi0_r1_burst_length_capture
+```
+
+Queue-head `validation runtime-assertion`, queue-head beat-count/RLAST
+validation, multi-beat queue-head read-data, deeper or multiple queue groups,
+mixed same-family auto-ID plus concrete queue-head demux, direct backend
+lowering, and VHDL remain deferred. The active frontier is `.118`, the next
+queue-head/read-data selector before broader behavior changes.
 
 First implementation subset selection:
 [AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION](../../AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md)

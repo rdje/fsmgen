@@ -1370,10 +1370,19 @@ generated queue-head last-beat completion pulses, and reports
 `generated_queue_head_response_demux_last_beat_completion_pulse` while
 preserving existing auto-ID last-beat and queue-head single-beat read-data
 report values. Selector `.116` chose `.117`, generated raw-`ARLEN`
-burst-length capture for the bounded queue-head last-beat read-data shape, as
-the next queue-head/read-data expansion. Multi-beat queue-head read-data,
-queue-head runtime beat-count/RLAST validation, deeper/multiple queue group,
-mixed auto-ID, backend, or residue expansion remain deferred.
+burst-length capture for the bounded queue-head last-beat read-data shape.
+Implementation `.117` now ships report-only raw-`ARLEN` burst-length capture
+for
+`ppif/axi_manager_capacity_status_read_last_beat_same_id_queue_head_burst_length.ppif`:
+generated `axi0_arlen` input, per-transaction raw-`ARLEN` storage,
+request-guarded burst-length capture rules, and the existing queue-head
+last-beat `RDATA`/`RRESP` capture rules. The report keeps
+`generated_queue_head_response_demux_last_beat_completion_pulse` and sets
+`burst_length_generated_behavior: true`. The active frontier advances to
+`.118`, the next queue-head/read-data selector; queue-head runtime
+beat-count/RLAST validation, multi-beat queue-head read-data,
+deeper/multiple queue group, mixed auto-ID, backend, or residue expansion
+remain deferred.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.

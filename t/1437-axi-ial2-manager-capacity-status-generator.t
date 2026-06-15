@@ -891,6 +891,53 @@ subtest 'read-data contract consumes generated read burst-last same-ID queue-hea
     like($hdl, qr/axi0_r0_last_rresp_next\s*=\s*axi0_rresp\s*;/, 'SystemVerilog captures queue-head last-beat RRESP into r0 output');
 };
 
+subtest 'read-data queue-head last-beat contract generates raw ARLEN burst-length capture' => sub {
+    my $result = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_same_id_read_last_beat_queue_head_burst_length());
+    my $isf = $result->{generated_ial1}{text};
+    my $fsm = $result->{generated_ial0}{files}{'axi0_capacity_status.fsm'};
+
+    like($isf, qr/\(rule axi0_r0_response_demux \(& axi0_read_complete \(== axi0_rid 4'd3\) axi0_rlast axi0_read_id3_same_id_issue_order_slot0_r0_q\)/, 'queue-head burst-length read-data keeps r0 RLAST-gated concrete queue-head demux rule');
+    like($isf, qr/\(rule axi0_r1_response_demux \(& axi0_read_complete \(== axi0_rid 4'd3\) axi0_rlast axi0_read_id3_same_id_issue_order_slot0_r1_q\)/, 'queue-head burst-length read-data keeps r1 RLAST-gated concrete queue-head demux rule');
+    like($isf, qr/\(input axi0_arlen \(width 8\)\)/, 'queue-head burst-length read-data declares ARLEN as a generated width-8 input');
+    like($isf, qr/\(var axi0_r0_arlen_q \(width 8\)\)/, 'queue-head burst-length read-data declares r0 raw ARLEN storage');
+    like($isf, qr/\(var axi0_r1_arlen_q \(width 8\)\)/, 'queue-head burst-length read-data declares r1 raw ARLEN storage');
+    like($isf, qr/\(rule axi0_r0_burst_length_capture axi0_r0_request\s+\(axi0_r0_arlen_q axi0_arlen\)\)/, 'queue-head burst-length read-data captures r0 raw ARLEN on request');
+    like($isf, qr/\(rule axi0_r1_burst_length_capture axi0_r1_request\s+\(axi0_r1_arlen_q axi0_arlen\)\)/, 'queue-head burst-length read-data captures r1 raw ARLEN on request');
+    like(
+        $isf,
+        qr/\(rule axi0_r0_read_data_capture axi0_r0_complete\s+\(axi0_r0_last_rdata axi0_rdata\)\s+\(axi0_r0_last_rresp axi0_rresp\)\)/,
+        'queue-head burst-length read-data still guards r0 payload capture with generated queue-head last-beat completion',
+    );
+    unlike($isf, qr/\bexpected_beats_q\b/, 'queue-head report-only burst-length read-data does not generate expected-beat storage');
+    unlike($isf, qr/\bread_beat_count_q\b/, 'queue-head report-only burst-length read-data does not generate beat-count storage');
+    like($fsm, qr/\(-axi0_r0_burst_length_capture\s+<axi0_r0_request\s+\(<- \(axi0_r0_arlen_q axi0_arlen\)\)\s+\)/, 'scheduled .fsm carries r0 queue-head raw ARLEN capture');
+    like($fsm, qr/\(-axi0_r1_burst_length_capture\s+<axi0_r1_request\s+\(<- \(axi0_r1_arlen_q axi0_arlen\)\)\s+\)/, 'scheduled .fsm carries r1 queue-head raw ARLEN capture');
+    like($fsm, qr/\(-axi0_r0_read_data_capture\s+<axi0_r0_complete\s+\(<- \(axi0_r0_last_rdata> axi0_rdata\)\)\s+\(<- \(axi0_r0_last_rresp> axi0_rresp\)\)/, 'scheduled .fsm keeps r0 queue-head last-beat read-data capture assignments');
+
+    assert_same_id_queue_head_response_demux_report($result->{report}{response_demux}, 'generator queue-head burst-length response-demux report');
+    assert_read_data_burst_length_report(
+        $result->{report}{read_data},
+        'generator queue-head burst-length read-data report',
+        'report_only',
+        'generated_queue_head_response_demux_last_beat_completion_pulse',
+    );
+    my $read_policy = $result->{report}{same_id_ordering}{concrete_id_reuse_policy}{read};
+    ok($read_policy->{accepted_same_id_reuse}, 'queue-head burst-length behavior keeps same-ID reuse accepted for the covered shape');
+    ok($read_policy->{generated_queue_behavior}, 'queue-head burst-length behavior keeps generated queue behavior true');
+
+    my $hdl = hdl_for('axi0_capacity_status', $fsm);
+    like($hdl, qr/\binput\s+(?:wire\s+)?\[7:0\]\s+axi0_arlen\b/, 'SystemVerilog exposes generated ARLEN input for queue-head burst-length capture');
+    like($hdl, qr/\breg\s+\[7:0\]\s+axi0_r0_arlen_q\b/, 'SystemVerilog declares r0 queue-head raw ARLEN storage');
+    like($hdl, qr/\breg\s+\[7:0\]\s+axi0_r1_arlen_q\b/, 'SystemVerilog declares r1 queue-head raw ARLEN storage');
+    like($hdl, qr/assign\s+axi0_r0_burst_length_capture_en\s*=\s*axi0_r0_request\s*;/, 'SystemVerilog guards r0 queue-head ARLEN capture with request event');
+    like($hdl, qr/assign\s+axi0_r1_burst_length_capture_en\s*=\s*axi0_r1_request\s*;/, 'SystemVerilog guards r1 queue-head ARLEN capture with request event');
+    like($hdl, qr/axi0_r0_arlen_q_next\s*=\s*axi0_arlen\s*;/, 'SystemVerilog captures raw ARLEN into r0 queue-head storage');
+    like($hdl, qr/axi0_r1_arlen_q_next\s*=\s*axi0_arlen\s*;/, 'SystemVerilog captures raw ARLEN into r1 queue-head storage');
+    like($hdl, qr/assign\s+axi0_r0_read_data_capture_en\s*=\s*axi0_r0_complete\s*;/, 'SystemVerilog keeps r0 queue-head read-data capture on generated last-beat completion');
+    like($hdl, qr/axi0_r0_last_rdata_next\s*=\s*axi0_rdata\s*;/, 'SystemVerilog still captures queue-head last-beat RDATA');
+    like($hdl, qr/axi0_r0_last_rresp_next\s*=\s*axi0_rresp\s*;/, 'SystemVerilog still captures queue-head last-beat RRESP');
+};
+
 subtest 'last-beat read-data contract generates capture behavior' => sub {
     my $result = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_read_data_last_beat());
     my $isf = $result->{generated_ial1}{text};
@@ -1281,11 +1328,11 @@ subtest 'malformed contract objects fail closed and no direct lower-to-fsm entry
             $c->{read_data} = sample_contract_with_read_data_multi_beat()->{read_data};
             $c;
         }, qr/read_data\.read can consume concrete same-ID queue-head response_demux\.read only for generated read single-beat queue-head demux with capture_scope single-beat or generated read burst-last queue-head demux with capture_scope last-beat/],
-        ['last-beat read data consuming same-ID queue-head demux with burst length', sub {
-            my $c = sample_contract_with_same_id_queue_head_response_demux();
-            $c->{read_data} = sample_contract_with_read_data_burst_length()->{read_data};
+        ['last-beat read data consuming same-ID queue-head demux with runtime burst-length validation', sub {
+            my $c = sample_contract_with_same_id_read_last_beat_queue_head_burst_length();
+            $c->{read_data}{read}{burst_length}{validation} = 'runtime-assertion';
             $c;
-        }, qr/read_data\.read queue-head last-beat capture does not support burst_length metadata/],
+        }, qr/read_data\.read queue-head burst_length runtime validation is not supported/],
         ['read data unsupported family', sub { my $c = sample_contract_with_read_response_demux(); $c->{read_data} = { write => {} }; $c }, qr/read_data has unsupported family 'write'/],
         ['read data without read response demux', sub {
             my $c = sample_contract_with_read_auto_id_lifecycle();
@@ -1608,6 +1655,22 @@ sub sample_contract_with_same_id_read_last_beat_queue_head_read_data {
                 },
             ],
         },
+    };
+    return $contract;
+}
+
+sub sample_contract_with_same_id_read_last_beat_queue_head_burst_length {
+    my $contract = sample_contract_with_same_id_read_last_beat_queue_head_read_data();
+    $contract->{intent_name} = 'axi_manager_capacity_status_read_last_beat_same_id_queue_head_burst_length';
+    $contract->{source}{object_id} = 'axi-manager-capacity-status-read-last-beat-same-id-queue-head-burst-length';
+    $contract->{read_data}{read}{burst_length} = {
+        source       => 'arlen',
+        signal       => 'axi0_arlen',
+        signal_width => 8,
+        encoding     => 'axlen-plus-one',
+        capture      => 'request',
+        max_beats    => 16,
+        validation   => 'report-only',
     };
     return $contract;
 }
@@ -2135,15 +2198,18 @@ sub assert_rlast_report_prose_alignment {
     ok($id_residue, "$owner reports AXI ID/order unsupported residue");
     like(
         $id_residue->{detail},
-        qr/generated burst-last RLAST response-demux completion, structural last-beat read-data metadata, generated last-beat read-data RDATA\/RRESP capture, generated last-beat read-data RDATA\/RRESP capture from generated read burst-last concrete same-ID queue-head response-demux, generated raw-ARLEN burst-length capture, explicit runtime-assertion beat-count\/RLAST validation, generated multi-beat read-data output-bank behavior for the covered auto-ID multi-beat-by-RID subset, bounded burst payload\/output behavior through that per-beat output bank, and generated scalar RRESP aggregation behavior are supported/,
-        "$owner reports generated burst-last, last-beat, queue-head last-beat, raw ARLEN, beat-count, multi-beat output-bank, bounded burst output, and scalar aggregation behavior as supported",
+        qr/generated burst-last RLAST response-demux completion, structural last-beat read-data metadata, generated last-beat read-data RDATA\/RRESP capture, generated last-beat read-data RDATA\/RRESP capture from generated read burst-last concrete same-ID queue-head response-demux, generated raw-ARLEN burst-length capture including report-only generated read burst-last concrete same-ID queue-head read-data contracts, explicit runtime-assertion beat-count\/RLAST validation for non-queue-head read-data contracts, generated multi-beat read-data output-bank behavior for the covered auto-ID multi-beat-by-RID subset, bounded burst payload\/output behavior through that per-beat output bank, and generated scalar RRESP aggregation behavior are supported/,
+        "$owner reports generated burst-last, last-beat, queue-head last-beat, queue-head report-only raw ARLEN, non-queue-head beat-count, multi-beat output-bank, bounded burst output, and scalar aggregation behavior as supported",
     );
     my $stale_metadata = join('', 'report-only burst-last ', 'RLAST response-demux metadata');
     my $stale_tracking = join('', 'generated burst/last-beat tracking ', 'remain outside');
     my $stale_queue_head_read_data = 'read-data consumption of burst-last or multi-beat concrete same-ID queue-head demux';
+    my $stale_queue_head_burst_length = 'burst-length metadata with queue-head read-data';
     ok(index($id_residue->{detail}, $stale_metadata) < 0, "$owner removes stale report-only residue prose");
     ok(index($id_residue->{detail}, $stale_tracking) < 0, "$owner removes stale burst tracking residue prose");
     ok(index($id_residue->{detail}, $stale_queue_head_read_data) < 0, "$owner removes stale burst-last queue-head read-data residue prose");
+    ok(index($id_residue->{detail}, $stale_queue_head_burst_length) < 0, "$owner removes stale queue-head burst-length residue prose");
+    ok(index($id_residue->{detail}, 'queue-head runtime burst-length beat-count/RLAST validation') >= 0, "$owner keeps queue-head runtime burst-length validation as residue");
 }
 
 sub assert_read_data_report {
@@ -2264,8 +2330,9 @@ sub assert_read_data_last_beat_report {
 }
 
 sub assert_read_data_burst_length_report {
-    my ($read_data, $owner) = @_;
-    my $validation = $_[2] // 'report_only';
+    my ($read_data, $owner, $validation, $expected_completion_validity) = @_;
+    $validation //= 'report_only';
+    $expected_completion_validity //= 'generated_read_response_demux_last_beat_completion_pulse';
     my $runtime_validation = $validation eq 'runtime_assertion';
 
     is($read_data->{mode}, 'bounded_last_beat_read_data_contract', "$owner marks bounded last-beat read-data contract mode");
@@ -2273,7 +2340,7 @@ sub assert_read_data_burst_length_report {
     my $read = $read_data->{read};
     is($read->{capture_scope}, 'last_beat', "$owner reports last-beat capture scope");
     is($read->{completion_source}, 'response_demux', "$owner reports response-demux completion source");
-    is($read->{completion_validity}, 'generated_read_response_demux_last_beat_completion_pulse', "$owner reports generated last-beat demux pulse validity");
+    is($read->{completion_validity}, $expected_completion_validity, "$owner reports generated last-beat demux pulse validity");
     is($read->{data_signal}, 'axi0_rdata', "$owner reports RDATA signal");
     is($read->{status_signal}, 'axi0_rresp', "$owner reports RRESP signal");
     is($read->{status_policy}, 'last_beat', "$owner reports last-beat status policy");

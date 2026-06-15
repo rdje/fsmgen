@@ -30,7 +30,11 @@ The implemented boundary is intentionally narrow:
 - `read-data.read.completion-source response-demux`;
 - `read-data.read.status-policy last-beat`;
 - `read-data.read.interleaving last-beat-by-rid`;
-- no queue-head `burst-length` metadata in this slice.
+- no queue-head `burst-length` metadata in the `.115` slice.
+
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.117` later ships report-only
+queue-head raw-`ARLEN` burst-length capture for this same bounded shape; see
+[AXI_IAL2_MANAGER_QUEUE_HEAD_BURST_LENGTH_BEHAVIOR](AXI_IAL2_MANAGER_QUEUE_HEAD_BURST_LENGTH_BEHAVIOR.md).
 
 FSMGen derives read-data transaction coverage from the generated queue-head
 read group and generated completion signals, not from auto-ID transaction
@@ -125,15 +129,15 @@ Existing report values remain stable:
 
 The static-rule and unsupported-residue prose now list generated read
 burst-last queue-head last-beat read-data as supported, while keeping
-multi-beat queue-head read-data and queue-head `burst-length` metadata
-deferred.
+multi-beat queue-head read-data and queue-head runtime burst-length
+beat-count/RLAST validation deferred.
 
 ## Deferred
 
 The slice still fail-closes or defers:
 
 - multi-beat queue-head read-data;
-- queue-head read-data with `burst-length` metadata;
+- queue-head burst-length runtime validation;
 - deeper or multiple duplicate concrete-ID groups;
 - mixed same-family auto-ID plus concrete queue-head response demux;
 - generalized per-ID queues;
