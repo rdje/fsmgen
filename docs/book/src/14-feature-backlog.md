@@ -5219,6 +5219,24 @@ The next implementation is limited to scalar `capture_scope last-beat`, no
 queue-head groups. Report-only raw-`ARLEN` and runtime beat-count/`RLAST`
 multi-group variants remain separate deferred owners.
 
+Multi-group queue-head last-beat read-data behavior:
+[AXI_IAL2_MANAGER_MULTI_GROUP_QUEUE_HEAD_LAST_BEAT_READ_DATA_BEHAVIOR](../../AXI_IAL2_MANAGER_MULTI_GROUP_QUEUE_HEAD_LAST_BEAT_READ_DATA_BEHAVIOR.md)
+ships `.130` for
+`ppif/axi_manager_capacity_status_read_multi_group_last_beat_same_id_queue_head_read_data.ppif`.
+The generated path flattens the `RID` `3` `r0`/`r1` group and the `RID` `5`
+`r2`/`r3` group into scalar last-beat read-data coverage, emits generated
+`RDATA`/`RRESP` inputs, per-transaction last-beat data/status outputs, and
+scalar capture rules guarded by generated queue-head last-beat completion
+pulses. The report records `capture_scope: last_beat`,
+`completion_validity:
+generated_queue_head_response_demux_last_beat_completion_pulse`,
+`burst_length_source: rlast_only`, `burst_length_validation: not_generated`,
+transactions `r0`, `r1`, `r2`, `r3`, eight generated scalar outputs, four
+generated capture rules, `response_demux.residue: read_data_interleaving,
+bursts`, and the scalar last-beat read-data residue set. Report-only
+raw-`ARLEN` and runtime-validation multi-group scalar variants remain separate
+deferred owners.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same

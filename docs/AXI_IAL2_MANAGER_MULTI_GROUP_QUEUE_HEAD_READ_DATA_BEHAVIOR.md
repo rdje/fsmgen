@@ -87,13 +87,17 @@ The response-demux-only multi-group sample remains supported and still has no
 
 - `ppif/axi_manager_capacity_status_read_multi_group_same_id_queue_head_response_demux.ppif`
 
+Scalar last-beat read-data over multiple generated queue-head groups ships in
+the later `.130` behavior note:
+
+- `docs/AXI_IAL2_MANAGER_MULTI_GROUP_QUEUE_HEAD_LAST_BEAT_READ_DATA_BEHAVIOR.md`
+
 ## Deferred
 
 Still deferred:
 
-- Last-beat-only read-data over multiple queue groups.
-- Report-only or runtime-only multi-group variants outside the selected
-  multi-beat output-bank shape.
+- Report-only raw-`ARLEN` or runtime-validation scalar last-beat multi-group
+  variants outside the selected no-`burst_length` scalar shape.
 - Same-family mixed `auto_id_lifecycle` plus concrete queue-head demux.
 - Deeper concrete same-ID queue groups.
 - Write-family multi-group queue-head behavior.

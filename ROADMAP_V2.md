@@ -1417,14 +1417,16 @@ flattening the `RID` `3` and `RID` `5` generated queue groups into
 multi-beat read-data coverage with per-transaction output banks, valid masks,
 length outputs, scalar `RRESP` aggregation, raw `ARLEN` capture, and
 beat-count/`RLAST` runtime validation. Audit `.129` selected `.130`,
-generated multi-group queue-head last-beat read-data capture. The next
-implementation boundary is scalar `capture_scope last-beat`, no
-`burst_length` metadata, complete per-transaction `data_output`/`status_output`
-bindings, and two or more generated read burst-last depth-2 queue-head
-groups. Report-only raw-`ARLEN` and runtime beat-count/`RLAST` multi-group
-variants, same-family auto-ID, deeper queues, write or read single-beat
-multi-group queue-head behavior, packed outputs, direct backend, and VHDL
-remain deferred.
+generated multi-group queue-head last-beat read-data capture. `.130` now ships
+that behavior for
+`ppif/axi_manager_capacity_status_read_multi_group_last_beat_same_id_queue_head_read_data.ppif`,
+flattening the `RID` `3` and `RID` `5` generated queue groups into scalar
+last-beat read-data coverage with generated `RDATA`/`RRESP` inputs,
+per-transaction last-beat data/status outputs, and capture rules guarded by
+generated queue-head last-beat completion pulses. Report-only raw-`ARLEN` and
+runtime beat-count/`RLAST` multi-group scalar variants, same-family auto-ID,
+deeper queues, write or read single-beat multi-group queue-head behavior,
+packed outputs, direct backend, and VHDL remain deferred.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.
