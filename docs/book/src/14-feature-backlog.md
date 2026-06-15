@@ -5173,6 +5173,19 @@ audit-only: generated read-data over multiple queue groups remains deferred
 until the audit chooses whether the first behavior should cover last-beat,
 multi-beat, or a narrower prerequisite.
 
+Multi-group queue-head read-data readiness audit:
+[AXI_IAL2_MANAGER_MULTI_GROUP_QUEUE_HEAD_READ_DATA_READINESS_AUDIT](../../AXI_IAL2_MANAGER_MULTI_GROUP_QUEUE_HEAD_READ_DATA_READINESS_AUDIT.md)
+selects `.127`, generated multi-group queue-head multi-beat read-data
+output-bank behavior. The audit found the current blocker is the exact-one
+group guard in read-data response-demux coverage, while response-state lookup,
+matched-read-beat matching, output-bank generation, beat-count/`RLAST`
+validation, valid-mask and length outputs, and scalar `RRESP` aggregation
+already iterate or name artifacts by transaction. `.127` must widen coverage
+only for the selected multi-beat output-bank shape; last-beat-only
+multi-group read-data, report-only/runtime-only variants, deeper queues,
+same-family auto-ID plus concrete queue-head demux, direct backend lowering,
+and VHDL remain deferred.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same

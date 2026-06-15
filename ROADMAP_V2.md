@@ -1410,11 +1410,16 @@ and generated queue reports for both covered groups while preserving the
 existing family-wide admitted-request onehot boundary. Read-data over multiple
 groups, same-family auto-ID, deeper queues, write or read single-beat
 multi-group queue-head behavior, packed outputs, direct backend, and VHDL
-remain deferred. Selector `.125` now chooses `.126`, readiness audit for
-read-data coverage over multiple generated read burst-last concrete same-ID
-queue-head groups, before any behavior change. Generated read-data over
-multiple groups remains deferred until that audit selects an exact
-implementation boundary.
+remain deferred. Selector `.125` chose `.126`, readiness audit for read-data
+coverage over multiple generated read burst-last concrete same-ID queue-head
+groups. Audit `.126` now selects `.127`, generated multi-group queue-head
+multi-beat read-data output-bank behavior. The next behavior owner must
+flatten all selected generated queue groups into read-data coverage only for
+the selected multi-beat output-bank shape, with one generated last-beat
+completion signal per transaction and matched-read-beat lookup by transaction.
+Last-beat-only multi-group read-data, report-only/runtime-only variants,
+same-family auto-ID, deeper queues, write or read single-beat multi-group
+queue-head behavior, packed outputs, direct backend, and VHDL remain deferred.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.
