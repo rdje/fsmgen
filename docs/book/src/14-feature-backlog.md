@@ -5210,6 +5210,15 @@ deeper queues, same-family auto-ID plus concrete queue-head demux,
 write/read-single-beat multi-group queue-head behavior, direct backend
 lowering, and VHDL remain deferred.
 
+Multi-group queue-head last-beat read-data readiness:
+[AXI_IAL2_MANAGER_MULTI_GROUP_QUEUE_HEAD_LAST_BEAT_READ_DATA_READINESS_AUDIT](../../AXI_IAL2_MANAGER_MULTI_GROUP_QUEUE_HEAD_LAST_BEAT_READ_DATA_READINESS_AUDIT.md)
+selects `.130`, generated multi-group queue-head last-beat read-data capture.
+The next implementation is limited to scalar `capture_scope last-beat`, no
+`burst_length` metadata, and complete per-transaction `data_output` and
+`status_output` bindings over two or more generated read burst-last depth-2
+queue-head groups. Report-only raw-`ARLEN` and runtime beat-count/`RLAST`
+multi-group variants remain separate deferred owners.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same
