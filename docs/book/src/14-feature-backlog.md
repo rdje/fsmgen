@@ -5283,6 +5283,18 @@ Because validation is report-only, expected-beat storage, beat counters, and
 beat-count/`RLAST` assertions remain absent; runtime validation for the
 multi-group scalar shape remains deferred.
 
+Post multi-group queue-head burst-length selector:
+[AXI_IAL2_MANAGER_POST_MULTI_GROUP_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTI_GROUP_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
+selects `.134`, readiness audit for generated runtime-validation multi-group
+queue-head scalar last-beat read-data. The audit comes before behavior changes
+because the next generated shape would combine scalar final outputs with
+expected-beat storage, matched-beat counters, and beat-count/`RLAST`
+assertions for every transaction across multiple queue groups. The current
+evidence is split across `.132` report-only scalar multi-group capture, `.119`
+one-group scalar runtime validation, and `.127` multi-group multi-beat runtime
+validation, so `.134` must prove the scalar multi-group composition boundary
+before implementation.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same

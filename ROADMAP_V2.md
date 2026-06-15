@@ -1435,7 +1435,11 @@ multi-group queue-head behavior, packed outputs, direct backend, and VHDL
 remain deferred.
 Selector `.131` selected `.132`, generated report-only raw-`ARLEN`
 burst-length capture for the multi-group queue-head scalar last-beat read-data
-shape, and `.132` completed that implementation boundary.
+shape, and `.132` completed that implementation boundary. Selector `.133`
+selected `.134`, readiness audit for generated runtime-validation multi-group
+queue-head scalar last-beat read-data, before any behavior slice adds
+expected-beat storage, matched-beat counters, and beat-count/`RLAST`
+assertions across multiple queue groups.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.
