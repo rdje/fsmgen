@@ -1,6 +1,6 @@
 ---
 id: ial2-feature-completeness-next-slice
-title: IAL2 feature completeness next slice is multiple queue-head response-demux group readiness
+title: IAL2 feature completeness next slice is generated multiple queue-head response-demux groups
 answers:
   - "what is the next IAL2 feature completeness slice?"
   - "what is the next IAL2 PNT task?"
@@ -21,13 +21,14 @@ answers:
   - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.121?"
   - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.122?"
   - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.123?"
+  - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.124?"
   - "what is the next AXI manager slice?"
   - "what is the next AXI manager task after same-ID queue behavior implementation?"
 date: 2026-06-15
 status: current
 tags: [ial2, axi, manager, same-id, concrete-id, ordering, feature-completeness, task-tree]
-evidence: docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; docs/AXI_IAL2_MANAGER_POST_QUEUE_HEAD_MULTI_BEAT_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_QUEUE_HEAD_MULTI_BEAT_READ_DATA_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_POST_QUEUE_HEAD_RUNTIME_VALIDATION_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_QUEUE_HEAD_RUNTIME_VALIDATION_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_MULTI_BEAT_READ_DATA_OUTPUT_BANK_BEHAVIOR_FIRST_SLICE.md; docs/book/src/14-feature-backlog.md; README.md; ROADMAP_V2.md; docs/knowledge/ial2-common-vs-profile-factoring.md
-reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.122|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.123|queue-head multi-beat|multiple independent read burst-last depth-2 concrete same-ID queue-head response-demux groups|read_multi_beat_same_id_queue_head_read_data|per_beat_output_bank|generated_queue_head_response_demux_last_beat_completion_pulse|common semantic core' docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md docs/AXI_IAL2_MANAGER_POST_QUEUE_HEAD_MULTI_BEAT_NEXT_SLICE_SELECTION.md docs/AXI_IAL2_MANAGER_QUEUE_HEAD_MULTI_BEAT_READ_DATA_BEHAVIOR.md docs/book/src/14-feature-backlog.md README.md ROADMAP_V2.md docs/knowledge/ial2-common-vs-profile-factoring.md
+evidence: docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; docs/AXI_IAL2_MANAGER_MULTI_GROUP_QUEUE_HEAD_RESPONSE_DEMUX_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_POST_QUEUE_HEAD_MULTI_BEAT_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_QUEUE_HEAD_MULTI_BEAT_READ_DATA_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_POST_QUEUE_HEAD_RUNTIME_VALIDATION_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_QUEUE_HEAD_RUNTIME_VALIDATION_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_MULTI_BEAT_READ_DATA_OUTPUT_BANK_BEHAVIOR_FIRST_SLICE.md; docs/book/src/14-feature-backlog.md; README.md; ROADMAP_V2.md; docs/knowledge/ial2-common-vs-profile-factoring.md
+reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.123|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.124|multi-group queue-head response-demux|multiple independent read burst-last depth-2 concrete same-ID queue-head response-demux groups|read_multi_beat_same_id_queue_head_read_data|per_beat_output_bank|generated_queue_head_response_demux_last_beat_completion_pulse|family-wide admitted-request onehot|common semantic core' docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md docs/AXI_IAL2_MANAGER_MULTI_GROUP_QUEUE_HEAD_RESPONSE_DEMUX_READINESS_AUDIT.md docs/book/src/14-feature-backlog.md README.md ROADMAP_V2.md docs/knowledge/ial2-common-vs-profile-factoring.md
 ---
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.106` shipped the first generated
@@ -93,11 +94,14 @@ per-transaction valid masks and length outputs, scalar `RRESP` aggregation,
 sample. `IAL2-FEATURE-COMPLETENESS-FRONTIER.122` selected
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.123`, readiness audit for multiple
 independent read burst-last depth-2 concrete same-ID queue-head response-demux
-groups. `.123` is audit-only and response-demux-only: no read-data, no
-same-family auto-ID, no deeper queues, no packed outputs, no direct backend,
-and no VHDL. Read-data over multiple groups, deeper groups, same-family mixed
-auto-ID, packed burst-vector outputs, alternate payload assembly, direct
-backend, and VHDL remain deferred.
+groups. `IAL2-FEATURE-COMPLETENESS-FRONTIER.123` selected
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.124`, generated read burst-last
+response-demux-only queue-head behavior for two or more duplicate concrete
+read-ID groups, each exactly two transactions at computed depth `2`. `.124`
+must preserve the existing family-wide admitted-request onehot boundary and
+must not claim read-data over multiple groups, same-family auto-ID, deeper
+queues, write-family or single-beat multi-group behavior, packed outputs,
+direct backend, or VHDL.
 
 The IAL2 factoring stance remains that common constructs should be promoted
 only after compatible reuse is proven across multiple profiles.

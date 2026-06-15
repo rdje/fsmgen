@@ -26,7 +26,10 @@ reports, diagnostics, and lowerer behavior can scale from one duplicate
 concrete read-ID group to multiple independent groups without changing the
 payload contract.
 
-`.123` is audit-only. It is read-family, burst-last, response-demux-only, and
-depth-2 only. It explicitly defers read-data over multiple groups, deeper
-queues, same-family mixed auto-ID plus concrete queue-head demux, write-family
+`.123` was audit-only. It selected
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.124`, generated read burst-last
+response-demux-only queue-head behavior for multiple duplicate concrete read-ID
+groups, while preserving the existing family-wide admitted-request onehot
+boundary. It explicitly defers read-data over multiple groups, deeper queues,
+same-family mixed auto-ID plus concrete queue-head demux, write-family
 multi-group behavior, packed burst-vector outputs, direct backend, and VHDL.

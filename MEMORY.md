@@ -10,9 +10,9 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `HEAD after commit` — `IAL2-FEATURE-COMPLETENESS-FRONTIER.122: select multiple queue-head group audit`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.123` pending; next action is auditing readiness for multiple independent read burst-last depth-2 concrete same-ID queue-head response-demux groups.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.122`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.121`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.120`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.119`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.118`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.117`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.116`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.115`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.114`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.113`. Older completed slices are in the task tree and git history.
+- latest_commit: `HEAD after commit` — `IAL2-FEATURE-COMPLETENESS-FRONTIER.123: audit multiple queue-head groups`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.124` pending; next action is implementing generated multiple read burst-last depth-2 concrete same-ID queue-head response-demux groups under the existing family-wide admitted-request boundary.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.123`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.122`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.121`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.120`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.119`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.118`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.117`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.116`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.115`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.114`. Older completed slices are in the task tree and git history.
 - in_flight_uncommitted: none after this commit; unrelated untracked `fx/` intentionally left alone.
 - blockers: none.
 
