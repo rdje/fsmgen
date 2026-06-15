@@ -7,11 +7,12 @@ answers:
   - "which PPIF sample covers queue-head burst-length capture?"
   - "does queue-head burst-length support runtime validation?"
   - "what is generated for axi0_arlen in queue-head read-data?"
+  - "what comes after queue-head burst-length capture?"
 date: 2026-06-15
 status: current
 tags: [ial2, axi, manager, read-data, queue-head, burst-length, arlen]
-evidence: docs/AXI_IAL2_MANAGER_QUEUE_HEAD_BURST_LENGTH_BEHAVIOR.md; ppif/axi_manager_capacity_status_read_last_beat_same_id_queue_head_burst_length.ppif; perl/FSM/IAL2/ProtocolIntent/AxiManagerCapacityStatus.pm; t/1437-axi-ial2-manager-capacity-status-generator.t; t/1436-ial2-ppif-parser-cli.t; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md
-reverify: env -u PERL5LIB ./bin/fsmgen --emit-schedule-json ppif/axi_manager_capacity_status_read_last_beat_same_id_queue_head_burst_length.ppif && rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.117|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.118|queue-head burst-length|axi0_arlen|generated_burst_length_capture|queue-head runtime burst-length' docs/AXI_IAL2_MANAGER_QUEUE_HEAD_BURST_LENGTH_BEHAVIOR.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md README.md ROADMAP_V2.md docs/book/src/14-feature-backlog.md
+evidence: docs/AXI_IAL2_MANAGER_QUEUE_HEAD_BURST_LENGTH_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md; ppif/axi_manager_capacity_status_read_last_beat_same_id_queue_head_burst_length.ppif; perl/FSM/IAL2/ProtocolIntent/AxiManagerCapacityStatus.pm; t/1437-axi-ial2-manager-capacity-status-generator.t; t/1436-ial2-ppif-parser-cli.t; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md
+reverify: env -u PERL5LIB ./bin/fsmgen --emit-schedule-json ppif/axi_manager_capacity_status_read_last_beat_same_id_queue_head_burst_length.ppif && rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.117|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.118|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.119|queue-head burst-length|queue-head runtime|axi0_arlen|generated_burst_length_capture' docs/AXI_IAL2_MANAGER_QUEUE_HEAD_BURST_LENGTH_BEHAVIOR.md docs/AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md README.md ROADMAP_V2.md docs/book/src/14-feature-backlog.md
 ---
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.117` shipped report-only raw-`ARLEN`
@@ -37,3 +38,7 @@ and sets `burst_length_generated_behavior: true`. Queue-head
 `validation runtime-assertion`, queue-head beat-count/RLAST validation,
 multi-beat queue-head read-data, deeper/multiple queue groups, mixed auto-ID,
 direct backend, and VHDL remain deferred.
+
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.118` later selected
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.119`, generated queue-head
+beat-count/RLAST runtime validation, as the next bounded behavior owner.

@@ -5003,8 +5003,17 @@ read_data.read.generated_burst_length_rules:
 Queue-head `validation runtime-assertion`, queue-head beat-count/RLAST
 validation, multi-beat queue-head read-data, deeper or multiple queue groups,
 mixed same-family auto-ID plus concrete queue-head demux, direct backend
-lowering, and VHDL remain deferred. The active frontier is `.118`, the next
-queue-head/read-data selector before broader behavior changes.
+lowering, and VHDL remain deferred.
+
+Post queue-head burst-length selector:
+[AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
+selects generated queue-head beat-count/RLAST runtime validation for the same
+bounded queue-head last-beat read-data shape as `.119`. The selected
+implementation should preserve the queue-head last-beat completion-validity
+report while adding expected-count storage, matched-read-beat counters,
+beat-count rules, and runtime assertions for request-time ARLEN bounds,
+over-count/extra beats, early `RLAST`, and missing final `RLAST`. Multi-beat
+queue-head read-data remains behind that validation slice.
 
 First implementation subset selection:
 [AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION](../../AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md)

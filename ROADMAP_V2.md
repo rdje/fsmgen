@@ -1378,9 +1378,12 @@ generated `axi0_arlen` input, per-transaction raw-`ARLEN` storage,
 request-guarded burst-length capture rules, and the existing queue-head
 last-beat `RDATA`/`RRESP` capture rules. The report keeps
 `generated_queue_head_response_demux_last_beat_completion_pulse` and sets
-`burst_length_generated_behavior: true`. The active frontier advances to
-`.118`, the next queue-head/read-data selector; queue-head runtime
-beat-count/RLAST validation, multi-beat queue-head read-data,
+`burst_length_generated_behavior: true`. Selector `.118` chose `.119`,
+generated queue-head beat-count/RLAST runtime validation for the bounded
+queue-head last-beat read-data shape. The next implementation should count
+matched read beats from raw response event plus concrete `RID` plus active
+queue-head transaction identity while preserving the queue-head last-beat
+completion-validity report; multi-beat queue-head read-data,
 deeper/multiple queue group, mixed auto-ID, backend, or residue expansion
 remain deferred.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
