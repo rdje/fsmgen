@@ -5295,6 +5295,19 @@ one-group scalar runtime validation, and `.127` multi-group multi-beat runtime
 validation, so `.134` must prove the scalar multi-group composition boundary
 before implementation.
 
+Multi-group queue-head runtime-validation readiness:
+[AXI_IAL2_MANAGER_MULTI_GROUP_QUEUE_HEAD_RUNTIME_VALIDATION_READINESS_AUDIT](../../AXI_IAL2_MANAGER_MULTI_GROUP_QUEUE_HEAD_RUNTIME_VALIDATION_READINESS_AUDIT.md)
+selects `.135`, generated runtime-validation multi-group queue-head scalar
+last-beat read-data. The audit found no new IAL1, IAL0, SystemVerilog,
+direct-backend, or VHDL prerequisite. The remaining local implementation
+change is the queue-head read-data coverage gate: expected-beat storage,
+matched-read-beat counters, request-time raw-`ARLEN` capture, and
+beat-count/`RLAST` assertions already iterate by transaction. `.135` must
+preserve `.132` report-only raw-`ARLEN` multi-group scalar behavior, `.130`
+no-`burst_length` multi-group scalar behavior, `.127` multi-group multi-beat
+behavior, `.124` response-demux-only multi-group behavior, and `.119`
+one-group scalar runtime-validation behavior.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same

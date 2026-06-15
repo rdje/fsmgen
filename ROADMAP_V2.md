@@ -1439,7 +1439,11 @@ shape, and `.132` completed that implementation boundary. Selector `.133`
 selected `.134`, readiness audit for generated runtime-validation multi-group
 queue-head scalar last-beat read-data, before any behavior slice adds
 expected-beat storage, matched-beat counters, and beat-count/`RLAST`
-assertions across multiple queue groups.
+assertions across multiple queue groups. Audit `.134` found no new IAL1,
+IAL0, SystemVerilog, direct-backend, or VHDL prerequisite; the remaining local
+blocker is the queue-head read-data coverage gate. It selected `.135`,
+generated runtime-validation multi-group queue-head scalar last-beat
+read-data, as the next implementation owner.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.
