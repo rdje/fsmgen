@@ -4943,10 +4943,12 @@ read_data.read.completion_validity:
 Existing auto-ID last-beat read-data keeps
 `generated_read_response_demux_last_beat_completion_pulse`, and existing
 queue-head single-beat read-data keeps
-`generated_queue_head_response_demux_completion_pulse`. Multi-beat queue-head
-read-data, queue-head runtime beat-count/RLAST validation, deeper or multiple
-queue groups, mixed same-family auto-ID plus concrete queue-head demux,
-generalized per-ID queues, direct backend lowering, and VHDL remain deferred.
+`generated_queue_head_response_demux_completion_pulse`. Queue-head runtime
+beat-count/RLAST validation is shipped by `.119` for the bounded
+queue-head last-beat burst-length shape. Multi-beat queue-head read-data,
+deeper or multiple queue groups, mixed same-family auto-ID plus concrete
+queue-head demux, generalized per-ID queues, direct backend lowering, and
+VHDL remain deferred.
 
 Post queue-head last-beat read-data selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_LAST_BEAT_READ_DATA_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_LAST_BEAT_READ_DATA_NEXT_SLICE_SELECTION.md)
@@ -5000,20 +5002,49 @@ read_data.read.generated_burst_length_rules:
   - axi0_r1_burst_length_capture
 ```
 
-Queue-head `validation runtime-assertion`, queue-head beat-count/RLAST
-validation, multi-beat queue-head read-data, deeper or multiple queue groups,
-mixed same-family auto-ID plus concrete queue-head demux, direct backend
-lowering, and VHDL remain deferred.
+The report-only queue-head burst-length sample does not generate beat-count
+state or runtime assertions. The runtime-validation sibling now ships in
+queue-head runtime validation behavior:
+[AXI_IAL2_MANAGER_QUEUE_HEAD_RUNTIME_VALIDATION_BEHAVIOR](../../AXI_IAL2_MANAGER_QUEUE_HEAD_RUNTIME_VALIDATION_BEHAVIOR.md).
+
+```bash
+./bin/fsmgen --emit-schedule-json ppif/axi_manager_capacity_status_read_last_beat_same_id_queue_head_burst_length_runtime_assertion.ppif
+./bin/fsmgen --quiet --verify-hdl --output /tmp/fsmgen_read_last_beat_same_id_queue_head_burst_length_runtime_assertion.sv ppif/axi_manager_capacity_status_read_last_beat_same_id_queue_head_burst_length_runtime_assertion.ppif
+```
+
+For that sample, the report keeps the queue-head last-beat completion validity
+and adds generated runtime-validation artifacts:
+
+```text
+read_data.read.completion_validity:
+  generated_queue_head_response_demux_last_beat_completion_pulse
+read_data.read.burst_length_validation: runtime_assertion
+read_data.read.beat_count_validation_generated_behavior: true
+read_data.read.beat_count_match_source:
+  response_demux_matched_read_beat
+read_data.read.generated_expected_beat_count_storage:
+  - axi0_r0_expected_beats_q
+  - axi0_r1_expected_beats_q
+read_data.read.generated_beat_count_storage:
+  - axi0_r0_read_beat_count_q
+  - axi0_r1_read_beat_count_q
+```
+
+The matched beat source is the raw read response event plus concrete `RID`
+plus active queue-head transaction identity. It is intentionally not the
+`RLAST`-qualified generated completion pulse, so early/missing `RLAST`
+assertions can reason about every matched beat.
+
+Multi-beat queue-head read-data, deeper or multiple queue groups, mixed
+same-family auto-ID plus concrete queue-head demux, direct backend lowering,
+and VHDL remain deferred.
 
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same
-bounded queue-head last-beat read-data shape as `.119`. The selected
-implementation should preserve the queue-head last-beat completion-validity
-report while adding expected-count storage, matched-read-beat counters,
-beat-count rules, and runtime assertions for request-time ARLEN bounds,
-over-count/extra beats, early `RLAST`, and missing final `RLAST`. Multi-beat
-queue-head read-data remains behind that validation slice.
+bounded queue-head last-beat read-data shape as `.119`; `.119` now ships that
+selected behavior. Multi-beat queue-head read-data remains behind that
+validation slice.
 
 First implementation subset selection:
 [AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION](../../AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md)

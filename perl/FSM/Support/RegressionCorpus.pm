@@ -208,6 +208,17 @@ my @REGRESSION_CORPUS = (
         expected_semantic_source_root_kind => 'fsm',
     },
     {
+        id => 'intent.ppif_axi_manager_capacity_status_read_last_beat_same_id_queue_head_burst_length_runtime_assertion',
+        relpath => 'ppif/axi_manager_capacity_status_read_last_beat_same_id_queue_head_burst_length_runtime_assertion.ppif',
+        family => 'protocol_fixture',
+        classification => 'supported_smoke',
+        coverage => 'ial2_ppif_manager_capacity_status_read_last_beat_same_id_queue_head_burst_length_runtime_assertion_pipeline_cli',
+        source_kind => 'ppif',
+        strict_supported => 1,
+        expected_module_name => 'axi0_capacity_status',
+        expected_semantic_source_root_kind => 'fsm',
+    },
+    {
         id => 'intent.ppif_axi_manager_capacity_status_write_same_id_queue_head_response_demux',
         relpath => 'ppif/axi_manager_capacity_status_write_same_id_queue_head_response_demux.ppif',
         family => 'protocol_fixture',

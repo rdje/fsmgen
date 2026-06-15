@@ -15,6 +15,10 @@ The selected next owner is `IAL2-FEATURE-COMPLETENESS-FRONTIER.119`:
 generated queue-head beat-count/`RLAST` runtime validation for the same
 bounded queue-head last-beat read-data shape.
 
+Implementation outcome: `IAL2-FEATURE-COMPLETENESS-FRONTIER.119` has since
+shipped that selected behavior. The generated behavior note is
+[AXI_IAL2_MANAGER_QUEUE_HEAD_RUNTIME_VALIDATION_BEHAVIOR](AXI_IAL2_MANAGER_QUEUE_HEAD_RUNTIME_VALIDATION_BEHAVIOR.md).
+
 No parser, generator, PPIF sample, support-accounting, test, generated
 artifact, or HDL behavior changes in this selector.
 
@@ -79,8 +83,8 @@ read_data_multi_beat:
   read_data.read.multi_beat_reassembly_generated_behavior: true
 ```
 
-A temporary PPIF variant of the queue-head burst-length sample with
-`(validation runtime-assertion)` still fails closed today with:
+At selector time, a temporary PPIF variant of the queue-head burst-length
+sample with `(validation runtime-assertion)` still failed closed with:
 
 ```text
 AXI manager capacity/status IAL2 contract read_data.read queue-head burst_length runtime validation is not supported in this slice
@@ -100,6 +104,11 @@ The implementation substrate is already close to the needed boundary:
 
 No lower IAL1, IAL0, or SystemVerilog prerequisite is evident for the first
 bounded queue-head runtime-validation slice.
+
+The `.119` implementation removed that explicit guard for the bounded
+queue-head runtime-validation shape and checked in
+`ppif/axi_manager_capacity_status_read_last_beat_same_id_queue_head_burst_length_runtime_assertion.ppif`
+as the support-accounted public sample.
 
 ## Selection
 

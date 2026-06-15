@@ -8,6 +8,10 @@ Task-tree owner: `IAL2-FEATURE-COMPLETENESS-FRONTIER.117`
 
 This slice ships generated raw-`ARLEN` burst-length capture for the bounded
 read burst-last concrete same-ID queue-head last-beat read-data shape.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.119` later ships generated queue-head
+beat-count/`RLAST` runtime validation for the sibling
+`validation runtime-assertion` shape; this document remains the report-only
+burst-length behavior note.
 
 The public support-accounted sample is:
 
@@ -33,8 +37,9 @@ The supported boundary is intentionally narrow:
   `encoding axlen-plus-one`, `capture request`, `max-beats 16`, and
   `validation report-only`.
 
-Queue-head burst-length capture is report-only in this slice. Queue-head
-runtime beat-count/RLAST validation remains deferred.
+Queue-head burst-length capture is report-only in this slice. For the
+runtime-validation sibling, see
+[AXI_IAL2_MANAGER_QUEUE_HEAD_RUNTIME_VALIDATION_BEHAVIOR](AXI_IAL2_MANAGER_QUEUE_HEAD_RUNTIME_VALIDATION_BEHAVIOR.md).
 
 ## Generated Behavior
 
@@ -110,14 +115,13 @@ read_data:
 Existing report values remain stable for the auto-ID burst-length sample,
 queue-head last-beat read-data without burst-length metadata, queue-head
 single-beat read-data, auto-ID last-beat read-data, auto-ID multi-beat
-read-data, and read burst-last queue-head demux.
+read-data, the queue-head runtime-validation burst-length sample, and read
+burst-last queue-head demux.
 
 ## Deferred
 
-The slice still fail-closes or defers:
+The report-only slice still fail-closes or defers:
 
-- queue-head `burst-length` with `validation runtime-assertion`;
-- queue-head beat-count/RLAST runtime validation;
 - multi-beat queue-head read-data;
 - deeper or multiple duplicate concrete-ID groups;
 - mixed same-family auto-ID plus concrete queue-head response demux;

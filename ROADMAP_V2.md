@@ -1380,12 +1380,18 @@ last-beat `RDATA`/`RRESP` capture rules. The report keeps
 `generated_queue_head_response_demux_last_beat_completion_pulse` and sets
 `burst_length_generated_behavior: true`. Selector `.118` chose `.119`,
 generated queue-head beat-count/RLAST runtime validation for the bounded
-queue-head last-beat read-data shape. The next implementation should count
-matched read beats from raw response event plus concrete `RID` plus active
-queue-head transaction identity while preserving the queue-head last-beat
-completion-validity report; multi-beat queue-head read-data,
-deeper/multiple queue group, mixed auto-ID, backend, or residue expansion
-remain deferred.
+queue-head last-beat read-data shape, and implementation `.119` now ships
+that runtime-validation sibling for
+`ppif/axi_manager_capacity_status_read_last_beat_same_id_queue_head_burst_length_runtime_assertion.ppif`.
+It preserves request-bound raw-`ARLEN` capture and queue-head last-beat
+`RDATA`/`RRESP` capture, adds expected-count storage, matched-read-beat
+counters, initialization/increment rules, and runtime assertions for
+request-time `ARLEN` bounds, over-count/extra beats, early `RLAST`, and
+missing final `RLAST`. Matched beats are counted from raw response event plus
+concrete `RID` plus active queue-head transaction identity while preserving
+the queue-head last-beat completion-validity report. Multi-beat queue-head
+read-data, deeper/multiple queue group, mixed auto-ID, backend, or residue
+expansion remain deferred.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.

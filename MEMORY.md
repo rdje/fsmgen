@@ -10,9 +10,9 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `HEAD after commit` — `IAL2-FEATURE-COMPLETENESS-FRONTIER.118: select queue-head runtime validation`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.119` pending; next action is implementing generated queue-head beat-count/RLAST runtime validation for the bounded queue-head last-beat read-data shape.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.118`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.117`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.116`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.115`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.114`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.113`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.112`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.111`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.110`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.109`. Older completed slices are in the task tree and git history.
+- latest_commit: `HEAD after commit` — `IAL2-FEATURE-COMPLETENESS-FRONTIER.119: ship queue-head runtime validation`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.120` pending; next action is auditing and selecting the next AXI queue-head/read-data expansion after generated queue-head runtime validation.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.119`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.118`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.117`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.116`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.115`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.114`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.113`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.112`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.111`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.110`. Older completed slices are in the task tree and git history.
 - in_flight_uncommitted: none after this commit; unrelated untracked `fx/` intentionally left alone.
 - blockers: none.
 
