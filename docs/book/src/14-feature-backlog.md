@@ -5197,10 +5197,18 @@ multi_beat`, `completion_validity:
 generated_queue_head_response_demux_last_beat_completion_pulse`,
 `beat_match_source: response_demux_matched_read_beat`, `output_shape:
 per_beat_output_bank`, and empty `read_data`/`response_demux` residue.
-`.128` is the next selector/audit. Last-beat-only multi-group read-data,
-report-only/runtime-only variants outside this selected multi-beat output-bank
-shape, deeper queues, same-family auto-ID plus concrete queue-head demux,
-direct backend lowering, and VHDL remain deferred.
+
+Post multi-group queue-head read-data selector:
+[AXI_IAL2_MANAGER_POST_MULTI_GROUP_QUEUE_HEAD_READ_DATA_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTI_GROUP_QUEUE_HEAD_READ_DATA_NEXT_SLICE_SELECTION.md)
+selects `.129`, readiness audit for last-beat-only read-data over multiple
+generated read burst-last concrete same-ID queue-head groups. The selector is
+audit-only: the next owner must decide how to isolate scalar last-beat capture
+from report-only/raw-`ARLEN`, runtime-validation-only, and multi-beat
+output-bank variants before any behavior change. Report-only/runtime-only
+multi-group variants outside the selected multi-beat output-bank shape,
+deeper queues, same-family auto-ID plus concrete queue-head demux,
+write/read-single-beat multi-group queue-head behavior, direct backend
+lowering, and VHDL remain deferred.
 
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)

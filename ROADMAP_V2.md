@@ -1416,10 +1416,13 @@ generated multi-group queue-head multi-beat read-data output-bank behavior.
 flattening the `RID` `3` and `RID` `5` generated queue groups into
 multi-beat read-data coverage with per-transaction output banks, valid masks,
 length outputs, scalar `RRESP` aggregation, raw `ARLEN` capture, and
-beat-count/`RLAST` runtime validation. `.128` is the next selector/audit.
-Last-beat-only multi-group read-data, report-only/runtime-only variants,
-same-family auto-ID, deeper queues, write or read single-beat multi-group
-queue-head behavior, packed outputs, direct backend, and VHDL remain deferred.
+beat-count/`RLAST` runtime validation. Selector `.128` chose `.129`,
+readiness audit for last-beat-only read-data over multiple generated read
+burst-last concrete same-ID queue-head groups. That audit must isolate scalar
+last-beat capture from report-only/runtime burst-length variants before any
+behavior change. Report-only/runtime-only multi-group variants, same-family
+auto-ID, deeper queues, write or read single-beat multi-group queue-head
+behavior, packed outputs, direct backend, and VHDL remain deferred.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.
