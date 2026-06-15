@@ -1427,6 +1427,13 @@ generated queue-head last-beat completion pulses. Report-only raw-`ARLEN` and
 runtime beat-count/`RLAST` multi-group scalar variants, same-family auto-ID,
 deeper queues, write or read single-beat multi-group queue-head behavior,
 packed outputs, direct backend, and VHDL remain deferred.
+Selector `.131` selected `.132`, generated report-only raw-`ARLEN`
+burst-length capture for the multi-group queue-head scalar last-beat read-data
+shape. The next implementation boundary is `burst_length` metadata with
+`source arlen`, signal width `8`, `encoding axlen-plus-one`, `capture
+request`, and `validation report-only` over every generated read burst-last
+depth-2 queue-head group. Runtime beat-count/`RLAST` validation for that
+multi-group scalar shape remains deferred to a separate owner.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.

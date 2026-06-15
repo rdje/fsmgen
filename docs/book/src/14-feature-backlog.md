@@ -5237,6 +5237,16 @@ bursts`, and the scalar last-beat read-data residue set. Report-only
 raw-`ARLEN` and runtime-validation multi-group scalar variants remain separate
 deferred owners.
 
+Post multi-group queue-head last-beat read-data selector:
+[AXI_IAL2_MANAGER_POST_MULTI_GROUP_QUEUE_HEAD_LAST_BEAT_READ_DATA_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTI_GROUP_QUEUE_HEAD_LAST_BEAT_READ_DATA_NEXT_SLICE_SELECTION.md)
+selects `.132`, generated report-only raw-`ARLEN` burst-length capture for
+the multi-group queue-head scalar last-beat read-data shape. The next
+implementation is limited to `burst_length` metadata with `source arlen`,
+signal width `8`, `encoding axlen-plus-one`, `capture request`, and
+`validation report-only` over all generated read burst-last depth-2 queue-head
+groups. Runtime beat-count/`RLAST` validation for the multi-group scalar shape
+remains a separate deferred owner.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same
