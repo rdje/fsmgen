@@ -4906,25 +4906,34 @@ and VHDL remain deferred. `IAL2-FEATURE-COMPLETENESS-FRONTIER.114` selected
 the bounded last-beat queue-head read-data follow-up before any broader
 queue-head/read-data expansion.
 
-Post queue-head read-data selector:
-[AXI_IAL2_MANAGER_POST_QUEUE_HEAD_READ_DATA_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_READ_DATA_NEXT_SLICE_SELECTION.md)
-selects `IAL2-FEATURE-COMPLETENESS-FRONTIER.115`, generated last-beat
-`RDATA`/`RRESP` capture for the bounded read burst-last concrete same-ID
-queue-head demux shape. The selected follow-up reuses the already generated
-`RLAST`-qualified queue-head completion pulses from:
+Queue-head last-beat read-data behavior:
+[AXI_IAL2_MANAGER_QUEUE_HEAD_LAST_BEAT_READ_DATA_BEHAVIOR](../../AXI_IAL2_MANAGER_QUEUE_HEAD_LAST_BEAT_READ_DATA_BEHAVIOR.md)
+ships generated last-beat `RDATA`/`RRESP` capture for the bounded read
+burst-last concrete same-ID queue-head demux shape:
+
+```bash
+./bin/fsmgen --emit-schedule-json ppif/axi_manager_capacity_status_read_last_beat_same_id_queue_head_read_data.ppif
+./bin/fsmgen --quiet --verify-hdl --output /tmp/fsmgen_read_last_beat_same_id_queue_head_read_data.sv ppif/axi_manager_capacity_status_read_last_beat_same_id_queue_head_read_data.ppif
+```
+
+The implementation reuses the generated `RID` plus `RLAST` queue-head demux
+from:
 
 ```bash
 ./bin/fsmgen --emit-schedule-json ppif/axi_manager_capacity_status_same_id_queue_head_response_demux.ppif
 ```
 
-and should combine that queue-head demux boundary with the existing scalar
-last-beat read-data capture shape proven by:
+and emits per-transaction last-beat capture rules:
 
-```bash
-./bin/fsmgen --emit-schedule-json ppif/axi_manager_capacity_status_read_data_last_beat.ppif
+```text
+rule axi0_r0_read_data_capture:
+  guard: axi0_r0_complete
+  assignments:
+    axi0_r0_last_rdata <- axi0_rdata
+    axi0_r0_last_rresp <- axi0_rresp
 ```
 
-The selected report value for the future queue-head last-beat path is:
+The queue-head last-beat report value is:
 
 ```text
 read_data.read.completion_validity:
@@ -4935,9 +4944,11 @@ Existing auto-ID last-beat read-data keeps
 `generated_read_response_demux_last_beat_completion_pulse`, and existing
 queue-head single-beat read-data keeps
 `generated_queue_head_response_demux_completion_pulse`. Multi-beat queue-head
-read-data, deeper or multiple queue groups, mixed same-family auto-ID plus
-concrete queue-head demux, generalized per-ID queues, direct backend lowering,
-and VHDL remain deferred.
+read-data, queue-head `burst-length` metadata, deeper or multiple queue
+groups, mixed same-family auto-ID plus concrete queue-head demux, generalized
+per-ID queues, direct backend lowering, and VHDL remain deferred. The active
+frontier `.116` selects the next exact queue-head/read-data owner before any
+broader behavior change.
 
 First implementation subset selection:
 [AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION](../../AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md)

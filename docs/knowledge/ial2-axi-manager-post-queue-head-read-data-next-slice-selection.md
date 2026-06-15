@@ -10,7 +10,7 @@ answers:
 date: 2026-06-15
 status: current
 tags: [ial2, axi, manager, read-data, same-id, queue-head, selector, last-beat]
-evidence: docs/AXI_IAL2_MANAGER_POST_QUEUE_HEAD_READ_DATA_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_QUEUE_HEAD_READ_DATA_BEHAVIOR_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_SAME_ID_QUEUE_BEHAVIOR_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_LAST_BEAT_READ_DATA_BEHAVIOR_FIRST_SLICE.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md
+evidence: docs/AXI_IAL2_MANAGER_POST_QUEUE_HEAD_READ_DATA_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_QUEUE_HEAD_LAST_BEAT_READ_DATA_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_QUEUE_HEAD_READ_DATA_BEHAVIOR_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_SAME_ID_QUEUE_BEHAVIOR_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_LAST_BEAT_READ_DATA_BEHAVIOR_FIRST_SLICE.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md
 reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\.114|IAL2-FEATURE-COMPLETENESS-FRONTIER\.115|generated_queue_head_response_demux_last_beat_completion_pulse|generated_read_burst_last_queue_head_demux|last-beat queue-head read-data' docs/AXI_IAL2_MANAGER_POST_QUEUE_HEAD_READ_DATA_NEXT_SLICE_SELECTION.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md README.md ROADMAP_V2.md docs/book/src/14-feature-backlog.md
 ---
 
@@ -31,6 +31,10 @@ queue-head single-beat completion validity
 (`generated_queue_head_response_demux_completion_pulse`) while introducing a
 queue-head last-beat validity report:
 `generated_queue_head_response_demux_last_beat_completion_pulse`.
+
+That selected `.115` implementation has now shipped in
+`docs/AXI_IAL2_MANAGER_QUEUE_HEAD_LAST_BEAT_READ_DATA_BEHAVIOR.md` and
+`ppif/axi_manager_capacity_status_read_last_beat_same_id_queue_head_read_data.ppif`.
 
 Multi-beat queue-head read-data, deeper or multiple queue groups, mixed
 same-family auto-ID plus concrete queue-head demux, generalized per-ID queues,

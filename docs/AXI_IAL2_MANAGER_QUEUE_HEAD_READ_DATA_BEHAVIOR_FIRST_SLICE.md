@@ -86,15 +86,16 @@ read_data:
 ```
 
 The existing auto-ID read-data path keeps reporting
-`generated_read_response_demux_completion_pulse`.
+`generated_read_response_demux_completion_pulse`. The bounded read
+burst-last queue-head last-beat path is shipped separately in
+`docs/AXI_IAL2_MANAGER_QUEUE_HEAD_LAST_BEAT_READ_DATA_BEHAVIOR.md`.
 
 ## Deferred
 
 The slice still fail-closes or defers:
 
-- read burst-last last-beat queue-head read-data, now selected as `.115`
-  but not yet shipped
 - multi-beat queue-head read-data
+- queue-head read-data with `burst-length` metadata
 - deeper or multiple duplicate concrete-ID groups
 - mixed same-family auto-ID plus concrete queue-head response demux
 - generalized per-ID queues

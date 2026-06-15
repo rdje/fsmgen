@@ -10,9 +10,9 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `HEAD after commit` — `IAL2-FEATURE-COMPLETENESS-FRONTIER.114: select last-beat queue-head read-data`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.115` pending; next action is implementing generated last-beat read-data capture for the bounded read burst-last concrete same-ID queue-head demux shape.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.114`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.113`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.112`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.111`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.110`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.109`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.108`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.107`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.106`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.105`. Older completed slices are in the task tree and git history.
+- latest_commit: `HEAD after commit` — `IAL2-FEATURE-COMPLETENESS-FRONTIER.115: ship last-beat queue-head read-data`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.116` pending; next action is selecting the next AXI queue-head/read-data expansion after generated last-beat queue-head read-data capture.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.115`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.114`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.113`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.112`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.111`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.110`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.109`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.108`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.107`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.106`. Older completed slices are in the task tree and git history.
 - in_flight_uncommitted: none after this commit; unrelated untracked `fx/` intentionally left alone.
 - blockers: none.
 

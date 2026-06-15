@@ -10,8 +10,8 @@ answers:
 date: 2026-06-15
 status: current
 tags: [ial2, ial1, ial0, systemverilog, roadmap, task-tree, feature-completeness]
-evidence: docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; docs/AXI_IAL2_MANAGER_POST_QUEUE_HEAD_READ_DATA_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_QUEUE_HEAD_READ_DATA_BEHAVIOR_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_QUEUE_HEAD_READ_DATA_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_POST_READ_SINGLE_BEAT_SAME_ID_QUEUE_BEHAVIOR_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_READ_SINGLE_BEAT_SAME_ID_QUEUE_HEAD_RESPONSE_DEMUX_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_LAST_BEAT_READ_DATA_BEHAVIOR_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_READ_DATA_BEHAVIOR_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_POST_WRITE_SAME_ID_QUEUE_BEHAVIOR_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_WRITE_SAME_ID_QUEUE_HEAD_RESPONSE_DEMUX_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_SAME_ID_QUEUE_BEHAVIOR_FIRST_SLICE.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md; docs/tasks/R11-DIRECT-STRUCTURAL-VHDL-REROUTING.md
-reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.114|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.115|generated_queue_head_response_demux_last_beat_completion_pulse|generated_queue_head_response_demux_completion_pulse|axi_manager_capacity_status_read_single_beat_same_id_queue_head_read_data|generated_write_bid_queue_head_demux|generated_read_burst_last_queue_head_demux|generated_read_single_beat_queue_head_demux|IAL1/IAL0/SV prerequisites|VHDL backend/reroute' docs/TASK_TREE.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/AXI_IAL2_MANAGER_POST_QUEUE_HEAD_READ_DATA_NEXT_SLICE_SELECTION.md docs/AXI_IAL2_MANAGER_QUEUE_HEAD_READ_DATA_BEHAVIOR_FIRST_SLICE.md docs/AXI_IAL2_MANAGER_LAST_BEAT_READ_DATA_BEHAVIOR_FIRST_SLICE.md README.md ROADMAP_V2.md docs/book/src/14-feature-backlog.md
+evidence: docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; docs/AXI_IAL2_MANAGER_QUEUE_HEAD_LAST_BEAT_READ_DATA_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_POST_QUEUE_HEAD_READ_DATA_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_QUEUE_HEAD_READ_DATA_BEHAVIOR_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_LAST_BEAT_READ_DATA_BEHAVIOR_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_READ_DATA_BEHAVIOR_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_WRITE_SAME_ID_QUEUE_HEAD_RESPONSE_DEMUX_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_SAME_ID_QUEUE_BEHAVIOR_FIRST_SLICE.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md; docs/tasks/R11-DIRECT-STRUCTURAL-VHDL-REROUTING.md
+reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.115|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.116|generated_queue_head_response_demux_last_beat_completion_pulse|generated_queue_head_response_demux_completion_pulse|axi_manager_capacity_status_read_last_beat_same_id_queue_head_read_data|generated_write_bid_queue_head_demux|generated_read_burst_last_queue_head_demux|generated_read_single_beat_queue_head_demux|VHDL backend/reroute' docs/TASK_TREE.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/AXI_IAL2_MANAGER_QUEUE_HEAD_LAST_BEAT_READ_DATA_BEHAVIOR.md README.md ROADMAP_V2.md docs/book/src/14-feature-backlog.md
 ---
 
 The current feature-completeness priority is IAL2 on the
@@ -26,19 +26,18 @@ burst-last depth-2 queue state and queue-head demux for the public sample.
 group of two transactions at computed depth 2. `IAL2-FEATURE-COMPLETENESS-FRONTIER.111`
 selected queue-head read-data readiness as `.112`, `.112` selected `.113`,
 and `.113` shipped generated single-beat read-data capture for bounded read
-single-beat concrete same-ID queue-head demux. The current PNT frontier is
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.115`, generated last-beat read-data
-capture for the bounded read burst-last concrete same-ID queue-head demux
-shape. Generated queue-head read-data capture is already supported for the
-bounded read single-beat shape and reports
-`generated_queue_head_response_demux_completion_pulse`; existing auto-ID
-read-data capture keeps `generated_read_response_demux_completion_pulse`.
-`.115` should add
-`generated_queue_head_response_demux_last_beat_completion_pulse` for the
-queue-head last-beat path while preserving existing auto-ID last-beat and
-queue-head single-beat report values. Deeper/multiple groups, multi-beat
-queue-head read-data, same-family mixed auto-ID, direct backend lowering, and
-VHDL remain deferred.
+single-beat concrete same-ID queue-head demux. `.114` selected `.115`, and
+`.115` shipped generated last-beat read-data capture for the bounded read
+burst-last concrete same-ID queue-head demux shape. The current PNT frontier
+is `IAL2-FEATURE-COMPLETENESS-FRONTIER.116`, the selector for the next
+queue-head/read-data expansion. Generated queue-head read-data capture now
+supports the bounded read single-beat shape and the bounded read burst-last
+last-beat shape, with completion-validity reports
+`generated_queue_head_response_demux_completion_pulse` and
+`generated_queue_head_response_demux_last_beat_completion_pulse`,
+respectively. Deeper/multiple groups, multi-beat queue-head read-data,
+queue-head `burst-length` metadata, same-family mixed auto-ID, direct backend
+lowering, and VHDL remain deferred.
 
 Completed `.47` shipped generated single-beat `RDATA`/`RRESP` capture
 behavior. Completed `.48` selected `.49` because the current public read-data

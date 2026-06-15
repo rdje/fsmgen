@@ -1358,15 +1358,21 @@ queue-head group and completion signals, emits generated `RDATA`/`RRESP`
 inputs plus per-transaction data/status outputs, guards capture rules with the
 generated queue-head completion pulses, and reports
 `generated_queue_head_response_demux_completion_pulse` while preserving the
-existing auto-ID read-data completion-validity report. Selector `.114`
-chooses `.115`, generated last-beat read-data capture for the bounded read
-burst-last concrete same-ID queue-head demux shape. The next implementation
-should reuse the already generated `RLAST`-qualified queue-head completion
-pulses, preserve existing auto-ID last-beat and queue-head single-beat
-read-data report values, and report
-`generated_queue_head_response_demux_last_beat_completion_pulse` for the new
-queue-head last-beat path. Multi-beat queue-head read-data, deeper/multiple
-queue group, mixed auto-ID, backend, or residue expansion remain deferred.
+existing auto-ID read-data completion-validity report. Selector `.114` chose
+`.115`, generated last-beat read-data capture for the bounded read burst-last
+concrete same-ID queue-head demux shape. Implementation `.115` now ships that
+shape for
+`ppif/axi_manager_capacity_status_read_last_beat_same_id_queue_head_read_data.ppif`:
+the generator reuses the already generated `RLAST`-qualified queue-head
+completion pulses, emits generated `RDATA`/`RRESP` inputs plus
+per-transaction last-beat data/status outputs, guards capture rules with the
+generated queue-head last-beat completion pulses, and reports
+`generated_queue_head_response_demux_last_beat_completion_pulse` while
+preserving existing auto-ID last-beat and queue-head single-beat read-data
+report values. Multi-beat queue-head read-data, queue-head `burst-length`
+metadata, deeper/multiple queue group, mixed auto-ID, backend, or residue
+expansion remain deferred. The active frontier is `.116`, the selector for
+the next queue-head/read-data expansion after `.115`.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.
