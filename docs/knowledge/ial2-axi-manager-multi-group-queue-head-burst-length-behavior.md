@@ -10,7 +10,7 @@ date: 2026-06-15
 status: current
 tags: [ial2, axi, manager, queue-head, read-data, same-id, last-beat, multi-group, arlen, burst-length]
 evidence: docs/AXI_IAL2_MANAGER_MULTI_GROUP_QUEUE_HEAD_BURST_LENGTH_BEHAVIOR.md; ppif/axi_manager_capacity_status_read_multi_group_last_beat_same_id_queue_head_burst_length.ppif; perl/FSM/IAL2/ProtocolIntent/AxiManagerCapacityStatus.pm; t/1437-axi-ial2-manager-capacity-status-generator.t; t/1436-ial2-ppif-parser-cli.t; perl/FSM/Support/RegressionCorpus.pm; docs/REGRESSION_CORPUS.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md
-reverify: env -u PERL5LIB ./bin/fsmgen --emit-schedule-json ppif/axi_manager_capacity_status_read_multi_group_last_beat_same_id_queue_head_burst_length.ppif && rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.132|read_multi_group_last_beat_same_id_queue_head_burst_length|generated_burst_length_storage|burst_length_validation: report_only|runtime-validation last-beat read-data over multiple queue groups|AXI_IAL2_MANAGER_MULTI_GROUP_QUEUE_HEAD_BURST_LENGTH_BEHAVIOR' docs/AXI_IAL2_MANAGER_MULTI_GROUP_QUEUE_HEAD_BURST_LENGTH_BEHAVIOR.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md README.md ROADMAP_V2.md docs/book/src/14-feature-backlog.md
+reverify: env -u PERL5LIB ./bin/fsmgen --emit-schedule-json ppif/axi_manager_capacity_status_read_multi_group_last_beat_same_id_queue_head_burst_length.ppif && rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.132|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.135|read_multi_group_last_beat_same_id_queue_head_burst_length|generated_burst_length_storage|burst_length_validation: report_only|runtime-validation sibling|AXI_IAL2_MANAGER_MULTI_GROUP_QUEUE_HEAD_BURST_LENGTH_BEHAVIOR' docs/AXI_IAL2_MANAGER_MULTI_GROUP_QUEUE_HEAD_BURST_LENGTH_BEHAVIOR.md docs/AXI_IAL2_MANAGER_MULTI_GROUP_QUEUE_HEAD_RUNTIME_VALIDATION_BEHAVIOR.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md README.md ROADMAP_V2.md docs/book/src/14-feature-backlog.md
 ---
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.132` shipped generated report-only
@@ -38,5 +38,6 @@ scalar read-data capture rules for `r0`, `r1`, `r2`, and `r3`.
 
 Because validation is report-only, the shape does not generate expected-beat
 storage, matched-beat counters, or beat-count/`RLAST` runtime assertions.
-Runtime-validation multi-group scalar last-beat read-data remains deferred
-behind a separate owner.
+The runtime-validation sibling for the same multi-group scalar shape is now
+shipped by `IAL2-FEATURE-COMPLETENESS-FRONTIER.135` in
+`ppif/axi_manager_capacity_status_read_multi_group_last_beat_same_id_queue_head_burst_length_runtime_assertion.ppif`.

@@ -1266,13 +1266,16 @@ sub _read_data_response_demux_transaction_coverage(%args) {
             && !$args{has_burst_length};
         my $multi_group_last_beat_with_report_only_burst_length = $capture_scope eq 'last-beat'
             && $burst_length_validation eq 'report_only';
+        my $multi_group_last_beat_with_runtime_assertion_burst_length = $capture_scope eq 'last-beat'
+            && $burst_length_validation eq 'runtime_assertion';
         my $multi_group_coverage = $capture_scope eq 'multi-beat'
             || $multi_group_last_beat_without_burst_length
-            || $multi_group_last_beat_with_report_only_burst_length;
+            || $multi_group_last_beat_with_report_only_burst_length
+            || $multi_group_last_beat_with_runtime_assertion_burst_length;
         my $queue_group_diagnostic = $capture_scope eq 'multi-beat'
             ? 'AXI manager capacity/status IAL2 contract read_data.read queue-head multi-beat coverage requires one or more depth-2 concrete same-ID read queue groups in this slice'
-            : ($multi_group_last_beat_without_burst_length || $multi_group_last_beat_with_report_only_burst_length)
-                ? 'AXI manager capacity/status IAL2 contract read_data.read queue-head last-beat coverage requires one or more depth-2 concrete same-ID read queue groups with no burst_length metadata or report-only burst_length metadata in this slice'
+            : ($multi_group_last_beat_without_burst_length || $multi_group_last_beat_with_report_only_burst_length || $multi_group_last_beat_with_runtime_assertion_burst_length)
+                ? 'AXI manager capacity/status IAL2 contract read_data.read queue-head last-beat coverage requires one or more depth-2 concrete same-ID read queue groups with no burst_length metadata, report-only burst_length metadata, or runtime-assertion burst_length metadata in this slice'
                 : 'AXI manager capacity/status IAL2 contract read_data.read queue-head coverage requires exactly one depth-2 concrete same-ID read queue group in this slice';
         confess "$queue_group_diagnostic\n"
             unless ref($groups) eq 'ARRAY' && @$groups;

@@ -1429,10 +1429,14 @@ queue-head scalar last-beat read-data shape:
 `ppif/axi_manager_capacity_status_read_multi_group_last_beat_same_id_queue_head_burst_length.ppif`
 adds the shared generated `axi0_arlen` input, per-transaction raw-`ARLEN`
 storage/capture rules for `r0`, `r1`, `r2`, and `r3`, and preserves scalar
-last-beat data/status capture. Runtime beat-count/`RLAST` multi-group scalar
-validation, same-family auto-ID, deeper queues, write or read single-beat
-multi-group queue-head behavior, packed outputs, direct backend, and VHDL
-remain deferred.
+last-beat data/status capture. Implementation `.135` now ships the
+runtime-validation sibling
+`ppif/axi_manager_capacity_status_read_multi_group_last_beat_same_id_queue_head_burst_length_runtime_assertion.ppif`:
+per-transaction expected-beat storage, matched read-beat counters,
+request-time initialization, raw queue-head matched-beat increment rules, and
+beat-count/`RLAST` assertions are generated for `r0`, `r1`, `r2`, and `r3`
+while scalar final data/status capture stays guarded by generated queue-head
+last-beat completion pulses.
 Selector `.131` selected `.132`, generated report-only raw-`ARLEN`
 burst-length capture for the multi-group queue-head scalar last-beat read-data
 shape, and `.132` completed that implementation boundary. Selector `.133`
@@ -1442,8 +1446,9 @@ expected-beat storage, matched-beat counters, and beat-count/`RLAST`
 assertions across multiple queue groups. Audit `.134` found no new IAL1,
 IAL0, SystemVerilog, direct-backend, or VHDL prerequisite; the remaining local
 blocker is the queue-head read-data coverage gate. It selected `.135`,
-generated runtime-validation multi-group queue-head scalar last-beat
-read-data, as the next implementation owner.
+and `.135` completed that implementation boundary. Same-family auto-ID,
+deeper queues, write or read single-beat multi-group queue-head behavior,
+packed outputs, direct backend, and VHDL remain deferred.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.

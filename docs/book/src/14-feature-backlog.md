@@ -5218,7 +5218,7 @@ That implementation shipped scalar `capture_scope last-beat`, no
 `status_output` bindings over two or more generated read burst-last depth-2
 queue-head groups. Report-only raw-`ARLEN` multi-group scalar capture is now
 shipped by `.132`; runtime beat-count/`RLAST` multi-group scalar validation
-remains a separate deferred owner.
+is shipped by `.135`.
 
 Multi-group queue-head last-beat read-data behavior:
 [AXI_IAL2_MANAGER_MULTI_GROUP_QUEUE_HEAD_LAST_BEAT_READ_DATA_BEHAVIOR](../../AXI_IAL2_MANAGER_MULTI_GROUP_QUEUE_HEAD_LAST_BEAT_READ_DATA_BEHAVIOR.md)
@@ -5235,8 +5235,8 @@ generated_queue_head_response_demux_last_beat_completion_pulse`,
 transactions `r0`, `r1`, `r2`, `r3`, eight generated scalar outputs, four
 generated capture rules, `response_demux.residue: read_data_interleaving,
 bursts`, and the scalar last-beat read-data residue set. Report-only
-raw-`ARLEN` is shipped by `.132`; runtime-validation multi-group scalar
-variants remain separately deferred.
+raw-`ARLEN` is shipped by `.132`; the runtime-validation multi-group scalar
+sibling is shipped by `.135`.
 
 Post multi-group queue-head last-beat read-data selector:
 [AXI_IAL2_MANAGER_POST_MULTI_GROUP_QUEUE_HEAD_LAST_BEAT_READ_DATA_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTI_GROUP_QUEUE_HEAD_LAST_BEAT_READ_DATA_NEXT_SLICE_SELECTION.md)
@@ -5280,8 +5280,8 @@ The report records `capture_scope: last_beat`,
 transactions `r0`, `r1`, `r2`, `r3`, one generated burst-length input, four
 generated raw-`ARLEN` storage elements, and four generated burst-length rules.
 Because validation is report-only, expected-beat storage, beat counters, and
-beat-count/`RLAST` assertions remain absent; runtime validation for the
-multi-group scalar shape remains deferred.
+beat-count/`RLAST` assertions remain absent from this sample; runtime
+validation for the multi-group scalar shape is shipped by `.135`.
 
 Post multi-group queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_MULTI_GROUP_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTI_GROUP_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
@@ -5307,6 +5307,44 @@ preserve `.132` report-only raw-`ARLEN` multi-group scalar behavior, `.130`
 no-`burst_length` multi-group scalar behavior, `.127` multi-group multi-beat
 behavior, `.124` response-demux-only multi-group behavior, and `.119`
 one-group scalar runtime-validation behavior.
+
+Multi-group queue-head runtime-validation behavior:
+[AXI_IAL2_MANAGER_MULTI_GROUP_QUEUE_HEAD_RUNTIME_VALIDATION_BEHAVIOR](../../AXI_IAL2_MANAGER_MULTI_GROUP_QUEUE_HEAD_RUNTIME_VALIDATION_BEHAVIOR.md)
+ships `.135` for
+`ppif/axi_manager_capacity_status_read_multi_group_last_beat_same_id_queue_head_burst_length_runtime_assertion.ppif`.
+The source uses two generated read burst-last depth-2 concrete same-ID
+queue-head groups (`RID` `3` for `r0`/`r1`, `RID` `5` for `r2`/`r3`) and a
+scalar last-beat `read-data` contract with:
+
+```text
+(burst-length
+  (source arlen)
+  (signal axi0_arlen (width 8))
+  (encoding axlen-plus-one)
+  (capture request)
+  (max-beats 16)
+  (validation runtime-assertion))
+```
+
+The generated path preserves scalar final `RDATA`/`RRESP` capture guarded by
+generated queue-head last-beat completion pulses, and adds runtime-validation
+state for every covered transaction: raw-`ARLEN` storage, expected-beat
+storage, matched read-beat counters, request-time initialization rules,
+matched-beat increment rules, and ARLEN-bound/extra-beat/early-`RLAST`/
+missing-final-`RLAST` assertions. The schedule report records
+`burst_length_validation: runtime_assertion`,
+`beat_count_validation_generated_behavior: true`, generated expected-beat and
+beat-count artifacts for `r0`, `r1`, `r2`, and `r3`, and removes
+`generated_beat_count_validation` from `read_data.residue`. Remaining
+read-data residue is limited to `multi_beat_read_data_reassembly`,
+`per_beat_outputs`, and `rresp_aggregation` for this scalar sample.
+
+The `.132` report-only sample remains free of expected-beat storage, counters,
+and assertions; the `.130` no-`burst_length` sample still omits `axi0_arlen`;
+the `.127` multi-group multi-beat sample remains residue-clean; the `.124`
+response-demux-only sample still has no `read_data` section; and the `.119`
+one-group runtime-validation sample keeps its existing two-transaction
+boundary.
 
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)

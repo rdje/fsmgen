@@ -1095,6 +1095,82 @@ subtest 'read-data multi-group queue-head last-beat contract generates raw ARLEN
     unlike($hdl, qr/\bread_beat_count_q\b/, 'SystemVerilog omits beat-count storage for multi-group report-only burst-length');
 };
 
+subtest 'read-data multi-group queue-head last-beat contract generates beat-count and RLAST runtime validation' => sub {
+    my $result = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_same_id_read_multi_group_queue_head_last_beat_burst_length_runtime_assertion());
+    my $isf = $result->{generated_ial1}{text};
+    my $fsm = $result->{generated_ial0}{files}{'axi0_capacity_status.fsm'};
+
+    like($isf, qr/\(rule axi0_r2_response_demux \(& axi0_read_complete \(== axi0_rid 4'd5\) axi0_rlast axi0_read_id5_same_id_issue_order_slot0_r2_q\)/, 'multi-group queue-head runtime validation emits r2 RID5 response-demux rule');
+    like($isf, qr/\(rule axi0_r3_response_demux \(& axi0_read_complete \(== axi0_rid 4'd5\) axi0_rlast axi0_read_id5_same_id_issue_order_slot0_r3_q\)/, 'multi-group queue-head runtime validation emits r3 RID5 response-demux rule');
+    like($isf, qr/\(input axi0_arlen \(width 8\)\)/, 'multi-group queue-head runtime validation declares ARLEN as a generated width-8 input');
+    like($isf, qr/\(var axi0_r2_expected_beats_q \(width 5\)\)/, 'multi-group queue-head runtime validation declares r2 expected-beat storage');
+    like($isf, qr/\(var axi0_r3_expected_beats_q \(width 5\)\)/, 'multi-group queue-head runtime validation declares r3 expected-beat storage');
+    like($isf, qr/\(var axi0_r2_read_beat_count_q \(width 5\)\)/, 'multi-group queue-head runtime validation declares r2 beat-count storage');
+    like($isf, qr/\(var axi0_r3_read_beat_count_q \(width 5\)\)/, 'multi-group queue-head runtime validation declares r3 beat-count storage');
+    like($isf, qr/\(rule axi0_r2_burst_length_capture axi0_r2_request\s+\(axi0_r2_arlen_q axi0_arlen\)\)/, 'multi-group queue-head runtime validation captures r2 raw ARLEN on request');
+    like($isf, qr/\(rule axi0_r2_beat_count_init axi0_r2_request\s+\(axi0_r2_expected_beats_q \(\+ axi0_arlen\[4:0\] 5'd1\)\)\s+\(axi0_r2_read_beat_count_q 0\)\)/, 'multi-group queue-head runtime validation initializes r2 expected count and beat counter on request');
+    like($isf, qr/\(rule axi0_r2_read_beat_count \(& \(& axi0_read_complete \(& \(== axi0_rid 4'd5\) axi0_read_id5_same_id_issue_order_slot0_r2_q\)\) \(! axi0_r2_request\)\)\s+\(axi0_r2_read_beat_count_q \(\+ axi0_r2_read_beat_count_q 5'd1\)\)\)/, 'multi-group queue-head runtime validation increments r2 count on raw matched RID5 queue-head beat');
+    like($isf, qr/\(rule axi0_r3_read_beat_count \(& \(& axi0_read_complete \(& \(== axi0_rid 4'd5\) axi0_read_id5_same_id_issue_order_slot0_r3_q\)\) \(! axi0_r3_request\)\)\s+\(axi0_r3_read_beat_count_q \(\+ axi0_r3_read_beat_count_q 5'd1\)\)\)/, 'multi-group queue-head runtime validation increments r3 count on raw matched RID5 queue-head beat');
+    like(
+        $isf,
+        qr/\(rule axi0_r2_read_data_capture axi0_r2_complete\s+\(axi0_r2_last_rdata axi0_rdata\)\s+\(axi0_r2_last_rresp axi0_rresp\)\)/,
+        'multi-group queue-head runtime validation still guards r2 scalar capture with generated queue-head last-beat completion',
+    );
+    like($isf, qr/axi0 r2 ARLEN is within configured max beats/, 'multi-group queue-head runtime validation emits r2 ARLEN bound assertion');
+    like($isf, qr/axi0 r2 read beat count is below expected count/, 'multi-group queue-head runtime validation emits r2 over-count assertion');
+    like($isf, qr/axi0 r2 RLAST appears only on the expected final read beat/, 'multi-group queue-head runtime validation emits r2 early-RLAST assertion');
+    like($isf, qr/axi0 r2 expected final read beat has RLAST/, 'multi-group queue-head runtime validation emits r2 missing-RLAST assertion');
+    like($fsm, qr/\(-axi0_r2_beat_count_init\s+<axi0_r2_request\s+\(<- \(axi0_r2_expected_beats_q \(\+ axi0_arlen\[4:0\] 5'd1\)\)\)\s+\(<- \(axi0_r2_read_beat_count_q 0\)\)/, 'scheduled .fsm carries r2 multi-group expected-beat initialization');
+    like($fsm, qr/\(-axi0_r2_read_beat_count\s+<\(& \(& axi0_read_complete \(& \(== axi0_rid 4'd5\) axi0_read_id5_same_id_issue_order_slot0_r2_q\)\) \(! axi0_r2_request\)\)\s+\(<- \(axi0_r2_read_beat_count_q \(\+ axi0_r2_read_beat_count_q 5'd1\)\)\)/, 'scheduled .fsm carries r2 multi-group matched-beat increment');
+
+    assert_same_id_queue_head_response_demux_report(
+        $result->{report}{response_demux},
+        'generator multi-group queue-head runtime validation response-demux report',
+        queues => [
+            {
+                concrete_id          => 3,
+                transactions         => [qw(r0 r1)],
+                depth                => 2,
+                dequeue_event_source => 'queue_head_response_demux',
+            },
+            {
+                concrete_id          => 5,
+                transactions         => [qw(r2 r3)],
+                depth                => 2,
+                dequeue_event_source => 'queue_head_response_demux',
+            },
+        ],
+        completion_signals => [qw(axi0_r0_complete axi0_r1_complete axi0_r2_complete axi0_r3_complete)],
+        generated_rules => [qw(axi0_r0_response_demux axi0_r1_response_demux axi0_r2_response_demux axi0_r3_response_demux)],
+        generated_assertions => [qw(
+            axi0_read_response_demux_active_match
+            axi0_r0_r1_read_response_demux_unique_match
+            axi0_r0_r2_read_response_demux_unique_match
+            axi0_r0_r3_read_response_demux_unique_match
+            axi0_r1_r2_read_response_demux_unique_match
+            axi0_r1_r3_read_response_demux_unique_match
+            axi0_r2_r3_read_response_demux_unique_match
+        )],
+    );
+    assert_read_data_burst_length_report(
+        $result->{report}{read_data},
+        'generator multi-group queue-head runtime validation read-data report',
+        'runtime_assertion',
+        'generated_queue_head_response_demux_last_beat_completion_pulse',
+        transactions => [qw(r0 r1 r2 r3)],
+    );
+
+    my $hdl = hdl_for('axi0_capacity_status', $fsm);
+    like($hdl, qr/\binput\s+(?:wire\s+)?\[7:0\]\s+axi0_arlen\b/, 'SystemVerilog exposes generated ARLEN input for multi-group queue-head runtime validation');
+    like($hdl, qr/\breg\s+\[4:0\]\s+axi0_r2_expected_beats_q\b/, 'SystemVerilog declares r2 multi-group expected-beat storage');
+    like($hdl, qr/\breg\s+\[4:0\]\s+axi0_r3_expected_beats_q\b/, 'SystemVerilog declares r3 multi-group expected-beat storage');
+    like($hdl, qr/\breg\s+\[4:0\]\s+axi0_r2_read_beat_count_q\b/, 'SystemVerilog declares r2 multi-group beat-count storage');
+    like($hdl, qr/\breg\s+\[4:0\]\s+axi0_r3_read_beat_count_q\b/, 'SystemVerilog declares r3 multi-group beat-count storage');
+    like($hdl, qr/axi0_r2_expected_beats_q_next\s*=\s*axi0_arlen\[4:0\]\s*\+\s*5'd1\s*;/, 'SystemVerilog initializes r2 multi-group expected count from ARLEN+1');
+    like($hdl, qr/axi0_r2_read_beat_count_q_next\s*=\s*axi0_r2_read_beat_count_q\s*\+\s*5'd1\s*;/, 'SystemVerilog increments r2 multi-group beat count');
+    like($hdl, qr/assign\s+axi0_r2_read_beat_count_en\s*=/, 'SystemVerilog emits r2 multi-group beat-count increment enable');
+};
+
 subtest 'read-data queue-head last-beat contract generates raw ARLEN burst-length capture' => sub {
     my $result = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_same_id_read_last_beat_queue_head_burst_length());
     my $isf = $result->{generated_ial1}{text};
@@ -1694,11 +1770,6 @@ subtest 'malformed contract objects fail closed and no direct lower-to-fsm entry
             $c->{auto_id_lifecycle} = { read => { pool => [0] } };
             $c;
         }, qr/response_demux\.read does not support same-family auto_id_lifecycle plus concrete same-ID queue-head demux/],
-        ['runtime-validation read data over multiple same-ID queue-head groups remains deferred', sub {
-            my $c = sample_contract_with_same_id_read_multi_group_queue_head_last_beat_read_data();
-            $c->{read_data}{read}{burst_length} = sample_contract_with_same_id_read_last_beat_queue_head_burst_length_runtime_assertion()->{read_data}{read}{burst_length};
-            $c;
-        }, qr/read_data\.read queue-head coverage requires exactly one depth-2 concrete same-ID read queue group in this slice/],
         ['read data unsupported family', sub { my $c = sample_contract_with_read_response_demux(); $c->{read_data} = { write => {} }; $c }, qr/read_data has unsupported family 'write'/],
         ['read data without read response demux', sub {
             my $c = sample_contract_with_read_auto_id_lifecycle();
@@ -2131,6 +2202,14 @@ sub sample_contract_with_same_id_read_multi_group_queue_head_last_beat_burst_len
     $contract->{source}{object_id} = 'axi-manager-capacity-status-read-multi-group-last-beat-same-id-queue-head-burst-length';
     $contract->{read_data}{read}{burst_length}
         = sample_contract_with_same_id_read_last_beat_queue_head_burst_length()->{read_data}{read}{burst_length};
+    return $contract;
+}
+
+sub sample_contract_with_same_id_read_multi_group_queue_head_last_beat_burst_length_runtime_assertion {
+    my $contract = sample_contract_with_same_id_read_multi_group_queue_head_last_beat_burst_length();
+    $contract->{intent_name} = 'axi_manager_capacity_status_read_multi_group_last_beat_same_id_queue_head_burst_length_runtime_assertion';
+    $contract->{source}{object_id} = 'axi-manager-capacity-status-read-multi-group-last-beat-same-id-queue-head-burst-length-runtime-assertion';
+    $contract->{read_data}{read}{burst_length}{validation} = 'runtime-assertion';
     return $contract;
 }
 

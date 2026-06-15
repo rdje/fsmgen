@@ -115,7 +115,9 @@ The new sample reports:
 
 The static report prose now names multi-group queue-head last-beat capture with
 report-only raw-`ARLEN` metadata as supported. It keeps runtime-validation
-last-beat read-data over multiple queue groups outside the shipped boundary.
+last-beat read-data over multiple queue groups outside this report-only
+sample's boundary; the runtime-validation sibling is shipped by
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.135`.
 
 ## Preserved Behavior
 
@@ -140,8 +142,6 @@ samples retain their existing behavior:
 
 Still deferred:
 
-- Runtime beat-count/`RLAST` validation for multi-group scalar last-beat
-  read-data.
 - Same-family mixed `auto_id_lifecycle` plus concrete queue-head demux.
 - Deeper concrete same-ID queue groups.
 - Write-family multi-group queue-head behavior.

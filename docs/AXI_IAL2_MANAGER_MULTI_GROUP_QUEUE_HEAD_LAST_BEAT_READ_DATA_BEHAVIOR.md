@@ -45,7 +45,8 @@ No `axi0_arlen`, raw-`ARLEN` storage, expected-beat storage, beat counters, or
 per-beat output banks are generated for this scalar no-`burst_length` shape.
 The report-only raw-`ARLEN` multi-group scalar follow-up is shipped separately
 by `IAL2-FEATURE-COMPLETENESS-FRONTIER.132`; this `.130` sample remains the
-no-`burst_length` baseline.
+no-`burst_length` baseline. The runtime-validation sibling is shipped
+separately by `IAL2-FEATURE-COMPLETENESS-FRONTIER.135`.
 
 The generated `r2` scalar capture path is representative:
 
@@ -102,7 +103,6 @@ The multi-group response-demux-only sample remains supported and still has no
 
 Still deferred:
 
-- Runtime beat-count/`RLAST` multi-group scalar last-beat variants.
 - Same-family mixed `auto_id_lifecycle` plus concrete queue-head demux.
 - Deeper concrete same-ID queue groups.
 - Write-family multi-group queue-head behavior.

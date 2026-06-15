@@ -160,7 +160,7 @@ The `.132` implementation boundary is:
 - preserve `.130` no-`burst_length` scalar multi-group behavior, `.127`
   multi-group multi-beat behavior, `.124` response-demux-only behavior, and
   `.115` / `.117` / `.119` one-group scalar queue-head behavior;
-- keep runtime-validation multi-group scalar behavior, deeper queues,
+- at selection time, keep runtime-validation multi-group scalar behavior, deeper queues,
   same-family mixed auto-ID plus concrete queue-head demux, write/read
   single-beat multi-group behavior, packed outputs, direct backend, and VHDL
   deferred.
@@ -171,7 +171,9 @@ Report-only raw-`ARLEN` capture is the smallest useful expansion after `.130`.
 It keeps the scalar last-beat payload/status behavior and queue topology
 unchanged while proving the multi-group burst-length artifact surface for all
 covered transactions. It also leaves runtime beat-count/`RLAST` assertions as
-a clean follow-up owner after raw-`ARLEN` storage and reporting are verified.
+a clean follow-up owner after raw-`ARLEN` storage and reporting are verified;
+that follow-up was later shipped by
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.135`.
 
 ## Validation Gates For .132
 
@@ -184,8 +186,8 @@ The implementation slice should run:
 - direct schedule/check/semantic/HDL probes for the new sample;
 - preservation probes for `.130`, `.127`, `.124`, `.117`, `.119`, and `.115`
   samples;
-- a negative runtime-validation multi-group scalar probe that remains
-  fail-closed until a later owner selects it;
+- a negative runtime-validation multi-group scalar probe that remained
+  fail-closed until a later owner selected it;
 - support-accounting corpus gates if a new sample is added;
 - Knowledge Map generation/check, mdBook build, docs path audit, memory
   architecture check, diff hygiene, README numbering, stale `.132` active
@@ -198,9 +200,8 @@ and Knowledge Map state only.
 
 ## Deferred Work
 
-The following remain outside `.131` and `.132`:
+The following remained outside `.131` and `.132` at selection time:
 
-- runtime beat-count/`RLAST` multi-group scalar last-beat read-data;
 - deeper concrete same-ID issue-order queues;
 - same-family mixed auto-ID plus concrete queue-head demux;
 - write-family multiple-group queue-head behavior;
