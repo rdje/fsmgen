@@ -1146,9 +1146,6 @@ sub _normalize_read_data(%args) {
     }
     confess "AXI manager capacity/status IAL2 contract read_data requires a read family\n"
         unless exists $raw->{read};
-    confess "AXI manager capacity/status IAL2 contract read_data cannot consume concrete same-ID queue-head response_demux.read metadata in this slice\n"
-        if ref($args{response_demux}) eq 'HASH'
-            && _response_demux_family_has_queue_head_contract($args{response_demux}, 'read');
     confess "AXI manager capacity/status IAL2 contract read_data requires generated read response_demux metadata\n"
         unless ref($args{response_demux}) eq 'HASH'
             && ref($args{response_demux}{read}) eq 'HASH'
@@ -1229,6 +1226,61 @@ sub _normalize_read_data(%args) {
         generated_behavior => 1,
         read               => $read,
         residue            => $residue,
+    };
+}
+
+sub _read_data_response_demux_transaction_coverage(%args) {
+    my $response_demux = $args{response_demux};
+    my $capture_scope = $args{capture_scope};
+    confess "Internal error: read-data coverage requires read response_demux metadata\n"
+        unless ref($response_demux) eq 'HASH';
+
+    my $transaction_completion_source = $response_demux->{transaction_completion_source} // '';
+    if ($transaction_completion_source eq 'generated_queue_head_demux') {
+        confess "AXI manager capacity/status IAL2 contract read_data.read can consume concrete same-ID queue-head response_demux.read only for generated read single-beat queue-head demux with capture_scope single-beat in this slice\n"
+            unless ($response_demux->{response_scope} // '') eq 'single_beat'
+                && $capture_scope eq 'single-beat'
+                && ($response_demux->{generated_queue_behavior_boundary} // '') eq 'generated_read_single_beat_queue_head_demux';
+
+        my $groups = $response_demux->{same_id_issue_order_queues};
+        confess "AXI manager capacity/status IAL2 contract read_data.read queue-head coverage requires exactly one depth-2 concrete same-ID read queue group in this slice\n"
+            unless ref($groups) eq 'ARRAY' && @$groups == 1;
+        my $group = $groups->[0];
+        confess "AXI manager capacity/status IAL2 contract read_data.read queue-head coverage requires exactly one depth-2 concrete same-ID read queue group in this slice\n"
+            unless ref($group) eq 'HASH'
+                && ($group->{depth} // 0) == 2
+                && ref($group->{transactions}) eq 'ARRAY'
+                && @{$group->{transactions}} == 2;
+
+        my @transactions = @{$group->{transactions}};
+        my @completion_signals = @{$response_demux->{generated_completion_signals} || []};
+        confess "AXI manager capacity/status IAL2 contract read_data.read queue-head coverage requires one generated completion signal per covered read transaction\n"
+            unless @completion_signals == @transactions;
+        my %completion_signal_by_transaction;
+        @completion_signal_by_transaction{@transactions} = @completion_signals;
+
+        return {
+            transactions                     => \@transactions,
+            completion_signal_by_transaction => \%completion_signal_by_transaction,
+            missing_diagnostic               => 'read response_demux queue-head transaction(s)',
+            uncovered_diagnostic             => 'generated read response_demux queue-head transactions',
+            completion_validity              => 'generated_queue_head_response_demux_completion_pulse',
+        };
+    }
+
+    my @transactions = @{$response_demux->{auto_transactions} || []};
+    confess "AXI manager capacity/status IAL2 contract read_data.read requires read response_demux auto transaction coverage metadata\n"
+        unless @transactions;
+    my @completion_signals = @{$response_demux->{generated_completion_signals} || []};
+    my %completion_signal_by_transaction;
+    @completion_signal_by_transaction{@transactions} = @completion_signals
+        if @completion_signals == @transactions;
+
+    return {
+        transactions                     => \@transactions,
+        completion_signal_by_transaction => \%completion_signal_by_transaction,
+        missing_diagnostic               => 'read response_demux auto transaction(s)',
+        uncovered_diagnostic             => 'generated read response_demux auto transactions',
     };
 }
 
@@ -1315,7 +1367,11 @@ sub _normalize_read_data_read(%args) {
         unless @$raw_transactions;
 
     my %transaction_by_name = map { $_->{name} => $_ } @{$args{transactions}};
-    my @covered_transactions = @{$args{response_demux}{auto_transactions} || []};
+    my $coverage = _read_data_response_demux_transaction_coverage(
+        response_demux => $args{response_demux},
+        capture_scope  => $capture_scope,
+    );
+    my @covered_transactions = @{$coverage->{transactions}};
     my %covered = map { $_ => 1 } @covered_transactions;
     my (%seen, @transactions);
     for my $index (0 .. $#$raw_transactions) {
@@ -1350,7 +1406,7 @@ sub _normalize_read_data_read(%args) {
         );
         confess "AXI manager capacity/status IAL2 contract read_data.read duplicates transaction '$transaction_name'\n"
             if $seen{$transaction_name}++;
-        confess "AXI manager capacity/status IAL2 contract read_data.read transaction '$transaction_name' is not covered by generated read response_demux auto transactions\n"
+        confess "AXI manager capacity/status IAL2 contract read_data.read transaction '$transaction_name' is not covered by $coverage->{uncovered_diagnostic}\n"
             unless $covered{$transaction_name};
         my $transaction = $transaction_by_name{$transaction_name};
         confess "AXI manager capacity/status IAL2 contract read_data.read transaction '$transaction_name' is missing from transactions metadata\n"
@@ -1360,7 +1416,8 @@ sub _normalize_read_data_read(%args) {
 
         my %normalized_transaction = (
             transaction       => $transaction_name,
-            completion_signal => $transaction->{completion_event},
+            completion_signal => $coverage->{completion_signal_by_transaction}{$transaction_name}
+                // $transaction->{completion_event},
             data_width        => $data_width,
             status_width      => $status_width,
         );
@@ -1409,7 +1466,7 @@ sub _normalize_read_data_read(%args) {
     }
 
     my @missing = grep { !$seen{$_} } @covered_transactions;
-    confess "AXI manager capacity/status IAL2 contract read_data.read transaction coverage is missing read response_demux auto transaction(s): " . join(', ', @missing) . "\n"
+    confess "AXI manager capacity/status IAL2 contract read_data.read transaction coverage is missing $coverage->{missing_diagnostic}: " . join(', ', @missing) . "\n"
         if @missing;
 
     my %normalized_capture_scope = (
@@ -1421,6 +1478,8 @@ sub _normalize_read_data_read(%args) {
     my $completion_validity = $capture_scope eq 'single-beat'
         ? 'generated_read_response_demux_completion_pulse'
         : 'generated_read_response_demux_last_beat_completion_pulse';
+    $completion_validity = $coverage->{completion_validity}
+        if defined $coverage->{completion_validity};
     my %interleaving_policy = (
         'single-beat' => 'single_beat_by_rid',
         'last-beat'   => 'last_beat_by_rid',
@@ -4204,12 +4263,12 @@ sub _build_report(%args) {
             'response_demux.read response_scope single_beat generates bounded single-beat read RID demux behavior for explicit opt-in contracts',
             'response_demux.read response_scope burst_last requires one-bit last_signal metadata and generates matched-RID-and-RLAST last-beat completion behavior for explicit opt-in contracts',
             'response_demux transaction_completion must be generated; selected auto-ID families make transaction completion names generated demux pulse outputs, while the bounded read single-beat, read burst-last, and write depth-2 concrete same-ID queue-head shapes also make transaction completion names generated demux pulse outputs',
-            'concrete same-ID queue-head response_demux is generated only for bounded one-group two-transaction depth-2 shapes: read single-beat, read burst-last, or write, with issue-order-queue policy, duplicate concrete-ID group, no same-family auto_id_lifecycle demux, and no read_data consumption in this slice',
+            'concrete same-ID queue-head response_demux is generated only for bounded one-group two-transaction depth-2 shapes: read single-beat, read burst-last, or write, with issue-order-queue policy, duplicate concrete-ID group, no same-family auto_id_lifecycle demux, and read_data consumption supported only for the generated read single-beat queue-head subset in this slice',
             'read_data supports explicit generated single-beat capture behavior with response_scope single_beat, explicit generated last-beat capture behavior with response_scope burst_last, and explicit generated multi-beat output-bank behavior with response_scope burst_last',
             'read_data.read data width must be positive and status width must be 2',
             'read_data.read optional burst_length metadata is accepted only for last-beat or multi-beat capture, source arlen, signal width 8, axlen-plus-one encoding, request capture, max_beats 1..256, report-only or runtime-assertion validation, generated raw-ARLEN capture, and generated beat-count/RLAST runtime assertions only for explicit runtime-assertion contracts; multi-beat capture requires runtime-assertion validation',
             'read_data.read optional status_aggregation metadata is accepted only for multi-beat capture, policy worst-observed, status width 2, status_policy per-beat, runtime-assertion burst-length validation, and complete per-transaction status_aggregate_output bindings',
-            'read_data.read transaction outputs must exactly cover read response_demux auto transactions',
+            'read_data.read transaction outputs must exactly cover read response_demux auto transactions or the supported generated read single-beat queue-head transactions',
             'read_data generates bounded single-beat and last-beat RDATA/RRESP capture inputs, outputs, guarded assignments, raw-ARLEN burst-length capture storage/rules, beat-count/RLAST runtime assertions for explicit runtime-assertion contracts, multi-beat output-bank data/status lanes, valid masks, length outputs, request-time clearing, lane capture rules, and scalar RRESP aggregation outputs/init/update rules for explicit multi-beat contracts',
         ],
         unsupported_residue => [
@@ -4219,7 +4278,7 @@ sub _build_report(%args) {
             },
             {
                 id     => 'axi_id_ordering_and_response_matching',
-                detail => 'Concrete transaction ID request/response assertions, explicit bounded auto-ID request-ID drive plus completion-event release, generated auto-ID same-ID avoidance, explicit static concrete-ID reuse reject policy metadata, issue-order-queue admitted-request pulse generation for selected concrete-ID families, bounded read single-beat, read burst-last, and write depth-2 concrete same-ID issue-order queue state plus queue-head response-demux behavior for selected public sample shapes, generated write BID response demux, generated single-beat read RID response demux, generated single-beat read-data RDATA/RRESP capture, generated burst-last RLAST response-demux completion, structural last-beat read-data metadata, generated last-beat read-data RDATA/RRESP capture, generated raw-ARLEN burst-length capture, explicit runtime-assertion beat-count/RLAST validation, generated multi-beat read-data output-bank behavior for the covered auto-ID multi-beat-by-RID subset, bounded burst payload/output behavior through that per-beat output bank, and generated scalar RRESP aggregation behavior are supported; dynamic user-ID arbitration while issuing multiple same-family requests in one cycle, deeper/multiple-group concrete same-ID issue-order queues, generalized scoreboard policies, read-data consumption of concrete same-ID queue-head demux, authored/general different-ID interleaving outside the covered auto-ID subset, packed burst-vector outputs, alternate full burst payload assembly, and aggregate-only status output shapes remain outside this capacity/status shell.',
+                detail => 'Concrete transaction ID request/response assertions, explicit bounded auto-ID request-ID drive plus completion-event release, generated auto-ID same-ID avoidance, explicit static concrete-ID reuse reject policy metadata, issue-order-queue admitted-request pulse generation for selected concrete-ID families, bounded read single-beat, read burst-last, and write depth-2 concrete same-ID issue-order queue state plus queue-head response-demux behavior for selected public sample shapes, generated write BID response demux, generated single-beat read RID response demux, generated single-beat read-data RDATA/RRESP capture, generated single-beat read-data RDATA/RRESP capture from generated read single-beat concrete same-ID queue-head response-demux, generated burst-last RLAST response-demux completion, structural last-beat read-data metadata, generated last-beat read-data RDATA/RRESP capture, generated raw-ARLEN burst-length capture, explicit runtime-assertion beat-count/RLAST validation, generated multi-beat read-data output-bank behavior for the covered auto-ID multi-beat-by-RID subset, bounded burst payload/output behavior through that per-beat output bank, and generated scalar RRESP aggregation behavior are supported; dynamic user-ID arbitration while issuing multiple same-family requests in one cycle, deeper/multiple-group concrete same-ID issue-order queues, generalized scoreboard policies, read-data consumption of burst-last or multi-beat concrete same-ID queue-head demux, authored/general different-ID interleaving outside the covered auto-ID subset, packed burst-vector outputs, alternate full burst payload assembly, and aggregate-only status output shapes remain outside this capacity/status shell.',
             },
             {
                 id     => 'profile_aliases_and_full_manager_behavior',

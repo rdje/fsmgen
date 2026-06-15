@@ -1350,7 +1350,17 @@ bounded read single-beat concrete same-ID queue-head demux shape. No
 IAL1/IAL0/SystemVerilog prerequisite is evident; the behavior slice must make
 read-data coverage source-aware for generated queue-head completion signals
 instead of only auto-ID transaction lists, then add the combined public sample,
-tests, support accounting, and docs.
+tests, support accounting, and docs. Implementation `.113` now ships that
+bounded behavior for
+`ppif/axi_manager_capacity_status_read_single_beat_same_id_queue_head_read_data.ppif`:
+the generator derives read-data transaction coverage from the generated
+queue-head group and completion signals, emits generated `RDATA`/`RRESP`
+inputs plus per-transaction data/status outputs, guards capture rules with the
+generated queue-head completion pulses, and reports
+`generated_queue_head_response_demux_completion_pulse` while preserving the
+existing auto-ID read-data completion-validity report. `.114` is the next
+selector before any burst-last/last-beat/multi-beat queue-head read-data,
+deeper/multiple queue group, mixed auto-ID, backend, or residue expansion.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.

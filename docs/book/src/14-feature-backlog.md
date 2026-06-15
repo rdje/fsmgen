@@ -4851,6 +4851,60 @@ queue-head demux shape. No lowerer prerequisite is evident; `.113` must make
 read-data coverage source-aware for generated queue-head completion signals
 instead of only auto-ID transaction lists.
 
+Queue-head read-data behavior first slice:
+[AXI_IAL2_MANAGER_QUEUE_HEAD_READ_DATA_BEHAVIOR_FIRST_SLICE](../../AXI_IAL2_MANAGER_QUEUE_HEAD_READ_DATA_BEHAVIOR_FIRST_SLICE.md)
+ships `IAL2-FEATURE-COMPLETENESS-FRONTIER.113`. The public sample is:
+
+```bash
+./bin/fsmgen --emit-schedule-json ppif/axi_manager_capacity_status_read_single_beat_same_id_queue_head_read_data.ppif
+./bin/fsmgen --quiet --verify-hdl --output /tmp/fsmgen_read_single_beat_same_id_queue_head_read_data.sv ppif/axi_manager_capacity_status_read_single_beat_same_id_queue_head_read_data.ppif
+```
+
+The implemented boundary is exactly one generated read single-beat concrete
+same-ID queue-head demux with one duplicate read-ID group, two read
+transactions, computed queue depth 2, and single-beat `read-data` capture.
+FSMGen derives read-data transaction coverage from the generated queue-head
+group and `generated_completion_signals`, then emits generated `RDATA` and
+`RRESP` inputs plus per-transaction data/status outputs.
+
+The read-data capture rules are ordinary guarded assignments driven by the
+generated queue-head completion pulses:
+
+```lisp
+(rule axi0_r0_read_data_capture axi0_r0_complete
+  (axi0_r0_rdata axi0_rdata)
+  (axi0_r0_rresp axi0_rresp))
+
+(rule axi0_r1_read_data_capture axi0_r1_complete
+  (axi0_r1_rdata axi0_rdata)
+  (axi0_r1_rresp axi0_rresp))
+```
+
+The schedule report distinguishes this queue-head path with:
+
+```text
+read_data:
+  mode: bounded_single_beat_read_data_contract
+  generated_behavior: true
+  read:
+    completion_validity: generated_queue_head_response_demux_completion_pulse
+    generated_inputs:
+      - axi0_rdata
+      - axi0_rresp
+    generated_outputs:
+      - axi0_r0_rdata
+      - axi0_r0_rresp
+      - axi0_r1_rdata
+      - axi0_r1_rresp
+```
+
+The existing auto-ID read-data path keeps reporting
+`generated_read_response_demux_completion_pulse`. Burst-last, last-beat, and
+multi-beat queue-head read-data; deeper or multiple queue groups; mixed
+same-family auto-ID plus concrete queue-head demux; direct backend lowering;
+and VHDL remain deferred. `IAL2-FEATURE-COMPLETENESS-FRONTIER.114` is the
+next selector before any broader queue-head/read-data expansion.
+
 First implementation subset selection:
 [AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION](../../AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md)
 selects a source-anchored AXI Valid-Ready channel contract/monitor as the

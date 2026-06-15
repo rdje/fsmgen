@@ -801,6 +801,50 @@ subtest 'read-data contract generates single-beat capture behavior' => sub {
     like($hdl, qr/axi0_r0_rresp_next\s*=\s*axi0_rresp\s*;/, 'SystemVerilog captures RRESP into r0 status output');
 };
 
+subtest 'read-data contract consumes generated read single-beat same-ID queue-head demux' => sub {
+    my $result = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_same_id_read_single_beat_queue_head_read_data());
+    my $isf = $result->{generated_ial1}{text};
+    my $fsm = $result->{generated_ial0}{files}{'axi0_capacity_status.fsm'};
+
+    like($isf, qr/\(rule axi0_r0_response_demux \(& axi0_read_complete \(== axi0_rid 4'd3\) axi0_read_id3_same_id_issue_order_slot0_r0_q\)/, 'queue-head read-data contract keeps r0 concrete queue-head demux rule');
+    like($isf, qr/\(rule axi0_r1_response_demux \(& axi0_read_complete \(== axi0_rid 4'd3\) axi0_read_id3_same_id_issue_order_slot0_r1_q\)/, 'queue-head read-data contract keeps r1 concrete queue-head demux rule');
+    like($isf, qr/\(input axi0_rdata \(width 32\)\)/, 'queue-head read-data contract declares RDATA as a generated input');
+    like($isf, qr/\(input axi0_rresp \(width 2\)\)/, 'queue-head read-data contract declares RRESP as a generated input');
+    like($isf, qr/\(output axi0_r0_rdata \(width 32\)\)/, 'queue-head read-data contract declares r0 data output');
+    like($isf, qr/\(output axi0_r0_rresp \(width 2\)\)/, 'queue-head read-data contract declares r0 status output');
+    like(
+        $isf,
+        qr/\(rule axi0_r0_read_data_capture axi0_r0_complete\s+\(axi0_r0_rdata axi0_rdata\)\s+\(axi0_r0_rresp axi0_rresp\)\)/,
+        'queue-head read-data contract guards r0 capture with generated queue-head completion',
+    );
+    like(
+        $isf,
+        qr/\(rule axi0_r1_read_data_capture axi0_r1_complete\s+\(axi0_r1_rdata axi0_rdata\)\s+\(axi0_r1_rresp axi0_rresp\)\)/,
+        'queue-head read-data contract guards r1 capture with generated queue-head completion',
+    );
+    unlike($isf, qr/\baxi0_rlast\b/, 'queue-head read-data single-beat contract does not generate or consume RLAST');
+    like($fsm, qr/\(-axi0_r0_read_data_capture\s+<axi0_r0_complete\s+\(<- \(axi0_r0_rdata> axi0_rdata\)\)\s+\(<- \(axi0_r0_rresp> axi0_rresp\)\)/, 'scheduled .fsm carries r0 queue-head read-data capture assignments');
+    like($fsm, qr/\(-axi0_r1_read_data_capture\s+<axi0_r1_complete\s+\(<- \(axi0_r1_rdata> axi0_rdata\)\)\s+\(<- \(axi0_r1_rresp> axi0_rresp\)\)/, 'scheduled .fsm carries r1 queue-head read-data capture assignments');
+
+    assert_same_id_read_single_beat_queue_head_response_demux_report($result->{report}{response_demux}, 'generator queue-head read-data response-demux report');
+    assert_read_data_report(
+        $result->{report}{read_data},
+        'generator queue-head read-data report',
+        'generated_queue_head_response_demux_completion_pulse',
+    );
+    my $read_policy = $result->{report}{same_id_ordering}{concrete_id_reuse_policy}{read};
+    ok($read_policy->{accepted_same_id_reuse}, 'queue-head read-data behavior keeps same-ID reuse accepted for the covered shape');
+    ok($read_policy->{generated_queue_behavior}, 'queue-head read-data behavior keeps generated queue behavior true');
+
+    my $hdl = hdl_for('axi0_capacity_status', $fsm);
+    like($hdl, qr/\binput\s+(?:wire\s+)?\[3:0\]\s+axi0_rid\b/, 'SystemVerilog exposes generated RID input for queue-head demux');
+    like($hdl, qr/\binput\s+(?:wire\s+)?\[31:0\]\s+axi0_rdata\b/, 'SystemVerilog exposes generated RDATA input for queue-head read-data capture');
+    like($hdl, qr/\boutput\s+reg\s+\[31:0\]\s+axi0_r0_rdata\b/, 'SystemVerilog exposes r0 queue-head captured data output');
+    like($hdl, qr/assign\s+axi0_r0_read_data_capture_en\s*=\s*axi0_r0_complete\s*;/, 'SystemVerilog drives r0 queue-head read-data capture from generated completion');
+    like($hdl, qr/axi0_r0_rdata_next\s*=\s*axi0_rdata\s*;/, 'SystemVerilog captures queue-head RDATA into r0 output');
+    like($hdl, qr/axi0_r0_rresp_next\s*=\s*axi0_rresp\s*;/, 'SystemVerilog captures queue-head RRESP into r0 output');
+};
+
 subtest 'last-beat read-data contract generates capture behavior' => sub {
     my $result = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_read_data_last_beat());
     my $isf = $result->{generated_ial1}{text};
@@ -1186,11 +1230,11 @@ subtest 'malformed contract objects fail closed and no direct lower-to-fsm entry
             $c->{auto_id_lifecycle} = { read => { pool => [0] } };
             $c;
         }, qr/response_demux\.read does not support same-family auto_id_lifecycle plus concrete same-ID queue-head demux/],
-        ['read data consuming same-ID queue-head demux', sub {
+        ['read data consuming unsupported same-ID queue-head demux', sub {
             my $c = sample_contract_with_same_id_queue_head_response_demux();
             $c->{read_data} = sample_contract_with_read_data_burst_length()->{read_data};
             $c;
-        }, qr/read_data cannot consume concrete same-ID queue-head response_demux\.read metadata/],
+        }, qr/read_data\.read can consume concrete same-ID queue-head response_demux\.read only for generated read single-beat queue-head demux with capture_scope single-beat/],
         ['read data unsupported family', sub { my $c = sample_contract_with_read_response_demux(); $c->{read_data} = { write => {} }; $c }, qr/read_data has unsupported family 'write'/],
         ['read data without read response demux', sub {
             my $c = sample_contract_with_read_auto_id_lifecycle();
@@ -1451,6 +1495,36 @@ sub sample_contract_with_same_id_read_single_beat_queue_head_response_demux {
             response_event => 'axi0_read_complete',
             response_scope => 'single-beat',
             transaction_completion => 'generated',
+        },
+    };
+    return $contract;
+}
+
+sub sample_contract_with_same_id_read_single_beat_queue_head_read_data {
+    my $contract = sample_contract_with_same_id_read_single_beat_queue_head_response_demux();
+    $contract->{intent_name} = 'axi_manager_capacity_status_read_single_beat_same_id_queue_head_read_data';
+    $contract->{source}{object_id} = 'axi-manager-capacity-status-read-single-beat-same-id-queue-head-read-data';
+    $contract->{read_data} = {
+        read => {
+            capture_scope     => 'single-beat',
+            completion_source => 'response-demux',
+            data_signal       => 'axi0_rdata',
+            data_width        => 32,
+            status_signal     => 'axi0_rresp',
+            status_width      => 2,
+            interleaving      => 'single-beat-by-rid',
+            transactions      => [
+                {
+                    transaction   => 'r0',
+                    data_output   => 'axi0_r0_rdata',
+                    status_output => 'axi0_r0_rresp',
+                },
+                {
+                    transaction   => 'r1',
+                    data_output   => 'axi0_r1_rdata',
+                    status_output => 'axi0_r1_rresp',
+                },
+            ],
         },
     };
     return $contract;
@@ -1989,13 +2063,15 @@ sub assert_rlast_report_prose_alignment {
 }
 
 sub assert_read_data_report {
-    my ($read_data, $owner) = @_;
+    my ($read_data, $owner, $expected_completion_validity) = @_;
+    $expected_completion_validity //= 'generated_read_response_demux_completion_pulse';
+
     is($read_data->{mode}, 'bounded_single_beat_read_data_contract', "$owner marks bounded single-beat read-data contract mode");
     ok($read_data->{generated_behavior}, "$owner marks generated behavior true");
     my $read = $read_data->{read};
     is($read->{capture_scope}, 'single_beat', "$owner reports single-beat capture scope");
     is($read->{completion_source}, 'response_demux', "$owner reports response-demux completion source");
-    is($read->{completion_validity}, 'generated_read_response_demux_completion_pulse', "$owner reports generated demux pulse validity");
+    is($read->{completion_validity}, $expected_completion_validity, "$owner reports generated demux pulse validity");
     is($read->{data_signal}, 'axi0_rdata', "$owner reports RDATA signal");
     is($read->{data_signal_width}, 32, "$owner reports RDATA width");
     is($read->{data_signal_direction}, 'generated_input', "$owner reports RDATA generated-input direction");
