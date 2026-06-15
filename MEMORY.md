@@ -10,10 +10,10 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `HEAD after commit` — `IAL2-FEATURE-COMPLETENESS-FRONTIER.135: ship multi-group runtime validation`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.136` pending; next action is selecting the next AXI manager feature-completeness slice after generated runtime-validation multi-group queue-head scalar last-beat read-data.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.135`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.134`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.133`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.132`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.131`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.130`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.129`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.128`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.127`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.126`. Older completed slices are in the task tree and git history.
-- in_flight_uncommitted: none after this commit; unrelated untracked `fx/` intentionally left alone.
+- latest_commit: `HEAD after commit` — `SEMANTIC-INTROSPECTION-MCP-FRONTIER.2: activate first-class introspection`.
+- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.3` pending; next action is implementing the first-class semantic-introspection contract manifest before any MCP adapter or read/write tools.
+- recently_done: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.2`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.135`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.134`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.133`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.132`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.131`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.130`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.129`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.128`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.127`. Older completed slices are in the task tree and git history.
+- in_flight_uncommitted: none after this commit; `IAL2-FEATURE-COMPLETENESS-FRONTIER.136` remains active but deferred while the semantic-introspection priority is active; unrelated untracked `fx/` intentionally left alone.
 - blockers: none.
 
 ## Notes

@@ -7518,24 +7518,44 @@ and regression-backed.
 
 ### Semantic Introspection And MCP Adapter
 
-Status: proposed under
+Status: active first-class feature under
 [`SEMANTIC-INTROSPECTION-MCP-FRONTIER`](../../tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md).
 
-Goal: make FSMGen machine-controllable for LLM/AI automation by exposing stable
-semantic introspection APIs first, then optional MCP adapters over those APIs.
+Goal: make deep semantic introspection a first-class FSMGen capability. Every
+meaningful FSMGen semantic domain should become queryable through a clean,
+bounded API, and MCP is a required adapter over that API rather than the source
+of truth for the semantic contract.
 
-Current boundary: FSMGen already has several machine-readable surfaces:
-`--capability-manifest`, `--check --json`, `--emit-semantic-json`,
-`--emit-schedule-json`, support accounting, stable diagnostics, generated
-artifact inventories, and mdBook/corpus examples. These are candidates for a
-future adapter, not proof that an MCP surface is shipped.
+Current shipped boundary: FSMGen already exposes several machine-readable
+surfaces that form the foundation for the contract: `--capability-manifest`,
+`--check --json`, `--emit-semantic-json`, `--emit-schedule-json`, support
+accounting, stable diagnostics, generated artifact inventories,
+backend-validation status, embedding contract metadata, and mdBook/corpus
+examples. The MCP adapter itself is not shipped yet.
 
-The owner-capture slice records the scope and leaves implementation inactive.
-The first required implementation prerequisite is a no-code selector. It must choose the bounded
-resource/tool/prompt subset, schema/versioning policy, safety model,
-workspace/output restrictions, and whether the first adapter is CLI-driven,
-in-process, or service-backed. Raw private AST, scheduler, and lowering objects
-remain outside the public automation contract.
+Current active frontier: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.2` selected
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.3`, the first implementation owner. That
+slice must add a manifest-advertised semantic-introspection contract naming
+query domains, query families, schema/version fields, contract sources,
+provenance and support-accounting expectations, read-only defaults, workspace
+restrictions, and MCP resource/tool mappings over the existing public
+surfaces.
+
+Selected first MCP resource families are `fsmgen://capabilities`,
+`fsmgen://contracts`, `fsmgen://diagnostics`,
+`fsmgen://support-accounting`, `fsmgen://examples`,
+`fsmgen://source/{source_id}/check`,
+`fsmgen://source/{source_id}/semantic`, and
+`fsmgen://source/{source_id}/schedule`. Selected first MCP tool families are
+`fsmgen_capability_query`, `fsmgen_check`, `fsmgen_semantic_introspect`,
+`fsmgen_schedule_preview`, `fsmgen_find_examples`, and
+`fsmgen_explain_diagnostic`.
+
+Raw private parser ASTs, scheduler objects, lowering objects, `HDLGenerator`
+compatibility hashes, and internal Perl references remain outside the public
+automation contract. Read/write generation tools, HDL writing, service mode,
+network access, arbitrary filesystem traversal, and mutation workflows remain
+deferred until separately task-tree-owned.
 
 ### Fully Frozen Programmatic Embedding API
 

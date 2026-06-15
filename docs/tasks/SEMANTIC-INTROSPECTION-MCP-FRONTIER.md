@@ -3,17 +3,17 @@
 ## Metadata
 
 - Tree ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER`
-- Status: `proposed`
+- Status: `active`
 - Roadmap lane: `Embedding And Public APIs / AI integration`
 - Created: `2026-06-14`
-- Last updated: `2026-06-14`
+- Last updated: `2026-06-15`
 - Owner: repo-local workflow
 
 ## Goal
 
-Own future work that makes FSMGen machine-controllable for LLM/AI automation
-through stable semantic introspection APIs first, and optional MCP adapters
-second.
+Make deep semantic introspection a first-class FSMGen feature: every meaningful
+FSMGen semantic domain must become queryable through a clean, bounded API and
+MCP must expose that API without leaking private implementation structures.
 
 ## Applied Direction From The RTL Simulator MCP Discussion
 
@@ -62,28 +62,32 @@ For FSMGen, the analogs are:
   raw `LoweringIR`, or unstable whole-hash payloads as public API.
 - Do not add arbitrary shell access, unrestricted file writes, network access,
   or unbounded workspace traversal through any future MCP adapter.
-- Do not make MCP part of the semantic contract for IAL0, IAL1, or IAL2;
-  MCP is an integration adapter over bounded public surfaces.
-- Do not disturb the active IAL2 feature-completeness frontier.
+- Do not make MCP define the semantic contract for IAL0, IAL1, or IAL2; MCP
+  exposes the bounded public semantic-introspection API.
+- Do not continue broad IAL2 feature-completeness work ahead of this lane
+  while the user has made semantic introspection the active priority.
 
 ## Acceptance Criteria
 
-- The first active leaf inventories current machine-readable surfaces and
+- The first active selector inventories current machine-readable surfaces and
   selects a bounded semantic-introspection contract boundary before any
   implementation.
+- Future implementation exposes MCP through the selected semantic API instead
+  of through raw private compiler objects or ad hoc command text.
 - Any future implementation leaf names exact resources, tools, prompts,
   schemas, safety policy, tests, docs, and rollback plan before source changes.
-- Public docs and mdBook explain only shipped behavior; proposed MCP work stays
-  clearly labeled as future until implemented.
+- Public docs and mdBook explain only shipped behavior; unshipped MCP adapter
+  work stays clearly labeled as future until implemented.
 - Each completed leaf is committed through `COMMIT.md`.
 
 ## Task Tree
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER`
-  Status: `proposed`
-  Goal: `Track stable semantic introspection and MCP adapter work.`
+  Status: `active`
+  Goal: `Track first-class semantic introspection and MCP query API work.`
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1`,
-    `SEMANTIC-INTROSPECTION-MCP-FRONTIER.2`
+    `SEMANTIC-INTROSPECTION-MCP-FRONTIER.2`,
+    `SEMANTIC-INTROSPECTION-MCP-FRONTIER.3`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1`
   Status: `done`
@@ -93,13 +97,20 @@ For FSMGen, the analogs are:
   Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1: capture MCP introspection owner`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Select the first semantic-introspection API/MCP contract boundary.`
   Acceptance: `A selector reads the existing capability manifest, check JSON, normalized semantic JSON, schedule JSON, support accounting, diagnostic registry, embedding contracts, mdBook examples, roadmap, task tree, Memory, and Knowledge Map; it selects the first safe resource/tool/prompt subset or records a smaller prerequisite before any behavior-bearing implementation.`
+  Verification: `passed`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.2: activate first-class introspection`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.3`
+  Status: `pending`
+  Goal: `Implement the first-class semantic-introspection contract manifest.`
+  Acceptance: `Add a bounded manifest-advertised semantic-introspection contract that names query domains, query families, version/schema fields, contract sources, provenance/support-accounting expectations, read-only defaults, workspace restrictions, and MCP resource/tool mappings over existing capability, check JSON, normalized semantic JSON, schedule JSON, support-accounting, diagnostics, documentation/example, embedding, and backend-validation surfaces; do not expose raw private AST/scheduler/lowering objects or implement write/generation MCP tools; update tests, docs, mdBook, task tree, Memory, Knowledge Map, README, and roadmap; run focused contract/manifest checks plus standard continuity gates.`
   Verification: `pending`
   Commit: `pending`
 
-## Candidate Contract Questions For `.1`
+## Candidate Contract Questions For `.3`
 
 - Which current JSON surfaces are stable enough to expose directly to AI
   clients, and which need a narrower wrapper first?
@@ -115,8 +126,8 @@ For FSMGen, the analogs are:
   user approval because they write generated artifacts or HDL?
 - What are the bounded schemas, versioning keys, run IDs, audit logs,
   workspace-root restrictions, and no-arbitrary-shell guarantees?
-- How will the mdBook explain the shipped behavior without promising future
-  service/MCP surfaces before implementation?
+- How will the mdBook explain the shipped behavior without pretending future
+  service/MCP adapter surfaces are already implemented?
 
 ## Candidate Future Phases
 
@@ -132,11 +143,19 @@ For FSMGen, the analogs are:
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1` | `done` | Completed owner capture and roadmap/book sync for this new lane. |
-| 2 | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.2` | `pending` | Proposed first selector; activate only when this lane is chosen over the current IAL2 feature-completeness frontier. |
+| 1 | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.3` | `pending` | `.2` made semantic introspection first-class and selected a manifest-advertised semantic-introspection API contract before MCP adapter implementation. |
 
 ## Decisions
 
+- `2026-06-15`: User clarified that deep semantic introspection is a
+  first-class FSMGen feature and everything meaningful in FSMGen must become
+  queryable through MCP via a clean API. Activate this tree and make MCP a
+  required adapter over the stable semantic-introspection API, not an optional
+  someday integration.
+- `2026-06-15`: `.2` selected `.3`, first-class semantic-introspection
+  contract manifest. The first implementation must advertise query domains and
+  MCP resource/tool mappings through a bounded contract over existing shipped
+  machine-readable surfaces before any read-write tools or service mode.
 - `2026-06-14`: Create this as a proposed owner, not an active implementation
   lane. The first real work must be no-code contract selection over existing
   public surfaces.
@@ -146,27 +165,30 @@ For FSMGen, the analogs are:
 
 ## Open Questions
 
-- Whether the first implementation should be CLI-driven, in-process Perl API,
-  or a local long-lived service is intentionally left to selector leaf `.1`.
+- Whether the first adapter implementation should be CLI-driven, in-process
+  Perl API, or a local long-lived service is intentionally left to future
+  adapter leaves after `.3` defines the contract.
 
 ## Blockers
 
-- None for ownership. Implementation is blocked until `.1` is activated and
-  completed.
+- None for ownership. MCP adapter implementation is blocked until `.3`
+  completes the first-class semantic-introspection contract manifest.
 
 ## Verification Log
 
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-06-14` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1` | `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `mdbook build docs/book`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `scripts/check_memory_architecture.sh`; `git --no-pager diff --check` | `passed`; Knowledge Map now has `177` facts and `1030` question keys |
-| `pending` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.2` | `pending` | `pending` |
+| `2026-06-15` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.2` | Existing owner tree, roadmap, mdBook, Knowledge Map card, embedding and semantic-export contracts, README CLI/API documentation; sampled `env -u PERL5LIB ./bin/fsmgen --capability-manifest`, `env -u PERL5LIB ./bin/fsmgen --strict --check --json ppif/axi_aw_valid_ready.ppif`, `env -u PERL5LIB ./bin/fsmgen --strict --emit-semantic-json ppif/axi_aw_valid_ready.ppif`, and `env -u PERL5LIB ./bin/fsmgen --strict --emit-schedule-json ppif/axi_aw_valid_ready.ppif`; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `mdbook build docs/book`; `env -u PERL5LIB prove -Iperl t/1414-docs-relative-paths-audit.t`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `git --no-pager diff --check`; README numbering check; active/proposed semantic-introspection frontier scans | `passed`; selected `.3`, first-class semantic-introspection contract manifest |
+| `pending` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.3` | `pending` | `pending` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1: capture MCP introspection owner` | Proposed owner capture only; no implementation active. |
-| `SEMANTIC-INTROSPECTION-MCP-FRONTIER.2` | `pending` | `pending` |
+| `SEMANTIC-INTROSPECTION-MCP-FRONTIER.2` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.2: activate first-class introspection` | Activated semantic introspection as a first-class feature and selected `.3`, the contract-manifest implementation owner. |
+| `SEMANTIC-INTROSPECTION-MCP-FRONTIER.3` | `pending` | `pending` |
 
 ## Changelog
 
@@ -175,3 +197,6 @@ For FSMGen, the analogs are:
 - `2026-06-14`: Completed `.1`; task-tree index, roadmap, mdBook backlog, and
   Knowledge Map now capture the proposed owner and leave implementation behind
   selector `.2`.
+- `2026-06-15`: Completed `.2`; deep semantic introspection is now an active
+  first-class feature lane, MCP is a required adapter over the stable semantic
+  API, and `.3` owns the first implementation boundary.

@@ -61,6 +61,15 @@ browser-capable JavaScript, and Dart/web implementations should target those
 same observable contracts, with the Perl implementation serving as the current
 reference/oracle rather than the definition of the IAL layers; see
 [docs/decisions/0018-ial-contracts-are-backend-language-neutral.md](docs/decisions/0018-ial-contracts-are-backend-language-neutral.md).
+Deep semantic introspection is now a first-class FSMGen feature, tracked by
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER`. The selected architecture is stable
+semantic-introspection API first and MCP as a required adapter over that API.
+The immediate implementation owner is
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.3`, which must add a
+manifest-advertised semantic-introspection contract over the existing
+capability manifest, check JSON, normalized semantic JSON, schedule JSON,
+support-accounting, diagnostics, documentation/example, embedding, and
+backend-validation surfaces before any MCP adapter or read/write tool work.
 Current primary target is SystemVerilog, with Verilog conversion support and a scoped direct-root VHDL scaffold for the accepted single-FSM subset, including delayed-pulse clock-branch lowering, generic-bearing direct-root module headers with typed scalar/vector sized-literal defaults, signed vector and signed scalar direct-root ports, scalar/vector two-state `bit` input-port and internal declaration lowering, signed scalar/vector, non-signed four-state `logic` input-port/internal declaration lowering, and vector `logic signed` internal declaration lowering, scalar and signed scalar addition/subtraction/multiplication RHS/chain lowering, vector numeric-literal addition/subtraction emitted by compound update/shorthand forms, same-width unsigned-style addition/subtraction/multiplication/division/modulo/XOR RHS/chain lowering, same-width signed vector addition/subtraction/multiplication/division/modulo RHS lowering for signed targets and operands, signed vector numeric-literal addition/subtraction/multiplication/division/modulo RHS lowering including signed vector negative decimal addition, subtraction, multiplication, division, and modulo literals, non-signed vector positive decimal multiplication/division/modulo literal lowering in signal-first, literal-first, and literal-literal order, non-signed vector negative decimal addition/subtraction/multiplication/division/modulo literal lowering, bounded generated AMBA wrap arithmetic for `fsm/amba_requester.fsm`, bounded non-signed vector, signed vector, and scalar output-port decimal literal assignment lowering including non-signed vector, signed vector, and scalar negative decimal literals, bounded direct aggregate-output packed-vector lowering, a bounded C3 external-RTL literal/concat composition VHDL structural top for `t/corpus/composition_intent_integer_literals.fsm`, bounded external-RTL scalar integer, scalar integer expression, one-bit sized bitstring, multi-bit sized bitstring, and resolved packed aggregate VHDL generic maps including resolved package-backed constants, a bounded C1 standalone-DT child composition VHDL passthrough top for `t/corpus/standalone_dtc_explicit_system_autowire.fsm`, bounded C1 standalone-DT scalar integer, scalar expression, one-bit sized bitstring, multi-bit sized bitstring, packed-list, and packed-map VHDL generic maps, a bounded C2 generated-FSM child composition VHDL scalar-autowire top for `t/corpus/implicit_composition_system_autowire.fsm`, bounded C2 generated-FSM scalar integer, scalar expression, one-bit sized bitstring, multi-bit sized bitstring, and resolved packed aggregate VHDL generic maps, and a bounded APB/C4 generated-FSM child composition VHDL top for `fsm/apb_tb.fsm` with scalar integer, scalar expression, one-bit sized bitstring, multi-bit sized bitstring, resolved packed aggregate, and resolved package-backed generic maps in the same APB/C4 shape.
 Scalar division/modulo, including signed scalar division/modulo, in the direct
 VHDL scaffold remains an explicit fail-closed boundary; full aggregate
@@ -126,9 +135,11 @@ and an aggregate wrapper/top SystemVerilog HDL entry with `--verify-hdl`
 support for the tracked AW/W sample. Public `.pif`/`.ppi`/`.axi` aliases and
 the full AXI manager remain unshipped. Mandatory lowering remains
 `IAL2 -> IAL1 -> IAL0`. IAL2 feature completeness on the
-SystemVerilog-backed path is now the active priority under
-`IAL2-FEATURE-COMPLETENESS-FRONTIER`, including any explicitly selected IAL1
-or IAL0/SV prerequisites needed for IAL2 to lower cleanly. The first
+SystemVerilog-backed path remains active under
+`IAL2-FEATURE-COMPLETENESS-FRONTIER` at `.136`, including any explicitly
+selected IAL1 or IAL0/SV prerequisites needed for IAL2 to lower cleanly, but
+the immediate PNT priority is now the first-class semantic-introspection lane.
+The first
 in-process AXI manager outstanding-capacity and acceptance/status generator is
 now shipped as `FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus`; it
 accepts a structured AXI4 manager contract, emits generated `.isf` before
@@ -896,6 +907,8 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 180. `LIVE_ACHIEVEMENT_STATUS.md`: latest completed roadmap-aligned slice.
 181. `WARP.md`: repository-specific agent/development guidance.
 182. `.agents/workflows/commit.md`: automation-oriented commit workflow description.
+183. `docs/SEMANTIC_INTROSPECTION_MCP_FIRST_CLASS_SELECTION.md`: selected
+     first-class semantic-introspection and MCP contract-manifest boundary.
 
 ## Documentation index (all `.md` files in this repo)
 - `README.md` — single entry point and navigation hub.
@@ -911,6 +924,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/tasks/PROJECT-REMAINING-WORK-TASKTREE-OWNERSHIP.md` — completed roadmap-maintenance task tree that routed the 2026-06-05 remaining-work inventory to existing active owners or new broad owner trees.
 - `docs/tasks/COMPOSITION-TYPE-BACKLOG-EXHAUSTION.md` — completed Composition/type backlog tree; shipped aggregate parameter/generic equality/inequality, closed the remaining Composition/type leaves behind exact prerequisites, and routed VHDL-dependent work through the completed backend/API frontier.
 - `docs/tasks/ISF-REMAINING-BROAD-FRONTIER.md` — proposed broad `R14` ISF frontier owner tree for deferred ISF backlog directions not already owned by narrower active trees.
+- `docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md` — active semantic-introspection/MCP task tree; `.2` made deep semantic introspection a first-class feature and `.3` owns the first manifest-advertised semantic-introspection contract.
 - `docs/tasks/BACKEND-API-VALIDATION-FRONTIER.md` — completed backend/API frontier owner tree for VHDL, external validation, ABC, structured generation, embedding API, and normalized export backlog through `.132`.
 - `docs/tasks/ARCHITECTURE-DEBT-FRONTIER.md` — completed architecture-debt frontier owner tree; direct-backend structural internal declaration nets shipped, and ISF parser/lowerer extraction remains deferred behind future exact ownership.
 - `docs/tasks/ISF-FRONTIER-SPAWN-AWAITANY-BOOK-RUNNABLE-EXAMPLES.md` — completed `R14` task tree that added runnable `lisp` book examples (in `13d`) for the shipped loop-contained spawn + `(await_all done)` and multi-pending `(await_any done)` + drain features (`t/1376` count 36 → 38); all repeat-body-activation frontier shapes now have copy-pasteable book examples.
@@ -1315,6 +1329,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/ISF_PUBLIC_INTERFACE_CONTRACT.md` — live downstream-consumer API contract for ISF parser/scheduler surfaces.
 - `docs/ISF_LIBRARY_CATALOG.md` — live catalog of shipped reusable ISF library definitions.
 - `docs/REGRESSION_CORPUS.md` — human-readable companion to the machine-checked support and regression catalog.
+- `docs/SEMANTIC_INTROSPECTION_MCP_FIRST_CLASS_SELECTION.md` — selected first-class semantic-introspection API and MCP adapter boundary for `SEMANTIC-INTROSPECTION-MCP-FRONTIER.3`.
 - `docs/INTENT_CAPTURE_AXI_CASE_STUDY.md` — AXI intent-capture case-study notes for future high-level synthesis work.
 - `docs/IAL2_PROTOCOL_PLATFORM_INTENT_EVALUATION.md` — first non-code IAL2 protocol/platform intent evaluation and go/no-go criteria.
 - `docs/AXI_VALID_READY_INTENT_PROBE.md` — first bounded AXI Valid-Ready source-anchor evidence inventory for future IAL2 design/probe work.
