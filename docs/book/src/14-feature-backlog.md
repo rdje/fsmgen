@@ -5160,10 +5160,12 @@ response_demux.residue:
 The existing admitted-request boundary remains family-wide: one generated
 `axi0_read_issue_order_queue_request_onehot0` assertion covers all selected
 read request events. The slice does not claim simultaneous group-local
-same-cycle enqueue support. Read-data over multiple queue groups, same-family
-auto-ID plus concrete queue-head demux, deeper queues, write-family or read
-single-beat multiple-group queue-head behavior, direct backend lowering, and
-VHDL remain deferred.
+same-cycle enqueue support. The response-demux-only sample has no `read_data`
+section; multi-group read-data support is documented in the later
+multi-group queue-head read-data behavior slice. Same-family auto-ID plus
+concrete queue-head demux, deeper queues, write-family or read single-beat
+multiple-group queue-head behavior, direct backend lowering, and VHDL remain
+deferred.
 
 Post multi-group queue-head demux selector:
 [AXI_IAL2_MANAGER_POST_MULTI_GROUP_QUEUE_HEAD_DEMUX_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTI_GROUP_QUEUE_HEAD_DEMUX_NEXT_SLICE_SELECTION.md)
@@ -5175,16 +5177,30 @@ multi-beat, or a narrower prerequisite.
 
 Multi-group queue-head read-data readiness audit:
 [AXI_IAL2_MANAGER_MULTI_GROUP_QUEUE_HEAD_READ_DATA_READINESS_AUDIT](../../AXI_IAL2_MANAGER_MULTI_GROUP_QUEUE_HEAD_READ_DATA_READINESS_AUDIT.md)
-selects `.127`, generated multi-group queue-head multi-beat read-data
-output-bank behavior. The audit found the current blocker is the exact-one
-group guard in read-data response-demux coverage, while response-state lookup,
+selected `.127`, generated multi-group queue-head multi-beat read-data
+output-bank behavior. The audit found the blocker was the exact-one-group
+guard in read-data response-demux coverage, while response-state lookup,
 matched-read-beat matching, output-bank generation, beat-count/`RLAST`
 validation, valid-mask and length outputs, and scalar `RRESP` aggregation
-already iterate or name artifacts by transaction. `.127` must widen coverage
-only for the selected multi-beat output-bank shape; last-beat-only
-multi-group read-data, report-only/runtime-only variants, deeper queues,
-same-family auto-ID plus concrete queue-head demux, direct backend lowering,
-and VHDL remain deferred.
+already iterated or named artifacts by transaction.
+
+Multi-group queue-head read-data behavior:
+[AXI_IAL2_MANAGER_MULTI_GROUP_QUEUE_HEAD_READ_DATA_BEHAVIOR](../../AXI_IAL2_MANAGER_MULTI_GROUP_QUEUE_HEAD_READ_DATA_BEHAVIOR.md)
+ships `.127` for
+`ppif/axi_manager_capacity_status_read_multi_group_same_id_queue_head_read_data.ppif`.
+The generated path flattens the `RID` `3` `r0`/`r1` group and the `RID` `5`
+`r2`/`r3` group into multi-beat read-data coverage, emits per-transaction
+output-bank clearing, sixteen `RDATA`/`RRESP` lanes, valid-mask and length
+outputs, scalar `RRESP` aggregation, raw `ARLEN` capture, and
+beat-count/`RLAST` runtime validation, and reports `capture_scope:
+multi_beat`, `completion_validity:
+generated_queue_head_response_demux_last_beat_completion_pulse`,
+`beat_match_source: response_demux_matched_read_beat`, `output_shape:
+per_beat_output_bank`, and empty `read_data`/`response_demux` residue.
+`.128` is the next selector/audit. Last-beat-only multi-group read-data,
+report-only/runtime-only variants outside this selected multi-beat output-bank
+shape, deeper queues, same-family auto-ID plus concrete queue-head demux,
+direct backend lowering, and VHDL remain deferred.
 
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)

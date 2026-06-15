@@ -1407,16 +1407,16 @@ The generated path emits concrete-ID-scoped compact one-hot queue storage,
 finite depth-2 transition rules, generated completion pulse outputs,
 queue-head response-demux rules, queue assertions, response-demux assertions,
 and generated queue reports for both covered groups while preserving the
-existing family-wide admitted-request onehot boundary. Read-data over multiple
-groups, same-family auto-ID, deeper queues, write or read single-beat
-multi-group queue-head behavior, packed outputs, direct backend, and VHDL
-remain deferred. Selector `.125` chose `.126`, readiness audit for read-data
-coverage over multiple generated read burst-last concrete same-ID queue-head
-groups. Audit `.126` now selects `.127`, generated multi-group queue-head
-multi-beat read-data output-bank behavior. The next behavior owner must
-flatten all selected generated queue groups into read-data coverage only for
-the selected multi-beat output-bank shape, with one generated last-beat
-completion signal per transaction and matched-read-beat lookup by transaction.
+existing family-wide admitted-request onehot boundary. Selector `.125` chose
+`.126`, readiness audit for read-data coverage over multiple generated read
+burst-last concrete same-ID queue-head groups. Audit `.126` selected `.127`,
+generated multi-group queue-head multi-beat read-data output-bank behavior.
+`.127` now ships that behavior for
+`ppif/axi_manager_capacity_status_read_multi_group_same_id_queue_head_read_data.ppif`,
+flattening the `RID` `3` and `RID` `5` generated queue groups into
+multi-beat read-data coverage with per-transaction output banks, valid masks,
+length outputs, scalar `RRESP` aggregation, raw `ARLEN` capture, and
+beat-count/`RLAST` runtime validation. `.128` is the next selector/audit.
 Last-beat-only multi-group read-data, report-only/runtime-only variants,
 same-family auto-ID, deeper queues, write or read single-beat multi-group
 queue-head behavior, packed outputs, direct backend, and VHDL remain deferred.

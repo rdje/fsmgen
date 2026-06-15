@@ -551,6 +551,64 @@ subtest 'PPIF adapter parses AXI manager read multi-beat same-ID queue-head read
     ok($read_policy->{generated_queue_behavior}, 'adapter report marks read multi-beat queue-head generated queue behavior true');
 };
 
+subtest 'PPIF adapter parses AXI manager read multi-group same-ID queue-head read-data behavior' => sub {
+    my $sample_path = sample_capacity_read_multi_group_same_id_queue_head_read_data_ppif_path();
+    ok(-f $sample_path, 'tracked runnable PPIF capacity/status read multi-group same-ID queue-head read-data sample exists');
+
+    my $result = FSM::Adapter::IAL2::PPIF->new()->parse_source(sample_capacity_read_multi_group_same_id_queue_head_read_data_ppif(), $sample_path);
+    my $isf = $result->{generated_ial1}{text};
+    my $fsm = $result->{generated_ial0}{files}{'axi0_capacity_status.fsm'};
+
+    is($result->{kind}, 'protocol_intent.axi_manager_capacity_status', 'read multi-group same-ID queue-head read-data sample still uses the capacity/status generator');
+    is($result->{report}{source_object}{id}, 'axi-manager-capacity-status-read-multi-group-same-id-queue-head-read-data', 'read multi-group same-ID queue-head read-data source object id is preserved');
+    is($result->{report}{source_object}{intent_name}, 'axi_manager_capacity_status_read_multi_group_same_id_queue_head_read_data', 'read multi-group same-ID queue-head read-data source intent name is preserved');
+    like($isf, qr/\(rule axi0_r2_response_demux \(& axi0_read_complete \(== axi0_rid 4'd5\) axi0_rlast axi0_read_id5_same_id_issue_order_slot0_r2_q\)/, 'read multi-group queue-head read-data sample emits r2 RID5 response-demux rule');
+    like($isf, qr/\(output axi0_r2_beat_rdata_0 \(width 32\)\)/, 'read multi-group queue-head read-data sample generates r2 beat data output bank');
+    like($isf, qr/\(output axi0_r2_rresp \(width 2\)\)/, 'read multi-group queue-head read-data sample generates r2 scalar status aggregate output');
+    like($isf, qr/\(rule axi0_r2_read_beat_0_capture \(& \(& axi0_read_complete \(& \(== axi0_rid 4'd5\) axi0_read_id5_same_id_issue_order_slot0_r2_q\)\) \(! axi0_r2_request\) \(== axi0_r2_read_beat_count_q 5'd0\)\)[\s\S]*\(axi0_r2_beat_rdata_0 axi0_rdata\)[\s\S]*\(axi0_r2_beat_valid 16'b0000000000000001\)[\s\S]*\(axi0_r2_read_beats 5'd1\)\)/, 'read multi-group queue-head read-data sample captures r2 lane 0 under RID5 queue-head match');
+    like($fsm, qr/\(-axi0_r2_read_beat_0_capture\s+<\(& \(& axi0_read_complete \(& \(== axi0_rid 4'd5\) axi0_read_id5_same_id_issue_order_slot0_r2_q\)\) \(! axi0_r2_request\) \(== axi0_r2_read_beat_count_q 5'd0\)\)[\s\S]*\(<- \(axi0_r2_beat_rdata_0> axi0_rdata\)\)[\s\S]*\(<- \(axi0_r2_beat_valid> 16'b0000000000000001\)\)[\s\S]*\(<- \(axi0_r2_read_beats> 5'd1\)\)/, 'read multi-group queue-head read-data sample lowers r2 lane 0 payload, valid mask, and length');
+    assert_same_id_queue_head_response_demux_report(
+        $result->{report}{response_demux},
+        'adapter multi-group queue-head read-data response-demux report',
+        residue => [],
+        queues => [
+            {
+                concrete_id          => 3,
+                transactions         => [qw(r0 r1)],
+                depth                => 2,
+                dequeue_event_source => 'queue_head_response_demux',
+            },
+            {
+                concrete_id          => 5,
+                transactions         => [qw(r2 r3)],
+                depth                => 2,
+                dequeue_event_source => 'queue_head_response_demux',
+            },
+        ],
+        completion_signals => [qw(axi0_r0_complete axi0_r1_complete axi0_r2_complete axi0_r3_complete)],
+        generated_rules => [qw(axi0_r0_response_demux axi0_r1_response_demux axi0_r2_response_demux axi0_r3_response_demux)],
+        generated_assertions => [qw(
+            axi0_read_response_demux_active_match
+            axi0_r0_r1_read_response_demux_unique_match
+            axi0_r0_r2_read_response_demux_unique_match
+            axi0_r0_r3_read_response_demux_unique_match
+            axi0_r1_r2_read_response_demux_unique_match
+            axi0_r1_r3_read_response_demux_unique_match
+            axi0_r2_r3_read_response_demux_unique_match
+        )],
+    );
+    assert_read_data_multi_beat_report(
+        $result->{report}{read_data},
+        'adapter multi-group queue-head read-data report',
+        completion_validity => 'generated_queue_head_response_demux_last_beat_completion_pulse',
+        transactions => [qw(r0 r1 r2 r3)],
+    );
+    my $read_policy = $result->{report}{same_id_ordering}{concrete_id_reuse_policy}{read};
+    is_deeply([map { $_->{concrete_id} } @{$read_policy->{generated_queues} || []}], [3, 5], 'adapter multi-group read-data report keeps both generated queue groups');
+    ok($read_policy->{accepted_same_id_reuse}, 'adapter report accepts read multi-group same-ID queue-head reuse for the covered shape');
+    ok($read_policy->{generated_queue_behavior}, 'adapter report marks read multi-group queue-head generated queue behavior true');
+};
+
 subtest 'PPIF adapter parses AXI manager write same-ID queue-head response-demux behavior' => sub {
     my $sample_path = sample_capacity_write_same_id_queue_head_response_demux_ppif_path();
     ok(-f $sample_path, 'tracked runnable PPIF capacity/status write same-ID queue-head response-demux sample exists');
@@ -1571,6 +1629,55 @@ subtest 'CLI emits IAL2 report JSON for AXI manager read multi-beat same-ID queu
     is_deeply($report->{generated_artifacts}{ial0}{files}, ['axi0_capacity_status.fsm'], 'read multi-beat same-ID queue-head read-data keeps the generated .fsm artifact name stable');
 };
 
+subtest 'CLI emits IAL2 report JSON for AXI manager read multi-group same-ID queue-head read-data .ppif' => sub {
+    my ($success, undef, undef, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--emit-schedule-json', sample_capacity_read_multi_group_same_id_queue_head_read_data_ppif_path()],
+    );
+
+    ok($success, '--emit-schedule-json succeeds for capacity/status read multi-group same-ID queue-head read-data .ppif');
+    is(join('', @{$stderr_buf || []}), '', 'capacity/status read multi-group same-ID queue-head read-data report keeps stderr clean');
+    my $report = decode_json(join('', @{$stdout_buf || []}));
+    is($report->{schema}, 'fsmgen.ial2.protocol_intent.axi_manager_capacity_status.v1', 'CLI keeps the capacity/status report schema');
+    is($report->{source_object}{intent_name}, 'axi_manager_capacity_status_read_multi_group_same_id_queue_head_read_data', 'read multi-group same-ID queue-head read-data report carries the PPIF top-level intent name');
+    assert_same_id_queue_head_response_demux_report(
+        $report->{response_demux},
+        'CLI multi-group queue-head read-data response-demux report',
+        residue => [],
+        queues => [
+            {
+                concrete_id          => 3,
+                transactions         => [qw(r0 r1)],
+                depth                => 2,
+                dequeue_event_source => 'queue_head_response_demux',
+            },
+            {
+                concrete_id          => 5,
+                transactions         => [qw(r2 r3)],
+                depth                => 2,
+                dequeue_event_source => 'queue_head_response_demux',
+            },
+        ],
+        completion_signals => [qw(axi0_r0_complete axi0_r1_complete axi0_r2_complete axi0_r3_complete)],
+        generated_rules => [qw(axi0_r0_response_demux axi0_r1_response_demux axi0_r2_response_demux axi0_r3_response_demux)],
+        generated_assertions => [qw(
+            axi0_read_response_demux_active_match
+            axi0_r0_r1_read_response_demux_unique_match
+            axi0_r0_r2_read_response_demux_unique_match
+            axi0_r0_r3_read_response_demux_unique_match
+            axi0_r1_r2_read_response_demux_unique_match
+            axi0_r1_r3_read_response_demux_unique_match
+            axi0_r2_r3_read_response_demux_unique_match
+        )],
+    );
+    assert_read_data_multi_beat_report(
+        $report->{read_data},
+        'CLI multi-group queue-head read-data report',
+        completion_validity => 'generated_queue_head_response_demux_last_beat_completion_pulse',
+        transactions => [qw(r0 r1 r2 r3)],
+    );
+    is_deeply($report->{generated_artifacts}{ial0}{files}, ['axi0_capacity_status.fsm'], 'read multi-group same-ID queue-head read-data keeps the generated .fsm artifact name stable');
+};
+
 subtest 'CLI emits IAL2 report JSON for AXI manager write same-ID queue-head response-demux .ppif' => sub {
     my ($success, undef, undef, $stdout_buf, $stderr_buf) = run(
         command => ['./bin/fsmgen', '--emit-schedule-json', sample_capacity_write_same_id_queue_head_response_demux_ppif_path()],
@@ -1958,6 +2065,38 @@ subtest 'CLI --verify-hdl accepts AXI manager read multi-beat same-ID queue-head
     like($sv, qr/axi0_r0_beat_valid_next\s*=\s*16'b1\s*;/, 'read multi-beat queue-head read-data HDL sets the first valid-mask prefix');
     like($sv, qr/axi0_r0_read_beats_next\s*=\s*5'd1\s*;/, 'read multi-beat queue-head read-data HDL sets r0 length after first beat');
     like($sv, qr/axi0_r0_rresp_next\s*=\s*axi0_rresp\s*;/, 'read multi-beat queue-head read-data HDL updates scalar aggregate from current RRESP');
+};
+
+subtest 'CLI --verify-hdl accepts AXI manager read multi-group same-ID queue-head read-data .ppif' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $hdl = File::Spec->catfile($tempdir, 'axi_read_multi_group_same_id_queue_head_read_data.sv');
+
+    my ($success, undef, undef, undef, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--quiet', '--verify-hdl', '--output', $hdl, sample_capacity_read_multi_group_same_id_queue_head_read_data_ppif_path()],
+    );
+
+    ok($success, 'capacity/status read multi-group same-ID queue-head read-data --verify-hdl succeeds');
+    is(join('', @{$stderr_buf || []}), '', 'capacity/status read multi-group same-ID queue-head read-data --verify-hdl keeps stderr clean');
+    ok(-f $hdl, 'read multi-group same-ID queue-head read-data --output writes generated HDL');
+    my $sv = slurp($hdl);
+    like($sv, qr/\binput\s+(?:wire\s+)?\[3:0\]\s+axi0_rid\b/, 'read multi-group queue-head read-data HDL exposes generated RID input');
+    like($sv, qr/\binput\s+(?:wire\s+)?axi0_rlast\b/, 'read multi-group queue-head read-data HDL exposes generated RLAST input');
+    like($sv, qr/\binput\s+(?:wire\s+)?\[7:0\]\s+axi0_arlen\b/, 'read multi-group queue-head read-data HDL exposes generated ARLEN input');
+    like($sv, qr/\binput\s+(?:wire\s+)?\[31:0\]\s+axi0_rdata\b/, 'read multi-group queue-head read-data HDL exposes generated RDATA input');
+    like($sv, qr/\binput\s+(?:wire\s+)?\[1:0\]\s+axi0_rresp\b/, 'read multi-group queue-head read-data HDL exposes generated RRESP input');
+    like($sv, qr/\boutput\s+reg\s+\[31:0\]\s+axi0_r2_beat_rdata_0\b/, 'read multi-group queue-head read-data HDL exposes r2 per-beat data output');
+    like($sv, qr/\boutput\s+reg\s+\[1:0\]\s+axi0_r2_beat_rresp_0\b/, 'read multi-group queue-head read-data HDL exposes r2 per-beat status output');
+    like($sv, qr/\boutput\s+reg\s+\[1:0\]\s+axi0_r2_rresp\b/, 'read multi-group queue-head read-data HDL exposes r2 scalar status aggregate output');
+    like($sv, qr/\boutput\s+reg\s+\[15:0\]\s+axi0_r2_beat_valid\b/, 'read multi-group queue-head read-data HDL exposes r2 valid-mask output');
+    like($sv, qr/\boutput\s+reg\s+\[4:0\]\s+axi0_r2_read_beats\b/, 'read multi-group queue-head read-data HDL exposes r2 length output');
+    like($sv, qr/assign\s+axi0_r2_read_data_output_init_en\s*=\s*axi0_r2_request\s*;/, 'read multi-group queue-head read-data HDL clears r2 output bank on request');
+    like($sv, qr/assign\s+axi0_r2_read_beat_0_capture_en\s*=/, 'read multi-group queue-head read-data HDL emits r2 lane 0 capture enable');
+    like($sv, qr/axi0_read_id5_same_id_issue_order_slot0_r2_q/, 'read multi-group queue-head read-data HDL references RID5 slot-0 transaction identity');
+    like($sv, qr/axi0_r2_beat_rdata_0_next\s*=\s*axi0_rdata\s*;/, 'read multi-group queue-head read-data HDL captures r2 lane 0 RDATA');
+    like($sv, qr/axi0_r2_beat_rresp_0_next\s*=\s*axi0_rresp\s*;/, 'read multi-group queue-head read-data HDL captures r2 lane 0 RRESP');
+    like($sv, qr/axi0_r2_beat_valid_next\s*=\s*16'b1\s*;/, 'read multi-group queue-head read-data HDL sets r2 first valid-mask prefix');
+    like($sv, qr/axi0_r2_read_beats_next\s*=\s*5'd1\s*;/, 'read multi-group queue-head read-data HDL sets r2 length after first beat');
+    like($sv, qr/axi0_r2_rresp_next\s*=\s*axi0_rresp\s*;/, 'read multi-group queue-head read-data HDL updates r2 scalar aggregate from current RRESP');
 };
 
 subtest 'CLI --verify-hdl accepts AXI manager last-beat read-data behavior .ppif' => sub {
@@ -2561,6 +2700,50 @@ subtest 'CLI check JSON and semantic JSON support-account read multi-group same-
         $semantic_report->{semantic}{module}{name},
         'axi0_capacity_status',
         'capacity/status read multi-group same-ID queue-head response-demux semantic JSON records the unchanged generated module',
+    );
+};
+
+subtest 'CLI check JSON and semantic JSON support-account read multi-group same-ID queue-head read-data .ppif separately' => sub {
+    my $policy_path = sample_capacity_read_multi_group_same_id_queue_head_read_data_ppif_path();
+    my ($success, undef, undef, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--strict', '--check', '--json', $policy_path],
+    );
+    ok($success, 'capacity/status read multi-group same-ID queue-head read-data --check --json succeeds');
+    is(join('', @{$stderr_buf || []}), '', 'capacity/status read multi-group same-ID queue-head read-data --check --json keeps stderr clean');
+    my $check_report = decode_json(join('', @{$stdout_buf || []}));
+    ok($check_report->{success}, 'capacity/status read multi-group same-ID queue-head read-data check JSON reports success');
+    is(
+        $check_report->{source}{resolved_path},
+        File::Spec->rel2abs($policy_path),
+        'capacity/status read multi-group same-ID queue-head read-data check JSON reports the public .ppif source path',
+    );
+    is(
+        $check_report->{support_accounting}{entry_id},
+        'intent.ppif_axi_manager_capacity_status_read_multi_group_same_id_queue_head_read_data',
+        'capacity/status read multi-group same-ID queue-head read-data check JSON support accounting names the PPIF corpus entry',
+    );
+
+    my ($semantic_success, undef, undef, $semantic_stdout, $semantic_stderr) = run(
+        command => ['./bin/fsmgen', '--strict', '--emit-semantic-json', $policy_path],
+    );
+    ok($semantic_success, 'capacity/status read multi-group same-ID queue-head read-data --emit-semantic-json succeeds');
+    is(join('', @{$semantic_stderr || []}), '', 'capacity/status read multi-group same-ID queue-head read-data --emit-semantic-json keeps stderr clean');
+    my $semantic_report = decode_json(join('', @{$semantic_stdout || []}));
+    ok($semantic_report->{success}, 'capacity/status read multi-group same-ID queue-head read-data semantic JSON reports success');
+    is(
+        $semantic_report->{source}{resolved_path},
+        File::Spec->rel2abs($policy_path),
+        'capacity/status read multi-group same-ID queue-head read-data semantic JSON reports the public .ppif source path',
+    );
+    is(
+        $semantic_report->{support_accounting}{entry_id},
+        'intent.ppif_axi_manager_capacity_status_read_multi_group_same_id_queue_head_read_data',
+        'capacity/status read multi-group same-ID queue-head read-data semantic JSON support accounting names the PPIF corpus entry',
+    );
+    is(
+        $semantic_report->{semantic}{module}{name},
+        'axi0_capacity_status',
+        'capacity/status read multi-group same-ID queue-head read-data semantic JSON records the unchanged generated module',
     );
 };
 
@@ -3398,6 +3581,10 @@ sub sample_capacity_read_multi_group_same_id_queue_head_response_demux_ppif_path
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_read_multi_group_same_id_queue_head_response_demux.ppif');
 }
 
+sub sample_capacity_read_multi_group_same_id_queue_head_read_data_ppif_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_read_multi_group_same_id_queue_head_read_data.ppif');
+}
+
 sub sample_capacity_read_single_beat_same_id_queue_head_response_demux_ppif_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_read_single_beat_same_id_queue_head_response_demux.ppif');
 }
@@ -3500,6 +3687,10 @@ sub sample_capacity_same_id_queue_head_response_demux_ppif {
 
 sub sample_capacity_read_multi_group_same_id_queue_head_response_demux_ppif {
     return slurp(sample_capacity_read_multi_group_same_id_queue_head_response_demux_ppif_path());
+}
+
+sub sample_capacity_read_multi_group_same_id_queue_head_read_data_ppif {
+    return slurp(sample_capacity_read_multi_group_same_id_queue_head_read_data_ppif_path());
 }
 
 sub sample_capacity_read_single_beat_same_id_queue_head_response_demux_ppif {
@@ -4179,7 +4370,7 @@ sub assert_rlast_report_prose_alignment {
     ok($id_residue, "$owner reports AXI ID/order unsupported residue");
     like(
         $id_residue->{detail},
-        qr/generated burst-last RLAST response-demux completion, structural last-beat read-data metadata, generated last-beat read-data RDATA\/RRESP capture, generated last-beat read-data RDATA\/RRESP capture from generated read burst-last concrete same-ID queue-head response-demux, generated raw-ARLEN burst-length capture including report-only generated read burst-last concrete same-ID queue-head read-data contracts, explicit runtime-assertion beat-count\/RLAST validation for auto-ID and bounded read burst-last concrete same-ID queue-head read-data contracts, generated multi-beat read-data output-bank behavior for the covered auto-ID multi-beat-by-RID subset and bounded read burst-last concrete same-ID queue-head subset, bounded burst payload\/output behavior through that per-beat output bank, and generated scalar RRESP aggregation behavior are supported/,
+        qr/generated burst-last RLAST response-demux completion, structural last-beat read-data metadata, generated last-beat read-data RDATA\/RRESP capture, generated last-beat read-data RDATA\/RRESP capture from generated read burst-last concrete same-ID queue-head response-demux, generated raw-ARLEN burst-length capture including report-only generated read burst-last concrete same-ID queue-head read-data contracts, explicit runtime-assertion beat-count\/RLAST validation for auto-ID and bounded read burst-last concrete same-ID queue-head read-data contracts, generated multi-beat read-data output-bank behavior for the covered auto-ID multi-beat-by-RID subset and bounded read burst-last concrete same-ID queue-head subset including multiple independent queue-head groups, bounded burst payload\/output behavior through that per-beat output bank, and generated scalar RRESP aggregation behavior are supported/,
         "$owner reports generated burst-last, last-beat, queue-head last-beat, queue-head report-only raw ARLEN, non-queue-head and queue-head beat-count, multi-beat output-bank, bounded burst output, and scalar aggregation behavior as supported",
     );
     like(
@@ -4445,64 +4636,78 @@ sub assert_read_data_multi_beat_report {
     is($read->{length_output}, 'per_transaction_beat_count', "$owner reports length-output shape");
     ok($read->{multi_beat_reassembly_generated_behavior}, "$owner reports generated multi-beat reassembly/output behavior");
 
-    my @r0_data_outputs = map { "axi0_r0_beat_rdata_$_" } 0 .. 15;
-    my @r1_data_outputs = map { "axi0_r1_beat_rdata_$_" } 0 .. 15;
-    my @r0_status_outputs = map { "axi0_r0_beat_rresp_$_" } 0 .. 15;
-    my @r1_status_outputs = map { "axi0_r1_beat_rresp_$_" } 0 .. 15;
-    my @multi_beat_outputs = (
-        @r0_data_outputs,
-        @r0_status_outputs,
-        qw(axi0_r0_rresp axi0_r0_beat_valid axi0_r0_read_beats),
-        @r1_data_outputs,
-        @r1_status_outputs,
-        qw(axi0_r1_rresp axi0_r1_beat_valid axi0_r1_read_beats),
-    );
-    my @r0_capture_rules = map { "axi0_r0_read_beat_${_}_capture" } 0 .. 15;
-    my @r1_capture_rules = map { "axi0_r1_read_beat_${_}_capture" } 0 .. 15;
-    my @multi_beat_capture_rules = (@r0_capture_rules, @r1_capture_rules);
-    my @status_aggregate_outputs = qw(axi0_r0_rresp axi0_r1_rresp);
-    my @status_aggregate_init_rules = qw(axi0_r0_read_data_output_init axi0_r1_read_data_output_init);
-    my @status_aggregate_update_rules = qw(axi0_r0_rresp_aggregate axi0_r1_rresp_aggregate);
+    my @transactions = @{$args{transactions} || [qw(r0 r1)]};
+    my (%data_outputs, %status_outputs, %capture_rules);
+    for my $transaction (@transactions) {
+        $data_outputs{$transaction} = [map { "axi0_${transaction}_beat_rdata_$_" } 0 .. 15];
+        $status_outputs{$transaction} = [map { "axi0_${transaction}_beat_rresp_$_" } 0 .. 15];
+        $capture_rules{$transaction} = [map { "axi0_${transaction}_read_beat_${_}_capture" } 0 .. 15];
+    }
 
-    is_deeply([map { $_->{transaction} } @{$read->{transactions}}], [qw(r0 r1)], "$owner reports multi-beat transaction bindings");
-    is_deeply([map { $_->{data_output_prefix} } @{$read->{transactions}}], [qw(axi0_r0_beat_rdata axi0_r1_beat_rdata)], "$owner reports data output prefixes");
-    is_deeply([map { $_->{status_output_prefix} } @{$read->{transactions}}], [qw(axi0_r0_beat_rresp axi0_r1_beat_rresp)], "$owner reports status output prefixes");
-    is_deeply([map { $_->{status_aggregate_output} } @{$read->{transactions}}], [qw(axi0_r0_rresp axi0_r1_rresp)], "$owner reports scalar RRESP aggregate outputs");
-    is_deeply([map { $_->{status_aggregate_output_width} } @{$read->{transactions}}], [2, 2], "$owner reports scalar RRESP aggregate output widths");
-    is_deeply($read->{transactions}[0]{generated_data_outputs}, \@r0_data_outputs, "$owner reports r0 generated data lane names");
-    is_deeply($read->{transactions}[0]{generated_status_outputs}, \@r0_status_outputs, "$owner reports r0 generated status lane names");
-    is_deeply([map { $_->{valid_mask_output} } @{$read->{transactions}}], [qw(axi0_r0_beat_valid axi0_r1_beat_valid)], "$owner reports valid-mask outputs");
-    is_deeply([map { $_->{valid_mask_width} } @{$read->{transactions}}], [16, 16], "$owner reports valid-mask widths");
-    is_deeply([map { $_->{length_output} } @{$read->{transactions}}], [qw(axi0_r0_read_beats axi0_r1_read_beats)], "$owner reports length outputs");
-    is_deeply([map { $_->{length_output_width} } @{$read->{transactions}}], [5, 5], "$owner reports length-output widths");
-    is_deeply([map { $_->{expected_beat_count_storage} } @{$read->{transactions}}], [qw(axi0_r0_expected_beats_q axi0_r1_expected_beats_q)], "$owner reports expected-beat storage");
-    is_deeply([map { $_->{beat_count_storage} } @{$read->{transactions}}], [qw(axi0_r0_read_beat_count_q axi0_r1_read_beat_count_q)], "$owner reports beat-count storage");
-    is_deeply([map { $_->{multi_beat_output_init_rule} } @{$read->{transactions}}], [qw(axi0_r0_read_data_output_init axi0_r1_read_data_output_init)], "$owner reports multi-beat output init rules");
-    is_deeply($read->{transactions}[0]{multi_beat_capture_rules}, \@r0_capture_rules, "$owner reports r0 multi-beat capture rules");
+    my @multi_beat_outputs = map {
+        my $transaction = $_;
+        (
+            @{$data_outputs{$transaction}},
+            @{$status_outputs{$transaction}},
+            "axi0_${transaction}_rresp",
+            "axi0_${transaction}_beat_valid",
+            "axi0_${transaction}_read_beats",
+        );
+    } @transactions;
+    my @multi_beat_data_outputs = map { @{$data_outputs{$_}} } @transactions;
+    my @multi_beat_status_outputs = map { @{$status_outputs{$_}} } @transactions;
+    my @multi_beat_capture_rules = map { @{$capture_rules{$_}} } @transactions;
+    my @status_aggregate_outputs = map { "axi0_${_}_rresp" } @transactions;
+    my @status_aggregate_init_rules = map { "axi0_${_}_read_data_output_init" } @transactions;
+    my @status_aggregate_update_rules = map { "axi0_${_}_rresp_aggregate" } @transactions;
+    my @burst_length_storage = map { "axi0_${_}_arlen_q" } @transactions;
+    my @burst_length_rules = map { "axi0_${_}_burst_length_capture" } @transactions;
+    my @expected_beat_count_storage = map { "axi0_${_}_expected_beats_q" } @transactions;
+    my @beat_count_storage = map { "axi0_${_}_read_beat_count_q" } @transactions;
+    my @beat_count_rules = map { ("axi0_${_}_beat_count_init", "axi0_${_}_read_beat_count") } @transactions;
+    my @generated_rules = (
+        @burst_length_rules,
+        @beat_count_rules,
+        @status_aggregate_init_rules,
+        map {
+            my $transaction = $_;
+            (@{$capture_rules{$transaction}}, "axi0_${transaction}_rresp_aggregate");
+        } @transactions,
+    );
+
+    is_deeply([map { $_->{transaction} } @{$read->{transactions}}], \@transactions, "$owner reports multi-beat transaction bindings");
+    is_deeply([map { $_->{data_output_prefix} } @{$read->{transactions}}], [map { "axi0_${_}_beat_rdata" } @transactions], "$owner reports data output prefixes");
+    is_deeply([map { $_->{status_output_prefix} } @{$read->{transactions}}], [map { "axi0_${_}_beat_rresp" } @transactions], "$owner reports status output prefixes");
+    is_deeply([map { $_->{status_aggregate_output} } @{$read->{transactions}}], \@status_aggregate_outputs, "$owner reports scalar RRESP aggregate outputs");
+    is_deeply([map { $_->{status_aggregate_output_width} } @{$read->{transactions}}], [(2) x scalar(@transactions)], "$owner reports scalar RRESP aggregate output widths");
+    is_deeply($read->{transactions}[0]{generated_data_outputs}, $data_outputs{$transactions[0]}, "$owner reports first transaction generated data lane names");
+    is_deeply($read->{transactions}[0]{generated_status_outputs}, $status_outputs{$transactions[0]}, "$owner reports first transaction generated status lane names");
+    is_deeply([map { $_->{valid_mask_output} } @{$read->{transactions}}], [map { "axi0_${_}_beat_valid" } @transactions], "$owner reports valid-mask outputs");
+    is_deeply([map { $_->{valid_mask_width} } @{$read->{transactions}}], [(16) x scalar(@transactions)], "$owner reports valid-mask widths");
+    is_deeply([map { $_->{length_output} } @{$read->{transactions}}], [map { "axi0_${_}_read_beats" } @transactions], "$owner reports length outputs");
+    is_deeply([map { $_->{length_output_width} } @{$read->{transactions}}], [(5) x scalar(@transactions)], "$owner reports length-output widths");
+    is_deeply([map { $_->{expected_beat_count_storage} } @{$read->{transactions}}], \@expected_beat_count_storage, "$owner reports expected-beat storage");
+    is_deeply([map { $_->{beat_count_storage} } @{$read->{transactions}}], \@beat_count_storage, "$owner reports beat-count storage");
+    is_deeply([map { $_->{multi_beat_output_init_rule} } @{$read->{transactions}}], \@status_aggregate_init_rules, "$owner reports multi-beat output init rules");
+    is_deeply($read->{transactions}[0]{multi_beat_capture_rules}, $capture_rules{$transactions[0]}, "$owner reports first transaction multi-beat capture rules");
     is_deeply([map { $_->{status_aggregate_init_rule} } @{$read->{transactions}}], \@status_aggregate_init_rules, "$owner reports scalar aggregate init rule ownership");
     is_deeply([map { $_->{status_aggregate_update_rule} } @{$read->{transactions}}], \@status_aggregate_update_rules, "$owner reports scalar aggregate update rules");
     is_deeply($read->{generated_inputs}, [qw(axi0_rdata axi0_rresp axi0_arlen)], "$owner reports generated payload and ARLEN inputs");
     is_deeply($read->{generated_outputs}, \@multi_beat_outputs, "$owner reports generated output-bank and scalar aggregate outputs");
     is_deeply($read->{generated_status_aggregate_outputs}, \@status_aggregate_outputs, "$owner reports generated scalar aggregate outputs");
-    is_deeply($read->{generated_multi_beat_data_outputs}, [@r0_data_outputs, @r1_data_outputs], "$owner reports generated multi-beat data outputs");
-    is_deeply($read->{generated_multi_beat_status_outputs}, [@r0_status_outputs, @r1_status_outputs], "$owner reports generated multi-beat status outputs");
-    is_deeply($read->{generated_multi_beat_valid_outputs}, [qw(axi0_r0_beat_valid axi0_r1_beat_valid)], "$owner reports generated multi-beat valid-mask outputs");
-    is_deeply($read->{generated_multi_beat_length_outputs}, [qw(axi0_r0_read_beats axi0_r1_read_beats)], "$owner reports generated multi-beat length outputs");
-    is_deeply($read->{generated_burst_length_storage}, [qw(axi0_r0_arlen_q axi0_r1_arlen_q)], "$owner reports generated burst-length storage");
-    is_deeply($read->{generated_beat_count_rules}, [qw(axi0_r0_beat_count_init axi0_r0_read_beat_count axi0_r1_beat_count_init axi0_r1_read_beat_count)], "$owner reports generated beat-count rules");
-    is_deeply($read->{generated_multi_beat_output_init_rules}, [qw(axi0_r0_read_data_output_init axi0_r1_read_data_output_init)], "$owner reports generated multi-beat output init rules");
+    is_deeply($read->{generated_multi_beat_data_outputs}, \@multi_beat_data_outputs, "$owner reports generated multi-beat data outputs");
+    is_deeply($read->{generated_multi_beat_status_outputs}, \@multi_beat_status_outputs, "$owner reports generated multi-beat status outputs");
+    is_deeply($read->{generated_multi_beat_valid_outputs}, [map { "axi0_${_}_beat_valid" } @transactions], "$owner reports generated multi-beat valid-mask outputs");
+    is_deeply($read->{generated_multi_beat_length_outputs}, [map { "axi0_${_}_read_beats" } @transactions], "$owner reports generated multi-beat length outputs");
+    is_deeply($read->{generated_burst_length_storage}, \@burst_length_storage, "$owner reports generated burst-length storage");
+    is_deeply($read->{generated_beat_count_rules}, \@beat_count_rules, "$owner reports generated beat-count rules");
+    is_deeply($read->{generated_multi_beat_output_init_rules}, \@status_aggregate_init_rules, "$owner reports generated multi-beat output init rules");
     is_deeply($read->{generated_multi_beat_capture_rules}, \@multi_beat_capture_rules, "$owner reports generated multi-beat capture rules");
     is_deeply($read->{generated_status_aggregate_init_rules}, \@status_aggregate_init_rules, "$owner reports generated scalar aggregate init rules");
     is_deeply($read->{generated_status_aggregate_update_rules}, \@status_aggregate_update_rules, "$owner reports generated scalar aggregate update rules");
     is_deeply(
         $read->{generated_rules},
-        [
-            qw(axi0_r0_burst_length_capture axi0_r1_burst_length_capture axi0_r0_beat_count_init axi0_r0_read_beat_count axi0_r1_beat_count_init axi0_r1_read_beat_count axi0_r0_read_data_output_init axi0_r1_read_data_output_init),
-            @r0_capture_rules,
-            'axi0_r0_rresp_aggregate',
-            @r1_capture_rules,
-            'axi0_r1_rresp_aggregate',
-        ],
+        \@generated_rules,
         "$owner reports generated rules with output init, per-lane capture, and scalar aggregate update rules",
     );
     is_deeply($read_data->{residue}, [], "$owner removes generated scalar RRESP aggregation behavior from read-data residue");
