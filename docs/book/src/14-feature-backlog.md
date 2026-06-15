@@ -5165,6 +5165,14 @@ auto-ID plus concrete queue-head demux, deeper queues, write-family or read
 single-beat multiple-group queue-head behavior, direct backend lowering, and
 VHDL remain deferred.
 
+Post multi-group queue-head demux selector:
+[AXI_IAL2_MANAGER_POST_MULTI_GROUP_QUEUE_HEAD_DEMUX_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTI_GROUP_QUEUE_HEAD_DEMUX_NEXT_SLICE_SELECTION.md)
+selects `.126`, readiness audit for read-data coverage over multiple
+generated read burst-last concrete same-ID queue-head groups. The selector is
+audit-only: generated read-data over multiple queue groups remains deferred
+until the audit chooses whether the first behavior should cover last-beat,
+multi-beat, or a narrower prerequisite.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same
