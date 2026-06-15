@@ -119,16 +119,16 @@ auto-ID runtime-validation burst-length, auto-ID multi-beat read-data,
 queue-head last-beat read-data, queue-head single-beat read-data, and read
 burst-last queue-head demux samples.
 
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.120` later selected generated multi-beat
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.121` later shipped generated multi-beat
 read-data output-bank behavior for this bounded read burst-last concrete
-same-ID queue-head demux family as `.121`; see
-[AXI_IAL2_MANAGER_POST_QUEUE_HEAD_RUNTIME_VALIDATION_NEXT_SLICE_SELECTION](AXI_IAL2_MANAGER_POST_QUEUE_HEAD_RUNTIME_VALIDATION_NEXT_SLICE_SELECTION.md).
+same-ID queue-head demux family; see
+[AXI_IAL2_MANAGER_QUEUE_HEAD_MULTI_BEAT_READ_DATA_BEHAVIOR](AXI_IAL2_MANAGER_QUEUE_HEAD_MULTI_BEAT_READ_DATA_BEHAVIOR.md).
 
 ## Deferred
 
 The slice still fail-closes or defers:
 
-- multi-beat queue-head read-data until the selected `.121` implementation;
+- queue-head multi-beat shapes outside the bounded `.121` output-bank subset;
 - deeper or multiple duplicate concrete-ID groups;
 - mixed same-family auto-ID plus concrete queue-head response demux;
 - generalized per-ID queues;

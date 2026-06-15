@@ -5035,12 +5035,54 @@ plus active queue-head transaction identity. It is intentionally not the
 `RLAST`-qualified generated completion pulse, so early/missing `RLAST`
 assertions can reason about every matched beat.
 
-Selector `.120` now chooses generated multi-beat read-data output-bank
-behavior for the bounded read burst-last concrete same-ID queue-head demux
-shape as `.121`. That next owner is scoped to raw matched queue-head read
-beats, per-beat output banks, valid-mask/length outputs, and scalar `RRESP`
-aggregation. Deeper or multiple queue groups, mixed same-family auto-ID plus
-concrete queue-head demux, direct backend lowering, and VHDL remain deferred.
+Queue-head multi-beat read-data behavior:
+[AXI_IAL2_MANAGER_QUEUE_HEAD_MULTI_BEAT_READ_DATA_BEHAVIOR](../../AXI_IAL2_MANAGER_QUEUE_HEAD_MULTI_BEAT_READ_DATA_BEHAVIOR.md)
+ships generated multi-beat read-data output-bank behavior for the bounded
+read burst-last concrete same-ID queue-head demux sample:
+
+```bash
+./bin/fsmgen --emit-schedule-json ppif/axi_manager_capacity_status_read_multi_beat_same_id_queue_head_read_data.ppif
+./bin/fsmgen --quiet --verify-hdl --output /tmp/fsmgen_read_multi_beat_same_id_queue_head_read_data.sv ppif/axi_manager_capacity_status_read_multi_beat_same_id_queue_head_read_data.ppif
+```
+
+The lane capture rules use raw matched queue-head read beats plus the current
+beat-count lane index, while queue dequeue and transaction completion remain
+owned by the generated `RLAST`-qualified queue-head demux:
+
+```text
+rule axi0_r0_read_beat_0_capture:
+  guard:
+    axi0_read_complete
+    and axi0_rid == 3
+    and axi0_read_id3_same_id_issue_order_slot0_r0_q
+    and not axi0_r0_request
+    and axi0_r0_read_beat_count_q == 0
+  assignments:
+    axi0_r0_beat_rdata_0 <- axi0_rdata
+    axi0_r0_beat_rresp_0 <- axi0_rresp
+    axi0_r0_beat_valid <- 16'b0000000000000001
+    axi0_r0_read_beats <- 5'd1
+```
+
+The report distinguishes this bounded queue-head multi-beat path with:
+
+```text
+read_data.read.capture_scope: multi_beat
+read_data.read.completion_validity:
+  generated_queue_head_response_demux_last_beat_completion_pulse
+read_data.read.beat_match_source:
+  response_demux_matched_read_beat
+read_data.read.output_shape: per_beat_output_bank
+read_data.read.valid_output: per_transaction_valid_mask
+read_data.read.length_output: per_transaction_beat_count
+read_data.read.status_aggregation: worst_observed
+read_data.residue: []
+response_demux.residue: []
+```
+
+Deeper or multiple queue groups, mixed same-family auto-ID plus concrete
+queue-head demux, packed burst-vector outputs, alternate payload assembly,
+direct backend lowering, and VHDL remain deferred.
 
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
@@ -5050,8 +5092,9 @@ selected behavior.
 
 Post queue-head runtime-validation selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_RUNTIME_VALIDATION_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_RUNTIME_VALIDATION_NEXT_SLICE_SELECTION.md)
-selects generated multi-beat read-data output-bank behavior for the bounded
-read burst-last concrete same-ID queue-head demux shape as `.121`.
+selected generated multi-beat read-data output-bank behavior for the bounded
+read burst-last concrete same-ID queue-head demux shape as `.121`; `.121` now
+ships that selected behavior.
 
 First implementation subset selection:
 [AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION](../../AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md)
