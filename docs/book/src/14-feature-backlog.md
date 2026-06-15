@@ -4843,7 +4843,13 @@ pulses, but current normalization still fail-closes when `read_data` consumes
 concrete queue-head read demux. `.112` must decide whether the first safe
 behavior slice can be bounded to read single-beat queue-head demux plus
 single-beat `RDATA`/`RRESP` capture, or whether metadata/report alignment is
-required first.
+required first. Audit `.112`
+[AXI_IAL2_MANAGER_QUEUE_HEAD_READ_DATA_READINESS_AUDIT](../../AXI_IAL2_MANAGER_QUEUE_HEAD_READ_DATA_READINESS_AUDIT.md)
+selects `IAL2-FEATURE-COMPLETENESS-FRONTIER.113`, generated single-beat
+read-data capture for the bounded read single-beat concrete same-ID
+queue-head demux shape. No lowerer prerequisite is evident; `.113` must make
+read-data coverage source-aware for generated queue-head completion signals
+instead of only auto-ID transaction lists.
 
 First implementation subset selection:
 [AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION](../../AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md)

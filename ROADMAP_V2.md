@@ -1345,6 +1345,12 @@ response-demux completion pulses, but current normalization still rejects
 queue-head demux. `.112` must decide whether the first safe behavior slice can
 be bounded to read single-beat queue-head demux plus single-beat read-data
 capture, or whether parser/report/static metadata alignment is required first.
+Audit `.112` selects `.113`, generated single-beat read-data capture for the
+bounded read single-beat concrete same-ID queue-head demux shape. No
+IAL1/IAL0/SystemVerilog prerequisite is evident; the behavior slice must make
+read-data coverage source-aware for generated queue-head completion signals
+instead of only auto-ID transaction lists, then add the combined public sample,
+tests, support accounting, and docs.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.
