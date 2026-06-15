@@ -29,5 +29,6 @@ the queue-head response-demux contract, `.103` shipped selected-not-generated
 metadata, `.104` selected the behavior-slice selector, `.105` selected the
 first implementation boundary, `.106` shipped read burst-last depth-2 queue
 behavior, `.108` shipped write depth-2 queue-head behavior, and `.109`
-selected read single-beat queue-head behavior. The current active frontier is
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.110`.
+selected read single-beat queue-head behavior, and `.110` shipped generated
+read single-beat depth-2 queue-head `RID` demux without `RLAST`. The current
+active frontier is `IAL2-FEATURE-COMPLETENESS-FRONTIER.111`.

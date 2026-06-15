@@ -131,9 +131,10 @@ support accounting, and HDL verification.
 
 ## Deferred Work
 
-Still deferred after this slice:
+Deferred immediately after this slice:
 
-- read `single-beat` concrete same-ID queue-head behavior;
+- read `single-beat` concrete same-ID queue-head behavior, now shipped by
+  `IAL2-FEATURE-COMPLETENESS-FRONTIER.110`;
 - more than one duplicate concrete-ID group;
 - queue groups deeper than two slots;
 - same-family mixed auto-ID plus concrete queue-head demux;

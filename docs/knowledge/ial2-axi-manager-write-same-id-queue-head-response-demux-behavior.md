@@ -30,7 +30,8 @@ behavior, and the write same-ID policy reports `accepted_same_id_reuse: true`
 and `generated_queue_behavior: true`.
 
 The slice also repaired appended HDL assertion emission by inlining
-assertion-only intermediate expressions in SVA conditions. Read `single-beat`,
-deeper or multiple duplicate-ID groups, same-family mixed auto-ID plus
+assertion-only intermediate expressions in SVA conditions. `.110` has since
+shipped generated read single-beat queue-head `RID` demux without `RLAST`.
+Deeper or multiple duplicate-ID groups, same-family mixed auto-ID plus
 concrete queue-head demux, read-data consumption, direct backend lowering, and
 VHDL remain deferred behind later task-tree owners.

@@ -10,9 +10,9 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `HEAD after commit` — `IAL2-FEATURE-COMPLETENESS-FRONTIER.109: select read single-beat same-ID queue behavior`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.110` pending; next action is implementing generated AXI read single-beat same-ID queue-head behavior for one duplicate concrete read-ID group of two transactions at computed depth 2.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.109`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.108`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.107`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.106`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.105`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.104`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.103`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.102`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.101`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.100`. Older completed slices are in the task tree and git history.
+- latest_commit: `HEAD after commit` — `IAL2-FEATURE-COMPLETENESS-FRONTIER.110: ship read single-beat same-ID queue behavior`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.111` pending; next action is auditing and selecting the next AXI same-ID queue behavior expansion after shipped read burst-last, write, and read single-beat depth-2 queue-head behavior.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.110`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.109`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.108`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.107`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.106`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.105`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.104`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.103`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.102`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.101`. Older completed slices are in the task tree and git history.
 - in_flight_uncommitted: none after this commit; unrelated untracked `fx/` intentionally left alone.
 - blockers: none.
 

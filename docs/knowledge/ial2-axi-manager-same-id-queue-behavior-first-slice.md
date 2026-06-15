@@ -35,8 +35,10 @@ reports `enforcement: generated_issue_order_queue`,
 
 `.107` selected write queue-head behavior as the next same-ID expansion, and
 `.108` has since shipped generated write depth-2 queue-head `BID` demux for
-one duplicate concrete write-ID group. The active frontier is now
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.109`, an audit/selector for the next
-same-ID queue behavior expansion. Read `single-beat`, deeper or multiple
-duplicate-ID groups, same-family mixed auto-ID, read-data consumption, direct
-backend, and VHDL remain deferred.
+one duplicate concrete write-ID group. `.110` has also shipped generated read
+single-beat depth-2 queue-head `RID` demux without `RLAST` for one duplicate
+concrete read-ID group. The active frontier is now
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.111`, an audit/selector for the next
+same-ID queue behavior expansion. Deeper or multiple duplicate-ID groups,
+same-family mixed auto-ID, read-data consumption, direct backend, and VHDL
+remain deferred.

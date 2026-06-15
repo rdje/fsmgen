@@ -275,6 +275,36 @@ subtest 'PPIF adapter parses AXI manager same-ID queue-head response-demux metad
     );
 };
 
+subtest 'PPIF adapter parses AXI manager read single-beat same-ID queue-head response-demux behavior' => sub {
+    my $sample_path = sample_capacity_read_single_beat_same_id_queue_head_response_demux_ppif_path();
+    ok(-f $sample_path, 'tracked runnable PPIF capacity/status read single-beat same-ID queue-head response-demux sample exists');
+
+    my $result = FSM::Adapter::IAL2::PPIF->new()->parse_source(sample_capacity_read_single_beat_same_id_queue_head_response_demux_ppif(), $sample_path);
+    my $isf = $result->{generated_ial1}{text};
+
+    is($result->{kind}, 'protocol_intent.axi_manager_capacity_status', 'read single-beat same-ID queue-head demux sample still uses the capacity/status generator');
+    is($result->{report}{source_object}{id}, 'axi-manager-capacity-status-read-single-beat-same-id-queue-head-response-demux', 'read single-beat same-ID queue-head demux source object id is preserved');
+    is($result->{report}{source_object}{intent_name}, 'axi_manager_capacity_status_read_single_beat_same_id_queue_head_response_demux', 'read single-beat same-ID queue-head demux source intent name is preserved');
+    like($isf, qr/\(var axi0_r0_admitted_request_pulse_q \(width 1\)\)/, 'read single-beat same-ID queue-head demux sample keeps r0 admitted request pulse');
+    like($isf, qr/\(var axi0_r1_admitted_request_pulse_q \(width 1\)\)/, 'read single-beat same-ID queue-head demux sample keeps r1 admitted request pulse');
+    like($isf, qr/\(var axi0_read_id3_same_id_issue_order_slot0_r0_q \(width 1\)\)/, 'read single-beat same-ID queue-head demux sample declares generated queue slot state');
+    like($isf, qr/\(rule axi0_read_id3_same_id_issue_order_r0_dequeue_enqueue_r1\b/, 'read single-beat same-ID queue-head demux sample emits generated queue transition rules');
+    like($isf, qr/\(rule axi0_r0_response_demux \(& axi0_read_complete \(== axi0_rid 4'd3\) axi0_read_id3_same_id_issue_order_slot0_r0_q\)/, 'read single-beat same-ID queue-head demux sample emits generated r0 response-demux rule');
+    unlike($isf, qr/\baxi0_rlast\b/, 'read single-beat same-ID queue-head demux sample does not generate or consume RLAST');
+    like($isf, qr/\(output axi0_r0_complete\)/, 'read single-beat same-ID queue-head demux sample emits generated r0 completion output');
+    assert_same_id_read_single_beat_queue_head_response_demux_report($result->{report}{response_demux}, 'adapter report');
+    my $read_policy = $result->{report}{same_id_ordering}{concrete_id_reuse_policy}{read};
+    is($read_policy->{response_demux_strategy}, 'queue_head_issue_order', 'adapter report marks read single-beat queue-head demux strategy');
+    is($read_policy->{response_demux_implementation_status}, 'generated', 'adapter report marks generated read single-beat response-demux status');
+    ok($read_policy->{accepted_same_id_reuse}, 'adapter report accepts read single-beat same-ID reuse for the covered shape');
+    ok($read_policy->{generated_queue_behavior}, 'adapter report marks generated read single-beat queue behavior true');
+    is_deeply(
+        $result->{report}{id_response_rule_engine}{residue},
+        [qw(auto_id_allocation id_release)],
+        'read single-beat same-ID queue-head demux generated behavior removes same-ID and response-demux ID/response residue',
+    );
+};
+
 subtest 'PPIF adapter parses AXI manager write same-ID queue-head response-demux behavior' => sub {
     my $sample_path = sample_capacity_write_same_id_queue_head_response_demux_ppif_path();
     ok(-f $sample_path, 'tracked runnable PPIF capacity/status write same-ID queue-head response-demux sample exists');
@@ -1175,6 +1205,25 @@ subtest 'CLI emits IAL2 report JSON for AXI manager same-ID queue-head response-
     is_deeply($report->{generated_artifacts}{ial0}{files}, ['axi0_capacity_status.fsm'], 'same-ID queue-head response-demux keeps the generated .fsm artifact name stable');
 };
 
+subtest 'CLI emits IAL2 report JSON for AXI manager read single-beat same-ID queue-head response-demux .ppif' => sub {
+    my ($success, undef, undef, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--emit-schedule-json', sample_capacity_read_single_beat_same_id_queue_head_response_demux_ppif_path()],
+    );
+
+    ok($success, '--emit-schedule-json succeeds for capacity/status read single-beat same-ID queue-head response-demux .ppif');
+    is(join('', @{$stderr_buf || []}), '', 'capacity/status read single-beat same-ID queue-head response-demux report keeps stderr clean');
+    my $report = decode_json(join('', @{$stdout_buf || []}));
+    is($report->{schema}, 'fsmgen.ial2.protocol_intent.axi_manager_capacity_status.v1', 'CLI keeps the capacity/status report schema');
+    is($report->{source_object}{intent_name}, 'axi_manager_capacity_status_read_single_beat_same_id_queue_head_response_demux', 'read single-beat same-ID queue-head response-demux report carries the PPIF top-level intent name');
+    assert_same_id_read_single_beat_queue_head_response_demux_report($report->{response_demux}, 'CLI report');
+    my $read_policy = $report->{same_id_ordering}{concrete_id_reuse_policy}{read};
+    is($read_policy->{response_demux_strategy}, 'queue_head_issue_order', 'CLI report marks read single-beat queue-head response-demux strategy');
+    is($read_policy->{response_demux_implementation_status}, 'generated', 'CLI report marks generated read single-beat response-demux status');
+    ok($read_policy->{accepted_same_id_reuse}, 'CLI report accepts read single-beat same-ID reuse for the covered shape');
+    ok($read_policy->{generated_queue_behavior}, 'CLI report marks generated read single-beat queue behavior true');
+    is_deeply($report->{generated_artifacts}{ial0}{files}, ['axi0_capacity_status.fsm'], 'read single-beat same-ID queue-head response-demux keeps the generated .fsm artifact name stable');
+};
+
 subtest 'CLI emits IAL2 report JSON for AXI manager write same-ID queue-head response-demux .ppif' => sub {
     my ($success, undef, undef, $stdout_buf, $stderr_buf) = run(
         command => ['./bin/fsmgen', '--emit-schedule-json', sample_capacity_write_same_id_queue_head_response_demux_ppif_path()],
@@ -1384,6 +1433,25 @@ subtest 'CLI --verify-hdl accepts AXI manager write same-ID queue-head response-
     like($sv, qr/\boutput\s+reg\s+axi0_w0_complete\b/, 'write same-ID queue-head HDL exposes generated completion output');
     like($sv, qr/\breg\s+axi0_write_id3_same_id_issue_order_slot0_w0_q\b/, 'write same-ID queue-head HDL exposes queue-head slot state');
     like($sv, qr/axi0_write_complete\s*&\s*\(axi0_bid\s*==\s*4'd3\)\s*&\s*axi0_write_id3_same_id_issue_order_slot0_w0_q/, 'write same-ID queue-head HDL lowers the concrete BID head match guard');
+};
+
+subtest 'CLI --verify-hdl accepts AXI manager read single-beat same-ID queue-head response-demux behavior .ppif' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $hdl = File::Spec->catfile($tempdir, 'axi_read_single_beat_same_id_queue_head_response_demux.sv');
+
+    my ($success, undef, undef, undef, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--quiet', '--verify-hdl', '--output', $hdl, sample_capacity_read_single_beat_same_id_queue_head_response_demux_ppif_path()],
+    );
+
+    ok($success, 'capacity/status read single-beat same-ID queue-head response-demux --verify-hdl succeeds');
+    is(join('', @{$stderr_buf || []}), '', 'capacity/status read single-beat same-ID queue-head response-demux --verify-hdl keeps stderr clean');
+    ok(-f $hdl, 'read single-beat same-ID queue-head response-demux --output writes generated HDL');
+    my $sv = slurp($hdl);
+    like($sv, qr/\binput\s+(?:wire\s+)?\[3:0\]\s+axi0_rid\b/, 'read single-beat same-ID queue-head HDL exposes generated RID input');
+    unlike($sv, qr/\baxi0_rlast\b/, 'read single-beat same-ID queue-head HDL does not expose RLAST');
+    like($sv, qr/\boutput\s+reg\s+axi0_r0_complete\b/, 'read single-beat same-ID queue-head HDL exposes generated completion output');
+    like($sv, qr/\breg\s+axi0_read_id3_same_id_issue_order_slot0_r0_q\b/, 'read single-beat same-ID queue-head HDL exposes queue-head slot state');
+    like($sv, qr/axi0_read_complete\s*&\s*\(axi0_rid\s*==\s*4'd3\)\s*&\s*axi0_read_id3_same_id_issue_order_slot0_r0_q/, 'read single-beat same-ID queue-head HDL lowers the concrete RID head match guard');
 };
 
 subtest 'CLI --verify-hdl accepts AXI manager read response-demux behavior .ppif' => sub {
@@ -1985,6 +2053,50 @@ subtest 'CLI check JSON and semantic JSON support-account same-ID queue-head res
     );
 };
 
+subtest 'CLI check JSON and semantic JSON support-account read single-beat same-ID queue-head response-demux .ppif separately' => sub {
+    my $policy_path = sample_capacity_read_single_beat_same_id_queue_head_response_demux_ppif_path();
+    my ($success, undef, undef, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--strict', '--check', '--json', $policy_path],
+    );
+    ok($success, 'capacity/status read single-beat same-ID queue-head response-demux --check --json succeeds');
+    is(join('', @{$stderr_buf || []}), '', 'capacity/status read single-beat same-ID queue-head response-demux --check --json keeps stderr clean');
+    my $check_report = decode_json(join('', @{$stdout_buf || []}));
+    ok($check_report->{success}, 'capacity/status read single-beat same-ID queue-head response-demux check JSON reports success');
+    is(
+        $check_report->{source}{resolved_path},
+        File::Spec->rel2abs($policy_path),
+        'capacity/status read single-beat same-ID queue-head response-demux check JSON reports the public .ppif source path',
+    );
+    is(
+        $check_report->{support_accounting}{entry_id},
+        'intent.ppif_axi_manager_capacity_status_read_single_beat_same_id_queue_head_response_demux',
+        'capacity/status read single-beat same-ID queue-head response-demux check JSON support accounting names the PPIF corpus entry',
+    );
+
+    my ($semantic_success, undef, undef, $semantic_stdout, $semantic_stderr) = run(
+        command => ['./bin/fsmgen', '--strict', '--emit-semantic-json', $policy_path],
+    );
+    ok($semantic_success, 'capacity/status read single-beat same-ID queue-head response-demux --emit-semantic-json succeeds');
+    is(join('', @{$semantic_stderr || []}), '', 'capacity/status read single-beat same-ID queue-head response-demux --emit-semantic-json keeps stderr clean');
+    my $semantic_report = decode_json(join('', @{$semantic_stdout || []}));
+    ok($semantic_report->{success}, 'capacity/status read single-beat same-ID queue-head response-demux semantic JSON reports success');
+    is(
+        $semantic_report->{source}{resolved_path},
+        File::Spec->rel2abs($policy_path),
+        'capacity/status read single-beat same-ID queue-head response-demux semantic JSON reports the public .ppif source path',
+    );
+    is(
+        $semantic_report->{support_accounting}{entry_id},
+        'intent.ppif_axi_manager_capacity_status_read_single_beat_same_id_queue_head_response_demux',
+        'capacity/status read single-beat same-ID queue-head response-demux semantic JSON support accounting names the PPIF corpus entry',
+    );
+    is(
+        $semantic_report->{semantic}{module}{name},
+        'axi0_capacity_status',
+        'capacity/status read single-beat same-ID queue-head response-demux semantic JSON records the unchanged generated module',
+    );
+};
+
 subtest 'CLI check JSON and semantic JSON support-account write same-ID queue-head response-demux .ppif separately' => sub {
     my $policy_path = sample_capacity_write_same_id_queue_head_response_demux_ppif_path();
     my ($success, undef, undef, $stdout_buf, $stderr_buf) = run(
@@ -2551,6 +2663,10 @@ sub sample_capacity_same_id_queue_head_response_demux_ppif_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_same_id_queue_head_response_demux.ppif');
 }
 
+sub sample_capacity_read_single_beat_same_id_queue_head_response_demux_ppif_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_read_single_beat_same_id_queue_head_response_demux.ppif');
+}
+
 sub sample_capacity_write_same_id_queue_head_response_demux_ppif_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_write_same_id_queue_head_response_demux.ppif');
 }
@@ -2625,6 +2741,10 @@ sub sample_capacity_same_id_issue_order_queue_policy_ppif {
 
 sub sample_capacity_same_id_queue_head_response_demux_ppif {
     return slurp(sample_capacity_same_id_queue_head_response_demux_ppif_path());
+}
+
+sub sample_capacity_read_single_beat_same_id_queue_head_response_demux_ppif {
+    return slurp(sample_capacity_read_single_beat_same_id_queue_head_response_demux_ppif_path());
 }
 
 sub sample_capacity_write_same_id_queue_head_response_demux_ppif {
@@ -3682,6 +3802,54 @@ sub assert_same_id_queue_head_response_demux_report {
     );
     ok($read->{generated_queue_behavior}, "$owner reports generated queue behavior");
     is($read->{generated_queue_behavior_boundary}, 'generated_read_burst_last_queue_head_demux', "$owner reports generated queue boundary");
+    ok(!exists($read->{selected_completion_signals}), "$owner no longer reports selected completion signal names");
+    is_deeply($read->{generated_completion_signals}, [qw(axi0_r0_complete axi0_r1_complete)], "$owner reports generated completion signal names");
+    is_deeply($read->{generated_rules}, [qw(axi0_r0_response_demux axi0_r1_response_demux)], "$owner reports generated response-demux rules");
+    is_deeply(
+        $read->{generated_assertions},
+        [qw(axi0_read_response_demux_active_match axi0_r0_r1_read_response_demux_unique_match)],
+        "$owner reports generated response-demux assertions",
+    );
+    is_deeply(
+        $demux->{residue},
+        [qw(read_data_interleaving bursts)],
+        "$owner removes generated queue-head demux behavior from residue",
+    );
+}
+
+sub assert_same_id_read_single_beat_queue_head_response_demux_report {
+    my ($demux, $owner) = @_;
+
+    is($demux->{mode}, 'bounded_response_demux_contract', "$owner marks bounded response-demux contract mode");
+    ok($demux->{generated_behavior}, "$owner marks top-level generated behavior true");
+    my $read = $demux->{read};
+    is($read->{mode}, 'bounded_read_rid_queue_head_demux_contract', "$owner marks queue-head read demux mode");
+    ok($read->{generated_behavior}, "$owner marks read generated behavior true");
+    is($read->{implementation_status}, 'generated', "$owner reports generated status");
+    is($read->{response_event}, 'axi0_read_complete', "$owner reports raw read response event");
+    is($read->{response_event_role}, 'raw_accepted_read_response', "$owner reports single-beat response role");
+    is($read->{response_scope}, 'single_beat', "$owner reports single-beat scope");
+    is($read->{response_id_signal}, 'axi0_rid', "$owner reports RID signal");
+    is($read->{response_id_direction}, 'generated_input', "$owner reports RID direction");
+    ok(!exists($read->{last_signal}), "$owner omits RLAST signal for single-beat queue-head demux");
+    ok(!exists($read->{last_signal_width}), "$owner omits RLAST width for single-beat queue-head demux");
+    is($read->{transaction_completion_source}, 'generated_queue_head_demux', "$owner reports queue-head transaction completion source");
+    is($read->{transaction_completion_semantics}, 'matched_concrete_id_queue_head', "$owner reports queue-head single-beat semantics");
+    is($read->{queue_state_representation}, 'compact_onehot_transaction_slots', "$owner reports queue state representation");
+    is_deeply(
+        $read->{same_id_issue_order_queues},
+        [
+            {
+                concrete_id          => 3,
+                transactions         => [qw(r0 r1)],
+                depth                => 2,
+                dequeue_event_source => 'queue_head_response_demux',
+            },
+        ],
+        "$owner reports duplicate concrete read-ID queue group",
+    );
+    ok($read->{generated_queue_behavior}, "$owner reports generated queue behavior");
+    is($read->{generated_queue_behavior_boundary}, 'generated_read_single_beat_queue_head_demux', "$owner reports generated read single-beat queue boundary");
     ok(!exists($read->{selected_completion_signals}), "$owner no longer reports selected completion signal names");
     is_deeply($read->{generated_completion_signals}, [qw(axi0_r0_complete axi0_r1_complete)], "$owner reports generated completion signal names");
     is_deeply($read->{generated_rules}, [qw(axi0_r0_response_demux axi0_r1_response_demux)], "$owner reports generated response-demux rules");

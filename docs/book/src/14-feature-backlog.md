@@ -4731,13 +4731,13 @@ axi0_write_complete
 && axi0_write_id3_same_id_issue_order_slot0_w0_q
 ```
 
-The future `.108` slice must generate compact one-hot write queue slots,
-finite write enqueue/dequeue/same-cycle update rules, generated write
-completion pulse outputs, queue-head `BID` demux rules, queue assertions, and
-report/residue movement only for that covered shape. Read `single-beat`,
-deeper or multiple queue groups, same-family mixed auto-ID, read-data
-consumption of concrete queue-head demux, direct backend lowering, and VHDL
-remain deferred.
+The `.108` slice later generated compact one-hot write queue slots, finite
+write enqueue/dequeue/same-cycle update rules, generated write completion
+pulse outputs, queue-head `BID` demux rules, queue assertions, and
+report/residue movement only for that covered shape. `.110` later shipped the
+read `single-beat` analogue. Deeper or multiple queue groups, same-family
+mixed auto-ID, read-data consumption of concrete queue-head demux, direct
+backend lowering, and VHDL remain deferred.
 
 Write same-ID queue-head response-demux behavior:
 [AXI_IAL2_MANAGER_WRITE_SAME_ID_QUEUE_HEAD_RESPONSE_DEMUX_BEHAVIOR](../../AXI_IAL2_MANAGER_WRITE_SAME_ID_QUEUE_HEAD_RESPONSE_DEMUX_BEHAVIOR.md)
@@ -4796,6 +4796,47 @@ concrete `RID`, and compact slot-0 transaction bit, without `RLAST`.
 Read-data consumption, deeper or multiple duplicate-ID groups, same-family
 mixed auto-ID plus concrete queue-head demux, generalized per-ID queues,
 direct backend lowering, and VHDL remain deferred.
+
+Read single-beat same-ID queue-head response-demux behavior:
+[AXI_IAL2_MANAGER_READ_SINGLE_BEAT_SAME_ID_QUEUE_HEAD_RESPONSE_DEMUX_BEHAVIOR](../../AXI_IAL2_MANAGER_READ_SINGLE_BEAT_SAME_ID_QUEUE_HEAD_RESPONSE_DEMUX_BEHAVIOR.md)
+ships `IAL2-FEATURE-COMPLETENESS-FRONTIER.110`. The public sample is:
+
+```bash
+./bin/fsmgen --emit-schedule-json ppif/axi_manager_capacity_status_read_single_beat_same_id_queue_head_response_demux.ppif
+./bin/fsmgen --quiet --verify-hdl --output /tmp/fsmgen_read_single_beat_same_id_queue_head_response_demux.sv ppif/axi_manager_capacity_status_read_single_beat_same_id_queue_head_response_demux.ppif
+```
+
+The sample uses two read transactions, `r0` and `r1`, sharing concrete read ID
+`3`, selected read `concrete-id-reuse issue-order-queue`, and generated read
+single-beat response demux. FSMGen now emits admitted read enqueue pulses,
+compact one-hot depth-2 queue slots, finite queue update rules, generated
+read completion pulse outputs, queue-head `RID` demux rules, and
+queue/response assertions for that covered shape. No `RLAST` signal is
+generated or consumed.
+
+The generated `r0` demux rule is:
+
+```lisp
+(rule axi0_r0_response_demux
+  (& axi0_read_complete (== axi0_rid 4'd3)
+     axi0_read_id3_same_id_issue_order_slot0_r0_q)
+  (pulse axi0_r0_complete))
+```
+
+The read response-demux report marks
+`generated_queue_behavior_boundary: generated_read_single_beat_queue_head_demux`.
+The read same-ID policy reports
+`implementation_status: generated_read_single_beat_queue_head_demux`,
+`accepted_same_id_reuse: true`, and `generated_queue_behavior: true`.
+Check JSON and normalized semantic JSON match support accounting entry
+`intent.ppif_axi_manager_capacity_status_read_single_beat_same_id_queue_head_response_demux`.
+
+After `.110`, read-data consumption of concrete queue-head demux, deeper or
+multiple duplicate-ID groups, same-family mixed auto-ID plus concrete
+queue-head demux, generalized per-ID queues, direct backend lowering, and VHDL
+remain deferred. The active frontier advances to
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.111`, the post-read-single-beat same-ID
+queue behavior audit/selector.
 
 First implementation subset selection:
 [AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION](../../AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md)

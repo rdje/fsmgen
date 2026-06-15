@@ -1320,25 +1320,33 @@ ships the write-family analogue for
 one duplicate concrete write-ID group of two transactions at computed depth
 2, compact one-hot write queue slots, generated write completion pulse
 outputs, queue-head `BID` demux rules, support-accounting coverage, and
-Verilator-clean generated SystemVerilog. Read `single-beat`, deeper/multiple
-groups, same-family mixed auto-ID, read-data consumption of concrete
-queue-head demux, direct backend, and VHDL remain deferred.
+Verilator-clean generated SystemVerilog. At that point, read `single-beat`
+remained deferred until `.110`; deeper/multiple groups, same-family mixed
+auto-ID, read-data consumption of concrete queue-head demux, direct backend,
+and VHDL remain deferred.
 After `.108`, the frontier advanced to `.109`, the same-ID queue behavior
 expansion audit/selector after shipped read burst-last and write depth-2
 queue-head behavior.
 Selector `.109` chooses `.110`, generated read `single-beat` concrete
 same-ID queue-head behavior for one duplicate read-ID group of two
-transactions at depth 2. The next slice should generate queue-head `RID`
-demux without `RLAST` and keep read-data consumption, deeper or multiple
-groups, same-family mixed auto-ID, generalized per-ID queues, direct backend,
-and VHDL deferred.
+transactions at depth 2. Implementation `.110` now ships that bounded shape
+for
+`ppif/axi_manager_capacity_status_read_single_beat_same_id_queue_head_response_demux.ppif`:
+compact one-hot read queue slots, admitted read enqueue pulses, generated read
+completion pulse outputs, queue-head `RID` demux rules without `RLAST`,
+support-accounting coverage, and Verilator-clean generated SystemVerilog.
+Read-data consumption, deeper or multiple groups, same-family mixed auto-ID,
+generalized per-ID queues, direct backend, and VHDL remain deferred. The
+frontier advances to `.111`, the post-read-single-beat same-ID queue behavior
+audit/selector.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.
 Verification-code generation is captured as a separate future roadmap lane
 from the synthesizable RTL/HDL feature-completeness path.
-Packed burst outputs, concrete same-ID queue variants beyond the selected
-`.110` read single-beat boundary, per-ID queues, queued policy, profile
+Packed burst outputs, concrete same-ID queue variants beyond the shipped
+read burst-last, write, and read single-beat depth-2 queue-head boundaries,
+per-ID queues, queued policy, profile
 aliases, full-manager behavior, direct backend lowering, and VHDL remain
 deferred.
 The shipped public capacity/status source accepts one

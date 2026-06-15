@@ -2142,9 +2142,16 @@ sub _build_same_id_issue_order_queue_behavior(%args) {
     my $family_name = $queue_head_families[0];
     my $entry = $demux->{$family_name};
     return undef unless ref($entry) eq 'HASH' && !$entry->{generated_behavior};
-    return undef if $family_name eq 'read'
-        && (($entry->{response_scope} // '') ne 'burst_last'
-            || ($entry->{last_signal_width} // 0) != 1);
+    if ($family_name eq 'read') {
+        my $scope = $entry->{response_scope} // '';
+        return undef unless (
+            $scope eq 'single_beat'
+                && !defined $entry->{last_signal}
+        ) || (
+            $scope eq 'burst_last'
+                && ($entry->{last_signal_width} // 0) == 1
+        );
+    }
 
     my $groups = $entry->{same_id_issue_order_queues};
     return undef unless ref($groups) eq 'ARRAY' && @$groups == 1;
@@ -2212,7 +2219,9 @@ sub _build_same_id_issue_order_queue_behavior(%args) {
 
     my $implementation_status = $family_name eq 'write'
         ? 'generated_write_bid_queue_head_demux'
-        : 'generated_read_burst_last_queue_head_demux';
+        : ($entry->{response_scope} // '') eq 'single_beat'
+            ? 'generated_read_single_beat_queue_head_demux'
+            : 'generated_read_burst_last_queue_head_demux';
     my $queue_group = {
         family                  => $family_name,
         implementation_status   => $implementation_status,
@@ -4188,14 +4197,14 @@ sub _build_report(%args) {
             'auto_id_lifecycle pools are bounded to 1..4 unique values per family and must fit the declared positive ID width',
             'auto_id_lifecycle generates first-free request-ID drive, per-transaction busy/selected-ID state, completion-event release, no-ID assertions, inactive-completion assertions, and same-family request mutual-exclusion assertions',
             'same_id_ordering for generated auto-ID families is enforced by avoiding same-ID concurrency through allocator free-ID guards plus pairwise active selected-ID assertions',
-            'same_id_ordering_policy accepts explicit read/write concrete-id-reuse reject policies plus issue-order-queue admitted-request pulse generation, and generates bounded read burst-last or write depth-2 concrete same-ID queue state plus queue-head response demux for selected public sample shapes',
+            'same_id_ordering_policy accepts explicit read/write concrete-id-reuse reject policies plus issue-order-queue admitted-request pulse generation, and generates bounded read single-beat, read burst-last, or write depth-2 concrete same-ID queue state plus queue-head response demux for selected public sample shapes',
             'response_demux requires id_families, transactions, and either selected-family auto_id_lifecycle metadata or selected same-id-ordering concrete-id-reuse issue-order-queue metadata with a duplicate concrete-ID group',
             'response_demux.write requires response_event equal to write_complete and generates bounded write BID demux behavior for explicit opt-in contracts',
             'response_demux.read requires response_event equal to read_complete, response_scope single_beat or burst_last, read ID-family metadata, read transactions, and read auto_id_lifecycle metadata or selected concrete same-ID queue-head metadata',
             'response_demux.read response_scope single_beat generates bounded single-beat read RID demux behavior for explicit opt-in contracts',
             'response_demux.read response_scope burst_last requires one-bit last_signal metadata and generates matched-RID-and-RLAST last-beat completion behavior for explicit opt-in contracts',
-            'response_demux transaction_completion must be generated; selected auto-ID families make transaction completion names generated demux pulse outputs, while the bounded read burst-last and write depth-2 concrete same-ID queue-head shapes also make transaction completion names generated demux pulse outputs',
-            'concrete same-ID queue-head response_demux is generated only for bounded one-group two-transaction depth-2 shapes: read burst-last or write, with issue-order-queue policy, duplicate concrete-ID group, no same-family auto_id_lifecycle demux, and no read_data consumption in this slice',
+            'response_demux transaction_completion must be generated; selected auto-ID families make transaction completion names generated demux pulse outputs, while the bounded read single-beat, read burst-last, and write depth-2 concrete same-ID queue-head shapes also make transaction completion names generated demux pulse outputs',
+            'concrete same-ID queue-head response_demux is generated only for bounded one-group two-transaction depth-2 shapes: read single-beat, read burst-last, or write, with issue-order-queue policy, duplicate concrete-ID group, no same-family auto_id_lifecycle demux, and no read_data consumption in this slice',
             'read_data supports explicit generated single-beat capture behavior with response_scope single_beat, explicit generated last-beat capture behavior with response_scope burst_last, and explicit generated multi-beat output-bank behavior with response_scope burst_last',
             'read_data.read data width must be positive and status width must be 2',
             'read_data.read optional burst_length metadata is accepted only for last-beat or multi-beat capture, source arlen, signal width 8, axlen-plus-one encoding, request capture, max_beats 1..256, report-only or runtime-assertion validation, generated raw-ARLEN capture, and generated beat-count/RLAST runtime assertions only for explicit runtime-assertion contracts; multi-beat capture requires runtime-assertion validation',
@@ -4210,7 +4219,7 @@ sub _build_report(%args) {
             },
             {
                 id     => 'axi_id_ordering_and_response_matching',
-                detail => 'Concrete transaction ID request/response assertions, explicit bounded auto-ID request-ID drive plus completion-event release, generated auto-ID same-ID avoidance, explicit static concrete-ID reuse reject policy metadata, issue-order-queue admitted-request pulse generation for selected concrete-ID families, bounded read burst-last and write depth-2 concrete same-ID issue-order queue state plus queue-head response-demux behavior for selected public sample shapes, generated write BID response demux, generated single-beat read RID response demux, generated single-beat read-data RDATA/RRESP capture, generated burst-last RLAST response-demux completion, structural last-beat read-data metadata, generated last-beat read-data RDATA/RRESP capture, generated raw-ARLEN burst-length capture, explicit runtime-assertion beat-count/RLAST validation, generated multi-beat read-data output-bank behavior for the covered auto-ID multi-beat-by-RID subset, bounded burst payload/output behavior through that per-beat output bank, and generated scalar RRESP aggregation behavior are supported; dynamic user-ID arbitration while issuing multiple same-family requests in one cycle, read single-beat/deeper/multiple-group concrete same-ID issue-order queues, generalized scoreboard policies, read-data consumption of concrete same-ID queue-head demux, authored/general different-ID interleaving outside the covered auto-ID subset, packed burst-vector outputs, alternate full burst payload assembly, and aggregate-only status output shapes remain outside this capacity/status shell.',
+                detail => 'Concrete transaction ID request/response assertions, explicit bounded auto-ID request-ID drive plus completion-event release, generated auto-ID same-ID avoidance, explicit static concrete-ID reuse reject policy metadata, issue-order-queue admitted-request pulse generation for selected concrete-ID families, bounded read single-beat, read burst-last, and write depth-2 concrete same-ID issue-order queue state plus queue-head response-demux behavior for selected public sample shapes, generated write BID response demux, generated single-beat read RID response demux, generated single-beat read-data RDATA/RRESP capture, generated burst-last RLAST response-demux completion, structural last-beat read-data metadata, generated last-beat read-data RDATA/RRESP capture, generated raw-ARLEN burst-length capture, explicit runtime-assertion beat-count/RLAST validation, generated multi-beat read-data output-bank behavior for the covered auto-ID multi-beat-by-RID subset, bounded burst payload/output behavior through that per-beat output bank, and generated scalar RRESP aggregation behavior are supported; dynamic user-ID arbitration while issuing multiple same-family requests in one cycle, deeper/multiple-group concrete same-ID issue-order queues, generalized scoreboard policies, read-data consumption of concrete same-ID queue-head demux, authored/general different-ID interleaving outside the covered auto-ID subset, packed burst-vector outputs, alternate full burst payload assembly, and aggregate-only status output shapes remain outside this capacity/status shell.',
             },
             {
                 id     => 'profile_aliases_and_full_manager_behavior',
