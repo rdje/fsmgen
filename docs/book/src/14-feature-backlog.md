@@ -4899,12 +4899,12 @@ read_data:
 ```
 
 The existing auto-ID read-data path keeps reporting
-`generated_read_response_demux_completion_pulse`. Burst-last, last-beat, and
-multi-beat queue-head read-data; deeper or multiple queue groups; mixed
-same-family auto-ID plus concrete queue-head demux; direct backend lowering;
-and VHDL remain deferred. `IAL2-FEATURE-COMPLETENESS-FRONTIER.114` selected
-the bounded last-beat queue-head read-data follow-up before any broader
-queue-head/read-data expansion.
+`generated_read_response_demux_completion_pulse`. Later queue-head slices
+ship bounded burst-last last-beat capture, report-only raw-`ARLEN`
+burst-length capture, and runtime beat-count/`RLAST` validation. `.120`
+selects bounded multi-beat queue-head read-data output-bank behavior as the
+next owner. Deeper or multiple queue groups, mixed same-family auto-ID plus
+concrete queue-head demux, direct backend lowering, and VHDL remain deferred.
 
 Queue-head last-beat read-data behavior:
 [AXI_IAL2_MANAGER_QUEUE_HEAD_LAST_BEAT_READ_DATA_BEHAVIOR](../../AXI_IAL2_MANAGER_QUEUE_HEAD_LAST_BEAT_READ_DATA_BEHAVIOR.md)
@@ -5035,16 +5035,23 @@ plus active queue-head transaction identity. It is intentionally not the
 `RLAST`-qualified generated completion pulse, so early/missing `RLAST`
 assertions can reason about every matched beat.
 
-Multi-beat queue-head read-data, deeper or multiple queue groups, mixed
-same-family auto-ID plus concrete queue-head demux, direct backend lowering,
-and VHDL remain deferred.
+Selector `.120` now chooses generated multi-beat read-data output-bank
+behavior for the bounded read burst-last concrete same-ID queue-head demux
+shape as `.121`. That next owner is scoped to raw matched queue-head read
+beats, per-beat output banks, valid-mask/length outputs, and scalar `RRESP`
+aggregation. Deeper or multiple queue groups, mixed same-family auto-ID plus
+concrete queue-head demux, direct backend lowering, and VHDL remain deferred.
 
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same
 bounded queue-head last-beat read-data shape as `.119`; `.119` now ships that
-selected behavior. Multi-beat queue-head read-data remains behind that
-validation slice.
+selected behavior.
+
+Post queue-head runtime-validation selector:
+[AXI_IAL2_MANAGER_POST_QUEUE_HEAD_RUNTIME_VALIDATION_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_RUNTIME_VALIDATION_NEXT_SLICE_SELECTION.md)
+selects generated multi-beat read-data output-bank behavior for the bounded
+read burst-last concrete same-ID queue-head demux shape as `.121`.
 
 First implementation subset selection:
 [AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION](../../AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md)

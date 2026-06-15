@@ -10,8 +10,8 @@ answers:
 date: 2026-06-15
 status: current
 tags: [ial2, axi, manager, read-data, queue-head, burst-length, rlast, runtime-validation]
-evidence: docs/AXI_IAL2_MANAGER_QUEUE_HEAD_RUNTIME_VALIDATION_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_QUEUE_HEAD_BURST_LENGTH_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md; ppif/axi_manager_capacity_status_read_last_beat_same_id_queue_head_burst_length_runtime_assertion.ppif; perl/FSM/IAL2/ProtocolIntent/AxiManagerCapacityStatus.pm; perl/FSM/Support/RegressionCorpus.pm; t/1437-axi-ial2-manager-capacity-status-generator.t; t/1436-ial2-ppif-parser-cli.t; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md
-reverify: env -u PERL5LIB ./bin/fsmgen --emit-schedule-json ppif/axi_manager_capacity_status_read_last_beat_same_id_queue_head_burst_length_runtime_assertion.ppif && rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.119|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.120|queue-head runtime|runtime_assertion|beat_count_match_source|response_demux_matched_read_beat|generated_queue_head_response_demux_last_beat_completion_pulse' docs/AXI_IAL2_MANAGER_QUEUE_HEAD_RUNTIME_VALIDATION_BEHAVIOR.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md README.md ROADMAP_V2.md docs/book/src/14-feature-backlog.md
+evidence: docs/AXI_IAL2_MANAGER_QUEUE_HEAD_RUNTIME_VALIDATION_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_POST_QUEUE_HEAD_RUNTIME_VALIDATION_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_QUEUE_HEAD_BURST_LENGTH_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md; ppif/axi_manager_capacity_status_read_last_beat_same_id_queue_head_burst_length_runtime_assertion.ppif; perl/FSM/IAL2/ProtocolIntent/AxiManagerCapacityStatus.pm; perl/FSM/Support/RegressionCorpus.pm; t/1437-axi-ial2-manager-capacity-status-generator.t; t/1436-ial2-ppif-parser-cli.t; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md
+reverify: env -u PERL5LIB ./bin/fsmgen --emit-schedule-json ppif/axi_manager_capacity_status_read_last_beat_same_id_queue_head_burst_length_runtime_assertion.ppif && rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.119|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.120|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.121|queue-head runtime|queue-head multi-beat|runtime_assertion|beat_count_match_source|response_demux_matched_read_beat|generated_queue_head_response_demux_last_beat_completion_pulse' docs/AXI_IAL2_MANAGER_QUEUE_HEAD_RUNTIME_VALIDATION_BEHAVIOR.md docs/AXI_IAL2_MANAGER_POST_QUEUE_HEAD_RUNTIME_VALIDATION_NEXT_SLICE_SELECTION.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md README.md ROADMAP_V2.md docs/book/src/14-feature-backlog.md
 ---
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.119` shipped generated
@@ -35,7 +35,8 @@ identity. It intentionally does not use the `RLAST`-qualified completion
 pulse, while the read-data capture completion validity remains
 `generated_queue_head_response_demux_last_beat_completion_pulse`.
 
-The active frontier advances to `IAL2-FEATURE-COMPLETENESS-FRONTIER.120`, the
-next queue-head/read-data expansion selector. Multi-beat queue-head
-read-data, deeper or multiple queue groups, mixed auto-ID, direct backend, and
-VHDL remain deferred.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.120` selected
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.121`, generated multi-beat read-data
+output-bank behavior for the bounded read burst-last concrete same-ID
+queue-head demux shape. Deeper or multiple queue groups, mixed auto-ID,
+direct backend, and VHDL remain deferred.

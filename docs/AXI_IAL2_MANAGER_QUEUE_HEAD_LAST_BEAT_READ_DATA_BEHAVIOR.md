@@ -134,13 +134,14 @@ Existing report values remain stable:
 The static-rule and unsupported-residue prose now list generated read
 burst-last queue-head last-beat read-data as supported, while keeping
 multi-beat queue-head read-data deferred. Runtime queue-head burst-length
-beat-count/`RLAST` validation is shipped by `.119`.
+beat-count/`RLAST` validation is shipped by `.119`, and generated multi-beat
+queue-head read-data output-bank behavior is selected by `.120` as `.121`.
 
 ## Deferred
 
 The slice still fail-closes or defers:
 
-- multi-beat queue-head read-data;
+- multi-beat queue-head read-data until the selected `.121` implementation;
 - deeper or multiple duplicate concrete-ID groups;
 - mixed same-family auto-ID plus concrete queue-head response demux;
 - generalized per-ID queues;

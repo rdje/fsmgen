@@ -10,8 +10,8 @@ answers:
 date: 2026-06-15
 status: current
 tags: [ial2, axi, manager, read-data, same-id, queue-head, selector, last-beat]
-evidence: docs/AXI_IAL2_MANAGER_POST_QUEUE_HEAD_READ_DATA_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_QUEUE_HEAD_LAST_BEAT_READ_DATA_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_POST_QUEUE_HEAD_LAST_BEAT_READ_DATA_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_QUEUE_HEAD_READ_DATA_BEHAVIOR_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_SAME_ID_QUEUE_BEHAVIOR_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_LAST_BEAT_READ_DATA_BEHAVIOR_FIRST_SLICE.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md
-reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\.114|IAL2-FEATURE-COMPLETENESS-FRONTIER\.115|IAL2-FEATURE-COMPLETENESS-FRONTIER\.116|IAL2-FEATURE-COMPLETENESS-FRONTIER\.117|generated_queue_head_response_demux_last_beat_completion_pulse|generated_read_burst_last_queue_head_demux|queue-head burst-length' docs/AXI_IAL2_MANAGER_POST_QUEUE_HEAD_READ_DATA_NEXT_SLICE_SELECTION.md docs/AXI_IAL2_MANAGER_POST_QUEUE_HEAD_LAST_BEAT_READ_DATA_NEXT_SLICE_SELECTION.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md README.md ROADMAP_V2.md docs/book/src/14-feature-backlog.md
+evidence: docs/AXI_IAL2_MANAGER_POST_QUEUE_HEAD_READ_DATA_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_QUEUE_HEAD_LAST_BEAT_READ_DATA_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_POST_QUEUE_HEAD_LAST_BEAT_READ_DATA_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_POST_QUEUE_HEAD_RUNTIME_VALIDATION_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_QUEUE_HEAD_READ_DATA_BEHAVIOR_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_SAME_ID_QUEUE_BEHAVIOR_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_LAST_BEAT_READ_DATA_BEHAVIOR_FIRST_SLICE.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md
+reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\.114|IAL2-FEATURE-COMPLETENESS-FRONTIER\.115|IAL2-FEATURE-COMPLETENESS-FRONTIER\.116|IAL2-FEATURE-COMPLETENESS-FRONTIER\.117|IAL2-FEATURE-COMPLETENESS-FRONTIER\.120|IAL2-FEATURE-COMPLETENESS-FRONTIER\.121|generated_queue_head_response_demux_last_beat_completion_pulse|generated_read_burst_last_queue_head_demux|queue-head burst-length|queue-head multi-beat' docs/AXI_IAL2_MANAGER_POST_QUEUE_HEAD_READ_DATA_NEXT_SLICE_SELECTION.md docs/AXI_IAL2_MANAGER_POST_QUEUE_HEAD_LAST_BEAT_READ_DATA_NEXT_SLICE_SELECTION.md docs/AXI_IAL2_MANAGER_POST_QUEUE_HEAD_RUNTIME_VALIDATION_NEXT_SLICE_SELECTION.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md README.md ROADMAP_V2.md docs/book/src/14-feature-backlog.md
 ---
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.114` selected
@@ -36,10 +36,13 @@ That selected `.115` implementation has now shipped in
 `docs/AXI_IAL2_MANAGER_QUEUE_HEAD_LAST_BEAT_READ_DATA_BEHAVIOR.md` and
 `ppif/axi_manager_capacity_status_read_last_beat_same_id_queue_head_read_data.ppif`.
 
-Multi-beat queue-head read-data, deeper or multiple queue groups, mixed
-same-family auto-ID plus concrete queue-head demux, generalized per-ID queues,
-direct backend lowering, and VHDL remain deferred.
+`.120` later selected `.121`, generated multi-beat read-data output-bank
+behavior for the bounded read burst-last concrete same-ID queue-head demux
+shape. Deeper or multiple queue groups, mixed same-family auto-ID plus
+concrete queue-head demux, generalized per-ID queues, direct backend
+lowering, and VHDL remain deferred.
 
 After `.115` shipped, `.116` selected `.117`, generated raw-`ARLEN`
 burst-length capture for the bounded queue-head last-beat read-data shape.
-Multi-beat queue-head read-data remains deferred.
+`.120` later selected the bounded queue-head multi-beat read-data output-bank
+implementation owner as `.121`.

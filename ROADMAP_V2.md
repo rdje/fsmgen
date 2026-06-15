@@ -1389,9 +1389,13 @@ counters, initialization/increment rules, and runtime assertions for
 request-time `ARLEN` bounds, over-count/extra beats, early `RLAST`, and
 missing final `RLAST`. Matched beats are counted from raw response event plus
 concrete `RID` plus active queue-head transaction identity while preserving
-the queue-head last-beat completion-validity report. Multi-beat queue-head
-read-data, deeper/multiple queue group, mixed auto-ID, backend, or residue
-expansion remain deferred.
+the queue-head last-beat completion-validity report. Selector `.120` chose
+`.121`, generated multi-beat read-data output-bank behavior for the bounded
+read burst-last concrete same-ID queue-head demux shape. That next owner is
+now scoped to the existing depth-2 queue-head boundary, raw matched-beat lane
+capture, valid-mask/length outputs, and scalar `RRESP` aggregation already
+proven by the auto-ID multi-beat path. Deeper/multiple queue groups, mixed
+auto-ID, backend, or broader residue expansion remain deferred.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.

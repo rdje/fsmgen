@@ -12,6 +12,9 @@ read burst-last concrete same-ID queue-head last-beat read-data shape.
 beat-count/`RLAST` runtime validation for the sibling
 `validation runtime-assertion` shape; this document remains the report-only
 burst-length behavior note.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.120` later selects generated multi-beat
+read-data output-bank behavior for the same bounded queue-head family as
+`.121`.
 
 The public support-accounted sample is:
 
@@ -122,7 +125,7 @@ burst-last queue-head demux.
 
 The report-only slice still fail-closes or defers:
 
-- multi-beat queue-head read-data;
+- multi-beat queue-head read-data until the selected `.121` implementation;
 - deeper or multiple duplicate concrete-ID groups;
 - mixed same-family auto-ID plus concrete queue-head response demux;
 - generalized per-ID queues;

@@ -1,6 +1,6 @@
 ---
 id: ial2-feature-completeness-next-slice
-title: IAL2 feature completeness next slice is post-runtime queue-head expansion selection
+title: IAL2 feature completeness next slice is queue-head multi-beat read-data
 answers:
   - "what is the next IAL2 feature completeness slice?"
   - "what is the next IAL2 PNT task?"
@@ -18,13 +18,14 @@ answers:
   - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.118?"
   - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.119?"
   - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.120?"
+  - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.121?"
   - "what is the next AXI manager slice?"
   - "what is the next AXI manager task after same-ID queue behavior implementation?"
 date: 2026-06-15
 status: current
 tags: [ial2, axi, manager, same-id, concrete-id, ordering, feature-completeness, task-tree]
-evidence: docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; docs/AXI_IAL2_MANAGER_QUEUE_HEAD_RUNTIME_VALIDATION_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_QUEUE_HEAD_BURST_LENGTH_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_BEAT_COUNT_RLAST_RUNTIME_VALIDATION_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_MULTI_BEAT_READ_DATA_OUTPUT_BANK_BEHAVIOR_FIRST_SLICE.md; docs/book/src/14-feature-backlog.md; README.md; ROADMAP_V2.md; docs/knowledge/ial2-common-vs-profile-factoring.md
-reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.119|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.120|queue-head runtime|beat-count/RLAST|runtime_assertion|generated_queue_head_response_demux_last_beat_completion_pulse|common semantic core' docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md docs/AXI_IAL2_MANAGER_QUEUE_HEAD_RUNTIME_VALIDATION_BEHAVIOR.md docs/book/src/14-feature-backlog.md README.md ROADMAP_V2.md docs/knowledge/ial2-common-vs-profile-factoring.md
+evidence: docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; docs/AXI_IAL2_MANAGER_POST_QUEUE_HEAD_RUNTIME_VALIDATION_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_QUEUE_HEAD_RUNTIME_VALIDATION_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_MULTI_BEAT_READ_DATA_OUTPUT_BANK_BEHAVIOR_FIRST_SLICE.md; docs/book/src/14-feature-backlog.md; README.md; ROADMAP_V2.md; docs/knowledge/ial2-common-vs-profile-factoring.md
+reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.120|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.121|queue-head multi-beat|per_beat_output_bank|generated_queue_head_response_demux_last_beat_completion_pulse|common semantic core' docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md docs/AXI_IAL2_MANAGER_POST_QUEUE_HEAD_RUNTIME_VALIDATION_NEXT_SLICE_SELECTION.md docs/book/src/14-feature-backlog.md README.md ROADMAP_V2.md docs/knowledge/ial2-common-vs-profile-factoring.md
 ---
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.106` shipped the first generated
@@ -69,7 +70,10 @@ last-beat read-data shape. `IAL2-FEATURE-COMPLETENESS-FRONTIER.119` shipped
 that behavior for
 `ppif/axi_manager_capacity_status_read_last_beat_same_id_queue_head_burst_length_runtime_assertion.ppif`
 and advanced the frontier to `IAL2-FEATURE-COMPLETENESS-FRONTIER.120`, the
-next queue-head/read-data expansion selector.
+next queue-head/read-data expansion selector. `IAL2-FEATURE-COMPLETENESS-FRONTIER.120`
+selected `IAL2-FEATURE-COMPLETENESS-FRONTIER.121`, generated multi-beat
+read-data output-bank behavior for the bounded read burst-last concrete
+same-ID queue-head demux shape.
 
 The already-covered public samples now report generated response demux,
 generated same-ID ordering, `accepted_same_id_reuse: true`, and
@@ -81,9 +85,9 @@ single-beat path reports `generated_queue_head_response_demux_completion_pulse`;
 the last-beat path reports
 `generated_queue_head_response_demux_last_beat_completion_pulse`. Existing
 auto-ID read-data capture keeps its auto-ID completion-validity values.
-The active PNT frontier is now `IAL2-FEATURE-COMPLETENESS-FRONTIER.120`.
-Multi-beat queue-head read-data, deeper or multiple groups, same-family mixed
-auto-ID, direct backend, and VHDL remain deferred.
+The active PNT frontier is now `IAL2-FEATURE-COMPLETENESS-FRONTIER.121`.
+Deeper or multiple groups, same-family mixed auto-ID, packed burst-vector
+outputs, direct backend, and VHDL remain deferred.
 
 The IAL2 factoring stance remains that common constructs should be promoted
 only after compatible reuse is proven across multiple profiles.
