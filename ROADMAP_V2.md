@@ -1396,16 +1396,22 @@ That bounded sample emits request-time output-bank clearing, per-beat
 `RDATA`/`RRESP` lane captures guarded by raw matched queue-head read beat plus
 beat-count lane index, valid-mask/length outputs, scalar `RRESP` aggregation,
 generated beat-count/`RLAST` artifacts, and empty `read_data` and
-`response_demux` residue. Selector `.122` now chooses `.123`, readiness audit
-for multiple independent read burst-last depth-2 concrete same-ID queue-head
-response-demux groups. Audit `.123` now selects `.124`, generated read
+`response_demux` residue. Selector `.122` chose `.123`, readiness audit for
+multiple independent read burst-last depth-2 concrete same-ID queue-head
+response-demux groups. Audit `.123` selected `.124`, generated read
 burst-last response-demux-only queue-head behavior for two or more duplicate
 concrete read-ID groups, each exactly two transactions at computed depth `2`.
-The implementation owner must keep the existing family-wide admitted-request
-onehot boundary and excludes read-data, same-family auto-ID, deeper queues,
-packed outputs, direct backend, and VHDL. Read-data over multiple groups,
-deeper queues, mixed auto-ID, packed burst-vector outputs, alternate payload
-assembly, direct backend, and VHDL remain deferred.
+Implementation `.124` now ships that behavior for
+`ppif/axi_manager_capacity_status_read_multi_group_same_id_queue_head_response_demux.ppif`.
+The generated path emits concrete-ID-scoped compact one-hot queue storage,
+finite depth-2 transition rules, generated completion pulse outputs,
+queue-head response-demux rules, queue assertions, response-demux assertions,
+and generated queue reports for both covered groups while preserving the
+existing family-wide admitted-request onehot boundary. Read-data over multiple
+groups, same-family auto-ID, deeper queues, write or read single-beat
+multi-group queue-head behavior, packed outputs, direct backend, and VHDL
+remain deferred. The next active frontier is `.125`, the next exact IAL2
+feature-completeness selector after the multi-group response-demux slice.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.

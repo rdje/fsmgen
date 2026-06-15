@@ -141,7 +141,7 @@ multi-beat, and read burst-last queue-head demux samples.
 The slice still fail-closes or defers:
 
 - queue groups deeper than two slots;
-- more than one duplicate concrete-ID group;
+- read-data consumption over more than one duplicate concrete-ID group;
 - same-family mixed auto-ID plus concrete queue-head response demux;
 - generalized per-ID issue-order queues;
 - packed burst-vector outputs and alternate payload assembly;

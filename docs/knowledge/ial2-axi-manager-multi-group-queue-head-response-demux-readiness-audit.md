@@ -10,8 +10,8 @@ answers:
 date: 2026-06-15
 status: current
 tags: [ial2, axi, manager, queue-head, same-id, response-demux, task-tree]
-evidence: docs/AXI_IAL2_MANAGER_MULTI_GROUP_QUEUE_HEAD_RESPONSE_DEMUX_READINESS_AUDIT.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; docs/book/src/14-feature-backlog.md; README.md; ROADMAP_V2.md
-reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.123|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.124|multi-group queue-head response-demux|family-wide admitted-request onehot|generated multiple independent read burst-last depth-2 concrete same-ID queue-head response-demux groups|generated_same_id_queue_head_demux' docs/AXI_IAL2_MANAGER_MULTI_GROUP_QUEUE_HEAD_RESPONSE_DEMUX_READINESS_AUDIT.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md docs/book/src/14-feature-backlog.md README.md ROADMAP_V2.md
+evidence: docs/AXI_IAL2_MANAGER_MULTI_GROUP_QUEUE_HEAD_RESPONSE_DEMUX_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_MULTI_GROUP_QUEUE_HEAD_RESPONSE_DEMUX_BEHAVIOR.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; docs/book/src/14-feature-backlog.md; README.md; ROADMAP_V2.md
+reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.123|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.124|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.125|multi-group queue-head response-demux|family-wide admitted-request onehot|generated multiple independent read burst-last depth-2 concrete same-ID queue-head response-demux groups|read_multi_group_same_id_queue_head_response_demux|generated_same_id_queue_head_demux' docs/AXI_IAL2_MANAGER_MULTI_GROUP_QUEUE_HEAD_RESPONSE_DEMUX_READINESS_AUDIT.md docs/AXI_IAL2_MANAGER_MULTI_GROUP_QUEUE_HEAD_RESPONSE_DEMUX_BEHAVIOR.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md docs/book/src/14-feature-backlog.md README.md ROADMAP_V2.md
 ---
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.123` selected
@@ -31,3 +31,8 @@ must not claim simultaneous group-local same-cycle enqueue widening. It also
 excludes read-data over multiple groups, same-family auto-ID plus concrete
 queue-head demux, deeper queues, write-family or read single-beat multi-group
 queue-head behavior, packed outputs, direct backend, and VHDL.
+
+Implementation `.124` has since shipped this selected response-demux-only
+behavior for
+`ppif/axi_manager_capacity_status_read_multi_group_same_id_queue_head_response_demux.ppif`;
+the behavior fact card owns the generated artifact details.

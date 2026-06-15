@@ -2232,13 +2232,13 @@ sub _build_same_id_issue_order_queue_behavior(%args) {
     }
 
     my $groups = $entry->{same_id_issue_order_queues};
-    return undef unless ref($groups) eq 'ARRAY' && @$groups == 1;
-
-    my $group = $groups->[0];
-    return undef unless ref($group) eq 'HASH'
-        && ($group->{depth} // 0) == 2
-        && ref($group->{transactions}) eq 'ARRAY'
-        && @{$group->{transactions}} == 2;
+    return undef unless ref($groups) eq 'ARRAY' && @$groups;
+    if (@$groups > 1) {
+        return undef unless $family_name eq 'read'
+            && ($entry->{response_scope} // '') eq 'burst_last'
+            && ($entry->{last_signal_width} // 0) == 1
+            && defined $entry->{last_signal};
+    }
 
     my $policy = _same_id_ordering_policy_for_family($args{same_id_ordering_policy}, $family_name);
     return undef unless ref($policy) eq 'HASH'
@@ -2251,79 +2251,88 @@ sub _build_same_id_issue_order_queue_behavior(%args) {
     my $id_family = ref($args{id_families}) eq 'HASH' ? $args{id_families}{$family_name} : undef;
     return undef unless ref($id_family) eq 'HASH' && $id_family->{present};
 
-    my %transaction_by_name = map { $_->{name} => $_ } @{$args{transactions} || []};
-    my %pulse_by_transaction = map { $_->{transaction} => $_ }
-        @{$boundary->{families}{$family_name}{generated_pulses} || []};
-    my @transactions;
-    for my $transaction_name (@{$group->{transactions}}) {
-        my $transaction = $transaction_by_name{$transaction_name};
-        my $pulse = $pulse_by_transaction{$transaction_name};
-        return undef unless ref($transaction) eq 'HASH'
-            && ($transaction->{kind} // '') eq $family_name
-            && ref($transaction->{id}) eq 'HASH'
-            && ($transaction->{id}{policy} // '') eq 'concrete'
-            && ($transaction->{id}{value} // -1) == ($group->{concrete_id} // -2)
-            && ref($pulse) eq 'HASH';
-        push @transactions, {
-            transaction    => $transaction->{name},
-            tag            => $transaction->{tag},
-            request_event  => $transaction->{request_event},
-            completion_event => $transaction->{completion_event},
-            admitted_pulse => $pulse->{pulse},
-        };
-    }
-
-    my $prefix = _same_id_issue_order_queue_group_prefix(
-        $args{manager_name},
-        $family_name,
-        $group->{concrete_id},
-    );
-    my %slot_signal;
-    my @storage;
-    for my $slot (0 .. 1) {
-        for my $transaction (@transactions) {
-            my $signal = "${prefix}_slot${slot}_$transaction->{transaction}_q";
-            $slot_signal{$slot}{$transaction->{transaction}} = $signal;
-            push @storage, $signal;
-        }
-    }
-
-    for my $transaction (@transactions) {
-        $transaction->{head_signal} = $slot_signal{0}{$transaction->{transaction}};
-        $transaction->{slot_signals} = [
-            map { $slot_signal{$_}{$transaction->{transaction}} } 0 .. 1
-        ];
-    }
-
     my $implementation_status = $family_name eq 'write'
         ? 'generated_write_bid_queue_head_demux'
         : ($entry->{response_scope} // '') eq 'single_beat'
             ? 'generated_read_single_beat_queue_head_demux'
             : 'generated_read_burst_last_queue_head_demux';
-    my $queue_group = {
-        family                  => $family_name,
-        implementation_status   => $implementation_status,
-        concrete_id             => $group->{concrete_id},
-        concrete_id_literal     => _sized_decimal_literal($id_family->{width}, $group->{concrete_id}),
-        id_width                => $id_family->{width},
-        depth                   => 2,
-        queue_state_representation => 'compact_onehot_transaction_slots',
-        dequeue_event_source    => 'queue_head_response_demux',
-        response_event          => $entry->{response_event},
-        response_id_signal      => $entry->{response_id_signal},
-        prefix                  => $prefix,
-        transactions            => \@transactions,
-        slot_signals            => \%slot_signal,
-        storage                 => \@storage,
-    };
-    $queue_group->{last_signal} = $entry->{last_signal}
-        if defined $entry->{last_signal};
-    $queue_group->{transition_rules} = [
-        map { $_->{name} } _same_id_issue_order_queue_transition_specs($queue_group)
-    ];
-    $queue_group->{generated_assertions} = [
-        map { $_->{name} } _same_id_issue_order_queue_assertion_specs_for_group($queue_group)
-    ];
+    my %transaction_by_name = map { $_->{name} => $_ } @{$args{transactions} || []};
+    my %pulse_by_transaction = map { $_->{transaction} => $_ }
+        @{$boundary->{families}{$family_name}{generated_pulses} || []};
+    my @queue_groups;
+    for my $group (@$groups) {
+        return undef unless ref($group) eq 'HASH'
+            && ($group->{depth} // 0) == 2
+            && ref($group->{transactions}) eq 'ARRAY'
+            && @{$group->{transactions}} == 2;
+
+        my @transactions;
+        for my $transaction_name (@{$group->{transactions}}) {
+            my $transaction = $transaction_by_name{$transaction_name};
+            my $pulse = $pulse_by_transaction{$transaction_name};
+            return undef unless ref($transaction) eq 'HASH'
+                && ($transaction->{kind} // '') eq $family_name
+                && ref($transaction->{id}) eq 'HASH'
+                && ($transaction->{id}{policy} // '') eq 'concrete'
+                && ($transaction->{id}{value} // -1) == ($group->{concrete_id} // -2)
+                && ref($pulse) eq 'HASH';
+            push @transactions, {
+                transaction      => $transaction->{name},
+                tag              => $transaction->{tag},
+                request_event    => $transaction->{request_event},
+                completion_event => $transaction->{completion_event},
+                admitted_pulse   => $pulse->{pulse},
+            };
+        }
+
+        my $prefix = _same_id_issue_order_queue_group_prefix(
+            $args{manager_name},
+            $family_name,
+            $group->{concrete_id},
+        );
+        my %slot_signal;
+        my @storage;
+        for my $slot (0 .. 1) {
+            for my $transaction (@transactions) {
+                my $signal = "${prefix}_slot${slot}_$transaction->{transaction}_q";
+                $slot_signal{$slot}{$transaction->{transaction}} = $signal;
+                push @storage, $signal;
+            }
+        }
+
+        for my $transaction (@transactions) {
+            $transaction->{head_signal} = $slot_signal{0}{$transaction->{transaction}};
+            $transaction->{slot_signals} = [
+                map { $slot_signal{$_}{$transaction->{transaction}} } 0 .. 1
+            ];
+        }
+
+        my $queue_group = {
+            family                  => $family_name,
+            implementation_status   => $implementation_status,
+            concrete_id             => $group->{concrete_id},
+            concrete_id_literal     => _sized_decimal_literal($id_family->{width}, $group->{concrete_id}),
+            id_width                => $id_family->{width},
+            depth                   => 2,
+            queue_state_representation => 'compact_onehot_transaction_slots',
+            dequeue_event_source    => 'queue_head_response_demux',
+            response_event          => $entry->{response_event},
+            response_id_signal      => $entry->{response_id_signal},
+            prefix                  => $prefix,
+            transactions            => \@transactions,
+            slot_signals            => \%slot_signal,
+            storage                 => \@storage,
+        };
+        $queue_group->{last_signal} = $entry->{last_signal}
+            if defined $entry->{last_signal};
+        $queue_group->{transition_rules} = [
+            map { $_->{name} } _same_id_issue_order_queue_transition_specs($queue_group)
+        ];
+        $queue_group->{generated_assertions} = [
+            map { $_->{name} } _same_id_issue_order_queue_assertion_specs_for_group($queue_group)
+        ];
+        push @queue_groups, $queue_group;
+    }
 
     return {
         mode               => 'bounded_same_id_issue_order_queue',
@@ -2333,7 +2342,7 @@ sub _build_same_id_issue_order_queue_behavior(%args) {
                 family                => $family_name,
                 generated_behavior    => 1,
                 implementation_status => $implementation_status,
-                groups                => [$queue_group],
+                groups                => \@queue_groups,
             },
         },
     };
@@ -4282,7 +4291,7 @@ sub _build_report(%args) {
             'response_demux.read response_scope single_beat generates bounded single-beat read RID demux behavior for explicit opt-in contracts',
             'response_demux.read response_scope burst_last requires one-bit last_signal metadata and generates matched-RID-and-RLAST last-beat completion behavior for explicit opt-in contracts',
             'response_demux transaction_completion must be generated; selected auto-ID families make transaction completion names generated demux pulse outputs, while the bounded read single-beat, read burst-last, and write depth-2 concrete same-ID queue-head shapes also make transaction completion names generated demux pulse outputs',
-            'concrete same-ID queue-head response_demux is generated only for bounded one-group two-transaction depth-2 shapes: read single-beat, read burst-last, or write, with issue-order-queue policy, duplicate concrete-ID group, no same-family auto_id_lifecycle demux, and read_data consumption supported for generated read single-beat queue-head capture, generated read burst-last queue-head last-beat capture, report-only raw-ARLEN burst-length capture, runtime beat-count/RLAST validation on generated read burst-last queue-head last-beat capture, and generated multi-beat output-bank capture on generated read burst-last queue-head demux in this slice',
+            'concrete same-ID queue-head response_demux is generated only for bounded two-transaction depth-2 shapes: one-group read single-beat, one-or-more-group read burst-last response-demux-only, or one-group write, with issue-order-queue policy, duplicate concrete-ID groups, no same-family auto_id_lifecycle demux, and read_data consumption supported only for exactly one generated read queue-head group through generated read single-beat queue-head capture, generated read burst-last queue-head last-beat capture, report-only raw-ARLEN burst-length capture, runtime beat-count/RLAST validation on generated read burst-last queue-head last-beat capture, and generated multi-beat output-bank capture on generated read burst-last queue-head demux in this slice',
             'read_data supports explicit generated single-beat capture behavior with response_scope single_beat, explicit generated last-beat capture behavior with response_scope burst_last, and explicit generated multi-beat output-bank behavior with response_scope burst_last',
             'read_data.read data width must be positive and status width must be 2',
             'read_data.read optional burst_length metadata is accepted only for last-beat or multi-beat capture, source arlen, signal width 8, axlen-plus-one encoding, request capture, max_beats 1..256, report-only or runtime-assertion validation, generated raw-ARLEN capture, and generated beat-count/RLAST runtime assertions only for explicit runtime-assertion contracts; multi-beat capture requires runtime-assertion validation',
@@ -4297,7 +4306,7 @@ sub _build_report(%args) {
             },
             {
                 id     => 'axi_id_ordering_and_response_matching',
-                detail => 'Concrete transaction ID request/response assertions, explicit bounded auto-ID request-ID drive plus completion-event release, generated auto-ID same-ID avoidance, explicit static concrete-ID reuse reject policy metadata, issue-order-queue admitted-request pulse generation for selected concrete-ID families, bounded read single-beat, read burst-last, and write depth-2 concrete same-ID issue-order queue state plus queue-head response-demux behavior for selected public sample shapes, generated write BID response demux, generated single-beat read RID response demux, generated single-beat read-data RDATA/RRESP capture, generated single-beat read-data RDATA/RRESP capture from generated read single-beat concrete same-ID queue-head response-demux, generated burst-last RLAST response-demux completion, structural last-beat read-data metadata, generated last-beat read-data RDATA/RRESP capture, generated last-beat read-data RDATA/RRESP capture from generated read burst-last concrete same-ID queue-head response-demux, generated raw-ARLEN burst-length capture including report-only generated read burst-last concrete same-ID queue-head read-data contracts, explicit runtime-assertion beat-count/RLAST validation for auto-ID and bounded read burst-last concrete same-ID queue-head read-data contracts, generated multi-beat read-data output-bank behavior for the covered auto-ID multi-beat-by-RID subset and bounded read burst-last concrete same-ID queue-head subset, bounded burst payload/output behavior through that per-beat output bank, and generated scalar RRESP aggregation behavior are supported; dynamic user-ID arbitration while issuing multiple same-family requests in one cycle, deeper/multiple-group concrete same-ID issue-order queues, generalized scoreboard policies, authored/general different-ID interleaving outside the covered auto-ID and bounded queue-head subsets, packed burst-vector outputs, alternate full burst payload assembly, and aggregate-only status output shapes remain outside this capacity/status shell.',
+                detail => 'Concrete transaction ID request/response assertions, explicit bounded auto-ID request-ID drive plus completion-event release, generated auto-ID same-ID avoidance, explicit static concrete-ID reuse reject policy metadata, issue-order-queue admitted-request pulse generation for selected concrete-ID families, bounded read single-beat, read burst-last, and write depth-2 concrete same-ID issue-order queue state plus queue-head response-demux behavior for selected public sample shapes including multiple independent read burst-last response-demux-only queue groups, generated write BID response demux, generated single-beat read RID response demux, generated single-beat read-data RDATA/RRESP capture, generated single-beat read-data RDATA/RRESP capture from generated read single-beat concrete same-ID queue-head response-demux, generated burst-last RLAST response-demux completion, structural last-beat read-data metadata, generated last-beat read-data RDATA/RRESP capture, generated last-beat read-data RDATA/RRESP capture from generated read burst-last concrete same-ID queue-head response-demux, generated raw-ARLEN burst-length capture including report-only generated read burst-last concrete same-ID queue-head read-data contracts, explicit runtime-assertion beat-count/RLAST validation for auto-ID and bounded read burst-last concrete same-ID queue-head read-data contracts, generated multi-beat read-data output-bank behavior for the covered auto-ID multi-beat-by-RID subset and bounded read burst-last concrete same-ID queue-head subset, bounded burst payload/output behavior through that per-beat output bank, and generated scalar RRESP aggregation behavior are supported; dynamic user-ID arbitration while issuing multiple same-family requests in one cycle, read-data over multiple queue groups, deeper concrete same-ID issue-order queues, write-family or read single-beat multiple-group queue-head behavior, generalized scoreboard policies, authored/general different-ID interleaving outside the covered auto-ID and bounded queue-head subsets, packed burst-vector outputs, alternate full burst payload assembly, and aggregate-only status output shapes remain outside this capacity/status shell.',
             },
             {
                 id     => 'profile_aliases_and_full_manager_behavior',

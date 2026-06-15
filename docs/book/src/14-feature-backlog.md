@@ -4735,8 +4735,10 @@ The `.108` slice later generated compact one-hot write queue slots, finite
 write enqueue/dequeue/same-cycle update rules, generated write completion
 pulse outputs, queue-head `BID` demux rules, queue assertions, and
 report/residue movement only for that covered shape. `.110` later shipped the
-read `single-beat` analogue. Deeper or multiple queue groups, same-family
-mixed auto-ID, read-data consumption of concrete queue-head demux, direct
+read `single-beat` analogue, and `.124` later shipped multiple independent
+read burst-last response-demux-only queue groups. Deeper queues,
+write-family or read single-beat multiple-group queue-head behavior,
+same-family mixed auto-ID, read-data over multiple queue groups, direct
 backend lowering, and VHDL remain deferred.
 
 Write same-ID queue-head response-demux behavior:
@@ -5084,9 +5086,10 @@ read_data.residue: []
 response_demux.residue: []
 ```
 
-Deeper or multiple queue groups, mixed same-family auto-ID plus concrete
-queue-head demux, packed burst-vector outputs, alternate payload assembly,
-direct backend lowering, and VHDL remain deferred.
+Read-data over multiple queue groups, deeper queue groups, mixed same-family
+auto-ID plus concrete queue-head demux, write-family or read single-beat
+multiple-group queue-head behavior, packed burst-vector outputs, alternate
+payload assembly, direct backend lowering, and VHDL remain deferred.
 
 Post queue-head multi-beat selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
@@ -5105,6 +5108,62 @@ builder still has a one-group generation guard. `.124` must preserve the
 family-wide admitted-request onehot boundary and must not enable read-data over
 multiple groups, same-family auto-ID, deeper queues, direct backend lowering,
 or VHDL.
+
+Multi-group queue-head response-demux behavior:
+[AXI_IAL2_MANAGER_MULTI_GROUP_QUEUE_HEAD_RESPONSE_DEMUX_BEHAVIOR](../../AXI_IAL2_MANAGER_MULTI_GROUP_QUEUE_HEAD_RESPONSE_DEMUX_BEHAVIOR.md)
+ships `.124`, generated read burst-last response-demux-only queue-head
+behavior for multiple duplicate concrete read-ID groups. The public sample is:
+
+```bash
+./bin/fsmgen --emit-schedule-json ppif/axi_manager_capacity_status_read_multi_group_same_id_queue_head_response_demux.ppif
+./bin/fsmgen --quiet --verify-hdl --output /tmp/fsmgen_read_multi_group_same_id_queue_head_response_demux.sv ppif/axi_manager_capacity_status_read_multi_group_same_id_queue_head_response_demux.ppif
+```
+
+The sample uses two duplicate read-ID groups: `r0`/`r1` share concrete `RID`
+`3`, and `r2`/`r3` share concrete `RID` `5`. FSMGen emits concrete-ID-scoped
+compact one-hot queue storage, finite depth-2 transition rules, generated
+completion pulse outputs, group-local response-state expressions,
+`RLAST`-qualified queue-head response-demux rules, queue assertions,
+response-demux assertions, and generated queue reports for both groups.
+
+The generated `r2` demux rule is:
+
+```lisp
+(rule axi0_r2_response_demux
+  (& axi0_read_complete (== axi0_rid 4'd5) axi0_rlast
+     axi0_read_id5_same_id_issue_order_slot0_r2_q)
+  (pulse axi0_r2_complete))
+```
+
+The report marks:
+
+```text
+response_demux.read.generated_queue_behavior_boundary:
+  generated_read_burst_last_queue_head_demux
+response_demux.read.generated_completion_signals:
+  axi0_r0_complete
+  axi0_r1_complete
+  axi0_r2_complete
+  axi0_r3_complete
+response_demux.read.same_id_issue_order_queues:
+  - concrete_id: 3
+    transactions: [r0, r1]
+    depth: 2
+  - concrete_id: 5
+    transactions: [r2, r3]
+    depth: 2
+response_demux.residue:
+  read_data_interleaving
+  bursts
+```
+
+The existing admitted-request boundary remains family-wide: one generated
+`axi0_read_issue_order_queue_request_onehot0` assertion covers all selected
+read request events. The slice does not claim simultaneous group-local
+same-cycle enqueue support. Read-data over multiple queue groups, same-family
+auto-ID plus concrete queue-head demux, deeper queues, write-family or read
+single-beat multiple-group queue-head behavior, direct backend lowering, and
+VHDL remain deferred.
 
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
