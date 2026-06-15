@@ -5213,11 +5213,12 @@ lowering, and VHDL remain deferred.
 Multi-group queue-head last-beat read-data readiness:
 [AXI_IAL2_MANAGER_MULTI_GROUP_QUEUE_HEAD_LAST_BEAT_READ_DATA_READINESS_AUDIT](../../AXI_IAL2_MANAGER_MULTI_GROUP_QUEUE_HEAD_LAST_BEAT_READ_DATA_READINESS_AUDIT.md)
 selects `.130`, generated multi-group queue-head last-beat read-data capture.
-The next implementation is limited to scalar `capture_scope last-beat`, no
+That implementation shipped scalar `capture_scope last-beat`, no
 `burst_length` metadata, and complete per-transaction `data_output` and
 `status_output` bindings over two or more generated read burst-last depth-2
-queue-head groups. Report-only raw-`ARLEN` and runtime beat-count/`RLAST`
-multi-group variants remain separate deferred owners.
+queue-head groups. Report-only raw-`ARLEN` multi-group scalar capture is now
+shipped by `.132`; runtime beat-count/`RLAST` multi-group scalar validation
+remains a separate deferred owner.
 
 Multi-group queue-head last-beat read-data behavior:
 [AXI_IAL2_MANAGER_MULTI_GROUP_QUEUE_HEAD_LAST_BEAT_READ_DATA_BEHAVIOR](../../AXI_IAL2_MANAGER_MULTI_GROUP_QUEUE_HEAD_LAST_BEAT_READ_DATA_BEHAVIOR.md)
@@ -5234,18 +5235,53 @@ generated_queue_head_response_demux_last_beat_completion_pulse`,
 transactions `r0`, `r1`, `r2`, `r3`, eight generated scalar outputs, four
 generated capture rules, `response_demux.residue: read_data_interleaving,
 bursts`, and the scalar last-beat read-data residue set. Report-only
-raw-`ARLEN` and runtime-validation multi-group scalar variants remain separate
-deferred owners.
+raw-`ARLEN` is shipped by `.132`; runtime-validation multi-group scalar
+variants remain separately deferred.
 
 Post multi-group queue-head last-beat read-data selector:
 [AXI_IAL2_MANAGER_POST_MULTI_GROUP_QUEUE_HEAD_LAST_BEAT_READ_DATA_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTI_GROUP_QUEUE_HEAD_LAST_BEAT_READ_DATA_NEXT_SLICE_SELECTION.md)
 selects `.132`, generated report-only raw-`ARLEN` burst-length capture for
-the multi-group queue-head scalar last-beat read-data shape. The next
+the multi-group queue-head scalar last-beat read-data shape. That shipped
 implementation is limited to `burst_length` metadata with `source arlen`,
 signal width `8`, `encoding axlen-plus-one`, `capture request`, and
 `validation report-only` over all generated read burst-last depth-2 queue-head
 groups. Runtime beat-count/`RLAST` validation for the multi-group scalar shape
 remains a separate deferred owner.
+
+Multi-group queue-head burst-length behavior:
+[AXI_IAL2_MANAGER_MULTI_GROUP_QUEUE_HEAD_BURST_LENGTH_BEHAVIOR](../../AXI_IAL2_MANAGER_MULTI_GROUP_QUEUE_HEAD_BURST_LENGTH_BEHAVIOR.md)
+ships `.132` for
+`ppif/axi_manager_capacity_status_read_multi_group_last_beat_same_id_queue_head_burst_length.ppif`.
+The generated path keeps the `RID` `3` `r0`/`r1` group and the `RID` `5`
+`r2`/`r3` group in scalar last-beat read-data coverage, adds the shared
+generated `axi0_arlen` input, and emits per-transaction raw-`ARLEN` storage
+and request-guarded capture rules:
+
+```text
+axi0_r0_arlen_q, axi0_r1_arlen_q, axi0_r2_arlen_q, axi0_r3_arlen_q
+axi0_r0_burst_length_capture, axi0_r1_burst_length_capture,
+axi0_r2_burst_length_capture, axi0_r3_burst_length_capture
+```
+
+The public source uses a report-only `burst-length` clause:
+
+```text
+(burst-length
+  (source arlen)
+  (signal axi0_arlen (width 8))
+  (encoding axlen-plus-one)
+  (capture request)
+  (max-beats 16)
+  (validation report-only))
+```
+
+The report records `capture_scope: last_beat`,
+`burst_length_source: arlen_signal`, `burst_length_validation: report_only`,
+transactions `r0`, `r1`, `r2`, `r3`, one generated burst-length input, four
+generated raw-`ARLEN` storage elements, and four generated burst-length rules.
+Because validation is report-only, expected-beat storage, beat counters, and
+beat-count/`RLAST` assertions remain absent; runtime validation for the
+multi-group scalar shape remains deferred.
 
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)

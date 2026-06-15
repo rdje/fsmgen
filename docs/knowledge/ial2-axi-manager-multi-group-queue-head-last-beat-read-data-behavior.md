@@ -5,7 +5,7 @@ answers:
   - "what did IAL2-FEATURE-COMPLETENESS-FRONTIER.130 ship?"
   - "is scalar last-beat read-data over multiple queue-head groups supported?"
   - "which PPIF sample covers multi-group queue-head last-beat read-data?"
-  - "are multi-group raw-ARLEN last-beat variants supported?"
+  - "what did the .130 no-burst multi-group scalar last-beat sample ship?"
 date: 2026-06-15
 status: current
 tags: [ial2, axi, manager, queue-head, read-data, same-id, last-beat, multi-group]
@@ -38,5 +38,8 @@ generated capture rules. `response_demux.residue` remains
 last-beat set for multi-beat reassembly, per-beat outputs, `RRESP`
 aggregation, and `ARLEN` / beat-count validation.
 
-Report-only raw-`ARLEN` and runtime beat-count/`RLAST` multi-group scalar
-last-beat variants remain deferred separate owners.
+Report-only raw-`ARLEN` multi-group scalar last-beat capture is shipped by
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.132` in
+`ppif/axi_manager_capacity_status_read_multi_group_last_beat_same_id_queue_head_burst_length.ppif`.
+Runtime beat-count/`RLAST` multi-group scalar last-beat validation remains a
+separate deferred owner.

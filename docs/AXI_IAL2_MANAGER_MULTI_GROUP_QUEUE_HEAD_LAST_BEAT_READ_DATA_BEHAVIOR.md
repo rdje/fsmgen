@@ -43,6 +43,9 @@ Generated artifacts include:
 
 No `axi0_arlen`, raw-`ARLEN` storage, expected-beat storage, beat counters, or
 per-beat output banks are generated for this scalar no-`burst_length` shape.
+The report-only raw-`ARLEN` multi-group scalar follow-up is shipped separately
+by `IAL2-FEATURE-COMPLETENESS-FRONTIER.132`; this `.130` sample remains the
+no-`burst_length` baseline.
 
 The generated `r2` scalar capture path is representative:
 
@@ -73,6 +76,12 @@ The new sample reports:
 
 ## Preserved Behavior
 
+The `.132` report-only raw-`ARLEN` multi-group scalar sample adds the shared
+`axi0_arlen` input plus per-transaction raw-`ARLEN` storage/capture rules while
+preserving the same scalar last-beat data/status outputs:
+
+- `ppif/axi_manager_capacity_status_read_multi_group_last_beat_same_id_queue_head_burst_length.ppif`
+
 The existing multi-group multi-beat sample remains residue-clean and still
 generates output banks, raw `ARLEN` capture, beat-count/`RLAST` runtime
 validation, valid masks, length outputs, and scalar `RRESP` aggregation:
@@ -93,7 +102,6 @@ The multi-group response-demux-only sample remains supported and still has no
 
 Still deferred:
 
-- Report-only raw-`ARLEN` multi-group scalar last-beat variants.
 - Runtime beat-count/`RLAST` multi-group scalar last-beat variants.
 - Same-family mixed `auto_id_lifecycle` plus concrete queue-head demux.
 - Deeper concrete same-ID queue groups.
