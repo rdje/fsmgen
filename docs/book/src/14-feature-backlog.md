@@ -4901,10 +4901,12 @@ read_data:
 The existing auto-ID read-data path keeps reporting
 `generated_read_response_demux_completion_pulse`. Later queue-head slices
 ship bounded burst-last last-beat capture, report-only raw-`ARLEN`
-burst-length capture, and runtime beat-count/`RLAST` validation. `.120`
-selects bounded multi-beat queue-head read-data output-bank behavior as the
-next owner. Deeper or multiple queue groups, mixed same-family auto-ID plus
-concrete queue-head demux, direct backend lowering, and VHDL remain deferred.
+burst-length capture, runtime beat-count/`RLAST` validation, and bounded
+multi-beat queue-head read-data output-bank behavior. The active frontier is
+now `.123`, a readiness audit for multiple independent read burst-last
+depth-2 concrete same-ID queue-head response-demux groups. Read-data over
+multiple groups, deeper queues, mixed same-family auto-ID plus concrete
+queue-head demux, direct backend lowering, and VHDL remain deferred.
 
 Queue-head last-beat read-data behavior:
 [AXI_IAL2_MANAGER_QUEUE_HEAD_LAST_BEAT_READ_DATA_BEHAVIOR](../../AXI_IAL2_MANAGER_QUEUE_HEAD_LAST_BEAT_READ_DATA_BEHAVIOR.md)
@@ -5083,6 +5085,14 @@ response_demux.residue: []
 Deeper or multiple queue groups, mixed same-family auto-ID plus concrete
 queue-head demux, packed burst-vector outputs, alternate payload assembly,
 direct backend lowering, and VHDL remain deferred.
+
+Post queue-head multi-beat selector:
+[AXI_IAL2_MANAGER_POST_QUEUE_HEAD_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
+selects `.123`, readiness audit for multiple independent read burst-last
+depth-2 concrete same-ID queue-head response-demux groups. The selected audit
+is response-demux-only: no read-data, no same-family auto-ID, no deeper
+queues, no multiple response families, no packed outputs, no direct backend,
+and no VHDL.
 
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)

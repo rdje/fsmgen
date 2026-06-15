@@ -1396,7 +1396,13 @@ That bounded sample emits request-time output-bank clearing, per-beat
 `RDATA`/`RRESP` lane captures guarded by raw matched queue-head read beat plus
 beat-count lane index, valid-mask/length outputs, scalar `RRESP` aggregation,
 generated beat-count/`RLAST` artifacts, and empty `read_data` and
-`response_demux` residue. Deeper/multiple queue groups, mixed auto-ID,
+`response_demux` residue. Selector `.122` now chooses `.123`, readiness audit
+for multiple independent read burst-last depth-2 concrete same-ID queue-head
+response-demux groups. The next frontier is audit-only and response-demux-only:
+read family, burst-last, two or more duplicate concrete read-ID groups,
+exactly two transactions per group, computed depth `2`, no read-data, no
+same-family auto-ID, no deeper queues, no packed outputs, no direct backend,
+and no VHDL. Read-data over multiple groups, deeper queues, mixed auto-ID,
 packed burst-vector outputs, alternate payload assembly, direct backend, and
 VHDL remain deferred.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2

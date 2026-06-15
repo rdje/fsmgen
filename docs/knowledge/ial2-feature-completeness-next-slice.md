@@ -1,6 +1,6 @@
 ---
 id: ial2-feature-completeness-next-slice
-title: IAL2 feature completeness next slice is queue-head/read-data expansion selection
+title: IAL2 feature completeness next slice is multiple queue-head response-demux group readiness
 answers:
   - "what is the next IAL2 feature completeness slice?"
   - "what is the next IAL2 PNT task?"
@@ -20,13 +20,14 @@ answers:
   - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.120?"
   - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.121?"
   - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.122?"
+  - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.123?"
   - "what is the next AXI manager slice?"
   - "what is the next AXI manager task after same-ID queue behavior implementation?"
 date: 2026-06-15
 status: current
 tags: [ial2, axi, manager, same-id, concrete-id, ordering, feature-completeness, task-tree]
-evidence: docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; docs/AXI_IAL2_MANAGER_QUEUE_HEAD_MULTI_BEAT_READ_DATA_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_POST_QUEUE_HEAD_RUNTIME_VALIDATION_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_QUEUE_HEAD_RUNTIME_VALIDATION_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_MULTI_BEAT_READ_DATA_OUTPUT_BANK_BEHAVIOR_FIRST_SLICE.md; docs/book/src/14-feature-backlog.md; README.md; ROADMAP_V2.md; docs/knowledge/ial2-common-vs-profile-factoring.md
-reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.121|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.122|queue-head multi-beat|read_multi_beat_same_id_queue_head_read_data|per_beat_output_bank|generated_queue_head_response_demux_last_beat_completion_pulse|common semantic core' docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md docs/AXI_IAL2_MANAGER_QUEUE_HEAD_MULTI_BEAT_READ_DATA_BEHAVIOR.md docs/book/src/14-feature-backlog.md README.md ROADMAP_V2.md docs/knowledge/ial2-common-vs-profile-factoring.md
+evidence: docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; docs/AXI_IAL2_MANAGER_POST_QUEUE_HEAD_MULTI_BEAT_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_QUEUE_HEAD_MULTI_BEAT_READ_DATA_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_POST_QUEUE_HEAD_RUNTIME_VALIDATION_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_QUEUE_HEAD_RUNTIME_VALIDATION_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_MULTI_BEAT_READ_DATA_OUTPUT_BANK_BEHAVIOR_FIRST_SLICE.md; docs/book/src/14-feature-backlog.md; README.md; ROADMAP_V2.md; docs/knowledge/ial2-common-vs-profile-factoring.md
+reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.122|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.123|queue-head multi-beat|multiple independent read burst-last depth-2 concrete same-ID queue-head response-demux groups|read_multi_beat_same_id_queue_head_read_data|per_beat_output_bank|generated_queue_head_response_demux_last_beat_completion_pulse|common semantic core' docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md docs/AXI_IAL2_MANAGER_POST_QUEUE_HEAD_MULTI_BEAT_NEXT_SLICE_SELECTION.md docs/AXI_IAL2_MANAGER_QUEUE_HEAD_MULTI_BEAT_READ_DATA_BEHAVIOR.md docs/book/src/14-feature-backlog.md README.md ROADMAP_V2.md docs/knowledge/ial2-common-vs-profile-factoring.md
 ---
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.106` shipped the first generated
@@ -89,9 +90,12 @@ auto-ID read-data capture keeps its auto-ID completion-validity values.
 The queue-head multi-beat path now reports `per_beat_output_bank`,
 per-transaction valid masks and length outputs, scalar `RRESP` aggregation,
 `read_data.residue: []`, and `response_demux.residue: []` for the bounded
-sample. The active PNT frontier is now
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.122`, a selector/audit for the next
-queue-head/read-data expansion. Deeper or multiple groups, same-family mixed
+sample. `IAL2-FEATURE-COMPLETENESS-FRONTIER.122` selected
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.123`, readiness audit for multiple
+independent read burst-last depth-2 concrete same-ID queue-head response-demux
+groups. `.123` is audit-only and response-demux-only: no read-data, no
+same-family auto-ID, no deeper queues, no packed outputs, no direct backend,
+and no VHDL. Read-data over multiple groups, deeper groups, same-family mixed
 auto-ID, packed burst-vector outputs, alternate payload assembly, direct
 backend, and VHDL remain deferred.
 
