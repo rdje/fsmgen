@@ -30,6 +30,7 @@ The report marks `read_data.read.completion_validity` as
 path. The existing auto-ID read-data path keeps
 `generated_read_response_demux_completion_pulse`.
 
-Read burst-last queue-head read-data, last-beat or multi-beat queue-head
-read-data, deeper or multiple groups, mixed same-family auto-ID plus concrete
-queue-head demux, direct backend lowering, and VHDL remain deferred.
+Read burst-last last-beat queue-head read-data is selected as `.115` but is
+not shipped yet. Multi-beat queue-head read-data, deeper or multiple groups,
+mixed same-family auto-ID plus concrete queue-head demux, direct backend
+lowering, and VHDL remain deferred.

@@ -1358,9 +1358,15 @@ queue-head group and completion signals, emits generated `RDATA`/`RRESP`
 inputs plus per-transaction data/status outputs, guards capture rules with the
 generated queue-head completion pulses, and reports
 `generated_queue_head_response_demux_completion_pulse` while preserving the
-existing auto-ID read-data completion-validity report. `.114` is the next
-selector before any burst-last/last-beat/multi-beat queue-head read-data,
-deeper/multiple queue group, mixed auto-ID, backend, or residue expansion.
+existing auto-ID read-data completion-validity report. Selector `.114`
+chooses `.115`, generated last-beat read-data capture for the bounded read
+burst-last concrete same-ID queue-head demux shape. The next implementation
+should reuse the already generated `RLAST`-qualified queue-head completion
+pulses, preserve existing auto-ID last-beat and queue-head single-beat
+read-data report values, and report
+`generated_queue_head_response_demux_last_beat_completion_pulse` for the new
+queue-head last-beat path. Multi-beat queue-head read-data, deeper/multiple
+queue group, mixed auto-ID, backend, or residue expansion remain deferred.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.

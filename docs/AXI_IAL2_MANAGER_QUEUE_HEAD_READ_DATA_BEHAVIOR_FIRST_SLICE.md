@@ -92,8 +92,9 @@ The existing auto-ID read-data path keeps reporting
 
 The slice still fail-closes or defers:
 
-- read burst-last queue-head read-data
-- last-beat or multi-beat queue-head read-data
+- read burst-last last-beat queue-head read-data, now selected as `.115`
+  but not yet shipped
+- multi-beat queue-head read-data
 - deeper or multiple duplicate concrete-ID groups
 - mixed same-family auto-ID plus concrete queue-head response demux
 - generalized per-ID queues

@@ -4902,8 +4902,42 @@ The existing auto-ID read-data path keeps reporting
 `generated_read_response_demux_completion_pulse`. Burst-last, last-beat, and
 multi-beat queue-head read-data; deeper or multiple queue groups; mixed
 same-family auto-ID plus concrete queue-head demux; direct backend lowering;
-and VHDL remain deferred. `IAL2-FEATURE-COMPLETENESS-FRONTIER.114` is the
-next selector before any broader queue-head/read-data expansion.
+and VHDL remain deferred. `IAL2-FEATURE-COMPLETENESS-FRONTIER.114` selected
+the bounded last-beat queue-head read-data follow-up before any broader
+queue-head/read-data expansion.
+
+Post queue-head read-data selector:
+[AXI_IAL2_MANAGER_POST_QUEUE_HEAD_READ_DATA_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_READ_DATA_NEXT_SLICE_SELECTION.md)
+selects `IAL2-FEATURE-COMPLETENESS-FRONTIER.115`, generated last-beat
+`RDATA`/`RRESP` capture for the bounded read burst-last concrete same-ID
+queue-head demux shape. The selected follow-up reuses the already generated
+`RLAST`-qualified queue-head completion pulses from:
+
+```bash
+./bin/fsmgen --emit-schedule-json ppif/axi_manager_capacity_status_same_id_queue_head_response_demux.ppif
+```
+
+and should combine that queue-head demux boundary with the existing scalar
+last-beat read-data capture shape proven by:
+
+```bash
+./bin/fsmgen --emit-schedule-json ppif/axi_manager_capacity_status_read_data_last_beat.ppif
+```
+
+The selected report value for the future queue-head last-beat path is:
+
+```text
+read_data.read.completion_validity:
+  generated_queue_head_response_demux_last_beat_completion_pulse
+```
+
+Existing auto-ID last-beat read-data keeps
+`generated_read_response_demux_last_beat_completion_pulse`, and existing
+queue-head single-beat read-data keeps
+`generated_queue_head_response_demux_completion_pulse`. Multi-beat queue-head
+read-data, deeper or multiple queue groups, mixed same-family auto-ID plus
+concrete queue-head demux, generalized per-ID queues, direct backend lowering,
+and VHDL remain deferred.
 
 First implementation subset selection:
 [AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION](../../AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md)
