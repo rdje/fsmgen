@@ -4,8 +4,8 @@ title: AXI manager queue-head last-beat read-data behavior covers generated read
 layer: B
 date: 2026-06-15
 owner: IAL2-FEATURE-COMPLETENESS-FRONTIER.115
-evidence: docs/AXI_IAL2_MANAGER_QUEUE_HEAD_LAST_BEAT_READ_DATA_BEHAVIOR.md; ppif/axi_manager_capacity_status_read_last_beat_same_id_queue_head_read_data.ppif; perl/FSM/IAL2/ProtocolIntent/AxiManagerCapacityStatus.pm; t/1437-axi-ial2-manager-capacity-status-generator.t; t/1436-ial2-ppif-parser-cli.t; perl/FSM/Support/RegressionCorpus.pm; docs/REGRESSION_CORPUS.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md
-reverify: env -u PERL5LIB ./bin/fsmgen --emit-schedule-json ppif/axi_manager_capacity_status_read_last_beat_same_id_queue_head_read_data.ppif && env -u PERL5LIB ./bin/fsmgen --quiet --verify-hdl --output /tmp/fsmgen_queue_head_last_beat_read_data_reverify.sv ppif/axi_manager_capacity_status_read_last_beat_same_id_queue_head_read_data.ppif && env -u PERL5LIB prove -Iperl t/1437-axi-ial2-manager-capacity-status-generator.t t/1436-ial2-ppif-parser-cli.t
+evidence: docs/AXI_IAL2_MANAGER_QUEUE_HEAD_LAST_BEAT_READ_DATA_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_POST_QUEUE_HEAD_LAST_BEAT_READ_DATA_NEXT_SLICE_SELECTION.md; ppif/axi_manager_capacity_status_read_last_beat_same_id_queue_head_read_data.ppif; perl/FSM/IAL2/ProtocolIntent/AxiManagerCapacityStatus.pm; t/1437-axi-ial2-manager-capacity-status-generator.t; t/1436-ial2-ppif-parser-cli.t; perl/FSM/Support/RegressionCorpus.pm; docs/REGRESSION_CORPUS.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md
+reverify: env -u PERL5LIB ./bin/fsmgen --emit-schedule-json ppif/axi_manager_capacity_status_read_last_beat_same_id_queue_head_read_data.ppif && rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.116|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.117|queue-head burst-length|raw-ARLEN|generated_queue_head_response_demux_last_beat_completion_pulse' docs/AXI_IAL2_MANAGER_POST_QUEUE_HEAD_LAST_BEAT_READ_DATA_NEXT_SLICE_SELECTION.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md
 answers:
   - "does AXI manager read-data support generated burst-last queue-head response demux?"
   - "what did IAL2-FEATURE-COMPLETENESS-FRONTIER.115 ship?"
@@ -33,7 +33,9 @@ queue-head last-beat path. Existing auto-ID last-beat read-data keeps
 queue-head single-beat read-data keeps
 `generated_queue_head_response_demux_completion_pulse`.
 
-Multi-beat queue-head read-data, queue-head `burst-length` metadata, deeper
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.116` selected
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.117`, generated raw-`ARLEN`
+burst-length capture for this bounded queue-head last-beat shape. Multi-beat
+queue-head read-data, queue-head runtime beat-count/RLAST validation, deeper
 or multiple groups, mixed same-family auto-ID plus concrete queue-head demux,
-direct backend lowering, and VHDL remain deferred. `IAL2-FEATURE-COMPLETENESS-FRONTIER.116`
-owns the next selector before any broader queue-head/read-data expansion.
+direct backend lowering, and VHDL remain deferred.

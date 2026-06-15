@@ -1369,10 +1369,11 @@ per-transaction last-beat data/status outputs, guards capture rules with the
 generated queue-head last-beat completion pulses, and reports
 `generated_queue_head_response_demux_last_beat_completion_pulse` while
 preserving existing auto-ID last-beat and queue-head single-beat read-data
-report values. Multi-beat queue-head read-data, queue-head `burst-length`
-metadata, deeper/multiple queue group, mixed auto-ID, backend, or residue
-expansion remain deferred. The active frontier is `.116`, the selector for
-the next queue-head/read-data expansion after `.115`.
+report values. Selector `.116` chose `.117`, generated raw-`ARLEN`
+burst-length capture for the bounded queue-head last-beat read-data shape, as
+the next queue-head/read-data expansion. Multi-beat queue-head read-data,
+queue-head runtime beat-count/RLAST validation, deeper/multiple queue group,
+mixed auto-ID, backend, or residue expansion remain deferred.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.

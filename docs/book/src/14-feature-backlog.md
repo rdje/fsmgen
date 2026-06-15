@@ -4944,11 +4944,19 @@ Existing auto-ID last-beat read-data keeps
 `generated_read_response_demux_last_beat_completion_pulse`, and existing
 queue-head single-beat read-data keeps
 `generated_queue_head_response_demux_completion_pulse`. Multi-beat queue-head
-read-data, queue-head `burst-length` metadata, deeper or multiple queue
-groups, mixed same-family auto-ID plus concrete queue-head demux, generalized
-per-ID queues, direct backend lowering, and VHDL remain deferred. The active
-frontier `.116` selects the next exact queue-head/read-data owner before any
-broader behavior change.
+read-data, queue-head runtime beat-count/RLAST validation, deeper or multiple
+queue groups, mixed same-family auto-ID plus concrete queue-head demux,
+generalized per-ID queues, direct backend lowering, and VHDL remain deferred.
+
+Post queue-head last-beat read-data selector:
+[AXI_IAL2_MANAGER_POST_QUEUE_HEAD_LAST_BEAT_READ_DATA_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_LAST_BEAT_READ_DATA_NEXT_SLICE_SELECTION.md)
+selects generated raw-`ARLEN` burst-length capture for the bounded
+queue-head last-beat read-data shape as `.117`. That next implementation is
+expected to add a public support-accounted sample that combines the `.115`
+queue-head last-beat capture shape with report-only `burst-length` metadata,
+generating `axi0_arlen`, per-transaction raw-`ARLEN` storage, and
+request-guarded burst-length capture rules while preserving the queue-head
+last-beat completion-validity report value.
 
 First implementation subset selection:
 [AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION](../../AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md)
