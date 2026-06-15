@@ -71,7 +71,7 @@ subtest 'facade manifests advertise stateful reuse without widening object injec
         );
         is(
             $contract->{generation_argument_shape},
-            'scalar filesystem path to a .fsm source root',
+            'scalar filesystem path to a supported .fsm, .isf, or .ppif source root',
             "$label keeps the filesystem-path generation argument boundary",
         );
         ok(

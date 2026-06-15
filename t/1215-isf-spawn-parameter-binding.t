@@ -10271,7 +10271,7 @@ ISF
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'repeat multi-pending await_any without drain', qr/repeat-body spawn requires same-body '\(await_all done\)' before the repeat check can loop/);
+    assert_lower_rejected(<<'ISF', 'repeat multi-pending await_any without drain', qr/repeat-body multi-pending await_any requires later same-body '\(await_all done\)' before the repeat check can loop/);
 (actor repeat_await_any_multi_pending_without_drain
   (clock clk)
   (interface (input start) (input loops (width 3)) (output done))

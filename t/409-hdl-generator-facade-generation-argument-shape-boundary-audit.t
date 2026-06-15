@@ -31,7 +31,7 @@ END {
         if $INITIAL_DEBUG_STATE;
 }
 
-my $generation_argument_shape = 'scalar filesystem path to a .fsm source root';
+my $generation_argument_shape = 'scalar filesystem path to a supported .fsm, .isf, or .ppif source root';
 
 subtest 'manifests advertise the facade generation path argument shape' => sub {
     my @views = (
@@ -62,7 +62,7 @@ subtest 'manifests advertise the facade generation path argument shape' => sub {
         is(
             $facade->{generation_argument_shape},
             $generation_argument_shape,
-            "$label advertises the scalar .fsm generation argument boundary",
+            "$label advertises the scalar supported-source generation argument boundary",
         );
         ok(
             contains_value($facade->{method_names}, 'generate_hdl_from_file'),
@@ -125,7 +125,7 @@ subtest 'HDLGenerator rejects malformed generation arguments at the facade bound
             code => sub { $pipeline->generate_hdl_from_file('source_root'); },
         },
         {
-            label => 'non-fsm path',
+            label => 'unsupported source suffix path',
             code => sub { $pipeline->generate_hdl_from_file('source_root.sv'); },
         },
         {
@@ -141,7 +141,7 @@ subtest 'HDLGenerator rejects malformed generation arguments at the facade bound
 
         like(
             $error,
-            qr/FSM::Pipeline::HDLGenerator expects generate_hdl_from_file\(\.\.\.\) argument to be a scalar filesystem path to a \.fsm source root/s,
+            qr/FSM::Pipeline::HDLGenerator expects generate_hdl_from_file\(\.\.\.\) argument to be a scalar filesystem path to a supported \.fsm, \.isf, or \.ppif source root/s,
             "$case->{label} receives the targeted facade diagnostic",
         );
         unlike(

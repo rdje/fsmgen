@@ -243,6 +243,7 @@ sub capability_manifest_language_surface_keys {
     return [
         qw(
             strict_mode
+            file_surfaces
             default_mode_compatibility
             assignments
             system_contracts

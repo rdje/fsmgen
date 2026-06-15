@@ -33,7 +33,7 @@ END {
 
 my $generation_argument_list_shape = 'exactly one source-path argument after object invocant';
 my $generation_argument_list_error = qr/FSM::Pipeline::HDLGenerator expects generate_hdl_from_file\(\.\.\.\) arguments after the object invocant to contain exactly one source-path argument/s;
-my $generation_argument_shape_error = qr/FSM::Pipeline::HDLGenerator expects generate_hdl_from_file\(\.\.\.\) argument to be a scalar filesystem path to a \.fsm source root/s;
+my $generation_argument_shape_error = qr/FSM::Pipeline::HDLGenerator expects generate_hdl_from_file\(\.\.\.\) argument to be a scalar filesystem path to a supported \.fsm, \.isf, or \.ppif source root/s;
 
 subtest 'manifests advertise the facade generation argument-list shape' => sub {
     my @views = (
@@ -68,8 +68,8 @@ subtest 'manifests advertise the facade generation argument-list shape' => sub {
         );
         is(
             $facade->{generation_argument_shape},
-            'scalar filesystem path to a .fsm source root',
-            "$label still advertises the scalar .fsm source-path value shape",
+            'scalar filesystem path to a supported .fsm, .isf, or .ppif source root',
+            "$label still advertises the scalar supported-source value shape",
         );
         ok(
             contains_value($facade->{method_names}, 'generate_hdl_from_file'),
@@ -190,7 +190,7 @@ subtest 'single malformed generation arguments still use the value-shape diagnos
         like(
             $error,
             $generation_argument_shape_error,
-            "$case->{label} remains covered by the scalar .fsm value-shape diagnostic",
+            "$case->{label} remains covered by the scalar supported-source value-shape diagnostic",
         );
         unlike(
             $error,

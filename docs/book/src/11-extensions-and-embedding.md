@@ -1316,6 +1316,11 @@ my $result = FSM::Pipeline::HDLGenerator->new(
 )->generate_hdl_from_file('path/to/file.fsm');
 ```
 
+The source path may name a supported `.fsm`, `.isf`, or `.ppif` root. `.isf`
+and `.ppif` inputs lower through their generated review artifacts before the
+normal HDL generation pipeline runs, and `source_info.kind` preserves the
+public source kind.
+
 `R13` now treats explicit serializable plan/report APIs as the preferred
 direction for new embedder-facing surfaces.
 

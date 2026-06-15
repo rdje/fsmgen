@@ -21,7 +21,7 @@ my @protocol_entries = protocol_fixture_entries();
 
 ok(@entries >= 7, 'regression corpus catalog starts with named entries across multiple classifications');
 ok(@entries >= 50, 'regression corpus catalog now covers supported language-feature fixtures plus root-level, section-level, child-root, direct-generation, and composition-contract residue families');
-is(scalar(@protocol_entries), 4, 'first visible corpus slice contains the four named protocol fixtures');
+is(scalar(@protocol_entries), 30, 'first visible corpus slice contains the named protocol and public intent fixtures');
 
 my %allowed_classifications = map { $_ => 1 } qw(
     supported_smoke
@@ -32,6 +32,32 @@ my %allowed_classifications = map { $_ => 1 } qw(
 my %allowed_coverages = map { $_ => 1 } qw(
     direct_root_pipeline_cli
     composition_top_pipeline_cli
+    isf_pipeline_cli
+    ial2_ppif_pipeline_cli
+    ial2_ppif_bundle_pipeline_cli
+    ial2_ppif_manager_capacity_status_pipeline_cli
+    ial2_ppif_manager_capacity_status_id_family_pipeline_cli
+    ial2_ppif_manager_capacity_status_transaction_envelope_pipeline_cli
+    ial2_ppif_manager_capacity_status_transaction_event_dispatch_pipeline_cli
+    ial2_ppif_manager_capacity_status_same_id_reject_policy_pipeline_cli
+    ial2_ppif_manager_capacity_status_same_id_issue_order_queue_policy_pipeline_cli
+    ial2_ppif_manager_capacity_status_same_id_queue_head_response_demux_pipeline_cli
+    ial2_ppif_manager_capacity_status_read_single_beat_same_id_queue_head_response_demux_pipeline_cli
+    ial2_ppif_manager_capacity_status_read_single_beat_same_id_queue_head_read_data_pipeline_cli
+    ial2_ppif_manager_capacity_status_read_last_beat_same_id_queue_head_read_data_pipeline_cli
+    ial2_ppif_manager_capacity_status_read_last_beat_same_id_queue_head_burst_length_pipeline_cli
+    ial2_ppif_manager_capacity_status_read_last_beat_same_id_queue_head_burst_length_runtime_assertion_pipeline_cli
+    ial2_ppif_manager_capacity_status_read_multi_beat_same_id_queue_head_read_data_pipeline_cli
+    ial2_ppif_manager_capacity_status_write_same_id_queue_head_response_demux_pipeline_cli
+    ial2_ppif_manager_capacity_status_auto_id_lifecycle_pipeline_cli
+    ial2_ppif_manager_capacity_status_response_demux_pipeline_cli
+    ial2_ppif_manager_capacity_status_read_response_demux_pipeline_cli
+    ial2_ppif_manager_capacity_status_read_response_demux_burst_last_pipeline_cli
+    ial2_ppif_manager_capacity_status_read_data_pipeline_cli
+    ial2_ppif_manager_capacity_status_read_data_last_beat_pipeline_cli
+    ial2_ppif_manager_capacity_status_read_data_burst_length_pipeline_cli
+    ial2_ppif_manager_capacity_status_read_data_burst_length_runtime_assertion_pipeline_cli
+    ial2_ppif_manager_capacity_status_read_data_multi_beat_pipeline_cli
     legacy_root_default_pipeline_cli
     legacy_section_default_pipeline_cli
     legacy_assignment_default_pipeline_cli
@@ -66,6 +92,32 @@ my %strict_rejection_coverages = map { $_ => 1 } qw(
 my %coverage_classification = (
     direct_root_pipeline_cli => 'supported_smoke',
     composition_top_pipeline_cli => 'supported_smoke',
+    isf_pipeline_cli => 'supported_smoke',
+    ial2_ppif_pipeline_cli => 'supported_smoke',
+    ial2_ppif_bundle_pipeline_cli => 'supported_smoke',
+    ial2_ppif_manager_capacity_status_pipeline_cli => 'supported_smoke',
+    ial2_ppif_manager_capacity_status_id_family_pipeline_cli => 'supported_smoke',
+    ial2_ppif_manager_capacity_status_transaction_envelope_pipeline_cli => 'supported_smoke',
+    ial2_ppif_manager_capacity_status_transaction_event_dispatch_pipeline_cli => 'supported_smoke',
+    ial2_ppif_manager_capacity_status_same_id_reject_policy_pipeline_cli => 'supported_smoke',
+    ial2_ppif_manager_capacity_status_same_id_issue_order_queue_policy_pipeline_cli => 'supported_smoke',
+    ial2_ppif_manager_capacity_status_same_id_queue_head_response_demux_pipeline_cli => 'supported_smoke',
+    ial2_ppif_manager_capacity_status_read_single_beat_same_id_queue_head_response_demux_pipeline_cli => 'supported_smoke',
+    ial2_ppif_manager_capacity_status_read_single_beat_same_id_queue_head_read_data_pipeline_cli => 'supported_smoke',
+    ial2_ppif_manager_capacity_status_read_last_beat_same_id_queue_head_read_data_pipeline_cli => 'supported_smoke',
+    ial2_ppif_manager_capacity_status_read_last_beat_same_id_queue_head_burst_length_pipeline_cli => 'supported_smoke',
+    ial2_ppif_manager_capacity_status_read_last_beat_same_id_queue_head_burst_length_runtime_assertion_pipeline_cli => 'supported_smoke',
+    ial2_ppif_manager_capacity_status_read_multi_beat_same_id_queue_head_read_data_pipeline_cli => 'supported_smoke',
+    ial2_ppif_manager_capacity_status_write_same_id_queue_head_response_demux_pipeline_cli => 'supported_smoke',
+    ial2_ppif_manager_capacity_status_auto_id_lifecycle_pipeline_cli => 'supported_smoke',
+    ial2_ppif_manager_capacity_status_response_demux_pipeline_cli => 'supported_smoke',
+    ial2_ppif_manager_capacity_status_read_response_demux_pipeline_cli => 'supported_smoke',
+    ial2_ppif_manager_capacity_status_read_response_demux_burst_last_pipeline_cli => 'supported_smoke',
+    ial2_ppif_manager_capacity_status_read_data_pipeline_cli => 'supported_smoke',
+    ial2_ppif_manager_capacity_status_read_data_last_beat_pipeline_cli => 'supported_smoke',
+    ial2_ppif_manager_capacity_status_read_data_burst_length_pipeline_cli => 'supported_smoke',
+    ial2_ppif_manager_capacity_status_read_data_burst_length_runtime_assertion_pipeline_cli => 'supported_smoke',
+    ial2_ppif_manager_capacity_status_read_data_multi_beat_pipeline_cli => 'supported_smoke',
     legacy_root_default_pipeline_cli => 'legacy_out_of_scope',
     legacy_section_default_pipeline_cli => 'legacy_out_of_scope',
     legacy_assignment_default_pipeline_cli => 'legacy_out_of_scope',
@@ -91,6 +143,32 @@ for my $required_id (qw(
     protocol.apb_completer
     protocol.amba_requester
     protocol.apb_tb
+    intent.isf_apb_requester
+    intent.ppif_axi_aw_valid_ready
+    intent.ppif_axi_aw_w_valid_ready_bundle
+    intent.ppif_axi_manager_capacity_status
+    intent.ppif_axi_manager_capacity_status_id_family
+    intent.ppif_axi_manager_capacity_status_transaction_envelope
+    intent.ppif_axi_manager_capacity_status_transaction_event_dispatch
+    intent.ppif_axi_manager_capacity_status_same_id_reject_policy
+    intent.ppif_axi_manager_capacity_status_same_id_issue_order_queue_policy
+    intent.ppif_axi_manager_capacity_status_same_id_queue_head_response_demux
+    intent.ppif_axi_manager_capacity_status_read_single_beat_same_id_queue_head_response_demux
+    intent.ppif_axi_manager_capacity_status_read_single_beat_same_id_queue_head_read_data
+    intent.ppif_axi_manager_capacity_status_read_last_beat_same_id_queue_head_read_data
+    intent.ppif_axi_manager_capacity_status_read_last_beat_same_id_queue_head_burst_length
+    intent.ppif_axi_manager_capacity_status_read_last_beat_same_id_queue_head_burst_length_runtime_assertion
+    intent.ppif_axi_manager_capacity_status_read_multi_beat_same_id_queue_head_read_data
+    intent.ppif_axi_manager_capacity_status_write_same_id_queue_head_response_demux
+    intent.ppif_axi_manager_capacity_status_auto_id_lifecycle
+    intent.ppif_axi_manager_capacity_status_response_demux
+    intent.ppif_axi_manager_capacity_status_read_response_demux
+    intent.ppif_axi_manager_capacity_status_read_response_demux_burst_last
+    intent.ppif_axi_manager_capacity_status_read_data
+    intent.ppif_axi_manager_capacity_status_read_data_last_beat
+    intent.ppif_axi_manager_capacity_status_read_data_burst_length
+    intent.ppif_axi_manager_capacity_status_read_data_burst_length_runtime_assertion
+    intent.ppif_axi_manager_capacity_status_read_data_multi_beat
     feature.partial_lhs_with_size
     feature.partial_lhs_inferred_width
     feature.direct_rhs_concat_pack
@@ -370,8 +448,13 @@ for my $entry (@entries) {
     elsif (exists $entry->{diagnostic_code}) {
         fail("non-failure catalog entry '$entry->{id}' must not reserve a diagnostic code");
     }
-    elsif ($entry->{source_kind} eq 'fsm' || $entry->{source_kind} eq 'dt') {
-        ok($entry->{expected_module_name}, "direct-root entry '$entry->{id}' records an expected module name");
+    elsif (
+        $entry->{source_kind} eq 'fsm'
+            || $entry->{source_kind} eq 'dt'
+            || $entry->{source_kind} eq 'isf'
+            || $entry->{source_kind} eq 'ppif'
+    ) {
+        ok($entry->{expected_module_name}, "direct or intent entry '$entry->{id}' records an expected module name");
     }
     elsif ($entry->{source_kind} eq 'composition') {
         ok($entry->{expected_top_name}, "composition entry '$entry->{id}' records an expected top name");
@@ -417,8 +500,7 @@ for my $entry (@entries) {
         )
             if $entry->{coverage} eq 'direct_root_pipeline_cli';
         ok(
-            $entry->{coverage} eq 'direct_root_pipeline_cli'
-                || $entry->{coverage} eq 'composition_top_pipeline_cli',
+            ($coverage_classification{$entry->{coverage}} || '') eq 'supported_smoke',
             "strict-supported entry '$entry->{id}' keeps pipeline/CLI coverage",
         );
     }
@@ -426,8 +508,8 @@ for my $entry (@entries) {
 
 is(
     scalar(grep { $_->{classification} eq 'supported_smoke' } @entries),
-    41,
-    'catalog now keeps forty-one named supported-smoke entries including direct and composition language-feature fixtures',
+    67,
+    'catalog now keeps sixty-seven named supported-smoke entries including direct, composition, ISF, and PPIF fixtures',
 );
 is(
     scalar(grep { $_->{classification} eq 'legacy_out_of_scope' } @entries),
@@ -441,14 +523,40 @@ is(
 );
 is(
     scalar(grep { $_->{strict_supported} } @entries),
-    41,
-    'catalog now records forty-one positive strict-mode supported-smoke acceptance entries',
+    67,
+    'catalog now records sixty-seven positive strict-mode supported-smoke acceptance entries',
 );
 for my $strict_supported_id (qw(
     protocol.apb_requester
     protocol.apb_completer
     protocol.amba_requester
     protocol.apb_tb
+    intent.isf_apb_requester
+    intent.ppif_axi_aw_valid_ready
+    intent.ppif_axi_aw_w_valid_ready_bundle
+    intent.ppif_axi_manager_capacity_status
+    intent.ppif_axi_manager_capacity_status_id_family
+    intent.ppif_axi_manager_capacity_status_transaction_envelope
+    intent.ppif_axi_manager_capacity_status_transaction_event_dispatch
+    intent.ppif_axi_manager_capacity_status_same_id_reject_policy
+    intent.ppif_axi_manager_capacity_status_same_id_issue_order_queue_policy
+    intent.ppif_axi_manager_capacity_status_same_id_queue_head_response_demux
+    intent.ppif_axi_manager_capacity_status_read_single_beat_same_id_queue_head_response_demux
+    intent.ppif_axi_manager_capacity_status_read_single_beat_same_id_queue_head_read_data
+    intent.ppif_axi_manager_capacity_status_read_last_beat_same_id_queue_head_read_data
+    intent.ppif_axi_manager_capacity_status_read_last_beat_same_id_queue_head_burst_length
+    intent.ppif_axi_manager_capacity_status_read_last_beat_same_id_queue_head_burst_length_runtime_assertion
+    intent.ppif_axi_manager_capacity_status_read_multi_beat_same_id_queue_head_read_data
+    intent.ppif_axi_manager_capacity_status_write_same_id_queue_head_response_demux
+    intent.ppif_axi_manager_capacity_status_auto_id_lifecycle
+    intent.ppif_axi_manager_capacity_status_response_demux
+    intent.ppif_axi_manager_capacity_status_read_response_demux
+    intent.ppif_axi_manager_capacity_status_read_response_demux_burst_last
+    intent.ppif_axi_manager_capacity_status_read_data
+    intent.ppif_axi_manager_capacity_status_read_data_last_beat
+    intent.ppif_axi_manager_capacity_status_read_data_burst_length
+    intent.ppif_axi_manager_capacity_status_read_data_burst_length_runtime_assertion
+    intent.ppif_axi_manager_capacity_status_read_data_multi_beat
     feature.partial_lhs_with_size
     feature.partial_lhs_inferred_width
     feature.direct_rhs_concat_pack

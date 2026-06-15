@@ -1431,7 +1431,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `perl/FSM/Scheduler/ISF/Emitter/FSM.pm` — scheduled `.fsm` emitter for `.isf` lowering results.
 - `perl/FSM/Scheduler/ISF/Emitter/CompositionTop.pm` — generated `?top` emitter for ISF spawned-child parent/child handoff.
 - `perl/FSM/Scheduler/ISF/Emitter/JSON.pm` — machine-readable schedule-report emitter for `.isf` lowering results.
-- `perl/FSM/Pipeline/HDLGenerator.pm` — thin public generation facade around source/direct/composition orchestrators.
+- `perl/FSM/Pipeline/HDLGenerator.pm` — thin public generation facade around source/direct/composition orchestrators; accepts supported `.fsm`, `.isf`, and `.ppif` source roots.
 - `perl/FSM/Composition/Net.pm` — typed internal net plan for multi-child composition wiring.
 - `perl/FSM/Composition/Parser.pm` — first typed composition parser/IR boundary.
 - `perl/FSM/Composition/Plan.pm` — typed realized top-planning object for active composition work.

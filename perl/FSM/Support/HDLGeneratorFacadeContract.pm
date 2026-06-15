@@ -79,7 +79,7 @@ sub build_hdl_generator_facade_contract {
         generation_receiver_shape => 'blessed FSM::Pipeline::HDLGenerator object',
         generation_receiver_instance_shape => 'exact hash-backed FSM::Pipeline::HDLGenerator instance constructed by new(...) with required facade state',
         generation_argument_list_shape => 'exactly one source-path argument after object invocant',
-        generation_argument_shape => 'scalar filesystem path to a .fsm source root',
+        generation_argument_shape => 'scalar filesystem path to a supported .fsm, .isf, or .ppif source root',
         result_contract_source => hdl_generator_result_contract_source(),
         direct_extension_contract_source => extension_contract_source(),
         debug_runtime_contract_source => debug_runtime_contract_source(),

@@ -8,6 +8,8 @@ use feature qw(signatures);
 no warnings 'experimental::signatures';
 
 use Carp qw(confess);
+use File::Spec;
+use File::Temp qw(tempdir);
 use FindBin;
 use lib "$FindBin::Bin";
 use Scalar::Util qw(blessed reftype);
@@ -297,6 +299,10 @@ sub generate_hdl_from_file ($self, @generation_args) {
     return with_fsm_debug_state(
         { debug_level => ($pipeline->{debug_level} // 0) },
         sub {
+            return _generate_hdl_from_ppif_file($pipeline, $generation_source_path)
+                if $generation_source_path =~ /\.ppif\z/i;
+            return _generate_hdl_from_isf_file($pipeline, $generation_source_path)
+                if $generation_source_path =~ /\.isf\z/i;
             return FSM::Pipeline::SourceGenerationOrchestrator->generate_from_file(
                 pipeline => $pipeline,
                 fsm_file => $generation_source_path,
@@ -367,10 +373,81 @@ sub _generation_arg_list (@generation_args) {
     return _generation_source_path_arg($generation_args[0]);
 }
 sub _generation_source_path_arg ($value) {
-    confess "FSM::Pipeline::HDLGenerator expects generate_hdl_from_file(...) argument to be a scalar filesystem path to a .fsm source root"
-        unless defined($value) && !ref($value) && length($value) && $value =~ /\.fsm\z/;
+    confess "FSM::Pipeline::HDLGenerator expects generate_hdl_from_file(...) argument to be a scalar filesystem path to a supported .fsm, .isf, or .ppif source root"
+        unless defined($value) && !ref($value) && length($value) && $value =~ /\.(?:fsm|isf|ppif)\z/i;
 
     return $value;
+}
+sub _generate_hdl_from_isf_file ($pipeline, $isf_path) {
+    require FSM::Adapter::ISF;
+    require FSM::Scheduler::ISF;
+
+    my $adapter = FSM::Adapter::ISF->new();
+    my $scheduler = FSM::Scheduler::ISF->new();
+    my $actor = $adapter->parse_file($isf_path);
+    my $lowered = $scheduler->lower($actor);
+    my $files = $lowered->{files} || {};
+    my $entry_basename = exists $files->{"$actor->{actor_name}_top.fsm"}
+        ? "$actor->{actor_name}_top.fsm"
+        : exists $files->{"$actor->{actor_name}.fsm"}
+            ? "$actor->{actor_name}.fsm"
+            : undef;
+
+    confess "ISF lowering emitted no generated .fsm HDL entry artifact\n"
+        unless defined($entry_basename) && exists $files->{$entry_basename};
+
+    my $entry_path = _write_generated_fsm_files($files, $entry_basename);
+    my $result = FSM::Pipeline::SourceGenerationOrchestrator->generate_from_file(
+        pipeline => $pipeline,
+        fsm_file => $entry_path,
+    );
+    _annotate_public_source_info($result, 'isf', $isf_path, $entry_basename);
+    return $result;
+}
+sub _generate_hdl_from_ppif_file ($pipeline, $ppif_path) {
+    require FSM::Adapter::IAL2::PPIF;
+
+    my $ppif_result = FSM::Adapter::IAL2::PPIF->new()->parse_file($ppif_path);
+    my $files = $ppif_result->{generated_ial0}{files} || {};
+    my $entry_basename;
+
+    if (($ppif_result->{kind} // '') eq 'protocol_intent.valid_ready_bundle') {
+        $entry_basename = $ppif_result->{report}{generated_artifacts}{hdl_entry}{entry_artifact};
+    }
+    else {
+        my $artifact_files = $ppif_result->{report}{generated_artifacts}{ial0}{files} || [];
+        $entry_basename = $artifact_files->[0];
+    }
+
+    confess "PPIF lowering emitted no generated .fsm HDL entry artifact\n"
+        unless defined($entry_basename) && exists $files->{$entry_basename};
+
+    my $entry_path = _write_generated_fsm_files($files, $entry_basename);
+    my $result = FSM::Pipeline::SourceGenerationOrchestrator->generate_from_file(
+        pipeline => $pipeline,
+        fsm_file => $entry_path,
+    );
+    _annotate_public_source_info($result, 'ppif', $ppif_path, $entry_basename);
+    $result->{protocol_intent_report} = $ppif_result->{report};
+    return $result;
+}
+sub _write_generated_fsm_files ($files, $entry_basename) {
+    my $dir = tempdir(CLEANUP => 1);
+    for my $name (sort keys %$files) {
+        my $path = File::Spec->catfile($dir, $name);
+        open my $fh, '>', $path or confess "Cannot write generated temporary .fsm artifact '$path': $!";
+        print {$fh} $files->{$name};
+        close $fh or confess "Cannot close generated temporary .fsm artifact '$path': $!";
+    }
+
+    return File::Spec->catfile($dir, $entry_basename);
+}
+sub _annotate_public_source_info ($result, $kind, $source_path, $entry_artifact) {
+    $result->{source_info} ||= {};
+    $result->{source_info}{kind} = $kind;
+    $result->{source_info}{public_source_path} = $source_path;
+    $result->{source_info}{generated_hdl_entry_artifact} = $entry_artifact;
+    return $result;
 }
 
 1;

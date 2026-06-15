@@ -147,7 +147,10 @@ sub _assert_entry_composition_plan {
 sub _assert_entry_hdl_shape {
     my ($entry, $hdl, $owner) = @_;
 
-    if ($entry->{source_kind} eq 'fsm' || $entry->{source_kind} eq 'dt') {
+    if ($entry->{source_kind} eq 'fsm'
+        || $entry->{source_kind} eq 'dt'
+        || $entry->{source_kind} eq 'isf'
+        || $entry->{source_kind} eq 'ppif') {
         like(
             $hdl,
             qr/\bmodule\s+\Q$entry->{expected_module_name}\E\b/s,
