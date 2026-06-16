@@ -1067,7 +1067,7 @@ support-accounting metadata under query/limit/filter controls.
 `SEMANTIC-INTROSPECTION-MCP-FRONTIER.30` closes the immediate read-only
 semantic-introspection/MCP pass after source discovery and returns active
 roadmap priority to the IAL2 feature-completeness tree, currently at
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.140`.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.141`.
 The parser/report metadata slice `IAL2-FEATURE-COMPLETENESS-FRONTIER.39` is
 now shipped for the bounded AXI read response-demux public contract selected
 by `.38`. The selected read arm requires `(response-scope single-beat)`,
@@ -1543,10 +1543,10 @@ as supported, the focused parser assertion rejects the retired unsupported
 wording, the `.135`, `.132`, `.130`, `.127`, `.124`, and `.119` live reports
 remain unchanged, and `.138` selected `.139`, readiness audit for generated
 write-family multi-group queue-head response-demux. A temporary two-group
-write probe now reports two duplicate concrete write-ID groups but remains
+write probe reported two duplicate concrete write-ID groups but remained
 metadata-only with `generated_same_id_queue_head_demux` residue, while
 one-group write queue-head and read burst-last multi-group queue-head behavior
-are already generated. Read single-beat multi-group behavior, deeper queues,
+were already generated. Read single-beat multi-group behavior, deeper queues,
 same-family mixed auto-ID plus concrete queue-head demux, packed outputs,
 direct backend, and VHDL remain deferred.
 Audit `.139` selected `.140`, generated write-family multi-group queue-head
@@ -1555,9 +1555,17 @@ generated-artifact, lowerer, direct-backend, or VHDL prerequisite. The
 planner and report path already carry multiple write groups, and downstream
 queue-state, transition, assertion, response-demux state/rule, report, and
 residue helpers already group-iterate once behavior exists; the local blocker
-is the narrow builder gate that permits multiple groups only for read
-burst-last. `.140` must preserve the existing family-wide admitted-request
-onehot boundary and keep group-local simultaneous enqueue widening deferred.
+was the narrow builder gate that permitted multiple groups only for read
+burst-last. `.140` shipped generated write-family multi-group queue-head
+response-demux for
+`ppif/axi_manager_capacity_status_write_multi_group_same_id_queue_head_response_demux.ppif`.
+The generated report lists `BID` `3` for `w0`/`w1` and `BID` `5` for
+`w2`/`w3`, every generated group remains depth `2`, generated completion
+signals cover `w0` through `w3`, and `generated_same_id_queue_head_demux`
+residue is removed for the covered write family. The implementation preserves
+the existing family-wide admitted-request onehot boundary and keeps
+group-local simultaneous enqueue widening deferred. The active frontier is
+`.141`, the next feature-completeness selector.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.

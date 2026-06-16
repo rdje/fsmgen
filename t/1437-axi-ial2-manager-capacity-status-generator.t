@@ -577,6 +577,85 @@ subtest 'same-ID queue-head response-demux generates write queue state and compl
     );
 };
 
+subtest 'same-ID queue-head response-demux generates write multi-group queue state and completion demux' => sub {
+    my $result = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_same_id_write_multi_group_queue_head_response_demux());
+    my $isf = $result->{generated_ial1}{text};
+
+    like($isf, qr/\(var axi0_w0_admitted_request_pulse_q \(width 1\)\)/, 'write multi-group queue-head selection keeps first admitted request pulse storage');
+    like($isf, qr/\(var axi0_w3_admitted_request_pulse_q \(width 1\)\)/, 'write multi-group queue-head selection keeps final admitted request pulse storage');
+    like($isf, qr/\(output axi0_w0_complete\)/, 'write multi-group queue-head demux exposes w0 completion as a generated output');
+    like($isf, qr/\(output axi0_w3_complete\)/, 'write multi-group queue-head demux exposes w3 completion as a generated output');
+    like($isf, qr/\(input axi0_write_complete\)/, 'raw write response remains the generated demux input');
+    unlike($isf, qr/\(input axi0_w2_complete\)/, 'w2 completion is no longer an authored input');
+    unlike($isf, qr/\baxi0_rlast\b/, 'write multi-group queue-head demux does not generate or consume RLAST');
+    like($isf, qr/\(var axi0_write_id3_same_id_issue_order_slot0_w0_q \(width 1\)\)/, 'write multi-group queue-head demux declares concrete ID 3 slot state');
+    like($isf, qr/\(var axi0_write_id5_same_id_issue_order_slot0_w2_q \(width 1\)\)/, 'write multi-group queue-head demux declares concrete ID 5 slot state');
+    like($isf, qr/\(rule axi0_write_id5_same_id_issue_order_empty_enqueue_w2\b/, 'write multi-group queue-head demux emits ID 5 empty enqueue transition');
+    like($isf, qr/\(rule axi0_write_id5_same_id_issue_order_w2_dequeue_enqueue_w3\b/, 'write multi-group queue-head demux emits ID 5 same-cycle dequeue/enqueue transition');
+    like($isf, qr/\(priority axi0_write_id5_same_id_issue_order_empty_enqueue_w2 over axi0_write_id5_same_id_issue_order_empty_enqueue_w3\)/, 'write multi-group queue-head transition priorities include ID 5 group');
+    like($isf, qr/\(rule axi0_w2_response_demux \(& axi0_write_complete \(== axi0_bid 4'd5\) axi0_write_id5_same_id_issue_order_slot0_w2_q\)/, 'write multi-group queue-head demux emits w2 response-demux rule without RLAST');
+    like($isf, qr/\(rule axi0_w3_response_demux \(& axi0_write_complete \(== axi0_bid 4'd5\) axi0_write_id5_same_id_issue_order_slot0_w3_q\)/, 'write multi-group queue-head demux emits w3 response-demux rule without RLAST');
+    like($isf, qr/write same-ID issue-order queue enqueue has space or selected dequeue/, 'write multi-group queue-head demux emits queue capacity assertions');
+    like($isf, qr/write same-ID issue-order queue enqueue for w3 does not duplicate a remaining transaction/, 'write multi-group queue-head demux emits duplicate-after-dequeue assertions for the second group');
+
+    assert_same_id_write_queue_head_response_demux_report(
+        $result->{report}{response_demux},
+        'generator multi-group write report',
+        queues => [
+            {
+                concrete_id          => 3,
+                transactions         => [qw(w0 w1)],
+                depth                => 2,
+                dequeue_event_source => 'queue_head_response_demux',
+            },
+            {
+                concrete_id          => 5,
+                transactions         => [qw(w2 w3)],
+                depth                => 2,
+                dequeue_event_source => 'queue_head_response_demux',
+            },
+        ],
+        completion_signals => [qw(axi0_w0_complete axi0_w1_complete axi0_w2_complete axi0_w3_complete)],
+        generated_rules => [qw(axi0_w0_response_demux axi0_w1_response_demux axi0_w2_response_demux axi0_w3_response_demux)],
+        generated_assertions => [qw(
+            axi0_write_response_demux_active_match
+            axi0_w0_w1_write_response_demux_unique_match
+            axi0_w0_w2_write_response_demux_unique_match
+            axi0_w0_w3_write_response_demux_unique_match
+            axi0_w1_w2_write_response_demux_unique_match
+            axi0_w1_w3_write_response_demux_unique_match
+            axi0_w2_w3_write_response_demux_unique_match
+        )],
+    );
+    my $write_policy = $result->{report}{same_id_ordering}{concrete_id_reuse_policy}{write};
+    is_deeply(
+        $write_policy->{admitted_request_boundary}{generated_assertions},
+        [qw(axi0_write_issue_order_queue_request_onehot0)],
+        'same-ID write multi-group policy keeps a family-wide admitted-request onehot assertion',
+    );
+    is($write_policy->{response_demux_strategy}, 'queue_head_issue_order', 'same-ID write multi-group policy reports queue-head response-demux strategy');
+    is($write_policy->{response_demux_implementation_status}, 'generated', 'same-ID write multi-group policy reports generated response-demux status');
+    ok($write_policy->{accepted_same_id_reuse}, 'write multi-group queue-head behavior accepts same-ID reuse for the covered shape');
+    ok($write_policy->{generated_queue_behavior}, 'write multi-group queue-head behavior claims generated queue behavior');
+    is($write_policy->{enforcement}, 'generated_issue_order_queue', 'same-ID write multi-group policy reports generated issue-order queue enforcement');
+    is($write_policy->{implementation_status}, 'generated_write_bid_queue_head_demux', 'same-ID write multi-group policy reports the bounded generated implementation status');
+    is_deeply(
+        [map { $_->{concrete_id} } @{$write_policy->{generated_queues} || []}],
+        [3, 5],
+        'same-ID write multi-group policy reports both generated write queue groups',
+    );
+    is_deeply(
+        $result->{report}{same_id_ordering}{residue},
+        [qw(per_id_issue_order_queues)],
+        'generated write multi-group same-ID queue behavior leaves only broader per-ID queue residue',
+    );
+    is_deeply(
+        $result->{report}{id_response_rule_engine}{residue},
+        [qw(auto_id_allocation id_release)],
+        'generated write multi-group queue-head behavior removes same-ID and response-demux residue from ID/response report',
+    );
+};
+
 subtest 'auto-ID lifecycle generates bounded request-ID drive behavior' => sub {
     my $result = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_auto_id_lifecycle());
     my $isf = $result->{generated_ial1}{text};
@@ -2233,6 +2312,32 @@ sub sample_contract_with_same_id_write_queue_head_response_demux {
     return $contract;
 }
 
+sub sample_contract_with_same_id_write_multi_group_queue_head_response_demux {
+    my $contract = sample_contract_with_same_id_write_queue_head_response_demux();
+    $contract->{intent_name} = 'axi_manager_capacity_status_write_multi_group_same_id_queue_head_response_demux';
+    $contract->{source}{object_id} = 'axi-manager-capacity-status-write-multi-group-same-id-queue-head-response-demux';
+    $contract->{write_max_pending} = 4;
+    $contract->{transactions}[2]{id} = { value => 4 };
+    push @{$contract->{transactions}},
+        {
+            kind             => 'write',
+            name             => 'w2',
+            tag              => 'wr2',
+            request_event    => 'axi0_w2_request',
+            completion_event => 'axi0_w2_complete',
+            id               => { value => 5 },
+        },
+        {
+            kind             => 'write',
+            name             => 'w3',
+            tag              => 'wr3',
+            request_event    => 'axi0_w3_request',
+            completion_event => 'axi0_w3_complete',
+            id               => { value => 5 },
+        };
+    return $contract;
+}
+
 sub sample_contract_with_auto_id_lifecycle {
     my $contract = sample_contract_with_transaction_event_dispatch();
     $contract->{intent_name} = 'axi_manager_capacity_status_auto_id_lifecycle';
@@ -2679,7 +2784,21 @@ sub assert_same_id_read_single_beat_queue_head_response_demux_report {
 }
 
 sub assert_same_id_write_queue_head_response_demux_report {
-    my ($demux, $owner) = @_;
+    my ($demux, $owner, %args) = @_;
+
+    my $expected_queues = $args{queues} // [
+        {
+            concrete_id          => 3,
+            transactions         => [qw(w0 w1)],
+            depth                => 2,
+            dequeue_event_source => 'queue_head_response_demux',
+        },
+    ];
+    my $expected_completion_signals = $args{completion_signals} // [qw(axi0_w0_complete axi0_w1_complete)];
+    my $expected_rules = $args{generated_rules} // [qw(axi0_w0_response_demux axi0_w1_response_demux)];
+    my $expected_assertions = $args{generated_assertions} // [
+        qw(axi0_write_response_demux_active_match axi0_w0_w1_write_response_demux_unique_match)
+    ];
 
     is($demux->{mode}, 'bounded_write_bid_demux_contract', "$owner keeps write-only top-level response-demux mode");
     ok($demux->{generated_behavior}, "$owner marks top-level generated behavior true");
@@ -2696,24 +2815,17 @@ sub assert_same_id_write_queue_head_response_demux_report {
     is($write->{queue_state_representation}, 'compact_onehot_transaction_slots', "$owner reports queue state representation");
     is_deeply(
         $write->{same_id_issue_order_queues},
-        [
-            {
-                concrete_id          => 3,
-                transactions         => [qw(w0 w1)],
-                depth                => 2,
-                dequeue_event_source => 'queue_head_response_demux',
-            },
-        ],
+        $expected_queues,
         "$owner reports duplicate concrete write-ID queue group",
     );
     ok($write->{generated_queue_behavior}, "$owner reports generated queue behavior");
     is($write->{generated_queue_behavior_boundary}, 'generated_write_bid_queue_head_demux', "$owner reports generated write queue boundary");
     ok(!exists($write->{selected_completion_signals}), "$owner no longer reports selected completion signal names");
-    is_deeply($write->{generated_completion_signals}, [qw(axi0_w0_complete axi0_w1_complete)], "$owner reports generated completion signal names");
-    is_deeply($write->{generated_rules}, [qw(axi0_w0_response_demux axi0_w1_response_demux)], "$owner reports generated queue-head demux rules");
+    is_deeply($write->{generated_completion_signals}, $expected_completion_signals, "$owner reports generated completion signal names");
+    is_deeply($write->{generated_rules}, $expected_rules, "$owner reports generated queue-head demux rules");
     is_deeply(
         $write->{generated_assertions},
-        [qw(axi0_write_response_demux_active_match axi0_w0_w1_write_response_demux_unique_match)],
+        $expected_assertions,
         "$owner reports generated queue-head response-demux assertions",
     );
     is_deeply(
@@ -2743,8 +2855,8 @@ sub assert_rlast_report_prose_alignment {
     ok($id_residue, "$owner reports AXI ID/order unsupported residue");
     like(
         $id_residue->{detail},
-        qr/generated burst-last RLAST response-demux completion, structural last-beat read-data metadata, generated last-beat read-data RDATA\/RRESP capture, generated last-beat read-data RDATA\/RRESP capture from generated read burst-last concrete same-ID queue-head response-demux including multiple independent queue-head groups with no burst_length metadata or report-only raw-ARLEN burst-length metadata, generated raw-ARLEN burst-length capture including report-only generated read burst-last concrete same-ID queue-head read-data contracts with one or more independent queue-head groups, explicit runtime-assertion beat-count\/RLAST validation for auto-ID and bounded read burst-last concrete same-ID queue-head read-data contracts, generated multi-beat read-data output-bank behavior for the covered auto-ID multi-beat-by-RID subset and bounded read burst-last concrete same-ID queue-head subset including multiple independent queue-head groups, bounded burst payload\/output behavior through that per-beat output bank, and generated scalar RRESP aggregation behavior are supported/,
-        "$owner reports generated burst-last, last-beat, queue-head last-beat including multi-group scalar, queue-head report-only raw ARLEN, non-queue-head and queue-head beat-count, multi-beat output-bank, bounded burst output, and scalar aggregation behavior as supported",
+        qr/generated burst-last RLAST response-demux completion, structural last-beat read-data metadata, generated last-beat read-data RDATA\/RRESP capture, generated last-beat read-data RDATA\/RRESP capture from generated read burst-last concrete same-ID queue-head response-demux including multiple independent queue-head groups with no burst_length metadata, report-only raw-ARLEN burst-length metadata, or runtime-assertion beat-count\/RLAST validation metadata, generated raw-ARLEN burst-length capture including report-only and runtime-validation generated read burst-last concrete same-ID queue-head read-data contracts with one or more independent queue-head groups, explicit runtime-assertion beat-count\/RLAST validation for auto-ID and bounded read burst-last concrete same-ID queue-head read-data contracts including one or more independent queue-head groups, generated multi-beat read-data output-bank behavior for the covered auto-ID multi-beat-by-RID subset and bounded read burst-last concrete same-ID queue-head subset including multiple independent queue-head groups, bounded burst payload\/output behavior through that per-beat output bank, and generated scalar RRESP aggregation behavior are supported/,
+        "$owner reports generated burst-last, last-beat, queue-head last-beat including multi-group scalar runtime validation, queue-head report-only/raw runtime ARLEN, non-queue-head and queue-head beat-count, multi-beat output-bank, bounded burst output, and scalar aggregation behavior as supported",
     );
     like(
         $id_residue->{detail},
@@ -2756,14 +2868,15 @@ sub assert_rlast_report_prose_alignment {
     my $stale_queue_head_read_data = 'read-data consumption of burst-last or multi-beat concrete same-ID queue-head demux';
     my $stale_queue_head_burst_length = 'burst-length metadata with queue-head read-data';
     my $stale_multi_group = 'deeper/multiple-group concrete same-ID issue-order queues';
-    my $stale_multi_group_burst_length_boundary = 'report-only or runtime-validation last-beat read-data over multiple queue groups';
+    my $stale_multi_group_burst_length_boundary = join('', 'report-only or runtime-validation last-beat read-data ', 'over multiple queue groups');
+    my $stale_runtime_multi_group_scalar = join('', 'runtime-validation last-beat read-data ', 'over multiple queue groups');
     ok(index($id_residue->{detail}, $stale_metadata) < 0, "$owner removes stale report-only residue prose");
     ok(index($id_residue->{detail}, $stale_tracking) < 0, "$owner removes stale burst tracking residue prose");
     ok(index($id_residue->{detail}, $stale_queue_head_read_data) < 0, "$owner removes stale burst-last queue-head read-data residue prose");
     ok(index($id_residue->{detail}, $stale_queue_head_burst_length) < 0, "$owner removes stale queue-head burst-length residue prose");
     ok(index($id_residue->{detail}, $stale_multi_group) < 0, "$owner removes stale broad multiple-group residue prose");
     ok(index($id_residue->{detail}, $stale_multi_group_burst_length_boundary) < 0, "$owner removes stale report-only multi-group raw ARLEN residue prose");
-    like($id_residue->{detail}, qr/runtime-validation last-beat read-data over multiple queue groups/, "$owner keeps runtime-validation multi-group scalar last-beat residue prose");
+    ok(index($id_residue->{detail}, $stale_runtime_multi_group_scalar) < 0, "$owner removes stale runtime-validation multi-group scalar last-beat residue prose");
     ok(index($id_residue->{detail}, 'last-beat-only read-data over multiple queue groups') < 0, "$owner removes stale scalar multi-group last-beat residue prose");
     ok(index($id_residue->{detail}, 'queue-head runtime burst-length beat-count/RLAST validation') < 0, "$owner removes stale queue-head runtime validation residue prose");
 }

@@ -763,6 +763,70 @@ subtest 'PPIF adapter parses AXI manager write same-ID queue-head response-demux
     );
 };
 
+subtest 'PPIF adapter parses AXI manager write multi-group same-ID queue-head response-demux behavior' => sub {
+    my $sample_path = sample_capacity_write_multi_group_same_id_queue_head_response_demux_ppif_path();
+    ok(-f $sample_path, 'tracked runnable PPIF capacity/status write multi-group same-ID queue-head response-demux sample exists');
+
+    my $result = FSM::Adapter::IAL2::PPIF->new()->parse_source(sample_capacity_write_multi_group_same_id_queue_head_response_demux_ppif(), $sample_path);
+    my $isf = $result->{generated_ial1}{text};
+
+    is($result->{kind}, 'protocol_intent.axi_manager_capacity_status', 'write multi-group same-ID queue-head demux sample still uses the capacity/status generator');
+    is($result->{report}{source_object}{id}, 'axi-manager-capacity-status-write-multi-group-same-id-queue-head-response-demux', 'write multi-group same-ID queue-head demux source object id is preserved');
+    is($result->{report}{source_object}{intent_name}, 'axi_manager_capacity_status_write_multi_group_same_id_queue_head_response_demux', 'write multi-group same-ID queue-head demux source intent name is preserved');
+    like($isf, qr/\(var axi0_w0_admitted_request_pulse_q \(width 1\)\)/, 'write multi-group same-ID queue-head demux sample keeps w0 admitted request pulse');
+    like($isf, qr/\(var axi0_w3_admitted_request_pulse_q \(width 1\)\)/, 'write multi-group same-ID queue-head demux sample keeps w3 admitted request pulse');
+    like($isf, qr/\(var axi0_write_id5_same_id_issue_order_slot0_w2_q \(width 1\)\)/, 'write multi-group same-ID queue-head demux sample declares second generated queue slot state');
+    like($isf, qr/\(rule axi0_write_id5_same_id_issue_order_w2_dequeue_enqueue_w3\b/, 'write multi-group same-ID queue-head demux sample emits second generated queue transition rules');
+    like($isf, qr/\(rule axi0_w2_response_demux \(& axi0_write_complete \(== axi0_bid 4'd5\) axi0_write_id5_same_id_issue_order_slot0_w2_q\)/, 'write multi-group same-ID queue-head demux sample emits generated w2 response-demux rule');
+    like($isf, qr/\(output axi0_w3_complete\)/, 'write multi-group same-ID queue-head demux sample emits generated w3 completion output');
+    unlike($isf, qr/\baxi0_rlast\b/, 'write multi-group same-ID queue-head demux sample does not consume RLAST');
+    assert_same_id_write_queue_head_response_demux_report(
+        $result->{report}{response_demux},
+        'adapter multi-group write report',
+        queues => [
+            {
+                concrete_id          => 3,
+                transactions         => [qw(w0 w1)],
+                depth                => 2,
+                dequeue_event_source => 'queue_head_response_demux',
+            },
+            {
+                concrete_id          => 5,
+                transactions         => [qw(w2 w3)],
+                depth                => 2,
+                dequeue_event_source => 'queue_head_response_demux',
+            },
+        ],
+        completion_signals => [qw(axi0_w0_complete axi0_w1_complete axi0_w2_complete axi0_w3_complete)],
+        generated_rules => [qw(axi0_w0_response_demux axi0_w1_response_demux axi0_w2_response_demux axi0_w3_response_demux)],
+        generated_assertions => [qw(
+            axi0_write_response_demux_active_match
+            axi0_w0_w1_write_response_demux_unique_match
+            axi0_w0_w2_write_response_demux_unique_match
+            axi0_w0_w3_write_response_demux_unique_match
+            axi0_w1_w2_write_response_demux_unique_match
+            axi0_w1_w3_write_response_demux_unique_match
+            axi0_w2_w3_write_response_demux_unique_match
+        )],
+    );
+    my $write_policy = $result->{report}{same_id_ordering}{concrete_id_reuse_policy}{write};
+    is_deeply(
+        $write_policy->{admitted_request_boundary}{generated_assertions},
+        [qw(axi0_write_issue_order_queue_request_onehot0)],
+        'adapter report keeps family-wide admitted-request onehot for write multi-group queue-head demux',
+    );
+    is_deeply([map { $_->{concrete_id} } @{$write_policy->{generated_queues} || []}], [3, 5], 'adapter report keeps both generated write queue groups');
+    is($write_policy->{response_demux_strategy}, 'queue_head_issue_order', 'adapter report marks write multi-group queue-head demux strategy');
+    is($write_policy->{response_demux_implementation_status}, 'generated', 'adapter report marks generated write multi-group response-demux status');
+    ok($write_policy->{accepted_same_id_reuse}, 'adapter report accepts write multi-group same-ID reuse for the covered shape');
+    ok($write_policy->{generated_queue_behavior}, 'adapter report marks generated write multi-group queue behavior true');
+    is_deeply(
+        $result->{report}{id_response_rule_engine}{residue},
+        [qw(auto_id_allocation id_release)],
+        'write multi-group same-ID queue-head demux generated behavior removes same-ID and response-demux ID/response residue',
+    );
+};
+
 subtest 'PPIF adapter parses AXI manager auto-ID lifecycle behavior' => sub {
     my $sample_path = sample_capacity_auto_id_lifecycle_ppif_path();
     ok(-f $sample_path, 'tracked runnable PPIF capacity/status auto-ID lifecycle sample exists');
@@ -1919,6 +1983,54 @@ subtest 'CLI emits IAL2 report JSON for AXI manager write same-ID queue-head res
     is_deeply($report->{generated_artifacts}{ial0}{files}, ['axi0_capacity_status.fsm'], 'write same-ID queue-head response-demux keeps the generated .fsm artifact name stable');
 };
 
+subtest 'CLI emits IAL2 report JSON for AXI manager write multi-group same-ID queue-head response-demux .ppif' => sub {
+    my ($success, undef, undef, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--emit-schedule-json', sample_capacity_write_multi_group_same_id_queue_head_response_demux_ppif_path()],
+    );
+
+    ok($success, '--emit-schedule-json succeeds for capacity/status write multi-group same-ID queue-head response-demux .ppif');
+    is(join('', @{$stderr_buf || []}), '', 'capacity/status write multi-group same-ID queue-head response-demux report keeps stderr clean');
+    my $report = decode_json(join('', @{$stdout_buf || []}));
+    is($report->{schema}, 'fsmgen.ial2.protocol_intent.axi_manager_capacity_status.v1', 'CLI keeps the capacity/status report schema');
+    is($report->{source_object}{intent_name}, 'axi_manager_capacity_status_write_multi_group_same_id_queue_head_response_demux', 'write multi-group same-ID queue-head response-demux report carries the PPIF top-level intent name');
+    assert_same_id_write_queue_head_response_demux_report(
+        $report->{response_demux},
+        'CLI multi-group write report',
+        queues => [
+            {
+                concrete_id          => 3,
+                transactions         => [qw(w0 w1)],
+                depth                => 2,
+                dequeue_event_source => 'queue_head_response_demux',
+            },
+            {
+                concrete_id          => 5,
+                transactions         => [qw(w2 w3)],
+                depth                => 2,
+                dequeue_event_source => 'queue_head_response_demux',
+            },
+        ],
+        completion_signals => [qw(axi0_w0_complete axi0_w1_complete axi0_w2_complete axi0_w3_complete)],
+        generated_rules => [qw(axi0_w0_response_demux axi0_w1_response_demux axi0_w2_response_demux axi0_w3_response_demux)],
+        generated_assertions => [qw(
+            axi0_write_response_demux_active_match
+            axi0_w0_w1_write_response_demux_unique_match
+            axi0_w0_w2_write_response_demux_unique_match
+            axi0_w0_w3_write_response_demux_unique_match
+            axi0_w1_w2_write_response_demux_unique_match
+            axi0_w1_w3_write_response_demux_unique_match
+            axi0_w2_w3_write_response_demux_unique_match
+        )],
+    );
+    my $write_policy = $report->{same_id_ordering}{concrete_id_reuse_policy}{write};
+    is_deeply([map { $_->{concrete_id} } @{$write_policy->{generated_queues} || []}], [3, 5], 'CLI report keeps both generated write queue groups');
+    is($write_policy->{response_demux_strategy}, 'queue_head_issue_order', 'CLI report marks write multi-group queue-head response-demux strategy');
+    is($write_policy->{response_demux_implementation_status}, 'generated', 'CLI report marks generated write multi-group response-demux status');
+    ok($write_policy->{accepted_same_id_reuse}, 'CLI report accepts write multi-group same-ID reuse for the covered shape');
+    ok($write_policy->{generated_queue_behavior}, 'CLI report marks generated write multi-group queue behavior true');
+    is_deeply($report->{generated_artifacts}{ial0}{files}, ['axi0_capacity_status.fsm'], 'write multi-group same-ID queue-head response-demux keeps the generated .fsm artifact name stable');
+};
+
 subtest 'CLI emits IAL2 report JSON for AXI manager auto-ID lifecycle behavior .ppif' => sub {
     my ($success, undef, undef, $stdout_buf, $stderr_buf) = run(
         command => ['./bin/fsmgen', '--emit-schedule-json', sample_capacity_auto_id_lifecycle_ppif_path()],
@@ -2109,6 +2221,24 @@ subtest 'CLI --verify-hdl accepts AXI manager write same-ID queue-head response-
     like($sv, qr/\boutput\s+reg\s+axi0_w0_complete\b/, 'write same-ID queue-head HDL exposes generated completion output');
     like($sv, qr/\breg\s+axi0_write_id3_same_id_issue_order_slot0_w0_q\b/, 'write same-ID queue-head HDL exposes queue-head slot state');
     like($sv, qr/axi0_write_complete\s*&\s*\(axi0_bid\s*==\s*4'd3\)\s*&\s*axi0_write_id3_same_id_issue_order_slot0_w0_q/, 'write same-ID queue-head HDL lowers the concrete BID head match guard');
+};
+
+subtest 'CLI --verify-hdl accepts AXI manager write multi-group same-ID queue-head response-demux behavior .ppif' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $hdl = File::Spec->catfile($tempdir, 'axi_write_multi_group_same_id_queue_head_response_demux.sv');
+
+    my ($success, undef, undef, undef, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--quiet', '--verify-hdl', '--output', $hdl, sample_capacity_write_multi_group_same_id_queue_head_response_demux_ppif_path()],
+    );
+
+    ok($success, 'capacity/status write multi-group same-ID queue-head response-demux --verify-hdl succeeds');
+    is(join('', @{$stderr_buf || []}), '', 'capacity/status write multi-group same-ID queue-head response-demux --verify-hdl keeps stderr clean');
+    ok(-f $hdl, 'write multi-group same-ID queue-head response-demux --output writes generated HDL');
+    my $sv = slurp($hdl);
+    like($sv, qr/\binput\s+(?:wire\s+)?\[3:0\]\s+axi0_bid\b/, 'write multi-group same-ID queue-head HDL exposes generated BID input');
+    like($sv, qr/\boutput\s+reg\s+axi0_w3_complete\b/, 'write multi-group same-ID queue-head HDL exposes generated w3 completion output');
+    like($sv, qr/\breg\s+axi0_write_id5_same_id_issue_order_slot0_w2_q\b/, 'write multi-group same-ID queue-head HDL exposes second queue-head slot state');
+    like($sv, qr/axi0_write_complete\s*&\s*\(axi0_bid\s*==\s*4'd5\)\s*&\s*axi0_write_id5_same_id_issue_order_slot0_w2_q/, 'write multi-group same-ID queue-head HDL lowers the concrete BID 5 head match guard');
 };
 
 subtest 'CLI --verify-hdl accepts AXI manager read single-beat same-ID queue-head response-demux behavior .ppif' => sub {
@@ -3499,6 +3629,50 @@ subtest 'CLI check JSON and semantic JSON support-account write same-ID queue-he
     );
 };
 
+subtest 'CLI check JSON and semantic JSON support-account write multi-group same-ID queue-head response-demux .ppif separately' => sub {
+    my $policy_path = sample_capacity_write_multi_group_same_id_queue_head_response_demux_ppif_path();
+    my ($success, undef, undef, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--strict', '--check', '--json', $policy_path],
+    );
+    ok($success, 'capacity/status write multi-group same-ID queue-head response-demux --check --json succeeds');
+    is(join('', @{$stderr_buf || []}), '', 'capacity/status write multi-group same-ID queue-head response-demux --check --json keeps stderr clean');
+    my $check_report = decode_json(join('', @{$stdout_buf || []}));
+    ok($check_report->{success}, 'capacity/status write multi-group same-ID queue-head response-demux check JSON reports success');
+    is(
+        $check_report->{source}{resolved_path},
+        File::Spec->rel2abs($policy_path),
+        'capacity/status write multi-group same-ID queue-head response-demux check JSON reports the public .ppif source path',
+    );
+    is(
+        $check_report->{support_accounting}{entry_id},
+        'intent.ppif_axi_manager_capacity_status_write_multi_group_same_id_queue_head_response_demux',
+        'capacity/status write multi-group same-ID queue-head response-demux check JSON support accounting names the PPIF corpus entry',
+    );
+
+    my ($semantic_success, undef, undef, $semantic_stdout, $semantic_stderr) = run(
+        command => ['./bin/fsmgen', '--strict', '--emit-semantic-json', $policy_path],
+    );
+    ok($semantic_success, 'capacity/status write multi-group same-ID queue-head response-demux --emit-semantic-json succeeds');
+    is(join('', @{$semantic_stderr || []}), '', 'capacity/status write multi-group same-ID queue-head response-demux --emit-semantic-json keeps stderr clean');
+    my $semantic_report = decode_json(join('', @{$semantic_stdout || []}));
+    ok($semantic_report->{success}, 'capacity/status write multi-group same-ID queue-head response-demux semantic JSON reports success');
+    is(
+        $semantic_report->{source}{resolved_path},
+        File::Spec->rel2abs($policy_path),
+        'capacity/status write multi-group same-ID queue-head response-demux semantic JSON reports the public .ppif source path',
+    );
+    is(
+        $semantic_report->{support_accounting}{entry_id},
+        'intent.ppif_axi_manager_capacity_status_write_multi_group_same_id_queue_head_response_demux',
+        'capacity/status write multi-group same-ID queue-head response-demux semantic JSON support accounting names the PPIF corpus entry',
+    );
+    is(
+        $semantic_report->{semantic}{module}{name},
+        'axi0_capacity_status',
+        'capacity/status write multi-group same-ID queue-head response-demux semantic JSON records the unchanged generated module',
+    );
+};
+
 subtest 'CLI check JSON and semantic JSON support-account auto-ID lifecycle .ppif separately' => sub {
     my $lifecycle_path = sample_capacity_auto_id_lifecycle_ppif_path();
     my ($success, undef, undef, $stdout_buf, $stderr_buf) = run(
@@ -4069,6 +4243,10 @@ sub sample_capacity_write_same_id_queue_head_response_demux_ppif_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_write_same_id_queue_head_response_demux.ppif');
 }
 
+sub sample_capacity_write_multi_group_same_id_queue_head_response_demux_ppif_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_write_multi_group_same_id_queue_head_response_demux.ppif');
+}
+
 sub sample_capacity_auto_id_lifecycle_ppif_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_auto_id_lifecycle.ppif');
 }
@@ -4187,6 +4365,10 @@ sub sample_capacity_read_multi_beat_same_id_queue_head_read_data_ppif {
 
 sub sample_capacity_write_same_id_queue_head_response_demux_ppif {
     return slurp(sample_capacity_write_same_id_queue_head_response_demux_ppif_path());
+}
+
+sub sample_capacity_write_multi_group_same_id_queue_head_response_demux_ppif {
+    return slurp(sample_capacity_write_multi_group_same_id_queue_head_response_demux_ppif_path());
 }
 
 sub sample_capacity_auto_id_lifecycle_ppif {
@@ -5384,7 +5566,21 @@ sub assert_same_id_read_single_beat_queue_head_response_demux_report {
 }
 
 sub assert_same_id_write_queue_head_response_demux_report {
-    my ($demux, $owner) = @_;
+    my ($demux, $owner, %args) = @_;
+
+    my $expected_queues = $args{queues} // [
+        {
+            concrete_id          => 3,
+            transactions         => [qw(w0 w1)],
+            depth                => 2,
+            dequeue_event_source => 'queue_head_response_demux',
+        },
+    ];
+    my $expected_completion_signals = $args{completion_signals} // [qw(axi0_w0_complete axi0_w1_complete)];
+    my $expected_rules = $args{generated_rules} // [qw(axi0_w0_response_demux axi0_w1_response_demux)];
+    my $expected_assertions = $args{generated_assertions} // [
+        qw(axi0_write_response_demux_active_match axi0_w0_w1_write_response_demux_unique_match)
+    ];
 
     is($demux->{mode}, 'bounded_write_bid_demux_contract', "$owner keeps write-only top-level response-demux mode");
     ok($demux->{generated_behavior}, "$owner marks top-level generated behavior true");
@@ -5401,24 +5597,17 @@ sub assert_same_id_write_queue_head_response_demux_report {
     is($write->{queue_state_representation}, 'compact_onehot_transaction_slots', "$owner reports queue state representation");
     is_deeply(
         $write->{same_id_issue_order_queues},
-        [
-            {
-                concrete_id          => 3,
-                transactions         => [qw(w0 w1)],
-                depth                => 2,
-                dequeue_event_source => 'queue_head_response_demux',
-            },
-        ],
+        $expected_queues,
         "$owner reports duplicate concrete write-ID queue group",
     );
     ok($write->{generated_queue_behavior}, "$owner reports generated queue behavior");
     is($write->{generated_queue_behavior_boundary}, 'generated_write_bid_queue_head_demux', "$owner reports generated write queue boundary");
     ok(!exists($write->{selected_completion_signals}), "$owner no longer reports selected completion signal names");
-    is_deeply($write->{generated_completion_signals}, [qw(axi0_w0_complete axi0_w1_complete)], "$owner reports generated completion signal names");
-    is_deeply($write->{generated_rules}, [qw(axi0_w0_response_demux axi0_w1_response_demux)], "$owner reports generated response-demux rules");
+    is_deeply($write->{generated_completion_signals}, $expected_completion_signals, "$owner reports generated completion signal names");
+    is_deeply($write->{generated_rules}, $expected_rules, "$owner reports generated response-demux rules");
     is_deeply(
         $write->{generated_assertions},
-        [qw(axi0_write_response_demux_active_match axi0_w0_w1_write_response_demux_unique_match)],
+        $expected_assertions,
         "$owner reports generated response-demux assertions",
     );
     is_deeply(

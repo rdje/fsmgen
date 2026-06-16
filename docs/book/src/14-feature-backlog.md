@@ -4736,10 +4736,11 @@ write enqueue/dequeue/same-cycle update rules, generated write completion
 pulse outputs, queue-head `BID` demux rules, queue assertions, and
 report/residue movement only for that covered shape. `.110` later shipped the
 read `single-beat` analogue, and `.124` later shipped multiple independent
-read burst-last response-demux-only queue groups. Deeper queues,
-write-family or read single-beat multiple-group queue-head behavior,
-same-family mixed auto-ID, read-data over multiple queue groups, direct
-backend lowering, and VHDL remain deferred.
+read burst-last response-demux-only queue groups. `.140` later shipped
+write-family multi-group response-demux-only queue-head behavior. Deeper
+queues, read single-beat multiple-group queue-head behavior, same-family mixed
+auto-ID, read-data over multiple queue groups, direct backend lowering, and
+VHDL remain deferred.
 
 Write same-ID queue-head response-demux behavior:
 [AXI_IAL2_MANAGER_WRITE_SAME_ID_QUEUE_HEAD_RESPONSE_DEMUX_BEHAVIOR](../../AXI_IAL2_MANAGER_WRITE_SAME_ID_QUEUE_HEAD_RESPONSE_DEMUX_BEHAVIOR.md)
@@ -5367,10 +5368,10 @@ Write multi-group queue-head response-demux readiness audit:
 [AXI_IAL2_MANAGER_WRITE_MULTI_GROUP_QUEUE_HEAD_RESPONSE_DEMUX_READINESS_AUDIT](../../AXI_IAL2_MANAGER_WRITE_MULTI_GROUP_QUEUE_HEAD_RESPONSE_DEMUX_READINESS_AUDIT.md)
 is complete and selects `.140`, generated write-family multi-group queue-head
 response-demux. The one-group write queue-head sample is generated, and a
-temporary two-group write probe reports two concrete write-ID groups but still
-remains metadata-only with `generated_same_id_queue_head_demux` residue
-because the local behavior-builder gate only admits multi-group read
-burst-last today. The audit found no new parser, support-accounting,
+temporary two-group write probe reported two concrete write-ID groups but
+remained metadata-only with `generated_same_id_queue_head_demux` residue
+because the local behavior-builder gate admitted only multi-group read
+burst-last at that time. The audit found no new parser, support-accounting,
 generated-artifact, lowerer, direct-backend, or VHDL prerequisite: once
 behavior exists, the queue-state, transition, assertion, response-demux
 state/rule, report, and residue helpers already iterate groups for write.
@@ -5378,6 +5379,46 @@ state/rule, report, and residue helpers already iterate groups for write.
 must not claim group-local simultaneous enqueue widening. Read single-beat
 multi-group behavior, deeper queues, same-family mixed auto-ID plus concrete
 queue-head demux, packed outputs, direct backend, and VHDL remain deferred.
+
+Write multi-group queue-head response-demux behavior:
+[AXI_IAL2_MANAGER_WRITE_MULTI_GROUP_QUEUE_HEAD_RESPONSE_DEMUX_BEHAVIOR](../../AXI_IAL2_MANAGER_WRITE_MULTI_GROUP_QUEUE_HEAD_RESPONSE_DEMUX_BEHAVIOR.md)
+ships `.140`, generated write-family multi-group queue-head response-demux.
+The public sample is:
+
+```bash
+./bin/fsmgen --emit-schedule-json ppif/axi_manager_capacity_status_write_multi_group_same_id_queue_head_response_demux.ppif
+./bin/fsmgen --quiet --verify-hdl --output /tmp/fsmgen_write_multi_group_same_id_queue_head_response_demux.sv ppif/axi_manager_capacity_status_write_multi_group_same_id_queue_head_response_demux.ppif
+```
+
+The sample uses two duplicate write-ID groups: `w0`/`w1` share concrete `BID`
+`3`, and `w2`/`w3` share concrete `BID` `5`. FSMGen emits
+concrete-ID-scoped compact one-hot write queue storage, finite depth-2 update
+rules, generated completion pulse outputs, queue-head `BID` demux rules,
+queue assertions, response-demux assertions, and generated queue reports for
+both groups.
+
+The generated `w2` demux rule is:
+
+```lisp
+(rule axi0_w2_response_demux
+  (& axi0_write_complete (== axi0_bid 4'd5)
+     axi0_write_id5_same_id_issue_order_slot0_w2_q)
+  (pulse axi0_w2_complete))
+```
+
+The report marks `generated_queue_behavior_boundary:
+generated_write_bid_queue_head_demux`, lists generated completion signals for
+`w0` through `w3`, removes `generated_same_id_queue_head_demux` residue, and
+keeps `read_response_demux`, `read_data_interleaving`, and `bursts` as
+response-demux residue. The same-ID policy lists both generated write queues
+and keeps the existing family-wide admitted-request onehot assertion across
+all selected write request events. The slice does not claim group-local
+simultaneous same-cycle enqueue support.
+
+Read single-beat multi-group behavior, deeper queues, same-family mixed
+auto-ID plus concrete queue-head demux, packed outputs, direct backend, and
+VHDL remain deferred. The active frontier advances to `.141`, the next
+feature-completeness selector.
 
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
@@ -7640,7 +7681,7 @@ support catalog entries instead of recursive workspace traversal.
 `SEMANTIC-INTROSPECTION-MCP-FRONTIER.30` closes the immediate read-only
 semantic-introspection/MCP pass after source discovery; the active roadmap
 priority is again the IAL2 feature-completeness tree, currently at
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.140`.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.141`.
 
 Selected first MCP resource families are `fsmgen://capabilities`,
 `fsmgen://contracts`, `fsmgen://diagnostics`,
