@@ -140,6 +140,20 @@ The new sample reports:
 `generated_beat_count_validation` is removed from `read_data.residue` only for
 this bounded runtime-validation sample.
 
+## Support Report Alignment
+
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.137` cleaned the static support report for
+this shipped behavior. The AXI ID/order support detail now describes generated
+runtime-validation multi-group queue-head scalar last-beat read-data as
+supported, including runtime-assertion beat-count/`RLAST` validation metadata
+for one or more independent queue-head groups.
+
+The retired unsupported-residue wording for runtime-validation multi-group
+scalar last-beat read-data is no longer emitted for this shipped shape. This
+alignment changes only report prose and focused parser expectations; it does
+not broaden parser syntax, generator admission, PPIF samples, support
+accounting, generated artifacts, or HDL behavior.
+
 ## Preserved Behavior
 
 The report-only raw-`ARLEN` multi-group scalar sample remains supported and

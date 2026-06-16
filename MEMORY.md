@@ -10,10 +10,10 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `HEAD after commit` — `IAL2-FEATURE-COMPLETENESS-FRONTIER.136: select support residue cleanup`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.137` pending; next action is report/static residue cleanup after generated runtime-validation multi-group queue-head scalar last-beat read-data.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.136`; `SEMANTIC-INTROSPECTION-MCP-FRONTIER.30`; `SEMANTIC-INTROSPECTION-MCP-FRONTIER.29`; `SEMANTIC-INTROSPECTION-MCP-FRONTIER.28`; `SEMANTIC-INTROSPECTION-MCP-FRONTIER.27`; `SEMANTIC-INTROSPECTION-MCP-FRONTIER.26`; `SEMANTIC-INTROSPECTION-MCP-FRONTIER.25`; `SEMANTIC-INTROSPECTION-MCP-FRONTIER.24`; `SEMANTIC-INTROSPECTION-MCP-FRONTIER.23`; `SEMANTIC-INTROSPECTION-MCP-FRONTIER.22`. Older completed slices are in the task tree and git history.
-- in_flight_uncommitted: none after this commit; `.137` is the next code-change owner; unrelated untracked `fx/` intentionally left alone.
+- latest_commit: `HEAD after commit` — `IAL2-FEATURE-COMPLETENESS-FRONTIER.137: clean support residue`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.138` pending; next action is the next AXI manager feature-completeness selector after support residue cleanup.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.137`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.136`; `SEMANTIC-INTROSPECTION-MCP-FRONTIER.30`; `SEMANTIC-INTROSPECTION-MCP-FRONTIER.29`; `SEMANTIC-INTROSPECTION-MCP-FRONTIER.28`; `SEMANTIC-INTROSPECTION-MCP-FRONTIER.27`; `SEMANTIC-INTROSPECTION-MCP-FRONTIER.26`; `SEMANTIC-INTROSPECTION-MCP-FRONTIER.25`; `SEMANTIC-INTROSPECTION-MCP-FRONTIER.24`; `SEMANTIC-INTROSPECTION-MCP-FRONTIER.23`. Older completed slices are in the task tree and git history.
+- in_flight_uncommitted: none after this commit; `.138` is the next selector owner; unrelated untracked `fx/` intentionally left alone.
 - blockers: none.
 
 ## Notes

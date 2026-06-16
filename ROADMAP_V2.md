@@ -1066,7 +1066,8 @@ identities with file kind, source kind, available read-only query kinds, and
 support-accounting metadata under query/limit/filter controls.
 `SEMANTIC-INTROSPECTION-MCP-FRONTIER.30` closes the immediate read-only
 semantic-introspection/MCP pass after source discovery and returns active
-roadmap priority to `IAL2-FEATURE-COMPLETENESS-FRONTIER.136`.
+roadmap priority to the IAL2 feature-completeness tree, currently at
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.138`.
 The parser/report metadata slice `IAL2-FEATURE-COMPLETENESS-FRONTIER.39` is
 now shipped for the bounded AXI read response-demux public contract selected
 by `.38`. The selected read arm requires `(response-scope single-beat)`,
@@ -1536,7 +1537,12 @@ Selector `.136` selected `.137`, report/static residue cleanup, because live
 `.135` reports prove generated runtime-validation multi-group queue-head
 scalar last-beat read-data is supported while the AXI ID/order support-detail
 string and focused PPIF/parser assertion still preserve stale unsupported
-wording for that exact behavior.
+wording for that exact behavior. `.137` completed that cleanup: the support
+detail now describes the shipped runtime-validation multi-group scalar shape
+as supported, the focused parser assertion rejects the retired unsupported
+wording, the `.135`, `.132`, `.130`, `.127`, `.124`, and `.119` live reports
+remain unchanged, and `.138` is the next AXI manager feature-completeness
+selector.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.

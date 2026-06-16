@@ -125,7 +125,8 @@ metadata, and does not perform arbitrary workspace traversal, expose hidden
 paths, or return machine-local absolute paths. The immediate read-only
 semantic-introspection/MCP pass is complete through
 `SEMANTIC-INTROSPECTION-MCP-FRONTIER.30`; active roadmap priority has returned
-to `IAL2-FEATURE-COMPLETENESS-FRONTIER.136`.
+to the IAL2 feature-completeness tree, currently at
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.138`.
 Current primary target is SystemVerilog, with Verilog conversion support and a scoped direct-root VHDL scaffold for the accepted single-FSM subset, including delayed-pulse clock-branch lowering, generic-bearing direct-root module headers with typed scalar/vector sized-literal defaults, signed vector and signed scalar direct-root ports, scalar/vector two-state `bit` input-port and internal declaration lowering, signed scalar/vector, non-signed four-state `logic` input-port/internal declaration lowering, and vector `logic signed` internal declaration lowering, scalar and signed scalar addition/subtraction/multiplication RHS/chain lowering, vector numeric-literal addition/subtraction emitted by compound update/shorthand forms, same-width unsigned-style addition/subtraction/multiplication/division/modulo/XOR RHS/chain lowering, same-width signed vector addition/subtraction/multiplication/division/modulo RHS lowering for signed targets and operands, signed vector numeric-literal addition/subtraction/multiplication/division/modulo RHS lowering including signed vector negative decimal addition, subtraction, multiplication, division, and modulo literals, non-signed vector positive decimal multiplication/division/modulo literal lowering in signal-first, literal-first, and literal-literal order, non-signed vector negative decimal addition/subtraction/multiplication/division/modulo literal lowering, bounded generated AMBA wrap arithmetic for `fsm/amba_requester.fsm`, bounded non-signed vector, signed vector, and scalar output-port decimal literal assignment lowering including non-signed vector, signed vector, and scalar negative decimal literals, bounded direct aggregate-output packed-vector lowering, a bounded C3 external-RTL literal/concat composition VHDL structural top for `t/corpus/composition_intent_integer_literals.fsm`, bounded external-RTL scalar integer, scalar integer expression, one-bit sized bitstring, multi-bit sized bitstring, and resolved packed aggregate VHDL generic maps including resolved package-backed constants, a bounded C1 standalone-DT child composition VHDL passthrough top for `t/corpus/standalone_dtc_explicit_system_autowire.fsm`, bounded C1 standalone-DT scalar integer, scalar expression, one-bit sized bitstring, multi-bit sized bitstring, packed-list, and packed-map VHDL generic maps, a bounded C2 generated-FSM child composition VHDL scalar-autowire top for `t/corpus/implicit_composition_system_autowire.fsm`, bounded C2 generated-FSM scalar integer, scalar expression, one-bit sized bitstring, multi-bit sized bitstring, and resolved packed aggregate VHDL generic maps, and a bounded APB/C4 generated-FSM child composition VHDL top for `fsm/apb_tb.fsm` with scalar integer, scalar expression, one-bit sized bitstring, multi-bit sized bitstring, resolved packed aggregate, and resolved package-backed generic maps in the same APB/C4 shape.
 Scalar division/modulo, including signed scalar division/modulo, in the direct
 VHDL scaffold remains an explicit fail-closed boundary; full aggregate
@@ -192,10 +193,10 @@ support for the tracked AW/W sample. Public `.pif`/`.ppi`/`.axi` aliases and
 the full AXI manager remain unshipped. Mandatory lowering remains
 `IAL2 -> IAL1 -> IAL0`. IAL2 feature completeness on the
 SystemVerilog-backed path remains active under
-`IAL2-FEATURE-COMPLETENESS-FRONTIER` at `.136`, including any explicitly
+`IAL2-FEATURE-COMPLETENESS-FRONTIER` at `.138`, including any explicitly
 selected IAL1 or IAL0/SV prerequisites needed for IAL2 to lower cleanly; after
-the completed semantic-introspection `.30` selector, this IAL2 `.136` leaf is
-again the immediate PNT priority.
+the completed `.137` support-residue cleanup, this IAL2 `.138` selector is
+the immediate PNT priority.
 The first
 in-process AXI manager outstanding-capacity and acceptance/status generator is
 now shipped as `FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus`; it
@@ -776,7 +777,12 @@ Selector `.136` chose `.137`, narrow report/static residue cleanup, because
 the shipped `.135` live report supports runtime-validation multi-group
 queue-head scalar last-beat read-data while one AXI ID/order support-detail
 string and focused PPIF/parser assertion still preserve stale unsupported
-wording for that exact behavior.
+wording for that exact behavior. `.137` completed that cleanup: the report
+now describes generated runtime-validation multi-group queue-head scalar
+last-beat read-data as supported, focused parser expectations reject the
+retired unsupported-residue wording, and `.135`, `.132`, `.130`, `.127`,
+`.124`, and `.119` live schedule behavior is preserved. The active frontier is
+`.138`, the next AXI manager feature-completeness selector.
 The IAL2 factoring stance remains evidence-driven: keep AXI-specific same-ID
 ordering in the AXI vocabulary until another profile proves the same semantic
 need.
@@ -945,7 +951,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 156. `docs/AXI_IAL2_MANAGER_MULTI_GROUP_QUEUE_HEAD_BURST_LENGTH_BEHAVIOR.md`: shipped generated report-only raw-`ARLEN` capture for multi-group queue-head scalar last-beat read-data.
 157. `docs/AXI_IAL2_MANAGER_POST_MULTI_GROUP_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md`: selected runtime-validation multi-group queue-head scalar last-beat readiness audit.
 158. `docs/AXI_IAL2_MANAGER_MULTI_GROUP_QUEUE_HEAD_RUNTIME_VALIDATION_READINESS_AUDIT.md`: audited runtime-validation multi-group queue-head scalar last-beat readiness and selected the implementation owner.
-159. `docs/AXI_IAL2_MANAGER_MULTI_GROUP_QUEUE_HEAD_RUNTIME_VALIDATION_BEHAVIOR.md`: shipped generated runtime-validation multi-group queue-head scalar last-beat read-data.
+159. `docs/AXI_IAL2_MANAGER_MULTI_GROUP_QUEUE_HEAD_RUNTIME_VALIDATION_BEHAVIOR.md`: shipped generated runtime-validation multi-group queue-head scalar last-beat read-data and records the `.137` support-report residue alignment.
 160. `docs/AXI_IAL2_MANAGER_POST_MULTI_GROUP_QUEUE_HEAD_RUNTIME_VALIDATION_NEXT_SLICE_SELECTION.md`: selected report/static residue cleanup after generated runtime-validation multi-group queue-head scalar last-beat read-data.
 161. `docs/AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md`: selected first AXI-derived IAL2 implementation subset and pre-code contract.
 162. `docs/AXI_IAL2_VALID_READY_READINESS_AUDIT.md`: code/test/docs/report owner map for the future AXI Valid-Ready IAL2 implementation.
@@ -987,7 +993,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/tasks/PROJECT-REMAINING-WORK-TASKTREE-OWNERSHIP.md` — completed roadmap-maintenance task tree that routed the 2026-06-05 remaining-work inventory to existing active owners or new broad owner trees.
 - `docs/tasks/COMPOSITION-TYPE-BACKLOG-EXHAUSTION.md` — completed Composition/type backlog tree; shipped aggregate parameter/generic equality/inequality, closed the remaining Composition/type leaves behind exact prerequisites, and routed VHDL-dependent work through the completed backend/API frontier.
 - `docs/tasks/ISF-REMAINING-BROAD-FRONTIER.md` — proposed broad `R14` ISF frontier owner tree for deferred ISF backlog directions not already owned by narrower active trees.
-- `docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md` — completed immediate semantic-introspection/MCP task tree; `.2` made deep semantic introspection a first-class feature, `.29` shipped catalog-backed source discovery, and `.30` returned active priority to IAL2 `.136`.
+- `docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md` — completed immediate semantic-introspection/MCP task tree; `.2` made deep semantic introspection a first-class feature, `.29` shipped catalog-backed source discovery, and `.30` returned active priority to IAL2.
 - `docs/tasks/BACKEND-API-VALIDATION-FRONTIER.md` — completed backend/API frontier owner tree for VHDL, external validation, ABC, structured generation, embedding API, and normalized export backlog through `.132`.
 - `docs/tasks/ARCHITECTURE-DEBT-FRONTIER.md` — completed architecture-debt frontier owner tree; direct-backend structural internal declaration nets shipped, and ISF parser/lowerer extraction remains deferred behind future exact ownership.
 - `docs/tasks/ISF-FRONTIER-SPAWN-AWAITANY-BOOK-RUNNABLE-EXAMPLES.md` — completed `R14` task tree that added runnable `lisp` book examples (in `13d`) for the shipped loop-contained spawn + `(await_all done)` and multi-pending `(await_any done)` + drain features (`t/1376` count 36 → 38); all repeat-body-activation frontier shapes now have copy-pasteable book examples.
@@ -1528,7 +1534,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/AXI_IAL2_MANAGER_MULTI_GROUP_QUEUE_HEAD_BURST_LENGTH_BEHAVIOR.md` — shipped generated report-only raw-`ARLEN` capture for multi-group queue-head scalar last-beat read-data.
 - `docs/AXI_IAL2_MANAGER_POST_MULTI_GROUP_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md` — selected runtime-validation multi-group queue-head scalar last-beat readiness audit.
 - `docs/AXI_IAL2_MANAGER_MULTI_GROUP_QUEUE_HEAD_RUNTIME_VALIDATION_READINESS_AUDIT.md` — audited runtime-validation multi-group queue-head scalar last-beat readiness and selected the implementation owner.
-- `docs/AXI_IAL2_MANAGER_MULTI_GROUP_QUEUE_HEAD_RUNTIME_VALIDATION_BEHAVIOR.md` — shipped generated runtime-validation multi-group queue-head scalar last-beat read-data.
+- `docs/AXI_IAL2_MANAGER_MULTI_GROUP_QUEUE_HEAD_RUNTIME_VALIDATION_BEHAVIOR.md` — shipped generated runtime-validation multi-group queue-head scalar last-beat read-data and records the `.137` support-report residue alignment.
 - `docs/AXI_IAL2_MANAGER_POST_MULTI_GROUP_QUEUE_HEAD_RUNTIME_VALIDATION_NEXT_SLICE_SELECTION.md` — selected report/static residue cleanup after generated runtime-validation multi-group queue-head scalar last-beat read-data.
 - `docs/AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md` — selected first AXI-derived IAL2 implementation subset and pre-code contract.
 - `docs/AXI_IAL2_VALID_READY_READINESS_AUDIT.md` — code/test/docs/report owner map for a future AXI Valid-Ready IAL2 implementation slice.

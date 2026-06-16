@@ -4838,8 +4838,8 @@ sub assert_rlast_report_prose_alignment {
     ok($id_residue, "$owner reports AXI ID/order unsupported residue");
     like(
         $id_residue->{detail},
-        qr/generated burst-last RLAST response-demux completion, structural last-beat read-data metadata, generated last-beat read-data RDATA\/RRESP capture, generated last-beat read-data RDATA\/RRESP capture from generated read burst-last concrete same-ID queue-head response-demux including multiple independent queue-head groups with no burst_length metadata or report-only raw-ARLEN burst-length metadata, generated raw-ARLEN burst-length capture including report-only generated read burst-last concrete same-ID queue-head read-data contracts with one or more independent queue-head groups, explicit runtime-assertion beat-count\/RLAST validation for auto-ID and bounded read burst-last concrete same-ID queue-head read-data contracts, generated multi-beat read-data output-bank behavior for the covered auto-ID multi-beat-by-RID subset and bounded read burst-last concrete same-ID queue-head subset including multiple independent queue-head groups, bounded burst payload\/output behavior through that per-beat output bank, and generated scalar RRESP aggregation behavior are supported/,
-        "$owner reports generated burst-last, last-beat, queue-head last-beat including multi-group scalar, queue-head report-only raw ARLEN, non-queue-head and queue-head beat-count, multi-beat output-bank, bounded burst output, and scalar aggregation behavior as supported",
+        qr/generated burst-last RLAST response-demux completion, structural last-beat read-data metadata, generated last-beat read-data RDATA\/RRESP capture, generated last-beat read-data RDATA\/RRESP capture from generated read burst-last concrete same-ID queue-head response-demux including multiple independent queue-head groups with no burst_length metadata, report-only raw-ARLEN burst-length metadata, or runtime-assertion beat-count\/RLAST validation metadata, generated raw-ARLEN burst-length capture including report-only and runtime-validation generated read burst-last concrete same-ID queue-head read-data contracts with one or more independent queue-head groups, explicit runtime-assertion beat-count\/RLAST validation for auto-ID and bounded read burst-last concrete same-ID queue-head read-data contracts including one or more independent queue-head groups, generated multi-beat read-data output-bank behavior for the covered auto-ID multi-beat-by-RID subset and bounded read burst-last concrete same-ID queue-head subset including multiple independent queue-head groups, bounded burst payload\/output behavior through that per-beat output bank, and generated scalar RRESP aggregation behavior are supported/,
+        "$owner reports generated burst-last, last-beat, queue-head last-beat including multi-group scalar runtime validation, queue-head report-only/raw runtime ARLEN, non-queue-head and queue-head beat-count, multi-beat output-bank, bounded burst output, and scalar aggregation behavior as supported",
     );
     like(
         $id_residue->{detail},
@@ -4851,14 +4851,15 @@ sub assert_rlast_report_prose_alignment {
     my $stale_queue_head_read_data = 'read-data consumption of burst-last or multi-beat concrete same-ID queue-head demux';
     my $stale_queue_head_burst_length = 'burst-length metadata with queue-head read-data';
     my $stale_multi_group = 'deeper/multiple-group concrete same-ID issue-order queues';
-    my $stale_multi_group_burst_length_boundary = 'report-only or runtime-validation last-beat read-data over multiple queue groups';
+    my $stale_multi_group_burst_length_boundary = join('', 'report-only or runtime-validation last-beat read-data ', 'over multiple queue groups');
+    my $stale_runtime_multi_group_scalar = join('', 'runtime-validation last-beat read-data ', 'over multiple queue groups');
     ok(index($id_residue->{detail}, $stale_metadata) < 0, "$owner removes stale report-only residue prose");
     ok(index($id_residue->{detail}, $stale_tracking) < 0, "$owner removes stale burst tracking residue prose");
     ok(index($id_residue->{detail}, $stale_queue_head_read_data) < 0, "$owner removes stale burst-last queue-head read-data residue prose");
     ok(index($id_residue->{detail}, $stale_queue_head_burst_length) < 0, "$owner removes stale queue-head burst-length residue prose");
     ok(index($id_residue->{detail}, $stale_multi_group) < 0, "$owner removes stale broad multiple-group residue prose");
     ok(index($id_residue->{detail}, $stale_multi_group_burst_length_boundary) < 0, "$owner removes stale report-only multi-group raw ARLEN residue prose");
-    like($id_residue->{detail}, qr/runtime-validation last-beat read-data over multiple queue groups/, "$owner keeps runtime-validation multi-group scalar last-beat residue prose");
+    ok(index($id_residue->{detail}, $stale_runtime_multi_group_scalar) < 0, "$owner removes stale runtime-validation multi-group scalar last-beat residue prose");
     ok(index($id_residue->{detail}, 'last-beat-only read-data over multiple queue groups') < 0, "$owner removes stale scalar multi-group last-beat residue prose");
     ok(index($id_residue->{detail}, 'queue-head runtime burst-length beat-count/RLAST validation') < 0, "$owner removes stale queue-head runtime validation residue prose");
 }

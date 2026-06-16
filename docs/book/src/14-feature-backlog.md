@@ -5348,14 +5348,15 @@ boundary.
 
 Post multi-group queue-head runtime-validation selector:
 [AXI_IAL2_MANAGER_POST_MULTI_GROUP_QUEUE_HEAD_RUNTIME_VALIDATION_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTI_GROUP_QUEUE_HEAD_RUNTIME_VALIDATION_NEXT_SLICE_SELECTION.md)
-selects `.137`, report/static residue cleanup. The `.135` live report now
-ships generated runtime-validation multi-group queue-head scalar last-beat
-read-data, but one AXI ID/order support-detail string and focused PPIF/parser
-assertion still preserve stale unsupported wording for that exact behavior.
-The next slice is therefore a narrow report/static cleanup; deeper queues,
-same-family mixed auto-ID, write/read-single-beat multi-group queue-head
-behavior, packed outputs, alternate payload assembly, direct backend lowering,
-and VHDL remain deferred.
+selected `.137`, report/static residue cleanup. `.137` is now complete: the
+AXI ID/order support detail describes generated runtime-validation multi-group
+queue-head scalar last-beat read-data as supported, focused parser
+expectations reject the retired unsupported-residue wording, and the `.135`,
+`.132`, `.130`, `.127`, `.124`, and `.119` live schedule boundaries are
+preserved. Deeper queues, same-family mixed auto-ID,
+write/read-single-beat multi-group queue-head behavior, packed outputs,
+alternate payload assembly, direct backend lowering, and VHDL remain deferred;
+the active IAL2 frontier is `.138`, the next AXI manager selector.
 
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
@@ -7617,7 +7618,8 @@ discovery as the next implementation boundary.
 support catalog entries instead of recursive workspace traversal.
 `SEMANTIC-INTROSPECTION-MCP-FRONTIER.30` closes the immediate read-only
 semantic-introspection/MCP pass after source discovery; the active roadmap
-priority is again `IAL2-FEATURE-COMPLETENESS-FRONTIER.136`.
+priority is again the IAL2 feature-completeness tree, currently at
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.138`.
 
 Selected first MCP resource families are `fsmgen://capabilities`,
 `fsmgen://contracts`, `fsmgen://diagnostics`,
