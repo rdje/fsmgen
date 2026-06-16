@@ -326,15 +326,20 @@ The current FSMGen-side priority order is:
    channel grouping, semantic signal roles, temporal/stability contracts, and
    provenance/residual metadata.
 
-## What SPECFORGE Can Plan Around Now
+## What Downstream Consumers Can Plan Around Now
 
-Until the machine surfaces exist, SPECFORGE can already rely on these FSMGen
-project policies:
+Downstream consumers, including SPECFORGE, can rely on these FSMGen project
+policies:
 
 - strict mode is the preferred target for generated `.fsm`;
 - compatibility syntax should not be treated as canonical adapter output;
 - mdBook chapters are the public human-facing contract;
 - `fsmgen --capability-manifest` is the first machine-readable support surface;
+- `language_surface.file_surfaces` in the capability manifest is the
+  machine-readable source of truth for shipped `.fsm`/`.isf`/`.ppif` suffixes,
+  intent layers, lowering order, supported CLI modes, and per-suffix boundary
+  text; the `.ppif` boundary is bounded public IAL2 that lowers through
+  generated `.isf` before generated `.fsm`;
 - `fsmgen --strict --check --json path/to/file.fsm` is the first bounded
   machine-readable check/diagnostic surface, including a nested
   `support_accounting` object for matched expected failures, a report-level

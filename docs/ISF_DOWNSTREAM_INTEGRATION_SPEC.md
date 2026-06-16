@@ -1,24 +1,27 @@
 # ISF Downstream Integration Specification
 
 Status: `bounded_public`
-Document version: `2026-05-23`
+Document version: `2026-06-16`
 ISF source specification: `.isf` specification v0.6
-Primary audience: SPECFORGE and other tools that emit, validate, inspect, or
-consume FSMGen Intent Scheduling Format sources and reports.
+Primary audience: downstream tools that emit, validate, inspect, or consume
+FSMGen Intent Scheduling Format sources and reports.
 
 This is the single downstream-facing integration contract for the current
-`.isf` surface. A consumer should be able to implement against this document
-without reading the mdBook, Perl modules, task trees, or tests first. Those
-artifacts remain the implementation evidence and evolution history; this file
-packages the current public contract in one place.
+`.isf` / IAL1 surface, and it anchors how IAL2 sources that lower through
+`.isf` interact with downstream tools. A consumer should be able to implement
+against this document for IAL1 behavior without reading the mdBook, Perl
+modules, task trees, or tests first. Those artifacts remain the implementation
+evidence and evolution history; this file packages the current public IAL1
+contract and the downstream file-surface stack in one place.
 
 Synchronization invariant: this document must stay truthful with respect to
 the live `.isf` spec, the mdBook, the public contract, the manifest metadata,
-the regression tests, and the codebase itself. A mismatch between this file and
-implementation behavior is a project bug. Do not update this file as an
-aspirational design note; update it only with the same slice that changes the
-source language, diagnostics, lowering behavior, public facade, schedule JSON,
-generated artifacts, fixtures, or documented deferrals.
+the support-accounting catalog, the regression tests, explicit deferrals, and
+the codebase itself. A mismatch between this file and implementation behavior
+is a project bug. Do not update this file as an aspirational design note;
+update it only with the same slice that changes the source language,
+diagnostics, lowering behavior, public facade, schedule JSON, generated
+artifacts, fixtures, support status, or documented deferrals.
 
 ## 1. Readiness And Stability
 
@@ -50,7 +53,8 @@ The source/lowering contract remains bounded even though schedule JSON
   schedule JSON schema is stable for `schema_version: 1`; use the key/value
   families described here and the machine-readable manifest for exact
   discovery.
-- Future `.isf` changes must update this document, the public contract, tests,
+- Future downstream-visible `.isf` or `.ppif` changes must update this
+  document, the public contract, manifest metadata, support accounting, tests,
   and book content in the same implementation slice.
 
 ## 2. Integration Pipeline
@@ -58,7 +62,7 @@ The source/lowering contract remains bounded even though schedule JSON
 The current semantic pipeline is:
 
 ```text
-SPECFORGE IntentIR
+Downstream intent source
   -> .isf source
   -> FSM::Adapter::ISF parser
   -> FSM::Scheduler::ISF lowering
@@ -76,8 +80,33 @@ Intent abstraction levels:
   intent above `.fsm`: actors, transactions, drives, samples, waits, control
   flow, generated child activations, rules, storage, libraries, constraints,
   and selected clock-domain metadata lower into reviewable `.fsm`.
-- No higher layer is currently shipped. Protocol-level intent objects above
-  individual transactions are future work.
+- `.ppif` is the first shipped Intent Abstraction Layer 2 (`IAL2`) public file
+  surface. It is Protocol/Platform Intent Format source and always lowers
+  through generated `.isf` before generated `.fsm`; direct IAL2-to-IAL0
+  lowering is not a public contract.
+- Current bounded `.ppif` coverage includes one-channel Valid-Ready sources,
+  multi-channel Valid-Ready bundles, and one-object AXI manager
+  capacity/status sources. Support-accounted AXI manager coverage includes
+  capacity/status, ID-family metadata, transaction envelopes and fan-in,
+  concrete-ID assertions, bounded auto-ID lifecycle, same-ID reject and
+  issue-order-queue policy, generated auto-ID write/read response-demux,
+  generated single/last/multi-beat read-data capture, burst-length/runtime
+  validation, scalar `RRESP` aggregation, one-or-more read burst-last
+  queue-head groups, one-or-more write queue-head groups, and read
+  single-beat queue-head response-demux including multiple response-demux-only
+  groups.
+- Deeper concrete same-ID queues, same-family mixed auto-ID plus concrete
+  queue-head demux, read-data over multiple read single-beat queue-head
+  groups, group-local simultaneous enqueue widening, packed burst-vector
+  outputs, alternate full burst payload assembly, aliases, platform clauses,
+  full AXI manager behavior, direct backend lowering, and VHDL remain
+  deferred.
+- The machine-readable source of truth for shipped suffixes, layers, lowering
+  order, CLI modes, and current per-suffix boundary text is
+  `./bin/fsmgen --capability-manifest` under
+  `language_surface.file_surfaces`. That manifest boundary, this handoff, the
+  public contracts, the mdBook, the support-accounting catalog, and the
+  codebase must remain lockstep for every downstream consumer.
 
 ## 3. CLI Entry Points
 
@@ -3296,7 +3325,7 @@ Generated names in reports and generated artifacts are deterministic for the
 same source and FSMGen version. They can be used as report-local or
 artifact-local identifiers when another public field explicitly references the
 same name. They are not a semantic string grammar for downstream tools to
-parse. SPECFORGE-style consumers should use explicit bounded fields such as
+parse. Downstream consumers should use explicit bounded fields such as
 `owner`, `owner_kind`, `role`, `kind`, `instance`, `parent_port`,
 `child_port`, `trigger_source`, `payload_source`, storage `role`, and
 generated-composition summaries. Before the whole schedule JSON schema is
@@ -3338,7 +3367,7 @@ Assignment and child-summary boundary:
   multi-file detail is the `lower(...)` files map, generated `.fsm` artifacts,
   `actor_network`, `generated_composition`, `library_uses[]`, and
   `clock_domains[]` / `crossings[]`.
-- SPECFORGE-style integrations should report bugs with the runnable source,
+- Downstream integrations should report bugs with the runnable source,
   command, bundle, and observed output. They do not need to classify whether a
   failure belongs to `.fsm`, `.isf`, private provenance, or generated child
   internals.
@@ -4247,7 +4276,7 @@ The following are not public shipped integration surfaces today:
 
 ## 19. Integration Guidance
 
-For a SPECFORGE-style producer:
+For a downstream producer:
 
 - Emit only the source forms listed in this document.
 - If FSMGen behavior looks wrong, follow the strict, format-agnostic
@@ -4297,10 +4326,12 @@ For a downstream analyzer:
 
 ## 20. Source Of Truth And Evolution
 
-This file is the canonical human downstream integration document for `.isf`.
-It is intentionally duplicated into the mdBook by include, not by a second copy.
-It must always remain synchronized with the live docs, the book, the
-machine-readable public contract, and the shipped implementation.
+This file is the canonical human downstream integration document for `.isf`
+and the IAL2-to-IAL1 lowering stack used by `.ppif`. It is intentionally
+duplicated into the mdBook by include, not by a second copy. It must always
+remain synchronized with the live docs, the book, the machine-readable public
+contracts, manifest metadata, support-accounting catalog, and shipped
+implementation.
 
 Supporting artifacts:
 
@@ -4322,12 +4353,13 @@ Supporting artifacts:
 
 Evolution rule:
 
-Any future change to public ISF syntax, parser facade behavior, scheduler
-facade behavior, lower-result shape, schedule-report shape, diagnostics, or
-downstream guidance must update this file in the same commit as the behavior
-change.
+Any future change to public ISF syntax, PPIF lowering contract, parser facade
+behavior, scheduler facade behavior, lower-result shape, schedule-report shape,
+diagnostics, or downstream guidance must update this file in the same commit
+as the behavior change.
 
-Minimum same-slice update set for downstream-visible ISF behavior changes:
+Minimum same-slice update set for downstream-visible ISF or PPIF behavior
+changes:
 
 - source/parser/lowering/report/emitter code that implements the behavior;
 - focused regression coverage;
@@ -4335,7 +4367,11 @@ Minimum same-slice update set for downstream-visible ISF behavior changes:
 - this file;
 - the relevant mdBook chapter or included book page;
 - `docs/ISF_PUBLIC_INTERFACE_CONTRACT.md` and
-  `perl/FSM/Support/ISFPublicInterfaceContract.pm` when public facade, report,
+  `perl/FSM/Support/LanguageSurfaceSection.pm` when shipped suffix/layer/CLI or
+  per-suffix boundary metadata changes;
+- support-accounting catalog/docs when supported sample or fixture coverage
+  changes;
+- `perl/FSM/Support/ISFPublicInterfaceContract.pm` when public facade, report,
   manifest, live-doc, or tested-by metadata changes;
 - `docs/ISF_LIBRARY_CATALOG.md` when reusable library semantics change;
 - owning task tree and live recovery docs.

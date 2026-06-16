@@ -13,15 +13,15 @@ answers:
   - "does .ppif check JSON keep the .ppif source path?"
   - "does .ppif semantic JSON keep the .ppif source path?"
   - "does .ppif report the top-level protocol-platform-intent name?"
-date: 2026-06-12
+date: 2026-06-16
 status: current
 tags: [ial2, ppif, parser, cli, valid-ready]
 evidence: docs/IAL2_PPIF_PARSER_CLI_FIRST_SLICE.md; ppif/axi_aw_valid_ready.ppif; perl/FSM/Adapter/IAL2/PPIF.pm; perl/FSM/Support/LanguageSurfaceSection.pm; perl/FSM/Support/LanguageSurfaceContract.pm; bin/fsmgen; t/1436-ial2-ppif-parser-cli.t; t/297-capability-manifest.t; t/317-language-surface-contract.t; t/301-check-json-supported-corpus.t; t/303-normalized-semantic-json-supported-corpus.t; docs/tasks/IAL2-PPIF-PARSER-CLI-FIRST-SLICE.md; docs/tasks/LANGUAGE-SURFACE-FILE-CLI-MODES.md
 reverify: prove -Iperl t/1436-ial2-ppif-parser-cli.t t/1435-axi-ial2-valid-ready-generator.t t/297-capability-manifest.t t/317-language-surface-contract.t t/301-check-json-supported-corpus.t t/303-normalized-semantic-json-supported-corpus.t
 ---
 
-`.ppif` is now accepted by `bin/fsmgen` as the first public IAL2 file surface.
-The first supported syntax is one top-level
+`.ppif` is accepted by `bin/fsmgen` as the first public IAL2 file surface.
+The original first supported syntax was one top-level
 `(protocol-platform-intent NAME ...)` form with `(profile axi4)`, `(source ...)`,
 and exactly one `(valid-ready-channel ...)` object.
 
@@ -35,7 +35,8 @@ The first runnable checked-in sample is `ppif/axi_aw_valid_ready.ppif`.
 The capability manifest advertises `.ppif` under
 `language_surface.file_surfaces`, where it is marked as IAL2 and documented as
 lowering through generated `.isf` before generated `.fsm`. The same `.ppif`
-file-surface entry publishes `supported_cli_modes[]`, including
+file-surface entry publishes current bounded-public status,
+`supported_cli_modes[]`, and the per-suffix boundary text, including
 `--emit-schedule-json`, `--check --json / --check-json`, and
 `--emit-semantic-json`.
 Run `./bin/fsmgen --emit-schedule-json ppif/axi_aw_valid_ready.ppif` for the
@@ -52,8 +53,14 @@ support-accounting entry. The normalized semantic payload still describes the
 generated `.fsm` semantic root.
 
 Unsupported aliases remain unsupported. `.pif`, `.ppi`, `.axi`,
-protocol-specific aliases, platform placement clauses, and full AXI manager
-behavior all require later exact owners. A later bounded bundle slice now
-supports multiple unique `valid-ready-channel` objects for aggregate IAL2
-reports, generated review artifacts, check JSON, aggregate semantic JSON, and a
-selected aggregate wrapper/top HDL entry for the tracked AW/W sample.
+protocol-specific aliases, platform placement clauses, full AXI manager
+behavior, direct backend lowering, and VHDL all require later exact owners.
+Later bounded slices support multiple unique `valid-ready-channel` objects and
+one-object AXI manager capacity/status sources. Support-accounted AXI manager
+coverage now includes generated auto-ID write/read response-demux,
+single-beat, last-beat, and multi-beat read-data capture,
+burst-length/runtime validation, scalar `RRESP` aggregation, one-or-more read
+burst-last queue-head groups, one-or-more write queue-head groups, and read
+single-beat queue-head response-demux including multiple response-demux-only
+groups; read-data over multiple read single-beat queue-head groups remains
+deferred.

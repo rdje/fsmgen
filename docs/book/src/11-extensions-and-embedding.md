@@ -47,7 +47,26 @@ file surface. The `.ppif` entry records that it lowers through generated
 `.isf` before generated `.fsm`, points at `ppif/axi_aw_valid_ready.ppif`, and
 publishes its supported CLI modes, including `--emit-schedule-json`,
 `--check-json`, and `--emit-semantic-json`. It keeps `.pif`, `.ppi`, `.axi`,
-and other aliases outside the first slice.
+and other aliases outside the current bounded public surface.
+
+The same manifest boundary now describes the current `.ppif` contract for any
+downstream consumer: bounded public `.ppif` covers one-channel Valid-Ready
+sources, multi-channel Valid-Ready bundles, and one-object AXI manager
+capacity/status sources. Support-accounted AXI manager coverage includes
+capacity/status, ID-family metadata, transaction envelopes and fan-in,
+concrete-ID assertions, bounded auto-ID lifecycle, same-ID reject and
+issue-order-queue policy, generated auto-ID write/read response-demux,
+generated single/last/multi-beat read-data capture, burst-length/runtime
+validation, scalar `RRESP` aggregation, one-or-more read burst-last
+queue-head groups, one-or-more write queue-head groups, and read single-beat
+queue-head response-demux including multiple response-demux-only groups.
+Deeper concrete same-ID queues, same-family mixed auto-ID plus concrete
+queue-head demux, read-data over multiple read single-beat queue-head groups,
+group-local simultaneous enqueue widening, packed burst-vector outputs,
+alternate full burst payload assembly, aliases, platform clauses, full AXI
+manager behavior, direct backend lowering, and VHDL remain deferred. This
+manifest boundary, the downstream handoff, the public contracts, this book,
+support-accounting, and the codebase must remain lockstep.
 
 The embedding section's `serializable_plan_reports` branch also advertises
 `public_top_level_presence_keys` and `json_safe_surface_keys`; both the
@@ -2841,7 +2860,7 @@ catalog-backed through the manifest support catalog: reuse existing manifest,
 support-accounting, and example surfaces; do not recursively expose arbitrary
 workspace files. The immediate semantic-introspection/MCP pass is complete
 through `SEMANTIC-INTROSPECTION-MCP-FRONTIER.30`; active roadmap priority has
-returned to `IAL2-FEATURE-COMPLETENESS-FRONTIER.136`.
+returned to `IAL2-FEATURE-COMPLETENESS-FRONTIER.144`.
 
 ## Downstream Tool Alignment
 

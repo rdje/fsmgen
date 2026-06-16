@@ -42,12 +42,21 @@ Use it first for objective, navigation, and where to find code/docs quickly.
 - The mdBook is a required user-facing artifact for every future slice that
   changes behavior, syntax, diagnostics, workflow, public contracts, or any
   other user-visible FSMGen behavior.
-- Keep the mdBook, live specs, roadmap/task-tree status, and public contract
-  docs synchronized in the same slice as the code change.
-- For downstream-visible `.isf` changes, also keep
-  `docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md` synchronized with the codebase,
-  live specs, mdBook, public contract, manifest metadata, tests, and explicit
-  deferrals. That file is the single SPECFORGE-style integration handoff.
+- Keep the codebase, mdBook, live specs, roadmap/task-tree status, downstream
+  handoff/integration docs, public contract docs, capability-manifest metadata,
+  support-accounting catalog entries, tests, and explicit deferrals
+  synchronized in the same slice as any downstream-visible change. These
+  surfaces must convey the same facts from their different viewpoints for any
+  downstream consumer; drift is a project bug.
+- For downstream-visible `.isf` or `.ppif` changes, also keep
+  `docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md`,
+  `docs/ISF_PUBLIC_INTERFACE_CONTRACT.md`,
+  `docs/book/src/13i-downstream-integration.md`,
+  `docs/book/src/11-extensions-and-embedding.md`, the manifest
+  `language_surface.file_surfaces` boundary, and the support-accounting
+  catalog synchronized with the codebase, live specs, mdBook, public contract,
+  tests, and explicit deferrals. Those files are downstream-consumer
+  integration handoffs, not project-specific private notes.
 - Do not treat a user-visible implementation slice as complete until the book
   describes the shipped behavior accurately enough for review without reading
   the codebase.
@@ -191,24 +200,27 @@ Direct VHDL backend/reroute work through `StructuralRTLIR` is deferred by
 IAL0/IAL1/IAL2 path is feature complete. The first exact private ISF
 lowerer extraction is shipped as `FSM::Scheduler::ISF::ATLGeneratedTop` for
 ATL generated-top report projection and data-link child-interface marking;
-broader parser/lowerer extraction remains deferred behind future exact owners. IAL2
-protocol/platform intent has its first behavior-bearing in-process generator
-slice: `FSM::IAL2::ProtocolIntent::ValidReadyChannel` accepts one AXI
-Valid-Ready contract object, emits reviewable `.isf`, lowers through existing
-IAL1 to reviewable `.fsm`, and returns a source-anchor/residue report. `.ppif`
-is the first public generic IAL2 file suffix and `bin/fsmgen` now accepts one
-`.ppif` Valid-Ready source object with the existing single-channel HDL/semantic
-path, plus bounded multi-channel Valid-Ready bundles for aggregate reports,
-check JSON, aggregate semantic JSON, generated `.isf`/`.fsm` review artifacts,
-and an aggregate wrapper/top SystemVerilog HDL entry with `--verify-hdl`
-support for the tracked AW/W sample. Public `.pif`/`.ppi`/`.axi` aliases and
-the full AXI manager remain unshipped. Mandatory lowering remains
-`IAL2 -> IAL1 -> IAL0`. IAL2 feature completeness on the
-SystemVerilog-backed path remains active under
-`IAL2-FEATURE-COMPLETENESS-FRONTIER` at `.140`, including any explicitly
-selected IAL1 or IAL0/SV prerequisites needed for IAL2 to lower cleanly; after
-the completed `.139` readiness audit, this IAL2 `.140` implementation is the
-immediate PNT priority.
+broader parser/lowerer extraction remains deferred behind future exact owners.
+IAL2 protocol/platform intent is public through bounded `.ppif` sources, with
+mandatory lowering `IAL2 -> IAL1 -> IAL0`; direct IAL2-to-IAL0 lowering is not
+a public contract. Current bounded `.ppif` coverage includes one-channel
+Valid-Ready sources, multi-channel Valid-Ready bundles, and one-object AXI
+manager capacity/status sources. Support-accounted AXI manager coverage now
+includes capacity/status, ID-family metadata, transaction envelopes and
+fan-in, concrete-ID assertions, bounded auto-ID lifecycle, same-ID reject and
+issue-order-queue policy, generated auto-ID write/read response-demux,
+generated single/last/multi-beat read-data capture, burst-length/runtime
+validation, scalar `RRESP` aggregation, one-or-more read burst-last
+queue-head groups, one-or-more write queue-head groups, and read single-beat
+queue-head response-demux including multiple response-demux-only groups.
+Public `.pif`/`.ppi`/`.axi` aliases, deeper concrete same-ID queues,
+same-family mixed auto-ID plus concrete queue-head demux, read-data over
+multiple read single-beat queue-head groups, group-local simultaneous enqueue
+widening, packed burst-vector outputs, alternate full burst payload assembly,
+full AXI manager behavior, direct backend lowering, and VHDL remain deferred.
+IAL2 feature completeness on the SystemVerilog-backed path remains active
+under `IAL2-FEATURE-COMPLETENESS-FRONTIER` at `.144`, the next
+feature-completeness selector/audit.
 The first
 in-process AXI manager outstanding-capacity and acceptance/status generator is
 now shipped as `FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus`; it
@@ -860,7 +872,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 13. `docs/SPECFORGE_FEEDBACK_RESPONSE.md`: FSMGen's tracked response and alignment plan for SPECFORGE adapter feedback.
 14. `docs/INTENT_SCHEDULING_BRAINSTORM.md`: living brainstorm log for an intent-scheduling layer above explicit cycle-authored `.fsm`.
 15. `docs/ISF_ATL_DESIGN_PROPOSAL.md`: live design proposal for ISF Actor Transfer Level actor-network orchestration.
-16. `docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md`: single self-contained downstream `.isf` integration handoff.
+16. `docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md`: single self-contained downstream `.isf` integration handoff plus `.ppif`/IAL2-to-IAL1 lowering-stack boundary.
 17. `docs/DOWNSTREAM_ISSUE_REPORTING.md`: strict downstream issue-reporting protocol for local FSMGen reproduction.
 18. `docs/ISF_SPEC.md`: active R14 `.isf` Intent Scheduling Format specification.
 19. `docs/ISF_PUBLIC_INTERFACE_CONTRACT.md`: live downstream-consumer API contract for ISF parser/scheduler surfaces.
@@ -2340,9 +2352,9 @@ owns the bounded top-level and first nested section-key lists advertised
 through `language_surface.surface_contract` without pretending the whole
 authored language is frozen. The bounded `language_surface.file_surfaces`
 section advertises the shipped `.fsm`/`.isf`/`.ppif` file suffixes, including
-the `.ppif` first-slice rule that IAL2 lowers through generated `.isf` before
-generated `.fsm`, and publishes the supported CLI modes for each shipped
-suffix.
+the `.ppif` bounded-public rule that IAL2 lowers through generated `.isf`
+before generated `.fsm`, and publishes the supported CLI modes plus current
+support/deferral boundary for each shipped suffix.
 The manifest's `documentation` section now has the same split too:
 [perl/FSM/Support/CapabilityManifest.pm](perl/FSM/Support/CapabilityManifest.pm)
 still publishes the current doc pointers, while

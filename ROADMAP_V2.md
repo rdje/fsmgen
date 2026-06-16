@@ -660,6 +660,9 @@ Current direction:
 
 Expected result:
 - the project becomes a stronger platform for downstream tooling, not just a CLI.
+- downstream-visible changes keep the codebase, downstream handoff/integration
+  docs, public contracts, capability-manifest metadata, support-accounting
+  catalog entries, tests, and mdBook in lockstep for every downstream consumer.
 
 ### R14. Intent Scheduling — `.isf` format and lowering compiler
 Goal:
@@ -681,8 +684,9 @@ Core thesis (from [docs/INTENT_SCHEDULING_BRAINSTORM.md](docs/INTENT_SCHEDULING_
 
 Architecture:
 - `.isf` (Intent Scheduling Format) → scheduled `.fsm` → SV/VHDL
-- SPECFORGE targets `.isf` from its IntentIR; FSMGen owns scheduling,
-  cycle inference, conflict analysis, and lowering.
+- Downstream tools, including SPECFORGE, may target `.isf` from their own
+  intent representations; FSMGen owns scheduling, cycle inference, conflict
+  analysis, and lowering.
 - `.fsm` remains the explicit cycle-accurate middle layer — inspectable,
   debuggable, and patchable.
 

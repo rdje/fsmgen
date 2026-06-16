@@ -67,7 +67,7 @@ sub build_language_surface_section {
                 {
                     suffix => '.ppif',
                     intent_layer => 'IAL2',
-                    status => 'shipped_first_slice',
+                    status => 'shipped_bounded_public',
                     role => 'Protocol/Platform Intent Format source that lowers to generated .isf before generated .fsm',
                     lowers_to => ['.isf', '.fsm'],
                     generated_review_artifacts => ['.isf', '.fsm'],
@@ -80,7 +80,7 @@ sub build_language_surface_section {
                         '--verify-hdl',
                     ],
                     sample_path => 'ppif/axi_aw_valid_ready.ppif',
-                    current_boundary => 'one-channel Valid-Ready sources and one-object AXI manager capacity/status sources with optional static ID-family metadata, structural transaction-envelope metadata, per-transaction event dispatch/fan-in, concrete transaction ID request/response assertions, explicit bounded auto-ID request-ID drive, generated write BID response-demux behavior, and read RID response-demux parser/report metadata can emit HDL and semantic JSON; multi-channel Valid-Ready bundles emit aggregate reports, check JSON, semantic JSON, and review artifacts while generated read RID demux behavior, ordering, read-data interleaving, bursts, aliases, platform clauses, full AXI manager behavior, and VHDL remain deferred',
+                    current_boundary => 'bounded public .ppif covers one-channel Valid-Ready sources, multi-channel Valid-Ready bundles, and one-object AXI manager capacity/status sources; every .ppif path lowers through generated .isf before generated .fsm. Support-accounted AXI manager coverage includes capacity/status, ID-family metadata, transaction envelopes and fan-in, concrete-ID assertions, bounded auto-ID lifecycle, same-ID reject and issue-order-queue policy, generated auto-ID write/read response-demux, generated single/last/multi-beat read-data capture, burst-length/runtime validation, scalar RRESP aggregation, one-or-more read burst-last queue-head groups, one-or-more write queue-head groups, and read single-beat queue-head response-demux including multiple response-demux-only groups. Deeper concrete same-ID queues, same-family mixed auto-ID plus concrete queue-head demux, read-data over multiple read single-beat queue-head groups, group-local simultaneous enqueue widening, packed burst-vector outputs, alternate full burst payload assembly, aliases, platform clauses, full AXI manager behavior, direct backend lowering, and VHDL remain deferred',
                 },
             ],
             unsupported_first_slice_aliases => [qw(.pif .ppi .axi .chi .ace .ahb .apb .atb)],

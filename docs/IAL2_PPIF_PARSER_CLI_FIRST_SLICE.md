@@ -92,7 +92,24 @@ Discover the shipped file suffix stack:
 
 The manifest's `language_surface.file_surfaces` section lists `.fsm`, `.isf`,
 and `.ppif`; the `.ppif` entry records IAL2, generated `.isf` before generated
-`.fsm`, the sample path, and the unsupported first-slice aliases.
+`.fsm`, the sample path, supported CLI modes, current bounded-public status,
+and the unsupported first-slice aliases.
+
+This document records the original Valid-Ready parser/CLI slice. The current
+machine-readable downstream boundary is broader and lives in
+`./bin/fsmgen --capability-manifest` under
+`language_surface.file_surfaces`: bounded public `.ppif` now includes
+one-channel Valid-Ready sources, multi-channel Valid-Ready bundles, and
+one-object AXI manager capacity/status sources. Support-accounted AXI manager
+coverage includes generated auto-ID write/read response-demux, single-beat,
+last-beat, and multi-beat read-data capture, burst-length/runtime validation,
+scalar `RRESP` aggregation, one-or-more read burst-last queue-head groups,
+one-or-more write queue-head groups, and read single-beat queue-head
+response-demux including multiple response-demux-only groups. Deeper concrete
+same-ID queues,
+same-family mixed auto-ID plus concrete queue-head demux, read-data over
+multiple read single-beat queue-head groups, aliases, platform clauses, full
+AXI manager behavior, direct backend lowering, and VHDL remain deferred.
 
 Malformed `.ppif` source fails closed before claiming generated behavior. The
 first slice rejects missing profile/source/channel clauses, malformed reset
@@ -131,11 +148,12 @@ The public `.ppif` surface does not support `.pif`, `.ppi`, `.axi`, `.chi`,
 exact-owner decisions.
 
 The bounded bundle slices support multiple unique Valid-Ready channel objects
-for aggregate IAL2 reports, check JSON, aggregate semantic JSON, and generated
-review artifacts. They still do not support platform placement clauses, a full
-AXI manager, transaction IDs, outstanding-window scheduling, response matching,
-bursts, channel dependency rules, wrapper/top actor HDL generation, or a direct
-`.ppif` to `.fsm` shortcut.
+for aggregate IAL2 reports, check JSON, aggregate semantic JSON, generated
+review artifacts, and the tracked aggregate wrapper/top HDL entry. Later
+bounded AXI manager capacity/status slices added the support-accounted coverage
+advertised by the capability manifest. Platform clauses, full AXI manager
+behavior, aliases, VHDL, and any direct `.ppif` to `.fsm` shortcut remain
+future exact-owner decisions.
 
 ## Validation
 

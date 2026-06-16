@@ -2800,6 +2800,11 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
     );
     my %file_surface_by_suffix = map { $_->{suffix} => $_ } @{$manifest->{language_surface}{file_surfaces}{entries}};
     is($file_surface_by_suffix{'.ppif'}{intent_layer}, 'IAL2', 'manifest marks .ppif as IAL2');
+    is(
+        $file_surface_by_suffix{'.ppif'}{status},
+        'shipped_bounded_public',
+        'manifest marks .ppif as a bounded public shipped surface',
+    );
     is_deeply(
         $file_surface_by_suffix{'.ppif'}{lowers_to},
         ['.isf', '.fsm'],
@@ -2821,8 +2826,18 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
     );
     like(
         $file_surface_by_suffix{'.ppif'}{current_boundary},
-        qr/multi-channel Valid-Ready bundles emit aggregate reports/,
+        qr/multi-channel Valid-Ready bundles/,
         'manifest keeps the current PPIF boundary explicit',
+    );
+    like(
+        $file_surface_by_suffix{'.ppif'}{current_boundary},
+        qr/read single-beat queue-head response-demux including multiple response-demux-only groups/,
+        'manifest advertises shipped read single-beat multi-group queue-head response-demux',
+    );
+    like(
+        $file_surface_by_suffix{'.ppif'}{current_boundary},
+        qr/read-data over multiple read single-beat queue-head groups/,
+        'manifest keeps read-data over multiple read single-beat queue-head groups deferred',
     );
     my %unsupported_aliases = map { $_ => 1 } @{$manifest->{language_surface}{file_surfaces}{unsupported_first_slice_aliases}};
     ok($unsupported_aliases{'.pif'}, 'manifest keeps .pif unsupported in the first PPIF slice');

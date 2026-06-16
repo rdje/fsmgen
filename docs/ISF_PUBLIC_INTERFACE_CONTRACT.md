@@ -6,7 +6,8 @@ The single self-contained human integration handoff for downstream producers
 and consumers is
 [docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md](ISF_DOWNSTREAM_INTEGRATION_SPEC.md).
 That document must stay synchronized with this contract, the live `.isf` spec,
-the mdBook, manifest metadata, regression tests, and implementation behavior.
+the mdBook, manifest metadata, support-accounting catalog, regression tests,
+explicit deferrals, and implementation behavior.
 
 It is intentionally a live document: any implementation slice that changes
 supported ISF syntax, CLI behavior, public in-process facade behavior, scheduled
@@ -30,7 +31,28 @@ The intent-layer terminology used by the docs is also part of this live
 contract: `.fsm` is Intent Abstraction Layer 0 (`IAL0`), the explicit
 cycle-authored review artifact, and current `.isf` is Intent Abstraction Layer
 1 (`IAL1`), the scheduling-intent layer that lowers to reviewable IAL0 `.fsm`.
-No higher layer is currently shipped.
+`.ppif` is the first shipped Intent Abstraction Layer 2 (`IAL2`) public file
+surface. It is Protocol/Platform Intent Format source and always lowers through
+generated `.isf` before generated `.fsm`; direct IAL2-to-IAL0 lowering is not a
+public contract. The machine-readable downstream-consumer boundary for shipped
+suffixes, CLI modes, lowering order, and per-suffix status lives in
+`./bin/fsmgen --capability-manifest` under `language_surface.file_surfaces`.
+
+Current bounded `.ppif` coverage includes one-channel Valid-Ready sources,
+multi-channel Valid-Ready bundles, and one-object AXI manager capacity/status
+sources. Support-accounted AXI manager coverage includes capacity/status,
+ID-family metadata, transaction envelopes and fan-in, concrete-ID assertions,
+bounded auto-ID lifecycle, same-ID reject and issue-order-queue policy,
+generated auto-ID write/read response-demux, generated single/last/multi-beat
+read-data capture, burst-length/runtime validation, scalar `RRESP`
+aggregation, one-or-more read burst-last queue-head groups, one-or-more write
+queue-head groups, and read single-beat queue-head response-demux including
+multiple response-demux-only groups. Deeper concrete same-ID queues,
+same-family mixed auto-ID plus concrete queue-head demux, read-data over
+multiple read single-beat queue-head groups, group-local simultaneous enqueue
+widening, packed burst-vector outputs, alternate full burst payload assembly,
+aliases, platform clauses, full AXI manager behavior, direct backend lowering,
+and VHDL remain deferred.
 
 Machine-readable discovery lives in
 [perl/FSM/Support/ISFPublicInterfaceContract.pm](../perl/FSM/Support/ISFPublicInterfaceContract.pm)
@@ -3586,15 +3608,23 @@ These are not stable public interfaces yet:
 
 This contract evolves with R14 implementation work.
 
-When an ISF slice changes a downstream-visible behavior, update together:
+When an ISF or PPIF slice changes a downstream-visible behavior, update
+together:
 
 - [docs/ISF_PUBLIC_INTERFACE_CONTRACT.md](ISF_PUBLIC_INTERFACE_CONTRACT.md)
 - [docs/ISF_SPEC.md](ISF_SPEC.md)
 - [docs/DOWNSTREAM_ISSUE_REPORTING.md](DOWNSTREAM_ISSUE_REPORTING.md) when the
   change affects downstream issue reproduction guidance
+- [docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md](ISF_DOWNSTREAM_INTEGRATION_SPEC.md)
 - [docs/book/src/13-intent-scheduling.md](book/src/13-intent-scheduling.md)
 - [docs/book/src/13k-isf-feature-support-matrix.md](book/src/13k-isf-feature-support-matrix.md)
+- [docs/book/src/11-extensions-and-embedding.md](book/src/11-extensions-and-embedding.md)
+  when the manifest/file-surface boundary changes
 - [perl/FSM/Support/ISFPublicInterfaceContract.pm](../perl/FSM/Support/ISFPublicInterfaceContract.pm)
+- [perl/FSM/Support/LanguageSurfaceSection.pm](../perl/FSM/Support/LanguageSurfaceSection.pm)
+  when `language_surface.file_surfaces` changes
+- support-accounting catalog/docs and focused tests when supported source
+  coverage changes
 - focused regression tests for the changed public surface
 
 The goal is not to freeze ISF prematurely. The goal is to make every public

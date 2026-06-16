@@ -2369,6 +2369,10 @@ contracts, infrastructure, in-memory host APIs, semantic introspection/MCP
 surfaces, fixture parity, host abstractions, parity gates, and book blueprint
 gaps before any Rust/Rust-Wasm, browser JavaScript, Dart/web, Julia, or other
 non-Perl implementation slice changes code or public contracts.
+Downstream-visible changes must keep the codebase, downstream
+handoff/integration docs, public contracts, capability-manifest metadata,
+support-accounting catalog entries, tests, explicit deferrals, and this book
+in lockstep for every downstream consumer.
 
 Decision `0016` selects `.ppif` (Protocol/Platform Intent Format) as the first
 public generic IAL2 file suffix. Earlier candidates `.pif` and `.ppi` are not
