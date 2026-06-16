@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-SPECFORGE-PHASE-MEMBERSHIP-RESPONSE`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `Downstream ISF handoff / verification-generation alignment`
 - Created: `2026-06-16`
 - Last updated: `2026-06-16`
@@ -52,7 +52,7 @@ tracked response channel.
 ## Task Tree
 
 - ID: `ISF-SPECFORGE-PHASE-MEMBERSHIP-RESPONSE`
-  Status: `active`
+  Status: `done`
   Goal: `Record FSMGen's answer to SPECFORGE's transaction phase-membership/value/order request.`
   Children: `ISF-SPECFORGE-PHASE-MEMBERSHIP-RESPONSE.1, ISF-SPECFORGE-PHASE-MEMBERSHIP-RESPONSE.2`
 
@@ -64,18 +64,18 @@ tracked response channel.
   Commit: `ISF-SPECFORGE-PHASE-MEMBERSHIP-RESPONSE.1: select phase response`
 
 - ID: `ISF-SPECFORGE-PHASE-MEMBERSHIP-RESPONSE.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Edit and commit the tracked FSMGen response.`
   Acceptance: `The response document records the dated answer, durable follow-on task-tree/Knowledge Map state is synchronized, doc-only validation passes, and the tree closes.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `passed: mdbook build docs/book; prove -Iperl t/1414-docs-relative-paths-audit.t; bash knowledge-map/scripts/check_knowledge_map.sh; scripts/check_memory_architecture.sh; git diff --check; positive response scan`
+  Commit: `ISF-SPECFORGE-PHASE-MEMBERSHIP-RESPONSE.2: answer phase membership`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
 | 1 | `ISF-SPECFORGE-PHASE-MEMBERSHIP-RESPONSE.1` | `done` | The SPECFORGE request has been read and scoped as a no-runtime-change response. |
-| 2 | `ISF-SPECFORGE-PHASE-MEMBERSHIP-RESPONSE.2` | `pending` | Edit the established tracked response file and close the response loop. |
+| 2 | `ISF-SPECFORGE-PHASE-MEMBERSHIP-RESPONSE.2` | `done` | Added the dated tracked response and closed the response loop without runtime code changes. |
 
 ## Decisions
 
@@ -86,6 +86,10 @@ tracked response channel.
 - `2026-06-16`: Preserve `.isf` as SPECFORGE's synthesizable target. A future
   `.val` idea can be considered only as a verification-specific layer or
   artifact after `.isf`/schedule-report facts are selected.
+- `2026-06-16`: Answer `.2`: do not treat bare `drive` as participation,
+  do not encode unordered phase facts as transaction-body order, and route any
+  future grounded phase membership handoff to checked transaction phase-group
+  metadata in `.isf`, not to `.val`.
 
 ## Open Questions
 
@@ -102,15 +106,20 @@ tracked response channel.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-06-16` | `ISF-SPECFORGE-PHASE-MEMBERSHIP-RESPONSE.1` | `Read external SPECFORGE feedback request and current FSMGen response; git diff --check; scripts/check_memory_architecture.sh; positive owner scan` | `passed` |
+| `2026-06-16` | `ISF-SPECFORGE-PHASE-MEMBERSHIP-RESPONSE.2` | `mdbook build docs/book`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `git diff --check`; positive response scan | `passed` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `ISF-SPECFORGE-PHASE-MEMBERSHIP-RESPONSE.1` | `ISF-SPECFORGE-PHASE-MEMBERSHIP-RESPONSE.1: select phase response` | `selection owner before response edit` |
-| `ISF-SPECFORGE-PHASE-MEMBERSHIP-RESPONSE.2` | `pending` | `pending response edit` |
+| `ISF-SPECFORGE-PHASE-MEMBERSHIP-RESPONSE.2` | `ISF-SPECFORGE-PHASE-MEMBERSHIP-RESPONSE.2: answer phase membership` | `tracked response edited and tree closed` |
 
 ## Changelog
 
 - `2026-06-16`: Created the task tree in response to SPECFORGE's
   transaction phase-membership/value/order request.
+- `2026-06-16`: Added the tracked response. FSMGen's guidance is that
+  SPECFORGE should keep ungrounded values/order as metadata/residuals for now;
+  future checked transaction phase-group metadata belongs in `.isf`; `.val`
+  is not a replacement for SPECFORGE's synthesizable ISF target.

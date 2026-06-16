@@ -139,12 +139,20 @@ reusable verification IP, and VHDL-oriented verification artifacts.
   surface is report-only and does not generate SV/UVM, VHDL, scoreboard,
   coverage, reusable VIP, `.fsm`, or HDL behavior. This unblocks `.4`, the
   first SV/UVM output contract selector.
+- `2026-06-16`: `ISF-SPECFORGE-PHASE-MEMBERSHIP-RESPONSE.2` records selector
+  input for `.4`: SPECFORGE's grounded transaction phase membership should
+  not be lowered by fabricating drive values or transaction-body order. Future
+  checked transaction phase-group metadata belongs in `.isf`; `.val`, if ever
+  selected, is a verification artifact/layer and not a replacement for `.isf`.
 
 ## Open Questions
 
 - What transaction/event object model should follow after
   `ISF-VERIFICATION-OBSERVATION-METADATA.1` ships passive observation
   metadata?
+- What checked transaction phase-group metadata shape should carry grounded
+  membership/phase/role facts without implying drive values, body order, or
+  generated verification output?
 - Should protocol-specific IAL2 facts become verification annotations on the
   generated IAL1 artifact, or should a future direct IAL2 verification route
   exist at all?

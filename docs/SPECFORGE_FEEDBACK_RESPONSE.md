@@ -826,3 +826,121 @@ Net: **both** flagged deltas are now shipped in FSMGEN. **Action for SPECFORGE:*
 obligations off residuals into `(assert (=> <ante> (stable <sig>)))` and
 `(assert (=> <ante> (within <cons> MIN MAX)))`. The `IntentIR → .isf → FSMGEN` loop now
 carries the full mined temporal-rule surface.
+
+## 2026-06-16: Transaction Phase Membership Without Fabricated Values Or Order
+
+This answers SPECFORGE's `2026-06-16` question about lowering grounded
+transaction phase membership without inventing per-signal drive values or a
+total step order.
+
+Short answer: **SPECFORGE should not fabricate either value or order**, and
+FSMGen does not need an immediate code change to answer that guidance. The
+right future FSMGen feature, if this becomes load-bearing for `.isf`, is
+checked transaction phase-group metadata in ISF. It should be selected and
+implemented under a new task-tree owner before any parser/report behavior
+changes.
+
+### Value-less output participation
+
+Do **not** reinterpret `(drive S)` as a participation marker. In today's ISF,
+named `drive` calls are value-bearing behavior: a drive call starts a generated
+drive DT and schedules an output update. Accepting a bare output drive, a hidden
+don't-care actual, or a fake default value would blur "this source grounded
+membership" into "generate behavior that drives something." That would be the
+same fabrication SPECFORGE is trying to avoid.
+
+For now, if SPECFORGE knows only that output `S` participates in transaction
+`T` but does not know the value driven on `S`, keep that fact in SPECFORGE
+IntentIR metadata/residuals and do not lower it as a transaction-body drive.
+Only emit a `drive` call when the source grounds both the participation and the
+value/behavior.
+
+### Unordered or partial-order transaction facts
+
+Do **not** encode unordered phase membership as transaction-body order. ISF
+transaction bodies are intentionally source-ordered implementation steps: one
+clause after another means FSMGen may schedule them in that order, and a
+multi-pair drive block is same-cycle behavior only when the driven values are
+grounded. A transaction body is therefore the wrong container for a set of
+membership facts whose cross-phase ordering is not asserted by the source.
+
+If SPECFORGE has only a set, or a partial order that is not yet expressible as
+checked FSMGen behavior, it should preserve that fact outside the body until
+FSMGen has a selected metadata/constraint surface for it.
+
+### Phase-group metadata is the right future ISF shape
+
+FSMGen agrees with the direction of a protocol-neutral **transaction
+phase-group metadata** surface. The first safe version should be checked
+metadata, not generated behavior. Conceptually it would carry facts like:
+
+- the transaction name;
+- authored phase/group names such as `address`, `data`, `setup`, `access`, or
+  `response`;
+- member signals per phase/group;
+- actor-relative role/direction for each member, such as driven output or
+  sampled input;
+- optional provenance/residual notes when a phase order or value is not
+  grounded.
+
+The important first-slice rule is negative: this metadata must not imply
+drive values, a total schedule order, HDL behavior, SV/UVM output, VHDL output,
+or a public artifact until those effects have their own selected contracts.
+Validation should still be real: signal names should resolve, directions
+should match the actor interface, duplicate/malformed groups should fail
+closed, and the schedule/report shape should be discoverable through the
+public contract.
+
+That future feature is adjacent to, but not the same as, the actor-level
+`(observe NAME (role passive_monitor) (signals SIG...))` metadata that now
+ships. `observe` is useful as passive public-signal observation input for
+future verification tooling; it does not express transaction-specific phase
+membership.
+
+### Ordering as constraint versus ordering as body
+
+When the source genuinely grounds executable step order and values, using the
+transaction body is appropriate. When the source grounds only an obligation or
+temporal relationship, that should be expressed through the verification
+family (`assert`/`assume`/`cover`, `after`, `next`, `within`, monitors, and
+sampled-value predicates) or through a future checked constraint/report
+surface, not by pretending the body is an unordered fact bag.
+
+So the division is:
+
+- body clauses: grounded implementation behavior and source order;
+- verification properties/constraints: grounded temporal obligations;
+- future phase-group metadata: grounded membership/phase/role facts with no
+  generated behavior until a later output contract consumes them.
+
+### `.isf` versus a possible `.val`
+
+`.isf` remains the source of truth for SPECFORGE's synthesizable path:
+
+```text
+SPECFORGE IntentIR -> .isf -> FSMGen scheduling -> .fsm -> HDL
+```
+
+Do not target `.val` instead of `.isf` for SPECFORGE's synthesizable ISF goal.
+The `.val` idea, if FSMGen later selects it at all, is a Verification
+Abstraction Layer for generated verification artifacts: a possible
+target-neutral review/interchange artifact between `.isf`/schedule reports
+and SV/UVM or VHDL-oriented verification output. It is not a replacement for
+`.isf`, and it is not needed to answer this SPECFORGE request.
+
+### What SPECFORGE can safely do now
+
+- Keep transaction phase membership as IntentIR metadata/residuals when values
+  or order are not grounded.
+- Emit ISF transaction-body `drive`/`sample` steps only for facts whose values
+  and ordering are grounded.
+- Use existing ISF verification properties for genuinely grounded temporal
+  obligations.
+- Treat future checked transaction phase-group metadata as the right FSMGen
+  request if SPECFORGE needs those membership facts to cross the `.isf`
+  boundary without becoming behavior.
+
+Implementation note for FSMGen: the response itself required no runtime code
+change. Adding the future metadata surface would require a separate task tree,
+live spec/book/public-contract updates, support accounting, focused positive
+and fail-closed tests, Knowledge Map sync, and the normal commit workflow.
