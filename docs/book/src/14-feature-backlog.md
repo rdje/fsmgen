@@ -5346,6 +5346,17 @@ response-demux-only sample still has no `read_data` section; and the `.119`
 one-group runtime-validation sample keeps its existing two-transaction
 boundary.
 
+Post multi-group queue-head runtime-validation selector:
+[AXI_IAL2_MANAGER_POST_MULTI_GROUP_QUEUE_HEAD_RUNTIME_VALIDATION_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTI_GROUP_QUEUE_HEAD_RUNTIME_VALIDATION_NEXT_SLICE_SELECTION.md)
+selects `.137`, report/static residue cleanup. The `.135` live report now
+ships generated runtime-validation multi-group queue-head scalar last-beat
+read-data, but one AXI ID/order support-detail string and focused PPIF/parser
+assertion still preserve stale unsupported wording for that exact behavior.
+The next slice is therefore a narrow report/static cleanup; deeper queues,
+same-family mixed auto-ID, write/read-single-beat multi-group queue-head
+behavior, packed outputs, alternate payload assembly, direct backend lowering,
+and VHDL remain deferred.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same

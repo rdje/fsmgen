@@ -1532,6 +1532,11 @@ blocker is the queue-head read-data coverage gate. It selected `.135`,
 and `.135` completed that implementation boundary. Same-family auto-ID,
 deeper queues, write or read single-beat multi-group queue-head behavior,
 packed outputs, direct backend, and VHDL remain deferred.
+Selector `.136` selected `.137`, report/static residue cleanup, because live
+`.135` reports prove generated runtime-validation multi-group queue-head
+scalar last-beat read-data is supported while the AXI ID/order support-detail
+string and focused PPIF/parser assertion still preserve stale unsupported
+wording for that exact behavior.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.
