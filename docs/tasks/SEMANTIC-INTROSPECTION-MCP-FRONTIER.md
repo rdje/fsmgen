@@ -111,7 +111,8 @@ For FSMGen, the analogs are:
     `SEMANTIC-INTROSPECTION-MCP-FRONTIER.24`,
     `SEMANTIC-INTROSPECTION-MCP-FRONTIER.25`,
     `SEMANTIC-INTROSPECTION-MCP-FRONTIER.26`,
-    `SEMANTIC-INTROSPECTION-MCP-FRONTIER.27`
+    `SEMANTIC-INTROSPECTION-MCP-FRONTIER.27`,
+    `SEMANTIC-INTROSPECTION-MCP-FRONTIER.28`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1`
   Status: `done`
@@ -296,9 +297,16 @@ For FSMGen, the analogs are:
   Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.26: title MCP server info`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.27`
-  Status: `pending`
+  Status: `done`
   Goal: `Audit remaining MCP read-only profile work and decide exhaustion or next expansion.`
   Acceptance: `Review the completed MCP adapter frontier against the selected read-only semantic-introspection profile, official MCP feature families already deferred or shipped, mdBook/user-facing docs, and roadmap priorities; either mark this hardening run exhausted with a return frontier or select one exact next leaf; do not make behavior-bearing code changes in this audit unless a smaller owned leaf is created first.`
+  Verification: `passed`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.27: exhaust MCP protocol hardening`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.28`
+  Status: `pending`
+  Goal: `Select read-only source and workspace discovery boundaries.`
+  Acceptance: `Audit whether the MCP adapter should expose bounded read-only source/workspace discovery for available repo/workspace inputs, examples, and supported file families; either select exact resources/tools/schemas/tests/docs or defer discovery; do not allow arbitrary filesystem traversal, hidden dotfile leakage, machine-local absolute path leakage, writes, network, shell, mutation, commit, or push authority.`
   Commit: `pending`
 
 ## Implementation Notes From `.4`
@@ -781,6 +789,23 @@ For FSMGen, the analogs are:
 - Are any remaining MCP optional features important enough to select now
   without broadening authority or duplicating existing surfaces?
 
+## Implementation Notes From `.27`
+
+- The immediate MCP protocol-hardening pass is exhausted for the current
+  read-only profile.
+- Remaining optional MCP feature families are either shipped, explicitly
+  unsupported/deferred in this task tree, or require future exact owners.
+- The next useful semantic-introspection frontier moves from protocol mechanics
+  to read-only source/workspace discovery.
+
+## Candidate Contract Questions For `.28`
+
+- Should source/workspace discovery use a resource, a tool, or both?
+- Which directories and file suffixes are safe to scan without arbitrary
+  traversal or hidden-file leakage?
+- How should source discovery reuse existing support-accounting/example
+  catalogs without inventing a second source registry?
+
 ## Candidate Future Phases
 
 - Phase 1: contract inventory and first safe semantic-introspection boundary.
@@ -795,7 +820,7 @@ For FSMGen, the analogs are:
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.27` | `pending` | `.26` stabilized server identity metadata; the next exact frontier is an exhaustion audit for the MCP hardening run. |
+| 1 | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.28` | `pending` | `.27` exhausted immediate MCP protocol hardening; the next exact frontier is read-only source/workspace discovery selection. |
 
 ## Decisions
 
@@ -879,6 +904,8 @@ For FSMGen, the analogs are:
   messages and no `error.data`.
 - `2026-06-16`: `.26` added stable `serverInfo.title` metadata while keeping
   instructions compact, read-only, and free of unshipped feature claims.
+- `2026-06-16`: `.27` exhausted the immediate MCP protocol-hardening pass and
+  selected read-only source/workspace discovery as the next semantic frontier.
 - `2026-06-14`: Create this as a proposed owner, not an active implementation
   lane. The first real work must be no-code contract selection over existing
   public surfaces.
@@ -888,7 +915,7 @@ For FSMGen, the analogs are:
 
 ## Open Questions
 
-- None for `.26`; `.27` owns the remaining MCP profile exhaustion audit.
+- None for `.27`; `.28` owns read-only source/workspace discovery selection.
 
 ## Blockers
 
@@ -926,6 +953,7 @@ For FSMGen, the analogs are:
 | `2026-06-16` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.24` | Syntax checks for `SemanticIntrospectionMCPAdapter`, `t/1441`, and `t/1460`; `prove -Iperl t/1441-semantic-introspection-mcp-adapter.t t/1445-semantic-introspection-mcp-schema-snapshots.t t/1460-semantic-introspection-mcp-initialize-negotiation-boundary.t`; mdBook, docs path audit, Knowledge Map generation/check, memory-architecture, README-numbering, and diff gates | `passed`; locked initialize negotiation and selected `.25` error-data/sanitization boundary |
 | `2026-06-16` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.25` | Syntax check for `t/1461`; `prove -Iperl t/1461-semantic-introspection-mcp-error-data-sanitization-boundary.t`; mdBook, docs path audit, Knowledge Map generation/check, memory-architecture, README-numbering, and diff gates | `passed`; kept errors message-only/sanitized and selected `.26` serverInfo/instructions boundary |
 | `2026-06-16` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.26` | Syntax checks for `SemanticIntrospectionMCPAdapter` and `t/1462`; `prove -Iperl t/1441-semantic-introspection-mcp-adapter.t t/1445-semantic-introspection-mcp-schema-snapshots.t t/1460-semantic-introspection-mcp-initialize-negotiation-boundary.t t/1462-semantic-introspection-mcp-serverinfo-instructions-boundary.t`; mdBook, docs path audit, Knowledge Map generation/check, memory-architecture, README-numbering, and diff gates | `passed`; added stable server title metadata and selected `.27` remaining-profile exhaustion audit |
+| `2026-06-16` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.27` | mdBook, docs path audit, Knowledge Map generation/check, memory-architecture, README-numbering, and diff gates | `passed`; exhausted immediate MCP protocol hardening and selected `.28` read-only source/workspace discovery |
 
 ## Commit Log
 
@@ -957,7 +985,8 @@ For FSMGen, the analogs are:
 | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.24` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.24: lock MCP initialize negotiation` | Locked initialize to the supported protocol version and minimal server capabilities. |
 | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.25` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.25: keep MCP errors message-only` | Kept JSON-RPC errors message-only and sanitized, with no error.data. |
 | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.26` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.26: title MCP server info` | Added stable serverInfo title metadata and guarded compact read-only instructions. |
-| `SEMANTIC-INTROSPECTION-MCP-FRONTIER.27` | `pending` | `pending` |
+| `SEMANTIC-INTROSPECTION-MCP-FRONTIER.27` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.27: exhaust MCP protocol hardening` | Exhausted the immediate read-only MCP protocol-hardening pass. |
+| `SEMANTIC-INTROSPECTION-MCP-FRONTIER.28` | `pending` | `pending` |
 
 ## Changelog
 
@@ -1043,3 +1072,5 @@ For FSMGen, the analogs are:
 - `2026-06-16`: Completed `.26`; initialize serverInfo now has stable title
   metadata, instructions remain compact/read-only, and `.27` owns the
   remaining MCP profile exhaustion audit.
+- `2026-06-16`: Completed `.27`; immediate MCP protocol hardening is
+  exhausted, and `.28` owns read-only source/workspace discovery selection.

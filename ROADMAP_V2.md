@@ -1052,8 +1052,12 @@ set. `SEMANTIC-INTROSPECTION-MCP-FRONTIER.25` keeps JSON-RPC errors
 message-only and sanitized, with no `error.data` until a bounded data schema
 is selected. `SEMANTIC-INTROSPECTION-MCP-FRONTIER.26` adds stable
 `serverInfo.title` metadata while keeping instructions compact and read-only.
-The next frontier is `SEMANTIC-INTROSPECTION-MCP-FRONTIER.27`, the remaining
-MCP profile exhaustion audit.
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.27` exhausts the immediate MCP
+protocol-hardening pass: remaining optional MCP feature families are either
+shipped, explicitly unsupported for the read-only profile, or deferred behind
+future exact owners. The next frontier is
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.28`, read-only source/workspace discovery
+selection.
 The IAL2
 SystemVerilog-backed feature-completeness tree remains
 active at

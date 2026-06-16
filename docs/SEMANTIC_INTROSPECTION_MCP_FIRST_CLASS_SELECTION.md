@@ -240,6 +240,12 @@ boundary. Initialize now includes stable `serverInfo.title` metadata, while
 instructions stay compact and read-only and do not advertise blocked authority
 or unshipped optional MCP features.
 
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.27` exhausted the immediate MCP protocol
+hardening pass for the shipped read-only profile. The remaining optional MCP
+feature families are either shipped, explicitly unsupported/deferred above, or
+require future exact owners. The next selected direction is deeper read-only
+source/workspace discovery for semantic-introspection queries.
+
 ## Deferred
 
 The following remain outside `.2` and `.3` unless separately selected:

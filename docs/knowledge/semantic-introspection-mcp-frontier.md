@@ -60,6 +60,8 @@ answers:
   - "are FSMGen MCP error messages sanitized?"
   - "what serverInfo title does FSMGen MCP expose?"
   - "what do FSMGen MCP initialize instructions advertise?"
+  - "is the immediate FSMGen MCP protocol-hardening pass exhausted?"
+  - "what is the next semantic-introspection frontier after MCP protocol hardening?"
 date: 2026-06-16
 status: current
 tags: [mcp, ai, llm, semantic-json, embedding, public-api, task-tree]
@@ -178,6 +180,10 @@ and no `error.data` until a bounded, redacted error-data schema is selected.
 `.26` adds stable `serverInfo.title` metadata:
 `FSMGen Semantic Introspection`. Initialize instructions remain compact,
 read-only, and free of unshipped optional MCP feature claims.
+`.27` exhausts the immediate MCP protocol-hardening pass for the read-only
+profile. Remaining optional MCP feature families are either shipped, explicitly
+unsupported/deferred above, or require future exact owners. The next semantic
+frontier is read-only source/workspace discovery.
 FSMGen should not expose raw private Perl AST, scheduler, lowering objects,
 `HDLGenerator` compatibility hashes, or internal Perl references as public
 automation APIs. Write generation tools, HDL writing, service mode, network
@@ -192,5 +198,5 @@ workflows; assertion assistance maps to proposing verification-intent source
 that FSMGen then checks and lowers.
 
 The next semantic-introspection leaf is
-`SEMANTIC-INTROSPECTION-MCP-FRONTIER.27`, remaining MCP profile exhaustion
-audit.
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.28`, read-only source/workspace
+discovery selection.

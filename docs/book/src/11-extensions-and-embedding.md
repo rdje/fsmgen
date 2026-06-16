@@ -2826,6 +2826,12 @@ it identifies the read-only semantic-introspection profile without advertising
 blocked write, shell, network, commit, push, or unshipped optional MCP
 features.
 
+The immediate MCP protocol-hardening pass is exhausted for the current
+read-only profile. Optional feature families not listed as shipped above are
+deferred behind future exact task-tree leaves. The next semantic-introspection
+work moves back from protocol mechanics to query coverage: bounded read-only
+source/workspace discovery.
+
 ## Downstream Tool Alignment
 
 FSMGen now keeps a tracked response to SPECFORGE's `.fsm` adapter feedback:
