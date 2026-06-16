@@ -5361,14 +5361,23 @@ multi-group queue-head response-demux.
 
 Post support-residue cleanup selector:
 [AXI_IAL2_MANAGER_POST_SUPPORT_RESIDUE_CLEANUP_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_SUPPORT_RESIDUE_CLEANUP_NEXT_SLICE_SELECTION.md)
-selects `.139`. The one-group write queue-head sample is generated, and a
+selected `.139`.
+
+Write multi-group queue-head response-demux readiness audit:
+[AXI_IAL2_MANAGER_WRITE_MULTI_GROUP_QUEUE_HEAD_RESPONSE_DEMUX_READINESS_AUDIT](../../AXI_IAL2_MANAGER_WRITE_MULTI_GROUP_QUEUE_HEAD_RESPONSE_DEMUX_READINESS_AUDIT.md)
+is complete and selects `.140`, generated write-family multi-group queue-head
+response-demux. The one-group write queue-head sample is generated, and a
 temporary two-group write probe reports two concrete write-ID groups but still
-remains metadata-only with `generated_same_id_queue_head_demux` residue. The
-audit must decide whether a direct generated write-family multi-group
-implementation is safe or whether group-local enqueue refinement or another
-prerequisite is needed first. Read single-beat multi-group behavior, deeper
-queues, same-family mixed auto-ID plus concrete queue-head demux, packed
-outputs, direct backend, and VHDL remain deferred.
+remains metadata-only with `generated_same_id_queue_head_demux` residue
+because the local behavior-builder gate only admits multi-group read
+burst-last today. The audit found no new parser, support-accounting,
+generated-artifact, lowerer, direct-backend, or VHDL prerequisite: once
+behavior exists, the queue-state, transition, assertion, response-demux
+state/rule, report, and residue helpers already iterate groups for write.
+`.140` must preserve the family-wide admitted-request onehot contract and
+must not claim group-local simultaneous enqueue widening. Read single-beat
+multi-group behavior, deeper queues, same-family mixed auto-ID plus concrete
+queue-head demux, packed outputs, direct backend, and VHDL remain deferred.
 
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
@@ -7631,7 +7640,7 @@ support catalog entries instead of recursive workspace traversal.
 `SEMANTIC-INTROSPECTION-MCP-FRONTIER.30` closes the immediate read-only
 semantic-introspection/MCP pass after source discovery; the active roadmap
 priority is again the IAL2 feature-completeness tree, currently at
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.139`.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.140`.
 
 Selected first MCP resource families are `fsmgen://capabilities`,
 `fsmgen://contracts`, `fsmgen://diagnostics`,
