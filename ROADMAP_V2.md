@@ -1067,7 +1067,7 @@ support-accounting metadata under query/limit/filter controls.
 `SEMANTIC-INTROSPECTION-MCP-FRONTIER.30` closes the immediate read-only
 semantic-introspection/MCP pass after source discovery and returns active
 roadmap priority to the IAL2 feature-completeness tree, currently at
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.138`.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.139`.
 The parser/report metadata slice `IAL2-FEATURE-COMPLETENESS-FRONTIER.39` is
 now shipped for the bounded AXI read response-demux public contract selected
 by `.38`. The selected read arm requires `(response-scope single-beat)`,
@@ -1541,8 +1541,14 @@ wording for that exact behavior. `.137` completed that cleanup: the support
 detail now describes the shipped runtime-validation multi-group scalar shape
 as supported, the focused parser assertion rejects the retired unsupported
 wording, the `.135`, `.132`, `.130`, `.127`, `.124`, and `.119` live reports
-remain unchanged, and `.138` is the next AXI manager feature-completeness
-selector.
+remain unchanged, and `.138` selected `.139`, readiness audit for generated
+write-family multi-group queue-head response-demux. A temporary two-group
+write probe now reports two duplicate concrete write-ID groups but remains
+metadata-only with `generated_same_id_queue_head_demux` residue, while
+one-group write queue-head and read burst-last multi-group queue-head behavior
+are already generated. Read single-beat multi-group behavior, deeper queues,
+same-family mixed auto-ID plus concrete queue-head demux, packed outputs,
+direct backend, and VHDL remain deferred.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.

@@ -5356,7 +5356,19 @@ expectations reject the retired unsupported-residue wording, and the `.135`,
 preserved. Deeper queues, same-family mixed auto-ID,
 write/read-single-beat multi-group queue-head behavior, packed outputs,
 alternate payload assembly, direct backend lowering, and VHDL remain deferred;
-the active IAL2 frontier is `.138`, the next AXI manager selector.
+selector `.138` chose `.139`, readiness audit for generated write-family
+multi-group queue-head response-demux.
+
+Post support-residue cleanup selector:
+[AXI_IAL2_MANAGER_POST_SUPPORT_RESIDUE_CLEANUP_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_SUPPORT_RESIDUE_CLEANUP_NEXT_SLICE_SELECTION.md)
+selects `.139`. The one-group write queue-head sample is generated, and a
+temporary two-group write probe reports two concrete write-ID groups but still
+remains metadata-only with `generated_same_id_queue_head_demux` residue. The
+audit must decide whether a direct generated write-family multi-group
+implementation is safe or whether group-local enqueue refinement or another
+prerequisite is needed first. Read single-beat multi-group behavior, deeper
+queues, same-family mixed auto-ID plus concrete queue-head demux, packed
+outputs, direct backend, and VHDL remain deferred.
 
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
@@ -7619,7 +7631,7 @@ support catalog entries instead of recursive workspace traversal.
 `SEMANTIC-INTROSPECTION-MCP-FRONTIER.30` closes the immediate read-only
 semantic-introspection/MCP pass after source discovery; the active roadmap
 priority is again the IAL2 feature-completeness tree, currently at
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.138`.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.139`.
 
 Selected first MCP resource families are `fsmgen://capabilities`,
 `fsmgen://contracts`, `fsmgen://diagnostics`,
