@@ -1053,6 +1053,76 @@ subtest 'read-data contract consumes generated read single-beat same-ID queue-he
     like($hdl, qr/axi0_r0_rresp_next\s*=\s*axi0_rresp\s*;/, 'SystemVerilog captures queue-head RRESP into r0 output');
 };
 
+subtest 'read-data contract consumes generated read single-beat multi-group same-ID queue-head demux' => sub {
+    my $result = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_same_id_read_single_beat_multi_group_queue_head_read_data());
+    my $isf = $result->{generated_ial1}{text};
+    my $fsm = $result->{generated_ial0}{files}{'axi0_capacity_status.fsm'};
+
+    like($isf, qr/\(rule axi0_r0_response_demux \(& axi0_read_complete \(== axi0_rid 4'd3\) axi0_read_id3_same_id_issue_order_slot0_r0_q\)/, 'multi-group queue-head read-data keeps r0 concrete queue-head demux rule');
+    like($isf, qr/\(rule axi0_r3_response_demux \(& axi0_read_complete \(== axi0_rid 4'd5\) axi0_read_id5_same_id_issue_order_slot0_r3_q\)/, 'multi-group queue-head read-data keeps r3 concrete queue-head demux rule');
+    like($isf, qr/\(input axi0_rdata \(width 32\)\)/, 'multi-group queue-head read-data declares RDATA as a generated input');
+    like($isf, qr/\(input axi0_rresp \(width 2\)\)/, 'multi-group queue-head read-data declares RRESP as a generated input');
+    like($isf, qr/\(output axi0_r2_rdata \(width 32\)\)/, 'multi-group queue-head read-data declares r2 data output');
+    like($isf, qr/\(output axi0_r3_rresp \(width 2\)\)/, 'multi-group queue-head read-data declares r3 status output');
+    like(
+        $isf,
+        qr/\(rule axi0_r2_read_data_capture axi0_r2_complete\s+\(axi0_r2_rdata axi0_rdata\)\s+\(axi0_r2_rresp axi0_rresp\)\)/,
+        'multi-group queue-head read-data guards r2 capture with generated queue-head completion',
+    );
+    like(
+        $isf,
+        qr/\(rule axi0_r3_read_data_capture axi0_r3_complete\s+\(axi0_r3_rdata axi0_rdata\)\s+\(axi0_r3_rresp axi0_rresp\)\)/,
+        'multi-group queue-head read-data guards r3 capture with generated queue-head completion',
+    );
+    unlike($isf, qr/\baxi0_rlast\b/, 'multi-group queue-head read-data single-beat contract does not generate or consume RLAST');
+    like($fsm, qr/\(-axi0_r2_read_data_capture\s+<axi0_r2_complete\s+\(<- \(axi0_r2_rdata> axi0_rdata\)\)\s+\(<- \(axi0_r2_rresp> axi0_rresp\)\)/, 'scheduled .fsm carries r2 multi-group queue-head read-data capture assignments');
+    like($fsm, qr/\(-axi0_r3_read_data_capture\s+<axi0_r3_complete\s+\(<- \(axi0_r3_rdata> axi0_rdata\)\)\s+\(<- \(axi0_r3_rresp> axi0_rresp\)\)/, 'scheduled .fsm carries r3 multi-group queue-head read-data capture assignments');
+
+    assert_same_id_read_single_beat_queue_head_response_demux_report(
+        $result->{report}{response_demux},
+        'generator multi-group queue-head read-data response-demux report',
+        queues => [
+            {
+                concrete_id          => 3,
+                transactions         => [qw(r0 r1)],
+                depth                => 2,
+                dequeue_event_source => 'queue_head_response_demux',
+            },
+            {
+                concrete_id          => 5,
+                transactions         => [qw(r2 r3)],
+                depth                => 2,
+                dequeue_event_source => 'queue_head_response_demux',
+            },
+        ],
+        completion_signals => [qw(axi0_r0_complete axi0_r1_complete axi0_r2_complete axi0_r3_complete)],
+        generated_rules => [qw(axi0_r0_response_demux axi0_r1_response_demux axi0_r2_response_demux axi0_r3_response_demux)],
+        generated_assertions => [qw(
+            axi0_read_response_demux_active_match
+            axi0_r0_r1_read_response_demux_unique_match
+            axi0_r0_r2_read_response_demux_unique_match
+            axi0_r0_r3_read_response_demux_unique_match
+            axi0_r1_r2_read_response_demux_unique_match
+            axi0_r1_r3_read_response_demux_unique_match
+            axi0_r2_r3_read_response_demux_unique_match
+        )],
+    );
+    assert_read_data_report(
+        $result->{report}{read_data},
+        'generator multi-group queue-head read-data report',
+        'generated_queue_head_response_demux_completion_pulse',
+        transactions => [qw(r0 r1 r2 r3)],
+    );
+
+    my $hdl = hdl_for('axi0_capacity_status', $fsm);
+    like($hdl, qr/\binput\s+(?:wire\s+)?\[3:0\]\s+axi0_rid\b/, 'SystemVerilog exposes generated RID input for multi-group queue-head demux');
+    like($hdl, qr/\binput\s+(?:wire\s+)?\[31:0\]\s+axi0_rdata\b/, 'SystemVerilog exposes generated RDATA input for multi-group queue-head read-data capture');
+    like($hdl, qr/\boutput\s+reg\s+\[31:0\]\s+axi0_r3_rdata\b/, 'SystemVerilog exposes r3 multi-group queue-head captured data output');
+    like($hdl, qr/assign\s+axi0_r3_read_data_capture_en\s*=\s*axi0_r3_complete\s*;/, 'SystemVerilog drives r3 multi-group queue-head read-data capture from generated completion');
+    like($hdl, qr/axi0_r3_rdata_next\s*=\s*axi0_rdata\s*;/, 'SystemVerilog captures multi-group queue-head RDATA into r3 output');
+    like($hdl, qr/axi0_read_complete\s*&\s*\(axi0_rid\s*==\s*4'd5\)\s*&\s*axi0_read_id5_same_id_issue_order_slot0_r3_q/, 'SystemVerilog keeps concrete RID 5 queue-head demux guard for r3');
+};
+
 subtest 'read-data contract consumes generated read burst-last same-ID queue-head demux' => sub {
     my $result = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_same_id_read_last_beat_queue_head_read_data());
     my $isf = $result->{generated_ial1}{text};
@@ -2262,6 +2332,25 @@ sub sample_contract_with_same_id_read_single_beat_queue_head_read_data {
     return $contract;
 }
 
+sub sample_contract_with_same_id_read_single_beat_multi_group_queue_head_read_data {
+    my $contract = sample_contract_with_same_id_read_single_beat_multi_group_queue_head_response_demux();
+    $contract->{intent_name} = 'axi_manager_capacity_status_read_single_beat_multi_group_same_id_queue_head_read_data';
+    $contract->{source}{object_id} = 'axi-manager-capacity-status-read-single-beat-multi-group-same-id-queue-head-read-data';
+    $contract->{read_data} = sample_contract_with_same_id_read_single_beat_queue_head_read_data()->{read_data};
+    push @{$contract->{read_data}{read}{transactions}},
+        {
+            transaction   => 'r2',
+            data_output   => 'axi0_r2_rdata',
+            status_output => 'axi0_r2_rresp',
+        },
+        {
+            transaction   => 'r3',
+            data_output   => 'axi0_r3_rdata',
+            status_output => 'axi0_r3_rresp',
+        };
+    return $contract;
+}
+
 sub sample_contract_with_same_id_read_last_beat_queue_head_read_data {
     my $contract = sample_contract_with_same_id_queue_head_response_demux();
     $contract->{intent_name} = 'axi_manager_capacity_status_read_last_beat_same_id_queue_head_read_data';
@@ -2963,6 +3052,11 @@ sub assert_rlast_report_prose_alignment {
         qr/multiple independent read burst-last response-demux-only queue groups/,
         "$owner reports bounded multi-group read burst-last queue-head response-demux as supported",
     );
+    like(
+        $id_residue->{detail},
+        qr/multiple independent read single-beat response-demux-only or scalar read-data queue groups/,
+        "$owner reports bounded multi-group read single-beat queue-head read-data as supported",
+    );
     my $stale_metadata = join('', 'report-only burst-last ', 'RLAST response-demux metadata');
     my $stale_tracking = join('', 'generated burst/last-beat tracking ', 'remain outside');
     my $stale_queue_head_read_data = 'read-data consumption of burst-last or multi-beat concrete same-ID queue-head demux';
@@ -2979,11 +3073,18 @@ sub assert_rlast_report_prose_alignment {
     ok(index($id_residue->{detail}, $stale_runtime_multi_group_scalar) < 0, "$owner removes stale runtime-validation multi-group scalar last-beat residue prose");
     ok(index($id_residue->{detail}, 'last-beat-only read-data over multiple queue groups') < 0, "$owner removes stale scalar multi-group last-beat residue prose");
     ok(index($id_residue->{detail}, 'queue-head runtime burst-length beat-count/RLAST validation') < 0, "$owner removes stale queue-head runtime validation residue prose");
+    ok(index($id_residue->{detail}, 'read-data over multiple read single-beat queue-head groups') < 0, "$owner removes stale single-beat multi-group read-data residue prose");
 }
 
 sub assert_read_data_report {
-    my ($read_data, $owner, $expected_completion_validity) = @_;
+    my ($read_data, $owner, $expected_completion_validity, %args) = @_;
     $expected_completion_validity //= 'generated_read_response_demux_completion_pulse';
+    my @transactions = @{$args{transactions} // [qw(r0 r1)]};
+    my @completion_signals = map { "axi0_${_}_complete" } @transactions;
+    my @data_outputs = map { "axi0_${_}_rdata" } @transactions;
+    my @status_outputs = map { "axi0_${_}_rresp" } @transactions;
+    my @generated_outputs = map { ("axi0_${_}_rdata", "axi0_${_}_rresp") } @transactions;
+    my @generated_rules = map { "axi0_${_}_read_data_capture" } @transactions;
 
     is($read_data->{mode}, 'bounded_single_beat_read_data_contract', "$owner marks bounded single-beat read-data contract mode");
     ok($read_data->{generated_behavior}, "$owner marks generated behavior true");
@@ -3000,32 +3101,32 @@ sub assert_read_data_report {
     is($read->{interleaving_policy}, 'single_beat_by_rid', "$owner reports single-beat-by-RID interleaving policy");
     is_deeply(
         [map { $_->{transaction} } @{$read->{transactions}}],
-        [qw(r0 r1)],
+        \@transactions,
         "$owner reports read-data transaction bindings in source order",
     );
     is_deeply(
         [map { $_->{completion_signal} } @{$read->{transactions}}],
-        [qw(axi0_r0_complete axi0_r1_complete)],
+        \@completion_signals,
         "$owner binds read-data validity to generated demux completion pulses",
     );
     is_deeply(
         [map { $_->{data_output} } @{$read->{transactions}}],
-        [qw(axi0_r0_rdata axi0_r1_rdata)],
+        \@data_outputs,
         "$owner reports transaction data outputs",
     );
     is_deeply(
         [map { $_->{status_output} } @{$read->{transactions}}],
-        [qw(axi0_r0_rresp axi0_r1_rresp)],
+        \@status_outputs,
         "$owner reports transaction status outputs",
     );
     is_deeply(
         [map { $_->{data_width} } @{$read->{transactions}}],
-        [32, 32],
+        [(32) x @transactions],
         "$owner reports inherited transaction data widths",
     );
     is_deeply(
         [map { $_->{status_width} } @{$read->{transactions}}],
-        [2, 2],
+        [(2) x @transactions],
         "$owner reports inherited transaction status widths",
     );
     is_deeply(
@@ -3035,12 +3136,12 @@ sub assert_read_data_report {
     );
     is_deeply(
         $read->{generated_outputs},
-        [qw(axi0_r0_rdata axi0_r0_rresp axi0_r1_rdata axi0_r1_rresp)],
+        \@generated_outputs,
         "$owner reports generated read-data capture outputs",
     );
     is_deeply(
         $read->{generated_rules},
-        [qw(axi0_r0_read_data_capture axi0_r1_read_data_capture)],
+        \@generated_rules,
         "$owner reports generated read-data capture rules",
     );
     is_deeply(

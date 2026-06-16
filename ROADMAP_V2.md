@@ -1080,7 +1080,7 @@ support-accounting metadata under query/limit/filter controls.
 `SEMANTIC-INTROSPECTION-MCP-FRONTIER.30` closes the immediate read-only
 semantic-introspection/MCP pass after source discovery and returns active
 roadmap priority to the IAL2 feature-completeness tree, currently at
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.146`.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.147`.
 The parser/report metadata slice `IAL2-FEATURE-COMPLETENESS-FRONTIER.39` is
 now shipped for the bounded AXI read response-demux public contract selected
 by `.38`. The selected read arm requires `(response-scope single-beat)`,
@@ -1601,8 +1601,15 @@ keeping MCP-facing semantic introspection aligned with the public support
 catalog. Selector `.144` chose `.145`, readiness audit for generated read-data
 over read single-beat multi-group queue-head groups. Audit `.145` found no
 new parser, IAL1, IAL0/SystemVerilog, direct-backend, or VHDL prerequisite and
-selected `.146`, the bounded implementation owner. The active frontier is
-`.146`; deeper queues,
+selected `.146`, the bounded implementation owner. `.146` shipped generated
+read-data over read single-beat multi-group queue-head response-demux for
+`ppif/axi_manager_capacity_status_read_single_beat_multi_group_same_id_queue_head_read_data.ppif`.
+The generated report covers `RID` `3` for `r0`/`r1` and `RID` `5` for
+`r2`/`r3`, scalar `RDATA`/`RRESP` captures guarded by generated queue-head
+completion pulses, and `completion_validity:
+generated_queue_head_response_demux_completion_pulse`; strict check JSON and
+semantic JSON match the new support-accounting entry. The active frontier is
+`.147`, the next AXI manager feature-completeness selector; deeper queues,
 same-family mixed auto-ID, and group-local simultaneous enqueue widening
 remain deferred.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2

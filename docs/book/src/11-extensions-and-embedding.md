@@ -59,10 +59,10 @@ issue-order-queue policy, generated auto-ID write/read response-demux,
 generated single/last/multi-beat read-data capture, burst-length/runtime
 validation, scalar `RRESP` aggregation, one-or-more read burst-last
 queue-head groups, one-or-more write queue-head groups, and read single-beat
-queue-head response-demux including multiple response-demux-only groups.
+queue-head response-demux and scalar read-data including multiple queue-head
+groups.
 Deeper concrete same-ID queues, same-family mixed auto-ID plus concrete
-queue-head demux, read-data over multiple read single-beat queue-head groups,
-group-local simultaneous enqueue widening, packed burst-vector outputs,
+queue-head demux, group-local simultaneous enqueue widening, packed burst-vector outputs,
 alternate full burst payload assembly, aliases, platform clauses, full AXI
 manager behavior, direct backend lowering, and VHDL remain deferred. This
 manifest boundary, the downstream handoff, the public contracts, this book,
@@ -2860,7 +2860,7 @@ catalog-backed through the manifest support catalog: reuse existing manifest,
 support-accounting, and example surfaces; do not recursively expose arbitrary
 workspace files. The immediate semantic-introspection/MCP pass is complete
 through `SEMANTIC-INTROSPECTION-MCP-FRONTIER.30`; active roadmap priority has
-returned to `IAL2-FEATURE-COMPLETENESS-FRONTIER.146`.
+returned to `IAL2-FEATURE-COMPLETENESS-FRONTIER.147`.
 
 ## Downstream Tool Alignment
 

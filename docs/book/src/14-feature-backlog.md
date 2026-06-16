@@ -5499,18 +5499,26 @@ has depth `2`, generated completion signals cover `r0` through `r3`, and the
 response-demux rules match `RID` without `RLAST`. The sample has no
 `read_data` clause. Check JSON and semantic JSON match the support-accounting
 entry for the sample, so the MCP-facing semantic-introspection surface carries
-the same support claim as the public corpus catalog. Read-data over multiple
-read single-beat queue-head groups, deeper queues, same-family mixed auto-ID,
-group-local enqueue widening, packed outputs, direct backend lowering, and
-VHDL remain deferred. Selector
+the same support claim as the public corpus catalog. Selector
 [AXI_IAL2_MANAGER_POST_READ_SINGLE_BEAT_MULTI_GROUP_QUEUE_HEAD_RESPONSE_DEMUX_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_READ_SINGLE_BEAT_MULTI_GROUP_QUEUE_HEAD_RESPONSE_DEMUX_NEXT_SLICE_SELECTION.md)
 chooses `.145`, readiness audit for generated read-data over read single-beat
 multi-group queue-head response-demux. Audit
 [AXI_IAL2_MANAGER_READ_SINGLE_BEAT_MULTI_GROUP_QUEUE_HEAD_READ_DATA_READINESS_AUDIT](../../AXI_IAL2_MANAGER_READ_SINGLE_BEAT_MULTI_GROUP_QUEUE_HEAD_READ_DATA_READINESS_AUDIT.md)
 found no new parser, IAL1, IAL0/SystemVerilog, direct-backend, or VHDL
-prerequisite and selects `.146`, the bounded implementation owner. The active
-frontier is `.146`; deeper queues, mixed auto-ID, group-local enqueue
-widening, packed outputs, direct backend, and VHDL remain deferred.
+prerequisite and selects `.146`, the bounded implementation owner. Behavior
+[AXI_IAL2_MANAGER_READ_SINGLE_BEAT_MULTI_GROUP_QUEUE_HEAD_READ_DATA_BEHAVIOR](../../AXI_IAL2_MANAGER_READ_SINGLE_BEAT_MULTI_GROUP_QUEUE_HEAD_READ_DATA_BEHAVIOR.md)
+ships `.146`, generated read-data over read single-beat multi-group
+queue-head response-demux. The public sample is
+`ppif/axi_manager_capacity_status_read_single_beat_multi_group_same_id_queue_head_read_data.ppif`:
+`r0`/`r1` share `RID` `3`, `r2`/`r3` share `RID` `5`, generated
+`axi0_rdata`/`axi0_rresp` inputs feed scalar `RDATA`/`RRESP` outputs for
+all four read transactions, and capture rules are guarded by generated
+queue-head completion pulses. The read-data report uses
+`completion_validity: generated_queue_head_response_demux_completion_pulse`;
+check JSON and semantic JSON support-account the sample under the public
+corpus entry. The active frontier is `.147`; deeper queues, mixed auto-ID,
+group-local enqueue widening, packed outputs, direct backend, and VHDL remain
+deferred.
 
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
@@ -7773,7 +7781,7 @@ support catalog entries instead of recursive workspace traversal.
 `SEMANTIC-INTROSPECTION-MCP-FRONTIER.30` closes the immediate read-only
 semantic-introspection/MCP pass after source discovery; the active roadmap
 priority is again the IAL2 feature-completeness tree, currently at
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.146`.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.147`.
 
 Selected first MCP resource families are `fsmgen://capabilities`,
 `fsmgen://contracts`, `fsmgen://diagnostics`,

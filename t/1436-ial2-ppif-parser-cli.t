@@ -459,6 +459,68 @@ subtest 'PPIF adapter parses AXI manager read single-beat same-ID queue-head rea
     );
 };
 
+subtest 'PPIF adapter parses AXI manager read single-beat multi-group same-ID queue-head read-data behavior' => sub {
+    my $sample_path = sample_capacity_read_single_beat_multi_group_same_id_queue_head_read_data_ppif_path();
+    ok(-f $sample_path, 'tracked runnable PPIF capacity/status read single-beat multi-group same-ID queue-head read-data sample exists');
+
+    my $result = FSM::Adapter::IAL2::PPIF->new()->parse_source(sample_capacity_read_single_beat_multi_group_same_id_queue_head_read_data_ppif(), $sample_path);
+    my $isf = $result->{generated_ial1}{text};
+    my $fsm = $result->{generated_ial0}{files}{'axi0_capacity_status.fsm'};
+
+    is($result->{kind}, 'protocol_intent.axi_manager_capacity_status', 'read single-beat multi-group same-ID queue-head read-data sample still uses the capacity/status generator');
+    is($result->{report}{source_object}{id}, 'axi-manager-capacity-status-read-single-beat-multi-group-same-id-queue-head-read-data', 'read single-beat multi-group same-ID queue-head read-data source object id is preserved');
+    is($result->{report}{source_object}{intent_name}, 'axi_manager_capacity_status_read_single_beat_multi_group_same_id_queue_head_read_data', 'read single-beat multi-group same-ID queue-head read-data source intent name is preserved');
+    like($isf, qr/\(rule axi0_r2_response_demux \(& axi0_read_complete \(== axi0_rid 4'd5\) axi0_read_id5_same_id_issue_order_slot0_r2_q\)/, 'read single-beat multi-group queue-head read-data sample emits generated r2 queue-head demux rule');
+    like($isf, qr/\(input axi0_rdata \(width 32\)\)/, 'read single-beat multi-group queue-head read-data sample generates RDATA input');
+    like($isf, qr/\(input axi0_rresp \(width 2\)\)/, 'read single-beat multi-group queue-head read-data sample generates RRESP input');
+    like(
+        $isf,
+        qr/\(rule axi0_r3_read_data_capture axi0_r3_complete\s+\(axi0_r3_rdata axi0_rdata\)\s+\(axi0_r3_rresp axi0_rresp\)\)/,
+        'read single-beat multi-group queue-head read-data sample captures r3 payload under generated completion',
+    );
+    like(
+        $fsm,
+        qr/\(-axi0_r3_read_data_capture\s+<axi0_r3_complete\s+\(<- \(axi0_r3_rdata> axi0_rdata\)\)\s+\(<- \(axi0_r3_rresp> axi0_rresp\)\)/,
+        'read single-beat multi-group queue-head read-data sample lowers r3 capture rule into generated .fsm',
+    );
+    unlike($isf, qr/\baxi0_rlast\b/, 'read single-beat multi-group queue-head read-data sample does not generate or consume RLAST');
+    assert_same_id_read_single_beat_queue_head_response_demux_report(
+        $result->{report}{response_demux},
+        'adapter multi-group queue-head read-data response-demux report',
+        queues => [
+            {
+                concrete_id          => 3,
+                transactions         => [qw(r0 r1)],
+                depth                => 2,
+                dequeue_event_source => 'queue_head_response_demux',
+            },
+            {
+                concrete_id          => 5,
+                transactions         => [qw(r2 r3)],
+                depth                => 2,
+                dequeue_event_source => 'queue_head_response_demux',
+            },
+        ],
+        completion_signals => [qw(axi0_r0_complete axi0_r1_complete axi0_r2_complete axi0_r3_complete)],
+        generated_rules => [qw(axi0_r0_response_demux axi0_r1_response_demux axi0_r2_response_demux axi0_r3_response_demux)],
+        generated_assertions => [qw(
+            axi0_read_response_demux_active_match
+            axi0_r0_r1_read_response_demux_unique_match
+            axi0_r0_r2_read_response_demux_unique_match
+            axi0_r0_r3_read_response_demux_unique_match
+            axi0_r1_r2_read_response_demux_unique_match
+            axi0_r1_r3_read_response_demux_unique_match
+            axi0_r2_r3_read_response_demux_unique_match
+        )],
+    );
+    assert_read_data_report(
+        $result->{report}{read_data},
+        'adapter multi-group queue-head read-data report',
+        'generated_queue_head_response_demux_completion_pulse',
+        transactions => [qw(r0 r1 r2 r3)],
+    );
+};
+
 subtest 'PPIF adapter parses AXI manager read last-beat same-ID queue-head read-data behavior' => sub {
     my $sample_path = sample_capacity_read_last_beat_same_id_queue_head_read_data_ppif_path();
     ok(-f $sample_path, 'tracked runnable PPIF capacity/status read last-beat same-ID queue-head read-data sample exists');
@@ -1843,6 +1905,54 @@ subtest 'CLI emits IAL2 report JSON for AXI manager read single-beat same-ID que
     is_deeply($report->{generated_artifacts}{ial0}{files}, ['axi0_capacity_status.fsm'], 'read single-beat same-ID queue-head read-data keeps the generated .fsm artifact name stable');
 };
 
+subtest 'CLI emits IAL2 report JSON for AXI manager read single-beat multi-group same-ID queue-head read-data .ppif' => sub {
+    my ($success, undef, undef, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--emit-schedule-json', sample_capacity_read_single_beat_multi_group_same_id_queue_head_read_data_ppif_path()],
+    );
+
+    ok($success, '--emit-schedule-json succeeds for capacity/status read single-beat multi-group same-ID queue-head read-data .ppif');
+    is(join('', @{$stderr_buf || []}), '', 'capacity/status read single-beat multi-group same-ID queue-head read-data report keeps stderr clean');
+    my $report = decode_json(join('', @{$stdout_buf || []}));
+    is($report->{schema}, 'fsmgen.ial2.protocol_intent.axi_manager_capacity_status.v1', 'CLI keeps the capacity/status report schema');
+    is($report->{source_object}{intent_name}, 'axi_manager_capacity_status_read_single_beat_multi_group_same_id_queue_head_read_data', 'read single-beat multi-group same-ID queue-head read-data report carries the PPIF top-level intent name');
+    assert_same_id_read_single_beat_queue_head_response_demux_report(
+        $report->{response_demux},
+        'CLI multi-group queue-head read-data response-demux report',
+        queues => [
+            {
+                concrete_id          => 3,
+                transactions         => [qw(r0 r1)],
+                depth                => 2,
+                dequeue_event_source => 'queue_head_response_demux',
+            },
+            {
+                concrete_id          => 5,
+                transactions         => [qw(r2 r3)],
+                depth                => 2,
+                dequeue_event_source => 'queue_head_response_demux',
+            },
+        ],
+        completion_signals => [qw(axi0_r0_complete axi0_r1_complete axi0_r2_complete axi0_r3_complete)],
+        generated_rules => [qw(axi0_r0_response_demux axi0_r1_response_demux axi0_r2_response_demux axi0_r3_response_demux)],
+        generated_assertions => [qw(
+            axi0_read_response_demux_active_match
+            axi0_r0_r1_read_response_demux_unique_match
+            axi0_r0_r2_read_response_demux_unique_match
+            axi0_r0_r3_read_response_demux_unique_match
+            axi0_r1_r2_read_response_demux_unique_match
+            axi0_r1_r3_read_response_demux_unique_match
+            axi0_r2_r3_read_response_demux_unique_match
+        )],
+    );
+    assert_read_data_report(
+        $report->{read_data},
+        'CLI multi-group queue-head read-data report',
+        'generated_queue_head_response_demux_completion_pulse',
+        transactions => [qw(r0 r1 r2 r3)],
+    );
+    is_deeply($report->{generated_artifacts}{ial0}{files}, ['axi0_capacity_status.fsm'], 'read single-beat multi-group same-ID queue-head read-data keeps the generated .fsm artifact name stable');
+};
+
 subtest 'CLI emits IAL2 report JSON for AXI manager read last-beat same-ID queue-head read-data .ppif' => sub {
     my ($success, undef, undef, $stdout_buf, $stderr_buf) = run(
         command => ['./bin/fsmgen', '--emit-schedule-json', sample_capacity_read_last_beat_same_id_queue_head_read_data_ppif_path()],
@@ -2411,6 +2521,30 @@ subtest 'CLI --verify-hdl accepts AXI manager read single-beat same-ID queue-hea
     like($sv, qr/axi0_r0_rdata_next\s*=\s*axi0_rdata\s*;/, 'read single-beat queue-head read-data HDL captures RDATA into r0 output');
     like($sv, qr/axi0_r0_rresp_next\s*=\s*axi0_rresp\s*;/, 'read single-beat queue-head read-data HDL captures RRESP into r0 output');
     unlike($sv, qr/\baxi0_rlast\b/, 'read single-beat queue-head read-data HDL does not expose RLAST');
+};
+
+subtest 'CLI --verify-hdl accepts AXI manager read single-beat multi-group same-ID queue-head read-data behavior .ppif' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $hdl = File::Spec->catfile($tempdir, 'axi_read_single_beat_multi_group_same_id_queue_head_read_data.sv');
+
+    my ($success, undef, undef, undef, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--quiet', '--verify-hdl', '--output', $hdl, sample_capacity_read_single_beat_multi_group_same_id_queue_head_read_data_ppif_path()],
+    );
+
+    ok($success, 'capacity/status read single-beat multi-group same-ID queue-head read-data --verify-hdl succeeds');
+    is(join('', @{$stderr_buf || []}), '', 'capacity/status read single-beat multi-group same-ID queue-head read-data --verify-hdl keeps stderr clean');
+    ok(-f $hdl, 'read single-beat multi-group same-ID queue-head read-data --output writes generated HDL');
+    my $sv = slurp($hdl);
+    like($sv, qr/\binput\s+(?:wire\s+)?\[3:0\]\s+axi0_rid\b/, 'read single-beat multi-group queue-head read-data HDL exposes generated RID input');
+    like($sv, qr/\binput\s+(?:wire\s+)?\[31:0\]\s+axi0_rdata\b/, 'read single-beat multi-group queue-head read-data HDL exposes generated RDATA input');
+    like($sv, qr/\binput\s+(?:wire\s+)?\[1:0\]\s+axi0_rresp\b/, 'read single-beat multi-group queue-head read-data HDL exposes generated RRESP input');
+    like($sv, qr/\boutput\s+reg\s+\[31:0\]\s+axi0_r3_rdata\b/, 'read single-beat multi-group queue-head read-data HDL exposes r3 captured data output');
+    like($sv, qr/\boutput\s+reg\s+\[1:0\]\s+axi0_r3_rresp\b/, 'read single-beat multi-group queue-head read-data HDL exposes r3 captured status output');
+    like($sv, qr/assign\s+axi0_r3_read_data_capture_en\s*=\s*axi0_r3_complete\s*;/, 'read single-beat multi-group queue-head read-data HDL guards r3 capture with generated completion');
+    like($sv, qr/axi0_read_complete\s*&\s*\(axi0_rid\s*==\s*4'd5\)\s*&\s*axi0_read_id5_same_id_issue_order_slot0_r3_q/, 'read single-beat multi-group queue-head read-data HDL keeps concrete RID 5 queue-head demux guard');
+    like($sv, qr/axi0_r3_rdata_next\s*=\s*axi0_rdata\s*;/, 'read single-beat multi-group queue-head read-data HDL captures RDATA into r3 output');
+    like($sv, qr/axi0_r3_rresp_next\s*=\s*axi0_rresp\s*;/, 'read single-beat multi-group queue-head read-data HDL captures RRESP into r3 output');
+    unlike($sv, qr/\baxi0_rlast\b/, 'read single-beat multi-group queue-head read-data HDL does not expose RLAST');
 };
 
 subtest 'CLI --verify-hdl accepts AXI manager read response-demux behavior .ppif' => sub {
@@ -3591,6 +3725,50 @@ subtest 'CLI check JSON and semantic JSON support-account read single-beat same-
     );
 };
 
+subtest 'CLI check JSON and semantic JSON support-account read single-beat multi-group same-ID queue-head read-data .ppif separately' => sub {
+    my $policy_path = sample_capacity_read_single_beat_multi_group_same_id_queue_head_read_data_ppif_path();
+    my ($success, undef, undef, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--strict', '--check', '--json', $policy_path],
+    );
+    ok($success, 'capacity/status read single-beat multi-group same-ID queue-head read-data --check --json succeeds');
+    is(join('', @{$stderr_buf || []}), '', 'capacity/status read single-beat multi-group same-ID queue-head read-data --check --json keeps stderr clean');
+    my $check_report = decode_json(join('', @{$stdout_buf || []}));
+    ok($check_report->{success}, 'capacity/status read single-beat multi-group same-ID queue-head read-data check JSON reports success');
+    is(
+        $check_report->{source}{resolved_path},
+        File::Spec->rel2abs($policy_path),
+        'capacity/status read single-beat multi-group same-ID queue-head read-data check JSON reports the public .ppif source path',
+    );
+    is(
+        $check_report->{support_accounting}{entry_id},
+        'intent.ppif_axi_manager_capacity_status_read_single_beat_multi_group_same_id_queue_head_read_data',
+        'capacity/status read single-beat multi-group same-ID queue-head read-data check JSON support accounting names the PPIF corpus entry',
+    );
+
+    my ($semantic_success, undef, undef, $semantic_stdout, $semantic_stderr) = run(
+        command => ['./bin/fsmgen', '--strict', '--emit-semantic-json', $policy_path],
+    );
+    ok($semantic_success, 'capacity/status read single-beat multi-group same-ID queue-head read-data --emit-semantic-json succeeds');
+    is(join('', @{$semantic_stderr || []}), '', 'capacity/status read single-beat multi-group same-ID queue-head read-data --emit-semantic-json keeps stderr clean');
+    my $semantic_report = decode_json(join('', @{$semantic_stdout || []}));
+    ok($semantic_report->{success}, 'capacity/status read single-beat multi-group same-ID queue-head read-data semantic JSON reports success');
+    is(
+        $semantic_report->{source}{resolved_path},
+        File::Spec->rel2abs($policy_path),
+        'capacity/status read single-beat multi-group same-ID queue-head read-data semantic JSON reports the public .ppif source path',
+    );
+    is(
+        $semantic_report->{support_accounting}{entry_id},
+        'intent.ppif_axi_manager_capacity_status_read_single_beat_multi_group_same_id_queue_head_read_data',
+        'capacity/status read single-beat multi-group same-ID queue-head read-data semantic JSON support accounting names the PPIF corpus entry',
+    );
+    is(
+        $semantic_report->{semantic}{module}{name},
+        'axi0_capacity_status',
+        'capacity/status read single-beat multi-group same-ID queue-head read-data semantic JSON records the unchanged generated module',
+    );
+};
+
 subtest 'CLI check JSON and semantic JSON support-account read last-beat same-ID queue-head read-data .ppif separately' => sub {
     my $policy_path = sample_capacity_read_last_beat_same_id_queue_head_read_data_ppif_path();
     my ($success, undef, undef, $stdout_buf, $stderr_buf) = run(
@@ -4396,6 +4574,10 @@ sub sample_capacity_read_single_beat_multi_group_same_id_queue_head_response_dem
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_read_single_beat_multi_group_same_id_queue_head_response_demux.ppif');
 }
 
+sub sample_capacity_read_single_beat_multi_group_same_id_queue_head_read_data_ppif_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_read_single_beat_multi_group_same_id_queue_head_read_data.ppif');
+}
+
 sub sample_capacity_read_multi_group_last_beat_same_id_queue_head_read_data_ppif_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_read_multi_group_last_beat_same_id_queue_head_read_data.ppif');
 }
@@ -4522,6 +4704,10 @@ sub sample_capacity_read_multi_group_same_id_queue_head_response_demux_ppif {
 
 sub sample_capacity_read_single_beat_multi_group_same_id_queue_head_response_demux_ppif {
     return slurp(sample_capacity_read_single_beat_multi_group_same_id_queue_head_response_demux_ppif_path());
+}
+
+sub sample_capacity_read_single_beat_multi_group_same_id_queue_head_read_data_ppif {
+    return slurp(sample_capacity_read_single_beat_multi_group_same_id_queue_head_read_data_ppif_path());
 }
 
 sub sample_capacity_read_multi_group_last_beat_same_id_queue_head_read_data_ppif {
@@ -5229,6 +5415,11 @@ sub assert_rlast_report_prose_alignment {
         qr/multiple independent read burst-last response-demux-only queue groups/,
         "$owner reports bounded multi-group read burst-last queue-head response-demux as supported",
     );
+    like(
+        $id_residue->{detail},
+        qr/multiple independent read single-beat response-demux-only or scalar read-data queue groups/,
+        "$owner reports bounded multi-group read single-beat queue-head read-data as supported",
+    );
     my $stale_metadata = join('', 'report-only burst-last ', 'RLAST response-demux metadata');
     my $stale_tracking = join('', 'generated burst/last-beat tracking ', 'remain outside');
     my $stale_queue_head_read_data = 'read-data consumption of burst-last or multi-beat concrete same-ID queue-head demux';
@@ -5245,11 +5436,18 @@ sub assert_rlast_report_prose_alignment {
     ok(index($id_residue->{detail}, $stale_runtime_multi_group_scalar) < 0, "$owner removes stale runtime-validation multi-group scalar last-beat residue prose");
     ok(index($id_residue->{detail}, 'last-beat-only read-data over multiple queue groups') < 0, "$owner removes stale scalar multi-group last-beat residue prose");
     ok(index($id_residue->{detail}, 'queue-head runtime burst-length beat-count/RLAST validation') < 0, "$owner removes stale queue-head runtime validation residue prose");
+    ok(index($id_residue->{detail}, 'read-data over multiple read single-beat queue-head groups') < 0, "$owner removes stale single-beat multi-group read-data residue prose");
 }
 
 sub assert_read_data_report {
-    my ($read_data, $owner, $expected_completion_validity) = @_;
+    my ($read_data, $owner, $expected_completion_validity, %args) = @_;
     $expected_completion_validity //= 'generated_read_response_demux_completion_pulse';
+    my @transactions = @{$args{transactions} // [qw(r0 r1)]};
+    my @completion_signals = map { "axi0_${_}_complete" } @transactions;
+    my @data_outputs = map { "axi0_${_}_rdata" } @transactions;
+    my @status_outputs = map { "axi0_${_}_rresp" } @transactions;
+    my @generated_outputs = map { ("axi0_${_}_rdata", "axi0_${_}_rresp") } @transactions;
+    my @generated_rules = map { "axi0_${_}_read_data_capture" } @transactions;
 
     is($read_data->{mode}, 'bounded_single_beat_read_data_contract', "$owner marks bounded single-beat read-data contract mode");
     ok($read_data->{generated_behavior}, "$owner marks generated behavior true");
@@ -5266,32 +5464,32 @@ sub assert_read_data_report {
     is($read->{interleaving_policy}, 'single_beat_by_rid', "$owner reports single-beat-by-RID interleaving policy");
     is_deeply(
         [map { $_->{transaction} } @{$read->{transactions}}],
-        [qw(r0 r1)],
+        \@transactions,
         "$owner reports read-data transaction bindings in source order",
     );
     is_deeply(
         [map { $_->{completion_signal} } @{$read->{transactions}}],
-        [qw(axi0_r0_complete axi0_r1_complete)],
+        \@completion_signals,
         "$owner binds read-data validity to generated demux completion pulses",
     );
     is_deeply(
         [map { $_->{data_output} } @{$read->{transactions}}],
-        [qw(axi0_r0_rdata axi0_r1_rdata)],
+        \@data_outputs,
         "$owner reports transaction data outputs",
     );
     is_deeply(
         [map { $_->{status_output} } @{$read->{transactions}}],
-        [qw(axi0_r0_rresp axi0_r1_rresp)],
+        \@status_outputs,
         "$owner reports transaction status outputs",
     );
     is_deeply(
         [map { $_->{data_width} } @{$read->{transactions}}],
-        [32, 32],
+        [(32) x @transactions],
         "$owner reports inherited transaction data widths",
     );
     is_deeply(
         [map { $_->{status_width} } @{$read->{transactions}}],
-        [2, 2],
+        [(2) x @transactions],
         "$owner reports inherited transaction status widths",
     );
     is_deeply(
@@ -5301,12 +5499,12 @@ sub assert_read_data_report {
     );
     is_deeply(
         $read->{generated_outputs},
-        [qw(axi0_r0_rdata axi0_r0_rresp axi0_r1_rdata axi0_r1_rresp)],
+        \@generated_outputs,
         "$owner reports generated read-data capture outputs",
     );
     is_deeply(
         $read->{generated_rules},
-        [qw(axi0_r0_read_data_capture axi0_r1_read_data_capture)],
+        \@generated_rules,
         "$owner reports generated read-data capture rules",
     );
     is_deeply(
