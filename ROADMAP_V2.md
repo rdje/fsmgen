@@ -1038,15 +1038,18 @@ read-only profile: every current tool is marked `readOnlyHint: true` and
 `openWorldHint: false`, while write-only destructive/idempotent hints remain
 absent. `SEMANTIC-INTROSPECTION-MCP-FRONTIER.21` keeps common MCP annotations
 absent from resources, templates, resource-read content, and tool-result text
-blocks, and does not return resource links from tools. The next frontier is
+blocks, and does not return resource links from tools.
 `SEMANTIC-INTROSPECTION-MCP-FRONTIER.22` keeps progress/cancellation session
 behavior unshipped: request progress tokens do not emit progress
 notifications, and id-less `notifications/cancelled` messages remain silent.
 `SEMANTIC-INTROSPECTION-MCP-FRONTIER.23` explicitly rejects JSON-RPC batch
 arrays and non-object request envelopes with `-32600 Invalid Request`; the
-stdio profile remains one compact request object per line. The next frontier
-is `SEMANTIC-INTROSPECTION-MCP-FRONTIER.24`, initialize protocol/capability
-negotiation selection.
+stdio profile remains one compact request object per line.
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.24` locks initialize negotiation to the
+single supported `2025-06-18` protocol version and keeps client
+capabilities from widening the server's minimal resources/tools capability
+set. The next frontier is `SEMANTIC-INTROSPECTION-MCP-FRONTIER.25`, MCP
+error-data/sanitization selection.
 The IAL2
 SystemVerilog-backed feature-completeness tree remains
 active at

@@ -30,7 +30,7 @@ my $adapter = FSM::Support::SemanticIntrospectionMCPAdapter->new(
 
 subtest 'adapter initializes and discovers read-only resource and tool families' => sub {
     my $initialize = $adapter->initialize_result({ protocolVersion => 'test-protocol' });
-    is($initialize->{protocolVersion}, 'test-protocol', 'initialize echoes requested protocol version');
+    is($initialize->{protocolVersion}, '2025-06-18', 'initialize reports supported protocol version');
     is($initialize->{serverInfo}{name}, 'fsmgen-semantic-introspection', 'server identity is stable');
     ok($initialize->{capabilities}{resources}, 'resources capability is advertised');
     ok($initialize->{capabilities}{tools}, 'tools capability is advertised');

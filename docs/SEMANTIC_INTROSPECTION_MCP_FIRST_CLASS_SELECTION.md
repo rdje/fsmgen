@@ -223,6 +223,12 @@ boundary. The adapter accepts one request object at a time. Batch arrays and
 other non-object envelopes return `-32600 Invalid Request`; newline-delimited
 stdio remains one compact request object per line.
 
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.24` selected the initialize
+protocol/capability boundary. The server reports the supported MCP protocol
+version `2025-06-18` and does not echo unsupported client protocol strings.
+Client capabilities cannot widen the advertised server capability map beyond
+the shipped `resources` and `tools` capabilities.
+
 ## Deferred
 
 The following remain outside `.2` and `.3` unless separately selected:

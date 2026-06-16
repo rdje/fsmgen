@@ -14,6 +14,8 @@ use FSM::Support::CapabilityManifest qw(build_capability_manifest);
 
 our @EXPORT_OK = qw(semantic_introspection_mcp_adapter_contract_source);
 
+use constant MCP_PROTOCOL_VERSION => '2025-06-18';
+
 sub semantic_introspection_mcp_adapter_contract_source {
     return 'FSM::Support::SemanticIntrospectionMCPAdapter';
 }
@@ -49,7 +51,7 @@ sub initialize_result {
     my $producer = $manifest->{producer} || {};
 
     return {
-        protocolVersion => $params->{protocolVersion} || '2025-06-18',
+        protocolVersion => _negotiated_protocol_version($params->{protocolVersion}),
         capabilities => {
             resources => {
                 listChanged => JSON::PP::false,
@@ -64,6 +66,13 @@ sub initialize_result {
         },
         instructions => 'Read-only FSMGen semantic introspection over capability, check, semantic, schedule, diagnostic, support-accounting, and example surfaces.',
     };
+}
+
+sub _negotiated_protocol_version {
+    my ($requested) = @_;
+    return MCP_PROTOCOL_VERSION
+        unless defined($requested) && $requested eq MCP_PROTOCOL_VERSION;
+    return $requested;
 }
 
 sub list_resources {

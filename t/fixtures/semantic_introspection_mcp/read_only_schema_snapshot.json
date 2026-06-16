@@ -5,7 +5,7 @@
          "tools"
       ],
       "instructions_mentions_read_only" : true,
-      "protocolVersion" : "test-protocol",
+      "protocolVersion" : "2025-06-18",
       "resource_capability_keys" : [
          "listChanged"
       ],

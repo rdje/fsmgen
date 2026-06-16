@@ -7590,9 +7590,12 @@ id-less `notifications/cancelled` messages remain silent notifications.
 `SEMANTIC-INTROSPECTION-MCP-FRONTIER.23` keeps JSON-RPC batch arrays and
 non-object request envelopes unsupported with explicit `-32600 Invalid
 Request` errors.
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.24` locks initialize negotiation to
+server protocol version `2025-06-18` and keeps client capabilities from
+widening the advertised resources/tools capability set.
 
-Current active frontier: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.24`, initialize
-protocol/capability boundary.
+Current active frontier: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.25`, MCP
+error-data/sanitization boundary.
 
 Selected first MCP resource families are `fsmgen://capabilities`,
 `fsmgen://contracts`, `fsmgen://diagnostics`,
