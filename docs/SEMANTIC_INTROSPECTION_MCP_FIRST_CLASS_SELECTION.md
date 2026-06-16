@@ -262,6 +262,12 @@ and bounded support metadata. Query controls include `query`, `limit`,
 absolute paths, unsupported file kinds, workspace scans, writes, network,
 shell, mutation, commit, and push authority remain outside the shipped profile.
 
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.30` closes the immediate read-only
+semantic-introspection/MCP pass after catalog-backed source discovery. No
+additional semantic-introspection behavior leaf is selected now; active
+roadmap priority returns to
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.136`.
+
 ## Deferred
 
 The following remain outside `.2` and `.3` unless separately selected:

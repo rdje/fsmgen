@@ -7604,6 +7604,9 @@ discovery as the next implementation boundary.
 `SEMANTIC-INTROSPECTION-MCP-FRONTIER.29` ships that boundary as
 `fsmgen://sources` and `fsmgen_discover_sources`, backed by existing manifest
 support catalog entries instead of recursive workspace traversal.
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.30` closes the immediate read-only
+semantic-introspection/MCP pass after source discovery; the active roadmap
+priority is again `IAL2-FEATURE-COMPLETENESS-FRONTIER.136`.
 
 Selected first MCP resource families are `fsmgen://capabilities`,
 `fsmgen://contracts`, `fsmgen://diagnostics`,

@@ -1064,11 +1064,9 @@ that catalog-backed discovery as `fsmgen://sources` and
 `fsmgen_discover_sources`, returning only repo/workspace-relative source
 identities with file kind, source kind, available read-only query kinds, and
 support-accounting metadata under query/limit/filter controls.
-The IAL2
-SystemVerilog-backed feature-completeness tree remains
-active at
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.136`, but broad IAL2 expansion is no
-longer the immediate lane while this semantic-introspection priority is active.
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.30` closes the immediate read-only
+semantic-introspection/MCP pass after source discovery and returns active
+roadmap priority to `IAL2-FEATURE-COMPLETENESS-FRONTIER.136`.
 The parser/report metadata slice `IAL2-FEATURE-COMPLETENESS-FRONTIER.39` is
 now shipped for the bounded AXI read response-demux public contract selected
 by `.38`. The selected read arm requires `(response-scope single-beat)`,

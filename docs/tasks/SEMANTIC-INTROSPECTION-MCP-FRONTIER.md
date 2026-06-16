@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `Embedding And Public APIs / AI integration`
 - Created: `2026-06-14`
 - Last updated: `2026-06-16`
@@ -65,7 +65,7 @@ For FSMGen, the analogs are:
 - Do not make MCP define the semantic contract for IAL0, IAL1, or IAL2; MCP
   exposes the bounded public semantic-introspection API.
 - Do not continue broad IAL2 feature-completeness work ahead of this lane
-  while the user has made semantic introspection the active priority.
+  while an exact semantic-introspection leaf is the active priority.
 
 ## Acceptance Criteria
 
@@ -83,7 +83,7 @@ For FSMGen, the analogs are:
 ## Task Tree
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER`
-  Status: `active`
+  Status: `done`
   Goal: `Track first-class semantic introspection and MCP query API work.`
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1`,
     `SEMANTIC-INTROSPECTION-MCP-FRONTIER.2`,
@@ -320,10 +320,11 @@ For FSMGen, the analogs are:
   Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.29: add MCP source discovery`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.30`
-  Status: `pending`
+  Status: `done`
   Goal: `Select the next post-source-discovery semantic-introspection frontier.`
   Acceptance: `Review the shipped read-only semantic-introspection surface after catalog-backed source discovery against roadmap priorities, mdBook coverage, Knowledge Map facts, and remaining active task-tree work; either select one exact next semantic-introspection leaf or return the active lane to the broader roadmap frontier; do not make behavior-bearing code changes in this audit unless a smaller owned leaf is created first.`
-  Commit: `pending`
+  Verification: `passed`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.30: return to IAL2 frontier`
 
 ## Implementation Notes From `.4`
 
@@ -864,6 +865,21 @@ For FSMGen, the analogs are:
 - Are there any remaining user-facing docs or examples needed before another
   behavior-bearing semantic-introspection leaf is selected?
 
+## Implementation Notes From `.30`
+
+- The immediate read-only semantic-introspection/MCP pass is exhausted after
+  catalog-backed source discovery.
+- No additional semantic-introspection behavior-bearing leaf is selected now:
+  the shipped capability manifest, resources, tools, mdBook coverage, README,
+  roadmap, and Knowledge Map already describe the current public surface.
+- Active roadmap priority returns to
+  `IAL2-FEATURE-COMPLETENESS-FRONTIER.136`, the existing selector after
+  generated runtime-validation multi-group queue-head scalar last-beat
+  read-data.
+- Future MCP or semantic-introspection expansion still requires a new exact
+  task-tree leaf before any code, test, source, generated-artifact, or config
+  change.
+
 ## Candidate Future Phases
 
 - Phase 1: contract inventory and first safe semantic-introspection boundary.
@@ -878,7 +894,7 @@ For FSMGen, the analogs are:
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.30` | `pending` | `.29` shipped catalog-backed source discovery; the next exact frontier is a no-code selection of the next semantic-introspection or broader roadmap lane. |
+| 1 | `_none_` | `done` | `.30` closed the immediate semantic-introspection/MCP pass after catalog-backed source discovery; active roadmap priority returns to `IAL2-FEATURE-COMPLETENESS-FRONTIER.136`. |
 
 ## Decisions
 
@@ -970,6 +986,9 @@ For FSMGen, the analogs are:
   `fsmgen://sources` and `fsmgen_discover_sources`, backed by the manifest
   support catalog rather than filesystem traversal, and routed the next
   selection audit to `.30`.
+- `2026-06-16`: `.30` closed the immediate semantic-introspection/MCP pass
+  after catalog-backed source discovery and returned active roadmap priority
+  to `IAL2-FEATURE-COMPLETENESS-FRONTIER.136`.
 - `2026-06-14`: Create this as a proposed owner, not an active implementation
   lane. The first real work must be no-code contract selection over existing
   public surfaces.
@@ -979,8 +998,9 @@ For FSMGen, the analogs are:
 
 ## Open Questions
 
-- None for `.29`; `.30` owns the next semantic-introspection or broader
-  roadmap-lane selection.
+- None for the immediate semantic-introspection/MCP pass. Future expansion
+  needs a new exact leaf; active roadmap priority is
+  `IAL2-FEATURE-COMPLETENESS-FRONTIER.136`.
 
 ## Blockers
 
@@ -1021,6 +1041,7 @@ For FSMGen, the analogs are:
 | `2026-06-16` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.27` | mdBook, docs path audit, Knowledge Map generation/check, memory-architecture, README-numbering, and diff gates | `passed`; exhausted immediate MCP protocol hardening and selected `.28` read-only source/workspace discovery |
 | `2026-06-16` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.28` | mdBook, docs path audit, Knowledge Map generation/check, memory-architecture, README-numbering, and diff gates | `passed`; selected catalog-backed source discovery and routed implementation to `.29` |
 | `2026-06-16` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.29` | Syntax checks for `SemanticIntrospectionContract`, `SemanticIntrospectionMCPAdapter`, and focused MCP tests; `prove -Iperl t/1441-semantic-introspection-mcp-adapter.t t/1444-semantic-introspection-mcp-support-queries.t t/1445-semantic-introspection-mcp-schema-snapshots.t t/1455-semantic-introspection-mcp-structured-tool-output.t t/1456-semantic-introspection-mcp-tool-annotations-boundary.t`; one-shot `fsmgen_discover_sources` probe; mdBook, docs path audit, Knowledge Map generation/check, memory-architecture, README-numbering, and diff gates | `passed`; shipped catalog-backed source discovery and routed next selection to `.30` |
+| `2026-06-16` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.30` | Roadmap, mdBook, Knowledge Map, README, `docs/TASK_TREE.md`, and active IAL2 `.136` task-tree audit; mdBook, docs path audit, Knowledge Map generation/check, memory-architecture, README-numbering, and diff gates | `passed`; closed the immediate semantic-introspection/MCP pass and returned active priority to IAL2 `.136` |
 
 ## Commit Log
 
@@ -1055,7 +1076,7 @@ For FSMGen, the analogs are:
 | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.27` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.27: exhaust MCP protocol hardening` | Exhausted the immediate read-only MCP protocol-hardening pass. |
 | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.28` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.28: select MCP source discovery` | Selected catalog-backed source discovery and routed implementation to `.29`. |
 | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.29` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.29: add MCP source discovery` | Shipped catalog-backed `fsmgen://sources` and `fsmgen_discover_sources` over manifest support catalog entries. |
-| `SEMANTIC-INTROSPECTION-MCP-FRONTIER.30` | `pending` | `pending` |
+| `SEMANTIC-INTROSPECTION-MCP-FRONTIER.30` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.30: return to IAL2 frontier` | Closed the immediate semantic-introspection/MCP pass and returned active priority to IAL2 `.136`. |
 
 ## Changelog
 
@@ -1150,4 +1171,8 @@ For FSMGen, the analogs are:
   discovery with relative paths, file/source kind metadata, support metadata,
   and query/filter controls while keeping traversal, hidden paths, absolute
   paths, writes, network, shell, mutation, commit, and push authority blocked.
-  `.30` owns the next semantic-introspection or broader roadmap selection.
+  It routed the final selection audit to `.30`.
+- `2026-06-16`: Completed `.30`; the immediate read-only
+  semantic-introspection/MCP pass is exhausted after catalog-backed source
+  discovery, no new semantic behavior leaf is selected, and active roadmap
+  priority returns to `IAL2-FEATURE-COMPLETENESS-FRONTIER.136`.

@@ -2839,7 +2839,9 @@ read-only profile. Optional feature families not listed as shipped above are
 deferred behind future exact task-tree leaves. Source discovery is now
 catalog-backed through the manifest support catalog: reuse existing manifest,
 support-accounting, and example surfaces; do not recursively expose arbitrary
-workspace files.
+workspace files. The immediate semantic-introspection/MCP pass is complete
+through `SEMANTIC-INTROSPECTION-MCP-FRONTIER.30`; active roadmap priority has
+returned to `IAL2-FEATURE-COMPLETENESS-FRONTIER.136`.
 
 ## Downstream Tool Alignment
 
