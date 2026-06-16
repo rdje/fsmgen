@@ -1008,10 +1008,13 @@ schema snapshot fixtures plus a client compatibility matrix for the shipped
 one-shot and MCP 2025-06-18 newline-delimited JSON-RPC stdio profile.
 `SEMANTIC-INTROSPECTION-MCP-FRONTIER.9` locked that stdio framing boundary
 with a focused no-embedded-newline guard and keeps Streamable HTTP, prompts,
-sampling, completions, roots negotiation, service mode, and write tools outside
-the shipped profile. The next frontier is
-`SEMANTIC-INTROSPECTION-MCP-FRONTIER.10`, MCP roots/workspace-root negotiation
-selection. The IAL2
+sampling, completions, client roots consumption, service mode, and write tools outside
+the shipped profile. `SEMANTIC-INTROSPECTION-MCP-FRONTIER.10` selected
+explicit `--workspace-root` as the only shipped source authority; MCP client
+roots are not consumed yet and source escapes remain fail-closed before any
+runner invocation. The next frontier is
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.11`, read-only MCP prompt/workflow
+template selection. The IAL2
 SystemVerilog-backed feature-completeness tree remains
 active at
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.136`, but broad IAL2 expansion is no

@@ -2715,7 +2715,8 @@ The read-only adapter currently has a bounded client profile:
 | One-shot JSON-RPC probe through `--request-json` | shipped | `t/1442-fsmgen-mcp-jsonrpc-cli.t` and `t/1445-semantic-introspection-mcp-schema-snapshots.t` |
 | MCP 2025-06-18 stdio transport using newline-delimited JSON-RPC and `initialize`, `resources/list`, `resources/templates/list`, `resources/read`, `tools/list`, `tools/call`, and `ping` | shipped | `t/1441-semantic-introspection-mcp-adapter.t`, `t/1443-semantic-introspection-mcp-protocol-hardening.t`, `t/1446-semantic-introspection-mcp-stdio-framing.t`, and the schema fixture in `t/fixtures/semantic_introspection_mcp/read_only_schema_snapshot.json` |
 | Local clients that can launch `perl bin/fsmgen-mcp --workspace-root ROOT` and speak the shipped JSON-RPC profile | compatible with the shipped read-only profile | Same fixture plus the documented workflow examples above |
-| Clients that require Streamable HTTP transport, prompts, sampling, completions, roots negotiation, or service-mode session features | not claimed yet | Future task-tree ownership required before implementation |
+| MCP client `roots` capability and `roots/list` negotiation | not consumed in the shipped profile; `--workspace-root` remains authoritative | `t/1447-semantic-introspection-mcp-roots-boundary.t` |
+| Clients that require Streamable HTTP transport, prompts, sampling, completions, or service-mode session features | not claimed yet | Future task-tree ownership required before implementation |
 | Clients that need write/generation, HDL output writing, automated repair, shell, network, commit, or push tools | intentionally blocked | `semantic_introspection.write_generation_tools_enabled` remains false |
 
 The MCP 2025-06-18 transport specification defines stdio messages as
@@ -2723,6 +2724,12 @@ newline-delimited JSON-RPC messages with no embedded newlines. The fixture
 snapshot is deliberately a projection of envelope shape, tool names, resource
 templates, input property names, safety flags, and source-query provenance. It
 does not pin volatile support-corpus counts or dump full compiler reports.
+
+MCP roots are a client feature that can expose `file://` workspace boundaries
+to servers. FSMGen does not consume client roots in the shipped profile because
+source access is already bounded by the explicit `--workspace-root` chosen when
+the adapter is launched. A client roots integration must be task-tree-owned
+before it can broaden or replace that authority.
 
 ## Downstream Tool Alignment
 

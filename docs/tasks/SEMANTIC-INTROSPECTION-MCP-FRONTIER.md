@@ -94,7 +94,8 @@ For FSMGen, the analogs are:
     `SEMANTIC-INTROSPECTION-MCP-FRONTIER.7`,
     `SEMANTIC-INTROSPECTION-MCP-FRONTIER.8`,
     `SEMANTIC-INTROSPECTION-MCP-FRONTIER.9`,
-    `SEMANTIC-INTROSPECTION-MCP-FRONTIER.10`
+    `SEMANTIC-INTROSPECTION-MCP-FRONTIER.10`,
+    `SEMANTIC-INTROSPECTION-MCP-FRONTIER.11`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1`
   Status: `done`
@@ -160,9 +161,16 @@ For FSMGen, the analogs are:
   Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.9: lock MCP stdio framing`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.10`
-  Status: `pending`
+  Status: `done`
   Goal: `Select the MCP roots and workspace-root negotiation boundary.`
   Acceptance: `Audit the official MCP roots client feature against FSMGen's explicit --workspace-root and source identity policy; select whether the adapter should consume roots/list_changed or remain CLI-configured for this phase; do not allow unbounded workspace traversal or implicit source access; sync docs/KM/Memory/task/roadmap and run focused/docs gates.`
+  Verification: `passed`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.10: select MCP roots boundary`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.11`
+  Status: `pending`
+  Goal: `Select read-only MCP prompt and workflow template boundaries.`
+  Acceptance: `Audit whether read-only prompt/workflow templates for diagnostics, support discovery, examples, and semantic inspection should be advertised now or deferred; if selected, name exact prompt templates, inputs, safety policy, tests, and docs before implementation; do not enable writes, sampling, elicitation, network, shell, mutation workflows, commit, or push tools.`
   Commit: `pending`
 
 ## Implementation Notes From `.4`
@@ -268,7 +276,7 @@ For FSMGen, the analogs are:
   shell, network, commit, or push tool is advertised.
 - The mdBook now has a client compatibility matrix that distinguishes the
   shipped one-shot/newline-delimited MCP stdio profile from unclaimed
-  Streamable HTTP, roots negotiation, prompts, sampling, completions, and
+  Streamable HTTP, client roots consumption, prompts, sampling, completions, and
   service-mode session features.
 
 ## Candidate Contract Questions For `.9`
@@ -291,7 +299,7 @@ For FSMGen, the analogs are:
   non-leaking parse-error messages.
 - The mdBook compatibility matrix no longer defers mythical Content-Length
   stdio framing; it marks MCP stdio as shipped and keeps Streamable HTTP,
-  prompts, sampling, completions, roots negotiation, service mode, and write
+  prompts, sampling, completions, client roots consumption, service mode, and write
   tools outside the shipped profile.
 
 ## Candidate Contract Questions For `.10`
@@ -302,6 +310,28 @@ For FSMGen, the analogs are:
   path-sanitized report payloads?
 - What is the smallest client-visible roots contract that preserves fail-closed
   source access and does not broaden filesystem traversal?
+
+## Implementation Notes From `.10`
+
+- MCP roots are a client feature for exposing `file://` workspace boundaries to
+  servers, but the shipped FSMGen adapter does not consume `roots/list` yet.
+- Explicit `--workspace-root` remains the only authority for source-bound
+  queries in this phase.
+- Added `t/1447-semantic-introspection-mcp-roots-boundary.t` to prove client
+  roots capabilities do not replace the configured workspace root, `roots/list`
+  is not a server-side method, and source escapes are rejected before runner
+  invocation.
+- The mdBook compatibility matrix now has a dedicated roots row instead of
+  implying roots negotiation is silently supported.
+
+## Candidate Contract Questions For `.11`
+
+- Which read-only prompt templates would add value without becoming a second,
+  text-first semantic API?
+- Should diagnostic triage, example discovery, and source semantic inspection
+  remain tool-only until prompt schemas can be snapshot-tested?
+- How should prompt templates avoid implying mutation, repair, generation, or
+  sampling authority?
 
 ## Candidate Future Phases
 
@@ -317,7 +347,7 @@ For FSMGen, the analogs are:
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.10` | `pending` | `.9` locked the official newline-delimited MCP stdio framing boundary; the next exact frontier is roots/workspace-root negotiation. |
+| 1 | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.11` | `pending` | `.10` selected explicit workspace-root authority and deferred client roots consumption; the next exact frontier is read-only prompt/workflow template selection. |
 
 ## Decisions
 
@@ -351,12 +381,15 @@ For FSMGen, the analogs are:
   bounded one-shot workflows for capabilities, support summaries, diagnostics,
   examples, check JSON, semantic JSON, and schedule previews.
 - `2026-06-16`: `.8` added bounded read-only MCP schema snapshot fixtures and a
-  client compatibility matrix that does not claim Streamable HTTP, roots
-  negotiation, prompts, sampling, completions, service mode, or write tools.
+  client compatibility matrix that does not claim Streamable HTTP, client roots
+  consumption, prompts, sampling, completions, service mode, or write tools.
 - `2026-06-16`: `.9` audited the official MCP 2025-06-18 stdio transport,
   locked newline-delimited JSON-RPC framing with no embedded newlines, and kept
-  Streamable HTTP, roots negotiation, prompts, sampling, completions, service
-  mode, and write tools outside the shipped profile.
+  Streamable HTTP, client roots consumption, prompts, sampling, completions,
+  service mode, and write tools outside the shipped profile.
+- `2026-06-16`: `.10` selected explicit `--workspace-root` as the only shipped
+  source authority; MCP client roots are not consumed yet, and source escapes
+  remain fail-closed before runner invocation.
 - `2026-06-14`: Create this as a proposed owner, not an active implementation
   lane. The first real work must be no-code contract selection over existing
   public surfaces.
@@ -366,7 +399,7 @@ For FSMGen, the analogs are:
 
 ## Open Questions
 
-- None for `.9`; `.10` owns MCP roots/workspace-root negotiation.
+- None for `.10`; `.11` owns read-only prompt/workflow template selection.
 
 ## Blockers
 
@@ -387,6 +420,7 @@ For FSMGen, the analogs are:
 | `2026-06-16` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.7` | MCP one-shot examples for `tools/list`, `fsmgen_capability_query`, `fsmgen_support_summary`, `fsmgen_find_examples`, `fsmgen_explain_diagnostic`, `fsmgen_check`, `fsmgen_semantic_introspect`, and `fsmgen_schedule_preview`; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `mdbook build docs/book`; `env -u PERL5LIB prove -Iperl t/1414-docs-relative-paths-audit.t`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `git --no-pager diff --check`; README numbering check | `passed`; documented read-only MCP client workflows and selected `.8` schema snapshot/client compatibility frontier |
 | `2026-06-16` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.8` | Syntax check for `t/1445`; `prove -Iperl t/1438-semantic-introspection-contract.t t/1441-semantic-introspection-mcp-adapter.t t/1442-fsmgen-mcp-jsonrpc-cli.t t/1443-semantic-introspection-mcp-protocol-hardening.t t/1444-semantic-introspection-mcp-support-queries.t t/1445-semantic-introspection-mcp-schema-snapshots.t`; mdBook, docs path audit, Knowledge Map generation/check, memory-architecture, README-numbering, and diff gates | `passed`; added read-only MCP schema snapshot fixture and client compatibility matrix; selected `.9` official MCP stdio framing compatibility boundary |
 | `2026-06-16` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.9` | Syntax check for `t/1446`; `prove -Iperl t/1441-semantic-introspection-mcp-adapter.t t/1442-fsmgen-mcp-jsonrpc-cli.t t/1443-semantic-introspection-mcp-protocol-hardening.t t/1445-semantic-introspection-mcp-schema-snapshots.t t/1446-semantic-introspection-mcp-stdio-framing.t`; mdBook, docs path audit, Knowledge Map generation/check, memory-architecture, README-numbering, and diff gates | `passed`; locked official newline-delimited MCP stdio framing and selected `.10` roots/workspace-root negotiation |
+| `2026-06-16` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.10` | Syntax check for `t/1447`; `prove -Iperl t/1441-semantic-introspection-mcp-adapter.t t/1443-semantic-introspection-mcp-protocol-hardening.t t/1446-semantic-introspection-mcp-stdio-framing.t t/1447-semantic-introspection-mcp-roots-boundary.t`; mdBook, docs path audit, Knowledge Map generation/check, memory-architecture, README-numbering, and diff gates | `passed`; selected explicit workspace-root authority and selected `.11` read-only prompt/workflow template boundary |
 
 ## Commit Log
 
@@ -401,7 +435,8 @@ For FSMGen, the analogs are:
 | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.7` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.7: document MCP client workflows` | Documented generic read-only MCP client configuration and bounded one-shot workflows for the shipped resource/tool families. |
 | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.8` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.8: add MCP schema snapshots` | Added bounded read-only MCP schema snapshot fixture/test and a client compatibility matrix. |
 | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.9` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.9: lock MCP stdio framing` | Locked official newline-delimited MCP stdio framing with a focused guard and corrected the compatibility matrix. |
-| `SEMANTIC-INTROSPECTION-MCP-FRONTIER.10` | `pending` | `pending` |
+| `SEMANTIC-INTROSPECTION-MCP-FRONTIER.10` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.10: select MCP roots boundary` | Selected explicit workspace-root authority for the shipped profile and deferred client roots consumption. |
+| `SEMANTIC-INTROSPECTION-MCP-FRONTIER.11` | `pending` | `pending` |
 
 ## Changelog
 
@@ -441,4 +476,7 @@ For FSMGen, the analogs are:
   compatibility.
 - `2026-06-16`: Completed `.9`; official MCP stdio is newline-delimited
   JSON-RPC, the adapter's stdio path now has explicit framing coverage, and
-  `.10` owns roots/workspace-root negotiation.
+  then selected `.10` for roots/workspace-root negotiation.
+- `2026-06-16`: Completed `.10`; explicit `--workspace-root` remains the only
+  shipped source authority, client roots remain unconsumed, and `.11` owns
+  read-only prompt/workflow template selection.

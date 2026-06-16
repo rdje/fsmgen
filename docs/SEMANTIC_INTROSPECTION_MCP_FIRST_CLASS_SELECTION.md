@@ -148,6 +148,11 @@ JSON-RPC with no embedded newlines. One-shot JSON-RPC and MCP stdio are
 shipped, while Streamable HTTP, prompts, sampling, completions, roots
 negotiation, service mode, and write/generation tools are not claimed yet.
 
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.10` selected the workspace-root boundary
+for the shipped profile. MCP client roots remain unconsumed; the adapter uses
+the explicit `--workspace-root` chosen at launch, keeps source identities
+relative to that root, and rejects source escapes before invoking FSMGen.
+
 ## Deferred
 
 The following remain outside `.2` and `.3` unless separately selected:

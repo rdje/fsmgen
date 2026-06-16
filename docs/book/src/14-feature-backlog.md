@@ -7550,12 +7550,14 @@ previews.
 `SEMANTIC-INTROSPECTION-MCP-FRONTIER.8` adds bounded read-only MCP schema
 snapshot fixtures and a client compatibility matrix. The shipped profile is
 one-shot or MCP 2025-06-18 newline-delimited JSON-RPC stdio; Streamable HTTP,
-prompts, sampling, completions, roots negotiation, service mode, and write
+prompts, sampling, completions, client roots consumption, service mode, and write
 tools are not claimed yet. `SEMANTIC-INTROSPECTION-MCP-FRONTIER.9` locks the
 stdio framing conclusion with a focused newline/no-embedded-newline guard.
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.10` selects explicit `--workspace-root`
+as the only shipped source authority; MCP client roots are not consumed yet.
 
-Current active frontier: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.10`,
-MCP roots/workspace-root negotiation boundary.
+Current active frontier: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.11`, read-only
+MCP prompt/workflow template boundary.
 
 Selected first MCP resource families are `fsmgen://capabilities`,
 `fsmgen://contracts`, `fsmgen://diagnostics`,
