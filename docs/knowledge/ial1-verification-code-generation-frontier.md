@@ -12,17 +12,19 @@ answers:
 date: 2026-06-16
 status: current
 tags: [ial1, isf, verification, sv-uvm, vhdl, task-tree]
-evidence: docs/tasks/IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.md; docs/TASK_TREE.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md; docs/knowledge/ial2-axi-manager-post-rresp-aggregation-next-slice.md
-reverify: rg -n 'IAL1-VERIFICATION-CODE-GENERATION-FRONTIER|IAL1 verification-specific|SV/UVM|VHDL-oriented verification|Direct IAL2-to-verification|Verification Code Generation' docs/tasks/IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.md docs/TASK_TREE.md README.md ROADMAP_V2.md docs/book/src/14-feature-backlog.md docs/knowledge/ial2-axi-manager-post-rresp-aggregation-next-slice.md
+evidence: docs/tasks/IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.md; docs/IAL1_VERIFICATION_CODE_GENERATION_SOURCE_READINESS_AUDIT.md; docs/TASK_TREE.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md; docs/knowledge/ial2-axi-manager-post-rresp-aggregation-next-slice.md
+reverify: rg -n 'IAL1-VERIFICATION-CODE-GENERATION-FRONTIER|IAL1 verification-specific|SV/UVM|VHDL-oriented verification|Direct IAL2-to-verification|Verification Code Generation|observation/source-feature' docs/tasks/IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.md docs/IAL1_VERIFICATION_CODE_GENERATION_SOURCE_READINESS_AUDIT.md docs/TASK_TREE.md README.md ROADMAP_V2.md docs/book/src/14-feature-backlog.md docs/knowledge/ial2-axi-manager-post-rresp-aggregation-next-slice.md
 ---
 
 FSMGen verification-code generation is now owned by the active
 `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER` task tree.
 
-The selected starting stance is IAL1 (`.isf`) to verification code. The next
-frontier, `.2`, audits whether existing IAL1 verification primitives are
-sufficient or whether new IAL1 verification-specific source features are
-needed before any generated verification code ships.
+The selected starting stance is IAL1 (`.isf`) to verification code. Frontier
+`.2` found the existing IAL1 checks/properties sufficient for inline SV
+assertion projection but insufficient for first-class generated verification
+artifacts. The next frontier, `.3`, selects the first IAL1 verification
+observation/source-feature contract before any generated verification code
+ships.
 
 Future target families are explicitly tracked, not implied: SV/UVM agents,
 monitors, scoreboards, protocol checkers, coverage, reusable verification IP,

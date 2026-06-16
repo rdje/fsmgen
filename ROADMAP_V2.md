@@ -1608,13 +1608,16 @@ profiles need compatible semantics.
 Verification-code generation is captured as a separate roadmap lane from the
 synthesizable RTL/HDL feature-completeness path and is now task-tree owned by
 `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER`. The selected starting stance is
-IAL1 (`.isf`) to verification code, with the first executable frontier auditing
-whether existing IAL1 verification primitives are sufficient or whether new
-IAL1 verification-specific source features are needed before any output
-generation. SV/UVM agents, monitors, scoreboards, protocol checkers, coverage,
-reusable verification IP, and VHDL-oriented verification artifacts each require
-separate contract-selection owners. Direct IAL2-to-verification generation
-remains an explicit audit question, not an implementation assumption.
+IAL1 (`.isf`) to verification code. Audit `.2` found the shipped IAL1
+assert/assume/cover/property/monitor surface sufficient for inline
+SystemVerilog assertion projection but insufficient as the sole source
+contract for first-class generated SV/UVM or VHDL-oriented verification
+artifacts. The current frontier `.3` selects an IAL1 verification
+observation/source-feature contract before output generation. SV/UVM agents,
+monitors, scoreboards, protocol checkers, coverage, reusable verification IP,
+and VHDL-oriented verification artifacts each require separate
+contract-selection owners. Direct IAL2-to-verification generation remains an
+explicit audit question, not an implementation assumption.
 Packed burst outputs, concrete same-ID queue variants beyond the shipped
 read burst-last, write, and read single-beat depth-2 queue-head boundaries,
 per-ID queues, queued policy, profile

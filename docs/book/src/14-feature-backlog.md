@@ -4159,12 +4159,15 @@ remain deferred in the current RTL lane.
 
 That verification lane is now task-tree owned by
 `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER`. Its default source stance is
-IAL1 (`.isf`) to verification code, not direct IAL2 to verification. The next
-frontier audits whether existing IAL1 verification primitives are sufficient
-or whether new IAL1 verification-specific features are needed for SV/UVM
-agents, monitors, scoreboards, protocol checkers, coverage, reusable VIP, and
-VHDL-oriented verification artifacts. Direct IAL2-to-verification generation
-remains an open audit question.
+IAL1 (`.isf`) to verification code, not direct IAL2 to verification. The
+source-readiness audit
+[IAL1_VERIFICATION_CODE_GENERATION_SOURCE_READINESS_AUDIT](../../IAL1_VERIFICATION_CODE_GENERATION_SOURCE_READINESS_AUDIT.md)
+found the existing IAL1 assert/assume/cover/property/monitor surface sufficient
+for inline SystemVerilog assertion projection, but insufficient for
+first-class generated SV/UVM or VHDL-oriented verification artifacts. The
+current frontier `.3` selects an IAL1 verification observation/source-feature
+contract before any output generator is chosen. Direct IAL2-to-verification
+generation remains an open audit question.
 
 Read-data interleaving queue readiness audit:
 [AXI_IAL2_MANAGER_READ_DATA_INTERLEAVING_QUEUE_READINESS_AUDIT](../../AXI_IAL2_MANAGER_READ_DATA_INTERLEAVING_QUEUE_READINESS_AUDIT.md)
