@@ -5420,6 +5420,17 @@ auto-ID plus concrete queue-head demux, packed outputs, direct backend, and
 VHDL remain deferred. The active frontier advances to `.141`, the next
 feature-completeness selector.
 
+Post write multi-group queue-head response-demux selector:
+[AXI_IAL2_MANAGER_POST_WRITE_MULTI_GROUP_QUEUE_HEAD_RESPONSE_DEMUX_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_WRITE_MULTI_GROUP_QUEUE_HEAD_RESPONSE_DEMUX_NEXT_SLICE_SELECTION.md)
+selects `.142`, readiness audit for generated read single-beat multi-group
+queue-head response-demux. A temporary read single-beat two-group probe with
+`r0`/`r1` sharing `RID` `3` and `r2`/`r3` sharing `RID` `5` reports two
+selected queue-head groups but remains generated-false with
+`generated_same_id_queue_head_demux` residue. The adjacent read burst-last
+multi-group, read single-beat one-group, and write multi-group queue-head
+response-demux shapes are generated, so the next owner is an audit before any
+behavior widening.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same
@@ -7681,7 +7692,7 @@ support catalog entries instead of recursive workspace traversal.
 `SEMANTIC-INTROSPECTION-MCP-FRONTIER.30` closes the immediate read-only
 semantic-introspection/MCP pass after source discovery; the active roadmap
 priority is again the IAL2 feature-completeness tree, currently at
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.141`.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.142`.
 
 Selected first MCP resource families are `fsmgen://capabilities`,
 `fsmgen://contracts`, `fsmgen://diagnostics`,

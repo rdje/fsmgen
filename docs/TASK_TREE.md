@@ -44,7 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `IAL2-FEATURE-COMPLETENESS-FRONTIER` | `active` | `IAL2 / SV-backed feature completeness` | `.141` post-write-multi-group feature-completeness selector | [docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md](docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md) |
+| `IAL2-FEATURE-COMPLETENESS-FRONTIER` | `active` | `IAL2 / SV-backed feature completeness` | `.142` read single-beat multi-group queue-head response-demux readiness audit | [docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md](docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md) |
 | `SEMANTIC-INTROSPECTION-MCP-FRONTIER` | `done` | `Embedding And Public APIs / AI integration` | complete (`.30`; immediate read-only semantic/MCP pass exhausted after catalog-backed source discovery; active priority returned to IAL2) | [docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md](docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md) |
 | `CI-PERL-FSM-REGRESSION-JUN15-REPAIR` | `done` | `CI / regression integrity` | complete (`.1`; repaired GitHub run `27531373582` Perl regression failure cluster; full `./bin/ci-regression`, mdBook, Knowledge Map, memory, path, README, and diff gates pass) | [docs/tasks/CI-PERL-FSM-REGRESSION-JUN15-REPAIR.md](docs/tasks/CI-PERL-FSM-REGRESSION-JUN15-REPAIR.md) |
 | `ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE` | `done` | `R14` | complete (`.9`; simplified public contract docs from enumerated activation lists to construction rules; next executable frontier is `ISF-SCHEDULING-BACKLOG-FRONTIER.4.1`) | [docs/tasks/ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.md](docs/tasks/ISF-COMPOSITIONAL-CONTROL-FLOW-ARCHITECTURE.md) |
