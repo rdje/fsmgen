@@ -4,19 +4,22 @@ title: IAL2 selects read-data over read single-beat multi-group queue-head readi
 answers:
   - "what did IAL2-FEATURE-COMPLETENESS-FRONTIER.144 select?"
   - "what comes after read single-beat multi-group queue-head response-demux?"
-  - "is read-data over multiple read single-beat queue-head groups implemented?"
   - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.145?"
   - "why audit read-data over read single-beat multi-group queue-head groups first?"
 date: 2026-06-16
 status: current
 tags: [ial2, axi, manager, queue-head, read-data, same-id, single-beat, task-tree]
-evidence: docs/AXI_IAL2_MANAGER_POST_READ_SINGLE_BEAT_MULTI_GROUP_QUEUE_HEAD_RESPONSE_DEMUX_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_READ_SINGLE_BEAT_MULTI_GROUP_QUEUE_HEAD_RESPONSE_DEMUX_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_QUEUE_HEAD_READ_DATA_BEHAVIOR.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; perl/FSM/IAL2/ProtocolIntent/AxiManagerCapacityStatus.pm; perl/FSM/Adapter/IAL2/PPIF.pm; t/1437-axi-ial2-manager-capacity-status-generator.t; t/1436-ial2-ppif-parser-cli.t; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md
+evidence: docs/AXI_IAL2_MANAGER_POST_READ_SINGLE_BEAT_MULTI_GROUP_QUEUE_HEAD_RESPONSE_DEMUX_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_READ_SINGLE_BEAT_MULTI_GROUP_QUEUE_HEAD_RESPONSE_DEMUX_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_QUEUE_HEAD_READ_DATA_BEHAVIOR_FIRST_SLICE.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; perl/FSM/IAL2/ProtocolIntent/AxiManagerCapacityStatus.pm; perl/FSM/Adapter/IAL2/PPIF.pm; t/1437-axi-ial2-manager-capacity-status-generator.t; t/1436-ial2-ppif-parser-cli.t; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md
 reverify: env -u PERL5LIB ./bin/fsmgen --emit-schedule-json ppif/axi_manager_capacity_status_read_single_beat_multi_group_same_id_queue_head_response_demux.ppif && env -u PERL5LIB ./bin/fsmgen --emit-schedule-json ppif/axi_manager_capacity_status_read_single_beat_same_id_queue_head_read_data.ppif && rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.144|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.145|read-data over read single-beat multi-group|generated_read_single_beat_queue_head_demux|read single-beat multi-group queue-head response-demux' docs/AXI_IAL2_MANAGER_POST_READ_SINGLE_BEAT_MULTI_GROUP_QUEUE_HEAD_RESPONSE_DEMUX_NEXT_SLICE_SELECTION.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md README.md ROADMAP_V2.md docs/book/src/14-feature-backlog.md
 ---
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.144` selected
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.145`, readiness audit for generated
 read-data over read single-beat multi-group queue-head response-demux.
+
+Implementation status for that behavior is superseded by
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.146`, which shipped the bounded generated
+read-data behavior. This card remains the historical `.144` selector fact.
 
 The selector did not change parser, generator, sample, support-accounting,
 test, generated artifact, or HDL behavior. The current public boundary remains

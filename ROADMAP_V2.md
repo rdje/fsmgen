@@ -1080,7 +1080,7 @@ support-accounting metadata under query/limit/filter controls.
 `SEMANTIC-INTROSPECTION-MCP-FRONTIER.30` closes the immediate read-only
 semantic-introspection/MCP pass after source discovery and returns active
 roadmap priority to the IAL2 feature-completeness tree, currently at
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.147`.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.148`.
 The parser/report metadata slice `IAL2-FEATURE-COMPLETENESS-FRONTIER.39` is
 now shipped for the bounded AXI read response-demux public contract selected
 by `.38`. The selected read arm requires `(response-scope single-beat)`,
@@ -1608,10 +1608,13 @@ The generated report covers `RID` `3` for `r0`/`r1` and `RID` `5` for
 `r2`/`r3`, scalar `RDATA`/`RRESP` captures guarded by generated queue-head
 completion pulses, and `completion_validity:
 generated_queue_head_response_demux_completion_pulse`; strict check JSON and
-semantic JSON match the new support-accounting entry. The active frontier is
-`.147`, the next AXI manager feature-completeness selector; deeper queues,
-same-family mixed auto-ID, and group-local simultaneous enqueue widening
-remain deferred.
+semantic JSON match the new support-accounting entry. Selector `.147`
+selected `.148`, readiness audit for generated concrete same-ID queue-head groups
+deeper than two slots, after live reports confirmed the generated queue-head
+families remain depth-2 and code inspection found the queue builder,
+transition matrix, state/full helpers, and assertions specialized around two
+slots. Same-family mixed auto-ID and group-local simultaneous enqueue
+widening remain deferred.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.

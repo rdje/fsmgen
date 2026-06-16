@@ -11,7 +11,7 @@ date: 2026-06-16
 status: current
 tags: [downstream, contracts, mdbook, handoff, integration, manifest, support-accounting]
 evidence: README.md; ROADMAP_V2.md; docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md; docs/ISF_PUBLIC_INTERFACE_CONTRACT.md; perl/FSM/Support/LanguageSurfaceSection.pm; docs/book/src/11-extensions-and-embedding.md; docs/book/src/13i-downstream-integration.md; docs/tasks/BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.md
-reverify: rg -n 'downstream consumer|downstream-visible|lockstep|language_surface\\.file_surfaces|read-data over multiple read single-beat queue-head groups|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.144' README.md ROADMAP_V2.md docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md docs/ISF_PUBLIC_INTERFACE_CONTRACT.md perl/FSM/Support/LanguageSurfaceSection.pm docs/book/src/11-extensions-and-embedding.md docs/tasks/BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.md
+reverify: rg -n 'downstream consumer|downstream-visible|lockstep|language_surface\\.file_surfaces|deeper concrete same-ID|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.148' README.md ROADMAP_V2.md docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md docs/ISF_PUBLIC_INTERFACE_CONTRACT.md perl/FSM/Support/LanguageSurfaceSection.pm docs/book/src/11-extensions-and-embedding.md docs/tasks/BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.md docs/TASK_TREE.md
 ---
 
 Any downstream-visible change must keep the codebase, downstream

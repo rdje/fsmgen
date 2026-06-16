@@ -5516,9 +5516,14 @@ all four read transactions, and capture rules are guarded by generated
 queue-head completion pulses. The read-data report uses
 `completion_validity: generated_queue_head_response_demux_completion_pulse`;
 check JSON and semantic JSON support-account the sample under the public
-corpus entry. The active frontier is `.147`; deeper queues, mixed auto-ID,
-group-local enqueue widening, packed outputs, direct backend, and VHDL remain
-deferred.
+corpus entry. Selector
+[AXI_IAL2_MANAGER_POST_READ_SINGLE_BEAT_MULTI_GROUP_QUEUE_HEAD_READ_DATA_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_READ_SINGLE_BEAT_MULTI_GROUP_QUEUE_HEAD_READ_DATA_NEXT_SLICE_SELECTION.md)
+chooses `.148`, readiness audit for generated concrete same-ID queue-head
+groups deeper than two slots. The selector records that all generated
+queue-head samples remain depth-2 today and that the queue builder,
+transition matrix, state/full helpers, and assertions are specialized around
+slots `0` and `1`. Mixed auto-ID, group-local enqueue widening, packed
+outputs, direct backend, and VHDL remain deferred.
 
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
@@ -7781,7 +7786,7 @@ support catalog entries instead of recursive workspace traversal.
 `SEMANTIC-INTROSPECTION-MCP-FRONTIER.30` closes the immediate read-only
 semantic-introspection/MCP pass after source discovery; the active roadmap
 priority is again the IAL2 feature-completeness tree, currently at
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.147`.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.148`.
 
 Selected first MCP resource families are `fsmgen://capabilities`,
 `fsmgen://contracts`, `fsmgen://diagnostics`,

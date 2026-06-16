@@ -62,5 +62,6 @@ single-beat, last-beat, and multi-beat read-data capture,
 burst-length/runtime validation, scalar `RRESP` aggregation, one-or-more read
 burst-last queue-head groups, one-or-more write queue-head groups, and read
 single-beat queue-head response-demux including multiple response-demux-only
-groups; read-data over multiple read single-beat queue-head groups remains
-deferred.
+and scalar read-data groups. Deeper concrete same-ID queue-head groups,
+same-family mixed auto-ID plus concrete queue-head demux, direct backend
+lowering, and VHDL remain deferred.
