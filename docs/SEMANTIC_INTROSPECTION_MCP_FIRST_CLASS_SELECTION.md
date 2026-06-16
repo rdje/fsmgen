@@ -106,16 +106,21 @@ MCP adapter.
 top-level `semantic_introspection` capability-manifest section. The manifest
 now advertises query domains, query families, versioning/provenance/safety
 policy, contract-surface ownership, selected MCP resource URI templates, and
-selected MCP tool names. It explicitly reports
-`mcp_adapter_implemented: false` and `write_generation_tools_enabled: false`;
-the next frontier is the read-only MCP adapter owner,
-`SEMANTIC-INTROSPECTION-MCP-FRONTIER.4`.
+selected MCP tool names.
+
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.4` shipped the first read-only local
+JSON-RPC stdio adapter over that contract as `bin/fsmgen-mcp`, backed by
+`FSM::Support::SemanticIntrospectionMCPAdapter`. The manifest now reports
+`mcp_adapter_implemented: true` and still reports
+`write_generation_tools_enabled: false`. Static resources expose capabilities,
+contracts, diagnostics, support accounting, and examples; source-bound tools
+and resources require a workspace-root-contained source identity.
 
 ## Deferred
 
 The following remain outside `.2` and `.3` unless separately selected:
 
-- read/write generation tools exposed through MCP;
+- write generation tools exposed through MCP;
 - HDL output-writing tools;
 - long-lived service mode;
 - network access;

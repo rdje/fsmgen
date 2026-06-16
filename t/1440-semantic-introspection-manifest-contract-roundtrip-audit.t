@@ -21,6 +21,7 @@ subtest 'manifest semantic-introspection contract survives JSON round trip' => s
     my $expected = build_semantic_introspection_contract();
 
     is_deeply($contract->{entrypoints}, $expected->{entrypoints}, 'decoded contract keeps entrypoints');
+    is_deeply($contract->{mcp_adapter_entrypoints}, $expected->{mcp_adapter_entrypoints}, 'decoded contract keeps MCP adapter entrypoints');
     is_deeply($contract->{contract_surface_map}, $expected->{contract_surface_map}, 'decoded contract keeps contract surface map');
     is_deeply($contract->{query_domain_names}, $expected->{query_domain_names}, 'decoded contract keeps query-domain names');
     is_deeply($contract->{query_family_names}, $expected->{query_family_names}, 'decoded contract keeps query-family names');

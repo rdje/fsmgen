@@ -10,6 +10,7 @@ use FSM::Support::SemanticIntrospectionContract qw(
     build_semantic_introspection_contract
     semantic_introspection_contract_source
     semantic_introspection_contract_surface_map
+    semantic_introspection_mcp_adapter_entrypoints
     semantic_introspection_mcp_resource_uri_templates
     semantic_introspection_mcp_resources
     semantic_introspection_mcp_tool_names
@@ -37,11 +38,13 @@ sub build_semantic_introspection_section {
             cli_aliases => [
                 './bin/fsmgen --emit-capability-manifest',
             ],
+            mcp_adapter => semantic_introspection_mcp_adapter_entrypoints(),
             in_process => [
                 'FSM::Support::CapabilityManifest::build_capability_manifest()->{semantic_introspection}',
                 'FSM::Support::SemanticIntrospectionSection::build_semantic_introspection_section()',
             ],
         },
+        mcp_adapter_entrypoints => semantic_introspection_mcp_adapter_entrypoints(),
         contract_surface_map => semantic_introspection_contract_surface_map(),
         query_domains => semantic_introspection_query_domains(),
         query_families => semantic_introspection_query_families(),
@@ -56,7 +59,7 @@ sub build_semantic_introspection_section {
         safety_policy => semantic_introspection_safety_policy(),
         raw_private_surfaces_excluded => semantic_introspection_raw_private_surfaces_excluded(),
         read_only_default => JSON::PP::true,
-        mcp_adapter_implemented => JSON::PP::false,
+        mcp_adapter_implemented => JSON::PP::true,
         write_generation_tools_enabled => JSON::PP::false,
         section_contract => build_semantic_introspection_contract(),
     };

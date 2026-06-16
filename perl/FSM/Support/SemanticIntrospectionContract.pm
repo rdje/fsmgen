@@ -23,6 +23,7 @@ our @EXPORT_OK = qw(
     build_semantic_introspection_contract
     semantic_introspection_contract_source
     semantic_introspection_contract_surface_map
+    semantic_introspection_mcp_adapter_entrypoints
     semantic_introspection_mcp_resource_uri_templates
     semantic_introspection_mcp_resources
     semantic_introspection_mcp_tool_names
@@ -54,11 +55,13 @@ sub build_semantic_introspection_contract {
             cli_aliases => [
                 './bin/fsmgen --emit-capability-manifest',
             ],
+            mcp_adapter => semantic_introspection_mcp_adapter_entrypoints(),
             in_process => [
                 'FSM::Support::CapabilityManifest::build_capability_manifest()->{semantic_introspection}',
                 'FSM::Support::SemanticIntrospectionSection::build_semantic_introspection_section()',
             ],
         },
+        mcp_adapter_entrypoints => semantic_introspection_mcp_adapter_entrypoints(),
         public_top_level_presence_keys => semantic_introspection_public_top_level_keys(),
         query_domain_names => semantic_introspection_query_domain_names(),
         query_family_names => semantic_introspection_query_family_names(),
@@ -71,11 +74,12 @@ sub build_semantic_introspection_contract {
         raw_private_surfaces_excluded => semantic_introspection_raw_private_surfaces_excluded(),
         presence_key_family_map => semantic_introspection_presence_key_family_map(),
         read_only_default => JSON::PP::true,
-        mcp_adapter_implemented => JSON::PP::false,
+        mcp_adapter_implemented => JSON::PP::true,
         write_generation_tools_enabled => JSON::PP::false,
         guidance => [
             'Treat semantic_introspection as the first-class bounded query contract advertised by the capability manifest for schema version 1.',
-            'MCP resources and tools listed here are selected adapter mappings over the stable semantic-introspection API; this contract does not claim that an MCP adapter is implemented yet.',
+            'MCP resources and tools listed here are implemented by the read-only FSMGen MCP adapter over the stable semantic-introspection API.',
+            'Use bin/fsmgen-mcp for the shipped local JSON-RPC stdio adapter; write/generation tools remain disabled.',
             'Use query_domains and query_families to discover which existing public FSMGen surfaces can answer a question without depending on private parser, scheduler, lowering, or HDLGenerator objects.',
             'Source-bound queries must preserve source identity, producer metadata, diagnostics, generated-output inventories when emitted, and support-accounting metadata when the backing surface provides it.',
             'Read-only query families are the default. Write, HDL-generation, mutation, network, arbitrary-shell, commit, and push tools require future task-tree ownership before they can be advertised as enabled.',
@@ -91,6 +95,7 @@ sub semantic_introspection_public_top_level_keys {
             contract_source
             report_source
             entrypoints
+            mcp_adapter_entrypoints
             contract_surface_map
             query_domains
             query_families
@@ -109,6 +114,14 @@ sub semantic_introspection_public_top_level_keys {
             write_generation_tools_enabled
             section_contract
         ),
+    ];
+}
+
+sub semantic_introspection_mcp_adapter_entrypoints {
+    return [
+        'perl bin/fsmgen-mcp --workspace-root DIR',
+        'perl bin/fsmgen-mcp --request-json JSON --workspace-root DIR',
+        'FSM::Support::SemanticIntrospectionMCPAdapter->new(workspace_root => DIR)->run_stdio()',
     ];
 }
 
@@ -212,6 +225,11 @@ sub semantic_introspection_contract_surface_map {
             contract_source => semantic_exports_contract_source(),
             current_entrypoints => ['./bin/fsmgen --capability-manifest'],
         },
+        mcp_adapter => {
+            manifest_path => ['semantic_introspection'],
+            contract_source => 'FSM::Support::SemanticIntrospectionMCPAdapter',
+            current_entrypoints => semantic_introspection_mcp_adapter_entrypoints(),
+        },
         normalized_semantic_json => {
             manifest_path => ['semantic_exports', 'normalized_semantic_json'],
             contract_source => normalized_semantic_report_contract_source(),
@@ -271,7 +289,7 @@ sub semantic_introspection_query_domains {
         _domain(
             'contracts',
             'Discover bounded contract sources, public key families, schema versions, and nested surface ownership.',
-            [qw(capabilities diagnostics support_accounting semantic_exports embedding backend_validation documentation_examples language_surface)],
+            [qw(capabilities diagnostics support_accounting semantic_exports mcp_adapter embedding backend_validation documentation_examples language_surface)],
             'fsmgen://contracts',
         ),
         _domain(
@@ -388,7 +406,7 @@ sub semantic_introspection_mcp_resources {
     my %surface_map = %{semantic_introspection_contract_surface_map()};
     return [
         _resource('fsmgen://capabilities', 'capabilities', ['capabilities', 'producer', 'language_surface'], $surface_map{capabilities}{contract_source}),
-        _resource('fsmgen://contracts', 'contracts', [qw(capabilities diagnostics support_accounting semantic_exports embedding backend_validation documentation_examples language_surface)], semantic_introspection_contract_source()),
+        _resource('fsmgen://contracts', 'contracts', [qw(capabilities diagnostics support_accounting semantic_exports mcp_adapter embedding backend_validation documentation_examples language_surface)], semantic_introspection_contract_source()),
         _resource('fsmgen://diagnostics', 'diagnostics', [qw(diagnostics check_json)], diagnostics_contract_source()),
         _resource('fsmgen://support-accounting', 'support_accounting', ['support_accounting'], support_accounting_contract_source()),
         _resource('fsmgen://examples', 'examples', ['documentation_examples'], documentation_contract_source()),
@@ -444,7 +462,8 @@ sub semantic_introspection_provenance_support_policy {
 sub semantic_introspection_safety_policy {
     return {
         default_access => 'read_only',
-        workspace_root_restriction => 'future adapters must resolve source_id and paths under the caller-approved workspace root',
+        workspace_root_restriction => 'the shipped adapter resolves source_id and paths under the caller-approved workspace root',
+        source_bound_path_sanitization => 'workspace_or_repo_absolute_paths_return_relative_else_redacted',
         arbitrary_shell_access => JSON::PP::false,
         network_access => JSON::PP::false,
         implicit_file_writes => JSON::PP::false,
@@ -452,7 +471,7 @@ sub semantic_introspection_safety_policy {
         mutation_tools_enabled => JSON::PP::false,
         commit_or_push_tools_enabled => JSON::PP::false,
         raw_private_object_exposure => JSON::PP::false,
-        mcp_adapter_status => 'contract_advertised_adapter_not_implemented',
+        mcp_adapter_status => 'implemented_read_only_jsonrpc_stdio',
     };
 }
 
@@ -519,7 +538,7 @@ sub _resource {
         output_contract_source => $output_contract_source,
         source_bound => $source_bound ? JSON::PP::true : JSON::PP::false,
         read_only => JSON::PP::true,
-        adapter_status => 'selected_not_implemented',
+        adapter_status => 'implemented_read_only',
     };
 }
 
@@ -534,7 +553,7 @@ sub _tool {
         writes_files => JSON::PP::false,
         requires_workspace_root => JSON::PP::true,
         network_access => JSON::PP::false,
-        adapter_status => 'selected_not_implemented',
+        adapter_status => 'implemented_read_only',
     };
 }
 

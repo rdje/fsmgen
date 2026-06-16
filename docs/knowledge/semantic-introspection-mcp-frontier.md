@@ -16,8 +16,8 @@ answers:
 date: 2026-06-15
 status: current
 tags: [mcp, ai, llm, semantic-json, embedding, public-api, task-tree]
-evidence: docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md; docs/SEMANTIC_INTROSPECTION_MCP_FIRST_CLASS_SELECTION.md; docs/TASK_TREE.md; ROADMAP_V2.md; docs/book/src/11-extensions-and-embedding.md; docs/book/src/14-feature-backlog.md; perl/FSM/Support/SemanticIntrospectionContract.pm; perl/FSM/Support/SemanticIntrospectionSection.pm
-reverify: env -u PERL5LIB ./bin/fsmgen --capability-manifest >/tmp/fsmgen_semantic_introspection_manifest.json && perl -MJSON::PP=decode_json -0777 -ne 'my $m=decode_json($_); die "missing semantic_introspection\n" unless $m->{semantic_introspection}; die "adapter unexpectedly enabled\n" if $m->{semantic_introspection}{mcp_adapter_implemented}; die "missing contract owner\n" unless ($m->{manifest_contract}{top_level_contract_source_map}{semantic_introspection}||"") eq "FSM::Support::SemanticIntrospectionContract"; print "semantic_introspection manifest ok\n";' /tmp/fsmgen_semantic_introspection_manifest.json
+evidence: docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md; docs/SEMANTIC_INTROSPECTION_MCP_FIRST_CLASS_SELECTION.md; docs/TASK_TREE.md; ROADMAP_V2.md; docs/book/src/11-extensions-and-embedding.md; docs/book/src/14-feature-backlog.md; perl/FSM/Support/SemanticIntrospectionContract.pm; perl/FSM/Support/SemanticIntrospectionSection.pm; perl/FSM/Support/SemanticIntrospectionMCPAdapter.pm; bin/fsmgen-mcp
+reverify: env -u PERL5LIB ./bin/fsmgen --capability-manifest >/tmp/fsmgen_semantic_introspection_manifest.json && perl -MJSON::PP=decode_json -0777 -ne 'my $m=decode_json($_); die "missing semantic_introspection\n" unless $m->{semantic_introspection}; die "adapter not enabled\n" unless $m->{semantic_introspection}{mcp_adapter_implemented}; die "write tools unexpectedly enabled\n" if $m->{semantic_introspection}{write_generation_tools_enabled}; die "missing adapter owner\n" unless ($m->{semantic_introspection}{contract_surface_map}{mcp_adapter}{contract_source}||"") eq "FSM::Support::SemanticIntrospectionMCPAdapter"; print "semantic_introspection manifest adapter ok\n";' /tmp/fsmgen_semantic_introspection_manifest.json && perl bin/fsmgen-mcp --request-json '{"jsonrpc":"2.0","id":1,"method":"tools/list"}' >/tmp/fsmgen_mcp_tools.json && perl -MJSON::PP=decode_json -0777 -ne 'my $r=decode_json($_); my %t=map { $_->{name}=>1 } @{$r->{result}{tools}}; die "missing semantic tool\n" unless $t{fsmgen_semantic_introspect}; print "fsmgen-mcp tools ok\n";' /tmp/fsmgen_mcp_tools.json
 ---
 
 FSMGen has an active owner for first-class semantic introspection and future
@@ -38,27 +38,30 @@ mappings over the existing capability manifest, check JSON, normalized
 semantic JSON, schedule JSON, support accounting, diagnostics,
 documentation/example, embedding, and backend-validation surfaces.
 
-The next implementation leaf is `SEMANTIC-INTROSPECTION-MCP-FRONTIER.4`, the
-first read-only MCP adapter over the shipped contract.
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.4` shipped the first read-only local
+JSON-RPC stdio adapter over the contract: `bin/fsmgen-mcp`, backed by
+`FSM::Support::SemanticIntrospectionMCPAdapter`.
 
-The selected first MCP resource families are `fsmgen://capabilities`,
+The shipped first MCP resource families are `fsmgen://capabilities`,
 `fsmgen://contracts`, `fsmgen://diagnostics`,
 `fsmgen://support-accounting`, `fsmgen://examples`,
 `fsmgen://source/{source_id}/check`,
 `fsmgen://source/{source_id}/semantic`, and
 `fsmgen://source/{source_id}/schedule`.
 
-The selected first MCP tool families are `fsmgen_capability_query`,
+The shipped first MCP tool families are `fsmgen_capability_query`,
 `fsmgen_check`, `fsmgen_semantic_introspect`, `fsmgen_schedule_preview`,
 `fsmgen_find_examples`, and `fsmgen_explain_diagnostic`.
 
-The MCP adapter is not implemented yet: the manifest reports
-`mcp_adapter_implemented: false` and `write_generation_tools_enabled: false`.
+The manifest reports `mcp_adapter_implemented: true` and
+`write_generation_tools_enabled: false`. Source-bound adapter responses
+normalize workspace/repo absolute paths to relative source identities and
+redact other absolute paths.
 FSMGen should not expose raw private Perl AST, scheduler, lowering objects,
 `HDLGenerator` compatibility hashes, or internal Perl references as public
-automation APIs. Read/write generation tools, HDL writing, service mode,
-network access, arbitrary filesystem traversal, mutation workflows, and
-commit/push actions remain deferred until separately task-tree-owned.
+automation APIs. Write generation tools, HDL writing, service mode, network
+access, arbitrary filesystem traversal, mutation workflows, and commit/push
+actions remain deferred until separately task-tree-owned.
 
 The RTL-simulator MCP analogy maps to FSMGen as follows: compile/elaborate/run
 maps to check/lower/semantic JSON/schedule JSON/generate HDL; hierarchy and

@@ -12,6 +12,7 @@ use FSM::Support::SemanticIntrospectionContract qw(
     build_semantic_introspection_contract
     semantic_introspection_contract_source
     semantic_introspection_contract_surface_map
+    semantic_introspection_mcp_adapter_entrypoints
     semantic_introspection_mcp_resource_uri_templates
     semantic_introspection_mcp_tool_names
     semantic_introspection_public_top_level_keys
@@ -82,6 +83,7 @@ subtest 'semantic-introspection contract maps existing public surfaces to owners
         support_accounting
         diagnostics
         documentation_examples
+        mcp_adapter
         embedding
         backend_validation
     );
@@ -94,10 +96,21 @@ subtest 'semantic-introspection contract maps existing public surfaces to owners
     }
 };
 
-subtest 'semantic-introspection contract is read-only and explicit about unimplemented MCP adapter' => sub {
+subtest 'semantic-introspection contract is read-only and explicit about the shipped adapter boundary' => sub {
     ok($contract->{read_only_default}, 'read-only is the default');
-    ok(!$contract->{mcp_adapter_implemented}, 'MCP adapter is not claimed as implemented');
+    ok($contract->{mcp_adapter_implemented}, 'read-only MCP adapter is claimed as implemented');
+    is_deeply(
+        $contract->{mcp_adapter_entrypoints},
+        semantic_introspection_mcp_adapter_entrypoints(),
+        'MCP adapter entrypoints are advertised as public contract data',
+    );
     ok(!$contract->{write_generation_tools_enabled}, 'write/generation tools are not enabled');
+    is($contract->{safety_policy}{mcp_adapter_status}, 'implemented_read_only_jsonrpc_stdio', 'adapter status is read-only JSON-RPC stdio');
+    is(
+        $contract->{safety_policy}{source_bound_path_sanitization},
+        'workspace_or_repo_absolute_paths_return_relative_else_redacted',
+        'source-bound path sanitization policy is advertised',
+    );
     ok(!$contract->{safety_policy}{arbitrary_shell_access}, 'arbitrary shell access is forbidden');
     ok(!$contract->{safety_policy}{network_access}, 'network access is forbidden');
     ok(!$contract->{safety_policy}{raw_private_object_exposure}, 'raw private object exposure is forbidden');

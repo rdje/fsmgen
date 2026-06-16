@@ -88,7 +88,8 @@ For FSMGen, the analogs are:
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1`,
     `SEMANTIC-INTROSPECTION-MCP-FRONTIER.2`,
     `SEMANTIC-INTROSPECTION-MCP-FRONTIER.3`,
-    `SEMANTIC-INTROSPECTION-MCP-FRONTIER.4`
+    `SEMANTIC-INTROSPECTION-MCP-FRONTIER.4`,
+    `SEMANTIC-INTROSPECTION-MCP-FRONTIER.5`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1`
   Status: `done`
@@ -112,30 +113,48 @@ For FSMGen, the analogs are:
   Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.3: ship introspection contract manifest`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.4`
-  Status: `pending`
+  Status: `done`
   Goal: `Implement the first read-only MCP adapter over the semantic-introspection contract.`
   Acceptance: `Expose the manifest-selected read-only resource/tool families through a bounded local MCP adapter over the semantic_introspection contract; require explicit workspace-root/source identity handling for source-bound queries; do not enable write/generation tools, network access, arbitrary shell access, mutation workflows, commit/push actions, or raw private AST/scheduler/lowering/HDLGenerator payloads; add focused adapter tests plus manifest/docs/mdBook/Memory/Knowledge Map/task-tree/README/roadmap synchronization; run appropriate focused checks and continuity gates.`
-  Verification: `pending`
+  Verification: `passed`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.4: ship read-only MCP adapter`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.5`
+  Status: `pending`
+  Goal: `Harden MCP adapter protocol/client compatibility and source-query envelopes.`
+  Acceptance: `Audit the shipped read-only JSON-RPC stdio adapter against MCP client expectations; add protocol fixture coverage for initialize, notifications, resource listing, resource templates, resource reads, tool listing, tool calls, error envelopes, source URI escaping, path sanitization, and source-query provenance; do not enable write/generation tools, network access, arbitrary shell access, mutation workflows, commit/push actions, or raw private payloads; sync manifest/docs/mdBook/Memory/Knowledge Map/task-tree/README/roadmap and run focused plus continuity gates.`
   Commit: `pending`
 
-## Candidate Contract Questions For `.4`
+## Implementation Notes From `.4`
 
-- Should the first adapter be a repo-local stdio MCP server over existing CLI
-  JSON, a thin in-process Perl adapter, or a small wrapper that can support
-  both without freezing service mode?
-- How will `.4` bind `source_id` to explicit workspace-root-contained source
-  paths without allowing arbitrary traversal or shell execution?
-- Which selected `semantic_introspection.mcp_resources[]` can be implemented
-  from cached manifest data, and which require per-source tool calls?
-- How will the selected tools preserve check JSON, normalized semantic JSON,
-  schedule JSON, diagnostics, support-accounting, and generated-output
-  inventories without exposing raw private objects?
-- What is the first adapter test harness: direct tool invocation, MCP protocol
-  JSON fixtures, or both?
-- How will adapter errors map back to stable FSMGen diagnostics or explicit
-  unsupported-residue responses?
-- How will the mdBook explain the shipped behavior without pretending future
-  write/generation tools are already implemented?
+- `.4` ships a repo-local read-only JSON-RPC stdio adapter:
+  `bin/fsmgen-mcp`, backed by
+  `FSM::Support::SemanticIntrospectionMCPAdapter`.
+- Static resources read manifest-backed capabilities, contracts,
+  diagnostics, support accounting, and examples.
+- Source-bound resources/tools drive fixed repo-local `bin/fsmgen` argv for
+  strict check JSON, normalized semantic JSON, and schedule JSON.
+- Source identity is resolved under an explicit workspace root before any
+  FSMGen invocation. Workspace escape attempts fail before the runner is
+  called.
+- Source-bound payloads normalize workspace/repo absolute paths to relative
+  source identities and redact other absolute paths.
+- Write/generation tools, network access, arbitrary shell access, mutation
+  workflows, commit/push actions, service mode, and raw private object payloads
+  remain blocked.
+
+## Candidate Contract Questions For `.5`
+
+- Which MCP clients should be fixture-modeled first, and which protocol
+  behaviors can stay in the local JSON-RPC stdio harness until a real client
+  integration leaf?
+- Should the adapter add more explicit source-query provenance wrappers around
+  check JSON, normalized semantic JSON, and schedule JSON without changing those
+  underlying public report contracts?
+- Which error families should remain adapter-local JSON-RPC errors and which
+  should map to stable FSMGen diagnostic codes or unsupported-residue payloads?
+- Does source URI escaping need stricter percent-encoding validation before any
+  future client integration is considered signoff-ready?
 
 ## Candidate Future Phases
 
@@ -151,7 +170,7 @@ For FSMGen, the analogs are:
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.4` | `pending` | `.3` shipped the manifest-advertised semantic-introspection contract; the next exact frontier is the read-only MCP adapter over that contract. |
+| 1 | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.5` | `pending` | `.4` shipped the first read-only adapter; the next exact frontier is protocol/client compatibility and source-query envelope hardening. |
 
 ## Decisions
 
@@ -169,6 +188,11 @@ For FSMGen, the analogs are:
   versioning/provenance/safety policy, contract-surface owners, selected MCP
   resources/tools, `mcp_adapter_implemented: false`, and
   `write_generation_tools_enabled: false`.
+- `2026-06-15`: `.4` shipped `bin/fsmgen-mcp`, a read-only local JSON-RPC
+  stdio adapter over the manifest-selected resources/tools. The manifest now
+  reports `mcp_adapter_implemented: true`, keeps
+  `write_generation_tools_enabled: false`, and advertises source-bound path
+  sanitization.
 - `2026-06-14`: Create this as a proposed owner, not an active implementation
   lane. The first real work must be no-code contract selection over existing
   public surfaces.
@@ -178,9 +202,8 @@ For FSMGen, the analogs are:
 
 ## Open Questions
 
-- Whether the first adapter implementation should be CLI-driven, in-process
-  Perl API, or a local long-lived service is intentionally left to future
-  adapter leaf `.4`.
+- None for `.4`; `.5` owns protocol/client compatibility and source-query
+  envelope hardening.
 
 ## Blockers
 
@@ -195,7 +218,7 @@ For FSMGen, the analogs are:
 | `2026-06-14` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1` | `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `mdbook build docs/book`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `scripts/check_memory_architecture.sh`; `git --no-pager diff --check` | `passed`; Knowledge Map now has `177` facts and `1030` question keys |
 | `2026-06-15` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.2` | Existing owner tree, roadmap, mdBook, Knowledge Map card, embedding and semantic-export contracts, README CLI/API documentation; sampled `env -u PERL5LIB ./bin/fsmgen --capability-manifest`, `env -u PERL5LIB ./bin/fsmgen --strict --check --json ppif/axi_aw_valid_ready.ppif`, `env -u PERL5LIB ./bin/fsmgen --strict --emit-semantic-json ppif/axi_aw_valid_ready.ppif`, and `env -u PERL5LIB ./bin/fsmgen --strict --emit-schedule-json ppif/axi_aw_valid_ready.ppif`; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `mdbook build docs/book`; `env -u PERL5LIB prove -Iperl t/1414-docs-relative-paths-audit.t`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `git --no-pager diff --check`; README numbering check; active/proposed semantic-introspection frontier scans | `passed`; selected `.3`, first-class semantic-introspection contract manifest |
 | `2026-06-15` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.3` | Syntax checks for `SemanticIntrospectionContract`, `SemanticIntrospectionSection`, `CapabilityManifest`, `CapabilityManifestContract`, and new tests; `prove -Iperl t/1438-semantic-introspection-contract.t t/1439-semantic-introspection-section-runtime-contract-audit.t t/1440-semantic-introspection-manifest-contract-roundtrip-audit.t t/369-manifest-section-builder-audit.t t/370-capability-manifest-section-discovery-audit.t t/897-capability-manifest-contract-public-keys-json-roundtrip-audit.t t/898-capability-manifest-contract-top-level-source-map-json-roundtrip-audit.t t/899-capability-manifest-contract-section-presence-map-json-roundtrip-audit.t t/900-capability-manifest-contract-presence-family-map-json-roundtrip-audit.t`; `./bin/fsmgen --capability-manifest` probe; broader manifest/continuity gates | `passed`; shipped top-level `semantic_introspection` manifest section and selected `.4` read-only MCP adapter |
-| `pending` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.4` | `pending` | `pending` |
+| `2026-06-15` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.4` | Syntax checks for `SemanticIntrospectionMCPAdapter`, `bin/fsmgen-mcp`, semantic-introspection contract/section modules, `CapabilityManifestContract`, and new adapter tests; `prove -Iperl t/1438-semantic-introspection-contract.t t/1439-semantic-introspection-section-runtime-contract-audit.t t/1440-semantic-introspection-manifest-contract-roundtrip-audit.t t/1441-semantic-introspection-mcp-adapter.t t/1442-fsmgen-mcp-jsonrpc-cli.t`; live `bin/fsmgen-mcp` tools/list and sanitized semantic-query probes; broader manifest, mdBook, Knowledge Map, memory-architecture, README-numbering, and diff gates | `passed`; shipped read-only MCP adapter and selected `.5` hardening frontier |
 
 ## Commit Log
 
@@ -204,7 +227,8 @@ For FSMGen, the analogs are:
 | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1: capture MCP introspection owner` | Proposed owner capture only; no implementation active. |
 | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.2` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.2: activate first-class introspection` | Activated semantic introspection as a first-class feature and selected `.3`, the contract-manifest implementation owner. |
 | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.3` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.3: ship introspection contract manifest` | Shipped the top-level `semantic_introspection` capability-manifest contract and selected `.4`, the read-only MCP adapter frontier. |
-| `SEMANTIC-INTROSPECTION-MCP-FRONTIER.4` | `pending` | `pending` |
+| `SEMANTIC-INTROSPECTION-MCP-FRONTIER.4` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.4: ship read-only MCP adapter` | Shipped `bin/fsmgen-mcp`, a read-only local JSON-RPC stdio adapter over the manifest-selected resources/tools, with workspace-root source binding and path sanitization. |
+| `SEMANTIC-INTROSPECTION-MCP-FRONTIER.5` | `pending` | `pending` |
 
 ## Changelog
 
@@ -218,5 +242,10 @@ For FSMGen, the analogs are:
   API, and `.3` owns the first implementation boundary.
 - `2026-06-15`: Completed `.3`; `semantic_introspection` is now a shipped
   top-level capability-manifest section with bounded query domains/families,
-  selected read-only MCP mappings, explicit safety policy, and no enabled MCP
-  adapter or write/generation tools.
+  selected read-only MCP mappings, explicit safety policy, and no write/generation
+  tools.
+- `2026-06-15`: Completed `.4`; `bin/fsmgen-mcp` now ships the first read-only
+  local JSON-RPC stdio adapter over the `semantic_introspection` contract,
+  backed by direct adapter and CLI tests, workspace-root source binding, and
+  machine-local absolute path sanitization. `.5` owns protocol/client
+  compatibility and source-query envelope hardening.

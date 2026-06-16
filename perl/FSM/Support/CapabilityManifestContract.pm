@@ -231,6 +231,7 @@ sub capability_manifest_semantic_introspection_keys {
             contract_source
             report_source
             entrypoints
+            mcp_adapter_entrypoints
             contract_surface_map
             query_domains
             query_families

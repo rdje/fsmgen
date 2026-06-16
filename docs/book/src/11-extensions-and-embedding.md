@@ -2611,11 +2611,13 @@ duplicated inline manifest assembly logic.
 The capability manifest's `semantic_introspection` section is the first-class
 machine-query contract for AI/tooling integration. It names the public query
 domains, query families, versioning/provenance policy, read-only safety
-policy, contract-surface ownership, selected MCP resource URI templates, and
-selected MCP tool names.
+policy, contract-surface ownership, MCP adapter entrypoints, MCP resource URI
+templates, and MCP tool names.
 
 ```bash
 ./bin/fsmgen --capability-manifest
+perl bin/fsmgen-mcp --request-json '{"jsonrpc":"2.0","id":1,"method":"tools/list"}'
+perl bin/fsmgen-mcp --workspace-root . --request-json '{"jsonrpc":"2.0","id":2,"method":"tools/call","params":{"name":"fsmgen_capability_query","arguments":{"section":"semantic_introspection"}}}'
 ```
 
 The relevant manifest shape is:
@@ -2625,8 +2627,13 @@ The relevant manifest shape is:
   "semantic_introspection": {
     "schema_version": 1,
     "status": "bounded_public",
-    "mcp_adapter_implemented": false,
+    "mcp_adapter_implemented": true,
     "write_generation_tools_enabled": false,
+    "mcp_adapter_entrypoints": [
+      "perl bin/fsmgen-mcp --workspace-root DIR",
+      "perl bin/fsmgen-mcp --request-json JSON --workspace-root DIR",
+      "FSM::Support::SemanticIntrospectionMCPAdapter->new(workspace_root => DIR)->run_stdio()"
+    ],
     "mcp_resource_uri_templates": [
       "fsmgen://capabilities",
       "fsmgen://contracts",
@@ -2649,12 +2656,16 @@ The relevant manifest shape is:
 }
 ```
 
-This section is a shipped semantic API contract, not a shipped MCP server. The
-selected MCP resources/tools are adapter mappings over the stable
-semantic-introspection API. Raw parser ASTs, private scheduler/lowering
-objects, `HDLGenerator` compatibility hashes, arbitrary shell output, network
-access, implicit file writes, mutation workflows, and commit/push actions are
-not public semantic-introspection payloads.
+`bin/fsmgen-mcp` is the first shipped read-only local JSON-RPC stdio adapter
+over this contract. Static resources expose capabilities, contracts,
+diagnostics, support accounting, and examples. Source-bound resources/tools
+require a caller-approved workspace root and a source identity under that
+root; source-bound responses normalize workspace/repo absolute paths to
+relative source identities and redact other absolute paths. Raw parser ASTs,
+private scheduler/lowering objects, `HDLGenerator` compatibility hashes,
+arbitrary shell output, network access, implicit file writes,
+write/generation tools, mutation workflows, and commit/push actions are not
+public semantic-introspection payloads.
 
 ## Downstream Tool Alignment
 

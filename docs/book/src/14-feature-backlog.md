@@ -7533,14 +7533,15 @@ support-accounting expectations, read-only defaults, workspace restrictions,
 and MCP resource/tool mappings over the existing capability manifest, check
 JSON, normalized semantic JSON, schedule JSON, support accounting, stable
 diagnostics, generated artifact inventories, backend-validation status,
-embedding contract metadata, and mdBook/corpus examples. The MCP adapter
-itself is not shipped yet; the manifest reports
-`mcp_adapter_implemented: false` and `write_generation_tools_enabled: false`.
+embedding contract metadata, and mdBook/corpus examples. `bin/fsmgen-mcp` now
+ships the first read-only local JSON-RPC stdio adapter over that contract; the
+manifest reports `mcp_adapter_implemented: true` and
+`write_generation_tools_enabled: false`.
 
-Current active frontier: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.3` shipped the
-manifest-advertised semantic-introspection contract. The next owned frontier is
-`SEMANTIC-INTROSPECTION-MCP-FRONTIER.4`, the first read-only MCP adapter slice
-over that contract.
+Current active frontier: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.4` shipped the
+read-only adapter. The next owned frontier is
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.5`, protocol/client compatibility and
+source-query envelope hardening for that adapter.
 
 Selected first MCP resource families are `fsmgen://capabilities`,
 `fsmgen://contracts`, `fsmgen://diagnostics`,
@@ -7554,8 +7555,10 @@ Selected first MCP resource families are `fsmgen://capabilities`,
 
 Raw private parser ASTs, scheduler objects, lowering objects, `HDLGenerator`
 compatibility hashes, and internal Perl references remain outside the public
-automation contract. Read/write generation tools, HDL writing, service mode,
-network access, arbitrary filesystem traversal, and mutation workflows remain
+automation contract. Source-bound adapter responses normalize workspace/repo
+absolute paths to relative source identities and redact other absolute paths.
+Write generation tools, HDL writing, service mode, network access, arbitrary
+filesystem traversal, mutation workflows, and commit/push actions remain
 deferred until separately task-tree-owned.
 
 ### Fully Frozen Programmatic Embedding API

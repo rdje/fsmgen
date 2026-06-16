@@ -1,0 +1,57 @@
+#!/usr/bin/perl
+
+use v5.20;
+use strict;
+use warnings;
+use Getopt::Long;
+use JSON::PP ();
+use FindBin;
+use File::Spec;
+
+use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
+
+use FSM::Support::SemanticIntrospectionMCPAdapter;
+
+my $workspace_root = '.';
+my $repo_root = File::Spec->catdir($FindBin::Bin, '..');
+my $request_json = '';
+my $help = 0;
+
+GetOptions(
+    'workspace-root=s' => \$workspace_root,
+    'repo-root=s' => \$repo_root,
+    'request-json=s' => \$request_json,
+    'help|h' => \$help,
+) or die "Error in command line arguments\n";
+
+if ($help) {
+    print <<'EOF';
+FSMGen read-only semantic-introspection MCP adapter
+
+Usage:
+  perl bin/fsmgen-mcp [--workspace-root DIR]
+  perl bin/fsmgen-mcp --request-json JSON [--workspace-root DIR]
+
+The adapter speaks JSON-RPC 2.0 over newline-delimited stdio for the first
+read-only FSMGen MCP slice. It exposes resources/list,
+resources/templates/list, resources/read, tools/list, tools/call, initialize,
+and ping. Source-bound tools require source_path or source_id under the
+configured workspace root. No write/generation tools are enabled.
+EOF
+    exit 0;
+}
+
+my $adapter = FSM::Support::SemanticIntrospectionMCPAdapter->new(
+    repo_root => $repo_root,
+    workspace_root => $workspace_root,
+);
+
+if (length $request_json) {
+    my $request = JSON::PP->new->decode($request_json);
+    my $response = $adapter->handle_jsonrpc_request($request);
+    print JSON::PP->new->ascii->canonical->pretty->encode($response)
+        if $response;
+    exit 0;
+}
+
+$adapter->run_stdio();

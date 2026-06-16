@@ -69,9 +69,10 @@ advertises query domains, query families, versioning/provenance/safety policy,
 contract sources, read-only defaults, and selected MCP resource/tool mappings
 over the existing capability manifest, check JSON, normalized semantic JSON,
 schedule JSON, support-accounting, diagnostics, documentation/example,
-embedding, and backend-validation surfaces. The MCP adapter itself remains
-unshipped and explicitly reported as not implemented until the next exact
-task-tree leaf owns it.
+embedding, and backend-validation surfaces. `bin/fsmgen-mcp` now ships the
+first read-only local JSON-RPC stdio adapter over that contract; the manifest
+reports `mcp_adapter_implemented: true` while `write_generation_tools_enabled`
+remains false.
 Current primary target is SystemVerilog, with Verilog conversion support and a scoped direct-root VHDL scaffold for the accepted single-FSM subset, including delayed-pulse clock-branch lowering, generic-bearing direct-root module headers with typed scalar/vector sized-literal defaults, signed vector and signed scalar direct-root ports, scalar/vector two-state `bit` input-port and internal declaration lowering, signed scalar/vector, non-signed four-state `logic` input-port/internal declaration lowering, and vector `logic signed` internal declaration lowering, scalar and signed scalar addition/subtraction/multiplication RHS/chain lowering, vector numeric-literal addition/subtraction emitted by compound update/shorthand forms, same-width unsigned-style addition/subtraction/multiplication/division/modulo/XOR RHS/chain lowering, same-width signed vector addition/subtraction/multiplication/division/modulo RHS lowering for signed targets and operands, signed vector numeric-literal addition/subtraction/multiplication/division/modulo RHS lowering including signed vector negative decimal addition, subtraction, multiplication, division, and modulo literals, non-signed vector positive decimal multiplication/division/modulo literal lowering in signal-first, literal-first, and literal-literal order, non-signed vector negative decimal addition/subtraction/multiplication/division/modulo literal lowering, bounded generated AMBA wrap arithmetic for `fsm/amba_requester.fsm`, bounded non-signed vector, signed vector, and scalar output-port decimal literal assignment lowering including non-signed vector, signed vector, and scalar negative decimal literals, bounded direct aggregate-output packed-vector lowering, a bounded C3 external-RTL literal/concat composition VHDL structural top for `t/corpus/composition_intent_integer_literals.fsm`, bounded external-RTL scalar integer, scalar integer expression, one-bit sized bitstring, multi-bit sized bitstring, and resolved packed aggregate VHDL generic maps including resolved package-backed constants, a bounded C1 standalone-DT child composition VHDL passthrough top for `t/corpus/standalone_dtc_explicit_system_autowire.fsm`, bounded C1 standalone-DT scalar integer, scalar expression, one-bit sized bitstring, multi-bit sized bitstring, packed-list, and packed-map VHDL generic maps, a bounded C2 generated-FSM child composition VHDL scalar-autowire top for `t/corpus/implicit_composition_system_autowire.fsm`, bounded C2 generated-FSM scalar integer, scalar expression, one-bit sized bitstring, multi-bit sized bitstring, and resolved packed aggregate VHDL generic maps, and a bounded APB/C4 generated-FSM child composition VHDL top for `fsm/apb_tb.fsm` with scalar integer, scalar expression, one-bit sized bitstring, multi-bit sized bitstring, resolved packed aggregate, and resolved package-backed generic maps in the same APB/C4 shape.
 Scalar division/modulo, including signed scalar division/modulo, in the direct
 VHDL scaffold remains an explicit fail-closed boundary; full aggregate
@@ -1331,7 +1332,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/ISF_PUBLIC_INTERFACE_CONTRACT.md` — live downstream-consumer API contract for ISF parser/scheduler surfaces.
 - `docs/ISF_LIBRARY_CATALOG.md` — live catalog of shipped reusable ISF library definitions.
 - `docs/REGRESSION_CORPUS.md` — human-readable companion to the machine-checked support and regression catalog.
-- `docs/SEMANTIC_INTROSPECTION_MCP_FIRST_CLASS_SELECTION.md` — selected first-class semantic-introspection API and MCP adapter boundary for `SEMANTIC-INTROSPECTION-MCP-FRONTIER.3`.
+- `docs/SEMANTIC_INTROSPECTION_MCP_FIRST_CLASS_SELECTION.md` — selected first-class semantic-introspection API and MCP adapter boundary for `SEMANTIC-INTROSPECTION-MCP-FRONTIER.3` and records the `.4` read-only adapter result.
 - `docs/INTENT_CAPTURE_AXI_CASE_STUDY.md` — AXI intent-capture case-study notes for future high-level synthesis work.
 - `docs/IAL2_PROTOCOL_PLATFORM_INTENT_EVALUATION.md` — first non-code IAL2 protocol/platform intent evaluation and go/no-go criteria.
 - `docs/AXI_VALID_READY_INTENT_PROBE.md` — first bounded AXI Valid-Ready source-anchor evidence inventory for future IAL2 design/probe work.
@@ -1515,6 +1516,8 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 ## Project file and directory map
 ### Core entrypoints and pipeline
 - `bin/fsmgen` — main CLI entrypoint.
+- `bin/fsmgen-mcp` — read-only local JSON-RPC stdio adapter over the
+  `semantic_introspection` manifest contract.
 - `bin/fsmgen-issue-bundle` — downstream issue-bundle helper that captures
   reproducible FSMGen command artifacts for local triage.
 - `perl/FSM/Adapter/ISF.pm` — `.isf` parser facade for intent-scheduling sources.
@@ -1542,6 +1545,9 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `perl/FSM/Support/ProducerContract.pm` — bounded manifest-facing contract for the `producer` section's public identity/build metadata keys.
 - `perl/FSM/Support/SemanticExportsContract.pm` — bounded manifest-facing contract for the `semantic_exports` section's public top-level and nested contract-owner map.
 - `perl/FSM/Support/SemanticIntrospectionContract.pm` — bounded manifest-facing first-class semantic-introspection contract with query domains, query families, MCP resource/tool mappings, safety policy, and public surface ownership.
+- `perl/FSM/Support/SemanticIntrospectionMCPAdapter.pm` — read-only
+  semantic-introspection adapter that exposes manifest-selected MCP
+  resources/tools over local JSON-RPC stdio without write/generation tools.
 - `perl/FSM/Support/SemanticIntrospectionSection.pm` — dedicated `semantic_introspection` manifest-section builder.
 - `perl/FSM/Support/CheckDiagnostics.pm` — bounded `--check --json` report builder and stable-code classifier.
 - `perl/FSM/Support/CheckDiagnosticsContract.pm` — bounded `--check --json` key-presence contract advertised through the capability manifest.
@@ -1616,6 +1622,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 ./bin/fsmgen --emit-schedule-json isf/i2c_master.isf
 ./bin/fsmgen --emit-schedule-json ppif/axi_aw_valid_ready.ppif
 ./bin/fsmgen --capability-manifest
+perl bin/fsmgen-mcp --request-json '{"jsonrpc":"2.0","id":1,"method":"tools/list"}'
 ```
 
 ## Documentation quick preview
@@ -2152,13 +2159,19 @@ The manifest's `semantic_introspection` section is the first-class query
 contract for AI/tooling integration:
 [perl/FSM/Support/SemanticIntrospectionSection.pm](perl/FSM/Support/SemanticIntrospectionSection.pm)
 publishes query domains, query families, versioning/provenance/safety policy,
-contract-surface ownership, selected MCP resource URI templates, and selected
-MCP tool names, while
+contract-surface ownership, MCP adapter entrypoints, MCP resource URI
+templates, and MCP tool names, while
 [perl/FSM/Support/SemanticIntrospectionContract.pm](perl/FSM/Support/SemanticIntrospectionContract.pm)
 owns the bounded schema advertised through
-`semantic_introspection.section_contract`. The section reports
-`mcp_adapter_implemented: false` and `write_generation_tools_enabled: false`;
-it is a shipped semantic API contract, not a shipped MCP server.
+`semantic_introspection.section_contract`.
+[perl/FSM/Support/SemanticIntrospectionMCPAdapter.pm](perl/FSM/Support/SemanticIntrospectionMCPAdapter.pm)
+and [bin/fsmgen-mcp](bin/fsmgen-mcp) implement the first read-only local
+JSON-RPC stdio adapter over that contract. The section reports
+`mcp_adapter_implemented: true` and `write_generation_tools_enabled: false`;
+source-bound responses normalize workspace/repo absolute paths to relative
+source identities and redact other absolute paths. Write/generation, network,
+shell, mutation, commit, and push tools are still not part of the public
+semantic-introspection surface.
 The manifest's `backend_validation` section now follows that split too:
 [perl/FSM/Support/CapabilityManifest.pm](perl/FSM/Support/CapabilityManifest.pm)
 still publishes the current backend validation surfaces, while
