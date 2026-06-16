@@ -246,6 +246,12 @@ feature families are either shipped, explicitly unsupported/deferred above, or
 require future exact owners. The next selected direction is deeper read-only
 source/workspace discovery for semantic-introspection queries.
 
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.28` selected the source-discovery
+implementation boundary. Discovery must be catalog-backed over existing
+manifest, support-accounting, and example surfaces. It must not recursively
+scan arbitrary workspace paths, expose hidden files, return machine-local
+absolute paths, or introduce write/network/shell authority.
+
 ## Deferred
 
 The following remain outside `.2` and `.3` unless separately selected:

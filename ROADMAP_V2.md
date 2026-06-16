@@ -1057,7 +1057,10 @@ protocol-hardening pass: remaining optional MCP feature families are either
 shipped, explicitly unsupported for the read-only profile, or deferred behind
 future exact owners. The next frontier is
 `SEMANTIC-INTROSPECTION-MCP-FRONTIER.28`, read-only source/workspace discovery
-selection.
+selection. `SEMANTIC-INTROSPECTION-MCP-FRONTIER.28` selects catalog-backed
+source discovery over existing manifest/support/example surfaces, not
+arbitrary workspace traversal. The next frontier is
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.29`, source-discovery implementation.
 The IAL2
 SystemVerilog-backed feature-completeness tree remains
 active at

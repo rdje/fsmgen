@@ -112,7 +112,8 @@ For FSMGen, the analogs are:
     `SEMANTIC-INTROSPECTION-MCP-FRONTIER.25`,
     `SEMANTIC-INTROSPECTION-MCP-FRONTIER.26`,
     `SEMANTIC-INTROSPECTION-MCP-FRONTIER.27`,
-    `SEMANTIC-INTROSPECTION-MCP-FRONTIER.28`
+    `SEMANTIC-INTROSPECTION-MCP-FRONTIER.28`,
+    `SEMANTIC-INTROSPECTION-MCP-FRONTIER.29`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1`
   Status: `done`
@@ -304,9 +305,16 @@ For FSMGen, the analogs are:
   Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.27: exhaust MCP protocol hardening`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.28`
-  Status: `pending`
+  Status: `done`
   Goal: `Select read-only source and workspace discovery boundaries.`
   Acceptance: `Audit whether the MCP adapter should expose bounded read-only source/workspace discovery for available repo/workspace inputs, examples, and supported file families; either select exact resources/tools/schemas/tests/docs or defer discovery; do not allow arbitrary filesystem traversal, hidden dotfile leakage, machine-local absolute path leakage, writes, network, shell, mutation, commit, or push authority.`
+  Verification: `passed`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.28: select MCP source discovery`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.29`
+  Status: `pending`
+  Goal: `Implement catalog-backed read-only source discovery.`
+  Acceptance: `Expose bounded source discovery through MCP using existing manifest, support-accounting, and example/catalog surfaces; return repo/workspace-relative source identities with file kind, source kind/support metadata when available, query/limit controls, and no hidden files, arbitrary recursive traversal, machine-local absolute paths, writes, network, shell, mutation, commit, or push authority; update tests, docs, mdBook, Knowledge Map, Memory, and roadmap; run focused plus continuity gates.`
   Commit: `pending`
 
 ## Implementation Notes From `.4`
@@ -806,6 +814,25 @@ For FSMGen, the analogs are:
 - How should source discovery reuse existing support-accounting/example
   catalogs without inventing a second source registry?
 
+## Implementation Notes From `.28`
+
+- Source discovery is selected as catalog-backed, not filesystem-wide.
+- `.29` should reuse existing manifest, support-accounting, and example/catalog
+  surfaces and return bounded repo/workspace-relative source identities.
+- Arbitrary recursive traversal, hidden-file exposure, machine-local absolute
+  paths, writes, network, shell, mutation, commit, and push authority remain
+  non-goals.
+
+## Candidate Contract Questions For `.29`
+
+- Which existing catalog entries should be included first: support-accounting
+  examples, mdBook-documented examples, or all known `.fsm`/`.isf`/`.ppif`
+  sample inputs?
+- Should the first discovery surface be a tool only, a static resource only,
+  or both?
+- What stable output schema keeps discovery useful without freezing volatile
+  support-accounting internals?
+
 ## Candidate Future Phases
 
 - Phase 1: contract inventory and first safe semantic-introspection boundary.
@@ -820,7 +847,7 @@ For FSMGen, the analogs are:
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.28` | `pending` | `.27` exhausted immediate MCP protocol hardening; the next exact frontier is read-only source/workspace discovery selection. |
+| 1 | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.29` | `pending` | `.28` selected catalog-backed source discovery; the next exact frontier is implementation. |
 
 ## Decisions
 
@@ -906,6 +933,8 @@ For FSMGen, the analogs are:
   instructions compact, read-only, and free of unshipped feature claims.
 - `2026-06-16`: `.27` exhausted the immediate MCP protocol-hardening pass and
   selected read-only source/workspace discovery as the next semantic frontier.
+- `2026-06-16`: `.28` selected catalog-backed source discovery over existing
+  manifest/support/example surfaces and routed implementation to `.29`.
 - `2026-06-14`: Create this as a proposed owner, not an active implementation
   lane. The first real work must be no-code contract selection over existing
   public surfaces.
@@ -915,7 +944,7 @@ For FSMGen, the analogs are:
 
 ## Open Questions
 
-- None for `.27`; `.28` owns read-only source/workspace discovery selection.
+- None for `.28`; `.29` owns catalog-backed source discovery implementation.
 
 ## Blockers
 
@@ -954,6 +983,7 @@ For FSMGen, the analogs are:
 | `2026-06-16` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.25` | Syntax check for `t/1461`; `prove -Iperl t/1461-semantic-introspection-mcp-error-data-sanitization-boundary.t`; mdBook, docs path audit, Knowledge Map generation/check, memory-architecture, README-numbering, and diff gates | `passed`; kept errors message-only/sanitized and selected `.26` serverInfo/instructions boundary |
 | `2026-06-16` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.26` | Syntax checks for `SemanticIntrospectionMCPAdapter` and `t/1462`; `prove -Iperl t/1441-semantic-introspection-mcp-adapter.t t/1445-semantic-introspection-mcp-schema-snapshots.t t/1460-semantic-introspection-mcp-initialize-negotiation-boundary.t t/1462-semantic-introspection-mcp-serverinfo-instructions-boundary.t`; mdBook, docs path audit, Knowledge Map generation/check, memory-architecture, README-numbering, and diff gates | `passed`; added stable server title metadata and selected `.27` remaining-profile exhaustion audit |
 | `2026-06-16` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.27` | mdBook, docs path audit, Knowledge Map generation/check, memory-architecture, README-numbering, and diff gates | `passed`; exhausted immediate MCP protocol hardening and selected `.28` read-only source/workspace discovery |
+| `2026-06-16` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.28` | mdBook, docs path audit, Knowledge Map generation/check, memory-architecture, README-numbering, and diff gates | `passed`; selected catalog-backed source discovery and routed implementation to `.29` |
 
 ## Commit Log
 
@@ -986,7 +1016,8 @@ For FSMGen, the analogs are:
 | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.25` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.25: keep MCP errors message-only` | Kept JSON-RPC errors message-only and sanitized, with no error.data. |
 | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.26` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.26: title MCP server info` | Added stable serverInfo title metadata and guarded compact read-only instructions. |
 | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.27` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.27: exhaust MCP protocol hardening` | Exhausted the immediate read-only MCP protocol-hardening pass. |
-| `SEMANTIC-INTROSPECTION-MCP-FRONTIER.28` | `pending` | `pending` |
+| `SEMANTIC-INTROSPECTION-MCP-FRONTIER.28` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.28: select MCP source discovery` | Selected catalog-backed source discovery and routed implementation to `.29`. |
+| `SEMANTIC-INTROSPECTION-MCP-FRONTIER.29` | `pending` | `pending` |
 
 ## Changelog
 
@@ -1074,3 +1105,5 @@ For FSMGen, the analogs are:
   remaining MCP profile exhaustion audit.
 - `2026-06-16`: Completed `.27`; immediate MCP protocol hardening is
   exhausted, and `.28` owns read-only source/workspace discovery selection.
+- `2026-06-16`: Completed `.28`; selected catalog-backed read-only source
+  discovery, and `.29` owns implementation.

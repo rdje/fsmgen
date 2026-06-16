@@ -62,6 +62,7 @@ answers:
   - "what do FSMGen MCP initialize instructions advertise?"
   - "is the immediate FSMGen MCP protocol-hardening pass exhausted?"
   - "what is the next semantic-introspection frontier after MCP protocol hardening?"
+  - "what source discovery boundary is selected for FSMGen MCP?"
 date: 2026-06-16
 status: current
 tags: [mcp, ai, llm, semantic-json, embedding, public-api, task-tree]
@@ -184,6 +185,10 @@ read-only, and free of unshipped optional MCP feature claims.
 profile. Remaining optional MCP feature families are either shipped, explicitly
 unsupported/deferred above, or require future exact owners. The next semantic
 frontier is read-only source/workspace discovery.
+`.28` selects catalog-backed source discovery over existing manifest,
+support-accounting, and example surfaces. It does not select arbitrary
+workspace traversal, hidden-file exposure, machine-local absolute paths, or
+write/network/shell authority. `.29` owns implementation.
 FSMGen should not expose raw private Perl AST, scheduler, lowering objects,
 `HDLGenerator` compatibility hashes, or internal Perl references as public
 automation APIs. Write generation tools, HDL writing, service mode, network
@@ -198,5 +203,4 @@ workflows; assertion assistance maps to proposing verification-intent source
 that FSMGen then checks and lowers.
 
 The next semantic-introspection leaf is
-`SEMANTIC-INTROSPECTION-MCP-FRONTIER.28`, read-only source/workspace
-discovery selection.
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.29`, source discovery implementation.

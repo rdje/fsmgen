@@ -7599,9 +7599,11 @@ and sanitized; `error.data` remains absent until a bounded schema is selected.
 metadata and keeps instructions compact/read-only.
 `SEMANTIC-INTROSPECTION-MCP-FRONTIER.27` exhausts the immediate MCP
 protocol-hardening pass for the current read-only profile.
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.28` selects catalog-backed source
+discovery as the next implementation boundary.
 
-Current active frontier: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.28`, read-only
-source/workspace discovery selection.
+Current active frontier: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.29`, source
+discovery implementation.
 
 Selected first MCP resource families are `fsmgen://capabilities`,
 `fsmgen://contracts`, `fsmgen://diagnostics`,

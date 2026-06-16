@@ -2830,7 +2830,9 @@ The immediate MCP protocol-hardening pass is exhausted for the current
 read-only profile. Optional feature families not listed as shipped above are
 deferred behind future exact task-tree leaves. The next semantic-introspection
 work moves back from protocol mechanics to query coverage: bounded read-only
-source/workspace discovery.
+source/workspace discovery. The selected implementation boundary is
+catalog-backed: reuse existing manifest, support-accounting, and example
+surfaces; do not recursively expose arbitrary workspace files.
 
 ## Downstream Tool Alignment
 
