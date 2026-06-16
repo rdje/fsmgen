@@ -2356,6 +2356,13 @@ syntax, generated review artifacts, reports, diagnostics, and HDL behavior
 through suitable host abstractions rather than creating parallel semantics. Decision
 [0018](../../decisions/0018-ial-contracts-are-backend-language-neutral.md)
 records this rule.
+The active owner for that portability work is
+[BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER](../../tasks/BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.md).
+Its `.2` frontier audits public contracts, infrastructure, in-memory host APIs,
+semantic introspection/MCP surfaces, fixture parity, host abstractions, and
+book transparency before any Rust/Rust-Wasm, browser JavaScript, Dart/web,
+Julia, or other non-Perl implementation slice changes code or public
+contracts.
 
 Decision `0016` selects `.ppif` (Protocol/Platform Intent Format) as the first
 public generic IAL2 file suffix. Earlier candidates `.pif` and `.ppi` are not

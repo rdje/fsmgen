@@ -61,6 +61,12 @@ browser-capable JavaScript, and Dart/web implementations should target those
 same observable contracts, with the Perl implementation serving as the current
 reference/oracle rather than the definition of the IAL layers; see
 [docs/decisions/0018-ial-contracts-are-backend-language-neutral.md](docs/decisions/0018-ial-contracts-are-backend-language-neutral.md).
+The dedicated task-tree owner for auditing and hardening that portability
+contract is
+`BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER`, currently at `.2`, a
+backend-language-neutral contract/infrastructure readiness audit before any
+future Rust/Rust-Wasm, browser JavaScript, Dart/web, Julia, or other host work
+changes code or public contracts.
 Deep semantic introspection is now a first-class FSMGen feature, tracked by
 `SEMANTIC-INTROSPECTION-MCP-FRONTIER`. The selected architecture is stable
 semantic-introspection API first and MCP as a required adapter over that API.
@@ -1039,6 +1045,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/tasks/PROJECT-REMAINING-WORK-TASKTREE-OWNERSHIP.md` — completed roadmap-maintenance task tree that routed the 2026-06-05 remaining-work inventory to existing active owners or new broad owner trees.
 - `docs/tasks/COMPOSITION-TYPE-BACKLOG-EXHAUSTION.md` — completed Composition/type backlog tree; shipped aggregate parameter/generic equality/inequality, closed the remaining Composition/type leaves behind exact prerequisites, and routed VHDL-dependent work through the completed backend/API frontier.
 - `docs/tasks/ISF-REMAINING-BROAD-FRONTIER.md` — proposed broad `R14` ISF frontier owner tree for deferred ISF backlog directions not already owned by narrower active trees.
+- `docs/tasks/BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.md` — active backend-language portability contract tree; `.1` created the owner and `.2` audits public contracts, infrastructure, in-memory host APIs, semantic introspection, and parity gates before any non-Perl implementation work changes code.
 - `docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md` — completed immediate semantic-introspection/MCP task tree; `.2` made deep semantic introspection a first-class feature, `.29` shipped catalog-backed source discovery, and `.30` returned active priority to IAL2.
 - `docs/tasks/BACKEND-API-VALIDATION-FRONTIER.md` — completed backend/API frontier owner tree for VHDL, external validation, ABC, structured generation, embedding API, and normalized export backlog through `.132`.
 - `docs/tasks/ARCHITECTURE-DEBT-FRONTIER.md` — completed architecture-debt frontier owner tree; direct-backend structural internal declaration nets shipped, and ISF parser/lowerer extraction remains deferred behind future exact ownership.

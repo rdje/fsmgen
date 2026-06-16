@@ -10,10 +10,10 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `HEAD after commit` — `IAL2-FEATURE-COMPLETENESS-FRONTIER.143: ship read single-beat multi-group demux`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.144` pending; next action is selecting/auditing the next AXI manager feature-completeness slice after generated read single-beat multi-group queue-head response-demux.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.143`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.142`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.141`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.140`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.139`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.138`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.137`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.136`; `SEMANTIC-INTROSPECTION-MCP-FRONTIER.30`; `SEMANTIC-INTROSPECTION-MCP-FRONTIER.29`. Older completed slices are in the task tree and git history.
-- in_flight_uncommitted: none after this commit; `.144` is the next selector/audit owner; unrelated untracked `fx/` intentionally left alone.
+- latest_commit: `HEAD after commit` — `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.1: create portability task tree`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.144` pending; backend-language portability is also task-tree owned at `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2` pending.
+- recently_done: `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.1`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.143`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.142`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.141`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.140`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.139`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.138`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.137`; `SEMANTIC-INTROSPECTION-MCP-FRONTIER.30`; `SEMANTIC-INTROSPECTION-MCP-FRONTIER.29`. Older completed slices are in the task tree and git history.
+- in_flight_uncommitted: none after this commit; `.144` remains the next IAL2 selector/audit owner; unrelated untracked `fx/` intentionally left alone.
 - blockers: none.
 
 ## Notes
