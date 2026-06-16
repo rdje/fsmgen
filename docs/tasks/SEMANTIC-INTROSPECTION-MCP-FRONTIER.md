@@ -95,7 +95,8 @@ For FSMGen, the analogs are:
     `SEMANTIC-INTROSPECTION-MCP-FRONTIER.8`,
     `SEMANTIC-INTROSPECTION-MCP-FRONTIER.9`,
     `SEMANTIC-INTROSPECTION-MCP-FRONTIER.10`,
-    `SEMANTIC-INTROSPECTION-MCP-FRONTIER.11`
+    `SEMANTIC-INTROSPECTION-MCP-FRONTIER.11`,
+    `SEMANTIC-INTROSPECTION-MCP-FRONTIER.12`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1`
   Status: `done`
@@ -168,9 +169,16 @@ For FSMGen, the analogs are:
   Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.10: select MCP roots boundary`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.11`
-  Status: `pending`
+  Status: `done`
   Goal: `Select read-only MCP prompt and workflow template boundaries.`
   Acceptance: `Audit whether read-only prompt/workflow templates for diagnostics, support discovery, examples, and semantic inspection should be advertised now or deferred; if selected, name exact prompt templates, inputs, safety policy, tests, and docs before implementation; do not enable writes, sampling, elicitation, network, shell, mutation workflows, commit, or push tools.`
+  Verification: `passed`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.11: defer MCP prompt templates`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.12`
+  Status: `pending`
+  Goal: `Select MCP resource subscription and list-change boundaries.`
+  Acceptance: `Audit whether resource subscribe/unsubscribe, resources/listChanged, and notifications/resources/list_changed should be advertised for the read-only semantic-introspection profile; either select exact behavior with tests/docs or keep static resources with listChanged false; do not enable writes, network, shell, mutation workflows, commit, or push tools.`
   Commit: `pending`
 
 ## Implementation Notes From `.4`
@@ -333,6 +341,27 @@ For FSMGen, the analogs are:
 - How should prompt templates avoid implying mutation, repair, generation, or
   sampling authority?
 
+## Implementation Notes From `.11`
+
+- MCP prompts are user-facing server-provided templates, not the structured
+  semantic API itself.
+- Prompt templates remain unadvertised in the shipped profile; clients should
+  use resources/tools for semantic queries.
+- Added `t/1448-semantic-introspection-mcp-prompts-boundary.t` to guard that
+  the server does not advertise `prompts`, prompt-shaped tools are absent, and
+  `prompts/list` / `prompts/get` return method-not-found until a prompt
+  contract is separately selected.
+
+## Candidate Contract Questions For `.12`
+
+- Should static semantic-introspection resources continue advertising
+  `listChanged => false`, or is there a bounded list-change notification
+  contract worth shipping?
+- Should resource subscribe/unsubscribe remain unsupported until there is a
+  long-lived service mode or mutable resource state?
+- What fixture coverage is needed before a client can rely on resource-list
+  stability across sessions?
+
 ## Candidate Future Phases
 
 - Phase 1: contract inventory and first safe semantic-introspection boundary.
@@ -347,7 +376,7 @@ For FSMGen, the analogs are:
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.11` | `pending` | `.10` selected explicit workspace-root authority and deferred client roots consumption; the next exact frontier is read-only prompt/workflow template selection. |
+| 1 | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.12` | `pending` | `.11` deferred prompt templates behind a future prompt contract; the next exact frontier is resource subscription/list-change selection. |
 
 ## Decisions
 
@@ -390,6 +419,8 @@ For FSMGen, the analogs are:
 - `2026-06-16`: `.10` selected explicit `--workspace-root` as the only shipped
   source authority; MCP client roots are not consumed yet, and source escapes
   remain fail-closed before runner invocation.
+- `2026-06-16`: `.11` kept MCP prompt templates unadvertised until a separate
+  prompt contract can be selected and snapshot-tested.
 - `2026-06-14`: Create this as a proposed owner, not an active implementation
   lane. The first real work must be no-code contract selection over existing
   public surfaces.
@@ -399,7 +430,7 @@ For FSMGen, the analogs are:
 
 ## Open Questions
 
-- None for `.10`; `.11` owns read-only prompt/workflow template selection.
+- None for `.11`; `.12` owns resource subscription/list-change selection.
 
 ## Blockers
 
@@ -421,6 +452,7 @@ For FSMGen, the analogs are:
 | `2026-06-16` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.8` | Syntax check for `t/1445`; `prove -Iperl t/1438-semantic-introspection-contract.t t/1441-semantic-introspection-mcp-adapter.t t/1442-fsmgen-mcp-jsonrpc-cli.t t/1443-semantic-introspection-mcp-protocol-hardening.t t/1444-semantic-introspection-mcp-support-queries.t t/1445-semantic-introspection-mcp-schema-snapshots.t`; mdBook, docs path audit, Knowledge Map generation/check, memory-architecture, README-numbering, and diff gates | `passed`; added read-only MCP schema snapshot fixture and client compatibility matrix; selected `.9` official MCP stdio framing compatibility boundary |
 | `2026-06-16` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.9` | Syntax check for `t/1446`; `prove -Iperl t/1441-semantic-introspection-mcp-adapter.t t/1442-fsmgen-mcp-jsonrpc-cli.t t/1443-semantic-introspection-mcp-protocol-hardening.t t/1445-semantic-introspection-mcp-schema-snapshots.t t/1446-semantic-introspection-mcp-stdio-framing.t`; mdBook, docs path audit, Knowledge Map generation/check, memory-architecture, README-numbering, and diff gates | `passed`; locked official newline-delimited MCP stdio framing and selected `.10` roots/workspace-root negotiation |
 | `2026-06-16` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.10` | Syntax check for `t/1447`; `prove -Iperl t/1441-semantic-introspection-mcp-adapter.t t/1443-semantic-introspection-mcp-protocol-hardening.t t/1446-semantic-introspection-mcp-stdio-framing.t t/1447-semantic-introspection-mcp-roots-boundary.t`; mdBook, docs path audit, Knowledge Map generation/check, memory-architecture, README-numbering, and diff gates | `passed`; selected explicit workspace-root authority and selected `.11` read-only prompt/workflow template boundary |
+| `2026-06-16` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.11` | Syntax check for `t/1448`; `prove -Iperl t/1441-semantic-introspection-mcp-adapter.t t/1443-semantic-introspection-mcp-protocol-hardening.t t/1448-semantic-introspection-mcp-prompts-boundary.t`; mdBook, docs path audit, Knowledge Map generation/check, memory-architecture, README-numbering, and diff gates | `passed`; kept prompt templates unadvertised and selected `.12` resource subscription/list-change boundary |
 
 ## Commit Log
 
@@ -436,7 +468,8 @@ For FSMGen, the analogs are:
 | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.8` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.8: add MCP schema snapshots` | Added bounded read-only MCP schema snapshot fixture/test and a client compatibility matrix. |
 | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.9` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.9: lock MCP stdio framing` | Locked official newline-delimited MCP stdio framing with a focused guard and corrected the compatibility matrix. |
 | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.10` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.10: select MCP roots boundary` | Selected explicit workspace-root authority for the shipped profile and deferred client roots consumption. |
-| `SEMANTIC-INTROSPECTION-MCP-FRONTIER.11` | `pending` | `pending` |
+| `SEMANTIC-INTROSPECTION-MCP-FRONTIER.11` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.11: defer MCP prompt templates` | Kept prompt templates unadvertised until a prompt contract is separately selected and snapshot-tested. |
+| `SEMANTIC-INTROSPECTION-MCP-FRONTIER.12` | `pending` | `pending` |
 
 ## Changelog
 
@@ -478,5 +511,7 @@ For FSMGen, the analogs are:
   JSON-RPC, the adapter's stdio path now has explicit framing coverage, and
   then selected `.10` for roots/workspace-root negotiation.
 - `2026-06-16`: Completed `.10`; explicit `--workspace-root` remains the only
-  shipped source authority, client roots remain unconsumed, and `.11` owns
-  read-only prompt/workflow template selection.
+  shipped source authority, client roots remain unconsumed, and `.11` selected
+  the read-only prompt/workflow template boundary.
+- `2026-06-16`: Completed `.11`; prompt templates remain unadvertised in the
+  shipped profile, and `.12` owns resource subscription/list-change selection.

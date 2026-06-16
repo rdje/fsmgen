@@ -2716,7 +2716,8 @@ The read-only adapter currently has a bounded client profile:
 | MCP 2025-06-18 stdio transport using newline-delimited JSON-RPC and `initialize`, `resources/list`, `resources/templates/list`, `resources/read`, `tools/list`, `tools/call`, and `ping` | shipped | `t/1441-semantic-introspection-mcp-adapter.t`, `t/1443-semantic-introspection-mcp-protocol-hardening.t`, `t/1446-semantic-introspection-mcp-stdio-framing.t`, and the schema fixture in `t/fixtures/semantic_introspection_mcp/read_only_schema_snapshot.json` |
 | Local clients that can launch `perl bin/fsmgen-mcp --workspace-root ROOT` and speak the shipped JSON-RPC profile | compatible with the shipped read-only profile | Same fixture plus the documented workflow examples above |
 | MCP client `roots` capability and `roots/list` negotiation | not consumed in the shipped profile; `--workspace-root` remains authoritative | `t/1447-semantic-introspection-mcp-roots-boundary.t` |
-| Clients that require Streamable HTTP transport, prompts, sampling, completions, or service-mode session features | not claimed yet | Future task-tree ownership required before implementation |
+| MCP prompt templates through `prompts/list` and `prompts/get` | not advertised in the shipped profile; use resources/tools for semantic queries | `t/1448-semantic-introspection-mcp-prompts-boundary.t` |
+| Clients that require Streamable HTTP transport, sampling, completions, or service-mode session features | not claimed yet | Future task-tree ownership required before implementation |
 | Clients that need write/generation, HDL output writing, automated repair, shell, network, commit, or push tools | intentionally blocked | `semantic_introspection.write_generation_tools_enabled` remains false |
 
 The MCP 2025-06-18 transport specification defines stdio messages as
@@ -2730,6 +2731,10 @@ to servers. FSMGen does not consume client roots in the shipped profile because
 source access is already bounded by the explicit `--workspace-root` chosen when
 the adapter is launched. A client roots integration must be task-tree-owned
 before it can broaden or replace that authority.
+
+Prompt templates are also deferred. The shipped semantic-introspection API is
+the structured resource/tool surface; prompt templates would be user-facing
+workflow text and must not become a second, less precise semantic API.
 
 ## Downstream Tool Alignment
 

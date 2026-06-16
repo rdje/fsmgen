@@ -21,11 +21,13 @@ answers:
   - "is FSMGen MCP stdio newline delimited?"
   - "does FSMGen consume MCP client roots?"
   - "what is the FSMGen MCP workspace-root authority?"
+  - "does FSMGen advertise MCP prompts?"
+  - "are FSMGen MCP prompt templates implemented?"
 date: 2026-06-16
 status: current
 tags: [mcp, ai, llm, semantic-json, embedding, public-api, task-tree]
-evidence: docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md; docs/SEMANTIC_INTROSPECTION_MCP_FIRST_CLASS_SELECTION.md; docs/TASK_TREE.md; ROADMAP_V2.md; docs/book/src/11-extensions-and-embedding.md; docs/book/src/14-feature-backlog.md; perl/FSM/Support/SemanticIntrospectionContract.pm; perl/FSM/Support/SemanticIntrospectionSection.pm; perl/FSM/Support/SemanticIntrospectionMCPAdapter.pm; bin/fsmgen-mcp; https://modelcontextprotocol.io/specification/2025-06-18/basic/transports; https://modelcontextprotocol.io/specification/2025-06-18/client/roots
-reverify: env -u PERL5LIB ./bin/fsmgen --capability-manifest >/tmp/fsmgen_semantic_introspection_manifest.json && perl -MJSON::PP=decode_json -0777 -ne 'my $m=decode_json($_); die "missing semantic_introspection\n" unless $m->{semantic_introspection}; die "adapter not enabled\n" unless $m->{semantic_introspection}{mcp_adapter_implemented}; die "write tools unexpectedly enabled\n" if $m->{semantic_introspection}{write_generation_tools_enabled}; die "missing adapter owner\n" unless ($m->{semantic_introspection}{contract_surface_map}{mcp_adapter}{contract_source}||"") eq "FSM::Support::SemanticIntrospectionMCPAdapter"; print "semantic_introspection manifest adapter ok\n";' /tmp/fsmgen_semantic_introspection_manifest.json && perl bin/fsmgen-mcp --request-json '{"jsonrpc":"2.0","id":1,"method":"tools/list"}' >/tmp/fsmgen_mcp_tools.json && perl -MJSON::PP=decode_json -0777 -ne 'my $r=decode_json($_); my %t=map { $_->{name}=>1 } @{$r->{result}{tools}}; die "missing semantic tool\n" unless $t{fsmgen_semantic_introspect}; print "fsmgen-mcp tools ok\n";' /tmp/fsmgen_mcp_tools.json && prove -Iperl t/1445-semantic-introspection-mcp-schema-snapshots.t t/1446-semantic-introspection-mcp-stdio-framing.t t/1447-semantic-introspection-mcp-roots-boundary.t
+evidence: docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md; docs/SEMANTIC_INTROSPECTION_MCP_FIRST_CLASS_SELECTION.md; docs/TASK_TREE.md; ROADMAP_V2.md; docs/book/src/11-extensions-and-embedding.md; docs/book/src/14-feature-backlog.md; perl/FSM/Support/SemanticIntrospectionContract.pm; perl/FSM/Support/SemanticIntrospectionSection.pm; perl/FSM/Support/SemanticIntrospectionMCPAdapter.pm; bin/fsmgen-mcp; https://modelcontextprotocol.io/specification/2025-06-18/basic/transports; https://modelcontextprotocol.io/specification/2025-06-18/client/roots; https://modelcontextprotocol.io/specification/2025-06-18/server/prompts
+reverify: env -u PERL5LIB ./bin/fsmgen --capability-manifest >/tmp/fsmgen_semantic_introspection_manifest.json && perl -MJSON::PP=decode_json -0777 -ne 'my $m=decode_json($_); die "missing semantic_introspection\n" unless $m->{semantic_introspection}; die "adapter not enabled\n" unless $m->{semantic_introspection}{mcp_adapter_implemented}; die "write tools unexpectedly enabled\n" if $m->{semantic_introspection}{write_generation_tools_enabled}; die "missing adapter owner\n" unless ($m->{semantic_introspection}{contract_surface_map}{mcp_adapter}{contract_source}||"") eq "FSM::Support::SemanticIntrospectionMCPAdapter"; print "semantic_introspection manifest adapter ok\n";' /tmp/fsmgen_semantic_introspection_manifest.json && perl bin/fsmgen-mcp --request-json '{"jsonrpc":"2.0","id":1,"method":"tools/list"}' >/tmp/fsmgen_mcp_tools.json && perl -MJSON::PP=decode_json -0777 -ne 'my $r=decode_json($_); my %t=map { $_->{name}=>1 } @{$r->{result}{tools}}; die "missing semantic tool\n" unless $t{fsmgen_semantic_introspect}; print "fsmgen-mcp tools ok\n";' /tmp/fsmgen_mcp_tools.json && prove -Iperl t/1445-semantic-introspection-mcp-schema-snapshots.t t/1446-semantic-introspection-mcp-stdio-framing.t t/1447-semantic-introspection-mcp-roots-boundary.t t/1448-semantic-introspection-mcp-prompts-boundary.t
 ---
 
 FSMGen has an active owner for first-class semantic introspection and future
@@ -88,6 +90,9 @@ future-owned work.
 the adapter does not consume MCP client roots yet, does not expose `roots` as a
 server capability, treats client `roots/list` as unsupported, and rejects
 source escapes before invoking FSMGen.
+`.11` keeps MCP prompt templates unadvertised. Clients should use the
+structured resources/tools for semantic queries until a separate prompt
+contract is selected and snapshot-tested.
 FSMGen should not expose raw private Perl AST, scheduler, lowering objects,
 `HDLGenerator` compatibility hashes, or internal Perl references as public
 automation APIs. Write generation tools, HDL writing, service mode, network
@@ -102,5 +107,5 @@ workflows; assertion assistance maps to proposing verification-intent source
 that FSMGen then checks and lowers.
 
 The next semantic-introspection leaf is
-`SEMANTIC-INTROSPECTION-MCP-FRONTIER.11`, read-only MCP prompt/workflow
-template boundary.
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.12`, MCP resource subscription/list-change
+boundary.

@@ -1012,9 +1012,11 @@ sampling, completions, client roots consumption, service mode, and write tools o
 the shipped profile. `SEMANTIC-INTROSPECTION-MCP-FRONTIER.10` selected
 explicit `--workspace-root` as the only shipped source authority; MCP client
 roots are not consumed yet and source escapes remain fail-closed before any
-runner invocation. The next frontier is
-`SEMANTIC-INTROSPECTION-MCP-FRONTIER.11`, read-only MCP prompt/workflow
-template selection. The IAL2
+runner invocation. `SEMANTIC-INTROSPECTION-MCP-FRONTIER.11` keeps prompt
+templates unadvertised until a separate prompt contract can be selected and
+snapshot-tested. The next frontier is
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.12`, MCP resource subscription/list-change
+selection. The IAL2
 SystemVerilog-backed feature-completeness tree remains
 active at
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.136`, but broad IAL2 expansion is no

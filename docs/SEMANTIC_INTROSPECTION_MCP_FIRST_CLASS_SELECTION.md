@@ -153,6 +153,11 @@ for the shipped profile. MCP client roots remain unconsumed; the adapter uses
 the explicit `--workspace-root` chosen at launch, keeps source identities
 relative to that root, and rejects source escapes before invoking FSMGen.
 
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.11` selected the prompt boundary for the
+shipped profile. Prompt templates are not advertised yet; clients should use
+the structured resource/tool API for semantic queries until a separate prompt
+contract is selected and snapshot-tested.
+
 ## Deferred
 
 The following remain outside `.2` and `.3` unless separately selected:

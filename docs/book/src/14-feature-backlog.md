@@ -7555,9 +7555,11 @@ tools are not claimed yet. `SEMANTIC-INTROSPECTION-MCP-FRONTIER.9` locks the
 stdio framing conclusion with a focused newline/no-embedded-newline guard.
 `SEMANTIC-INTROSPECTION-MCP-FRONTIER.10` selects explicit `--workspace-root`
 as the only shipped source authority; MCP client roots are not consumed yet.
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.11` keeps prompt templates unadvertised
+until a separate prompt contract can be selected and snapshot-tested.
 
-Current active frontier: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.11`, read-only
-MCP prompt/workflow template boundary.
+Current active frontier: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.12`, MCP
+resource subscription/list-change boundary.
 
 Selected first MCP resource families are `fsmgen://capabilities`,
 `fsmgen://contracts`, `fsmgen://diagnostics`,
