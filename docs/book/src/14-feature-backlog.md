@@ -4165,9 +4165,14 @@ source-readiness audit
 found the existing IAL1 assert/assume/cover/property/monitor surface sufficient
 for inline SystemVerilog assertion projection, but insufficient for
 first-class generated SV/UVM or VHDL-oriented verification artifacts. The
-current frontier `.3` selects an IAL1 verification observation/source-feature
-contract before any output generator is chosen. Direct IAL2-to-verification
-generation remains an open audit question.
+observation selector
+[IAL1_VERIFICATION_OBSERVATION_CONTRACT_SELECTION](../../IAL1_VERIFICATION_OBSERVATION_CONTRACT_SELECTION.md)
+then selected actor-level passive observation metadata,
+`(observe NAME (role passive_monitor) (signals SIG...))`, as the first IAL1
+verification-specific source feature. `ISF-VERIFICATION-OBSERVATION-METADATA.1`
+owns parser/report/public-contract implementation; output generation remains
+deferred. Direct IAL2-to-verification generation remains an open audit
+question.
 
 Read-data interleaving queue readiness audit:
 [AXI_IAL2_MANAGER_READ_DATA_INTERLEAVING_QUEUE_READINESS_AUDIT](../../AXI_IAL2_MANAGER_READ_DATA_INTERLEAVING_QUEUE_READINESS_AUDIT.md)

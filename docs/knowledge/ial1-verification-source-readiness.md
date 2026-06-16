@@ -10,8 +10,8 @@ answers:
 date: 2026-06-16
 status: current
 tags: [ial1, isf, verification, sv-uvm, vhdl, task-tree]
-evidence: docs/IAL1_VERIFICATION_CODE_GENERATION_SOURCE_READINESS_AUDIT.md; docs/tasks/IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.md
-reverify: rg -n 'Source Readiness Audit|observation contract|not enough|insufficient|IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.3' docs/IAL1_VERIFICATION_CODE_GENERATION_SOURCE_READINESS_AUDIT.md docs/tasks/IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.md
+evidence: docs/IAL1_VERIFICATION_CODE_GENERATION_SOURCE_READINESS_AUDIT.md; docs/IAL1_VERIFICATION_OBSERVATION_CONTRACT_SELECTION.md; docs/tasks/IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.md; docs/tasks/ISF-VERIFICATION-OBSERVATION-METADATA.md
+reverify: rg -n 'Source Readiness Audit|observation contract|not enough|insufficient|IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.3|ISF-VERIFICATION-OBSERVATION-METADATA|observe NAME|passive_monitor' docs/IAL1_VERIFICATION_CODE_GENERATION_SOURCE_READINESS_AUDIT.md docs/IAL1_VERIFICATION_OBSERVATION_CONTRACT_SELECTION.md docs/tasks/IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.md docs/tasks/ISF-VERIFICATION-OBSERVATION-METADATA.md
 ---
 
 `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.2` decided that the existing IAL1
@@ -20,9 +20,9 @@ assertion/property path, but not enough for first-class generated verification
 artifacts such as UVM monitors, agents, scoreboards, coverage collectors,
 reusable VIP, or VHDL-oriented verification outputs.
 
-The next prerequisite is `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.3`: select
-a bounded IAL1 verification-specific source/report feature family, expected to
-start with passive observation roles and source identity for future generated
-monitors/checkers. SV/UVM output, VHDL output, direct IAL2 routing, and public
-CLI/artifact contracts stay behind later selector leaves.
-
+The selected next prerequisite is
+`ISF-VERIFICATION-OBSERVATION-METADATA.1`: implement actor-level passive
+observation metadata, `(observe NAME (role passive_monitor) (signals SIG...))`,
+as the first IAL1 verification-specific source/report feature family. SV/UVM
+output, VHDL output, direct IAL2 routing, and public CLI/artifact contracts
+stay behind later selector leaves.

@@ -1612,12 +1612,15 @@ IAL1 (`.isf`) to verification code. Audit `.2` found the shipped IAL1
 assert/assume/cover/property/monitor surface sufficient for inline
 SystemVerilog assertion projection but insufficient as the sole source
 contract for first-class generated SV/UVM or VHDL-oriented verification
-artifacts. The current frontier `.3` selects an IAL1 verification
-observation/source-feature contract before output generation. SV/UVM agents,
-monitors, scoreboards, protocol checkers, coverage, reusable verification IP,
-and VHDL-oriented verification artifacts each require separate
-contract-selection owners. Direct IAL2-to-verification generation remains an
-explicit audit question, not an implementation assumption.
+artifacts. Selector `.3` chose actor-level passive observation metadata,
+`(observe NAME (role passive_monitor) (signals SIG...))`, as the first IAL1
+verification-specific source feature. Implementation is owned by
+`ISF-VERIFICATION-OBSERVATION-METADATA.1` and remains metadata-only/report-only
+before any output generator is selected. SV/UVM agents, monitors,
+scoreboards, protocol checkers, coverage, reusable verification IP, and
+VHDL-oriented verification artifacts each require separate contract-selection
+owners. Direct IAL2-to-verification generation remains an explicit audit
+question, not an implementation assumption.
 Packed burst outputs, concrete same-ID queue variants beyond the shipped
 read burst-last, write, and read single-beat depth-2 queue-head boundaries,
 per-ID queues, queued policy, profile

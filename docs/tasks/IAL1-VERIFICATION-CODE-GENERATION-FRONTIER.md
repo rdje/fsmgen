@@ -67,11 +67,11 @@ reusable verification IP, and VHDL-oriented verification artifacts.
   Commit: `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.2: audit IAL1 verification source`
 
 - ID: `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.3`
-  Status: `pending`
+  Status: `done`
   Goal: `Select the first IAL1 verification observation/source-feature contract before output generation.`
   Acceptance: `Because .2 found missing IAL1 surface area for first-class verification-code generation, this selector chooses one exact source/report feature family, expected to cover passive observation roles and source identity for future monitors/checkers; records diagnostics, examples, generated .fsm or report artifact boundary, support-accounting shape, mdBook coverage, validation gates, and deferrals before implementation. UVM, VHDL, scoreboard, coverage, reusable VIP, direct IAL2 routing, and public CLI/artifact behavior remain behind their later selector leaves.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `passed: Knowledge Map regeneration/check, mdBook build, docs path audit, memory architecture check, positive ownership scans, and diff hygiene`
+  Commit: `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.3: select observation metadata`
 
 - ID: `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4`
   Status: `pending`
@@ -106,7 +106,9 @@ reusable verification IP, and VHDL-oriented verification artifacts.
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
 | 1 | `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.2` | `done` | Audit completed; existing IAL1 checks/properties are enough for inline SV assertion projection but not enough for first-class SV/UVM or VHDL-oriented verification-code generation. |
-| 2 | `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.3` | `pending` | Select the first IAL1 verification-specific observation/source-feature contract before any output generator is chosen. |
+| 2 | `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.3` | `done` | Selected actor-level passive observation metadata as the first IAL1 verification-specific source feature. |
+| 3 | `ISF-VERIFICATION-OBSERVATION-METADATA.1` | `pending` | Implement the selected `observe` metadata contract before `.4` chooses an SV/UVM output generator. |
+| 4 | `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` | `pending` | SV/UVM output selection waits until the selected IAL1 observation source contract ships. |
 
 ## Decisions
 
@@ -127,11 +129,17 @@ reusable verification IP, and VHDL-oriented verification artifacts.
   first-class SV/UVM or VHDL-oriented verification-code generation. Select
   `.3`, an IAL1 verification observation/source-feature selector, before
   choosing output artifacts.
+- `2026-06-16`: Complete selector `.3`. The selected first source feature is
+  actor-level passive observation metadata spelled
+  `(observe NAME (role passive_monitor) (signals SIG...))`, projected only to
+  additive schedule JSON `verification_observations[]`. Implementation is
+  owned by active tree `ISF-VERIFICATION-OBSERVATION-METADATA`, leaf `.1`.
 
 ## Open Questions
 
-- What exact IAL1 passive observation/source-identity contract should `.3`
-  select before verification output generation?
+- What transaction/event object model should follow after
+  `ISF-VERIFICATION-OBSERVATION-METADATA.1` ships passive observation
+  metadata?
 - Should protocol-specific IAL2 facts become verification annotations on the
   generated IAL1 artifact, or should a future direct IAL2 verification route
   exist at all?
@@ -140,8 +148,9 @@ reusable verification IP, and VHDL-oriented verification artifacts.
 
 ## Blockers
 
-- None for the `.2` audit. Implementation remains blocked until the audit and
-  relevant contract-selection leaves complete.
+- SV/UVM output selection leaf `.4` waits until
+  `ISF-VERIFICATION-OBSERVATION-METADATA.1` ships the selected source
+  prerequisite. No blocker for the observation metadata implementation owner.
 
 ## Verification Log
 
@@ -149,6 +158,7 @@ reusable verification IP, and VHDL-oriented verification artifacts.
 | --- | --- | --- | --- |
 | `2026-06-16` | `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.1` | `bash knowledge-map/scripts/gen_knowledge_map.sh`; `rg -n 'IAL1-VERIFICATION-CODE-GENERATION-FRONTIER|IAL1 verification-specific|SV/UVM|VHDL-oriented verification|Direct IAL2-to-verification|Verification Code Generation' docs/tasks/IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.md docs/TASK_TREE.md README.md ROADMAP_V2.md docs/book/src/14-feature-backlog.md docs/knowledge/ial1-verification-code-generation-frontier.md docs/knowledge/ial2-axi-manager-post-rresp-aggregation-next-slice.md MEMORY.md`; Knowledge Map generated-index spot check; `mdbook build docs/book`; `env -u PERL5LIB prove -Iperl t/1414-docs-relative-paths-audit.t`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `git diff --check` | `passed`; verification-code generation is now task-tree owned as an IAL1-first lane, with IAL1 verification-specific features, SV/UVM targets, VHDL verification targets, IAL2 routing, and public artifact/report/support-accounting contracts captured as executable future leaves |
 | `2026-06-16` | `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.2` | Audit/read: `docs/IAL1_VERIFICATION_CODE_GENERATION_SOURCE_READINESS_AUDIT.md`; `docs/ISF_SPEC.md`; `docs/ISF_PUBLIC_INTERFACE_CONTRACT.md`; `docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md`; `docs/book/src/13d-control-flow.md`; `docs/book/src/13h-lowering-reference.md`; `docs/book/src/13k-isf-feature-support-matrix.md`; `docs/book/src/14-feature-backlog.md`; `docs/tasks/ISF-ASSERT.md`; `docs/tasks/ISF-ASSERT-CONCURRENT.md`; `docs/tasks/ISF-COVER-ASSUME.md`; `docs/tasks/ISF-PROPERTY-IMPLICATION.md`; `docs/tasks/ISF-PROPERTY-SAMPLED-VALUE.md`; `docs/tasks/ISF-PROPERTY-WINDOW-RANGE.md`; `docs/tasks/ISF-TRIGGER-ANCHOR.md`; `docs/tasks/ISF-TEMPORAL-CONTRACT-ASSERTIONS.md`; `docs/tasks/ISF-TEMPORAL-CONTRACT-STORAGE-REPORTS.md`; `docs/tasks/R11-DIRECT-STRUCTURAL-VHDL-REROUTING.md`; `docs/vendor/accellera/uvm/UVM_Class_Reference_Manual_1.2.pdf`; `docs/vendor/accellera/uvm/uvm_users_guide_1.2.pdf`; `.cache/local-references/accellera/uvm/uvm-1.2`; `perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl/FSM/Scheduler/ISF/Emitter/FSM.pm`; `perl/FSM/Adapter/FSMGenFull/Parser.pm`; `perl/FSM/Adapter/FSMGenFull/SignalAnalyzer.pm`; `perl/FSM/Pipeline/GeneratedModuleInfoBuilder.pm`; `perl/FSM/Backend/GeneratedModuleEmitter.pm`; `pdftotext`/`rg` UVM reference scans; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `mdbook build docs/book`; `env -u PERL5LIB prove -Iperl t/1414-docs-relative-paths-audit.t`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `git diff --check` | `passed`; existing IAL1 verification checks/properties are sufficient for inline SV assertion projection but insufficient for first-class verification-code generation, so `.3` is selected to define an IAL1 verification observation/source-feature contract |
+| `2026-06-16` | `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.3` | Selection/read: `docs/IAL1_VERIFICATION_CODE_GENERATION_SOURCE_READINESS_AUDIT.md`; `docs/IAL1_VERIFICATION_OBSERVATION_CONTRACT_SELECTION.md`; `docs/tasks/ISF-VERIFICATION-OBSERVATION-METADATA.md`; `docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md`; `docs/ISF_PUBLIC_INTERFACE_CONTRACT.md`; `docs/book/src/13k-isf-feature-support-matrix.md`; `perl/FSM/Scheduler/ISF/Emitter/JSON.pm`; `perl/FSM/Adapter/ISF/Parser.pm`; `t/1179-isf-phase-stage-boundary.t`; `t/1252-isf-actor-phase-stage-report.t`; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `mdbook build docs/book`; `env -u PERL5LIB prove -Iperl t/1414-docs-relative-paths-audit.t`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `git diff --check` | `passed`; selected actor-level passive `observe` metadata and created `ISF-VERIFICATION-OBSERVATION-METADATA.1` as the implementation owner before SV/UVM output selection |
 
 ## Commit Log
 
@@ -156,9 +166,13 @@ reusable verification IP, and VHDL-oriented verification artifacts.
 | --- | --- | --- |
 | `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.1` | `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.1: create verification frontier` | Created the active IAL1-first verification-code generation frontier and selected `.2`, the IAL1 verification-source/prerequisite audit. |
 | `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.2` | `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.2: audit IAL1 verification source` | Completed the IAL1 source-readiness audit and selected `.3`, an IAL1 verification observation/source-feature contract selector. |
+| `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.3` | `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.3: select observation metadata` | Selected the first IAL1 verification-specific source feature and created `ISF-VERIFICATION-OBSERVATION-METADATA.1`. |
 
 ## Changelog
 
 - `2026-06-16`: Created active IAL1 verification-code generation frontier and
   selected `.2`, IAL1 verification-source and prerequisite audit, as the next
   executable leaf.
+- `2026-06-16`: Completed `.3`, selecting actor-level passive observation
+  metadata and creating the active implementation owner tree
+  `ISF-VERIFICATION-OBSERVATION-METADATA`.
