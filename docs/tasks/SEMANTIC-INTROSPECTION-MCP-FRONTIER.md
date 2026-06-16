@@ -109,7 +109,8 @@ For FSMGen, the analogs are:
     `SEMANTIC-INTROSPECTION-MCP-FRONTIER.22`,
     `SEMANTIC-INTROSPECTION-MCP-FRONTIER.23`,
     `SEMANTIC-INTROSPECTION-MCP-FRONTIER.24`,
-    `SEMANTIC-INTROSPECTION-MCP-FRONTIER.25`
+    `SEMANTIC-INTROSPECTION-MCP-FRONTIER.25`,
+    `SEMANTIC-INTROSPECTION-MCP-FRONTIER.26`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1`
   Status: `done`
@@ -280,9 +281,16 @@ For FSMGen, the analogs are:
   Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.24: lock MCP initialize negotiation`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.25`
-  Status: `pending`
+  Status: `done`
   Goal: `Select MCP error-data and sanitization boundaries.`
   Acceptance: `Audit whether JSON-RPC error responses should include structured data objects for invalid params, method-not-found, unsupported envelopes, or adapter failures; either select exact sanitized data fields with tests/docs or keep message-only errors; do not leak machine-local paths, raw Perl stack frames, raw private objects, command internals, network, shell, write/generation, commit, or push authority.`
+  Verification: `passed`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.25: keep MCP errors message-only`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.26`
+  Status: `pending`
+  Goal: `Select MCP serverInfo and instructions metadata boundaries.`
+  Acceptance: `Audit whether initialize serverInfo should add display title or richer metadata and whether instructions text should be expanded or kept compact; either select exact stable fields/text with tests/docs or keep the current minimal profile; do not introduce marketing copy, stale capability claims, unowned optional protocol features, machine-local paths, writes, network, shell, commit, or push authority.`
   Commit: `pending`
 
 ## Implementation Notes From `.4`
@@ -729,6 +737,24 @@ For FSMGen, the analogs are:
   machine-local paths, Perl implementation details, or command internals?
 - How should tests prove that any error data remains bounded and redacted?
 
+## Implementation Notes From `.25`
+
+- JSON-RPC errors remain message-only for the shipped profile: stable `code`
+  and sanitized `message`, with no `error.data`.
+- Error messages are guarded against machine-local repo-root leakage and Perl
+  file/line suffixes.
+- Added
+  `t/1461-semantic-introspection-mcp-error-data-sanitization-boundary.t`.
+
+## Candidate Contract Questions For `.26`
+
+- Should `serverInfo` include a stable display `title`, or is `name`/`version`
+  enough for the shipped profile?
+- Should `instructions` become a more detailed client-facing contract summary,
+  or remain compact to avoid duplicating the mdBook and manifest?
+- How should tests prevent instructions from advertising unshipped optional
+  protocol capabilities?
+
 ## Candidate Future Phases
 
 - Phase 1: contract inventory and first safe semantic-introspection boundary.
@@ -743,7 +769,7 @@ For FSMGen, the analogs are:
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.25` | `pending` | `.24` locked initialize negotiation; the next exact frontier is MCP error-data/sanitization selection. |
+| 1 | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.26` | `pending` | `.25` kept errors message-only and sanitized; the next exact frontier is serverInfo/instructions metadata selection. |
 
 ## Decisions
 
@@ -823,6 +849,8 @@ For FSMGen, the analogs are:
 - `2026-06-16`: `.24` locked initialize negotiation to the supported
   `2025-06-18` protocol version and kept client capabilities from widening the
   server's advertised capability map.
+- `2026-06-16`: `.25` kept JSON-RPC errors message-only with sanitized
+  messages and no `error.data`.
 - `2026-06-14`: Create this as a proposed owner, not an active implementation
   lane. The first real work must be no-code contract selection over existing
   public surfaces.
@@ -832,7 +860,7 @@ For FSMGen, the analogs are:
 
 ## Open Questions
 
-- None for `.24`; `.25` owns MCP error-data/sanitization selection.
+- None for `.25`; `.26` owns MCP serverInfo/instructions metadata selection.
 
 ## Blockers
 
@@ -868,6 +896,7 @@ For FSMGen, the analogs are:
 | `2026-06-16` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.22` | Syntax check for `t/1458`; `prove -Iperl t/1458-semantic-introspection-mcp-progress-cancellation-boundary.t`; mdBook, docs path audit, Knowledge Map generation/check, memory-architecture, README-numbering, and diff gates | `passed`; kept progress/cancellation unshipped and selected `.23` JSON-RPC batch/envelope boundary |
 | `2026-06-16` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.23` | Syntax checks for `SemanticIntrospectionMCPAdapter` and `t/1459`; `prove -Iperl t/1443-semantic-introspection-mcp-protocol-hardening.t t/1446-semantic-introspection-mcp-stdio-framing.t t/1459-semantic-introspection-mcp-jsonrpc-batch-envelope-boundary.t`; mdBook, docs path audit, Knowledge Map generation/check, memory-architecture, README-numbering, and diff gates | `passed`; rejected JSON-RPC batch/non-object envelopes and selected `.24` initialize protocol/capability boundary |
 | `2026-06-16` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.24` | Syntax checks for `SemanticIntrospectionMCPAdapter`, `t/1441`, and `t/1460`; `prove -Iperl t/1441-semantic-introspection-mcp-adapter.t t/1445-semantic-introspection-mcp-schema-snapshots.t t/1460-semantic-introspection-mcp-initialize-negotiation-boundary.t`; mdBook, docs path audit, Knowledge Map generation/check, memory-architecture, README-numbering, and diff gates | `passed`; locked initialize negotiation and selected `.25` error-data/sanitization boundary |
+| `2026-06-16` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.25` | Syntax check for `t/1461`; `prove -Iperl t/1461-semantic-introspection-mcp-error-data-sanitization-boundary.t`; mdBook, docs path audit, Knowledge Map generation/check, memory-architecture, README-numbering, and diff gates | `passed`; kept errors message-only/sanitized and selected `.26` serverInfo/instructions boundary |
 
 ## Commit Log
 
@@ -897,7 +926,8 @@ For FSMGen, the analogs are:
 | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.22` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.22: defer MCP progress cancellation` | Kept progress notifications and cancellation session behavior unshipped for the one-shot/stdin profile. |
 | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.23` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.23: reject MCP batch envelopes` | Rejected batch arrays and non-object JSON-RPC envelopes with explicit invalid-request errors. |
 | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.24` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.24: lock MCP initialize negotiation` | Locked initialize to the supported protocol version and minimal server capabilities. |
-| `SEMANTIC-INTROSPECTION-MCP-FRONTIER.25` | `pending` | `pending` |
+| `SEMANTIC-INTROSPECTION-MCP-FRONTIER.25` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.25: keep MCP errors message-only` | Kept JSON-RPC errors message-only and sanitized, with no error.data. |
+| `SEMANTIC-INTROSPECTION-MCP-FRONTIER.26` | `pending` | `pending` |
 
 ## Changelog
 
@@ -978,3 +1008,5 @@ For FSMGen, the analogs are:
 - `2026-06-16`: Completed `.24`; initialize now reports the supported MCP
   protocol version and minimal server capabilities, and `.25` owns
   error-data/sanitization selection.
+- `2026-06-16`: Completed `.25`; JSON-RPC errors remain message-only and
+  sanitized, and `.26` owns serverInfo/instructions metadata selection.

@@ -2729,6 +2729,7 @@ The read-only adapter currently has a bounded client profile:
 | MCP progress tokens and cancellation notifications | no progress notifications in the one-shot/stdin profile; id-less `notifications/cancelled` is silent, and id-bearing cancellation requests are unsupported | `t/1458-semantic-introspection-mcp-progress-cancellation-boundary.t` |
 | JSON-RPC batch arrays and non-object request envelopes | not shipped; rejected with `-32600 Invalid Request`; stdio remains one compact request object per line | `t/1459-semantic-introspection-mcp-jsonrpc-batch-envelope-boundary.t` |
 | MCP initialize protocol/capability negotiation | server reports supported protocol `2025-06-18`; client capabilities do not widen the minimal server `resources`/`tools` capabilities | `t/1441-semantic-introspection-mcp-adapter.t`, `t/1445-semantic-introspection-mcp-schema-snapshots.t`, and `t/1460-semantic-introspection-mcp-initialize-negotiation-boundary.t` |
+| MCP JSON-RPC `error.data` | not shipped; errors expose stable code plus sanitized message only | `t/1461-semantic-introspection-mcp-error-data-sanitization-boundary.t` |
 | Clients that need write/generation, HDL output writing, automated repair, shell, network, commit, or push tools | intentionally blocked | `semantic_introspection.write_generation_tools_enabled` remains false |
 
 The MCP 2025-06-18 transport specification defines stdio messages as
@@ -2811,6 +2812,10 @@ supported protocol version, `2025-06-18`, rather than echoing unsupported
 client strings. Client-advertised roots, sampling, elicitation, or
 experimental capability objects do not widen the server capability map; only
 the shipped `resources` and `tools` capabilities are advertised.
+
+JSON-RPC errors are message-only in the shipped profile. Clients can rely on
+the standard error `code` and a sanitized `message`; `error.data` remains
+absent until a stable, redacted data schema is selected.
 
 ## Downstream Tool Alignment
 

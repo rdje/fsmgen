@@ -229,6 +229,12 @@ version `2025-06-18` and does not echo unsupported client protocol strings.
 Client capabilities cannot widen the advertised server capability map beyond
 the shipped `resources` and `tools` capabilities.
 
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.25` selected the error-data boundary.
+JSON-RPC errors expose a stable `code` and sanitized `message` only.
+`error.data` remains absent until a separate bounded schema can be selected
+without leaking machine-local paths, Perl internals, command details, or raw
+private objects.
+
 ## Deferred
 
 The following remain outside `.2` and `.3` unless separately selected:

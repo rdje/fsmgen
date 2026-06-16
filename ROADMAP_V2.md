@@ -1048,8 +1048,10 @@ stdio profile remains one compact request object per line.
 `SEMANTIC-INTROSPECTION-MCP-FRONTIER.24` locks initialize negotiation to the
 single supported `2025-06-18` protocol version and keeps client
 capabilities from widening the server's minimal resources/tools capability
-set. The next frontier is `SEMANTIC-INTROSPECTION-MCP-FRONTIER.25`, MCP
-error-data/sanitization selection.
+set. `SEMANTIC-INTROSPECTION-MCP-FRONTIER.25` keeps JSON-RPC errors
+message-only and sanitized, with no `error.data` until a bounded data schema
+is selected. The next frontier is `SEMANTIC-INTROSPECTION-MCP-FRONTIER.26`,
+MCP serverInfo/instructions metadata selection.
 The IAL2
 SystemVerilog-backed feature-completeness tree remains
 active at

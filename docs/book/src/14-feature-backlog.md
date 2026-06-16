@@ -7593,9 +7593,11 @@ Request` errors.
 `SEMANTIC-INTROSPECTION-MCP-FRONTIER.24` locks initialize negotiation to
 server protocol version `2025-06-18` and keeps client capabilities from
 widening the advertised resources/tools capability set.
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.25` keeps JSON-RPC errors message-only
+and sanitized; `error.data` remains absent until a bounded schema is selected.
 
-Current active frontier: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.25`, MCP
-error-data/sanitization boundary.
+Current active frontier: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.26`, MCP
+serverInfo/instructions boundary.
 
 Selected first MCP resource families are `fsmgen://capabilities`,
 `fsmgen://contracts`, `fsmgen://diagnostics`,
