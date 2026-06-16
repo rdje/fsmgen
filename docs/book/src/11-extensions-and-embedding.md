@@ -2722,7 +2722,7 @@ The read-only adapter currently has a bounded client profile:
 | MCP logging through `logging/setLevel` and `notifications/message` | not advertised in the shipped profile; diagnostics stay in JSON-RPC errors and structured payloads | `t/1451-semantic-introspection-mcp-logging-boundary.t` |
 | MCP pagination cursors on `resources/list`, `resources/templates/list`, and `tools/list` | bounded unpaginated lists; no `nextCursor`; client-supplied cursors are invalid params because no cursor is issued | `t/1452-semantic-introspection-mcp-pagination-boundary.t` |
 | MCP sampling and elicitation through `sampling/createMessage` and `elicitation/create` | not used in the shipped profile; FSMGen does not initiate model calls or user-input requests | `t/1453-semantic-introspection-mcp-sampling-elicitation-boundary.t` |
-| Clients that require Streamable HTTP transport or service-mode session features | not claimed yet | Future task-tree ownership required before implementation |
+| Streamable HTTP transport, listener flags, and service-mode session features | not shipped; CLI exposes only one-shot `--request-json` and newline-delimited stdio | `t/1454-semantic-introspection-mcp-transport-boundary.t` |
 | Clients that need write/generation, HDL output writing, automated repair, shell, network, commit, or push tools | intentionally blocked | `semantic_introspection.write_generation_tools_enabled` remains false |
 
 The MCP 2025-06-18 transport specification defines stdio messages as
@@ -2764,6 +2764,11 @@ Sampling and elicitation are also deferred. The read-only adapter does not
 request nested LLM generations or user input through `sampling/createMessage`
 or `elicitation/create`; MCP hosts should use the structured resources and
 tools as the semantic surface.
+
+Streamable HTTP and service-mode transports are deferred. `bin/fsmgen-mcp`
+does not expose listener, HTTP, port, or serve flags; local clients use either
+the one-shot `--request-json` path for probes or newline-delimited JSON-RPC
+over stdio for the MCP transport.
 
 ## Downstream Tool Alignment
 

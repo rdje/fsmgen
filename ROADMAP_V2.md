@@ -1025,9 +1025,11 @@ bounded and unpaginated: resource/template/tool listings emit no `nextCursor`,
 and client-supplied cursors are invalid params until a paginated profile is
 selected. `SEMANTIC-INTROSPECTION-MCP-FRONTIER.16` keeps sampling and
 elicitation unsupported; the adapter does not initiate model calls or
-user-input requests through MCP. The next frontier is
-`SEMANTIC-INTROSPECTION-MCP-FRONTIER.17`, MCP Streamable HTTP/service-mode
-transport selection. The IAL2
+user-input requests through MCP. `SEMANTIC-INTROSPECTION-MCP-FRONTIER.17`
+keeps transport bounded to one-shot `--request-json` and newline-delimited
+stdio; Streamable HTTP and service mode remain unshipped. The next frontier is
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.18`, MCP structured tool output
+selection. The IAL2
 SystemVerilog-backed feature-completeness tree remains
 active at
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.136`, but broad IAL2 expansion is no

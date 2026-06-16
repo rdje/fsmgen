@@ -7570,9 +7570,12 @@ client-supplied cursors are invalid params until a paginated profile is
 selected.
 `SEMANTIC-INTROSPECTION-MCP-FRONTIER.16` keeps MCP sampling and elicitation
 unsupported; the adapter does not initiate model calls or user-input requests.
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.17` keeps transport bounded to one-shot
+`--request-json` and newline-delimited stdio; Streamable HTTP and service mode
+remain unshipped.
 
-Current active frontier: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.17`, MCP
-Streamable HTTP/service-mode transport boundary.
+Current active frontier: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.18`, MCP
+structured tool output boundary.
 
 Selected first MCP resource families are `fsmgen://capabilities`,
 `fsmgen://contracts`, `fsmgen://diagnostics`,

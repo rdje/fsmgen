@@ -183,6 +183,11 @@ boundary for the shipped profile. FSMGen does not initiate
 `sampling/createMessage` or `elicitation/create`; hosts should use the
 structured resources and tools for semantic workflows.
 
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.17` selected the transport boundary for
+the shipped profile. `bin/fsmgen-mcp` exposes one-shot `--request-json` and
+newline-delimited JSON-RPC stdio only; Streamable HTTP, listener flags, and
+service-mode sessions remain unshipped.
+
 ## Deferred
 
 The following remain outside `.2` and `.3` unless separately selected:
