@@ -7536,12 +7536,15 @@ diagnostics, generated artifact inventories, backend-validation status,
 embedding contract metadata, and mdBook/corpus examples. `bin/fsmgen-mcp` now
 ships the first read-only local JSON-RPC stdio adapter over that contract; the
 manifest reports `mcp_adapter_implemented: true` and
-`write_generation_tools_enabled: false`.
+`write_generation_tools_enabled: false`. `SEMANTIC-INTROSPECTION-MCP-FRONTIER.5`
+hardens the adapter with protocol-level JSON-RPC error codes, notification
+handling, malformed percent-encoding rejection, source-query
+`adapter_provenance`, and source-bound path sanitization.
 
-Current active frontier: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.4` shipped the
-read-only adapter. The next owned frontier is
-`SEMANTIC-INTROSPECTION-MCP-FRONTIER.5`, protocol/client compatibility and
-source-query envelope hardening for that adapter.
+Current active frontier: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.5` shipped
+protocol/client compatibility and source-query envelope hardening. The next
+owned frontier is `SEMANTIC-INTROSPECTION-MCP-FRONTIER.6`, deeper
+read-only diagnostic/example/support-accounting query coverage.
 
 Selected first MCP resource families are `fsmgen://capabilities`,
 `fsmgen://contracts`, `fsmgen://diagnostics`,
@@ -7556,7 +7559,8 @@ Selected first MCP resource families are `fsmgen://capabilities`,
 Raw private parser ASTs, scheduler objects, lowering objects, `HDLGenerator`
 compatibility hashes, and internal Perl references remain outside the public
 automation contract. Source-bound adapter responses normalize workspace/repo
-absolute paths to relative source identities and redact other absolute paths.
+absolute paths to relative source identities, redact other absolute paths, and
+carry a non-leaking `adapter_provenance` envelope.
 Write generation tools, HDL writing, service mode, network access, arbitrary
 filesystem traversal, mutation workflows, and commit/push actions remain
 deferred until separately task-tree-owned.

@@ -464,6 +464,13 @@ sub semantic_introspection_safety_policy {
         default_access => 'read_only',
         workspace_root_restriction => 'the shipped adapter resolves source_id and paths under the caller-approved workspace root',
         source_bound_path_sanitization => 'workspace_or_repo_absolute_paths_return_relative_else_redacted',
+        source_query_provenance => 'adapter_provenance records read_only transport, command shape, source identity policy, and no-shell policy without returning workspace roots',
+        jsonrpc_error_code_policy => {
+            parse_error => -32700,
+            invalid_request => -32600,
+            method_not_found => -32601,
+            adapter_call_error => -32000,
+        },
         arbitrary_shell_access => JSON::PP::false,
         network_access => JSON::PP::false,
         implicit_file_writes => JSON::PP::false,

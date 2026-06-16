@@ -993,9 +993,12 @@ MCP-queryable FSMGen semantics under
 over that contract. The shipped adapter exposes capabilities, contracts,
 diagnostics, support accounting, examples, source check JSON, normalized
 semantic JSON, and schedule previews through `bin/fsmgen-mcp` without enabling
-write/generation, network, shell, mutation, commit, or push tools. The next
-frontier is `SEMANTIC-INTROSPECTION-MCP-FRONTIER.5`, protocol/client
-compatibility and source-query envelope hardening for the adapter. The IAL2
+write/generation, network, shell, mutation, commit, or push tools.
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.5` hardened protocol/client behavior with
+JSON-RPC error-code policy, notification handling, malformed percent-encoding
+rejection, and non-leaking source-query provenance. The next frontier is
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.6`, deeper read-only
+diagnostic/example/support-accounting query coverage. The IAL2
 SystemVerilog-backed feature-completeness tree remains
 active at
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.136`, but broad IAL2 expansion is no

@@ -116,6 +116,13 @@ JSON-RPC stdio adapter over that contract as `bin/fsmgen-mcp`, backed by
 contracts, diagnostics, support accounting, and examples; source-bound tools
 and resources require a workspace-root-contained source identity.
 
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.5` hardened the shipped adapter's
+protocol/client boundary. The adapter now returns protocol-level JSON-RPC
+errors for invalid requests and unknown methods, ignores id-less
+notifications, rejects malformed percent-encoded source URI segments, and
+adds a non-leaking `adapter_provenance` envelope to source-bound query
+responses.
+
 ## Deferred
 
 The following remain outside `.2` and `.3` unless separately selected:

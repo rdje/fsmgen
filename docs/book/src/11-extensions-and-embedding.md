@@ -2660,12 +2660,14 @@ The relevant manifest shape is:
 over this contract. Static resources expose capabilities, contracts,
 diagnostics, support accounting, and examples. Source-bound resources/tools
 require a caller-approved workspace root and a source identity under that
-root; source-bound responses normalize workspace/repo absolute paths to
-relative source identities and redact other absolute paths. Raw parser ASTs,
-private scheduler/lowering objects, `HDLGenerator` compatibility hashes,
-arbitrary shell output, network access, implicit file writes,
-write/generation tools, mutation workflows, and commit/push actions are not
-public semantic-introspection payloads.
+root; source-bound responses include `adapter_provenance`, normalize
+workspace/repo absolute paths to relative source identities, and redact other
+absolute paths. Protocol-level JSON-RPC failures use `-32700` for parse
+errors, `-32600` for invalid requests, `-32601` for unknown methods, and
+`-32000` for adapter call errors. Raw parser ASTs, private scheduler/lowering
+objects, `HDLGenerator` compatibility hashes, arbitrary shell output, network
+access, implicit file writes, write/generation tools, mutation workflows, and
+commit/push actions are not public semantic-introspection payloads.
 
 ## Downstream Tool Alignment
 

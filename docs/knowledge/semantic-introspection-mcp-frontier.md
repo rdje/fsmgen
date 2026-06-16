@@ -56,7 +56,9 @@ The shipped first MCP tool families are `fsmgen_capability_query`,
 The manifest reports `mcp_adapter_implemented: true` and
 `write_generation_tools_enabled: false`. Source-bound adapter responses
 normalize workspace/repo absolute paths to relative source identities and
-redact other absolute paths.
+redact other absolute paths. `.5` hardens protocol/client behavior with
+JSON-RPC error-code policy, notification handling, malformed percent-encoding
+rejection, and non-leaking source-query `adapter_provenance`.
 FSMGen should not expose raw private Perl AST, scheduler, lowering objects,
 `HDLGenerator` compatibility hashes, or internal Perl references as public
 automation APIs. Write generation tools, HDL writing, service mode, network
@@ -69,3 +71,7 @@ waveform queries map to structured semantic/lowering/provenance/diagnostic
 queries; coverage closure maps to support-accounting and example-discovery
 workflows; assertion assistance maps to proposing verification-intent source
 that FSMGen then checks and lowers.
+
+The next semantic-introspection leaf is
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.6`, deeper read-only
+diagnostic/example/support-accounting query coverage.

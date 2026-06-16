@@ -222,9 +222,14 @@ sub handle_jsonrpc_request {
     my $method = $request->{method};
     return undef unless defined $id;
 
+    if (exists $request->{jsonrpc} && defined($request->{jsonrpc}) && $request->{jsonrpc} ne '2.0') {
+        return _jsonrpc_error_response($id, -32600, 'Invalid JSON-RPC version; expected 2.0');
+    }
+    return _jsonrpc_error_response($id, -32600, 'JSON-RPC method is required')
+        unless defined($method) && length($method);
+
     my $result;
     eval {
-        die "JSON-RPC method is required" unless defined($method) && length($method);
         if ($method eq 'initialize') {
             $result = $self->initialize_result($request->{params});
         } elsif ($method eq 'resources/list') {
@@ -242,20 +247,17 @@ sub handle_jsonrpc_request {
         } elsif ($method eq 'ping') {
             $result = {};
         } else {
-            die "Unsupported JSON-RPC method: $method";
+            die "FSMGEN_JSONRPC_METHOD_NOT_FOUND: $method";
         }
         1;
     } or do {
         my $error = "$@";
         chomp $error;
-        return {
-            jsonrpc => '2.0',
-            id => $id,
-            error => {
-                code => -32000,
-                message => $error || 'FSMGen MCP adapter error',
-            },
-        };
+        $error = _strip_perl_error_location($error);
+        if ($error =~ s/\AFSMGEN_JSONRPC_METHOD_NOT_FOUND: /Unsupported JSON-RPC method: /) {
+            return _jsonrpc_error_response($id, -32601, $error);
+        }
+        return _jsonrpc_error_response($id, -32000, $error || 'FSMGen MCP adapter error');
     };
 
     return {
@@ -282,6 +284,7 @@ sub run_stdio {
         } or do {
             my $error = "$@";
             chomp $error;
+            $error = _strip_perl_error_location($error);
             $response = {
                 jsonrpc => '2.0',
                 id => undef,
@@ -337,6 +340,7 @@ sub _source_query_payload {
         source_id => $source_id,
         source_path => $source_id,
         query_kind => $kind,
+        adapter_provenance => $self->_source_query_adapter_provenance($kind),
         path_sanitization => {
             machine_local_absolute_paths => 'workspace_or_repo_absolute_paths_return_relative_else_redacted',
         },
@@ -429,6 +433,26 @@ sub _run_fsmgen_json {
 sub _manifest {
     my ($self) = @_;
     return $self->{manifest_builder}->();
+}
+
+sub _source_query_adapter_provenance {
+    my ($self, $kind) = @_;
+
+    my %shape = (
+        check => 'bin/fsmgen --strict --check --json <source>',
+        semantic => 'bin/fsmgen --strict --emit-semantic-json <source>',
+        schedule => 'bin/fsmgen --emit-schedule-json <source>',
+    );
+
+    return {
+        contract_source => semantic_introspection_mcp_adapter_contract_source(),
+        transport => 'jsonrpc_stdio',
+        read_only => JSON::PP::true,
+        shell_access => JSON::PP::false,
+        workspace_root_policy => 'caller_configured_root_not_returned',
+        source_identity => 'workspace_relative',
+        command_shape => $shape{$kind} || 'unsupported',
+    };
 }
 
 sub _sanitize_public_payload {
@@ -533,8 +557,28 @@ sub _path_is_under {
 
 sub _uri_decode {
     my ($value) = @_;
+    die "Invalid percent encoding in MCP resource uri segment: $value"
+        if $value =~ /%(?![0-9A-Fa-f]{2})/;
     $value =~ s/%([0-9A-Fa-f]{2})/chr(hex($1))/eg;
     return $value;
+}
+
+sub _jsonrpc_error_response {
+    my ($id, $code, $message) = @_;
+    return {
+        jsonrpc => '2.0',
+        id => $id,
+        error => {
+            code => $code,
+            message => $message,
+        },
+    };
+}
+
+sub _strip_perl_error_location {
+    my ($message) = @_;
+    $message =~ s/\s+at\s+\S+\s+line\s+\d+\.?\z//;
+    return $message;
 }
 
 1;

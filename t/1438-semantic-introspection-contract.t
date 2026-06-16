@@ -111,6 +111,15 @@ subtest 'semantic-introspection contract is read-only and explicit about the shi
         'workspace_or_repo_absolute_paths_return_relative_else_redacted',
         'source-bound path sanitization policy is advertised',
     );
+    like(
+        $contract->{safety_policy}{source_query_provenance},
+        qr/adapter_provenance records read_only transport/,
+        'source-query provenance policy is advertised',
+    );
+    is($contract->{safety_policy}{jsonrpc_error_code_policy}{parse_error}, -32700, 'parse error code is advertised');
+    is($contract->{safety_policy}{jsonrpc_error_code_policy}{invalid_request}, -32600, 'invalid request code is advertised');
+    is($contract->{safety_policy}{jsonrpc_error_code_policy}{method_not_found}, -32601, 'method-not-found code is advertised');
+    is($contract->{safety_policy}{jsonrpc_error_code_policy}{adapter_call_error}, -32000, 'adapter call error code is advertised');
     ok(!$contract->{safety_policy}{arbitrary_shell_access}, 'arbitrary shell access is forbidden');
     ok(!$contract->{safety_policy}{network_access}, 'network access is forbidden');
     ok(!$contract->{safety_policy}{raw_private_object_exposure}, 'raw private object exposure is forbidden');

@@ -72,7 +72,9 @@ schedule JSON, support-accounting, diagnostics, documentation/example,
 embedding, and backend-validation surfaces. `bin/fsmgen-mcp` now ships the
 first read-only local JSON-RPC stdio adapter over that contract; the manifest
 reports `mcp_adapter_implemented: true` while `write_generation_tools_enabled`
-remains false.
+remains false. The adapter now has protocol-level JSON-RPC error-code policy,
+id-less notification silence, malformed source-URI percent-encoding rejection,
+and non-leaking source-query provenance.
 Current primary target is SystemVerilog, with Verilog conversion support and a scoped direct-root VHDL scaffold for the accepted single-FSM subset, including delayed-pulse clock-branch lowering, generic-bearing direct-root module headers with typed scalar/vector sized-literal defaults, signed vector and signed scalar direct-root ports, scalar/vector two-state `bit` input-port and internal declaration lowering, signed scalar/vector, non-signed four-state `logic` input-port/internal declaration lowering, and vector `logic signed` internal declaration lowering, scalar and signed scalar addition/subtraction/multiplication RHS/chain lowering, vector numeric-literal addition/subtraction emitted by compound update/shorthand forms, same-width unsigned-style addition/subtraction/multiplication/division/modulo/XOR RHS/chain lowering, same-width signed vector addition/subtraction/multiplication/division/modulo RHS lowering for signed targets and operands, signed vector numeric-literal addition/subtraction/multiplication/division/modulo RHS lowering including signed vector negative decimal addition, subtraction, multiplication, division, and modulo literals, non-signed vector positive decimal multiplication/division/modulo literal lowering in signal-first, literal-first, and literal-literal order, non-signed vector negative decimal addition/subtraction/multiplication/division/modulo literal lowering, bounded generated AMBA wrap arithmetic for `fsm/amba_requester.fsm`, bounded non-signed vector, signed vector, and scalar output-port decimal literal assignment lowering including non-signed vector, signed vector, and scalar negative decimal literals, bounded direct aggregate-output packed-vector lowering, a bounded C3 external-RTL literal/concat composition VHDL structural top for `t/corpus/composition_intent_integer_literals.fsm`, bounded external-RTL scalar integer, scalar integer expression, one-bit sized bitstring, multi-bit sized bitstring, and resolved packed aggregate VHDL generic maps including resolved package-backed constants, a bounded C1 standalone-DT child composition VHDL passthrough top for `t/corpus/standalone_dtc_explicit_system_autowire.fsm`, bounded C1 standalone-DT scalar integer, scalar expression, one-bit sized bitstring, multi-bit sized bitstring, packed-list, and packed-map VHDL generic maps, a bounded C2 generated-FSM child composition VHDL scalar-autowire top for `t/corpus/implicit_composition_system_autowire.fsm`, bounded C2 generated-FSM scalar integer, scalar expression, one-bit sized bitstring, multi-bit sized bitstring, and resolved packed aggregate VHDL generic maps, and a bounded APB/C4 generated-FSM child composition VHDL top for `fsm/apb_tb.fsm` with scalar integer, scalar expression, one-bit sized bitstring, multi-bit sized bitstring, resolved packed aggregate, and resolved package-backed generic maps in the same APB/C4 shape.
 Scalar division/modulo, including signed scalar division/modulo, in the direct
 VHDL scaffold remains an explicit fail-closed boundary; full aggregate
@@ -2168,10 +2170,12 @@ owns the bounded schema advertised through
 and [bin/fsmgen-mcp](bin/fsmgen-mcp) implement the first read-only local
 JSON-RPC stdio adapter over that contract. The section reports
 `mcp_adapter_implemented: true` and `write_generation_tools_enabled: false`;
-source-bound responses normalize workspace/repo absolute paths to relative
-source identities and redact other absolute paths. Write/generation, network,
-shell, mutation, commit, and push tools are still not part of the public
-semantic-introspection surface.
+source-bound responses include `adapter_provenance`, normalize workspace/repo
+absolute paths to relative source identities, and redact other absolute paths.
+Protocol-level JSON-RPC failures use `-32700` for parse errors, `-32600` for
+invalid requests, `-32601` for unknown methods, and `-32000` for adapter call
+errors. Write/generation, network, shell, mutation, commit, and push tools are
+still not part of the public semantic-introspection surface.
 The manifest's `backend_validation` section now follows that split too:
 [perl/FSM/Support/CapabilityManifest.pm](perl/FSM/Support/CapabilityManifest.pm)
 still publishes the current backend validation surfaces, while
