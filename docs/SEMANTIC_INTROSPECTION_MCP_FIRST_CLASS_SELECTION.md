@@ -205,6 +205,13 @@ not set `destructiveHint` or `idempotentHint` on these read-only tools because
 those hints are meaningful for non-read-only tools; write/generation tools
 remain unshipped.
 
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.21` selected the common content/resource
+annotation boundary. The shipped profile keeps `Annotations` absent from
+resources, resource templates, resource-read content blocks, and tool-result
+text blocks. Tool results do not return `resource_link` content yet. Stable
+audience, priority, last-modified, and resource-link contracts remain future
+work.
+
 ## Deferred
 
 The following remain outside `.2` and `.3` unless separately selected:

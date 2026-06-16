@@ -105,7 +105,8 @@ For FSMGen, the analogs are:
     `SEMANTIC-INTROSPECTION-MCP-FRONTIER.18`,
     `SEMANTIC-INTROSPECTION-MCP-FRONTIER.19`,
     `SEMANTIC-INTROSPECTION-MCP-FRONTIER.20`,
-    `SEMANTIC-INTROSPECTION-MCP-FRONTIER.21`
+    `SEMANTIC-INTROSPECTION-MCP-FRONTIER.21`,
+    `SEMANTIC-INTROSPECTION-MCP-FRONTIER.22`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1`
   Status: `done`
@@ -248,9 +249,16 @@ For FSMGen, the analogs are:
   Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.20: annotate MCP tool safety`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.21`
-  Status: `pending`
+  Status: `done`
   Goal: `Select MCP content and resource annotation boundaries.`
   Acceptance: `Audit whether MCP content blocks, resource descriptors, or resource templates should advertise audience, priority, last-modified, or resource-link annotations; either select exact stable annotations with tests/docs or keep them absent; do not leak machine-local paths, imply subscriptions/list-change behavior, expose network/shell/write authority, or freeze volatile generated report details.`
+  Verification: `passed`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.21: defer MCP content annotations`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.22`
+  Status: `pending`
+  Goal: `Select MCP progress and cancellation boundaries.`
+  Acceptance: `Audit whether the read-only adapter should honor request progress tokens, emit notifications/progress, or handle notifications/cancelled beyond existing notification silence; either select exact bounded behavior with tests/docs or keep progress/cancellation unsupported/no-op for the one-shot profile; do not imply async jobs, service mode, mutation, network, shell, commit, or push authority.`
   Commit: `pending`
 
 ## Implementation Notes From `.4`
@@ -617,6 +625,28 @@ For FSMGen, the analogs are:
 - Should tool results return resource links for existing static resources, or
   would that duplicate the resource API without adding review value?
 
+## Implementation Notes From `.21`
+
+- Common MCP `Annotations` remain absent from resource descriptors, resource
+  templates, resource-read content blocks, and tool-result text blocks.
+- Tool results do not return `resource_link` content yet; clients should use
+  the explicit `resources/list`, `resources/templates/list`, and
+  `resources/read` API.
+- Added
+  `t/1457-semantic-introspection-mcp-content-resource-annotations-boundary.t`
+  to guard the absence of audience/priority/lastModified annotations and tool
+  result resource links.
+
+## Candidate Contract Questions For `.22`
+
+- Should one-shot requests with `_meta.progressToken` produce progress
+  notifications, or is that only meaningful for a future service profile?
+- Should `notifications/cancelled` be accepted as a silent notification, logged
+  nowhere, or treated as unsupported because there is no long-running job
+  registry?
+- How can progress/cancellation behavior be tested without adding async
+  background work or broadening transport/session authority?
+
 ## Candidate Future Phases
 
 - Phase 1: contract inventory and first safe semantic-introspection boundary.
@@ -631,7 +661,7 @@ For FSMGen, the analogs are:
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.21` | `pending` | `.20` shipped read-only closed-world tool annotations; the next exact frontier is content/resource annotation selection. |
+| 1 | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.22` | `pending` | `.21` kept content/resource annotations absent; the next exact frontier is progress/cancellation selection. |
 
 ## Decisions
 
@@ -699,6 +729,9 @@ For FSMGen, the analogs are:
   every current tool advertises `readOnlyHint: true` and `openWorldHint:
   false`; destructive/idempotent hints remain absent because no write tools are
   shipped.
+- `2026-06-16`: `.21` kept common MCP annotations absent from resources,
+  resource templates, resource-read content, and tool-result text blocks; tool
+  results do not return resource links.
 - `2026-06-14`: Create this as a proposed owner, not an active implementation
   lane. The first real work must be no-code contract selection over existing
   public surfaces.
@@ -708,7 +741,7 @@ For FSMGen, the analogs are:
 
 ## Open Questions
 
-- None for `.20`; `.21` owns MCP content/resource annotation selection.
+- None for `.21`; `.22` owns MCP progress/cancellation selection.
 
 ## Blockers
 
@@ -740,6 +773,7 @@ For FSMGen, the analogs are:
 | `2026-06-16` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.18` | Syntax checks for `SemanticIntrospectionMCPAdapter`, `t/1445`, and `t/1455`; `prove -Iperl t/1445-semantic-introspection-mcp-schema-snapshots.t t/1455-semantic-introspection-mcp-structured-tool-output.t`; mdBook, docs path audit, Knowledge Map generation/check, memory-architecture, README-numbering, and diff gates | `passed`; shipped structuredContent and selected `.19` outputSchema boundary |
 | `2026-06-16` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.19` | Syntax checks for `SemanticIntrospectionMCPAdapter`, `t/1445`, and `t/1455`; `prove -Iperl t/1445-semantic-introspection-mcp-schema-snapshots.t t/1455-semantic-introspection-mcp-structured-tool-output.t`; mdBook, docs path audit, Knowledge Map generation/check, memory-architecture, README-numbering, and diff gates | `passed`; shipped compact outputSchema metadata and selected `.20` tool annotation/safety metadata boundary |
 | `2026-06-16` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.20` | Syntax checks for `SemanticIntrospectionMCPAdapter`, `t/1445`, and `t/1456`; `prove -Iperl t/1445-semantic-introspection-mcp-schema-snapshots.t t/1456-semantic-introspection-mcp-tool-annotations-boundary.t`; mdBook, docs path audit, Knowledge Map generation/check, memory-architecture, README-numbering, and diff gates | `passed`; shipped read-only closed-world tool annotations and selected `.21` content/resource annotation boundary |
+| `2026-06-16` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.21` | Syntax check for `t/1457`; `prove -Iperl t/1457-semantic-introspection-mcp-content-resource-annotations-boundary.t`; mdBook, docs path audit, Knowledge Map generation/check, memory-architecture, README-numbering, and diff gates | `passed`; kept content/resource annotations absent and selected `.22` progress/cancellation boundary |
 
 ## Commit Log
 
@@ -765,7 +799,8 @@ For FSMGen, the analogs are:
 | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.18` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.18: add MCP structured tool content` | Added structuredContent to read-only MCP tool results while keeping serialized JSON text content. |
 | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.19` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.19: add MCP output schemas` | Added compact per-tool outputSchema metadata for stable public envelope fields. |
 | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.20` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.20: annotate MCP tool safety` | Added read-only closed-world MCP tool annotations for the shipped profile. |
-| `SEMANTIC-INTROSPECTION-MCP-FRONTIER.21` | `pending` | `pending` |
+| `SEMANTIC-INTROSPECTION-MCP-FRONTIER.21` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.21: defer MCP content annotations` | Kept common content/resource annotations and tool-result resource links absent for the shipped profile. |
+| `SEMANTIC-INTROSPECTION-MCP-FRONTIER.22` | `pending` | `pending` |
 
 ## Changelog
 
@@ -834,3 +869,6 @@ For FSMGen, the analogs are:
 - `2026-06-16`: Completed `.20`; current MCP tools now advertise read-only
   closed-world annotations, and `.21` owns content/resource annotation
   selection.
+- `2026-06-16`: Completed `.21`; resources, resource templates, resource-read
+  content, and tool-result text remain unannotated, tools return no resource
+  links, and `.22` owns progress/cancellation selection.

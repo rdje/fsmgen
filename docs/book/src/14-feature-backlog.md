@@ -7581,9 +7581,12 @@ internals remain schema-light.
 `SEMANTIC-INTROSPECTION-MCP-FRONTIER.20` ships MCP tool annotations for the
 read-only profile: current tools advertise `readOnlyHint: true` and
 `openWorldHint: false`; write-only destructive/idempotent hints remain absent.
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.21` keeps common MCP annotations absent
+from resources, templates, resource-read content, and tool-result text blocks;
+tools do not return resource links yet.
 
-Current active frontier: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.21`, MCP
-content/resource annotation boundary.
+Current active frontier: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.22`, MCP
+progress/cancellation boundary.
 
 Selected first MCP resource families are `fsmgen://capabilities`,
 `fsmgen://contracts`, `fsmgen://diagnostics`,

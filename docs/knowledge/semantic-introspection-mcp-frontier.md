@@ -45,11 +45,14 @@ answers:
   - "does FSMGen MCP advertise readOnlyHint?"
   - "does FSMGen MCP advertise openWorldHint?"
   - "does FSMGen MCP advertise destructiveHint or idempotentHint?"
+  - "does FSMGen MCP annotate resources or resource templates?"
+  - "does FSMGen MCP annotate tool result content?"
+  - "does FSMGen MCP return resource_link tool content?"
 date: 2026-06-16
 status: current
 tags: [mcp, ai, llm, semantic-json, embedding, public-api, task-tree]
 evidence: docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md; docs/SEMANTIC_INTROSPECTION_MCP_FIRST_CLASS_SELECTION.md; docs/TASK_TREE.md; ROADMAP_V2.md; docs/book/src/11-extensions-and-embedding.md; docs/book/src/14-feature-backlog.md; perl/FSM/Support/SemanticIntrospectionContract.pm; perl/FSM/Support/SemanticIntrospectionSection.pm; perl/FSM/Support/SemanticIntrospectionMCPAdapter.pm; bin/fsmgen-mcp; https://modelcontextprotocol.io/specification/2025-06-18/basic/transports; https://modelcontextprotocol.io/specification/2025-06-18/client/roots; https://modelcontextprotocol.io/specification/2025-06-18/client/sampling; https://modelcontextprotocol.io/specification/2025-06-18/client/elicitation; https://modelcontextprotocol.io/specification/2025-06-18/server/prompts; https://modelcontextprotocol.io/specification/2025-06-18/server/resources; https://modelcontextprotocol.io/specification/2025-06-18/server/tools; https://modelcontextprotocol.io/specification/2025-06-18/schema; https://modelcontextprotocol.io/specification/2025-06-18/server/utilities/completion; https://modelcontextprotocol.io/specification/2025-06-18/server/utilities/logging; https://modelcontextprotocol.io/specification/2025-06-18/server/utilities/pagination
-reverify: env -u PERL5LIB ./bin/fsmgen --capability-manifest >/tmp/fsmgen_semantic_introspection_manifest.json && perl -MJSON::PP=decode_json -0777 -ne 'my $m=decode_json($_); die "missing semantic_introspection\n" unless $m->{semantic_introspection}; die "adapter not enabled\n" unless $m->{semantic_introspection}{mcp_adapter_implemented}; die "write tools unexpectedly enabled\n" if $m->{semantic_introspection}{write_generation_tools_enabled}; die "missing adapter owner\n" unless ($m->{semantic_introspection}{contract_surface_map}{mcp_adapter}{contract_source}||"") eq "FSM::Support::SemanticIntrospectionMCPAdapter"; print "semantic_introspection manifest adapter ok\n";' /tmp/fsmgen_semantic_introspection_manifest.json && perl bin/fsmgen-mcp --request-json '{"jsonrpc":"2.0","id":1,"method":"tools/list"}' >/tmp/fsmgen_mcp_tools.json && perl -MJSON::PP=decode_json -0777 -ne 'my $r=decode_json($_); my %t=map { $_->{name}=>1 } @{$r->{result}{tools}}; die "missing semantic tool\n" unless $t{fsmgen_semantic_introspect}; die "unexpected cursor\n" if exists $r->{result}{nextCursor}; print "fsmgen-mcp tools ok\n";' /tmp/fsmgen_mcp_tools.json && prove -Iperl t/1445-semantic-introspection-mcp-schema-snapshots.t t/1446-semantic-introspection-mcp-stdio-framing.t t/1447-semantic-introspection-mcp-roots-boundary.t t/1448-semantic-introspection-mcp-prompts-boundary.t t/1449-semantic-introspection-mcp-resource-change-boundary.t t/1450-semantic-introspection-mcp-completion-boundary.t t/1451-semantic-introspection-mcp-logging-boundary.t t/1452-semantic-introspection-mcp-pagination-boundary.t t/1453-semantic-introspection-mcp-sampling-elicitation-boundary.t t/1454-semantic-introspection-mcp-transport-boundary.t t/1455-semantic-introspection-mcp-structured-tool-output.t t/1456-semantic-introspection-mcp-tool-annotations-boundary.t
+reverify: env -u PERL5LIB ./bin/fsmgen --capability-manifest >/tmp/fsmgen_semantic_introspection_manifest.json && perl -MJSON::PP=decode_json -0777 -ne 'my $m=decode_json($_); die "missing semantic_introspection\n" unless $m->{semantic_introspection}; die "adapter not enabled\n" unless $m->{semantic_introspection}{mcp_adapter_implemented}; die "write tools unexpectedly enabled\n" if $m->{semantic_introspection}{write_generation_tools_enabled}; die "missing adapter owner\n" unless ($m->{semantic_introspection}{contract_surface_map}{mcp_adapter}{contract_source}||"") eq "FSM::Support::SemanticIntrospectionMCPAdapter"; print "semantic_introspection manifest adapter ok\n";' /tmp/fsmgen_semantic_introspection_manifest.json && perl bin/fsmgen-mcp --request-json '{"jsonrpc":"2.0","id":1,"method":"tools/list"}' >/tmp/fsmgen_mcp_tools.json && perl -MJSON::PP=decode_json -0777 -ne 'my $r=decode_json($_); my %t=map { $_->{name}=>1 } @{$r->{result}{tools}}; die "missing semantic tool\n" unless $t{fsmgen_semantic_introspect}; die "unexpected cursor\n" if exists $r->{result}{nextCursor}; print "fsmgen-mcp tools ok\n";' /tmp/fsmgen_mcp_tools.json && prove -Iperl t/1445-semantic-introspection-mcp-schema-snapshots.t t/1446-semantic-introspection-mcp-stdio-framing.t t/1447-semantic-introspection-mcp-roots-boundary.t t/1448-semantic-introspection-mcp-prompts-boundary.t t/1449-semantic-introspection-mcp-resource-change-boundary.t t/1450-semantic-introspection-mcp-completion-boundary.t t/1451-semantic-introspection-mcp-logging-boundary.t t/1452-semantic-introspection-mcp-pagination-boundary.t t/1453-semantic-introspection-mcp-sampling-elicitation-boundary.t t/1454-semantic-introspection-mcp-transport-boundary.t t/1455-semantic-introspection-mcp-structured-tool-output.t t/1456-semantic-introspection-mcp-tool-annotations-boundary.t t/1457-semantic-introspection-mcp-content-resource-annotations-boundary.t
 ---
 
 FSMGen has an active owner for first-class semantic introspection and future
@@ -143,6 +146,10 @@ manifest payloads schema-light.
 advertises `readOnlyHint: true` and `openWorldHint: false`. `destructiveHint`
 and `idempotentHint` remain absent because they are meaningful for
 non-read-only tools, and FSMGen ships no write/generation MCP tools.
+`.21` keeps common MCP `Annotations` absent from resources, resource
+templates, resource-read content blocks, and tool-result text blocks. Tool
+results do not return `resource_link` content; stable audience, priority,
+last-modified, and resource-link contracts remain future work.
 FSMGen should not expose raw private Perl AST, scheduler, lowering objects,
 `HDLGenerator` compatibility hashes, or internal Perl references as public
 automation APIs. Write generation tools, HDL writing, service mode, network
@@ -157,5 +164,4 @@ workflows; assertion assistance maps to proposing verification-intent source
 that FSMGen then checks and lowers.
 
 The next semantic-introspection leaf is
-`SEMANTIC-INTROSPECTION-MCP-FRONTIER.21`, MCP content/resource annotation
-boundary.
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.22`, MCP progress/cancellation boundary.
