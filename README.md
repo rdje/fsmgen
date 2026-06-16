@@ -481,8 +481,13 @@ because the selected per-beat output bank is already the bounded burst
 payload/output shape for that subset. Packed/full burst assembly remains a
 separate deferred contract. Verification-code generation
 (`SV/UVM` agents, monitors, scoreboards, checkers, coverage, and reusable VIP)
-is a valid future FSMGEN route, but it is tracked as a separate roadmap lane
-from the current synthesizable RTL/HDL feature-completeness path.
+is a valid FSMGEN route, but it is tracked as a separate roadmap lane from
+the current synthesizable RTL/HDL feature-completeness path. That lane is now
+task-tree owned by `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER`: the default
+source stance is IAL1 (`.isf`) first, with an explicit audit for any missing
+IAL1 verification-specific features before SV/UVM or VHDL-oriented
+verification output is selected. Direct IAL2-to-verification generation remains
+an audit question, not an implementation assumption.
 Implementation `.85` ships that report/static alignment: the public
 multi-beat sample now reports `response_demux.residue: []` and
 `same_id_ordering.residue: [concrete_id_same_id_ordering,
@@ -1064,6 +1069,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/tasks/COMPOSITION-TYPE-BACKLOG-EXHAUSTION.md` — completed Composition/type backlog tree; shipped aggregate parameter/generic equality/inequality, closed the remaining Composition/type leaves behind exact prerequisites, and routed VHDL-dependent work through the completed backend/API frontier.
 - `docs/tasks/ISF-REMAINING-BROAD-FRONTIER.md` — proposed broad `R14` ISF frontier owner tree for deferred ISF backlog directions not already owned by narrower active trees.
 - `docs/tasks/BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.md` — active backend-language portability contract tree; `.2.1` captured the variant-parity doctrine and `.2.2` audits public contracts, infrastructure, in-memory host APIs, semantic introspection, and parity gates before any non-Perl implementation work changes code.
+- `docs/tasks/IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.md` — active IAL1-first verification-code generation tree; `.1` promoted the deferred verification-code route into task-tree ownership, and `.2` audits IAL1 verification-specific feature needs, SV/UVM and VHDL output prerequisites, IAL2 routing, and public artifact/report/support-accounting contracts before any generated verification code ships.
 - `docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md` — completed immediate semantic-introspection/MCP task tree; `.2` made deep semantic introspection a first-class feature, `.29` shipped catalog-backed source discovery, and `.30` returned active priority to IAL2.
 - `docs/tasks/BACKEND-API-VALIDATION-FRONTIER.md` — completed backend/API frontier owner tree for VHDL, external validation, ABC, structured generation, embedding API, and normalized export backlog through `.132`.
 - `docs/tasks/ARCHITECTURE-DEBT-FRONTIER.md` — completed architecture-debt frontier owner tree; direct-backend structural internal declaration nets shipped, and ISF parser/lowerer extraction remains deferred behind future exact ownership.

@@ -5,8 +5,6 @@ answers:
   - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.80?"
   - "what did IAL2-FEATURE-COMPLETENESS-FRONTIER.80 select?"
   - "what comes after generated scalar RRESP aggregation?"
-  - "where does FSMGEN verification-code generation fit?"
-  - "should verification output be part of the synthesizable RTL lane?"
 date: 2026-06-14
 status: current
 tags: [ial2, axi, manager, read-data, interleaving, queues, verification, task-tree]
@@ -30,3 +28,8 @@ keeps it separate from the current synthesizable RTL/HDL feature-completeness
 path. A later roadmap lane should own SV/UVM agents, monitors, scoreboards,
 protocol checkers, coverage, and reusable verification IP so verification
 targets can use non-synthesizable target-language constructs freely.
+
+That later lane is now owned by
+`IAL1-VERIFICATION-CODE-GENERATION-FRONTIER`; the canonical current fact card
+for verification-generation ownership is
+`docs/knowledge/ial1-verification-code-generation-frontier.md`.

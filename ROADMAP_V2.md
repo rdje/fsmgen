@@ -1605,8 +1605,16 @@ remain deferred.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.
-Verification-code generation is captured as a separate future roadmap lane
-from the synthesizable RTL/HDL feature-completeness path.
+Verification-code generation is captured as a separate roadmap lane from the
+synthesizable RTL/HDL feature-completeness path and is now task-tree owned by
+`IAL1-VERIFICATION-CODE-GENERATION-FRONTIER`. The selected starting stance is
+IAL1 (`.isf`) to verification code, with the first executable frontier auditing
+whether existing IAL1 verification primitives are sufficient or whether new
+IAL1 verification-specific source features are needed before any output
+generation. SV/UVM agents, monitors, scoreboards, protocol checkers, coverage,
+reusable verification IP, and VHDL-oriented verification artifacts each require
+separate contract-selection owners. Direct IAL2-to-verification generation
+remains an explicit audit question, not an implementation assumption.
 Packed burst outputs, concrete same-ID queue variants beyond the shipped
 read burst-last, write, and read single-beat depth-2 queue-head boundaries,
 per-ID queues, queued policy, profile
