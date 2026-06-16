@@ -136,6 +136,15 @@ examples cover capabilities, support summaries, diagnostics, examples, strict
 check JSON, normalized semantic JSON, and schedule previews without enabling
 write/generation tools or exposing the configured workspace root.
 
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.8` added a bounded schema snapshot
+fixture for the read-only adapter's initialization, resource, template, tool,
+and tool-envelope shapes, guarded by
+`t/1445-semantic-introspection-mcp-schema-snapshots.t`. The mdBook now
+documents the first client compatibility matrix: one-shot JSON-RPC and
+line-delimited JSON-RPC stdio are shipped, while full MCP Content-Length
+framing, prompts, sampling, completions, service mode, and write/generation
+tools are not claimed yet.
+
 ## Deferred
 
 The following remain outside `.2` and `.3` unless separately selected:

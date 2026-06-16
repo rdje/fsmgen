@@ -1,0 +1,506 @@
+{
+   "initialize" : {
+      "capability_keys" : [
+         "resources",
+         "tools"
+      ],
+      "instructions_mentions_read_only" : true,
+      "protocolVersion" : "test-protocol",
+      "resource_capability_keys" : [
+         "listChanged"
+      ],
+      "server_name" : "fsmgen-semantic-introspection",
+      "server_version_type" : "string",
+      "tool_capability_keys" : [
+         "listChanged"
+      ]
+   },
+   "resource_templates" : [
+      {
+         "has_description" : true,
+         "mimeType" : "application/json",
+         "name" : "capabilities",
+         "uriTemplate" : "fsmgen://capabilities"
+      },
+      {
+         "has_description" : true,
+         "mimeType" : "application/json",
+         "name" : "contracts",
+         "uriTemplate" : "fsmgen://contracts"
+      },
+      {
+         "has_description" : true,
+         "mimeType" : "application/json",
+         "name" : "diagnostics",
+         "uriTemplate" : "fsmgen://diagnostics"
+      },
+      {
+         "has_description" : true,
+         "mimeType" : "application/json",
+         "name" : "support_accounting",
+         "uriTemplate" : "fsmgen://support-accounting"
+      },
+      {
+         "has_description" : true,
+         "mimeType" : "application/json",
+         "name" : "examples",
+         "uriTemplate" : "fsmgen://examples"
+      },
+      {
+         "has_description" : true,
+         "mimeType" : "application/json",
+         "name" : "source_check",
+         "uriTemplate" : "fsmgen://source/{source_id}/check"
+      },
+      {
+         "has_description" : true,
+         "mimeType" : "application/json",
+         "name" : "source_semantic",
+         "uriTemplate" : "fsmgen://source/{source_id}/semantic"
+      },
+      {
+         "has_description" : true,
+         "mimeType" : "application/json",
+         "name" : "source_schedule",
+         "uriTemplate" : "fsmgen://source/{source_id}/schedule"
+      }
+   ],
+   "resources" : [
+      {
+         "has_description" : true,
+         "mimeType" : "application/json",
+         "name" : "FSMGen capabilities",
+         "uri" : "fsmgen://capabilities"
+      },
+      {
+         "has_description" : true,
+         "mimeType" : "application/json",
+         "name" : "FSMGen contracts",
+         "uri" : "fsmgen://contracts"
+      },
+      {
+         "has_description" : true,
+         "mimeType" : "application/json",
+         "name" : "FSMGen diagnostics",
+         "uri" : "fsmgen://diagnostics"
+      },
+      {
+         "has_description" : true,
+         "mimeType" : "application/json",
+         "name" : "FSMGen support accounting",
+         "uri" : "fsmgen://support-accounting"
+      },
+      {
+         "has_description" : true,
+         "mimeType" : "application/json",
+         "name" : "FSMGen examples",
+         "uri" : "fsmgen://examples"
+      }
+   ],
+   "tool_envelopes" : {
+      "capability_query" : {
+         "content_types" : [
+            "text"
+         ],
+         "decoded_payload" : {
+            "mcp_adapter_implemented" : true,
+            "mcp_resource_templates" : [
+               "fsmgen://capabilities",
+               "fsmgen://contracts",
+               "fsmgen://diagnostics",
+               "fsmgen://support-accounting",
+               "fsmgen://examples",
+               "fsmgen://source/{source_id}/check",
+               "fsmgen://source/{source_id}/semantic",
+               "fsmgen://source/{source_id}/schedule"
+            ],
+            "mcp_tool_names" : [
+               "fsmgen_capability_query",
+               "fsmgen_check",
+               "fsmgen_semantic_introspect",
+               "fsmgen_schedule_preview",
+               "fsmgen_find_examples",
+               "fsmgen_explain_diagnostic",
+               "fsmgen_support_summary"
+            ],
+            "payload_keys" : [
+               "payload",
+               "section"
+            ],
+            "section" : "semantic_introspection",
+            "semantic_keys" : [
+               "contract_source",
+               "contract_surface_map",
+               "entrypoints",
+               "mcp_adapter_entrypoints",
+               "mcp_adapter_implemented",
+               "mcp_resource_uri_templates",
+               "mcp_resources",
+               "mcp_tool_names",
+               "mcp_tools",
+               "provenance_support_policy",
+               "query_domain_names",
+               "query_domains",
+               "query_families",
+               "query_family_names",
+               "raw_private_surfaces_excluded",
+               "read_only_default",
+               "report_source",
+               "safety_policy",
+               "schema_version",
+               "section_contract",
+               "status",
+               "versioning_policy",
+               "write_generation_tools_enabled"
+            ],
+            "write_generation_tools_enabled" : false
+         },
+         "isError" : false,
+         "response_keys" : [
+            "content",
+            "isError"
+         ]
+      },
+      "check" : {
+         "content_types" : [
+            "text"
+         ],
+         "decoded_payload" : {
+            "adapter_provenance" : {
+               "command_shape" : "bin/fsmgen --strict --check --json <source>",
+               "contract_source" : "FSM::Support::SemanticIntrospectionMCPAdapter",
+               "read_only" : true,
+               "shell_access" : false,
+               "source_identity" : "workspace_relative",
+               "transport" : "jsonrpc_stdio",
+               "workspace_root_policy" : "caller_configured_root_not_returned"
+            },
+            "path_sanitization_keys" : [
+               "machine_local_absolute_paths"
+            ],
+            "payload_keys" : [
+               "adapter_provenance",
+               "path_sanitization",
+               "query_kind",
+               "report",
+               "source_id",
+               "source_path"
+            ],
+            "query_kind" : "check",
+            "report_keys" : [
+               "argv",
+               "ok",
+               "runner",
+               "source"
+            ],
+            "source_id" : "ppif/axi_aw_valid_ready.ppif"
+         },
+         "isError" : false,
+         "response_keys" : [
+            "content",
+            "isError"
+         ]
+      },
+      "diagnostic" : {
+         "content_types" : [
+            "text"
+         ],
+         "decoded_payload" : {
+            "code" : "FSMGEN_COMPOSITION_CHILD_ITEM_LIST_SHAPE",
+            "diagnostic_keys" : [
+               "code",
+               "family",
+               "severity",
+               "stability",
+               "summary"
+            ],
+            "payload_keys" : [
+               "code",
+               "diagnostic",
+               "registry_contract",
+               "support_examples"
+            ],
+            "registry_contract_keys" : [
+               "bounded_family_values",
+               "bounded_severity_values",
+               "bounded_stability_values",
+               "bounded_value_family_map",
+               "code_shape",
+               "contract_source",
+               "entry_presence_keys",
+               "entrypoints",
+               "guidance",
+               "key_family_map",
+               "public_sibling_keys",
+               "registry_returns_defensive_copies",
+               "report_source",
+               "schema_version",
+               "status"
+            ],
+            "support_example_count" : 2,
+            "support_example_keys" : [
+               "classification",
+               "coverage",
+               "diagnostic_code",
+               "family",
+               "id",
+               "relpath",
+               "source_kind",
+               "strict_supported"
+            ]
+         },
+         "isError" : false,
+         "response_keys" : [
+            "content",
+            "isError"
+         ]
+      },
+      "examples" : {
+         "content_types" : [
+            "text"
+         ],
+         "decoded_payload" : {
+            "catalog_entry_keys" : [
+               "classification",
+               "coverage",
+               "expected_child_modules",
+               "expected_hdl_pattern_count",
+               "expected_instance_count",
+               "expected_lane",
+               "expected_top_name",
+               "family",
+               "has_expected_error_pattern",
+               "has_expected_hint_pattern",
+               "id",
+               "relpath",
+               "source_kind",
+               "strict_supported"
+            ],
+            "embedded_support_summary_sample_count" : 0,
+            "limit" : 2,
+            "payload_keys" : [
+               "catalog_entries",
+               "documentation",
+               "limit",
+               "query",
+               "returned_count",
+               "support_summary"
+            ],
+            "query" : "composition",
+            "returned_count" : 2
+         },
+         "isError" : false,
+         "response_keys" : [
+            "content",
+            "isError"
+         ]
+      },
+      "schedule" : {
+         "content_types" : [
+            "text"
+         ],
+         "decoded_payload" : {
+            "adapter_provenance" : {
+               "command_shape" : "bin/fsmgen --emit-schedule-json <source>",
+               "contract_source" : "FSM::Support::SemanticIntrospectionMCPAdapter",
+               "read_only" : true,
+               "shell_access" : false,
+               "source_identity" : "workspace_relative",
+               "transport" : "jsonrpc_stdio",
+               "workspace_root_policy" : "caller_configured_root_not_returned"
+            },
+            "path_sanitization_keys" : [
+               "machine_local_absolute_paths"
+            ],
+            "payload_keys" : [
+               "adapter_provenance",
+               "path_sanitization",
+               "query_kind",
+               "report",
+               "source_id",
+               "source_path"
+            ],
+            "query_kind" : "schedule",
+            "report_keys" : [
+               "argv",
+               "ok",
+               "runner",
+               "source"
+            ],
+            "source_id" : "ppif/axi_aw_valid_ready.ppif"
+         },
+         "isError" : false,
+         "response_keys" : [
+            "content",
+            "isError"
+         ]
+      },
+      "semantic" : {
+         "content_types" : [
+            "text"
+         ],
+         "decoded_payload" : {
+            "adapter_provenance" : {
+               "command_shape" : "bin/fsmgen --strict --emit-semantic-json <source>",
+               "contract_source" : "FSM::Support::SemanticIntrospectionMCPAdapter",
+               "read_only" : true,
+               "shell_access" : false,
+               "source_identity" : "workspace_relative",
+               "transport" : "jsonrpc_stdio",
+               "workspace_root_policy" : "caller_configured_root_not_returned"
+            },
+            "path_sanitization_keys" : [
+               "machine_local_absolute_paths"
+            ],
+            "payload_keys" : [
+               "adapter_provenance",
+               "path_sanitization",
+               "query_kind",
+               "report",
+               "source_id",
+               "source_path"
+            ],
+            "query_kind" : "semantic",
+            "report_keys" : [
+               "argv",
+               "ok",
+               "runner",
+               "source"
+            ],
+            "source_id" : "ppif/axi_aw_valid_ready.ppif"
+         },
+         "isError" : false,
+         "response_keys" : [
+            "content",
+            "isError"
+         ]
+      },
+      "support_summary" : {
+         "content_types" : [
+            "text"
+         ],
+         "decoded_payload" : {
+            "aggregate_shapes" : {
+               "classifications" : "HASH",
+               "coverage_buckets" : "HASH",
+               "families" : "HASH",
+               "source_kinds" : "HASH"
+            },
+            "id_count_keys" : [
+               "expected_failure_ids",
+               "strict_supported_ids",
+               "supported_smoke_ids"
+            ],
+            "payload_keys" : [
+               "classifications",
+               "coverage_buckets",
+               "entry_count",
+               "families",
+               "id_counts",
+               "query_kind",
+               "sample_catalog_entries",
+               "source",
+               "source_kinds"
+            ],
+            "query_kind" : "support_summary",
+            "sample_count" : 2,
+            "sample_entry_keys" : [
+               "classification",
+               "coverage",
+               "family",
+               "id",
+               "relpath",
+               "source_kind",
+               "strict_supported"
+            ]
+         },
+         "isError" : false,
+         "response_keys" : [
+            "content",
+            "isError"
+         ]
+      }
+   },
+   "tools" : [
+      {
+         "name" : "fsmgen_capability_query",
+         "property_names" : [
+            "section"
+         ],
+         "property_types" : {
+            "section" : "string"
+         },
+         "required" : []
+      },
+      {
+         "name" : "fsmgen_check",
+         "property_names" : [
+            "source_id",
+            "source_path"
+         ],
+         "property_types" : {
+            "source_id" : "string",
+            "source_path" : "string"
+         },
+         "required" : []
+      },
+      {
+         "name" : "fsmgen_semantic_introspect",
+         "property_names" : [
+            "source_id",
+            "source_path"
+         ],
+         "property_types" : {
+            "source_id" : "string",
+            "source_path" : "string"
+         },
+         "required" : []
+      },
+      {
+         "name" : "fsmgen_schedule_preview",
+         "property_names" : [
+            "source_id",
+            "source_path"
+         ],
+         "property_types" : {
+            "source_id" : "string",
+            "source_path" : "string"
+         },
+         "required" : []
+      },
+      {
+         "name" : "fsmgen_find_examples",
+         "property_names" : [
+            "limit",
+            "query"
+         ],
+         "property_types" : {
+            "limit" : "integer",
+            "query" : "string"
+         },
+         "required" : []
+      },
+      {
+         "name" : "fsmgen_explain_diagnostic",
+         "property_names" : [
+            "code"
+         ],
+         "property_types" : {
+            "code" : "string"
+         },
+         "required" : [
+            "code"
+         ]
+      },
+      {
+         "name" : "fsmgen_support_summary",
+         "property_names" : [
+            "limit_examples"
+         ],
+         "property_types" : {
+            "limit_examples" : "integer"
+         },
+         "required" : []
+      }
+   ]
+}

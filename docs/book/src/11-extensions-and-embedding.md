@@ -2706,6 +2706,23 @@ strict check JSON, source-bound semantic inspection, and schedule previews. The
 source-bound requests return workspace-relative source identity and
 `adapter_provenance`; they do not return the configured workspace root.
 
+### MCP Client Compatibility Matrix
+
+The read-only adapter currently has a bounded client profile:
+
+| Client integration mode | Status | Guard |
+| --- | --- | --- |
+| One-shot JSON-RPC probe through `--request-json` | shipped | `t/1442-fsmgen-mcp-jsonrpc-cli.t` and `t/1445-semantic-introspection-mcp-schema-snapshots.t` |
+| Line-delimited JSON-RPC stdio using `initialize`, `resources/list`, `resources/templates/list`, `resources/read`, `tools/list`, `tools/call`, and `ping` | shipped | `t/1441-semantic-introspection-mcp-adapter.t`, `t/1443-semantic-introspection-mcp-protocol-hardening.t`, and the schema fixture in `t/fixtures/semantic_introspection_mcp/read_only_schema_snapshot.json` |
+| Local clients that can launch `perl bin/fsmgen-mcp --workspace-root ROOT` and speak the shipped JSON-RPC profile | compatible with the shipped read-only profile | Same fixture plus the documented workflow examples above |
+| Clients that require full MCP Content-Length stdio framing, prompts, sampling, completions, or service-mode session features | not claimed yet | Future task-tree ownership required before implementation |
+| Clients that need write/generation, HDL output writing, automated repair, shell, network, commit, or push tools | intentionally blocked | `semantic_introspection.write_generation_tools_enabled` remains false |
+
+The fixture snapshot is deliberately a projection of envelope shape, tool
+names, resource templates, input property names, safety flags, and
+source-query provenance. It does not pin volatile support-corpus counts or dump
+full compiler reports.
+
 ## Downstream Tool Alignment
 
 FSMGen now keeps a tracked response to SPECFORGE's `.fsm` adapter feedback:

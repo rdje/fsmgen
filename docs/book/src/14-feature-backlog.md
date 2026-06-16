@@ -7547,9 +7547,14 @@ diagnostic explanations linked to support-accounting examples.
 configuration and bounded one-shot workflows for capabilities, support
 summaries, diagnostics, examples, check JSON, semantic JSON, and schedule
 previews.
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.8` adds bounded read-only MCP schema
+snapshot fixtures and a client compatibility matrix. The shipped profile is
+one-shot or line-delimited JSON-RPC stdio; full MCP Content-Length framing,
+prompts, sampling, completions, service mode, and write tools are not claimed
+yet.
 
-Current active frontier: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.8`, schema
-snapshot fixtures and a client compatibility matrix.
+Current active frontier: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.9`, full MCP
+stdio framing compatibility boundary.
 
 Selected first MCP resource families are `fsmgen://capabilities`,
 `fsmgen://contracts`, `fsmgen://diagnostics`,
