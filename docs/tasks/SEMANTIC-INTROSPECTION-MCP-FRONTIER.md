@@ -100,7 +100,8 @@ For FSMGen, the analogs are:
     `SEMANTIC-INTROSPECTION-MCP-FRONTIER.13`,
     `SEMANTIC-INTROSPECTION-MCP-FRONTIER.14`,
     `SEMANTIC-INTROSPECTION-MCP-FRONTIER.15`,
-    `SEMANTIC-INTROSPECTION-MCP-FRONTIER.16`
+    `SEMANTIC-INTROSPECTION-MCP-FRONTIER.16`,
+    `SEMANTIC-INTROSPECTION-MCP-FRONTIER.17`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1`
   Status: `done`
@@ -208,9 +209,16 @@ For FSMGen, the analogs are:
   Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.15: bound MCP pagination`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.16`
-  Status: `pending`
+  Status: `done`
   Goal: `Select MCP sampling and elicitation boundaries for read-only semantic workflows.`
   Acceptance: `Audit whether sampling/createMessage and elicitation/create should be used or advertised for semantic-introspection workflows; either select exact bounded behavior with tests/docs or keep server-initiated model/user requests unsupported; do not enable model calls, user data collection, writes, network, shell, mutation workflows, commit, or push tools.`
+  Verification: `passed`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.16: defer MCP sampling elicitation`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.17`
+  Status: `pending`
+  Goal: `Select MCP Streamable HTTP and service-mode transport boundaries.`
+  Acceptance: `Audit whether Streamable HTTP transport, HTTP session behavior, or long-lived service mode should be advertised for the read-only semantic-introspection adapter; either select exact bounded behavior with tests/docs or keep one-shot/newline-delimited stdio as the only shipped transport; do not enable ambient network serving, writes, shell, mutation workflows, commit, or push tools.`
   Commit: `pending`
 
 ## Implementation Notes From `.4`
@@ -474,6 +482,28 @@ For FSMGen, the analogs are:
 - What guards are required before any server-initiated model or user-interaction
   request can coexist with the no-write/no-network/no-shell policy?
 
+## Implementation Notes From `.16`
+
+- MCP sampling and elicitation remain unsupported in the shipped profile.
+- Client-advertised `sampling` or `elicitation` capabilities do not widen the
+  server capabilities returned by `initialize`.
+- `sampling/createMessage` and `elicitation/create` remain unsupported server
+  methods; FSMGen does not initiate model calls or user-input requests through
+  MCP.
+- Added
+  `t/1453-semantic-introspection-mcp-sampling-elicitation-boundary.t` to guard
+  the boundary.
+
+## Candidate Contract Questions For `.17`
+
+- Should the adapter keep one-shot and newline-delimited stdio as the only
+  shipped transports until a real long-lived client profile requires
+  Streamable HTTP?
+- What session, lifecycle, and shutdown semantics would an HTTP/service-mode
+  adapter need before it can be signoff-ready?
+- How should a future transport preserve the current no-write, no-shell,
+  no-network-beyond-listener, and workspace-root source authority policy?
+
 ## Candidate Future Phases
 
 - Phase 1: contract inventory and first safe semantic-introspection boundary.
@@ -488,7 +518,7 @@ For FSMGen, the analogs are:
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.16` | `pending` | `.15` kept list responses bounded and unpaginated; the next exact frontier is sampling/elicitation selection. |
+| 1 | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.17` | `pending` | `.16` kept sampling and elicitation unsupported; the next exact frontier is Streamable HTTP/service-mode transport selection. |
 
 ## Decisions
 
@@ -542,6 +572,8 @@ For FSMGen, the analogs are:
   JSON-RPC errors and structured, sanitized payloads.
 - `2026-06-16`: `.15` kept list responses bounded and unpaginated: no
   `nextCursor` is emitted, and unissued cursor params are invalid.
+- `2026-06-16`: `.16` kept sampling and elicitation unsupported; FSMGen does
+  not initiate model calls or user-input requests through MCP.
 - `2026-06-14`: Create this as a proposed owner, not an active implementation
   lane. The first real work must be no-code contract selection over existing
   public surfaces.
@@ -551,7 +583,7 @@ For FSMGen, the analogs are:
 
 ## Open Questions
 
-- None for `.15`; `.16` owns MCP sampling/elicitation selection.
+- None for `.16`; `.17` owns MCP Streamable HTTP/service-mode transport selection.
 
 ## Blockers
 
@@ -578,6 +610,7 @@ For FSMGen, the analogs are:
 | `2026-06-16` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.13` | Syntax check for `t/1450`; `prove -Iperl t/1441-semantic-introspection-mcp-adapter.t t/1443-semantic-introspection-mcp-protocol-hardening.t t/1450-semantic-introspection-mcp-completion-boundary.t`; mdBook, docs path audit, Knowledge Map generation/check, memory-architecture, README-numbering, and diff gates | `passed`; kept completion unsupported and selected `.14` logging API boundary |
 | `2026-06-16` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.14` | Syntax check for `t/1451`; `prove -Iperl t/1441-semantic-introspection-mcp-adapter.t t/1443-semantic-introspection-mcp-protocol-hardening.t t/1451-semantic-introspection-mcp-logging-boundary.t`; mdBook, docs path audit, Knowledge Map generation/check, memory-architecture, README-numbering, and diff gates | `passed`; kept logging unsupported and selected `.15` pagination boundary |
 | `2026-06-16` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.15` | Syntax checks for `SemanticIntrospectionMCPAdapter` and `t/1452`; `prove -Iperl t/1441-semantic-introspection-mcp-adapter.t t/1443-semantic-introspection-mcp-protocol-hardening.t t/1445-semantic-introspection-mcp-schema-snapshots.t t/1449-semantic-introspection-mcp-resource-change-boundary.t t/1452-semantic-introspection-mcp-pagination-boundary.t`; mdBook, docs path audit, Knowledge Map generation/check, memory-architecture, README-numbering, and diff gates | `passed`; kept list responses bounded/unpaginated and selected `.16` sampling/elicitation boundary |
+| `2026-06-16` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.16` | Syntax check for `t/1453`; `prove -Iperl t/1441-semantic-introspection-mcp-adapter.t t/1443-semantic-introspection-mcp-protocol-hardening.t t/1453-semantic-introspection-mcp-sampling-elicitation-boundary.t`; mdBook, docs path audit, Knowledge Map generation/check, memory-architecture, README-numbering, and diff gates | `passed`; kept sampling/elicitation unsupported and selected `.17` Streamable HTTP/service-mode transport boundary |
 
 ## Commit Log
 
@@ -598,7 +631,8 @@ For FSMGen, the analogs are:
 | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.13` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.13: defer MCP completions` | Kept completion unsupported until bounded candidate providers are selected. |
 | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.14` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.14: defer MCP logging` | Kept MCP logging unsupported until a bounded log-message contract is selected. |
 | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.15` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.15: bound MCP pagination` | Kept list responses bounded and unpaginated, with unissued cursor params rejected as invalid. |
-| `SEMANTIC-INTROSPECTION-MCP-FRONTIER.16` | `pending` | `pending` |
+| `SEMANTIC-INTROSPECTION-MCP-FRONTIER.16` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.16: defer MCP sampling elicitation` | Kept sampling and elicitation unsupported for the read-only profile. |
+| `SEMANTIC-INTROSPECTION-MCP-FRONTIER.17` | `pending` | `pending` |
 
 ## Changelog
 
@@ -652,4 +686,6 @@ For FSMGen, the analogs are:
   owns pagination selection.
 - `2026-06-16`: Completed `.15`; list responses remain bounded and
   unpaginated, client cursors are invalid until a paginated profile is
-  selected, and `.16` owns sampling/elicitation selection.
+  selected, and `.16` selected sampling/elicitation policy.
+- `2026-06-16`: Completed `.16`; sampling and elicitation remain unsupported,
+  and `.17` owns Streamable HTTP/service-mode transport selection.

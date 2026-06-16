@@ -1023,8 +1023,11 @@ unsupported; adapter diagnostics remain JSON-RPC errors and structured
 payloads. `SEMANTIC-INTROSPECTION-MCP-FRONTIER.15` keeps list responses
 bounded and unpaginated: resource/template/tool listings emit no `nextCursor`,
 and client-supplied cursors are invalid params until a paginated profile is
-selected. The next frontier is `SEMANTIC-INTROSPECTION-MCP-FRONTIER.16`, MCP
-sampling/elicitation selection. The IAL2
+selected. `SEMANTIC-INTROSPECTION-MCP-FRONTIER.16` keeps sampling and
+elicitation unsupported; the adapter does not initiate model calls or
+user-input requests through MCP. The next frontier is
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.17`, MCP Streamable HTTP/service-mode
+transport selection. The IAL2
 SystemVerilog-backed feature-completeness tree remains
 active at
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.136`, but broad IAL2 expansion is no

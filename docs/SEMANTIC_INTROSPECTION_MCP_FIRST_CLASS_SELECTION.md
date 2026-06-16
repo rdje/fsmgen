@@ -178,6 +178,11 @@ the shipped profile. Resource, resource-template, and tool list responses are
 bounded and unpaginated: they emit no `nextCursor`, and client-supplied cursor
 params are invalid because the adapter has issued no cursor.
 
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.16` selected the sampling/elicitation
+boundary for the shipped profile. FSMGen does not initiate
+`sampling/createMessage` or `elicitation/create`; hosts should use the
+structured resources and tools for semantic workflows.
+
 ## Deferred
 
 The following remain outside `.2` and `.3` unless separately selected:

@@ -7568,9 +7568,11 @@ diagnostics remain JSON-RPC errors and structured payloads.
 unpaginated: resource/template/tool listings emit no `nextCursor`, and
 client-supplied cursors are invalid params until a paginated profile is
 selected.
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.16` keeps MCP sampling and elicitation
+unsupported; the adapter does not initiate model calls or user-input requests.
 
-Current active frontier: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.16`, MCP
-sampling/elicitation boundary.
+Current active frontier: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.17`, MCP
+Streamable HTTP/service-mode transport boundary.
 
 Selected first MCP resource families are `fsmgen://capabilities`,
 `fsmgen://contracts`, `fsmgen://diagnostics`,
