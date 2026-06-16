@@ -24,10 +24,12 @@ The selected starting stance is IAL1 (`.isf`) to verification code. Frontier
 assertion projection but insufficient for first-class generated verification
 artifacts. Frontier `.3` selected actor-level passive observation metadata,
 `(observe NAME (role passive_monitor) (signals SIG...))`, as the first IAL1
-verification-specific source feature. The active implementation owner is
-`ISF-VERIFICATION-OBSERVATION-METADATA.1`; generated verification code remains
-deferred until that source prerequisite ships and a later output selector
-chooses an exact target.
+verification-specific source feature. Implementation
+`ISF-VERIFICATION-OBSERVATION-METADATA.1` shipped that report-only source
+contract through `verification_observations[]`. Generated verification code
+remains deferred until a later output selector chooses an exact target; the
+next frontier leaf is `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4`, the
+first SV/UVM output contract selector.
 
 Future target families are explicitly tracked, not implied: SV/UVM agents,
 monitors, scoreboards, protocol checkers, coverage, reusable verification IP,

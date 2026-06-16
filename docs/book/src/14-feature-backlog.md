@@ -4170,9 +4170,11 @@ observation selector
 then selected actor-level passive observation metadata,
 `(observe NAME (role passive_monitor) (signals SIG...))`, as the first IAL1
 verification-specific source feature. `ISF-VERIFICATION-OBSERVATION-METADATA.1`
-owns parser/report/public-contract implementation; output generation remains
-deferred. Direct IAL2-to-verification generation remains an open audit
-question.
+shipped the parser, additive `verification_observations[]` schedule-report
+projection, public contract metadata, supported-smoke fixture, and mdBook
+example for that report-only metadata. Generated SV/UVM, VHDL-oriented,
+scoreboard, coverage, reusable VIP, public artifact/CLI, and direct
+IAL2-to-verification generation remain deferred behind later selector leaves.
 
 Read-data interleaving queue readiness audit:
 [AXI_IAL2_MANAGER_READ_DATA_INTERLEAVING_QUEUE_READINESS_AUDIT](../../AXI_IAL2_MANAGER_READ_DATA_INTERLEAVING_QUEUE_READINESS_AUDIT.md)

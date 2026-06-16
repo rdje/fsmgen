@@ -20,9 +20,11 @@ assertion/property path, but not enough for first-class generated verification
 artifacts such as UVM monitors, agents, scoreboards, coverage collectors,
 reusable VIP, or VHDL-oriented verification outputs.
 
-The selected next prerequisite is
-`ISF-VERIFICATION-OBSERVATION-METADATA.1`: implement actor-level passive
+The selected source prerequisite,
+`ISF-VERIFICATION-OBSERVATION-METADATA.1`, shipped actor-level passive
 observation metadata, `(observe NAME (role passive_monitor) (signals SIG...))`,
 as the first IAL1 verification-specific source/report feature family. SV/UVM
 output, VHDL output, direct IAL2 routing, and public CLI/artifact contracts
-stay behind later selector leaves.
+stay behind later selector leaves; the next frontier leaf is
+`IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4`, the first SV/UVM output
+contract selector.

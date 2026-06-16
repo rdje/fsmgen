@@ -32,6 +32,7 @@ sub report_hash($self, $ir) {
         watchdog       => $ir->{watchdog},
         actor_phases   => $self->_actor_metadata_summary($ir, 'actor_phases'),
         actor_stages   => $self->_actor_metadata_summary($ir, 'actor_stages'),
+        verification_observations => $self->_verification_observation_summary($ir),
         actor_params    => $self->_actor_param_summary($ir),
         actor_constants => $self->_actor_constant_summary($ir),
         port_count     => scalar(@{$ir->{ports}}),
@@ -462,6 +463,28 @@ sub _actor_metadata_summary($self, $ir, $key) {
                 body => _clone_report_value($_->{body} || []),
             }
         } @{$ir->{$key} || []}
+    ];
+}
+
+sub _verification_observation_summary($self, $ir) {
+    return [
+        map {
+            {
+                name    => $_->{name},
+                role    => $_->{role},
+                clock   => $ir->{clock},
+                reset   => $self->_reset_summary($ir->{reset}),
+                signals => [
+                    map {
+                        {
+                            name      => $_->{name},
+                            direction => $_->{direction},
+                            width     => 0 + $_->{width},
+                        }
+                    } @{$_->{signals} || []}
+                ],
+            }
+        } @{$ir->{verification_observations} || []}
     ];
 }
 

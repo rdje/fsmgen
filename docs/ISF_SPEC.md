@@ -516,6 +516,17 @@ Additional actor clauses with mixed parser/scheduler behavior:
   schedule-report visible through `actor_phases[]` and `actor_stages[]`, but
   it still does not add generated `.fsm`, generated composition-top, or HDL
   behavior.
+- actor-level `(observe NAME (role passive_monitor) (signals SIG...))`,
+  structurally validated as a non-empty scalar observation name, required
+  `passive_monitor` role, and non-empty source-ordered list of unique actor
+  interface signals. The parser resolves each signal to input/output direction
+  and scalar width, and schedule JSON exposes the metadata through
+  `verification_observations[]`. The declaration is report-only: it does not
+  add generated `.fsm`, generated composition-top, HDL, UVM, VHDL, scoreboard,
+  coverage, or VIP behavior. Actor storage, transaction-local ports, dotted
+  endpoints, child endpoints, expressions, unsupported roles, duplicate
+  observation names, and multi-domain observation partitioning fail closed or
+  remain deferred.
 - `(resources ...)`, structurally validated as resource entries with
   `(arbiter priority|round_robin)` plus optional `(kind ...)` and
   `(users ...)`/`(members ...)`; `rule_slot`, `output_bundle`,
@@ -4101,6 +4112,20 @@ only for bounded public report projection: schedule JSON exposes
 `actor_phases[]` and `actor_stages[]` entries with each authored metadata
 `name` and parser-validated list-form `body`. Generated `.fsm`, generated
 composition tops, and HDL do not consume that actor-level metadata today.
+
+Actor-level `(observe NAME (role passive_monitor) (signals SIG...))` metadata
+is the first shipped IAL1 verification-specific source feature. It records a
+named passive observation point over public actor interface signals for future
+generated verification artifacts. The parser requires a single-clock actor,
+the exact `passive_monitor` role, and a non-empty unique list of scalar input
+or output interface signal names. It rejects storage names, transaction-local
+ports, dotted or child endpoints, unknown signals, duplicate observation names,
+and unsupported roles. LoweringIR carries the resolved metadata only for
+bounded public report projection: schedule JSON exposes
+`verification_observations[]` entries with `name`, `role`, inherited `clock`,
+`reset`, and source-ordered signal summaries. Generated `.fsm`, generated
+composition tops, HDL, UVM, VHDL, scoreboards, coverage, and reusable VIP do
+not consume observation metadata today.
 Transaction-level `(phase name property...)` remains the
 current pass-through state marker lowering. Transaction-level
 `(stage name (ready ready_signal) (valid valid_signal))` is the preferred
@@ -4872,6 +4897,16 @@ the authored metadata `name` and a JSON-safe copy of the list-form `body`. The
 capability-manifest ISF public contract advertises those keys through
 `schedule_report_actor_phase_keys` and
 `schedule_report_actor_stage_keys`.
+The `verification_observations` array reports parser-validated actor-level
+passive observation metadata without assigning runtime semantics to it. Each
+entry has the authored observation `name`, `role`, inherited `clock`, `reset`,
+and source-ordered `signals`; each signal entry has `name`, `direction`, and
+resolved scalar `width`. The only shipped role value is `passive_monitor`.
+Actors without observation metadata report an empty array. The
+capability-manifest ISF public contract advertises these fields and role
+values through `schedule_report_verification_observation_keys`,
+`schedule_report_verification_observation_signal_keys`, and
+`schedule_report_verification_observation_role_values`.
 The `transaction_stages` array reports the shipped ready/valid stage subset.
 Each entry has `transaction`, authored stage `name`, `kind =
 ready_valid_barrier`, generated `state`, `ready` input, and `valid` output.

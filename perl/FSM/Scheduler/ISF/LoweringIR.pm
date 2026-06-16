@@ -164,6 +164,7 @@ sub _build_child_ir($self, $tx, $actor, $cname) {
         watchdog   => $actor->{watchdog},
         actor_phases => _actor_metadata_declarations($actor, 'phases'),
         actor_stages => _actor_metadata_declarations($actor, 'stages'),
+        verification_observations => _verification_observation_declarations($actor),
         package_imports => _actor_package_imports($actor),
         package_roots => _actor_package_roots($actor),
         type_declarations => _actor_type_declarations($actor),
@@ -1205,6 +1206,7 @@ sub _build_parent_ir($self, $actor, $generated_children, $pruned_transactions = 
         watchdog   => $actor->{watchdog},
         actor_phases => _actor_metadata_declarations($actor, 'phases'),
         actor_stages => _actor_metadata_declarations($actor, 'stages'),
+        verification_observations => _verification_observation_declarations($actor),
         package_imports => _actor_package_imports($actor),
         package_roots => _actor_package_roots($actor),
         type_declarations => _actor_type_declarations($actor),
@@ -4194,6 +4196,20 @@ sub _actor_metadata_declarations {
                 body => _clone_isf_value($_->{body} || []),
             }
         } @{$actor->{$key} || []}
+    ];
+}
+
+sub _verification_observation_declarations {
+    my ($actor) = @_;
+    return [] unless ref($actor) eq 'HASH';
+    return [
+        map {
+            {
+                name    => $_->{name},
+                role    => $_->{role},
+                signals => _clone_isf_value($_->{signals} || []),
+            }
+        } @{$actor->{verification_observations} || []}
     ];
 }
 

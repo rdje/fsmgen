@@ -135,6 +135,9 @@ our @EXPORT_OK = qw(
     isf_public_interface_schedule_report_transaction_ordering
     isf_public_interface_schedule_report_transaction_states_shape
     isf_public_interface_schedule_report_transaction_keys
+    isf_public_interface_schedule_report_verification_observation_keys
+    isf_public_interface_schedule_report_verification_observation_signal_keys
+    isf_public_interface_schedule_report_verification_observation_role_values
     isf_public_interface_schedule_report_watchdog_shape
     isf_public_interface_shipped_library_definitions
     isf_public_interface_report_return_shape
@@ -230,6 +233,9 @@ sub build_isf_public_interface_contract {
         schedule_report_crossing_keys => isf_public_interface_schedule_report_crossing_keys(),
         schedule_report_actor_phase_keys => isf_public_interface_schedule_report_actor_phase_keys(),
         schedule_report_actor_stage_keys => isf_public_interface_schedule_report_actor_stage_keys(),
+        schedule_report_verification_observation_keys => isf_public_interface_schedule_report_verification_observation_keys(),
+        schedule_report_verification_observation_signal_keys => isf_public_interface_schedule_report_verification_observation_signal_keys(),
+        schedule_report_verification_observation_role_values => isf_public_interface_schedule_report_verification_observation_role_values(),
         schedule_report_actor_network_keys => isf_public_interface_schedule_report_actor_network_keys(),
         schedule_report_actor_network_instance_keys => isf_public_interface_schedule_report_actor_network_instance_keys(),
         schedule_report_actor_network_resolved_instance_keys => isf_public_interface_schedule_report_actor_network_resolved_instance_keys(),
@@ -985,6 +991,7 @@ sub isf_public_interface_schedule_report_top_level_keys {
             watchdog
             actor_phases
             actor_stages
+            verification_observations
             actor_params
             actor_constants
             port_count
@@ -1405,6 +1412,36 @@ sub isf_public_interface_schedule_report_actor_stage_keys {
         qw(
             name
             body
+        ),
+    ];
+}
+
+sub isf_public_interface_schedule_report_verification_observation_keys {
+    return [
+        qw(
+            name
+            role
+            clock
+            reset
+            signals
+        ),
+    ];
+}
+
+sub isf_public_interface_schedule_report_verification_observation_signal_keys {
+    return [
+        qw(
+            name
+            direction
+            width
+        ),
+    ];
+}
+
+sub isf_public_interface_schedule_report_verification_observation_role_values {
+    return [
+        qw(
+            passive_monitor
         ),
     ];
 }
@@ -1946,6 +1983,8 @@ sub isf_public_interface_schedule_report_presence_key_family_map {
         schedule_report_reset_keys => isf_public_interface_schedule_report_reset_keys(),
         schedule_report_actor_phase_keys => isf_public_interface_schedule_report_actor_phase_keys(),
         schedule_report_actor_stage_keys => isf_public_interface_schedule_report_actor_stage_keys(),
+        schedule_report_verification_observation_keys => isf_public_interface_schedule_report_verification_observation_keys(),
+        schedule_report_verification_observation_signal_keys => isf_public_interface_schedule_report_verification_observation_signal_keys(),
         schedule_report_actor_network_keys => isf_public_interface_schedule_report_actor_network_keys(),
         schedule_report_actor_network_instance_keys => isf_public_interface_schedule_report_actor_network_instance_keys(),
         schedule_report_actor_network_resolved_instance_keys => isf_public_interface_schedule_report_actor_network_resolved_instance_keys(),

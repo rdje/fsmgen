@@ -489,10 +489,13 @@ assert/assume/cover/property/monitor surface sufficient for inline
 SystemVerilog assertion projection, but insufficient for first-class generated
 SV/UVM or VHDL-oriented verification artifacts. The current frontier `.3`
 selected an actor-level passive observation metadata contract as the first
-IAL1 verification-specific source feature. The implementation owner is
-`ISF-VERIFICATION-OBSERVATION-METADATA.1`, which must ship before any output
-generator is chosen. Direct IAL2-to-verification generation remains an audit
-question, not an implementation assumption.
+IAL1 verification-specific source feature. Implementation
+`ISF-VERIFICATION-OBSERVATION-METADATA.1` ships the report-only parser,
+additive `verification_observations[]` schedule JSON projection, public
+contract metadata, supported-smoke fixture, and mdBook example for that
+contract. SV/UVM output selection now belongs to
+`IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4`; direct IAL2-to-verification
+generation remains an audit question, not an implementation assumption.
 Implementation `.85` ships that report/static alignment: the public
 multi-beat sample now reports `response_demux.residue: []` and
 `same_id_ordering.residue: [concrete_id_same_id_ordering,
@@ -1075,7 +1078,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/tasks/ISF-REMAINING-BROAD-FRONTIER.md` — proposed broad `R14` ISF frontier owner tree for deferred ISF backlog directions not already owned by narrower active trees.
 - `docs/tasks/BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.md` — active backend-language portability contract tree; `.2.1` captured the variant-parity doctrine and `.2.2` audits public contracts, infrastructure, in-memory host APIs, semantic introspection, and parity gates before any non-Perl implementation work changes code.
 - `docs/tasks/IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.md` — active IAL1-first verification-code generation tree; `.1` promoted the deferred verification-code route into task-tree ownership, `.2` completed the IAL1 source-readiness audit, and `.3` selected actor-level passive observation metadata as the first source prerequisite.
-- `docs/tasks/ISF-VERIFICATION-OBSERVATION-METADATA.md` — active implementation owner for the selected IAL1 passive observation source feature; `.1` will implement actor-level `(observe NAME (role passive_monitor) (signals SIG...))` metadata and schedule JSON projection before any generated verification code ships.
+- `docs/tasks/ISF-VERIFICATION-OBSERVATION-METADATA.md` — completed implementation owner for the selected IAL1 passive observation source feature; `.1` shipped actor-level `(observe NAME (role passive_monitor) (signals SIG...))` metadata, additive `verification_observations[]` schedule JSON projection, public contract metadata, a supported-smoke fixture, and mdBook coverage without generated verification output.
 - `docs/IAL1_VERIFICATION_CODE_GENERATION_SOURCE_READINESS_AUDIT.md` — audit for `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.2`; records that existing IAL1 checks/properties are sufficient for inline SV assertion projection but not enough for first-class generated verification artifacts, and selects `.3`.
 - `docs/IAL1_VERIFICATION_OBSERVATION_CONTRACT_SELECTION.md` — selector for `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.3`; chooses the metadata-only actor-level `observe` source contract and routes implementation to `ISF-VERIFICATION-OBSERVATION-METADATA.1`.
 - `docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md` — completed immediate semantic-introspection/MCP task tree; `.2` made deep semantic introspection a first-class feature, `.29` shipped catalog-backed source discovery, and `.30` returned active priority to IAL2.

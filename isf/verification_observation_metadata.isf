@@ -1,0 +1,14 @@
+(actor verification_observation_metadata
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface
+    (input valid)
+    (input data (width 8))
+    (output ready)
+    (output done))
+  (observe link_rx
+    (role passive_monitor)
+    (signals valid ready data))
+  (transaction main
+    (on valid)
+    (complete done)))

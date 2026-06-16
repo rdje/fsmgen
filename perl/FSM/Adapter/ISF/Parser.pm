@@ -64,6 +64,7 @@ use constant {
 #     resources     => [ { name => ..., arbiter => ..., kind => ..., users => [...], members => [...] }, ... ],
 #     storage       => [ { kind => "var"|"bank", name => ..., width => ..., depth => ..., signals => [...] }, ... ],
 #     constants     => [ { name => ..., value => ... }, ... ],
+#     verification_observations => [ { name => ..., role => ..., signals => [...] }, ... ],
 #     type_declarations => [ ... ],
 #     enum_declarations => [ ... ],
 #     constant_symbols => { packages => ... },
@@ -165,6 +166,7 @@ sub _build_actor($self, $actor_ast, $source_label) {
         drives       => {},
         phases       => [],
         stages       => [],
+        verification_observations => [],
         params       => [],
         imports      => [],
         package_imports => [],
@@ -180,6 +182,7 @@ sub _build_actor($self, $actor_ast, $source_label) {
     };
     my %actor_phase_names;
     my %actor_stage_names;
+    my %verification_observation_names;
     my %handshake_names;
     my %singleton_actor_clauses;
     my %transaction_names;
@@ -290,6 +293,11 @@ sub _build_actor($self, $actor_ast, $source_label) {
             confess "Error: duplicate actor stage '$stage->{name}'\n"
                 if $actor_stage_names{$stage->{name}}++;
             push @{$result->{stages}}, $stage;
+        } elsif ($keyword eq 'observe') {
+            my $observation = $self->_parse_verification_observation($clause, $actor_name);
+            confess "Error: duplicate observe declaration '$observation->{name}' in actor '$actor_name'\n"
+                if $verification_observation_names{$observation->{name}}++;
+            push @{$result->{verification_observations}}, $observation;
         } else {
             confess "Error: unknown actor clause '$keyword' in actor '$actor_name'\n";
         }
@@ -366,6 +374,7 @@ sub _build_actor($self, $actor_ast, $source_label) {
     $self->_finalize_actor_storage_widths($result);
     $self->_finalize_actor_transaction_port_widths($result);
     $self->_finalize_actor_type_references($result);
+    $self->_finalize_actor_verification_observations($result);
     $self->_validate_deferred_atl_drive_sink_expression_candidates($result);
     $self->_validate_rule_pulse_targets($result);
     $self->_validate_actor_aggregate_storage_paths($result);
@@ -6908,6 +6917,44 @@ sub _actor_interface_signal_by_name {
     return undef;
 }
 
+sub _actor_storage_signal_by_name {
+    my ($actor, $name) = @_;
+    return undef unless ref($actor) eq 'HASH' && defined($name) && !ref($name);
+
+    for my $entry (@{$actor->{storage} || []}) {
+        next unless ref($entry) eq 'HASH';
+        return $entry if ($entry->{name} // '') eq $name;
+        for my $signal (@{$entry->{signals} || []}) {
+            next unless ref($signal) eq 'HASH';
+            return $signal if ($signal->{name} // '') eq $name;
+        }
+    }
+
+    return undef;
+}
+
+sub _actor_transaction_port_by_name {
+    my ($actor, $name) = @_;
+    return undef unless ref($actor) eq 'HASH' && defined($name) && !ref($name);
+
+    for my $tx (@{$actor->{transactions} || []}) {
+        next unless ref($tx) eq 'HASH';
+        for my $direction (qw(inputs outputs)) {
+            for my $port (@{($tx->{ports} || {})->{$direction} || []}) {
+                next unless ref($port) eq 'HASH';
+                if (($port->{name} // '') eq $name) {
+                    return {
+                        transaction => $tx->{name},
+                        port        => $port,
+                    };
+                }
+            }
+        }
+    }
+
+    return undef;
+}
+
 sub _finalize_actor_domain_annotations($self, $actor) {
     my $actor_name = $actor->{actor_name} // 'unknown';
     my $clock_domains = $actor->{clock_domains};
@@ -9685,6 +9732,112 @@ sub _parse_phase($self, $clause) {
 
 sub _parse_stage($self, $clause) {
     return $self->_parse_named_body_clause($clause, 'stage');
+}
+
+sub _parse_verification_observation($self, $clause, $actor_name) {
+    confess "Error: actor '$actor_name' observe declaration requires '(observe NAME (role passive_monitor) (signals SIG...))'\n"
+        unless @$clause >= 2;
+
+    my $name = $clause->[1];
+    confess "Error: observe declaration in actor '$actor_name' requires a scalar HDL identifier name\n"
+        unless _is_hdl_identifier($name);
+
+    my ($role, @signals);
+    my %seen_clause;
+    for my $part (@{$clause}[2 .. $#$clause]) {
+        confess "Error: observe '$name' in actor '$actor_name' clauses must be list forms\n"
+            unless ref($part) eq 'ARRAY' && @$part;
+        my $head = $part->[0];
+        confess "Error: observe '$name' in actor '$actor_name' clause heads must be scalar\n"
+            unless defined($head) && !ref($head) && length($head);
+        confess "Error: observe '$name' in actor '$actor_name' has duplicate '$head' clause\n"
+            if $seen_clause{$head}++;
+
+        if ($head eq 'role') {
+            confess "Error: observe '$name' in actor '$actor_name' role requires '(role passive_monitor)'\n"
+                unless @$part == 2 && defined($part->[1]) && !ref($part->[1]) && length($part->[1]);
+            $role = $part->[1];
+            confess "Error: observe '$name' in actor '$actor_name' has unsupported role '$role'; supported role: passive_monitor\n"
+                unless $role eq 'passive_monitor';
+            next;
+        }
+
+        if ($head eq 'signals') {
+            my @items = grep { defined } @{$part}[1 .. $#$part];
+            confess "Error: observe '$name' in actor '$actor_name' requires a non-empty '(signals SIG...)' clause\n"
+                unless @items;
+
+            my %seen_signal;
+            for my $signal (@items) {
+                confess "Error: observe '$name' in actor '$actor_name' signals entries must be scalar actor interface signal names\n"
+                    unless _is_hdl_identifier($signal);
+                confess "Error: observe '$name' in actor '$actor_name' has duplicate signal '$signal'\n"
+                    if $seen_signal{$signal}++;
+                push @signals, $signal;
+            }
+            next;
+        }
+
+        confess "Error: observe '$name' in actor '$actor_name' has unsupported clause '$head'\n";
+    }
+
+    confess "Error: observe '$name' in actor '$actor_name' requires '(role passive_monitor)'\n"
+        unless defined $role;
+    confess "Error: observe '$name' in actor '$actor_name' requires a non-empty '(signals SIG...)' clause\n"
+        unless @signals;
+
+    return {
+        name    => $name,
+        role    => $role,
+        signals => \@signals,
+    };
+}
+
+sub _finalize_actor_verification_observations($self, $actor) {
+    my @observations = @{$actor->{verification_observations} || []};
+    return 1 unless @observations;
+
+    my $actor_name = $actor->{actor_name} // 'unknown';
+    confess "Error: actor '$actor_name' observe declarations require a single-clock actor; multi-domain observation partitioning remains deferred\n"
+        if ref($actor->{clock_domains}) eq 'HASH';
+
+    my %interface_by_name;
+    for my $direction (qw(inputs outputs)) {
+        my $public_direction = $direction eq 'inputs' ? 'input' : 'output';
+        for my $port (@{($actor->{interface} || {})->{$direction} || []}) {
+            my $port_name = $port->{name};
+            my $width = $port->{width};
+            confess "Error: actor '$actor_name' interface port '$port_name' cannot be observed because its width is not a resolved positive scalar width\n"
+                unless defined($width) && !ref($width) && "$width" =~ /\A[1-9][0-9]*\z/;
+            $interface_by_name{$port_name} = {
+                name      => $port_name,
+                direction => $public_direction,
+                width     => 0 + $width,
+            };
+        }
+    }
+
+    for my $observation (@observations) {
+        my @resolved_signals;
+        for my $signal (@{$observation->{signals} || []}) {
+            my $interface_signal = $interface_by_name{$signal};
+            if (!$interface_signal) {
+                my $storage = _actor_storage_signal_by_name($actor, $signal);
+                confess "Error: observe '$observation->{name}' in actor '$actor_name' references actor-owned storage '$signal'; observe signals must be actor interface inputs or outputs\n"
+                    if $storage;
+
+                my $transaction_port = _actor_transaction_port_by_name($actor, $signal);
+                confess "Error: observe '$observation->{name}' in actor '$actor_name' references transaction-local port '$signal' in transaction '$transaction_port->{transaction}'; observe signals must be actor interface inputs or outputs\n"
+                    if $transaction_port;
+
+                confess "Error: observe '$observation->{name}' in actor '$actor_name' references unknown actor interface signal '$signal'\n";
+            }
+            push @resolved_signals, _clone_isf_value($interface_signal);
+        }
+        $observation->{signals} = \@resolved_signals;
+    }
+
+    return 1;
 }
 
 sub _validate_transaction_phase_stage_clauses($self, $clauses) {

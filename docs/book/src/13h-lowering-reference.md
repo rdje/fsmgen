@@ -2233,6 +2233,36 @@ public report projection: schedule JSON exposes `actor_phases[]` and
 list-form body. Generated `.fsm`, generated composition top, and HDL do not
 consume actor-level phase/stage metadata today.
 
+Actor-level passive observation metadata uses a dedicated verification report
+family. The shipped form is `(observe NAME (role passive_monitor) (signals
+SIG...))`, where every signal is a public actor interface signal in a
+single-clock actor. It is parser-validated and schedule-report visible through
+`verification_observations[]`, but it does not add generated `.fsm`, generated
+composition top, HDL, UVM, VHDL, scoreboard, coverage, or VIP behavior.
+
+```lisp
+(actor verification_observation_metadata
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface
+    (input valid)
+    (input data (width 8))
+    (output ready)
+    (output done))
+  (observe link_rx
+    (role passive_monitor)
+    (signals valid ready data))
+  (transaction main
+    (on valid)
+    (complete done)))
+```
+
+Running `./bin/fsmgen --emit-schedule-json
+isf/verification_observation_metadata.isf` reports one
+`verification_observations[]` entry named `link_rx`, with inherited `clk` /
+`rst_n` context and source-ordered signal summaries for `valid`, `ready`, and
+`data`.
+
 ```lisp
 (stage accept
   (ready ready)

@@ -1400,6 +1400,13 @@ Actor-level phase/stage metadata is also checked by
 it is copied into `LoweringIR` only for bounded `actor_phases[]` and
 `actor_stages[]` schedule-report projection, and it still does not create
 generated `.fsm`, generated composition-top, or HDL runtime behavior.
+Actor-level passive observation metadata is checked by
+[t/1260-isf-verification-observation-metadata.t](../t/1260-isf-verification-observation-metadata.t):
+`(observe NAME (role passive_monitor) (signals SIG...))` is copied into
+`LoweringIR` only for bounded `verification_observations[]` schedule-report
+projection, with source-ordered public interface signal summaries and no
+generated `.fsm`, generated composition-top, HDL, UVM, VHDL, scoreboard,
+coverage, or VIP behavior.
 The unsupported transaction-clause boundary is checked by
 [t/1180-isf-unsupported-transaction-clause-boundary.t](../t/1180-isf-unsupported-transaction-clause-boundary.t)
 so removed or future transaction clause heads, including `(assign ...)`, fail
@@ -3070,6 +3077,7 @@ reset
 watchdog
 actor_phases
 actor_stages
+verification_observations
 actor_params
 actor_constants
 port_count
@@ -3103,6 +3111,8 @@ Current bounded nested and array summary families:
 reset: name, kind, polarity
 actor_phases entries: name, body
 actor_stages entries: name, body
+verification_observations entries: name, role, clock, reset, signals
+verification_observations signal entries: name, direction, width
 actor_params entries: name, value
 actor_constants entries: name, value
 actor_network: kind, instances, groups, generated_tops, association_schedules, group_schedules, data_movements, event_waits, transaction_triggers
@@ -3278,6 +3288,20 @@ generated `.fsm`, generated-top, or HDL runtime behavior. The
 machine-readable contract advertises these through
 `schedule_report_actor_phase_keys` and
 `schedule_report_actor_stage_keys`.
+
+For each `verification_observations` entry, `name` is the authored
+observation name, `role` is the selected passive role, `clock` is the actor
+default-domain clock, `reset` is the same reset summary shape used by the
+top-level report, and `signals` is the source-ordered public actor interface
+signal list. Each signal entry reports `name`, `direction`, and resolved
+scalar `width`. Observation metadata is informational report metadata only; it
+does not add scheduler, generated `.fsm`, generated-top, HDL, UVM, VHDL,
+scoreboard, coverage, or VIP runtime behavior. The machine-readable contract
+advertises these through
+`schedule_report_verification_observation_keys`,
+`schedule_report_verification_observation_signal_keys`, and
+`schedule_report_verification_observation_role_values`; the only shipped role
+value is `passive_monitor`.
 
 For each `transaction_waits` entry, `transaction` is the authored transaction
 name, `cycles` is the exact positive resolved static wait count or JSON null
@@ -3510,7 +3534,8 @@ Stable, versioned evolution:
 - `inferred_storage[].role`, `compile_issues[]`,
   `compatible_fanin_groups[]`, `priority_resolutions[]`,
   `resource_arbitration[]`, `actor_constants[]`, `actor_phases[]`,
-  `actor_stages[]`, `actor_params[]`, `transaction_waits[]`,
+  `actor_stages[]`, `verification_observations[]`, `actor_params[]`,
+  `transaction_waits[]`,
   `transaction_stages[]`, `transaction_loops[]`, `loop_early_exits[]`,
   `temporal_contracts[]`, `transaction_port_bindings[]`, `actor_network`,
   `library_uses[]`, and `generated_composition` are bounded summaries, not raw

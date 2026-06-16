@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-VERIFICATION-OBSERVATION-METADATA`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `Verification code generation / IAL1 source feature`
 - Created: `2026-06-16`
 - Last updated: `2026-06-16`
@@ -48,22 +48,22 @@ generated verification component should observe.
 ## Task Tree
 
 - ID: `ISF-VERIFICATION-OBSERVATION-METADATA`
-  Status: `active`
+  Status: `done`
   Goal: `Ship bounded actor-level passive observation metadata for future verification-code generation.`
   Children: `ISF-VERIFICATION-OBSERVATION-METADATA.1`
 
 - ID: `ISF-VERIFICATION-OBSERVATION-METADATA.1`
-  Status: `pending`
+  Status: `done`
   Goal: `Implement actor-level passive observation metadata and schedule-report projection.`
   Acceptance: `Parser accepts the exact actor-body observe form, rejects malformed/unsupported variants, records source-ordered interface signal observations, report JSON exposes verification_observations[] through advertised public contract keys, support accounting and a supported-smoke fixture cover the feature, mdBook documents a runnable example, and generated .fsm/HDL behavior remains unchanged.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `passed`
+  Commit: `ISF-VERIFICATION-OBSERVATION-METADATA.1: ship observation metadata`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-VERIFICATION-OBSERVATION-METADATA.1` | `pending` | `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.3` selected this exact source prerequisite before any SV/UVM, VHDL-oriented, direct IAL2, or public verification-output behavior. |
+| 1 | `ISF-VERIFICATION-OBSERVATION-METADATA.1` | `done` | Shipped the selected report-only observation metadata prerequisite; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` can now select the first SV/UVM output contract. |
 
 ## Decisions
 
@@ -72,6 +72,11 @@ generated verification component should observe.
   actor metadata precedent, but uses a dedicated `verification_observations[]`
   schedule-report family so generated verification tooling does not bind to
   generic phase/stage metadata.
+- `2026-06-16`: Ship `.1`: the parser accepts exact actor-level
+  `(observe NAME (role passive_monitor) (signals SIG...))` declarations,
+  resolves public interface signals for schedule JSON, advertises the new
+  public contract key/value families, and keeps generated `.fsm`, HDL, UVM,
+  VHDL, scoreboard, coverage, and VIP behavior unchanged.
 
 ## Open Questions
 
@@ -83,22 +88,23 @@ generated verification component should observe.
 
 ## Blockers
 
-- None for `.1`.
+- None.
 
 ## Verification Log
 
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
-| `2026-06-16` | `ISF-VERIFICATION-OBSERVATION-METADATA.1` | `pending` | `pending` |
+| `2026-06-16` | `ISF-VERIFICATION-OBSERVATION-METADATA.1` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/Emitter/JSON.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -Iperl t/1260-isf-verification-observation-metadata.t t/1255-isf-schedule-report-golden-matrix.t t/1112-isf-public-interface-contract.t t/248-regression-corpus-accounting.t t/261-regression-corpus-supported-language-features.t`; `perl -Iperl t/296-regression-corpus-supported-behavior.t`; `perl -Iperl t/301-check-json-supported-corpus.t`; `./bin/fsmgen --emit-semantic-json isf/verification_observation_metadata.isf`; `./bin/fsmgen --strict --emit-semantic-json isf/verification_observation_metadata.isf`; `mdbook build docs/book`; `prove -Iperl t/297-capability-manifest.t t/1305-isf-book-feature-matrix-audit.t t/1376-isf-book-example-lowering-audit.t t/1303-isf-public-live-book-paths-audit.t t/1414-docs-relative-paths-audit.t`; Knowledge Map regeneration/check; memory architecture check; diff hygiene | `passed`; observation metadata is parser/report/public-contract covered, support-accounted, book-documented, and remains report-only with unchanged generated `.fsm`/HDL behavior |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-VERIFICATION-OBSERVATION-METADATA.1` | `pending` | `pending` |
+| `ISF-VERIFICATION-OBSERVATION-METADATA.1` | `ISF-VERIFICATION-OBSERVATION-METADATA.1: ship observation metadata` | Shipped actor-level passive observation metadata and additive `verification_observations[]` schedule-report/public-contract projection. |
 
 ## Changelog
 
 - `2026-06-16`: Created active implementation owner tree from
   `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.3`.
-
+- `2026-06-16`: Implemented the report-only observation metadata source
+  contract and unblocked `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4`.

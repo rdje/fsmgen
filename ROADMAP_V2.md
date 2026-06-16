@@ -1614,13 +1614,16 @@ SystemVerilog assertion projection but insufficient as the sole source
 contract for first-class generated SV/UVM or VHDL-oriented verification
 artifacts. Selector `.3` chose actor-level passive observation metadata,
 `(observe NAME (role passive_monitor) (signals SIG...))`, as the first IAL1
-verification-specific source feature. Implementation is owned by
-`ISF-VERIFICATION-OBSERVATION-METADATA.1` and remains metadata-only/report-only
-before any output generator is selected. SV/UVM agents, monitors,
-scoreboards, protocol checkers, coverage, reusable verification IP, and
-VHDL-oriented verification artifacts each require separate contract-selection
-owners. Direct IAL2-to-verification generation remains an explicit audit
-question, not an implementation assumption.
+verification-specific source feature. Implementation
+`ISF-VERIFICATION-OBSERVATION-METADATA.1` shipped that metadata-only/report-only
+source feature through parser validation, additive
+`verification_observations[]` schedule JSON, public contract metadata,
+supported-smoke coverage, and mdBook documentation before any output generator
+was selected. SV/UVM agents, monitors, scoreboards, protocol checkers,
+coverage, reusable verification IP, and VHDL-oriented verification artifacts
+each require separate contract-selection owners. Direct IAL2-to-verification
+generation remains an explicit audit question, not an implementation
+assumption.
 Packed burst outputs, concrete same-ID queue variants beyond the shipped
 read burst-last, write, and read single-beat depth-2 queue-head boundaries,
 per-ID queues, queued policy, profile

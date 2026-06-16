@@ -189,6 +189,18 @@ sub golden_matrix_cases {
             ],
         },
         {
+            name => 'verification_observation',
+            filename => 'verification_observation_report.isf',
+            source => verification_observation_source(),
+            covers => [
+                qw(
+                  schedule_report_verification_observation_keys
+                  schedule_report_verification_observation_signal_keys
+                  schedule_report_verification_observation_role_values
+                )
+            ],
+        },
+        {
             name => 'actor_params',
             filename => 'actor_param_report.isf',
             source => actor_param_source(),
@@ -495,6 +507,7 @@ sub assert_key_branch {
         schedule_report_actor_param_keys => ['actor_params'],
         schedule_report_actor_phase_keys => ['actor_phases'],
         schedule_report_actor_stage_keys => ['actor_stages'],
+        schedule_report_verification_observation_keys => ['verification_observations'],
         schedule_report_bank_access_keys => ['bank_accesses'],
         schedule_report_clock_domain_keys => ['clock_domains'],
         schedule_report_compile_issue_keys => ['compile_issues'],
@@ -665,6 +678,11 @@ sub assert_key_branch {
         assert_entry_keys(first_entry($domain->{crossings}), $contract->{$branch}, "$label clock-domain crossing endpoint keys");
         return 1;
     }
+    if ($branch eq 'schedule_report_verification_observation_signal_keys') {
+        my $observation = first_entry($report->{verification_observations});
+        assert_entry_keys(first_entry($observation->{signals}), $contract->{$branch}, "$label verification observation signal keys");
+        return 1;
+    }
 
     return 0;
 }
@@ -720,6 +738,9 @@ sub assert_value_branch {
     }
     elsif ($branch eq 'schedule_report_fanin_group_kind_values') {
         @values = map { $_->{kind} } @{$report->{compatible_fanin_groups}};
+    }
+    elsif ($branch eq 'schedule_report_verification_observation_role_values') {
+        @values = map { $_->{role} } @{$report->{verification_observations}};
     }
     elsif ($branch eq 'schedule_report_generated_composition_kind_values') {
         @values = ($report->{generated_composition}{kind});
@@ -958,6 +979,25 @@ sub actor_metadata_source {
   (stage pass_through (input start) (output done) (latency (max 3)))
   (transaction main
     (on start)
+    (complete done)))
+ISF
+}
+
+sub verification_observation_source {
+    return <<'ISF';
+(actor verification_observation_report
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface
+    (input valid)
+    (input data (width 8))
+    (output ready)
+    (output done))
+  (observe link_rx
+    (role passive_monitor)
+    (signals valid ready data))
+  (transaction main
+    (on valid)
     (complete done)))
 ISF
 }

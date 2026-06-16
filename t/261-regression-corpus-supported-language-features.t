@@ -30,7 +30,9 @@ sub _source_search_paths_for_entry {
 sub _assert_entry_hdl_shape {
     my ($entry, $hdl, $owner) = @_;
 
-    if ($entry->{source_kind} eq 'fsm' || $entry->{source_kind} eq 'dt') {
+    if ($entry->{source_kind} eq 'fsm'
+        || $entry->{source_kind} eq 'dt'
+        || $entry->{source_kind} eq 'isf') {
         like(
             $hdl,
             qr/\bmodule\s+\Q$entry->{expected_module_name}\E\b/s,

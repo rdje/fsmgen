@@ -3294,6 +3294,7 @@ reset
 watchdog
 actor_phases
 actor_stages
+verification_observations
 actor_params
 actor_constants
 port_count
@@ -3343,6 +3344,15 @@ Schedule-report evolution rules:
 - Breaking schedule-report changes require a `schema_version` bump and
   migration or deprecation documentation in the same slice.
 - Deprecated fields stay documented until the schema version that removes them.
+
+Actor-level passive observation metadata is report-only. The accepted source
+form is `(observe NAME (role passive_monitor) (signals SIG...))`, where
+`SIG...` must name public actor interface signals in a single-clock actor.
+Downstream consumers may read `verification_observations[]` to discover
+authored passive monitor intent, inherited clock/reset context, and
+source-ordered signal `name`/`direction`/`width` summaries. They must not infer
+generated `.fsm`, HDL, UVM, VHDL, scoreboard, coverage, or VIP artifacts from
+that metadata; output generation remains behind later selector leaves.
 
 Golden fixture matrix:
 
@@ -3400,6 +3410,8 @@ Important entry key families:
 actor_constants[]: name, value
 actor_phases[]: name, body
 actor_stages[]: name, body
+verification_observations[]: name, role, clock, reset, signals
+verification_observations[].signals[]: name, direction, width
 actor_params[]: name, value
 inferred_storage[] required: name, kind
 inferred_storage[] optional: role, type, type_kind, width

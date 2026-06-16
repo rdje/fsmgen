@@ -19,9 +19,11 @@ verification-specific source feature: actor-level passive observation metadata.
 
 The selected source form is
 `(observe NAME (role passive_monitor) (signals SIG...))`. It is report-only:
-it should populate a future `verification_observations[]` schedule-report
-family and must not emit scheduled `.fsm`, HDL, UVM, VHDL, scoreboard,
-coverage, or VIP artifacts in the first implementation slice.
+implementation `.1` now populates `verification_observations[]` in schedule
+JSON and must not emit scheduled `.fsm`, HDL, UVM, VHDL, scoreboard, coverage,
+or VIP artifacts.
 
-Implementation is owned by `ISF-VERIFICATION-OBSERVATION-METADATA.1`.
-
+Implementation shipped in `ISF-VERIFICATION-OBSERVATION-METADATA.1`; the next
+verification-code generation frontier leaf is
+`IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4`, the first SV/UVM output
+contract selector.
