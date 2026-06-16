@@ -1067,7 +1067,7 @@ support-accounting metadata under query/limit/filter controls.
 `SEMANTIC-INTROSPECTION-MCP-FRONTIER.30` closes the immediate read-only
 semantic-introspection/MCP pass after source discovery and returns active
 roadmap priority to the IAL2 feature-completeness tree, currently at
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.143`.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.144`.
 The parser/report metadata slice `IAL2-FEATURE-COMPLETENESS-FRONTIER.39` is
 now shipped for the bounded AXI read response-demux public contract selected
 by `.38`. The selected read arm requires `(response-scope single-beat)`,
@@ -1575,9 +1575,20 @@ read single-beat multi-group queue-head response-demux, after finding no new
 parser, support-accounting, generated-artifact, lowerer, direct-backend, or
 VHDL prerequisite. The planner, storage, transition, assertion,
 response-demux rule, report, and residue helpers already group-iterate for
-read single-beat once behavior exists; the next slice must preserve the
-response-demux-only boundary and leave read-data, deeper queues, same-family
-mixed auto-ID, and group-local simultaneous enqueue widening deferred.
+read single-beat once behavior exists. `.143` shipped generated read
+single-beat multi-group queue-head response-demux for
+`ppif/axi_manager_capacity_status_read_single_beat_multi_group_same_id_queue_head_response_demux.ppif`.
+The generated report lists `RID` `3` for `r0`/`r1` and `RID` `5` for
+`r2`/`r3`, every generated group remains depth `2`, generated completion
+signals cover `r0` through `r3`, no `RLAST` or `read_data` behavior is
+introduced, and `generated_same_id_queue_head_demux` residue is removed for
+the covered read single-beat response-demux-only family. Strict check JSON and
+normalized semantic JSON match the support-accounting entry for the sample,
+keeping MCP-facing semantic introspection aligned with the public support
+catalog. The active frontier is `.144`, the next selector/audit; read-data
+over read single-beat multi-group queue-head groups, deeper queues,
+same-family mixed auto-ID, and group-local simultaneous enqueue widening
+remain deferred.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.

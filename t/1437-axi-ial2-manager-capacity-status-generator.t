@@ -536,6 +536,75 @@ subtest 'same-ID queue-head response-demux generates read single-beat queue stat
     );
 };
 
+subtest 'same-ID queue-head response-demux generates read single-beat multi-group queue state and completion demux' => sub {
+    my $result = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_same_id_read_single_beat_multi_group_queue_head_response_demux());
+    my $isf = $result->{generated_ial1}{text};
+
+    like($isf, qr/\(var axi0_r0_admitted_request_pulse_q \(width 1\)\)/, 'read single-beat multi-group queue-head selection keeps first admitted request pulse storage');
+    like($isf, qr/\(var axi0_r3_admitted_request_pulse_q \(width 1\)\)/, 'read single-beat multi-group queue-head selection keeps final admitted request pulse storage');
+    like($isf, qr/\(output axi0_r0_complete\)/, 'read single-beat multi-group queue-head demux exposes r0 completion as a generated output');
+    like($isf, qr/\(output axi0_r3_complete\)/, 'read single-beat multi-group queue-head demux exposes r3 completion as a generated output');
+    like($isf, qr/\(input axi0_read_complete\)/, 'raw read response remains the generated demux input');
+    unlike($isf, qr/\(input axi0_r2_complete\)/, 'r2 completion is no longer an authored input');
+    unlike($isf, qr/\baxi0_rlast\b/, 'read single-beat multi-group queue-head demux does not generate or consume RLAST');
+    unlike($isf, qr/\baxi0_rdata\b/, 'read single-beat multi-group response-demux-only sample does not generate read-data inputs');
+    like($isf, qr/\(var axi0_read_id3_same_id_issue_order_slot0_r0_q \(width 1\)\)/, 'read single-beat multi-group queue-head demux declares concrete ID 3 slot state');
+    like($isf, qr/\(var axi0_read_id5_same_id_issue_order_slot0_r2_q \(width 1\)\)/, 'read single-beat multi-group queue-head demux declares concrete ID 5 slot state');
+    like($isf, qr/\(rule axi0_read_id5_same_id_issue_order_empty_enqueue_r2\b/, 'read single-beat multi-group queue-head demux emits ID 5 empty enqueue transition');
+    like($isf, qr/\(rule axi0_read_id5_same_id_issue_order_r2_dequeue_enqueue_r3\b/, 'read single-beat multi-group queue-head demux emits ID 5 same-cycle dequeue/enqueue transition');
+    like($isf, qr/\(rule axi0_r2_response_demux \(& axi0_read_complete \(== axi0_rid 4'd5\) axi0_read_id5_same_id_issue_order_slot0_r2_q\)/, 'read single-beat multi-group queue-head demux emits r2 response-demux rule without RLAST');
+    like($isf, qr/\(rule axi0_r3_response_demux \(& axi0_read_complete \(== axi0_rid 4'd5\) axi0_read_id5_same_id_issue_order_slot0_r3_q\)/, 'read single-beat multi-group queue-head demux emits r3 response-demux rule without RLAST');
+    like($isf, qr/\(assert \(! \(\| [\s\S]*\(& axi0_r0_request axi0_r2_request\)/, 'read single-beat multi-group queue-head demux keeps one family-wide request mutual-exclusion assertion');
+    unlike($isf, qr/non-last response beat does not dequeue/, 'read single-beat multi-group queue-head demux omits non-last dequeue assertions');
+
+    assert_same_id_read_single_beat_queue_head_response_demux_report(
+        $result->{report}{response_demux},
+        'generator multi-group read single-beat report',
+        queues => [
+            {
+                concrete_id          => 3,
+                transactions         => [qw(r0 r1)],
+                depth                => 2,
+                dequeue_event_source => 'queue_head_response_demux',
+            },
+            {
+                concrete_id          => 5,
+                transactions         => [qw(r2 r3)],
+                depth                => 2,
+                dequeue_event_source => 'queue_head_response_demux',
+            },
+        ],
+        completion_signals => [qw(axi0_r0_complete axi0_r1_complete axi0_r2_complete axi0_r3_complete)],
+        generated_rules => [qw(axi0_r0_response_demux axi0_r1_response_demux axi0_r2_response_demux axi0_r3_response_demux)],
+        generated_assertions => [qw(
+            axi0_read_response_demux_active_match
+            axi0_r0_r1_read_response_demux_unique_match
+            axi0_r0_r2_read_response_demux_unique_match
+            axi0_r0_r3_read_response_demux_unique_match
+            axi0_r1_r2_read_response_demux_unique_match
+            axi0_r1_r3_read_response_demux_unique_match
+            axi0_r2_r3_read_response_demux_unique_match
+        )],
+    );
+    my $read_policy = $result->{report}{same_id_ordering}{concrete_id_reuse_policy}{read};
+    is($read_policy->{implementation_status}, 'generated_read_single_beat_queue_head_demux', 'multi-group read single-beat policy reports the generated single-beat implementation status');
+    is_deeply(
+        [map { $_->{concrete_id} } @{$read_policy->{generated_queues} || []}],
+        [3, 5],
+        'multi-group read single-beat policy reports both generated read queue groups',
+    );
+    is_deeply(
+        $result->{report}{same_id_ordering}{residue},
+        [qw(per_id_issue_order_queues)],
+        'generated read single-beat multi-group same-ID queue behavior leaves only broader per-ID queue residue',
+    );
+    is_deeply(
+        $result->{report}{id_response_rule_engine}{residue},
+        [qw(auto_id_allocation id_release)],
+        'generated read single-beat multi-group queue-head behavior removes same-ID and response-demux residue from ID/response report',
+    );
+};
+
 subtest 'same-ID queue-head response-demux generates write queue state and completion demux' => sub {
     my $result = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_same_id_write_queue_head_response_demux());
     my $isf = $result->{generated_ial1}{text};
@@ -2138,6 +2207,31 @@ sub sample_contract_with_same_id_read_single_beat_queue_head_response_demux {
     return $contract;
 }
 
+sub sample_contract_with_same_id_read_single_beat_multi_group_queue_head_response_demux {
+    my $contract = sample_contract_with_same_id_read_single_beat_queue_head_response_demux();
+    $contract->{intent_name} = 'axi_manager_capacity_status_read_single_beat_multi_group_same_id_queue_head_response_demux';
+    $contract->{source}{object_id} = 'axi-manager-capacity-status-read-single-beat-multi-group-same-id-queue-head-response-demux';
+    $contract->{read_max_pending} = 4;
+    push @{$contract->{transactions}},
+        {
+            kind             => 'read',
+            name             => 'r2',
+            tag              => 'rd2',
+            request_event    => 'axi0_r2_request',
+            completion_event => 'axi0_r2_complete',
+            id               => { value => 5 },
+        },
+        {
+            kind             => 'read',
+            name             => 'r3',
+            tag              => 'rd3',
+            request_event    => 'axi0_r3_request',
+            completion_event => 'axi0_r3_complete',
+            id               => { value => 5 },
+        };
+    return $contract;
+}
+
 sub sample_contract_with_same_id_read_single_beat_queue_head_read_data {
     my $contract = sample_contract_with_same_id_read_single_beat_queue_head_response_demux();
     $contract->{intent_name} = 'axi_manager_capacity_status_read_single_beat_same_id_queue_head_read_data';
@@ -2736,7 +2830,20 @@ sub assert_same_id_queue_head_response_demux_report {
 }
 
 sub assert_same_id_read_single_beat_queue_head_response_demux_report {
-    my ($demux, $owner) = @_;
+    my ($demux, $owner, %args) = @_;
+    my $expected_queues = $args{queues} // [
+        {
+            concrete_id          => 3,
+            transactions         => [qw(r0 r1)],
+            depth                => 2,
+            dequeue_event_source => 'queue_head_response_demux',
+        },
+    ];
+    my $expected_completion_signals = $args{completion_signals} // [qw(axi0_r0_complete axi0_r1_complete)];
+    my $expected_rules = $args{generated_rules} // [qw(axi0_r0_response_demux axi0_r1_response_demux)];
+    my $expected_assertions = $args{generated_assertions} // [
+        qw(axi0_read_response_demux_active_match axi0_r0_r1_read_response_demux_unique_match)
+    ];
 
     is($demux->{mode}, 'bounded_response_demux_contract', "$owner marks bounded response-demux contract mode");
     ok($demux->{generated_behavior}, "$owner marks top-level generated behavior true");
@@ -2756,24 +2863,17 @@ sub assert_same_id_read_single_beat_queue_head_response_demux_report {
     is($read->{queue_state_representation}, 'compact_onehot_transaction_slots', "$owner reports queue state representation");
     is_deeply(
         $read->{same_id_issue_order_queues},
-        [
-            {
-                concrete_id          => 3,
-                transactions         => [qw(r0 r1)],
-                depth                => 2,
-                dequeue_event_source => 'queue_head_response_demux',
-            },
-        ],
+        $expected_queues,
         "$owner reports duplicate concrete-ID queue group",
     );
     ok($read->{generated_queue_behavior}, "$owner reports generated queue behavior");
     is($read->{generated_queue_behavior_boundary}, 'generated_read_single_beat_queue_head_demux', "$owner reports generated queue boundary");
     ok(!exists($read->{selected_completion_signals}), "$owner no longer reports selected completion signal names");
-    is_deeply($read->{generated_completion_signals}, [qw(axi0_r0_complete axi0_r1_complete)], "$owner reports generated completion signal names");
-    is_deeply($read->{generated_rules}, [qw(axi0_r0_response_demux axi0_r1_response_demux)], "$owner reports generated queue-head demux rules");
+    is_deeply($read->{generated_completion_signals}, $expected_completion_signals, "$owner reports generated completion signal names");
+    is_deeply($read->{generated_rules}, $expected_rules, "$owner reports generated queue-head demux rules");
     is_deeply(
         $read->{generated_assertions},
-        [qw(axi0_read_response_demux_active_match axi0_r0_r1_read_response_demux_unique_match)],
+        $expected_assertions,
         "$owner reports generated queue-head response-demux assertions",
     );
     is_deeply(
