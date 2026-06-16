@@ -11,6 +11,7 @@ use JSON::PP qw(decode_json);
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::Adapter::IAL2::PPIF;
+use FSM::Support::HDLExternalValidation qw(missing_systemverilog_validation_tools);
 
 subtest 'PPIF adapter parses the selected Valid-Ready source shape' => sub {
     my $sample_path = sample_ppif_path();
@@ -2279,6 +2280,10 @@ subtest 'CLI emits IAL2 report JSON for AXI manager multi-beat read-data metadat
     is_deeply($report->{generated_artifacts}{ial0}{files}, ['axi0_capacity_status.fsm'], 'multi-beat read-data metadata keeps the generated .fsm artifact name stable');
 };
 
+SKIP: {
+    my $skip_reason = external_systemverilog_validation_skip_reason();
+    skip $skip_reason, 21 if defined $skip_reason;
+
 subtest 'CLI --verify-hdl accepts AXI manager auto-ID lifecycle behavior .ppif' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $hdl = File::Spec->catfile($tempdir, 'axi_auto_id_lifecycle.sv');
@@ -2771,6 +2776,8 @@ subtest 'CLI --verify-hdl accepts AXI manager multi-beat read-data output-bank .
     like($sv, qr/axi0_r0_read_beats_next\s*=\s*5'd1\s*;/, 'multi-beat HDL sets first length value');
 };
 
+}
+
 subtest 'CLI --outdir materializes generated .isf, .fsm, and HDL for .ppif' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $outdir = File::Spec->catdir($tempdir, 'out');
@@ -2788,6 +2795,10 @@ subtest 'CLI --outdir materializes generated .isf, .fsm, and HDL for .ppif' => s
     like(slurp(File::Spec->catfile($outdir, 'axi_aw_valid_ready_monitor.isf')), qr/\(protocol-platform-intent\b|\(actor axi_aw_valid_ready_monitor\b/, 'generated .isf is inspectable text');
     like(slurp($hdl), qr/\bmodule\s+axi_aw_valid_ready_monitor\b/, 'generated HDL contains the monitor module');
 };
+
+SKIP: {
+    my $skip_reason = external_systemverilog_validation_skip_reason();
+    skip $skip_reason, 2 if defined $skip_reason;
 
 subtest 'CLI --outdir and --verify-hdl materialize capacity/status review artifacts and HDL' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
@@ -2834,6 +2845,8 @@ subtest 'CLI --outdir and --verify-hdl materialize transaction dispatch review a
     like($sv, qr/\Q$request_assert\E/, 'transaction dispatch HDL emits the concrete request ID assertion');
     like($sv, qr/\Q$response_assert\E/, 'transaction dispatch HDL emits the concrete response ID assertion');
 };
+
+}
 
 subtest 'CLI --outdir materializes bundle review artifacts and HDL' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
@@ -4315,18 +4328,29 @@ subtest 'CLI bundle HDL modes use aggregate wrapper entry' => sub {
         'bundle semantic child lists generated IAL0 review artifacts plus wrapper/top',
     );
 
-    my $verify_outdir = File::Spec->catdir($tempdir, 'verify-out');
-    my $verify_hdl = File::Spec->catfile($tempdir, 'verify-bundle.sv');
-    my ($verify_success, undef, undef, undef, $verify_stderr) = run(
-        command => ['./bin/fsmgen', '--quiet', '--outdir', $verify_outdir, '--output', $verify_hdl, '--verify-hdl', $bundle_path],
-    );
-    ok($verify_success, 'bundle --verify-hdl validates the aggregate wrapper/top HDL');
-    is(join('', @{$verify_stderr || []}), '', 'bundle --verify-hdl keeps stderr clean');
-    ok(-f $verify_hdl, 'bundle --verify-hdl writes the requested HDL output');
-    ok(-f File::Spec->catfile($verify_outdir, 'axi_aw_w_valid_ready_bundle.fsm'), 'bundle --verify-hdl keeps wrapper/top review artifact in --outdir');
+    SKIP: {
+        my $skip_reason = external_systemverilog_validation_skip_reason();
+        skip $skip_reason, 4 if defined $skip_reason;
+
+        my $verify_outdir = File::Spec->catdir($tempdir, 'verify-out');
+        my $verify_hdl = File::Spec->catfile($tempdir, 'verify-bundle.sv');
+        my ($verify_success, undef, undef, undef, $verify_stderr) = run(
+            command => ['./bin/fsmgen', '--quiet', '--outdir', $verify_outdir, '--output', $verify_hdl, '--verify-hdl', $bundle_path],
+        );
+        ok($verify_success, 'bundle --verify-hdl validates the aggregate wrapper/top HDL');
+        is(join('', @{$verify_stderr || []}), '', 'bundle --verify-hdl keeps stderr clean');
+        ok(-f $verify_hdl, 'bundle --verify-hdl writes the requested HDL output');
+        ok(-f File::Spec->catfile($verify_outdir, 'axi_aw_w_valid_ready_bundle.fsm'), 'bundle --verify-hdl keeps wrapper/top review artifact in --outdir');
+    }
 };
 
 done_testing();
+
+sub external_systemverilog_validation_skip_reason {
+    my @missing_tools = missing_systemverilog_validation_tools();
+    return undef unless @missing_tools;
+    return 'External SystemVerilog validation tools are not installed: ' . join(', ', @missing_tools);
+}
 
 sub sample_ppif_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_aw_valid_ready.ppif');
