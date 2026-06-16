@@ -64,12 +64,14 @@ reference/oracle rather than the definition of the IAL layers; see
 Deep semantic introspection is now a first-class FSMGen feature, tracked by
 `SEMANTIC-INTROSPECTION-MCP-FRONTIER`. The selected architecture is stable
 semantic-introspection API first and MCP as a required adapter over that API.
-The immediate implementation owner is
-`SEMANTIC-INTROSPECTION-MCP-FRONTIER.3`, which must add a
-manifest-advertised semantic-introspection contract over the existing
-capability manifest, check JSON, normalized semantic JSON, schedule JSON,
-support-accounting, diagnostics, documentation/example, embedding, and
-backend-validation surfaces before any MCP adapter or read/write tool work.
+The capability manifest now exposes a `semantic_introspection` section that
+advertises query domains, query families, versioning/provenance/safety policy,
+contract sources, read-only defaults, and selected MCP resource/tool mappings
+over the existing capability manifest, check JSON, normalized semantic JSON,
+schedule JSON, support-accounting, diagnostics, documentation/example,
+embedding, and backend-validation surfaces. The MCP adapter itself remains
+unshipped and explicitly reported as not implemented until the next exact
+task-tree leaf owns it.
 Current primary target is SystemVerilog, with Verilog conversion support and a scoped direct-root VHDL scaffold for the accepted single-FSM subset, including delayed-pulse clock-branch lowering, generic-bearing direct-root module headers with typed scalar/vector sized-literal defaults, signed vector and signed scalar direct-root ports, scalar/vector two-state `bit` input-port and internal declaration lowering, signed scalar/vector, non-signed four-state `logic` input-port/internal declaration lowering, and vector `logic signed` internal declaration lowering, scalar and signed scalar addition/subtraction/multiplication RHS/chain lowering, vector numeric-literal addition/subtraction emitted by compound update/shorthand forms, same-width unsigned-style addition/subtraction/multiplication/division/modulo/XOR RHS/chain lowering, same-width signed vector addition/subtraction/multiplication/division/modulo RHS lowering for signed targets and operands, signed vector numeric-literal addition/subtraction/multiplication/division/modulo RHS lowering including signed vector negative decimal addition, subtraction, multiplication, division, and modulo literals, non-signed vector positive decimal multiplication/division/modulo literal lowering in signal-first, literal-first, and literal-literal order, non-signed vector negative decimal addition/subtraction/multiplication/division/modulo literal lowering, bounded generated AMBA wrap arithmetic for `fsm/amba_requester.fsm`, bounded non-signed vector, signed vector, and scalar output-port decimal literal assignment lowering including non-signed vector, signed vector, and scalar negative decimal literals, bounded direct aggregate-output packed-vector lowering, a bounded C3 external-RTL literal/concat composition VHDL structural top for `t/corpus/composition_intent_integer_literals.fsm`, bounded external-RTL scalar integer, scalar integer expression, one-bit sized bitstring, multi-bit sized bitstring, and resolved packed aggregate VHDL generic maps including resolved package-backed constants, a bounded C1 standalone-DT child composition VHDL passthrough top for `t/corpus/standalone_dtc_explicit_system_autowire.fsm`, bounded C1 standalone-DT scalar integer, scalar expression, one-bit sized bitstring, multi-bit sized bitstring, packed-list, and packed-map VHDL generic maps, a bounded C2 generated-FSM child composition VHDL scalar-autowire top for `t/corpus/implicit_composition_system_autowire.fsm`, bounded C2 generated-FSM scalar integer, scalar expression, one-bit sized bitstring, multi-bit sized bitstring, and resolved packed aggregate VHDL generic maps, and a bounded APB/C4 generated-FSM child composition VHDL top for `fsm/apb_tb.fsm` with scalar integer, scalar expression, one-bit sized bitstring, multi-bit sized bitstring, resolved packed aggregate, and resolved package-backed generic maps in the same APB/C4 shape.
 Scalar division/modulo, including signed scalar division/modulo, in the direct
 VHDL scaffold remains an explicit fail-closed boundary; full aggregate
@@ -1539,6 +1541,8 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `perl/FSM/Support/LanguageSurfaceContract.pm` — bounded manifest-facing contract for the `language_surface` section's public top-level, first nested key lists, file-surface discovery keys, and per-suffix supported CLI-mode metadata.
 - `perl/FSM/Support/ProducerContract.pm` — bounded manifest-facing contract for the `producer` section's public identity/build metadata keys.
 - `perl/FSM/Support/SemanticExportsContract.pm` — bounded manifest-facing contract for the `semantic_exports` section's public top-level and nested contract-owner map.
+- `perl/FSM/Support/SemanticIntrospectionContract.pm` — bounded manifest-facing first-class semantic-introspection contract with query domains, query families, MCP resource/tool mappings, safety policy, and public surface ownership.
+- `perl/FSM/Support/SemanticIntrospectionSection.pm` — dedicated `semantic_introspection` manifest-section builder.
 - `perl/FSM/Support/CheckDiagnostics.pm` — bounded `--check --json` report builder and stable-code classifier.
 - `perl/FSM/Support/CheckDiagnosticsContract.pm` — bounded `--check --json` key-presence contract advertised through the capability manifest.
 - `perl/FSM/Support/CheckFailureDiagnosticContract.pm` — shared bounded nested-object contract for failure `diagnostic` payloads in public check JSON and normalized semantic JSON.
@@ -2144,6 +2148,17 @@ owns the bounded top-level and nested contract-owner map advertised through
 `semantic_exports.section_contract`. That keeps `normalized_semantic_json`
 discoverable without pretending every future semantic export format is already
 frozen.
+The manifest's `semantic_introspection` section is the first-class query
+contract for AI/tooling integration:
+[perl/FSM/Support/SemanticIntrospectionSection.pm](perl/FSM/Support/SemanticIntrospectionSection.pm)
+publishes query domains, query families, versioning/provenance/safety policy,
+contract-surface ownership, selected MCP resource URI templates, and selected
+MCP tool names, while
+[perl/FSM/Support/SemanticIntrospectionContract.pm](perl/FSM/Support/SemanticIntrospectionContract.pm)
+owns the bounded schema advertised through
+`semantic_introspection.section_contract`. The section reports
+`mcp_adapter_implemented: false` and `write_generation_tools_enabled: false`;
+it is a shipped semantic API contract, not a shipped MCP server.
 The manifest's `backend_validation` section now follows that split too:
 [perl/FSM/Support/CapabilityManifest.pm](perl/FSM/Support/CapabilityManifest.pm)
 still publishes the current backend validation surfaces, while

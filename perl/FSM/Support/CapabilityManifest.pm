@@ -12,6 +12,7 @@ use FSM::Support::EmbeddingSection qw(build_embedding_section);
 use FSM::Support::LanguageSurfaceSection qw(build_language_surface_section);
 use FSM::Support::ProducerSection qw(build_producer_section);
 use FSM::Support::SemanticExportsSection qw(build_semantic_exports_section);
+use FSM::Support::SemanticIntrospectionSection qw(build_semantic_introspection_section);
 use FSM::Support::SupportAccountingSection qw(build_support_accounting_section);
 
 our @EXPORT_OK = qw(build_capability_manifest);
@@ -23,6 +24,7 @@ sub build_capability_manifest {
         support_accounting => build_support_accounting_section(),
         diagnostics => build_diagnostics_section(),
         semantic_exports => build_semantic_exports_section(),
+        semantic_introspection => build_semantic_introspection_section(),
         backend_validation => build_backend_validation_section(),
         embedding => build_embedding_section(),
         language_surface => build_language_surface_section(),

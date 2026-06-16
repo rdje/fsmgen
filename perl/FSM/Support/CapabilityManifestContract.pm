@@ -27,6 +27,9 @@ use FSM::Support::ProducerContract qw(
 use FSM::Support::SemanticExportsContract qw(
     semantic_exports_contract_source
 );
+use FSM::Support::SemanticIntrospectionContract qw(
+    semantic_introspection_contract_source
+);
 use FSM::Support::SupportAccountingContract qw(
     support_accounting_contract_source
 );
@@ -45,6 +48,7 @@ our @EXPORT_OK = qw(
     capability_manifest_producer_keys
     capability_manifest_public_top_level_keys
     capability_manifest_semantic_exports_keys
+    capability_manifest_semantic_introspection_keys
     capability_manifest_support_accounting_keys
 );
 
@@ -75,6 +79,7 @@ sub build_capability_manifest_contract {
         support_accounting_presence_keys => capability_manifest_support_accounting_keys(),
         diagnostics_presence_keys => capability_manifest_diagnostics_keys(),
         semantic_exports_presence_keys => capability_manifest_semantic_exports_keys(),
+        semantic_introspection_presence_keys => capability_manifest_semantic_introspection_keys(),
         backend_validation_presence_keys => capability_manifest_backend_validation_keys(),
         embedding_presence_keys => capability_manifest_embedding_keys(),
         language_surface_presence_keys => capability_manifest_language_surface_keys(),
@@ -98,6 +103,7 @@ sub capability_manifest_top_level_contract_source_map {
         support_accounting => support_accounting_contract_source(),
         diagnostics => diagnostics_contract_source(),
         semantic_exports => semantic_exports_contract_source(),
+        semantic_introspection => semantic_introspection_contract_source(),
         backend_validation => backend_validation_contract_source(),
         embedding => embedding_contract_source(),
         language_surface => language_surface_contract_source(),
@@ -111,6 +117,7 @@ sub capability_manifest_top_level_section_presence_key_map {
         support_accounting => capability_manifest_support_accounting_keys(),
         diagnostics => capability_manifest_diagnostics_keys(),
         semantic_exports => capability_manifest_semantic_exports_keys(),
+        semantic_introspection => capability_manifest_semantic_introspection_keys(),
         backend_validation => capability_manifest_backend_validation_keys(),
         embedding => capability_manifest_embedding_keys(),
         language_surface => capability_manifest_language_surface_keys(),
@@ -124,6 +131,7 @@ sub capability_manifest_presence_key_family_map {
         support_accounting_presence_keys => capability_manifest_support_accounting_keys(),
         diagnostics_presence_keys => capability_manifest_diagnostics_keys(),
         semantic_exports_presence_keys => capability_manifest_semantic_exports_keys(),
+        semantic_introspection_presence_keys => capability_manifest_semantic_introspection_keys(),
         backend_validation_presence_keys => capability_manifest_backend_validation_keys(),
         embedding_presence_keys => capability_manifest_embedding_keys(),
         language_surface_presence_keys => capability_manifest_language_surface_keys(),
@@ -139,6 +147,7 @@ sub capability_manifest_public_top_level_keys {
             support_accounting
             diagnostics
             semantic_exports
+            semantic_introspection
             backend_validation
             embedding
             language_surface
@@ -209,6 +218,35 @@ sub capability_manifest_semantic_exports_keys {
     return [
         qw(
             normalized_semantic_json
+            section_contract
+        ),
+    ];
+}
+
+sub capability_manifest_semantic_introspection_keys {
+    return [
+        qw(
+            schema_version
+            status
+            contract_source
+            report_source
+            entrypoints
+            contract_surface_map
+            query_domains
+            query_families
+            query_domain_names
+            query_family_names
+            mcp_resources
+            mcp_tools
+            mcp_resource_uri_templates
+            mcp_tool_names
+            versioning_policy
+            provenance_support_policy
+            safety_policy
+            raw_private_surfaces_excluded
+            read_only_default
+            mcp_adapter_implemented
+            write_generation_tools_enabled
             section_contract
         ),
     ];

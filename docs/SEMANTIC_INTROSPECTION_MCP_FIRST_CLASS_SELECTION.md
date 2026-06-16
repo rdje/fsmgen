@@ -100,6 +100,17 @@ itself unless the contract surface and tests remain small enough for a safe
 single slice. If not, it must activate the next exact leaf for the read-only
 MCP adapter.
 
+## Implementation Result
+
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.3` shipped the selected contract as a
+top-level `semantic_introspection` capability-manifest section. The manifest
+now advertises query domains, query families, versioning/provenance/safety
+policy, contract-surface ownership, selected MCP resource URI templates, and
+selected MCP tool names. It explicitly reports
+`mcp_adapter_implemented: false` and `write_generation_tools_enabled: false`;
+the next frontier is the read-only MCP adapter owner,
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.4`.
+
 ## Deferred
 
 The following remain outside `.2` and `.3` unless separately selected:

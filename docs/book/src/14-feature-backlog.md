@@ -7526,20 +7526,21 @@ meaningful FSMGen semantic domain should become queryable through a clean,
 bounded API, and MCP is a required adapter over that API rather than the source
 of truth for the semantic contract.
 
-Current shipped boundary: FSMGen already exposes several machine-readable
-surfaces that form the foundation for the contract: `--capability-manifest`,
-`--check --json`, `--emit-semantic-json`, `--emit-schedule-json`, support
-accounting, stable diagnostics, generated artifact inventories,
-backend-validation status, embedding contract metadata, and mdBook/corpus
-examples. The MCP adapter itself is not shipped yet.
+Current shipped boundary: `./bin/fsmgen --capability-manifest` now exposes a
+top-level `semantic_introspection` section. That section names query domains,
+query families, schema/version fields, contract sources, provenance and
+support-accounting expectations, read-only defaults, workspace restrictions,
+and MCP resource/tool mappings over the existing capability manifest, check
+JSON, normalized semantic JSON, schedule JSON, support accounting, stable
+diagnostics, generated artifact inventories, backend-validation status,
+embedding contract metadata, and mdBook/corpus examples. The MCP adapter
+itself is not shipped yet; the manifest reports
+`mcp_adapter_implemented: false` and `write_generation_tools_enabled: false`.
 
-Current active frontier: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.2` selected
-`SEMANTIC-INTROSPECTION-MCP-FRONTIER.3`, the first implementation owner. That
-slice must add a manifest-advertised semantic-introspection contract naming
-query domains, query families, schema/version fields, contract sources,
-provenance and support-accounting expectations, read-only defaults, workspace
-restrictions, and MCP resource/tool mappings over the existing public
-surfaces.
+Current active frontier: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.3` shipped the
+manifest-advertised semantic-introspection contract. The next owned frontier is
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.4`, the first read-only MCP adapter slice
+over that contract.
 
 Selected first MCP resource families are `fsmgen://capabilities`,
 `fsmgen://contracts`, `fsmgen://diagnostics`,

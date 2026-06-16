@@ -2608,6 +2608,54 @@ That keeps the current bounded
 coverage promises in one place instead of leaving that public section as
 duplicated inline manifest assembly logic.
 
+The capability manifest's `semantic_introspection` section is the first-class
+machine-query contract for AI/tooling integration. It names the public query
+domains, query families, versioning/provenance policy, read-only safety
+policy, contract-surface ownership, selected MCP resource URI templates, and
+selected MCP tool names.
+
+```bash
+./bin/fsmgen --capability-manifest
+```
+
+The relevant manifest shape is:
+
+```json
+{
+  "semantic_introspection": {
+    "schema_version": 1,
+    "status": "bounded_public",
+    "mcp_adapter_implemented": false,
+    "write_generation_tools_enabled": false,
+    "mcp_resource_uri_templates": [
+      "fsmgen://capabilities",
+      "fsmgen://contracts",
+      "fsmgen://diagnostics",
+      "fsmgen://support-accounting",
+      "fsmgen://examples",
+      "fsmgen://source/{source_id}/check",
+      "fsmgen://source/{source_id}/semantic",
+      "fsmgen://source/{source_id}/schedule"
+    ],
+    "mcp_tool_names": [
+      "fsmgen_capability_query",
+      "fsmgen_check",
+      "fsmgen_semantic_introspect",
+      "fsmgen_schedule_preview",
+      "fsmgen_find_examples",
+      "fsmgen_explain_diagnostic"
+    ]
+  }
+}
+```
+
+This section is a shipped semantic API contract, not a shipped MCP server. The
+selected MCP resources/tools are adapter mappings over the stable
+semantic-introspection API. Raw parser ASTs, private scheduler/lowering
+objects, `HDLGenerator` compatibility hashes, arbitrary shell output, network
+access, implicit file writes, mutation workflows, and commit/push actions are
+not public semantic-introspection payloads.
+
 ## Downstream Tool Alignment
 
 FSMGen now keeps a tracked response to SPECFORGE's `.fsm` adapter feedback:

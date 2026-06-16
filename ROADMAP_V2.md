@@ -624,11 +624,12 @@ Current direction:
 - Deep semantic introspection is now a first-class FSMGen feature, tracked by
   [docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md](docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md).
   The selected rule is stable semantic API first and MCP as a required adapter
-  over that API. The first implementation owner is
-  `SEMANTIC-INTROSPECTION-MCP-FRONTIER.3`, a manifest-advertised
-  semantic-introspection contract over existing capability, check JSON,
-  normalized semantic JSON, schedule JSON, support-accounting, diagnostics,
-  documentation/example, embedding, and backend-validation surfaces.
+  over that API. `SEMANTIC-INTROSPECTION-MCP-FRONTIER.3` shipped a
+  manifest-advertised `semantic_introspection` section over existing
+  capability, check JSON, normalized semantic JSON, schedule JSON,
+  support-accounting, diagnostics, documentation/example, embedding, and
+  backend-validation surfaces. The MCP adapter itself is still unshipped and
+  reports disabled in the manifest until the next exact leaf owns it.
 - The serializable plan/report boundary is now an affirmative `R13` direction,
   not an optional maybe. Raw branches such as `composition_spec`,
   `composition_plan`, `fsm_module`, `raw_ast`, `resolved_package_imports`, and
@@ -985,14 +986,16 @@ The active immediate priority is now first-class semantic introspection and
 MCP-queryable FSMGen semantics under
 [docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md](docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md).
 `SEMANTIC-INTROSPECTION-MCP-FRONTIER.2` activated that lane and selected
-`SEMANTIC-INTROSPECTION-MCP-FRONTIER.3`, the first implementation owner: a
-manifest-advertised semantic-introspection contract that names query domains,
-query families, schema/version fields, provenance/support-accounting
-expectations, read-only defaults, workspace restrictions, and MCP
-resource/tool mappings over the existing capability manifest, check JSON,
-normalized semantic JSON, schedule JSON, diagnostics, support-accounting,
-documentation/example, embedding, and backend-validation surfaces. The IAL2
-SystemVerilog-backed feature-completeness tree remains active at
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.3`, which now ships a manifest-advertised
+`semantic_introspection` contract that names query domains, query families,
+schema/version fields, provenance/support-accounting expectations, read-only
+defaults, workspace restrictions, and MCP resource/tool mappings over the
+existing capability manifest, check JSON, normalized semantic JSON, schedule
+JSON, diagnostics, support-accounting, documentation/example, embedding, and
+backend-validation surfaces. The next frontier is
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.4`, the first read-only MCP adapter over
+that contract. The IAL2 SystemVerilog-backed feature-completeness tree remains
+active at
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.136`, but broad IAL2 expansion is no
 longer the immediate lane while this semantic-introspection priority is active.
 The parser/report metadata slice `IAL2-FEATURE-COMPLETENESS-FRONTIER.39` is
