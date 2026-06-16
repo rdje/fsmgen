@@ -2410,6 +2410,17 @@ The repo-local tracked raw AXI reference for future bounded probes is
 It is evidence for future task-tree-owned protocol-intent work, not a shipped
 PDF/spec extraction capability.
 
+Additional tracked raw standards references are available for future
+task-tree-owned probes:
+
+- `docs/vendor/accellera/systemrdl/SystemRDL_2.0_Jan2018.pdf`
+- `docs/vendor/accellera/pss/Portable_Test_Stimulus_Standard_v3.0.pdf`
+- `docs/vendor/accellera/uvm/UVM_Class_Reference_Manual_1.2.pdf`
+- `docs/vendor/accellera/uvm/uvm_users_guide_1.2.pdf`
+
+They are local reference artifacts only. They do not ship SystemRDL, PSS, UVM,
+PDF extraction, parser, lowering, scheduler, or HDL behavior.
+
 Completed evidence probe:
 [AXI-VALID-READY-INTENT-PROBE](../../tasks/AXI-VALID-READY-INTENT-PROBE.md)
 extracted the first valid/ready source-anchor evidence inventory without

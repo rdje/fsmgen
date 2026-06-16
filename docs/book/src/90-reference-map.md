@@ -57,6 +57,12 @@ or task-scoped activity must close with that workflow before the next work
 starts, so crash recovery and agent handoff can resume from task-scoped
 commits instead of a dirty worktree.
 
+Tracked raw standards PDFs under `docs/vendor/` are local reference artifacts
+for future task-tree-owned evidence or design probes. The current set includes
+the Arm AMBA AXI specification plus Accellera SystemRDL 2.0, Portable Test and
+Stimulus 3.0, and UVM 1.2 references. These PDFs do not by themselves ship
+standard extraction, parser, lowering, scheduler, or HDL behavior.
+
 `TASK_TREE.md` is the active-tree and PNT frontier reference. For ISF feature
 work, it points to the reusable synchronization checklist in
 `docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md` so public specs, book chapters,

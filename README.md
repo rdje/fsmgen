@@ -1648,6 +1648,10 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/decisions/0017-ppif-valid-ready-bundle-contract.md` — future multi-channel `.ppif` bundle contract decision.
 - `docs/decisions/0018-ial-contracts-are-backend-language-neutral.md` — IAL contracts and mdBook stay backend-language-neutral for future Rust, Rust/Wasm, browser-capable JavaScript, and Dart/web parity.
 - `docs/vendor/arm/amba/axi/IHI0022_L_2025-08_AMBA_AXI_Protocol_Specification.pdf` — tracked repo-local raw AXI protocol specification reference for future task-tree-owned IAL2 probes.
+- `docs/vendor/accellera/systemrdl/SystemRDL_2.0_Jan2018.pdf` — tracked repo-local raw Accellera SystemRDL 2.0 reference for future task-tree-owned register/interface intent probes.
+- `docs/vendor/accellera/pss/Portable_Test_Stimulus_Standard_v3.0.pdf` — tracked repo-local raw Accellera Portable Test and Stimulus 3.0 reference for future task-tree-owned portable scenario/test intent probes.
+- `docs/vendor/accellera/uvm/UVM_Class_Reference_Manual_1.2.pdf` — tracked repo-local raw Accellera UVM 1.2 class reference for future task-tree-owned verification-integration probes.
+- `docs/vendor/accellera/uvm/uvm_users_guide_1.2.pdf` — tracked repo-local raw Accellera UVM 1.2 user guide for future task-tree-owned verification-integration probes.
 - `docs/FEATURE_BACKLOG.md` — repo-level pointer to the canonical mdBook backlog for deferred/not-fully-shipped user-visible features.
 - `docs/VHDL_SCOPE.md` — scoped VHDL backend plan and shipped direct-root scaffold boundary.
 - `CHANGES.md` — persistent technical change history.
