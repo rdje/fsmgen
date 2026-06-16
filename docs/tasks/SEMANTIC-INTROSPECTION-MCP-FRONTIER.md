@@ -106,7 +106,8 @@ For FSMGen, the analogs are:
     `SEMANTIC-INTROSPECTION-MCP-FRONTIER.19`,
     `SEMANTIC-INTROSPECTION-MCP-FRONTIER.20`,
     `SEMANTIC-INTROSPECTION-MCP-FRONTIER.21`,
-    `SEMANTIC-INTROSPECTION-MCP-FRONTIER.22`
+    `SEMANTIC-INTROSPECTION-MCP-FRONTIER.22`,
+    `SEMANTIC-INTROSPECTION-MCP-FRONTIER.23`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1`
   Status: `done`
@@ -256,9 +257,16 @@ For FSMGen, the analogs are:
   Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.21: defer MCP content annotations`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.22`
-  Status: `pending`
+  Status: `done`
   Goal: `Select MCP progress and cancellation boundaries.`
   Acceptance: `Audit whether the read-only adapter should honor request progress tokens, emit notifications/progress, or handle notifications/cancelled beyond existing notification silence; either select exact bounded behavior with tests/docs or keep progress/cancellation unsupported/no-op for the one-shot profile; do not imply async jobs, service mode, mutation, network, shell, commit, or push authority.`
+  Verification: `passed`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.22: defer MCP progress cancellation`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.23`
+  Status: `pending`
+  Goal: `Select JSON-RPC batch and request-envelope boundaries.`
+  Acceptance: `Audit whether newline-delimited stdio and --request-json should accept JSON-RPC batch arrays or only single request objects; either select exact batch behavior with tests/docs or keep batch unsupported with explicit errors; do not add async fan-out, mutation, write/generation tools, network, shell, commit, or push authority.`
   Commit: `pending`
 
 ## Implementation Notes From `.4`
@@ -647,6 +655,26 @@ For FSMGen, the analogs are:
 - How can progress/cancellation behavior be tested without adding async
   background work or broadening transport/session authority?
 
+## Implementation Notes From `.22`
+
+- Request `_meta.progressToken` values do not emit `notifications/progress` in
+  the shipped one-shot/stdin profile.
+- Id-less `notifications/cancelled` messages remain silent notifications, and
+  id-bearing `notifications/cancelled` requests are method-not-found because no
+  job/session registry is shipped.
+- Added
+  `t/1458-semantic-introspection-mcp-progress-cancellation-boundary.t` to
+  guard progress-token no-op behavior and cancellation notification handling.
+
+## Candidate Contract Questions For `.23`
+
+- Should `--request-json` reject JSON-RPC batch arrays as invalid requests or
+  expand them into multiple responses?
+- Should newline-delimited stdio continue to require exactly one compact JSON
+  request object per line?
+- What error shape should be stable for non-object envelopes without implying
+  batch or async fan-out support?
+
 ## Candidate Future Phases
 
 - Phase 1: contract inventory and first safe semantic-introspection boundary.
@@ -661,7 +689,7 @@ For FSMGen, the analogs are:
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.22` | `pending` | `.21` kept content/resource annotations absent; the next exact frontier is progress/cancellation selection. |
+| 1 | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.23` | `pending` | `.22` kept progress/cancellation session behavior unshipped; the next exact frontier is JSON-RPC batch/envelope selection. |
 
 ## Decisions
 
@@ -732,6 +760,9 @@ For FSMGen, the analogs are:
 - `2026-06-16`: `.21` kept common MCP annotations absent from resources,
   resource templates, resource-read content, and tool-result text blocks; tool
   results do not return resource links.
+- `2026-06-16`: `.22` kept progress/cancellation session behavior unshipped:
+  progress tokens emit no progress notifications, and cancelled notifications
+  are silent unless incorrectly sent as id-bearing requests.
 - `2026-06-14`: Create this as a proposed owner, not an active implementation
   lane. The first real work must be no-code contract selection over existing
   public surfaces.
@@ -741,7 +772,7 @@ For FSMGen, the analogs are:
 
 ## Open Questions
 
-- None for `.21`; `.22` owns MCP progress/cancellation selection.
+- None for `.22`; `.23` owns JSON-RPC batch/envelope selection.
 
 ## Blockers
 
@@ -774,6 +805,7 @@ For FSMGen, the analogs are:
 | `2026-06-16` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.19` | Syntax checks for `SemanticIntrospectionMCPAdapter`, `t/1445`, and `t/1455`; `prove -Iperl t/1445-semantic-introspection-mcp-schema-snapshots.t t/1455-semantic-introspection-mcp-structured-tool-output.t`; mdBook, docs path audit, Knowledge Map generation/check, memory-architecture, README-numbering, and diff gates | `passed`; shipped compact outputSchema metadata and selected `.20` tool annotation/safety metadata boundary |
 | `2026-06-16` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.20` | Syntax checks for `SemanticIntrospectionMCPAdapter`, `t/1445`, and `t/1456`; `prove -Iperl t/1445-semantic-introspection-mcp-schema-snapshots.t t/1456-semantic-introspection-mcp-tool-annotations-boundary.t`; mdBook, docs path audit, Knowledge Map generation/check, memory-architecture, README-numbering, and diff gates | `passed`; shipped read-only closed-world tool annotations and selected `.21` content/resource annotation boundary |
 | `2026-06-16` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.21` | Syntax check for `t/1457`; `prove -Iperl t/1457-semantic-introspection-mcp-content-resource-annotations-boundary.t`; mdBook, docs path audit, Knowledge Map generation/check, memory-architecture, README-numbering, and diff gates | `passed`; kept content/resource annotations absent and selected `.22` progress/cancellation boundary |
+| `2026-06-16` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.22` | Syntax check for `t/1458`; `prove -Iperl t/1458-semantic-introspection-mcp-progress-cancellation-boundary.t`; mdBook, docs path audit, Knowledge Map generation/check, memory-architecture, README-numbering, and diff gates | `passed`; kept progress/cancellation unshipped and selected `.23` JSON-RPC batch/envelope boundary |
 
 ## Commit Log
 
@@ -800,7 +832,8 @@ For FSMGen, the analogs are:
 | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.19` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.19: add MCP output schemas` | Added compact per-tool outputSchema metadata for stable public envelope fields. |
 | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.20` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.20: annotate MCP tool safety` | Added read-only closed-world MCP tool annotations for the shipped profile. |
 | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.21` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.21: defer MCP content annotations` | Kept common content/resource annotations and tool-result resource links absent for the shipped profile. |
-| `SEMANTIC-INTROSPECTION-MCP-FRONTIER.22` | `pending` | `pending` |
+| `SEMANTIC-INTROSPECTION-MCP-FRONTIER.22` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.22: defer MCP progress cancellation` | Kept progress notifications and cancellation session behavior unshipped for the one-shot/stdin profile. |
+| `SEMANTIC-INTROSPECTION-MCP-FRONTIER.23` | `pending` | `pending` |
 
 ## Changelog
 
@@ -872,3 +905,6 @@ For FSMGen, the analogs are:
 - `2026-06-16`: Completed `.21`; resources, resource templates, resource-read
   content, and tool-result text remain unannotated, tools return no resource
   links, and `.22` owns progress/cancellation selection.
+- `2026-06-16`: Completed `.22`; progress tokens are ignored by the shipped
+  one-shot/stdin profile, cancelled notifications stay silent, and `.23` owns
+  JSON-RPC batch/envelope selection.

@@ -2726,6 +2726,7 @@ The read-only adapter currently has a bounded client profile:
 | MCP tool `structuredContent` and `outputSchema` | shipped for read-only tools; `structuredContent` matches serialized JSON text, and compact output schemas cover stable public envelope fields | `t/1445-semantic-introspection-mcp-schema-snapshots.t` and `t/1455-semantic-introspection-mcp-structured-tool-output.t` |
 | MCP tool annotations | shipped for read-only closed-world tools: `readOnlyHint: true` and `openWorldHint: false`; write-only destructive/idempotent hints are absent | `t/1445-semantic-introspection-mcp-schema-snapshots.t` and `t/1456-semantic-introspection-mcp-tool-annotations-boundary.t` |
 | MCP common annotations on resources, resource templates, resource-read content, and tool-result content | not shipped; no audience/priority/lastModified annotations and no tool-result resource links yet | `t/1457-semantic-introspection-mcp-content-resource-annotations-boundary.t` |
+| MCP progress tokens and cancellation notifications | no progress notifications in the one-shot/stdin profile; id-less `notifications/cancelled` is silent, and id-bearing cancellation requests are unsupported | `t/1458-semantic-introspection-mcp-progress-cancellation-boundary.t` |
 | Clients that need write/generation, HDL output writing, automated repair, shell, network, commit, or push tools | intentionally blocked | `semantic_introspection.write_generation_tools_enabled` remains false |
 
 The MCP 2025-06-18 transport specification defines stdio messages as
@@ -2791,6 +2792,12 @@ resource-read content blocks, or tool-result text blocks in the shipped
 profile. The adapter also does not return `resource_link` content from tools.
 Audience/priority hints and last-modified timestamps need separate stable
 contracts before they can become part of the public API.
+
+Progress and cancellation session behavior is not shipped. A request may carry
+`_meta.progressToken`, but the adapter emits no `notifications/progress` in
+the one-shot/stdin profile. Id-less `notifications/cancelled` messages are
+silent notifications; id-bearing cancellation requests are unsupported because
+there is no background job registry or long-lived service session to cancel.
 
 ## Downstream Tool Alignment
 

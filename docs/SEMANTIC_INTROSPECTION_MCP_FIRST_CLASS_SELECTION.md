@@ -212,6 +212,12 @@ text blocks. Tool results do not return `resource_link` content yet. Stable
 audience, priority, last-modified, and resource-link contracts remain future
 work.
 
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.22` selected the progress/cancellation
+boundary for the shipped profile. Request `_meta.progressToken` values do not
+emit `notifications/progress`; id-less `notifications/cancelled` messages stay
+silent, and id-bearing cancellation requests are unsupported because no async
+job/session registry is shipped.
+
 ## Deferred
 
 The following remain outside `.2` and `.3` unless separately selected:

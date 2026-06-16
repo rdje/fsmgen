@@ -1039,7 +1039,11 @@ read-only profile: every current tool is marked `readOnlyHint: true` and
 absent. `SEMANTIC-INTROSPECTION-MCP-FRONTIER.21` keeps common MCP annotations
 absent from resources, templates, resource-read content, and tool-result text
 blocks, and does not return resource links from tools. The next frontier is
-`SEMANTIC-INTROSPECTION-MCP-FRONTIER.22`, MCP progress/cancellation selection.
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.22` keeps progress/cancellation session
+behavior unshipped: request progress tokens do not emit progress
+notifications, and id-less `notifications/cancelled` messages remain silent.
+The next frontier is `SEMANTIC-INTROSPECTION-MCP-FRONTIER.23`, JSON-RPC
+batch/envelope selection.
 The IAL2
 SystemVerilog-backed feature-completeness tree remains
 active at

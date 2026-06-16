@@ -7584,9 +7584,12 @@ read-only profile: current tools advertise `readOnlyHint: true` and
 `SEMANTIC-INTROSPECTION-MCP-FRONTIER.21` keeps common MCP annotations absent
 from resources, templates, resource-read content, and tool-result text blocks;
 tools do not return resource links yet.
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.22` keeps progress/cancellation session
+behavior unshipped: progress tokens do not emit progress notifications, and
+id-less `notifications/cancelled` messages remain silent notifications.
 
-Current active frontier: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.22`, MCP
-progress/cancellation boundary.
+Current active frontier: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.23`, JSON-RPC
+batch/envelope boundary.
 
 Selected first MCP resource families are `fsmgen://capabilities`,
 `fsmgen://contracts`, `fsmgen://diagnostics`,
