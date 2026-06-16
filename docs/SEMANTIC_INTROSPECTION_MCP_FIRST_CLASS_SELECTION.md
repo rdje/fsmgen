@@ -173,6 +173,11 @@ shipped profile. MCP logging is not advertised yet; adapter diagnostics remain
 JSON-RPC errors and structured, sanitized payloads until a logging contract is
 selected.
 
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.15` selected the pagination boundary for
+the shipped profile. Resource, resource-template, and tool list responses are
+bounded and unpaginated: they emit no `nextCursor`, and client-supplied cursor
+params are invalid because the adapter has issued no cursor.
+
 ## Deferred
 
 The following remain outside `.2` and `.3` unless separately selected:

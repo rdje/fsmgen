@@ -2720,7 +2720,8 @@ The read-only adapter currently has a bounded client profile:
 | MCP prompt templates through `prompts/list` and `prompts/get` | not advertised in the shipped profile; use resources/tools for semantic queries | `t/1448-semantic-introspection-mcp-prompts-boundary.t` |
 | MCP completion API through `completion/complete` | not advertised in the shipped profile; no candidate provider is selected yet | `t/1450-semantic-introspection-mcp-completion-boundary.t` |
 | MCP logging through `logging/setLevel` and `notifications/message` | not advertised in the shipped profile; diagnostics stay in JSON-RPC errors and structured payloads | `t/1451-semantic-introspection-mcp-logging-boundary.t` |
-| Clients that require Streamable HTTP transport, sampling, or service-mode session features | not claimed yet | Future task-tree ownership required before implementation |
+| MCP pagination cursors on `resources/list`, `resources/templates/list`, and `tools/list` | bounded unpaginated lists; no `nextCursor`; client-supplied cursors are invalid params because no cursor is issued | `t/1452-semantic-introspection-mcp-pagination-boundary.t` |
+| Clients that require Streamable HTTP transport, sampling, elicitation, or service-mode session features | not claimed yet | Future task-tree ownership required before implementation |
 | Clients that need write/generation, HDL output writing, automated repair, shell, network, commit, or push tools | intentionally blocked | `semantic_introspection.write_generation_tools_enabled` remains false |
 
 The MCP 2025-06-18 transport specification defines stdio messages as
@@ -2752,6 +2753,11 @@ structure or creating a second search API.
 Logging is deferred until the adapter has a bounded log-message contract.
 Current diagnostics stay in JSON-RPC error envelopes, stable diagnostic
 payloads, and sanitized source-query provenance.
+
+Pagination is intentionally not enabled for the shipped static lists. Resource,
+resource-template, and tool listings return the complete bounded list with no
+`nextCursor`; a client-supplied cursor is invalid because the adapter never
+issued a cursor in this profile.
 
 ## Downstream Tool Alignment
 

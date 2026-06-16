@@ -242,13 +242,16 @@ sub handle_jsonrpc_request {
         if ($method eq 'initialize') {
             $result = $self->initialize_result($request->{params});
         } elsif ($method eq 'resources/list') {
+            _reject_unsupported_list_cursor($request->{params});
             $result = $self->list_resources();
         } elsif ($method eq 'resources/templates/list') {
+            _reject_unsupported_list_cursor($request->{params});
             $result = $self->list_resource_templates();
         } elsif ($method eq 'resources/read') {
             my $params = $request->{params} || {};
             $result = $self->read_resource($params->{uri});
         } elsif ($method eq 'tools/list') {
+            _reject_unsupported_list_cursor($request->{params});
             $result = $self->list_tools();
         } elsif ($method eq 'tools/call') {
             my $params = $request->{params} || {};
@@ -266,6 +269,9 @@ sub handle_jsonrpc_request {
         if ($error =~ s/\AFSMGEN_JSONRPC_METHOD_NOT_FOUND: /Unsupported JSON-RPC method: /) {
             return _jsonrpc_error_response($id, -32601, $error);
         }
+        if ($error =~ s/\AFSMGEN_JSONRPC_INVALID_PARAMS: /Invalid params: /) {
+            return _jsonrpc_error_response($id, -32602, $error);
+        }
         return _jsonrpc_error_response($id, -32000, $error || 'FSMGen MCP adapter error');
     };
 
@@ -274,6 +280,14 @@ sub handle_jsonrpc_request {
         id => $id,
         result => $result,
     };
+}
+
+sub _reject_unsupported_list_cursor {
+    my ($params) = @_;
+    return unless ref($params) eq 'HASH' && exists $params->{cursor};
+
+    die "FSMGEN_JSONRPC_INVALID_PARAMS: "
+        . "cursor pagination is not supported by the bounded FSMGen MCP list profile";
 }
 
 sub run_stdio {

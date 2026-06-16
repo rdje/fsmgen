@@ -6,7 +6,7 @@
 - Status: `active`
 - Roadmap lane: `Embedding And Public APIs / AI integration`
 - Created: `2026-06-14`
-- Last updated: `2026-06-15`
+- Last updated: `2026-06-16`
 - Owner: repo-local workflow
 
 ## Goal
@@ -99,7 +99,8 @@ For FSMGen, the analogs are:
     `SEMANTIC-INTROSPECTION-MCP-FRONTIER.12`,
     `SEMANTIC-INTROSPECTION-MCP-FRONTIER.13`,
     `SEMANTIC-INTROSPECTION-MCP-FRONTIER.14`,
-    `SEMANTIC-INTROSPECTION-MCP-FRONTIER.15`
+    `SEMANTIC-INTROSPECTION-MCP-FRONTIER.15`,
+    `SEMANTIC-INTROSPECTION-MCP-FRONTIER.16`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1`
   Status: `done`
@@ -200,9 +201,16 @@ For FSMGen, the analogs are:
   Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.14: defer MCP logging`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.15`
-  Status: `pending`
+  Status: `done`
   Goal: `Select MCP pagination boundaries for resource/tool listings.`
   Acceptance: `Audit whether resources/list, resources/templates/list, tools/list, prompts/list, and other list endpoints should support cursor pagination; either select exact pagination behavior with tests/docs or keep bounded unpaginated listings; do not enable unbounded payloads, writes, network, shell, mutation workflows, commit, or push tools.`
+  Verification: `passed`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.15: bound MCP pagination`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.16`
+  Status: `pending`
+  Goal: `Select MCP sampling and elicitation boundaries for read-only semantic workflows.`
+  Acceptance: `Audit whether sampling/createMessage and elicitation/create should be used or advertised for semantic-introspection workflows; either select exact bounded behavior with tests/docs or keep server-initiated model/user requests unsupported; do not enable model calls, user data collection, writes, network, shell, mutation workflows, commit, or push tools.`
   Commit: `pending`
 
 ## Implementation Notes From `.4`
@@ -443,6 +451,29 @@ For FSMGen, the analogs are:
   larger catalogs make it necessary?
 - Which list endpoints need snapshot coverage before cursor semantics can ship?
 
+## Implementation Notes From `.15`
+
+- The shipped resource, resource-template, and tool lists remain complete,
+  bounded, and unpaginated.
+- `resources/list`, `resources/templates/list`, and `tools/list` do not emit
+  `nextCursor`.
+- Client-supplied cursor params are rejected as JSON-RPC invalid params because
+  the adapter has issued no cursor in this profile.
+- `prompts/list` remains unsupported rather than becoming a hidden paginated
+  prompt surface.
+- Added `t/1452-semantic-introspection-mcp-pagination-boundary.t` to guard
+  the bounded unpaginated list contract and invalid-cursor behavior.
+
+## Candidate Contract Questions For `.16`
+
+- Should the read-only adapter ever initiate `sampling/createMessage`, or should
+  all AI reasoning remain with the MCP host/client using FSMGen's structured
+  resources and tools?
+- Should `elicitation/create` stay unsupported until FSMGen has an explicit
+  user-input workflow contract that forbids sensitive data requests?
+- What guards are required before any server-initiated model or user-interaction
+  request can coexist with the no-write/no-network/no-shell policy?
+
 ## Candidate Future Phases
 
 - Phase 1: contract inventory and first safe semantic-introspection boundary.
@@ -457,7 +488,7 @@ For FSMGen, the analogs are:
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.15` | `pending` | `.14` kept logging unsupported until a bounded log-message contract exists; the next exact frontier is pagination selection. |
+| 1 | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.16` | `pending` | `.15` kept list responses bounded and unpaginated; the next exact frontier is sampling/elicitation selection. |
 
 ## Decisions
 
@@ -509,6 +540,8 @@ For FSMGen, the analogs are:
   source, diagnostic, section, and example candidate providers are selected.
 - `2026-06-16`: `.14` kept MCP logging unsupported; adapter diagnostics remain
   JSON-RPC errors and structured, sanitized payloads.
+- `2026-06-16`: `.15` kept list responses bounded and unpaginated: no
+  `nextCursor` is emitted, and unissued cursor params are invalid.
 - `2026-06-14`: Create this as a proposed owner, not an active implementation
   lane. The first real work must be no-code contract selection over existing
   public surfaces.
@@ -518,7 +551,7 @@ For FSMGen, the analogs are:
 
 ## Open Questions
 
-- None for `.14`; `.15` owns MCP pagination selection.
+- None for `.15`; `.16` owns MCP sampling/elicitation selection.
 
 ## Blockers
 
@@ -544,6 +577,7 @@ For FSMGen, the analogs are:
 | `2026-06-16` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.12` | Syntax check for `t/1449`; `prove -Iperl t/1441-semantic-introspection-mcp-adapter.t t/1443-semantic-introspection-mcp-protocol-hardening.t t/1449-semantic-introspection-mcp-resource-change-boundary.t`; mdBook, docs path audit, Knowledge Map generation/check, memory-architecture, README-numbering, and diff gates | `passed`; kept resources static and selected `.13` completion API boundary |
 | `2026-06-16` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.13` | Syntax check for `t/1450`; `prove -Iperl t/1441-semantic-introspection-mcp-adapter.t t/1443-semantic-introspection-mcp-protocol-hardening.t t/1450-semantic-introspection-mcp-completion-boundary.t`; mdBook, docs path audit, Knowledge Map generation/check, memory-architecture, README-numbering, and diff gates | `passed`; kept completion unsupported and selected `.14` logging API boundary |
 | `2026-06-16` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.14` | Syntax check for `t/1451`; `prove -Iperl t/1441-semantic-introspection-mcp-adapter.t t/1443-semantic-introspection-mcp-protocol-hardening.t t/1451-semantic-introspection-mcp-logging-boundary.t`; mdBook, docs path audit, Knowledge Map generation/check, memory-architecture, README-numbering, and diff gates | `passed`; kept logging unsupported and selected `.15` pagination boundary |
+| `2026-06-16` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.15` | Syntax checks for `SemanticIntrospectionMCPAdapter` and `t/1452`; `prove -Iperl t/1441-semantic-introspection-mcp-adapter.t t/1443-semantic-introspection-mcp-protocol-hardening.t t/1445-semantic-introspection-mcp-schema-snapshots.t t/1449-semantic-introspection-mcp-resource-change-boundary.t t/1452-semantic-introspection-mcp-pagination-boundary.t`; mdBook, docs path audit, Knowledge Map generation/check, memory-architecture, README-numbering, and diff gates | `passed`; kept list responses bounded/unpaginated and selected `.16` sampling/elicitation boundary |
 
 ## Commit Log
 
@@ -563,7 +597,8 @@ For FSMGen, the analogs are:
 | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.12` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.12: keep MCP resources static` | Kept resource subscription/list-change features unadvertised for the shipped static resource profile. |
 | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.13` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.13: defer MCP completions` | Kept completion unsupported until bounded candidate providers are selected. |
 | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.14` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.14: defer MCP logging` | Kept MCP logging unsupported until a bounded log-message contract is selected. |
-| `SEMANTIC-INTROSPECTION-MCP-FRONTIER.15` | `pending` | `pending` |
+| `SEMANTIC-INTROSPECTION-MCP-FRONTIER.15` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.15: bound MCP pagination` | Kept list responses bounded and unpaginated, with unissued cursor params rejected as invalid. |
+| `SEMANTIC-INTROSPECTION-MCP-FRONTIER.16` | `pending` | `pending` |
 
 ## Changelog
 
@@ -615,3 +650,6 @@ For FSMGen, the analogs are:
   candidate providers are selected, and `.14` selected logging API policy.
 - `2026-06-16`: Completed `.14`; MCP logging remains unsupported, and `.15`
   owns pagination selection.
+- `2026-06-16`: Completed `.15`; list responses remain bounded and
+  unpaginated, client cursors are invalid until a paginated profile is
+  selected, and `.16` owns sampling/elicitation selection.

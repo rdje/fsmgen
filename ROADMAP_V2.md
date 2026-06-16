@@ -1020,8 +1020,11 @@ resources reporting `listChanged: false`. `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1
 keeps `completion/complete` unsupported until a bounded candidate provider is
 selected. `SEMANTIC-INTROSPECTION-MCP-FRONTIER.14` keeps MCP logging
 unsupported; adapter diagnostics remain JSON-RPC errors and structured
-payloads. The next frontier is `SEMANTIC-INTROSPECTION-MCP-FRONTIER.15`, MCP
-pagination selection. The IAL2
+payloads. `SEMANTIC-INTROSPECTION-MCP-FRONTIER.15` keeps list responses
+bounded and unpaginated: resource/template/tool listings emit no `nextCursor`,
+and client-supplied cursors are invalid params until a paginated profile is
+selected. The next frontier is `SEMANTIC-INTROSPECTION-MCP-FRONTIER.16`, MCP
+sampling/elicitation selection. The IAL2
 SystemVerilog-backed feature-completeness tree remains
 active at
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.136`, but broad IAL2 expansion is no

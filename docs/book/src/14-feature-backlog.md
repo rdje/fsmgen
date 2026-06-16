@@ -7564,9 +7564,13 @@ list-change notifications unadvertised; static resources continue to report
 unsupported until a bounded candidate-provider contract is selected.
 `SEMANTIC-INTROSPECTION-MCP-FRONTIER.14` keeps MCP logging unsupported; adapter
 diagnostics remain JSON-RPC errors and structured payloads.
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.15` keeps list responses bounded and
+unpaginated: resource/template/tool listings emit no `nextCursor`, and
+client-supplied cursors are invalid params until a paginated profile is
+selected.
 
-Current active frontier: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.15`, MCP
-pagination boundary.
+Current active frontier: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.16`, MCP
+sampling/elicitation boundary.
 
 Selected first MCP resource families are `fsmgen://capabilities`,
 `fsmgen://contracts`, `fsmgen://diagnostics`,
