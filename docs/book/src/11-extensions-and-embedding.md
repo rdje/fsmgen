@@ -2718,6 +2718,7 @@ The read-only adapter currently has a bounded client profile:
 | Resource subscriptions and list-change notifications | not advertised in the shipped profile; resources are static with `listChanged: false` | `t/1449-semantic-introspection-mcp-resource-change-boundary.t` |
 | MCP client `roots` capability and `roots/list` negotiation | not consumed in the shipped profile; `--workspace-root` remains authoritative | `t/1447-semantic-introspection-mcp-roots-boundary.t` |
 | MCP prompt templates through `prompts/list` and `prompts/get` | not advertised in the shipped profile; use resources/tools for semantic queries | `t/1448-semantic-introspection-mcp-prompts-boundary.t` |
+| MCP completion API through `completion/complete` | not advertised in the shipped profile; no candidate provider is selected yet | `t/1450-semantic-introspection-mcp-completion-boundary.t` |
 | Clients that require Streamable HTTP transport, sampling, completions, or service-mode session features | not claimed yet | Future task-tree ownership required before implementation |
 | Clients that need write/generation, HDL output writing, automated repair, shell, network, commit, or push tools | intentionally blocked | `semantic_introspection.write_generation_tools_enabled` remains false |
 
@@ -2741,6 +2742,11 @@ Resource lists are static in the shipped profile. The adapter advertises
 `listChanged: false`, does not advertise `subscribe`, and treats
 `resources/subscribe` and `resources/unsubscribe` as unsupported until a
 separate resource-change contract is selected.
+
+Completion is deferred for the same reason: source-path, diagnostic-code,
+section-name, and example-query suggestions need a bounded candidate provider
+before the adapter can expose `completion/complete` without leaking workspace
+structure or creating a second search API.
 
 ## Downstream Tool Alignment
 

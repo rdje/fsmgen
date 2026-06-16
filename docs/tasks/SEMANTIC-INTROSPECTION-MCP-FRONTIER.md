@@ -97,7 +97,8 @@ For FSMGen, the analogs are:
     `SEMANTIC-INTROSPECTION-MCP-FRONTIER.10`,
     `SEMANTIC-INTROSPECTION-MCP-FRONTIER.11`,
     `SEMANTIC-INTROSPECTION-MCP-FRONTIER.12`,
-    `SEMANTIC-INTROSPECTION-MCP-FRONTIER.13`
+    `SEMANTIC-INTROSPECTION-MCP-FRONTIER.13`,
+    `SEMANTIC-INTROSPECTION-MCP-FRONTIER.14`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1`
   Status: `done`
@@ -184,9 +185,16 @@ For FSMGen, the analogs are:
   Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.12: keep MCP resources static`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.13`
-  Status: `pending`
+  Status: `done`
   Goal: `Select MCP completion API boundaries for resource and tool arguments.`
   Acceptance: `Audit whether completion/complete should be advertised for source paths, diagnostics, examples, sections, or resource templates; either select exact completion behavior with tests/docs or keep completion unsupported; do not enable filesystem traversal beyond configured workspace-root, writes, network, shell, mutation workflows, commit, or push tools.`
+  Verification: `passed`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.13: defer MCP completions`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.14`
+  Status: `pending`
+  Goal: `Select MCP logging API boundaries for adapter diagnostics.`
+  Acceptance: `Audit whether logging/setLevel and notifications/message should be advertised for adapter diagnostics; either select exact bounded logging behavior with tests/docs or keep logging unsupported; do not expose raw stderr, machine-local paths, writes, network, shell, mutation workflows, commit, or push tools.`
   Commit: `pending`
 
 ## Implementation Notes From `.4`
@@ -390,6 +398,26 @@ For FSMGen, the analogs are:
 - Should completion stay unsupported until the adapter has a reusable bounded
   candidate-provider contract?
 
+## Implementation Notes From `.13`
+
+- MCP completion is an optional utility for prompt and resource-URI argument
+  suggestions.
+- Completion remains unsupported in the shipped profile until source-path,
+  diagnostic-code, manifest-section, and example-query candidate providers are
+  bounded and snapshot-tested.
+- Added `t/1450-semantic-introspection-mcp-completion-boundary.t` to guard that
+  the server does not advertise `completions` and that `completion/complete`
+  returns method-not-found.
+
+## Candidate Contract Questions For `.14`
+
+- Should adapter diagnostics use MCP logging, or should errors remain pure
+  JSON-RPC error envelopes and tool payloads for now?
+- How can logging avoid leaking raw stderr, absolute paths, or private
+  implementation details?
+- Is there a useful log level contract before the adapter has a long-lived
+  service mode?
+
 ## Candidate Future Phases
 
 - Phase 1: contract inventory and first safe semantic-introspection boundary.
@@ -404,7 +432,7 @@ For FSMGen, the analogs are:
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.13` | `pending` | `.12` kept resources static with list-change/subscription features unadvertised; the next exact frontier is completion API selection. |
+| 1 | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.14` | `pending` | `.13` kept completion unsupported until bounded candidate providers exist; the next exact frontier is logging API selection. |
 
 ## Decisions
 
@@ -452,6 +480,8 @@ For FSMGen, the analogs are:
 - `2026-06-16`: `.12` kept MCP resources static with `listChanged` false and
   subscription methods unsupported until a resource-change contract is
   separately selected.
+- `2026-06-16`: `.13` kept `completion/complete` unsupported until bounded
+  source, diagnostic, section, and example candidate providers are selected.
 - `2026-06-14`: Create this as a proposed owner, not an active implementation
   lane. The first real work must be no-code contract selection over existing
   public surfaces.
@@ -461,7 +491,7 @@ For FSMGen, the analogs are:
 
 ## Open Questions
 
-- None for `.12`; `.13` owns MCP completion API selection.
+- None for `.13`; `.14` owns MCP logging API selection.
 
 ## Blockers
 
@@ -485,6 +515,7 @@ For FSMGen, the analogs are:
 | `2026-06-16` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.10` | Syntax check for `t/1447`; `prove -Iperl t/1441-semantic-introspection-mcp-adapter.t t/1443-semantic-introspection-mcp-protocol-hardening.t t/1446-semantic-introspection-mcp-stdio-framing.t t/1447-semantic-introspection-mcp-roots-boundary.t`; mdBook, docs path audit, Knowledge Map generation/check, memory-architecture, README-numbering, and diff gates | `passed`; selected explicit workspace-root authority and selected `.11` read-only prompt/workflow template boundary |
 | `2026-06-16` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.11` | Syntax check for `t/1448`; `prove -Iperl t/1441-semantic-introspection-mcp-adapter.t t/1443-semantic-introspection-mcp-protocol-hardening.t t/1448-semantic-introspection-mcp-prompts-boundary.t`; mdBook, docs path audit, Knowledge Map generation/check, memory-architecture, README-numbering, and diff gates | `passed`; kept prompt templates unadvertised and selected `.12` resource subscription/list-change boundary |
 | `2026-06-16` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.12` | Syntax check for `t/1449`; `prove -Iperl t/1441-semantic-introspection-mcp-adapter.t t/1443-semantic-introspection-mcp-protocol-hardening.t t/1449-semantic-introspection-mcp-resource-change-boundary.t`; mdBook, docs path audit, Knowledge Map generation/check, memory-architecture, README-numbering, and diff gates | `passed`; kept resources static and selected `.13` completion API boundary |
+| `2026-06-16` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.13` | Syntax check for `t/1450`; `prove -Iperl t/1441-semantic-introspection-mcp-adapter.t t/1443-semantic-introspection-mcp-protocol-hardening.t t/1450-semantic-introspection-mcp-completion-boundary.t`; mdBook, docs path audit, Knowledge Map generation/check, memory-architecture, README-numbering, and diff gates | `passed`; kept completion unsupported and selected `.14` logging API boundary |
 
 ## Commit Log
 
@@ -502,7 +533,8 @@ For FSMGen, the analogs are:
 | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.10` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.10: select MCP roots boundary` | Selected explicit workspace-root authority for the shipped profile and deferred client roots consumption. |
 | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.11` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.11: defer MCP prompt templates` | Kept prompt templates unadvertised until a prompt contract is separately selected and snapshot-tested. |
 | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.12` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.12: keep MCP resources static` | Kept resource subscription/list-change features unadvertised for the shipped static resource profile. |
-| `SEMANTIC-INTROSPECTION-MCP-FRONTIER.13` | `pending` | `pending` |
+| `SEMANTIC-INTROSPECTION-MCP-FRONTIER.13` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.13: defer MCP completions` | Kept completion unsupported until bounded candidate providers are selected. |
+| `SEMANTIC-INTROSPECTION-MCP-FRONTIER.14` | `pending` | `pending` |
 
 ## Changelog
 
@@ -549,4 +581,6 @@ For FSMGen, the analogs are:
 - `2026-06-16`: Completed `.11`; prompt templates remain unadvertised in the
   shipped profile, and `.12` selected resource subscription/list-change policy.
 - `2026-06-16`: Completed `.12`; resources remain static with list-change and
-  subscription features unadvertised, and `.13` owns completion API selection.
+  subscription features unadvertised, and `.13` selected completion API policy.
+- `2026-06-16`: Completed `.13`; completion remains unsupported until bounded
+  candidate providers are selected, and `.14` owns logging API selection.

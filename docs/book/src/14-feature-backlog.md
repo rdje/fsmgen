@@ -7560,9 +7560,11 @@ until a separate prompt contract can be selected and snapshot-tested.
 `SEMANTIC-INTROSPECTION-MCP-FRONTIER.12` keeps resource subscriptions and
 list-change notifications unadvertised; static resources continue to report
 `listChanged: false`.
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.13` keeps `completion/complete`
+unsupported until a bounded candidate-provider contract is selected.
 
-Current active frontier: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.13`, MCP
-completion API boundary.
+Current active frontier: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.14`, MCP
+logging API boundary.
 
 Selected first MCP resource families are `fsmgen://capabilities`,
 `fsmgen://contracts`, `fsmgen://diagnostics`,

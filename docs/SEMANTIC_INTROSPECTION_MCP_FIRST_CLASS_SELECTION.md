@@ -163,6 +163,11 @@ for the shipped profile. Resources remain static: `listChanged` is false,
 `subscribe` is not advertised, and resource subscribe/unsubscribe methods stay
 unsupported until a separate resource-change contract is selected.
 
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.13` selected the completion boundary for
+the shipped profile. `completion/complete` remains unsupported until source,
+diagnostic, section, and example candidate providers can be bounded and
+snapshot-tested.
+
 ## Deferred
 
 The following remain outside `.2` and `.3` unless separately selected:
