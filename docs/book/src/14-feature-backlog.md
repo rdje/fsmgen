@@ -5431,6 +5431,17 @@ multi-group, read single-beat one-group, and write multi-group queue-head
 response-demux shapes are generated, so the next owner is an audit before any
 behavior widening.
 
+Read single-beat multi-group queue-head response-demux readiness audit:
+[AXI_IAL2_MANAGER_READ_SINGLE_BEAT_MULTI_GROUP_QUEUE_HEAD_RESPONSE_DEMUX_READINESS_AUDIT](../../AXI_IAL2_MANAGER_READ_SINGLE_BEAT_MULTI_GROUP_QUEUE_HEAD_RESPONSE_DEMUX_READINESS_AUDIT.md)
+selects `.143`, generated read single-beat multi-group queue-head
+response-demux. The audit finds no new parser, support-accounting,
+generated-artifact, lowerer, direct-backend, or VHDL prerequisite: queue-head
+planning, storage, transition, assertion, response-demux rule, report, and
+residue helpers already group-iterate for read single-beat once behavior
+exists. The implementation boundary stays response-demux-only and leaves
+read-data, deeper queues, same-family mixed auto-ID, and group-local
+simultaneous enqueue widening deferred.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same
@@ -7692,7 +7703,7 @@ support catalog entries instead of recursive workspace traversal.
 `SEMANTIC-INTROSPECTION-MCP-FRONTIER.30` closes the immediate read-only
 semantic-introspection/MCP pass after source discovery; the active roadmap
 priority is again the IAL2 feature-completeness tree, currently at
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.142`.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.143`.
 
 Selected first MCP resource families are `fsmgen://capabilities`,
 `fsmgen://contracts`, `fsmgen://diagnostics`,

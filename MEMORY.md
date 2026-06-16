@@ -10,10 +10,10 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `HEAD after commit` — `IAL2-FEATURE-COMPLETENESS-FRONTIER.141: select read single-beat multi-group audit`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.142` pending; next action is read single-beat multi-group queue-head response-demux readiness audit.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.141`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.140`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.139`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.138`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.137`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.136`; `SEMANTIC-INTROSPECTION-MCP-FRONTIER.30`; `SEMANTIC-INTROSPECTION-MCP-FRONTIER.29`; `SEMANTIC-INTROSPECTION-MCP-FRONTIER.28`; `SEMANTIC-INTROSPECTION-MCP-FRONTIER.27`. Older completed slices are in the task tree and git history.
-- in_flight_uncommitted: none after this commit; `.142` is the next audit owner; unrelated untracked `fx/` intentionally left alone.
+- latest_commit: `HEAD after commit` — `IAL2-FEATURE-COMPLETENESS-FRONTIER.142: audit read single-beat multi-group readiness`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.143` pending; next action is generated read single-beat multi-group queue-head response-demux.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.142`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.141`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.140`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.139`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.138`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.137`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.136`; `SEMANTIC-INTROSPECTION-MCP-FRONTIER.30`; `SEMANTIC-INTROSPECTION-MCP-FRONTIER.29`; `SEMANTIC-INTROSPECTION-MCP-FRONTIER.28`. Older completed slices are in the task tree and git history.
+- in_flight_uncommitted: none after this commit; `.143` is the next implementation owner; unrelated untracked `fx/` intentionally left alone.
 - blockers: none.
 
 ## Notes
