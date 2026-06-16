@@ -5505,10 +5505,12 @@ group-local enqueue widening, packed outputs, direct backend lowering, and
 VHDL remain deferred. Selector
 [AXI_IAL2_MANAGER_POST_READ_SINGLE_BEAT_MULTI_GROUP_QUEUE_HEAD_RESPONSE_DEMUX_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_READ_SINGLE_BEAT_MULTI_GROUP_QUEUE_HEAD_RESPONSE_DEMUX_NEXT_SLICE_SELECTION.md)
 chooses `.145`, readiness audit for generated read-data over read single-beat
-multi-group queue-head response-demux. The active frontier is `.145`; the
-audit must decide whether the single-beat queue-head read-data coverage gate
-can be safely widened from exactly one depth-2 group to one-or-more depth-2
-groups before any behavior change.
+multi-group queue-head response-demux. Audit
+[AXI_IAL2_MANAGER_READ_SINGLE_BEAT_MULTI_GROUP_QUEUE_HEAD_READ_DATA_READINESS_AUDIT](../../AXI_IAL2_MANAGER_READ_SINGLE_BEAT_MULTI_GROUP_QUEUE_HEAD_READ_DATA_READINESS_AUDIT.md)
+found no new parser, IAL1, IAL0/SystemVerilog, direct-backend, or VHDL
+prerequisite and selects `.146`, the bounded implementation owner. The active
+frontier is `.146`; deeper queues, mixed auto-ID, group-local enqueue
+widening, packed outputs, direct backend, and VHDL remain deferred.
 
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
@@ -7771,7 +7773,7 @@ support catalog entries instead of recursive workspace traversal.
 `SEMANTIC-INTROSPECTION-MCP-FRONTIER.30` closes the immediate read-only
 semantic-introspection/MCP pass after source discovery; the active roadmap
 priority is again the IAL2 feature-completeness tree, currently at
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.145`.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.146`.
 
 Selected first MCP resource families are `fsmgen://capabilities`,
 `fsmgen://contracts`, `fsmgen://diagnostics`,

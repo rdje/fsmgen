@@ -1080,7 +1080,7 @@ support-accounting metadata under query/limit/filter controls.
 `SEMANTIC-INTROSPECTION-MCP-FRONTIER.30` closes the immediate read-only
 semantic-introspection/MCP pass after source discovery and returns active
 roadmap priority to the IAL2 feature-completeness tree, currently at
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.145`.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.146`.
 The parser/report metadata slice `IAL2-FEATURE-COMPLETENESS-FRONTIER.39` is
 now shipped for the bounded AXI read response-demux public contract selected
 by `.38`. The selected read arm requires `(response-scope single-beat)`,
@@ -1599,8 +1599,10 @@ the covered read single-beat response-demux-only family. Strict check JSON and
 normalized semantic JSON match the support-accounting entry for the sample,
 keeping MCP-facing semantic introspection aligned with the public support
 catalog. Selector `.144` chose `.145`, readiness audit for generated read-data
-over read single-beat multi-group queue-head groups. The active frontier is
-`.145`; deeper queues,
+over read single-beat multi-group queue-head groups. Audit `.145` found no
+new parser, IAL1, IAL0/SystemVerilog, direct-backend, or VHDL prerequisite and
+selected `.146`, the bounded implementation owner. The active frontier is
+`.146`; deeper queues,
 same-family mixed auto-ID, and group-local simultaneous enqueue widening
 remain deferred.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
