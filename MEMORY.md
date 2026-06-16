@@ -10,9 +10,9 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `HEAD after commit` — `SEMANTIC-INTROSPECTION-MCP-FRONTIER.11: defer MCP prompt templates`.
-- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.12` pending; next action is MCP resource subscription/list-change boundary selection.
-- recently_done: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.11`; `SEMANTIC-INTROSPECTION-MCP-FRONTIER.10`; `SEMANTIC-INTROSPECTION-MCP-FRONTIER.9`; `SEMANTIC-INTROSPECTION-MCP-FRONTIER.8`; `SEMANTIC-INTROSPECTION-MCP-FRONTIER.7`; `SEMANTIC-INTROSPECTION-MCP-FRONTIER.6`; `SEMANTIC-INTROSPECTION-MCP-FRONTIER.5`; `SEMANTIC-INTROSPECTION-MCP-FRONTIER.4`; `SEMANTIC-INTROSPECTION-MCP-FRONTIER.3`; `SEMANTIC-INTROSPECTION-MCP-FRONTIER.2`. Older completed slices are in the task tree and git history.
+- latest_commit: `HEAD after commit` — `SEMANTIC-INTROSPECTION-MCP-FRONTIER.12: keep MCP resources static`.
+- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.13` pending; next action is MCP completion API boundary selection.
+- recently_done: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.12`; `SEMANTIC-INTROSPECTION-MCP-FRONTIER.11`; `SEMANTIC-INTROSPECTION-MCP-FRONTIER.10`; `SEMANTIC-INTROSPECTION-MCP-FRONTIER.9`; `SEMANTIC-INTROSPECTION-MCP-FRONTIER.8`; `SEMANTIC-INTROSPECTION-MCP-FRONTIER.7`; `SEMANTIC-INTROSPECTION-MCP-FRONTIER.6`; `SEMANTIC-INTROSPECTION-MCP-FRONTIER.5`; `SEMANTIC-INTROSPECTION-MCP-FRONTIER.4`; `SEMANTIC-INTROSPECTION-MCP-FRONTIER.3`. Older completed slices are in the task tree and git history.
 - in_flight_uncommitted: none after this commit; `IAL2-FEATURE-COMPLETENESS-FRONTIER.136` remains active but deferred while the semantic-introspection priority is active; unrelated untracked `fx/` intentionally left alone.
 - blockers: none.
 

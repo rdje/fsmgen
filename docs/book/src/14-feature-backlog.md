@@ -7557,9 +7557,12 @@ stdio framing conclusion with a focused newline/no-embedded-newline guard.
 as the only shipped source authority; MCP client roots are not consumed yet.
 `SEMANTIC-INTROSPECTION-MCP-FRONTIER.11` keeps prompt templates unadvertised
 until a separate prompt contract can be selected and snapshot-tested.
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.12` keeps resource subscriptions and
+list-change notifications unadvertised; static resources continue to report
+`listChanged: false`.
 
-Current active frontier: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.12`, MCP
-resource subscription/list-change boundary.
+Current active frontier: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.13`, MCP
+completion API boundary.
 
 Selected first MCP resource families are `fsmgen://capabilities`,
 `fsmgen://contracts`, `fsmgen://diagnostics`,

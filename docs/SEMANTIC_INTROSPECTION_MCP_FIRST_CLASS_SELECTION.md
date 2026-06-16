@@ -158,6 +158,11 @@ shipped profile. Prompt templates are not advertised yet; clients should use
 the structured resource/tool API for semantic queries until a separate prompt
 contract is selected and snapshot-tested.
 
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.12` selected the resource-change boundary
+for the shipped profile. Resources remain static: `listChanged` is false,
+`subscribe` is not advertised, and resource subscribe/unsubscribe methods stay
+unsupported until a separate resource-change contract is selected.
+
 ## Deferred
 
 The following remain outside `.2` and `.3` unless separately selected:

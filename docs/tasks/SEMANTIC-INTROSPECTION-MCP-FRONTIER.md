@@ -96,7 +96,8 @@ For FSMGen, the analogs are:
     `SEMANTIC-INTROSPECTION-MCP-FRONTIER.9`,
     `SEMANTIC-INTROSPECTION-MCP-FRONTIER.10`,
     `SEMANTIC-INTROSPECTION-MCP-FRONTIER.11`,
-    `SEMANTIC-INTROSPECTION-MCP-FRONTIER.12`
+    `SEMANTIC-INTROSPECTION-MCP-FRONTIER.12`,
+    `SEMANTIC-INTROSPECTION-MCP-FRONTIER.13`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1`
   Status: `done`
@@ -176,9 +177,16 @@ For FSMGen, the analogs are:
   Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.11: defer MCP prompt templates`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.12`
-  Status: `pending`
+  Status: `done`
   Goal: `Select MCP resource subscription and list-change boundaries.`
   Acceptance: `Audit whether resource subscribe/unsubscribe, resources/listChanged, and notifications/resources/list_changed should be advertised for the read-only semantic-introspection profile; either select exact behavior with tests/docs or keep static resources with listChanged false; do not enable writes, network, shell, mutation workflows, commit, or push tools.`
+  Verification: `passed`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.12: keep MCP resources static`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.13`
+  Status: `pending`
+  Goal: `Select MCP completion API boundaries for resource and tool arguments.`
+  Acceptance: `Audit whether completion/complete should be advertised for source paths, diagnostics, examples, sections, or resource templates; either select exact completion behavior with tests/docs or keep completion unsupported; do not enable filesystem traversal beyond configured workspace-root, writes, network, shell, mutation workflows, commit, or push tools.`
   Commit: `pending`
 
 ## Implementation Notes From `.4`
@@ -362,6 +370,26 @@ For FSMGen, the analogs are:
 - What fixture coverage is needed before a client can rely on resource-list
   stability across sessions?
 
+## Implementation Notes From `.12`
+
+- The shipped resource list remains static: `initialize` reports
+  `resources.listChanged` false and does not advertise `resources.subscribe`.
+- Added `t/1449-semantic-introspection-mcp-resource-change-boundary.t` to guard
+  static resource capability shape, non-paginated bounded listings, and
+  unsupported `resources/subscribe` / `resources/unsubscribe` methods.
+- The mdBook compatibility matrix now names resource subscriptions and
+  list-change notifications as unadvertised in the shipped profile.
+
+## Candidate Contract Questions For `.13`
+
+- Which arguments would benefit from completion first: source paths,
+  diagnostic codes, manifest sections, example queries, or resource-template
+  variables?
+- How can completion remain workspace-root-bounded and avoid unbounded
+  filesystem traversal?
+- Should completion stay unsupported until the adapter has a reusable bounded
+  candidate-provider contract?
+
 ## Candidate Future Phases
 
 - Phase 1: contract inventory and first safe semantic-introspection boundary.
@@ -376,7 +404,7 @@ For FSMGen, the analogs are:
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.12` | `pending` | `.11` deferred prompt templates behind a future prompt contract; the next exact frontier is resource subscription/list-change selection. |
+| 1 | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.13` | `pending` | `.12` kept resources static with list-change/subscription features unadvertised; the next exact frontier is completion API selection. |
 
 ## Decisions
 
@@ -421,6 +449,9 @@ For FSMGen, the analogs are:
   remain fail-closed before runner invocation.
 - `2026-06-16`: `.11` kept MCP prompt templates unadvertised until a separate
   prompt contract can be selected and snapshot-tested.
+- `2026-06-16`: `.12` kept MCP resources static with `listChanged` false and
+  subscription methods unsupported until a resource-change contract is
+  separately selected.
 - `2026-06-14`: Create this as a proposed owner, not an active implementation
   lane. The first real work must be no-code contract selection over existing
   public surfaces.
@@ -430,7 +461,7 @@ For FSMGen, the analogs are:
 
 ## Open Questions
 
-- None for `.11`; `.12` owns resource subscription/list-change selection.
+- None for `.12`; `.13` owns MCP completion API selection.
 
 ## Blockers
 
@@ -453,6 +484,7 @@ For FSMGen, the analogs are:
 | `2026-06-16` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.9` | Syntax check for `t/1446`; `prove -Iperl t/1441-semantic-introspection-mcp-adapter.t t/1442-fsmgen-mcp-jsonrpc-cli.t t/1443-semantic-introspection-mcp-protocol-hardening.t t/1445-semantic-introspection-mcp-schema-snapshots.t t/1446-semantic-introspection-mcp-stdio-framing.t`; mdBook, docs path audit, Knowledge Map generation/check, memory-architecture, README-numbering, and diff gates | `passed`; locked official newline-delimited MCP stdio framing and selected `.10` roots/workspace-root negotiation |
 | `2026-06-16` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.10` | Syntax check for `t/1447`; `prove -Iperl t/1441-semantic-introspection-mcp-adapter.t t/1443-semantic-introspection-mcp-protocol-hardening.t t/1446-semantic-introspection-mcp-stdio-framing.t t/1447-semantic-introspection-mcp-roots-boundary.t`; mdBook, docs path audit, Knowledge Map generation/check, memory-architecture, README-numbering, and diff gates | `passed`; selected explicit workspace-root authority and selected `.11` read-only prompt/workflow template boundary |
 | `2026-06-16` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.11` | Syntax check for `t/1448`; `prove -Iperl t/1441-semantic-introspection-mcp-adapter.t t/1443-semantic-introspection-mcp-protocol-hardening.t t/1448-semantic-introspection-mcp-prompts-boundary.t`; mdBook, docs path audit, Knowledge Map generation/check, memory-architecture, README-numbering, and diff gates | `passed`; kept prompt templates unadvertised and selected `.12` resource subscription/list-change boundary |
+| `2026-06-16` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.12` | Syntax check for `t/1449`; `prove -Iperl t/1441-semantic-introspection-mcp-adapter.t t/1443-semantic-introspection-mcp-protocol-hardening.t t/1449-semantic-introspection-mcp-resource-change-boundary.t`; mdBook, docs path audit, Knowledge Map generation/check, memory-architecture, README-numbering, and diff gates | `passed`; kept resources static and selected `.13` completion API boundary |
 
 ## Commit Log
 
@@ -469,7 +501,8 @@ For FSMGen, the analogs are:
 | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.9` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.9: lock MCP stdio framing` | Locked official newline-delimited MCP stdio framing with a focused guard and corrected the compatibility matrix. |
 | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.10` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.10: select MCP roots boundary` | Selected explicit workspace-root authority for the shipped profile and deferred client roots consumption. |
 | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.11` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.11: defer MCP prompt templates` | Kept prompt templates unadvertised until a prompt contract is separately selected and snapshot-tested. |
-| `SEMANTIC-INTROSPECTION-MCP-FRONTIER.12` | `pending` | `pending` |
+| `SEMANTIC-INTROSPECTION-MCP-FRONTIER.12` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.12: keep MCP resources static` | Kept resource subscription/list-change features unadvertised for the shipped static resource profile. |
+| `SEMANTIC-INTROSPECTION-MCP-FRONTIER.13` | `pending` | `pending` |
 
 ## Changelog
 
@@ -514,4 +547,6 @@ For FSMGen, the analogs are:
   shipped source authority, client roots remain unconsumed, and `.11` selected
   the read-only prompt/workflow template boundary.
 - `2026-06-16`: Completed `.11`; prompt templates remain unadvertised in the
-  shipped profile, and `.12` owns resource subscription/list-change selection.
+  shipped profile, and `.12` selected resource subscription/list-change policy.
+- `2026-06-16`: Completed `.12`; resources remain static with list-change and
+  subscription features unadvertised, and `.13` owns completion API selection.
