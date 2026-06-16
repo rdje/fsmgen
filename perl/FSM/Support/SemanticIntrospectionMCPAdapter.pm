@@ -62,6 +62,7 @@ sub initialize_result {
         },
         serverInfo => {
             name => 'fsmgen-semantic-introspection',
+            title => 'FSMGen Semantic Introspection',
             version => $producer->{version} || '0.0-dev',
         },
         instructions => 'Read-only FSMGen semantic introspection over capability, check, semantic, schedule, diagnostic, support-accounting, and example surfaces.',

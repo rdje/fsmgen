@@ -2730,6 +2730,7 @@ The read-only adapter currently has a bounded client profile:
 | JSON-RPC batch arrays and non-object request envelopes | not shipped; rejected with `-32600 Invalid Request`; stdio remains one compact request object per line | `t/1459-semantic-introspection-mcp-jsonrpc-batch-envelope-boundary.t` |
 | MCP initialize protocol/capability negotiation | server reports supported protocol `2025-06-18`; client capabilities do not widen the minimal server `resources`/`tools` capabilities | `t/1441-semantic-introspection-mcp-adapter.t`, `t/1445-semantic-introspection-mcp-schema-snapshots.t`, and `t/1460-semantic-introspection-mcp-initialize-negotiation-boundary.t` |
 | MCP JSON-RPC `error.data` | not shipped; errors expose stable code plus sanitized message only | `t/1461-semantic-introspection-mcp-error-data-sanitization-boundary.t` |
+| MCP `serverInfo` and `instructions` metadata | `serverInfo` includes stable name/title/version; instructions stay compact and read-only | `t/1445-semantic-introspection-mcp-schema-snapshots.t` and `t/1462-semantic-introspection-mcp-serverinfo-instructions-boundary.t` |
 | Clients that need write/generation, HDL output writing, automated repair, shell, network, commit, or push tools | intentionally blocked | `semantic_introspection.write_generation_tools_enabled` remains false |
 
 The MCP 2025-06-18 transport specification defines stdio messages as
@@ -2816,6 +2817,14 @@ the shipped `resources` and `tools` capabilities are advertised.
 JSON-RPC errors are message-only in the shipped profile. Clients can rely on
 the standard error `code` and a sanitized `message`; `error.data` remains
 absent until a stable, redacted data schema is selected.
+
+The initialize response uses stable server identity metadata:
+`serverInfo.name` is `fsmgen-semantic-introspection`, `serverInfo.title` is
+`FSMGen Semantic Introspection`, and `serverInfo.version` comes from the
+capability manifest producer metadata. The instructions string stays compact:
+it identifies the read-only semantic-introspection profile without advertising
+blocked write, shell, network, commit, push, or unshipped optional MCP
+features.
 
 ## Downstream Tool Alignment
 

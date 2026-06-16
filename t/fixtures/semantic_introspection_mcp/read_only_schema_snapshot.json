@@ -10,6 +10,7 @@
          "listChanged"
       ],
       "server_name" : "fsmgen-semantic-introspection",
+      "server_title" : "FSMGen Semantic Introspection",
       "server_version_type" : "string",
       "tool_capability_keys" : [
          "listChanged"

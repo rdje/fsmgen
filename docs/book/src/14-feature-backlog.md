@@ -7595,9 +7595,11 @@ server protocol version `2025-06-18` and keeps client capabilities from
 widening the advertised resources/tools capability set.
 `SEMANTIC-INTROSPECTION-MCP-FRONTIER.25` keeps JSON-RPC errors message-only
 and sanitized; `error.data` remains absent until a bounded schema is selected.
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.26` adds stable `serverInfo.title`
+metadata and keeps instructions compact/read-only.
 
-Current active frontier: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.26`, MCP
-serverInfo/instructions boundary.
+Current active frontier: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.27`, remaining
+MCP profile exhaustion audit.
 
 Selected first MCP resource families are `fsmgen://capabilities`,
 `fsmgen://contracts`, `fsmgen://diagnostics`,

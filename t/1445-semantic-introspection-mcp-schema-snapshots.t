@@ -129,6 +129,7 @@ sub project_initialize {
         resource_capability_keys => sorted_keys($response->{capabilities}{resources}),
         tool_capability_keys => sorted_keys($response->{capabilities}{tools}),
         server_name => $response->{serverInfo}{name},
+        server_title => $response->{serverInfo}{title},
         server_version_type => defined($response->{serverInfo}{version}) ? 'string' : 'missing',
         instructions_mentions_read_only => json_bool(($response->{instructions} || '') =~ /Read-only/),
     };

@@ -1050,8 +1050,10 @@ single supported `2025-06-18` protocol version and keeps client
 capabilities from widening the server's minimal resources/tools capability
 set. `SEMANTIC-INTROSPECTION-MCP-FRONTIER.25` keeps JSON-RPC errors
 message-only and sanitized, with no `error.data` until a bounded data schema
-is selected. The next frontier is `SEMANTIC-INTROSPECTION-MCP-FRONTIER.26`,
-MCP serverInfo/instructions metadata selection.
+is selected. `SEMANTIC-INTROSPECTION-MCP-FRONTIER.26` adds stable
+`serverInfo.title` metadata while keeping instructions compact and read-only.
+The next frontier is `SEMANTIC-INTROSPECTION-MCP-FRONTIER.27`, the remaining
+MCP profile exhaustion audit.
 The IAL2
 SystemVerilog-backed feature-completeness tree remains
 active at

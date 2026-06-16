@@ -235,6 +235,11 @@ JSON-RPC errors expose a stable `code` and sanitized `message` only.
 without leaking machine-local paths, Perl internals, command details, or raw
 private objects.
 
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.26` selected the serverInfo/instructions
+boundary. Initialize now includes stable `serverInfo.title` metadata, while
+instructions stay compact and read-only and do not advertise blocked authority
+or unshipped optional MCP features.
+
 ## Deferred
 
 The following remain outside `.2` and `.3` unless separately selected:
