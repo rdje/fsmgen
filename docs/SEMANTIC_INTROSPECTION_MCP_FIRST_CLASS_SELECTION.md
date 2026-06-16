@@ -168,6 +168,11 @@ the shipped profile. `completion/complete` remains unsupported until source,
 diagnostic, section, and example candidate providers can be bounded and
 snapshot-tested.
 
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.14` selected the logging boundary for the
+shipped profile. MCP logging is not advertised yet; adapter diagnostics remain
+JSON-RPC errors and structured, sanitized payloads until a logging contract is
+selected.
+
 ## Deferred
 
 The following remain outside `.2` and `.3` unless separately selected:

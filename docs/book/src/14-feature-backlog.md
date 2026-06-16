@@ -7562,9 +7562,11 @@ list-change notifications unadvertised; static resources continue to report
 `listChanged: false`.
 `SEMANTIC-INTROSPECTION-MCP-FRONTIER.13` keeps `completion/complete`
 unsupported until a bounded candidate-provider contract is selected.
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.14` keeps MCP logging unsupported; adapter
+diagnostics remain JSON-RPC errors and structured payloads.
 
-Current active frontier: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.14`, MCP
-logging API boundary.
+Current active frontier: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.15`, MCP
+pagination boundary.
 
 Selected first MCP resource families are `fsmgen://capabilities`,
 `fsmgen://contracts`, `fsmgen://diagnostics`,

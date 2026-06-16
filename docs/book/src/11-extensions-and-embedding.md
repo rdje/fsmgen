@@ -2719,7 +2719,8 @@ The read-only adapter currently has a bounded client profile:
 | MCP client `roots` capability and `roots/list` negotiation | not consumed in the shipped profile; `--workspace-root` remains authoritative | `t/1447-semantic-introspection-mcp-roots-boundary.t` |
 | MCP prompt templates through `prompts/list` and `prompts/get` | not advertised in the shipped profile; use resources/tools for semantic queries | `t/1448-semantic-introspection-mcp-prompts-boundary.t` |
 | MCP completion API through `completion/complete` | not advertised in the shipped profile; no candidate provider is selected yet | `t/1450-semantic-introspection-mcp-completion-boundary.t` |
-| Clients that require Streamable HTTP transport, sampling, completions, or service-mode session features | not claimed yet | Future task-tree ownership required before implementation |
+| MCP logging through `logging/setLevel` and `notifications/message` | not advertised in the shipped profile; diagnostics stay in JSON-RPC errors and structured payloads | `t/1451-semantic-introspection-mcp-logging-boundary.t` |
+| Clients that require Streamable HTTP transport, sampling, or service-mode session features | not claimed yet | Future task-tree ownership required before implementation |
 | Clients that need write/generation, HDL output writing, automated repair, shell, network, commit, or push tools | intentionally blocked | `semantic_introspection.write_generation_tools_enabled` remains false |
 
 The MCP 2025-06-18 transport specification defines stdio messages as
@@ -2747,6 +2748,10 @@ Completion is deferred for the same reason: source-path, diagnostic-code,
 section-name, and example-query suggestions need a bounded candidate provider
 before the adapter can expose `completion/complete` without leaking workspace
 structure or creating a second search API.
+
+Logging is deferred until the adapter has a bounded log-message contract.
+Current diagnostics stay in JSON-RPC error envelopes, stable diagnostic
+payloads, and sanitized source-query provenance.
 
 ## Downstream Tool Alignment
 
