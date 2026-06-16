@@ -1042,8 +1042,11 @@ blocks, and does not return resource links from tools. The next frontier is
 `SEMANTIC-INTROSPECTION-MCP-FRONTIER.22` keeps progress/cancellation session
 behavior unshipped: request progress tokens do not emit progress
 notifications, and id-less `notifications/cancelled` messages remain silent.
-The next frontier is `SEMANTIC-INTROSPECTION-MCP-FRONTIER.23`, JSON-RPC
-batch/envelope selection.
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.23` explicitly rejects JSON-RPC batch
+arrays and non-object request envelopes with `-32600 Invalid Request`; the
+stdio profile remains one compact request object per line. The next frontier
+is `SEMANTIC-INTROSPECTION-MCP-FRONTIER.24`, initialize protocol/capability
+negotiation selection.
 The IAL2
 SystemVerilog-backed feature-completeness tree remains
 active at

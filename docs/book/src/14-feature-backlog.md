@@ -7587,9 +7587,12 @@ tools do not return resource links yet.
 `SEMANTIC-INTROSPECTION-MCP-FRONTIER.22` keeps progress/cancellation session
 behavior unshipped: progress tokens do not emit progress notifications, and
 id-less `notifications/cancelled` messages remain silent notifications.
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.23` keeps JSON-RPC batch arrays and
+non-object request envelopes unsupported with explicit `-32600 Invalid
+Request` errors.
 
-Current active frontier: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.23`, JSON-RPC
-batch/envelope boundary.
+Current active frontier: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.24`, initialize
+protocol/capability boundary.
 
 Selected first MCP resource families are `fsmgen://capabilities`,
 `fsmgen://contracts`, `fsmgen://diagnostics`,

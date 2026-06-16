@@ -246,7 +246,11 @@ sub call_tool {
 
 sub handle_jsonrpc_request {
     my ($self, $request) = @_;
-    die "JSON-RPC request must be a hash" unless ref($request) eq 'HASH';
+    return _jsonrpc_error_response(
+        undef,
+        -32600,
+        'JSON-RPC single request object is required; batch arrays and non-object envelopes are not supported',
+    ) unless ref($request) eq 'HASH';
 
     my $id = $request->{id};
     my $method = $request->{method};

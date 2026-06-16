@@ -218,6 +218,11 @@ emit `notifications/progress`; id-less `notifications/cancelled` messages stay
 silent, and id-bearing cancellation requests are unsupported because no async
 job/session registry is shipped.
 
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.23` selected the JSON-RPC batch/envelope
+boundary. The adapter accepts one request object at a time. Batch arrays and
+other non-object envelopes return `-32600 Invalid Request`; newline-delimited
+stdio remains one compact request object per line.
+
 ## Deferred
 
 The following remain outside `.2` and `.3` unless separately selected:

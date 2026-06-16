@@ -2727,6 +2727,7 @@ The read-only adapter currently has a bounded client profile:
 | MCP tool annotations | shipped for read-only closed-world tools: `readOnlyHint: true` and `openWorldHint: false`; write-only destructive/idempotent hints are absent | `t/1445-semantic-introspection-mcp-schema-snapshots.t` and `t/1456-semantic-introspection-mcp-tool-annotations-boundary.t` |
 | MCP common annotations on resources, resource templates, resource-read content, and tool-result content | not shipped; no audience/priority/lastModified annotations and no tool-result resource links yet | `t/1457-semantic-introspection-mcp-content-resource-annotations-boundary.t` |
 | MCP progress tokens and cancellation notifications | no progress notifications in the one-shot/stdin profile; id-less `notifications/cancelled` is silent, and id-bearing cancellation requests are unsupported | `t/1458-semantic-introspection-mcp-progress-cancellation-boundary.t` |
+| JSON-RPC batch arrays and non-object request envelopes | not shipped; rejected with `-32600 Invalid Request`; stdio remains one compact request object per line | `t/1459-semantic-introspection-mcp-jsonrpc-batch-envelope-boundary.t` |
 | Clients that need write/generation, HDL output writing, automated repair, shell, network, commit, or push tools | intentionally blocked | `semantic_introspection.write_generation_tools_enabled` remains false |
 
 The MCP 2025-06-18 transport specification defines stdio messages as
@@ -2798,6 +2799,11 @@ Progress and cancellation session behavior is not shipped. A request may carry
 the one-shot/stdin profile. Id-less `notifications/cancelled` messages are
 silent notifications; id-bearing cancellation requests are unsupported because
 there is no background job registry or long-lived service session to cancel.
+
+JSON-RPC batch arrays are not accepted. `--request-json` and newline-delimited
+stdio both require one request object at a time; batch arrays or other
+non-object envelopes return `-32600 Invalid Request` rather than invoking any
+adapter method.
 
 ## Downstream Tool Alignment
 
