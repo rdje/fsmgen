@@ -7543,11 +7543,13 @@ handling, malformed percent-encoding rejection, source-query
 `SEMANTIC-INTROSPECTION-MCP-FRONTIER.6` adds `fsmgen_support_summary`,
 bounded support-accounting aggregates, support-aware example discovery, and
 diagnostic explanations linked to support-accounting examples.
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.7` documents generic read-only MCP client
+configuration and bounded one-shot workflows for capabilities, support
+summaries, diagnostics, examples, check JSON, semantic JSON, and schedule
+previews.
 
-Current active frontier: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.6` shipped
-deeper read-only diagnostic/example/support-accounting query coverage. The
-next owned frontier is `SEMANTIC-INTROSPECTION-MCP-FRONTIER.7`, read-only MCP
-client configuration and workflow examples.
+Current active frontier: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.8`, schema
+snapshot fixtures and a client compatibility matrix.
 
 Selected first MCP resource families are `fsmgen://capabilities`,
 `fsmgen://contracts`, `fsmgen://diagnostics`,

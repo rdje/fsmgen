@@ -13,7 +13,9 @@ answers:
   - "which MCP tools are selected for FSMGen introspection?"
   - "where is FSMGen semantic introspection advertised?"
   - "is the FSMGen MCP adapter implemented?"
-date: 2026-06-15
+  - "how do I configure the FSMGen MCP adapter?"
+  - "which read-only MCP workflow examples are documented?"
+date: 2026-06-16
 status: current
 tags: [mcp, ai, llm, semantic-json, embedding, public-api, task-tree]
 evidence: docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md; docs/SEMANTIC_INTROSPECTION_MCP_FIRST_CLASS_SELECTION.md; docs/TASK_TREE.md; ROADMAP_V2.md; docs/book/src/11-extensions-and-embedding.md; docs/book/src/14-feature-backlog.md; perl/FSM/Support/SemanticIntrospectionContract.pm; perl/FSM/Support/SemanticIntrospectionSection.pm; perl/FSM/Support/SemanticIntrospectionMCPAdapter.pm; bin/fsmgen-mcp
@@ -62,6 +64,11 @@ JSON-RPC error-code policy, notification handling, malformed percent-encoding
 rejection, and non-leaking source-query `adapter_provenance`.
 `.6` adds bounded support-accounting summaries, support-aware example
 discovery, and diagnostic explanations linked to support-accounting examples.
+`.7` documents generic read-only client configuration with `perl
+/path/to/fsmgen/bin/fsmgen-mcp --workspace-root /path/to/workspace` and
+bounded one-shot JSON-RPC workflows for capabilities, support summaries,
+diagnostics, examples, strict check JSON, normalized semantic JSON, and
+schedule previews.
 FSMGen should not expose raw private Perl AST, scheduler, lowering objects,
 `HDLGenerator` compatibility hashes, or internal Perl references as public
 automation APIs. Write generation tools, HDL writing, service mode, network
@@ -76,5 +83,5 @@ workflows; assertion assistance maps to proposing verification-intent source
 that FSMGen then checks and lowers.
 
 The next semantic-introspection leaf is
-`SEMANTIC-INTROSPECTION-MCP-FRONTIER.7`, read-only MCP client configuration
-and workflow examples.
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.8`, schema snapshot fixtures and a client
+compatibility matrix.

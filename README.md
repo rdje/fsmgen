@@ -930,7 +930,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/tasks/PROJECT-REMAINING-WORK-TASKTREE-OWNERSHIP.md` — completed roadmap-maintenance task tree that routed the 2026-06-05 remaining-work inventory to existing active owners or new broad owner trees.
 - `docs/tasks/COMPOSITION-TYPE-BACKLOG-EXHAUSTION.md` — completed Composition/type backlog tree; shipped aggregate parameter/generic equality/inequality, closed the remaining Composition/type leaves behind exact prerequisites, and routed VHDL-dependent work through the completed backend/API frontier.
 - `docs/tasks/ISF-REMAINING-BROAD-FRONTIER.md` — proposed broad `R14` ISF frontier owner tree for deferred ISF backlog directions not already owned by narrower active trees.
-- `docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md` — active semantic-introspection/MCP task tree; `.2` made deep semantic introspection a first-class feature and `.3` owns the first manifest-advertised semantic-introspection contract.
+- `docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md` — active semantic-introspection/MCP task tree; `.2` made deep semantic introspection a first-class feature, `.7` documented read-only MCP workflows, and `.8` owns schema snapshot fixtures plus the first client compatibility matrix.
 - `docs/tasks/BACKEND-API-VALIDATION-FRONTIER.md` — completed backend/API frontier owner tree for VHDL, external validation, ABC, structured generation, embedding API, and normalized export backlog through `.132`.
 - `docs/tasks/ARCHITECTURE-DEBT-FRONTIER.md` — completed architecture-debt frontier owner tree; direct-backend structural internal declaration nets shipped, and ISF parser/lowerer extraction remains deferred behind future exact ownership.
 - `docs/tasks/ISF-FRONTIER-SPAWN-AWAITANY-BOOK-RUNNABLE-EXAMPLES.md` — completed `R14` task tree that added runnable `lisp` book examples (in `13d`) for the shipped loop-contained spawn + `(await_all done)` and multi-pending `(await_any done)` + drain features (`t/1376` count 36 → 38); all repeat-body-activation frontier shapes now have copy-pasteable book examples.
@@ -1627,6 +1627,14 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 ./bin/fsmgen --capability-manifest
 perl bin/fsmgen-mcp --request-json '{"jsonrpc":"2.0","id":1,"method":"tools/list"}'
 ```
+
+For a read-only MCP client, configure the local command as
+`perl /path/to/fsmgen/bin/fsmgen-mcp --workspace-root /path/to/workspace`.
+For one-shot probes, use `--request-json` with JSON-RPC 2.0 requests; for
+example, call `fsmgen_capability_query`, `fsmgen_support_summary`,
+`fsmgen_explain_diagnostic`, `fsmgen_find_examples`, `fsmgen_check`,
+`fsmgen_semantic_introspect`, or `fsmgen_schedule_preview`. Source-bound calls
+use a workspace-relative `source_path`.
 
 ## Documentation quick preview
 ```bash

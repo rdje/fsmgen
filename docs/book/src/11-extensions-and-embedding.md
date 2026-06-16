@@ -2670,6 +2670,42 @@ objects, `HDLGenerator` compatibility hashes, arbitrary shell output, network
 access, implicit file writes, write/generation tools, mutation workflows, and
 commit/push actions are not public semantic-introspection payloads.
 
+### Read-only MCP Workflow Examples
+
+A generic local read-only client configuration uses the adapter command and an
+explicit workspace root:
+
+```json
+{
+  "command": "perl",
+  "args": [
+    "/path/to/fsmgen/bin/fsmgen-mcp",
+    "--workspace-root",
+    "/path/to/workspace"
+  ]
+}
+```
+
+The same requests can be probed without a long-lived client by passing one
+JSON-RPC 2.0 request through `--request-json`:
+
+```bash
+perl bin/fsmgen-mcp --request-json '{"jsonrpc":"2.0","id":1,"method":"tools/list"}'
+perl bin/fsmgen-mcp --request-json '{"jsonrpc":"2.0","id":2,"method":"tools/call","params":{"name":"fsmgen_capability_query","arguments":{"section":"semantic_introspection"}}}'
+perl bin/fsmgen-mcp --request-json '{"jsonrpc":"2.0","id":3,"method":"tools/call","params":{"name":"fsmgen_support_summary","arguments":{"limit_examples":3}}}'
+perl bin/fsmgen-mcp --request-json '{"jsonrpc":"2.0","id":4,"method":"tools/call","params":{"name":"fsmgen_find_examples","arguments":{"query":"composition","limit":3}}}'
+perl bin/fsmgen-mcp --request-json '{"jsonrpc":"2.0","id":5,"method":"tools/call","params":{"name":"fsmgen_explain_diagnostic","arguments":{"code":"FSMGEN_COMPOSITION_CHILD_ITEM_LIST_SHAPE","limit_examples":3}}}'
+perl bin/fsmgen-mcp --workspace-root . --request-json '{"jsonrpc":"2.0","id":6,"method":"tools/call","params":{"name":"fsmgen_check","arguments":{"source_path":"ppif/axi_aw_valid_ready.ppif"}}}'
+perl bin/fsmgen-mcp --workspace-root . --request-json '{"jsonrpc":"2.0","id":7,"method":"tools/call","params":{"name":"fsmgen_semantic_introspect","arguments":{"source_path":"ppif/axi_aw_valid_ready.ppif"}}}'
+perl bin/fsmgen-mcp --workspace-root . --request-json '{"jsonrpc":"2.0","id":8,"method":"tools/call","params":{"name":"fsmgen_schedule_preview","arguments":{"source_path":"ppif/axi_aw_valid_ready.ppif"}}}'
+```
+
+Those workflows cover tool discovery, bounded support-accounting coverage,
+capability-contract queries, example discovery, stable diagnostic explanation,
+strict check JSON, source-bound semantic inspection, and schedule previews. The
+source-bound requests return workspace-relative source identity and
+`adapter_provenance`; they do not return the configured workspace root.
+
 ## Downstream Tool Alignment
 
 FSMGen now keeps a tracked response to SPECFORGE's `.fsm` adapter feedback:

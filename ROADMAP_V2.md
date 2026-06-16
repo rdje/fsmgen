@@ -999,9 +999,12 @@ JSON-RPC error-code policy, notification handling, malformed percent-encoding
 rejection, and non-leaking source-query provenance.
 `SEMANTIC-INTROSPECTION-MCP-FRONTIER.6` added `fsmgen_support_summary`,
 bounded support-accounting aggregates, support-aware example discovery, and
-diagnostic explanations linked to support-accounting examples. The next
-frontier is `SEMANTIC-INTROSPECTION-MCP-FRONTIER.7`, read-only MCP client
-configuration and workflow examples. The IAL2
+diagnostic explanations linked to support-accounting examples.
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.7` documented generic read-only MCP
+client configuration and bounded one-shot workflows for capabilities, support
+summaries, diagnostics, examples, check JSON, semantic JSON, and schedule
+previews. The next frontier is `SEMANTIC-INTROSPECTION-MCP-FRONTIER.8`, schema
+snapshot fixtures and a client compatibility matrix. The IAL2
 SystemVerilog-backed feature-completeness tree remains
 active at
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.136`, but broad IAL2 expansion is no

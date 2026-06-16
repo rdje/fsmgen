@@ -130,6 +130,12 @@ support-accounting aggregates, includes a support summary in example
 discovery results, and links stable diagnostic explanations to matching
 support-accounting examples.
 
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.7` documented generic read-only MCP
+client configuration and bounded one-shot JSON-RPC workflows. The user-facing
+examples cover capabilities, support summaries, diagnostics, examples, strict
+check JSON, normalized semantic JSON, and schedule previews without enabling
+write/generation tools or exposing the configured workspace root.
+
 ## Deferred
 
 The following remain outside `.2` and `.3` unless separately selected:
