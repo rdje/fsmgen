@@ -7578,9 +7578,12 @@ read-only tool results alongside serialized JSON text.
 `SEMANTIC-INTROSPECTION-MCP-FRONTIER.19` ships per-tool `outputSchema`
 metadata for stable public envelope fields. Volatile nested reports and catalog
 internals remain schema-light.
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.20` ships MCP tool annotations for the
+read-only profile: current tools advertise `readOnlyHint: true` and
+`openWorldHint: false`; write-only destructive/idempotent hints remain absent.
 
-Current active frontier: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.20`, MCP tool
-annotation/safety metadata boundary.
+Current active frontier: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.21`, MCP
+content/resource annotation boundary.
 
 Selected first MCP resource families are `fsmgen://capabilities`,
 `fsmgen://contracts`, `fsmgen://diagnostics`,

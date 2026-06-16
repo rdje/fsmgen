@@ -1032,9 +1032,12 @@ stdio; Streamable HTTP and service mode remain unshipped.
 read-only tool results while retaining serialized JSON text compatibility.
 `SEMANTIC-INTROSPECTION-MCP-FRONTIER.19` ships compact per-tool
 `outputSchema` metadata for stable public envelope fields while leaving
-volatile nested reports and catalog internals schema-light. The next frontier
-is `SEMANTIC-INTROSPECTION-MCP-FRONTIER.20`, MCP tool annotation/safety
-metadata selection. The IAL2
+volatile nested reports and catalog internals schema-light.
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.20` ships MCP tool annotations for the
+read-only profile: every current tool is marked `readOnlyHint: true` and
+`openWorldHint: false`, while write-only destructive/idempotent hints remain
+absent. The next frontier is `SEMANTIC-INTROSPECTION-MCP-FRONTIER.21`, MCP
+content/resource annotation selection. The IAL2
 SystemVerilog-backed feature-completeness tree remains
 active at
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.136`, but broad IAL2 expansion is no

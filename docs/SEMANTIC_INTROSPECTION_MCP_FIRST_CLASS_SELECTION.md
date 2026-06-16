@@ -198,6 +198,13 @@ boundary. Read-only tool descriptors advertise compact schemas for stable
 public envelope fields, while volatile nested compiler reports, support
 catalogs, and manifest payloads remain schema-light objects or arrays.
 
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.20` selected the first MCP tool
+annotation boundary. All shipped read-only tool descriptors advertise
+`readOnlyHint: true` and `openWorldHint: false`. The adapter deliberately does
+not set `destructiveHint` or `idempotentHint` on these read-only tools because
+those hints are meaningful for non-read-only tools; write/generation tools
+remain unshipped.
+
 ## Deferred
 
 The following remain outside `.2` and `.3` unless separately selected:

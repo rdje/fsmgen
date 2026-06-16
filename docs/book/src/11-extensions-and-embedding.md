@@ -2724,6 +2724,7 @@ The read-only adapter currently has a bounded client profile:
 | MCP sampling and elicitation through `sampling/createMessage` and `elicitation/create` | not used in the shipped profile; FSMGen does not initiate model calls or user-input requests | `t/1453-semantic-introspection-mcp-sampling-elicitation-boundary.t` |
 | Streamable HTTP transport, listener flags, and service-mode session features | not shipped; CLI exposes only one-shot `--request-json` and newline-delimited stdio | `t/1454-semantic-introspection-mcp-transport-boundary.t` |
 | MCP tool `structuredContent` and `outputSchema` | shipped for read-only tools; `structuredContent` matches serialized JSON text, and compact output schemas cover stable public envelope fields | `t/1445-semantic-introspection-mcp-schema-snapshots.t` and `t/1455-semantic-introspection-mcp-structured-tool-output.t` |
+| MCP tool annotations | shipped for read-only closed-world tools: `readOnlyHint: true` and `openWorldHint: false`; write-only destructive/idempotent hints are absent | `t/1445-semantic-introspection-mcp-schema-snapshots.t` and `t/1456-semantic-introspection-mcp-tool-annotations-boundary.t` |
 | Clients that need write/generation, HDL output writing, automated repair, shell, network, commit, or push tools | intentionally blocked | `semantic_introspection.write_generation_tools_enabled` remains false |
 
 The MCP 2025-06-18 transport specification defines stdio messages as
@@ -2777,6 +2778,12 @@ content block, preserving compatibility with text-only clients while giving
 MCP clients a direct JSON result. Per-tool `outputSchema` metadata describes
 stable public envelope fields; volatile nested compiler reports and support
 catalog internals remain schema-light objects or arrays.
+
+Tool descriptors also carry the narrow MCP safety annotations selected for
+the shipped read-only profile. Every current tool advertises `readOnlyHint:
+true` and `openWorldHint: false`. FSMGen does not advertise
+`destructiveHint` or `idempotentHint` for these tools because those hints are
+defined for non-read-only tools, and write/generation tools remain disabled.
 
 ## Downstream Tool Alignment
 

@@ -147,6 +147,7 @@ sub list_tools {
                 },
                 [],
                 _capability_query_output_schema(),
+                _read_only_closed_world_tool_annotations(),
             ),
             _tool_descriptor(
                 'fsmgen_check',
@@ -154,6 +155,7 @@ sub list_tools {
                 _source_tool_properties(),
                 [],
                 _source_query_output_schema(),
+                _read_only_closed_world_tool_annotations(),
             ),
             _tool_descriptor(
                 'fsmgen_semantic_introspect',
@@ -161,6 +163,7 @@ sub list_tools {
                 _source_tool_properties(),
                 [],
                 _source_query_output_schema(),
+                _read_only_closed_world_tool_annotations(),
             ),
             _tool_descriptor(
                 'fsmgen_schedule_preview',
@@ -168,6 +171,7 @@ sub list_tools {
                 _source_tool_properties(),
                 [],
                 _source_query_output_schema(),
+                _read_only_closed_world_tool_annotations(),
             ),
             _tool_descriptor(
                 'fsmgen_find_examples',
@@ -178,6 +182,7 @@ sub list_tools {
                 },
                 [],
                 _examples_output_schema(),
+                _read_only_closed_world_tool_annotations(),
             ),
             _tool_descriptor(
                 'fsmgen_explain_diagnostic',
@@ -187,6 +192,7 @@ sub list_tools {
                 },
                 ['code'],
                 _diagnostic_output_schema(),
+                _read_only_closed_world_tool_annotations(),
             ),
             _tool_descriptor(
                 'fsmgen_support_summary',
@@ -196,6 +202,7 @@ sub list_tools {
                 },
                 [],
                 _support_summary_output_schema(),
+                _read_only_closed_world_tool_annotations(),
             ),
         ],
     };
@@ -599,7 +606,7 @@ sub _resource_descriptor {
 }
 
 sub _tool_descriptor {
-    my ($name, $description, $properties, $required, $output_schema) = @_;
+    my ($name, $description, $properties, $required, $output_schema, $annotations) = @_;
     my $descriptor = {
         name => $name,
         description => $description,
@@ -611,6 +618,7 @@ sub _tool_descriptor {
         },
     };
     $descriptor->{outputSchema} = $output_schema if $output_schema;
+    $descriptor->{annotations} = $annotations if $annotations;
     return $descriptor;
 }
 
@@ -718,6 +726,13 @@ sub _open_object_schema {
     return {
         type => 'object',
         additionalProperties => JSON::PP::true,
+    };
+}
+
+sub _read_only_closed_world_tool_annotations {
+    return {
+        readOnlyHint => JSON::PP::true,
+        openWorldHint => JSON::PP::false,
     };
 }
 

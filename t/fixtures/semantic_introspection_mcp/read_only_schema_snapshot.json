@@ -438,6 +438,11 @@
    "tools" : [
       {
          "name" : "fsmgen_capability_query",
+         "annotation_keys" : [
+            "openWorldHint",
+            "readOnlyHint"
+         ],
+         "openWorldHint" : false,
          "output_property_names" : [
             "manifest_contract",
             "payload",
@@ -452,10 +457,16 @@
          "property_types" : {
             "section" : "string"
          },
+         "readOnlyHint" : true,
          "required" : []
       },
       {
          "name" : "fsmgen_check",
+         "annotation_keys" : [
+            "openWorldHint",
+            "readOnlyHint"
+         ],
+         "openWorldHint" : false,
          "output_property_names" : [
             "adapter_provenance",
             "path_sanitization",
@@ -481,10 +492,16 @@
             "source_id" : "string",
             "source_path" : "string"
          },
+         "readOnlyHint" : true,
          "required" : []
       },
       {
          "name" : "fsmgen_semantic_introspect",
+         "annotation_keys" : [
+            "openWorldHint",
+            "readOnlyHint"
+         ],
+         "openWorldHint" : false,
          "output_property_names" : [
             "adapter_provenance",
             "path_sanitization",
@@ -510,10 +527,16 @@
             "source_id" : "string",
             "source_path" : "string"
          },
+         "readOnlyHint" : true,
          "required" : []
       },
       {
          "name" : "fsmgen_schedule_preview",
+         "annotation_keys" : [
+            "openWorldHint",
+            "readOnlyHint"
+         ],
+         "openWorldHint" : false,
          "output_property_names" : [
             "adapter_provenance",
             "path_sanitization",
@@ -539,10 +562,16 @@
             "source_id" : "string",
             "source_path" : "string"
          },
+         "readOnlyHint" : true,
          "required" : []
       },
       {
          "name" : "fsmgen_find_examples",
+         "annotation_keys" : [
+            "openWorldHint",
+            "readOnlyHint"
+         ],
+         "openWorldHint" : false,
          "output_property_names" : [
             "catalog_entries",
             "documentation",
@@ -568,10 +597,16 @@
             "limit" : "integer",
             "query" : "string"
          },
+         "readOnlyHint" : true,
          "required" : []
       },
       {
          "name" : "fsmgen_explain_diagnostic",
+         "annotation_keys" : [
+            "openWorldHint",
+            "readOnlyHint"
+         ],
+         "openWorldHint" : false,
          "output_property_names" : [
             "code",
             "diagnostic",
@@ -591,12 +626,18 @@
          "property_types" : {
             "code" : "string"
          },
+         "readOnlyHint" : true,
          "required" : [
             "code"
          ]
       },
       {
          "name" : "fsmgen_support_summary",
+         "annotation_keys" : [
+            "openWorldHint",
+            "readOnlyHint"
+         ],
+         "openWorldHint" : false,
          "output_property_names" : [
             "classifications",
             "coverage_buckets",
@@ -626,6 +667,7 @@
          "property_types" : {
             "limit_examples" : "integer"
          },
+         "readOnlyHint" : true,
          "required" : []
       }
    ]

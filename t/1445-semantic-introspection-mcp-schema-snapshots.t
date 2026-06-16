@@ -173,8 +173,12 @@ sub project_tools {
             my $properties = $schema->{properties} || {};
             my $output_schema = $_->{outputSchema} || {};
             my $output_properties = $output_schema->{properties} || {};
+            my $annotations = $_->{annotations} || {};
             {
                 name => $_->{name},
+                annotation_keys => sorted_keys($annotations),
+                openWorldHint => json_bool($annotations->{openWorldHint}),
+                readOnlyHint => json_bool($annotations->{readOnlyHint}),
                 required => [@{$schema->{required} || []}],
                 property_names => sorted_keys($properties),
                 property_types => {
