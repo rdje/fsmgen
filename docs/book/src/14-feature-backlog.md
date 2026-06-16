@@ -5502,8 +5502,13 @@ entry for the sample, so the MCP-facing semantic-introspection surface carries
 the same support claim as the public corpus catalog. Read-data over multiple
 read single-beat queue-head groups, deeper queues, same-family mixed auto-ID,
 group-local enqueue widening, packed outputs, direct backend lowering, and
-VHDL remain deferred. The active frontier advances to `.144`, the next
-feature-completeness selector/audit.
+VHDL remain deferred. Selector
+[AXI_IAL2_MANAGER_POST_READ_SINGLE_BEAT_MULTI_GROUP_QUEUE_HEAD_RESPONSE_DEMUX_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_READ_SINGLE_BEAT_MULTI_GROUP_QUEUE_HEAD_RESPONSE_DEMUX_NEXT_SLICE_SELECTION.md)
+chooses `.145`, readiness audit for generated read-data over read single-beat
+multi-group queue-head response-demux. The active frontier is `.145`; the
+audit must decide whether the single-beat queue-head read-data coverage gate
+can be safely widened from exactly one depth-2 group to one-or-more depth-2
+groups before any behavior change.
 
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
@@ -7766,7 +7771,7 @@ support catalog entries instead of recursive workspace traversal.
 `SEMANTIC-INTROSPECTION-MCP-FRONTIER.30` closes the immediate read-only
 semantic-introspection/MCP pass after source discovery; the active roadmap
 priority is again the IAL2 feature-completeness tree, currently at
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.144`.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.145`.
 
 Selected first MCP resource families are `fsmgen://capabilities`,
 `fsmgen://contracts`, `fsmgen://diagnostics`,
