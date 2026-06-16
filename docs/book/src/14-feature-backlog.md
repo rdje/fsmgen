@@ -7601,26 +7601,30 @@ metadata and keeps instructions compact/read-only.
 protocol-hardening pass for the current read-only profile.
 `SEMANTIC-INTROSPECTION-MCP-FRONTIER.28` selects catalog-backed source
 discovery as the next implementation boundary.
-
-Current active frontier: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.29`, source
-discovery implementation.
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.29` ships that boundary as
+`fsmgen://sources` and `fsmgen_discover_sources`, backed by existing manifest
+support catalog entries instead of recursive workspace traversal.
 
 Selected first MCP resource families are `fsmgen://capabilities`,
 `fsmgen://contracts`, `fsmgen://diagnostics`,
-`fsmgen://support-accounting`, `fsmgen://examples`,
+`fsmgen://support-accounting`, `fsmgen://examples`, `fsmgen://sources`,
 `fsmgen://source/{source_id}/check`,
 `fsmgen://source/{source_id}/semantic`, and
 `fsmgen://source/{source_id}/schedule`. Selected first MCP tool families are
 `fsmgen_capability_query`, `fsmgen_check`, `fsmgen_semantic_introspect`,
-`fsmgen_schedule_preview`, `fsmgen_find_examples`, and
-`fsmgen_explain_diagnostic`; the shipped support-accounting query tool is
-`fsmgen_support_summary`.
+`fsmgen_schedule_preview`, `fsmgen_discover_sources`,
+`fsmgen_find_examples`, and `fsmgen_explain_diagnostic`; the shipped
+support-accounting query tool is `fsmgen_support_summary`.
 
 Raw private parser ASTs, scheduler objects, lowering objects, `HDLGenerator`
 compatibility hashes, and internal Perl references remain outside the public
 automation contract. Source-bound adapter responses normalize workspace/repo
 absolute paths to relative source identities, redact other absolute paths, and
 carry a non-leaking `adapter_provenance` envelope.
+Source discovery responses return only catalog-backed repo/workspace-relative
+source identities, file kind, source kind, available read-only query kinds, and
+support metadata under `query`, `limit`, `file_kind`, `source_kind`, and
+`classification` controls.
 Write generation tools, HDL writing, service mode, network access, arbitrary
 filesystem traversal, mutation workflows, and commit/push actions remain
 deferred until separately task-tree-owned.

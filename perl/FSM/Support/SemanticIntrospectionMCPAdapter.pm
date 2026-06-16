@@ -86,6 +86,7 @@ sub list_resources {
             $self->_resource_descriptor('fsmgen://diagnostics', 'FSMGen diagnostics', 'Stable diagnostic code and check-JSON contract metadata.'),
             $self->_resource_descriptor('fsmgen://support-accounting', 'FSMGen support accounting', 'Corpus-backed support-accounting manifest section.'),
             $self->_resource_descriptor('fsmgen://examples', 'FSMGen examples', 'Repo-relative documentation and corpus example index.'),
+            $self->_resource_descriptor('fsmgen://sources', 'FSMGen sources', 'Catalog-backed repo/workspace-relative source identity discovery.'),
         ],
     };
 }
@@ -126,6 +127,8 @@ sub read_resource {
         $payload = $self->_manifest->{support_accounting};
     } elsif ($uri eq 'fsmgen://examples') {
         $payload = $self->_examples_payload({});
+    } elsif ($uri eq 'fsmgen://sources') {
+        $payload = $self->_sources_payload({});
     } elsif ($uri =~ m{\Afsmgen://source/(.+)/(check|semantic|schedule)\z}) {
         my ($source_id, $kind) = (_uri_decode($1), $2);
         $payload = $self->_source_query_payload($kind, { source_id => $source_id });
@@ -184,6 +187,20 @@ sub list_tools {
                 _read_only_closed_world_tool_annotations(),
             ),
             _tool_descriptor(
+                'fsmgen_discover_sources',
+                'Discover catalog-backed repo/workspace-relative source identities without workspace traversal.',
+                {
+                    query => { type => 'string', description => 'Optional case-insensitive substring matched against public catalog identity and support fields.' },
+                    limit => { type => 'integer', description => 'Maximum number of sources to return; default 25.' },
+                    file_kind => { type => 'string', description => 'Optional exact source file kind filter such as fsm, isf, or ppif.' },
+                    source_kind => { type => 'string', description => 'Optional exact support-catalog source_kind filter.' },
+                    classification => { type => 'string', description => 'Optional exact support-catalog classification filter.' },
+                },
+                [],
+                _sources_output_schema(),
+                _read_only_closed_world_tool_annotations(),
+            ),
+            _tool_descriptor(
                 'fsmgen_find_examples',
                 'Find repo-relative documentation and corpus examples from the manifest/support catalog.',
                 {
@@ -234,6 +251,8 @@ sub call_tool {
         $payload = $self->_source_query_payload('schedule', $arguments);
     } elsif ($name eq 'fsmgen_find_examples') {
         $payload = $self->_examples_payload($arguments);
+    } elsif ($name eq 'fsmgen_discover_sources') {
+        $payload = $self->_sources_payload($arguments);
     } elsif ($name eq 'fsmgen_explain_diagnostic') {
         $payload = $self->_diagnostic_payload($arguments);
     } elsif ($name eq 'fsmgen_support_summary') {
@@ -431,6 +450,138 @@ sub _examples_payload {
         returned_count => scalar @entries,
         catalog_entries => \@entries,
     };
+}
+
+sub _sources_payload {
+    my ($self, $arguments) = @_;
+    $arguments ||= {};
+
+    my $manifest = $self->_manifest;
+    my $support = $manifest->{support_accounting} || {};
+    my $query = lc($arguments->{query} // '');
+    my $limit = _bounded_limit($arguments->{limit}, 25);
+    my $file_kind_filter = lc($arguments->{file_kind} // '');
+    my $source_kind_filter = lc($arguments->{source_kind} // '');
+    my $classification_filter = lc($arguments->{classification} // '');
+
+    my @sources = grep { defined $_ } map {
+        _source_discovery_entry($_)
+    } @{$support->{catalog_entries} || []};
+
+    if (length $query) {
+        @sources = grep { _source_discovery_entry_matches_query($_, $query) } @sources;
+    }
+    if (length $file_kind_filter) {
+        @sources = grep { lc($_->{file_kind} // '') eq $file_kind_filter } @sources;
+    }
+    if (length $source_kind_filter) {
+        @sources = grep { lc($_->{source_kind} // '') eq $source_kind_filter } @sources;
+    }
+    if (length $classification_filter) {
+        @sources = grep { lc($_->{support}{classification} // '') eq $classification_filter } @sources;
+    }
+
+    my $matched_count = scalar @sources;
+    splice @sources, $limit if @sources > $limit;
+
+    return {
+        query_kind => 'source_discovery',
+        source => $support->{source},
+        query => $arguments->{query} // '',
+        limit => $limit,
+        filters => {
+            file_kind => $arguments->{file_kind} // '',
+            source_kind => $arguments->{source_kind} // '',
+            classification => $arguments->{classification} // '',
+        },
+        path_policy => {
+            discovery_authority => 'manifest_support_catalog_only',
+            recursive_workspace_traversal => JSON::PP::false,
+            hidden_paths => 'excluded',
+            source_identity => 'repo_or_workspace_relative',
+            machine_local_absolute_paths => 'not_returned',
+        },
+        total_catalog_count => scalar @{$support->{catalog_entries} || []},
+        matched_count => $matched_count,
+        returned_count => scalar @sources,
+        sources => \@sources,
+    };
+}
+
+sub _source_discovery_entry {
+    my ($entry) = @_;
+
+    my $relpath = $entry->{relpath};
+    return undef unless _public_catalog_relpath($relpath);
+
+    my $file_kind = _source_file_kind($relpath);
+    return undef unless length $file_kind;
+
+    my %support = map { $_ => $entry->{$_} } grep { exists $entry->{$_} } qw(
+        id
+        family
+        classification
+        coverage
+        strict_supported
+        diagnostic_code
+        expected_module_name
+        expected_top_name
+        expected_lane
+        has_expected_error_pattern
+        has_expected_hint_pattern
+    );
+    $support{strict_supported} = $entry->{strict_supported} ? JSON::PP::true : JSON::PP::false
+        if exists $entry->{strict_supported};
+
+    return {
+        source_id => $relpath,
+        source_path => $relpath,
+        relpath => $relpath,
+        file_kind => $file_kind,
+        source_kind => $entry->{source_kind} // '',
+        available_query_kinds => _available_source_query_kinds($file_kind),
+        support => \%support,
+    };
+}
+
+sub _public_catalog_relpath {
+    my ($relpath) = @_;
+    return 0 unless defined($relpath) && length($relpath);
+    return 0 if File::Spec->file_name_is_absolute($relpath);
+    return 0 if $relpath =~ m{\\};
+    return 0 if $relpath =~ m{(?:\A|/)\.\.?(?:/|\z)};
+    return 0 if $relpath =~ m{(?:\A|/)\.[^/]+};
+    return 1;
+}
+
+sub _source_file_kind {
+    my ($relpath) = @_;
+    return '' unless defined($relpath) && $relpath =~ /\.([A-Za-z0-9_]+)\z/;
+    my $kind = lc($1);
+    return $kind if $kind =~ /\A(?:fsm|isf|ppif)\z/;
+    return '';
+}
+
+sub _available_source_query_kinds {
+    my ($file_kind) = @_;
+    my @kinds = qw(check semantic);
+    push @kinds, 'schedule' if ($file_kind // '') =~ /\A(?:isf|ppif)\z/;
+    return \@kinds;
+}
+
+sub _source_discovery_entry_matches_query {
+    my ($source, $query) = @_;
+    my @fields = (
+        $source->{source_id},
+        $source->{file_kind},
+        $source->{source_kind},
+        map { $source->{support}{$_} // '' } qw(id family classification coverage diagnostic_code),
+    );
+
+    for my $field (@fields) {
+        return 1 if index(lc($field // ''), $query) >= 0;
+    }
+    return 0;
 }
 
 sub _diagnostic_payload {
@@ -688,6 +839,25 @@ sub _examples_output_schema {
             catalog_entries => { type => 'array', items => _open_object_schema() },
         },
         [qw(documentation query limit support_summary returned_count catalog_entries)],
+        JSON::PP::false,
+    );
+}
+
+sub _sources_output_schema {
+    return _object_schema(
+        {
+            query_kind => { type => 'string' },
+            source => { type => 'string' },
+            query => { type => 'string' },
+            limit => { type => 'integer' },
+            filters => _open_object_schema(),
+            path_policy => _open_object_schema(),
+            total_catalog_count => { type => 'integer' },
+            matched_count => { type => 'integer' },
+            returned_count => { type => 'integer' },
+            sources => { type => 'array', items => _open_object_schema() },
+        },
+        [qw(query_kind source query limit filters path_policy total_catalog_count matched_count returned_count sources)],
         JSON::PP::false,
     );
 }

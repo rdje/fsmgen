@@ -50,6 +50,12 @@
       {
          "has_description" : true,
          "mimeType" : "application/json",
+         "name" : "source_discovery",
+         "uriTemplate" : "fsmgen://sources"
+      },
+      {
+         "has_description" : true,
+         "mimeType" : "application/json",
          "name" : "source_check",
          "uriTemplate" : "fsmgen://source/{source_id}/check"
       },
@@ -96,6 +102,12 @@
          "mimeType" : "application/json",
          "name" : "FSMGen examples",
          "uri" : "fsmgen://examples"
+      },
+      {
+         "has_description" : true,
+         "mimeType" : "application/json",
+         "name" : "FSMGen sources",
+         "uri" : "fsmgen://sources"
       }
    ],
    "tool_envelopes" : {
@@ -111,6 +123,7 @@
                "fsmgen://diagnostics",
                "fsmgen://support-accounting",
                "fsmgen://examples",
+               "fsmgen://sources",
                "fsmgen://source/{source_id}/check",
                "fsmgen://source/{source_id}/semantic",
                "fsmgen://source/{source_id}/schedule"
@@ -120,6 +133,7 @@
                "fsmgen_check",
                "fsmgen_semantic_introspect",
                "fsmgen_schedule_preview",
+               "fsmgen_discover_sources",
                "fsmgen_find_examples",
                "fsmgen_explain_diagnostic",
                "fsmgen_support_summary"
@@ -388,6 +402,74 @@
          ],
          "structuredContent_matches_text" : true
       },
+      "source_discovery" : {
+         "content_types" : [
+            "text"
+         ],
+         "decoded_payload" : {
+            "filter_keys" : [
+               "classification",
+               "file_kind",
+               "source_kind"
+            ],
+            "first_source_file_kind" : "ppif",
+            "first_source_query_kinds" : [
+               "check",
+               "semantic",
+               "schedule"
+            ],
+            "first_source_support_keys" : [
+               "classification",
+               "coverage",
+               "expected_module_name",
+               "family",
+               "has_expected_error_pattern",
+               "has_expected_hint_pattern",
+               "id",
+               "strict_supported"
+            ],
+            "limit" : 2,
+            "matched_count_type" : "integer",
+            "path_policy_keys" : [
+               "discovery_authority",
+               "hidden_paths",
+               "machine_local_absolute_paths",
+               "recursive_workspace_traversal",
+               "source_identity"
+            ],
+            "payload_keys" : [
+               "filters",
+               "limit",
+               "matched_count",
+               "path_policy",
+               "query",
+               "query_kind",
+               "returned_count",
+               "source",
+               "sources",
+               "total_catalog_count"
+            ],
+            "query" : "axi_aw",
+            "query_kind" : "source_discovery",
+            "returned_count" : 2,
+            "source_entry_keys" : [
+               "available_query_kinds",
+               "file_kind",
+               "relpath",
+               "source_id",
+               "source_kind",
+               "source_path",
+               "support"
+            ]
+         },
+         "isError" : false,
+         "response_keys" : [
+            "content",
+            "isError",
+            "structuredContent"
+         ],
+         "structuredContent_matches_text" : true
+      },
       "support_summary" : {
          "content_types" : [
             "text"
@@ -562,6 +644,55 @@
          "property_types" : {
             "source_id" : "string",
             "source_path" : "string"
+         },
+         "readOnlyHint" : true,
+         "required" : []
+      },
+      {
+         "name" : "fsmgen_discover_sources",
+         "annotation_keys" : [
+            "openWorldHint",
+            "readOnlyHint"
+         ],
+         "openWorldHint" : false,
+         "output_property_names" : [
+            "filters",
+            "limit",
+            "matched_count",
+            "path_policy",
+            "query",
+            "query_kind",
+            "returned_count",
+            "source",
+            "sources",
+            "total_catalog_count"
+         ],
+         "output_required" : [
+            "query_kind",
+            "source",
+            "query",
+            "limit",
+            "filters",
+            "path_policy",
+            "total_catalog_count",
+            "matched_count",
+            "returned_count",
+            "sources"
+         ],
+         "output_schema_type" : "object",
+         "property_names" : [
+            "classification",
+            "file_kind",
+            "limit",
+            "query",
+            "source_kind"
+         ],
+         "property_types" : {
+            "classification" : "string",
+            "file_kind" : "string",
+            "limit" : "integer",
+            "query" : "string",
+            "source_kind" : "string"
          },
          "readOnlyHint" : true,
          "required" : []

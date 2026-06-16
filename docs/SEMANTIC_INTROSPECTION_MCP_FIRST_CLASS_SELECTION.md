@@ -252,6 +252,16 @@ manifest, support-accounting, and example surfaces. It must not recursively
 scan arbitrary workspace paths, expose hidden files, return machine-local
 absolute paths, or introduce write/network/shell authority.
 
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.29` shipped that boundary. The adapter now
+advertises `fsmgen://sources` and `fsmgen_discover_sources`; both are backed by
+`support_accounting.catalog_entries` from the capability manifest rather than
+filesystem traversal. Results return repo/workspace-relative `source_id` /
+`source_path` values, file kind, source kind, available read-only query kinds,
+and bounded support metadata. Query controls include `query`, `limit`,
+`file_kind`, `source_kind`, and `classification`. Hidden paths, dot segments,
+absolute paths, unsupported file kinds, workspace scans, writes, network,
+shell, mutation, commit, and push authority remain outside the shipped profile.
+
 ## Deferred
 
 The following remain outside `.2` and `.3` unless separately selected:

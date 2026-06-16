@@ -133,6 +133,7 @@ sub semantic_introspection_query_domain_names {
             diagnostics
             support_accounting
             examples
+            source_discovery
             source_check
             source_semantic
             source_schedule
@@ -151,6 +152,7 @@ sub semantic_introspection_query_family_names {
             check
             semantic_introspect
             schedule_preview
+            discover_sources
             find_examples
             explain_diagnostic
             support_summary
@@ -165,6 +167,7 @@ sub semantic_introspection_mcp_resource_uri_templates {
         'fsmgen://diagnostics',
         'fsmgen://support-accounting',
         'fsmgen://examples',
+        'fsmgen://sources',
         'fsmgen://source/{source_id}/check',
         'fsmgen://source/{source_id}/semantic',
         'fsmgen://source/{source_id}/schedule',
@@ -178,6 +181,7 @@ sub semantic_introspection_mcp_tool_names {
             fsmgen_check
             fsmgen_semantic_introspect
             fsmgen_schedule_preview
+            fsmgen_discover_sources
             fsmgen_find_examples
             fsmgen_explain_diagnostic
             fsmgen_support_summary
@@ -262,6 +266,14 @@ sub semantic_introspection_contract_surface_map {
             contract_source => documentation_contract_source(),
             current_entrypoints => ['./bin/fsmgen --capability-manifest'],
         },
+        source_discovery => {
+            manifest_path => ['support_accounting', 'catalog_entries'],
+            contract_source => support_accounting_contract_source(),
+            current_entrypoints => [
+                './bin/fsmgen --capability-manifest',
+                'perl bin/fsmgen-mcp --request-json JSON --workspace-root DIR',
+            ],
+        },
         embedding => {
             manifest_path => ['embedding'],
             contract_source => embedding_contract_source(),
@@ -311,6 +323,12 @@ sub semantic_introspection_query_domains {
             'Find repo-relative mdBook and corpus examples without exposing machine-local paths.',
             ['documentation_examples'],
             'fsmgen://examples',
+        ),
+        _domain(
+            'source_discovery',
+            'Discover catalog-backed repo/workspace-relative source identities without recursive workspace traversal.',
+            [qw(source_discovery support_accounting documentation_examples)],
+            'fsmgen://sources',
         ),
         _domain(
             'source_check',
@@ -388,6 +406,13 @@ sub semantic_introspection_query_families {
             ['fsmgen://source/{source_id}/schedule'],
         ),
         _query_family(
+            'discover_sources',
+            'Catalog-backed source identity discovery over existing support-accounting and example metadata.',
+            ['source_discovery'],
+            'fsmgen_discover_sources',
+            ['fsmgen://sources'],
+        ),
+        _query_family(
             'find_examples',
             'Example and documentation lookup over repo-relative mdBook and corpus references.',
             ['examples'],
@@ -419,6 +444,7 @@ sub semantic_introspection_mcp_resources {
         _resource('fsmgen://diagnostics', 'diagnostics', [qw(diagnostics check_json)], diagnostics_contract_source()),
         _resource('fsmgen://support-accounting', 'support_accounting', ['support_accounting'], support_accounting_contract_source()),
         _resource('fsmgen://examples', 'examples', ['documentation_examples'], documentation_contract_source()),
+        _resource('fsmgen://sources', 'source_discovery', [qw(source_discovery support_accounting documentation_examples)], support_accounting_contract_source()),
         _resource('fsmgen://source/{source_id}/check', 'source_check', [qw(check_json diagnostics support_accounting generated_artifacts)], check_diagnostics_contract_source(), JSON::PP::true),
         _resource('fsmgen://source/{source_id}/semantic', 'source_semantic', [qw(normalized_semantic_json semantic_exports support_accounting generated_artifacts)], normalized_semantic_report_contract_source(), JSON::PP::true),
         _resource('fsmgen://source/{source_id}/schedule', 'source_schedule', [qw(schedule_json generated_artifacts diagnostics)], isf_public_interface_contract_source(), JSON::PP::true),
@@ -431,6 +457,7 @@ sub semantic_introspection_mcp_tools {
         _tool('fsmgen_check', 'check', 'source_check', 'check JSON'),
         _tool('fsmgen_semantic_introspect', 'semantic_introspect', 'source_semantic', 'normalized semantic JSON'),
         _tool('fsmgen_schedule_preview', 'schedule_preview', 'source_schedule', 'schedule JSON'),
+        _tool('fsmgen_discover_sources', 'discover_sources', 'source_discovery', 'catalog-backed source identities'),
         _tool('fsmgen_find_examples', 'find_examples', 'examples', 'repo-relative documentation and corpus examples'),
         _tool('fsmgen_explain_diagnostic', 'explain_diagnostic', 'diagnostics', 'stable diagnostic-code metadata'),
         _tool('fsmgen_support_summary', 'support_summary', 'support_accounting', 'bounded support-accounting summary'),

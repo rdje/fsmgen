@@ -91,6 +91,14 @@ sub build_schema_snapshot {
                 }),
                 \&project_examples_payload,
             ),
+            source_discovery => project_tool_response(
+                $adapter->call_tool('fsmgen_discover_sources', {
+                    query => 'axi_aw',
+                    file_kind => 'ppif',
+                    limit => 2,
+                }),
+                \&project_sources_payload,
+            ),
             diagnostic => project_tool_response(
                 $adapter->call_tool('fsmgen_explain_diagnostic', {
                     code => 'FSMGEN_COMPOSITION_CHILD_ITEM_LIST_SHAPE',
@@ -254,6 +262,25 @@ sub project_examples_payload {
         returned_count => $payload->{returned_count},
         catalog_entry_keys => sorted_keys($payload->{catalog_entries}[0] || {}),
         embedded_support_summary_sample_count => scalar @{$payload->{support_summary}{sample_catalog_entries}},
+    };
+}
+
+sub project_sources_payload {
+    my ($payload) = @_;
+
+    return {
+        payload_keys => sorted_keys($payload),
+        query_kind => $payload->{query_kind},
+        query => $payload->{query},
+        limit => $payload->{limit},
+        filter_keys => sorted_keys($payload->{filters}),
+        path_policy_keys => sorted_keys($payload->{path_policy}),
+        matched_count_type => defined($payload->{matched_count}) ? 'integer' : 'missing',
+        returned_count => $payload->{returned_count},
+        source_entry_keys => sorted_keys($payload->{sources}[0] || {}),
+        first_source_file_kind => $payload->{sources}[0]{file_kind},
+        first_source_query_kinds => $payload->{sources}[0]{available_query_kinds} || [],
+        first_source_support_keys => sorted_keys($payload->{sources}[0]{support} || {}),
     };
 }
 

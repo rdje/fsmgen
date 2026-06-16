@@ -113,7 +113,8 @@ For FSMGen, the analogs are:
     `SEMANTIC-INTROSPECTION-MCP-FRONTIER.26`,
     `SEMANTIC-INTROSPECTION-MCP-FRONTIER.27`,
     `SEMANTIC-INTROSPECTION-MCP-FRONTIER.28`,
-    `SEMANTIC-INTROSPECTION-MCP-FRONTIER.29`
+    `SEMANTIC-INTROSPECTION-MCP-FRONTIER.29`,
+    `SEMANTIC-INTROSPECTION-MCP-FRONTIER.30`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1`
   Status: `done`
@@ -312,9 +313,16 @@ For FSMGen, the analogs are:
   Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.28: select MCP source discovery`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.29`
-  Status: `pending`
+  Status: `done`
   Goal: `Implement catalog-backed read-only source discovery.`
   Acceptance: `Expose bounded source discovery through MCP using existing manifest, support-accounting, and example/catalog surfaces; return repo/workspace-relative source identities with file kind, source kind/support metadata when available, query/limit controls, and no hidden files, arbitrary recursive traversal, machine-local absolute paths, writes, network, shell, mutation, commit, or push authority; update tests, docs, mdBook, Knowledge Map, Memory, and roadmap; run focused plus continuity gates.`
+  Verification: `passed`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.29: add MCP source discovery`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.30`
+  Status: `pending`
+  Goal: `Select the next post-source-discovery semantic-introspection frontier.`
+  Acceptance: `Review the shipped read-only semantic-introspection surface after catalog-backed source discovery against roadmap priorities, mdBook coverage, Knowledge Map facts, and remaining active task-tree work; either select one exact next semantic-introspection leaf or return the active lane to the broader roadmap frontier; do not make behavior-bearing code changes in this audit unless a smaller owned leaf is created first.`
   Commit: `pending`
 
 ## Implementation Notes From `.4`
@@ -833,6 +841,29 @@ For FSMGen, the analogs are:
 - What stable output schema keeps discovery useful without freezing volatile
   support-accounting internals?
 
+## Implementation Notes From `.29`
+
+- Source discovery is now advertised through both `fsmgen://sources` and
+  `fsmgen_discover_sources`.
+- Discovery is backed by `support_accounting.catalog_entries` from the
+  capability manifest; it does not scan the repository or workspace.
+- Returned source identities are repo/workspace-relative `source_id` /
+  `source_path` values with file kind, source kind, available read-only query
+  kinds, and bounded support metadata.
+- Query controls are `query`, `limit`, `file_kind`, `source_kind`, and
+  `classification`.
+- Catalog entries with absolute paths, dot segments, hidden path segments, or
+  unsupported file kinds are filtered before response construction.
+
+## Candidate Contract Questions For `.30`
+
+- Should the semantic-introspection lane continue with deeper source-bound
+  query coverage now that catalog discovery is shipped?
+- Should the next exact owner return to the broader `IAL2` frontier instead of
+  adding more MCP surface now?
+- Are there any remaining user-facing docs or examples needed before another
+  behavior-bearing semantic-introspection leaf is selected?
+
 ## Candidate Future Phases
 
 - Phase 1: contract inventory and first safe semantic-introspection boundary.
@@ -847,7 +878,7 @@ For FSMGen, the analogs are:
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.29` | `pending` | `.28` selected catalog-backed source discovery; the next exact frontier is implementation. |
+| 1 | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.30` | `pending` | `.29` shipped catalog-backed source discovery; the next exact frontier is a no-code selection of the next semantic-introspection or broader roadmap lane. |
 
 ## Decisions
 
@@ -935,6 +966,10 @@ For FSMGen, the analogs are:
   selected read-only source/workspace discovery as the next semantic frontier.
 - `2026-06-16`: `.28` selected catalog-backed source discovery over existing
   manifest/support/example surfaces and routed implementation to `.29`.
+- `2026-06-16`: `.29` shipped catalog-backed source discovery as
+  `fsmgen://sources` and `fsmgen_discover_sources`, backed by the manifest
+  support catalog rather than filesystem traversal, and routed the next
+  selection audit to `.30`.
 - `2026-06-14`: Create this as a proposed owner, not an active implementation
   lane. The first real work must be no-code contract selection over existing
   public surfaces.
@@ -944,7 +979,8 @@ For FSMGen, the analogs are:
 
 ## Open Questions
 
-- None for `.28`; `.29` owns catalog-backed source discovery implementation.
+- None for `.29`; `.30` owns the next semantic-introspection or broader
+  roadmap-lane selection.
 
 ## Blockers
 
@@ -984,6 +1020,7 @@ For FSMGen, the analogs are:
 | `2026-06-16` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.26` | Syntax checks for `SemanticIntrospectionMCPAdapter` and `t/1462`; `prove -Iperl t/1441-semantic-introspection-mcp-adapter.t t/1445-semantic-introspection-mcp-schema-snapshots.t t/1460-semantic-introspection-mcp-initialize-negotiation-boundary.t t/1462-semantic-introspection-mcp-serverinfo-instructions-boundary.t`; mdBook, docs path audit, Knowledge Map generation/check, memory-architecture, README-numbering, and diff gates | `passed`; added stable server title metadata and selected `.27` remaining-profile exhaustion audit |
 | `2026-06-16` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.27` | mdBook, docs path audit, Knowledge Map generation/check, memory-architecture, README-numbering, and diff gates | `passed`; exhausted immediate MCP protocol hardening and selected `.28` read-only source/workspace discovery |
 | `2026-06-16` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.28` | mdBook, docs path audit, Knowledge Map generation/check, memory-architecture, README-numbering, and diff gates | `passed`; selected catalog-backed source discovery and routed implementation to `.29` |
+| `2026-06-16` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.29` | Syntax checks for `SemanticIntrospectionContract`, `SemanticIntrospectionMCPAdapter`, and focused MCP tests; `prove -Iperl t/1441-semantic-introspection-mcp-adapter.t t/1444-semantic-introspection-mcp-support-queries.t t/1445-semantic-introspection-mcp-schema-snapshots.t t/1455-semantic-introspection-mcp-structured-tool-output.t t/1456-semantic-introspection-mcp-tool-annotations-boundary.t`; one-shot `fsmgen_discover_sources` probe; mdBook, docs path audit, Knowledge Map generation/check, memory-architecture, README-numbering, and diff gates | `passed`; shipped catalog-backed source discovery and routed next selection to `.30` |
 
 ## Commit Log
 
@@ -1017,7 +1054,8 @@ For FSMGen, the analogs are:
 | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.26` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.26: title MCP server info` | Added stable serverInfo title metadata and guarded compact read-only instructions. |
 | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.27` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.27: exhaust MCP protocol hardening` | Exhausted the immediate read-only MCP protocol-hardening pass. |
 | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.28` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.28: select MCP source discovery` | Selected catalog-backed source discovery and routed implementation to `.29`. |
-| `SEMANTIC-INTROSPECTION-MCP-FRONTIER.29` | `pending` | `pending` |
+| `SEMANTIC-INTROSPECTION-MCP-FRONTIER.29` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.29: add MCP source discovery` | Shipped catalog-backed `fsmgen://sources` and `fsmgen_discover_sources` over manifest support catalog entries. |
+| `SEMANTIC-INTROSPECTION-MCP-FRONTIER.30` | `pending` | `pending` |
 
 ## Changelog
 
@@ -1106,4 +1144,10 @@ For FSMGen, the analogs are:
 - `2026-06-16`: Completed `.27`; immediate MCP protocol hardening is
   exhausted, and `.28` owns read-only source/workspace discovery selection.
 - `2026-06-16`: Completed `.28`; selected catalog-backed read-only source
-  discovery, and `.29` owns implementation.
+  discovery and routed implementation to `.29`.
+- `2026-06-16`: Completed `.29`; `fsmgen://sources` and
+  `fsmgen_discover_sources` now expose catalog-backed source identity
+  discovery with relative paths, file/source kind metadata, support metadata,
+  and query/filter controls while keeping traversal, hidden paths, absolute
+  paths, writes, network, shell, mutation, commit, and push authority blocked.
+  `.30` owns the next semantic-introspection or broader roadmap selection.

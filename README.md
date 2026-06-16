@@ -117,10 +117,12 @@ capability set. JSON-RPC errors remain message-only for now: stable error
 schema is selected. `initialize.serverInfo` includes the stable display title
 `FSMGen Semantic Introspection`, and the instructions remain a compact
 read-only semantic-introspection profile summary. The immediate MCP
-protocol-hardening pass is now exhausted; the next semantic-introspection
-frontier is read-only source/workspace discovery. The selected implementation
-boundary is catalog-backed discovery over existing manifest/support/example
-surfaces, not arbitrary workspace traversal; `.29` owns implementation.
+protocol-hardening pass is now exhausted. Read-only source discovery is now
+catalog-backed through `fsmgen://sources` and `fsmgen_discover_sources`: it
+uses the existing manifest support catalog, returns only repo/workspace-relative
+source identities plus file kind, source kind, query availability, and support
+metadata, and does not perform arbitrary workspace traversal, expose hidden
+paths, or return machine-local absolute paths.
 Current primary target is SystemVerilog, with Verilog conversion support and a scoped direct-root VHDL scaffold for the accepted single-FSM subset, including delayed-pulse clock-branch lowering, generic-bearing direct-root module headers with typed scalar/vector sized-literal defaults, signed vector and signed scalar direct-root ports, scalar/vector two-state `bit` input-port and internal declaration lowering, signed scalar/vector, non-signed four-state `logic` input-port/internal declaration lowering, and vector `logic signed` internal declaration lowering, scalar and signed scalar addition/subtraction/multiplication RHS/chain lowering, vector numeric-literal addition/subtraction emitted by compound update/shorthand forms, same-width unsigned-style addition/subtraction/multiplication/division/modulo/XOR RHS/chain lowering, same-width signed vector addition/subtraction/multiplication/division/modulo RHS lowering for signed targets and operands, signed vector numeric-literal addition/subtraction/multiplication/division/modulo RHS lowering including signed vector negative decimal addition, subtraction, multiplication, division, and modulo literals, non-signed vector positive decimal multiplication/division/modulo literal lowering in signal-first, literal-first, and literal-literal order, non-signed vector negative decimal addition/subtraction/multiplication/division/modulo literal lowering, bounded generated AMBA wrap arithmetic for `fsm/amba_requester.fsm`, bounded non-signed vector, signed vector, and scalar output-port decimal literal assignment lowering including non-signed vector, signed vector, and scalar negative decimal literals, bounded direct aggregate-output packed-vector lowering, a bounded C3 external-RTL literal/concat composition VHDL structural top for `t/corpus/composition_intent_integer_literals.fsm`, bounded external-RTL scalar integer, scalar integer expression, one-bit sized bitstring, multi-bit sized bitstring, and resolved packed aggregate VHDL generic maps including resolved package-backed constants, a bounded C1 standalone-DT child composition VHDL passthrough top for `t/corpus/standalone_dtc_explicit_system_autowire.fsm`, bounded C1 standalone-DT scalar integer, scalar expression, one-bit sized bitstring, multi-bit sized bitstring, packed-list, and packed-map VHDL generic maps, a bounded C2 generated-FSM child composition VHDL scalar-autowire top for `t/corpus/implicit_composition_system_autowire.fsm`, bounded C2 generated-FSM scalar integer, scalar expression, one-bit sized bitstring, multi-bit sized bitstring, and resolved packed aggregate VHDL generic maps, and a bounded APB/C4 generated-FSM child composition VHDL top for `fsm/apb_tb.fsm` with scalar integer, scalar expression, one-bit sized bitstring, multi-bit sized bitstring, resolved packed aggregate, and resolved package-backed generic maps in the same APB/C4 shape.
 Scalar division/modulo, including signed scalar division/modulo, in the direct
 VHDL scaffold remains an explicit fail-closed boundary; full aggregate
@@ -975,7 +977,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/tasks/PROJECT-REMAINING-WORK-TASKTREE-OWNERSHIP.md` — completed roadmap-maintenance task tree that routed the 2026-06-05 remaining-work inventory to existing active owners or new broad owner trees.
 - `docs/tasks/COMPOSITION-TYPE-BACKLOG-EXHAUSTION.md` — completed Composition/type backlog tree; shipped aggregate parameter/generic equality/inequality, closed the remaining Composition/type leaves behind exact prerequisites, and routed VHDL-dependent work through the completed backend/API frontier.
 - `docs/tasks/ISF-REMAINING-BROAD-FRONTIER.md` — proposed broad `R14` ISF frontier owner tree for deferred ISF backlog directions not already owned by narrower active trees.
-- `docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md` — active semantic-introspection/MCP task tree; `.2` made deep semantic introspection a first-class feature, `.28` selected catalog-backed source discovery, and `.29` owns implementation.
+- `docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md` — active semantic-introspection/MCP task tree; `.2` made deep semantic introspection a first-class feature, `.29` shipped catalog-backed source discovery, and `.30` owns next-frontier selection.
 - `docs/tasks/BACKEND-API-VALIDATION-FRONTIER.md` — completed backend/API frontier owner tree for VHDL, external validation, ABC, structured generation, embedding API, and normalized export backlog through `.132`.
 - `docs/tasks/ARCHITECTURE-DEBT-FRONTIER.md` — completed architecture-debt frontier owner tree; direct-backend structural internal declaration nets shipped, and ISF parser/lowerer extraction remains deferred behind future exact ownership.
 - `docs/tasks/ISF-FRONTIER-SPAWN-AWAITANY-BOOK-RUNNABLE-EXAMPLES.md` — completed `R14` task tree that added runnable `lisp` book examples (in `13d`) for the shipped loop-contained spawn + `(await_all done)` and multi-pending `(await_any done)` + drain features (`t/1376` count 36 → 38); all repeat-body-activation frontier shapes now have copy-pasteable book examples.
@@ -1678,9 +1680,11 @@ For a read-only MCP client, configure the local command as
 `perl /path/to/fsmgen/bin/fsmgen-mcp --workspace-root /path/to/workspace`.
 For one-shot probes, use `--request-json` with JSON-RPC 2.0 requests; for
 example, call `fsmgen_capability_query`, `fsmgen_support_summary`,
-`fsmgen_explain_diagnostic`, `fsmgen_find_examples`, `fsmgen_check`,
-`fsmgen_semantic_introspect`, or `fsmgen_schedule_preview`. Source-bound calls
-use a workspace-relative `source_path`.
+`fsmgen_explain_diagnostic`, `fsmgen_discover_sources`,
+`fsmgen_find_examples`, `fsmgen_check`, `fsmgen_semantic_introspect`, or
+`fsmgen_schedule_preview`. Source discovery supports `query`, `limit`,
+`file_kind`, `source_kind`, and `classification` filters over the bounded
+catalog. Source-bound calls use a workspace-relative `source_path`.
 
 ## Documentation quick preview
 ```bash
@@ -2232,9 +2236,10 @@ invalid requests, `-32601` for unknown methods, and `-32000` for adapter call
 errors. Write/generation, network, shell, mutation, commit, and push tools are
 still not part of the public semantic-introspection surface. The
 `fsmgen_support_summary` tool returns bounded support-accounting aggregates,
-`fsmgen_find_examples` includes support-summary context, and
-`fsmgen_explain_diagnostic` links stable diagnostic metadata to matching
-support-accounting examples.
+`fsmgen_discover_sources` returns catalog-backed relative source identities
+without workspace traversal, `fsmgen_find_examples` includes support-summary
+context, and `fsmgen_explain_diagnostic` links stable diagnostic metadata to
+matching support-accounting examples.
 The manifest's `backend_validation` section now follows that split too:
 [perl/FSM/Support/CapabilityManifest.pm](perl/FSM/Support/CapabilityManifest.pm)
 still publishes the current backend validation surfaces, while

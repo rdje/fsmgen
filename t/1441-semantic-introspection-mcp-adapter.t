@@ -40,9 +40,11 @@ subtest 'adapter initializes and discovers read-only resource and tool families'
     ok($resource_uri{'fsmgen://capabilities'}, 'capability manifest resource is listed');
     ok($resource_uri{'fsmgen://contracts'}, 'contract resource is listed');
     ok($resource_uri{'fsmgen://examples'}, 'examples resource is listed');
+    ok($resource_uri{'fsmgen://sources'}, 'source discovery resource is listed');
 
     my $templates = $adapter->list_resource_templates()->{resourceTemplates};
     my %template_uri = map { $_->{uriTemplate} => $_ } @{$templates};
+    ok($template_uri{'fsmgen://sources'}, 'source discovery template is listed');
     ok($template_uri{'fsmgen://source/{source_id}/semantic'}, 'source semantic template is listed');
     ok($template_uri{'fsmgen://source/{source_id}/schedule'}, 'source schedule template is listed');
 
@@ -51,6 +53,7 @@ subtest 'adapter initializes and discovers read-only resource and tool families'
     ok($tool{fsmgen_capability_query}, 'capability query tool is listed');
     ok($tool{fsmgen_semantic_introspect}, 'semantic introspection tool is listed');
     ok($tool{fsmgen_schedule_preview}, 'schedule preview tool is listed');
+    ok($tool{fsmgen_discover_sources}, 'source discovery tool is listed');
     ok($tool{fsmgen_explain_diagnostic}, 'diagnostic explanation tool is listed');
 
     for my $name (keys %tool) {

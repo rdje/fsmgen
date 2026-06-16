@@ -2640,6 +2640,7 @@ The relevant manifest shape is:
       "fsmgen://diagnostics",
       "fsmgen://support-accounting",
       "fsmgen://examples",
+      "fsmgen://sources",
       "fsmgen://source/{source_id}/check",
       "fsmgen://source/{source_id}/semantic",
       "fsmgen://source/{source_id}/schedule"
@@ -2649,6 +2650,7 @@ The relevant manifest shape is:
       "fsmgen_check",
       "fsmgen_semantic_introspect",
       "fsmgen_schedule_preview",
+      "fsmgen_discover_sources",
       "fsmgen_find_examples",
       "fsmgen_explain_diagnostic",
       "fsmgen_support_summary"
@@ -2659,7 +2661,8 @@ The relevant manifest shape is:
 
 `bin/fsmgen-mcp` is the first shipped read-only local JSON-RPC stdio adapter
 over this contract. Static resources expose capabilities, contracts,
-diagnostics, support accounting, and examples. Source-bound resources/tools
+diagnostics, support accounting, examples, and catalog-backed source discovery.
+Source-bound resources/tools
 require a caller-approved workspace root and a source identity under that
 root; source-bound responses include `adapter_provenance`, normalize
 workspace/repo absolute paths to relative source identities, and redact other
@@ -2693,17 +2696,21 @@ JSON-RPC 2.0 request through `--request-json`:
 perl bin/fsmgen-mcp --request-json '{"jsonrpc":"2.0","id":1,"method":"tools/list"}'
 perl bin/fsmgen-mcp --request-json '{"jsonrpc":"2.0","id":2,"method":"tools/call","params":{"name":"fsmgen_capability_query","arguments":{"section":"semantic_introspection"}}}'
 perl bin/fsmgen-mcp --request-json '{"jsonrpc":"2.0","id":3,"method":"tools/call","params":{"name":"fsmgen_support_summary","arguments":{"limit_examples":3}}}'
-perl bin/fsmgen-mcp --request-json '{"jsonrpc":"2.0","id":4,"method":"tools/call","params":{"name":"fsmgen_find_examples","arguments":{"query":"composition","limit":3}}}'
-perl bin/fsmgen-mcp --request-json '{"jsonrpc":"2.0","id":5,"method":"tools/call","params":{"name":"fsmgen_explain_diagnostic","arguments":{"code":"FSMGEN_COMPOSITION_CHILD_ITEM_LIST_SHAPE","limit_examples":3}}}'
-perl bin/fsmgen-mcp --workspace-root . --request-json '{"jsonrpc":"2.0","id":6,"method":"tools/call","params":{"name":"fsmgen_check","arguments":{"source_path":"ppif/axi_aw_valid_ready.ppif"}}}'
-perl bin/fsmgen-mcp --workspace-root . --request-json '{"jsonrpc":"2.0","id":7,"method":"tools/call","params":{"name":"fsmgen_semantic_introspect","arguments":{"source_path":"ppif/axi_aw_valid_ready.ppif"}}}'
-perl bin/fsmgen-mcp --workspace-root . --request-json '{"jsonrpc":"2.0","id":8,"method":"tools/call","params":{"name":"fsmgen_schedule_preview","arguments":{"source_path":"ppif/axi_aw_valid_ready.ppif"}}}'
+perl bin/fsmgen-mcp --request-json '{"jsonrpc":"2.0","id":4,"method":"tools/call","params":{"name":"fsmgen_discover_sources","arguments":{"query":"axi_aw","file_kind":"ppif","limit":2}}}'
+perl bin/fsmgen-mcp --request-json '{"jsonrpc":"2.0","id":5,"method":"tools/call","params":{"name":"fsmgen_find_examples","arguments":{"query":"composition","limit":3}}}'
+perl bin/fsmgen-mcp --request-json '{"jsonrpc":"2.0","id":6,"method":"tools/call","params":{"name":"fsmgen_explain_diagnostic","arguments":{"code":"FSMGEN_COMPOSITION_CHILD_ITEM_LIST_SHAPE","limit_examples":3}}}'
+perl bin/fsmgen-mcp --workspace-root . --request-json '{"jsonrpc":"2.0","id":7,"method":"tools/call","params":{"name":"fsmgen_check","arguments":{"source_path":"ppif/axi_aw_valid_ready.ppif"}}}'
+perl bin/fsmgen-mcp --workspace-root . --request-json '{"jsonrpc":"2.0","id":8,"method":"tools/call","params":{"name":"fsmgen_semantic_introspect","arguments":{"source_path":"ppif/axi_aw_valid_ready.ppif"}}}'
+perl bin/fsmgen-mcp --workspace-root . --request-json '{"jsonrpc":"2.0","id":9,"method":"tools/call","params":{"name":"fsmgen_schedule_preview","arguments":{"source_path":"ppif/axi_aw_valid_ready.ppif"}}}'
 ```
 
 Those workflows cover tool discovery, bounded support-accounting coverage,
-capability-contract queries, example discovery, stable diagnostic explanation,
-strict check JSON, source-bound semantic inspection, and schedule previews. The
-source-bound requests return workspace-relative source identity and
+capability-contract queries, catalog-backed source discovery, example
+discovery, stable diagnostic explanation, strict check JSON, source-bound
+semantic inspection, and schedule previews. Source discovery returns only
+repo/workspace-relative catalog identities with file kind, source kind,
+available read-only query kinds, and support metadata; it does not traverse the
+workspace. The source-bound requests return workspace-relative source identity and
 `adapter_provenance`; they do not return the configured workspace root.
 
 ### MCP Client Compatibility Matrix
@@ -2731,6 +2738,7 @@ The read-only adapter currently has a bounded client profile:
 | MCP initialize protocol/capability negotiation | server reports supported protocol `2025-06-18`; client capabilities do not widen the minimal server `resources`/`tools` capabilities | `t/1441-semantic-introspection-mcp-adapter.t`, `t/1445-semantic-introspection-mcp-schema-snapshots.t`, and `t/1460-semantic-introspection-mcp-initialize-negotiation-boundary.t` |
 | MCP JSON-RPC `error.data` | not shipped; errors expose stable code plus sanitized message only | `t/1461-semantic-introspection-mcp-error-data-sanitization-boundary.t` |
 | MCP `serverInfo` and `instructions` metadata | `serverInfo` includes stable name/title/version; instructions stay compact and read-only | `t/1445-semantic-introspection-mcp-schema-snapshots.t` and `t/1462-semantic-introspection-mcp-serverinfo-instructions-boundary.t` |
+| Catalog-backed source discovery | shipped as `fsmgen://sources` and `fsmgen_discover_sources`; results come from manifest support catalog entries, with `query`, `limit`, `file_kind`, `source_kind`, and `classification` controls, and no recursive workspace traversal or absolute-path exposure | `t/1444-semantic-introspection-mcp-support-queries.t` and `t/1445-semantic-introspection-mcp-schema-snapshots.t` |
 | Clients that need write/generation, HDL output writing, automated repair, shell, network, commit, or push tools | intentionally blocked | `semantic_introspection.write_generation_tools_enabled` remains false |
 
 The MCP 2025-06-18 transport specification defines stdio messages as
@@ -2828,11 +2836,10 @@ features.
 
 The immediate MCP protocol-hardening pass is exhausted for the current
 read-only profile. Optional feature families not listed as shipped above are
-deferred behind future exact task-tree leaves. The next semantic-introspection
-work moves back from protocol mechanics to query coverage: bounded read-only
-source/workspace discovery. The selected implementation boundary is
-catalog-backed: reuse existing manifest, support-accounting, and example
-surfaces; do not recursively expose arbitrary workspace files.
+deferred behind future exact task-tree leaves. Source discovery is now
+catalog-backed through the manifest support catalog: reuse existing manifest,
+support-accounting, and example surfaces; do not recursively expose arbitrary
+workspace files.
 
 ## Downstream Tool Alignment
 

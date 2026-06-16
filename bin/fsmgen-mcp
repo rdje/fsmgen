@@ -36,7 +36,9 @@ The adapter speaks JSON-RPC 2.0 over newline-delimited stdio for the first
 read-only FSMGen MCP slice. It exposes resources/list,
 resources/templates/list, resources/read, tools/list, tools/call, initialize,
 and ping. Source-bound tools require source_path or source_id under the
-configured workspace root. No write/generation tools are enabled.
+configured workspace root. Catalog-backed source discovery uses the manifest
+support catalog and does not scan the workspace. No write/generation tools are
+enabled.
 EOF
     exit 0;
 }

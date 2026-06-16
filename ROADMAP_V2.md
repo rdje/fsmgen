@@ -1059,8 +1059,11 @@ future exact owners. The next frontier is
 `SEMANTIC-INTROSPECTION-MCP-FRONTIER.28`, read-only source/workspace discovery
 selection. `SEMANTIC-INTROSPECTION-MCP-FRONTIER.28` selects catalog-backed
 source discovery over existing manifest/support/example surfaces, not
-arbitrary workspace traversal. The next frontier is
-`SEMANTIC-INTROSPECTION-MCP-FRONTIER.29`, source-discovery implementation.
+arbitrary workspace traversal. `SEMANTIC-INTROSPECTION-MCP-FRONTIER.29` ships
+that catalog-backed discovery as `fsmgen://sources` and
+`fsmgen_discover_sources`, returning only repo/workspace-relative source
+identities with file kind, source kind, available read-only query kinds, and
+support-accounting metadata under query/limit/filter controls.
 The IAL2
 SystemVerilog-backed feature-completeness tree remains
 active at
