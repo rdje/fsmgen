@@ -5525,6 +5525,21 @@ transition matrix, state/full helpers, and assertions are specialized around
 slots `0` and `1`. Mixed auto-ID, group-local enqueue widening, packed
 outputs, direct backend, and VHDL remain deferred.
 
+Deeper queue-head groups readiness audit:
+[AXI_IAL2_MANAGER_DEEPER_QUEUE_HEAD_GROUPS_READINESS_AUDIT](../../AXI_IAL2_MANAGER_DEEPER_QUEUE_HEAD_GROUPS_READINESS_AUDIT.md)
+selects `.149`, generated read single-beat depth-3 concrete same-ID
+queue-head response-demux through generalized shared queue-state helpers.
+Temporary depth-3 read single-beat, read burst-last, and write response-demux
+probes report selected-not-generated depth-3 queue groups and pass strict
+check/semantic without support-accounting matches. Temporary depth-3 read-data
+probes fail closed because generated read response-demux metadata does not
+exist for depth-3 queue-head groups. The selected first behavior boundary is
+one read single-beat group of three transactions at computed depth `3`, with
+compact one-hot slots generalized to `slot0` through `slot2`; read-data,
+write depth-3, burst-last depth-3, multiple depth-3 groups, mixed auto-ID,
+group-local simultaneous enqueue widening, direct backend, and VHDL remain
+deferred.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same
@@ -7786,7 +7801,7 @@ support catalog entries instead of recursive workspace traversal.
 `SEMANTIC-INTROSPECTION-MCP-FRONTIER.30` closes the immediate read-only
 semantic-introspection/MCP pass after source discovery; the active roadmap
 priority is again the IAL2 feature-completeness tree, currently at
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.148`.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.149`.
 
 Selected first MCP resource families are `fsmgen://capabilities`,
 `fsmgen://contracts`, `fsmgen://diagnostics`,
