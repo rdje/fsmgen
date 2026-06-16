@@ -7574,11 +7574,13 @@ unsupported; the adapter does not initiate model calls or user-input requests.
 `--request-json` and newline-delimited stdio; Streamable HTTP and service mode
 remain unshipped.
 `SEMANTIC-INTROSPECTION-MCP-FRONTIER.18` ships MCP `structuredContent` for
-read-only tool results alongside serialized JSON text; per-tool `outputSchema`
-metadata remains deferred.
+read-only tool results alongside serialized JSON text.
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.19` ships per-tool `outputSchema`
+metadata for stable public envelope fields. Volatile nested reports and catalog
+internals remain schema-light.
 
-Current active frontier: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.19`, MCP
-per-tool outputSchema boundary.
+Current active frontier: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.20`, MCP tool
+annotation/safety metadata boundary.
 
 Selected first MCP resource families are `fsmgen://capabilities`,
 `fsmgen://contracts`, `fsmgen://diagnostics`,

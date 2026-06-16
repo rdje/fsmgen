@@ -171,6 +171,8 @@ sub project_tools {
         map {
             my $schema = $_->{inputSchema} || {};
             my $properties = $schema->{properties} || {};
+            my $output_schema = $_->{outputSchema} || {};
+            my $output_properties = $output_schema->{properties} || {};
             {
                 name => $_->{name},
                 required => [@{$schema->{required} || []}],
@@ -179,6 +181,9 @@ sub project_tools {
                     map { $_ => ($properties->{$_}{type} || 'unspecified') }
                     sort keys %{$properties}
                 },
+                output_schema_type => $output_schema->{type} || 'missing',
+                output_required => [@{$output_schema->{required} || []}],
+                output_property_names => sorted_keys($output_properties),
             }
         } @{$response->{tools}}
     ];

@@ -103,7 +103,8 @@ For FSMGen, the analogs are:
     `SEMANTIC-INTROSPECTION-MCP-FRONTIER.16`,
     `SEMANTIC-INTROSPECTION-MCP-FRONTIER.17`,
     `SEMANTIC-INTROSPECTION-MCP-FRONTIER.18`,
-    `SEMANTIC-INTROSPECTION-MCP-FRONTIER.19`
+    `SEMANTIC-INTROSPECTION-MCP-FRONTIER.19`,
+    `SEMANTIC-INTROSPECTION-MCP-FRONTIER.20`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1`
   Status: `done`
@@ -232,9 +233,16 @@ For FSMGen, the analogs are:
   Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.18: add MCP structured tool content`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.19`
-  Status: `pending`
+  Status: `done`
   Goal: `Select MCP per-tool outputSchema boundaries.`
   Acceptance: `Audit which read-only MCP tool payloads have stable enough bounded schemas to advertise outputSchema; either select exact schemas with snapshot tests/docs or keep outputSchema deferred; do not overconstrain volatile support counts, full compiler reports, raw private objects, writes, network, shell, mutation workflows, commit, or push tools.`
+  Verification: `passed`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.19: add MCP output schemas`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.20`
+  Status: `pending`
+  Goal: `Select MCP tool annotation and safety metadata boundaries.`
+  Acceptance: `Audit whether read-only MCP tool descriptors should advertise annotations such as read-only or destructive/idempotent/open-world hints; either select exact stable annotations with tests/docs or keep annotations absent; do not imply write/generation authority, network access, shell access, mutation workflows, commit, or push tools.`
   Commit: `pending`
 
 ## Implementation Notes From `.4`
@@ -562,6 +570,25 @@ For FSMGen, the analogs are:
 - How can output schemas improve client integration without freezing volatile
   support-accounting counts or private implementation details?
 
+## Implementation Notes From `.19`
+
+- Read-only MCP tool descriptors now advertise compact `outputSchema` metadata.
+- Output schemas cover stable public envelope fields and intentionally leave
+  nested compiler reports, support catalogs, and manifest payloads as
+  schema-light objects or arrays.
+- Updated `t/1455-semantic-introspection-mcp-structured-tool-output.t` and the
+  schema snapshot fixture to guard output schema presence and stable projected
+  fields.
+
+## Candidate Contract Questions For `.20`
+
+- Should read-only tools advertise MCP annotations to help clients distinguish
+  non-mutating queries from future write/generation tools?
+- Which annotations are stable enough to expose without implying mutation,
+  network, shell, repair, commit, or push authority?
+- How should annotations be snapshot-tested so future tool additions cannot
+  accidentally widen safety expectations?
+
 ## Candidate Future Phases
 
 - Phase 1: contract inventory and first safe semantic-introspection boundary.
@@ -576,7 +603,7 @@ For FSMGen, the analogs are:
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.19` | `pending` | `.18` shipped structuredContent while deferring outputSchema; the next exact frontier is per-tool outputSchema selection. |
+| 1 | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.20` | `pending` | `.19` shipped compact outputSchema metadata; the next exact frontier is tool annotation/safety metadata selection. |
 
 ## Decisions
 
@@ -637,6 +664,9 @@ For FSMGen, the analogs are:
 - `2026-06-16`: `.18` added MCP `structuredContent` to read-only tool results
   while preserving serialized JSON text content; per-tool `outputSchema`
   remains deferred.
+- `2026-06-16`: `.19` added compact `outputSchema` metadata for stable public
+  tool-result envelope fields while keeping nested reports and catalogs
+  schema-light.
 - `2026-06-14`: Create this as a proposed owner, not an active implementation
   lane. The first real work must be no-code contract selection over existing
   public surfaces.
@@ -646,7 +676,7 @@ For FSMGen, the analogs are:
 
 ## Open Questions
 
-- None for `.18`; `.19` owns MCP per-tool outputSchema selection.
+- None for `.19`; `.20` owns MCP tool annotation/safety metadata selection.
 
 ## Blockers
 
@@ -676,6 +706,7 @@ For FSMGen, the analogs are:
 | `2026-06-16` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.16` | Syntax check for `t/1453`; `prove -Iperl t/1441-semantic-introspection-mcp-adapter.t t/1443-semantic-introspection-mcp-protocol-hardening.t t/1453-semantic-introspection-mcp-sampling-elicitation-boundary.t`; mdBook, docs path audit, Knowledge Map generation/check, memory-architecture, README-numbering, and diff gates | `passed`; kept sampling/elicitation unsupported and selected `.17` Streamable HTTP/service-mode transport boundary |
 | `2026-06-16` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.17` | Syntax check for `t/1454`; `prove -Iperl t/1442-fsmgen-mcp-jsonrpc-cli.t t/1446-semantic-introspection-mcp-stdio-framing.t t/1454-semantic-introspection-mcp-transport-boundary.t`; mdBook, docs path audit, Knowledge Map generation/check, memory-architecture, README-numbering, and diff gates | `passed`; kept transport local to one-shot/stdin and selected `.18` structured tool output boundary |
 | `2026-06-16` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.18` | Syntax checks for `SemanticIntrospectionMCPAdapter`, `t/1445`, and `t/1455`; `prove -Iperl t/1445-semantic-introspection-mcp-schema-snapshots.t t/1455-semantic-introspection-mcp-structured-tool-output.t`; mdBook, docs path audit, Knowledge Map generation/check, memory-architecture, README-numbering, and diff gates | `passed`; shipped structuredContent and selected `.19` outputSchema boundary |
+| `2026-06-16` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.19` | Syntax checks for `SemanticIntrospectionMCPAdapter`, `t/1445`, and `t/1455`; `prove -Iperl t/1445-semantic-introspection-mcp-schema-snapshots.t t/1455-semantic-introspection-mcp-structured-tool-output.t`; mdBook, docs path audit, Knowledge Map generation/check, memory-architecture, README-numbering, and diff gates | `passed`; shipped compact outputSchema metadata and selected `.20` tool annotation/safety metadata boundary |
 
 ## Commit Log
 
@@ -699,7 +730,8 @@ For FSMGen, the analogs are:
 | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.16` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.16: defer MCP sampling elicitation` | Kept sampling and elicitation unsupported for the read-only profile. |
 | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.17` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.17: keep MCP transport local stdio` | Kept Streamable HTTP and service mode unshipped; CLI remains one-shot/stdin only. |
 | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.18` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.18: add MCP structured tool content` | Added structuredContent to read-only MCP tool results while keeping serialized JSON text content. |
-| `SEMANTIC-INTROSPECTION-MCP-FRONTIER.19` | `pending` | `pending` |
+| `SEMANTIC-INTROSPECTION-MCP-FRONTIER.19` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.19: add MCP output schemas` | Added compact per-tool outputSchema metadata for stable public envelope fields. |
+| `SEMANTIC-INTROSPECTION-MCP-FRONTIER.20` | `pending` | `pending` |
 
 ## Changelog
 
@@ -760,5 +792,8 @@ For FSMGen, the analogs are:
   unshipped, transport stays one-shot/stdin only, and `.18` selected
   structured MCP tool output.
 - `2026-06-16`: Completed `.18`; read-only tool results now include
-  `structuredContent` matching their serialized JSON text, and `.19` owns
-  per-tool `outputSchema` selection.
+  `structuredContent` matching their serialized JSON text, and `.19` selected
+  per-tool `outputSchema` metadata.
+- `2026-06-16`: Completed `.19`; compact `outputSchema` metadata now covers
+  stable public tool-result envelope fields, and `.20` owns tool
+  annotation/safety metadata selection.

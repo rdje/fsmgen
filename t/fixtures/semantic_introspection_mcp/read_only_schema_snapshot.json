@@ -438,6 +438,14 @@
    "tools" : [
       {
          "name" : "fsmgen_capability_query",
+         "output_property_names" : [
+            "manifest_contract",
+            "payload",
+            "section",
+            "semantic_introspection"
+         ],
+         "output_required" : [],
+         "output_schema_type" : "object",
          "property_names" : [
             "section"
          ],
@@ -448,6 +456,23 @@
       },
       {
          "name" : "fsmgen_check",
+         "output_property_names" : [
+            "adapter_provenance",
+            "path_sanitization",
+            "query_kind",
+            "report",
+            "source_id",
+            "source_path"
+         ],
+         "output_required" : [
+            "source_id",
+            "source_path",
+            "query_kind",
+            "adapter_provenance",
+            "path_sanitization",
+            "report"
+         ],
+         "output_schema_type" : "object",
          "property_names" : [
             "source_id",
             "source_path"
@@ -460,6 +485,23 @@
       },
       {
          "name" : "fsmgen_semantic_introspect",
+         "output_property_names" : [
+            "adapter_provenance",
+            "path_sanitization",
+            "query_kind",
+            "report",
+            "source_id",
+            "source_path"
+         ],
+         "output_required" : [
+            "source_id",
+            "source_path",
+            "query_kind",
+            "adapter_provenance",
+            "path_sanitization",
+            "report"
+         ],
+         "output_schema_type" : "object",
          "property_names" : [
             "source_id",
             "source_path"
@@ -472,6 +514,23 @@
       },
       {
          "name" : "fsmgen_schedule_preview",
+         "output_property_names" : [
+            "adapter_provenance",
+            "path_sanitization",
+            "query_kind",
+            "report",
+            "source_id",
+            "source_path"
+         ],
+         "output_required" : [
+            "source_id",
+            "source_path",
+            "query_kind",
+            "adapter_provenance",
+            "path_sanitization",
+            "report"
+         ],
+         "output_schema_type" : "object",
          "property_names" : [
             "source_id",
             "source_path"
@@ -484,6 +543,23 @@
       },
       {
          "name" : "fsmgen_find_examples",
+         "output_property_names" : [
+            "catalog_entries",
+            "documentation",
+            "limit",
+            "query",
+            "returned_count",
+            "support_summary"
+         ],
+         "output_required" : [
+            "documentation",
+            "query",
+            "limit",
+            "support_summary",
+            "returned_count",
+            "catalog_entries"
+         ],
+         "output_schema_type" : "object",
          "property_names" : [
             "limit",
             "query"
@@ -496,6 +572,19 @@
       },
       {
          "name" : "fsmgen_explain_diagnostic",
+         "output_property_names" : [
+            "code",
+            "diagnostic",
+            "registry_contract",
+            "support_examples"
+         ],
+         "output_required" : [
+            "code",
+            "diagnostic",
+            "registry_contract",
+            "support_examples"
+         ],
+         "output_schema_type" : "object",
          "property_names" : [
             "code"
          ],
@@ -508,6 +597,29 @@
       },
       {
          "name" : "fsmgen_support_summary",
+         "output_property_names" : [
+            "classifications",
+            "coverage_buckets",
+            "entry_count",
+            "families",
+            "id_counts",
+            "query_kind",
+            "sample_catalog_entries",
+            "source",
+            "source_kinds"
+         ],
+         "output_required" : [
+            "query_kind",
+            "source",
+            "entry_count",
+            "classifications",
+            "coverage_buckets",
+            "families",
+            "source_kinds",
+            "id_counts",
+            "sample_catalog_entries"
+         ],
+         "output_schema_type" : "object",
          "property_names" : [
             "limit_examples"
          ],

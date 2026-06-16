@@ -50,11 +50,14 @@ subtest 'tool calls return structuredContent plus text JSON compatibility' => su
     }
 };
 
-subtest 'tool descriptors keep outputSchema deferred until schema selection' => sub {
+subtest 'tool descriptors expose compact public outputSchema envelopes' => sub {
     my $tools = $adapter->list_tools()->{tools};
 
     for my $tool (@{$tools}) {
-        ok(!exists $tool->{outputSchema}, "$tool->{name} has no outputSchema yet");
+        my $schema = $tool->{outputSchema};
+        ok($schema, "$tool->{name} has an outputSchema");
+        is($schema->{type}, 'object', "$tool->{name} outputSchema is an object");
+        ok($schema->{properties}, "$tool->{name} outputSchema names public fields");
     }
 };
 

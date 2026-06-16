@@ -190,8 +190,13 @@ service-mode sessions remain unshipped.
 
 `SEMANTIC-INTROSPECTION-MCP-FRONTIER.18` selected the first structured tool
 output boundary. Read-only tool calls return MCP `structuredContent` matching
-the serialized JSON text block; per-tool `outputSchema` metadata remains
-deferred until exact schemas are selected.
+the serialized JSON text block; per-tool `outputSchema` metadata was left for
+`.19`.
+
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.19` selected the first `outputSchema`
+boundary. Read-only tool descriptors advertise compact schemas for stable
+public envelope fields, while volatile nested compiler reports, support
+catalogs, and manifest payloads remain schema-light objects or arrays.
 
 ## Deferred
 

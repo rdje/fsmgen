@@ -145,21 +145,29 @@ sub list_tools {
                 {
                     section => { type => 'string', description => 'Optional section name: all, semantic_introspection, contracts, diagnostics, support_accounting, examples, embedding, backend_validation, language_surface.' },
                 },
+                [],
+                _capability_query_output_schema(),
             ),
             _tool_descriptor(
                 'fsmgen_check',
                 'Run read-only strict check JSON for a workspace-contained source path.',
                 _source_tool_properties(),
+                [],
+                _source_query_output_schema(),
             ),
             _tool_descriptor(
                 'fsmgen_semantic_introspect',
                 'Run read-only normalized semantic JSON for a workspace-contained source path.',
                 _source_tool_properties(),
+                [],
+                _source_query_output_schema(),
             ),
             _tool_descriptor(
                 'fsmgen_schedule_preview',
                 'Run read-only schedule JSON for a workspace-contained .isf or .ppif source path.',
                 _source_tool_properties(),
+                [],
+                _source_query_output_schema(),
             ),
             _tool_descriptor(
                 'fsmgen_find_examples',
@@ -168,6 +176,8 @@ sub list_tools {
                     query => { type => 'string', description => 'Optional case-insensitive substring matched against ids and repo-relative paths.' },
                     limit => { type => 'integer', description => 'Maximum number of catalog examples to return; default 25.' },
                 },
+                [],
+                _examples_output_schema(),
             ),
             _tool_descriptor(
                 'fsmgen_explain_diagnostic',
@@ -176,6 +186,7 @@ sub list_tools {
                     code => { type => 'string', description => 'Stable diagnostic code to explain.' },
                 },
                 ['code'],
+                _diagnostic_output_schema(),
             ),
             _tool_descriptor(
                 'fsmgen_support_summary',
@@ -183,6 +194,8 @@ sub list_tools {
                 {
                     limit_examples => { type => 'integer', description => 'Maximum number of sample catalog entries to include; default 10.' },
                 },
+                [],
+                _support_summary_output_schema(),
             ),
         ],
     };
@@ -586,8 +599,8 @@ sub _resource_descriptor {
 }
 
 sub _tool_descriptor {
-    my ($name, $description, $properties, $required) = @_;
-    return {
+    my ($name, $description, $properties, $required, $output_schema) = @_;
+    my $descriptor = {
         name => $name,
         description => $description,
         inputSchema => {
@@ -597,6 +610,8 @@ sub _tool_descriptor {
             additionalProperties => JSON::PP::false,
         },
     };
+    $descriptor->{outputSchema} = $output_schema if $output_schema;
+    return $descriptor;
 }
 
 sub _source_tool_properties {
@@ -609,6 +624,100 @@ sub _source_tool_properties {
             type => 'string',
             description => 'Alias for source_path, usually a repo-relative path.',
         },
+    };
+}
+
+sub _capability_query_output_schema {
+    return _object_schema(
+        {
+            section => { type => 'string' },
+            payload => _open_object_schema(),
+            manifest_contract => _open_object_schema(),
+            semantic_introspection => _open_object_schema(),
+        },
+        [],
+        JSON::PP::true,
+    );
+}
+
+sub _source_query_output_schema {
+    return _object_schema(
+        {
+            source_id => { type => 'string' },
+            source_path => { type => 'string' },
+            query_kind => { type => 'string' },
+            adapter_provenance => _open_object_schema(),
+            path_sanitization => _open_object_schema(),
+            report => _open_object_schema(),
+        },
+        [qw(source_id source_path query_kind adapter_provenance path_sanitization report)],
+        JSON::PP::false,
+    );
+}
+
+sub _examples_output_schema {
+    return _object_schema(
+        {
+            documentation => { type => 'array', items => _open_object_schema() },
+            query => { type => 'string' },
+            limit => { type => 'integer' },
+            support_summary => _open_object_schema(),
+            returned_count => { type => 'integer' },
+            catalog_entries => { type => 'array', items => _open_object_schema() },
+        },
+        [qw(documentation query limit support_summary returned_count catalog_entries)],
+        JSON::PP::false,
+    );
+}
+
+sub _diagnostic_output_schema {
+    return _object_schema(
+        {
+            code => { type => 'string' },
+            diagnostic => _open_object_schema(),
+            registry_contract => _open_object_schema(),
+            support_examples => { type => 'array', items => _open_object_schema() },
+        },
+        [qw(code diagnostic registry_contract support_examples)],
+        JSON::PP::false,
+    );
+}
+
+sub _support_summary_output_schema {
+    return _object_schema(
+        {
+            query_kind => { type => 'string' },
+            source => { type => 'string' },
+            entry_count => { type => 'integer' },
+            classifications => _open_object_schema(),
+            coverage_buckets => _open_object_schema(),
+            families => _open_object_schema(),
+            source_kinds => _open_object_schema(),
+            id_counts => _open_object_schema(),
+            sample_catalog_entries => { type => 'array', items => _open_object_schema() },
+        },
+        [
+            qw(query_kind source entry_count classifications coverage_buckets
+              families source_kinds id_counts sample_catalog_entries)
+        ],
+        JSON::PP::false,
+    );
+}
+
+sub _object_schema {
+    my ($properties, $required, $additional_properties) = @_;
+    return {
+        type => 'object',
+        properties => $properties || {},
+        required => $required || [],
+        additionalProperties => $additional_properties,
+    };
+}
+
+sub _open_object_schema {
+    return {
+        type => 'object',
+        additionalProperties => JSON::PP::true,
     };
 }
 

@@ -131,8 +131,10 @@ requests through MCP.
 and newline-delimited JSON-RPC stdio only. Streamable HTTP, listener flags,
 port flags, and service mode remain unshipped.
 `.18` adds MCP `structuredContent` to read-only tool results. The existing
-serialized JSON text content remains present for compatibility, and per-tool
-`outputSchema` metadata remains deferred until exact schemas are selected.
+serialized JSON text content remains present for compatibility. `.19` adds
+compact per-tool `outputSchema` metadata for stable public result-envelope
+fields while keeping volatile nested compiler reports, support catalogs, and
+manifest payloads schema-light.
 FSMGen should not expose raw private Perl AST, scheduler, lowering objects,
 `HDLGenerator` compatibility hashes, or internal Perl references as public
 automation APIs. Write generation tools, HDL writing, service mode, network
@@ -147,4 +149,5 @@ workflows; assertion assistance maps to proposing verification-intent source
 that FSMGen then checks and lowers.
 
 The next semantic-introspection leaf is
-`SEMANTIC-INTROSPECTION-MCP-FRONTIER.19`, MCP per-tool outputSchema boundary.
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.20`, MCP tool annotation/safety metadata
+boundary.
