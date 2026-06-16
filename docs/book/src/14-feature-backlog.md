@@ -2356,13 +2356,19 @@ syntax, generated review artifacts, reports, diagnostics, and HDL behavior
 through suitable host abstractions rather than creating parallel semantics. Decision
 [0018](../../decisions/0018-ial-contracts-are-backend-language-neutral.md)
 records this rule.
+All future variants and implementations must satisfy FSMGen's public
+contracts. The portability goal is identical in-memory behavior on any
+suitable platform/environment, with feature, functionality, diagnostic,
+semantic-introspection, example, fixture, and test parity against the Perl
+reference/oracle. The book must grow into the language-independent blueprint
+for building a conforming FSMGen variant in language X.
 The active owner for that portability work is
 [BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER](../../tasks/BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.md).
-Its `.2` frontier audits public contracts, infrastructure, in-memory host APIs,
-semantic introspection/MCP surfaces, fixture parity, host abstractions, and
-book transparency before any Rust/Rust-Wasm, browser JavaScript, Dart/web,
-Julia, or other non-Perl implementation slice changes code or public
-contracts.
+Its `.2.1` leaf captures that doctrine and its `.2.2` frontier audits public
+contracts, infrastructure, in-memory host APIs, semantic introspection/MCP
+surfaces, fixture parity, host abstractions, parity gates, and book blueprint
+gaps before any Rust/Rust-Wasm, browser JavaScript, Dart/web, Julia, or other
+non-Perl implementation slice changes code or public contracts.
 
 Decision `0016` selects `.ppif` (Protocol/Platform Intent Format) as the first
 public generic IAL2 file suffix. Earlier candidates `.pif` and `.ppi` are not

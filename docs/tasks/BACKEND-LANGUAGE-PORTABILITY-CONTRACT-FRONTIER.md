@@ -15,14 +15,22 @@ Ensure FSMGen has explicit public contracts, infrastructure, test strategy,
 documentation, and task ownership for future implementations in languages or
 runtimes other than the current Perl 5 reference implementation, including
 Rust/Rust-Wasm, browser-capable JavaScript, Dart/web, Julia, and future
-in-memory or embedded hosts.
+in-memory or embedded hosts. The ultimate portability target is identical
+in-memory behavior on any suitable platform/environment, with every language
+variant kept on par for functionality, features, diagnostics, semantic
+introspection, examples, fixtures, and tests. The Perl implementation is the
+de facto reference/oracle for parity until another explicit decision changes
+that role. The mdBook must eventually contain enough contract detail for a
+competent implementer to build a conforming FSMGen variant in language X
+without reading Perl internals as the source of truth. Every future variant or
+implementation must satisfy the same FSMGen public contracts.
 
 ## Non-Goals
 
 - Do not start a second implementation in this tree before the contract audit
   identifies an exact executable slice.
 - Do not change IAL0, IAL1, IAL2, parser, lowerer, HDL, MCP, or runtime
-  behavior under the tree-creation leaf.
+  behavior under tree-creation or doctrine-capture leaves.
 - Do not select Rust, Julia, Dart, JavaScript, or any other language as the
   mandatory next implementation target in this tree-creation leaf.
 - Do not weaken the current Perl 5 implementation's role as the reference
@@ -37,6 +45,16 @@ in-memory or embedded hosts.
   generated review artifacts, diagnostics, support accounting, semantic JSON,
   MCP-facing introspection, in-memory API expectations, fixture parity,
   host-abstraction boundaries, and mdBook/user-facing contract transparency.
+- The portability doctrine records that every implementation-language variant
+  must be systematically portable, in-memory capable where the host allows it,
+  and parity-checked against the Perl reference/oracle across functionality,
+  features, diagnostics, semantic introspection, examples, fixtures, and tests.
+- The portability doctrine records that every future variant or implementation
+  must satisfy FSMGen's public contracts rather than defining a parallel or
+  reduced contract.
+- The portability doctrine records that the mdBook must grow into the
+  language-independent implementation blueprint for conforming variants, not
+  only a user guide for the current Perl implementation.
 - README, roadmap, mdBook, Memory, Knowledge Map, and the task-tree index point
   at the new owner where project state changed.
 - Each completed leaf is committed through `COMMIT.md`.
@@ -46,7 +64,7 @@ in-memory or embedded hosts.
 - ID: `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER`
   Status: `active`
   Goal: `Own the backend-language portability contract and infrastructure audit frontier.`
-  Children: `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.1, BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2`
+  Children: `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.1, BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2, BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.1, BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2`
 
 - ID: `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.1`
   Status: `done`
@@ -56,9 +74,24 @@ in-memory or embedded hosts.
   Commit: `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.1: create portability task tree`
 
 - ID: `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Audit backend-language-neutral contract and infrastructure readiness.`
-  Acceptance: `Read decision 0018, README, roadmap, mdBook, semantic-introspection/MCP tree, current source/report/diagnostic/support-accounting/semantic JSON/MCP surfaces, public examples, regression corpus, CLI behavior, in-process Perl APIs, generated artifacts, and relevant task trees; identify every Perl/POSIX/process/filesystem/module-loading assumption that is public contract versus current implementation detail; define the portable in-memory execution contract needed by Rust/Rust-Wasm, browser-capable JavaScript, Dart/web, Julia, and future hosts; map parity requirements for source syntax, diagnostics, support accounting, semantic JSON, MCP resources/tools, examples, review artifacts, and HDL outputs; record exact future implementation leaves, validation gates, docs/book impact, compatibility risks, and rollback boundaries before any code or public-contract changes.`
+  Children: `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.1, BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2`
+  Acceptance: `Read decision 0018, README, roadmap, mdBook, semantic-introspection/MCP tree, current source/report/diagnostic/support-accounting/semantic JSON/MCP surfaces, public examples, regression corpus, CLI behavior, in-process Perl APIs, generated artifacts, and relevant task trees; identify every Perl/POSIX/process/filesystem/module-loading assumption that is public contract versus current implementation detail; define the portable in-memory execution contract needed by Rust/Rust-Wasm, browser-capable JavaScript, Dart/web, Julia, and future hosts; map parity requirements for source syntax, diagnostics, support accounting, semantic JSON, MCP resources/tools, examples, review artifacts, HDL outputs, and test suites; define how the Perl reference/oracle is used to prove that every variant satisfies the same FSMGen public contracts; define what the mdBook must contain so an implementation in language X can be built from public contracts rather than Perl internals; record exact future implementation leaves, validation gates, docs/book impact, compatibility risks, and rollback boundaries before any code or public-contract changes.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.1`
+  Status: `done`
+  Goal: `Capture the cross-implementation parity doctrine.`
+  Acceptance: `Record the user-stated doctrine that FSMGen's ultimate goal is identical in-memory behavior on any platform/environment through any conforming backend language; every future variant or implementation must satisfy FSMGen's public contracts and be on par for functionality, features, diagnostics, semantic introspection, examples, fixtures, and tests; the Perl implementation is the de facto reference/oracle for parity; and the mdBook must contain enough language-independent contract detail to guide a conforming implementation in language X. Sync README, roadmap, mdBook, task tree, Memory, and Knowledge Map without code behavior changes.`
+  Verification: `passed`
+  Commit: `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.1: capture variant parity doctrine`
+
+- ID: `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2`
+  Status: `pending`
+  Goal: `Perform the backend-language-neutral contract and infrastructure readiness audit.`
+  Acceptance: `Execute the parent audit after the cross-implementation parity doctrine is captured: read the public contract, task-tree, decision, code, test, support-accounting, semantic JSON, MCP, examples, regression corpus, CLI, and in-process API surfaces; separate public contract from Perl implementation detail; define the portable in-memory execution/API contract; define parity harness requirements against the Perl reference/oracle that prove every variant satisfies FSMGen's public contracts; define mdBook blueprint gaps for language-X implementations; select exact future leaves and validation gates before any code or public-contract changes.`
   Verification: `pending`
   Commit: `pending`
 
@@ -66,7 +99,7 @@ in-memory or embedded hosts.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2` | `pending` | `.1` created the owner tree; the next step is an audit before any portability infrastructure or implementation-language work changes code or public contracts. |
+| 1 | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` | `pending` | `.2.1` captured the cross-implementation parity doctrine; the next step is the full audit before any portability infrastructure or implementation-language work changes code or public contracts. |
 
 ## Decisions
 
@@ -76,6 +109,13 @@ in-memory or embedded hosts.
   IAL0, IAL1, IAL2, public file formats, reports, diagnostics, examples, and
   mdBook explanations are backend-language-neutral contracts; Perl 5 is the
   current reference implementation, not the portable IAL definition.
+- `2026-06-16`: Captured the clarified parity doctrine: FSMGen's ultimate
+  portability goal is identical in-memory behavior on any suitable platform
+  through any conforming backend language, every variant must stay on par for
+  functionality/features/tests and public semantic surfaces, every future
+  variant must satisfy FSMGen public contracts, Perl remains the de facto
+  parity oracle, and the mdBook must become sufficient contract material for
+  implementing a conforming language-X variant.
 
 ## Open Questions
 
@@ -96,15 +136,19 @@ in-memory or embedded hosts.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-06-16` | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.1` | `mdbook build docs/book`; `env -u PERL5LIB prove -Iperl t/1414-docs-relative-paths-audit.t`; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `git --no-pager diff --check`; README numbering check | `passed`; created active backend-language portability task-tree owner and registered the pending audit frontier |
+| `2026-06-16` | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.1` | `mdbook build docs/book`; `env -u PERL5LIB prove -Iperl t/1414-docs-relative-paths-audit.t`; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `git --no-pager diff --check`; README numbering check | `passed`; captured the cross-implementation parity doctrine and advanced the audit frontier to `.2.2` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.1` | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.1: create portability task tree` | Created the owner tree and advanced the frontier to `.2`, the backend-language-neutral contract/infrastructure audit. |
+| `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.1` | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.1: capture variant parity doctrine` | Captured identical in-memory behavior, variant parity, mandatory FSMGen contract satisfaction, Perl oracle, and mdBook language-X blueprint doctrine; advanced the audit frontier to `.2.2`. |
 
 ## Changelog
 
 - `2026-06-16`: Created the backend-language portability contract frontier and
   made `.2` the pending audit owner for future Rust/Rust-Wasm, browser
   JavaScript, Dart/web, Julia, and other non-Perl/in-memory host work.
+- `2026-06-16`: Captured the cross-implementation parity doctrine and made
+  `.2.2` the pending audit owner.

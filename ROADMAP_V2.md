@@ -791,9 +791,12 @@ Architecture constraint:
   current Perl reference implementation plus future Rust, Rust/Wasm, and
   browser-capable JavaScript and Dart/web implementations.
 - `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER` is the active task-tree
-  owner for this horizon. Its `.2` frontier must audit public contracts,
+  owner for this horizon. Its `.2.1` leaf records that every future variant or
+  implementation must satisfy FSMGen's public contracts and stay on par with
+  the Perl reference/oracle. Its `.2.2` frontier must audit public contracts,
   infrastructure, in-memory host APIs, semantic introspection/MCP surfaces,
-  fixture parity, host abstractions, and mdBook transparency before any
+  fixture parity, host abstractions, Perl-oracle parity gates, and mdBook
+  language-X blueprint gaps before any
   Rust/Rust-Wasm, browser JavaScript, Dart/web, Julia, or other non-Perl
   implementation slice changes code or public contracts.
 
