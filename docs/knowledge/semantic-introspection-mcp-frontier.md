@@ -51,7 +51,8 @@ The shipped first MCP resource families are `fsmgen://capabilities`,
 
 The shipped first MCP tool families are `fsmgen_capability_query`,
 `fsmgen_check`, `fsmgen_semantic_introspect`, `fsmgen_schedule_preview`,
-`fsmgen_find_examples`, and `fsmgen_explain_diagnostic`.
+`fsmgen_find_examples`, `fsmgen_explain_diagnostic`, and
+`fsmgen_support_summary`.
 
 The manifest reports `mcp_adapter_implemented: true` and
 `write_generation_tools_enabled: false`. Source-bound adapter responses
@@ -59,6 +60,8 @@ normalize workspace/repo absolute paths to relative source identities and
 redact other absolute paths. `.5` hardens protocol/client behavior with
 JSON-RPC error-code policy, notification handling, malformed percent-encoding
 rejection, and non-leaking source-query `adapter_provenance`.
+`.6` adds bounded support-accounting summaries, support-aware example
+discovery, and diagnostic explanations linked to support-accounting examples.
 FSMGen should not expose raw private Perl AST, scheduler, lowering objects,
 `HDLGenerator` compatibility hashes, or internal Perl references as public
 automation APIs. Write generation tools, HDL writing, service mode, network
@@ -73,5 +76,5 @@ workflows; assertion assistance maps to proposing verification-intent source
 that FSMGen then checks and lowers.
 
 The next semantic-introspection leaf is
-`SEMANTIC-INTROSPECTION-MCP-FRONTIER.6`, deeper read-only
-diagnostic/example/support-accounting query coverage.
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.7`, read-only MCP client configuration
+and workflow examples.

@@ -177,6 +177,13 @@ sub list_tools {
                 },
                 ['code'],
             ),
+            _tool_descriptor(
+                'fsmgen_support_summary',
+                'Return a bounded support-accounting summary with optional example samples.',
+                {
+                    limit_examples => { type => 'integer', description => 'Maximum number of sample catalog entries to include; default 10.' },
+                },
+            ),
         ],
     };
 }
@@ -199,6 +206,8 @@ sub call_tool {
         $payload = $self->_examples_payload($arguments);
     } elsif ($name eq 'fsmgen_explain_diagnostic') {
         $payload = $self->_diagnostic_payload($arguments);
+    } elsif ($name eq 'fsmgen_support_summary') {
+        $payload = $self->_support_summary_payload($arguments);
     } else {
         die "Unsupported MCP tool: $name";
     }
@@ -369,6 +378,8 @@ sub _examples_payload {
         documentation => $manifest->{documentation},
         query => $arguments->{query} // '',
         limit => $limit,
+        support_summary => $self->_support_summary_payload({ limit_examples => 0 }),
+        returned_count => scalar @entries,
         catalog_entries => \@entries,
     };
 }
@@ -386,6 +397,33 @@ sub _diagnostic_payload {
         code => $code,
         diagnostic => $matches[0],
         registry_contract => $manifest->{diagnostics}{stable_code_registry},
+        support_examples => _catalog_entry_sample(
+            [grep { ($_->{diagnostic_code} // '') eq $code } @{$manifest->{support_accounting}{catalog_entries} || []}],
+            $arguments->{limit_examples} || 10,
+        ),
+    };
+}
+
+sub _support_summary_payload {
+    my ($self, $arguments) = @_;
+    my $manifest = $self->_manifest;
+    my $support = $manifest->{support_accounting} || {};
+    my $limit = _bounded_limit($arguments->{limit_examples}, 10);
+
+    return {
+        query_kind => 'support_summary',
+        source => $support->{source},
+        entry_count => $support->{entry_count} || 0,
+        classifications => $support->{classifications} || {},
+        coverage_buckets => $support->{coverage_buckets} || {},
+        families => $support->{families} || {},
+        source_kinds => $support->{source_kinds} || {},
+        id_counts => {
+            supported_smoke_ids => scalar @{$support->{supported_smoke_ids} || []},
+            strict_supported_ids => scalar @{$support->{strict_supported_ids} || []},
+            expected_failure_ids => scalar @{$support->{expected_failure_ids} || []},
+        },
+        sample_catalog_entries => _catalog_entry_sample($support->{catalog_entries} || [], $limit),
     };
 }
 
@@ -406,6 +444,38 @@ sub _resolve_source_argument {
     my $rel = File::Spec->abs2rel($abs, $self->{workspace_root});
     $rel =~ s{\\}{/}g;
     return ($abs, $rel);
+}
+
+sub _catalog_entry_sample {
+    my ($entries, $limit) = @_;
+    $limit = _bounded_limit($limit, 10);
+
+    my @sample = @{$entries || []};
+    splice @sample, $limit if @sample > $limit;
+
+    return [
+        map {
+            {
+                id => $_->{id},
+                relpath => $_->{relpath},
+                family => $_->{family},
+                classification => $_->{classification},
+                coverage => $_->{coverage},
+                source_kind => $_->{source_kind},
+                strict_supported => $_->{strict_supported},
+                (exists $_->{diagnostic_code} ? (diagnostic_code => $_->{diagnostic_code}) : ()),
+            }
+        } @sample
+    ];
+}
+
+sub _bounded_limit {
+    my ($value, $default) = @_;
+    $default = 10 unless defined($default);
+    return $default unless defined($value) && $value =~ /\A\d+\z/;
+    return 0 if $value == 0;
+    return 100 if $value > 100;
+    return $value;
 }
 
 sub _run_fsmgen_json {

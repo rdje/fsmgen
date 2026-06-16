@@ -7540,11 +7540,14 @@ manifest reports `mcp_adapter_implemented: true` and
 hardens the adapter with protocol-level JSON-RPC error codes, notification
 handling, malformed percent-encoding rejection, source-query
 `adapter_provenance`, and source-bound path sanitization.
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.6` adds `fsmgen_support_summary`,
+bounded support-accounting aggregates, support-aware example discovery, and
+diagnostic explanations linked to support-accounting examples.
 
-Current active frontier: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.5` shipped
-protocol/client compatibility and source-query envelope hardening. The next
-owned frontier is `SEMANTIC-INTROSPECTION-MCP-FRONTIER.6`, deeper
-read-only diagnostic/example/support-accounting query coverage.
+Current active frontier: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.6` shipped
+deeper read-only diagnostic/example/support-accounting query coverage. The
+next owned frontier is `SEMANTIC-INTROSPECTION-MCP-FRONTIER.7`, read-only MCP
+client configuration and workflow examples.
 
 Selected first MCP resource families are `fsmgen://capabilities`,
 `fsmgen://contracts`, `fsmgen://diagnostics`,
@@ -7554,7 +7557,8 @@ Selected first MCP resource families are `fsmgen://capabilities`,
 `fsmgen://source/{source_id}/schedule`. Selected first MCP tool families are
 `fsmgen_capability_query`, `fsmgen_check`, `fsmgen_semantic_introspect`,
 `fsmgen_schedule_preview`, `fsmgen_find_examples`, and
-`fsmgen_explain_diagnostic`.
+`fsmgen_explain_diagnostic`; the shipped support-accounting query tool is
+`fsmgen_support_summary`.
 
 Raw private parser ASTs, scheduler objects, lowering objects, `HDLGenerator`
 compatibility hashes, and internal Perl references remain outside the public

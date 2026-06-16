@@ -66,6 +66,7 @@ subtest 'semantic-introspection contract advertises first MCP resource and tool 
     my %tools = map { $_ => 1 } @{$contract->{mcp_tool_names}};
     ok($tools{fsmgen_semantic_introspect}, 'semantic-introspection tool is selected');
     ok($tools{fsmgen_explain_diagnostic}, 'diagnostic-explanation tool is selected');
+    ok($tools{fsmgen_support_summary}, 'support-summary tool is selected');
 };
 
 subtest 'semantic-introspection contract maps existing public surfaces to owners' => sub {

@@ -24,6 +24,7 @@ subtest 'fsmgen-mcp lists read-only semantic-introspection tools through one-sho
     ok($tool{fsmgen_capability_query}, 'capability query tool is listed');
     ok($tool{fsmgen_semantic_introspect}, 'semantic introspection tool is listed');
     ok($tool{fsmgen_schedule_preview}, 'schedule preview tool is listed');
+    ok($tool{fsmgen_support_summary}, 'support-summary tool is listed');
     ok(!$tool{fsmgen_write_generation}, 'write/generation tool is not listed');
 };
 

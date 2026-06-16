@@ -153,6 +153,7 @@ sub semantic_introspection_query_family_names {
             schedule_preview
             find_examples
             explain_diagnostic
+            support_summary
         ),
     ];
 }
@@ -179,6 +180,7 @@ sub semantic_introspection_mcp_tool_names {
             fsmgen_schedule_preview
             fsmgen_find_examples
             fsmgen_explain_diagnostic
+            fsmgen_support_summary
         ),
     ];
 }
@@ -399,6 +401,13 @@ sub semantic_introspection_query_families {
             'fsmgen_explain_diagnostic',
             ['fsmgen://diagnostics'],
         ),
+        _query_family(
+            'support_summary',
+            'Bounded support-accounting summary for supported, strict-supported, and expected-failure corpus coverage.',
+            ['support_accounting'],
+            'fsmgen_support_summary',
+            ['fsmgen://support-accounting'],
+        ),
     ];
 }
 
@@ -424,6 +433,7 @@ sub semantic_introspection_mcp_tools {
         _tool('fsmgen_schedule_preview', 'schedule_preview', 'source_schedule', 'schedule JSON'),
         _tool('fsmgen_find_examples', 'find_examples', 'examples', 'repo-relative documentation and corpus examples'),
         _tool('fsmgen_explain_diagnostic', 'explain_diagnostic', 'diagnostics', 'stable diagnostic-code metadata'),
+        _tool('fsmgen_support_summary', 'support_summary', 'support_accounting', 'bounded support-accounting summary'),
     ];
 }
 

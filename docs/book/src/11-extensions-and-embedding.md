@@ -2650,7 +2650,8 @@ The relevant manifest shape is:
       "fsmgen_semantic_introspect",
       "fsmgen_schedule_preview",
       "fsmgen_find_examples",
-      "fsmgen_explain_diagnostic"
+      "fsmgen_explain_diagnostic",
+      "fsmgen_support_summary"
     ]
   }
 }

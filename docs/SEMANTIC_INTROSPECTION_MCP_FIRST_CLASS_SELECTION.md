@@ -94,6 +94,7 @@ The selected first MCP tool families are:
 - `fsmgen_schedule_preview`
 - `fsmgen_find_examples`
 - `fsmgen_explain_diagnostic`
+- `fsmgen_support_summary`
 
 `SEMANTIC-INTROSPECTION-MCP-FRONTIER.3` should not implement the MCP adapter
 itself unless the contract surface and tests remain small enough for a safe
@@ -122,6 +123,12 @@ errors for invalid requests and unknown methods, ignores id-less
 notifications, rejects malformed percent-encoded source URI segments, and
 adds a non-leaking `adapter_provenance` envelope to source-bound query
 responses.
+
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.6` deepened the shipped read-only query
+coverage. The adapter now exposes `fsmgen_support_summary`, returns bounded
+support-accounting aggregates, includes a support summary in example
+discovery results, and links stable diagnostic explanations to matching
+support-accounting examples.
 
 ## Deferred
 

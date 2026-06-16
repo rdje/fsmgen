@@ -90,7 +90,8 @@ For FSMGen, the analogs are:
     `SEMANTIC-INTROSPECTION-MCP-FRONTIER.3`,
     `SEMANTIC-INTROSPECTION-MCP-FRONTIER.4`,
     `SEMANTIC-INTROSPECTION-MCP-FRONTIER.5`,
-    `SEMANTIC-INTROSPECTION-MCP-FRONTIER.6`
+    `SEMANTIC-INTROSPECTION-MCP-FRONTIER.6`,
+    `SEMANTIC-INTROSPECTION-MCP-FRONTIER.7`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1`
   Status: `done`
@@ -128,9 +129,16 @@ For FSMGen, the analogs are:
   Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.5: harden MCP protocol envelopes`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.6`
-  Status: `pending`
+  Status: `done`
   Goal: `Deepen read-only diagnostic, example, and support-accounting MCP query coverage.`
   Acceptance: `Extend the read-only adapter with richer bounded query envelopes for diagnostic explanations, example discovery, and support-accounting summaries without exposing raw private objects or enabling writes; preserve workspace-root/source identity policy; update focused tests, manifest/docs/mdBook/Memory/Knowledge Map/task-tree/README/roadmap; run focused plus continuity gates.`
+  Verification: `passed`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.6: deepen MCP support queries`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.7`
+  Status: `pending`
+  Goal: `Document read-only MCP client configuration and workflow examples.`
+  Acceptance: `Add user-facing read-only MCP client configuration/workflow examples for capabilities, support summaries, diagnostics, examples, check JSON, semantic JSON, and schedule previews; keep examples bounded and non-mutating; sync README/mdBook/task tree/Memory/Knowledge Map/roadmap and run docs plus continuity gates.`
   Commit: `pending`
 
 ## Implementation Notes From `.4`
@@ -185,6 +193,26 @@ For FSMGen, the analogs are:
 - What is the smallest support-accounting summary that helps AI clients select
   nearest supported spellings without dumping the entire catalog by default?
 
+## Implementation Notes From `.6`
+
+- Added `support_summary` / `fsmgen_support_summary` to the manifest-advertised
+  query/tool families.
+- `fsmgen_support_summary` returns bounded support-accounting aggregates,
+  ID-family counts, and optional sanitized catalog samples.
+- `fsmgen_find_examples` now includes support-summary context without dumping
+  catalog samples by default.
+- `fsmgen_explain_diagnostic` now links stable diagnostic metadata to matching
+  support-accounting examples.
+
+## Candidate Contract Questions For `.7`
+
+- Which MCP client configuration shape should the mdBook document first without
+  depending on a specific proprietary client?
+- Which read-only workflows should be shown as copy-paste JSON-RPC examples
+  versus prose recipes?
+- How much output should examples include without turning docs into large
+  generated JSON dumps?
+
 ## Candidate Future Phases
 
 - Phase 1: contract inventory and first safe semantic-introspection boundary.
@@ -199,7 +227,7 @@ For FSMGen, the analogs are:
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.6` | `pending` | `.5` hardened protocol/client behavior; the next exact frontier is deeper read-only diagnostic/example/support-accounting query coverage. |
+| 1 | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.7` | `pending` | `.6` deepened support, example, and diagnostic queries; the next exact frontier is read-only MCP client configuration and workflow examples. |
 
 ## Decisions
 
@@ -226,6 +254,9 @@ For FSMGen, the analogs are:
   id-less notification silence, malformed percent-encoding rejection, and
   source-query `adapter_provenance` envelopes without enabling write/generation
   tools.
+- `2026-06-16`: `.6` added `fsmgen_support_summary`, bounded
+  support-accounting aggregates, support-aware example discovery, and
+  diagnostic explanations linked to support-accounting examples.
 - `2026-06-14`: Create this as a proposed owner, not an active implementation
   lane. The first real work must be no-code contract selection over existing
   public surfaces.
@@ -235,8 +266,8 @@ For FSMGen, the analogs are:
 
 ## Open Questions
 
-- None for `.5`; `.6` owns deeper diagnostic/example/support-accounting query
-  coverage.
+- None for `.6`; `.7` owns read-only MCP client configuration and workflow
+  examples.
 
 ## Blockers
 
@@ -253,6 +284,7 @@ For FSMGen, the analogs are:
 | `2026-06-15` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.3` | Syntax checks for `SemanticIntrospectionContract`, `SemanticIntrospectionSection`, `CapabilityManifest`, `CapabilityManifestContract`, and new tests; `prove -Iperl t/1438-semantic-introspection-contract.t t/1439-semantic-introspection-section-runtime-contract-audit.t t/1440-semantic-introspection-manifest-contract-roundtrip-audit.t t/369-manifest-section-builder-audit.t t/370-capability-manifest-section-discovery-audit.t t/897-capability-manifest-contract-public-keys-json-roundtrip-audit.t t/898-capability-manifest-contract-top-level-source-map-json-roundtrip-audit.t t/899-capability-manifest-contract-section-presence-map-json-roundtrip-audit.t t/900-capability-manifest-contract-presence-family-map-json-roundtrip-audit.t`; `./bin/fsmgen --capability-manifest` probe; broader manifest/continuity gates | `passed`; shipped top-level `semantic_introspection` manifest section and selected `.4` read-only MCP adapter |
 | `2026-06-15` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.4` | Syntax checks for `SemanticIntrospectionMCPAdapter`, `bin/fsmgen-mcp`, semantic-introspection contract/section modules, `CapabilityManifestContract`, and new adapter tests; `prove -Iperl t/1438-semantic-introspection-contract.t t/1439-semantic-introspection-section-runtime-contract-audit.t t/1440-semantic-introspection-manifest-contract-roundtrip-audit.t t/1441-semantic-introspection-mcp-adapter.t t/1442-fsmgen-mcp-jsonrpc-cli.t`; live `bin/fsmgen-mcp` tools/list and sanitized semantic-query probes; broader manifest, mdBook, Knowledge Map, memory-architecture, README-numbering, and diff gates | `passed`; shipped read-only MCP adapter and selected `.5` hardening frontier |
 | `2026-06-16` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.5` | Syntax checks for `SemanticIntrospectionMCPAdapter` and `t/1443`; `prove -Iperl t/1438-semantic-introspection-contract.t t/1439-semantic-introspection-section-runtime-contract-audit.t t/1440-semantic-introspection-manifest-contract-roundtrip-audit.t t/1441-semantic-introspection-mcp-adapter.t t/1442-fsmgen-mcp-jsonrpc-cli.t t/1443-semantic-introspection-mcp-protocol-hardening.t`; mdBook, Knowledge Map, memory-architecture, README-numbering, and diff gates | `passed`; hardened protocol/client envelopes and selected `.6` deeper read-only query coverage |
+| `2026-06-16` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.6` | Syntax checks for `SemanticIntrospectionMCPAdapter`, `SemanticIntrospectionContract`, and `t/1444`; `prove -Iperl t/1438-semantic-introspection-contract.t t/1439-semantic-introspection-section-runtime-contract-audit.t t/1440-semantic-introspection-manifest-contract-roundtrip-audit.t t/1441-semantic-introspection-mcp-adapter.t t/1442-fsmgen-mcp-jsonrpc-cli.t t/1443-semantic-introspection-mcp-protocol-hardening.t t/1444-semantic-introspection-mcp-support-queries.t`; broader manifest, mdBook, Knowledge Map, memory-architecture, README-numbering, and diff gates | `passed`; added support summary and support-aware diagnostic/example queries; selected `.7` docs/workflow frontier |
 
 ## Commit Log
 
@@ -263,7 +295,8 @@ For FSMGen, the analogs are:
 | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.3` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.3: ship introspection contract manifest` | Shipped the top-level `semantic_introspection` capability-manifest contract and selected `.4`, the read-only MCP adapter frontier. |
 | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.4` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.4: ship read-only MCP adapter` | Shipped `bin/fsmgen-mcp`, a read-only local JSON-RPC stdio adapter over the manifest-selected resources/tools, with workspace-root source binding and path sanitization. |
 | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.5` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.5: harden MCP protocol envelopes` | Hardened JSON-RPC protocol error handling, notification behavior, source URI percent-encoding validation, and source-query provenance envelopes. |
-| `SEMANTIC-INTROSPECTION-MCP-FRONTIER.6` | `pending` | `pending` |
+| `SEMANTIC-INTROSPECTION-MCP-FRONTIER.6` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.6: deepen MCP support queries` | Added support-summary, support-aware examples, and diagnostic-to-support-accounting query envelopes. |
+| `SEMANTIC-INTROSPECTION-MCP-FRONTIER.7` | `pending` | `pending` |
 
 ## Changelog
 
@@ -288,3 +321,7 @@ For FSMGen, the analogs are:
   error codes, id-less notification silence, malformed percent-encoding
   rejection, and non-leaking source-query `adapter_provenance`. `.6` owns
   deeper read-only diagnostic/example/support-accounting query coverage.
+- `2026-06-16`: Completed `.6`; the adapter now exposes
+  `fsmgen_support_summary`, embeds support-summary context in example
+  discovery, and links diagnostics to support-accounting examples. `.7` owns
+  read-only MCP client configuration and workflow examples.
