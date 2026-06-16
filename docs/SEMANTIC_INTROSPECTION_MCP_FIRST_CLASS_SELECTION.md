@@ -188,6 +188,11 @@ the shipped profile. `bin/fsmgen-mcp` exposes one-shot `--request-json` and
 newline-delimited JSON-RPC stdio only; Streamable HTTP, listener flags, and
 service-mode sessions remain unshipped.
 
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.18` selected the first structured tool
+output boundary. Read-only tool calls return MCP `structuredContent` matching
+the serialized JSON text block; per-tool `outputSchema` metadata remains
+deferred until exact schemas are selected.
+
 ## Deferred
 
 The following remain outside `.2` and `.3` unless separately selected:

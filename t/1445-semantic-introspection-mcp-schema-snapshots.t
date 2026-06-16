@@ -192,6 +192,10 @@ sub project_tool_response {
         response_keys => sorted_keys($response),
         isError => json_bool($response->{isError}),
         content_types => [map { $_->{type} } @{$response->{content}}],
+        structuredContent_matches_text => json_bool(
+            JSON::PP->new->ascii->canonical->encode($response->{structuredContent})
+                eq JSON::PP->new->ascii->canonical->encode($payload)
+        ),
         decoded_payload => $payload_projection->($payload),
     };
 }

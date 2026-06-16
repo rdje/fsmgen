@@ -102,7 +102,8 @@ For FSMGen, the analogs are:
     `SEMANTIC-INTROSPECTION-MCP-FRONTIER.15`,
     `SEMANTIC-INTROSPECTION-MCP-FRONTIER.16`,
     `SEMANTIC-INTROSPECTION-MCP-FRONTIER.17`,
-    `SEMANTIC-INTROSPECTION-MCP-FRONTIER.18`
+    `SEMANTIC-INTROSPECTION-MCP-FRONTIER.18`,
+    `SEMANTIC-INTROSPECTION-MCP-FRONTIER.19`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1`
   Status: `done`
@@ -224,9 +225,16 @@ For FSMGen, the analogs are:
   Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.17: keep MCP transport local stdio`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.18`
-  Status: `pending`
+  Status: `done`
   Goal: `Select MCP structured tool output boundaries.`
   Acceptance: `Audit whether read-only tool results should add MCP outputSchema and structuredContent alongside the existing JSON text content; either select exact bounded schemas/tests/docs or keep text-only JSON payloads for compatibility; do not expose raw private objects, writes, network, shell, mutation workflows, commit, or push tools.`
+  Verification: `passed`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.18: add MCP structured tool content`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.19`
+  Status: `pending`
+  Goal: `Select MCP per-tool outputSchema boundaries.`
+  Acceptance: `Audit which read-only MCP tool payloads have stable enough bounded schemas to advertise outputSchema; either select exact schemas with snapshot tests/docs or keep outputSchema deferred; do not overconstrain volatile support counts, full compiler reports, raw private objects, writes, network, shell, mutation workflows, commit, or push tools.`
   Commit: `pending`
 
 ## Implementation Notes From `.4`
@@ -533,6 +541,27 @@ For FSMGen, the analogs are:
 - How should schema snapshot fixtures review output-shape drift without pinning
   volatile support-corpus counts or full generated reports?
 
+## Implementation Notes From `.18`
+
+- Read-only MCP tool calls now return `structuredContent` containing the same
+  bounded public JSON object serialized in the existing text content block.
+- Existing text JSON content remains for backward-compatible MCP clients.
+- Per-tool `outputSchema` metadata remains deferred until exact schemas are
+  selected and snapshot-tested.
+- Added `t/1455-semantic-introspection-mcp-structured-tool-output.t` and
+  updated the schema snapshot fixture to guard response keys and text/structured
+  payload agreement.
+
+## Candidate Contract Questions For `.19`
+
+- Which read-only tool payloads should advertise `outputSchema` first:
+  capability queries, support summaries, diagnostic explanations, example
+  discovery, source check JSON, semantic JSON, or schedule previews?
+- Should source-bound tools expose compact envelope schemas only, leaving full
+  compiler reports intentionally schema-light?
+- How can output schemas improve client integration without freezing volatile
+  support-accounting counts or private implementation details?
+
 ## Candidate Future Phases
 
 - Phase 1: contract inventory and first safe semantic-introspection boundary.
@@ -547,7 +576,7 @@ For FSMGen, the analogs are:
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.18` | `pending` | `.17` kept transport local to one-shot/stdin; the next exact frontier is structured MCP tool output selection. |
+| 1 | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.19` | `pending` | `.18` shipped structuredContent while deferring outputSchema; the next exact frontier is per-tool outputSchema selection. |
 
 ## Decisions
 
@@ -605,6 +634,9 @@ For FSMGen, the analogs are:
   not initiate model calls or user-input requests through MCP.
 - `2026-06-16`: `.17` kept transport local to one-shot `--request-json` and
   newline-delimited stdio; Streamable HTTP and service mode remain unshipped.
+- `2026-06-16`: `.18` added MCP `structuredContent` to read-only tool results
+  while preserving serialized JSON text content; per-tool `outputSchema`
+  remains deferred.
 - `2026-06-14`: Create this as a proposed owner, not an active implementation
   lane. The first real work must be no-code contract selection over existing
   public surfaces.
@@ -614,7 +646,7 @@ For FSMGen, the analogs are:
 
 ## Open Questions
 
-- None for `.17`; `.18` owns MCP structured tool output selection.
+- None for `.18`; `.19` owns MCP per-tool outputSchema selection.
 
 ## Blockers
 
@@ -643,6 +675,7 @@ For FSMGen, the analogs are:
 | `2026-06-16` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.15` | Syntax checks for `SemanticIntrospectionMCPAdapter` and `t/1452`; `prove -Iperl t/1441-semantic-introspection-mcp-adapter.t t/1443-semantic-introspection-mcp-protocol-hardening.t t/1445-semantic-introspection-mcp-schema-snapshots.t t/1449-semantic-introspection-mcp-resource-change-boundary.t t/1452-semantic-introspection-mcp-pagination-boundary.t`; mdBook, docs path audit, Knowledge Map generation/check, memory-architecture, README-numbering, and diff gates | `passed`; kept list responses bounded/unpaginated and selected `.16` sampling/elicitation boundary |
 | `2026-06-16` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.16` | Syntax check for `t/1453`; `prove -Iperl t/1441-semantic-introspection-mcp-adapter.t t/1443-semantic-introspection-mcp-protocol-hardening.t t/1453-semantic-introspection-mcp-sampling-elicitation-boundary.t`; mdBook, docs path audit, Knowledge Map generation/check, memory-architecture, README-numbering, and diff gates | `passed`; kept sampling/elicitation unsupported and selected `.17` Streamable HTTP/service-mode transport boundary |
 | `2026-06-16` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.17` | Syntax check for `t/1454`; `prove -Iperl t/1442-fsmgen-mcp-jsonrpc-cli.t t/1446-semantic-introspection-mcp-stdio-framing.t t/1454-semantic-introspection-mcp-transport-boundary.t`; mdBook, docs path audit, Knowledge Map generation/check, memory-architecture, README-numbering, and diff gates | `passed`; kept transport local to one-shot/stdin and selected `.18` structured tool output boundary |
+| `2026-06-16` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.18` | Syntax checks for `SemanticIntrospectionMCPAdapter`, `t/1445`, and `t/1455`; `prove -Iperl t/1445-semantic-introspection-mcp-schema-snapshots.t t/1455-semantic-introspection-mcp-structured-tool-output.t`; mdBook, docs path audit, Knowledge Map generation/check, memory-architecture, README-numbering, and diff gates | `passed`; shipped structuredContent and selected `.19` outputSchema boundary |
 
 ## Commit Log
 
@@ -665,7 +698,8 @@ For FSMGen, the analogs are:
 | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.15` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.15: bound MCP pagination` | Kept list responses bounded and unpaginated, with unissued cursor params rejected as invalid. |
 | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.16` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.16: defer MCP sampling elicitation` | Kept sampling and elicitation unsupported for the read-only profile. |
 | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.17` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.17: keep MCP transport local stdio` | Kept Streamable HTTP and service mode unshipped; CLI remains one-shot/stdin only. |
-| `SEMANTIC-INTROSPECTION-MCP-FRONTIER.18` | `pending` | `pending` |
+| `SEMANTIC-INTROSPECTION-MCP-FRONTIER.18` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.18: add MCP structured tool content` | Added structuredContent to read-only MCP tool results while keeping serialized JSON text content. |
+| `SEMANTIC-INTROSPECTION-MCP-FRONTIER.19` | `pending` | `pending` |
 
 ## Changelog
 
@@ -723,5 +757,8 @@ For FSMGen, the analogs are:
 - `2026-06-16`: Completed `.16`; sampling and elicitation remain unsupported,
   and `.17` selected the Streamable HTTP/service-mode transport boundary.
 - `2026-06-16`: Completed `.17`; Streamable HTTP and service mode remain
-  unshipped, transport stays one-shot/stdin only, and `.18` owns structured
-  MCP tool output selection.
+  unshipped, transport stays one-shot/stdin only, and `.18` selected
+  structured MCP tool output.
+- `2026-06-16`: Completed `.18`; read-only tool results now include
+  `structuredContent` matching their serialized JSON text, and `.19` owns
+  per-tool `outputSchema` selection.

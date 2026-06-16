@@ -158,8 +158,10 @@
          "isError" : false,
          "response_keys" : [
             "content",
-            "isError"
-         ]
+            "isError",
+            "structuredContent"
+         ],
+         "structuredContent_matches_text" : true
       },
       "check" : {
          "content_types" : [
@@ -198,8 +200,10 @@
          "isError" : false,
          "response_keys" : [
             "content",
-            "isError"
-         ]
+            "isError",
+            "structuredContent"
+         ],
+         "structuredContent_matches_text" : true
       },
       "diagnostic" : {
          "content_types" : [
@@ -252,8 +256,10 @@
          "isError" : false,
          "response_keys" : [
             "content",
-            "isError"
-         ]
+            "isError",
+            "structuredContent"
+         ],
+         "structuredContent_matches_text" : true
       },
       "examples" : {
          "content_types" : [
@@ -292,8 +298,10 @@
          "isError" : false,
          "response_keys" : [
             "content",
-            "isError"
-         ]
+            "isError",
+            "structuredContent"
+         ],
+         "structuredContent_matches_text" : true
       },
       "schedule" : {
          "content_types" : [
@@ -332,8 +340,10 @@
          "isError" : false,
          "response_keys" : [
             "content",
-            "isError"
-         ]
+            "isError",
+            "structuredContent"
+         ],
+         "structuredContent_matches_text" : true
       },
       "semantic" : {
          "content_types" : [
@@ -372,8 +382,10 @@
          "isError" : false,
          "response_keys" : [
             "content",
-            "isError"
-         ]
+            "isError",
+            "structuredContent"
+         ],
+         "structuredContent_matches_text" : true
       },
       "support_summary" : {
          "content_types" : [
@@ -417,8 +429,10 @@
          "isError" : false,
          "response_keys" : [
             "content",
-            "isError"
-         ]
+            "isError",
+            "structuredContent"
+         ],
+         "structuredContent_matches_text" : true
       }
    },
    "tools" : [

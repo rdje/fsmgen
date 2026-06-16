@@ -219,6 +219,7 @@ sub call_tool {
                 text => $self->_encode_pretty($payload),
             },
         ],
+        structuredContent => $payload,
         isError => JSON::PP::false,
     };
 }

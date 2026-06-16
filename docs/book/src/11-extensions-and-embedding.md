@@ -2723,6 +2723,7 @@ The read-only adapter currently has a bounded client profile:
 | MCP pagination cursors on `resources/list`, `resources/templates/list`, and `tools/list` | bounded unpaginated lists; no `nextCursor`; client-supplied cursors are invalid params because no cursor is issued | `t/1452-semantic-introspection-mcp-pagination-boundary.t` |
 | MCP sampling and elicitation through `sampling/createMessage` and `elicitation/create` | not used in the shipped profile; FSMGen does not initiate model calls or user-input requests | `t/1453-semantic-introspection-mcp-sampling-elicitation-boundary.t` |
 | Streamable HTTP transport, listener flags, and service-mode session features | not shipped; CLI exposes only one-shot `--request-json` and newline-delimited stdio | `t/1454-semantic-introspection-mcp-transport-boundary.t` |
+| MCP tool `structuredContent` | shipped for read-only tools alongside the existing serialized JSON text content; per-tool `outputSchema` remains deferred | `t/1445-semantic-introspection-mcp-schema-snapshots.t` and `t/1455-semantic-introspection-mcp-structured-tool-output.t` |
 | Clients that need write/generation, HDL output writing, automated repair, shell, network, commit, or push tools | intentionally blocked | `semantic_introspection.write_generation_tools_enabled` remains false |
 
 The MCP 2025-06-18 transport specification defines stdio messages as
@@ -2769,6 +2770,12 @@ Streamable HTTP and service-mode transports are deferred. `bin/fsmgen-mcp`
 does not expose listener, HTTP, port, or serve flags; local clients use either
 the one-shot `--request-json` path for probes or newline-delimited JSON-RPC
 over stdio for the MCP transport.
+
+Tool calls return both structured and text forms. The `structuredContent`
+field carries the same bounded public JSON object serialized in the text
+content block, preserving compatibility with text-only clients while giving
+MCP clients a direct JSON result. Per-tool `outputSchema` metadata is deferred
+until each schema can be selected and snapshot-tested.
 
 ## Downstream Tool Alignment
 
