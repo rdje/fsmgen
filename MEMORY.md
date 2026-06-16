@@ -10,9 +10,9 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `HEAD after commit` — `FX-UNTRACKED-LEGACY-REMOVAL.1: remove unused legacy fx tree`.
+- latest_commit: `HEAD after commit` — `BIN-FSMGEN-IMPORT-TREE-JUN16-REFRESH.1: refresh import tree after semantic support growth`.
 - active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.144` pending; backend-language portability is also task-tree owned at `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` active/pending after the downstream-consumer sync.
-- recently_done: `FX-UNTRACKED-LEGACY-REMOVAL.1`; `ACCELLERA-STANDARDS-LOCAL-REFERENCE-IMPORT.1`; `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2.1`; `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.1`; `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.1`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.143`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.142`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.141`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.140`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.139`. Older completed slices are in the task tree and git history.
+- recently_done: `BIN-FSMGEN-IMPORT-TREE-JUN16-REFRESH.1`; `FX-UNTRACKED-LEGACY-REMOVAL.1`; `ACCELLERA-STANDARDS-LOCAL-REFERENCE-IMPORT.1`; `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2.1`; `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.1`; `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.1`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.143`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.142`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.141`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.140`. Older completed slices are in the task tree and git history.
 - in_flight_uncommitted: none after this commit; `.144` remains the next IAL2 selector/audit owner and `.2.2` remains the backend-language-neutral contract/infrastructure readiness audit owner; ignored local-only mirrors are at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`; the unused untracked legacy `fx/` directory was removed in `FX-UNTRACKED-LEGACY-REMOVAL.1`.
 - blockers: none.
 
