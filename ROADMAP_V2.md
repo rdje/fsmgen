@@ -1005,8 +1005,12 @@ client configuration and bounded one-shot workflows for capabilities, support
 summaries, diagnostics, examples, check JSON, semantic JSON, and schedule
 previews. `SEMANTIC-INTROSPECTION-MCP-FRONTIER.8` added bounded read-only MCP
 schema snapshot fixtures plus a client compatibility matrix for the shipped
-one-shot and line-delimited JSON-RPC stdio profile. The next frontier is
-`SEMANTIC-INTROSPECTION-MCP-FRONTIER.9`, full MCP stdio framing compatibility
+one-shot and MCP 2025-06-18 newline-delimited JSON-RPC stdio profile.
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.9` locked that stdio framing boundary
+with a focused no-embedded-newline guard and keeps Streamable HTTP, prompts,
+sampling, completions, roots negotiation, service mode, and write tools outside
+the shipped profile. The next frontier is
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.10`, MCP roots/workspace-root negotiation
 selection. The IAL2
 SystemVerilog-backed feature-completeness tree remains
 active at

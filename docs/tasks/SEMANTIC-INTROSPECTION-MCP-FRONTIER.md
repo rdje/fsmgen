@@ -93,7 +93,8 @@ For FSMGen, the analogs are:
     `SEMANTIC-INTROSPECTION-MCP-FRONTIER.6`,
     `SEMANTIC-INTROSPECTION-MCP-FRONTIER.7`,
     `SEMANTIC-INTROSPECTION-MCP-FRONTIER.8`,
-    `SEMANTIC-INTROSPECTION-MCP-FRONTIER.9`
+    `SEMANTIC-INTROSPECTION-MCP-FRONTIER.9`,
+    `SEMANTIC-INTROSPECTION-MCP-FRONTIER.10`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.1`
   Status: `done`
@@ -152,9 +153,16 @@ For FSMGen, the analogs are:
   Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.8: add MCP schema snapshots`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.9`
+  Status: `done`
+  Goal: `Audit and select the official MCP stdio framing compatibility boundary.`
+  Acceptance: `Audit the shipped line-delimited JSON-RPC stdio profile against official MCP 2025-06-18 stdio framing/session expectations; add a bounded framing guard or record a smaller exact prerequisite before behavior-bearing changes; sync docs/KM/Memory/task/roadmap and run focused/docs gates; do not enable writes, prompts, sampling, network, shell, mutation workflows, commit, or push tools.`
+  Verification: `passed`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.9: lock MCP stdio framing`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.10`
   Status: `pending`
-  Goal: `Audit and select the full MCP stdio framing compatibility boundary.`
-  Acceptance: `Audit the shipped line-delimited JSON-RPC stdio profile against full MCP stdio framing/session expectations; either implement a bounded compatibility layer or record a smaller exact prerequisite before behavior-bearing changes; sync docs/KM/Memory/task/roadmap and run focused/docs gates; do not enable writes, prompts, sampling, network, shell, mutation workflows, commit, or push tools.`
+  Goal: `Select the MCP roots and workspace-root negotiation boundary.`
+  Acceptance: `Audit the official MCP roots client feature against FSMGen's explicit --workspace-root and source identity policy; select whether the adapter should consume roots/list_changed or remain CLI-configured for this phase; do not allow unbounded workspace traversal or implicit source access; sync docs/KM/Memory/task/roadmap and run focused/docs gates.`
   Commit: `pending`
 
 ## Implementation Notes From `.4`
@@ -259,19 +267,41 @@ For FSMGen, the analogs are:
   live adapter against the fixture while asserting that no write, generation,
   shell, network, commit, or push tool is advertised.
 - The mdBook now has a client compatibility matrix that distinguishes the
-  shipped one-shot/line-delimited JSON-RPC stdio profile from unclaimed full
-  MCP Content-Length framing, prompts, sampling, completions, and service-mode
-  session features.
+  shipped one-shot/newline-delimited MCP stdio profile from unclaimed
+  Streamable HTTP, roots negotiation, prompts, sampling, completions, and
+  service-mode session features.
 
 ## Candidate Contract Questions For `.9`
 
-- Should FSMGen add full MCP Content-Length stdio framing now, or keep the
-  line-delimited JSON-RPC profile as the only shipped client contract until a
-  smaller prerequisite lands?
+- Is the current line-delimited JSON-RPC stdio transport already aligned with
+  the official MCP 2025-06-18 stdio transport?
 - Which MCP session-lifecycle messages are required for real clients before
   prompts, sampling, or write tools are even considered?
 - How should the adapter preserve the current read-only/path-sanitized policy
   if an additional framing layer is introduced?
+
+## Implementation Notes From `.9`
+
+- The official MCP 2025-06-18 transport specification defines stdio messages
+  as newline-delimited JSON-RPC messages with no embedded newlines.
+- The existing `run_stdio` path already emits compact newline-delimited
+  JSON-RPC responses for stdio and stays silent for id-less notifications.
+- Added `t/1446-semantic-introspection-mcp-stdio-framing.t` to guard
+  one-message-per-line output, notification silence, parse-error framing, and
+  non-leaking parse-error messages.
+- The mdBook compatibility matrix no longer defers mythical Content-Length
+  stdio framing; it marks MCP stdio as shipped and keeps Streamable HTTP,
+  prompts, sampling, completions, roots negotiation, service mode, and write
+  tools outside the shipped profile.
+
+## Candidate Contract Questions For `.10`
+
+- Should the adapter consume MCP client `roots` to derive workspace roots, or
+  keep explicit `--workspace-root` as the only source of authority for now?
+- How should root changes interact with already-open source identities and
+  path-sanitized report payloads?
+- What is the smallest client-visible roots contract that preserves fail-closed
+  source access and does not broaden filesystem traversal?
 
 ## Candidate Future Phases
 
@@ -287,7 +317,7 @@ For FSMGen, the analogs are:
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.9` | `pending` | `.8` added schema snapshot fixtures and the first compatibility matrix; the next exact frontier is full MCP stdio framing compatibility selection. |
+| 1 | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.10` | `pending` | `.9` locked the official newline-delimited MCP stdio framing boundary; the next exact frontier is roots/workspace-root negotiation. |
 
 ## Decisions
 
@@ -321,8 +351,12 @@ For FSMGen, the analogs are:
   bounded one-shot workflows for capabilities, support summaries, diagnostics,
   examples, check JSON, semantic JSON, and schedule previews.
 - `2026-06-16`: `.8` added bounded read-only MCP schema snapshot fixtures and a
-  client compatibility matrix that does not claim full MCP framing, prompts,
-  sampling, completions, service mode, or write tools.
+  client compatibility matrix that does not claim Streamable HTTP, roots
+  negotiation, prompts, sampling, completions, service mode, or write tools.
+- `2026-06-16`: `.9` audited the official MCP 2025-06-18 stdio transport,
+  locked newline-delimited JSON-RPC framing with no embedded newlines, and kept
+  Streamable HTTP, roots negotiation, prompts, sampling, completions, service
+  mode, and write tools outside the shipped profile.
 - `2026-06-14`: Create this as a proposed owner, not an active implementation
   lane. The first real work must be no-code contract selection over existing
   public surfaces.
@@ -332,7 +366,7 @@ For FSMGen, the analogs are:
 
 ## Open Questions
 
-- None for `.8`; `.9` owns the full MCP stdio framing compatibility boundary.
+- None for `.9`; `.10` owns MCP roots/workspace-root negotiation.
 
 ## Blockers
 
@@ -351,7 +385,8 @@ For FSMGen, the analogs are:
 | `2026-06-16` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.5` | Syntax checks for `SemanticIntrospectionMCPAdapter` and `t/1443`; `prove -Iperl t/1438-semantic-introspection-contract.t t/1439-semantic-introspection-section-runtime-contract-audit.t t/1440-semantic-introspection-manifest-contract-roundtrip-audit.t t/1441-semantic-introspection-mcp-adapter.t t/1442-fsmgen-mcp-jsonrpc-cli.t t/1443-semantic-introspection-mcp-protocol-hardening.t`; mdBook, Knowledge Map, memory-architecture, README-numbering, and diff gates | `passed`; hardened protocol/client envelopes and selected `.6` deeper read-only query coverage |
 | `2026-06-16` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.6` | Syntax checks for `SemanticIntrospectionMCPAdapter`, `SemanticIntrospectionContract`, and `t/1444`; `prove -Iperl t/1438-semantic-introspection-contract.t t/1439-semantic-introspection-section-runtime-contract-audit.t t/1440-semantic-introspection-manifest-contract-roundtrip-audit.t t/1441-semantic-introspection-mcp-adapter.t t/1442-fsmgen-mcp-jsonrpc-cli.t t/1443-semantic-introspection-mcp-protocol-hardening.t t/1444-semantic-introspection-mcp-support-queries.t`; broader manifest, mdBook, Knowledge Map, memory-architecture, README-numbering, and diff gates | `passed`; added support summary and support-aware diagnostic/example queries; selected `.7` docs/workflow frontier |
 | `2026-06-16` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.7` | MCP one-shot examples for `tools/list`, `fsmgen_capability_query`, `fsmgen_support_summary`, `fsmgen_find_examples`, `fsmgen_explain_diagnostic`, `fsmgen_check`, `fsmgen_semantic_introspect`, and `fsmgen_schedule_preview`; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `mdbook build docs/book`; `env -u PERL5LIB prove -Iperl t/1414-docs-relative-paths-audit.t`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `git --no-pager diff --check`; README numbering check | `passed`; documented read-only MCP client workflows and selected `.8` schema snapshot/client compatibility frontier |
-| `2026-06-16` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.8` | Syntax check for `t/1445`; `prove -Iperl t/1438-semantic-introspection-contract.t t/1441-semantic-introspection-mcp-adapter.t t/1442-fsmgen-mcp-jsonrpc-cli.t t/1443-semantic-introspection-mcp-protocol-hardening.t t/1444-semantic-introspection-mcp-support-queries.t t/1445-semantic-introspection-mcp-schema-snapshots.t`; mdBook, docs path audit, Knowledge Map generation/check, memory-architecture, README-numbering, and diff gates | `passed`; added read-only MCP schema snapshot fixture and client compatibility matrix; selected `.9` full MCP stdio framing compatibility boundary |
+| `2026-06-16` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.8` | Syntax check for `t/1445`; `prove -Iperl t/1438-semantic-introspection-contract.t t/1441-semantic-introspection-mcp-adapter.t t/1442-fsmgen-mcp-jsonrpc-cli.t t/1443-semantic-introspection-mcp-protocol-hardening.t t/1444-semantic-introspection-mcp-support-queries.t t/1445-semantic-introspection-mcp-schema-snapshots.t`; mdBook, docs path audit, Knowledge Map generation/check, memory-architecture, README-numbering, and diff gates | `passed`; added read-only MCP schema snapshot fixture and client compatibility matrix; selected `.9` official MCP stdio framing compatibility boundary |
+| `2026-06-16` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.9` | Syntax check for `t/1446`; `prove -Iperl t/1441-semantic-introspection-mcp-adapter.t t/1442-fsmgen-mcp-jsonrpc-cli.t t/1443-semantic-introspection-mcp-protocol-hardening.t t/1445-semantic-introspection-mcp-schema-snapshots.t t/1446-semantic-introspection-mcp-stdio-framing.t`; mdBook, docs path audit, Knowledge Map generation/check, memory-architecture, README-numbering, and diff gates | `passed`; locked official newline-delimited MCP stdio framing and selected `.10` roots/workspace-root negotiation |
 
 ## Commit Log
 
@@ -365,7 +400,8 @@ For FSMGen, the analogs are:
 | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.6` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.6: deepen MCP support queries` | Added support-summary, support-aware examples, and diagnostic-to-support-accounting query envelopes. |
 | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.7` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.7: document MCP client workflows` | Documented generic read-only MCP client configuration and bounded one-shot workflows for the shipped resource/tool families. |
 | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.8` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.8: add MCP schema snapshots` | Added bounded read-only MCP schema snapshot fixture/test and a client compatibility matrix. |
-| `SEMANTIC-INTROSPECTION-MCP-FRONTIER.9` | `pending` | `pending` |
+| `SEMANTIC-INTROSPECTION-MCP-FRONTIER.9` | `SEMANTIC-INTROSPECTION-MCP-FRONTIER.9: lock MCP stdio framing` | Locked official newline-delimited MCP stdio framing with a focused guard and corrected the compatibility matrix. |
+| `SEMANTIC-INTROSPECTION-MCP-FRONTIER.10` | `pending` | `pending` |
 
 ## Changelog
 
@@ -401,4 +437,8 @@ For FSMGen, the analogs are:
   client compatibility matrix.
 - `2026-06-16`: Completed `.8`; the read-only MCP profile now has a bounded
   schema snapshot fixture/test and the mdBook documents the first client
-  compatibility matrix. `.9` owns full MCP stdio framing compatibility.
+  compatibility matrix, then selected `.9` for official MCP stdio framing
+  compatibility.
+- `2026-06-16`: Completed `.9`; official MCP stdio is newline-delimited
+  JSON-RPC, the adapter's stdio path now has explicit framing coverage, and
+  `.10` owns roots/workspace-root negotiation.

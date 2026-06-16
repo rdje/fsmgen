@@ -140,10 +140,13 @@ write/generation tools or exposing the configured workspace root.
 fixture for the read-only adapter's initialization, resource, template, tool,
 and tool-envelope shapes, guarded by
 `t/1445-semantic-introspection-mcp-schema-snapshots.t`. The mdBook now
-documents the first client compatibility matrix: one-shot JSON-RPC and
-line-delimited JSON-RPC stdio are shipped, while full MCP Content-Length
-framing, prompts, sampling, completions, service mode, and write/generation
-tools are not claimed yet.
+documents the first client compatibility matrix.
+
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.9` audited the official MCP 2025-06-18
+transport boundary and locked the current stdio profile as newline-delimited
+JSON-RPC with no embedded newlines. One-shot JSON-RPC and MCP stdio are
+shipped, while Streamable HTTP, prompts, sampling, completions, roots
+negotiation, service mode, and write/generation tools are not claimed yet.
 
 ## Deferred
 
