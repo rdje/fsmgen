@@ -1675,7 +1675,17 @@ failed closed at the depth-2-only burst-last queue-head read-data coverage
 gate. No behavior-bearing code changed in `.157`; write depth-3,
 burst-length/runtime or multi-beat over read burst-last depth-3, multiple or
 mixed depth-3 groups, same-family mixed auto-ID, group-local enqueue widening,
-direct backend, and VHDL remain deferred until separately selected.
+direct backend, and VHDL remain deferred until separately selected. `.158`
+audited the scalar last-beat read-data sibling and selected `.159`, direct
+bounded implementation for exactly one generated read burst-last depth-3
+concrete `RID` group with `r0`/`r1`/`r2`. Code review found the same-ID queue
+builder already generates the depth-3 burst-last demux and the scalar
+read-data artifact path already iterates covered transactions once the local
+coverage gate admits them; no lower-layer prerequisite was found. `.158`
+remains audit-only. Burst-length/runtime or multi-beat over read burst-last
+depth-3, write depth-3, multiple or mixed depth-3 groups, same-family mixed
+auto-ID, group-local enqueue widening, direct backend, and VHDL remain
+deferred until separately selected.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.

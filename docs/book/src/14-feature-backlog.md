@@ -5645,8 +5645,8 @@ Strict check JSON and normalized semantic JSON support-account the sample as
 Read-data over read burst-last depth-3, burst-length/runtime or multi-beat
 over read burst-last depth-3, write depth-3, multiple or mixed depth-3
 groups, mixed auto-ID, group-local enqueue widening, direct backend, and VHDL
-remain separately deferred. `.157` is the next feature-completeness
-selector.
+remain separately deferred. `.157` selected `.158`, the focused read-data
+readiness audit.
 
 Post read burst-last depth-3 queue-head response-demux selector:
 [AXI_IAL2_MANAGER_POST_READ_BURST_LAST_DEPTH3_QUEUE_HEAD_RESPONSE_DEMUX_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_READ_BURST_LAST_DEPTH3_QUEUE_HEAD_RESPONSE_DEMUX_NEXT_SLICE_SELECTION.md)
@@ -5669,6 +5669,25 @@ is needed first. Burst-length metadata, runtime validation, multi-beat output
 bank behavior, write depth-3, multiple or mixed depth-3 groups, mixed
 auto-ID, group-local enqueue widening, direct backend, and VHDL remain
 separately deferred.
+
+Read burst-last depth-3 queue-head read-data readiness:
+[AXI_IAL2_MANAGER_READ_BURST_LAST_DEPTH3_QUEUE_HEAD_READ_DATA_READINESS_AUDIT](../../AXI_IAL2_MANAGER_READ_BURST_LAST_DEPTH3_QUEUE_HEAD_READ_DATA_READINESS_AUDIT.md)
+records `.158` and selects `.159`, direct bounded implementation of scalar
+last-beat read-data over the generated read burst-last depth-3 queue-head
+response-demux. The audit confirms that the `.156` response-demux already
+generates the single depth-3 `RID` group and three completion pulses, while
+the scalar read-data artifact path already emits inputs, outputs, and capture
+rules by iterating the covered transaction list once the local coverage gate
+admits the shape.
+
+The selected `.159` boundary is intentionally narrow: read family only,
+`response-scope burst-last`, one-bit `RLAST`, exactly one concrete `RID`
+group with `r0`, `r1`, and `r2`, queue depth 3, `capture-scope last-beat`,
+`completion-source response-demux`, `status-policy last-beat`, and scalar
+`RDATA`/`RRESP` outputs. Burst-length metadata, runtime validation,
+multi-beat output-bank behavior, write depth-3, multiple or mixed depth-3
+groups, mixed auto-ID, group-local enqueue widening, direct backend, and VHDL
+remain separately deferred.
 
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)

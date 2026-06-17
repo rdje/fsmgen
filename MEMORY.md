@@ -10,10 +10,10 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `HEAD after .157 commit` — `IAL2-FEATURE-COMPLETENESS-FRONTIER.157: select depth-3 burst-last read-data audit`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.158` audit generated read-data over read burst-last depth-3 queue-head response-demux readiness; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.157` selected `.158` after confirming `.156` is generated and response-demux-only while a temporary last-beat read-data-over-`.156` probe fails closed at the depth-2-only burst-last queue-head read-data coverage gate.
-- in_flight_uncommitted: none after `.157` commit. `.158` must audit whether scalar last-beat read-data over exactly one generated read burst-last depth-3 concrete `RID` group can be implemented directly or needs a smaller prerequisite. Do not enable burst-length/runtime/multi-beat over read burst-last depth-3, write depth-3, multiple/mixed depth-3 groups, mixed auto-ID, group-local enqueue widening, direct backend, or VHDL. Ignored local-only mirrors are at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
+- latest_commit: `HEAD after .158 commit` — `IAL2-FEATURE-COMPLETENESS-FRONTIER.158: audit burst-last depth-3 read-data`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.159` implement generated scalar read-data over read burst-last depth-3 queue-head response-demux; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.158` audited read-data over generated read burst-last depth-3 queue-head response-demux and selected `.159` as a direct bounded implementation owner; no behavior-bearing files changed.
+- in_flight_uncommitted: none after `.158` commit. `.159` must implement only scalar last-beat `RDATA`/`RRESP` over exactly one generated read burst-last depth-3 concrete `RID` group (`r0`/`r1`/`r2`), with no burst-length/runtime/multi-beat, write depth-3, multiple/mixed depth-3 groups, mixed auto-ID, group-local enqueue widening, direct backend, or VHDL widening. Ignored local-only mirrors are at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
 
 ## Notes
