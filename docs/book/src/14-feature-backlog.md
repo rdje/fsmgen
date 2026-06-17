@@ -5712,7 +5712,19 @@ Strict check JSON and normalized semantic JSON support-account the sample as
 Burst-length/runtime or multi-beat behavior over read burst-last depth-3,
 write depth-3, multiple or mixed depth-3 groups, mixed auto-ID,
 group-local enqueue widening, direct backend, and VHDL remain separately
-deferred. `.160` is the next feature-completeness selector after `.159`.
+deferred.
+
+Post read burst-last depth-3 queue-head read-data selector:
+[AXI_IAL2_MANAGER_POST_READ_BURST_LAST_DEPTH3_QUEUE_HEAD_READ_DATA_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_READ_BURST_LAST_DEPTH3_QUEUE_HEAD_READ_DATA_NEXT_SLICE_SELECTION.md)
+records `.160` and selects `.161`, readiness audit for generated report-only
+raw-`ARLEN` burst-length capture over the `.159` shape. The selector's live
+probes show `.159` is generated at depth 3 but still reports
+`arlen_or_beat_count_validation` residue, while the existing depth-2
+queue-head burst-length sibling already generates request-bound raw-`ARLEN`
+storage and capture rules with `validation report_only`. Runtime validation,
+multi-beat output-bank behavior, write depth-3, multiple or mixed depth-3
+groups, mixed auto-ID, group-local enqueue widening, direct backend, and VHDL
+remain separately deferred.
 
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)

@@ -1696,8 +1696,12 @@ check JSON, semantic JSON, and `--verify-hdl` cover the public sample through
 support accounting. Burst-length/runtime or multi-beat over read burst-last
 depth-3, write depth-3, multiple or mixed depth-3 groups, same-family mixed
 auto-ID, group-local enqueue widening, direct backend, and VHDL remain
-deferred until separately selected. `.160` is the next feature-completeness
-selector after `.159`.
+deferred until separately selected. `.160` selected `.161`, readiness audit
+for generated report-only raw-`ARLEN` burst-length capture over the same
+read burst-last depth-3 queue-head read-data shape. Runtime validation,
+multi-beat output-bank behavior, write depth-3, multiple or mixed depth-3
+groups, same-family mixed auto-ID, group-local enqueue widening, direct
+backend, and VHDL remain deferred until separately selected.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.

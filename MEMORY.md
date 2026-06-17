@@ -10,10 +10,10 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `HEAD after .159 commit` — `IAL2-FEATURE-COMPLETENESS-FRONTIER.159: ship burst-last depth-3 read-data`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.160` select the next IAL2 feature-completeness slice after generated read burst-last depth-3 queue-head read-data; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.159` shipped generated scalar last-beat `RDATA`/`RRESP` over exactly one generated read burst-last depth-3 concrete `RID` group (`r0`/`r1`/`r2`) and advanced the IAL2 frontier to `.160`.
-- in_flight_uncommitted: none after `.159` commit. `.160` is selector-only until it chooses the next exact owner; do not enable burst-length/runtime/multi-beat over read burst-last depth-3, write depth-3, multiple/mixed depth-3 groups, mixed auto-ID, group-local enqueue widening, direct backend, or VHDL without a new owned leaf. Ignored local-only mirrors are at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
+- latest_commit: `HEAD after .160 commit` — `IAL2-FEATURE-COMPLETENESS-FRONTIER.160: select depth-3 burst-length audit`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.161` audit readiness for generated report-only raw-`ARLEN` burst-length capture over the generated read burst-last depth-3 queue-head read-data shape; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.160` selected `.161` after comparing the `.159` depth-3 read-data sample with existing depth-2 report-only burst-length, runtime-validation, and multi-beat queue-head siblings.
+- in_flight_uncommitted: none after `.160` commit. `.161` must audit only the report-only raw-`ARLEN` burst-length boundary before any behavior change; do not enable runtime-validation, multi-beat over read burst-last depth-3, write depth-3, multiple/mixed depth-3 groups, mixed auto-ID, group-local enqueue widening, direct backend, or VHDL without a new owned leaf. Ignored local-only mirrors are at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
 
 ## Notes
