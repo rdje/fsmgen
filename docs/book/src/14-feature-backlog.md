@@ -5616,6 +5616,38 @@ boundary is response-demux only: no read-data, burst-length,
 runtime-validation, multi-beat output-bank, write depth-3, multiple/mixed
 depth-3 groups, mixed auto-ID, direct backend, or VHDL widening.
 
+Read burst-last depth-3 queue-head response-demux behavior:
+[AXI_IAL2_MANAGER_READ_BURST_LAST_DEPTH3_QUEUE_HEAD_RESPONSE_DEMUX_BEHAVIOR](../../AXI_IAL2_MANAGER_READ_BURST_LAST_DEPTH3_QUEUE_HEAD_RESPONSE_DEMUX_BEHAVIOR.md)
+records `.156` and ships generated response-demux-only behavior for one
+read burst-last concrete `RID` group at depth 3. The runnable public sample
+is:
+
+```bash
+./bin/fsmgen --emit-schedule-json ppif/axi_manager_capacity_status_read_burst_last_depth3_same_id_queue_head_response_demux.ppif
+./bin/fsmgen --quiet --verify-hdl --output /tmp/fsmgen_read_burst_last_depth3_same_id_queue_head_response_demux.sv ppif/axi_manager_capacity_status_read_burst_last_depth3_same_id_queue_head_response_demux.ppif
+```
+
+The generated queue covers `r0`, `r1`, and `r2` with concrete `RID` `3`.
+Storage spans `slot0` through `slot2`, the report marks
+`generated_read_burst_last_queue_head_demux`, and completion pulses fire only
+for the active queue head when raw read completion, `RID`, `RLAST`, and slot
+identity all match. A generated response-demux rule has this shape:
+
+```lisp
+(rule axi0_r2_response_demux
+  (& axi0_read_complete (== axi0_rid 4'd3) axi0_rlast
+     axi0_read_id3_same_id_issue_order_slot0_r2_q)
+  (pulse axi0_r2_complete))
+```
+
+Strict check JSON and normalized semantic JSON support-account the sample as
+`intent.ppif_axi_manager_capacity_status_read_burst_last_depth3_same_id_queue_head_response_demux`.
+Read-data over read burst-last depth-3, burst-length/runtime or multi-beat
+over read burst-last depth-3, write depth-3, multiple or mixed depth-3
+groups, mixed auto-ID, group-local enqueue widening, direct backend, and VHDL
+remain separately deferred. `.157` is the next feature-completeness
+selector.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same

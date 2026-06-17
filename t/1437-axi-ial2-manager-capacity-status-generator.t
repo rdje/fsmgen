@@ -588,6 +588,59 @@ subtest 'same-ID queue-head response-demux generates read single-beat depth-3 qu
     );
 };
 
+subtest 'same-ID queue-head response-demux generates read burst-last depth-3 queue state and completion demux' => sub {
+    my $result = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_same_id_read_burst_last_depth3_queue_head_response_demux());
+    my $isf = $result->{generated_ial1}{text};
+
+    like($isf, qr/\(var axi0_r2_admitted_request_pulse_q \(width 1\)\)/, 'read burst-last depth-3 queue-head selection keeps third admitted request pulse storage');
+    like($isf, qr/\(output axi0_r2_complete\)/, 'read burst-last depth-3 queue-head demux exposes r2 completion as a generated output');
+    unlike($isf, qr/\(input axi0_r2_complete\)/, 'read burst-last depth-3 r2 completion is no longer an authored input');
+    like($isf, qr/\(input axi0_rlast\)/, 'read burst-last depth-3 queue-head demux consumes RLAST');
+    like($isf, qr/\(var axi0_read_id3_same_id_issue_order_slot2_r2_q \(width 1\)\)/, 'read burst-last depth-3 queue-head demux declares slot2 r2 state');
+    like($isf, qr/\(rule axi0_read_id3_same_id_issue_order_empty_enqueue_r0\b/, 'read burst-last depth-3 queue-head demux emits empty enqueue r0 transition');
+    like($isf, qr/\(rule axi0_read_id3_same_id_issue_order_r0_r1_enqueue_r2\b/, 'read burst-last depth-3 queue-head demux emits fill-third-slot transition');
+    like($isf, qr/\(rule axi0_read_id3_same_id_issue_order_r0_r1_r2_dequeue_r0\b/, 'read burst-last depth-3 queue-head demux emits full-queue dequeue transition');
+    like($isf, qr/\(rule axi0_read_id3_same_id_issue_order_r0_r1_r2_dequeue_enqueue_r0\b/, 'read burst-last depth-3 queue-head demux emits full-queue dequeue/enqueue transition');
+    like($isf, qr/\(rule axi0_r2_response_demux \(& axi0_read_complete \(== axi0_rid 4'd3\) axi0_rlast axi0_read_id3_same_id_issue_order_slot0_r2_q\)/, 'read burst-last depth-3 queue-head demux emits RLAST-gated r2 response-demux rule');
+    like($isf, qr/read same-ID non-last response beat does not dequeue/, 'read burst-last depth-3 queue-head demux emits non-last no-dequeue assertion');
+    like($isf, qr/read same-ID issue-order queue slot 2 is one-hot-or-empty/, 'read burst-last depth-3 queue-head demux emits slot2 one-hot assertion');
+    like($isf, qr/read same-ID issue-order queue is compact/, 'read burst-last depth-3 queue-head demux emits generalized compactness assertion');
+    like($isf, qr/read same-ID issue-order queue enqueue for r2 does not duplicate a remaining transaction/, 'read burst-last depth-3 queue-head demux emits duplicate-after-dequeue assertion for r2');
+
+    assert_same_id_queue_head_response_demux_report(
+        $result->{report}{response_demux},
+        'generator depth-3 read burst-last report',
+        queues => [
+            {
+                concrete_id          => 3,
+                transactions         => [qw(r0 r1 r2)],
+                depth                => 3,
+                dequeue_event_source => 'queue_head_response_demux',
+            },
+        ],
+        completion_signals => [qw(axi0_r0_complete axi0_r1_complete axi0_r2_complete)],
+        generated_rules => [qw(axi0_r0_response_demux axi0_r1_response_demux axi0_r2_response_demux)],
+        generated_assertions => [qw(
+            axi0_read_response_demux_active_match
+            axi0_r0_r1_read_response_demux_unique_match
+            axi0_r0_r2_read_response_demux_unique_match
+            axi0_r1_r2_read_response_demux_unique_match
+        )],
+    );
+    my $read_policy = $result->{report}{same_id_ordering}{concrete_id_reuse_policy}{read};
+    is($read_policy->{implementation_status}, 'generated_read_burst_last_queue_head_demux', 'depth-3 read burst-last policy reports the generated burst-last implementation status');
+    is_deeply(
+        [map { $_->{depth} } @{$read_policy->{generated_queues} || []}],
+        [3],
+        'depth-3 read burst-last policy reports the generated depth-3 queue',
+    );
+    is_deeply(
+        $result->{report}{id_response_rule_engine}{residue},
+        [qw(auto_id_allocation id_release)],
+        'generated read burst-last depth-3 queue-head behavior removes same-ID and response-demux residue from ID/response report',
+    );
+};
+
 subtest 'read-data contract consumes generated read single-beat depth-3 same-ID queue-head demux' => sub {
     my $result = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_same_id_read_single_beat_depth3_queue_head_read_data());
     my $isf = $result->{generated_ial1}{text};
@@ -2400,6 +2453,16 @@ sub sample_contract_with_same_id_read_single_beat_depth3_queue_head_response_dem
     return $contract;
 }
 
+sub sample_contract_with_same_id_read_burst_last_depth3_queue_head_response_demux {
+    my $contract = sample_contract_with_same_id_read_single_beat_depth3_queue_head_response_demux();
+    $contract->{intent_name} = 'axi_manager_capacity_status_read_burst_last_depth3_same_id_queue_head_response_demux';
+    $contract->{source}{object_id} = 'axi-manager-capacity-status-read-burst-last-depth3-same-id-queue-head-response-demux';
+    $contract->{response_demux}{read}{response_scope} = 'burst-last';
+    $contract->{response_demux}{read}{last_signal} = 'axi0_rlast';
+    $contract->{response_demux}{read}{last_signal_width} = 1;
+    return $contract;
+}
+
 sub sample_contract_with_same_id_read_single_beat_depth3_queue_head_read_data {
     my $contract = sample_contract_with_same_id_read_single_beat_depth3_queue_head_response_demux();
     $contract->{intent_name} = 'axi_manager_capacity_status_read_single_beat_depth3_same_id_queue_head_read_data';
@@ -3197,6 +3260,11 @@ sub assert_rlast_report_prose_alignment {
         $id_residue->{detail},
         qr/selected single-group read single-beat depth-3 response-demux-only and scalar read-data queue-head shapes/,
         "$owner reports selected read single-beat depth-3 queue-head response-demux and read-data as supported",
+    );
+    like(
+        $id_residue->{detail},
+        qr/selected single-group read burst-last depth-3 response-demux-only shape/,
+        "$owner reports selected read burst-last depth-3 queue-head response-demux as supported",
     );
     like(
         $id_residue->{detail},

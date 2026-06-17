@@ -1657,6 +1657,19 @@ selected-not-generated only because of the local queue-builder depth gate.
 Write depth-3, read-data over read burst-last depth-3, multiple or mixed
 depth-3 groups, same-family mixed auto-ID, group-local enqueue widening,
 direct backend, and VHDL remain deferred until separately selected.
+`.156` now ships that bounded read burst-last depth-3 queue-head
+response-demux sibling for
+`ppif/axi_manager_capacity_status_read_burst_last_depth3_same_id_queue_head_response_demux.ppif`:
+one read burst-last concrete `RID` `3` group covers `r0`/`r1`/`r2`, compact
+one-hot queue storage spans `slot0` through `slot2`, generated completion
+pulses are emitted only for the active head transaction when raw read
+completion, `RID`, `RLAST`, and slot identity match, and strict check JSON,
+semantic JSON, and `--verify-hdl` cover the public sample through support
+accounting. Read-data over read burst-last depth-3, burst-length/runtime or
+multi-beat over read burst-last depth-3, write depth-3, multiple or mixed
+depth-3 groups, same-family mixed auto-ID, group-local enqueue widening,
+direct backend, and VHDL remain deferred. `.157` is the next
+feature-completeness selector.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.
