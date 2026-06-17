@@ -1752,14 +1752,19 @@ beat-count/`RLAST` assertions per transaction, and
 `generated_beat_count_validation` residue while keeping
 `multi_beat_read_data_reassembly`, `per_beat_outputs`, and
 `rresp_aggregation` residue. The `.162` report-only sample is preserved.
-`.166` selected `.167`, readiness audit for generated multi-beat output-bank
-behavior over the same read burst-last depth-3 queue-head runtime-validation
-shape. Live reports show `.165` leaves only
+`.167` audited generated multi-beat output-bank readiness over that same
+depth-3 runtime-validation shape and selected `.168`, direct bounded
+implementation. Live reports show `.165` leaves only
 `multi_beat_read_data_reassembly`, `per_beat_outputs`, and
-`rresp_aggregation` read-data residue, and an in-memory depth-3 multi-beat
-candidate fails closed only at the local multi-beat coverage diagnostic.
-Write depth-3, multiple or mixed depth-3 groups, mixed auto-ID, direct
-backend, verification-output generation, and VHDL remain deferred.
+`rresp_aggregation` read-data residue; depth-2 one-group and multi-group
+multi-beat siblings already generate `per_beat_output_bank` behavior with
+empty read-data residue; and an in-memory depth-3 multi-beat candidate fails
+closed only at the local multi-beat coverage diagnostic. `.168` is limited to
+one read burst-last depth-3 queue-head group with `r0`/`r1`/`r2`, runtime
+`ARLEN` validation, per-beat output banks, valid masks, length outputs, and
+scalar `RRESP` aggregation. Write depth-3, multiple or mixed depth-3 groups,
+mixed auto-ID, direct backend, verification-output generation, and VHDL
+remain deferred.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.

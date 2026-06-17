@@ -5868,6 +5868,18 @@ candidate fails closed at the local multi-beat coverage diagnostic. `.167`
 must audit whether direct implementation can widen that local admission gate
 or needs a smaller prerequisite before behavior changes.
 
+Read burst-last depth-3 queue-head multi-beat readiness:
+[AXI_IAL2_MANAGER_READ_BURST_LAST_DEPTH3_QUEUE_HEAD_MULTI_BEAT_READINESS_AUDIT](../../AXI_IAL2_MANAGER_READ_BURST_LAST_DEPTH3_QUEUE_HEAD_MULTI_BEAT_READINESS_AUDIT.md)
+records `.167` and selects `.168`, direct bounded implementation of
+generated multi-beat output-bank behavior over one read burst-last depth-3
+queue-head runtime-validation group. The audit found no parser, IAL1, IAL0,
+SystemVerilog lowerer, support-accounting, or mdBook prerequisite beyond the
+local multi-beat depth-3 admission gate. The selected behavior is limited to
+`r0`/`r1`/`r2`, runtime `ARLEN` validation, per-beat output banks, valid
+masks, length outputs, and scalar `RRESP` aggregation; write depth-3,
+multiple or mixed depth-3 groups, mixed auto-ID, direct backend, verification
+output generation, and VHDL remain separate owned work.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same

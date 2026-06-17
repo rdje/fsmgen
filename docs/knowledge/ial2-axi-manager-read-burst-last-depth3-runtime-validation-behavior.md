@@ -8,8 +8,8 @@ answers:
 date: 2026-06-17
 status: current
 tags: [ial2, axi, manager, read-data, burst-last, queue-head, depth-3, runtime-validation, burst-length]
-evidence: docs/AXI_IAL2_MANAGER_READ_BURST_LAST_DEPTH3_QUEUE_HEAD_RUNTIME_VALIDATION_BEHAVIOR.md; ppif/axi_manager_capacity_status_read_burst_last_depth3_same_id_queue_head_burst_length_runtime_assertion.ppif; perl/FSM/IAL2/ProtocolIntent/AxiManagerCapacityStatus.pm; perl/FSM/Support/RegressionCorpus.pm; t/1437-axi-ial2-manager-capacity-status-generator.t; t/1436-ial2-ppif-parser-cli.t; t/248-regression-corpus-accounting.t; docs/REGRESSION_CORPUS.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md
-reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.165|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.166|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.167|READ_BURST_LAST_DEPTH3_QUEUE_HEAD_RUNTIME_VALIDATION_BEHAVIOR|runtime beat-count|beat_count_match_source|multi_beat_read_data_reassembly|axi_manager_capacity_status_read_burst_last_depth3_same_id_queue_head_burst_length_runtime_assertion' docs/AXI_IAL2_MANAGER_READ_BURST_LAST_DEPTH3_QUEUE_HEAD_RUNTIME_VALIDATION_BEHAVIOR.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md README.md ROADMAP_V2.md docs/book/src/14-feature-backlog.md ppif/axi_manager_capacity_status_read_burst_last_depth3_same_id_queue_head_burst_length_runtime_assertion.ppif
+evidence: docs/AXI_IAL2_MANAGER_READ_BURST_LAST_DEPTH3_QUEUE_HEAD_RUNTIME_VALIDATION_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_READ_BURST_LAST_DEPTH3_QUEUE_HEAD_MULTI_BEAT_READINESS_AUDIT.md; ppif/axi_manager_capacity_status_read_burst_last_depth3_same_id_queue_head_burst_length_runtime_assertion.ppif; perl/FSM/IAL2/ProtocolIntent/AxiManagerCapacityStatus.pm; perl/FSM/Support/RegressionCorpus.pm; t/1437-axi-ial2-manager-capacity-status-generator.t; t/1436-ial2-ppif-parser-cli.t; t/248-regression-corpus-accounting.t; docs/REGRESSION_CORPUS.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md
+reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.165|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.166|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.167|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.168|READ_BURST_LAST_DEPTH3_QUEUE_HEAD_RUNTIME_VALIDATION_BEHAVIOR|READ_BURST_LAST_DEPTH3_QUEUE_HEAD_MULTI_BEAT_READINESS_AUDIT|runtime beat-count|beat_count_match_source|multi_beat_read_data_reassembly|axi_manager_capacity_status_read_burst_last_depth3_same_id_queue_head_burst_length_runtime_assertion' docs/AXI_IAL2_MANAGER_READ_BURST_LAST_DEPTH3_QUEUE_HEAD_RUNTIME_VALIDATION_BEHAVIOR.md docs/AXI_IAL2_MANAGER_READ_BURST_LAST_DEPTH3_QUEUE_HEAD_MULTI_BEAT_READINESS_AUDIT.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md README.md ROADMAP_V2.md docs/book/src/14-feature-backlog.md ppif/axi_manager_capacity_status_read_burst_last_depth3_same_id_queue_head_burst_length_runtime_assertion.ppif
 ---
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.165` shipped generated runtime
@@ -34,7 +34,9 @@ this shape.
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.166` selected
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.167`, readiness audit for generated
 multi-beat output-bank behavior over this depth-3 runtime-validation shape.
-Write depth-3, multiple or mixed depth-3 groups, mixed auto-ID,
-group-local enqueue widening, packed outputs, alternate burst assembly,
-direct backend, verification-output generation, and VHDL remain deferred
-behind future owned leaves.
+`.167` completed that audit and selected
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.168`, direct bounded implementation over
+the same `r0`/`r1`/`r2` group. Write depth-3, multiple or mixed depth-3
+groups, mixed auto-ID, group-local enqueue widening, packed outputs,
+alternate burst assembly, direct backend, verification-output generation, and
+VHDL remain deferred behind future owned leaves.
