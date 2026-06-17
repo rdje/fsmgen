@@ -5689,6 +5689,31 @@ multi-beat output-bank behavior, write depth-3, multiple or mixed depth-3
 groups, mixed auto-ID, group-local enqueue widening, direct backend, and VHDL
 remain separately deferred.
 
+Read burst-last depth-3 queue-head read-data behavior:
+[AXI_IAL2_MANAGER_READ_BURST_LAST_DEPTH3_QUEUE_HEAD_READ_DATA_BEHAVIOR](../../AXI_IAL2_MANAGER_READ_BURST_LAST_DEPTH3_QUEUE_HEAD_READ_DATA_BEHAVIOR.md)
+records `.159` and ships generated scalar last-beat read-data over one read
+burst-last concrete `RID` group at depth 3. The runnable public sample is:
+
+```bash
+./bin/fsmgen --emit-schedule-json ppif/axi_manager_capacity_status_read_burst_last_depth3_same_id_queue_head_read_data.ppif
+./bin/fsmgen --quiet --verify-hdl --output /tmp/fsmgen_read_burst_last_depth3_same_id_queue_head_read_data.sv ppif/axi_manager_capacity_status_read_burst_last_depth3_same_id_queue_head_read_data.ppif
+```
+
+The generated queue covers `r0`, `r1`, and `r2` with concrete `RID` `3`.
+The response-demux remains `generated_read_burst_last_queue_head_demux`, and
+the read-data report marks
+`generated_queue_head_response_demux_last_beat_completion_pulse`. Generation
+adds `axi0_rdata`/`axi0_rresp` inputs, scalar
+`axi0_r*_last_rdata`/`axi0_r*_last_rresp` outputs, and read-data capture
+rules guarded by each generated `RID`/`RLAST` queue-head completion pulse.
+
+Strict check JSON and normalized semantic JSON support-account the sample as
+`intent.ppif_axi_manager_capacity_status_read_burst_last_depth3_same_id_queue_head_read_data`.
+Burst-length/runtime or multi-beat behavior over read burst-last depth-3,
+write depth-3, multiple or mixed depth-3 groups, mixed auto-ID,
+group-local enqueue widening, direct backend, and VHDL remain separately
+deferred. `.160` is the next feature-completeness selector after `.159`.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same

@@ -1686,6 +1686,18 @@ remains audit-only. Burst-length/runtime or multi-beat over read burst-last
 depth-3, write depth-3, multiple or mixed depth-3 groups, same-family mixed
 auto-ID, group-local enqueue widening, direct backend, and VHDL remain
 deferred until separately selected.
+`.159` now ships that bounded scalar last-beat read-data sibling for
+`ppif/axi_manager_capacity_status_read_burst_last_depth3_same_id_queue_head_read_data.ppif`:
+the same `r0`/`r1`/`r2` concrete `RID` `3` depth-3 queue-head group drives
+generated `axi0_rdata`/`axi0_rresp` inputs, per-transaction scalar
+last-beat `RDATA`/`RRESP` outputs, and capture rules guarded by
+`generated_queue_head_response_demux_last_beat_completion_pulse`. Strict
+check JSON, semantic JSON, and `--verify-hdl` cover the public sample through
+support accounting. Burst-length/runtime or multi-beat over read burst-last
+depth-3, write depth-3, multiple or mixed depth-3 groups, same-family mixed
+auto-ID, group-local enqueue widening, direct backend, and VHDL remain
+deferred until separately selected. `.160` is the next feature-completeness
+selector after `.159`.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.
