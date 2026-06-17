@@ -1736,6 +1736,17 @@ direct implementation only needs that admission boundary widened or whether a
 smaller prerequisite is required. Multi-beat output banks, write depth-3,
 multiple or mixed depth-3 groups, mixed auto-ID, direct backend, and VHDL
 remain deferred until separately selected.
+`.164` now selects `.165`, direct bounded implementation of generated
+runtime beat-count/`RLAST` validation over that same `.162` depth-3
+queue-head raw-`ARLEN` burst-length shape. The audit found no lower-layer
+prerequisite beyond the local coverage gate: runtime-validation
+normalization, expected-beat storage, read-beat counters, beat-count
+init/increment rules, assertion generation, generated-artifact reporting, and
+schedule-report fields already iterate the covered transaction list. `.165`
+must add the public support-accounted runtime-validation PPIF sample, focused
+generator/PPIF coverage, and docs while preserving the `.162` report-only
+sample and keeping multi-beat output banks, write depth-3, multiple or mixed
+depth-3 groups, mixed auto-ID, direct backend, and VHDL deferred.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.

@@ -5796,6 +5796,24 @@ changes. Multi-beat output-bank behavior over read burst-last depth-3, write
 depth-3, multiple or mixed depth-3 groups, mixed auto-ID, direct backend, and
 VHDL remain separately deferred.
 
+Read burst-last depth-3 queue-head runtime-validation readiness:
+[AXI_IAL2_MANAGER_READ_BURST_LAST_DEPTH3_QUEUE_HEAD_RUNTIME_VALIDATION_READINESS_AUDIT](../../AXI_IAL2_MANAGER_READ_BURST_LAST_DEPTH3_QUEUE_HEAD_RUNTIME_VALIDATION_READINESS_AUDIT.md)
+records `.164` and selects `.165`, direct bounded implementation of generated
+runtime beat-count/`RLAST` validation over the `.162` read burst-last
+depth-3 queue-head raw-`ARLEN` burst-length shape. The audit's temporary
+`runtime-assertion` candidate fails closed only at the local queue-head
+last-beat coverage diagnostic. Below that gate, runtime-validation
+normalization, expected-beat storage, read-beat counters, beat-count
+init/increment rules, four beat-count/`RLAST` assertions per transaction,
+generated-artifact reporting, and schedule-report fields already iterate the
+covered transaction list. `.165` should add the support-accounted public
+runtime-validation PPIF sample and focused tests, remove
+`generated_beat_count_validation` residue for that sample, and keep
+`multi_beat_read_data_reassembly`, `per_beat_outputs`, and
+`rresp_aggregation` residue. Multi-beat output-bank behavior over read
+burst-last depth-3, write depth-3, multiple or mixed depth-3 groups, mixed
+auto-ID, direct backend, and VHDL remain separately deferred.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same
