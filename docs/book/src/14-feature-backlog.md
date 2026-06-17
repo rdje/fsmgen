@@ -5552,10 +5552,17 @@ state core optionally dequeues the active head on matched `RID`, compacts the
 remaining entries toward `slot0`, and appends the one admitted request at the
 tail after any shift. Check JSON and semantic JSON support-account the sample,
 and `--verify-hdl` emits the generated `RID` input, `r2` completion output,
-and third-slot queue state. `.150` is the next selector before read-data over
-depth-3 queues, write depth-3, burst-last depth-3, multiple or mixed depth-3
-groups, mixed auto-ID, group-local enqueue widening, direct backend, or VHDL
-behavior changes.
+and third-slot queue state.
+
+Post read single-beat depth-3 queue-head selector:
+[AXI_IAL2_MANAGER_POST_READ_SINGLE_BEAT_DEPTH3_QUEUE_HEAD_RESPONSE_DEMUX_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_READ_SINGLE_BEAT_DEPTH3_QUEUE_HEAD_RESPONSE_DEMUX_NEXT_SLICE_SELECTION.md)
+selects `.151`, focused PPIF support-detail expectation alignment, before the
+next depth-3 behavior expansion. The support detail now explicitly names
+independent `depth-2` queue-head groups for existing multi-group read-data and
+burst behavior, while the depth-3 sample remains response-demux-only with no
+`read_data`. Read-data over depth-3 queues, write depth-3, burst-last
+depth-3, multiple or mixed depth-3 groups, mixed auto-ID, group-local enqueue
+widening, direct backend, and VHDL remain separately deferred.
 
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
