@@ -1723,6 +1723,19 @@ depth-3, write depth-3, multiple or mixed depth-3 groups, same-family mixed
 auto-ID, group-local enqueue widening, direct backend, and VHDL remain
 deferred until separately selected. `.162` advances the active frontier to
 `.163`, the next feature-completeness selector.
+`.163` now selects `.164`, readiness audit for generated runtime
+beat-count/`RLAST` validation over that `.162` depth-3 queue-head read-data
+plus report-only raw-`ARLEN` burst-length shape. Live probes confirmed the
+`.162` sample still reports `generated_beat_count_validation` residue, while
+the existing one-group and multi-group depth-2 runtime-validation samples
+already generate expected-beat storage, matched-beat counters, beat-count
+rules, and runtime assertions from transaction-list driven helpers. A
+temporary depth-3 runtime-validation candidate currently fails closed only at
+the local last-beat queue-head coverage diagnostic. `.164` must audit whether
+direct implementation only needs that admission boundary widened or whether a
+smaller prerequisite is required. Multi-beat output banks, write depth-3,
+multiple or mixed depth-3 groups, mixed auto-ID, direct backend, and VHDL
+remain deferred until separately selected.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.
