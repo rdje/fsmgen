@@ -710,6 +710,62 @@ subtest 'PPIF adapter parses AXI manager read burst-last depth-3 same-ID queue-h
     );
 };
 
+subtest 'PPIF adapter parses AXI manager read burst-last depth-3 same-ID queue-head multi-beat read-data behavior' => sub {
+    my $sample_path = sample_capacity_read_burst_last_depth3_same_id_queue_head_multi_beat_read_data_ppif_path();
+    ok(-f $sample_path, 'tracked runnable PPIF capacity/status read burst-last depth-3 same-ID queue-head multi-beat read-data sample exists');
+
+    my $result = FSM::Adapter::IAL2::PPIF->new()->parse_source(sample_capacity_read_burst_last_depth3_same_id_queue_head_multi_beat_read_data_ppif(), $sample_path);
+    my $isf = $result->{generated_ial1}{text};
+    my $fsm = $result->{generated_ial0}{files}{'axi0_capacity_status.fsm'};
+
+    is($result->{kind}, 'protocol_intent.axi_manager_capacity_status', 'read burst-last depth-3 same-ID queue-head multi-beat sample still uses the capacity/status generator');
+    is($result->{report}{source_object}{id}, 'axi-manager-capacity-status-read-burst-last-depth3-same-id-queue-head-multi-beat-read-data', 'read burst-last depth-3 same-ID queue-head multi-beat source object id is preserved');
+    is($result->{report}{source_object}{intent_name}, 'axi_manager_capacity_status_read_burst_last_depth3_same_id_queue_head_multi_beat_read_data', 'read burst-last depth-3 same-ID queue-head multi-beat source intent name is preserved');
+    like($isf, qr/\(rule axi0_r2_response_demux \(& axi0_read_complete \(== axi0_rid 4'd3\) axi0_rlast axi0_read_id3_same_id_issue_order_slot0_r2_q\)/, 'read burst-last depth-3 multi-beat sample keeps r2 RLAST-gated queue-head demux rule');
+    like($isf, qr/\(input axi0_arlen \(width 8\)\)/, 'read burst-last depth-3 multi-beat sample declares ARLEN as a generated width-8 input');
+    like($isf, qr/\(input axi0_rdata \(width 32\)\)/, 'read burst-last depth-3 multi-beat sample declares generated RDATA input');
+    like($isf, qr/\(input axi0_rresp \(width 2\)\)/, 'read burst-last depth-3 multi-beat sample declares generated RRESP input');
+    like($isf, qr/\(output axi0_r2_beat_rdata_0 \(width 32\)\)/, 'read burst-last depth-3 multi-beat sample declares r2 beat data output bank');
+    like($isf, qr/\(output axi0_r2_beat_rresp_0 \(width 2\)\)/, 'read burst-last depth-3 multi-beat sample declares r2 beat status output bank');
+    like($isf, qr/\(output axi0_r2_rresp \(width 2\)\)/, 'read burst-last depth-3 multi-beat sample declares r2 scalar status aggregate output');
+    like($isf, qr/\(output axi0_r2_beat_valid \(width 16\)\)/, 'read burst-last depth-3 multi-beat sample declares r2 valid-mask output');
+    like($isf, qr/\(output axi0_r2_read_beats \(width 5\)\)/, 'read burst-last depth-3 multi-beat sample declares r2 length output');
+    like($isf, qr/\(rule axi0_r2_read_data_output_init axi0_r2_request[\s\S]*\(axi0_r2_beat_rdata_0 32'd0\)[\s\S]*\(axi0_r2_rresp 2'd0\)[\s\S]*\(axi0_r2_beat_valid 16'b0\)[\s\S]*\(axi0_r2_read_beats 5'd0\)\)/, 'read burst-last depth-3 multi-beat sample clears r2 output bank on request');
+    like($isf, qr/\(rule axi0_r2_read_beat_0_capture \(& \(& axi0_read_complete \(& \(== axi0_rid 4'd3\) axi0_read_id3_same_id_issue_order_slot0_r2_q\)\) \(! axi0_r2_request\) \(== axi0_r2_read_beat_count_q 5'd0\)\)[\s\S]*\(axi0_r2_beat_rdata_0 axi0_rdata\)[\s\S]*\(axi0_r2_beat_rresp_0 axi0_rresp\)[\s\S]*\(axi0_r2_beat_valid 16'b0000000000000001\)[\s\S]*\(axi0_r2_read_beats 5'd1\)\)/, 'read burst-last depth-3 multi-beat sample captures r2 lane 0 under raw matched queue-head beat');
+    like($isf, qr/\(rule axi0_r2_rresp_aggregate \(& \(& axi0_read_complete \(& \(== axi0_rid 4'd3\) axi0_read_id3_same_id_issue_order_slot0_r2_q\)\) \(! axi0_r2_request\) \(< axi0_r2_rresp axi0_rresp\)\)\s+\(axi0_r2_rresp axi0_rresp\)\)/, 'read burst-last depth-3 multi-beat sample updates r2 scalar aggregate under raw matched queue-head beat');
+    like($fsm, qr/\(-axi0_r2_read_beat_0_capture\s+<\(& \(& axi0_read_complete \(& \(== axi0_rid 4'd3\) axi0_read_id3_same_id_issue_order_slot0_r2_q\)\) \(! axi0_r2_request\) \(== axi0_r2_read_beat_count_q 5'd0\)\)[\s\S]*\(<- \(axi0_r2_beat_rdata_0> axi0_rdata\)\)[\s\S]*\(<- \(axi0_r2_beat_valid> 16'b0000000000000001\)\)[\s\S]*\(<- \(axi0_r2_read_beats> 5'd1\)\)/, 'read burst-last depth-3 multi-beat sample lowers r2 lane 0 payload, valid mask, and length');
+    assert_same_id_queue_head_response_demux_report(
+        $result->{report}{response_demux},
+        'adapter read burst-last depth-3 multi-beat response-demux report',
+        residue => [],
+        queues => [
+            {
+                concrete_id          => 3,
+                transactions         => [qw(r0 r1 r2)],
+                depth                => 3,
+                dequeue_event_source => 'queue_head_response_demux',
+            },
+        ],
+        completion_signals => [qw(axi0_r0_complete axi0_r1_complete axi0_r2_complete)],
+        generated_rules => [qw(axi0_r0_response_demux axi0_r1_response_demux axi0_r2_response_demux)],
+        generated_assertions => [qw(
+            axi0_read_response_demux_active_match
+            axi0_r0_r1_read_response_demux_unique_match
+            axi0_r0_r2_read_response_demux_unique_match
+            axi0_r1_r2_read_response_demux_unique_match
+        )],
+    );
+    assert_read_data_multi_beat_report(
+        $result->{report}{read_data},
+        'adapter read burst-last depth-3 multi-beat read-data report',
+        completion_validity => 'generated_queue_head_response_demux_last_beat_completion_pulse',
+        transactions => [qw(r0 r1 r2)],
+    );
+    my $read_policy = $result->{report}{same_id_ordering}{concrete_id_reuse_policy}{read};
+    ok($read_policy->{accepted_same_id_reuse}, 'adapter depth-3 multi-beat report accepts read same-ID queue-head reuse for the covered shape');
+    ok($read_policy->{generated_queue_behavior}, 'adapter depth-3 multi-beat report marks generated queue behavior true');
+};
+
 subtest 'PPIF adapter parses AXI manager read single-beat multi-group same-ID queue-head read-data behavior' => sub {
     my $sample_path = sample_capacity_read_single_beat_multi_group_same_id_queue_head_read_data_ppif_path();
     ok(-f $sample_path, 'tracked runnable PPIF capacity/status read single-beat multi-group same-ID queue-head read-data sample exists');
@@ -2347,6 +2403,46 @@ subtest 'CLI emits IAL2 report JSON for AXI manager read burst-last depth-3 same
     is_deeply($report->{generated_artifacts}{ial0}{files}, ['axi0_capacity_status.fsm'], 'read burst-last depth-3 same-ID queue-head burst-length runtime validation keeps the generated .fsm artifact name stable');
 };
 
+subtest 'CLI emits IAL2 report JSON for AXI manager read burst-last depth-3 same-ID queue-head multi-beat read-data .ppif' => sub {
+    my ($success, undef, undef, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--emit-schedule-json', sample_capacity_read_burst_last_depth3_same_id_queue_head_multi_beat_read_data_ppif_path()],
+    );
+
+    ok($success, '--emit-schedule-json succeeds for capacity/status read burst-last depth-3 same-ID queue-head multi-beat read-data .ppif');
+    is(join('', @{$stderr_buf || []}), '', 'capacity/status read burst-last depth-3 same-ID queue-head multi-beat read-data report keeps stderr clean');
+    my $report = decode_json(join('', @{$stdout_buf || []}));
+    is($report->{schema}, 'fsmgen.ial2.protocol_intent.axi_manager_capacity_status.v1', 'CLI keeps the capacity/status report schema');
+    is($report->{source_object}{intent_name}, 'axi_manager_capacity_status_read_burst_last_depth3_same_id_queue_head_multi_beat_read_data', 'read burst-last depth-3 same-ID queue-head multi-beat report carries the PPIF top-level intent name');
+    assert_same_id_queue_head_response_demux_report(
+        $report->{response_demux},
+        'CLI read burst-last depth-3 multi-beat response-demux report',
+        residue => [],
+        queues => [
+            {
+                concrete_id          => 3,
+                transactions         => [qw(r0 r1 r2)],
+                depth                => 3,
+                dequeue_event_source => 'queue_head_response_demux',
+            },
+        ],
+        completion_signals => [qw(axi0_r0_complete axi0_r1_complete axi0_r2_complete)],
+        generated_rules => [qw(axi0_r0_response_demux axi0_r1_response_demux axi0_r2_response_demux)],
+        generated_assertions => [qw(
+            axi0_read_response_demux_active_match
+            axi0_r0_r1_read_response_demux_unique_match
+            axi0_r0_r2_read_response_demux_unique_match
+            axi0_r1_r2_read_response_demux_unique_match
+        )],
+    );
+    assert_read_data_multi_beat_report(
+        $report->{read_data},
+        'CLI read burst-last depth-3 multi-beat read-data report',
+        completion_validity => 'generated_queue_head_response_demux_last_beat_completion_pulse',
+        transactions => [qw(r0 r1 r2)],
+    );
+    is_deeply($report->{generated_artifacts}{ial0}{files}, ['axi0_capacity_status.fsm'], 'read burst-last depth-3 same-ID queue-head multi-beat read-data keeps the generated .fsm artifact name stable');
+};
+
 subtest 'CLI emits IAL2 report JSON for AXI manager read single-beat multi-group same-ID queue-head read-data .ppif' => sub {
     my ($success, undef, undef, $stdout_buf, $stderr_buf) = run(
         command => ['./bin/fsmgen', '--emit-schedule-json', sample_capacity_read_single_beat_multi_group_same_id_queue_head_read_data_ppif_path()],
@@ -3030,6 +3126,38 @@ subtest 'CLI --verify-hdl accepts AXI manager read burst-last depth-3 same-ID qu
     like($sv, qr/assign\s+axi0_r2_read_data_capture_en\s*=\s*axi0_r2_complete\s*;/, 'read burst-last depth-3 same-ID queue-head burst-length runtime HDL keeps r2 read-data capture on generated completion');
     like($sv, qr/axi0_read_complete\s*&\s*\(?axi0_rid\s*==\s*4'd3\)?\s*&\s*axi0_read_id3_same_id_issue_order_slot0_r2_q/, 'read burst-last depth-3 same-ID queue-head burst-length runtime HDL counts raw matched RID3 queue-head beats');
     unlike($sv, qr/\baxi0_r2_beat_valid\b/, 'read burst-last depth-3 same-ID queue-head burst-length runtime HDL does not expose r2 multi-beat valid output');
+};
+
+subtest 'CLI --verify-hdl accepts AXI manager read burst-last depth-3 same-ID queue-head multi-beat read-data behavior .ppif' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $hdl = File::Spec->catfile($tempdir, 'axi_read_burst_last_depth3_same_id_queue_head_multi_beat_read_data.sv');
+
+    my ($success, undef, undef, undef, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--quiet', '--verify-hdl', '--output', $hdl, sample_capacity_read_burst_last_depth3_same_id_queue_head_multi_beat_read_data_ppif_path()],
+    );
+
+    ok($success, 'capacity/status read burst-last depth-3 same-ID queue-head multi-beat read-data --verify-hdl succeeds');
+    is(join('', @{$stderr_buf || []}), '', 'capacity/status read burst-last depth-3 same-ID queue-head multi-beat read-data --verify-hdl keeps stderr clean');
+    ok(-f $hdl, 'read burst-last depth-3 same-ID queue-head multi-beat read-data --output writes generated HDL');
+    my $sv = slurp($hdl);
+    like($sv, qr/\binput\s+(?:wire\s+)?\[3:0\]\s+axi0_rid\b/, 'read burst-last depth-3 multi-beat HDL exposes generated RID input');
+    like($sv, qr/\binput\s+(?:wire\s+)?axi0_rlast\b/, 'read burst-last depth-3 multi-beat HDL exposes generated RLAST input');
+    like($sv, qr/\binput\s+(?:wire\s+)?\[7:0\]\s+axi0_arlen\b/, 'read burst-last depth-3 multi-beat HDL exposes generated ARLEN input');
+    like($sv, qr/\binput\s+(?:wire\s+)?\[31:0\]\s+axi0_rdata\b/, 'read burst-last depth-3 multi-beat HDL exposes generated RDATA input');
+    like($sv, qr/\binput\s+(?:wire\s+)?\[1:0\]\s+axi0_rresp\b/, 'read burst-last depth-3 multi-beat HDL exposes generated RRESP input');
+    like($sv, qr/\boutput\s+reg\s+\[31:0\]\s+axi0_r2_beat_rdata_0\b/, 'read burst-last depth-3 multi-beat HDL exposes r2 per-beat data output');
+    like($sv, qr/\boutput\s+reg\s+\[1:0\]\s+axi0_r2_beat_rresp_0\b/, 'read burst-last depth-3 multi-beat HDL exposes r2 per-beat status output');
+    like($sv, qr/\boutput\s+reg\s+\[1:0\]\s+axi0_r2_rresp\b/, 'read burst-last depth-3 multi-beat HDL exposes r2 scalar status aggregate output');
+    like($sv, qr/\boutput\s+reg\s+\[15:0\]\s+axi0_r2_beat_valid\b/, 'read burst-last depth-3 multi-beat HDL exposes r2 valid-mask output');
+    like($sv, qr/\boutput\s+reg\s+\[4:0\]\s+axi0_r2_read_beats\b/, 'read burst-last depth-3 multi-beat HDL exposes r2 length output');
+    like($sv, qr/assign\s+axi0_r2_read_data_output_init_en\s*=\s*axi0_r2_request\s*;/, 'read burst-last depth-3 multi-beat HDL clears r2 output bank on request');
+    like($sv, qr/assign\s+axi0_r2_read_beat_0_capture_en\s*=/, 'read burst-last depth-3 multi-beat HDL emits r2 lane 0 capture enable');
+    like($sv, qr/axi0_read_id3_same_id_issue_order_slot0_r2_q/, 'read burst-last depth-3 multi-beat HDL references RID3 slot-0 transaction identity for r2');
+    like($sv, qr/axi0_r2_beat_rdata_0_next\s*=\s*axi0_rdata\s*;/, 'read burst-last depth-3 multi-beat HDL captures r2 lane 0 RDATA');
+    like($sv, qr/axi0_r2_beat_rresp_0_next\s*=\s*axi0_rresp\s*;/, 'read burst-last depth-3 multi-beat HDL captures r2 lane 0 RRESP');
+    like($sv, qr/axi0_r2_beat_valid_next\s*=\s*16'b1\s*;/, 'read burst-last depth-3 multi-beat HDL sets the first r2 valid-mask prefix');
+    like($sv, qr/axi0_r2_read_beats_next\s*=\s*5'd1\s*;/, 'read burst-last depth-3 multi-beat HDL sets r2 length after first beat');
+    like($sv, qr/axi0_r2_rresp_next\s*=\s*axi0_rresp\s*;/, 'read burst-last depth-3 multi-beat HDL updates r2 scalar aggregate from current RRESP');
 };
 
 subtest 'CLI --verify-hdl accepts AXI manager read single-beat multi-group same-ID queue-head response-demux behavior .ppif' => sub {
@@ -4476,6 +4604,50 @@ subtest 'CLI check JSON and semantic JSON support-account read burst-last depth-
     );
 };
 
+subtest 'CLI check JSON and semantic JSON support-account read burst-last depth-3 same-ID queue-head multi-beat read-data .ppif separately' => sub {
+    my $policy_path = sample_capacity_read_burst_last_depth3_same_id_queue_head_multi_beat_read_data_ppif_path();
+    my ($success, undef, undef, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--strict', '--check', '--json', $policy_path],
+    );
+    ok($success, 'capacity/status read burst-last depth-3 same-ID queue-head multi-beat read-data --check --json succeeds');
+    is(join('', @{$stderr_buf || []}), '', 'capacity/status read burst-last depth-3 same-ID queue-head multi-beat read-data --check --json keeps stderr clean');
+    my $check_report = decode_json(join('', @{$stdout_buf || []}));
+    ok($check_report->{success}, 'capacity/status read burst-last depth-3 same-ID queue-head multi-beat read-data check JSON reports success');
+    is(
+        $check_report->{source}{resolved_path},
+        File::Spec->rel2abs($policy_path),
+        'capacity/status read burst-last depth-3 same-ID queue-head multi-beat read-data check JSON reports the public .ppif source path',
+    );
+    is(
+        $check_report->{support_accounting}{entry_id},
+        'intent.ppif_axi_manager_capacity_status_read_burst_last_depth3_same_id_queue_head_multi_beat_read_data',
+        'capacity/status read burst-last depth-3 same-ID queue-head multi-beat read-data check JSON support accounting names the PPIF corpus entry',
+    );
+
+    my ($semantic_success, undef, undef, $semantic_stdout, $semantic_stderr) = run(
+        command => ['./bin/fsmgen', '--strict', '--emit-semantic-json', $policy_path],
+    );
+    ok($semantic_success, 'capacity/status read burst-last depth-3 same-ID queue-head multi-beat read-data --emit-semantic-json succeeds');
+    is(join('', @{$semantic_stderr || []}), '', 'capacity/status read burst-last depth-3 same-ID queue-head multi-beat read-data --emit-semantic-json keeps stderr clean');
+    my $semantic_report = decode_json(join('', @{$semantic_stdout || []}));
+    ok($semantic_report->{success}, 'capacity/status read burst-last depth-3 same-ID queue-head multi-beat read-data semantic JSON reports success');
+    is(
+        $semantic_report->{source}{resolved_path},
+        File::Spec->rel2abs($policy_path),
+        'capacity/status read burst-last depth-3 same-ID queue-head multi-beat read-data semantic JSON reports the public .ppif source path',
+    );
+    is(
+        $semantic_report->{support_accounting}{entry_id},
+        'intent.ppif_axi_manager_capacity_status_read_burst_last_depth3_same_id_queue_head_multi_beat_read_data',
+        'capacity/status read burst-last depth-3 same-ID queue-head multi-beat read-data semantic JSON support accounting names the PPIF corpus entry',
+    );
+    is(
+        $semantic_report->{semantic}{module}{name},
+        'axi0_capacity_status',
+        'capacity/status read burst-last depth-3 same-ID queue-head multi-beat read-data semantic JSON records the unchanged generated module',
+    );
+};
+
 subtest 'CLI check JSON and semantic JSON support-account read single-beat depth-3 same-ID queue-head read-data .ppif separately' => sub {
     my $policy_path = sample_capacity_read_single_beat_depth3_same_id_queue_head_read_data_ppif_path();
     my ($success, undef, undef, $stdout_buf, $stderr_buf) = run(
@@ -5457,6 +5629,10 @@ sub sample_capacity_read_burst_last_depth3_same_id_queue_head_burst_length_runti
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_read_burst_last_depth3_same_id_queue_head_burst_length_runtime_assertion.ppif');
 }
 
+sub sample_capacity_read_burst_last_depth3_same_id_queue_head_multi_beat_read_data_ppif_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_read_burst_last_depth3_same_id_queue_head_multi_beat_read_data.ppif');
+}
+
 sub sample_capacity_read_single_beat_depth3_same_id_queue_head_read_data_ppif_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_read_single_beat_depth3_same_id_queue_head_read_data.ppif');
 }
@@ -5611,6 +5787,10 @@ sub sample_capacity_read_burst_last_depth3_same_id_queue_head_burst_length_ppif 
 
 sub sample_capacity_read_burst_last_depth3_same_id_queue_head_burst_length_runtime_assertion_ppif {
     return slurp(sample_capacity_read_burst_last_depth3_same_id_queue_head_burst_length_runtime_assertion_ppif_path());
+}
+
+sub sample_capacity_read_burst_last_depth3_same_id_queue_head_multi_beat_read_data_ppif {
+    return slurp(sample_capacity_read_burst_last_depth3_same_id_queue_head_multi_beat_read_data_ppif_path());
 }
 
 sub sample_capacity_read_single_beat_depth3_same_id_queue_head_read_data_ppif {

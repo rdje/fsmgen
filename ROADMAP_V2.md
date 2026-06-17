@@ -1765,6 +1765,18 @@ one read burst-last depth-3 queue-head group with `r0`/`r1`/`r2`, runtime
 scalar `RRESP` aggregation. Write depth-3, multiple or mixed depth-3 groups,
 mixed auto-ID, direct backend, verification-output generation, and VHDL
 remain deferred.
+`.168` now ships that bounded multi-beat read-data behavior for
+`ppif/axi_manager_capacity_status_read_burst_last_depth3_same_id_queue_head_multi_beat_read_data.ppif`.
+It admits exactly one read burst-last concrete `RID` `3` group at depth `3`,
+generates per-transaction output-bank clearing, 48 per-lane `RDATA`/`RRESP`
+captures, valid masks, length outputs, scalar worst-observed `RRESP`
+aggregation, raw `ARLEN` capture, expected-beat/read-beat storage, runtime
+beat-count/`RLAST` assertions, and empty `read_data`/`response_demux` residue
+for the covered sample. The support-accounted check/semantic surface reports
+`intent.ppif_axi_manager_capacity_status_read_burst_last_depth3_same_id_queue_head_multi_beat_read_data`.
+The active frontier advances to `.169`, a selector/audit for the next
+roadmap-aligned IAL2 feature-completeness slice after depth-3 multi-beat
+output-bank behavior.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.

@@ -5880,6 +5880,31 @@ masks, length outputs, and scalar `RRESP` aggregation; write depth-3,
 multiple or mixed depth-3 groups, mixed auto-ID, direct backend, verification
 output generation, and VHDL remain separate owned work.
 
+Read burst-last depth-3 queue-head multi-beat read-data behavior:
+[AXI_IAL2_MANAGER_READ_BURST_LAST_DEPTH3_QUEUE_HEAD_MULTI_BEAT_READ_DATA_BEHAVIOR](../../AXI_IAL2_MANAGER_READ_BURST_LAST_DEPTH3_QUEUE_HEAD_MULTI_BEAT_READ_DATA_BEHAVIOR.md)
+records `.168`, which ships generated multi-beat read-data output-bank
+behavior over the same read burst-last depth-3 queue-head runtime-validation
+shape. The public source is
+`ppif/axi_manager_capacity_status_read_burst_last_depth3_same_id_queue_head_multi_beat_read_data.ppif`.
+It covers one concrete `RID` `3` group with `r0`, `r1`, and `r2` at computed
+depth `3`, `capture-scope multi-beat`, `status-policy per-beat`,
+`status-aggregation (policy worst-observed)`, `interleaving
+multi-beat-by-rid`, and runtime-assertion `ARLEN` burst-length metadata.
+
+Generation emits request-time output-bank clearing, 16 `RDATA` lanes and 16
+`RRESP` lanes per transaction, 48 total lane capture rules, valid-mask
+outputs, read-length outputs, scalar worst-observed `RRESP` aggregate outputs,
+raw `ARLEN` capture, expected-beat storage, read-beat counters, beat-count
+rules, and beat-count/`RLAST` assertions for all three transactions. The
+schedule report sets `output_shape: per_beat_output_bank`, keeps
+`beat_count_match_source: response_demux_matched_read_beat`, and reports empty
+`read_data` and `response_demux` residue for the covered sample. Strict check
+JSON and normalized semantic JSON support-account it as
+`intent.ppif_axi_manager_capacity_status_read_burst_last_depth3_same_id_queue_head_multi_beat_read_data`.
+Write depth-3, multiple or mixed depth-3 groups, mixed auto-ID, group-local
+enqueue widening, packed burst outputs, direct backend, verification-output
+generation, VHDL, and backend-language variant work remain separately owned.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same
