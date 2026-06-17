@@ -5648,6 +5648,28 @@ groups, mixed auto-ID, group-local enqueue widening, direct backend, and VHDL
 remain separately deferred. `.157` is the next feature-completeness
 selector.
 
+Post read burst-last depth-3 queue-head response-demux selector:
+[AXI_IAL2_MANAGER_POST_READ_BURST_LAST_DEPTH3_QUEUE_HEAD_RESPONSE_DEMUX_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_READ_BURST_LAST_DEPTH3_QUEUE_HEAD_RESPONSE_DEMUX_NEXT_SLICE_SELECTION.md)
+records `.157` and selects `.158`, readiness audit for generated read-data
+over read burst-last depth-3 queue-head response-demux. The selector confirms
+that `.156` is generated at depth 3 and remains response-demux-only, while
+the existing read burst-last queue-head read-data path is still depth 2. A
+temporary last-beat read-data-over-`.156` probe fails closed at the current
+coverage gate:
+
+```text
+read_data.read queue-head last-beat coverage requires one or more depth-2
+concrete same-ID read queue groups
+```
+
+The `.158` audit must decide whether the next implementation can safely
+support last-beat scalar `RDATA`/`RRESP` capture for exactly one read
+burst-last depth-3 concrete `RID` group, or whether a smaller prerequisite
+is needed first. Burst-length metadata, runtime validation, multi-beat output
+bank behavior, write depth-3, multiple or mixed depth-3 groups, mixed
+auto-ID, group-local enqueue widening, direct backend, and VHDL remain
+separately deferred.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same

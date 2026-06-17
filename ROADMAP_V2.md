@@ -1668,8 +1668,14 @@ semantic JSON, and `--verify-hdl` cover the public sample through support
 accounting. Read-data over read burst-last depth-3, burst-length/runtime or
 multi-beat over read burst-last depth-3, write depth-3, multiple or mixed
 depth-3 groups, same-family mixed auto-ID, group-local enqueue widening,
-direct backend, and VHDL remain deferred. `.157` is the next
-feature-completeness selector.
+direct backend, and VHDL remain deferred. `.157` selected `.158`, readiness
+audit for generated read-data over read burst-last depth-3 queue-head
+response-demux, after a temporary last-beat read-data-over-`.156` probe
+failed closed at the depth-2-only burst-last queue-head read-data coverage
+gate. No behavior-bearing code changed in `.157`; write depth-3,
+burst-length/runtime or multi-beat over read burst-last depth-3, multiple or
+mixed depth-3 groups, same-family mixed auto-ID, group-local enqueue widening,
+direct backend, and VHDL remain deferred until separately selected.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.
