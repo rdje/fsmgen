@@ -60,8 +60,8 @@ generated single/last/multi-beat read-data capture, burst-length/runtime
 validation, scalar `RRESP` aggregation, one-or-more read burst-last
 queue-head groups, one-or-more write queue-head groups, and read single-beat
 queue-head response-demux and scalar read-data including multiple queue-head
-groups.
-Deeper concrete same-ID queues, same-family mixed auto-ID plus concrete
+groups, plus selected read and write single-group depth-3 queue-head shapes.
+Broader concrete same-ID queues, same-family mixed auto-ID plus concrete
 queue-head demux, group-local simultaneous enqueue widening, packed burst-vector outputs,
 alternate full burst payload assembly, aliases, platform clauses, full AXI
 manager behavior, direct backend lowering, and VHDL remain deferred. This

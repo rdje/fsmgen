@@ -1073,6 +1073,65 @@ subtest 'same-ID queue-head response-demux generates write queue state and compl
     );
 };
 
+subtest 'same-ID queue-head response-demux generates write depth-3 queue state and completion demux' => sub {
+    my $result = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_same_id_write_depth3_queue_head_response_demux());
+    my $isf = $result->{generated_ial1}{text};
+
+    like($isf, qr/\(var axi0_w2_admitted_request_pulse_q \(width 1\)\)/, 'write depth-3 queue-head selection keeps third admitted request pulse storage');
+    like($isf, qr/\(output axi0_w2_complete\)/, 'write depth-3 queue-head demux exposes w2 completion as a generated output');
+    like($isf, qr/\(input axi0_write_complete\)/, 'raw write response remains the generated demux input');
+    unlike($isf, qr/\(input axi0_w2_complete\)/, 'w2 completion is no longer an authored input');
+    unlike($isf, qr/\baxi0_rlast\b/, 'write depth-3 queue-head demux does not generate or consume RLAST');
+    like($isf, qr/\(var axi0_write_id3_same_id_issue_order_slot2_w2_q \(width 1\)\)/, 'write depth-3 queue-head demux declares slot2 w2 state');
+    like($isf, qr/\(rule axi0_write_id3_same_id_issue_order_empty_enqueue_w0\b/, 'write depth-3 queue-head demux emits empty enqueue w0 transition');
+    like($isf, qr/\(rule axi0_write_id3_same_id_issue_order_w0_w1_enqueue_w2\b/, 'write depth-3 queue-head demux emits fill-third-slot transition');
+    like($isf, qr/\(rule axi0_write_id3_same_id_issue_order_w0_w1_w2_dequeue_w0\b/, 'write depth-3 queue-head demux emits full-queue dequeue transition');
+    like($isf, qr/\(rule axi0_write_id3_same_id_issue_order_w0_w1_w2_dequeue_enqueue_w0\b/, 'write depth-3 queue-head demux emits full-queue dequeue/enqueue transition');
+    like($isf, qr/\(rule axi0_w2_response_demux \(& axi0_write_complete \(== axi0_bid 4'd3\) axi0_write_id3_same_id_issue_order_slot0_w2_q\)/, 'write depth-3 queue-head demux emits w2 response-demux rule without RLAST');
+    like($isf, qr/write same-ID issue-order queue slot 2 is one-hot-or-empty/, 'write depth-3 queue-head demux emits slot2 one-hot assertion');
+    like($isf, qr/write same-ID issue-order queue is compact/, 'write depth-3 queue-head demux emits generalized compactness assertion');
+    like($isf, qr/write same-ID issue-order queue enqueue for w2 does not duplicate a remaining transaction/, 'write depth-3 queue-head demux emits duplicate-after-dequeue assertion for w2');
+
+    assert_same_id_write_queue_head_response_demux_report(
+        $result->{report}{response_demux},
+        'generator depth-3 write report',
+        queues => [
+            {
+                concrete_id          => 3,
+                transactions         => [qw(w0 w1 w2)],
+                depth                => 3,
+                dequeue_event_source => 'queue_head_response_demux',
+            },
+        ],
+        completion_signals => [qw(axi0_w0_complete axi0_w1_complete axi0_w2_complete)],
+        generated_rules => [qw(axi0_w0_response_demux axi0_w1_response_demux axi0_w2_response_demux)],
+        generated_assertions => [qw(
+            axi0_write_response_demux_active_match
+            axi0_w0_w1_write_response_demux_unique_match
+            axi0_w0_w2_write_response_demux_unique_match
+            axi0_w1_w2_write_response_demux_unique_match
+        )],
+    );
+    my $write_policy = $result->{report}{same_id_ordering}{concrete_id_reuse_policy}{write};
+    is($write_policy->{implementation_status}, 'generated_write_bid_queue_head_demux', 'depth-3 write policy reports the generated write implementation status');
+    ok($write_policy->{accepted_same_id_reuse}, 'write depth-3 queue-head behavior accepts same-ID reuse for the covered shape');
+    ok($write_policy->{generated_queue_behavior}, 'write depth-3 queue-head behavior claims generated queue behavior');
+    is_deeply(
+        [map { $_->{depth} } @{$write_policy->{generated_queues} || []}],
+        [3],
+        'depth-3 write policy reports the generated depth-3 queue',
+    );
+    my ($queue) = @{$write_policy->{generated_queues} || []};
+    is(scalar(@{$queue->{slot_storage} || []}), 9, 'depth-3 write queue report lists 9 queue slot storage signals');
+    is(scalar(@{$queue->{generated_update_rules} || []}), 54, 'depth-3 write queue report lists 54 generated update rules');
+    is(scalar(@{$queue->{generated_assertions} || []}), 14, 'depth-3 write queue report lists 14 generated queue assertions');
+    is_deeply(
+        $result->{report}{id_response_rule_engine}{residue},
+        [qw(auto_id_allocation id_release)],
+        'generated write depth-3 queue-head behavior removes same-ID and response-demux residue from ID/response report',
+    );
+};
+
 subtest 'same-ID queue-head response-demux generates write multi-group queue state and completion demux' => sub {
     my $result = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_same_id_write_multi_group_queue_head_response_demux());
     my $isf = $result->{generated_ial1}{text};
@@ -3007,6 +3066,22 @@ sub sample_contract_with_same_id_write_queue_head_response_demux {
     return $contract;
 }
 
+sub sample_contract_with_same_id_write_depth3_queue_head_response_demux {
+    my $contract = sample_contract_with_same_id_write_queue_head_response_demux();
+    $contract->{intent_name} = 'axi_manager_capacity_status_write_depth3_same_id_queue_head_response_demux';
+    $contract->{source}{object_id} = 'axi-manager-capacity-status-write-depth3-same-id-queue-head-response-demux';
+    $contract->{write_max_pending} = 3;
+    splice @{$contract->{transactions}}, 2, 0, {
+        kind             => 'write',
+        name             => 'w2',
+        tag              => 'wr2',
+        request_event    => 'axi0_w2_request',
+        completion_event => 'axi0_w2_complete',
+        id               => { value => 3 },
+    };
+    return $contract;
+}
+
 sub sample_contract_with_same_id_write_multi_group_queue_head_response_demux {
     my $contract = sample_contract_with_same_id_write_queue_head_response_demux();
     $contract->{intent_name} = 'axi_manager_capacity_status_write_multi_group_same_id_queue_head_response_demux';
@@ -3556,7 +3631,7 @@ sub assert_rlast_report_prose_alignment {
     ok($id_residue, "$owner reports AXI ID/order unsupported residue");
     like(
         $id_residue->{detail},
-        qr/generated burst-last RLAST response-demux completion, structural last-beat read-data metadata, generated last-beat read-data RDATA\/RRESP capture, generated last-beat read-data RDATA\/RRESP capture from generated read burst-last concrete same-ID queue-head response-demux including multiple independent depth-2 queue-head groups with no burst_length metadata, report-only raw-ARLEN burst-length metadata, or runtime-assertion beat-count\/RLAST validation metadata, plus the selected single depth-3 queue-head group with no burst_length metadata, report-only raw-ARLEN burst-length metadata, or runtime-assertion beat-count\/RLAST validation metadata, generated raw-ARLEN burst-length capture including report-only and runtime-validation generated read burst-last concrete same-ID queue-head read-data contracts with one or more independent depth-2 queue-head groups plus the selected single depth-3 report-only and runtime-validation groups, explicit runtime-assertion beat-count\/RLAST validation for auto-ID and bounded read burst-last concrete same-ID queue-head read-data contracts including one or more independent depth-2 queue-head groups plus the selected single depth-3 group, generated multi-beat read-data output-bank behavior for the covered auto-ID multi-beat-by-RID subset and bounded read burst-last concrete same-ID queue-head subset including multiple independent depth-2 queue-head groups, bounded burst payload\/output behavior through that per-beat output bank, and generated scalar RRESP aggregation behavior are supported/,
+        qr/generated burst-last RLAST response-demux completion, structural last-beat read-data metadata, generated last-beat read-data RDATA\/RRESP capture, generated last-beat read-data RDATA\/RRESP capture from generated read burst-last concrete same-ID queue-head response-demux including multiple independent depth-2 queue-head groups with no burst_length metadata, report-only raw-ARLEN burst-length metadata, or runtime-assertion beat-count\/RLAST validation metadata, plus the selected single depth-3 queue-head group with no burst_length metadata, report-only raw-ARLEN burst-length metadata, or runtime-assertion beat-count\/RLAST validation metadata, generated raw-ARLEN burst-length capture including report-only and runtime-validation generated read burst-last concrete same-ID queue-head read-data contracts with one or more independent depth-2 queue-head groups plus the selected single depth-3 report-only and runtime-validation groups, explicit runtime-assertion beat-count\/RLAST validation for auto-ID and bounded read burst-last concrete same-ID queue-head read-data contracts including one or more independent depth-2 queue-head groups plus the selected single depth-3 group, generated multi-beat read-data output-bank behavior for the covered auto-ID multi-beat-by-RID subset and bounded read burst-last concrete same-ID queue-head subset including multiple independent depth-2 queue-head groups plus the selected single depth-3 runtime-validation queue-head group, bounded burst payload\/output behavior through that per-beat output bank, and generated scalar RRESP aggregation behavior are supported/,
         "$owner reports generated burst-last, last-beat, queue-head last-beat including multi-group scalar runtime validation, queue-head report-only/raw runtime ARLEN, non-queue-head and queue-head beat-count, multi-beat output-bank, bounded burst output, and scalar aggregation behavior as supported",
     );
     like(
@@ -3576,8 +3651,13 @@ sub assert_rlast_report_prose_alignment {
     );
     like(
         $id_residue->{detail},
-        qr/selected single-group read burst-last depth-3 response-demux-only, scalar last-beat read-data, report-only raw-ARLEN burst-length, and runtime beat-count\/RLAST validation queue-head shapes/,
+        qr/selected single-group read burst-last depth-3 response-demux-only, scalar last-beat read-data, report-only raw-ARLEN burst-length, runtime beat-count\/RLAST validation, and runtime-validation multi-beat output-bank queue-head shapes/,
         "$owner reports selected read burst-last depth-3 queue-head response-demux and read-data as supported",
+    );
+    like(
+        $id_residue->{detail},
+        qr/selected single-group write depth-3 response-demux-only queue-head shape/,
+        "$owner reports selected write depth-3 queue-head response-demux as supported",
     );
     like(
         $id_residue->{detail},

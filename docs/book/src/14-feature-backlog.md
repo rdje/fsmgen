@@ -5939,6 +5939,47 @@ widening, read-data, burst-length, runtime-validation, multi-beat payload,
 direct backend, verification-output generation, VHDL, and backend-language
 variant work remain separately owned.
 
+Write depth-3 queue-head response-demux behavior:
+[AXI_IAL2_MANAGER_WRITE_DEPTH3_QUEUE_HEAD_RESPONSE_DEMUX_BEHAVIOR](../../AXI_IAL2_MANAGER_WRITE_DEPTH3_QUEUE_HEAD_RESPONSE_DEMUX_BEHAVIOR.md)
+records `.171`, which ships generated write-family depth-3 concrete same-ID
+queue-head response-demux. The public source is:
+
+```bash
+./bin/fsmgen --emit-schedule-json ppif/axi_manager_capacity_status_write_depth3_same_id_queue_head_response_demux.ppif
+./bin/fsmgen --quiet --verify-hdl --output /tmp/fsmgen_write_depth3_same_id_queue_head_response_demux.sv ppif/axi_manager_capacity_status_write_depth3_same_id_queue_head_response_demux.ppif
+```
+
+The sample covers one write group with `w0`, `w1`, and `w2` sharing concrete
+`BID` `3`, selected write `concrete-id-reuse issue-order-queue`, queue depth
+`3`, and generated write response demux. FSMGen emits generated completion
+outputs for all three writes, three queue-head `BID` demux rules, four write
+response-demux assertions, 9 compact queue slot storage signals, 54 queue
+update rules, and 14 queue assertions.
+
+The generated `w2` demux rule is:
+
+```lisp
+(rule axi0_w2_response_demux
+  (& axi0_write_complete (== axi0_bid 4'd3)
+     axi0_write_id3_same_id_issue_order_slot0_w2_q)
+  (pulse axi0_w2_complete))
+```
+
+The schedule report marks `generated_queue_behavior_boundary:
+generated_write_bid_queue_head_demux`, removes
+`generated_same_id_queue_head_demux` from response-demux residue, reduces
+same-ID ordering residue to `per_id_issue_order_queues`, and removes
+`same_id_ordering` and `response_demux` from ID/response rule-engine residue.
+Strict check JSON and normalized semantic JSON support-account the sample as
+`intent.ppif_axi_manager_capacity_status_write_depth3_same_id_queue_head_response_demux`.
+
+Read-data, burst-length, runtime-validation, multi-beat payload, read
+response-demux, `RLAST`, multiple or mixed depth-3 groups, mixed auto-ID,
+group-local enqueue widening, packed outputs, direct backend,
+verification-output generation, VHDL, and backend-language variant work remain
+separately owned. The active frontier advances to `.172`, the next
+feature-completeness selector/audit.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same
