@@ -5603,6 +5603,19 @@ depth-3, read-data over read burst-last depth-3, multiple or mixed depth-3
 groups, mixed auto-ID, group-local enqueue widening, direct backend, and VHDL
 remain separately deferred.
 
+Read burst-last depth-3 queue-head response-demux readiness audit:
+[AXI_IAL2_MANAGER_READ_BURST_LAST_DEPTH3_QUEUE_HEAD_RESPONSE_DEMUX_READINESS_AUDIT](../../AXI_IAL2_MANAGER_READ_BURST_LAST_DEPTH3_QUEUE_HEAD_RESPONSE_DEMUX_READINESS_AUDIT.md)
+records `.155` and selects `.156`, generated read burst-last depth-3
+queue-head response-demux. The audit's temporary burst-last depth-3 probe
+passes schedule parsing, strict check JSON, and semantic JSON, reports one
+selected concrete `RID` group with `r0`/`r1`/`r2` at depth 3, and remains
+selected-not-generated only because the current behavior builder admits
+depth-3 generation for the read single-beat sibling but not yet for the
+`RLAST`-qualified burst-last sibling. The selected `.156` implementation
+boundary is response-demux only: no read-data, burst-length,
+runtime-validation, multi-beat output-bank, write depth-3, multiple/mixed
+depth-3 groups, mixed auto-ID, direct backend, or VHDL widening.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same

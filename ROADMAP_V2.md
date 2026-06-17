@@ -1650,11 +1650,13 @@ generated `axi0_rdata`/`axi0_rresp` inputs, per-transaction scalar
 `generated_queue_head_response_demux_completion_pulse`; strict check JSON,
 semantic JSON, and `--verify-hdl` cover the public sample through support
 accounting. `.154` selected `.155`, readiness audit for generated read
-burst-last depth-3 queue-head response-demux, as the next exact owner. Read
-burst-last depth-3 remains audit-only until `.155` completes; write depth-3,
-read-data over read burst-last depth-3, multiple or mixed depth-3 groups,
-same-family mixed auto-ID, group-local enqueue widening, direct backend, and
-VHDL remain deferred until separately selected.
+burst-last depth-3 queue-head response-demux. `.155` selected `.156` as the
+direct bounded implementation owner after finding the temporary depth-3
+burst-last probe passes schedule/check/semantic parsing and remains
+selected-not-generated only because of the local queue-builder depth gate.
+Write depth-3, read-data over read burst-last depth-3, multiple or mixed
+depth-3 groups, same-family mixed auto-ID, group-local enqueue widening,
+direct backend, and VHDL remain deferred until separately selected.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.
