@@ -1702,6 +1702,15 @@ read burst-last depth-3 queue-head read-data shape. Runtime validation,
 multi-beat output-bank behavior, write depth-3, multiple or mixed depth-3
 groups, same-family mixed auto-ID, group-local enqueue widening, direct
 backend, and VHDL remain deferred until separately selected.
+`.161` selected `.162`, direct bounded implementation of generated
+report-only raw-`ARLEN` burst-length capture over exactly one generated read
+burst-last depth-3 queue-head read-data group, after live probes found the
+temporary candidate fails only at the local queue-head read-data coverage
+predicate and the raw-`ARLEN` storage/rule/report path is already
+transaction-list driven. Runtime validation, multi-beat output-bank behavior,
+write depth-3, multiple or mixed depth-3 groups, same-family mixed auto-ID,
+group-local enqueue widening, direct backend, and VHDL remain deferred until
+separately selected.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.

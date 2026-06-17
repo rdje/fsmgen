@@ -5726,6 +5726,17 @@ multi-beat output-bank behavior, write depth-3, multiple or mixed depth-3
 groups, mixed auto-ID, group-local enqueue widening, direct backend, and VHDL
 remain separately deferred.
 
+Read burst-last depth-3 queue-head burst-length readiness:
+[AXI_IAL2_MANAGER_READ_BURST_LAST_DEPTH3_QUEUE_HEAD_BURST_LENGTH_READINESS_AUDIT](../../AXI_IAL2_MANAGER_READ_BURST_LAST_DEPTH3_QUEUE_HEAD_BURST_LENGTH_READINESS_AUDIT.md)
+records `.161` and selects `.162`, direct bounded implementation of generated
+report-only raw-`ARLEN` burst-length capture over the same `.159` depth-3
+read burst-last queue-head read-data shape. The audit's temporary candidate
+failed only at the local queue-head read-data coverage predicate; normalization
+and artifact/report helpers already iterate the covered transactions for
+raw-`ARLEN` input, storage, and request-bound capture rules. Runtime
+validation, multi-beat output-bank behavior, broader depth-3 groups, direct
+backend, and VHDL remain separately deferred.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same
