@@ -1634,11 +1634,13 @@ production support detail now explicitly names independent `depth-2`
 queue-head groups while the focused PPIF regex still expected the older
 wording. `.151` aligned that validation surface without changing parser,
 generator, report, sample, support-accounting, generated artifact, or HDL
-behavior. `.152` is now the readiness audit for scalar read-data over
-generated read single-beat depth-3 queue-head response-demux; read burst-last
-depth-3, write depth-3, multiple or mixed depth-3 groups, same-family mixed
-auto-ID, group-local enqueue widening, direct backend, and VHDL remain
-deferred until separately selected.
+behavior. `.152` audited scalar read-data over generated read single-beat
+depth-3 queue-head response-demux and selected `.153` as the direct bounded
+implementation owner: one read single-beat concrete `RID` group of three
+transactions with scalar `RDATA`/`RRESP` capture over the generated completion
+pulses. Read burst-last depth-3, write depth-3, multiple or mixed depth-3
+groups, same-family mixed auto-ID, group-local enqueue widening, direct
+backend, and VHDL remain deferred until separately selected.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.

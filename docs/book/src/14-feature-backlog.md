@@ -5561,11 +5561,21 @@ next depth-3 behavior expansion. The support detail now explicitly names
 independent `depth-2` queue-head groups for existing multi-group read-data and
 burst behavior, while the depth-3 sample remains response-demux-only with no
 `read_data`. `.151` aligned that validation expectation without changing
-public behavior. `.152` is now the readiness audit for scalar read-data over
-generated read single-beat depth-3 queue-head response-demux. Write depth-3,
-burst-last depth-3, multiple or mixed depth-3 groups, mixed auto-ID,
-group-local enqueue widening, direct backend, and VHDL remain separately
-deferred.
+public behavior. `.152` audited scalar read-data over generated read
+single-beat depth-3 queue-head response-demux readiness and selected `.153` as
+the direct bounded implementation owner. Write depth-3, burst-last depth-3,
+multiple or mixed depth-3 groups, mixed auto-ID, group-local enqueue widening,
+direct backend, and VHDL remain separately deferred.
+
+Read single-beat depth-3 queue-head read-data readiness audit:
+[AXI_IAL2_MANAGER_READ_SINGLE_BEAT_DEPTH3_QUEUE_HEAD_READ_DATA_READINESS_AUDIT](../../AXI_IAL2_MANAGER_READ_SINGLE_BEAT_DEPTH3_QUEUE_HEAD_READ_DATA_READINESS_AUDIT.md)
+records `.152`: the shipped depth-3 response-demux sample has no `read_data`,
+a temporary scalar read-data probe fails closed at the explicit depth-2
+queue-head read-data coverage gate, and the downstream read-data input, output,
+rule, report, `.fsm`, and HDL paths already iterate covered transactions once
+coverage admits them. The selected `.153` boundary is one read single-beat
+concrete `RID` group of three transactions, scalar `RDATA`/`RRESP` capture, and
+generated queue-head completion-pulse validity.
 
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
