@@ -10,7 +10,7 @@ date: 2026-06-17
 status: current
 tags: [ial2, axi, manager, read-data, burst-last, queue-head, depth-3, multi-beat, output-bank]
 evidence: docs/AXI_IAL2_MANAGER_READ_BURST_LAST_DEPTH3_QUEUE_HEAD_MULTI_BEAT_READ_DATA_BEHAVIOR.md; ppif/axi_manager_capacity_status_read_burst_last_depth3_same_id_queue_head_multi_beat_read_data.ppif; perl/FSM/IAL2/ProtocolIntent/AxiManagerCapacityStatus.pm; perl/FSM/Support/RegressionCorpus.pm; t/1437-axi-ial2-manager-capacity-status-generator.t; t/1436-ial2-ppif-parser-cli.t; t/248-regression-corpus-accounting.t; docs/REGRESSION_CORPUS.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md
-reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.168|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.169|READ_BURST_LAST_DEPTH3_QUEUE_HEAD_MULTI_BEAT_READ_DATA_BEHAVIOR|axi_manager_capacity_status_read_burst_last_depth3_same_id_queue_head_multi_beat_read_data|per_beat_output_bank|generated_multi_beat_capture_rules|read_data.residue' docs/AXI_IAL2_MANAGER_READ_BURST_LAST_DEPTH3_QUEUE_HEAD_MULTI_BEAT_READ_DATA_BEHAVIOR.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md README.md ROADMAP_V2.md docs/book/src/14-feature-backlog.md ppif/axi_manager_capacity_status_read_burst_last_depth3_same_id_queue_head_multi_beat_read_data.ppif
+reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.168|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.169|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.170|READ_BURST_LAST_DEPTH3_QUEUE_HEAD_MULTI_BEAT_READ_DATA_BEHAVIOR|POST_READ_BURST_LAST_DEPTH3_QUEUE_HEAD_MULTI_BEAT_NEXT_SLICE_SELECTION|axi_manager_capacity_status_read_burst_last_depth3_same_id_queue_head_multi_beat_read_data|per_beat_output_bank|generated_multi_beat_capture_rules|read_data.residue' docs/AXI_IAL2_MANAGER_READ_BURST_LAST_DEPTH3_QUEUE_HEAD_MULTI_BEAT_READ_DATA_BEHAVIOR.md docs/AXI_IAL2_MANAGER_POST_READ_BURST_LAST_DEPTH3_QUEUE_HEAD_MULTI_BEAT_NEXT_SLICE_SELECTION.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md README.md ROADMAP_V2.md docs/book/src/14-feature-backlog.md ppif/axi_manager_capacity_status_read_burst_last_depth3_same_id_queue_head_multi_beat_read_data.ppif
 ---
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.168` shipped generated multi-beat
@@ -34,9 +34,10 @@ reports `read_data.mode: bounded_multi_beat_read_data_contract`,
 response_demux_matched_read_beat`, empty `read_data.residue`, and empty
 `response_demux.residue` for the covered sample.
 
-The next IAL2 frontier is `IAL2-FEATURE-COMPLETENESS-FRONTIER.169`, a
-selector/audit for the next roadmap-aligned feature-completeness slice. Write
-depth-3, multiple or mixed depth-3 groups, mixed auto-ID, group-local enqueue
-widening, packed burst-vector outputs, alternate burst assembly, direct
-backend, verification-output generation, VHDL, and backend-language variants
-remain deferred behind future owned leaves.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.169` selected the next IAL2 frontier:
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.170`, readiness audit for generated
+write-family depth-3 concrete same-ID queue-head response-demux. Multiple or
+mixed depth-3 groups, mixed auto-ID, group-local enqueue widening, packed
+burst-vector outputs, alternate burst assembly, direct backend,
+verification-output generation, VHDL, and backend-language variants remain
+deferred behind future owned leaves.

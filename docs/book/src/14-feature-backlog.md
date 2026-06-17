@@ -5905,6 +5905,22 @@ Write depth-3, multiple or mixed depth-3 groups, mixed auto-ID, group-local
 enqueue widening, packed burst outputs, direct backend, verification-output
 generation, VHDL, and backend-language variant work remain separately owned.
 
+Post read burst-last depth-3 queue-head multi-beat selector:
+[AXI_IAL2_MANAGER_POST_READ_BURST_LAST_DEPTH3_QUEUE_HEAD_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_READ_BURST_LAST_DEPTH3_QUEUE_HEAD_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
+records `.169` and selects `.170`, readiness audit for generated
+write-family depth-3 concrete same-ID queue-head response-demux. Existing
+write depth-2 one-group and multi-group queue-head response-demux samples are
+generated through `generated_write_bid_queue_head_demux`. A temporary write
+depth-3 candidate with `w0`/`w1`/`w2` sharing concrete `BID` `3` passes
+strict check with no diagnostics, reports one depth-3 write queue group, and
+remains selected-not-generated only with `generated_same_id_queue_head_demux`
+residue. `.170` must audit whether direct implementation only needs the local
+queue-head behavior admission boundary widened or whether a smaller
+prerequisite is required. Multiple or mixed depth-3 groups, mixed auto-ID,
+group-local enqueue widening, packed outputs, alternate burst assembly,
+direct backend, verification-output generation, VHDL, and backend-language
+variant work remain separately owned.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same

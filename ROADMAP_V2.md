@@ -1774,9 +1774,20 @@ aggregation, raw `ARLEN` capture, expected-beat/read-beat storage, runtime
 beat-count/`RLAST` assertions, and empty `read_data`/`response_demux` residue
 for the covered sample. The support-accounted check/semantic surface reports
 `intent.ppif_axi_manager_capacity_status_read_burst_last_depth3_same_id_queue_head_multi_beat_read_data`.
-The active frontier advances to `.169`, a selector/audit for the next
-roadmap-aligned IAL2 feature-completeness slice after depth-3 multi-beat
+That completed `.168` and handed off to `.169`, a selector/audit for the
+next roadmap-aligned IAL2 feature-completeness slice after depth-3 multi-beat
 output-bank behavior.
+`.169` now selects `.170`, readiness audit for generated write-family
+depth-3 concrete same-ID queue-head response-demux. Existing write depth-2
+one-group and multi-group queue-head response-demux samples are generated
+through `generated_write_bid_queue_head_demux`, and a temporary write
+depth-3 candidate with `w0`/`w1`/`w2` sharing concrete `BID` `3` passes
+strict check with no diagnostics while reporting one depth-3 write queue
+group and remaining selected-not-generated only with
+`generated_same_id_queue_head_demux` residue. Multiple or mixed depth-3
+groups, mixed auto-ID, group-local enqueue widening, packed outputs,
+alternate burst assembly, direct backend, verification-output generation, and
+VHDL remain deferred until separately selected.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.

@@ -39,8 +39,9 @@ multi-beat output-bank behavior over this depth-3 runtime-validation shape.
 the same `r0`/`r1`/`r2` group. `.168` shipped the multi-beat output-bank
 sample
 `ppif/axi_manager_capacity_status_read_burst_last_depth3_same_id_queue_head_multi_beat_read_data.ppif`
-and advanced the active frontier to `.169`, the next selector/audit. Write
-depth-3, multiple or mixed depth-3 groups, mixed auto-ID, group-local enqueue
-widening, packed outputs, alternate burst assembly, direct backend,
-verification-output generation, and VHDL remain deferred behind future owned
-leaves.
+and handed off to `.169`, the next selector/audit. Write depth-3 was then
+selected by `.169` as `.170`, readiness audit for generated
+write-family depth-3 concrete same-ID queue-head response-demux. Multiple or
+mixed depth-3 groups, mixed auto-ID, group-local enqueue widening, packed
+outputs, alternate burst assembly, direct backend, verification-output
+generation, and VHDL remain deferred behind future owned leaves.

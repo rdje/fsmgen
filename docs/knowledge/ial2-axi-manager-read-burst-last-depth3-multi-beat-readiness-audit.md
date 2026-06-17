@@ -18,9 +18,9 @@ reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.167|IAL2-FEATURE-COMPLETEN
 generated multi-beat output-bank behavior over exactly one read burst-last
 depth-3 queue-head runtime-validation group.
 
-`.168` has since shipped that behavior and advanced the frontier to
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.169`, the next feature-completeness
-selector/audit.
+`.168` has since shipped that behavior. `.169` then selected
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.170`, readiness audit for generated
+write-family depth-3 concrete same-ID queue-head response-demux.
 
 The audit found no parser, IAL1, IAL0, SystemVerilog lowerer,
 support-accounting framework, or mdBook prerequisite beyond the local
