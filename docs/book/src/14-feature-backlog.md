@@ -5737,6 +5737,48 @@ raw-`ARLEN` input, storage, and request-bound capture rules. Runtime
 validation, multi-beat output-bank behavior, broader depth-3 groups, direct
 backend, and VHDL remain separately deferred.
 
+Read burst-last depth-3 queue-head burst-length behavior:
+[AXI_IAL2_MANAGER_READ_BURST_LAST_DEPTH3_QUEUE_HEAD_BURST_LENGTH_BEHAVIOR](../../AXI_IAL2_MANAGER_READ_BURST_LAST_DEPTH3_QUEUE_HEAD_BURST_LENGTH_BEHAVIOR.md)
+records `.162`, which ships generated report-only raw-`ARLEN` burst-length
+capture over the same read burst-last depth-3 queue-head read-data shape. The
+public source
+`ppif/axi_manager_capacity_status_read_burst_last_depth3_same_id_queue_head_burst_length.ppif`
+uses one concrete `RID` `3` group with `r0`, `r1`, and `r2` at computed depth
+`3`, scalar last-beat `RDATA`/`RRESP` outputs, and this additive
+`burst-length` clause:
+
+```text
+(burst-length
+  (source arlen)
+  (signal axi0_arlen (width 8))
+  (encoding axlen-plus-one)
+  (capture request)
+  (max-beats 16)
+  (validation report-only))
+```
+
+Generation adds `axi0_arlen`, raw-`ARLEN` storage
+`axi0_r0_arlen_q`, `axi0_r1_arlen_q`, and `axi0_r2_arlen_q`, and
+request-guarded capture rules `axi0_r0_burst_length_capture`,
+`axi0_r1_burst_length_capture`, and `axi0_r2_burst_length_capture`. The
+existing scalar read-data capture remains guarded by
+`generated_queue_head_response_demux_last_beat_completion_pulse`. The report
+sets `burst_length_validation: report_only`, records generated
+burst-length input/storage/rule fields, and keeps `generated_beat_count_validation`,
+`multi_beat_read_data_reassembly`, `per_beat_outputs`, and
+`rresp_aggregation` residue. No expected-beat storage, matched-beat counters,
+or beat-count/`RLAST` runtime assertions are generated in this report-only
+shape.
+
+Strict check JSON and normalized semantic JSON support-account the sample as
+`intent.ppif_axi_manager_capacity_status_read_burst_last_depth3_same_id_queue_head_burst_length`
+with coverage bucket
+`ial2_ppif_manager_capacity_status_read_burst_last_depth3_same_id_queue_head_burst_length_pipeline_cli`.
+Runtime validation and multi-beat output-bank behavior over read burst-last
+depth-3, write depth-3, multiple or mixed depth-3 groups, mixed auto-ID,
+group-local enqueue widening, direct backend, and VHDL remain separately
+deferred.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same

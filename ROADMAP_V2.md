@@ -1711,6 +1711,18 @@ transaction-list driven. Runtime validation, multi-beat output-bank behavior,
 write depth-3, multiple or mixed depth-3 groups, same-family mixed auto-ID,
 group-local enqueue widening, direct backend, and VHDL remain deferred until
 separately selected.
+`.162` now ships that bounded report-only raw-`ARLEN` burst-length sibling for
+`ppif/axi_manager_capacity_status_read_burst_last_depth3_same_id_queue_head_burst_length.ppif`:
+the same `r0`/`r1`/`r2` concrete `RID` `3` depth-3 queue-head group keeps
+generated scalar last-beat `RDATA`/`RRESP` capture and adds generated
+`axi0_arlen`, raw-`ARLEN` storage for `r0`, `r1`, and `r2`, and
+request-guarded burst-length capture rules. Strict check JSON, semantic JSON,
+and `--verify-hdl` cover the public sample through support accounting.
+Runtime validation, multi-beat output-bank behavior over read burst-last
+depth-3, write depth-3, multiple or mixed depth-3 groups, same-family mixed
+auto-ID, group-local enqueue widening, direct backend, and VHDL remain
+deferred until separately selected. `.162` advances the active frontier to
+`.163`, the next feature-completeness selector.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.

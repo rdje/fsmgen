@@ -10,10 +10,10 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `HEAD after .161 commit` — `IAL2-FEATURE-COMPLETENESS-FRONTIER.161: audit depth-3 burst-length`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.162` implement generated report-only raw-`ARLEN` burst-length capture over the generated read burst-last depth-3 queue-head read-data shape; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.161` audited the `.160`-selected report-only raw-`ARLEN` depth-3 boundary and selected `.162` after finding the temporary candidate fails only at the local queue-head read-data coverage gate.
-- in_flight_uncommitted: none after `.161` commit. `.162` must implement only report-only raw-`ARLEN` burst-length over exactly one generated read burst-last depth-3 queue-head read-data group; do not enable runtime-validation, multi-beat over read burst-last depth-3, write depth-3, multiple/mixed depth-3 groups, mixed auto-ID, group-local enqueue widening, direct backend, or VHDL without a new owned leaf. Ignored local-only mirrors are at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
+- latest_commit: `HEAD after .162 commit` — `IAL2-FEATURE-COMPLETENESS-FRONTIER.162: ship depth-3 burst-length`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.163` select the next feature-completeness slice after generated report-only raw-`ARLEN` burst-length over read burst-last depth-3 queue-head read-data shipped; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.162` shipped generated report-only raw-`ARLEN` burst-length capture for `ppif/axi_manager_capacity_status_read_burst_last_depth3_same_id_queue_head_burst_length.ppif`, with support-accounted check/semantic JSON and focused generator/PPIF coverage.
+- in_flight_uncommitted: none after `.162` commit. `.163` is selector-only: read `.162` behavior and adjacent runtime/multi-beat/depth-3 deferrals, then choose the next exact owner before any behavior change. Do not enable runtime-validation, multi-beat over read burst-last depth-3, write depth-3, multiple/mixed depth-3 groups, mixed auto-ID, group-local enqueue widening, direct backend, or VHDL without a new owned leaf. Ignored local-only mirrors are at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
 
 ## Notes

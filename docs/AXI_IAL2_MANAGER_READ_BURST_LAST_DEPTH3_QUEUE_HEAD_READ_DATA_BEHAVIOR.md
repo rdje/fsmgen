@@ -50,7 +50,10 @@ concrete `RID` `3`. The computed read queue depth is `3`.
 
 There is no `burst_length`, raw `ARLEN`, runtime beat-count validation,
 multi-beat output bank, packed output vector, aggregate-only status output,
-write-family behavior, direct backend lowering, or VHDL in this sample.
+write-family behavior, direct backend lowering, or VHDL in this no-burst-length
+sample. The report-only raw-`ARLEN` burst-length sibling is shipped separately
+by
+[AXI_IAL2_MANAGER_READ_BURST_LAST_DEPTH3_QUEUE_HEAD_BURST_LENGTH_BEHAVIOR](AXI_IAL2_MANAGER_READ_BURST_LAST_DEPTH3_QUEUE_HEAD_BURST_LENGTH_BEHAVIOR.md).
 
 ## Generated Behavior
 
@@ -170,9 +173,12 @@ their existing boundaries.
 
 ## Deferred Work
 
-The following remain outside this slice:
+Report-only raw-`ARLEN` burst-length metadata over read burst-last depth-3
+queue-head read-data is outside this no-burst-length slice and is shipped
+separately by `IAL2-FEATURE-COMPLETENESS-FRONTIER.162`.
 
-- burst-length metadata over read burst-last depth-3 queue-head read-data;
+The following remain deferred:
+
 - runtime beat-count/`RLAST` validation over read burst-last depth-3
   queue-head read-data;
 - multi-beat output-bank behavior over read burst-last depth-3 queue-head
