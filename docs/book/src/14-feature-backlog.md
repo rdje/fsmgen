@@ -5806,13 +5806,54 @@ last-beat coverage diagnostic. Below that gate, runtime-validation
 normalization, expected-beat storage, read-beat counters, beat-count
 init/increment rules, four beat-count/`RLAST` assertions per transaction,
 generated-artifact reporting, and schedule-report fields already iterate the
-covered transaction list. `.165` should add the support-accounted public
-runtime-validation PPIF sample and focused tests, remove
-`generated_beat_count_validation` residue for that sample, and keep
+covered transaction list. `.165` now ships the support-accounted public
+runtime-validation PPIF sample and focused tests, removes
+`generated_beat_count_validation` residue for that sample, and keeps
 `multi_beat_read_data_reassembly`, `per_beat_outputs`, and
 `rresp_aggregation` residue. Multi-beat output-bank behavior over read
 burst-last depth-3, write depth-3, multiple or mixed depth-3 groups, mixed
 auto-ID, direct backend, and VHDL remain separately deferred.
+
+Read burst-last depth-3 queue-head runtime-validation behavior:
+[AXI_IAL2_MANAGER_READ_BURST_LAST_DEPTH3_QUEUE_HEAD_RUNTIME_VALIDATION_BEHAVIOR](../../AXI_IAL2_MANAGER_READ_BURST_LAST_DEPTH3_QUEUE_HEAD_RUNTIME_VALIDATION_BEHAVIOR.md)
+records `.165`, which ships generated runtime beat-count/`RLAST` validation
+over the same read burst-last depth-3 queue-head raw-`ARLEN` burst-length
+shape. The public source is
+`ppif/axi_manager_capacity_status_read_burst_last_depth3_same_id_queue_head_burst_length_runtime_assertion.ppif`.
+It uses one concrete `RID` `3` group with `r0`, `r1`, and `r2` at computed
+depth `3`, scalar last-beat `RDATA`/`RRESP` outputs, and the same
+`burst-length` source as the report-only sibling with `(validation
+runtime-assertion)`.
+
+Generation adds `axi0_r0_expected_beats_q`,
+`axi0_r1_expected_beats_q`, `axi0_r2_expected_beats_q`,
+`axi0_r0_read_beat_count_q`, `axi0_r1_read_beat_count_q`, and
+`axi0_r2_read_beat_count_q`, plus request-time beat-count init rules and raw
+matched-read-beat increment rules for all three transactions. The matched
+read-beat counter is driven by `response_demux_matched_read_beat`, not by the
+`RLAST`-qualified completion pulse, so intermediate beats are counted before
+the final completion captures scalar data/status. Each transaction gets four
+runtime assertions: request-time `ARLEN` bound, extra beat beyond expected
+count, early `RLAST`, and missing `RLAST` on the expected final beat.
+
+The schedule report sets `burst_length_validation: runtime_assertion`,
+`beat_count_validation_generated_behavior: true`,
+`expected_beat_count_encoding: arlen_plus_one`,
+`beat_count_match_source: response_demux_matched_read_beat`, and
+`beat_count_width: 5`. It reports generated expected-beat storage, read-beat
+counters, beat-count rules, and beat-count/`RLAST` assertions for `r0`,
+`r1`, and `r2`. `read_data.residue` is reduced to
+`multi_beat_read_data_reassembly`, `per_beat_outputs`, and
+`rresp_aggregation`.
+
+Strict check JSON and normalized semantic JSON support-account the sample as
+`intent.ppif_axi_manager_capacity_status_read_burst_last_depth3_same_id_queue_head_burst_length_runtime_assertion`
+with coverage bucket
+`ial2_ppif_manager_capacity_status_read_burst_last_depth3_same_id_queue_head_burst_length_runtime_assertion_pipeline_cli`.
+Multi-beat output-bank behavior over read burst-last depth-3, write depth-3,
+multiple or mixed depth-3 groups, mixed auto-ID, group-local enqueue
+widening, packed burst outputs, direct backend, and VHDL remain separately
+deferred.
 
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)

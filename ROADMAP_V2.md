@@ -1743,10 +1743,19 @@ prerequisite beyond the local coverage gate: runtime-validation
 normalization, expected-beat storage, read-beat counters, beat-count
 init/increment rules, assertion generation, generated-artifact reporting, and
 schedule-report fields already iterate the covered transaction list. `.165`
-must add the public support-accounted runtime-validation PPIF sample, focused
-generator/PPIF coverage, and docs while preserving the `.162` report-only
-sample and keeping multi-beat output banks, write depth-3, multiple or mixed
-depth-3 groups, mixed auto-ID, direct backend, and VHDL deferred.
+now ships that behavior for
+`ppif/axi_manager_capacity_status_read_burst_last_depth3_same_id_queue_head_burst_length_runtime_assertion.ppif`.
+The generated report has expected-beat storage and read-beat counters for
+`r0`, `r1`, and `r2`, raw matched-read-beat increment rules, four
+beat-count/`RLAST` assertions per transaction, and
+`beat_count_match_source: response_demux_matched_read_beat`; it removes
+`generated_beat_count_validation` residue while keeping
+`multi_beat_read_data_reassembly`, `per_beat_outputs`, and
+`rresp_aggregation` residue. The `.162` report-only sample is preserved.
+`.165` advances the active frontier to `.166`, the next
+feature-completeness selector, while multi-beat output banks over read
+burst-last depth-3, write depth-3, multiple or mixed depth-3 groups, mixed
+auto-ID, direct backend, and VHDL remain deferred.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.

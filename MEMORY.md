@@ -10,10 +10,10 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `HEAD after .164 commit` — `IAL2-FEATURE-COMPLETENESS-FRONTIER.164: audit depth-3 runtime validation`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.165` implement generated runtime beat-count/`RLAST` validation over exactly one read burst-last depth-3 queue-head raw-`ARLEN` burst-length group; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.164` selected `.165`, direct bounded runtime-validation implementation, after finding the temporary depth-3 runtime candidate fails only at the local coverage gate and lower beat-count helpers are transaction-list driven.
-- in_flight_uncommitted: none after `.164` commit. `.165` must implement only runtime beat-count/RLAST validation for the `.164`-selected one-group read burst-last depth-3 queue-head shape, with public support-accounted PPIF sample/tests/docs. Do not enable multi-beat over read burst-last depth-3, write depth-3, multiple/mixed depth-3 groups, mixed auto-ID, group-local enqueue widening, direct backend, or VHDL without a new owned leaf. Ignored local-only mirrors are at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
+- latest_commit: `HEAD after .165 commit` — `IAL2-FEATURE-COMPLETENESS-FRONTIER.165: ship depth-3 runtime validation`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.166` select the next feature-completeness owner after generated read burst-last depth-3 queue-head runtime validation; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.165` shipped generated runtime beat-count/`RLAST` validation over one read burst-last depth-3 queue-head raw-`ARLEN` group, with public support-accounted sample, focused generator/PPIF coverage, corpus accounting, docs, mdBook, task tree, and Knowledge Map sync.
+- in_flight_uncommitted: none after `.165` commit. `.166` is selector-only until it chooses the next exact owner; do not enable multi-beat over read burst-last depth-3, write depth-3, multiple/mixed depth-3 groups, mixed auto-ID, group-local enqueue widening, packed outputs, direct backend, or VHDL without a new owned leaf. Ignored local-only mirrors are at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
 
 ## Notes

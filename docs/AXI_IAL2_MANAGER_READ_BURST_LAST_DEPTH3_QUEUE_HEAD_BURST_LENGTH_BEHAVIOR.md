@@ -150,8 +150,10 @@ read_data.residue:
 
 `validation report-only` records and preserves the raw `ARLEN` value for
 introspection and downstream review. It intentionally does not validate the
-observed number of read beats against `ARLEN`; runtime validation remains a
-separate owner.
+observed number of read beats against `ARLEN`; the runtime-validation sibling
+is shipped separately by `IAL2-FEATURE-COMPLETENESS-FRONTIER.165` and
+documented in
+[AXI_IAL2_MANAGER_READ_BURST_LAST_DEPTH3_QUEUE_HEAD_RUNTIME_VALIDATION_BEHAVIOR](AXI_IAL2_MANAGER_READ_BURST_LAST_DEPTH3_QUEUE_HEAD_RUNTIME_VALIDATION_BEHAVIOR.md).
 
 ## Admission Boundary
 
@@ -180,10 +182,10 @@ The generated behavior stays limited to:
 - no same-family `auto-id-lifecycle` demux.
 
 The existing depth-2 burst-last queue-head report-only and runtime-validation
-boundaries remain unchanged. This slice does not allow runtime validation or
-multi-beat output-bank behavior over read burst-last depth-3 queue-head
-read-data, multiple depth-3 groups, or mixed depth-2/depth-3 generated
-read-data groups.
+boundaries remain unchanged. The depth-3 runtime-validation sibling now ships
+as a separate explicit sample. This slice still does not allow multi-beat
+output-bank behavior over read burst-last depth-3 queue-head read-data,
+multiple depth-3 groups, or mixed depth-2/depth-3 generated read-data groups.
 
 ## Support Accounting And Semantic Introspection
 
@@ -205,16 +207,14 @@ The no-`burst_length` depth-3 read-data sample remains generated without
 `read_data`. The depth-3 single-beat read-data sibling remains generated
 without `RLAST`. Depth-2 burst-last queue-head read-data, report-only
 burst-length, runtime-validation, multi-beat output-bank, multi-group
-report-only burst-length, read single-beat one-group and multi-group
-read-data, and write-family queue-head response-demux samples remain within
-their existing boundaries.
+report-only burst-length, depth-3 runtime-validation, read single-beat
+one-group and multi-group read-data, and write-family queue-head
+response-demux samples remain within their existing boundaries.
 
 ## Deferred Work
 
 The following remain outside this slice:
 
-- runtime beat-count/`RLAST` validation over read burst-last depth-3
-  queue-head read-data;
 - multi-beat output-bank behavior over read burst-last depth-3 queue-head
   read-data;
 - write depth-3 response-demux;
