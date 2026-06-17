@@ -1788,6 +1788,18 @@ group and remaining selected-not-generated only with
 groups, mixed auto-ID, group-local enqueue widening, packed outputs,
 alternate burst assembly, direct backend, verification-output generation, and
 VHDL remain deferred until separately selected.
+`.170` now selects `.171`, direct bounded implementation of generated
+write-family depth-3 concrete same-ID queue-head response-demux. The audit
+found existing write depth-2 one-group and multi-group samples are generated
+and support-accounted, read single-beat and burst-last depth-3 siblings prove
+the shared queue-state machinery, and the temporary write depth-3 candidate
+strict-checks cleanly while remaining selected-not-generated only at the local
+`generated_same_id_queue_head_demux` boundary. `.171` should add exactly the
+one public write depth-3 `BID` `3` sample and support-accounted generated
+behavior; multiple or mixed depth-3 groups, mixed auto-ID, group-local
+enqueue widening, read-data, burst-length, runtime-validation, multi-beat
+payload, direct backend, verification-output generation, and VHDL remain
+deferred.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.

@@ -41,7 +41,9 @@ sample
 `ppif/axi_manager_capacity_status_read_burst_last_depth3_same_id_queue_head_multi_beat_read_data.ppif`
 and handed off to `.169`, the next selector/audit. Write depth-3 was then
 selected by `.169` as `.170`, readiness audit for generated
-write-family depth-3 concrete same-ID queue-head response-demux. Multiple or
-mixed depth-3 groups, mixed auto-ID, group-local enqueue widening, packed
-outputs, alternate burst assembly, direct backend, verification-output
-generation, and VHDL remain deferred behind future owned leaves.
+write-family depth-3 concrete same-ID queue-head response-demux. `.170`
+selected `.171`, direct bounded implementation of that write depth-3
+queue-head behavior. Multiple or mixed depth-3 groups, mixed auto-ID,
+group-local enqueue widening, packed outputs, alternate burst assembly,
+direct backend, verification-output generation, and VHDL remain deferred
+behind future owned leaves.

@@ -5921,6 +5921,24 @@ group-local enqueue widening, packed outputs, alternate burst assembly,
 direct backend, verification-output generation, VHDL, and backend-language
 variant work remain separately owned.
 
+Write depth-3 queue-head response-demux readiness:
+[AXI_IAL2_MANAGER_WRITE_DEPTH3_QUEUE_HEAD_RESPONSE_DEMUX_READINESS_AUDIT](../../AXI_IAL2_MANAGER_WRITE_DEPTH3_QUEUE_HEAD_RESPONSE_DEMUX_READINESS_AUDIT.md)
+records `.170` and selects `.171`, direct bounded implementation of
+generated write-family depth-3 concrete same-ID queue-head response-demux.
+The audit found the write depth-2 one-group and multi-group samples are
+generated and support-accounted, and the read depth-3 siblings prove the
+shared compact one-hot queue-state machinery for three slots. The temporary
+write depth-3 candidate with `w0`/`w1`/`w2` sharing concrete `BID` `3`
+strict-checks cleanly and remains selected-not-generated only at
+`generated_same_id_queue_head_demux`. `.171` is limited to one write depth-3
+public sample, generated completion outputs and response-demux rules for
+`w0`/`w1`/`w2`, 9 queue slot storage signals, 54 queue update rules, 14 queue
+assertions, 4 write response-demux assertions, support accounting, tests, and
+docs. Multiple or mixed depth-3 groups, mixed auto-ID, group-local enqueue
+widening, read-data, burst-length, runtime-validation, multi-beat payload,
+direct backend, verification-output generation, VHDL, and backend-language
+variant work remain separately owned.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same

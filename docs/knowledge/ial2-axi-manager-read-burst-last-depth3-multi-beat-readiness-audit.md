@@ -20,7 +20,9 @@ depth-3 queue-head runtime-validation group.
 
 `.168` has since shipped that behavior. `.169` then selected
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.170`, readiness audit for generated
-write-family depth-3 concrete same-ID queue-head response-demux.
+write-family depth-3 concrete same-ID queue-head response-demux. `.170`
+selected `IAL2-FEATURE-COMPLETENESS-FRONTIER.171`, direct bounded
+implementation of that write depth-3 queue-head behavior.
 
 The audit found no parser, IAL1, IAL0, SystemVerilog lowerer,
 support-accounting framework, or mdBook prerequisite beyond the local

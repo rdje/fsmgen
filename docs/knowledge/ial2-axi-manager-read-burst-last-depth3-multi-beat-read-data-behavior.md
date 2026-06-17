@@ -36,8 +36,10 @@ response_demux_matched_read_beat`, empty `read_data.residue`, and empty
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.169` selected the next IAL2 frontier:
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.170`, readiness audit for generated
-write-family depth-3 concrete same-ID queue-head response-demux. Multiple or
-mixed depth-3 groups, mixed auto-ID, group-local enqueue widening, packed
+write-family depth-3 concrete same-ID queue-head response-demux. `.170` has
+since selected `IAL2-FEATURE-COMPLETENESS-FRONTIER.171`, direct bounded
+implementation of that write depth-3 queue-head behavior. Multiple or mixed
+depth-3 groups, mixed auto-ID, group-local enqueue widening, packed
 burst-vector outputs, alternate burst assembly, direct backend,
 verification-output generation, VHDL, and backend-language variants remain
 deferred behind future owned leaves.
