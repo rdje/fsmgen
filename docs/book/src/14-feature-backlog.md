@@ -5560,9 +5560,12 @@ selects `.151`, focused PPIF support-detail expectation alignment, before the
 next depth-3 behavior expansion. The support detail now explicitly names
 independent `depth-2` queue-head groups for existing multi-group read-data and
 burst behavior, while the depth-3 sample remains response-demux-only with no
-`read_data`. Read-data over depth-3 queues, write depth-3, burst-last
-depth-3, multiple or mixed depth-3 groups, mixed auto-ID, group-local enqueue
-widening, direct backend, and VHDL remain separately deferred.
+`read_data`. `.151` aligned that validation expectation without changing
+public behavior. `.152` is now the readiness audit for scalar read-data over
+generated read single-beat depth-3 queue-head response-demux. Write depth-3,
+burst-last depth-3, multiple or mixed depth-3 groups, mixed auto-ID,
+group-local enqueue widening, direct backend, and VHDL remain separately
+deferred.
 
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)

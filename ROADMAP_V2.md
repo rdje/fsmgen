@@ -1629,13 +1629,16 @@ semantic JSON, and `--verify-hdl` cover the public sample through support
 accounting. Read-data over depth-3 queues, write and burst-last depth-3
 response-demux, multiple or mixed depth-3 groups, same-family mixed auto-ID,
 and group-local simultaneous enqueue widening remain deferred. Selector `.150`
-chooses `.151`, focused PPIF support-detail expectation alignment, because the
+chose `.151`, focused PPIF support-detail expectation alignment, because the
 production support detail now explicitly names independent `depth-2`
-queue-head groups while the focused PPIF regex still expects the older wording.
-`.151` is validation-surface alignment only; read-data over depth-3 queues,
-read burst-last depth-3, write depth-3, multiple or mixed depth-3 groups,
-same-family mixed auto-ID, group-local enqueue widening, direct backend, and
-VHDL remain deferred until separately selected.
+queue-head groups while the focused PPIF regex still expected the older
+wording. `.151` aligned that validation surface without changing parser,
+generator, report, sample, support-accounting, generated artifact, or HDL
+behavior. `.152` is now the readiness audit for scalar read-data over
+generated read single-beat depth-3 queue-head response-demux; read burst-last
+depth-3, write depth-3, multiple or mixed depth-3 groups, same-family mixed
+auto-ID, group-local enqueue widening, direct backend, and VHDL remain
+deferred until separately selected.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.

@@ -221,9 +221,8 @@ simultaneous enqueue widening, packed burst-vector outputs, alternate full
 burst payload assembly, full AXI manager behavior, direct backend lowering,
 and VHDL remain deferred.
 IAL2 feature completeness on the SystemVerilog-backed path remains active
-under `IAL2-FEATURE-COMPLETENESS-FRONTIER` at `.151`, support-detail
-expectation alignment after generated read single-beat depth-3 queue-head
-response-demux.
+under `IAL2-FEATURE-COMPLETENESS-FRONTIER` at `.152`, readiness audit for
+read-data over generated read single-beat depth-3 queue-head response-demux.
 The first
 in-process AXI manager outstanding-capacity and acceptance/status generator is
 now shipped as `FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus`; it
