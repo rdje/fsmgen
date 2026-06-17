@@ -205,7 +205,8 @@ queue-head response-demux from selected-not-generated into generated behavior.
 The following remain outside `.124`:
 
 - read-data capture over multiple queue-head groups;
-- queue depths greater than two slots;
+- additional queue-depth widening beyond the later selected one-group
+  depth-3 read single-beat response-demux/read-data shapes;
 - same-family mixed auto-ID plus concrete queue-head response demux;
 - write-family multi-group queue-head response demux;
 - read `single-beat` multi-group queue-head response demux;

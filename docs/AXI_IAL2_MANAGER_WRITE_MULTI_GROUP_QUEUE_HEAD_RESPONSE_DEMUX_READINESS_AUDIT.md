@@ -212,7 +212,8 @@ into generated behavior.
 The following remain outside `.140`:
 
 - read single-beat multi-group queue-head behavior;
-- queue depths greater than two slots;
+- additional queue-depth widening beyond the later selected one-group
+  depth-3 read single-beat response-demux/read-data shapes;
 - same-family mixed auto-ID plus concrete queue-head response demux;
 - group-local simultaneous same-cycle enqueue widening;
 - packed burst-vector outputs and alternate payload assembly;

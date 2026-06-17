@@ -136,11 +136,14 @@ read-data variants, runtime-validation and multi-beat read-data, and
 write-family queue-head response-demux remain generated only for their shipped
 depth-2 shapes.
 
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.153` later shipped a separate scalar
+read-data sibling for this selected depth-3 read single-beat queue-head group.
+This response-demux-only sample remains generated without `read_data`.
+
 ## Deferred Work
 
 The following remain outside this slice:
 
-- read-data over depth-3 queue-head response-demux;
 - read burst-last depth-3 response-demux;
 - write depth-3 response-demux;
 - multiple independent depth-3 groups in one manager object;

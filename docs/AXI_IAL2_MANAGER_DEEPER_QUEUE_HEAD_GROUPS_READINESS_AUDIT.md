@@ -85,17 +85,21 @@ same-ID queue-head metadata, but remain selected-not-generated:
   check=pass semantic=pass support_accounting=unmatched
 ```
 
-Temporary depth-3 read-data probes fail closed because generated read
-response-demux metadata does not yet exist for depth-3 queue-head groups:
+Temporary depth-3 read-data probes failed closed during the `.148` audit
+because generated read response-demux metadata did not yet exist for depth-3
+queue-head groups:
 
 ```text
 AXI manager capacity/status IAL2 contract read_data requires generated read response_demux metadata
 ```
 
-That diagnostic is expected today. After a future depth-3 read single-beat
-response-demux slice generates response metadata, read-data must still remain
-bounded by its own coverage gates until a separately owned read-data slice
-widens them.
+Current-status note: `.149` later shipped the selected read single-beat
+depth-3 response-demux shape, and `.153` later shipped its selected scalar
+read-data sibling.
+
+That diagnostic was expected during `.148`. `.149` later generated the
+selected depth-3 read single-beat response metadata, and `.153` later widened
+the read-data coverage gate only for one selected scalar read-data sibling.
 
 The temporary probes were removed after use.
 
@@ -105,7 +109,7 @@ The temporary probes were removed after use.
 concrete-ID groups. When three transactions share one concrete ID and the
 family pending limit admits them, the report-visible group depth is `3`.
 
-Generation is deliberately depth-2 specialized today:
+Generation was deliberately depth-2 specialized at the `.148` audit point:
 
 - `_build_same_id_issue_order_queue_behavior` rejects any generated group
   whose `depth` is not exactly `2` or whose transaction count is not exactly
@@ -118,6 +122,9 @@ Generation is deliberately depth-2 specialized today:
 - response-demux response states and read-data coverage can iterate generated
   transactions after queue behavior exists, but they depend on a valid
   generated queue behavior object.
+
+`.149` later generalized the shared queue-state helpers for the selected
+one-group depth-3 read single-beat response-demux shape.
 
 The next behavior owner is therefore not a safe one-line gate widening. It
 must generalize the shared same-ID issue-order queue-state machinery first,
@@ -157,7 +164,8 @@ The implementation owner should be bounded to:
 
 The following remain outside `.149`:
 
-- read-data over depth-3 queue-head response-demux;
+- the depth-3 scalar read-data sibling, later shipped for one selected read
+  single-beat group by `.153`;
 - read burst-last depth-3 response-demux;
 - write depth-3 response-demux;
 - multiple independent depth-3 groups in one manager object;
@@ -173,7 +181,8 @@ The following remain outside `.149`:
 
 `.149` must preserve fail-closed behavior for:
 
-- depth-3 read-data probes until a read-data owner widens coverage;
+- depth-3 read-data probes until a read-data owner widens coverage; `.153`
+  later fulfilled that for one selected read single-beat scalar shape;
 - write and read burst-last depth-3 probes unless explicitly selected later;
 - multiple depth-3 groups and mixed depth-2/depth-3 generated groups;
 - same-family mixed auto-ID plus concrete queue-head demux;
@@ -193,8 +202,8 @@ The implementation slice should run:
 - direct `--emit-schedule-json`, `--strict --check --json`,
   `--strict --emit-semantic-json`, generated HDL, and `--verify-hdl` probes for
   the new depth-3 public sample;
-- negative schedule/check/semantic probes for depth-3 read-data, write,
-  burst-last, and multiple-group shapes that remain deferred;
+- negative schedule/check/semantic probes for depth-3 read-data at `.149`,
+  write, burst-last, and multiple-group shapes that remain deferred;
 - preservation probes for `.146`, `.143`, `.140`, `.135`, `.132`, `.130`,
   `.127`, `.124`, `.113`, and one-group queue-head samples;
 - Knowledge Map generation/check, mdBook build, docs path audit, memory

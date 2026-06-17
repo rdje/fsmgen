@@ -6,11 +6,11 @@ answers:
   - "which PPIF sample covers read single-beat depth-3 queue-head response-demux?"
   - "what did IAL2-FEATURE-COMPLETENESS-FRONTIER.149 ship?"
   - "what is deferred after read single-beat depth-3 queue-head response-demux?"
-date: 2026-06-16
+date: 2026-06-17
 status: current
 tags: [ial2, axi, manager, same-id, queue-head, response-demux, depth-3]
-evidence: docs/AXI_IAL2_MANAGER_READ_SINGLE_BEAT_DEPTH3_QUEUE_HEAD_RESPONSE_DEMUX_BEHAVIOR.md; ppif/axi_manager_capacity_status_read_single_beat_depth3_same_id_queue_head_response_demux.ppif; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md
-reverify: ./bin/fsmgen --strict --check --json ppif/axi_manager_capacity_status_read_single_beat_depth3_same_id_queue_head_response_demux.ppif && rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\.149|read single-beat depth-3|slot2|depth-3 queue-head response-demux' docs/AXI_IAL2_MANAGER_READ_SINGLE_BEAT_DEPTH3_QUEUE_HEAD_RESPONSE_DEMUX_BEHAVIOR.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md README.md ROADMAP_V2.md docs/book/src/14-feature-backlog.md
+evidence: docs/AXI_IAL2_MANAGER_READ_SINGLE_BEAT_DEPTH3_QUEUE_HEAD_RESPONSE_DEMUX_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_READ_SINGLE_BEAT_DEPTH3_QUEUE_HEAD_READ_DATA_BEHAVIOR.md; ppif/axi_manager_capacity_status_read_single_beat_depth3_same_id_queue_head_response_demux.ppif; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md
+reverify: ./bin/fsmgen --strict --check --json ppif/axi_manager_capacity_status_read_single_beat_depth3_same_id_queue_head_response_demux.ppif && rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\.149|IAL2-FEATURE-COMPLETENESS-FRONTIER\.153|read single-beat depth-3|slot2|depth-3 queue-head response-demux|read-data sibling' docs/AXI_IAL2_MANAGER_READ_SINGLE_BEAT_DEPTH3_QUEUE_HEAD_RESPONSE_DEMUX_BEHAVIOR.md docs/AXI_IAL2_MANAGER_READ_SINGLE_BEAT_DEPTH3_QUEUE_HEAD_READ_DATA_BEHAVIOR.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md README.md ROADMAP_V2.md docs/book/src/14-feature-backlog.md
 ---
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.149` shipped one generated read
@@ -27,7 +27,11 @@ completion pulse outputs for `r0`, `r1`, and `r2`. Response-demux rules match
 the raw `RID` and the active queue head; no `RLAST` or `read_data` behavior is
 introduced by this sample.
 
-Read-data over depth-3 queues, read burst-last depth-3 response-demux, write
-depth-3 response-demux, multiple or mixed depth-3 groups, same-family mixed
-auto-ID, group-local enqueue widening, packed outputs, direct backend, and
-VHDL remain deferred behind future task-tree leaves.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.153` later shipped a separate scalar
+read-data sibling for the same selected one-group depth-3 single-beat shape;
+this response-demux-only sample remains generated without `read_data`.
+
+Read burst-last depth-3 response-demux, write depth-3 response-demux,
+multiple or mixed depth-3 groups, same-family mixed auto-ID, group-local
+enqueue widening, packed outputs, direct backend, and VHDL remain deferred
+behind future task-tree leaves.

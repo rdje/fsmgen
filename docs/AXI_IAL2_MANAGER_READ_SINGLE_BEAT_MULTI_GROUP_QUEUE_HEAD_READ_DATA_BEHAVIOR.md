@@ -151,16 +151,19 @@ and the generated module name `axi0_capacity_status`.
 
 The existing read single-beat response-demux-only multi-group sample remains
 generated without `read_data`. The one-group single-beat queue-head read-data
-sample remains generated with the same completion validity. Read burst-last
-multi-group queue-head scalar, raw-`ARLEN`, runtime-validation, and multi-beat
-read-data samples remain within their previous boundaries. Write-family
-multi-group queue-head response-demux is unchanged.
+sample remains generated with the same completion validity. The selected
+one-group depth-3 read single-beat queue-head read-data sibling is documented
+separately and does not change this multi-group depth-2 boundary. Read
+burst-last multi-group queue-head scalar, raw-`ARLEN`, runtime-validation, and
+multi-beat read-data samples remain within their previous boundaries.
+Write-family multi-group queue-head response-demux is unchanged.
 
 ## Deferred Work
 
 The following remain outside this slice:
 
-- queue depths greater than two slots;
+- additional queue-depth widening beyond the selected one-group depth-3 read
+  single-beat read-data shape;
 - same-family mixed auto-ID plus concrete queue-head response demux;
 - group-local simultaneous same-cycle enqueue widening;
 - packed burst-vector outputs and alternate payload assembly;

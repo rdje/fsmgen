@@ -41,9 +41,10 @@ ppif/axi_manager_capacity_status_read_single_beat_depth3_same_id_queue_head_resp
   same_id_generated=1
 ```
 
-`read_data` over generated queue-head response-demux remains intentionally
-bounded to depth-2 groups today. The depth-3 public sample has no `read_data`
-clause and keeps read-data over depth-3 queues deferred.
+At `.150`, `read_data` over generated queue-head response-demux remained
+intentionally bounded to depth-2 groups. The `.149` depth-3 public sample has
+no `read_data` clause; `.153` later shipped a separate selected one-group
+depth-3 scalar read-data sibling.
 
 Focused PPIF parser/CLI validation exposed a narrower validation drift: the
 production support-detail string now explicitly names independent `depth-2`
@@ -60,8 +61,9 @@ This is the next smallest safe owner because:
 
 - the depth-3 response-demux behavior shipped in `.149` is already
   support-accounted;
-- read-data over depth-3 queue-head demux still requires a separate behavior
-  owner because the current coverage gate is depth-2-specific;
+- depth-3 read-data still requires a separate behavior owner because the
+  current coverage gate is depth-2-specific; `.153` later shipped the selected
+  one-group scalar read-data sibling;
 - the focused PPIF failure is a validation-surface drift, not a report or HDL
   behavior failure; and
 - keeping the baseline green before widening behavior protects the next
@@ -71,7 +73,8 @@ This is the next smallest safe owner because:
 
 The following remain outside `.150` and `.151` unless separately selected:
 
-- read-data over depth-3 queue-head response-demux;
+- the depth-3 scalar read-data sibling, later selected and shipped by `.153`
+  for one read single-beat group;
 - read burst-last depth-3 response-demux;
 - write depth-3 response-demux;
 - multiple or mixed depth-3 queue-head groups;

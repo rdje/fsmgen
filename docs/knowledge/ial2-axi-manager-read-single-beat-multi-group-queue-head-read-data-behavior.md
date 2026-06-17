@@ -32,6 +32,7 @@ queue-head completion pulses.
 Strict check JSON and semantic JSON support-account the sample as
 `intent.ppif_axi_manager_capacity_status_read_single_beat_multi_group_same_id_queue_head_read_data`.
 Read-data over multiple read single-beat queue-head groups is no longer an
-unsupported residue for this bounded shape. Deeper queues, same-family mixed
-auto-ID, group-local enqueue widening, packed outputs, direct backend, and
-VHDL remain deferred.
+unsupported residue for this bounded depth-2 shape. A separate `.153` sibling
+ships one selected depth-3 single-beat read-data group; additional queue-depth
+widening beyond that shape, same-family mixed auto-ID, group-local enqueue
+widening, packed outputs, direct backend, and VHDL remain deferred.

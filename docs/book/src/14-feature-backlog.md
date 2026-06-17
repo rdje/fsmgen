@@ -5577,6 +5577,19 @@ coverage admits them. The selected `.153` boundary is one read single-beat
 concrete `RID` group of three transactions, scalar `RDATA`/`RRESP` capture, and
 generated queue-head completion-pulse validity.
 
+Read single-beat depth-3 queue-head read-data behavior:
+[AXI_IAL2_MANAGER_READ_SINGLE_BEAT_DEPTH3_QUEUE_HEAD_READ_DATA_BEHAVIOR](../../AXI_IAL2_MANAGER_READ_SINGLE_BEAT_DEPTH3_QUEUE_HEAD_READ_DATA_BEHAVIOR.md)
+ships `.153`, generated scalar read-data over the selected read single-beat
+depth-3 queue-head response-demux group. The public sample is
+`ppif/axi_manager_capacity_status_read_single_beat_depth3_same_id_queue_head_read_data.ppif`.
+It keeps the `r0`/`r1`/`r2` concrete `RID` `3` depth-3 queue-head group,
+generates `axi0_rdata` and `axi0_rresp` inputs, emits scalar
+`axi0_r*_rdata`/`axi0_r*_rresp` outputs, and guards each capture rule with the
+generated queue-head completion pulse. The response-demux-only depth-3 sample
+remains separate and generated without `read_data`; read burst-last depth-3,
+write depth-3, multiple or mixed depth-3 groups, mixed auto-ID, group-local
+enqueue widening, direct backend, and VHDL remain separately deferred.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same

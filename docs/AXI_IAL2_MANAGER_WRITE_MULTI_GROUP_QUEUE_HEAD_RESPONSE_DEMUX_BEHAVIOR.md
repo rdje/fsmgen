@@ -128,7 +128,8 @@ remain within their previous boundaries.
 The following remain outside this slice:
 
 - read single-beat multi-group queue-head behavior;
-- queue depths greater than two slots;
+- additional queue-depth widening beyond the later selected one-group
+  depth-3 read single-beat response-demux/read-data shapes;
 - same-family mixed auto-ID plus concrete queue-head response demux;
 - group-local simultaneous same-cycle enqueue widening;
 - packed outputs and alternate payload assembly;

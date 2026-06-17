@@ -134,7 +134,8 @@ shapes.
 
 The following remain outside `.123`:
 
-- queue depths greater than two slots;
+- additional queue-depth widening beyond the later selected one-group
+  depth-3 read single-beat response-demux/read-data shapes;
 - generated read-data capture over multiple queue-head groups;
 - same-family mixed auto-ID plus concrete queue-head response demux;
 - write-family multi-group queue-head response demux;
