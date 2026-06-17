@@ -5590,6 +5590,19 @@ remains separate and generated without `read_data`; read burst-last depth-3,
 write depth-3, multiple or mixed depth-3 groups, mixed auto-ID, group-local
 enqueue widening, direct backend, and VHDL remain separately deferred.
 
+Post read single-beat depth-3 queue-head read-data selector:
+[AXI_IAL2_MANAGER_POST_READ_SINGLE_BEAT_DEPTH3_QUEUE_HEAD_READ_DATA_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_READ_SINGLE_BEAT_DEPTH3_QUEUE_HEAD_READ_DATA_NEXT_SLICE_SELECTION.md)
+records `.154` and selects `.155`, readiness audit for generated read
+burst-last depth-3 queue-head response-demux. The selector confirms the
+current depth-3 generated path is still read single-beat only, while existing
+read burst-last and write queue-head groups remain generated at depth 2. The
+next audit will check whether the `RLAST`-qualified read burst-last path can
+safely reuse the generalized depth-3 queue-state core for exactly one
+three-transaction concrete `RID` group before any behavior is widened. Write
+depth-3, read-data over read burst-last depth-3, multiple or mixed depth-3
+groups, mixed auto-ID, group-local enqueue widening, direct backend, and VHDL
+remain separately deferred.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same
