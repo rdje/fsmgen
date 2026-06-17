@@ -5855,6 +5855,19 @@ multiple or mixed depth-3 groups, mixed auto-ID, group-local enqueue
 widening, packed burst outputs, direct backend, and VHDL remain separately
 deferred.
 
+Post read burst-last depth-3 queue-head runtime-validation selector:
+[AXI_IAL2_MANAGER_POST_READ_BURST_LAST_DEPTH3_QUEUE_HEAD_RUNTIME_VALIDATION_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_READ_BURST_LAST_DEPTH3_QUEUE_HEAD_RUNTIME_VALIDATION_NEXT_SLICE_SELECTION.md)
+records `.166` and selects `.167`, readiness audit for generated multi-beat
+output-bank behavior over the shipped read burst-last depth-3 queue-head
+runtime-validation shape. The selector keeps `.166` documentation-only: the
+`.165` runtime sample is generated at depth `3` and leaves only
+`multi_beat_read_data_reassembly`, `per_beat_outputs`, and
+`rresp_aggregation` residue; the existing depth-2 multi-beat queue-head
+sample proves the output-bank substrate; an in-memory depth-3 multi-beat
+candidate fails closed at the local multi-beat coverage diagnostic. `.167`
+must audit whether direct implementation can widen that local admission gate
+or needs a smaller prerequisite before behavior changes.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same
