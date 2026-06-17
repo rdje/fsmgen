@@ -2295,9 +2295,18 @@ sub _build_same_id_issue_order_queue_behavior(%args) {
     my @queue_groups;
     for my $group (@$groups) {
         return undef unless ref($group) eq 'HASH'
-            && ($group->{depth} // 0) == 2
-            && ref($group->{transactions}) eq 'ARRAY'
-            && @{$group->{transactions}} == 2;
+            && ref($group->{transactions}) eq 'ARRAY';
+
+        my $group_depth = $group->{depth} // 0;
+        my $transaction_count = scalar(@{$group->{transactions}});
+        my $depth2_shape = $group_depth == 2 && $transaction_count == 2;
+        my $read_single_beat_depth3_shape = $family_name eq 'read'
+            && ($entry->{response_scope} // '') eq 'single_beat'
+            && !defined $entry->{last_signal}
+            && @$groups == 1
+            && $group_depth == 3
+            && $transaction_count == 3;
+        return undef unless $depth2_shape || $read_single_beat_depth3_shape;
 
         my @transactions;
         for my $transaction_name (@{$group->{transactions}}) {
@@ -2325,7 +2334,7 @@ sub _build_same_id_issue_order_queue_behavior(%args) {
         );
         my %slot_signal;
         my @storage;
-        for my $slot (0 .. 1) {
+        for my $slot (0 .. ($group_depth - 1)) {
             for my $transaction (@transactions) {
                 my $signal = "${prefix}_slot${slot}_$transaction->{transaction}_q";
                 $slot_signal{$slot}{$transaction->{transaction}} = $signal;
@@ -2336,7 +2345,7 @@ sub _build_same_id_issue_order_queue_behavior(%args) {
         for my $transaction (@transactions) {
             $transaction->{head_signal} = $slot_signal{0}{$transaction->{transaction}};
             $transaction->{slot_signals} = [
-                map { $slot_signal{$_}{$transaction->{transaction}} } 0 .. 1
+                map { $slot_signal{$_}{$transaction->{transaction}} } 0 .. ($group_depth - 1)
             ];
         }
 
@@ -2346,7 +2355,7 @@ sub _build_same_id_issue_order_queue_behavior(%args) {
             concrete_id             => $group->{concrete_id},
             concrete_id_literal     => _sized_decimal_literal($id_family->{width}, $group->{concrete_id}),
             id_width                => $id_family->{width},
-            depth                   => 2,
+            depth                   => $group_depth,
             queue_state_representation => 'compact_onehot_transaction_slots',
             dequeue_event_source    => 'queue_head_response_demux',
             response_event          => $entry->{response_event},
@@ -3159,10 +3168,15 @@ sub _same_id_issue_order_queue_priority_lines($contract) {
     my @lines;
     for my $family_name (qw(write read)) {
         for my $group (_same_id_issue_order_queue_groups($behavior, $family_name)) {
-            my @rules = @{$group->{transition_rules} || []};
-            for my $left_index (0 .. $#rules) {
-                for my $right_index ($left_index + 1 .. $#rules) {
-                    push @lines, "  (priority $rules[$left_index] over $rules[$right_index])";
+            my %rules_by_from_state;
+            for my $spec (_same_id_issue_order_queue_transition_specs($group)) {
+                push @{$rules_by_from_state{_same_id_issue_order_queue_state_key($spec->{from})}}, $spec->{name};
+            }
+            for my $state_key (sort keys %rules_by_from_state) {
+                my $rules = $rules_by_from_state{$state_key};
+                next if @$rules < 2;
+                for my $left_index (0 .. $#$rules - 1) {
+                    push @lines, "  (priority $rules->[$left_index] over $rules->[$left_index + 1])";
                 }
             }
         }
@@ -3295,7 +3309,7 @@ sub _same_id_issue_order_queue_rule_lines($contract) {
                 push @lines, _auto_id_rule(
                     $transition->{name},
                     $transition->{guard},
-                    _same_id_issue_order_queue_assignments($group, $transition->{to}),
+                    _same_id_issue_order_queue_assignments($group, $transition->{to}, $transition->{from}),
                 );
             }
         }
@@ -3305,59 +3319,88 @@ sub _same_id_issue_order_queue_rule_lines($contract) {
 }
 
 sub _same_id_issue_order_queue_transition_specs($group) {
-    my ($t0, $t1) = @{$group->{transactions} || []};
-    return () unless ref($t0) eq 'HASH' && ref($t1) eq 'HASH';
+    my @transactions = grep { ref($_) eq 'HASH' } @{$group->{transactions} || []};
+    return () unless @transactions;
 
-    my $n0 = $t0->{transaction};
-    my $n1 = $t1->{transaction};
-    my $e0 = $t0->{admitted_pulse};
-    my $e1 = $t1->{admitted_pulse};
-    my $m0 = _same_id_issue_order_queue_head_match_expr($group, $n0);
-    my $m1 = _same_id_issue_order_queue_head_match_expr($group, $n1);
-    my @specs = (
-        ["empty_enqueue_$n0"          => []        => [$n0]      => [$e0, _not_expr($e1), _not_expr($m0), _not_expr($m1)]],
-        ["empty_enqueue_$n1"          => []        => [$n1]      => [$e1, _not_expr($e0), _not_expr($m0), _not_expr($m1)]],
-        ["${n0}_dequeue"              => [$n0]     => []         => [$m0, _not_expr($m1), _not_expr($e0), _not_expr($e1)]],
-        ["${n1}_dequeue"              => [$n1]     => []         => [$m1, _not_expr($m0), _not_expr($e0), _not_expr($e1)]],
-        ["${n0}_enqueue_$n1"          => [$n0]     => [$n0, $n1] => [$e1, _not_expr($e0), _not_expr($m0), _not_expr($m1)]],
-        ["${n1}_enqueue_$n0"          => [$n1]     => [$n1, $n0] => [$e0, _not_expr($e1), _not_expr($m0), _not_expr($m1)]],
-        ["${n0}_dequeue_enqueue_$n0"  => [$n0]     => [$n0]      => [$m0, $e0, _not_expr($m1), _not_expr($e1)]],
-        ["${n0}_dequeue_enqueue_$n1"  => [$n0]     => [$n1]      => [$m0, $e1, _not_expr($m1), _not_expr($e0)]],
-        ["${n1}_dequeue_enqueue_$n0"  => [$n1]     => [$n0]      => [$m1, $e0, _not_expr($m0), _not_expr($e1)]],
-        ["${n1}_dequeue_enqueue_$n1"  => [$n1]     => [$n1]      => [$m1, $e1, _not_expr($m0), _not_expr($e0)]],
-        ["${n0}_${n1}_dequeue_$n0"    => [$n0,$n1] => [$n1]      => [$m0, _not_expr($m1), _not_expr($e0), _not_expr($e1)]],
-        ["${n1}_${n0}_dequeue_$n1"    => [$n1,$n0] => [$n0]      => [$m1, _not_expr($m0), _not_expr($e0), _not_expr($e1)]],
-        ["${n0}_${n1}_dequeue_enqueue_$n0" => [$n0,$n1] => [$n1,$n0] => [$m0, $e0, _not_expr($m1), _not_expr($e1)]],
-        ["${n1}_${n0}_dequeue_enqueue_$n1" => [$n1,$n0] => [$n0,$n1] => [$m1, $e1, _not_expr($m0), _not_expr($e0)]],
-    );
+    my @names = map { $_->{transaction} } @transactions;
+    my %enqueue_expr = map { $_->{transaction} => $_->{admitted_pulse} } @transactions;
+    my %head_match_expr = map {
+        $_ => _same_id_issue_order_queue_head_match_expr($group, $_)
+    } @names;
 
-    return map {
-        my ($suffix, $from, $to, $events) = @$_;
-        +{
-            name  => "$group->{prefix}_$suffix",
-            from  => $from,
-            to    => $to,
-            guard => _and_expr(
-                _same_id_issue_order_queue_state_expr($group, $from),
-                @$events,
-            ),
+    my @specs;
+    for my $from (_same_id_issue_order_queue_state_sequences(\@names, $group->{depth})) {
+        my @dequeue_options = (undef);
+        push @dequeue_options, $from->[0] if @$from;
+
+        for my $dequeue (@dequeue_options) {
+            my @after_dequeue = defined $dequeue ? @{$from}[1 .. $#$from] : @$from;
+            my %remaining = map { $_ => 1 } @after_dequeue;
+            my @enqueue_options = (undef);
+            push @enqueue_options, grep { !$remaining{$_} } @names
+                if @after_dequeue < ($group->{depth} // 0);
+
+            for my $enqueue (@enqueue_options) {
+                next unless defined($dequeue) || defined($enqueue);
+
+                my @to = @after_dequeue;
+                push @to, $enqueue if defined $enqueue;
+                next if _same_id_issue_order_queue_state_key($from)
+                    eq _same_id_issue_order_queue_state_key(\@to);
+
+                my @dequeue_terms = defined $dequeue
+                    ? (
+                        $head_match_expr{$dequeue},
+                        map { $_ eq $dequeue ? () : _not_expr($head_match_expr{$_}) } @names,
+                    )
+                    : map { _not_expr($head_match_expr{$_}) } @names;
+                my @enqueue_terms = defined $enqueue
+                    ? (
+                        $enqueue_expr{$enqueue},
+                        map { $_ eq $enqueue ? () : _not_expr($enqueue_expr{$_}) } @names,
+                    )
+                    : map { _not_expr($enqueue_expr{$_}) } @names;
+
+                push @specs, {
+                    name  => "$group->{prefix}_" . _same_id_issue_order_queue_transition_suffix($from, $dequeue, $enqueue),
+                    from  => [@$from],
+                    to    => \@to,
+                    guard => _and_expr(
+                        _same_id_issue_order_queue_state_expr($group, $from),
+                        @dequeue_terms,
+                        @enqueue_terms,
+                    ),
+                };
+            }
         }
-    } @specs;
+    }
+    return @specs;
 }
 
-sub _same_id_issue_order_queue_assignments($group, $state) {
+sub _same_id_issue_order_queue_assignments($group, $state, $from_state = undef) {
     my %occupied;
     for my $slot (0 .. $#$state) {
         $occupied{$slot}{$state->[$slot]} = 1;
     }
+    my %from_occupied;
+    if (defined $from_state) {
+        for my $slot (0 .. $#$from_state) {
+            $from_occupied{$slot}{$from_state->[$slot]} = 1;
+        }
+    }
 
     my @assignments;
-    for my $slot (0 .. 1) {
+    for my $slot (0 .. (($group->{depth} // 0) - 1)) {
         for my $transaction (@{$group->{transactions} || []}) {
             my $name = $transaction->{transaction};
+            my $next_value = $occupied{$slot}{$name} ? 1 : 0;
+            if (defined $from_state) {
+                my $current_value = $from_occupied{$slot}{$name} ? 1 : 0;
+                next if $next_value == $current_value;
+            }
             push @assignments, [
                 $group->{slot_signals}{$slot}{$name},
-                $occupied{$slot}{$name} ? 1 : 0,
+                $next_value,
             ];
         }
     }
@@ -3371,7 +3414,7 @@ sub _same_id_issue_order_queue_state_expr($group, $state) {
     }
 
     my @terms;
-    for my $slot (0 .. 1) {
+    for my $slot (0 .. (($group->{depth} // 0) - 1)) {
         for my $transaction (@{$group->{transactions} || []}) {
             my $name = $transaction->{transaction};
             my $signal = $group->{slot_signals}{$slot}{$name};
@@ -3388,10 +3431,9 @@ sub _same_id_issue_order_queue_slot_any_expr($group, $slot) {
 }
 
 sub _same_id_issue_order_queue_full_expr($group) {
-    return _and_expr(
-        _same_id_issue_order_queue_slot_any_expr($group, 0),
-        _same_id_issue_order_queue_slot_any_expr($group, 1),
-    );
+    return _and_expr(map {
+        _same_id_issue_order_queue_slot_any_expr($group, $_)
+    } 0 .. (($group->{depth} // 0) - 1));
 }
 
 sub _same_id_issue_order_queue_head_match_expr($group, $transaction_name) {
@@ -3434,17 +3476,18 @@ sub _same_id_issue_order_queue_remaining_after_dequeue_expr($group, $transaction
             $group->{slot_signals}{0}{$transaction_name},
             _not_expr($head_match),
         ),
-        $group->{slot_signals}{1}{$transaction_name},
+        map {
+            $group->{slot_signals}{$_}{$transaction_name}
+        } 1 .. (($group->{depth} // 0) - 1),
     );
 }
 
 sub _same_id_issue_order_queue_assertion_specs_for_group($group) {
-    my ($t0, $t1) = @{$group->{transactions} || []};
-    return () unless ref($t0) eq 'HASH' && ref($t1) eq 'HASH';
+    return () unless @{$group->{transactions} || []};
 
     my $prefix = $group->{prefix};
-    my $slot0_any = _same_id_issue_order_queue_slot_any_expr($group, 0);
-    my $slot1_any = _same_id_issue_order_queue_slot_any_expr($group, 1);
+    my @slot_indices = 0 .. (($group->{depth} // 0) - 1);
+    my @slot_any = map { _same_id_issue_order_queue_slot_any_expr($group, $_) } @slot_indices;
     my $dequeue = _same_id_issue_order_queue_dequeue_expr($group);
     my $response_for_id = _same_id_issue_order_queue_response_antecedent_expr($group);
     my @head_matches = map {
@@ -3452,24 +3495,23 @@ sub _same_id_issue_order_queue_assertion_specs_for_group($group) {
     } @{$group->{transactions} || []};
     my @enqueue_pulses = map { $_->{admitted_pulse} } @{$group->{transactions} || []};
 
-    my @assertions = (
-        {
-            name      => "${prefix}_slot0_onehot0",
+    my @assertions;
+    for my $slot (@slot_indices) {
+        push @assertions, {
+            name      => "${prefix}_slot${slot}_onehot0",
             condition => _same_id_at_most_one_expr(
-                map { $group->{slot_signals}{0}{$_->{transaction}} } @{$group->{transactions}}
+                map { $group->{slot_signals}{$slot}{$_->{transaction}} } @{$group->{transactions}}
             ),
-            message   => "$group->{family} same-ID issue-order queue slot 0 is one-hot-or-empty",
-        },
-        {
-            name      => "${prefix}_slot1_onehot0",
-            condition => _same_id_at_most_one_expr(
-                map { $group->{slot_signals}{1}{$_->{transaction}} } @{$group->{transactions}}
-            ),
-            message   => "$group->{family} same-ID issue-order queue slot 1 is one-hot-or-empty",
-        },
+            message   => "$group->{family} same-ID issue-order queue slot $slot is one-hot-or-empty",
+        };
+    }
+
+    push @assertions,
         {
             name      => "${prefix}_compact",
-            condition => _implies_expr($slot1_any, $slot0_any),
+            condition => _and_expr(map {
+                _implies_expr($slot_any[$_], $slot_any[$_ - 1])
+            } 1 .. $#slot_any),
             message   => "$group->{family} same-ID issue-order queue is compact",
         },
         {
@@ -3482,7 +3524,7 @@ sub _same_id_issue_order_queue_assertion_specs_for_group($group) {
         },
         {
             name      => "${prefix}_response_requires_nonempty",
-            condition => _implies_expr($response_for_id, $slot0_any),
+            condition => _implies_expr($response_for_id, $slot_any[0]),
             message   => "$group->{family} same-ID queue-head response requires a nonempty queue",
         },
         {
@@ -3495,10 +3537,9 @@ sub _same_id_issue_order_queue_assertion_specs_for_group($group) {
         },
         {
             name      => "${prefix}_dequeue_requires_nonempty",
-            condition => _implies_expr($dequeue, $slot0_any),
+            condition => _implies_expr($dequeue, $slot_any[0]),
             message   => "$group->{family} same-ID issue-order queue dequeue requires a nonempty queue",
-        },
-    );
+        };
     push @assertions, {
         name      => "${prefix}_nonlast_no_dequeue",
         condition => _implies_expr(
@@ -3513,10 +3554,9 @@ sub _same_id_issue_order_queue_assertion_specs_for_group($group) {
         push @assertions,
             {
                 name      => "${prefix}_${name}_unique_slot",
-                condition => _not_expr(_and_expr(
-                    $group->{slot_signals}{0}{$name},
-                    $group->{slot_signals}{1}{$name},
-                )),
+                condition => _same_id_at_most_one_expr(map {
+                    $group->{slot_signals}{$_}{$name}
+                } @slot_indices),
                 message   => "$group->{family} same-ID issue-order queue transaction $name appears in at most one slot",
             },
             {
@@ -3530,6 +3570,50 @@ sub _same_id_issue_order_queue_assertion_specs_for_group($group) {
     }
 
     return @assertions;
+}
+
+sub _same_id_issue_order_queue_state_sequences($transaction_names, $depth) {
+    my @states = ([]);
+    for my $length (1 .. ($depth // 0)) {
+        _same_id_issue_order_queue_state_sequences_of_length(
+            \@states,
+            [],
+            $transaction_names,
+            $length,
+        );
+    }
+    return @states;
+}
+
+sub _same_id_issue_order_queue_state_sequences_of_length($states, $prefix, $transaction_names, $target_length) {
+    if (@$prefix == $target_length) {
+        push @$states, [@$prefix];
+        return;
+    }
+
+    my %used = map { $_ => 1 } @$prefix;
+    for my $name (@$transaction_names) {
+        next if $used{$name};
+        _same_id_issue_order_queue_state_sequences_of_length(
+            $states,
+            [@$prefix, $name],
+            $transaction_names,
+            $target_length,
+        );
+    }
+}
+
+sub _same_id_issue_order_queue_transition_suffix($from, $dequeue, $enqueue) {
+    my $from_label = @$from ? join('_', @$from) : 'empty';
+    return "${from_label}_dequeue_enqueue_$enqueue"
+        if defined($dequeue) && defined($enqueue);
+    return @$from == 1 ? "${from_label}_dequeue" : "${from_label}_dequeue_$dequeue"
+        if defined $dequeue;
+    return "${from_label}_enqueue_$enqueue";
+}
+
+sub _same_id_issue_order_queue_state_key($state) {
+    return join("\x1f", @$state);
 }
 
 sub _read_data_burst_length_storage_lines($contract) {
@@ -4088,7 +4172,7 @@ sub _sized_binary_literal($width, $bits) {
 }
 
 sub _implies_expr($antecedent, $consequent) {
-    return "(=> $antecedent $consequent)";
+    return _or_expr(_not_expr($antecedent), $consequent);
 }
 
 sub _quoted_isf_string($value) {
@@ -4317,14 +4401,14 @@ sub _build_report(%args) {
             'auto_id_lifecycle pools are bounded to 1..4 unique values per family and must fit the declared positive ID width',
             'auto_id_lifecycle generates first-free request-ID drive, per-transaction busy/selected-ID state, completion-event release, no-ID assertions, inactive-completion assertions, and same-family request mutual-exclusion assertions',
             'same_id_ordering for generated auto-ID families is enforced by avoiding same-ID concurrency through allocator free-ID guards plus pairwise active selected-ID assertions',
-            'same_id_ordering_policy accepts explicit read/write concrete-id-reuse reject policies plus issue-order-queue admitted-request pulse generation, and generates bounded read single-beat, read burst-last, or write depth-2 concrete same-ID queue state plus queue-head response demux for selected public sample shapes, including multiple independent read single-beat, read burst-last, and write groups',
+            'same_id_ordering_policy accepts explicit read/write concrete-id-reuse reject policies plus issue-order-queue admitted-request pulse generation, and generates bounded read single-beat, read burst-last, or write depth-2 concrete same-ID queue state plus queue-head response demux for selected public sample shapes, including multiple independent read single-beat, read burst-last, and write groups, plus a selected single-group read single-beat depth-3 response-demux-only queue-head shape',
             'response_demux requires id_families, transactions, and either selected-family auto_id_lifecycle metadata or selected same-id-ordering concrete-id-reuse issue-order-queue metadata with a duplicate concrete-ID group',
             'response_demux.write requires response_event equal to write_complete and generates bounded write BID demux behavior for explicit opt-in contracts',
             'response_demux.read requires response_event equal to read_complete, response_scope single_beat or burst_last, read ID-family metadata, read transactions, and read auto_id_lifecycle metadata or selected concrete same-ID queue-head metadata',
             'response_demux.read response_scope single_beat generates bounded single-beat read RID demux behavior for explicit opt-in contracts',
             'response_demux.read response_scope burst_last requires one-bit last_signal metadata and generates matched-RID-and-RLAST last-beat completion behavior for explicit opt-in contracts',
-            'response_demux transaction_completion must be generated; selected auto-ID families make transaction completion names generated demux pulse outputs, while the bounded read single-beat, read burst-last, and write depth-2 concrete same-ID queue-head shapes also make transaction completion names generated demux pulse outputs',
-            'concrete same-ID queue-head response_demux is generated only for bounded two-transaction depth-2 shapes: one-or-more-group read single-beat response-demux-only or scalar read-data capture, one-or-more-group read burst-last response-demux-only, or one-or-more-group write, with issue-order-queue policy, duplicate concrete-ID groups, no same-family auto_id_lifecycle demux, and read_data consumption supported for one-or-more generated read single-beat queue-head groups through generated read single-beat queue-head scalar capture, plus one-or-more generated read burst-last queue-head groups through generated read burst-last queue-head last-beat capture with no burst_length metadata, generated read burst-last queue-head last-beat capture with report-only raw-ARLEN burst-length metadata, generated read burst-last queue-head last-beat capture with runtime-assertion beat-count/RLAST validation metadata, and generated multi-beat output-bank capture in this slice',
+            'response_demux transaction_completion must be generated; selected auto-ID families make transaction completion names generated demux pulse outputs, while the bounded read single-beat, read burst-last, and write depth-2 concrete same-ID queue-head shapes plus the selected single-group read single-beat depth-3 response-demux-only queue-head shape also make transaction completion names generated demux pulse outputs',
+            'concrete same-ID queue-head response_demux is generated for bounded two-transaction depth-2 shapes: one-or-more-group read single-beat response-demux-only or scalar read-data capture, one-or-more-group read burst-last response-demux-only, or one-or-more-group write, plus one selected single-group read single-beat depth-3 response-demux-only shape; all require issue-order-queue policy, duplicate concrete-ID groups, and no same-family auto_id_lifecycle demux, and read_data consumption is supported only for one-or-more generated depth-2 read single-beat queue-head groups through generated read single-beat queue-head scalar capture, plus one-or-more generated depth-2 read burst-last queue-head groups through generated read burst-last queue-head last-beat capture with no burst_length metadata, generated read burst-last queue-head last-beat capture with report-only raw-ARLEN burst-length metadata, generated read burst-last queue-head last-beat capture with runtime-assertion beat-count/RLAST validation metadata, and generated multi-beat output-bank capture in this slice',
             'read_data supports explicit generated single-beat capture behavior with response_scope single_beat, explicit generated last-beat capture behavior with response_scope burst_last, and explicit generated multi-beat output-bank behavior with response_scope burst_last',
             'read_data.read data width must be positive and status width must be 2',
             'read_data.read optional burst_length metadata is accepted only for last-beat or multi-beat capture, source arlen, signal width 8, axlen-plus-one encoding, request capture, max_beats 1..256, report-only or runtime-assertion validation, generated raw-ARLEN capture, and generated beat-count/RLAST runtime assertions only for explicit runtime-assertion contracts; multi-beat capture requires runtime-assertion validation',
@@ -4339,7 +4423,7 @@ sub _build_report(%args) {
             },
             {
                 id     => 'axi_id_ordering_and_response_matching',
-                detail => 'Concrete transaction ID request/response assertions, explicit bounded auto-ID request-ID drive plus completion-event release, generated auto-ID same-ID avoidance, explicit static concrete-ID reuse reject policy metadata, issue-order-queue admitted-request pulse generation for selected concrete-ID families, bounded read single-beat, read burst-last, and write depth-2 concrete same-ID issue-order queue state plus queue-head response-demux behavior for selected public sample shapes including multiple independent read single-beat response-demux-only or scalar read-data queue groups, multiple independent read burst-last response-demux-only queue groups, and multiple independent write response-demux queue groups, generated write BID response demux, generated single-beat read RID response demux, generated single-beat read-data RDATA/RRESP capture, generated single-beat read-data RDATA/RRESP capture from generated read single-beat concrete same-ID queue-head response-demux including multiple independent queue-head groups, generated burst-last RLAST response-demux completion, structural last-beat read-data metadata, generated last-beat read-data RDATA/RRESP capture, generated last-beat read-data RDATA/RRESP capture from generated read burst-last concrete same-ID queue-head response-demux including multiple independent queue-head groups with no burst_length metadata, report-only raw-ARLEN burst-length metadata, or runtime-assertion beat-count/RLAST validation metadata, generated raw-ARLEN burst-length capture including report-only and runtime-validation generated read burst-last concrete same-ID queue-head read-data contracts with one or more independent queue-head groups, explicit runtime-assertion beat-count/RLAST validation for auto-ID and bounded read burst-last concrete same-ID queue-head read-data contracts including one or more independent queue-head groups, generated multi-beat read-data output-bank behavior for the covered auto-ID multi-beat-by-RID subset and bounded read burst-last concrete same-ID queue-head subset including multiple independent queue-head groups, bounded burst payload/output behavior through that per-beat output bank, and generated scalar RRESP aggregation behavior are supported; dynamic user-ID arbitration while issuing multiple same-family requests in one cycle, deeper concrete same-ID issue-order queues, generalized scoreboard policies, authored/general different-ID interleaving outside the covered auto-ID and bounded queue-head subsets, packed burst-vector outputs, alternate full burst payload assembly, and aggregate-only status output shapes remain outside this capacity/status shell.',
+                detail => 'Concrete transaction ID request/response assertions, explicit bounded auto-ID request-ID drive plus completion-event release, generated auto-ID same-ID avoidance, explicit static concrete-ID reuse reject policy metadata, issue-order-queue admitted-request pulse generation for selected concrete-ID families, bounded read single-beat, read burst-last, and write depth-2 concrete same-ID issue-order queue state plus queue-head response-demux behavior for selected public sample shapes including multiple independent read single-beat response-demux-only or scalar read-data queue groups, multiple independent read burst-last response-demux-only queue groups, and multiple independent write response-demux queue groups, one selected single-group read single-beat depth-3 response-demux-only queue-head shape, generated write BID response demux, generated single-beat read RID response demux, generated single-beat read-data RDATA/RRESP capture, generated single-beat read-data RDATA/RRESP capture from generated read single-beat concrete same-ID queue-head response-demux including multiple independent depth-2 queue-head groups, generated burst-last RLAST response-demux completion, structural last-beat read-data metadata, generated last-beat read-data RDATA/RRESP capture, generated last-beat read-data RDATA/RRESP capture from generated read burst-last concrete same-ID queue-head response-demux including multiple independent depth-2 queue-head groups with no burst_length metadata, report-only raw-ARLEN burst-length metadata, or runtime-assertion beat-count/RLAST validation metadata, generated raw-ARLEN burst-length capture including report-only and runtime-validation generated read burst-last concrete same-ID queue-head read-data contracts with one or more independent depth-2 queue-head groups, explicit runtime-assertion beat-count/RLAST validation for auto-ID and bounded read burst-last concrete same-ID queue-head read-data contracts including one or more independent depth-2 queue-head groups, generated multi-beat read-data output-bank behavior for the covered auto-ID multi-beat-by-RID subset and bounded read burst-last concrete same-ID queue-head subset including multiple independent depth-2 queue-head groups, bounded burst payload/output behavior through that per-beat output bank, and generated scalar RRESP aggregation behavior are supported; dynamic user-ID arbitration while issuing multiple same-family requests in one cycle, concrete same-ID issue-order queues deeper than the selected read single-beat depth-3 shape, generalized scoreboard policies, authored/general different-ID interleaving outside the covered auto-ID and bounded queue-head subsets, packed burst-vector outputs, alternate full burst payload assembly, and aggregate-only status output shapes remain outside this capacity/status shell.',
             },
             {
                 id     => 'profile_aliases_and_full_manager_behavior',

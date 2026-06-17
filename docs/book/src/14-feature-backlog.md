@@ -5540,6 +5540,23 @@ write depth-3, burst-last depth-3, multiple depth-3 groups, mixed auto-ID,
 group-local simultaneous enqueue widening, direct backend, and VHDL remain
 deferred.
 
+Read single-beat depth-3 queue-head response-demux behavior:
+[AXI_IAL2_MANAGER_READ_SINGLE_BEAT_DEPTH3_QUEUE_HEAD_RESPONSE_DEMUX_BEHAVIOR](../../AXI_IAL2_MANAGER_READ_SINGLE_BEAT_DEPTH3_QUEUE_HEAD_RESPONSE_DEMUX_BEHAVIOR.md)
+ships `.149`, generated read single-beat depth-3 queue-head response-demux for
+`ppif/axi_manager_capacity_status_read_single_beat_depth3_same_id_queue_head_response_demux.ppif`.
+The public sample has one duplicate concrete read-ID group: `r0`, `r1`, and
+`r2` share `RID` `3`; computed queue depth is `3`; generated state includes
+`slot0`, `slot1`, and `slot2`; and generated completion pulse outputs cover
+`r0` through `r2` without `RLAST` or `read_data`. The generalized shared queue
+state core optionally dequeues the active head on matched `RID`, compacts the
+remaining entries toward `slot0`, and appends the one admitted request at the
+tail after any shift. Check JSON and semantic JSON support-account the sample,
+and `--verify-hdl` emits the generated `RID` input, `r2` completion output,
+and third-slot queue state. `.150` is the next selector before read-data over
+depth-3 queues, write depth-3, burst-last depth-3, multiple or mixed depth-3
+groups, mixed auto-ID, group-local enqueue widening, direct backend, or VHDL
+behavior changes.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same

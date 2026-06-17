@@ -175,6 +175,17 @@ my @REGRESSION_CORPUS = (
         expected_semantic_source_root_kind => 'fsm',
     },
     {
+        id => 'intent.ppif_axi_manager_capacity_status_read_single_beat_depth3_same_id_queue_head_response_demux',
+        relpath => 'ppif/axi_manager_capacity_status_read_single_beat_depth3_same_id_queue_head_response_demux.ppif',
+        family => 'protocol_fixture',
+        classification => 'supported_smoke',
+        coverage => 'ial2_ppif_manager_capacity_status_read_single_beat_depth3_same_id_queue_head_response_demux_pipeline_cli',
+        source_kind => 'ppif',
+        strict_supported => 1,
+        expected_module_name => 'axi0_capacity_status',
+        expected_semantic_source_root_kind => 'fsm',
+    },
+    {
         id => 'intent.ppif_axi_manager_capacity_status_read_single_beat_multi_group_same_id_queue_head_response_demux',
         relpath => 'ppif/axi_manager_capacity_status_read_single_beat_multi_group_same_id_queue_head_response_demux.ppif',
         family => 'protocol_fixture',

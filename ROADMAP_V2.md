@@ -1620,9 +1620,16 @@ support-accounting matches; temporary depth-3 read-data probes fail closed
 because generated read response-demux metadata does not exist for depth-3
 groups. `.148` selected `.149`, generated read single-beat depth-3
 queue-head response-demux through generalized shared queue-state helpers.
-Read-data over depth-3 queues, write and burst-last depth-3 response-demux,
-multiple depth-3 groups, same-family mixed auto-ID, and group-local
-simultaneous enqueue widening remain deferred.
+`.149` now ships that bounded behavior for
+`ppif/axi_manager_capacity_status_read_single_beat_depth3_same_id_queue_head_response_demux.ppif`:
+one read single-beat concrete `RID` `3` group covers `r0`/`r1`/`r2`, compact
+one-hot queue storage spans `slot0` through `slot2`, generated completion
+pulses are emitted only for the active head transaction, and strict check JSON,
+semantic JSON, and `--verify-hdl` cover the public sample through support
+accounting. Read-data over depth-3 queues, write and burst-last depth-3
+response-demux, multiple or mixed depth-3 groups, same-family mixed auto-ID,
+and group-local simultaneous enqueue widening remain deferred. `.150` is the
+next selector before any further behavior widening.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.
