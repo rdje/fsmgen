@@ -1850,16 +1850,18 @@ single-beat read-data coverage gate now admits duplicate concrete `RID`
 groups with computed depths `2` or `3` when at least one group is depth `3`;
 read-data normalization, artifact enumeration, report projection, and HDL
 lowering remain transaction-list driven. Two public support-accounted samples
-cover the two-depth-3 and mixed depth-3/depth-2 shapes. Read burst-last
-read-data over multiple/mixed depth-3 groups, burst-length,
-runtime-validation, multi-beat payload, write-family read-data, mixed
-auto-ID, group-local enqueue widening, packed outputs, alternate burst
-assembly, direct backend, verification-output generation, VHDL, and
-backend-language variants remain deferred. Selector `.178` selected `.179`,
-readiness audit for generated read burst-last scalar last-beat read-data over
-multiple/mixed depth-3 queue-head groups. Audit `.179` selected `.180`, direct
-bounded implementation of that behavior with no `burst_length` metadata. The
-active frontier advances to `.180`.
+cover the two-depth-3 and mixed depth-3/depth-2 shapes. Selector `.178`
+selected `.179`, readiness audit for generated read burst-last scalar
+last-beat read-data over multiple/mixed depth-3 queue-head groups. Audit
+`.179` selected `.180`, and implementation `.180` now ships generated read
+burst-last scalar last-beat `RDATA`/`RRESP` over two-depth-3 and mixed
+depth-3/depth-2 concrete same-ID queue-head groups with no `burst_length`
+metadata. The two public samples are support-accounted, strict check/semantic
+JSON matched, and HDL-verifiable. Burst-length, runtime-validation,
+multi-beat payload over those groups, write-family read-data, mixed auto-ID,
+group-local enqueue widening, packed outputs, alternate burst assembly, direct
+backend, verification-output generation, VHDL, and backend-language variants
+remain deferred. The active frontier advances to `.181`, the next selector.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.
