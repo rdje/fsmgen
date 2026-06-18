@@ -6108,6 +6108,21 @@ auto-ID, group-local enqueue widening, packed outputs, alternate burst
 assembly, direct backend, verification-output generation, VHDL, and
 backend-language variants remain separately owned.
 
+Multiple/mixed depth-3 queue-head last-beat read-data readiness:
+[AXI_IAL2_MANAGER_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_LAST_BEAT_READ_DATA_READINESS_AUDIT](../../AXI_IAL2_MANAGER_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_LAST_BEAT_READ_DATA_READINESS_AUDIT.md)
+records `.179`, which selects `.180`, direct bounded implementation of
+generated read burst-last scalar last-beat `RDATA`/`RRESP` over multiple or
+mixed depth-3 concrete same-ID queue-head groups with no `burst_length`
+metadata. The audit is behavior-free: the matching `.174` response-demux-only
+samples already generate over depth `3,3` and `3,2` queue sets, the one-group
+depth-3 read burst-last scalar read-data sibling already generates, downstream
+scalar read-data artifacts are transaction-list driven, and temporary
+last-beat read-data candidates over those queue sets fail closed only at the
+local last-beat coverage gate. Burst-length, runtime-validation, multi-beat
+payload, write-family read-data, mixed auto-ID, group-local enqueue widening,
+packed outputs, alternate burst assembly, direct backend, verification-output
+generation, VHDL, and backend-language variants remain separately owned.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same
@@ -8369,7 +8384,7 @@ support catalog entries instead of recursive workspace traversal.
 `SEMANTIC-INTROSPECTION-MCP-FRONTIER.30` closes the immediate read-only
 semantic-introspection/MCP pass after source discovery; the active roadmap
 priority is again the IAL2 feature-completeness tree, currently at
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.179`.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.180`.
 
 Selected first MCP resource families are `fsmgen://capabilities`,
 `fsmgen://contracts`, `fsmgen://diagnostics`,
