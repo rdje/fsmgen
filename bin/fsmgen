@@ -6,6 +6,7 @@ use feature qw(signatures postderef);
 use Getopt::Long;
 use JSON::PP ();
 use File::Basename;
+use File::Path qw(make_path);
 use File::Spec;
 
 use FindBin;
@@ -179,6 +180,31 @@ sub format_cli_artifact_error {
     } @artifacts;
 
     return $prefix . $text;
+}
+
+sub default_hdl_artifact_dir {
+    my ($lang_info) = @_;
+
+    my %subdir_for_ext = (
+        '.sv'  => 'sv',
+        '.vhd' => 'vhd',
+        '.v'   => 'v',
+    );
+    my $subdir = $subdir_for_ext{$lang_info->{ext}} // 'hdl';
+    return File::Spec->catdir('.artifacts', $subdir);
+}
+
+sub ensure_default_hdl_artifact_dir {
+    my ($dir, %context) = @_;
+
+    return if -d $dir;
+
+    eval { make_path($dir); 1 }
+        or die format_cli_artifact_error(
+            "Cannot create default HDL artifact directory: $@\n",
+            ['Output directory', $dir],
+            ['Source input', $context{input}],
+        );
 }
 
 sub emit_machine_failure_if_requested {
@@ -449,7 +475,7 @@ Options:
                   Current first strict slice rejects legacy '+fsm' roots and
                   requires the modern explicit '?fsm:module_name' family
   -l, --language  Target HDL language: systemverilog|sv|verilog|v|vhdl (default: systemverilog)
-  -o, --output    Specify output file (default: <fsm_name>.<ext> in current working directory)
+  -o, --output    Specify output file (default: .artifacts/<language>/<fsm_name>.<ext>)
   -h, --help      Show this help message
 
 Environment Variables:
@@ -942,8 +968,10 @@ if (!$check_mode && !$emit_semantic_json && !$output_file) {
         $fsm_bare_name =~ s/\.(?:fsm|isf|ppif)$//i;  # Remove source extension if present
     }
     
-    # Generate output file in current working directory
-    $output_file = "${fsm_bare_name}$lang_info->{ext}";
+    # Keep implicit generated HDL out of the repository root.
+    my $artifact_dir = default_hdl_artifact_dir($lang_info);
+    ensure_default_hdl_artifact_dir($artifact_dir, input => $fsm_input);
+    $output_file = File::Spec->catfile($artifact_dir, "${fsm_bare_name}$lang_info->{ext}");
 }
 
 # Convert output file to absolute path

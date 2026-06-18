@@ -10,6 +10,9 @@
 # Generated files pattern
 *_generated.*
 
+# Default local artifact directory for implicit FSMGen HDL outputs
+.artifacts/
+
 ## Debug and Log Files
 # FSMGen debug logs (created with --debug flag)
 *.log

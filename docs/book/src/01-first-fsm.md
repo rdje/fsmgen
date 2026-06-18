@@ -18,6 +18,11 @@ Useful first commands:
 ./bin/fsmgen --debug=3 fsm/lte_dif_pmaster.fsm
 ```
 
+Without `--output`, FSMGen writes generated HDL under the git-ignored
+`.artifacts/<language>/` directory. The first command above writes
+`.artifacts/sv/trial_0.sv`; an explicit `--output` path is used exactly as
+provided.
+
 ## A Small First FSM
 
 ```lisp

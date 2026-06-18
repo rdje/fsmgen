@@ -24,6 +24,11 @@ Common commands:
 ./bin/fsmgen --strict --emit-semantic-json fsm/apb_requester.fsm
 ```
 
+If `--output` is omitted, generated HDL is written below the git-ignored
+`.artifacts/<language>/` tree, for example `.artifacts/sv/trial_0.sv` for
+SystemVerilog or `.artifacts/vhd/direct_assignment_pair_form.vhd` for VHDL.
+Explicit `--output` paths are preserved exactly.
+
 ## Output Shape
 
 Today, direct FSM/DT lowering is flattened.
@@ -167,6 +172,7 @@ Trace behavior:
 
 ## Useful Options
 
+- With no `--output`, generated HDL is saved under `.artifacts/<language>/`.
 - `-o, --output <file>` writes generated HDL to the requested path.
 - `-l, --language <systemverilog|sv|verilog|v|vhdl>` selects the target
   language. `sv` aliases SystemVerilog, `v` aliases Verilog, and VHDL is

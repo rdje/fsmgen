@@ -1201,6 +1201,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/TASK_TREE_README.md` — setup guide for adopting the task-tree tracking workflow in another project.
 - `docs/TASK_TREE.md` — repo-local task-tree workflow, active tree index, and PNT frontier rules.
 - `docs/tasks/TEMPLATE.md` — reusable template for one top-level task tree.
+- `docs/tasks/GENERATED-HDL-ARTIFACT-PLACEMENT.md` — completed artifact-hygiene task tree for routing implicit generated HDL into git-ignored hidden artifact directories while preserving explicit output paths.
 - `docs/tasks/PROJECT-REMAINING-WORK-TASKTREE-OWNERSHIP.md` — completed roadmap-maintenance task tree that routed the 2026-06-05 remaining-work inventory to existing active owners or new broad owner trees.
 - `docs/tasks/COMPOSITION-TYPE-BACKLOG-EXHAUSTION.md` — completed Composition/type backlog tree; shipped aggregate parameter/generic equality/inequality, closed the remaining Composition/type leaves behind exact prerequisites, and routed VHDL-dependent work through the completed backend/API frontier.
 - `docs/tasks/ISF-REMAINING-BROAD-FRONTIER.md` — proposed broad `R14` ISF frontier owner tree for deferred ISF backlog directions not already owned by narrower active trees.
@@ -1979,6 +1980,11 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 perl bin/fsmgen-mcp --request-json '{"jsonrpc":"2.0","id":1,"method":"tools/list"}'
 ```
 
+When `--output` is omitted, generated HDL is written under the git-ignored
+`.artifacts/<language>/` directory, such as `.artifacts/sv/trial_0.sv` or
+`.artifacts/vhd/direct_assignment_pair_form.vhd`. Use `--output` when you want
+an exact destination path.
+
 For a read-only MCP client, configure the local command as
 `perl /path/to/fsmgen/bin/fsmgen-mcp --workspace-root /path/to/workspace`.
 For one-shot probes, use `--request-json` with JSON-RPC 2.0 requests; for
@@ -2037,6 +2043,7 @@ cd docs/book && mdbook serve
 ./bin/fsmgen [options] <fsm_file_or_isf_file>
 ```
 - `-o, --output <file>`: explicit output path.
+- With no `--output`, generated HDL is saved under `.artifacts/<language>/`.
 - `--outdir <dir>`: write every scheduled `.fsm` file produced from a multi-file `.isf` lowering.
 - `-l, --language <systemverilog|sv|verilog|v|vhdl>`: target language.
 - `-d, --debug[=N]`: numeric debug compatibility level (`0..4`; bare `--debug` implies `4`).
