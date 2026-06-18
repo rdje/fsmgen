@@ -1844,6 +1844,20 @@ Burst-last read-data, burst-length, runtime-validation, multi-beat payload,
 mixed auto-ID, group-local enqueue widening, packed outputs, direct backend,
 verification-output generation, VHDL, and backend-language variants remain
 deferred behind future owned leaves.
+`.177` now ships generated read single-beat scalar `RDATA`/`RRESP` over
+multiple or mixed depth-3 concrete same-ID queue-head groups. The local
+single-beat read-data coverage gate now admits duplicate concrete `RID`
+groups with computed depths `2` or `3` when at least one group is depth `3`;
+read-data normalization, artifact enumeration, report projection, and HDL
+lowering remain transaction-list driven. Two public support-accounted samples
+cover the two-depth-3 and mixed depth-3/depth-2 shapes. Read burst-last
+read-data over multiple/mixed depth-3 groups, burst-length,
+runtime-validation, multi-beat payload, write-family read-data, mixed
+auto-ID, group-local enqueue widening, packed outputs, alternate burst
+assembly, direct backend, verification-output generation, VHDL, and
+backend-language variants remain deferred. The active frontier advances to
+`.178`, the next IAL2 feature-completeness selector after multiple/mixed
+depth-3 single-beat read-data.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.

@@ -828,6 +828,17 @@ subtest 'PPIF adapter parses AXI manager read single-beat multi-group same-ID qu
     );
 };
 
+for my $case_name (qw(
+    read_single_multi_depth3
+    read_single_mixed_depth3_depth2
+)) {
+    my %case = queue_head_depth3_read_data_case_args($case_name);
+    subtest "PPIF adapter parses AXI manager $case{owner} behavior" => sub {
+        ok(-f $case{path}->(), "tracked runnable PPIF capacity/status $case{owner} sample exists");
+        assert_ppif_queue_head_read_data_adapter_case(%case);
+    };
+}
+
 subtest 'PPIF adapter parses AXI manager read last-beat same-ID queue-head read-data behavior' => sub {
     my $sample_path = sample_capacity_read_last_beat_same_id_queue_head_read_data_ppif_path();
     ok(-f $sample_path, 'tracked runnable PPIF capacity/status read last-beat same-ID queue-head read-data sample exists');
@@ -2556,6 +2567,16 @@ subtest 'CLI emits IAL2 report JSON for AXI manager read single-beat multi-group
     is_deeply($report->{generated_artifacts}{ial0}{files}, ['axi0_capacity_status.fsm'], 'read single-beat multi-group same-ID queue-head read-data keeps the generated .fsm artifact name stable');
 };
 
+for my $case_name (qw(
+    read_single_multi_depth3
+    read_single_mixed_depth3_depth2
+)) {
+    my %case = queue_head_depth3_read_data_case_args($case_name);
+    subtest "CLI emits IAL2 report JSON for AXI manager $case{owner} .ppif" => sub {
+        assert_ppif_queue_head_read_data_schedule_json_case(%case);
+    };
+}
+
 subtest 'CLI emits IAL2 report JSON for AXI manager read last-beat same-ID queue-head read-data .ppif' => sub {
     my ($success, undef, undef, $stdout_buf, $stderr_buf) = run(
         command => ['./bin/fsmgen', '--emit-schedule-json', sample_capacity_read_last_beat_same_id_queue_head_read_data_ppif_path()],
@@ -3399,6 +3420,16 @@ subtest 'CLI --verify-hdl accepts AXI manager read single-beat multi-group same-
     like($sv, qr/axi0_r3_rresp_next\s*=\s*axi0_rresp\s*;/, 'read single-beat multi-group queue-head read-data HDL captures RRESP into r3 output');
     unlike($sv, qr/\baxi0_rlast\b/, 'read single-beat multi-group queue-head read-data HDL does not expose RLAST');
 };
+
+for my $case_name (qw(
+    read_single_multi_depth3
+    read_single_mixed_depth3_depth2
+)) {
+    my %case = queue_head_depth3_read_data_case_args($case_name);
+    subtest "CLI --verify-hdl accepts AXI manager $case{owner} .ppif" => sub {
+        assert_ppif_queue_head_read_data_verify_hdl_case(%case);
+    };
+}
 
 subtest 'CLI --verify-hdl accepts AXI manager read response-demux behavior .ppif' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
@@ -4930,6 +4961,16 @@ subtest 'CLI check JSON and semantic JSON support-account read single-beat multi
     );
 };
 
+for my $case_name (qw(
+    read_single_multi_depth3
+    read_single_mixed_depth3_depth2
+)) {
+    my %case = queue_head_depth3_read_data_case_args($case_name);
+    subtest "CLI check JSON and semantic JSON support-account $case{owner} .ppif separately" => sub {
+        assert_ppif_strict_json_support_case(%case);
+    };
+}
+
 subtest 'CLI check JSON and semantic JSON support-account read last-beat same-ID queue-head read-data .ppif separately' => sub {
     my $policy_path = sample_capacity_read_last_beat_same_id_queue_head_read_data_ppif_path();
     my ($success, undef, undef, $stdout_buf, $stderr_buf) = run(
@@ -5815,6 +5856,14 @@ sub sample_capacity_read_single_beat_mixed_depth3_depth2_same_id_queue_head_resp
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_read_single_beat_mixed_depth3_depth2_same_id_queue_head_response_demux.ppif');
 }
 
+sub sample_capacity_read_single_beat_multi_depth3_same_id_queue_head_read_data_ppif_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_read_single_beat_multi_depth3_same_id_queue_head_read_data.ppif');
+}
+
+sub sample_capacity_read_single_beat_mixed_depth3_depth2_same_id_queue_head_read_data_ppif_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_read_single_beat_mixed_depth3_depth2_same_id_queue_head_read_data.ppif');
+}
+
 sub sample_capacity_read_burst_last_depth3_same_id_queue_head_response_demux_ppif_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_read_burst_last_depth3_same_id_queue_head_response_demux.ppif');
 }
@@ -6001,6 +6050,14 @@ sub sample_capacity_read_single_beat_multi_depth3_same_id_queue_head_response_de
 
 sub sample_capacity_read_single_beat_mixed_depth3_depth2_same_id_queue_head_response_demux_ppif {
     return slurp(sample_capacity_read_single_beat_mixed_depth3_depth2_same_id_queue_head_response_demux_ppif_path());
+}
+
+sub sample_capacity_read_single_beat_multi_depth3_same_id_queue_head_read_data_ppif {
+    return slurp(sample_capacity_read_single_beat_multi_depth3_same_id_queue_head_read_data_ppif_path());
+}
+
+sub sample_capacity_read_single_beat_mixed_depth3_depth2_same_id_queue_head_read_data_ppif {
+    return slurp(sample_capacity_read_single_beat_mixed_depth3_depth2_same_id_queue_head_read_data_ppif_path());
 }
 
 sub sample_capacity_read_burst_last_depth3_same_id_queue_head_response_demux_ppif {
@@ -6734,8 +6791,8 @@ sub assert_rlast_report_prose_alignment {
     );
     like(
         $id_residue->{detail},
-        qr/selected single-group read single-beat depth-3 scalar read-data queue-head shape/,
-        "$owner reports selected read single-beat depth-3 queue-head read-data as supported",
+        qr/selected single-group and multiple\/mixed read single-beat depth-3 scalar read-data queue-head shapes/,
+        "$owner reports selected read single-beat depth-3 queue-head read-data shapes as supported",
     );
     like(
         $id_residue->{detail},
@@ -6744,8 +6801,8 @@ sub assert_rlast_report_prose_alignment {
     );
     like(
         $id_residue->{detail},
-        qr/generated single-beat read-data RDATA\/RRESP capture from generated read single-beat concrete same-ID queue-head response-demux including multiple independent depth-2 queue-head groups or the selected single depth-3 queue-head group/,
-        "$owner reports selected depth-3 queue-head read-data capture as supported",
+        qr/generated single-beat read-data RDATA\/RRESP capture from generated read single-beat concrete same-ID queue-head response-demux including multiple independent depth-2 queue-head groups, the selected single depth-3 queue-head group, and selected multiple\/mixed depth-3 queue-head groups/,
+        "$owner reports selected single and multiple/mixed depth-3 queue-head read-data capture as supported",
     );
     like(
         $id_residue->{detail},
@@ -7434,6 +7491,183 @@ sub assert_ppif_queue_head_verify_hdl_case {
     like($sv, $args{completion_output_pattern}, "$args{owner} HDL exposes the final generated completion output");
     like($sv, $args{slot_state_pattern}, "$args{owner} HDL exposes the selected queue slot state");
     like($sv, $args{demux_guard_pattern}, "$args{owner} HDL lowers the selected concrete-ID head match guard");
+}
+
+sub assert_ppif_queue_head_read_data_adapter_case {
+    my (%args) = @_;
+    my $sample_path = $args{path}->();
+    my $result = FSM::Adapter::IAL2::PPIF->new()->parse_source($args{source}->(), $sample_path);
+    my $isf = $result->{generated_ial1}{text};
+    my $fsm = $result->{generated_ial0}{files}{'axi0_capacity_status.fsm'};
+    my $tx = $args{final_transaction};
+
+    is($result->{kind}, 'protocol_intent.axi_manager_capacity_status', "$args{owner} sample still uses the capacity/status generator");
+    is($result->{report}{source_object}{id}, $args{object_id}, "$args{owner} source object id is preserved");
+    is($result->{report}{source_object}{intent_name}, $args{intent_name}, "$args{owner} source intent name is preserved");
+    like($isf, $args{isf_demux_rule_pattern}, "$args{owner} sample emits generated $tx queue-head demux rule");
+    like($isf, qr/\(input axi0_rdata \(width 32\)\)/, "$args{owner} sample generates RDATA input");
+    like($isf, qr/\(input axi0_rresp \(width 2\)\)/, "$args{owner} sample generates RRESP input");
+    like($isf, qr/\(output axi0_${tx}_rdata \(width 32\)\)/, "$args{owner} sample declares $tx data output");
+    like($isf, qr/\(output axi0_${tx}_rresp \(width 2\)\)/, "$args{owner} sample declares $tx status output");
+    like(
+        $isf,
+        qr/\(rule axi0_${tx}_read_data_capture axi0_${tx}_complete\s+\(axi0_${tx}_rdata axi0_rdata\)\s+\(axi0_${tx}_rresp axi0_rresp\)\)/,
+        "$args{owner} sample captures $tx payload under generated completion",
+    );
+    like(
+        $fsm,
+        qr/\(-axi0_${tx}_read_data_capture\s+<axi0_${tx}_complete\s+\(<- \(axi0_${tx}_rdata> axi0_rdata\)\)\s+\(<- \(axi0_${tx}_rresp> axi0_rresp\)\)/,
+        "$args{owner} sample lowers $tx capture rule into generated .fsm",
+    );
+    unlike($isf, qr/\baxi0_rlast\b/, "$args{owner} sample does not generate or consume RLAST");
+    assert_same_id_read_single_beat_queue_head_response_demux_report(
+        $result->{report}{response_demux},
+        "$args{owner} adapter response-demux report",
+        queues => $args{queues},
+        completion_signals => $args{completion_signals},
+        generated_rules => $args{generated_rules},
+        generated_assertions => $args{generated_assertions},
+    );
+    assert_read_data_report(
+        $result->{report}{read_data},
+        "$args{owner} adapter read-data report",
+        'generated_queue_head_response_demux_completion_pulse',
+        transactions => $args{transactions},
+    );
+    my $policy = $result->{report}{same_id_ordering}{concrete_id_reuse_policy}{read};
+    is_deeply([map { $_->{depth} } @{$policy->{generated_queues} || []}], $args{queue_depths}, "$args{owner} adapter report lists generated queue depths");
+    is_deeply($result->{report}{generated_artifacts}{ial0}{files}, ['axi0_capacity_status.fsm'], "$args{owner} keeps the generated .fsm artifact name stable");
+}
+
+sub assert_ppif_queue_head_read_data_schedule_json_case {
+    my (%args) = @_;
+    my $sample_path = $args{path}->();
+    my ($success, undef, undef, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--emit-schedule-json', $sample_path],
+    );
+
+    ok($success, "$args{owner} --emit-schedule-json succeeds");
+    is(join('', @{$stderr_buf || []}), '', "$args{owner} --emit-schedule-json keeps stderr clean");
+    my $report = decode_json(join('', @{$stdout_buf || []}));
+    is($report->{schema}, 'fsmgen.ial2.protocol_intent.axi_manager_capacity_status.v1', "$args{owner} keeps the capacity/status report schema");
+    is($report->{source_object}{intent_name}, $args{intent_name}, "$args{owner} report carries the PPIF top-level intent name");
+    assert_same_id_read_single_beat_queue_head_response_demux_report(
+        $report->{response_demux},
+        "$args{owner} CLI response-demux report",
+        queues => $args{queues},
+        completion_signals => $args{completion_signals},
+        generated_rules => $args{generated_rules},
+        generated_assertions => $args{generated_assertions},
+    );
+    assert_read_data_report(
+        $report->{read_data},
+        "$args{owner} CLI read-data report",
+        'generated_queue_head_response_demux_completion_pulse',
+        transactions => $args{transactions},
+    );
+    my $policy = $report->{same_id_ordering}{concrete_id_reuse_policy}{read};
+    is_deeply([map { $_->{depth} } @{$policy->{generated_queues} || []}], $args{queue_depths}, "$args{owner} CLI report lists generated queue depths");
+    is_deeply($report->{generated_artifacts}{ial0}{files}, ['axi0_capacity_status.fsm'], "$args{owner} keeps the generated .fsm artifact name stable");
+}
+
+sub assert_ppif_queue_head_read_data_verify_hdl_case {
+    my (%args) = @_;
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $hdl = File::Spec->catfile($tempdir, "$args{artifact_stem}.sv");
+    my $tx = $args{final_transaction};
+
+    my ($success, undef, undef, undef, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--quiet', '--verify-hdl', '--output', $hdl, $args{path}->()],
+    );
+
+    ok($success, "$args{owner} --verify-hdl succeeds");
+    is(join('', @{$stderr_buf || []}), '', "$args{owner} --verify-hdl keeps stderr clean");
+    ok(-f $hdl, "$args{owner} --output writes generated HDL");
+    my $sv = slurp($hdl);
+    like($sv, qr/\binput\s+(?:wire\s+)?\[3:0\]\s+axi0_rid\b/, "$args{owner} HDL exposes generated RID input");
+    like($sv, qr/\binput\s+(?:wire\s+)?\[31:0\]\s+axi0_rdata\b/, "$args{owner} HDL exposes generated RDATA input");
+    like($sv, qr/\binput\s+(?:wire\s+)?\[1:0\]\s+axi0_rresp\b/, "$args{owner} HDL exposes generated RRESP input");
+    like($sv, qr/\boutput\s+reg\s+\[31:0\]\s+axi0_${tx}_rdata\b/, "$args{owner} HDL exposes $tx captured data output");
+    like($sv, qr/\boutput\s+reg\s+\[1:0\]\s+axi0_${tx}_rresp\b/, "$args{owner} HDL exposes $tx captured status output");
+    like($sv, qr/assign\s+axi0_${tx}_read_data_capture_en\s*=\s*axi0_${tx}_complete\s*;/, "$args{owner} HDL guards $tx capture with generated completion");
+    like($sv, $args{hdl_demux_guard_pattern}, "$args{owner} HDL keeps the selected concrete RID queue-head demux guard");
+    like($sv, qr/axi0_${tx}_rdata_next\s*=\s*axi0_rdata\s*;/, "$args{owner} HDL captures RDATA into $tx output");
+    like($sv, qr/axi0_${tx}_rresp_next\s*=\s*axi0_rresp\s*;/, "$args{owner} HDL captures RRESP into $tx output");
+    unlike($sv, qr/\baxi0_rlast\b/, "$args{owner} HDL does not expose RLAST");
+}
+
+sub assert_ppif_strict_json_support_case {
+    my (%args) = @_;
+    my $policy_path = $args{path}->();
+    my ($success, undef, undef, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--strict', '--check', '--json', $policy_path],
+    );
+    ok($success, "$args{owner} --check --json succeeds");
+    is(join('', @{$stderr_buf || []}), '', "$args{owner} --check --json keeps stderr clean");
+    my $check_report = decode_json(join('', @{$stdout_buf || []}));
+    ok($check_report->{success}, "$args{owner} check JSON reports success");
+    is($check_report->{source}{resolved_path}, File::Spec->rel2abs($policy_path), "$args{owner} check JSON reports the public .ppif source path");
+    is($check_report->{support_accounting}{entry_id}, $args{entry_id}, "$args{owner} check JSON support accounting names the PPIF corpus entry");
+
+    my ($semantic_success, undef, undef, $semantic_stdout, $semantic_stderr) = run(
+        command => ['./bin/fsmgen', '--strict', '--emit-semantic-json', $policy_path],
+    );
+    ok($semantic_success, "$args{owner} --emit-semantic-json succeeds");
+    is(join('', @{$semantic_stderr || []}), '', "$args{owner} --emit-semantic-json keeps stderr clean");
+    my $semantic_report = decode_json(join('', @{$semantic_stdout || []}));
+    ok($semantic_report->{success}, "$args{owner} semantic JSON reports success");
+    is($semantic_report->{source}{resolved_path}, File::Spec->rel2abs($policy_path), "$args{owner} semantic JSON reports the public .ppif source path");
+    is($semantic_report->{support_accounting}{entry_id}, $args{entry_id}, "$args{owner} semantic JSON support accounting names the PPIF corpus entry");
+    is($semantic_report->{semantic}{module}{name}, 'axi0_capacity_status', "$args{owner} semantic JSON records the unchanged generated module");
+}
+
+sub queue_head_depth3_read_data_case_args {
+    my ($case_name) = @_;
+    my %cases = (
+        read_single_multi_depth3 => {
+            owner => 'read single-beat multi-depth-3 same-ID queue-head read-data',
+            path => \&sample_capacity_read_single_beat_multi_depth3_same_id_queue_head_read_data_ppif_path,
+            source => \&sample_capacity_read_single_beat_multi_depth3_same_id_queue_head_read_data_ppif,
+            intent_name => 'axi_manager_capacity_status_read_single_beat_multi_depth3_same_id_queue_head_read_data',
+            object_id => 'axi-manager-capacity-status-read-single-beat-multi-depth3-same-id-queue-head-read-data',
+            entry_id => 'intent.ppif_axi_manager_capacity_status_read_single_beat_multi_depth3_same_id_queue_head_read_data',
+            queues => [
+                { concrete_id => 3, transactions => [qw(r0 r1 r2)], depth => 3, dequeue_event_source => 'queue_head_response_demux' },
+                { concrete_id => 5, transactions => [qw(r3 r4 r5)], depth => 3, dequeue_event_source => 'queue_head_response_demux' },
+            ],
+            queue_depths => [3, 3],
+            transactions => [qw(r0 r1 r2 r3 r4 r5)],
+            completion_signals => [qw(axi0_r0_complete axi0_r1_complete axi0_r2_complete axi0_r3_complete axi0_r4_complete axi0_r5_complete)],
+            generated_rules => [qw(axi0_r0_response_demux axi0_r1_response_demux axi0_r2_response_demux axi0_r3_response_demux axi0_r4_response_demux axi0_r5_response_demux)],
+            generated_assertions => same_id_response_demux_assertions('read', qw(r0 r1 r2 r3 r4 r5)),
+            artifact_stem => 'axi_read_single_beat_multi_depth3_same_id_queue_head_read_data',
+            final_transaction => 'r5',
+            isf_demux_rule_pattern => qr/\(rule axi0_r5_response_demux \(& axi0_read_complete \(== axi0_rid 4'd5\) axi0_read_id5_same_id_issue_order_slot0_r5_q\)/,
+            hdl_demux_guard_pattern => qr/axi0_read_complete\s*&\s*\(axi0_rid\s*==\s*4'd5\)\s*&\s*axi0_read_id5_same_id_issue_order_slot0_r5_q/,
+        },
+        read_single_mixed_depth3_depth2 => {
+            owner => 'read single-beat mixed depth-3/depth-2 same-ID queue-head read-data',
+            path => \&sample_capacity_read_single_beat_mixed_depth3_depth2_same_id_queue_head_read_data_ppif_path,
+            source => \&sample_capacity_read_single_beat_mixed_depth3_depth2_same_id_queue_head_read_data_ppif,
+            intent_name => 'axi_manager_capacity_status_read_single_beat_mixed_depth3_depth2_same_id_queue_head_read_data',
+            object_id => 'axi-manager-capacity-status-read-single-beat-mixed-depth3-depth2-same-id-queue-head-read-data',
+            entry_id => 'intent.ppif_axi_manager_capacity_status_read_single_beat_mixed_depth3_depth2_same_id_queue_head_read_data',
+            queues => [
+                { concrete_id => 3, transactions => [qw(r0 r1 r2)], depth => 3, dequeue_event_source => 'queue_head_response_demux' },
+                { concrete_id => 5, transactions => [qw(r3 r4)], depth => 2, dequeue_event_source => 'queue_head_response_demux' },
+            ],
+            queue_depths => [3, 2],
+            transactions => [qw(r0 r1 r2 r3 r4)],
+            completion_signals => [qw(axi0_r0_complete axi0_r1_complete axi0_r2_complete axi0_r3_complete axi0_r4_complete)],
+            generated_rules => [qw(axi0_r0_response_demux axi0_r1_response_demux axi0_r2_response_demux axi0_r3_response_demux axi0_r4_response_demux)],
+            generated_assertions => same_id_response_demux_assertions('read', qw(r0 r1 r2 r3 r4)),
+            artifact_stem => 'axi_read_single_beat_mixed_depth3_depth2_same_id_queue_head_read_data',
+            final_transaction => 'r4',
+            isf_demux_rule_pattern => qr/\(rule axi0_r4_response_demux \(& axi0_read_complete \(== axi0_rid 4'd5\) axi0_read_id5_same_id_issue_order_slot0_r4_q\)/,
+            hdl_demux_guard_pattern => qr/axi0_read_complete\s*&\s*\(axi0_rid\s*==\s*4'd5\)\s*&\s*axi0_read_id5_same_id_issue_order_slot0_r4_q/,
+        },
+    );
+    return %{$cases{$case_name}};
 }
 
 sub queue_head_depth3_case_args {

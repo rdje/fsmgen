@@ -147,7 +147,7 @@ paths, or return machine-local absolute paths. The immediate read-only
 semantic-introspection/MCP pass is complete through
 `SEMANTIC-INTROSPECTION-MCP-FRONTIER.30`; active roadmap priority has returned
 to the IAL2 feature-completeness tree, currently at
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.173`.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.178`.
 Current primary target is SystemVerilog, with Verilog conversion support and a scoped direct-root VHDL scaffold for the accepted single-FSM subset, including delayed-pulse clock-branch lowering, generic-bearing direct-root module headers with typed scalar/vector sized-literal defaults, signed vector and signed scalar direct-root ports, scalar/vector two-state `bit` input-port and internal declaration lowering, signed scalar/vector, non-signed four-state `logic` input-port/internal declaration lowering, and vector `logic signed` internal declaration lowering, scalar and signed scalar addition/subtraction/multiplication RHS/chain lowering, vector numeric-literal addition/subtraction emitted by compound update/shorthand forms, same-width unsigned-style addition/subtraction/multiplication/division/modulo/XOR RHS/chain lowering, same-width signed vector addition/subtraction/multiplication/division/modulo RHS lowering for signed targets and operands, signed vector numeric-literal addition/subtraction/multiplication/division/modulo RHS lowering including signed vector negative decimal addition, subtraction, multiplication, division, and modulo literals, non-signed vector positive decimal multiplication/division/modulo literal lowering in signal-first, literal-first, and literal-literal order, non-signed vector negative decimal addition/subtraction/multiplication/division/modulo literal lowering, bounded generated AMBA wrap arithmetic for `fsm/amba_requester.fsm`, bounded non-signed vector, signed vector, and scalar output-port decimal literal assignment lowering including non-signed vector, signed vector, and scalar negative decimal literals, bounded direct aggregate-output packed-vector lowering, a bounded C3 external-RTL literal/concat composition VHDL structural top for `t/corpus/composition_intent_integer_literals.fsm`, bounded external-RTL scalar integer, scalar integer expression, one-bit sized bitstring, multi-bit sized bitstring, and resolved packed aggregate VHDL generic maps including resolved package-backed constants, a bounded C1 standalone-DT child composition VHDL passthrough top for `t/corpus/standalone_dtc_explicit_system_autowire.fsm`, bounded C1 standalone-DT scalar integer, scalar expression, one-bit sized bitstring, multi-bit sized bitstring, packed-list, and packed-map VHDL generic maps, a bounded C2 generated-FSM child composition VHDL scalar-autowire top for `t/corpus/implicit_composition_system_autowire.fsm`, bounded C2 generated-FSM scalar integer, scalar expression, one-bit sized bitstring, multi-bit sized bitstring, and resolved packed aggregate VHDL generic maps, and a bounded APB/C4 generated-FSM child composition VHDL top for `fsm/apb_tb.fsm` with scalar integer, scalar expression, one-bit sized bitstring, multi-bit sized bitstring, resolved packed aggregate, and resolved package-backed generic maps in the same APB/C4 shape.
 Scalar division/modulo, including signed scalar division/modulo, in the direct
 VHDL scaffold remains an explicit fail-closed boundary; full aggregate
@@ -220,7 +220,8 @@ report-only raw-`ARLEN` burst-length and runtime beat-count/`RLAST`
 validation shapes plus the selected runtime-validation multi-beat output-bank
 shape plus the selected one-group write depth-3 response-demux-only shape plus
 multiple or mixed depth-3 response-demux-only queue-head groups for read
-single-beat, read burst-last, and write families.
+single-beat, read burst-last, and write families plus selected multiple/mixed
+depth-3 read single-beat scalar read-data groups.
 Public `.pif`/`.ppi`/`.axi` aliases, broader concrete same-ID queues,
 same-family mixed auto-ID plus concrete queue-head demux, group-local
 simultaneous enqueue widening, packed burst-vector outputs, alternate full
@@ -241,6 +242,18 @@ Audit `.176` selects `.177`, direct bounded implementation of read
 single-beat scalar `RDATA`/`RRESP` over generated multiple/mixed depth-3
 queue-head groups. Burst-last read-data, burst-length, runtime-validation,
 multi-beat payload, mixed auto-ID, direct backend, and VHDL remain deferred.
+Implementation `.177` now ships that bounded read single-beat scalar
+read-data behavior for two-depth-3 and mixed depth-3/depth-2 concrete
+same-ID queue-head groups. The two public samples are support-accounted,
+strict check/semantic JSON matched, and HDL-verifiable. The implementation
+widens only the local single-beat read-data coverage admission predicate;
+burst-last read-data over multiple/mixed depth-3 groups, burst-length,
+runtime-validation, multi-beat payload, write-family read-data, mixed
+auto-ID, group-local enqueue widening, packed outputs, direct backend,
+verification-output generation, VHDL, and backend-language variants remain
+deferred. The active frontier advances to `.178`, the next IAL2
+feature-completeness selector after multiple/mixed depth-3 single-beat
+read-data.
 The first
 in-process AXI manager outstanding-capacity and acceptance/status generator is
 now shipped as `FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus`; it
@@ -1103,30 +1116,31 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 196. `docs/AXI_IAL2_MANAGER_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_RESPONSE_DEMUX_BEHAVIOR.md`: shipped generated multiple/mixed depth-3 queue-head response-demux behavior.
 197. `docs/AXI_IAL2_MANAGER_POST_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_RESPONSE_DEMUX_NEXT_SLICE_SELECTION.md`: selected read-data over multiple/mixed depth-3 queue-head groups as the next readiness audit.
 198. `docs/AXI_IAL2_MANAGER_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_READ_DATA_READINESS_AUDIT.md`: audited multiple/mixed depth-3 queue-head read-data readiness and selected read single-beat scalar implementation.
-199. `docs/AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md`: selected first AXI-derived IAL2 implementation subset and pre-code contract.
-200. `docs/AXI_IAL2_VALID_READY_READINESS_AUDIT.md`: code/test/docs/report owner map for the future AXI Valid-Ready IAL2 implementation.
-201. `docs/AXI_IAL2_VALID_READY_GENERATOR_FIRST_SLICE.md`: first in-process AXI Valid-Ready IAL2 generator slice and report surface.
-202. `docs/decisions/0016-ppif-is-first-public-ial2-container.md`: selects `.ppif` as the first public generic IAL2 file surface.
-203. `docs/IAL2_PPIF_PARSER_CLI_FIRST_SLICE.md`: first public `.ppif` parser/CLI slice for one AXI Valid-Ready source object.
-204. `docs/IAL2_PPIF_MULTI_VALID_READY_READINESS.md`: readiness map for future multi-channel `.ppif` Valid-Ready support.
-205. `docs/IAL2_PPIF_VALID_READY_BUNDLE_CONTRACT_SELECTION.md`: selected future aggregate bundle contract for multi-channel `.ppif` Valid-Ready support.
-206. `docs/IAL2_PPIF_VALID_READY_BUNDLE_FIRST_SLICE.md`: shipped bounded multi-channel `.ppif` Valid-Ready bundle report/review-artifact behavior.
-207. `docs/IAL2_PPIF_BUNDLE_SEMANTIC_JSON_FIRST_SLICE.md`: shipped aggregate semantic JSON for multi-channel `.ppif` bundles.
-208. `docs/IAL2_PPIF_BUNDLE_HDL_ENTRY_SELECTION.md`: selected aggregate wrapper/top HDL entry contract for multi-channel `.ppif` bundles.
-209. `docs/IAL2_PPIF_BUNDLE_HDL_ENTRY_FIRST_SLICE.md`: shipped aggregate wrapper/top HDL entry for the tracked multi-channel `.ppif` bundle.
-210. `docs/PDF_EXTRACTION_WORKFLOW.md`: portable workflow for source-anchored PDF text, table, diagram, and image extraction.
-211. `docs/decisions/0014-protocol-platform-intent-surface-and-layered-lowering.md`: generic IAL2 file-surface candidates and layered lowering decision.
-212. `docs/decisions/0015-ial2-profile-extensions-are-vocabulary-aliases.md`: IAL2 protocol-profile extension refinement.
-213. `docs/decisions/0017-ppif-valid-ready-bundle-contract.md`: future multi-channel `.ppif` bundle contract decision.
-214. `docs/decisions/0018-ial-contracts-are-backend-language-neutral.md`: IAL contracts and mdBook stay backend-language-neutral for future Rust, Rust/Wasm, browser-capable JavaScript, and Dart/web parity.
-215. `docs/FEATURE_BACKLOG.md`: pointer to the canonical mdBook feature backlog for deferred/not-fully-shipped user-visible work.
-216. `CHANGES.md`: chronological technical changes.
-217. `DEVELOPMENT_NOTES.md`: design rationale and decisions.
-218. `MEMORY.md`: continuity/handoff state.
-219. `LIVE_ACHIEVEMENT_STATUS.md`: latest completed roadmap-aligned slice.
-220. `WARP.md`: repository-specific agent/development guidance.
-221. `.agents/workflows/commit.md`: automation-oriented commit workflow description.
-222. `docs/SEMANTIC_INTROSPECTION_MCP_FIRST_CLASS_SELECTION.md`: selected
+199. `docs/AXI_IAL2_MANAGER_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_READ_DATA_BEHAVIOR.md`: shipped generated multiple/mixed depth-3 read single-beat queue-head scalar read-data behavior.
+200. `docs/AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md`: selected first AXI-derived IAL2 implementation subset and pre-code contract.
+201. `docs/AXI_IAL2_VALID_READY_READINESS_AUDIT.md`: code/test/docs/report owner map for the future AXI Valid-Ready IAL2 implementation.
+202. `docs/AXI_IAL2_VALID_READY_GENERATOR_FIRST_SLICE.md`: first in-process AXI Valid-Ready IAL2 generator slice and report surface.
+203. `docs/decisions/0016-ppif-is-first-public-ial2-container.md`: selects `.ppif` as the first public generic IAL2 file surface.
+204. `docs/IAL2_PPIF_PARSER_CLI_FIRST_SLICE.md`: first public `.ppif` parser/CLI slice for one AXI Valid-Ready source object.
+205. `docs/IAL2_PPIF_MULTI_VALID_READY_READINESS.md`: readiness map for future multi-channel `.ppif` Valid-Ready support.
+206. `docs/IAL2_PPIF_VALID_READY_BUNDLE_CONTRACT_SELECTION.md`: selected future aggregate bundle contract for multi-channel `.ppif` Valid-Ready support.
+207. `docs/IAL2_PPIF_VALID_READY_BUNDLE_FIRST_SLICE.md`: shipped bounded multi-channel `.ppif` Valid-Ready bundle report/review-artifact behavior.
+208. `docs/IAL2_PPIF_BUNDLE_SEMANTIC_JSON_FIRST_SLICE.md`: shipped aggregate semantic JSON for multi-channel `.ppif` bundles.
+209. `docs/IAL2_PPIF_BUNDLE_HDL_ENTRY_SELECTION.md`: selected aggregate wrapper/top HDL entry contract for multi-channel `.ppif` bundles.
+210. `docs/IAL2_PPIF_BUNDLE_HDL_ENTRY_FIRST_SLICE.md`: shipped aggregate wrapper/top HDL entry for the tracked multi-channel `.ppif` bundle.
+211. `docs/PDF_EXTRACTION_WORKFLOW.md`: portable workflow for source-anchored PDF text, table, diagram, and image extraction.
+212. `docs/decisions/0014-protocol-platform-intent-surface-and-layered-lowering.md`: generic IAL2 file-surface candidates and layered lowering decision.
+213. `docs/decisions/0015-ial2-profile-extensions-are-vocabulary-aliases.md`: IAL2 protocol-profile extension refinement.
+214. `docs/decisions/0017-ppif-valid-ready-bundle-contract.md`: future multi-channel `.ppif` bundle contract decision.
+215. `docs/decisions/0018-ial-contracts-are-backend-language-neutral.md`: IAL contracts and mdBook stay backend-language-neutral for future Rust, Rust/Wasm, browser-capable JavaScript, and Dart/web parity.
+216. `docs/FEATURE_BACKLOG.md`: pointer to the canonical mdBook feature backlog for deferred/not-fully-shipped user-visible work.
+217. `CHANGES.md`: chronological technical changes.
+218. `DEVELOPMENT_NOTES.md`: design rationale and decisions.
+219. `MEMORY.md`: continuity/handoff state.
+220. `LIVE_ACHIEVEMENT_STATUS.md`: latest completed roadmap-aligned slice.
+221. `WARP.md`: repository-specific agent/development guidance.
+222. `.agents/workflows/commit.md`: automation-oriented commit workflow description.
+223. `docs/SEMANTIC_INTROSPECTION_MCP_FIRST_CLASS_SELECTION.md`: selected
      first-class semantic-introspection and MCP contract-manifest boundary.
 
 ## Documentation index (all `.md` files in this repo)
@@ -1729,6 +1743,8 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/AXI_IAL2_MANAGER_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_RESPONSE_DEMUX_READINESS_AUDIT.md` — audited multiple/mixed depth-3 queue-head response-demux readiness and selected the bounded implementation owner.
 - `docs/AXI_IAL2_MANAGER_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_RESPONSE_DEMUX_BEHAVIOR.md` — shipped generated multiple/mixed depth-3 queue-head response-demux behavior and its support-accounted semantic-introspection surface.
 - `docs/AXI_IAL2_MANAGER_POST_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_RESPONSE_DEMUX_NEXT_SLICE_SELECTION.md` — selected read-data over multiple/mixed depth-3 queue-head groups as the next readiness audit after generated multiple/mixed depth-3 response-demux.
+- `docs/AXI_IAL2_MANAGER_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_READ_DATA_READINESS_AUDIT.md` — audited read-data over multiple/mixed depth-3 queue-head groups and selected read single-beat scalar implementation.
+- `docs/AXI_IAL2_MANAGER_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_READ_DATA_BEHAVIOR.md` — shipped generated multiple/mixed depth-3 read single-beat queue-head scalar read-data behavior and its support-accounted semantic-introspection surface.
 - `docs/AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md` — selected first AXI-derived IAL2 implementation subset and pre-code contract.
 - `docs/AXI_IAL2_VALID_READY_READINESS_AUDIT.md` — code/test/docs/report owner map for a future AXI Valid-Ready IAL2 implementation slice.
 - `docs/AXI_IAL2_VALID_READY_GENERATOR_FIRST_SLICE.md` — first in-process AXI Valid-Ready IAL2 generator slice and report surface.
@@ -1752,6 +1768,8 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `ppif/axi_manager_capacity_status_read_single_beat_multi_group_same_id_queue_head_response_demux.ppif` — checked-in runnable `.ppif` sample for generated read single-beat multi-group queue-head `RID` response demux without `RLAST` or `read_data`, support-accounted through check JSON and semantic JSON.
 - `ppif/axi_manager_capacity_status_read_single_beat_same_id_queue_head_read_data.ppif` — checked-in runnable `.ppif` sample for generated single-beat `RDATA`/`RRESP` capture from generated read single-beat concrete same-ID queue-head response demux.
 - `ppif/axi_manager_capacity_status_read_single_beat_depth3_same_id_queue_head_read_data.ppif` — checked-in runnable `.ppif` sample for generated single-beat scalar `RDATA`/`RRESP` capture over the selected read single-beat depth-3 queue-head group, support-accounted through check JSON and semantic JSON.
+- `ppif/axi_manager_capacity_status_read_single_beat_multi_depth3_same_id_queue_head_read_data.ppif` — checked-in runnable `.ppif` sample for generated single-beat scalar `RDATA`/`RRESP` capture over two depth-3 concrete same-ID queue-head groups, support-accounted through check JSON and semantic JSON.
+- `ppif/axi_manager_capacity_status_read_single_beat_mixed_depth3_depth2_same_id_queue_head_read_data.ppif` — checked-in runnable `.ppif` sample for generated single-beat scalar `RDATA`/`RRESP` capture over mixed depth-3/depth-2 concrete same-ID queue-head groups, support-accounted through check JSON and semantic JSON.
 - `ppif/axi_manager_capacity_status_read_burst_last_depth3_same_id_queue_head_response_demux.ppif` — checked-in runnable `.ppif` sample for generated read burst-last depth-3 concrete same-ID queue-head response-demux, support-accounted through check JSON and semantic JSON.
 - `ppif/axi_manager_capacity_status_read_burst_last_depth3_same_id_queue_head_read_data.ppif` — checked-in runnable `.ppif` sample for generated scalar last-beat `RDATA`/`RRESP` capture over the selected read burst-last depth-3 queue-head group, support-accounted through check JSON and semantic JSON.
 - `ppif/axi_manager_capacity_status_read_burst_last_depth3_same_id_queue_head_burst_length.ppif` — checked-in runnable `.ppif` sample for generated report-only raw-`ARLEN` burst-length capture over the selected read burst-last depth-3 queue-head read-data group, support-accounted through check JSON and semantic JSON.

@@ -4,7 +4,6 @@ title: Read-data over multiple/mixed depth-3 queue-head groups is the next audit
 answers:
   - "what did IAL2-FEATURE-COMPLETENESS-FRONTIER.175 select?"
   - "what is the next IAL2 frontier after multiple/mixed depth-3 response-demux?"
-  - "is read-data over multiple or mixed depth-3 queue-head groups generated?"
 date: 2026-06-18
 status: current
 tags: [ial2, axi, manager, read-data, queue-head, depth-3, selector]

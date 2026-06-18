@@ -1996,6 +1996,149 @@ subtest 'read-data contract consumes generated read single-beat multi-group same
     like($hdl, qr/axi0_read_complete\s*&\s*\(axi0_rid\s*==\s*4'd5\)\s*&\s*axi0_read_id5_same_id_issue_order_slot0_r3_q/, 'SystemVerilog keeps concrete RID 5 queue-head demux guard for r3');
 };
 
+subtest 'read-data contract consumes generated read single-beat multiple depth-3 same-ID queue-head demux' => sub {
+    my $result = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_same_id_read_single_beat_multi_depth3_queue_head_read_data());
+    my $isf = $result->{generated_ial1}{text};
+    my $fsm = $result->{generated_ial0}{files}{'axi0_capacity_status.fsm'};
+
+    like($isf, qr/\(rule axi0_r2_response_demux \(& axi0_read_complete \(== axi0_rid 4'd3\) axi0_read_id3_same_id_issue_order_slot0_r2_q\)/, 'multi-depth-3 queue-head read-data keeps r2 concrete queue-head demux rule');
+    like($isf, qr/\(rule axi0_r5_response_demux \(& axi0_read_complete \(== axi0_rid 4'd5\) axi0_read_id5_same_id_issue_order_slot0_r5_q\)/, 'multi-depth-3 queue-head read-data keeps r5 concrete queue-head demux rule');
+    like($isf, qr/\(input axi0_rdata \(width 32\)\)/, 'multi-depth-3 queue-head read-data declares RDATA as a generated input');
+    like($isf, qr/\(input axi0_rresp \(width 2\)\)/, 'multi-depth-3 queue-head read-data declares RRESP as a generated input');
+    like($isf, qr/\(output axi0_r5_rdata \(width 32\)\)/, 'multi-depth-3 queue-head read-data declares r5 data output');
+    like($isf, qr/\(output axi0_r5_rresp \(width 2\)\)/, 'multi-depth-3 queue-head read-data declares r5 status output');
+    like(
+        $isf,
+        qr/\(rule axi0_r5_read_data_capture axi0_r5_complete\s+\(axi0_r5_rdata axi0_rdata\)\s+\(axi0_r5_rresp axi0_rresp\)\)/,
+        'multi-depth-3 queue-head read-data guards r5 capture with generated queue-head completion',
+    );
+    unlike($isf, qr/\baxi0_rlast\b/, 'multi-depth-3 queue-head read-data single-beat contract does not generate or consume RLAST');
+    like($fsm, qr/\(-axi0_r5_read_data_capture\s+<axi0_r5_complete\s+\(<- \(axi0_r5_rdata> axi0_rdata\)\)\s+\(<- \(axi0_r5_rresp> axi0_rresp\)\)/, 'scheduled .fsm carries r5 multi-depth-3 queue-head read-data capture assignments');
+
+    assert_same_id_read_single_beat_queue_head_response_demux_report(
+        $result->{report}{response_demux},
+        'generator multi-depth-3 queue-head read-data response-demux report',
+        queues => [
+            {
+                concrete_id          => 3,
+                transactions         => [qw(r0 r1 r2)],
+                depth                => 3,
+                dequeue_event_source => 'queue_head_response_demux',
+            },
+            {
+                concrete_id          => 5,
+                transactions         => [qw(r3 r4 r5)],
+                depth                => 3,
+                dequeue_event_source => 'queue_head_response_demux',
+            },
+        ],
+        completion_signals => [qw(axi0_r0_complete axi0_r1_complete axi0_r2_complete axi0_r3_complete axi0_r4_complete axi0_r5_complete)],
+        generated_rules => [qw(axi0_r0_response_demux axi0_r1_response_demux axi0_r2_response_demux axi0_r3_response_demux axi0_r4_response_demux axi0_r5_response_demux)],
+        generated_assertions => [qw(
+            axi0_read_response_demux_active_match
+            axi0_r0_r1_read_response_demux_unique_match
+            axi0_r0_r2_read_response_demux_unique_match
+            axi0_r0_r3_read_response_demux_unique_match
+            axi0_r0_r4_read_response_demux_unique_match
+            axi0_r0_r5_read_response_demux_unique_match
+            axi0_r1_r2_read_response_demux_unique_match
+            axi0_r1_r3_read_response_demux_unique_match
+            axi0_r1_r4_read_response_demux_unique_match
+            axi0_r1_r5_read_response_demux_unique_match
+            axi0_r2_r3_read_response_demux_unique_match
+            axi0_r2_r4_read_response_demux_unique_match
+            axi0_r2_r5_read_response_demux_unique_match
+            axi0_r3_r4_read_response_demux_unique_match
+            axi0_r3_r5_read_response_demux_unique_match
+            axi0_r4_r5_read_response_demux_unique_match
+        )],
+    );
+    assert_read_data_report(
+        $result->{report}{read_data},
+        'generator multi-depth-3 queue-head read-data report',
+        'generated_queue_head_response_demux_completion_pulse',
+        transactions => [qw(r0 r1 r2 r3 r4 r5)],
+    );
+
+    my $hdl = hdl_for('axi0_capacity_status', $fsm);
+    like($hdl, qr/\binput\s+(?:wire\s+)?\[3:0\]\s+axi0_rid\b/, 'SystemVerilog exposes generated RID input for multi-depth-3 queue-head read-data demux');
+    like($hdl, qr/\binput\s+(?:wire\s+)?\[31:0\]\s+axi0_rdata\b/, 'SystemVerilog exposes generated RDATA input for multi-depth-3 queue-head read-data capture');
+    like($hdl, qr/\boutput\s+reg\s+\[31:0\]\s+axi0_r5_rdata\b/, 'SystemVerilog exposes r5 multi-depth-3 queue-head captured data output');
+    like($hdl, qr/assign\s+axi0_r5_read_data_capture_en\s*=\s*axi0_r5_complete\s*;/, 'SystemVerilog drives r5 multi-depth-3 queue-head read-data capture from generated completion');
+    like($hdl, qr/axi0_r5_rdata_next\s*=\s*axi0_rdata\s*;/, 'SystemVerilog captures multi-depth-3 queue-head RDATA into r5 output');
+    like($hdl, qr/axi0_r5_rresp_next\s*=\s*axi0_rresp\s*;/, 'SystemVerilog captures multi-depth-3 queue-head RRESP into r5 output');
+    like($hdl, qr/axi0_read_complete\s*&\s*\(axi0_rid\s*==\s*4'd5\)\s*&\s*axi0_read_id5_same_id_issue_order_slot0_r5_q/, 'SystemVerilog keeps concrete RID 5 depth-3 queue-head demux guard for r5');
+};
+
+subtest 'read-data contract consumes generated read single-beat mixed depth-3/depth-2 same-ID queue-head demux' => sub {
+    my $result = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_same_id_read_single_beat_mixed_depth3_depth2_queue_head_read_data());
+    my $isf = $result->{generated_ial1}{text};
+    my $fsm = $result->{generated_ial0}{files}{'axi0_capacity_status.fsm'};
+
+    like($isf, qr/\(rule axi0_r2_response_demux \(& axi0_read_complete \(== axi0_rid 4'd3\) axi0_read_id3_same_id_issue_order_slot0_r2_q\)/, 'mixed-depth queue-head read-data keeps r2 concrete queue-head demux rule');
+    like($isf, qr/\(rule axi0_r4_response_demux \(& axi0_read_complete \(== axi0_rid 4'd5\) axi0_read_id5_same_id_issue_order_slot0_r4_q\)/, 'mixed-depth queue-head read-data keeps r4 concrete queue-head demux rule');
+    like($isf, qr/\(input axi0_rdata \(width 32\)\)/, 'mixed-depth queue-head read-data declares RDATA as a generated input');
+    like($isf, qr/\(input axi0_rresp \(width 2\)\)/, 'mixed-depth queue-head read-data declares RRESP as a generated input');
+    like($isf, qr/\(output axi0_r4_rdata \(width 32\)\)/, 'mixed-depth queue-head read-data declares r4 data output');
+    like($isf, qr/\(output axi0_r4_rresp \(width 2\)\)/, 'mixed-depth queue-head read-data declares r4 status output');
+    like(
+        $isf,
+        qr/\(rule axi0_r4_read_data_capture axi0_r4_complete\s+\(axi0_r4_rdata axi0_rdata\)\s+\(axi0_r4_rresp axi0_rresp\)\)/,
+        'mixed-depth queue-head read-data guards r4 capture with generated queue-head completion',
+    );
+    unlike($isf, qr/\baxi0_rlast\b/, 'mixed-depth queue-head read-data single-beat contract does not generate or consume RLAST');
+    like($fsm, qr/\(-axi0_r4_read_data_capture\s+<axi0_r4_complete\s+\(<- \(axi0_r4_rdata> axi0_rdata\)\)\s+\(<- \(axi0_r4_rresp> axi0_rresp\)\)/, 'scheduled .fsm carries r4 mixed-depth queue-head read-data capture assignments');
+
+    assert_same_id_read_single_beat_queue_head_response_demux_report(
+        $result->{report}{response_demux},
+        'generator mixed-depth queue-head read-data response-demux report',
+        queues => [
+            {
+                concrete_id          => 3,
+                transactions         => [qw(r0 r1 r2)],
+                depth                => 3,
+                dequeue_event_source => 'queue_head_response_demux',
+            },
+            {
+                concrete_id          => 5,
+                transactions         => [qw(r3 r4)],
+                depth                => 2,
+                dequeue_event_source => 'queue_head_response_demux',
+            },
+        ],
+        completion_signals => [qw(axi0_r0_complete axi0_r1_complete axi0_r2_complete axi0_r3_complete axi0_r4_complete)],
+        generated_rules => [qw(axi0_r0_response_demux axi0_r1_response_demux axi0_r2_response_demux axi0_r3_response_demux axi0_r4_response_demux)],
+        generated_assertions => [qw(
+            axi0_read_response_demux_active_match
+            axi0_r0_r1_read_response_demux_unique_match
+            axi0_r0_r2_read_response_demux_unique_match
+            axi0_r0_r3_read_response_demux_unique_match
+            axi0_r0_r4_read_response_demux_unique_match
+            axi0_r1_r2_read_response_demux_unique_match
+            axi0_r1_r3_read_response_demux_unique_match
+            axi0_r1_r4_read_response_demux_unique_match
+            axi0_r2_r3_read_response_demux_unique_match
+            axi0_r2_r4_read_response_demux_unique_match
+            axi0_r3_r4_read_response_demux_unique_match
+        )],
+    );
+    assert_read_data_report(
+        $result->{report}{read_data},
+        'generator mixed-depth queue-head read-data report',
+        'generated_queue_head_response_demux_completion_pulse',
+        transactions => [qw(r0 r1 r2 r3 r4)],
+    );
+
+    my $hdl = hdl_for('axi0_capacity_status', $fsm);
+    like($hdl, qr/\binput\s+(?:wire\s+)?\[3:0\]\s+axi0_rid\b/, 'SystemVerilog exposes generated RID input for mixed-depth queue-head read-data demux');
+    like($hdl, qr/\binput\s+(?:wire\s+)?\[31:0\]\s+axi0_rdata\b/, 'SystemVerilog exposes generated RDATA input for mixed-depth queue-head read-data capture');
+    like($hdl, qr/\boutput\s+reg\s+\[31:0\]\s+axi0_r4_rdata\b/, 'SystemVerilog exposes r4 mixed-depth queue-head captured data output');
+    like($hdl, qr/assign\s+axi0_r4_read_data_capture_en\s*=\s*axi0_r4_complete\s*;/, 'SystemVerilog drives r4 mixed-depth queue-head read-data capture from generated completion');
+    like($hdl, qr/axi0_r4_rdata_next\s*=\s*axi0_rdata\s*;/, 'SystemVerilog captures mixed-depth queue-head RDATA into r4 output');
+    like($hdl, qr/axi0_r4_rresp_next\s*=\s*axi0_rresp\s*;/, 'SystemVerilog captures mixed-depth queue-head RRESP into r4 output');
+    like($hdl, qr/axi0_read_complete\s*&\s*\(axi0_rid\s*==\s*4'd5\)\s*&\s*axi0_read_id5_same_id_issue_order_slot0_r4_q/, 'SystemVerilog keeps concrete RID 5 depth-2 queue-head demux guard for r4');
+};
+
 subtest 'read-data contract consumes generated read burst-last same-ID queue-head demux' => sub {
     my $result = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_same_id_read_last_beat_queue_head_read_data());
     my $isf = $result->{generated_ial1}{text};
@@ -3313,6 +3456,59 @@ sub sample_contract_with_same_id_read_single_beat_depth3_queue_head_read_data {
     return $contract;
 }
 
+sub sample_contract_with_same_id_read_single_beat_multi_depth3_queue_head_read_data {
+    my $contract = sample_contract_with_same_id_read_single_beat_multi_depth3_queue_head_response_demux();
+    $contract->{intent_name} = 'axi_manager_capacity_status_read_single_beat_multi_depth3_same_id_queue_head_read_data';
+    $contract->{source}{object_id} = 'axi-manager-capacity-status-read-single-beat-multi-depth3-same-id-queue-head-read-data';
+    $contract->{read_data} = sample_contract_with_same_id_read_single_beat_queue_head_read_data()->{read_data};
+    push @{$contract->{read_data}{read}{transactions}},
+        {
+            transaction   => 'r2',
+            data_output   => 'axi0_r2_rdata',
+            status_output => 'axi0_r2_rresp',
+        },
+        {
+            transaction   => 'r3',
+            data_output   => 'axi0_r3_rdata',
+            status_output => 'axi0_r3_rresp',
+        },
+        {
+            transaction   => 'r4',
+            data_output   => 'axi0_r4_rdata',
+            status_output => 'axi0_r4_rresp',
+        },
+        {
+            transaction   => 'r5',
+            data_output   => 'axi0_r5_rdata',
+            status_output => 'axi0_r5_rresp',
+        };
+    return $contract;
+}
+
+sub sample_contract_with_same_id_read_single_beat_mixed_depth3_depth2_queue_head_read_data {
+    my $contract = sample_contract_with_same_id_read_single_beat_mixed_depth3_depth2_queue_head_response_demux();
+    $contract->{intent_name} = 'axi_manager_capacity_status_read_single_beat_mixed_depth3_depth2_same_id_queue_head_read_data';
+    $contract->{source}{object_id} = 'axi-manager-capacity-status-read-single-beat-mixed-depth3-depth2-same-id-queue-head-read-data';
+    $contract->{read_data} = sample_contract_with_same_id_read_single_beat_queue_head_read_data()->{read_data};
+    push @{$contract->{read_data}{read}{transactions}},
+        {
+            transaction   => 'r2',
+            data_output   => 'axi0_r2_rdata',
+            status_output => 'axi0_r2_rresp',
+        },
+        {
+            transaction   => 'r3',
+            data_output   => 'axi0_r3_rdata',
+            status_output => 'axi0_r3_rresp',
+        },
+        {
+            transaction   => 'r4',
+            data_output   => 'axi0_r4_rdata',
+            status_output => 'axi0_r4_rresp',
+        };
+    return $contract;
+}
+
 sub sample_contract_with_same_id_read_single_beat_multi_group_queue_head_response_demux {
     my $contract = sample_contract_with_same_id_read_single_beat_queue_head_response_demux();
     $contract->{intent_name} = 'axi_manager_capacity_status_read_single_beat_multi_group_same_id_queue_head_response_demux';
@@ -4181,8 +4377,8 @@ sub assert_rlast_report_prose_alignment {
     );
     like(
         $id_residue->{detail},
-        qr/selected single-group read single-beat depth-3 scalar read-data queue-head shape/,
-        "$owner reports selected read single-beat depth-3 queue-head read-data as supported",
+        qr/selected single-group and multiple\/mixed read single-beat depth-3 scalar read-data queue-head shapes/,
+        "$owner reports selected read single-beat depth-3 queue-head read-data shapes as supported",
     );
     like(
         $id_residue->{detail},
@@ -4191,8 +4387,8 @@ sub assert_rlast_report_prose_alignment {
     );
     like(
         $id_residue->{detail},
-        qr/generated single-beat read-data RDATA\/RRESP capture from generated read single-beat concrete same-ID queue-head response-demux including multiple independent depth-2 queue-head groups or the selected single depth-3 queue-head group/,
-        "$owner reports selected depth-3 queue-head read-data capture as supported",
+        qr/generated single-beat read-data RDATA\/RRESP capture from generated read single-beat concrete same-ID queue-head response-demux including multiple independent depth-2 queue-head groups, the selected single depth-3 queue-head group, and selected multiple\/mixed depth-3 queue-head groups/,
+        "$owner reports selected single and multiple/mixed depth-3 queue-head read-data capture as supported",
     );
     like(
         $id_residue->{detail},
