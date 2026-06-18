@@ -10,10 +10,10 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `HEAD after GENERATED-HDL-ARTIFACT-PLACEMENT.1 commit` — `GENERATED-HDL-ARTIFACT-PLACEMENT.1: route generated HDL artifacts`.
+- latest_commit: `HEAD after RHS-LOGIC-SIMPLIFICATION-FRONTIER.1 commit` — `RHS-LOGIC-SIMPLIFICATION-FRONTIER.1: minimize generated RHS logic`.
 - active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.184` is the next IAL2 selector; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `GENERATED-HDL-ARTIFACT-PLACEMENT.1` routed implicit generated HDL to git-ignored `.artifacts/<language>/` directories, preserved explicit `--output` paths, moved existing ignored root `.sv`/`.vhd` outputs into `.artifacts/sv/` and `.artifacts/vhd/`, and added focused CLI regression coverage. Previous: `IAL2-FEATURE-COMPLETENESS-FRONTIER.183` shipped generated report-only raw-`ARLEN` burst-length capture over multiple/mixed depth-3 queue-head scalar last-beat read-data.
-- in_flight_uncommitted: none after the artifact-placement commit. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
+- recently_done: `RHS-LOGIC-SIMPLIFICATION-FRONTIER.1` shipped shared width-safe generated RHS AST simplification before HDL rendering, updated StructuralRTLIR assignment records to store the simplified RHS AST, synced mdBook/README/knowledge-map/task-tree records, and passed focused SV/VHDL/docs/memory gates. Previous: `GENERATED-HDL-ARTIFACT-PLACEMENT.1` routed implicit generated HDL to git-ignored `.artifacts/<language>/` directories.
+- in_flight_uncommitted: none after the RHS simplification commit. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
 
 ## Notes

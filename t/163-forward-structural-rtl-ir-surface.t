@@ -130,7 +130,7 @@ FSM
         $structural_rtl_ir->{auxiliary_assignments},
         [
             '  assign IDLE_en = current_state == IDLE;',
-            q{  assign IDLE_out_in_en = IDLE_en & 1'b1;  // OUT <- IN},
+            q{  assign IDLE_out_in_en = IDLE_en;  // OUT <- IN},
             '  assign out_in_en = IDLE_out_in_en;',
         ],
         'structural_rtl_ir preserves direct generated enable assignment lines',

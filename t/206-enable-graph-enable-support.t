@@ -81,7 +81,7 @@ FSM
 
     my $dt_block = $support->generate_dt_enables_from_analysis();
     like($dt_block, qr/\bassign idle_out1_1_en = idle_en & A;\s+\/\/ OUT1 <- 1\b/, 'enable support emits DT-specific enable wiring for regular-state assignments');
-    like($dt_block, qr/\bassign watch_watch_1_en = watch_en & 1'b1;\s+\/\/ WATCH <- 1\b/, 'enable support emits DT-specific enable wiring for standalone-DT assignments');
+    like($dt_block, qr/\bassign watch_watch_1_en = watch_en;\s+\/\/ WATCH <- 1\b/, 'enable support emits simplified DT-specific enable wiring for standalone-DT assignments');
 
     my $lhs_block = $support->generate_lhs_enables_from_analysis();
     like($lhs_block, qr/\bassign out1_1_en = idle_out1_1_en;/, 'enable support emits grouped LHS-level enables for regular-state assignments');

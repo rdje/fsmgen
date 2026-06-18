@@ -41,7 +41,10 @@ no warnings 'experimental::signatures';
 use List::Util qw(min);
 use Scalar::Util qw(blessed);
 
+use FSM::AST::Node;
+use FSM::CoreAST;
 use FSM::Debug;
+use FSM::HDL::ASTFactorization;
 use FSM::Package::IntegerLiteralSupport;
 
 =head2 new
@@ -70,14 +73,497 @@ operator and precedence rules.
 sub ast_to_systemverilog ($self, $ast) {
     return "1'b1" unless $ast && blessed($ast);
 
-    my $sv = $self->_ast_to_systemverilog_internal($ast, undef);
+    my $simplified_ast = $self->simplify_logic_ast($ast);
+    my $sv = $self->_ast_to_systemverilog_internal($simplified_ast, undef);
 
     my ($package, $filename, $line, $subroutine) = caller(1);
     fsm_debug("*** AST_TO_SV_DEBUG: $sv ***", 3);
     fsm_debug("    Called from: $subroutine at line $line", 3);
-    fsm_debug("    AST type: " . ref($ast), 3);
+    fsm_debug("    AST type: " . ref($simplified_ast), 3);
 
     return $sv;
+}
+
+=head2 simplify_logic_ast
+
+Return a logically equivalent AST with local boolean/bitwise identities removed
+before any HDL text is rendered. Rewrites are deliberately width-conservative:
+rules that would change vector semantics are only applied when the expression is
+known to be boolean/single-bit.
+
+=cut
+
+sub simplify_logic_ast ($self, $ast) {
+    return $ast unless $ast && blessed($ast);
+
+    my $current = $ast;
+    for my $iteration (1 .. 16) {
+        my $next = $self->_simplify_logic_ast_once($current);
+        last if $self->_logic_ast_key($next) eq $self->_logic_ast_key($current);
+        $current = $next;
+    }
+
+    return $current;
+}
+
+sub _simplify_logic_ast_once ($self, $ast) {
+    return $ast unless $ast && blessed($ast);
+
+    if ($self->_is_binary_ast($ast)) {
+        my $operator = eval { $ast->operator } || '';
+        my $left = $self->_simplify_logic_ast_once($ast->left);
+        my $right = $self->_simplify_logic_ast_once($ast->right);
+        my $rebuilt = $self->_new_binary_like($ast, $operator, $left, $right);
+
+        my $truthiness = $self->_simplify_truthiness_comparison($rebuilt);
+        return $self->_simplify_logic_ast_once($truthiness)
+            if defined $truthiness
+            && $self->_logic_ast_key($truthiness) ne $self->_logic_ast_key($rebuilt);
+
+        my $constant_fold = $self->_simplify_binary_constant_fold($rebuilt);
+        return $constant_fold if defined $constant_fold;
+
+        my $identity = $self->_simplify_binary_identity($rebuilt);
+        return $identity if defined $identity;
+
+        my $idempotent = $self->_simplify_binary_idempotence($rebuilt);
+        return $idempotent if defined $idempotent;
+
+        my $complement = $self->_simplify_binary_complement($rebuilt);
+        return $complement if defined $complement;
+
+        my $absorption = $self->_simplify_binary_absorption($rebuilt);
+        return $absorption if defined $absorption;
+
+        my $consensus = $self->_simplify_binary_consensus($rebuilt);
+        return $consensus if defined $consensus;
+
+        return $rebuilt;
+    }
+
+    if ($self->_is_unary_ast($ast)) {
+        my $operator = eval { $ast->operator } || '';
+        my $operand = $self->_simplify_logic_ast_once($ast->operand);
+        my $rebuilt = $self->_new_unary_like($ast, $operator, $operand);
+
+        return $self->_simplify_unary_not($rebuilt)
+            if $self->_is_not_operator($operator);
+
+        return $rebuilt;
+    }
+
+    return $ast;
+}
+
+sub _simplify_unary_not ($self, $ast) {
+    my $operand = $ast->operand;
+    my $constant = $self->_literal_boolean_value($operand);
+    return $self->_boolean_constant($constant ? 0 : 1) if defined $constant;
+
+    if ($self->_is_unary_ast($operand) && $self->_is_not_operator(eval { $operand->operator } || '')) {
+        my $inner = $operand->operand;
+        return $inner if $self->_node_is_booleanish($inner);
+    }
+
+    my $demorgan = $self->_simplify_demorgan_if_shorter($ast);
+    return $demorgan if defined $demorgan;
+
+    return $ast;
+}
+
+sub _simplify_demorgan_if_shorter ($self, $ast) {
+    my $operand = $ast->operand;
+    return undef unless $self->_is_binary_ast($operand);
+
+    my $operator = $self->_boolean_operator_family(eval { $operand->operator } || '');
+    return undef unless $operator eq '&' || $operator eq '|';
+    return undef unless $self->_node_is_booleanish($operand->left)
+        && $self->_node_is_booleanish($operand->right);
+
+    my $dual_operator = $operator eq '&' ? '|' : '&';
+    my $candidate = $self->_new_binary_like(
+        $operand,
+        $dual_operator,
+        $self->_new_unary_like($ast, '!', $operand->left),
+        $self->_new_unary_like($ast, '!', $operand->right),
+    );
+    $candidate = $self->_simplify_logic_ast_once($candidate);
+
+    my $candidate_text = $self->_ast_to_systemverilog_internal($candidate, undef);
+    my $original_text = $self->_ast_to_systemverilog_internal($ast, undef);
+    return length($candidate_text) < length($original_text) ? $candidate : undef;
+}
+
+sub _simplify_truthiness_comparison ($self, $ast) {
+    return undef unless $self->_is_binary_ast($ast);
+
+    my $operator = eval { $ast->operator } || '';
+    return undef unless $operator eq '==' || $operator eq '!=';
+
+    my ($left_value, $left_known) = $self->_known_literal_numeric_value($ast->left);
+    my ($right_value, $right_known) = $self->_known_literal_numeric_value($ast->right);
+
+    if ($left_known && $right_known) {
+        my $result = $operator eq '==' ? ($left_value == $right_value) : ($left_value != $right_value);
+        return $self->_boolean_constant($result ? 1 : 0);
+    }
+
+    my ($signalish_operand, $literal_operand) = $self->_extract_truthiness_operands($ast->left, $ast->right);
+    return undef unless $signalish_operand && $literal_operand;
+    return undef unless $self->_node_is_booleanish($signalish_operand);
+
+    my $literal_value = $self->_literal_numeric_value($literal_operand);
+    return undef unless defined $literal_value;
+
+    if ($literal_value == 0) {
+        return $operator eq '!='
+            ? $signalish_operand
+            : $self->_new_unary_like($ast, '!', $signalish_operand);
+    }
+
+    if ($literal_value == 1) {
+        return $operator eq '=='
+            ? $signalish_operand
+            : $self->_new_unary_like($ast, '!', $signalish_operand);
+    }
+
+    return undef;
+}
+
+sub _simplify_binary_constant_fold ($self, $ast) {
+    my $operator = $self->_canonical_logic_operator(eval { $ast->operator } || '');
+    return undef unless $operator =~ /^(?:&|\||\^|&&|\|\|)$/;
+
+    my $left_value = $self->_literal_boolean_value($ast->left);
+    my $right_value = $self->_literal_boolean_value($ast->right);
+    return undef unless defined $left_value && defined $right_value;
+
+    if ($operator eq '&' || $operator eq '&&') {
+        return $self->_boolean_constant(($left_value != 0 && $right_value != 0) ? 1 : 0);
+    }
+    if ($operator eq '|' || $operator eq '||') {
+        return $self->_boolean_constant(($left_value != 0 || $right_value != 0) ? 1 : 0);
+    }
+    if ($operator eq '^') {
+        return $self->_boolean_constant((($left_value != 0) xor ($right_value != 0)) ? 1 : 0);
+    }
+
+    return undef;
+}
+
+sub _simplify_binary_identity ($self, $ast) {
+    my $operator = $self->_canonical_logic_operator(eval { $ast->operator } || '');
+    my $left = $ast->left;
+    my $right = $ast->right;
+
+    if ($operator eq '&&') {
+        return $self->_boolean_constant(0)
+            if $self->_literal_is_boolean_zero($left) || $self->_literal_is_boolean_zero($right);
+        return $right
+            if $self->_literal_is_boolean_one($left) && $self->_node_is_booleanish($right);
+        return $left
+            if $self->_literal_is_boolean_one($right) && $self->_node_is_booleanish($left);
+    }
+
+    if ($operator eq '||') {
+        return $self->_boolean_constant(1)
+            if $self->_literal_is_boolean_one($left) || $self->_literal_is_boolean_one($right);
+        return $right
+            if $self->_literal_is_boolean_zero($left) && $self->_node_is_booleanish($right);
+        return $left
+            if $self->_literal_is_boolean_zero($right) && $self->_node_is_booleanish($left);
+    }
+
+    if ($operator eq '&') {
+        return $self->_boolean_constant(0)
+            if (($self->_literal_is_boolean_zero($left) && $self->_node_is_booleanish($right))
+                || ($self->_literal_is_boolean_zero($right) && $self->_node_is_booleanish($left)));
+        return $right
+            if $self->_literal_is_boolean_one($left) && $self->_node_is_booleanish($right);
+        return $left
+            if $self->_literal_is_boolean_one($right) && $self->_node_is_booleanish($left);
+    }
+
+    if ($operator eq '|') {
+        return $self->_boolean_constant(1)
+            if (($self->_literal_is_boolean_one($left) && $self->_node_is_booleanish($right))
+                || ($self->_literal_is_boolean_one($right) && $self->_node_is_booleanish($left)));
+        return $right
+            if $self->_literal_is_boolean_zero($left) && $self->_node_is_booleanish($right);
+        return $left
+            if $self->_literal_is_boolean_zero($right) && $self->_node_is_booleanish($left);
+    }
+
+    if ($operator eq '^') {
+        return $right
+            if $self->_literal_is_boolean_zero($left) && $self->_node_is_booleanish($right);
+        return $left
+            if $self->_literal_is_boolean_zero($right) && $self->_node_is_booleanish($left);
+    }
+
+    return undef;
+}
+
+sub _simplify_binary_idempotence ($self, $ast) {
+    my $operator = $self->_canonical_logic_operator(eval { $ast->operator } || '');
+    return undef unless $operator =~ /^(?:&|\||\^|&&|\|\|)$/;
+    return undef unless $self->_logic_ast_key($ast->left) eq $self->_logic_ast_key($ast->right);
+
+    if ($operator eq '&' || $operator eq '|') {
+        return $ast->left;
+    }
+
+    if (($operator eq '&&' || $operator eq '||') && $self->_node_is_booleanish($ast->left)) {
+        return $ast->left;
+    }
+
+    if ($operator eq '^' && $self->_node_is_booleanish($ast->left)) {
+        return $self->_boolean_constant(0);
+    }
+
+    return undef;
+}
+
+sub _simplify_binary_complement ($self, $ast) {
+    my $operator = $self->_canonical_logic_operator(eval { $ast->operator } || '');
+    return undef unless $operator =~ /^(?:&|\||&&|\|\|)$/;
+
+    my $left = $ast->left;
+    my $right = $ast->right;
+    return undef unless $self->_node_is_booleanish($left) && $self->_node_is_booleanish($right);
+    return undef unless $self->_is_negation_pair($left, $right);
+
+    return $self->_boolean_constant(($operator eq '|' || $operator eq '||') ? 1 : 0);
+}
+
+sub _simplify_binary_absorption ($self, $ast) {
+    my $outer_operator = $self->_boolean_operator_family(eval { $ast->operator } || '');
+    return undef unless $outer_operator eq '&' || $outer_operator eq '|';
+
+    my $inner_operator = $outer_operator eq '&' ? '|' : '&';
+    my $outer_bool = $self->_node_is_booleanish($ast);
+
+    for my $side (
+        [$ast->left, $ast->right],
+        [$ast->right, $ast->left],
+    ) {
+        my ($plain, $compound) = @$side;
+        next unless $self->_is_binary_ast($compound);
+        next unless $self->_boolean_operator_family(eval { $compound->operator } || '') eq $inner_operator;
+        next unless $outer_bool
+            && $self->_node_is_booleanish($plain)
+            && $self->_node_is_booleanish($compound->left)
+            && $self->_node_is_booleanish($compound->right);
+        return $plain
+            if $self->_logic_ast_key($plain) eq $self->_logic_ast_key($compound->left)
+            || $self->_logic_ast_key($plain) eq $self->_logic_ast_key($compound->right);
+    }
+
+    return undef;
+}
+
+sub _simplify_binary_consensus ($self, $ast) {
+    my $outer_operator = $self->_boolean_operator_family(eval { $ast->operator } || '');
+    return undef unless $outer_operator eq '&' || $outer_operator eq '|';
+    return undef unless $self->_node_is_booleanish($ast);
+
+    my $inner_operator = $outer_operator eq '|' ? '&' : '|';
+    return undef unless $self->_is_binary_ast($ast->left) && $self->_is_binary_ast($ast->right);
+    return undef unless $self->_boolean_operator_family(eval { $ast->left->operator } || '') eq $inner_operator;
+    return undef unless $self->_boolean_operator_family(eval { $ast->right->operator } || '') eq $inner_operator;
+
+    my @left_terms = ($ast->left->left, $ast->left->right);
+    my @right_terms = ($ast->right->left, $ast->right->right);
+
+    for my $left_index (0 .. 1) {
+        for my $right_index (0 .. 1) {
+            my $common_left = $left_terms[$left_index];
+            my $common_right = $right_terms[$right_index];
+            next unless $self->_logic_ast_key($common_left) eq $self->_logic_ast_key($common_right);
+
+            my $other_left = $left_terms[1 - $left_index];
+            my $other_right = $right_terms[1 - $right_index];
+            next unless $self->_node_is_booleanish($common_left)
+                && $self->_node_is_booleanish($other_left)
+                && $self->_node_is_booleanish($other_right);
+            return $common_left if $self->_is_negation_pair($other_left, $other_right);
+        }
+    }
+
+    return undef;
+}
+
+sub _known_literal_numeric_value ($self, $ast) {
+    my $value = $self->_literal_numeric_value($ast);
+    return (undef, 0) unless defined $value;
+    return ($value, 1);
+}
+
+sub _literal_boolean_value ($self, $ast) {
+    return undef unless $ast && blessed($ast);
+
+    if ($ast->isa('FSM::AST::LogicalConstant')) {
+        return $ast->value ? 1 : 0;
+    }
+
+    return undef unless $self->_is_literal_operand($ast);
+    my $value = $self->_literal_numeric_value($ast);
+    return undef unless defined $value && ($value == 0 || $value == 1);
+
+    my $width = $self->_literal_width($ast);
+    return undef if defined $width && $width > 1;
+    return $value ? 1 : 0;
+}
+
+sub _literal_is_boolean_zero ($self, $ast) {
+    my $value = $self->_literal_boolean_value($ast);
+    return defined($value) && $value == 0 ? 1 : 0;
+}
+
+sub _literal_is_boolean_one ($self, $ast) {
+    my $value = $self->_literal_boolean_value($ast);
+    return defined($value) && $value == 1 ? 1 : 0;
+}
+
+sub _literal_width ($self, $literal) {
+    return undef unless $literal && blessed($literal);
+
+    my $width = eval { $literal->can('width') ? $literal->width : undef };
+    return $width if defined($width) && !ref($width) && $width =~ /\A\d+\z/;
+
+    my $text = eval { $literal->to_systemverilog() };
+    return $1 if defined($text) && $text =~ /\A(\d+)'\w/i;
+
+    return undef;
+}
+
+sub _boolean_constant ($self, $value) {
+    return FSM::AST::LogicalConstant->new($value ? 1 : 0);
+}
+
+sub _node_is_booleanish ($self, $ast) {
+    return 0 unless $ast && blessed($ast);
+    return 1 if $ast->isa('FSM::AST::LogicalConstant');
+    return 1 if defined $self->_literal_boolean_value($ast);
+    return 1 if $self->_operand_is_single_bit($ast);
+
+    if ($self->_is_unary_ast($ast)) {
+        return 1 if $self->_is_not_operator(eval { $ast->operator } || '');
+    }
+
+    if ($self->_is_binary_ast($ast)) {
+        my $operator = $self->_canonical_logic_operator(eval { $ast->operator } || '');
+        return 1 if $operator =~ /^(?:==|!=|<|>|<=|>=|&&|\|\|)$/;
+    }
+
+    return 0;
+}
+
+sub _is_negation_pair ($self, $left, $right) {
+    return 1 if $self->_is_unary_ast($left)
+        && $self->_is_not_operator(eval { $left->operator } || '')
+        && $self->_logic_ast_key($left->operand) eq $self->_logic_ast_key($right)
+        && $self->_node_is_booleanish($right);
+
+    return 1 if $self->_is_unary_ast($right)
+        && $self->_is_not_operator(eval { $right->operator } || '')
+        && $self->_logic_ast_key($right->operand) eq $self->_logic_ast_key($left)
+        && $self->_node_is_booleanish($left);
+
+    return 0;
+}
+
+sub _canonical_logic_operator ($self, $operator) {
+    my %canonical = (
+        and => '&',
+        or  => '|',
+        xor => '^',
+    );
+    return $canonical{$operator} || $operator;
+}
+
+sub _boolean_operator_family ($self, $operator) {
+    my $canonical = $self->_canonical_logic_operator($operator);
+    return '&' if $canonical eq '&&';
+    return '|' if $canonical eq '||';
+    return $canonical;
+}
+
+sub _is_not_operator ($self, $operator) {
+    return $operator eq '!' || $operator eq 'not';
+}
+
+sub _is_binary_ast ($self, $ast) {
+    return 0 unless $ast && blessed($ast);
+    return 1 if $ast->isa('FSM::AST::BinaryOp') || $ast->isa('FSM::CoreAST::BinaryOp');
+    return 1 if $ast->isa('FSM::HDL::SubstitutedBinaryOp');
+    return 0;
+}
+
+sub _is_unary_ast ($self, $ast) {
+    return 0 unless $ast && blessed($ast);
+    return 1 if $ast->isa('FSM::AST::UnaryOp') || $ast->isa('FSM::CoreAST::UnaryOp');
+    return 1 if $ast->isa('FSM::HDL::SubstitutedUnaryOp');
+    return 0;
+}
+
+sub _new_binary_like ($self, $original, $operator, $left, $right) {
+    return FSM::CoreAST::BinaryOp->new($operator, $left, $right)
+        if blessed($original) && $original->isa('FSM::CoreAST::BinaryOp');
+
+    return FSM::HDL::SubstitutedBinaryOp->new(operator => $operator, left => $left, right => $right)
+        if blessed($original) && $original->isa('FSM::HDL::SubstitutedBinaryOp');
+
+    return FSM::AST::BinaryOp->new($operator, $left, $right);
+}
+
+sub _new_unary_like ($self, $original, $operator, $operand) {
+    return FSM::CoreAST::UnaryOp->new(operator => $operator, operand => $operand)
+        if blessed($original) && $original->isa('FSM::CoreAST::UnaryOp');
+
+    return FSM::HDL::SubstitutedUnaryOp->new(operator => $operator, operand => $operand)
+        if blessed($original) && $original->isa('FSM::HDL::SubstitutedUnaryOp');
+
+    return FSM::AST::UnaryOp->new($operator, $operand);
+}
+
+sub _logic_ast_key ($self, $ast) {
+    return 'undef' unless defined $ast;
+    return 'scalar:' . $ast unless ref($ast);
+    return 'unblessed:' . ref($ast) unless blessed($ast);
+
+    if ($self->_is_binary_ast($ast)) {
+        my $operator = $self->_canonical_logic_operator(eval { $ast->operator } || '');
+        my $left_key = $self->_logic_ast_key($ast->left);
+        my $right_key = $self->_logic_ast_key($ast->right);
+        if ($operator =~ /^(?:&|\||\^|&&|\|\||==|!=)$/ && $right_key lt $left_key) {
+            ($left_key, $right_key) = ($right_key, $left_key);
+        }
+        return join(':', 'binary', $operator, $left_key, $right_key);
+    }
+
+    if ($self->_is_unary_ast($ast)) {
+        my $operator = eval { $ast->operator } || '';
+        return join(':', 'unary', $operator, $self->_logic_ast_key($ast->operand));
+    }
+
+    if ($ast->isa('FSM::AST::LogicalConstant')) {
+        return 'literal:' . ($ast->value ? 1 : 0) . ':1';
+    }
+
+    if ($self->_is_literal_operand($ast)) {
+        my $value = $self->_literal_numeric_value($ast);
+        my $raw_value = eval { $ast->value };
+        my $width = $self->_literal_width($ast);
+        return join(':', 'literal', defined($value) ? $value : defined($raw_value) ? $raw_value : '', defined($width) ? $width : '');
+    }
+
+    if ($ast->can('to_systemverilog')) {
+        my $text = eval { $ast->to_systemverilog() };
+        return 'rendered:' . $text if defined $text;
+    }
+
+    return 'object:' . ref($ast) . ':' . "$ast";
 }
 
 =head2 ast_contains_factorizable_operators
@@ -363,12 +849,16 @@ sub _is_truthiness_signal_operand ($self, $ast) {
 
 sub _is_literal_operand ($self, $ast) {
     return 0 unless $ast && blessed($ast);
+    return 1 if $ast->isa('FSM::AST::LogicalConstant');
     return 1 if $ast->isa('FSM::AST::Literal') || $ast->isa('FSM::CoreAST::Literal');
     return 0;
 }
 
 sub _literal_numeric_value ($self, $literal) {
     return undef unless $self->_is_literal_operand($literal);
+
+    return $literal->value ? 1 : 0
+        if $literal->isa('FSM::AST::LogicalConstant');
 
     my $text = eval { $literal->to_systemverilog() };
     $text = eval { $literal->value } unless defined $text && $text ne '';
@@ -698,6 +1188,11 @@ sub _operand_is_single_bit ($self, $ast) {
         my $result = $self->_signal_is_single_bit($name);
         fsm_debug("      RESULT: " . ($result ? 'single-bit' : 'multi-bit') . " (via _signal_is_single_bit)", 3);
         return $result;
+
+    } elsif ($ast->isa('FSM::AST::LogicalConstant')) {
+        fsm_debug("      PATH: LogicalConstant", 3);
+        fsm_debug("      RESULT: single-bit (logical constant)", 3);
+        return 1;
 
     } elsif ($ast->isa('FSM::AST::Literal') || $ast->isa('FSM::CoreAST::Literal')) {
         fsm_debug("      PATH: Literal", 3);

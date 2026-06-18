@@ -88,7 +88,7 @@ subtest 'stateful facade reuse returns fresh direct structural_rtl_ir containers
         $second->{structural_rtl_ir}{auxiliary_assignments},
         [
             '  assign idle_en = current_state == IDLE;',
-            q{  assign idle_out_1_en = idle_en & 1'b1;  // OUT <- 1},
+            q{  assign idle_out_1_en = idle_en;  // OUT <- 1},
             '  assign out_1_en = idle_out_1_en;',
         ],
         'later generation on the same facade does not inherit caller mutation of direct structural_rtl_ir enable assignment lines',

@@ -162,6 +162,76 @@ FSM
         'AST support collapses 1-bit equals-one comparisons to the bare signal',
     );
 
+    my $a_ref = sub { FSM::AST::SignalRef->new('A') };
+    my $b_ref = sub { FSM::AST::SignalRef->new('B') };
+    my $bus1_ref = sub { FSM::AST::SignalRef->new('BUS1') };
+    my $one = sub { FSM::AST::Literal->new('1') };
+    my $zero = sub { FSM::AST::Literal->new('0') };
+    my $not_b = sub { FSM::AST::UnaryOp->new('!', $b_ref->()) };
+
+    is(
+        $support->ast_to_systemverilog(FSM::AST::BinaryOp->new('&', $a_ref->(), $one->())),
+        'A',
+        'AST support simplifies boolean identity A & 1 to A before rendering',
+    );
+    is(
+        $support->ast_to_systemverilog(FSM::AST::BinaryOp->new('|', $a_ref->(), $zero->())),
+        'A',
+        'AST support simplifies boolean identity A | 0 to A before rendering',
+    );
+    is(
+        $support->ast_to_systemverilog(FSM::AST::BinaryOp->new('&', $a_ref->(), $zero->())),
+        "1'b0",
+        'AST support simplifies boolean annihilator A & 0 to false before rendering',
+    );
+    is(
+        $support->ast_to_systemverilog(FSM::AST::BinaryOp->new('|', $a_ref->(), FSM::AST::UnaryOp->new('!', $a_ref->()))),
+        "1'b1",
+        'AST support simplifies boolean complement A | !A to true before rendering',
+    );
+    is(
+        $support->ast_to_systemverilog(FSM::AST::UnaryOp->new('!', FSM::AST::UnaryOp->new('!', $a_ref->()))),
+        'A',
+        'AST support simplifies double negation before rendering',
+    );
+    is(
+        $support->ast_to_systemverilog(
+            FSM::AST::BinaryOp->new(
+                '|',
+                $a_ref->(),
+                FSM::AST::BinaryOp->new('&', $a_ref->(), $b_ref->()),
+            ),
+        ),
+        'A',
+        'AST support simplifies absorption A | (A & B) to A before rendering',
+    );
+    is(
+        $support->ast_to_systemverilog(
+            FSM::AST::BinaryOp->new(
+                '|',
+                FSM::AST::BinaryOp->new('&', $a_ref->(), $b_ref->()),
+                FSM::AST::BinaryOp->new('&', $a_ref->(), $not_b->()),
+            ),
+        ),
+        'A',
+        'AST support simplifies consensus (A & B) | (A & !B) to A before rendering',
+    );
+    is(
+        $support->ast_to_systemverilog(
+            FSM::AST::UnaryOp->new(
+                '!',
+                FSM::AST::BinaryOp->new('&', $a_ref->(), $not_b->()),
+            ),
+        ),
+        '!A | B',
+        'AST support applies shorter De Morgan form after RHS AST simplification',
+    );
+    is(
+        $support->ast_to_systemverilog(FSM::AST::BinaryOp->new('&', $bus1_ref->(), FSM::AST::Literal->new("1'b1"))),
+        "BUS1 & 1'b1",
+        'AST support preserves vector-nonidentity BUS1 & 1 when width-safe simplification is not proven',
+    );
+
     my $cnt_signal = FSM::CoreAST::Signal->new(name => 'CNT', width => 3);
     my $cnt_slice_ne_two = FSM::CoreAST::BinaryOp->new(
         '!=',

@@ -186,8 +186,11 @@ through `StructuralRTLIR`, populate direct input-port generated-enable RHS
 `targets[]` connectivity on `structural_rtl_ir.ports[]`, populate direct
 output-port source summaries on `structural_rtl_ir.ports[]` from lowered
 output-drive families, and retain `structural_rtl_ir.auxiliary_assignments[]`
-as the scalar-string compatibility mirror. Broader output-drive/always-block
-body consumer modeling remains outside the compact source summary.
+as the scalar-string compatibility mirror. Generated-enable RHS expressions
+now pass through a shared AST logic simplification step before SystemVerilog
+text is emitted, and direct `assignment_records[]` store that same simplified
+RHS AST. Broader output-drive/always-block body consumer modeling remains
+outside the compact source summary.
 Direct instance/link selector `R11-DIRECT-STRUCTURAL-INSTANCES-LINKS.1`
 confirmed direct roots are leaf structural summaries and intentionally keep
 `instances[]`, `declared_links[]`, and `resolved_links[]` empty; populated
@@ -1202,6 +1205,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/TASK_TREE.md` — repo-local task-tree workflow, active tree index, and PNT frontier rules.
 - `docs/tasks/TEMPLATE.md` — reusable template for one top-level task tree.
 - `docs/tasks/GENERATED-HDL-ARTIFACT-PLACEMENT.md` — completed artifact-hygiene task tree for routing implicit generated HDL into git-ignored hidden artifact directories while preserving explicit output paths.
+- `docs/tasks/RHS-LOGIC-SIMPLIFICATION-FRONTIER.md` — completed generated-HDL quality tree for AST-level RHS logic-equivalence simplification before HDL emission.
 - `docs/tasks/PROJECT-REMAINING-WORK-TASKTREE-OWNERSHIP.md` — completed roadmap-maintenance task tree that routed the 2026-06-05 remaining-work inventory to existing active owners or new broad owner trees.
 - `docs/tasks/COMPOSITION-TYPE-BACKLOG-EXHAUSTION.md` — completed Composition/type backlog tree; shipped aggregate parameter/generic equality/inequality, closed the remaining Composition/type leaves behind exact prerequisites, and routed VHDL-dependent work through the completed backend/API frontier.
 - `docs/tasks/ISF-REMAINING-BROAD-FRONTIER.md` — proposed broad `R14` ISF frontier owner tree for deferred ISF backlog directions not already owned by narrower active trees.

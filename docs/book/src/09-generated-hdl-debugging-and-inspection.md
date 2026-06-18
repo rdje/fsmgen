@@ -43,6 +43,15 @@ That means the emitted HDL emphasizes:
 This is deliberate. The current default generation mode is the debug-friendly
 flattened path.
 
+Before generated assignment RHS text is emitted, FSMGen simplifies the RHS AST
+with width-safe logic equivalences. Covered boolean cases include constants,
+identity/annihilator terms, idempotence, complement pairs, double negation,
+absorption, shorter De Morgan forms, and common consensus patterns. For
+example, generated enables such as `watch_en & 1'b1` emit as `watch_en`, and
+`A | (A & B)` emits as `A`. The simplifier is AST-based, not a text rewrite;
+vector cases such as `BUS1 & 1'b1` are preserved unless the AST proves the
+rewrite is width-safe.
+
 ## Reading The Generated HDL
 
 When inspecting emitted SystemVerilog, look for:
@@ -310,7 +319,9 @@ already-prepared direct backend enable registries and assignment analysis.
 `structural_rtl_ir.assignment_records[]` includes machine-readable generated
 enable continuous-assignment records with structured `lhs`, `rhs`, rendered
 SystemVerilog text, and provenance. The `rhs` entry carries a normalized
-expression AST when the direct backend already has one. The older
+expression AST when the direct backend already has one; for generated-enable
+records this is the same simplified RHS AST used to render the assignment
+text. The older
 `structural_rtl_ir.auxiliary_assignments[]` field remains as the scalar-string
 compatibility mirror for those rendered assignment lines. Generated-enable net
 entries also carry structured `source` objects for assignment-record drivers

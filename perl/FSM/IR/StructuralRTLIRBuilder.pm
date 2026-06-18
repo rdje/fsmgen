@@ -576,8 +576,12 @@ sub _direct_assignment_record (%args) {
     my $lhs = $args{lhs};
     return undef unless defined($lhs) && length($lhs);
 
-    my $rhs_text = _direct_ast_to_systemverilog(
+    my $rhs_ast = _direct_simplified_rhs_ast(
         ast => $args{rhs_ast},
+        ast_support => $args{ast_support},
+    );
+    my $rhs_text = _direct_ast_to_systemverilog(
+        ast => $rhs_ast,
         ast_support => $args{ast_support},
     );
     my $rendered = "  assign $lhs = $rhs_text;";
@@ -594,11 +598,20 @@ sub _direct_assignment_record (%args) {
             kind => 'expression',
             language => 'systemverilog',
             text => $rhs_text,
-            ast => _direct_ast_record($args{rhs_ast}),
+            ast => _direct_ast_record($rhs_ast),
         },
         rendered => $rendered,
         provenance => _clone($args{provenance} || {}),
     };
+}
+
+sub _direct_simplified_rhs_ast (%args) {
+    my $ast = $args{ast};
+    my $ast_support = $args{ast_support};
+    return $ast unless blessed($ast)
+        && ref($ast_support)
+        && $ast_support->can('simplify_logic_ast');
+    return $ast_support->simplify_logic_ast($ast);
 }
 
 sub _direct_apply_assignment_record_connectivity (%args) {
