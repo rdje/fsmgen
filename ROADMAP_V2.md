@@ -1834,6 +1834,16 @@ read-data coverage gate, while `.174` response-demux-only samples remain
 generated. The selector is documentation-only and makes no parser, generator,
 PPIF sample, support-accounting, generated-artifact, test, or HDL behavior
 changes.
+`.176` now selects `.177`, direct bounded implementation of generated read
+single-beat scalar `RDATA`/`RRESP` over multiple or mixed depth-3 concrete
+same-ID queue-head groups. The audit found that the blocker is local to the
+single-beat branch of `_read_data_response_demux_transaction_coverage`; after
+coverage admits transactions, read-data normalization, generated-artifact
+enumeration, report projection, and tests are transaction-list driven.
+Burst-last read-data, burst-length, runtime-validation, multi-beat payload,
+mixed auto-ID, group-local enqueue widening, packed outputs, direct backend,
+verification-output generation, VHDL, and backend-language variants remain
+deferred behind future owned leaves.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.

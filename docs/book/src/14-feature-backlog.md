@@ -6066,6 +6066,18 @@ next behavior owner starts with single-beat scalar read-data, scalar
 single-beat plus last-beat, or a broader read-data set before any behavior
 change.
 
+Multiple/mixed depth-3 queue-head read-data readiness:
+[AXI_IAL2_MANAGER_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_READ_DATA_READINESS_AUDIT](../../AXI_IAL2_MANAGER_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_READ_DATA_READINESS_AUDIT.md)
+records `.176`, which selects `.177`, direct bounded implementation of read
+single-beat scalar `RDATA`/`RRESP` over generated multiple or mixed depth-3
+queue-head response-demux groups. Existing read single-beat multi-group
+depth-2 read-data and one-group depth-3 read-data samples are generated, while
+temporary two-depth-3 and mixed depth-3/depth-2 single-beat read-data
+candidates fail closed at the current coverage gate. `.177` must stay limited
+to scalar single-beat read-data; burst-last read-data, burst-length,
+runtime-validation, multi-beat payload, mixed auto-ID, direct backend, VHDL,
+and backend-language variants remain separate owned work.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same
