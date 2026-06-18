@@ -6140,6 +6140,21 @@ support-accounted as
 and
 `intent.ppif_axi_manager_capacity_status_read_burst_last_mixed_depth3_depth2_same_id_queue_head_read_data`.
 
+Post multiple/mixed depth-3 queue-head last-beat read-data selector:
+[AXI_IAL2_MANAGER_POST_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_LAST_BEAT_READ_DATA_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_LAST_BEAT_READ_DATA_NEXT_SLICE_SELECTION.md)
+records `.181`, which selects `.182`, readiness audit for generated
+report-only raw-`ARLEN` burst-length capture over the multiple/mixed depth-3
+queue-head scalar last-beat read-data shape shipped by `.180`. The selector is
+documentation-only. It follows the established sequence used by one-group
+depth-3 and multi-group depth-2 queue-head scalar last-beat read-data:
+no-`burst_length` scalar last-beat read-data first, report-only raw-`ARLEN`
+next, then runtime-validation and multi-beat payload only after separate
+owners. Runtime validation, multi-beat output bank, write-family read-data,
+same-family mixed auto-ID plus concrete queue-head demux, group-local enqueue
+widening, packed payload vectors, alternate burst assembly, direct backend,
+verification-output generation, VHDL, and backend-language variants remain
+separately owned.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same
@@ -8401,7 +8416,7 @@ support catalog entries instead of recursive workspace traversal.
 `SEMANTIC-INTROSPECTION-MCP-FRONTIER.30` closes the immediate read-only
 semantic-introspection/MCP pass after source discovery; the active roadmap
 priority is again the IAL2 feature-completeness tree, currently at
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.181`.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.182`.
 
 Selected first MCP resource families are `fsmgen://capabilities`,
 `fsmgen://contracts`, `fsmgen://diagnostics`,
