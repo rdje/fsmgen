@@ -5978,7 +5978,7 @@ response-demux, `RLAST`, multiple or mixed depth-3 groups, mixed auto-ID,
 group-local enqueue widening, packed outputs, direct backend,
 verification-output generation, VHDL, and backend-language variant work remain
 separately owned. That implementation advanced the active frontier to `.172`,
-the selector that now selects `.173`.
+the selector that selected `.173`; the `.173` audit now selects `.174`.
 
 Post write depth-3 queue-head selector:
 [AXI_IAL2_MANAGER_POST_WRITE_DEPTH3_QUEUE_HEAD_RESPONSE_DEMUX_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_WRITE_DEPTH3_QUEUE_HEAD_RESPONSE_DEMUX_NEXT_SLICE_SELECTION.md)
@@ -5993,6 +5993,33 @@ smaller first family/scope. Read-data, burst-length, runtime-validation,
 multi-beat payload, mixed auto-ID, group-local enqueue widening, packed
 outputs, direct backend, verification-output generation, VHDL, and
 backend-language variant work remain separately owned.
+
+Multiple/mixed depth-3 queue-head readiness:
+[AXI_IAL2_MANAGER_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_RESPONSE_DEMUX_READINESS_AUDIT](../../AXI_IAL2_MANAGER_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_RESPONSE_DEMUX_READINESS_AUDIT.md)
+records `.173`, which selects `.174`, direct bounded implementation of
+generated multiple or mixed depth-3 concrete same-ID queue-head response-demux
+for response-demux-only read single-beat, read burst-last, and write
+families. The audit found the only direct generation blocker is the local
+depth-3 `@$groups == 1` shape predicate in
+`_build_same_id_issue_order_queue_behavior`; downstream queue-state,
+transition, assertion, response-demux, and report helpers already iterate
+generated groups and their local depths. Temporary read single-beat, read
+burst-last, and write two-depth-3 and mixed depth-3/depth-2 candidates
+strict-check with no diagnostics and remain selected-not-generated with
+`generated_same_id_queue_head_demux` residue, while existing one-group
+depth-3 and multi-group depth-2 public samples remain generated and
+support-accounted.
+
+`.174` should add public support-accounted samples for read single-beat,
+read burst-last, and write two-depth-3 and mixed depth-3/depth-2 groups. The
+expected generated surface keeps the same family boundaries:
+`generated_read_single_beat_queue_head_demux`,
+`generated_read_burst_last_queue_head_demux`, and
+`generated_write_bid_queue_head_demux`. Read-data over multiple/mixed
+depth-3 groups, burst-length, runtime-validation, multi-beat payload, mixed
+auto-ID, group-local enqueue widening, packed outputs, direct backend,
+verification-output generation, VHDL, and backend-language variant work remain
+separately owned.
 
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)

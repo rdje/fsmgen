@@ -10,7 +10,7 @@ date: 2026-06-18
 status: current
 tags: [ial2, axi, manager, response-demux, queue-head, depth-3, readiness]
 evidence: docs/AXI_IAL2_MANAGER_POST_WRITE_DEPTH3_QUEUE_HEAD_RESPONSE_DEMUX_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_WRITE_DEPTH3_QUEUE_HEAD_RESPONSE_DEMUX_BEHAVIOR.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md
-reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.172|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.173|POST_WRITE_DEPTH3_QUEUE_HEAD_RESPONSE_DEMUX_NEXT_SLICE_SELECTION|multiple or mixed depth-3|generated_same_id_queue_head_demux' docs/AXI_IAL2_MANAGER_POST_WRITE_DEPTH3_QUEUE_HEAD_RESPONSE_DEMUX_NEXT_SLICE_SELECTION.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md README.md ROADMAP_V2.md docs/book/src/14-feature-backlog.md
+reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.172|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.173|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.174|POST_WRITE_DEPTH3_QUEUE_HEAD_RESPONSE_DEMUX_NEXT_SLICE_SELECTION|MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_RESPONSE_DEMUX_READINESS_AUDIT|multiple or mixed depth-3|generated_same_id_queue_head_demux' docs/AXI_IAL2_MANAGER_POST_WRITE_DEPTH3_QUEUE_HEAD_RESPONSE_DEMUX_NEXT_SLICE_SELECTION.md docs/AXI_IAL2_MANAGER_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_RESPONSE_DEMUX_READINESS_AUDIT.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md README.md ROADMAP_V2.md docs/book/src/14-feature-backlog.md
 ---
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.172` selected
@@ -25,9 +25,10 @@ two depth-3 groups and mixed depth-3/depth-2 groups strict-check with no
 diagnostics, report selected queue-head metadata, and remain
 selected-not-generated only with `generated_same_id_queue_head_demux` residue.
 
-`.173` is audit-only. It must decide whether the next behavior owner should
-cover all response-demux-only multiple/mixed depth-3 families or a smaller
-first family/scope. Read-data, burst-length, runtime-validation, multi-beat
-payload, mixed auto-ID, group-local enqueue widening, packed outputs, direct
-backend, verification-output generation, VHDL, and backend-language variants
-remain deferred behind future exact owners.
+`.173` completed that audit and selected `.174`, direct bounded implementation
+for response-demux-only read single-beat, read burst-last, and write
+multiple/mixed depth-3 family scopes. Read-data, burst-length,
+runtime-validation, multi-beat payload, mixed auto-ID, group-local enqueue
+widening, packed outputs, direct backend, verification-output generation,
+VHDL, and backend-language variants remain deferred behind future exact
+owners.

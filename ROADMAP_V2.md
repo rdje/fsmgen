@@ -1805,10 +1805,25 @@ depth-3 concrete same-ID queue-head response-demux groups. The selector found
 that one-group depth-3 and multi-group depth-2 response-demux samples are
 already generated, while temporary multi-depth-3 and mixed depth-3/depth-2
 write probes strict-check with no diagnostics but remain selected-not-generated
-with `generated_same_id_queue_head_demux` residue. `.173` is audit-only and
-must choose the exact next behavior owner or smaller prerequisite before any
-parser, generator, PPIF sample, support-accounting, generated-artifact, test,
-or HDL behavior changes.
+with `generated_same_id_queue_head_demux` residue. `.173` remained
+behavior-free and selected the exact next behavior owner before any parser,
+generator, PPIF sample, support-accounting, generated-artifact, test, or HDL
+behavior changes.
+`.173` now selects `.174`, direct bounded implementation of generated
+multiple or mixed depth-3 concrete same-ID queue-head response-demux for
+response-demux-only read single-beat, read burst-last, and write families.
+The audit found the remaining generation blocker is the local depth-3
+`@$groups == 1` predicate in `_build_same_id_issue_order_queue_behavior`;
+downstream queue-state, transition, assertion, response-demux, and report
+helpers are already group/depth driven. Temporary two-depth-3 and mixed
+depth-3/depth-2 probes across all three scopes strict-check with no
+diagnostics but remain selected-not-generated with
+`generated_same_id_queue_head_demux` residue; existing one-group depth-3 and
+multi-group depth-2 public samples remain generated and support-accounted.
+`.174` must preserve read-data, burst-length, runtime-validation, multi-beat
+payload, mixed auto-ID, group-local enqueue widening, packed outputs, direct
+backend, verification-output generation, VHDL, and backend-language variants
+behind future owned leaves.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.
