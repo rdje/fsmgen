@@ -6222,6 +6222,35 @@ concrete queue-head demux, group-local enqueue widening, packed outputs,
 alternate burst assembly, direct backend, verification-output generation,
 VHDL, and backend-language variants remain separately owned.
 
+Multiple/mixed depth-3 queue-head runtime-validation readiness audit:
+[AXI_IAL2_MANAGER_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_RUNTIME_VALIDATION_READINESS_AUDIT](../../AXI_IAL2_MANAGER_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_RUNTIME_VALIDATION_READINESS_AUDIT.md)
+records `.185`, which selects `.186`, direct bounded implementation of
+generated beat-count/`RLAST` runtime validation over the same
+multiple/mixed depth-3 queue-head scalar last-beat read-data shape. The audit
+is documentation-only. Compact probes show the `.183` report-only samples
+keep `generated_beat_count_validation` residue and have no expected-beat
+storage, beat-count rules, or beat-count/`RLAST` assertions, while the
+one-group depth-3 and multi-group depth-2 runtime-validation precedents
+generate those artifacts from admitted transaction lists. Temporary
+runtime-assertion variants of the two `.183` samples fail closed only at the
+local last-beat coverage diagnostic.
+
+The selected implementation should add support-accounted public samples
+`ppif/axi_manager_capacity_status_read_burst_last_multi_depth3_same_id_queue_head_burst_length_runtime_assertion.ppif`
+and
+`ppif/axi_manager_capacity_status_read_burst_last_mixed_depth3_depth2_same_id_queue_head_burst_length_runtime_assertion.ppif`.
+Those samples should report `burst_length_validation: runtime_assertion`,
+`beat_count_validation_generated_behavior: true`,
+`expected_beat_count_encoding: arlen_plus_one`, and
+`beat_count_match_source: response_demux_matched_read_beat`, then remove
+`generated_beat_count_validation` from read-data residue while preserving
+`multi_beat_read_data_reassembly`, `per_beat_outputs`, and
+`rresp_aggregation`. Multi-beat output bank, write-family read-data,
+same-family mixed auto-ID plus concrete queue-head demux, group-local enqueue
+widening, packed payload vectors, alternate burst assembly, direct backend,
+verification-output generation, VHDL, and backend-language variants remain
+separately owned.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same
@@ -8483,7 +8512,7 @@ support catalog entries instead of recursive workspace traversal.
 `SEMANTIC-INTROSPECTION-MCP-FRONTIER.30` closes the immediate read-only
 semantic-introspection/MCP pass after source discovery; the active roadmap
 priority is again the IAL2 feature-completeness tree, currently at
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.185`.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.186`.
 
 Selected first MCP resource families are `fsmgen://capabilities`,
 `fsmgen://contracts`, `fsmgen://diagnostics`,

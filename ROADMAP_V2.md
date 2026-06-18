@@ -1080,7 +1080,7 @@ support-accounting metadata under query/limit/filter controls.
 `SEMANTIC-INTROSPECTION-MCP-FRONTIER.30` closes the immediate read-only
 semantic-introspection/MCP pass after source discovery and returns active
 roadmap priority to the IAL2 feature-completeness tree, currently at
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.185`.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.186`.
 The parser/report metadata slice `IAL2-FEATURE-COMPLETENESS-FRONTIER.39` is
 now shipped for the bounded AXI read response-demux public contract selected
 by `.38`. The selected read arm requires `(response-scope single-beat)`,
@@ -1880,10 +1880,14 @@ mixed auto-ID, group-local enqueue widening, packed outputs, alternate burst
 assembly, direct backend, verification-output generation, VHDL, and
 backend-language variants remain deferred. Selector `.184` selected `.185`,
 readiness audit for generated runtime beat-count/`RLAST` validation over the
-same multiple/mixed depth-3 queue-head scalar last-beat read-data shape. No
-parser, generator, sample, support-accounting, validation, generated-artifact,
-test, or HDL behavior changed in the selector slice. The active frontier is
-`.185`.
+same multiple/mixed depth-3 queue-head scalar last-beat read-data shape. Audit
+`.185` selected `.186`, direct bounded implementation of that generated
+runtime-validation behavior. Temporary runtime-assertion variants fail closed
+only at the local last-beat coverage gate, while the expected-beat,
+beat-count, assertion, generated-artifact, and report helpers are
+transaction-list driven below that gate. No parser, generator, sample,
+support-accounting, validation, generated-artifact, test, or HDL behavior
+changed in the selector/audit slices. The active frontier is `.186`.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.
