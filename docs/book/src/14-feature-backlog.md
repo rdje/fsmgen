@@ -6054,6 +6054,18 @@ payload, mixed auto-ID, group-local enqueue widening, packed outputs, direct
 backend, verification-output generation, VHDL, and backend-language variant
 work remain separately owned.
 
+Post multiple/mixed depth-3 queue-head selector:
+[AXI_IAL2_MANAGER_POST_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_RESPONSE_DEMUX_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_RESPONSE_DEMUX_NEXT_SLICE_SELECTION.md)
+records `.175`, which selects `.176`, readiness audit for generated read-data
+over multiple or mixed depth-3 concrete same-ID queue-head groups. The
+selector keeps `.175` documentation-only: the `.174` response-demux-only
+samples are generated and support-accounted, while temporary read single-beat
+and read burst-last read-data candidates over two depth-3 queue groups fail
+closed at the current read-data coverage gate. `.176` must audit whether the
+next behavior owner starts with single-beat scalar read-data, scalar
+single-beat plus last-beat, or a broader read-data set before any behavior
+change.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same

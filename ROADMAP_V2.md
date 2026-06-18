@@ -1827,6 +1827,13 @@ over multiple/mixed depth-3 groups, burst-length, runtime-validation,
 multi-beat payload, mixed auto-ID, group-local enqueue widening, packed
 outputs, direct backend, verification-output generation, VHDL, and
 backend-language variants remain behind future owned leaves.
+`.175` now selects `.176`, readiness audit for generated read-data over
+multiple or mixed depth-3 concrete same-ID queue-head groups. Temporary
+read-data probes over two depth-3 read queue groups fail closed at the local
+read-data coverage gate, while `.174` response-demux-only samples remain
+generated. The selector is documentation-only and makes no parser, generator,
+PPIF sample, support-accounting, generated-artifact, test, or HDL behavior
+changes.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.
