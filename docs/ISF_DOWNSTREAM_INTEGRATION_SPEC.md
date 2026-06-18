@@ -94,10 +94,15 @@ Intent abstraction levels:
   validation, scalar `RRESP` aggregation, one-or-more read burst-last
   queue-head groups, one-or-more write queue-head groups, and read
   single-beat queue-head response-demux including multiple response-demux-only
-  groups.
+  groups and scalar read-data groups, plus selected multiple/mixed depth-3
+  read single-beat scalar read-data groups, selected multiple/mixed depth-3
+  read burst-last scalar last-beat read-data groups, and selected report-only
+  raw-`ARLEN` burst-length capture over those multiple/mixed depth-3 read
+  burst-last scalar last-beat groups.
 - Deeper concrete same-ID queues, same-family mixed auto-ID plus concrete
-  queue-head demux, read-data over multiple read single-beat queue-head
-  groups, group-local simultaneous enqueue widening, packed burst-vector
+  queue-head demux, runtime validation and multi-beat payload over
+  multiple/mixed depth-3 read burst-last queue-head groups, write-family
+  read-data, group-local simultaneous enqueue widening, packed burst-vector
   outputs, alternate full burst payload assembly, aliases, platform clauses,
   full AXI manager behavior, direct backend lowering, and VHDL remain
   deferred.

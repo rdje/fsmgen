@@ -6205,7 +6205,22 @@ Runtime validation, multi-beat output bank, write-family read-data,
 same-family mixed auto-ID plus concrete queue-head demux, group-local enqueue
 widening, packed payload vectors, alternate burst assembly, direct backend,
 verification-output generation, VHDL, and backend-language variants remain
-separately owned. `.184` is the next feature-completeness selector.
+separately owned.
+
+Post multiple/mixed depth-3 queue-head burst-length selector:
+[AXI_IAL2_MANAGER_POST_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
+records `.184`, which selects `.185`, readiness audit for generated
+beat-count/`RLAST` runtime validation over the same multiple/mixed depth-3
+queue-head scalar last-beat read-data shape. The selector is
+documentation-only. It records that the `.183` samples keep
+`generated_beat_count_validation` residue, while the one-group depth-3 and
+multi-group depth-2 runtime-validation precedents already generate
+transaction-list-driven expected-beat storage, read-beat counters, beat-count
+rules, and beat-count/`RLAST` assertions once coverage admits the shape.
+Multi-beat payload, write-family read-data, same-family mixed auto-ID plus
+concrete queue-head demux, group-local enqueue widening, packed outputs,
+alternate burst assembly, direct backend, verification-output generation,
+VHDL, and backend-language variants remain separately owned.
 
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
@@ -8468,7 +8483,7 @@ support catalog entries instead of recursive workspace traversal.
 `SEMANTIC-INTROSPECTION-MCP-FRONTIER.30` closes the immediate read-only
 semantic-introspection/MCP pass after source discovery; the active roadmap
 priority is again the IAL2 feature-completeness tree, currently at
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.183`.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.185`.
 
 Selected first MCP resource families are `fsmgen://capabilities`,
 `fsmgen://contracts`, `fsmgen://diagnostics`,

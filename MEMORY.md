@@ -10,10 +10,10 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `HEAD after RHS-LOGIC-SIMPLIFICATION-FRONTIER.2 commit` — `RHS-LOGIC-SIMPLIFICATION-FRONTIER.2: simplify vector RHS logic`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.184` is the next IAL2 selector; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `RHS-LOGIC-SIMPLIFICATION-FRONTIER.2` extended generated RHS simplification to width-proven vector/multi-bit bitwise identities, annihilators, idempotence, complements, double-negation, absorption, and consensus cases; unsafe width-changing masks such as `BUS1 & 1'b1` remain preserved; captured RHS metadata now routes through the shared simplifier.
-- in_flight_uncommitted: none after the vector RHS simplification commit. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
+- latest_commit: `HEAD after IAL2-FEATURE-COMPLETENESS-FRONTIER.184 commit` — `IAL2-FEATURE-COMPLETENESS-FRONTIER.184: select depth-3 runtime validation audit`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.185` is the next IAL2 readiness audit for generated runtime beat-count/RLAST validation over multiple/mixed depth-3 queue-head scalar last-beat read-data; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.184` selected `.185` after reading `.183` report-only raw-ARLEN behavior, `.182` audit, `.180` no-burst behavior, one-group depth-3 and multi-group depth-2 runtime precedents, code/report helpers, support accounting, roadmap, mdBook, downstream spec, task tree, Memory, and Knowledge Map. No parser/generator/sample/support-accounting/validation/generated-artifact/test/HDL behavior changed.
+- in_flight_uncommitted: none after the `IAL2-FEATURE-COMPLETENESS-FRONTIER.184` selector/docs commit. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
 
 ## Notes
