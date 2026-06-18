@@ -38,5 +38,6 @@ Strict check JSON and normalized semantic JSON match the support-accounting
 entry
 `intent.ppif_axi_manager_capacity_status_read_single_beat_multi_group_same_id_queue_head_response_demux`,
 so MCP-facing deep semantic introspection sees the same support claim as the
-public corpus catalog. After `.143`, the PNT frontier advanced to `.144`; the
-current IAL2 frontier after `.147` is `IAL2-FEATURE-COMPLETENESS-FRONTIER.148`.
+public corpus catalog. After `.143`, the PNT frontier advanced to `.144`; at
+that point, the IAL2 frontier after `.147` was
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.148`.

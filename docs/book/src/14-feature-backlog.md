@@ -5977,8 +5977,22 @@ Read-data, burst-length, runtime-validation, multi-beat payload, read
 response-demux, `RLAST`, multiple or mixed depth-3 groups, mixed auto-ID,
 group-local enqueue widening, packed outputs, direct backend,
 verification-output generation, VHDL, and backend-language variant work remain
-separately owned. The active frontier advances to `.172`, the next
-feature-completeness selector/audit.
+separately owned. That implementation advanced the active frontier to `.172`,
+the selector that now selects `.173`.
+
+Post write depth-3 queue-head selector:
+[AXI_IAL2_MANAGER_POST_WRITE_DEPTH3_QUEUE_HEAD_RESPONSE_DEMUX_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_WRITE_DEPTH3_QUEUE_HEAD_RESPONSE_DEMUX_NEXT_SLICE_SELECTION.md)
+records `.172`, which selects `.173`, readiness audit for generated multiple
+or mixed depth-3 concrete same-ID queue-head response-demux groups. Existing
+one-group depth-3 and multi-group depth-2 response-demux samples are
+generated, while temporary multi-depth-3 and mixed depth-3/depth-2 write
+probes strict-check with no diagnostics but remain selected-not-generated
+with `generated_same_id_queue_head_demux` residue. `.173` must audit whether
+the next behavior leaf should cover all response-demux-only families or a
+smaller first family/scope. Read-data, burst-length, runtime-validation,
+multi-beat payload, mixed auto-ID, group-local enqueue widening, packed
+outputs, direct backend, verification-output generation, VHDL, and
+backend-language variant work remain separately owned.
 
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)

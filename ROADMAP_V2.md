@@ -1800,6 +1800,15 @@ queue update rules, and 14 queue assertions. Multiple or mixed depth-3 groups,
 mixed auto-ID, group-local enqueue widening, read-data, burst-length,
 runtime-validation, multi-beat payload, direct backend, verification-output
 generation, and VHDL remain deferred.
+`.172` now selects `.173`, readiness audit for generated multiple or mixed
+depth-3 concrete same-ID queue-head response-demux groups. The selector found
+that one-group depth-3 and multi-group depth-2 response-demux samples are
+already generated, while temporary multi-depth-3 and mixed depth-3/depth-2
+write probes strict-check with no diagnostics but remain selected-not-generated
+with `generated_same_id_queue_head_demux` residue. `.173` is audit-only and
+must choose the exact next behavior owner or smaller prerequisite before any
+parser, generator, PPIF sample, support-accounting, generated-artifact, test,
+or HDL behavior changes.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.

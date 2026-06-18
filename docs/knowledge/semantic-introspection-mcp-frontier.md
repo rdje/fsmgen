@@ -204,8 +204,9 @@ support metadata. Query controls are `query`, `limit`, `file_kind`,
 `source_kind`, and `classification`; discovery does not scan the workspace.
 `.30` closes the immediate read-only semantic-introspection/MCP pass after
 catalog-backed source discovery. No additional semantic-introspection behavior
-leaf is selected now; active roadmap priority returns to
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.148`.
+leaf was selected in that slice; active roadmap priority returned at that
+point to `IAL2-FEATURE-COMPLETENESS-FRONTIER.148`. The current IAL2 frontier
+is tracked by `ial2-feature-completeness-priority`.
 FSMGen should not expose raw private Perl AST, scheduler, lowering objects,
 `HDLGenerator` compatibility hashes, or internal Perl references as public
 automation APIs. Write generation tools, HDL writing, service mode, network
