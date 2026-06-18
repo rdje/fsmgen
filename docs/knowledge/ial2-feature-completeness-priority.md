@@ -73,23 +73,26 @@ answers:
   - "what did IAL2-FEATURE-COMPLETENESS-FRONTIER.180 ship?"
   - "what did IAL2-FEATURE-COMPLETENESS-FRONTIER.181 select?"
   - "what did IAL2-FEATURE-COMPLETENESS-FRONTIER.182 select?"
+  - "what did IAL2-FEATURE-COMPLETENESS-FRONTIER.183 ship?"
   - "what is the next IAL2 frontier after multiple/mixed depth-3 burst-last read-data?"
   - "what is the next IAL2 frontier after multiple/mixed depth-3 burst-length readiness?"
+  - "what is the next IAL2 frontier after multiple/mixed depth-3 burst-length behavior?"
   - "what follows write depth-3 queue-head response-demux?"
   - "why is support-detail expectation alignment next after depth-3 queue-head response-demux?"
 date: 2026-06-18
 status: current
 tags: [ial2, ial1, ial0, systemverilog, roadmap, task-tree, feature-completeness]
-evidence: docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; docs/AXI_IAL2_MANAGER_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_BURST_LENGTH_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_POST_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_LAST_BEAT_READ_DATA_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_LAST_BEAT_READ_DATA_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_LAST_BEAT_READ_DATA_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_POST_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_READ_DATA_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_READ_DATA_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_READ_DATA_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_RESPONSE_DEMUX_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_READ_BURST_LAST_DEPTH3_QUEUE_HEAD_READ_DATA_BEHAVIOR.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md; docs/tasks/R11-DIRECT-STRUCTURAL-VHDL-REROUTING.md
-reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.182|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.183|MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_BURST_LENGTH_READINESS_AUDIT|read burst-last scalar last-beat|report-only raw|VHDL backend/reroute' docs/TASK_TREE.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/AXI_IAL2_MANAGER_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_BURST_LENGTH_READINESS_AUDIT.md README.md ROADMAP_V2.md docs/book/src/14-feature-backlog.md
+evidence: docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; docs/AXI_IAL2_MANAGER_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_BURST_LENGTH_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_BURST_LENGTH_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_POST_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_LAST_BEAT_READ_DATA_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_LAST_BEAT_READ_DATA_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_LAST_BEAT_READ_DATA_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_POST_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_READ_DATA_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_READ_DATA_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_READ_DATA_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_RESPONSE_DEMUX_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_READ_BURST_LAST_DEPTH3_QUEUE_HEAD_READ_DATA_BEHAVIOR.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md; docs/tasks/R11-DIRECT-STRUCTURAL-VHDL-REROUTING.md
+reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.183|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.184|MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_BURST_LENGTH_BEHAVIOR|read_burst_last_multi_depth3_same_id_queue_head_burst_length|report-only raw|VHDL backend/reroute' docs/TASK_TREE.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/AXI_IAL2_MANAGER_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_BURST_LENGTH_BEHAVIOR.md README.md ROADMAP_V2.md docs/book/src/14-feature-backlog.md
 ---
 
 The current feature-completeness priority is IAL2 on the
 SystemVerilog-backed path.
 
-Current frontier: `IAL2-FEATURE-COMPLETENESS-FRONTIER.183`, direct bounded
-implementation of generated report-only raw-`ARLEN` burst-length capture over
-multiple/mixed depth-3 queue-head scalar last-beat read-data.
+Current frontier: `IAL2-FEATURE-COMPLETENESS-FRONTIER.184`, selector for the
+next IAL2 feature-completeness slice after generated report-only raw-`ARLEN`
+burst-length capture over multiple/mixed depth-3 queue-head scalar last-beat
+read-data.
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.180` shipped two public support-accounted
 samples for that behavior: one with two depth-3 duplicate-`RID` groups and one
@@ -110,6 +113,15 @@ multiple/mixed depth-3 scalar last-beat shape. Temporary in-memory candidates
 with report-only `burst-length` metadata fail closed only at the local
 last-beat coverage gate, and the existing raw-`ARLEN` storage/rule/report
 helpers are transaction-list driven once coverage admits the shape.
+
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.183` shipped that behavior for the
+two-depth-3 and mixed depth-3/depth-2 queue-head scalar last-beat read-data
+samples. It adds generated `axi0_arlen`, per-transaction raw-`ARLEN` storage,
+and request-guarded burst-length capture rules while preserving scalar
+last-beat `RDATA`/`RRESP` capture and keeping `generated_beat_count_validation`
+residue. Runtime validation, multi-beat payload, write-family read-data,
+mixed auto-ID, direct backend, VHDL, and backend-language variants remain
+deferred.
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.108` shipped generated AXI same-ID write
 queue-head behavior for one duplicate concrete write-ID group of two

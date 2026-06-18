@@ -6176,6 +6176,37 @@ widening, packed payload vectors, alternate burst assembly, direct backend,
 verification-output generation, VHDL, and backend-language variants remain
 separately owned.
 
+Multiple/mixed depth-3 queue-head burst-length behavior:
+[AXI_IAL2_MANAGER_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_BURST_LENGTH_BEHAVIOR](../../AXI_IAL2_MANAGER_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_BURST_LENGTH_BEHAVIOR.md)
+records `.183`, which ships generated report-only raw-`ARLEN` burst-length
+capture over multiple/mixed depth-3 read burst-last queue-head scalar
+last-beat read-data. The public samples are
+`ppif/axi_manager_capacity_status_read_burst_last_multi_depth3_same_id_queue_head_burst_length.ppif`
+and
+`ppif/axi_manager_capacity_status_read_burst_last_mixed_depth3_depth2_same_id_queue_head_burst_length.ppif`.
+They cover two depth-3 duplicate-`RID` queue-head groups and mixed
+depth-3/depth-2 queue-head groups, respectively.
+
+Generation preserves the `RID`/`RLAST` queue-head response-demux completion
+source and scalar last-beat `RDATA`/`RRESP` capture, then adds generated
+`axi0_arlen`, per-transaction raw-`ARLEN` storage, and request-guarded
+burst-length capture rules. The report sets `burst_length_validation:
+report_only`, records generated burst-length input/storage/rule fields, and
+keeps `generated_beat_count_validation`, `multi_beat_read_data_reassembly`,
+`per_beat_outputs`, and `rresp_aggregation` residue. No expected-beat
+storage, read-beat counters, or beat-count/`RLAST` runtime assertions are
+generated in this report-only shape.
+
+Strict check JSON and normalized semantic JSON support-account the samples as
+`intent.ppif_axi_manager_capacity_status_read_burst_last_multi_depth3_same_id_queue_head_burst_length`
+and
+`intent.ppif_axi_manager_capacity_status_read_burst_last_mixed_depth3_depth2_same_id_queue_head_burst_length`.
+Runtime validation, multi-beat output bank, write-family read-data,
+same-family mixed auto-ID plus concrete queue-head demux, group-local enqueue
+widening, packed payload vectors, alternate burst assembly, direct backend,
+verification-output generation, VHDL, and backend-language variants remain
+separately owned. `.184` is the next feature-completeness selector.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same

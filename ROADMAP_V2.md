@@ -1869,13 +1869,17 @@ no-`burst_length` scalar last-beat read-data, report-only raw-`ARLEN`, then
 runtime validation and multi-beat output-bank behavior only behind later exact
 owners. Audit `.182` selected `.183`, direct bounded implementation of
 generated report-only raw-`ARLEN` burst-length capture over those
-multiple/mixed depth-3 queue-head scalar last-beat read-data groups. The next
-owner should add the two public support-accounted burst-length samples and
-widen only the local report-only last-beat coverage gate; runtime validation,
-multi-beat payload, write-family read-data, mixed auto-ID, group-local
-enqueue widening, packed outputs, alternate burst assembly, direct backend,
-verification-output generation, VHDL, and backend-language variants remain
-deferred. The active frontier advances to `.183`.
+multiple/mixed depth-3 queue-head scalar last-beat read-data groups.
+Implementation `.183` now ships that report-only raw-`ARLEN` burst-length
+behavior for the two-depth-3 and mixed depth-3/depth-2 queue-head scalar
+last-beat read-data samples. The new samples are support-accounted, strict
+check/semantic JSON matched, and HDL-verifiable; generated reports keep
+`generated_beat_count_validation` residue because runtime validation remains
+deferred. Runtime validation, multi-beat payload, write-family read-data,
+mixed auto-ID, group-local enqueue widening, packed outputs, alternate burst
+assembly, direct backend, verification-output generation, VHDL, and
+backend-language variants remain deferred. The active frontier advances to
+`.184`, the next feature-completeness selector.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.
