@@ -165,9 +165,17 @@ FSM
     my $a_ref = sub { FSM::AST::SignalRef->new('A') };
     my $b_ref = sub { FSM::AST::SignalRef->new('B') };
     my $bus1_ref = sub { FSM::AST::SignalRef->new('BUS1') };
+    my $bus2_ref = sub { FSM::AST::SignalRef->new('BUS2') };
     my $one = sub { FSM::AST::Literal->new('1') };
     my $zero = sub { FSM::AST::Literal->new('0') };
     my $not_b = sub { FSM::AST::UnaryOp->new('!', $b_ref->()) };
+    my %vector_signals = map {
+        $_ => FSM::CoreAST::Signal->new(name => $_, width => 8)
+    } qw(BUS1 BUS2);
+    my $bus1_core_ref = sub { FSM::CoreAST::SignalRef->new($vector_signals{BUS1}) };
+    my $bus2_core_ref = sub { FSM::CoreAST::SignalRef->new($vector_signals{BUS2}) };
+    my $bitnot_bus1 = sub { FSM::AST::UnaryOp->new('~', $bus1_core_ref->()) };
+    my $bitnot_bus2 = sub { FSM::AST::UnaryOp->new('~', $bus2_core_ref->()) };
 
     is(
         $support->ast_to_systemverilog(FSM::AST::BinaryOp->new('&', $a_ref->(), $one->())),
@@ -230,6 +238,83 @@ FSM
         $support->ast_to_systemverilog(FSM::AST::BinaryOp->new('&', $bus1_ref->(), FSM::AST::Literal->new("1'b1"))),
         "BUS1 & 1'b1",
         'AST support preserves vector-nonidentity BUS1 & 1 when width-safe simplification is not proven',
+    );
+    is(
+        $support->ast_to_systemverilog(FSM::AST::BinaryOp->new('&', $bus1_core_ref->(), FSM::AST::Literal->new("8'b11111111"))),
+        'BUS1',
+        'AST support simplifies vector identity BUS1 & 8-bit all-ones mask to BUS1',
+    );
+    is(
+        $support->ast_to_systemverilog(FSM::AST::BinaryOp->new('|', $bus1_core_ref->(), FSM::AST::Literal->new("8'b00000000"))),
+        'BUS1',
+        'AST support simplifies vector identity BUS1 | 8-bit zero mask to BUS1',
+    );
+    is(
+        $support->ast_to_systemverilog(FSM::AST::BinaryOp->new('&', $bus1_core_ref->(), FSM::AST::Literal->new("1'b0"))),
+        "8'b0",
+        'AST support simplifies vector annihilator BUS1 & 1-bit zero mask to an 8-bit zero constant',
+    );
+    is(
+        $support->ast_to_systemverilog(FSM::AST::BinaryOp->new('|', $bus1_core_ref->(), FSM::AST::Literal->new("8'b11111111"))),
+        "8'b11111111",
+        'AST support simplifies vector annihilator BUS1 | 8-bit all-ones mask to an 8-bit all-ones constant',
+    );
+    is(
+        $support->ast_to_systemverilog(FSM::AST::BinaryOp->new('^', $bus1_core_ref->(), FSM::AST::Literal->new("8'b00000000"))),
+        'BUS1',
+        'AST support simplifies vector XOR zero identity to BUS1',
+    );
+    is(
+        $support->ast_to_systemverilog(FSM::AST::BinaryOp->new('^', $bus1_core_ref->(), FSM::AST::Literal->new("8'b11111111"))),
+        '~(BUS1)',
+        'AST support simplifies vector XOR all-ones mask to bitwise complement',
+    );
+    is(
+        $support->ast_to_systemverilog(FSM::AST::BinaryOp->new('^', $bus1_core_ref->(), $bus1_core_ref->())),
+        "8'b0",
+        'AST support simplifies vector self-XOR to a same-width zero constant',
+    );
+    is(
+        $support->ast_to_systemverilog(FSM::AST::UnaryOp->new('~', FSM::AST::UnaryOp->new('~', $bus1_core_ref->()))),
+        'BUS1',
+        'AST support simplifies vector double bitwise negation before rendering',
+    );
+    is(
+        $support->ast_to_systemverilog(FSM::AST::BinaryOp->new('&', $bus1_core_ref->(), $bitnot_bus1->())),
+        "8'b0",
+        'AST support simplifies vector complement BUS1 & ~BUS1 to a same-width zero constant',
+    );
+    is(
+        $support->ast_to_systemverilog(FSM::AST::BinaryOp->new('|', $bus1_core_ref->(), $bitnot_bus1->())),
+        "8'b11111111",
+        'AST support simplifies vector complement BUS1 | ~BUS1 to a same-width all-ones constant',
+    );
+    is(
+        $support->ast_to_systemverilog(
+            FSM::AST::BinaryOp->new(
+                '|',
+                $bus1_core_ref->(),
+                FSM::AST::BinaryOp->new('&', $bus1_core_ref->(), $bus2_core_ref->()),
+            ),
+        ),
+        'BUS1',
+        'AST support simplifies vector absorption BUS1 | (BUS1 & BUS2) to BUS1',
+    );
+    is(
+        $support->ast_to_systemverilog(
+            FSM::AST::BinaryOp->new(
+                '|',
+                FSM::AST::BinaryOp->new('&', $bus1_core_ref->(), $bus2_core_ref->()),
+                FSM::AST::BinaryOp->new('&', $bus1_core_ref->(), $bitnot_bus2->()),
+            ),
+        ),
+        'BUS1',
+        'AST support simplifies vector consensus (BUS1 & BUS2) | (BUS1 & ~BUS2) to BUS1',
+    );
+    is(
+        $support->ast_to_systemverilog(FSM::AST::BinaryOp->new('&', $bus1_core_ref->(), FSM::AST::Literal->new("16'hffff"))),
+        "BUS1 & 16'hFFFF",
+        'AST support preserves vector identity masks that would change expression width',
     );
 
     my $cnt_signal = FSM::CoreAST::Signal->new(name => 'CNT', width => 3);

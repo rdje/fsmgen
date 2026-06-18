@@ -49,8 +49,13 @@ identity/annihilator terms, idempotence, complement pairs, double negation,
 absorption, shorter De Morgan forms, and common consensus patterns. For
 example, generated enables such as `watch_en & 1'b1` emit as `watch_en`, and
 `A | (A & B)` emits as `A`. The simplifier is AST-based, not a text rewrite;
-vector cases such as `BUS1 & 1'b1` are preserved unless the AST proves the
-rewrite is width-safe.
+vector and multi-bit bitwise expressions use the same width-safe rule family
+when signal widths and literal masks prove the rewrite preserves both value and
+expression width. For example, `BUS1 & 8'b11111111` emits as `BUS1`,
+`BUS1 | 8'b00000000` emits as `BUS1`, `BUS1 ^ BUS1` emits as `8'b0`, and
+`BUS1 | (BUS1 & BUS2)` emits as `BUS1` when both buses are known eight-bit
+signals. Width-changing masks are preserved: `BUS1 & 1'b1` is not a vector
+identity and still emits as `BUS1 & 1'b1`.
 
 ## Reading The Generated HDL
 

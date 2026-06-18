@@ -39,6 +39,7 @@ use feature qw(signatures);
 no warnings 'experimental::signatures';
 
 use List::Util qw(min);
+use Math::BigInt;
 use Scalar::Util qw(blessed);
 
 use FSM::AST::Node;
@@ -123,6 +124,9 @@ sub _simplify_logic_ast_once ($self, $ast) {
         my $constant_fold = $self->_simplify_binary_constant_fold($rebuilt);
         return $constant_fold if defined $constant_fold;
 
+        my $vector_identity = $self->_simplify_vector_bitwise_identity($rebuilt);
+        return $vector_identity if defined $vector_identity;
+
         my $identity = $self->_simplify_binary_identity($rebuilt);
         return $identity if defined $identity;
 
@@ -149,10 +153,56 @@ sub _simplify_logic_ast_once ($self, $ast) {
         return $self->_simplify_unary_not($rebuilt)
             if $self->_is_not_operator($operator);
 
+        return $self->_simplify_unary_bitwise_not($rebuilt)
+            if $self->_is_bitwise_not_operator($operator);
+
         return $rebuilt;
     }
 
     return $ast;
+}
+
+sub _simplify_unary_bitwise_not ($self, $ast) {
+    my $operand = $ast->operand;
+
+    my $literal_mask = $self->_literal_mask_info($operand);
+    if ($literal_mask) {
+        my $full_mask = Math::BigInt->bone->blsft($literal_mask->{width})->bsub(1);
+        my $result = $literal_mask->{value}->copy->bxor($full_mask);
+        return $self->_vector_constant_from_value($literal_mask->{width}, $result);
+    }
+
+    if ($self->_is_unary_ast($operand) && $self->_is_bitwise_not_operator(eval { $operand->operator } || '')) {
+        my $inner = $operand->operand;
+        return $inner if defined $self->_expression_width($inner);
+    }
+
+    my $demorgan = $self->_simplify_vector_demorgan_if_shorter($ast);
+    return $demorgan if defined $demorgan;
+
+    return $ast;
+}
+
+sub _simplify_vector_demorgan_if_shorter ($self, $ast) {
+    my $operand = $ast->operand;
+    return undef unless $self->_is_binary_ast($operand);
+
+    my $operator = $self->_canonical_logic_operator(eval { $operand->operator } || '');
+    return undef unless $operator eq '&' || $operator eq '|';
+    return undef unless $self->_known_same_expression_width($operand->left, $operand->right);
+
+    my $dual_operator = $operator eq '&' ? '|' : '&';
+    my $candidate = $self->_new_binary_like(
+        $operand,
+        $dual_operator,
+        $self->_new_unary_like($ast, '~', $operand->left),
+        $self->_new_unary_like($ast, '~', $operand->right),
+    );
+    $candidate = $self->_simplify_logic_ast_once($candidate);
+
+    my $candidate_text = $self->_ast_to_systemverilog_internal($candidate, undef);
+    my $original_text = $self->_ast_to_systemverilog_internal($ast, undef);
+    return length($candidate_text) < length($original_text) ? $candidate : undef;
 }
 
 sub _simplify_unary_not ($self, $ast) {
@@ -234,6 +284,9 @@ sub _simplify_binary_constant_fold ($self, $ast) {
     my $operator = $self->_canonical_logic_operator(eval { $ast->operator } || '');
     return undef unless $operator =~ /^(?:&|\||\^|&&|\|\|)$/;
 
+    my $vector_fold = $self->_simplify_vector_bitwise_constant_fold($ast);
+    return $vector_fold if defined $vector_fold;
+
     my $left_value = $self->_literal_boolean_value($ast->left);
     my $right_value = $self->_literal_boolean_value($ast->right);
     return undef unless defined $left_value && defined $right_value;
@@ -246,6 +299,76 @@ sub _simplify_binary_constant_fold ($self, $ast) {
     }
     if ($operator eq '^') {
         return $self->_boolean_constant((($left_value != 0) xor ($right_value != 0)) ? 1 : 0);
+    }
+
+    return undef;
+}
+
+sub _simplify_vector_bitwise_constant_fold ($self, $ast) {
+    my $operator = $self->_canonical_logic_operator(eval { $ast->operator } || '');
+    return undef unless $operator =~ /^(?:&|\||\^)$/;
+
+    my $left_mask = $self->_literal_mask_info($ast->left);
+    my $right_mask = $self->_literal_mask_info($ast->right);
+    return undef unless $left_mask && $right_mask;
+
+    my $width = $left_mask->{width} > $right_mask->{width}
+        ? $left_mask->{width}
+        : $right_mask->{width};
+    return undef unless defined $width && $width > 1;
+
+    my $modulus = Math::BigInt->bone->blsft($width);
+    my $mask = $modulus->copy->bsub(1);
+    my $left_value = $left_mask->{value}->copy->band($mask);
+    my $right_value = $right_mask->{value}->copy->band($mask);
+
+    my $result = $operator eq '&' ? $left_value->copy->band($right_value)
+        : $operator eq '|' ? $left_value->copy->bior($right_value)
+        : $left_value->copy->bxor($right_value);
+
+    return $self->_vector_constant_from_value($width, $result);
+}
+
+sub _simplify_vector_bitwise_identity ($self, $ast) {
+    my $operator = $self->_canonical_logic_operator(eval { $ast->operator } || '');
+    return undef unless $operator =~ /^(?:&|\||\^)$/;
+
+    my $left = $ast->left;
+    my $right = $ast->right;
+
+    for my $side (
+        [$left, $right],
+        [$right, $left],
+    ) {
+        my ($expr, $literal) = @$side;
+        my $expr_width = $self->_expression_width($expr);
+        my $mask = $self->_literal_mask_info($literal);
+        next unless defined $expr_width && $mask;
+
+        my $literal_width = $mask->{width};
+        my $result_width = $expr_width > $literal_width ? $expr_width : $literal_width;
+        next unless $result_width > 1;
+
+        if ($operator eq '&') {
+            return $expr
+                if $mask->{kind} eq 'ones' && $literal_width == $expr_width;
+            return $self->_vector_constant($result_width, 'zero')
+                if $mask->{kind} eq 'zero';
+        }
+
+        if ($operator eq '|') {
+            return $expr
+                if $mask->{kind} eq 'zero' && $literal_width <= $expr_width;
+            return $self->_vector_constant($result_width, 'ones')
+                if $mask->{kind} eq 'ones' && $literal_width >= $expr_width;
+        }
+
+        if ($operator eq '^') {
+            return $expr
+                if $mask->{kind} eq 'zero' && $literal_width <= $expr_width;
+            return $self->_new_unary_like($ast, '~', $expr)
+                if $mask->{kind} eq 'ones' && $literal_width == $expr_width;
+        }
     }
 
     return undef;
@@ -317,8 +440,13 @@ sub _simplify_binary_idempotence ($self, $ast) {
         return $ast->left;
     }
 
-    if ($operator eq '^' && $self->_node_is_booleanish($ast->left)) {
-        return $self->_boolean_constant(0);
+    if ($operator eq '^') {
+        return $self->_boolean_constant(0)
+            if $self->_node_is_booleanish($ast->left);
+
+        my $width = $self->_expression_width($ast->left);
+        return $self->_vector_constant($width, 'zero')
+            if defined $width && $width > 1;
     }
 
     return undef;
@@ -330,8 +458,13 @@ sub _simplify_binary_complement ($self, $ast) {
 
     my $left = $ast->left;
     my $right = $ast->right;
-    return undef unless $self->_node_is_booleanish($left) && $self->_node_is_booleanish($right);
     return undef unless $self->_is_negation_pair($left, $right);
+
+    unless ($self->_node_is_booleanish($left) && $self->_node_is_booleanish($right)) {
+        my $width = $self->_known_same_expression_width($left, $right);
+        return undef unless defined $width && $width > 1;
+        return $self->_vector_constant($width, ($operator eq '|' || $operator eq '||') ? 'ones' : 'zero');
+    }
 
     return $self->_boolean_constant(($operator eq '|' || $operator eq '||') ? 1 : 0);
 }
@@ -341,7 +474,7 @@ sub _simplify_binary_absorption ($self, $ast) {
     return undef unless $outer_operator eq '&' || $outer_operator eq '|';
 
     my $inner_operator = $outer_operator eq '&' ? '|' : '&';
-    my $outer_bool = $self->_node_is_booleanish($ast);
+    my $outer_width = $self->_expression_width($ast);
 
     for my $side (
         [$ast->left, $ast->right],
@@ -350,10 +483,13 @@ sub _simplify_binary_absorption ($self, $ast) {
         my ($plain, $compound) = @$side;
         next unless $self->_is_binary_ast($compound);
         next unless $self->_boolean_operator_family(eval { $compound->operator } || '') eq $inner_operator;
-        next unless $outer_bool
-            && $self->_node_is_booleanish($plain)
-            && $self->_node_is_booleanish($compound->left)
-            && $self->_node_is_booleanish($compound->right);
+        my $plain_width = $self->_expression_width($plain);
+        my $compound_width = $self->_expression_width($compound);
+        next unless defined $outer_width
+            && defined $plain_width
+            && defined $compound_width
+            && $outer_width == $plain_width
+            && $plain_width == $compound_width;
         return $plain
             if $self->_logic_ast_key($plain) eq $self->_logic_ast_key($compound->left)
             || $self->_logic_ast_key($plain) eq $self->_logic_ast_key($compound->right);
@@ -365,12 +501,17 @@ sub _simplify_binary_absorption ($self, $ast) {
 sub _simplify_binary_consensus ($self, $ast) {
     my $outer_operator = $self->_boolean_operator_family(eval { $ast->operator } || '');
     return undef unless $outer_operator eq '&' || $outer_operator eq '|';
-    return undef unless $self->_node_is_booleanish($ast);
+    my $outer_width = $self->_expression_width($ast);
+    return undef unless defined $outer_width;
 
     my $inner_operator = $outer_operator eq '|' ? '&' : '|';
     return undef unless $self->_is_binary_ast($ast->left) && $self->_is_binary_ast($ast->right);
     return undef unless $self->_boolean_operator_family(eval { $ast->left->operator } || '') eq $inner_operator;
     return undef unless $self->_boolean_operator_family(eval { $ast->right->operator } || '') eq $inner_operator;
+    return undef unless defined($self->_expression_width($ast->left))
+        && defined($self->_expression_width($ast->right))
+        && $self->_expression_width($ast->left) == $outer_width
+        && $self->_expression_width($ast->right) == $outer_width;
 
     my @left_terms = ($ast->left->left, $ast->left->right);
     my @right_terms = ($ast->right->left, $ast->right->right);
@@ -383,9 +524,7 @@ sub _simplify_binary_consensus ($self, $ast) {
 
             my $other_left = $left_terms[1 - $left_index];
             my $other_right = $right_terms[1 - $right_index];
-            next unless $self->_node_is_booleanish($common_left)
-                && $self->_node_is_booleanish($other_left)
-                && $self->_node_is_booleanish($other_right);
+            next unless $self->_known_same_expression_width($common_left, $other_left, $other_right);
             return $common_left if $self->_is_negation_pair($other_left, $other_right);
         }
     }
@@ -437,8 +576,144 @@ sub _literal_width ($self, $literal) {
     return undef;
 }
 
+sub _literal_mask_info ($self, $literal) {
+    return undef unless $self->_is_literal_operand($literal);
+
+    my $text = eval { FSM::Package::IntegerLiteralSupport->systemverilog_literal_from_literal_like($literal) };
+    $text = eval { $literal->to_systemverilog() } unless defined($text) && length($text);
+    return undef unless defined($text) && length($text);
+
+    my $parts = FSM::Package::IntegerLiteralSupport->literal_parts_from_scalar($text);
+    return undef unless ref($parts) eq 'HASH';
+
+    my $width = $parts->{width};
+    return undef unless defined($width) && !ref($width) && $width =~ /\A\d+\z/ && $width > 0;
+
+    my $value = $parts->{value};
+    return undef unless blessed($value) && $value->isa('Math::BigInt');
+
+    my $mask = Math::BigInt->bone->blsft($width)->bsub(1);
+    my $encoded = $value->copy->band($mask);
+    my $kind = $encoded->is_zero ? 'zero'
+        : $encoded->bcmp($mask) == 0 ? 'ones'
+        : 'mixed';
+
+    return {
+        width => 0 + $width,
+        value => $encoded,
+        kind => $kind,
+    };
+}
+
+sub _expression_width ($self, $ast) {
+    return undef unless $ast && blessed($ast);
+
+    return 1 if $ast->isa('FSM::AST::LogicalConstant');
+
+    if ($self->_is_literal_operand($ast)) {
+        return $self->_literal_width($ast);
+    }
+
+    if ($ast->isa('FSM::CoreAST::SignalRef')) {
+        my $slice_width = $self->_core_signal_ref_slice_width($ast);
+        return $slice_width if defined $slice_width;
+
+        my $signal = eval { $ast->signal };
+        my $width = eval { $signal && $signal->can('width') ? $signal->width : undef };
+        return $width if defined($width) && !ref($width) && $width =~ /\A\d+\z/;
+    }
+
+    if ($ast->isa('FSM::AST::SignalRef') || $ast->isa('FSM::CoreAST::SignalRef')) {
+        my $name = $self->{flattened_dt}->{enable_graph_capture_support}->extract_signal_name_from_ast($ast);
+        my $width = $self->_signal_width($name);
+        return $width if defined $width;
+    }
+
+    return 1 if $ast->isa('FSM::AST::IndexedRef') || $ast->isa('FSM::CoreAST::IndexedRef');
+    return 1 if $ast->isa('FSM::HDL::IntermediateSignalRef');
+
+    if ($ast->isa('FSM::CoreAST::AggregateRef') || $ast->isa('FSM::CoreAST::ParameterRef')) {
+        my $width = eval { $ast->width };
+        return $width if defined($width) && !ref($width) && $width =~ /\A\d+\z/;
+    }
+
+    if ($self->_is_unary_ast($ast)) {
+        my $operator = eval { $ast->operator } || '';
+        return 1 if $self->_is_not_operator($operator);
+        return $self->_expression_width($ast->operand)
+            if $self->_is_bitwise_not_operator($operator);
+        return undef;
+    }
+
+    if ($self->_is_binary_ast($ast)) {
+        my $operator = $self->_canonical_logic_operator(eval { $ast->operator } || '');
+        return 1 if $operator =~ /^(?:==|!=|<|>|<=|>=|&&|\|\|)$/;
+
+        if ($operator =~ /^(?:&|\||\^)$/) {
+            my $left_width = $self->_expression_width($ast->left);
+            my $right_width = $self->_expression_width($ast->right);
+            return undef unless defined $left_width && defined $right_width;
+            return $left_width > $right_width ? $left_width : $right_width;
+        }
+    }
+
+    return undef;
+}
+
+sub _known_same_expression_width ($self, @asts) {
+    return undef unless @asts;
+
+    my $width;
+    for my $ast (@asts) {
+        my $ast_width = $self->_expression_width($ast);
+        return undef unless defined $ast_width;
+        $width = $ast_width unless defined $width;
+        return undef unless $ast_width == $width;
+    }
+
+    return $width;
+}
+
+sub _signal_width ($self, $name) {
+    return undef unless defined($name) && length($name);
+
+    my $ctx = $self->{flattened_dt};
+    if ($ctx->{fsm_module} && $ctx->{fsm_module}->signals && $ctx->{fsm_module}->signals->{$name}) {
+        my $signal = $ctx->{fsm_module}->signals->{$name};
+        my $width = eval { $signal->can('width') ? $signal->width : undef };
+        return $width if defined($width) && !ref($width) && $width =~ /\A\d+\z/;
+        return 1 unless defined $width;
+    }
+
+    return 1 if $ctx->{enable_graph_signal_support}->is_intermediate_signal($name);
+    return 1 if $name =~ /_(?:en|wen)$/;
+
+    return undef;
+}
+
 sub _boolean_constant ($self, $value) {
     return FSM::AST::LogicalConstant->new($value ? 1 : 0);
+}
+
+sub _vector_constant ($self, $width, $kind) {
+    return undef unless defined($width) && !ref($width) && $width =~ /\A\d+\z/ && $width > 0;
+
+    my $digits = $kind eq 'ones'
+        ? ('1' x $width)
+        : ('0' x $width);
+    return FSM::CoreAST::Literal->new($digits, width => $width, radix => 'binary');
+}
+
+sub _vector_constant_from_value ($self, $width, $value) {
+    return undef unless defined($width) && !ref($width) && $width =~ /\A\d+\z/ && $width > 0;
+    return undef unless blessed($value) && $value->isa('Math::BigInt');
+
+    my $bits = $value->copy->as_bin;
+    $bits =~ s/\A0b//;
+    $bits = '0' if $bits eq '';
+    $bits = substr($bits, -$width) if length($bits) > $width;
+    $bits = ('0' x ($width - length($bits))) . $bits if length($bits) < $width;
+    return FSM::CoreAST::Literal->new($bits, width => $width, radix => 'binary');
 }
 
 sub _node_is_booleanish ($self, $ast) {
@@ -465,10 +740,20 @@ sub _is_negation_pair ($self, $left, $right) {
         && $self->_logic_ast_key($left->operand) eq $self->_logic_ast_key($right)
         && $self->_node_is_booleanish($right);
 
+    return 1 if $self->_is_unary_ast($left)
+        && $self->_is_bitwise_not_operator(eval { $left->operator } || '')
+        && $self->_logic_ast_key($left->operand) eq $self->_logic_ast_key($right)
+        && defined $self->_known_same_expression_width($left->operand, $right);
+
     return 1 if $self->_is_unary_ast($right)
         && $self->_is_not_operator(eval { $right->operator } || '')
         && $self->_logic_ast_key($right->operand) eq $self->_logic_ast_key($left)
         && $self->_node_is_booleanish($left);
+
+    return 1 if $self->_is_unary_ast($right)
+        && $self->_is_bitwise_not_operator(eval { $right->operator } || '')
+        && $self->_logic_ast_key($right->operand) eq $self->_logic_ast_key($left)
+        && defined $self->_known_same_expression_width($right->operand, $left);
 
     return 0;
 }
@@ -491,6 +776,10 @@ sub _boolean_operator_family ($self, $operator) {
 
 sub _is_not_operator ($self, $operator) {
     return $operator eq '!' || $operator eq 'not';
+}
+
+sub _is_bitwise_not_operator ($self, $operator) {
+    return $operator eq '~';
 }
 
 sub _is_binary_ast ($self, $ast) {

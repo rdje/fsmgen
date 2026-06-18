@@ -10,6 +10,7 @@ use FindBin;
 
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
+use FSM::CoreAST;
 use FSM::HDL::FlattenedDT;
 use FSM::Pipeline::SourceFrontend;
 
@@ -100,6 +101,31 @@ FSM
         $rhs_capture_value,
         qr/^(?:1|1'b1)$/,
         'capture support renders assignment RHS values into stable capture metadata',
+    );
+
+    my $bus_signal = FSM::CoreAST::Signal->new(name => 'BUS', width => 8);
+    my $bus_ref = sub { FSM::CoreAST::SignalRef->new($bus_signal) };
+    is(
+        $support->extract_rhs_capture_value(
+            FSM::CoreAST::BinaryOp->new(
+                '&',
+                $bus_ref->(),
+                FSM::CoreAST::Literal->new('11111111', width => 8, radix => 'binary'),
+            ),
+        ),
+        'BUS',
+        'capture support renders captured vector RHS values through the shared AST simplifier',
+    );
+    is(
+        $support->extract_rhs_capture_value(
+            FSM::CoreAST::BinaryOp->new(
+                '&',
+                $bus_ref->(),
+                FSM::CoreAST::Literal->new('1', width => 1, radix => 'binary'),
+            ),
+        ),
+        "BUS & 1'b1",
+        'capture support preserves captured vector RHS masks when simplification would change width semantics',
     );
 
     my $capture_metadata = $support->extract_assignment_capture_metadata($assignment);

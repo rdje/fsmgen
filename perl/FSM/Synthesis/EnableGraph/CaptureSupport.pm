@@ -849,6 +849,12 @@ assignment metadata.
 sub extract_rhs_capture_value ($self, $expr) {
     return 'unknown_expr' unless $expr && blessed($expr);
 
+    my $ast_support = $self->{flattened_dt}->{enable_graph_ast_support};
+    if (ref($ast_support) && $ast_support->can('ast_to_systemverilog')) {
+        my $sv = eval { $ast_support->ast_to_systemverilog($expr) };
+        return $sv if defined $sv && $sv ne '';
+    }
+
     if ($expr->can('to_systemverilog')) {
         my $sv = eval { $expr->to_systemverilog() };
         return $sv if defined $sv && $sv ne '';

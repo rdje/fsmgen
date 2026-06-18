@@ -30,9 +30,12 @@ in SystemVerilog or VHDL output.
 - Generated RHS expressions run through a shared deterministic simplifier that
   applies every width-safe logic equivalence implemented by the pass before HDL
   text emission.
-- The first committed pass covers constant folding, identity/annihilator,
+- The committed passes cover constant folding, identity/annihilator,
   idempotence, complement, double-negation, De Morgan, absorption, and common
   consensus-style simplifications where the AST proves the rewrite safe.
+- Vector/multi-bit bitwise RHS expressions apply the same equivalence families
+  when operand widths and literal masks prove the rewrite preserves both value
+  and expression width.
 - The simplification is shared by generated SystemVerilog and VHDL RHS
   emission surfaces covered by the focused tests.
 - Explicit expression output paths preserve semantics; tests prove simplified
@@ -47,7 +50,7 @@ in SystemVerilog or VHDL output.
 - ID: `RHS-LOGIC-SIMPLIFICATION-FRONTIER`
   Status: `done`
   Goal: `Add a generated-RHS logic simplification/minimization frontier.`
-  Children: `RHS-LOGIC-SIMPLIFICATION-FRONTIER.1`
+  Children: `RHS-LOGIC-SIMPLIFICATION-FRONTIER.1`, `RHS-LOGIC-SIMPLIFICATION-FRONTIER.2`
 
 - ID: `RHS-LOGIC-SIMPLIFICATION-FRONTIER.1`
   Status: `done`
@@ -56,11 +59,18 @@ in SystemVerilog or VHDL output.
   Verification: `passed`
   Commit: `RHS-LOGIC-SIMPLIFICATION-FRONTIER.1: minimize generated RHS logic`
 
+- ID: `RHS-LOGIC-SIMPLIFICATION-FRONTIER.2`
+  Status: `done`
+  Goal: `Extend generated RHS simplification to width-safe vector and multi-bit bitwise logic equivalences.`
+  Acceptance: `Multi-bit generated RHS bitwise expressions simplify identity, annihilator, idempotence, complement, double-negation, absorption, and consensus cases when widths/literal masks prove safety; unsafe width-changing cases remain preserved; focused SV/VHDL/docs gates pass.`
+  Verification: `passed`
+  Commit: `RHS-LOGIC-SIMPLIFICATION-FRONTIER.2: simplify vector RHS logic`
+
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `RHS-LOGIC-SIMPLIFICATION-FRONTIER.1` | `done` | First shared AST-level simplification pass shipped; no remaining frontier in this one-leaf tree. |
+| 1 | `RHS-LOGIC-SIMPLIFICATION-FRONTIER.2` | `done` | Width-safe vector/multi-bit generated RHS bitwise simplification shipped; no remaining frontier in this tree. |
 
 ## Decisions
 
@@ -72,6 +82,13 @@ in SystemVerilog or VHDL output.
 - `2026-06-18`: Broadened `.1` after user clarification: the pass must pursue
   minimal generated RHS expressions by applying all width-safe logic
   equivalences implemented by the simplifier, not just identity constants.
+- `2026-06-18`: Selected `.2` for width-aware vector/multi-bit bitwise logic
+  simplification after confirming `BUS1 & 1'b1` must remain unsimplified while
+  same-width all-one/all-zero mask cases should simplify.
+- `2026-06-18`: Completed `.2` with width-proven vector/multi-bit bitwise
+  identity, annihilator, idempotence, complement, double-negation, absorption,
+  and consensus simplification, plus captured RHS metadata routing through the
+  same AST simplifier.
 
 ## Open Questions
 
@@ -86,12 +103,14 @@ in SystemVerilog or VHDL output.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-06-18` | `.1` | `env -u PERL5LIB perl -Iperl -c perl/FSM/Synthesis/EnableGraph/ASTSupport.pm`; `env -u PERL5LIB perl -Iperl -c perl/FSM/IR/StructuralRTLIRBuilder.pm`; `env -u PERL5LIB prove -Iperl t/208-enable-graph-ast-support.t t/206-enable-graph-enable-support.t t/1333-direct-structural-rtl-ir-projection.t t/163-forward-structural-rtl-ir-surface.t t/624-hdl-generator-stateful-direct-structural-rtl-ir-alias-boundary-audit.t`; `env -u PERL5LIB prove -Iperl t/341-normalized-semantic-structural-rtl-ir-contract.t t/334-normalized-semantic-forward-ir-contract.t t/330-normalized-semantic-payload-contract.t t/311-normalized-semantic-report-contract.t`; `env -u PERL5LIB prove -Iperl t/297-capability-manifest.t t/498-structural-rtl-ir-accessor-defensive-copy-boundary-audit.t t/1420-vhdl-direct-backend-scaffold.t`; `knowledge-map/scripts/check_knowledge_map.sh`; `mdbook build docs/book`; `env -u PERL5LIB prove -Iperl t/1414-docs-relative-paths-audit.t`; `scripts/check_memory_architecture.sh`; `git diff --check`; `./bin/ci-regression quick` | passed |
+| `2026-06-18` | `.2` | `env -u PERL5LIB perl -Iperl -c perl/FSM/Synthesis/EnableGraph/ASTSupport.pm`; `env -u PERL5LIB perl -Iperl -c perl/FSM/Synthesis/EnableGraph/CaptureSupport.pm`; `env -u PERL5LIB prove -Iperl t/208-enable-graph-ast-support.t t/207-enable-graph-capture-support.t`; `env -u PERL5LIB prove -Iperl t/206-enable-graph-enable-support.t t/1333-direct-structural-rtl-ir-projection.t t/163-forward-structural-rtl-ir-surface.t t/624-hdl-generator-stateful-direct-structural-rtl-ir-alias-boundary-audit.t`; `env -u PERL5LIB prove -Iperl t/1401-isf-bit-ops.t t/1402-isf-bit-test.t`; `env -u PERL5LIB prove -Iperl t/1420-vhdl-direct-backend-scaffold.t`; `knowledge-map/scripts/check_knowledge_map.sh`; `mdbook build docs/book`; `env -u PERL5LIB prove -Iperl t/1414-docs-relative-paths-audit.t`; `scripts/check_memory_architecture.sh`; `git diff --check`; `./bin/ci-regression quick` | passed |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `.1` | `RHS-LOGIC-SIMPLIFICATION-FRONTIER.1: minimize generated RHS logic` | First shared AST-level generated RHS simplification pass. |
+| `.2` | `RHS-LOGIC-SIMPLIFICATION-FRONTIER.2: simplify vector RHS logic` | Width-safe vector/multi-bit bitwise simplification and capture RHS metadata routing. |
 
 ## Changelog
 
@@ -102,3 +121,10 @@ in SystemVerilog or VHDL output.
 - `2026-06-18`: Completed `.1`: generated RHS ASTs now simplify before HDL
   rendering, direct StructuralRTLIR assignment records store the simplified
   RHS AST, and focused SV/VHDL/docs/knowledge/memory gates pass.
+- `2026-06-18`: Activated `.2` for width-safe vector/multi-bit bitwise RHS
+  simplification.
+- `2026-06-18`: Completed `.2`: vector/multi-bit generated RHS bitwise
+  expressions now simplify width-proven identities and related equivalences,
+  unsafe width-changing masks remain preserved, captured RHS metadata uses the
+  shared simplifier, and focused SV/VHDL/docs/knowledge/memory/quick-regression
+  gates pass.
