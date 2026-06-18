@@ -6021,6 +6021,39 @@ auto-ID, group-local enqueue widening, packed outputs, direct backend,
 verification-output generation, VHDL, and backend-language variant work remain
 separately owned.
 
+Multiple/mixed depth-3 queue-head behavior:
+[AXI_IAL2_MANAGER_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_RESPONSE_DEMUX_BEHAVIOR](../../AXI_IAL2_MANAGER_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_RESPONSE_DEMUX_BEHAVIOR.md)
+records `.174`, which ships generated multiple or mixed depth-3 concrete
+same-ID queue-head response-demux for response-demux-only read single-beat,
+read burst-last, and write families. FSMGen now accepts duplicate concrete-ID
+queue-head groups whose computed depth is `2` or `3` when at least one group
+has depth `3`, and keeps the existing family report boundaries:
+`generated_read_single_beat_queue_head_demux`,
+`generated_read_burst_last_queue_head_demux`, and
+`generated_write_bid_queue_head_demux`.
+
+The six public samples cover read single-beat two-depth-3 groups, read
+single-beat mixed depth-3/depth-2 groups, read burst-last two-depth-3 groups,
+read burst-last mixed depth-3/depth-2 groups, write two-depth-3 groups, and
+write mixed depth-3/depth-2 groups. The two-depth-3 samples generate 18 queue
+storage signals and 108 queue update rules; the mixed samples generate 13
+queue storage signals and 66 queue update rules. Read single-beat and write
+samples generate 28 or 25 queue assertions depending on two-depth-3 versus
+mixed shape; read burst-last samples generate 30 or 27 queue assertions
+because they also guard non-last read response beats. Five-transaction mixed
+samples generate 5 response-demux rules and 11 response-demux assertions;
+six-transaction two-depth-3 samples generate 6 response-demux rules and 16
+response-demux assertions.
+
+Each sample is support-accounted through check JSON and normalized semantic
+JSON. The generated response-demux residue removes
+`generated_same_id_queue_head_demux` for the covered family, while write-only
+samples still preserve `read_response_demux` residue. Read-data over
+multiple/mixed depth-3 groups, burst-length, runtime-validation, multi-beat
+payload, mixed auto-ID, group-local enqueue widening, packed outputs, direct
+backend, verification-output generation, VHDL, and backend-language variant
+work remain separately owned.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same

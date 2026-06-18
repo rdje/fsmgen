@@ -1,6 +1,10 @@
 #!/usr/bin/env perl
 use strict;
 use warnings;
+BEGIN {
+    require Data::Dumper;
+    $Data::Dumper::Maxdepth = 4;
+}
 use Test::More;
 use File::Spec;
 use File::Temp qw(tempdir);
@@ -588,6 +592,133 @@ subtest 'same-ID queue-head response-demux generates read single-beat depth-3 qu
     );
 };
 
+subtest 'same-ID queue-head response-demux generates read single-beat multiple depth-3 queue state and completion demux' => sub {
+    my $result = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_same_id_read_single_beat_multi_depth3_queue_head_response_demux());
+    my $isf = $result->{generated_ial1}{text};
+
+    like($isf, qr/\(output axi0_r5_complete\)/, 'read single-beat multi-depth-3 queue-head demux exposes r5 completion as a generated output');
+    unlike($isf, qr/\(input axi0_r5_complete\)/, 'r5 completion is no longer an authored input');
+    unlike($isf, qr/\baxi0_rlast\b/, 'read single-beat multi-depth-3 queue-head demux does not generate or consume RLAST');
+    like($isf, qr/\(var axi0_read_id5_same_id_issue_order_slot2_r5_q \(width 1\)\)/, 'read single-beat multi-depth-3 queue-head demux declares ID 5 slot2 r5 state');
+    like($isf, qr/\(rule axi0_read_id5_same_id_issue_order_r3_r4_enqueue_r5\b/, 'read single-beat multi-depth-3 queue-head demux emits ID 5 fill-third-slot transition');
+    like($isf, qr/\(rule axi0_read_id5_same_id_issue_order_r3_r4_r5_dequeue_r3\b/, 'read single-beat multi-depth-3 queue-head demux emits ID 5 full-queue dequeue transition');
+    like($isf, qr/\(rule axi0_r5_response_demux \(& axi0_read_complete \(== axi0_rid 4'd5\) axi0_read_id5_same_id_issue_order_slot0_r5_q\)/, 'read single-beat multi-depth-3 queue-head demux emits r5 response-demux rule without RLAST');
+
+    assert_same_id_read_single_beat_queue_head_response_demux_report(
+        $result->{report}{response_demux},
+        'generator read single-beat multi-depth-3 report',
+        queues => [
+            {
+                concrete_id          => 3,
+                transactions         => [qw(r0 r1 r2)],
+                depth                => 3,
+                dequeue_event_source => 'queue_head_response_demux',
+            },
+            {
+                concrete_id          => 5,
+                transactions         => [qw(r3 r4 r5)],
+                depth                => 3,
+                dequeue_event_source => 'queue_head_response_demux',
+            },
+        ],
+        completion_signals => [qw(axi0_r0_complete axi0_r1_complete axi0_r2_complete axi0_r3_complete axi0_r4_complete axi0_r5_complete)],
+        generated_rules => [qw(axi0_r0_response_demux axi0_r1_response_demux axi0_r2_response_demux axi0_r3_response_demux axi0_r4_response_demux axi0_r5_response_demux)],
+        generated_assertions => [qw(
+            axi0_read_response_demux_active_match
+            axi0_r0_r1_read_response_demux_unique_match
+            axi0_r0_r2_read_response_demux_unique_match
+            axi0_r0_r3_read_response_demux_unique_match
+            axi0_r0_r4_read_response_demux_unique_match
+            axi0_r0_r5_read_response_demux_unique_match
+            axi0_r1_r2_read_response_demux_unique_match
+            axi0_r1_r3_read_response_demux_unique_match
+            axi0_r1_r4_read_response_demux_unique_match
+            axi0_r1_r5_read_response_demux_unique_match
+            axi0_r2_r3_read_response_demux_unique_match
+            axi0_r2_r4_read_response_demux_unique_match
+            axi0_r2_r5_read_response_demux_unique_match
+            axi0_r3_r4_read_response_demux_unique_match
+            axi0_r3_r5_read_response_demux_unique_match
+            axi0_r4_r5_read_response_demux_unique_match
+        )],
+    );
+    my $read_policy = $result->{report}{same_id_ordering}{concrete_id_reuse_policy}{read};
+    is_deeply([map { $_->{depth} } @{$read_policy->{generated_queues} || []}], [3, 3], 'read single-beat multi-depth-3 policy reports both generated depth-3 queues');
+    assert_same_id_generated_queue_counts(
+        $read_policy,
+        'read single-beat multi-depth-3 policy',
+        slot_storage     => 18,
+        update_rules     => 108,
+        queue_assertions => 28,
+    );
+    is_deeply(
+        $result->{report}{id_response_rule_engine}{residue},
+        [qw(auto_id_allocation id_release)],
+        'generated read single-beat multi-depth-3 queue-head behavior removes same-ID and response-demux residue from ID/response report',
+    );
+};
+
+subtest 'same-ID queue-head response-demux generates read single-beat mixed depth-3/depth-2 queue state and completion demux' => sub {
+    my $result = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_same_id_read_single_beat_mixed_depth3_depth2_queue_head_response_demux());
+    my $isf = $result->{generated_ial1}{text};
+
+    like($isf, qr/\(output axi0_r4_complete\)/, 'read single-beat mixed-depth queue-head demux exposes r4 completion as a generated output');
+    unlike($isf, qr/\(input axi0_r4_complete\)/, 'r4 completion is no longer an authored input');
+    unlike($isf, qr/\baxi0_rlast\b/, 'read single-beat mixed-depth queue-head demux does not generate or consume RLAST');
+    like($isf, qr/\(var axi0_read_id3_same_id_issue_order_slot2_r2_q \(width 1\)\)/, 'read single-beat mixed-depth queue-head demux keeps ID 3 depth-3 slot2 state');
+    like($isf, qr/\(var axi0_read_id5_same_id_issue_order_slot1_r4_q \(width 1\)\)/, 'read single-beat mixed-depth queue-head demux declares ID 5 depth-2 slot1 state');
+    like($isf, qr/\(rule axi0_read_id5_same_id_issue_order_r3_dequeue_enqueue_r4\b/, 'read single-beat mixed-depth queue-head demux emits ID 5 depth-2 same-cycle dequeue/enqueue transition');
+    like($isf, qr/\(rule axi0_r4_response_demux \(& axi0_read_complete \(== axi0_rid 4'd5\) axi0_read_id5_same_id_issue_order_slot0_r4_q\)/, 'read single-beat mixed-depth queue-head demux emits r4 response-demux rule without RLAST');
+
+    assert_same_id_read_single_beat_queue_head_response_demux_report(
+        $result->{report}{response_demux},
+        'generator read single-beat mixed-depth report',
+        queues => [
+            {
+                concrete_id          => 3,
+                transactions         => [qw(r0 r1 r2)],
+                depth                => 3,
+                dequeue_event_source => 'queue_head_response_demux',
+            },
+            {
+                concrete_id          => 5,
+                transactions         => [qw(r3 r4)],
+                depth                => 2,
+                dequeue_event_source => 'queue_head_response_demux',
+            },
+        ],
+        completion_signals => [qw(axi0_r0_complete axi0_r1_complete axi0_r2_complete axi0_r3_complete axi0_r4_complete)],
+        generated_rules => [qw(axi0_r0_response_demux axi0_r1_response_demux axi0_r2_response_demux axi0_r3_response_demux axi0_r4_response_demux)],
+        generated_assertions => [qw(
+            axi0_read_response_demux_active_match
+            axi0_r0_r1_read_response_demux_unique_match
+            axi0_r0_r2_read_response_demux_unique_match
+            axi0_r0_r3_read_response_demux_unique_match
+            axi0_r0_r4_read_response_demux_unique_match
+            axi0_r1_r2_read_response_demux_unique_match
+            axi0_r1_r3_read_response_demux_unique_match
+            axi0_r1_r4_read_response_demux_unique_match
+            axi0_r2_r3_read_response_demux_unique_match
+            axi0_r2_r4_read_response_demux_unique_match
+            axi0_r3_r4_read_response_demux_unique_match
+        )],
+    );
+    my $read_policy = $result->{report}{same_id_ordering}{concrete_id_reuse_policy}{read};
+    is_deeply([map { $_->{depth} } @{$read_policy->{generated_queues} || []}], [3, 2], 'read single-beat mixed-depth policy reports generated depth-3 then depth-2 queues');
+    assert_same_id_generated_queue_counts(
+        $read_policy,
+        'read single-beat mixed-depth policy',
+        slot_storage     => 13,
+        update_rules     => 66,
+        queue_assertions => 25,
+    );
+    is_deeply(
+        $result->{report}{id_response_rule_engine}{residue},
+        [qw(auto_id_allocation id_release)],
+        'generated read single-beat mixed-depth queue-head behavior removes same-ID and response-demux residue from ID/response report',
+    );
+};
+
 subtest 'same-ID queue-head response-demux generates read burst-last depth-3 queue state and completion demux' => sub {
     my $result = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_same_id_read_burst_last_depth3_queue_head_response_demux());
     my $isf = $result->{generated_ial1}{text};
@@ -638,6 +769,133 @@ subtest 'same-ID queue-head response-demux generates read burst-last depth-3 que
         $result->{report}{id_response_rule_engine}{residue},
         [qw(auto_id_allocation id_release)],
         'generated read burst-last depth-3 queue-head behavior removes same-ID and response-demux residue from ID/response report',
+    );
+};
+
+subtest 'same-ID queue-head response-demux generates read burst-last multiple depth-3 queue state and completion demux' => sub {
+    my $result = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_same_id_read_burst_last_multi_depth3_queue_head_response_demux());
+    my $isf = $result->{generated_ial1}{text};
+
+    like($isf, qr/\(output axi0_r5_complete\)/, 'read burst-last multi-depth-3 queue-head demux exposes r5 completion as a generated output');
+    unlike($isf, qr/\(input axi0_r5_complete\)/, 'read burst-last multi-depth-3 r5 completion is no longer an authored input');
+    like($isf, qr/\(input axi0_rlast\)/, 'read burst-last multi-depth-3 queue-head demux consumes RLAST');
+    like($isf, qr/\(var axi0_read_id5_same_id_issue_order_slot2_r5_q \(width 1\)\)/, 'read burst-last multi-depth-3 queue-head demux declares ID 5 slot2 r5 state');
+    like($isf, qr/\(rule axi0_read_id5_same_id_issue_order_r3_r4_enqueue_r5\b/, 'read burst-last multi-depth-3 queue-head demux emits ID 5 fill-third-slot transition');
+    like($isf, qr/\(rule axi0_read_id5_same_id_issue_order_r3_r4_r5_dequeue_r3\b/, 'read burst-last multi-depth-3 queue-head demux emits ID 5 full-queue dequeue transition');
+    like($isf, qr/\(rule axi0_r5_response_demux \(& axi0_read_complete \(== axi0_rid 4'd5\) axi0_rlast axi0_read_id5_same_id_issue_order_slot0_r5_q\)/, 'read burst-last multi-depth-3 queue-head demux emits RLAST-gated r5 response-demux rule');
+
+    assert_same_id_queue_head_response_demux_report(
+        $result->{report}{response_demux},
+        'generator read burst-last multi-depth-3 report',
+        queues => [
+            {
+                concrete_id          => 3,
+                transactions         => [qw(r0 r1 r2)],
+                depth                => 3,
+                dequeue_event_source => 'queue_head_response_demux',
+            },
+            {
+                concrete_id          => 5,
+                transactions         => [qw(r3 r4 r5)],
+                depth                => 3,
+                dequeue_event_source => 'queue_head_response_demux',
+            },
+        ],
+        completion_signals => [qw(axi0_r0_complete axi0_r1_complete axi0_r2_complete axi0_r3_complete axi0_r4_complete axi0_r5_complete)],
+        generated_rules => [qw(axi0_r0_response_demux axi0_r1_response_demux axi0_r2_response_demux axi0_r3_response_demux axi0_r4_response_demux axi0_r5_response_demux)],
+        generated_assertions => [qw(
+            axi0_read_response_demux_active_match
+            axi0_r0_r1_read_response_demux_unique_match
+            axi0_r0_r2_read_response_demux_unique_match
+            axi0_r0_r3_read_response_demux_unique_match
+            axi0_r0_r4_read_response_demux_unique_match
+            axi0_r0_r5_read_response_demux_unique_match
+            axi0_r1_r2_read_response_demux_unique_match
+            axi0_r1_r3_read_response_demux_unique_match
+            axi0_r1_r4_read_response_demux_unique_match
+            axi0_r1_r5_read_response_demux_unique_match
+            axi0_r2_r3_read_response_demux_unique_match
+            axi0_r2_r4_read_response_demux_unique_match
+            axi0_r2_r5_read_response_demux_unique_match
+            axi0_r3_r4_read_response_demux_unique_match
+            axi0_r3_r5_read_response_demux_unique_match
+            axi0_r4_r5_read_response_demux_unique_match
+        )],
+    );
+    my $read_policy = $result->{report}{same_id_ordering}{concrete_id_reuse_policy}{read};
+    is_deeply([map { $_->{depth} } @{$read_policy->{generated_queues} || []}], [3, 3], 'read burst-last multi-depth-3 policy reports both generated depth-3 queues');
+    assert_same_id_generated_queue_counts(
+        $read_policy,
+        'read burst-last multi-depth-3 policy',
+        slot_storage     => 18,
+        update_rules     => 108,
+        queue_assertions => 30,
+    );
+    is_deeply(
+        $result->{report}{id_response_rule_engine}{residue},
+        [qw(auto_id_allocation id_release)],
+        'generated read burst-last multi-depth-3 queue-head behavior removes same-ID and response-demux residue from ID/response report',
+    );
+};
+
+subtest 'same-ID queue-head response-demux generates read burst-last mixed depth-3/depth-2 queue state and completion demux' => sub {
+    my $result = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_same_id_read_burst_last_mixed_depth3_depth2_queue_head_response_demux());
+    my $isf = $result->{generated_ial1}{text};
+
+    like($isf, qr/\(output axi0_r4_complete\)/, 'read burst-last mixed-depth queue-head demux exposes r4 completion as a generated output');
+    unlike($isf, qr/\(input axi0_r4_complete\)/, 'read burst-last mixed-depth r4 completion is no longer an authored input');
+    like($isf, qr/\(input axi0_rlast\)/, 'read burst-last mixed-depth queue-head demux consumes RLAST');
+    like($isf, qr/\(var axi0_read_id3_same_id_issue_order_slot2_r2_q \(width 1\)\)/, 'read burst-last mixed-depth queue-head demux keeps ID 3 depth-3 slot2 state');
+    like($isf, qr/\(var axi0_read_id5_same_id_issue_order_slot1_r4_q \(width 1\)\)/, 'read burst-last mixed-depth queue-head demux declares ID 5 depth-2 slot1 state');
+    like($isf, qr/\(rule axi0_read_id5_same_id_issue_order_r3_dequeue_enqueue_r4\b/, 'read burst-last mixed-depth queue-head demux emits ID 5 depth-2 same-cycle dequeue/enqueue transition');
+    like($isf, qr/\(rule axi0_r4_response_demux \(& axi0_read_complete \(== axi0_rid 4'd5\) axi0_rlast axi0_read_id5_same_id_issue_order_slot0_r4_q\)/, 'read burst-last mixed-depth queue-head demux emits RLAST-gated r4 response-demux rule');
+
+    assert_same_id_queue_head_response_demux_report(
+        $result->{report}{response_demux},
+        'generator read burst-last mixed-depth report',
+        queues => [
+            {
+                concrete_id          => 3,
+                transactions         => [qw(r0 r1 r2)],
+                depth                => 3,
+                dequeue_event_source => 'queue_head_response_demux',
+            },
+            {
+                concrete_id          => 5,
+                transactions         => [qw(r3 r4)],
+                depth                => 2,
+                dequeue_event_source => 'queue_head_response_demux',
+            },
+        ],
+        completion_signals => [qw(axi0_r0_complete axi0_r1_complete axi0_r2_complete axi0_r3_complete axi0_r4_complete)],
+        generated_rules => [qw(axi0_r0_response_demux axi0_r1_response_demux axi0_r2_response_demux axi0_r3_response_demux axi0_r4_response_demux)],
+        generated_assertions => [qw(
+            axi0_read_response_demux_active_match
+            axi0_r0_r1_read_response_demux_unique_match
+            axi0_r0_r2_read_response_demux_unique_match
+            axi0_r0_r3_read_response_demux_unique_match
+            axi0_r0_r4_read_response_demux_unique_match
+            axi0_r1_r2_read_response_demux_unique_match
+            axi0_r1_r3_read_response_demux_unique_match
+            axi0_r1_r4_read_response_demux_unique_match
+            axi0_r2_r3_read_response_demux_unique_match
+            axi0_r2_r4_read_response_demux_unique_match
+            axi0_r3_r4_read_response_demux_unique_match
+        )],
+    );
+    my $read_policy = $result->{report}{same_id_ordering}{concrete_id_reuse_policy}{read};
+    is_deeply([map { $_->{depth} } @{$read_policy->{generated_queues} || []}], [3, 2], 'read burst-last mixed-depth policy reports generated depth-3 then depth-2 queues');
+    assert_same_id_generated_queue_counts(
+        $read_policy,
+        'read burst-last mixed-depth policy',
+        slot_storage     => 13,
+        update_rules     => 66,
+        queue_assertions => 27,
+    );
+    is_deeply(
+        $result->{report}{id_response_rule_engine}{residue},
+        [qw(auto_id_allocation id_release)],
+        'generated read burst-last mixed-depth queue-head behavior removes same-ID and response-demux residue from ID/response report',
     );
 };
 
@@ -1129,6 +1387,135 @@ subtest 'same-ID queue-head response-demux generates write depth-3 queue state a
         $result->{report}{id_response_rule_engine}{residue},
         [qw(auto_id_allocation id_release)],
         'generated write depth-3 queue-head behavior removes same-ID and response-demux residue from ID/response report',
+    );
+};
+
+subtest 'same-ID queue-head response-demux generates write multiple depth-3 queue state and completion demux' => sub {
+    my $result = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_same_id_write_multi_depth3_queue_head_response_demux());
+    my $isf = $result->{generated_ial1}{text};
+
+    like($isf, qr/\(output axi0_w5_complete\)/, 'write multi-depth-3 queue-head demux exposes w5 completion as a generated output');
+    like($isf, qr/\(input axi0_write_complete\)/, 'raw write response remains the generated demux input');
+    unlike($isf, qr/\(input axi0_w5_complete\)/, 'w5 completion is no longer an authored input');
+    unlike($isf, qr/\baxi0_rlast\b/, 'write multi-depth-3 queue-head demux does not generate or consume RLAST');
+    like($isf, qr/\(var axi0_write_id5_same_id_issue_order_slot2_w5_q \(width 1\)\)/, 'write multi-depth-3 queue-head demux declares ID 5 slot2 w5 state');
+    like($isf, qr/\(rule axi0_write_id5_same_id_issue_order_w3_w4_enqueue_w5\b/, 'write multi-depth-3 queue-head demux emits ID 5 fill-third-slot transition');
+    like($isf, qr/\(rule axi0_write_id5_same_id_issue_order_w3_w4_w5_dequeue_w3\b/, 'write multi-depth-3 queue-head demux emits ID 5 full-queue dequeue transition');
+    like($isf, qr/\(rule axi0_w5_response_demux \(& axi0_write_complete \(== axi0_bid 4'd5\) axi0_write_id5_same_id_issue_order_slot0_w5_q\)/, 'write multi-depth-3 queue-head demux emits w5 response-demux rule');
+
+    assert_same_id_write_queue_head_response_demux_report(
+        $result->{report}{response_demux},
+        'generator write multi-depth-3 report',
+        queues => [
+            {
+                concrete_id          => 3,
+                transactions         => [qw(w0 w1 w2)],
+                depth                => 3,
+                dequeue_event_source => 'queue_head_response_demux',
+            },
+            {
+                concrete_id          => 5,
+                transactions         => [qw(w3 w4 w5)],
+                depth                => 3,
+                dequeue_event_source => 'queue_head_response_demux',
+            },
+        ],
+        completion_signals => [qw(axi0_w0_complete axi0_w1_complete axi0_w2_complete axi0_w3_complete axi0_w4_complete axi0_w5_complete)],
+        generated_rules => [qw(axi0_w0_response_demux axi0_w1_response_demux axi0_w2_response_demux axi0_w3_response_demux axi0_w4_response_demux axi0_w5_response_demux)],
+        generated_assertions => [qw(
+            axi0_write_response_demux_active_match
+            axi0_w0_w1_write_response_demux_unique_match
+            axi0_w0_w2_write_response_demux_unique_match
+            axi0_w0_w3_write_response_demux_unique_match
+            axi0_w0_w4_write_response_demux_unique_match
+            axi0_w0_w5_write_response_demux_unique_match
+            axi0_w1_w2_write_response_demux_unique_match
+            axi0_w1_w3_write_response_demux_unique_match
+            axi0_w1_w4_write_response_demux_unique_match
+            axi0_w1_w5_write_response_demux_unique_match
+            axi0_w2_w3_write_response_demux_unique_match
+            axi0_w2_w4_write_response_demux_unique_match
+            axi0_w2_w5_write_response_demux_unique_match
+            axi0_w3_w4_write_response_demux_unique_match
+            axi0_w3_w5_write_response_demux_unique_match
+            axi0_w4_w5_write_response_demux_unique_match
+        )],
+    );
+    my $write_policy = $result->{report}{same_id_ordering}{concrete_id_reuse_policy}{write};
+    is_deeply([map { $_->{depth} } @{$write_policy->{generated_queues} || []}], [3, 3], 'write multi-depth-3 policy reports both generated depth-3 queues');
+    assert_same_id_generated_queue_counts(
+        $write_policy,
+        'write multi-depth-3 policy',
+        slot_storage     => 18,
+        update_rules     => 108,
+        queue_assertions => 28,
+    );
+    is_deeply(
+        $result->{report}{id_response_rule_engine}{residue},
+        [qw(auto_id_allocation id_release)],
+        'generated write multi-depth-3 queue-head behavior removes same-ID and response-demux residue from ID/response report',
+    );
+};
+
+subtest 'same-ID queue-head response-demux generates write mixed depth-3/depth-2 queue state and completion demux' => sub {
+    my $result = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_same_id_write_mixed_depth3_depth2_queue_head_response_demux());
+    my $isf = $result->{generated_ial1}{text};
+
+    like($isf, qr/\(output axi0_w4_complete\)/, 'write mixed-depth queue-head demux exposes w4 completion as a generated output');
+    like($isf, qr/\(input axi0_write_complete\)/, 'raw write response remains the generated demux input');
+    unlike($isf, qr/\(input axi0_w4_complete\)/, 'w4 completion is no longer an authored input');
+    unlike($isf, qr/\baxi0_rlast\b/, 'write mixed-depth queue-head demux does not generate or consume RLAST');
+    like($isf, qr/\(var axi0_write_id3_same_id_issue_order_slot2_w2_q \(width 1\)\)/, 'write mixed-depth queue-head demux keeps ID 3 depth-3 slot2 state');
+    like($isf, qr/\(var axi0_write_id5_same_id_issue_order_slot1_w4_q \(width 1\)\)/, 'write mixed-depth queue-head demux declares ID 5 depth-2 slot1 state');
+    like($isf, qr/\(rule axi0_write_id5_same_id_issue_order_w3_dequeue_enqueue_w4\b/, 'write mixed-depth queue-head demux emits ID 5 depth-2 same-cycle dequeue/enqueue transition');
+    like($isf, qr/\(rule axi0_w4_response_demux \(& axi0_write_complete \(== axi0_bid 4'd5\) axi0_write_id5_same_id_issue_order_slot0_w4_q\)/, 'write mixed-depth queue-head demux emits w4 response-demux rule');
+
+    assert_same_id_write_queue_head_response_demux_report(
+        $result->{report}{response_demux},
+        'generator write mixed-depth report',
+        queues => [
+            {
+                concrete_id          => 3,
+                transactions         => [qw(w0 w1 w2)],
+                depth                => 3,
+                dequeue_event_source => 'queue_head_response_demux',
+            },
+            {
+                concrete_id          => 5,
+                transactions         => [qw(w3 w4)],
+                depth                => 2,
+                dequeue_event_source => 'queue_head_response_demux',
+            },
+        ],
+        completion_signals => [qw(axi0_w0_complete axi0_w1_complete axi0_w2_complete axi0_w3_complete axi0_w4_complete)],
+        generated_rules => [qw(axi0_w0_response_demux axi0_w1_response_demux axi0_w2_response_demux axi0_w3_response_demux axi0_w4_response_demux)],
+        generated_assertions => [qw(
+            axi0_write_response_demux_active_match
+            axi0_w0_w1_write_response_demux_unique_match
+            axi0_w0_w2_write_response_demux_unique_match
+            axi0_w0_w3_write_response_demux_unique_match
+            axi0_w0_w4_write_response_demux_unique_match
+            axi0_w1_w2_write_response_demux_unique_match
+            axi0_w1_w3_write_response_demux_unique_match
+            axi0_w1_w4_write_response_demux_unique_match
+            axi0_w2_w3_write_response_demux_unique_match
+            axi0_w2_w4_write_response_demux_unique_match
+            axi0_w3_w4_write_response_demux_unique_match
+        )],
+    );
+    my $write_policy = $result->{report}{same_id_ordering}{concrete_id_reuse_policy}{write};
+    is_deeply([map { $_->{depth} } @{$write_policy->{generated_queues} || []}], [3, 2], 'write mixed-depth policy reports generated depth-3 then depth-2 queues');
+    assert_same_id_generated_queue_counts(
+        $write_policy,
+        'write mixed-depth policy',
+        slot_storage     => 13,
+        update_rules     => 66,
+        queue_assertions => 25,
+    );
+    is_deeply(
+        $result->{report}{id_response_rule_engine}{residue},
+        [qw(auto_id_allocation id_release)],
+        'generated write mixed-depth queue-head behavior removes same-ID and response-demux residue from ID/response report',
     );
 };
 
@@ -2779,10 +3166,88 @@ sub sample_contract_with_same_id_read_single_beat_depth3_queue_head_response_dem
     return $contract;
 }
 
+sub sample_contract_with_same_id_read_single_beat_multi_depth3_queue_head_response_demux {
+    my $contract = sample_contract_with_same_id_read_single_beat_depth3_queue_head_response_demux();
+    $contract->{intent_name} = 'axi_manager_capacity_status_read_single_beat_multi_depth3_same_id_queue_head_response_demux';
+    $contract->{source}{object_id} = 'axi-manager-capacity-status-read-single-beat-multi-depth3-same-id-queue-head-response-demux';
+    $contract->{read_max_pending} = 6;
+    push @{$contract->{transactions}},
+        {
+            kind             => 'read',
+            name             => 'r3',
+            tag              => 'rd3',
+            request_event    => 'axi0_r3_request',
+            completion_event => 'axi0_r3_complete',
+            id               => { value => 5 },
+        },
+        {
+            kind             => 'read',
+            name             => 'r4',
+            tag              => 'rd4',
+            request_event    => 'axi0_r4_request',
+            completion_event => 'axi0_r4_complete',
+            id               => { value => 5 },
+        },
+        {
+            kind             => 'read',
+            name             => 'r5',
+            tag              => 'rd5',
+            request_event    => 'axi0_r5_request',
+            completion_event => 'axi0_r5_complete',
+            id               => { value => 5 },
+        };
+    return $contract;
+}
+
+sub sample_contract_with_same_id_read_single_beat_mixed_depth3_depth2_queue_head_response_demux {
+    my $contract = sample_contract_with_same_id_read_single_beat_depth3_queue_head_response_demux();
+    $contract->{intent_name} = 'axi_manager_capacity_status_read_single_beat_mixed_depth3_depth2_same_id_queue_head_response_demux';
+    $contract->{source}{object_id} = 'axi-manager-capacity-status-read-single-beat-mixed-depth3-depth2-same-id-queue-head-response-demux';
+    $contract->{read_max_pending} = 5;
+    push @{$contract->{transactions}},
+        {
+            kind             => 'read',
+            name             => 'r3',
+            tag              => 'rd3',
+            request_event    => 'axi0_r3_request',
+            completion_event => 'axi0_r3_complete',
+            id               => { value => 5 },
+        },
+        {
+            kind             => 'read',
+            name             => 'r4',
+            tag              => 'rd4',
+            request_event    => 'axi0_r4_request',
+            completion_event => 'axi0_r4_complete',
+            id               => { value => 5 },
+        };
+    return $contract;
+}
+
 sub sample_contract_with_same_id_read_burst_last_depth3_queue_head_response_demux {
     my $contract = sample_contract_with_same_id_read_single_beat_depth3_queue_head_response_demux();
     $contract->{intent_name} = 'axi_manager_capacity_status_read_burst_last_depth3_same_id_queue_head_response_demux';
     $contract->{source}{object_id} = 'axi-manager-capacity-status-read-burst-last-depth3-same-id-queue-head-response-demux';
+    $contract->{response_demux}{read}{response_scope} = 'burst-last';
+    $contract->{response_demux}{read}{last_signal} = 'axi0_rlast';
+    $contract->{response_demux}{read}{last_signal_width} = 1;
+    return $contract;
+}
+
+sub sample_contract_with_same_id_read_burst_last_multi_depth3_queue_head_response_demux {
+    my $contract = sample_contract_with_same_id_read_single_beat_multi_depth3_queue_head_response_demux();
+    $contract->{intent_name} = 'axi_manager_capacity_status_read_burst_last_multi_depth3_same_id_queue_head_response_demux';
+    $contract->{source}{object_id} = 'axi-manager-capacity-status-read-burst-last-multi-depth3-same-id-queue-head-response-demux';
+    $contract->{response_demux}{read}{response_scope} = 'burst-last';
+    $contract->{response_demux}{read}{last_signal} = 'axi0_rlast';
+    $contract->{response_demux}{read}{last_signal_width} = 1;
+    return $contract;
+}
+
+sub sample_contract_with_same_id_read_burst_last_mixed_depth3_depth2_queue_head_response_demux {
+    my $contract = sample_contract_with_same_id_read_single_beat_mixed_depth3_depth2_queue_head_response_demux();
+    $contract->{intent_name} = 'axi_manager_capacity_status_read_burst_last_mixed_depth3_depth2_same_id_queue_head_response_demux';
+    $contract->{source}{object_id} = 'axi-manager-capacity-status-read-burst-last-mixed-depth3-depth2-same-id-queue-head-response-demux';
     $contract->{response_demux}{read}{response_scope} = 'burst-last';
     $contract->{response_demux}{read}{last_signal} = 'axi0_rlast';
     $contract->{response_demux}{read}{last_signal_width} = 1;
@@ -3079,6 +3544,66 @@ sub sample_contract_with_same_id_write_depth3_queue_head_response_demux {
         completion_event => 'axi0_w2_complete',
         id               => { value => 3 },
     };
+    return $contract;
+}
+
+sub sample_contract_with_same_id_write_multi_depth3_queue_head_response_demux {
+    my $contract = sample_contract_with_same_id_write_depth3_queue_head_response_demux();
+    $contract->{intent_name} = 'axi_manager_capacity_status_write_multi_depth3_same_id_queue_head_response_demux';
+    $contract->{source}{object_id} = 'axi-manager-capacity-status-write-multi-depth3-same-id-queue-head-response-demux';
+    $contract->{write_max_pending} = 6;
+    $contract->{transactions}[3]{id} = { value => 4 };
+    push @{$contract->{transactions}},
+        {
+            kind             => 'write',
+            name             => 'w3',
+            tag              => 'wr3',
+            request_event    => 'axi0_w3_request',
+            completion_event => 'axi0_w3_complete',
+            id               => { value => 5 },
+        },
+        {
+            kind             => 'write',
+            name             => 'w4',
+            tag              => 'wr4',
+            request_event    => 'axi0_w4_request',
+            completion_event => 'axi0_w4_complete',
+            id               => { value => 5 },
+        },
+        {
+            kind             => 'write',
+            name             => 'w5',
+            tag              => 'wr5',
+            request_event    => 'axi0_w5_request',
+            completion_event => 'axi0_w5_complete',
+            id               => { value => 5 },
+        };
+    return $contract;
+}
+
+sub sample_contract_with_same_id_write_mixed_depth3_depth2_queue_head_response_demux {
+    my $contract = sample_contract_with_same_id_write_depth3_queue_head_response_demux();
+    $contract->{intent_name} = 'axi_manager_capacity_status_write_mixed_depth3_depth2_same_id_queue_head_response_demux';
+    $contract->{source}{object_id} = 'axi-manager-capacity-status-write-mixed-depth3-depth2-same-id-queue-head-response-demux';
+    $contract->{write_max_pending} = 5;
+    $contract->{transactions}[3]{id} = { value => 4 };
+    push @{$contract->{transactions}},
+        {
+            kind             => 'write',
+            name             => 'w3',
+            tag              => 'wr3',
+            request_event    => 'axi0_w3_request',
+            completion_event => 'axi0_w3_complete',
+            id               => { value => 5 },
+        },
+        {
+            kind             => 'write',
+            name             => 'w4',
+            tag              => 'wr4',
+            request_event    => 'axi0_w4_request',
+            completion_event => 'axi0_w4_complete',
+            id               => { value => 5 },
+        };
     return $contract;
 }
 
@@ -3611,6 +4136,21 @@ sub assert_same_id_write_queue_head_response_demux_report {
     );
 }
 
+sub assert_same_id_generated_queue_counts {
+    my ($policy, $owner, %expected) = @_;
+
+    my ($slot_storage_count, $update_rule_count, $queue_assertion_count) = (0, 0, 0);
+    for my $queue (@{$policy->{generated_queues} || []}) {
+        $slot_storage_count += scalar(@{$queue->{slot_storage} || []});
+        $update_rule_count += scalar(@{$queue->{generated_update_rules} || []});
+        $queue_assertion_count += scalar(@{$queue->{generated_assertions} || []});
+    }
+
+    is($slot_storage_count, $expected{slot_storage}, "$owner reports expected queue slot storage count");
+    is($update_rule_count, $expected{update_rules}, "$owner reports expected queue update rule count");
+    is($queue_assertion_count, $expected{queue_assertions}, "$owner reports expected queue assertion count");
+}
+
 sub assert_rlast_report_prose_alignment {
     my ($report, $owner) = @_;
     my @rules = @{$report->{enforced_static_rules} || []};
@@ -3636,28 +4176,18 @@ sub assert_rlast_report_prose_alignment {
     );
     like(
         $id_residue->{detail},
-        qr/multiple independent read burst-last response-demux-only queue groups/,
-        "$owner reports bounded multi-group read burst-last queue-head response-demux as supported",
+        qr/multiple independent or mixed-depth read single-beat, read burst-last, and write response-demux queue groups/,
+        "$owner reports bounded multiple and mixed-depth queue-head response-demux groups as supported",
     );
     like(
         $id_residue->{detail},
-        qr/multiple independent read single-beat response-demux-only or scalar read-data queue groups/,
-        "$owner reports bounded multi-group read single-beat queue-head read-data as supported",
+        qr/selected single-group read single-beat depth-3 scalar read-data queue-head shape/,
+        "$owner reports selected read single-beat depth-3 queue-head read-data as supported",
     );
     like(
         $id_residue->{detail},
-        qr/selected single-group read single-beat depth-3 response-demux-only and scalar read-data queue-head shapes/,
-        "$owner reports selected read single-beat depth-3 queue-head response-demux and read-data as supported",
-    );
-    like(
-        $id_residue->{detail},
-        qr/selected single-group read burst-last depth-3 response-demux-only, scalar last-beat read-data, report-only raw-ARLEN burst-length, runtime beat-count\/RLAST validation, and runtime-validation multi-beat output-bank queue-head shapes/,
+        qr/selected single-group read burst-last depth-3 scalar last-beat read-data, report-only raw-ARLEN burst-length, runtime beat-count\/RLAST validation, and runtime-validation multi-beat output-bank queue-head shapes/,
         "$owner reports selected read burst-last depth-3 queue-head response-demux and read-data as supported",
-    );
-    like(
-        $id_residue->{detail},
-        qr/selected single-group write depth-3 response-demux-only queue-head shape/,
-        "$owner reports selected write depth-3 queue-head response-demux as supported",
     );
     like(
         $id_residue->{detail},

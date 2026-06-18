@@ -218,19 +218,21 @@ response-demux-only and scalar read-data shapes plus the selected one-group
 read burst-last depth-3 response-demux-only, scalar last-beat read-data, and
 report-only raw-`ARLEN` burst-length and runtime beat-count/`RLAST`
 validation shapes plus the selected runtime-validation multi-beat output-bank
-shape plus the selected one-group write depth-3 response-demux-only shape.
+shape plus the selected one-group write depth-3 response-demux-only shape plus
+multiple or mixed depth-3 response-demux-only queue-head groups for read
+single-beat, read burst-last, and write families.
 Public `.pif`/`.ppi`/`.axi` aliases, broader concrete same-ID queues,
 same-family mixed auto-ID plus concrete queue-head demux, group-local
 simultaneous enqueue widening, packed burst-vector outputs, alternate full
 burst payload assembly, full AXI manager behavior, direct backend lowering,
 and VHDL remain deferred.
 IAL2 feature completeness on the SystemVerilog-backed path remains active
-under `IAL2-FEATURE-COMPLETENESS-FRONTIER`; `.173` now selects `.174`,
-direct bounded implementation of generated multiple or mixed depth-3 concrete
-same-ID queue-head response-demux for response-demux-only read single-beat,
-read burst-last, and write families. The audit found temporary two-depth-3
-and mixed depth-3/depth-2 candidates across those scopes strict-check cleanly
-but remain selected-not-generated only at `generated_same_id_queue_head_demux`.
+under `IAL2-FEATURE-COMPLETENESS-FRONTIER`; `.174` now ships generated
+multiple or mixed depth-3 concrete same-ID queue-head response-demux for
+response-demux-only read single-beat, read burst-last, and write families.
+The six new public samples are support-accounted and preserve read-data,
+burst-length, runtime-validation, multi-beat, mixed auto-ID, direct backend,
+and VHDL boundaries.
 The first
 in-process AXI manager outstanding-capacity and acceptance/status generator is
 now shipped as `FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus`; it
@@ -1090,12 +1092,13 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 193. `docs/AXI_IAL2_MANAGER_WRITE_DEPTH3_QUEUE_HEAD_RESPONSE_DEMUX_BEHAVIOR.md`: shipped generated write depth-3 queue-head response-demux behavior.
 194. `docs/AXI_IAL2_MANAGER_POST_WRITE_DEPTH3_QUEUE_HEAD_RESPONSE_DEMUX_NEXT_SLICE_SELECTION.md`: selected multiple/mixed depth-3 queue-head response-demux readiness after generated write depth-3 queue-head response-demux.
 195. `docs/AXI_IAL2_MANAGER_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_RESPONSE_DEMUX_READINESS_AUDIT.md`: audited multiple/mixed depth-3 queue-head response-demux readiness and selected the implementation owner.
-196. `docs/AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md`: selected first AXI-derived IAL2 implementation subset and pre-code contract.
-197. `docs/AXI_IAL2_VALID_READY_READINESS_AUDIT.md`: code/test/docs/report owner map for the future AXI Valid-Ready IAL2 implementation.
-198. `docs/AXI_IAL2_VALID_READY_GENERATOR_FIRST_SLICE.md`: first in-process AXI Valid-Ready IAL2 generator slice and report surface.
-199. `docs/decisions/0016-ppif-is-first-public-ial2-container.md`: selects `.ppif` as the first public generic IAL2 file surface.
-200. `docs/IAL2_PPIF_PARSER_CLI_FIRST_SLICE.md`: first public `.ppif` parser/CLI slice for one AXI Valid-Ready source object.
-201. `docs/IAL2_PPIF_MULTI_VALID_READY_READINESS.md`: readiness map for future multi-channel `.ppif` Valid-Ready support.
+196. `docs/AXI_IAL2_MANAGER_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_RESPONSE_DEMUX_BEHAVIOR.md`: shipped generated multiple/mixed depth-3 queue-head response-demux behavior.
+197. `docs/AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md`: selected first AXI-derived IAL2 implementation subset and pre-code contract.
+198. `docs/AXI_IAL2_VALID_READY_READINESS_AUDIT.md`: code/test/docs/report owner map for the future AXI Valid-Ready IAL2 implementation.
+199. `docs/AXI_IAL2_VALID_READY_GENERATOR_FIRST_SLICE.md`: first in-process AXI Valid-Ready IAL2 generator slice and report surface.
+200. `docs/decisions/0016-ppif-is-first-public-ial2-container.md`: selects `.ppif` as the first public generic IAL2 file surface.
+201. `docs/IAL2_PPIF_PARSER_CLI_FIRST_SLICE.md`: first public `.ppif` parser/CLI slice for one AXI Valid-Ready source object.
+202. `docs/IAL2_PPIF_MULTI_VALID_READY_READINESS.md`: readiness map for future multi-channel `.ppif` Valid-Ready support.
 202. `docs/IAL2_PPIF_VALID_READY_BUNDLE_CONTRACT_SELECTION.md`: selected future aggregate bundle contract for multi-channel `.ppif` Valid-Ready support.
 203. `docs/IAL2_PPIF_VALID_READY_BUNDLE_FIRST_SLICE.md`: shipped bounded multi-channel `.ppif` Valid-Ready bundle report/review-artifact behavior.
 204. `docs/IAL2_PPIF_BUNDLE_SEMANTIC_JSON_FIRST_SLICE.md`: shipped aggregate semantic JSON for multi-channel `.ppif` bundles.
@@ -1714,6 +1717,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/AXI_IAL2_MANAGER_WRITE_DEPTH3_QUEUE_HEAD_RESPONSE_DEMUX_BEHAVIOR.md` — shipped generated write depth-3 queue-head response-demux behavior and its support-accounted semantic-introspection surface.
 - `docs/AXI_IAL2_MANAGER_POST_WRITE_DEPTH3_QUEUE_HEAD_RESPONSE_DEMUX_NEXT_SLICE_SELECTION.md` — selected multiple/mixed depth-3 queue-head response-demux readiness after generated write depth-3 queue-head response-demux.
 - `docs/AXI_IAL2_MANAGER_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_RESPONSE_DEMUX_READINESS_AUDIT.md` — audited multiple/mixed depth-3 queue-head response-demux readiness and selected the bounded implementation owner.
+- `docs/AXI_IAL2_MANAGER_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_RESPONSE_DEMUX_BEHAVIOR.md` — shipped generated multiple/mixed depth-3 queue-head response-demux behavior and its support-accounted semantic-introspection surface.
 - `docs/AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md` — selected first AXI-derived IAL2 implementation subset and pre-code contract.
 - `docs/AXI_IAL2_VALID_READY_READINESS_AUDIT.md` — code/test/docs/report owner map for a future AXI Valid-Ready IAL2 implementation slice.
 - `docs/AXI_IAL2_VALID_READY_GENERATOR_FIRST_SLICE.md` — first in-process AXI Valid-Ready IAL2 generator slice and report surface.
@@ -1744,6 +1748,12 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `ppif/axi_manager_capacity_status_read_single_beat_multi_group_same_id_queue_head_read_data.ppif` — checked-in runnable `.ppif` sample for generated single-beat scalar `RDATA`/`RRESP` capture over multiple read single-beat queue-head groups, support-accounted through check JSON and semantic JSON.
 - `ppif/axi_manager_capacity_status_write_same_id_queue_head_response_demux.ppif` — checked-in runnable `.ppif` sample for generated write depth-2 concrete same-ID queue state plus queue-head `BID` response demux.
 - `ppif/axi_manager_capacity_status_write_depth3_same_id_queue_head_response_demux.ppif` — checked-in runnable `.ppif` sample for generated write depth-3 concrete same-ID queue state plus queue-head `BID` response demux, support-accounted through check JSON and semantic JSON.
+- `ppif/axi_manager_capacity_status_read_single_beat_multi_depth3_same_id_queue_head_response_demux.ppif` — checked-in runnable `.ppif` sample for generated read single-beat two-depth-3 concrete same-ID queue-head `RID` response demux, support-accounted through check JSON and semantic JSON.
+- `ppif/axi_manager_capacity_status_read_single_beat_mixed_depth3_depth2_same_id_queue_head_response_demux.ppif` — checked-in runnable `.ppif` sample for generated read single-beat mixed depth-3/depth-2 concrete same-ID queue-head `RID` response demux, support-accounted through check JSON and semantic JSON.
+- `ppif/axi_manager_capacity_status_read_burst_last_multi_depth3_same_id_queue_head_response_demux.ppif` — checked-in runnable `.ppif` sample for generated read burst-last two-depth-3 concrete same-ID queue-head `RID`/`RLAST` response demux, support-accounted through check JSON and semantic JSON.
+- `ppif/axi_manager_capacity_status_read_burst_last_mixed_depth3_depth2_same_id_queue_head_response_demux.ppif` — checked-in runnable `.ppif` sample for generated read burst-last mixed depth-3/depth-2 concrete same-ID queue-head `RID`/`RLAST` response demux, support-accounted through check JSON and semantic JSON.
+- `ppif/axi_manager_capacity_status_write_multi_depth3_same_id_queue_head_response_demux.ppif` — checked-in runnable `.ppif` sample for generated write two-depth-3 concrete same-ID queue-head `BID` response demux, support-accounted through check JSON and semantic JSON.
+- `ppif/axi_manager_capacity_status_write_mixed_depth3_depth2_same_id_queue_head_response_demux.ppif` — checked-in runnable `.ppif` sample for generated write mixed depth-3/depth-2 concrete same-ID queue-head `BID` response demux, support-accounted through check JSON and semantic JSON.
 - `ppif/axi_manager_capacity_status_auto_id_lifecycle.ppif` — checked-in runnable `.ppif` sample for AXI manager auto-ID lifecycle bounded-pool request-ID drive behavior.
 - `ppif/axi_manager_capacity_status_read_response_demux.ppif` — checked-in runnable `.ppif` sample for AXI manager read response-demux generated single-beat `RID` behavior.
 - `ppif/axi_manager_capacity_status_read_response_demux_burst_last.ppif` — checked-in runnable `.ppif` sample for generated AXI manager burst-last `RLAST` response-demux completion behavior.
