@@ -6292,6 +6292,17 @@ generated read-data rules, generated assertions, PPIF corpus membership,
 support-accounting identity, generated artifacts, strict check/semantic JSON
 source identity, or HDL behavior.
 
+Post multiple/mixed depth-3 runtime-validation residue cleanup selector:
+[AXI_IAL2_MANAGER_POST_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_RUNTIME_VALIDATION_RESIDUE_CLEANUP_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_RUNTIME_VALIDATION_RESIDUE_CLEANUP_NEXT_SLICE_SELECTION.md)
+records `.189`, which selects `.190` as readiness audit for generated
+multi-beat output-bank behavior over the multiple/mixed depth-3
+runtime-validation queue-head groups. The selector confirmed the two `.186`
+samples generate runtime validation and keep only the multi-beat
+payload/output/aggregation residue, while the one-depth-3 and depth-2
+multi-group multi-beat precedents are residue-clean. The audit must decide
+whether the local multi-beat admission gate can be widened directly or whether
+a smaller prerequisite is needed.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same
@@ -8553,7 +8564,7 @@ support catalog entries instead of recursive workspace traversal.
 `SEMANTIC-INTROSPECTION-MCP-FRONTIER.30` closes the immediate read-only
 semantic-introspection/MCP pass after source discovery; the active roadmap
 priority is again the IAL2 feature-completeness tree, currently at
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.189`.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.190`.
 
 Selected first MCP resource families are `fsmgen://capabilities`,
 `fsmgen://contracts`, `fsmgen://diagnostics`,
