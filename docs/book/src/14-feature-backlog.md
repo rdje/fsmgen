@@ -6303,6 +6303,17 @@ multi-group multi-beat precedents are residue-clean. The audit must decide
 whether the local multi-beat admission gate can be widened directly or whether
 a smaller prerequisite is needed.
 
+Multiple/mixed depth-3 multi-beat readiness audit:
+[AXI_IAL2_MANAGER_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_MULTI_BEAT_READINESS_AUDIT](../../AXI_IAL2_MANAGER_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_MULTI_BEAT_READINESS_AUDIT.md)
+records `.190`, which selects `.191` as direct bounded implementation of
+generated multi-beat output-bank behavior over the two existing `.186`
+depth `3,3` and mixed depth `3,2` runtime-validation queue-head shapes. The
+audit found no lower-layer prerequisite: the runtime-validation substrate,
+one-depth-3 multi-beat precedent, and depth-2 multi-group multi-beat precedent
+are transaction-list driven after coverage admission. The remaining boundary
+is the local multi-beat coverage gate plus the two public support-accounted
+samples and expectations.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same
@@ -8564,7 +8575,7 @@ support catalog entries instead of recursive workspace traversal.
 `SEMANTIC-INTROSPECTION-MCP-FRONTIER.30` closes the immediate read-only
 semantic-introspection/MCP pass after source discovery; the active roadmap
 priority is again the IAL2 feature-completeness tree, currently at
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.190`.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.191`.
 
 Selected first MCP resource families are `fsmgen://capabilities`,
 `fsmgen://contracts`, `fsmgen://diagnostics`,

@@ -86,21 +86,24 @@ answers:
   - "what is the next IAL2 frontier after multiple/mixed depth-3 runtime residue cleanup?"
   - "what did IAL2-FEATURE-COMPLETENESS-FRONTIER.189 select?"
   - "what is the next IAL2 frontier after multiple/mixed depth-3 runtime multi-beat selection?"
+  - "what did IAL2-FEATURE-COMPLETENESS-FRONTIER.190 select?"
+  - "what is the next IAL2 frontier after multiple/mixed depth-3 multi-beat readiness?"
   - "what follows write depth-3 queue-head response-demux?"
   - "why is support-detail expectation alignment next after depth-3 queue-head response-demux?"
 date: 2026-06-19
 status: current
 tags: [ial2, ial1, ial0, systemverilog, roadmap, task-tree, feature-completeness]
-evidence: docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; docs/AXI_IAL2_MANAGER_POST_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_RUNTIME_VALIDATION_RESIDUE_CLEANUP_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_RUNTIME_VALIDATION_SUPPORT_RESIDUE_CLEANUP.md; docs/AXI_IAL2_MANAGER_POST_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_RUNTIME_VALIDATION_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_RUNTIME_VALIDATION_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_RUNTIME_VALIDATION_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_READ_BURST_LAST_DEPTH3_QUEUE_HEAD_MULTI_BEAT_READ_DATA_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_MULTI_GROUP_QUEUE_HEAD_READ_DATA_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_POST_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_BURST_LENGTH_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_BURST_LENGTH_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_POST_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_LAST_BEAT_READ_DATA_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_LAST_BEAT_READ_DATA_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_LAST_BEAT_READ_DATA_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_POST_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_READ_DATA_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_READ_DATA_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_READ_DATA_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_RESPONSE_DEMUX_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_READ_BURST_LAST_DEPTH3_QUEUE_HEAD_READ_DATA_BEHAVIOR.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md; docs/tasks/R11-DIRECT-STRUCTURAL-VHDL-REROUTING.md
-reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.189|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.190|RUNTIME_VALIDATION_RESIDUE_CLEANUP_NEXT_SLICE_SELECTION|multi-beat output-bank behavior over multiple/mixed depth-3|read burst-last multi-beat payload over multiple or mixed depth-3 queue-head groups|VHDL backend/reroute' docs/TASK_TREE.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/AXI_IAL2_MANAGER_POST_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_RUNTIME_VALIDATION_RESIDUE_CLEANUP_NEXT_SLICE_SELECTION.md README.md ROADMAP_V2.md docs/book/src/14-feature-backlog.md
+evidence: docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; docs/AXI_IAL2_MANAGER_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_MULTI_BEAT_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_POST_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_RUNTIME_VALIDATION_RESIDUE_CLEANUP_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_RUNTIME_VALIDATION_SUPPORT_RESIDUE_CLEANUP.md; docs/AXI_IAL2_MANAGER_POST_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_RUNTIME_VALIDATION_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_RUNTIME_VALIDATION_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_RUNTIME_VALIDATION_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_READ_BURST_LAST_DEPTH3_QUEUE_HEAD_MULTI_BEAT_READ_DATA_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_MULTI_GROUP_QUEUE_HEAD_READ_DATA_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_POST_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_BURST_LENGTH_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_BURST_LENGTH_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_POST_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_LAST_BEAT_READ_DATA_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_LAST_BEAT_READ_DATA_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_LAST_BEAT_READ_DATA_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_POST_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_READ_DATA_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_READ_DATA_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_READ_DATA_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_RESPONSE_DEMUX_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_READ_BURST_LAST_DEPTH3_QUEUE_HEAD_READ_DATA_BEHAVIOR.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md; docs/tasks/R11-DIRECT-STRUCTURAL-VHDL-REROUTING.md
+reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.190|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.191|MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_MULTI_BEAT_READINESS_AUDIT|multi-beat output-bank behavior over multiple/mixed depth-3|read_burst_last_multi_depth3_same_id_queue_head_multi_beat_read_data|VHDL backend/reroute' docs/TASK_TREE.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/AXI_IAL2_MANAGER_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_MULTI_BEAT_READINESS_AUDIT.md README.md ROADMAP_V2.md docs/book/src/14-feature-backlog.md
 ---
 
 The current feature-completeness priority is IAL2 on the
 SystemVerilog-backed path.
 
-Current frontier: `IAL2-FEATURE-COMPLETENESS-FRONTIER.190`, readiness audit
-for generated multi-beat output-bank behavior over multiple/mixed depth-3 read
-burst-last queue-head runtime-validation groups.
+Current frontier: `IAL2-FEATURE-COMPLETENESS-FRONTIER.191`, direct bounded
+implementation of generated multi-beat output-bank behavior over the two
+existing multiple/mixed depth-3 read burst-last queue-head runtime-validation
+shapes.
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.180` shipped two public support-accounted
 samples for that behavior: one with two depth-3 duplicate-`RID` groups and one
@@ -161,6 +164,14 @@ runtime-validation groups. Live probes showed the `.186` samples keep only
 multi-beat payload/output/aggregation residue, while the one-depth-3 and
 depth-2 multi-group multi-beat precedents are residue-clean. The target group
 sets still fail closed at the local multi-beat admission gate.
+
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.190` selected `.191`, direct bounded
+implementation of generated multi-beat output-bank behavior over the two
+existing `.186` depth `3,3` and mixed depth `3,2` runtime-validation
+queue-head shapes. No smaller prerequisite is needed: the runtime-validation,
+one-depth-3 multi-beat, and depth-2 multi-group multi-beat helpers are
+transaction-list driven once the local multi-beat coverage gate admits the
+shape.
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.108` shipped generated AXI same-ID write
 queue-head behavior for one duplicate concrete write-ID group of two

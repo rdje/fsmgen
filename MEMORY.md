@@ -10,10 +10,10 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `HEAD after IAL2-FEATURE-COMPLETENESS-FRONTIER.189 commit` — `IAL2-FEATURE-COMPLETENESS-FRONTIER.189: select depth-3 multi-beat audit`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.190` is the next IAL2 readiness audit for generated multi-beat output-bank behavior over multiple/mixed depth-3 read burst-last queue-head runtime-validation groups; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.189` selected `.190` after probes showed the `.186` multiple/mixed depth-3 runtime-validation samples keep only multi-beat payload/output/aggregation residue, while one-depth-3 and depth-2 multi-group multi-beat precedents are residue-clean and the target group sets fail closed at the local multi-beat admission gate. No parser, generator, sample, support-accounting, generated-artifact, validation, test, or HDL behavior changed.
-- in_flight_uncommitted: none after the `IAL2-FEATURE-COMPLETENESS-FRONTIER.189` selector/docs commit. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
+- latest_commit: `HEAD after IAL2-FEATURE-COMPLETENESS-FRONTIER.190 commit` - `IAL2-FEATURE-COMPLETENESS-FRONTIER.190: audit depth-3 multi-beat readiness`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.191` is the next IAL2 implementation slice for generated multi-beat output-bank behavior over the two `.186` multiple/mixed depth-3 read burst-last queue-head runtime-validation shapes; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.190` selected `.191` after auditing the `.186` runtime-validation shapes, one-depth-3 multi-beat behavior, depth-2 multi-group multi-beat/runtime precedents, and coverage/report/generated-artifact/test/support surfaces. No lower-layer prerequisite was found; the remaining blocker is the local multi-beat coverage admission predicate. No parser, generator, sample, support-accounting, generated-artifact, validation, test, or HDL behavior changed.
+- in_flight_uncommitted: none after the `IAL2-FEATURE-COMPLETENESS-FRONTIER.190` audit/docs commit. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
 
 ## Notes
