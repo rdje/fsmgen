@@ -6278,6 +6278,20 @@ support/report wording cleanup and focused expectation update. Multi-beat
 output-bank behavior over the multiple/mixed runtime-validation groups remains
 a later exact owner.
 
+Multiple/mixed depth-3 queue-head runtime-validation support residue cleanup:
+[AXI_IAL2_MANAGER_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_RUNTIME_VALIDATION_SUPPORT_RESIDUE_CLEANUP](../../AXI_IAL2_MANAGER_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_RUNTIME_VALIDATION_SUPPORT_RESIDUE_CLEANUP.md)
+records `.188`, which cleans stale support/residue wording after `.186`.
+Selected multiple/mixed depth-3 read burst-last queue-head scalar last-beat
+read-data with runtime-assertion beat-count/`RLAST` validation is now
+described as supported in the AXI manager static support detail.
+
+The remaining residue for this shape is the payload/output family:
+`read burst-last multi-beat payload over multiple or mixed depth-3 queue-head
+groups`. The cleanup does not change parser syntax, queue-head admission,
+generated read-data rules, generated assertions, PPIF corpus membership,
+support-accounting identity, generated artifacts, strict check/semantic JSON
+source identity, or HDL behavior.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same
@@ -8539,7 +8553,7 @@ support catalog entries instead of recursive workspace traversal.
 `SEMANTIC-INTROSPECTION-MCP-FRONTIER.30` closes the immediate read-only
 semantic-introspection/MCP pass after source discovery; the active roadmap
 priority is again the IAL2 feature-completeness tree, currently at
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.188`.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.189`.
 
 Selected first MCP resource families are `fsmgen://capabilities`,
 `fsmgen://contracts`, `fsmgen://diagnostics`,
