@@ -6264,10 +6264,19 @@ verification-output generation, VHDL, and backend-language variants remain
 separately owned.
 
 Post multiple/mixed depth-3 queue-head runtime-validation selector:
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.187` is the next documentation-only
-selector/readiness leaf after `.186`. It will compare multi-beat output-bank
-behavior over the shipped multiple/mixed runtime-validation groups with the
-other remaining exact candidates before any additional behavior changes.
+[AXI_IAL2_MANAGER_POST_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_RUNTIME_VALIDATION_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_RUNTIME_VALIDATION_NEXT_SLICE_SELECTION.md)
+records `.187`, which selected `.188` as report/static support-residue cleanup
+after generated runtime beat-count/`RLAST` validation over multiple/mixed
+depth-3 queue-head scalar last-beat read-data.
+
+The selector found that the two `.186` samples generate runtime validation and
+leave `read_data` residue limited to `multi_beat_read_data_reassembly`,
+`per_beat_outputs`, and `rresp_aggregation`, but the AXI ID/order
+unsupported-residue detail still classifies multiple/mixed depth-3 runtime
+validation with multi-beat payload as outside the shell. `.188` owns only that
+support/report wording cleanup and focused expectation update. Multi-beat
+output-bank behavior over the multiple/mixed runtime-validation groups remains
+a later exact owner.
 
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
@@ -8530,7 +8539,7 @@ support catalog entries instead of recursive workspace traversal.
 `SEMANTIC-INTROSPECTION-MCP-FRONTIER.30` closes the immediate read-only
 semantic-introspection/MCP pass after source discovery; the active roadmap
 priority is again the IAL2 feature-completeness tree, currently at
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.187`.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.188`.
 
 Selected first MCP resource families are `fsmgen://capabilities`,
 `fsmgen://contracts`, `fsmgen://diagnostics`,
