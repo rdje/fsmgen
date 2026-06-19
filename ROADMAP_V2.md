@@ -1080,7 +1080,7 @@ support-accounting metadata under query/limit/filter controls.
 `SEMANTIC-INTROSPECTION-MCP-FRONTIER.30` closes the immediate read-only
 semantic-introspection/MCP pass after source discovery and returns active
 roadmap priority to the IAL2 feature-completeness tree, currently at
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.186`.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.187`.
 The parser/report metadata slice `IAL2-FEATURE-COMPLETENESS-FRONTIER.39` is
 now shipped for the bounded AXI read response-demux public contract selected
 by `.38`. The selected read arm requires `(response-scope single-beat)`,
@@ -1875,19 +1875,23 @@ behavior for the two-depth-3 and mixed depth-3/depth-2 queue-head scalar
 last-beat read-data samples. The new samples are support-accounted, strict
 check/semantic JSON matched, and HDL-verifiable; generated reports keep
 `generated_beat_count_validation` residue because runtime validation remains
-deferred. Runtime validation, multi-beat payload, write-family read-data,
-mixed auto-ID, group-local enqueue widening, packed outputs, alternate burst
-assembly, direct backend, verification-output generation, VHDL, and
-backend-language variants remain deferred. Selector `.184` selected `.185`,
+deferred. Selector `.184` selected `.185`,
 readiness audit for generated runtime beat-count/`RLAST` validation over the
 same multiple/mixed depth-3 queue-head scalar last-beat read-data shape. Audit
 `.185` selected `.186`, direct bounded implementation of that generated
-runtime-validation behavior. Temporary runtime-assertion variants fail closed
-only at the local last-beat coverage gate, while the expected-beat,
-beat-count, assertion, generated-artifact, and report helpers are
-transaction-list driven below that gate. No parser, generator, sample,
-support-accounting, validation, generated-artifact, test, or HDL behavior
-changed in the selector/audit slices. The active frontier is `.186`.
+runtime-validation behavior. Implementation `.186` now ships generated
+runtime beat-count/`RLAST` validation over the same multiple/mixed depth-3
+queue-head scalar last-beat read-data shape. The two support-accounted
+runtime-assertion samples cover depth `3,3` and `3,2` queue sets, capture raw
+request `ARLEN`, store expected beats as `ARLEN+1`, generate read beat
+counters and request/response update rules, emit beat-count/`RLAST`
+assertions, report `burst_length_validation: runtime_assertion`, and remove
+`generated_beat_count_validation` residue while preserving multi-beat payload,
+per-beat output, and `RRESP` aggregation residue. Multi-beat payload,
+write-family read-data, same-family mixed auto-ID, group-local enqueue
+widening, packed outputs, alternate burst assembly, direct backend,
+verification-output generation, VHDL, and backend-language variants remain
+deferred. The active frontier is `.187`.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.

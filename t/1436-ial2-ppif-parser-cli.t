@@ -853,6 +853,8 @@ for my $case_name (qw(
 for my $case_name (qw(
     read_burst_multi_depth3
     read_burst_mixed_depth3_depth2
+    read_burst_multi_depth3_runtime_assertion
+    read_burst_mixed_depth3_depth2_runtime_assertion
 )) {
     my %case = queue_head_depth3_last_beat_burst_length_case_args($case_name);
     subtest "PPIF adapter parses AXI manager $case{owner} behavior" => sub {
@@ -2612,6 +2614,8 @@ for my $case_name (qw(
 for my $case_name (qw(
     read_burst_multi_depth3
     read_burst_mixed_depth3_depth2
+    read_burst_multi_depth3_runtime_assertion
+    read_burst_mixed_depth3_depth2_runtime_assertion
 )) {
     my %case = queue_head_depth3_last_beat_burst_length_case_args($case_name);
     subtest "CLI emits IAL2 report JSON for AXI manager $case{owner} .ppif" => sub {
@@ -3486,6 +3490,8 @@ for my $case_name (qw(
 for my $case_name (qw(
     read_burst_multi_depth3
     read_burst_mixed_depth3_depth2
+    read_burst_multi_depth3_runtime_assertion
+    read_burst_mixed_depth3_depth2_runtime_assertion
 )) {
     my %case = queue_head_depth3_last_beat_burst_length_case_args($case_name);
     subtest "CLI --verify-hdl accepts AXI manager $case{owner} .ppif" => sub {
@@ -5046,6 +5052,8 @@ for my $case_name (qw(
 for my $case_name (qw(
     read_burst_multi_depth3
     read_burst_mixed_depth3_depth2
+    read_burst_multi_depth3_runtime_assertion
+    read_burst_mixed_depth3_depth2_runtime_assertion
 )) {
     my %case = queue_head_depth3_last_beat_burst_length_case_args($case_name);
     subtest "CLI check JSON and semantic JSON support-account $case{owner} .ppif separately" => sub {
@@ -5978,6 +5986,14 @@ sub sample_capacity_read_burst_last_mixed_depth3_depth2_same_id_queue_head_burst
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_read_burst_last_mixed_depth3_depth2_same_id_queue_head_burst_length.ppif');
 }
 
+sub sample_capacity_read_burst_last_multi_depth3_same_id_queue_head_burst_length_runtime_assertion_ppif_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_read_burst_last_multi_depth3_same_id_queue_head_burst_length_runtime_assertion.ppif');
+}
+
+sub sample_capacity_read_burst_last_mixed_depth3_depth2_same_id_queue_head_burst_length_runtime_assertion_ppif_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_read_burst_last_mixed_depth3_depth2_same_id_queue_head_burst_length_runtime_assertion.ppif');
+}
+
 sub sample_capacity_read_burst_last_depth3_same_id_queue_head_burst_length_ppif_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_read_burst_last_depth3_same_id_queue_head_burst_length.ppif');
 }
@@ -6188,6 +6204,14 @@ sub sample_capacity_read_burst_last_multi_depth3_same_id_queue_head_burst_length
 
 sub sample_capacity_read_burst_last_mixed_depth3_depth2_same_id_queue_head_burst_length_ppif {
     return slurp(sample_capacity_read_burst_last_mixed_depth3_depth2_same_id_queue_head_burst_length_ppif_path());
+}
+
+sub sample_capacity_read_burst_last_multi_depth3_same_id_queue_head_burst_length_runtime_assertion_ppif {
+    return slurp(sample_capacity_read_burst_last_multi_depth3_same_id_queue_head_burst_length_runtime_assertion_ppif_path());
+}
+
+sub sample_capacity_read_burst_last_mixed_depth3_depth2_same_id_queue_head_burst_length_runtime_assertion_ppif {
+    return slurp(sample_capacity_read_burst_last_mixed_depth3_depth2_same_id_queue_head_burst_length_runtime_assertion_ppif_path());
 }
 
 sub sample_capacity_read_burst_last_depth3_same_id_queue_head_burst_length_ppif {
@@ -7825,6 +7849,7 @@ sub assert_ppif_queue_head_last_beat_burst_length_adapter_case {
     my $isf = $result->{generated_ial1}{text};
     my $fsm = $result->{generated_ial0}{files}{'axi0_capacity_status.fsm'};
     my $tx = $args{final_transaction};
+    my $validation = $args{runtime_validation} ? 'runtime_assertion' : 'report_only';
 
     is($result->{kind}, 'protocol_intent.axi_manager_capacity_status', "$args{owner} sample still uses the capacity/status generator");
     is($result->{report}{source_object}{id}, $args{object_id}, "$args{owner} source object id is preserved");
@@ -7848,8 +7873,15 @@ sub assert_ppif_queue_head_last_beat_burst_length_adapter_case {
         qr/\(-axi0_${tx}_burst_length_capture\s+<axi0_${tx}_request\s+\(<- \(axi0_${tx}_arlen_q axi0_arlen\)\)\s+\)/,
         "$args{owner} sample lowers $tx raw ARLEN capture rule into generated .fsm",
     );
-    unlike($isf, qr/\bexpected_beats_q\b/, "$args{owner} report-only sample does not generate expected-beat storage");
-    unlike($isf, qr/\bread_beat_count_q\b/, "$args{owner} report-only sample does not generate beat-count storage");
+    if ($args{runtime_validation}) {
+        like($isf, qr/\(var axi0_${tx}_expected_beats_q \(width 5\)\)/, "$args{owner} runtime sample declares $tx expected-beat storage");
+        like($isf, qr/\(var axi0_${tx}_read_beat_count_q \(width 5\)\)/, "$args{owner} runtime sample declares $tx beat-count storage");
+        like($isf, qr/\(rule axi0_${tx}_beat_count_init axi0_${tx}_request\b/, "$args{owner} runtime sample initializes $tx expected-beat state on request");
+        like($isf, qr/\(rule axi0_${tx}_read_beat_count\b/, "$args{owner} runtime sample increments $tx matched read-beat count");
+    } else {
+        unlike($isf, qr/\bexpected_beats_q\b/, "$args{owner} report-only sample does not generate expected-beat storage");
+        unlike($isf, qr/\bread_beat_count_q\b/, "$args{owner} report-only sample does not generate beat-count storage");
+    }
     assert_same_id_queue_head_response_demux_report(
         $result->{report}{response_demux},
         "$args{owner} adapter response-demux report",
@@ -7861,7 +7893,7 @@ sub assert_ppif_queue_head_last_beat_burst_length_adapter_case {
     assert_read_data_burst_length_report(
         $result->{report}{read_data},
         "$args{owner} adapter read-data report",
-        'report_only',
+        $validation,
         'generated_queue_head_response_demux_last_beat_completion_pulse',
         transactions => $args{transactions},
     );
@@ -7873,6 +7905,7 @@ sub assert_ppif_queue_head_last_beat_burst_length_adapter_case {
 sub assert_ppif_queue_head_last_beat_burst_length_schedule_json_case {
     my (%args) = @_;
     my $sample_path = $args{path}->();
+    my $validation = $args{runtime_validation} ? 'runtime_assertion' : 'report_only';
     my ($success, undef, undef, $stdout_buf, $stderr_buf) = run(
         command => ['./bin/fsmgen', '--emit-schedule-json', $sample_path],
     );
@@ -7893,7 +7926,7 @@ sub assert_ppif_queue_head_last_beat_burst_length_schedule_json_case {
     assert_read_data_burst_length_report(
         $report->{read_data},
         "$args{owner} CLI read-data report",
-        'report_only',
+        $validation,
         'generated_queue_head_response_demux_last_beat_completion_pulse',
         transactions => $args{transactions},
     );
@@ -7930,8 +7963,15 @@ sub assert_ppif_queue_head_last_beat_burst_length_verify_hdl_case {
     like($sv, $args{hdl_demux_guard_pattern}, "$args{owner} HDL keeps the selected RLAST-gated concrete RID queue-head demux guard");
     like($sv, qr/axi0_${tx}_last_rdata_next\s*=\s*axi0_rdata\s*;/, "$args{owner} HDL captures RDATA into $tx last output");
     like($sv, qr/axi0_${tx}_last_rresp_next\s*=\s*axi0_rresp\s*;/, "$args{owner} HDL captures RRESP into $tx last output");
-    unlike($sv, qr/\bexpected_beats_q\b/, "$args{owner} report-only HDL does not declare expected-beat storage");
-    unlike($sv, qr/\bread_beat_count_q\b/, "$args{owner} report-only HDL does not declare beat-count storage");
+    if ($args{runtime_validation}) {
+        like($sv, qr/\breg\s+\[4:0\]\s+axi0_${tx}_expected_beats_q\b/, "$args{owner} HDL declares $tx expected-beat storage");
+        like($sv, qr/\breg\s+\[4:0\]\s+axi0_${tx}_read_beat_count_q\b/, "$args{owner} HDL declares $tx beat-count storage");
+        like($sv, qr/assign\s+axi0_${tx}_beat_count_init_en\s*=\s*axi0_${tx}_request\s*;/, "$args{owner} HDL guards $tx beat-count init with request");
+        like($sv, qr/assign\s+axi0_${tx}_read_beat_count_en\s*=/, "$args{owner} HDL emits $tx beat-count increment enable");
+    } else {
+        unlike($sv, qr/\bexpected_beats_q\b/, "$args{owner} report-only HDL does not declare expected-beat storage");
+        unlike($sv, qr/\bread_beat_count_q\b/, "$args{owner} report-only HDL does not declare beat-count storage");
+    }
 }
 
 sub assert_ppif_strict_json_support_case {
@@ -8099,6 +8139,50 @@ sub queue_head_depth3_last_beat_burst_length_case_args {
             generated_assertions => same_id_response_demux_assertions('read', qw(r0 r1 r2 r3 r4)),
             artifact_stem => 'axi_read_burst_last_mixed_depth3_depth2_same_id_queue_head_burst_length',
             final_transaction => 'r4',
+            isf_demux_rule_pattern => qr/\(rule axi0_r4_response_demux \(& axi0_read_complete \(== axi0_rid 4'd5\) axi0_rlast axi0_read_id5_same_id_issue_order_slot0_r4_q\)/,
+            hdl_demux_guard_pattern => qr/axi0_read_complete\s*&\s*\(axi0_rid\s*==\s*4'd5\)\s*&\s*axi0_rlast\s*&\s*axi0_read_id5_same_id_issue_order_slot0_r4_q/,
+        },
+        read_burst_multi_depth3_runtime_assertion => {
+            owner => 'read burst-last multi-depth-3 same-ID queue-head runtime-validation burst-length',
+            path => \&sample_capacity_read_burst_last_multi_depth3_same_id_queue_head_burst_length_runtime_assertion_ppif_path,
+            source => \&sample_capacity_read_burst_last_multi_depth3_same_id_queue_head_burst_length_runtime_assertion_ppif,
+            intent_name => 'axi_manager_capacity_status_read_burst_last_multi_depth3_same_id_queue_head_burst_length_runtime_assertion',
+            object_id => 'axi-manager-capacity-status-read-burst-last-multi-depth3-same-id-queue-head-burst-length-runtime-assertion',
+            entry_id => 'intent.ppif_axi_manager_capacity_status_read_burst_last_multi_depth3_same_id_queue_head_burst_length_runtime_assertion',
+            queues => [
+                { concrete_id => 3, transactions => [qw(r0 r1 r2)], depth => 3, dequeue_event_source => 'queue_head_response_demux' },
+                { concrete_id => 5, transactions => [qw(r3 r4 r5)], depth => 3, dequeue_event_source => 'queue_head_response_demux' },
+            ],
+            queue_depths => [3, 3],
+            transactions => [qw(r0 r1 r2 r3 r4 r5)],
+            completion_signals => [qw(axi0_r0_complete axi0_r1_complete axi0_r2_complete axi0_r3_complete axi0_r4_complete axi0_r5_complete)],
+            generated_rules => [qw(axi0_r0_response_demux axi0_r1_response_demux axi0_r2_response_demux axi0_r3_response_demux axi0_r4_response_demux axi0_r5_response_demux)],
+            generated_assertions => same_id_response_demux_assertions('read', qw(r0 r1 r2 r3 r4 r5)),
+            artifact_stem => 'axi_read_burst_last_multi_depth3_same_id_queue_head_burst_length_runtime_assertion',
+            final_transaction => 'r5',
+            runtime_validation => 1,
+            isf_demux_rule_pattern => qr/\(rule axi0_r5_response_demux \(& axi0_read_complete \(== axi0_rid 4'd5\) axi0_rlast axi0_read_id5_same_id_issue_order_slot0_r5_q\)/,
+            hdl_demux_guard_pattern => qr/axi0_read_complete\s*&\s*\(axi0_rid\s*==\s*4'd5\)\s*&\s*axi0_rlast\s*&\s*axi0_read_id5_same_id_issue_order_slot0_r5_q/,
+        },
+        read_burst_mixed_depth3_depth2_runtime_assertion => {
+            owner => 'read burst-last mixed depth-3/depth-2 same-ID queue-head runtime-validation burst-length',
+            path => \&sample_capacity_read_burst_last_mixed_depth3_depth2_same_id_queue_head_burst_length_runtime_assertion_ppif_path,
+            source => \&sample_capacity_read_burst_last_mixed_depth3_depth2_same_id_queue_head_burst_length_runtime_assertion_ppif,
+            intent_name => 'axi_manager_capacity_status_read_burst_last_mixed_depth3_depth2_same_id_queue_head_burst_length_runtime_assertion',
+            object_id => 'axi-manager-capacity-status-read-burst-last-mixed-depth3-depth2-same-id-queue-head-burst-length-runtime-assertion',
+            entry_id => 'intent.ppif_axi_manager_capacity_status_read_burst_last_mixed_depth3_depth2_same_id_queue_head_burst_length_runtime_assertion',
+            queues => [
+                { concrete_id => 3, transactions => [qw(r0 r1 r2)], depth => 3, dequeue_event_source => 'queue_head_response_demux' },
+                { concrete_id => 5, transactions => [qw(r3 r4)], depth => 2, dequeue_event_source => 'queue_head_response_demux' },
+            ],
+            queue_depths => [3, 2],
+            transactions => [qw(r0 r1 r2 r3 r4)],
+            completion_signals => [qw(axi0_r0_complete axi0_r1_complete axi0_r2_complete axi0_r3_complete axi0_r4_complete)],
+            generated_rules => [qw(axi0_r0_response_demux axi0_r1_response_demux axi0_r2_response_demux axi0_r3_response_demux axi0_r4_response_demux)],
+            generated_assertions => same_id_response_demux_assertions('read', qw(r0 r1 r2 r3 r4)),
+            artifact_stem => 'axi_read_burst_last_mixed_depth3_depth2_same_id_queue_head_burst_length_runtime_assertion',
+            final_transaction => 'r4',
+            runtime_validation => 1,
             isf_demux_rule_pattern => qr/\(rule axi0_r4_response_demux \(& axi0_read_complete \(== axi0_rid 4'd5\) axi0_rlast axi0_read_id5_same_id_issue_order_slot0_r4_q\)/,
             hdl_demux_guard_pattern => qr/axi0_read_complete\s*&\s*\(axi0_rid\s*==\s*4'd5\)\s*&\s*axi0_rlast\s*&\s*axi0_read_id5_same_id_issue_order_slot0_r4_q/,
         },

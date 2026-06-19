@@ -1293,7 +1293,8 @@ sub _read_data_response_demux_transaction_coverage(%args) {
         }
         my $last_beat_depth3_coverage = 0;
         if (($multi_group_last_beat_without_burst_length
-                || $multi_group_last_beat_with_report_only_burst_length)
+                || $multi_group_last_beat_with_report_only_burst_length
+                || $multi_group_last_beat_with_runtime_assertion_burst_length)
             && ref($groups) eq 'ARRAY'
             && @$groups
         ) {
@@ -1316,15 +1317,6 @@ sub _read_data_response_demux_transaction_coverage(%args) {
                 last;
             }
             $last_beat_depth3_coverage = $all_groups_supported && $has_depth3_group;
-        } elsif ($multi_group_last_beat_with_runtime_assertion_burst_length
-            && ref($groups) eq 'ARRAY'
-            && @$groups == 1
-        ) {
-            my $group = $groups->[0];
-            $last_beat_depth3_coverage = ref($group) eq 'HASH'
-                && ($group->{depth} // 0) == 3
-                && ref($group->{transactions}) eq 'ARRAY'
-                && @{$group->{transactions}} == 3;
         }
         my $multi_beat_depth3_coverage = 0;
         if ($capture_scope eq 'multi-beat'
@@ -1348,7 +1340,7 @@ sub _read_data_response_demux_transaction_coverage(%args) {
             : $multi_group_single_beat
                 ? 'AXI manager capacity/status IAL2 contract read_data.read queue-head single-beat coverage requires one or more depth-2 concrete same-ID read queue groups, exactly one depth-3 concrete same-ID read queue group, or bounded multiple/mixed depth-3 concrete same-ID read queue groups in this slice'
             : ($multi_group_last_beat_without_burst_length || $multi_group_last_beat_with_report_only_burst_length || $multi_group_last_beat_with_runtime_assertion_burst_length)
-                ? 'AXI manager capacity/status IAL2 contract read_data.read queue-head last-beat coverage requires one or more depth-2 concrete same-ID read queue groups with no burst_length metadata, report-only burst_length metadata, or runtime-assertion burst_length metadata, exactly one depth-3 concrete same-ID read queue group with no burst_length metadata, report-only burst_length metadata, or runtime-assertion burst_length metadata, or bounded multiple/mixed depth-3 concrete same-ID read queue groups with no burst_length metadata or report-only burst_length metadata in this slice'
+                ? 'AXI manager capacity/status IAL2 contract read_data.read queue-head last-beat coverage requires one or more depth-2 concrete same-ID read queue groups with no burst_length metadata, report-only burst_length metadata, or runtime-assertion burst_length metadata, exactly one depth-3 concrete same-ID read queue group with no burst_length metadata, report-only burst_length metadata, or runtime-assertion burst_length metadata, or bounded multiple/mixed depth-3 concrete same-ID read queue groups with no burst_length metadata, report-only burst_length metadata, or runtime-assertion burst_length metadata in this slice'
                 : 'AXI manager capacity/status IAL2 contract read_data.read queue-head coverage requires exactly one depth-2 concrete same-ID read queue group in this slice';
         confess "$queue_group_diagnostic\n"
             unless ref($groups) eq 'ARRAY' && @$groups;

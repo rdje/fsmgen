@@ -2552,6 +2552,60 @@ subtest 'read-data burst-last mixed depth-3/depth-2 queue-head contract generate
     unlike($hdl, qr/\bread_beat_count_q\b/, 'SystemVerilog omits beat-count storage for burst-last mixed-depth report-only burst-length');
 };
 
+subtest 'read-data burst-last multi-depth-3 queue-head contract generates runtime beat-count validation' => sub {
+    my $result = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_same_id_read_burst_last_multi_depth3_queue_head_burst_length_runtime_assertion());
+    my $isf = $result->{generated_ial1}{text};
+    my $fsm = $result->{generated_ial0}{files}{'axi0_capacity_status.fsm'};
+
+    like($isf, qr/\(var axi0_r5_expected_beats_q \(width 5\)\)/, 'burst-last multi-depth-3 runtime validation declares r5 expected-beat storage');
+    like($isf, qr/\(var axi0_r5_read_beat_count_q \(width 5\)\)/, 'burst-last multi-depth-3 runtime validation declares r5 beat-count storage');
+    like($isf, qr/\(rule axi0_r5_beat_count_init axi0_r5_request\s+\(axi0_r5_expected_beats_q \(\+ axi0_arlen\[4:0\] 5'd1\)\)\s+\(axi0_r5_read_beat_count_q 0\)\)/, 'burst-last multi-depth-3 runtime validation initializes r5 expected count and beat counter on request');
+    like($isf, qr/\(rule axi0_r5_read_beat_count \(& \(& axi0_read_complete \(& \(== axi0_rid 4'd5\) axi0_read_id5_same_id_issue_order_slot0_r5_q\)\) \(! axi0_r5_request\)\)\s+\(axi0_r5_read_beat_count_q \(\+ axi0_r5_read_beat_count_q 5'd1\)\)\)/, 'burst-last multi-depth-3 runtime validation increments r5 count on raw matched RID5 queue-head beat');
+    like($fsm, qr/\(-axi0_r5_beat_count_init\s+<axi0_r5_request\s+\(<- \(axi0_r5_expected_beats_q \(\+ axi0_arlen\[4:0\] 5'd1\)\)\)\s+\(<- \(axi0_r5_read_beat_count_q 0\)\)/, 'scheduled .fsm carries r5 multi-depth-3 expected-beat initialization');
+    like($fsm, qr/\(-axi0_r5_read_beat_count\s+<\(& \(& axi0_read_complete \(& \(== axi0_rid 4'd5\) axi0_read_id5_same_id_issue_order_slot0_r5_q\)\) \(! axi0_r5_request\)\)\s+\(<- \(axi0_r5_read_beat_count_q \(\+ axi0_r5_read_beat_count_q 5'd1\)\)\)/, 'scheduled .fsm carries r5 multi-depth-3 matched-beat increment');
+
+    assert_read_data_burst_length_report(
+        $result->{report}{read_data},
+        'generator burst-last multi-depth-3 queue-head runtime-validation read-data report',
+        'runtime_assertion',
+        'generated_queue_head_response_demux_last_beat_completion_pulse',
+        transactions => [qw(r0 r1 r2 r3 r4 r5)],
+    );
+
+    my $hdl = hdl_for('axi0_capacity_status', $fsm);
+    like($hdl, qr/\breg\s+\[4:0\]\s+axi0_r5_expected_beats_q\b/, 'SystemVerilog declares r5 multi-depth-3 expected-beat storage');
+    like($hdl, qr/\breg\s+\[4:0\]\s+axi0_r5_read_beat_count_q\b/, 'SystemVerilog declares r5 multi-depth-3 beat-count storage');
+    like($hdl, qr/axi0_r5_read_beat_count_q_next\s*=\s*axi0_r5_read_beat_count_q\s*\+\s*5'd1\s*;/, 'SystemVerilog increments r5 multi-depth-3 beat count');
+    like($hdl, qr/assign\s+axi0_r5_read_beat_count_en\s*=/, 'SystemVerilog emits r5 multi-depth-3 beat-count increment enable');
+};
+
+subtest 'read-data burst-last mixed depth-3/depth-2 queue-head contract generates runtime beat-count validation' => sub {
+    my $result = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_same_id_read_burst_last_mixed_depth3_depth2_queue_head_burst_length_runtime_assertion());
+    my $isf = $result->{generated_ial1}{text};
+    my $fsm = $result->{generated_ial0}{files}{'axi0_capacity_status.fsm'};
+
+    like($isf, qr/\(var axi0_r4_expected_beats_q \(width 5\)\)/, 'burst-last mixed-depth runtime validation declares r4 expected-beat storage');
+    like($isf, qr/\(var axi0_r4_read_beat_count_q \(width 5\)\)/, 'burst-last mixed-depth runtime validation declares r4 beat-count storage');
+    like($isf, qr/\(rule axi0_r4_beat_count_init axi0_r4_request\s+\(axi0_r4_expected_beats_q \(\+ axi0_arlen\[4:0\] 5'd1\)\)\s+\(axi0_r4_read_beat_count_q 0\)\)/, 'burst-last mixed-depth runtime validation initializes r4 expected count and beat counter on request');
+    like($isf, qr/\(rule axi0_r4_read_beat_count \(& \(& axi0_read_complete \(& \(== axi0_rid 4'd5\) axi0_read_id5_same_id_issue_order_slot0_r4_q\)\) \(! axi0_r4_request\)\)\s+\(axi0_r4_read_beat_count_q \(\+ axi0_r4_read_beat_count_q 5'd1\)\)\)/, 'burst-last mixed-depth runtime validation increments r4 count on raw matched RID5 queue-head beat');
+    like($fsm, qr/\(-axi0_r4_beat_count_init\s+<axi0_r4_request\s+\(<- \(axi0_r4_expected_beats_q \(\+ axi0_arlen\[4:0\] 5'd1\)\)\)\s+\(<- \(axi0_r4_read_beat_count_q 0\)\)/, 'scheduled .fsm carries r4 mixed-depth expected-beat initialization');
+    like($fsm, qr/\(-axi0_r4_read_beat_count\s+<\(& \(& axi0_read_complete \(& \(== axi0_rid 4'd5\) axi0_read_id5_same_id_issue_order_slot0_r4_q\)\) \(! axi0_r4_request\)\)\s+\(<- \(axi0_r4_read_beat_count_q \(\+ axi0_r4_read_beat_count_q 5'd1\)\)\)/, 'scheduled .fsm carries r4 mixed-depth matched-beat increment');
+
+    assert_read_data_burst_length_report(
+        $result->{report}{read_data},
+        'generator burst-last mixed-depth queue-head runtime-validation read-data report',
+        'runtime_assertion',
+        'generated_queue_head_response_demux_last_beat_completion_pulse',
+        transactions => [qw(r0 r1 r2 r3 r4)],
+    );
+
+    my $hdl = hdl_for('axi0_capacity_status', $fsm);
+    like($hdl, qr/\breg\s+\[4:0\]\s+axi0_r4_expected_beats_q\b/, 'SystemVerilog declares r4 mixed-depth expected-beat storage');
+    like($hdl, qr/\breg\s+\[4:0\]\s+axi0_r4_read_beat_count_q\b/, 'SystemVerilog declares r4 mixed-depth beat-count storage');
+    like($hdl, qr/axi0_r4_read_beat_count_q_next\s*=\s*axi0_r4_read_beat_count_q\s*\+\s*5'd1\s*;/, 'SystemVerilog increments r4 mixed-depth beat count');
+    like($hdl, qr/assign\s+axi0_r4_read_beat_count_en\s*=/, 'SystemVerilog emits r4 mixed-depth beat-count increment enable');
+};
+
 subtest 'read-data multi-group queue-head last-beat contract generates raw ARLEN burst-length capture' => sub {
     my $result = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_same_id_read_multi_group_queue_head_last_beat_burst_length());
     my $isf = $result->{generated_ial1}{text};
@@ -3770,6 +3824,22 @@ sub sample_contract_with_same_id_read_burst_last_mixed_depth3_depth2_queue_head_
     $contract->{source}{object_id} = 'axi-manager-capacity-status-read-burst-last-mixed-depth3-depth2-same-id-queue-head-burst-length';
     $contract->{read_data}{read}{burst_length}
         = sample_contract_with_same_id_read_last_beat_queue_head_burst_length()->{read_data}{read}{burst_length};
+    return $contract;
+}
+
+sub sample_contract_with_same_id_read_burst_last_multi_depth3_queue_head_burst_length_runtime_assertion {
+    my $contract = sample_contract_with_same_id_read_burst_last_multi_depth3_queue_head_burst_length();
+    $contract->{intent_name} = 'axi_manager_capacity_status_read_burst_last_multi_depth3_same_id_queue_head_burst_length_runtime_assertion';
+    $contract->{source}{object_id} = 'axi-manager-capacity-status-read-burst-last-multi-depth3-same-id-queue-head-burst-length-runtime-assertion';
+    $contract->{read_data}{read}{burst_length}{validation} = 'runtime-assertion';
+    return $contract;
+}
+
+sub sample_contract_with_same_id_read_burst_last_mixed_depth3_depth2_queue_head_burst_length_runtime_assertion {
+    my $contract = sample_contract_with_same_id_read_burst_last_mixed_depth3_depth2_queue_head_burst_length();
+    $contract->{intent_name} = 'axi_manager_capacity_status_read_burst_last_mixed_depth3_depth2_same_id_queue_head_burst_length_runtime_assertion';
+    $contract->{source}{object_id} = 'axi-manager-capacity-status-read-burst-last-mixed-depth3-depth2-same-id-queue-head-burst-length-runtime-assertion';
+    $contract->{read_data}{read}{burst_length}{validation} = 'runtime-assertion';
     return $contract;
 }
 

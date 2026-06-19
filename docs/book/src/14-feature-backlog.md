@@ -6235,21 +6235,39 @@ generate those artifacts from admitted transaction lists. Temporary
 runtime-assertion variants of the two `.183` samples fail closed only at the
 local last-beat coverage diagnostic.
 
-The selected implementation should add support-accounted public samples
+Multiple/mixed depth-3 queue-head runtime-validation behavior:
+[AXI_IAL2_MANAGER_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_RUNTIME_VALIDATION_BEHAVIOR](../../AXI_IAL2_MANAGER_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_RUNTIME_VALIDATION_BEHAVIOR.md)
+records `.186`, which ships generated beat-count/`RLAST` runtime validation
+over multiple/mixed depth-3 read burst-last queue-head scalar last-beat
+read-data. The support-accounted public samples are
 `ppif/axi_manager_capacity_status_read_burst_last_multi_depth3_same_id_queue_head_burst_length_runtime_assertion.ppif`
 and
 `ppif/axi_manager_capacity_status_read_burst_last_mixed_depth3_depth2_same_id_queue_head_burst_length_runtime_assertion.ppif`.
-Those samples should report `burst_length_validation: runtime_assertion`,
+They cover two depth-3 duplicate-`RID` queue-head groups and mixed
+depth-3/depth-2 queue-head groups, respectively.
+
+Generation preserves request-side raw `ARLEN` capture and scalar last-beat
+`RDATA`/`RRESP` capture, adds expected-beat storage encoded as `ARLEN+1`,
+read-beat counters, request initialization rules, response increment rules,
+and generated beat-count/`RLAST` assertions. Reports set
+`burst_length_validation: runtime_assertion`,
 `beat_count_validation_generated_behavior: true`,
 `expected_beat_count_encoding: arlen_plus_one`, and
-`beat_count_match_source: response_demux_matched_read_beat`, then remove
-`generated_beat_count_validation` from read-data residue while preserving
-`multi_beat_read_data_reassembly`, `per_beat_outputs`, and
-`rresp_aggregation`. Multi-beat output bank, write-family read-data,
+`beat_count_match_source: response_demux_matched_read_beat`. The shipped
+runtime-validation shape removes `generated_beat_count_validation` from
+read-data residue while preserving `multi_beat_read_data_reassembly`,
+`per_beat_outputs`, and `rresp_aggregation`. Multi-beat output bank,
+write-family read-data,
 same-family mixed auto-ID plus concrete queue-head demux, group-local enqueue
 widening, packed payload vectors, alternate burst assembly, direct backend,
 verification-output generation, VHDL, and backend-language variants remain
 separately owned.
+
+Post multiple/mixed depth-3 queue-head runtime-validation selector:
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.187` is the next documentation-only
+selector/readiness leaf after `.186`. It will compare multi-beat output-bank
+behavior over the shipped multiple/mixed runtime-validation groups with the
+other remaining exact candidates before any additional behavior changes.
 
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
@@ -8512,7 +8530,7 @@ support catalog entries instead of recursive workspace traversal.
 `SEMANTIC-INTROSPECTION-MCP-FRONTIER.30` closes the immediate read-only
 semantic-introspection/MCP pass after source discovery; the active roadmap
 priority is again the IAL2 feature-completeness tree, currently at
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.186`.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.187`.
 
 Selected first MCP resource families are `fsmgen://capabilities`,
 `fsmgen://contracts`, `fsmgen://diagnostics`,

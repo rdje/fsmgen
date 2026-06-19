@@ -64,9 +64,11 @@ groups, plus selected read and write single-group depth-3 queue-head shapes,
 multiple/mixed depth-3 response-demux-only queue-head groups for read
 single-beat, read burst-last, and write families, selected multiple/mixed
 depth-3 read single-beat scalar read-data groups, selected multiple/mixed
-depth-3 read burst-last scalar last-beat read-data groups, and selected
+depth-3 read burst-last scalar last-beat read-data groups, selected
 report-only raw-`ARLEN` burst-length capture over those multiple/mixed
-depth-3 read burst-last scalar last-beat groups.
+depth-3 read burst-last scalar last-beat groups, and generated runtime
+beat-count/`RLAST` validation over those multiple/mixed depth-3 read
+burst-last scalar last-beat groups.
 Broader concrete same-ID queues, same-family mixed auto-ID plus concrete
 queue-head demux, group-local simultaneous enqueue widening, packed burst-vector outputs,
 alternate full burst payload assembly, aliases, platform clauses, full AXI
@@ -2866,7 +2868,7 @@ catalog-backed through the manifest support catalog: reuse existing manifest,
 support-accounting, and example surfaces; do not recursively expose arbitrary
 workspace files. The immediate semantic-introspection/MCP pass is complete
 through `SEMANTIC-INTROSPECTION-MCP-FRONTIER.30`; active roadmap priority has
-returned to `IAL2-FEATURE-COMPLETENESS-FRONTIER.148`.
+returned to `IAL2-FEATURE-COMPLETENESS-FRONTIER.187`.
 
 ## Downstream Tool Alignment
 
