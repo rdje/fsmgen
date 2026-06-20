@@ -2606,6 +2606,153 @@ subtest 'read-data burst-last mixed depth-3/depth-2 queue-head contract generate
     like($hdl, qr/assign\s+axi0_r4_read_beat_count_en\s*=/, 'SystemVerilog emits r4 mixed-depth beat-count increment enable');
 };
 
+subtest 'read-data burst-last multi-depth-3 queue-head contract generates multi-beat output-bank behavior' => sub {
+    my $result = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_same_id_read_burst_last_multi_depth3_queue_head_multi_beat_read_data());
+    my $isf = $result->{generated_ial1}{text};
+    my $fsm = $result->{generated_ial0}{files}{'axi0_capacity_status.fsm'};
+
+    like($isf, qr/\(rule axi0_r5_response_demux \(& axi0_read_complete \(== axi0_rid 4'd5\) axi0_rlast axi0_read_id5_same_id_issue_order_slot0_r5_q\)/, 'multi-depth-3 multi-beat emits r5 RID5 RLAST-gated queue-head demux rule');
+    like($isf, qr/\(output axi0_r5_beat_rdata_0 \(width 32\)\)/, 'multi-depth-3 multi-beat declares r5 beat 0 data output');
+    like($isf, qr/\(output axi0_r5_beat_rresp_0 \(width 2\)\)/, 'multi-depth-3 multi-beat declares r5 beat 0 status output');
+    like($isf, qr/\(output axi0_r5_rresp \(width 2\)\)/, 'multi-depth-3 multi-beat declares r5 scalar aggregate status output');
+    like($isf, qr/\(output axi0_r5_beat_valid \(width 16\)\)/, 'multi-depth-3 multi-beat declares r5 valid-mask output');
+    like($isf, qr/\(output axi0_r5_read_beats \(width 5\)\)/, 'multi-depth-3 multi-beat declares r5 length output');
+    like($isf, qr/\(var axi0_r5_expected_beats_q \(width 5\)\)/, 'multi-depth-3 multi-beat keeps r5 expected-beat storage');
+    like($isf, qr/\(var axi0_r5_read_beat_count_q \(width 5\)\)/, 'multi-depth-3 multi-beat keeps r5 beat-count storage');
+    like($isf, qr/\(rule axi0_r5_read_data_output_init axi0_r5_request[\s\S]*\(axi0_r5_beat_rdata_0 32'd0\)[\s\S]*\(axi0_r5_rresp 2'd0\)[\s\S]*\(axi0_r5_beat_valid 16'b0\)[\s\S]*\(axi0_r5_read_beats 5'd0\)\)/, 'multi-depth-3 multi-beat clears r5 output bank and aggregate on request');
+    like($isf, qr/\(rule axi0_r5_read_beat_0_capture \(& \(& axi0_read_complete \(& \(== axi0_rid 4'd5\) axi0_read_id5_same_id_issue_order_slot0_r5_q\)\) \(! axi0_r5_request\) \(== axi0_r5_read_beat_count_q 5'd0\)\)[\s\S]*\(axi0_r5_beat_rdata_0 axi0_rdata\)[\s\S]*\(axi0_r5_beat_rresp_0 axi0_rresp\)[\s\S]*\(axi0_r5_beat_valid 16'b0000000000000001\)[\s\S]*\(axi0_r5_read_beats 5'd1\)\)/, 'multi-depth-3 multi-beat captures r5 lane 0 with RID5 matched queue-head beat');
+    like($isf, qr/\(rule axi0_r5_rresp_aggregate \(& \(& axi0_read_complete \(& \(== axi0_rid 4'd5\) axi0_read_id5_same_id_issue_order_slot0_r5_q\)\) \(! axi0_r5_request\) \(< axi0_r5_rresp axi0_rresp\)\)\s+\(axi0_r5_rresp axi0_rresp\)\)/, 'multi-depth-3 multi-beat updates r5 scalar aggregate on RID5 matched beat');
+    like($fsm, qr/\(-axi0_r5_read_beat_0_capture\s+<\(& \(& axi0_read_complete \(& \(== axi0_rid 4'd5\) axi0_read_id5_same_id_issue_order_slot0_r5_q\)\) \(! axi0_r5_request\) \(== axi0_r5_read_beat_count_q 5'd0\)\)[\s\S]*\(<- \(axi0_r5_beat_rdata_0> axi0_rdata\)\)[\s\S]*\(<- \(axi0_r5_beat_rresp_0> axi0_rresp\)\)[\s\S]*\(<- \(axi0_r5_beat_valid> 16'b0000000000000001\)\)[\s\S]*\(<- \(axi0_r5_read_beats> 5'd1\)\)/, 'scheduled .fsm captures multi-depth-3 r5 lane 0 payload, valid mask, and length');
+
+    assert_same_id_queue_head_response_demux_report(
+        $result->{report}{response_demux},
+        'generator multi-depth-3 queue-head multi-beat response-demux report',
+        residue => [],
+        queues => [
+            {
+                concrete_id          => 3,
+                transactions         => [qw(r0 r1 r2)],
+                depth                => 3,
+                dequeue_event_source => 'queue_head_response_demux',
+            },
+            {
+                concrete_id          => 5,
+                transactions         => [qw(r3 r4 r5)],
+                depth                => 3,
+                dequeue_event_source => 'queue_head_response_demux',
+            },
+        ],
+        completion_signals => [qw(axi0_r0_complete axi0_r1_complete axi0_r2_complete axi0_r3_complete axi0_r4_complete axi0_r5_complete)],
+        generated_rules => [qw(axi0_r0_response_demux axi0_r1_response_demux axi0_r2_response_demux axi0_r3_response_demux axi0_r4_response_demux axi0_r5_response_demux)],
+        generated_assertions => [qw(
+            axi0_read_response_demux_active_match
+            axi0_r0_r1_read_response_demux_unique_match
+            axi0_r0_r2_read_response_demux_unique_match
+            axi0_r0_r3_read_response_demux_unique_match
+            axi0_r0_r4_read_response_demux_unique_match
+            axi0_r0_r5_read_response_demux_unique_match
+            axi0_r1_r2_read_response_demux_unique_match
+            axi0_r1_r3_read_response_demux_unique_match
+            axi0_r1_r4_read_response_demux_unique_match
+            axi0_r1_r5_read_response_demux_unique_match
+            axi0_r2_r3_read_response_demux_unique_match
+            axi0_r2_r4_read_response_demux_unique_match
+            axi0_r2_r5_read_response_demux_unique_match
+            axi0_r3_r4_read_response_demux_unique_match
+            axi0_r3_r5_read_response_demux_unique_match
+            axi0_r4_r5_read_response_demux_unique_match
+        )],
+    );
+    assert_read_data_multi_beat_report(
+        $result->{report}{read_data},
+        'generator multi-depth-3 queue-head multi-beat read-data report',
+        completion_validity => 'generated_queue_head_response_demux_last_beat_completion_pulse',
+        transactions => [qw(r0 r1 r2 r3 r4 r5)],
+    );
+
+    my $hdl = hdl_for('axi0_capacity_status', $fsm);
+    like($hdl, qr/\boutput\s+reg\s+\[31:0\]\s+axi0_r5_beat_rdata_0\b/, 'SystemVerilog exposes multi-depth-3 r5 per-beat data output');
+    like($hdl, qr/\boutput\s+reg\s+\[1:0\]\s+axi0_r5_rresp\b/, 'SystemVerilog exposes multi-depth-3 r5 scalar aggregate status output');
+    like($hdl, qr/\boutput\s+reg\s+\[15:0\]\s+axi0_r5_beat_valid\b/, 'SystemVerilog exposes multi-depth-3 r5 valid-mask output');
+    like($hdl, qr/\boutput\s+reg\s+\[4:0\]\s+axi0_r5_read_beats\b/, 'SystemVerilog exposes multi-depth-3 r5 length output');
+    like($hdl, qr/assign\s+axi0_r5_read_data_output_init_en\s*=\s*axi0_r5_request\s*;/, 'SystemVerilog drives multi-depth-3 r5 output-bank clear from request');
+    like($hdl, qr/assign\s+axi0_r5_read_beat_0_capture_en\s*=/, 'SystemVerilog emits multi-depth-3 r5 lane 0 capture enable');
+    like($hdl, qr/axi0_read_id5_same_id_issue_order_slot0_r5_q/, 'SystemVerilog multi-depth-3 lane capture references RID5 slot-0 transaction identity');
+    like($hdl, qr/axi0_r5_beat_rdata_0_next\s*=\s*axi0_rdata\s*;/, 'SystemVerilog captures multi-depth-3 r5 lane 0 data');
+    like($hdl, qr/axi0_r5_rresp_next\s*=\s*axi0_rresp\s*;/, 'SystemVerilog updates multi-depth-3 r5 scalar aggregate from current RRESP');
+};
+
+subtest 'read-data burst-last mixed depth-3/depth-2 queue-head contract generates multi-beat output-bank behavior' => sub {
+    my $result = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_same_id_read_burst_last_mixed_depth3_depth2_queue_head_multi_beat_read_data());
+    my $isf = $result->{generated_ial1}{text};
+    my $fsm = $result->{generated_ial0}{files}{'axi0_capacity_status.fsm'};
+
+    like($isf, qr/\(rule axi0_r4_response_demux \(& axi0_read_complete \(== axi0_rid 4'd5\) axi0_rlast axi0_read_id5_same_id_issue_order_slot0_r4_q\)/, 'mixed-depth multi-beat emits r4 RID5 RLAST-gated queue-head demux rule');
+    like($isf, qr/\(output axi0_r4_beat_rdata_0 \(width 32\)\)/, 'mixed-depth multi-beat declares r4 beat 0 data output');
+    like($isf, qr/\(output axi0_r4_beat_rresp_0 \(width 2\)\)/, 'mixed-depth multi-beat declares r4 beat 0 status output');
+    like($isf, qr/\(output axi0_r4_rresp \(width 2\)\)/, 'mixed-depth multi-beat declares r4 scalar aggregate status output');
+    like($isf, qr/\(output axi0_r4_beat_valid \(width 16\)\)/, 'mixed-depth multi-beat declares r4 valid-mask output');
+    like($isf, qr/\(output axi0_r4_read_beats \(width 5\)\)/, 'mixed-depth multi-beat declares r4 length output');
+    like($isf, qr/\(var axi0_r4_expected_beats_q \(width 5\)\)/, 'mixed-depth multi-beat keeps r4 expected-beat storage');
+    like($isf, qr/\(var axi0_r4_read_beat_count_q \(width 5\)\)/, 'mixed-depth multi-beat keeps r4 beat-count storage');
+    like($isf, qr/\(rule axi0_r4_read_data_output_init axi0_r4_request[\s\S]*\(axi0_r4_beat_rdata_0 32'd0\)[\s\S]*\(axi0_r4_rresp 2'd0\)[\s\S]*\(axi0_r4_beat_valid 16'b0\)[\s\S]*\(axi0_r4_read_beats 5'd0\)\)/, 'mixed-depth multi-beat clears r4 output bank and aggregate on request');
+    like($isf, qr/\(rule axi0_r4_read_beat_0_capture \(& \(& axi0_read_complete \(& \(== axi0_rid 4'd5\) axi0_read_id5_same_id_issue_order_slot0_r4_q\)\) \(! axi0_r4_request\) \(== axi0_r4_read_beat_count_q 5'd0\)\)[\s\S]*\(axi0_r4_beat_rdata_0 axi0_rdata\)[\s\S]*\(axi0_r4_beat_rresp_0 axi0_rresp\)[\s\S]*\(axi0_r4_beat_valid 16'b0000000000000001\)[\s\S]*\(axi0_r4_read_beats 5'd1\)\)/, 'mixed-depth multi-beat captures r4 lane 0 with RID5 matched queue-head beat');
+    like($isf, qr/\(rule axi0_r4_rresp_aggregate \(& \(& axi0_read_complete \(& \(== axi0_rid 4'd5\) axi0_read_id5_same_id_issue_order_slot0_r4_q\)\) \(! axi0_r4_request\) \(< axi0_r4_rresp axi0_rresp\)\)\s+\(axi0_r4_rresp axi0_rresp\)\)/, 'mixed-depth multi-beat updates r4 scalar aggregate on RID5 matched beat');
+    like($fsm, qr/\(-axi0_r4_read_beat_0_capture\s+<\(& \(& axi0_read_complete \(& \(== axi0_rid 4'd5\) axi0_read_id5_same_id_issue_order_slot0_r4_q\)\) \(! axi0_r4_request\) \(== axi0_r4_read_beat_count_q 5'd0\)\)[\s\S]*\(<- \(axi0_r4_beat_rdata_0> axi0_rdata\)\)[\s\S]*\(<- \(axi0_r4_beat_rresp_0> axi0_rresp\)\)[\s\S]*\(<- \(axi0_r4_beat_valid> 16'b0000000000000001\)\)[\s\S]*\(<- \(axi0_r4_read_beats> 5'd1\)\)/, 'scheduled .fsm captures mixed-depth r4 lane 0 payload, valid mask, and length');
+
+    assert_same_id_queue_head_response_demux_report(
+        $result->{report}{response_demux},
+        'generator mixed-depth queue-head multi-beat response-demux report',
+        residue => [],
+        queues => [
+            {
+                concrete_id          => 3,
+                transactions         => [qw(r0 r1 r2)],
+                depth                => 3,
+                dequeue_event_source => 'queue_head_response_demux',
+            },
+            {
+                concrete_id          => 5,
+                transactions         => [qw(r3 r4)],
+                depth                => 2,
+                dequeue_event_source => 'queue_head_response_demux',
+            },
+        ],
+        completion_signals => [qw(axi0_r0_complete axi0_r1_complete axi0_r2_complete axi0_r3_complete axi0_r4_complete)],
+        generated_rules => [qw(axi0_r0_response_demux axi0_r1_response_demux axi0_r2_response_demux axi0_r3_response_demux axi0_r4_response_demux)],
+        generated_assertions => [qw(
+            axi0_read_response_demux_active_match
+            axi0_r0_r1_read_response_demux_unique_match
+            axi0_r0_r2_read_response_demux_unique_match
+            axi0_r0_r3_read_response_demux_unique_match
+            axi0_r0_r4_read_response_demux_unique_match
+            axi0_r1_r2_read_response_demux_unique_match
+            axi0_r1_r3_read_response_demux_unique_match
+            axi0_r1_r4_read_response_demux_unique_match
+            axi0_r2_r3_read_response_demux_unique_match
+            axi0_r2_r4_read_response_demux_unique_match
+            axi0_r3_r4_read_response_demux_unique_match
+        )],
+    );
+    assert_read_data_multi_beat_report(
+        $result->{report}{read_data},
+        'generator mixed-depth queue-head multi-beat read-data report',
+        completion_validity => 'generated_queue_head_response_demux_last_beat_completion_pulse',
+        transactions => [qw(r0 r1 r2 r3 r4)],
+    );
+
+    my $hdl = hdl_for('axi0_capacity_status', $fsm);
+    like($hdl, qr/\boutput\s+reg\s+\[31:0\]\s+axi0_r4_beat_rdata_0\b/, 'SystemVerilog exposes mixed-depth r4 per-beat data output');
+    like($hdl, qr/\boutput\s+reg\s+\[1:0\]\s+axi0_r4_rresp\b/, 'SystemVerilog exposes mixed-depth r4 scalar aggregate status output');
+    like($hdl, qr/\boutput\s+reg\s+\[15:0\]\s+axi0_r4_beat_valid\b/, 'SystemVerilog exposes mixed-depth r4 valid-mask output');
+    like($hdl, qr/\boutput\s+reg\s+\[4:0\]\s+axi0_r4_read_beats\b/, 'SystemVerilog exposes mixed-depth r4 length output');
+    like($hdl, qr/assign\s+axi0_r4_read_data_output_init_en\s*=\s*axi0_r4_request\s*;/, 'SystemVerilog drives mixed-depth r4 output-bank clear from request');
+    like($hdl, qr/assign\s+axi0_r4_read_beat_0_capture_en\s*=/, 'SystemVerilog emits mixed-depth r4 lane 0 capture enable');
+    like($hdl, qr/axi0_read_id5_same_id_issue_order_slot0_r4_q/, 'SystemVerilog mixed-depth lane capture references RID5 slot-0 transaction identity');
+    like($hdl, qr/axi0_r4_beat_rdata_0_next\s*=\s*axi0_rdata\s*;/, 'SystemVerilog captures mixed-depth r4 lane 0 data');
+    like($hdl, qr/axi0_r4_rresp_next\s*=\s*axi0_rresp\s*;/, 'SystemVerilog updates mixed-depth r4 scalar aggregate from current RRESP');
+};
+
 subtest 'read-data multi-group queue-head last-beat contract generates raw ARLEN burst-length capture' => sub {
     my $result = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_same_id_read_multi_group_queue_head_last_beat_burst_length());
     my $isf = $result->{generated_ial1}{text};
@@ -3843,6 +3990,80 @@ sub sample_contract_with_same_id_read_burst_last_mixed_depth3_depth2_queue_head_
     return $contract;
 }
 
+sub sample_contract_with_same_id_read_burst_last_multi_depth3_queue_head_multi_beat_read_data {
+    my $contract = sample_contract_with_same_id_read_burst_last_multi_depth3_queue_head_burst_length_runtime_assertion();
+    $contract->{intent_name} = 'axi_manager_capacity_status_read_burst_last_multi_depth3_same_id_queue_head_multi_beat_read_data';
+    $contract->{source}{object_id} = 'axi-manager-capacity-status-read-burst-last-multi-depth3-same-id-queue-head-multi-beat-read-data';
+    $contract->{read_data} = sample_contract_with_read_data_multi_beat()->{read_data};
+    push @{$contract->{read_data}{read}{transactions}},
+        {
+            transaction             => 'r2',
+            data_output_prefix      => 'axi0_r2_beat_rdata',
+            status_output_prefix    => 'axi0_r2_beat_rresp',
+            status_aggregate_output => 'axi0_r2_rresp',
+            valid_mask_output       => 'axi0_r2_beat_valid',
+            length_output           => 'axi0_r2_read_beats',
+        },
+        {
+            transaction             => 'r3',
+            data_output_prefix      => 'axi0_r3_beat_rdata',
+            status_output_prefix    => 'axi0_r3_beat_rresp',
+            status_aggregate_output => 'axi0_r3_rresp',
+            valid_mask_output       => 'axi0_r3_beat_valid',
+            length_output           => 'axi0_r3_read_beats',
+        },
+        {
+            transaction             => 'r4',
+            data_output_prefix      => 'axi0_r4_beat_rdata',
+            status_output_prefix    => 'axi0_r4_beat_rresp',
+            status_aggregate_output => 'axi0_r4_rresp',
+            valid_mask_output       => 'axi0_r4_beat_valid',
+            length_output           => 'axi0_r4_read_beats',
+        },
+        {
+            transaction             => 'r5',
+            data_output_prefix      => 'axi0_r5_beat_rdata',
+            status_output_prefix    => 'axi0_r5_beat_rresp',
+            status_aggregate_output => 'axi0_r5_rresp',
+            valid_mask_output       => 'axi0_r5_beat_valid',
+            length_output           => 'axi0_r5_read_beats',
+        };
+    return $contract;
+}
+
+sub sample_contract_with_same_id_read_burst_last_mixed_depth3_depth2_queue_head_multi_beat_read_data {
+    my $contract = sample_contract_with_same_id_read_burst_last_mixed_depth3_depth2_queue_head_burst_length_runtime_assertion();
+    $contract->{intent_name} = 'axi_manager_capacity_status_read_burst_last_mixed_depth3_depth2_same_id_queue_head_multi_beat_read_data';
+    $contract->{source}{object_id} = 'axi-manager-capacity-status-read-burst-last-mixed-depth3-depth2-same-id-queue-head-multi-beat-read-data';
+    $contract->{read_data} = sample_contract_with_read_data_multi_beat()->{read_data};
+    push @{$contract->{read_data}{read}{transactions}},
+        {
+            transaction             => 'r2',
+            data_output_prefix      => 'axi0_r2_beat_rdata',
+            status_output_prefix    => 'axi0_r2_beat_rresp',
+            status_aggregate_output => 'axi0_r2_rresp',
+            valid_mask_output       => 'axi0_r2_beat_valid',
+            length_output           => 'axi0_r2_read_beats',
+        },
+        {
+            transaction             => 'r3',
+            data_output_prefix      => 'axi0_r3_beat_rdata',
+            status_output_prefix    => 'axi0_r3_beat_rresp',
+            status_aggregate_output => 'axi0_r3_rresp',
+            valid_mask_output       => 'axi0_r3_beat_valid',
+            length_output           => 'axi0_r3_read_beats',
+        },
+        {
+            transaction             => 'r4',
+            data_output_prefix      => 'axi0_r4_beat_rdata',
+            status_output_prefix    => 'axi0_r4_beat_rresp',
+            status_aggregate_output => 'axi0_r4_rresp',
+            valid_mask_output       => 'axi0_r4_beat_valid',
+            length_output           => 'axi0_r4_read_beats',
+        };
+    return $contract;
+}
+
 sub sample_contract_with_same_id_read_burst_last_depth3_queue_head_burst_length {
     my $contract = sample_contract_with_same_id_read_burst_last_depth3_queue_head_read_data();
     $contract->{intent_name} = 'axi_manager_capacity_status_read_burst_last_depth3_same_id_queue_head_burst_length';
@@ -4800,7 +5021,7 @@ sub assert_rlast_report_prose_alignment {
     ok($id_residue, "$owner reports AXI ID/order unsupported residue");
     like(
         $id_residue->{detail},
-        qr/generated burst-last RLAST response-demux completion, structural last-beat read-data metadata, generated last-beat read-data RDATA\/RRESP capture, generated last-beat read-data RDATA\/RRESP capture from generated read burst-last concrete same-ID queue-head response-demux including multiple independent depth-2 queue-head groups with no burst_length metadata, report-only raw-ARLEN burst-length metadata, or runtime-assertion beat-count\/RLAST validation metadata, plus the selected single depth-3 queue-head group with no burst_length metadata, report-only raw-ARLEN burst-length metadata, or runtime-assertion beat-count\/RLAST validation metadata, plus selected multiple\/mixed depth-3 queue-head groups with no burst_length metadata or report-only raw-ARLEN burst-length metadata, generated raw-ARLEN burst-length capture including report-only and runtime-validation generated read burst-last concrete same-ID queue-head read-data contracts with one or more independent depth-2 queue-head groups, the selected single depth-3 report-only and runtime-validation groups, and selected multiple\/mixed depth-3 report-only groups, explicit runtime-assertion beat-count\/RLAST validation for auto-ID and bounded read burst-last concrete same-ID queue-head read-data contracts including one or more independent depth-2 queue-head groups plus the selected single depth-3 group, generated multi-beat read-data output-bank behavior for the covered auto-ID multi-beat-by-RID subset and bounded read burst-last concrete same-ID queue-head subset including multiple independent depth-2 queue-head groups plus the selected single depth-3 runtime-validation queue-head group, bounded burst payload\/output behavior through that per-beat output bank, and generated scalar RRESP aggregation behavior are supported/,
+        qr/generated burst-last RLAST response-demux completion, structural last-beat read-data metadata, generated last-beat read-data RDATA\/RRESP capture, generated last-beat read-data RDATA\/RRESP capture from generated read burst-last concrete same-ID queue-head response-demux including multiple independent depth-2 queue-head groups with no burst_length metadata, report-only raw-ARLEN burst-length metadata, or runtime-assertion beat-count\/RLAST validation metadata, plus the selected single depth-3 queue-head group with no burst_length metadata, report-only raw-ARLEN burst-length metadata, or runtime-assertion beat-count\/RLAST validation metadata, plus selected multiple\/mixed depth-3 queue-head groups with no burst_length metadata, report-only raw-ARLEN burst-length metadata, runtime-assertion beat-count\/RLAST validation metadata, or runtime-assertion multi-beat output-bank metadata, generated raw-ARLEN burst-length capture including report-only and runtime-validation generated read burst-last concrete same-ID queue-head read-data contracts with one or more independent depth-2 queue-head groups, the selected single depth-3 report-only and runtime-validation groups, and selected multiple\/mixed depth-3 report-only and runtime-validation groups, explicit runtime-assertion beat-count\/RLAST validation for auto-ID and bounded read burst-last concrete same-ID queue-head read-data contracts including one or more independent depth-2 queue-head groups plus the selected single depth-3 group and selected multiple\/mixed depth-3 groups, generated multi-beat read-data output-bank behavior for the covered auto-ID multi-beat-by-RID subset and bounded read burst-last concrete same-ID queue-head subset including multiple independent depth-2 queue-head groups plus the selected single depth-3 runtime-validation queue-head group and selected multiple\/mixed depth-3 runtime-validation queue-head groups, bounded burst payload\/output behavior through that per-beat output bank, and generated scalar RRESP aggregation behavior are supported/,
         "$owner reports generated burst-last, last-beat, queue-head last-beat including multi-group scalar runtime validation, queue-head report-only/raw runtime ARLEN, non-queue-head and queue-head beat-count, multi-beat output-bank, bounded burst output, and scalar aggregation behavior as supported",
     );
     like(
@@ -4815,7 +5036,7 @@ sub assert_rlast_report_prose_alignment {
     );
     like(
         $id_residue->{detail},
-        qr/selected single-group read burst-last depth-3 scalar last-beat read-data, report-only raw-ARLEN burst-length, runtime beat-count\/RLAST validation, and runtime-validation multi-beat output-bank queue-head shapes/,
+        qr/selected single-group and multiple\/mixed read burst-last depth-3 scalar last-beat read-data, report-only raw-ARLEN burst-length, runtime beat-count\/RLAST validation, and runtime-validation multi-beat output-bank queue-head shapes/,
         "$owner reports selected read burst-last depth-3 queue-head response-demux and read-data as supported",
     );
     like(
@@ -4825,7 +5046,7 @@ sub assert_rlast_report_prose_alignment {
     );
     like(
         $id_residue->{detail},
-        qr/generated last-beat read-data RDATA\/RRESP capture from generated read burst-last concrete same-ID queue-head response-demux including multiple independent depth-2 queue-head groups with no burst_length metadata, report-only raw-ARLEN burst-length metadata, or runtime-assertion beat-count\/RLAST validation metadata, plus the selected single depth-3 queue-head group with no burst_length metadata, report-only raw-ARLEN burst-length metadata, or runtime-assertion beat-count\/RLAST validation metadata, plus selected multiple\/mixed depth-3 queue-head groups with no burst_length metadata or report-only raw-ARLEN burst-length metadata/,
+        qr/generated last-beat read-data RDATA\/RRESP capture from generated read burst-last concrete same-ID queue-head response-demux including multiple independent depth-2 queue-head groups with no burst_length metadata, report-only raw-ARLEN burst-length metadata, or runtime-assertion beat-count\/RLAST validation metadata, plus the selected single depth-3 queue-head group with no burst_length metadata, report-only raw-ARLEN burst-length metadata, or runtime-assertion beat-count\/RLAST validation metadata, plus selected multiple\/mixed depth-3 queue-head groups with no burst_length metadata, report-only raw-ARLEN burst-length metadata, runtime-assertion beat-count\/RLAST validation metadata, or runtime-assertion multi-beat output-bank metadata/,
         "$owner reports selected depth-3 burst-last queue-head read-data capture as supported",
     );
     my $stale_metadata = join('', 'report-only burst-last ', 'RLAST response-demux metadata');
@@ -4847,7 +5068,8 @@ sub assert_rlast_report_prose_alignment {
     ok(index($id_residue->{detail}, 'read-data over multiple read single-beat queue-head groups') < 0, "$owner removes stale single-beat multi-group read-data residue prose");
     ok(index($id_residue->{detail}, 'read burst-last read-data consumption over multiple or mixed depth-3 queue-head groups,') < 0, "$owner removes stale multiple/mixed depth-3 burst-last read-data residue prose");
     ok(index($id_residue->{detail}, 'read burst-last read-data consumption over multiple or mixed depth-3 queue-head groups with burst_length metadata') < 0, "$owner removes stale multiple/mixed depth-3 report-only burst-length residue prose");
-    like($id_residue->{detail}, qr/read burst-last read-data consumption over multiple or mixed depth-3 queue-head groups with runtime validation or multi-beat payload/, "$owner keeps runtime/multi-beat multiple/mixed depth-3 burst-last read-data deferred");
+    ok(index($id_residue->{detail}, 'read burst-last read-data consumption over multiple or mixed depth-3 queue-head groups with runtime validation or multi-beat payload') < 0, "$owner removes stale multiple/mixed depth-3 runtime-validation residue prose");
+    ok(index($id_residue->{detail}, 'read burst-last multi-beat payload over multiple or mixed depth-3 queue-head groups') < 0, "$owner removes stale multi-beat multiple/mixed depth-3 burst-last read-data residue prose");
 }
 
 sub assert_read_data_report {

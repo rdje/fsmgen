@@ -6314,6 +6314,25 @@ are transaction-list driven after coverage admission. The remaining boundary
 is the local multi-beat coverage gate plus the two public support-accounted
 samples and expectations.
 
+Multiple/mixed depth-3 multi-beat read-data behavior:
+[AXI_IAL2_MANAGER_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_MULTI_BEAT_READ_DATA_BEHAVIOR](../../AXI_IAL2_MANAGER_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_MULTI_BEAT_READ_DATA_BEHAVIOR.md)
+records `.191`, which ships generated multi-beat output-bank behavior over
+the selected multiple/mixed depth-3 runtime-validation queue-head groups. The
+public samples are:
+
+```text
+ppif/axi_manager_capacity_status_read_burst_last_multi_depth3_same_id_queue_head_multi_beat_read_data.ppif
+ppif/axi_manager_capacity_status_read_burst_last_mixed_depth3_depth2_same_id_queue_head_multi_beat_read_data.ppif
+```
+
+The first sample reports queue depths `3,3` and transactions `r0` through
+`r5`; the second reports queue depths `3,2` and transactions `r0` through
+`r4`. Both generate per-transaction `RDATA`/`RRESP` output banks, valid masks,
+length outputs, scalar worst-observed `RRESP` aggregates, raw `ARLEN`
+storage, expected/read beat counters, beat-count/`RLAST` assertions, empty
+`read_data` residue, and empty `response_demux` residue. Selector `.192` is
+the active next IAL2 feature-completeness owner.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same
@@ -8575,7 +8594,7 @@ support catalog entries instead of recursive workspace traversal.
 `SEMANTIC-INTROSPECTION-MCP-FRONTIER.30` closes the immediate read-only
 semantic-introspection/MCP pass after source discovery; the active roadmap
 priority is again the IAL2 feature-completeness tree, currently at
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.191`.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.192`.
 
 Selected first MCP resource families are `fsmgen://capabilities`,
 `fsmgen://contracts`, `fsmgen://diagnostics`,
