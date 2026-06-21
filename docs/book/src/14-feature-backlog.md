@@ -6330,8 +6330,9 @@ The first sample reports queue depths `3,3` and transactions `r0` through
 `r4`. Both generate per-transaction `RDATA`/`RRESP` output banks, valid masks,
 length outputs, scalar worst-observed `RRESP` aggregates, raw `ARLEN`
 storage, expected/read beat counters, beat-count/`RLAST` assertions, empty
-`read_data` residue, and empty `response_demux` residue. Selector `.192` is
-the active next IAL2 feature-completeness owner.
+`read_data` residue, and empty `response_demux` residue. Selector `.192`
+selected `.193`, readiness audit for same-family mixed auto-ID lifecycle plus
+concrete same-ID queue-head response-demux before any behavior change.
 
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
@@ -8594,7 +8595,7 @@ support catalog entries instead of recursive workspace traversal.
 `SEMANTIC-INTROSPECTION-MCP-FRONTIER.30` closes the immediate read-only
 semantic-introspection/MCP pass after source discovery; the active roadmap
 priority is again the IAL2 feature-completeness tree, currently at
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.192`.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.193`.
 
 Selected first MCP resource families are `fsmgen://capabilities`,
 `fsmgen://contracts`, `fsmgen://diagnostics`,

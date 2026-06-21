@@ -1,6 +1,6 @@
 ---
 id: ial2-feature-completeness-next-slice
-title: IAL2 feature completeness next slice is generated multiple queue-head response-demux groups
+title: IAL2 feature completeness next slice is mixed auto-ID queue-head readiness
 answers:
   - "what is the next IAL2 feature completeness slice?"
   - "what is the next IAL2 PNT task?"
@@ -24,12 +24,27 @@ answers:
   - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.124?"
   - "what is the next AXI manager slice?"
   - "what is the next AXI manager task after same-ID queue behavior implementation?"
-date: 2026-06-15
+date: 2026-06-21
 status: current
 tags: [ial2, axi, manager, same-id, concrete-id, ordering, feature-completeness, task-tree]
-evidence: docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; docs/AXI_IAL2_MANAGER_MULTI_GROUP_QUEUE_HEAD_RESPONSE_DEMUX_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_POST_QUEUE_HEAD_MULTI_BEAT_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_QUEUE_HEAD_MULTI_BEAT_READ_DATA_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_POST_QUEUE_HEAD_RUNTIME_VALIDATION_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_QUEUE_HEAD_RUNTIME_VALIDATION_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_MULTI_BEAT_READ_DATA_OUTPUT_BANK_BEHAVIOR_FIRST_SLICE.md; docs/book/src/14-feature-backlog.md; README.md; ROADMAP_V2.md; docs/knowledge/ial2-common-vs-profile-factoring.md
-reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.123|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.124|multi-group queue-head response-demux|multiple independent read burst-last depth-2 concrete same-ID queue-head response-demux groups|read_multi_beat_same_id_queue_head_read_data|per_beat_output_bank|generated_queue_head_response_demux_last_beat_completion_pulse|family-wide admitted-request onehot|common semantic core' docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md docs/AXI_IAL2_MANAGER_MULTI_GROUP_QUEUE_HEAD_RESPONSE_DEMUX_READINESS_AUDIT.md docs/book/src/14-feature-backlog.md README.md ROADMAP_V2.md docs/knowledge/ial2-common-vs-profile-factoring.md
+evidence: docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; docs/AXI_IAL2_MANAGER_POST_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_MULTI_BEAT_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_MULTI_BEAT_READ_DATA_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_MULTI_BEAT_READINESS_AUDIT.md; docs/book/src/14-feature-backlog.md; README.md; ROADMAP_V2.md; docs/knowledge/ial2-feature-completeness-priority.md; docs/knowledge/ial2-common-vs-profile-factoring.md
+reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.192|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.193|same-family mixed auto-ID|concrete same-ID queue-head|POST_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_MULTI_BEAT_NEXT_SLICE_SELECTION' docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md docs/AXI_IAL2_MANAGER_POST_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_MULTI_BEAT_NEXT_SLICE_SELECTION.md docs/book/src/14-feature-backlog.md README.md ROADMAP_V2.md docs/knowledge/ial2-feature-completeness-priority.md
 ---
+
+The next IAL2 feature-completeness slice is
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.193`, readiness audit for same-family
+mixed auto-ID lifecycle plus concrete same-ID queue-head response-demux.
+
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.192` selected `.193` after generated
+multiple/mixed depth-3 runtime-validation multi-beat output-bank behavior
+shipped in `.191`. The selected audit exists because generated auto-ID
+response-demux and concrete same-ID queue-head response-demux are both shipped
+on adjacent bounded shapes, while their same-family combination remains an
+explicit fail-closed boundary that must audit completion ownership,
+response-event fanout, report/residue shape, and support accounting before any
+behavior change.
+
+Historical notes from earlier queue-head frontier selection follow.
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.106` shipped the first generated
 same-ID queue behavior boundary for the public read burst-last depth-2 sample.
