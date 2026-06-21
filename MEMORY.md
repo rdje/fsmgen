@@ -10,10 +10,10 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `HEAD after IAL2-FEATURE-COMPLETENESS-FRONTIER.207 commit` - `IAL2-FEATURE-COMPLETENESS-FRONTIER.207: ship mixed multi-beat output banks`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.208` selects the next feature-completeness slice after mixed multi-beat output banks; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.207` shipped support-accounted generated mixed multi-beat output-bank behavior over the `.202` same-family mixed auto-ID plus depth-2 concrete same-ID queue-head runtime-validation shape. The new PPIF sample reports mixed last-beat completion validity, `r0`/`r1`/`r2` coverage, 48 RDATA lanes, 48 RRESP lanes, valid masks, length outputs, scalar `RRESP` aggregates, 48 lane capture rules, runtime beat-count/`RLAST` assertions, strict support accounting, semantic JSON, HDL, and empty read-data residue.
-- in_flight_uncommitted: none after the `IAL2-FEATURE-COMPLETENESS-FRONTIER.207` commit. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
+- latest_commit: `HEAD after IAL2-FEATURE-COMPLETENESS-FRONTIER.208 commit` - `IAL2-FEATURE-COMPLETENESS-FRONTIER.208: select group-local enqueue audit`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.209` audits group-local simultaneous enqueue widening after mixed multi-beat output banks; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.208` selected `.209`, an audit-only group-local simultaneous enqueue widening slice. Representative read multi-group, write multi-group, and `.207` mixed multi-beat queue-head samples still carry family-wide request onehot assertions (`axi0_read_issue_order_queue_request_onehot0` or `axi0_write_issue_order_queue_request_onehot0`) even with multiple concrete-ID queue groups.
+- in_flight_uncommitted: none after the `IAL2-FEATURE-COMPLETENESS-FRONTIER.208` commit. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
 
 ## Notes

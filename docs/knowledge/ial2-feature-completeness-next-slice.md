@@ -1,81 +1,35 @@
 ---
 id: ial2-feature-completeness-next-slice
-title: IAL2 feature completeness next slice is mixed scalar read-data implementation
+title: IAL2 feature completeness next slice is group-local enqueue audit
 answers:
   - "what is the next IAL2 feature completeness slice?"
   - "what is the next IAL2 PNT task?"
-  - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.107?"
-  - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.108?"
-  - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.109?"
-  - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.110?"
-  - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.111?"
-  - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.112?"
-  - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.113?"
-  - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.114?"
-  - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.115?"
-  - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.116?"
-  - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.117?"
-  - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.118?"
-  - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.119?"
-  - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.120?"
-  - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.121?"
-  - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.122?"
-  - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.123?"
-  - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.124?"
-  - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.194?"
-  - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.195?"
-  - "what did IAL2-FEATURE-COMPLETENESS-FRONTIER.195 select?"
-  - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.196?"
-  - "what did IAL2-FEATURE-COMPLETENESS-FRONTIER.196 select?"
-  - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.197?"
+  - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.208?"
+  - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.209?"
   - "what is the next AXI manager slice?"
-  - "what is the next AXI manager task after same-ID queue behavior implementation?"
+  - "what is the next AXI manager task after mixed multi-beat output banks?"
 date: 2026-06-21
 status: current
 tags: [ial2, axi, manager, same-id, concrete-id, ordering, feature-completeness, task-tree]
-evidence: docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; docs/AXI_IAL2_MANAGER_MIXED_AUTO_ID_QUEUE_HEAD_READ_DATA_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_POST_MIXED_AUTO_ID_QUEUE_HEAD_RESPONSE_DEMUX_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_MIXED_AUTO_ID_QUEUE_HEAD_RESPONSE_DEMUX_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_MIXED_AUTO_ID_QUEUE_HEAD_RESPONSE_DEMUX_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_POST_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_MULTI_BEAT_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_MULTI_BEAT_READ_DATA_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_MULTI_BEAT_READINESS_AUDIT.md; docs/book/src/14-feature-backlog.md; README.md; ROADMAP_V2.md; docs/knowledge/ial2-feature-completeness-priority.md; docs/knowledge/ial2-mixed-auto-id-queue-head-read-data-readiness-selection.md; docs/knowledge/ial2-mixed-auto-id-queue-head-read-data-readiness-audit.md; docs/knowledge/ial2-common-vs-profile-factoring.md
-reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.196|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.197|MIXED_AUTO_ID_QUEUE_HEAD_READ_DATA_READINESS_AUDIT|mixed scalar read-data|scalar read-data consumption' docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md docs/AXI_IAL2_MANAGER_MIXED_AUTO_ID_QUEUE_HEAD_READ_DATA_READINESS_AUDIT.md docs/book/src/14-feature-backlog.md README.md ROADMAP_V2.md docs/knowledge/ial2-feature-completeness-priority.md
+evidence: docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; docs/AXI_IAL2_MANAGER_POST_MIXED_AUTO_ID_QUEUE_HEAD_MULTI_BEAT_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_MIXED_AUTO_ID_QUEUE_HEAD_MULTI_BEAT_READ_DATA_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_MIXED_AUTO_ID_QUEUE_HEAD_MULTI_BEAT_READINESS_AUDIT.md; docs/book/src/14-feature-backlog.md; README.md; ROADMAP_V2.md; docs/knowledge/ial2-post-mixed-auto-id-queue-head-multi-beat-next-slice-selection.md
+reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.208|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.209|POST_MIXED_AUTO_ID_QUEUE_HEAD_MULTI_BEAT_NEXT_SLICE_SELECTION|group-local simultaneous enqueue|family-wide request onehot' docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md docs/AXI_IAL2_MANAGER_POST_MIXED_AUTO_ID_QUEUE_HEAD_MULTI_BEAT_NEXT_SLICE_SELECTION.md docs/book/src/14-feature-backlog.md README.md ROADMAP_V2.md
 ---
 
 The next IAL2 feature-completeness slice is
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.197`, direct bounded implementation of
-scalar read-data consumption over same-family mixed auto-ID lifecycle plus
-concrete queue-head response-demux.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.209`, readiness audit for group-local
+simultaneous enqueue widening across generated concrete same-ID queue-head
+families.
 
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.196` selected `.197` after temporary
-single-beat and burst-last mixed read-data probes failed closed only at the
-local coverage diagnostic that concrete transaction `r1` is not covered by
-generated read response-demux auto transactions. Adjacent mixed
-response-demux-only, auto-ID read-data, and queue-head read-data samples
-strict-check cleanly.
-
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.195` selected `.196` after live mixed
-response-demux reports showed combined auto-ID and concrete queue-head
-completion coverage, while read-data transaction coverage still has separate
-queue-head and auto-ID paths.
-
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.194` shipped the direct bounded
-response-demux-only implementation for public read single-beat, read
-burst-last, and write fixtures. Mixed read-data consumption, group-local
-simultaneous enqueue widening, write-family read-data diagnostics, packed
-burst-vector outputs, alternate full burst payload assembly, report/static
-residue cleanup, direct backend prerequisites, verification-output generation,
-VHDL/backend-language variants, or another exact prerequisite remain separately
-owned before behavior changes.
-
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.193` selected `.194` after confirming
-that read single-beat, read burst-last, and write probes all failed closed at
-the same local response-demux planner diagnostic, while adjacent shipped
-auto-ID and queue-head samples strict-checked cleanly.
-
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.192` selected `.193` after generated
-multiple/mixed depth-3 runtime-validation multi-beat output-bank behavior
-shipped in `.191`. The selected audit exists because generated auto-ID
-response-demux and concrete same-ID queue-head response-demux are both shipped
-on adjacent bounded shapes, while their same-family combination remains an
-explicit fail-closed boundary that must audit completion ownership,
-response-event fanout, report/residue shape, and support accounting before any
-behavior change.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.208` selected `.209` after `.207` shipped
+generated mixed multi-beat output-bank behavior over the same-family mixed
+auto-ID plus depth-2 concrete same-ID queue-head runtime-validation shape.
+Representative generated read multi-group, write multi-group, and mixed
+multi-beat samples still report one family-wide request mutual-exclusion
+assertion even when multiple concrete-ID queue groups exist. `.209` is
+audit-only and must decide whether that family-wide request onehot can become
+group-local, whether the direction-level capacity counter needs a prerequisite,
+and whether queue transition generation can handle distinct concrete-ID group
+enqueues in the same cycle.
 
 Historical notes from earlier queue-head frontier selection follow.
 

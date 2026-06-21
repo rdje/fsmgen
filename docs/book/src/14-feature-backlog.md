@@ -6460,6 +6460,14 @@ outputs, three valid masks, three length outputs, three scalar `RRESP`
 aggregate outputs, 48 lane capture rules, runtime beat-count/`RLAST`
 assertions, strict support accounting, semantic JSON, HDL, and empty read-data
 residue.
+Post mixed multi-beat selector:
+[AXI_IAL2_MANAGER_POST_MIXED_AUTO_ID_QUEUE_HEAD_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MIXED_AUTO_ID_QUEUE_HEAD_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
+selects `.209`, readiness audit for group-local simultaneous enqueue widening
+across generated concrete same-ID queue-head families. Representative read
+multi-group, write multi-group, and `.207` mixed multi-beat samples still use
+a family-wide request onehot assertion, so `.209` must audit admission,
+direction-level capacity accounting, transition generation, and preservation
+before any behavior change.
 
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)

@@ -1960,6 +1960,14 @@ runtime beat-count/`RLAST` assertions, strict support accounting, semantic
 JSON, and HDL. Group-local enqueue widening, packed outputs, direct backend,
 verification-output generation, VHDL, and backend-language variants remain
 separately owned.
+Selector `.208` now chooses `.209`, readiness audit for group-local
+simultaneous enqueue widening across generated concrete same-ID queue-head
+families. The selector records that representative generated read multi-group,
+write multi-group, and mixed multi-beat queue-head samples still carry a
+family-wide request onehot assertion even when multiple concrete-ID queue
+groups exist, so the next safe owner is an audit of admission, direction-level
+capacity accounting, transition generation, and preservation before any
+behavior change.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.
