@@ -3,7 +3,6 @@ id: ial2-post-multiple-mixed-depth3-multi-beat-next-slice-selection
 title: IAL2 post multi-beat output-bank selector chose mixed auto-ID queue-head readiness
 answers:
   - "what did IAL2-FEATURE-COMPLETENESS-FRONTIER.192 select?"
-  - "what is the next IAL2 frontier after multiple/mixed depth-3 multi-beat output banks?"
   - "why is mixed auto-ID plus concrete queue-head response-demux next?"
   - "is same-family mixed auto-ID plus concrete queue-head demux supported?"
 date: 2026-06-21

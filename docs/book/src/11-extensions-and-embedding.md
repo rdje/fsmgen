@@ -2869,7 +2869,7 @@ catalog-backed through the manifest support catalog: reuse existing manifest,
 support-accounting, and example surfaces; do not recursively expose arbitrary
 workspace files. The immediate semantic-introspection/MCP pass is complete
 through `SEMANTIC-INTROSPECTION-MCP-FRONTIER.30`; active roadmap priority has
-returned to `IAL2-FEATURE-COMPLETENESS-FRONTIER.193`.
+returned to `IAL2-FEATURE-COMPLETENESS-FRONTIER.194`.
 
 ## Downstream Tool Alignment
 
