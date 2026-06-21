@@ -51,9 +51,10 @@ multiple response-demux-only and scalar read-data groups, selected
 multiple/mixed depth-3 scalar/runtime/multi-beat queue-head read-data groups,
 and same-family mixed auto-ID plus concrete queue-head response-demux with
 scalar read-data for read single-beat and read burst-last shapes. Mixed
-report-only raw-`ARLEN` burst-length over that burst-last family is under
-audit and not yet shipped. Mixed runtime validation, mixed multi-beat
-read-data, group-local simultaneous enqueue widening, packed burst-vector outputs,
+report-only raw-`ARLEN` burst-length over that burst-last family is selected
+for the next support/publication slice but is not support-accounted as a
+public sample yet. Mixed runtime validation, mixed multi-beat read-data,
+group-local simultaneous enqueue widening, packed burst-vector outputs,
 alternate full burst payload assembly, aliases, platform clauses, full AXI
 manager behavior, direct backend lowering, verification-output generation,
 backend-language variants, and VHDL remain deferred.

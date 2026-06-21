@@ -105,7 +105,8 @@ Intent abstraction levels:
   auto-ID plus concrete queue-head response-demux with scalar read-data for
   read single-beat and read burst-last shapes.
 - Mixed report-only raw-`ARLEN` burst-length over the mixed read burst-last
-  scalar last-beat family is under audit and not yet shipped. Mixed runtime
+  scalar last-beat family is selected for the next support/publication slice
+  but is not support-accounted as a public sample yet. Mixed runtime
   validation, mixed multi-beat read-data, write-family read-data, group-local
   simultaneous enqueue widening, packed burst-vector outputs, alternate full
   burst payload assembly, aliases, platform clauses, full AXI manager

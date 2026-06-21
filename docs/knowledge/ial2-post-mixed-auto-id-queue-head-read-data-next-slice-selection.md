@@ -4,7 +4,6 @@ title: IAL2 .198 selects mixed report-only raw-ARLEN burst-length readiness
 answers:
   - "what did IAL2-FEATURE-COMPLETENESS-FRONTIER.198 select?"
   - "what is the next IAL2 slice after mixed scalar read-data?"
-  - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.199?"
   - "is mixed burst-length over auto-id queue-head shipped?"
   - "is mixed multi-beat read-data next after .197?"
 date: 2026-06-21
@@ -20,10 +19,11 @@ report-only raw-`ARLEN` burst-length capture over the same-family mixed
 auto-ID lifecycle plus concrete same-ID queue-head read burst-last scalar
 last-beat read-data shape.
 
-The behavior is not shipped yet. `.199` is audit-only and must decide whether a
-later implementation can directly reuse existing `burst-length` syntax and the
-transaction-list driven raw-`ARLEN` storage/capture/report helpers after the
-mixed last-beat coverage gate is widened.
+The `.199` audit has since completed and selected `.200`, direct
+support/publication of the report-only mixed raw-`ARLEN` burst-length boundary.
+See
+`docs/knowledge/ial2-mixed-auto-id-queue-head-burst-length-readiness-audit.md`
+for the completed audit result.
 
 Mixed runtime beat-count/`RLAST` validation, mixed multi-beat output banks,
 single-beat burst-length, group-local enqueue widening, write-family

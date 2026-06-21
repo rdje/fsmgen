@@ -10,10 +10,10 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `HEAD after IAL2-FEATURE-COMPLETENESS-FRONTIER.198 commit` - `IAL2-FEATURE-COMPLETENESS-FRONTIER.198: select mixed burst-length audit`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.199` is the readiness audit for report-only raw-ARLEN burst-length over mixed read burst-last scalar last-beat read-data; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.198` selected `.199` after reading the `.197` mixed scalar read-data behavior, `.196` audit, `.194` mixed response-demux behavior, adjacent auto-ID and concrete queue-head read-data/burst-length/runtime/multi-beat precedents, README, roadmap, mdBook, task tree, code, and Knowledge Map. The selected `.199` audit targets existing report-only raw-ARLEN burst-length syntax/helpers over the mixed burst-last shape; mixed runtime validation, multi-beat read-data, write-family read-data, group-local enqueue widening, direct backend, verification-output, VHDL, and backend variants remain deferred.
-- in_flight_uncommitted: none after the `IAL2-FEATURE-COMPLETENESS-FRONTIER.198` commit. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
+- latest_commit: `HEAD after IAL2-FEATURE-COMPLETENESS-FRONTIER.199 commit` - `IAL2-FEATURE-COMPLETENESS-FRONTIER.199: audit mixed burst-length readiness`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.200` is the direct support/publication owner for report-only raw-ARLEN burst-length over mixed read burst-last scalar last-beat read-data; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.199` audited mixed raw-ARLEN burst-length readiness after `.198`. Temporary report-only and runtime-assertion probes under `/tmp` both strict-check and emit schedule metadata through existing helpers; the report-only probe also semantic-exports and HDL-verifies. `.199` selected `.200` to publish/support-account the report-only boundary first and preserve or lock runtime validation as separately owned.
+- in_flight_uncommitted: none after the `IAL2-FEATURE-COMPLETENESS-FRONTIER.199` commit. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
 
 ## Notes
