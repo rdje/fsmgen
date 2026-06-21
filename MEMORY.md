@@ -10,10 +10,10 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `HEAD after IAL2-FEATURE-COMPLETENESS-FRONTIER.196 commit` - `IAL2-FEATURE-COMPLETENESS-FRONTIER.196: audit mixed read-data readiness`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.197` is the next implementation slice for mixed scalar read-data over same-family mixed auto-ID plus concrete queue-head response-demux; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.196` selected `.197` after temporary single-beat and burst-last mixed read-data probes failed only at the local coverage diagnostic for concrete queue-head transactions. Adjacent mixed response-demux-only, auto-ID read-data, and queue-head read-data samples strict-check cleanly. No parser, generator, PPIF sample, support-accounting catalog, validation, generated-artifact, test, or HDL behavior changed.
-- in_flight_uncommitted: none after the `IAL2-FEATURE-COMPLETENESS-FRONTIER.196` commit. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
+- latest_commit: `HEAD after IAL2-FEATURE-COMPLETENESS-FRONTIER.197 commit` - `IAL2-FEATURE-COMPLETENESS-FRONTIER.197: ship mixed read-data capture`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.198` is the next selector after mixed scalar read-data over same-family mixed auto-ID plus concrete queue-head response-demux; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.197` shipped bounded read single-beat and read burst-last scalar read-data over one mixed auto-ID transaction plus one depth-2 concrete read queue-head group. The two new public PPIF samples are support-accounted, strict-check and HDL-verify cleanly, and report mixed completion validity for `r0/r1/r2`; mixed multi-beat, burst-length/runtime over mixed, write-family read-data, direct backend, verification-output, VHDL, and backend variants remain deferred.
+- in_flight_uncommitted: none after the `IAL2-FEATURE-COMPLETENESS-FRONTIER.197` commit. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
 
 ## Notes

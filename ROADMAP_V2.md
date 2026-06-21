@@ -1080,7 +1080,7 @@ support-accounting metadata under query/limit/filter controls.
 `SEMANTIC-INTROSPECTION-MCP-FRONTIER.30` closes the immediate read-only
 semantic-introspection/MCP pass after source discovery and returns active
 roadmap priority to the IAL2 feature-completeness tree, currently at
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.197`.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.198`.
 The parser/report metadata slice `IAL2-FEATURE-COMPLETENESS-FRONTIER.39` is
 now shipped for the bounded AXI read response-demux public contract selected
 by `.38`. The selected read arm requires `(response-scope single-beat)`,
@@ -1919,7 +1919,15 @@ selected `.196`, readiness audit for mixed read-data consumption over
 same-family mixed auto-ID plus concrete same-ID queue-head response-demux.
 Audit `.196` selected `.197`, direct bounded implementation of scalar
 read-data consumption for the read single-beat and read burst-last mixed
-families. Mixed multi-beat read-data, burst-length/runtime validation over
+families. Implementation `.197` now ships that bounded scalar read-data
+behavior for the read single-beat and read burst-last same-family mixed
+auto-ID plus concrete same-ID queue-head response-demux shapes. The two public
+support-accounted samples bind `RDATA`/`RRESP` for `r0`, `r1`, and `r2`,
+reuse the combined generated response-demux completions, report the mixed
+single-beat and burst-last read-data completion-validity strings, strict-check
+and HDL-verify cleanly, and keep existing PPIF syntax. Selector `.198` is the
+next active owner before further IAL2 behavior expansion. Mixed multi-beat
+read-data, burst-length/runtime validation over
 mixed families, group-local enqueue widening, packed outputs, direct backend,
 verification-output generation, VHDL, and backend-language variants remain
 separately owned.

@@ -3151,6 +3151,77 @@ subtest 'CLI emits IAL2 report JSON for mixed auto-ID and same-ID queue-head res
     }
 };
 
+subtest 'CLI emits IAL2 report JSON for mixed auto-ID and same-ID queue-head read-data .ppif' => sub {
+    my @cases = (
+        {
+            label      => 'read-data single-beat',
+            owner      => 'mixed auto-ID queue-head read-data single-beat',
+            path       => \&sample_capacity_read_single_beat_mixed_auto_id_same_id_queue_head_read_data_ppif_path,
+            intent     => 'axi_manager_capacity_status_read_single_beat_mixed_auto_id_same_id_queue_head_read_data',
+            entry_id   => 'intent.ppif_axi_manager_capacity_status_read_single_beat_mixed_auto_id_same_id_queue_head_read_data',
+            queue_boundary => 'generated_read_single_beat_queue_head_demux',
+            scope      => 'single_beat',
+            completion_validity => 'generated_mixed_auto_id_queue_head_response_demux_completion_pulse',
+            report_assertion => \&assert_read_data_report,
+        },
+        {
+            label      => 'read-data burst-last',
+            owner      => 'mixed auto-ID queue-head read-data burst-last',
+            path       => \&sample_capacity_read_burst_last_mixed_auto_id_same_id_queue_head_read_data_ppif_path,
+            intent     => 'axi_manager_capacity_status_read_burst_last_mixed_auto_id_same_id_queue_head_read_data',
+            entry_id   => 'intent.ppif_axi_manager_capacity_status_read_burst_last_mixed_auto_id_same_id_queue_head_read_data',
+            queue_boundary => 'generated_read_burst_last_queue_head_demux',
+            scope      => 'burst_last',
+            last_signal => 'axi0_rlast',
+            completion_validity => 'generated_mixed_auto_id_queue_head_response_demux_last_beat_completion_pulse',
+            report_assertion => \&assert_read_data_last_beat_report,
+        },
+    );
+
+    for my $case (@cases) {
+        my $path = $case->{path}->();
+        my ($success, undef, undef, $stdout_buf, $stderr_buf) = run(
+            command => ['./bin/fsmgen', '--emit-schedule-json', $path],
+        );
+        ok($success, "mixed $case->{label} --emit-schedule-json succeeds");
+        is(join('', @{$stderr_buf || []}), '', "mixed $case->{label} report keeps stderr clean");
+        my $report = decode_json(join('', @{$stdout_buf || []}));
+        is($report->{schema}, 'fsmgen.ial2.protocol_intent.axi_manager_capacity_status.v1', "mixed $case->{label} report keeps schema");
+        is($report->{source_object}{intent_name}, $case->{intent}, "mixed $case->{label} report carries the PPIF intent name");
+
+        my $lifecycle = $report->{auto_id_lifecycle}{families}[0];
+        is($lifecycle->{request_id_signal}, 'axi0_arid', "mixed $case->{label} reports generated ARID output");
+        is($lifecycle->{request_id_direction}, 'generated_output', "mixed $case->{label} reports generated ARID direction");
+        is_deeply($report->{id_response_rule_engine}{id_signal_inputs}, ['axi0_rid'], "mixed $case->{label} reports only RID as concrete-ID input");
+
+        my $entry = $report->{response_demux}{read};
+        is($entry->{mode}, 'bounded_read_rid_mixed_auto_id_queue_head_demux_contract', "mixed $case->{label} reports mixed response-demux mode");
+        is($entry->{transaction_completion_source}, 'generated_demux_and_queue_head_demux', "mixed $case->{label} reports combined completion source");
+        is($entry->{generated_queue_behavior_boundary}, $case->{queue_boundary}, "mixed $case->{label} reports generated queue boundary");
+        is($entry->{response_scope}, $case->{scope}, "mixed $case->{label} reports read response scope");
+        is($entry->{last_signal}, $case->{last_signal}, "mixed $case->{label} reports RLAST")
+            if defined $case->{last_signal};
+        is_deeply($entry->{auto_transactions}, [qw(r0)], "mixed $case->{label} reports the auto-ID transaction");
+        is_deeply($entry->{generated_completion_signals}, [qw(axi0_r0_complete axi0_r1_complete axi0_r2_complete)], "mixed $case->{label} reports combined completion outputs");
+        is_deeply($entry->{same_id_issue_order_queues}[0]{transactions}, [qw(r1 r2)], "mixed $case->{label} reports the concrete queue-head transactions");
+        ok($entry->{generated_queue_behavior}, "mixed $case->{label} reports generated queue behavior");
+
+        $case->{report_assertion}->(
+            $report->{read_data},
+            "mixed $case->{label} CLI read-data report",
+            $case->{completion_validity},
+            transactions => [qw(r0 r1 r2)],
+        );
+        is_deeply($report->{generated_artifacts}{ial0}{files}, ['axi0_capacity_status.fsm'], "mixed $case->{label} keeps the generated .fsm artifact name stable");
+
+        assert_ppif_strict_json_support_case(
+            owner    => $case->{owner},
+            path     => $case->{path},
+            entry_id => $case->{entry_id},
+        );
+    }
+};
+
 subtest 'CLI emits IAL2 report JSON for AXI manager read-data metadata .ppif' => sub {
     my ($success, undef, undef, $stdout_buf, $stderr_buf) = run(
         command => ['./bin/fsmgen', '--emit-schedule-json', sample_capacity_read_data_ppif_path()],
@@ -6084,6 +6155,10 @@ sub sample_capacity_read_single_beat_mixed_auto_id_same_id_queue_head_response_d
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_read_single_beat_mixed_auto_id_same_id_queue_head_response_demux.ppif');
 }
 
+sub sample_capacity_read_single_beat_mixed_auto_id_same_id_queue_head_read_data_ppif_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_read_single_beat_mixed_auto_id_same_id_queue_head_read_data.ppif');
+}
+
 sub sample_capacity_read_single_beat_multi_depth3_same_id_queue_head_read_data_ppif_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_read_single_beat_multi_depth3_same_id_queue_head_read_data.ppif');
 }
@@ -6106,6 +6181,10 @@ sub sample_capacity_read_burst_last_mixed_depth3_depth2_same_id_queue_head_respo
 
 sub sample_capacity_read_burst_last_mixed_auto_id_same_id_queue_head_response_demux_ppif_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_read_burst_last_mixed_auto_id_same_id_queue_head_response_demux.ppif');
+}
+
+sub sample_capacity_read_burst_last_mixed_auto_id_same_id_queue_head_read_data_ppif_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_read_burst_last_mixed_auto_id_same_id_queue_head_read_data.ppif');
 }
 
 sub sample_capacity_read_burst_last_depth3_same_id_queue_head_read_data_ppif_path {
@@ -6324,6 +6403,10 @@ sub sample_capacity_read_single_beat_mixed_auto_id_same_id_queue_head_response_d
     return slurp(sample_capacity_read_single_beat_mixed_auto_id_same_id_queue_head_response_demux_ppif_path());
 }
 
+sub sample_capacity_read_single_beat_mixed_auto_id_same_id_queue_head_read_data_ppif {
+    return slurp(sample_capacity_read_single_beat_mixed_auto_id_same_id_queue_head_read_data_ppif_path());
+}
+
 sub sample_capacity_read_single_beat_multi_depth3_same_id_queue_head_read_data_ppif {
     return slurp(sample_capacity_read_single_beat_multi_depth3_same_id_queue_head_read_data_ppif_path());
 }
@@ -6346,6 +6429,10 @@ sub sample_capacity_read_burst_last_mixed_depth3_depth2_same_id_queue_head_respo
 
 sub sample_capacity_read_burst_last_mixed_auto_id_same_id_queue_head_response_demux_ppif {
     return slurp(sample_capacity_read_burst_last_mixed_auto_id_same_id_queue_head_response_demux_ppif_path());
+}
+
+sub sample_capacity_read_burst_last_mixed_auto_id_same_id_queue_head_read_data_ppif {
+    return slurp(sample_capacity_read_burst_last_mixed_auto_id_same_id_queue_head_read_data_ppif_path());
 }
 
 sub sample_capacity_read_burst_last_depth3_same_id_queue_head_read_data_ppif {

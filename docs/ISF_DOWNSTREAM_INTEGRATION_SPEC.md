@@ -100,13 +100,16 @@ Intent abstraction levels:
   raw-`ARLEN` burst-length capture over those multiple/mixed depth-3 read
   burst-last scalar last-beat groups, and generated runtime beat-count/`RLAST`
   validation over those multiple/mixed depth-3 read burst-last scalar
-  last-beat groups.
-- Deeper concrete same-ID queues, same-family mixed auto-ID plus concrete
-  queue-head demux, multi-beat payload over multiple/mixed depth-3 read
-  burst-last queue-head groups, write-family read-data, group-local
+  last-beat groups, generated multi-beat output-bank behavior over those
+  multiple/mixed depth-3 runtime-validation groups, and same-family mixed
+  auto-ID plus concrete queue-head response-demux with scalar read-data for
+  read single-beat and read burst-last shapes.
+- Mixed multi-beat read-data, burst-length/runtime validation over mixed
+  families, write-family read-data, group-local
   simultaneous enqueue widening, packed burst-vector outputs, alternate full
   burst payload assembly, aliases, platform clauses, full AXI manager
-  behavior, direct backend lowering, and VHDL remain deferred.
+  behavior, direct backend lowering, verification-output generation,
+  backend-language variants, and VHDL remain deferred.
 - The machine-readable source of truth for shipped suffixes, layers, lowering
   order, CLI modes, and current per-suffix boundary text is
   `./bin/fsmgen --capability-manifest` under

@@ -6344,7 +6344,25 @@ selected `.196`, readiness audit for mixed read-data consumption over
 same-family mixed auto-ID plus concrete same-ID queue-head response-demux.
 Audit `.196` selected `.197`, direct bounded implementation of scalar
 read-data consumption for the read single-beat and read burst-last mixed
-families. Mixed multi-beat read-data, burst-length/runtime validation over
+families. Implementation `.197` now ships that bounded scalar read-data
+behavior for the read single-beat and read burst-last same-family mixed
+auto-ID plus concrete same-ID queue-head response-demux shapes. The public
+examples are:
+
+```text
+ppif/axi_manager_capacity_status_read_single_beat_mixed_auto_id_same_id_queue_head_read_data.ppif
+ppif/axi_manager_capacity_status_read_burst_last_mixed_auto_id_same_id_queue_head_read_data.ppif
+```
+
+Both examples keep existing PPIF syntax, bind `RDATA`/`RRESP` outputs for
+`r0`, `r1`, and `r2`, reuse the combined generated response-demux completion
+pulses, and HDL-verify through the current validation lane. Single-beat
+read-data reports
+`generated_mixed_auto_id_queue_head_response_demux_completion_pulse`; the
+burst-last last-beat shape reports
+`generated_mixed_auto_id_queue_head_response_demux_last_beat_completion_pulse`.
+Selector `.198` is the next active owner before any further IAL2 behavior
+expansion. Mixed multi-beat read-data, burst-length/runtime validation over
 mixed families, group-local enqueue widening, packed burst-vector outputs,
 alternate payload assembly, direct backend, verification-output generation,
 VHDL, and backend-language variants remain separately owned.
@@ -6355,6 +6373,11 @@ selects `.196`, the mixed read-data consumption readiness audit.
 Mixed read-data readiness audit:
 [AXI_IAL2_MANAGER_MIXED_AUTO_ID_QUEUE_HEAD_READ_DATA_READINESS_AUDIT](../../AXI_IAL2_MANAGER_MIXED_AUTO_ID_QUEUE_HEAD_READ_DATA_READINESS_AUDIT.md)
 selects `.197`, the direct bounded scalar read-data implementation owner.
+Mixed read-data behavior:
+[AXI_IAL2_MANAGER_MIXED_AUTO_ID_QUEUE_HEAD_READ_DATA_BEHAVIOR](../../AXI_IAL2_MANAGER_MIXED_AUTO_ID_QUEUE_HEAD_READ_DATA_BEHAVIOR.md)
+ships `.197`, bounded scalar read-data over same-family mixed auto-ID plus
+concrete queue-head response-demux for the read single-beat and read
+burst-last public examples.
 
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
@@ -8617,7 +8640,7 @@ support catalog entries instead of recursive workspace traversal.
 `SEMANTIC-INTROSPECTION-MCP-FRONTIER.30` closes the immediate read-only
 semantic-introspection/MCP pass after source discovery; the active roadmap
 priority is again the IAL2 feature-completeness tree, currently at
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.197`.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.198`.
 
 Selected first MCP resource families are `fsmgen://capabilities`,
 `fsmgen://contracts`, `fsmgen://diagnostics`,

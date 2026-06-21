@@ -2831,13 +2831,18 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
     );
     like(
         $file_surface_by_suffix{'.ppif'}{current_boundary},
-        qr/read single-beat queue-head response-demux including multiple response-demux-only groups/,
-        'manifest advertises shipped read single-beat multi-group queue-head response-demux',
+        qr/read single-beat queue-head response-demux including multiple response-demux-only and scalar read-data groups/,
+        'manifest advertises shipped read single-beat multi-group queue-head response-demux and read-data',
     );
     like(
         $file_surface_by_suffix{'.ppif'}{current_boundary},
-        qr/read-data over multiple read single-beat queue-head groups/,
-        'manifest keeps read-data over multiple read single-beat queue-head groups deferred',
+        qr/same-family mixed auto-ID plus concrete queue-head response-demux with scalar read-data for read single-beat and read burst-last shapes/,
+        'manifest advertises shipped mixed auto-ID queue-head scalar read-data',
+    );
+    like(
+        $file_surface_by_suffix{'.ppif'}{current_boundary},
+        qr/Mixed multi-beat read-data, burst-length\/runtime validation over mixed families/,
+        'manifest keeps mixed multi-beat and mixed burst-runtime behavior deferred',
     );
     my %unsupported_aliases = map { $_ => 1 } @{$manifest->{language_surface}{file_surfaces}{unsupported_first_slice_aliases}};
     ok($unsupported_aliases{'.pif'}, 'manifest keeps .pif unsupported in the first PPIF slice');

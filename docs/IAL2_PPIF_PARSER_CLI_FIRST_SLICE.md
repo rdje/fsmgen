@@ -106,11 +106,14 @@ last-beat, and multi-beat read-data capture, burst-length/runtime validation,
 scalar `RRESP` aggregation, one-or-more read burst-last queue-head groups,
 one-or-more write queue-head groups, and read single-beat queue-head
 response-demux including multiple response-demux-only groups, plus selected
-read and write single-group depth-3 queue-head shapes. Broader concrete
-same-ID queues,
-same-family mixed auto-ID plus concrete queue-head demux, read-data over
-multiple read single-beat queue-head groups, aliases, platform clauses, full
-AXI manager behavior, direct backend lowering, and VHDL remain deferred.
+read and write single-group depth-3 queue-head shapes, selected
+multiple/mixed depth-3 queue-head scalar/runtime/multi-beat read-data shapes,
+and same-family mixed auto-ID plus concrete queue-head response-demux with
+scalar read-data for read single-beat and read burst-last shapes. Mixed
+multi-beat read-data, burst-length/runtime validation over mixed families,
+aliases, platform clauses, full AXI manager behavior, direct backend lowering,
+verification-output generation, backend-language variants, and VHDL remain
+deferred.
 
 Malformed `.ppif` source fails closed before claiming generated behavior. The
 first slice rejects missing profile/source/channel clauses, malformed reset

@@ -3408,6 +3408,98 @@ subtest 'mixed auto-ID and same-ID queue-head response-demux combines generated 
     }
 };
 
+subtest 'mixed auto-ID and same-ID queue-head read-data consumes combined completions' => sub {
+    my @cases = (
+        {
+            owner    => 'generator mixed read-data single-beat',
+            contract => sample_contract_with_read_single_beat_mixed_auto_id_same_id_queue_head_read_data(),
+            boundary => 'generated_read_single_beat_queue_head_demux',
+            scope    => 'single_beat',
+            output_data    => 'axi0_r2_rdata',
+            output_status  => 'axi0_r2_rresp',
+            demux_rule_pattern => qr/\(rule axi0_r2_response_demux \(& axi0_read_complete \(== axi0_rid 4'd3\) axi0_read_id3_same_id_issue_order_slot0_r2_q\)/,
+            hdl_demux_guard_pattern => qr/axi0_read_complete\s*&\s*\(axi0_rid\s*==\s*4'd3\)\s*&\s*axi0_read_id3_same_id_issue_order_slot0_r2_q/,
+            report_assertion => \&assert_read_data_report,
+            completion_validity => 'generated_mixed_auto_id_queue_head_response_demux_completion_pulse',
+        },
+        {
+            owner    => 'generator mixed read-data burst-last',
+            contract => sample_contract_with_read_burst_last_mixed_auto_id_same_id_queue_head_read_data(),
+            boundary => 'generated_read_burst_last_queue_head_demux',
+            scope    => 'burst_last',
+            last_signal => 'axi0_rlast',
+            output_data    => 'axi0_r2_last_rdata',
+            output_status  => 'axi0_r2_last_rresp',
+            demux_rule_pattern => qr/\(rule axi0_r2_response_demux \(& axi0_read_complete \(== axi0_rid 4'd3\) axi0_rlast axi0_read_id3_same_id_issue_order_slot0_r2_q\)/,
+            hdl_demux_guard_pattern => qr/axi0_read_complete\s*&\s*\(axi0_rid\s*==\s*4'd3\)\s*&\s*axi0_rlast\s*&\s*axi0_read_id3_same_id_issue_order_slot0_r2_q/,
+            report_assertion => \&assert_read_data_last_beat_report,
+            completion_validity => 'generated_mixed_auto_id_queue_head_response_demux_last_beat_completion_pulse',
+        },
+    );
+
+    for my $case (@cases) {
+        my $result = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate($case->{contract});
+        my $isf = $result->{generated_ial1}{text};
+        my $fsm = $result->{generated_ial0}{files}{'axi0_capacity_status.fsm'};
+        my $owner = $case->{owner};
+
+        like($isf, qr/\(output axi0_arid \(width 4\)\)/, "$owner exposes generated ARID output");
+        like($isf, qr/\(input axi0_rid \(width 4\)\)/, "$owner exposes generated RID input");
+        like($isf, qr/\(input axi0_rdata \(width 32\)\)/, "$owner declares RDATA as a generated input");
+        like($isf, qr/\(input axi0_rresp \(width 2\)\)/, "$owner declares RRESP as a generated input");
+        if ($case->{last_signal}) {
+            like($isf, qr/\(input axi0_rlast\)/, "$owner declares RLAST as a generated input");
+        } else {
+            unlike($isf, qr/\baxi0_rlast\b/, "$owner omits RLAST for single-beat capture");
+        }
+
+        like($isf, qr/\(rule axi0_r0_response_demux\b/, "$owner emits auto-ID response-demux rule");
+        like($isf, $case->{demux_rule_pattern}, "$owner emits concrete queue-head response-demux rule");
+        like($isf, qr/\(output \Q$case->{output_data}\E \(width 32\)\)/, "$owner declares final transaction data output");
+        like($isf, qr/\(output \Q$case->{output_status}\E \(width 2\)\)/, "$owner declares final transaction status output");
+        like(
+            $isf,
+            qr/\(rule axi0_r2_read_data_capture axi0_r2_complete\s+\(\Q$case->{output_data}\E axi0_rdata\)\s+\(\Q$case->{output_status}\E axi0_rresp\)\)/,
+            "$owner guards final transaction scalar capture with combined generated completion",
+        );
+        like(
+            $fsm,
+            qr/\(-axi0_r2_read_data_capture\s+<axi0_r2_complete\s+\(<- \(\Q$case->{output_data}\E> axi0_rdata\)\)\s+\(<- \(\Q$case->{output_status}\E> axi0_rresp\)\)/,
+            "$owner lowers final transaction capture assignments into generated .fsm",
+        );
+
+        assert_mixed_auto_id_queue_head_response_demux_report(
+            $result->{report},
+            "$owner response-demux report",
+            {
+                family            => 'read',
+                completion_prefix => 'r',
+                boundary          => $case->{boundary},
+                scope             => $case->{scope},
+                ($case->{last_signal} ? (last_signal => $case->{last_signal}) : ()),
+            },
+        );
+        $case->{report_assertion}->(
+            $result->{report}{read_data},
+            "$owner read-data report",
+            $case->{completion_validity},
+            transactions => [qw(r0 r1 r2)],
+        );
+
+        my $hdl = hdl_for('axi0_capacity_status', $fsm);
+        like($hdl, qr/\boutput\s+reg\s+\[3:0\]\s+axi0_arid\b/, "$owner SystemVerilog exposes generated ARID output");
+        like($hdl, qr/\binput\s+(?:wire\s+)?\[3:0\]\s+axi0_rid\b/, "$owner SystemVerilog exposes generated RID input");
+        like($hdl, qr/\binput\s+(?:wire\s+)?\[31:0\]\s+axi0_rdata\b/, "$owner SystemVerilog exposes generated RDATA input");
+        like($hdl, qr/\binput\s+(?:wire\s+)?\[1:0\]\s+axi0_rresp\b/, "$owner SystemVerilog exposes generated RRESP input");
+        like($hdl, qr/\boutput\s+reg\s+\[31:0\]\s+\Q$case->{output_data}\E\b/, "$owner SystemVerilog exposes captured data output");
+        like($hdl, qr/\boutput\s+reg\s+\[1:0\]\s+\Q$case->{output_status}\E\b/, "$owner SystemVerilog exposes captured status output");
+        like($hdl, qr/assign\s+axi0_r2_read_data_capture_en\s*=\s*axi0_r2_complete\s*;/, "$owner SystemVerilog drives capture from generated completion");
+        like($hdl, qr/\Q$case->{output_data}\E_next\s*=\s*axi0_rdata\s*;/, "$owner SystemVerilog captures RDATA into final transaction output");
+        like($hdl, qr/\Q$case->{output_status}\E_next\s*=\s*axi0_rresp\s*;/, "$owner SystemVerilog captures RRESP into final transaction output");
+        like($hdl, $case->{hdl_demux_guard_pattern}, "$owner SystemVerilog keeps the concrete queue-head demux guard");
+    }
+};
+
 subtest 'schedule report and HDL expose generated storage and status surface' => sub {
     my $result = generate_sample();
     my $report = $result->{generated_ial1_schedule_report};
@@ -4827,6 +4919,32 @@ sub sample_contract_with_read_burst_last_mixed_auto_id_same_id_queue_head_respon
         response_scope => 'burst-last',
         last_signal => 'axi0_rlast',
     );
+}
+
+sub sample_contract_with_read_single_beat_mixed_auto_id_same_id_queue_head_read_data {
+    my $contract = sample_contract_with_read_single_beat_mixed_auto_id_same_id_queue_head_response_demux();
+    $contract->{intent_name} = 'axi_manager_capacity_status_read_single_beat_mixed_auto_id_same_id_queue_head_read_data';
+    $contract->{source}{object_id} = 'axi-manager-capacity-status-read-single-beat-mixed-auto-id-same-id-queue-head-read-data';
+    $contract->{read_data} = sample_contract_with_same_id_read_single_beat_queue_head_read_data()->{read_data};
+    push @{$contract->{read_data}{read}{transactions}}, {
+        transaction   => 'r2',
+        data_output   => 'axi0_r2_rdata',
+        status_output => 'axi0_r2_rresp',
+    };
+    return $contract;
+}
+
+sub sample_contract_with_read_burst_last_mixed_auto_id_same_id_queue_head_read_data {
+    my $contract = sample_contract_with_read_burst_last_mixed_auto_id_same_id_queue_head_response_demux();
+    $contract->{intent_name} = 'axi_manager_capacity_status_read_burst_last_mixed_auto_id_same_id_queue_head_read_data';
+    $contract->{source}{object_id} = 'axi-manager-capacity-status-read-burst-last-mixed-auto-id-same-id-queue-head-read-data';
+    $contract->{read_data} = sample_contract_with_same_id_read_last_beat_queue_head_read_data()->{read_data};
+    push @{$contract->{read_data}{read}{transactions}}, {
+        transaction   => 'r2',
+        data_output   => 'axi0_r2_last_rdata',
+        status_output => 'axi0_r2_last_rresp',
+    };
+    return $contract;
 }
 
 sub sample_contract_with_write_mixed_auto_id_same_id_queue_head_response_demux {

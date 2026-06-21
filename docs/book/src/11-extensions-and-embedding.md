@@ -71,9 +71,10 @@ beat-count/`RLAST` validation over those multiple/mixed depth-3 read
 burst-last scalar last-beat groups, and generated multi-beat output-bank
 behavior over those multiple/mixed depth-3 runtime-validation groups, plus
 same-family mixed auto-ID lifecycle and concrete queue-head response-demux for
-response-demux-only read single-beat, read burst-last, and write shapes.
-Mixed-family scalar read-data consumption for read single-beat and read
-burst-last is the active implementation frontier; mixed multi-beat read-data,
+response-demux-only read single-beat, read burst-last, and write shapes, and
+scalar read-data over that mixed read boundary for read single-beat and read
+burst-last. The active IAL2 frontier is now the next-slice selector after that
+mixed scalar read-data behavior; mixed multi-beat read-data,
 burst-length/runtime validation over mixed families, broader concrete same-ID
 queues, group-local simultaneous enqueue widening, packed burst-vector
 outputs, alternate full burst payload assembly, aliases, platform clauses,
