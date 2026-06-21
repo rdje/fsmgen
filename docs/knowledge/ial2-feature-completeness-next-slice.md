@@ -1,6 +1,6 @@
 ---
 id: ial2-feature-completeness-next-slice
-title: IAL2 feature completeness next slice is post-mixed-response-demux selection
+title: IAL2 feature completeness next slice is mixed read-data readiness
 answers:
   - "what is the next IAL2 feature completeness slice?"
   - "what is the next IAL2 PNT task?"
@@ -24,27 +24,35 @@ answers:
   - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.124?"
   - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.194?"
   - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.195?"
+  - "what did IAL2-FEATURE-COMPLETENESS-FRONTIER.195 select?"
+  - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.196?"
   - "what is the next AXI manager slice?"
   - "what is the next AXI manager task after same-ID queue behavior implementation?"
 date: 2026-06-21
 status: current
 tags: [ial2, axi, manager, same-id, concrete-id, ordering, feature-completeness, task-tree]
-evidence: docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; docs/AXI_IAL2_MANAGER_MIXED_AUTO_ID_QUEUE_HEAD_RESPONSE_DEMUX_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_MIXED_AUTO_ID_QUEUE_HEAD_RESPONSE_DEMUX_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_POST_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_MULTI_BEAT_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_MULTI_BEAT_READ_DATA_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_MULTI_BEAT_READINESS_AUDIT.md; docs/book/src/14-feature-backlog.md; README.md; ROADMAP_V2.md; docs/knowledge/ial2-feature-completeness-priority.md; docs/knowledge/ial2-common-vs-profile-factoring.md
-reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.194|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.195|MIXED_AUTO_ID_QUEUE_HEAD_RESPONSE_DEMUX_BEHAVIOR|same-family mixed auto-ID|concrete same-ID queue-head' docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md docs/AXI_IAL2_MANAGER_MIXED_AUTO_ID_QUEUE_HEAD_RESPONSE_DEMUX_BEHAVIOR.md docs/book/src/14-feature-backlog.md README.md ROADMAP_V2.md docs/knowledge/ial2-feature-completeness-priority.md
+evidence: docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; docs/AXI_IAL2_MANAGER_POST_MIXED_AUTO_ID_QUEUE_HEAD_RESPONSE_DEMUX_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_MIXED_AUTO_ID_QUEUE_HEAD_RESPONSE_DEMUX_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_MIXED_AUTO_ID_QUEUE_HEAD_RESPONSE_DEMUX_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_POST_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_MULTI_BEAT_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_MULTI_BEAT_READ_DATA_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_MULTI_BEAT_READINESS_AUDIT.md; docs/book/src/14-feature-backlog.md; README.md; ROADMAP_V2.md; docs/knowledge/ial2-feature-completeness-priority.md; docs/knowledge/ial2-mixed-auto-id-queue-head-read-data-readiness-selection.md; docs/knowledge/ial2-common-vs-profile-factoring.md
+reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.195|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.196|POST_MIXED_AUTO_ID_QUEUE_HEAD_RESPONSE_DEMUX_NEXT_SLICE_SELECTION|mixed read-data consumption|same-family mixed auto-ID' docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md docs/AXI_IAL2_MANAGER_POST_MIXED_AUTO_ID_QUEUE_HEAD_RESPONSE_DEMUX_NEXT_SLICE_SELECTION.md docs/book/src/14-feature-backlog.md README.md ROADMAP_V2.md docs/knowledge/ial2-feature-completeness-priority.md
 ---
 
 The next IAL2 feature-completeness slice is
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.195`, selector for the next exact slice
-after bounded mixed auto-ID lifecycle plus concrete queue-head response-demux.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.196`, readiness audit for mixed read-data
+consumption over same-family mixed auto-ID lifecycle plus concrete queue-head
+response-demux.
+
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.195` selected `.196` after live mixed
+response-demux reports showed combined auto-ID and concrete queue-head
+completion coverage, while read-data transaction coverage still has separate
+queue-head and auto-ID paths.
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.194` shipped the direct bounded
 response-demux-only implementation for public read single-beat, read
-burst-last, and write fixtures. The selector must choose whether the next
-owner targets mixed read-data consumption, group-local simultaneous enqueue
-widening, write-family read-data diagnostics, packed burst-vector outputs,
-alternate full burst payload assembly, report/static residue cleanup, direct
-backend prerequisites, verification-output generation, VHDL/backend-language
-variants, or another exact prerequisite before any behavior change.
+burst-last, and write fixtures. Mixed read-data consumption, group-local
+simultaneous enqueue widening, write-family read-data diagnostics, packed
+burst-vector outputs, alternate full burst payload assembly, report/static
+residue cleanup, direct backend prerequisites, verification-output generation,
+VHDL/backend-language variants, or another exact prerequisite remain separately
+owned before behavior changes.
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.193` selected `.194` after confirming
 that read single-beat, read burst-last, and write probes all failed closed at

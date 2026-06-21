@@ -10,10 +10,10 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `HEAD after IAL2-FEATURE-COMPLETENESS-FRONTIER.194 commit` - `IAL2-FEATURE-COMPLETENESS-FRONTIER.194: ship mixed auto-ID queue-head demux`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.195` is the next selector after shipped mixed auto-ID plus concrete queue-head response-demux; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.194` shipped bounded same-family mixed auto-ID lifecycle plus concrete same-ID queue-head response-demux for public read single-beat, read burst-last, and write response-demux-only samples. It added three support-accounted PPIF samples, mixed reports/assertions, concrete request-ID drive under auto-ID-owned request-ID outputs, docs/mdBook/Knowledge Map sync, and preservation coverage. Focused support accounting passed 3953 tests, generator coverage passed 64 tests, and the full PPIF/CLI suite passed 214 tests in 19256 seconds.
-- in_flight_uncommitted: none after the `IAL2-FEATURE-COMPLETENESS-FRONTIER.194` commit. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
+- latest_commit: `HEAD after IAL2-FEATURE-COMPLETENESS-FRONTIER.195 commit` - `IAL2-FEATURE-COMPLETENESS-FRONTIER.195: select mixed read-data readiness`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.196` is the next readiness audit for mixed read-data consumption over same-family mixed auto-ID plus concrete queue-head response-demux; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.195` selected `.196` after live `.194` mixed response-demux reports showed `generated_demux_and_queue_head_demux` completion coverage for read single-beat, read burst-last, and write, while read-data coverage still has separate queue-head and auto-ID paths. No parser, generator, PPIF sample, support-accounting catalog, validation, generated-artifact, test, or HDL behavior changed.
+- in_flight_uncommitted: none after the `IAL2-FEATURE-COMPLETENESS-FRONTIER.195` commit. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
 
 ## Notes

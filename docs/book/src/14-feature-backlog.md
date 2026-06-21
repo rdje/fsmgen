@@ -6339,10 +6339,17 @@ public read single-beat, read burst-last, and write response-demux-only
 fixtures. Mixed reports combine auto-ID and concrete queue-head completion
 outputs/rules/assertions under one selected response family, keep the
 request-ID bus as the auto-ID lifecycle generated output, and add concrete
-request-ID drive rules for same-family concrete transactions. `.195` is the
-next selector before mixed read-data, group-local enqueue widening, packed
-burst-vector outputs, alternate payload assembly, direct backend,
-verification-output generation, VHDL, or backend-language variants.
+request-ID drive rules for same-family concrete transactions. Selector `.195`
+selected `.196`, readiness audit for mixed read-data consumption over
+same-family mixed auto-ID plus concrete same-ID queue-head response-demux.
+Mixed read-data remains unshipped until that audit selects an exact behavior
+or prerequisite; group-local enqueue widening, packed burst-vector outputs,
+alternate payload assembly, direct backend, verification-output generation,
+VHDL, and backend-language variants remain separately owned.
+
+Post mixed response-demux selector:
+[AXI_IAL2_MANAGER_POST_MIXED_AUTO_ID_QUEUE_HEAD_RESPONSE_DEMUX_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MIXED_AUTO_ID_QUEUE_HEAD_RESPONSE_DEMUX_NEXT_SLICE_SELECTION.md)
+selects `.196`, the mixed read-data consumption readiness audit.
 
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
@@ -8605,7 +8612,7 @@ support catalog entries instead of recursive workspace traversal.
 `SEMANTIC-INTROSPECTION-MCP-FRONTIER.30` closes the immediate read-only
 semantic-introspection/MCP pass after source discovery; the active roadmap
 priority is again the IAL2 feature-completeness tree, currently at
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.195`.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.196`.
 
 Selected first MCP resource families are `fsmgen://capabilities`,
 `fsmgen://contracts`, `fsmgen://diagnostics`,
