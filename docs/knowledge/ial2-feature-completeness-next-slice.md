@@ -1,35 +1,33 @@
 ---
 id: ial2-feature-completeness-next-slice
-title: IAL2 feature completeness next slice is group-local enqueue audit
+title: IAL2 feature completeness next slice is counted admission capacity audit
 answers:
   - "what is the next IAL2 feature completeness slice?"
   - "what is the next IAL2 PNT task?"
-  - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.208?"
   - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.209?"
+  - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.210?"
   - "what is the next AXI manager slice?"
-  - "what is the next AXI manager task after mixed multi-beat output banks?"
+  - "what is the next AXI manager task after group-local enqueue audit?"
 date: 2026-06-21
 status: current
 tags: [ial2, axi, manager, same-id, concrete-id, ordering, feature-completeness, task-tree]
-evidence: docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; docs/AXI_IAL2_MANAGER_POST_MIXED_AUTO_ID_QUEUE_HEAD_MULTI_BEAT_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_MIXED_AUTO_ID_QUEUE_HEAD_MULTI_BEAT_READ_DATA_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_MIXED_AUTO_ID_QUEUE_HEAD_MULTI_BEAT_READINESS_AUDIT.md; docs/book/src/14-feature-backlog.md; README.md; ROADMAP_V2.md; docs/knowledge/ial2-post-mixed-auto-id-queue-head-multi-beat-next-slice-selection.md
-reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.208|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.209|POST_MIXED_AUTO_ID_QUEUE_HEAD_MULTI_BEAT_NEXT_SLICE_SELECTION|group-local simultaneous enqueue|family-wide request onehot' docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md docs/AXI_IAL2_MANAGER_POST_MIXED_AUTO_ID_QUEUE_HEAD_MULTI_BEAT_NEXT_SLICE_SELECTION.md docs/book/src/14-feature-backlog.md README.md ROADMAP_V2.md
+evidence: docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; docs/AXI_IAL2_MANAGER_GROUP_LOCAL_SAME_ID_ENQUEUE_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_POST_MIXED_AUTO_ID_QUEUE_HEAD_MULTI_BEAT_NEXT_SLICE_SELECTION.md; docs/book/src/14-feature-backlog.md; README.md; ROADMAP_V2.md; docs/knowledge/ial2-group-local-same-id-enqueue-readiness-audit.md
+reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.209|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.210|GROUP_LOCAL_SAME_ID_ENQUEUE_READINESS_AUDIT|counted admission|capacity prerequisite|request_fanin' docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md docs/AXI_IAL2_MANAGER_GROUP_LOCAL_SAME_ID_ENQUEUE_READINESS_AUDIT.md docs/book/src/14-feature-backlog.md README.md ROADMAP_V2.md
 ---
 
 The next IAL2 feature-completeness slice is
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.209`, readiness audit for group-local
-simultaneous enqueue widening across generated concrete same-ID queue-head
-families.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.210`, counted admission/capacity
+prerequisite audit before group-local same-ID enqueue widening.
 
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.208` selected `.209` after `.207` shipped
-generated mixed multi-beat output-bank behavior over the same-family mixed
-auto-ID plus depth-2 concrete same-ID queue-head runtime-validation shape.
-Representative generated read multi-group, write multi-group, and mixed
-multi-beat samples still report one family-wide request mutual-exclusion
-assertion even when multiple concrete-ID queue groups exist. `.209` is
-audit-only and must decide whether that family-wide request onehot can become
-group-local, whether the direction-level capacity counter needs a prerequisite,
-and whether queue transition generation can handle distinct concrete-ID group
-enqueues in the same cycle.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.209` selected `.210` after auditing
+group-local simultaneous enqueue widening across generated concrete same-ID
+queue-head families. The audit found direct group-local onehot replacement is
+not safe yet because generated queue-head samples still use one Boolean
+same-direction request fan-in and one family-wide request onehot assertion,
+while capacity pending counters increment by one for any request fan-in.
+Queue transitions are already emitted per concrete-ID group, so distinct-group
+enqueue is blocked first by counted admission/capacity ownership, not by queue
+storage.
 
 Historical notes from earlier queue-head frontier selection follow.
 

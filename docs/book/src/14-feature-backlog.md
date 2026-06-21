@@ -6468,6 +6468,13 @@ multi-group, write multi-group, and `.207` mixed multi-beat samples still use
 a family-wide request onehot assertion, so `.209` must audit admission,
 direction-level capacity accounting, transition generation, and preservation
 before any behavior change.
+Group-local enqueue audit:
+[AXI_IAL2_MANAGER_GROUP_LOCAL_SAME_ID_ENQUEUE_READINESS_AUDIT](../../AXI_IAL2_MANAGER_GROUP_LOCAL_SAME_ID_ENQUEUE_READINESS_AUDIT.md)
+selects `.210`, counted admission/capacity prerequisite audit. The live
+generator still reports one Boolean request fan-in per direction and one
+family-wide same-ID request onehot assertion, while generated queue transition
+rules are already per concrete-ID group. Group-local enqueue widening therefore
+must first own counted request admission and pending/status accounting.
 
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
@@ -8730,7 +8737,7 @@ support catalog entries instead of recursive workspace traversal.
 `SEMANTIC-INTROSPECTION-MCP-FRONTIER.30` closes the immediate read-only
 semantic-introspection/MCP pass after source discovery; the active roadmap
 priority is again the IAL2 feature-completeness tree, currently at
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.207`.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.210`.
 
 Selected first MCP resource families are `fsmgen://capabilities`,
 `fsmgen://contracts`, `fsmgen://diagnostics`,
