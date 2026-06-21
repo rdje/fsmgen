@@ -10,10 +10,10 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `HEAD after IAL2-FEATURE-COMPLETENESS-FRONTIER.209 commit` - `IAL2-FEATURE-COMPLETENESS-FRONTIER.209: audit group-local enqueue capacity`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.210` audits counted admission/capacity semantics before group-local same-ID enqueue widening; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.209` selected `.210`, counted admission/capacity prerequisite audit. Live probes showed representative queue-head samples still use one Boolean same-direction request fan-in and one family-wide request onehot assertion; generated IAL1 confirmed queue transitions are per concrete-ID group but capacity pending counters increment by one for any request fan-in.
-- in_flight_uncommitted: none after the `IAL2-FEATURE-COMPLETENESS-FRONTIER.209` commit. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
+- latest_commit: `HEAD after IAL2-FEATURE-COMPLETENESS-FRONTIER.210 commit` - `IAL2-FEATURE-COMPLETENESS-FRONTIER.210: audit counted admission capacity`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.211` implements the counted same-ID request capacity substrate while preserving family-wide request onehot behavior; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.210` selected `.211`. Live probes over public read/write multi-group queue-head samples and `/tmp` max-pending-3 mutations showed Boolean request fan-in and family-wide onehot assertions; generated IAL1 confirmed distinct-group requests would be admitted while pending/status rules count one submit if the onehot were narrowed without counted capacity. The audit placed counted admission in the shared capacity/status matrix and rejected a same-ID-only overlay.
+- in_flight_uncommitted: none after the `IAL2-FEATURE-COMPLETENESS-FRONTIER.210` commit. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
 
 ## Notes

@@ -1,33 +1,32 @@
 ---
 id: ial2-feature-completeness-next-slice
-title: IAL2 feature completeness next slice is counted admission capacity audit
+title: IAL2 feature completeness next slice is counted capacity substrate
 answers:
   - "what is the next IAL2 feature completeness slice?"
   - "what is the next IAL2 PNT task?"
-  - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.209?"
   - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.210?"
+  - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.211?"
   - "what is the next AXI manager slice?"
-  - "what is the next AXI manager task after group-local enqueue audit?"
+  - "what is the next AXI manager task after counted admission audit?"
 date: 2026-06-21
 status: current
 tags: [ial2, axi, manager, same-id, concrete-id, ordering, feature-completeness, task-tree]
-evidence: docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; docs/AXI_IAL2_MANAGER_GROUP_LOCAL_SAME_ID_ENQUEUE_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_POST_MIXED_AUTO_ID_QUEUE_HEAD_MULTI_BEAT_NEXT_SLICE_SELECTION.md; docs/book/src/14-feature-backlog.md; README.md; ROADMAP_V2.md; docs/knowledge/ial2-group-local-same-id-enqueue-readiness-audit.md
-reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.209|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.210|GROUP_LOCAL_SAME_ID_ENQUEUE_READINESS_AUDIT|counted admission|capacity prerequisite|request_fanin' docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md docs/AXI_IAL2_MANAGER_GROUP_LOCAL_SAME_ID_ENQUEUE_READINESS_AUDIT.md docs/book/src/14-feature-backlog.md README.md ROADMAP_V2.md
+evidence: docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; docs/AXI_IAL2_MANAGER_COUNTED_ADMISSION_CAPACITY_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_GROUP_LOCAL_SAME_ID_ENQUEUE_READINESS_AUDIT.md; docs/book/src/14-feature-backlog.md; README.md; ROADMAP_V2.md; docs/knowledge/ial2-counted-admission-capacity-readiness-audit.md
+reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.210|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.211|COUNTED_ADMISSION_CAPACITY_READINESS_AUDIT|counted same-ID request capacity substrate|request_accounting|reject_current_request_set' docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md docs/AXI_IAL2_MANAGER_COUNTED_ADMISSION_CAPACITY_READINESS_AUDIT.md docs/book/src/14-feature-backlog.md README.md ROADMAP_V2.md
 ---
 
 The next IAL2 feature-completeness slice is
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.210`, counted admission/capacity
-prerequisite audit before group-local same-ID enqueue widening.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.211`, counted same-ID request capacity
+substrate implementation while preserving family-wide request onehot behavior.
 
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.209` selected `.210` after auditing
-group-local simultaneous enqueue widening across generated concrete same-ID
-queue-head families. The audit found direct group-local onehot replacement is
-not safe yet because generated queue-head samples still use one Boolean
-same-direction request fan-in and one family-wide request onehot assertion,
-while capacity pending counters increment by one for any request fan-in.
-Queue transitions are already emitted per concrete-ID group, so distinct-group
-enqueue is blocked first by counted admission/capacity ownership, not by queue
-storage.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.210` selected `.211` after auditing
+counted admission/capacity placement. The audit found counted same-direction
+admission belongs in the shared capacity/status matrix because that matrix
+owns public `pending_reads`, `pending_writes`, `*_slots_available`, `*_full`,
+and `*_can_accept` outputs. `.211` must add counted request-accounting report
+metadata and capacity/status substrate for selected generated same-ID
+queue-head families while preserving the current family-wide request onehot
+assertion. Group-local simultaneous enqueue acceptance remains deferred.
 
 Historical notes from earlier queue-head frontier selection follow.
 
