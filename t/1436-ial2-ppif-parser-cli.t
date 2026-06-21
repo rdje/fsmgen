@@ -3058,6 +3058,99 @@ subtest 'CLI emits IAL2 report JSON for AXI manager burst-last read response-dem
     is_deeply($report->{generated_artifacts}{ial0}{files}, ['axi0_capacity_status.fsm'], 'burst-last behavior keeps the generated .fsm artifact name stable');
 };
 
+subtest 'CLI emits IAL2 report JSON for mixed auto-ID and same-ID queue-head response-demux .ppif' => sub {
+    my @cases = (
+        {
+            label      => 'read single-beat',
+            path       => sample_capacity_read_single_beat_mixed_auto_id_same_id_queue_head_response_demux_ppif_path(),
+            intent     => 'axi_manager_capacity_status_read_single_beat_mixed_auto_id_same_id_queue_head_response_demux',
+            entry_id   => 'intent.ppif_axi_manager_capacity_status_read_single_beat_mixed_auto_id_same_id_queue_head_response_demux',
+            family     => 'read',
+            mode       => 'bounded_read_rid_mixed_auto_id_queue_head_demux_contract',
+            request_id => 'axi0_arid',
+            response_id => 'axi0_rid',
+            transactions => [qw(r0 r1 r2)],
+            queue_boundary => 'generated_read_single_beat_queue_head_demux',
+            scope      => 'single_beat',
+        },
+        {
+            label      => 'read burst-last',
+            path       => sample_capacity_read_burst_last_mixed_auto_id_same_id_queue_head_response_demux_ppif_path(),
+            intent     => 'axi_manager_capacity_status_read_burst_last_mixed_auto_id_same_id_queue_head_response_demux',
+            entry_id   => 'intent.ppif_axi_manager_capacity_status_read_burst_last_mixed_auto_id_same_id_queue_head_response_demux',
+            family     => 'read',
+            mode       => 'bounded_read_rid_mixed_auto_id_queue_head_demux_contract',
+            request_id => 'axi0_arid',
+            response_id => 'axi0_rid',
+            transactions => [qw(r0 r1 r2)],
+            queue_boundary => 'generated_read_burst_last_queue_head_demux',
+            scope      => 'burst_last',
+            last_signal => 'axi0_rlast',
+        },
+        {
+            label      => 'write',
+            path       => sample_capacity_write_mixed_auto_id_same_id_queue_head_response_demux_ppif_path(),
+            intent     => 'axi_manager_capacity_status_write_mixed_auto_id_same_id_queue_head_response_demux',
+            entry_id   => 'intent.ppif_axi_manager_capacity_status_write_mixed_auto_id_same_id_queue_head_response_demux',
+            family     => 'write',
+            mode       => 'bounded_write_bid_mixed_auto_id_queue_head_demux_contract',
+            request_id => 'axi0_awid',
+            response_id => 'axi0_bid',
+            transactions => [qw(w0 w1 w2)],
+            queue_boundary => 'generated_write_bid_queue_head_demux',
+        },
+    );
+
+    for my $case (@cases) {
+        my ($success, undef, undef, $stdout_buf, $stderr_buf) = run(
+            command => ['./bin/fsmgen', '--emit-schedule-json', $case->{path}],
+        );
+        ok($success, "mixed $case->{label} --emit-schedule-json succeeds");
+        is(join('', @{$stderr_buf || []}), '', "mixed $case->{label} report keeps stderr clean");
+        my $report = decode_json(join('', @{$stdout_buf || []}));
+        is($report->{schema}, 'fsmgen.ial2.protocol_intent.axi_manager_capacity_status.v1', "mixed $case->{label} report keeps schema");
+        is($report->{source_object}{intent_name}, $case->{intent}, "mixed $case->{label} report carries the PPIF intent name");
+
+        my $lifecycle = $report->{auto_id_lifecycle}{families}[0];
+        is($lifecycle->{request_id_signal}, $case->{request_id}, "mixed $case->{label} reports generated request-ID signal");
+        is($lifecycle->{request_id_direction}, 'generated_output', "mixed $case->{label} reports generated request-ID direction");
+        is_deeply($report->{id_response_rule_engine}{id_signal_inputs}, [$case->{response_id}], "mixed $case->{label} reports only the response ID as concrete-ID input");
+
+        my $entry = $report->{response_demux}{$case->{family}};
+        is($entry->{mode}, $case->{mode}, "mixed $case->{label} reports mixed response-demux mode");
+        is($entry->{transaction_completion_source}, 'generated_demux_and_queue_head_demux', "mixed $case->{label} reports combined completion source");
+        is($entry->{generated_queue_behavior_boundary}, $case->{queue_boundary}, "mixed $case->{label} reports generated queue boundary");
+        is_deeply($entry->{auto_transactions}, [$case->{transactions}[0]], "mixed $case->{label} reports the auto-ID transaction");
+        is_deeply(
+            $entry->{generated_completion_signals},
+            [map { "axi0_${_}_complete" } @{$case->{transactions}}],
+            "mixed $case->{label} reports combined completion outputs",
+        );
+        is_deeply(
+            $entry->{same_id_issue_order_queues}[0]{transactions},
+            [@{$case->{transactions}}[1, 2]],
+            "mixed $case->{label} reports the concrete queue-head transactions",
+        );
+        is($entry->{generated_queue_behavior}, 1, "mixed $case->{label} reports generated queue behavior");
+        is($entry->{response_id_signal}, $case->{response_id}, "mixed $case->{label} reports response ID signal");
+        is($entry->{response_id_direction}, 'generated_input', "mixed $case->{label} reports response ID direction");
+        is($entry->{response_scope}, $case->{scope}, "mixed $case->{label} reports read scope")
+            if $case->{family} eq 'read';
+        is($entry->{last_signal}, $case->{last_signal}, "mixed $case->{label} reports RLAST")
+            if defined $case->{last_signal};
+
+        my ($check_success, undef, undef, $check_stdout, $check_stderr) = run(
+            command => ['./bin/fsmgen', '--strict', '--check', '--json', $case->{path}],
+        );
+        ok($check_success, "mixed $case->{label} --check --json succeeds");
+        is(join('', @{$check_stderr || []}), '', "mixed $case->{label} check keeps stderr clean");
+        my $check_report = decode_json(join('', @{$check_stdout || []}));
+        ok($check_report->{success}, "mixed $case->{label} check reports success");
+        is($check_report->{support_accounting}{entry_id}, $case->{entry_id}, "mixed $case->{label} check names the support-accounting entry");
+        ok($check_report->{support_accounting}{strict_supported}, "mixed $case->{label} check reports strict support");
+    }
+};
+
 subtest 'CLI emits IAL2 report JSON for AXI manager read-data metadata .ppif' => sub {
     my ($success, undef, undef, $stdout_buf, $stderr_buf) = run(
         command => ['./bin/fsmgen', '--emit-schedule-json', sample_capacity_read_data_ppif_path()],
@@ -5987,6 +6080,10 @@ sub sample_capacity_read_single_beat_mixed_depth3_depth2_same_id_queue_head_resp
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_read_single_beat_mixed_depth3_depth2_same_id_queue_head_response_demux.ppif');
 }
 
+sub sample_capacity_read_single_beat_mixed_auto_id_same_id_queue_head_response_demux_ppif_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_read_single_beat_mixed_auto_id_same_id_queue_head_response_demux.ppif');
+}
+
 sub sample_capacity_read_single_beat_multi_depth3_same_id_queue_head_read_data_ppif_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_read_single_beat_multi_depth3_same_id_queue_head_read_data.ppif');
 }
@@ -6005,6 +6102,10 @@ sub sample_capacity_read_burst_last_multi_depth3_same_id_queue_head_response_dem
 
 sub sample_capacity_read_burst_last_mixed_depth3_depth2_same_id_queue_head_response_demux_ppif_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_read_burst_last_mixed_depth3_depth2_same_id_queue_head_response_demux.ppif');
+}
+
+sub sample_capacity_read_burst_last_mixed_auto_id_same_id_queue_head_response_demux_ppif_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_read_burst_last_mixed_auto_id_same_id_queue_head_response_demux.ppif');
 }
 
 sub sample_capacity_read_burst_last_depth3_same_id_queue_head_read_data_ppif_path {
@@ -6093,6 +6194,10 @@ sub sample_capacity_write_multi_depth3_same_id_queue_head_response_demux_ppif_pa
 
 sub sample_capacity_write_mixed_depth3_depth2_same_id_queue_head_response_demux_ppif_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_write_mixed_depth3_depth2_same_id_queue_head_response_demux.ppif');
+}
+
+sub sample_capacity_write_mixed_auto_id_same_id_queue_head_response_demux_ppif_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_write_mixed_auto_id_same_id_queue_head_response_demux.ppif');
 }
 
 sub sample_capacity_write_multi_group_same_id_queue_head_response_demux_ppif_path {
@@ -6215,6 +6320,10 @@ sub sample_capacity_read_single_beat_mixed_depth3_depth2_same_id_queue_head_resp
     return slurp(sample_capacity_read_single_beat_mixed_depth3_depth2_same_id_queue_head_response_demux_ppif_path());
 }
 
+sub sample_capacity_read_single_beat_mixed_auto_id_same_id_queue_head_response_demux_ppif {
+    return slurp(sample_capacity_read_single_beat_mixed_auto_id_same_id_queue_head_response_demux_ppif_path());
+}
+
 sub sample_capacity_read_single_beat_multi_depth3_same_id_queue_head_read_data_ppif {
     return slurp(sample_capacity_read_single_beat_multi_depth3_same_id_queue_head_read_data_ppif_path());
 }
@@ -6233,6 +6342,10 @@ sub sample_capacity_read_burst_last_multi_depth3_same_id_queue_head_response_dem
 
 sub sample_capacity_read_burst_last_mixed_depth3_depth2_same_id_queue_head_response_demux_ppif {
     return slurp(sample_capacity_read_burst_last_mixed_depth3_depth2_same_id_queue_head_response_demux_ppif_path());
+}
+
+sub sample_capacity_read_burst_last_mixed_auto_id_same_id_queue_head_response_demux_ppif {
+    return slurp(sample_capacity_read_burst_last_mixed_auto_id_same_id_queue_head_response_demux_ppif_path());
 }
 
 sub sample_capacity_read_burst_last_depth3_same_id_queue_head_read_data_ppif {
@@ -6321,6 +6434,10 @@ sub sample_capacity_write_multi_depth3_same_id_queue_head_response_demux_ppif {
 
 sub sample_capacity_write_mixed_depth3_depth2_same_id_queue_head_response_demux_ppif {
     return slurp(sample_capacity_write_mixed_depth3_depth2_same_id_queue_head_response_demux_ppif_path());
+}
+
+sub sample_capacity_write_mixed_auto_id_same_id_queue_head_response_demux_ppif {
+    return slurp(sample_capacity_write_mixed_auto_id_same_id_queue_head_response_demux_ppif_path());
 }
 
 sub sample_capacity_write_multi_group_same_id_queue_head_response_demux_ppif {

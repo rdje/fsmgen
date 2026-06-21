@@ -1,0 +1,56 @@
+(protocol-platform-intent axi_manager_capacity_status_write_mixed_auto_id_same_id_queue_head_response_demux
+  (profile axi4)
+  (source
+    (object axi-manager-capacity-status-write-mixed-auto-id-same-id-queue-head-response-demux)
+    (anchor (document IHI0022_L_2025-08) (section A1.1) (page A1-1))
+    (anchor (document IHI0022_L_2025-08) (section A1.2) (page A1-1))
+    (anchor (document IHI0022_L_2025-08) (section A5.1) (page A5-1))
+    (anchor (document IHI0022_L_2025-08) (section A5.1.1) (page A5-1))
+    (anchor (document IHI0022_L_2025-08) (section A5.5) (page A5-5))
+    (anchor (document IHI0022_L_2025-08) (section A5.6) (page A5-6)))
+  (manager-capacity-status axi0
+    (clock clk)
+    (reset (rst_n active_low async))
+    (read-max-pending 2)
+    (write-max-pending 4)
+    (submit-policy try)
+    (read-submit axi0_read_submit)
+    (read-complete axi0_read_complete)
+    (write-submit axi0_write_submit)
+    (write-complete axi0_write_complete)
+    (id-families
+      (write (width 4) (request-id axi0_awid) (response-id axi0_bid))
+      (read (width 4) (request-id axi0_arid) (response-id axi0_rid)))
+    (transactions
+      (write w0
+        (tag wr0)
+        (request axi0_w0_request)
+        (completion axi0_w0_complete)
+        (id auto))
+      (write w1
+        (tag wr1)
+        (request axi0_w1_request)
+        (completion axi0_w1_complete)
+        (id (value 3)))
+      (write w2
+        (tag wr2)
+        (request axi0_w2_request)
+        (completion axi0_w2_complete)
+        (id (value 3))))
+    (auto-id-lifecycle
+      (write (pool 0 1)))
+    (same-id-ordering
+      (write (concrete-id-reuse issue-order-queue)))
+    (response-demux
+      (write
+        (response-event axi0_write_complete)
+        (transaction-completion generated)))
+    (status
+      (read-can-accept axi0_read_can_accept)
+      (write-can-accept axi0_write_can_accept)
+      (read-full axi0_read_full)
+      (write-full axi0_write_full)
+      (pending-reads axi0_pending_reads)
+      (pending-writes axi0_pending_writes)
+      (read-slots-available axi0_read_slots_available)
+      (write-slots-available axi0_write_slots_available))))

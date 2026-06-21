@@ -3321,6 +3321,93 @@ subtest 'mixed read/write response-demux keeps write behavior and adds read beha
     assert_same_id_ordering_family($same_id_families{read}, 'generator report mixed read', 'read', 1);
 };
 
+subtest 'mixed auto-ID and same-ID queue-head response-demux combines generated families' => sub {
+    my @cases = (
+        {
+            owner    => 'generator mixed read single-beat',
+            family   => 'read',
+            contract => sample_contract_with_read_single_beat_mixed_auto_id_same_id_queue_head_response_demux(),
+            request_id_signal  => 'axi0_arid',
+            response_id_signal => 'axi0_rid',
+            response_event     => 'axi0_read_complete',
+            first_transaction  => 'r0',
+            second_transaction => 'r1',
+            third_transaction  => 'r2',
+            completion_prefix  => 'r',
+            boundary           => 'generated_read_single_beat_queue_head_demux',
+            scope              => 'single_beat',
+        },
+        {
+            owner    => 'generator mixed read burst-last',
+            family   => 'read',
+            contract => sample_contract_with_read_burst_last_mixed_auto_id_same_id_queue_head_response_demux(),
+            request_id_signal  => 'axi0_arid',
+            response_id_signal => 'axi0_rid',
+            response_event     => 'axi0_read_complete',
+            first_transaction  => 'r0',
+            second_transaction => 'r1',
+            third_transaction  => 'r2',
+            completion_prefix  => 'r',
+            boundary           => 'generated_read_burst_last_queue_head_demux',
+            scope              => 'burst_last',
+            last_signal        => 'axi0_rlast',
+        },
+        {
+            owner    => 'generator mixed write',
+            family   => 'write',
+            contract => sample_contract_with_write_mixed_auto_id_same_id_queue_head_response_demux(),
+            request_id_signal  => 'axi0_awid',
+            response_id_signal => 'axi0_bid',
+            response_event     => 'axi0_write_complete',
+            first_transaction  => 'w0',
+            second_transaction => 'w1',
+            third_transaction  => 'w2',
+            completion_prefix  => 'w',
+            boundary           => 'generated_write_bid_queue_head_demux',
+        },
+    );
+
+    for my $case (@cases) {
+        my $result = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate($case->{contract});
+        my $isf = $result->{generated_ial1}{text};
+        my $fsm = $result->{generated_ial0}{files}{'axi0_capacity_status.fsm'};
+        my $owner = $case->{owner};
+        my $request_id_signal = $case->{request_id_signal};
+        my $response_id_signal = $case->{response_id_signal};
+        my $first_transaction = $case->{first_transaction};
+        my $second_transaction = $case->{second_transaction};
+        my $third_transaction = $case->{third_transaction};
+
+        like($isf, qr/\(output \Q$request_id_signal\E \(width 4\)\)/, "$owner exposes the shared request ID as a generated output");
+        like($isf, qr/\(input \Q$response_id_signal\E \(width 4\)\)/, "$owner exposes the response ID as a generated input");
+        like($isf, qr/\(rule axi0_${first_transaction}_response_demux\b/, "$owner emits auto-ID response-demux rule");
+        like($isf, qr/\(pulse axi0_${first_transaction}_complete\)/, "$owner emits auto-ID response-demux pulse");
+        like($isf, qr/\(rule axi0_${second_transaction}_response_demux\b/, "$owner emits first concrete queue-head response-demux rule");
+        like($isf, qr/\(pulse axi0_${second_transaction}_complete\)/, "$owner emits first concrete queue-head response-demux pulse");
+        like($isf, qr/\(rule axi0_${third_transaction}_response_demux\b/, "$owner emits second concrete queue-head response-demux rule");
+        like($isf, qr/\(pulse axi0_${third_transaction}_complete\)/, "$owner emits second concrete queue-head response-demux pulse");
+        like($isf, qr/\(rule axi0_${second_transaction}_concrete_request_id_drive \(& axi0_${second_transaction}_request \(! axi0_${first_transaction}_request\)\)\s+\(\Q$request_id_signal\E 4'd3\)\)/, "$owner drives concrete request ID through the generated request-ID output");
+        like($isf, qr/\(rule axi0_${first_transaction}_auto_id_alloc_0\b/, "$owner emits the first auto-ID allocation rule");
+        like($isf, qr/\(! axi0_${second_transaction}_request\)/, "$owner guards auto-ID allocation against the first concrete request");
+        like($isf, qr/\(! axi0_${third_transaction}_request\)/, "$owner guards auto-ID allocation against the second concrete request");
+
+        assert_mixed_auto_id_queue_head_response_demux_report(
+            $result->{report},
+            $owner,
+            $case,
+        );
+        is_deeply(
+            $result->{report}{id_response_rule_engine}{id_signal_inputs},
+            [$response_id_signal],
+            "$owner reports only the response ID as an effective concrete-ID input",
+        );
+
+        my $hdl = hdl_for('axi0_capacity_status', $fsm);
+        like($hdl, qr/\boutput\s+reg\s+\[3:0\]\s+\Q$request_id_signal\E\b/, "$owner SystemVerilog exposes generated request ID output");
+        like($hdl, qr/\binput\s+(?:wire\s+)?\[3:0\]\s+\Q$response_id_signal\E\b/, "$owner SystemVerilog exposes response ID input");
+    }
+};
+
 subtest 'schedule report and HDL expose generated storage and status surface' => sub {
     my $result = generate_sample();
     my $report = $result->{generated_ial1_schedule_report};
@@ -3484,19 +3571,6 @@ subtest 'malformed contract objects fail closed and no direct lower-to-fsm entry
             };
             $c;
         }, qr/response_demux\.read concrete same-ID queue-head demux requires at least one duplicate concrete read ID group/],
-        ['same-ID queue-head response demux mixed with same-family auto lifecycle', sub {
-            my $c = sample_contract_with_same_id_queue_head_response_demux();
-            push @{$c->{transactions}}, {
-                kind             => 'read',
-                name             => 'r2',
-                tag              => 'rd2',
-                request_event    => 'axi0_r2_request',
-                completion_event => 'axi0_r2_complete',
-                id               => { policy => 'auto' },
-            };
-            $c->{auto_id_lifecycle} = { read => { pool => [0] } };
-            $c;
-        }, qr/response_demux\.read does not support same-family auto_id_lifecycle plus concrete same-ID queue-head demux/],
         ['read data unsupported family', sub { my $c = sample_contract_with_read_response_demux(); $c->{read_data} = { write => {} }; $c }, qr/read_data has unsupported family 'write'/],
         ['read data without read response demux', sub {
             my $c = sample_contract_with_read_auto_id_lifecycle();
@@ -4738,6 +4812,161 @@ sub sample_contract_with_mixed_response_demux {
         },
     };
     return $contract;
+}
+
+sub sample_contract_with_read_single_beat_mixed_auto_id_same_id_queue_head_response_demux {
+    return sample_contract_with_mixed_auto_id_same_id_queue_head_response_demux(
+        family => 'read',
+        response_scope => 'single-beat',
+    );
+}
+
+sub sample_contract_with_read_burst_last_mixed_auto_id_same_id_queue_head_response_demux {
+    return sample_contract_with_mixed_auto_id_same_id_queue_head_response_demux(
+        family => 'read',
+        response_scope => 'burst-last',
+        last_signal => 'axi0_rlast',
+    );
+}
+
+sub sample_contract_with_write_mixed_auto_id_same_id_queue_head_response_demux {
+    return sample_contract_with_mixed_auto_id_same_id_queue_head_response_demux(
+        family => 'write',
+    );
+}
+
+sub sample_contract_with_mixed_auto_id_same_id_queue_head_response_demux {
+    my (%args) = @_;
+    my $family = $args{family};
+    my $contract = sample_contract_with_id_families();
+    my $read = $family eq 'read';
+    my $prefix = $read ? 'r' : 'w';
+    my $tag_prefix = $read ? 'rd' : 'wr';
+    my $submit = $read ? 'read' : 'write';
+    my $response_event = $read ? 'axi0_read_complete' : 'axi0_write_complete';
+
+    $contract->{intent_name} = $read
+        ? ($args{response_scope} // '') eq 'burst-last'
+            ? 'axi_manager_capacity_status_read_burst_last_mixed_auto_id_same_id_queue_head_response_demux'
+            : 'axi_manager_capacity_status_read_single_beat_mixed_auto_id_same_id_queue_head_response_demux'
+        : 'axi_manager_capacity_status_write_mixed_auto_id_same_id_queue_head_response_demux';
+    $contract->{source}{object_id} = $read
+        ? ($args{response_scope} // '') eq 'burst-last'
+            ? 'axi-manager-capacity-status-read-burst-last-mixed-auto-id-same-id-queue-head-response-demux'
+            : 'axi-manager-capacity-status-read-single-beat-mixed-auto-id-same-id-queue-head-response-demux'
+        : 'axi-manager-capacity-status-write-mixed-auto-id-same-id-queue-head-response-demux';
+    $contract->{read_max_pending} = $read ? 4 : 2;
+    $contract->{write_max_pending} = $read ? 2 : 4;
+    $contract->{transactions} = [
+        {
+            kind             => $family,
+            name             => "${prefix}0",
+            tag              => "${tag_prefix}0",
+            request_event    => "axi0_${prefix}0_request",
+            completion_event => "axi0_${prefix}0_complete",
+            id               => { policy => 'auto' },
+        },
+        {
+            kind             => $family,
+            name             => "${prefix}1",
+            tag              => "${tag_prefix}1",
+            request_event    => "axi0_${prefix}1_request",
+            completion_event => "axi0_${prefix}1_complete",
+            id               => { value => 3 },
+        },
+        {
+            kind             => $family,
+            name             => "${prefix}2",
+            tag              => "${tag_prefix}2",
+            request_event    => "axi0_${prefix}2_request",
+            completion_event => "axi0_${prefix}2_complete",
+            id               => { value => 3 },
+        },
+    ];
+    $contract->{auto_id_lifecycle} = {
+        $family => { pool => [0, 1] },
+    };
+    $contract->{same_id_ordering_policy} = {
+        $family => {
+            concrete_id_reuse => 'issue-order-queue',
+        },
+    };
+    my %demux = (
+        response_event => $response_event,
+        transaction_completion => 'generated',
+    );
+    if ($read) {
+        $demux{response_scope} = $args{response_scope};
+        if (($args{response_scope} // '') eq 'burst-last') {
+            $demux{last_signal} = $args{last_signal};
+            $demux{last_signal_width} = 1;
+        }
+    }
+    $contract->{response_demux} = {
+        $family => \%demux,
+    };
+    return $contract;
+}
+
+sub assert_mixed_auto_id_queue_head_response_demux_report {
+    my ($report, $owner, $case) = @_;
+    my $demux = $report->{response_demux};
+    my $family = $case->{family};
+    my $entry = $demux->{$family};
+    my $prefix = $case->{completion_prefix};
+    my @transactions = map { "${prefix}$_" } 0 .. 2;
+
+    is(
+        $demux->{mode},
+        $family eq 'write' ? 'bounded_write_bid_demux_contract' : 'bounded_response_demux_contract',
+        "$owner reports top-level response-demux mode",
+    );
+    ok($demux->{generated_behavior}, "$owner reports generated response-demux behavior");
+    is(
+        $entry->{mode},
+        $family eq 'write'
+            ? 'bounded_write_bid_mixed_auto_id_queue_head_demux_contract'
+            : 'bounded_read_rid_mixed_auto_id_queue_head_demux_contract',
+        "$owner reports mixed family response-demux mode",
+    );
+    is($entry->{transaction_completion_source}, 'generated_demux_and_queue_head_demux', "$owner reports combined completion source");
+    is($entry->{generated_queue_behavior_boundary}, $case->{boundary}, "$owner reports queue-head generated boundary");
+    is_deeply($entry->{auto_transactions}, [$transactions[0]], "$owner reports the auto-ID transaction");
+    is_deeply($entry->{generated_rules}, [map { "axi0_${_}_response_demux" } @transactions], "$owner reports combined response-demux rules");
+    is_deeply($entry->{generated_completion_signals}, [map { "axi0_${_}_complete" } @transactions], "$owner reports combined completion signals");
+    is_deeply(
+        $entry->{generated_assertions},
+        [
+            "axi0_${family}_response_demux_active_match",
+            "axi0_$transactions[0]_$transactions[1]_${family}_response_demux_unique_match",
+            "axi0_$transactions[0]_$transactions[2]_${family}_response_demux_unique_match",
+            "axi0_$transactions[1]_$transactions[2]_${family}_response_demux_unique_match",
+        ],
+        "$owner reports combined response-demux assertions",
+    );
+    is_deeply(
+        $entry->{same_id_issue_order_queues},
+        [
+            {
+                concrete_id          => 3,
+                depth                => 2,
+                dequeue_event_source => 'queue_head_response_demux',
+                transactions         => [@transactions[1, 2]],
+            },
+        ],
+        "$owner reports the concrete same-ID queue-head group",
+    );
+    if ($family eq 'read') {
+        is($entry->{response_scope}, $case->{scope}, "$owner reports read response scope");
+        if ($case->{last_signal}) {
+            is($entry->{last_signal}, $case->{last_signal}, "$owner reports RLAST signal");
+        } else {
+            ok(!exists($entry->{last_signal}), "$owner omits RLAST for single-beat response demux");
+        }
+        is_deeply($demux->{residue}, [qw(read_data_interleaving bursts)], "$owner reports read residue");
+    } else {
+        is_deeply($demux->{residue}, [qw(read_response_demux read_data_interleaving bursts)], "$owner reports write residue");
+    }
 }
 
 sub assert_write_response_demux_report {

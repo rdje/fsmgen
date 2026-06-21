@@ -6334,7 +6334,15 @@ storage, expected/read beat counters, beat-count/`RLAST` assertions, empty
 selected `.193`, readiness audit for same-family mixed auto-ID lifecycle plus
 concrete same-ID queue-head response-demux before any behavior change. Audit
 `.193` selected `.194`, direct bounded response-demux-only implementation of
-that mixed family boundary.
+that mixed family boundary. Implementation `.194` now ships that behavior for
+public read single-beat, read burst-last, and write response-demux-only
+fixtures. Mixed reports combine auto-ID and concrete queue-head completion
+outputs/rules/assertions under one selected response family, keep the
+request-ID bus as the auto-ID lifecycle generated output, and add concrete
+request-ID drive rules for same-family concrete transactions. `.195` is the
+next selector before mixed read-data, group-local enqueue widening, packed
+burst-vector outputs, alternate payload assembly, direct backend,
+verification-output generation, VHDL, or backend-language variants.
 
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
@@ -8597,7 +8605,7 @@ support catalog entries instead of recursive workspace traversal.
 `SEMANTIC-INTROSPECTION-MCP-FRONTIER.30` closes the immediate read-only
 semantic-introspection/MCP pass after source discovery; the active roadmap
 priority is again the IAL2 feature-completeness tree, currently at
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.194`.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.195`.
 
 Selected first MCP resource families are `fsmgen://capabilities`,
 `fsmgen://contracts`, `fsmgen://diagnostics`,
