@@ -1332,6 +1332,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/tasks/TEMPLATE.md` — reusable template for one top-level task tree.
 - `docs/tasks/GENERATED-HDL-ARTIFACT-PLACEMENT.md` — completed artifact-hygiene task tree for routing implicit generated HDL into git-ignored hidden artifact directories while preserving explicit output paths.
 - `docs/tasks/RHS-LOGIC-SIMPLIFICATION-FRONTIER.md` — completed generated-HDL quality tree for AST-level boolean and width-proven vector/multi-bit RHS logic-equivalence simplification before HDL emission.
+- `docs/tasks/AGENT-RUNTIME-RAM-GUARD.md` — agent-runtime safety tree for guarded heavyweight local commands that could otherwise exhaust host RAM.
 - `docs/tasks/PROJECT-REMAINING-WORK-TASKTREE-OWNERSHIP.md` — completed roadmap-maintenance task tree that routed the 2026-06-05 remaining-work inventory to existing active owners or new broad owner trees.
 - `docs/tasks/COMPOSITION-TYPE-BACKLOG-EXHAUSTION.md` — completed Composition/type backlog tree; shipped aggregate parameter/generic equality/inequality, closed the remaining Composition/type leaves behind exact prerequisites, and routed VHDL-dependent work through the completed backend/API frontier.
 - `docs/tasks/ISF-REMAINING-BROAD-FRONTIER.md` — proposed broad `R14` ISF frontier owner tree for deferred ISF backlog directions not already owned by narrower active trees.
@@ -2189,6 +2190,22 @@ cd docs/book && mdbook serve
 - Hosted CI uses a minimal Perl setup. Ordinary runtime paths should not rely
   on undeclared local CPAN modules, and CLI report modes tested for clean
   stderr must remain compatible with the hosted Perl version.
+
+## Local RAM guard for heavy runs
+Broad `prove`, supported-corpus, and direct `fsmgen` runs can spawn large Perl
+children. Agent-launched heavyweight local commands must use the RAM guard or
+an equivalent active monitor:
+
+```bash
+scripts/run_with_ram_guard.sh -- prove -Iperl t/248-regression-corpus-accounting.t
+scripts/run_with_ram_guard.sh --process-max-rss-mb 3072 -- ./bin/fsmgen --check-json ppif/axi_aw_valid_ready.ppif
+```
+
+The guard defaults to stopping the command tree when host memory reaches 88%
+or when any descendant reaches 4096 MiB RSS. That keeps local runs below the
+90% danger zone. If the guard trips, stop the broad run, record the resource
+caveat in the owning task-tree leaf, and continue only with a narrower focused
+check unless the user explicitly authorizes a different cap.
 
 ## CLI quick reference
 ```bash

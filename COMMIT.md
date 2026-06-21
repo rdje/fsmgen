@@ -118,6 +118,11 @@ Ignoring it is not a style issue; it is a project-safety failure.
 - Do not stage unrelated untracked directories (for example local sandboxes).
 - Keep behavior-preserving refactor slices small and verifiable.
 - Keep attribution trailers out of task-scoped commits unless the user explicitly asks for them.
+- Run broad or potentially heavyweight local Perl/`prove`/`fsmgen` commands
+  under `scripts/run_with_ram_guard.sh` or an equivalent active monitor. The
+  default guard stops before host memory reaches the 90% danger zone; if it
+  trips, record the resource caveat in the owning task tree instead of
+  continuing unbounded.
 - Prefer one completed slice per commit cycle. If a task naturally fans out into multiple independently valid slices, close each slice with this workflow before moving on.
 
 ## Git index safety

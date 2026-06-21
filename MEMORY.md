@@ -10,10 +10,10 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `HEAD after IAL2-FEATURE-COMPLETENESS-FRONTIER.202 commit` - `IAL2-FEATURE-COMPLETENESS-FRONTIER.202: ship mixed runtime validation`.
+- latest_commit: `HEAD after AGENT-RUNTIME-RAM-GUARD.1 commit` - `AGENT-RUNTIME-RAM-GUARD.1: add RAM guard for heavy local runs`.
 - active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.203` selects the next post-mixed-runtime feature-completeness slice; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.202` shipped `ppif/axi_manager_capacity_status_read_burst_last_mixed_auto_id_same_id_queue_head_burst_length_runtime_assertion.ppif`, support-accounted runtime beat-count/RLAST validation over the `.200` mixed raw-ARLEN shape, and preserved `.200` report-only behavior.
-- in_flight_uncommitted: none after the `IAL2-FEATURE-COMPLETENESS-FRONTIER.202` commit. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
+- recently_done: `AGENT-RUNTIME-RAM-GUARD.1` added `scripts/run_with_ram_guard.sh`, default host RAM 88% / descendant RSS 4096 MiB guardrails, fail-closed inspection behavior, and README/COMMIT/Knowledge Map guidance after the `.202` broad supported-corpus run spawned a high-RSS Perl child.
+- in_flight_uncommitted: none after the `AGENT-RUNTIME-RAM-GUARD.1` commit. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
 
 ## Notes
@@ -23,6 +23,9 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
   (`docs/tasks/KNOWLEDGE-MAP-ADOPT.md`).
 - Push only on explicit user request (no commit-count cadence) — `docs/decisions/0005`.
 - PNT autonomously; do not pause mid-flow — `docs/decisions/0003`.
+- Heavy broad Perl/`prove`/`fsmgen` commands must run under
+  `scripts/run_with_ram_guard.sh` or equivalent monitoring; default cutoff is
+  host RAM 88% / descendant RSS 4096 MiB, below the user's 90% danger zone.
 - Optional `slang` HDL validation is a future backend-validation candidate only;
   no `--verify-hdl` policy changed in `.194`
   (`docs/knowledge/hdl-validation-slang-candidate.md`).
