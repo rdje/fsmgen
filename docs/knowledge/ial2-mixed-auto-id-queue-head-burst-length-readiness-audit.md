@@ -6,7 +6,6 @@ answers:
   - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.199?"
   - "does mixed auto-id queue-head burst-length already generate?"
   - "what is the next IAL2 slice after the mixed burst-length audit?"
-  - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.200?"
   - "is mixed runtime burst-length validation public after .199?"
 date: 2026-06-21
 status: current
@@ -27,3 +26,7 @@ the existing transaction-list helpers. Report-only is selected first for public
 support/accounting. Runtime beat-count/`RLAST` validation is not public after
 `.199`; `.200` must preserve or lock that runtime boundary while publishing
 the report-only sample.
+
+The shipped `.200` behavior is tracked by
+`docs/knowledge/ial2-mixed-auto-id-queue-head-burst-length-behavior.md`; this
+card remains the historical `.199` readiness-audit fact.

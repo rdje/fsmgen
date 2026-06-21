@@ -3163,6 +3163,7 @@ subtest 'CLI emits IAL2 report JSON for mixed auto-ID and same-ID queue-head rea
             scope      => 'single_beat',
             completion_validity => 'generated_mixed_auto_id_queue_head_response_demux_completion_pulse',
             report_assertion => \&assert_read_data_report,
+            report_assertion_args => ['generated_mixed_auto_id_queue_head_response_demux_completion_pulse'],
         },
         {
             label      => 'read-data burst-last',
@@ -3175,6 +3176,21 @@ subtest 'CLI emits IAL2 report JSON for mixed auto-ID and same-ID queue-head rea
             last_signal => 'axi0_rlast',
             completion_validity => 'generated_mixed_auto_id_queue_head_response_demux_last_beat_completion_pulse',
             report_assertion => \&assert_read_data_last_beat_report,
+            report_assertion_args => ['generated_mixed_auto_id_queue_head_response_demux_last_beat_completion_pulse'],
+        },
+        {
+            label      => 'read-data burst-last report-only burst-length',
+            owner      => 'mixed auto-ID queue-head read-data burst-last report-only burst-length',
+            path       => \&sample_capacity_read_burst_last_mixed_auto_id_same_id_queue_head_burst_length_ppif_path,
+            intent     => 'axi_manager_capacity_status_read_burst_last_mixed_auto_id_same_id_queue_head_burst_length',
+            entry_id   => 'intent.ppif_axi_manager_capacity_status_read_burst_last_mixed_auto_id_same_id_queue_head_burst_length',
+            queue_boundary => 'generated_read_burst_last_queue_head_demux',
+            scope      => 'burst_last',
+            last_signal => 'axi0_rlast',
+            completion_validity => 'generated_mixed_auto_id_queue_head_response_demux_last_beat_completion_pulse',
+            report_assertion => \&assert_read_data_burst_length_report,
+            report_assertion_args => ['report_only', 'generated_mixed_auto_id_queue_head_response_demux_last_beat_completion_pulse'],
+            burst_length => 1,
         },
     );
 
@@ -3209,7 +3225,7 @@ subtest 'CLI emits IAL2 report JSON for mixed auto-ID and same-ID queue-head rea
         $case->{report_assertion}->(
             $report->{read_data},
             "mixed $case->{label} CLI read-data report",
-            $case->{completion_validity},
+            @{$case->{report_assertion_args}},
             transactions => [qw(r0 r1 r2)],
         );
         is_deeply($report->{generated_artifacts}{ial0}{files}, ['axi0_capacity_status.fsm'], "mixed $case->{label} keeps the generated .fsm artifact name stable");
@@ -3219,7 +3235,56 @@ subtest 'CLI emits IAL2 report JSON for mixed auto-ID and same-ID queue-head rea
             path     => $case->{path},
             entry_id => $case->{entry_id},
         );
+
+        if ($case->{burst_length}) {
+            my ($semantic_success, undef, undef, $semantic_stdout, $semantic_stderr) = run(
+                command => ['./bin/fsmgen', '--strict', '--emit-semantic-json', $path],
+            );
+            ok($semantic_success, "mixed $case->{label} semantic JSON succeeds");
+            is(join('', @{$semantic_stderr || []}), '', "mixed $case->{label} semantic JSON keeps stderr clean");
+            my $semantic_report = decode_json(join('', @{$semantic_stdout || []}));
+            ok($semantic_report->{success}, "mixed $case->{label} semantic JSON reports success");
+            is($semantic_report->{support_accounting}{entry_id}, $case->{entry_id}, "mixed $case->{label} semantic JSON names the support-accounting entry");
+
+            SKIP: {
+                my $skip_reason = external_systemverilog_validation_skip_reason();
+                skip $skip_reason, 6 if defined $skip_reason;
+
+                my $tempdir = tempdir(CLEANUP => 1);
+                my $hdl = File::Spec->catfile($tempdir, 'mixed-auto-id-queue-head-burst-length.sv');
+                my ($verify_success, undef, undef, undef, $verify_stderr) = run(
+                    command => ['./bin/fsmgen', '--quiet', '--verify-hdl', '--output', $hdl, $path],
+                );
+                ok($verify_success, "mixed $case->{label} --verify-hdl succeeds");
+                is(join('', @{$verify_stderr || []}), '', "mixed $case->{label} --verify-hdl keeps stderr clean");
+                ok(-f $hdl, "mixed $case->{label} --verify-hdl writes generated HDL");
+                my $sv = slurp($hdl);
+                like($sv, qr/\binput\s+(?:wire\s+)?\[7:0\]\s+axi0_arlen\b/, "mixed $case->{label} HDL exposes generated ARLEN input");
+                like($sv, qr/\breg\s+\[7:0\]\s+axi0_r2_arlen_q\b/, "mixed $case->{label} HDL declares r2 raw ARLEN storage");
+                unlike($sv, qr/\bexpected_beats_q\b/, "mixed $case->{label} report-only HDL omits expected-beat storage");
+            }
+        }
     }
+};
+
+subtest 'CLI rejects mixed auto-ID queue-head runtime burst-length as separately owned' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $sample_path = File::Spec->catfile($tempdir, 'mixed-auto-id-runtime-burst-length.ppif');
+    my $source = sample_capacity_read_burst_last_mixed_auto_id_same_id_queue_head_burst_length_ppif();
+    $source =~ s/\(validation report-only\)/(validation runtime-assertion)/
+        or die 'new mixed burst-length sample did not contain report-only validation';
+    write_file($sample_path, $source);
+
+    my ($success, undef, undef, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--strict', '--check', '--json', $sample_path],
+    );
+    ok(!$success, 'mixed auto-ID queue-head runtime burst-length strict check fails closed');
+    my $diagnostic = join('', @{$stdout_buf || []}, @{$stderr_buf || []});
+    like(
+        $diagnostic,
+        qr/mixed auto-ID plus queue-head burst_length\.validation runtime-assertion remains separately owned/,
+        'runtime mixed burst-length diagnostic names the separately owned boundary',
+    );
 };
 
 subtest 'CLI emits IAL2 report JSON for AXI manager read-data metadata .ppif' => sub {
@@ -6187,6 +6252,10 @@ sub sample_capacity_read_burst_last_mixed_auto_id_same_id_queue_head_read_data_p
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_read_burst_last_mixed_auto_id_same_id_queue_head_read_data.ppif');
 }
 
+sub sample_capacity_read_burst_last_mixed_auto_id_same_id_queue_head_burst_length_ppif_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_read_burst_last_mixed_auto_id_same_id_queue_head_burst_length.ppif');
+}
+
 sub sample_capacity_read_burst_last_depth3_same_id_queue_head_read_data_ppif_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_read_burst_last_depth3_same_id_queue_head_read_data.ppif');
 }
@@ -6433,6 +6502,10 @@ sub sample_capacity_read_burst_last_mixed_auto_id_same_id_queue_head_response_de
 
 sub sample_capacity_read_burst_last_mixed_auto_id_same_id_queue_head_read_data_ppif {
     return slurp(sample_capacity_read_burst_last_mixed_auto_id_same_id_queue_head_read_data_ppif_path());
+}
+
+sub sample_capacity_read_burst_last_mixed_auto_id_same_id_queue_head_burst_length_ppif {
+    return slurp(sample_capacity_read_burst_last_mixed_auto_id_same_id_queue_head_burst_length_ppif_path());
 }
 
 sub sample_capacity_read_burst_last_depth3_same_id_queue_head_read_data_ppif {
@@ -7180,7 +7253,7 @@ sub assert_rlast_report_prose_alignment {
     ok($id_residue, "$owner reports AXI ID/order unsupported residue");
     like(
         $id_residue->{detail},
-        qr/generated burst-last RLAST response-demux completion, structural last-beat read-data metadata, generated last-beat read-data RDATA\/RRESP capture, generated last-beat read-data RDATA\/RRESP capture from generated read burst-last concrete same-ID queue-head response-demux including multiple independent depth-2 queue-head groups with no burst_length metadata, report-only raw-ARLEN burst-length metadata, or runtime-assertion beat-count\/RLAST validation metadata, plus the selected single depth-3 queue-head group with no burst_length metadata, report-only raw-ARLEN burst-length metadata, or runtime-assertion beat-count\/RLAST validation metadata, plus selected multiple\/mixed depth-3 queue-head groups with no burst_length metadata, report-only raw-ARLEN burst-length metadata, runtime-assertion beat-count\/RLAST validation metadata, or runtime-assertion multi-beat output-bank metadata, generated raw-ARLEN burst-length capture including report-only and runtime-validation generated read burst-last concrete same-ID queue-head read-data contracts with one or more independent depth-2 queue-head groups, the selected single depth-3 report-only and runtime-validation groups, and selected multiple\/mixed depth-3 report-only and runtime-validation groups, explicit runtime-assertion beat-count\/RLAST validation for auto-ID and bounded read burst-last concrete same-ID queue-head read-data contracts including one or more independent depth-2 queue-head groups plus the selected single depth-3 group and selected multiple\/mixed depth-3 groups, generated multi-beat read-data output-bank behavior for the covered auto-ID multi-beat-by-RID subset and bounded read burst-last concrete same-ID queue-head subset including multiple independent depth-2 queue-head groups plus the selected single depth-3 runtime-validation queue-head group and selected multiple\/mixed depth-3 runtime-validation queue-head groups, bounded burst payload\/output behavior through that per-beat output bank, and generated scalar RRESP aggregation behavior are supported/,
+        qr/generated burst-last RLAST response-demux completion, structural last-beat read-data metadata, generated last-beat read-data RDATA\/RRESP capture, generated last-beat read-data RDATA\/RRESP capture from generated read burst-last concrete same-ID queue-head response-demux including multiple independent depth-2 queue-head groups with no burst_length metadata, report-only raw-ARLEN burst-length metadata, or runtime-assertion beat-count\/RLAST validation metadata, plus the selected single depth-3 queue-head group with no burst_length metadata, report-only raw-ARLEN burst-length metadata, or runtime-assertion beat-count\/RLAST validation metadata, plus selected multiple\/mixed depth-3 queue-head groups with no burst_length metadata, report-only raw-ARLEN burst-length metadata, runtime-assertion beat-count\/RLAST validation metadata, or runtime-assertion multi-beat output-bank metadata, generated raw-ARLEN burst-length capture including report-only and runtime-validation generated read burst-last concrete same-ID queue-head read-data contracts with one or more independent depth-2 queue-head groups, the selected single depth-3 report-only and runtime-validation groups, selected multiple\/mixed depth-3 report-only and runtime-validation groups, and the selected same-family mixed auto-ID plus depth-2 concrete queue-head report-only group, explicit runtime-assertion beat-count\/RLAST validation for auto-ID and bounded read burst-last concrete same-ID queue-head read-data contracts including one or more independent depth-2 queue-head groups plus the selected single depth-3 group and selected multiple\/mixed depth-3 groups, generated multi-beat read-data output-bank behavior for the covered auto-ID multi-beat-by-RID subset and bounded read burst-last concrete same-ID queue-head subset including multiple independent depth-2 queue-head groups plus the selected single depth-3 runtime-validation queue-head group and selected multiple\/mixed depth-3 runtime-validation queue-head groups, bounded burst payload\/output behavior through that per-beat output bank, and generated scalar RRESP aggregation behavior are supported/,
         "$owner reports generated burst-last, last-beat, queue-head last-beat including multi-group scalar runtime validation, queue-head report-only/raw runtime ARLEN, non-queue-head and queue-head beat-count, multi-beat output-bank, bounded burst output, and scalar aggregation behavior as supported",
     );
     like(
@@ -7224,6 +7297,7 @@ sub assert_rlast_report_prose_alignment {
     ok(index($id_residue->{detail}, $stale_runtime_multi_group_scalar) < 0, "$owner removes stale runtime-validation multi-group scalar last-beat residue prose");
     ok(index($id_residue->{detail}, 'last-beat-only read-data over multiple queue groups') < 0, "$owner removes stale scalar multi-group last-beat residue prose");
     ok(index($id_residue->{detail}, 'queue-head runtime burst-length beat-count/RLAST validation') < 0, "$owner removes stale queue-head runtime validation residue prose");
+    ok(index($id_residue->{detail}, 'burst-length/runtime validation over same-family mixed auto-ID plus concrete queue-head response-demux') < 0, "$owner removes stale mixed report-only burst-length residue prose");
     ok(index($id_residue->{detail}, 'read-data over multiple read single-beat queue-head groups') < 0, "$owner removes stale single-beat multi-group read-data residue prose");
     ok(index($id_residue->{detail}, 'read burst-last read-data consumption over multiple or mixed depth-3 queue-head groups,') < 0, "$owner removes stale multiple/mixed depth-3 burst-last read-data residue prose");
     ok(index($id_residue->{detail}, 'read burst-last read-data consumption over multiple or mixed depth-3 queue-head groups with burst_length metadata') < 0, "$owner removes stale multiple/mixed depth-3 report-only burst-length residue prose");

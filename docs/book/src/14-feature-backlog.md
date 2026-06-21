@@ -6367,8 +6367,23 @@ auto-ID plus concrete queue-head scalar last-beat read-data shape. Audit
 `.199` found temporary report-only and runtime-assertion probes both generate
 through existing helpers, selected `.200` to publish/support-account the
 report-only boundary first, and requires `.200` to preserve or lock runtime
-validation as separately owned. That mixed report-only burst-length behavior
-is not support-accounted as a public sample yet. Mixed runtime validation,
+validation as separately owned. Implementation `.200` now ships that
+support-accounted report-only raw-`ARLEN` burst-length boundary through:
+
+```text
+ppif/axi_manager_capacity_status_read_burst_last_mixed_auto_id_same_id_queue_head_burst_length.ppif
+```
+
+The generated behavior adds width-8 `axi0_arlen`, request-captured raw
+`ARLEN` storage for `r0`, `r1`, and `r2`, and the burst-length capture rules
+`axi0_r0_burst_length_capture`, `axi0_r1_burst_length_capture`, and
+`axi0_r2_burst_length_capture` while preserving scalar last-beat
+`RDATA`/`RRESP` capture through
+`generated_mixed_auto_id_queue_head_response_demux_last_beat_completion_pulse`.
+Schedule, check, and semantic JSON report the support-accounting entry
+`intent.ppif_axi_manager_capacity_status_read_burst_last_mixed_auto_id_same_id_queue_head_burst_length`.
+The runtime-assertion variant for the same mixed auto-ID plus concrete
+queue-head shape fails closed as separately owned. Mixed runtime validation,
 mixed multi-beat read-data, group-local enqueue widening, packed burst-vector
 outputs, alternate payload assembly, direct backend, verification-output
 generation, VHDL, and backend-language variants remain separately owned.
@@ -6392,6 +6407,10 @@ Mixed burst-length readiness audit:
 [AXI_IAL2_MANAGER_MIXED_AUTO_ID_QUEUE_HEAD_BURST_LENGTH_READINESS_AUDIT](../../AXI_IAL2_MANAGER_MIXED_AUTO_ID_QUEUE_HEAD_BURST_LENGTH_READINESS_AUDIT.md)
 selects `.200`, the direct support/publication owner for report-only mixed
 raw-`ARLEN` burst-length.
+Mixed burst-length behavior:
+[AXI_IAL2_MANAGER_MIXED_AUTO_ID_QUEUE_HEAD_BURST_LENGTH_BEHAVIOR](../../AXI_IAL2_MANAGER_MIXED_AUTO_ID_QUEUE_HEAD_BURST_LENGTH_BEHAVIOR.md)
+ships `.200`, support-accounted report-only mixed raw-`ARLEN` burst-length
+capture, and locks mixed runtime validation as separately owned.
 
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
@@ -8654,7 +8673,7 @@ support catalog entries instead of recursive workspace traversal.
 `SEMANTIC-INTROSPECTION-MCP-FRONTIER.30` closes the immediate read-only
 semantic-introspection/MCP pass after source discovery; the active roadmap
 priority is again the IAL2 feature-completeness tree, currently at
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.200`.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.201`.
 
 Selected first MCP resource families are `fsmgen://capabilities`,
 `fsmgen://contracts`, `fsmgen://diagnostics`,
