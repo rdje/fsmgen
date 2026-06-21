@@ -24,5 +24,6 @@ counters, request-time initialization rules, matched-read-beat increment
 rules, and twelve beat-count/`RLAST` assertions for `r0`, `r1`, and `r2`.
 Schedule/check/semantic JSON report strict support under the new
 support-accounting entry, and the runtime sample removes
-`generated_beat_count_validation` from `read_data.residue`. Mixed multi-beat
-output banks remain separately owned.
+`generated_beat_count_validation` from `read_data.residue`. The later `.207`
+slice adds the mixed multi-beat output-bank sibling for the same
+runtime-validation shape.

@@ -3574,6 +3574,84 @@ subtest 'mixed auto-ID and same-ID queue-head read-data consumes combined comple
     }
 };
 
+subtest 'mixed auto-ID and same-ID queue-head multi-beat read-data generates output-bank behavior' => sub {
+    my $result = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(
+        sample_contract_with_read_burst_last_mixed_auto_id_same_id_queue_head_multi_beat_read_data(),
+    );
+    my $isf = $result->{generated_ial1}{text};
+    my $fsm = $result->{generated_ial0}{files}{'axi0_capacity_status.fsm'};
+    my $owner = 'generator mixed read-data burst-last multi-beat output-bank';
+
+    like($isf, qr/\(output axi0_arid \(width 4\)\)/, "$owner exposes generated ARID output");
+    like($isf, qr/\(input axi0_rid \(width 4\)\)/, "$owner exposes generated RID input");
+    like($isf, qr/\(input axi0_rlast\)/, "$owner declares RLAST as a generated input");
+    like($isf, qr/\(input axi0_arlen \(width 8\)\)/, "$owner declares ARLEN as a generated input");
+    like($isf, qr/\(input axi0_rdata \(width 32\)\)/, "$owner declares RDATA as a generated input");
+    like($isf, qr/\(input axi0_rresp \(width 2\)\)/, "$owner declares RRESP as a generated input");
+
+    for my $tx (qw(r0 r1 r2)) {
+        like($isf, qr/\(output axi0_${tx}_beat_rdata_0 \(width 32\)\)/, "$owner declares $tx beat 0 data output");
+        like($isf, qr/\(output axi0_${tx}_beat_rresp_0 \(width 2\)\)/, "$owner declares $tx beat 0 status output");
+        like($isf, qr/\(output axi0_${tx}_rresp \(width 2\)\)/, "$owner declares $tx scalar aggregate status output");
+        like($isf, qr/\(output axi0_${tx}_beat_valid \(width 16\)\)/, "$owner declares $tx valid-mask output");
+        like($isf, qr/\(output axi0_${tx}_read_beats \(width 5\)\)/, "$owner declares $tx length output");
+        like($isf, qr/\(var axi0_${tx}_arlen_q \(width 8\)\)/, "$owner declares $tx raw ARLEN storage");
+        like($isf, qr/\(var axi0_${tx}_expected_beats_q \(width 5\)\)/, "$owner declares $tx expected-beat storage");
+        like($isf, qr/\(var axi0_${tx}_read_beat_count_q \(width 5\)\)/, "$owner declares $tx beat-count storage");
+        like($isf, qr/\(rule axi0_${tx}_read_data_output_init axi0_${tx}_request[\s\S]*\(axi0_${tx}_beat_rdata_0 32'd0\)[\s\S]*\(axi0_${tx}_rresp 2'd0\)[\s\S]*\(axi0_${tx}_beat_valid 16'b0\)[\s\S]*\(axi0_${tx}_read_beats 5'd0\)\)/, "$owner clears $tx output bank on request");
+    }
+
+    like(
+        $isf,
+        qr/\(rule axi0_r0_read_beat_0_capture \(& \(& axi0_read_complete \(& axi0_r0_auto_id_busy_q \(== axi0_rid axi0_r0_auto_id_q\)\)\) \(! axi0_r0_request\) \(== axi0_r0_read_beat_count_q 5'd0\)\)[\s\S]*\(axi0_r0_beat_rdata_0 axi0_rdata\)[\s\S]*\(axi0_r0_beat_rresp_0 axi0_rresp\)[\s\S]*\(axi0_r0_beat_valid 16'b0000000000000001\)[\s\S]*\(axi0_r0_read_beats 5'd1\)\)/,
+        "$owner captures r0 auto-ID lane 0 payload with matched RID",
+    );
+    like(
+        $isf,
+        qr/\(rule axi0_r2_read_beat_0_capture \(& \(& axi0_read_complete \(& \(== axi0_rid 4'd3\) axi0_read_id3_same_id_issue_order_slot0_r2_q\)\) \(! axi0_r2_request\) \(== axi0_r2_read_beat_count_q 5'd0\)\)[\s\S]*\(axi0_r2_beat_rdata_0 axi0_rdata\)[\s\S]*\(axi0_r2_beat_rresp_0 axi0_rresp\)[\s\S]*\(axi0_r2_beat_valid 16'b0000000000000001\)[\s\S]*\(axi0_r2_read_beats 5'd1\)\)/,
+        "$owner captures r2 queue-head lane 0 payload with matched RID",
+    );
+    like(
+        $isf,
+        qr/\(rule axi0_r2_rresp_aggregate \(& \(& axi0_read_complete \(& \(== axi0_rid 4'd3\) axi0_read_id3_same_id_issue_order_slot0_r2_q\)\) \(! axi0_r2_request\) \(< axi0_r2_rresp axi0_rresp\)\)\s+\(axi0_r2_rresp axi0_rresp\)\)/,
+        "$owner updates r2 scalar aggregate on matched queue-head beat",
+    );
+    like(
+        $fsm,
+        qr/\(-axi0_r2_read_beat_0_capture\s+<\(& \(& axi0_read_complete \(& \(== axi0_rid 4'd3\) axi0_read_id3_same_id_issue_order_slot0_r2_q\)\) \(! axi0_r2_request\) \(== axi0_r2_read_beat_count_q 5'd0\)\)[\s\S]*\(<- \(axi0_r2_beat_rdata_0> axi0_rdata\)\)[\s\S]*\(<- \(axi0_r2_beat_rresp_0> axi0_rresp\)\)[\s\S]*\(<- \(axi0_r2_beat_valid> 16'b0000000000000001\)\)[\s\S]*\(<- \(axi0_r2_read_beats> 5'd1\)\)/,
+        "$owner lowers r2 queue-head lane 0 capture into generated .fsm",
+    );
+
+    my @beat_count_assertions = $fsm =~ /axi0_read_data_beat_count_checks_assert_/g;
+    is(scalar(@beat_count_assertions), 12, "$owner lowers four beat-count/RLAST assertions per covered transaction");
+
+    assert_mixed_auto_id_queue_head_response_demux_report(
+        $result->{report},
+        "$owner response-demux report",
+        {
+            family            => 'read',
+            completion_prefix => 'r',
+            boundary          => 'generated_read_burst_last_queue_head_demux',
+            scope             => 'burst_last',
+            last_signal       => 'axi0_rlast',
+        },
+    );
+    assert_read_data_multi_beat_report(
+        $result->{report}{read_data},
+        "$owner read-data report",
+        completion_validity => 'generated_mixed_auto_id_queue_head_response_demux_last_beat_completion_pulse',
+        transactions => [qw(r0 r1 r2)],
+    );
+
+    my $hdl = hdl_for('axi0_capacity_status', $fsm);
+    like($hdl, qr/\boutput\s+reg\s+\[31:0\]\s+axi0_r2_beat_rdata_0\b/, "$owner SystemVerilog exposes r2 beat 0 data output");
+    like($hdl, qr/\boutput\s+reg\s+\[15:0\]\s+axi0_r2_beat_valid\b/, "$owner SystemVerilog exposes r2 valid-mask output");
+    like($hdl, qr/assign\s+axi0_r2_read_data_output_init_en\s*=\s*axi0_r2_request\s*;/, "$owner SystemVerilog guards r2 output-bank clear with request");
+    like($hdl, qr/assign\s+axi0_r2_read_beat_0_capture_en\s*=/, "$owner SystemVerilog emits r2 lane 0 capture enable");
+    like($hdl, qr/axi0_read_complete\s*&\s*\(axi0_rid\s*==\s*4'd3\)\s*&\s*axi0_read_id3_same_id_issue_order_slot0_r2_q/, "$owner SystemVerilog keeps the r2 queue-head matched-beat guard");
+    like($hdl, qr/axi0_r2_rresp_next\s*=\s*axi0_rresp\s*;/, "$owner SystemVerilog updates r2 scalar aggregate");
+};
+
 subtest 'schedule report and HDL expose generated storage and status surface' => sub {
     my $result = generate_sample();
     my $report = $result->{generated_ial1_schedule_report};
@@ -5038,6 +5116,28 @@ sub sample_contract_with_read_burst_last_mixed_auto_id_same_id_queue_head_burst_
     return $contract;
 }
 
+sub sample_contract_with_read_burst_last_mixed_auto_id_same_id_queue_head_multi_beat_read_data {
+    my $contract = sample_contract_with_read_burst_last_mixed_auto_id_same_id_queue_head_burst_length_runtime_assertion();
+    my $read_data = sample_contract_with_read_data_multi_beat()->{read_data};
+
+    $contract->{intent_name} = 'axi_manager_capacity_status_read_burst_last_mixed_auto_id_same_id_queue_head_multi_beat_read_data';
+    $contract->{source}{object_id} = 'axi-manager-capacity-status-read-burst-last-mixed-auto-id-same-id-queue-head-multi-beat-read-data';
+    $read_data->{read}{transactions} = [
+        map {
+            {
+                transaction             => $_,
+                data_output_prefix      => "axi0_${_}_beat_rdata",
+                status_output_prefix    => "axi0_${_}_beat_rresp",
+                status_aggregate_output => "axi0_${_}_rresp",
+                valid_mask_output       => "axi0_${_}_beat_valid",
+                length_output           => "axi0_${_}_read_beats",
+            }
+        } qw(r0 r1 r2)
+    ];
+    $contract->{read_data} = $read_data;
+    return $contract;
+}
+
 sub sample_contract_with_write_mixed_auto_id_same_id_queue_head_response_demux {
     return sample_contract_with_mixed_auto_id_same_id_queue_head_response_demux(
         family => 'write',
@@ -5459,7 +5559,7 @@ sub assert_rlast_report_prose_alignment {
     ok($id_residue, "$owner reports AXI ID/order unsupported residue");
     like(
         $id_residue->{detail},
-        qr/generated burst-last RLAST response-demux completion, structural last-beat read-data metadata, generated last-beat read-data RDATA\/RRESP capture, generated last-beat read-data RDATA\/RRESP capture from generated read burst-last concrete same-ID queue-head response-demux including multiple independent depth-2 queue-head groups with no burst_length metadata, report-only raw-ARLEN burst-length metadata, or runtime-assertion beat-count\/RLAST validation metadata, plus the selected single depth-3 queue-head group with no burst_length metadata, report-only raw-ARLEN burst-length metadata, or runtime-assertion beat-count\/RLAST validation metadata, plus selected multiple\/mixed depth-3 queue-head groups with no burst_length metadata, report-only raw-ARLEN burst-length metadata, runtime-assertion beat-count\/RLAST validation metadata, or runtime-assertion multi-beat output-bank metadata, generated raw-ARLEN burst-length capture including report-only and runtime-validation generated read burst-last concrete same-ID queue-head read-data contracts with one or more independent depth-2 queue-head groups, the selected single depth-3 report-only and runtime-validation groups, selected multiple\/mixed depth-3 report-only and runtime-validation groups, and the selected same-family mixed auto-ID plus depth-2 concrete queue-head report-only and runtime-validation groups, explicit runtime-assertion beat-count\/RLAST validation for auto-ID and bounded read burst-last concrete same-ID queue-head read-data contracts including one or more independent depth-2 queue-head groups plus the selected single depth-3 group, selected multiple\/mixed depth-3 groups, and the selected same-family mixed auto-ID plus depth-2 concrete queue-head group, generated multi-beat read-data output-bank behavior for the covered auto-ID multi-beat-by-RID subset and bounded read burst-last concrete same-ID queue-head subset including multiple independent depth-2 queue-head groups plus the selected single depth-3 runtime-validation queue-head group and selected multiple\/mixed depth-3 runtime-validation queue-head groups, bounded burst payload\/output behavior through that per-beat output bank, and generated scalar RRESP aggregation behavior are supported/,
+        qr/generated burst-last RLAST response-demux completion, structural last-beat read-data metadata, generated last-beat read-data RDATA\/RRESP capture, generated last-beat read-data RDATA\/RRESP capture from generated read burst-last concrete same-ID queue-head response-demux including multiple independent depth-2 queue-head groups with no burst_length metadata, report-only raw-ARLEN burst-length metadata, or runtime-assertion beat-count\/RLAST validation metadata, plus the selected single depth-3 queue-head group with no burst_length metadata, report-only raw-ARLEN burst-length metadata, or runtime-assertion beat-count\/RLAST validation metadata, plus selected multiple\/mixed depth-3 queue-head groups with no burst_length metadata, report-only raw-ARLEN burst-length metadata, runtime-assertion beat-count\/RLAST validation metadata, or runtime-assertion multi-beat output-bank metadata, generated raw-ARLEN burst-length capture including report-only and runtime-validation generated read burst-last concrete same-ID queue-head read-data contracts with one or more independent depth-2 queue-head groups, the selected single depth-3 report-only and runtime-validation groups, selected multiple\/mixed depth-3 report-only and runtime-validation groups, and the selected same-family mixed auto-ID plus depth-2 concrete queue-head report-only and runtime-validation groups, explicit runtime-assertion beat-count\/RLAST validation for auto-ID and bounded read burst-last concrete same-ID queue-head read-data contracts including one or more independent depth-2 queue-head groups plus the selected single depth-3 group, selected multiple\/mixed depth-3 groups, and the selected same-family mixed auto-ID plus depth-2 concrete queue-head group, generated multi-beat read-data output-bank behavior for the covered auto-ID multi-beat-by-RID subset and bounded read burst-last concrete same-ID queue-head subset including multiple independent depth-2 queue-head groups plus the selected single depth-3 runtime-validation queue-head group, selected multiple\/mixed depth-3 runtime-validation queue-head groups, and the selected same-family mixed auto-ID plus depth-2 concrete queue-head runtime-validation group, bounded burst payload\/output behavior through that per-beat output bank, and generated scalar RRESP aggregation behavior are supported/,
         "$owner reports generated burst-last, last-beat, queue-head last-beat including multi-group scalar runtime validation, queue-head report-only/raw runtime ARLEN, non-queue-head and queue-head beat-count, multi-beat output-bank, bounded burst output, and scalar aggregation behavior as supported",
     );
     like(

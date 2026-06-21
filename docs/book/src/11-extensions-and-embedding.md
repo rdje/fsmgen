@@ -75,10 +75,9 @@ response-demux-only read single-beat, read burst-last, and write shapes, and
 scalar read-data over that mixed read boundary for read single-beat and read
 burst-last, plus report-only raw-`ARLEN` burst-length capture over that mixed
 read burst-last scalar last-beat shape, plus generated runtime
-beat-count/`RLAST` validation over that same mixed burst-last scalar shape.
-The post-runtime cleanup aligns the manifest, downstream handoff, public
-contracts, and book before the next mixed behavior expansion. Mixed
-multi-beat read-data, broader concrete same-ID queues, group-local
+beat-count/`RLAST` validation and generated multi-beat output-bank behavior
+over that same mixed burst-last runtime-validation shape. Broader concrete
+same-ID queues, group-local
 simultaneous enqueue widening, packed burst-vector outputs, alternate full
 burst payload assembly, aliases, platform clauses, full AXI manager behavior,
 direct backend lowering, verification-output generation, backend-language

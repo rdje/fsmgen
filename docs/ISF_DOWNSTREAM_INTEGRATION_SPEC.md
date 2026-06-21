@@ -104,14 +104,15 @@ Intent abstraction levels:
   multiple/mixed depth-3 runtime-validation groups, and same-family mixed
   auto-ID plus concrete queue-head response-demux with scalar read-data for
   read single-beat and read burst-last shapes plus report-only raw-`ARLEN`
-  burst-length and generated runtime beat-count/`RLAST` validation over that
-  mixed read burst-last scalar last-beat family.
-- Mixed multi-beat read-data, broader mixed-family burst-length/runtime
-  validation beyond the selected same-family mixed read burst-last scalar
-  shape, write-family read-data, group-local simultaneous enqueue widening,
-  packed burst-vector outputs, alternate full burst payload assembly, aliases,
-  platform clauses, full AXI manager behavior, direct backend lowering,
-  verification-output generation, backend-language variants, and VHDL remain
+  burst-length, generated runtime beat-count/`RLAST` validation, and generated
+  multi-beat output-bank behavior over that mixed read burst-last
+  runtime-validation family.
+- Broader mixed-family burst-length/runtime validation beyond the selected
+  same-family mixed read burst-last shape, write-family read-data,
+  group-local simultaneous enqueue widening, packed burst-vector outputs,
+  alternate full burst payload assembly, aliases, platform clauses, full AXI
+  manager behavior, direct backend lowering, verification-output generation,
+  backend-language variants, and VHDL remain
   deferred.
 - The machine-readable source of truth for shipped suffixes, layers, lowering
   order, CLI modes, and current per-suffix boundary text is

@@ -6448,6 +6448,18 @@ plus depth-2 concrete same-ID queue-head runtime-validation shape. The audit
 found the current blocker is local to the mixed read-data coverage predicate;
 transaction-list output-bank, aggregate, burst-length, beat-count, assertion,
 and report helpers are already ready after admission.
+Mixed multi-beat behavior:
+[AXI_IAL2_MANAGER_MIXED_AUTO_ID_QUEUE_HEAD_MULTI_BEAT_READ_DATA_BEHAVIOR](../../AXI_IAL2_MANAGER_MIXED_AUTO_ID_QUEUE_HEAD_MULTI_BEAT_READ_DATA_BEHAVIOR.md)
+ships `.207`, generated mixed multi-beat output-bank behavior over that
+same-family mixed auto-ID plus depth-2 concrete same-ID queue-head
+runtime-validation shape. The support-accounted sample is
+`ppif/axi_manager_capacity_status_read_burst_last_mixed_auto_id_same_id_queue_head_multi_beat_read_data.ppif`;
+it reports the mixed last-beat completion validity, three covered read
+transactions, 48 generated RDATA lane outputs, 48 generated RRESP lane
+outputs, three valid masks, three length outputs, three scalar `RRESP`
+aggregate outputs, 48 lane capture rules, runtime beat-count/`RLAST`
+assertions, strict support accounting, semantic JSON, HDL, and empty read-data
+residue.
 
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)

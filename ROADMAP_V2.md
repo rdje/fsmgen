@@ -1952,8 +1952,12 @@ audit found no lower-layer prerequisite: a temporary mixed multi-beat mutation
 fails closed only at the local mixed read-data coverage predicate, while
 existing transaction-list helpers already provide output-bank, scalar
 aggregate, burst-length, beat-count, assertion, and report artifacts after
-admission. Mixed multi-beat read-data remains separately owned until `.207`
-ships. Group-local enqueue widening, packed outputs, direct backend,
+admission. Implementation `.207` now ships the support-accounted mixed multi-beat
+output-bank sample and report surface over that exact runtime-validation
+shape, with three covered transactions, 48 RDATA lanes, 48 RRESP lanes, valid
+masks, length outputs, scalar `RRESP` aggregates, 48 lane capture rules,
+runtime beat-count/`RLAST` assertions, strict support accounting, semantic
+JSON, and HDL. Group-local enqueue widening, packed outputs, direct backend,
 verification-output generation, VHDL, and backend-language variants remain
 separately owned.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2

@@ -149,9 +149,9 @@ This slice preserves:
 
 ## Deferred Work
 
-The following remain outside this slice:
+The later `.207` slice ships the mixed multi-beat output-bank sibling for this
+same runtime-validation shape. The following remain outside this slice:
 
-- mixed multi-beat output-bank behavior;
 - single-beat burst-length behavior;
 - group-local simultaneous enqueue widening;
 - write-family read-data behavior;
