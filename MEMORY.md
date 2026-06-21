@@ -10,10 +10,10 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `HEAD after AGENT-RUNTIME-RAM-GUARD.1 commit` - `AGENT-RUNTIME-RAM-GUARD.1: add RAM guard for heavy local runs`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.203` selects the next post-mixed-runtime feature-completeness slice; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `AGENT-RUNTIME-RAM-GUARD.1` added `scripts/run_with_ram_guard.sh`, default host RAM 88% / descendant RSS 4096 MiB guardrails, fail-closed inspection behavior, and README/COMMIT/Knowledge Map guidance after the `.202` broad supported-corpus run spawned a high-RSS Perl child.
-- in_flight_uncommitted: none after the `AGENT-RUNTIME-RAM-GUARD.1` commit. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
+- latest_commit: `HEAD after IAL2-FEATURE-COMPLETENESS-FRONTIER.203 commit` - `IAL2-FEATURE-COMPLETENESS-FRONTIER.203: select mixed runtime cleanup`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.204` cleans stale support/static and public-contract wording after mixed runtime validation shipped; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.203` selected `.204`, report/static support and public-contract residue cleanup after `.202` shipped generated runtime beat-count/`RLAST` validation over the same-family mixed auto-ID plus depth-2 concrete same-ID queue-head read burst-last scalar last-beat shape.
+- in_flight_uncommitted: none after the `IAL2-FEATURE-COMPLETENESS-FRONTIER.203` commit. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
 
 ## Notes
