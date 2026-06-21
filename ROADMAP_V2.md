@@ -1080,7 +1080,7 @@ support-accounting metadata under query/limit/filter controls.
 `SEMANTIC-INTROSPECTION-MCP-FRONTIER.30` closes the immediate read-only
 semantic-introspection/MCP pass after source discovery and returns active
 roadmap priority to the IAL2 feature-completeness tree, currently at
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.201`.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.202`.
 The parser/report metadata slice `IAL2-FEATURE-COMPLETENESS-FRONTIER.39` is
 now shipped for the bounded AXI read response-demux public contract selected
 by `.38`. The selected read arm requires `(response-scope single-beat)`,
@@ -1936,11 +1936,13 @@ separately owned. Implementation `.200` now ships that support-accounted
 report-only raw-`ARLEN` burst-length boundary through
 `ppif/axi_manager_capacity_status_read_burst_last_mixed_auto_id_same_id_queue_head_burst_length.ppif`.
 The runtime-assertion variant for the same mixed auto-ID plus concrete
-queue-head shape fails closed as separately owned, and `.201` audits that
-runtime beat-count/`RLAST` validation boundary next. Mixed multi-beat
-read-data, group-local enqueue widening, packed outputs, direct backend,
-verification-output generation, VHDL, and backend-language variants remain
-separately owned.
+queue-head shape fails closed as separately owned. Audit `.201` selected
+`.202`, direct bounded support/publication of generated runtime
+beat-count/`RLAST` validation over that same mixed auto-ID plus concrete
+queue-head read burst-last scalar last-beat shape. Mixed runtime validation
+until `.202` ships, mixed multi-beat read-data, group-local enqueue widening,
+packed outputs, direct backend, verification-output generation, VHDL, and
+backend-language variants remain separately owned.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.

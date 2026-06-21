@@ -74,9 +74,10 @@ same-family mixed auto-ID lifecycle and concrete queue-head response-demux for
 response-demux-only read single-beat, read burst-last, and write shapes, and
 scalar read-data over that mixed read boundary for read single-beat and read
 burst-last, plus report-only raw-`ARLEN` burst-length capture over that mixed
-read burst-last scalar last-beat shape. The active IAL2 frontier now audits
-the separately owned mixed runtime beat-count/`RLAST` validation boundary.
-Mixed multi-beat read-data, broader concrete same-ID queues,
+read burst-last scalar last-beat shape. The active IAL2 frontier now owns the
+selected mixed runtime beat-count/`RLAST` validation implementation boundary,
+after the readiness audit selected `.202`; that runtime behavior remains
+deferred until `.202` ships. Mixed multi-beat read-data, broader concrete same-ID queues,
 group-local simultaneous enqueue widening, packed burst-vector
 outputs, alternate full burst payload assembly, aliases, platform clauses,
 full AXI manager behavior, direct backend lowering, verification-output
