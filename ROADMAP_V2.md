@@ -1944,8 +1944,16 @@ It reports `burst_length_validation: runtime_assertion`,
 `beat_count_match_source: response_demux_matched_read_beat`, expected-beat
 storage, read-beat counters, six beat-count rules, twelve beat-count/`RLAST`
 assertions, strict support accounting, semantic JSON support, and HDL, while
-removing `generated_beat_count_validation` residue. Mixed multi-beat
-read-data, group-local enqueue widening, packed outputs, direct backend,
+removing `generated_beat_count_validation` residue. Cleanup `.204` aligned
+public/support wording for that selected mixed runtime-validation shape. Audit
+`.206` then selected `.207`, direct bounded implementation of generated mixed
+multi-beat output-bank behavior over the same runtime-validation shape. The
+audit found no lower-layer prerequisite: a temporary mixed multi-beat mutation
+fails closed only at the local mixed read-data coverage predicate, while
+existing transaction-list helpers already provide output-bank, scalar
+aggregate, burst-length, beat-count, assertion, and report artifacts after
+admission. Mixed multi-beat read-data remains separately owned until `.207`
+ships. Group-local enqueue widening, packed outputs, direct backend,
 verification-output generation, VHDL, and backend-language variants remain
 separately owned.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
