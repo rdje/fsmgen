@@ -72,12 +72,13 @@ burst-last scalar last-beat groups, and generated multi-beat output-bank
 behavior over those multiple/mixed depth-3 runtime-validation groups, plus
 same-family mixed auto-ID lifecycle and concrete queue-head response-demux for
 response-demux-only read single-beat, read burst-last, and write shapes.
-Mixed-family read-data consumption is the active readiness audit; broader
-concrete same-ID queues, group-local simultaneous enqueue widening, packed
-burst-vector outputs, alternate full burst payload assembly, aliases, platform
-clauses, full AXI manager behavior, direct backend lowering,
-verification-output generation, backend-language variants, and VHDL remain
-deferred. This
+Mixed-family scalar read-data consumption for read single-beat and read
+burst-last is the active implementation frontier; mixed multi-beat read-data,
+burst-length/runtime validation over mixed families, broader concrete same-ID
+queues, group-local simultaneous enqueue widening, packed burst-vector
+outputs, alternate full burst payload assembly, aliases, platform clauses,
+full AXI manager behavior, direct backend lowering, verification-output
+generation, backend-language variants, and VHDL remain deferred. This
 manifest boundary, the downstream handoff, the public contracts, this book,
 support-accounting, and the codebase must remain lockstep.
 
@@ -2873,7 +2874,7 @@ catalog-backed through the manifest support catalog: reuse existing manifest,
 support-accounting, and example surfaces; do not recursively expose arbitrary
 workspace files. The immediate semantic-introspection/MCP pass is complete
 through `SEMANTIC-INTROSPECTION-MCP-FRONTIER.30`; active roadmap priority has
-returned to `IAL2-FEATURE-COMPLETENESS-FRONTIER.196`.
+returned to `IAL2-FEATURE-COMPLETENESS-FRONTIER.197`.
 
 ## Downstream Tool Alignment
 

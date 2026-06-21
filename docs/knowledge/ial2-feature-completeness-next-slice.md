@@ -1,6 +1,6 @@
 ---
 id: ial2-feature-completeness-next-slice
-title: IAL2 feature completeness next slice is mixed read-data readiness
+title: IAL2 feature completeness next slice is mixed scalar read-data implementation
 answers:
   - "what is the next IAL2 feature completeness slice?"
   - "what is the next IAL2 PNT task?"
@@ -26,19 +26,28 @@ answers:
   - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.195?"
   - "what did IAL2-FEATURE-COMPLETENESS-FRONTIER.195 select?"
   - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.196?"
+  - "what did IAL2-FEATURE-COMPLETENESS-FRONTIER.196 select?"
+  - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.197?"
   - "what is the next AXI manager slice?"
   - "what is the next AXI manager task after same-ID queue behavior implementation?"
 date: 2026-06-21
 status: current
 tags: [ial2, axi, manager, same-id, concrete-id, ordering, feature-completeness, task-tree]
-evidence: docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; docs/AXI_IAL2_MANAGER_POST_MIXED_AUTO_ID_QUEUE_HEAD_RESPONSE_DEMUX_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_MIXED_AUTO_ID_QUEUE_HEAD_RESPONSE_DEMUX_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_MIXED_AUTO_ID_QUEUE_HEAD_RESPONSE_DEMUX_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_POST_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_MULTI_BEAT_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_MULTI_BEAT_READ_DATA_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_MULTI_BEAT_READINESS_AUDIT.md; docs/book/src/14-feature-backlog.md; README.md; ROADMAP_V2.md; docs/knowledge/ial2-feature-completeness-priority.md; docs/knowledge/ial2-mixed-auto-id-queue-head-read-data-readiness-selection.md; docs/knowledge/ial2-common-vs-profile-factoring.md
-reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.195|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.196|POST_MIXED_AUTO_ID_QUEUE_HEAD_RESPONSE_DEMUX_NEXT_SLICE_SELECTION|mixed read-data consumption|same-family mixed auto-ID' docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md docs/AXI_IAL2_MANAGER_POST_MIXED_AUTO_ID_QUEUE_HEAD_RESPONSE_DEMUX_NEXT_SLICE_SELECTION.md docs/book/src/14-feature-backlog.md README.md ROADMAP_V2.md docs/knowledge/ial2-feature-completeness-priority.md
+evidence: docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; docs/AXI_IAL2_MANAGER_MIXED_AUTO_ID_QUEUE_HEAD_READ_DATA_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_POST_MIXED_AUTO_ID_QUEUE_HEAD_RESPONSE_DEMUX_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_MIXED_AUTO_ID_QUEUE_HEAD_RESPONSE_DEMUX_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_MIXED_AUTO_ID_QUEUE_HEAD_RESPONSE_DEMUX_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_POST_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_MULTI_BEAT_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_MULTI_BEAT_READ_DATA_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_MULTIPLE_MIXED_DEPTH3_QUEUE_HEAD_MULTI_BEAT_READINESS_AUDIT.md; docs/book/src/14-feature-backlog.md; README.md; ROADMAP_V2.md; docs/knowledge/ial2-feature-completeness-priority.md; docs/knowledge/ial2-mixed-auto-id-queue-head-read-data-readiness-selection.md; docs/knowledge/ial2-mixed-auto-id-queue-head-read-data-readiness-audit.md; docs/knowledge/ial2-common-vs-profile-factoring.md
+reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.196|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.197|MIXED_AUTO_ID_QUEUE_HEAD_READ_DATA_READINESS_AUDIT|mixed scalar read-data|scalar read-data consumption' docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md docs/AXI_IAL2_MANAGER_MIXED_AUTO_ID_QUEUE_HEAD_READ_DATA_READINESS_AUDIT.md docs/book/src/14-feature-backlog.md README.md ROADMAP_V2.md docs/knowledge/ial2-feature-completeness-priority.md
 ---
 
 The next IAL2 feature-completeness slice is
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.196`, readiness audit for mixed read-data
-consumption over same-family mixed auto-ID lifecycle plus concrete queue-head
-response-demux.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.197`, direct bounded implementation of
+scalar read-data consumption over same-family mixed auto-ID lifecycle plus
+concrete queue-head response-demux.
+
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.196` selected `.197` after temporary
+single-beat and burst-last mixed read-data probes failed closed only at the
+local coverage diagnostic that concrete transaction `r1` is not covered by
+generated read response-demux auto transactions. Adjacent mixed
+response-demux-only, auto-ID read-data, and queue-head read-data samples
+strict-check cleanly.
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.195` selected `.196` after live mixed
 response-demux reports showed combined auto-ID and concrete queue-head
