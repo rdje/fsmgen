@@ -2841,7 +2841,7 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
     );
     like(
         $file_surface_by_suffix{'.ppif'}{current_boundary},
-        qr/Mixed multi-beat read-data, broader burst-length\/runtime validation over mixed families/,
+        qr/Mixed multi-beat read-data, broader mixed-family burst-length\/runtime validation beyond that selected same-family mixed read burst-last scalar shape/,
         'manifest keeps mixed multi-beat and broader mixed burst-runtime behavior deferred',
     );
     my %unsupported_aliases = map { $_ => 1 } @{$manifest->{language_surface}{file_surfaces}{unsupported_first_slice_aliases}};

@@ -76,14 +76,15 @@ scalar read-data over that mixed read boundary for read single-beat and read
 burst-last, plus report-only raw-`ARLEN` burst-length capture over that mixed
 read burst-last scalar last-beat shape, plus generated runtime
 beat-count/`RLAST` validation over that same mixed burst-last scalar shape.
-The active IAL2 frontier now selects the next post-runtime mixed boundary
-after `.202` shipped the runtime behavior. Mixed multi-beat read-data, broader concrete same-ID queues,
-group-local simultaneous enqueue widening, packed burst-vector
-outputs, alternate full burst payload assembly, aliases, platform clauses,
-full AXI manager behavior, direct backend lowering, verification-output
-generation, backend-language variants, and VHDL remain deferred. This
-manifest boundary, the downstream handoff, the public contracts, this book,
-support-accounting, and the codebase must remain lockstep.
+The post-runtime cleanup aligns the manifest, downstream handoff, public
+contracts, and book before the next mixed behavior expansion. Mixed
+multi-beat read-data, broader concrete same-ID queues, group-local
+simultaneous enqueue widening, packed burst-vector outputs, alternate full
+burst payload assembly, aliases, platform clauses, full AXI manager behavior,
+direct backend lowering, verification-output generation, backend-language
+variants, and VHDL remain deferred. This manifest boundary, the downstream
+handoff, the public contracts, this book, support-accounting, and the codebase
+must remain lockstep.
 
 The embedding section's `serializable_plan_reports` branch also advertises
 `public_top_level_presence_keys` and `json_safe_surface_keys`; both the

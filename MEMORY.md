@@ -10,10 +10,10 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `HEAD after IAL2-FEATURE-COMPLETENESS-FRONTIER.203 commit` - `IAL2-FEATURE-COMPLETENESS-FRONTIER.203: select mixed runtime cleanup`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.204` cleans stale support/static and public-contract wording after mixed runtime validation shipped; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.203` selected `.204`, report/static support and public-contract residue cleanup after `.202` shipped generated runtime beat-count/`RLAST` validation over the same-family mixed auto-ID plus depth-2 concrete same-ID queue-head read burst-last scalar last-beat shape.
-- in_flight_uncommitted: none after the `IAL2-FEATURE-COMPLETENESS-FRONTIER.203` commit. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
+- latest_commit: `HEAD after IAL2-FEATURE-COMPLETENESS-FRONTIER.204 commit` - `IAL2-FEATURE-COMPLETENESS-FRONTIER.204: clean mixed runtime support wording`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.205` selects the next exact roadmap-aligned feature-completeness slice after mixed runtime support cleanup; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.204` cleaned stale support/static and public-contract wording after `.202` so selected mixed runtime validation is described as supported, while mixed multi-beat and broader mixed-family runtime/burst behavior remain deferred.
+- in_flight_uncommitted: none after the `IAL2-FEATURE-COMPLETENESS-FRONTIER.204` commit. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
 
 ## Notes
