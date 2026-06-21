@@ -104,8 +104,9 @@ Intent abstraction levels:
   multiple/mixed depth-3 runtime-validation groups, and same-family mixed
   auto-ID plus concrete queue-head response-demux with scalar read-data for
   read single-beat and read burst-last shapes.
-- Mixed multi-beat read-data, burst-length/runtime validation over mixed
-  families, write-family read-data, group-local
+- Mixed report-only raw-`ARLEN` burst-length over the mixed read burst-last
+  scalar last-beat family is under audit and not yet shipped. Mixed runtime
+  validation, mixed multi-beat read-data, write-family read-data, group-local
   simultaneous enqueue widening, packed burst-vector outputs, alternate full
   burst payload assembly, aliases, platform clauses, full AXI manager
   behavior, direct backend lowering, verification-output generation,

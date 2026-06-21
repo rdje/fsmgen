@@ -10,10 +10,10 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `HEAD after IAL2-FEATURE-COMPLETENESS-FRONTIER.197 commit` - `IAL2-FEATURE-COMPLETENESS-FRONTIER.197: ship mixed read-data capture`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.198` is the next selector after mixed scalar read-data over same-family mixed auto-ID plus concrete queue-head response-demux; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.197` shipped bounded read single-beat and read burst-last scalar read-data over one mixed auto-ID transaction plus one depth-2 concrete read queue-head group. The two new public PPIF samples are support-accounted, strict-check and HDL-verify cleanly, and report mixed completion validity for `r0/r1/r2`; mixed multi-beat, burst-length/runtime over mixed, write-family read-data, direct backend, verification-output, VHDL, and backend variants remain deferred.
-- in_flight_uncommitted: none after the `IAL2-FEATURE-COMPLETENESS-FRONTIER.197` commit. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
+- latest_commit: `HEAD after IAL2-FEATURE-COMPLETENESS-FRONTIER.198 commit` - `IAL2-FEATURE-COMPLETENESS-FRONTIER.198: select mixed burst-length audit`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.199` is the readiness audit for report-only raw-ARLEN burst-length over mixed read burst-last scalar last-beat read-data; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.198` selected `.199` after reading the `.197` mixed scalar read-data behavior, `.196` audit, `.194` mixed response-demux behavior, adjacent auto-ID and concrete queue-head read-data/burst-length/runtime/multi-beat precedents, README, roadmap, mdBook, task tree, code, and Knowledge Map. The selected `.199` audit targets existing report-only raw-ARLEN burst-length syntax/helpers over the mixed burst-last shape; mixed runtime validation, multi-beat read-data, write-family read-data, group-local enqueue widening, direct backend, verification-output, VHDL, and backend variants remain deferred.
+- in_flight_uncommitted: none after the `IAL2-FEATURE-COMPLETENESS-FRONTIER.198` commit. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
 
 ## Notes

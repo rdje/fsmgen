@@ -6361,11 +6361,14 @@ read-data reports
 `generated_mixed_auto_id_queue_head_response_demux_completion_pulse`; the
 burst-last last-beat shape reports
 `generated_mixed_auto_id_queue_head_response_demux_last_beat_completion_pulse`.
-Selector `.198` is the next active owner before any further IAL2 behavior
-expansion. Mixed multi-beat read-data, burst-length/runtime validation over
-mixed families, group-local enqueue widening, packed burst-vector outputs,
-alternate payload assembly, direct backend, verification-output generation,
-VHDL, and backend-language variants remain separately owned.
+Selector `.198` selected `.199`, readiness audit for generated report-only
+raw-`ARLEN` burst-length capture over the read burst-last same-family mixed
+auto-ID plus concrete queue-head scalar last-beat read-data shape. That mixed
+burst-length behavior is under audit and not yet shipped. Mixed runtime
+validation, mixed multi-beat read-data, group-local enqueue widening, packed
+burst-vector outputs, alternate payload assembly, direct backend,
+verification-output generation, VHDL, and backend-language variants remain
+separately owned.
 
 Post mixed response-demux selector:
 [AXI_IAL2_MANAGER_POST_MIXED_AUTO_ID_QUEUE_HEAD_RESPONSE_DEMUX_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MIXED_AUTO_ID_QUEUE_HEAD_RESPONSE_DEMUX_NEXT_SLICE_SELECTION.md)
@@ -6378,6 +6381,10 @@ Mixed read-data behavior:
 ships `.197`, bounded scalar read-data over same-family mixed auto-ID plus
 concrete queue-head response-demux for the read single-beat and read
 burst-last public examples.
+Post mixed read-data selector:
+[AXI_IAL2_MANAGER_POST_MIXED_AUTO_ID_QUEUE_HEAD_READ_DATA_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MIXED_AUTO_ID_QUEUE_HEAD_READ_DATA_NEXT_SLICE_SELECTION.md)
+selects `.199`, the mixed report-only raw-`ARLEN` burst-length readiness
+audit.
 
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
@@ -8640,7 +8647,7 @@ support catalog entries instead of recursive workspace traversal.
 `SEMANTIC-INTROSPECTION-MCP-FRONTIER.30` closes the immediate read-only
 semantic-introspection/MCP pass after source discovery; the active roadmap
 priority is again the IAL2 feature-completeness tree, currently at
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.198`.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.199`.
 
 Selected first MCP resource families are `fsmgen://capabilities`,
 `fsmgen://contracts`, `fsmgen://diagnostics`,
