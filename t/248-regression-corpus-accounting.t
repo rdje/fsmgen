@@ -21,7 +21,7 @@ my @protocol_entries = protocol_fixture_entries();
 
 ok(@entries >= 7, 'regression corpus catalog starts with named entries across multiple classifications');
 ok(@entries >= 50, 'regression corpus catalog now covers supported language-feature fixtures plus root-level, section-level, child-root, direct-generation, and composition-contract residue families');
-is(scalar(@protocol_entries), 68, 'first visible corpus slice contains the named protocol and public intent fixtures');
+is(scalar(@protocol_entries), 69, 'first visible corpus slice contains the named protocol and public intent fixtures');
 
 my %allowed_classifications = map { $_ => 1 } qw(
     supported_smoke
@@ -56,6 +56,7 @@ my %allowed_coverages = map { $_ => 1 } qw(
     ial2_ppif_manager_capacity_status_read_burst_last_mixed_depth3_depth2_same_id_queue_head_read_data_pipeline_cli
     ial2_ppif_manager_capacity_status_read_burst_last_mixed_auto_id_same_id_queue_head_read_data_pipeline_cli
     ial2_ppif_manager_capacity_status_read_burst_last_mixed_auto_id_same_id_queue_head_burst_length_pipeline_cli
+    ial2_ppif_manager_capacity_status_read_burst_last_mixed_auto_id_same_id_queue_head_burst_length_runtime_assertion_pipeline_cli
     ial2_ppif_manager_capacity_status_read_burst_last_multi_depth3_same_id_queue_head_burst_length_pipeline_cli
     ial2_ppif_manager_capacity_status_read_burst_last_mixed_depth3_depth2_same_id_queue_head_burst_length_pipeline_cli
     ial2_ppif_manager_capacity_status_read_burst_last_multi_depth3_same_id_queue_head_burst_length_runtime_assertion_pipeline_cli
@@ -154,6 +155,7 @@ my %coverage_classification = (
     ial2_ppif_manager_capacity_status_read_burst_last_mixed_depth3_depth2_same_id_queue_head_read_data_pipeline_cli => 'supported_smoke',
     ial2_ppif_manager_capacity_status_read_burst_last_mixed_auto_id_same_id_queue_head_read_data_pipeline_cli => 'supported_smoke',
     ial2_ppif_manager_capacity_status_read_burst_last_mixed_auto_id_same_id_queue_head_burst_length_pipeline_cli => 'supported_smoke',
+    ial2_ppif_manager_capacity_status_read_burst_last_mixed_auto_id_same_id_queue_head_burst_length_runtime_assertion_pipeline_cli => 'supported_smoke',
     ial2_ppif_manager_capacity_status_read_burst_last_multi_depth3_same_id_queue_head_burst_length_pipeline_cli => 'supported_smoke',
     ial2_ppif_manager_capacity_status_read_burst_last_mixed_depth3_depth2_same_id_queue_head_burst_length_pipeline_cli => 'supported_smoke',
     ial2_ppif_manager_capacity_status_read_burst_last_multi_depth3_same_id_queue_head_burst_length_runtime_assertion_pipeline_cli => 'supported_smoke',
@@ -243,6 +245,7 @@ for my $required_id (qw(
     intent.ppif_axi_manager_capacity_status_read_burst_last_mixed_depth3_depth2_same_id_queue_head_read_data
     intent.ppif_axi_manager_capacity_status_read_burst_last_mixed_auto_id_same_id_queue_head_read_data
     intent.ppif_axi_manager_capacity_status_read_burst_last_mixed_auto_id_same_id_queue_head_burst_length
+    intent.ppif_axi_manager_capacity_status_read_burst_last_mixed_auto_id_same_id_queue_head_burst_length_runtime_assertion
     intent.ppif_axi_manager_capacity_status_read_burst_last_multi_depth3_same_id_queue_head_burst_length
     intent.ppif_axi_manager_capacity_status_read_burst_last_mixed_depth3_depth2_same_id_queue_head_burst_length
     intent.ppif_axi_manager_capacity_status_read_burst_last_multi_depth3_same_id_queue_head_burst_length_runtime_assertion
@@ -623,8 +626,8 @@ for my $entry (@entries) {
 
 is(
     scalar(grep { $_->{classification} eq 'supported_smoke' } @entries),
-    106,
-    'catalog now keeps one hundred six named supported-smoke entries including direct, composition, ISF, and PPIF fixtures',
+    107,
+    'catalog now keeps one hundred seven named supported-smoke entries including direct, composition, ISF, and PPIF fixtures',
 );
 is(
     scalar(grep { $_->{classification} eq 'legacy_out_of_scope' } @entries),
@@ -638,8 +641,8 @@ is(
 );
 is(
     scalar(grep { $_->{strict_supported} } @entries),
-    106,
-    'catalog now records one hundred six positive strict-mode supported-smoke acceptance entries',
+    107,
+    'catalog now records one hundred seven positive strict-mode supported-smoke acceptance entries',
 );
 for my $strict_supported_id (qw(
     protocol.apb_requester
@@ -669,6 +672,7 @@ for my $strict_supported_id (qw(
     intent.ppif_axi_manager_capacity_status_read_burst_last_multi_depth3_same_id_queue_head_read_data
     intent.ppif_axi_manager_capacity_status_read_burst_last_mixed_depth3_depth2_same_id_queue_head_read_data
     intent.ppif_axi_manager_capacity_status_read_burst_last_mixed_auto_id_same_id_queue_head_burst_length
+    intent.ppif_axi_manager_capacity_status_read_burst_last_mixed_auto_id_same_id_queue_head_burst_length_runtime_assertion
     intent.ppif_axi_manager_capacity_status_read_burst_last_multi_depth3_same_id_queue_head_burst_length
     intent.ppif_axi_manager_capacity_status_read_burst_last_mixed_depth3_depth2_same_id_queue_head_burst_length
     intent.ppif_axi_manager_capacity_status_read_burst_last_multi_depth3_same_id_queue_head_burst_length_runtime_assertion

@@ -5,6 +5,11 @@ Status: shipped by `IAL2-FEATURE-COMPLETENESS-FRONTIER.200` on
 
 Task-tree owner: `IAL2-FEATURE-COMPLETENESS-FRONTIER.200`
 
+Superseding note: `.200` deliberately published the report-only boundary
+first. `IAL2-FEATURE-COMPLETENESS-FRONTIER.202` now ships the runtime
+beat-count/`RLAST` validation sibling documented in
+`docs/AXI_IAL2_MANAGER_MIXED_AUTO_ID_QUEUE_HEAD_RUNTIME_VALIDATION_BEHAVIOR.md`.
+
 ## Public Sample
 
 The runnable PPIF sample is:
@@ -114,22 +119,21 @@ ial2_ppif_manager_capacity_status_read_burst_last_mixed_auto_id_same_id_queue_he
 Strict check JSON and normalized semantic JSON report that entry, the
 `supported_smoke` classification, and generated module `axi0_capacity_status`.
 
-## Runtime Boundary
+## Runtime Boundary At `.200`
 
-Runtime beat-count/`RLAST` validation over this mixed auto-ID plus concrete
-queue-head shape remains separately owned. A PPIF that changes only this
-sample's burst-length validation mode to `runtime-assertion` now fails closed
-with a diagnostic naming the separately owned boundary.
+At `.200`, runtime beat-count/`RLAST` validation over this mixed auto-ID plus
+concrete queue-head shape remained separately owned. A PPIF that changed only
+this sample's burst-length validation mode to `runtime-assertion` failed
+closed with a diagnostic naming that boundary.
 
 Existing concrete queue-head runtime-validation samples remain supported. This
-fail-closed guard is limited to the same-family mixed auto-ID plus concrete
-queue-head response-demux shape.
+historical fail-closed guard was limited to the same-family mixed auto-ID plus
+concrete queue-head response-demux shape and is superseded by `.202`.
 
 ## Deferred Work
 
 The following remain outside this slice:
 
-- mixed runtime beat-count/`RLAST` validation;
 - mixed multi-beat output-bank behavior;
 - single-beat burst-length behavior;
 - group-local simultaneous enqueue widening;

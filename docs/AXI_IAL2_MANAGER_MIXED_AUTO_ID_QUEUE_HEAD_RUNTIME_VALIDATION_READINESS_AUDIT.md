@@ -5,6 +5,10 @@ Status: readiness audit for `IAL2-FEATURE-COMPLETENESS-FRONTIER.201` on
 
 Task-tree owner: `IAL2-FEATURE-COMPLETENESS-FRONTIER.201`
 
+Superseding note: this audit selected `.202`; `.202` now ships the selected
+runtime behavior in
+`docs/AXI_IAL2_MANAGER_MIXED_AUTO_ID_QUEUE_HEAD_RUNTIME_VALIDATION_BEHAVIOR.md`.
+
 ## Decision
 
 Select `IAL2-FEATURE-COMPLETENESS-FRONTIER.202`, direct bounded
@@ -52,8 +56,8 @@ ppif/axi_manager_capacity_status_read_burst_last_mixed_auto_id_same_id_queue_hea
   residue=generated_beat_count_validation,multi_beat_read_data_reassembly,per_beat_outputs,rresp_aggregation
 ```
 
-Changing only that sample's `burst-length` clause to
-`(validation runtime-assertion)` fails closed today with the `.200` diagnostic:
+At the time of this audit, changing only that sample's `burst-length` clause
+to `(validation runtime-assertion)` failed closed with the `.200` diagnostic:
 
 ```text
 AXI manager capacity/status IAL2 contract read_data.read mixed auto-ID plus
@@ -122,9 +126,9 @@ driven:
   expected-beat storage, counters, rules, assertions, match source, and residue
   removal from the same normalized transaction list.
 
-The remaining blocker is therefore local admission/publication for one mixed
-shape, not parser syntax, schedule normalization, generated artifact
-projection, report projection, semantic JSON, or HDL lowering.
+The remaining blocker at the time was therefore local admission/publication
+for one mixed shape, not parser syntax, schedule normalization, generated
+artifact projection, report projection, semantic JSON, or HDL lowering.
 
 ## Selected `.202` Boundary
 

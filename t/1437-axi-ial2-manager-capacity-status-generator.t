@@ -3449,6 +3449,21 @@ subtest 'mixed auto-ID and same-ID queue-head read-data consumes combined comple
             report_assertion_args => ['report_only', 'generated_mixed_auto_id_queue_head_response_demux_last_beat_completion_pulse'],
             burst_length => 1,
         },
+        {
+            owner    => 'generator mixed read-data burst-last runtime burst-length',
+            contract => sample_contract_with_read_burst_last_mixed_auto_id_same_id_queue_head_burst_length_runtime_assertion(),
+            boundary => 'generated_read_burst_last_queue_head_demux',
+            scope    => 'burst_last',
+            last_signal => 'axi0_rlast',
+            output_data    => 'axi0_r2_last_rdata',
+            output_status  => 'axi0_r2_last_rresp',
+            demux_rule_pattern => qr/\(rule axi0_r2_response_demux \(& axi0_read_complete \(== axi0_rid 4'd3\) axi0_rlast axi0_read_id3_same_id_issue_order_slot0_r2_q\)/,
+            hdl_demux_guard_pattern => qr/axi0_read_complete\s*&\s*\(axi0_rid\s*==\s*4'd3\)\s*&\s*axi0_rlast\s*&\s*axi0_read_id3_same_id_issue_order_slot0_r2_q/,
+            report_assertion => \&assert_read_data_burst_length_report,
+            report_assertion_args => ['runtime_assertion', 'generated_mixed_auto_id_queue_head_response_demux_last_beat_completion_pulse'],
+            burst_length => 1,
+            runtime_validation => 1,
+        },
     );
 
     for my $case (@cases) {
@@ -3476,6 +3491,23 @@ subtest 'mixed auto-ID and same-ID queue-head read-data consumes combined comple
                     qr/\(-axi0_${tx}_burst_length_capture\s+<axi0_${tx}_request\s+\(<- \(axi0_${tx}_arlen_q axi0_arlen\)\)\s+\)/,
                     "$owner lowers $tx raw ARLEN capture into generated .fsm",
                 );
+            }
+            if ($case->{runtime_validation}) {
+                for my $tx (qw(r0 r1 r2)) {
+                    like($isf, qr/\(var axi0_${tx}_expected_beats_q \(width 5\)\)/, "$owner declares $tx expected-beat storage");
+                    like($isf, qr/\(var axi0_${tx}_read_beat_count_q \(width 5\)\)/, "$owner declares $tx beat-count storage");
+                    like($isf, qr/\(rule axi0_${tx}_beat_count_init axi0_${tx}_request\s+\(axi0_${tx}_expected_beats_q \(\+ axi0_arlen\[4:0\] 5'd1\)\)\s+\(axi0_${tx}_read_beat_count_q 0\)\)/, "$owner initializes $tx expected count and beat counter on request");
+                    like($isf, qr/\(rule axi0_${tx}_read_beat_count\b[\s\S]*\(axi0_${tx}_read_beat_count_q \(\+ axi0_${tx}_read_beat_count_q 5'd1\)\)\)/, "$owner increments $tx beat count on matched read beat");
+                }
+                like(
+                    $isf,
+                    qr/\(rule axi0_r2_read_beat_count \(& \(& axi0_read_complete \(& \(== axi0_rid 4'd3\) axi0_read_id3_same_id_issue_order_slot0_r2_q\)\) \(! axi0_r2_request\)\)\s+\(axi0_r2_read_beat_count_q \(\+ axi0_r2_read_beat_count_q 5'd1\)\)\)/,
+                    "$owner increments r2 count on raw matched queue-head read beat without RLAST qualification",
+                );
+                like($fsm, qr/\(-axi0_r2_beat_count_init\s+<axi0_r2_request\s+\(<- \(axi0_r2_expected_beats_q \(\+ axi0_arlen\[4:0\] 5'd1\)\)\)\s+\(<- \(axi0_r2_read_beat_count_q 0\)\)/, "$owner lowers r2 expected-beat initialization");
+                like($fsm, qr/\(-axi0_r2_read_beat_count\s+<\(& \(& axi0_read_complete \(& \(== axi0_rid 4'd3\) axi0_read_id3_same_id_issue_order_slot0_r2_q\)\) \(! axi0_r2_request\)\)\s+\(<- \(axi0_r2_read_beat_count_q \(\+ axi0_r2_read_beat_count_q 5'd1\)\)\)/, "$owner lowers r2 matched-beat increment");
+                my @beat_count_assertions = $fsm =~ /axi0_read_data_beat_count_checks_assert_/g;
+                is(scalar(@beat_count_assertions), 12, "$owner lowers four beat-count/RLAST assertions per covered transaction");
             }
         }
 
@@ -3527,8 +3559,16 @@ subtest 'mixed auto-ID and same-ID queue-head read-data consumes combined comple
             like($hdl, qr/\breg\s+\[7:0\]\s+axi0_r2_arlen_q\b/, "$owner SystemVerilog declares r2 raw ARLEN storage");
             like($hdl, qr/assign\s+axi0_r2_burst_length_capture_en\s*=\s*axi0_r2_request\s*;/, "$owner SystemVerilog guards r2 ARLEN capture with request");
             like($hdl, qr/axi0_r2_arlen_q_next\s*=\s*axi0_arlen\s*;/, "$owner SystemVerilog captures raw ARLEN into r2 storage");
-            unlike($hdl, qr/\bexpected_beats_q\b/, "$owner report-only HDL omits expected-beat storage");
-            unlike($hdl, qr/\bread_beat_count_q\b/, "$owner report-only HDL omits beat-count storage");
+            if ($case->{runtime_validation}) {
+                like($hdl, qr/\breg\s+\[4:0\]\s+axi0_r2_expected_beats_q\b/, "$owner SystemVerilog declares r2 expected-beat storage");
+                like($hdl, qr/\breg\s+\[4:0\]\s+axi0_r2_read_beat_count_q\b/, "$owner SystemVerilog declares r2 beat-count storage");
+                like($hdl, qr/axi0_r2_expected_beats_q_next\s*=\s*axi0_arlen\[4:0\]\s*\+\s*5'd1\s*;/, "$owner SystemVerilog initializes r2 expected count from ARLEN+1");
+                like($hdl, qr/axi0_r2_read_beat_count_q_next\s*=\s*axi0_r2_read_beat_count_q\s*\+\s*5'd1\s*;/, "$owner SystemVerilog increments r2 beat count");
+                like($hdl, qr/assign\s+axi0_r2_read_beat_count_en\s*=/, "$owner SystemVerilog emits r2 beat-count increment enable");
+            } else {
+                unlike($hdl, qr/\bexpected_beats_q\b/, "$owner report-only HDL omits expected-beat storage");
+                unlike($hdl, qr/\bread_beat_count_q\b/, "$owner report-only HDL omits beat-count storage");
+            }
         }
         like($hdl, $case->{hdl_demux_guard_pattern}, "$owner SystemVerilog keeps the concrete queue-head demux guard");
     }
@@ -3730,7 +3770,6 @@ subtest 'malformed contract objects fail closed and no direct lower-to-fsm entry
         ['burst-length oversized max beats', sub { my $c = sample_contract_with_read_data_burst_length(); $c->{read_data}{read}{burst_length}{max_beats} = 257; $c }, qr/burst_length\.max_beats must be in 1\.\.256/],
         ['burst-length unsupported validation mode', sub { my $c = sample_contract_with_read_data_burst_length(); $c->{read_data}{read}{burst_length}{validation} = 'generated'; $c }, qr/burst_length\.validation must be report-only or runtime-assertion/],
         ['burst-length signal collision', sub { my $c = sample_contract_with_read_data_burst_length(); $c->{read_data}{read}{burst_length}{signal} = 'axi0_rid'; $c }, qr/duplicates signal 'axi0_rid'/],
-        ['mixed auto-ID queue-head runtime burst-length remains separately owned', sub { sample_contract_with_read_burst_last_mixed_auto_id_same_id_queue_head_burst_length_runtime_assertion() }, qr/mixed auto-ID plus queue-head burst_length\.validation runtime-assertion remains separately owned/],
         ['multi-beat read data with report-only validation', sub { my $c = sample_contract_with_read_data_multi_beat(); $c->{read_data}{read}{burst_length}{validation} = 'report-only'; $c }, qr/capture_scope multi-beat requires burst_length\.validation runtime-assertion/],
         ['multi-beat read data with single-beat response demux', sub { my $c = sample_contract_with_read_data_multi_beat(); $c->{response_demux} = sample_contract_with_read_response_demux()->{response_demux}; $c }, qr/capture_scope multi-beat requires response_demux\.read\.response_scope burst_last/],
         ['multi-beat read data missing status policy', sub { my $c = sample_contract_with_read_data_multi_beat(); delete $c->{read_data}{read}{status_policy}; $c }, qr/capture_scope multi-beat requires status_policy per-beat/],

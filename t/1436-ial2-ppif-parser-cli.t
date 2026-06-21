@@ -3192,6 +3192,21 @@ subtest 'CLI emits IAL2 report JSON for mixed auto-ID and same-ID queue-head rea
             report_assertion_args => ['report_only', 'generated_mixed_auto_id_queue_head_response_demux_last_beat_completion_pulse'],
             burst_length => 1,
         },
+        {
+            label      => 'read-data burst-last runtime burst-length',
+            owner      => 'mixed auto-ID queue-head read-data burst-last runtime burst-length',
+            path       => \&sample_capacity_read_burst_last_mixed_auto_id_same_id_queue_head_burst_length_runtime_assertion_ppif_path,
+            intent     => 'axi_manager_capacity_status_read_burst_last_mixed_auto_id_same_id_queue_head_burst_length_runtime_assertion',
+            entry_id   => 'intent.ppif_axi_manager_capacity_status_read_burst_last_mixed_auto_id_same_id_queue_head_burst_length_runtime_assertion',
+            queue_boundary => 'generated_read_burst_last_queue_head_demux',
+            scope      => 'burst_last',
+            last_signal => 'axi0_rlast',
+            completion_validity => 'generated_mixed_auto_id_queue_head_response_demux_last_beat_completion_pulse',
+            report_assertion => \&assert_read_data_burst_length_report,
+            report_assertion_args => ['runtime_assertion', 'generated_mixed_auto_id_queue_head_response_demux_last_beat_completion_pulse'],
+            burst_length => 1,
+            runtime_validation => 1,
+        },
     );
 
     for my $case (@cases) {
@@ -3248,7 +3263,8 @@ subtest 'CLI emits IAL2 report JSON for mixed auto-ID and same-ID queue-head rea
 
             SKIP: {
                 my $skip_reason = external_systemverilog_validation_skip_reason();
-                skip $skip_reason, 6 if defined $skip_reason;
+                my $verify_test_count = $case->{runtime_validation} ? 7 : 6;
+                skip $skip_reason, $verify_test_count if defined $skip_reason;
 
                 my $tempdir = tempdir(CLEANUP => 1);
                 my $hdl = File::Spec->catfile($tempdir, 'mixed-auto-id-queue-head-burst-length.sv');
@@ -3261,30 +3277,15 @@ subtest 'CLI emits IAL2 report JSON for mixed auto-ID and same-ID queue-head rea
                 my $sv = slurp($hdl);
                 like($sv, qr/\binput\s+(?:wire\s+)?\[7:0\]\s+axi0_arlen\b/, "mixed $case->{label} HDL exposes generated ARLEN input");
                 like($sv, qr/\breg\s+\[7:0\]\s+axi0_r2_arlen_q\b/, "mixed $case->{label} HDL declares r2 raw ARLEN storage");
-                unlike($sv, qr/\bexpected_beats_q\b/, "mixed $case->{label} report-only HDL omits expected-beat storage");
+                if ($case->{runtime_validation}) {
+                    like($sv, qr/\breg\s+\[4:0\]\s+axi0_r2_expected_beats_q\b/, "mixed $case->{label} HDL declares r2 expected-beat storage");
+                    like($sv, qr/\breg\s+\[4:0\]\s+axi0_r2_read_beat_count_q\b/, "mixed $case->{label} HDL declares r2 beat-count storage");
+                } else {
+                    unlike($sv, qr/\bexpected_beats_q\b/, "mixed $case->{label} report-only HDL omits expected-beat storage");
+                }
             }
         }
     }
-};
-
-subtest 'CLI rejects mixed auto-ID queue-head runtime burst-length as separately owned' => sub {
-    my $tempdir = tempdir(CLEANUP => 1);
-    my $sample_path = File::Spec->catfile($tempdir, 'mixed-auto-id-runtime-burst-length.ppif');
-    my $source = sample_capacity_read_burst_last_mixed_auto_id_same_id_queue_head_burst_length_ppif();
-    $source =~ s/\(validation report-only\)/(validation runtime-assertion)/
-        or die 'new mixed burst-length sample did not contain report-only validation';
-    write_file($sample_path, $source);
-
-    my ($success, undef, undef, $stdout_buf, $stderr_buf) = run(
-        command => ['./bin/fsmgen', '--strict', '--check', '--json', $sample_path],
-    );
-    ok(!$success, 'mixed auto-ID queue-head runtime burst-length strict check fails closed');
-    my $diagnostic = join('', @{$stdout_buf || []}, @{$stderr_buf || []});
-    like(
-        $diagnostic,
-        qr/mixed auto-ID plus queue-head burst_length\.validation runtime-assertion remains separately owned/,
-        'runtime mixed burst-length diagnostic names the separately owned boundary',
-    );
 };
 
 subtest 'CLI emits IAL2 report JSON for AXI manager read-data metadata .ppif' => sub {
@@ -6256,6 +6257,10 @@ sub sample_capacity_read_burst_last_mixed_auto_id_same_id_queue_head_burst_lengt
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_read_burst_last_mixed_auto_id_same_id_queue_head_burst_length.ppif');
 }
 
+sub sample_capacity_read_burst_last_mixed_auto_id_same_id_queue_head_burst_length_runtime_assertion_ppif_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_read_burst_last_mixed_auto_id_same_id_queue_head_burst_length_runtime_assertion.ppif');
+}
+
 sub sample_capacity_read_burst_last_depth3_same_id_queue_head_read_data_ppif_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_read_burst_last_depth3_same_id_queue_head_read_data.ppif');
 }
@@ -6506,6 +6511,10 @@ sub sample_capacity_read_burst_last_mixed_auto_id_same_id_queue_head_read_data_p
 
 sub sample_capacity_read_burst_last_mixed_auto_id_same_id_queue_head_burst_length_ppif {
     return slurp(sample_capacity_read_burst_last_mixed_auto_id_same_id_queue_head_burst_length_ppif_path());
+}
+
+sub sample_capacity_read_burst_last_mixed_auto_id_same_id_queue_head_burst_length_runtime_assertion_ppif {
+    return slurp(sample_capacity_read_burst_last_mixed_auto_id_same_id_queue_head_burst_length_runtime_assertion_ppif_path());
 }
 
 sub sample_capacity_read_burst_last_depth3_same_id_queue_head_read_data_ppif {

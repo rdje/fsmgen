@@ -1080,7 +1080,7 @@ support-accounting metadata under query/limit/filter controls.
 `SEMANTIC-INTROSPECTION-MCP-FRONTIER.30` closes the immediate read-only
 semantic-introspection/MCP pass after source discovery and returns active
 roadmap priority to the IAL2 feature-completeness tree, currently at
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.202`.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.203`.
 The parser/report metadata slice `IAL2-FEATURE-COMPLETENESS-FRONTIER.39` is
 now shipped for the bounded AXI read response-demux public contract selected
 by `.38`. The selected read arm requires `(response-scope single-beat)`,
@@ -1935,14 +1935,19 @@ boundary first, and requires `.200` to preserve or lock runtime validation as
 separately owned. Implementation `.200` now ships that support-accounted
 report-only raw-`ARLEN` burst-length boundary through
 `ppif/axi_manager_capacity_status_read_burst_last_mixed_auto_id_same_id_queue_head_burst_length.ppif`.
-The runtime-assertion variant for the same mixed auto-ID plus concrete
-queue-head shape fails closed as separately owned. Audit `.201` selected
-`.202`, direct bounded support/publication of generated runtime
-beat-count/`RLAST` validation over that same mixed auto-ID plus concrete
-queue-head read burst-last scalar last-beat shape. Mixed runtime validation
-until `.202` ships, mixed multi-beat read-data, group-local enqueue widening,
-packed outputs, direct backend, verification-output generation, VHDL, and
-backend-language variants remain separately owned.
+Audit `.201` selected `.202`, direct bounded support/publication of generated
+runtime beat-count/`RLAST` validation over that same mixed auto-ID plus
+concrete queue-head read burst-last scalar last-beat shape. Implementation
+`.202` now ships that support-accounted runtime-assertion sibling through
+`ppif/axi_manager_capacity_status_read_burst_last_mixed_auto_id_same_id_queue_head_burst_length_runtime_assertion.ppif`.
+It reports `burst_length_validation: runtime_assertion`,
+`beat_count_match_source: response_demux_matched_read_beat`, expected-beat
+storage, read-beat counters, six beat-count rules, twelve beat-count/`RLAST`
+assertions, strict support accounting, semantic JSON support, and HDL, while
+removing `generated_beat_count_validation` residue. Mixed multi-beat
+read-data, group-local enqueue widening, packed outputs, direct backend,
+verification-output generation, VHDL, and backend-language variants remain
+separately owned.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.
