@@ -2352,10 +2352,10 @@ matching for one explicit `response-demux.read` dynamic read transaction, and
 bounded scalar dynamic read-data capture over that generated dynamic read
 response-demux for exactly one dynamic read transaction. `.238` now also ships
 report-only dynamic raw-`ARLEN` burst-length capture for that generated
-dynamic last-beat read-data boundary. The next selected owner is `.239`,
-readiness audit for dynamic runtime beat-count/`RLAST` validation. `.236`
-added the bounded focused validation target for the shipped dynamic
-transaction-ID family.
+dynamic last-beat read-data boundary, and `.240` ships generated dynamic
+runtime beat-count/`RLAST` validation for the same single-active dynamic
+last-beat shape. `.236` added the bounded focused validation target for the
+shipped dynamic transaction-ID family.
 Broader IAL2 still must justify itself with semantics above individual
 transactions, not only syntax convenience. Its generic file surface remains
 protocol/platform-generic, and an IAL2 file may select a protocol or platform
@@ -6809,6 +6809,27 @@ transaction-list driven. Dynamic multi-beat output banks, multiple or mixed
 dynamic demux, same-cycle recapture, dynamic same-ID ordering, queues,
 scoreboards, direct backend behavior, backend-language variants, and VHDL
 remain deferred.
+Behavior
+[AXI_IAL2_MANAGER_DYNAMIC_RUNTIME_VALIDATION_BEHAVIOR](../../AXI_IAL2_MANAGER_DYNAMIC_RUNTIME_VALIDATION_BEHAVIOR.md)
+ships that selected runtime shape. The support-accounted public sample is:
+
+```text
+ppif/axi_manager_capacity_status_dynamic_read_data_burst_length_runtime_assertion.ppif
+```
+
+It uses the same dynamic last-beat read-data contract as the report-only
+sample, with:
+
+```lisp
+(validation runtime-assertion)
+```
+
+FSMGen generates expected-beat storage from `ARLEN + 1`, read-beat counter
+storage, request-time initialization, raw matched-`RID` beat-count increments,
+and four beat-count/`RLAST` assertions while leaving scalar `RDATA`/`RRESP`
+capture guarded by the generated dynamic `RID && RLAST` completion pulse.
+The `.238` report-only sample stays supported and keeps
+`generated_beat_count_validation` residue.
 
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)

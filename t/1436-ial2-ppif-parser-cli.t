@@ -376,6 +376,38 @@ subtest 'PPIF adapter parses AXI manager dynamic report-only burst-length read-d
     );
 };
 
+subtest 'PPIF adapter parses AXI manager dynamic runtime burst-length read-data behavior' => sub {
+    my $sample_path = sample_capacity_dynamic_read_data_burst_length_runtime_assertion_ppif_path();
+    ok(-f $sample_path, 'tracked runnable PPIF capacity/status dynamic runtime burst-length read-data sample exists');
+
+    my $result = FSM::Adapter::IAL2::PPIF->new()->parse_source(sample_capacity_dynamic_read_data_burst_length_runtime_assertion_ppif(), $sample_path);
+    my $isf = $result->{generated_ial1}{text};
+    my $fsm = $result->{generated_ial0}{files}{'axi0_capacity_status.fsm'};
+
+    is($result->{kind}, 'protocol_intent.axi_manager_capacity_status', 'dynamic runtime burst-length read-data sample still uses the capacity/status generator');
+    is($result->{report}{source_object}{id}, 'axi-manager-capacity-status-dynamic-read-data-burst-length-runtime-assertion', 'dynamic runtime burst-length read-data source object id is preserved');
+    is($result->{report}{source_object}{intent_name}, 'axi_manager_capacity_status_dynamic_read_data_burst_length_runtime_assertion', 'dynamic runtime burst-length read-data source intent name is preserved');
+    like($isf, qr/\(rule axi0_r0_response_demux \(& axi0_read_complete axi0_r0_dynamic_busy_q \(== axi0_rid axi0_r0_dynamic_id_q\) axi0_rlast\)/, 'dynamic runtime burst-length read-data sample keeps generated RID/RLAST demux rule');
+    like($isf, qr/\(input axi0_arlen \(width 8\)\)/, 'dynamic runtime burst-length read-data sample generates ARLEN input');
+    like($isf, qr/\(var axi0_r0_expected_beats_q \(width 5\)\)/, 'dynamic runtime burst-length read-data sample declares expected-beat storage');
+    like($isf, qr/\(var axi0_r0_read_beat_count_q \(width 5\)\)/, 'dynamic runtime burst-length read-data sample declares beat-count storage');
+    like($isf, qr/\(rule axi0_r0_read_beat_count \(& \(& axi0_read_complete \(& axi0_r0_dynamic_busy_q \(== axi0_rid axi0_r0_dynamic_id_q\)\)\) \(! axi0_r0_request\)\)/, 'dynamic runtime burst-length read-data sample counts raw matched RID beats');
+    like($isf, qr/axi0 r0 expected final read beat has RLAST/, 'dynamic runtime burst-length read-data sample emits missing-RLAST assertion');
+    like(
+        $fsm,
+        qr/\(<- \(axi0_r0_read_beat_count_q \(\+ axi0_r0_read_beat_count_q 5'd1\)\)\)/,
+        'dynamic runtime burst-length read-data sample lowers beat-count increment into generated .fsm',
+    );
+    assert_dynamic_read_response_demux_burst_last_report($result->{report}, 'adapter dynamic runtime burst-length read-data response-demux report');
+    assert_read_data_burst_length_report(
+        $result->{report}{read_data},
+        'adapter dynamic runtime burst-length read-data report',
+        'runtime_assertion',
+        'generated_dynamic_read_response_demux_last_beat_completion_pulse',
+        transactions => [qw(r0)],
+    );
+};
+
 subtest 'PPIF adapter parses AXI manager transaction event dispatch' => sub {
     my $sample_path = sample_capacity_transaction_dispatch_ppif_path();
     ok(-f $sample_path, 'tracked runnable PPIF capacity/status transaction-event dispatch sample exists');
@@ -5082,6 +5114,14 @@ subtest 'CLI check JSON and semantic JSON support-account dynamic burst-length r
     );
 };
 
+subtest 'CLI check JSON and semantic JSON support-account dynamic runtime burst-length read-data .ppif separately' => sub {
+    assert_ppif_strict_json_support_case(
+        owner    => 'capacity/status dynamic runtime burst-length read-data',
+        path     => \&sample_capacity_dynamic_read_data_burst_length_runtime_assertion_ppif_path,
+        entry_id => 'intent.ppif_axi_manager_capacity_status_dynamic_read_data_burst_length_runtime_assertion',
+    );
+};
+
 subtest 'CLI check JSON and semantic JSON support-account transaction-event dispatch .ppif separately' => sub {
     my $dispatch_path = sample_capacity_transaction_dispatch_ppif_path();
     my ($success, undef, undef, $stdout_buf, $stderr_buf) = run(
@@ -6857,6 +6897,10 @@ sub sample_capacity_dynamic_read_data_burst_length_ppif_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_dynamic_read_data_burst_length.ppif');
 }
 
+sub sample_capacity_dynamic_read_data_burst_length_runtime_assertion_ppif_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_dynamic_read_data_burst_length_runtime_assertion.ppif');
+}
+
 sub sample_capacity_transaction_dispatch_ppif_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_transaction_event_dispatch.ppif');
 }
@@ -7143,6 +7187,10 @@ sub sample_capacity_dynamic_read_data_last_beat_ppif {
 
 sub sample_capacity_dynamic_read_data_burst_length_ppif {
     return slurp(sample_capacity_dynamic_read_data_burst_length_ppif_path());
+}
+
+sub sample_capacity_dynamic_read_data_burst_length_runtime_assertion_ppif {
+    return slurp(sample_capacity_dynamic_read_data_burst_length_runtime_assertion_ppif_path());
 }
 
 sub sample_capacity_transaction_dispatch_ppif {

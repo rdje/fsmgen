@@ -2085,11 +2085,14 @@ generated report-only dynamic raw-`ARLEN` capture with support-accounted
 `ppif/axi_manager_capacity_status_dynamic_read_data_burst_length.ppif`,
 generated `axi0_arlen` input/storage/request-capture/report fields, and
 scalar payload capture still guarded by the generated dynamic last-beat
-completion pulse. `.239` selected `.240`, direct bounded generated dynamic
-beat-count/`RLAST` runtime validation over that same generated dynamic
-last-beat boundary. Dynamic multi-beat output banks, multiple/mixed dynamic
-demux, same-cycle recapture, dynamic same-ID ordering, queues, scoreboards,
-direct backend behavior, and VHDL remain residue.
+completion pulse. `.240` now ships generated dynamic beat-count/`RLAST`
+runtime validation over that same generated dynamic last-beat boundary with
+support-accounted
+`ppif/axi_manager_capacity_status_dynamic_read_data_burst_length_runtime_assertion.ppif`;
+the `.238` report-only sample remains supported and unchanged. Dynamic
+multi-beat output banks, multiple/mixed dynamic demux, same-cycle recapture,
+dynamic same-ID ordering, queues, scoreboards, direct backend behavior, and
+VHDL remain residue.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.
