@@ -1107,7 +1107,11 @@ PPIF samples, generated `RDATA`/`RRESP` capture, dynamic completion-validity
 report vocabulary, and explicit fail-closed residue. `.235` selected `.236`,
 AXI manager focused-suite cost cleanup, before any broader dynamic behavior
 change because the primary AXI manager parser/generator focused suites are no
-longer routine closeout surfaces.
+longer routine closeout surfaces. `.236` now adds
+`t/1438-axi-ial2-manager-dynamic-transaction-id-focused.t`, a bounded focused
+target for the shipped dynamic transaction-ID family, and selects `.237`,
+readiness audit for dynamic burst-length capture over generated dynamic
+last-beat read-data.
 The parser/report metadata slice `IAL2-FEATURE-COMPLETENESS-FRONTIER.39` is
 now shipped for the bounded AXI read response-demux public contract selected
 by `.38`. The selected read arm requires `(response-scope single-beat)`,
@@ -2070,10 +2074,11 @@ read transaction, with generated `RDATA`/`RRESP` inputs, scalar data/status
 outputs, dynamic completion-validity reports, and support-accounted public
 samples. `.235` selected `.236`, AXI manager focused-suite cost cleanup, so
 the shipped dynamic transaction-ID family can be validated through bounded
-focused targets before more behavior is added. Dynamic burst-length/runtime
-validation, multi-beat output banks, multiple/mixed dynamic demux, same-cycle
-recapture, dynamic same-ID ordering, queues, scoreboards, direct backend
-behavior, and VHDL remain residue.
+focused targets before more behavior is added. `.236` now ships that bounded
+target and `.237` is the next readiness audit for report-only dynamic
+burst-length capture. Dynamic runtime validation, multi-beat output banks,
+multiple/mixed dynamic demux, same-cycle recapture, dynamic same-ID ordering,
+queues, scoreboards, direct backend behavior, and VHDL remain residue.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.

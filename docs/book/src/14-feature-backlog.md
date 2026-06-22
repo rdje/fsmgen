@@ -2351,8 +2351,9 @@ single-beat `RID` response matching plus burst-last `RID && RLAST` response
 matching for one explicit `response-demux.read` dynamic read transaction, and
 bounded scalar dynamic read-data capture over that generated dynamic read
 response-demux for exactly one dynamic read transaction. The next selected
-owner is `.236`, AXI manager focused-suite cost cleanup before further
-dynamic behavior expansion.
+owner is `.237`, readiness audit for dynamic burst-length capture over
+generated dynamic last-beat read-data. `.236` added the bounded focused
+validation target for the shipped dynamic transaction-ID family.
 Broader IAL2 still must justify itself with semantics above individual
 transactions, not only syntax convenience. Its generic file surface remains
 protocol/platform-generic, and an IAL2 file may select a protocol or platform
@@ -6767,6 +6768,11 @@ dynamic behavior boundaries. The prerequisite is the validation surface: the
 shipped dynamic transaction-ID family should have bounded focused targets
 rather than relying on oversized `t/1436` and `t/1437` monoliths for routine
 closeout.
+Cleanup
+[AXI_IAL2_MANAGER_DYNAMIC_FOCUSED_SUITE_CLEANUP](../../AXI_IAL2_MANAGER_DYNAMIC_FOCUSED_SUITE_CLEANUP.md)
+adds `t/1438-axi-ial2-manager-dynamic-transaction-id-focused.t` for that
+bounded proof and selects `.237`, dynamic burst-length readiness audit, as the
+next owner.
 
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
@@ -9045,8 +9051,10 @@ selects `.233`, readiness audit for dynamic read-data routing over generated
 single-active dynamic read response-demux. `.233` selects `.234`, direct
 bounded scalar dynamic read-data capture over the generated dynamic read
 single-beat and burst-last/`RLAST` demux shapes. `.234` now ships that scalar
-dynamic read-data behavior, and `.235` selects `.236`, AXI manager
-focused-suite cost cleanup before further dynamic behavior expansion.
+dynamic read-data behavior, `.235` selects `.236`, AXI manager focused-suite
+cost cleanup before further dynamic behavior expansion, and `.236` ships the
+bounded dynamic-family focused target before selecting `.237`, dynamic
+burst-length readiness audit.
 
 Selected first MCP resource families are `fsmgen://capabilities`,
 `fsmgen://contracts`, `fsmgen://diagnostics`,
