@@ -3,6 +3,11 @@
 Status: selector for `IAL2-FEATURE-COMPLETENESS-FRONTIER.222` on
 2026-06-22.
 
+Current note: later leaves moved selected single-active dynamic read matching,
+selected dynamic read-data shapes, and bounded all-dynamic multiple write
+response-demux out of the `.222` residue. See the current behavior docs for
+those shipped follow-ups.
+
 Task-tree owner: `IAL2-FEATURE-COMPLETENESS-FRONTIER.222`
 
 ## Decision

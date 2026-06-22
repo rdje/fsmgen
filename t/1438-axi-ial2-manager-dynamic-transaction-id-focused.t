@@ -35,6 +35,15 @@ my @DYNAMIC_CASES = (
         behavior     => 'dynamic_write_demux',
     },
     {
+        label        => 'multiple dynamic write BID response demux',
+        relpath      => 'ppif/axi_manager_capacity_status_dynamic_write_response_demux_multi.ppif',
+        object_id    => 'axi-manager-capacity-status-dynamic-write-response-demux-multi',
+        intent_name  => 'axi_manager_capacity_status_dynamic_write_response_demux_multi',
+        entry_id     => 'intent.ppif_axi_manager_capacity_status_dynamic_write_response_demux_multi',
+        coverage     => 'ial2_ppif_manager_capacity_status_dynamic_write_response_demux_multi_pipeline_cli',
+        behavior     => 'dynamic_write_demux_multi',
+    },
+    {
         label        => 'dynamic read single-beat RID response demux',
         relpath      => 'ppif/axi_manager_capacity_status_dynamic_read_response_demux.ppif',
         object_id    => 'axi-manager-capacity-status-dynamic-read-response-demux',
@@ -181,6 +190,36 @@ sub assert_dynamic_behavior {
         like($hdl, qr/\binput\s+(?:wire\s+)?\[3:0\]\s+axi0_awid\b/, 'SystemVerilog exposes AWID');
         like($hdl, qr/\binput\s+(?:wire\s+)?\[3:0\]\s+axi0_bid\b/, 'SystemVerilog exposes BID');
         like($hdl, qr/axi0_write_complete\s*&\s*axi0_w0_dynamic_busy_q\s*&\s*\(axi0_bid\s*==\s*axi0_w0_dynamic_id_q\)/, 'SystemVerilog lowers dynamic write response guard');
+        return;
+    }
+
+    if ($case->{behavior} eq 'dynamic_write_demux_multi') {
+        like($isf, qr/\(input axi0_w0_request\)/, 'multiple dynamic write demux declares w0 request input');
+        like($isf, qr/\(input axi0_w1_request\)/, 'multiple dynamic write demux declares w1 request input');
+        like($isf, qr/\(input axi0_awid \(width 4\)\)/, 'multiple dynamic write demux declares AWID input');
+        like($isf, qr/\(input axi0_bid \(width 4\)\)/, 'multiple dynamic write demux declares BID input');
+        like($isf, qr/\(output axi0_w0_complete\)/, 'multiple dynamic write demux exposes w0 completion output');
+        like($isf, qr/\(output axi0_w1_complete\)/, 'multiple dynamic write demux exposes w1 completion output');
+        like($isf, qr/\(var axi0_w0_dynamic_id_q \(width 4\)\)/, 'multiple dynamic write demux allocates w0 selected-ID storage');
+        like($isf, qr/\(var axi0_w1_dynamic_id_q \(width 4\)\)/, 'multiple dynamic write demux allocates w1 selected-ID storage');
+        like($isf, qr/\(rule axi0_w0_dynamic_id_capture \(& \(& axi0_w0_request \(\| \(< axi0_pending_writes_q 2\) \(\| axi0_w0_complete axi0_w1_complete\)\)\) \(! axi0_w0_dynamic_busy_q\) \(! \(& axi0_w1_request/, 'multiple dynamic write demux gates w0 capture against sibling request');
+        like($isf, qr/\(! \(& axi0_w1_dynamic_busy_q \(== axi0_w1_dynamic_id_q axi0_awid\)\)\)/, 'multiple dynamic write demux gates w0 capture against active sibling ID');
+        like($isf, qr/\(rule axi0_w1_dynamic_id_capture \(& \(& axi0_w1_request \(\| \(< axi0_pending_writes_q 2\) \(\| axi0_w0_complete axi0_w1_complete\)\)\) \(! axi0_w1_dynamic_busy_q\) \(! \(& axi0_w0_request/, 'multiple dynamic write demux gates w1 capture against sibling request');
+        like($isf, qr/\(rule axi0_w0_response_demux \(& axi0_write_complete axi0_w0_dynamic_busy_q \(== axi0_bid axi0_w0_dynamic_id_q\)\)/, 'multiple dynamic write demux matches active w0 BID');
+        like($isf, qr/\(rule axi0_w1_response_demux \(& axi0_write_complete axi0_w1_dynamic_busy_q \(== axi0_bid axi0_w1_dynamic_id_q\)\)/, 'multiple dynamic write demux matches active w1 BID');
+        like($isf, qr/axi0 write dynamic requests are mutually exclusive/, 'multiple dynamic write demux emits request onehot assertion');
+        like($isf, qr/axi0 write dynamic active IDs are unique/, 'multiple dynamic write demux emits active ID uniqueness assertion');
+        like($isf, qr/axi0 write dynamic response matches at most one captured ID/, 'multiple dynamic write demux emits response unique-match assertion');
+        assert_dynamic_write_multi_report($result->{report});
+        like($fsm, qr/\(-axi0_w0_response_demux\s+<\(& axi0_write_complete axi0_w0_dynamic_busy_q \(== axi0_bid axi0_w0_dynamic_id_q\)\)/, 'scheduled FSM lowers multi dynamic w0 BID match');
+        like($fsm, qr/\(-axi0_w1_response_demux\s+<\(& axi0_write_complete axi0_w1_dynamic_busy_q \(== axi0_bid axi0_w1_dynamic_id_q\)\)/, 'scheduled FSM lowers multi dynamic w1 BID match');
+        my $hdl = hdl_for('axi0_capacity_status', $fsm);
+        like($hdl, qr/\binput\s+(?:wire\s+)?\[3:0\]\s+axi0_awid\b/, 'SystemVerilog exposes AWID for multi dynamic write');
+        like($hdl, qr/\binput\s+(?:wire\s+)?\[3:0\]\s+axi0_bid\b/, 'SystemVerilog exposes BID for multi dynamic write');
+        like($hdl, qr/axi0_write_complete\s*&\s*axi0_w0_dynamic_busy_q\s*&\s*\(axi0_bid\s*==\s*axi0_w0_dynamic_id_q\)/, 'SystemVerilog lowers multi dynamic w0 response guard');
+        like($hdl, qr/axi0_write_complete\s*&\s*axi0_w1_dynamic_busy_q\s*&\s*\(axi0_bid\s*==\s*axi0_w1_dynamic_id_q\)/, 'SystemVerilog lowers multi dynamic w1 response guard');
+        like($hdl, qr/axi0_w0_dynamic_busy_q\s*&\s*\(axi0_w0_dynamic_id_q\s*==\s*axi0_awid\)/, 'SystemVerilog lowers active sibling-ID expression for w0');
+        like($hdl, qr/axi0_w1_dynamic_busy_q\s*&\s*\(axi0_w1_dynamic_id_q\s*==\s*axi0_awid\)/, 'SystemVerilog lowers active sibling-ID expression for w1');
         return;
     }
 
@@ -363,6 +402,69 @@ sub assert_dynamic_write_report {
     is_deeply($write->{generated_assertions}, [qw(axi0_w0_dynamic_request_not_busy axi0_write_dynamic_response_active_match axi0_w0_dynamic_completion_active)], 'dynamic write report names generated assertions');
     is($report->{transactions}[0]{id}{implementation_status}, 'generated_capture_matching', 'dynamic write transaction reports generated capture/matching');
     assert_dynamic_residue($report, 'dynamic write demux keeps future dynamic residue visible');
+}
+
+sub assert_dynamic_write_multi_report {
+    my ($report) = @_;
+    my $write = $report->{response_demux}{write};
+
+    is($report->{response_demux}{mode}, 'bounded_multi_dynamic_write_bid_demux_contract', 'multiple dynamic write report marks multi BID-demux contract');
+    ok($report->{response_demux}{generated_behavior}, 'multiple dynamic write report marks generated demux behavior');
+    is($write->{mode}, 'bounded_multi_dynamic_write_bid_demux_contract', 'multiple dynamic write report marks write mode');
+    is($write->{transaction_completion_source}, 'generated_dynamic_demux', 'multiple dynamic write report marks generated completion source');
+    is($write->{transaction_completion_semantics}, 'matched_dynamic_id', 'multiple dynamic write report marks matched dynamic ID completion');
+    is_deeply($write->{dynamic_transactions}, [qw(w0 w1)], 'multiple dynamic write report names covered dynamic transactions');
+    is_deeply($write->{generated_rules}, [qw(axi0_w0_response_demux axi0_w1_response_demux)], 'multiple dynamic write report names generated response-demux rules');
+    is_deeply($write->{generated_completion_signals}, [qw(axi0_w0_complete axi0_w1_complete)], 'multiple dynamic write report names generated completions');
+    is_deeply(
+        $write->{generated_assertions},
+        [qw(
+            axi0_w0_dynamic_request_not_busy
+            axi0_w1_dynamic_request_not_busy
+            axi0_write_dynamic_request_onehot0
+            axi0_w0_dynamic_request_no_active_same_id
+            axi0_w1_dynamic_request_no_active_same_id
+            axi0_w0_w1_write_dynamic_active_id_unique
+            axi0_write_dynamic_response_active_match
+            axi0_w0_w1_write_dynamic_response_unique_match
+            axi0_w0_dynamic_completion_active
+            axi0_w1_dynamic_completion_active
+        )],
+        'multiple dynamic write report names generated assertions',
+    );
+    is_deeply(
+        $write->{dynamic_capture},
+        {
+            request_id_source           => 'axi0_awid',
+            capture_event_source        => 'admitted_dynamic_write_request',
+            ownership                   => 'multi_active_unique_dynamic_write_ids',
+            simultaneous_request_policy => 'onehot0_dynamic_write_request',
+            same_id_conflict_policy     => 'active_dynamic_ids_must_be_unique',
+            transactions                => [
+                {
+                    transaction        => 'w0',
+                    selected_id_signal => 'axi0_w0_dynamic_id_q',
+                    busy_signal        => 'axi0_w0_dynamic_busy_q',
+                    capture_rule       => 'axi0_w0_dynamic_id_capture',
+                    release_rule       => 'axi0_w0_dynamic_id_release',
+                },
+                {
+                    transaction        => 'w1',
+                    selected_id_signal => 'axi0_w1_dynamic_id_q',
+                    busy_signal        => 'axi0_w1_dynamic_busy_q',
+                    capture_rule       => 'axi0_w1_dynamic_id_capture',
+                    release_rule       => 'axi0_w1_dynamic_id_release',
+                },
+            ],
+        },
+        'multiple dynamic write report describes per-transaction dynamic capture',
+    );
+    is_deeply(
+        [map { $_->{id}{implementation_status} } @{$report->{transactions}}],
+        [qw(generated_capture_matching generated_capture_matching)],
+        'multiple dynamic write transactions report generated capture/matching',
+    );
+    assert_dynamic_residue($report, 'multiple dynamic write demux keeps future dynamic residue visible');
 }
 
 sub assert_dynamic_read_report {

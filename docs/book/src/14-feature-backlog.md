@@ -6604,7 +6604,12 @@ single-active selected-ID/busy ownership, matches `BID` against the captured
 ID, generates the transaction completion pulse, and keeps dynamic read
 matching, multiple dynamic write transactions, mixed dynamic/static write
 demux, same-cycle recapture, same-ID ordering, read-data routing, queues,
-scoreboards, direct backend behavior, and VHDL deferred.
+scoreboards, direct backend behavior, and VHDL deferred at selection time.
+Later dynamic leaves now ship selected single-active dynamic read matching,
+selected dynamic read-data shapes, and the all-dynamic multiple-write
+response-demux shape described below; mixed dynamic/static demux, multiple
+dynamic read demux, same-cycle widening/recapture, dynamic same-ID queues,
+scoreboards, direct backend behavior, and VHDL remain deferred.
 
 Dynamic write transaction-ID capture behavior:
 [AXI_IAL2_MANAGER_DYNAMIC_WRITE_TRANSACTION_ID_CAPTURE_BEHAVIOR](../../AXI_IAL2_MANAGER_DYNAMIC_WRITE_TRANSACTION_ID_CAPTURE_BEHAVIOR.md)
@@ -6616,10 +6621,13 @@ that pulse, runtime assertions, `bounded_dynamic_write_bid_demux_contract`
 schedule-report keys, and the support-accounted sample
 `ppif/axi_manager_capacity_status_dynamic_write_response_demux.ppif`.
 Metadata-only dynamic IDs remain unchanged when no behavior clause consumes
-them. Dynamic read matching, multiple dynamic write transactions, mixed
-dynamic/static write demux, same-cycle recapture, same-ID ordering, read-data
-routing, queues, scoreboards, direct backend behavior, HDL shapes outside the
-selected SystemVerilog path, and VHDL remain deferred.
+them. This single-active write sample remains supported. Later dynamic leaves
+now ship selected single-active dynamic read matching, selected dynamic
+read-data shapes, and the all-dynamic multiple-write response-demux shape
+described below; mixed dynamic/static demux, multiple dynamic read demux,
+same-cycle widening/recapture, dynamic same-ID queues, scoreboards, direct
+backend behavior, HDL shapes outside the selected SystemVerilog path, and VHDL
+remain deferred.
 
 Post dynamic write ID selector:
 [AXI_IAL2_MANAGER_POST_DYNAMIC_WRITE_ID_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_DYNAMIC_WRITE_ID_NEXT_SLICE_SELECTION.md)
@@ -6875,6 +6883,18 @@ in the covered family to be dynamic, keeps same-cycle dynamic write requests
 onehot0, requires active captured dynamic IDs to be pairwise unique, and
 prevents ambiguous `BID` responses through active-match, unique-match, and
 same-ID conflict assertions rather than queues or scoreboards.
+Multiple dynamic write response-demux behavior:
+[AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_WRITE_RESPONSE_DEMUX_BEHAVIOR](../../AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_WRITE_RESPONSE_DEMUX_BEHAVIOR.md)
+ships that `.247` behavior. The support-accounted public sample
+`ppif/axi_manager_capacity_status_dynamic_write_response_demux_multi.ppif`
+generates per-transaction selected-ID/busy state, admitted `AWID` capture,
+matched `BID` completion pulses, busy release rules, request onehot0
+assertions, active-ID uniqueness assertions, request no-active-same-ID
+assertions, response active-match assertions, and response unique-match
+assertions. Multiple dynamic read demux, mixed dynamic/static demux,
+same-cycle request widening beyond onehot0, dynamic same-ID queues,
+scoreboards, direct backend behavior, backend-language variants, and VHDL
+remain deferred.
 
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)

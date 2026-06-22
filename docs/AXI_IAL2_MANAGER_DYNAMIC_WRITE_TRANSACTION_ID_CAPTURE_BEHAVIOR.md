@@ -161,14 +161,21 @@ env -u PERL5LIB ./bin/fsmgen --quiet --output /tmp/fsmgen_dynamic_write_response
 ## Residue
 
 Metadata-only `(id dynamic)` remains supported when no same-family behavior
-clause consumes it. The generated dynamic behavior still fails closed for:
+clause consumes it. The single-active dynamic write behavior in this note is
+extended by
+[AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_WRITE_RESPONSE_DEMUX_BEHAVIOR](AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_WRITE_RESPONSE_DEMUX_BEHAVIOR.md)
+for all-dynamic write families with two or more write transactions. Broader
+generated dynamic behavior still fails closed for:
 
-- dynamic read response matching;
-- multiple dynamic write transactions;
+- dynamic read response matching outside the selected single-active
+  single-beat and burst-last/`RLAST` contracts;
 - mixed dynamic/static write response demux;
+- multiple dynamic write shapes outside the all-dynamic bounded response-demux
+  contract;
 - same-cycle release-and-recapture semantics;
 - same-ID ordering for dynamic IDs;
-- read-data routing over dynamic IDs;
+- read-data routing outside the selected single-active dynamic read-data
+  shapes;
 - queues, scoreboards, generalized arbitration, and full manager behavior;
 - direct backend behavior, HDL shapes outside this selected SystemVerilog path,
   and VHDL.

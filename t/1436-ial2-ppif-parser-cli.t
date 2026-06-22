@@ -219,6 +219,29 @@ subtest 'PPIF adapter parses AXI manager dynamic write response-demux behavior' 
     assert_dynamic_write_response_demux_report($result->{report}, 'adapter report');
 };
 
+subtest 'PPIF adapter parses AXI manager multiple dynamic write response-demux behavior' => sub {
+    my $sample_path = sample_capacity_dynamic_write_response_demux_multi_ppif_path();
+    ok(-f $sample_path, 'tracked runnable PPIF capacity/status multiple dynamic write response-demux sample exists');
+
+    my $result = FSM::Adapter::IAL2::PPIF->new()->parse_source(sample_capacity_dynamic_write_response_demux_multi_ppif(), $sample_path);
+    my $isf = $result->{generated_ial1}{text};
+
+    is($result->{kind}, 'protocol_intent.axi_manager_capacity_status', 'multiple dynamic write response-demux sample still uses the capacity/status generator');
+    is($result->{report}{source_object}{id}, 'axi-manager-capacity-status-dynamic-write-response-demux-multi', 'multiple dynamic write response-demux source object id is preserved');
+    is($result->{report}{source_object}{intent_name}, 'axi_manager_capacity_status_dynamic_write_response_demux_multi', 'multiple dynamic write response-demux source intent name is preserved');
+    like($isf, qr/\(input axi0_w0_request\)/, 'multiple dynamic write response-demux generated IAL1 declares w0 request');
+    like($isf, qr/\(input axi0_w1_request\)/, 'multiple dynamic write response-demux generated IAL1 declares w1 request');
+    like($isf, qr/\(input axi0_awid \(width 4\)\)/, 'multiple dynamic write response-demux generated IAL1 declares AWID');
+    like($isf, qr/\(input axi0_bid \(width 4\)\)/, 'multiple dynamic write response-demux generated IAL1 declares BID');
+    like($isf, qr/\(output axi0_w0_complete\)/, 'multiple dynamic write response-demux generated IAL1 exposes w0 completion');
+    like($isf, qr/\(output axi0_w1_complete\)/, 'multiple dynamic write response-demux generated IAL1 exposes w1 completion');
+    like($isf, qr/\(rule axi0_w0_response_demux \(& axi0_write_complete axi0_w0_dynamic_busy_q \(== axi0_bid axi0_w0_dynamic_id_q\)\)/, 'multiple dynamic write response-demux generated IAL1 matches w0 BID before completion');
+    like($isf, qr/\(rule axi0_w1_response_demux \(& axi0_write_complete axi0_w1_dynamic_busy_q \(== axi0_bid axi0_w1_dynamic_id_q\)\)/, 'multiple dynamic write response-demux generated IAL1 matches w1 BID before completion');
+    like($isf, qr/"axi0 write dynamic requests are mutually exclusive"/, 'multiple dynamic write response-demux generated IAL1 emits request onehot assertion');
+    like($isf, qr/"axi0 write dynamic response matches at most one captured ID"/, 'multiple dynamic write response-demux generated IAL1 emits response unique-match assertion');
+    assert_dynamic_write_response_demux_multi_report($result->{report}, 'adapter report');
+};
+
 subtest 'PPIF adapter parses AXI manager dynamic read response-demux behavior' => sub {
     my $sample_path = sample_capacity_dynamic_read_response_demux_ppif_path();
     ok(-f $sample_path, 'tracked runnable PPIF capacity/status dynamic read response-demux sample exists');
@@ -2606,6 +2629,20 @@ subtest 'CLI emits IAL2 report JSON for AXI manager dynamic write response-demux
     is($report->{source_object}{intent_name}, 'axi_manager_capacity_status_dynamic_write_response_demux', 'dynamic write response-demux report carries the PPIF top-level intent name');
     assert_dynamic_write_response_demux_report($report, 'CLI report');
     is_deeply($report->{generated_artifacts}{ial0}{files}, ['axi0_capacity_status.fsm'], 'dynamic write response-demux keeps the generated .fsm artifact name stable');
+};
+
+subtest 'CLI emits IAL2 report JSON for AXI manager multiple dynamic write response-demux .ppif' => sub {
+    my ($success, undef, undef, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--emit-schedule-json', sample_capacity_dynamic_write_response_demux_multi_ppif_path()],
+    );
+
+    ok($success, '--emit-schedule-json succeeds for capacity/status multiple dynamic write response-demux .ppif');
+    is(join('', @{$stderr_buf || []}), '', 'capacity/status multiple dynamic write response-demux report keeps stderr clean');
+    my $report = decode_json(join('', @{$stdout_buf || []}));
+    is($report->{schema}, 'fsmgen.ial2.protocol_intent.axi_manager_capacity_status.v1', 'CLI keeps the capacity/status report schema');
+    is($report->{source_object}{intent_name}, 'axi_manager_capacity_status_dynamic_write_response_demux_multi', 'multiple dynamic write response-demux report carries the PPIF top-level intent name');
+    assert_dynamic_write_response_demux_multi_report($report, 'CLI report');
+    is_deeply($report->{generated_artifacts}{ial0}{files}, ['axi0_capacity_status.fsm'], 'multiple dynamic write response-demux keeps the generated .fsm artifact name stable');
 };
 
 subtest 'CLI emits IAL2 report JSON for AXI manager dynamic read response-demux .ppif' => sub {
@@ -5083,6 +5120,40 @@ subtest 'CLI check JSON and semantic JSON support-account dynamic write response
     );
 };
 
+subtest 'CLI check JSON and semantic JSON support-account multiple dynamic write response-demux .ppif separately' => sub {
+    my $dynamic_path = sample_capacity_dynamic_write_response_demux_multi_ppif_path();
+    my ($success, undef, undef, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--strict', '--check', '--json', $dynamic_path],
+    );
+    ok($success, 'capacity/status multiple dynamic write response-demux --check --json succeeds');
+    is(join('', @{$stderr_buf || []}), '', 'capacity/status multiple dynamic write response-demux --check --json keeps stderr clean');
+    my $check_report = decode_json(join('', @{$stdout_buf || []}));
+    ok($check_report->{success}, 'capacity/status multiple dynamic write response-demux check JSON reports success');
+    is(
+        $check_report->{support_accounting}{entry_id},
+        'intent.ppif_axi_manager_capacity_status_dynamic_write_response_demux_multi',
+        'capacity/status multiple dynamic write response-demux check JSON support accounting names the PPIF corpus entry',
+    );
+
+    my ($semantic_success, undef, undef, $semantic_stdout, $semantic_stderr) = run(
+        command => ['./bin/fsmgen', '--strict', '--emit-semantic-json', $dynamic_path],
+    );
+    ok($semantic_success, 'capacity/status multiple dynamic write response-demux --emit-semantic-json succeeds');
+    is(join('', @{$semantic_stderr || []}), '', 'capacity/status multiple dynamic write response-demux --emit-semantic-json keeps stderr clean');
+    my $semantic_report = decode_json(join('', @{$semantic_stdout || []}));
+    ok($semantic_report->{success}, 'capacity/status multiple dynamic write response-demux semantic JSON reports success');
+    is(
+        $semantic_report->{support_accounting}{entry_id},
+        'intent.ppif_axi_manager_capacity_status_dynamic_write_response_demux_multi',
+        'capacity/status multiple dynamic write response-demux semantic JSON support accounting names the PPIF corpus entry',
+    );
+    is(
+        $semantic_report->{semantic}{module}{name},
+        'axi0_capacity_status',
+        'capacity/status multiple dynamic write response-demux semantic JSON records the unchanged generated module',
+    );
+};
+
 subtest 'CLI check JSON and semantic JSON support-account dynamic read response-demux .ppif separately' => sub {
     my $dynamic_path = sample_capacity_dynamic_read_response_demux_ppif_path();
     my ($success, undef, undef, $stdout_buf, $stderr_buf) = run(
@@ -6922,6 +6993,10 @@ sub sample_capacity_dynamic_write_response_demux_ppif_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_dynamic_write_response_demux.ppif');
 }
 
+sub sample_capacity_dynamic_write_response_demux_multi_ppif_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_dynamic_write_response_demux_multi.ppif');
+}
+
 sub sample_capacity_dynamic_read_response_demux_ppif_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_dynamic_read_response_demux.ppif');
 }
@@ -7216,6 +7291,10 @@ sub sample_capacity_dynamic_transaction_id_ppif {
 
 sub sample_capacity_dynamic_write_response_demux_ppif {
     return slurp(sample_capacity_dynamic_write_response_demux_ppif_path());
+}
+
+sub sample_capacity_dynamic_write_response_demux_multi_ppif {
+    return slurp(sample_capacity_dynamic_write_response_demux_multi_ppif_path());
 }
 
 sub sample_capacity_dynamic_read_response_demux_ppif {
@@ -8051,6 +8130,82 @@ sub assert_dynamic_write_response_demux_report {
             release_rule         => 'axi0_w0_dynamic_id_release',
         },
         "$owner reports dynamic capture state and rule ownership",
+    );
+    is_deeply(
+        $demux->{residue},
+        [qw(read_response_demux same_id_ordering read_data_interleaving bursts)],
+        "$owner keeps unsupported dynamic-read, same-ID, read-data, and burst residue explicit",
+    );
+    my %residue = map { $_->{id} => 1 } @{$report->{unsupported_residue}};
+    ok($residue{dynamic_transaction_id_behavior}, "$owner keeps future dynamic behavior residue visible");
+}
+
+sub assert_dynamic_write_response_demux_multi_report {
+    my ($report, $owner) = @_;
+    my $demux = $report->{response_demux};
+    my $write = $demux->{write};
+
+    is(scalar(@{$report->{transactions}}), 2, "$owner reports two dynamic write transactions");
+    is_deeply(
+        [map { $_->{id}{implementation_status} } @{$report->{transactions}}],
+        [qw(generated_capture_matching generated_capture_matching)],
+        "$owner reports generated capture/matching dynamic ID ownership for both writes",
+    );
+    is($demux->{mode}, 'bounded_multi_dynamic_write_bid_demux_contract', "$owner marks multiple dynamic write BID-demux contract mode");
+    ok($demux->{generated_behavior}, "$owner marks multiple dynamic response-demux behavior generated");
+    is($write->{mode}, 'bounded_multi_dynamic_write_bid_demux_contract', "$owner marks write multiple dynamic demux mode");
+    ok($write->{generated_behavior}, "$owner marks write multiple dynamic demux behavior generated");
+    is($write->{response_event}, 'axi0_write_complete', "$owner reports the raw write response event");
+    is($write->{response_event_role}, 'raw_accepted_write_response', "$owner reports the response-event role");
+    is($write->{response_id_signal}, 'axi0_bid', "$owner reports BID as the response ID signal");
+    is($write->{response_id_direction}, 'generated_input', "$owner reports response ID direction as generated input");
+    is($write->{transaction_completion_source}, 'generated_dynamic_demux', "$owner reports generated dynamic demux completion ownership");
+    is($write->{transaction_completion_semantics}, 'matched_dynamic_id', "$owner reports matched dynamic ID completion semantics");
+    is_deeply($write->{dynamic_transactions}, [qw(w0 w1)], "$owner reports the covered dynamic write transactions");
+    is_deeply($write->{generated_rules}, [qw(axi0_w0_response_demux axi0_w1_response_demux)], "$owner reports generated dynamic demux rules");
+    is_deeply($write->{generated_completion_signals}, [qw(axi0_w0_complete axi0_w1_complete)], "$owner reports generated dynamic completion pulses");
+    is_deeply(
+        $write->{generated_assertions},
+        [qw(
+            axi0_w0_dynamic_request_not_busy
+            axi0_w1_dynamic_request_not_busy
+            axi0_write_dynamic_request_onehot0
+            axi0_w0_dynamic_request_no_active_same_id
+            axi0_w1_dynamic_request_no_active_same_id
+            axi0_w0_w1_write_dynamic_active_id_unique
+            axi0_write_dynamic_response_active_match
+            axi0_w0_w1_write_dynamic_response_unique_match
+            axi0_w0_dynamic_completion_active
+            axi0_w1_dynamic_completion_active
+        )],
+        "$owner reports generated multiple dynamic assertions",
+    );
+    is_deeply(
+        $write->{dynamic_capture},
+        {
+            request_id_source           => 'axi0_awid',
+            capture_event_source        => 'admitted_dynamic_write_request',
+            ownership                   => 'multi_active_unique_dynamic_write_ids',
+            simultaneous_request_policy => 'onehot0_dynamic_write_request',
+            same_id_conflict_policy     => 'active_dynamic_ids_must_be_unique',
+            transactions                => [
+                {
+                    transaction        => 'w0',
+                    selected_id_signal => 'axi0_w0_dynamic_id_q',
+                    busy_signal        => 'axi0_w0_dynamic_busy_q',
+                    capture_rule       => 'axi0_w0_dynamic_id_capture',
+                    release_rule       => 'axi0_w0_dynamic_id_release',
+                },
+                {
+                    transaction        => 'w1',
+                    selected_id_signal => 'axi0_w1_dynamic_id_q',
+                    busy_signal        => 'axi0_w1_dynamic_busy_q',
+                    capture_rule       => 'axi0_w1_dynamic_id_capture',
+                    release_rule       => 'axi0_w1_dynamic_id_release',
+                },
+            ],
+        },
+        "$owner reports multiple dynamic capture state and rule ownership",
     );
     is_deeply(
         $demux->{residue},

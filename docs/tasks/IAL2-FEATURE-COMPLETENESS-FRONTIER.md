@@ -1776,9 +1776,16 @@ path before reopening VHDL backend or VHDL rerouting work.
   Commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.246: select multiple dynamic write demux`
 
 - ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER.247`
-  Status: `pending`
+  Status: `done`
   Goal: `Generate bounded multiple dynamic write response-demux behavior.`
   Acceptance: `Implement only the .246-selected contract: two or more all-dynamic write transactions under existing response-demux.write, generated selected-ID/busy state per transaction, admitted-request capture, same-cycle dynamic write request onehot0 assertion, active dynamic ID uniqueness and request no-active-same-ID assertions, per-transaction BID response-demux rules, active-match and unique-match response assertions, generated completions, release rules, schedule/check/semantic report keys, support-accounted public PPIF sample, generated .isf/.fsm/SystemVerilog artifacts, focused dynamic tests, support-accounting tests, README, ROADMAP_V2, mdBook, task tree, Memory, and Knowledge Map. Preserve the .223 single-active dynamic write sample and all dynamic read/read-data/runtime/multi-beat samples. Fail closed for mixed dynamic/static write demux, multiple dynamic read demux, same-cycle request widening beyond onehot0, same-cycle release-and-recapture, dynamic same-ID queues, scoreboards, direct backend behavior, backend-language variants, and VHDL.`
+  Verification: `Shipped generated bounded multiple dynamic write response-demux behavior. The generator now admits two or more all-dynamic write transactions under explicit response-demux.write, emits selected-ID/busy state per transaction, captures admitted AWID with sibling request and active same-ID guards, matches BID per active captured ID, pulses generated completions, releases busy, reports bounded_multi_dynamic_write_bid_demux_contract with multi_active_unique_dynamic_write_ids capture ownership, and emits request onehot0, request no-active-same-ID, active-ID uniqueness, active-match, unique-match, and completion-active assertions. Added support-accounted public sample ppif/axi_manager_capacity_status_dynamic_write_response_demux_multi.ppif, focused dynamic coverage, parser/generator expectations, support-accounting coverage, behavior docs, mdBook, README, ROADMAP_V2, Memory, and Knowledge Map fact. Preserved the .223 single-active dynamic write sample plus existing dynamic read/read-data/runtime/multi-beat behavior. Mixed dynamic/static demux, multiple dynamic read demux, same-cycle request widening beyond onehot0, same-cycle release-and-recapture, dynamic same-ID queues, scoreboards, direct backend behavior, backend-language variants, and VHDL remain fail-closed. Syntax checks, direct schedule/check/semantic/SystemVerilog/verify-HDL probes, guarded t/1438, guarded t/248, docs, Knowledge Map, mdBook, memory, doctrine, and diff gates passed; guarded full t/1436 and t/1437 attempts were stopped by the host-memory guard without TAP diagnostics.`
+  Commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.247: ship multiple dynamic write demux`
+
+- ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER.248`
+  Status: `pending`
+  Goal: `Select the next exact IAL2 feature-completeness owner after bounded multiple dynamic write response-demux.`
+  Acceptance: `Read .247 multiple dynamic write behavior, .246 contract selection, .245 readiness audit, .243 dynamic multi-beat behavior, .236 focused suite, current response-demux/read-data/dynamic residue reports, focused validation caveats, README, ROADMAP_V2, mdBook, Memory, and Knowledge Map. Choose the next exact owner or prerequisite after generated bounded multiple dynamic write response-demux: multiple dynamic read response-demux, mixed dynamic/static response-demux, same-cycle request widening, same-cycle release-and-recapture, dynamic same-ID ordering, queues, scoreboards, direct backend behavior, backend-language variants, VHDL, report/static cleanup, or a different roadmap-aligned owner. Record scope, non-goals, diagnostics, validation gates, rollback, docs, Knowledge Map impact, and explicit residue. Do not change parser, generator, PPIF samples, support-accounting catalog, validation behavior, generated artifact, test, schedule/check/semantic JSON, or HDL behavior in this selector unless explicitly selecting a later implementation owner.`
   Verification: `pending`
   Commit: `pending`
 
@@ -1786,7 +1793,7 @@ path before reopening VHDL backend or VHDL rerouting work.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.247` | `pending` | `.246` selected direct bounded multiple dynamic write response-demux behavior. |
+| 1 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.248` | `pending` | `.247` shipped bounded multiple dynamic write response-demux; select the next exact dynamic/residue owner before further behavior changes. |
 
 ## Decisions
 
@@ -1851,6 +1858,18 @@ path before reopening VHDL backend or VHDL rerouting work.
   onehot0, active dynamic IDs pairwise unique, and ambiguous `BID` responses
   covered by active-match, unique-match, and same-ID conflict assertions
   before queues or scoreboards.
+- `2026-06-22`: `.247` shipped generated bounded multiple dynamic write
+  response-demux behavior and selected `.248`, the next selector after this
+  dynamic demux expansion. The public support-accounted sample
+  `ppif/axi_manager_capacity_status_dynamic_write_response_demux_multi.ppif`
+  generates per-transaction selected-ID/busy state, admitted `AWID` capture,
+  matched `BID` completion pulses, busy release rules, request onehot0
+  assertions, active-ID uniqueness assertions, request no-active-same-ID
+  assertions, response active-match assertions, and response unique-match
+  assertions. Multiple dynamic read demux, mixed dynamic/static demux,
+  same-cycle request widening beyond onehot0, dynamic same-ID queues,
+  scoreboards, direct backend behavior, backend-language variants, and VHDL
+  remain deferred.
 - `2026-06-22`: `.236` added
   `t/1438-axi-ial2-manager-dynamic-transaction-id-focused.t`, a bounded
   routine validation target for the shipped dynamic transaction-ID family from
@@ -4379,6 +4398,7 @@ path before reopening VHDL backend or VHDL rerouting work.
 | `2026-06-22` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.244` | `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md`; `.243` dynamic multi-beat behavior; `.242` readiness audit; `.240` dynamic runtime validation; `.238` dynamic burst-length behavior; `.236` focused-suite cleanup; dynamic metadata/write/read/read-data behavior; current response-demux fail-closed code/tests; fresh `.243` schedule report; README, ROADMAP_V2, mdBook, task tree, Memory, and Knowledge Map; docs/doctrine closeout gates | `passed`; selected `.245`, readiness audit for multiple/mixed dynamic response-demux behavior after generated dynamic multi-beat output banks. No parser, generator, PPIF sample, support-accounting, validation behavior, generated artifact, test, schedule/check/semantic JSON, or HDL behavior changed. |
 | `2026-06-22` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.245` | `docs/AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_RESPONSE_DEMUX_READINESS_AUDIT.md`; `.244` selector; `.243` dynamic multi-beat behavior; `.223` single-active dynamic write behavior; response-demux normalizers and dynamic state/capture/release/match/assertion helpers; temporary two-dynamic-write fail-closed probe; README, ROADMAP_V2, mdBook, task tree, Memory, and Knowledge Map; docs/doctrine closeout gates | `passed`; selected `.246`, public contract selection for bounded multiple dynamic write response-demux behavior. No parser, generator, PPIF sample, support-accounting, validation behavior, generated artifact, test, schedule/check/semantic JSON, or HDL behavior changed. |
 | `2026-06-22` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.246` | `docs/AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_WRITE_RESPONSE_DEMUX_CONTRACT_SELECTION.md`; `.245` readiness audit; `.244` selector; `.243` dynamic multi-beat behavior; `.223` single-active dynamic write behavior; `.222` dynamic write contract selection; response-demux normalizers and dynamic storage/capture/release/rule/match/assertion/report helpers; README, ROADMAP_V2, mdBook, task tree, Memory, and Knowledge Map; docs/doctrine closeout gates | `passed`; selected `.247`, direct generated behavior for bounded multiple dynamic write response-demux. No parser, generator, PPIF sample, support-accounting, validation behavior, generated artifact, test, schedule/check/semantic JSON, or HDL behavior changed. |
+| `2026-06-22` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.247` | `perl/FSM/IAL2/ProtocolIntent/AxiManagerCapacityStatus.pm`; `perl/FSM/Support/RegressionCorpus.pm`; `ppif/axi_manager_capacity_status_dynamic_write_response_demux_multi.ppif`; `t/1436-ial2-ppif-parser-cli.t`; `t/1437-axi-ial2-manager-capacity-status-generator.t`; `t/1438-axi-ial2-manager-dynamic-transaction-id-focused.t`; `t/248-regression-corpus-accounting.t`; `docs/AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_WRITE_RESPONSE_DEMUX_BEHAVIOR.md`; `.246` contract selection; README, ROADMAP_V2, mdBook, task tree, Memory, and Knowledge Map; syntax checks; direct multiple dynamic write schedule/check/semantic/SystemVerilog/verify-HDL probes; guarded focused `prove t/1438-axi-ial2-manager-dynamic-transaction-id-focused.t`; guarded `prove t/248-regression-corpus-accounting.t`; attempted guarded full `prove t/1436-ial2-ppif-parser-cli.t`; attempted guarded full `prove t/1437-axi-ial2-manager-capacity-status-generator.t`; docs/doctrine closeout gates | `passed with host-memory caveat`; shipped generated bounded multiple dynamic write response-demux. The support-accounted public sample generates per-transaction selected-ID/busy state, admitted AWID capture, matched BID completion pulses, busy release rules, request onehot0, request no-active-same-ID, active-ID uniqueness, response active-match, response unique-match, and completion-active assertions while preserving adjacent dynamic write/read/read-data/runtime/multi-beat samples. Guarded full t/1436 and t/1437 attempts were stopped by the host-memory guard without TAP diagnostics; focused dynamic, support-accounting, direct parser/CLI, schedule/check/semantic/HDL, docs, and doctrine gates covered the slice. Selected `.248`, the next selector. |
 
 ## Commit Log
 
@@ -4630,9 +4650,18 @@ path before reopening VHDL backend or VHDL rerouting work.
 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.244` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.244: select dynamic demux audit` | Selected `.245`, readiness audit for multiple/mixed dynamic response-demux behavior after generated dynamic multi-beat output banks. |
 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.245` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.245: audit multiple dynamic demux readiness` | Selected `.246`, public contract selection for bounded multiple dynamic write response-demux behavior. |
 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.246` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.246: select multiple dynamic write demux` | Selected `.247`, direct generated behavior for bounded multiple dynamic write response-demux. |
+| `IAL2-FEATURE-COMPLETENESS-FRONTIER.247` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.247: ship multiple dynamic write demux` | Shipped generated bounded multiple dynamic write response-demux and advanced the frontier to `.248`, the next selector. |
 
 ## Changelog
 
+- `2026-06-22`: Completed `.247`, shipped generated bounded multiple
+  dynamic write response-demux. The public support-accounted sample
+  `ppif/axi_manager_capacity_status_dynamic_write_response_demux_multi.ppif`
+  generates per-transaction selected-ID/busy state, admitted `AWID` capture,
+  matched `BID` completion pulses, busy release rules, request onehot0,
+  request no-active-same-ID, active-ID uniqueness, response active-match,
+  response unique-match, and completion-active assertions. `.248` is the next
+  selector after this dynamic demux expansion.
 - `2026-06-22`: Completed `.246`, selected `.247`, direct generated
   behavior for bounded multiple dynamic write response-demux. The selected
   public contract reuses `response-demux.write`, requires all covered write
