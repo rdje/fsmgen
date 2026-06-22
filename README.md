@@ -1555,6 +1555,10 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 293. `docs/AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_RESPONSE_DEMUX_READINESS_AUDIT.md`:
      audited multiple/mixed dynamic response-demux readiness and selected
      public contract selection for bounded multiple dynamic write demux.
+294. `docs/AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_WRITE_RESPONSE_DEMUX_CONTRACT_SELECTION.md`:
+     selected direct generated behavior for bounded multiple dynamic write
+     response-demux with onehot0 dynamic write requests and pairwise unique
+     active dynamic IDs.
 
 ## Documentation index (all `.md` files in this repo)
 - `README.md` — single entry point and navigation hub.
@@ -2236,6 +2240,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_MULTI_BEAT_BEHAVIOR.md` — shipped generated dynamic multi-beat read-data output-bank behavior over generated dynamic runtime validation.
 - `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md` — selected multiple/mixed dynamic response-demux readiness audit after generated dynamic multi-beat output banks shipped.
 - `docs/AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_RESPONSE_DEMUX_READINESS_AUDIT.md` — audited multiple/mixed dynamic response-demux readiness and selected public contract selection for bounded multiple dynamic write demux.
+- `docs/AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_WRITE_RESPONSE_DEMUX_CONTRACT_SELECTION.md` — selected direct generated behavior for bounded multiple dynamic write response-demux with onehot0 dynamic write requests and pairwise unique active dynamic IDs.
 - `docs/AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md` — selected first AXI-derived IAL2 implementation subset and pre-code contract.
 - `docs/AXI_IAL2_VALID_READY_READINESS_AUDIT.md` — code/test/docs/report owner map for a future AXI Valid-Ready IAL2 implementation slice.
 - `docs/AXI_IAL2_VALID_READY_GENERATOR_FIRST_SLICE.md` — first in-process AXI Valid-Ready IAL2 generator slice and report surface.

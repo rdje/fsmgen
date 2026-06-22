@@ -6867,6 +6867,14 @@ response-demux behavior. The audit found list-shaped lower helpers after
 normalization, but the public contract must first define dynamic same-ID
 ambiguity handling before one raw response can safely map across multiple
 active dynamic transactions.
+Multiple dynamic write response-demux contract:
+[AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_WRITE_RESPONSE_DEMUX_CONTRACT_SELECTION](../../AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_WRITE_RESPONSE_DEMUX_CONTRACT_SELECTION.md)
+selects `.247`, direct generated behavior for bounded multiple dynamic write
+response-demux. The selected first behavior requires every write transaction
+in the covered family to be dynamic, keeps same-cycle dynamic write requests
+onehot0, requires active captured dynamic IDs to be pairwise unique, and
+prevents ambiguous `BID` responses through active-match, unique-match, and
+same-ID conflict assertions rather than queues or scoreboards.
 
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)

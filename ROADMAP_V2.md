@@ -2101,7 +2101,10 @@ output-bank behavior. `.244` selected `.245`, readiness audit for
 multiple/mixed dynamic response-demux behavior after generated dynamic
 multi-beat output banks. `.245` selected `.246`, public contract selection
 for bounded multiple dynamic write response-demux behavior before
-implementation.
+implementation. `.246` selected `.247`, direct bounded multiple dynamic
+write response-demux implementation with all selected write transactions
+dynamic, same-cycle dynamic write requests still onehot0, and active dynamic
+IDs required pairwise unique.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.
