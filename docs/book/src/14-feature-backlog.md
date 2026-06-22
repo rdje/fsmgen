@@ -6535,6 +6535,15 @@ family request-ID signal declared in `id-families` at the transaction's
 admitted request point; dynamic capture, response matching, same-ID policy,
 queues, scoreboards, support accounting, generated artifacts, validation,
 tests, and HDL remain deferred.
+Dynamic transaction-ID metadata readiness audit:
+[AXI_IAL2_MANAGER_DYNAMIC_TRANSACTION_ID_METADATA_READINESS_AUDIT](../../AXI_IAL2_MANAGER_DYNAMIC_TRANSACTION_ID_METADATA_READINESS_AUDIT.md)
+selects `.219`, direct metadata-first `(id dynamic)` parser/report
+implementation. The implementation boundary is metadata-only: accept exactly
+transaction-local `(id dynamic)`, require a positive-width `id-families`
+request/response signal contract, report user-supplied selected-not-generated
+dynamic metadata, add a support-accounted metadata-only PPIF sample, and fail
+closed for behavior clauses that would require dynamic capture, response
+matching, queues, scoreboards, read-data routing, or HDL behavior.
 
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
@@ -8797,7 +8806,7 @@ support catalog entries instead of recursive workspace traversal.
 `SEMANTIC-INTROSPECTION-MCP-FRONTIER.30` closes the immediate read-only
 semantic-introspection/MCP pass after source discovery; the active roadmap
 priority is again the IAL2 feature-completeness tree, currently at
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.218`.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.219`.
 
 Selected first MCP resource families are `fsmgen://capabilities`,
 `fsmgen://contracts`, `fsmgen://diagnostics`,

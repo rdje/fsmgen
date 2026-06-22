@@ -10,10 +10,10 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `HEAD after IAL2-FEATURE-COMPLETENESS-FRONTIER.217 commit` - `IAL2-FEATURE-COMPLETENESS-FRONTIER.217: select dynamic ID contract`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.218` audits metadata-first dynamic transaction-ID parser/report readiness; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.217` selected transaction-local `(id dynamic)` as the public dynamic/user transaction-ID contract and advanced to `.218`. The selected dynamic ID source is the family request-ID signal declared in `id-families` at the transaction's admitted request point; dynamic capture, response matching, same-ID policy, queues, scoreboards, support accounting, generated artifacts, validation, tests, and HDL remain deferred. No parser/generator/sample/support-accounting/test/validation/generated-artifact/HDL behavior changed.
-- in_flight_uncommitted: none after the `IAL2-FEATURE-COMPLETENESS-FRONTIER.217` commit. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
+- latest_commit: `HEAD after IAL2-FEATURE-COMPLETENESS-FRONTIER.218 commit` - `IAL2-FEATURE-COMPLETENESS-FRONTIER.218: audit dynamic ID metadata readiness`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.219` implements metadata-first dynamic transaction-ID parser/report support; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.218` selected `.219`, direct metadata-first `(id dynamic)` parser/report implementation. `.219` must accept exactly transaction-local `(id dynamic)`, require a positive-width `id-families` request/response signal contract, report user-supplied selected-not-generated dynamic metadata, add a support-accounted metadata-only sample, and fail closed for same-family behavior clauses that need dynamic capture, response matching, queues, scoreboards, read-data routing, or HDL behavior. No parser/generator/sample/support-accounting/test/validation/generated-artifact/HDL behavior changed in `.218`.
+- in_flight_uncommitted: none after the `IAL2-FEATURE-COMPLETENESS-FRONTIER.218` commit. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
 
 ## Notes
