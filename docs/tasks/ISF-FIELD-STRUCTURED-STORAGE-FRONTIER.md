@@ -44,7 +44,7 @@ structure layouts.
 ## Task Tree
 
 - ID: `ISF-FIELD-STRUCTURED-STORAGE-FRONTIER`
-  Status: `active`
+  Status: `done`
   Goal: `Make ISF capable of carrying checked declarative named bit-field maps for storage/register-like words.`
   Children: `ISF-FIELD-STRUCTURED-STORAGE-FRONTIER.1, ISF-FIELD-STRUCTURED-STORAGE-FRONTIER.2, ISF-FIELD-STRUCTURED-STORAGE-FRONTIER.3, ISF-FIELD-STRUCTURED-STORAGE-FRONTIER.4, ISF-FIELD-STRUCTURED-STORAGE-FRONTIER.5`
 
@@ -77,11 +77,11 @@ structure layouts.
   Commit: `ISF-FIELD-STRUCTURED-STORAGE-FRONTIER.4: support-account storage fields`
 
 - ID: `ISF-FIELD-STRUCTURED-STORAGE-FRONTIER.5`
-  Status: `pending`
+  Status: `done`
   Goal: `Select the next field-structured storage residual or close the frontier after support-accounting promotion.`
   Acceptance: `Audit the remaining deferred field-structured storage directions after '.4': parent reset derivation, actor '(enums ...)' references, access-policy behavior, generated assertions/register-model output, typed storage and aggregate carriers, banks, packet/flit layouts, normalized semantic JSON projection, downstream integration expectations, and any test/documentation gaps. Select one bounded next implementation slice, explicitly defer the rest, or close the frontier if no safe next slice is warranted. No code/test/source/config change occurs before this selector completes.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `passed: wrote docs/ISF_FIELD_STRUCTURED_STORAGE_FRONTIER_CLOSEOUT.md; added Knowledge Map closeout fact; updated README, MEMORY, docs/TASK_TREE.md, mdBook backlog, and this task tree; bash knowledge-map/scripts/gen_knowledge_map.sh; bash knowledge-map/scripts/check_knowledge_map.sh; mdbook build docs/book; git --no-pager diff --check; scripts/check_memory_architecture.sh; scripts/check_doctrines.sh. No parser, scheduler, lowerer, support-accounting catalog, fixture, test, generated .fsm/HDL, check JSON, semantic JSON, or runtime behavior changed in the selector.`
+  Commit: `ISF-FIELD-STRUCTURED-STORAGE-FRONTIER.5: close storage field frontier`
 
 ## Current Frontier
 
@@ -91,7 +91,7 @@ structure layouts.
 | 2 | `ISF-FIELD-STRUCTURED-STORAGE-FRONTIER.2` | `done` | Shipped the selected checked scalar metadata contract without changing scheduled `.fsm`/HDL behavior. |
 | 3 | `ISF-FIELD-STRUCTURED-STORAGE-FRONTIER.3` | `done` | Selected the next residual as a file-backed support-accounted scalar storage-field sample; deferred broader behavior/layout/semantic payload work. |
 | 4 | `ISF-FIELD-STRUCTURED-STORAGE-FRONTIER.4` | `done` | Promoted the shipped scalar field metadata surface into support accounting with a representative public `.isf` fixture. |
-| 5 | `ISF-FIELD-STRUCTURED-STORAGE-FRONTIER.5` | `pending` | Decide the next residual boundary after support-accounted scalar storage fields, or close the remaining field-structured storage work explicitly. |
+| 5 | `ISF-FIELD-STRUCTURED-STORAGE-FRONTIER.5` | `done` | Closed the narrow field-structured-storage frontier after support-accounted scalar storage fields; future behavior/layout/semantic-payload work needs fresh exact leaves. |
 
 ## Decisions
 
@@ -127,6 +127,11 @@ structure layouts.
   and normalized semantic JSON now report the matched
   `feature.isf_storage_field_metadata` source identity; schedule JSON remains
   the public field-map payload through `inferred_storage[].fields`.
+- `2026-06-22`: `.5` closed this narrow frontier. Parent reset derivation,
+  actor enum references, access-policy behavior, generated register or
+  verification output, typed/aggregate/bank/packet layouts, and direct
+  normalized semantic JSON field-map projection remain deferred behind future
+  exact task-tree leaves.
 
 ## Open Questions
 
@@ -151,6 +156,7 @@ structure layouts.
 | `2026-06-22` | `ISF-FIELD-STRUCTURED-STORAGE-FRONTIER.2` | `prove -Iperl t/1453-isf-storage-field-metadata.t; prove -Iperl t/1148-isf-public-storage-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1112-isf-public-interface-contract.t t/1113-isf-public-interface-contract-json-roundtrip-audit.t; prove -Iperl t/1255-isf-schedule-report-golden-matrix.t t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t t/1376-isf-book-example-lowering-audit.t; mdbook build docs/book; bash knowledge-map/scripts/gen_knowledge_map.sh; bash knowledge-map/scripts/check_knowledge_map.sh; git --no-pager diff --check; scripts/check_memory_architecture.sh; scripts/check_doctrines.sh` | `passed` |
 | `2026-06-22` | `ISF-FIELD-STRUCTURED-STORAGE-FRONTIER.3` | `read bootstrap/roadmap/task-tree/mdBook/Knowledge Map/import-tree context; audited docs/ISF_FIELD_STRUCTURED_STORAGE_CONTRACT_SELECTION.md, docs/ISF_SPEC.md, docs/ISF_PUBLIC_INTERFACE_CONTRACT.md, docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md, docs/SPECFORGE_FEEDBACK_RESPONSE.md, parser/lowerer/report/public-contract/test/support-accounting surfaces; wrote docs/ISF_FIELD_STRUCTURED_STORAGE_NEXT_RESIDUAL_SELECTION.md; bash knowledge-map/scripts/gen_knowledge_map.sh; bash knowledge-map/scripts/check_knowledge_map.sh; prove -Iperl t/1453-isf-storage-field-metadata.t t/1255-isf-schedule-report-golden-matrix.t t/1112-isf-public-interface-contract.t; mdbook build docs/book; git --no-pager diff --check; scripts/check_memory_architecture.sh; scripts/check_doctrines.sh` | `passed` |
 | `2026-06-22` | `ISF-FIELD-STRUCTURED-STORAGE-FRONTIER.4` | `perl -Iperl -c perl/FSM/Support/RegressionCorpus.pm; perl -Iperl -c t/248-regression-corpus-accounting.t; perl -Iperl -c t/1453-isf-storage-field-metadata.t; ./bin/fsmgen --emit-schedule-json isf/storage_fields.isf; ./bin/fsmgen --check-json isf/storage_fields.isf; ./bin/fsmgen --emit-semantic-json isf/storage_fields.isf; prove -Iperl t/1453-isf-storage-field-metadata.t t/248-regression-corpus-accounting.t; ./bin/fsmgen --strict --quiet -o /dev/null isf/storage_fields.isf; ./bin/fsmgen --strict --check-json isf/storage_fields.isf; ./bin/fsmgen --strict --emit-semantic-json isf/storage_fields.isf; scripts/run_with_ram_guard.sh prove -Iperl t/261-regression-corpus-supported-language-features.t t/296-regression-corpus-supported-behavior.t t/301-check-json-supported-corpus.t t/303-normalized-semantic-json-supported-corpus.t attempted twice` | `passed focused/direct; broad corpus blocked by RAM guard host memory cutoff` |
+| `2026-06-22` | `ISF-FIELD-STRUCTURED-STORAGE-FRONTIER.5` | `wrote docs/ISF_FIELD_STRUCTURED_STORAGE_FRONTIER_CLOSEOUT.md; added docs/knowledge/isf-field-structured-storage-frontier-closeout.md; updated README.md, MEMORY.md, docs/TASK_TREE.md, docs/book/src/14-feature-backlog.md, and this task tree; bash knowledge-map/scripts/gen_knowledge_map.sh; bash knowledge-map/scripts/check_knowledge_map.sh; mdbook build docs/book; git --no-pager diff --check; scripts/check_memory_architecture.sh; scripts/check_doctrines.sh` | `passed` |
 
 ## Commit Log
 
@@ -160,7 +166,7 @@ structure layouts.
 | `ISF-FIELD-STRUCTURED-STORAGE-FRONTIER.2` | `ISF-FIELD-STRUCTURED-STORAGE-FRONTIER.2: ship scalar storage fields` | `metadata-only scalar storage fields shipped for width-based actor-owned storage variables` |
 | `ISF-FIELD-STRUCTURED-STORAGE-FRONTIER.3` | `ISF-FIELD-STRUCTURED-STORAGE-FRONTIER.3: select storage field support sample` | `selected support-accounted public sample as next residual` |
 | `ISF-FIELD-STRUCTURED-STORAGE-FRONTIER.4` | `ISF-FIELD-STRUCTURED-STORAGE-FRONTIER.4: support-account storage fields` | `support-accounted public scalar storage-field sample shipped` |
-| `ISF-FIELD-STRUCTURED-STORAGE-FRONTIER.5` | `pending` | `pending` |
+| `ISF-FIELD-STRUCTURED-STORAGE-FRONTIER.5` | `ISF-FIELD-STRUCTURED-STORAGE-FRONTIER.5: close storage field frontier` | `closed after support-accounted scalar storage-field sample` |
 
 ## Changelog
 
@@ -182,3 +188,7 @@ structure layouts.
   `feature.isf_storage_field_metadata`, proved schedule JSON field-map
   exposure, and kept broader behavior/layout/semantic-payload projection work
   deferred behind `.5`.
+- `2026-06-22`: Completed `ISF-FIELD-STRUCTURED-STORAGE-FRONTIER.5`: closed
+  the narrow field-structured-storage frontier after support-accounted scalar
+  field metadata and returned the active PNT pointer to
+  `IAL2-FEATURE-COMPLETENESS-FRONTIER.240`.

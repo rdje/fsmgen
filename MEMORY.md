@@ -10,10 +10,10 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `HEAD after ISF-FIELD-STRUCTURED-STORAGE-FRONTIER.4 commit` - `ISF-FIELD-STRUCTURED-STORAGE-FRONTIER.4: support-account storage fields`.
-- active_work_unit: `ISF-FIELD-STRUCTURED-STORAGE-FRONTIER.5` selects the next field-structured storage residual or closes the frontier after support-accounting promotion; `IAL2-FEATURE-COMPLETENESS-FRONTIER.240`, `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4`, and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `ISF-FIELD-STRUCTURED-STORAGE-FRONTIER.4` added `isf/storage_fields.isf`, registered `feature.isf_storage_field_metadata`, proved schedule JSON `inferred_storage[].fields`, and confirmed default/strict check JSON plus semantic JSON support-accounting matches; the broad supported-corpus prove was attempted twice under the RAM guard but blocked by host memory above the 88% cutoff.
-- in_flight_uncommitted: none after the `.4` implementation commit workflow. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
+- latest_commit: `HEAD after ISF-FIELD-STRUCTURED-STORAGE-FRONTIER.5 commit` - `ISF-FIELD-STRUCTURED-STORAGE-FRONTIER.5: close storage field frontier`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.240` generates dynamic runtime beat-count/RLAST validation over generated dynamic last-beat read-data; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `ISF-FIELD-STRUCTURED-STORAGE-FRONTIER.5` closed the narrow field-structured-storage frontier after `.4` support-accounted scalar storage fields; parent reset derivation, actor enum references, access behavior, generated register/verification output, typed/aggregate/bank/packet layouts, and direct semantic JSON field maps require future exact leaves.
+- in_flight_uncommitted: none after the `.5` closeout commit workflow. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
 
 ## Notes

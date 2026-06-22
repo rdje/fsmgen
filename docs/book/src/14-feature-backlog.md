@@ -8508,6 +8508,10 @@ The non-behavior support-accounting promotion is now shipped through
 `isf/storage_fields.isf`: check JSON and normalized semantic JSON report the
 matched `feature.isf_storage_field_metadata` source identity, while schedule
 JSON remains the public payload for the field map.
+The narrow field-structured-storage frontier is closed after that promotion;
+future reset derivation, access behavior, register-model generation, aggregate
+or bank layout, packet/flit mapping, and direct semantic JSON field-map export
+need fresh exact task-tree leaves before implementation.
 
 Selected data-buffer access surface:
 
