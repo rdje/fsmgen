@@ -303,6 +303,8 @@ subtest 'transaction event dispatch fans per-transaction events into capacity ru
     is($direction{write}{completion_fanin}, '(| axi0_w0_complete axi0_w1_complete)', 'report exposes write completion fan-in expression');
     is_deeply($direction{read}{request_events}, ['axi0_r0_request'], 'report lists scalar read request event');
     is($direction{read}{request_fanin}, 'axi0_r0_request', 'report keeps scalar read request fan-in');
+    assert_boolean_capacity_accounting($result->{report}, 'dispatch write accounting report', direction => 'write', rule_count => 12);
+    assert_boolean_capacity_accounting($result->{report}, 'dispatch read accounting report', direction => 'read', rule_count => 20);
 
     my $engine = $result->{report}{id_response_rule_engine};
     is($engine->{mode}, 'concrete_id_assertions', 'dispatch report also exposes concrete-ID assertion mode');
@@ -497,6 +499,47 @@ subtest 'same-ID queue-head response-demux generates multiple read burst-last qu
         $result->{report}{id_response_rule_engine}{residue},
         [qw(auto_id_allocation id_release)],
         'multi-group generated queue-head behavior removes same-ID and response-demux residue from ID/response report',
+    );
+    assert_counted_same_id_capacity_accounting(
+        $result->{report},
+        'generator read multi-group counted capacity report',
+        direction => 'read',
+        rule_count => 30,
+        request_count_expression => '(+ (| axi0_r0_request axi0_r1_request) (| axi0_r2_request axi0_r3_request))',
+        counted_request_events => [qw(axi0_r0_request axi0_r1_request axi0_r2_request axi0_r3_request)],
+        counted_request_terms => [
+            '(| axi0_r0_request axi0_r1_request)',
+            '(| axi0_r2_request axi0_r3_request)',
+        ],
+        counted_request_groups => [
+            {
+                concrete_id    => 3,
+                request_events => [qw(axi0_r0_request axi0_r1_request)],
+                request_fanin  => '(| axi0_r0_request axi0_r1_request)',
+            },
+            {
+                concrete_id    => 5,
+                request_events => [qw(axi0_r2_request axi0_r3_request)],
+                request_fanin  => '(| axi0_r2_request axi0_r3_request)',
+            },
+        ],
+    );
+    assert_boolean_capacity_accounting($result->{report}, 'generator read multi-group write capacity report', direction => 'write', rule_count => 12);
+
+    my $low_capacity_contract = sample_contract_with_same_id_read_multi_group_queue_head_response_demux();
+    $low_capacity_contract->{read_max_pending} = 3;
+    my $low_capacity_isf = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate($low_capacity_contract)->{generated_ial1}{text};
+    assert_counted_low_capacity_rules(
+        $low_capacity_isf,
+        'generator read multi-group low-capacity rules',
+        direction => 'read',
+        request_count_expression => '(+ (| axi0_r0_request axi0_r1_request) (| axi0_r2_request axi0_r3_request))',
+        completion_fanin => '(| axi0_r0_complete axi0_r1_complete axi0_r2_complete axi0_r3_complete)',
+        pending_storage => 'axi0_pending_reads_q',
+        pending_output => 'axi0_pending_reads',
+        slots_output => 'axi0_read_slots_available',
+        full_output => 'axi0_read_full',
+        can_accept_output => 'axi0_read_can_accept',
     );
 };
 
@@ -1595,6 +1638,47 @@ subtest 'same-ID queue-head response-demux generates write multi-group queue sta
         $result->{report}{id_response_rule_engine}{residue},
         [qw(auto_id_allocation id_release)],
         'generated write multi-group queue-head behavior removes same-ID and response-demux residue from ID/response report',
+    );
+    assert_counted_same_id_capacity_accounting(
+        $result->{report},
+        'generator write multi-group counted capacity report',
+        direction => 'write',
+        rule_count => 30,
+        request_count_expression => '(+ (| axi0_w0_request axi0_w1_request) (| axi0_w2_request axi0_w3_request))',
+        counted_request_events => [qw(axi0_w0_request axi0_w1_request axi0_w2_request axi0_w3_request)],
+        counted_request_terms => [
+            '(| axi0_w0_request axi0_w1_request)',
+            '(| axi0_w2_request axi0_w3_request)',
+        ],
+        counted_request_groups => [
+            {
+                concrete_id    => 3,
+                request_events => [qw(axi0_w0_request axi0_w1_request)],
+                request_fanin  => '(| axi0_w0_request axi0_w1_request)',
+            },
+            {
+                concrete_id    => 5,
+                request_events => [qw(axi0_w2_request axi0_w3_request)],
+                request_fanin  => '(| axi0_w2_request axi0_w3_request)',
+            },
+        ],
+    );
+    assert_boolean_capacity_accounting($result->{report}, 'generator write multi-group read capacity report', direction => 'read', rule_count => 20);
+
+    my $low_capacity_contract = sample_contract_with_same_id_write_multi_group_queue_head_response_demux();
+    $low_capacity_contract->{write_max_pending} = 3;
+    my $low_capacity_isf = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate($low_capacity_contract)->{generated_ial1}{text};
+    assert_counted_low_capacity_rules(
+        $low_capacity_isf,
+        'generator write multi-group low-capacity rules',
+        direction => 'write',
+        request_count_expression => '(+ (| axi0_w0_request axi0_w1_request) (| axi0_w2_request axi0_w3_request))',
+        completion_fanin => '(| axi0_w0_complete axi0_w1_complete axi0_w2_complete axi0_w3_complete)',
+        pending_storage => 'axi0_pending_writes_q',
+        pending_output => 'axi0_pending_writes',
+        slots_output => 'axi0_write_slots_available',
+        full_output => 'axi0_write_full',
+        can_accept_output => 'axi0_write_can_accept',
     );
 };
 
@@ -5360,6 +5444,112 @@ sub assert_read_response_demux_burst_last_report {
     push @residue, 'read_data_interleaving' unless $multi_beat_by_rid_covered;
     push @residue, 'bursts' unless $bounded_burst_output_covered;
     is_deeply($demux->{residue}, \@residue, "$owner reports remaining read response-demux residue");
+}
+
+sub assert_boolean_capacity_accounting {
+    my ($report, $owner, %args) = @_;
+    my $direction = $args{direction};
+    my $dispatch = transaction_dispatch_entry($report, $direction);
+    my $accounting = $dispatch->{request_accounting};
+
+    is($accounting->{mode}, 'boolean_fanin', "$owner reports boolean request fan-in accounting");
+    is(
+        $accounting->{capacity_owner},
+        "generated_scheduler_or_status_rules.${direction}_capacity_matrix",
+        "$owner reports the capacity matrix owner",
+    );
+    is($accounting->{completion_accounting_mode}, 'boolean_fanin', "$owner reports boolean completion fan-in accounting");
+
+    my $matrix = capacity_matrix_entry($report, $direction);
+    is($matrix->{accounting_mode}, 'boolean_submit', "$owner reports boolean capacity-matrix accounting");
+    is($matrix->{completion_accounting_mode}, 'boolean_fanin', "$owner reports boolean capacity-matrix completion accounting");
+    is($matrix->{rule_count}, $args{rule_count}, "$owner reports the boolean capacity-matrix rule count");
+    ok(!exists($matrix->{counted_request_events}), "$owner omits counted request events");
+    ok(!exists($matrix->{request_count_expression}), "$owner omits counted request expression");
+}
+
+sub assert_counted_same_id_capacity_accounting {
+    my ($report, $owner, %args) = @_;
+    my $direction = $args{direction};
+    my $dispatch = transaction_dispatch_entry($report, $direction);
+    my $accounting = $dispatch->{request_accounting};
+
+    is($accounting->{mode}, 'counted_same_id_selected_requests', "$owner reports counted same-ID selected-request accounting");
+    is_deeply($accounting->{counted_request_events}, $args{counted_request_events}, "$owner reports counted request events");
+    is_deeply($accounting->{counted_request_terms}, $args{counted_request_terms}, "$owner reports counted request terms");
+    is_deeply($accounting->{counted_request_groups}, $args{counted_request_groups}, "$owner reports counted request groups");
+    is_deeply(
+        $accounting->{selected_same_id_request_events},
+        $args{counted_request_events},
+        "$owner reports selected same-ID request events",
+    );
+    is($accounting->{request_count_expression}, $args{request_count_expression}, "$owner reports request count expression");
+    is($accounting->{maximum_request_count}, scalar(@{$args{counted_request_terms}}), "$owner reports maximum request count");
+    is(
+        $accounting->{capacity_owner},
+        "generated_scheduler_or_status_rules.${direction}_capacity_matrix",
+        "$owner reports counted capacity owner",
+    );
+    is($accounting->{completion_accounting_mode}, 'boolean_fanin', "$owner keeps completion accounting boolean");
+    is($accounting->{over_capacity_policy}, 'reject_current_request_set', "$owner reports over-capacity rejection policy");
+
+    my $matrix = capacity_matrix_entry($report, $direction);
+    is($matrix->{accounting_mode}, 'counted_submit', "$owner reports counted capacity-matrix accounting");
+    is($matrix->{completion_accounting_mode}, 'boolean_fanin', "$owner reports counted matrix completion accounting");
+    is($matrix->{rule_count}, $args{rule_count}, "$owner reports exact-count capacity-matrix rule count");
+    is_deeply($matrix->{counted_request_events}, $args{counted_request_events}, "$owner mirrors counted request events into the matrix report");
+    is_deeply($matrix->{counted_request_terms}, $args{counted_request_terms}, "$owner mirrors counted request terms into the matrix report");
+    is_deeply($matrix->{counted_request_groups}, $args{counted_request_groups}, "$owner mirrors counted request groups into the matrix report");
+    is_deeply(
+        $matrix->{selected_same_id_request_events},
+        $args{counted_request_events},
+        "$owner mirrors selected same-ID request events into the matrix report",
+    );
+    is($matrix->{request_count_expression}, $args{request_count_expression}, "$owner mirrors request count expression into the matrix report");
+    is($matrix->{maximum_request_count}, scalar(@{$args{counted_request_terms}}), "$owner mirrors maximum request count into the matrix report");
+    is($matrix->{over_capacity_policy}, 'reject_current_request_set', "$owner mirrors over-capacity policy into the matrix report");
+}
+
+sub assert_counted_low_capacity_rules {
+    my ($isf, $owner, %args) = @_;
+    my $direction = $args{direction};
+    my $request_expr = $args{request_count_expression};
+    my $complete = $args{completion_fanin};
+    my $pending_storage = $args{pending_storage};
+    my $pending_output = $args{pending_output};
+    my $slots_output = $args{slots_output};
+    my $full_output = $args{full_output};
+    my $can_accept_output = $args{can_accept_output};
+
+    my $fits_one_request_at_occ2 = quotemeta(
+        "  (rule ${direction}_counted_req1_nocomplete_occ2 (& (== $request_expr 1) (! $complete) (== $pending_storage 2))"
+    );
+    like(
+        $isf,
+        qr/$fits_one_request_at_occ2[\s\S]*\(\Q$pending_storage\E 3\)[\s\S]*\(\Q$pending_output\E 3\)[\s\S]*\(\Q$slots_output\E 0\)[\s\S]*\(\Q$full_output\E 1\)[\s\S]*\(\Q$can_accept_output\E 1\)\)/,
+        "$owner accepts one counted request into the final slot",
+    );
+
+    my $rejects_two_requests_at_occ2 = quotemeta(
+        "  (rule ${direction}_counted_req2_nocomplete_occ2 (& (== $request_expr 2) (! $complete) (== $pending_storage 2))"
+    );
+    like(
+        $isf,
+        qr/$rejects_two_requests_at_occ2[\s\S]*\(\Q$pending_storage\E 2\)[\s\S]*\(\Q$pending_output\E 2\)[\s\S]*\(\Q$slots_output\E 1\)[\s\S]*\(\Q$full_output\E 0\)[\s\S]*\(\Q$can_accept_output\E 0\)\)/,
+        "$owner rejects an over-capacity counted request set without changing pending",
+    );
+}
+
+sub transaction_dispatch_entry {
+    my ($report, $direction) = @_;
+    my %by_direction = map { $_->{direction} => $_ } @{$report->{transaction_event_dispatch}{directions} || []};
+    return $by_direction{$direction};
+}
+
+sub capacity_matrix_entry {
+    my ($report, $direction) = @_;
+    my %by_direction = map { $_->{direction} => $_ } @{$report->{generated_scheduler_or_status_rules} || []};
+    return $by_direction{$direction};
 }
 
 sub assert_same_id_queue_head_response_demux_report {

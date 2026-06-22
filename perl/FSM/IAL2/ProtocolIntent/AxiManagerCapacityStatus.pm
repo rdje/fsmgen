@@ -180,6 +180,11 @@ sub _normalize_contract($raw) {
         same_id_ordering_policy  => $same_id_ordering_policy,
         same_id_admitted_request_boundary => $same_id_admitted_request_boundary,
     );
+    _apply_counted_request_accounting(
+        transaction_event_dispatch => $transaction_event_dispatch,
+        same_id_admitted_request_boundary => $same_id_admitted_request_boundary,
+        same_id_issue_order_queue_behavior => $same_id_issue_order_queue_behavior,
+    );
     $response_demux = _response_demux_with_same_id_issue_order_queue_behavior(
         response_demux => $response_demux,
         behavior       => $same_id_issue_order_queue_behavior,
@@ -2434,6 +2439,91 @@ sub _same_id_admitted_request_max_pending(%args) {
     confess "Internal error: unknown same-ID admitted request family '$args{family}'\n";
 }
 
+sub _apply_counted_request_accounting(%args) {
+    my $dispatch = $args{transaction_event_dispatch};
+    return unless ref($dispatch) eq 'HASH';
+
+    my $boundary = $args{same_id_admitted_request_boundary};
+    if (ref($boundary) eq 'HASH') {
+        for my $family_name (qw(write read)) {
+            next unless ref($boundary->{families}{$family_name}) eq 'HASH';
+            $boundary->{families}{$family_name}{accounting_mode} //= 'capacity_storage_and_completion_fanin';
+        }
+    }
+
+    for my $direction (qw(write read)) {
+        my $entry = $dispatch->{$direction};
+        next unless ref($entry) eq 'HASH';
+
+        $entry->{request_accounting} = _boolean_request_accounting($direction);
+        my $queue_family = _same_id_issue_order_queue_family_behavior(
+            $args{same_id_issue_order_queue_behavior},
+            $direction,
+        );
+        my $boundary_family = ref($boundary) eq 'HASH'
+            ? $boundary->{families}{$direction}
+            : undef;
+        next unless ref($queue_family) eq 'HASH'
+            && $queue_family->{generated_behavior}
+            && ref($boundary_family) eq 'HASH';
+
+        my @counted_request_groups = _counted_request_groups_for_queue_family($queue_family);
+        next unless @counted_request_groups > 1;
+
+        my @counted_request_terms = map { $_->{request_fanin} } @counted_request_groups;
+        my @counted_request_events = @{_unique_preserving([
+            map { @{$_->{request_events}} } @counted_request_groups
+        ])};
+        my @selected_same_id_request_events = @{$boundary_family->{selected_request_events} || []};
+        my $request_count_expression = _add_expr(@counted_request_terms);
+        my $accounting = {
+            mode                            => 'counted_same_id_selected_requests',
+            counted_request_events          => \@counted_request_events,
+            counted_request_terms           => \@counted_request_terms,
+            counted_request_groups          => \@counted_request_groups,
+            selected_same_id_request_events => \@selected_same_id_request_events,
+            request_count_expression        => $request_count_expression,
+            maximum_request_count           => scalar(@counted_request_terms),
+            capacity_owner                  => "generated_scheduler_or_status_rules.${direction}_capacity_matrix",
+            completion_accounting_mode      => 'boolean_fanin',
+            over_capacity_policy            => 'reject_current_request_set',
+        };
+        $entry->{request_accounting} = $accounting;
+        $boundary_family->{accounting_mode} = 'counted_capacity_storage_and_completion_fanin';
+        $boundary_family->{request_count_expression} = $request_count_expression;
+        $boundary_family->{counted_request_events} = \@counted_request_events;
+        $boundary_family->{counted_request_terms} = \@counted_request_terms;
+        $boundary_family->{counted_request_groups} = \@counted_request_groups;
+        $boundary_family->{over_capacity_policy} = 'reject_current_request_set';
+    }
+}
+
+sub _counted_request_groups_for_queue_family($queue_family) {
+    return () unless ref($queue_family) eq 'HASH';
+    my @groups;
+    for my $group (@{$queue_family->{groups} || []}) {
+        next unless ref($group) eq 'HASH' && ref($group->{transactions}) eq 'ARRAY';
+        my @request_events = @{_unique_preserving([
+            map { $_->{request_event} } @{$group->{transactions}}
+        ])};
+        next unless @request_events;
+        push @groups, {
+            concrete_id    => $group->{concrete_id},
+            request_events => \@request_events,
+            request_fanin  => _or_expr(@request_events),
+        };
+    }
+    return @groups;
+}
+
+sub _boolean_request_accounting($direction) {
+    return {
+        mode                       => 'boolean_fanin',
+        capacity_owner             => "generated_scheduler_or_status_rules.${direction}_capacity_matrix",
+        completion_accounting_mode => 'boolean_fanin',
+    };
+}
+
 sub _build_same_id_issue_order_queue_behavior(%args) {
     my $demux = $args{response_demux};
     return undef unless ref($demux) eq 'HASH';
@@ -2975,6 +3065,7 @@ sub _emit_isf($contract) {
         direction => 'read',
         submit => $read_events->{request_fanin},
         complete => $read_events->{completion_fanin},
+        request_accounting => $read_events->{request_accounting},
         max_pending => $contract->{read_max_pending},
         storage => $contract->{storage}{pending_reads},
         pending_output => $contract->{status_outputs}{pending_reads},
@@ -2986,6 +3077,7 @@ sub _emit_isf($contract) {
         direction => 'write',
         submit => $write_events->{request_fanin},
         complete => $write_events->{completion_fanin},
+        request_accounting => $write_events->{request_accounting},
         max_pending => $contract->{write_max_pending},
         storage => $contract->{storage}{pending_writes},
         pending_output => $contract->{status_outputs}{pending_writes},
@@ -3012,6 +3104,7 @@ sub _emit_isf($contract) {
         @auto_id_assertions,
     );
     my @auto_id_priorities = _auto_id_lifecycle_priority_lines($contract);
+    my @capacity_status_priorities = _capacity_status_priority_lines($contract);
     my @same_id_issue_order_queue_priorities = _same_id_issue_order_queue_priority_lines($contract);
     my @same_id_admitted_request_rules = _same_id_admitted_request_rule_lines($contract);
     my @same_id_issue_order_queue_rules = _same_id_issue_order_queue_rule_lines($contract);
@@ -3055,6 +3148,8 @@ sub _emit_isf($contract) {
         "",
         @auto_id_priorities,
         (@auto_id_priorities ? ("") : ()),
+        @capacity_status_priorities,
+        (@capacity_status_priorities ? ("") : ()),
         @same_id_issue_order_queue_priorities,
         (@same_id_issue_order_queue_priorities ? ("") : ()),
         @assertion_transactions,
@@ -3380,6 +3475,39 @@ sub _auto_id_lifecycle_priority_lines($contract) {
         }
     }
     return @lines;
+}
+
+sub _capacity_status_priority_lines($contract) {
+    my @lines;
+    for my $direction (qw(read write)) {
+        my $accounting = _direction_request_accounting($contract, $direction);
+        next unless ($accounting->{mode} // '') eq 'counted_same_id_selected_requests';
+        my $max_pending = $direction eq 'read'
+            ? $contract->{read_max_pending}
+            : $contract->{write_max_pending};
+        my @rules = _counted_direction_rule_names(
+            direction => $direction,
+            max_pending => $max_pending,
+            maximum_request_count => $accounting->{maximum_request_count},
+        );
+        for my $index (0 .. $#rules - 1) {
+            push @lines, "  (priority $rules[$index] over $rules[$index + 1])";
+        }
+    }
+    return @lines;
+}
+
+sub _counted_direction_rule_names(%args) {
+    my @rules;
+    for my $occupancy (0 .. $args{max_pending}) {
+        for my $completion_present (0, 1) {
+            my $completion_suffix = $completion_present ? 'complete' : 'nocomplete';
+            for my $request_count (0 .. ($args{maximum_request_count} // 0)) {
+                push @rules, "$args{direction}_counted_req${request_count}_${completion_suffix}_occ$occupancy";
+            }
+        }
+    }
+    return @rules;
 }
 
 sub _same_id_issue_order_queue_priority_lines($contract) {
@@ -4478,6 +4606,11 @@ sub _width_output_line($name, $width) {
 }
 
 sub _direction_rules(%args) {
+    if (ref($args{request_accounting}) eq 'HASH'
+        && ($args{request_accounting}{mode} // '') eq 'counted_same_id_selected_requests') {
+        return _counted_direction_rules(%args);
+    }
+
     my @rules;
     for my $occupancy (0 .. $args{max_pending}) {
         push @rules, _rule_lines(%args, kind => 'idle', occupancy => $occupancy);
@@ -4492,6 +4625,74 @@ sub _direction_rules(%args) {
         push @rules, _rule_lines(%args, kind => 'submit_complete', occupancy => $occupancy);
     }
     return @rules;
+}
+
+sub _counted_direction_rules(%args) {
+    my $maximum_request_count = $args{request_accounting}{maximum_request_count} // 0;
+    confess "Internal error: counted capacity/status rules require a positive request count\n"
+        unless $maximum_request_count > 0;
+
+    my @rules;
+    for my $occupancy (0 .. $args{max_pending}) {
+        for my $completion_present (0, 1) {
+            for my $request_count (0 .. $maximum_request_count) {
+                push @rules, _counted_rule_lines(
+                    %args,
+                    occupancy          => $occupancy,
+                    completion_present => $completion_present,
+                    request_count      => $request_count,
+                );
+            }
+        }
+    }
+    return @rules;
+}
+
+sub _counted_rule_lines(%args) {
+    my $occupancy = $args{occupancy};
+    my $completion_present = $args{completion_present};
+    my $completion_guard = $completion_present ? $args{complete} : _not_expr($args{complete});
+    my $request_count_expression = $args{request_accounting}{request_count_expression};
+    my $request_count_guard = _eq_expr($request_count_expression, $args{request_count});
+    my $condition = _and_expr(
+        $request_count_guard,
+        $completion_guard,
+        _eq_expr($args{storage}, $occupancy),
+    );
+    my ($next, $slots, $full, $can_accept) = _counted_rule_assignments(
+        occupancy          => $occupancy,
+        max_pending        => $args{max_pending},
+        completion_present => $completion_present,
+        request_count      => $args{request_count},
+    );
+    my $completion_suffix = $completion_present ? 'complete' : 'nocomplete';
+    my $rule = "$args{direction}_counted_req$args{request_count}_${completion_suffix}_occ$occupancy";
+
+    return (
+        "  (rule $rule $condition",
+        "    ($args{storage} $next)",
+        "    ($args{pending_output} $next)",
+        "    ($args{slots_output} $slots)",
+        "    ($args{full_output} $full)",
+        "    ($args{can_accept_output} $can_accept))",
+    );
+}
+
+sub _counted_rule_assignments(%args) {
+    my $completion_credit = $args{completion_present} && $args{occupancy} > 0 ? 1 : 0;
+    my $base = $args{occupancy} - $completion_credit;
+    $base = 0 if $base < 0;
+    my $capacity = $args{max_pending} - $base;
+    my $accepted = $args{request_count} <= $capacity ? 1 : 0;
+    my $next = $accepted ? $base + $args{request_count} : $base;
+    my $slots = $args{max_pending} - $next;
+    my $full = $next == $args{max_pending} ? 1 : 0;
+    my $can_accept = !$accepted
+        ? 0
+        : $args{request_count} > 0
+            ? 1
+            : (($args{occupancy} < $args{max_pending} || $args{completion_present}) ? 1 : 0);
+    return ($next, $slots, $full, $can_accept);
 }
 
 sub _rule_lines(%args) {
@@ -4536,6 +4737,71 @@ sub _next_pending($kind, $occupancy, $max_pending) {
 sub _can_accept($kind, $occupancy, $max_pending) {
     return 1 if $kind eq 'submit_complete' || $kind eq 'complete_only';
     return $occupancy < $max_pending ? 1 : 0;
+}
+
+sub _capacity_matrix_report_entry($contract, $direction) {
+    my $max_pending = $direction eq 'read'
+        ? $contract->{read_max_pending}
+        : $contract->{write_max_pending};
+    my $storage = $direction eq 'read'
+        ? $contract->{storage}{pending_reads}
+        : $contract->{storage}{pending_writes};
+    my @status_outputs = $direction eq 'read'
+        ? (
+            $contract->{status_outputs}{read_can_accept},
+            $contract->{status_outputs}{read_full},
+            $contract->{status_outputs}{pending_reads},
+            $contract->{status_outputs}{read_slots_available},
+        )
+        : (
+            $contract->{status_outputs}{write_can_accept},
+            $contract->{status_outputs}{write_full},
+            $contract->{status_outputs}{pending_writes},
+            $contract->{status_outputs}{write_slots_available},
+        );
+    my $accounting = _direction_request_accounting($contract, $direction);
+    my $counted = ($accounting->{mode} // '') eq 'counted_same_id_selected_requests';
+    my %entry = (
+        id => "${direction}_capacity_matrix",
+        direction => $direction,
+        rule_count => _capacity_matrix_rule_count($max_pending, $accounting),
+        storage => $storage,
+        status_outputs => \@status_outputs,
+        accounting_mode => $counted ? 'counted_submit' : 'boolean_submit',
+        completion_accounting_mode => $accounting->{completion_accounting_mode} // 'boolean_fanin',
+    );
+    if ($counted) {
+        $entry{counted_request_events} = _clone_jsonish($accounting->{counted_request_events});
+        $entry{counted_request_terms} = _clone_jsonish($accounting->{counted_request_terms});
+        $entry{counted_request_groups} = _clone_jsonish($accounting->{counted_request_groups});
+        $entry{selected_same_id_request_events} = _clone_jsonish($accounting->{selected_same_id_request_events});
+        $entry{request_count_expression} = $accounting->{request_count_expression};
+        $entry{maximum_request_count} = $accounting->{maximum_request_count};
+        $entry{over_capacity_policy} = $accounting->{over_capacity_policy};
+    }
+    return \%entry;
+}
+
+sub _direction_request_accounting($contract, $direction) {
+    my $dispatch = $contract->{transaction_event_dispatch};
+    if (ref($dispatch) eq 'HASH'
+        && ref($dispatch->{$direction}) eq 'HASH'
+        && ref($dispatch->{$direction}{request_accounting}) eq 'HASH') {
+        return $dispatch->{$direction}{request_accounting};
+    }
+    return _boolean_request_accounting($direction);
+}
+
+sub _capacity_matrix_rule_count($max_pending, $accounting) {
+    if (ref($accounting) eq 'HASH'
+        && ($accounting->{mode} // '') eq 'counted_same_id_selected_requests') {
+        return scalar _counted_direction_rule_names(
+            direction => '_',
+            max_pending => $max_pending,
+            maximum_request_count => $accounting->{maximum_request_count},
+        );
+    }
+    return 4 * ($max_pending + 1);
 }
 
 sub _build_report(%args) {
@@ -4614,30 +4880,8 @@ sub _build_report(%args) {
             },
         },
         generated_scheduler_or_status_rules => [
-            {
-                id => 'read_capacity_matrix',
-                direction => 'read',
-                rule_count => 4 * ($contract->{read_max_pending} + 1),
-                storage => $contract->{storage}{pending_reads},
-                status_outputs => [
-                    $contract->{status_outputs}{read_can_accept},
-                    $contract->{status_outputs}{read_full},
-                    $contract->{status_outputs}{pending_reads},
-                    $contract->{status_outputs}{read_slots_available},
-                ],
-            },
-            {
-                id => 'write_capacity_matrix',
-                direction => 'write',
-                rule_count => 4 * ($contract->{write_max_pending} + 1),
-                storage => $contract->{storage}{pending_writes},
-                status_outputs => [
-                    $contract->{status_outputs}{write_can_accept},
-                    $contract->{status_outputs}{write_full},
-                    $contract->{status_outputs}{pending_writes},
-                    $contract->{status_outputs}{write_slots_available},
-                ],
-            },
+            _capacity_matrix_report_entry($contract, 'read'),
+            _capacity_matrix_report_entry($contract, 'write'),
         ],
         blocked_reason_vocabulary => [
             'none',
@@ -5179,6 +5423,9 @@ sub _report_transaction_event_dispatch($contract) {
                     completion_events => _clone_jsonish($entry->{completion_events}),
                     request_fanin     => $entry->{request_fanin},
                     completion_fanin  => $entry->{completion_fanin},
+                    request_accounting => _clone_jsonish(
+                        $entry->{request_accounting} // _boolean_request_accounting($direction)
+                    ),
                 }
             } qw(write read)
         ],

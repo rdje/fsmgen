@@ -185,6 +185,8 @@ subtest 'PPIF adapter parses AXI manager transaction event dispatch' => sub {
     is_deeply($direction{write}{request_events}, [qw(axi0_w0_request axi0_w1_request)], 'dispatch report lists write request events');
     is($direction{write}{request_fanin}, '(| axi0_w0_request axi0_w1_request)', 'dispatch report carries write request fan-in expression');
     is($direction{read}{request_fanin}, 'axi0_r0_request', 'dispatch report keeps scalar read request fan-in');
+    assert_boolean_capacity_accounting($result->{report}, 'adapter dispatch write accounting report', direction => 'write', rule_count => 12);
+    assert_boolean_capacity_accounting($result->{report}, 'adapter dispatch read accounting report', direction => 'read', rule_count => 20);
     is($result->{report}{id_response_rule_engine}{mode}, 'concrete_id_assertions', 'dispatch report exposes concrete-ID assertion engine');
     is_deeply(
         [map { $_->{event} } @{$result->{report}{id_response_rule_engine}{checks}}],
@@ -333,6 +335,31 @@ subtest 'PPIF adapter parses AXI manager read multi-group same-ID queue-head res
         [qw(auto_id_allocation id_release)],
         'read multi-group same-ID queue-head demux generated behavior removes same-ID and response-demux ID/response residue',
     );
+    assert_counted_same_id_capacity_accounting(
+        $result->{report},
+        'adapter read multi-group counted capacity report',
+        direction => 'read',
+        rule_count => 30,
+        request_count_expression => '(+ (| axi0_r0_request axi0_r1_request) (| axi0_r2_request axi0_r3_request))',
+        counted_request_events => [qw(axi0_r0_request axi0_r1_request axi0_r2_request axi0_r3_request)],
+        counted_request_terms => [
+            '(| axi0_r0_request axi0_r1_request)',
+            '(| axi0_r2_request axi0_r3_request)',
+        ],
+        counted_request_groups => [
+            {
+                concrete_id    => 3,
+                request_events => [qw(axi0_r0_request axi0_r1_request)],
+                request_fanin  => '(| axi0_r0_request axi0_r1_request)',
+            },
+            {
+                concrete_id    => 5,
+                request_events => [qw(axi0_r2_request axi0_r3_request)],
+                request_fanin  => '(| axi0_r2_request axi0_r3_request)',
+            },
+        ],
+    );
+    assert_boolean_capacity_accounting($result->{report}, 'adapter read multi-group write capacity report', direction => 'write', rule_count => 12);
 };
 
 subtest 'PPIF adapter parses AXI manager read single-beat multi-group same-ID queue-head response-demux behavior' => sub {
@@ -1352,6 +1379,31 @@ subtest 'PPIF adapter parses AXI manager write multi-group same-ID queue-head re
         [qw(auto_id_allocation id_release)],
         'write multi-group same-ID queue-head demux generated behavior removes same-ID and response-demux ID/response residue',
     );
+    assert_counted_same_id_capacity_accounting(
+        $result->{report},
+        'adapter write multi-group counted capacity report',
+        direction => 'write',
+        rule_count => 30,
+        request_count_expression => '(+ (| axi0_w0_request axi0_w1_request) (| axi0_w2_request axi0_w3_request))',
+        counted_request_events => [qw(axi0_w0_request axi0_w1_request axi0_w2_request axi0_w3_request)],
+        counted_request_terms => [
+            '(| axi0_w0_request axi0_w1_request)',
+            '(| axi0_w2_request axi0_w3_request)',
+        ],
+        counted_request_groups => [
+            {
+                concrete_id    => 3,
+                request_events => [qw(axi0_w0_request axi0_w1_request)],
+                request_fanin  => '(| axi0_w0_request axi0_w1_request)',
+            },
+            {
+                concrete_id    => 5,
+                request_events => [qw(axi0_w2_request axi0_w3_request)],
+                request_fanin  => '(| axi0_w2_request axi0_w3_request)',
+            },
+        ],
+    );
+    assert_boolean_capacity_accounting($result->{report}, 'adapter write multi-group read capacity report', direction => 'read', rule_count => 20);
 };
 
 for my $case_name (qw(
@@ -2185,6 +2237,8 @@ subtest 'CLI emits IAL2 report JSON for AXI manager transaction event dispatch .
     is_deeply($direction{write}{request_events}, [qw(axi0_w0_request axi0_w1_request)], 'CLI report carries write request fan-in events');
     is($direction{write}{completion_fanin}, '(| axi0_w0_complete axi0_w1_complete)', 'CLI report carries write completion fan-in expression');
     is($direction{read}{request_fanin}, 'axi0_r0_request', 'CLI report carries scalar read request fan-in');
+    assert_boolean_capacity_accounting($report, 'CLI dispatch write accounting report', direction => 'write', rule_count => 12);
+    assert_boolean_capacity_accounting($report, 'CLI dispatch read accounting report', direction => 'read', rule_count => 20);
     is($report->{id_response_rule_engine}{mode}, 'concrete_id_assertions', 'CLI dispatch report exposes concrete-ID assertion mode');
     is_deeply(
         [map { $_->{event} } @{$report->{id_response_rule_engine}{checks}}],
@@ -2238,6 +2292,72 @@ subtest 'CLI emits IAL2 report JSON for AXI manager same-ID queue-head response-
     ok($read_policy->{accepted_same_id_reuse}, 'CLI report accepts same-ID reuse for the covered shape');
     ok($read_policy->{generated_queue_behavior}, 'CLI report marks generated queue behavior true');
     is_deeply($report->{generated_artifacts}{ial0}{files}, ['axi0_capacity_status.fsm'], 'same-ID queue-head response-demux keeps the generated .fsm artifact name stable');
+};
+
+subtest 'CLI emits IAL2 report JSON for AXI manager read multi-group same-ID queue-head response-demux .ppif' => sub {
+    my ($success, undef, undef, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--emit-schedule-json', sample_capacity_read_multi_group_same_id_queue_head_response_demux_ppif_path()],
+    );
+
+    ok($success, '--emit-schedule-json succeeds for capacity/status read multi-group same-ID queue-head response-demux .ppif');
+    is(join('', @{$stderr_buf || []}), '', 'capacity/status read multi-group same-ID queue-head response-demux report keeps stderr clean');
+    my $report = decode_json(join('', @{$stdout_buf || []}));
+    is($report->{schema}, 'fsmgen.ial2.protocol_intent.axi_manager_capacity_status.v1', 'CLI keeps the capacity/status report schema');
+    is($report->{source_object}{intent_name}, 'axi_manager_capacity_status_read_multi_group_same_id_queue_head_response_demux', 'read multi-group same-ID queue-head response-demux report carries the PPIF top-level intent name');
+    assert_same_id_queue_head_response_demux_report(
+        $report->{response_demux},
+        'CLI multi-group read report',
+        queues => [
+            {
+                concrete_id          => 3,
+                transactions         => [qw(r0 r1)],
+                depth                => 2,
+                dequeue_event_source => 'queue_head_response_demux',
+            },
+            {
+                concrete_id          => 5,
+                transactions         => [qw(r2 r3)],
+                depth                => 2,
+                dequeue_event_source => 'queue_head_response_demux',
+            },
+        ],
+        completion_signals => [qw(axi0_r0_complete axi0_r1_complete axi0_r2_complete axi0_r3_complete)],
+        generated_rules => [qw(axi0_r0_response_demux axi0_r1_response_demux axi0_r2_response_demux axi0_r3_response_demux)],
+        generated_assertions => [qw(
+            axi0_read_response_demux_active_match
+            axi0_r0_r1_read_response_demux_unique_match
+            axi0_r0_r2_read_response_demux_unique_match
+            axi0_r0_r3_read_response_demux_unique_match
+            axi0_r1_r2_read_response_demux_unique_match
+            axi0_r1_r3_read_response_demux_unique_match
+            axi0_r2_r3_read_response_demux_unique_match
+        )],
+    );
+    assert_counted_same_id_capacity_accounting(
+        $report,
+        'CLI read multi-group counted capacity report',
+        direction => 'read',
+        rule_count => 30,
+        request_count_expression => '(+ (| axi0_r0_request axi0_r1_request) (| axi0_r2_request axi0_r3_request))',
+        counted_request_events => [qw(axi0_r0_request axi0_r1_request axi0_r2_request axi0_r3_request)],
+        counted_request_terms => [
+            '(| axi0_r0_request axi0_r1_request)',
+            '(| axi0_r2_request axi0_r3_request)',
+        ],
+        counted_request_groups => [
+            {
+                concrete_id    => 3,
+                request_events => [qw(axi0_r0_request axi0_r1_request)],
+                request_fanin  => '(| axi0_r0_request axi0_r1_request)',
+            },
+            {
+                concrete_id    => 5,
+                request_events => [qw(axi0_r2_request axi0_r3_request)],
+                request_fanin  => '(| axi0_r2_request axi0_r3_request)',
+            },
+        ],
+    );
+    assert_boolean_capacity_accounting($report, 'CLI read multi-group write capacity report', direction => 'write', rule_count => 12);
 };
 
 subtest 'CLI emits IAL2 report JSON for AXI manager read single-beat same-ID queue-head response-demux .ppif' => sub {
@@ -2976,6 +3096,31 @@ subtest 'CLI emits IAL2 report JSON for AXI manager write multi-group same-ID qu
     ok($write_policy->{accepted_same_id_reuse}, 'CLI report accepts write multi-group same-ID reuse for the covered shape');
     ok($write_policy->{generated_queue_behavior}, 'CLI report marks generated write multi-group queue behavior true');
     is_deeply($report->{generated_artifacts}{ial0}{files}, ['axi0_capacity_status.fsm'], 'write multi-group same-ID queue-head response-demux keeps the generated .fsm artifact name stable');
+    assert_counted_same_id_capacity_accounting(
+        $report,
+        'CLI write multi-group counted capacity report',
+        direction => 'write',
+        rule_count => 30,
+        request_count_expression => '(+ (| axi0_w0_request axi0_w1_request) (| axi0_w2_request axi0_w3_request))',
+        counted_request_events => [qw(axi0_w0_request axi0_w1_request axi0_w2_request axi0_w3_request)],
+        counted_request_terms => [
+            '(| axi0_w0_request axi0_w1_request)',
+            '(| axi0_w2_request axi0_w3_request)',
+        ],
+        counted_request_groups => [
+            {
+                concrete_id    => 3,
+                request_events => [qw(axi0_w0_request axi0_w1_request)],
+                request_fanin  => '(| axi0_w0_request axi0_w1_request)',
+            },
+            {
+                concrete_id    => 5,
+                request_events => [qw(axi0_w2_request axi0_w3_request)],
+                request_fanin  => '(| axi0_w2_request axi0_w3_request)',
+            },
+        ],
+    );
+    assert_boolean_capacity_accounting($report, 'CLI write multi-group read capacity report', direction => 'read', rule_count => 20);
 };
 
 for my $case_name (qw(
@@ -7767,6 +7912,82 @@ sub assert_same_id_issue_order_queue_policy_report {
             generated_assertions => [],
         },
     });
+}
+
+sub assert_boolean_capacity_accounting {
+    my ($report, $owner, %args) = @_;
+    my $direction = $args{direction};
+    my $dispatch = transaction_dispatch_entry($report, $direction);
+    my $accounting = $dispatch->{request_accounting};
+
+    is($accounting->{mode}, 'boolean_fanin', "$owner reports boolean request fan-in accounting");
+    is(
+        $accounting->{capacity_owner},
+        "generated_scheduler_or_status_rules.${direction}_capacity_matrix",
+        "$owner reports the capacity matrix owner",
+    );
+    is($accounting->{completion_accounting_mode}, 'boolean_fanin', "$owner reports boolean completion fan-in accounting");
+
+    my $matrix = capacity_matrix_entry($report, $direction);
+    is($matrix->{accounting_mode}, 'boolean_submit', "$owner reports boolean capacity-matrix accounting");
+    is($matrix->{completion_accounting_mode}, 'boolean_fanin', "$owner reports boolean capacity-matrix completion accounting");
+    is($matrix->{rule_count}, $args{rule_count}, "$owner reports the boolean capacity-matrix rule count");
+    ok(!exists($matrix->{counted_request_events}), "$owner omits counted request events");
+    ok(!exists($matrix->{request_count_expression}), "$owner omits counted request expression");
+}
+
+sub assert_counted_same_id_capacity_accounting {
+    my ($report, $owner, %args) = @_;
+    my $direction = $args{direction};
+    my $dispatch = transaction_dispatch_entry($report, $direction);
+    my $accounting = $dispatch->{request_accounting};
+
+    is($accounting->{mode}, 'counted_same_id_selected_requests', "$owner reports counted same-ID selected-request accounting");
+    is_deeply($accounting->{counted_request_events}, $args{counted_request_events}, "$owner reports counted request events");
+    is_deeply($accounting->{counted_request_terms}, $args{counted_request_terms}, "$owner reports counted request terms");
+    is_deeply($accounting->{counted_request_groups}, $args{counted_request_groups}, "$owner reports counted request groups");
+    is_deeply(
+        $accounting->{selected_same_id_request_events},
+        $args{counted_request_events},
+        "$owner reports selected same-ID request events",
+    );
+    is($accounting->{request_count_expression}, $args{request_count_expression}, "$owner reports request count expression");
+    is($accounting->{maximum_request_count}, scalar(@{$args{counted_request_terms}}), "$owner reports maximum request count");
+    is(
+        $accounting->{capacity_owner},
+        "generated_scheduler_or_status_rules.${direction}_capacity_matrix",
+        "$owner reports counted capacity owner",
+    );
+    is($accounting->{completion_accounting_mode}, 'boolean_fanin', "$owner keeps completion accounting boolean");
+    is($accounting->{over_capacity_policy}, 'reject_current_request_set', "$owner reports over-capacity rejection policy");
+
+    my $matrix = capacity_matrix_entry($report, $direction);
+    is($matrix->{accounting_mode}, 'counted_submit', "$owner reports counted capacity-matrix accounting");
+    is($matrix->{completion_accounting_mode}, 'boolean_fanin', "$owner reports counted matrix completion accounting");
+    is($matrix->{rule_count}, $args{rule_count}, "$owner reports exact-count capacity-matrix rule count");
+    is_deeply($matrix->{counted_request_events}, $args{counted_request_events}, "$owner mirrors counted request events into the matrix report");
+    is_deeply($matrix->{counted_request_terms}, $args{counted_request_terms}, "$owner mirrors counted request terms into the matrix report");
+    is_deeply($matrix->{counted_request_groups}, $args{counted_request_groups}, "$owner mirrors counted request groups into the matrix report");
+    is_deeply(
+        $matrix->{selected_same_id_request_events},
+        $args{counted_request_events},
+        "$owner mirrors selected same-ID request events into the matrix report",
+    );
+    is($matrix->{request_count_expression}, $args{request_count_expression}, "$owner mirrors request count expression into the matrix report");
+    is($matrix->{maximum_request_count}, scalar(@{$args{counted_request_terms}}), "$owner mirrors maximum request count into the matrix report");
+    is($matrix->{over_capacity_policy}, 'reject_current_request_set', "$owner mirrors over-capacity policy into the matrix report");
+}
+
+sub transaction_dispatch_entry {
+    my ($report, $direction) = @_;
+    my %by_direction = map { $_->{direction} => $_ } @{$report->{transaction_event_dispatch}{directions} || []};
+    return $by_direction{$direction};
+}
+
+sub capacity_matrix_entry {
+    my ($report, $direction) = @_;
+    my %by_direction = map { $_->{direction} => $_ } @{$report->{generated_scheduler_or_status_rules} || []};
+    return $by_direction{$direction};
 }
 
 sub assert_same_id_queue_head_response_demux_report {
