@@ -6612,6 +6612,15 @@ dynamic/static write demux, same-cycle recapture, same-ID ordering, read-data
 routing, queues, scoreboards, direct backend behavior, HDL shapes outside the
 selected SystemVerilog path, and VHDL remain deferred.
 
+Post dynamic write ID selector:
+[AXI_IAL2_MANAGER_POST_DYNAMIC_WRITE_ID_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_DYNAMIC_WRITE_ID_NEXT_SLICE_SELECTION.md)
+selects `.225`, readiness audit for generated dynamic read transaction-ID
+capture and `RID` response matching. The selector records that read response
+scope, `RLAST`, read-data consumption, burst/runtime validation,
+interleaving, assertions, and report vocabulary require an audit before any
+parser, generator, PPIF sample, support-accounting, validation,
+generated-artifact, test, or HDL behavior changes.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same
@@ -8878,7 +8887,9 @@ transaction-ID capture and `BID` response matching.
 `DOCTRINE-ENFORCEMENT-ADOPTION.1` now adopts root
 `DOCTRINE_ENFORCEMENT.md`, root `TOOLBOX.md`,
 `scripts/check_doctrines.sh`, and FSMGEN-native issue-pinpointing commands.
-The next active IAL2 owner is `IAL2-FEATURE-COMPLETENESS-FRONTIER.224`.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.224` now selects `.225`, generated
+dynamic read transaction-ID capture and `RID` response matching readiness
+audit, before any read parser/generator/sample/test/HDL behavior changes.
 
 Selected first MCP resource families are `fsmgen://capabilities`,
 `fsmgen://contracts`, `fsmgen://diagnostics`,

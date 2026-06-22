@@ -1085,8 +1085,9 @@ transaction-ID capture and `BID` response matching.
 `DOCTRINE-ENFORCEMENT-ADOPTION.1` now adopts the portable doctrine-enforcement
 driver, root `DOCTRINE_ENFORCEMENT.md`, root `TOOLBOX.md`, the
 `scripts/check_doctrines.sh` registry, and FSMGEN-native issue-pinpointing
-commands. The next active IAL2 owner is
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.224`.
+commands. `IAL2-FEATURE-COMPLETENESS-FRONTIER.224` selects `.225`, generated
+dynamic read transaction-ID capture and `RID` response matching readiness
+audit, before any read parser/generator/sample/test/HDL behavior changes.
 The parser/report metadata slice `IAL2-FEATURE-COMPLETENESS-FRONTIER.39` is
 now shipped for the bounded AXI read response-demux public contract selected
 by `.38`. The selected read arm requires `(response-scope single-beat)`,
