@@ -6527,6 +6527,14 @@ generalized per-ID issue-order queues. The audit found no cleanup or
 lower-layer prerequisite: bounded concrete queue-head behavior is generated
 over static concrete ID values and transaction inventory, while PPIF
 transaction IDs currently accept only `auto` or concrete `(value N)`.
+Dynamic transaction-ID contract selection:
+[AXI_IAL2_MANAGER_DYNAMIC_TRANSACTION_ID_CONTRACT_SELECTION](../../AXI_IAL2_MANAGER_DYNAMIC_TRANSACTION_ID_CONTRACT_SELECTION.md)
+selects transaction-local `(id dynamic)` and `.218`, metadata-first dynamic
+transaction-ID parser/report readiness. The selected dynamic ID source is the
+family request-ID signal declared in `id-families` at the transaction's
+admitted request point; dynamic capture, response matching, same-ID policy,
+queues, scoreboards, support accounting, generated artifacts, validation,
+tests, and HDL remain deferred.
 
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
@@ -8789,7 +8797,7 @@ support catalog entries instead of recursive workspace traversal.
 `SEMANTIC-INTROSPECTION-MCP-FRONTIER.30` closes the immediate read-only
 semantic-introspection/MCP pass after source discovery; the active roadmap
 priority is again the IAL2 feature-completeness tree, currently at
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.217`.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.218`.
 
 Selected first MCP resource families are `fsmgen://capabilities`,
 `fsmgen://contracts`, `fsmgen://diagnostics`,

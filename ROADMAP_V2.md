@@ -1080,7 +1080,7 @@ support-accounting metadata under query/limit/filter controls.
 `SEMANTIC-INTROSPECTION-MCP-FRONTIER.30` closes the immediate read-only
 semantic-introspection/MCP pass after source discovery and returns active
 roadmap priority to the IAL2 feature-completeness tree, currently at
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.217`.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.218`.
 The parser/report metadata slice `IAL2-FEATURE-COMPLETENESS-FRONTIER.39` is
 now shipped for the bounded AXI read response-demux public contract selected
 by `.38`. The selected read arm requires `(response-scope single-beat)`,
@@ -1997,10 +1997,12 @@ assertions. Non-counted directions and mixed auto-ID single concrete-group
 directions preserve Boolean admission and the existing family-wide assertion.
 Selector `.215` found no cleanup prerequisite and selected `.216`; audit
 `.216` selected `.217`, public dynamic/user transaction-ID contract selection
-before generalized per-ID issue-order queues. The bounded concrete queue-head
-representation is generated over static concrete ID values and transaction
-inventory, while PPIF transaction IDs currently accept only `auto` or
-concrete `(value N)`.
+before generalized per-ID issue-order queues. Selector `.217` selected
+transaction-local `(id dynamic)`, sourced from the family request-ID signal at
+the admitted request point, and advanced the frontier to `.218`,
+metadata-first dynamic transaction-ID parser/report readiness. Dynamic ID
+capture, response matching, same-ID policy, queues, scoreboards, support
+accounting, generated artifacts, validation, tests, and HDL remain deferred.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.
