@@ -1090,9 +1090,10 @@ single-beat dynamic read transaction-ID capture and `RID` response matching:
 explicit `response-demux.read` with one transaction-local dynamic read ID
 captures admitted `ARID`, stores generated selected-ID/busy state, matches raw
 read responses with `RID == captured_id`, pulses the generated read completion,
-and support-accounts the new dynamic read PPIF sample. `.228` is the active
-selector for the next exact dynamic-ID/IAL2 owner after the bounded
-single-active dynamic read/write demux shapes.
+and support-accounts the new dynamic read PPIF sample. `.228` selected `.229`,
+readiness audit for dynamic read burst-last/`RLAST` transaction-ID capture and
+response matching after the bounded single-active dynamic read/write demux
+shapes.
 The parser/report metadata slice `IAL2-FEATURE-COMPLETENESS-FRONTIER.39` is
 now shipped for the bounded AXI read response-demux public contract selected
 by `.38`. The selected read arm requires `(response-scope single-beat)`,
@@ -2038,9 +2039,10 @@ path captures admitted `ARID`, stores selected-ID/busy state, matches raw read
 responses with `RID == captured_id`, pulses the generated read completion,
 releases busy from that completion, reports
 `bounded_dynamic_read_rid_demux_contract`, and adds a support-accounted dynamic
-read PPIF sample. Selector `.228` will choose the next exact owner after the
-bounded single-active dynamic read/write demux shapes. Dynamic read
-burst-last/`RLAST`, read-data routing, burst-length/runtime validation,
+read PPIF sample. `.228` selected `.229`, readiness audit for dynamic read
+burst-last/`RLAST` transaction-ID capture and response matching after the
+bounded single-active dynamic read/write demux shapes. Dynamic read-data
+routing, burst-length/runtime validation,
 interleaving, multiple dynamic reads, mixed dynamic/static read demux,
 same-cycle recapture, same-ID ordering, queues, scoreboards, direct backend
 behavior, HDL shapes outside this selected SystemVerilog path, and VHDL remain
