@@ -6843,6 +6843,16 @@ The readiness audit
 selects `.243`, direct bounded implementation. The remaining work is local to
 dynamic multi-beat coverage admission plus dynamic report-residue recognition;
 the existing public syntax and output-bank lowerers are already adjacent.
+Dynamic multi-beat behavior:
+[AXI_IAL2_MANAGER_DYNAMIC_MULTI_BEAT_BEHAVIOR](../../AXI_IAL2_MANAGER_DYNAMIC_MULTI_BEAT_BEHAVIOR.md)
+now ships that selected shape. The public sample
+`ppif/axi_manager_capacity_status_dynamic_read_data_multi_beat.ppif`
+generates per-beat `RDATA`/`RRESP` output lanes, a valid mask, a length
+output, a worst-observed scalar `RRESP` aggregate, raw matched-`RID`
+per-beat capture, and the `.240` expected-beat/`RLAST` runtime assertions.
+Multiple/mixed dynamic demux, same-cycle recapture, dynamic same-ID ordering,
+queues, scoreboards, direct backend behavior, backend-language variants, and
+VHDL remain deferred.
 
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)

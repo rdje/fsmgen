@@ -88,6 +88,15 @@ my @DYNAMIC_CASES = (
         coverage     => 'ial2_ppif_manager_capacity_status_dynamic_read_data_burst_length_runtime_assertion_pipeline_cli',
         behavior     => 'dynamic_read_data_burst_length_runtime_assertion',
     },
+    {
+        label        => 'dynamic read-data multi-beat output bank',
+        relpath      => 'ppif/axi_manager_capacity_status_dynamic_read_data_multi_beat.ppif',
+        object_id    => 'axi-manager-capacity-status-dynamic-read-data-multi-beat',
+        intent_name  => 'axi_manager_capacity_status_dynamic_read_data_multi_beat',
+        entry_id     => 'intent.ppif_axi_manager_capacity_status_dynamic_read_data_multi_beat',
+        coverage     => 'ial2_ppif_manager_capacity_status_dynamic_read_data_multi_beat_pipeline_cli',
+        behavior     => 'dynamic_read_data_multi_beat',
+    },
 );
 
 my $adapter = FSM::Adapter::IAL2::PPIF->new();
@@ -291,6 +300,37 @@ sub assert_dynamic_behavior {
         return;
     }
 
+    if ($case->{behavior} eq 'dynamic_read_data_multi_beat') {
+        like($isf, qr/\(rule axi0_r0_response_demux \(& axi0_read_complete axi0_r0_dynamic_busy_q \(== axi0_rid axi0_r0_dynamic_id_q\) axi0_rlast\)/, 'dynamic multi-beat read-data keeps generated RID/RLAST demux');
+        like($isf, qr/\(input axi0_arlen \(width 8\)\)/, 'dynamic multi-beat read-data declares ARLEN input');
+        like($isf, qr/\(output axi0_r0_beat_rdata_0 \(width 32\)\)/, 'dynamic multi-beat read-data declares first RDATA lane');
+        like($isf, qr/\(output axi0_r0_beat_rresp_15 \(width 2\)\)/, 'dynamic multi-beat read-data declares final RRESP lane');
+        like($isf, qr/\(output axi0_r0_beat_valid \(width 16\)\)/, 'dynamic multi-beat read-data declares valid-mask output');
+        like($isf, qr/\(output axi0_r0_read_beats \(width 5\)\)/, 'dynamic multi-beat read-data declares length output');
+        like($isf, qr/\(output axi0_r0_rresp \(width 2\)\)/, 'dynamic multi-beat read-data declares scalar aggregate RRESP output');
+        like($isf, qr/\(rule axi0_r0_read_data_output_init axi0_r0_request\s+\(axi0_r0_beat_rdata_0 32'd0\)[\s\S]*\(axi0_r0_beat_valid 16'b0\)\s+\(axi0_r0_read_beats 5'd0\)\)/, 'dynamic multi-beat read-data clears output bank on request');
+        like($isf, qr/\(rule axi0_r0_read_beat_0_capture \(& \(& axi0_read_complete \(& axi0_r0_dynamic_busy_q \(== axi0_rid axi0_r0_dynamic_id_q\)\)\) \(! axi0_r0_request\) \(== axi0_r0_read_beat_count_q 5'd0\)\)\s+\(axi0_r0_beat_rdata_0 axi0_rdata\)[\s\S]*\(axi0_r0_beat_valid 16'b0000000000000001\)\s+\(axi0_r0_read_beats 5'd1\)\)/, 'dynamic multi-beat read-data captures first matched beat lane');
+        like($isf, qr/\(rule axi0_r0_read_beat_15_capture \(& \(& axi0_read_complete \(& axi0_r0_dynamic_busy_q \(== axi0_rid axi0_r0_dynamic_id_q\)\)\) \(! axi0_r0_request\) \(== axi0_r0_read_beat_count_q 5'd15\)\)[\s\S]*\(axi0_r0_beat_rresp_15 axi0_rresp\)\s+\(axi0_r0_beat_valid 16'b1111111111111111\)\s+\(axi0_r0_read_beats 5'd16\)\)/, 'dynamic multi-beat read-data captures final matched beat lane');
+        like($isf, qr/\(rule axi0_r0_rresp_aggregate \(& \(& axi0_read_complete \(& axi0_r0_dynamic_busy_q \(== axi0_rid axi0_r0_dynamic_id_q\)\)\) \(! axi0_r0_request\) \(< axi0_r0_rresp axi0_rresp\)\)/, 'dynamic multi-beat read-data updates scalar RRESP aggregate on worse status');
+        assert_dynamic_read_rlast_report($result->{report});
+        assert_dynamic_read_data_multi_beat_report($result->{report}{read_data});
+        is_deeply($result->{report}{response_demux}{residue}, [qw(same_id_ordering)], 'dynamic multi-beat read-data removes read-data interleaving and burst residue from demux report');
+        like($fsm, qr/\(-axi0_r0_read_beat_0_capture\s+<\(& \(& axi0_read_complete \(& axi0_r0_dynamic_busy_q \(== axi0_rid axi0_r0_dynamic_id_q\)\)\) \(! axi0_r0_request\) \(== axi0_r0_read_beat_count_q 5'd0\)\)\s+\(<- \(axi0_r0_beat_rdata_0> axi0_rdata\)\)/, 'scheduled FSM lowers dynamic first-beat lane capture');
+        like($fsm, qr/\(-axi0_r0_rresp_aggregate\s+<\(& \(& axi0_read_complete \(& axi0_r0_dynamic_busy_q \(== axi0_rid axi0_r0_dynamic_id_q\)\)\) \(! axi0_r0_request\) \(< axi0_r0_rresp axi0_rresp\)\)/, 'scheduled FSM lowers dynamic scalar RRESP aggregation');
+        my $hdl = hdl_for('axi0_capacity_status', $fsm);
+        like($hdl, qr/\boutput\s+reg\s+\[31:0\]\s+axi0_r0_beat_rdata_0\b/, 'SystemVerilog exposes first dynamic multi-beat RDATA lane');
+        like($hdl, qr/\boutput\s+reg\s+\[1:0\]\s+axi0_r0_beat_rresp_15\b/, 'SystemVerilog exposes final dynamic multi-beat RRESP lane');
+        like($hdl, qr/\boutput\s+reg\s+\[15:0\]\s+axi0_r0_beat_valid\b/, 'SystemVerilog exposes dynamic multi-beat valid mask');
+        like($hdl, qr/\boutput\s+reg\s+\[4:0\]\s+axi0_r0_read_beats\b/, 'SystemVerilog exposes dynamic multi-beat length');
+        like($hdl, qr/\boutput\s+reg\s+\[1:0\]\s+axi0_r0_rresp\b/, 'SystemVerilog exposes dynamic scalar RRESP aggregate');
+        like($hdl, qr/assign\s+axi0_r0_read_beat_0_capture_en\s*=/, 'SystemVerilog emits first-lane capture enable');
+        like($hdl, qr/axi0_r0_beat_rdata_0_next\s*=\s*axi0_rdata\s*;/, 'SystemVerilog captures dynamic first-lane RDATA');
+        like($hdl, qr/axi0_r0_beat_valid_next\s*=\s*16'b1\s*;/, 'SystemVerilog captures dynamic valid mask for first beat');
+        like($hdl, qr/axi0_r0_read_beats_next\s*=\s*5'd1\s*;/, 'SystemVerilog captures dynamic length for first beat');
+        like($hdl, qr/assign\s+axi0_r0_rresp_aggregate_en\s*=/, 'SystemVerilog emits scalar RRESP aggregate enable');
+        return;
+    }
+
     fail("unknown dynamic behavior '$case->{behavior}'");
 }
 
@@ -444,6 +484,43 @@ sub assert_dynamic_read_data_burst_length_report {
         ok(!exists $read->{generated_beat_count_rules}, 'dynamic burst-length read-data report has no beat-count rules');
         is_deeply($read_data->{residue}, [qw(generated_beat_count_validation multi_beat_read_data_reassembly per_beat_outputs rresp_aggregation)], 'dynamic burst-length read-data report keeps explicit report-only residue');
     }
+}
+
+sub assert_dynamic_read_data_multi_beat_report {
+    my ($read_data) = @_;
+    my $read = $read_data->{read};
+    my @data_outputs = map { "axi0_r0_beat_rdata_$_" } 0 .. 15;
+    my @status_outputs = map { "axi0_r0_beat_rresp_$_" } 0 .. 15;
+    my @capture_rules = map { "axi0_r0_read_beat_${_}_capture" } 0 .. 15;
+
+    ok($read_data->{generated_behavior}, 'dynamic multi-beat read-data report marks generated behavior');
+    is($read_data->{mode}, 'bounded_multi_beat_read_data_contract', 'dynamic multi-beat read-data report marks multi-beat mode');
+    is($read->{completion_source}, 'response_demux', 'dynamic multi-beat read-data report binds to response-demux completion');
+    is($read->{completion_validity}, 'generated_dynamic_read_response_demux_last_beat_completion_pulse', 'dynamic multi-beat read-data report names generated dynamic last-beat validity');
+    is($read->{capture_scope}, 'multi_beat', 'dynamic multi-beat read-data report marks multi-beat capture');
+    is($read->{status_policy}, 'per_beat', 'dynamic multi-beat read-data report marks per-beat status');
+    is($read->{status_aggregation}, 'worst_observed', 'dynamic multi-beat read-data report marks worst-observed aggregation');
+    ok($read->{status_aggregation_generated_behavior}, 'dynamic multi-beat read-data report marks generated status aggregation');
+    is($read->{interleaving_policy}, 'multi_beat_by_rid', 'dynamic multi-beat read-data report marks multi-beat-by-RID interleaving');
+    is($read->{burst_length_source}, 'arlen_signal', 'dynamic multi-beat read-data report names ARLEN source');
+    is($read->{burst_length_validation}, 'runtime_assertion', 'dynamic multi-beat read-data report marks runtime validation');
+    is($read->{beat_match_source}, 'response_demux_matched_read_beat', 'dynamic multi-beat read-data report uses raw matched beat source');
+    is($read->{beat_count_match_source}, 'response_demux_matched_read_beat', 'dynamic multi-beat read-data report uses matched beat-count source');
+    is($read->{output_shape}, 'per_beat_output_bank', 'dynamic multi-beat read-data report marks output-bank shape');
+    ok($read->{multi_beat_reassembly_generated_behavior}, 'dynamic multi-beat read-data report marks generated reassembly');
+    is_deeply([map { $_->{transaction} } @{$read->{transactions}}], [qw(r0)], 'dynamic multi-beat read-data report binds r0 only');
+    is_deeply([map { $_->{completion_signal} } @{$read->{transactions}}], [qw(axi0_r0_complete)], 'dynamic multi-beat read-data report uses generated r0 completion');
+    is_deeply($read->{transactions}[0]{generated_data_outputs}, \@data_outputs, 'dynamic multi-beat read-data report names generated data lanes');
+    is_deeply($read->{transactions}[0]{generated_status_outputs}, \@status_outputs, 'dynamic multi-beat read-data report names generated status lanes');
+    is_deeply($read->{transactions}[0]{multi_beat_capture_rules}, \@capture_rules, 'dynamic multi-beat read-data report names per-lane capture rules');
+    is_deeply($read->{generated_multi_beat_data_outputs}, \@data_outputs, 'dynamic multi-beat read-data report names generated data output bank');
+    is_deeply($read->{generated_multi_beat_status_outputs}, \@status_outputs, 'dynamic multi-beat read-data report names generated status output bank');
+    is_deeply($read->{generated_multi_beat_valid_outputs}, [qw(axi0_r0_beat_valid)], 'dynamic multi-beat read-data report names valid-mask output');
+    is_deeply($read->{generated_multi_beat_length_outputs}, [qw(axi0_r0_read_beats)], 'dynamic multi-beat read-data report names length output');
+    is_deeply($read->{generated_status_aggregate_outputs}, [qw(axi0_r0_rresp)], 'dynamic multi-beat read-data report names scalar aggregate output');
+    is_deeply($read->{generated_multi_beat_output_init_rules}, [qw(axi0_r0_read_data_output_init)], 'dynamic multi-beat read-data report names output init rule');
+    is_deeply($read->{generated_status_aggregate_update_rules}, [qw(axi0_r0_rresp_aggregate)], 'dynamic multi-beat read-data report names aggregate update rule');
+    is_deeply($read_data->{residue}, [], 'dynamic multi-beat read-data report removes generated read-data residue');
 }
 
 sub assert_dynamic_residue {
