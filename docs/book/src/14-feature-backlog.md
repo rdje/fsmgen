@@ -6860,6 +6860,13 @@ behavior. The selected dynamic multi-beat sample now has empty `read_data`
 residue and keeps only `same_id_ordering` in `response_demux.residue`; the
 next prerequisite is the dynamic response ownership model for multiple
 dynamic transactions, mixed dynamic/static demux, and same-cycle recapture.
+Multiple dynamic response-demux readiness:
+[AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_RESPONSE_DEMUX_READINESS_AUDIT](../../AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_RESPONSE_DEMUX_READINESS_AUDIT.md)
+selects `.246`, public contract selection for bounded multiple dynamic write
+response-demux behavior. The audit found list-shaped lower helpers after
+normalization, but the public contract must first define dynamic same-ID
+ambiguity handling before one raw response can safely map across multiple
+active dynamic transactions.
 
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
