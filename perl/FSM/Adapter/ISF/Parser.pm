@@ -2183,6 +2183,69 @@ sub _finalize_actor_storage_widths($self, $actor) {
         confess "Error: actor '$actor_name' $context width token '$width' is not a $missing_source_detail; use '(type NAME)' for type aliases\n";
     }
 
+    _finalize_actor_storage_fields($actor);
+
+    return 1;
+}
+
+sub _finalize_actor_storage_fields {
+    my ($actor) = @_;
+    my $actor_name = $actor->{actor_name} // 'unknown';
+
+    for my $entry (@{$actor->{storage} || []}) {
+        my $fields = $entry->{fields};
+        next unless ref($fields) eq 'ARRAY' && @$fields;
+
+        my $storage_name = $entry->{name};
+        confess "Error: actor '$actor_name' storage '$storage_name' fields are supported only on scalar var entries in this slice\n"
+            unless ($entry->{kind} // '') eq 'var';
+
+        my $parent_width = $entry->{width};
+        confess "Error: actor '$actor_name' storage '$storage_name' fields require a resolved positive integer parent width\n"
+            unless defined($parent_width) && !ref($parent_width) && $parent_width =~ /\A[1-9][0-9]*\z/;
+        $parent_width += 0;
+
+        my $parent_reset = $entry->{reset_value};
+        if (defined $parent_reset) {
+            confess "Error: actor '$actor_name' storage var '$storage_name' reset value $parent_reset does not fit in $parent_width bit(s)\n"
+                if $parent_reset >= (2 ** $parent_width);
+        }
+
+        my %used_bits;
+        for my $field (@$fields) {
+            my $field_name = $field->{name};
+            my $msb = $field->{msb};
+            my $lsb = $field->{lsb};
+            confess "Error: actor '$actor_name' storage '$storage_name' field '$field_name' bits [$msb:$lsb] exceed parent width $parent_width\n"
+                if $msb >= $parent_width;
+            my $field_width = $msb - $lsb + 1;
+            $field->{width} = $field_width;
+
+            for my $bit ($lsb .. $msb) {
+                confess "Error: actor '$actor_name' storage '$storage_name' field '$field_name' overlaps field '$used_bits{$bit}' at bit $bit\n"
+                    if exists $used_bits{$bit};
+                $used_bits{$bit} = $field_name;
+            }
+
+            if (exists $field->{reset}) {
+                my $reset = $field->{reset};
+                confess "Error: actor '$actor_name' storage '$storage_name' field '$field_name' reset value $reset does not fit in $field_width bit(s)\n"
+                    if $reset >= (2 ** $field_width);
+                confess "Error: actor '$actor_name' storage '$storage_name' field '$field_name' reset metadata requires parent storage '(reset V)' in this slice\n"
+                    unless defined $parent_reset;
+                my $parent_slice = int($parent_reset / (2 ** $lsb)) % (2 ** $field_width);
+                confess "Error: actor '$actor_name' storage '$storage_name' field '$field_name' reset value $reset does not match parent reset slice $parent_slice\n"
+                    unless $reset == $parent_slice;
+            }
+
+            for my $member (@{$field->{enum} || []}) {
+                my $value = $member->{value};
+                confess "Error: actor '$actor_name' storage '$storage_name' field '$field_name' enum member '$member->{name}' value $value does not fit in $field_width bit(s)\n"
+                    if $value >= (2 ** $field_width);
+            }
+        }
+    }
+
     return 1;
 }
 
@@ -8592,6 +8655,13 @@ sub _parse_storage($self, $clause, $actor_name) {
                 );
                 next;
             }
+            if ($option_name eq 'fields') {
+                $parsed_options{fields_value} = _parse_actor_storage_fields_option(
+                    $option,
+                    "Error: actor '$actor_name' storage '$name' fields",
+                );
+                next;
+            }
             # ISF-REGISTER-RESET-VALUES.4: `(reset V)` sets a storage var's hardware reset
             # value (the value the register powers up at) — for register-map / CSR fields.
             if ($option_name eq 'reset') {
@@ -8610,6 +8680,8 @@ sub _parse_storage($self, $clause, $actor_name) {
             if defined($width) && defined($type);
         confess "Error: actor '$actor_name' storage '$name' requires '(width N)' or '(type NAME)'\n"
             unless defined($width) || defined($type);
+        confess "Error: actor '$actor_name' storage '$name' fields require scalar '(var ...)' storage with '(width N)'; typed storage fields are not supported in this slice\n"
+            if defined($parsed_options{fields_value}) && defined($type);
 
         my $reset = $parsed_options{reset_value};
         if (defined $reset) {
@@ -8626,6 +8698,8 @@ sub _parse_storage($self, $clause, $actor_name) {
                 if defined($parsed_options{depth_value});
             @signals = ({ name => $name, width => $width, (defined $reset ? (reset_value => $reset) : ()) });
         } else {
+            confess "Error: actor '$actor_name' storage bank '$name' does not accept '(fields ...)'; field-structured storage is supported only on scalar var entries in this slice\n"
+                if defined($parsed_options{fields_value});
             my $depth = $parsed_options{depth_value};
             confess "Error: actor '$actor_name' storage bank '$name' requires '(depth N)'\n"
                 unless defined($depth);
@@ -8641,6 +8715,8 @@ sub _parse_storage($self, $clause, $actor_name) {
             ($kind eq 'bank' ? (depth => $parsed_options{depth_value}) : ()),
             (defined $reset ? (reset_value => $reset) : ()),
         };
+        $entries[-1]{fields} = $parsed_options{fields_value}
+            if defined($parsed_options{fields_value});
         $entries[-1]{type} = $type if defined $type;
         $entries[-1]{domain} = $parsed_options{domain_value}
             if defined($parsed_options{domain_value});
@@ -8689,6 +8765,125 @@ sub _parse_actor_storage_width_option {
     return $option->[1] =~ /\A[1-9][0-9]*\z/
         ? 0 + $option->[1]
         : $option->[1];
+}
+
+sub _parse_actor_storage_fields_option {
+    my ($option, $context) = @_;
+
+    confess "$context requires '(fields (field NAME (bits HI LO) ...) ...)'\n"
+        unless ref($option) eq 'ARRAY' && @$option >= 2;
+
+    my @fields;
+    my %seen_field;
+    for my $field (@{$option}[1 .. $#$option]) {
+        confess "$context entries must be '(field NAME (bits HI LO) ...)'\n"
+            unless ref($field) eq 'ARRAY' && @$field >= 3;
+        my ($keyword, $name, @items) = @$field;
+        confess "$context entries must start with 'field'\n"
+            unless defined($keyword) && !ref($keyword) && $keyword eq 'field';
+        confess "$context field name must be a scalar HDL identifier\n"
+            unless _is_hdl_identifier($name);
+        confess "$context has duplicate field name '$name'\n"
+            if $seen_field{$name}++;
+
+        my %seen_options;
+        my %entry = (name => $name);
+        for my $item (@items) {
+            confess "$context field '$name' options must be list forms\n"
+                unless ref($item) eq 'ARRAY' && @$item;
+            my $option_name = $item->[0];
+            confess "$context field '$name' option name must be scalar\n"
+                unless defined($option_name) && !ref($option_name) && length($option_name);
+            confess "$context field '$name' has duplicate '$option_name' option\n"
+                if $seen_options{$option_name}++;
+
+            if ($option_name eq 'bits') {
+                confess "$context field '$name' bits requires '(bits HI LO)' with non-negative integer literals and HI >= LO\n"
+                    unless @$item == 3
+                        && defined($item->[1]) && !ref($item->[1]) && $item->[1] =~ /\A[0-9]+\z/
+                        && defined($item->[2]) && !ref($item->[2]) && $item->[2] =~ /\A[0-9]+\z/
+                        && ($item->[1] + 0) >= ($item->[2] + 0);
+                $entry{msb} = $item->[1] + 0;
+                $entry{lsb} = $item->[2] + 0;
+                next;
+            }
+            if ($option_name eq 'access') {
+                confess "$context field '$name' access requires '(access ro|rw|wo|w1c|w0c|rc|rs|warl|wpri|reserved)'\n"
+                    unless @$item == 2
+                        && defined($item->[1])
+                        && !ref($item->[1])
+                        && _is_actor_storage_field_access($item->[1]);
+                $entry{access} = $item->[1];
+                next;
+            }
+            if ($option_name eq 'reset') {
+                confess "$context field '$name' reset requires '(reset V)' with a non-negative integer literal\n"
+                    unless @$item == 2
+                        && defined($item->[1])
+                        && !ref($item->[1])
+                        && $item->[1] =~ /\A[0-9]+\z/;
+                $entry{reset} = $item->[1] + 0;
+                next;
+            }
+            if ($option_name eq 'enum') {
+                $entry{enum} = _parse_actor_storage_field_enum_option($item, "$context field '$name' enum");
+                next;
+            }
+
+            confess "$context field '$name' has unsupported option '$option_name'\n";
+        }
+
+        confess "$context field '$name' requires '(bits HI LO)'\n"
+            unless exists($entry{msb}) && exists($entry{lsb});
+        $entry{width} = $entry{msb} - $entry{lsb} + 1;
+        push @fields, \%entry;
+    }
+
+    return \@fields;
+}
+
+sub _parse_actor_storage_field_enum_option {
+    my ($option, $context) = @_;
+
+    confess "$context requires '(enum (NAME VALUE) ...)'\n"
+        unless ref($option) eq 'ARRAY' && @$option >= 2;
+
+    my @members;
+    my %seen_name;
+    my %seen_value;
+    for my $member (@{$option}[1 .. $#$option]) {
+        confess "$context entries must be '(NAME VALUE)'\n"
+            unless ref($member) eq 'ARRAY' && @$member == 2;
+        my ($name, $value) = @$member;
+        confess "$context member name must be a scalar HDL identifier\n"
+            unless _is_hdl_identifier($name);
+        confess "$context member '$name' value must be a non-negative integer literal\n"
+            unless defined($value) && !ref($value) && $value =~ /\A[0-9]+\z/;
+        confess "$context has duplicate member name '$name'\n"
+            if $seen_name{$name}++;
+        confess "$context has duplicate member value '$value'\n"
+            if $seen_value{$value + 0}++;
+        push @members, { name => $name, value => $value + 0 };
+    }
+
+    return \@members;
+}
+
+sub _is_actor_storage_field_access {
+    my ($value) = @_;
+    return 0 unless defined($value) && !ref($value);
+    return {
+        ro       => 1,
+        rw       => 1,
+        wo       => 1,
+        w1c      => 1,
+        w0c      => 1,
+        rc       => 1,
+        rs       => 1,
+        warl     => 1,
+        wpri     => 1,
+        reserved => 1,
+    }->{$value} ? 1 : 0;
 }
 
 sub _parse_transaction_port_width_option {

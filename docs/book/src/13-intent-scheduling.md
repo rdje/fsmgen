@@ -608,6 +608,11 @@ counters, and register storage with known ISF width evidence.
 Declared typed actor-owned storage may also expose optional `type` and `type_kind` summaries;
 the full type shape remains in the scheduled `.fsm` `+types`/`+size` review
 artifact.
+Declared scalar actor-owned storage may also expose optional `fields[]`
+metadata. Each field entry reports `name`, `msb`, `lsb`, `width`, and optional
+`access`, `reset`, and inline `enum[]` member metadata. This is a report
+surface only; field metadata does not change scheduled `.fsm`, HDL, access
+policy, or reset behavior.
 
 Transaction summaries expose emitted scheduled-state names in `states`, and
 `count` equals that array length; transaction summaries are sorted lexically by

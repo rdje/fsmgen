@@ -1025,3 +1025,13 @@ semantic JSON, or public syntax. A future implementation must be task-tree
 owned, documented in the mdBook/downstream handoff, support-accounted, covered
 by focused positive and fail-closed tests, projected through public reports as
 selected, and committed through the normal workflow.
+
+Implementation update (`2026-06-22`): the first bounded FSMGen slice now ships
+metadata-only declarative fields on scalar actor-owned storage variables.
+Authors may write `(fields (field NAME (bits HI LO) ...))` under a width-based
+`(var ...)` / `(variable ...)` entry. FSMGen validates names, literal ranges,
+non-overlap, optional access tokens, field reset metadata against an explicit
+parent reset, and inline enum values, then publishes the result through
+optional `inferred_storage[].fields`. This does not change generated `.fsm`,
+HDL, access behavior, reset derivation, banks, aggregate carriers, packet/flit
+layouts, or existing runtime field/data operations.

@@ -8494,16 +8494,15 @@ does not use an internal
 bank, but the shipped data-path probe now exercises a depth-4 bank through explicit
 store/load access.
 
-Declarative field-structured storage is accepted as future ISF work, not a
-current syntax. SPECFORGE's 2026-06-22 request identified static register/CSR
-bit-field maps and packet/flit layouts as a real representational gap:
-current `(storage (var NAME (width N)))` declarations are opaque words, while
-`set-field`, `when-field`, `extract`, and `assemble` are runtime behavior/data
-operations, not static layout declarations. The next owner is
-`ISF-FIELD-STRUCTURED-STORAGE-FRONTIER.1`, which must select syntax,
-validation, reset composition, enum/access metadata, report/semantic JSON
-projection, tests, docs, and residue before any parser or lowering behavior
-changes.
+Declarative field-structured storage now ships for the first bounded scalar
+storage slice: `(fields (field NAME (bits HI LO) ...))` is accepted on
+width-based scalar `var` / `variable` storage and appears as optional
+`inferred_storage[].fields` metadata. It remains report-only; `set-field`,
+`when-field`, `extract`, and `assemble` are still runtime behavior/data
+operations, not static layout declarations. Residual work remains for parent
+reset derivation, access-policy behavior, generated assertions/register
+models, actor `(enums ...)` references, banks, typed aggregate carriers, and
+packet/flit layouts.
 
 Selected data-buffer access surface:
 

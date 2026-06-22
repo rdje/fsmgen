@@ -634,11 +634,19 @@ Rules:
 - Banks lower to deterministic scalar storage entries such as `data_0`,
   `data_1`, `data_2`, and `data_3`.
 - Schedule reports expose declared storage through `inferred_storage`.
-- Declarative named bit-field maps on storage/register-like words are not a
-  shipped ISF surface yet. Existing runtime field/data operations such as
-  `set-field`, `when-field`, `extract`, and `assemble` must not be used to
-  stand in for a static PDF register table. The accepted future direction is
-  tracked by `ISF-FIELD-STRUCTURED-STORAGE-FRONTIER.1`.
+- Scalar `(var ...)` / `(variable ...)` storage entries may carry optional
+  `(fields (field NAME (bits HI LO) ...))` metadata. The first shipped slice is
+  metadata-only: it validates names, literal bit ranges inside the resolved
+  parent width, non-overlap, optional access vocabulary, optional field reset
+  metadata cross-checked against an explicit parent `(reset V)`, and inline
+  enum values. It publishes the accepted map as optional
+  `inferred_storage[].fields` on the parent storage entry. It does not derive
+  parent resets, enforce access policy, generate assertions/register models,
+  or generalize to banks, aggregate carriers, packet/flit layouts, or typed
+  storage entries.
+- Existing runtime field/data operations such as `set-field`, `when-field`,
+  `extract`, and `assemble` remain scheduled behavior and must not be used to
+  stand in for a static PDF register table.
 - `isf/fifo_data_path.isf` is the representative file-backed bank datapath
   fixture for scalarized store/load behavior.
 - `isf/fifo_controller.isf` is the representative file-backed controller-only
@@ -3438,7 +3446,8 @@ verification_observations[]: name, role, clock, reset, signals
 verification_observations[].signals[]: name, direction, width
 actor_params[]: name, value
 inferred_storage[] required: name, kind
-inferred_storage[] optional: role, type, type_kind, width
+inferred_storage[] optional: role, type, type_kind, width, fields
+inferred_storage[].fields[]: name, msb, lsb, width, access, reset, enum
 transactions[]: name, states, count
 transaction_waits[]: transaction, cycles, count_kind, count_source,
   entry_state, exit_state, counter_signal, counter_width

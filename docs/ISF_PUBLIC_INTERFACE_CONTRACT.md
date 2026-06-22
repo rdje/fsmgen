@@ -411,6 +411,12 @@ Actor-owned fixed storage declarations are checked by
 for parser shape, authored `(var ...)` / `(variable ...)` scalar storage
 forms, scalarized bank lowering, `actor_storage` report metadata, fail-closed
 diagnostics, and SystemVerilog generation for used storage.
+Declarative scalar storage field metadata is checked by
+[t/1453-isf-storage-field-metadata.t](../t/1453-isf-storage-field-metadata.t),
+covering `(fields (field NAME (bits HI LO) ...))` parser validation,
+optional access/reset/enum metadata, `inferred_storage[].fields` report
+projection, byte-identical scheduled `.fsm` output versus opaque storage, and
+fail-closed diagnostics for malformed field maps.
 Actor-owned scalar storage widths backed by actor-local scalar parameter
 defaults are checked by
 [t/1334-isf-scalar-storage-actor-param-widths.t](../t/1334-isf-scalar-storage-actor-param-widths.t)
@@ -2560,6 +2566,13 @@ actor-local scalar parameters, declared actor constants, or qualified imported
 package scalar constants that resolve to positive integers, plus fixed-depth
 `bank` declarations whose widths and depths may use those same static scalar
 sources and whose scalarized element names are scheduler input.
+Scalar width-based storage variables may also carry optional declarative
+`(fields ...)` metadata. The parser validates field names, literal bit ranges,
+non-overlap, optional access tokens, optional field reset metadata against an
+explicit parent reset, and inline enum values. The lower/report surface
+preserves accepted fields through `inferred_storage[].fields`; generated
+`.fsm`, HDL, access-policy behavior, reset derivation, banks, aggregate
+carriers, and packet/flit layouts are unchanged by that metadata.
 Schedule reports still use coarse `kind: register` for generated storage
 class; that report value is not the source vocabulary.
 Actor roots may also carry parser-validated actor-local constants through a
@@ -3206,7 +3219,10 @@ declared actor-owned storage, inferred scheduler counters, and register
 storage with known ISF width evidence. Declared typed actor-owned storage may
 also report the authored alias in `type` and the resolved top-level kind in
 `type_kind`; these are bounded summaries and do not expose raw type-spec
-hashes. The machine-readable contract advertises these through
+hashes. Declared scalar actor-owned storage may also report optional
+`fields[]` metadata entries with `name`, `msb`, `lsb`, `width`, and optional
+`access`, `reset`, and inline `enum[]` member metadata. The machine-readable
+contract advertises these through
 `schedule_report_storage_kind_values`, `schedule_report_storage_role_values`,
 `schedule_report_storage_optional_keys`, and
 `schedule_report_storage_width_shape`.

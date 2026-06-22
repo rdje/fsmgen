@@ -1,6 +1,6 @@
 ---
 id: isf-field-structured-storage-contract-selection
-title: ISF field-structured storage first slice is metadata-only scalar storage fields
+title: ISF field-structured storage first slice ships metadata-only scalar storage fields
 answers:
   - "what is the first ISF field-structured storage implementation contract?"
   - "how will FSMGen represent declarative register fields first?"
@@ -10,13 +10,14 @@ answers:
 date: 2026-06-22
 status: current
 tags: [isf, storage, register-fields, bit-fields, schedule-report]
-evidence: docs/ISF_FIELD_STRUCTURED_STORAGE_CONTRACT_SELECTION.md; docs/tasks/ISF-FIELD-STRUCTURED-STORAGE-FRONTIER.md
-reverify: rg -n 'metadata-only|inferred_storage\\[\\]\\.fields|ISF-FIELD-STRUCTURED-STORAGE-FRONTIER\\.2|field reset|Scalar actor-owned storage' docs/ISF_FIELD_STRUCTURED_STORAGE_CONTRACT_SELECTION.md docs/tasks/ISF-FIELD-STRUCTURED-STORAGE-FRONTIER.md
+evidence: docs/ISF_FIELD_STRUCTURED_STORAGE_CONTRACT_SELECTION.md; docs/tasks/ISF-FIELD-STRUCTURED-STORAGE-FRONTIER.md; docs/ISF_SPEC.md; docs/book/src/13a-actor-interface.md; perl/FSM/Adapter/ISF/Parser.pm; perl/FSM/Scheduler/ISF/Emitter/JSON.pm; t/1453-isf-storage-field-metadata.t
+reverify: rg -n 'metadata-only|inferred_storage\\[\\]\\.fields|ISF-FIELD-STRUCTURED-STORAGE-FRONTIER\\.2|field reset|storage field metadata|Declarative Storage Fields' docs/ISF_FIELD_STRUCTURED_STORAGE_CONTRACT_SELECTION.md docs/tasks/ISF-FIELD-STRUCTURED-STORAGE-FRONTIER.md docs/ISF_SPEC.md docs/book/src/13a-actor-interface.md perl/FSM/Adapter/ISF/Parser.pm perl/FSM/Scheduler/ISF/Emitter/JSON.pm t/1453-isf-storage-field-metadata.t
 ---
 
-The first declarative field-structured storage implementation is
+The first declarative field-structured storage implementation shipped in
 `ISF-FIELD-STRUCTURED-STORAGE-FRONTIER.2`. It is limited to metadata-only
-`fields` on scalar actor-owned `(var ...)` / `(variable ...)` storage entries.
+`fields` on width-based scalar actor-owned `(var ...)` / `(variable ...)`
+storage entries.
 
 The selected syntax uses `(fields (field NAME (bits HI LO) ...))` under a
 storage variable. Validation must reject duplicate names, malformed or

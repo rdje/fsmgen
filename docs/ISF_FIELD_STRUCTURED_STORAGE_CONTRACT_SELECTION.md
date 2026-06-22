@@ -2,7 +2,7 @@
 
 - Date: `2026-06-22`
 - Owner: `ISF-FIELD-STRUCTURED-STORAGE-FRONTIER.1`
-- Status: selected for first implementation slice
+- Status: implemented for first metadata-only scalar storage slice
 
 ## Context
 

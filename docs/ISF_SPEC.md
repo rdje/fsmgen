@@ -1873,6 +1873,57 @@ The report `kind` is the generated storage class; authored scalar storage uses
 the normalized scalar storage kind. `(state ...)` and `(register ...)` are not
 accepted storage entry spellings.
 
+### 5.1.1 Declarative Storage Fields
+
+Scalar actor-owned storage variables may carry checked declarative field
+metadata:
+
+```lisp
+(storage
+  (var control (width 8) (reset 161)
+    (fields
+      (field mode   (bits 7 5) (access rw) (reset 5)
+        (enum (IDLE 0) (RUN 5)))
+      (field prio   (bits 4 2) (access rw))
+      (field enable (bits 0 0) (access rw) (reset 1)
+        (enum (OFF 0) (ON 1))))))
+```
+
+This is metadata on the parent storage word, not generated field-level RTL.
+The scheduled `.fsm` and generated HDL remain byte-equivalent to an otherwise
+identical opaque storage variable. Existing runtime field/data operations such
+as `set-field`, `when-field`, `extract`, and `assemble` remain scheduled
+behavior and are not static field-map declarations.
+
+Field syntax is accepted only under scalar `(var ...)` / `(variable ...)`
+entries that use `(width ...)`. Banks and typed storage entries reject
+`(fields ...)` in this slice. Each field form is
+`(field NAME (bits HI LO) OPTIONS...)`, where `NAME` is an HDL identifier,
+`HI` and `LO` are non-negative integer literals, and `HI >= LO`. Field names
+must be unique within the parent word. Field ranges may leave gaps; FSMGen
+does not infer unnamed reserved fields. Ranges outside the resolved parent
+width and overlapping ranges fail closed.
+
+Optional field metadata:
+
+- `(access TOKEN)`, where `TOKEN` is `ro`, `rw`, `wo`, `w1c`, `w0c`, `rc`,
+  `rs`, `warl`, `wpri`, or `reserved`.
+- `(reset V)`, where `V` is a non-negative integer literal that fits the
+  field width. A field reset requires an explicit parent storage `(reset V)`
+  and must match the corresponding parent reset bit slice; the first slice
+  does not derive parent reset values from fields.
+- `(enum (NAME VALUE)...)`, where member names are HDL identifiers, values
+  are non-negative integer literals that fit the field width, and duplicate
+  names or values within one field fail closed. References to actor
+  `(enums ...)` remain deferred.
+
+Schedule reports expose this as optional `inferred_storage[].fields` metadata
+on the parent declared storage entry. Each field entry has `name`, `msb`,
+`lsb`, `width`, and optional `access`, `reset`, and `enum` entries. No access
+policy enforcement, generated assertions, register-model output, packet/flit
+layout surface, aggregate-field layout, bank layout, or reset derivation is
+promised by this first slice.
+
 ### 5.2 Actor-Owned Bank Access
 
 The first shipped source surface for actor-owned bank data access is explicit
@@ -5759,6 +5810,7 @@ Focused tests:
 - [t/1258-isf-enum-member-constants.t](../t/1258-isf-enum-member-constants.t)
 - [t/1259-isf-aggregate-storage-type-aliases.t](../t/1259-isf-aggregate-storage-type-aliases.t)
 - [t/1260-isf-aggregate-storage-leaf-reads.t](../t/1260-isf-aggregate-storage-leaf-reads.t)
+- [t/1260-isf-verification-observation-metadata.t](../t/1260-isf-verification-observation-metadata.t)
 - [t/1261-isf-aggregate-storage-leaf-writes.t](../t/1261-isf-aggregate-storage-leaf-writes.t)
 - [t/1262-isf-aggregate-storage-leaf-expression-reads.t](../t/1262-isf-aggregate-storage-leaf-expression-reads.t)
 - [t/1263-isf-enum-member-set-values.t](../t/1263-isf-enum-member-set-values.t)
@@ -5921,6 +5973,7 @@ Focused tests:
 - [t/1432-isf-loop-pending-spawn-local-do-effect-widening.t](../t/1432-isf-loop-pending-spawn-local-do-effect-widening.t)
 - [t/1433-isf-until-pending-spawn-local-do-effect-widening.t](../t/1433-isf-until-pending-spawn-local-do-effect-widening.t)
 - [t/1434-isf-while-pending-spawn-local-do-awaitany-effect-widening.t](../t/1434-isf-while-pending-spawn-local-do-awaitany-effect-widening.t)
+- [t/1453-isf-storage-field-metadata.t](../t/1453-isf-storage-field-metadata.t)
 
 ## 12. Explicitly Deferred
 

@@ -4290,6 +4290,8 @@ sub _declared_storage_for_ir {
             $signal{type_spec} = _clone_isf_value($_->{type_spec})
                 if exists $_->{type_spec};
             $signal{index} = $_->{index} if exists $_->{index};
+            $signal{fields} = _clone_isf_value($entry->{fields})
+                if exists($entry->{fields}) && ($entry->{kind} // '') eq 'var';
             \%signal;
         } @{$entry->{signals} || []};
 
@@ -4302,6 +4304,8 @@ sub _declared_storage_for_ir {
         $copy{type} = $entry->{type} if exists $entry->{type};
         $copy{type_spec} = _clone_isf_value($entry->{type_spec})
             if exists $entry->{type_spec};
+        $copy{fields} = _clone_isf_value($entry->{fields})
+            if exists($entry->{fields}) && ($entry->{kind} // '') eq 'var';
         $copy{depth} = $entry->{depth} if exists $entry->{depth};
         push @storage, \%copy;
     }

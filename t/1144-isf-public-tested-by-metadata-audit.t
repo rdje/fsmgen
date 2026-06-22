@@ -132,6 +132,7 @@ my $expected_tested_by = [
     't/1230-isf-library-import-resolution.t',
     't/1231-isf-library-generated-top.t',
     't/1232-isf-actor-storage-declarations.t',
+    't/1453-isf-storage-field-metadata.t',
     't/1233-isf-rule-expression-guards.t',
     't/1234-isf-disjoint-rule-writes.t',
     't/1235-isf-fifo-same-cycle-update-matrix.t',

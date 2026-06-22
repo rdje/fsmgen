@@ -280,6 +280,8 @@ sub _storage_summary($self, $ir) {
                 if defined($signal->{type}) && !ref($signal->{type}) && length($signal->{type});
             my $type_kind = _declared_type_kind($signal->{type_spec});
             $entry{type_kind} = $type_kind if defined $type_kind;
+            $entry{fields} = _storage_field_summary($signal->{fields})
+                if ref($signal->{fields}) eq 'ARRAY' && @{$signal->{fields}};
             push @storage, \%entry;
         }
     }
@@ -370,6 +372,27 @@ sub _declared_type_kind {
     my $kind = $type_spec->{kind};
     return undef unless defined($kind) && !ref($kind) && length($kind);
     return $kind;
+}
+
+sub _storage_field_summary {
+    my ($fields) = @_;
+    return [
+        map {
+            my %field = (
+                name  => $_->{name},
+                msb   => $_->{msb},
+                lsb   => $_->{lsb},
+                width => $_->{width},
+            );
+            $field{access} = $_->{access}
+                if defined($_->{access}) && !ref($_->{access}) && length($_->{access});
+            $field{reset} = $_->{reset}
+                if exists $_->{reset};
+            $field{enum} = _clone_report_value($_->{enum})
+                if ref($_->{enum}) eq 'ARRAY' && @{$_->{enum}};
+            \%field;
+        } @$fields
+    ];
 }
 
 sub _contract_monitor_storage_kind($name) {

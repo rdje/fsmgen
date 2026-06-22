@@ -465,6 +465,53 @@ written/read by a transaction (this lowers cleanly and passes Verilator/Yosys):
 Out of reset the generated HDL holds `ctrl` at `1` and `mode` at `16`; both are then
 writable from `wdata` and read out on `ctrl_out`/`mode_out`.
 
+### Declarative Storage Fields
+
+A scalar storage `var` may also carry a checked, declarative field map. This
+is metadata on the parent word. It does not generate field-level RTL, access
+policy logic, assertions, or reset derivation.
+
+```lisp
+(actor csr_fields
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start)
+    (input wdata (width 8))
+    (output done)
+    (output control_out (width 8)))
+  (storage
+    (var control (width 8) (reset 161)
+      (fields
+        (field mode (bits 7 5) (access rw) (reset 5)
+          (enum (IDLE 0) (RUN 5)))
+        (field prio (bits 4 2) (access rw))
+        (field enable (bits 0 0) (access rw) (reset 1)
+          (enum (OFF 0) (ON 1))))))
+  (transaction main
+    (on start)
+    (set control wdata)
+    (update control_out control)
+    (complete done)))
+```
+
+The `control` register still lowers as one 8-bit storage word. Its scheduled
+`.fsm` is byte-identical to the same source without `(fields ...)`, and the
+HDL reset behavior still comes only from the parent `(reset 161)`. The report
+adds `inferred_storage[].fields` on the `control` storage entry so downstream
+tools can see `mode`, `prio`, and `enable` without parsing comments.
+
+Each field uses `(field NAME (bits HI LO) ...)`; names are unique HDL
+identifiers, ranges are literal and inclusive, gaps are allowed, and
+overlaps or ranges outside the parent width fail closed. Optional
+`(access ro|rw|wo|w1c|w0c|rc|rs|warl|wpri|reserved)` is metadata only.
+Optional field `(reset V)` must match the corresponding bit slice of an
+explicit parent storage reset. Inline `(enum (NAME VALUE)...)` metadata is
+accepted when values fit the field width. Actor `(enums ...)` references,
+typed storage fields, banks, aggregate carriers, packet/flit layouts, access
+enforcement, generated register models, and parent reset derivation are
+deferred.
+
 `(storage ...)` is a singleton actor clause. Storage names and scalarized
 element names must not collide with interface ports, actor clock/reset signals,
 or generated scheduler signals such as `can_accept`. Missing scalar storage

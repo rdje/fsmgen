@@ -10,10 +10,10 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `HEAD after ISF-FIELD-STRUCTURED-STORAGE-FRONTIER.1 commit` - `ISF-FIELD-STRUCTURED-STORAGE-FRONTIER.1: select storage field contract`.
-- active_work_unit: `ISF-FIELD-STRUCTURED-STORAGE-FRONTIER.2` implements metadata-only declarative fields on scalar actor-owned storage variables; `IAL2-FEATURE-COMPLETENESS-FRONTIER.240`, `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4`, and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `ISF-FIELD-STRUCTURED-STORAGE-FRONTIER.1` selected the first contract in `docs/ISF_FIELD_STRUCTURED_STORAGE_CONTRACT_SELECTION.md`: checked metadata-only `fields` on scalar `var`/`variable` storage, optional `inferred_storage[].fields` report projection, gaps legal without inferred fields, overlap/out-of-range fail-closed, field reset metadata cross-checked against explicit parent reset, inline enum metadata only, and no generated HDL/reset/access behavior. No parser, scheduler, lowerer, generated artifact, test, schedule/semantic JSON, support-accounting, or HDL behavior changed yet.
-- in_flight_uncommitted: none after the `.1` selection commit workflow. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
+- latest_commit: `HEAD after ISF-FIELD-STRUCTURED-STORAGE-FRONTIER.2 commit` - `ISF-FIELD-STRUCTURED-STORAGE-FRONTIER.2: ship scalar storage fields`.
+- active_work_unit: `ISF-FIELD-STRUCTURED-STORAGE-FRONTIER.3` selects the next field-structured storage residual or closes the frontier after scalar field metadata shipped; `IAL2-FEATURE-COMPLETENESS-FRONTIER.240`, `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4`, and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `ISF-FIELD-STRUCTURED-STORAGE-FRONTIER.2` shipped checked metadata-only `(fields (field NAME (bits HI LO) ...))` on width-based scalar actor-owned `var`/`variable` storage, validates names/ranges/overlap/access/reset/inline enum metadata, preserves it in scheduler IR, exposes optional `inferred_storage[].fields`, updates ISF/public/downstream/mdBook/Knowledge Map surfaces, and leaves scheduled `.fsm`/HDL/access/reset behavior unchanged by field metadata.
+- in_flight_uncommitted: none after the `.2` implementation commit workflow. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
 
 ## Notes
