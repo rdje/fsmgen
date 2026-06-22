@@ -634,6 +634,11 @@ Rules:
 - Banks lower to deterministic scalar storage entries such as `data_0`,
   `data_1`, `data_2`, and `data_3`.
 - Schedule reports expose declared storage through `inferred_storage`.
+- Declarative named bit-field maps on storage/register-like words are not a
+  shipped ISF surface yet. Existing runtime field/data operations such as
+  `set-field`, `when-field`, `extract`, and `assemble` must not be used to
+  stand in for a static PDF register table. The accepted future direction is
+  tracked by `ISF-FIELD-STRUCTURED-STORAGE-FRONTIER.1`.
 - `isf/fifo_data_path.isf` is the representative file-backed bank datapath
   fixture for scalarized store/load behavior.
 - `isf/fifo_controller.isf` is the representative file-backed controller-only

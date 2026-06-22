@@ -944,3 +944,84 @@ Implementation note for FSMGen: the response itself required no runtime code
 change. Adding the future metadata surface would require a separate task tree,
 live spec/book/public-contract updates, support accounting, focused positive
 and fail-closed tests, Knowledge Map sync, and the normal commit workflow.
+
+## 2026-06-22: Declarative Field-Structured Storage
+
+This answers SPECFORGE's `2026-06-22` feature request for static, named
+bit-field maps on register/CSR-like storage words and related packed
+message/packet layouts.
+
+Short answer: **yes, FSMGen accepts this as a real ISF representational gap and
+a valid future direction**, but it is not shipped syntax or behavior today.
+The right next FSMGen step is
+`ISF-FIELD-STRUCTURED-STORAGE-FRONTIER.1`, a readiness/contract audit for the
+first checked declarative storage-field surface before parser or lowering code
+changes.
+
+### Static field maps are distinct from field operations
+
+Do **not** use existing runtime field operations as a substitute for a static
+field-map declaration. Forms such as `set-field`, `when-field`, `extract`, and
+`assemble` describe scheduled behavior, guards, or data movement over an
+already-declared word. They are not declarations that say "this register word
+has source-authored fields named `mode`, `prio`, and `enable`." Emitting those
+operations solely to preserve a PDF register table would fabricate behavior in
+the same way that a value-less transaction drive would fabricate a driven
+value.
+
+Current ISF storage is therefore still opaque at the declaration level:
+`(storage (var NAME (width N) ...))` can carry a scalar word and optional reset
+value, and aggregate storage can carry selected typed record/list shapes, but
+neither is a checked static field map for a register/CSR table.
+
+### Accepted direction
+
+FSMGen agrees with the semantic shape SPECFORGE is asking for: a storage
+declaration may need an optional declarative field partition where each field
+has at least:
+
+- a field name;
+- a bit range inside the storage width;
+- optional access metadata such as `ro`, `rw`, `w1c`, or `warl`;
+- optional field reset metadata;
+- optional enum/value metadata; and
+- optional descriptive/provenance metadata when the source carries it.
+
+The first safe version should be checked metadata unless a prior contract
+slice explicitly selects generated behavior. Validation should be real:
+field ranges must be inside the parent width, overlaps must fail closed, names
+must be deterministic and non-conflicting, malformed access/reset/enum entries
+must fail closed, and the public report/semantic projection must make the
+accepted fields discoverable without parsing comments.
+
+The first audit must settle details before implementation, especially:
+
+- whether fields must tile the full word, or whether explicit reserved/gap
+  metadata is allowed without inferring undocumented fields;
+- whether field resets are metadata-only at first, cross-validated against an
+  existing `(var ... (reset V))`, or allowed to derive the storage reset only
+  when the field map is complete and non-conflicting;
+- whether enum values are inline field metadata, references to actor-local
+  `(enums ...)`, or both;
+- whether access-policy vocabulary is metadata-only or eventually feeds
+  generated assertions/verification output; and
+- whether packet/structure layout generalization ships with scalar storage
+  fields or follows as a sibling feature.
+
+### What SPECFORGE can safely do now
+
+- Keep recovered register/CSR and packet/flit field maps in SPECFORGE
+  IntentIR metadata/residuals.
+- Continue emitting opaque ISF storage variables only when width/reset facts
+  are honestly supported by the current contract.
+- Do not emit `set-field`, `when-field`, `extract`, `assemble`, fake drives,
+  or comments as a replacement for a static declarative field map.
+- Treat `ISF-FIELD-STRUCTURED-STORAGE-FRONTIER.1` as the FSMGen-owned next
+  step for this feature request.
+
+Implementation note for FSMGen: this response itself does not change parser,
+scheduler, lowerer, generated `.fsm`, HDL, support accounting, schedule JSON,
+semantic JSON, or public syntax. A future implementation must be task-tree
+owned, documented in the mdBook/downstream handoff, support-accounted, covered
+by focused positive and fail-closed tests, projected through public reports as
+selected, and committed through the normal workflow.

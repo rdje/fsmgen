@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-FIELD-STRUCTURED-STORAGE-RESPONSE`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `Downstream ISF handoff / ISF storage metadata`
 - Created: `2026-06-22`
 - Last updated: `2026-06-22`
@@ -48,7 +48,7 @@ an exact future owner before code changes.
 ## Task Tree
 
 - ID: `ISF-FIELD-STRUCTURED-STORAGE-RESPONSE`
-  Status: `active`
+  Status: `done`
   Goal: `Record FSMGen's response to SPECFORGE's declarative field-structured storage request.`
   Children: `ISF-FIELD-STRUCTURED-STORAGE-RESPONSE.1, ISF-FIELD-STRUCTURED-STORAGE-RESPONSE.2`
 
@@ -60,17 +60,18 @@ an exact future owner before code changes.
   Commit: `ISF-FIELD-STRUCTURED-STORAGE-RESPONSE.1: select field storage response`
 
 - ID: `ISF-FIELD-STRUCTURED-STORAGE-RESPONSE.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Edit and commit the tracked FSMGen response.`
   Acceptance: `The response document records the dated answer; durable follow-on task-tree or Knowledge Map state is synchronized; docs-only validation passes; and the tree either closes or points at the exact next implementation/audit owner.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `passed: added the dated tracked response; created ISF-FIELD-STRUCTURED-STORAGE-FRONTIER.1 as the next readiness/contract audit owner; updated README, docs/TASK_TREE.md, docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md, mdBook backlog, MEMORY.md, and Knowledge Map; mdbook build docs/book; bash knowledge-map/scripts/check_knowledge_map.sh; scripts/check_memory_architecture.sh; git diff --check; scripts/check_doctrines.sh`
+  Commit: `ISF-FIELD-STRUCTURED-STORAGE-RESPONSE.2: answer field storage request`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-FIELD-STRUCTURED-STORAGE-RESPONSE.2` | `pending` | `.1` created the owner and selected a docs/contract response before editing the response file. |
+| 1 | `ISF-FIELD-STRUCTURED-STORAGE-RESPONSE.1` | `done` | Created the owner and selected a docs/contract response before editing the response file. |
+| 2 | `ISF-FIELD-STRUCTURED-STORAGE-RESPONSE.2` | `done` | Added the tracked response and routed implementation work to `ISF-FIELD-STRUCTURED-STORAGE-FRONTIER.1`. |
 
 ## Decisions
 
@@ -81,13 +82,17 @@ an exact future owner before code changes.
 - `2026-06-22`: Any accepted declarative storage-field behavior must get a
   later exact owner before code, grammar, support-accounting, semantic JSON,
   schedule JSON, mdBook contract, or generated HDL behavior changes.
+- `2026-06-22`: Answer `.2`: accept declarative field-structured storage as
+  a valid future ISF direction and a real current gap, keep existing runtime
+  field operations out of static-map service, and route implementation
+  selection to `ISF-FIELD-STRUCTURED-STORAGE-FRONTIER.1`.
 
 ## Open Questions
 
 - The exact future ISF syntax, validation rules, report/semantic projection,
   reset composition, access-policy vocabulary, enum relationship, and
-  packet/structure layout generalization remain unselected until the tracked
-  response chooses the next owner.
+  packet/structure layout generalization remain unselected until
+  `ISF-FIELD-STRUCTURED-STORAGE-FRONTIER.1` completes its audit.
 
 ## Blockers
 
@@ -98,16 +103,21 @@ an exact future owner before code changes.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-06-22` | `ISF-FIELD-STRUCTURED-STORAGE-RESPONSE.1` | `Read external SPECFORGE feedback request and current FSMGen response`; `git diff --check`; `scripts/check_memory_architecture.sh`; `scripts/check_doctrines.sh` | `passed` |
+| `2026-06-22` | `ISF-FIELD-STRUCTURED-STORAGE-RESPONSE.2` | `mdbook build docs/book`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `git diff --check`; `scripts/check_doctrines.sh`; positive response/frontier scan | `passed` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `ISF-FIELD-STRUCTURED-STORAGE-RESPONSE.1` | `ISF-FIELD-STRUCTURED-STORAGE-RESPONSE.1: select field storage response` | `selection owner before response edit` |
-| `ISF-FIELD-STRUCTURED-STORAGE-RESPONSE.2` | `pending` | `pending` |
+| `ISF-FIELD-STRUCTURED-STORAGE-RESPONSE.2` | `ISF-FIELD-STRUCTURED-STORAGE-RESPONSE.2: answer field storage request` | `tracked response edited and implementation frontier created` |
 
 ## Changelog
 
 - `2026-06-22`: Created the task tree in response to SPECFORGE's declarative
   field-structured storage feature request and selected `.2` as the tracked
   response edit.
+- `2026-06-22`: Added the tracked response. FSMGen accepts declarative
+  field-structured storage as a future ISF direction and routes the exact
+  contract audit to `ISF-FIELD-STRUCTURED-STORAGE-FRONTIER.1`; existing
+  runtime field operations remain behavior, not static field-map metadata.
