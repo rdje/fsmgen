@@ -6838,6 +6838,11 @@ behavior over the selected single-active dynamic read runtime-validation
 boundary. The selector changes no behavior; multiple/mixed dynamic demux,
 same-cycle recapture, dynamic same-ID ordering, queues, scoreboards, direct
 backend behavior, backend-language variants, and VHDL remain deferred.
+The readiness audit
+[AXI_IAL2_MANAGER_DYNAMIC_MULTI_BEAT_READINESS_AUDIT](../../AXI_IAL2_MANAGER_DYNAMIC_MULTI_BEAT_READINESS_AUDIT.md)
+selects `.243`, direct bounded implementation. The remaining work is local to
+dynamic multi-beat coverage admission plus dynamic report-residue recognition;
+the existing public syntax and output-bank lowerers are already adjacent.
 
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)

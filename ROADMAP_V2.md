@@ -2094,7 +2094,9 @@ multi-beat output banks, multiple/mixed dynamic demux, same-cycle recapture,
 dynamic same-ID ordering, queues, scoreboards, direct backend behavior, and
 VHDL remain residue. Selector `.241` selected `.242`, readiness audit for
 generated dynamic multi-beat output-bank behavior over the selected dynamic
-runtime-validation boundary.
+runtime-validation boundary. Audit `.242` selected `.243`, direct bounded
+dynamic multi-beat output-bank implementation over generated dynamic runtime
+validation.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.

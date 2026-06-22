@@ -10,10 +10,10 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `HEAD after IAL2-FEATURE-COMPLETENESS-FRONTIER.241 commit` - `IAL2-FEATURE-COMPLETENESS-FRONTIER.241: select dynamic multi-beat audit`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.242` audits generated dynamic multi-beat output-bank readiness over the selected dynamic runtime-validation boundary; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.241` selected `.242` as the next exact owner; `.240` shipped generated dynamic runtime beat-count/RLAST validation and `.238` report-only dynamic burst-length remains supported and unchanged.
-- in_flight_uncommitted: none after the `.241` commit workflow. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
+- latest_commit: `HEAD after IAL2-FEATURE-COMPLETENESS-FRONTIER.242 commit` - `IAL2-FEATURE-COMPLETENESS-FRONTIER.242: audit dynamic multi-beat readiness`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.243` generates dynamic multi-beat output banks over generated dynamic runtime validation; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.242` selected `.243` as direct bounded dynamic multi-beat output-bank implementation; `.240` shipped generated dynamic runtime validation and `.238` report-only dynamic burst-length remains supported.
+- in_flight_uncommitted: none after the `.242` commit workflow. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
 
 ## Notes
