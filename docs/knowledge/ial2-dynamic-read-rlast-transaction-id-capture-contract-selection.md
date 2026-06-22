@@ -10,8 +10,8 @@ answers:
 date: 2026-06-22
 status: current
 tags: [ial2, axi, dynamic-id, read-response-demux, rlast, contract-selection]
-evidence: docs/AXI_IAL2_MANAGER_DYNAMIC_READ_RLAST_TRANSACTION_ID_CAPTURE_CONTRACT_SELECTION.md; docs/AXI_IAL2_MANAGER_DYNAMIC_READ_RLAST_TRANSACTION_ID_CAPTURE_READINESS_AUDIT.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md; docs/knowledge/ial2-dynamic-read-rlast-transaction-id-capture-readiness-audit.md
-reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.230|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.231|DYNAMIC_READ_RLAST_TRANSACTION_ID_CAPTURE_CONTRACT_SELECTION|bounded_dynamic_read_rid_rlast_demux_contract|matched_dynamic_id_and_last_signal' docs/AXI_IAL2_MANAGER_DYNAMIC_READ_RLAST_TRANSACTION_ID_CAPTURE_CONTRACT_SELECTION.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md README.md ROADMAP_V2.md docs/book/src/14-feature-backlog.md
+evidence: docs/AXI_IAL2_MANAGER_DYNAMIC_READ_RLAST_TRANSACTION_ID_CAPTURE_CONTRACT_SELECTION.md; docs/AXI_IAL2_MANAGER_DYNAMIC_READ_RLAST_TRANSACTION_ID_CAPTURE_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_DYNAMIC_READ_RLAST_TRANSACTION_ID_CAPTURE_READINESS_AUDIT.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md; docs/knowledge/ial2-dynamic-read-rlast-transaction-id-capture-behavior.md; docs/knowledge/ial2-dynamic-read-rlast-transaction-id-capture-readiness-audit.md
+reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.230|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.231|DYNAMIC_READ_RLAST_TRANSACTION_ID_CAPTURE_CONTRACT_SELECTION|DYNAMIC_READ_RLAST_TRANSACTION_ID_CAPTURE_BEHAVIOR|bounded_dynamic_read_rid_rlast_demux_contract|matched_dynamic_id_and_last_signal' docs/AXI_IAL2_MANAGER_DYNAMIC_READ_RLAST_TRANSACTION_ID_CAPTURE_CONTRACT_SELECTION.md docs/AXI_IAL2_MANAGER_DYNAMIC_READ_RLAST_TRANSACTION_ID_CAPTURE_BEHAVIOR.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md README.md ROADMAP_V2.md docs/book/src/14-feature-backlog.md
 ---
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.230` selects `.231`, direct generated
@@ -30,3 +30,7 @@ The selected report vocabulary is
 selector keeps read-data routing, burst-length/runtime validation, multi-beat
 output banks, multiple/mixed dynamic demux, same-cycle recapture, same-ID
 ordering, queues, scoreboards, direct backend behavior, and VHDL as residue.
+
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.231` has since shipped the selected
+generated behavior; the current frontier is `.232`, selector for the next exact
+IAL2 owner.

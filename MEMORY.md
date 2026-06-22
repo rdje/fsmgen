@@ -10,10 +10,10 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `HEAD after IAL2-FEATURE-COMPLETENESS-FRONTIER.230 commit` - `IAL2-FEATURE-COMPLETENESS-FRONTIER.230: select dynamic read RLAST contract`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.231` generates bounded dynamic read burst-last/`RLAST` transaction-ID capture and response matching; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.230` selected `.231` as direct generated behavior for bounded dynamic read burst-last/`RLAST` transaction-ID capture.
-- in_flight_uncommitted: none after the `IAL2-FEATURE-COMPLETENESS-FRONTIER.230` commit. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
+- latest_commit: `HEAD after IAL2-FEATURE-COMPLETENESS-FRONTIER.231 commit` - `IAL2-FEATURE-COMPLETENESS-FRONTIER.231: ship dynamic read RLAST demux`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.232` selects the next exact IAL2 owner after bounded dynamic read burst-last/`RLAST` transaction-ID capture and response matching; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.231` shipped generated bounded dynamic read burst-last/`RLAST` transaction-ID capture and response matching, including the support-accounted `ppif/axi_manager_capacity_status_dynamic_read_response_demux_burst_last.ppif` sample.
+- in_flight_uncommitted: none after the `IAL2-FEATURE-COMPLETENESS-FRONTIER.231` commit. Broad `t/1437` was interrupted after long regex/runtime execution, and broad `t/1436` was interrupted after unrelated existing Verilator WIDTHTRUNC failures in multi-group queue-head verify-HDL fixtures; focused `.231` syntax, corpus accounting, schedule/check/semantic/HDL probes passed. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
 
 ## Notes

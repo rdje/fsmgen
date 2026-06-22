@@ -6649,10 +6649,10 @@ ID, `response-scope single-beat`, no `last_signal`, admitted read request-ID
 capture, single-active selected-ID/busy ownership, raw accepted read response
 plus `RID == captured_id` completion, generated busy release, read-specific
 dynamic assertions, and `bounded_dynamic_read_rid_demux_contract` report
-vocabulary. Dynamic read burst-last/`RLAST`, read-data routing,
-burst-length/runtime validation, multiple dynamic reads, mixed dynamic/static
-read demux, same-cycle recapture, same-ID ordering, queues, scoreboards,
-direct backend behavior, and VHDL remain deferred.
+vocabulary. The burst-last/`RLAST` sibling now ships under `.231`; dynamic
+read-data routing, burst-length/runtime validation, multiple dynamic reads,
+mixed dynamic/static read demux, same-cycle recapture, same-ID ordering,
+queues, scoreboards, direct backend behavior, and VHDL remain deferred.
 
 Dynamic read transaction-ID capture behavior:
 [AXI_IAL2_MANAGER_DYNAMIC_READ_TRANSACTION_ID_CAPTURE_BEHAVIOR](../../AXI_IAL2_MANAGER_DYNAMIC_READ_TRANSACTION_ID_CAPTURE_BEHAVIOR.md)
@@ -6701,6 +6701,21 @@ completion only on raw accepted read response beat plus `RID == captured_id`
 plus asserted `RLAST`. Read-data routing, burst-length/runtime validation,
 multi-beat outputs, multiple/mixed dynamic demux, same-ID ordering, queues,
 scoreboards, direct backend behavior, and VHDL remain future exact-owner work.
+
+Dynamic read RLAST behavior:
+[AXI_IAL2_MANAGER_DYNAMIC_READ_RLAST_TRANSACTION_ID_CAPTURE_BEHAVIOR](../../AXI_IAL2_MANAGER_DYNAMIC_READ_RLAST_TRANSACTION_ID_CAPTURE_BEHAVIOR.md)
+ships `.231`, generated bounded dynamic read burst-last/`RLAST`
+transaction-ID capture and response matching. The support-accounted public
+sample is
+`ppif/axi_manager_capacity_status_dynamic_read_response_demux_burst_last.ppif`.
+It uses one `(id dynamic)` read transaction plus explicit
+`response-demux.read` with `response-scope burst-last`, one-bit
+`last-signal`, and generated transaction completion. FSMGen captures admitted
+`ARID`, tracks generated selected-ID/busy state across non-last beats, pulses
+`axi0_r0_complete` only on raw read response plus `RID == captured_id &&
+RLAST`, releases busy from that completion, and reports
+`bounded_dynamic_read_rid_rlast_demux_contract` with
+`transaction_completion_semantics: matched_dynamic_id_and_last_signal`.
 
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
@@ -8973,9 +8988,9 @@ dynamic read transaction-ID capture and `RID` response matching readiness
 audit, and `.225` selects `.226`, public contract selection for bounded
 single-beat dynamic read ID capture and `RID` response matching. `.226`
 selects `.227`, direct generated bounded single-beat dynamic read ID capture
-and `RID` matching behavior. `.230` selects `.231`, direct generated behavior
-for bounded dynamic read burst-last/`RLAST` transaction-ID capture and response
-matching.
+and `RID` matching behavior. `.231` now ships bounded dynamic read
+burst-last/`RLAST` transaction-ID capture and response matching, and `.232` is
+the next selector for the next exact IAL2 owner.
 
 Selected first MCP resource families are `fsmgen://capabilities`,
 `fsmgen://contracts`, `fsmgen://diagnostics`,

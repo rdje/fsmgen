@@ -1090,10 +1090,15 @@ single-beat dynamic read transaction-ID capture and `RID` response matching:
 explicit `response-demux.read` with one transaction-local dynamic read ID
 captures admitted `ARID`, stores generated selected-ID/busy state, matches raw
 read responses with `RID == captured_id`, pulses the generated read completion,
-and support-accounts the new dynamic read PPIF sample. `.228` selected `.229`,
-`.229` selected `.230`, and `.230` selected `.231`, direct generated behavior
-for bounded dynamic read burst-last/`RLAST` transaction-ID capture and response
-matching after the bounded single-active dynamic read/write demux shapes.
+and support-accounts the new dynamic read PPIF sample. `.231` now ships the
+bounded dynamic read burst-last/`RLAST` sibling: explicit
+`response-demux.read` with one dynamic read transaction, `response-scope
+burst-last`, one-bit `last-signal`, admitted `ARID` capture, generated
+selected-ID/busy state, generated completion on matched `RID && RLAST`, busy
+release, `bounded_dynamic_read_rid_rlast_demux_contract` reports, and
+`ppif/axi_manager_capacity_status_dynamic_read_response_demux_burst_last.ppif`
+as a support-accounted sample. `.232` is the next selector after the bounded
+single-active dynamic read/write demux shapes.
 The parser/report metadata slice `IAL2-FEATURE-COMPLETENESS-FRONTIER.39` is
 now shipped for the bounded AXI read response-demux public contract selected
 by `.38`. The selected read arm requires `(response-scope single-beat)`,
@@ -2039,11 +2044,11 @@ path captures admitted `ARID`, stores selected-ID/busy state, matches raw read
 responses with `RID == captured_id`, pulses the generated read completion,
 releases busy from that completion, reports
 `bounded_dynamic_read_rid_demux_contract`, and adds a support-accounted dynamic
-read PPIF sample. `.228` selected `.229`, which audited dynamic read
-burst-last/`RLAST` readiness; `.230` reuses existing `response-demux.read`
-burst-last syntax with one dynamic read ID and selected `.231`, direct
-generated behavior for bounded dynamic read burst-last/`RLAST` transaction-ID
-capture and response matching. Dynamic read-data routing, burst-length/runtime validation,
+read PPIF sample. `.231` now ships the bounded dynamic read burst-last/`RLAST`
+sibling with existing `response-demux.read` burst-last syntax, one dynamic read
+ID, one-bit `last-signal`, admitted `ARID` capture, matched `RID && RLAST`
+completion, generated busy release, and support-accounted public PPIF coverage.
+Dynamic read-data routing, burst-length/runtime validation,
 interleaving, multiple dynamic reads, mixed dynamic/static read demux,
 same-cycle recapture, same-ID ordering, queues, scoreboards, direct backend
 behavior, HDL shapes outside this selected SystemVerilog path, and VHDL remain

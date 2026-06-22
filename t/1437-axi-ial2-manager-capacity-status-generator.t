@@ -395,6 +395,64 @@ subtest 'dynamic read response-demux captures ARID and matches single-beat RID' 
     like($sv_assertions, qr/axi0 r0 dynamic completion releases active captured ID/, 'assertion backend emits completion-active dynamic read assertion');
 };
 
+subtest 'dynamic read response-demux captures ARID and matches burst-last RID/RLAST' => sub {
+    my $result = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_dynamic_read_response_demux_burst_last());
+    my $isf = $result->{generated_ial1}{text};
+
+    like($isf, qr/\(input axi0_r0_request\)/, 'dynamic read RLAST demux declares the per-transaction read request event');
+    like($isf, qr/\(input axi0_read_complete\)/, 'dynamic read RLAST demux declares the raw read response beat event');
+    like($isf, qr/\(input axi0_arid \(width 4\)\)/, 'dynamic read RLAST demux declares ARID as the captured request ID input');
+    like($isf, qr/\(input axi0_rid \(width 4\)\)/, 'dynamic read RLAST demux declares RID as the matched response ID input');
+    like($isf, qr/\(input axi0_rlast\)/, 'dynamic read RLAST demux declares RLAST as the generated last-signal input');
+    unlike($isf, qr/\(input axi0_r0_complete\b/, 'dynamic read RLAST demux does not treat generated completion as an input');
+    like($isf, qr/\(output axi0_r0_complete\)/, 'dynamic read RLAST demux exposes the matched last-beat completion pulse as an output');
+    like($isf, qr/\(var axi0_r0_dynamic_id_q \(width 4\)\)/, 'dynamic read RLAST demux allocates selected dynamic ID state');
+    like($isf, qr/\(var axi0_r0_dynamic_busy_q \(width 1\)\)/, 'dynamic read RLAST demux allocates single-active busy state');
+    like(
+        $isf,
+        qr/\(rule axi0_r0_dynamic_id_capture \(& \(& axi0_r0_request \(\| \(< axi0_pending_reads_q 4\) axi0_r0_complete\)\) \(! axi0_r0_dynamic_busy_q\)\)\s+\(axi0_r0_dynamic_id_q axi0_arid\)\s+\(axi0_r0_dynamic_busy_q 1\)\)/,
+        'dynamic read RLAST demux captures ARID only for admitted not-busy requests',
+    );
+    like(
+        $isf,
+        qr/\(rule axi0_r0_response_demux \(& axi0_read_complete axi0_r0_dynamic_busy_q \(== axi0_rid axi0_r0_dynamic_id_q\) axi0_rlast\)\s+\(pulse axi0_r0_complete\)\)/,
+        'dynamic read RLAST demux pulses completion only for matching active RID last beats',
+    );
+    like(
+        $isf,
+        qr/\(rule axi0_r0_dynamic_id_release \(& axi0_r0_complete axi0_r0_dynamic_busy_q\)\s+\(axi0_r0_dynamic_busy_q 0\)\)/,
+        'dynamic read RLAST demux releases the single-active busy state on matched last-beat completion',
+    );
+    like(
+        $isf,
+        qr/\(assert \(\| \(! axi0_read_complete\) \(& axi0_r0_dynamic_busy_q \(== axi0_rid axi0_r0_dynamic_id_q\)\)\) "axi0 read dynamic response matches active captured ID"\)/,
+        'dynamic read RLAST demux keeps active-response assertion on raw RID match without RLAST gating',
+    );
+    like($isf, qr/"axi0 read dynamic request is not already active"/, 'dynamic read RLAST demux emits request-not-busy assertion');
+    like($isf, qr/"axi0 r0 dynamic completion releases active captured ID"/, 'dynamic read RLAST demux emits active-completion assertion');
+
+    assert_dynamic_read_response_demux_burst_last_report($result->{report}, 'generator report');
+
+    my $fsm = $result->{generated_ial0}{files}{'axi0_capacity_status.fsm'};
+    like($fsm, qr/\(\+size[\s\S]*\(axi0_arid 4\)/, 'scheduled .fsm declares ARID width for dynamic RLAST demux');
+    like($fsm, qr/\(\+size[\s\S]*\(axi0_rid 4\)/, 'scheduled .fsm declares RID width for dynamic RLAST demux');
+    like($fsm, qr/\(\+size[\s\S]*\(axi0_rlast 1\)/, 'scheduled .fsm declares RLAST width for dynamic RLAST demux');
+    like($fsm, qr/\(-axi0_r0_dynamic_id_capture\s+<\(& \(& axi0_r0_request/, 'scheduled .fsm lowers the dynamic RLAST capture rule');
+    like($fsm, qr/\(-axi0_r0_response_demux\s+<\(& axi0_read_complete axi0_r0_dynamic_busy_q \(== axi0_rid axi0_r0_dynamic_id_q\) axi0_rlast\)/, 'scheduled .fsm lowers the dynamic RID/RLAST match rule');
+    like($fsm, qr/\(-axi0_r0_dynamic_id_release\s+<\(& axi0_r0_complete axi0_r0_dynamic_busy_q\)/, 'scheduled .fsm lowers the dynamic RLAST release rule');
+
+    my $hdl = hdl_for('axi0_capacity_status', $fsm);
+    like($hdl, qr/\binput\s+(?:wire\s+)?\[3:0\]\s+axi0_arid\b/, 'SystemVerilog declares ARID as a 4-bit input for dynamic RLAST demux');
+    like($hdl, qr/\binput\s+(?:wire\s+)?\[3:0\]\s+axi0_rid\b/, 'SystemVerilog declares RID as a 4-bit input for dynamic RLAST demux');
+    like($hdl, qr/\binput\s+(?:wire\s+)?axi0_rlast\b/, 'SystemVerilog declares RLAST as a one-bit input for dynamic RLAST demux');
+    like($hdl, qr/axi0_read_complete\s*&\s*axi0_r0_dynamic_busy_q\s*&\s*\(axi0_rid\s*==\s*axi0_r0_dynamic_id_q\)\s*&\s*axi0_rlast/, 'SystemVerilog lowers the dynamic RID/RLAST last-beat guard');
+
+    my $sv_assertions = sv_assertion_block_for_result($result);
+    like($sv_assertions, qr/axi0 read dynamic request is not already active/, 'assertion backend emits request-not-busy dynamic RLAST assertion');
+    like($sv_assertions, qr/axi0 read dynamic response matches active captured ID/, 'assertion backend emits raw active RID-match dynamic RLAST assertion');
+    like($sv_assertions, qr/axi0 r0 dynamic completion releases active captured ID/, 'assertion backend emits completion-active dynamic RLAST assertion');
+};
+
 subtest 'transaction event dispatch fans per-transaction events into capacity rules' => sub {
     my $result = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_transaction_event_dispatch());
     my $isf = $result->{generated_ial1}{text};
@@ -4112,13 +4170,11 @@ subtest 'malformed contract objects fail closed and no direct lower-to-fsm entry
             };
             $c;
         }, qr/response_demux\.read dynamic ID matching supports no additional read transactions/],
-        ['dynamic read response demux rejects burst-last scope', sub {
-            my $c = sample_contract_with_dynamic_read_response_demux();
-            $c->{response_demux}{read}{response_scope} = 'burst-last';
-            $c->{response_demux}{read}{last_signal} = 'axi0_rlast';
-            $c->{response_demux}{read}{last_signal_width} = 1;
+        ['dynamic read RLAST response demux requires width-1 last signal', sub {
+            my $c = sample_contract_with_dynamic_read_response_demux_burst_last();
+            $c->{response_demux}{read}{last_signal_width} = 2;
             $c;
-        }, qr/response_demux\.read dynamic ID matching supports response_scope single-beat only/],
+        }, qr/response_demux\.read\.last_signal_width must be 1 in this slice/],
         ['auto lifecycle unsupported field', sub { my $c = sample_contract_with_auto_id_lifecycle(); $c->{auto_id_lifecycle}{write}{policy} = 'first-free'; $c }, qr/auto_id_lifecycle\.write unsupported field 'policy'/],
         ['auto lifecycle without ID-family metadata', sub {
             my $c = sample_contract();
@@ -4394,6 +4450,16 @@ sub sample_contract_with_dynamic_read_response_demux {
             transaction_completion => 'generated',
         },
     };
+    return $contract;
+}
+
+sub sample_contract_with_dynamic_read_response_demux_burst_last {
+    my $contract = sample_contract_with_dynamic_read_response_demux();
+    $contract->{intent_name} = 'axi_manager_capacity_status_dynamic_read_response_demux_burst_last';
+    $contract->{source}{object_id} = 'axi-manager-capacity-status-dynamic-read-response-demux-burst-last';
+    $contract->{response_demux}{read}{response_scope} = 'burst-last';
+    $contract->{response_demux}{read}{last_signal} = 'axi0_rlast';
+    $contract->{response_demux}{read}{last_signal_width} = 1;
     return $contract;
 }
 
@@ -5791,6 +5857,72 @@ sub assert_dynamic_read_response_demux_report {
             release_rule         => 'axi0_r0_dynamic_id_release',
         },
         "$owner reports dynamic read capture state and rule ownership",
+    );
+    is_deeply(
+        $demux->{residue},
+        [qw(same_id_ordering read_data_interleaving bursts)],
+        "$owner keeps unsupported same-ID, read-data, and burst residue explicit",
+    );
+    my %residue = map { $_->{id} => 1 } @{$report->{unsupported_residue}};
+    ok($residue{dynamic_transaction_id_behavior}, "$owner keeps future dynamic behavior residue visible");
+}
+
+sub assert_dynamic_read_response_demux_burst_last_report {
+    my ($report, $owner) = @_;
+    my $demux = $report->{response_demux};
+    my $read = $demux->{read};
+
+    is(scalar(@{$report->{transactions}}), 1, "$owner reports one dynamic read RLAST transaction");
+    is_deeply(
+        $report->{transactions}[0]{id},
+        {
+            policy                => 'dynamic',
+            family                => 'read',
+            family_width          => 4,
+            request_id_source     => 'axi0_arid',
+            response_id_signal    => 'axi0_rid',
+            ownership             => 'user_supplied',
+            implementation_status => 'generated_capture_matching',
+        },
+        "$owner reports generated capture/matching dynamic read RLAST ID ownership",
+    );
+    is($demux->{mode}, 'bounded_dynamic_read_rid_rlast_demux_contract', "$owner marks dynamic read RID/RLAST-demux contract mode");
+    ok($demux->{generated_behavior}, "$owner marks dynamic read RLAST response-demux behavior generated");
+    is($read->{mode}, 'bounded_dynamic_read_rid_rlast_demux_contract', "$owner marks read dynamic RLAST demux mode");
+    ok($read->{generated_behavior}, "$owner marks read dynamic RLAST demux behavior generated");
+    is($read->{response_event}, 'axi0_read_complete', "$owner reports the raw read response beat event");
+    is($read->{response_event_role}, 'raw_accepted_read_response_beat', "$owner reports the response-event role");
+    is($read->{response_scope}, 'burst_last', "$owner reports the selected burst-last response scope");
+    is($read->{response_id_signal}, 'axi0_rid', "$owner reports RID as the response ID signal");
+    is($read->{response_id_direction}, 'generated_input', "$owner reports response ID direction as generated input");
+    is($read->{last_signal}, 'axi0_rlast', "$owner reports RLAST as the last signal");
+    is($read->{last_signal_direction}, 'generated_input', "$owner reports RLAST direction as generated input");
+    is($read->{last_signal_width}, 1, "$owner reports RLAST width");
+    is($read->{transaction_completion_source}, 'generated_dynamic_demux_last_beat', "$owner reports generated dynamic last-beat demux completion ownership");
+    is($read->{transaction_completion_semantics}, 'matched_dynamic_id_and_last_signal', "$owner reports matched dynamic ID and last-signal completion semantics");
+    is($read->{beat_valid_output}, 'none', "$owner reports no per-beat valid output");
+    is($read->{burst_length_source}, 'rlast_only', "$owner reports RLAST-only burst boundary");
+    is($read->{burst_length_validation}, 'not_generated', "$owner reports no burst-length validation");
+    is_deeply($read->{dynamic_transactions}, [qw(r0)], "$owner reports the covered dynamic read RLAST transaction");
+    is_deeply($read->{generated_rules}, [qw(axi0_r0_response_demux)], "$owner reports generated dynamic RLAST demux rule");
+    is_deeply($read->{generated_completion_signals}, [qw(axi0_r0_complete)], "$owner reports generated dynamic RLAST completion pulse");
+    is_deeply(
+        $read->{generated_assertions},
+        [qw(axi0_r0_dynamic_request_not_busy axi0_read_dynamic_response_active_match axi0_r0_dynamic_completion_active)],
+        "$owner reports generated dynamic RLAST assertions",
+    );
+    is_deeply(
+        $read->{dynamic_capture},
+        {
+            request_id_source    => 'axi0_arid',
+            capture_event_source => 'admitted_dynamic_read_request',
+            ownership            => 'single_active_dynamic_read',
+            selected_id_signal   => 'axi0_r0_dynamic_id_q',
+            busy_signal          => 'axi0_r0_dynamic_busy_q',
+            capture_rule         => 'axi0_r0_dynamic_id_capture',
+            release_rule         => 'axi0_r0_dynamic_id_release',
+        },
+        "$owner reports dynamic read RLAST capture state and rule ownership",
     );
     is_deeply(
         $demux->{residue},

@@ -19,12 +19,15 @@ The supported public shape is intentionally narrow:
   response event;
 - the read family does not combine this dynamic shape with read
   `auto-id-lifecycle`, `same-id-ordering`, read-data, concrete queue-head
-  demux, mixed auto-ID/queue-head demux, or burst-last `RLAST` matching.
+  demux, or mixed auto-ID/queue-head demux.
 
-Dynamic read burst-last/`RLAST`, read-data routing, burst-length/runtime
-validation, multiple dynamic read transactions, mixed dynamic/static read demux,
-same-cycle recapture, dynamic same-ID ordering, queues, scoreboards, direct
-backend behavior, and VHDL remain future exact-owner work.
+The burst-last sibling now ships separately under
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.231`; see
+`docs/AXI_IAL2_MANAGER_DYNAMIC_READ_RLAST_TRANSACTION_ID_CAPTURE_BEHAVIOR.md`.
+Dynamic read-data routing, burst-length/runtime validation, multiple dynamic
+read transactions, mixed dynamic/static read demux, same-cycle recapture,
+dynamic same-ID ordering, queues, scoreboards, direct backend behavior, and
+VHDL remain future exact-owner work.
 
 ## Runnable PPIF
 
