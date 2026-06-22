@@ -132,10 +132,9 @@ reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.234|IAL2-FEATURE-COMPLETEN
 ---
 
 The current active project priority is
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.238`, generated report-only dynamic
-raw-`ARLEN` burst-length capture over generated single-active dynamic read
-last-beat response-demux and scalar dynamic read-data on the
-SystemVerilog-backed path.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.239`, readiness audit for dynamic runtime
+beat-count/`RLAST` validation over generated dynamic last-beat read-data with
+the `.238` report-only raw-`ARLEN` support on the SystemVerilog-backed path.
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.215` selected `.216` after `.214` shipped
 counted group-local admitted-request behavior. The selector found no immediate

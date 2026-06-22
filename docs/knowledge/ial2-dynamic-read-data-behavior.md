@@ -35,7 +35,7 @@ The generated capture rule consumes the generated completion pulse from the
 dynamic read response-demux. It does not add a second raw `RID` or `RLAST`
 match path inside read-data behavior.
 
-`.234` intentionally keeps dynamic burst-length capture, runtime validation,
+`.234` intentionally kept dynamic burst-length capture, runtime validation,
 multi-beat output banks, multiple dynamic read/write transactions, mixed
 dynamic/static demux, same-cycle recapture, dynamic same-ID ordering, queues,
 scoreboards, direct backend behavior, HDL behavior outside the selected
@@ -45,4 +45,6 @@ SystemVerilog path, and VHDL as explicit residue.
 validation for the shipped dynamic family. `IAL2-FEATURE-COMPLETENESS-FRONTIER.237`
 selected `IAL2-FEATURE-COMPLETENESS-FRONTIER.238`, direct bounded
 implementation of report-only dynamic raw-`ARLEN` burst-length capture over
-generated dynamic last-beat read-data.
+generated dynamic last-beat read-data. `.238` now ships that report-only
+dynamic raw-`ARLEN` capture; dynamic runtime validation and dynamic multi-beat
+output banks remain deferred.

@@ -2078,8 +2078,13 @@ the shipped dynamic transaction-ID family can be validated through bounded
 focused targets before more behavior is added. `.236` now ships that bounded
 target and `.237` is the next readiness audit for report-only dynamic
 burst-length capture. `.237` selected `.238`, direct bounded report-only
-dynamic raw-`ARLEN` burst-length implementation. Dynamic runtime validation,
-multi-beat output banks,
+dynamic raw-`ARLEN` burst-length implementation. `.238` now ships that
+generated report-only dynamic raw-`ARLEN` capture with support-accounted
+`ppif/axi_manager_capacity_status_dynamic_read_data_burst_length.ppif`,
+generated `axi0_arlen` input/storage/request-capture/report fields, and
+scalar payload capture still guarded by the generated dynamic last-beat
+completion pulse. `.239` is the next readiness audit for dynamic
+beat-count/`RLAST` runtime validation. Dynamic multi-beat output banks,
 multiple/mixed dynamic demux, same-cycle recapture, dynamic same-ID ordering,
 queues, scoreboards, direct backend behavior, and VHDL remain residue.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2

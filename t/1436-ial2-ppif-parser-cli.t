@@ -332,6 +332,50 @@ subtest 'PPIF adapter parses AXI manager dynamic last-beat read-data behavior' =
     );
 };
 
+subtest 'PPIF adapter parses AXI manager dynamic report-only burst-length read-data behavior' => sub {
+    my $sample_path = sample_capacity_dynamic_read_data_burst_length_ppif_path();
+    ok(-f $sample_path, 'tracked runnable PPIF capacity/status dynamic burst-length read-data sample exists');
+
+    my $result = FSM::Adapter::IAL2::PPIF->new()->parse_source(sample_capacity_dynamic_read_data_burst_length_ppif(), $sample_path);
+    my $isf = $result->{generated_ial1}{text};
+    my $fsm = $result->{generated_ial0}{files}{'axi0_capacity_status.fsm'};
+
+    is($result->{kind}, 'protocol_intent.axi_manager_capacity_status', 'dynamic burst-length read-data sample still uses the capacity/status generator');
+    is($result->{report}{source_object}{id}, 'axi-manager-capacity-status-dynamic-read-data-burst-length', 'dynamic burst-length read-data source object id is preserved');
+    is($result->{report}{source_object}{intent_name}, 'axi_manager_capacity_status_dynamic_read_data_burst_length', 'dynamic burst-length read-data source intent name is preserved');
+    like($isf, qr/\(rule axi0_r0_response_demux \(& axi0_read_complete axi0_r0_dynamic_busy_q \(== axi0_rid axi0_r0_dynamic_id_q\) axi0_rlast\)/, 'dynamic burst-length read-data sample keeps generated RID/RLAST demux rule');
+    like($isf, qr/\(input axi0_rlast\)/, 'dynamic burst-length read-data sample generates RLAST input');
+    like($isf, qr/\(input axi0_rdata \(width 32\)\)/, 'dynamic burst-length read-data sample generates RDATA input');
+    like($isf, qr/\(input axi0_rresp \(width 2\)\)/, 'dynamic burst-length read-data sample generates RRESP input');
+    like($isf, qr/\(input axi0_arlen \(width 8\)\)/, 'dynamic burst-length read-data sample generates ARLEN input');
+    like($isf, qr/\(var axi0_r0_arlen_q \(width 8\)\)/, 'dynamic burst-length read-data sample allocates raw ARLEN storage');
+    like($isf, qr/\(rule axi0_r0_burst_length_capture axi0_r0_request\s+\(axi0_r0_arlen_q axi0_arlen\)\)/, 'dynamic burst-length read-data sample captures raw ARLEN under request');
+    like(
+        $isf,
+        qr/\(rule axi0_r0_read_data_capture axi0_r0_complete\s+\(axi0_r0_last_rdata axi0_rdata\)\s+\(axi0_r0_last_rresp axi0_rresp\)\)/,
+        'dynamic burst-length read-data sample captures payload under generated dynamic last-beat completion',
+    );
+    unlike($isf, qr/read_beat_count_q|expected_beats_q|arlen_within_max/, 'dynamic burst-length read-data sample keeps runtime validation ungenerated');
+    like(
+        $fsm,
+        qr/\(-axi0_r0_burst_length_capture\s+<axi0_r0_request\s+\(<- \(axi0_r0_arlen_q axi0_arlen\)\)\s+\)/,
+        'dynamic burst-length read-data sample lowers raw ARLEN capture into generated .fsm',
+    );
+    like(
+        $fsm,
+        qr/\(-axi0_r0_read_data_capture\s+<axi0_r0_complete\s+\(<- \(axi0_r0_last_rdata> axi0_rdata\)\)\s+\(<- \(axi0_r0_last_rresp> axi0_rresp\)\)/,
+        'dynamic burst-length read-data sample lowers payload capture into generated .fsm',
+    );
+    assert_dynamic_read_response_demux_burst_last_report($result->{report}, 'adapter dynamic burst-length read-data response-demux report');
+    assert_read_data_burst_length_report(
+        $result->{report}{read_data},
+        'adapter dynamic burst-length read-data report',
+        'report_only',
+        'generated_dynamic_read_response_demux_last_beat_completion_pulse',
+        transactions => [qw(r0)],
+    );
+};
+
 subtest 'PPIF adapter parses AXI manager transaction event dispatch' => sub {
     my $sample_path = sample_capacity_transaction_dispatch_ppif_path();
     ok(-f $sample_path, 'tracked runnable PPIF capacity/status transaction-event dispatch sample exists');
@@ -5030,6 +5074,14 @@ subtest 'CLI check JSON and semantic JSON support-account dynamic last-beat read
     );
 };
 
+subtest 'CLI check JSON and semantic JSON support-account dynamic burst-length read-data .ppif separately' => sub {
+    assert_ppif_strict_json_support_case(
+        owner    => 'capacity/status dynamic burst-length read-data',
+        path     => \&sample_capacity_dynamic_read_data_burst_length_ppif_path,
+        entry_id => 'intent.ppif_axi_manager_capacity_status_dynamic_read_data_burst_length',
+    );
+};
+
 subtest 'CLI check JSON and semantic JSON support-account transaction-event dispatch .ppif separately' => sub {
     my $dispatch_path = sample_capacity_transaction_dispatch_ppif_path();
     my ($success, undef, undef, $stdout_buf, $stderr_buf) = run(
@@ -6801,6 +6853,10 @@ sub sample_capacity_dynamic_read_data_last_beat_ppif_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_dynamic_read_data_last_beat.ppif');
 }
 
+sub sample_capacity_dynamic_read_data_burst_length_ppif_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_dynamic_read_data_burst_length.ppif');
+}
+
 sub sample_capacity_transaction_dispatch_ppif_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_transaction_event_dispatch.ppif');
 }
@@ -7083,6 +7139,10 @@ sub sample_capacity_dynamic_read_data_ppif {
 
 sub sample_capacity_dynamic_read_data_last_beat_ppif {
     return slurp(sample_capacity_dynamic_read_data_last_beat_ppif_path());
+}
+
+sub sample_capacity_dynamic_read_data_burst_length_ppif {
+    return slurp(sample_capacity_dynamic_read_data_burst_length_ppif_path());
 }
 
 sub sample_capacity_transaction_dispatch_ppif {

@@ -44,3 +44,6 @@ last-beat response-demux and scalar dynamic read-data.
 `.237` selected `IAL2-FEATURE-COMPLETENESS-FRONTIER.238`, direct bounded
 implementation of report-only dynamic raw-`ARLEN` burst-length capture over
 generated dynamic last-beat read-data.
+
+`.238` now ships that dynamic report-only raw-`ARLEN` capture and leaves
+dynamic runtime validation to `.239`, the next readiness audit.

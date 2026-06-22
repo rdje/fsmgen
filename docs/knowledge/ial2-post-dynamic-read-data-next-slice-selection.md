@@ -41,3 +41,6 @@ selected `.237`, readiness audit for dynamic burst-length capture.
 
 `.237` selected `.238`, direct bounded implementation of report-only dynamic
 raw-`ARLEN` burst-length capture over generated dynamic last-beat read-data.
+
+`.238` now ships that report-only dynamic raw-`ARLEN` capture and selects
+`.239`, readiness audit for dynamic runtime beat-count/`RLAST` validation.

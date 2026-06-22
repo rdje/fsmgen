@@ -2350,10 +2350,12 @@ generated bounded single-active dynamic read transaction-ID capture plus
 single-beat `RID` response matching plus burst-last `RID && RLAST` response
 matching for one explicit `response-demux.read` dynamic read transaction, and
 bounded scalar dynamic read-data capture over that generated dynamic read
-response-demux for exactly one dynamic read transaction. The next selected
-owner is `.237`, readiness audit for dynamic burst-length capture over
-generated dynamic last-beat read-data. `.236` added the bounded focused
-validation target for the shipped dynamic transaction-ID family.
+response-demux for exactly one dynamic read transaction. `.238` now also ships
+report-only dynamic raw-`ARLEN` burst-length capture for that generated
+dynamic last-beat read-data boundary. The next selected owner is `.239`,
+readiness audit for dynamic runtime beat-count/`RLAST` validation. `.236`
+added the bounded focused validation target for the shipped dynamic
+transaction-ID family.
 Broader IAL2 still must justify itself with semantics above individual
 transactions, not only syntax convenience. Its generic file surface remains
 protocol/platform-generic, and an IAL2 file may select a protocol or platform
@@ -6776,6 +6778,28 @@ next owner. The readiness audit
 [AXI_IAL2_MANAGER_DYNAMIC_BURST_LENGTH_READINESS_AUDIT](../../AXI_IAL2_MANAGER_DYNAMIC_BURST_LENGTH_READINESS_AUDIT.md)
 selects `.238`, direct bounded report-only dynamic raw-`ARLEN` burst-length
 capture over generated dynamic last-beat read-data.
+Behavior
+[AXI_IAL2_MANAGER_DYNAMIC_BURST_LENGTH_BEHAVIOR](../../AXI_IAL2_MANAGER_DYNAMIC_BURST_LENGTH_BEHAVIOR.md)
+ships that selected shape. A dynamic last-beat read-data contract can now add:
+
+```lisp
+(burst-length
+  (source arlen)
+  (signal axi0_arlen (width 8))
+  (encoding axlen-plus-one)
+  (capture request)
+  (max-beats 16)
+  (validation report-only))
+```
+
+when paired with one `(id dynamic)` read transaction and generated
+`response-demux.read` `burst-last` completion. FSMGen generates `axi0_arlen`,
+transaction-local raw-`ARLEN` storage, request-guarded capture, and report
+fields for generated burst-length inputs/storage/rules. Dynamic `validation
+runtime-assertion`, dynamic multi-beat output banks, multiple or mixed
+dynamic demux, same-cycle recapture, dynamic same-ID ordering, queues,
+scoreboards, direct backend behavior, and VHDL remain deferred. `.239` audits
+dynamic runtime-validation readiness next.
 
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)

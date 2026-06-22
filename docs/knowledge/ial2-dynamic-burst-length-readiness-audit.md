@@ -33,7 +33,8 @@ non-dynamic last-beat and queue-head shapes. The current dynamic coverage gate
 is the local blocker because it admits dynamic single-beat or last-beat
 read-data only when no `burst_length` metadata is present.
 
-`.238` must keep dynamic runtime validation, dynamic multi-beat output banks,
-multiple or mixed dynamic demux, same-cycle recapture, dynamic same-ID
-ordering, queues, scoreboards, direct backend behavior, and VHDL deferred.
-
+`.238` now ships that selected report-only dynamic raw-`ARLEN` capture.
+Dynamic runtime validation, dynamic multi-beat output banks, multiple or
+mixed dynamic demux, same-cycle recapture, dynamic same-ID ordering, queues,
+scoreboards, direct backend behavior, and VHDL remain deferred; `.239` audits
+dynamic runtime-validation readiness next.
