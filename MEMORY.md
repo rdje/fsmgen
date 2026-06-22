@@ -10,9 +10,9 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `HEAD after IAL2-FEATURE-COMPLETENESS-FRONTIER.239 commit` - `IAL2-FEATURE-COMPLETENESS-FRONTIER.239: audit dynamic runtime readiness`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.240` generates dynamic runtime beat-count/RLAST validation over generated dynamic last-beat read-data; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.239` audited dynamic runtime beat-count/RLAST validation readiness over the shipped generated dynamic last-beat read-data plus report-only raw-ARLEN boundary and selected `.240`, direct bounded generated dynamic runtime validation. No parser, generator, PPIF sample, support-accounting, validation behavior, generated artifact, test, schedule/check/semantic JSON, or HDL behavior changed. Dynamic multi-beat output banks, multiple/mixed dynamic demux, same-cycle recapture, dynamic same-ID ordering, queues, scoreboards, direct backend behavior, backend-language variants, and VHDL remain deferred.
+- latest_commit: `HEAD after ISF-FIELD-STRUCTURED-STORAGE-RESPONSE.1 commit` - `ISF-FIELD-STRUCTURED-STORAGE-RESPONSE.1: select field storage response`.
+- active_work_unit: `ISF-FIELD-STRUCTURED-STORAGE-RESPONSE.2` edits FSMGen's tracked response to SPECFORGE's 2026-06-22 declarative field-structured storage request; `IAL2-FEATURE-COMPLETENESS-FRONTIER.240`, `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4`, and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `ISF-FIELD-STRUCTURED-STORAGE-RESPONSE.1` read SPECFORGE's field-structured storage feature request and created the response owner. The request concerns static named bit-field maps on storage/register/packet structures; response editing is `.2`. No parser, scheduler, lowerer, generated artifact, test, schedule/semantic JSON, support-accounting, or HDL behavior changed.
 - in_flight_uncommitted: none after the `.239` commit workflow. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
 
