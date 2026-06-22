@@ -6910,6 +6910,14 @@ response-rule, and assertion helpers after normalization, but the read helper
 and dynamic read-data coverage still admit exactly one generated dynamic read
 transaction, so public read scope and read-data interaction must be selected
 before implementation.
+Multiple dynamic read response-demux contract:
+[AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_READ_RESPONSE_DEMUX_CONTRACT_SELECTION](../../AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_READ_RESPONSE_DEMUX_CONTRACT_SELECTION.md)
+selects `.251`, direct generated behavior for bounded multiple dynamic read
+single-beat response-demux. The first contract is response-demux-only, requires
+all read transactions in the selected family to be dynamic, keeps same-cycle
+dynamic read requests onehot0, requires active captured dynamic read IDs to be
+pairwise unique, and defers burst-last/`RLAST`, read-data, burst-length,
+runtime validation, and multi-beat output banks over multiple dynamic reads.
 
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
