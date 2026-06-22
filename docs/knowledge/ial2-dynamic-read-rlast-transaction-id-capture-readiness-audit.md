@@ -10,8 +10,8 @@ answers:
 date: 2026-06-22
 status: current
 tags: [ial2, axi, dynamic-id, read-response-demux, rlast, readiness-audit]
-evidence: docs/AXI_IAL2_MANAGER_DYNAMIC_READ_RLAST_TRANSACTION_ID_CAPTURE_READINESS_AUDIT.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md; docs/knowledge/ial2-post-dynamic-read-id-next-slice-selection.md; docs/knowledge/ial2-dynamic-read-transaction-id-capture-behavior.md
-reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.229|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.230|DYNAMIC_READ_RLAST_TRANSACTION_ID_CAPTURE_READINESS_AUDIT|dynamic read burst-last|bounded dynamic read burst-last' docs/AXI_IAL2_MANAGER_DYNAMIC_READ_RLAST_TRANSACTION_ID_CAPTURE_READINESS_AUDIT.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md README.md ROADMAP_V2.md docs/book/src/14-feature-backlog.md
+evidence: docs/AXI_IAL2_MANAGER_DYNAMIC_READ_RLAST_TRANSACTION_ID_CAPTURE_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_DYNAMIC_READ_RLAST_TRANSACTION_ID_CAPTURE_CONTRACT_SELECTION.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md; docs/knowledge/ial2-dynamic-read-rlast-transaction-id-capture-contract-selection.md; docs/knowledge/ial2-post-dynamic-read-id-next-slice-selection.md; docs/knowledge/ial2-dynamic-read-transaction-id-capture-behavior.md
+reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.229|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.230|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.231|DYNAMIC_READ_RLAST_TRANSACTION_ID_CAPTURE_READINESS_AUDIT|DYNAMIC_READ_RLAST_TRANSACTION_ID_CAPTURE_CONTRACT_SELECTION|bounded dynamic read burst-last' docs/AXI_IAL2_MANAGER_DYNAMIC_READ_RLAST_TRANSACTION_ID_CAPTURE_READINESS_AUDIT.md docs/AXI_IAL2_MANAGER_DYNAMIC_READ_RLAST_TRANSACTION_ID_CAPTURE_CONTRACT_SELECTION.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md README.md ROADMAP_V2.md docs/book/src/14-feature-backlog.md
 ---
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.229` selects `.230`, public contract
@@ -31,3 +31,7 @@ The audit found no lower-layer prerequisite and no stale report/static cleanup
 blocker. Direct behavior still needs contract ownership before any parser,
 generator, PPIF sample, support-accounting catalog, generated artifact, test,
 validation, or HDL behavior changes.
+
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.230` completed that contract selection and
+selected `.231`, direct generated behavior using the existing
+`response-demux.read` burst-last syntax with one dynamic read transaction.

@@ -9,8 +9,8 @@ answers:
 date: 2026-06-22
 status: current
 tags: [ial2, axi, dynamic-id, read-response-demux, rlast, selector]
-evidence: docs/AXI_IAL2_MANAGER_POST_DYNAMIC_READ_ID_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_DYNAMIC_READ_RLAST_TRANSACTION_ID_CAPTURE_READINESS_AUDIT.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md; docs/knowledge/ial2-dynamic-read-rlast-transaction-id-capture-readiness-audit.md; docs/knowledge/ial2-dynamic-read-transaction-id-capture-behavior.md
-reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.228|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.229|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.230|POST_DYNAMIC_READ_ID_NEXT_SLICE_SELECTION|DYNAMIC_READ_RLAST_TRANSACTION_ID_CAPTURE_READINESS_AUDIT|dynamic read burst-last|RLAST transaction-ID capture' docs/AXI_IAL2_MANAGER_POST_DYNAMIC_READ_ID_NEXT_SLICE_SELECTION.md docs/AXI_IAL2_MANAGER_DYNAMIC_READ_RLAST_TRANSACTION_ID_CAPTURE_READINESS_AUDIT.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md README.md ROADMAP_V2.md docs/book/src/14-feature-backlog.md
+evidence: docs/AXI_IAL2_MANAGER_POST_DYNAMIC_READ_ID_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_DYNAMIC_READ_RLAST_TRANSACTION_ID_CAPTURE_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_DYNAMIC_READ_RLAST_TRANSACTION_ID_CAPTURE_CONTRACT_SELECTION.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md; docs/knowledge/ial2-dynamic-read-rlast-transaction-id-capture-contract-selection.md; docs/knowledge/ial2-dynamic-read-rlast-transaction-id-capture-readiness-audit.md; docs/knowledge/ial2-dynamic-read-transaction-id-capture-behavior.md
+reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.228|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.229|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.230|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.231|POST_DYNAMIC_READ_ID_NEXT_SLICE_SELECTION|DYNAMIC_READ_RLAST_TRANSACTION_ID_CAPTURE_CONTRACT_SELECTION|dynamic read burst-last|RLAST transaction-ID capture' docs/AXI_IAL2_MANAGER_POST_DYNAMIC_READ_ID_NEXT_SLICE_SELECTION.md docs/AXI_IAL2_MANAGER_DYNAMIC_READ_RLAST_TRANSACTION_ID_CAPTURE_CONTRACT_SELECTION.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md README.md ROADMAP_V2.md docs/book/src/14-feature-backlog.md
 ---
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.228` selects `.229`, readiness audit for
@@ -35,3 +35,6 @@ until the contract selector settles syntax, last-signal ownership,
 selected-ID/busy lifetime across non-last beats, completion/release semantics,
 assertions, report vocabulary, generated artifact boundaries, validation, and
 residue.
+
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.230` then selected `.231`, direct generated
+behavior for the selected dynamic read burst-last contract.

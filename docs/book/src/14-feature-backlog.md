@@ -6690,6 +6690,18 @@ ownership, selected-ID/busy lifetime across non-last beats, raw response
 `RID`/`RLAST` completion semantics, dynamic assertions, report vocabulary,
 generated artifact boundaries, and read-data/burst/runtime residue.
 
+Dynamic read RLAST contract selection:
+[AXI_IAL2_MANAGER_DYNAMIC_READ_RLAST_TRANSACTION_ID_CAPTURE_CONTRACT_SELECTION](../../AXI_IAL2_MANAGER_DYNAMIC_READ_RLAST_TRANSACTION_ID_CAPTURE_CONTRACT_SELECTION.md)
+selects `.231`, direct generated behavior for bounded dynamic read
+burst-last/`RLAST` transaction-ID capture and response matching. The selected
+public shape reuses existing `response-demux.read` with one transaction-local
+dynamic read ID, `response-scope burst-last`, one-bit `last-signal`, admitted
+`ARID` capture, single-active selected-ID/busy state across non-last beats, and
+completion only on raw accepted read response beat plus `RID == captured_id`
+plus asserted `RLAST`. Read-data routing, burst-length/runtime validation,
+multi-beat outputs, multiple/mixed dynamic demux, same-ID ordering, queues,
+scoreboards, direct backend behavior, and VHDL remain future exact-owner work.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same
@@ -8961,7 +8973,7 @@ dynamic read transaction-ID capture and `RID` response matching readiness
 audit, and `.225` selects `.226`, public contract selection for bounded
 single-beat dynamic read ID capture and `RID` response matching. `.226`
 selects `.227`, direct generated bounded single-beat dynamic read ID capture
-and `RID` matching behavior. `.229` selects `.230`, public contract selection
+and `RID` matching behavior. `.230` selects `.231`, direct generated behavior
 for bounded dynamic read burst-last/`RLAST` transaction-ID capture and response
 matching.
 
