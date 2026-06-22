@@ -2097,7 +2097,9 @@ generated dynamic multi-beat output-bank behavior over the selected dynamic
 runtime-validation boundary. Audit `.242` selected `.243`, direct bounded
 dynamic multi-beat output-bank implementation over generated dynamic runtime
 validation, and `.243` now ships that generated dynamic multi-beat read-data
-output-bank behavior. `.244` owns the next IAL2 feature-completeness selector.
+output-bank behavior. `.244` selected `.245`, readiness audit for
+multiple/mixed dynamic response-demux behavior after generated dynamic
+multi-beat output banks.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.

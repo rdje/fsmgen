@@ -6853,6 +6853,13 @@ per-beat capture, and the `.240` expected-beat/`RLAST` runtime assertions.
 Multiple/mixed dynamic demux, same-cycle recapture, dynamic same-ID ordering,
 queues, scoreboards, direct backend behavior, backend-language variants, and
 VHDL remain deferred.
+Post dynamic multi-beat selector:
+[AXI_IAL2_MANAGER_POST_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
+selects `.245`, readiness audit for multiple/mixed dynamic response-demux
+behavior. The selected dynamic multi-beat sample now has empty `read_data`
+residue and keeps only `same_id_ordering` in `response_demux.residue`; the
+next prerequisite is the dynamic response ownership model for multiple
+dynamic transactions, mixed dynamic/static demux, and same-cycle recapture.
 
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)

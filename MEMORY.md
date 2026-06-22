@@ -10,10 +10,10 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `HEAD after IAL2-FEATURE-COMPLETENESS-FRONTIER.243 commit` - `IAL2-FEATURE-COMPLETENESS-FRONTIER.243: ship dynamic multi-beat output banks`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.244` selects the next feature-completeness slice after generated dynamic multi-beat output banks; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.243` shipped generated dynamic multi-beat read-data output-bank behavior over generated dynamic runtime validation. The new support-accounted public sample is `ppif/axi_manager_capacity_status_dynamic_read_data_multi_beat.ppif`; `.240` scalar runtime validation and `.238` report-only dynamic burst-length remain supported.
-- in_flight_uncommitted: none after the `.243` commit workflow. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
+- latest_commit: `HEAD after IAL2-FEATURE-COMPLETENESS-FRONTIER.244 commit` - `IAL2-FEATURE-COMPLETENESS-FRONTIER.244: select dynamic demux audit`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.245` audits multiple/mixed dynamic response-demux readiness after generated dynamic multi-beat output banks; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.244` selected `.245`, readiness audit for multiple/mixed dynamic response-demux behavior. `.243` shipped generated dynamic multi-beat read-data output-bank behavior over generated dynamic runtime validation.
+- in_flight_uncommitted: none after the `.244` commit workflow. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
 
 ## Notes
