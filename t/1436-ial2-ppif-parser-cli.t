@@ -325,6 +325,20 @@ subtest 'PPIF adapter parses AXI manager read multi-group same-ID queue-head res
         )],
     );
     my $read_policy = $result->{report}{same_id_ordering}{concrete_id_reuse_policy}{read};
+    assert_counted_admitted_request_boundary(
+        $read_policy->{admitted_request_boundary},
+        'adapter read multi-group admitted boundary',
+        pending_storage => 'axi0_pending_reads_q',
+        max_pending => 4,
+        completion_fanin => '(| axi0_r0_complete axi0_r1_complete axi0_r2_complete axi0_r3_complete)',
+        request_count_expression => '(+ (| axi0_r0_request axi0_r1_request) (| axi0_r2_request axi0_r3_request))',
+        generated_assertions => [
+            qw(
+                axi0_read_id3_same_id_issue_order_request_onehot0
+                axi0_read_id5_same_id_issue_order_request_onehot0
+            )
+        ],
+    );
     is_deeply(
         [map { $_->{concrete_id} } @{$read_policy->{generated_queues} || []}],
         [3, 5],
@@ -1366,8 +1380,27 @@ subtest 'PPIF adapter parses AXI manager write multi-group same-ID queue-head re
     my $write_policy = $result->{report}{same_id_ordering}{concrete_id_reuse_policy}{write};
     is_deeply(
         $write_policy->{admitted_request_boundary}{generated_assertions},
-        [qw(axi0_write_issue_order_queue_request_onehot0)],
-        'adapter report keeps family-wide admitted-request onehot for write multi-group queue-head demux',
+        [
+            qw(
+                axi0_write_id3_same_id_issue_order_request_onehot0
+                axi0_write_id5_same_id_issue_order_request_onehot0
+            )
+        ],
+        'adapter report keeps group-local admitted-request onehots for write multi-group queue-head demux',
+    );
+    assert_counted_admitted_request_boundary(
+        $write_policy->{admitted_request_boundary},
+        'adapter write multi-group admitted boundary',
+        pending_storage => 'axi0_pending_writes_q',
+        max_pending => 4,
+        completion_fanin => '(| axi0_w0_complete axi0_w1_complete axi0_w2_complete axi0_w3_complete)',
+        request_count_expression => '(+ (| axi0_w0_request axi0_w1_request) (| axi0_w2_request axi0_w3_request))',
+        generated_assertions => [
+            qw(
+                axi0_write_id3_same_id_issue_order_request_onehot0
+                axi0_write_id5_same_id_issue_order_request_onehot0
+            )
+        ],
     );
     is_deeply([map { $_->{concrete_id} } @{$write_policy->{generated_queues} || []}], [3, 5], 'adapter report keeps both generated write queue groups');
     is($write_policy->{response_demux_strategy}, 'queue_head_issue_order', 'adapter report marks write multi-group queue-head demux strategy');
@@ -7976,6 +8009,32 @@ sub assert_counted_same_id_capacity_accounting {
     is($matrix->{request_count_expression}, $args{request_count_expression}, "$owner mirrors request count expression into the matrix report");
     is($matrix->{maximum_request_count}, scalar(@{$args{counted_request_terms}}), "$owner mirrors maximum request count into the matrix report");
     is($matrix->{over_capacity_policy}, 'reject_current_request_set', "$owner mirrors over-capacity policy into the matrix report");
+}
+
+sub assert_counted_admitted_request_boundary {
+    my ($boundary, $owner, %args) = @_;
+
+    is($boundary->{guard_source}, 'counted_request_set_capacity_fit', "$owner reports counted admitted guard source");
+    is($boundary->{accounting_mode}, 'counted_capacity_storage_and_completion_fanin', "$owner reports counted admitted accounting mode");
+    is($boundary->{request_assertion_scope}, 'concrete_id_group', "$owner reports group-local request assertion scope");
+    is($boundary->{pending_storage}, $args{pending_storage}, "$owner reports admitted guard pending storage");
+    is($boundary->{max_pending}, $args{max_pending}, "$owner reports admitted guard max-pending bound");
+    is($boundary->{completion_fanin}, $args{completion_fanin}, "$owner reports admitted guard completion fan-in");
+    is($boundary->{request_count_expression}, $args{request_count_expression}, "$owner reports admitted request-count expression");
+    is_deeply($boundary->{generated_assertions}, $args{generated_assertions}, "$owner reports group-local admitted request assertions");
+    like(
+        $boundary->{request_set_fit_expression},
+        qr/\Q(<= $args{request_count_expression} 0)\E/,
+        "$owner request-set fit expression can reject non-empty over-capacity request sets",
+    );
+    for my $pulse (@{$boundary->{generated_pulses} || []}) {
+        is(
+            $pulse->{guard},
+            "(& $pulse->{request_event} $boundary->{request_set_fit_expression})",
+            "$owner gates $pulse->{transaction} admitted pulse with the counted request-set fit expression",
+        );
+        unlike($pulse->{guard}, qr/can_accept/, "$owner admitted request guard does not consume can_accept");
+    }
 }
 
 sub transaction_dispatch_entry {

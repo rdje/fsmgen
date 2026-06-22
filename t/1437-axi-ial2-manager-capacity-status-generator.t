@@ -456,7 +456,9 @@ subtest 'same-ID queue-head response-demux generates multiple read burst-last qu
     like($isf, qr/\(rule axi0_read_id5_same_id_issue_order_r2_dequeue_enqueue_r3\b/, 'multi-group queue-head demux emits same-cycle dequeue/enqueue transition for RID 5');
     like($isf, qr/\(rule axi0_r2_response_demux \(& axi0_read_complete \(== axi0_rid 4'd5\) axi0_rlast axi0_read_id5_same_id_issue_order_slot0_r2_q\)/, 'multi-group queue-head demux emits r2 response-demux rule');
     like($isf, qr/\(rule axi0_r3_response_demux \(& axi0_read_complete \(== axi0_rid 4'd5\) axi0_rlast axi0_read_id5_same_id_issue_order_slot0_r3_q\)/, 'multi-group queue-head demux emits r3 response-demux rule');
-    like($isf, qr/\(assert \(! \(\| [\s\S]*\(& axi0_r0_request axi0_r2_request\)/, 'multi-group queue-head demux keeps one family-wide request mutual-exclusion assertion');
+    like($isf, qr/\(assert \(! \(& axi0_r0_request axi0_r1_request\)\) "read same-ID issue-order queue requests for concrete ID 3 are mutually exclusive"\)/, 'multi-group queue-head demux emits a group-local request assertion for RID 3');
+    like($isf, qr/\(assert \(! \(& axi0_r2_request axi0_r3_request\)\) "read same-ID issue-order queue requests for concrete ID 5 are mutually exclusive"\)/, 'multi-group queue-head demux emits a group-local request assertion for RID 5');
+    unlike($isf, qr/\(& axi0_r0_request axi0_r2_request\)/, 'multi-group queue-head demux no longer rejects distinct concrete-ID read requests by assertion');
     unlike($isf, qr/\baxi0_rdata\b/, 'multi-group response-demux-only sample does not generate read-data inputs');
 
     assert_same_id_queue_head_response_demux_report(
@@ -490,6 +492,20 @@ subtest 'same-ID queue-head response-demux generates multiple read burst-last qu
     );
     my $read_policy = $result->{report}{same_id_ordering}{concrete_id_reuse_policy}{read};
     is($read_policy->{implementation_status}, 'generated_read_burst_last_queue_head_demux', 'multi-group policy keeps read burst-last implementation status');
+    assert_counted_admitted_request_boundary(
+        $read_policy->{admitted_request_boundary},
+        'generator read multi-group admitted boundary',
+        pending_storage => 'axi0_pending_reads_q',
+        max_pending => 4,
+        completion_fanin => '(| axi0_r0_complete axi0_r1_complete axi0_r2_complete axi0_r3_complete)',
+        request_count_expression => '(+ (| axi0_r0_request axi0_r1_request) (| axi0_r2_request axi0_r3_request))',
+        generated_assertions => [
+            qw(
+                axi0_read_id3_same_id_issue_order_request_onehot0
+                axi0_read_id5_same_id_issue_order_request_onehot0
+            )
+        ],
+    );
     is_deeply(
         [map { $_->{concrete_id} } @{$read_policy->{generated_queues} || []}],
         [3, 5],
@@ -528,7 +544,8 @@ subtest 'same-ID queue-head response-demux generates multiple read burst-last qu
 
     my $low_capacity_contract = sample_contract_with_same_id_read_multi_group_queue_head_response_demux();
     $low_capacity_contract->{read_max_pending} = 3;
-    my $low_capacity_isf = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate($low_capacity_contract)->{generated_ial1}{text};
+    my $low_capacity_result = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate($low_capacity_contract);
+    my $low_capacity_isf = $low_capacity_result->{generated_ial1}{text};
     assert_counted_low_capacity_rules(
         $low_capacity_isf,
         'generator read multi-group low-capacity rules',
@@ -540,6 +557,14 @@ subtest 'same-ID queue-head response-demux generates multiple read burst-last qu
         slots_output => 'axi0_read_slots_available',
         full_output => 'axi0_read_full',
         can_accept_output => 'axi0_read_can_accept',
+    );
+    assert_counted_low_capacity_admitted_guard(
+        $low_capacity_result->{report}{same_id_ordering}{concrete_id_reuse_policy}{read}{admitted_request_boundary},
+        'generator read multi-group low-capacity admitted guard',
+        request_count_expression => '(+ (| axi0_r0_request axi0_r1_request) (| axi0_r2_request axi0_r3_request))',
+        completion_fanin => '(| axi0_r0_complete axi0_r1_complete axi0_r2_complete axi0_r3_complete)',
+        pending_storage => 'axi0_pending_reads_q',
+        max_pending => 3,
     );
 };
 
@@ -1282,7 +1307,9 @@ subtest 'same-ID queue-head response-demux generates read single-beat multi-grou
     like($isf, qr/\(rule axi0_read_id5_same_id_issue_order_r2_dequeue_enqueue_r3\b/, 'read single-beat multi-group queue-head demux emits ID 5 same-cycle dequeue/enqueue transition');
     like($isf, qr/\(rule axi0_r2_response_demux \(& axi0_read_complete \(== axi0_rid 4'd5\) axi0_read_id5_same_id_issue_order_slot0_r2_q\)/, 'read single-beat multi-group queue-head demux emits r2 response-demux rule without RLAST');
     like($isf, qr/\(rule axi0_r3_response_demux \(& axi0_read_complete \(== axi0_rid 4'd5\) axi0_read_id5_same_id_issue_order_slot0_r3_q\)/, 'read single-beat multi-group queue-head demux emits r3 response-demux rule without RLAST');
-    like($isf, qr/\(assert \(! \(\| [\s\S]*\(& axi0_r0_request axi0_r2_request\)/, 'read single-beat multi-group queue-head demux keeps one family-wide request mutual-exclusion assertion');
+    like($isf, qr/\(assert \(! \(& axi0_r0_request axi0_r1_request\)\) "read same-ID issue-order queue requests for concrete ID 3 are mutually exclusive"\)/, 'read single-beat multi-group queue-head demux emits a group-local request assertion for RID 3');
+    like($isf, qr/\(assert \(! \(& axi0_r2_request axi0_r3_request\)\) "read same-ID issue-order queue requests for concrete ID 5 are mutually exclusive"\)/, 'read single-beat multi-group queue-head demux emits a group-local request assertion for RID 5');
+    unlike($isf, qr/\(& axi0_r0_request axi0_r2_request\)/, 'read single-beat multi-group queue-head demux no longer rejects distinct concrete-ID read requests by assertion');
     unlike($isf, qr/non-last response beat does not dequeue/, 'read single-beat multi-group queue-head demux omits non-last dequeue assertions');
 
     assert_same_id_read_single_beat_queue_head_response_demux_report(
@@ -1615,8 +1642,27 @@ subtest 'same-ID queue-head response-demux generates write multi-group queue sta
     my $write_policy = $result->{report}{same_id_ordering}{concrete_id_reuse_policy}{write};
     is_deeply(
         $write_policy->{admitted_request_boundary}{generated_assertions},
-        [qw(axi0_write_issue_order_queue_request_onehot0)],
-        'same-ID write multi-group policy keeps a family-wide admitted-request onehot assertion',
+        [
+            qw(
+                axi0_write_id3_same_id_issue_order_request_onehot0
+                axi0_write_id5_same_id_issue_order_request_onehot0
+            )
+        ],
+        'same-ID write multi-group policy reports group-local admitted-request onehot assertions',
+    );
+    assert_counted_admitted_request_boundary(
+        $write_policy->{admitted_request_boundary},
+        'generator write multi-group admitted boundary',
+        pending_storage => 'axi0_pending_writes_q',
+        max_pending => 4,
+        completion_fanin => '(| axi0_w0_complete axi0_w1_complete axi0_w2_complete axi0_w3_complete)',
+        request_count_expression => '(+ (| axi0_w0_request axi0_w1_request) (| axi0_w2_request axi0_w3_request))',
+        generated_assertions => [
+            qw(
+                axi0_write_id3_same_id_issue_order_request_onehot0
+                axi0_write_id5_same_id_issue_order_request_onehot0
+            )
+        ],
     );
     is($write_policy->{response_demux_strategy}, 'queue_head_issue_order', 'same-ID write multi-group policy reports queue-head response-demux strategy');
     is($write_policy->{response_demux_implementation_status}, 'generated', 'same-ID write multi-group policy reports generated response-demux status');
@@ -1667,7 +1713,8 @@ subtest 'same-ID queue-head response-demux generates write multi-group queue sta
 
     my $low_capacity_contract = sample_contract_with_same_id_write_multi_group_queue_head_response_demux();
     $low_capacity_contract->{write_max_pending} = 3;
-    my $low_capacity_isf = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate($low_capacity_contract)->{generated_ial1}{text};
+    my $low_capacity_result = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate($low_capacity_contract);
+    my $low_capacity_isf = $low_capacity_result->{generated_ial1}{text};
     assert_counted_low_capacity_rules(
         $low_capacity_isf,
         'generator write multi-group low-capacity rules',
@@ -1679,6 +1726,14 @@ subtest 'same-ID queue-head response-demux generates write multi-group queue sta
         slots_output => 'axi0_write_slots_available',
         full_output => 'axi0_write_full',
         can_accept_output => 'axi0_write_can_accept',
+    );
+    assert_counted_low_capacity_admitted_guard(
+        $low_capacity_result->{report}{same_id_ordering}{concrete_id_reuse_policy}{write}{admitted_request_boundary},
+        'generator write multi-group low-capacity admitted guard',
+        request_count_expression => '(+ (| axi0_w0_request axi0_w1_request) (| axi0_w2_request axi0_w3_request))',
+        completion_fanin => '(| axi0_w0_complete axi0_w1_complete axi0_w2_complete axi0_w3_complete)',
+        pending_storage => 'axi0_pending_writes_q',
+        max_pending => 3,
     );
 };
 
@@ -5537,6 +5592,62 @@ sub assert_counted_low_capacity_rules {
         $isf,
         qr/$rejects_two_requests_at_occ2[\s\S]*\(\Q$pending_storage\E 2\)[\s\S]*\(\Q$pending_output\E 2\)[\s\S]*\(\Q$slots_output\E 1\)[\s\S]*\(\Q$full_output\E 0\)[\s\S]*\(\Q$can_accept_output\E 0\)\)/,
         "$owner rejects an over-capacity counted request set without changing pending",
+    );
+}
+
+sub assert_counted_admitted_request_boundary {
+    my ($boundary, $owner, %args) = @_;
+
+    is($boundary->{guard_source}, 'counted_request_set_capacity_fit', "$owner reports counted admitted guard source");
+    is($boundary->{accounting_mode}, 'counted_capacity_storage_and_completion_fanin', "$owner reports counted admitted accounting mode");
+    is($boundary->{request_assertion_scope}, 'concrete_id_group', "$owner reports group-local request assertion scope");
+    is($boundary->{pending_storage}, $args{pending_storage}, "$owner reports admitted guard pending storage");
+    is($boundary->{max_pending}, $args{max_pending}, "$owner reports admitted guard max-pending bound");
+    is($boundary->{completion_fanin}, $args{completion_fanin}, "$owner reports admitted guard completion fan-in");
+    is($boundary->{request_count_expression}, $args{request_count_expression}, "$owner reports admitted request-count expression");
+    is_deeply($boundary->{generated_assertions}, $args{generated_assertions}, "$owner reports group-local admitted request assertions");
+    like(
+        $boundary->{request_set_fit_expression},
+        qr/\Q(<= $args{request_count_expression} 0)\E/,
+        "$owner request-set fit expression can reject non-empty over-capacity request sets",
+    );
+    for my $pulse (@{$boundary->{generated_pulses} || []}) {
+        is(
+            $pulse->{guard},
+            "(& $pulse->{request_event} $boundary->{request_set_fit_expression})",
+            "$owner gates $pulse->{transaction} admitted pulse with the counted request-set fit expression",
+        );
+        unlike($pulse->{guard}, qr/can_accept/, "$owner admitted request guard does not consume can_accept");
+    }
+}
+
+sub assert_counted_low_capacity_admitted_guard {
+    my ($boundary, $owner, %args) = @_;
+    my $request_expr = $args{request_count_expression};
+    my $complete = $args{completion_fanin};
+    my $pending_storage = $args{pending_storage};
+    my $max_pending = $args{max_pending};
+    my $one_slot_left = $max_pending - 1;
+
+    like(
+        $boundary->{request_set_fit_expression},
+        qr/\Q(& (== $pending_storage $one_slot_left) (! $complete) (<= $request_expr 1))\E/,
+        "$owner allows only one request when one slot is available without completion",
+    );
+    like(
+        $boundary->{request_set_fit_expression},
+        qr/\Q(& (== $pending_storage $one_slot_left) $complete (<= $request_expr 2))\E/,
+        "$owner credits one completion only when the queue is nonempty",
+    );
+    like(
+        $boundary->{request_set_fit_expression},
+        qr/\Q(& (== $pending_storage $max_pending) (! $complete) (<= $request_expr 0))\E/,
+        "$owner rejects every request at full occupancy without completion",
+    );
+    like(
+        $boundary->{request_set_fit_expression},
+        qr/\Q(& (== $pending_storage $max_pending) $complete (<= $request_expr 1))\E/,
+        "$owner admits at most one request at full occupancy with one completion",
     );
 }
 
