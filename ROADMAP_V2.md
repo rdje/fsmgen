@@ -1080,7 +1080,7 @@ support-accounting metadata under query/limit/filter controls.
 `SEMANTIC-INTROSPECTION-MCP-FRONTIER.30` closes the immediate read-only
 semantic-introspection/MCP pass after source discovery and returns active
 roadmap priority to the IAL2 feature-completeness tree, currently at
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.213`.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.214`.
 The parser/report metadata slice `IAL2-FEATURE-COMPLETENESS-FRONTIER.39` is
 now shipped for the bounded AXI read response-demux public contract selected
 by `.38`. The selected read arm requires `(response-scope single-beat)`,
@@ -1986,8 +1986,10 @@ queue-head reports now expose counted selected-request accounting,
 and mixed auto-ID single concrete-group directions remain Boolean. Selector
 `.212` found that admitted-request pulses still use scalar pending storage
 plus Boolean completion fan-in, so direct group-local onehot narrowing could
-enqueue requests that the capacity matrix rejects. `.213` audits admitted
-pulse guard alignment before any group-local same-ID enqueue behavior change.
+enqueue requests that the capacity matrix rejects. Audit `.213` selected
+`.214`, direct bounded implementation of counted admitted-request guard
+alignment and group-local request assertions for generated multi-group
+queue-head families.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.

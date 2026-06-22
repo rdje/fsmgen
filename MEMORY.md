@@ -10,10 +10,10 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `HEAD after IAL2-FEATURE-COMPLETENESS-FRONTIER.212 commit` - `IAL2-FEATURE-COMPLETENESS-FRONTIER.212: select admitted guard audit`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.213` audits counted admitted-request guard alignment before group-local same-ID enqueue behavior; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.212` selected `.213` after finding counted capacity/status can reject over-capacity current request sets, but admitted-request pulses still use scalar pending storage plus Boolean completion fan-in. Direct group-local onehot narrowing could enqueue requests that the capacity matrix rejects; queue transitions are already per concrete-ID group and are not the first remaining blocker. No parser/generator/sample/test/HDL behavior changed.
-- in_flight_uncommitted: none after the `IAL2-FEATURE-COMPLETENESS-FRONTIER.212` commit. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
+- latest_commit: `HEAD after IAL2-FEATURE-COMPLETENESS-FRONTIER.213 commit` - `IAL2-FEATURE-COMPLETENESS-FRONTIER.213: audit admitted guard alignment`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.214` implements counted admitted-request guard alignment and group-local request assertions for generated multi-group queue-head families; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.213` selected `.214` after auditing counted admitted-request guard alignment. The audit found IAL1 already supports the needed arithmetic/comparison guard expressions, so `.214` can stay local to the AXI IAL2 generator: derive a current-request-set fit expression from counted capacity/status metadata, gate counted admitted-request pulses with it, and replace family-wide request onehot assertions only with per concrete-ID group assertions for counted multi-group directions. No parser/generator/sample/test/HDL behavior changed.
+- in_flight_uncommitted: none after the `IAL2-FEATURE-COMPLETENESS-FRONTIER.213` commit. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
 
 ## Notes

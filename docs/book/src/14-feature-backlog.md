@@ -6498,6 +6498,14 @@ group-local same-ID enqueue behavior. The counted matrix can reject an
 over-capacity current request set, but admitted-request pulses still use
 scalar pending storage plus Boolean completion fan-in, so direct group-local
 onehot narrowing is not safe until those guards are owned.
+Counted admitted-request guard audit:
+[AXI_IAL2_MANAGER_COUNTED_ADMITTED_REQUEST_GUARD_READINESS_AUDIT](../../AXI_IAL2_MANAGER_COUNTED_ADMITTED_REQUEST_GUARD_READINESS_AUDIT.md)
+selects `.214`, direct bounded implementation of counted admitted-request
+guard alignment and group-local request assertions for generated multi-group
+queue-head families. The implementation should derive the admitted-request
+fit guard from the counted capacity/status matrix semantics and preserve
+Boolean admission plus family-wide assertions for non-counted directions and
+mixed auto-ID single concrete-group directions.
 
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
@@ -8760,7 +8768,7 @@ support catalog entries instead of recursive workspace traversal.
 `SEMANTIC-INTROSPECTION-MCP-FRONTIER.30` closes the immediate read-only
 semantic-introspection/MCP pass after source discovery; the active roadmap
 priority is again the IAL2 feature-completeness tree, currently at
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.213`.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.214`.
 
 Selected first MCP resource families are `fsmgen://capabilities`,
 `fsmgen://contracts`, `fsmgen://diagnostics`,
