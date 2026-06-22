@@ -10,10 +10,10 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `HEAD after IAL2-FEATURE-COMPLETENESS-FRONTIER.223 commit` - `IAL2-FEATURE-COMPLETENESS-FRONTIER.223: ship dynamic write ID demux`.
-- active_work_unit: `DOCTRINE-ENFORCEMENT-ADOPTION.1` adopts the PGEN doctrine-enforcement system into FSMGEN and creates an FSMGEN-specific issue-pinpointing `TOOLBOX.md`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.224`, `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4`, and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.223` shipped generated bounded dynamic write transaction-ID capture and `BID` response matching for one explicit `response-demux.write` dynamic write transaction. The new public sample is `ppif/axi_manager_capacity_status_dynamic_write_response_demux.ppif`; metadata-only dynamic IDs remain unchanged when no behavior clause consumes them.
-- in_flight_uncommitted: none after the `IAL2-FEATURE-COMPLETENESS-FRONTIER.223` commit. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
+- latest_commit: `HEAD after DOCTRINE-ENFORCEMENT-ADOPTION.1 commit` - `DOCTRINE-ENFORCEMENT-ADOPTION.1: adopt doctrine enforcement toolbox`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.224` selects the next exact IAL2 owner after generated dynamic write ID behavior and completed doctrine-enforcement adoption; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `DOCTRINE-ENFORCEMENT-ADOPTION.1` adopted root `DOCTRINE_ENFORCEMENT.md`, root `TOOLBOX.md`, `scripts/check_doctrines.sh`, `scripts/check_doctrine_bootstrap.sh`, `scripts/check_docs_relative_paths.sh`, pre-commit wiring, hosted CI wiring, README/roadmap/mdBook/task-tree/Knowledge Map sync, without parser/generator/HDL/PPIF/runtime behavior changes. Previous slice `.223` shipped generated bounded dynamic write transaction-ID capture and `BID` response matching.
+- in_flight_uncommitted: none after the `DOCTRINE-ENFORCEMENT-ADOPTION.1` commit. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
 
 ## Notes

@@ -1,0 +1,249 @@
+# TOOLBOX.md - FSMGEN Diagnostic And Doctrine Toolbox
+
+Use this first when diagnosing FSMGEN issues. The goal is to locate the exact
+why and where with repo-owned tools before changing code.
+
+For code changes, record the relevant command and result in the owning
+task-tree leaf. The commit must still follow `COMMIT.md`, and the doctrine
+driver must pass:
+
+```bash
+scripts/check_doctrines.sh
+```
+
+## Quick Chooser
+
+| Symptom or question | First tool |
+| --- | --- |
+| Generated HDL looks wrong or a CLI run fails | Trace workflow with `--trace-verbosity=debug --trace-log=FILE`. |
+| Need the legacy debug stream | `--debug=N` where `N` is `1..4`; bare `--debug` means `4`. |
+| ISF or PPIF lowering/report shape is unclear | `--emit-schedule-json`. |
+| Need stable diagnostics without writing HDL | `--strict --check --json`. |
+| Need sanitized semantic/IR structure | `--strict --emit-semantic-json`. |
+| Need generated SystemVerilog checked by external tools | `--verify-hdl --output /tmp/out.sv`. |
+| Need support-accounting coverage truth | `prove -Iperl t/248-regression-corpus-accounting.t`. |
+| Need a specific parser/generator regression | Focused `prove -Iperl t/<test>.t`. |
+| Need user-facing docs proof | `mdbook build docs/book`. |
+| Need docs path hygiene | `scripts/check_docs_relative_paths.sh`. |
+| Need Knowledge Map sync | `knowledge-map/scripts/gen_knowledge_map.sh` then `knowledge-map/scripts/check_knowledge_map.sh`. |
+| Need doctrine/memory gate truth | `scripts/check_doctrines.sh`. |
+| Need diff hygiene before commit | `git --no-pager diff --check` and `git status --short`. |
+| Need a downstream repro bundle | `./bin/fsmgen-issue-bundle --case PATH --issue-id ID -- [FSMGEN_OPTIONS...]`. |
+
+## 1. Trace And Debug
+
+### Trace log
+
+Use this when the control flow, lowering path, or diagnostic context is unclear.
+
+```bash
+./bin/fsmgen --trace-verbosity=debug --trace-log=/tmp/fsmgen.trace \
+  --output /tmp/fsmgen_out.sv path/to/input.fsm
+```
+
+Expected signal: command stderr/stdout stays readable, while `/tmp/fsmgen.trace`
+contains origin-tagged trace lines with file, function, and line information.
+Use lower verbosity (`low`, `medium`, `high`) when the trace is too large.
+
+For `.isf` or `.ppif` inputs, keep report-only JSON stdout clean by routing
+trace output to a file:
+
+```bash
+./bin/fsmgen --quiet --trace-verbosity=debug --trace-log=/tmp/fsmgen.trace \
+  --emit-schedule-json path/to/input.ppif
+```
+
+### Numeric debug
+
+Use this for the older compatibility debug stream:
+
+```bash
+./bin/fsmgen --debug=3 --output /tmp/fsmgen_out.sv path/to/input.fsm
+```
+
+Expected signal: debug output identifies parser/generator phases and major
+decision points. Prefer the named trace log when you need structured trace
+routing.
+
+## 2. Report-Only JSON Surfaces
+
+### Schedule JSON
+
+Use this first for `.isf` and `.ppif` lowering questions.
+
+```bash
+./bin/fsmgen --quiet --emit-schedule-json path/to/input.isf
+./bin/fsmgen --quiet --emit-schedule-json path/to/input.ppif
+```
+
+Expected signal: stdout is JSON describing the scheduled/lowered intent. For
+PPIF AXI manager work, this is the fastest way to inspect generated behavior
+flags, report modes, generated rules, assertions, support residue, and source
+identity before reading code.
+
+### Strict check JSON
+
+Use this for stable success/failure diagnostics and support-accounting matches.
+
+```bash
+./bin/fsmgen --quiet --strict --check --json path/to/input.fsm
+./bin/fsmgen --quiet --strict --check --json path/to/input.isf
+./bin/fsmgen --quiet --strict --check --json path/to/input.ppif
+```
+
+Expected signal: success reports include `success: true` and support-accounting
+metadata when the source is catalogued. Failures return `success: false` with a
+bounded diagnostic object instead of partial HDL artifacts.
+
+### Semantic JSON
+
+Use this when the generated HDL is downstream of a semantic shape problem.
+
+```bash
+./bin/fsmgen --quiet --strict --emit-semantic-json path/to/input.fsm
+./bin/fsmgen --quiet --strict --emit-semantic-json path/to/input.isf
+./bin/fsmgen --quiet --strict --emit-semantic-json path/to/input.ppif
+```
+
+Expected signal: stdout contains bounded normalized semantic JSON with module,
+system, signal-analysis, symbol, and forward-IR projections. For `.isf` and
+`.ppif`, the public source path remains the source identity even when generated
+temporary `.fsm` sources are used internally.
+
+## 3. HDL And External Validation
+
+Use `--verify-hdl` after generating SystemVerilog when the suspected issue is
+backend output quality or external-tool compatibility.
+
+```bash
+./bin/fsmgen --quiet --verify-hdl --output /tmp/fsmgen_out.sv path/to/input.fsm
+```
+
+Expected signal: FSMGEN writes SystemVerilog and runs the configured
+Verilator/Yosys validation path when available. Missing optional external tools
+are reported according to the existing validation contract; do not treat missing
+optional tools as a behavior fix.
+
+For direct inspection without external tools:
+
+```bash
+./bin/fsmgen --quiet --output /tmp/fsmgen_out.sv path/to/input.fsm
+rg -n 'signal_or_rule_name|assert|always_ff' /tmp/fsmgen_out.sv
+```
+
+## 4. Support Accounting And Regression
+
+Use support accounting when the question is "is this public sample or expected
+failure catalogued and covered?"
+
+```bash
+prove -Iperl t/248-regression-corpus-accounting.t
+```
+
+Expected signal: the corpus-accounting test reports all catalogued supported,
+strict-supported, semantic, and expected-failure entries as accounted.
+
+Use focused tests for the owning subsystem:
+
+```bash
+prove -Iperl t/1436-ial2-ppif-parser-cli.t
+prove -Iperl t/1437-axi-ial2-manager-capacity-status-generator.t
+```
+
+Use the repo-owned local regression tiers for broader checks:
+
+```bash
+./bin/ci-regression quick
+./bin/ci-regression smoke
+./bin/ci-regression isf
+./bin/ci-regression
+```
+
+Broad or potentially heavy Perl runs launched by agents must use the RAM guard
+or an equivalent active monitor:
+
+```bash
+scripts/run_with_ram_guard.sh -- prove -Iperl t/248-regression-corpus-accounting.t
+```
+
+## 5. Documentation, Knowledge, And Doctrine Gates
+
+Use these when the issue touches user-facing docs, task continuity, or repo
+policy.
+
+```bash
+mdbook build docs/book
+scripts/check_docs_relative_paths.sh
+knowledge-map/scripts/gen_knowledge_map.sh
+knowledge-map/scripts/check_knowledge_map.sh
+scripts/check_memory_architecture.sh
+scripts/check_doctrines.sh
+```
+
+Expected signals:
+
+- mdBook completes without broken source or renderer errors.
+- docs relative-path audit reports no machine-local home-directory paths.
+- Knowledge Map check says facts are valid, IDs are unique, and the map is in sync.
+- memory architecture check confirms `MEMORY.md` is bounded and bootstrap/task/decision stores exist.
+- doctrine bootstrap check confirms root doctrine/toolbox docs, bootstrap
+  pointers, hook wiring, and CI wiring exist.
+- doctrine driver reports every registered doctrine as `PASS`.
+
+## 6. Task-Tree And Git Hygiene
+
+Before any code, test, source, generated-artifact, or config change, identify
+the owning task-tree leaf:
+
+```bash
+rg -n 'Current Frontier|<LEAF-ID>|Verification Log|Commit Log' docs/tasks docs/TASK_TREE.md
+```
+
+Before commit:
+
+```bash
+git status --short
+git --no-pager diff --check
+scripts/check_doctrines.sh
+```
+
+After commit, truncate `git_message_brief.txt` and verify a clean tree:
+
+```bash
+truncate -s 0 git_message_brief.txt
+git status --short
+```
+
+Do not update frozen legacy blobs (`CHANGES.md`, `DEVELOPMENT_NOTES.md`,
+`ROADMAP_STATUS.md`, `LIVE_ACHIEVEMENT_STATUS.md`). Route durable status to
+task-trees, `MEMORY.md`, decision records, Knowledge Map fact cards, and git.
+
+## 7. Downstream Issue Bundles
+
+Use the bundle helper when a failure needs to be handed off or replayed without
+asking the downstream reporter to classify the FSMGEN layer.
+
+```bash
+./bin/fsmgen-issue-bundle \
+  --case path/to/input.isf \
+  --issue-id short-id \
+  --failure-class rejected-input \
+  --expected 'expected behavior' \
+  --observed 'observed behavior' \
+  -- --strict
+```
+
+Expected signal: the bundle directory contains environment metadata, the input
+artifact, capability manifest, original command output, check JSON, strict check
+JSON, semantic JSON, schedule JSON, and generated SystemVerilog probes.
+
+## 8. When The Toolbox Is Not Enough
+
+If no command above can identify the why and where:
+
+1. Record the missing diagnostic capability in the owning task-tree leaf.
+2. Add or improve a tool under a new exact task-tree owner.
+3. Add a deterministic doctrine check only when there is an invariant that can
+   be re-derived from the repository or rerun as an oracle.
+
+Do not replace missing tool evidence with speculation.

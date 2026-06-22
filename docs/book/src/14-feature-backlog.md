@@ -8874,8 +8874,11 @@ support catalog entries instead of recursive workspace traversal.
 semantic-introspection/MCP pass after source discovery. The IAL2
 feature-completeness tree has shipped
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.223`, bounded dynamic write
-transaction-ID capture and `BID` response matching; the next active requested
-owner is `DOCTRINE-ENFORCEMENT-ADOPTION.1`.
+transaction-ID capture and `BID` response matching.
+`DOCTRINE-ENFORCEMENT-ADOPTION.1` now adopts root
+`DOCTRINE_ENFORCEMENT.md`, root `TOOLBOX.md`,
+`scripts/check_doctrines.sh`, and FSMGEN-native issue-pinpointing commands.
+The next active IAL2 owner is `IAL2-FEATURE-COMPLETENESS-FRONTIER.224`.
 
 Selected first MCP resource families are `fsmgen://capabilities`,
 `fsmgen://contracts`, `fsmgen://diagnostics`,

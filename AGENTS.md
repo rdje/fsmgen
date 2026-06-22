@@ -3,20 +3,24 @@
 This is the tool-neutral entrypoint (the common `AGENTS.md` convention). Other
 harnesses' bootstrap files (`CLAUDE.md`, `.cursorrules`,
 `.github/copilot-instructions.md`, `GEMINI.md`, `.windsurfrules`) point back here.
-The system of record is **`README.md`** + **`MEMORY_ARCHITECTURE.md`**.
+The system of record is **`README.md`** + **`MEMORY_ARCHITECTURE.md`** +
+**`DOCTRINE_ENFORCEMENT.md`** + **`TOOLBOX.md`**.
 
 ## On every session start / resume
 
 1. Read **`README.md`** — project objective, layout, standard commands.
 2. Read **`MEMORY_ARCHITECTURE.md`** — how memory + continuity work here (MANDATORY;
    it is enforced — see below).
-3. Resume from **`MEMORY.md`** — the bounded resume pointer: latest commit, the active
+3. Read **`DOCTRINE_ENFORCEMENT.md`** and **`TOOLBOX.md`** — how repository
+   doctrines are mechanically checked and which FSMGEN tools to use first for
+   issue diagnosis.
+4. Resume from **`MEMORY.md`** — the bounded resume pointer: latest commit, the active
    task-tree frontier, the single next action, any in-flight uncommitted work.
-4. Open the active **task-tree** under `docs/tasks/` (index: `docs/TASK_TREE.md`); its
+5. Open the active **task-tree** under `docs/tasks/` (index: `docs/TASK_TREE.md`); its
    frontier row is your precise next step.
-5. Pull only the relevant **decision records** under `docs/decisions/`
+6. Pull only the relevant **decision records** under `docs/decisions/`
    (index: `docs/decisions/INDEX.md`).
-6. Before re-deriving any durable fact from code or runtime, consult
+7. Before re-deriving any durable fact from code or runtime, consult
    **`KNOWLEDGE_MAP.md`** — a derived *question → fact* index (generated from the
    front-mattered fact cards under `docs/knowledge/`; see `knowledge-map/`). Find
    your question, follow the one pointer to the canonical home, and trust the dated
@@ -37,8 +41,9 @@ The system of record is **`README.md`** + **`MEMORY_ARCHITECTURE.md`**.
   (e.g. `ISF-SWAP: …`, `MEMORY-ARCHITECTURE-ADOPTION.4: …`).
 - **The mdBook (`docs/book/`) is user-facing** — keep it synced in the same slice with
   runnable, lowering-clean examples (`docs/decisions/0006`).
-- **Before committing, run `scripts/check_memory_architecture.sh`** — git hooks and CI
-  run it too, and a non-compliant change fails the build and cannot merge. Activate the
-  hooks once per clone: `git config core.hooksPath .githooks`.
+- **Before committing, run `scripts/check_doctrines.sh`** — git hooks and CI
+  run it too, including the memory-architecture and Knowledge Map gates, and a
+  non-compliant change fails the build and cannot merge. Activate the hooks
+  once per clone: `git config core.hooksPath .githooks`.
 
 Nothing important may live only in this conversation — route it to a layer and commit.

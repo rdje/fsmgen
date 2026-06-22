@@ -2,6 +2,11 @@
 
 This file provides guidance to WARP (warp.dev) when working with code in this repository.
 
+Read `AGENTS.md` first. The system of record is `README.md`,
+`MEMORY_ARCHITECTURE.md`, `DOCTRINE_ENFORCEMENT.md`, and `TOOLBOX.md`. Resume
+from `MEMORY.md`, use the active task-tree frontier under `docs/tasks/`, commit
+per `COMMIT.md`, and run `scripts/check_doctrines.sh` before committing.
+
 ## Project Overview
 
 FSMGen is a sophisticated finite state machine (FSM) HDL generator that converts Lisp-like `.fsm` files into synthesizable RTL code. The tool supports SystemVerilog, Verilog, and VHDL output formats with advanced features like AST factorization, intermediate signal optimization, and multi-pass dependency resolution.

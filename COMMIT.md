@@ -37,7 +37,7 @@ Ignoring it is not a style issue; it is a project-safety failure.
     the single next action only.
   - **OVERWRITE** its "Current state" block when recording completed work — never append.
     Keep it ≤ ~60 lines; this is mechanically capped by
-    `scripts/check_memory_architecture.sh` (pre-commit hook + CI). Rationale and the
+    `scripts/check_doctrines.sh` (pre-commit hook + CI). Rationale and the
     reconciliation of this workflow with the memory standard: `docs/decisions/0007`.
 - `ROADMAP_STATUS.md`
   - **FROZEN legacy blob** (do not append). Superseded by the task-trees (layer B,
@@ -79,6 +79,7 @@ Ignoring it is not a style issue; it is a project-safety failure.
 4. Run validation appropriate to the scope:
    - For code changes: syntax + tests/regression.
    - For doc-only changes: basic repo state checks are sufficient.
+   - For all completed task-scoped changes: `scripts/check_doctrines.sh`.
 5. Write `git_message_brief.txt` with:
    - concise subject line,
    - key body lines or bullet points,

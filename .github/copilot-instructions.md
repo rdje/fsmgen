@@ -1,3 +1,3 @@
 # GitHub Copilot instructions
 
-This repo's agent instructions are tool-neutral. Read **`AGENTS.md`** first, then the system of record: **`README.md`** + **`MEMORY_ARCHITECTURE.md`** (memory + continuity, MANDATORY and enforced). Resume from `MEMORY.md` -> the active task-tree under `docs/tasks/` (index `docs/TASK_TREE.md`); durable facts in `docs/decisions/`; commit per `COMMIT.md` with the work-unit id in the subject; run `scripts/check_memory_architecture.sh` before committing.
+This repo's agent instructions are tool-neutral. Read **`AGENTS.md`** first, then the system of record: **`README.md`** + **`MEMORY_ARCHITECTURE.md`** + **`DOCTRINE_ENFORCEMENT.md`** + **`TOOLBOX.md`**. Resume from `MEMORY.md` -> the active task-tree under `docs/tasks/` (index `docs/TASK_TREE.md`); durable facts in `docs/decisions/`; commit per `COMMIT.md` with the work-unit id in the subject; run `scripts/check_doctrines.sh` before committing.

@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `DOCTRINE-ENFORCEMENT-ADOPTION`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `infra/continuity/doctrine enforcement`
 - Created: `2026-06-22`
 - Last updated: `2026-06-22`
@@ -51,35 +51,37 @@ accounting, HDL validation, mdBook, Knowledge Map, and memory/doctrine gates.
 ## Task Tree
 
 - ID: `DOCTRINE-ENFORCEMENT-ADOPTION`
-  Status: `active`
+  Status: `done`
   Goal: `Adopt doctrine-enforcement architecture and an FSMGEN toolbox catalog.`
   Children: `DOCTRINE-ENFORCEMENT-ADOPTION.1`
 
 - ID: `DOCTRINE-ENFORCEMENT-ADOPTION.1`
-  Status: `pending`
+  Status: `done`
   Goal: `Adopt the PGEN doctrine-enforcement standard and create the FSMGEN toolbox catalog.`
   Acceptance: `Read the sibling PGEN checkout's DOCTRINE_ENFORCEMENT.md and TOOLBOX.md; write the FSMGEN DOCTRINE_ENFORCEMENT.md adoption using portable doctrine-check, registry/driver, hook, and CI concepts; create TOOLBOX.md with FSMGEN-native diagnostic commands such as --debug/--trace-verbosity/--trace-log, --emit-schedule-json, --check --json, --emit-semantic-json, --verify-hdl, support-accounting tests, mdBook build, Knowledge Map generation/checks, docs relative-path audit, memory architecture gate, and git/diff hygiene; update bootstrap pointers, README, ROADMAP_V2, mdBook, task tree, Memory, and Knowledge Map; add focused docs/gate validation; do not change parser/generator/HDL behavior without a later exact owner.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `scripts/check_doctrines.sh --list`; `scripts/check_docs_relative_paths.sh`; `bash knowledge-map/scripts/gen_knowledge_map.sh`; final `scripts/check_doctrines.sh`; `mdbook build docs/book`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `git --no-pager diff --check`.
+  Commit: `DOCTRINE-ENFORCEMENT-ADOPTION.1: adopt doctrine enforcement toolbox`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `DOCTRINE-ENFORCEMENT-ADOPTION.1` | `pending` | User requested adoption of the PGEN doctrine-enforcement system and an FSMGEN issue-pinpointing toolbox after the in-flight `.223` slice completes. |
+| 1 | `DOCTRINE-ENFORCEMENT-ADOPTION.1` | `done` | Adopted root `DOCTRINE_ENFORCEMENT.md`, root `TOOLBOX.md`, the doctrine driver/registry, the bootstrap self-check, docs path wrapper, pre-commit wiring, and hosted CI wiring. |
 
 ## Decisions
 
 - `2026-06-22`: The adoption leaf will translate the portable doctrine model
   from PGEN but write FSMGEN-native toolbox commands; PGEN-specific grammar
   and Rust certificate commands are evidence for structure, not FSMGEN tools.
+- `2026-06-22`: FSMGEN has enough deterministic structural gates for a first
+  concrete doctrine driver. `scripts/check_doctrines.sh` now registers
+  `DOCTRINE-BOOTSTRAP`, `MEMORY-ARCH`, `KNOWLEDGE-MAP`, and `DOC-PATHS`.
+  Heavier regression and mdBook gates remain in the existing CI/regression
+  entrypoints rather than the fast pre-commit registry.
 
 ## Open Questions
 
-- Whether FSMGEN already has enough doctrine checks for a general
-  `scripts/check_doctrines.sh` driver in the first adoption slice, or whether
-  `.1` should land documentation plus a check-driver selector before hook/CI
-  wiring. This does not block reading and documenting the adoption source.
+- None.
 
 ## Blockers
 
@@ -89,15 +91,18 @@ accounting, HDL validation, mdBook, Knowledge Map, and memory/doctrine gates.
 
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
-| `2026-06-22` | `DOCTRINE-ENFORCEMENT-ADOPTION.1` | `pending` | `pending` |
+| `2026-06-22` | `DOCTRINE-ENFORCEMENT-ADOPTION.1` | `scripts/check_doctrines.sh --list`; `scripts/check_docs_relative_paths.sh`; `bash knowledge-map/scripts/gen_knowledge_map.sh`; final `scripts/check_doctrines.sh`; `mdbook build docs/book`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `git --no-pager diff --check` | `passed`; adoption docs, toolbox, driver, bootstrap check, docs path wrapper, hook/CI wiring, README, ROADMAP_V2, mdBook, task tree, Memory, and Knowledge Map were updated without parser/generator/HDL/PPIF/runtime behavior changes. |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `DOCTRINE-ENFORCEMENT-ADOPTION.1` | `pending` | `pending` |
+| `DOCTRINE-ENFORCEMENT-ADOPTION.1` | `DOCTRINE-ENFORCEMENT-ADOPTION.1: adopt doctrine enforcement toolbox` | Adopted the portable doctrine-enforcement model and FSMGEN-native toolbox catalog. |
 
 ## Changelog
 
 - `2026-06-22`: Created task tree for the requested doctrine-enforcement and
   toolbox adoption work.
+- `2026-06-22`: Adopted root doctrine enforcement and toolbox docs, a
+  doctrine driver with four registered structural checks, local pre-commit and
+  hosted CI wiring, and live README/roadmap/mdBook/Knowledge Map/status sync.

@@ -14,13 +14,23 @@ Use it first for objective, navigation, and where to find code/docs quickly.
   task-tree's frontier row → only the relevant `docs/decisions/` records.
 - **Route every durable thing to a layer and commit before the turn ends** — nothing
   important may live only in the conversation. Before committing run
-  `scripts/check_memory_architecture.sh` (git hooks and CI run it too; a non-compliant
-  change cannot merge). The tool-neutral bootstrap files (`AGENTS.md`, `CLAUDE.md`,
-  `.cursorrules`, `.github/copilot-instructions.md`, `GEMINI.md`, `.windsurfrules`) are
-  one-line pointers back here.
+  `scripts/check_doctrines.sh` (git hooks and CI run it too; a non-compliant
+  change cannot merge). The doctrine driver includes the doctrine-bootstrap,
+  memory architecture, Knowledge Map, and docs path gates. The tool-neutral bootstrap files
+  (`AGENTS.md`, `CLAUDE.md`, `.cursorrules`, `.github/copilot-instructions.md`,
+  `GEMINI.md`, `.windsurfrules`) are pointers back here plus the doctrine and
+  toolbox docs.
+- **`DOCTRINE_ENFORCEMENT.md`** (repo root) is the portable doctrine-check
+  architecture as applied to FSMGEN, and **`TOOLBOX.md`** is the issue
+  pinpointing catalog. Use the toolbox commands first when diagnosing failures,
+  trace questions, report drift, support-accounting gaps, docs drift, or
+  continuity/gate issues.
 
 ## Session safety invariant
 - The commit workflow in `COMMIT.md` is mandatory and non-negotiable.
+- Doctrine enforcement in `DOCTRINE_ENFORCEMENT.md` and the diagnostic toolbox
+  in `TOOLBOX.md` are mandatory workflow surfaces; the registered gate is
+  `scripts/check_doctrines.sh`.
 - Before any code, test, source, generated-artifact, or config change, the work
   must already have task-tree ownership in `docs/TASK_TREE.md` and
   `docs/tasks/*.md`.
@@ -147,8 +157,9 @@ paths, or return machine-local absolute paths. The immediate read-only
 semantic-introspection/MCP pass is complete through
 `SEMANTIC-INTROSPECTION-MCP-FRONTIER.30`; `IAL2-FEATURE-COMPLETENESS-FRONTIER.223`
 now ships bounded dynamic write transaction-ID capture and `BID` response
-matching, and the next active requested owner is
-`DOCTRINE-ENFORCEMENT-ADOPTION.1`.
+matching. `DOCTRINE-ENFORCEMENT-ADOPTION.1` now adopts the portable doctrine
+driver and FSMGEN toolbox, and the next active IAL2 owner is
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.224`.
 Current primary target is SystemVerilog, with Verilog conversion support and a scoped direct-root VHDL scaffold for the accepted single-FSM subset, including delayed-pulse clock-branch lowering, generic-bearing direct-root module headers with typed scalar/vector sized-literal defaults, signed vector and signed scalar direct-root ports, scalar/vector two-state `bit` input-port and internal declaration lowering, signed scalar/vector, non-signed four-state `logic` input-port/internal declaration lowering, and vector `logic signed` internal declaration lowering, scalar and signed scalar addition/subtraction/multiplication RHS/chain lowering, vector numeric-literal addition/subtraction emitted by compound update/shorthand forms, same-width unsigned-style addition/subtraction/multiplication/division/modulo/XOR RHS/chain lowering, same-width signed vector addition/subtraction/multiplication/division/modulo RHS lowering for signed targets and operands, signed vector numeric-literal addition/subtraction/multiplication/division/modulo RHS lowering including signed vector negative decimal addition, subtraction, multiplication, division, and modulo literals, non-signed vector positive decimal multiplication/division/modulo literal lowering in signal-first, literal-first, and literal-literal order, non-signed vector negative decimal addition/subtraction/multiplication/division/modulo literal lowering, bounded generated AMBA wrap arithmetic for `fsm/amba_requester.fsm`, bounded non-signed vector, signed vector, and scalar output-port decimal literal assignment lowering including non-signed vector, signed vector, and scalar negative decimal literals, bounded direct aggregate-output packed-vector lowering, a bounded C3 external-RTL literal/concat composition VHDL structural top for `t/corpus/composition_intent_integer_literals.fsm`, bounded external-RTL scalar integer, scalar integer expression, one-bit sized bitstring, multi-bit sized bitstring, and resolved packed aggregate VHDL generic maps including resolved package-backed constants, a bounded C1 standalone-DT child composition VHDL passthrough top for `t/corpus/standalone_dtc_explicit_system_autowire.fsm`, bounded C1 standalone-DT scalar integer, scalar expression, one-bit sized bitstring, multi-bit sized bitstring, packed-list, and packed-map VHDL generic maps, a bounded C2 generated-FSM child composition VHDL scalar-autowire top for `t/corpus/implicit_composition_system_autowire.fsm`, bounded C2 generated-FSM scalar integer, scalar expression, one-bit sized bitstring, multi-bit sized bitstring, and resolved packed aggregate VHDL generic maps, and a bounded APB/C4 generated-FSM child composition VHDL top for `fsm/apb_tb.fsm` with scalar integer, scalar expression, one-bit sized bitstring, multi-bit sized bitstring, resolved packed aggregate, and resolved package-backed generic maps in the same APB/C4 shape.
 Scalar division/modulo, including signed scalar division/modulo, in the direct
 VHDL scaffold remains an explicit fail-closed boundary; full aggregate
@@ -1156,7 +1167,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 
 ## Fast ramp-up order
 1. `README.md` (this file): project objective + navigation.
-2. `COMMIT.md`: mandatory commit workflow and safety invariant for crash recovery.
+2. `COMMIT.md`: mandatory commit workflow and safety invariant for crash recovery; pair it with `DOCTRINE_ENFORCEMENT.md` and `TOOLBOX.md` for the mechanical rule gate and diagnostic commands.
 3. `SESSION_BOOTSTRAP.md`: default first task for a new engineering session.
 4. `ROADMAP_STATUS.md`: canonical live roadmap/workstream status.
 5. `docs/TASK_TREE_README.md`: setup guide for adopting this task-tree tracking workflow in another project.
@@ -1425,9 +1436,15 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 268. `.agents/workflows/commit.md`: automation-oriented commit workflow description.
 269. `docs/SEMANTIC_INTROSPECTION_MCP_FIRST_CLASS_SELECTION.md`: selected
      first-class semantic-introspection and MCP contract-manifest boundary.
+270. `DOCTRINE_ENFORCEMENT.md`: mechanical doctrine-enforcement architecture and
+     FSMGEN doctrine registry.
+271. `TOOLBOX.md`: FSMGEN diagnostic and doctrine toolbox with exact issue-pinpointing
+     commands.
 
 ## Documentation index (all `.md` files in this repo)
 - `README.md` — single entry point and navigation hub.
+- `DOCTRINE_ENFORCEMENT.md` — root doctrine-enforcement architecture and check registry.
+- `TOOLBOX.md` — root FSMGEN diagnostic toolbox and gate-command catalog.
 - `SESSION_BOOTSTRAP.md` — canonical first-task file for a new engineering session.
 - `ROADMAP_STATUS.md` — canonical live roadmap/workstream status board.
 - `ROADMAP_V2.md` — detailed post-`R0`..`R7` roadmap intent and sequencing.
@@ -1439,7 +1456,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/tasks/TEMPLATE.md` — reusable template for one top-level task tree.
 - `docs/tasks/GENERATED-HDL-ARTIFACT-PLACEMENT.md` — completed artifact-hygiene task tree for routing implicit generated HDL into git-ignored hidden artifact directories while preserving explicit output paths.
 - `docs/tasks/RHS-LOGIC-SIMPLIFICATION-FRONTIER.md` — completed generated-HDL quality tree for AST-level boolean and width-proven vector/multi-bit RHS logic-equivalence simplification before HDL emission.
-- `docs/tasks/DOCTRINE-ENFORCEMENT-ADOPTION.md` — active adoption tree for the portable doctrine-enforcement architecture and FSMGEN-specific issue-pinpointing toolbox catalog requested after generated dynamic write ID behavior.
+- `docs/tasks/DOCTRINE-ENFORCEMENT-ADOPTION.md` — completed adoption tree for the portable doctrine-enforcement architecture, FSMGEN-specific issue-pinpointing toolbox catalog, doctrine driver, bootstrap self-check, docs path wrapper, pre-commit wiring, and hosted CI wiring.
 - `docs/tasks/AGENT-RUNTIME-RAM-GUARD.md` — agent-runtime safety tree for guarded heavyweight local commands that could otherwise exhaust host RAM.
 - `docs/tasks/PROJECT-REMAINING-WORK-TASKTREE-OWNERSHIP.md` — completed roadmap-maintenance task tree that routed the 2026-06-05 remaining-work inventory to existing active owners or new broad owner trees.
 - `docs/tasks/COMPOSITION-TYPE-BACKLOG-EXHAUSTION.md` — completed Composition/type backlog tree; shipped aggregate parameter/generic equality/inequality, closed the remaining Composition/type leaves behind exact prerequisites, and routed VHDL-dependent work through the completed backend/API frontier.
@@ -2247,6 +2264,14 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `ppif/` — sample/input `.ppif` files for shipped IAL2 public surfaces.
 - `t/` — regression and behavior tests.
 - `t/fixtures/semantic_introspection_mcp/` — bounded read-only MCP resource/tool envelope snapshots for client compatibility.
+- `scripts/check_doctrines.sh` — doctrine-enforcement driver for registered
+  deterministic repo rules.
+- `scripts/check_doctrine_bootstrap.sh` — doctrine adoption self-check for root
+  doctrine/toolbox docs, bootstrap pointers, hook wiring, and CI wiring.
+- `scripts/check_docs_relative_paths.sh` — docs path-hygiene doctrine wrapper
+  over `t/1414-docs-relative-paths-audit.t`.
+- `scripts/check_memory_architecture.sh` — memory-architecture doctrine check
+  registered under the doctrine driver.
 - `docs/` — user and technical docs.
 - `generated/` — generated parser/output artifacts.
 - `grammars/` — grammar definitions.
@@ -2293,12 +2318,16 @@ cd docs/book && mdbook serve
 
 ## Local CI / pre-push regression
 ```bash
+scripts/check_doctrines.sh
 ./bin/ci-regression quick
 ./bin/ci-regression smoke
 ./bin/ci-regression isf
 ./bin/ci-regression
 ./bin/ci-regression --list
 ```
+- `scripts/check_doctrines.sh` is the fast doctrine gate used by pre-commit and
+  CI; it currently runs doctrine-bootstrap, memory architecture, Knowledge
+  Map, and docs path checks.
 - `bin/ci-regression` is the repo-owned local regression entrypoint.
 - The script resolves the repository root itself, so you can invoke it without depending on your current working directory.
 - It supports explicit turnaround tiers:

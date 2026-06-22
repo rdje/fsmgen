@@ -165,6 +165,22 @@ For composition tops, also inspect:
 
 ## Trace Workflow
 
+The repository-level diagnostic catalog is `TOOLBOX.md`. Use it first when a
+failure needs root-cause work: it lists the FSMGEN commands for trace logs,
+schedule JSON, strict check JSON, semantic JSON, support-accounting tests, HDL
+validation, mdBook, Knowledge Map, doctrine gates, task-tree lookup, and git
+hygiene. The mechanical gate model is documented in
+`DOCTRINE_ENFORCEMENT.md`, and the fast registered gate is:
+
+```bash
+scripts/check_doctrines.sh
+```
+
+That driver currently runs the doctrine-bootstrap check, memory-architecture
+check, Knowledge Map sync check, and docs relative-path audit. The local
+pre-commit hook regenerates the Knowledge Map before running the driver, and
+hosted regression CI runs the same driver before the broader regression gate.
+
 Recommended debug run:
 
 ```bash

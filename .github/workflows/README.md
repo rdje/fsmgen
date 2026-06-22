@@ -8,9 +8,11 @@ the public FSMGen repository.
 `regression.yml` runs the repo-owned regression gate on pushes to `main`, pull
 requests targeting `main`, and manual `workflow_dispatch` runs.
 
-The hosted workflow calls `./bin/ci-regression`, the same entrypoint used by
-the local pre-push gate. That keeps the local and GitHub quality gates aligned,
-including the mdBook build that `bin/ci-regression` runs by default.
+The hosted workflow first runs `scripts/check_doctrines.sh`, the same
+doctrine-enforcement driver used by the local pre-commit hook after Knowledge
+Map regeneration. It then calls `./bin/ci-regression`, the same entrypoint used
+by the local pre-push gate. That keeps the local and GitHub quality gates
+aligned, including the mdBook build that `bin/ci-regression` runs by default.
 
 The workflow's Perl setup is intentionally minimal. Runtime code should avoid
 undeclared CPAN dependencies in ordinary execution, and CLI paths that are

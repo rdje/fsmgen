@@ -19,9 +19,9 @@ jobs:
       with:
         fetch-depth: 0
 
-    - name: Memory-architecture gate (E4)
+    - name: Doctrine-enforcement gate (E4)
       run: |
-        bash scripts/check_memory_architecture.sh
+        bash scripts/check_doctrines.sh
         # Every commit subject on the branch must carry a work-unit id (or a conventional type).
         if git rev-parse --verify -q origin/main >/dev/null; then
           base=origin/main

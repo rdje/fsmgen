@@ -117,13 +117,11 @@ evidence: docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/tasks/DOCTRINE-
 reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.223|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.224|DOCTRINE-ENFORCEMENT-ADOPTION\\.1|DYNAMIC_WRITE_TRANSACTION_ID_CAPTURE_BEHAVIOR|bounded_dynamic_write_bid_demux_contract|generated_capture_matching|dynamic_write_response_demux|BID response matching|VHDL backend/reroute' docs/TASK_TREE.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/tasks/DOCTRINE-ENFORCEMENT-ADOPTION.md docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_TRANSACTION_ID_CAPTURE_BEHAVIOR.md README.md ROADMAP_V2.md docs/book/src/14-feature-backlog.md
 ---
 
-The current active requested project priority is
-`DOCTRINE-ENFORCEMENT-ADOPTION.1`, the portable doctrine-enforcement and
-FSMGEN toolbox adoption requested after `.223`.
-
-Current IAL2 frontier: `IAL2-FEATURE-COMPLETENESS-FRONTIER.224`, selector for
+The current active project priority is
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.224`, selector for
 the next exact IAL2 owner after generated dynamic write transaction-ID capture
-and `BID` response matching on the SystemVerilog-backed path.
+and `BID` response matching on the SystemVerilog-backed path. The requested
+doctrine-enforcement and FSMGEN toolbox adoption is complete.
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.215` selected `.216` after `.214` shipped
 counted group-local admitted-request behavior. The selector found no immediate
@@ -191,7 +189,7 @@ generated selected-ID/busy state, matches `BID` against the captured ID,
 pulses the transaction completion, releases busy, reports
 `bounded_dynamic_write_bid_demux_contract`, and marks the covered transaction
 ID `generated_capture_matching`. `.224` must select the next exact IAL2 owner
-after the requested doctrine-enforcement adoption task.
+after the now-completed doctrine-enforcement adoption task.
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.196` selected `.197` after temporary
 single-beat and burst-last mixed read-data probes failed closed only at the

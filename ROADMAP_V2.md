@@ -1081,8 +1081,12 @@ support-accounting metadata under query/limit/filter controls.
 semantic-introspection/MCP pass after source discovery. The IAL2
 feature-completeness tree has shipped
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.223`, bounded dynamic write
-transaction-ID capture and `BID` response matching; the next active requested
-owner is `DOCTRINE-ENFORCEMENT-ADOPTION.1`.
+transaction-ID capture and `BID` response matching.
+`DOCTRINE-ENFORCEMENT-ADOPTION.1` now adopts the portable doctrine-enforcement
+driver, root `DOCTRINE_ENFORCEMENT.md`, root `TOOLBOX.md`, the
+`scripts/check_doctrines.sh` registry, and FSMGEN-native issue-pinpointing
+commands. The next active IAL2 owner is
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.224`.
 The parser/report metadata slice `IAL2-FEATURE-COMPLETENESS-FRONTIER.39` is
 now shipped for the bounded AXI read response-demux public contract selected
 by `.38`. The selected read arm requires `(response-scope single-beat)`,
