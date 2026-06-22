@@ -2347,11 +2347,10 @@ metadata-first dynamic transaction-ID parser/report support, generated
 bounded single-active dynamic write transaction-ID capture plus `BID` response
 matching for one explicit `response-demux.write` dynamic write transaction, and
 generated bounded single-active dynamic read transaction-ID capture plus
-single-beat `RID` response matching for one explicit `response-demux.read`
-dynamic read transaction.
-The next selected owner is `.228`, a selector for the next exact dynamic-ID or
-IAL2 cleanup prerequisite after the bounded single-active dynamic read/write
-demux shapes.
+single-beat `RID` response matching plus burst-last `RID && RLAST` response
+matching for one explicit `response-demux.read` dynamic read transaction.
+The next selected owner is `.233`, readiness audit for dynamic read-data
+routing over the generated single-active dynamic read response-demux family.
 Broader IAL2 still must justify itself with semantics above individual
 transactions, not only syntax convenience. Its generic file surface remains
 protocol/platform-generic, and an IAL2 file may select a protocol or platform
@@ -6717,6 +6716,19 @@ RLAST`, releases busy from that completion, and reports
 `bounded_dynamic_read_rid_rlast_demux_contract` with
 `transaction_completion_semantics: matched_dynamic_id_and_last_signal`.
 
+Post dynamic read RLAST selector:
+[AXI_IAL2_MANAGER_POST_DYNAMIC_READ_RLAST_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_DYNAMIC_READ_RLAST_NEXT_SLICE_SELECTION.md)
+selects `.233`, readiness audit for dynamic read-data routing over generated
+single-active dynamic read response-demux. The selector keeps behavior
+unchanged and records that the next audit must inspect single-beat versus
+last-beat read-data scope, generated completion consumption, selected-ID/busy
+interactions, data/status capture, report keys, diagnostics, public sample and
+support-accounting boundaries, validation gates, rollback, docs, Knowledge Map,
+and explicit residue. Dynamic read-data, burst-length/runtime validation,
+multi-beat outputs, multiple/mixed dynamic demux, same-cycle recapture,
+same-ID ordering, queues, scoreboards, direct backend behavior, and VHDL remain
+deferred until exact owners select them.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same
@@ -8989,8 +9001,9 @@ audit, and `.225` selects `.226`, public contract selection for bounded
 single-beat dynamic read ID capture and `RID` response matching. `.226`
 selects `.227`, direct generated bounded single-beat dynamic read ID capture
 and `RID` matching behavior. `.231` now ships bounded dynamic read
-burst-last/`RLAST` transaction-ID capture and response matching, and `.232` is
-the next selector for the next exact IAL2 owner.
+burst-last/`RLAST` transaction-ID capture and response matching, and `.232`
+selects `.233`, readiness audit for dynamic read-data routing over generated
+single-active dynamic read response-demux.
 
 Selected first MCP resource families are `fsmgen://capabilities`,
 `fsmgen://contracts`, `fsmgen://diagnostics`,

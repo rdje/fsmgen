@@ -76,8 +76,11 @@ scalar read-data over that mixed read boundary for read single-beat and read
 burst-last, plus report-only raw-`ARLEN` burst-length capture over that mixed
 read burst-last scalar last-beat shape, plus generated runtime
 beat-count/`RLAST` validation and generated multi-beat output-bank behavior
-over that same mixed burst-last runtime-validation shape. Broader concrete
-same-ID queues, group-local
+over that same mixed burst-last runtime-validation shape, plus metadata-first
+dynamic transaction-ID reports and generated single-active dynamic write,
+read single-beat, and read burst-last response-demux for one explicit dynamic
+transaction. Dynamic read-data routing and dynamic burst/runtime/multi-beat
+follow-ons remain deferred. Broader concrete same-ID queues, group-local
 simultaneous enqueue widening, packed burst-vector outputs, alternate full
 burst payload assembly, aliases, platform clauses, full AXI manager behavior,
 direct backend lowering, verification-output generation, backend-language
