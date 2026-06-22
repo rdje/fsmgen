@@ -1111,7 +1111,8 @@ longer routine closeout surfaces. `.236` now adds
 `t/1438-axi-ial2-manager-dynamic-transaction-id-focused.t`, a bounded focused
 target for the shipped dynamic transaction-ID family, and selects `.237`,
 readiness audit for dynamic burst-length capture over generated dynamic
-last-beat read-data.
+last-beat read-data. `.237` now selects `.238`, direct bounded report-only
+raw-`ARLEN` burst-length capture over generated dynamic last-beat read-data.
 The parser/report metadata slice `IAL2-FEATURE-COMPLETENESS-FRONTIER.39` is
 now shipped for the bounded AXI read response-demux public contract selected
 by `.38`. The selected read arm requires `(response-scope single-beat)`,
@@ -2076,7 +2077,9 @@ samples. `.235` selected `.236`, AXI manager focused-suite cost cleanup, so
 the shipped dynamic transaction-ID family can be validated through bounded
 focused targets before more behavior is added. `.236` now ships that bounded
 target and `.237` is the next readiness audit for report-only dynamic
-burst-length capture. Dynamic runtime validation, multi-beat output banks,
+burst-length capture. `.237` selected `.238`, direct bounded report-only
+dynamic raw-`ARLEN` burst-length implementation. Dynamic runtime validation,
+multi-beat output banks,
 multiple/mixed dynamic demux, same-cycle recapture, dynamic same-ID ordering,
 queues, scoreboards, direct backend behavior, and VHDL remain residue.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2

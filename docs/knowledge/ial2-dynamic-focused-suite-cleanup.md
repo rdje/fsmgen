@@ -7,11 +7,12 @@ answers:
   - "which test covers dynamic transaction-ID behavior without the AXI manager monoliths?"
   - "what is the next IAL2 frontier after dynamic focused validation?"
   - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.237?"
+  - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.238?"
 date: 2026-06-22
 status: current
 tags: [ial2, axi, dynamic-id, validation, tests, task-tree]
-evidence: docs/AXI_IAL2_MANAGER_DYNAMIC_FOCUSED_SUITE_CLEANUP.md; t/1438-axi-ial2-manager-dynamic-transaction-id-focused.t; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md; docs/knowledge/ial2-dynamic-read-data-behavior.md; docs/knowledge/ial2-post-dynamic-read-data-next-slice-selection.md; docs/knowledge/ial2-feature-completeness-priority.md
-reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.236|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.237|t/1438-axi-ial2-manager-dynamic-transaction-id-focused|dynamic burst-length capture|metadata-only transaction-local|dynamic write BID|dynamic read burst-last' docs/AXI_IAL2_MANAGER_DYNAMIC_FOCUSED_SUITE_CLEANUP.md t/1438-axi-ial2-manager-dynamic-transaction-id-focused.t docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md README.md ROADMAP_V2.md docs/book/src/14-feature-backlog.md
+evidence: docs/AXI_IAL2_MANAGER_DYNAMIC_FOCUSED_SUITE_CLEANUP.md; docs/AXI_IAL2_MANAGER_DYNAMIC_BURST_LENGTH_READINESS_AUDIT.md; t/1438-axi-ial2-manager-dynamic-transaction-id-focused.t; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md; docs/knowledge/ial2-dynamic-read-data-behavior.md; docs/knowledge/ial2-post-dynamic-read-data-next-slice-selection.md; docs/knowledge/ial2-feature-completeness-priority.md; docs/knowledge/ial2-dynamic-burst-length-readiness-audit.md
+reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.236|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.237|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.238|t/1438-axi-ial2-manager-dynamic-transaction-id-focused|dynamic burst-length capture|dynamic raw-ARLEN|metadata-only transaction-local|dynamic write BID|dynamic read burst-last' docs/AXI_IAL2_MANAGER_DYNAMIC_FOCUSED_SUITE_CLEANUP.md docs/AXI_IAL2_MANAGER_DYNAMIC_BURST_LENGTH_READINESS_AUDIT.md t/1438-axi-ial2-manager-dynamic-transaction-id-focused.t docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md README.md ROADMAP_V2.md docs/book/src/14-feature-backlog.md
 ---
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.236` added
@@ -39,3 +40,7 @@ shipped dynamic family.
 `.236` selected `IAL2-FEATURE-COMPLETENESS-FRONTIER.237`, readiness audit for
 dynamic burst-length capture over generated single-active dynamic read
 last-beat response-demux and scalar dynamic read-data.
+
+`.237` selected `IAL2-FEATURE-COMPLETENESS-FRONTIER.238`, direct bounded
+implementation of report-only dynamic raw-`ARLEN` burst-length capture over
+generated dynamic last-beat read-data.

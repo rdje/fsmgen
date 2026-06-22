@@ -6772,7 +6772,10 @@ Cleanup
 [AXI_IAL2_MANAGER_DYNAMIC_FOCUSED_SUITE_CLEANUP](../../AXI_IAL2_MANAGER_DYNAMIC_FOCUSED_SUITE_CLEANUP.md)
 adds `t/1438-axi-ial2-manager-dynamic-transaction-id-focused.t` for that
 bounded proof and selects `.237`, dynamic burst-length readiness audit, as the
-next owner.
+next owner. The readiness audit
+[AXI_IAL2_MANAGER_DYNAMIC_BURST_LENGTH_READINESS_AUDIT](../../AXI_IAL2_MANAGER_DYNAMIC_BURST_LENGTH_READINESS_AUDIT.md)
+selects `.238`, direct bounded report-only dynamic raw-`ARLEN` burst-length
+capture over generated dynamic last-beat read-data.
 
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
@@ -9054,7 +9057,9 @@ single-beat and burst-last/`RLAST` demux shapes. `.234` now ships that scalar
 dynamic read-data behavior, `.235` selects `.236`, AXI manager focused-suite
 cost cleanup before further dynamic behavior expansion, and `.236` ships the
 bounded dynamic-family focused target before selecting `.237`, dynamic
-burst-length readiness audit.
+burst-length readiness audit. `.237` selects `.238`, direct bounded
+report-only dynamic raw-`ARLEN` burst-length capture over generated dynamic
+last-beat read-data.
 
 Selected first MCP resource families are `fsmgen://capabilities`,
 `fsmgen://contracts`, `fsmgen://diagnostics`,
