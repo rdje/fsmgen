@@ -2344,8 +2344,8 @@ through public `.ppif`, including optional static ID-family metadata and
 optional structural transaction-envelope metadata with per-transaction event
 dispatch/fan-in, concrete transaction ID request/response assertions, and
 metadata-first dynamic transaction-ID parser/report support. The active IAL2
-frontier is now readiness audit for generated dynamic transaction-ID capture
-and response matching before behavior changes.
+frontier is now public contract selection for bounded dynamic write
+transaction-ID capture and `BID` response matching before behavior changes.
 Broader IAL2 still must justify itself with semantics above individual
 transactions, not only syntax convenience. Its generic file surface remains
 protocol/platform-generic, and an IAL2 file may select a protocol or platform
@@ -6573,6 +6573,17 @@ boundaries, diagnostics, validation, rollback, and residue before any parser,
 generator, PPIF sample, support-accounting, test, generated HDL, or runtime
 behavior changes.
 
+Dynamic transaction-ID capture/matching readiness audit:
+[AXI_IAL2_MANAGER_DYNAMIC_TRANSACTION_ID_CAPTURE_MATCHING_READINESS_AUDIT](../../AXI_IAL2_MANAGER_DYNAMIC_TRANSACTION_ID_CAPTURE_MATCHING_READINESS_AUDIT.md)
+selects `.222`, public contract selection for bounded dynamic write
+transaction-ID capture and `BID` response matching. The audit found the lower
+substrate can likely carry selected-ID storage, busy state, response-ID
+equality, completion pulses, and active/unique assertions, but the public
+contract must first define admitted-request capture timing, single-active
+dynamic ownership, stored-ID lifetime, matched-response completion/release
+semantics, diagnostics/assertions, report vocabulary, validation, rollback,
+and residue.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same
@@ -8834,7 +8845,7 @@ support catalog entries instead of recursive workspace traversal.
 `SEMANTIC-INTROSPECTION-MCP-FRONTIER.30` closes the immediate read-only
 semantic-introspection/MCP pass after source discovery; the active roadmap
 priority is again the IAL2 feature-completeness tree, currently at
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.221`.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.222`.
 
 Selected first MCP resource families are `fsmgen://capabilities`,
 `fsmgen://contracts`, `fsmgen://diagnostics`,
