@@ -10,10 +10,10 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `HEAD after IAL2-FEATURE-COMPLETENESS-FRONTIER.215 commit` - `IAL2-FEATURE-COMPLETENESS-FRONTIER.215: select dynamic same-ID audit`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.216` audits dynamic same-ID issue-order queue readiness beyond selected counted concrete-ID queue-head groups; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.215` selected `.216` after `.214` shipped counted group-local admitted-request behavior. The selector found no immediate cleanup prerequisite: generated queue-head reports expose counted request-set fit guards and concrete-ID group assertion scope, while the remaining local same-ID ordering residue is `per_id_issue_order_queues`. No parser/generator/sample/support-accounting/test/validation/generated-artifact/HDL behavior changed.
-- in_flight_uncommitted: none after the `IAL2-FEATURE-COMPLETENESS-FRONTIER.215` commit. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
+- latest_commit: `HEAD after IAL2-FEATURE-COMPLETENESS-FRONTIER.216 commit` - `IAL2-FEATURE-COMPLETENESS-FRONTIER.216: audit dynamic ID contract`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.217` selects the public dynamic/user transaction-ID contract before generalized per-ID issue-order queues; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.216` selected `.217` after auditing dynamic same-ID issue-order readiness beyond selected counted concrete-ID queue-head groups. The audit found no cleanup or lower-layer prerequisite: bounded concrete queue-head behavior is generated and counted, while PPIF transaction IDs currently accept only `auto` or concrete `(value N)`, so generalized dynamic/user-ID arbitration needs a public contract first. No parser/generator/sample/support-accounting/test/validation/generated-artifact/HDL behavior changed.
+- in_flight_uncommitted: none after the `IAL2-FEATURE-COMPLETENESS-FRONTIER.216` commit. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
 
 ## Notes

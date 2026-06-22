@@ -6520,6 +6520,13 @@ selects `.216`, readiness audit for dynamic same-ID issue-order queues beyond
 selected counted concrete-ID queue-head groups. The selector found no cleanup
 prerequisite after `.214`; the next local ordering residue is dynamic/per-ID
 issue-order behavior rather than another concrete queue-head sibling.
+Dynamic same-ID issue-order readiness audit:
+[AXI_IAL2_MANAGER_DYNAMIC_SAME_ID_ISSUE_ORDER_READINESS_AUDIT](../../AXI_IAL2_MANAGER_DYNAMIC_SAME_ID_ISSUE_ORDER_READINESS_AUDIT.md)
+selects `.217`, public dynamic/user transaction-ID contract selection before
+generalized per-ID issue-order queues. The audit found no cleanup or
+lower-layer prerequisite: bounded concrete queue-head behavior is generated
+over static concrete ID values and transaction inventory, while PPIF
+transaction IDs currently accept only `auto` or concrete `(value N)`.
 
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
@@ -8782,7 +8789,7 @@ support catalog entries instead of recursive workspace traversal.
 `SEMANTIC-INTROSPECTION-MCP-FRONTIER.30` closes the immediate read-only
 semantic-introspection/MCP pass after source discovery; the active roadmap
 priority is again the IAL2 feature-completeness tree, currently at
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.216`.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.217`.
 
 Selected first MCP resource families are `fsmgen://capabilities`,
 `fsmgen://contracts`, `fsmgen://diagnostics`,
