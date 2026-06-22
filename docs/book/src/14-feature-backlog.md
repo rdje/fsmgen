@@ -6679,6 +6679,17 @@ burst/runtime interactions, validation, rollback, and explicit residue before
 any parser, generator, PPIF sample, support-accounting catalog, generated
 artifact, test, validation, or HDL behavior changes.
 
+Dynamic read RLAST readiness audit:
+[AXI_IAL2_MANAGER_DYNAMIC_READ_RLAST_TRANSACTION_ID_CAPTURE_READINESS_AUDIT](../../AXI_IAL2_MANAGER_DYNAMIC_READ_RLAST_TRANSACTION_ID_CAPTURE_READINESS_AUDIT.md)
+selects `.230`, public contract selection for bounded dynamic read
+burst-last/`RLAST` transaction-ID capture and response matching. The audit
+keeps behavior unchanged: existing dynamic read support remains single-beat,
+existing non-dynamic burst-last support remains generated, and dynamic
+burst-last behavior waits for the public contract to settle last-signal
+ownership, selected-ID/busy lifetime across non-last beats, raw response
+`RID`/`RLAST` completion semantics, dynamic assertions, report vocabulary,
+generated artifact boundaries, and read-data/burst/runtime residue.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same
@@ -8950,8 +8961,9 @@ dynamic read transaction-ID capture and `RID` response matching readiness
 audit, and `.225` selects `.226`, public contract selection for bounded
 single-beat dynamic read ID capture and `RID` response matching. `.226`
 selects `.227`, direct generated bounded single-beat dynamic read ID capture
-and `RID` matching behavior. `.228` selects `.229`, readiness audit for
-dynamic read burst-last/`RLAST` transaction-ID capture and response matching.
+and `RID` matching behavior. `.229` selects `.230`, public contract selection
+for bounded dynamic read burst-last/`RLAST` transaction-ID capture and response
+matching.
 
 Selected first MCP resource families are `fsmgen://capabilities`,
 `fsmgen://contracts`, `fsmgen://diagnostics`,
