@@ -6831,6 +6831,14 @@ capture guarded by the generated dynamic `RID && RLAST` completion pulse.
 The `.238` report-only sample stays supported and keeps
 `generated_beat_count_validation` residue.
 
+Post dynamic runtime-validation selector:
+[AXI_IAL2_MANAGER_POST_DYNAMIC_RUNTIME_VALIDATION_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_DYNAMIC_RUNTIME_VALIDATION_NEXT_SLICE_SELECTION.md)
+selects `.242`, readiness audit for generated dynamic multi-beat output-bank
+behavior over the selected single-active dynamic read runtime-validation
+boundary. The selector changes no behavior; multiple/mixed dynamic demux,
+same-cycle recapture, dynamic same-ID ordering, queues, scoreboards, direct
+backend behavior, backend-language variants, and VHDL remain deferred.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same
