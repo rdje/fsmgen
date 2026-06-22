@@ -36,6 +36,11 @@ No PPIF syntax changed, no new public sample was added, and response-demux,
 read-data, burst-length, runtime-validation, queue-state storage, and HDL
 interfaces are otherwise unchanged.
 
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.219` later made the counted request-count
+evaluation width explicit in reports and generated rule guards. The public
+grouping fields from `.211` remain stable, while the exact-width evaluation
+fields described below are now the rule-generation contract.
+
 ## Report Contract
 
 Schedule JSON now includes request-accounting metadata under
@@ -68,6 +73,12 @@ accounting. The read multi-group sample reports:
     "(| axi0_r2_request axi0_r3_request)"
   ],
   "request_count_expression": "(+ (| axi0_r0_request axi0_r1_request) (| axi0_r2_request axi0_r3_request))",
+  "request_count_evaluation_terms": [
+    "(concat 1'b0 (| axi0_r0_request axi0_r1_request))",
+    "(concat 1'b0 (| axi0_r2_request axi0_r3_request))"
+  ],
+  "request_count_evaluation_expression": "(+ (concat 1'b0 (| axi0_r0_request axi0_r1_request)) (concat 1'b0 (| axi0_r2_request axi0_r3_request)))",
+  "request_count_evaluation_width": 2,
   "maximum_request_count": 2,
   "capacity_owner": "generated_scheduler_or_status_rules.read_capacity_matrix",
   "completion_accounting_mode": "boolean_fanin",
@@ -93,6 +104,13 @@ the original four-state-per-occupancy rule count.
 Mixed auto-ID plus one concrete same-ID queue-head group remains Boolean
 because there is only one concrete-ID queue group to count.
 
+The user-facing `request_count_expression` continues to describe the selected
+group fan-in shape. The `request_count_evaluation_*` fields are the exact-width
+expression used by generated capacity rules and equality checks. One-bit group
+terms are zero-extended to the width required by the larger of
+`maximum_request_count` and `max_pending`; comparisons use matching sized
+decimal literals.
+
 ## Capacity Semantics
 
 For counted directions the capacity/status matrix evaluates the request count
@@ -101,15 +119,25 @@ For the read multi-group sample, the counted expression is:
 
 ```lisp
 (+ (| axi0_r0_request axi0_r1_request)
-   (| axi0_r2_request axi0_r3_request))
+  (| axi0_r2_request axi0_r3_request))
+```
+
+The exact rule evaluation expression zero-extends each Boolean group term:
+
+```lisp
+(+ (concat 1'b0 (| axi0_r0_request axi0_r1_request))
+   (concat 1'b0 (| axi0_r2_request axi0_r3_request)))
 ```
 
 For the write multi-group sample, the counted expression is:
 
 ```lisp
 (+ (| axi0_w0_request axi0_w1_request)
-   (| axi0_w2_request axi0_w3_request))
+  (| axi0_w2_request axi0_w3_request))
 ```
+
+The write-side exact evaluation expression follows the same zero-extension
+shape over the write request terms.
 
 Completion accounting remains Boolean fan-in. A completion present in the
 same cycle frees at most one slot before the selected request count is

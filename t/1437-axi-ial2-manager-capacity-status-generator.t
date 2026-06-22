@@ -262,6 +262,33 @@ subtest 'optional transaction-envelope metadata emits concrete ID assertions' =>
     like($sv_assertions, qr/\Q$response_assert\E/, 'SystemVerilog assertion backend emits the response concrete-ID property');
 };
 
+subtest 'dynamic transaction-ID metadata reports selected user ownership without generated behavior' => sub {
+    my $base = generate_sample();
+    my $result = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_dynamic_transaction_id());
+    my $isf = $result->{generated_ial1}{text};
+
+    is(
+        $result->{generated_ial1}{text},
+        $base->{generated_ial1}{text},
+        'dynamic transaction-ID metadata leaves generated IAL1 unchanged',
+    );
+    is_deeply(
+        $result->{generated_ial0}{files},
+        $base->{generated_ial0}{files},
+        'dynamic transaction-ID metadata leaves generated IAL0 unchanged',
+    );
+    unlike($isf, qr/\(input axi0_awid\b/, 'dynamic write request ID signal is not generated before capture behavior is owned');
+    unlike($isf, qr/\(input axi0_bid\b/, 'dynamic write response ID signal is not generated before response matching is owned');
+    unlike($isf, qr/\(input axi0_arid\b/, 'dynamic read request ID signal is not generated before capture behavior is owned');
+    unlike($isf, qr/\(input axi0_rid\b/, 'dynamic read response ID signal is not generated before response matching is owned');
+    ok(!exists $result->{report}{id_response_rule_engine}, 'dynamic metadata does not emit a concrete-ID assertion engine');
+    is($result->{report}{source_object}{id}, 'axi-manager-capacity-status-dynamic-transaction-id', 'dynamic transaction-ID source object id is preserved');
+    is($result->{report}{source_object}{intent_name}, 'axi_manager_capacity_status_dynamic_transaction_id', 'dynamic transaction-ID source intent name is preserved');
+    assert_dynamic_transaction_id_report($result->{report}{transactions}, 'generator report');
+    my %residue = map { $_->{id} => 1 } @{$result->{report}{unsupported_residue}};
+    ok($residue{dynamic_transaction_id_behavior}, 'dynamic behavior boundary remains explicit unsupported residue');
+};
+
 subtest 'transaction event dispatch fans per-transaction events into capacity rules' => sub {
     my $result = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_transaction_event_dispatch());
     my $isf = $result->{generated_ial1}{text};
@@ -550,7 +577,12 @@ subtest 'same-ID queue-head response-demux generates multiple read burst-last qu
         $low_capacity_isf,
         'generator read multi-group low-capacity rules',
         direction => 'read',
+        max_pending => 3,
         request_count_expression => '(+ (| axi0_r0_request axi0_r1_request) (| axi0_r2_request axi0_r3_request))',
+        counted_request_terms => [
+            '(| axi0_r0_request axi0_r1_request)',
+            '(| axi0_r2_request axi0_r3_request)',
+        ],
         completion_fanin => '(| axi0_r0_complete axi0_r1_complete axi0_r2_complete axi0_r3_complete)',
         pending_storage => 'axi0_pending_reads_q',
         pending_output => 'axi0_pending_reads',
@@ -1719,7 +1751,12 @@ subtest 'same-ID queue-head response-demux generates write multi-group queue sta
         $low_capacity_isf,
         'generator write multi-group low-capacity rules',
         direction => 'write',
+        max_pending => 3,
         request_count_expression => '(+ (| axi0_w0_request axi0_w1_request) (| axi0_w2_request axi0_w3_request))',
+        counted_request_terms => [
+            '(| axi0_w0_request axi0_w1_request)',
+            '(| axi0_w2_request axi0_w3_request)',
+        ],
         completion_fanin => '(| axi0_w0_complete axi0_w1_complete axi0_w2_complete axi0_w3_complete)',
         pending_storage => 'axi0_pending_writes_q',
         pending_output => 'axi0_pending_writes',
@@ -3773,6 +3810,7 @@ subtest 'mixed auto-ID and same-ID queue-head multi-beat read-data generates out
             boundary          => 'generated_read_burst_last_queue_head_demux',
             scope             => 'burst_last',
             last_signal       => 'axi0_rlast',
+            demux_residue     => [],
         },
     );
     assert_read_data_multi_beat_report(
@@ -3787,7 +3825,9 @@ subtest 'mixed auto-ID and same-ID queue-head multi-beat read-data generates out
     like($hdl, qr/\boutput\s+reg\s+\[15:0\]\s+axi0_r2_beat_valid\b/, "$owner SystemVerilog exposes r2 valid-mask output");
     like($hdl, qr/assign\s+axi0_r2_read_data_output_init_en\s*=\s*axi0_r2_request\s*;/, "$owner SystemVerilog guards r2 output-bank clear with request");
     like($hdl, qr/assign\s+axi0_r2_read_beat_0_capture_en\s*=/, "$owner SystemVerilog emits r2 lane 0 capture enable");
-    like($hdl, qr/axi0_read_complete\s*&\s*\(axi0_rid\s*==\s*4'd3\)\s*&\s*axi0_read_id3_same_id_issue_order_slot0_r2_q/, "$owner SystemVerilog keeps the r2 queue-head matched-beat guard");
+    like($hdl, qr/assign\s+intermediate_and_axi0_read_id3_same_id_issue_order_sl_etc_\d+\s*=\s*\(axi0_rid\s*==\s*4'd3\)\s*&\s*axi0_read_id3_same_id_issue_order_slot0_r2_q\s*;/, "$owner SystemVerilog factors the r2 queue-head RID/slot match");
+    like($hdl, qr/assign\s+intermediate_and_axi0_read_complete_intermediate_and__etc_\d+\s*=\s*axi0_read_complete\s*&\s*intermediate_and_axi0_read_id3_same_id_issue_order_sl_etc_\d+\s*;/, "$owner SystemVerilog combines read completion with the r2 queue-head match");
+    like($hdl, qr/assign\s+intermediate_and_intermediate_and_axi0_read_complete__etc_\d+\s*=\s*intermediate_and_axi0_read_complete_intermediate_and__etc_\d+\s*&\s*!axi0_r2_request\s*&\s*\(~\|axi0_r2_read_beat_count_q\)\s*;/, "$owner SystemVerilog gates r2 lane 0 capture with the matched beat");
     like($hdl, qr/axi0_r2_rresp_next\s*=\s*axi0_rresp\s*;/, "$owner SystemVerilog updates r2 scalar aggregate");
 };
 
@@ -3843,9 +3883,26 @@ subtest 'malformed contract objects fail closed and no direct lower-to-fsm entry
         ['write transaction bound to read direction-level event', sub { my $c = sample_contract_with_transactions(); $c->{transactions}[0]{request_event} = 'axi0_read_submit'; $c }, qr/write request_event must not reference read direction-level event 'axi0_read_submit'/],
         ['duplicate write dispatch request event', sub { my $c = sample_contract_with_transaction_event_dispatch(); $c->{transactions}[1]{request_event} = 'axi0_w0_request'; $c }, qr/write request_event 'axi0_w0_request' is reused by transactions 'w0' and 'w1' while using per-transaction dispatch/],
         ['transaction event collides with status output', sub { my $c = sample_contract_with_transaction_event_dispatch(); $c->{transactions}[2]{request_event} = 'axi0_read_full'; $c }, qr/duplicates signal 'axi0_read_full'/],
+        ['transaction ID unsupported policy', sub { my $c = sample_contract_with_transactions(); $c->{transactions}[0]{id} = { policy => 'user' }; $c }, qr/transactions\[0\]\.id policy must be auto or dynamic/],
         ['concrete transaction ID without family metadata', sub { my $c = sample_contract(); $c->{transactions} = [sample_contract_with_transactions()->{transactions}[1]]; $c }, qr/concrete ID requires id_families metadata/],
         ['concrete transaction ID too wide', sub { my $c = sample_contract_with_transactions(); $c->{transactions}[1]{id}{value} = 16; $c }, qr/concrete read ID value 16 does not fit width 4/],
         ['concrete transaction ID with zero-width family', sub { my $c = sample_contract_with_transactions(); $c->{id_families}{read} = { width => 0 }; $c }, qr/concrete read ID is not allowed when read ID-family width is 0/],
+        ['dynamic transaction ID without family metadata', sub {
+            my $c = sample_contract();
+            $c->{transactions} = [
+                {
+                    kind             => 'read',
+                    name             => 'r0',
+                    tag              => 'rd0',
+                    request_event    => 'axi0_read_submit',
+                    completion_event => 'axi0_read_complete',
+                    id               => { policy => 'dynamic' },
+                },
+            ];
+            $c;
+        }, qr/dynamic ID requires id_families metadata/],
+        ['dynamic transaction ID with value', sub { my $c = sample_contract_with_dynamic_transaction_id(); $c->{transactions}[0]{id}{value} = 0; $c }, qr/transactions\[0\]\.id dynamic policy must not include value/],
+        ['dynamic transaction ID with zero-width family', sub { my $c = sample_contract_with_dynamic_transaction_id(); $c->{id_families}{read} = { width => 0 }; $c }, qr/dynamic read ID requires positive read ID-family width/],
         ['concrete transaction same-family same-ID reuse', sub {
             my $c = sample_contract_with_transaction_event_dispatch();
             push @{$c->{transactions}}, {
@@ -3897,6 +3954,10 @@ subtest 'malformed contract objects fail closed and no direct lower-to-fsm entry
             };
             $c;
         }, qr/concrete ID assertions require unique request events; event 'axi0_read_submit' is shared by transactions 'r0' and 'r1'/],
+        ['dynamic transaction ID blocks same-family auto lifecycle behavior', sub { my $c = sample_contract_with_dynamic_transaction_id(); $c->{auto_id_lifecycle} = { read => { pool => [0] } }; $c }, qr/auto_id_lifecycle\.read cannot be combined with dynamic read transaction ID metadata/],
+        ['dynamic transaction ID blocks same-family response demux behavior', sub { my $c = sample_contract_with_dynamic_transaction_id(); $c->{response_demux} = { read => { response_event => 'axi0_read_complete', response_scope => 'single-beat', transaction_completion => 'generated' } }; $c }, qr/response_demux\.read cannot be combined with dynamic read transaction ID metadata/],
+        ['dynamic transaction ID blocks same-family same-ID ordering behavior', sub { my $c = sample_contract_with_dynamic_transaction_id(); $c->{same_id_ordering_policy} = { read => { concrete_id_reuse => 'issue-order-queue' } }; $c }, qr/same_id_ordering_policy\.read cannot be combined with dynamic read transaction ID metadata/],
+        ['dynamic transaction ID blocks read-data behavior', sub { my $c = sample_contract_with_dynamic_transaction_id(); $c->{read_data} = sample_contract_with_read_data()->{read_data}; $c }, qr/read_data\.read cannot be combined with dynamic read transaction ID metadata/],
         ['auto lifecycle unsupported field', sub { my $c = sample_contract_with_auto_id_lifecycle(); $c->{auto_id_lifecycle}{write}{policy} = 'first-free'; $c }, qr/auto_id_lifecycle\.write unsupported field 'policy'/],
         ['auto lifecycle without ID-family metadata', sub {
             my $c = sample_contract();
@@ -4098,6 +4159,31 @@ sub sample_contract_with_transactions {
             request_event    => 'axi0_read_submit',
             completion_event => 'axi0_read_complete',
             id               => { value => 3 },
+        },
+    ];
+    return $contract;
+}
+
+sub sample_contract_with_dynamic_transaction_id {
+    my $contract = sample_contract_with_id_families();
+    $contract->{intent_name} = 'axi_manager_capacity_status_dynamic_transaction_id';
+    $contract->{source}{object_id} = 'axi-manager-capacity-status-dynamic-transaction-id';
+    $contract->{transactions} = [
+        {
+            kind             => 'write',
+            name             => 'w0',
+            tag              => 'wr0',
+            request_event    => 'axi0_write_submit',
+            completion_event => 'axi0_write_complete',
+            id               => { policy => 'dynamic' },
+        },
+        {
+            kind             => 'read',
+            name             => 'r0',
+            tag              => 'rd0',
+            request_event    => 'axi0_read_submit',
+            completion_event => 'axi0_read_complete',
+            id               => { policy => 'dynamic' },
         },
     ];
     return $contract;
@@ -5356,6 +5442,38 @@ sub sample_contract_with_mixed_auto_id_same_id_queue_head_response_demux {
     return $contract;
 }
 
+sub assert_dynamic_transaction_id_report {
+    my ($transactions, $owner) = @_;
+
+    is(scalar(@$transactions), 2, "$owner reports both dynamic transaction-ID entries");
+    is_deeply(
+        $transactions->[0]{id},
+        {
+            policy                => 'dynamic',
+            family                => 'write',
+            family_width          => 4,
+            request_id_source     => 'axi0_awid',
+            response_id_signal    => 'axi0_bid',
+            ownership             => 'user_supplied',
+            implementation_status => 'selected_not_generated',
+        },
+        "$owner reports write dynamic ID metadata ownership",
+    );
+    is_deeply(
+        $transactions->[1]{id},
+        {
+            policy                => 'dynamic',
+            family                => 'read',
+            family_width          => 4,
+            request_id_source     => 'axi0_arid',
+            response_id_signal    => 'axi0_rid',
+            ownership             => 'user_supplied',
+            implementation_status => 'selected_not_generated',
+        },
+        "$owner reports read dynamic ID metadata ownership",
+    );
+}
+
 sub assert_mixed_auto_id_queue_head_response_demux_report {
     my ($report, $owner, $case) = @_;
     my $demux = $report->{response_demux};
@@ -5411,7 +5529,8 @@ sub assert_mixed_auto_id_queue_head_response_demux_report {
         } else {
             ok(!exists($entry->{last_signal}), "$owner omits RLAST for single-beat response demux");
         }
-        is_deeply($demux->{residue}, [qw(read_data_interleaving bursts)], "$owner reports read residue");
+        my $expected_residue = $case->{demux_residue} // [qw(read_data_interleaving bursts)];
+        is_deeply($demux->{residue}, $expected_residue, "$owner reports read residue");
     } else {
         is_deeply($demux->{residue}, [qw(read_response_demux read_data_interleaving bursts)], "$owner reports write residue");
     }
@@ -5539,6 +5658,14 @@ sub assert_counted_same_id_capacity_accounting {
         "$owner reports selected same-ID request events",
     );
     is($accounting->{request_count_expression}, $args{request_count_expression}, "$owner reports request count expression");
+    my $max_pending = _max_pending_from_counted_rule_count($args{rule_count}, scalar(@{$args{counted_request_terms}}));
+    my ($evaluation_expression, $evaluation_terms, $evaluation_width) = counted_request_evaluation_contract(
+        max_pending => $max_pending,
+        terms       => $args{counted_request_terms},
+    );
+    is_deeply($accounting->{request_count_evaluation_terms}, $evaluation_terms, "$owner reports exact-width request count evaluation terms");
+    is($accounting->{request_count_evaluation_expression}, $evaluation_expression, "$owner reports exact-width request count evaluation expression");
+    is($accounting->{request_count_evaluation_width}, $evaluation_width, "$owner reports request count evaluation width");
     is($accounting->{maximum_request_count}, scalar(@{$args{counted_request_terms}}), "$owner reports maximum request count");
     is(
         $accounting->{capacity_owner},
@@ -5561,6 +5688,9 @@ sub assert_counted_same_id_capacity_accounting {
         "$owner mirrors selected same-ID request events into the matrix report",
     );
     is($matrix->{request_count_expression}, $args{request_count_expression}, "$owner mirrors request count expression into the matrix report");
+    is_deeply($matrix->{request_count_evaluation_terms}, $evaluation_terms, "$owner mirrors exact-width request count evaluation terms into the matrix report");
+    is($matrix->{request_count_evaluation_expression}, $evaluation_expression, "$owner mirrors exact-width request count evaluation expression into the matrix report");
+    is($matrix->{request_count_evaluation_width}, $evaluation_width, "$owner mirrors request count evaluation width into the matrix report");
     is($matrix->{maximum_request_count}, scalar(@{$args{counted_request_terms}}), "$owner mirrors maximum request count into the matrix report");
     is($matrix->{over_capacity_policy}, 'reject_current_request_set', "$owner mirrors over-capacity policy into the matrix report");
 }
@@ -5568,7 +5698,12 @@ sub assert_counted_same_id_capacity_accounting {
 sub assert_counted_low_capacity_rules {
     my ($isf, $owner, %args) = @_;
     my $direction = $args{direction};
-    my $request_expr = $args{request_count_expression};
+    my ($request_expr, undef, $request_width) = counted_request_evaluation_contract(
+        max_pending => $args{max_pending},
+        terms       => $args{counted_request_terms},
+    );
+    my $one = sized_decimal_literal($request_width, 1);
+    my $two = sized_decimal_literal($request_width, 2);
     my $complete = $args{completion_fanin};
     my $pending_storage = $args{pending_storage};
     my $pending_output = $args{pending_output};
@@ -5577,7 +5712,7 @@ sub assert_counted_low_capacity_rules {
     my $can_accept_output = $args{can_accept_output};
 
     my $fits_one_request_at_occ2 = quotemeta(
-        "  (rule ${direction}_counted_req1_nocomplete_occ2 (& (== $request_expr 1) (! $complete) (== $pending_storage 2))"
+        "  (rule ${direction}_counted_req1_nocomplete_occ2 (& (== $request_expr $one) (! $complete) (== $pending_storage 2))"
     );
     like(
         $isf,
@@ -5586,7 +5721,7 @@ sub assert_counted_low_capacity_rules {
     );
 
     my $rejects_two_requests_at_occ2 = quotemeta(
-        "  (rule ${direction}_counted_req2_nocomplete_occ2 (& (== $request_expr 2) (! $complete) (== $pending_storage 2))"
+        "  (rule ${direction}_counted_req2_nocomplete_occ2 (& (== $request_expr $two) (! $complete) (== $pending_storage 2))"
     );
     like(
         $isf,
@@ -5605,10 +5740,18 @@ sub assert_counted_admitted_request_boundary {
     is($boundary->{max_pending}, $args{max_pending}, "$owner reports admitted guard max-pending bound");
     is($boundary->{completion_fanin}, $args{completion_fanin}, "$owner reports admitted guard completion fan-in");
     is($boundary->{request_count_expression}, $args{request_count_expression}, "$owner reports admitted request-count expression");
+    my ($evaluation_expression, $evaluation_terms, $evaluation_width) = counted_request_evaluation_contract(
+        max_pending => $args{max_pending},
+        terms       => $boundary->{counted_request_terms},
+    );
+    is_deeply($boundary->{request_count_evaluation_terms}, $evaluation_terms, "$owner reports exact-width admitted request-count evaluation terms");
+    is($boundary->{request_count_evaluation_expression}, $evaluation_expression, "$owner reports exact-width admitted request-count evaluation expression");
+    is($boundary->{request_count_evaluation_width}, $evaluation_width, "$owner reports admitted request-count evaluation width");
     is_deeply($boundary->{generated_assertions}, $args{generated_assertions}, "$owner reports group-local admitted request assertions");
+    my $zero = sized_decimal_literal($evaluation_width, 0);
     like(
         $boundary->{request_set_fit_expression},
-        qr/\Q(<= $args{request_count_expression} 0)\E/,
+        qr/\Q(<= $evaluation_expression $zero)\E/,
         "$owner request-set fit expression can reject non-empty over-capacity request sets",
     );
     for my $pulse (@{$boundary->{generated_pulses} || []}) {
@@ -5623,7 +5766,8 @@ sub assert_counted_admitted_request_boundary {
 
 sub assert_counted_low_capacity_admitted_guard {
     my ($boundary, $owner, %args) = @_;
-    my $request_expr = $args{request_count_expression};
+    my $request_expr = $boundary->{request_count_evaluation_expression};
+    my $request_width = $boundary->{request_count_evaluation_width};
     my $complete = $args{completion_fanin};
     my $pending_storage = $args{pending_storage};
     my $max_pending = $args{max_pending};
@@ -5631,24 +5775,63 @@ sub assert_counted_low_capacity_admitted_guard {
 
     like(
         $boundary->{request_set_fit_expression},
-        qr/\Q(& (== $pending_storage $one_slot_left) (! $complete) (<= $request_expr 1))\E/,
+        qr/\Q(& (== $pending_storage $one_slot_left) (! $complete) (<= $request_expr @{[sized_decimal_literal($request_width, 1)]}))\E/,
         "$owner allows only one request when one slot is available without completion",
     );
     like(
         $boundary->{request_set_fit_expression},
-        qr/\Q(& (== $pending_storage $one_slot_left) $complete (<= $request_expr 2))\E/,
+        qr/\Q(& (== $pending_storage $one_slot_left) $complete (<= $request_expr @{[sized_decimal_literal($request_width, 2)]}))\E/,
         "$owner credits one completion only when the queue is nonempty",
     );
     like(
         $boundary->{request_set_fit_expression},
-        qr/\Q(& (== $pending_storage $max_pending) (! $complete) (<= $request_expr 0))\E/,
+        qr/\Q(& (== $pending_storage $max_pending) (! $complete) (<= $request_expr @{[sized_decimal_literal($request_width, 0)]}))\E/,
         "$owner rejects every request at full occupancy without completion",
     );
     like(
         $boundary->{request_set_fit_expression},
-        qr/\Q(& (== $pending_storage $max_pending) $complete (<= $request_expr 1))\E/,
+        qr/\Q(& (== $pending_storage $max_pending) $complete (<= $request_expr @{[sized_decimal_literal($request_width, 1)]}))\E/,
         "$owner admits at most one request at full occupancy with one completion",
     );
+}
+
+sub counted_request_evaluation_contract {
+    my (%args) = @_;
+    my $terms = $args{terms} || [];
+    my $term_count = scalar(@$terms);
+    my $width = _count_width($args{max_pending} > $term_count ? $args{max_pending} : $term_count);
+    my @evaluation_terms = map { zero_extend_one_bit_expr($_, $width) } @$terms;
+    my $expression = @evaluation_terms == 1
+        ? $evaluation_terms[0]
+        : '(+ ' . join(' ', @evaluation_terms) . ')';
+    return ($expression, \@evaluation_terms, $width);
+}
+
+sub zero_extend_one_bit_expr {
+    my ($expr, $width) = @_;
+    return $expr unless defined($width) && $width > 1;
+    return '(concat ' . ($width - 1) . "'b" . ('0' x ($width - 1)) . " $expr)";
+}
+
+sub sized_decimal_literal {
+    my ($width, $value) = @_;
+    return "${width}'d$value";
+}
+
+sub _count_width {
+    my ($max_value) = @_;
+    my $width = 1;
+    my $limit = 2;
+    while ($limit <= $max_value) {
+        ++$width;
+        $limit *= 2;
+    }
+    return $width;
+}
+
+sub _max_pending_from_counted_rule_count {
+    my ($rule_count, $term_count) = @_;
+    return int($rule_count / (2 * ($term_count + 1)) - 1);
 }
 
 sub transaction_dispatch_entry {

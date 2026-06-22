@@ -503,14 +503,16 @@ sub _manager_capacity_transaction_key($clause_name) {
 }
 
 sub _parse_manager_capacity_transaction_id($items, $source_label, $name, $kind, $transaction_name) {
-    confess "Error: .ppif (manager-capacity-status $name (transactions ($kind $transaction_name (id ...)))) requires (id auto) or (id (value N))\n"
+    confess "Error: .ppif (manager-capacity-status $name (transactions ($kind $transaction_name (id ...)))) requires (id auto), (id dynamic), or (id (value N))\n"
         unless @$items == 1;
 
     my $id = $items->[0];
     return { policy => 'auto' }
         if !ref($id) && $id eq 'auto';
+    return { policy => 'dynamic' }
+        if !ref($id) && $id eq 'dynamic';
 
-    confess "Error: .ppif (manager-capacity-status $name (transactions ($kind $transaction_name (id ...)))) requires (id auto) or (id (value N))\n"
+    confess "Error: .ppif (manager-capacity-status $name (transactions ($kind $transaction_name (id ...)))) requires (id auto), (id dynamic), or (id (value N))\n"
         unless ref($id) eq 'ARRAY' && @$id == 2 && ($id->[0] // '') eq 'value' && !ref($id->[1]);
 
     my $value = $id->[1];

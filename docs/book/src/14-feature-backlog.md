@@ -2342,7 +2342,8 @@ first bounded shipped surface for one AXI Valid-Ready protocol intent object,
 multi-channel Valid-Ready bundles, and one AXI manager capacity/status shell
 through public `.ppif`, including optional static ID-family metadata and
 optional structural transaction-envelope metadata with per-transaction event
-dispatch/fan-in plus concrete transaction ID request/response assertions.
+dispatch/fan-in, concrete transaction ID request/response assertions, and
+metadata-first dynamic transaction-ID parser/report support.
 Broader IAL2 still must justify itself with semantics above individual
 transactions, not only syntax convenience. Its generic file surface remains
 protocol/platform-generic, and an IAL2 file may select a protocol or platform
@@ -6513,7 +6514,10 @@ admitted-request pulses with a request-set fit expression derived from the
 counted capacity/status matrix, replace the family-wide request onehot with
 per-concrete-ID group request assertions, and preserve Boolean admission plus
 family-wide assertions for non-counted directions and mixed auto-ID single
-concrete-group directions.
+concrete-group directions. The counted report surface now also carries
+`request_count_evaluation_terms`, `request_count_evaluation_expression`, and
+`request_count_evaluation_width` so generated guards and equality checks use
+exact-width zero-extended request-count expressions.
 Post counted group-local enqueue selector:
 [AXI_IAL2_MANAGER_POST_COUNTED_GROUP_LOCAL_ENQUEUE_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_COUNTED_GROUP_LOCAL_ENQUEUE_NEXT_SLICE_SELECTION.md)
 selects `.216`, readiness audit for dynamic same-ID issue-order queues beyond
@@ -6544,6 +6548,18 @@ request/response signal contract, report user-supplied selected-not-generated
 dynamic metadata, add a support-accounted metadata-only PPIF sample, and fail
 closed for behavior clauses that would require dynamic capture, response
 matching, queues, scoreboards, read-data routing, or HDL behavior.
+Dynamic transaction-ID metadata behavior:
+[AXI_IAL2_MANAGER_DYNAMIC_TRANSACTION_ID_METADATA_BEHAVIOR](../../AXI_IAL2_MANAGER_DYNAMIC_TRANSACTION_ID_METADATA_BEHAVIOR.md)
+ships `.219`. Public `.ppif` now accepts `(id dynamic)` for read and write
+transactions when the matching positive-width ID family declares request and
+response ID signals. Schedule reports emit `policy: dynamic`, `family`,
+`family_width`, `request_id_source`, `response_id_signal`, `ownership:
+user_supplied`, and `implementation_status: selected_not_generated`. The
+support-accounted sample is
+`ppif/axi_manager_capacity_status_dynamic_transaction_id.ppif`. Dynamic ID
+capture, response matching, same-ID ordering, read-data routing, queues,
+scoreboards, direct backend behavior, HDL behavior, and VHDL remain backlog
+under the explicit `dynamic_transaction_id_behavior` residue.
 
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
@@ -8806,7 +8822,7 @@ support catalog entries instead of recursive workspace traversal.
 `SEMANTIC-INTROSPECTION-MCP-FRONTIER.30` closes the immediate read-only
 semantic-introspection/MCP pass after source discovery; the active roadmap
 priority is again the IAL2 feature-completeness tree, currently at
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.219`.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.220`.
 
 Selected first MCP resource families are `fsmgen://capabilities`,
 `fsmgen://contracts`, `fsmgen://diagnostics`,

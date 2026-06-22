@@ -630,7 +630,12 @@ sub _expression_width ($self, $ast) {
     }
 
     return 1 if $ast->isa('FSM::AST::IndexedRef') || $ast->isa('FSM::CoreAST::IndexedRef');
-    return 1 if $ast->isa('FSM::HDL::IntermediateSignalRef');
+    if ($ast->isa('FSM::HDL::IntermediateSignalRef')) {
+        my $signal_name = eval { $ast->signal_name } || $ast->{signal_name};
+        my $width = $self->_intermediate_signal_width($signal_name);
+        return $width if defined $width;
+        return 1;
+    }
 
     if ($ast->isa('FSM::CoreAST::AggregateRef') || $ast->isa('FSM::CoreAST::ParameterRef')) {
         my $width = eval { $ast->width };
@@ -685,10 +690,73 @@ sub _signal_width ($self, $name) {
         return 1 unless defined $width;
     }
 
-    return 1 if $ctx->{enable_graph_signal_support}->is_intermediate_signal($name);
+    if ($ctx->{enable_graph_signal_support}->is_intermediate_signal($name)) {
+        my $width = $self->_intermediate_signal_width($name);
+        return $width if defined $width;
+        return 1;
+    }
     return 1 if $name =~ /_(?:en|wen)$/;
 
     return undef;
+}
+
+sub _intermediate_signal_width ($self, $name) {
+    return undef unless defined($name) && length($name);
+
+    my $ctx = $self->{flattened_dt};
+    return undef unless $ctx
+        && $ctx->{enable_graph_signal_support}
+        && $ctx->{enable_graph_signal_support}->is_intermediate_signal($name);
+
+    if ($ctx->{fsm_module} && $ctx->{fsm_module}->signals && $ctx->{fsm_module}->signals->{$name}) {
+        my $signal = $ctx->{fsm_module}->signals->{$name};
+        my $width = eval { $signal->can('width') ? $signal->width : undef };
+        return $width if defined($width) && !ref($width) && $width =~ /\A\d+\z/ && $width > 0;
+    }
+
+    if ($ctx->{enable_graph_assignment_support}
+        && $ctx->{enable_graph_assignment_support}->can('get_signal_info'))
+    {
+        my $signal_info = eval { $ctx->{enable_graph_assignment_support}->get_signal_info($name) };
+        if ($signal_info && ref($signal_info) eq 'HASH') {
+            my $width = $signal_info->{width};
+            return $width if defined($width) && !ref($width) && $width =~ /\A\d+\z/ && $width > 0;
+        }
+    }
+
+    my %signal_registry;
+    for my $registry (
+        $ctx->{intermediate_signals},
+        ($ctx->{ast_factorizer} && $ctx->{ast_factorizer}->{intermediate_signals})
+            ? $ctx->{ast_factorizer}->{intermediate_signals}
+            : undef,
+        $ctx->{referenced_intermediate_signals},
+    ) {
+        next unless ref($registry) eq 'HASH';
+        for my $signal_name (keys %$registry) {
+            $signal_registry{$signal_name} //= $registry->{$signal_name};
+        }
+    }
+
+    my $signal_info = $signal_registry{$name};
+    if ($signal_info && ref($signal_info) eq 'HASH') {
+        my $width = $signal_info->{width};
+        return $width if defined($width) && !ref($width) && $width =~ /\A\d+\z/ && $width > 0;
+    }
+
+    if ($ctx->{enable_graph_intermediate_support}
+        && $ctx->{enable_graph_intermediate_support}->can('_get_intermediate_signal_registry_entry'))
+    {
+        my $registry_entry = eval {
+            $ctx->{enable_graph_intermediate_support}->_get_intermediate_signal_registry_entry($name)
+        };
+        if ($registry_entry && ref($registry_entry) eq 'HASH') {
+            my $width = $registry_entry->{width};
+            return $width if defined($width) && !ref($width) && $width =~ /\A\d+\z/ && $width > 0;
+        }
+    }
+
+    return 1;
 }
 
 sub _boolean_constant ($self, $value) {
@@ -1396,9 +1464,12 @@ sub _signal_is_single_bit ($self, $name) {
     }
 
     if ($ctx->{enable_graph_signal_support}->is_intermediate_signal($name)) {
-        fsm_debug("      PATH: Intermediate signal (assuming 1-bit)", 3);
-        fsm_debug("      RESULT: single-bit (intermediate signals are boolean)", 3);
-        return 1;
+        my $width = $self->_intermediate_signal_width($name);
+        my $result = (!defined($width) || $width == 1) ? 1 : 0;
+        fsm_debug("      PATH: Intermediate signal", 3);
+        fsm_debug("      Intermediate signal width: " . (defined($width) ? $width : 'unknown'), 3);
+        fsm_debug("      RESULT: " . ($result ? 'single-bit' : 'multi-bit') . " (from intermediate width)", 3);
+        return $result;
     }
 
     if ($name =~ /_(?:en|wen)$/) {
@@ -1550,8 +1621,11 @@ sub _operand_is_single_bit ($self, $ast) {
         fsm_debug("      PATH: IntermediateSignalRef", 3);
         my $signal_name = eval { $ast->signal_name } || 'UNKNOWN';
         fsm_debug("      Intermediate signal name: '$signal_name'", 3);
-        fsm_debug("      RESULT: single-bit (intermediate signals are always boolean)", 3);
-        return 1;
+        my $width = $self->_intermediate_signal_width($signal_name);
+        my $result = (!defined($width) || $width == 1) ? 1 : 0;
+        fsm_debug("      Intermediate signal width: " . (defined($width) ? $width : 'unknown'), 3);
+        fsm_debug("      RESULT: " . ($result ? 'single-bit' : 'multi-bit') . " (from intermediate width)", 3);
+        return $result;
     } else {
         fsm_debug("      PATH: Unknown AST type - " . ref($ast), 3);
         fsm_debug("      RESULT: multi-bit (unknown type fallback)", 3);

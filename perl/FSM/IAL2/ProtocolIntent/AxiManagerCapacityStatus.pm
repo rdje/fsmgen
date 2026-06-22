@@ -135,6 +135,13 @@ sub _normalize_contract($raw) {
             id_families      => $id_families,
         )
         : undef;
+    _reject_dynamic_transaction_behavior_interactions(
+        transactions                => $transactions,
+        raw_auto_id_lifecycle       => $raw->{auto_id_lifecycle},
+        raw_response_demux          => $raw->{response_demux},
+        raw_read_data               => $raw->{read_data},
+        raw_same_id_ordering_policy => $raw->{same_id_ordering_policy},
+    );
     my $auto_id_lifecycle = exists($raw->{auto_id_lifecycle})
         ? _normalize_auto_id_lifecycle(
             raw_lifecycle => $raw->{auto_id_lifecycle},
@@ -523,14 +530,33 @@ sub _normalize_transaction_id($raw_id, $kind, $index, $id_families) {
     }
 
     if (exists $raw_id->{policy}) {
-        confess "AXI manager capacity/status IAL2 contract transactions[$index].id policy must be auto\n"
-            unless !ref($raw_id->{policy}) && $raw_id->{policy} eq 'auto';
-        confess "AXI manager capacity/status IAL2 contract transactions[$index].id auto policy must not include value\n"
+        confess "AXI manager capacity/status IAL2 contract transactions[$index].id policy must be auto or dynamic\n"
+            unless !ref($raw_id->{policy}) && $raw_id->{policy} =~ /\A(?:auto|dynamic)\z/;
+        my $policy = $raw_id->{policy};
+        confess "AXI manager capacity/status IAL2 contract transactions[$index].id $policy policy must not include value\n"
             if exists $raw_id->{value};
-        return { policy => 'auto' };
+        return { policy => 'auto' } if $policy eq 'auto';
+
+        confess "AXI manager capacity/status IAL2 contract transactions[$index] dynamic ID requires id_families metadata\n"
+            unless ref($id_families) eq 'HASH';
+        my $family = $id_families->{$kind};
+        confess "AXI manager capacity/status IAL2 contract transactions[$index] dynamic $kind ID requires a declared $kind ID family\n"
+            unless ref($family) eq 'HASH';
+        confess "AXI manager capacity/status IAL2 contract transactions[$index] dynamic $kind ID requires positive $kind ID-family width\n"
+            unless $family->{present};
+
+        return {
+            policy                => 'dynamic',
+            family                => $kind,
+            family_width          => $family->{width},
+            request_id_source     => $family->{request_id_signal},
+            response_id_signal    => $family->{response_id_signal},
+            ownership             => 'user_supplied',
+            implementation_status => 'selected_not_generated',
+        };
     }
 
-    confess "AXI manager capacity/status IAL2 contract transactions[$index].id requires policy auto or concrete value\n"
+    confess "AXI manager capacity/status IAL2 contract transactions[$index].id requires policy auto, policy dynamic, or concrete value\n"
         unless exists $raw_id->{value};
 
     my $value = _unsigned_integer($raw_id->{value}, "transactions[$index].id.value");
@@ -555,6 +581,44 @@ sub _normalize_transaction_id($raw_id, $kind, $index, $id_families) {
         family_width => $width,
         fits         => 1,
     };
+}
+
+sub _reject_dynamic_transaction_behavior_interactions(%args) {
+    my $transactions = $args{transactions};
+    return unless ref($transactions) eq 'ARRAY';
+
+    my %dynamic_by_family;
+    for my $transaction (@$transactions) {
+        my $id = $transaction->{id};
+        next unless ref($id) eq 'HASH' && ($id->{policy} // '') eq 'dynamic';
+        push @{$dynamic_by_family{$transaction->{kind}}}, $transaction->{name};
+    }
+    return unless %dynamic_by_family;
+
+    for my $family (qw(write read)) {
+        next unless @{$dynamic_by_family{$family} || []};
+        my $transactions_text = join(', ', @{$dynamic_by_family{$family}});
+
+        if (ref($args{raw_auto_id_lifecycle}) eq 'HASH'
+            && exists $args{raw_auto_id_lifecycle}{$family}) {
+            confess "AXI manager capacity/status IAL2 contract auto_id_lifecycle.$family cannot be combined with dynamic $family transaction ID metadata in this slice; dynamic ID capture and lifecycle ownership remain selected_not_generated for transaction(s): $transactions_text\n";
+        }
+        if (ref($args{raw_response_demux}) eq 'HASH'
+            && exists $args{raw_response_demux}{$family}) {
+            confess "AXI manager capacity/status IAL2 contract response_demux.$family cannot be combined with dynamic $family transaction ID metadata in this slice; dynamic response matching remains selected_not_generated for transaction(s): $transactions_text\n";
+        }
+        if (ref($args{raw_same_id_ordering_policy}) eq 'HASH'
+            && exists $args{raw_same_id_ordering_policy}{$family}) {
+            confess "AXI manager capacity/status IAL2 contract same_id_ordering_policy.$family cannot be combined with dynamic $family transaction ID metadata in this slice; dynamic same-ID ordering remains selected_not_generated for transaction(s): $transactions_text\n";
+        }
+    }
+
+    if (@{$dynamic_by_family{read} || []}
+        && ref($args{raw_read_data}) eq 'HASH'
+        && exists $args{raw_read_data}{read}) {
+        my $transactions_text = join(', ', @{$dynamic_by_family{read}});
+        confess "AXI manager capacity/status IAL2 contract read_data.read cannot be combined with dynamic read transaction ID metadata in this slice; dynamic read-data routing remains selected_not_generated for transaction(s): $transactions_text\n";
+    }
 }
 
 sub _unsigned_integer($value, $field) {
@@ -2476,6 +2540,14 @@ sub _apply_counted_request_accounting(%args) {
         ])};
         my @selected_same_id_request_events = @{$boundary_family->{selected_request_events} || []};
         my $request_count_expression = _add_expr(@counted_request_terms);
+        my $request_count_evaluation_width = _counter_width(_max_int(
+            scalar(@counted_request_terms),
+            $boundary_family->{max_pending} // scalar(@counted_request_terms),
+        ));
+        my @counted_request_evaluation_terms = map {
+            _zero_extend_one_bit_expr($_, $request_count_evaluation_width)
+        } @counted_request_terms;
+        my $request_count_evaluation_expression = _add_expr(@counted_request_evaluation_terms);
         my $accounting = {
             mode                            => 'counted_same_id_selected_requests',
             counted_request_events          => \@counted_request_events,
@@ -2483,6 +2555,9 @@ sub _apply_counted_request_accounting(%args) {
             counted_request_groups          => \@counted_request_groups,
             selected_same_id_request_events => \@selected_same_id_request_events,
             request_count_expression        => $request_count_expression,
+            request_count_evaluation_terms  => \@counted_request_evaluation_terms,
+            request_count_evaluation_expression => $request_count_evaluation_expression,
+            request_count_evaluation_width  => $request_count_evaluation_width,
             maximum_request_count           => scalar(@counted_request_terms),
             capacity_owner                  => "generated_scheduler_or_status_rules.${direction}_capacity_matrix",
             completion_accounting_mode      => 'boolean_fanin',
@@ -2490,7 +2565,8 @@ sub _apply_counted_request_accounting(%args) {
         };
         $entry->{request_accounting} = $accounting;
         my $request_set_fit_expression = _counted_request_set_fit_expr(
-            request_count_expression => $request_count_expression,
+            request_count_expression => $request_count_evaluation_expression,
+            request_count_width      => $request_count_evaluation_width,
             pending_storage          => $boundary_family->{pending_storage},
             max_pending              => $boundary_family->{max_pending},
             completion_fanin         => $boundary_family->{completion_fanin},
@@ -2498,6 +2574,9 @@ sub _apply_counted_request_accounting(%args) {
         $boundary_family->{accounting_mode} = 'counted_capacity_storage_and_completion_fanin';
         $boundary_family->{guard_source} = 'counted_request_set_capacity_fit';
         $boundary_family->{request_count_expression} = $request_count_expression;
+        $boundary_family->{request_count_evaluation_terms} = \@counted_request_evaluation_terms;
+        $boundary_family->{request_count_evaluation_expression} = $request_count_evaluation_expression;
+        $boundary_family->{request_count_evaluation_width} = $request_count_evaluation_width;
         $boundary_family->{request_set_fit_expression} = $request_set_fit_expression;
         $boundary_family->{counted_request_events} = \@counted_request_events;
         $boundary_family->{counted_request_terms} = \@counted_request_terms;
@@ -2527,7 +2606,10 @@ sub _counted_request_set_fit_expr(%args) {
             push @cases, _and_expr(
                 _eq_expr($args{pending_storage}, $occupancy),
                 $completion_guard,
-                _le_expr($args{request_count_expression}, $capacity),
+                _le_expr(
+                    $args{request_count_expression},
+                    _sized_decimal_literal($args{request_count_width}, $capacity),
+                ),
             );
         }
     }
@@ -2567,6 +2649,20 @@ sub _counted_request_groups_for_queue_family($queue_family) {
         };
     }
     return @groups;
+}
+
+sub _zero_extend_one_bit_expr($expr, $target_width) {
+    return $expr unless defined($target_width) && $target_width > 1;
+    return "(concat " . _sized_binary_literal($target_width - 1, '0' x ($target_width - 1)) . " $expr)";
+}
+
+sub _max_int(@values) {
+    my $max = 0;
+    for my $value (@values) {
+        next unless defined($value);
+        $max = $value if $value > $max;
+    }
+    return $max;
 }
 
 sub _boolean_request_accounting($direction) {
@@ -4709,8 +4805,12 @@ sub _counted_rule_lines(%args) {
     my $occupancy = $args{occupancy};
     my $completion_present = $args{completion_present};
     my $completion_guard = $completion_present ? $args{complete} : _not_expr($args{complete});
-    my $request_count_expression = $args{request_accounting}{request_count_expression};
-    my $request_count_guard = _eq_expr($request_count_expression, $args{request_count});
+    my $request_count_expression = $args{request_accounting}{request_count_evaluation_expression}
+        // $args{request_accounting}{request_count_expression};
+    my $request_count_literal = defined($args{request_accounting}{request_count_evaluation_width})
+        ? _sized_decimal_literal($args{request_accounting}{request_count_evaluation_width}, $args{request_count})
+        : $args{request_count};
+    my $request_count_guard = _eq_expr($request_count_expression, $request_count_literal);
     my $condition = _and_expr(
         $request_count_guard,
         $completion_guard,
@@ -4833,6 +4933,9 @@ sub _capacity_matrix_report_entry($contract, $direction) {
         $entry{counted_request_groups} = _clone_jsonish($accounting->{counted_request_groups});
         $entry{selected_same_id_request_events} = _clone_jsonish($accounting->{selected_same_id_request_events});
         $entry{request_count_expression} = $accounting->{request_count_expression};
+        $entry{request_count_evaluation_terms} = _clone_jsonish($accounting->{request_count_evaluation_terms});
+        $entry{request_count_evaluation_expression} = $accounting->{request_count_evaluation_expression};
+        $entry{request_count_evaluation_width} = $accounting->{request_count_evaluation_width};
         $entry{maximum_request_count} = $accounting->{maximum_request_count};
         $entry{over_capacity_policy} = $accounting->{over_capacity_policy};
     }
@@ -4971,6 +5074,8 @@ sub _build_report(%args) {
             'concrete transaction ID values require a present matching ID family and must fit its declared width',
             'concrete transaction ID assertions require unique request/response events per concrete transaction',
             'concrete transaction ID values generate request/response ID equality assertions against the declared ID-family signals',
+            'dynamic transaction ID metadata requires a present matching ID family, reports request_id_source/response_id_signal ownership as selected_not_generated, and does not generate ID capture, response matching, or HDL behavior',
+            'dynamic transaction IDs fail closed with same-family auto_id_lifecycle, response_demux, read_data, and same_id_ordering behavior clauses until dynamic matching is explicitly owned',
             'auto_id_lifecycle requires id_families and transactions metadata',
             'auto_id_lifecycle listed families must have at least one auto-ID transaction in that family',
             'auto_id_lifecycle pools are bounded to 1..4 unique values per family and must fit the declared positive ID width',
@@ -4999,6 +5104,10 @@ sub _build_report(%args) {
             {
                 id     => 'axi_id_ordering_and_response_matching',
                 detail => 'Concrete transaction ID request/response assertions, explicit bounded auto-ID request-ID drive plus completion-event release, generated auto-ID same-ID avoidance, explicit static concrete-ID reuse reject policy metadata, issue-order-queue admitted-request pulse generation for selected concrete-ID families, counted request-set capacity fit guards and per-concrete-ID group request assertions for generated multi-group queue-head families, bounded read single-beat, read burst-last, and write depth-2/depth-3 concrete same-ID issue-order queue state plus queue-head response-demux behavior for selected public response-demux-only sample shapes including multiple independent or mixed-depth read single-beat, read burst-last, and write response-demux queue groups, same-family mixed auto-ID lifecycle plus concrete same-ID queue-head response-demux for selected response-demux-only read single-beat, read burst-last, and write sample shapes, selected read single-beat and read burst-last scalar read-data plus read burst-last report-only raw-ARLEN burst-length, runtime beat-count/RLAST validation, and runtime-validation multi-beat output-bank behavior over that same-family mixed response-demux boundary, selected single-group and multiple/mixed read single-beat depth-3 scalar read-data queue-head shapes, selected single-group and multiple/mixed read burst-last depth-3 scalar last-beat read-data, report-only raw-ARLEN burst-length, runtime beat-count/RLAST validation, and runtime-validation multi-beat output-bank queue-head shapes, generated write BID response demux, generated single-beat read RID response demux, generated single-beat read-data RDATA/RRESP capture, generated single-beat read-data RDATA/RRESP capture from generated read single-beat concrete same-ID queue-head response-demux including multiple independent depth-2 queue-head groups, the selected single depth-3 queue-head group, and selected multiple/mixed depth-3 queue-head groups, generated burst-last RLAST response-demux completion, structural last-beat read-data metadata, generated last-beat read-data RDATA/RRESP capture, generated last-beat read-data RDATA/RRESP capture from generated read burst-last concrete same-ID queue-head response-demux including multiple independent depth-2 queue-head groups with no burst_length metadata, report-only raw-ARLEN burst-length metadata, or runtime-assertion beat-count/RLAST validation metadata, plus the selected single depth-3 queue-head group with no burst_length metadata, report-only raw-ARLEN burst-length metadata, or runtime-assertion beat-count/RLAST validation metadata, plus selected multiple/mixed depth-3 queue-head groups with no burst_length metadata, report-only raw-ARLEN burst-length metadata, runtime-assertion beat-count/RLAST validation metadata, or runtime-assertion multi-beat output-bank metadata, generated raw-ARLEN burst-length capture including report-only and runtime-validation generated read burst-last concrete same-ID queue-head read-data contracts with one or more independent depth-2 queue-head groups, the selected single depth-3 report-only and runtime-validation groups, selected multiple/mixed depth-3 report-only and runtime-validation groups, and the selected same-family mixed auto-ID plus depth-2 concrete queue-head report-only and runtime-validation groups, explicit runtime-assertion beat-count/RLAST validation for auto-ID and bounded read burst-last concrete same-ID queue-head read-data contracts including one or more independent depth-2 queue-head groups plus the selected single depth-3 group, selected multiple/mixed depth-3 groups, and the selected same-family mixed auto-ID plus depth-2 concrete queue-head group, generated multi-beat read-data output-bank behavior for the covered auto-ID multi-beat-by-RID subset and bounded read burst-last concrete same-ID queue-head subset including multiple independent depth-2 queue-head groups plus the selected single depth-3 runtime-validation queue-head group, selected multiple/mixed depth-3 runtime-validation queue-head groups, and the selected same-family mixed auto-ID plus depth-2 concrete queue-head runtime-validation group, bounded burst payload/output behavior through that per-beat output bank, and generated scalar RRESP aggregation behavior are supported; dynamic user-ID arbitration beyond selected counted concrete-ID queue-head groups, concrete same-ID issue-order queues deeper than the selected read single-beat, read burst-last, and write depth-3 shapes, generalized scoreboard policies, authored/general different-ID interleaving outside the covered auto-ID, bounded queue-head, and mixed response-demux subsets, packed burst-vector outputs, alternate full burst payload assembly, and aggregate-only status output shapes remain outside this capacity/status shell.',
+            },
+            {
+                id     => 'dynamic_transaction_id_behavior',
+                detail => 'Dynamic transaction-ID parser/report metadata is supported for (id dynamic) when matching ID-family metadata is present; dynamic ID capture, response matching, same-ID ordering, read-data routing, queues, scoreboards, and HDL behavior remain future exact-owner work.',
             },
             {
                 id     => 'profile_aliases_and_full_manager_behavior',
@@ -5508,6 +5617,17 @@ sub _report_transactions($contract) {
 
 sub _report_transaction_id($id) {
     return { policy => 'auto' } if ($id->{policy} // '') eq 'auto';
+    if (($id->{policy} // '') eq 'dynamic') {
+        return {
+            policy                => 'dynamic',
+            family                => $id->{family},
+            family_width          => $id->{family_width},
+            request_id_source     => $id->{request_id_source},
+            response_id_signal    => $id->{response_id_signal},
+            ownership             => $id->{ownership},
+            implementation_status => $id->{implementation_status},
+        };
+    }
 
     return {
         policy       => 'concrete',

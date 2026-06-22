@@ -32,6 +32,9 @@ guard_source=counted_request_set_capacity_fit
 accounting_mode=counted_capacity_storage_and_completion_fanin
 request_assertion_scope=concrete_id_group
 request_count_expression=(+ <group0-request-fanin> <group1-request-fanin> ...)
+request_count_evaluation_terms=(<zero-extended group0-request-fanin> ...)
+request_count_evaluation_expression=(+ <zero-extended group terms> ...)
+request_count_evaluation_width=<exact comparison width>
 request_set_fit_expression=(| <occupancy/completion/request-count cases> ...)
 generated_assertions=<one *_request_onehot0 per concrete-ID group>
 ```
@@ -43,9 +46,23 @@ The existing counted capacity/status fields from `.211` remain stable:
 - `counted_request_terms`
 - `counted_request_groups`
 - `request_count_expression`
+- `request_count_evaluation_terms`
+- `request_count_evaluation_expression`
+- `request_count_evaluation_width`
 - `maximum_request_count`
 - `over_capacity_policy: reject_current_request_set`
 - capacity matrix `accounting_mode: counted_submit`
+
+The `request_count_expression` field remains the user-facing selected group
+fan-in shape. The `request_count_evaluation_*` fields are the exact-width
+expression used by generated admitted-request guards and capacity rules. For
+two one-bit group terms with a two-bit count, the evaluation terms are
+zero-extended, for example:
+
+```lisp
+(+ (concat 1'b0 (| axi0_r0_request axi0_r1_request))
+   (concat 1'b0 (| axi0_r2_request axi0_r3_request)))
+```
 
 The public read and write multi-group samples now report group-local assertion
 names such as:
@@ -65,6 +82,8 @@ The request-set fit expression mirrors the counted capacity matrix:
 - completion credits only when occupancy is greater than zero;
 - the current request set is accepted only when the counted request count fits
   the resulting capacity;
+- request-count comparisons use the exact-width evaluation expression and
+  matching sized decimal literals;
 - an over-capacity current request set produces no admitted-request pulse, so
   queue state does not diverge from the shared pending/status matrix.
 

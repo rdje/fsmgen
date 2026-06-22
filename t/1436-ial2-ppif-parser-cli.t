@@ -167,6 +167,37 @@ subtest 'PPIF adapter parses optional AXI manager transaction-envelope metadata'
     );
 };
 
+subtest 'PPIF adapter parses AXI manager dynamic transaction-ID metadata without generated behavior' => sub {
+    my $sample_path = sample_capacity_dynamic_transaction_id_ppif_path();
+    ok(-f $sample_path, 'tracked runnable PPIF capacity/status dynamic transaction-ID sample exists');
+
+    my $base = FSM::Adapter::IAL2::PPIF->new()->parse_source(sample_capacity_ppif(), sample_capacity_ppif_path());
+    my $result = FSM::Adapter::IAL2::PPIF->new()->parse_source(sample_capacity_dynamic_transaction_id_ppif(), $sample_path);
+    my $isf = $result->{generated_ial1}{text};
+
+    is($result->{kind}, 'protocol_intent.axi_manager_capacity_status', 'dynamic transaction-ID sample still uses the capacity/status generator');
+    is($result->{report}{source_object}{id}, 'axi-manager-capacity-status-dynamic-transaction-id', 'dynamic transaction-ID source object id is preserved');
+    is($result->{report}{source_object}{intent_name}, 'axi_manager_capacity_status_dynamic_transaction_id', 'dynamic transaction-ID source intent name is preserved');
+    is(
+        $result->{generated_ial1}{text},
+        $base->{generated_ial1}{text},
+        'dynamic transaction-ID metadata does not alter generated IAL1 text',
+    );
+    is_deeply(
+        $result->{generated_ial0}{files},
+        $base->{generated_ial0}{files},
+        'dynamic transaction-ID metadata does not alter generated IAL0 files',
+    );
+    unlike($isf, qr/\(input axi0_awid\b/, 'dynamic write request ID signal is not generated before capture behavior is owned');
+    unlike($isf, qr/\(input axi0_bid\b/, 'dynamic write response ID signal is not generated before response matching is owned');
+    unlike($isf, qr/\(input axi0_arid\b/, 'dynamic read request ID signal is not generated before capture behavior is owned');
+    unlike($isf, qr/\(input axi0_rid\b/, 'dynamic read response ID signal is not generated before response matching is owned');
+    ok(!exists $result->{report}{id_response_rule_engine}, 'dynamic metadata does not emit a concrete-ID assertion engine');
+    assert_dynamic_transaction_id_report($result->{report}{transactions}, 'adapter report');
+    my %residue = map { $_->{id} => 1 } @{$result->{report}{unsupported_residue}};
+    ok($residue{dynamic_transaction_id_behavior}, 'dynamic behavior boundary remains explicit unsupported residue');
+};
+
 subtest 'PPIF adapter parses AXI manager transaction event dispatch' => sub {
     my $sample_path = sample_capacity_transaction_dispatch_ppif_path();
     ok(-f $sample_path, 'tracked runnable PPIF capacity/status transaction-event dispatch sample exists');
@@ -1796,13 +1827,31 @@ subtest 'PPIF adapter diagnostics fail closed before generation claims' => sub {
             qr/write request_event 'axi0_w0_request' is reused by transactions 'w0' and 'w1' while using per-transaction dispatch/],
         ['manager transaction malformed id',
             capacity_ppif_with_objects(manager_capacity_object_with_transactions('(write w0 (tag wr0) (request axi0_write_submit) (completion axi0_write_complete) (id (policy auto)))')),
-            qr/requires \(id auto\) or \(id \(value N\)\)/],
+            qr/requires \(id auto\), \(id dynamic\), or \(id \(value N\)\)/],
+        ['manager transaction unsupported id policy token',
+            capacity_ppif_with_objects(manager_capacity_object_with_transactions('(write w0 (tag wr0) (request axi0_write_submit) (completion axi0_write_complete) (id user))')),
+            qr/requires \(id auto\), \(id dynamic\), or \(id \(value N\)\)/],
+        ['manager transaction unsupported parenthesized dynamic id',
+            capacity_ppif_with_objects(manager_capacity_object_with_transactions('(write w0 (tag wr0) (request axi0_write_submit) (completion axi0_write_complete) (id (dynamic)))')),
+            qr/requires \(id auto\), \(id dynamic\), or \(id \(value N\)\)/],
+        ['manager transaction unsupported signal id',
+            capacity_ppif_with_objects(manager_capacity_object_with_transactions('(write w0 (tag wr0) (request axi0_write_submit) (completion axi0_write_complete) (id (signal axi0_awid)))')),
+            qr/requires \(id auto\), \(id dynamic\), or \(id \(value N\)\)/],
         ['manager transaction concrete ID too wide',
             capacity_ppif_with_objects(manager_capacity_object_with_id_families_and_transactions(
                 '(write (width 4) (request-id awid) (response-id bid)) (read (width 4) (request-id arid) (response-id rid))',
                 '(read r0 (tag rd0) (request axi0_read_submit) (completion axi0_read_complete) (id (value 16)))',
             )),
             qr/concrete read ID value 16 does not fit width 4/],
+        ['manager transaction dynamic ID without family metadata',
+            capacity_ppif_with_objects(manager_capacity_object_with_transactions('(read r0 (tag rd0) (request axi0_read_submit) (completion axi0_read_complete) (id dynamic))')),
+            qr/dynamic ID requires id_families metadata/],
+        ['manager transaction dynamic ID with zero-width family',
+            capacity_ppif_with_objects(manager_capacity_object_with_id_families_and_transactions(
+                '(write (width 4) (request-id awid) (response-id bid)) (read (width 0))',
+                '(read r0 (tag rd0) (request axi0_read_submit) (completion axi0_read_complete) (id dynamic))',
+            )),
+            qr/dynamic read ID requires positive read ID-family width/],
         ['manager transaction concrete same-family same-ID reuse',
             capacity_ppif_with_objects(manager_capacity_object_with_id_families_and_transactions(
                 '(write (width 4) (request-id awid) (response-id bid)) (read (width 4) (request-id arid) (response-id rid))',
@@ -1847,6 +1896,34 @@ subtest 'PPIF adapter diagnostics fail closed before generation claims' => sub {
                 '(read r0 (tag rd0) (request axi0_read_submit) (completion axi0_read_complete) (id (value 3))) (read r1 (tag rd1) (request axi0_read_submit) (completion axi0_read_complete) (id (value 4)))',
             )),
             qr/concrete ID assertions require unique request events; event 'axi0_read_submit' is shared by transactions 'r0' and 'r1'/],
+        ['manager dynamic transaction ID blocks same-family auto lifecycle behavior',
+            capacity_ppif_with_objects(manager_capacity_object_with_id_families_transactions_and_auto_id_lifecycle(
+                '(write (width 4) (request-id awid) (response-id bid)) (read (width 4) (request-id arid) (response-id rid))',
+                '(read r0 (tag rd0) (request axi0_read_submit) (completion axi0_read_complete) (id dynamic))',
+                '(read (pool 0))',
+            )),
+            qr/auto_id_lifecycle\.read cannot be combined with dynamic read transaction ID metadata/],
+        ['manager dynamic transaction ID blocks same-family response demux behavior',
+            capacity_ppif_with_objects(manager_capacity_object_with_id_families_transactions_and_response_demux(
+                '(write (width 4) (request-id awid) (response-id bid)) (read (width 4) (request-id arid) (response-id rid))',
+                '(read r0 (tag rd0) (request axi0_read_submit) (completion axi0_read_complete) (id dynamic))',
+                '(read (response-event axi0_read_complete) (response-scope single-beat) (transaction-completion generated))',
+            )),
+            qr/response_demux\.read cannot be combined with dynamic read transaction ID metadata/],
+        ['manager dynamic transaction ID blocks same-family same-ID ordering behavior',
+            capacity_ppif_with_objects(manager_capacity_object_with_id_families_transactions_and_same_id_ordering(
+                '(write (width 4) (request-id awid) (response-id bid)) (read (width 4) (request-id arid) (response-id rid))',
+                '(read r0 (tag rd0) (request axi0_read_submit) (completion axi0_read_complete) (id dynamic))',
+                '(read (concrete-id-reuse issue-order-queue))',
+            )),
+            qr/same_id_ordering_policy\.read cannot be combined with dynamic read transaction ID metadata/],
+        ['manager dynamic transaction ID blocks read-data behavior',
+            capacity_ppif_with_objects(manager_capacity_object_with_id_families_transactions_and_read_data(
+                '(write (width 4) (request-id awid) (response-id bid)) (read (width 4) (request-id arid) (response-id rid))',
+                '(read r0 (tag rd0) (request axi0_read_submit) (completion axi0_read_complete) (id dynamic))',
+                default_manager_read_data_clause(),
+            )),
+            qr/read_data\.read cannot be combined with dynamic read transaction ID metadata/],
         ['duplicate manager auto-ID lifecycle clause',
             capacity_ppif_with_objects(manager_capacity_object_with_duplicate_auto_id_lifecycle()),
             qr/duplicate \(auto-id-lifecycle \.\.\.\) clause/],
@@ -2253,6 +2330,21 @@ subtest 'CLI emits IAL2 report JSON for AXI manager transaction-envelope metadat
         'CLI report exposes request and response concrete-ID checks',
     );
     is_deeply($report->{generated_artifacts}{ial0}{files}, ['axi0_capacity_status.fsm'], 'transaction metadata keeps the generated .fsm artifact name stable');
+};
+
+subtest 'CLI emits IAL2 report JSON for AXI manager dynamic transaction-ID metadata .ppif' => sub {
+    my ($success, undef, undef, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--emit-schedule-json', sample_capacity_dynamic_transaction_id_ppif_path()],
+    );
+
+    ok($success, '--emit-schedule-json succeeds for capacity/status dynamic transaction-ID .ppif');
+    is(join('', @{$stderr_buf || []}), '', 'capacity/status dynamic transaction-ID report keeps stderr clean');
+    my $report = decode_json(join('', @{$stdout_buf || []}));
+    is($report->{schema}, 'fsmgen.ial2.protocol_intent.axi_manager_capacity_status.v1', 'CLI keeps the capacity/status report schema');
+    is($report->{source_object}{intent_name}, 'axi_manager_capacity_status_dynamic_transaction_id', 'dynamic transaction-ID report carries the PPIF top-level intent name');
+    assert_dynamic_transaction_id_report($report->{transactions}, 'CLI report');
+    ok(!exists $report->{id_response_rule_engine}, 'CLI dynamic metadata report does not emit a concrete-ID assertion engine');
+    is_deeply($report->{generated_artifacts}{ial0}{files}, ['axi0_capacity_status.fsm'], 'dynamic transaction-ID metadata keeps the generated .fsm artifact name stable');
 };
 
 subtest 'CLI emits IAL2 report JSON for AXI manager transaction event dispatch .ppif' => sub {
@@ -4614,6 +4706,50 @@ subtest 'CLI check JSON and semantic JSON support-account transaction-envelope .
     );
 };
 
+subtest 'CLI check JSON and semantic JSON support-account dynamic transaction-ID .ppif separately' => sub {
+    my $dynamic_path = sample_capacity_dynamic_transaction_id_ppif_path();
+    my ($success, undef, undef, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--strict', '--check', '--json', $dynamic_path],
+    );
+    ok($success, 'capacity/status dynamic transaction-ID --check --json succeeds');
+    is(join('', @{$stderr_buf || []}), '', 'capacity/status dynamic transaction-ID --check --json keeps stderr clean');
+    my $check_report = decode_json(join('', @{$stdout_buf || []}));
+    ok($check_report->{success}, 'capacity/status dynamic transaction-ID check JSON reports success');
+    is(
+        $check_report->{source}{resolved_path},
+        File::Spec->rel2abs($dynamic_path),
+        'capacity/status dynamic transaction-ID check JSON reports the public .ppif source path',
+    );
+    is(
+        $check_report->{support_accounting}{entry_id},
+        'intent.ppif_axi_manager_capacity_status_dynamic_transaction_id',
+        'capacity/status dynamic transaction-ID check JSON support accounting names the PPIF corpus entry',
+    );
+
+    my ($semantic_success, undef, undef, $semantic_stdout, $semantic_stderr) = run(
+        command => ['./bin/fsmgen', '--strict', '--emit-semantic-json', $dynamic_path],
+    );
+    ok($semantic_success, 'capacity/status dynamic transaction-ID --emit-semantic-json succeeds');
+    is(join('', @{$semantic_stderr || []}), '', 'capacity/status dynamic transaction-ID --emit-semantic-json keeps stderr clean');
+    my $semantic_report = decode_json(join('', @{$semantic_stdout || []}));
+    ok($semantic_report->{success}, 'capacity/status dynamic transaction-ID semantic JSON reports success');
+    is(
+        $semantic_report->{source}{resolved_path},
+        File::Spec->rel2abs($dynamic_path),
+        'capacity/status dynamic transaction-ID semantic JSON reports the public .ppif source path',
+    );
+    is(
+        $semantic_report->{support_accounting}{entry_id},
+        'intent.ppif_axi_manager_capacity_status_dynamic_transaction_id',
+        'capacity/status dynamic transaction-ID semantic JSON support accounting names the PPIF corpus entry',
+    );
+    is(
+        $semantic_report->{semantic}{module}{name},
+        'axi0_capacity_status',
+        'capacity/status dynamic transaction-ID semantic JSON records the unchanged generated module',
+    );
+};
+
 subtest 'CLI check JSON and semantic JSON support-account transaction-event dispatch .ppif separately' => sub {
     my $dispatch_path = sample_capacity_transaction_dispatch_ppif_path();
     my ($success, undef, undef, $stdout_buf, $stderr_buf) = run(
@@ -6361,6 +6497,10 @@ sub sample_capacity_transaction_ppif_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_transaction_envelope.ppif');
 }
 
+sub sample_capacity_dynamic_transaction_id_ppif_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_dynamic_transaction_id.ppif');
+}
+
 sub sample_capacity_transaction_dispatch_ppif_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_transaction_event_dispatch.ppif');
 }
@@ -6619,6 +6759,10 @@ sub sample_capacity_id_family_ppif {
 
 sub sample_capacity_transaction_ppif {
     return slurp(sample_capacity_transaction_ppif_path());
+}
+
+sub sample_capacity_dynamic_transaction_id_ppif {
+    return slurp(sample_capacity_dynamic_transaction_id_ppif_path());
 }
 
 sub sample_capacity_transaction_dispatch_ppif {
@@ -7121,6 +7265,13 @@ sub manager_capacity_object_with_id_families_transactions_and_response_demux {
     return $object;
 }
 
+sub manager_capacity_object_with_id_families_transactions_and_read_data {
+    my ($families, $transactions, $read_data) = @_;
+    my $object = manager_capacity_object_with_id_families_and_transactions($families, $transactions);
+    $object =~ s/\)\z/\n    (read-data $read_data))/;
+    return $object;
+}
+
 sub default_manager_read_auto_transactions {
     return join(' ',
         '(read r0 (tag rd0) (request axi0_r0_request) (completion axi0_r0_complete) (id auto))',
@@ -7336,6 +7487,38 @@ sub read_data_clause_with {
         $clause =~ s/$target/$replacement/;
     }
     return $clause;
+}
+
+sub assert_dynamic_transaction_id_report {
+    my ($transactions, $owner) = @_;
+
+    is(scalar(@$transactions), 2, "$owner reports both dynamic transaction-ID entries");
+    is_deeply(
+        $transactions->[0]{id},
+        {
+            policy                => 'dynamic',
+            family                => 'write',
+            family_width          => 4,
+            request_id_source     => 'axi0_awid',
+            response_id_signal    => 'axi0_bid',
+            ownership             => 'user_supplied',
+            implementation_status => 'selected_not_generated',
+        },
+        "$owner reports write dynamic ID metadata ownership",
+    );
+    is_deeply(
+        $transactions->[1]{id},
+        {
+            policy                => 'dynamic',
+            family                => 'read',
+            family_width          => 4,
+            request_id_source     => 'axi0_arid',
+            response_id_signal    => 'axi0_rid',
+            ownership             => 'user_supplied',
+            implementation_status => 'selected_not_generated',
+        },
+        "$owner reports read dynamic ID metadata ownership",
+    );
 }
 
 sub assert_write_auto_id_lifecycle_report {
@@ -7985,6 +8168,14 @@ sub assert_counted_same_id_capacity_accounting {
         "$owner reports selected same-ID request events",
     );
     is($accounting->{request_count_expression}, $args{request_count_expression}, "$owner reports request count expression");
+    my $max_pending = _max_pending_from_counted_rule_count($args{rule_count}, scalar(@{$args{counted_request_terms}}));
+    my ($evaluation_expression, $evaluation_terms, $evaluation_width) = counted_request_evaluation_contract(
+        max_pending => $max_pending,
+        terms       => $args{counted_request_terms},
+    );
+    is_deeply($accounting->{request_count_evaluation_terms}, $evaluation_terms, "$owner reports exact-width request count evaluation terms");
+    is($accounting->{request_count_evaluation_expression}, $evaluation_expression, "$owner reports exact-width request count evaluation expression");
+    is($accounting->{request_count_evaluation_width}, $evaluation_width, "$owner reports request count evaluation width");
     is($accounting->{maximum_request_count}, scalar(@{$args{counted_request_terms}}), "$owner reports maximum request count");
     is(
         $accounting->{capacity_owner},
@@ -8007,6 +8198,9 @@ sub assert_counted_same_id_capacity_accounting {
         "$owner mirrors selected same-ID request events into the matrix report",
     );
     is($matrix->{request_count_expression}, $args{request_count_expression}, "$owner mirrors request count expression into the matrix report");
+    is_deeply($matrix->{request_count_evaluation_terms}, $evaluation_terms, "$owner mirrors exact-width request count evaluation terms into the matrix report");
+    is($matrix->{request_count_evaluation_expression}, $evaluation_expression, "$owner mirrors exact-width request count evaluation expression into the matrix report");
+    is($matrix->{request_count_evaluation_width}, $evaluation_width, "$owner mirrors request count evaluation width into the matrix report");
     is($matrix->{maximum_request_count}, scalar(@{$args{counted_request_terms}}), "$owner mirrors maximum request count into the matrix report");
     is($matrix->{over_capacity_policy}, 'reject_current_request_set', "$owner mirrors over-capacity policy into the matrix report");
 }
@@ -8021,10 +8215,18 @@ sub assert_counted_admitted_request_boundary {
     is($boundary->{max_pending}, $args{max_pending}, "$owner reports admitted guard max-pending bound");
     is($boundary->{completion_fanin}, $args{completion_fanin}, "$owner reports admitted guard completion fan-in");
     is($boundary->{request_count_expression}, $args{request_count_expression}, "$owner reports admitted request-count expression");
+    my ($evaluation_expression, $evaluation_terms, $evaluation_width) = counted_request_evaluation_contract(
+        max_pending => $args{max_pending},
+        terms       => $boundary->{counted_request_terms},
+    );
+    is_deeply($boundary->{request_count_evaluation_terms}, $evaluation_terms, "$owner reports exact-width admitted request-count evaluation terms");
+    is($boundary->{request_count_evaluation_expression}, $evaluation_expression, "$owner reports exact-width admitted request-count evaluation expression");
+    is($boundary->{request_count_evaluation_width}, $evaluation_width, "$owner reports admitted request-count evaluation width");
     is_deeply($boundary->{generated_assertions}, $args{generated_assertions}, "$owner reports group-local admitted request assertions");
+    my $zero = sized_decimal_literal($evaluation_width, 0);
     like(
         $boundary->{request_set_fit_expression},
-        qr/\Q(<= $args{request_count_expression} 0)\E/,
+        qr/\Q(<= $evaluation_expression $zero)\E/,
         "$owner request-set fit expression can reject non-empty over-capacity request sets",
     );
     for my $pulse (@{$boundary->{generated_pulses} || []}) {
@@ -8035,6 +8237,45 @@ sub assert_counted_admitted_request_boundary {
         );
         unlike($pulse->{guard}, qr/can_accept/, "$owner admitted request guard does not consume can_accept");
     }
+}
+
+sub counted_request_evaluation_contract {
+    my (%args) = @_;
+    my $terms = $args{terms} || [];
+    my $term_count = scalar(@$terms);
+    my $width = _count_width($args{max_pending} > $term_count ? $args{max_pending} : $term_count);
+    my @evaluation_terms = map { zero_extend_one_bit_expr($_, $width) } @$terms;
+    my $expression = @evaluation_terms == 1
+        ? $evaluation_terms[0]
+        : '(+ ' . join(' ', @evaluation_terms) . ')';
+    return ($expression, \@evaluation_terms, $width);
+}
+
+sub zero_extend_one_bit_expr {
+    my ($expr, $width) = @_;
+    return $expr unless defined($width) && $width > 1;
+    return '(concat ' . ($width - 1) . "'b" . ('0' x ($width - 1)) . " $expr)";
+}
+
+sub sized_decimal_literal {
+    my ($width, $value) = @_;
+    return "${width}'d$value";
+}
+
+sub _count_width {
+    my ($max_value) = @_;
+    my $width = 1;
+    my $limit = 2;
+    while ($limit <= $max_value) {
+        ++$width;
+        $limit *= 2;
+    }
+    return $width;
+}
+
+sub _max_pending_from_counted_rule_count {
+    my ($rule_count, $term_count) = @_;
+    return int($rule_count / (2 * ($term_count + 1)) - 1);
 }
 
 sub transaction_dispatch_entry {

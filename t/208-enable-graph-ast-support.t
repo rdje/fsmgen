@@ -162,6 +162,41 @@ FSM
         'AST support collapses 1-bit equals-one comparisons to the bare signal',
     );
 
+    $prepared_backend->{intermediate_signals}{sum_expr} = {
+        width => 3,
+        expression => 'BUS1[2:0] + BUS2[2:0]',
+        source => 'test_width_metadata',
+    };
+    $prepared_backend->{intermediate_signals}{flag_expr} = {
+        width => 1,
+        expression => 'A & B',
+        source => 'test_width_metadata',
+    };
+    my $sum_expr_ref = sub { FSM::HDL::IntermediateSignalRef->new(signal_name => 'sum_expr') };
+    my $flag_expr_ref = sub { FSM::HDL::IntermediateSignalRef->new(signal_name => 'flag_expr') };
+
+    is(
+        $support->ast_to_systemverilog(
+            FSM::AST::BinaryOp->new('==', $sum_expr_ref->(), FSM::AST::Literal->new("3'd0")),
+        ),
+        '(~|sum_expr)',
+        'AST support renders multi-bit intermediate equals-zero as reduction zero',
+    );
+    is(
+        $support->ast_to_systemverilog(
+            FSM::AST::BinaryOp->new('==', $sum_expr_ref->(), FSM::AST::Literal->new("3'd1")),
+        ),
+        "sum_expr == 3'd1",
+        'AST support preserves multi-bit intermediate equals-one as explicit equality',
+    );
+    is(
+        $support->ast_to_systemverilog(
+            FSM::AST::BinaryOp->new('==', $flag_expr_ref->(), FSM::AST::Literal->new("1'b0")),
+        ),
+        '!flag_expr',
+        'AST support still collapses one-bit intermediate equals-zero to direct negation',
+    );
+
     my $a_ref = sub { FSM::AST::SignalRef->new('A') };
     my $b_ref = sub { FSM::AST::SignalRef->new('B') };
     my $bus1_ref = sub { FSM::AST::SignalRef->new('BUS1') };
