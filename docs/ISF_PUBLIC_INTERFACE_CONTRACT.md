@@ -3146,7 +3146,7 @@ actor_network association_schedules entries: association, kind, lifetime, owner_
 actor_network group_schedules entries: group, owner_transaction, context, members, target_transactions, signals, schedule, dependency_policy, storage, source, sink
 actor_network event_waits entries: transaction, context, instance, event, signal, source
 actor_network transaction_triggers entries: owner_transaction, context, instance, target_transaction, signal, sink
-inferred_storage entries: name, kind, optional role, optional type, optional type_kind, optional width
+inferred_storage entries: name, kind, optional role, optional type, optional type_kind, optional width, optional fields
 transactions entries: name, states, count
 transaction_waits entries: transaction, cycles, count_kind, count_source, entry_state, exit_state, counter_signal, counter_width
 transaction_waits count_kind values: static, runtime_scalar, runtime_expression

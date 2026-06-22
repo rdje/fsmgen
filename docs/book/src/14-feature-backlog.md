@@ -8504,6 +8504,11 @@ reset derivation, access-policy behavior, generated assertions/register
 models, actor `(enums ...)` references, banks, typed aggregate carriers, and
 packet/flit layouts.
 
+The next selected non-behavior residual is support-accounting promotion: add a
+file-backed public `.isf` fixture for the shipped scalar field metadata surface
+so check JSON and normalized semantic JSON can report a matched supported
+source identity. Schedule JSON remains the public payload for the field map.
+
 Selected data-buffer access surface:
 
 ```lisp
