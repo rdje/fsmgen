@@ -2347,6 +2347,9 @@ metadata-first dynamic transaction-ID parser/report support, and generated
 bounded single-active dynamic write transaction-ID capture plus `BID`
 response matching for one explicit `response-demux.write` dynamic write
 transaction.
+The next selected owner is `.226`, public contract selection for bounded
+single-beat dynamic read ID capture and `RID` response matching; dynamic read
+HDL behavior has not changed yet.
 Broader IAL2 still must justify itself with semantics above individual
 transactions, not only syntax convenience. Its generic file surface remains
 protocol/platform-generic, and an IAL2 file may select a protocol or platform
@@ -6621,6 +6624,20 @@ interleaving, assertions, and report vocabulary require an audit before any
 parser, generator, PPIF sample, support-accounting, validation,
 generated-artifact, test, or HDL behavior changes.
 
+Dynamic read transaction-ID capture/matching readiness audit:
+[AXI_IAL2_MANAGER_DYNAMIC_READ_TRANSACTION_ID_CAPTURE_MATCHING_READINESS_AUDIT](../../AXI_IAL2_MANAGER_DYNAMIC_READ_TRANSACTION_ID_CAPTURE_MATCHING_READINESS_AUDIT.md)
+selects `.226`, public contract selection for bounded single-beat dynamic
+read transaction-ID capture and `RID` response matching. The audit found the
+existing response-demux substrate can likely carry selected-ID storage, busy
+state, `RID` equality, completion pulses, release, and assertions, but the
+public read contract must first settle admitted-request capture timing,
+single-active ownership, single-beat completion/release semantics, diagnostics,
+report keys, validation, rollback, and residue. Dynamic read burst-last,
+`RLAST`, read-data routing, burst-length/runtime validation, interleaving,
+multiple dynamic reads, mixed dynamic/static read demux, same-cycle recapture,
+same-ID ordering, queues, scoreboards, direct backend behavior, and VHDL
+remain deferred.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same
@@ -8889,7 +8906,9 @@ transaction-ID capture and `BID` response matching.
 `scripts/check_doctrines.sh`, and FSMGEN-native issue-pinpointing commands.
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.224` now selects `.225`, generated
 dynamic read transaction-ID capture and `RID` response matching readiness
-audit, before any read parser/generator/sample/test/HDL behavior changes.
+audit, and `.225` selects `.226`, public contract selection for bounded
+single-beat dynamic read ID capture and `RID` response matching before any
+read parser/generator/sample/test/HDL behavior changes.
 
 Selected first MCP resource families are `fsmgen://capabilities`,
 `fsmgen://contracts`, `fsmgen://diagnostics`,

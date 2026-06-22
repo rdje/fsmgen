@@ -1,6 +1,6 @@
 ---
 id: ial2-feature-completeness-next-slice
-title: IAL2 feature completeness next slice is post-dynamic-write behavior selection
+title: IAL2 feature completeness next slice is dynamic read contract selection
 answers:
   - "what is the next IAL2 feature completeness slice?"
   - "what is the next IAL2 PNT task?"
@@ -19,6 +19,7 @@ answers:
   - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.223?"
   - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.224?"
   - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.225?"
+  - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.226?"
   - "what is the next AXI manager slice?"
   - "what is the next AXI manager task after counted capacity substrate?"
   - "what is the next AXI manager task after counted admitted guard alignment?"
@@ -26,14 +27,16 @@ answers:
 date: 2026-06-22
 status: current
 tags: [ial2, axi, manager, same-id, concrete-id, ordering, feature-completeness, task-tree]
-evidence: docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/tasks/DOCTRINE-ENFORCEMENT-ADOPTION.md; docs/TASK_TREE.md; docs/AXI_IAL2_MANAGER_POST_DYNAMIC_WRITE_ID_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_TRANSACTION_ID_CAPTURE_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_TRANSACTION_ID_CAPTURE_CONTRACT_SELECTION.md; docs/AXI_IAL2_MANAGER_DYNAMIC_TRANSACTION_ID_CAPTURE_MATCHING_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_POST_DYNAMIC_TRANSACTION_ID_METADATA_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_DYNAMIC_TRANSACTION_ID_METADATA_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_DYNAMIC_TRANSACTION_ID_METADATA_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_DYNAMIC_TRANSACTION_ID_CONTRACT_SELECTION.md; docs/AXI_IAL2_MANAGER_DYNAMIC_SAME_ID_ISSUE_ORDER_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_POST_COUNTED_GROUP_LOCAL_ENQUEUE_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_COUNTED_ADMITTED_REQUEST_GUARD_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_COUNTED_ADMITTED_REQUEST_GUARD_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_POST_COUNTED_CAPACITY_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_COUNTED_SAME_ID_CAPACITY_SUBSTRATE_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_COUNTED_ADMISSION_CAPACITY_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_GROUP_LOCAL_SAME_ID_ENQUEUE_READINESS_AUDIT.md; docs/book/src/14-feature-backlog.md; README.md; ROADMAP_V2.md; docs/knowledge/ial2-post-dynamic-write-id-next-slice-selection.md; docs/knowledge/ial2-dynamic-write-transaction-id-capture-behavior.md; docs/knowledge/ial2-dynamic-write-transaction-id-capture-contract-selection.md; docs/knowledge/ial2-dynamic-transaction-id-capture-matching-readiness-audit.md; docs/knowledge/ial2-post-dynamic-transaction-id-metadata-next-slice-selection.md; docs/knowledge/ial2-dynamic-transaction-id-metadata-behavior.md; docs/knowledge/ial2-dynamic-transaction-id-metadata-readiness-audit.md; docs/knowledge/ial2-dynamic-transaction-id-contract-selection.md; docs/knowledge/ial2-dynamic-same-id-issue-order-readiness-audit.md; docs/knowledge/ial2-post-counted-group-local-enqueue-next-slice-selection.md; docs/knowledge/ial2-counted-admitted-request-guard-behavior.md; docs/knowledge/ial2-counted-same-id-capacity-substrate.md
-reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.223|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.224|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.225|POST_DYNAMIC_WRITE_ID_NEXT_SLICE_SELECTION|DYNAMIC_WRITE_TRANSACTION_ID_CAPTURE_BEHAVIOR|bounded_dynamic_write_bid_demux_contract|generated_capture_matching|dynamic_write_response_demux|BID response matching|RID response matching' docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/tasks/DOCTRINE-ENFORCEMENT-ADOPTION.md docs/TASK_TREE.md docs/AXI_IAL2_MANAGER_POST_DYNAMIC_WRITE_ID_NEXT_SLICE_SELECTION.md docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_TRANSACTION_ID_CAPTURE_BEHAVIOR.md docs/book/src/14-feature-backlog.md README.md ROADMAP_V2.md
+evidence: docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/tasks/DOCTRINE-ENFORCEMENT-ADOPTION.md; docs/TASK_TREE.md; docs/AXI_IAL2_MANAGER_DYNAMIC_READ_TRANSACTION_ID_CAPTURE_MATCHING_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_POST_DYNAMIC_WRITE_ID_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_TRANSACTION_ID_CAPTURE_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_TRANSACTION_ID_CAPTURE_CONTRACT_SELECTION.md; docs/AXI_IAL2_MANAGER_DYNAMIC_TRANSACTION_ID_CAPTURE_MATCHING_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_POST_DYNAMIC_TRANSACTION_ID_METADATA_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_DYNAMIC_TRANSACTION_ID_METADATA_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_DYNAMIC_TRANSACTION_ID_METADATA_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_DYNAMIC_TRANSACTION_ID_CONTRACT_SELECTION.md; docs/AXI_IAL2_MANAGER_DYNAMIC_SAME_ID_ISSUE_ORDER_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_POST_COUNTED_GROUP_LOCAL_ENQUEUE_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_COUNTED_ADMITTED_REQUEST_GUARD_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_COUNTED_ADMITTED_REQUEST_GUARD_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_POST_COUNTED_CAPACITY_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_COUNTED_SAME_ID_CAPACITY_SUBSTRATE_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_COUNTED_ADMISSION_CAPACITY_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_GROUP_LOCAL_SAME_ID_ENQUEUE_READINESS_AUDIT.md; docs/book/src/14-feature-backlog.md; README.md; ROADMAP_V2.md; docs/knowledge/ial2-dynamic-read-transaction-id-capture-matching-readiness-audit.md; docs/knowledge/ial2-post-dynamic-write-id-next-slice-selection.md; docs/knowledge/ial2-dynamic-write-transaction-id-capture-behavior.md; docs/knowledge/ial2-dynamic-write-transaction-id-capture-contract-selection.md; docs/knowledge/ial2-dynamic-transaction-id-capture-matching-readiness-audit.md; docs/knowledge/ial2-post-dynamic-transaction-id-metadata-next-slice-selection.md; docs/knowledge/ial2-dynamic-transaction-id-metadata-behavior.md; docs/knowledge/ial2-dynamic-transaction-id-metadata-readiness-audit.md; docs/knowledge/ial2-dynamic-transaction-id-contract-selection.md; docs/knowledge/ial2-dynamic-same-id-issue-order-readiness-audit.md; docs/knowledge/ial2-post-counted-group-local-enqueue-next-slice-selection.md; docs/knowledge/ial2-counted-admitted-request-guard-behavior.md; docs/knowledge/ial2-counted-same-id-capacity-substrate.md
+reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.224|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.225|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.226|DYNAMIC_READ_TRANSACTION_ID_CAPTURE_MATCHING_READINESS_AUDIT|POST_DYNAMIC_WRITE_ID_NEXT_SLICE_SELECTION|bounded_dynamic_write_bid_demux_contract|bounded single-beat dynamic read|RID response matching' docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/tasks/DOCTRINE-ENFORCEMENT-ADOPTION.md docs/TASK_TREE.md docs/AXI_IAL2_MANAGER_DYNAMIC_READ_TRANSACTION_ID_CAPTURE_MATCHING_READINESS_AUDIT.md docs/AXI_IAL2_MANAGER_POST_DYNAMIC_WRITE_ID_NEXT_SLICE_SELECTION.md docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_TRANSACTION_ID_CAPTURE_BEHAVIOR.md docs/book/src/14-feature-backlog.md README.md ROADMAP_V2.md
 ---
 
 The next active project slice is
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.225`, readiness audit for generated
-dynamic read transaction-ID capture and `RID` response matching after generated
-dynamic write transaction-ID capture and `BID` response matching.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.226`, public contract selection for
+bounded single-beat dynamic read transaction-ID capture and `RID` response
+matching. It follows the `.225` readiness audit and must not implement parser,
+generator, sample, support-accounting, test, generated-artifact, or HDL
+behavior directly.
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.211` shipped counted selected-request
 capacity/status substrate for generated same-ID queue-head families with
@@ -137,6 +140,15 @@ generated dynamic read transaction-ID capture and `RID` response matching.
 Read response scope, `RLAST`, read-data consumption, burst/runtime validation,
 interleaving, assertions, and report vocabulary need audit before behavior
 changes.
+
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.225` selected `.226`, public contract
+selection for bounded single-beat dynamic read transaction-ID capture and
+`RID` response matching. The audit found no cleanup or lower-layer prerequisite
+but kept dynamic read burst-last/`RLAST`, read-data routing,
+burst-length/runtime validation, interleaving, multiple dynamic reads, mixed
+dynamic/static read demux, same-cycle recapture, same-ID ordering, queues,
+scoreboards, direct backend behavior, HDL shapes outside the selected
+SystemVerilog path, and VHDL deferred.
 
 Historical notes from earlier queue-head frontier selection follow.
 
