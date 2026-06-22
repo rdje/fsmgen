@@ -1104,8 +1104,10 @@ of scalar dynamic read-data capture for the generated dynamic read single-beat
 and burst-last/`RLAST` demux shapes. `.234` now ships that bounded scalar
 dynamic read-data behavior with support-accounted single-beat and last-beat
 PPIF samples, generated `RDATA`/`RRESP` capture, dynamic completion-validity
-report vocabulary, and explicit fail-closed residue. `.235` is the next
-selector before any broader dynamic behavior change.
+report vocabulary, and explicit fail-closed residue. `.235` selected `.236`,
+AXI manager focused-suite cost cleanup, before any broader dynamic behavior
+change because the primary AXI manager parser/generator focused suites are no
+longer routine closeout surfaces.
 The parser/report metadata slice `IAL2-FEATURE-COMPLETENESS-FRONTIER.39` is
 now shipped for the bounded AXI read response-demux public contract selected
 by `.38`. The selected read arm requires `(response-scope single-beat)`,
@@ -2066,10 +2068,12 @@ single-beat plus scalar last-beat dynamic read-data capture. `.234` now ships
 that behavior through existing `read-data.read` syntax for exactly one dynamic
 read transaction, with generated `RDATA`/`RRESP` inputs, scalar data/status
 outputs, dynamic completion-validity reports, and support-accounted public
-samples. `.235` is the next selector. Dynamic burst-length/runtime validation,
-multi-beat output banks, multiple/mixed dynamic demux, same-cycle recapture,
-dynamic same-ID ordering, queues, scoreboards, direct backend behavior, and
-VHDL remain residue.
+samples. `.235` selected `.236`, AXI manager focused-suite cost cleanup, so
+the shipped dynamic transaction-ID family can be validated through bounded
+focused targets before more behavior is added. Dynamic burst-length/runtime
+validation, multi-beat output banks, multiple/mixed dynamic demux, same-cycle
+recapture, dynamic same-ID ordering, queues, scoreboards, direct backend
+behavior, and VHDL remain residue.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.
