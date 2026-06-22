@@ -1078,9 +1078,11 @@ that catalog-backed discovery as `fsmgen://sources` and
 identities with file kind, source kind, available read-only query kinds, and
 support-accounting metadata under query/limit/filter controls.
 `SEMANTIC-INTROSPECTION-MCP-FRONTIER.30` closes the immediate read-only
-semantic-introspection/MCP pass after source discovery and returns active
-roadmap priority to the IAL2 feature-completeness tree, currently at
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.223`.
+semantic-introspection/MCP pass after source discovery. The IAL2
+feature-completeness tree has shipped
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.223`, bounded dynamic write
+transaction-ID capture and `BID` response matching; the next active requested
+owner is `DOCTRINE-ENFORCEMENT-ADOPTION.1`.
 The parser/report metadata slice `IAL2-FEATURE-COMPLETENESS-FRONTIER.39` is
 now shipped for the bounded AXI read response-demux public contract selected
 by `.38`. The selected read arm requires `(response-scope single-beat)`,
@@ -2012,11 +2014,17 @@ and response matching before any behavior changes. Audit `.221` selects
 `.222`, public contract selection for bounded dynamic write transaction-ID
 capture and `BID` response matching. Selector `.222` selects `.223`, direct
 generated behavior using existing `response-demux.write` with one
-transaction-local dynamic write ID. The next behavior must capture the write
-request-ID source at the admitted request point, enforce single-active
-selected-ID/busy ownership, match `BID` against the captured ID, generate the
-transaction completion pulse, release busy, and report the dynamic write demux
-artifacts.
+transaction-local dynamic write ID. Implementation `.223` ships that boundary:
+the generator captures the write request-ID source at the admitted request
+point, enforces single-active selected-ID/busy ownership, matches `BID`
+against the captured ID, generates the transaction completion pulse, releases
+busy from that pulse, reports `bounded_dynamic_write_bid_demux_contract`, and
+adds `ppif/axi_manager_capacity_status_dynamic_write_response_demux.ppif` as
+a support-accounted sample. Metadata-only dynamic IDs remain unchanged when no
+behavior clause consumes them. Dynamic read matching, multiple dynamic write
+transactions, mixed dynamic/static write demux, same-cycle recapture, same-ID
+ordering, read-data routing, queues, scoreboards, direct backend behavior, HDL
+shapes outside this selected SystemVerilog path, and VHDL remain deferred.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.

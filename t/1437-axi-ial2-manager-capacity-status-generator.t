@@ -289,6 +289,59 @@ subtest 'dynamic transaction-ID metadata reports selected user ownership without
     ok($residue{dynamic_transaction_id_behavior}, 'dynamic behavior boundary remains explicit unsupported residue');
 };
 
+subtest 'dynamic write response-demux captures AWID and matches BID' => sub {
+    my $result = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_dynamic_write_response_demux());
+    my $isf = $result->{generated_ial1}{text};
+
+    like($isf, qr/\(input axi0_w0_request\)/, 'dynamic write demux declares the per-transaction write request event');
+    like($isf, qr/\(input axi0_write_complete\)/, 'dynamic write demux declares the raw write response event');
+    like($isf, qr/\(input axi0_awid \(width 4\)\)/, 'dynamic write demux declares AWID as the captured request ID input');
+    like($isf, qr/\(input axi0_bid \(width 4\)\)/, 'dynamic write demux declares BID as the matched response ID input');
+    unlike($isf, qr/\(input axi0_w0_complete\b/, 'dynamic write demux does not treat generated completion as an input');
+    like($isf, qr/\(output axi0_w0_complete\)/, 'dynamic write demux exposes the matched completion pulse as an output');
+    like($isf, qr/\(var axi0_w0_dynamic_id_q \(width 4\)\)/, 'dynamic write demux allocates selected dynamic ID state');
+    like($isf, qr/\(var axi0_w0_dynamic_busy_q \(width 1\)\)/, 'dynamic write demux allocates single-active busy state');
+    like(
+        $isf,
+        qr/\(rule axi0_w0_dynamic_id_capture \(& \(& axi0_w0_request \(\| \(< axi0_pending_writes_q 2\) axi0_w0_complete\)\) \(! axi0_w0_dynamic_busy_q\)\)\s+\(axi0_w0_dynamic_id_q axi0_awid\)\s+\(axi0_w0_dynamic_busy_q 1\)\)/,
+        'dynamic write demux captures AWID only for admitted not-busy requests',
+    );
+    like(
+        $isf,
+        qr/\(rule axi0_w0_response_demux \(& axi0_write_complete axi0_w0_dynamic_busy_q \(== axi0_bid axi0_w0_dynamic_id_q\)\)\s+\(pulse axi0_w0_complete\)\)/,
+        'dynamic write demux pulses completion only for matching active BID responses',
+    );
+    like(
+        $isf,
+        qr/\(rule axi0_w0_dynamic_id_release \(& axi0_w0_complete axi0_w0_dynamic_busy_q\)\s+\(axi0_w0_dynamic_busy_q 0\)\)/,
+        'dynamic write demux releases the single-active busy state on matched completion',
+    );
+    like($isf, qr/"axi0 write dynamic request is not already active"/, 'dynamic write demux emits request-not-busy assertion');
+    like($isf, qr/"axi0 write dynamic response matches active captured ID"/, 'dynamic write demux emits active BID-match assertion');
+    like($isf, qr/"axi0 w0 dynamic completion releases active captured ID"/, 'dynamic write demux emits active-completion assertion');
+
+    assert_dynamic_write_response_demux_report($result->{report}, 'generator report');
+
+    my $fsm = $result->{generated_ial0}{files}{'axi0_capacity_status.fsm'};
+    like($fsm, qr/\(\+size[\s\S]*\(axi0_awid 4\)/, 'scheduled .fsm declares AWID width');
+    like($fsm, qr/\(\+size[\s\S]*\(axi0_bid 4\)/, 'scheduled .fsm declares BID width');
+    like($fsm, qr/\(-axi0_w0_dynamic_id_capture\s+<\(& \(& axi0_w0_request/, 'scheduled .fsm lowers the dynamic capture rule');
+    like($fsm, qr/\(-axi0_w0_response_demux\s+<\(& axi0_write_complete axi0_w0_dynamic_busy_q \(== axi0_bid axi0_w0_dynamic_id_q\)\)/, 'scheduled .fsm lowers the dynamic BID match rule');
+    like($fsm, qr/\(-axi0_w0_dynamic_id_release\s+<\(& axi0_w0_complete axi0_w0_dynamic_busy_q\)/, 'scheduled .fsm lowers the dynamic release rule');
+
+    my $hdl = hdl_for('axi0_capacity_status', $fsm);
+    like($hdl, qr/\binput\s+(?:wire\s+)?\[3:0\]\s+axi0_awid\b/, 'SystemVerilog declares AWID as a 4-bit input');
+    like($hdl, qr/\binput\s+(?:wire\s+)?\[3:0\]\s+axi0_bid\b/, 'SystemVerilog declares BID as a 4-bit input');
+    like($hdl, qr/\breg\s+\[3:0\]\s+axi0_w0_dynamic_id_q\b/, 'SystemVerilog declares selected dynamic ID state');
+    like($hdl, qr/\breg\s+axi0_w0_dynamic_busy_q\b/, 'SystemVerilog declares dynamic busy state');
+    like($hdl, qr/axi0_write_complete\s*&\s*axi0_w0_dynamic_busy_q\s*&\s*\(axi0_bid\s*==\s*axi0_w0_dynamic_id_q\)/, 'SystemVerilog lowers the dynamic BID-match guard');
+
+    my $sv_assertions = sv_assertion_block_for_result($result);
+    like($sv_assertions, qr/axi0 write dynamic request is not already active/, 'assertion backend emits request-not-busy dynamic assertion');
+    like($sv_assertions, qr/axi0 write dynamic response matches active captured ID/, 'assertion backend emits active BID-match dynamic assertion');
+    like($sv_assertions, qr/axi0 w0 dynamic completion releases active captured ID/, 'assertion backend emits completion-active dynamic assertion');
+};
+
 subtest 'transaction event dispatch fans per-transaction events into capacity rules' => sub {
     my $result = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_transaction_event_dispatch());
     my $isf = $result->{generated_ial1}{text};
@@ -3958,6 +4011,30 @@ subtest 'malformed contract objects fail closed and no direct lower-to-fsm entry
         ['dynamic transaction ID blocks same-family response demux behavior', sub { my $c = sample_contract_with_dynamic_transaction_id(); $c->{response_demux} = { read => { response_event => 'axi0_read_complete', response_scope => 'single-beat', transaction_completion => 'generated' } }; $c }, qr/response_demux\.read cannot be combined with dynamic read transaction ID metadata/],
         ['dynamic transaction ID blocks same-family same-ID ordering behavior', sub { my $c = sample_contract_with_dynamic_transaction_id(); $c->{same_id_ordering_policy} = { read => { concrete_id_reuse => 'issue-order-queue' } }; $c }, qr/same_id_ordering_policy\.read cannot be combined with dynamic read transaction ID metadata/],
         ['dynamic transaction ID blocks read-data behavior', sub { my $c = sample_contract_with_dynamic_transaction_id(); $c->{read_data} = sample_contract_with_read_data()->{read_data}; $c }, qr/read_data\.read cannot be combined with dynamic read transaction ID metadata/],
+        ['dynamic write response demux requires exactly one dynamic write transaction', sub {
+            my $c = sample_contract_with_dynamic_write_response_demux();
+            push @{$c->{transactions}}, {
+                kind             => 'write',
+                name             => 'w1',
+                tag              => 'wr1',
+                request_event    => 'axi0_w1_request',
+                completion_event => 'axi0_w1_complete',
+                id               => { policy => 'dynamic' },
+            };
+            $c;
+        }, qr/response_demux\.write dynamic ID matching supports exactly one dynamic write transaction/],
+        ['dynamic write response demux rejects mixed write transaction ownership', sub {
+            my $c = sample_contract_with_dynamic_write_response_demux();
+            push @{$c->{transactions}}, {
+                kind             => 'write',
+                name             => 'w1',
+                tag              => 'wr1',
+                request_event    => 'axi0_w1_request',
+                completion_event => 'axi0_w1_complete',
+                id               => { value => 1 },
+            };
+            $c;
+        }, qr/response_demux\.write dynamic ID matching supports no additional write transactions/],
         ['auto lifecycle unsupported field', sub { my $c = sample_contract_with_auto_id_lifecycle(); $c->{auto_id_lifecycle}{write}{policy} = 'first-free'; $c }, qr/auto_id_lifecycle\.write unsupported field 'policy'/],
         ['auto lifecycle without ID-family metadata', sub {
             my $c = sample_contract();
@@ -4186,6 +4263,29 @@ sub sample_contract_with_dynamic_transaction_id {
             id               => { policy => 'dynamic' },
         },
     ];
+    return $contract;
+}
+
+sub sample_contract_with_dynamic_write_response_demux {
+    my $contract = sample_contract_with_id_families();
+    $contract->{intent_name} = 'axi_manager_capacity_status_dynamic_write_response_demux';
+    $contract->{source}{object_id} = 'axi-manager-capacity-status-dynamic-write-response-demux';
+    $contract->{transactions} = [
+        {
+            kind             => 'write',
+            name             => 'w0',
+            tag              => 'wr0',
+            request_event    => 'axi0_w0_request',
+            completion_event => 'axi0_w0_complete',
+            id               => { policy => 'dynamic' },
+        },
+    ];
+    $contract->{response_demux} = {
+        write => {
+            response_event => 'axi0_write_complete',
+            transaction_completion => 'generated',
+        },
+    };
     return $contract;
 }
 
@@ -5472,6 +5572,65 @@ sub assert_dynamic_transaction_id_report {
         },
         "$owner reports read dynamic ID metadata ownership",
     );
+}
+
+sub assert_dynamic_write_response_demux_report {
+    my ($report, $owner) = @_;
+    my $demux = $report->{response_demux};
+    my $write = $demux->{write};
+
+    is(scalar(@{$report->{transactions}}), 1, "$owner reports one dynamic write transaction");
+    is_deeply(
+        $report->{transactions}[0]{id},
+        {
+            policy                => 'dynamic',
+            family                => 'write',
+            family_width          => 4,
+            request_id_source     => 'axi0_awid',
+            response_id_signal    => 'axi0_bid',
+            ownership             => 'user_supplied',
+            implementation_status => 'generated_capture_matching',
+        },
+        "$owner reports generated capture/matching dynamic ID ownership",
+    );
+    is($demux->{mode}, 'bounded_dynamic_write_bid_demux_contract', "$owner marks dynamic write BID-demux contract mode");
+    ok($demux->{generated_behavior}, "$owner marks dynamic response-demux behavior generated");
+    is($write->{mode}, 'bounded_dynamic_write_bid_demux_contract', "$owner marks write dynamic demux mode");
+    ok($write->{generated_behavior}, "$owner marks write dynamic demux behavior generated");
+    is($write->{response_event}, 'axi0_write_complete', "$owner reports the raw write response event");
+    is($write->{response_event_role}, 'raw_accepted_write_response', "$owner reports the response-event role");
+    is($write->{response_id_signal}, 'axi0_bid', "$owner reports BID as the response ID signal");
+    is($write->{response_id_direction}, 'generated_input', "$owner reports response ID direction as generated input");
+    is($write->{transaction_completion_source}, 'generated_dynamic_demux', "$owner reports generated dynamic demux completion ownership");
+    is($write->{transaction_completion_semantics}, 'matched_dynamic_id', "$owner reports matched dynamic ID completion semantics");
+    is_deeply($write->{dynamic_transactions}, [qw(w0)], "$owner reports the covered dynamic write transaction");
+    is_deeply($write->{generated_rules}, [qw(axi0_w0_response_demux)], "$owner reports generated dynamic demux rule");
+    is_deeply($write->{generated_completion_signals}, [qw(axi0_w0_complete)], "$owner reports generated dynamic completion pulse");
+    is_deeply(
+        $write->{generated_assertions},
+        [qw(axi0_w0_dynamic_request_not_busy axi0_write_dynamic_response_active_match axi0_w0_dynamic_completion_active)],
+        "$owner reports generated dynamic assertions",
+    );
+    is_deeply(
+        $write->{dynamic_capture},
+        {
+            request_id_source    => 'axi0_awid',
+            capture_event_source => 'admitted_dynamic_write_request',
+            ownership            => 'single_active_dynamic_write',
+            selected_id_signal   => 'axi0_w0_dynamic_id_q',
+            busy_signal          => 'axi0_w0_dynamic_busy_q',
+            capture_rule         => 'axi0_w0_dynamic_id_capture',
+            release_rule         => 'axi0_w0_dynamic_id_release',
+        },
+        "$owner reports dynamic capture state and rule ownership",
+    );
+    is_deeply(
+        $demux->{residue},
+        [qw(read_response_demux same_id_ordering read_data_interleaving bursts)],
+        "$owner keeps unsupported dynamic-read, same-ID, read-data, and burst residue explicit",
+    );
+    my %residue = map { $_->{id} => 1 } @{$report->{unsupported_residue}};
+    ok($residue{dynamic_transaction_id_behavior}, "$owner keeps future dynamic behavior residue visible");
 }
 
 sub assert_mixed_auto_id_queue_head_response_demux_report {

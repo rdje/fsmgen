@@ -156,11 +156,13 @@ sub _normalize_contract($raw) {
     my $response_demux = exists($raw->{response_demux})
         ? _normalize_response_demux(
             raw_response_demux => $raw->{response_demux},
+            manager_name        => $name,
             events             => \%events,
             id_families        => $id_families,
             transactions       => $transactions,
             auto_id_lifecycle  => $auto_id_lifecycle,
             same_id_ordering_policy => $same_id_ordering_policy,
+            storage            => \%storage,
             read_max_pending   => $read_max_pending,
             write_max_pending  => $write_max_pending,
         )
@@ -605,6 +607,7 @@ sub _reject_dynamic_transaction_behavior_interactions(%args) {
         }
         if (ref($args{raw_response_demux}) eq 'HASH'
             && exists $args{raw_response_demux}{$family}) {
+            next if $family eq 'write';
             confess "AXI manager capacity/status IAL2 contract response_demux.$family cannot be combined with dynamic $family transaction ID metadata in this slice; dynamic response matching remains selected_not_generated for transaction(s): $transactions_text\n";
         }
         if (ref($args{raw_same_id_ordering_policy}) eq 'HASH'
@@ -804,20 +807,32 @@ sub _normalize_response_demux(%args) {
             unless $write_family->{present};
 
         my $write_lifecycle = _auto_id_lifecycle_family_by_name($args{auto_id_lifecycle}, 'write');
-        my $queue_head_plan = _response_demux_queue_head_plan_for_family(
-            family_name             => 'write',
-            transactions            => $args{transactions},
-            same_id_ordering_policy => $args{same_id_ordering_policy},
-            max_pending             => $args{write_max_pending},
-            lifecycle               => $write_lifecycle,
+        my $dynamic_write_transaction = _response_demux_dynamic_write_transaction(
+            manager_name             => $args{manager_name},
+            transactions             => $args{transactions},
+            write_family             => $write_family,
+            write_lifecycle          => $write_lifecycle,
+            same_id_ordering_policy  => $args{same_id_ordering_policy},
+            storage                  => $args{storage},
+            write_max_pending        => $args{write_max_pending},
         );
+        my $queue_head_plan = ref($dynamic_write_transaction) eq 'HASH'
+            ? undef
+            : _response_demux_queue_head_plan_for_family(
+                family_name             => 'write',
+                transactions            => $args{transactions},
+                same_id_ordering_policy => $args{same_id_ordering_policy},
+                max_pending             => $args{write_max_pending},
+                lifecycle               => $write_lifecycle,
+            );
 
         $normalized{write} = _normalize_response_demux_write(
-            raw_write       => $raw->{write},
-            events          => $args{events},
-            write_family    => $write_family,
-            write_lifecycle => $write_lifecycle,
-            queue_head_plan => $queue_head_plan,
+            raw_write                 => $raw->{write},
+            events                    => $args{events},
+            write_family              => $write_family,
+            write_lifecycle           => $write_lifecycle,
+            queue_head_plan           => $queue_head_plan,
+            dynamic_write_transaction => $dynamic_write_transaction,
         );
     }
 
@@ -849,9 +864,12 @@ sub _normalize_response_demux(%args) {
     my $generated_behavior = grep {
         ref($normalized{$_}) eq 'HASH' && $normalized{$_}{generated_behavior}
     } qw(write read);
+    my $write_mode = $normalized{write}{mode} // 'bounded_write_bid_demux_contract';
     my $mode = exists($normalized{read})
         ? 'bounded_response_demux_contract'
-        : 'bounded_write_bid_demux_contract';
+        : ($write_mode eq 'bounded_dynamic_write_bid_demux_contract'
+            ? $write_mode
+            : 'bounded_write_bid_demux_contract');
     my @residue = _response_demux_residue(\%normalized);
 
     return {
@@ -859,6 +877,58 @@ sub _normalize_response_demux(%args) {
         generated_behavior => $generated_behavior ? 1 : 0,
         %normalized,
         residue => \@residue,
+    };
+}
+
+sub _response_demux_dynamic_write_transaction(%args) {
+    my @write_transactions = grep { ($_->{kind} // '') eq 'write' } @{$args{transactions} || []};
+    my @dynamic = grep {
+        ref($_->{id}) eq 'HASH' && ($_->{id}{policy} // '') eq 'dynamic'
+    } @write_transactions;
+    return undef unless @dynamic;
+
+    confess "AXI manager capacity/status IAL2 contract response_demux.write dynamic ID matching supports exactly one dynamic write transaction in this slice\n"
+        unless @dynamic == 1;
+    confess "AXI manager capacity/status IAL2 contract response_demux.write dynamic ID matching supports no additional write transactions in this slice\n"
+        unless @write_transactions == 1;
+    confess "AXI manager capacity/status IAL2 contract response_demux.write dynamic ID matching cannot be combined with write auto_id_lifecycle metadata in this slice\n"
+        if ref($args{write_lifecycle}) eq 'HASH';
+    my $policy = _same_id_ordering_policy_for_family($args{same_id_ordering_policy}, 'write');
+    confess "AXI manager capacity/status IAL2 contract response_demux.write dynamic ID matching cannot be combined with same_id_ordering.write in this slice\n"
+        if ref($policy) eq 'HASH';
+
+    my $transaction = $dynamic[0];
+    my $id = $transaction->{id};
+    $id->{implementation_status} = 'generated_capture_matching';
+    my $prefix = "$args{manager_name}_$transaction->{name}";
+    my $selected_id_signal = "${prefix}_dynamic_id_q";
+    my $busy_signal = "${prefix}_dynamic_busy_q";
+    my $completion_fanin = _fanin_expression([map { $_->{completion_event} } @write_transactions]);
+    my $request_acceptance_expr = _same_id_admitted_request_guard_expr(
+        request_event    => $transaction->{request_event},
+        pending_storage  => $args{storage}{pending_writes},
+        max_pending      => $args{write_max_pending},
+        completion_fanin => $completion_fanin,
+    );
+
+    return {
+        family                  => 'write',
+        response_demux_kind     => 'dynamic_write',
+        transaction             => $transaction->{name},
+        tag                     => $transaction->{tag},
+        request_event           => $transaction->{request_event},
+        completion_event        => $transaction->{completion_event},
+        request_id_source       => $id->{request_id_source},
+        response_id_signal      => $id->{response_id_signal},
+        family_width            => $id->{family_width},
+        selected_id_signal      => $selected_id_signal,
+        busy_signal             => $busy_signal,
+        request_acceptance_expr => $request_acceptance_expr,
+        capture_guard           => _and_expr($request_acceptance_expr, _not_expr($busy_signal)),
+        capture_rule            => "${prefix}_dynamic_id_capture",
+        release_rule            => "${prefix}_dynamic_id_release",
+        request_not_busy_assertion => "${prefix}_dynamic_request_not_busy",
+        completion_assertion    => "${prefix}_dynamic_completion_active",
     };
 }
 
@@ -1035,6 +1105,34 @@ sub _normalize_response_demux_write(%args) {
     for my $completion_signal (@completion_signals) {
         confess "AXI manager capacity/status IAL2 contract response_demux.write generated transaction completion signal '$completion_signal' must be distinct from response_event '$response_event'\n"
             if $completion_signal eq $response_event;
+    }
+
+    if (ref($args{dynamic_write_transaction}) eq 'HASH') {
+        my $state = $args{dynamic_write_transaction};
+        confess "AXI manager capacity/status IAL2 contract response_demux.write generated transaction completion signal '$state->{completion_event}' must be distinct from response_event '$response_event'\n"
+            if $state->{completion_event} eq $response_event;
+        return {
+            mode                         => 'bounded_dynamic_write_bid_demux_contract',
+            generated_behavior           => 1,
+            response_event                => $response_event,
+            response_event_role           => 'raw_accepted_write_response',
+            response_id_signal            => $args{write_family}{response_id_signal},
+            response_id_direction         => 'generated_input',
+            transaction_completion_source => 'generated_dynamic_demux',
+            transaction_completion_semantics => 'matched_dynamic_id',
+            dynamic_transactions          => [$state->{transaction}],
+            dynamic_capture               => {
+                request_id_source    => $state->{request_id_source},
+                capture_event_source => 'admitted_dynamic_write_request',
+                ownership            => 'single_active_dynamic_write',
+                selected_id_signal   => $state->{selected_id_signal},
+                busy_signal          => $state->{busy_signal},
+                capture_rule         => $state->{capture_rule},
+                release_rule         => $state->{release_rule},
+            },
+            generated_completion_signals => [$state->{completion_event}],
+            dynamic_transaction_state    => [$state],
+        };
     }
 
     if ($queue_head_selected) {
@@ -3042,6 +3140,9 @@ sub _response_demux_signal_names($response_demux) {
         next unless ref($entry) eq 'HASH';
         push @signals, $entry->{last_signal}
             if defined $entry->{last_signal};
+        for my $state (@{$entry->{dynamic_transaction_state} || []}) {
+            push @signals, $state->{selected_id_signal}, $state->{busy_signal};
+        }
         push @signals, @{$entry->{generated_completion_signals} || []}
             if $entry->{generated_behavior};
     }
@@ -3238,6 +3339,7 @@ sub _emit_isf($contract) {
         @{$contract->{event_inputs}},
         @{_id_response_signal_inputs($contract)},
         _response_demux_response_id_inputs($contract),
+        _response_demux_dynamic_request_id_inputs($contract),
         _read_data_source_inputs($contract),
     ]);
     my @id_response_assertions = _id_response_assertion_transaction_lines($contract);
@@ -3257,7 +3359,9 @@ sub _emit_isf($contract) {
     my @same_id_issue_order_queue_priorities = _same_id_issue_order_queue_priority_lines($contract);
     my @same_id_admitted_request_rules = _same_id_admitted_request_rule_lines($contract);
     my @same_id_issue_order_queue_rules = _same_id_issue_order_queue_rule_lines($contract);
+    my @response_demux_dynamic_capture_rules = _response_demux_dynamic_capture_rule_lines($contract);
     my @response_demux_rules = _response_demux_rule_lines($contract);
+    my @response_demux_dynamic_release_rules = _response_demux_dynamic_release_rule_lines($contract);
     my @read_data_burst_length_capture_rules = _read_data_burst_length_capture_rule_lines($contract);
     my @read_data_beat_count_rules = _read_data_beat_count_rule_lines($contract);
     my @read_data_multi_beat_output_init_rules = _read_data_multi_beat_output_init_rule_lines($contract);
@@ -3268,6 +3372,7 @@ sub _emit_isf($contract) {
         "    (var $contract->{storage}{pending_writes} (width $write_width))",
         _same_id_admitted_request_storage_lines($contract),
         _same_id_issue_order_queue_storage_lines($contract),
+        _response_demux_dynamic_storage_lines($contract),
         _auto_id_lifecycle_storage_lines($contract),
         _read_data_burst_length_storage_lines($contract),
         _read_data_beat_count_storage_lines($contract),
@@ -3307,8 +3412,12 @@ sub _emit_isf($contract) {
         (@same_id_admitted_request_rules ? ("") : ()),
         @same_id_issue_order_queue_rules,
         (@same_id_issue_order_queue_rules ? ("") : ()),
+        @response_demux_dynamic_capture_rules,
+        (@response_demux_dynamic_capture_rules ? ("") : ()),
         @response_demux_rules,
         (@response_demux_rules ? ("") : ()),
+        @response_demux_dynamic_release_rules,
+        (@response_demux_dynamic_release_rules ? ("") : ()),
         @read_data_burst_length_capture_rules,
         (@read_data_burst_length_capture_rules ? ("") : ()),
         @read_data_beat_count_rules,
@@ -3357,6 +3466,18 @@ sub _response_demux_response_id_inputs($contract) {
         push @signals, $entry->{response_id_signal};
         push @signals, $entry->{last_signal}
             if defined $entry->{last_signal};
+    }
+    return @{_unique_preserving(\@signals)};
+}
+
+sub _response_demux_dynamic_request_id_inputs($contract) {
+    my $demux = $contract->{response_demux};
+    return () unless ref($demux) eq 'HASH' && $demux->{generated_behavior};
+    my @signals;
+    for my $family (qw(write read)) {
+        my $entry = $demux->{$family};
+        next unless ref($entry) eq 'HASH' && $entry->{generated_behavior};
+        push @signals, map { $_->{request_id_source} } @{$entry->{dynamic_transaction_state} || []};
     }
     return @{_unique_preserving(\@signals)};
 }
@@ -3475,6 +3596,23 @@ sub _response_demux_completion_output_lines($contract) {
             && $demux->{$_}{generated_behavior}
         } qw(write read)
     ])};
+}
+
+sub _response_demux_dynamic_storage_lines($contract) {
+    my $demux = $contract->{response_demux};
+    return () unless ref($demux) eq 'HASH' && $demux->{generated_behavior};
+
+    my @lines;
+    for my $family_name (qw(write read)) {
+        my $entry = $demux->{$family_name};
+        next unless ref($entry) eq 'HASH' && $entry->{generated_behavior};
+        for my $state (@{$entry->{dynamic_transaction_state} || []}) {
+            push @lines,
+                "    (var $state->{selected_id_signal} (width $state->{family_width}))",
+                "    (var $state->{busy_signal} (width 1))";
+        }
+    }
+    return @lines;
 }
 
 sub _auto_id_lifecycle_storage_lines($contract) {
@@ -3762,6 +3900,49 @@ sub _auto_id_lifecycle_concrete_request_id_rule_lines($contract, $family) {
                     $request_id_signal,
                     _sized_decimal_literal($width, $transaction->{id}{value}),
                 ],
+            ],
+        );
+    }
+    return @lines;
+}
+
+sub _response_demux_dynamic_transaction_states($contract) {
+    my $demux = $contract->{response_demux};
+    return () unless ref($demux) eq 'HASH' && $demux->{generated_behavior};
+
+    my @states;
+    for my $family_name (qw(write read)) {
+        my $entry = $demux->{$family_name};
+        next unless ref($entry) eq 'HASH' && $entry->{generated_behavior};
+        push @states, map { +{ family => $family_name, %$_ } }
+            @{$entry->{dynamic_transaction_state} || []};
+    }
+    return @states;
+}
+
+sub _response_demux_dynamic_capture_rule_lines($contract) {
+    my @lines;
+    for my $state (_response_demux_dynamic_transaction_states($contract)) {
+        push @lines, _auto_id_rule(
+            $state->{capture_rule},
+            $state->{capture_guard},
+            [
+                [$state->{selected_id_signal}, $state->{request_id_source}],
+                [$state->{busy_signal}, 1],
+            ],
+        );
+    }
+    return @lines;
+}
+
+sub _response_demux_dynamic_release_rule_lines($contract) {
+    my @lines;
+    for my $state (_response_demux_dynamic_transaction_states($contract)) {
+        push @lines, _auto_id_rule(
+            $state->{release_rule},
+            _and_expr($state->{completion_event}, $state->{busy_signal}),
+            [
+                [$state->{busy_signal}, 0],
             ],
         );
     }
@@ -4420,6 +4601,9 @@ sub _response_demux_transaction_states_for_family($contract, $family_name) {
     return () unless ref($demux->{$family_name}) eq 'HASH' && $demux->{$family_name}{generated_behavior};
 
     my @states;
+    push @states, map { +{ family => $family_name, %$_ } }
+        @{$demux->{$family_name}{dynamic_transaction_state} || []};
+
     my $lifecycle = _auto_id_lifecycle_family_by_name($contract->{auto_id_lifecycle}, $family_name);
     if (ref($lifecycle) eq 'HASH') {
         my %wanted = map { $_ => 1 } @{$demux->{$family_name}{auto_transactions} || []};
@@ -4590,6 +4774,10 @@ sub _response_demux_assertion_specs_for_family($contract, $family) {
     my @states = _response_demux_transaction_states_for_family($contract, $family);
     return () unless @states;
 
+    my @dynamic_states = grep { ($_->{response_demux_kind} // '') eq 'dynamic_write' } @states;
+    return _response_demux_dynamic_assertion_specs_for_family($contract, $family, \@dynamic_states)
+        if @dynamic_states && @dynamic_states == @states;
+
     my @matches = map { _response_demux_match_expr($contract, $_) } @states;
     my $queue_head = grep { ($_->{response_demux_kind} // '') eq 'same_id_queue_head' } @states;
     my $auto_id = scalar(@states) - $queue_head;
@@ -4633,6 +4821,42 @@ sub _response_demux_assertion_specs_for_family($contract, $family) {
         }
     }
 
+    return @assertions;
+}
+
+sub _response_demux_dynamic_assertion_specs_for_family($contract, $family, $states) {
+    my $demux = $contract->{response_demux};
+    my @assertions;
+    for my $state (@$states) {
+        push @assertions, {
+            name      => $state->{request_not_busy_assertion},
+            condition => _implies_expr(
+                $state->{request_acceptance_expr},
+                _not_expr($state->{busy_signal}),
+            ),
+            message   => "$contract->{name} $family dynamic request is not already active",
+        };
+    }
+
+    push @assertions, {
+        name      => "$contract->{name}_${family}_dynamic_response_active_match",
+        condition => _implies_expr(
+            $demux->{$family}{response_event},
+            _or_expr(map { _response_demux_match_expr($contract, $_) } @$states),
+        ),
+        message   => "$contract->{name} $family dynamic response matches active captured ID",
+    };
+
+    for my $state (@$states) {
+        push @assertions, {
+            name      => $state->{completion_assertion},
+            condition => _implies_expr(
+                $state->{completion_event},
+                $state->{busy_signal},
+            ),
+            message   => "$contract->{name} $state->{transaction} dynamic completion releases active captured ID",
+        };
+    }
     return @assertions;
 }
 
@@ -5074,16 +5298,16 @@ sub _build_report(%args) {
             'concrete transaction ID values require a present matching ID family and must fit its declared width',
             'concrete transaction ID assertions require unique request/response events per concrete transaction',
             'concrete transaction ID values generate request/response ID equality assertions against the declared ID-family signals',
-            'dynamic transaction ID metadata requires a present matching ID family, reports request_id_source/response_id_signal ownership as selected_not_generated, and does not generate ID capture, response matching, or HDL behavior',
-            'dynamic transaction IDs fail closed with same-family auto_id_lifecycle, response_demux, read_data, and same_id_ordering behavior clauses until dynamic matching is explicitly owned',
+            'dynamic transaction ID metadata requires a present matching ID family and reports request_id_source/response_id_signal user ownership; metadata-only dynamic IDs remain selected_not_generated, while the selected single-active write response_demux contract reports generated_capture_matching',
+            'dynamic transaction IDs fail closed with same-family auto_id_lifecycle, read response_demux, read_data, same_id_ordering, multiple dynamic write response_demux, and mixed dynamic/static write response_demux behavior clauses until those dynamic matching shapes are explicitly owned',
             'auto_id_lifecycle requires id_families and transactions metadata',
             'auto_id_lifecycle listed families must have at least one auto-ID transaction in that family',
             'auto_id_lifecycle pools are bounded to 1..4 unique values per family and must fit the declared positive ID width',
             'auto_id_lifecycle generates first-free request-ID drive, per-transaction busy/selected-ID state, completion-event release, no-ID assertions, inactive-completion assertions, and same-family request mutual-exclusion assertions',
             'same_id_ordering for generated auto-ID families is enforced by avoiding same-ID concurrency through allocator free-ID guards plus pairwise active selected-ID assertions',
             'same_id_ordering_policy accepts explicit read/write concrete-id-reuse reject policies plus issue-order-queue admitted-request pulse generation, generates bounded read single-beat, read burst-last, or write depth-2/depth-3 concrete same-ID queue state plus queue-head response demux for selected public response-demux-only shapes, including multiple independent read single-beat, read burst-last, and write groups, gates generated multi-group queue-head admitted requests with counted request-set capacity fit guards, replaces those counted families family-wide request onehot assertions with per-concrete-ID group request assertions, and supports selected single-group read single-beat depth-3 scalar read-data queue-head shape, selected single-group read burst-last depth-3 scalar last-beat read-data, report-only raw-ARLEN burst-length, runtime beat-count/RLAST validation, runtime-validation multi-beat output-bank queue-head shapes, selected multiple/mixed depth-3 runtime-validation multi-beat output-bank queue-head shapes, and selected same-family mixed auto-ID plus depth-2 concrete queue-head read burst-last report-only raw-ARLEN burst-length and runtime beat-count/RLAST validation shapes',
-            'response_demux requires id_families, transactions, and either selected-family auto_id_lifecycle metadata or selected same-id-ordering concrete-id-reuse issue-order-queue metadata with a duplicate concrete-ID group',
-            'response_demux.write requires response_event equal to write_complete and generates bounded write BID demux behavior for explicit opt-in contracts',
+            'response_demux requires id_families, transactions, and either selected-family auto_id_lifecycle metadata, selected same-id-ordering concrete-id-reuse issue-order-queue metadata with a duplicate concrete-ID group, or one selected dynamic write transaction for the bounded dynamic write BID demux contract',
+            'response_demux.write requires response_event equal to write_complete and generates bounded write BID demux behavior for explicit opt-in auto-ID, concrete queue-head, mixed auto-ID/queue-head, or single-active dynamic write contracts',
             'response_demux.read requires response_event equal to read_complete, response_scope single_beat or burst_last, read ID-family metadata, read transactions, and read auto_id_lifecycle metadata or selected concrete same-ID queue-head metadata',
             'response_demux.read response_scope single_beat generates bounded single-beat read RID demux behavior for explicit opt-in contracts',
             'response_demux.read response_scope burst_last requires one-bit last_signal metadata and generates matched-RID-and-RLAST last-beat completion behavior for explicit opt-in contracts',
@@ -5103,11 +5327,11 @@ sub _build_report(%args) {
             },
             {
                 id     => 'axi_id_ordering_and_response_matching',
-                detail => 'Concrete transaction ID request/response assertions, explicit bounded auto-ID request-ID drive plus completion-event release, generated auto-ID same-ID avoidance, explicit static concrete-ID reuse reject policy metadata, issue-order-queue admitted-request pulse generation for selected concrete-ID families, counted request-set capacity fit guards and per-concrete-ID group request assertions for generated multi-group queue-head families, bounded read single-beat, read burst-last, and write depth-2/depth-3 concrete same-ID issue-order queue state plus queue-head response-demux behavior for selected public response-demux-only sample shapes including multiple independent or mixed-depth read single-beat, read burst-last, and write response-demux queue groups, same-family mixed auto-ID lifecycle plus concrete same-ID queue-head response-demux for selected response-demux-only read single-beat, read burst-last, and write sample shapes, selected read single-beat and read burst-last scalar read-data plus read burst-last report-only raw-ARLEN burst-length, runtime beat-count/RLAST validation, and runtime-validation multi-beat output-bank behavior over that same-family mixed response-demux boundary, selected single-group and multiple/mixed read single-beat depth-3 scalar read-data queue-head shapes, selected single-group and multiple/mixed read burst-last depth-3 scalar last-beat read-data, report-only raw-ARLEN burst-length, runtime beat-count/RLAST validation, and runtime-validation multi-beat output-bank queue-head shapes, generated write BID response demux, generated single-beat read RID response demux, generated single-beat read-data RDATA/RRESP capture, generated single-beat read-data RDATA/RRESP capture from generated read single-beat concrete same-ID queue-head response-demux including multiple independent depth-2 queue-head groups, the selected single depth-3 queue-head group, and selected multiple/mixed depth-3 queue-head groups, generated burst-last RLAST response-demux completion, structural last-beat read-data metadata, generated last-beat read-data RDATA/RRESP capture, generated last-beat read-data RDATA/RRESP capture from generated read burst-last concrete same-ID queue-head response-demux including multiple independent depth-2 queue-head groups with no burst_length metadata, report-only raw-ARLEN burst-length metadata, or runtime-assertion beat-count/RLAST validation metadata, plus the selected single depth-3 queue-head group with no burst_length metadata, report-only raw-ARLEN burst-length metadata, or runtime-assertion beat-count/RLAST validation metadata, plus selected multiple/mixed depth-3 queue-head groups with no burst_length metadata, report-only raw-ARLEN burst-length metadata, runtime-assertion beat-count/RLAST validation metadata, or runtime-assertion multi-beat output-bank metadata, generated raw-ARLEN burst-length capture including report-only and runtime-validation generated read burst-last concrete same-ID queue-head read-data contracts with one or more independent depth-2 queue-head groups, the selected single depth-3 report-only and runtime-validation groups, selected multiple/mixed depth-3 report-only and runtime-validation groups, and the selected same-family mixed auto-ID plus depth-2 concrete queue-head report-only and runtime-validation groups, explicit runtime-assertion beat-count/RLAST validation for auto-ID and bounded read burst-last concrete same-ID queue-head read-data contracts including one or more independent depth-2 queue-head groups plus the selected single depth-3 group, selected multiple/mixed depth-3 groups, and the selected same-family mixed auto-ID plus depth-2 concrete queue-head group, generated multi-beat read-data output-bank behavior for the covered auto-ID multi-beat-by-RID subset and bounded read burst-last concrete same-ID queue-head subset including multiple independent depth-2 queue-head groups plus the selected single depth-3 runtime-validation queue-head group, selected multiple/mixed depth-3 runtime-validation queue-head groups, and the selected same-family mixed auto-ID plus depth-2 concrete queue-head runtime-validation group, bounded burst payload/output behavior through that per-beat output bank, and generated scalar RRESP aggregation behavior are supported; dynamic user-ID arbitration beyond selected counted concrete-ID queue-head groups, concrete same-ID issue-order queues deeper than the selected read single-beat, read burst-last, and write depth-3 shapes, generalized scoreboard policies, authored/general different-ID interleaving outside the covered auto-ID, bounded queue-head, and mixed response-demux subsets, packed burst-vector outputs, alternate full burst payload assembly, and aggregate-only status output shapes remain outside this capacity/status shell.',
+                detail => 'Concrete transaction ID request/response assertions, explicit bounded auto-ID request-ID drive plus completion-event release, generated auto-ID same-ID avoidance, explicit static concrete-ID reuse reject policy metadata, issue-order-queue admitted-request pulse generation for selected concrete-ID families, counted request-set capacity fit guards and per-concrete-ID group request assertions for generated multi-group queue-head families, bounded read single-beat, read burst-last, and write depth-2/depth-3 concrete same-ID issue-order queue state plus queue-head response-demux behavior for selected public response-demux-only sample shapes including multiple independent or mixed-depth read single-beat, read burst-last, and write response-demux queue groups, same-family mixed auto-ID lifecycle plus concrete same-ID queue-head response-demux for selected response-demux-only read single-beat, read burst-last, and write sample shapes, selected read single-beat and read burst-last scalar read-data plus read burst-last report-only raw-ARLEN burst-length, runtime beat-count/RLAST validation, and runtime-validation multi-beat output-bank behavior over that same-family mixed response-demux boundary, selected single-group and multiple/mixed read single-beat depth-3 scalar read-data queue-head shapes, selected single-group and multiple/mixed read burst-last depth-3 scalar last-beat read-data, report-only raw-ARLEN burst-length, runtime beat-count/RLAST validation, and runtime-validation multi-beat output-bank queue-head shapes, generated write BID response demux, generated single-active dynamic write BID response demux, generated single-beat read RID response demux, generated single-beat read-data RDATA/RRESP capture, generated single-beat read-data RDATA/RRESP capture from generated read single-beat concrete same-ID queue-head response-demux including multiple independent depth-2 queue-head groups, the selected single depth-3 queue-head group, and selected multiple/mixed depth-3 queue-head groups, generated burst-last RLAST response-demux completion, structural last-beat read-data metadata, generated last-beat read-data RDATA/RRESP capture, generated last-beat read-data RDATA/RRESP capture from generated read burst-last concrete same-ID queue-head response-demux including multiple independent depth-2 queue-head groups with no burst_length metadata, report-only raw-ARLEN burst-length metadata, or runtime-assertion beat-count/RLAST validation metadata, plus the selected single depth-3 queue-head group with no burst_length metadata, report-only raw-ARLEN burst-length metadata, or runtime-assertion beat-count/RLAST validation metadata, plus selected multiple/mixed depth-3 queue-head groups with no burst_length metadata, report-only raw-ARLEN burst-length metadata, runtime-assertion beat-count/RLAST validation metadata, or runtime-assertion multi-beat output-bank metadata, generated raw-ARLEN burst-length capture including report-only and runtime-validation generated read burst-last concrete same-ID queue-head read-data contracts with one or more independent depth-2 queue-head groups, the selected single depth-3 report-only and runtime-validation groups, selected multiple/mixed depth-3 report-only and runtime-validation groups, and the selected same-family mixed auto-ID plus depth-2 concrete queue-head report-only and runtime-validation groups, explicit runtime-assertion beat-count/RLAST validation for auto-ID and bounded read burst-last concrete same-ID queue-head read-data contracts including one or more independent depth-2 queue-head groups plus the selected single depth-3 group, selected multiple/mixed depth-3 groups, and the selected same-family mixed auto-ID plus depth-2 concrete queue-head group, generated multi-beat read-data output-bank behavior for the covered auto-ID multi-beat-by-RID subset and bounded read burst-last concrete same-ID queue-head subset including multiple independent depth-2 queue-head groups plus the selected single depth-3 runtime-validation queue-head group, selected multiple/mixed depth-3 runtime-validation queue-head groups, and the selected same-family mixed auto-ID plus depth-2 concrete queue-head runtime-validation group, bounded burst payload/output behavior through that per-beat output bank, and generated scalar RRESP aggregation behavior are supported; dynamic user-ID arbitration beyond selected single-active dynamic write response demux and selected counted concrete-ID queue-head groups, concrete same-ID issue-order queues deeper than the selected read single-beat, read burst-last, and write depth-3 shapes, generalized scoreboard policies, authored/general different-ID interleaving outside the covered auto-ID, bounded queue-head, mixed response-demux, and selected dynamic write-demux subsets, packed burst-vector outputs, alternate full burst payload assembly, and aggregate-only status output shapes remain outside this capacity/status shell.',
             },
             {
                 id     => 'dynamic_transaction_id_behavior',
-                detail => 'Dynamic transaction-ID parser/report metadata is supported for (id dynamic) when matching ID-family metadata is present; dynamic ID capture, response matching, same-ID ordering, read-data routing, queues, scoreboards, and HDL behavior remain future exact-owner work.',
+                detail => 'Dynamic transaction-ID parser/report metadata is supported for (id dynamic) when matching ID-family metadata is present; single-active dynamic write ID capture and BID response matching are supported under explicit response-demux.write, while dynamic read matching, multiple dynamic write transactions, mixed dynamic/static write response demux, same-cycle recapture, same-ID ordering, read-data routing, queues, scoreboards, and HDL behavior outside that selected write shape remain future exact-owner work.',
             },
             {
                 id     => 'profile_aliases_and_full_manager_behavior',
@@ -5153,6 +5377,7 @@ sub _report_response_demux($contract) {
         $demux->{$family}{generated_behavior} = $contract->{response_demux}{$family}{generated_behavior}
             ? JSON::PP::true
             : JSON::PP::false;
+        delete $demux->{$family}{dynamic_transaction_state};
     }
     if ($contract->{response_demux}{generated_behavior}) {
         for my $family (qw(write read)) {

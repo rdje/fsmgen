@@ -2340,12 +2340,13 @@ Current boundary: FSMGen names `.fsm` as Intent Abstraction Layer 0 (`IAL0`)
 and current `.isf` as Intent Abstraction Layer 1 (`IAL1`). `IAL2` now has a
 first bounded shipped surface for one AXI Valid-Ready protocol intent object,
 multi-channel Valid-Ready bundles, and one AXI manager capacity/status shell
-through public `.ppif`, including optional static ID-family metadata and
+through public `.ppif`, including optional static ID-family metadata,
 optional structural transaction-envelope metadata with per-transaction event
-dispatch/fan-in, concrete transaction ID request/response assertions, and
-metadata-first dynamic transaction-ID parser/report support. The active IAL2
-frontier is now generated bounded dynamic write transaction-ID capture and
-`BID` response matching behavior.
+dispatch/fan-in, concrete transaction ID request/response assertions,
+metadata-first dynamic transaction-ID parser/report support, and generated
+bounded single-active dynamic write transaction-ID capture plus `BID`
+response matching for one explicit `response-demux.write` dynamic write
+transaction.
 Broader IAL2 still must justify itself with semantics above individual
 transactions, not only syntax convenience. Its generic file surface remains
 protocol/platform-generic, and an IAL2 file may select a protocol or platform
@@ -6596,6 +6597,21 @@ matching, multiple dynamic write transactions, mixed dynamic/static write
 demux, same-cycle recapture, same-ID ordering, read-data routing, queues,
 scoreboards, direct backend behavior, and VHDL deferred.
 
+Dynamic write transaction-ID capture behavior:
+[AXI_IAL2_MANAGER_DYNAMIC_WRITE_TRANSACTION_ID_CAPTURE_BEHAVIOR](../../AXI_IAL2_MANAGER_DYNAMIC_WRITE_TRANSACTION_ID_CAPTURE_BEHAVIOR.md)
+ships `.223`. Explicit `response-demux.write` with exactly one
+transaction-local dynamic write ID now generates `AWID` capture at the
+admitted write request, generated selected-ID and busy state, a `BID` match
+against the captured ID, the transaction completion pulse, busy release from
+that pulse, runtime assertions, `bounded_dynamic_write_bid_demux_contract`
+schedule-report keys, and the support-accounted sample
+`ppif/axi_manager_capacity_status_dynamic_write_response_demux.ppif`.
+Metadata-only dynamic IDs remain unchanged when no behavior clause consumes
+them. Dynamic read matching, multiple dynamic write transactions, mixed
+dynamic/static write demux, same-cycle recapture, same-ID ordering, read-data
+routing, queues, scoreboards, direct backend behavior, HDL shapes outside the
+selected SystemVerilog path, and VHDL remain deferred.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same
@@ -8855,9 +8871,11 @@ discovery as the next implementation boundary.
 `fsmgen://sources` and `fsmgen_discover_sources`, backed by existing manifest
 support catalog entries instead of recursive workspace traversal.
 `SEMANTIC-INTROSPECTION-MCP-FRONTIER.30` closes the immediate read-only
-semantic-introspection/MCP pass after source discovery; the active roadmap
-priority is again the IAL2 feature-completeness tree, currently at
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.223`.
+semantic-introspection/MCP pass after source discovery. The IAL2
+feature-completeness tree has shipped
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.223`, bounded dynamic write
+transaction-ID capture and `BID` response matching; the next active requested
+owner is `DOCTRINE-ENFORCEMENT-ADOPTION.1`.
 
 Selected first MCP resource families are `fsmgen://capabilities`,
 `fsmgen://contracts`, `fsmgen://diagnostics`,
