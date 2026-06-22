@@ -106,12 +106,18 @@ Intent abstraction levels:
   read single-beat and read burst-last shapes plus report-only raw-`ARLEN`
   burst-length, generated runtime beat-count/`RLAST` validation, and generated
   multi-beat output-bank behavior over that mixed read burst-last
-  runtime-validation family.
+  runtime-validation family, plus generated single-active dynamic write,
+  dynamic read single-beat, and dynamic read burst-last response-demux,
+  scalar dynamic read-data for single-beat and last-beat captures, and
+  report-only dynamic raw-`ARLEN` burst-length capture over generated dynamic
+  last-beat read-data.
 - Broader mixed-family burst-length/runtime validation beyond the selected
   same-family mixed read burst-last shape, write-family read-data,
-  group-local simultaneous enqueue widening, packed burst-vector outputs,
-  alternate full burst payload assembly, aliases, platform clauses, full AXI
-  manager behavior, direct backend lowering, verification-output generation,
+  dynamic runtime beat-count/`RLAST` validation over generated dynamic
+  last-beat read-data, dynamic multi-beat output banks, group-local
+  simultaneous enqueue widening, packed burst-vector outputs, alternate full
+  burst payload assembly, aliases, platform clauses, full AXI manager
+  behavior, direct backend lowering, verification-output generation,
   backend-language variants, and VHDL remain
   deferred.
 - The machine-readable source of truth for shipped suffixes, layers, lowering

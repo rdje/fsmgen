@@ -6795,11 +6795,20 @@ ships that selected shape. A dynamic last-beat read-data contract can now add:
 when paired with one `(id dynamic)` read transaction and generated
 `response-demux.read` `burst-last` completion. FSMGen generates `axi0_arlen`,
 transaction-local raw-`ARLEN` storage, request-guarded capture, and report
-fields for generated burst-length inputs/storage/rules. Dynamic `validation
-runtime-assertion`, dynamic multi-beat output banks, multiple or mixed
+fields for generated burst-length inputs/storage/rules. Dynamic multi-beat
+output banks, multiple or mixed dynamic demux, same-cycle recapture, dynamic
+same-ID ordering, queues, scoreboards, direct backend behavior, and VHDL
+remain deferred. The readiness audit
+[AXI_IAL2_MANAGER_DYNAMIC_RUNTIME_VALIDATION_READINESS_AUDIT](../../AXI_IAL2_MANAGER_DYNAMIC_RUNTIME_VALIDATION_READINESS_AUDIT.md)
+selects `.240`, direct bounded generated dynamic beat-count/`RLAST` runtime
+validation over that same generated dynamic last-beat boundary. The selected
+implementation needs no new public contract selector because existing
+`read-data.read` `burst-length` syntax already accepts `validation
+runtime-assertion`, and the runtime helper/report/residue substrate is already
+transaction-list driven. Dynamic multi-beat output banks, multiple or mixed
 dynamic demux, same-cycle recapture, dynamic same-ID ordering, queues,
-scoreboards, direct backend behavior, and VHDL remain deferred. `.239` audits
-dynamic runtime-validation readiness next.
+scoreboards, direct backend behavior, backend-language variants, and VHDL
+remain deferred.
 
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
