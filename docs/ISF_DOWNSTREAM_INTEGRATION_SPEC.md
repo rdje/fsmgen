@@ -644,6 +644,10 @@ Rules:
   parent resets, enforce access policy, generate assertions/register models,
   or generalize to banks, aggregate carriers, packet/flit layouts, or typed
   storage entries.
+- `isf/storage_fields.isf` is the representative file-backed support-accounted
+  fixture for scalar storage field metadata. Its check JSON and normalized
+  semantic JSON report a matched `feature.isf_storage_field_metadata` support
+  identity; schedule JSON remains the public field-map payload.
 - Existing runtime field/data operations such as `set-field`, `when-field`,
   `extract`, and `assemble` remain scheduled behavior and must not be used to
   stand in for a static PDF register table.

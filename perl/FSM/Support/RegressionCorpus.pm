@@ -868,6 +868,17 @@ my @REGRESSION_CORPUS = (
         expected_semantic_source_root_kind => 'fsm',
     },
     {
+        id => 'feature.isf_storage_field_metadata',
+        relpath => 'isf/storage_fields.isf',
+        family => 'language_feature_fixture',
+        classification => 'supported_smoke',
+        coverage => 'isf_pipeline_cli',
+        source_kind => 'isf',
+        strict_supported => 1,
+        expected_module_name => 'storage_fields',
+        expected_semantic_source_root_kind => 'fsm',
+    },
+    {
         id => 'feature.partial_lhs_with_size',
         relpath => 't/corpus/partial_lhs_with_size.fsm',
         family => 'language_feature_fixture',

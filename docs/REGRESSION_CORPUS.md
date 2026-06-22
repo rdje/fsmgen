@@ -644,6 +644,8 @@ manifest output while keeping the exact file lists widenable.
 | `intent.ppif_axi_manager_capacity_status_read_data_burst_length` | [ppif/axi_manager_capacity_status_read_data_burst_length.ppif](ppif/axi_manager_capacity_status_read_data_burst_length.ppif) | `supported_smoke` | `ial2_ppif_manager_capacity_status_read_data_burst_length_pipeline_cli` |
 | `intent.ppif_axi_manager_capacity_status_read_data_burst_length_runtime_assertion` | [ppif/axi_manager_capacity_status_read_data_burst_length_runtime_assertion.ppif](ppif/axi_manager_capacity_status_read_data_burst_length_runtime_assertion.ppif) | `supported_smoke` | `ial2_ppif_manager_capacity_status_read_data_burst_length_runtime_assertion_pipeline_cli` |
 | `intent.ppif_axi_manager_capacity_status_read_data_multi_beat` | [ppif/axi_manager_capacity_status_read_data_multi_beat.ppif](ppif/axi_manager_capacity_status_read_data_multi_beat.ppif) | `supported_smoke` | `ial2_ppif_manager_capacity_status_read_data_multi_beat_pipeline_cli` |
+| `feature.isf_verification_observation_metadata` | [isf/verification_observation_metadata.isf](isf/verification_observation_metadata.isf) | `supported_smoke` | `isf_pipeline_cli` |
+| `feature.isf_storage_field_metadata` | [isf/storage_fields.isf](isf/storage_fields.isf) | `supported_smoke` | `isf_pipeline_cli` |
 | `feature.partial_lhs_with_size` | [t/corpus/partial_lhs_with_size.fsm](t/corpus/partial_lhs_with_size.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
 | `feature.partial_lhs_inferred_width` | [t/corpus/partial_lhs_inferred_width.fsm](t/corpus/partial_lhs_inferred_width.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
 | `feature.direct_rhs_concat_pack` | [t/corpus/direct_rhs_concat_pack.fsm](t/corpus/direct_rhs_concat_pack.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
@@ -876,6 +878,12 @@ manifest output while keeping the exact file lists widenable.
   proves that direct `+size` expressions support constants, enums, params,
   aggregate scalar leaves, bitwise aliases, `0d` decimal terms, signed based
   negative terms, and unsized based literals before HDL generation. The
+  `feature.isf_verification_observation_metadata` and
+  `feature.isf_storage_field_metadata` entries cover public `.isf`
+  language-feature fixtures through the same support-accounted pipeline,
+  check JSON, and normalized semantic JSON paths as other supported fixtures.
+  The field metadata fixture keeps the field map itself on the schedule JSON
+  `inferred_storage[].fields` payload. The
   `feature.declarative_bits_symbol_widths` entry proves that direct-root
   `+types` `(bits WIDTH_SYMBOL)` specs resolve positive integer scalar
   constants and enum members before driving downstream `+size` declarations.

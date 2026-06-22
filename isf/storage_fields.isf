@@ -1,0 +1,21 @@
+(actor storage_fields
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface
+    (input start)
+    (input wdata (width 8))
+    (output done)
+    (output control_out (width 8)))
+  (storage
+    (var control (width 8) (reset 161)
+      (fields
+        (field mode (bits 7 5) (access rw) (reset 5)
+          (enum (IDLE 0) (RUN 5)))
+        (field prio (bits 4 2) (access rw))
+        (field enable (bits 0 0) (access rw) (reset 1)
+          (enum (OFF 0) (ON 1))))))
+  (transaction main
+    (on start)
+    (set control wdata)
+    (update control_out control)
+    (complete done)))

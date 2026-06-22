@@ -1922,7 +1922,10 @@ on the parent declared storage entry. Each field entry has `name`, `msb`,
 `lsb`, `width`, and optional `access`, `reset`, and `enum` entries. No access
 policy enforcement, generated assertions, register-model output, packet/flit
 layout surface, aggregate-field layout, bank layout, or reset derivation is
-promised by this first slice.
+promised by this first slice. The public fixture `isf/storage_fields.isf` is
+support-accounted as `feature.isf_storage_field_metadata`; check JSON and
+normalized semantic JSON report that matched source identity, while the field
+map remains a schedule JSON payload.
 
 ### 5.2 Actor-Owned Bank Access
 

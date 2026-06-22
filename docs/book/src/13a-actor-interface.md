@@ -500,6 +500,9 @@ The `control` register still lowers as one 8-bit storage word. Its scheduled
 HDL reset behavior still comes only from the parent `(reset 161)`. The report
 adds `inferred_storage[].fields` on the `control` storage entry so downstream
 tools can see `mode`, `prio`, and `enable` without parsing comments.
+The repository fixture `isf/storage_fields.isf` carries this same public
+surface and is support-accounted through check JSON and normalized semantic
+JSON; the field map itself remains a schedule JSON payload.
 
 Each field uses `(field NAME (bits HI LO) ...)`; names are unique HDL
 identifiers, ranges are literal and inclusive, gaps are allowed, and

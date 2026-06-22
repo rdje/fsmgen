@@ -311,6 +311,7 @@ for my $required_id (qw(
     intent.ppif_axi_manager_capacity_status_read_data_burst_length_runtime_assertion
     intent.ppif_axi_manager_capacity_status_read_data_multi_beat
     feature.isf_verification_observation_metadata
+    feature.isf_storage_field_metadata
     feature.partial_lhs_with_size
     feature.partial_lhs_inferred_width
     feature.direct_rhs_concat_pack
@@ -650,8 +651,8 @@ for my $entry (@entries) {
 
 is(
     scalar(grep { $_->{classification} eq 'supported_smoke' } @entries),
-    115,
-    'catalog now keeps one hundred fifteen named supported-smoke entries including direct, composition, ISF, and PPIF fixtures',
+    116,
+    'catalog now keeps one hundred sixteen named supported-smoke entries including direct, composition, ISF, and PPIF fixtures',
 );
 is(
     scalar(grep { $_->{classification} eq 'legacy_out_of_scope' } @entries),
@@ -665,8 +666,8 @@ is(
 );
 is(
     scalar(grep { $_->{strict_supported} } @entries),
-    115,
-    'catalog now records one hundred fifteen positive strict-mode supported-smoke acceptance entries',
+    116,
+    'catalog now records one hundred sixteen positive strict-mode supported-smoke acceptance entries',
 );
 for my $strict_supported_id (qw(
     protocol.apb_requester
@@ -745,6 +746,7 @@ for my $strict_supported_id (qw(
     intent.ppif_axi_manager_capacity_status_read_data_burst_length_runtime_assertion
     intent.ppif_axi_manager_capacity_status_read_data_multi_beat
     feature.isf_verification_observation_metadata
+    feature.isf_storage_field_metadata
     feature.partial_lhs_with_size
     feature.partial_lhs_inferred_width
     feature.direct_rhs_concat_pack

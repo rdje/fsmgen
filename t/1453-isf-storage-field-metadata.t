@@ -33,39 +33,7 @@ subtest 'scalar storage fields parse, report, and leave scheduled fsm unchanged'
     is($entry->{width}, 8, 'field-structured storage reports the parent width') if $entry;
     is_deeply(
         $entry->{fields},
-        [
-            {
-                name   => 'mode',
-                msb    => 7,
-                lsb    => 5,
-                width  => 3,
-                access => 'rw',
-                reset  => 5,
-                enum   => [
-                    { name => 'IDLE', value => 0 },
-                    { name => 'RUN',  value => 5 },
-                ],
-            },
-            {
-                name   => 'prio',
-                msb    => 4,
-                lsb    => 2,
-                width  => 3,
-                access => 'rw',
-            },
-            {
-                name   => 'enable',
-                msb    => 0,
-                lsb    => 0,
-                width  => 1,
-                access => 'rw',
-                reset  => 1,
-                enum   => [
-                    { name => 'OFF', value => 0 },
-                    { name => 'ON',  value => 1 },
-                ],
-            },
-        ],
+        expected_control_fields(),
         'schedule report exposes checked field metadata',
     );
 
@@ -76,6 +44,19 @@ subtest 'scalar storage fields parse, report, and leave scheduled fsm unchanged'
     my $opaque_report = report_source($without_fields, 'storage-fields-opaque.isf');
     my $opaque_entry = storage_entry($opaque_report, 'control');
     ok(!exists $opaque_entry->{fields}, 'opaque storage omits fields metadata');
+};
+
+subtest 'public storage fields fixture exposes schedule metadata' => sub {
+    my $source = slurp_repo_file('isf/storage_fields.isf');
+    my $report = report_source($source, 'isf/storage_fields.isf');
+    my $entry = storage_entry($report, 'control');
+
+    ok($entry, 'public fixture schedule report includes control storage');
+    is_deeply(
+        $entry->{fields},
+        expected_control_fields(),
+        'public fixture schedule report exposes field metadata',
+    );
 };
 
 subtest 'malformed scalar storage fields fail closed' => sub {
@@ -181,6 +162,52 @@ $fields    ))
     (update control_out control)
     (complete done)))
 ISF
+}
+
+sub expected_control_fields {
+    return [
+        {
+            name   => 'mode',
+            msb    => 7,
+            lsb    => 5,
+            width  => 3,
+            access => 'rw',
+            reset  => 5,
+            enum   => [
+                { name => 'IDLE', value => 0 },
+                { name => 'RUN',  value => 5 },
+            ],
+        },
+        {
+            name   => 'prio',
+            msb    => 4,
+            lsb    => 2,
+            width  => 3,
+            access => 'rw',
+        },
+        {
+            name   => 'enable',
+            msb    => 0,
+            lsb    => 0,
+            width  => 1,
+            access => 'rw',
+            reset  => 1,
+            enum   => [
+                { name => 'OFF', value => 0 },
+                { name => 'ON',  value => 1 },
+            ],
+        },
+    ];
+}
+
+sub slurp_repo_file {
+    my ($relpath) = @_;
+    my $path = File::Spec->catfile($FindBin::Bin, '..', split m{/}, $relpath);
+    open my $fh, '<', $path or die "Cannot open $path for read: $!";
+    local $/;
+    my $contents = <$fh>;
+    close $fh or die "Cannot close $path after read: $!";
+    return $contents;
 }
 
 sub bad_source {

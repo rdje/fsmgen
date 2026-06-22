@@ -9,19 +9,19 @@ answers:
 date: 2026-06-22
 status: current
 tags: [isf, storage, register-fields, support-accounting, schedule-report]
-evidence: docs/ISF_FIELD_STRUCTURED_STORAGE_NEXT_RESIDUAL_SELECTION.md; docs/tasks/ISF-FIELD-STRUCTURED-STORAGE-FRONTIER.md; docs/ISF_PUBLIC_INTERFACE_CONTRACT.md; docs/book/src/14-feature-backlog.md; t/1453-isf-storage-field-metadata.t; t/1255-isf-schedule-report-golden-matrix.t
-reverify: rg -n 'ISF-FIELD-STRUCTURED-STORAGE-FRONTIER\\.3|ISF-FIELD-STRUCTURED-STORAGE-FRONTIER\\.4|support-accounted scalar storage-field|inferred_storage\\[\\]\\.fields|normalized semantic payload|NEXT_RESIDUAL' docs/ISF_FIELD_STRUCTURED_STORAGE_NEXT_RESIDUAL_SELECTION.md docs/tasks/ISF-FIELD-STRUCTURED-STORAGE-FRONTIER.md docs/ISF_PUBLIC_INTERFACE_CONTRACT.md docs/book/src/14-feature-backlog.md
+evidence: docs/ISF_FIELD_STRUCTURED_STORAGE_NEXT_RESIDUAL_SELECTION.md; docs/tasks/ISF-FIELD-STRUCTURED-STORAGE-FRONTIER.md; docs/ISF_PUBLIC_INTERFACE_CONTRACT.md; docs/book/src/14-feature-backlog.md; isf/storage_fields.isf; perl/FSM/Support/RegressionCorpus.pm; t/1453-isf-storage-field-metadata.t; t/1255-isf-schedule-report-golden-matrix.t
+reverify: rg -n 'ISF-FIELD-STRUCTURED-STORAGE-FRONTIER\\.3|ISF-FIELD-STRUCTURED-STORAGE-FRONTIER\\.4|feature\\.isf_storage_field_metadata|isf/storage_fields\\.isf|inferred_storage\\[\\]\\.fields|normalized semantic payload|NEXT_RESIDUAL' docs/ISF_FIELD_STRUCTURED_STORAGE_NEXT_RESIDUAL_SELECTION.md docs/tasks/ISF-FIELD-STRUCTURED-STORAGE-FRONTIER.md docs/ISF_PUBLIC_INTERFACE_CONTRACT.md docs/book/src/14-feature-backlog.md perl/FSM/Support/RegressionCorpus.pm
 ---
 
 `ISF-FIELD-STRUCTURED-STORAGE-FRONTIER.3` selected support-accounting
 promotion as the next bounded residual after the metadata-only scalar storage
 field slice.
 
-The next implementation leaf is `ISF-FIELD-STRUCTURED-STORAGE-FRONTIER.4`.
-It should add a file-backed public `.isf` fixture that uses the shipped
-scalar `(fields ...)` metadata and register that source in support accounting
-so check JSON and normalized semantic JSON report a matched supported source
-identity.
+The selected implementation leaf was
+`ISF-FIELD-STRUCTURED-STORAGE-FRONTIER.4`. It added the file-backed public
+fixture `isf/storage_fields.isf` for shipped scalar `(fields ...)` metadata
+and registered it as `feature.isf_storage_field_metadata`, so check JSON and
+normalized semantic JSON report a matched supported source identity.
 
 Schedule JSON remains the public payload for the field map through
 `inferred_storage[].fields`. Normalized semantic JSON still describes the
