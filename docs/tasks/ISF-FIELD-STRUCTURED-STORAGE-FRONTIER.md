@@ -46,12 +46,19 @@ structure layouts.
 - ID: `ISF-FIELD-STRUCTURED-STORAGE-FRONTIER`
   Status: `active`
   Goal: `Make ISF capable of carrying checked declarative named bit-field maps for storage/register-like words.`
-  Children: `ISF-FIELD-STRUCTURED-STORAGE-FRONTIER.1`
+  Children: `ISF-FIELD-STRUCTURED-STORAGE-FRONTIER.1, ISF-FIELD-STRUCTURED-STORAGE-FRONTIER.2`
 
 - ID: `ISF-FIELD-STRUCTURED-STORAGE-FRONTIER.1`
-  Status: `pending`
+  Status: `done`
   Goal: `Audit readiness and select the first declarative field-structured storage contract.`
   Acceptance: `Read SPECFORGE's 2026-06-22 field-structured storage request; current ISF storage parser/scheduler/lowerer/report/semantic surfaces; actor-owned scalar and aggregate storage docs/tests; register reset values; runtime field operations set-field/when-field/extract/assemble; support-accounting fixtures; mdBook and downstream integration docs. Decide whether the first slice should be metadata-only scalar storage fields, reset-composition validation, enum/access metadata, aggregate/packet layout generalization, or a prerequisite cleanup. Record exact syntax, fail-closed validation, report and semantic JSON shape, docs/tests, explicit residue, and rollback before any behavior change.`
+  Verification: `passed: audited SPECFORGE request; README/MEMORY/TASK_TREE/task owner; docs/decisions/0001, 0002, 0006, 0007, 0018; Knowledge Map field-storage fact; docs/ISF_SPEC.md; docs/ISF_PUBLIC_INTERFACE_CONTRACT.md; docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md; docs/book/src/13a-actor-interface.md, 13-intent-scheduling.md, 13j-type-enum-aggregate.md, 13k-isf-feature-support-matrix.md, 14-feature-backlog.md; parser storage path in perl/FSM/Adapter/ISF/Parser.pm; scheduler storage/report paths in perl/FSM/Scheduler/ISF/LoweringIR.pm and Emitter/JSON.pm; public contract metadata in perl/FSM/Support/ISFPublicInterfaceContract.pm; focused storage/reset/report tests t/1232, t/1397, t/1398, t/1148, t/1226, t/1255; selected docs/ISF_FIELD_STRUCTURED_STORAGE_CONTRACT_SELECTION.md`
+  Commit: `ISF-FIELD-STRUCTURED-STORAGE-FRONTIER.1: select storage field contract`
+
+- ID: `ISF-FIELD-STRUCTURED-STORAGE-FRONTIER.2`
+  Status: `pending`
+  Goal: `Implement metadata-only declarative fields on scalar actor-owned storage variables.`
+  Acceptance: `Parser accepts '(fields (field NAME (bits HI LO) ...))' only on scalar '(var ...)'/'(variable ...)' storage entries; validates identifier names, duplicate field names, literal bit ranges inside resolved parent width, no overlaps, optional access vocabulary, optional field reset cross-checked against parent '(reset V)', inline enum names/values fitting field width, and fail-closed malformed shapes; scheduler IR preserves field metadata; schedule JSON exposes optional inferred_storage[].fields; existing '.fsm'/HDL behavior remains byte-equivalent for sources without fields; public contract metadata, docs/ISF_SPEC.md, downstream spec, mdBook, Knowledge Map, and task state are synchronized; focused positive/fail-closed tests pass.`
   Verification: `pending`
   Commit: `pending`
 
@@ -59,7 +66,8 @@ structure layouts.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-FIELD-STRUCTURED-STORAGE-FRONTIER.1` | `pending` | SPECFORGE's request identified a real representational gap; the first safe step is a readiness/contract audit before parser or lowering changes. |
+| 1 | `ISF-FIELD-STRUCTURED-STORAGE-FRONTIER.1` | `done` | Selected the first implementation boundary as metadata-only scalar storage fields with checked ranges/access/resets/enums and report projection. |
+| 2 | `ISF-FIELD-STRUCTURED-STORAGE-FRONTIER.2` | `pending` | Implement the selected checked metadata contract before any broader reset derivation, access behavior, aggregate, bank, or packet layout work. |
 
 ## Decisions
 
@@ -72,17 +80,19 @@ structure layouts.
   complete tiling is required or explicit reserved/gap metadata is allowed,
   how field resets relate to `(var ... (reset V))`, how enum/access metadata
   is represented, and how report/semantic JSON surfaces publish the result.
+- `2026-06-22`: `.1` selected metadata-only scalar storage fields as the
+  first slice. `fields` applies only to scalar `var`/`variable` storage,
+  leaves gaps legal without inference, rejects overlaps and out-of-range
+  ranges, keeps reset derivation out of scope while cross-checking field reset
+  metadata against an explicit parent reset, uses inline enum metadata only,
+  and publishes fields through optional `inferred_storage[].fields`.
 
 ## Open Questions
 
-- Should first-slice field ranges be required to tile the whole storage word,
-  or may explicit gaps/reserved fields be represented without inferred names?
-- Are field-level resets metadata-only in the first slice, or may a complete
-  non-conflicting field reset map derive or validate storage reset behavior?
-- Should enum values be inline field metadata, a reference to actor-local
-  `(enums ...)`, or both?
-- Is packet/structure layout generalization part of the first public syntax
-  or a later sibling after scalar storage fields ship?
+- Later leaves must decide whether complete field maps may derive parent
+  storage reset values, whether actor `(enums ...)` references participate in
+  field metadata, and how to generalize from scalar registers to packet,
+  structure, bank, or aggregate layouts.
 
 ## Blockers
 
@@ -92,15 +102,19 @@ structure layouts.
 
 | Date | Leaf | Checks | Result |
 | --- | --- | --- |
-| `2026-06-22` | `ISF-FIELD-STRUCTURED-STORAGE-FRONTIER.1` | `pending` | `pending` |
+| `2026-06-22` | `ISF-FIELD-STRUCTURED-STORAGE-FRONTIER.1` | `read SPECFORGE request, active task owner, relevant decisions, Knowledge Map, ISF spec/public/downstream/mdBook docs, parser/lowerer/report/contract/test surfaces; wrote docs/ISF_FIELD_STRUCTURED_STORAGE_CONTRACT_SELECTION.md; git diff --check; scripts/check_memory_architecture.sh; scripts/check_doctrines.sh` | `passed` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-FIELD-STRUCTURED-STORAGE-FRONTIER.1` | `pending` | `pending` |
+| `ISF-FIELD-STRUCTURED-STORAGE-FRONTIER.1` | `ISF-FIELD-STRUCTURED-STORAGE-FRONTIER.1: select storage field contract` | `metadata-only scalar storage field contract selected` |
+| `ISF-FIELD-STRUCTURED-STORAGE-FRONTIER.2` | `pending` | `pending` |
 
 ## Changelog
 
 - `2026-06-22`: Created the implementation frontier selected by
   `ISF-FIELD-STRUCTURED-STORAGE-RESPONSE.2`.
+- `2026-06-22`: Completed the readiness audit and selected
+  `ISF-FIELD-STRUCTURED-STORAGE-FRONTIER.2` to implement metadata-only
+  declarative fields on scalar actor-owned storage variables.
