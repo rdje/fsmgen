@@ -10,14 +10,18 @@ answers:
 date: 2026-06-22
 status: current
 tags: [ial2, axi, dynamic-id, read-response-demux, contract, task-tree]
-evidence: docs/AXI_IAL2_MANAGER_DYNAMIC_READ_TRANSACTION_ID_CAPTURE_CONTRACT_SELECTION.md; docs/AXI_IAL2_MANAGER_DYNAMIC_READ_TRANSACTION_ID_CAPTURE_MATCHING_READINESS_AUDIT.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md
-reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.226|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.227|DYNAMIC_READ_TRANSACTION_ID_CAPTURE_CONTRACT_SELECTION|bounded_dynamic_read_rid_demux_contract|admitted_dynamic_read_request|matched_dynamic_id_single_beat' docs/AXI_IAL2_MANAGER_DYNAMIC_READ_TRANSACTION_ID_CAPTURE_CONTRACT_SELECTION.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md README.md ROADMAP_V2.md docs/book/src/14-feature-backlog.md
+evidence: docs/AXI_IAL2_MANAGER_DYNAMIC_READ_TRANSACTION_ID_CAPTURE_CONTRACT_SELECTION.md; docs/AXI_IAL2_MANAGER_DYNAMIC_READ_TRANSACTION_ID_CAPTURE_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_DYNAMIC_READ_TRANSACTION_ID_CAPTURE_MATCHING_READINESS_AUDIT.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md
+reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.226|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.227|DYNAMIC_READ_TRANSACTION_ID_CAPTURE_CONTRACT_SELECTION|DYNAMIC_READ_TRANSACTION_ID_CAPTURE_BEHAVIOR|bounded_dynamic_read_rid_demux_contract|admitted_dynamic_read_request|matched_dynamic_id_single_beat' docs/AXI_IAL2_MANAGER_DYNAMIC_READ_TRANSACTION_ID_CAPTURE_CONTRACT_SELECTION.md docs/AXI_IAL2_MANAGER_DYNAMIC_READ_TRANSACTION_ID_CAPTURE_BEHAVIOR.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md README.md ROADMAP_V2.md docs/book/src/14-feature-backlog.md
 ---
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.226` selects
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.227`, direct generated behavior for
 bounded single-beat dynamic read transaction-ID capture and `RID` response
 matching.
+
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.227` has since shipped that selected
+behavior; the implemented contract is recorded in
+`docs/AXI_IAL2_MANAGER_DYNAMIC_READ_TRANSACTION_ID_CAPTURE_BEHAVIOR.md`.
 
 The selected public contract reuses existing `response-demux.read` with
 `response-scope single-beat`, one transaction-local `(id dynamic)` read

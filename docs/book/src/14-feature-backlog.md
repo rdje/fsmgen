@@ -2343,13 +2343,15 @@ multi-channel Valid-Ready bundles, and one AXI manager capacity/status shell
 through public `.ppif`, including optional static ID-family metadata,
 optional structural transaction-envelope metadata with per-transaction event
 dispatch/fan-in, concrete transaction ID request/response assertions,
-metadata-first dynamic transaction-ID parser/report support, and generated
-bounded single-active dynamic write transaction-ID capture plus `BID`
-response matching for one explicit `response-demux.write` dynamic write
-transaction.
-The next selected owner is `.227`, direct generated bounded single-beat
-dynamic read ID capture and `RID` response matching; dynamic read HDL
-behavior has not changed yet.
+metadata-first dynamic transaction-ID parser/report support, generated
+bounded single-active dynamic write transaction-ID capture plus `BID` response
+matching for one explicit `response-demux.write` dynamic write transaction, and
+generated bounded single-active dynamic read transaction-ID capture plus
+single-beat `RID` response matching for one explicit `response-demux.read`
+dynamic read transaction.
+The next selected owner is `.228`, a selector for the next exact dynamic-ID or
+IAL2 cleanup prerequisite after the bounded single-active dynamic read/write
+demux shapes.
 Broader IAL2 still must justify itself with semantics above individual
 transactions, not only syntax convenience. Its generic file surface remains
 protocol/platform-generic, and an IAL2 file may select a protocol or platform
@@ -6651,6 +6653,20 @@ vocabulary. Dynamic read burst-last/`RLAST`, read-data routing,
 burst-length/runtime validation, multiple dynamic reads, mixed dynamic/static
 read demux, same-cycle recapture, same-ID ordering, queues, scoreboards,
 direct backend behavior, and VHDL remain deferred.
+
+Dynamic read transaction-ID capture behavior:
+[AXI_IAL2_MANAGER_DYNAMIC_READ_TRANSACTION_ID_CAPTURE_BEHAVIOR](../../AXI_IAL2_MANAGER_DYNAMIC_READ_TRANSACTION_ID_CAPTURE_BEHAVIOR.md)
+ships `.227`, generated bounded single-beat dynamic read transaction-ID capture
+and `RID` response matching. The support-accounted public sample is
+`ppif/axi_manager_capacity_status_dynamic_read_response_demux.ppif`. It uses one
+`(id dynamic)` read transaction plus explicit `response-demux.read` with
+`response-scope single-beat` and generated transaction completion. FSMGen
+captures admitted `ARID` into generated selected-ID storage, tracks a
+single-active dynamic read busy bit, matches raw accepted read responses with
+`RID == captured_id`, pulses `axi0_r0_complete`, releases busy from that pulse,
+and reports `bounded_dynamic_read_rid_demux_contract` with
+`capture_event_source: admitted_dynamic_read_request` and
+`transaction_completion_semantics: matched_dynamic_id_single_beat`.
 
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)

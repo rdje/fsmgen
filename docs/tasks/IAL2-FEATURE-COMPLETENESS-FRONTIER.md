@@ -1636,9 +1636,16 @@ path before reopening VHDL backend or VHDL rerouting work.
   Commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.226: select dynamic read ID contract`
 
 - ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER.227`
-  Status: `pending`
+  Status: `done`
   Goal: `Implement bounded single-beat dynamic read transaction-ID capture and RID response matching.`
   Acceptance: `Read .226 contract selection, .225 readiness audit, .224 selector, .223 dynamic write behavior, .219 dynamic transaction-ID metadata behavior, current PPIF transaction and response-demux syntax, dynamic ID parser/normalizer/report code, read response-demux single-beat implementation, admitted-request guard/capacity code, dynamic storage/rule/assertion/report helpers, support accounting, focused tests, README, ROADMAP_V2, mdBook, task tree, Memory, and Knowledge Map. Implement exactly the selected public contract: existing response-demux.read with one transaction-local dynamic read ID, response-scope single-beat, no last_signal, no auto-id-lifecycle/read-data/same-id-ordering/read queue behavior in the selected read family, admitted ARID/request-ID capture, generated selected-ID and busy storage, RID match completion pulse, busy release, generated assertions, report keys including bounded_dynamic_read_rid_demux_contract, support-accounted public PPIF sample, schedule/check/semantic/default-HDL reachability, docs, Knowledge Map, and explicit residue. Preserve generated dynamic write behavior, metadata-only dynamic IDs when no behavior clause consumes them, existing auto-ID/concrete/mixed response-demux and read-data behavior, and fail-closed dynamic read burst-last/RLAST/read-data/burst/runtime/multiple/mixed/same-cycle/same-ID/queue/scoreboard/direct-backend/VHDL boundaries.`
+  Verification: `Shipped generated bounded single-beat dynamic read transaction-ID capture and RID response matching. The implementation reuses response-demux.read with one transaction-local dynamic read ID, captures the admitted read request-ID source into generated selected-ID storage, tracks single-active busy ownership, matches raw read responses with RID == captured_id, pulses the generated transaction completion, releases busy from that completion, emits dynamic read assertions, reports bounded_dynamic_read_rid_demux_contract, and adds ppif/axi_manager_capacity_status_dynamic_read_response_demux.ppif as a support-accounted sample. Focused syntax checks passed for the touched modules/tests; t/248 regression-corpus accounting passed 4047 tests; direct schedule JSON, strict check JSON, semantic JSON, and default SystemVerilog probes for the dynamic read sample passed; direct write BID and write queue-head schedule probes confirmed the branch-presence helper preserves existing write-only mode/residue. Full t/1437 attempts were stopped as oversized CPU-bound runs after stale duplicate processes were detected; no final broad TAP pass was claimed, and focused probes covered the changed surfaces.`
+  Commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.227: ship dynamic read ID demux`
+
+- ID: `IAL2-FEATURE-COMPLETENESS-FRONTIER.228`
+  Status: `pending`
+  Goal: `Select the next exact IAL2 owner after bounded dynamic read ID demux.`
+  Acceptance: `Read .227 behavior, .226 contract selection, .225 readiness audit, .223 dynamic write behavior, .219 dynamic transaction-ID metadata behavior, support-accounted dynamic read/write samples, live reports/artifacts/tests, explicit residue, README, ROADMAP_V2, mdBook, task tree, Memory, and Knowledge Map. Choose one next exact owner or cleanup prerequisite after generated single-active dynamic read/write response demux: dynamic read burst-last/RLAST, read-data routing over dynamic IDs, multiple dynamic read/write transactions, mixed dynamic/static response demux, same-cycle recapture, dynamic same-ID ordering, queues/scoreboards, report/static/support cleanup, direct backend lowering, VHDL/backend-language boundary, or another narrower prerequisite. Record scope, non-goals, public syntax/report expectations, generated artifact boundaries, diagnostics, validation gates, rollback, docs, Knowledge Map impact, and explicit residue. Do not change parser, generator, PPIF samples, support accounting, validation, generated artifacts, tests, or HDL behavior unless this selector explicitly creates a later implementation leaf.`
   Verification: `pending`
   Commit: `pending`
 
@@ -1646,10 +1653,21 @@ path before reopening VHDL backend or VHDL rerouting work.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.227` | `pending` | `.226` selected direct generated behavior for bounded single-beat dynamic read transaction-ID capture and `RID` response matching. |
+| 1 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.228` | `pending` | `.227` shipped bounded single-beat dynamic read transaction-ID capture and `RID` response matching; choose the next exact dynamic-ID/IAL2 owner or cleanup prerequisite. |
 
 ## Decisions
 
+- `2026-06-22`: `.227` shipped generated bounded single-beat dynamic read
+  transaction-ID capture and `RID` response matching. Explicit
+  `response-demux.read` with exactly one transaction-local dynamic read ID now
+  captures the admitted read request-ID source, stores generated selected-ID and
+  busy state, matches raw read responses with `RID == captured_id`, pulses the
+  generated transaction completion, releases busy from that completion, reports
+  `bounded_dynamic_read_rid_demux_contract`, and adds
+  `ppif/axi_manager_capacity_status_dynamic_read_response_demux.ppif` as a
+  support-accounted sample. The next leaf is `.228`, selector for the next exact
+  dynamic-ID/IAL2 owner or cleanup prerequisite after the bounded single-active
+  dynamic read/write demux shapes.
 - `2026-06-22`: `.226` selected `.227`, direct generated behavior for
   bounded single-beat dynamic read transaction-ID capture and `RID` response
   matching. The selected public contract reuses existing `response-demux.read`
@@ -4047,6 +4065,7 @@ path before reopening VHDL backend or VHDL rerouting work.
 | `2026-06-22` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.224` | `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_WRITE_ID_NEXT_SLICE_SELECTION.md`; `.223` behavior; `.222` contract selection; dynamic transaction-ID metadata behavior; current dynamic write sample/support accounting; generated reports/artifacts/tests; README, ROADMAP_V2, mdBook, task tree, Memory, and Knowledge Map; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `mdbook build docs/book`; `scripts/check_doctrines.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `git --no-pager diff --check` | `passed`; selected `.225`, readiness audit for generated dynamic read transaction-ID capture and `RID` response matching. No parser, generator, PPIF sample, support-accounting catalog, validation, generated-artifact, test, or HDL behavior changed. |
 | `2026-06-22` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.225` | `docs/AXI_IAL2_MANAGER_DYNAMIC_READ_TRANSACTION_ID_CAPTURE_MATCHING_READINESS_AUDIT.md`; `.224` selector; `.223` behavior; `.222` contract selection; `.219` dynamic metadata behavior; existing generated read response-demux single-beat and burst-last behavior; read-data capture, burst-length, runtime-validation, and multi-beat output-bank families; current dynamic metadata and dynamic write behavior samples/support accounting; AXI manager dynamic/read response-demux normalizer, storage/rule/assertion/report helpers, support detail, and report projection; direct schedule JSON probes for dynamic metadata, dynamic write, read single-beat response-demux, and read burst-last response-demux samples; README, ROADMAP_V2, mdBook, task tree, Memory, and Knowledge Map; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `mdbook build docs/book`; `scripts/check_doctrines.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `git --no-pager diff --check` | `passed`; selected `.226`, public contract selection for bounded single-beat dynamic read transaction-ID capture and `RID` response matching. No parser, generator, PPIF sample, support-accounting catalog, validation, generated-artifact, test, or HDL behavior changed. |
 | `2026-06-22` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.226` | `docs/AXI_IAL2_MANAGER_DYNAMIC_READ_TRANSACTION_ID_CAPTURE_CONTRACT_SELECTION.md`; `.225` readiness audit; `.224` selector; `.223` dynamic write behavior; `.222` dynamic write contract selection; `.219` dynamic transaction-ID metadata behavior; current PPIF transaction and response-demux syntax; dynamic ID parser/normalizer/report code; read response-demux single-beat/burst-last implementation and report precedents; admitted-request guard/capacity precedents; dynamic storage/rule/assertion/report helpers; support accounting and focused tests; README, ROADMAP_V2, mdBook, task tree, Memory, and Knowledge Map; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `mdbook build docs/book`; `scripts/check_doctrines.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `git --no-pager diff --check` | `passed`; selected `.227`, direct generated behavior for bounded single-beat dynamic read transaction-ID capture and `RID` response matching. No parser, generator, PPIF sample, support-accounting catalog, validation, generated-artifact, test, or HDL behavior changed. |
+| `2026-06-22` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.227` | `perl/FSM/IAL2/ProtocolIntent/AxiManagerCapacityStatus.pm`; `perl/FSM/Support/RegressionCorpus.pm`; `ppif/axi_manager_capacity_status_dynamic_read_response_demux.ppif`; `t/1436-ial2-ppif-parser-cli.t`; `t/1437-axi-ial2-manager-capacity-status-generator.t`; `t/248-regression-corpus-accounting.t`; `docs/AXI_IAL2_MANAGER_DYNAMIC_READ_TRANSACTION_ID_CAPTURE_BEHAVIOR.md`; README, ROADMAP_V2, mdBook, task tree, Memory, and Knowledge Map; syntax checks for touched modules/tests; `env -u PERL5LIB prove -Iperl t/248-regression-corpus-accounting.t`; direct dynamic read schedule JSON, strict check JSON, semantic JSON, and default SystemVerilog probes; direct legacy write BID and write queue-head schedule probes; stopped duplicate oversized `t/1437` attempts; doctrine/docs closeout gates | `passed with oversized-suite caveat`; shipped generated bounded single-beat dynamic read transaction-ID capture and `RID` response matching. The generated path captures admitted `ARID`, stores selected-ID/busy state, matches `RID`, pulses the generated read completion, releases busy, reports `bounded_dynamic_read_rid_demux_contract`, and support-accounts the new public PPIF sample while preserving metadata-only dynamic IDs, generated dynamic write demux, existing auto-ID/concrete/mixed response-demux/read-data behavior, and fail-closed dynamic burst/read-data/multiple/mixed/same-cycle/same-ID/queue/scoreboard/direct-backend/VHDL boundaries. |
 
 ## Commit Log
 
@@ -4278,9 +4297,22 @@ path before reopening VHDL backend or VHDL rerouting work.
 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.224` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.224: select dynamic read ID audit` | Selected `.225`, readiness audit for generated dynamic read transaction-ID capture and `RID` response matching. |
 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.225` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.225: audit dynamic read ID readiness` | Selected `.226`, public contract selection for bounded single-beat dynamic read transaction-ID capture and `RID` response matching. |
 | `IAL2-FEATURE-COMPLETENESS-FRONTIER.226` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.226: select dynamic read ID contract` | Selected `.227`, direct generated behavior for bounded single-beat dynamic read transaction-ID capture and `RID` response matching. |
+| `IAL2-FEATURE-COMPLETENESS-FRONTIER.227` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.227: ship dynamic read ID demux` | Shipped generated bounded single-beat dynamic read transaction-ID capture and `RID` response matching, and advanced the frontier to `.228`, the next selector. |
 
 ## Changelog
 
+- `2026-06-22`: Completed `.227`, shipped generated bounded single-beat
+  dynamic read transaction-ID capture and `RID` response matching. The generated
+  path captures admitted `ARID`, stores generated selected-ID and busy state,
+  matches raw read responses with `RID == captured_id`, pulses the generated
+  transaction completion, releases busy from that completion, emits dynamic read
+  assertions, reports `bounded_dynamic_read_rid_demux_contract`, and adds
+  `ppif/axi_manager_capacity_status_dynamic_read_response_demux.ppif` as a
+  support-accounted sample. Metadata-only dynamic IDs, generated dynamic write
+  demux, existing auto-ID/concrete/mixed response-demux/read-data behavior, and
+  fail-closed dynamic burst/read-data/multiple/mixed/same-cycle/same-ID/queue/
+  scoreboard/direct-backend/VHDL boundaries are preserved. The frontier advances
+  to `.228`, selector for the next exact dynamic-ID/IAL2 owner.
 - `2026-06-22`: Completed `.226`, selected `.227` as direct generated
   behavior for bounded single-beat dynamic read transaction-ID capture and
   `RID` response matching. The selected public contract reuses existing

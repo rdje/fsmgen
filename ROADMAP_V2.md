@@ -1085,12 +1085,14 @@ transaction-ID capture and `BID` response matching.
 `DOCTRINE-ENFORCEMENT-ADOPTION.1` now adopts the portable doctrine-enforcement
 driver, root `DOCTRINE_ENFORCEMENT.md`, root `TOOLBOX.md`, the
 `scripts/check_doctrines.sh` registry, and FSMGEN-native issue-pinpointing
-commands. `IAL2-FEATURE-COMPLETENESS-FRONTIER.224` selects `.225`, generated
-dynamic read transaction-ID capture and `RID` response matching readiness
-audit, and `.225` selects `.226`, public contract selection for bounded
-single-beat dynamic read ID capture and `RID` response matching. `.226`
-selects `.227`, direct generated bounded single-beat dynamic read ID capture
-and `RID` matching behavior.
+commands. `IAL2-FEATURE-COMPLETENESS-FRONTIER.227` now ships generated bounded
+single-beat dynamic read transaction-ID capture and `RID` response matching:
+explicit `response-demux.read` with one transaction-local dynamic read ID
+captures admitted `ARID`, stores generated selected-ID/busy state, matches raw
+read responses with `RID == captured_id`, pulses the generated read completion,
+and support-accounts the new dynamic read PPIF sample. `.228` is the active
+selector for the next exact dynamic-ID/IAL2 owner after the bounded
+single-active dynamic read/write demux shapes.
 The parser/report metadata slice `IAL2-FEATURE-COMPLETENESS-FRONTIER.39` is
 now shipped for the bounded AXI read response-demux public contract selected
 by `.38`. The selected read arm requires `(response-scope single-beat)`,
@@ -2029,19 +2031,20 @@ against the captured ID, generates the transaction completion pulse, releases
 busy from that pulse, reports `bounded_dynamic_write_bid_demux_contract`, and
 adds `ppif/axi_manager_capacity_status_dynamic_write_response_demux.ppif` as
 a support-accounted sample. Metadata-only dynamic IDs remain unchanged when no
-behavior clause consumes them. Selector `.224` chooses `.225`, generated
-dynamic read transaction-ID capture and `RID` response matching readiness
-audit. Audit `.225` selects `.226`, public contract selection for bounded
-single-beat dynamic read ID capture and `RID` response matching. Selector
-`.226` chooses `.227`, direct generated behavior using existing
-`response-demux.read` with one transaction-local dynamic read ID,
-`response-scope single-beat`, admitted request-ID capture, single-active
-selected-ID/busy state, and raw accepted read response plus `RID` match
-completion. Dynamic read burst-last/`RLAST`, read-data routing,
-burst-length/runtime validation, interleaving, multiple dynamic reads, mixed
-dynamic/static read demux, same-cycle recapture, same-ID ordering, queues,
-scoreboards, direct backend behavior, HDL shapes outside this selected
-SystemVerilog path, and VHDL remain deferred.
+behavior clause consumes them. Implementation `.227` ships generated
+single-beat dynamic read ID capture and `RID` response matching using existing
+`response-demux.read` with one transaction-local dynamic read ID. The generated
+path captures admitted `ARID`, stores selected-ID/busy state, matches raw read
+responses with `RID == captured_id`, pulses the generated read completion,
+releases busy from that completion, reports
+`bounded_dynamic_read_rid_demux_contract`, and adds a support-accounted dynamic
+read PPIF sample. Selector `.228` will choose the next exact owner after the
+bounded single-active dynamic read/write demux shapes. Dynamic read
+burst-last/`RLAST`, read-data routing, burst-length/runtime validation,
+interleaving, multiple dynamic reads, mixed dynamic/static read demux,
+same-cycle recapture, same-ID ordering, queues, scoreboards, direct backend
+behavior, HDL shapes outside this selected SystemVerilog path, and VHDL remain
+deferred.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.
