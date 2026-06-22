@@ -1,23 +1,26 @@
 ---
 id: ial2-feature-completeness-next-slice
-title: IAL2 feature completeness next slice is post-counted capacity selector
+title: IAL2 feature completeness next slice is admitted-pulse guard alignment audit
 answers:
   - "what is the next IAL2 feature completeness slice?"
   - "what is the next IAL2 PNT task?"
   - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.211?"
   - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.212?"
+  - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.213?"
   - "what is the next AXI manager slice?"
   - "what is the next AXI manager task after counted capacity substrate?"
-date: 2026-06-21
+  - "why is group-local same-ID enqueue not implemented after counted capacity?"
+date: 2026-06-22
 status: current
 tags: [ial2, axi, manager, same-id, concrete-id, ordering, feature-completeness, task-tree]
-evidence: docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; docs/AXI_IAL2_MANAGER_COUNTED_SAME_ID_CAPACITY_SUBSTRATE_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_COUNTED_ADMISSION_CAPACITY_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_GROUP_LOCAL_SAME_ID_ENQUEUE_READINESS_AUDIT.md; docs/book/src/14-feature-backlog.md; README.md; ROADMAP_V2.md; docs/knowledge/ial2-counted-same-id-capacity-substrate.md
-reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.211|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.212|COUNTED_SAME_ID_CAPACITY_SUBSTRATE|counted_same_id_selected_requests|counted_submit|reject_current_request_set|group-local same-ID enqueue' docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md docs/AXI_IAL2_MANAGER_COUNTED_SAME_ID_CAPACITY_SUBSTRATE_BEHAVIOR.md docs/book/src/14-feature-backlog.md README.md ROADMAP_V2.md
+evidence: docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; docs/AXI_IAL2_MANAGER_POST_COUNTED_CAPACITY_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_COUNTED_SAME_ID_CAPACITY_SUBSTRATE_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_COUNTED_ADMISSION_CAPACITY_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_GROUP_LOCAL_SAME_ID_ENQUEUE_READINESS_AUDIT.md; docs/book/src/14-feature-backlog.md; README.md; ROADMAP_V2.md; docs/knowledge/ial2-counted-same-id-capacity-substrate.md
+reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.212|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.213|POST_COUNTED_CAPACITY_NEXT_SLICE_SELECTION|admitted-request guard|admitted-pulse guard|counted_same_id_selected_requests|counted_submit|reject_current_request_set|group-local same-ID enqueue' docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md docs/AXI_IAL2_MANAGER_POST_COUNTED_CAPACITY_NEXT_SLICE_SELECTION.md docs/book/src/14-feature-backlog.md README.md ROADMAP_V2.md
 ---
 
 The next IAL2 feature-completeness slice is
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.212`, the selector after counted same-ID
-capacity substrate.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.213`, the readiness audit for aligning
+same-ID admitted-request pulses with counted request-set capacity before any
+group-local same-ID enqueue behavior change.
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.211` shipped counted selected-request
 capacity/status substrate for generated same-ID queue-head families with
@@ -26,8 +29,16 @@ multiple concrete-ID groups. The substrate reports
 `request_count_expression`, `maximum_request_count`, `counted_submit` capacity
 matrices, Boolean completion accounting, and
 `over_capacity_policy: reject_current_request_set`, while preserving the
-family-wide request onehot assertion. `.212` must choose the next smallest
-safe owner before any group-local simultaneous enqueue behavior change.
+family-wide request onehot assertion.
+
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.212` selected `.213`. The selector found
+that counted capacity/status can reject over-capacity current request sets,
+but admitted-request pulses still use scalar pending storage plus Boolean
+completion fan-in. Directly narrowing the family-wide request onehot to
+group-local assertions could therefore enqueue requests that the capacity
+matrix rejects. Queue transitions are already per concrete-ID group, so the
+next owner is the admitted-pulse guard/alignment audit, not a direct behavior
+implementation.
 
 Historical notes from earlier queue-head frontier selection follow.
 

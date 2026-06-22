@@ -6490,8 +6490,14 @@ concrete-ID groups. The generated read/write multi-group reports now expose
 `counted_same_id_selected_requests`, counted request groups, additive request
 count expressions, `counted_submit` capacity matrices, Boolean completion
 accounting, and `reject_current_request_set` over-capacity behavior while the
-family-wide request onehot assertions remain in force. `.212` selects the
-next owner before any group-local simultaneous enqueue behavior change.
+family-wide request onehot assertions remain in force.
+Post counted-capacity selector:
+[AXI_IAL2_MANAGER_POST_COUNTED_CAPACITY_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_COUNTED_CAPACITY_NEXT_SLICE_SELECTION.md)
+selects `.213`, readiness audit for admitted-request guard alignment before
+group-local same-ID enqueue behavior. The counted matrix can reject an
+over-capacity current request set, but admitted-request pulses still use
+scalar pending storage plus Boolean completion fan-in, so direct group-local
+onehot narrowing is not safe until those guards are owned.
 
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
@@ -8754,7 +8760,7 @@ support catalog entries instead of recursive workspace traversal.
 `SEMANTIC-INTROSPECTION-MCP-FRONTIER.30` closes the immediate read-only
 semantic-introspection/MCP pass after source discovery; the active roadmap
 priority is again the IAL2 feature-completeness tree, currently at
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.212`.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.213`.
 
 Selected first MCP resource families are `fsmgen://capabilities`,
 `fsmgen://contracts`, `fsmgen://diagnostics`,

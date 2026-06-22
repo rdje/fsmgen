@@ -11,7 +11,7 @@ date: 2026-06-21
 status: current
 tags: [ial2, axi, manager, same-id, counted-capacity, queue-head]
 evidence: docs/AXI_IAL2_MANAGER_COUNTED_SAME_ID_CAPACITY_SUBSTRATE_BEHAVIOR.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; perl/FSM/IAL2/ProtocolIntent/AxiManagerCapacityStatus.pm; t/1437-axi-ial2-manager-capacity-status-generator.t; t/1436-ial2-ppif-parser-cli.t; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md
-reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.211|counted_same_id_selected_requests|counted_submit|reject_current_request_set|request_count_expression|maximum_request_count|family-wide request onehot|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.212' docs/AXI_IAL2_MANAGER_COUNTED_SAME_ID_CAPACITY_SUBSTRATE_BEHAVIOR.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md README.md ROADMAP_V2.md docs/book/src/14-feature-backlog.md perl/FSM/IAL2/ProtocolIntent/AxiManagerCapacityStatus.pm t/1437-axi-ial2-manager-capacity-status-generator.t t/1436-ial2-ppif-parser-cli.t
+reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.211|counted_same_id_selected_requests|counted_submit|reject_current_request_set|request_count_expression|maximum_request_count|family-wide request onehot|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.213' docs/AXI_IAL2_MANAGER_COUNTED_SAME_ID_CAPACITY_SUBSTRATE_BEHAVIOR.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md README.md ROADMAP_V2.md docs/book/src/14-feature-backlog.md perl/FSM/IAL2/ProtocolIntent/AxiManagerCapacityStatus.pm t/1437-axi-ial2-manager-capacity-status-generator.t t/1436-ial2-ppif-parser-cli.t
 ---
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.211` shipped counted same-ID
@@ -29,5 +29,7 @@ The public read/write multi-group queue-head response-demux reports now expose
 
 The substrate does not enable group-local simultaneous enqueue acceptance.
 The existing family-wide same-ID request onehot assertions remain in place,
-and legal public behavior stays one request per direction per cycle. `.212` is
-the next selector before any group-local same-ID enqueue behavior work.
+and legal public behavior stays one request per direction per cycle. `.213` is
+the next audit before any group-local same-ID enqueue behavior work; it must
+align admitted-request pulse guards with counted request-set capacity before
+the request onehot can narrow to concrete-ID groups.

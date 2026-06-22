@@ -10,10 +10,10 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `HEAD after IAL2-FEATURE-COMPLETENESS-FRONTIER.211 commit` - `IAL2-FEATURE-COMPLETENESS-FRONTIER.211: ship counted same-ID capacity substrate`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.212` selects the next group-local same-ID enqueue readiness slice after counted capacity substrate; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.211` shipped counted selected-request capacity/status substrate for generated read/write multi-group same-ID queue-head families while preserving family-wide request onehot assertions. Reports now expose `counted_same_id_selected_requests`, counted request groups/terms, `request_count_expression`, `maximum_request_count`, counted capacity matrices, Boolean completion accounting, and `reject_current_request_set`; low-capacity probes prove over-capacity request sets are rejected without changing pending/status.
-- in_flight_uncommitted: none after the `IAL2-FEATURE-COMPLETENESS-FRONTIER.211` commit. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
+- latest_commit: `HEAD after IAL2-FEATURE-COMPLETENESS-FRONTIER.212 commit` - `IAL2-FEATURE-COMPLETENESS-FRONTIER.212: select admitted guard audit`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.213` audits counted admitted-request guard alignment before group-local same-ID enqueue behavior; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.212` selected `.213` after finding counted capacity/status can reject over-capacity current request sets, but admitted-request pulses still use scalar pending storage plus Boolean completion fan-in. Direct group-local onehot narrowing could enqueue requests that the capacity matrix rejects; queue transitions are already per concrete-ID group and are not the first remaining blocker. No parser/generator/sample/test/HDL behavior changed.
+- in_flight_uncommitted: none after the `IAL2-FEATURE-COMPLETENESS-FRONTIER.212` commit. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
 
 ## Notes
