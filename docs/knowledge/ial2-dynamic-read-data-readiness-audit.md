@@ -9,8 +9,8 @@ answers:
 date: 2026-06-22
 status: current
 tags: [ial2, axi, dynamic-id, read-data, read-response-demux, selector]
-evidence: docs/AXI_IAL2_MANAGER_DYNAMIC_READ_DATA_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_POST_DYNAMIC_READ_RLAST_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_DYNAMIC_READ_RLAST_TRANSACTION_ID_CAPTURE_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_DYNAMIC_READ_TRANSACTION_ID_CAPTURE_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_READ_DATA_BEHAVIOR_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_LAST_BEAT_READ_DATA_BEHAVIOR_FIRST_SLICE.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md; perl/FSM/IAL2/ProtocolIntent/AxiManagerCapacityStatus.pm; perl/FSM/Adapter/IAL2/PPIF.pm
-reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.233|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.234|DYNAMIC_READ_DATA_READINESS_AUDIT|scalar dynamic read-data|generated_dynamic_demux|generated_dynamic_demux_last_beat|read_data\\.read cannot be combined with dynamic read transaction ID metadata' docs/AXI_IAL2_MANAGER_DYNAMIC_READ_DATA_READINESS_AUDIT.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md README.md ROADMAP_V2.md docs/book/src/14-feature-backlog.md perl/FSM/IAL2/ProtocolIntent/AxiManagerCapacityStatus.pm
+evidence: docs/AXI_IAL2_MANAGER_DYNAMIC_READ_DATA_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_DYNAMIC_READ_DATA_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_POST_DYNAMIC_READ_RLAST_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_DYNAMIC_READ_RLAST_TRANSACTION_ID_CAPTURE_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_DYNAMIC_READ_TRANSACTION_ID_CAPTURE_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_READ_DATA_BEHAVIOR_FIRST_SLICE.md; docs/AXI_IAL2_MANAGER_LAST_BEAT_READ_DATA_BEHAVIOR_FIRST_SLICE.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md; docs/knowledge/ial2-dynamic-read-data-behavior.md; perl/FSM/IAL2/ProtocolIntent/AxiManagerCapacityStatus.pm; perl/FSM/Adapter/IAL2/PPIF.pm
+reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.233|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.234|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.235|DYNAMIC_READ_DATA_READINESS_AUDIT|DYNAMIC_READ_DATA_BEHAVIOR|scalar dynamic read-data|generated_dynamic_demux|generated_dynamic_demux_last_beat|generated_dynamic_read_response_demux_completion_pulse|generated_dynamic_read_response_demux_last_beat_completion_pulse' docs/AXI_IAL2_MANAGER_DYNAMIC_READ_DATA_READINESS_AUDIT.md docs/AXI_IAL2_MANAGER_DYNAMIC_READ_DATA_BEHAVIOR.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md README.md ROADMAP_V2.md docs/book/src/14-feature-backlog.md perl/FSM/IAL2/ProtocolIntent/AxiManagerCapacityStatus.pm
 ---
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.233` selects `.234`, direct bounded
@@ -33,3 +33,9 @@ banks, multiple dynamic read/write transactions, mixed dynamic/static demux,
 same-cycle recapture, dynamic same-ID ordering, queues, scoreboards, direct
 backend behavior, HDL behavior outside the selected SystemVerilog path, and
 VHDL fail-closed.
+
+The selected `.234` implementation later shipped that scalar dynamic
+read-data boundary. Its behavior contract is recorded in
+`docs/AXI_IAL2_MANAGER_DYNAMIC_READ_DATA_BEHAVIOR.md` and
+`docs/knowledge/ial2-dynamic-read-data-behavior.md`; `.235` is the next exact
+owner selector.

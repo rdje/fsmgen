@@ -263,6 +263,75 @@ subtest 'PPIF adapter parses AXI manager dynamic read burst-last response-demux 
     assert_dynamic_read_response_demux_burst_last_report($result->{report}, 'adapter report');
 };
 
+subtest 'PPIF adapter parses AXI manager dynamic single-beat read-data behavior' => sub {
+    my $sample_path = sample_capacity_dynamic_read_data_ppif_path();
+    ok(-f $sample_path, 'tracked runnable PPIF capacity/status dynamic read-data sample exists');
+
+    my $result = FSM::Adapter::IAL2::PPIF->new()->parse_source(sample_capacity_dynamic_read_data_ppif(), $sample_path);
+    my $isf = $result->{generated_ial1}{text};
+    my $fsm = $result->{generated_ial0}{files}{'axi0_capacity_status.fsm'};
+
+    is($result->{kind}, 'protocol_intent.axi_manager_capacity_status', 'dynamic read-data sample still uses the capacity/status generator');
+    is($result->{report}{source_object}{id}, 'axi-manager-capacity-status-dynamic-read-data', 'dynamic read-data source object id is preserved');
+    is($result->{report}{source_object}{intent_name}, 'axi_manager_capacity_status_dynamic_read_data', 'dynamic read-data source intent name is preserved');
+    like($isf, qr/\(rule axi0_r0_response_demux \(& axi0_read_complete axi0_r0_dynamic_busy_q \(== axi0_rid axi0_r0_dynamic_id_q\)\)/, 'dynamic read-data sample keeps generated RID demux rule');
+    like($isf, qr/\(input axi0_rdata \(width 32\)\)/, 'dynamic read-data sample generates RDATA input');
+    like($isf, qr/\(input axi0_rresp \(width 2\)\)/, 'dynamic read-data sample generates RRESP input');
+    like($isf, qr/\(output axi0_r0_rdata \(width 32\)\)/, 'dynamic read-data sample generates scalar data output');
+    like(
+        $isf,
+        qr/\(rule axi0_r0_read_data_capture axi0_r0_complete\s+\(axi0_r0_rdata axi0_rdata\)\s+\(axi0_r0_rresp axi0_rresp\)\)/,
+        'dynamic read-data sample captures payload under generated dynamic completion',
+    );
+    like(
+        $fsm,
+        qr/\(-axi0_r0_read_data_capture\s+<axi0_r0_complete\s+\(<- \(axi0_r0_rdata> axi0_rdata\)\)\s+\(<- \(axi0_r0_rresp> axi0_rresp\)\)/,
+        'dynamic read-data sample lowers capture rule into generated .fsm',
+    );
+    assert_dynamic_read_response_demux_report($result->{report}, 'adapter dynamic read-data response-demux report');
+    assert_read_data_report(
+        $result->{report}{read_data},
+        'adapter dynamic read-data report',
+        'generated_dynamic_read_response_demux_completion_pulse',
+        transactions => [qw(r0)],
+    );
+};
+
+subtest 'PPIF adapter parses AXI manager dynamic last-beat read-data behavior' => sub {
+    my $sample_path = sample_capacity_dynamic_read_data_last_beat_ppif_path();
+    ok(-f $sample_path, 'tracked runnable PPIF capacity/status dynamic last-beat read-data sample exists');
+
+    my $result = FSM::Adapter::IAL2::PPIF->new()->parse_source(sample_capacity_dynamic_read_data_last_beat_ppif(), $sample_path);
+    my $isf = $result->{generated_ial1}{text};
+    my $fsm = $result->{generated_ial0}{files}{'axi0_capacity_status.fsm'};
+
+    is($result->{kind}, 'protocol_intent.axi_manager_capacity_status', 'dynamic last-beat read-data sample still uses the capacity/status generator');
+    is($result->{report}{source_object}{id}, 'axi-manager-capacity-status-dynamic-read-data-last-beat', 'dynamic last-beat read-data source object id is preserved');
+    is($result->{report}{source_object}{intent_name}, 'axi_manager_capacity_status_dynamic_read_data_last_beat', 'dynamic last-beat read-data source intent name is preserved');
+    like($isf, qr/\(rule axi0_r0_response_demux \(& axi0_read_complete axi0_r0_dynamic_busy_q \(== axi0_rid axi0_r0_dynamic_id_q\) axi0_rlast\)/, 'dynamic last-beat read-data sample keeps generated RID/RLAST demux rule');
+    like($isf, qr/\(input axi0_rlast\)/, 'dynamic last-beat read-data sample generates RLAST input');
+    like($isf, qr/\(input axi0_rdata \(width 32\)\)/, 'dynamic last-beat read-data sample generates RDATA input');
+    like($isf, qr/\(output axi0_r0_last_rdata \(width 32\)\)/, 'dynamic last-beat read-data sample generates scalar last data output');
+    like(
+        $isf,
+        qr/\(rule axi0_r0_read_data_capture axi0_r0_complete\s+\(axi0_r0_last_rdata axi0_rdata\)\s+\(axi0_r0_last_rresp axi0_rresp\)\)/,
+        'dynamic last-beat read-data sample captures payload under generated dynamic last-beat completion',
+    );
+    unlike($isf, qr/\baxi0_arlen\b/, 'dynamic last-beat read-data sample keeps dynamic burst-length metadata absent');
+    like(
+        $fsm,
+        qr/\(-axi0_r0_read_data_capture\s+<axi0_r0_complete\s+\(<- \(axi0_r0_last_rdata> axi0_rdata\)\)\s+\(<- \(axi0_r0_last_rresp> axi0_rresp\)\)/,
+        'dynamic last-beat read-data sample lowers capture rule into generated .fsm',
+    );
+    assert_dynamic_read_response_demux_burst_last_report($result->{report}, 'adapter dynamic last-beat read-data response-demux report');
+    assert_read_data_last_beat_report(
+        $result->{report}{read_data},
+        'adapter dynamic last-beat read-data report',
+        'generated_dynamic_read_response_demux_last_beat_completion_pulse',
+        transactions => [qw(r0)],
+    );
+};
+
 subtest 'PPIF adapter parses AXI manager transaction event dispatch' => sub {
     my $sample_path = sample_capacity_transaction_dispatch_ppif_path();
     ok(-f $sample_path, 'tracked runnable PPIF capacity/status transaction-event dispatch sample exists');
@@ -1982,13 +2051,13 @@ subtest 'PPIF adapter diagnostics fail closed before generation claims' => sub {
                 '(read (concrete-id-reuse issue-order-queue))',
             )),
             qr/same_id_ordering_policy\.read cannot be combined with dynamic read transaction ID metadata/],
-        ['manager dynamic transaction ID blocks read-data behavior',
+        ['manager dynamic read-data without response-demux metadata remains unsupported',
             capacity_ppif_with_objects(manager_capacity_object_with_id_families_transactions_and_read_data(
                 '(write (width 4) (request-id awid) (response-id bid)) (read (width 4) (request-id arid) (response-id rid))',
                 '(read r0 (tag rd0) (request axi0_read_submit) (completion axi0_read_complete) (id dynamic))',
                 default_manager_read_data_clause(),
             )),
-            qr/read_data\.read cannot be combined with dynamic read transaction ID metadata/],
+            qr/read_data requires generated read response_demux metadata/],
         ['duplicate manager auto-ID lifecycle clause',
             capacity_ppif_with_objects(manager_capacity_object_with_duplicate_auto_id_lifecycle()),
             qr/duplicate \(auto-id-lifecycle \.\.\.\) clause/],
@@ -4945,6 +5014,22 @@ subtest 'CLI check JSON and semantic JSON support-account dynamic read response-
     );
 };
 
+subtest 'CLI check JSON and semantic JSON support-account dynamic read-data .ppif separately' => sub {
+    assert_ppif_strict_json_support_case(
+        owner    => 'capacity/status dynamic read-data',
+        path     => \&sample_capacity_dynamic_read_data_ppif_path,
+        entry_id => 'intent.ppif_axi_manager_capacity_status_dynamic_read_data',
+    );
+};
+
+subtest 'CLI check JSON and semantic JSON support-account dynamic last-beat read-data .ppif separately' => sub {
+    assert_ppif_strict_json_support_case(
+        owner    => 'capacity/status dynamic last-beat read-data',
+        path     => \&sample_capacity_dynamic_read_data_last_beat_ppif_path,
+        entry_id => 'intent.ppif_axi_manager_capacity_status_dynamic_read_data_last_beat',
+    );
+};
+
 subtest 'CLI check JSON and semantic JSON support-account transaction-event dispatch .ppif separately' => sub {
     my $dispatch_path = sample_capacity_transaction_dispatch_ppif_path();
     my ($success, undef, undef, $stdout_buf, $stderr_buf) = run(
@@ -6708,6 +6793,14 @@ sub sample_capacity_dynamic_read_response_demux_burst_last_ppif_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_dynamic_read_response_demux_burst_last.ppif');
 }
 
+sub sample_capacity_dynamic_read_data_ppif_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_dynamic_read_data.ppif');
+}
+
+sub sample_capacity_dynamic_read_data_last_beat_ppif_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_dynamic_read_data_last_beat.ppif');
+}
+
 sub sample_capacity_transaction_dispatch_ppif_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_transaction_event_dispatch.ppif');
 }
@@ -6982,6 +7075,14 @@ sub sample_capacity_dynamic_read_response_demux_ppif {
 
 sub sample_capacity_dynamic_read_response_demux_burst_last_ppif {
     return slurp(sample_capacity_dynamic_read_response_demux_burst_last_ppif_path());
+}
+
+sub sample_capacity_dynamic_read_data_ppif {
+    return slurp(sample_capacity_dynamic_read_data_ppif_path());
+}
+
+sub sample_capacity_dynamic_read_data_last_beat_ppif {
+    return slurp(sample_capacity_dynamic_read_data_last_beat_ppif_path());
 }
 
 sub sample_capacity_transaction_dispatch_ppif {
