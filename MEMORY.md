@@ -10,10 +10,10 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `HEAD after IAL2-FEATURE-COMPLETENESS-FRONTIER.219 commit` - `IAL2-FEATURE-COMPLETENESS-FRONTIER.219: ship dynamic ID metadata`.
+- latest_commit: `HEAD after BIN-FSMGEN-IMPORT-TREE-JUN22-REFRESH.1 commit` - `BIN-FSMGEN-IMPORT-TREE-JUN22-REFRESH.1: refresh import tree after dynamic ID metadata`.
 - active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.220` selects the next IAL2 feature-completeness slice after dynamic transaction-ID metadata support; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.219` shipped metadata-first `(id dynamic)` parser/report support. Public `.ppif` accepts exactly transaction-local `(id dynamic)` when a matching positive-width `id-families` request/response signal contract exists, reports user-supplied selected-not-generated dynamic metadata, adds support-accounted `ppif/axi_manager_capacity_status_dynamic_transaction_id.ppif`, and fails closed for same-family behavior clauses that need dynamic capture, response matching, queues, scoreboards, read-data routing, or HDL behavior. Existing auto, concrete, counted queue-head, generated artifact, validation, and default HDL behavior remain preserved.
-- in_flight_uncommitted: none after the `IAL2-FEATURE-COMPLETENESS-FRONTIER.219` commit. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
+- recently_done: `BIN-FSMGEN-IMPORT-TREE-JUN22-REFRESH.1` refreshed `docs/BIN_FSMGEN_IMPORT_TREE.md` after `.219` dynamic ID metadata growth. The `bin/fsmgen` static import closure remains `206` project files total / `205` `.pm`; selected CLI/IAL2/ISF/support line counts now match source.
+- in_flight_uncommitted: none after the `BIN-FSMGEN-IMPORT-TREE-JUN22-REFRESH.1` commit. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
 
 ## Notes
