@@ -10,10 +10,10 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `HEAD after IAL2-FEATURE-COMPLETENESS-FRONTIER.248 commit` - `IAL2-FEATURE-COMPLETENESS-FRONTIER.248: select multiple dynamic read audit`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.249` audits multiple dynamic read response-demux readiness after bounded multiple dynamic write response-demux; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.248` selected `.249`, readiness audit for multiple dynamic read response-demux, because the read side couples `single_beat`/`burst_last`, optional `RLAST`, raw matched-read-beat counting, scalar read-data, burst-length/runtime validation, and multi-beat output-bank behavior.
-- in_flight_uncommitted: none after the `.248` commit workflow. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
+- latest_commit: `HEAD after IAL2-FEATURE-COMPLETENESS-FRONTIER.249 commit` - `IAL2-FEATURE-COMPLETENESS-FRONTIER.249: audit multiple dynamic read readiness`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.250` selects the public contract for bounded multiple dynamic read response-demux; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.249` selected `.250`, public contract selection for bounded multiple dynamic read response-demux, because read scope, optional `RLAST`, raw matched-read-beat assertions, read-data interaction, burst-length/runtime validation, and multi-beat output-bank residue need exact ownership before implementation.
+- in_flight_uncommitted: none after the `.249` commit workflow. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
 
 ## Notes

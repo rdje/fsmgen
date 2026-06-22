@@ -6902,6 +6902,14 @@ read side needs an audit before behavior changes because it combines
 `single_beat` and `burst_last` response scopes, optional `RLAST`, raw
 matched-read-beat counting, scalar read-data, burst-length/runtime
 validation, and multi-beat output-bank coupling.
+Multiple dynamic read response-demux readiness:
+[AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_READ_RESPONSE_DEMUX_READINESS_AUDIT](../../AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_READ_RESPONSE_DEMUX_READINESS_AUDIT.md)
+selects `.250`, public contract selection for bounded multiple dynamic read
+response-demux. The audit found list-shaped dynamic storage, capture/release,
+response-rule, and assertion helpers after normalization, but the read helper
+and dynamic read-data coverage still admit exactly one generated dynamic read
+transaction, so public read scope and read-data interaction must be selected
+before implementation.
 
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)

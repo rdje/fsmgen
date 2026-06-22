@@ -2112,6 +2112,10 @@ multiple dynamic read response-demux. That audit must account for read
 `single_beat` and `burst_last` scopes, optional `RLAST`, raw matched-read-beat
 counting, scalar read-data, burst-length/runtime validation, and multi-beat
 output-bank coupling before any multiple dynamic read behavior is widened.
+Audit `.249` selected `.250`, public contract selection for bounded multiple
+dynamic read response-demux, because the lower substrate is partly list-shaped
+but public read semantics and dynamic read-data interaction need exact
+ownership before implementation.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.
