@@ -1080,7 +1080,7 @@ support-accounting metadata under query/limit/filter controls.
 `SEMANTIC-INTROSPECTION-MCP-FRONTIER.30` closes the immediate read-only
 semantic-introspection/MCP pass after source discovery and returns active
 roadmap priority to the IAL2 feature-completeness tree, currently at
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.222`.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.223`.
 The parser/report metadata slice `IAL2-FEATURE-COMPLETENESS-FRONTIER.39` is
 now shipped for the bounded AXI read response-demux public contract selected
 by `.38`. The selected read arm requires `(response-scope single-beat)`,
@@ -2010,10 +2010,13 @@ queues, scoreboards, read-data routing, or HDL behavior. Selector `.220`
 chooses `.221`, readiness audit for generated dynamic transaction-ID capture
 and response matching before any behavior changes. Audit `.221` selects
 `.222`, public contract selection for bounded dynamic write transaction-ID
-capture and `BID` response matching, because admitted-request capture timing,
-single-active dynamic ownership, matched-response completion/release
-semantics, diagnostics/assertions, report vocabulary, validation, and residue
-must be explicit before generated behavior changes.
+capture and `BID` response matching. Selector `.222` selects `.223`, direct
+generated behavior using existing `response-demux.write` with one
+transaction-local dynamic write ID. The next behavior must capture the write
+request-ID source at the admitted request point, enforce single-active
+selected-ID/busy ownership, match `BID` against the captured ID, generate the
+transaction completion pulse, release busy, and report the dynamic write demux
+artifacts.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.

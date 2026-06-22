@@ -10,10 +10,10 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `HEAD after IAL2-FEATURE-COMPLETENESS-FRONTIER.221 commit` - `IAL2-FEATURE-COMPLETENESS-FRONTIER.221: audit dynamic ID capture readiness`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.222` selects the public contract for bounded dynamic write transaction-ID capture and `BID` response matching; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.221` selected `.222` after auditing generated dynamic transaction-ID capture and response matching readiness. `.222` must settle admitted-request capture timing, single-active dynamic ownership, stored-ID lifetime, matched-response completion/release semantics, assertions/diagnostics, reports, validation, rollback, and residue before behavior changes.
-- in_flight_uncommitted: none after the `IAL2-FEATURE-COMPLETENESS-FRONTIER.221` commit. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
+- latest_commit: `HEAD after IAL2-FEATURE-COMPLETENESS-FRONTIER.222 commit` - `IAL2-FEATURE-COMPLETENESS-FRONTIER.222: select dynamic write ID contract`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.223` generates bounded dynamic write transaction-ID capture and `BID` response matching; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.222` selected `.223` after choosing existing `response-demux.write` plus one transaction-local dynamic write ID as the direct generated behavior contract. No new dynamic-ID lifecycle clause or metadata-only generated-completion acceptance was selected.
+- in_flight_uncommitted: none after the `IAL2-FEATURE-COMPLETENESS-FRONTIER.222` commit. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
 
 ## Notes
