@@ -1088,8 +1088,9 @@ driver, root `DOCTRINE_ENFORCEMENT.md`, root `TOOLBOX.md`, the
 commands. `IAL2-FEATURE-COMPLETENESS-FRONTIER.224` selects `.225`, generated
 dynamic read transaction-ID capture and `RID` response matching readiness
 audit, and `.225` selects `.226`, public contract selection for bounded
-single-beat dynamic read ID capture and `RID` response matching before any
-read parser/generator/sample/test/HDL behavior changes.
+single-beat dynamic read ID capture and `RID` response matching. `.226`
+selects `.227`, direct generated bounded single-beat dynamic read ID capture
+and `RID` matching behavior.
 The parser/report metadata slice `IAL2-FEATURE-COMPLETENESS-FRONTIER.39` is
 now shipped for the bounded AXI read response-demux public contract selected
 by `.38`. The selected read arm requires `(response-scope single-beat)`,
@@ -2031,12 +2032,16 @@ a support-accounted sample. Metadata-only dynamic IDs remain unchanged when no
 behavior clause consumes them. Selector `.224` chooses `.225`, generated
 dynamic read transaction-ID capture and `RID` response matching readiness
 audit. Audit `.225` selects `.226`, public contract selection for bounded
-single-beat dynamic read ID capture and `RID` response matching. Dynamic read
-burst-last/`RLAST`, read-data routing, burst-length/runtime validation,
-interleaving, multiple dynamic reads, mixed dynamic/static read demux,
-same-cycle recapture, same-ID ordering, queues, scoreboards, direct backend
-behavior, HDL shapes outside this selected SystemVerilog path, and VHDL remain
- deferred.
+single-beat dynamic read ID capture and `RID` response matching. Selector
+`.226` chooses `.227`, direct generated behavior using existing
+`response-demux.read` with one transaction-local dynamic read ID,
+`response-scope single-beat`, admitted request-ID capture, single-active
+selected-ID/busy state, and raw accepted read response plus `RID` match
+completion. Dynamic read burst-last/`RLAST`, read-data routing,
+burst-length/runtime validation, interleaving, multiple dynamic reads, mixed
+dynamic/static read demux, same-cycle recapture, same-ID ordering, queues,
+scoreboards, direct backend behavior, HDL shapes outside this selected
+SystemVerilog path, and VHDL remain deferred.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.
