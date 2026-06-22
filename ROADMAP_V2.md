@@ -2107,7 +2107,11 @@ same-cycle dynamic write requests still onehot0, active dynamic IDs required
 pairwise unique, generated active-match/unique-match/same-ID conflict
 assertions, and
 `ppif/axi_manager_capacity_status_dynamic_write_response_demux_multi.ppif` as
-a support-accounted public sample.
+a support-accounted public sample. `.248` selected `.249`, readiness audit for
+multiple dynamic read response-demux. That audit must account for read
+`single_beat` and `burst_last` scopes, optional `RLAST`, raw matched-read-beat
+counting, scalar read-data, burst-length/runtime validation, and multi-beat
+output-bank coupling before any multiple dynamic read behavior is widened.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.

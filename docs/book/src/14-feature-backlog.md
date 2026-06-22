@@ -6895,6 +6895,13 @@ assertions. Multiple dynamic read demux, mixed dynamic/static demux,
 same-cycle request widening beyond onehot0, dynamic same-ID queues,
 scoreboards, direct backend behavior, backend-language variants, and VHDL
 remain deferred.
+Post multiple dynamic write response-demux selector:
+[AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_WRITE_RESPONSE_DEMUX_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_WRITE_RESPONSE_DEMUX_NEXT_SLICE_SELECTION.md)
+selects `.249`, readiness audit for multiple dynamic read response-demux. The
+read side needs an audit before behavior changes because it combines
+`single_beat` and `burst_last` response scopes, optional `RLAST`, raw
+matched-read-beat counting, scalar read-data, burst-length/runtime
+validation, and multi-beat output-bank coupling.
 
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
