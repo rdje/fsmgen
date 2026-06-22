@@ -6514,6 +6514,12 @@ counted capacity/status matrix, replace the family-wide request onehot with
 per-concrete-ID group request assertions, and preserve Boolean admission plus
 family-wide assertions for non-counted directions and mixed auto-ID single
 concrete-group directions.
+Post counted group-local enqueue selector:
+[AXI_IAL2_MANAGER_POST_COUNTED_GROUP_LOCAL_ENQUEUE_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_COUNTED_GROUP_LOCAL_ENQUEUE_NEXT_SLICE_SELECTION.md)
+selects `.216`, readiness audit for dynamic same-ID issue-order queues beyond
+selected counted concrete-ID queue-head groups. The selector found no cleanup
+prerequisite after `.214`; the next local ordering residue is dynamic/per-ID
+issue-order behavior rather than another concrete queue-head sibling.
 
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
@@ -8776,7 +8782,7 @@ support catalog entries instead of recursive workspace traversal.
 `SEMANTIC-INTROSPECTION-MCP-FRONTIER.30` closes the immediate read-only
 semantic-introspection/MCP pass after source discovery; the active roadmap
 priority is again the IAL2 feature-completeness tree, currently at
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.215`.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.216`.
 
 Selected first MCP resource families are `fsmgen://capabilities`,
 `fsmgen://contracts`, `fsmgen://diagnostics`,

@@ -1,6 +1,6 @@
 ---
 id: ial2-feature-completeness-next-slice
-title: IAL2 feature completeness next slice is post counted group-local same-ID enqueue selection
+title: IAL2 feature completeness next slice is dynamic same-ID readiness audit
 answers:
   - "what is the next IAL2 feature completeness slice?"
   - "what is the next IAL2 PNT task?"
@@ -9,20 +9,22 @@ answers:
   - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.213?"
   - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.214?"
   - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.215?"
+  - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.216?"
   - "what is the next AXI manager slice?"
   - "what is the next AXI manager task after counted capacity substrate?"
   - "what is the next AXI manager task after counted admitted guard alignment?"
+  - "what is the next AXI manager task after counted group-local enqueue?"
 date: 2026-06-22
 status: current
 tags: [ial2, axi, manager, same-id, concrete-id, ordering, feature-completeness, task-tree]
-evidence: docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; docs/AXI_IAL2_MANAGER_COUNTED_ADMITTED_REQUEST_GUARD_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_COUNTED_ADMITTED_REQUEST_GUARD_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_POST_COUNTED_CAPACITY_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_COUNTED_SAME_ID_CAPACITY_SUBSTRATE_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_COUNTED_ADMISSION_CAPACITY_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_GROUP_LOCAL_SAME_ID_ENQUEUE_READINESS_AUDIT.md; docs/book/src/14-feature-backlog.md; README.md; ROADMAP_V2.md; docs/knowledge/ial2-counted-admitted-request-guard-behavior.md; docs/knowledge/ial2-counted-same-id-capacity-substrate.md
-reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.214|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.215|COUNTED_ADMITTED_REQUEST_GUARD_BEHAVIOR|counted_request_set_capacity_fit|request_set_fit_expression|request_assertion_scope|concrete_id_group|group-local request assertions' docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md docs/AXI_IAL2_MANAGER_COUNTED_ADMITTED_REQUEST_GUARD_BEHAVIOR.md docs/book/src/14-feature-backlog.md README.md ROADMAP_V2.md
+evidence: docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; docs/AXI_IAL2_MANAGER_POST_COUNTED_GROUP_LOCAL_ENQUEUE_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_COUNTED_ADMITTED_REQUEST_GUARD_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_COUNTED_ADMITTED_REQUEST_GUARD_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_POST_COUNTED_CAPACITY_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_COUNTED_SAME_ID_CAPACITY_SUBSTRATE_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_COUNTED_ADMISSION_CAPACITY_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_GROUP_LOCAL_SAME_ID_ENQUEUE_READINESS_AUDIT.md; docs/book/src/14-feature-backlog.md; README.md; ROADMAP_V2.md; docs/knowledge/ial2-post-counted-group-local-enqueue-next-slice-selection.md; docs/knowledge/ial2-counted-admitted-request-guard-behavior.md; docs/knowledge/ial2-counted-same-id-capacity-substrate.md
+reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.215|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.216|POST_COUNTED_GROUP_LOCAL_ENQUEUE_NEXT_SLICE_SELECTION|dynamic same-ID|per_id_issue_order_queues|counted_request_set_capacity_fit|request_assertion_scope' docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md docs/AXI_IAL2_MANAGER_POST_COUNTED_GROUP_LOCAL_ENQUEUE_NEXT_SLICE_SELECTION.md docs/book/src/14-feature-backlog.md README.md ROADMAP_V2.md
 ---
 
 The next IAL2 feature-completeness slice is
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.215`, the selector for the next
-roadmap-aligned AXI manager slice after counted admitted-request guard
-alignment and group-local request assertions shipped.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.216`, readiness audit for dynamic
+same-ID issue-order queues beyond selected counted concrete-ID queue-head
+groups.
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.211` shipped counted selected-request
 capacity/status substrate for generated same-ID queue-head families with
@@ -57,6 +59,16 @@ admitted-request pulse with that expression; report
 family-wide same-ID request onehot with per concrete-ID group assertions.
 Non-counted directions and mixed auto-ID single concrete-group directions keep
 Boolean admission and family-wide request assertions.
+
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.215` selected `.216`. The selector found
+no immediate stale support-accounting or report cleanup blocker after `.214`.
+Representative generated queue-head reports expose
+`counted_request_set_capacity_fit` and
+`request_assertion_scope: concrete_id_group`, while the remaining local
+ordering residue is `per_id_issue_order_queues` and the broader unsupported
+residue is dynamic arbitration beyond selected counted concrete-ID queue-head
+groups. `.216` must stay audit-only unless it first selects a later dynamic
+per-ID queue/scoreboard implementation or prerequisite owner.
 
 Historical notes from earlier queue-head frontier selection follow.
 
