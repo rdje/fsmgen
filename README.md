@@ -163,9 +163,9 @@ generated bounded single-beat dynamic read ID capture and `RID` matching
 behavior through explicit `response-demux.read`, and
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.231` now ships generated bounded dynamic
 read burst-last/`RLAST` transaction-ID capture and response matching. The next
-active IAL2 frontier is `IAL2-FEATURE-COMPLETENESS-FRONTIER.233`, readiness
-audit for dynamic read-data routing over the generated single-active dynamic
-read response-demux family selected by `.232`.
+active IAL2 frontier is `IAL2-FEATURE-COMPLETENESS-FRONTIER.234`, direct
+bounded implementation of scalar dynamic read-data capture over the generated
+single-active dynamic read response-demux family selected by `.233`.
 Current primary target is SystemVerilog, with Verilog conversion support and a scoped direct-root VHDL scaffold for the accepted single-FSM subset, including delayed-pulse clock-branch lowering, generic-bearing direct-root module headers with typed scalar/vector sized-literal defaults, signed vector and signed scalar direct-root ports, scalar/vector two-state `bit` input-port and internal declaration lowering, signed scalar/vector, non-signed four-state `logic` input-port/internal declaration lowering, and vector `logic signed` internal declaration lowering, scalar and signed scalar addition/subtraction/multiplication RHS/chain lowering, vector numeric-literal addition/subtraction emitted by compound update/shorthand forms, same-width unsigned-style addition/subtraction/multiplication/division/modulo/XOR RHS/chain lowering, same-width signed vector addition/subtraction/multiplication/division/modulo RHS lowering for signed targets and operands, signed vector numeric-literal addition/subtraction/multiplication/division/modulo RHS lowering including signed vector negative decimal addition, subtraction, multiplication, division, and modulo literals, non-signed vector positive decimal multiplication/division/modulo literal lowering in signal-first, literal-first, and literal-literal order, non-signed vector negative decimal addition/subtraction/multiplication/division/modulo literal lowering, bounded generated AMBA wrap arithmetic for `fsm/amba_requester.fsm`, bounded non-signed vector, signed vector, and scalar output-port decimal literal assignment lowering including non-signed vector, signed vector, and scalar negative decimal literals, bounded direct aggregate-output packed-vector lowering, a bounded C3 external-RTL literal/concat composition VHDL structural top for `t/corpus/composition_intent_integer_literals.fsm`, bounded external-RTL scalar integer, scalar integer expression, one-bit sized bitstring, multi-bit sized bitstring, and resolved packed aggregate VHDL generic maps including resolved package-backed constants, a bounded C1 standalone-DT child composition VHDL passthrough top for `t/corpus/standalone_dtc_explicit_system_autowire.fsm`, bounded C1 standalone-DT scalar integer, scalar expression, one-bit sized bitstring, multi-bit sized bitstring, packed-list, and packed-map VHDL generic maps, a bounded C2 generated-FSM child composition VHDL scalar-autowire top for `t/corpus/implicit_composition_system_autowire.fsm`, bounded C2 generated-FSM scalar integer, scalar expression, one-bit sized bitstring, multi-bit sized bitstring, and resolved packed aggregate VHDL generic maps, and a bounded APB/C4 generated-FSM child composition VHDL top for `fsm/apb_tb.fsm` with scalar integer, scalar expression, one-bit sized bitstring, multi-bit sized bitstring, resolved packed aggregate, and resolved package-backed generic maps in the same APB/C4 shape.
 Scalar division/modulo, including signed scalar division/modulo, in the direct
 VHDL scaffold remains an explicit fail-closed boundary; full aggregate
@@ -1496,6 +1496,9 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 280. `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_READ_RLAST_NEXT_SLICE_SELECTION.md`:
      selected dynamic read-data routing readiness after generated dynamic read
      burst-last/`RLAST` response-demux behavior.
+281. `docs/AXI_IAL2_MANAGER_DYNAMIC_READ_DATA_READINESS_AUDIT.md`:
+     audited dynamic read-data routing readiness and selected direct bounded
+     scalar single-beat plus last-beat implementation.
 
 ## Documentation index (all `.md` files in this repo)
 - `README.md` — single entry point and navigation hub.
@@ -2160,6 +2163,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_READ_RLAST_TRANSACTION_ID_CAPTURE_CONTRACT_SELECTION.md` — selected existing `response-demux.read` burst-last syntax plus one dynamic read transaction as the direct generated dynamic read `RID`/`RLAST` matching contract.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_READ_RLAST_TRANSACTION_ID_CAPTURE_BEHAVIOR.md` — shipped bounded dynamic read burst-last/`RLAST` transaction-ID capture and `RID`/`RLAST` response matching for one explicit `response-demux.read` dynamic read transaction.
 - `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_READ_RLAST_NEXT_SLICE_SELECTION.md` — selected dynamic read-data routing readiness after generated dynamic read burst-last/`RLAST` response-demux behavior.
+- `docs/AXI_IAL2_MANAGER_DYNAMIC_READ_DATA_READINESS_AUDIT.md` — audited dynamic read-data routing readiness and selected direct bounded scalar single-beat plus last-beat implementation.
 - `docs/AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md` — selected first AXI-derived IAL2 implementation subset and pre-code contract.
 - `docs/AXI_IAL2_VALID_READY_READINESS_AUDIT.md` — code/test/docs/report owner map for a future AXI Valid-Ready IAL2 implementation slice.
 - `docs/AXI_IAL2_VALID_READY_GENERATOR_FIRST_SLICE.md` — first in-process AXI Valid-Ready IAL2 generator slice and report surface.

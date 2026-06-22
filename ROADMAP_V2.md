@@ -1099,7 +1099,9 @@ release, `bounded_dynamic_read_rid_rlast_demux_contract` reports, and
 `ppif/axi_manager_capacity_status_dynamic_read_response_demux_burst_last.ppif`
 as a support-accounted sample. `.232` selected `.233`, readiness audit for
 dynamic read-data routing over the generated single-active dynamic read
-response-demux family.
+response-demux family. `.233` selected `.234`, direct bounded implementation
+of scalar dynamic read-data capture for the generated dynamic read single-beat
+and burst-last/`RLAST` demux shapes.
 The parser/report metadata slice `IAL2-FEATURE-COMPLETENESS-FRONTIER.39` is
 now shipped for the bounded AXI read response-demux public contract selected
 by `.38`. The selected read arm requires `(response-scope single-beat)`,
@@ -2053,11 +2055,13 @@ Dynamic read-data routing, burst-length/runtime validation,
 interleaving, multiple dynamic reads, mixed dynamic/static read demux,
 same-cycle recapture, same-ID ordering, queues, scoreboards, direct backend
 behavior, HDL shapes outside this selected SystemVerilog path, and VHDL remain
-deferred. Selector `.232` chooses `.233`, readiness audit for dynamic read-data
-routing over the generated single-active dynamic read response-demux family, so
-the next behavior-bearing owner must first settle single-beat versus last-beat
-scope, generated completion consumption, data/status capture, reports,
-diagnostics, support accounting, validation, rollback, and residue.
+deferred. Selector `.232` chose `.233`, readiness audit for dynamic read-data
+routing over the generated single-active dynamic read response-demux family;
+audit `.233` selected `.234`, direct bounded implementation of scalar
+single-beat plus scalar last-beat dynamic read-data capture. Dynamic
+burst-length/runtime validation, multi-beat output banks, multiple/mixed
+dynamic demux, same-cycle recapture, dynamic same-ID ordering, queues,
+scoreboards, direct backend behavior, and VHDL remain residue.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.
