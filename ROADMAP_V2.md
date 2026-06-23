@@ -2438,11 +2438,19 @@ dynamic plus one static or one dynamic plus three static, first select a
 public source/report contract for a capped mixed set, land helper/report
 cleanup, or defer in favor of same-cycle, queue, scoreboard, backend, or VHDL
 work.
+`.316` now selects `.317`, public contract selection for the first broader
+mixed dynamic/static transaction-cardinality shape. The audit changes no
+behavior; it finds that mixed demux admission, mixed demux construction,
+read burst-last normalization, read-data coverage, and multi-beat residue
+predicates all still encode the exact one-dynamic plus one- or two-static
+boundary, so the next owner must choose the first public broader shape,
+report vocabulary, diagnostics, support-accounting stem, and validation
+strategy before implementation.
 No behavior changed in
 `.270`, `.271`, `.273`, `.274`, `.275`, `.277`, `.278`,
 `.279`, `.281`, `.282`, `.283`, `.285`, `.286`, `.288`, `.290`, `.292`, or
 `.293`, `.294`, `.296`, `.297`, `.298`, `.300`, `.301`, `.302`, `.304`,
-`.305`, `.306`, `.308`, `.309`, `.311`, `.313`, or `.315`.
+`.305`, `.306`, `.308`, `.309`, `.311`, `.313`, `.315`, or `.316`.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.

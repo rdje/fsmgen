@@ -7769,6 +7769,16 @@ owner should directly widen a bounded broader shape, first select a public
 source/report contract, land helper/report cleanup, or defer in favor of
 same-cycle, queue, scoreboard, backend, or VHDL work.
 
+Broader mixed dynamic/static cardinality readiness audit:
+[AXI_IAL2_MANAGER_BROADER_MIXED_DYNAMIC_STATIC_CARDINALITY_READINESS_AUDIT](../../AXI_IAL2_MANAGER_BROADER_MIXED_DYNAMIC_STATIC_CARDINALITY_READINESS_AUDIT.md)
+selects `.317`, public contract selection for the first broader mixed
+dynamic/static transaction-cardinality shape. The audit changes no behavior.
+It finds that mixed demux admission, mixed demux construction, read
+burst-last normalization, read-data coverage, and multi-beat residue
+predicates still encode the exact one-dynamic plus one- or two-static
+boundary, so the next owner must choose the first public broader shape and
+report/diagnostic/support-accounting contract before implementation.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same
