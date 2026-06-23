@@ -2306,10 +2306,13 @@ feature-completeness selector after widened mixed read single-beat behavior.
 read burst-last `RID && RLAST` response-demux, because read-data,
 burst-length/runtime validation, and multi-beat output-bank widening over the
 multi-static mixed read shape should wait until final-beat completion semantics
-are audited.
+are audited. `.301` now selects `.302`, public contract selection for bounded
+multiple mixed dynamic/static read burst-last `RID && RLAST` response-demux,
+after a guarded temporary candidate confirmed the current fail-closed
+diagnostic for the multi-static burst-last shape.
 No behavior changed in `.270`, `.271`, `.273`, `.274`, `.275`, `.277`, `.278`,
 `.279`, `.281`, `.282`, `.283`, `.285`, `.286`, `.288`, `.290`, `.292`, or
-`.293`, `.294`, `.296`, `.297`, `.298`, or `.300`.
+`.293`, `.294`, `.296`, `.297`, `.298`, `.300`, or `.301`.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.

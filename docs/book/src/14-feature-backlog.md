@@ -7572,6 +7572,14 @@ read-data, burst-length/runtime validation, and multi-beat output-bank
 widening over the multi-static mixed read shape should wait until final-beat
 completion semantics are audited.
 
+Multiple mixed dynamic/static read RLAST readiness:
+[AXI_IAL2_MANAGER_MULTIPLE_MIXED_DYNAMIC_STATIC_READ_RLAST_RESPONSE_DEMUX_READINESS_AUDIT](../../AXI_IAL2_MANAGER_MULTIPLE_MIXED_DYNAMIC_STATIC_READ_RLAST_RESPONSE_DEMUX_READINESS_AUDIT.md)
+selects `.302`, public contract selection for bounded multiple mixed
+dynamic/static read burst-last `RID && RLAST` response-demux. The audit
+changes no behavior; a guarded temporary candidate confirmed the current
+strict-check diagnostic for one dynamic plus two concrete static reads under
+`response-scope burst-last`.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same
