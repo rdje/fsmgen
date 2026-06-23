@@ -7051,6 +7051,19 @@ unchanged and chooses an audit because multi-beat output-bank widening depends
 on per-transaction raw-`ARLEN` capture, expected-beat state, read-beat
 counters, and assertion semantics across multiple active dynamic reads.
 
+Multiple dynamic read burst-length/runtime readiness audit:
+[AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_READ_BURST_LENGTH_RUNTIME_READINESS_AUDIT](../../AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_READ_BURST_LENGTH_RUNTIME_READINESS_AUDIT.md)
+selects `.262`, public contract selection for bounded burst-length and
+runtime beat-count/`RLAST` validation over generated multiple dynamic read
+response-demux. The lower burst-length, beat-count, assertion, matched-beat,
+and report helpers are already transaction-list shaped after coverage
+admission, but the current dynamic coverage gate still fails closed for
+multi-transaction burst-length/runtime metadata. The next slice must settle
+sample names, report-only versus runtime split, transaction coverage,
+per-transaction `ARLEN` ownership, report vocabulary, diagnostics, validation,
+and residue before implementation. No parser, generator, sample,
+support-accounting, test, JSON, or HDL behavior changed in the audit.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same

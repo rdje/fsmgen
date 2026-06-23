@@ -2157,7 +2157,12 @@ and
 runtime beat-count/`RLAST` validation over generated multiple dynamic read
 response-demux, because multi-beat output-bank widening depends on
 per-transaction raw-`ARLEN` capture and runtime counter/assertion semantics
-across multiple active dynamic reads.
+across multiple active dynamic reads. `.261` selected `.262`, public
+contract selection for bounded burst-length/runtime validation over generated
+multiple dynamic read response-demux, because the lower helpers are close
+after coverage admission but sample names, split/combined report-only/runtime
+scope, report vocabulary, diagnostics, validation, and residue need contract
+ownership before implementation.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.

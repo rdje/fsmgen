@@ -1,6 +1,6 @@
 ---
 id: ial2-feature-completeness-next-slice
-title: IAL2 feature completeness next slice is multiple dynamic runtime audit
+title: IAL2 feature completeness next slice is multiple dynamic runtime contract
 answers:
   - "what is the next IAL2 feature completeness slice?"
   - "what is the next IAL2 PNT task?"
@@ -36,6 +36,7 @@ answers:
   - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.257?"
   - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.258?"
   - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.261?"
+  - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.262?"
   - "what is the next AXI manager slice?"
   - "what is the next AXI manager task after counted capacity substrate?"
   - "what is the next AXI manager task after counted admitted guard alignment?"
@@ -43,14 +44,14 @@ answers:
 date: 2026-06-23
 status: current
 tags: [ial2, axi, manager, same-id, concrete-id, ordering, feature-completeness, task-tree]
-evidence: docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; docs/AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_READ_DATA_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_READ_DATA_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_DYNAMIC_RUNTIME_VALIDATION_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_DYNAMIC_BURST_LENGTH_BEHAVIOR.md; docs/book/src/14-feature-backlog.md; README.md; ROADMAP_V2.md; docs/knowledge/ial2-post-multiple-dynamic-read-data-next-slice-selection.md; docs/knowledge/ial2-multiple-dynamic-read-data-behavior.md
-reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.260|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.261|POST_MULTIPLE_DYNAMIC_READ_DATA_NEXT_SLICE_SELECTION|burst-length/runtime validation over generated multiple dynamic read response-demux|multiple dynamic runtime audit' docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md docs/AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_READ_DATA_NEXT_SLICE_SELECTION.md docs/book/src/14-feature-backlog.md README.md ROADMAP_V2.md docs/knowledge/ial2-post-multiple-dynamic-read-data-next-slice-selection.md
+evidence: docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; docs/AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_READ_BURST_LENGTH_RUNTIME_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_READ_DATA_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_READ_DATA_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_DYNAMIC_RUNTIME_VALIDATION_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_DYNAMIC_BURST_LENGTH_BEHAVIOR.md; docs/book/src/14-feature-backlog.md; README.md; ROADMAP_V2.md; docs/knowledge/ial2-multiple-dynamic-read-burst-length-runtime-readiness-audit.md; docs/knowledge/ial2-post-multiple-dynamic-read-data-next-slice-selection.md; docs/knowledge/ial2-multiple-dynamic-read-data-behavior.md
+reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.261|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.262|MULTIPLE_DYNAMIC_READ_BURST_LENGTH_RUNTIME_READINESS_AUDIT|public contract selection for bounded burst-length and runtime beat-count|multiple dynamic runtime contract' docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md docs/AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_READ_BURST_LENGTH_RUNTIME_READINESS_AUDIT.md docs/book/src/14-feature-backlog.md README.md ROADMAP_V2.md docs/knowledge/ial2-multiple-dynamic-read-burst-length-runtime-readiness-audit.md
 ---
 
 The next active IAL2 project slice is
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.261`, readiness audit for
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.262`, public contract selection for
 burst-length/runtime validation over generated multiple dynamic read
-response-demux after `.260` selected that owner.
+response-demux after `.261` selected that owner.
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.251` ships generated bounded multiple
 dynamic read single-beat response-demux with the support-accounted public
@@ -86,7 +87,10 @@ demux transactions. `.260` selected `.261`, readiness audit for generated
 burst-length and runtime beat-count/`RLAST` validation over generated multiple
 dynamic read response-demux, because multi-beat output-bank widening depends
 on per-transaction raw-`ARLEN` capture and runtime counter/assertion semantics
-across multiple active dynamic reads.
+across multiple active dynamic reads. `.261` selected `.262`, public contract
+selection, because the lower helpers are close after coverage admission but
+sample names, report-only/runtime split, report vocabulary, diagnostics,
+validation, and residue need ownership before implementation.
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.211` shipped counted selected-request
 capacity/status substrate for generated same-ID queue-head families with
