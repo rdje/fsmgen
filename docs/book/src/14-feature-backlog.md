@@ -7620,6 +7620,18 @@ before raw `ARLEN`, runtime validation, multi-beat output banks, broader
 cardinalities, same-cycle widening, queues/scoreboards, backend variants, or
 VHDL widen.
 
+Multiple mixed dynamic/static read-data readiness audit:
+[AXI_IAL2_MANAGER_MULTIPLE_MIXED_DYNAMIC_STATIC_READ_DATA_READINESS_AUDIT](../../AXI_IAL2_MANAGER_MULTIPLE_MIXED_DYNAMIC_STATIC_READ_DATA_READINESS_AUDIT.md)
+selects `.306`, public contract selection for bounded scalar read-data over
+generated multiple mixed dynamic/static read response-demux. The audit changes
+no behavior in `.305`. It finds that scalar read-data normalization and
+capture rule generation are already transaction-count agnostic after coverage
+is admitted, while the current mixed dynamic/static read-data coverage branch
+only admits the one-dynamic plus one-static completion sources. The next
+contract slice must settle public sample names, completion-validity
+vocabulary, dynamic-then-static transaction coverage, diagnostics, validation
+strategy, residue movement, and rollback before implementation changes.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same
