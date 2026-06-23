@@ -7114,9 +7114,17 @@ next because the live dynamic multi-beat admission boundary is still
 single-active, while scalar burst-length/runtime over multiple dynamic reads
 is now generated; it must settle the multi-transaction output-bank source
 shape, diagnostics, report vocabulary, validation, and residue before
-multiple dynamic multi-beat behavior widens. Mixed dynamic/static, queue,
-scoreboard, direct backend, backend-language variant, and VHDL behavior remain
-later exact owners.
+multiple dynamic multi-beat behavior widens.
+Multiple dynamic multi-beat readiness audit:
+[AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_MULTI_BEAT_READINESS_AUDIT](../../AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_MULTI_BEAT_READINESS_AUDIT.md)
+selects `.267`, public contract selection for bounded generated multiple
+dynamic multi-beat output-bank behavior. The audit found no separate IAL1,
+IAL0, or SystemVerilog prerequisite before contract selection: the lower
+output-bank helpers are already transaction-list shaped after coverage
+admission, while dynamic multi-beat admission and report-residue recognition
+are still single-active. Mixed dynamic/static, queue, scoreboard, direct
+backend, backend-language variant, and VHDL behavior remain later exact
+owners.
 
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
