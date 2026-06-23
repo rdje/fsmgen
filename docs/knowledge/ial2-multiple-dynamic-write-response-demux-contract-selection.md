@@ -28,7 +28,9 @@ queues: raw write responses must match at least one and at most one active
 captured dynamic write, active dynamic IDs must be unique, and new dynamic
 write requests must not reuse an ID held by an active sibling transaction.
 
-Multiple dynamic read demux, mixed dynamic/static demux, same-cycle request
-widening, same-cycle release-and-recapture, dynamic same-ID queues,
-scoreboards, direct backend behavior, backend-language variants, and VHDL
-remain deferred.
+Multiple dynamic read single-beat response-demux now ships under `.251`.
+Multiple dynamic read burst-last/`RLAST`, read-data, burst-length/runtime
+validation, and multi-beat output-bank widening remain deferred along with
+mixed dynamic/static demux, same-cycle request widening,
+same-cycle release-and-recapture, dynamic same-ID queues, scoreboards, direct
+backend behavior, backend-language variants, and VHDL.

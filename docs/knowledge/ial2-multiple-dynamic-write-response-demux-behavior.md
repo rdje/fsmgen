@@ -28,7 +28,9 @@ active dynamic IDs to be pairwise unique, and prevents ambiguous `BID`
 responses through active-match, unique-match, request no-active-same-ID, and
 active-ID-unique assertions rather than queues or scoreboards.
 
-Multiple dynamic read demux, mixed dynamic/static demux, same-cycle request
-widening beyond onehot0, same-cycle release-and-recapture, dynamic same-ID
-queues, scoreboards, direct backend behavior, backend-language variants, and
-VHDL remain deferred.
+Multiple dynamic read single-beat response-demux now ships under `.251`.
+Multiple dynamic read burst-last/`RLAST`, read-data, burst-length/runtime
+validation, and multi-beat output-bank widening remain deferred along with
+mixed dynamic/static demux, same-cycle request widening beyond onehot0,
+same-cycle release-and-recapture, dynamic same-ID queues, scoreboards, direct
+backend behavior, backend-language variants, and VHDL.

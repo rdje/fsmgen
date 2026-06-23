@@ -2065,11 +2065,13 @@ read PPIF sample. `.231` now ships the bounded dynamic read burst-last/`RLAST`
 sibling with existing `response-demux.read` burst-last syntax, one dynamic read
 ID, one-bit `last-signal`, admitted `ARID` capture, matched `RID && RLAST`
 completion, generated busy release, and support-accounted public PPIF coverage.
-Dynamic read-data routing, burst-length/runtime validation,
-interleaving, multiple dynamic reads, mixed dynamic/static read demux,
-same-cycle recapture, same-ID ordering, queues, scoreboards, direct backend
-behavior, HDL shapes outside this selected SystemVerilog path, and VHDL remain
-deferred. Selector `.232` chose `.233`, readiness audit for dynamic read-data
+Dynamic read-data routing, burst-length/runtime validation, and bounded
+multiple dynamic read single-beat response-demux now ship under later leaves.
+Interleaving, multiple dynamic read burst-last/read-data widening, mixed
+dynamic/static read demux, same-cycle recapture, same-ID ordering, queues,
+scoreboards, direct backend behavior, HDL shapes outside this selected
+SystemVerilog path, and VHDL remain deferred. Selector `.232` chose `.233`,
+readiness audit for dynamic read-data
 routing over the generated single-active dynamic read response-demux family;
 audit `.233` selected `.234`, direct bounded implementation of scalar
 single-beat plus scalar last-beat dynamic read-data capture. `.234` now ships
@@ -2115,11 +2117,14 @@ output-bank coupling before any multiple dynamic read behavior is widened.
 Audit `.249` selected `.250`, public contract selection for bounded multiple
 dynamic read response-demux, because the lower substrate is partly list-shaped
 but public read semantics and dynamic read-data interaction need exact
-ownership before implementation. `.250` selected `.251`, direct generated
-behavior for the bounded all-dynamic read-family `single_beat`
-response-demux-only contract; burst-last/`RLAST`, read-data, burst-length,
-runtime validation, and multi-beat output banks over multiple dynamic reads
-remain later exact owners.
+ownership before implementation. `.250` selected `.251`, and `.251` now ships
+generated behavior for the bounded all-dynamic read-family `single_beat`
+response-demux-only contract with per-transaction selected-ID/busy state,
+admitted `ARID` capture, matched `RID` completion pulses, request onehot0,
+active dynamic-ID uniqueness, active-match, unique-match, and
+completion-active assertions. `.252` is the next exact-owner selector;
+burst-last/`RLAST`, read-data, burst-length, runtime validation, and
+multi-beat output banks over multiple dynamic reads remain later exact owners.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.

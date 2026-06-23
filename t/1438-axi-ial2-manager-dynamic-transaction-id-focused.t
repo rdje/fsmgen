@@ -53,6 +53,15 @@ my @DYNAMIC_CASES = (
         behavior     => 'dynamic_read_demux',
     },
     {
+        label        => 'multiple dynamic read single-beat RID response demux',
+        relpath      => 'ppif/axi_manager_capacity_status_dynamic_read_response_demux_multi.ppif',
+        object_id    => 'axi-manager-capacity-status-dynamic-read-response-demux-multi',
+        intent_name  => 'axi_manager_capacity_status_dynamic_read_response_demux_multi',
+        entry_id     => 'intent.ppif_axi_manager_capacity_status_dynamic_read_response_demux_multi',
+        coverage     => 'ial2_ppif_manager_capacity_status_dynamic_read_response_demux_multi_pipeline_cli',
+        behavior     => 'dynamic_read_demux_multi',
+    },
+    {
         label        => 'dynamic read burst-last RID/RLAST response demux',
         relpath      => 'ppif/axi_manager_capacity_status_dynamic_read_response_demux_burst_last.ppif',
         object_id    => 'axi-manager-capacity-status-dynamic-read-response-demux-burst-last',
@@ -240,6 +249,36 @@ sub assert_dynamic_behavior {
         like($hdl, qr/\binput\s+(?:wire\s+)?\[3:0\]\s+axi0_arid\b/, 'SystemVerilog exposes ARID');
         like($hdl, qr/\binput\s+(?:wire\s+)?\[3:0\]\s+axi0_rid\b/, 'SystemVerilog exposes RID');
         like($hdl, qr/axi0_read_complete\s*&\s*axi0_r0_dynamic_busy_q\s*&\s*\(axi0_rid\s*==\s*axi0_r0_dynamic_id_q\)/, 'SystemVerilog lowers dynamic read response guard');
+        return;
+    }
+
+    if ($case->{behavior} eq 'dynamic_read_demux_multi') {
+        like($isf, qr/\(input axi0_r0_request\)/, 'multiple dynamic read demux declares r0 request input');
+        like($isf, qr/\(input axi0_r1_request\)/, 'multiple dynamic read demux declares r1 request input');
+        like($isf, qr/\(input axi0_arid \(width 4\)\)/, 'multiple dynamic read demux declares ARID input');
+        like($isf, qr/\(input axi0_rid \(width 4\)\)/, 'multiple dynamic read demux declares RID input');
+        like($isf, qr/\(output axi0_r0_complete\)/, 'multiple dynamic read demux exposes r0 completion output');
+        like($isf, qr/\(output axi0_r1_complete\)/, 'multiple dynamic read demux exposes r1 completion output');
+        like($isf, qr/\(var axi0_r0_dynamic_id_q \(width 4\)\)/, 'multiple dynamic read demux allocates r0 selected-ID storage');
+        like($isf, qr/\(var axi0_r1_dynamic_id_q \(width 4\)\)/, 'multiple dynamic read demux allocates r1 selected-ID storage');
+        like($isf, qr/\(rule axi0_r0_dynamic_id_capture \(& \(& axi0_r0_request \(\| \(< axi0_pending_reads_q 4\) \(\| axi0_r0_complete axi0_r1_complete\)\)\) \(! axi0_r0_dynamic_busy_q\) \(! \(& axi0_r1_request/, 'multiple dynamic read demux gates r0 capture against sibling request');
+        like($isf, qr/\(! \(& axi0_r1_dynamic_busy_q \(== axi0_r1_dynamic_id_q axi0_arid\)\)\)/, 'multiple dynamic read demux gates r0 capture against active sibling ID');
+        like($isf, qr/\(rule axi0_r1_dynamic_id_capture \(& \(& axi0_r1_request \(\| \(< axi0_pending_reads_q 4\) \(\| axi0_r0_complete axi0_r1_complete\)\)\) \(! axi0_r1_dynamic_busy_q\) \(! \(& axi0_r0_request/, 'multiple dynamic read demux gates r1 capture against sibling request');
+        like($isf, qr/\(rule axi0_r0_response_demux \(& axi0_read_complete axi0_r0_dynamic_busy_q \(== axi0_rid axi0_r0_dynamic_id_q\)\)/, 'multiple dynamic read demux matches active r0 RID');
+        like($isf, qr/\(rule axi0_r1_response_demux \(& axi0_read_complete axi0_r1_dynamic_busy_q \(== axi0_rid axi0_r1_dynamic_id_q\)\)/, 'multiple dynamic read demux matches active r1 RID');
+        like($isf, qr/axi0 read dynamic requests are mutually exclusive/, 'multiple dynamic read demux emits request onehot assertion');
+        like($isf, qr/axi0 read dynamic active IDs are unique/, 'multiple dynamic read demux emits active ID uniqueness assertion');
+        like($isf, qr/axi0 read dynamic response matches at most one captured ID/, 'multiple dynamic read demux emits response unique-match assertion');
+        assert_dynamic_read_multi_report($result->{report});
+        like($fsm, qr/\(-axi0_r0_response_demux\s+<\(& axi0_read_complete axi0_r0_dynamic_busy_q \(== axi0_rid axi0_r0_dynamic_id_q\)\)/, 'scheduled FSM lowers multi dynamic r0 RID match');
+        like($fsm, qr/\(-axi0_r1_response_demux\s+<\(& axi0_read_complete axi0_r1_dynamic_busy_q \(== axi0_rid axi0_r1_dynamic_id_q\)\)/, 'scheduled FSM lowers multi dynamic r1 RID match');
+        my $hdl = hdl_for('axi0_capacity_status', $fsm);
+        like($hdl, qr/\binput\s+(?:wire\s+)?\[3:0\]\s+axi0_arid\b/, 'SystemVerilog exposes ARID for multi dynamic read');
+        like($hdl, qr/\binput\s+(?:wire\s+)?\[3:0\]\s+axi0_rid\b/, 'SystemVerilog exposes RID for multi dynamic read');
+        like($hdl, qr/axi0_read_complete\s*&\s*axi0_r0_dynamic_busy_q\s*&\s*\(axi0_rid\s*==\s*axi0_r0_dynamic_id_q\)/, 'SystemVerilog lowers multi dynamic r0 response guard');
+        like($hdl, qr/axi0_read_complete\s*&\s*axi0_r1_dynamic_busy_q\s*&\s*\(axi0_rid\s*==\s*axi0_r1_dynamic_id_q\)/, 'SystemVerilog lowers multi dynamic r1 response guard');
+        like($hdl, qr/axi0_r0_dynamic_busy_q\s*&\s*\(axi0_r0_dynamic_id_q\s*==\s*axi0_arid\)/, 'SystemVerilog lowers active sibling-ID expression for r0');
+        like($hdl, qr/axi0_r1_dynamic_busy_q\s*&\s*\(axi0_r1_dynamic_id_q\s*==\s*axi0_arid\)/, 'SystemVerilog lowers active sibling-ID expression for r1');
         return;
     }
 
@@ -482,6 +521,70 @@ sub assert_dynamic_read_report {
     is_deeply($read->{generated_assertions}, [qw(axi0_r0_dynamic_request_not_busy axi0_read_dynamic_response_active_match axi0_r0_dynamic_completion_active)], 'dynamic read report names generated assertions');
     is($report->{transactions}[0]{id}{implementation_status}, 'generated_capture_matching', 'dynamic read transaction reports generated capture/matching');
     assert_dynamic_residue($report, 'dynamic read demux keeps future dynamic residue visible');
+}
+
+sub assert_dynamic_read_multi_report {
+    my ($report) = @_;
+    my $read = $report->{response_demux}{read};
+
+    is($report->{response_demux}{mode}, 'bounded_multi_dynamic_read_rid_demux_contract', 'multiple dynamic read report marks multi RID-demux contract');
+    ok($report->{response_demux}{generated_behavior}, 'multiple dynamic read report marks generated demux behavior');
+    is($read->{mode}, 'bounded_multi_dynamic_read_rid_demux_contract', 'multiple dynamic read report marks read mode');
+    is($read->{response_scope}, 'single_beat', 'multiple dynamic read report marks single-beat scope');
+    is($read->{transaction_completion_source}, 'generated_dynamic_demux', 'multiple dynamic read report marks generated completion source');
+    is($read->{transaction_completion_semantics}, 'matched_dynamic_id_single_beat', 'multiple dynamic read report marks matched dynamic RID completion');
+    is_deeply($read->{dynamic_transactions}, [qw(r0 r1)], 'multiple dynamic read report names covered dynamic transactions');
+    is_deeply($read->{generated_rules}, [qw(axi0_r0_response_demux axi0_r1_response_demux)], 'multiple dynamic read report names generated response-demux rules');
+    is_deeply($read->{generated_completion_signals}, [qw(axi0_r0_complete axi0_r1_complete)], 'multiple dynamic read report names generated completions');
+    is_deeply(
+        $read->{generated_assertions},
+        [qw(
+            axi0_r0_dynamic_request_not_busy
+            axi0_r1_dynamic_request_not_busy
+            axi0_read_dynamic_request_onehot0
+            axi0_r0_dynamic_request_no_active_same_id
+            axi0_r1_dynamic_request_no_active_same_id
+            axi0_r0_r1_read_dynamic_active_id_unique
+            axi0_read_dynamic_response_active_match
+            axi0_r0_r1_read_dynamic_response_unique_match
+            axi0_r0_dynamic_completion_active
+            axi0_r1_dynamic_completion_active
+        )],
+        'multiple dynamic read report names generated assertions',
+    );
+    is_deeply(
+        $read->{dynamic_capture},
+        {
+            request_id_source           => 'axi0_arid',
+            capture_event_source        => 'admitted_dynamic_read_request',
+            ownership                   => 'multi_active_unique_dynamic_read_ids',
+            simultaneous_request_policy => 'onehot0_dynamic_read_request',
+            same_id_conflict_policy     => 'active_dynamic_ids_must_be_unique',
+            transactions                => [
+                {
+                    transaction        => 'r0',
+                    selected_id_signal => 'axi0_r0_dynamic_id_q',
+                    busy_signal        => 'axi0_r0_dynamic_busy_q',
+                    capture_rule       => 'axi0_r0_dynamic_id_capture',
+                    release_rule       => 'axi0_r0_dynamic_id_release',
+                },
+                {
+                    transaction        => 'r1',
+                    selected_id_signal => 'axi0_r1_dynamic_id_q',
+                    busy_signal        => 'axi0_r1_dynamic_busy_q',
+                    capture_rule       => 'axi0_r1_dynamic_id_capture',
+                    release_rule       => 'axi0_r1_dynamic_id_release',
+                },
+            ],
+        },
+        'multiple dynamic read report describes per-transaction dynamic capture',
+    );
+    is_deeply(
+        [map { $_->{id}{implementation_status} } @{$report->{transactions}}],
+        [qw(generated_capture_matching generated_capture_matching)],
+        'multiple dynamic read transactions report generated capture/matching',
+    );
+    assert_dynamic_residue($report, 'multiple dynamic read demux keeps future dynamic residue visible');
 }
 
 sub assert_dynamic_read_rlast_report {

@@ -33,8 +33,8 @@ The expected report mode is `bounded_dynamic_read_rid_demux_contract`, with
 `capture_event_source: admitted_dynamic_read_request` and
 `transaction_completion_semantics: matched_dynamic_id_single_beat`.
 
-Dynamic read `burst-last`/`RLAST`, read-data routing,
-burst-length/runtime-validation behavior, multiple dynamic reads,
-mixed dynamic/static read demux, same-cycle recapture, same-ID ordering,
-queues, scoreboards, direct backend behavior, and VHDL remain future
-exact-owner work.
+Dynamic read `burst-last`/`RLAST`, read-data routing, and bounded multiple
+dynamic read single-beat response-demux now ship under later leaves. Multiple
+dynamic read burst-last/read-data widening, mixed dynamic/static read demux,
+same-cycle recapture, same-ID ordering, queues, scoreboards, direct backend
+behavior, and VHDL remain future exact-owner work.

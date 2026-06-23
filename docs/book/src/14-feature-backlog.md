@@ -6606,10 +6606,12 @@ matching, multiple dynamic write transactions, mixed dynamic/static write
 demux, same-cycle recapture, same-ID ordering, read-data routing, queues,
 scoreboards, direct backend behavior, and VHDL deferred at selection time.
 Later dynamic leaves now ship selected single-active dynamic read matching,
-selected dynamic read-data shapes, and the all-dynamic multiple-write
-response-demux shape described below; mixed dynamic/static demux, multiple
-dynamic read demux, same-cycle widening/recapture, dynamic same-ID queues,
-scoreboards, direct backend behavior, and VHDL remain deferred.
+selected dynamic read-data shapes, the all-dynamic multiple-write
+response-demux shape, and the all-dynamic multiple-read single-beat
+response-demux-only shape described below; mixed dynamic/static demux,
+multiple dynamic read burst-last/read-data widening, same-cycle
+widening/recapture, dynamic same-ID queues, scoreboards, direct backend
+behavior, and VHDL remain deferred.
 
 Dynamic write transaction-ID capture behavior:
 [AXI_IAL2_MANAGER_DYNAMIC_WRITE_TRANSACTION_ID_CAPTURE_BEHAVIOR](../../AXI_IAL2_MANAGER_DYNAMIC_WRITE_TRANSACTION_ID_CAPTURE_BEHAVIOR.md)
@@ -6623,11 +6625,12 @@ schedule-report keys, and the support-accounted sample
 Metadata-only dynamic IDs remain unchanged when no behavior clause consumes
 them. This single-active write sample remains supported. Later dynamic leaves
 now ship selected single-active dynamic read matching, selected dynamic
-read-data shapes, and the all-dynamic multiple-write response-demux shape
-described below; mixed dynamic/static demux, multiple dynamic read demux,
-same-cycle widening/recapture, dynamic same-ID queues, scoreboards, direct
-backend behavior, HDL shapes outside the selected SystemVerilog path, and VHDL
-remain deferred.
+read-data shapes, the all-dynamic multiple-write response-demux shape, and the
+all-dynamic multiple-read single-beat response-demux-only shape described
+below; mixed dynamic/static demux, multiple dynamic read burst-last/read-data
+widening, same-cycle widening/recapture, dynamic same-ID queues, scoreboards,
+direct backend behavior, HDL shapes outside the selected SystemVerilog path,
+and VHDL remain deferred.
 
 Post dynamic write ID selector:
 [AXI_IAL2_MANAGER_POST_DYNAMIC_WRITE_ID_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_DYNAMIC_WRITE_ID_NEXT_SLICE_SELECTION.md)
@@ -6662,9 +6665,11 @@ capture, single-active selected-ID/busy ownership, raw accepted read response
 plus `RID == captured_id` completion, generated busy release, read-specific
 dynamic assertions, and `bounded_dynamic_read_rid_demux_contract` report
 vocabulary. The burst-last/`RLAST` sibling now ships under `.231`; dynamic
-read-data routing, burst-length/runtime validation, multiple dynamic reads,
-mixed dynamic/static read demux, same-cycle recapture, same-ID ordering,
-queues, scoreboards, direct backend behavior, and VHDL remain deferred.
+read-data routing, burst-length/runtime validation, and the bounded multiple
+dynamic read single-beat response-demux-only sibling now ship under later
+leaves. Multiple dynamic read burst-last/read-data widening, mixed
+dynamic/static read demux, same-cycle recapture, same-ID ordering, queues,
+scoreboards, direct backend behavior, and VHDL remain deferred.
 
 Dynamic read transaction-ID capture behavior:
 [AXI_IAL2_MANAGER_DYNAMIC_READ_TRANSACTION_ID_CAPTURE_BEHAVIOR](../../AXI_IAL2_MANAGER_DYNAMIC_READ_TRANSACTION_ID_CAPTURE_BEHAVIOR.md)
@@ -6891,10 +6896,12 @@ generates per-transaction selected-ID/busy state, admitted `AWID` capture,
 matched `BID` completion pulses, busy release rules, request onehot0
 assertions, active-ID uniqueness assertions, request no-active-same-ID
 assertions, response active-match assertions, and response unique-match
-assertions. Multiple dynamic read demux, mixed dynamic/static demux,
-same-cycle request widening beyond onehot0, dynamic same-ID queues,
-scoreboards, direct backend behavior, backend-language variants, and VHDL
-remain deferred.
+assertions. Multiple dynamic read single-beat response-demux now ships under
+`.251`; multiple dynamic read burst-last/`RLAST`, read-data, burst-length,
+runtime validation, and multi-beat output-bank widening remain deferred along
+with mixed dynamic/static demux, same-cycle request widening beyond onehot0,
+dynamic same-ID queues, scoreboards, direct backend behavior, backend-language
+variants, and VHDL.
 Post multiple dynamic write response-demux selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_WRITE_RESPONSE_DEMUX_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_WRITE_RESPONSE_DEMUX_NEXT_SLICE_SELECTION.md)
 selects `.249`, readiness audit for multiple dynamic read response-demux. The
@@ -6918,6 +6925,21 @@ all read transactions in the selected family to be dynamic, keeps same-cycle
 dynamic read requests onehot0, requires active captured dynamic read IDs to be
 pairwise unique, and defers burst-last/`RLAST`, read-data, burst-length,
 runtime validation, and multi-beat output banks over multiple dynamic reads.
+Multiple dynamic read response-demux behavior:
+[AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_READ_RESPONSE_DEMUX_BEHAVIOR](../../AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_READ_RESPONSE_DEMUX_BEHAVIOR.md)
+ships `.251`, generated bounded multiple dynamic read single-beat
+response-demux. The support-accounted sample
+`ppif/axi_manager_capacity_status_dynamic_read_response_demux_multi.ppif`
+uses explicit `response-demux.read` with `response-scope single-beat`, two
+all-dynamic read transactions, shared `ARID`/`RID` family signals,
+per-transaction selected-ID/busy state, admitted `ARID` capture, generated
+matched-`RID` completion pulses, busy release rules, request onehot0,
+request no-active-same-ID, active-ID uniqueness, active-match, unique-match,
+and completion-active assertions. Multiple dynamic read burst-last/`RLAST`,
+read-data, burst-length/runtime validation, multi-beat output banks, mixed
+dynamic/static demux, same-cycle widening, same-cycle release-and-recapture,
+dynamic same-ID queues, scoreboards, direct backend behavior, backend-language
+variants, and VHDL remain later exact owners.
 
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)

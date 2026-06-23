@@ -10,10 +10,10 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `HEAD after IAL2-FEATURE-COMPLETENESS-FRONTIER.250 commit` - `IAL2-FEATURE-COMPLETENESS-FRONTIER.250: select multiple dynamic read demux`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.251` generates bounded multiple dynamic read single-beat response-demux; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.250` selected `.251`, direct generated behavior for bounded multiple dynamic read single-beat response-demux with all-dynamic read transactions, onehot0 same-cycle requests, and pairwise unique active dynamic read IDs.
-- in_flight_uncommitted: none after the `.250` commit workflow. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
+- latest_commit: `HEAD after IAL2-FEATURE-COMPLETENESS-FRONTIER.251 commit` - `IAL2-FEATURE-COMPLETENESS-FRONTIER.251: ship multiple dynamic read demux`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.252` selects the next exact owner after bounded multiple dynamic read single-beat response-demux; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.251` shipped generated bounded multiple dynamic read single-beat response-demux with all-dynamic read transactions, per-transaction selected-ID/busy state, admitted `ARID` capture, matched `RID` completion pulses, onehot0 same-cycle requests, pairwise unique active dynamic read IDs, support-accounted PPIF sample, docs, and focused validation.
+- in_flight_uncommitted: none after the `.251` commit workflow. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
 
 ## Notes

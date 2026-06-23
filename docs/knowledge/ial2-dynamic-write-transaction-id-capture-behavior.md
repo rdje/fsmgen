@@ -36,7 +36,8 @@ assertions.
 Metadata-only `(id dynamic)` remains supported when no behavior clause consumes
 it. The single-active write sample remains supported, while later dynamic
 leaves ship selected single-active dynamic read matching, selected dynamic
-read-data shapes, and bounded all-dynamic multiple write response-demux.
-Mixed dynamic/static response demux, multiple dynamic read demux, same-cycle
-widening/recapture, dynamic same-ID queues, scoreboards, direct backend
-behavior, and VHDL remain residue.
+read-data shapes, bounded all-dynamic multiple write response-demux, and
+bounded all-dynamic multiple read single-beat response-demux.
+Mixed dynamic/static response demux, multiple dynamic read burst-last/read-data
+widening, same-cycle widening/recapture, dynamic same-ID queues, scoreboards,
+direct backend behavior, and VHDL remain residue.
