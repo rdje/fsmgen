@@ -7467,6 +7467,19 @@ runtime assertions per covered transaction. Reports use
 next mixed dynamic/static frontier selector after generated mixed multi-beat
 output banks.
 
+Post mixed dynamic/static multi-beat selector:
+[AXI_IAL2_MANAGER_POST_MIXED_DYNAMIC_STATIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MIXED_DYNAMIC_STATIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
+selects `.293`, readiness audit for multiple mixed dynamic/static transaction
+cardinality after the one-dynamic plus one-concrete-static mixed path reached
+multi-beat output banks. The audit must decide the first bounded
+cardinality-widening owner, static concrete-ID reservation-list rules,
+dynamic capture exclusion for all selected static IDs, generated ownership
+assertions, report vocabulary, diagnostics, public sample/support-accounting
+names, focused validation, rollback, and explicit residue. Same-cycle
+widening, release-and-recapture, dynamic same-ID queues, scoreboards, direct
+backend behavior, backend-language variants, and VHDL remain later exact
+owners.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same
