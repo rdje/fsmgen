@@ -7593,6 +7593,19 @@ list-shaped `mixed_transactions`/`static_id_reservations`, dynamic capture
 exclusions for all selected static IDs, raw `RID` ownership assertions, and
 final `RID && RLAST` completion pulses for `r0`, `r1`, and `r2`.
 
+Multiple mixed dynamic/static read RLAST behavior:
+[AXI_IAL2_MANAGER_MULTIPLE_MIXED_DYNAMIC_STATIC_READ_RLAST_RESPONSE_DEMUX_BEHAVIOR](../../AXI_IAL2_MANAGER_MULTIPLE_MIXED_DYNAMIC_STATIC_READ_RLAST_RESPONSE_DEMUX_BEHAVIOR.md)
+ships `.303`. The public sample
+`ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static_burst_last.ppif`
+uses existing `response-demux.read` syntax with `response-scope burst-last`,
+one one-bit `last-signal`, one dynamic read transaction, and two concrete
+static read transactions. FSMGen now emits dynamic selected-ID/busy state,
+per-static busy state, dynamic capture exclusions for static IDs `4'd3` and
+`4'd5`, generated final-beat `RID && RLAST` completion pulses for `r0`,
+`r1`, and `r2`, pairwise raw `RID` response unique-match assertions, and
+list-shaped mixed transaction/static-ID reservation report fields while
+preserving the `.276`, `.280`, and `.299` public report contracts.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same

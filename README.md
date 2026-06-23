@@ -375,7 +375,17 @@ concrete static reads under existing `response-demux.read` syntax with
 completion source `generated_multi_mixed_dynamic_static_read_demux_last_beat`,
 list-shaped mixed/static-ID reservation fields, raw `RID` ownership
 assertions, and final `RID && RLAST` completion pulses for `r0`, `r1`, and
-`r2`. No behavior
+`r2`. `.303` now ships that bounded multiple mixed read burst-last behavior
+through support-accounted public sample
+`ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static_burst_last.ppif`.
+The generated behavior emits dynamic selected-ID/busy state, per-static busy
+state, dynamic capture exclusions for static IDs `4'd3` and `4'd5`, onehot0
+request assertions across all selected read transactions, three final-beat
+`RID && RLAST` completion pulses, pairwise raw `RID` unique-match assertions,
+and list-shaped report fields while preserving the `.276`, `.280`, and `.299`
+public report contracts. `.303` selected `.304`, the next exact IAL2
+feature-completeness selector after widened mixed read burst-last behavior.
+No behavior
 changed in `.273`, `.274`, `.275`,
 `.277`, `.278`, `.279`, `.281`,
 `.282`, `.283`, `.285`, `.286`, `.288`, `.290`, `.292`, `.293`, `.294`, `.296`, `.297`, `.298`, `.300`, `.301`, or `.302`.
