@@ -7344,6 +7344,24 @@ burst-length/runtime validation, multi-beat output banks, multiple mixed
 transactions, same-cycle widening, queues, scoreboards, direct backend,
 backend-language variants, and VHDL as later owners.
 
+Mixed dynamic/static read-data behavior:
+[AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_READ_DATA_BEHAVIOR](../../AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_READ_DATA_BEHAVIOR.md)
+ships `.284`, generated bounded scalar read-data capture over generated mixed
+dynamic/static read response-demux. The support-accounted public samples are
+`ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_read_data.ppif`
+for scalar single-beat `RDATA`/`RRESP` capture, and
+`ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_burst_last_read_data.ppif`
+for scalar last-beat capture. The generated capture covers exactly one
+dynamic read transaction followed by one concrete static read transaction,
+guards each scalar data/status update only with that transaction's generated
+mixed demux completion pulse, and reports
+`generated_mixed_dynamic_static_read_response_demux_completion_pulse` or
+`generated_mixed_dynamic_static_read_response_demux_last_beat_completion_pulse`.
+Burst-length/runtime validation, multi-beat output banks, multiple mixed
+transactions, same-cycle widening, release-and-recapture, dynamic same-ID
+queues, scoreboards, direct backend behavior, backend-language variants, and
+VHDL remain later owners.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same

@@ -2219,10 +2219,15 @@ bounded scalar read-data over generated mixed dynamic/static read
 response-demux, after finding the read-data helper substrate close but not
 contract-complete for the new mixed completion sources. `.283` selected
 `.284`, direct generated behavior for bounded scalar read-data over generated
-mixed dynamic/static read response-demux. The selected future samples are
+mixed dynamic/static read response-demux. `.284` now ships that behavior
+through support-accounted public samples
 `ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_read_data.ppif`
 and
 `ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_burst_last_read_data.ppif`.
+The shipped capture covers the ordered dynamic-plus-static transaction set,
+guards scalar `RDATA`/`RRESP` updates only with generated mixed demux
+completion pulses, and reports the mixed-specific single-beat and last-beat
+completion-validity strings.
 No behavior changed in `.270`, `.271`, `.273`, `.274`, `.275`, `.277`, `.278`,
 `.279`, `.281`, `.282`, or `.283`.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
