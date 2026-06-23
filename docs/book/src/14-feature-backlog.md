@@ -7707,6 +7707,18 @@ over this same multiple mixed raw-`ARLEN` boundary; runtime validation,
 multi-beat output banks, broader cardinalities, same-cycle widening,
 queues/scoreboards, backend variants, and VHDL remain deferred.
 
+Multiple mixed dynamic/static runtime-validation readiness audit:
+[AXI_IAL2_MANAGER_MULTIPLE_MIXED_DYNAMIC_STATIC_READ_DATA_RUNTIME_VALIDATION_READINESS_AUDIT](../../AXI_IAL2_MANAGER_MULTIPLE_MIXED_DYNAMIC_STATIC_READ_DATA_RUNTIME_VALIDATION_READINESS_AUDIT.md)
+selects `.312`, direct bounded implementation of runtime beat-count/`RLAST`
+validation over generated multiple mixed dynamic/static raw-`ARLEN`
+last-beat read-data. The audit changes no behavior in `.311`. It finds that
+the existing runtime-validation machinery is transaction-list driven across
+`r0`, `r1`, and `r2` once the multiple mixed last-beat coverage branch admits
+`validation runtime-assertion`. The selected public sample is
+`ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static_burst_last_read_data_burst_length_runtime_assertion.ppif`;
+multi-beat output banks, broader cardinalities, same-cycle widening,
+queues/scoreboards, backend variants, and VHDL remain deferred.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same
