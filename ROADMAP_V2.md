@@ -2371,17 +2371,20 @@ changes no behavior; it chooses the audit because runtime validation and
 multi-beat output banks over the multiple mixed shape depend on first settling
 request-time raw-`ARLEN` capture for the dynamic transaction and both concrete
 static transactions.
-`.309` now selects `.310`, direct bounded implementation of report-only
+`.309` selected `.310`, direct bounded implementation of report-only
 raw-`ARLEN` burst-length capture over generated multiple mixed dynamic/static
-read burst-last response-demux and scalar last-beat read-data. The audit found
-that the generic burst-length normalization, per-transaction storage/rule
-generation, and report artifact lists already scale across `r0`, `r1`, and
-`r2` once the multiple mixed coverage branch admits last-beat
-`validation report-only` burst metadata. The selected public sample is
+read burst-last response-demux and scalar last-beat read-data. `.310` now
+ships that generated behavior through the support-accounted public sample
 `ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static_burst_last_read_data_burst_length.ppif`;
-runtime validation, multi-beat output banks, broader cardinalities,
-same-cycle widening, queues/scoreboards, backend variants, and VHDL remain
-deferred.
+the generated IAL1 adds `axi0_arlen`, raw request-time storage
+`axi0_r0_arlen_q`, `axi0_r1_arlen_q`, and `axi0_r2_arlen_q`, request-guarded
+burst-length capture rules for `r0`, `r1`, and `r2`, report artifact lists,
+and scalar last-beat payload capture still guarded only by generated multiple
+mixed `RID && RLAST` completion pulses. `.310` selected `.311`, readiness
+audit for generated runtime beat-count/`RLAST` validation over the same
+multiple mixed raw-`ARLEN` boundary. Runtime validation, multi-beat output
+banks, broader cardinalities, same-cycle widening, queues/scoreboards,
+backend variants, and VHDL remain deferred.
 No behavior changed in
 `.270`, `.271`, `.273`, `.274`, `.275`, `.277`, `.278`,
 `.279`, `.281`, `.282`, `.283`, `.285`, `.286`, `.288`, `.290`, `.292`, or

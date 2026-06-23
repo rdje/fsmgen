@@ -7691,6 +7691,22 @@ runtime validation, multi-beat output banks, broader cardinalities,
 same-cycle widening, queues/scoreboards, backend variants, and VHDL remain
 deferred.
 
+Multiple mixed dynamic/static burst-length behavior:
+[AXI_IAL2_MANAGER_MULTIPLE_MIXED_DYNAMIC_STATIC_READ_DATA_BURST_LENGTH_BEHAVIOR](../../AXI_IAL2_MANAGER_MULTIPLE_MIXED_DYNAMIC_STATIC_READ_DATA_BURST_LENGTH_BEHAVIOR.md)
+ships `.310`. The public sample
+`ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static_burst_last_read_data_burst_length.ppif`
+adds generated report-only raw-`ARLEN` capture to the `.307` multiple mixed
+last-beat read-data shape. FSMGen emits generated `axi0_arlen`, raw
+request-time storage `axi0_r0_arlen_q`, `axi0_r1_arlen_q`, and
+`axi0_r2_arlen_q`, one request-guarded burst-length capture rule per
+transaction, and report artifact lists for the generated ARLEN input,
+storage, and rules. Scalar last-beat `RDATA`/`RRESP` capture remains guarded
+only by generated multiple mixed `RID && RLAST` completions. `.310` selects
+`.311`, readiness audit for generated runtime beat-count/`RLAST` validation
+over this same multiple mixed raw-`ARLEN` boundary; runtime validation,
+multi-beat output banks, broader cardinalities, same-cycle widening,
+queues/scoreboards, backend variants, and VHDL remain deferred.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same
