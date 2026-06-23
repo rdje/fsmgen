@@ -7412,6 +7412,24 @@ increments, four assertions per transaction, and report/residue updates.
 Mixed multi-beat output banks, multiple mixed transactions, direct backend
 behavior, backend-language variants, and VHDL remain later exact owners.
 
+Mixed dynamic/static read-data runtime-validation behavior:
+[AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_READ_DATA_RUNTIME_VALIDATION_BEHAVIOR](../../AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_READ_DATA_RUNTIME_VALIDATION_BEHAVIOR.md)
+ships `.289`, generated runtime beat-count/`RLAST` validation over generated
+mixed dynamic/static read burst-last response-demux and scalar last-beat
+read-data. The support-accounted public sample is
+`ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_burst_last_read_data_burst_length_runtime_assertion.ppif`.
+FSMGen emits `axi0_arlen`, raw `ARLEN` storage, expected-beat storage,
+read-beat counters, request-time `ARLEN + 1` initialization, raw matched-beat
+increments for the dynamic captured `RID` and static concrete `RID`, and four
+runtime assertions per covered transaction. Scalar `RDATA`/`RRESP` capture
+remains guarded only by generated mixed `RID && RLAST` completion pulses. The
+report keeps `bounded_last_beat_read_data_contract`,
+`runtime_assertion`, `response_demux_matched_read_beat`, generated beat-count
+artifact lists, and removes `generated_beat_count_validation` from read-data
+residue. Mixed multi-beat output banks, multiple mixed transactions, direct
+backend behavior, backend-language variants, and VHDL remain later exact
+owners.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same

@@ -2241,6 +2241,15 @@ burst-length validation with the mixed last-beat completion-validity string.
 beat-count/`RLAST` validation over that same mixed dynamic/static
 raw-`ARLEN` scalar last-beat read-data shape, after finding the generic
 runtime machinery ready and no separate public contract selection needed.
+`.289` now ships that runtime sibling through support-accounted public sample
+`ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_burst_last_read_data_burst_length_runtime_assertion.ppif`.
+The generated behavior emits expected-beat storage, read-beat counters,
+request-time `ARLEN + 1` initialization, raw matched-read-beat counter
+increments for the dynamic captured `RID` and static concrete `RID`, four
+runtime assertions per covered transaction, and report/residue updates with
+`runtime_assertion`, `response_demux_matched_read_beat`, and no
+`generated_beat_count_validation` residue while preserving `.287`
+report-only behavior.
 No behavior changed in `.270`, `.271`, `.273`, `.274`, `.275`, `.277`, `.278`,
 `.279`, `.281`, `.282`, `.283`, `.285`, `.286`, or `.288`.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2

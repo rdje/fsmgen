@@ -10,9 +10,9 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.288: audit mixed runtime readiness`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.289` implements runtime beat-count/RLAST validation over generated mixed dynamic/static last-beat read-data; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.288` selected `.289`, direct bounded implementation of mixed dynamic/static runtime beat-count/RLAST validation after `.287` shipped report-only raw-ARLEN capture; `.287` shipped generated report-only raw-ARLEN burst-length capture over generated mixed dynamic/static read burst-last response-demux and scalar last-beat read-data; `.286` selected `.287`.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.289: ship mixed runtime validation`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.290` audits mixed dynamic/static multi-beat output-bank readiness after generated mixed runtime validation; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.289` shipped generated runtime beat-count/RLAST validation over generated mixed dynamic/static read burst-last response-demux and scalar last-beat read-data while preserving `.287` report-only behavior; `.288` selected `.289`; `.287` shipped generated report-only raw-ARLEN burst-length capture over generated mixed dynamic/static read burst-last response-demux and scalar last-beat read-data.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
 
