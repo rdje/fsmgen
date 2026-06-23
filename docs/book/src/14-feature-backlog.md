@@ -6981,6 +6981,21 @@ dynamic/static demux, same-cycle widening, release-and-recapture, dynamic
 same-ID queues, scoreboards, direct backend behavior, backend-language
 variants, and VHDL remain later exact owners.
 
+Multiple dynamic read RLAST response-demux behavior:
+[AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_READ_RLAST_RESPONSE_DEMUX_BEHAVIOR](../../AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_READ_RLAST_RESPONSE_DEMUX_BEHAVIOR.md)
+ships generated bounded multiple dynamic read burst-last/`RLAST`
+response-demux for
+`ppif/axi_manager_capacity_status_dynamic_read_response_demux_multi_burst_last.ppif`.
+The report mode is
+`bounded_multi_dynamic_read_rid_rlast_demux_contract`. The generated logic
+captures admitted `ARID` into per-transaction selected-ID/busy state, enforces
+onehot0 same-cycle dynamic read requests and pairwise unique active dynamic
+IDs, completes each transaction only on final `RID && RLAST`, and keeps raw
+`RID` beat active/unique assertions unqualified by `RLAST` so non-last beats
+remain checked but do not complete the transaction. Read-data,
+burst-length/runtime validation, and multi-beat output banks over multiple
+dynamic read demux remain explicit future owners.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same

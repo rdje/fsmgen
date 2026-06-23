@@ -2137,7 +2137,13 @@ bounded all-dynamic multi-active read burst-last/`RLAST` response-demux
 contract, with read-data, burst-length/runtime validation, multi-beat output
 banks, mixed dynamic/static demux, same-cycle widening, release-and-recapture,
 dynamic same-ID queues, scoreboards, direct backend, backend-language
-variants, and VHDL still deferred.
+variants, and VHDL still deferred. `.255` ships that generated behavior as
+`bounded_multi_dynamic_read_rid_rlast_demux_contract` with raw `RID` beat
+active/unique assertions, final `RID && RLAST` completion/release guards, and
+the support-accounted public sample
+`ppif/axi_manager_capacity_status_dynamic_read_response_demux_multi_burst_last.ppif`.
+`.256` will select the next exact owner for the remaining dynamic read-side
+residue.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.

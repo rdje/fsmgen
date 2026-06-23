@@ -286,6 +286,32 @@ subtest 'PPIF adapter parses AXI manager multiple dynamic read response-demux be
     assert_dynamic_read_response_demux_multi_report($result->{report}, 'adapter report');
 };
 
+subtest 'PPIF adapter parses AXI manager multiple dynamic read burst-last response-demux behavior' => sub {
+    my $sample_path = sample_capacity_dynamic_read_response_demux_multi_burst_last_ppif_path();
+    ok(-f $sample_path, 'tracked runnable PPIF capacity/status multiple dynamic read burst-last response-demux sample exists');
+
+    my $result = FSM::Adapter::IAL2::PPIF->new()->parse_source(sample_capacity_dynamic_read_response_demux_multi_burst_last_ppif(), $sample_path);
+    my $isf = $result->{generated_ial1}{text};
+
+    is($result->{kind}, 'protocol_intent.axi_manager_capacity_status', 'multiple dynamic read burst-last response-demux sample still uses the capacity/status generator');
+    is($result->{report}{source_object}{id}, 'axi-manager-capacity-status-dynamic-read-response-demux-multi-burst-last', 'multiple dynamic read burst-last response-demux source object id is preserved');
+    is($result->{report}{source_object}{intent_name}, 'axi_manager_capacity_status_dynamic_read_response_demux_multi_burst_last', 'multiple dynamic read burst-last response-demux source intent name is preserved');
+    like($isf, qr/\(input axi0_r0_request\)/, 'multiple dynamic read burst-last response-demux generated IAL1 declares r0 request');
+    like($isf, qr/\(input axi0_r1_request\)/, 'multiple dynamic read burst-last response-demux generated IAL1 declares r1 request');
+    like($isf, qr/\(input axi0_arid \(width 4\)\)/, 'multiple dynamic read burst-last response-demux generated IAL1 declares ARID');
+    like($isf, qr/\(input axi0_rid \(width 4\)\)/, 'multiple dynamic read burst-last response-demux generated IAL1 declares RID');
+    like($isf, qr/\(input axi0_rlast\)/, 'multiple dynamic read burst-last response-demux generated IAL1 declares RLAST');
+    unlike($isf, qr/\(input axi0_r0_complete\b/, 'multiple dynamic read burst-last response-demux generated IAL1 treats r0 completion as generated');
+    unlike($isf, qr/\(input axi0_r1_complete\b/, 'multiple dynamic read burst-last response-demux generated IAL1 treats r1 completion as generated');
+    like($isf, qr/\(output axi0_r0_complete\)/, 'multiple dynamic read burst-last response-demux generated IAL1 exposes r0 matched last-beat completion');
+    like($isf, qr/\(output axi0_r1_complete\)/, 'multiple dynamic read burst-last response-demux generated IAL1 exposes r1 matched last-beat completion');
+    like($isf, qr/\(rule axi0_r0_response_demux \(& axi0_read_complete axi0_r0_dynamic_busy_q \(== axi0_rid axi0_r0_dynamic_id_q\) axi0_rlast\)/, 'multiple dynamic read burst-last response-demux generated IAL1 matches r0 RID and RLAST before completion');
+    like($isf, qr/\(rule axi0_r1_response_demux \(& axi0_read_complete axi0_r1_dynamic_busy_q \(== axi0_rid axi0_r1_dynamic_id_q\) axi0_rlast\)/, 'multiple dynamic read burst-last response-demux generated IAL1 matches r1 RID and RLAST before completion');
+    like($isf, qr/\(assert \(\| \(! axi0_read_complete\) \(\| \(& axi0_r0_dynamic_busy_q \(== axi0_rid axi0_r0_dynamic_id_q\)\) \(& axi0_r1_dynamic_busy_q \(== axi0_rid axi0_r1_dynamic_id_q\)\)\)\) "axi0 read dynamic response matches active captured ID"\)/, 'multiple dynamic read burst-last active-response assertion remains raw RID based');
+    like($isf, qr/"axi0 read dynamic response matches at most one captured ID"/, 'multiple dynamic read burst-last response-demux generated IAL1 emits raw unique-match assertion');
+    assert_dynamic_read_response_demux_multi_burst_last_report($result->{report}, 'adapter report');
+};
+
 subtest 'PPIF adapter parses AXI manager dynamic read burst-last response-demux behavior' => sub {
     my $sample_path = sample_capacity_dynamic_read_response_demux_burst_last_ppif_path();
     ok(-f $sample_path, 'tracked runnable PPIF capacity/status dynamic read burst-last response-demux sample exists');
@@ -2694,6 +2720,20 @@ subtest 'CLI emits IAL2 report JSON for AXI manager multiple dynamic read respon
     is($report->{source_object}{intent_name}, 'axi_manager_capacity_status_dynamic_read_response_demux_multi', 'multiple dynamic read response-demux report carries the PPIF top-level intent name');
     assert_dynamic_read_response_demux_multi_report($report, 'CLI report');
     is_deeply($report->{generated_artifacts}{ial0}{files}, ['axi0_capacity_status.fsm'], 'multiple dynamic read response-demux keeps the generated .fsm artifact name stable');
+};
+
+subtest 'CLI emits IAL2 report JSON for AXI manager multiple dynamic read burst-last response-demux .ppif' => sub {
+    my ($success, undef, undef, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--emit-schedule-json', sample_capacity_dynamic_read_response_demux_multi_burst_last_ppif_path()],
+    );
+
+    ok($success, '--emit-schedule-json succeeds for capacity/status multiple dynamic read burst-last response-demux .ppif');
+    is(join('', @{$stderr_buf || []}), '', 'capacity/status multiple dynamic read burst-last response-demux report keeps stderr clean');
+    my $report = decode_json(join('', @{$stdout_buf || []}));
+    is($report->{schema}, 'fsmgen.ial2.protocol_intent.axi_manager_capacity_status.v1', 'CLI keeps the capacity/status report schema');
+    is($report->{source_object}{intent_name}, 'axi_manager_capacity_status_dynamic_read_response_demux_multi_burst_last', 'multiple dynamic read burst-last response-demux report carries the PPIF top-level intent name');
+    assert_dynamic_read_response_demux_multi_burst_last_report($report, 'CLI report');
+    is_deeply($report->{generated_artifacts}{ial0}{files}, ['axi0_capacity_status.fsm'], 'multiple dynamic read burst-last response-demux keeps the generated .fsm artifact name stable');
 };
 
 subtest 'CLI emits IAL2 report JSON for AXI manager dynamic read burst-last response-demux .ppif' => sub {
@@ -5243,6 +5283,14 @@ subtest 'CLI check JSON and semantic JSON support-account multiple dynamic read 
     );
 };
 
+subtest 'CLI check JSON and semantic JSON support-account multiple dynamic read burst-last response-demux .ppif separately' => sub {
+    assert_ppif_strict_json_support_case(
+        owner    => 'capacity/status multiple dynamic read burst-last response-demux',
+        path     => \&sample_capacity_dynamic_read_response_demux_multi_burst_last_ppif_path,
+        entry_id => 'intent.ppif_axi_manager_capacity_status_dynamic_read_response_demux_multi_burst_last',
+    );
+};
+
 subtest 'CLI check JSON and semantic JSON support-account dynamic read-data .ppif separately' => sub {
     assert_ppif_strict_json_support_case(
         owner    => 'capacity/status dynamic read-data',
@@ -7050,6 +7098,10 @@ sub sample_capacity_dynamic_read_response_demux_multi_ppif_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_dynamic_read_response_demux_multi.ppif');
 }
 
+sub sample_capacity_dynamic_read_response_demux_multi_burst_last_ppif_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_dynamic_read_response_demux_multi_burst_last.ppif');
+}
+
 sub sample_capacity_dynamic_read_response_demux_burst_last_ppif_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_dynamic_read_response_demux_burst_last.ppif');
 }
@@ -7352,6 +7404,10 @@ sub sample_capacity_dynamic_read_response_demux_ppif {
 
 sub sample_capacity_dynamic_read_response_demux_multi_ppif {
     return slurp(sample_capacity_dynamic_read_response_demux_multi_ppif_path());
+}
+
+sub sample_capacity_dynamic_read_response_demux_multi_burst_last_ppif {
+    return slurp(sample_capacity_dynamic_read_response_demux_multi_burst_last_ppif_path());
 }
 
 sub sample_capacity_dynamic_read_response_demux_burst_last_ppif {
@@ -8396,6 +8452,89 @@ sub assert_dynamic_read_response_demux_multi_report {
             ],
         },
         "$owner reports multiple dynamic read capture state and rule ownership",
+    );
+    is_deeply(
+        $demux->{residue},
+        [qw(same_id_ordering read_data_interleaving bursts)],
+        "$owner keeps unsupported same-ID, read-data, and burst residue explicit",
+    );
+    my %residue = map { $_->{id} => 1 } @{$report->{unsupported_residue}};
+    ok($residue{dynamic_transaction_id_behavior}, "$owner keeps future dynamic behavior residue visible");
+}
+
+sub assert_dynamic_read_response_demux_multi_burst_last_report {
+    my ($report, $owner) = @_;
+    my $demux = $report->{response_demux};
+    my $read = $demux->{read};
+
+    is(scalar(@{$report->{transactions}}), 2, "$owner reports two dynamic read RLAST transactions");
+    is_deeply(
+        [map { $_->{id}{implementation_status} } @{$report->{transactions}}],
+        [qw(generated_capture_matching generated_capture_matching)],
+        "$owner reports generated capture/matching dynamic ID ownership for both RLAST reads",
+    );
+    is($demux->{mode}, 'bounded_multi_dynamic_read_rid_rlast_demux_contract', "$owner marks multiple dynamic read RID/RLAST-demux contract mode");
+    ok($demux->{generated_behavior}, "$owner marks multiple dynamic read RLAST response-demux behavior generated");
+    is($read->{mode}, 'bounded_multi_dynamic_read_rid_rlast_demux_contract', "$owner marks read multiple dynamic RLAST demux mode");
+    ok($read->{generated_behavior}, "$owner marks read multiple dynamic RLAST demux behavior generated");
+    is($read->{response_event}, 'axi0_read_complete', "$owner reports the raw read response beat event");
+    is($read->{response_event_role}, 'raw_accepted_read_response_beat', "$owner reports the response-event role");
+    is($read->{response_scope}, 'burst_last', "$owner reports the selected burst-last response scope");
+    is($read->{response_id_signal}, 'axi0_rid', "$owner reports RID as the response ID signal");
+    is($read->{response_id_direction}, 'generated_input', "$owner reports response ID direction as generated input");
+    is($read->{last_signal}, 'axi0_rlast', "$owner reports RLAST as the last signal");
+    is($read->{last_signal_direction}, 'generated_input', "$owner reports RLAST direction as generated input");
+    is($read->{last_signal_width}, 1, "$owner reports RLAST width");
+    is($read->{transaction_completion_source}, 'generated_dynamic_demux_last_beat', "$owner reports generated dynamic last-beat demux completion ownership");
+    is($read->{transaction_completion_semantics}, 'matched_dynamic_id_and_last_signal', "$owner reports matched dynamic ID and last-signal completion semantics");
+    is($read->{beat_valid_output}, 'none', "$owner reports no per-beat valid output");
+    is($read->{burst_length_source}, 'rlast_only', "$owner reports RLAST-only burst boundary");
+    is($read->{burst_length_validation}, 'not_generated', "$owner reports no burst-length validation");
+    is_deeply($read->{dynamic_transactions}, [qw(r0 r1)], "$owner reports the covered dynamic read RLAST transactions");
+    is_deeply($read->{generated_rules}, [qw(axi0_r0_response_demux axi0_r1_response_demux)], "$owner reports generated dynamic RLAST demux rules");
+    is_deeply($read->{generated_completion_signals}, [qw(axi0_r0_complete axi0_r1_complete)], "$owner reports generated dynamic RLAST completion pulses");
+    is_deeply(
+        $read->{generated_assertions},
+        [qw(
+            axi0_r0_dynamic_request_not_busy
+            axi0_r1_dynamic_request_not_busy
+            axi0_read_dynamic_request_onehot0
+            axi0_r0_dynamic_request_no_active_same_id
+            axi0_r1_dynamic_request_no_active_same_id
+            axi0_r0_r1_read_dynamic_active_id_unique
+            axi0_read_dynamic_response_active_match
+            axi0_r0_r1_read_dynamic_response_unique_match
+            axi0_r0_dynamic_completion_active
+            axi0_r1_dynamic_completion_active
+        )],
+        "$owner reports generated multiple dynamic RLAST assertions",
+    );
+    is_deeply(
+        $read->{dynamic_capture},
+        {
+            request_id_source           => 'axi0_arid',
+            capture_event_source        => 'admitted_dynamic_read_request',
+            ownership                   => 'multi_active_unique_dynamic_read_ids',
+            simultaneous_request_policy => 'onehot0_dynamic_read_request',
+            same_id_conflict_policy     => 'active_dynamic_ids_must_be_unique',
+            transactions                => [
+                {
+                    transaction        => 'r0',
+                    selected_id_signal => 'axi0_r0_dynamic_id_q',
+                    busy_signal        => 'axi0_r0_dynamic_busy_q',
+                    capture_rule       => 'axi0_r0_dynamic_id_capture',
+                    release_rule       => 'axi0_r0_dynamic_id_release',
+                },
+                {
+                    transaction        => 'r1',
+                    selected_id_signal => 'axi0_r1_dynamic_id_q',
+                    busy_signal        => 'axi0_r1_dynamic_busy_q',
+                    capture_rule       => 'axi0_r1_dynamic_id_capture',
+                    release_rule       => 'axi0_r1_dynamic_id_release',
+                },
+            ],
+        },
+        "$owner reports multiple dynamic read RLAST capture state and rule ownership",
     );
     is_deeply(
         $demux->{residue},
