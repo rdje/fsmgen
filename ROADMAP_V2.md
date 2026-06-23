@@ -2472,6 +2472,14 @@ response-demux. The selector changes no behavior and reuses existing
 `response-demux.read` syntax, public sample stem
 `ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static3.ppif`,
 and report mode `bounded_multi_mixed_dynamic_static_read_rid_demux_contract`.
+`.322` now ships that public sample and generated read single-beat behavior.
+Mixed dynamic/static read single-beat response-demux accepts exactly one
+dynamic read transaction plus one, two, or three pairwise-distinct concrete
+static read transactions, emits generated completion pulses/rules for the
+full covered set, records list-shaped static ID reservations/exclusions, and
+keeps the existing multi-mixed read report mode. Burst-last and read-data over
+the three-static read boundary remain fail-closed. `.323` is the next
+exact-owner selector after the three-static mixed read single-beat demux.
 No behavior changed in
 `.270`, `.271`, `.273`, `.274`, `.275`, `.277`, `.278`,
 `.279`, `.281`, `.282`, `.283`, `.285`, `.286`, `.288`, `.290`, `.292`, or
