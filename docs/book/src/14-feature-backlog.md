@@ -7430,6 +7430,22 @@ residue. Mixed multi-beat output banks, multiple mixed transactions, direct
 backend behavior, backend-language variants, and VHDL remain later exact
 owners.
 
+Mixed dynamic/static read-data multi-beat readiness audit:
+[AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_READ_DATA_MULTI_BEAT_READINESS_AUDIT](../../AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_READ_DATA_MULTI_BEAT_READINESS_AUDIT.md)
+selects `.291`, direct bounded implementation of generated mixed
+dynamic/static multi-beat output-bank behavior over the `.289` runtime
+boundary. The audit found no lower-layer prerequisite: `.289` already provides
+the generated mixed `RID && RLAST` response-demux, raw `ARLEN` capture,
+expected-beat storage, counters, raw matched-beat expressions, and runtime
+assertions, while existing multi-beat helpers are transaction-list driven once
+coverage admits `capture-scope multi-beat`. The selected future sample is
+`ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_burst_last_read_data_multi_beat.ppif`.
+It should use `status-policy per-beat`, `status-aggregation worst-observed`,
+`interleaving multi-beat-by-rid`, runtime-assertion `burst-length` metadata,
+and complete dynamic-plus-static output-bank bindings. Multiple mixed
+transactions, same-cycle widening, direct backend behavior,
+backend-language variants, and VHDL remain later exact owners.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same

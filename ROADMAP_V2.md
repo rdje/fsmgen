@@ -2250,8 +2250,12 @@ runtime assertions per covered transaction, and report/residue updates with
 `runtime_assertion`, `response_demux_matched_read_beat`, and no
 `generated_beat_count_validation` residue while preserving `.287`
 report-only behavior.
+`.290` selected `.291`, direct bounded implementation of generated mixed
+dynamic/static multi-beat output banks over the `.289` runtime boundary,
+after finding the existing output-bank machinery transaction-list driven and
+the current blocker local to the mixed coverage predicate.
 No behavior changed in `.270`, `.271`, `.273`, `.274`, `.275`, `.277`, `.278`,
-`.279`, `.281`, `.282`, `.283`, `.285`, `.286`, or `.288`.
+`.279`, `.281`, `.282`, `.283`, `.285`, `.286`, `.288`, or `.290`.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.
