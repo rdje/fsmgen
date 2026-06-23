@@ -2122,9 +2122,12 @@ generated behavior for the bounded all-dynamic read-family `single_beat`
 response-demux-only contract with per-transaction selected-ID/busy state,
 admitted `ARID` capture, matched `RID` completion pulses, request onehot0,
 active dynamic-ID uniqueness, active-match, unique-match, and
-completion-active assertions. `.252` is the next exact-owner selector;
-burst-last/`RLAST`, read-data, burst-length, runtime validation, and
-multi-beat output banks over multiple dynamic reads remain later exact owners.
+completion-active assertions. `.252` selected `.253`, readiness audit for
+multiple dynamic read burst-last/`RLAST` response-demux, because that boundary
+must define raw matched-`RID` beat assertions, selected-ID/busy lifetime across
+non-last beats, and final `RID && RLAST` completion before read-data,
+burst-length/runtime validation, or multi-beat output banks over multiple
+dynamic reads can widen safely.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.

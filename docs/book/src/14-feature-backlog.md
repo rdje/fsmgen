@@ -6940,6 +6940,17 @@ read-data, burst-length/runtime validation, multi-beat output banks, mixed
 dynamic/static demux, same-cycle widening, same-cycle release-and-recapture,
 dynamic same-ID queues, scoreboards, direct backend behavior, backend-language
 variants, and VHDL remain later exact owners.
+Post multiple dynamic read response-demux selector:
+[AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_READ_RESPONSE_DEMUX_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_READ_RESPONSE_DEMUX_NEXT_SLICE_SELECTION.md)
+selects `.253`, readiness audit for multiple dynamic read burst-last/`RLAST`
+response-demux after `.251` shipped the bounded multiple dynamic read
+single-beat boundary. The audit must decide whether all-dynamic multiple-read
+burst-last can be implemented directly, needs contract selection, or needs
+helper/report cleanup first. It must settle raw matched-`RID` beat assertions,
+selected-ID/busy lifetime across non-last beats, one-bit `last-signal`
+ownership, final `RID && RLAST` completion, generated release, validation,
+rollback, and explicit residue before any multiple dynamic read read-data,
+burst-length/runtime, or multi-beat output-bank widening.
 
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
