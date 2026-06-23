@@ -12,30 +12,31 @@ read response-demux into two implementation leaves:
 - select `IAL2-FEATURE-COMPLETENESS-FRONTIER.263`, direct generated
   report-only raw-`ARLEN` burst-length capture over generated multiple dynamic
   read response-demux and scalar last-beat read-data; and
-- reserve `IAL2-FEATURE-COMPLETENESS-FRONTIER.264` for the runtime
+- select `IAL2-FEATURE-COMPLETENESS-FRONTIER.264` as the runtime
   beat-count/`RLAST` assertion sibling after the report-only boundary lands.
 
 This selector changes no parser, generator, PPIF sample, support-accounting
 catalog, validation behavior, generated artifact, test, schedule/check or
 semantic JSON, or HDL behavior.
 
-Implementation status: `IAL2-FEATURE-COMPLETENESS-FRONTIER.263` now implements
+Implementation status: `IAL2-FEATURE-COMPLETENESS-FRONTIER.263` implements
 the report-only half of this split contract; see
 `docs/AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_READ_BURST_LENGTH_BEHAVIOR.md`.
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.264` remains the runtime
-beat-count/`RLAST` sibling owner.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.264` implements the runtime
+beat-count/`RLAST` sibling; see
+`docs/AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_READ_BURST_LENGTH_RUNTIME_BEHAVIOR.md`.
 
 ## Public Source Shapes
 
-The `.263` report-only sample should extend the shipped `.259` last-beat
+The `.263` report-only sample extends the shipped `.259` last-beat
 multiple dynamic read-data sample:
 
 ```text
 ppif/axi_manager_capacity_status_dynamic_read_data_multi_burst_length.ppif
 ```
 
-The `.264` runtime sibling should use the same source shape and change only
-the `burst-length` validation mode:
+The `.264` runtime sibling uses the same source shape and changes only the
+`burst-length` validation mode:
 
 ```text
 ppif/axi_manager_capacity_status_dynamic_read_data_multi_burst_length_runtime_assertion.ppif
@@ -81,7 +82,7 @@ and VHDL remain later exact owners.
 
 ## Report-Only Contract For .263
 
-`.263` should keep the scalar last-beat read-data mode:
+`.263` keeps the scalar last-beat read-data mode:
 
 ```text
 read_data.mode = bounded_last_beat_read_data_contract
@@ -91,7 +92,7 @@ read_data.read.burst_length_source = arlen_signal
 read_data.read.burst_length_validation = report_only
 ```
 
-For the public two-transaction sample, generated burst-length artifacts should
+For the public two-transaction sample, generated burst-length artifacts
 include:
 
 ```text
@@ -110,7 +111,7 @@ are generated in `.263`; `generated_beat_count_validation`,
 
 ## Runtime Contract For .264
 
-`.264` should preserve the `.263` source shape, sample naming, transaction
+`.264` preserves the `.263` source shape, sample naming, transaction
 coverage, raw-`ARLEN` storage, and scalar last-beat payload capture while
 enabling runtime validation:
 
@@ -121,7 +122,7 @@ read_data.read.expected_beat_count_encoding = arlen_plus_one
 read_data.read.beat_count_match_source = response_demux_matched_read_beat
 ```
 
-For each covered dynamic read transaction, runtime generation should add:
+For each covered dynamic read transaction, runtime generation adds:
 
 - expected-beat storage initialized from request-time `ARLEN + 1`;
 - read-beat counter storage initialized to zero on the transaction request;
@@ -140,8 +141,8 @@ payload, per-beat outputs, and `RRESP` aggregation remain future owners.
 
 ## Diagnostics
 
-The later implementation should preserve existing complete-coverage
-diagnostics and make the burst-length/runtime boundary explicit:
+The implementation preserves existing complete-coverage diagnostics and makes
+the burst-length/runtime boundary explicit:
 
 - reject missing read-data bindings for any generated dynamic read demux
   transaction;
@@ -159,13 +160,13 @@ diagnostics and make the burst-length/runtime boundary explicit:
   exact owner.
 
 The existing single-active `.238` report-only and `.240` runtime samples
-remain supported independently and should not be reclassified as multiple
-dynamic coverage.
+remain supported independently and are not reclassified as multiple dynamic
+coverage.
 
 ## Validation Gates
 
-`.263` should include focused syntax, direct CLI, support-accounting, docs,
-and doctrine validation for the report-only sample:
+`.263` includes focused syntax, direct CLI, support-accounting, docs, and
+doctrine validation for the report-only sample:
 
 ```bash
 env -u PERL5LIB perl -Iperl -c perl/FSM/IAL2/ProtocolIntent/AxiManagerCapacityStatus.pm
@@ -188,8 +189,8 @@ git --no-pager diff --check
 scripts/check_doctrines.sh
 ```
 
-`.264` should repeat the direct schedule/check/semantic/verify-HDL probes for
-the runtime sample, prove that `.263` remains report-only, and keep broader
+`.264` repeats the direct schedule/check/semantic/verify-HDL probes for the
+runtime sample, proves that `.263` remains report-only, and keeps broader
 `t/1436`/`t/1437` monoliths non-routine unless host resources allow them under
 the RAM guard.
 

@@ -783,6 +783,45 @@ subtest 'multiple dynamic report-only burst-length read-data contract captures A
     unlike($hdl, qr/read_beat_count_q|expected_beats_q|arlen_within_max/, 'SystemVerilog keeps multiple dynamic report-only burst-length runtime validation ungenerated');
 };
 
+subtest 'multiple dynamic runtime burst-length read-data contract validates each transaction' => sub {
+    my $result = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_dynamic_read_data_multi_burst_length_runtime_assertion());
+    my $isf = $result->{generated_ial1}{text};
+    my $fsm = $result->{generated_ial0}{files}{'axi0_capacity_status.fsm'};
+
+    like($isf, qr/\(rule axi0_r0_response_demux \(& axi0_read_complete axi0_r0_dynamic_busy_q \(== axi0_rid axi0_r0_dynamic_id_q\) axi0_rlast\)\s+\(pulse axi0_r0_complete\)\)/, 'multiple dynamic runtime read-data keeps generated r0 RID/RLAST demux');
+    like($isf, qr/\(rule axi0_r1_response_demux \(& axi0_read_complete axi0_r1_dynamic_busy_q \(== axi0_rid axi0_r1_dynamic_id_q\) axi0_rlast\)\s+\(pulse axi0_r1_complete\)\)/, 'multiple dynamic runtime read-data keeps generated r1 RID/RLAST demux');
+    like($isf, qr/\(var axi0_r0_expected_beats_q \(width 5\)\)/, 'multiple dynamic runtime read-data allocates r0 expected-beat storage');
+    like($isf, qr/\(var axi0_r1_expected_beats_q \(width 5\)\)/, 'multiple dynamic runtime read-data allocates r1 expected-beat storage');
+    like($isf, qr/\(var axi0_r0_read_beat_count_q \(width 5\)\)/, 'multiple dynamic runtime read-data allocates r0 beat-count storage');
+    like($isf, qr/\(var axi0_r1_read_beat_count_q \(width 5\)\)/, 'multiple dynamic runtime read-data allocates r1 beat-count storage');
+    like($isf, qr/\(rule axi0_r1_beat_count_init axi0_r1_request\s+\(axi0_r1_expected_beats_q \(\+ axi0_arlen\[4:0\] 5'd1\)\)\s+\(axi0_r1_read_beat_count_q 0\)\)/, 'multiple dynamic runtime read-data initializes r1 expected count and counter on request');
+    like($isf, qr/\(rule axi0_r1_read_beat_count \(& \(& axi0_read_complete \(& axi0_r1_dynamic_busy_q \(== axi0_rid axi0_r1_dynamic_id_q\)\)\) \(! axi0_r1_request\)\)\s+\(axi0_r1_read_beat_count_q \(\+ axi0_r1_read_beat_count_q 5'd1\)\)\)/, 'multiple dynamic runtime read-data increments r1 on raw matched RID beat');
+    like($isf, qr/axi0 r1 ARLEN is within configured max beats/, 'multiple dynamic runtime read-data emits r1 ARLEN bound assertion');
+    like($isf, qr/axi0 r1 RLAST appears only on the expected final read beat/, 'multiple dynamic runtime read-data emits r1 early-RLAST assertion');
+    like($isf, qr/axi0 r1 expected final read beat has RLAST/, 'multiple dynamic runtime read-data emits r1 missing-RLAST assertion');
+    like(
+        $fsm,
+        qr/\(-axi0_r1_read_beat_count\s+<\(& \(& axi0_read_complete \(& axi0_r1_dynamic_busy_q \(== axi0_rid axi0_r1_dynamic_id_q\)\)\) \(! axi0_r1_request\)\)\s+\(<- \(axi0_r1_read_beat_count_q \(\+ axi0_r1_read_beat_count_q 5'd1\)\)\)/,
+        'scheduled .fsm lowers r1 multiple dynamic runtime beat-count increment',
+    );
+
+    assert_dynamic_read_response_demux_multi_burst_last_report($result->{report}, 'generator multiple dynamic runtime read-data response-demux report');
+    assert_read_data_burst_length_report(
+        $result->{report}{read_data},
+        'generator multiple dynamic runtime read-data report',
+        'runtime_assertion',
+        'generated_dynamic_read_response_demux_last_beat_completion_pulse',
+        transactions => [qw(r0 r1)],
+    );
+
+    my $hdl = hdl_for('axi0_capacity_status', $fsm);
+    like($hdl, qr/\breg\s+\[4:0\]\s+axi0_r1_expected_beats_q\b/, 'SystemVerilog declares r1 multiple dynamic expected-beat storage');
+    like($hdl, qr/\breg\s+\[4:0\]\s+axi0_r1_read_beat_count_q\b/, 'SystemVerilog declares r1 multiple dynamic beat-count storage');
+    like($hdl, qr/assign\s+axi0_r1_beat_count_init_en\s*=\s*axi0_r1_request\s*;/, 'SystemVerilog guards r1 multiple dynamic beat-count init with request');
+    like($hdl, qr/assign\s+axi0_r1_read_beat_count_en\s*=/, 'SystemVerilog emits r1 multiple dynamic beat-count increment enable');
+    like($hdl, qr/axi0_r1_expected_beats_q_next\s*=\s*axi0_arlen\[4:0\]\s*\+\s*5'd1\s*;/, 'SystemVerilog initializes r1 multiple dynamic expected count from ARLEN+1');
+};
+
 subtest 'transaction event dispatch fans per-transaction events into capacity rules' => sub {
     my $result = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_transaction_event_dispatch());
     my $isf = $result->{generated_ial1}{text};
@@ -4989,6 +5028,14 @@ sub sample_contract_with_dynamic_read_data_multi_burst_length {
         max_beats    => 16,
         validation   => 'report-only',
     };
+    return $contract;
+}
+
+sub sample_contract_with_dynamic_read_data_multi_burst_length_runtime_assertion {
+    my $contract = sample_contract_with_dynamic_read_data_multi_burst_length();
+    $contract->{intent_name} = 'axi_manager_capacity_status_dynamic_read_data_multi_burst_length_runtime_assertion';
+    $contract->{source}{object_id} = 'axi-manager-capacity-status-dynamic-read-data-multi-burst-length-runtime-assertion';
+    $contract->{read_data}{read}{burst_length}{validation} = 'runtime-assertion';
     return $contract;
 }
 

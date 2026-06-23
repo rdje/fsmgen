@@ -7058,9 +7058,9 @@ Multiple dynamic read burst-length/runtime readiness audit:
 selects `.262`, public contract selection for bounded burst-length and
 runtime beat-count/`RLAST` validation over generated multiple dynamic read
 response-demux. The lower burst-length, beat-count, assertion, matched-beat,
-and report helpers are already transaction-list shaped after coverage
-admission, but the current dynamic coverage gate still fails closed for
-multi-transaction burst-length/runtime metadata. The next slice must settle
+and report helpers were already transaction-list shaped after coverage
+admission, but the dynamic coverage gate still failed closed for
+multi-transaction burst-length/runtime metadata at audit time. The next slice had to settle
 sample names, report-only versus runtime split, transaction coverage,
 per-transaction `ARLEN` ownership, report vocabulary, diagnostics, validation,
 and residue before implementation. No parser, generator, sample,
@@ -7072,8 +7072,8 @@ selects a split implementation. `.263` ships report-only raw-`ARLEN`
 burst-length capture over generated multiple dynamic read burst-last
 response-demux and scalar last-beat read-data, using
 `ppif/axi_manager_capacity_status_dynamic_read_data_multi_burst_length.ppif`
-as the public sample. `.264` is reserved for the runtime
-beat-count/`RLAST` assertion sibling through
+as the public sample. `.264` ships the runtime beat-count/`RLAST` assertion
+sibling through
 `ppif/axi_manager_capacity_status_dynamic_read_data_multi_burst_length_runtime_assertion.ppif`.
 Both shapes require complete coverage of the all-dynamic read transaction set;
 mixed dynamic/static demux, multiple dynamic multi-beat output banks,
@@ -7091,7 +7091,23 @@ read-data shape. The schedule report records
 `generated_burst_length_storage`, per-transaction
 `generated_burst_length_rules`, and keeps
 `generated_beat_count_validation` as residue. Runtime beat-count/`RLAST`
-validation over multiple dynamic read demux remains the `.264` owner.
+validation over multiple dynamic read demux ships in `.264`.
+
+Multiple dynamic read burst-length runtime behavior:
+[AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_READ_BURST_LENGTH_RUNTIME_BEHAVIOR](../../AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_READ_BURST_LENGTH_RUNTIME_BEHAVIOR.md)
+ships `.264`. FSMGen now emits per-transaction expected-beat storage,
+read-beat counter storage, request-time initialization, matched-read-beat
+counter increments, and four runtime assertions per generated all-dynamic read
+transaction in the scalar last-beat shape. The schedule report records
+`burst_length_validation: runtime_assertion`,
+`beat_count_validation_generated_behavior: true`,
+`expected_beat_count_encoding: arlen_plus_one`,
+`beat_count_match_source: response_demux_matched_read_beat`, per-transaction
+generated beat-count storage/rules/assertions, and removes
+`generated_beat_count_validation` from residue.
+The next IAL2 frontier is `.265`, an exact-owner selector before any further
+multiple dynamic multi-beat, mixed dynamic/static, queue, scoreboard, direct
+backend, backend-language variant, or VHDL behavior is widened.
 
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)

@@ -103,12 +103,14 @@ The multiple dynamic read-data coverage checks still require complete
 exactly-once transaction coverage. Missing, duplicate, or extra read-data
 transaction bindings are rejected before generation.
 
-Runtime beat-count/`RLAST` validation over multiple dynamic read demux remains
-reserved for `IAL2-FEATURE-COMPLETENESS-FRONTIER.264`. Multiple dynamic
-multi-beat output banks, mixed dynamic/static demux, same-cycle request
-widening beyond the existing onehot0 policy, same-cycle release-and-recapture,
-dynamic same-ID queues and scoreboards, direct backend behavior,
-backend-language variants, and VHDL remain later exact owners.
+Runtime beat-count/`RLAST` validation over the same multiple dynamic
+last-beat shape now ships under `IAL2-FEATURE-COMPLETENESS-FRONTIER.264` and
+is documented in
+`docs/AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_READ_BURST_LENGTH_RUNTIME_BEHAVIOR.md`.
+Multiple dynamic multi-beat output banks, mixed dynamic/static demux,
+same-cycle request widening beyond the existing onehot0 policy, same-cycle
+release-and-recapture, dynamic same-ID queues and scoreboards, direct backend
+behavior, backend-language variants, and VHDL remain later exact owners.
 
 The single-active dynamic report-only, runtime-validation, and multi-beat
 samples remain supported independently and are not reclassified as multiple

@@ -86,9 +86,9 @@ multi-beat output-bank behavior for the single-active dynamic read-data
 boundary, generated bounded multiple dynamic write response-demux, generated
 bounded multiple dynamic read single-beat and burst-last response-demux,
 scalar read-data over those multiple dynamic read response-demux shapes, and
-report-only raw-`ARLEN` burst-length capture over the multiple dynamic
-last-beat read-data shape. Multiple dynamic runtime-validation and multi-beat
-follow-ons remain deferred. Broader concrete same-ID queues, group-local
+report-only raw-`ARLEN` burst-length capture plus runtime beat-count/`RLAST`
+validation over the multiple dynamic last-beat read-data shape. Multiple
+dynamic multi-beat follow-ons remain deferred. Broader concrete same-ID queues, group-local
 simultaneous enqueue widening, packed burst-vector outputs, alternate full
 burst payload assembly, aliases, platform clauses, full AXI manager behavior,
 direct backend lowering, verification-output generation, backend-language

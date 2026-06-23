@@ -10,9 +10,9 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.263: ship multiple dynamic burst-length capture`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.264` ships runtime beat-count/`RLAST` validation over generated multiple dynamic read response-demux after `.263`; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.263` shipped support-accounted report-only raw-`ARLEN` burst-length capture over generated multiple dynamic read burst-last response-demux and scalar last-beat read-data through `ppif/axi_manager_capacity_status_dynamic_read_data_multi_burst_length.ppif`. Multiple dynamic runtime validation remains `.264`.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.264: ship multiple dynamic runtime validation`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.265` selects the next exact IAL2 owner after `.263` report-only and `.264` runtime beat-count/`RLAST` validation over generated multiple dynamic read response-demux; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.264` shipped support-accounted runtime beat-count/`RLAST` validation over generated multiple dynamic read burst-last response-demux and scalar last-beat read-data through `ppif/axi_manager_capacity_status_dynamic_read_data_multi_burst_length_runtime_assertion.ppif`, preserving the `.263` report-only raw-`ARLEN` sample.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
 

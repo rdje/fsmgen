@@ -506,6 +506,42 @@ subtest 'PPIF adapter parses AXI manager multiple dynamic report-only burst-leng
     );
 };
 
+subtest 'PPIF adapter parses AXI manager multiple dynamic runtime burst-length read-data behavior' => sub {
+    my $sample_path = sample_capacity_dynamic_read_data_multi_burst_length_runtime_assertion_ppif_path();
+    ok(-f $sample_path, 'tracked runnable PPIF capacity/status multiple dynamic runtime burst-length read-data sample exists');
+
+    my $result = FSM::Adapter::IAL2::PPIF->new()->parse_source(sample_capacity_dynamic_read_data_multi_burst_length_runtime_assertion_ppif(), $sample_path);
+    my $isf = $result->{generated_ial1}{text};
+    my $fsm = $result->{generated_ial0}{files}{'axi0_capacity_status.fsm'};
+
+    is($result->{kind}, 'protocol_intent.axi_manager_capacity_status', 'multiple dynamic runtime burst-length read-data sample still uses the capacity/status generator');
+    is($result->{report}{source_object}{id}, 'axi-manager-capacity-status-dynamic-read-data-multi-burst-length-runtime-assertion', 'multiple dynamic runtime burst-length read-data source object id is preserved');
+    is($result->{report}{source_object}{intent_name}, 'axi_manager_capacity_status_dynamic_read_data_multi_burst_length_runtime_assertion', 'multiple dynamic runtime burst-length read-data source intent name is preserved');
+    like($isf, qr/\(input axi0_arlen \(width 8\)\)/, 'multiple dynamic runtime burst-length read-data sample generates ARLEN input');
+    like($isf, qr/\(var axi0_r0_expected_beats_q \(width 5\)\)/, 'multiple dynamic runtime burst-length read-data sample allocates r0 expected-beat storage');
+    like($isf, qr/\(var axi0_r1_expected_beats_q \(width 5\)\)/, 'multiple dynamic runtime burst-length read-data sample allocates r1 expected-beat storage');
+    like($isf, qr/\(var axi0_r0_read_beat_count_q \(width 5\)\)/, 'multiple dynamic runtime burst-length read-data sample allocates r0 beat-count storage');
+    like($isf, qr/\(var axi0_r1_read_beat_count_q \(width 5\)\)/, 'multiple dynamic runtime burst-length read-data sample allocates r1 beat-count storage');
+    like($isf, qr/\(rule axi0_r1_beat_count_init axi0_r1_request\s+\(axi0_r1_expected_beats_q \(\+ axi0_arlen\[4:0\] 5'd1\)\)\s+\(axi0_r1_read_beat_count_q 0\)\)/, 'multiple dynamic runtime burst-length read-data sample initializes r1 expected count under request');
+    like($isf, qr/\(rule axi0_r1_read_beat_count \(& \(& axi0_read_complete \(& axi0_r1_dynamic_busy_q \(== axi0_rid axi0_r1_dynamic_id_q\)\)\) \(! axi0_r1_request\)\)\s+\(axi0_r1_read_beat_count_q \(\+ axi0_r1_read_beat_count_q 5'd1\)\)\)/, 'multiple dynamic runtime burst-length read-data sample increments r1 matched read-beat count');
+    like($isf, qr/axi0 r1 ARLEN is within configured max beats/, 'multiple dynamic runtime burst-length read-data sample emits r1 ARLEN bound assertion');
+    like($isf, qr/axi0 r1 RLAST appears only on the expected final read beat/, 'multiple dynamic runtime burst-length read-data sample emits r1 early-RLAST assertion');
+    like($isf, qr/axi0 r1 expected final read beat has RLAST/, 'multiple dynamic runtime burst-length read-data sample emits r1 missing-RLAST assertion');
+    like(
+        $fsm,
+        qr/\(-axi0_r1_read_beat_count\s+<\(& \(& axi0_read_complete \(& axi0_r1_dynamic_busy_q \(== axi0_rid axi0_r1_dynamic_id_q\)\)\) \(! axi0_r1_request\)\)\s+\(<- \(axi0_r1_read_beat_count_q \(\+ axi0_r1_read_beat_count_q 5'd1\)\)\)/,
+        'multiple dynamic runtime burst-length read-data sample lowers r1 beat-count increment into generated .fsm',
+    );
+    assert_dynamic_read_response_demux_multi_burst_last_report($result->{report}, 'adapter multiple dynamic runtime burst-length read-data response-demux report');
+    assert_read_data_burst_length_report(
+        $result->{report}{read_data},
+        'adapter multiple dynamic runtime burst-length read-data report',
+        'runtime_assertion',
+        'generated_dynamic_read_response_demux_last_beat_completion_pulse',
+        transactions => [qw(r0 r1)],
+    );
+};
+
 subtest 'PPIF adapter parses AXI manager dynamic report-only burst-length read-data behavior' => sub {
     my $sample_path = sample_capacity_dynamic_read_data_burst_length_ppif_path();
     ok(-f $sample_path, 'tracked runnable PPIF capacity/status dynamic burst-length read-data sample exists');
@@ -5433,6 +5469,14 @@ subtest 'CLI check JSON and semantic JSON support-account multiple dynamic burst
     );
 };
 
+subtest 'CLI check JSON and semantic JSON support-account multiple dynamic runtime burst-length read-data .ppif separately' => sub {
+    assert_ppif_strict_json_support_case(
+        owner    => 'capacity/status multiple dynamic runtime burst-length read-data',
+        path     => \&sample_capacity_dynamic_read_data_multi_burst_length_runtime_assertion_ppif_path,
+        entry_id => 'intent.ppif_axi_manager_capacity_status_dynamic_read_data_multi_burst_length_runtime_assertion',
+    );
+};
+
 subtest 'CLI check JSON and semantic JSON support-account dynamic burst-length read-data .ppif separately' => sub {
     assert_ppif_strict_json_support_case(
         owner    => 'capacity/status dynamic burst-length read-data',
@@ -7252,6 +7296,10 @@ sub sample_capacity_dynamic_read_data_multi_burst_length_ppif_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_dynamic_read_data_multi_burst_length.ppif');
 }
 
+sub sample_capacity_dynamic_read_data_multi_burst_length_runtime_assertion_ppif_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_dynamic_read_data_multi_burst_length_runtime_assertion.ppif');
+}
+
 sub sample_capacity_dynamic_read_data_burst_length_ppif_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_dynamic_read_data_burst_length.ppif');
 }
@@ -7570,6 +7618,10 @@ sub sample_capacity_dynamic_read_data_multi_last_beat_ppif {
 
 sub sample_capacity_dynamic_read_data_multi_burst_length_ppif {
     return slurp(sample_capacity_dynamic_read_data_multi_burst_length_ppif_path());
+}
+
+sub sample_capacity_dynamic_read_data_multi_burst_length_runtime_assertion_ppif {
+    return slurp(sample_capacity_dynamic_read_data_multi_burst_length_runtime_assertion_ppif_path());
 }
 
 sub sample_capacity_dynamic_read_data_burst_length_ppif {
