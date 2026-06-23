@@ -882,7 +882,8 @@ sub _normalize_response_demux(%args) {
             && ($read_mode eq 'bounded_dynamic_read_rid_demux_contract'
                 || $read_mode eq 'bounded_dynamic_read_rid_rlast_demux_contract'
                 || $read_mode eq 'bounded_multi_dynamic_read_rid_demux_contract'
-                || $read_mode eq 'bounded_multi_dynamic_read_rid_rlast_demux_contract')
+                || $read_mode eq 'bounded_multi_dynamic_read_rid_rlast_demux_contract'
+                || $read_mode eq 'bounded_mixed_dynamic_static_read_rid_demux_contract')
             ? $read_mode
             : 'bounded_response_demux_contract')
         : ($dynamic_write_mode
@@ -1144,13 +1145,25 @@ sub _response_demux_dynamic_read_transaction(%args) {
     } @read_transactions;
     return undef unless @dynamic;
 
-    confess "AXI manager capacity/status IAL2 contract response_demux.read dynamic ID matching requires every read transaction to use dynamic IDs in this slice\n"
-        unless @dynamic == @read_transactions;
     confess "AXI manager capacity/status IAL2 contract response_demux.read dynamic ID matching cannot be combined with read auto_id_lifecycle metadata in this slice\n"
         if ref($args{read_lifecycle}) eq 'HASH';
     my $policy = _same_id_ordering_policy_for_family($args{same_id_ordering_policy}, 'read');
     confess "AXI manager capacity/status IAL2 contract response_demux.read dynamic ID matching cannot be combined with same_id_ordering.read in this slice\n"
         if ref($policy) eq 'HASH';
+
+    my @concrete_static = grep {
+        ref($_->{id}) eq 'HASH' && ($_->{id}{policy} // '') eq 'concrete'
+    } @read_transactions;
+    if (@dynamic != @read_transactions) {
+        confess "AXI manager capacity/status IAL2 contract response_demux.read mixed dynamic/static ID matching supports exactly one dynamic read transaction and one concrete static read transaction in this slice\n"
+            unless @read_transactions == 2 && @dynamic == 1 && @concrete_static == 1;
+        return _response_demux_mixed_dynamic_static_read_transaction(
+            %args,
+            read_transactions => \@read_transactions,
+            dynamic_transaction => $dynamic[0],
+            static_transaction => $concrete_static[0],
+        );
+    }
 
     my $completion_fanin = _fanin_expression([map { $_->{completion_event} } @read_transactions]);
     my @states;
@@ -1245,6 +1258,122 @@ sub _response_demux_dynamic_read_transaction(%args) {
         dynamic_capture               => $dynamic_capture,
         generated_completion_signals  => \@completion_signals,
         dynamic_transaction_state     => \@states,
+    };
+}
+
+sub _response_demux_mixed_dynamic_static_read_transaction(%args) {
+    my $dynamic_transaction = $args{dynamic_transaction};
+    my $static_transaction = $args{static_transaction};
+    my @read_transactions = @{$args{read_transactions} || []};
+    confess "Internal error: mixed dynamic/static read demux requires one dynamic and one static transaction\n"
+        unless ref($dynamic_transaction) eq 'HASH'
+            && ref($static_transaction) eq 'HASH'
+            && @read_transactions == 2;
+
+    my $dynamic_id = $dynamic_transaction->{id};
+    $dynamic_id->{implementation_status} = 'generated_capture_matching';
+
+    my $completion_fanin = _fanin_expression([map { $_->{completion_event} } @read_transactions]);
+    my $dynamic_prefix = "$args{manager_name}_$dynamic_transaction->{name}";
+    my $static_prefix = "$args{manager_name}_$static_transaction->{name}";
+    my $static_id = $static_transaction->{id}{value};
+    my $static_id_literal = _sized_decimal_literal($args{read_family}{width}, $static_id);
+
+    my $dynamic_request_acceptance = _same_id_admitted_request_guard_expr(
+        request_event    => $dynamic_transaction->{request_event},
+        pending_storage  => $args{storage}{pending_reads},
+        max_pending      => $args{read_max_pending},
+        completion_fanin => $completion_fanin,
+    );
+    my $static_request_acceptance = _same_id_admitted_request_guard_expr(
+        request_event    => $static_transaction->{request_event},
+        pending_storage  => $args{storage}{pending_reads},
+        max_pending      => $args{read_max_pending},
+        completion_fanin => $completion_fanin,
+    );
+
+    my $dynamic_state = {
+        family                  => 'read',
+        response_demux_kind     => 'dynamic_read',
+        transaction             => $dynamic_transaction->{name},
+        tag                     => $dynamic_transaction->{tag},
+        request_event           => $dynamic_transaction->{request_event},
+        completion_event        => $dynamic_transaction->{completion_event},
+        request_id_source       => $dynamic_id->{request_id_source},
+        response_id_signal      => $dynamic_id->{response_id_signal},
+        family_width            => $dynamic_id->{family_width},
+        selected_id_signal      => "${dynamic_prefix}_dynamic_id_q",
+        busy_signal             => "${dynamic_prefix}_dynamic_busy_q",
+        request_acceptance_expr => $dynamic_request_acceptance,
+        capture_rule            => "${dynamic_prefix}_dynamic_id_capture",
+        release_rule            => "${dynamic_prefix}_dynamic_id_release",
+        request_not_busy_assertion => "${dynamic_prefix}_dynamic_request_not_busy",
+        request_not_static_id_assertion => "${dynamic_prefix}_dynamic_request_not_static_id",
+        active_not_static_id_assertion => "${dynamic_prefix}_dynamic_active_not_static_id",
+        completion_assertion    => "${dynamic_prefix}_dynamic_completion_active",
+    };
+    my $static_state = {
+        family                  => 'read',
+        response_demux_kind     => 'static_concrete_read',
+        transaction             => $static_transaction->{name},
+        tag                     => $static_transaction->{tag},
+        request_event           => $static_transaction->{request_event},
+        completion_event        => $static_transaction->{completion_event},
+        concrete_id             => $static_id,
+        concrete_id_literal     => $static_id_literal,
+        busy_signal             => "${static_prefix}_static_busy_q",
+        request_acceptance_expr => $static_request_acceptance,
+        capture_rule            => "${static_prefix}_static_busy_capture",
+        release_rule            => "${static_prefix}_static_busy_release",
+        request_not_busy_assertion => "${static_prefix}_static_request_not_busy",
+        completion_assertion    => "${static_prefix}_static_completion_active",
+    };
+
+    $dynamic_state->{capture_guard} = _and_expr(
+        $dynamic_request_acceptance,
+        _not_expr($dynamic_state->{busy_signal}),
+        _not_expr($static_request_acceptance),
+        _not_expr(_eq_expr($dynamic_state->{request_id_source}, $static_id_literal)),
+    );
+    $static_state->{capture_guard} = _and_expr(
+        $static_request_acceptance,
+        _not_expr($static_state->{busy_signal}),
+        _not_expr($dynamic_request_acceptance),
+    );
+
+    return {
+        mode                         => 'bounded_mixed_dynamic_static_read_rid_demux_contract',
+        transaction_completion_source => 'generated_mixed_dynamic_static_read_demux',
+        transaction_completion_semantics => 'matched_dynamic_or_static_concrete_id_single_beat',
+        dynamic_transactions          => [$dynamic_state->{transaction}],
+        static_transactions           => [$static_state->{transaction}],
+        mixed_transactions            => {
+            dynamic => $dynamic_state->{transaction},
+            static  => $static_state->{transaction},
+        },
+        static_id_reservation         => {
+            transaction            => $static_state->{transaction},
+            concrete_id            => $static_id,
+            concrete_id_literal    => $static_id_literal,
+            dynamic_capture_policy => 'dynamic_id_must_not_equal_static_concrete_id',
+        },
+        dynamic_capture               => {
+            request_id_source           => $dynamic_state->{request_id_source},
+            capture_event_source        => 'admitted_dynamic_read_request',
+            ownership                   => 'mixed_dynamic_static_unique_read_ids',
+            simultaneous_request_policy => 'onehot0_mixed_read_request',
+            static_id_conflict_policy   => 'static_concrete_ids_reserved',
+            selected_id_signal          => $dynamic_state->{selected_id_signal},
+            busy_signal                 => $dynamic_state->{busy_signal},
+            capture_rule                => $dynamic_state->{capture_rule},
+            release_rule                => $dynamic_state->{release_rule},
+        },
+        generated_completion_signals  => [
+            $dynamic_state->{completion_event},
+            $static_state->{completion_event},
+        ],
+        dynamic_transaction_state     => [$dynamic_state],
+        static_transaction_state      => [$static_state],
     };
 }
 
@@ -1554,8 +1683,10 @@ sub _normalize_response_demux_read(%args) {
 
     if (ref($args{dynamic_read_transaction}) eq 'HASH') {
         my $plan = $args{dynamic_read_transaction};
-        my @states = @{$plan->{dynamic_transaction_state} || []};
-        my $multi_dynamic = @states > 1;
+        my @dynamic_states = @{$plan->{dynamic_transaction_state} || []};
+        my @static_states = @{$plan->{static_transaction_state} || []};
+        my @states = (@dynamic_states, @static_states);
+        my $multi_dynamic = @dynamic_states > 1;
         for my $state (@states) {
             confess "AXI manager capacity/status IAL2 contract response_demux.read generated transaction completion signal '$state->{completion_event}' must be distinct from response_event '$response_event'\n"
                 if $state->{completion_event} eq $response_event;
@@ -1563,7 +1694,7 @@ sub _normalize_response_demux_read(%args) {
         if ($response_scope eq 'single-beat') {
             confess "AXI manager capacity/status IAL2 contract response_demux.read.last_signal is only supported with response_scope burst-last\n"
                 if exists($raw->{last_signal}) || exists($raw->{last_signal_width});
-            return {
+            my %entry = (
                 mode                         => $plan->{mode},
                 generated_behavior           => 1,
                 response_event                => $response_event,
@@ -1571,15 +1702,22 @@ sub _normalize_response_demux_read(%args) {
                 response_scope                => 'single_beat',
                 response_id_signal            => $args{read_family}{response_id_signal},
                 response_id_direction         => 'generated_input',
-                transaction_completion_source => 'generated_dynamic_demux',
-                transaction_completion_semantics => 'matched_dynamic_id_single_beat',
+                transaction_completion_source => $plan->{transaction_completion_source} // 'generated_dynamic_demux',
+                transaction_completion_semantics => $plan->{transaction_completion_semantics} // 'matched_dynamic_id_single_beat',
                 dynamic_transactions          => _clone_jsonish($plan->{dynamic_transactions}),
                 dynamic_capture               => _clone_jsonish($plan->{dynamic_capture}),
                 generated_completion_signals  => _clone_jsonish($plan->{generated_completion_signals}),
                 dynamic_transaction_state     => _clone_jsonish($plan->{dynamic_transaction_state}),
-            };
+            );
+            for my $field (qw(static_transactions mixed_transactions static_id_reservation static_transaction_state)) {
+                $entry{$field} = _clone_jsonish($plan->{$field})
+                    if exists $plan->{$field};
+            }
+            return \%entry;
         }
 
+        confess "AXI manager capacity/status IAL2 contract response_demux.read mixed dynamic/static ID matching supports response_scope single-beat only in this slice\n"
+            if @static_states;
         confess "AXI manager capacity/status IAL2 contract response_demux.read.response_scope burst-last requires field 'last_signal'\n"
             unless exists $raw->{last_signal};
         confess "AXI manager capacity/status IAL2 contract response_demux.read.response_scope burst-last requires field 'last_signal_width'\n"
@@ -5204,13 +5342,17 @@ sub _response_demux_rule_name($contract, $state) {
     return "$contract->{name}_$state->{transaction}_response_demux";
 }
 
+sub _response_demux_kind_is_static_concrete($state) {
+    return (($state->{response_demux_kind} // '') =~ /\Astatic_concrete_/) ? 1 : 0;
+}
+
 sub _response_demux_guard_expr($contract, $state) {
     return $state->{queue_head_guard_expr}
         if ($state->{response_demux_kind} // '') eq 'same_id_queue_head';
 
     my $demux = $contract->{response_demux};
     my $family = $state->{family};
-    if (($state->{response_demux_kind} // '') eq 'static_concrete_write') {
+    if (_response_demux_kind_is_static_concrete($state)) {
         return _and_expr(
             $demux->{$family}{response_event},
             $state->{busy_signal},
@@ -5236,7 +5378,7 @@ sub _response_demux_match_expr($contract, $state) {
 
     my $demux = $contract->{response_demux};
     my $family = $state->{family};
-    if (($state->{response_demux_kind} // '') eq 'static_concrete_write') {
+    if (_response_demux_kind_is_static_concrete($state)) {
         return _and_expr(
             $state->{busy_signal},
             _eq_expr($demux->{$family}{response_id_signal}, $state->{concrete_id_literal}),
@@ -5326,7 +5468,7 @@ sub _response_demux_assertion_specs_for_family($contract, $family) {
     return () unless @states;
 
     my @dynamic_states = grep { ($_->{response_demux_kind} // '') =~ /\Adynamic_/ } @states;
-    my @static_states = grep { ($_->{response_demux_kind} // '') eq 'static_concrete_write' } @states;
+    my @static_states = grep { _response_demux_kind_is_static_concrete($_) } @states;
     return _response_demux_mixed_dynamic_static_assertion_specs_for_family(
         $contract,
         $family,

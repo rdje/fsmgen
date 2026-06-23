@@ -53,6 +53,15 @@ my @DYNAMIC_CASES = (
         behavior     => 'mixed_dynamic_static_write_demux',
     },
     {
+        label        => 'mixed dynamic/static read single-beat RID response demux',
+        relpath      => 'ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux.ppif',
+        object_id    => 'axi-manager-capacity-status-read-mixed-dynamic-static-response-demux',
+        intent_name  => 'axi_manager_capacity_status_read_mixed_dynamic_static_response_demux',
+        entry_id     => 'intent.ppif_axi_manager_capacity_status_read_mixed_dynamic_static_response_demux',
+        coverage     => 'ial2_ppif_manager_capacity_status_read_mixed_dynamic_static_response_demux_pipeline_cli',
+        behavior     => 'mixed_dynamic_static_read_demux',
+    },
+    {
         label        => 'dynamic read single-beat RID response demux',
         relpath      => 'ppif/axi_manager_capacity_status_dynamic_read_response_demux.ppif',
         object_id    => 'axi-manager-capacity-status-dynamic-read-response-demux',
@@ -324,6 +333,38 @@ sub assert_dynamic_behavior {
         like($hdl, qr/\breg\s+axi0_w1_static_busy_q\b/, 'SystemVerilog declares mixed static busy state');
         like($hdl, qr/axi0_write_complete\s*&\s*axi0_w0_dynamic_busy_q\s*&\s*\(axi0_bid\s*==\s*axi0_w0_dynamic_id_q\)/, 'SystemVerilog lowers mixed dynamic response guard');
         like($hdl, qr/axi0_write_complete\s*&\s*axi0_w1_static_busy_q\s*&\s*\(axi0_bid\s*==\s*4'd3\)/, 'SystemVerilog lowers mixed static response guard');
+        return;
+    }
+
+    if ($case->{behavior} eq 'mixed_dynamic_static_read_demux') {
+        like($isf, qr/\(input axi0_r0_request\)/, 'mixed read demux declares dynamic request input');
+        like($isf, qr/\(input axi0_r1_request\)/, 'mixed read demux declares static request input');
+        like($isf, qr/\(input axi0_arid \(width 4\)\)/, 'mixed read demux declares ARID input');
+        like($isf, qr/\(input axi0_rid \(width 4\)\)/, 'mixed read demux declares RID input');
+        like($isf, qr/\(output axi0_r0_complete\)/, 'mixed read demux exposes dynamic completion output');
+        like($isf, qr/\(output axi0_r1_complete\)/, 'mixed read demux exposes static completion output');
+        like($isf, qr/\(var axi0_r0_dynamic_id_q \(width 4\)\)/, 'mixed read demux allocates dynamic selected-ID storage');
+        like($isf, qr/\(var axi0_r0_dynamic_busy_q \(width 1\)\)/, 'mixed read demux allocates dynamic busy storage');
+        like($isf, qr/\(var axi0_r1_static_busy_q \(width 1\)\)/, 'mixed read demux allocates static busy storage');
+        like($isf, qr/\(rule axi0_r0_dynamic_id_capture\b/, 'mixed read demux emits dynamic ID capture rule');
+        like($isf, qr/\(! \(& axi0_r1_request/, 'mixed read demux prevents dynamic capture during static request');
+        like($isf, qr/\(! \(== axi0_arid 4'd3\)\)/, 'mixed read demux prevents dynamic capture of the static concrete ID');
+        like($isf, qr/\(axi0_r0_dynamic_id_q axi0_arid\)/, 'mixed read demux captures dynamic ARID');
+        like($isf, qr/\(rule axi0_r1_static_busy_capture \(& \(& axi0_r1_request/, 'mixed read demux captures admitted static request busy state');
+        like($isf, qr/\(rule axi0_r0_response_demux \(& axi0_read_complete axi0_r0_dynamic_busy_q \(== axi0_rid axi0_r0_dynamic_id_q\)\)/, 'mixed read demux matches dynamic active RID');
+        like($isf, qr/\(rule axi0_r1_response_demux \(& axi0_read_complete axi0_r1_static_busy_q \(== axi0_rid 4'd3\)\)/, 'mixed read demux matches static concrete RID');
+        like($isf, qr/\(rule axi0_r1_static_busy_release \(& axi0_r1_complete axi0_r1_static_busy_q\)/, 'mixed read demux releases static busy state');
+        like($isf, qr/axi0 read mixed dynamic\/static requests are mutually exclusive/, 'mixed read demux emits request onehot assertion');
+        like($isf, qr/axi0 r0 dynamic request does not use static concrete ID/, 'mixed read demux emits dynamic request static-ID reservation assertion');
+        like($isf, qr/axi0 read mixed dynamic\/static response matches at most one transaction/, 'mixed read demux emits response unique-match assertion');
+        assert_mixed_dynamic_static_read_report($result->{report});
+        like($fsm, qr/\(-axi0_r0_response_demux\s+<\(& axi0_read_complete axi0_r0_dynamic_busy_q \(== axi0_rid axi0_r0_dynamic_id_q\)\)/, 'scheduled FSM lowers mixed dynamic RID match');
+        like($fsm, qr/\(-axi0_r1_response_demux\s+<\(& axi0_read_complete axi0_r1_static_busy_q \(== axi0_rid 4'd3\)\)/, 'scheduled FSM lowers mixed static RID match');
+        my $hdl = hdl_for('axi0_capacity_status', $fsm);
+        like($hdl, qr/\breg\s+\[3:0\]\s+axi0_r0_dynamic_id_q\b/, 'SystemVerilog declares mixed read dynamic selected-ID state');
+        like($hdl, qr/\breg\s+axi0_r1_static_busy_q\b/, 'SystemVerilog declares mixed read static busy state');
+        like($hdl, qr/axi0_read_complete\s*&\s*axi0_r0_dynamic_busy_q\s*&\s*\(axi0_rid\s*==\s*axi0_r0_dynamic_id_q\)/, 'SystemVerilog lowers mixed dynamic read response guard');
+        like($hdl, qr/axi0_read_complete\s*&\s*axi0_r1_static_busy_q\s*&\s*\(axi0_rid\s*==\s*4'd3\)/, 'SystemVerilog lowers mixed static read response guard');
         return;
     }
 
@@ -820,6 +861,79 @@ sub assert_mixed_dynamic_static_write_report {
     );
     ok($report->{transactions}[1]{id}{fits}, 'mixed write static transaction reports concrete ID fits the family width');
     assert_dynamic_residue($report, 'mixed write demux keeps future dynamic residue visible');
+}
+
+sub assert_mixed_dynamic_static_read_report {
+    my ($report) = @_;
+    my $read = $report->{response_demux}{read};
+
+    is($report->{response_demux}{mode}, 'bounded_mixed_dynamic_static_read_rid_demux_contract', 'mixed read report marks mixed RID-demux contract');
+    ok($report->{response_demux}{generated_behavior}, 'mixed read report marks generated demux behavior');
+    is($read->{mode}, 'bounded_mixed_dynamic_static_read_rid_demux_contract', 'mixed read report marks read mode');
+    is($read->{response_scope}, 'single_beat', 'mixed read report marks single-beat scope');
+    is($read->{transaction_completion_source}, 'generated_mixed_dynamic_static_read_demux', 'mixed read report marks generated mixed read completion source');
+    is($read->{transaction_completion_semantics}, 'matched_dynamic_or_static_concrete_id_single_beat', 'mixed read report marks mixed read completion semantics');
+    is_deeply($read->{dynamic_transactions}, [qw(r0)], 'mixed read report names covered dynamic transaction');
+    is_deeply($read->{static_transactions}, [qw(r1)], 'mixed read report names covered static transaction');
+    is_deeply($read->{mixed_transactions}, { dynamic => 'r0', static => 'r1' }, 'mixed read report names dynamic/static transaction roles');
+    is_deeply(
+        $read->{static_id_reservation},
+        {
+            transaction            => 'r1',
+            concrete_id            => 3,
+            concrete_id_literal    => "4'd3",
+            dynamic_capture_policy => 'dynamic_id_must_not_equal_static_concrete_id',
+        },
+        'mixed read report records static-ID reservation policy',
+    );
+    is_deeply($read->{generated_rules}, [qw(axi0_r0_response_demux axi0_r1_response_demux)], 'mixed read report names generated response-demux rules');
+    is_deeply($read->{generated_completion_signals}, [qw(axi0_r0_complete axi0_r1_complete)], 'mixed read report names generated completions');
+    is_deeply(
+        $read->{generated_assertions},
+        [qw(
+            axi0_r0_dynamic_request_not_busy
+            axi0_r1_static_request_not_busy
+            axi0_read_mixed_dynamic_static_request_onehot0
+            axi0_r0_dynamic_request_not_static_id
+            axi0_r0_dynamic_active_not_static_id
+            axi0_read_mixed_dynamic_static_response_active_match
+            axi0_r0_r1_read_mixed_dynamic_static_response_unique_match
+            axi0_r0_dynamic_completion_active
+            axi0_r1_static_completion_active
+        )],
+        'mixed read report names generated assertions',
+    );
+    is_deeply(
+        $read->{dynamic_capture},
+        {
+            request_id_source           => 'axi0_arid',
+            capture_event_source        => 'admitted_dynamic_read_request',
+            ownership                   => 'mixed_dynamic_static_unique_read_ids',
+            simultaneous_request_policy => 'onehot0_mixed_read_request',
+            static_id_conflict_policy   => 'static_concrete_ids_reserved',
+            selected_id_signal          => 'axi0_r0_dynamic_id_q',
+            busy_signal                 => 'axi0_r0_dynamic_busy_q',
+            capture_rule                => 'axi0_r0_dynamic_id_capture',
+            release_rule                => 'axi0_r0_dynamic_id_release',
+        },
+        'mixed read report describes dynamic capture ownership',
+    );
+    is($report->{transactions}[0]{id}{implementation_status}, 'generated_capture_matching', 'mixed read dynamic transaction reports generated capture/matching');
+    is_deeply(
+        {
+            map { $_ => $report->{transactions}[1]{id}{$_} }
+            qw(policy value family family_width)
+        },
+        {
+            policy       => 'concrete',
+            value        => 3,
+            family       => 'read',
+            family_width => 4,
+        },
+        'mixed read static transaction keeps concrete ID metadata',
+    );
+    ok($report->{transactions}[1]{id}{fits}, 'mixed read static transaction reports concrete ID fits the family width');
+    assert_dynamic_residue($report, 'mixed read demux keeps future dynamic residue visible');
 }
 
 sub assert_dynamic_read_report {

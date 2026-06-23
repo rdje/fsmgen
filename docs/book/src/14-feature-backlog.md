@@ -7237,13 +7237,29 @@ banks while still fixing dynamic/static `RID` ownership.
 Mixed dynamic/static read demux contract selection:
 [AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_READ_RESPONSE_DEMUX_CONTRACT_SELECTION](../../AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_READ_RESPONSE_DEMUX_CONTRACT_SELECTION.md)
 selects direct generated behavior for bounded one-dynamic plus one-concrete
-static read single-beat `RID` response-demux. The future support-accounted
-sample is
+static read single-beat `RID` response-demux. The support-accounted sample is
 `ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux.ppif`,
 with report mode `bounded_mixed_dynamic_static_read_rid_demux_contract`,
 static-ID reservation away from dynamic `ARID` capture, onehot0 mixed read
 requests, static busy-state ownership, and burst/read-data/runtime/multi-beat
 residue left to later owners.
+
+Mixed dynamic/static read demux behavior:
+[AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_READ_RESPONSE_DEMUX_BEHAVIOR](../../AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_READ_RESPONSE_DEMUX_BEHAVIOR.md)
+ships `.276`, generated bounded mixed dynamic/static read single-beat `RID`
+response-demux. The public sample uses existing `response-demux.read` syntax
+with `response-scope single-beat`, one dynamic read transaction `r0`, and one
+concrete static read transaction `r1` at ID `3`. FSMGen emits
+`axi0_r0_dynamic_id_q`, `axi0_r0_dynamic_busy_q`, and
+`axi0_r1_static_busy_q`; dynamic capture rejects static literal `4'd3`, static
+capture tracks only busy state, raw `RID` responses match either the active
+dynamic ID or the active static concrete ID, and generated completions release
+the matching busy state. The generated assertion set proves mixed read request
+onehot0, dynamic/static ID reservation, raw response active match, raw response
+unique match, and dynamic/static completion-active release. Burst-last,
+read-data, burst/runtime, multi-beat output banks, multiple mixed
+transactions, same-cycle widening, release-and-recapture, queues, scoreboards,
+direct backend, backend-language variants, and VHDL remain later owners.
 
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
