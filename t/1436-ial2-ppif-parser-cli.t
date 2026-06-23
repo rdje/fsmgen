@@ -404,6 +404,77 @@ subtest 'PPIF adapter parses AXI manager dynamic last-beat read-data behavior' =
     );
 };
 
+subtest 'PPIF adapter parses AXI manager multiple dynamic single-beat read-data behavior' => sub {
+    my $sample_path = sample_capacity_dynamic_read_data_multi_ppif_path();
+    ok(-f $sample_path, 'tracked runnable PPIF capacity/status multiple dynamic read-data sample exists');
+
+    my $result = FSM::Adapter::IAL2::PPIF->new()->parse_source(sample_capacity_dynamic_read_data_multi_ppif(), $sample_path);
+    my $isf = $result->{generated_ial1}{text};
+    my $fsm = $result->{generated_ial0}{files}{'axi0_capacity_status.fsm'};
+
+    is($result->{kind}, 'protocol_intent.axi_manager_capacity_status', 'multiple dynamic read-data sample still uses the capacity/status generator');
+    is($result->{report}{source_object}{id}, 'axi-manager-capacity-status-dynamic-read-data-multi', 'multiple dynamic read-data source object id is preserved');
+    is($result->{report}{source_object}{intent_name}, 'axi_manager_capacity_status_dynamic_read_data_multi', 'multiple dynamic read-data source intent name is preserved');
+    like($isf, qr/\(rule axi0_r0_response_demux \(& axi0_read_complete axi0_r0_dynamic_busy_q \(== axi0_rid axi0_r0_dynamic_id_q\)\)/, 'multiple dynamic read-data sample keeps r0 generated RID demux rule');
+    like($isf, qr/\(rule axi0_r1_response_demux \(& axi0_read_complete axi0_r1_dynamic_busy_q \(== axi0_rid axi0_r1_dynamic_id_q\)\)/, 'multiple dynamic read-data sample keeps r1 generated RID demux rule');
+    like($isf, qr/\(input axi0_rdata \(width 32\)\)/, 'multiple dynamic read-data sample generates RDATA input');
+    like($isf, qr/\(output axi0_r0_rdata \(width 32\)\)/, 'multiple dynamic read-data sample generates r0 scalar data output');
+    like($isf, qr/\(output axi0_r1_rdata \(width 32\)\)/, 'multiple dynamic read-data sample generates r1 scalar data output');
+    like(
+        $isf,
+        qr/\(rule axi0_r1_read_data_capture axi0_r1_complete\s+\(axi0_r1_rdata axi0_rdata\)\s+\(axi0_r1_rresp axi0_rresp\)\)/,
+        'multiple dynamic read-data sample captures r1 payload under generated dynamic completion',
+    );
+    like(
+        $fsm,
+        qr/\(-axi0_r1_read_data_capture\s+<axi0_r1_complete\s+\(<- \(axi0_r1_rdata> axi0_rdata\)\)\s+\(<- \(axi0_r1_rresp> axi0_rresp\)\)/,
+        'multiple dynamic read-data sample lowers r1 capture rule into generated .fsm',
+    );
+    assert_dynamic_read_response_demux_multi_report($result->{report}, 'adapter multiple dynamic read-data response-demux report');
+    assert_read_data_report(
+        $result->{report}{read_data},
+        'adapter multiple dynamic read-data report',
+        'generated_dynamic_read_response_demux_completion_pulse',
+        transactions => [qw(r0 r1)],
+    );
+};
+
+subtest 'PPIF adapter parses AXI manager multiple dynamic last-beat read-data behavior' => sub {
+    my $sample_path = sample_capacity_dynamic_read_data_multi_last_beat_ppif_path();
+    ok(-f $sample_path, 'tracked runnable PPIF capacity/status multiple dynamic last-beat read-data sample exists');
+
+    my $result = FSM::Adapter::IAL2::PPIF->new()->parse_source(sample_capacity_dynamic_read_data_multi_last_beat_ppif(), $sample_path);
+    my $isf = $result->{generated_ial1}{text};
+    my $fsm = $result->{generated_ial0}{files}{'axi0_capacity_status.fsm'};
+
+    is($result->{kind}, 'protocol_intent.axi_manager_capacity_status', 'multiple dynamic last-beat read-data sample still uses the capacity/status generator');
+    is($result->{report}{source_object}{id}, 'axi-manager-capacity-status-dynamic-read-data-multi-last-beat', 'multiple dynamic last-beat read-data source object id is preserved');
+    is($result->{report}{source_object}{intent_name}, 'axi_manager_capacity_status_dynamic_read_data_multi_last_beat', 'multiple dynamic last-beat read-data source intent name is preserved');
+    like($isf, qr/\(rule axi0_r0_response_demux \(& axi0_read_complete axi0_r0_dynamic_busy_q \(== axi0_rid axi0_r0_dynamic_id_q\) axi0_rlast\)/, 'multiple dynamic last-beat read-data sample keeps r0 generated RID/RLAST demux rule');
+    like($isf, qr/\(rule axi0_r1_response_demux \(& axi0_read_complete axi0_r1_dynamic_busy_q \(== axi0_rid axi0_r1_dynamic_id_q\) axi0_rlast\)/, 'multiple dynamic last-beat read-data sample keeps r1 generated RID/RLAST demux rule');
+    like($isf, qr/\(input axi0_rlast\)/, 'multiple dynamic last-beat read-data sample generates RLAST input');
+    like($isf, qr/\(output axi0_r0_last_rdata \(width 32\)\)/, 'multiple dynamic last-beat read-data sample generates r0 scalar last data output');
+    like($isf, qr/\(output axi0_r1_last_rdata \(width 32\)\)/, 'multiple dynamic last-beat read-data sample generates r1 scalar last data output');
+    like(
+        $isf,
+        qr/\(rule axi0_r1_read_data_capture axi0_r1_complete\s+\(axi0_r1_last_rdata axi0_rdata\)\s+\(axi0_r1_last_rresp axi0_rresp\)\)/,
+        'multiple dynamic last-beat read-data sample captures r1 payload under generated dynamic last-beat completion',
+    );
+    unlike($isf, qr/\baxi0_arlen\b/, 'multiple dynamic last-beat read-data sample keeps dynamic burst-length metadata absent');
+    like(
+        $fsm,
+        qr/\(-axi0_r1_read_data_capture\s+<axi0_r1_complete\s+\(<- \(axi0_r1_last_rdata> axi0_rdata\)\)\s+\(<- \(axi0_r1_last_rresp> axi0_rresp\)\)/,
+        'multiple dynamic last-beat read-data sample lowers r1 capture rule into generated .fsm',
+    );
+    assert_dynamic_read_response_demux_multi_burst_last_report($result->{report}, 'adapter multiple dynamic last-beat read-data response-demux report');
+    assert_read_data_last_beat_report(
+        $result->{report}{read_data},
+        'adapter multiple dynamic last-beat read-data report',
+        'generated_dynamic_read_response_demux_last_beat_completion_pulse',
+        transactions => [qw(r0 r1)],
+    );
+};
+
 subtest 'PPIF adapter parses AXI manager dynamic report-only burst-length read-data behavior' => sub {
     my $sample_path = sample_capacity_dynamic_read_data_burst_length_ppif_path();
     ok(-f $sample_path, 'tracked runnable PPIF capacity/status dynamic burst-length read-data sample exists');
@@ -5307,6 +5378,22 @@ subtest 'CLI check JSON and semantic JSON support-account dynamic last-beat read
     );
 };
 
+subtest 'CLI check JSON and semantic JSON support-account multiple dynamic read-data .ppif separately' => sub {
+    assert_ppif_strict_json_support_case(
+        owner    => 'capacity/status multiple dynamic read-data',
+        path     => \&sample_capacity_dynamic_read_data_multi_ppif_path,
+        entry_id => 'intent.ppif_axi_manager_capacity_status_dynamic_read_data_multi',
+    );
+};
+
+subtest 'CLI check JSON and semantic JSON support-account multiple dynamic last-beat read-data .ppif separately' => sub {
+    assert_ppif_strict_json_support_case(
+        owner    => 'capacity/status multiple dynamic last-beat read-data',
+        path     => \&sample_capacity_dynamic_read_data_multi_last_beat_ppif_path,
+        entry_id => 'intent.ppif_axi_manager_capacity_status_dynamic_read_data_multi_last_beat',
+    );
+};
+
 subtest 'CLI check JSON and semantic JSON support-account dynamic burst-length read-data .ppif separately' => sub {
     assert_ppif_strict_json_support_case(
         owner    => 'capacity/status dynamic burst-length read-data',
@@ -7114,6 +7201,14 @@ sub sample_capacity_dynamic_read_data_last_beat_ppif_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_dynamic_read_data_last_beat.ppif');
 }
 
+sub sample_capacity_dynamic_read_data_multi_ppif_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_dynamic_read_data_multi.ppif');
+}
+
+sub sample_capacity_dynamic_read_data_multi_last_beat_ppif_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_dynamic_read_data_multi_last_beat.ppif');
+}
+
 sub sample_capacity_dynamic_read_data_burst_length_ppif_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_dynamic_read_data_burst_length.ppif');
 }
@@ -7420,6 +7515,14 @@ sub sample_capacity_dynamic_read_data_ppif {
 
 sub sample_capacity_dynamic_read_data_last_beat_ppif {
     return slurp(sample_capacity_dynamic_read_data_last_beat_ppif_path());
+}
+
+sub sample_capacity_dynamic_read_data_multi_ppif {
+    return slurp(sample_capacity_dynamic_read_data_multi_ppif_path());
+}
+
+sub sample_capacity_dynamic_read_data_multi_last_beat_ppif {
+    return slurp(sample_capacity_dynamic_read_data_multi_last_beat_ppif_path());
 }
 
 sub sample_capacity_dynamic_read_data_burst_length_ppif {

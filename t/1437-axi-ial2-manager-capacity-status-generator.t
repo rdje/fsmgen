@@ -668,6 +668,81 @@ subtest 'dynamic last-beat read-data contract consumes generated dynamic RLAST r
     like($hdl, qr/axi0_r0_last_rresp_next\s*=\s*axi0_rresp\s*;/, 'SystemVerilog captures dynamic last-beat RRESP into scalar output');
 };
 
+subtest 'multiple dynamic read-data contract consumes generated dynamic single-beat read demux' => sub {
+    my $result = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_dynamic_read_data_multi());
+    my $isf = $result->{generated_ial1}{text};
+    my $fsm = $result->{generated_ial0}{files}{'axi0_capacity_status.fsm'};
+
+    like($isf, qr/\(rule axi0_r0_response_demux \(& axi0_read_complete axi0_r0_dynamic_busy_q \(== axi0_rid axi0_r0_dynamic_id_q\)\)\s+\(pulse axi0_r0_complete\)\)/, 'multiple dynamic read-data keeps generated r0 RID demux');
+    like($isf, qr/\(rule axi0_r1_response_demux \(& axi0_read_complete axi0_r1_dynamic_busy_q \(== axi0_rid axi0_r1_dynamic_id_q\)\)\s+\(pulse axi0_r1_complete\)\)/, 'multiple dynamic read-data keeps generated r1 RID demux');
+    like($isf, qr/\(input axi0_rdata \(width 32\)\)/, 'multiple dynamic read-data declares RDATA as a generated input');
+    like($isf, qr/\(input axi0_rresp \(width 2\)\)/, 'multiple dynamic read-data declares RRESP as a generated input');
+    like($isf, qr/\(output axi0_r0_rdata \(width 32\)\)/, 'multiple dynamic read-data declares r0 scalar data output');
+    like($isf, qr/\(output axi0_r1_rdata \(width 32\)\)/, 'multiple dynamic read-data declares r1 scalar data output');
+    like(
+        $isf,
+        qr/\(rule axi0_r1_read_data_capture axi0_r1_complete\s+\(axi0_r1_rdata axi0_rdata\)\s+\(axi0_r1_rresp axi0_rresp\)\)/,
+        'multiple dynamic read-data captures r1 scalar payload under generated dynamic completion',
+    );
+    like(
+        $fsm,
+        qr/\(-axi0_r1_read_data_capture\s+<axi0_r1_complete\s+\(<- \(axi0_r1_rdata> axi0_rdata\)\)\s+\(<- \(axi0_r1_rresp> axi0_rresp\)\)/,
+        'scheduled .fsm lowers r1 multiple dynamic read-data capture assignments',
+    );
+
+    assert_dynamic_read_response_demux_multi_report($result->{report}, 'generator multiple dynamic read-data response-demux report');
+    assert_read_data_report(
+        $result->{report}{read_data},
+        'generator multiple dynamic read-data report',
+        'generated_dynamic_read_response_demux_completion_pulse',
+        transactions => [qw(r0 r1)],
+    );
+
+    my $hdl = hdl_for('axi0_capacity_status', $fsm);
+    like($hdl, qr/\boutput\s+reg\s+\[31:0\]\s+axi0_r1_rdata\b/, 'SystemVerilog exposes r1 dynamic read-data scalar data output');
+    like($hdl, qr/assign\s+axi0_r1_read_data_capture_en\s*=\s*axi0_r1_complete\s*;/, 'SystemVerilog guards r1 dynamic read-data capture with generated completion');
+    like($hdl, qr/axi0_r1_rdata_next\s*=\s*axi0_rdata\s*;/, 'SystemVerilog captures r1 dynamic RDATA into scalar output');
+    like($hdl, qr/axi0_r1_rresp_next\s*=\s*axi0_rresp\s*;/, 'SystemVerilog captures r1 dynamic RRESP into scalar output');
+};
+
+subtest 'multiple dynamic last-beat read-data contract consumes generated dynamic RLAST read demux' => sub {
+    my $result = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_dynamic_read_data_multi_last_beat());
+    my $isf = $result->{generated_ial1}{text};
+    my $fsm = $result->{generated_ial0}{files}{'axi0_capacity_status.fsm'};
+
+    like($isf, qr/\(rule axi0_r0_response_demux \(& axi0_read_complete axi0_r0_dynamic_busy_q \(== axi0_rid axi0_r0_dynamic_id_q\) axi0_rlast\)\s+\(pulse axi0_r0_complete\)\)/, 'multiple dynamic last-beat read-data keeps generated r0 RID/RLAST demux');
+    like($isf, qr/\(rule axi0_r1_response_demux \(& axi0_read_complete axi0_r1_dynamic_busy_q \(== axi0_rid axi0_r1_dynamic_id_q\) axi0_rlast\)\s+\(pulse axi0_r1_complete\)\)/, 'multiple dynamic last-beat read-data keeps generated r1 RID/RLAST demux');
+    like($isf, qr/\(input axi0_rlast\)/, 'multiple dynamic last-beat read-data declares RLAST');
+    like($isf, qr/\(input axi0_rdata \(width 32\)\)/, 'multiple dynamic last-beat read-data declares RDATA as a generated input');
+    like($isf, qr/\(output axi0_r0_last_rdata \(width 32\)\)/, 'multiple dynamic last-beat read-data declares r0 scalar last data output');
+    like($isf, qr/\(output axi0_r1_last_rdata \(width 32\)\)/, 'multiple dynamic last-beat read-data declares r1 scalar last data output');
+    like(
+        $isf,
+        qr/\(rule axi0_r1_read_data_capture axi0_r1_complete\s+\(axi0_r1_last_rdata axi0_rdata\)\s+\(axi0_r1_last_rresp axi0_rresp\)\)/,
+        'multiple dynamic last-beat read-data captures r1 scalar payload under generated dynamic completion',
+    );
+    unlike($isf, qr/\baxi0_arlen\b/, 'multiple dynamic last-beat read-data does not enable dynamic burst-length capture');
+    like(
+        $fsm,
+        qr/\(-axi0_r1_read_data_capture\s+<axi0_r1_complete\s+\(<- \(axi0_r1_last_rdata> axi0_rdata\)\)\s+\(<- \(axi0_r1_last_rresp> axi0_rresp\)\)/,
+        'scheduled .fsm lowers r1 multiple dynamic last-beat read-data capture assignments',
+    );
+
+    assert_dynamic_read_response_demux_multi_burst_last_report($result->{report}, 'generator multiple dynamic last-beat read-data response-demux report');
+    assert_read_data_last_beat_report(
+        $result->{report}{read_data},
+        'generator multiple dynamic last-beat read-data report',
+        'generated_dynamic_read_response_demux_last_beat_completion_pulse',
+        transactions => [qw(r0 r1)],
+    );
+
+    my $hdl = hdl_for('axi0_capacity_status', $fsm);
+    like($hdl, qr/\boutput\s+reg\s+\[31:0\]\s+axi0_r1_last_rdata\b/, 'SystemVerilog exposes r1 dynamic last-beat scalar data output');
+    like($hdl, qr/assign\s+axi0_r1_read_data_capture_en\s*=\s*axi0_r1_complete\s*;/, 'SystemVerilog guards r1 dynamic last-beat read-data capture with generated completion');
+    like($hdl, qr/axi0_r1_last_rdata_next\s*=\s*axi0_rdata\s*;/, 'SystemVerilog captures r1 dynamic last-beat RDATA into scalar output');
+    like($hdl, qr/axi0_r1_last_rresp_next\s*=\s*axi0_rresp\s*;/, 'SystemVerilog captures r1 dynamic last-beat RRESP into scalar output');
+};
+
 subtest 'transaction event dispatch fans per-transaction events into capacity rules' => sub {
     my $result = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_transaction_event_dispatch());
     my $isf = $result->{generated_ial1}{text};
@@ -4793,6 +4868,67 @@ sub sample_contract_with_dynamic_read_data_last_beat {
                     transaction => 'r0',
                     data_output => 'axi0_r0_last_rdata',
                     status_output => 'axi0_r0_last_rresp',
+                },
+            ],
+        },
+    };
+    return $contract;
+}
+
+sub sample_contract_with_dynamic_read_data_multi {
+    my $contract = sample_contract_with_dynamic_read_response_demux_multi();
+    $contract->{intent_name} = 'axi_manager_capacity_status_dynamic_read_data_multi';
+    $contract->{source}{object_id} = 'axi-manager-capacity-status-dynamic-read-data-multi';
+    $contract->{read_data} = {
+        read => {
+            capture_scope => 'single-beat',
+            completion_source => 'response-demux',
+            data_signal => 'axi0_rdata',
+            data_width => 32,
+            status_signal => 'axi0_rresp',
+            status_width => 2,
+            interleaving => 'single-beat-by-rid',
+            transactions => [
+                {
+                    transaction => 'r0',
+                    data_output => 'axi0_r0_rdata',
+                    status_output => 'axi0_r0_rresp',
+                },
+                {
+                    transaction => 'r1',
+                    data_output => 'axi0_r1_rdata',
+                    status_output => 'axi0_r1_rresp',
+                },
+            ],
+        },
+    };
+    return $contract;
+}
+
+sub sample_contract_with_dynamic_read_data_multi_last_beat {
+    my $contract = sample_contract_with_dynamic_read_response_demux_multi_burst_last();
+    $contract->{intent_name} = 'axi_manager_capacity_status_dynamic_read_data_multi_last_beat';
+    $contract->{source}{object_id} = 'axi-manager-capacity-status-dynamic-read-data-multi-last-beat';
+    $contract->{read_data} = {
+        read => {
+            capture_scope => 'last-beat',
+            completion_source => 'response-demux',
+            data_signal => 'axi0_rdata',
+            data_width => 32,
+            status_signal => 'axi0_rresp',
+            status_width => 2,
+            status_policy => 'last-beat',
+            interleaving => 'last-beat-by-rid',
+            transactions => [
+                {
+                    transaction => 'r0',
+                    data_output => 'axi0_r0_last_rdata',
+                    status_output => 'axi0_r0_last_rresp',
+                },
+                {
+                    transaction => 'r1',
+                    data_output => 'axi0_r1_last_rdata',
+                    status_output => 'axi0_r1_last_rresp',
                 },
             ],
         },

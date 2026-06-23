@@ -7028,6 +7028,21 @@ dynamic read demux transactions, reuses the scalar single-beat and last-beat
 read-data report modes, and keeps burst-length/runtime validation plus
 multi-beat output banks over multiple dynamic read demux as later owners.
 
+Multiple dynamic read-data behavior:
+[AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_READ_DATA_BEHAVIOR](../../AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_READ_DATA_BEHAVIOR.md)
+ships `.259`. FSMGen now generates scalar single-beat and scalar last-beat
+`RDATA`/`RRESP` capture over generated all-dynamic multiple read
+response-demux. The shipped public samples are
+`ppif/axi_manager_capacity_status_dynamic_read_data_multi.ppif` and
+`ppif/axi_manager_capacity_status_dynamic_read_data_multi_last_beat.ppif`.
+Each read-data transaction binding must cover one generated dynamic read
+demux transaction, every generated dynamic read demux transaction must be
+covered exactly once, and each scalar capture rule is guarded by that
+transaction's generated completion pulse. Burst-length/runtime validation,
+multi-beat output banks, mixed dynamic/static demux, same-cycle widening,
+dynamic same-ID queues, scoreboards, direct backend behavior,
+backend-language variants, and VHDL remain later exact owners.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same

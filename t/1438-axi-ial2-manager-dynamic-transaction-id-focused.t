@@ -98,6 +98,24 @@ my @DYNAMIC_CASES = (
         behavior     => 'dynamic_read_data_last_beat',
     },
     {
+        label        => 'multiple dynamic read-data single-beat capture',
+        relpath      => 'ppif/axi_manager_capacity_status_dynamic_read_data_multi.ppif',
+        object_id    => 'axi-manager-capacity-status-dynamic-read-data-multi',
+        intent_name  => 'axi_manager_capacity_status_dynamic_read_data_multi',
+        entry_id     => 'intent.ppif_axi_manager_capacity_status_dynamic_read_data_multi',
+        coverage     => 'ial2_ppif_manager_capacity_status_dynamic_read_data_multi_pipeline_cli',
+        behavior     => 'dynamic_read_data_multi',
+    },
+    {
+        label        => 'multiple dynamic read-data last-beat capture',
+        relpath      => 'ppif/axi_manager_capacity_status_dynamic_read_data_multi_last_beat.ppif',
+        object_id    => 'axi-manager-capacity-status-dynamic-read-data-multi-last-beat',
+        intent_name  => 'axi_manager_capacity_status_dynamic_read_data_multi_last_beat',
+        entry_id     => 'intent.ppif_axi_manager_capacity_status_dynamic_read_data_multi_last_beat',
+        coverage     => 'ial2_ppif_manager_capacity_status_dynamic_read_data_multi_last_beat_pipeline_cli',
+        behavior     => 'dynamic_read_data_multi_last_beat',
+    },
+    {
         label        => 'dynamic read-data report-only burst-length capture',
         relpath      => 'ppif/axi_manager_capacity_status_dynamic_read_data_burst_length.ppif',
         object_id    => 'axi-manager-capacity-status-dynamic-read-data-burst-length',
@@ -361,6 +379,45 @@ sub assert_dynamic_behavior {
         like($hdl, qr/assign\s+axi0_r0_read_data_capture_en\s*=\s*axi0_r0_complete\s*;/, 'SystemVerilog guards dynamic last-beat read-data capture by completion');
         like($hdl, qr/axi0_r0_last_rdata_next\s*=\s*axi0_rdata\s*;/, 'SystemVerilog captures dynamic last-beat RDATA');
         like($hdl, qr/axi0_r0_last_rresp_next\s*=\s*axi0_rresp\s*;/, 'SystemVerilog captures dynamic last-beat RRESP');
+        return;
+    }
+
+    if ($case->{behavior} eq 'dynamic_read_data_multi') {
+        like($isf, qr/\(rule axi0_r0_response_demux \(& axi0_read_complete axi0_r0_dynamic_busy_q \(== axi0_rid axi0_r0_dynamic_id_q\)\)/, 'multiple dynamic read-data keeps r0 generated RID demux');
+        like($isf, qr/\(rule axi0_r1_response_demux \(& axi0_read_complete axi0_r1_dynamic_busy_q \(== axi0_rid axi0_r1_dynamic_id_q\)\)/, 'multiple dynamic read-data keeps r1 generated RID demux');
+        like($isf, qr/\(input axi0_rdata \(width 32\)\)/, 'multiple dynamic read-data declares RDATA input');
+        like($isf, qr/\(input axi0_rresp \(width 2\)\)/, 'multiple dynamic read-data declares RRESP input');
+        like($isf, qr/\(output axi0_r0_rdata \(width 32\)\)/, 'multiple dynamic read-data declares r0 scalar data output');
+        like($isf, qr/\(output axi0_r1_rdata \(width 32\)\)/, 'multiple dynamic read-data declares r1 scalar data output');
+        like($isf, qr/\(rule axi0_r0_read_data_capture axi0_r0_complete\s+\(axi0_r0_rdata axi0_rdata\)\s+\(axi0_r0_rresp axi0_rresp\)\)/, 'multiple dynamic read-data captures r0 payload under generated completion');
+        like($isf, qr/\(rule axi0_r1_read_data_capture axi0_r1_complete\s+\(axi0_r1_rdata axi0_rdata\)\s+\(axi0_r1_rresp axi0_rresp\)\)/, 'multiple dynamic read-data captures r1 payload under generated completion');
+        assert_dynamic_read_multi_report($result->{report});
+        assert_read_data_report($result->{report}{read_data}, 'generated_dynamic_read_response_demux_completion_pulse', [qw(rlast_completion bursts multi_beat_read_data_reassembly)], [qw(r0 r1)]);
+        like($fsm, qr/\(-axi0_r1_read_data_capture\s+<axi0_r1_complete\s+\(<- \(axi0_r1_rdata> axi0_rdata\)\)\s+\(<- \(axi0_r1_rresp> axi0_rresp\)\)/, 'scheduled FSM lowers r1 multiple dynamic read-data capture');
+        my $hdl = hdl_for('axi0_capacity_status', $fsm);
+        like($hdl, qr/assign\s+axi0_r1_read_data_capture_en\s*=\s*axi0_r1_complete\s*;/, 'SystemVerilog guards r1 multiple dynamic read-data capture by completion');
+        like($hdl, qr/axi0_r1_rdata_next\s*=\s*axi0_rdata\s*;/, 'SystemVerilog captures r1 dynamic RDATA');
+        like($hdl, qr/axi0_r1_rresp_next\s*=\s*axi0_rresp\s*;/, 'SystemVerilog captures r1 dynamic RRESP');
+        return;
+    }
+
+    if ($case->{behavior} eq 'dynamic_read_data_multi_last_beat') {
+        like($isf, qr/\(rule axi0_r0_response_demux \(& axi0_read_complete axi0_r0_dynamic_busy_q \(== axi0_rid axi0_r0_dynamic_id_q\) axi0_rlast\)/, 'multiple dynamic last-beat read-data keeps r0 generated RID/RLAST demux');
+        like($isf, qr/\(rule axi0_r1_response_demux \(& axi0_read_complete axi0_r1_dynamic_busy_q \(== axi0_rid axi0_r1_dynamic_id_q\) axi0_rlast\)/, 'multiple dynamic last-beat read-data keeps r1 generated RID/RLAST demux');
+        like($isf, qr/\(input axi0_rlast\)/, 'multiple dynamic last-beat read-data declares RLAST input');
+        like($isf, qr/\(input axi0_rdata \(width 32\)\)/, 'multiple dynamic last-beat read-data declares RDATA input');
+        like($isf, qr/\(output axi0_r0_last_rdata \(width 32\)\)/, 'multiple dynamic last-beat read-data declares r0 scalar last data output');
+        like($isf, qr/\(output axi0_r1_last_rdata \(width 32\)\)/, 'multiple dynamic last-beat read-data declares r1 scalar last data output');
+        like($isf, qr/\(rule axi0_r0_read_data_capture axi0_r0_complete\s+\(axi0_r0_last_rdata axi0_rdata\)\s+\(axi0_r0_last_rresp axi0_rresp\)\)/, 'multiple dynamic last-beat read-data captures r0 payload under generated completion');
+        like($isf, qr/\(rule axi0_r1_read_data_capture axi0_r1_complete\s+\(axi0_r1_last_rdata axi0_rdata\)\s+\(axi0_r1_last_rresp axi0_rresp\)\)/, 'multiple dynamic last-beat read-data captures r1 payload under generated completion');
+        unlike($isf, qr/\baxi0_arlen\b/, 'multiple dynamic last-beat read-data keeps burst-length metadata absent');
+        assert_dynamic_read_multi_rlast_report($result->{report});
+        assert_read_data_report($result->{report}{read_data}, 'generated_dynamic_read_response_demux_last_beat_completion_pulse', [qw(multi_beat_read_data_reassembly per_beat_outputs rresp_aggregation arlen_or_beat_count_validation)], [qw(r0 r1)]);
+        like($fsm, qr/\(-axi0_r1_read_data_capture\s+<axi0_r1_complete\s+\(<- \(axi0_r1_last_rdata> axi0_rdata\)\)\s+\(<- \(axi0_r1_last_rresp> axi0_rresp\)\)/, 'scheduled FSM lowers r1 multiple dynamic last-beat read-data capture');
+        my $hdl = hdl_for('axi0_capacity_status', $fsm);
+        like($hdl, qr/assign\s+axi0_r1_read_data_capture_en\s*=\s*axi0_r1_complete\s*;/, 'SystemVerilog guards r1 multiple dynamic last-beat read-data capture by completion');
+        like($hdl, qr/axi0_r1_last_rdata_next\s*=\s*axi0_rdata\s*;/, 'SystemVerilog captures r1 dynamic last-beat RDATA');
+        like($hdl, qr/axi0_r1_last_rresp_next\s*=\s*axi0_rresp\s*;/, 'SystemVerilog captures r1 dynamic last-beat RRESP');
         return;
     }
 
@@ -708,7 +765,10 @@ sub assert_dynamic_read_multi_rlast_report {
 }
 
 sub assert_read_data_report {
-    my ($read_data, $completion_validity, $expected_residue) = @_;
+    my ($read_data, $completion_validity, $expected_residue, $expected_transactions) = @_;
+    $expected_transactions //= [qw(r0)];
+    my @completion_signals = map { "axi0_${_}_complete" } @$expected_transactions;
+    my @capture_rules = map { "axi0_${_}_read_data_capture" } @$expected_transactions;
     my $read = $read_data->{read};
 
     ok($read_data->{generated_behavior}, 'dynamic read-data report marks generated behavior');
@@ -716,10 +776,10 @@ sub assert_read_data_report {
     is($read->{completion_validity}, $completion_validity, 'dynamic read-data report names generated dynamic completion validity');
     is($read->{data_signal}, 'axi0_rdata', 'dynamic read-data report names RDATA input');
     is($read->{status_signal}, 'axi0_rresp', 'dynamic read-data report names RRESP input');
-    is_deeply([map { $_->{transaction} } @{$read->{transactions}}], [qw(r0)], 'dynamic read-data report binds r0 only');
-    is_deeply([map { $_->{completion_signal} } @{$read->{transactions}}], [qw(axi0_r0_complete)], 'dynamic read-data report uses generated r0 completion');
+    is_deeply([map { $_->{transaction} } @{$read->{transactions}}], $expected_transactions, 'dynamic read-data report binds expected transactions');
+    is_deeply([map { $_->{completion_signal} } @{$read->{transactions}}], \@completion_signals, 'dynamic read-data report uses generated completion pulses');
     is_deeply($read->{generated_inputs}, [qw(axi0_rdata axi0_rresp)], 'dynamic read-data report names generated inputs');
-    is_deeply($read->{generated_rules}, [qw(axi0_r0_read_data_capture)], 'dynamic read-data report names capture rule');
+    is_deeply($read->{generated_rules}, \@capture_rules, 'dynamic read-data report names capture rules');
     is_deeply($read_data->{residue}, $expected_residue, 'dynamic read-data report keeps explicit residue');
 }
 

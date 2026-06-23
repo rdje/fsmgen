@@ -3,7 +3,6 @@ id: ial2-multiple-dynamic-read-data-contract-selection
 title: IAL2 multiple dynamic read-data contract selects direct implementation
 answers:
   - "what did IAL2-FEATURE-COMPLETENESS-FRONTIER.258 select?"
-  - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.259?"
   - "what is the multiple dynamic read-data contract?"
   - "what PPIF samples should cover multiple dynamic read-data?"
 date: 2026-06-23

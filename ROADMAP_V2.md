@@ -2143,13 +2143,19 @@ active/unique assertions, final `RID && RLAST` completion/release guards, and
 the support-accounted public sample
 `ppif/axi_manager_capacity_status_dynamic_read_response_demux_multi_burst_last.ppif`.
 `.256` selected `.257`, readiness audit for read-data over generated multiple
-dynamic read response-demux, because dynamic read-data coverage still accepts
-exactly one dynamic read transaction while the response-demux substrate now
-has multiple dynamic completion pulses. `.257` selected `.258`, public
-contract selection for bounded scalar read-data over generated multiple
-dynamic read response-demux. `.258` selected `.259`, direct generated
-behavior, with public scalar single-beat and last-beat samples and explicit
-burst-length/runtime/multi-beat residue.
+dynamic read response-demux, because dynamic read-data coverage still
+accepted exactly one dynamic read transaction while the response-demux
+substrate had multiple dynamic completion pulses. `.257` selected `.258`,
+public contract selection for bounded scalar read-data over generated
+multiple dynamic read response-demux. `.258` selected `.259`, and `.259` now
+ships generated bounded scalar single-beat and scalar last-beat read-data
+over all-dynamic multiple read response-demux through the support-accounted
+public samples `ppif/axi_manager_capacity_status_dynamic_read_data_multi.ppif`
+and
+`ppif/axi_manager_capacity_status_dynamic_read_data_multi_last_beat.ppif`.
+`.260` is the next selector for the remaining burst-length/runtime,
+multi-beat, mixed dynamic/static, same-cycle, queue/scoreboard,
+direct/backend, and VHDL residue.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.

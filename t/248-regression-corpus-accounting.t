@@ -21,7 +21,7 @@ my @protocol_entries = protocol_fixture_entries();
 
 ok(@entries >= 7, 'regression corpus catalog starts with named entries across multiple classifications');
 ok(@entries >= 50, 'regression corpus catalog now covers supported language-feature fixtures plus root-level, section-level, child-root, direct-generation, and composition-contract residue families');
-is(scalar(@protocol_entries), 82, 'first visible corpus slice contains the named protocol and public intent fixtures');
+is(scalar(@protocol_entries), 84, 'first visible corpus slice contains the named protocol and public intent fixtures');
 
 my %allowed_classifications = map { $_ => 1 } qw(
     supported_smoke
@@ -47,6 +47,8 @@ my %allowed_coverages = map { $_ => 1 } qw(
     ial2_ppif_manager_capacity_status_dynamic_read_response_demux_burst_last_pipeline_cli
     ial2_ppif_manager_capacity_status_dynamic_read_data_pipeline_cli
     ial2_ppif_manager_capacity_status_dynamic_read_data_last_beat_pipeline_cli
+    ial2_ppif_manager_capacity_status_dynamic_read_data_multi_pipeline_cli
+    ial2_ppif_manager_capacity_status_dynamic_read_data_multi_last_beat_pipeline_cli
     ial2_ppif_manager_capacity_status_dynamic_read_data_burst_length_pipeline_cli
     ial2_ppif_manager_capacity_status_dynamic_read_data_burst_length_runtime_assertion_pipeline_cli
     ial2_ppif_manager_capacity_status_dynamic_read_data_multi_beat_pipeline_cli
@@ -159,6 +161,8 @@ my %coverage_classification = (
     ial2_ppif_manager_capacity_status_dynamic_read_response_demux_burst_last_pipeline_cli => 'supported_smoke',
     ial2_ppif_manager_capacity_status_dynamic_read_data_pipeline_cli => 'supported_smoke',
     ial2_ppif_manager_capacity_status_dynamic_read_data_last_beat_pipeline_cli => 'supported_smoke',
+    ial2_ppif_manager_capacity_status_dynamic_read_data_multi_pipeline_cli => 'supported_smoke',
+    ial2_ppif_manager_capacity_status_dynamic_read_data_multi_last_beat_pipeline_cli => 'supported_smoke',
     ial2_ppif_manager_capacity_status_dynamic_read_data_burst_length_pipeline_cli => 'supported_smoke',
     ial2_ppif_manager_capacity_status_dynamic_read_data_burst_length_runtime_assertion_pipeline_cli => 'supported_smoke',
     ial2_ppif_manager_capacity_status_dynamic_read_data_multi_beat_pipeline_cli => 'supported_smoke',
@@ -262,6 +266,8 @@ for my $required_id (qw(
     intent.ppif_axi_manager_capacity_status_dynamic_read_response_demux_burst_last
     intent.ppif_axi_manager_capacity_status_dynamic_read_data
     intent.ppif_axi_manager_capacity_status_dynamic_read_data_last_beat
+    intent.ppif_axi_manager_capacity_status_dynamic_read_data_multi
+    intent.ppif_axi_manager_capacity_status_dynamic_read_data_multi_last_beat
     intent.ppif_axi_manager_capacity_status_dynamic_read_data_burst_length
     intent.ppif_axi_manager_capacity_status_dynamic_read_data_multi_beat
     intent.ppif_axi_manager_capacity_status_transaction_event_dispatch
@@ -665,8 +671,8 @@ for my $entry (@entries) {
 
 is(
     scalar(grep { $_->{classification} eq 'supported_smoke' } @entries),
-    121,
-    'catalog now keeps one hundred twenty-one named supported-smoke entries including direct, composition, ISF, and PPIF fixtures',
+    123,
+    'catalog now keeps one hundred twenty-three named supported-smoke entries including direct, composition, ISF, and PPIF fixtures',
 );
 is(
     scalar(grep { $_->{classification} eq 'legacy_out_of_scope' } @entries),
@@ -680,8 +686,8 @@ is(
 );
 is(
     scalar(grep { $_->{strict_supported} } @entries),
-    121,
-    'catalog now records one hundred twenty-one positive strict-mode supported-smoke acceptance entries',
+    123,
+    'catalog now records one hundred twenty-three positive strict-mode supported-smoke acceptance entries',
 );
 for my $strict_supported_id (qw(
     protocol.apb_requester
@@ -703,6 +709,8 @@ for my $strict_supported_id (qw(
     intent.ppif_axi_manager_capacity_status_dynamic_read_response_demux_burst_last
     intent.ppif_axi_manager_capacity_status_dynamic_read_data
     intent.ppif_axi_manager_capacity_status_dynamic_read_data_last_beat
+    intent.ppif_axi_manager_capacity_status_dynamic_read_data_multi
+    intent.ppif_axi_manager_capacity_status_dynamic_read_data_multi_last_beat
     intent.ppif_axi_manager_capacity_status_dynamic_read_data_burst_length
     intent.ppif_axi_manager_capacity_status_dynamic_read_data_burst_length_runtime_assertion
     intent.ppif_axi_manager_capacity_status_dynamic_read_data_multi_beat
