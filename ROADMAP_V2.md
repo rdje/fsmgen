@@ -2489,12 +2489,17 @@ plus three-concrete-static mixed dynamic/static read burst-last `RID && RLAST`
 response-demux. The audit changes no behavior and keeps the three-static
 burst-last behavior, read-data, burst-length/runtime validation, and
 multi-beat output banks behind future exact owners.
+`.325` now selects `.326`, direct generated behavior for bounded one-dynamic
+plus three-concrete-static mixed dynamic/static read burst-last `RID && RLAST`
+response-demux. The selector changes no behavior and locks the public sample,
+support identity, report vocabulary, diagnostics, validation gates, and
+residue for the implementation owner.
 No behavior changed in
 `.270`, `.271`, `.273`, `.274`, `.275`, `.277`, `.278`,
 `.279`, `.281`, `.282`, `.283`, `.285`, `.286`, `.288`, `.290`, `.292`, or
 `.293`, `.294`, `.296`, `.297`, `.298`, `.300`, `.301`, `.302`, `.304`,
 `.305`, `.306`, `.308`, `.309`, `.311`, `.313`, `.315`, `.316`, `.317`, or
-`.319`, `.320`, `.321`, `.323`, or `.324`.
+`.319`, `.320`, `.321`, `.323`, `.324`, or `.325`.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.
