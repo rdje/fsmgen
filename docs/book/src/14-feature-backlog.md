@@ -7563,6 +7563,15 @@ single-beat `RID` completion pulses for `r0`, `r1`, and `r2`, pairwise raw
 transaction/static-ID reservation report fields while preserving the `.276`
 one-dynamic plus one-static report contract.
 
+Post multiple mixed dynamic/static read selector:
+[AXI_IAL2_MANAGER_POST_MULTIPLE_MIXED_DYNAMIC_STATIC_READ_DEMUX_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_MIXED_DYNAMIC_STATIC_READ_DEMUX_NEXT_SLICE_SELECTION.md)
+selects `.301`, readiness audit for multiple mixed dynamic/static read
+burst-last `RID && RLAST` response-demux after `.299` shipped widened
+single-beat `RID` behavior. The selector changes no behavior; it records that
+read-data, burst-length/runtime validation, and multi-beat output-bank
+widening over the multi-static mixed read shape should wait until final-beat
+completion semantics are audited.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same

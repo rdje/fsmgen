@@ -2302,9 +2302,14 @@ single-beat `RID` completion pulses, pairwise unique-match assertions, and
 list-shaped report fields while preserving the `.276` one-dynamic plus
 one-static read report contract. `.299` selected `.300`, the next exact IAL2
 feature-completeness selector after widened mixed read single-beat behavior.
+`.300` now selects `.301`, readiness audit for multiple mixed dynamic/static
+read burst-last `RID && RLAST` response-demux, because read-data,
+burst-length/runtime validation, and multi-beat output-bank widening over the
+multi-static mixed read shape should wait until final-beat completion semantics
+are audited.
 No behavior changed in `.270`, `.271`, `.273`, `.274`, `.275`, `.277`, `.278`,
 `.279`, `.281`, `.282`, `.283`, `.285`, `.286`, `.288`, `.290`, `.292`, or
-`.293`, `.294`, `.296`, `.297`, or `.298`.
+`.293`, `.294`, `.296`, `.297`, `.298`, or `.300`.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.
