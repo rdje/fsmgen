@@ -7492,6 +7492,20 @@ reservation lists, dynamic capture exclusion, onehot0 request policy,
 raw-response ownership, generated completion ordering, report vocabulary, and
 diagnostics before read `RID`/`RLAST` or read-data behavior widens.
 
+Multiple mixed dynamic/static write response-demux contract:
+[AXI_IAL2_MANAGER_MULTIPLE_MIXED_DYNAMIC_STATIC_WRITE_RESPONSE_DEMUX_CONTRACT_SELECTION](../../AXI_IAL2_MANAGER_MULTIPLE_MIXED_DYNAMIC_STATIC_WRITE_RESPONSE_DEMUX_CONTRACT_SELECTION.md)
+selects `.295`, direct generated behavior for bounded multiple mixed
+dynamic/static write `BID` response-demux. The first public behavior should
+reuse existing `response-demux.write` syntax with exactly one dynamic write
+transaction and exactly two concrete static write transactions. Reports should
+use `bounded_multi_mixed_dynamic_static_write_bid_demux_contract`, generated
+completion source `generated_multi_mixed_dynamic_static_demux`, list-shaped
+mixed transaction and static-ID reservation fields, dynamic capture
+exclusions for every selected static ID, onehot0 request policy across all
+selected write transactions, and pairwise raw-response unique-match
+assertions. The one-dynamic plus one-static `.272` report contract remains
+unchanged.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same

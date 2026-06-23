@@ -2267,10 +2267,12 @@ multi-beat output banks. `.292` now selects `.293`, readiness audit for
 multiple mixed dynamic/static transaction cardinality after the one-dynamic
 plus one-concrete-static mixed path reached multi-beat output banks. `.293`
 now selects `.294`, public contract selection for bounded multiple mixed
-dynamic/static write `BID` response-demux.
+dynamic/static write `BID` response-demux. `.294` now selects `.295`, direct
+generated behavior for exactly one dynamic plus two concrete static write
+transactions under existing `response-demux.write` syntax.
 No behavior changed in `.270`, `.271`, `.273`, `.274`, `.275`, `.277`, `.278`,
 `.279`, `.281`, `.282`, `.283`, `.285`, `.286`, `.288`, `.290`, `.292`, or
-`.293`.
+`.293`, or `.294`.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.
