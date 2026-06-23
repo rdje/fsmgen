@@ -7280,6 +7280,18 @@ an explicit public contract for static final-beat completion, raw `RID` beat
 ownership assertions, report vocabulary, diagnostics, sample/support-accounting
 names, and residue before generated behavior changes.
 
+Mixed dynamic/static read RLAST contract selection:
+[AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_READ_RLAST_RESPONSE_DEMUX_CONTRACT_SELECTION](../../AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_READ_RLAST_RESPONSE_DEMUX_CONTRACT_SELECTION.md)
+selects direct generated behavior for bounded mixed dynamic/static read
+burst-last `RID && RLAST` response-demux. The future support-accounted sample
+is
+`ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_burst_last.ppif`.
+The contract keeps raw `RID` beat ownership assertions separate from final
+`RID && RLAST` dynamic/static completions and keeps read-data,
+burst-length/runtime validation, multi-beat output banks, multiple mixed
+transactions, same-cycle widening, release-and-recapture, queues, scoreboards,
+direct backend, backend-language variants, and VHDL as later owners.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same
