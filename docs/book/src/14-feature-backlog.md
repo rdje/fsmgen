@@ -7646,6 +7646,25 @@ multiple mixed completion-validity strings, and keeps raw `ARLEN`, runtime
 validation, multi-beat output banks, broader cardinalities, same-cycle
 widening, queues/scoreboards, backend variants, and VHDL deferred.
 
+Multiple mixed dynamic/static read-data behavior:
+[AXI_IAL2_MANAGER_MULTIPLE_MIXED_DYNAMIC_STATIC_READ_DATA_BEHAVIOR](../../AXI_IAL2_MANAGER_MULTIPLE_MIXED_DYNAMIC_STATIC_READ_DATA_BEHAVIOR.md)
+ships `.307`. The public samples
+`ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static_read_data.ppif`
+and
+`ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static_burst_last_read_data.ppif`
+compose the `.299` single-beat `RID` demux and `.303` burst-last
+`RID && RLAST` demux with scalar read-data for the ordered transaction set
+`r0, r1, r2`. FSMGen now emits shared generated `axi0_rdata`/`axi0_rresp`
+inputs, scalar data/status outputs for the dynamic transaction and both
+static transactions, and one capture rule per transaction guarded only by the
+generated multiple mixed demux completion pulse. Reports use
+`generated_multi_mixed_dynamic_static_read_response_demux_completion_pulse`
+for single-beat capture and
+`generated_multi_mixed_dynamic_static_read_response_demux_last_beat_completion_pulse`
+for last-beat capture while raw `ARLEN`, runtime validation, multi-beat output
+banks, broader cardinalities, same-cycle widening, queues/scoreboards,
+backend variants, and VHDL remain deferred.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same

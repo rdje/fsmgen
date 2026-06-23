@@ -2353,6 +2353,17 @@ completion-validity strings
 `generated_multi_mixed_dynamic_static_read_response_demux_completion_pulse`
 and
 `generated_multi_mixed_dynamic_static_read_response_demux_last_beat_completion_pulse`.
+`.307` now ships that generated bounded scalar read-data behavior through the
+two support-accounted public samples. The generated behavior emits shared
+`axi0_rdata`/`axi0_rresp` inputs, scalar data/status outputs for `r0`, `r1`,
+and `r2`, one read-data capture rule per transaction guarded only by the
+generated multiple mixed demux completion pulse, and report entries that bind
+the ordered dynamic-then-static transaction set to the new completion-validity
+strings while keeping raw `ARLEN`, runtime validation, multi-beat output
+banks, broader cardinalities, same-cycle widening, queues/scoreboards,
+backend variants, and VHDL deferred. `.307` selected `.308`, the next exact
+IAL2 feature-completeness selector after widened multiple mixed read-data
+behavior.
 No behavior changed in
 `.270`, `.271`, `.273`, `.274`, `.275`, `.277`, `.278`,
 `.279`, `.281`, `.282`, `.283`, `.285`, `.286`, `.288`, `.290`, `.292`, or
