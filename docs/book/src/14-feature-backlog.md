@@ -7261,6 +7261,16 @@ read-data, burst/runtime, multi-beat output banks, multiple mixed
 transactions, same-cycle widening, release-and-recapture, queues, scoreboards,
 direct backend, backend-language variants, and VHDL remain later owners.
 
+Post mixed dynamic/static read demux selector:
+[AXI_IAL2_MANAGER_POST_MIXED_DYNAMIC_STATIC_READ_DEMUX_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MIXED_DYNAMIC_STATIC_READ_DEMUX_NEXT_SLICE_SELECTION.md)
+selects mixed dynamic/static read burst-last `RID && RLAST` readiness after
+`.276` shipped bounded mixed dynamic/static read single-beat `RID`
+response-demux. The audit comes before read-data, burst/runtime validation,
+multi-beat output banks, multiple mixed transactions, same-cycle widening,
+release-and-recapture, queues, scoreboards, direct backend,
+backend-language variants, or VHDL because those later surfaces depend on a
+settled final-beat completion or matched-beat ownership boundary.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same
