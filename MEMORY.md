@@ -10,9 +10,9 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.266: audit multiple dynamic multi-beat readiness`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.267` selects the public contract for bounded generated multiple dynamic multi-beat output-bank behavior; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.266` audited generated multiple dynamic multi-beat output-bank readiness and selected `.267`, public contract selection; guarded schedule probes were stopped because host memory was already above the configured cutoff, and no behavior changed.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.267: select multiple dynamic multi-beat contract`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.268` implements the selected bounded generated multiple dynamic multi-beat output-bank behavior; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.267` selected `.268`, direct implementation of bounded all-dynamic multi-transaction multi-beat output-bank behavior through future sample `ppif/axi_manager_capacity_status_dynamic_read_data_multi_transaction_multi_beat.ppif`; no behavior changed.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
 

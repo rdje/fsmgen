@@ -7126,6 +7126,24 @@ are still single-active. Mixed dynamic/static, queue, scoreboard, direct
 backend, backend-language variant, and VHDL behavior remain later exact
 owners.
 
+Multiple dynamic multi-beat contract selection:
+[AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_MULTI_BEAT_CONTRACT_SELECTION](../../AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_MULTI_BEAT_CONTRACT_SELECTION.md)
+selects `.268`, direct implementation of the bounded all-dynamic
+multi-transaction multi-beat output-bank contract. The selected future public
+sample is
+`ppif/axi_manager_capacity_status_dynamic_read_data_multi_transaction_multi_beat.ppif`;
+the name deliberately distinguishes multiple dynamic transactions from the
+existing single-active dynamic multi-beat sample. The contract requires
+generated dynamic read burst-last response-demux, `capture-scope multi-beat`,
+runtime-assertion `ARLEN` burst-length metadata, complete exactly-once
+output-bank bindings for every generated dynamic read transaction,
+request-time output-bank initialization, raw matched-beat lane capture, and
+worst-observed per-transaction scalar `RRESP` aggregation. The selected
+report should remove read-data multi-beat, per-beat output, and `RRESP`
+aggregation residue for that sample while keeping mixed dynamic/static,
+same-cycle widening, release-and-recapture, queues, scoreboards, direct
+backend, backend-language variant, and VHDL behavior under later owners.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same

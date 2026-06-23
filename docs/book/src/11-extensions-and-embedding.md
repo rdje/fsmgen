@@ -89,8 +89,11 @@ scalar read-data over those multiple dynamic read response-demux shapes, and
 report-only raw-`ARLEN` burst-length capture plus runtime beat-count/`RLAST`
 validation over the multiple dynamic last-beat read-data shape. Multiple
 dynamic multi-beat output-bank behavior was audited under
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.266`; `.267` owns public contract
-selection before any behavior-bearing widening. Broader concrete same-ID queues, group-local
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.266`; `.267` selected `.268`, direct
+implementation of the bounded all-dynamic multi-transaction multi-beat
+output-bank contract through the future public sample
+`ppif/axi_manager_capacity_status_dynamic_read_data_multi_transaction_multi_beat.ppif`.
+Broader concrete same-ID queues, group-local
 simultaneous enqueue widening, packed burst-vector outputs, alternate full
 burst payload assembly, aliases, platform clauses, full AXI manager behavior,
 direct backend lowering, verification-output generation, backend-language
