@@ -2237,8 +2237,12 @@ The shipped behavior emits `axi0_arlen`, per-transaction raw-`ARLEN`
 storage/capture rules, keeps scalar `RDATA`/`RRESP` capture guarded by the
 generated mixed `RID && RLAST` completion pulses, and reports `report_only`
 burst-length validation with the mixed last-beat completion-validity string.
+`.288` selected `.289`, direct bounded implementation of runtime
+beat-count/`RLAST` validation over that same mixed dynamic/static
+raw-`ARLEN` scalar last-beat read-data shape, after finding the generic
+runtime machinery ready and no separate public contract selection needed.
 No behavior changed in `.270`, `.271`, `.273`, `.274`, `.275`, `.277`, `.278`,
-`.279`, `.281`, `.282`, `.283`, `.285`, or `.286`.
+`.279`, `.281`, `.282`, `.283`, `.285`, `.286`, or `.288`.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.

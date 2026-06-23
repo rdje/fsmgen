@@ -7397,6 +7397,21 @@ beat-count/`RLAST` validation, multi-beat output banks, multiple mixed
 transactions, direct backend behavior, backend-language variants, and VHDL
 remain later exact owners.
 
+Mixed dynamic/static read-data runtime-validation readiness audit:
+[AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_READ_DATA_RUNTIME_VALIDATION_READINESS_AUDIT](../../AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_READ_DATA_RUNTIME_VALIDATION_READINESS_AUDIT.md)
+selects `.289`, direct bounded implementation of runtime beat-count/`RLAST`
+validation over the same generated mixed dynamic/static read burst-last
+response-demux and scalar last-beat read-data shape as `.287`. The selected
+runtime sibling sample is
+`ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_burst_last_read_data_burst_length_runtime_assertion.ppif`.
+The audit found no lower-layer prerequisite and no separate public contract
+selection need: once the mixed coverage gate admits `validation
+runtime-assertion`, the existing runtime machinery can generate expected-beat
+storage, read-beat counters, request-time initialization, raw matched-read-beat
+increments, four assertions per transaction, and report/residue updates.
+Mixed multi-beat output banks, multiple mixed transactions, direct backend
+behavior, backend-language variants, and VHDL remain later exact owners.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same
