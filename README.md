@@ -1732,6 +1732,9 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
      selected mixed dynamic/static read burst-last `RID && RLAST`
      response-demux readiness after bounded mixed dynamic/static read
      single-beat `RID` response-demux shipped.
+326. `docs/AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_READ_RLAST_RESPONSE_DEMUX_READINESS_AUDIT.md`:
+     audited mixed dynamic/static read burst-last `RID && RLAST`
+     response-demux readiness and selected public contract selection.
 
 ## Documentation index (all `.md` files in this repo)
 - `README.md` — single entry point and navigation hub.
@@ -2445,6 +2448,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_READ_RESPONSE_DEMUX_CONTRACT_SELECTION.md` — selected direct generated behavior for bounded mixed dynamic/static read single-beat `RID` response-demux.
 - `docs/AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_READ_RESPONSE_DEMUX_BEHAVIOR.md` — shipped generated bounded mixed dynamic/static read single-beat `RID` response-demux with static concrete-ID reservation away from dynamic capture.
 - `docs/AXI_IAL2_MANAGER_POST_MIXED_DYNAMIC_STATIC_READ_DEMUX_NEXT_SLICE_SELECTION.md` — selected mixed dynamic/static read burst-last `RID && RLAST` readiness after bounded mixed dynamic/static read single-beat `RID` response-demux shipped.
+- `docs/AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_READ_RLAST_RESPONSE_DEMUX_READINESS_AUDIT.md` — audited mixed dynamic/static read burst-last `RID && RLAST` readiness and selected public contract selection.
 - `docs/AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md` — selected first AXI-derived IAL2 implementation subset and pre-code contract.
 - `docs/AXI_IAL2_VALID_READY_READINESS_AUDIT.md` — code/test/docs/report owner map for a future AXI Valid-Ready IAL2 implementation slice.
 - `docs/AXI_IAL2_VALID_READY_GENERATOR_FIRST_SLICE.md` — first in-process AXI Valid-Ready IAL2 generator slice and report surface.
