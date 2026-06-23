@@ -7796,6 +7796,15 @@ assertions for the covered write transactions.
 Read-side, read-data, two-dynamic-plus-static, general capped mixed sets,
 same-cycle, queue/scoreboard, backend, and VHDL work remain deferred.
 
+Post three-static mixed dynamic/static write demux selector:
+[AXI_IAL2_MANAGER_POST_THREE_STATIC_MIXED_DYNAMIC_STATIC_WRITE_DEMUX_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_THREE_STATIC_MIXED_DYNAMIC_STATIC_WRITE_DEMUX_NEXT_SLICE_SELECTION.md)
+selects `.320`, readiness audit for bounded one-dynamic plus
+three-concrete-static mixed dynamic/static read response-demux. The selector
+changes no behavior. It starts the audit at the read single-beat `RID`
+boundary and keeps burst-last, read-data, two-dynamic-plus-static, capped
+mixed sets, same-cycle, queue/scoreboard, backend, and VHDL work as explicit
+future owners.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same

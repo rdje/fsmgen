@@ -511,8 +511,11 @@ transaction plus one, two, or three pairwise-distinct concrete static write
 transactions, emits generated completion pulses/rules for the full covered
 set, records list-shaped static ID reservations/exclusions, and keeps the
 existing multi-mixed write report mode.
-Read-side, read-data, two-dynamic-plus-static, general capped mixed sets,
-same-cycle, queue/scoreboard, backend, and VHDL work remain deferred.
+`.319` now selects `.320`, readiness audit for bounded one-dynamic plus
+three-concrete-static mixed dynamic/static read response-demux. The selector
+changes no behavior and starts the audit at the single-beat `RID` boundary
+before burst-last, read-data, two-dynamic-plus-static, general capped mixed
+sets, same-cycle, queue/scoreboard, backend, or VHDL work.
 No behavior
 changed in `.273`, `.274`, `.275`,
 `.277`, `.278`, `.279`, `.281`,
@@ -2758,6 +2761,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/AXI_IAL2_MANAGER_POST_MULTIPLE_MIXED_MULTI_BEAT_NEXT_SLICE_SELECTION.md` — selected broader mixed dynamic/static transaction cardinality readiness after generated multiple mixed dynamic/static multi-beat output banks shipped.
 - `docs/AXI_IAL2_MANAGER_BROADER_MIXED_DYNAMIC_STATIC_CARDINALITY_READINESS_AUDIT.md` — audited broader mixed dynamic/static cardinality readiness and selected public contract selection before behavior changes.
 - `docs/AXI_IAL2_MANAGER_BROADER_MIXED_DYNAMIC_STATIC_CARDINALITY_CONTRACT_SELECTION.md` — selected one dynamic plus three concrete static write `BID` response-demux as the first broader mixed cardinality behavior.
+- `docs/AXI_IAL2_MANAGER_POST_THREE_STATIC_MIXED_DYNAMIC_STATIC_WRITE_DEMUX_NEXT_SLICE_SELECTION.md` — selected one dynamic plus three concrete static mixed dynamic/static read response-demux readiness after the three-static write demux shipped.
 - `docs/AXI_IAL2_MANAGER_BROADER_MIXED_DYNAMIC_STATIC_WRITE_RESPONSE_DEMUX_BEHAVIOR.md` — shipped generated one dynamic plus three concrete static write `BID` response-demux while preserving the existing multi-mixed write report mode.
 - `docs/AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md` — selected first AXI-derived IAL2 implementation subset and pre-code contract.
 - `docs/AXI_IAL2_VALID_READY_READINESS_AUDIT.md` — code/test/docs/report owner map for a future AXI Valid-Ready IAL2 implementation slice.
