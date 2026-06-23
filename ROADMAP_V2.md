@@ -2145,7 +2145,9 @@ the support-accounted public sample
 `.256` selected `.257`, readiness audit for read-data over generated multiple
 dynamic read response-demux, because dynamic read-data coverage still accepts
 exactly one dynamic read transaction while the response-demux substrate now
-has multiple dynamic completion pulses.
+has multiple dynamic completion pulses. `.257` selected `.258`, public
+contract selection for bounded scalar read-data over generated multiple
+dynamic read response-demux before behavior changes.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.

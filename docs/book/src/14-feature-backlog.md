@@ -7006,6 +7006,17 @@ exactly one dynamic read transaction. That read-data coverage audit is the
 next dependency before burst-length/runtime validation or multi-beat
 output-bank widening over multiple dynamic read demux.
 
+Multiple dynamic read-data readiness audit:
+[AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_READ_DATA_READINESS_AUDIT](../../AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_READ_DATA_READINESS_AUDIT.md)
+selects `.258`, public contract selection for bounded scalar read-data over
+generated multiple dynamic read response-demux. The audit found the helper
+substrate is close: dynamic response-demux reports expose ordered transactions
+and generated completion pulses, and read-data normalization already validates
+transaction bindings against a coverage list. The contract selector must still
+pin scalar single-beat and last-beat source shapes, sample names,
+transaction-to-completion mapping, report vocabulary, diagnostics, validation,
+and residue before behavior changes.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same
