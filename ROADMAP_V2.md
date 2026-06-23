@@ -2230,7 +2230,13 @@ completion pulses, and reports the mixed-specific single-beat and last-beat
 completion-validity strings. `.285` selected `.286`, readiness audit for
 generated report-only raw-`ARLEN` burst-length capture over the mixed
 dynamic/static last-beat read-data shape. `.286` selected `.287`, direct
-bounded implementation of that report-only raw-`ARLEN` capture shape.
+bounded implementation of that report-only raw-`ARLEN` capture shape. `.287`
+now ships that behavior through support-accounted public sample
+`ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_burst_last_read_data_burst_length.ppif`.
+The shipped behavior emits `axi0_arlen`, per-transaction raw-`ARLEN`
+storage/capture rules, keeps scalar `RDATA`/`RRESP` capture guarded by the
+generated mixed `RID && RLAST` completion pulses, and reports `report_only`
+burst-length validation with the mixed last-beat completion-validity string.
 No behavior changed in `.270`, `.271`, `.273`, `.274`, `.275`, `.277`, `.278`,
 `.279`, `.281`, `.282`, `.283`, `.285`, or `.286`.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
