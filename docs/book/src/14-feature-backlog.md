@@ -7734,6 +7734,18 @@ queues/scoreboards, backend variants, and VHDL remain deferred. `.312`
 selects `.313`, readiness audit for generated multiple mixed dynamic/static
 multi-beat output banks over this runtime-validation boundary.
 
+Multiple mixed dynamic/static multi-beat readiness audit:
+[AXI_IAL2_MANAGER_MULTIPLE_MIXED_DYNAMIC_STATIC_READ_DATA_MULTI_BEAT_READINESS_AUDIT](../../AXI_IAL2_MANAGER_MULTIPLE_MIXED_DYNAMIC_STATIC_READ_DATA_MULTI_BEAT_READINESS_AUDIT.md)
+selects `.314`, direct bounded implementation of generated multiple mixed
+dynamic/static multi-beat output banks over the `.312` runtime-validation
+boundary. The audit changes no behavior in `.313`. It finds that `.312`
+already supplies the exact one-dynamic plus two-static generated burst-last
+runtime source shape, while `.291` and `.268` already ship the public
+multi-beat syntax and report vocabulary. The selected public sample is
+`ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static_burst_last_read_data_multi_beat.ppif`.
+The implementation owner should add only bounded coverage admission, support
+publication, focused tests, and multiple mixed multi-beat residue recognition.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same

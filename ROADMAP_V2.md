@@ -2407,11 +2407,21 @@ Multi-beat output banks, broader cardinalities, same-cycle widening,
 queues/scoreboards, backend variants, and VHDL remain deferred.
 `.312` selected `.313`, readiness audit for generated multiple mixed
 dynamic/static multi-beat output banks over this runtime-validation boundary.
+`.313` now selects `.314`, direct bounded implementation of generated
+multiple mixed dynamic/static multi-beat output banks over that boundary. The
+audit changes no behavior; it finds that `.312` already proves the required
+runtime source shape for `r0`, `r1`, and `r2`, while `.291` and `.268`
+already ship the public multi-beat syntax and report vocabulary. The selected
+sample is
+`ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static_burst_last_read_data_multi_beat.ppif`;
+the implementation should also add multiple mixed multi-beat residue
+recognition so the sample reports empty read-data residue and only
+same-ID-ordering response-demux residue.
 No behavior changed in
 `.270`, `.271`, `.273`, `.274`, `.275`, `.277`, `.278`,
 `.279`, `.281`, `.282`, `.283`, `.285`, `.286`, `.288`, `.290`, `.292`, or
 `.293`, `.294`, `.296`, `.297`, `.298`, `.300`, `.301`, `.302`, `.304`,
-`.305`, `.306`, `.308`, `.309`, or `.311`.
+`.305`, `.306`, `.308`, `.309`, `.311`, or `.313`.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.
