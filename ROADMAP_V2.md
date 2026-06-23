@@ -2189,8 +2189,9 @@ assertions, response active/unique-match assertions, and completion-active
 release assertions. `.273` selected `.274`, readiness audit for mixed
 dynamic/static read response-demux before choosing single-beat `RID`,
 burst-last `RID && RLAST`, read-data, burst/runtime, multi-beat, report
-cleanup, or another prerequisite. No behavior changed in `.270`, `.271`, or
-`.273`.
+cleanup, or another prerequisite. `.274` selected `.275`, public contract
+selection for bounded mixed dynamic/static read single-beat `RID`
+response-demux. No behavior changed in `.270`, `.271`, `.273`, or `.274`.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.

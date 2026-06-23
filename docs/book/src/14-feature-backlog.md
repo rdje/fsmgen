@@ -7221,9 +7221,18 @@ Post mixed dynamic/static write demux selector:
 selects mixed dynamic/static read response-demux readiness after `.272` shipped
 bounded mixed dynamic/static write `BID` response-demux. The read side still
 fails closed when a selected read family mixes dynamic and static/concrete
-transaction IDs, and `.274` must audit whether the first safe read owner is
-single-beat `RID`, burst-last `RID && RLAST`, scalar read-data, burst/runtime,
-multi-beat output banks, report cleanup, or another prerequisite.
+transaction IDs; `.274` selected single-beat `RID` public contract selection as
+the first safe read owner before burst-last `RID && RLAST`, scalar read-data,
+burst/runtime, multi-beat output banks, report cleanup, or another
+prerequisite.
+
+Mixed dynamic/static read demux readiness audit:
+[AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_READ_RESPONSE_DEMUX_READINESS_AUDIT](../../AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_READ_RESPONSE_DEMUX_READINESS_AUDIT.md)
+selects public contract selection for bounded mixed dynamic/static read
+single-beat `RID` response-demux. The first read shape is intentionally
+single-beat because it avoids `RLAST`, raw non-final beat accounting, read-data
+capture, raw `ARLEN`, runtime beat-count validation, and multi-beat output
+banks while still fixing dynamic/static `RID` ownership.
 
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)

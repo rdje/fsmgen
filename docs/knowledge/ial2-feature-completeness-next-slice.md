@@ -1,6 +1,6 @@
 ---
 id: ial2-feature-completeness-next-slice
-title: IAL2 feature completeness next slice is mixed dynamic/static read demux readiness audit
+title: IAL2 feature completeness next slice is mixed dynamic/static read single-beat contract selection
 answers:
   - "what is the next IAL2 feature completeness slice?"
   - "what is the next IAL2 PNT task?"
@@ -49,6 +49,7 @@ answers:
   - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.272?"
   - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.273?"
   - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.274?"
+  - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.275?"
   - "what is the next IAL2 task after multiple dynamic runtime validation?"
   - "what is the next multiple dynamic read-data task?"
   - "what is the next AXI manager slice?"
@@ -58,14 +59,13 @@ answers:
 date: 2026-06-23
 status: current
 tags: [ial2, axi, manager, same-id, concrete-id, ordering, feature-completeness, task-tree]
-evidence: docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; docs/REGRESSION_CORPUS.md; docs/AXI_IAL2_MANAGER_POST_MIXED_DYNAMIC_STATIC_WRITE_DEMUX_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_WRITE_RESPONSE_DEMUX_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_WRITE_RESPONSE_DEMUX_CONTRACT_SELECTION.md; docs/AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_RESPONSE_DEMUX_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_MULTI_BEAT_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_MULTI_BEAT_CONTRACT_SELECTION.md; docs/AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_MULTI_BEAT_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_RUNTIME_VALIDATION_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_READ_BURST_LENGTH_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_READ_BURST_LENGTH_RUNTIME_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_READ_BURST_LENGTH_RUNTIME_CONTRACT_SELECTION.md; docs/AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_READ_BURST_LENGTH_RUNTIME_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_READ_DATA_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_DYNAMIC_RUNTIME_VALIDATION_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_DYNAMIC_BURST_LENGTH_BEHAVIOR.md; docs/book/src/14-feature-backlog.md; README.md; ROADMAP_V2.md; docs/knowledge/ial2-post-mixed-dynamic-static-write-demux-next-slice-selection.md; docs/knowledge/ial2-mixed-dynamic-static-write-response-demux-behavior.md; docs/knowledge/ial2-mixed-dynamic-static-write-response-demux-contract-selection.md; docs/knowledge/ial2-mixed-dynamic-static-response-demux-readiness-audit.md; docs/knowledge/ial2-post-multiple-dynamic-multi-beat-next-slice-selection.md; docs/knowledge/ial2-multiple-dynamic-multi-beat-behavior.md; docs/knowledge/ial2-multiple-dynamic-multi-beat-contract-selection.md; docs/knowledge/ial2-multiple-dynamic-multi-beat-readiness-audit.md; docs/knowledge/ial2-post-multiple-dynamic-runtime-validation-next-slice-selection.md; docs/knowledge/ial2-multiple-dynamic-read-burst-length-behavior.md; docs/knowledge/ial2-multiple-dynamic-read-burst-length-runtime-behavior.md; docs/knowledge/ial2-multiple-dynamic-read-burst-length-runtime-contract-selection.md; docs/knowledge/ial2-multiple-dynamic-read-burst-length-runtime-readiness-audit.md; docs/knowledge/ial2-multiple-dynamic-read-data-behavior.md
-reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.273|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.274|POST_MIXED_DYNAMIC_STATIC_WRITE_DEMUX_NEXT_SLICE_SELECTION|mixed dynamic/static read response-demux|response_demux\\.read dynamic ID matching requires every read transaction' docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md docs/AXI_IAL2_MANAGER_POST_MIXED_DYNAMIC_STATIC_WRITE_DEMUX_NEXT_SLICE_SELECTION.md docs/book/src/14-feature-backlog.md README.md ROADMAP_V2.md docs/knowledge/ial2-post-mixed-dynamic-static-write-demux-next-slice-selection.md perl/FSM/IAL2/ProtocolIntent/AxiManagerCapacityStatus.pm
+evidence: docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; docs/REGRESSION_CORPUS.md; docs/AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_READ_RESPONSE_DEMUX_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_POST_MIXED_DYNAMIC_STATIC_WRITE_DEMUX_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_WRITE_RESPONSE_DEMUX_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_WRITE_RESPONSE_DEMUX_CONTRACT_SELECTION.md; docs/AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_RESPONSE_DEMUX_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_MULTI_BEAT_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_MULTI_BEAT_CONTRACT_SELECTION.md; docs/AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_MULTI_BEAT_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_RUNTIME_VALIDATION_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_READ_BURST_LENGTH_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_READ_BURST_LENGTH_RUNTIME_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_READ_BURST_LENGTH_RUNTIME_CONTRACT_SELECTION.md; docs/AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_READ_BURST_LENGTH_RUNTIME_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_READ_DATA_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_DYNAMIC_RUNTIME_VALIDATION_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_DYNAMIC_BURST_LENGTH_BEHAVIOR.md; docs/book/src/14-feature-backlog.md; README.md; ROADMAP_V2.md; docs/knowledge/ial2-mixed-dynamic-static-read-response-demux-readiness-audit.md; docs/knowledge/ial2-post-mixed-dynamic-static-write-demux-next-slice-selection.md; docs/knowledge/ial2-mixed-dynamic-static-write-response-demux-behavior.md; docs/knowledge/ial2-mixed-dynamic-static-write-response-demux-contract-selection.md; docs/knowledge/ial2-mixed-dynamic-static-response-demux-readiness-audit.md; docs/knowledge/ial2-post-multiple-dynamic-multi-beat-next-slice-selection.md; docs/knowledge/ial2-multiple-dynamic-multi-beat-behavior.md; docs/knowledge/ial2-multiple-dynamic-multi-beat-contract-selection.md; docs/knowledge/ial2-multiple-dynamic-multi-beat-readiness-audit.md; docs/knowledge/ial2-post-multiple-dynamic-runtime-validation-next-slice-selection.md; docs/knowledge/ial2-multiple-dynamic-read-burst-length-behavior.md; docs/knowledge/ial2-multiple-dynamic-read-burst-length-runtime-behavior.md; docs/knowledge/ial2-multiple-dynamic-read-burst-length-runtime-contract-selection.md; docs/knowledge/ial2-multiple-dynamic-read-burst-length-runtime-readiness-audit.md; docs/knowledge/ial2-multiple-dynamic-read-data-behavior.md
+reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.274|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.275|MIXED_DYNAMIC_STATIC_READ_RESPONSE_DEMUX_READINESS_AUDIT|bounded_mixed_dynamic_static_read_rid_demux_contract|mixed dynamic/static read single-beat' docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md docs/AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_READ_RESPONSE_DEMUX_READINESS_AUDIT.md docs/book/src/14-feature-backlog.md README.md ROADMAP_V2.md docs/knowledge/ial2-mixed-dynamic-static-read-response-demux-readiness-audit.md perl/FSM/IAL2/ProtocolIntent/AxiManagerCapacityStatus.pm
 ---
 
 The next active IAL2 project slice is
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.274`, readiness audit for mixed
-dynamic/static read response-demux after generated bounded mixed
-dynamic/static write `BID` response-demux shipped.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.275`, public contract selection for
+bounded mixed dynamic/static read single-beat `RID` response-demux.
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.265` selected `.266` after `.263`
 shipped report-only raw-`ARLEN` capture and `.264` shipped runtime
@@ -96,10 +96,11 @@ now ships that behavior through
 The contract reserves the static concrete ID away from dynamic capture so one
 raw `BID` cannot legally match both owners. `.273` selected `.274`, readiness
 audit for mixed dynamic/static read response-demux. No behavior changed in
-`.273`. `.274` must decide whether the first safe read owner is single-beat
-`RID`, burst-last `RID && RLAST`, scalar read-data, burst/runtime, multi-beat
-output banks, report/static cleanup, public contract selection, or another
-prerequisite before further behavior changes.
+`.273`. `.274` selected `.275`, public contract selection for bounded mixed
+dynamic/static read single-beat `RID` response-demux, because single-beat `RID`
+fixes dynamic/static read ownership before burst-last `RID && RLAST`,
+read-data, burst/runtime, or multi-beat coupling. No behavior changed in
+`.274`.
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.251` ships generated bounded multiple
 dynamic read single-beat response-demux with the support-accounted public
