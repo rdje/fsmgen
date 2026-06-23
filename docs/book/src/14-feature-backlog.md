@@ -7759,6 +7759,16 @@ residue, and response-demux residue limited to `same_id_ordering`. `.314`
 selects `.315`, the next exact-owner selector after multiple mixed
 dynamic/static read-data reached multi-beat output banks.
 
+Post multiple mixed multi-beat selector:
+[AXI_IAL2_MANAGER_POST_MULTIPLE_MIXED_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_MIXED_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
+selects `.316`, readiness audit for broader mixed dynamic/static transaction
+cardinality after the one-dynamic plus one- or two-static mixed read-data
+chain reached multi-beat output banks. The selector changes no behavior and
+does not choose a public sample yet; the audit must decide whether the next
+owner should directly widen a bounded broader shape, first select a public
+source/report contract, land helper/report cleanup, or defer in favor of
+same-cycle, queue, scoreboard, backend, or VHDL work.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same

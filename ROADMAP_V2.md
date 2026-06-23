@@ -2429,11 +2429,20 @@ Reports use `bounded_multi_beat_read_data_contract`, leave `read_data.residue`
 empty, and leave response-demux residue limited to `same_id_ordering`.
 `.314` selected `.315`, the next exact-owner selector after multiple mixed
 dynamic/static read-data reached multi-beat output banks.
+`.315` now selects `.316`, readiness audit for broader mixed dynamic/static
+transaction cardinality after the one-dynamic plus one- or two-static mixed
+read-data chain reached multi-beat output banks. The selector changes no
+behavior and does not choose a public sample yet; the audit must decide
+whether the next owner should directly widen a bounded shape such as two
+dynamic plus one static or one dynamic plus three static, first select a
+public source/report contract for a capped mixed set, land helper/report
+cleanup, or defer in favor of same-cycle, queue, scoreboard, backend, or VHDL
+work.
 No behavior changed in
 `.270`, `.271`, `.273`, `.274`, `.275`, `.277`, `.278`,
 `.279`, `.281`, `.282`, `.283`, `.285`, `.286`, `.288`, `.290`, `.292`, or
 `.293`, `.294`, `.296`, `.297`, `.298`, `.300`, `.301`, `.302`, `.304`,
-`.305`, `.306`, `.308`, `.309`, `.311`, or `.313`.
+`.305`, `.306`, `.308`, `.309`, `.311`, `.313`, or `.315`.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.
