@@ -11,15 +11,15 @@ Use it to keep one current, high-signal picture of:
 Refresh this document at the start of a later session whenever the effective entrypoint/import-tree architecture has moved enough that this note is no longer honest.
 
 Current baseline:
-- Reviewed on `2026-06-22`.
-- Startup bootstrap refreshed again on `2026-06-22`; the live static trace
+- Reviewed on `2026-06-23`.
+- Startup bootstrap refreshed again on `2026-06-23`; the live static trace
   includes the R14 `.isf` intent-scheduling path, the IAL2 `.ppif`
   protocol-intent pre-lowering path, the AXI manager capacity/status PPIF
   surface, the first-class semantic-introspection manifest support surface,
   and the bounded direct/composition VHDL backend owners. The
   project-owned closure counts remain unchanged since the June 16 refresh, and
-  selected line-count measurements below were refreshed from source after
-  dynamic transaction-ID metadata growth.
+  selected line-count measurements below were refreshed from source after the
+  mixed dynamic/static write response-demux implementation.
 - Scope is the project-owned transitive `FSM::...` tree reachable from [bin/fsmgen](bin/fsmgen).
 - Perl core and non-project helper modules are treated as support dependencies, not as part of the architectural map.
 - Static trace from [bin/fsmgen](bin/fsmgen) currently reaches `206` project files total, `205` `.pm` packages.
@@ -301,16 +301,16 @@ Current thin-coordinator / public-surface assembler line counts:
 - [perl/FSM/HDL/FlattenedDT.pm](perl/FSM/HDL/FlattenedDT.pm): `178`
 - [perl/FSM/Adapter/IAL2/PPIF.pm](perl/FSM/Adapter/IAL2/PPIF.pm): `1495`
 - [perl/FSM/IAL2/ProtocolIntent/ValidReadyChannel.pm](perl/FSM/IAL2/ProtocolIntent/ValidReadyChannel.pm): `461`
-- [perl/FSM/IAL2/ProtocolIntent/AxiManagerCapacityStatus.pm](perl/FSM/IAL2/ProtocolIntent/AxiManagerCapacityStatus.pm): `5668`
+- [perl/FSM/IAL2/ProtocolIntent/AxiManagerCapacityStatus.pm](perl/FSM/IAL2/ProtocolIntent/AxiManagerCapacityStatus.pm): `6636`
 - [perl/FSM/Adapter/ISF.pm](perl/FSM/Adapter/ISF.pm): `100`
-- [perl/FSM/Adapter/ISF/Parser.pm](perl/FSM/Adapter/ISF/Parser.pm): `9895`
+- [perl/FSM/Adapter/ISF/Parser.pm](perl/FSM/Adapter/ISF/Parser.pm): `10090`
 - [perl/FSM/Adapter/ISF/LispishAdapter.pm](perl/FSM/Adapter/ISF/LispishAdapter.pm): `99`
 - [perl/FSM/Scheduler/ISF.pm](perl/FSM/Scheduler/ISF.pm): `591`
-- [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm): `12746`
+- [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm): `12750`
 - [perl/FSM/Scheduler/ISF/ATLGeneratedTop.pm](perl/FSM/Scheduler/ISF/ATLGeneratedTop.pm): `95`
 - [perl/FSM/Scheduler/ISF/Emitter/FSM.pm](perl/FSM/Scheduler/ISF/Emitter/FSM.pm): `547`
 - [perl/FSM/Scheduler/ISF/Emitter/CompositionTop.pm](perl/FSM/Scheduler/ISF/Emitter/CompositionTop.pm): `499`
-- [perl/FSM/Scheduler/ISF/Emitter/JSON.pm](perl/FSM/Scheduler/ISF/Emitter/JSON.pm): `1076`
+- [perl/FSM/Scheduler/ISF/Emitter/JSON.pm](perl/FSM/Scheduler/ISF/Emitter/JSON.pm): `1099`
 - [perl/FSM/Support/CapabilityManifest.pm](perl/FSM/Support/CapabilityManifest.pm): `36`
 - [perl/FSM/Support/CapabilityManifestContract.pm](perl/FSM/Support/CapabilityManifestContract.pm): `308`
 - [perl/FSM/Support/ProducerSection.pm](perl/FSM/Support/ProducerSection.pm): `62`
@@ -330,13 +330,13 @@ Current thin-coordinator / public-surface assembler line counts:
 - [perl/FSM/Support/NormalizedSemanticProtocolIntentBundleContract.pm](perl/FSM/Support/NormalizedSemanticProtocolIntentBundleContract.pm): `89`
 
 Current largest reachable files by line count:
-- [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm): `12746`
-- [perl/FSM/Adapter/ISF/Parser.pm](perl/FSM/Adapter/ISF/Parser.pm): `9895`
-- [perl/FSM/IAL2/ProtocolIntent/AxiManagerCapacityStatus.pm](perl/FSM/IAL2/ProtocolIntent/AxiManagerCapacityStatus.pm): `5668`
+- [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm): `12750`
+- [perl/FSM/Adapter/ISF/Parser.pm](perl/FSM/Adapter/ISF/Parser.pm): `10090`
+- [perl/FSM/IAL2/ProtocolIntent/AxiManagerCapacityStatus.pm](perl/FSM/IAL2/ProtocolIntent/AxiManagerCapacityStatus.pm): `6636`
 - [perl/FSM/Adapter/FSMGenFull/Parser.pm](perl/FSM/Adapter/FSMGenFull/Parser.pm): `3906`
-- [perl/FSM/Support/RegressionCorpus.pm](perl/FSM/Support/RegressionCorpus.pm): `3247`
+- [perl/FSM/Support/RegressionCorpus.pm](perl/FSM/Support/RegressionCorpus.pm): `3445`
 - [perl/FSM/CoreAST.pm](perl/FSM/CoreAST.pm): `2431`
-- [perl/FSM/Support/ISFPublicInterfaceContract.pm](perl/FSM/Support/ISFPublicInterfaceContract.pm): `2065`
+- [perl/FSM/Support/ISFPublicInterfaceContract.pm](perl/FSM/Support/ISFPublicInterfaceContract.pm): `2067`
 - [perl/FSM/Composition/LinkedPlanBuilder.pm](perl/FSM/Composition/LinkedPlanBuilder.pm): `1835`
 - [perl/FSM/Scheduler/ISF/ControlFlowEffects.pm](perl/FSM/Scheduler/ISF/ControlFlowEffects.pm): `1769`
 - [perl/FSM/Composition/Parser.pm](perl/FSM/Composition/Parser.pm): `1695`
