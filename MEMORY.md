@@ -10,10 +10,10 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `HEAD after IAL2-FEATURE-COMPLETENESS-FRONTIER.261 commit` - `IAL2-FEATURE-COMPLETENESS-FRONTIER.261: audit multiple dynamic runtime readiness`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.262` selects the public contract for burst-length/runtime validation over generated multiple dynamic read response-demux; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.261` selected `.262`, public contract selection for bounded burst-length and runtime beat-count/`RLAST` validation over generated multiple dynamic read response-demux. The audit found the lower helpers are close after coverage admission, while the current dynamic coverage gate still fails closed for multi-transaction burst-length/runtime metadata. No behavior changed.
-- in_flight_uncommitted: none after the `.261` commit workflow. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
+- latest_commit: `HEAD after IAL2-FEATURE-COMPLETENESS-FRONTIER.262 commit` - `IAL2-FEATURE-COMPLETENESS-FRONTIER.262: select multiple dynamic burst-length contract`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.263` ships report-only raw-`ARLEN` burst-length capture over generated multiple dynamic read response-demux; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.262` selected a split public contract: `.263` direct report-only raw-`ARLEN` capture first, then `.264` runtime beat-count/`RLAST` validation after `.263` lands. No behavior changed.
+- in_flight_uncommitted: none after the `.262` commit workflow. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
 
 ## Notes

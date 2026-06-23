@@ -2162,7 +2162,11 @@ contract selection for bounded burst-length/runtime validation over generated
 multiple dynamic read response-demux, because the lower helpers are close
 after coverage admission but sample names, split/combined report-only/runtime
 scope, report vocabulary, diagnostics, validation, and residue need contract
-ownership before implementation.
+ownership before implementation. `.262` selected a split implementation:
+`.263` will ship report-only raw-`ARLEN` burst-length capture over generated
+multiple dynamic read response-demux first, and `.264` is reserved for the
+runtime beat-count/`RLAST` assertion sibling after that report-only boundary
+lands.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.

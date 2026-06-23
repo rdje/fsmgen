@@ -7064,6 +7064,20 @@ per-transaction `ARLEN` ownership, report vocabulary, diagnostics, validation,
 and residue before implementation. No parser, generator, sample,
 support-accounting, test, JSON, or HDL behavior changed in the audit.
 
+Multiple dynamic read burst-length/runtime contract selection:
+[AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_READ_BURST_LENGTH_RUNTIME_CONTRACT_SELECTION](../../AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_READ_BURST_LENGTH_RUNTIME_CONTRACT_SELECTION.md)
+selects a split implementation. `.263` will ship report-only raw-`ARLEN`
+burst-length capture over generated multiple dynamic read burst-last
+response-demux and scalar last-beat read-data, with
+`ppif/axi_manager_capacity_status_dynamic_read_data_multi_burst_length.ppif`
+as the selected public sample. `.264` is reserved for the runtime
+beat-count/`RLAST` assertion sibling through
+`ppif/axi_manager_capacity_status_dynamic_read_data_multi_burst_length_runtime_assertion.ppif`.
+Both shapes require complete coverage of the all-dynamic read transaction set;
+mixed dynamic/static demux, multiple dynamic multi-beat output banks,
+same-cycle widening, dynamic queues/scoreboards, direct backend behavior,
+backend-language variants, and VHDL remain later owners.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same
