@@ -7787,6 +7787,12 @@ behavior. It reuses the existing
 `bounded_multi_mixed_dynamic_static_write_bid_demux_contract` report mode and
 chooses public sample stem
 `ppif/axi_manager_capacity_status_write_mixed_dynamic_static_response_demux_multi_static3.ppif`.
+`.318` now ships that sample and generated write behavior. The generated
+contract accepts exactly one dynamic write transaction plus one, two, or three
+pairwise-distinct concrete static write transactions, records the static
+reservations/exclusions as list-shaped report fields, and emits completion,
+response-demux, active-match, pairwise unique-match, and completion-active
+assertions for the covered write transactions.
 Read-side, read-data, two-dynamic-plus-static, general capped mixed sets,
 same-cycle, queue/scoreboard, backend, and VHDL work remain deferred.
 

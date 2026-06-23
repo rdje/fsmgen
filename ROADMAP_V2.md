@@ -2452,8 +2452,11 @@ changes no behavior; it reuses the existing
 `bounded_multi_mixed_dynamic_static_write_bid_demux_contract` report mode and
 chooses public sample stem
 `ppif/axi_manager_capacity_status_write_mixed_dynamic_static_response_demux_multi_static3.ppif`.
-Read-side, read-data, two-dynamic-plus-static, general capped mixed sets,
-same-cycle, queue/scoreboard, backend, and VHDL work remain deferred.
+`.318` now ships that sample and generated write behavior while preserving the
+existing report mode. Mixed dynamic/static write response-demux is now bounded
+to one dynamic plus one, two, or three concrete static write transactions;
+broader read-side, read-data, two-dynamic-plus-static, general capped mixed
+sets, same-cycle, queue/scoreboard, backend, and VHDL work remain deferred.
 No behavior changed in
 `.270`, `.271`, `.273`, `.274`, `.275`, `.277`, `.278`,
 `.279`, `.281`, `.282`, `.283`, `.285`, `.286`, `.288`, `.290`, `.292`, or
