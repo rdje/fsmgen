@@ -10,9 +10,9 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.271: select mixed dynamic/static write demux`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.272` implements bounded mixed dynamic/static write `BID` response-demux behavior; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.271` selected `.272`, direct generated behavior for bounded mixed dynamic/static write `BID` response-demux using existing `response-demux.write` syntax, exactly one dynamic and one concrete static write transaction, and static concrete IDs reserved away from dynamic capture; no behavior changed.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.272: ship mixed dynamic/static write demux`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.273` selects the next exact owner after generated bounded mixed dynamic/static write `BID` response-demux; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.272` shipped generated bounded mixed dynamic/static write `BID` response-demux through `ppif/axi_manager_capacity_status_write_mixed_dynamic_static_response_demux.ppif`, using existing `response-demux.write` syntax with exactly one dynamic write transaction, one concrete static write transaction, static concrete-ID reservation away from dynamic capture, mixed request onehot0, response active/unique-match, and completion-active assertions.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
 

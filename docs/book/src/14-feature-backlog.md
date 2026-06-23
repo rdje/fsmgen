@@ -7193,6 +7193,29 @@ both owners. Read-side mixed demux, multiple mixed transactions, same-cycle
 widening, release-and-recapture, queues, scoreboards, direct backend,
 backend-language variants, and VHDL remain later owners.
 
+Mixed dynamic/static write response-demux behavior:
+[AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_WRITE_RESPONSE_DEMUX_BEHAVIOR](../../AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_WRITE_RESPONSE_DEMUX_BEHAVIOR.md)
+ships that `.272` behavior. The support-accounted public sample
+`ppif/axi_manager_capacity_status_write_mixed_dynamic_static_response_demux.ppif`
+generates dynamic selected-ID/busy state for `w0`, static busy state for `w1`,
+captures `AWID` for the dynamic transaction only when it is not the static
+concrete ID, matches generated completions from raw `BID` responses, and
+reports `bounded_mixed_dynamic_static_write_bid_demux_contract`.
+
+```text
+(response-demux
+  (write
+    (response-event axi0_write_complete)
+    (transaction-completion generated)))
+```
+
+The generated assertion set proves dynamic/static request onehot0, dynamic
+request/static-ID exclusion, active dynamic ID/static-ID exclusion, raw
+response active match, raw response unique match, and dynamic/static
+completion-active release. Read-side mixed demux, multiple mixed transactions,
+same-cycle widening, release-and-recapture, queues, scoreboards, direct
+backend, backend-language variants, and VHDL remain later owners.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same

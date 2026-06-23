@@ -1701,6 +1701,10 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 319. `docs/AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_WRITE_RESPONSE_DEMUX_CONTRACT_SELECTION.md`:
      selected direct generated behavior for bounded mixed dynamic/static
      write `BID` response-demux.
+320. `docs/AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_WRITE_RESPONSE_DEMUX_BEHAVIOR.md`:
+     shipped generated bounded mixed dynamic/static write `BID`
+     response-demux for exactly one dynamic write transaction plus one
+     concrete static write transaction.
 
 ## Documentation index (all `.md` files in this repo)
 - `README.md` — single entry point and navigation hub.
@@ -2408,6 +2412,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md` — selected mixed dynamic/static response-demux readiness after generated bounded multiple dynamic multi-beat output banks shipped.
 - `docs/AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_RESPONSE_DEMUX_READINESS_AUDIT.md` — audited mixed dynamic/static response-demux readiness and selected public contract selection for bounded mixed dynamic/static write `BID` response-demux.
 - `docs/AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_WRITE_RESPONSE_DEMUX_CONTRACT_SELECTION.md` — selected direct generated behavior for bounded mixed dynamic/static write `BID` response-demux.
+- `docs/AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_WRITE_RESPONSE_DEMUX_BEHAVIOR.md` — shipped generated bounded mixed dynamic/static write `BID` response-demux with static concrete-ID reservation away from dynamic capture.
 - `docs/AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md` — selected first AXI-derived IAL2 implementation subset and pre-code contract.
 - `docs/AXI_IAL2_VALID_READY_READINESS_AUDIT.md` — code/test/docs/report owner map for a future AXI Valid-Ready IAL2 implementation slice.
 - `docs/AXI_IAL2_VALID_READY_GENERATOR_FIRST_SLICE.md` — first in-process AXI Valid-Ready IAL2 generator slice and report surface.
@@ -2456,6 +2461,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `ppif/axi_manager_capacity_status_dynamic_transaction_id.ppif` — checked-in runnable `.ppif` sample for metadata-first dynamic transaction-ID parser/report support with `(id dynamic)`, support-accounted through check JSON and semantic JSON while HDL dynamic matching remains deferred.
 - `ppif/axi_manager_capacity_status_dynamic_write_response_demux.ppif` — checked-in runnable `.ppif` sample for generated single-active dynamic write transaction-ID capture and `BID` response matching through explicit `response-demux.write`, support-accounted through check JSON and semantic JSON.
 - `ppif/axi_manager_capacity_status_dynamic_write_response_demux_multi.ppif` — checked-in runnable `.ppif` sample for generated bounded multiple dynamic write transaction-ID capture and `BID` response matching through explicit `response-demux.write` with all-dynamic write transactions, support-accounted through check JSON and semantic JSON.
+- `ppif/axi_manager_capacity_status_write_mixed_dynamic_static_response_demux.ppif` — checked-in runnable `.ppif` sample for generated bounded mixed dynamic/static write `BID` response matching through explicit `response-demux.write` with one dynamic and one concrete static write transaction, support-accounted through check JSON and semantic JSON.
 - `ppif/axi_manager_capacity_status_dynamic_read_response_demux.ppif` — checked-in runnable `.ppif` sample for generated single-active dynamic read transaction-ID capture and single-beat `RID` response matching through explicit `response-demux.read`, support-accounted through check JSON and semantic JSON.
 - `ppif/axi_manager_capacity_status_dynamic_read_response_demux_multi.ppif` — checked-in runnable `.ppif` sample for generated bounded multiple dynamic read transaction-ID capture and single-beat `RID` response matching through explicit `response-demux.read` with all-dynamic read transactions, support-accounted through check JSON and semantic JSON.
 - `ppif/axi_manager_capacity_status_dynamic_read_data_multi.ppif` — checked-in runnable `.ppif` sample for generated scalar single-beat `RDATA`/`RRESP` capture over generated multiple dynamic read single-beat response-demux, support-accounted through check JSON and semantic JSON.

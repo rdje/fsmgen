@@ -381,6 +381,68 @@ subtest 'multiple dynamic write response-demux captures AWID and matches BID' =>
     like($sv_assertions, qr/axi0 write dynamic response matches at most one captured ID/, 'assertion backend emits multi dynamic response unique-match assertion');
 };
 
+subtest 'mixed dynamic/static write response-demux captures AWID and matches static BID' => sub {
+    my $result = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_mixed_dynamic_static_write_response_demux());
+    my $isf = $result->{generated_ial1}{text};
+
+    like($isf, qr/\(input axi0_w0_request\)/, 'mixed dynamic/static write demux declares dynamic request event');
+    like($isf, qr/\(input axi0_w1_request\)/, 'mixed dynamic/static write demux declares static request event');
+    like($isf, qr/\(input axi0_awid \(width 4\)\)/, 'mixed dynamic/static write demux declares AWID');
+    like($isf, qr/\(input axi0_bid \(width 4\)\)/, 'mixed dynamic/static write demux declares BID');
+    like($isf, qr/\(output axi0_w0_complete\)/, 'mixed dynamic/static write demux exposes dynamic completion');
+    like($isf, qr/\(output axi0_w1_complete\)/, 'mixed dynamic/static write demux exposes static completion');
+    like($isf, qr/\(var axi0_w0_dynamic_id_q \(width 4\)\)/, 'mixed dynamic/static write demux allocates dynamic selected-ID state');
+    like($isf, qr/\(var axi0_w0_dynamic_busy_q \(width 1\)\)/, 'mixed dynamic/static write demux allocates dynamic busy state');
+    like($isf, qr/\(var axi0_w1_static_busy_q \(width 1\)\)/, 'mixed dynamic/static write demux allocates static busy state');
+    like($isf, qr/\(rule axi0_w0_dynamic_id_capture\b/, 'mixed dynamic/static write demux emits dynamic capture rule');
+    like($isf, qr/\(! \(& axi0_w1_request/, 'mixed dynamic/static write demux gates dynamic capture against static request');
+    like($isf, qr/\(! \(== axi0_awid 4'd3\)\)/, 'mixed dynamic/static write demux gates dynamic capture against static concrete ID');
+    like($isf, qr/\(axi0_w0_dynamic_id_q axi0_awid\)/, 'mixed dynamic/static write demux captures dynamic AWID');
+    like($isf, qr/\(axi0_w0_dynamic_busy_q 1\)/, 'mixed dynamic/static write demux marks dynamic request busy');
+    like($isf, qr/\(rule axi0_w1_static_busy_capture\b/, 'mixed dynamic/static write demux emits static capture rule');
+    like($isf, qr/\(& \(& axi0_w1_request/, 'mixed dynamic/static write demux captures admitted static request');
+    like($isf, qr/\(! axi0_w1_static_busy_q\)/, 'mixed dynamic/static write demux requires static transaction idle');
+    like($isf, qr/\(! \(& axi0_w0_request/, 'mixed dynamic/static write demux gates static capture against dynamic request');
+    like($isf, qr/\(axi0_w1_static_busy_q 1\)/, 'mixed dynamic/static write demux marks static request busy');
+    like(
+        $isf,
+        qr/\(rule axi0_w0_response_demux \(& axi0_write_complete axi0_w0_dynamic_busy_q \(== axi0_bid axi0_w0_dynamic_id_q\)\)\s+\(pulse axi0_w0_complete\)\)/,
+        'mixed dynamic/static write demux pulses dynamic completion on matching active BID',
+    );
+    like(
+        $isf,
+        qr/\(rule axi0_w1_response_demux \(& axi0_write_complete axi0_w1_static_busy_q \(== axi0_bid 4'd3\)\)\s+\(pulse axi0_w1_complete\)\)/,
+        'mixed dynamic/static write demux pulses static completion on matching concrete BID',
+    );
+    like(
+        $isf,
+        qr/\(rule axi0_w1_static_busy_release \(& axi0_w1_complete axi0_w1_static_busy_q\)\s+\(axi0_w1_static_busy_q 0\)\)/,
+        'mixed dynamic/static write demux releases static busy state on generated completion',
+    );
+    like($isf, qr/"axi0 write mixed dynamic\/static requests are mutually exclusive"/, 'mixed dynamic/static write demux emits mixed request onehot assertion');
+    like($isf, qr/"axi0 w0 dynamic request does not use static concrete ID"/, 'mixed dynamic/static write demux emits dynamic request static-ID reservation assertion');
+    like($isf, qr/"axi0 write mixed dynamic\/static response matches active transaction"/, 'mixed dynamic/static write demux emits active response assertion');
+    like($isf, qr/"axi0 write mixed dynamic\/static response matches at most one transaction"/, 'mixed dynamic/static write demux emits unique response assertion');
+    like($isf, qr/"axi0 w1 static completion releases active concrete ID"/, 'mixed dynamic/static write demux emits static completion-active assertion');
+
+    assert_mixed_dynamic_static_write_response_demux_report($result->{report}, 'generator report');
+
+    my $fsm = $result->{generated_ial0}{files}{'axi0_capacity_status.fsm'};
+    like($fsm, qr/\(-axi0_w0_response_demux\s+<\(& axi0_write_complete axi0_w0_dynamic_busy_q \(== axi0_bid axi0_w0_dynamic_id_q\)\)/, 'scheduled .fsm lowers mixed dynamic BID match');
+    like($fsm, qr/\(-axi0_w1_response_demux\s+<\(& axi0_write_complete axi0_w1_static_busy_q \(== axi0_bid 4'd3\)\)/, 'scheduled .fsm lowers mixed static BID match');
+
+    my $hdl = hdl_for('axi0_capacity_status', $fsm);
+    like($hdl, qr/\breg\s+\[3:0\]\s+axi0_w0_dynamic_id_q\b/, 'SystemVerilog declares mixed dynamic ID state');
+    like($hdl, qr/\breg\s+axi0_w1_static_busy_q\b/, 'SystemVerilog declares mixed static busy state');
+    like($hdl, qr/axi0_write_complete\s*&\s*axi0_w0_dynamic_busy_q\s*&\s*\(axi0_bid\s*==\s*axi0_w0_dynamic_id_q\)/, 'SystemVerilog lowers mixed dynamic BID-match guard');
+    like($hdl, qr/axi0_write_complete\s*&\s*axi0_w1_static_busy_q\s*&\s*\(axi0_bid\s*==\s*4'd3\)/, 'SystemVerilog lowers mixed static BID-match guard');
+
+    my $sv_assertions = sv_assertion_block_for_result($result);
+    like($sv_assertions, qr/axi0 write mixed dynamic\/static requests are mutually exclusive/, 'assertion backend emits mixed request onehot assertion');
+    like($sv_assertions, qr/axi0 w0 dynamic request does not use static concrete ID/, 'assertion backend emits request static-ID reservation assertion');
+    like($sv_assertions, qr/axi0 write mixed dynamic\/static response matches at most one transaction/, 'assertion backend emits response unique-match assertion');
+};
+
 subtest 'dynamic read response-demux captures ARID and matches single-beat RID' => sub {
     my $result = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_dynamic_read_response_demux());
     my $isf = $result->{generated_ial1}{text};
@@ -4536,7 +4598,7 @@ subtest 'malformed contract objects fail closed and no direct lower-to-fsm entry
         ['dynamic transaction ID blocks same-family auto lifecycle behavior', sub { my $c = sample_contract_with_dynamic_transaction_id(); $c->{auto_id_lifecycle} = { read => { pool => [0] } }; $c }, qr/auto_id_lifecycle\.read cannot be combined with dynamic read transaction ID metadata/],
         ['dynamic read response demux requires generated completion distinct from raw response event', sub { my $c = sample_contract_with_dynamic_transaction_id(); $c->{response_demux} = { read => { response_event => 'axi0_read_complete', response_scope => 'single-beat', transaction_completion => 'generated' } }; $c }, qr/response_demux\.read generated transaction completion signal 'axi0_read_complete' must be distinct from response_event 'axi0_read_complete'/],
         ['dynamic transaction ID blocks same-family same-ID ordering behavior', sub { my $c = sample_contract_with_dynamic_transaction_id(); $c->{same_id_ordering_policy} = { read => { concrete_id_reuse => 'issue-order-queue' } }; $c }, qr/same_id_ordering_policy\.read cannot be combined with dynamic read transaction ID metadata/],
-        ['dynamic write response demux rejects mixed write transaction ownership', sub {
+        ['dynamic write response demux rejects unsupported mixed write transaction counts', sub {
             my $c = sample_contract_with_dynamic_write_response_demux();
             push @{$c->{transactions}}, {
                 kind             => 'write',
@@ -4546,8 +4608,16 @@ subtest 'malformed contract objects fail closed and no direct lower-to-fsm entry
                 completion_event => 'axi0_w1_complete',
                 id               => { value => 1 },
             };
+            push @{$c->{transactions}}, {
+                kind             => 'write',
+                name             => 'w2',
+                tag              => 'wr2',
+                request_event    => 'axi0_w2_request',
+                completion_event => 'axi0_w2_complete',
+                id               => { value => 2 },
+            };
             $c;
-        }, qr/response_demux\.write dynamic ID matching requires every write transaction to use dynamic IDs/],
+        }, qr/response_demux\.write mixed dynamic\/static ID matching supports exactly one dynamic write transaction and one concrete static write transaction/],
         ['dynamic read-data rejects incomplete multiple dynamic read RLAST coverage', sub {
             my $c = sample_contract_with_dynamic_read_response_demux_multi_burst_last();
             $c->{read_data} = {
@@ -4862,6 +4932,37 @@ sub sample_contract_with_dynamic_write_response_demux_multi {
             request_event    => 'axi0_w1_request',
             completion_event => 'axi0_w1_complete',
             id               => { policy => 'dynamic' },
+        },
+    ];
+    $contract->{response_demux} = {
+        write => {
+            response_event => 'axi0_write_complete',
+            transaction_completion => 'generated',
+        },
+    };
+    return $contract;
+}
+
+sub sample_contract_with_mixed_dynamic_static_write_response_demux {
+    my $contract = sample_contract_with_id_families();
+    $contract->{intent_name} = 'axi_manager_capacity_status_write_mixed_dynamic_static_response_demux';
+    $contract->{source}{object_id} = 'axi-manager-capacity-status-write-mixed-dynamic-static-response-demux';
+    $contract->{transactions} = [
+        {
+            kind             => 'write',
+            name             => 'w0',
+            tag              => 'wr0',
+            request_event    => 'axi0_w0_request',
+            completion_event => 'axi0_w0_complete',
+            id               => { policy => 'dynamic' },
+        },
+        {
+            kind             => 'write',
+            name             => 'w1',
+            tag              => 'wr1',
+            request_event    => 'axi0_w1_request',
+            completion_event => 'axi0_w1_complete',
+            id               => { value => 3 },
         },
     ];
     $contract->{response_demux} = {
@@ -6522,6 +6623,91 @@ sub assert_dynamic_write_response_demux_multi_report {
             ],
         },
         "$owner reports multiple dynamic capture state and rule ownership",
+    );
+    is_deeply(
+        $demux->{residue},
+        [qw(read_response_demux same_id_ordering read_data_interleaving bursts)],
+        "$owner keeps unsupported dynamic-read, same-ID, read-data, and burst residue explicit",
+    );
+    my %residue = map { $_->{id} => 1 } @{$report->{unsupported_residue}};
+    ok($residue{dynamic_transaction_id_behavior}, "$owner keeps future dynamic behavior residue visible");
+}
+
+sub assert_mixed_dynamic_static_write_response_demux_report {
+    my ($report, $owner) = @_;
+    my $demux = $report->{response_demux};
+    my $write = $demux->{write};
+
+    is(scalar(@{$report->{transactions}}), 2, "$owner reports dynamic and static write transactions");
+    is($report->{transactions}[0]{id}{implementation_status}, 'generated_capture_matching', "$owner reports generated capture/matching for the dynamic write");
+    is_deeply(
+        {
+            map { $_ => $report->{transactions}[1]{id}{$_} }
+            qw(policy value family family_width)
+        },
+        {
+            policy       => 'concrete',
+            value        => 3,
+            family       => 'write',
+            family_width => 4,
+        },
+        "$owner reports concrete static write ID metadata",
+    );
+    ok($report->{transactions}[1]{id}{fits}, "$owner reports concrete static write ID fits the family width");
+    is($demux->{mode}, 'bounded_mixed_dynamic_static_write_bid_demux_contract', "$owner marks mixed dynamic/static write BID-demux contract mode");
+    ok($demux->{generated_behavior}, "$owner marks mixed dynamic/static response-demux behavior generated");
+    is($write->{mode}, 'bounded_mixed_dynamic_static_write_bid_demux_contract', "$owner marks write mixed dynamic/static demux mode");
+    ok($write->{generated_behavior}, "$owner marks write mixed dynamic/static demux behavior generated");
+    is($write->{response_event}, 'axi0_write_complete', "$owner reports the raw write response event");
+    is($write->{response_event_role}, 'raw_accepted_write_response', "$owner reports the response-event role");
+    is($write->{response_id_signal}, 'axi0_bid', "$owner reports BID as the response ID signal");
+    is($write->{response_id_direction}, 'generated_input', "$owner reports response ID direction as generated input");
+    is($write->{transaction_completion_source}, 'generated_mixed_dynamic_static_demux', "$owner reports generated mixed dynamic/static demux completion ownership");
+    is($write->{transaction_completion_semantics}, 'matched_dynamic_or_static_concrete_id', "$owner reports mixed dynamic/static completion semantics");
+    is_deeply($write->{dynamic_transactions}, [qw(w0)], "$owner reports the dynamic write transaction");
+    is_deeply($write->{static_transactions}, [qw(w1)], "$owner reports the static write transaction");
+    is_deeply($write->{mixed_transactions}, { dynamic => 'w0', static => 'w1' }, "$owner reports mixed transaction roles");
+    is_deeply(
+        $write->{static_id_reservation},
+        {
+            transaction            => 'w1',
+            concrete_id            => 3,
+            concrete_id_literal    => "4'd3",
+            dynamic_capture_policy => 'dynamic_id_must_not_equal_static_concrete_id',
+        },
+        "$owner reports static-ID reservation policy",
+    );
+    is_deeply($write->{generated_rules}, [qw(axi0_w0_response_demux axi0_w1_response_demux)], "$owner reports generated mixed demux rules");
+    is_deeply($write->{generated_completion_signals}, [qw(axi0_w0_complete axi0_w1_complete)], "$owner reports generated mixed completion pulses");
+    is_deeply(
+        $write->{generated_assertions},
+        [qw(
+            axi0_w0_dynamic_request_not_busy
+            axi0_w1_static_request_not_busy
+            axi0_write_mixed_dynamic_static_request_onehot0
+            axi0_w0_dynamic_request_not_static_id
+            axi0_w0_dynamic_active_not_static_id
+            axi0_write_mixed_dynamic_static_response_active_match
+            axi0_w0_w1_write_mixed_dynamic_static_response_unique_match
+            axi0_w0_dynamic_completion_active
+            axi0_w1_static_completion_active
+        )],
+        "$owner reports generated mixed dynamic/static assertions",
+    );
+    is_deeply(
+        $write->{dynamic_capture},
+        {
+            request_id_source           => 'axi0_awid',
+            capture_event_source        => 'admitted_dynamic_write_request',
+            ownership                   => 'mixed_dynamic_static_unique_write_ids',
+            simultaneous_request_policy => 'onehot0_mixed_write_request',
+            static_id_conflict_policy   => 'static_concrete_ids_reserved',
+            selected_id_signal          => 'axi0_w0_dynamic_id_q',
+            busy_signal                 => 'axi0_w0_dynamic_busy_q',
+            capture_rule                => 'axi0_w0_dynamic_id_capture',
+            release_rule                => 'axi0_w0_dynamic_id_release',
+        },
+        "$owner reports dynamic capture state and mixed ownership",
     );
     is_deeply(
         $demux->{residue},
