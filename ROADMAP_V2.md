@@ -2328,9 +2328,18 @@ request assertions across all selected read transactions, three final-beat
 and list-shaped report fields while preserving the `.276`, `.280`, and `.299`
 public report contracts. `.303` selected `.304`, the next exact IAL2
 feature-completeness selector after widened mixed read burst-last behavior.
-No behavior changed in `.270`, `.271`, `.273`, `.274`, `.275`, `.277`, `.278`,
+`.304` now selects `.305`, readiness audit for bounded scalar read-data over
+generated multiple mixed dynamic/static read response-demux, because `.299`
+and `.303` now provide the single-beat and burst-last generated completion
+pulses that scalar `RDATA`/`RRESP` capture would consume. The audit must
+settle candidate sample stems, completion-validity vocabulary,
+dynamic-then-static transaction coverage, diagnostics, validation strategy,
+rollback, and residue before raw `ARLEN`, runtime validation, multi-beat
+output banks, broader cardinalities, same-cycle widening, queues/scoreboards,
+backend variants, or VHDL widen. No behavior changed in `.270`, `.271`,
+`.273`, `.274`, `.275`, `.277`, `.278`,
 `.279`, `.281`, `.282`, `.283`, `.285`, `.286`, `.288`, `.290`, `.292`, or
-`.293`, `.294`, `.296`, `.297`, `.298`, `.300`, `.301`, or `.302`.
+`.293`, `.294`, `.296`, `.297`, `.298`, `.300`, `.301`, `.302`, or `.304`.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.

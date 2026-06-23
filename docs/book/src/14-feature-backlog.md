@@ -7606,6 +7606,20 @@ per-static busy state, dynamic capture exclusions for static IDs `4'd3` and
 list-shaped mixed transaction/static-ID reservation report fields while
 preserving the `.276`, `.280`, and `.299` public report contracts.
 
+Post multiple mixed dynamic/static read RLAST selector:
+[AXI_IAL2_MANAGER_POST_MULTIPLE_MIXED_DYNAMIC_STATIC_READ_RLAST_DEMUX_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_MIXED_DYNAMIC_STATIC_READ_RLAST_DEMUX_NEXT_SLICE_SELECTION.md)
+selects `.305`, readiness audit for bounded scalar read-data over generated
+multiple mixed dynamic/static read response-demux. The selector changes no
+behavior in `.304`. It chooses the audit because `.299` now supplies
+generated multiple mixed single-beat `RID` completions and `.303` now
+supplies generated multiple mixed burst-last `RID && RLAST` completions for
+one dynamic read plus two concrete static reads. The audit must settle sample
+stems, completion-validity vocabulary, dynamic-then-static transaction
+coverage, diagnostics, validation strategy, rollback, and explicit residue
+before raw `ARLEN`, runtime validation, multi-beat output banks, broader
+cardinalities, same-cycle widening, queues/scoreboards, backend variants, or
+VHDL widen.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same
