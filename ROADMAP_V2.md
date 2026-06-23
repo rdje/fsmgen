@@ -2179,7 +2179,11 @@ multi-beat output-bank behavior through the support-accounted public sample
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,
 public contract selection for bounded mixed dynamic/static write `BID`
-response-demux; no behavior changed in the audit.
+response-demux. `.271` selected `.272`, direct generated behavior for that
+bounded mixed write contract, with existing `response-demux.write` syntax,
+exactly one dynamic write transaction, exactly one concrete static write
+transaction, and static concrete IDs reserved away from dynamic capture. No
+behavior changed in `.270` or `.271`.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.

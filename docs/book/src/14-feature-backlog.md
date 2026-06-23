@@ -7182,6 +7182,17 @@ concrete-ID versus active dynamic captured-ID ownership without read `RLAST`,
 burst-length/runtime, read-data, or multi-beat output-bank coupling. No
 behavior changed in the audit.
 
+Mixed dynamic/static write response-demux contract:
+[AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_WRITE_RESPONSE_DEMUX_CONTRACT_SELECTION](../../AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_WRITE_RESPONSE_DEMUX_CONTRACT_SELECTION.md)
+selects `.272`, direct generated behavior for bounded mixed dynamic/static
+write `BID` response-demux. The contract reuses existing
+`response-demux.write` syntax with generated completion, exactly one dynamic
+write transaction, exactly one concrete static write transaction, and static
+concrete IDs reserved away from dynamic capture so one raw `BID` cannot match
+both owners. Read-side mixed demux, multiple mixed transactions, same-cycle
+widening, release-and-recapture, queues, scoreboards, direct backend,
+backend-language variants, and VHDL remain later owners.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same
