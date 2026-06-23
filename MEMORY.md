@@ -10,9 +10,9 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.316: audit broader mixed cardinality readiness`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.317` selects the public contract for the first broader mixed dynamic/static transaction-cardinality shape; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.316` selected `.317` contract selection after finding direct broader mixed dynamic/static implementation premature at the exact one-dynamic plus one- or two-static admission/coverage boundary.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.317: select broader mixed cardinality contract`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.318` ships generated one-dynamic plus three-concrete-static write `BID` response-demux; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.317` selected `.318` direct behavior for public sample `ppif/axi_manager_capacity_status_write_mixed_dynamic_static_response_demux_multi_static3.ppif`, reusing the existing multi-mixed write report mode.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
 

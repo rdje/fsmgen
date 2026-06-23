@@ -7779,6 +7779,17 @@ predicates still encode the exact one-dynamic plus one- or two-static
 boundary, so the next owner must choose the first public broader shape and
 report/diagnostic/support-accounting contract before implementation.
 
+Broader mixed dynamic/static cardinality contract selection:
+[AXI_IAL2_MANAGER_BROADER_MIXED_DYNAMIC_STATIC_CARDINALITY_CONTRACT_SELECTION](../../AXI_IAL2_MANAGER_BROADER_MIXED_DYNAMIC_STATIC_CARDINALITY_CONTRACT_SELECTION.md)
+selects `.318`, direct generated behavior for bounded one-dynamic plus
+three-concrete-static write `BID` response-demux. The selector changes no
+behavior. It reuses the existing
+`bounded_multi_mixed_dynamic_static_write_bid_demux_contract` report mode and
+chooses public sample stem
+`ppif/axi_manager_capacity_status_write_mixed_dynamic_static_response_demux_multi_static3.ppif`.
+Read-side, read-data, two-dynamic-plus-static, general capped mixed sets,
+same-cycle, queue/scoreboard, backend, and VHDL work remain deferred.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same

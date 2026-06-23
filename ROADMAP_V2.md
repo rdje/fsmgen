@@ -2446,11 +2446,19 @@ predicates all still encode the exact one-dynamic plus one- or two-static
 boundary, so the next owner must choose the first public broader shape,
 report vocabulary, diagnostics, support-accounting stem, and validation
 strategy before implementation.
+`.317` now selects `.318`, direct generated behavior for bounded one-dynamic
+plus three-concrete-static write `BID` response-demux. The contract selection
+changes no behavior; it reuses the existing
+`bounded_multi_mixed_dynamic_static_write_bid_demux_contract` report mode and
+chooses public sample stem
+`ppif/axi_manager_capacity_status_write_mixed_dynamic_static_response_demux_multi_static3.ppif`.
+Read-side, read-data, two-dynamic-plus-static, general capped mixed sets,
+same-cycle, queue/scoreboard, backend, and VHDL work remain deferred.
 No behavior changed in
 `.270`, `.271`, `.273`, `.274`, `.275`, `.277`, `.278`,
 `.279`, `.281`, `.282`, `.283`, `.285`, `.286`, `.288`, `.290`, `.292`, or
 `.293`, `.294`, `.296`, `.297`, `.298`, `.300`, `.301`, `.302`, `.304`,
-`.305`, `.306`, `.308`, `.309`, `.311`, `.313`, `.315`, or `.316`.
+`.305`, `.306`, `.308`, `.309`, `.311`, `.313`, `.315`, `.316`, or `.317`.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.
