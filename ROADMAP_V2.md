@@ -2282,10 +2282,15 @@ one-static report contract. `.296` now selects `.297`, readiness audit for
 multiple mixed dynamic/static read response-demux after the widened write
 contract shipped, because the read plan builder remains singular while
 read-side single-beat `RID` and burst-last `RID && RLAST` scopes need an
-owned parity audit before contract selection or implementation.
+owned parity audit before contract selection or implementation. `.297` now
+selects `.298`, public contract selection for bounded multiple mixed
+dynamic/static read single-beat `RID` response-demux, leaving burst-last
+`RID && RLAST`, read-data, burst-length/runtime validation, multi-beat output
+banks, broader mixed cardinalities, same-cycle widening, queues/scoreboards,
+backend variants, and VHDL as later exact owners.
 No behavior changed in `.270`, `.271`, `.273`, `.274`, `.275`, `.277`, `.278`,
 `.279`, `.281`, `.282`, `.283`, `.285`, `.286`, `.288`, `.290`, `.292`, or
-`.293`, `.294`, or `.296`.
+`.293`, `.294`, `.296`, or `.297`.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.

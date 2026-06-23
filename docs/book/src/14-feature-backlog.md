@@ -7528,6 +7528,16 @@ response-demux remains singular while single-beat `RID` and burst-last
 `RID && RLAST` scopes need an owned parity audit before contract selection or
 implementation.
 
+Multiple mixed dynamic/static read readiness:
+[AXI_IAL2_MANAGER_MULTIPLE_MIXED_DYNAMIC_STATIC_READ_RESPONSE_DEMUX_READINESS_AUDIT](../../AXI_IAL2_MANAGER_MULTIPLE_MIXED_DYNAMIC_STATIC_READ_RESPONSE_DEMUX_READINESS_AUDIT.md)
+selects `.298`, public contract selection for bounded multiple mixed
+dynamic/static read single-beat `RID` response-demux. The audit changes no
+behavior; it records that the read plan builder remains singular, the mixed
+assertion helper is already list-shaped, and single-beat `RID` is the
+smallest read-side widened ownership surface before burst-last `RID &&
+RLAST`, read-data, burst-length/runtime validation, or multi-beat output
+banks.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same
