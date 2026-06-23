@@ -2186,7 +2186,11 @@ The shipped contract uses existing `response-demux.write` syntax with exactly
 one dynamic write transaction, exactly one concrete static write transaction,
 static concrete IDs reserved away from dynamic capture, mixed request onehot0
 assertions, response active/unique-match assertions, and completion-active
-release assertions. No behavior changed in `.270` or `.271`.
+release assertions. `.273` selected `.274`, readiness audit for mixed
+dynamic/static read response-demux before choosing single-beat `RID`,
+burst-last `RID && RLAST`, read-data, burst/runtime, multi-beat, report
+cleanup, or another prerequisite. No behavior changed in `.270`, `.271`, or
+`.273`.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.

@@ -7216,6 +7216,15 @@ completion-active release. Read-side mixed demux, multiple mixed transactions,
 same-cycle widening, release-and-recapture, queues, scoreboards, direct
 backend, backend-language variants, and VHDL remain later owners.
 
+Post mixed dynamic/static write demux selector:
+[AXI_IAL2_MANAGER_POST_MIXED_DYNAMIC_STATIC_WRITE_DEMUX_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MIXED_DYNAMIC_STATIC_WRITE_DEMUX_NEXT_SLICE_SELECTION.md)
+selects mixed dynamic/static read response-demux readiness after `.272` shipped
+bounded mixed dynamic/static write `BID` response-demux. The read side still
+fails closed when a selected read family mixes dynamic and static/concrete
+transaction IDs, and `.274` must audit whether the first safe read owner is
+single-beat `RID`, burst-last `RID && RLAST`, scalar read-data, burst/runtime,
+multi-beat output banks, report cleanup, or another prerequisite.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same
