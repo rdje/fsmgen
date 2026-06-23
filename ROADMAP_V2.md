@@ -2168,8 +2168,9 @@ multiple dynamic read response-demux through
 `ppif/axi_manager_capacity_status_dynamic_read_data_multi_burst_length.ppif`.
 `.264` now ships the runtime beat-count/`RLAST` assertion sibling through
 `ppif/axi_manager_capacity_status_dynamic_read_data_multi_burst_length_runtime_assertion.ppif`.
-`.265` is the next exact-owner selector before any further IAL2 behavior is
-widened.
+`.265` selects `.266`, readiness audit for generated multiple dynamic
+multi-beat output-bank behavior over the generated multiple dynamic read
+runtime-validation boundary, before any further IAL2 behavior is widened.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.

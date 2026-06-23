@@ -7105,9 +7105,18 @@ transaction in the scalar last-beat shape. The schedule report records
 `beat_count_match_source: response_demux_matched_read_beat`, per-transaction
 generated beat-count storage/rules/assertions, and removes
 `generated_beat_count_validation` from residue.
-The next IAL2 frontier is `.265`, an exact-owner selector before any further
-multiple dynamic multi-beat, mixed dynamic/static, queue, scoreboard, direct
-backend, backend-language variant, or VHDL behavior is widened.
+Post multiple dynamic runtime-validation selector:
+[AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_RUNTIME_VALIDATION_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_RUNTIME_VALIDATION_NEXT_SLICE_SELECTION.md)
+selects `.266`, readiness audit for generated multiple dynamic multi-beat
+output-bank behavior over the generated multiple dynamic read
+runtime-validation boundary. The selector changes no behavior. The audit is
+next because the live dynamic multi-beat admission boundary is still
+single-active, while scalar burst-length/runtime over multiple dynamic reads
+is now generated; it must settle the multi-transaction output-bank source
+shape, diagnostics, report vocabulary, validation, and residue before
+multiple dynamic multi-beat behavior widens. Mixed dynamic/static, queue,
+scoreboard, direct backend, backend-language variant, and VHDL behavior remain
+later exact owners.
 
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)

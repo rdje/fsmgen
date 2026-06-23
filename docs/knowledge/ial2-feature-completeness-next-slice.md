@@ -1,6 +1,6 @@
 ---
 id: ial2-feature-completeness-next-slice
-title: IAL2 feature completeness next slice is post-runtime exact-owner selection
+title: IAL2 feature completeness next slice is multiple dynamic multi-beat readiness
 answers:
   - "what is the next IAL2 feature completeness slice?"
   - "what is the next IAL2 PNT task?"
@@ -40,6 +40,9 @@ answers:
   - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.263?"
   - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.264?"
   - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.265?"
+  - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.266?"
+  - "what is the next IAL2 task after multiple dynamic runtime validation?"
+  - "what is the next multiple dynamic read-data task?"
   - "what is the next AXI manager slice?"
   - "what is the next AXI manager task after counted capacity substrate?"
   - "what is the next AXI manager task after counted admitted guard alignment?"
@@ -47,12 +50,16 @@ answers:
 date: 2026-06-23
 status: current
 tags: [ial2, axi, manager, same-id, concrete-id, ordering, feature-completeness, task-tree]
-evidence: docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; docs/REGRESSION_CORPUS.md; docs/AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_READ_BURST_LENGTH_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_READ_BURST_LENGTH_RUNTIME_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_READ_BURST_LENGTH_RUNTIME_CONTRACT_SELECTION.md; docs/AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_READ_BURST_LENGTH_RUNTIME_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_READ_DATA_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_DYNAMIC_RUNTIME_VALIDATION_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_DYNAMIC_BURST_LENGTH_BEHAVIOR.md; docs/book/src/14-feature-backlog.md; README.md; ROADMAP_V2.md; docs/knowledge/ial2-multiple-dynamic-read-burst-length-behavior.md; docs/knowledge/ial2-multiple-dynamic-read-burst-length-runtime-behavior.md; docs/knowledge/ial2-multiple-dynamic-read-burst-length-runtime-contract-selection.md; docs/knowledge/ial2-multiple-dynamic-read-burst-length-runtime-readiness-audit.md; docs/knowledge/ial2-multiple-dynamic-read-data-behavior.md
-reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.263|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.264|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.265|MULTIPLE_DYNAMIC_READ_BURST_LENGTH_BEHAVIOR|MULTIPLE_DYNAMIC_READ_BURST_LENGTH_RUNTIME_BEHAVIOR|dynamic_read_data_multi_burst_length|multiple dynamic runtime|runtime beat-count' docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md docs/REGRESSION_CORPUS.md docs/AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_READ_BURST_LENGTH_BEHAVIOR.md docs/AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_READ_BURST_LENGTH_RUNTIME_BEHAVIOR.md docs/book/src/14-feature-backlog.md README.md ROADMAP_V2.md docs/knowledge/ial2-multiple-dynamic-read-burst-length-behavior.md docs/knowledge/ial2-multiple-dynamic-read-burst-length-runtime-behavior.md
+evidence: docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; docs/REGRESSION_CORPUS.md; docs/AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_RUNTIME_VALIDATION_NEXT_SLICE_SELECTION.md; docs/AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_READ_BURST_LENGTH_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_READ_BURST_LENGTH_RUNTIME_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_READ_BURST_LENGTH_RUNTIME_CONTRACT_SELECTION.md; docs/AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_READ_BURST_LENGTH_RUNTIME_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_READ_DATA_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_DYNAMIC_RUNTIME_VALIDATION_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_DYNAMIC_BURST_LENGTH_BEHAVIOR.md; docs/book/src/14-feature-backlog.md; README.md; ROADMAP_V2.md; docs/knowledge/ial2-post-multiple-dynamic-runtime-validation-next-slice-selection.md; docs/knowledge/ial2-multiple-dynamic-read-burst-length-behavior.md; docs/knowledge/ial2-multiple-dynamic-read-burst-length-runtime-behavior.md; docs/knowledge/ial2-multiple-dynamic-read-burst-length-runtime-contract-selection.md; docs/knowledge/ial2-multiple-dynamic-read-burst-length-runtime-readiness-audit.md; docs/knowledge/ial2-multiple-dynamic-read-data-behavior.md
+reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.265|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.266|POST_MULTIPLE_DYNAMIC_RUNTIME_VALIDATION_NEXT_SLICE_SELECTION|multiple dynamic multi-beat output-bank readiness|dynamic_read_data_multi_burst_length|multiple dynamic runtime|runtime beat-count' docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md docs/AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_RUNTIME_VALIDATION_NEXT_SLICE_SELECTION.md docs/AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_READ_BURST_LENGTH_RUNTIME_BEHAVIOR.md docs/book/src/14-feature-backlog.md README.md ROADMAP_V2.md docs/knowledge/ial2-post-multiple-dynamic-runtime-validation-next-slice-selection.md
 ---
 
 The next active IAL2 project slice is
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.265`, an exact-owner selector after `.263`
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.266`, readiness audit for generated
+multiple dynamic multi-beat read-data output-bank behavior over the generated
+multiple dynamic read runtime-validation boundary.
+
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.265` selected `.266` after `.263`
 shipped report-only raw-`ARLEN` capture and `.264` shipped runtime
 beat-count/`RLAST` validation over generated multiple dynamic read
 response-demux.
@@ -101,8 +108,9 @@ the runtime beat-count/`RLAST` assertion sibling. `.263` ships the report-only s
 `ppif/axi_manager_capacity_status_dynamic_read_data_multi_burst_length.ppif`.
 `.264` ships the runtime sample
 `ppif/axi_manager_capacity_status_dynamic_read_data_multi_burst_length_runtime_assertion.ppif`.
-`.265` must select the next exact IAL2 owner before any further behavior is
-widened.
+`.265` selected `.266`, readiness audit for generated multiple dynamic
+multi-beat output-bank behavior before any further multiple dynamic read-data
+behavior is widened.
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.211` shipped counted selected-request
 capacity/status substrate for generated same-ID queue-head families with
