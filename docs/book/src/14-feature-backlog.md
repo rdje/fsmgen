@@ -7676,6 +7676,21 @@ pulses, while runtime validation and multi-beat output banks depend on first
 settling request-time raw-`ARLEN` capture for the dynamic transaction and both
 concrete static transactions.
 
+Multiple mixed dynamic/static burst-length readiness:
+[AXI_IAL2_MANAGER_MULTIPLE_MIXED_DYNAMIC_STATIC_READ_DATA_BURST_LENGTH_READINESS_AUDIT](../../AXI_IAL2_MANAGER_MULTIPLE_MIXED_DYNAMIC_STATIC_READ_DATA_BURST_LENGTH_READINESS_AUDIT.md)
+selects `.310`, direct bounded implementation of report-only raw-`ARLEN`
+burst-length capture over generated multiple mixed dynamic/static read
+burst-last response-demux and scalar last-beat read-data. The audit changes no
+behavior in `.309`. It finds that the generic burst-length normalization,
+per-transaction storage/rule generation, and report artifact lists are already
+transaction-list driven once the multiple mixed coverage branch admits
+last-beat `validation report-only` burst metadata. The selected public sample
+is
+`ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static_burst_last_read_data_burst_length.ppif`;
+runtime validation, multi-beat output banks, broader cardinalities,
+same-cycle widening, queues/scoreboards, backend variants, and VHDL remain
+deferred.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same

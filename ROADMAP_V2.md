@@ -2371,11 +2371,22 @@ changes no behavior; it chooses the audit because runtime validation and
 multi-beat output banks over the multiple mixed shape depend on first settling
 request-time raw-`ARLEN` capture for the dynamic transaction and both concrete
 static transactions.
+`.309` now selects `.310`, direct bounded implementation of report-only
+raw-`ARLEN` burst-length capture over generated multiple mixed dynamic/static
+read burst-last response-demux and scalar last-beat read-data. The audit found
+that the generic burst-length normalization, per-transaction storage/rule
+generation, and report artifact lists already scale across `r0`, `r1`, and
+`r2` once the multiple mixed coverage branch admits last-beat
+`validation report-only` burst metadata. The selected public sample is
+`ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static_burst_last_read_data_burst_length.ppif`;
+runtime validation, multi-beat output banks, broader cardinalities,
+same-cycle widening, queues/scoreboards, backend variants, and VHDL remain
+deferred.
 No behavior changed in
 `.270`, `.271`, `.273`, `.274`, `.275`, `.277`, `.278`,
 `.279`, `.281`, `.282`, `.283`, `.285`, `.286`, `.288`, `.290`, `.292`, or
 `.293`, `.294`, `.296`, `.297`, `.298`, `.300`, `.301`, `.302`, `.304`,
-`.305`, `.306`, or `.308`.
+`.305`, `.306`, `.308`, or `.309`.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.
