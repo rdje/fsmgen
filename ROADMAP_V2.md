@@ -2480,12 +2480,16 @@ full covered set, records list-shaped static ID reservations/exclusions, and
 keeps the existing multi-mixed read report mode. Burst-last and read-data over
 the three-static read boundary remain fail-closed. `.323` is the next
 exact-owner selector after the three-static mixed read single-beat demux.
+`.323` now selects `.324`, readiness audit for bounded one-dynamic plus
+three-concrete-static mixed dynamic/static read burst-last `RID && RLAST`
+response-demux. The selector changes no behavior and keeps read-data over the
+three-static boundary behind final-beat completion semantics.
 No behavior changed in
 `.270`, `.271`, `.273`, `.274`, `.275`, `.277`, `.278`,
 `.279`, `.281`, `.282`, `.283`, `.285`, `.286`, `.288`, `.290`, `.292`, or
 `.293`, `.294`, `.296`, `.297`, `.298`, `.300`, `.301`, `.302`, `.304`,
 `.305`, `.306`, `.308`, `.309`, `.311`, `.313`, `.315`, `.316`, `.317`, or
-`.319`, `.320`, or `.321`.
+`.319`, `.320`, `.321`, or `.323`.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.

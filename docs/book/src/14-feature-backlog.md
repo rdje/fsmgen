@@ -7837,6 +7837,14 @@ exclusion, response active-match, pairwise unique-match, and
 completion-active assertions. Burst-last and read-data over the three-static
 read boundary remain future exact-owner work.
 
+Post three-static mixed dynamic/static read demux selector:
+[AXI_IAL2_MANAGER_POST_THREE_STATIC_MIXED_DYNAMIC_STATIC_READ_DEMUX_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_THREE_STATIC_MIXED_DYNAMIC_STATIC_READ_DEMUX_NEXT_SLICE_SELECTION.md)
+selects `.324`, readiness audit for bounded one-dynamic plus
+three-concrete-static mixed dynamic/static read burst-last `RID && RLAST`
+response-demux after the three-static read single-beat demux shipped. The
+selector changes no behavior and keeps read-data over the three-static
+boundary behind final-beat completion semantics.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same
