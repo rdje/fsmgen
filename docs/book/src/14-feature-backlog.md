@@ -7318,6 +7318,17 @@ multi-beat output banks, multiple mixed transactions, same-cycle widening,
 release-and-recapture, queues, scoreboards, direct backend,
 backend-language variants, or VHDL.
 
+Mixed dynamic/static read-data readiness audit:
+[AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_READ_DATA_READINESS_AUDIT](../../AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_READ_DATA_READINESS_AUDIT.md)
+selects `.283`, public contract selection for bounded scalar read-data over
+generated mixed dynamic/static read response-demux. The audit found the lower
+scalar capture substrate close, but the read-data transaction coverage helper
+has no branch for `generated_mixed_dynamic_static_read_demux` or
+`generated_mixed_dynamic_static_read_demux_last_beat`; the contract must choose
+the public single-beat and last-beat source shapes, exact mixed transaction
+coverage, sample names, completion-validity/report vocabulary, diagnostics,
+validation gates, and explicit residue before behavior changes.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same

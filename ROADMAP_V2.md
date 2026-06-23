@@ -2214,9 +2214,12 @@ from dynamic capture, raw `RID` beat active/unique assertions, final
 `.282`, readiness audit for read-data over generated mixed dynamic/static read
 response-demux, because scalar read-data coverage is the next dependency
 before mixed burst-length/runtime validation, multi-beat output banks, or
-broader mixed widening.
+broader mixed widening. `.282` selected `.283`, public contract selection for
+bounded scalar read-data over generated mixed dynamic/static read
+response-demux, after finding the read-data helper substrate close but not
+contract-complete for the new mixed completion sources.
 No behavior changed in `.270`, `.271`, `.273`, `.274`, `.275`, `.277`, `.278`,
-`.279`, or `.281`.
+`.279`, `.281`, or `.282`.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.
