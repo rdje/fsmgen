@@ -7746,6 +7746,19 @@ multi-beat syntax and report vocabulary. The selected public sample is
 The implementation owner should add only bounded coverage admission, support
 publication, focused tests, and multiple mixed multi-beat residue recognition.
 
+Multiple mixed dynamic/static multi-beat behavior:
+[AXI_IAL2_MANAGER_MULTIPLE_MIXED_DYNAMIC_STATIC_READ_DATA_MULTI_BEAT_BEHAVIOR](../../AXI_IAL2_MANAGER_MULTIPLE_MIXED_DYNAMIC_STATIC_READ_DATA_MULTI_BEAT_BEHAVIOR.md)
+ships `.314`. The public sample
+`ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static_burst_last_read_data_multi_beat.ppif`
+emits generated per-beat output banks for `r0`, `r1`, and `r2`: 48 `RDATA`
+lanes, 48 `RRESP` lanes, three valid masks, three length outputs, and three
+scalar worst-observed `RRESP` aggregates. Reports use
+`bounded_multi_beat_read_data_contract`, multi-mixed last-beat completion
+validity, runtime-assertion `ARLEN` burst-length metadata, empty read-data
+residue, and response-demux residue limited to `same_id_ordering`. `.314`
+selects `.315`, the next exact-owner selector after multiple mixed
+dynamic/static read-data reached multi-beat output banks.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same

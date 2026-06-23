@@ -10,9 +10,9 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.313: audit multiple mixed multi-beat readiness`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.314` ships generated multiple mixed dynamic/static multi-beat output banks over the generated runtime-validation boundary; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.313` selected direct `.314` implementation for multiple mixed dynamic/static multi-beat output banks over the `.312` runtime boundary; no behavior changed, and the audit recorded the sample/support/report/residue/validation plan.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.314: ship multiple mixed multi-beat output banks`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.315` selects the next exact IAL2 feature-completeness frontier after generated multiple mixed dynamic/static read-data reached multi-beat output banks; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.314` shipped support-accounted multiple mixed dynamic/static multi-beat output banks for `r0/r1/r2`, empty read-data residue, and response-demux residue limited to `same_id_ordering`; focused new-case validation passed with 98 assertions and CLI JSON skipped.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
 

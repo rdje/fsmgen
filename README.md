@@ -474,6 +474,16 @@ runtime multi-beat source shape. The selected public sample is
 The implementation owner should also add multiple mixed multi-beat
 report-residue recognition so the new sample leaves empty read-data residue
 and only same-ID ordering response-demux residue.
+`.314` now ships that multi-beat behavior. FSMGen emits 48 generated `RDATA`
+lane outputs, 48 generated `RRESP` lane outputs, three valid-mask outputs,
+three length outputs, three scalar worst-observed `RRESP` aggregate outputs,
+per-lane capture rules, output-bank init rules, raw `ARLEN` storage,
+expected-beat storage, read-beat counters, and twelve runtime assertions for
+`r0`, `r1`, and `r2`. Reports use
+`bounded_multi_beat_read_data_contract`, leave `read_data.residue` empty, and
+leave response-demux residue limited to `same_id_ordering`. `.314` selected
+`.315`, the next exact-owner selector after the multiple mixed dynamic/static
+read-data chain reached multi-beat output banks.
 No behavior
 changed in `.273`, `.274`, `.275`,
 `.277`, `.278`, `.279`, `.281`,
@@ -2715,6 +2725,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/AXI_IAL2_MANAGER_MULTIPLE_MIXED_DYNAMIC_STATIC_READ_DATA_RUNTIME_VALIDATION_READINESS_AUDIT.md` — audited runtime beat-count/`RLAST` validation readiness over generated multiple mixed dynamic/static raw-`ARLEN` last-beat read-data and selected direct implementation.
 - `docs/AXI_IAL2_MANAGER_MULTIPLE_MIXED_DYNAMIC_STATIC_READ_DATA_RUNTIME_VALIDATION_BEHAVIOR.md` — shipped generated runtime beat-count/`RLAST` validation over generated multiple mixed dynamic/static raw-`ARLEN` last-beat read-data.
 - `docs/AXI_IAL2_MANAGER_MULTIPLE_MIXED_DYNAMIC_STATIC_READ_DATA_MULTI_BEAT_READINESS_AUDIT.md` — audited multiple mixed dynamic/static multi-beat output-bank readiness over generated runtime validation and selected direct implementation.
+- `docs/AXI_IAL2_MANAGER_MULTIPLE_MIXED_DYNAMIC_STATIC_READ_DATA_MULTI_BEAT_BEHAVIOR.md` — shipped generated multiple mixed dynamic/static multi-beat output banks over generated runtime validation.
 - `docs/AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md` — selected first AXI-derived IAL2 implementation subset and pre-code contract.
 - `docs/AXI_IAL2_VALID_READY_READINESS_AUDIT.md` — code/test/docs/report owner map for a future AXI Valid-Ready IAL2 implementation slice.
 - `docs/AXI_IAL2_VALID_READY_GENERATOR_FIRST_SLICE.md` — first in-process AXI Valid-Ready IAL2 generator slice and report surface.

@@ -2417,6 +2417,18 @@ sample is
 the implementation should also add multiple mixed multi-beat residue
 recognition so the sample reports empty read-data residue and only
 same-ID-ordering response-demux residue.
+`.314` now ships that generated multi-beat behavior through the
+support-accounted public sample
+`ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static_burst_last_read_data_multi_beat.ppif`.
+The sample emits 48 generated `RDATA` lane outputs, 48 generated `RRESP` lane
+outputs, three valid masks, three length outputs, three scalar
+worst-observed `RRESP` aggregate outputs, per-lane capture rules,
+output-bank init rules, raw `ARLEN` storage, expected-beat storage,
+read-beat counters, and twelve runtime assertions for `r0`, `r1`, and `r2`.
+Reports use `bounded_multi_beat_read_data_contract`, leave `read_data.residue`
+empty, and leave response-demux residue limited to `same_id_ordering`.
+`.314` selected `.315`, the next exact-owner selector after multiple mixed
+dynamic/static read-data reached multi-beat output banks.
 No behavior changed in
 `.270`, `.271`, `.273`, `.274`, `.275`, `.277`, `.278`,
 `.279`, `.281`, `.282`, `.283`, `.285`, `.286`, `.288`, `.290`, `.292`, or

@@ -21,7 +21,7 @@ my @protocol_entries = protocol_fixture_entries();
 
 ok(@entries >= 7, 'regression corpus catalog starts with named entries across multiple classifications');
 ok(@entries >= 50, 'regression corpus catalog now covers supported language-feature fixtures plus root-level, section-level, child-root, direct-generation, and composition-contract residue families');
-is(scalar(@protocol_entries), 102, 'first visible corpus slice contains the named protocol and public intent fixtures');
+is(scalar(@protocol_entries), 103, 'first visible corpus slice contains the named protocol and public intent fixtures');
 
 my %allowed_classifications = map { $_ => 1 } qw(
     supported_smoke
@@ -51,6 +51,7 @@ my %allowed_coverages = map { $_ => 1 } qw(
     ial2_ppif_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static_burst_last_read_data_pipeline_cli
     ial2_ppif_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static_burst_last_read_data_burst_length_pipeline_cli
     ial2_ppif_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static_burst_last_read_data_burst_length_runtime_assertion_pipeline_cli
+    ial2_ppif_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static_burst_last_read_data_multi_beat_pipeline_cli
     ial2_ppif_manager_capacity_status_read_mixed_dynamic_static_response_demux_read_data_pipeline_cli
     ial2_ppif_manager_capacity_status_read_mixed_dynamic_static_response_demux_burst_last_read_data_pipeline_cli
     ial2_ppif_manager_capacity_status_read_mixed_dynamic_static_response_demux_burst_last_read_data_burst_length_pipeline_cli
@@ -183,6 +184,7 @@ my %coverage_classification = (
     ial2_ppif_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static_burst_last_read_data_pipeline_cli => 'supported_smoke',
     ial2_ppif_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static_burst_last_read_data_burst_length_pipeline_cli => 'supported_smoke',
     ial2_ppif_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static_burst_last_read_data_burst_length_runtime_assertion_pipeline_cli => 'supported_smoke',
+    ial2_ppif_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static_burst_last_read_data_multi_beat_pipeline_cli => 'supported_smoke',
     ial2_ppif_manager_capacity_status_read_mixed_dynamic_static_response_demux_read_data_pipeline_cli => 'supported_smoke',
     ial2_ppif_manager_capacity_status_read_mixed_dynamic_static_response_demux_burst_last_read_data_pipeline_cli => 'supported_smoke',
     ial2_ppif_manager_capacity_status_read_mixed_dynamic_static_response_demux_burst_last_read_data_burst_length_pipeline_cli => 'supported_smoke',
@@ -306,6 +308,7 @@ for my $required_id (qw(
     intent.ppif_axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static_burst_last_read_data
     intent.ppif_axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static_burst_last_read_data_burst_length
     intent.ppif_axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static_burst_last_read_data_burst_length_runtime_assertion
+    intent.ppif_axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static_burst_last_read_data_multi_beat
     intent.ppif_axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_read_data
     intent.ppif_axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_burst_last_read_data
     intent.ppif_axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_burst_last_read_data_burst_length
@@ -725,8 +728,8 @@ for my $entry (@entries) {
 
 is(
     scalar(grep { $_->{classification} eq 'supported_smoke' } @entries),
-    141,
-    'catalog now keeps one hundred forty-one named supported-smoke entries including direct, composition, ISF, and PPIF fixtures',
+    142,
+    'catalog now keeps one hundred forty-two named supported-smoke entries including direct, composition, ISF, and PPIF fixtures',
 );
 is(
     scalar(grep { $_->{classification} eq 'legacy_out_of_scope' } @entries),
@@ -740,8 +743,8 @@ is(
 );
 is(
     scalar(grep { $_->{strict_supported} } @entries),
-    141,
-    'catalog now records one hundred forty-one positive strict-mode supported-smoke acceptance entries',
+    142,
+    'catalog now records one hundred forty-two positive strict-mode supported-smoke acceptance entries',
 );
 for my $strict_supported_id (qw(
     protocol.apb_requester
@@ -767,6 +770,7 @@ for my $strict_supported_id (qw(
     intent.ppif_axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static_burst_last_read_data
     intent.ppif_axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static_burst_last_read_data_burst_length
     intent.ppif_axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static_burst_last_read_data_burst_length_runtime_assertion
+    intent.ppif_axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static_burst_last_read_data_multi_beat
     intent.ppif_axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_read_data
     intent.ppif_axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_burst_last_read_data
     intent.ppif_axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_burst_last_read_data_burst_length
