@@ -7362,6 +7362,16 @@ transactions, same-cycle widening, release-and-recapture, dynamic same-ID
 queues, scoreboards, direct backend behavior, backend-language variants, and
 VHDL remain later owners.
 
+Post mixed dynamic/static read-data selector:
+[AXI_IAL2_MANAGER_POST_MIXED_DYNAMIC_STATIC_READ_DATA_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MIXED_DYNAMIC_STATIC_READ_DATA_NEXT_SLICE_SELECTION.md)
+selects `.286`, readiness audit for generated report-only raw-`ARLEN`
+burst-length capture over generated mixed dynamic/static read burst-last
+response-demux and scalar last-beat read-data. The selector keeps runtime
+beat-count/`RLAST` validation, multi-beat output banks, multiple mixed
+transactions, same-cycle widening, release-and-recapture, dynamic same-ID
+queues, scoreboards, direct backend behavior, backend-language variants, and
+VHDL as later exact owners unless the audit selects a narrower prerequisite.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same
