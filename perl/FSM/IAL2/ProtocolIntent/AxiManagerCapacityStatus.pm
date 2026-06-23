@@ -2247,17 +2247,17 @@ sub _read_data_response_demux_transaction_coverage(%args) {
         my $supported = $supported_boundaries{$capture_scope};
         my $has_burst_length = $args{has_burst_length};
         my $burst_length_validation = $args{burst_length_validation} // '';
-        my $multi_mixed_last_beat_report_only_burst_length = $has_burst_length
+        my $multi_mixed_last_beat_supported_burst_length = $has_burst_length
             && $capture_scope eq 'last-beat'
             && $transaction_completion_source eq 'generated_multi_mixed_dynamic_static_read_demux_last_beat'
             && ($response_demux->{response_scope} // '') eq 'burst_last'
-            && $burst_length_validation eq 'report_only';
-        my $mixed_diagnostic = 'AXI manager capacity/status IAL2 contract read_data.read multiple mixed dynamic/static coverage requires generated multiple mixed dynamic/static read single-beat response_demux with capture_scope single-beat and no burst_length metadata, generated multiple mixed dynamic/static read burst-last response_demux with capture_scope last-beat and no burst_length metadata, or generated multiple mixed dynamic/static read burst-last response_demux with capture_scope last-beat and report-only burst_length metadata in this slice';
+            && ($burst_length_validation eq 'report_only' || $burst_length_validation eq 'runtime_assertion');
+        my $mixed_diagnostic = 'AXI manager capacity/status IAL2 contract read_data.read multiple mixed dynamic/static coverage requires generated multiple mixed dynamic/static read single-beat response_demux with capture_scope single-beat and no burst_length metadata, generated multiple mixed dynamic/static read burst-last response_demux with capture_scope last-beat and no burst_length metadata, or generated multiple mixed dynamic/static read burst-last response_demux with capture_scope last-beat and report-only or runtime-assertion burst_length metadata in this slice';
         confess "$mixed_diagnostic\n"
             unless ref($supported) eq 'HASH'
                 && $transaction_completion_source eq $supported->{transaction_completion_source}
                 && ($response_demux->{response_scope} // '') eq $supported->{response_scope}
-                && (!$has_burst_length || $multi_mixed_last_beat_report_only_burst_length);
+                && (!$has_burst_length || $multi_mixed_last_beat_supported_burst_length);
 
         my @dynamic_transactions = @{$response_demux->{dynamic_transactions} || []};
         my @static_transactions = @{$response_demux->{static_transactions} || []};

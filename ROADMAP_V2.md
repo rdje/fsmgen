@@ -2394,6 +2394,19 @@ admits `validation runtime-assertion`. The selected public sample is
 `ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static_burst_last_read_data_burst_length_runtime_assertion.ppif`;
 multi-beat output banks, broader cardinalities, same-cycle widening,
 queues/scoreboards, backend variants, and VHDL remain deferred.
+`.312` now ships that runtime-validation behavior. FSMGen emits generated
+`axi0_r0_expected_beats_q`, `axi0_r1_expected_beats_q`, and
+`axi0_r2_expected_beats_q`, generated `axi0_r0_read_beat_count_q`,
+`axi0_r1_read_beat_count_q`, and `axi0_r2_read_beat_count_q`, request-time
+beat-count initialization, raw matched-read-beat increment rules, and four
+runtime assertions per covered transaction. The public sample reports twelve
+generated beat-count assertions and removes `generated_beat_count_validation`
+from read-data residue while keeping scalar last-beat `RDATA`/`RRESP` capture
+guarded by generated multiple mixed `RID && RLAST` completion pulses.
+Multi-beat output banks, broader cardinalities, same-cycle widening,
+queues/scoreboards, backend variants, and VHDL remain deferred.
+`.312` selected `.313`, readiness audit for generated multiple mixed
+dynamic/static multi-beat output banks over this runtime-validation boundary.
 No behavior changed in
 `.270`, `.271`, `.273`, `.274`, `.275`, `.277`, `.278`,
 `.279`, `.281`, `.282`, `.283`, `.285`, `.286`, `.288`, `.290`, `.292`, or

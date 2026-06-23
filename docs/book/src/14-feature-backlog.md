@@ -7719,6 +7719,21 @@ the existing runtime-validation machinery is transaction-list driven across
 multi-beat output banks, broader cardinalities, same-cycle widening,
 queues/scoreboards, backend variants, and VHDL remain deferred.
 
+Multiple mixed dynamic/static runtime-validation behavior:
+[AXI_IAL2_MANAGER_MULTIPLE_MIXED_DYNAMIC_STATIC_READ_DATA_RUNTIME_VALIDATION_BEHAVIOR](../../AXI_IAL2_MANAGER_MULTIPLE_MIXED_DYNAMIC_STATIC_READ_DATA_RUNTIME_VALIDATION_BEHAVIOR.md)
+ships `.312`. The public sample
+`ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static_burst_last_read_data_burst_length_runtime_assertion.ppif`
+adds generated runtime beat-count/`RLAST` validation to the `.310` multiple
+mixed raw-`ARLEN` last-beat read-data shape. FSMGen emits expected-beat
+storage, read-beat counters, request-time beat-count initialization, raw
+matched-read-beat increment rules, and four runtime assertions for each of
+`r0`, `r1`, and `r2`. Scalar last-beat `RDATA`/`RRESP` capture remains
+guarded only by generated multiple mixed `RID && RLAST` completions.
+Multi-beat output banks, broader cardinalities, same-cycle widening,
+queues/scoreboards, backend variants, and VHDL remain deferred. `.312`
+selects `.313`, readiness audit for generated multiple mixed dynamic/static
+multi-beat output banks over this runtime-validation boundary.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same
