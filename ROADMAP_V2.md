@@ -2142,8 +2142,10 @@ variants, and VHDL still deferred. `.255` ships that generated behavior as
 active/unique assertions, final `RID && RLAST` completion/release guards, and
 the support-accounted public sample
 `ppif/axi_manager_capacity_status_dynamic_read_response_demux_multi_burst_last.ppif`.
-`.256` will select the next exact owner for the remaining dynamic read-side
-residue.
+`.256` selected `.257`, readiness audit for read-data over generated multiple
+dynamic read response-demux, because dynamic read-data coverage still accepts
+exactly one dynamic read transaction while the response-demux substrate now
+has multiple dynamic completion pulses.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.

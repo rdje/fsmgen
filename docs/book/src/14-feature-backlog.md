@@ -6996,6 +6996,16 @@ remain checked but do not complete the transaction. Read-data,
 burst-length/runtime validation, and multi-beat output banks over multiple
 dynamic read demux remain explicit future owners.
 
+Post multiple dynamic read RLAST response-demux selector:
+[AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_READ_RLAST_RESPONSE_DEMUX_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_READ_RLAST_RESPONSE_DEMUX_NEXT_SLICE_SELECTION.md)
+selects `.257`, readiness audit for read-data over generated multiple dynamic
+read response-demux. The selector records that `.251` and `.255` now provide
+generated multiple dynamic read completion pulses for single-beat and
+burst-last scopes, but `read_data.read` dynamic coverage still requires
+exactly one dynamic read transaction. That read-data coverage audit is the
+next dependency before burst-length/runtime validation or multi-beat
+output-bank widening over multiple dynamic read demux.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same
