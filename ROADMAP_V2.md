@@ -2253,7 +2253,17 @@ report-only behavior.
 `.290` selected `.291`, direct bounded implementation of generated mixed
 dynamic/static multi-beat output banks over the `.289` runtime boundary,
 after finding the existing output-bank machinery transaction-list driven and
-the current blocker local to the mixed coverage predicate.
+the current blocker local to the mixed coverage predicate. `.291` now ships
+that behavior through support-accounted public sample
+`ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_burst_last_read_data_multi_beat.ppif`.
+The generated behavior emits per-transaction data/status output banks, valid
+masks, length outputs, scalar worst-observed `RRESP` aggregate outputs,
+request-time output-bank clearing, raw matched-read-beat lane capture for the
+dynamic captured `RID` and static concrete `RID`, raw `ARLEN`/expected
+beat/count state, four runtime assertions per transaction, empty read-data
+residue, and `response_demux.residue = [same_id_ordering]`. `.291` selected
+`.292`, the next mixed dynamic/static frontier selector after generated mixed
+multi-beat output banks.
 No behavior changed in `.270`, `.271`, `.273`, `.274`, `.275`, `.277`, `.278`,
 `.279`, `.281`, `.282`, `.283`, `.285`, `.286`, `.288`, or `.290`.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2

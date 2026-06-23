@@ -7446,6 +7446,27 @@ and complete dynamic-plus-static output-bank bindings. Multiple mixed
 transactions, same-cycle widening, direct backend behavior,
 backend-language variants, and VHDL remain later exact owners.
 
+Mixed dynamic/static read-data multi-beat behavior:
+[AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_READ_DATA_MULTI_BEAT_BEHAVIOR](../../AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_READ_DATA_MULTI_BEAT_BEHAVIOR.md)
+ships `.291`, generated mixed dynamic/static multi-beat output-bank behavior
+over generated mixed dynamic/static read burst-last response-demux and runtime
+beat-count/`RLAST` validation. The support-accounted public sample is
+`ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_burst_last_read_data_multi_beat.ppif`.
+The sample uses exactly one dynamic read transaction and one concrete static
+read transaction, `capture-scope multi-beat`, `status-policy per-beat`,
+`status-aggregation worst-observed`, `interleaving multi-beat-by-rid`, and
+runtime-assertion `burst-length` metadata. FSMGen emits per-transaction
+data/status output banks, valid masks, length outputs, scalar worst-observed
+`RRESP` aggregate outputs, request-time output-bank clearing, raw
+matched-read-beat lane capture for the dynamic captured `RID` and static
+concrete `RID`, raw `ARLEN`/expected-beat/read-beat-count state, and four
+runtime assertions per covered transaction. Reports use
+`bounded_multi_beat_read_data_contract`, mixed last-beat completion validity,
+`response_demux_matched_read_beat`, empty read-data residue, and
+`response_demux.residue = [same_id_ordering]`. `.291` selects `.292`, the
+next mixed dynamic/static frontier selector after generated mixed multi-beat
+output banks.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same
