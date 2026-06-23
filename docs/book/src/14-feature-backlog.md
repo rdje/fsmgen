@@ -7043,6 +7043,14 @@ multi-beat output banks, mixed dynamic/static demux, same-cycle widening,
 dynamic same-ID queues, scoreboards, direct backend behavior,
 backend-language variants, and VHDL remain later exact owners.
 
+Post multiple dynamic read-data selector:
+[AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_READ_DATA_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_READ_DATA_NEXT_SLICE_SELECTION.md)
+selects `.261`, readiness audit for burst-length/runtime validation over
+generated multiple dynamic read response-demux. The selector keeps behavior
+unchanged and chooses an audit because multi-beat output-bank widening depends
+on per-transaction raw-`ARLEN` capture, expected-beat state, read-beat
+counters, and assertion semantics across multiple active dynamic reads.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same

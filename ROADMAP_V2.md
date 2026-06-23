@@ -2153,9 +2153,11 @@ over all-dynamic multiple read response-demux through the support-accounted
 public samples `ppif/axi_manager_capacity_status_dynamic_read_data_multi.ppif`
 and
 `ppif/axi_manager_capacity_status_dynamic_read_data_multi_last_beat.ppif`.
-`.260` is the next selector for the remaining burst-length/runtime,
-multi-beat, mixed dynamic/static, same-cycle, queue/scoreboard,
-direct/backend, and VHDL residue.
+`.260` selected `.261`, readiness audit for generated burst-length and
+runtime beat-count/`RLAST` validation over generated multiple dynamic read
+response-demux, because multi-beat output-bank widening depends on
+per-transaction raw-`ARLEN` capture and runtime counter/assertion semantics
+across multiple active dynamic reads.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.

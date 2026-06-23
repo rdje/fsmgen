@@ -10,10 +10,10 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `HEAD after IAL2-FEATURE-COMPLETENESS-FRONTIER.259 commit` - `IAL2-FEATURE-COMPLETENESS-FRONTIER.259: ship multiple dynamic read-data`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.260` selects the next exact owner after generated multiple dynamic read-data; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.259` shipped generated bounded scalar single-beat and scalar last-beat read-data over generated all-dynamic multiple read response-demux. Public samples `ppif/axi_manager_capacity_status_dynamic_read_data_multi.ppif` and `ppif/axi_manager_capacity_status_dynamic_read_data_multi_last_beat.ppif` are support-accounted. Burst-length/runtime validation and multi-beat output banks over multiple dynamic read demux remain later owners; broad guarded `t/1437` was stopped by the RAM guard before TAP.
-- in_flight_uncommitted: none after the `.259` commit workflow. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
+- latest_commit: `HEAD after IAL2-FEATURE-COMPLETENESS-FRONTIER.260 commit` - `IAL2-FEATURE-COMPLETENESS-FRONTIER.260: select multiple dynamic runtime audit`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.261` audits burst-length/runtime validation readiness over generated multiple dynamic read response-demux; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.260` selected `.261`, readiness audit for generated burst-length and runtime beat-count/`RLAST` validation over generated multiple dynamic read response-demux. The selector changed no behavior and records that multi-beat output-bank widening depends on per-transaction raw-`ARLEN` capture and runtime counter/assertion semantics across multiple active dynamic reads.
+- in_flight_uncommitted: none after the `.260` commit workflow. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
 
 ## Notes
