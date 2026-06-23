@@ -10,9 +10,9 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.268: ship multiple dynamic multi-beat output banks`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.269` selects the next exact owner after generated bounded multiple dynamic multi-beat output banks; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.268` shipped generated bounded multiple dynamic multi-beat output banks through support-accounted sample `ppif/axi_manager_capacity_status_dynamic_read_data_multi_transaction_multi_beat.ppif`; `.269` is the next selector.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.269: select mixed dynamic/static demux audit`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.270` audits mixed dynamic/static response-demux readiness; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.269` selected `.270`, readiness audit for mixed dynamic/static response-demux after generated bounded multiple dynamic multi-beat output banks; no behavior changed.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
 

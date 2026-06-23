@@ -7159,6 +7159,19 @@ residue for the supported sample. Response-demux residue still keeps
 release-and-recapture, queues, scoreboards, direct backend, backend-language
 variant, and VHDL behavior remain later owners.
 
+Post multiple dynamic multi-beat selector:
+[AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
+selects `.270`, readiness audit for mixed dynamic/static response-demux after
+generated bounded multiple dynamic multi-beat output banks. The selector
+changes no behavior. The audit is next because the all-dynamic multiple
+dynamic path now covers write response-demux, read single-beat response-demux,
+read burst-last/`RLAST` response-demux, scalar read-data, report-only
+raw-`ARLEN` capture, runtime beat-count/`RLAST` validation, and multi-beat
+output banks, while mixed static and dynamic response ownership still needs a
+settled fail-closed/public contract boundary before same-cycle widening,
+release-and-recapture, queues, scoreboards, direct backend,
+backend-language variants, or VHDL.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same
