@@ -10,9 +10,9 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.285: select mixed burst-length audit`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.286` audits mixed dynamic/static report-only raw-ARLEN burst-length readiness after scalar mixed read-data; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.285` selected `.286`, readiness audit for generated report-only raw-ARLEN burst-length capture over generated mixed dynamic/static read burst-last response-demux and scalar last-beat read-data; `.284` shipped generated bounded scalar read-data capture over generated mixed dynamic/static read response-demux with support-accounted single-beat and last-beat samples; `.280` shipped generated bounded mixed dynamic/static read burst-last `RID && RLAST` response-demux.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.286: audit mixed burst-length readiness`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.287` implements report-only raw-ARLEN burst-length capture over generated mixed dynamic/static last-beat read-data; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.286` selected `.287`, direct bounded implementation of report-only raw-ARLEN burst-length capture over generated mixed dynamic/static read burst-last response-demux and scalar last-beat read-data; `.285` selected `.286`; `.284` shipped generated bounded scalar read-data capture over generated mixed dynamic/static read response-demux with support-accounted single-beat and last-beat samples.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
 

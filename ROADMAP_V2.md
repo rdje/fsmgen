@@ -2229,9 +2229,10 @@ guards scalar `RDATA`/`RRESP` updates only with generated mixed demux
 completion pulses, and reports the mixed-specific single-beat and last-beat
 completion-validity strings. `.285` selected `.286`, readiness audit for
 generated report-only raw-`ARLEN` burst-length capture over the mixed
-dynamic/static last-beat read-data shape.
+dynamic/static last-beat read-data shape. `.286` selected `.287`, direct
+bounded implementation of that report-only raw-`ARLEN` capture shape.
 No behavior changed in `.270`, `.271`, `.273`, `.274`, `.275`, `.277`, `.278`,
-`.279`, `.281`, `.282`, `.283`, or `.285`.
+`.279`, `.281`, `.282`, `.283`, `.285`, or `.286`.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.

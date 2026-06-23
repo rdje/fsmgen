@@ -7372,6 +7372,16 @@ transactions, same-cycle widening, release-and-recapture, dynamic same-ID
 queues, scoreboards, direct backend behavior, backend-language variants, and
 VHDL as later exact owners unless the audit selects a narrower prerequisite.
 
+Mixed dynamic/static read-data burst-length readiness audit:
+[AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_READ_DATA_BURST_LENGTH_READINESS_AUDIT](../../AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_READ_DATA_BURST_LENGTH_READINESS_AUDIT.md)
+selects `.287`, direct bounded implementation of report-only raw-`ARLEN`
+burst-length capture over generated mixed dynamic/static read burst-last
+response-demux and scalar last-beat read-data. The audit found the existing
+public `burst-length` syntax and generic raw-`ARLEN` input/storage/rule/report
+helpers sufficient; `.287` only needs to widen the mixed last-beat/report-only
+coverage gate and publish the sample/support/test/docs surface. Runtime
+beat-count/`RLAST` validation and multi-beat output banks remain later owners.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same
