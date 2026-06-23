@@ -7480,6 +7480,18 @@ widening, release-and-recapture, dynamic same-ID queues, scoreboards, direct
 backend behavior, backend-language variants, and VHDL remain later exact
 owners.
 
+Multiple mixed dynamic/static response-demux readiness:
+[AXI_IAL2_MANAGER_MULTIPLE_MIXED_DYNAMIC_STATIC_RESPONSE_DEMUX_READINESS_AUDIT](../../AXI_IAL2_MANAGER_MULTIPLE_MIXED_DYNAMIC_STATIC_RESPONSE_DEMUX_READINESS_AUDIT.md)
+selects `.294`, public contract selection for bounded multiple mixed
+dynamic/static write `BID` response-demux. The audit found that current mixed
+write/read plan builders and read-data coverage predicates are still singular
+for exactly one dynamic and one concrete static transaction, while mixed
+assertion generation already iterates over dynamic/static state lists. Write
+`BID` response-demux is the first widened owner because it settles static-ID
+reservation lists, dynamic capture exclusion, onehot0 request policy,
+raw-response ownership, generated completion ordering, report vocabulary, and
+diagnostics before read `RID`/`RLAST` or read-data behavior widens.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same

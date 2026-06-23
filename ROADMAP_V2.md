@@ -2265,9 +2265,12 @@ residue, and `response_demux.residue = [same_id_ordering]`. `.291` selected
 `.292`, the next mixed dynamic/static frontier selector after generated mixed
 multi-beat output banks. `.292` now selects `.293`, readiness audit for
 multiple mixed dynamic/static transaction cardinality after the one-dynamic
-plus one-concrete-static mixed path reached multi-beat output banks.
+plus one-concrete-static mixed path reached multi-beat output banks. `.293`
+now selects `.294`, public contract selection for bounded multiple mixed
+dynamic/static write `BID` response-demux.
 No behavior changed in `.270`, `.271`, `.273`, `.274`, `.275`, `.277`, `.278`,
-`.279`, `.281`, `.282`, `.283`, `.285`, `.286`, `.288`, `.290`, or `.292`.
+`.279`, `.281`, `.282`, `.283`, `.285`, `.286`, `.288`, `.290`, `.292`, or
+`.293`.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.
