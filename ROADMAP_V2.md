@@ -2127,7 +2127,12 @@ multiple dynamic read burst-last/`RLAST` response-demux, because that boundary
 must define raw matched-`RID` beat assertions, selected-ID/busy lifetime across
 non-last beats, and final `RID && RLAST` completion before read-data,
 burst-length/runtime validation, or multi-beat output banks over multiple
-dynamic reads can widen safely.
+dynamic reads can widen safely. `.253` selected `.254`, public contract
+selection for bounded multiple dynamic read burst-last/`RLAST`
+response-demux, because the lower substrate is close but the public contract
+must pin all-dynamic family shape, last-signal ownership, raw beat versus
+final completion assertions, report vocabulary, validation, and residue before
+behavior changes.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.

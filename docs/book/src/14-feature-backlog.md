@@ -6952,6 +6952,20 @@ ownership, final `RID && RLAST` completion, generated release, validation,
 rollback, and explicit residue before any multiple dynamic read read-data,
 burst-length/runtime, or multi-beat output-bank widening.
 
+Multiple dynamic read RLAST response-demux readiness audit:
+[AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_READ_RLAST_RESPONSE_DEMUX_READINESS_AUDIT](../../AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_READ_RLAST_RESPONSE_DEMUX_READINESS_AUDIT.md)
+selects `.254`, public contract selection for bounded multiple dynamic read
+burst-last/`RLAST` response-demux. The audit found the state-list
+capture/release/rule/assertion substrate is close after `.251`, but the
+public contract must first pin the all-dynamic family shape, burst-last
+`last-signal` ownership, selected-ID/busy lifetime across non-last beats, raw
+`RID` beat matching versus final `RID && RLAST` completion, generated
+assertion roles, report vocabulary, sample/support-accounting expectations,
+validation, rollback, and explicit read-data/runtime/multi-beat residue. No
+parser, generator, PPIF sample, support-accounting catalog, validation
+behavior, generated artifact, test, schedule/check/semantic JSON, or HDL
+behavior changes in the audit slice.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same

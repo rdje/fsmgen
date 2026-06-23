@@ -10,10 +10,10 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `HEAD after IAL2-FEATURE-COMPLETENESS-FRONTIER.252 commit` - `IAL2-FEATURE-COMPLETENESS-FRONTIER.252: select multiple dynamic read RLAST audit`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.253` audits multiple dynamic read burst-last/`RLAST` response-demux readiness; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.252` selected `.253`, readiness audit for multiple dynamic read burst-last/`RLAST` response-demux after `.251` shipped bounded multiple dynamic read single-beat response-demux. The selector records burst-last as the next dependency before multiple dynamic read read-data, burst-length/runtime validation, or multi-beat output-bank widening.
-- in_flight_uncommitted: none after the `.252` commit workflow. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
+- latest_commit: `HEAD after IAL2-FEATURE-COMPLETENESS-FRONTIER.253 commit` - `IAL2-FEATURE-COMPLETENESS-FRONTIER.253: audit multiple dynamic read RLAST readiness`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.254` selects the public contract for bounded multiple dynamic read burst-last/`RLAST` response-demux; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.253` selected `.254`, public contract selection for bounded multiple dynamic read burst-last/`RLAST` response-demux. The audit records that state-list capture/release/rule/assertion substrate is close, but public burst-last semantics, raw beat versus final completion assertions, last-signal ownership, report vocabulary, sample/support expectations, validation, and read-data/runtime/multi-beat residue need exact contract ownership before implementation.
+- in_flight_uncommitted: none after the `.253` commit workflow. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
 
 ## Notes
