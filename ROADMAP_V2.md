@@ -2191,7 +2191,10 @@ dynamic/static read response-demux before choosing single-beat `RID`,
 burst-last `RID && RLAST`, read-data, burst/runtime, multi-beat, report
 cleanup, or another prerequisite. `.274` selected `.275`, public contract
 selection for bounded mixed dynamic/static read single-beat `RID`
-response-demux. No behavior changed in `.270`, `.271`, `.273`, or `.274`.
+response-demux. `.275` selected `.276`, direct generated behavior for that
+bounded mixed read contract through future public sample
+`ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux.ppif`.
+No behavior changed in `.270`, `.271`, `.273`, `.274`, or `.275`.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.

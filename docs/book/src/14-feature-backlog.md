@@ -7234,6 +7234,17 @@ single-beat because it avoids `RLAST`, raw non-final beat accounting, read-data
 capture, raw `ARLEN`, runtime beat-count validation, and multi-beat output
 banks while still fixing dynamic/static `RID` ownership.
 
+Mixed dynamic/static read demux contract selection:
+[AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_READ_RESPONSE_DEMUX_CONTRACT_SELECTION](../../AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_READ_RESPONSE_DEMUX_CONTRACT_SELECTION.md)
+selects direct generated behavior for bounded one-dynamic plus one-concrete
+static read single-beat `RID` response-demux. The future support-accounted
+sample is
+`ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux.ppif`,
+with report mode `bounded_mixed_dynamic_static_read_rid_demux_contract`,
+static-ID reservation away from dynamic `ARID` capture, onehot0 mixed read
+requests, static busy-state ownership, and burst/read-data/runtime/multi-beat
+residue left to later owners.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same

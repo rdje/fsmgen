@@ -10,9 +10,9 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.274: audit mixed read demux readiness`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.275` selects the public contract for bounded mixed dynamic/static read single-beat `RID` response-demux; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.274` selected `.275`; `.273` selected `.274`; `BIN-FSMGEN-IMPORT-TREE-JUN23-REFRESH.1` refreshed stale live `bin/fsmgen` import-tree measurements after `.272`; static trace remains `206` project files / `205` `.pm` packages.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.275: select mixed read demux contract`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.276` implements bounded mixed dynamic/static read single-beat `RID` response-demux; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.275` selected `.276`; `.274` selected `.275`; `.273` selected `.274`; `BIN-FSMGEN-IMPORT-TREE-JUN23-REFRESH.1` refreshed stale live `bin/fsmgen` import-tree measurements after `.272`; static trace remains `206` project files / `205` `.pm` packages.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
 
