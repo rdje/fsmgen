@@ -2175,9 +2175,11 @@ for bounded generated multiple dynamic multi-beat output-bank behavior. `.267`
 selected `.268`, and `.268` now ships generated bounded multiple dynamic
 multi-beat output-bank behavior through the support-accounted public sample
 `ppif/axi_manager_capacity_status_dynamic_read_data_multi_transaction_multi_beat.ppif`.
-`.269` selects `.270`, readiness audit for mixed dynamic/static response-demux
-after the all-dynamic multiple dynamic write/read/read-data/multi-beat chain
-is now covered.
+`.269` selected `.270`, readiness audit for mixed dynamic/static
+response-demux after the all-dynamic multiple dynamic
+write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,
+public contract selection for bounded mixed dynamic/static write `BID`
+response-demux; no behavior changed in the audit.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.

@@ -7172,6 +7172,16 @@ settled fail-closed/public contract boundary before same-cycle widening,
 release-and-recapture, queues, scoreboards, direct backend,
 backend-language variants, or VHDL.
 
+Mixed dynamic/static response-demux readiness audit:
+[AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_RESPONSE_DEMUX_READINESS_AUDIT](../../AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_RESPONSE_DEMUX_READINESS_AUDIT.md)
+selects `.271`, public contract selection for bounded mixed dynamic/static
+write `BID` response-demux. Current dynamic response-demux intentionally
+fails closed unless every selected family transaction is dynamic. The audit
+chooses write `BID` as the first mixed family because it can settle static
+concrete-ID versus active dynamic captured-ID ownership without read `RLAST`,
+burst-length/runtime, read-data, or multi-beat output-bank coupling. No
+behavior changed in the audit.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same

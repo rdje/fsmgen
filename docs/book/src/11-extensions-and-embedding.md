@@ -93,8 +93,9 @@ dynamic multi-beat output-bank behavior was audited under
 now ships generated bounded multiple dynamic multi-beat output-bank behavior
 through the support-accounted public sample
 `ppif/axi_manager_capacity_status_dynamic_read_data_multi_transaction_multi_beat.ppif`.
-`.269` selects mixed dynamic/static response-demux readiness as the next
-exact owner.
+`.269` selected mixed dynamic/static response-demux readiness, and `.270`
+selected public contract selection for bounded mixed dynamic/static write
+`BID` response-demux as the next exact owner. The audit changed no behavior.
 Broader concrete same-ID queues, group-local
 simultaneous enqueue widening, packed burst-vector outputs, alternate full
 burst payload assembly, aliases, platform clauses, full AXI manager behavior,
