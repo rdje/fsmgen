@@ -6966,6 +6966,21 @@ parser, generator, PPIF sample, support-accounting catalog, validation
 behavior, generated artifact, test, schedule/check/semantic JSON, or HDL
 behavior changes in the audit slice.
 
+Multiple dynamic read RLAST response-demux contract selection:
+[AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_READ_RLAST_RESPONSE_DEMUX_CONTRACT_SELECTION](../../AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_READ_RLAST_RESPONSE_DEMUX_CONTRACT_SELECTION.md)
+selects `.255`, direct generated behavior for bounded multiple dynamic read
+burst-last/`RLAST` response-demux. The selected contract uses two or more
+all-dynamic read transactions, `response-demux.read response-scope
+burst-last`, a one-bit `last-signal`, admitted `ARID` capture, onehot0
+same-cycle dynamic read requests, pairwise unique active dynamic IDs, raw
+`RID` beat active/unique assertions without `RLAST`, final `RID && RLAST`
+completion/release guards, and
+`bounded_multi_dynamic_read_rid_rlast_demux_contract` report vocabulary.
+Read-data, burst-length/runtime validation, multi-beat output banks, mixed
+dynamic/static demux, same-cycle widening, release-and-recapture, dynamic
+same-ID queues, scoreboards, direct backend behavior, backend-language
+variants, and VHDL remain later exact owners.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same

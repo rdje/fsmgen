@@ -2132,7 +2132,12 @@ selection for bounded multiple dynamic read burst-last/`RLAST`
 response-demux, because the lower substrate is close but the public contract
 must pin all-dynamic family shape, last-signal ownership, raw beat versus
 final completion assertions, report vocabulary, validation, and residue before
-behavior changes.
+behavior changes. `.254` selected `.255`, direct generated behavior for the
+bounded all-dynamic multi-active read burst-last/`RLAST` response-demux
+contract, with read-data, burst-length/runtime validation, multi-beat output
+banks, mixed dynamic/static demux, same-cycle widening, release-and-recapture,
+dynamic same-ID queues, scoreboards, direct backend, backend-language
+variants, and VHDL still deferred.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.
