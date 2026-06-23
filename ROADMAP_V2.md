@@ -2292,7 +2292,16 @@ direct generated behavior for exactly one dynamic plus two concrete static
 read transactions under existing `response-demux.read` syntax with
 `response-scope single-beat`, candidate report mode
 `bounded_multi_mixed_dynamic_static_read_rid_demux_contract`, and list-shaped
-static-ID reservation fields.
+static-ID reservation fields. `.299` now ships that bounded multiple mixed
+read behavior through support-accounted public sample
+`ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static.ppif`.
+The generated behavior emits dynamic selected-ID/busy state, per-static busy
+state, dynamic capture exclusions for static IDs `4'd3` and `4'd5`, onehot0
+request assertions across all selected read transactions, three raw
+single-beat `RID` completion pulses, pairwise unique-match assertions, and
+list-shaped report fields while preserving the `.276` one-dynamic plus
+one-static read report contract. `.299` selected `.300`, the next exact IAL2
+feature-completeness selector after widened mixed read single-beat behavior.
 No behavior changed in `.270`, `.271`, `.273`, `.274`, `.275`, `.277`, `.278`,
 `.279`, `.281`, `.282`, `.283`, `.285`, `.286`, `.288`, `.290`, `.292`, or
 `.293`, `.294`, `.296`, `.297`, or `.298`.
