@@ -125,6 +125,24 @@ my @DYNAMIC_CASES = (
         behavior     => 'mixed_dynamic_static_read_rlast_demux_multi_static3',
     },
     {
+        label        => 'three-static mixed dynamic/static read-data single-beat capture',
+        relpath      => 'ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static3_read_data.ppif',
+        object_id    => 'axi-manager-capacity-status-read-mixed-dynamic-static-response-demux-multi-static3-read-data',
+        intent_name  => 'axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static3_read_data',
+        entry_id     => 'intent.ppif_axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static3_read_data',
+        coverage     => 'ial2_ppif_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static3_read_data_pipeline_cli',
+        behavior     => 'mixed_dynamic_static_read_data_multi_static3',
+    },
+    {
+        label        => 'three-static mixed dynamic/static read-data last-beat capture',
+        relpath      => 'ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static3_burst_last_read_data.ppif',
+        object_id    => 'axi-manager-capacity-status-read-mixed-dynamic-static-response-demux-multi-static3-burst-last-read-data',
+        intent_name  => 'axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static3_burst_last_read_data',
+        entry_id     => 'intent.ppif_axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static3_burst_last_read_data',
+        coverage     => 'ial2_ppif_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static3_burst_last_read_data_pipeline_cli',
+        behavior     => 'mixed_dynamic_static_read_data_multi_static3_last_beat',
+    },
+    {
         label        => 'multiple mixed dynamic/static read-data single-beat capture',
         relpath      => 'ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static_read_data.ppif',
         object_id    => 'axi-manager-capacity-status-read-mixed-dynamic-static-response-demux-multi-static-read-data',
@@ -867,6 +885,78 @@ sub assert_dynamic_behavior {
         like($hdl, qr/assign\s+axi0_r2_read_data_capture_en\s*=\s*axi0_r2_complete\s*;/, 'SystemVerilog guards multi-static second static last-beat read-data capture by completion');
         like($hdl, qr/axi0_r2_last_rdata_next\s*=\s*axi0_rdata\s*;/, 'SystemVerilog captures multi-static second static last-beat RDATA');
         like($hdl, qr/axi0_r2_last_rresp_next\s*=\s*axi0_rresp\s*;/, 'SystemVerilog captures multi-static second static last-beat RRESP');
+        return;
+    }
+
+    if ($case->{behavior} eq 'mixed_dynamic_static_read_data_multi_static3') {
+        my @static_cases = (
+            { transaction => 'r1', value => 3, literal => "4'd3", label => 'first' },
+            { transaction => 'r2', value => 5, literal => "4'd5", label => 'second' },
+            { transaction => 'r3', value => 7, literal => "4'd7", label => 'third' },
+        );
+        like($isf, qr/\(rule axi0_r0_response_demux \(& axi0_read_complete axi0_r0_dynamic_busy_q \(== axi0_rid axi0_r0_dynamic_id_q\)\)/, 'three-static mixed read-data keeps dynamic RID demux');
+        for my $static_case (@static_cases) {
+            my $transaction = $static_case->{transaction};
+            my $label = $static_case->{label};
+            my $literal = quotemeta($static_case->{literal});
+            like($isf, qr/\(rule axi0_${transaction}_response_demux \(& axi0_read_complete axi0_${transaction}_static_busy_q \(== axi0_rid $literal\)\)/, "three-static mixed read-data keeps $label static RID demux");
+        }
+        like($isf, qr/\(input axi0_rdata \(width 32\)\)/, 'three-static mixed read-data declares RDATA input');
+        like($isf, qr/\(input axi0_rresp \(width 2\)\)/, 'three-static mixed read-data declares RRESP input');
+        for my $tx (qw(r0 r1 r2 r3)) {
+            like($isf, qr/\(output axi0_${tx}_rdata \(width 32\)\)/, "three-static mixed read-data declares $tx scalar data output");
+            like($isf, qr/\(output axi0_${tx}_rresp \(width 2\)\)/, "three-static mixed read-data declares $tx scalar status output");
+            like($isf, qr/\(rule axi0_${tx}_read_data_capture axi0_${tx}_complete\s+\(axi0_${tx}_rdata axi0_rdata\)\s+\(axi0_${tx}_rresp axi0_rresp\)\)/, "three-static mixed read-data captures $tx payload under generated completion");
+        }
+        assert_mixed_dynamic_static_read_multi_static_report($result->{report}, \@static_cases);
+        assert_read_data_report(
+            $result->{report}{read_data},
+            'generated_multi_mixed_dynamic_static_read_response_demux_completion_pulse',
+            [qw(rlast_completion bursts multi_beat_read_data_reassembly)],
+            [qw(r0 r1 r2 r3)],
+        );
+        like($fsm, qr/\(-axi0_r3_read_data_capture\s+<axi0_r3_complete\s+\(<- \(axi0_r3_rdata> axi0_rdata\)\)\s+\(<- \(axi0_r3_rresp> axi0_rresp\)\)/, 'scheduled FSM lowers three-static third static read-data capture');
+        my $hdl = hdl_for('axi0_capacity_status', $fsm);
+        like($hdl, qr/assign\s+axi0_r3_read_data_capture_en\s*=\s*axi0_r3_complete\s*;/, 'SystemVerilog guards three-static third static read-data capture by completion');
+        like($hdl, qr/axi0_r3_rdata_next\s*=\s*axi0_rdata\s*;/, 'SystemVerilog captures three-static third static RDATA');
+        like($hdl, qr/axi0_r3_rresp_next\s*=\s*axi0_rresp\s*;/, 'SystemVerilog captures three-static third static RRESP');
+        return;
+    }
+
+    if ($case->{behavior} eq 'mixed_dynamic_static_read_data_multi_static3_last_beat') {
+        my @static_cases = (
+            { transaction => 'r1', value => 3, literal => "4'd3", label => 'first' },
+            { transaction => 'r2', value => 5, literal => "4'd5", label => 'second' },
+            { transaction => 'r3', value => 7, literal => "4'd7", label => 'third' },
+        );
+        like($isf, qr/\(rule axi0_r0_response_demux \(& axi0_read_complete axi0_r0_dynamic_busy_q \(== axi0_rid axi0_r0_dynamic_id_q\) axi0_rlast\)/, 'three-static mixed last-beat read-data keeps dynamic RID/RLAST demux');
+        for my $static_case (@static_cases) {
+            my $transaction = $static_case->{transaction};
+            my $label = $static_case->{label};
+            my $literal = quotemeta($static_case->{literal});
+            like($isf, qr/\(rule axi0_${transaction}_response_demux \(& axi0_read_complete axi0_${transaction}_static_busy_q \(== axi0_rid $literal\) axi0_rlast\)/, "three-static mixed last-beat read-data keeps $label static RID/RLAST demux");
+        }
+        like($isf, qr/\(input axi0_rlast\)/, 'three-static mixed last-beat read-data declares RLAST input');
+        like($isf, qr/\(input axi0_rdata \(width 32\)\)/, 'three-static mixed last-beat read-data declares RDATA input');
+        like($isf, qr/\(input axi0_rresp \(width 2\)\)/, 'three-static mixed last-beat read-data declares RRESP input');
+        for my $tx (qw(r0 r1 r2 r3)) {
+            like($isf, qr/\(output axi0_${tx}_last_rdata \(width 32\)\)/, "three-static mixed last-beat read-data declares $tx scalar last data output");
+            like($isf, qr/\(output axi0_${tx}_last_rresp \(width 2\)\)/, "three-static mixed last-beat read-data declares $tx scalar last status output");
+            like($isf, qr/\(rule axi0_${tx}_read_data_capture axi0_${tx}_complete\s+\(axi0_${tx}_last_rdata axi0_rdata\)\s+\(axi0_${tx}_last_rresp axi0_rresp\)\)/, "three-static mixed last-beat read-data captures $tx payload under generated completion");
+        }
+        unlike($isf, qr/\baxi0_arlen\b/, 'three-static mixed last-beat read-data keeps burst-length metadata absent');
+        assert_mixed_dynamic_static_read_rlast_multi_static_report($result->{report}, \@static_cases);
+        assert_read_data_report(
+            $result->{report}{read_data},
+            'generated_multi_mixed_dynamic_static_read_response_demux_last_beat_completion_pulse',
+            [qw(multi_beat_read_data_reassembly per_beat_outputs rresp_aggregation arlen_or_beat_count_validation)],
+            [qw(r0 r1 r2 r3)],
+        );
+        like($fsm, qr/\(-axi0_r3_read_data_capture\s+<axi0_r3_complete\s+\(<- \(axi0_r3_last_rdata> axi0_rdata\)\)\s+\(<- \(axi0_r3_last_rresp> axi0_rresp\)\)/, 'scheduled FSM lowers three-static third static last-beat read-data capture');
+        my $hdl = hdl_for('axi0_capacity_status', $fsm);
+        like($hdl, qr/assign\s+axi0_r3_read_data_capture_en\s*=\s*axi0_r3_complete\s*;/, 'SystemVerilog guards three-static third static last-beat read-data capture by completion');
+        like($hdl, qr/axi0_r3_last_rdata_next\s*=\s*axi0_rdata\s*;/, 'SystemVerilog captures three-static third static last-beat RDATA');
+        like($hdl, qr/axi0_r3_last_rresp_next\s*=\s*axi0_rresp\s*;/, 'SystemVerilog captures three-static third static last-beat RRESP');
         return;
     }
 

@@ -2521,6 +2521,14 @@ dynamic/static read response-demux. The selector changes no behavior and
 keeps three-static `burst_length`, runtime beat-count/`RLAST` validation,
 multi-beat output banks, broader mixed cardinalities, same-cycle widening,
 queues/scoreboards, backend variants, and VHDL behind future exact owners.
+`.330` now ships generated scalar read-data over that boundary. The public
+single-beat and last-beat samples generate scalar `RDATA`/`RRESP` capture
+for `r0`, `r1`, `r2`, and `r3`, report the existing multi-mixed read demux
+contract modes, and bind read-data completion validity to the generated
+single-beat or last-beat response-demux completion pulses. Three-static raw
+`ARLEN`, runtime beat-count/`RLAST` validation, and multi-beat output banks
+remain future exact owners. `.331` is the next selector after this shipped
+behavior.
 No behavior changed in
 `.270`, `.271`, `.273`, `.274`, `.275`, `.277`, `.278`,
 `.279`, `.281`, `.282`, `.283`, `.285`, `.286`, `.288`, `.290`, `.292`, or

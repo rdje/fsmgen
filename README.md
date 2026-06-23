@@ -584,6 +584,20 @@ fixes the two public sample stems, support identities, transaction order
 diagnostics, validation gates, rollback, and residue while keeping
 three-static `burst_length`, runtime validation, and multi-beat output banks
 behind later owners.
+`.330` now ships that behavior. The support-accounted public samples
+`ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static3_read_data.ppif`
+and
+`ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static3_burst_last_read_data.ppif`
+generate scalar `RDATA`/`RRESP` capture for `r0`, `r1`, `r2`, and `r3`
+over the generated one-dynamic plus three-concrete-static mixed read demux
+completion pulses. Reports keep the existing multi-mixed read response-demux
+modes and expose read-data completion validity
+`generated_multi_mixed_dynamic_static_read_response_demux_completion_pulse`
+or
+`generated_multi_mixed_dynamic_static_read_response_demux_last_beat_completion_pulse`.
+Three-static `burst_length`, runtime beat-count/`RLAST` validation, and
+multi-beat output banks remain fail-closed. `.331` is the next exact-owner
+selector after three-static scalar read-data.
 No behavior
 changed in `.273`, `.274`, `.275`,
 `.277`, `.278`, `.279`, `.281`,

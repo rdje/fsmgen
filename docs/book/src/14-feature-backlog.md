@@ -7906,6 +7906,18 @@ and
 three-static `burst_length`, runtime validation, and multi-beat output banks
 remain fail-closed.
 
+Three-static mixed dynamic/static read-data behavior:
+[AXI_IAL2_MANAGER_THREE_STATIC_MIXED_DYNAMIC_STATIC_READ_DATA_BEHAVIOR](../../AXI_IAL2_MANAGER_THREE_STATIC_MIXED_DYNAMIC_STATIC_READ_DATA_BEHAVIOR.md)
+ships generated scalar read-data capture over generated one-dynamic plus
+three-concrete-static mixed dynamic/static read response-demux. The public
+single-beat and last-beat samples generate scalar `RDATA`/`RRESP` capture
+for `r0`, `r1`, `r2`, and `r3`; reports expose completion validity
+`generated_multi_mixed_dynamic_static_read_response_demux_completion_pulse`
+or
+`generated_multi_mixed_dynamic_static_read_response_demux_last_beat_completion_pulse`.
+Three-static raw `ARLEN`, runtime beat-count/`RLAST` validation, and
+multi-beat output banks remain fail-closed.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same
