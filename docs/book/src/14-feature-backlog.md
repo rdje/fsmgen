@@ -7519,6 +7519,15 @@ assertions, and list-shaped mixed transaction/static-ID reservation report
 fields while preserving the `.272` one-dynamic plus one-static report
 contract.
 
+Post multiple mixed dynamic/static write selector:
+[AXI_IAL2_MANAGER_POST_MULTIPLE_MIXED_DYNAMIC_STATIC_WRITE_DEMUX_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_MIXED_DYNAMIC_STATIC_WRITE_DEMUX_NEXT_SLICE_SELECTION.md)
+selects `.297`, readiness audit for multiple mixed dynamic/static read
+response-demux after `.295` shipped the widened write `BID` contract. The
+selector changes no behavior; it records that read-side mixed dynamic/static
+response-demux remains singular while single-beat `RID` and burst-last
+`RID && RLAST` scopes need an owned parity audit before contract selection or
+implementation.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same

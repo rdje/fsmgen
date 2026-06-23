@@ -2278,10 +2278,14 @@ state, dynamic capture exclusions for static IDs `4'd3` and `4'd5`, onehot0
 request assertions across all selected write transactions, three raw `BID`
 response-demux completion pulses, pairwise unique-match assertions, and
 list-shaped report fields while preserving the `.272` one-dynamic plus
-one-static report contract.
+one-static report contract. `.296` now selects `.297`, readiness audit for
+multiple mixed dynamic/static read response-demux after the widened write
+contract shipped, because the read plan builder remains singular while
+read-side single-beat `RID` and burst-last `RID && RLAST` scopes need an
+owned parity audit before contract selection or implementation.
 No behavior changed in `.270`, `.271`, `.273`, `.274`, `.275`, `.277`, `.278`,
 `.279`, `.281`, `.282`, `.283`, `.285`, `.286`, `.288`, `.290`, `.292`, or
-`.293`, or `.294`.
+`.293`, `.294`, or `.296`.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.
