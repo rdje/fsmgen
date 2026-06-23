@@ -7506,6 +7506,19 @@ selected write transactions, and pairwise raw-response unique-match
 assertions. The one-dynamic plus one-static `.272` report contract remains
 unchanged.
 
+Multiple mixed dynamic/static write response-demux behavior:
+[AXI_IAL2_MANAGER_MULTIPLE_MIXED_DYNAMIC_STATIC_WRITE_RESPONSE_DEMUX_BEHAVIOR](../../AXI_IAL2_MANAGER_MULTIPLE_MIXED_DYNAMIC_STATIC_WRITE_RESPONSE_DEMUX_BEHAVIOR.md)
+ships `.295`. The public sample
+`ppif/axi_manager_capacity_status_write_mixed_dynamic_static_response_demux_multi_static.ppif`
+uses existing `response-demux.write` syntax with one dynamic write
+transaction and two concrete static write transactions. FSMGen now emits
+dynamic selected-ID/busy state, per-static busy state, dynamic capture
+exclusions for static IDs `4'd3` and `4'd5`, generated completion pulses
+for `w0`, `w1`, and `w2`, pairwise raw `BID` response unique-match
+assertions, and list-shaped mixed transaction/static-ID reservation report
+fields while preserving the `.272` one-dynamic plus one-static report
+contract.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same

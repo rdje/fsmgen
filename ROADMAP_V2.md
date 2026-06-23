@@ -2269,7 +2269,16 @@ plus one-concrete-static mixed path reached multi-beat output banks. `.293`
 now selects `.294`, public contract selection for bounded multiple mixed
 dynamic/static write `BID` response-demux. `.294` now selects `.295`, direct
 generated behavior for exactly one dynamic plus two concrete static write
-transactions under existing `response-demux.write` syntax.
+transactions under existing `response-demux.write` syntax. `.295` now ships
+that bounded multiple mixed write behavior through support-accounted public
+sample
+`ppif/axi_manager_capacity_status_write_mixed_dynamic_static_response_demux_multi_static.ppif`.
+The generated behavior emits dynamic selected-ID/busy state, per-static busy
+state, dynamic capture exclusions for static IDs `4'd3` and `4'd5`, onehot0
+request assertions across all selected write transactions, three raw `BID`
+response-demux completion pulses, pairwise unique-match assertions, and
+list-shaped report fields while preserving the `.272` one-dynamic plus
+one-static report contract.
 No behavior changed in `.270`, `.271`, `.273`, `.274`, `.275`, `.277`, `.278`,
 `.279`, `.281`, `.282`, `.283`, `.285`, `.286`, `.288`, `.290`, `.292`, or
 `.293`, or `.294`.

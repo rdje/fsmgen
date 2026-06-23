@@ -10,9 +10,9 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.294: select multiple mixed write contract`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.295` implements bounded multiple mixed dynamic/static write BID response-demux for one dynamic plus two concrete static write transactions; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.294` selected `.295`, direct generated behavior for bounded multiple mixed dynamic/static write BID response-demux; `.293` selected `.294`; `.292` selected `.293`.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.295: ship multiple mixed write demux`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.296` selects the next IAL2 frontier after bounded multiple mixed dynamic/static write BID response-demux; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.295` shipped generated bounded multiple mixed dynamic/static write BID response-demux for one dynamic plus two concrete static write transactions; `.294` selected `.295`; `.293` selected `.294`.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
 
@@ -26,6 +26,8 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Heavy broad Perl/`prove`/`fsmgen` commands must run under
   `scripts/run_with_ram_guard.sh` or equivalent monitoring; default cutoff is
   host RAM 88% / descendant RSS 4096 MiB, below the user's 90% danger zone.
+  `.295` used documented 90% host-cutoff retries only after default host-memory
+  trips; a 92% retry request was rejected as too risky and was not run.
 - Optional `slang` HDL validation is a future backend-validation candidate only;
   no `--verify-hdl` policy changed in `.194`
   (`docs/knowledge/hdl-validation-slang-candidate.md`).
