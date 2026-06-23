@@ -2202,8 +2202,15 @@ selected `.279`, public contract selection for that mixed read burst-last
 shape, after finding the substrate close but requiring explicit static
 final-beat completion and report semantics before implementation. `.279`
 selected `.280`, direct generated behavior for the bounded mixed read
-burst-last contract through future public sample
+burst-last contract. `.280` now ships generated bounded mixed dynamic/static
+read burst-last `RID && RLAST` response-demux through public sample
 `ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_burst_last.ppif`.
+The shipped behavior uses existing `response-demux.read` syntax with
+`response-scope burst-last`, one-bit `axi0_rlast`, one dynamic read transaction
+and one concrete static read transaction, static concrete ID reservation away
+from dynamic capture, raw `RID` beat active/unique assertions, final
+`RID && RLAST` dynamic/static completions, and report mode
+`bounded_mixed_dynamic_static_read_rid_rlast_demux_contract`.
 No behavior changed in `.270`, `.271`, `.273`, `.274`, `.275`, `.277`, `.278`,
 or `.279`.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2

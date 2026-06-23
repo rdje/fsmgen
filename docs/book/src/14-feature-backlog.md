@@ -7283,7 +7283,7 @@ names, and residue before generated behavior changes.
 Mixed dynamic/static read RLAST contract selection:
 [AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_READ_RLAST_RESPONSE_DEMUX_CONTRACT_SELECTION](../../AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_READ_RLAST_RESPONSE_DEMUX_CONTRACT_SELECTION.md)
 selects direct generated behavior for bounded mixed dynamic/static read
-burst-last `RID && RLAST` response-demux. The future support-accounted sample
+burst-last `RID && RLAST` response-demux. The selected support-accounted sample
 is
 `ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_burst_last.ppif`.
 The contract keeps raw `RID` beat ownership assertions separate from final
@@ -7291,6 +7291,21 @@ The contract keeps raw `RID` beat ownership assertions separate from final
 burst-length/runtime validation, multi-beat output banks, multiple mixed
 transactions, same-cycle widening, release-and-recapture, queues, scoreboards,
 direct backend, backend-language variants, and VHDL as later owners.
+
+Mixed dynamic/static read RLAST behavior:
+[AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_READ_RLAST_RESPONSE_DEMUX_BEHAVIOR](../../AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_READ_RLAST_RESPONSE_DEMUX_BEHAVIOR.md)
+ships `.280`, generated bounded mixed dynamic/static read burst-last
+`RID && RLAST` response-demux. The public sample uses existing
+`response-demux.read` syntax with `response-scope burst-last`, one-bit
+`axi0_rlast`, one dynamic read transaction `r0`, and one concrete static read
+transaction `r1` at ID `3`. FSMGen emits dynamic selected-ID/busy state and
+static busy state, reserves static literal `4'd3` away from dynamic capture,
+keeps raw `RID` beat active/unique assertions unqualified by `RLAST`, and
+pulses generated completions only for final matched `RID && RLAST` beats.
+Read-data, burst-length/runtime validation, multi-beat output banks, multiple
+mixed transactions, same-cycle widening, release-and-recapture, queues,
+scoreboards, direct backend, backend-language variants, and VHDL remain later
+owners.
 
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
