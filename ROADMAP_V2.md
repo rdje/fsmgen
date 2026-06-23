@@ -2172,8 +2172,8 @@ multiple dynamic read response-demux through
 multi-beat output-bank behavior over the generated multiple dynamic read
 runtime-validation boundary. `.266` selects `.267`, public contract selection
 for bounded generated multiple dynamic multi-beat output-bank behavior. `.267`
-selects `.268`, direct implementation of the selected all-dynamic
-multi-transaction output-bank behavior through the future public sample
+selected `.268`, and `.268` now ships generated bounded multiple dynamic
+multi-beat output-bank behavior through the support-accounted public sample
 `ppif/axi_manager_capacity_status_dynamic_read_data_multi_transaction_multi_beat.ppif`.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple

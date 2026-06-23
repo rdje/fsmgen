@@ -777,7 +777,7 @@ subtest 'multiple dynamic report-only burst-length read-data contract captures A
     );
 
     my $hdl = hdl_for('axi0_capacity_status', $fsm);
-    like($hdl, qr/\binput\s+\[7:0\]\s+axi0_arlen\b/, 'SystemVerilog exposes generated ARLEN input');
+    like($hdl, qr/\binput\s+(?:wire\s+)?\[7:0\]\s+axi0_arlen\b/, 'SystemVerilog exposes generated ARLEN input');
     like($hdl, qr/assign\s+axi0_r1_burst_length_capture_en\s*=\s*axi0_r1_request\s*;/, 'SystemVerilog guards r1 raw ARLEN capture with transaction request');
     like($hdl, qr/axi0_r1_arlen_q_next\s*=\s*axi0_arlen\s*;/, 'SystemVerilog captures r1 raw ARLEN into storage');
     unlike($hdl, qr/read_beat_count_q|expected_beats_q|arlen_within_max/, 'SystemVerilog keeps multiple dynamic report-only burst-length runtime validation ungenerated');
@@ -820,6 +820,52 @@ subtest 'multiple dynamic runtime burst-length read-data contract validates each
     like($hdl, qr/assign\s+axi0_r1_beat_count_init_en\s*=\s*axi0_r1_request\s*;/, 'SystemVerilog guards r1 multiple dynamic beat-count init with request');
     like($hdl, qr/assign\s+axi0_r1_read_beat_count_en\s*=/, 'SystemVerilog emits r1 multiple dynamic beat-count increment enable');
     like($hdl, qr/axi0_r1_expected_beats_q_next\s*=\s*axi0_arlen\[4:0\]\s*\+\s*5'd1\s*;/, 'SystemVerilog initializes r1 multiple dynamic expected count from ARLEN+1');
+};
+
+subtest 'multiple dynamic multi-beat read-data contract emits output banks for each transaction' => sub {
+    my $result = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_dynamic_read_data_multi_transaction_multi_beat());
+    my $isf = $result->{generated_ial1}{text};
+    my $fsm = $result->{generated_ial0}{files}{'axi0_capacity_status.fsm'};
+
+    like($isf, qr/\(rule axi0_r0_response_demux \(& axi0_read_complete axi0_r0_dynamic_busy_q \(== axi0_rid axi0_r0_dynamic_id_q\) axi0_rlast\)\s+\(pulse axi0_r0_complete\)\)/, 'multiple dynamic multi-beat read-data keeps generated r0 RID/RLAST demux');
+    like($isf, qr/\(rule axi0_r1_response_demux \(& axi0_read_complete axi0_r1_dynamic_busy_q \(== axi0_rid axi0_r1_dynamic_id_q\) axi0_rlast\)\s+\(pulse axi0_r1_complete\)\)/, 'multiple dynamic multi-beat read-data keeps generated r1 RID/RLAST demux');
+    like($isf, qr/\(output axi0_r0_beat_rdata_0 \(width 32\)\)/, 'multiple dynamic multi-beat read-data emits r0 first RDATA lane');
+    like($isf, qr/\(output axi0_r1_beat_rdata_15 \(width 32\)\)/, 'multiple dynamic multi-beat read-data emits r1 final RDATA lane');
+    like($isf, qr/\(output axi0_r1_beat_rresp_15 \(width 2\)\)/, 'multiple dynamic multi-beat read-data emits r1 final RRESP lane');
+    like($isf, qr/\(output axi0_r0_beat_valid \(width 16\)\)/, 'multiple dynamic multi-beat read-data emits r0 valid mask');
+    like($isf, qr/\(output axi0_r1_beat_valid \(width 16\)\)/, 'multiple dynamic multi-beat read-data emits r1 valid mask');
+    like($isf, qr/\(output axi0_r1_read_beats \(width 5\)\)/, 'multiple dynamic multi-beat read-data emits r1 length output');
+    like($isf, qr/\(output axi0_r1_rresp \(width 2\)\)/, 'multiple dynamic multi-beat read-data emits r1 scalar RRESP aggregate');
+    like($isf, qr/\(rule axi0_r1_read_data_output_init axi0_r1_request\s+\(axi0_r1_beat_rdata_0 32'd0\)[\s\S]*\(axi0_r1_beat_valid 16'b0\)\s+\(axi0_r1_read_beats 5'd0\)\)/, 'multiple dynamic multi-beat read-data clears r1 output bank on request');
+    like($isf, qr/\(rule axi0_r1_read_beat_0_capture \(& \(& axi0_read_complete \(& axi0_r1_dynamic_busy_q \(== axi0_rid axi0_r1_dynamic_id_q\)\)\) \(! axi0_r1_request\) \(== axi0_r1_read_beat_count_q 5'd0\)\)\s+\(axi0_r1_beat_rdata_0 axi0_rdata\)[\s\S]*\(axi0_r1_beat_valid 16'b0000000000000001\)\s+\(axi0_r1_read_beats 5'd1\)\)/, 'multiple dynamic multi-beat read-data captures r1 first matched beat lane');
+    like($isf, qr/\(rule axi0_r1_rresp_aggregate \(& \(& axi0_read_complete \(& axi0_r1_dynamic_busy_q \(== axi0_rid axi0_r1_dynamic_id_q\)\)\) \(! axi0_r1_request\) \(< axi0_r1_rresp axi0_rresp\)\)/, 'multiple dynamic multi-beat read-data updates r1 scalar RRESP aggregate on worse status');
+
+    assert_dynamic_read_response_demux_multi_burst_last_report(
+        $result->{report},
+        'generator multiple dynamic multi-beat read-data response-demux report',
+        residue => [qw(same_id_ordering)],
+    );
+    assert_read_data_multi_beat_report(
+        $result->{report}{read_data},
+        'generator multiple dynamic multi-beat read-data report',
+        completion_validity => 'generated_dynamic_read_response_demux_last_beat_completion_pulse',
+        transactions => [qw(r0 r1)],
+    );
+
+    like($fsm, qr/\(-axi0_r1_read_beat_0_capture\s+<\(& \(& axi0_read_complete \(& axi0_r1_dynamic_busy_q \(== axi0_rid axi0_r1_dynamic_id_q\)\)\) \(! axi0_r1_request\) \(== axi0_r1_read_beat_count_q 5'd0\)\)\s+\(<- \(axi0_r1_beat_rdata_0> axi0_rdata\)\)/, 'scheduled .fsm lowers r1 first-beat lane capture');
+    like($fsm, qr/\(-axi0_r1_rresp_aggregate\s+<\(& \(& axi0_read_complete \(& axi0_r1_dynamic_busy_q \(== axi0_rid axi0_r1_dynamic_id_q\)\)\) \(! axi0_r1_request\) \(< axi0_r1_rresp axi0_rresp\)\)/, 'scheduled .fsm lowers r1 scalar RRESP aggregation');
+
+    my $hdl = hdl_for('axi0_capacity_status', $fsm);
+    like($hdl, qr/\boutput\s+reg\s+\[31:0\]\s+axi0_r1_beat_rdata_0\b/, 'SystemVerilog exposes r1 first dynamic multi-beat RDATA lane');
+    like($hdl, qr/\boutput\s+reg\s+\[1:0\]\s+axi0_r1_beat_rresp_15\b/, 'SystemVerilog exposes r1 final dynamic multi-beat RRESP lane');
+    like($hdl, qr/\boutput\s+reg\s+\[15:0\]\s+axi0_r1_beat_valid\b/, 'SystemVerilog exposes r1 dynamic multi-beat valid mask');
+    like($hdl, qr/\boutput\s+reg\s+\[4:0\]\s+axi0_r1_read_beats\b/, 'SystemVerilog exposes r1 dynamic multi-beat length');
+    like($hdl, qr/\boutput\s+reg\s+\[1:0\]\s+axi0_r1_rresp\b/, 'SystemVerilog exposes r1 dynamic scalar RRESP aggregate');
+    like($hdl, qr/assign\s+axi0_r1_read_beat_0_capture_en\s*=/, 'SystemVerilog emits r1 first-lane capture enable');
+    like($hdl, qr/axi0_r1_beat_rdata_0_next\s*=\s*axi0_rdata\s*;/, 'SystemVerilog captures r1 first-lane RDATA');
+    like($hdl, qr/axi0_r1_beat_valid_next\s*=\s*16'b1\s*;/, 'SystemVerilog captures r1 valid mask for first beat');
+    like($hdl, qr/axi0_r1_read_beats_next\s*=\s*5'd1\s*;/, 'SystemVerilog captures r1 length for first beat');
+    like($hdl, qr/assign\s+axi0_r1_rresp_aggregate_en\s*=/, 'SystemVerilog emits r1 scalar RRESP aggregate enable');
 };
 
 subtest 'transaction event dispatch fans per-transaction events into capacity rules' => sub {
@@ -4502,7 +4548,7 @@ subtest 'malformed contract objects fail closed and no direct lower-to-fsm entry
             };
             $c;
         }, qr/response_demux\.write dynamic ID matching requires every write transaction to use dynamic IDs/],
-        ['dynamic read-data rejects multiple dynamic read RLAST response demux', sub {
+        ['dynamic read-data rejects incomplete multiple dynamic read RLAST coverage', sub {
             my $c = sample_contract_with_dynamic_read_response_demux_multi_burst_last();
             $c->{read_data} = {
                 read => {
@@ -4524,7 +4570,7 @@ subtest 'malformed contract objects fail closed and no direct lower-to-fsm entry
                 },
             };
             $c;
-        }, qr/read_data\.read dynamic coverage requires exactly one dynamic read transaction/],
+        }, qr/read_data\.read transaction coverage is missing read response_demux dynamic transaction\(s\): r1/],
         ['dynamic read response demux rejects mixed read transaction ownership', sub {
             my $c = sample_contract_with_dynamic_read_response_demux();
             push @{$c->{transactions}}, {
@@ -5036,6 +5082,37 @@ sub sample_contract_with_dynamic_read_data_multi_burst_length_runtime_assertion 
     $contract->{intent_name} = 'axi_manager_capacity_status_dynamic_read_data_multi_burst_length_runtime_assertion';
     $contract->{source}{object_id} = 'axi-manager-capacity-status-dynamic-read-data-multi-burst-length-runtime-assertion';
     $contract->{read_data}{read}{burst_length}{validation} = 'runtime-assertion';
+    return $contract;
+}
+
+sub sample_contract_with_dynamic_read_data_multi_transaction_multi_beat {
+    my $contract = sample_contract_with_dynamic_read_data_multi_burst_length_runtime_assertion();
+    $contract->{intent_name} = 'axi_manager_capacity_status_dynamic_read_data_multi_transaction_multi_beat';
+    $contract->{source}{object_id} = 'axi-manager-capacity-status-dynamic-read-data-multi-transaction-multi-beat';
+    $contract->{read_data}{read}{capture_scope} = 'multi-beat';
+    $contract->{read_data}{read}{status_policy} = 'per-beat';
+    $contract->{read_data}{read}{status_aggregation} = {
+        policy => 'worst-observed',
+    };
+    $contract->{read_data}{read}{interleaving} = 'multi-beat-by-rid';
+    $contract->{read_data}{read}{transactions} = [
+        {
+            transaction             => 'r0',
+            data_output_prefix      => 'axi0_r0_beat_rdata',
+            status_output_prefix    => 'axi0_r0_beat_rresp',
+            status_aggregate_output => 'axi0_r0_rresp',
+            valid_mask_output       => 'axi0_r0_beat_valid',
+            length_output           => 'axi0_r0_read_beats',
+        },
+        {
+            transaction             => 'r1',
+            data_output_prefix      => 'axi0_r1_beat_rdata',
+            status_output_prefix    => 'axi0_r1_beat_rresp',
+            status_aggregate_output => 'axi0_r1_rresp',
+            valid_mask_output       => 'axi0_r1_beat_valid',
+            length_output           => 'axi0_r1_read_beats',
+        },
+    ];
     return $contract;
 }
 
@@ -6589,9 +6666,10 @@ sub assert_dynamic_read_response_demux_multi_report {
 }
 
 sub assert_dynamic_read_response_demux_multi_burst_last_report {
-    my ($report, $owner) = @_;
+    my ($report, $owner, %args) = @_;
     my $demux = $report->{response_demux};
     my $read = $demux->{read};
+    my $expected_residue = $args{residue} // [qw(same_id_ordering read_data_interleaving bursts)];
 
     is(scalar(@{$report->{transactions}}), 2, "$owner reports two dynamic read RLAST transactions");
     is_deeply(
@@ -6664,7 +6742,7 @@ sub assert_dynamic_read_response_demux_multi_burst_last_report {
     );
     is_deeply(
         $demux->{residue},
-        [qw(same_id_ordering read_data_interleaving bursts)],
+        $expected_residue,
         "$owner keeps unsupported same-ID, read-data, and burst residue explicit",
     );
     my %residue = map { $_->{id} => 1 } @{$report->{unsupported_residue}};
@@ -7362,10 +7440,14 @@ sub assert_rlast_report_prose_alignment {
             "$owner reports selected depth-3 burst-last queue-head read-data capture as supported",
         ],
         [
+            'generated single-active and bounded multiple all-dynamic read-data runtime-validation multi-beat output-bank behavior',
+            "$owner reports single-active and bounded multiple dynamic multi-beat output-bank behavior as supported",
+        ],
+        [
             join(
                 '',
                 'generated multi-beat read-data output-bank behavior for the covered auto-ID multi-beat-by-RID subset, ',
-                'selected dynamic single-active read demux subset, and bounded read burst-last concrete same-ID ',
+                'selected dynamic single-active and bounded multiple all-dynamic read demux subset, and bounded read burst-last concrete same-ID ',
                 'queue-head subset including multiple independent depth-2 queue-head groups plus the selected ',
                 'single depth-3 runtime-validation queue-head group, selected multiple/mixed depth-3 runtime-validation ',
                 'queue-head groups, and the selected same-family mixed auto-ID plus depth-2 concrete queue-head ',

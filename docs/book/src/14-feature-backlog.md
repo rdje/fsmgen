@@ -7076,9 +7076,10 @@ as the public sample. `.264` ships the runtime beat-count/`RLAST` assertion
 sibling through
 `ppif/axi_manager_capacity_status_dynamic_read_data_multi_burst_length_runtime_assertion.ppif`.
 Both shapes require complete coverage of the all-dynamic read transaction set;
-mixed dynamic/static demux, multiple dynamic multi-beat output banks,
-same-cycle widening, dynamic queues/scoreboards, direct backend behavior,
-backend-language variants, and VHDL remain later owners.
+generated multiple dynamic multi-beat output banks ship in `.268`.
+Mixed dynamic/static demux, same-cycle widening, dynamic queues/scoreboards,
+direct backend behavior, backend-language variants, and VHDL remain later
+owners.
 
 Multiple dynamic read burst-length behavior:
 [AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_READ_BURST_LENGTH_BEHAVIOR](../../AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_READ_BURST_LENGTH_BEHAVIOR.md)
@@ -7115,6 +7116,7 @@ single-active, while scalar burst-length/runtime over multiple dynamic reads
 is now generated; it must settle the multi-transaction output-bank source
 shape, diagnostics, report vocabulary, validation, and residue before
 multiple dynamic multi-beat behavior widens.
+
 Multiple dynamic multi-beat readiness audit:
 [AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_MULTI_BEAT_READINESS_AUDIT](../../AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_MULTI_BEAT_READINESS_AUDIT.md)
 selects `.267`, public contract selection for bounded generated multiple
@@ -7129,8 +7131,8 @@ owners.
 Multiple dynamic multi-beat contract selection:
 [AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_MULTI_BEAT_CONTRACT_SELECTION](../../AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_MULTI_BEAT_CONTRACT_SELECTION.md)
 selects `.268`, direct implementation of the bounded all-dynamic
-multi-transaction multi-beat output-bank contract. The selected future public
-sample is
+multi-transaction multi-beat output-bank contract. The selected public sample
+is
 `ppif/axi_manager_capacity_status_dynamic_read_data_multi_transaction_multi_beat.ppif`;
 the name deliberately distinguishes multiple dynamic transactions from the
 existing single-active dynamic multi-beat sample. The contract requires
@@ -7138,11 +7140,24 @@ generated dynamic read burst-last response-demux, `capture-scope multi-beat`,
 runtime-assertion `ARLEN` burst-length metadata, complete exactly-once
 output-bank bindings for every generated dynamic read transaction,
 request-time output-bank initialization, raw matched-beat lane capture, and
-worst-observed per-transaction scalar `RRESP` aggregation. The selected
-report should remove read-data multi-beat, per-beat output, and `RRESP`
-aggregation residue for that sample while keeping mixed dynamic/static,
-same-cycle widening, release-and-recapture, queues, scoreboards, direct
-backend, backend-language variant, and VHDL behavior under later owners.
+worst-observed per-transaction scalar `RRESP` aggregation.
+
+Multiple dynamic multi-beat behavior:
+[AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_MULTI_BEAT_BEHAVIOR](../../AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_MULTI_BEAT_BEHAVIOR.md)
+ships `.268`. FSMGen now emits per-transaction output-bank initialization,
+per-beat `RDATA`/`RRESP` lanes, valid masks, length outputs, scalar
+worst-observed `RRESP` aggregates, request-captured `ARLEN`, expected-beat
+state, read-beat counters, raw matched-beat lane capture, and four runtime
+assertions per generated all-dynamic read transaction. The schedule report
+records `read_data.mode: bounded_multi_beat_read_data_contract`,
+`completion_validity:
+generated_dynamic_read_response_demux_last_beat_completion_pulse`,
+`status_aggregation_generated_behavior: true`,
+`multi_beat_reassembly_generated_behavior: true`, and empty read-data
+residue for the supported sample. Response-demux residue still keeps
+`same_id_ordering`; mixed dynamic/static, same-cycle widening,
+release-and-recapture, queues, scoreboards, direct backend, backend-language
+variant, and VHDL behavior remain later owners.
 
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)

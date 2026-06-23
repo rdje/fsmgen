@@ -31,6 +31,6 @@ report vocabulary, validation gates, rollback, and explicit residue before an
 implementation leaf widens behavior.
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.267` later selected `.268`, direct
-implementation of that contract, and reserved
+implementation of that contract. `.268` now ships
 `ppif/axi_manager_capacity_status_dynamic_read_data_multi_transaction_multi_beat.ppif`
-as the future public sample.
+as the public support-accounted sample.
