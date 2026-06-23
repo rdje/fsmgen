@@ -2210,9 +2210,13 @@ The shipped behavior uses existing `response-demux.read` syntax with
 and one concrete static read transaction, static concrete ID reservation away
 from dynamic capture, raw `RID` beat active/unique assertions, final
 `RID && RLAST` dynamic/static completions, and report mode
-`bounded_mixed_dynamic_static_read_rid_rlast_demux_contract`.
+`bounded_mixed_dynamic_static_read_rid_rlast_demux_contract`. `.281` selected
+`.282`, readiness audit for read-data over generated mixed dynamic/static read
+response-demux, because scalar read-data coverage is the next dependency
+before mixed burst-length/runtime validation, multi-beat output banks, or
+broader mixed widening.
 No behavior changed in `.270`, `.271`, `.273`, `.274`, `.275`, `.277`, `.278`,
-or `.279`.
+`.279`, or `.281`.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.

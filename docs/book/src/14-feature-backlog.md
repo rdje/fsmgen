@@ -7307,6 +7307,17 @@ mixed transactions, same-cycle widening, release-and-recapture, queues,
 scoreboards, direct backend, backend-language variants, and VHDL remain later
 owners.
 
+Post mixed dynamic/static read RLAST demux selector:
+[AXI_IAL2_MANAGER_POST_MIXED_DYNAMIC_STATIC_READ_RLAST_DEMUX_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MIXED_DYNAMIC_STATIC_READ_RLAST_DEMUX_NEXT_SLICE_SELECTION.md)
+selects `.282`, readiness audit for read-data over generated mixed
+dynamic/static read response-demux. With `.276` and `.280`, the mixed read
+family now has generated single-beat `RID` and burst-last `RID && RLAST`
+completion pulses; scalar read-data coverage over those generated completions
+is the next dependency before mixed burst-length/runtime validation,
+multi-beat output banks, multiple mixed transactions, same-cycle widening,
+release-and-recapture, queues, scoreboards, direct backend,
+backend-language variants, or VHDL.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same
