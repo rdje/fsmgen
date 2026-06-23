@@ -7877,6 +7877,15 @@ and `4'd7`, keeps raw `RID` active/unique assertions separate from final
 `r2`, and `r3`. Read-data, burst-length/runtime validation, and multi-beat
 output banks over this three-static boundary remain future exact-owner work.
 
+Post three-static mixed dynamic/static read RLAST demux selector:
+[AXI_IAL2_MANAGER_POST_THREE_STATIC_MIXED_DYNAMIC_STATIC_READ_RLAST_DEMUX_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_THREE_STATIC_MIXED_DYNAMIC_STATIC_READ_RLAST_DEMUX_NEXT_SLICE_SELECTION.md)
+selects `.328`, readiness audit for bounded scalar read-data over generated
+one-dynamic plus three-concrete-static mixed dynamic/static read
+response-demux. The selector changes no behavior; it records that current
+read-data coverage still admits the generated multi-mixed completion sources
+only for exactly one dynamic plus two concrete static read transactions, so
+three-static read-data needs an audit before any behavior-bearing owner.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same
