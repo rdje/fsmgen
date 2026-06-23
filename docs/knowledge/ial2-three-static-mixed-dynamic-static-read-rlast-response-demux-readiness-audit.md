@@ -4,7 +4,6 @@ title: Three-static mixed read RLAST demux readiness selects public contract wor
 answers:
   - "what did IAL2-FEATURE-COMPLETENESS-FRONTIER.324 decide?"
   - "what is next after three-static mixed read single-beat demux?"
-  - "is three-static mixed dynamic/static read RLAST demux implemented?"
   - "which owner selects the three-static mixed read RLAST contract?"
 date: 2026-06-23
 status: current
@@ -18,10 +17,10 @@ reverify: bash knowledge-map/scripts/check_knowledge_map.sh
 bounded one-dynamic plus three-concrete-static mixed dynamic/static read
 burst-last `RID && RLAST` response-demux.
 
-The audit changes no behavior. Three-static mixed read single-beat `RID`
-response-demux already ships, and the two-static mixed read burst-last
-`RID && RLAST` report is list-shaped, but current burst-last read
-normalization still admits only one dynamic plus one or two static reads.
+The audit changed no behavior. At `.324` time, three-static mixed read
+single-beat `RID` response-demux already shipped, and the two-static mixed
+read burst-last `RID && RLAST` report was list-shaped, but burst-last read
+normalization still admitted only one dynamic plus one or two static reads.
 
 The next contract-selection owner should decide whether to reuse
 `response-demux.read` with `response-scope burst-last`, one one-bit
@@ -31,6 +30,7 @@ completion source `generated_multi_mixed_dynamic_static_read_demux_last_beat`,
 and public sample stem
 `ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static3_burst_last.ppif`.
 
-Direct behavior, read-data, burst-length/runtime validation, multi-beat
-output banks, two-dynamic-plus-static, general capped mixed sets, same-cycle,
-queue, scoreboard, backend, and VHDL work remain future exact owners.
+Direct behavior was later shipped by `.326`. Read-data,
+burst-length/runtime validation, multi-beat output banks,
+two-dynamic-plus-static, general capped mixed sets, same-cycle, queue,
+scoreboard, backend, and VHDL work remain future exact owners.

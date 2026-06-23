@@ -2494,6 +2494,16 @@ plus three-concrete-static mixed dynamic/static read burst-last `RID && RLAST`
 response-demux. The selector changes no behavior and locks the public sample,
 support identity, report vocabulary, diagnostics, validation gates, and
 residue for the implementation owner.
+`.326` now ships generated one-dynamic plus three-concrete-static mixed
+dynamic/static read burst-last `RID && RLAST` response-demux through
+`ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static3_burst_last.ppif`.
+The generated report reuses
+`bounded_multi_mixed_dynamic_static_read_rid_rlast_demux_contract` with
+list-shaped dynamic/static transactions, static ID reservations/exclusions
+for `4'd3`, `4'd5`, and `4'd7`, raw `RID` active/unique assertions, and final
+`RID && RLAST` completion pulses for `r0` through `r3`. Read-data over the
+three-static boundary remains deferred. `.327` is the next exact-owner
+selector after the shipped three-static mixed read burst-last demux.
 No behavior changed in
 `.270`, `.271`, `.273`, `.274`, `.275`, `.277`, `.278`,
 `.279`, `.281`, `.282`, `.283`, `.285`, `.286`, `.288`, `.290`, `.292`, or

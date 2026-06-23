@@ -554,6 +554,17 @@ response-demux. The selector changes no behavior; it reuses existing
 `ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static3_burst_last.ppif`,
 and report mode
 `bounded_multi_mixed_dynamic_static_read_rid_rlast_demux_contract`.
+`.326` now ships that public sample and generated read burst-last behavior.
+Mixed dynamic/static read burst-last response-demux accepts exactly one
+dynamic read transaction plus one, two, or three pairwise-distinct concrete
+static read transactions, emits generated final-beat completion pulses/rules
+for the full covered set, records list-shaped static ID
+reservations/exclusions, keeps raw `RID` active-match assertions separate
+from `RID && RLAST` completion, and preserves the existing multi-mixed read
+burst-last report mode. Read-data over the three-static read boundary remains
+fail-closed.
+`.327` is the next exact-owner selector after the three-static mixed read
+burst-last demux.
 No behavior
 changed in `.273`, `.274`, `.275`,
 `.277`, `.278`, `.279`, `.281`,

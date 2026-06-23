@@ -116,6 +116,15 @@ my @DYNAMIC_CASES = (
         behavior     => 'mixed_dynamic_static_read_rlast_demux_multi_static',
     },
     {
+        label        => 'three-static mixed dynamic/static read burst-last RID/RLAST response demux',
+        relpath      => 'ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static3_burst_last.ppif',
+        object_id    => 'axi-manager-capacity-status-read-mixed-dynamic-static-response-demux-multi-static3-burst-last',
+        intent_name  => 'axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static3_burst_last',
+        entry_id     => 'intent.ppif_axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static3_burst_last',
+        coverage     => 'ial2_ppif_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static3_burst_last_pipeline_cli',
+        behavior     => 'mixed_dynamic_static_read_rlast_demux_multi_static3',
+    },
+    {
         label        => 'multiple mixed dynamic/static read-data single-beat capture',
         relpath      => 'ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static_read_data.ppif',
         object_id    => 'axi-manager-capacity-status-read-mixed-dynamic-static-response-demux-multi-static-read-data',
@@ -727,39 +736,81 @@ sub assert_dynamic_behavior {
         return;
     }
 
-    if ($case->{behavior} eq 'mixed_dynamic_static_read_rlast_demux_multi_static') {
+    if ($case->{behavior} eq 'mixed_dynamic_static_read_rlast_demux_multi_static'
+        || $case->{behavior} eq 'mixed_dynamic_static_read_rlast_demux_multi_static3') {
+        my @static_cases = (
+            { transaction => 'r1', value => 3, literal => "4'd3", label => 'first' },
+            { transaction => 'r2', value => 5, literal => "4'd5", label => 'second' },
+            (
+                $case->{behavior} eq 'mixed_dynamic_static_read_rlast_demux_multi_static3'
+                    ? ({ transaction => 'r3', value => 7, literal => "4'd7", label => 'third' })
+                    : ()
+            ),
+        );
         like($isf, qr/\(input axi0_r0_request\)/, 'multi-static mixed read RLAST demux declares dynamic request input');
-        like($isf, qr/\(input axi0_r1_request\)/, 'multi-static mixed read RLAST demux declares first static request input');
-        like($isf, qr/\(input axi0_r2_request\)/, 'multi-static mixed read RLAST demux declares second static request input');
+        for my $static_case (@static_cases) {
+            my $transaction = $static_case->{transaction};
+            my $label = $static_case->{label};
+            like($isf, qr/\(input axi0_${transaction}_request\)/, "multi-static mixed read RLAST demux declares $label static request input");
+        }
         like($isf, qr/\(input axi0_arid \(width 4\)\)/, 'multi-static mixed read RLAST demux declares ARID input');
         like($isf, qr/\(input axi0_rid \(width 4\)\)/, 'multi-static mixed read RLAST demux declares RID input');
         like($isf, qr/\(input axi0_rlast\)/, 'multi-static mixed read RLAST demux declares RLAST input');
         like($isf, qr/\(output axi0_r0_complete\)/, 'multi-static mixed read RLAST demux exposes dynamic completion output');
-        like($isf, qr/\(output axi0_r1_complete\)/, 'multi-static mixed read RLAST demux exposes first static completion output');
-        like($isf, qr/\(output axi0_r2_complete\)/, 'multi-static mixed read RLAST demux exposes second static completion output');
+        for my $static_case (@static_cases) {
+            my $transaction = $static_case->{transaction};
+            my $label = $static_case->{label};
+            like($isf, qr/\(output axi0_${transaction}_complete\)/, "multi-static mixed read RLAST demux exposes $label static completion output");
+        }
         like($isf, qr/\(var axi0_r0_dynamic_id_q \(width 4\)\)/, 'multi-static mixed read RLAST demux allocates dynamic selected-ID storage');
         like($isf, qr/\(var axi0_r0_dynamic_busy_q \(width 1\)\)/, 'multi-static mixed read RLAST demux allocates dynamic busy storage');
-        like($isf, qr/\(var axi0_r1_static_busy_q \(width 1\)\)/, 'multi-static mixed read RLAST demux allocates first static busy storage');
-        like($isf, qr/\(var axi0_r2_static_busy_q \(width 1\)\)/, 'multi-static mixed read RLAST demux allocates second static busy storage');
-        like($isf, qr/\(! \(== axi0_arid 4'd3\)\)/, 'multi-static mixed read RLAST demux prevents dynamic capture of first static concrete ID');
-        like($isf, qr/\(! \(== axi0_arid 4'd5\)\)/, 'multi-static mixed read RLAST demux prevents dynamic capture of second static concrete ID');
+        for my $static_case (@static_cases) {
+            my $transaction = $static_case->{transaction};
+            my $label = $static_case->{label};
+            my $literal = quotemeta($static_case->{literal});
+            like($isf, qr/\(var axi0_${transaction}_static_busy_q \(width 1\)\)/, "multi-static mixed read RLAST demux allocates $label static busy storage");
+            like($isf, qr/\(! \(== axi0_arid $literal\)\)/, "multi-static mixed read RLAST demux prevents dynamic capture of $label static concrete ID");
+        }
         like($isf, qr/\(rule axi0_r0_response_demux \(& axi0_read_complete axi0_r0_dynamic_busy_q \(== axi0_rid axi0_r0_dynamic_id_q\) axi0_rlast\)/, 'multi-static mixed read RLAST demux matches dynamic active RID and RLAST');
-        like($isf, qr/\(rule axi0_r1_response_demux \(& axi0_read_complete axi0_r1_static_busy_q \(== axi0_rid 4'd3\) axi0_rlast\)/, 'multi-static mixed read RLAST demux matches first static concrete RID and RLAST');
-        like($isf, qr/\(rule axi0_r2_response_demux \(& axi0_read_complete axi0_r2_static_busy_q \(== axi0_rid 4'd5\) axi0_rlast\)/, 'multi-static mixed read RLAST demux matches second static concrete RID and RLAST');
-        like($isf, qr/\(assert \(\| \(! axi0_read_complete\) \(\| \(& axi0_r0_dynamic_busy_q \(== axi0_rid axi0_r0_dynamic_id_q\)\) \(& axi0_r1_static_busy_q \(== axi0_rid 4'd3\)\) \(& axi0_r2_static_busy_q \(== axi0_rid 4'd5\)\)\)\) "axi0 read mixed dynamic\/static response matches active transaction"\)/, 'multi-static mixed read RLAST demux keeps active-response assertion on raw RID match');
+        for my $static_case (@static_cases) {
+            my $transaction = $static_case->{transaction};
+            my $label = $static_case->{label};
+            my $literal = quotemeta($static_case->{literal});
+            like($isf, qr/\(rule axi0_${transaction}_response_demux \(& axi0_read_complete axi0_${transaction}_static_busy_q \(== axi0_rid $literal\) axi0_rlast\)/, "multi-static mixed read RLAST demux matches $label static concrete RID and RLAST");
+        }
+        my @raw_match_exprs = ('(& axi0_r0_dynamic_busy_q (== axi0_rid axi0_r0_dynamic_id_q))');
+        for my $static_case (@static_cases) {
+            my $transaction = $static_case->{transaction};
+            my $literal = $static_case->{literal};
+            push @raw_match_exprs, "(& axi0_${transaction}_static_busy_q (== axi0_rid $literal))";
+        }
+        my $active_match_assertion =
+            '(assert (| (! axi0_read_complete) (| '
+            . join(' ', @raw_match_exprs)
+            . ')) "axi0 read mixed dynamic/static response matches active transaction")';
+        like($isf, qr/\Q$active_match_assertion\E/, 'multi-static mixed read RLAST demux keeps active-response assertion on raw RID match');
         like($isf, qr/axi0 read mixed dynamic\/static response matches at most one transaction/, 'multi-static mixed read RLAST demux emits raw response unique-match assertions');
-        like($isf, qr/axi0 r2 static completion releases active concrete ID/, 'multi-static mixed read RLAST demux emits second static completion-active assertion');
-        assert_mixed_dynamic_static_read_rlast_multi_static_report($result->{report});
+        my $last_static_transaction = $static_cases[-1]{transaction};
+        like($isf, qr/axi0 $last_static_transaction static completion releases active concrete ID/, 'multi-static mixed read RLAST demux emits last static completion-active assertion');
+        assert_mixed_dynamic_static_read_rlast_multi_static_report($result->{report}, \@static_cases);
         like($fsm, qr/\(-axi0_r0_response_demux\s+<\(& axi0_read_complete axi0_r0_dynamic_busy_q \(== axi0_rid axi0_r0_dynamic_id_q\) axi0_rlast\)/, 'scheduled FSM lowers multi-static mixed dynamic RID/RLAST match');
-        like($fsm, qr/\(-axi0_r1_response_demux\s+<\(& axi0_read_complete axi0_r1_static_busy_q \(== axi0_rid 4'd3\) axi0_rlast\)/, 'scheduled FSM lowers multi-static mixed first static RID/RLAST match');
-        like($fsm, qr/\(-axi0_r2_response_demux\s+<\(& axi0_read_complete axi0_r2_static_busy_q \(== axi0_rid 4'd5\) axi0_rlast\)/, 'scheduled FSM lowers multi-static mixed second static RID/RLAST match');
+        for my $static_case (@static_cases) {
+            my $transaction = $static_case->{transaction};
+            my $label = $static_case->{label};
+            my $literal = quotemeta($static_case->{literal});
+            like($fsm, qr/\(-axi0_${transaction}_response_demux\s+<\(& axi0_read_complete axi0_${transaction}_static_busy_q \(== axi0_rid $literal\) axi0_rlast\)/, "scheduled FSM lowers multi-static mixed $label static RID/RLAST match");
+        }
         my $hdl = hdl_for('axi0_capacity_status', $fsm);
         like($hdl, qr/\binput\s+(?:wire\s+)?\[3:0\]\s+axi0_arid\b/, 'SystemVerilog exposes ARID for multi-static mixed read RLAST');
         like($hdl, qr/\binput\s+(?:wire\s+)?\[3:0\]\s+axi0_rid\b/, 'SystemVerilog exposes RID for multi-static mixed read RLAST');
         like($hdl, qr/\binput\s+(?:wire\s+)?axi0_rlast\b/, 'SystemVerilog exposes RLAST for multi-static mixed read RLAST');
         like($hdl, qr/axi0_read_complete\s*&\s*axi0_r0_dynamic_busy_q\s*&\s*\(axi0_rid\s*==\s*axi0_r0_dynamic_id_q\)\s*&\s*axi0_rlast/, 'SystemVerilog lowers multi-static mixed dynamic RID/RLAST guard');
-        like($hdl, qr/axi0_read_complete\s*&\s*axi0_r1_static_busy_q\s*&\s*\(axi0_rid\s*==\s*4'd3\)\s*&\s*axi0_rlast/, 'SystemVerilog lowers multi-static mixed first static RID/RLAST guard');
-        like($hdl, qr/axi0_read_complete\s*&\s*axi0_r2_static_busy_q\s*&\s*\(axi0_rid\s*==\s*4'd5\)\s*&\s*axi0_rlast/, 'SystemVerilog lowers multi-static mixed second static RID/RLAST guard');
+        for my $static_case (@static_cases) {
+            my $transaction = $static_case->{transaction};
+            my $label = $static_case->{label};
+            my $literal = quotemeta($static_case->{literal});
+            like($hdl, qr/axi0_read_complete\s*&\s*axi0_${transaction}_static_busy_q\s*&\s*\(axi0_rid\s*==\s*$literal\)\s*&\s*axi0_rlast/, "SystemVerilog lowers multi-static mixed $label static RID/RLAST guard");
+        }
         return;
     }
 
@@ -1893,7 +1944,23 @@ sub assert_mixed_dynamic_static_read_rlast_report {
 }
 
 sub assert_mixed_dynamic_static_read_rlast_multi_static_report {
-    my ($report) = @_;
+    my ($report, $static_cases) = @_;
+    my @static_cases = @{$static_cases || [
+        { transaction => 'r1', index => 1, value => 3, literal => "4'd3", label => 'first' },
+        { transaction => 'r2', index => 2, value => 5, literal => "4'd5", label => 'second' },
+    ]};
+    for my $index (0 .. $#static_cases) {
+        $static_cases[$index]{index} = $index + 1 unless exists $static_cases[$index]{index};
+    }
+    my @static_names = map { $_->{transaction} } @static_cases;
+    my @transaction_names = ('r0', @static_names);
+    my @unique_match_assertions;
+    for my $left_index (0 .. $#transaction_names - 1) {
+        for my $right_index ($left_index + 1 .. $#transaction_names) {
+            push @unique_match_assertions,
+                "axi0_$transaction_names[$left_index]_$transaction_names[$right_index]_read_mixed_dynamic_static_response_unique_match";
+        }
+    }
     my $read = $report->{response_demux}{read};
 
     is($report->{response_demux}{mode}, 'bounded_multi_mixed_dynamic_static_read_rid_rlast_demux_contract', 'multi-static mixed read RLAST report marks multi-static mixed RID/RLAST-demux contract');
@@ -1910,47 +1977,48 @@ sub assert_mixed_dynamic_static_read_rlast_multi_static_report {
     is($read->{burst_length_source}, 'rlast_only', 'multi-static mixed read RLAST report marks RLAST-only burst length source');
     is($read->{burst_length_validation}, 'not_generated', 'multi-static mixed read RLAST report leaves burst-length validation ungenerated');
     is_deeply($read->{dynamic_transactions}, [qw(r0)], 'multi-static mixed read RLAST report names covered dynamic transaction');
-    is_deeply($read->{static_transactions}, [qw(r1 r2)], 'multi-static mixed read RLAST report names covered static transactions');
-    is_deeply($read->{mixed_transactions}, { dynamic => [qw(r0)], static => [qw(r1 r2)] }, 'multi-static mixed read RLAST report names dynamic/static transaction roles as lists');
-    is_deeply($read->{generated_rules}, [qw(axi0_r0_response_demux axi0_r1_response_demux axi0_r2_response_demux)], 'multi-static mixed read RLAST report names generated response-demux rules');
-    is_deeply($read->{generated_completion_signals}, [qw(axi0_r0_complete axi0_r1_complete axi0_r2_complete)], 'multi-static mixed read RLAST report names generated completions');
+    is_deeply($read->{static_transactions}, \@static_names, 'multi-static mixed read RLAST report names covered static transactions');
+    is_deeply($read->{mixed_transactions}, { dynamic => [qw(r0)], static => \@static_names }, 'multi-static mixed read RLAST report names dynamic/static transaction roles as lists');
+    is_deeply($read->{generated_rules}, [map { "axi0_${_}_response_demux" } @transaction_names], 'multi-static mixed read RLAST report names generated response-demux rules');
+    is_deeply($read->{generated_completion_signals}, [map { "axi0_${_}_complete" } @transaction_names], 'multi-static mixed read RLAST report names generated completions');
     is_deeply(
         $read->{static_id_reservations},
         [
-            {
-                transaction            => 'r1',
-                concrete_id            => 3,
-                concrete_id_literal    => "4'd3",
-                dynamic_capture_policy => 'dynamic_id_must_not_equal_static_concrete_id',
-            },
-            {
-                transaction            => 'r2',
-                concrete_id            => 5,
-                concrete_id_literal    => "4'd5",
-                dynamic_capture_policy => 'dynamic_id_must_not_equal_static_concrete_id',
-            },
+            map {
+                +{
+                    transaction            => $_->{transaction},
+                    concrete_id            => $_->{value},
+                    concrete_id_literal    => $_->{literal},
+                    dynamic_capture_policy => 'dynamic_id_must_not_equal_static_concrete_id',
+                }
+            } @static_cases
         ],
         'multi-static mixed read RLAST report records list-shaped static-ID reservations',
     );
     is_deeply(
         $read->{generated_assertions},
-        [qw(
-            axi0_r0_dynamic_request_not_busy
-            axi0_r1_static_request_not_busy
-            axi0_r2_static_request_not_busy
-            axi0_read_mixed_dynamic_static_request_onehot0
-            axi0_r0_r1_read_dynamic_request_not_static_id
-            axi0_r0_r1_read_dynamic_active_not_static_id
-            axi0_r0_r2_read_dynamic_request_not_static_id
-            axi0_r0_r2_read_dynamic_active_not_static_id
-            axi0_read_mixed_dynamic_static_response_active_match
-            axi0_r0_r1_read_mixed_dynamic_static_response_unique_match
-            axi0_r0_r2_read_mixed_dynamic_static_response_unique_match
-            axi0_r1_r2_read_mixed_dynamic_static_response_unique_match
-            axi0_r0_dynamic_completion_active
-            axi0_r1_static_completion_active
-            axi0_r2_static_completion_active
-        )],
+        [
+            'axi0_r0_dynamic_request_not_busy',
+            (map {
+                my $transaction = $_->{transaction};
+                "axi0_${transaction}_static_request_not_busy";
+            } @static_cases),
+            'axi0_read_mixed_dynamic_static_request_onehot0',
+            (map {
+                my $transaction = $_->{transaction};
+                (
+                    "axi0_r0_${transaction}_read_dynamic_request_not_static_id",
+                    "axi0_r0_${transaction}_read_dynamic_active_not_static_id",
+                )
+            } @static_cases),
+            'axi0_read_mixed_dynamic_static_response_active_match',
+            @unique_match_assertions,
+            'axi0_r0_dynamic_completion_active',
+            (map {
+                my $transaction = $_->{transaction};
+                "axi0_${transaction}_static_completion_active";
+            } @static_cases),
+        ],
         'multi-static mixed read RLAST report names generated assertions',
     );
     is_deeply(
@@ -1961,7 +2029,7 @@ sub assert_mixed_dynamic_static_read_rlast_multi_static_report {
             ownership                   => 'multi_mixed_dynamic_static_unique_read_ids',
             simultaneous_request_policy => 'onehot0_mixed_read_request',
             static_id_conflict_policy   => 'static_concrete_ids_reserved',
-            static_id_exclusions        => ["4'd3", "4'd5"],
+            static_id_exclusions        => [map { $_->{literal} } @static_cases],
             transactions                => [
                 {
                     transaction        => 'r0',
@@ -1975,10 +2043,7 @@ sub assert_mixed_dynamic_static_read_rlast_multi_static_report {
         'multi-static mixed read RLAST report describes dynamic capture ownership and all static exclusions',
     );
     is($report->{transactions}[0]{id}{implementation_status}, 'generated_capture_matching', 'multi-static mixed read RLAST dynamic transaction reports generated capture/matching');
-    for my $case (
-        { index => 1, value => 3, label => 'first' },
-        { index => 2, value => 5, label => 'second' },
-    ) {
+    for my $case (@static_cases) {
         is_deeply(
             {
                 map { $_ => $report->{transactions}[$case->{index}]{id}{$_} }

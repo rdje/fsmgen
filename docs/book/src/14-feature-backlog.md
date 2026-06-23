@@ -7864,6 +7864,19 @@ response-demux. The selector changes no behavior; it reuses existing
 mode, and the future public sample
 `ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static3_burst_last.ppif`.
 
+Three-static mixed dynamic/static read RLAST response-demux behavior:
+[AXI_IAL2_MANAGER_THREE_STATIC_MIXED_DYNAMIC_STATIC_READ_RLAST_RESPONSE_DEMUX_BEHAVIOR](../../AXI_IAL2_MANAGER_THREE_STATIC_MIXED_DYNAMIC_STATIC_READ_RLAST_RESPONSE_DEMUX_BEHAVIOR.md)
+ships generated one-dynamic plus three-concrete-static mixed dynamic/static
+read burst-last `RID && RLAST` response-demux through
+`ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static3_burst_last.ppif`.
+The generated report reuses
+`bounded_multi_mixed_dynamic_static_read_rid_rlast_demux_contract`, records
+static ID reservations and dynamic-capture exclusions for `4'd3`, `4'd5`,
+and `4'd7`, keeps raw `RID` active/unique assertions separate from final
+`RID && RLAST` completion, and emits generated completions for `r0`, `r1`,
+`r2`, and `r3`. Read-data, burst-length/runtime validation, and multi-beat
+output banks over this three-static boundary remain future exact-owner work.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same
