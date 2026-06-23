@@ -7665,6 +7665,17 @@ for last-beat capture while raw `ARLEN`, runtime validation, multi-beat output
 banks, broader cardinalities, same-cycle widening, queues/scoreboards,
 backend variants, and VHDL remain deferred.
 
+Post multiple mixed dynamic/static read-data selector:
+[AXI_IAL2_MANAGER_POST_MULTIPLE_MIXED_DYNAMIC_STATIC_READ_DATA_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_MIXED_DYNAMIC_STATIC_READ_DATA_NEXT_SLICE_SELECTION.md)
+selects `.309`, readiness audit for generated report-only raw-`ARLEN`
+burst-length capture over generated multiple mixed dynamic/static read
+burst-last response-demux and scalar last-beat read-data. The selector changes
+no behavior in `.308`. It chooses the audit because `.307` now supplies scalar
+last-beat read-data over the `.303` multiple mixed `RID && RLAST` completion
+pulses, while runtime validation and multi-beat output banks depend on first
+settling request-time raw-`ARLEN` capture for the dynamic transaction and both
+concrete static transactions.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same

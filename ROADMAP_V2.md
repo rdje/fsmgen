@@ -2364,11 +2364,18 @@ banks, broader cardinalities, same-cycle widening, queues/scoreboards,
 backend variants, and VHDL deferred. `.307` selected `.308`, the next exact
 IAL2 feature-completeness selector after widened multiple mixed read-data
 behavior.
+`.308` now selects `.309`, readiness audit for generated report-only
+raw-`ARLEN` burst-length capture over generated multiple mixed dynamic/static
+read burst-last response-demux and scalar last-beat read-data. The selector
+changes no behavior; it chooses the audit because runtime validation and
+multi-beat output banks over the multiple mixed shape depend on first settling
+request-time raw-`ARLEN` capture for the dynamic transaction and both concrete
+static transactions.
 No behavior changed in
 `.270`, `.271`, `.273`, `.274`, `.275`, `.277`, `.278`,
 `.279`, `.281`, `.282`, `.283`, `.285`, `.286`, `.288`, `.290`, `.292`, or
 `.293`, `.294`, `.296`, `.297`, `.298`, `.300`, `.301`, `.302`, `.304`,
-`.305`, or `.306`.
+`.305`, `.306`, or `.308`.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.
