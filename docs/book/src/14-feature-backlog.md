@@ -7017,6 +7017,17 @@ pin scalar single-beat and last-beat source shapes, sample names,
 transaction-to-completion mapping, report vocabulary, diagnostics, validation,
 and residue before behavior changes.
 
+Multiple dynamic read-data contract selection:
+[AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_READ_DATA_CONTRACT_SELECTION](../../AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_READ_DATA_CONTRACT_SELECTION.md)
+selects `.259`, direct generated behavior for bounded scalar read-data over
+generated multiple dynamic read response-demux. The selected public samples
+are `ppif/axi_manager_capacity_status_dynamic_read_data_multi.ppif` and
+`ppif/axi_manager_capacity_status_dynamic_read_data_multi_last_beat.ppif`.
+The contract requires read-data bindings to exactly cover all generated
+dynamic read demux transactions, reuses the scalar single-beat and last-beat
+read-data report modes, and keeps burst-length/runtime validation plus
+multi-beat output banks over multiple dynamic read demux as later owners.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same

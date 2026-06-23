@@ -2147,7 +2147,9 @@ dynamic read response-demux, because dynamic read-data coverage still accepts
 exactly one dynamic read transaction while the response-demux substrate now
 has multiple dynamic completion pulses. `.257` selected `.258`, public
 contract selection for bounded scalar read-data over generated multiple
-dynamic read response-demux before behavior changes.
+dynamic read response-demux. `.258` selected `.259`, direct generated
+behavior, with public scalar single-beat and last-beat samples and explicit
+burst-length/runtime/multi-beat residue.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.
