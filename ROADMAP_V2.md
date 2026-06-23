@@ -2515,12 +2515,18 @@ dynamic/static read response-demux. The audit changes no behavior; the
 implementation substrate is list-shaped after coverage admission, but public
 source/report naming, support accounting, diagnostics, validation, and
 residue need a contract-selection owner before behavior changes.
+`.329` now selects `.330`, direct generated behavior for bounded scalar
+read-data over generated one-dynamic plus three-concrete-static mixed
+dynamic/static read response-demux. The selector changes no behavior and
+keeps three-static `burst_length`, runtime beat-count/`RLAST` validation,
+multi-beat output banks, broader mixed cardinalities, same-cycle widening,
+queues/scoreboards, backend variants, and VHDL behind future exact owners.
 No behavior changed in
 `.270`, `.271`, `.273`, `.274`, `.275`, `.277`, `.278`,
 `.279`, `.281`, `.282`, `.283`, `.285`, `.286`, `.288`, `.290`, `.292`, or
 `.293`, `.294`, `.296`, `.297`, `.298`, `.300`, `.301`, `.302`, `.304`,
 `.305`, `.306`, `.308`, `.309`, `.311`, `.313`, `.315`, `.316`, `.317`, or
-`.319`, `.320`, `.321`, `.323`, `.324`, `.325`, `.327`, or `.328`.
+`.319`, `.320`, `.321`, `.323`, `.324`, `.325`, `.327`, `.328`, or `.329`.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.

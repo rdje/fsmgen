@@ -7895,6 +7895,17 @@ normalizer, capture-rule generator, and report artifacts are transaction-list
 driven after coverage admission, while the current multi-mixed coverage
 branch still stops at exactly two concrete static read transactions.
 
+Three-static mixed dynamic/static read-data contract selection:
+[AXI_IAL2_MANAGER_THREE_STATIC_MIXED_DYNAMIC_STATIC_READ_DATA_CONTRACT_SELECTION](../../AXI_IAL2_MANAGER_THREE_STATIC_MIXED_DYNAMIC_STATIC_READ_DATA_CONTRACT_SELECTION.md)
+selects `.330`, direct generated behavior for bounded scalar read-data over
+generated one-dynamic plus three-concrete-static mixed dynamic/static read
+response-demux. The selected public sample stems are
+`ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static3_read_data.ppif`
+and
+`ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static3_burst_last_read_data.ppif`;
+three-static `burst_length`, runtime validation, and multi-beat output banks
+remain fail-closed.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same
