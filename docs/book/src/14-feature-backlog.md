@@ -7580,6 +7580,19 @@ changes no behavior; a guarded temporary candidate confirmed the current
 strict-check diagnostic for one dynamic plus two concrete static reads under
 `response-scope burst-last`.
 
+Multiple mixed dynamic/static read RLAST contract:
+[AXI_IAL2_MANAGER_MULTIPLE_MIXED_DYNAMIC_STATIC_READ_RLAST_RESPONSE_DEMUX_CONTRACT_SELECTION](../../AXI_IAL2_MANAGER_MULTIPLE_MIXED_DYNAMIC_STATIC_READ_RLAST_RESPONSE_DEMUX_CONTRACT_SELECTION.md)
+selects `.303`, direct generated behavior for bounded multiple mixed
+dynamic/static read burst-last `RID && RLAST` response-demux. The selected
+contract changes no behavior in `.302`; it reuses existing
+`response-demux.read` syntax with one dynamic read transaction, two concrete
+static read transactions, `response-scope burst-last`, one-bit `last-signal`,
+mode `bounded_multi_mixed_dynamic_static_read_rid_rlast_demux_contract`,
+completion source `generated_multi_mixed_dynamic_static_read_demux_last_beat`,
+list-shaped `mixed_transactions`/`static_id_reservations`, dynamic capture
+exclusions for all selected static IDs, raw `RID` ownership assertions, and
+final `RID && RLAST` completion pulses for `r0`, `r1`, and `r2`.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same

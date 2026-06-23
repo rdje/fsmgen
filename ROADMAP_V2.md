@@ -2309,10 +2309,19 @@ multi-static mixed read shape should wait until final-beat completion semantics
 are audited. `.301` now selects `.302`, public contract selection for bounded
 multiple mixed dynamic/static read burst-last `RID && RLAST` response-demux,
 after a guarded temporary candidate confirmed the current fail-closed
-diagnostic for the multi-static burst-last shape.
+diagnostic for the multi-static burst-last shape. `.302` now selects `.303`,
+direct generated behavior for that bounded multiple mixed read burst-last
+contract: exactly one dynamic read plus two pairwise-distinct concrete static
+reads under existing `response-demux.read` syntax with `response-scope
+burst-last`, one-bit `last-signal`, mode
+`bounded_multi_mixed_dynamic_static_read_rid_rlast_demux_contract`,
+completion source `generated_multi_mixed_dynamic_static_read_demux_last_beat`,
+list-shaped mixed/static-ID reservation fields, raw `RID` ownership
+assertions, and final `RID && RLAST` completion pulses for `r0`, `r1`, and
+`r2`.
 No behavior changed in `.270`, `.271`, `.273`, `.274`, `.275`, `.277`, `.278`,
 `.279`, `.281`, `.282`, `.283`, `.285`, `.286`, `.288`, `.290`, `.292`, or
-`.293`, `.294`, `.296`, `.297`, `.298`, `.300`, or `.301`.
+`.293`, `.294`, `.296`, `.297`, `.298`, `.300`, `.301`, or `.302`.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.
