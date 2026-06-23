@@ -2217,9 +2217,14 @@ before mixed burst-length/runtime validation, multi-beat output banks, or
 broader mixed widening. `.282` selected `.283`, public contract selection for
 bounded scalar read-data over generated mixed dynamic/static read
 response-demux, after finding the read-data helper substrate close but not
-contract-complete for the new mixed completion sources.
+contract-complete for the new mixed completion sources. `.283` selected
+`.284`, direct generated behavior for bounded scalar read-data over generated
+mixed dynamic/static read response-demux. The selected future samples are
+`ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_read_data.ppif`
+and
+`ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_burst_last_read_data.ppif`.
 No behavior changed in `.270`, `.271`, `.273`, `.274`, `.275`, `.277`, `.278`,
-`.279`, `.281`, or `.282`.
+`.279`, `.281`, `.282`, or `.283`.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.
