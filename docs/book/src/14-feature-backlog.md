@@ -7814,6 +7814,15 @@ surface is list-shaped enough for contract selection, while read admission,
 burst-last normalization, and read-data coverage still enforce one dynamic
 plus one or two static reads.
 
+Three-static mixed dynamic/static read response-demux contract selection:
+[AXI_IAL2_MANAGER_THREE_STATIC_MIXED_DYNAMIC_STATIC_READ_RESPONSE_DEMUX_CONTRACT_SELECTION](../../AXI_IAL2_MANAGER_THREE_STATIC_MIXED_DYNAMIC_STATIC_READ_RESPONSE_DEMUX_CONTRACT_SELECTION.md)
+selects `.322`, direct generated behavior for bounded one-dynamic plus
+three-concrete-static mixed dynamic/static read single-beat `RID`
+response-demux. The selector changes no behavior. It reuses existing
+`response-demux.read` syntax, public sample stem
+`ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static3.ppif`,
+and report mode `bounded_multi_mixed_dynamic_static_read_rid_demux_contract`.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same

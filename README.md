@@ -522,6 +522,12 @@ one-dynamic plus three-concrete-static mixed dynamic/static read single-beat
 report/assertion surface is already list-shaped while read admission,
 burst-last normalization, and read-data coverage still encode the
 one-dynamic plus one- or two-static read boundary.
+`.321` now selects `.322`, direct generated behavior for bounded
+one-dynamic plus three-concrete-static mixed dynamic/static read single-beat
+`RID` response-demux. The selector changes no behavior; it reuses existing
+`response-demux.read` syntax and the
+`bounded_multi_mixed_dynamic_static_read_rid_demux_contract` report mode,
+with cardinality carried by existing list-shaped fields.
 No behavior
 changed in `.273`, `.274`, `.275`,
 `.277`, `.278`, `.279`, `.281`,
@@ -2769,6 +2775,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/AXI_IAL2_MANAGER_BROADER_MIXED_DYNAMIC_STATIC_CARDINALITY_CONTRACT_SELECTION.md` — selected one dynamic plus three concrete static write `BID` response-demux as the first broader mixed cardinality behavior.
 - `docs/AXI_IAL2_MANAGER_POST_THREE_STATIC_MIXED_DYNAMIC_STATIC_WRITE_DEMUX_NEXT_SLICE_SELECTION.md` — selected one dynamic plus three concrete static mixed dynamic/static read response-demux readiness after the three-static write demux shipped.
 - `docs/AXI_IAL2_MANAGER_THREE_STATIC_MIXED_DYNAMIC_STATIC_READ_RESPONSE_DEMUX_READINESS_AUDIT.md` — audited one dynamic plus three concrete static mixed dynamic/static read response-demux readiness and selected public contract selection for the single-beat `RID` boundary.
+- `docs/AXI_IAL2_MANAGER_THREE_STATIC_MIXED_DYNAMIC_STATIC_READ_RESPONSE_DEMUX_CONTRACT_SELECTION.md` — selected direct generated behavior for one dynamic plus three concrete static mixed dynamic/static read single-beat `RID` response-demux.
 - `docs/AXI_IAL2_MANAGER_BROADER_MIXED_DYNAMIC_STATIC_WRITE_RESPONSE_DEMUX_BEHAVIOR.md` — shipped generated one dynamic plus three concrete static write `BID` response-demux while preserving the existing multi-mixed write report mode.
 - `docs/AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md` — selected first AXI-derived IAL2 implementation subset and pre-code contract.
 - `docs/AXI_IAL2_VALID_READY_READINESS_AUDIT.md` — code/test/docs/report owner map for a future AXI Valid-Ready IAL2 implementation slice.
