@@ -7845,6 +7845,15 @@ response-demux after the three-static read single-beat demux shipped. The
 selector changes no behavior and keeps read-data over the three-static
 boundary behind final-beat completion semantics.
 
+Three-static mixed dynamic/static read RLAST readiness audit:
+[AXI_IAL2_MANAGER_THREE_STATIC_MIXED_DYNAMIC_STATIC_READ_RLAST_RESPONSE_DEMUX_READINESS_AUDIT](../../AXI_IAL2_MANAGER_THREE_STATIC_MIXED_DYNAMIC_STATIC_READ_RLAST_RESPONSE_DEMUX_READINESS_AUDIT.md)
+selects `.325`, public contract selection for bounded one-dynamic plus
+three-concrete-static mixed dynamic/static read burst-last `RID && RLAST`
+response-demux. The audit changes no behavior; it confirms the current
+three-static single-beat read demux and two-static burst-last demux are
+list-shaped while three-static burst-last admission and read-data coverage
+remain fail-closed.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same
