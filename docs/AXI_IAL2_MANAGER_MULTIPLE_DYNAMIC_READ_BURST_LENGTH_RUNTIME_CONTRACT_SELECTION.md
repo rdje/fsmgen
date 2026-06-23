@@ -19,6 +19,12 @@ This selector changes no parser, generator, PPIF sample, support-accounting
 catalog, validation behavior, generated artifact, test, schedule/check or
 semantic JSON, or HDL behavior.
 
+Implementation status: `IAL2-FEATURE-COMPLETENESS-FRONTIER.263` now implements
+the report-only half of this split contract; see
+`docs/AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_READ_BURST_LENGTH_BEHAVIOR.md`.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.264` remains the runtime
+beat-count/`RLAST` sibling owner.
+
 ## Public Source Shapes
 
 The `.263` report-only sample should extend the shipped `.259` last-beat

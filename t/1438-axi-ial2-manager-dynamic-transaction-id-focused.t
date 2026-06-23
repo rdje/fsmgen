@@ -116,6 +116,15 @@ my @DYNAMIC_CASES = (
         behavior     => 'dynamic_read_data_multi_last_beat',
     },
     {
+        label        => 'multiple dynamic read-data report-only burst-length capture',
+        relpath      => 'ppif/axi_manager_capacity_status_dynamic_read_data_multi_burst_length.ppif',
+        object_id    => 'axi-manager-capacity-status-dynamic-read-data-multi-burst-length',
+        intent_name  => 'axi_manager_capacity_status_dynamic_read_data_multi_burst_length',
+        entry_id     => 'intent.ppif_axi_manager_capacity_status_dynamic_read_data_multi_burst_length',
+        coverage     => 'ial2_ppif_manager_capacity_status_dynamic_read_data_multi_burst_length_pipeline_cli',
+        behavior     => 'dynamic_read_data_multi_burst_length',
+    },
+    {
         label        => 'dynamic read-data report-only burst-length capture',
         relpath      => 'ppif/axi_manager_capacity_status_dynamic_read_data_burst_length.ppif',
         object_id    => 'axi-manager-capacity-status-dynamic-read-data-burst-length',
@@ -418,6 +427,29 @@ sub assert_dynamic_behavior {
         like($hdl, qr/assign\s+axi0_r1_read_data_capture_en\s*=\s*axi0_r1_complete\s*;/, 'SystemVerilog guards r1 multiple dynamic last-beat read-data capture by completion');
         like($hdl, qr/axi0_r1_last_rdata_next\s*=\s*axi0_rdata\s*;/, 'SystemVerilog captures r1 dynamic last-beat RDATA');
         like($hdl, qr/axi0_r1_last_rresp_next\s*=\s*axi0_rresp\s*;/, 'SystemVerilog captures r1 dynamic last-beat RRESP');
+        return;
+    }
+
+    if ($case->{behavior} eq 'dynamic_read_data_multi_burst_length') {
+        like($isf, qr/\(rule axi0_r0_response_demux \(& axi0_read_complete axi0_r0_dynamic_busy_q \(== axi0_rid axi0_r0_dynamic_id_q\) axi0_rlast\)/, 'multiple dynamic burst-length read-data keeps r0 generated RID/RLAST demux');
+        like($isf, qr/\(rule axi0_r1_response_demux \(& axi0_read_complete axi0_r1_dynamic_busy_q \(== axi0_rid axi0_r1_dynamic_id_q\) axi0_rlast\)/, 'multiple dynamic burst-length read-data keeps r1 generated RID/RLAST demux');
+        like($isf, qr/\(input axi0_arlen \(width 8\)\)/, 'multiple dynamic burst-length read-data declares ARLEN input');
+        like($isf, qr/\(var axi0_r0_arlen_q \(width 8\)\)/, 'multiple dynamic burst-length read-data allocates r0 raw ARLEN storage');
+        like($isf, qr/\(var axi0_r1_arlen_q \(width 8\)\)/, 'multiple dynamic burst-length read-data allocates r1 raw ARLEN storage');
+        like($isf, qr/\(rule axi0_r0_burst_length_capture axi0_r0_request\s+\(axi0_r0_arlen_q axi0_arlen\)\)/, 'multiple dynamic burst-length read-data captures r0 raw ARLEN under request');
+        like($isf, qr/\(rule axi0_r1_burst_length_capture axi0_r1_request\s+\(axi0_r1_arlen_q axi0_arlen\)\)/, 'multiple dynamic burst-length read-data captures r1 raw ARLEN under request');
+        like($isf, qr/\(rule axi0_r0_read_data_capture axi0_r0_complete\s+\(axi0_r0_last_rdata axi0_rdata\)\s+\(axi0_r0_last_rresp axi0_rresp\)\)/, 'multiple dynamic burst-length read-data keeps r0 payload capture under generated completion');
+        like($isf, qr/\(rule axi0_r1_read_data_capture axi0_r1_complete\s+\(axi0_r1_last_rdata axi0_rdata\)\s+\(axi0_r1_last_rresp axi0_rresp\)\)/, 'multiple dynamic burst-length read-data keeps r1 payload capture under generated completion');
+        unlike($isf, qr/read_beat_count_q|expected_beats_q|arlen_within_max/, 'multiple dynamic report-only burst-length emits no runtime beat-count state or assertions');
+        assert_dynamic_read_multi_rlast_report($result->{report});
+        assert_dynamic_read_data_burst_length_report($result->{report}{read_data}, 'report_only', [qw(r0 r1)]);
+        like($fsm, qr/\(-axi0_r1_burst_length_capture\s+<axi0_r1_request\s+\(<- \(axi0_r1_arlen_q axi0_arlen\)\)\s+\)/, 'scheduled FSM lowers r1 multiple dynamic raw ARLEN capture');
+        like($fsm, qr/\(-axi0_r1_read_data_capture\s+<axi0_r1_complete\s+\(<- \(axi0_r1_last_rdata> axi0_rdata\)\)\s+\(<- \(axi0_r1_last_rresp> axi0_rresp\)\)/, 'scheduled FSM keeps r1 multiple dynamic payload capture');
+        my $hdl = hdl_for('axi0_capacity_status', $fsm);
+        like($hdl, qr/\binput\s+(?:wire\s+)?\[7:0\]\s+axi0_arlen\b/, 'SystemVerilog exposes multiple dynamic ARLEN');
+        like($hdl, qr/assign\s+axi0_r1_burst_length_capture_en\s*=\s*axi0_r1_request\s*;/, 'SystemVerilog guards r1 multiple dynamic ARLEN capture by request');
+        like($hdl, qr/axi0_r1_arlen_q_next\s*=\s*axi0_arlen\s*;/, 'SystemVerilog captures r1 multiple dynamic raw ARLEN');
+        unlike($hdl, qr/arlen_within_max|read_beat_count|expected_beats/, 'SystemVerilog keeps multiple dynamic report-only burst-length free of runtime validation');
         return;
     }
 
@@ -784,9 +816,26 @@ sub assert_read_data_report {
 }
 
 sub assert_dynamic_read_data_burst_length_report {
-    my ($read_data, $validation) = @_;
+    my ($read_data, $validation, $expected_transactions) = @_;
     $validation //= 'report_only';
+    $expected_transactions //= [qw(r0)];
     my $runtime_validation = $validation eq 'runtime_assertion';
+    my @transactions = @$expected_transactions;
+    my @completion_signals = map { "axi0_${_}_complete" } @transactions;
+    my @burst_length_storage = map { "axi0_${_}_arlen_q" } @transactions;
+    my @burst_length_rules = map { "axi0_${_}_burst_length_capture" } @transactions;
+    my @read_data_rules = map { "axi0_${_}_read_data_capture" } @transactions;
+    my @expected_beat_storage = map { "axi0_${_}_expected_beats_q" } @transactions;
+    my @beat_count_storage = map { "axi0_${_}_read_beat_count_q" } @transactions;
+    my @beat_count_rules = map { ("axi0_${_}_beat_count_init", "axi0_${_}_read_beat_count") } @transactions;
+    my @beat_count_assertions = map {
+        (
+            "axi0_${_}_arlen_within_max",
+            "axi0_${_}_read_beat_before_expected_count",
+            "axi0_${_}_rlast_on_expected_beat",
+            "axi0_${_}_expected_final_beat_has_rlast",
+        )
+    } @transactions;
     my $read = $read_data->{read};
 
     ok($read_data->{generated_behavior}, 'dynamic burst-length read-data report marks generated behavior');
@@ -804,50 +853,41 @@ sub assert_dynamic_read_data_burst_length_report {
     is($read->{max_beats}, 16, 'dynamic burst-length read-data report marks max-beats');
     ok($read->{burst_length_generated_behavior}, 'dynamic burst-length read-data report marks generated raw ARLEN behavior');
     is($read->{burst_length_validation}, $validation, 'dynamic burst-length read-data report marks selected validation mode');
-    is_deeply([map { $_->{transaction} } @{$read->{transactions}}], [qw(r0)], 'dynamic burst-length read-data report binds r0 only');
-    is_deeply([map { $_->{completion_signal} } @{$read->{transactions}}], [qw(axi0_r0_complete)], 'dynamic burst-length read-data report uses generated r0 completion');
-    is_deeply([map { $_->{burst_length_storage} } @{$read->{transactions}}], [qw(axi0_r0_arlen_q)], 'dynamic burst-length read-data report names raw ARLEN storage');
-    is_deeply([map { $_->{burst_length_capture_rule} } @{$read->{transactions}}], [qw(axi0_r0_burst_length_capture)], 'dynamic burst-length read-data report names ARLEN capture rule');
+    is_deeply([map { $_->{transaction} } @{$read->{transactions}}], \@transactions, 'dynamic burst-length read-data report binds expected transactions');
+    is_deeply([map { $_->{completion_signal} } @{$read->{transactions}}], \@completion_signals, 'dynamic burst-length read-data report uses generated completions');
+    is_deeply([map { $_->{burst_length_storage} } @{$read->{transactions}}], \@burst_length_storage, 'dynamic burst-length read-data report names raw ARLEN storage');
+    is_deeply([map { $_->{burst_length_capture_rule} } @{$read->{transactions}}], \@burst_length_rules, 'dynamic burst-length read-data report names ARLEN capture rules');
     is_deeply($read->{generated_inputs}, [qw(axi0_rdata axi0_rresp axi0_arlen)], 'dynamic burst-length read-data report adds ARLEN to generated inputs');
     is_deeply($read->{generated_burst_length_inputs}, [qw(axi0_arlen)], 'dynamic burst-length read-data report names generated ARLEN input');
-    is_deeply($read->{generated_burst_length_storage}, [qw(axi0_r0_arlen_q)], 'dynamic burst-length read-data report names generated ARLEN storage');
-    is_deeply($read->{generated_burst_length_rules}, [qw(axi0_r0_burst_length_capture)], 'dynamic burst-length read-data report names generated ARLEN rule');
+    is_deeply($read->{generated_burst_length_storage}, \@burst_length_storage, 'dynamic burst-length read-data report names generated ARLEN storage');
+    is_deeply($read->{generated_burst_length_rules}, \@burst_length_rules, 'dynamic burst-length read-data report names generated ARLEN rules');
     if ($runtime_validation) {
         ok($read->{beat_count_validation_generated_behavior}, 'dynamic runtime burst-length read-data report marks beat-count validation generated');
         is($read->{expected_beat_count_encoding}, 'arlen_plus_one', 'dynamic runtime burst-length read-data report marks ARLEN+1 expected-count encoding');
         is($read->{beat_count_match_source}, 'response_demux_matched_read_beat', 'dynamic runtime burst-length read-data report uses raw matched RID beat source');
         is($read->{beat_count_width}, 5, 'dynamic runtime burst-length read-data report marks beat-count width');
-        is_deeply([map { $_->{expected_beat_count_storage} } @{$read->{transactions}}], [qw(axi0_r0_expected_beats_q)], 'dynamic runtime burst-length read-data report names expected-beat storage');
-        is_deeply([map { $_->{beat_count_storage} } @{$read->{transactions}}], [qw(axi0_r0_read_beat_count_q)], 'dynamic runtime burst-length read-data report names beat-count storage');
-        is_deeply([map { $_->{beat_count_init_rule} } @{$read->{transactions}}], [qw(axi0_r0_beat_count_init)], 'dynamic runtime burst-length read-data report names beat-count init rule');
-        is_deeply([map { $_->{beat_count_increment_rule} } @{$read->{transactions}}], [qw(axi0_r0_read_beat_count)], 'dynamic runtime burst-length read-data report names beat-count increment rule');
+        is_deeply([map { $_->{expected_beat_count_storage} } @{$read->{transactions}}], \@expected_beat_storage, 'dynamic runtime burst-length read-data report names expected-beat storage');
+        is_deeply([map { $_->{beat_count_storage} } @{$read->{transactions}}], \@beat_count_storage, 'dynamic runtime burst-length read-data report names beat-count storage');
+        is_deeply([map { $_->{beat_count_init_rule} } @{$read->{transactions}}], [map { "axi0_${_}_beat_count_init" } @transactions], 'dynamic runtime burst-length read-data report names beat-count init rules');
+        is_deeply([map { $_->{beat_count_increment_rule} } @{$read->{transactions}}], [map { "axi0_${_}_read_beat_count" } @transactions], 'dynamic runtime burst-length read-data report names beat-count increment rules');
         is_deeply(
             $read->{transactions}[0]{beat_count_assertions},
-            [qw(
-                axi0_r0_arlen_within_max
-                axi0_r0_read_beat_before_expected_count
-                axi0_r0_rlast_on_expected_beat
-                axi0_r0_expected_final_beat_has_rlast
-            )],
+            [
+                "axi0_$transactions[0]_arlen_within_max",
+                "axi0_$transactions[0]_read_beat_before_expected_count",
+                "axi0_$transactions[0]_rlast_on_expected_beat",
+                "axi0_$transactions[0]_expected_final_beat_has_rlast",
+            ],
             'dynamic runtime burst-length read-data report names beat-count assertions',
         );
-        is_deeply($read->{generated_expected_beat_count_storage}, [qw(axi0_r0_expected_beats_q)], 'dynamic runtime burst-length read-data report names generated expected-beat storage');
-        is_deeply($read->{generated_beat_count_storage}, [qw(axi0_r0_read_beat_count_q)], 'dynamic runtime burst-length read-data report names generated beat-count storage');
-        is_deeply($read->{generated_beat_count_rules}, [qw(axi0_r0_beat_count_init axi0_r0_read_beat_count)], 'dynamic runtime burst-length read-data report names generated beat-count rules');
-        is_deeply(
-            $read->{generated_beat_count_assertions},
-            [qw(
-                axi0_r0_arlen_within_max
-                axi0_r0_read_beat_before_expected_count
-                axi0_r0_rlast_on_expected_beat
-                axi0_r0_expected_final_beat_has_rlast
-            )],
-            'dynamic runtime burst-length read-data report names generated beat-count assertions',
-        );
-        is_deeply($read->{generated_rules}, [qw(axi0_r0_read_data_capture axi0_r0_burst_length_capture axi0_r0_beat_count_init axi0_r0_read_beat_count)], 'dynamic runtime burst-length read-data report names payload, ARLEN, and beat-count rules');
+        is_deeply($read->{generated_expected_beat_count_storage}, \@expected_beat_storage, 'dynamic runtime burst-length read-data report names generated expected-beat storage');
+        is_deeply($read->{generated_beat_count_storage}, \@beat_count_storage, 'dynamic runtime burst-length read-data report names generated beat-count storage');
+        is_deeply($read->{generated_beat_count_rules}, \@beat_count_rules, 'dynamic runtime burst-length read-data report names generated beat-count rules');
+        is_deeply($read->{generated_beat_count_assertions}, \@beat_count_assertions, 'dynamic runtime burst-length read-data report names generated beat-count assertions');
+        is_deeply($read->{generated_rules}, [@read_data_rules, @burst_length_rules, @beat_count_rules], 'dynamic runtime burst-length read-data report names payload, ARLEN, and beat-count rules');
         is_deeply($read_data->{residue}, [qw(multi_beat_read_data_reassembly per_beat_outputs rresp_aggregation)], 'dynamic runtime burst-length read-data report removes generated beat-count residue');
     } else {
-        is_deeply($read->{generated_rules}, [qw(axi0_r0_read_data_capture axi0_r0_burst_length_capture)], 'dynamic burst-length read-data report names payload and ARLEN capture rules');
+        is_deeply($read->{generated_rules}, [@read_data_rules, @burst_length_rules], 'dynamic burst-length read-data report names payload and ARLEN capture rules');
         ok(!exists $read->{beat_count_validation_generated_behavior}, 'dynamic burst-length read-data report keeps runtime validation absent');
         ok(!exists $read->{generated_beat_count_rules}, 'dynamic burst-length read-data report has no beat-count rules');
         is_deeply($read_data->{residue}, [qw(generated_beat_count_validation multi_beat_read_data_reassembly per_beat_outputs rresp_aggregation)], 'dynamic burst-length read-data report keeps explicit report-only residue');

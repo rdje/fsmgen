@@ -129,10 +129,14 @@ multiple dynamic transaction set:
 - completion-count mismatches between generated dynamic demux completions and
   covered transactions are rejected.
 
-Dynamic burst-length/runtime validation and dynamic multi-beat output-bank
-coverage remain limited to the selected single-active dynamic read-data
-owners. Multiple dynamic read demux with `burst_length`, runtime beat-count
-validation, or multi-beat output banks remains explicit future work.
+Report-only raw-`ARLEN` burst-length capture over the multiple dynamic
+last-beat shape now ships under
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.263` and is documented in
+`docs/AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_READ_BURST_LENGTH_BEHAVIOR.md`.
+Runtime beat-count/`RLAST` validation over multiple dynamic read demux remains
+reserved for `IAL2-FEATURE-COMPLETENESS-FRONTIER.264`. Dynamic multi-beat
+output-bank coverage remains limited to the selected single-active dynamic
+read-data owner.
 
 The selected behavior also does not widen mixed dynamic/static demux,
 same-cycle request behavior beyond onehot0, release-and-recapture, dynamic

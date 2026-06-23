@@ -81,7 +81,13 @@ dynamic transaction-ID reports and generated single-active dynamic write,
 read single-beat, and read burst-last response-demux for one explicit dynamic
 transaction, scalar dynamic read-data for single-beat and last-beat captures,
 and report-only dynamic raw-`ARLEN` burst-length capture over generated
-dynamic last-beat read-data. Dynamic runtime-validation and multi-beat
+dynamic last-beat read-data, generated dynamic runtime-validation and
+multi-beat output-bank behavior for the single-active dynamic read-data
+boundary, generated bounded multiple dynamic write response-demux, generated
+bounded multiple dynamic read single-beat and burst-last response-demux,
+scalar read-data over those multiple dynamic read response-demux shapes, and
+report-only raw-`ARLEN` burst-length capture over the multiple dynamic
+last-beat read-data shape. Multiple dynamic runtime-validation and multi-beat
 follow-ons remain deferred. Broader concrete same-ID queues, group-local
 simultaneous enqueue widening, packed burst-vector outputs, alternate full
 burst payload assembly, aliases, platform clauses, full AXI manager behavior,

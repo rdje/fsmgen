@@ -743,6 +743,46 @@ subtest 'multiple dynamic last-beat read-data contract consumes generated dynami
     like($hdl, qr/axi0_r1_last_rresp_next\s*=\s*axi0_rresp\s*;/, 'SystemVerilog captures r1 dynamic last-beat RRESP into scalar output');
 };
 
+subtest 'multiple dynamic report-only burst-length read-data contract captures ARLEN per transaction' => sub {
+    my $result = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_dynamic_read_data_multi_burst_length());
+    my $isf = $result->{generated_ial1}{text};
+    my $fsm = $result->{generated_ial0}{files}{'axi0_capacity_status.fsm'};
+
+    like($isf, qr/\(rule axi0_r0_response_demux \(& axi0_read_complete axi0_r0_dynamic_busy_q \(== axi0_rid axi0_r0_dynamic_id_q\) axi0_rlast\)\s+\(pulse axi0_r0_complete\)\)/, 'multiple dynamic burst-length read-data keeps generated r0 RID/RLAST demux');
+    like($isf, qr/\(rule axi0_r1_response_demux \(& axi0_read_complete axi0_r1_dynamic_busy_q \(== axi0_rid axi0_r1_dynamic_id_q\) axi0_rlast\)\s+\(pulse axi0_r1_complete\)\)/, 'multiple dynamic burst-length read-data keeps generated r1 RID/RLAST demux');
+    like($isf, qr/\(input axi0_arlen \(width 8\)\)/, 'multiple dynamic burst-length read-data declares ARLEN');
+    like($isf, qr/\(var axi0_r0_arlen_q \(width 8\)\)/, 'multiple dynamic burst-length read-data allocates r0 raw ARLEN storage');
+    like($isf, qr/\(var axi0_r1_arlen_q \(width 8\)\)/, 'multiple dynamic burst-length read-data allocates r1 raw ARLEN storage');
+    like($isf, qr/\(rule axi0_r0_burst_length_capture axi0_r0_request\s+\(axi0_r0_arlen_q axi0_arlen\)\)/, 'multiple dynamic burst-length read-data captures r0 raw ARLEN under request');
+    like($isf, qr/\(rule axi0_r1_burst_length_capture axi0_r1_request\s+\(axi0_r1_arlen_q axi0_arlen\)\)/, 'multiple dynamic burst-length read-data captures r1 raw ARLEN under request');
+    like(
+        $isf,
+        qr/\(rule axi0_r1_read_data_capture axi0_r1_complete\s+\(axi0_r1_last_rdata axi0_rdata\)\s+\(axi0_r1_last_rresp axi0_rresp\)\)/,
+        'multiple dynamic burst-length read-data keeps r1 payload capture under generated dynamic last-beat completion',
+    );
+    unlike($isf, qr/read_beat_count_q|expected_beats_q|arlen_within_max/, 'multiple dynamic burst-length read-data keeps runtime validation ungenerated');
+    like(
+        $fsm,
+        qr/\(-axi0_r1_burst_length_capture\s+<axi0_r1_request\s+\(<- \(axi0_r1_arlen_q axi0_arlen\)\)\s+\)/,
+        'scheduled .fsm lowers r1 multiple dynamic raw ARLEN capture',
+    );
+
+    assert_dynamic_read_response_demux_multi_burst_last_report($result->{report}, 'generator multiple dynamic burst-length read-data response-demux report');
+    assert_read_data_burst_length_report(
+        $result->{report}{read_data},
+        'generator multiple dynamic burst-length read-data report',
+        'report_only',
+        'generated_dynamic_read_response_demux_last_beat_completion_pulse',
+        transactions => [qw(r0 r1)],
+    );
+
+    my $hdl = hdl_for('axi0_capacity_status', $fsm);
+    like($hdl, qr/\binput\s+\[7:0\]\s+axi0_arlen\b/, 'SystemVerilog exposes generated ARLEN input');
+    like($hdl, qr/assign\s+axi0_r1_burst_length_capture_en\s*=\s*axi0_r1_request\s*;/, 'SystemVerilog guards r1 raw ARLEN capture with transaction request');
+    like($hdl, qr/axi0_r1_arlen_q_next\s*=\s*axi0_arlen\s*;/, 'SystemVerilog captures r1 raw ARLEN into storage');
+    unlike($hdl, qr/read_beat_count_q|expected_beats_q|arlen_within_max/, 'SystemVerilog keeps multiple dynamic report-only burst-length runtime validation ungenerated');
+};
+
 subtest 'transaction event dispatch fans per-transaction events into capacity rules' => sub {
     my $result = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_transaction_event_dispatch());
     my $isf = $result->{generated_ial1}{text};
@@ -4932,6 +4972,22 @@ sub sample_contract_with_dynamic_read_data_multi_last_beat {
                 },
             ],
         },
+    };
+    return $contract;
+}
+
+sub sample_contract_with_dynamic_read_data_multi_burst_length {
+    my $contract = sample_contract_with_dynamic_read_data_multi_last_beat();
+    $contract->{intent_name} = 'axi_manager_capacity_status_dynamic_read_data_multi_burst_length';
+    $contract->{source}{object_id} = 'axi-manager-capacity-status-dynamic-read-data-multi-burst-length';
+    $contract->{read_data}{read}{burst_length} = {
+        source       => 'arlen',
+        signal       => 'axi0_arlen',
+        signal_width => 8,
+        encoding     => 'axlen-plus-one',
+        capture      => 'request',
+        max_beats    => 16,
+        validation   => 'report-only',
     };
     return $contract;
 }

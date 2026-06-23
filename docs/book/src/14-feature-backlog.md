@@ -7038,10 +7038,12 @@ response-demux. The shipped public samples are
 Each read-data transaction binding must cover one generated dynamic read
 demux transaction, every generated dynamic read demux transaction must be
 covered exactly once, and each scalar capture rule is guarded by that
-transaction's generated completion pulse. Burst-length/runtime validation,
-multi-beat output banks, mixed dynamic/static demux, same-cycle widening,
-dynamic same-ID queues, scoreboards, direct backend behavior,
-backend-language variants, and VHDL remain later exact owners.
+transaction's generated completion pulse. Report-only raw-`ARLEN`
+burst-length capture over the multiple dynamic last-beat shape now ships under
+`.263`; runtime validation, multi-beat output banks, mixed dynamic/static
+demux, same-cycle widening, dynamic same-ID queues, scoreboards, direct
+backend behavior, backend-language variants, and VHDL remain later exact
+owners.
 
 Post multiple dynamic read-data selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_READ_DATA_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_READ_DATA_NEXT_SLICE_SELECTION.md)
@@ -7066,17 +7068,30 @@ support-accounting, test, JSON, or HDL behavior changed in the audit.
 
 Multiple dynamic read burst-length/runtime contract selection:
 [AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_READ_BURST_LENGTH_RUNTIME_CONTRACT_SELECTION](../../AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_READ_BURST_LENGTH_RUNTIME_CONTRACT_SELECTION.md)
-selects a split implementation. `.263` will ship report-only raw-`ARLEN`
+selects a split implementation. `.263` ships report-only raw-`ARLEN`
 burst-length capture over generated multiple dynamic read burst-last
-response-demux and scalar last-beat read-data, with
+response-demux and scalar last-beat read-data, using
 `ppif/axi_manager_capacity_status_dynamic_read_data_multi_burst_length.ppif`
-as the selected public sample. `.264` is reserved for the runtime
+as the public sample. `.264` is reserved for the runtime
 beat-count/`RLAST` assertion sibling through
 `ppif/axi_manager_capacity_status_dynamic_read_data_multi_burst_length_runtime_assertion.ppif`.
 Both shapes require complete coverage of the all-dynamic read transaction set;
 mixed dynamic/static demux, multiple dynamic multi-beat output banks,
 same-cycle widening, dynamic queues/scoreboards, direct backend behavior,
 backend-language variants, and VHDL remain later owners.
+
+Multiple dynamic read burst-length behavior:
+[AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_READ_BURST_LENGTH_BEHAVIOR](../../AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_READ_BURST_LENGTH_BEHAVIOR.md)
+ships `.263`. FSMGen now emits a shared generated `axi0_arlen` input,
+per-transaction raw-`ARLEN` storage, and request-guarded burst-length capture
+rules for every generated all-dynamic read transaction in the scalar last-beat
+read-data shape. The schedule report records
+`burst_length_validation: report_only`,
+`generated_burst_length_inputs`, per-transaction
+`generated_burst_length_storage`, per-transaction
+`generated_burst_length_rules`, and keeps
+`generated_beat_count_validation` as residue. Runtime beat-count/`RLAST`
+validation over multiple dynamic read demux remains the `.264` owner.
 
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
