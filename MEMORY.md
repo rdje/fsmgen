@@ -10,9 +10,9 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.297: audit multiple mixed read readiness`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.298` selects the public contract for bounded multiple mixed dynamic/static read single-beat RID response-demux; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.297` selected `.298`, public contract selection for bounded multiple mixed dynamic/static read single-beat RID response-demux; `.296` selected `.297`; `.295` shipped generated bounded multiple mixed write BID response-demux.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.298: select multiple mixed read contract`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.299` implements bounded multiple mixed dynamic/static read single-beat RID response-demux for one dynamic plus two concrete static read transactions; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.298` selected `.299`, direct generated behavior for bounded multiple mixed dynamic/static read single-beat RID response-demux; `.297` selected `.298`; `.296` selected `.297`.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
 

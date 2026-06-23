@@ -2287,10 +2287,15 @@ selects `.298`, public contract selection for bounded multiple mixed
 dynamic/static read single-beat `RID` response-demux, leaving burst-last
 `RID && RLAST`, read-data, burst-length/runtime validation, multi-beat output
 banks, broader mixed cardinalities, same-cycle widening, queues/scoreboards,
-backend variants, and VHDL as later exact owners.
+backend variants, and VHDL as later exact owners. `.298` now selects `.299`,
+direct generated behavior for exactly one dynamic plus two concrete static
+read transactions under existing `response-demux.read` syntax with
+`response-scope single-beat`, candidate report mode
+`bounded_multi_mixed_dynamic_static_read_rid_demux_contract`, and list-shaped
+static-ID reservation fields.
 No behavior changed in `.270`, `.271`, `.273`, `.274`, `.275`, `.277`, `.278`,
 `.279`, `.281`, `.282`, `.283`, `.285`, `.286`, `.288`, `.290`, `.292`, or
-`.293`, `.294`, `.296`, or `.297`.
+`.293`, `.294`, `.296`, `.297`, or `.298`.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.

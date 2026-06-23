@@ -7538,6 +7538,18 @@ smallest read-side widened ownership surface before burst-last `RID &&
 RLAST`, read-data, burst-length/runtime validation, or multi-beat output
 banks.
 
+Multiple mixed dynamic/static read contract:
+[AXI_IAL2_MANAGER_MULTIPLE_MIXED_DYNAMIC_STATIC_READ_RESPONSE_DEMUX_CONTRACT_SELECTION](../../AXI_IAL2_MANAGER_MULTIPLE_MIXED_DYNAMIC_STATIC_READ_RESPONSE_DEMUX_CONTRACT_SELECTION.md)
+selects `.299`, direct generated behavior for bounded multiple mixed
+dynamic/static read single-beat `RID` response-demux. The selected contract
+uses existing `response-demux.read` syntax with `response-scope single-beat`,
+one dynamic read transaction, two concrete static read transactions, candidate
+mode `bounded_multi_mixed_dynamic_static_read_rid_demux_contract`, completion
+source `generated_multi_mixed_dynamic_static_read_demux`, list-shaped
+`mixed_transactions`/`static_id_reservations`, dynamic capture exclusions for
+all selected static IDs, and preserved `.276` one-dynamic plus one-static
+report shape.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same
