@@ -7886,6 +7886,15 @@ read-data coverage still admits the generated multi-mixed completion sources
 only for exactly one dynamic plus two concrete static read transactions, so
 three-static read-data needs an audit before any behavior-bearing owner.
 
+Three-static mixed dynamic/static read-data readiness audit:
+[AXI_IAL2_MANAGER_THREE_STATIC_MIXED_DYNAMIC_STATIC_READ_DATA_READINESS_AUDIT](../../AXI_IAL2_MANAGER_THREE_STATIC_MIXED_DYNAMIC_STATIC_READ_DATA_READINESS_AUDIT.md)
+selects `.329`, public contract selection for bounded scalar read-data over
+generated one-dynamic plus three-concrete-static mixed dynamic/static read
+response-demux. The audit changes no behavior; it finds the scalar read-data
+normalizer, capture-rule generator, and report artifacts are transaction-list
+driven after coverage admission, while the current multi-mixed coverage
+branch still stops at exactly two concrete static read transactions.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same
