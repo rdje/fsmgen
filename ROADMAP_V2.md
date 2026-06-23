@@ -2341,11 +2341,23 @@ selection for bounded scalar read-data over generated multiple mixed
 dynamic/static read response-demux, after finding that the scalar read-data
 normalization/capture path can already handle arbitrary covered transaction
 counts but the current mixed dynamic/static coverage branch only admits the
-one-dynamic plus one-static completion sources. No behavior changed in
+one-dynamic plus one-static completion sources. `.306` now selects `.307`,
+direct generated behavior for that bounded scalar read-data contract over
+generated multiple mixed dynamic/static read response-demux. The selected
+samples are
+`ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static_read_data.ppif`
+and
+`ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static_burst_last_read_data.ppif`;
+the contract uses dynamic-then-static transaction coverage `r0, r1, r2` and
+completion-validity strings
+`generated_multi_mixed_dynamic_static_read_response_demux_completion_pulse`
+and
+`generated_multi_mixed_dynamic_static_read_response_demux_last_beat_completion_pulse`.
+No behavior changed in
 `.270`, `.271`, `.273`, `.274`, `.275`, `.277`, `.278`,
 `.279`, `.281`, `.282`, `.283`, `.285`, `.286`, `.288`, `.290`, `.292`, or
-`.293`, `.294`, `.296`, `.297`, `.298`, `.300`, `.301`, `.302`, `.304`, or
-`.305`.
+`.293`, `.294`, `.296`, `.297`, `.298`, `.300`, `.301`, `.302`, `.304`,
+`.305`, or `.306`.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.

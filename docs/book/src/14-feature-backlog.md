@@ -7632,6 +7632,20 @@ contract slice must settle public sample names, completion-validity
 vocabulary, dynamic-then-static transaction coverage, diagnostics, validation
 strategy, residue movement, and rollback before implementation changes.
 
+Multiple mixed dynamic/static read-data contract:
+[AXI_IAL2_MANAGER_MULTIPLE_MIXED_DYNAMIC_STATIC_READ_DATA_CONTRACT_SELECTION](../../AXI_IAL2_MANAGER_MULTIPLE_MIXED_DYNAMIC_STATIC_READ_DATA_CONTRACT_SELECTION.md)
+selects `.307`, direct generated behavior for bounded scalar read-data over
+generated multiple mixed dynamic/static read response-demux. The selector
+changes no behavior in `.306`. The selected public samples are
+`ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static_read_data.ppif`
+and
+`ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static_burst_last_read_data.ppif`.
+The contract uses dynamic-then-static transaction coverage `r0, r1, r2`,
+keeps scalar single-beat and last-beat read-data modes, uses generated
+multiple mixed completion-validity strings, and keeps raw `ARLEN`, runtime
+validation, multi-beat output banks, broader cardinalities, same-cycle
+widening, queues/scoreboards, backend variants, and VHDL deferred.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same

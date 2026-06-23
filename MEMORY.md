@@ -10,9 +10,9 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.305: audit multiple mixed read-data readiness`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.306` selects the public contract for bounded scalar read-data over generated multiple mixed dynamic/static read response-demux; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.305` selected `.306` after auditing the scalar read-data coverage gap for `.299/.303` multiple mixed read demux; `.304` selected `.305`; `.303` shipped generated multiple mixed dynamic/static read burst-last RID/RLAST response-demux with host-memory caveats for direct CLI probes.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.306: select multiple mixed read-data contract`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.307` implements bounded scalar read-data over generated multiple mixed dynamic/static read response-demux; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.306` selected `.307` with public multi-static read-data sample names and completion-validity vocabulary; `.305` selected `.306` after auditing the scalar read-data coverage gap for `.299/.303` multiple mixed read demux; `.303` shipped generated multiple mixed dynamic/static read burst-last RID/RLAST response-demux with host-memory caveats for direct CLI probes.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
 
