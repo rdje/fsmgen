@@ -2800,6 +2800,17 @@ for `r0`, `r1`, and `r2`. Reports name `runtime_assertion`,
 `response_demux_matched_read_beat` for this exact scalar last-beat shape.
 `.355` advanced the frontier to `.356`, readiness audit for
 two-dynamic-plus-one-static multi-beat output banks over this runtime boundary.
+`.356` now selects `.357`, direct implementation of generated multi-beat
+output banks over that two-dynamic-plus-one-static runtime-validation
+boundary. The audit changes no behavior. The direct candidate currently fails
+only at the local multiple mixed dynamic/static read-data transaction-set
+admission diagnostic; the public multi-beat syntax, output-bank report
+vocabulary, runtime ARLEN validation, transaction-list-driven output-bank
+helpers, and support/testing precedents are already present. `.357` owns the
+public sample
+`ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_dynamic_burst_last_read_data_multi_beat.ppif`,
+support identity, coverage key, focused behavior label, diagnostics,
+validation, rollback, and residue.
 No behavior changed in
 `.270`, `.271`, `.273`, `.274`, `.275`, `.277`, `.278`,
 `.279`, `.281`, `.282`, `.283`, `.285`, `.286`, `.288`, `.290`, `.292`, or
@@ -2807,7 +2818,7 @@ No behavior changed in
 `.305`, `.306`, `.308`, `.309`, `.311`, `.313`, `.315`, `.316`, `.317`, or
 `.319`, `.320`, `.321`, `.323`, `.324`, `.325`, `.327`, `.328`, `.329`,
 `.331`, `.332`, `.334`, `.336`, `.338`, `.339`, `.340`, `.342`, `.343`,
-`.345`, `.346`, `.348`, `.349`, `.351`, `.352`, or `.354`.
+`.345`, `.346`, `.348`, `.349`, `.351`, `.352`, `.354`, or `.356`.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.
