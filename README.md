@@ -998,12 +998,22 @@ same-cycle request, and replaces the request-not-busy assertion with
 `axi0_w0_dynamic_request_idle_or_releasing`. A same-cycle request plus generated
 matching completion now pulses completion, captures the new `AWID`, and leaves
 busy asserted while the response match still uses the pre-update selected ID.
-The frontier advances to `.366`, the next selector for same-cycle and
-release-recapture residue after the single-active dynamic write boundary.
+That behavior advanced the frontier to `.366`, the next selector for
+same-cycle and release-recapture residue after the single-active dynamic write
+boundary.
+`.366` now selects `.367`, public contract selection for first single-active
+dynamic read same-cycle release-and-recapture. The selector changes no
+behavior. Single-active dynamic read is the closest symmetric sibling after
+the write recapture slice because the current `RID` and `RID && RLAST` paths
+share selected-ID/busy ownership with the dynamic write path but still report
+request-not-busy. The next contract owner must decide whether the first
+behavior slice covers single-beat `RID`, burst-last `RID && RLAST`, or a split
+scope, and must preserve existing dynamic read-data completion-pulse consumers
+before any generator update.
 No behavior
 changed in `.273`, `.274`, `.275`,
 `.277`, `.278`, `.279`, `.281`,
-`.282`, `.283`, `.285`, `.286`, `.288`, `.290`, `.292`, `.293`, `.294`, `.296`, `.297`, `.298`, `.300`, `.301`, `.302`, `.304`, `.305`, `.306`, `.308`, `.309`, `.311`, `.313`, `.315`, `.316`, `.317`, `.323`, `.324`, `.325`, `.327`, `.328`, `.329`, `.331`, `.332`, `.334`, `.336`, `.338`, `.339`, `.340`, `.342`, `.343`, `.345`, `.346`, `.348`, `.349`, `.351`, `.352`, `.354`, `.356`, `.358`, `.359`, `.360`, `.362`, `.363`, or `.364`.
+`.282`, `.283`, `.285`, `.286`, `.288`, `.290`, `.292`, `.293`, `.294`, `.296`, `.297`, `.298`, `.300`, `.301`, `.302`, `.304`, `.305`, `.306`, `.308`, `.309`, `.311`, `.313`, `.315`, `.316`, `.317`, `.323`, `.324`, `.325`, `.327`, `.328`, `.329`, `.331`, `.332`, `.334`, `.336`, `.338`, `.339`, `.340`, `.342`, `.343`, `.345`, `.346`, `.348`, `.349`, `.351`, `.352`, `.354`, `.356`, `.358`, `.359`, `.360`, `.362`, `.363`, `.364`, or `.366`.
 Current primary target is SystemVerilog, with Verilog conversion support and a scoped direct-root VHDL scaffold for the accepted single-FSM subset, including delayed-pulse clock-branch lowering, generic-bearing direct-root module headers with typed scalar/vector sized-literal defaults, signed vector and signed scalar direct-root ports, scalar/vector two-state `bit` input-port and internal declaration lowering, signed scalar/vector, non-signed four-state `logic` input-port/internal declaration lowering, and vector `logic signed` internal declaration lowering, scalar and signed scalar addition/subtraction/multiplication RHS/chain lowering, vector numeric-literal addition/subtraction emitted by compound update/shorthand forms, same-width unsigned-style addition/subtraction/multiplication/division/modulo/XOR RHS/chain lowering, same-width signed vector addition/subtraction/multiplication/division/modulo RHS lowering for signed targets and operands, signed vector numeric-literal addition/subtraction/multiplication/division/modulo RHS lowering including signed vector negative decimal addition, subtraction, multiplication, division, and modulo literals, non-signed vector positive decimal multiplication/division/modulo literal lowering in signal-first, literal-first, and literal-literal order, non-signed vector negative decimal addition/subtraction/multiplication/division/modulo literal lowering, bounded generated AMBA wrap arithmetic for `fsm/amba_requester.fsm`, bounded non-signed vector, signed vector, and scalar output-port decimal literal assignment lowering including non-signed vector, signed vector, and scalar negative decimal literals, bounded direct aggregate-output packed-vector lowering, a bounded C3 external-RTL literal/concat composition VHDL structural top for `t/corpus/composition_intent_integer_literals.fsm`, bounded external-RTL scalar integer, scalar integer expression, one-bit sized bitstring, multi-bit sized bitstring, and resolved packed aggregate VHDL generic maps including resolved package-backed constants, a bounded C1 standalone-DT child composition VHDL passthrough top for `t/corpus/standalone_dtc_explicit_system_autowire.fsm`, bounded C1 standalone-DT scalar integer, scalar expression, one-bit sized bitstring, multi-bit sized bitstring, packed-list, and packed-map VHDL generic maps, a bounded C2 generated-FSM child composition VHDL scalar-autowire top for `t/corpus/implicit_composition_system_autowire.fsm`, bounded C2 generated-FSM scalar integer, scalar expression, one-bit sized bitstring, multi-bit sized bitstring, and resolved packed aggregate VHDL generic maps, and a bounded APB/C4 generated-FSM child composition VHDL top for `fsm/apb_tb.fsm` with scalar integer, scalar expression, one-bit sized bitstring, multi-bit sized bitstring, resolved packed aggregate, and resolved package-backed generic maps in the same APB/C4 shape.
 Scalar division/modulo, including signed scalar division/modulo, in the direct
 VHDL scaffold remains an explicit fail-closed boundary; full aggregate
@@ -3297,6 +3307,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_MIXED_SAME_CYCLE_READINESS_AUDIT.md` — audited same-cycle request/response and release-and-recapture readiness for generated dynamic/mixed response-demux/read-data shapes and selected the single-active dynamic write contract-selection boundary.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_CONTRACT_SELECTION.md` — selected direct single-active dynamic write `BID` same-cycle release-and-recapture behavior under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_BEHAVIOR.md` — shipped single-active dynamic write `BID` same-cycle release-and-recapture under the existing dynamic write response-demux public sample.
+- `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_WRITE_RECAPTURE_NEXT_SLICE_SELECTION.md` — selected `.367`, public contract selection for first single-active dynamic read same-cycle release-and-recapture after dynamic write recapture shipped.
 - `docs/AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md` — selected first AXI-derived IAL2 implementation subset and pre-code contract.
 - `docs/AXI_IAL2_VALID_READY_READINESS_AUDIT.md` — code/test/docs/report owner map for a future AXI Valid-Ready IAL2 implementation slice.
 - `docs/AXI_IAL2_VALID_READY_GENERATOR_FIRST_SLICE.md` — first in-process AXI Valid-Ready IAL2 generator slice and report surface.

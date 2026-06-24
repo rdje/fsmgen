@@ -2896,8 +2896,18 @@ same-cycle request, and replaces the request-not-busy assertion with
 `axi0_w0_dynamic_request_idle_or_releasing`. A same-cycle request plus generated
 matching completion now pulses completion, captures the new `AWID`, and keeps
 busy asserted using the pre-update selected ID for the response match.
-The frontier advances to `.366`, the next selector for same-cycle and
-release-recapture residue after the single-active dynamic write boundary.
+That behavior advanced the frontier to `.366`, the next selector for
+same-cycle and release-recapture residue after the single-active dynamic write
+boundary.
+`.366` now selects `.367`, public contract selection for first single-active
+dynamic read same-cycle release-and-recapture. The selector changes no
+behavior. Single-active dynamic read is the closest symmetric sibling because
+the current single-beat `RID` and burst-last `RID && RLAST` paths share
+selected-ID/busy ownership with the dynamic write path but still report
+request-not-busy. The contract owner must settle whether the first behavior
+slice covers only single-beat `RID`, includes burst-last `RID && RLAST`, or
+splits those scopes, and must preserve existing dynamic read-data
+completion-pulse consumers before implementation.
 No behavior changed in
 `.270`, `.271`, `.273`, `.274`, `.275`, `.277`, `.278`,
 `.279`, `.281`, `.282`, `.283`, `.285`, `.286`, `.288`, `.290`, `.292`, or
@@ -2906,7 +2916,7 @@ No behavior changed in
 `.319`, `.320`, `.321`, `.323`, `.324`, `.325`, `.327`, `.328`, `.329`,
 `.331`, `.332`, `.334`, `.336`, `.338`, `.339`, `.340`, `.342`, `.343`,
 `.345`, `.346`, `.348`, `.349`, `.351`, `.352`, `.354`, `.356`, `.358`,
-`.359`, `.360`, `.362`, `.363`, or `.364`.
+`.359`, `.360`, `.362`, `.363`, `.364`, or `.366`.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.

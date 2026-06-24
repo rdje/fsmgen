@@ -8361,8 +8361,17 @@ sample. The generated update emits `axi0_w0_dynamic_id_release_recapture`,
 keeps `bounded_dynamic_write_bid_demux_contract`, adds
 `same_cycle_release_recapture_policy` report vocabulary, changes release-only
 to exclude a same-cycle request, and replaces the request-not-busy assertion
-with `axi0_w0_dynamic_request_idle_or_releasing`. The frontier advances to
+with `axi0_w0_dynamic_request_idle_or_releasing`. That behavior advanced to
 `.366`, the next same-cycle/release-recapture selector.
+
+Post dynamic write recapture selector:
+[AXI_IAL2_MANAGER_POST_DYNAMIC_WRITE_RECAPTURE_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_DYNAMIC_WRITE_RECAPTURE_NEXT_SLICE_SELECTION.md)
+selects `.367`, public contract selection for first single-active dynamic read
+same-cycle release-and-recapture. The selector changes no behavior. The
+single-active dynamic read `RID` and `RID && RLAST` paths are the closest
+symmetric siblings after the write recapture slice, but the contract selection
+must settle scope and read-data completion-pulse preservation before any
+generator update.
 
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
