@@ -707,6 +707,8 @@ sub assert_dynamic_behavior {
                     : ()
             ),
         );
+        my $release_recapture_expected =
+            $case->{behavior} eq 'mixed_dynamic_static_write_demux_multi_static';
         like($isf, qr/\(input axi0_w0_request\)/, 'multi-static mixed write demux declares dynamic request input');
         for my $static_case (@static_cases) {
             my $transaction = $static_case->{transaction};
@@ -748,14 +750,44 @@ sub assert_dynamic_behavior {
             }
         }
         like($isf, qr/\(rule axi0_w0_response_demux \(& axi0_write_complete axi0_w0_dynamic_busy_q \(== axi0_bid axi0_w0_dynamic_id_q\)\)/, 'multi-static mixed write demux matches dynamic active BID');
+        if ($release_recapture_expected) {
+            like($isf, qr/\(rule axi0_w0_dynamic_id_release \(& axi0_w0_complete axi0_w0_dynamic_busy_q \(! axi0_w0_request\)\)/, 'multi-static mixed write demux dynamic release-only excludes same-cycle dynamic request');
+        } else {
+            like($isf, qr/\(rule axi0_w0_dynamic_id_release \(& axi0_w0_complete axi0_w0_dynamic_busy_q\)/, 'multi-static mixed write demux releases dynamic busy state');
+        }
         for my $static_case (@static_cases) {
             my $transaction = $static_case->{transaction};
             my $label = $static_case->{label};
             my $literal = quotemeta($static_case->{literal});
             like($isf, qr/\(rule axi0_${transaction}_response_demux \(& axi0_write_complete axi0_${transaction}_static_busy_q \(== axi0_bid $literal\)\)/, "multi-static mixed write demux matches $label static concrete BID");
-            like($isf, qr/\(rule axi0_${transaction}_static_busy_release \(& axi0_${transaction}_complete axi0_${transaction}_static_busy_q\)/, "multi-static mixed write demux releases $label static busy state");
+            if ($release_recapture_expected) {
+                like($isf, qr/\(rule axi0_${transaction}_static_busy_release \(& axi0_${transaction}_complete axi0_${transaction}_static_busy_q \(! axi0_${transaction}_request\)\)/, "multi-static mixed write demux $label static release-only excludes same-cycle static request");
+            } else {
+                like($isf, qr/\(rule axi0_${transaction}_static_busy_release \(& axi0_${transaction}_complete axi0_${transaction}_static_busy_q\)/, "multi-static mixed write demux releases $label static busy state");
+            }
+        }
+        if ($release_recapture_expected) {
+            like($isf, qr/\(rule axi0_w0_dynamic_id_release_recapture \(& \(& axi0_w0_request \(\| \(< axi0_pending_writes_q 3\) \(\| axi0_w0_complete axi0_w1_complete axi0_w2_complete\)\)\) axi0_w0_complete axi0_w0_dynamic_busy_q/, 'multi-static mixed write demux recaptures dynamic ID on same-cycle dynamic completion');
+            for my $static_case (@static_cases) {
+                my $transaction = $static_case->{transaction};
+                my $label = $static_case->{label};
+                my $literal = quotemeta($static_case->{literal});
+                like($isf, qr/\(rule axi0_w0_dynamic_id_release_recapture[\s\S]*\(! \(& axi0_${transaction}_request/, "multi-static mixed write demux dynamic recapture blocks $label static request");
+                like($isf, qr/\(rule axi0_w0_dynamic_id_release_recapture[\s\S]*\(! \(== axi0_awid $literal\)\)/, "multi-static mixed write demux dynamic recapture excludes $label static ID");
+                like($isf, qr/\(rule axi0_${transaction}_static_busy_release_recapture \(& \(& axi0_${transaction}_request \(\| \(< axi0_pending_writes_q 3\) \(\| axi0_w0_complete axi0_w1_complete axi0_w2_complete\)\)\) axi0_${transaction}_complete axi0_${transaction}_static_busy_q/, "multi-static mixed write demux recaptures $label static busy on same-cycle static completion");
+                like($isf, qr/\(rule axi0_${transaction}_static_busy_release_recapture[\s\S]*\(! \(& axi0_w0_request/, "multi-static mixed write demux $label static recapture blocks dynamic request");
+                for my $sibling (grep { $_->{transaction} ne $transaction } @static_cases) {
+                    my $sibling_transaction = $sibling->{transaction};
+                    my $sibling_label = $sibling->{label};
+                    like($isf, qr/\(rule axi0_${transaction}_static_busy_release_recapture[\s\S]*\(! \(& axi0_${sibling_transaction}_request/, "multi-static mixed write demux $label static recapture blocks $sibling_label static request");
+                }
+            }
         }
         like($isf, qr/axi0 write mixed dynamic\/static requests are mutually exclusive/, 'multi-static mixed write demux emits request onehot assertion');
+        if ($release_recapture_expected) {
+            like($isf, qr/axi0 write dynamic request is idle or releasing active captured ID/, 'multi-static mixed write demux emits dynamic idle-or-releasing assertion');
+            like($isf, qr/axi0 write static request is idle or releasing active concrete ID/, 'multi-static mixed write demux emits static idle-or-releasing assertions');
+        }
         like($isf, qr/axi0 w0 dynamic request does not use static concrete ID/, 'multi-static mixed write demux emits dynamic request static-ID reservation assertions');
         like($isf, qr/axi0 write mixed dynamic\/static response matches at most one transaction/, 'multi-static mixed write demux emits response unique-match assertions');
         my $last_static_transaction = $static_cases[-1]{transaction};
@@ -768,6 +800,14 @@ sub assert_dynamic_behavior {
             my $literal = quotemeta($static_case->{literal});
             like($fsm, qr/\(-axi0_${transaction}_response_demux\s+<\(& axi0_write_complete axi0_${transaction}_static_busy_q \(== axi0_bid $literal\)\)/, "scheduled FSM lowers multi-static mixed $label static BID match");
             like($fsm, qr/\(-axi0_w0_dynamic_id_capture[\s\S]*\(! \(== axi0_awid $literal\)\)/, "scheduled FSM lowers dynamic capture exclusion for $label static ID");
+        }
+        if ($release_recapture_expected) {
+            like($fsm, qr/\(-axi0_w0_dynamic_id_release_recapture\s+<\(& \(& axi0_w0_request/, 'scheduled FSM lowers multi-static mixed dynamic release-recapture');
+            for my $static_case (@static_cases) {
+                my $transaction = $static_case->{transaction};
+                my $label = $static_case->{label};
+                like($fsm, qr/\(-axi0_${transaction}_static_busy_release_recapture\s+<\(& \(& axi0_${transaction}_request/, "scheduled FSM lowers multi-static mixed $label static release-recapture");
+            }
         }
         my $hdl = hdl_for('axi0_capacity_status', $fsm);
         like($hdl, qr/\breg\s+\[3:0\]\s+axi0_w0_dynamic_id_q\b/, 'SystemVerilog declares multi-static mixed dynamic selected-ID state');
@@ -2357,6 +2397,7 @@ sub assert_mixed_dynamic_static_write_multi_static_report {
     for my $index (0 .. $#static_cases) {
         $static_cases[$index]{index} = $index + 1 unless exists $static_cases[$index]{index};
     }
+    my $release_recapture_expected = @static_cases == 2;
     my @static_names = map { $_->{transaction} } @static_cases;
     my @transaction_names = ('w0', @static_names);
     my @unique_match_assertions;
@@ -2395,10 +2436,14 @@ sub assert_mixed_dynamic_static_write_multi_static_report {
     is_deeply(
         $write->{generated_assertions},
         [
-            'axi0_w0_dynamic_request_not_busy',
+            $release_recapture_expected
+                ? 'axi0_w0_dynamic_request_idle_or_releasing'
+                : 'axi0_w0_dynamic_request_not_busy',
             (map {
                 my $transaction = $_->{transaction};
-                "axi0_${transaction}_static_request_not_busy";
+                $release_recapture_expected
+                    ? "axi0_${transaction}_static_request_idle_or_releasing"
+                    : "axi0_${transaction}_static_request_not_busy";
             } @static_cases),
             'axi0_write_mixed_dynamic_static_request_onehot0',
             (map {
@@ -2418,6 +2463,19 @@ sub assert_mixed_dynamic_static_write_multi_static_report {
         ],
         'multi-static mixed write report names generated assertions',
     );
+    my %dynamic_transaction_capture = (
+        transaction        => 'w0',
+        selected_id_signal => 'axi0_w0_dynamic_id_q',
+        busy_signal        => 'axi0_w0_dynamic_busy_q',
+        capture_rule       => 'axi0_w0_dynamic_id_capture',
+        release_rule       => 'axi0_w0_dynamic_id_release',
+    );
+    if ($release_recapture_expected) {
+        $dynamic_transaction_capture{release_recapture_rule} = 'axi0_w0_dynamic_id_release_recapture';
+        $dynamic_transaction_capture{same_cycle_release_recapture_policy} = 'mixed_dynamic_static_dynamic_write';
+        $dynamic_transaction_capture{release_recapture_source} = 'generated_multi_mixed_dynamic_static_demux_completion';
+        $dynamic_transaction_capture{release_recapture_transaction} = 'w0';
+    }
     is_deeply(
         $write->{dynamic_capture},
         {
@@ -2428,17 +2486,39 @@ sub assert_mixed_dynamic_static_write_multi_static_report {
             static_id_conflict_policy   => 'static_concrete_ids_reserved',
             static_id_exclusions        => [map { $_->{literal} } @static_cases],
             transactions                => [
-                {
-                    transaction        => 'w0',
-                    selected_id_signal => 'axi0_w0_dynamic_id_q',
-                    busy_signal        => 'axi0_w0_dynamic_busy_q',
-                    capture_rule       => 'axi0_w0_dynamic_id_capture',
-                    release_rule       => 'axi0_w0_dynamic_id_release',
-                },
+                \%dynamic_transaction_capture,
             ],
         },
         'multi-static mixed write report describes dynamic capture ownership and all static exclusions',
     );
+    if ($release_recapture_expected) {
+        is_deeply(
+            $write->{static_capture},
+            [
+                map {
+                    my $transaction = $_->{transaction};
+                    +{
+                        transaction                         => $transaction,
+                        concrete_id                         => $_->{value},
+                        concrete_id_literal                 => $_->{literal},
+                        capture_event_source                => 'admitted_static_write_request',
+                        ownership                           => 'mixed_dynamic_static_concrete_write_id',
+                        simultaneous_request_policy         => 'onehot0_mixed_write_request',
+                        busy_signal                         => "axi0_${transaction}_static_busy_q",
+                        capture_rule                        => "axi0_${transaction}_static_busy_capture",
+                        release_rule                        => "axi0_${transaction}_static_busy_release",
+                        release_recapture_rule              => "axi0_${transaction}_static_busy_release_recapture",
+                        same_cycle_release_recapture_policy => 'mixed_dynamic_static_static_write',
+                        release_recapture_source            => 'generated_multi_mixed_dynamic_static_demux_completion',
+                        release_recapture_transaction       => $transaction,
+                    }
+                } @static_cases
+            ],
+            'multi-static mixed write report records list-shaped static recapture ownership',
+        );
+    } else {
+        ok(!exists $write->{static_capture}, 'multi-static mixed write report leaves static recapture absent outside the selected two-static owner');
+    }
     is($report->{transactions}[0]{id}{implementation_status}, 'generated_capture_matching', 'multi-static mixed write dynamic transaction reports generated capture/matching');
     for my $case (@static_cases) {
         is_deeply(

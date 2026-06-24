@@ -2349,6 +2349,19 @@ list-shaped recapture report fields under `dynamic_capture.transactions[]` and
 `static_capture[]`, selects disjoint release-only and release-recapture guards
 for `w0`, `w1`, and `w2`, and replaces the selected request-not-busy assertions
 with idle-or-releasing names.
+`.400` now ships one-dynamic plus two-static mixed dynamic/static write `BID`
+same-cycle release-and-recapture for the existing multi-static public sample.
+FSMGen emits dynamic `w0` selected-ID release-recapture and `w1`/`w2`
+concrete static busy release-recapture, reports dynamic recapture under
+`dynamic_capture.transactions[0]`, reports static recapture under list-shaped
+`static_capture[]`, and replaces the selected `w0`/`w1`/`w2`
+request-not-busy assertions with idle-or-releasing assertions. Public syntax,
+support identity, mode/source/semantics, transaction lists, static-ID
+reservations, response-demux matches, generated completions, onehot0/
+static-ID-exclusion/active-match/pairwise-unique-match/completion-active
+assertions, one-static singular recapture shape, and three-static
+no-recapture shape are preserved. `.401` selects the next post two-static
+mixed write recapture activity.
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,

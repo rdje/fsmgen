@@ -7394,6 +7394,21 @@ list-shaped recapture metadata under `dynamic_capture.transactions[]` and
 same-cycle requests, and replaces the `w0`, `w1`, and `w2` request-not-busy
 assertions with idle-or-releasing assertions.
 
+Multiple mixed dynamic/static write recapture behavior:
+[AXI_IAL2_MANAGER_MULTIPLE_MIXED_DYNAMIC_STATIC_WRITE_RECAPTURE_BEHAVIOR](../../AXI_IAL2_MANAGER_MULTIPLE_MIXED_DYNAMIC_STATIC_WRITE_RECAPTURE_BEHAVIOR.md)
+ships one-dynamic plus two-static mixed dynamic/static write `BID`
+same-cycle release-and-recapture for the existing multi-static public sample.
+FSMGen emits dynamic `w0` selected-ID release-recapture and `w1`/`w2`
+concrete static busy release-recapture, reports dynamic recapture under
+`dynamic_capture.transactions[0]`, reports static recapture under list-shaped
+`static_capture[]`, and replaces the selected request-not-busy assertions with
+idle-or-releasing assertions. Public syntax, support identity, mode/source/
+semantics, transaction lists, static-ID reservations, response-demux matches,
+generated completions, onehot0/static-ID-exclusion/active-match/
+pairwise-unique-match/completion-active assertions, one-static singular
+recapture shape, and three-static no-recapture shape are preserved. `.401`
+selects the next post two-static mixed write recapture activity.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after
