@@ -1021,6 +1021,17 @@ idle-or-releasing semantics. Burst-last `RID && RLAST`, scalar last-beat
 read-data, burst-length/runtime/multi-beat recapture, multiple dynamic,
 mixed dynamic/static, static busy, queue, scoreboard, backend, VHDL, and
 full-manager behavior remain later owners.
+`.368` now ships generated single-active dynamic read single-beat `RID`
+same-cycle release-and-recapture. FSMGen emits
+`axi0_r0_dynamic_id_release_recapture`, keeps release-only disjoint from
+same-cycle requests, reports `same_cycle_release_recapture_policy:
+single_active_dynamic_read`, replaces `axi0_r0_dynamic_request_not_busy` with
+`axi0_r0_dynamic_request_idle_or_releasing`, and preserves scalar single-beat
+dynamic read-data payload capture under the existing generated completion
+pulse. Burst-last `RID && RLAST`, scalar last-beat read-data,
+burst-length/runtime/multi-beat recapture, multiple dynamic, mixed
+dynamic/static, static busy, queue, scoreboard, backend, VHDL, and
+full-manager behavior remain later owners.
 No behavior
 changed in `.273`, `.274`, `.275`,
 `.277`, `.278`, `.279`, `.281`,
@@ -1115,7 +1126,8 @@ read burst-last scalar last-beat read-data plus metadata-first dynamic
 transaction-ID parser/report support for `(id dynamic)`, generated
 single-active dynamic write `BID` response matching plus same-cycle
 release-and-recapture, and generated
-single-active dynamic read single-beat `RID` response matching. Selector
+single-active dynamic read single-beat `RID` response matching plus
+same-cycle release-and-recapture. Selector
 `.228` selected `.229`, readiness audit for dynamic read burst-last/`RLAST`
 transaction-ID capture and response matching before any behavior changes.
 Selector `.178` selected
@@ -1316,7 +1328,7 @@ the generated read completion, releases busy, reports
 as a support-accounted sample. Metadata-only dynamic IDs remain unchanged when
 no behavior clause consumes them. Multiple dynamic transactions, mixed
 dynamic/static demux, same-cycle recapture outside the selected single-active
-write boundary, same-ID ordering, read-data
+write and read single-beat boundaries, same-ID ordering, read-data
 routing, burst-length/runtime validation, queues, scoreboards, direct backend
 behavior, HDL shapes outside this selected SystemVerilog path, and VHDL remain
 deferred.
@@ -3320,6 +3332,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_BEHAVIOR.md` — shipped single-active dynamic write `BID` same-cycle release-and-recapture under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_WRITE_RECAPTURE_NEXT_SLICE_SELECTION.md` — selected `.367`, public contract selection for first single-active dynamic read same-cycle release-and-recapture after dynamic write recapture shipped.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_READ_SAME_CYCLE_RECAPTURE_CONTRACT_SELECTION.md` — selected direct single-active dynamic read single-beat `RID` same-cycle release-and-recapture behavior under the existing dynamic read response-demux public sample.
+- `docs/AXI_IAL2_MANAGER_DYNAMIC_READ_SAME_CYCLE_RECAPTURE_BEHAVIOR.md` — shipped single-active dynamic read single-beat `RID` same-cycle release-and-recapture under the existing dynamic read response-demux public sample.
 - `docs/AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md` — selected first AXI-derived IAL2 implementation subset and pre-code contract.
 - `docs/AXI_IAL2_VALID_READY_READINESS_AUDIT.md` — code/test/docs/report owner map for a future AXI Valid-Ready IAL2 implementation slice.
 - `docs/AXI_IAL2_VALID_READY_GENERATOR_FIRST_SLICE.md` — first in-process AXI Valid-Ready IAL2 generator slice and report surface.
@@ -3389,7 +3402,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_burst_last_read_data_multi_beat.ppif` — checked-in runnable `.ppif` sample for generated mixed dynamic/static multi-beat read-data output banks over generated mixed dynamic/static read burst-last/`RLAST` response-demux and runtime beat-count/`RLAST` validation.
 - `ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static_burst_last_read_data_burst_length.ppif` — checked-in runnable `.ppif` sample for generated report-only raw-`ARLEN` burst-length capture over generated multiple mixed dynamic/static read burst-last/`RLAST` response-demux and scalar last-beat read-data, support-accounted through check JSON and semantic JSON.
 - `ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static_burst_last_read_data_burst_length_runtime_assertion.ppif` — checked-in runnable `.ppif` sample for generated runtime beat-count/`RLAST` validation over generated multiple mixed dynamic/static read burst-last/`RLAST` response-demux and scalar last-beat read-data, support-accounted through check JSON and semantic JSON.
-- `ppif/axi_manager_capacity_status_dynamic_read_response_demux.ppif` — checked-in runnable `.ppif` sample for generated single-active dynamic read transaction-ID capture and single-beat `RID` response matching through explicit `response-demux.read`, support-accounted through check JSON and semantic JSON.
+- `ppif/axi_manager_capacity_status_dynamic_read_response_demux.ppif` — checked-in runnable `.ppif` sample for generated single-active dynamic read transaction-ID capture, single-beat `RID` response matching, and same-cycle release-and-recapture through explicit `response-demux.read`, support-accounted through check JSON and semantic JSON.
 - `ppif/axi_manager_capacity_status_dynamic_read_response_demux_multi.ppif` — checked-in runnable `.ppif` sample for generated bounded multiple dynamic read transaction-ID capture and single-beat `RID` response matching through explicit `response-demux.read` with all-dynamic read transactions, support-accounted through check JSON and semantic JSON.
 - `ppif/axi_manager_capacity_status_dynamic_read_data_multi.ppif` — checked-in runnable `.ppif` sample for generated scalar single-beat `RDATA`/`RRESP` capture over generated multiple dynamic read single-beat response-demux, support-accounted through check JSON and semantic JSON.
 - `ppif/axi_manager_capacity_status_dynamic_read_data_multi_last_beat.ppif` — checked-in runnable `.ppif` sample for generated scalar last-beat `RDATA`/`RRESP` capture over generated multiple dynamic read burst-last/`RLAST` response-demux, support-accounted through check JSON and semantic JSON.

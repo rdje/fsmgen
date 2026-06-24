@@ -1,7 +1,8 @@
 # AXI IAL2 Manager Dynamic Read Transaction-ID Capture Behavior
 
 Status: implementation record for `IAL2-FEATURE-COMPLETENESS-FRONTIER.227` on
-2026-06-22.
+2026-06-22, amended by `IAL2-FEATURE-COMPLETENESS-FRONTIER.368` on 2026-06-24
+for single-beat same-cycle release-and-recapture.
 
 Task-tree owner: `IAL2-FEATURE-COMPLETENESS-FRONTIER.227`
 
@@ -24,8 +25,11 @@ The supported public shape is intentionally narrow:
 The burst-last sibling now ships separately under
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.231`; see
 `docs/AXI_IAL2_MANAGER_DYNAMIC_READ_RLAST_TRANSACTION_ID_CAPTURE_BEHAVIOR.md`.
-Dynamic read-data routing, burst-length/runtime validation, multiple dynamic
-read transactions, mixed dynamic/static read demux, same-cycle recapture,
+Single-beat same-cycle release-and-recapture now ships under
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.368`; see
+`docs/AXI_IAL2_MANAGER_DYNAMIC_READ_SAME_CYCLE_RECAPTURE_BEHAVIOR.md`.
+Dynamic burst-last recapture, burst-length/runtime validation recapture,
+multiple dynamic read transactions, mixed dynamic/static read demux recapture,
 dynamic same-ID ordering, queues, scoreboards, direct backend behavior, and
 VHDL remain future exact-owner work.
 
@@ -90,8 +94,11 @@ axi0_read_complete && axi0_r0_dynamic_busy_q &&
   (axi0_rid == axi0_r0_dynamic_id_q)
 ```
 
-That match pulses `axi0_r0_complete`. The generated release rule clears
-`axi0_r0_dynamic_busy_q` from the completion pulse.
+That match pulses `axi0_r0_complete`. The generated release-only rule clears
+`axi0_r0_dynamic_busy_q` from the completion pulse only when there is no
+same-cycle `axi0_r0_request`. When the generated completion and an admitted
+same-cycle request occur together, the release-recapture rule captures the new
+`axi0_arid` and leaves the busy bit asserted.
 
 ## Report Contract
 
@@ -134,10 +141,14 @@ response_demux:
       busy_signal: axi0_r0_dynamic_busy_q
       capture_rule: axi0_r0_dynamic_id_capture
       release_rule: axi0_r0_dynamic_id_release
+      release_recapture_rule: axi0_r0_dynamic_id_release_recapture
+      same_cycle_release_recapture_policy: single_active_dynamic_read
+      release_recapture_source: generated_dynamic_demux_completion
+      release_recapture_transaction: r0
     generated_rules: [axi0_r0_response_demux]
     generated_completion_signals: [axi0_r0_complete]
     generated_assertions:
-      - axi0_r0_dynamic_request_not_busy
+      - axi0_r0_dynamic_request_idle_or_releasing
       - axi0_read_dynamic_response_active_match
       - axi0_r0_dynamic_completion_active
 ```
@@ -172,7 +183,7 @@ axi0_read_complete & axi0_r0_dynamic_busy_q &
 
 The assertion backend emits read-specific dynamic checks for:
 
-- admitted dynamic read request is not already active;
+- admitted dynamic read request is idle or releasing the active captured ID;
 - raw read response matches an active captured ID;
 - generated dynamic read completion releases active captured ID.
 
@@ -186,5 +197,8 @@ This slice preserves:
 - auto-ID, concrete queue-head, mixed auto-ID/queue-head, read single-beat,
   read burst-last, read-data, burst-length, runtime-validation, and multi-beat
   output-bank behavior already shipped for non-dynamic shapes;
+- request-not-busy behavior for burst-last `RID && RLAST`, multiple dynamic,
+  and mixed dynamic/static read demux until those shapes are separately
+  selected for recapture;
 - fail-closed diagnostics for the dynamic read shapes outside this selected
   single-beat contract.

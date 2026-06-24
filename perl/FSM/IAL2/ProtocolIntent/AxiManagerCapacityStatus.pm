@@ -1305,6 +1305,8 @@ sub _response_demux_dynamic_read_transaction(%args) {
             request_acceptance_expr => $request_acceptance_expr,
             capture_rule            => "${prefix}_dynamic_id_capture",
             release_rule            => "${prefix}_dynamic_id_release",
+            request_idle_or_releasing_assertion => "${prefix}_dynamic_request_idle_or_releasing",
+            release_recapture_rule   => "${prefix}_dynamic_id_release_recapture",
             request_not_busy_assertion => "${prefix}_dynamic_request_not_busy",
             request_no_active_same_id_assertion => "${prefix}_dynamic_request_no_active_same_id",
             completion_assertion    => "${prefix}_dynamic_completion_active",
@@ -1904,6 +1906,8 @@ sub _normalize_response_demux_read(%args) {
                 generated_completion_signals  => _clone_jsonish($plan->{generated_completion_signals}),
                 dynamic_transaction_state     => _clone_jsonish($plan->{dynamic_transaction_state}),
             );
+            _response_demux_mark_single_active_dynamic_read_recapture(\%entry)
+                if @dynamic_states == 1 && !@static_states;
             for my $field (qw(static_transactions mixed_transactions static_id_reservation static_id_reservations static_transaction_state)) {
                 $entry{$field} = _clone_jsonish($plan->{$field})
                     if exists $plan->{$field};
@@ -2138,6 +2142,23 @@ sub _normalize_response_demux_read(%args) {
         auto_transactions             => _clone_jsonish($args{read_lifecycle}{auto_transactions}),
         generated_completion_signals  => _clone_jsonish(\@completion_signals),
     };
+}
+
+sub _response_demux_mark_single_active_dynamic_read_recapture($entry) {
+    my $states = $entry->{dynamic_transaction_state};
+    return unless ref($states) eq 'ARRAY' && @$states == 1;
+
+    my $state = $states->[0];
+    $state->{same_cycle_release_recapture_policy} = 'single_active_dynamic_read';
+    $state->{release_recapture_source} = 'generated_dynamic_demux_completion';
+    $state->{release_recapture_transaction} = $state->{transaction};
+
+    my $capture = $entry->{dynamic_capture};
+    return unless ref($capture) eq 'HASH';
+    $capture->{release_recapture_rule} = $state->{release_recapture_rule};
+    $capture->{same_cycle_release_recapture_policy} = $state->{same_cycle_release_recapture_policy};
+    $capture->{release_recapture_source} = $state->{release_recapture_source};
+    $capture->{release_recapture_transaction} = $state->{release_recapture_transaction};
 }
 
 sub _normalize_read_data(%args) {
@@ -5019,7 +5040,7 @@ sub _response_demux_dynamic_release_rule_lines($contract) {
     my @lines;
     for my $state (_response_demux_dynamic_transaction_states($contract)) {
         my $guard = _and_expr($state->{completion_event}, $state->{busy_signal});
-        if (_response_demux_state_has_single_active_dynamic_write_recapture($state)) {
+        if (_response_demux_state_has_single_active_dynamic_recapture($state)) {
             $guard = _and_expr(
                 $state->{completion_event},
                 $state->{busy_signal},
@@ -5040,7 +5061,7 @@ sub _response_demux_dynamic_release_rule_lines($contract) {
 sub _response_demux_dynamic_release_recapture_rule_lines($contract) {
     my @lines;
     for my $state (_response_demux_dynamic_transaction_states($contract)) {
-        next unless _response_demux_state_has_single_active_dynamic_write_recapture($state);
+        next unless _response_demux_state_has_single_active_dynamic_recapture($state);
         push @lines, _auto_id_rule(
             $state->{release_recapture_rule},
             _and_expr(
@@ -5057,9 +5078,12 @@ sub _response_demux_dynamic_release_recapture_rule_lines($contract) {
     return @lines;
 }
 
-sub _response_demux_state_has_single_active_dynamic_write_recapture($state) {
-    return ($state->{family} // '') eq 'write'
-        && (($state->{same_cycle_release_recapture_policy} // '') eq 'single_active_dynamic_write');
+sub _response_demux_state_has_single_active_dynamic_recapture($state) {
+    my $family = $state->{family} // '';
+    my $policy = $state->{same_cycle_release_recapture_policy} // '';
+    return 1 if $family eq 'write' && $policy eq 'single_active_dynamic_write';
+    return 1 if $family eq 'read' && $policy eq 'single_active_dynamic_read';
+    return 0;
 }
 
 sub _response_demux_static_release_rule_lines($contract) {
@@ -6137,7 +6161,7 @@ sub _response_demux_dynamic_assertion_specs_for_family($contract, $family, $stat
     my $demux = $contract->{response_demux};
     my @assertions;
     for my $state (@$states) {
-        if (_response_demux_state_has_single_active_dynamic_write_recapture($state)) {
+        if (_response_demux_state_has_single_active_dynamic_recapture($state)) {
             push @assertions, {
                 name      => $state->{request_idle_or_releasing_assertion},
                 condition => _implies_expr(
@@ -6714,7 +6738,7 @@ sub _build_report(%args) {
             },
             {
                 id     => 'dynamic_transaction_id_behavior',
-                detail => 'Dynamic transaction-ID parser/report metadata is supported for (id dynamic) when matching ID-family metadata is present; single-active dynamic write ID capture and BID response matching including same-cycle release-and-recapture, plus bounded multiple all-dynamic, one-dynamic plus one-, two-, or three-concrete-static mixed dynamic/static write BID response-demux matching, and two-dynamic plus one-concrete-static mixed dynamic/static write BID response-demux matching are supported under explicit response-demux.write; single-active dynamic read ID capture plus single-beat RID response matching or burst-last RID/RLAST response matching, bounded multiple all-dynamic read single-beat RID response matching, bounded multiple all-dynamic read burst-last RID/RLAST response matching, bounded one-dynamic plus one-, two-, or three-concrete-static mixed dynamic/static read single-beat RID response matching and burst-last RID/RLAST response matching, and bounded two-dynamic plus one-concrete-static mixed dynamic/static read single-beat RID response matching or burst-last RID/RLAST response matching are supported under explicit response-demux.read; scalar single-beat and scalar last-beat dynamic read-data routing over generated dynamic read completions is supported for single-active and bounded multiple all-dynamic read demux, including report-only raw-ARLEN burst-length capture and runtime beat-count/RLAST validation for bounded multiple all-dynamic scalar last-beat read-data shapes; runtime-assertion raw-ARLEN multi-beat dynamic read-data output-bank routing over generated single-active and bounded multiple all-dynamic burst-last read demux is supported; scalar single-beat and scalar last-beat mixed dynamic/static read-data routing over generated mixed dynamic/static read completions is supported for selected one-dynamic plus one-, two-, or three-concrete-static read demux shapes with no burst_length metadata; scalar single-beat and scalar last-beat mixed dynamic/static read-data routing over generated mixed dynamic/static read completions is supported for the selected two-dynamic plus one-concrete-static read demux shape with no burst_length metadata; report-only raw-ARLEN burst-length capture over mixed dynamic/static scalar last-beat read-data is supported for selected one-dynamic plus one-, two-, or three-concrete-static read demux shapes and the selected two-dynamic plus one-concrete-static read demux shape; runtime beat-count/RLAST validation over mixed dynamic/static scalar last-beat read-data is supported for selected one-dynamic plus one-, two-, or three-concrete-static read demux shapes and the selected two-dynamic plus one-concrete-static read demux shape; runtime-assertion raw-ARLEN multi-beat mixed dynamic/static read-data routing is supported for selected one-dynamic plus one-, two-, or three-concrete-static read demux shapes and the selected two-dynamic plus one-concrete-static read demux shape. Mixed dynamic/static write shapes beyond selected one-dynamic plus one-, two-, or three-concrete-static transactions or two-dynamic plus one-concrete-static transactions, mixed dynamic/static read single-beat and burst-last shapes beyond selected one-dynamic plus one-, two-, or three-concrete-static transactions or two-dynamic plus one-concrete-static transactions, mixed dynamic/static scalar read-data shapes beyond selected one-dynamic plus one-, two-, or three-concrete-static scalar read-data shapes and the selected two-dynamic plus one-concrete-static scalar read-data shape, mixed dynamic/static runtime read-data shapes beyond the selected one-dynamic plus one-, two-, or three-concrete-static shapes and the selected two-dynamic plus one-concrete-static scalar last-beat shape, mixed dynamic/static multi-beat read-data shapes beyond selected one-dynamic plus one-, two-, or three-concrete-static transactions or selected two-dynamic plus one-concrete-static transactions, same-cycle request widening beyond onehot0, same-cycle recapture outside single-active dynamic write BID demux, same-ID ordering, queues, scoreboards, and HDL behavior outside the selected dynamic/mixed write/read shapes remain future exact-owner work.',
+                detail => 'Dynamic transaction-ID parser/report metadata is supported for (id dynamic) when matching ID-family metadata is present; single-active dynamic write ID capture and BID response matching including same-cycle release-and-recapture, plus bounded multiple all-dynamic, one-dynamic plus one-, two-, or three-concrete-static mixed dynamic/static write BID response-demux matching, and two-dynamic plus one-concrete-static mixed dynamic/static write BID response-demux matching are supported under explicit response-demux.write; single-active dynamic read ID capture plus single-beat RID response matching including same-cycle release-and-recapture or burst-last RID/RLAST response matching without release-and-recapture, bounded multiple all-dynamic read single-beat RID response matching, bounded multiple all-dynamic read burst-last RID/RLAST response matching, bounded one-dynamic plus one-, two-, or three-concrete-static mixed dynamic/static read single-beat RID response matching and burst-last RID/RLAST response matching, and bounded two-dynamic plus one-concrete-static mixed dynamic/static read single-beat RID response matching or burst-last RID/RLAST response matching are supported under explicit response-demux.read; scalar single-beat and scalar last-beat dynamic read-data routing over generated dynamic read completions is supported for single-active and bounded multiple all-dynamic read demux, including report-only raw-ARLEN burst-length capture and runtime beat-count/RLAST validation for bounded multiple all-dynamic scalar last-beat read-data shapes; runtime-assertion raw-ARLEN multi-beat dynamic read-data output-bank routing over generated single-active and bounded multiple all-dynamic burst-last read demux is supported; scalar single-beat and scalar last-beat mixed dynamic/static read-data routing over generated mixed dynamic/static read completions is supported for selected one-dynamic plus one-, two-, or three-concrete-static read demux shapes with no burst_length metadata; scalar single-beat and scalar last-beat mixed dynamic/static read-data routing over generated mixed dynamic/static read completions is supported for the selected two-dynamic plus one-concrete-static read demux shape with no burst_length metadata; report-only raw-ARLEN burst-length capture over mixed dynamic/static scalar last-beat read-data is supported for selected one-dynamic plus one-, two-, or three-concrete-static read demux shapes and the selected two-dynamic plus one-concrete-static read demux shape; runtime beat-count/RLAST validation over mixed dynamic/static scalar last-beat read-data is supported for selected one-dynamic plus one-, two-, or three-concrete-static read demux shapes and the selected two-dynamic plus one-concrete-static read demux shape; runtime-assertion raw-ARLEN multi-beat mixed dynamic/static read-data routing is supported for selected one-dynamic plus one-, two-, or three-concrete-static read demux shapes and the selected two-dynamic plus one-concrete-static read demux shape. Mixed dynamic/static write shapes beyond selected one-dynamic plus one-, two-, or three-concrete-static transactions or two-dynamic plus one-concrete-static transactions, mixed dynamic/static read single-beat and burst-last shapes beyond selected one-dynamic plus one-, two-, or three-concrete-static transactions or two-dynamic plus one-concrete-static transactions, mixed dynamic/static scalar read-data shapes beyond selected one-dynamic plus one-, two-, or three-concrete-static scalar read-data shapes and the selected two-dynamic plus one-concrete-static scalar read-data shape, mixed dynamic/static runtime read-data shapes beyond the selected one-dynamic plus one-, two-, or three-concrete-static shapes and the selected two-dynamic plus one-concrete-static scalar last-beat shape, mixed dynamic/static multi-beat read-data shapes beyond selected one-dynamic plus one-, two-, or three-concrete-static transactions or selected two-dynamic plus one-concrete-static transactions, same-cycle request widening beyond onehot0, same-cycle recapture outside single-active dynamic write BID demux and single-active dynamic read single-beat RID demux, same-ID ordering, queues, scoreboards, and HDL behavior outside the selected dynamic/mixed write/read shapes remain future exact-owner work.',
             },
             {
                 id     => 'profile_aliases_and_full_manager_behavior',

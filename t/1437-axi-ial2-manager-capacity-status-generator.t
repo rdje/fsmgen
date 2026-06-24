@@ -585,10 +585,15 @@ subtest 'dynamic read response-demux captures ARID and matches single-beat RID' 
     );
     like(
         $isf,
-        qr/\(rule axi0_r0_dynamic_id_release \(& axi0_r0_complete axi0_r0_dynamic_busy_q\)\s+\(axi0_r0_dynamic_busy_q 0\)\)/,
-        'dynamic read demux releases the single-active busy state on matched completion',
+        qr/\(rule axi0_r0_dynamic_id_release_recapture \(& \(& axi0_r0_request \(\| \(< axi0_pending_reads_q 4\) axi0_r0_complete\)\) axi0_r0_complete axi0_r0_dynamic_busy_q\)\s+\(axi0_r0_dynamic_id_q axi0_arid\)\s+\(axi0_r0_dynamic_busy_q 1\)\)/,
+        'dynamic read demux recaptures ARID on same-cycle matched completion and admitted request',
     );
-    like($isf, qr/"axi0 read dynamic request is not already active"/, 'dynamic read demux emits request-not-busy assertion');
+    like(
+        $isf,
+        qr/\(rule axi0_r0_dynamic_id_release \(& axi0_r0_complete axi0_r0_dynamic_busy_q \(! axi0_r0_request\)\)\s+\(axi0_r0_dynamic_busy_q 0\)\)/,
+        'dynamic read demux releases the single-active busy state only without a same-cycle request',
+    );
+    like($isf, qr/"axi0 read dynamic request is idle or releasing active captured ID"/, 'dynamic read demux emits idle-or-releasing assertion');
     like($isf, qr/"axi0 read dynamic response matches active captured ID"/, 'dynamic read demux emits active RID-match assertion');
     like($isf, qr/"axi0 r0 dynamic completion releases active captured ID"/, 'dynamic read demux emits active-completion assertion');
 
@@ -599,7 +604,8 @@ subtest 'dynamic read response-demux captures ARID and matches single-beat RID' 
     like($fsm, qr/\(\+size[\s\S]*\(axi0_rid 4\)/, 'scheduled .fsm declares RID width');
     like($fsm, qr/\(-axi0_r0_dynamic_id_capture\s+<\(& \(& axi0_r0_request/, 'scheduled .fsm lowers the dynamic read capture rule');
     like($fsm, qr/\(-axi0_r0_response_demux\s+<\(& axi0_read_complete axi0_r0_dynamic_busy_q \(== axi0_rid axi0_r0_dynamic_id_q\)\)/, 'scheduled .fsm lowers the dynamic RID match rule');
-    like($fsm, qr/\(-axi0_r0_dynamic_id_release\s+<\(& axi0_r0_complete axi0_r0_dynamic_busy_q\)/, 'scheduled .fsm lowers the dynamic read release rule');
+    like($fsm, qr/\(-axi0_r0_dynamic_id_release_recapture\s+<\(& \(& axi0_r0_request/, 'scheduled .fsm lowers the dynamic read release-recapture rule');
+    like($fsm, qr/\(-axi0_r0_dynamic_id_release\s+<\(& axi0_r0_complete axi0_r0_dynamic_busy_q \(! axi0_r0_request\)\)/, 'scheduled .fsm lowers the dynamic read release-only rule');
 
     my $hdl = hdl_for('axi0_capacity_status', $fsm);
     like($hdl, qr/\binput\s+(?:wire\s+)?\[3:0\]\s+axi0_arid\b/, 'SystemVerilog declares ARID as a 4-bit input');
@@ -609,7 +615,7 @@ subtest 'dynamic read response-demux captures ARID and matches single-beat RID' 
     like($hdl, qr/axi0_read_complete\s*&\s*axi0_r0_dynamic_busy_q\s*&\s*\(axi0_rid\s*==\s*axi0_r0_dynamic_id_q\)/, 'SystemVerilog lowers the dynamic RID-match guard');
 
     my $sv_assertions = sv_assertion_block_for_result($result);
-    like($sv_assertions, qr/axi0 read dynamic request is not already active/, 'assertion backend emits request-not-busy dynamic read assertion');
+    like($sv_assertions, qr/axi0 read dynamic request is idle or releasing active captured ID/, 'assertion backend emits idle-or-releasing dynamic read assertion');
     like($sv_assertions, qr/axi0 read dynamic response matches active captured ID/, 'assertion backend emits active RID-match dynamic assertion');
     like($sv_assertions, qr/axi0 r0 dynamic completion releases active captured ID/, 'assertion backend emits completion-active dynamic read assertion');
 };
@@ -775,6 +781,11 @@ subtest 'dynamic read-data contract consumes generated dynamic single-beat read 
         $isf,
         qr/\(rule axi0_r0_response_demux \(& axi0_read_complete axi0_r0_dynamic_busy_q \(== axi0_rid axi0_r0_dynamic_id_q\)\)\s+\(pulse axi0_r0_complete\)\)/,
         'dynamic read-data keeps generated single-beat dynamic RID demux',
+    );
+    like(
+        $isf,
+        qr/\(rule axi0_r0_dynamic_id_release_recapture \(& \(& axi0_r0_request \(\| \(< axi0_pending_reads_q 4\) axi0_r0_complete\)\) axi0_r0_complete axi0_r0_dynamic_busy_q\)/,
+        'dynamic read-data keeps generated single-beat release-recapture demux state',
     );
     like(
         $isf,
@@ -7095,7 +7106,7 @@ sub assert_dynamic_read_response_demux_report {
     is_deeply($read->{generated_completion_signals}, [qw(axi0_r0_complete)], "$owner reports generated dynamic read completion pulse");
     is_deeply(
         $read->{generated_assertions},
-        [qw(axi0_r0_dynamic_request_not_busy axi0_read_dynamic_response_active_match axi0_r0_dynamic_completion_active)],
+        [qw(axi0_r0_dynamic_request_idle_or_releasing axi0_read_dynamic_response_active_match axi0_r0_dynamic_completion_active)],
         "$owner reports generated dynamic read assertions",
     );
     is_deeply(
@@ -7108,6 +7119,10 @@ sub assert_dynamic_read_response_demux_report {
             busy_signal          => 'axi0_r0_dynamic_busy_q',
             capture_rule         => 'axi0_r0_dynamic_id_capture',
             release_rule         => 'axi0_r0_dynamic_id_release',
+            release_recapture_rule => 'axi0_r0_dynamic_id_release_recapture',
+            same_cycle_release_recapture_policy => 'single_active_dynamic_read',
+            release_recapture_source => 'generated_dynamic_demux_completion',
+            release_recapture_transaction => 'r0',
         },
         "$owner reports dynamic read capture state and rule ownership",
     );

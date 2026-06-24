@@ -2348,8 +2348,9 @@ bounded single-active dynamic write transaction-ID capture plus `BID` response
 matching plus same-cycle release-and-recapture for one explicit
 `response-demux.write` dynamic write transaction, and
 generated bounded single-active dynamic read transaction-ID capture plus
-single-beat `RID` response matching plus burst-last `RID && RLAST` response
-matching for one explicit `response-demux.read` dynamic read transaction, and
+single-beat `RID` response matching with same-cycle release-and-recapture plus
+burst-last `RID && RLAST` response matching for one explicit
+`response-demux.read` dynamic read transaction, and
 bounded scalar dynamic read-data capture over that generated dynamic read
 response-demux for exactly one dynamic read transaction. `.238` now also ships
 report-only dynamic raw-`ARLEN` burst-length capture for that generated
@@ -6608,7 +6609,8 @@ demux, same-cycle recapture, same-ID ordering, read-data routing, queues,
 scoreboards, direct backend behavior, and VHDL deferred at selection time.
 Later dynamic leaves now ship selected single-active dynamic read matching,
 selected dynamic read-data shapes, the single-active dynamic write same-cycle
-release-and-recapture extension, the all-dynamic multiple-write
+release-and-recapture extension, the single-active dynamic read single-beat
+same-cycle release-and-recapture extension, the all-dynamic multiple-write
 response-demux shape, and the all-dynamic multiple-read single-beat
 response-demux-only shape described below; mixed dynamic/static demux,
 multiple dynamic read burst-last/read-data widening, same-cycle
@@ -6628,11 +6630,12 @@ Metadata-only dynamic IDs remain unchanged when no behavior clause consumes
 them. This single-active write sample remains supported and `.365` extends it
 with same-cycle release-and-recapture. Later dynamic leaves now ship selected
 single-active dynamic read matching, selected dynamic read-data shapes, the
-all-dynamic multiple-write response-demux shape, and the all-dynamic multiple-read
-single-beat response-demux-only shape described below; mixed dynamic/static
-demux, multiple dynamic read burst-last/read-data widening, same-cycle
-recapture outside the selected single-active dynamic write boundary, dynamic
-same-ID queues, scoreboards,
+single-active dynamic read single-beat same-cycle release-and-recapture
+extension, the all-dynamic multiple-write response-demux shape, and the
+all-dynamic multiple-read single-beat response-demux-only shape described
+below; mixed dynamic/static demux, multiple dynamic read burst-last/read-data
+widening, same-cycle recapture outside the selected single-active dynamic write
+and read single-beat boundaries, dynamic same-ID queues, scoreboards,
 direct backend behavior, HDL shapes outside the selected SystemVerilog path,
 and VHDL remain deferred.
 
@@ -8383,6 +8386,19 @@ read-side `same_cycle_release_recapture_policy` vocabulary, and leaves
 burst-last `RID && RLAST`, scalar last-beat read-data, burst-length/runtime,
 multi-beat, multiple dynamic, mixed dynamic/static, backend, and VHDL behavior
 to later owners.
+
+Dynamic read same-cycle recapture behavior:
+[AXI_IAL2_MANAGER_DYNAMIC_READ_SAME_CYCLE_RECAPTURE_BEHAVIOR](../../AXI_IAL2_MANAGER_DYNAMIC_READ_SAME_CYCLE_RECAPTURE_BEHAVIOR.md)
+ships `.368`, generated single-active dynamic read single-beat `RID`
+same-cycle release-and-recapture under the existing public sample. The generated
+updates now include `axi0_r0_dynamic_id_release_recapture`, release-only excludes
+a same-cycle request, the report records
+`same_cycle_release_recapture_policy: single_active_dynamic_read`, and the
+single-active request assertion is now
+`axi0_r0_dynamic_request_idle_or_releasing`. Scalar single-beat dynamic
+read-data remains a completion-pulse payload consumer; burst-last, scalar
+last-beat read-data, burst-length/runtime/multi-beat recapture, multiple
+dynamic, mixed dynamic/static, backend, and VHDL behavior remain later owners.
 
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)

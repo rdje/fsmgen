@@ -1617,9 +1617,11 @@ sub assert_dynamic_behavior {
         like($isf, qr/\(var axi0_r0_dynamic_busy_q \(width 1\)\)/, 'dynamic read demux allocates busy storage');
         like($isf, qr/\(rule axi0_r0_dynamic_id_capture \(& \(& axi0_r0_request \(\| \(< axi0_pending_reads_q 4\) axi0_r0_complete\)\) \(! axi0_r0_dynamic_busy_q\)\)/, 'dynamic read demux captures admitted ARID');
         like($isf, qr/\(rule axi0_r0_response_demux \(& axi0_read_complete axi0_r0_dynamic_busy_q \(== axi0_rid axi0_r0_dynamic_id_q\)\)/, 'dynamic read demux matches active RID');
-        like($isf, qr/\(rule axi0_r0_dynamic_id_release \(& axi0_r0_complete axi0_r0_dynamic_busy_q\)/, 'dynamic read demux releases active state');
+        like($isf, qr/\(rule axi0_r0_dynamic_id_release_recapture \(& \(& axi0_r0_request \(\| \(< axi0_pending_reads_q 4\) axi0_r0_complete\)\) axi0_r0_complete axi0_r0_dynamic_busy_q\)/, 'dynamic read demux recaptures on same-cycle release');
+        like($isf, qr/\(rule axi0_r0_dynamic_id_release \(& axi0_r0_complete axi0_r0_dynamic_busy_q \(! axi0_r0_request\)\)/, 'dynamic read demux releases active state only without same-cycle request');
         assert_dynamic_read_report($result->{report});
         like($fsm, qr/\(-axi0_r0_response_demux\s+<\(& axi0_read_complete axi0_r0_dynamic_busy_q \(== axi0_rid axi0_r0_dynamic_id_q\)\)/, 'scheduled FSM lowers dynamic read RID match');
+        like($fsm, qr/\(-axi0_r0_dynamic_id_release_recapture\s+<\(& \(& axi0_r0_request/, 'scheduled FSM lowers dynamic read release-recapture');
         my $hdl = hdl_for('axi0_capacity_status', $fsm);
         like($hdl, qr/\binput\s+(?:wire\s+)?\[3:0\]\s+axi0_arid\b/, 'SystemVerilog exposes ARID');
         like($hdl, qr/\binput\s+(?:wire\s+)?\[3:0\]\s+axi0_rid\b/, 'SystemVerilog exposes RID');
@@ -3080,7 +3082,24 @@ sub assert_dynamic_read_report {
     is_deeply($read->{dynamic_transactions}, [qw(r0)], 'dynamic read report names the covered dynamic transaction');
     is_deeply($read->{generated_rules}, [qw(axi0_r0_response_demux)], 'dynamic read report names generated response-demux rule');
     is_deeply($read->{generated_completion_signals}, [qw(axi0_r0_complete)], 'dynamic read report names generated completion');
-    is_deeply($read->{generated_assertions}, [qw(axi0_r0_dynamic_request_not_busy axi0_read_dynamic_response_active_match axi0_r0_dynamic_completion_active)], 'dynamic read report names generated assertions');
+    is_deeply($read->{generated_assertions}, [qw(axi0_r0_dynamic_request_idle_or_releasing axi0_read_dynamic_response_active_match axi0_r0_dynamic_completion_active)], 'dynamic read report names generated assertions');
+    is_deeply(
+        $read->{dynamic_capture},
+        {
+            request_id_source    => 'axi0_arid',
+            capture_event_source => 'admitted_dynamic_read_request',
+            ownership            => 'single_active_dynamic_read',
+            selected_id_signal   => 'axi0_r0_dynamic_id_q',
+            busy_signal          => 'axi0_r0_dynamic_busy_q',
+            capture_rule         => 'axi0_r0_dynamic_id_capture',
+            release_rule         => 'axi0_r0_dynamic_id_release',
+            release_recapture_rule => 'axi0_r0_dynamic_id_release_recapture',
+            same_cycle_release_recapture_policy => 'single_active_dynamic_read',
+            release_recapture_source => 'generated_dynamic_demux_completion',
+            release_recapture_transaction => 'r0',
+        },
+        'dynamic read report names release-recapture capture ownership',
+    );
     is($report->{transactions}[0]{id}{implementation_status}, 'generated_capture_matching', 'dynamic read transaction reports generated capture/matching');
     assert_dynamic_residue($report, 'dynamic read demux keeps future dynamic residue visible');
 }

@@ -2070,8 +2070,8 @@ Dynamic read-data routing, burst-length/runtime validation, and bounded
 multiple dynamic read single-beat response-demux now ship under later leaves.
 Interleaving, multiple dynamic read burst-last/read-data widening, mixed
 dynamic/static read demux, same-cycle recapture outside the selected
-single-active dynamic write boundary, same-ID ordering, queues,
-scoreboards, direct backend behavior, HDL shapes outside this selected
+single-active dynamic write and read single-beat boundaries, same-ID ordering,
+queues, scoreboards, direct backend behavior, HDL shapes outside this selected
 SystemVerilog path, and VHDL remain deferred. Selector `.232` chose `.233`,
 readiness audit for dynamic read-data
 routing over the generated single-active dynamic read response-demux family;
@@ -2919,6 +2919,18 @@ idle-or-releasing semantics. Burst-last `RID && RLAST`, scalar last-beat
 read-data, burst-length/runtime/multi-beat recapture, multiple dynamic,
 mixed dynamic/static, static busy, queue, scoreboard, backend variants, VHDL,
 and full-manager behavior remain later owners.
+`.368` now ships generated single-active dynamic read single-beat `RID`
+same-cycle release-and-recapture under the existing public sample/source
+syntax. FSMGen emits `axi0_r0_dynamic_id_release_recapture`, keeps release-only
+disjoint from same-cycle requests, reports
+`same_cycle_release_recapture_policy: single_active_dynamic_read`, replaces the
+single-active request-not-busy assertion with
+`axi0_r0_dynamic_request_idle_or_releasing`, and preserves scalar single-beat
+dynamic read-data capture under the generated completion pulse. Burst-last
+`RID && RLAST`, scalar last-beat read-data, burst-length/runtime/multi-beat
+recapture, multiple dynamic, mixed dynamic/static, static busy, queue,
+scoreboard, backend variants, VHDL, and full-manager behavior remain later
+owners.
 No behavior changed in
 `.270`, `.271`, `.273`, `.274`, `.275`, `.277`, `.278`,
 `.279`, `.281`, `.282`, `.283`, `.285`, `.286`, `.288`, `.290`, `.292`, or
