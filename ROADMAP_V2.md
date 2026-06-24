@@ -2909,6 +2909,17 @@ support-accounted public sample is
 `ppif/axi_manager_capacity_status_dynamic_read_response_demux_multi_same_id_reject.ppif`.
 Single-active dynamic demux, one-dynamic mixed demux, queues, scoreboards,
 direct backend behavior, backend-language variants, and VHDL remain deferred.
+`.439` now selects `.440`, readiness audit for single-active dynamic
+same-ID reject mapping. Single-active dynamic response-demux already exposes
+generated `*_dynamic_request_idle_or_releasing`, active-match, and
+completion-active assertions for write `BID`, read single-beat `RID`, and read
+burst-last `RID && RLAST`, but it does not expose the `.438` multi-active
+`*_dynamic_request_no_active_same_id` plus `*_dynamic_active_id_unique`
+assertion pair. The next audit must decide whether a single-active-specific
+generated reject report contract is honest or whether the current fail-closed
+behavior remains. One-dynamic mixed mapping, dynamic queues, scoreboards,
+direct backend behavior, backend-language variants, VHDL, and new generated HDL
+remain deferred.
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,
