@@ -2744,6 +2744,14 @@ transactions `r0`, `r1`, `r2`, and capture rules
 banks, broader cardinalities, the single-beat `.344` read-data sibling, and
 backend variants remain future exact owners; `.351` selects the report-only
 raw-`ARLEN` burst-length readiness boundary next.
+`.351` now selects `.352`, readiness audit for report-only raw-`ARLEN`
+burst-length capture over the shipped two-dynamic-plus-one-static mixed
+dynamic/static scalar last-beat read-data boundary. The selector changes no
+behavior. `.352` must decide whether the `.350` public sample should grow the
+existing `burst-length` syntax directly, needs public contract selection first,
+needs helper/report cleanup first, or should defer behind another prerequisite.
+Runtime validation, multi-beat output banks, broader cardinalities, direct
+backend behavior, backend-language variants, and VHDL remain separate owners.
 No behavior changed in
 `.270`, `.271`, `.273`, `.274`, `.275`, `.277`, `.278`,
 `.279`, `.281`, `.282`, `.283`, `.285`, `.286`, `.288`, `.290`, `.292`, or
@@ -2751,7 +2759,7 @@ No behavior changed in
 `.305`, `.306`, `.308`, `.309`, `.311`, `.313`, `.315`, `.316`, `.317`, or
 `.319`, `.320`, `.321`, `.323`, `.324`, `.325`, `.327`, `.328`, `.329`,
 `.331`, `.332`, `.334`, `.336`, `.338`, `.339`, `.340`, `.342`, `.343`,
-`.345`, `.346`, `.348`, or `.349`.
+`.345`, `.346`, `.348`, `.349`, or `.351`.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.

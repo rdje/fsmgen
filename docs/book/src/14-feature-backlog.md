@@ -8181,6 +8181,18 @@ and generated capture rules for `r0`, `r1`, and `r2`. Report-only raw `ARLEN`,
 runtime validation, multi-beat output banks, and the single-beat `.344`
 read-data sibling remain future exact owners.
 
+Post two-dynamic/one-static mixed dynamic/static read burst-last read-data
+selector:
+[AXI_IAL2_MANAGER_POST_TWO_DYNAMIC_ONE_STATIC_MIXED_DYNAMIC_STATIC_READ_RLAST_READ_DATA_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_TWO_DYNAMIC_ONE_STATIC_MIXED_DYNAMIC_STATIC_READ_RLAST_READ_DATA_NEXT_SLICE_SELECTION.md)
+selects `.352`, readiness audit for report-only raw-`ARLEN` burst-length
+capture over the shipped `.350` scalar last-beat read-data boundary. The
+selector changes no behavior. The audit must decide whether the `.350` public
+sample should grow existing `burst-length` syntax directly, needs a public
+contract selector first, needs helper/report cleanup first, or should defer
+behind another prerequisite. Runtime validation, multi-beat output banks,
+broader cardinalities, direct backend behavior, backend-language variants, and
+VHDL remain separate owners.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same
