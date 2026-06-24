@@ -684,6 +684,17 @@ dynamic write transactions `w0`/`w1`, static write transaction `w2` with ID
 report mode, `onehot0_mixed_write_request`, active dynamic selected-ID
 uniqueness, static concrete-ID reservation/exclusion, and mixed response
 active/unique assertion roles.
+`.341` now ships that generated behavior through the support-accounted public
+sample
+`ppif/axi_manager_capacity_status_write_mixed_dynamic_static_response_demux_multi_dynamic.ppif`.
+Mixed dynamic/static write response-demux now accepts exactly two dynamic
+write transactions plus one concrete static write transaction, emits selected
+dynamic ID/busy state for `w0`/`w1`, static busy state for `w2`, onehot0
+mixed request assertions, per-dynamic request no-active-same-ID checks,
+pairwise active dynamic selected-ID uniqueness, static-ID reservation and
+request/active exclusion for `4'd3`, three raw `BID` completion pulses, and
+list-shaped report fields while preserving the `.272`, `.295`, and `.318`
+mixed write report contracts.
 No behavior
 changed in `.273`, `.274`, `.275`,
 `.277`, `.278`, `.279`, `.281`,
@@ -2952,6 +2963,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/AXI_IAL2_MANAGER_POST_THREE_STATIC_MIXED_DYNAMIC_STATIC_READ_DATA_MULTI_BEAT_NEXT_SLICE_SELECTION.md` — selected readiness audit for two-dynamic-plus-one-static mixed dynamic/static write `BID` response-demux after the three-static mixed read-data chain reached multi-beat output banks.
 - `docs/AXI_IAL2_MANAGER_TWO_DYNAMIC_ONE_STATIC_MIXED_DYNAMIC_STATIC_WRITE_RESPONSE_DEMUX_READINESS_AUDIT.md` — audited two-dynamic-plus-one-static mixed dynamic/static write `BID` response-demux readiness and selected public contract selection.
 - `docs/AXI_IAL2_MANAGER_TWO_DYNAMIC_ONE_STATIC_MIXED_DYNAMIC_STATIC_WRITE_RESPONSE_DEMUX_CONTRACT_SELECTION.md` — selected direct generated behavior for bounded two-dynamic-plus-one-static mixed dynamic/static write `BID` response-demux.
+- `docs/AXI_IAL2_MANAGER_TWO_DYNAMIC_ONE_STATIC_MIXED_DYNAMIC_STATIC_WRITE_RESPONSE_DEMUX_BEHAVIOR.md` — shipped generated bounded two-dynamic-plus-one-static mixed dynamic/static write `BID` response-demux.
 - `docs/AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md` — selected first AXI-derived IAL2 implementation subset and pre-code contract.
 - `docs/AXI_IAL2_VALID_READY_READINESS_AUDIT.md` — code/test/docs/report owner map for a future AXI Valid-Ready IAL2 implementation slice.
 - `docs/AXI_IAL2_VALID_READY_GENERATOR_FIRST_SLICE.md` — first in-process AXI Valid-Ready IAL2 generator slice and report surface.

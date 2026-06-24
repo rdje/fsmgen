@@ -8027,8 +8027,27 @@ dynamic write transactions `w0`/`w1`, static write transaction `w2` with ID
 `3`, the existing `bounded_multi_mixed_dynamic_static_write_bid_demux_contract`
 report mode, `onehot0_mixed_write_request`, active dynamic selected-ID
 uniqueness, static concrete-ID reservation/exclusion, and mixed response
-active/unique assertion roles. The generated behavior remains unshipped until
-`.341` lands.
+active/unique assertion roles.
+
+Two-dynamic/one-static mixed dynamic/static write response-demux behavior:
+[AXI_IAL2_MANAGER_TWO_DYNAMIC_ONE_STATIC_MIXED_DYNAMIC_STATIC_WRITE_RESPONSE_DEMUX_BEHAVIOR](../../AXI_IAL2_MANAGER_TWO_DYNAMIC_ONE_STATIC_MIXED_DYNAMIC_STATIC_WRITE_RESPONSE_DEMUX_BEHAVIOR.md)
+ships `.341`, generated bounded two-dynamic-plus-one-static mixed
+dynamic/static write `BID` response-demux. The support-accounted public sample
+is
+`ppif/axi_manager_capacity_status_write_mixed_dynamic_static_response_demux_multi_dynamic.ppif`.
+The generated behavior captures dynamic `AWID` into selected-ID/busy state
+for `w0` and `w1`, tracks static busy state for `w2` with concrete ID `3`,
+requires onehot0 mixed write requests, prevents request-time capture of an
+already-active sibling dynamic ID, keeps active dynamic selected IDs pairwise
+unique, excludes static literal `4'd3` from dynamic request and active state,
+and emits three generated completion pulses matched against raw `BID`.
+Reports reuse `bounded_multi_mixed_dynamic_static_write_bid_demux_contract`
+with list-shaped dynamic/static transaction fields and preserve the earlier
+one-dynamic mixed write contracts.
+
+The next exact owner after `.341` is `.342`, readiness audit for bounded
+two-dynamic-plus-one-static mixed dynamic/static read single-beat `RID`
+response-demux.
 
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)

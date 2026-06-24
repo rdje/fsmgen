@@ -920,10 +920,12 @@ sub _response_demux_dynamic_write_transaction(%args) {
         ref($_->{id}) eq 'HASH' && ($_->{id}{policy} // '') eq 'concrete'
     } @write_transactions;
     if (@dynamic != @write_transactions) {
-        my $supported_mixed_shape = @dynamic == 1
-            && (@concrete_static == 1 || @concrete_static == 2 || @concrete_static == 3)
+        my $one_dynamic_multi_static = @dynamic == 1
+            && (@concrete_static == 1 || @concrete_static == 2 || @concrete_static == 3);
+        my $two_dynamic_one_static = @dynamic == 2 && @concrete_static == 1;
+        my $supported_mixed_shape = ($one_dynamic_multi_static || $two_dynamic_one_static)
             && @write_transactions == @dynamic + @concrete_static;
-        confess "AXI manager capacity/status IAL2 contract response_demux.write mixed dynamic/static ID matching supports exactly one dynamic write transaction plus one, two, or three pairwise-distinct concrete static write transactions in this slice\n"
+        confess "AXI manager capacity/status IAL2 contract response_demux.write mixed dynamic/static ID matching supports exactly one dynamic write transaction plus one, two, or three pairwise-distinct concrete static write transactions, or exactly two dynamic write transactions plus one concrete static write transaction, in this slice\n"
             unless $supported_mixed_shape;
         return _response_demux_mixed_dynamic_static_write_transaction(
             %args,
@@ -1037,44 +1039,48 @@ sub _response_demux_mixed_dynamic_static_write_transaction(%args) {
     @static_transactions = ($args{static_transaction})
         if !@static_transactions && ref($args{static_transaction}) eq 'HASH';
     my @write_transactions = @{$args{write_transactions} || []};
-    confess "Internal error: mixed dynamic/static write demux requires one dynamic and one, two, or three static transactions\n"
-        unless @dynamic_transactions == 1
-            && (@static_transactions == 1 || @static_transactions == 2 || @static_transactions == 3)
+    my $one_dynamic_multi_static = @dynamic_transactions == 1
+        && (@static_transactions == 1 || @static_transactions == 2 || @static_transactions == 3);
+    my $two_dynamic_one_static = @dynamic_transactions == 2 && @static_transactions == 1;
+    confess "Internal error: mixed dynamic/static write demux requires one dynamic and one, two, or three static transactions, or two dynamic and one static transaction\n"
+        unless ($one_dynamic_multi_static || $two_dynamic_one_static)
             && @write_transactions == @dynamic_transactions + @static_transactions;
 
-    my $dynamic_transaction = $dynamic_transactions[0];
-    my $dynamic_id = $dynamic_transaction->{id};
-    $dynamic_id->{implementation_status} = 'generated_capture_matching';
-
     my $completion_fanin = _fanin_expression([map { $_->{completion_event} } @write_transactions]);
-    my $dynamic_prefix = "$args{manager_name}_$dynamic_transaction->{name}";
-    my $dynamic_request_acceptance = _same_id_admitted_request_guard_expr(
-        request_event    => $dynamic_transaction->{request_event},
-        pending_storage  => $args{storage}{pending_writes},
-        max_pending      => $args{write_max_pending},
-        completion_fanin => $completion_fanin,
-    );
+    my @dynamic_states;
+    for my $dynamic_transaction (@dynamic_transactions) {
+        my $dynamic_id = $dynamic_transaction->{id};
+        $dynamic_id->{implementation_status} = 'generated_capture_matching';
+        my $dynamic_prefix = "$args{manager_name}_$dynamic_transaction->{name}";
+        my $dynamic_request_acceptance = _same_id_admitted_request_guard_expr(
+            request_event    => $dynamic_transaction->{request_event},
+            pending_storage  => $args{storage}{pending_writes},
+            max_pending      => $args{write_max_pending},
+            completion_fanin => $completion_fanin,
+        );
 
-    my $dynamic_state = {
-        family                  => 'write',
-        response_demux_kind     => 'dynamic_write',
-        transaction             => $dynamic_transaction->{name},
-        tag                     => $dynamic_transaction->{tag},
-        request_event           => $dynamic_transaction->{request_event},
-        completion_event        => $dynamic_transaction->{completion_event},
-        request_id_source       => $dynamic_id->{request_id_source},
-        response_id_signal      => $dynamic_id->{response_id_signal},
-        family_width            => $dynamic_id->{family_width},
-        selected_id_signal      => "${dynamic_prefix}_dynamic_id_q",
-        busy_signal             => "${dynamic_prefix}_dynamic_busy_q",
-        request_acceptance_expr => $dynamic_request_acceptance,
-        capture_rule            => "${dynamic_prefix}_dynamic_id_capture",
-        release_rule            => "${dynamic_prefix}_dynamic_id_release",
-        request_not_busy_assertion => "${dynamic_prefix}_dynamic_request_not_busy",
-        request_not_static_id_assertion => "${dynamic_prefix}_dynamic_request_not_static_id",
-        active_not_static_id_assertion => "${dynamic_prefix}_dynamic_active_not_static_id",
-        completion_assertion    => "${dynamic_prefix}_dynamic_completion_active",
-    };
+        push @dynamic_states, {
+            family                  => 'write',
+            response_demux_kind     => 'dynamic_write',
+            transaction             => $dynamic_transaction->{name},
+            tag                     => $dynamic_transaction->{tag},
+            request_event           => $dynamic_transaction->{request_event},
+            completion_event        => $dynamic_transaction->{completion_event},
+            request_id_source       => $dynamic_id->{request_id_source},
+            response_id_signal      => $dynamic_id->{response_id_signal},
+            family_width            => $dynamic_id->{family_width},
+            selected_id_signal      => "${dynamic_prefix}_dynamic_id_q",
+            busy_signal             => "${dynamic_prefix}_dynamic_busy_q",
+            request_acceptance_expr => $dynamic_request_acceptance,
+            capture_rule            => "${dynamic_prefix}_dynamic_id_capture",
+            release_rule            => "${dynamic_prefix}_dynamic_id_release",
+            request_not_busy_assertion => "${dynamic_prefix}_dynamic_request_not_busy",
+            request_no_active_same_id_assertion => "${dynamic_prefix}_dynamic_request_no_active_same_id",
+            request_not_static_id_assertion => "${dynamic_prefix}_dynamic_request_not_static_id",
+            active_not_static_id_assertion => "${dynamic_prefix}_dynamic_active_not_static_id",
+            completion_assertion    => "${dynamic_prefix}_dynamic_completion_active",
+        };
+    }
 
     my %seen_static_ids;
     my @static_states;
@@ -1110,31 +1116,45 @@ sub _response_demux_mixed_dynamic_static_write_transaction(%args) {
     }
 
     my @static_request_blocks = map { _not_expr($_->{request_acceptance_expr}) } @static_states;
-    my @static_id_blocks = map {
-        _not_expr(_eq_expr($dynamic_state->{request_id_source}, $_->{concrete_id_literal}))
-    } @static_states;
-    $dynamic_state->{capture_guard} = _and_expr(
-        $dynamic_request_acceptance,
-        _not_expr($dynamic_state->{busy_signal}),
-        @static_request_blocks,
-        @static_id_blocks,
-    );
+    my $multi_dynamic = @dynamic_states > 1;
+    for my $dynamic_state (@dynamic_states) {
+        my @sibling_request_exprs = map { $_->{request_acceptance_expr} }
+            grep { $_->{transaction} ne $dynamic_state->{transaction} } @dynamic_states;
+        my @active_same_id_exprs = map {
+            _and_expr(
+                $_->{busy_signal},
+                _eq_expr($_->{selected_id_signal}, $dynamic_state->{request_id_source}),
+            )
+        } grep { $_->{transaction} ne $dynamic_state->{transaction} } @dynamic_states;
+        my @static_id_blocks = map {
+            _not_expr(_eq_expr($dynamic_state->{request_id_source}, $_->{concrete_id_literal}))
+        } @static_states;
+        $dynamic_state->{capture_guard} = _and_expr(
+            $dynamic_state->{request_acceptance_expr},
+            _not_expr($dynamic_state->{busy_signal}),
+            ($multi_dynamic ? map { _not_expr($_) } @sibling_request_exprs : ()),
+            ($multi_dynamic ? map { _not_expr($_) } @active_same_id_exprs : ()),
+            @static_request_blocks,
+            @static_id_blocks,
+        );
+    }
     for my $static_state (@static_states) {
+        my @dynamic_request_exprs = map { $_->{request_acceptance_expr} } @dynamic_states;
         my @sibling_static_request_exprs = map { $_->{request_acceptance_expr} }
             grep { $_->{transaction} ne $static_state->{transaction} } @static_states;
         $static_state->{capture_guard} = _and_expr(
             $static_state->{request_acceptance_expr},
             _not_expr($static_state->{busy_signal}),
-            _not_expr($dynamic_request_acceptance),
+            map { _not_expr($_) } @dynamic_request_exprs,
             map { _not_expr($_) } @sibling_static_request_exprs,
         );
     }
 
-    my @dynamic_transaction_names = ($dynamic_state->{transaction});
+    my @dynamic_transaction_names = map { $_->{transaction} } @dynamic_states;
     my @static_transaction_names = map { $_->{transaction} } @static_states;
     my @completion_signals = (
-        $dynamic_state->{completion_event},
-        map { $_->{completion_event} } @static_states,
+        (map { $_->{completion_event} } @dynamic_states),
+        (map { $_->{completion_event} } @static_states),
     );
     my @static_id_reservations = map {
         +{
@@ -1152,25 +1172,47 @@ sub _response_demux_mixed_dynamic_static_write_transaction(%args) {
         dynamic_transactions          => \@dynamic_transaction_names,
         static_transactions           => \@static_transaction_names,
         mixed_transactions            => {
-            dynamic => $dynamic_state->{transaction},
+            dynamic => $dynamic_states[0]{transaction},
             static  => $static_states[0]{transaction},
         },
         static_id_reservation         => $static_id_reservations[0],
         dynamic_capture               => {
-            request_id_source           => $dynamic_state->{request_id_source},
+            request_id_source           => $dynamic_states[0]{request_id_source},
             capture_event_source        => 'admitted_dynamic_write_request',
             ownership                   => 'mixed_dynamic_static_unique_write_ids',
             simultaneous_request_policy => 'onehot0_mixed_write_request',
             static_id_conflict_policy   => 'static_concrete_ids_reserved',
-            selected_id_signal          => $dynamic_state->{selected_id_signal},
-            busy_signal                 => $dynamic_state->{busy_signal},
-            capture_rule                => $dynamic_state->{capture_rule},
-            release_rule                => $dynamic_state->{release_rule},
+            selected_id_signal          => $dynamic_states[0]{selected_id_signal},
+            busy_signal                 => $dynamic_states[0]{busy_signal},
+            capture_rule                => $dynamic_states[0]{capture_rule},
+            release_rule                => $dynamic_states[0]{release_rule},
         },
         generated_completion_signals  => \@completion_signals,
-        dynamic_transaction_state     => [$dynamic_state],
+        dynamic_transaction_state     => \@dynamic_states,
         static_transaction_state      => \@static_states,
-    } if @static_states == 1;
+    } if @dynamic_states == 1 && @static_states == 1;
+
+    my %dynamic_capture = (
+        request_id_source           => $dynamic_states[0]{request_id_source},
+        capture_event_source        => 'admitted_dynamic_write_request',
+        ownership                   => 'multi_mixed_dynamic_static_unique_write_ids',
+        simultaneous_request_policy => 'onehot0_mixed_write_request',
+        static_id_conflict_policy   => 'static_concrete_ids_reserved',
+        static_id_exclusions        => [map { $_->{concrete_id_literal} } @static_states],
+        transactions                => [
+            map {
+                +{
+                    transaction        => $_->{transaction},
+                    selected_id_signal => $_->{selected_id_signal},
+                    busy_signal        => $_->{busy_signal},
+                    capture_rule       => $_->{capture_rule},
+                    release_rule       => $_->{release_rule},
+                }
+            } @dynamic_states
+        ],
+    );
+    $dynamic_capture{same_id_conflict_policy} = 'active_dynamic_ids_must_be_unique'
+        if @dynamic_states > 1;
 
     return {
         mode                         => 'bounded_multi_mixed_dynamic_static_write_bid_demux_contract',
@@ -1183,25 +1225,9 @@ sub _response_demux_mixed_dynamic_static_write_transaction(%args) {
             static  => \@static_transaction_names,
         },
         static_id_reservations        => \@static_id_reservations,
-        dynamic_capture               => {
-            request_id_source           => $dynamic_state->{request_id_source},
-            capture_event_source        => 'admitted_dynamic_write_request',
-            ownership                   => 'multi_mixed_dynamic_static_unique_write_ids',
-            simultaneous_request_policy => 'onehot0_mixed_write_request',
-            static_id_conflict_policy   => 'static_concrete_ids_reserved',
-            static_id_exclusions        => [map { $_->{concrete_id_literal} } @static_states],
-            transactions                => [
-                {
-                    transaction        => $dynamic_state->{transaction},
-                    selected_id_signal => $dynamic_state->{selected_id_signal},
-                    busy_signal        => $dynamic_state->{busy_signal},
-                    capture_rule       => $dynamic_state->{capture_rule},
-                    release_rule       => $dynamic_state->{release_rule},
-                },
-            ],
-        },
+        dynamic_capture               => \%dynamic_capture,
         generated_completion_signals  => \@completion_signals,
-        dynamic_transaction_state     => [$dynamic_state],
+        dynamic_transaction_state     => \@dynamic_states,
         static_transaction_state      => \@static_states,
     };
 }
@@ -5878,6 +5904,40 @@ sub _response_demux_mixed_dynamic_static_assertion_specs_for_family($contract, $
         condition => _same_id_at_most_one_expr(map { $_->{request_acceptance_expr} } @states),
         message   => "$contract->{name} $family mixed dynamic/static requests are mutually exclusive",
     };
+
+    if (@$dynamic_states > 1) {
+        for my $dynamic_state (@$dynamic_states) {
+            my @active_same_id_exprs = map {
+                _and_expr(
+                    $_->{busy_signal},
+                    _eq_expr($_->{selected_id_signal}, $dynamic_state->{request_id_source}),
+                )
+            } grep { $_->{transaction} ne $dynamic_state->{transaction} } @$dynamic_states;
+            push @assertions, {
+                name      => $dynamic_state->{request_no_active_same_id_assertion},
+                condition => _implies_expr(
+                    $dynamic_state->{request_acceptance_expr},
+                    _not_expr(_or_expr(@active_same_id_exprs)),
+                ),
+                message   => "$contract->{name} $dynamic_state->{transaction} dynamic request does not reuse an active sibling ID",
+            };
+        }
+
+        for my $left_index (0 .. $#$dynamic_states) {
+            for my $right_index ($left_index + 1 .. $#$dynamic_states) {
+                my $left = $dynamic_states->[$left_index];
+                my $right = $dynamic_states->[$right_index];
+                push @assertions, {
+                    name      => "$contract->{name}_$left->{transaction}_$right->{transaction}_${family}_dynamic_active_id_unique",
+                    condition => _implies_expr(
+                        _and_expr($left->{busy_signal}, $right->{busy_signal}),
+                        _not_expr(_eq_expr($left->{selected_id_signal}, $right->{selected_id_signal})),
+                    ),
+                    message   => "$contract->{name} $family dynamic active IDs are unique",
+                };
+            }
+        }
+    }
 
     for my $dynamic_state (@$dynamic_states) {
         for my $static_state (@$static_states) {

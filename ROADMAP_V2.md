@@ -2615,6 +2615,17 @@ dynamic write transactions `w0`/`w1`, static write transaction `w2` with ID
 report mode, `onehot0_mixed_write_request`, active dynamic selected-ID
 uniqueness, static concrete-ID reservation/exclusion, and mixed response
 active/unique assertion roles.
+`.341` now ships that generated behavior through the support-accounted public
+sample
+`ppif/axi_manager_capacity_status_write_mixed_dynamic_static_response_demux_multi_dynamic.ppif`.
+Mixed dynamic/static write response-demux now accepts exactly two dynamic
+write transactions plus one concrete static write transaction, emits selected
+dynamic ID/busy state for `w0`/`w1`, static busy state for `w2`, onehot0
+mixed request assertions, per-dynamic request no-active-same-ID checks,
+pairwise active dynamic selected-ID uniqueness, static-ID reservation and
+request/active exclusion for `4'd3`, three raw `BID` completion pulses, and
+list-shaped report fields while preserving the `.272`, `.295`, and `.318`
+mixed write report contracts.
 No behavior changed in
 `.270`, `.271`, `.273`, `.274`, `.275`, `.277`, `.278`,
 `.279`, `.281`, `.282`, `.283`, `.285`, `.286`, `.288`, `.290`, `.292`, or
