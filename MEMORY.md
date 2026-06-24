@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.415: ship read RLAST recapture`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.416` selects the next post two-static mixed read burst-last recapture slice; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.415` shipped one-dynamic-plus-two-static mixed dynamic/static read burst-last `RID && RLAST` same-cycle release-and-recapture for `ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static_burst_last.ppif`. The report now exposes dynamic recapture under `dynamic_capture.transactions[0]`, list-shaped `static_capture[]` entries for `r1`/`r2`, final-beat source `generated_multi_mixed_dynamic_static_read_demux_last_beat_completion`, and idle-or-releasing assertions for `r0`/`r1`/`r2`; one-static RLAST recapture, three-static no-recapture, two-dynamic-plus-one-static no-recapture, and layered consumers are preserved.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.416: select three-static read recapture audit`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.417` audits one-dynamic-plus-three-static mixed read single-beat RID recapture readiness; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.416` selected `.417`, readiness audit for one-dynamic-plus-three-static mixed dynamic/static read single-beat `RID` same-cycle release-and-recapture. A guarded baseline schedule probe for `ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static3.ppif` produced a 46985-byte report with request-not-busy assertions for `r0`/`r1`/`r2`/`r3`, no `static_capture`, and no release-recapture fields; `.417` must pin three-static recapture report/guard/assertion/validation and deferred-boundary contracts before behavior changes.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
-- next_action: Start `.416`: select the next exact AXI manager feature-completeness slice after the two-static mixed read burst-last recapture behavior, without behavior changes.
+- next_action: Start `.417`: audit the three-static mixed read single-beat recapture readiness boundary without behavior changes unless a later leaf is selected.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact

@@ -7634,6 +7634,17 @@ one-static RLAST recapture shape, three-static no-recapture shape,
 two-dynamic-plus-one-static no-recapture shape, and scalar read-data/raw-
 `ARLEN`/runtime/multi-beat consumers remain preserved.
 
+Post multiple mixed dynamic/static read RLAST recapture selector:
+[AXI_IAL2_MANAGER_POST_MULTIPLE_MIXED_DYNAMIC_STATIC_READ_RLAST_RECAPTURE_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_MIXED_DYNAMIC_STATIC_READ_RLAST_RECAPTURE_NEXT_SLICE_SELECTION.md)
+selects `.417`, readiness audit for one-dynamic-plus-three-static mixed
+dynamic/static read single-beat `RID` same-cycle release-and-recapture. The
+selector changes no behavior. A guarded baseline schedule probe for
+`ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static3.ppif`
+produced a 46985-byte report showing request-not-busy assertions for
+`r0`/`r1`/`r2`/`r3`, no `static_capture`, and no release-recapture fields.
+The audit must pin the three-static recapture report, guard, assertion,
+validation, rollback, and deferred-boundary contract before implementation.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

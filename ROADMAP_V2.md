@@ -2584,6 +2584,17 @@ passed and produced a 46549-byte report; focused `t/1438`, strict check JSON,
 semantic JSON, SystemVerilog generation, and `--verify-hdl` stopped at the
 default 88% RAM guard cutoff before completion, with no cutoff raised. `.416`
 now selects the next post two-static mixed read burst-last recapture slice.
+`.416` now selects `.417`, readiness audit for one-dynamic-plus-three-static
+mixed dynamic/static read single-beat `RID` same-cycle release-and-recapture.
+The selector changes no behavior. A guarded baseline schedule probe for
+`ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static3.ppif`
+started at host memory 87.3% against the default 88% cutoff and produced a
+46985-byte report showing request-not-busy assertions for `r0`/`r1`/`r2`/
+`r3`, no `static_capture`, and no release-recapture fields. `.417` must pin
+three-static `static_capture[]`, dynamic/static guard composition,
+idle-or-releasing assertions, validation gates, rollback, docs, Knowledge Map
+impact, and deferred burst-last/two-dynamic/backend boundaries before any
+behavior change.
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,
