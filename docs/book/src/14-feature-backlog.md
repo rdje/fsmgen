@@ -7764,6 +7764,21 @@ capture for `r2`, the generated mixed read completion source, and
 idle-or-releasing assertions while preserving the burst-last no-recapture
 sibling and read-data consumers.
 
+Two-dynamic/one-static mixed dynamic/static read recapture contract:
+[AXI_IAL2_MANAGER_TWO_DYNAMIC_ONE_STATIC_MIXED_DYNAMIC_STATIC_READ_RECAPTURE_CONTRACT_SELECTION](../../AXI_IAL2_MANAGER_TWO_DYNAMIC_ONE_STATIC_MIXED_DYNAMIC_STATIC_READ_RECAPTURE_CONTRACT_SELECTION.md)
+selects `.427`, direct implementation of the single-beat `RID`
+same-cycle release-and-recapture contract. The selector changes no behavior.
+The implementation owner should keep the existing public sample and report
+mode, add release-recapture entries for `r0` and `r1` under
+`dynamic_capture.transactions[]` with
+`mixed_dynamic_static_multi_active_dynamic_read`, add list-shaped
+`static_capture[]` for `r2`, use
+`generated_multi_mixed_dynamic_static_read_demux_completion`, and replace only
+the `r0`/`r1`/`r2` request-not-busy assertions with idle-or-releasing
+assertions. The burst-last two-dynamic read sibling, one-/two-/three-static
+read recapture shapes, the two-dynamic write recapture shape, and read-data
+consumers stay preservation boundaries.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

@@ -2747,6 +2747,18 @@ contract-selection leaf should pin `mixed_dynamic_static_multi_active_dynamic_re
 list-shaped static capture for `r2`,
 `generated_multi_mixed_dynamic_static_read_demux_completion`, and
 idle-or-releasing assertions for `r0`, `r1`, and `r2`.
+`.426` now selects `.427`, direct implementation of that
+two-dynamic-plus-one-static mixed dynamic/static read single-beat recapture
+contract. The selector changes no behavior. The contract preserves the
+existing public syntax, support identity,
+`bounded_multi_mixed_dynamic_static_read_rid_demux_contract`,
+`generated_multi_mixed_dynamic_static_read_demux`, and
+`matched_dynamic_or_static_concrete_id_single_beat`; it adds dynamic
+recapture fields for `r0`/`r1` with
+`mixed_dynamic_static_multi_active_dynamic_read`, list-shaped
+`static_capture[]` for `r2`, the generated mixed read completion source,
+combined dynamic/static guards, same-transaction release-only exclusions, and
+idle-or-releasing assertions for `r0`, `r1`, and `r2`.
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,
