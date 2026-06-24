@@ -1691,8 +1691,11 @@ sub assert_dynamic_behavior {
         like($isf, qr/\(input axi0_rlast\)/, 'dynamic read RLAST demux declares RLAST input');
         unlike($isf, qr/\(input axi0_r0_complete\b/, 'dynamic read RLAST demux owns generated completion');
         like($isf, qr/\(rule axi0_r0_response_demux \(& axi0_read_complete axi0_r0_dynamic_busy_q \(== axi0_rid axi0_r0_dynamic_id_q\) axi0_rlast\)/, 'dynamic read RLAST demux matches active RID and RLAST');
+        like($isf, qr/\(rule axi0_r0_dynamic_id_release_recapture \(& \(& axi0_r0_request \(\| \(< axi0_pending_reads_q 4\) axi0_r0_complete\)\) axi0_r0_complete axi0_r0_dynamic_busy_q\)/, 'dynamic read RLAST demux recaptures on same-cycle final completion');
+        like($isf, qr/\(rule axi0_r0_dynamic_id_release \(& axi0_r0_complete axi0_r0_dynamic_busy_q \(! axi0_r0_request\)\)/, 'dynamic read RLAST release-only excludes same-cycle request');
         assert_dynamic_read_rlast_report($result->{report});
         like($fsm, qr/\(-axi0_r0_response_demux\s+<\(& axi0_read_complete axi0_r0_dynamic_busy_q \(== axi0_rid axi0_r0_dynamic_id_q\) axi0_rlast\)/, 'scheduled FSM lowers dynamic RID/RLAST match');
+        like($fsm, qr/\(-axi0_r0_dynamic_id_release_recapture\s+<\(& \(& axi0_r0_request/, 'scheduled FSM lowers dynamic RLAST release-recapture');
         my $hdl = hdl_for('axi0_capacity_status', $fsm);
         like($hdl, qr/\binput\s+(?:wire\s+)?axi0_rlast\b/, 'SystemVerilog exposes RLAST');
         like($hdl, qr/axi0_read_complete\s*&\s*axi0_r0_dynamic_busy_q\s*&\s*\(axi0_rid\s*==\s*axi0_r0_dynamic_id_q\)\s*&\s*axi0_rlast/, 'SystemVerilog lowers dynamic RID/RLAST guard');
@@ -3181,6 +3184,24 @@ sub assert_dynamic_read_rlast_report {
     is_deeply($read->{dynamic_transactions}, [qw(r0)], 'dynamic read RLAST report names the covered dynamic transaction');
     is_deeply($read->{generated_rules}, [qw(axi0_r0_response_demux)], 'dynamic read RLAST report names generated response-demux rule');
     is_deeply($read->{generated_completion_signals}, [qw(axi0_r0_complete)], 'dynamic read RLAST report names generated completion');
+    is_deeply($read->{generated_assertions}, [qw(axi0_r0_dynamic_request_idle_or_releasing axi0_read_dynamic_response_active_match axi0_r0_dynamic_completion_active)], 'dynamic read RLAST report names release-recapture assertions');
+    is_deeply(
+        $read->{dynamic_capture},
+        {
+            request_id_source    => 'axi0_arid',
+            capture_event_source => 'admitted_dynamic_read_request',
+            ownership            => 'single_active_dynamic_read',
+            selected_id_signal   => 'axi0_r0_dynamic_id_q',
+            busy_signal          => 'axi0_r0_dynamic_busy_q',
+            capture_rule         => 'axi0_r0_dynamic_id_capture',
+            release_rule         => 'axi0_r0_dynamic_id_release',
+            release_recapture_rule => 'axi0_r0_dynamic_id_release_recapture',
+            same_cycle_release_recapture_policy => 'single_active_dynamic_read',
+            release_recapture_source => 'generated_dynamic_demux_last_beat_completion',
+            release_recapture_transaction => 'r0',
+        },
+        'dynamic read RLAST report names release-recapture capture ownership',
+    );
     is($report->{transactions}[0]{id}{implementation_status}, 'generated_capture_matching', 'dynamic read RLAST transaction reports generated capture/matching');
     assert_dynamic_residue($report, 'dynamic read RLAST demux keeps future dynamic residue visible');
 }

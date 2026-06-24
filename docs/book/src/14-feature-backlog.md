@@ -8431,6 +8431,18 @@ idle-or-releasing semantics, preserves raw matched non-last beats, and treats
 scalar last-beat read-data, raw-`ARLEN`, runtime, and multi-beat output banks as
 payload/validation preservation consumers.
 
+Dynamic read RLAST recapture behavior:
+[AXI_IAL2_MANAGER_DYNAMIC_READ_RLAST_RECAPTURE_BEHAVIOR](../../AXI_IAL2_MANAGER_DYNAMIC_READ_RLAST_RECAPTURE_BEHAVIOR.md)
+ships `.372`, generated single-active dynamic read burst-last `RID && RLAST`
+same-cycle release-and-recapture under the existing public sample. The generated
+updates now include `axi0_r0_dynamic_id_release_recapture`, release-only excludes
+a same-cycle request, the report records
+`release_recapture_source: generated_dynamic_demux_last_beat_completion`, and
+the burst-last single-active request assertion is now
+`axi0_r0_dynamic_request_idle_or_releasing`. Matched non-last beats remain raw
+matched beats only; scalar last-beat read-data, raw-`ARLEN`, runtime, and
+multi-beat payload/validation contracts remain preserved consumers.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same

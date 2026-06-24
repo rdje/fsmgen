@@ -24,9 +24,13 @@ The public contract is intentionally narrow:
   demux, mixed auto-ID/queue-head demux, multiple dynamic read transactions, or
   mixed dynamic/static read transactions.
 
-Dynamic read-data routing, burst-length/runtime validation, multi-beat output
-banks, same-cycle recapture, dynamic same-ID ordering, queues, scoreboards,
-direct backend behavior, and VHDL remain future exact-owner work.
+Dynamic read-data routing, burst-length/runtime validation, and multi-beat
+output banks later shipped as consumers of this generated completion pulse.
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.372` later added same-cycle
+release-and-recapture for this exact single-active burst-last shape while
+preserving the source syntax and mode described here. Dynamic same-ID ordering,
+queues, scoreboards, direct backend behavior, and VHDL remain future
+exact-owner work.
 
 ## Runnable PPIF
 
@@ -94,6 +98,12 @@ That match pulses `axi0_r0_complete`. The generated release rule clears
 `axi0_r0_dynamic_busy_q` from the completion pulse. Matched non-last beats keep
 the dynamic read active and do not pulse the generated completion.
 
+As of `IAL2-FEATURE-COMPLETENESS-FRONTIER.372`, release-only is disjoint from a
+same-cycle `r0` request, and the same-cycle final completion plus admitted `r0`
+request path uses `axi0_r0_dynamic_id_release_recapture` to capture the new
+`ARID` while leaving busy asserted for the next cycle. The response match still
+uses the pre-update selected ID.
+
 The active-response assertion remains raw-beat based: a raw read response must
 have an active captured dynamic ID and matching `RID`, regardless of `RLAST`.
 This keeps matched non-last beats legal while diagnosing mismatched beats.
@@ -146,10 +156,14 @@ response_demux:
       busy_signal: axi0_r0_dynamic_busy_q
       capture_rule: axi0_r0_dynamic_id_capture
       release_rule: axi0_r0_dynamic_id_release
+      release_recapture_rule: axi0_r0_dynamic_id_release_recapture
+      same_cycle_release_recapture_policy: single_active_dynamic_read
+      release_recapture_source: generated_dynamic_demux_last_beat_completion
+      release_recapture_transaction: r0
     generated_rules: [axi0_r0_response_demux]
     generated_completion_signals: [axi0_r0_complete]
     generated_assertions:
-      - axi0_r0_dynamic_request_not_busy
+      - axi0_r0_dynamic_request_idle_or_releasing
       - axi0_read_dynamic_response_active_match
       - axi0_r0_dynamic_completion_active
 ```
@@ -197,6 +211,8 @@ This slice preserves:
   the dynamic ID;
 - generated single-active dynamic write `BID` response matching;
 - generated single-active dynamic read single-beat `RID` response matching;
+- generated same-cycle release-and-recapture for single-active dynamic
+  burst-last reads as of `.372`;
 - auto-ID, concrete queue-head, mixed auto-ID/queue-head, read single-beat,
   read burst-last, read-data, burst-length, runtime-validation, and multi-beat
   output-bank behavior already shipped for non-dynamic shapes;

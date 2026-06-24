@@ -1060,6 +1060,17 @@ idle-or-releasing semantics, preserves raw matched non-last beats and raw
 active-match assertions, and treats scalar last-beat read-data, raw-`ARLEN`,
 runtime beat-count/`RLAST`, and multi-beat output banks as payload/validation
 preservation consumers.
+`.372` now ships generated single-active dynamic read burst-last `RID && RLAST`
+same-cycle release-and-recapture under the existing public sample/source
+syntax. FSMGen emits `axi0_r0_dynamic_id_release_recapture`, keeps release-only
+disjoint from same-cycle requests, reports
+`release_recapture_source: generated_dynamic_demux_last_beat_completion`,
+replaces the burst-last single-active request-not-busy assertion with
+`axi0_r0_dynamic_request_idle_or_releasing`, preserves raw matched non-last
+beats and raw active-match assertions, and keeps scalar last-beat read-data,
+raw-`ARLEN`, runtime beat-count/`RLAST`, and multi-beat output-bank
+payload/validation contracts intact. The frontier advances to `.373`, the next
+same-cycle/release-recapture selector.
 No behavior
 changed in `.273`, `.274`, `.275`,
 `.277`, `.278`, `.279`, `.281`,
@@ -3364,6 +3375,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_READ_RECAPTURE_NEXT_SLICE_SELECTION.md` — selected readiness audit for single-active dynamic read burst-last `RID && RLAST` same-cycle release-and-recapture after single-beat read recapture shipped.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_READ_RLAST_RECAPTURE_READINESS_AUDIT.md` — audited single-active dynamic read burst-last `RID && RLAST` same-cycle release-and-recapture readiness and selected public contract selection before behavior changes.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_READ_RLAST_RECAPTURE_CONTRACT_SELECTION.md` — selected direct single-active dynamic read burst-last `RID && RLAST` same-cycle release-and-recapture behavior under the existing burst-last dynamic read response-demux public sample.
+- `docs/AXI_IAL2_MANAGER_DYNAMIC_READ_RLAST_RECAPTURE_BEHAVIOR.md` — shipped single-active dynamic read burst-last `RID && RLAST` same-cycle release-and-recapture under the existing burst-last dynamic read response-demux public sample.
 - `docs/AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md` — selected first AXI-derived IAL2 implementation subset and pre-code contract.
 - `docs/AXI_IAL2_VALID_READY_READINESS_AUDIT.md` — code/test/docs/report owner map for a future AXI Valid-Ready IAL2 implementation slice.
 - `docs/AXI_IAL2_VALID_READY_GENERATOR_FIRST_SLICE.md` — first in-process AXI Valid-Ready IAL2 generator slice and report surface.

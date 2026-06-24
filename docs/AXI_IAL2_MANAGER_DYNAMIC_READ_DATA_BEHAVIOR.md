@@ -21,10 +21,14 @@ The public contract is intentionally narrow:
   `response-scope burst-last`, a one-bit `last-signal`, and
   `status-policy last-beat`;
 - `read-data.read` binds exactly the same single dynamic read transaction;
-- dynamic `burst-length`, runtime beat-count/`RLAST` validation, multi-beat
-  output banks, multiple dynamic reads, mixed dynamic/static demux,
-  same-cycle recapture, dynamic same-ID ordering, queues, scoreboards, direct
-  backend behavior, and VHDL remain future exact-owner work.
+- dynamic `burst-length`, runtime beat-count/`RLAST` validation, and
+  multi-beat output banks later shipped as bounded dynamic consumers.
+  Single-active dynamic read single-beat recapture shipped in `.368`, and
+  single-active dynamic burst-last `RID && RLAST` recapture shipped in `.372`
+  while preserving the payload capture contracts described here. Multiple
+  dynamic reads, mixed dynamic/static demux, dynamic same-ID ordering, queues,
+  scoreboards, direct backend behavior, and VHDL remain future exact-owner
+  work.
 
 The generated behavior reuses the already shipped dynamic read selected-ID and
 busy state. Read-data capture consumes the generated per-transaction completion

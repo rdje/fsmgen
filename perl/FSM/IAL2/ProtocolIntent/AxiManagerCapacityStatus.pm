@@ -1978,7 +1978,7 @@ sub _normalize_response_demux_read(%args) {
             return \%entry;
         }
 
-        return {
+        my %entry = (
             mode                         => $multi_dynamic
                 ? 'bounded_multi_dynamic_read_rid_rlast_demux_contract'
                 : 'bounded_dynamic_read_rid_rlast_demux_contract',
@@ -2000,7 +2000,12 @@ sub _normalize_response_demux_read(%args) {
             dynamic_capture               => _clone_jsonish($plan->{dynamic_capture}),
             generated_completion_signals  => _clone_jsonish($plan->{generated_completion_signals}),
             dynamic_transaction_state     => _clone_jsonish($plan->{dynamic_transaction_state}),
-        };
+        );
+        _response_demux_mark_single_active_dynamic_read_recapture(
+            \%entry,
+            release_recapture_source => 'generated_dynamic_demux_last_beat_completion',
+        ) if @dynamic_states == 1 && !@static_states;
+        return \%entry;
     }
 
     my $queue_head_plan = $args{queue_head_plan};
@@ -2144,13 +2149,14 @@ sub _normalize_response_demux_read(%args) {
     };
 }
 
-sub _response_demux_mark_single_active_dynamic_read_recapture($entry) {
+sub _response_demux_mark_single_active_dynamic_read_recapture($entry, %args) {
     my $states = $entry->{dynamic_transaction_state};
     return unless ref($states) eq 'ARRAY' && @$states == 1;
 
     my $state = $states->[0];
     $state->{same_cycle_release_recapture_policy} = 'single_active_dynamic_read';
-    $state->{release_recapture_source} = 'generated_dynamic_demux_completion';
+    $state->{release_recapture_source} =
+        $args{release_recapture_source} // 'generated_dynamic_demux_completion';
     $state->{release_recapture_transaction} = $state->{transaction};
 
     my $capture = $entry->{dynamic_capture};

@@ -81,7 +81,8 @@ This slice deliberately keeps the following fail-closed:
 - dynamic `burst-length` with `validation runtime-assertion`;
 - dynamic multi-beat read-data output banks;
 - multiple or mixed dynamic response demux;
-- same-cycle dynamic recapture;
+- same-cycle dynamic recapture beyond the `.372` single-active burst-last
+  response-demux state lifetime;
 - dynamic same-ID ordering;
 - queues and scoreboards;
 - direct backend behavior; and

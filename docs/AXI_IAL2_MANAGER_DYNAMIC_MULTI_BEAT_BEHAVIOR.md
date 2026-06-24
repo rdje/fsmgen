@@ -87,9 +87,11 @@ runtime-validation sample, scalar dynamic single-beat and last-beat read-data
 samples, dynamic write/read response-demux samples, and all non-dynamic
 multi-beat output-bank samples remain supported.
 
-Multiple or mixed dynamic demux, same-cycle recapture, dynamic same-ID
-ordering, queues, scoreboards, direct backend behavior, backend-language
-variants outside the selected SystemVerilog path, and VHDL remain fail-closed.
+The `.372` single-active burst-last response-demux recapture now shares this
+multi-beat state lifetime while preserving the per-beat output-bank contract.
+Multiple or mixed dynamic demux recapture, dynamic same-ID ordering, queues,
+scoreboards, direct backend behavior, backend-language variants outside the
+selected SystemVerilog path, and VHDL remain fail-closed.
 
 ## Validation
 

@@ -62,11 +62,13 @@ report-only `generated_beat_count_validation` residue for the selected sample.
 The `.238` report-only sample remains unchanged and keeps
 `generated_beat_count_validation` in its read-data residue.
 
-Dynamic single-beat read-data with burst-length metadata, dynamic multi-beat
-output banks, multiple or mixed dynamic response demux, same-cycle recapture,
-dynamic same-ID ordering, queues, scoreboards, direct backend behavior,
-backend-language variants outside the selected SystemVerilog path, and VHDL
-remain fail-closed.
+Dynamic single-beat read-data with burst-length metadata and dynamic
+multi-beat output banks remain separately bounded. The `.372` single-active
+burst-last response-demux recapture now shares this runtime-validation state
+lifetime while preserving the beat-count/`RLAST` validation contract. Multiple
+or mixed dynamic response demux recapture, dynamic same-ID ordering, queues,
+scoreboards, direct backend behavior, backend-language variants outside the
+selected SystemVerilog path, and VHDL remain fail-closed.
 
 ## Validation
 

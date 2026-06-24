@@ -2959,6 +2959,17 @@ idle-or-releasing semantics, preserves raw matched non-last beats and raw
 active-match assertions, and treats scalar last-beat read-data, raw-`ARLEN`,
 runtime beat-count/`RLAST`, and multi-beat output banks as payload/validation
 preservation consumers.
+`.372` now ships generated single-active dynamic read burst-last `RID && RLAST`
+same-cycle release-and-recapture under the existing public sample/source
+syntax. FSMGen emits `axi0_r0_dynamic_id_release_recapture`, keeps release-only
+disjoint from same-cycle requests, reports
+`release_recapture_source: generated_dynamic_demux_last_beat_completion`,
+replaces the burst-last single-active request-not-busy assertion with
+`axi0_r0_dynamic_request_idle_or_releasing`, preserves raw matched non-last
+beats and raw active-match assertions, and keeps scalar last-beat read-data,
+raw-`ARLEN`, runtime beat-count/`RLAST`, and multi-beat output-bank
+payload/validation contracts intact. The frontier advances to `.373`, the next
+same-cycle/release-recapture selector.
 No behavior changed in
 `.270`, `.271`, `.273`, `.274`, `.275`, `.277`, `.278`,
 `.279`, `.281`, `.282`, `.283`, `.285`, `.286`, `.288`, `.290`, `.292`, or
