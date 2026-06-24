@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.393: select mixed read RLAST recapture audit`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.394` audits mixed dynamic/static read burst-last RID/RLAST same-cycle release-and-recapture readiness; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.393` selected `.394`, readiness audit for mixed dynamic/static read burst-last RID/RLAST same-cycle release-and-recapture. The selector recorded that burst-last is the nearest sibling after `.392`, but must audit final-only RID/RLAST release/recapture, raw non-final RID preservation, raw active/unique-match assertions, scalar last-beat read-data, raw ARLEN, runtime beat-count/RLAST validation, and multi-beat output-bank consumers before contract selection. No behavior changed.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.394: audit mixed read RLAST recapture readiness`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.395` selects the public contract for mixed dynamic/static read burst-last RID/RLAST same-cycle release-and-recapture; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.394` audited mixed dynamic/static read burst-last RID/RLAST recapture readiness and selected `.395`, public contract selection. A guarded schedule probe passed at 83.0% host memory against the 88% cutoff and confirmed the current burst-last mode/scope/last-signal/last-beat source, request-not-busy assertions, no dynamic recapture policy, and no static_capture block. No behavior changed.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
-- next_action: Start `.394`: audit mixed dynamic/static read burst-last recapture readiness and decide whether direct contract selection is safe or a narrower prerequisite is needed.
+- next_action: Start `.395`: select the public mixed dynamic/static read burst-last recapture contract, including last-beat report source, dynamic/static recapture fields, idle-or-releasing assertions, raw RID preservation, and consumer preservation.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact

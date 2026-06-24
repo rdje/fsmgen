@@ -7317,6 +7317,19 @@ preserve raw non-final `RID` beats, raw active/unique-match assertions,
 scalar last-beat read-data, raw `ARLEN`, runtime beat-count/`RLAST`
 validation, and multi-beat output-bank consumers.
 
+Mixed dynamic/static read RLAST recapture readiness audit:
+[AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_READ_RLAST_RECAPTURE_READINESS_AUDIT](../../AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_READ_RLAST_RECAPTURE_READINESS_AUDIT.md)
+selects `.395`, public contract selection for mixed dynamic/static read
+burst-last `RID && RLAST` same-cycle release-and-recapture. The audit changes
+no behavior. A guarded baseline schedule probe confirmed the existing
+`bounded_mixed_dynamic_static_read_rid_rlast_demux_contract`,
+`response_scope: burst_last`, `last_signal: axi0_rlast`, last-beat completion
+source, request-not-busy assertions, no recapture metadata, and no
+`static_capture` block. Contract selection is next so last-beat report source,
+dynamic/static recapture fields, idle-or-releasing assertions, raw non-final
+`RID` preservation, and read-data/raw-`ARLEN`/runtime/multi-beat consumers are
+pinned before implementation.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

@@ -2289,6 +2289,16 @@ needs audit before contract selection because final-only release and recapture
 must preserve raw non-final `RID` beats, raw active/unique-match assertions,
 scalar last-beat read-data, raw `ARLEN`, runtime beat-count/`RLAST`
 validation, and multi-beat output-bank consumers.
+`.394` selects `.395`, public contract selection for mixed dynamic/static read
+burst-last `RID && RLAST` same-cycle release-and-recapture. The audit changes
+no behavior. A guarded baseline schedule probe confirmed the existing
+`bounded_mixed_dynamic_static_read_rid_rlast_demux_contract`,
+`response_scope: burst_last`, `last_signal: axi0_rlast`, last-beat completion
+source, request-not-busy assertions, no recapture metadata, and no
+`static_capture` block. Contract selection is next so last-beat report source,
+dynamic/static recapture fields, idle-or-releasing assertions, raw non-final
+`RID` preservation, and read-data/raw-`ARLEN`/runtime/multi-beat consumers are
+pinned before implementation.
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,
