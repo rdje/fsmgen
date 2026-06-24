@@ -1879,6 +1879,27 @@ focused diagnostics, a metadata-only public sample, and support accounting,
 while keeping generated dynamic response-demux plus dynamic same-ID policy
 fail-closed until a later owner maps generated no-active-same-ID assertion
 enforcement.
+`.436` now ships metadata-first parser/report support for the selected
+`(dynamic-id-reuse reject)` policy under `(same-id-ordering ...)`. PPIF accepts
+dynamic-only family arms and coexistence with existing concrete
+`concrete-id-reuse` clauses; empty arms, duplicate dynamic clauses,
+unsupported dynamic policy values, selected dynamic policy without
+transactions, selected dynamic policy without a same-family dynamic
+transaction, concrete-only same-ID policy against dynamic transaction IDs, and
+dynamic response-demux plus same-family dynamic policy remain fail-closed with
+targeted diagnostics. Reports now carry
+`same_id_ordering.dynamic_id_reuse_policy.<family>` with `policy: reject`,
+`implementation_status: selected_not_generated`, `enforcement:
+not_generated`, `accepted_same_id_reuse: false`,
+`request_conflict_policy: no_active_same_id`, and no generated queue or
+scoreboard behavior. Dynamic-only policy uses
+`same_id_ordering.mode: dynamic_id_reuse_policy`; concrete plus dynamic policy
+uses `id_reuse_policy`. The public sample
+`ppif/axi_manager_capacity_status_dynamic_same_id_reject_policy.ppif` is
+support-accounted as
+`intent.ppif_axi_manager_capacity_status_dynamic_same_id_reject_policy`.
+Generated dynamic same-ID enforcement, response-demux mapping, queues,
+scoreboards, HDL behavior, and VHDL behavior remain deferred.
 No behavior
 changed in `.273`, `.274`, `.275`,
 `.277`, `.278`, `.279`, `.281`,
@@ -4227,6 +4248,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_SAME_ID_POLICY_READINESS_AUDIT.md` — audited dynamic same-ID policy readiness after bounded dynamic/mixed recapture completion and selected public dynamic same-ID policy contract selection before queues or scoreboards.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_SAME_ID_POLICY_CONTRACT_SELECTION.md` — selected additive `(dynamic-id-reuse reject)` public contract and metadata-first parser/report readiness audit before implementation.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_SAME_ID_POLICY_METADATA_READINESS_AUDIT.md` — audited metadata-first implementation readiness for `(dynamic-id-reuse reject)` and selected direct parser/report implementation.
+- `docs/AXI_IAL2_MANAGER_DYNAMIC_SAME_ID_POLICY_METADATA_FIRST_SLICE.md` — shipped metadata-first parser/report support for `(dynamic-id-reuse reject)`, including report fields, diagnostics, sample/support accounting, and deferred generated enforcement.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_CONTRACT_SELECTION.md` — selected direct single-active dynamic write `BID` same-cycle release-and-recapture behavior under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_BEHAVIOR.md` — shipped single-active dynamic write `BID` same-cycle release-and-recapture under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_WRITE_RECAPTURE_NEXT_SLICE_SELECTION.md` — selected `.367`, public contract selection for first single-active dynamic read same-cycle release-and-recapture after dynamic write recapture shipped.
@@ -4290,6 +4312,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `ppif/axi_manager_capacity_status_write_multi_depth3_same_id_queue_head_response_demux.ppif` — checked-in runnable `.ppif` sample for generated write two-depth-3 concrete same-ID queue-head `BID` response demux, support-accounted through check JSON and semantic JSON.
 - `ppif/axi_manager_capacity_status_write_mixed_depth3_depth2_same_id_queue_head_response_demux.ppif` — checked-in runnable `.ppif` sample for generated write mixed depth-3/depth-2 concrete same-ID queue-head `BID` response demux, support-accounted through check JSON and semantic JSON.
 - `ppif/axi_manager_capacity_status_dynamic_transaction_id.ppif` — checked-in runnable `.ppif` sample for metadata-first dynamic transaction-ID parser/report support with `(id dynamic)`, support-accounted through check JSON and semantic JSON while HDL dynamic matching remains deferred.
+- `ppif/axi_manager_capacity_status_dynamic_same_id_reject_policy.ppif` — checked-in runnable `.ppif` sample for metadata-first dynamic same-ID reject policy parser/report support with `(dynamic-id-reuse reject)`, support-accounted while generated enforcement remains deferred.
 - `ppif/axi_manager_capacity_status_dynamic_write_response_demux.ppif` — checked-in runnable `.ppif` sample for generated single-active dynamic write transaction-ID capture, `BID` response matching, and same-cycle release-and-recapture through explicit `response-demux.write`, support-accounted through check JSON and semantic JSON.
 - `ppif/axi_manager_capacity_status_dynamic_write_response_demux_multi.ppif` — checked-in runnable `.ppif` sample for generated bounded multiple dynamic write transaction-ID capture, `BID` response matching, and same-cycle release-and-recapture through explicit `response-demux.write` with all-dynamic write transactions, support-accounted through check JSON and semantic JSON.
 - `ppif/axi_manager_capacity_status_write_mixed_dynamic_static_response_demux.ppif` — checked-in runnable `.ppif` sample for generated bounded mixed dynamic/static write `BID` response matching through explicit `response-demux.write` with one dynamic and one concrete static write transaction, support-accounted through check JSON and semantic JSON.

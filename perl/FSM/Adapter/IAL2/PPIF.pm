@@ -597,18 +597,30 @@ sub _parse_manager_capacity_same_id_ordering_family($items, $source_label, $name
         next unless defined $clause;
         my ($head, @body) = _clause_parts($clause, $source_label);
         confess "Error: .ppif (manager-capacity-status $name (same-id-ordering ($family ...))) has unsupported clause '($head ...)'\n"
-            unless $head eq 'concrete-id-reuse';
-        confess "Error: .ppif (manager-capacity-status $name (same-id-ordering ($family ...))) has duplicate (concrete-id-reuse ...) clause\n"
-            if exists $entry{concrete_id_reuse};
-        confess "Error: .ppif (manager-capacity-status $name (same-id-ordering ($family (concrete-id-reuse ...)))) requires exactly one scalar value\n"
+            unless $head =~ /\A(?:concrete-id-reuse|dynamic-id-reuse)\z/;
+
+        if ($head eq 'concrete-id-reuse') {
+            confess "Error: .ppif (manager-capacity-status $name (same-id-ordering ($family ...))) has duplicate (concrete-id-reuse ...) clause\n"
+                if exists $entry{concrete_id_reuse};
+            confess "Error: .ppif (manager-capacity-status $name (same-id-ordering ($family (concrete-id-reuse ...)))) requires exactly one scalar value\n"
+                unless @body == 1 && !ref($body[0]);
+            confess "Error: .ppif (manager-capacity-status $name (same-id-ordering ($family (concrete-id-reuse ...)))) supports only reject or issue-order-queue in this slice\n"
+                unless $body[0] =~ /\A(?:reject|issue-order-queue)\z/;
+            $entry{concrete_id_reuse} = $body[0];
+            next;
+        }
+
+        confess "Error: .ppif (manager-capacity-status $name (same-id-ordering ($family ...))) has duplicate (dynamic-id-reuse ...) clause\n"
+            if exists $entry{dynamic_id_reuse};
+        confess "Error: .ppif (manager-capacity-status $name (same-id-ordering ($family (dynamic-id-reuse ...)))) requires exactly one scalar value\n"
             unless @body == 1 && !ref($body[0]);
-        confess "Error: .ppif (manager-capacity-status $name (same-id-ordering ($family (concrete-id-reuse ...)))) supports only reject or issue-order-queue in this slice\n"
-            unless $body[0] =~ /\A(?:reject|issue-order-queue)\z/;
-        $entry{concrete_id_reuse} = $body[0];
+        confess "Error: .ppif (manager-capacity-status $name (same-id-ordering ($family (dynamic-id-reuse ...)))) supports only reject in this slice\n"
+            unless $body[0] eq 'reject';
+        $entry{dynamic_id_reuse} = $body[0];
     }
 
-    confess "Error: .ppif (manager-capacity-status $name (same-id-ordering ($family ...))) is missing required (concrete-id-reuse ...) clause\n"
-        unless exists $entry{concrete_id_reuse};
+    confess "Error: .ppif (manager-capacity-status $name (same-id-ordering ($family ...))) requires at least one (concrete-id-reuse ...) or (dynamic-id-reuse ...) clause\n"
+        unless exists($entry{concrete_id_reuse}) || exists($entry{dynamic_id_reuse});
 
     return \%entry;
 }

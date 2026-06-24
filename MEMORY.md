@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.435: audit dynamic same-ID metadata readiness`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.436` implements metadata-first parser/report support for `dynamic-id-reuse reject`; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.435` selected `.436`, direct metadata-first parser/report implementation for `(dynamic-id-reuse reject)`. It found no lowerer/HDL/support-infrastructure prerequisite and kept generated dynamic response-demux plus dynamic same-ID policy fail-closed until a later generated-enforcement mapping owner.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.436: ship dynamic same-ID reject metadata`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.437` audits generated dynamic same-ID reject enforcement mapping readiness; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.436` shipped metadata-first PPIF parser/report support for `(dynamic-id-reuse reject)`, the public sample `ppif/axi_manager_capacity_status_dynamic_same_id_reject_policy.ppif`, support accounting, focused tests, docs, mdBook, and Knowledge Map. Generated dynamic same-ID enforcement, response-demux mapping, queues, scoreboards, HDL behavior, and VHDL behavior remain deferred; dynamic response-demux plus same-family dynamic policy remains fail-closed.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
-- next_action: Start `.436`: implement only metadata-first `dynamic-id-reuse reject` parser/report support, public sample, support accounting, focused tests, docs, and continuity updates; do not add generated dynamic same-ID enforcement or response-demux mapping.
+- next_action: Start `.437`: audit whether selected `dynamic-id-reuse reject` can map to already generated dynamic/mixed response-demux no-active-same-ID enforcement, or whether a smaller report-mapping prerequisite is needed; preserve `.436` metadata behavior and generated HDL.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact

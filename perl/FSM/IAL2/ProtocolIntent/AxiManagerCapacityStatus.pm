@@ -588,6 +588,14 @@ sub _normalize_transaction_id($raw_id, $kind, $index, $id_families) {
 
 sub _reject_dynamic_transaction_behavior_interactions(%args) {
     my $transactions = $args{transactions};
+    my %dynamic_policy_by_family = _raw_same_id_ordering_dynamic_policy_families(
+        $args{raw_same_id_ordering_policy},
+    );
+
+    if (%dynamic_policy_by_family && ref($transactions) ne 'ARRAY') {
+        my ($family) = sort keys %dynamic_policy_by_family;
+        confess "AXI manager capacity/status IAL2 contract same_id_ordering_policy.$family dynamic-id-reuse reject requires transactions metadata\n";
+    }
     return unless ref($transactions) eq 'ARRAY';
 
     my %dynamic_by_family;
@@ -595,6 +603,10 @@ sub _reject_dynamic_transaction_behavior_interactions(%args) {
         my $id = $transaction->{id};
         next unless ref($id) eq 'HASH' && ($id->{policy} // '') eq 'dynamic';
         push @{$dynamic_by_family{$transaction->{kind}}}, $transaction->{name};
+    }
+    for my $family (sort keys %dynamic_policy_by_family) {
+        next if @{$dynamic_by_family{$family} || []};
+        confess "AXI manager capacity/status IAL2 contract same_id_ordering_policy.$family dynamic-id-reuse reject requires at least one dynamic $family transaction\n";
     }
     return unless %dynamic_by_family;
 
@@ -613,10 +625,23 @@ sub _reject_dynamic_transaction_behavior_interactions(%args) {
         }
         if (ref($args{raw_same_id_ordering_policy}) eq 'HASH'
             && exists $args{raw_same_id_ordering_policy}{$family}) {
-            confess "AXI manager capacity/status IAL2 contract same_id_ordering_policy.$family cannot be combined with dynamic $family transaction ID metadata in this slice; dynamic same-ID ordering remains selected_not_generated for transaction(s): $transactions_text\n";
+            next if $dynamic_policy_by_family{$family};
+            confess "AXI manager capacity/status IAL2 contract same_id_ordering_policy.$family concrete-id-reuse policy does not cover dynamic $family transaction ID metadata; select dynamic-id-reuse reject for transaction(s): $transactions_text\n";
         }
     }
 
+}
+
+sub _raw_same_id_ordering_dynamic_policy_families($raw) {
+    return () unless ref($raw) eq 'HASH';
+
+    my %families;
+    for my $family (qw(write read)) {
+        my $entry = $raw->{$family};
+        next unless ref($entry) eq 'HASH' && exists $entry->{dynamic_id_reuse};
+        $families{$family} = 1;
+    }
+    return %families;
 }
 
 sub _unsigned_integer($value, $field) {
@@ -3497,35 +3522,59 @@ sub _normalize_same_id_ordering_policy_family($raw, $family) {
     confess "AXI manager capacity/status IAL2 contract same_id_ordering_policy.$family must be a hash reference\n"
         unless ref($raw) eq 'HASH';
 
-    my %allowed = map { $_ => 1 } qw(concrete_id_reuse);
+    my %allowed = map { $_ => 1 } qw(concrete_id_reuse dynamic_id_reuse);
     for my $field (sort keys %$raw) {
         confess "AXI manager capacity/status IAL2 contract same_id_ordering_policy.$family unsupported field '$field'\n"
             unless $allowed{$field};
     }
-    confess "AXI manager capacity/status IAL2 contract same_id_ordering_policy.$family is missing required field 'concrete_id_reuse'\n"
-        unless exists $raw->{concrete_id_reuse};
+    confess "AXI manager capacity/status IAL2 contract same_id_ordering_policy.$family requires at least one concrete_id_reuse or dynamic_id_reuse field\n"
+        unless exists($raw->{concrete_id_reuse}) || exists($raw->{dynamic_id_reuse});
 
-    my $policy = _nonempty_scalar(
-        $raw->{concrete_id_reuse},
-        "same_id_ordering_policy.$family.concrete_id_reuse",
-    );
-    confess "AXI manager capacity/status IAL2 contract same_id_ordering_policy.$family.concrete_id_reuse must be reject or issue-order-queue in this slice\n"
-        unless $policy =~ /\A(?:reject|issue-order-queue)\z/;
+    my %entry;
+    if (exists $raw->{concrete_id_reuse}) {
+        my $policy = _nonempty_scalar(
+            $raw->{concrete_id_reuse},
+            "same_id_ordering_policy.$family.concrete_id_reuse",
+        );
+        confess "AXI manager capacity/status IAL2 contract same_id_ordering_policy.$family.concrete_id_reuse must be reject or issue-order-queue in this slice\n"
+            unless $policy =~ /\A(?:reject|issue-order-queue)\z/;
 
-    return {
-        policy                   => 'issue_order_queue',
-        implementation_status    => 'selected_not_generated',
-        enforcement              => 'not_generated',
-        accepted_same_id_reuse   => 0,
-        generated_queue_behavior => 0,
-    } if $policy eq 'issue-order-queue';
+        %entry = $policy eq 'issue-order-queue'
+            ? (
+                policy                   => 'issue_order_queue',
+                implementation_status    => 'selected_not_generated',
+                enforcement              => 'not_generated',
+                accepted_same_id_reuse   => 0,
+                generated_queue_behavior => 0,
+            )
+            : (
+                policy                   => 'reject',
+                enforcement              => 'static_validation',
+                accepted_same_id_reuse   => 0,
+                generated_queue_behavior => 0,
+            );
+    }
 
-    return {
-        policy                   => 'reject',
-        enforcement              => 'static_validation',
-        accepted_same_id_reuse   => 0,
-        generated_queue_behavior => 0,
-    };
+    if (exists $raw->{dynamic_id_reuse}) {
+        my $policy = _nonempty_scalar(
+            $raw->{dynamic_id_reuse},
+            "same_id_ordering_policy.$family.dynamic_id_reuse",
+        );
+        confess "AXI manager capacity/status IAL2 contract same_id_ordering_policy.$family.dynamic_id_reuse must be reject in this slice\n"
+            unless $policy eq 'reject';
+
+        $entry{dynamic_id_reuse} = {
+            policy                       => 'reject',
+            implementation_status        => 'selected_not_generated',
+            enforcement                  => 'not_generated',
+            accepted_same_id_reuse       => 0,
+            request_conflict_policy      => 'no_active_same_id',
+            generated_queue_behavior     => 0,
+            generated_scoreboard_behavior => 0,
+        };
+    }
+
+    return \%entry;
 }
 
 sub _auto_id_lifecycle_family_by_name($auto_id_lifecycle, $family_name) {
@@ -3539,7 +3588,13 @@ sub _auto_id_lifecycle_family_by_name($auto_id_lifecycle, $family_name) {
 sub _build_same_id_ordering(%args) {
     my $lifecycle = $args{auto_id_lifecycle};
     my $policy = $args{same_id_ordering_policy};
-    my $has_policy = ref($policy) eq 'HASH' && (exists($policy->{read}) || exists($policy->{write}));
+    my $concrete_policy = _same_id_ordering_concrete_policy($policy);
+    my $dynamic_policy = _same_id_ordering_dynamic_policy($policy);
+    my $has_concrete_policy = ref($concrete_policy) eq 'HASH'
+        && (exists($concrete_policy->{read}) || exists($concrete_policy->{write}));
+    my $has_dynamic_policy = ref($dynamic_policy) eq 'HASH'
+        && (exists($dynamic_policy->{read}) || exists($dynamic_policy->{write}));
+    my $has_policy = $has_concrete_policy || $has_dynamic_policy;
     my $lifecycle_generated = ref($lifecycle) eq 'HASH' && $lifecycle->{generated_behavior};
     my $queue_generated = ref($args{same_id_issue_order_queue_behavior}) eq 'HASH'
         && $args{same_id_issue_order_queue_behavior}{generated_behavior};
@@ -3569,26 +3624,33 @@ sub _build_same_id_ordering(%args) {
 
     return undef unless @families || $has_policy;
 
-    my @policy_entry = $has_policy
+    my @policy_entry;
+    push @policy_entry, $has_concrete_policy
         ? (concrete_id_reuse_policy => _same_id_ordering_policy_with_admitted_boundary(
-            policy => $policy,
+            policy => $concrete_policy,
             admitted_request_boundary => $args{same_id_admitted_request_boundary},
             response_demux => $args{response_demux},
             same_id_issue_order_queue_behavior => $args{same_id_issue_order_queue_behavior},
         ))
         : ();
+    push @policy_entry, $has_dynamic_policy
+        ? (dynamic_id_reuse_policy => $dynamic_policy)
+        : ();
+
     if (!@families) {
         return {
-            mode               => 'concrete_id_reuse_policy',
+            mode               => _same_id_ordering_policy_mode(
+                has_concrete_policy => $has_concrete_policy,
+                has_dynamic_policy  => $has_dynamic_policy,
+            ),
             generated_behavior => $queue_generated ? 1 : 0,
             source_anchors     => _clone_jsonish($args{source_anchors} || []),
             @policy_entry,
-            residue            => $queue_generated
-                ? ['per_id_issue_order_queues']
-                : [
-                    'concrete_id_same_id_ordering',
-                    'per_id_issue_order_queues',
-                ],
+            residue            => _same_id_ordering_policy_residue(
+                has_concrete_policy => $has_concrete_policy,
+                has_dynamic_policy  => $has_dynamic_policy,
+                queue_generated     => $queue_generated,
+            ),
         };
     }
 
@@ -3607,6 +3669,52 @@ sub _build_same_id_ordering(%args) {
             'bursts',
         ],
     };
+}
+
+sub _same_id_ordering_concrete_policy($policy) {
+    return undef unless ref($policy) eq 'HASH';
+
+    my %concrete;
+    for my $family_name (qw(read write)) {
+        my $entry = $policy->{$family_name};
+        next unless ref($entry) eq 'HASH' && exists $entry->{policy};
+        my %copy = %$entry;
+        delete $copy{dynamic_id_reuse};
+        $concrete{$family_name} = \%copy;
+    }
+    return %concrete ? \%concrete : undef;
+}
+
+sub _same_id_ordering_dynamic_policy($policy) {
+    return undef unless ref($policy) eq 'HASH';
+
+    my %dynamic;
+    for my $family_name (qw(read write)) {
+        my $entry = $policy->{$family_name};
+        next unless ref($entry) eq 'HASH' && ref($entry->{dynamic_id_reuse}) eq 'HASH';
+        $dynamic{$family_name} = _clone_jsonish($entry->{dynamic_id_reuse});
+    }
+    return %dynamic ? \%dynamic : undef;
+}
+
+sub _same_id_ordering_policy_mode(%args) {
+    return 'id_reuse_policy'
+        if $args{has_concrete_policy} && $args{has_dynamic_policy};
+    return 'dynamic_id_reuse_policy'
+        if $args{has_dynamic_policy};
+    return 'concrete_id_reuse_policy';
+}
+
+sub _same_id_ordering_policy_residue(%args) {
+    my @residue;
+    if ($args{has_concrete_policy}) {
+        push @residue, $args{queue_generated}
+            ? qw(per_id_issue_order_queues)
+            : qw(concrete_id_same_id_ordering per_id_issue_order_queues);
+    }
+    push @residue, 'dynamic_id_same_id_ordering'
+        if $args{has_dynamic_policy};
+    return \@residue;
 }
 
 sub _same_id_ordering_policy_with_admitted_boundary(%args) {
@@ -7188,13 +7296,13 @@ sub _build_report(%args) {
             'concrete transaction ID assertions require unique request/response events per concrete transaction',
             'concrete transaction ID values generate request/response ID equality assertions against the declared ID-family signals',
             'dynamic transaction ID metadata requires a present matching ID family and reports request_id_source/response_id_signal user ownership; metadata-only dynamic IDs remain selected_not_generated, while selected dynamic write/read response_demux contracts report generated_capture_matching',
-            'dynamic transaction IDs fail closed with same-family auto_id_lifecycle, same_id_ordering, mixed dynamic/static response_demux outside the selected one-dynamic plus one-, two-, or three-concrete-static write BID demux, two-dynamic plus one-concrete-static write BID demux, one-dynamic plus one-, two-, or three-concrete-static read RID/RID-and-RLAST demux, and two-dynamic plus one-concrete-static read single-beat RID or burst-last RID/RLAST demux contracts, and dynamic read_data shapes outside selected scalar single-beat, scalar last-beat, report-only raw-ARLEN scalar last-beat, runtime-assertion raw-ARLEN scalar last-beat, or runtime-assertion raw-ARLEN multi-beat output-bank generated dynamic read response_demux until those dynamic matching shapes are explicitly owned',
+            'dynamic transaction IDs fail closed with same-family auto_id_lifecycle, concrete-id-reuse same_id_ordering assumptions that do not also select dynamic-id-reuse reject, dynamic response_demux plus same-family dynamic-id-reuse policy, mixed dynamic/static response_demux outside the selected one-dynamic plus one-, two-, or three-concrete-static write BID demux, two-dynamic plus one-concrete-static write BID demux, one-dynamic plus one-, two-, or three-concrete-static read RID/RID-and-RLAST demux, and two-dynamic plus one-concrete-static read single-beat RID or burst-last RID/RLAST demux contracts, and dynamic read_data shapes outside selected scalar single-beat, scalar last-beat, report-only raw-ARLEN scalar last-beat, runtime-assertion raw-ARLEN scalar last-beat, or runtime-assertion raw-ARLEN multi-beat output-bank generated dynamic read response_demux until those dynamic matching shapes are explicitly owned',
             'auto_id_lifecycle requires id_families and transactions metadata',
             'auto_id_lifecycle listed families must have at least one auto-ID transaction in that family',
             'auto_id_lifecycle pools are bounded to 1..4 unique values per family and must fit the declared positive ID width',
             'auto_id_lifecycle generates first-free request-ID drive, per-transaction busy/selected-ID state, completion-event release, no-ID assertions, inactive-completion assertions, and same-family request mutual-exclusion assertions',
             'same_id_ordering for generated auto-ID families is enforced by avoiding same-ID concurrency through allocator free-ID guards plus pairwise active selected-ID assertions',
-            'same_id_ordering_policy accepts explicit read/write concrete-id-reuse reject policies plus issue-order-queue admitted-request pulse generation, generates bounded read single-beat, read burst-last, or write depth-2/depth-3 concrete same-ID queue state plus queue-head response demux for selected public response-demux-only shapes, including multiple independent read single-beat, read burst-last, and write groups, gates generated multi-group queue-head admitted requests with counted request-set capacity fit guards, replaces those counted families family-wide request onehot assertions with per-concrete-ID group request assertions, and supports selected single-group read single-beat depth-3 scalar read-data queue-head shape, selected single-group read burst-last depth-3 scalar last-beat read-data, report-only raw-ARLEN burst-length, runtime beat-count/RLAST validation, runtime-validation multi-beat output-bank queue-head shapes, selected multiple/mixed depth-3 runtime-validation multi-beat output-bank queue-head shapes, and selected same-family mixed auto-ID plus depth-2 concrete queue-head read burst-last report-only raw-ARLEN burst-length and runtime beat-count/RLAST validation shapes',
+            'same_id_ordering_policy accepts explicit read/write concrete-id-reuse reject policies, dynamic-id-reuse reject parser/report metadata, and concrete issue-order-queue admitted-request pulse generation, generates bounded read single-beat, read burst-last, or write depth-2/depth-3 concrete same-ID queue state plus queue-head response demux for selected public response-demux-only shapes, including multiple independent read single-beat, read burst-last, and write groups, gates generated multi-group queue-head admitted requests with counted request-set capacity fit guards, replaces those counted families family-wide request onehot assertions with per-concrete-ID group request assertions, and supports selected single-group read single-beat depth-3 scalar read-data queue-head shape, selected single-group read burst-last depth-3 scalar last-beat read-data, report-only raw-ARLEN burst-length, runtime beat-count/RLAST validation, runtime-validation multi-beat output-bank queue-head shapes, selected multiple/mixed depth-3 runtime-validation multi-beat output-bank queue-head shapes, and selected same-family mixed auto-ID plus depth-2 concrete queue-head read burst-last report-only raw-ARLEN burst-length and runtime beat-count/RLAST validation shapes',
             'response_demux requires id_families, transactions, and either selected-family auto_id_lifecycle metadata, selected same-id-ordering concrete-id-reuse issue-order-queue metadata with a duplicate concrete-ID group, one or more all-dynamic selected write transactions for the bounded dynamic write BID demux contracts, one dynamic plus one, two, or three concrete static write transactions or two dynamic plus one concrete static write transaction for the bounded mixed dynamic/static write BID demux contracts, one or more all-dynamic selected read transactions for the bounded dynamic read RID demux contracts, or one dynamic plus one, two, or three concrete static read transactions plus the selected two dynamic plus one concrete static read transaction shape for the bounded mixed dynamic/static read RID/RID-and-RLAST demux contracts',
             'response_demux.write requires response_event equal to write_complete and generates bounded write BID demux behavior for explicit opt-in auto-ID, concrete queue-head, mixed auto-ID/queue-head, single-active dynamic write, bounded multiple all-dynamic write, bounded one-dynamic plus one-, two-, or three-concrete-static mixed dynamic/static write contracts, or the selected bounded two-dynamic plus one-concrete-static mixed dynamic/static write contract',
             'response_demux.read requires response_event equal to read_complete, response_scope single_beat or burst_last, read ID-family metadata, read transactions, and read auto_id_lifecycle metadata, selected concrete same-ID queue-head metadata, selected all-dynamic read transactions, one dynamic plus one, two, or three concrete static read transactions for single-beat or burst-last mixed dynamic/static read contracts, or two dynamic plus one concrete static read transaction for the selected single-beat or burst-last mixed dynamic/static read contract',
@@ -7220,7 +7328,7 @@ sub _build_report(%args) {
             },
             {
                 id     => 'dynamic_transaction_id_behavior',
-                detail => 'Dynamic transaction-ID parser/report metadata is supported for (id dynamic) when matching ID-family metadata is present; single-active dynamic write ID capture and BID response matching including same-cycle release-and-recapture, bounded multiple all-dynamic write BID response-demux matching including same-cycle release-and-recapture, plus one-dynamic plus one-, two-, or three-concrete-static mixed dynamic/static write BID response-demux matching, and two-dynamic plus one-concrete-static mixed dynamic/static write BID response-demux matching are supported under explicit response-demux.write; single-active dynamic read ID capture plus single-beat RID response matching and burst-last RID/RLAST response matching including same-cycle release-and-recapture, bounded multiple all-dynamic read single-beat RID response matching including same-cycle release-and-recapture, bounded multiple all-dynamic read burst-last RID/RLAST response matching, bounded one-dynamic plus one-, two-, or three-concrete-static mixed dynamic/static read single-beat RID response matching and burst-last RID/RLAST response matching, and bounded two-dynamic plus one-concrete-static mixed dynamic/static read single-beat RID response matching or burst-last RID/RLAST response matching are supported under explicit response-demux.read; scalar single-beat and scalar last-beat dynamic read-data routing over generated dynamic read completions is supported for single-active and bounded multiple all-dynamic read demux, including report-only raw-ARLEN burst-length capture and runtime beat-count/RLAST validation for bounded multiple all-dynamic scalar last-beat read-data shapes; runtime-assertion raw-ARLEN multi-beat dynamic read-data output-bank routing over generated single-active and bounded multiple all-dynamic burst-last read demux is supported; scalar single-beat and scalar last-beat mixed dynamic/static read-data routing over generated mixed dynamic/static read completions is supported for selected one-dynamic plus one-, two-, or three-concrete-static read demux shapes with no burst_length metadata; scalar single-beat and scalar last-beat mixed dynamic/static read-data routing over generated mixed dynamic/static read completions is supported for the selected two-dynamic plus one-concrete-static read demux shape with no burst_length metadata; report-only raw-ARLEN burst-length capture over mixed dynamic/static scalar last-beat read-data is supported for selected one-dynamic plus one-, two-, or three-concrete-static read demux shapes and the selected two-dynamic plus one-concrete-static read demux shape; runtime beat-count/RLAST validation over mixed dynamic/static scalar last-beat read-data is supported for selected one-dynamic plus one-, two-, or three-concrete-static read demux shapes and the selected two-dynamic plus one-concrete-static read demux shape; runtime-assertion raw-ARLEN multi-beat mixed dynamic/static read-data routing is supported for selected one-dynamic plus one-, two-, or three-concrete-static read demux shapes and the selected two-dynamic plus one-concrete-static read demux shape. Mixed dynamic/static write shapes beyond selected one-dynamic plus one-, two-, or three-concrete-static transactions or two-dynamic plus one-concrete-static transactions, mixed dynamic/static read single-beat and burst-last shapes beyond selected one-dynamic plus one-, two-, or three-concrete-static transactions or two-dynamic plus one-concrete-static transactions, mixed dynamic/static scalar read-data shapes beyond selected one-dynamic plus one-, two-, or three-concrete-static scalar read-data shapes and the selected two-dynamic plus one-concrete-static scalar read-data shape, mixed dynamic/static runtime read-data shapes beyond the selected one-dynamic plus one-, two-, or three-concrete-static shapes and the selected two-dynamic plus one-concrete-static scalar last-beat shape, mixed dynamic/static multi-beat read-data shapes beyond selected one-dynamic plus one-, two-, or three-concrete-static transactions or selected two-dynamic plus one-concrete-static transactions, same-cycle request widening beyond onehot0, same-cycle recapture outside single-active dynamic write BID demux, bounded multiple all-dynamic write BID demux, single-active dynamic read single-beat RID demux, bounded multiple all-dynamic read single-beat RID demux, and single-active dynamic read burst-last RID/RLAST demux, same-ID ordering, queues, scoreboards, and HDL behavior outside the selected dynamic/mixed write/read shapes remain future exact-owner work.',
+                detail => 'Dynamic transaction-ID parser/report metadata is supported for (id dynamic) when matching ID-family metadata is present; dynamic same-ID reject parser/report metadata is supported through same_id_ordering_policy dynamic-id-reuse reject with generated enforcement left selected_not_generated. Single-active dynamic write ID capture and BID response matching including same-cycle release-and-recapture, bounded multiple all-dynamic write BID response-demux matching including same-cycle release-and-recapture, plus one-dynamic plus one-, two-, or three-concrete-static mixed dynamic/static write BID response-demux matching, and two-dynamic plus one-concrete-static mixed dynamic/static write BID response-demux matching are supported under explicit response-demux.write; single-active dynamic read ID capture plus single-beat RID response matching and burst-last RID/RLAST response matching including same-cycle release-and-recapture, bounded multiple all-dynamic read single-beat RID response matching including same-cycle release-and-recapture, bounded multiple all-dynamic read burst-last RID/RLAST response matching, bounded one-dynamic plus one-, two-, or three-concrete-static mixed dynamic/static read single-beat RID response matching and burst-last RID/RLAST response matching, and bounded two-dynamic plus one-concrete-static mixed dynamic/static read single-beat RID response matching or burst-last RID/RLAST response matching are supported under explicit response-demux.read; scalar single-beat and scalar last-beat dynamic read-data routing over generated dynamic read completions is supported for single-active and bounded multiple all-dynamic read demux, including report-only raw-ARLEN burst-length capture and runtime beat-count/RLAST validation for bounded multiple all-dynamic scalar last-beat read-data shapes; runtime-assertion raw-ARLEN multi-beat dynamic read-data output-bank routing over generated single-active and bounded multiple all-dynamic burst-last read demux is supported; scalar single-beat and scalar last-beat mixed dynamic/static read-data routing over generated mixed dynamic/static read completions is supported for selected one-dynamic plus one-, two-, or three-concrete-static read demux shapes with no burst_length metadata; scalar single-beat and scalar last-beat mixed dynamic/static read-data routing over generated mixed dynamic/static read completions is supported for the selected two-dynamic plus one-concrete-static read demux shape with no burst_length metadata; report-only raw-ARLEN burst-length capture over mixed dynamic/static scalar last-beat read-data is supported for selected one-dynamic plus one-, two-, or three-concrete-static read demux shapes and the selected two-dynamic plus one-concrete-static read demux shape; runtime beat-count/RLAST validation over mixed dynamic/static scalar last-beat read-data is supported for selected one-dynamic plus one-, two-, or three-concrete-static read demux shapes and the selected two-dynamic plus one-concrete-static read demux shape; runtime-assertion raw-ARLEN multi-beat mixed dynamic/static read-data routing is supported for selected one-dynamic plus one-, two-, or three-concrete-static read demux shapes and the selected two-dynamic plus one-concrete-static read demux shape. Mixed dynamic/static write shapes beyond selected one-dynamic plus one-, two-, or three-concrete-static transactions or two-dynamic plus one-concrete-static transactions, mixed dynamic/static read single-beat and burst-last shapes beyond selected one-dynamic plus one-, two-, or three-concrete-static transactions or two-dynamic plus one-concrete-static transactions, mixed dynamic/static scalar read-data shapes beyond selected one-dynamic plus one-, two-, or three-concrete-static scalar read-data shapes and the selected two-dynamic plus one-concrete-static scalar read-data shape, mixed dynamic/static runtime read-data shapes beyond the selected one-dynamic plus one-, two-, or three-concrete-static shapes and the selected two-dynamic plus one-concrete-static scalar last-beat shape, mixed dynamic/static multi-beat read-data shapes beyond selected one-dynamic plus one-, two-, or three-concrete-static transactions or selected two-dynamic plus one-concrete-static transactions, same-cycle request widening beyond onehot0, same-cycle recapture outside single-active dynamic write BID demux, bounded multiple all-dynamic write BID demux, single-active dynamic read single-beat RID demux, bounded multiple all-dynamic read single-beat RID demux, and single-active dynamic read burst-last RID/RLAST demux, generated dynamic same-ID ordering enforcement, queues, scoreboards, and HDL behavior outside the selected dynamic/mixed write/read shapes remain future exact-owner work.',
             },
             {
                 id     => 'profile_aliases_and_full_manager_behavior',

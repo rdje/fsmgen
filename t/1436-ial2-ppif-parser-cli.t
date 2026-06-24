@@ -198,6 +198,33 @@ subtest 'PPIF adapter parses AXI manager dynamic transaction-ID metadata without
     ok($residue{dynamic_transaction_id_behavior}, 'dynamic behavior boundary remains explicit unsupported residue');
 };
 
+subtest 'PPIF adapter parses AXI manager dynamic same-ID reject policy metadata' => sub {
+    my $sample_path = sample_capacity_dynamic_same_id_reject_policy_ppif_path();
+    ok(-f $sample_path, 'tracked runnable PPIF capacity/status dynamic same-ID reject policy sample exists');
+
+    my $base = FSM::Adapter::IAL2::PPIF->new()->parse_source(sample_capacity_dynamic_transaction_id_ppif(), sample_capacity_dynamic_transaction_id_ppif_path());
+    my $result = FSM::Adapter::IAL2::PPIF->new()->parse_source(sample_capacity_dynamic_same_id_reject_policy_ppif(), $sample_path);
+
+    is($result->{kind}, 'protocol_intent.axi_manager_capacity_status', 'dynamic same-ID reject sample still uses the capacity/status generator');
+    is($result->{report}{source_object}{id}, 'axi-manager-capacity-status-dynamic-same-id-reject-policy', 'dynamic same-ID reject source object id is preserved');
+    is($result->{report}{source_object}{intent_name}, 'axi_manager_capacity_status_dynamic_same_id_reject_policy', 'dynamic same-ID reject source intent name is preserved');
+    is(
+        $result->{generated_ial1}{text},
+        $base->{generated_ial1}{text},
+        'dynamic same-ID reject policy metadata does not alter generated IAL1 text',
+    );
+    is_deeply(
+        $result->{generated_ial0}{files},
+        $base->{generated_ial0}{files},
+        'dynamic same-ID reject policy metadata does not alter generated IAL0 files',
+    );
+    ok(!exists $result->{report}{id_response_rule_engine}, 'dynamic same-ID metadata does not emit a concrete-ID assertion engine');
+    assert_dynamic_transaction_id_report($result->{report}{transactions}, 'adapter report');
+    assert_dynamic_same_id_reject_policy_report($result->{report}{same_id_ordering}, 'adapter report');
+    my %residue = map { $_->{id} => 1 } @{$result->{report}{unsupported_residue}};
+    ok($residue{dynamic_transaction_id_behavior}, 'dynamic behavior boundary remains explicit unsupported residue');
+};
+
 subtest 'PPIF adapter parses AXI manager dynamic write response-demux behavior' => sub {
     my $sample_path = sample_capacity_dynamic_write_response_demux_ppif_path();
     ok(-f $sample_path, 'tracked runnable PPIF capacity/status dynamic write response-demux sample exists');
@@ -2375,15 +2402,21 @@ subtest 'PPIF adapter diagnostics fail closed before generation claims' => sub {
         ['duplicate manager same-ID ordering read family',
             capacity_ppif_with_objects(manager_capacity_object_with_same_id_ordering('(read (concrete-id-reuse reject)) (read (concrete-id-reuse reject))')),
             qr/duplicate \(read \.\.\.\) family clause/],
-        ['missing manager same-ID ordering concrete reuse policy',
+        ['empty manager same-ID ordering family policy arm',
             capacity_ppif_with_objects(manager_capacity_object_with_same_id_ordering('(read)')),
-            qr/is missing required \(concrete-id-reuse \.\.\.\) clause/],
+            qr/requires at least one \(concrete-id-reuse \.\.\.\) or \(dynamic-id-reuse \.\.\.\) clause/],
         ['duplicate manager same-ID ordering concrete reuse policy',
             capacity_ppif_with_objects(manager_capacity_object_with_same_id_ordering('(read (concrete-id-reuse reject) (concrete-id-reuse reject))')),
             qr/duplicate \(concrete-id-reuse \.\.\.\) clause/],
+        ['duplicate manager same-ID ordering dynamic reuse policy',
+            capacity_ppif_with_objects(manager_capacity_object_with_same_id_ordering('(read (dynamic-id-reuse reject) (dynamic-id-reuse reject))')),
+            qr/duplicate \(dynamic-id-reuse \.\.\.\) clause/],
         ['unsupported manager same-ID ordering scoreboard policy',
             capacity_ppif_with_objects(manager_capacity_object_with_same_id_ordering('(write (concrete-id-reuse scoreboard))')),
             qr/supports only reject or issue-order-queue in this slice/],
+        ['unsupported manager same-ID ordering dynamic scoreboard policy',
+            capacity_ppif_with_objects(manager_capacity_object_with_same_id_ordering('(read (dynamic-id-reuse scoreboard))')),
+            qr/supports only reject in this slice/],
         ['manager same-ID ordering reject blocks concrete same-ID reuse',
             capacity_ppif_with_objects(manager_capacity_object_with_id_families_transactions_and_same_id_ordering(
                 '(write (width 4) (request-id awid) (response-id bid)) (read (width 4) (request-id arid) (response-id rid))',
@@ -2418,13 +2451,34 @@ subtest 'PPIF adapter diagnostics fail closed before generation claims' => sub {
                 '(read (response-event axi0_read_complete) (response-scope single-beat) (transaction-completion generated))',
             )),
             qr/response_demux\.read generated transaction completion signal 'axi0_read_complete' must be distinct from response_event 'axi0_read_complete'/],
-        ['manager dynamic transaction ID blocks same-family same-ID ordering behavior',
+        ['manager dynamic same-ID policy requires transactions metadata',
+            capacity_ppif_with_objects(manager_capacity_object_with_id_families_and_same_id_ordering(
+                '(write (width 4) (request-id awid) (response-id bid)) (read (width 4) (request-id arid) (response-id rid))',
+                '(read (dynamic-id-reuse reject))',
+            )),
+            qr/same_id_ordering_policy\.read dynamic-id-reuse reject requires transactions metadata/],
+        ['manager dynamic same-ID policy requires same-family dynamic transaction',
+            capacity_ppif_with_objects(manager_capacity_object_with_id_families_transactions_and_same_id_ordering(
+                '(write (width 4) (request-id awid) (response-id bid)) (read (width 4) (request-id arid) (response-id rid))',
+                default_manager_transactions(),
+                '(write (dynamic-id-reuse reject))',
+            )),
+            qr/same_id_ordering_policy\.write dynamic-id-reuse reject requires at least one dynamic write transaction/],
+        ['manager dynamic transaction ID rejects concrete-only same-ID policy assumptions',
             capacity_ppif_with_objects(manager_capacity_object_with_id_families_transactions_and_same_id_ordering(
                 '(write (width 4) (request-id awid) (response-id bid)) (read (width 4) (request-id arid) (response-id rid))',
                 '(read r0 (tag rd0) (request axi0_read_submit) (completion axi0_read_complete) (id dynamic))',
                 '(read (concrete-id-reuse issue-order-queue))',
             )),
-            qr/same_id_ordering_policy\.read cannot be combined with dynamic read transaction ID metadata/],
+            qr/same_id_ordering_policy\.read concrete-id-reuse policy does not cover dynamic read transaction ID metadata; select dynamic-id-reuse reject for transaction\(s\): r0/],
+        ['manager dynamic response-demux rejects same-family dynamic same-ID policy',
+            capacity_ppif_with_objects(manager_capacity_object_with_id_families_transactions_same_id_ordering_and_response_demux(
+                '(write (width 4) (request-id awid) (response-id bid)) (read (width 4) (request-id arid) (response-id rid))',
+                '(read r0 (tag rd0) (request axi0_r0_request) (completion axi0_r0_complete) (id dynamic))',
+                '(read (dynamic-id-reuse reject))',
+                '(read (response-event axi0_read_complete) (response-scope single-beat) (transaction-completion generated))',
+            )),
+            qr/response_demux\.read dynamic ID matching cannot be combined with same_id_ordering\.read in this slice/],
         ['manager dynamic read-data without response-demux metadata remains unsupported',
             capacity_ppif_with_objects(manager_capacity_object_with_id_families_transactions_and_read_data(
                 '(write (width 4) (request-id awid) (response-id bid)) (read (width 4) (request-id arid) (response-id rid))',
@@ -2853,6 +2907,22 @@ subtest 'CLI emits IAL2 report JSON for AXI manager dynamic transaction-ID metad
     assert_dynamic_transaction_id_report($report->{transactions}, 'CLI report');
     ok(!exists $report->{id_response_rule_engine}, 'CLI dynamic metadata report does not emit a concrete-ID assertion engine');
     is_deeply($report->{generated_artifacts}{ial0}{files}, ['axi0_capacity_status.fsm'], 'dynamic transaction-ID metadata keeps the generated .fsm artifact name stable');
+};
+
+subtest 'CLI emits IAL2 report JSON for AXI manager dynamic same-ID reject policy .ppif' => sub {
+    my ($success, undef, undef, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--emit-schedule-json', sample_capacity_dynamic_same_id_reject_policy_ppif_path()],
+    );
+
+    ok($success, '--emit-schedule-json succeeds for capacity/status dynamic same-ID reject policy .ppif');
+    is(join('', @{$stderr_buf || []}), '', 'capacity/status dynamic same-ID reject policy report keeps stderr clean');
+    my $report = decode_json(join('', @{$stdout_buf || []}));
+    is($report->{schema}, 'fsmgen.ial2.protocol_intent.axi_manager_capacity_status.v1', 'CLI keeps the capacity/status report schema');
+    is($report->{source_object}{intent_name}, 'axi_manager_capacity_status_dynamic_same_id_reject_policy', 'dynamic same-ID reject report carries the PPIF top-level intent name');
+    assert_dynamic_transaction_id_report($report->{transactions}, 'CLI report');
+    assert_dynamic_same_id_reject_policy_report($report->{same_id_ordering}, 'CLI report');
+    ok(!exists $report->{id_response_rule_engine}, 'CLI dynamic same-ID metadata report does not emit a concrete-ID assertion engine');
+    is_deeply($report->{generated_artifacts}{ial0}{files}, ['axi0_capacity_status.fsm'], 'dynamic same-ID reject metadata keeps the generated .fsm artifact name stable');
 };
 
 subtest 'CLI emits IAL2 report JSON for AXI manager dynamic write response-demux .ppif' => sub {
@@ -7311,6 +7381,10 @@ sub sample_capacity_dynamic_transaction_id_ppif_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_dynamic_transaction_id.ppif');
 }
 
+sub sample_capacity_dynamic_same_id_reject_policy_ppif_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_dynamic_same_id_reject_policy.ppif');
+}
+
 sub sample_capacity_dynamic_write_response_demux_ppif_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_dynamic_write_response_demux.ppif');
 }
@@ -7637,6 +7711,10 @@ sub sample_capacity_transaction_ppif {
 
 sub sample_capacity_dynamic_transaction_id_ppif {
     return slurp(sample_capacity_dynamic_transaction_id_ppif_path());
+}
+
+sub sample_capacity_dynamic_same_id_reject_policy_ppif {
+    return slurp(sample_capacity_dynamic_same_id_reject_policy_ppif_path());
 }
 
 sub sample_capacity_dynamic_write_response_demux_ppif {
@@ -8020,6 +8098,13 @@ sub manager_capacity_object_with_id_families {
     my ($families) = @_;
     my $object = manager_capacity_object();
     $object =~ s/\)\z/\n    (id-families $families))/;
+    return $object;
+}
+
+sub manager_capacity_object_with_id_families_and_same_id_ordering {
+    my ($families, $ordering) = @_;
+    my $object = manager_capacity_object_with_id_families($families);
+    $object =~ s/\)\z/\n    (same-id-ordering $ordering))/;
     return $object;
 }
 
@@ -9556,6 +9641,38 @@ sub assert_same_id_issue_order_queue_policy_report {
             generated_assertions => [],
         },
     });
+}
+
+sub assert_dynamic_same_id_reject_policy_report {
+    my ($ordering, $owner) = @_;
+
+    is($ordering->{mode}, 'dynamic_id_reuse_policy', "$owner marks dynamic same-ID policy mode");
+    ok(!$ordering->{generated_behavior}, "$owner marks dynamic same-ID policy generated behavior false");
+    ok(!exists($ordering->{families}), "$owner does not report generated same-ID avoidance families");
+    is_deeply(
+        $ordering->{residue},
+        [qw(dynamic_id_same_id_ordering)],
+        "$owner keeps dynamic same-ID ordering as residue",
+    );
+    ok(@{$ordering->{source_anchors}}, "$owner carries source anchors into dynamic same-ID policy metadata");
+    is_deeply(
+        [sort keys %{$ordering->{dynamic_id_reuse_policy}}],
+        ['read'],
+        "$owner reports the selected read dynamic-ID reuse policy",
+    );
+    is_deeply(
+        $ordering->{dynamic_id_reuse_policy}{read},
+        {
+            policy                       => 'reject',
+            implementation_status        => 'selected_not_generated',
+            enforcement                  => 'not_generated',
+            accepted_same_id_reuse       => 0,
+            request_conflict_policy      => 'no_active_same_id',
+            generated_queue_behavior     => 0,
+            generated_scoreboard_behavior => 0,
+        },
+        "$owner reports selected-not-generated dynamic same-ID reject metadata",
+    );
 }
 
 sub assert_boolean_capacity_accounting {

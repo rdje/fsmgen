@@ -7905,6 +7905,23 @@ while keeping generated dynamic response-demux plus dynamic same-ID policy
 fail-closed until a later owner maps generated no-active-same-ID assertion
 enforcement.
 
+Dynamic same-ID policy metadata-first support:
+[AXI_IAL2_MANAGER_DYNAMIC_SAME_ID_POLICY_METADATA_FIRST_SLICE](../../AXI_IAL2_MANAGER_DYNAMIC_SAME_ID_POLICY_METADATA_FIRST_SLICE.md)
+ships parser/report support for `(dynamic-id-reuse reject)` under
+`(same-id-ordering ...)`. Dynamic-only policy reports
+`same_id_ordering.mode: dynamic_id_reuse_policy` and
+`same_id_ordering.dynamic_id_reuse_policy.<family>` with `policy: reject`,
+`implementation_status: selected_not_generated`, `enforcement:
+not_generated`, `accepted_same_id_reuse: false`,
+`request_conflict_policy: no_active_same_id`, and no generated queue or
+scoreboard behavior. Concrete and dynamic policy clauses may coexist in one
+family arm and report as `same_id_ordering.mode: id_reuse_policy`. The public
+sample is
+`ppif/axi_manager_capacity_status_dynamic_same_id_reject_policy.ppif`.
+Generated dynamic same-ID enforcement, response-demux mapping, queues,
+scoreboards, HDL behavior, and VHDL behavior remain deferred; dynamic
+response-demux plus same-family dynamic policy still fails closed.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

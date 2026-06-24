@@ -2863,6 +2863,27 @@ focused diagnostics, a metadata-only public sample, and support accounting,
 while keeping generated dynamic response-demux plus dynamic same-ID policy
 fail-closed until a later owner maps generated no-active-same-ID assertion
 enforcement.
+`.436` now ships metadata-first parser/report support for the selected
+`(dynamic-id-reuse reject)` policy under `(same-id-ordering ...)`. PPIF accepts
+dynamic-only family arms and coexistence with existing concrete
+`concrete-id-reuse` clauses; empty arms, duplicate dynamic clauses,
+unsupported dynamic policy values, selected dynamic policy without
+transactions, selected dynamic policy without a same-family dynamic
+transaction, concrete-only same-ID policy against dynamic transaction IDs, and
+dynamic response-demux plus same-family dynamic policy remain fail-closed with
+targeted diagnostics. Reports now carry
+`same_id_ordering.dynamic_id_reuse_policy.<family>` with `policy: reject`,
+`implementation_status: selected_not_generated`, `enforcement:
+not_generated`, `accepted_same_id_reuse: false`,
+`request_conflict_policy: no_active_same_id`, and no generated queue or
+scoreboard behavior. Dynamic-only policy uses
+`same_id_ordering.mode: dynamic_id_reuse_policy`; concrete plus dynamic policy
+uses `id_reuse_policy`. The public sample
+`ppif/axi_manager_capacity_status_dynamic_same_id_reject_policy.ppif` is
+support-accounted as
+`intent.ppif_axi_manager_capacity_status_dynamic_same_id_reject_policy`.
+Generated dynamic same-ID enforcement, response-demux mapping, queues,
+scoreboards, HDL behavior, and VHDL behavior remain deferred.
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,
