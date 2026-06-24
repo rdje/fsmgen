@@ -1985,7 +1985,7 @@ sub _normalize_response_demux_read(%args) {
                 _response_demux_mark_single_active_dynamic_read_recapture(\%entry);
             } elsif ($multi_dynamic && !@static_states) {
                 _response_demux_mark_multi_active_dynamic_read_recapture(\%entry);
-            } elsif (@dynamic_states == 1 && (@static_states == 1 || @static_states == 2)) {
+            } elsif (@dynamic_states == 1 && (@static_states == 1 || @static_states == 2 || @static_states == 3)) {
                 _response_demux_mark_mixed_dynamic_static_read_recapture(\%entry);
             }
             return \%entry;
@@ -2380,7 +2380,7 @@ sub _response_demux_mark_mixed_dynamic_static_read_recapture($entry, %args) {
     my $static_states = $entry->{static_transaction_state};
     return unless ref($dynamic_states) eq 'ARRAY' && @$dynamic_states == 1;
     return unless ref($static_states) eq 'ARRAY'
-        && (@$static_states == 1 || @$static_states == 2);
+        && (@$static_states == 1 || @$static_states == 2 || @$static_states == 3);
     return if grep { ref($_) ne 'HASH' } @$dynamic_states;
     return if grep { ref($_) ne 'HASH' } @$static_states;
 

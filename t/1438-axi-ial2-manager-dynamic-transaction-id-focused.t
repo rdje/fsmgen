@@ -2846,7 +2846,7 @@ sub assert_mixed_dynamic_static_read_multi_static_report {
     }
     my @static_names = map { $_->{transaction} } @static_cases;
     my @transaction_names = ('r0', @static_names);
-    my $release_recapture_expected = @static_cases == 2;
+    my $release_recapture_expected = @static_cases == 2 || @static_cases == 3;
     my @unique_match_assertions;
     for my $left_index (0 .. $#transaction_names - 1) {
         for my $right_index ($left_index + 1 .. $#transaction_names) {

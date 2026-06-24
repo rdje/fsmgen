@@ -2629,6 +2629,25 @@ idle-or-releasing assertion names. A fresh guarded baseline schedule attempt
 stopped at the default 88% host RAM cutoff because host memory started at
 88.1%; no cutoff was raised, and the `.416`/`.417` 46985-byte baseline
 remains the recorded evidence.
+`.419` now ships one-dynamic-plus-three-static mixed dynamic/static read
+single-beat `RID` same-cycle release-and-recapture for
+`ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static3.ppif`.
+The implementation widens only the selected single-beat marker path and
+focused expectation. Reports now include dynamic recapture under
+`dynamic_capture.transactions[0]`, list-shaped `static_capture[]` entries for
+`r1`/`r2`/`r3`,
+`generated_multi_mixed_dynamic_static_read_demux_completion`, guard
+composition across three static requests/static-ID exclusions and both static
+siblings, release-only same-transaction request exclusions, and
+idle-or-releasing assertions for all four read transactions. Public syntax,
+support identity, mode/scope/source/semantics, onehot0/static-ID/
+active-match/unique-match/completion-active assertions, one-/two-static read
+recapture, three-static burst-last no-recapture,
+two-dynamic-plus-one-static no-recapture, and three-static read-data consumers
+remain preserved. Syntax and direct normalizer/rule/preservation probes
+passed. Guarded selected schedule and focused `t/1438` probes stopped because
+host memory was already above the default 88% cutoff; no cutoff was raised.
+`.420` now selects the next exact post-recapture owner.
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,

@@ -1647,6 +1647,28 @@ deferred burst-last/two-dynamic/backend boundaries for the implementation
 owner. A fresh guarded baseline schedule attempt stopped at the default 88%
 host RAM cutoff because host memory started at 88.1%; no cutoff was raised,
 and the `.416`/`.417` 46985-byte baseline remains the recorded evidence.
+`.419` now ships one-dynamic-plus-three-static mixed dynamic/static read
+single-beat `RID` same-cycle release-and-recapture for
+`ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static3.ppif`.
+FSMGen now reports dynamic recapture under
+`dynamic_capture.transactions[0]`, list-shaped static recapture under
+`static_capture[]` for `r1`/`r2`/`r3`,
+`generated_multi_mixed_dynamic_static_read_demux_completion`, guard
+composition across all three static requests/static-ID exclusions and both
+static siblings, release-only same-transaction request exclusions, and
+idle-or-releasing request assertions for `r0`/`r1`/`r2`/`r3`. Public syntax,
+support identity, mode/scope/source/semantics, generated demux/completion
+behavior, onehot0/static-ID/active-match/unique-match/completion-active
+assertions, one-/two-static read recapture, three-static burst-last
+no-recapture, two-dynamic-plus-one-static no-recapture, and three-static
+read-data/raw-`ARLEN`/runtime/multi-beat consumers remain preserved. Syntax
+checks passed. Guarded selected schedule and focused `t/1438` probes stopped
+immediately because host memory was already 89.9% and 90.0%, above the
+default 88% cutoff; no cutoff was raised. Direct normalizer/rule probes
+verified the selected recapture fields, guard-array counts, release-recapture
+rule headers, assertion names, and adjacent preservation boundaries. `.420`
+now selects the next exact owner after three-static read single-beat
+recapture.
 No behavior
 changed in `.273`, `.274`, `.275`,
 `.277`, `.278`, `.279`, `.281`,
@@ -3978,6 +4000,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/AXI_IAL2_MANAGER_POST_MULTIPLE_MIXED_DYNAMIC_STATIC_READ_RLAST_RECAPTURE_NEXT_SLICE_SELECTION.md` — selected readiness audit for one-dynamic-plus-three-static mixed dynamic/static read single-beat `RID` same-cycle release-and-recapture after the two-static read recapture family shipped.
 - `docs/AXI_IAL2_MANAGER_THREE_STATIC_MIXED_DYNAMIC_STATIC_READ_RECAPTURE_READINESS_AUDIT.md` — audited one-dynamic-plus-three-static mixed dynamic/static read single-beat `RID` same-cycle release-and-recapture readiness and selected public contract selection.
 - `docs/AXI_IAL2_MANAGER_THREE_STATIC_MIXED_DYNAMIC_STATIC_READ_RECAPTURE_CONTRACT_SELECTION.md` — selected direct one-dynamic-plus-three-static mixed dynamic/static read single-beat `RID` same-cycle release-and-recapture implementation under the existing three-static public sample.
+- `docs/AXI_IAL2_MANAGER_THREE_STATIC_MIXED_DYNAMIC_STATIC_READ_RECAPTURE_BEHAVIOR.md` — shipped one-dynamic-plus-three-static mixed dynamic/static read single-beat `RID` same-cycle release-and-recapture under the existing three-static public sample.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_CONTRACT_SELECTION.md` — selected direct single-active dynamic write `BID` same-cycle release-and-recapture behavior under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_BEHAVIOR.md` — shipped single-active dynamic write `BID` same-cycle release-and-recapture under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_WRITE_RECAPTURE_NEXT_SLICE_SELECTION.md` — selected `.367`, public contract selection for first single-active dynamic read same-cycle release-and-recapture after dynamic write recapture shipped.

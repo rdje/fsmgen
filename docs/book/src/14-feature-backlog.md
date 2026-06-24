@@ -7674,6 +7674,18 @@ add dynamic recapture under `dynamic_capture.transactions[0]`, list-shaped
 guard composition, same-transaction request exclusions on release-only rules,
 and idle-or-releasing request assertions for all four transactions.
 
+Three-static mixed dynamic/static read recapture behavior:
+[AXI_IAL2_MANAGER_THREE_STATIC_MIXED_DYNAMIC_STATIC_READ_RECAPTURE_BEHAVIOR](../../AXI_IAL2_MANAGER_THREE_STATIC_MIXED_DYNAMIC_STATIC_READ_RECAPTURE_BEHAVIOR.md)
+ships one-dynamic-plus-three-static mixed dynamic/static read single-beat
+`RID` same-cycle release-and-recapture for the existing three-static public
+sample. Reports now include dynamic recapture for `r0`, list-shaped
+`static_capture[]` entries for `r1`/`r2`/`r3`,
+`generated_multi_mixed_dynamic_static_read_demux_completion`, composed
+dynamic/static guards, same-transaction request exclusions on release-only
+rules, and idle-or-releasing request assertions for all four transactions.
+The three-static burst-last sample and two-dynamic-plus-one-static samples
+remain un-widened.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after
