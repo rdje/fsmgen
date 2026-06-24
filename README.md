@@ -1623,10 +1623,34 @@ syntax/support identity, list-shaped `static_capture[]` for `r1`/`r2`/`r3`,
 guard composition, idle-or-releasing assertions for all four transactions,
 preservation boundaries, validation gates, rollback, docs, and Knowledge Map
 impact before implementation.
+`.418` now selects `.419`, direct implementation of
+one-dynamic-plus-three-static mixed dynamic/static read single-beat `RID`
+same-cycle release-and-recapture for
+`ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static3.ppif`.
+The selector changes no behavior. The selected contract preserves public
+syntax and support identity,
+`bounded_multi_mixed_dynamic_static_read_rid_demux_contract`,
+`response_scope: single_beat`,
+`transaction_completion_source: generated_multi_mixed_dynamic_static_read_demux`,
+`transaction_completion_semantics:
+matched_dynamic_or_static_concrete_id_single_beat`, the `r0`/`r1`/`r2`/`r3`
+dynamic/static/mixed transaction lists, static-ID reservations for `4'd3`,
+`4'd5`, and `4'd7`, generated demux/completion behavior, onehot0,
+static-ID-exclusion, response-active-match, pairwise unique-match, and
+completion-active assertions. It selects
+`dynamic_capture.transactions[0]` recapture fields, list-shaped
+`static_capture[]` entries for `r1`/`r2`/`r3`, release-recapture source
+`generated_multi_mixed_dynamic_static_read_demux_completion`, mixed read
+policy names, dynamic/static guard composition, release-only
+same-transaction request exclusions, idle-or-releasing assertion names, and
+deferred burst-last/two-dynamic/backend boundaries for the implementation
+owner. A fresh guarded baseline schedule attempt stopped at the default 88%
+host RAM cutoff because host memory started at 88.1%; no cutoff was raised,
+and the `.416`/`.417` 46985-byte baseline remains the recorded evidence.
 No behavior
 changed in `.273`, `.274`, `.275`,
 `.277`, `.278`, `.279`, `.281`,
-`.282`, `.283`, `.285`, `.286`, `.288`, `.290`, `.292`, `.293`, `.294`, `.296`, `.297`, `.298`, `.300`, `.301`, `.302`, `.304`, `.305`, `.306`, `.308`, `.309`, `.311`, `.313`, `.315`, `.316`, `.317`, `.323`, `.324`, `.325`, `.327`, `.328`, `.329`, `.331`, `.332`, `.334`, `.336`, `.338`, `.339`, `.340`, `.342`, `.343`, `.345`, `.346`, `.348`, `.349`, `.351`, `.352`, `.354`, `.356`, `.358`, `.359`, `.360`, `.362`, `.363`, `.364`, `.366`, `.367`, `.369`, `.370`, `.371`, `.373`, `.374`, `.376`, `.377`, `.379`, `.380`, `.382`, `.383`, `.384`, `.386`, `.387`, `.388`, `.390`, `.391`, `.393`, `.394`, `.395`, `.397`, `.398`, `.399`, `.401`, `.402`, `.404`, `.405`, `.406`, `.408`, `.409`, `.410`, `.412`, `.413`, `.414`, `.416`, or `.417`.
+`.282`, `.283`, `.285`, `.286`, `.288`, `.290`, `.292`, `.293`, `.294`, `.296`, `.297`, `.298`, `.300`, `.301`, `.302`, `.304`, `.305`, `.306`, `.308`, `.309`, `.311`, `.313`, `.315`, `.316`, `.317`, `.323`, `.324`, `.325`, `.327`, `.328`, `.329`, `.331`, `.332`, `.334`, `.336`, `.338`, `.339`, `.340`, `.342`, `.343`, `.345`, `.346`, `.348`, `.349`, `.351`, `.352`, `.354`, `.356`, `.358`, `.359`, `.360`, `.362`, `.363`, `.364`, `.366`, `.367`, `.369`, `.370`, `.371`, `.373`, `.374`, `.376`, `.377`, `.379`, `.380`, `.382`, `.383`, `.384`, `.386`, `.387`, `.388`, `.390`, `.391`, `.393`, `.394`, `.395`, `.397`, `.398`, `.399`, `.401`, `.402`, `.404`, `.405`, `.406`, `.408`, `.409`, `.410`, `.412`, `.413`, `.414`, `.416`, `.417`, or `.418`.
 Current primary target is SystemVerilog, with Verilog conversion support and a scoped direct-root VHDL scaffold for the accepted single-FSM subset, including delayed-pulse clock-branch lowering, generic-bearing direct-root module headers with typed scalar/vector sized-literal defaults, signed vector and signed scalar direct-root ports, scalar/vector two-state `bit` input-port and internal declaration lowering, signed scalar/vector, non-signed four-state `logic` input-port/internal declaration lowering, and vector `logic signed` internal declaration lowering, scalar and signed scalar addition/subtraction/multiplication RHS/chain lowering, vector numeric-literal addition/subtraction emitted by compound update/shorthand forms, same-width unsigned-style addition/subtraction/multiplication/division/modulo/XOR RHS/chain lowering, same-width signed vector addition/subtraction/multiplication/division/modulo RHS lowering for signed targets and operands, signed vector numeric-literal addition/subtraction/multiplication/division/modulo RHS lowering including signed vector negative decimal addition, subtraction, multiplication, division, and modulo literals, non-signed vector positive decimal multiplication/division/modulo literal lowering in signal-first, literal-first, and literal-literal order, non-signed vector negative decimal addition/subtraction/multiplication/division/modulo literal lowering, bounded generated AMBA wrap arithmetic for `fsm/amba_requester.fsm`, bounded non-signed vector, signed vector, and scalar output-port decimal literal assignment lowering including non-signed vector, signed vector, and scalar negative decimal literals, bounded direct aggregate-output packed-vector lowering, a bounded C3 external-RTL literal/concat composition VHDL structural top for `t/corpus/composition_intent_integer_literals.fsm`, bounded external-RTL scalar integer, scalar integer expression, one-bit sized bitstring, multi-bit sized bitstring, and resolved packed aggregate VHDL generic maps including resolved package-backed constants, a bounded C1 standalone-DT child composition VHDL passthrough top for `t/corpus/standalone_dtc_explicit_system_autowire.fsm`, bounded C1 standalone-DT scalar integer, scalar expression, one-bit sized bitstring, multi-bit sized bitstring, packed-list, and packed-map VHDL generic maps, a bounded C2 generated-FSM child composition VHDL scalar-autowire top for `t/corpus/implicit_composition_system_autowire.fsm`, bounded C2 generated-FSM scalar integer, scalar expression, one-bit sized bitstring, multi-bit sized bitstring, and resolved packed aggregate VHDL generic maps, and a bounded APB/C4 generated-FSM child composition VHDL top for `fsm/apb_tb.fsm` with scalar integer, scalar expression, one-bit sized bitstring, multi-bit sized bitstring, resolved packed aggregate, and resolved package-backed generic maps in the same APB/C4 shape.
 Scalar division/modulo, including signed scalar division/modulo, in the direct
 VHDL scaffold remains an explicit fail-closed boundary; full aggregate
@@ -3953,6 +3977,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/AXI_IAL2_MANAGER_MULTIPLE_MIXED_DYNAMIC_STATIC_READ_RLAST_RECAPTURE_BEHAVIOR.md` — shipped one-dynamic-plus-two-static mixed dynamic/static read burst-last `RID && RLAST` same-cycle release-and-recapture under the existing public sample.
 - `docs/AXI_IAL2_MANAGER_POST_MULTIPLE_MIXED_DYNAMIC_STATIC_READ_RLAST_RECAPTURE_NEXT_SLICE_SELECTION.md` — selected readiness audit for one-dynamic-plus-three-static mixed dynamic/static read single-beat `RID` same-cycle release-and-recapture after the two-static read recapture family shipped.
 - `docs/AXI_IAL2_MANAGER_THREE_STATIC_MIXED_DYNAMIC_STATIC_READ_RECAPTURE_READINESS_AUDIT.md` — audited one-dynamic-plus-three-static mixed dynamic/static read single-beat `RID` same-cycle release-and-recapture readiness and selected public contract selection.
+- `docs/AXI_IAL2_MANAGER_THREE_STATIC_MIXED_DYNAMIC_STATIC_READ_RECAPTURE_CONTRACT_SELECTION.md` — selected direct one-dynamic-plus-three-static mixed dynamic/static read single-beat `RID` same-cycle release-and-recapture implementation under the existing three-static public sample.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_CONTRACT_SELECTION.md` — selected direct single-active dynamic write `BID` same-cycle release-and-recapture behavior under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_BEHAVIOR.md` — shipped single-active dynamic write `BID` same-cycle release-and-recapture under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_WRITE_RECAPTURE_NEXT_SLICE_SELECTION.md` — selected `.367`, public contract selection for first single-active dynamic read same-cycle release-and-recapture after dynamic write recapture shipped.

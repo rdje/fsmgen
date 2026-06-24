@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.417: audit three-static read recapture readiness`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.418` selects the public contract for one-dynamic-plus-three-static mixed read single-beat RID recapture; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.417` audited three-static mixed read recapture readiness and selected `.418`, public contract selection. The audit found no lower parser/syntax/support/report/IAL1 prerequisite: the public sample and list-shaped report mode already ship, rule/assertion helpers already compose over guard arrays, and the marker body already projects list-shaped static capture after its current one-or-two-static guard.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.418: select three-static read recapture contract`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.419` implements one-dynamic-plus-three-static mixed read single-beat RID recapture; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.418` selected `.419`, direct implementation of one-dynamic-plus-three-static mixed dynamic/static read single-beat RID same-cycle release-and-recapture under the existing public sample. The selector pins public syntax/support identity, mode/source/semantics, r0/r1/r2/r3 lists, static IDs 4'd3/4'd5/4'd7, dynamic recapture, list-shaped static_capture[] r1/r2/r3 recapture, generated_multi_mixed_dynamic_static_read_demux_completion, guard composition, release-only request exclusions, idle-or-releasing assertions, adjacent preservation boundaries, and RAM-guarded validation. A fresh baseline probe stopped at the default 88% host cutoff with host memory at 88.1%; no cutoff was raised and the .416/.417 46985-byte baseline remains evidence.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
-- next_action: Start `.418`: select the exact three-static mixed read single-beat recapture contract before any implementation.
+- next_action: Start `.419`: implement the selected three-static mixed read single-beat recapture, validate it, sync docs/Knowledge Map, and commit before continuing.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact

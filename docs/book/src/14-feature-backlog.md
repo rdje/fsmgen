@@ -7656,6 +7656,24 @@ helpers already compose over guard arrays, and the marker body already
 projects list-shaped static capture entries after its current one-or-two-
 static selection guard.
 
+Three-static mixed dynamic/static read recapture contract selection:
+[AXI_IAL2_MANAGER_THREE_STATIC_MIXED_DYNAMIC_STATIC_READ_RECAPTURE_CONTRACT_SELECTION](../../AXI_IAL2_MANAGER_THREE_STATIC_MIXED_DYNAMIC_STATIC_READ_RECAPTURE_CONTRACT_SELECTION.md)
+selects `.419`, direct implementation of one-dynamic-plus-three-static mixed
+dynamic/static read single-beat `RID` same-cycle release-and-recapture for
+`ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static3.ppif`.
+The selector changes no behavior. The selected contract preserves the
+existing public syntax and support identity, the existing
+`bounded_multi_mixed_dynamic_static_read_rid_demux_contract` mode,
+single-beat scope, generated multiple mixed read demux source, `r0`/`r1`/
+`r2`/`r3` transaction lists, static-ID reservations, generated demux and
+completion names, onehot0/static-ID/active-match/unique-match/completion-
+active assertions, and adjacent read-data consumers. The implementation must
+add dynamic recapture under `dynamic_capture.transactions[0]`, list-shaped
+`static_capture[]` entries for `r1`/`r2`/`r3`,
+`generated_multi_mixed_dynamic_static_read_demux_completion`, dynamic/static
+guard composition, same-transaction request exclusions on release-only rules,
+and idle-or-releasing request assertions for all four transactions.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

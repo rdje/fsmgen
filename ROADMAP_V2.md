@@ -2606,6 +2606,29 @@ read recapture marker body already projects list-shaped static capture entries
 after its current one-or-two-static selection guard. `.418` must pin the
 exact report, guard, assertion, validation, rollback, docs, Knowledge Map,
 and deferred-boundary contract before implementation.
+`.418` now selects `.419`, direct implementation of
+one-dynamic-plus-three-static mixed dynamic/static read single-beat `RID`
+same-cycle release-and-recapture for
+`ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static3.ppif`.
+The selector changes no behavior. The selected contract preserves public
+syntax/support identity,
+`bounded_multi_mixed_dynamic_static_read_rid_demux_contract`,
+`response_scope: single_beat`,
+`transaction_completion_source: generated_multi_mixed_dynamic_static_read_demux`,
+`transaction_completion_semantics:
+matched_dynamic_or_static_concrete_id_single_beat`, `r0`/`r1`/`r2`/`r3`
+transaction lists, static-ID reservations for `4'd3`/`4'd5`/`4'd7`,
+generated demux/completion behavior, onehot0, static-ID exclusions,
+response-active-match, pairwise unique-match, completion-active assertions,
+and adjacent three-static read-data/raw-`ARLEN`/runtime/multi-beat consumers.
+It selects `dynamic_capture.transactions[0]` recapture fields, list-shaped
+`static_capture[]` entries for `r1`/`r2`/`r3`, release-recapture source
+`generated_multi_mixed_dynamic_static_read_demux_completion`, dynamic/static
+guard composition, release-only same-transaction request exclusions, and
+idle-or-releasing assertion names. A fresh guarded baseline schedule attempt
+stopped at the default 88% host RAM cutoff because host memory started at
+88.1%; no cutoff was raised, and the `.416`/`.417` 46985-byte baseline
+remains the recorded evidence.
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,
