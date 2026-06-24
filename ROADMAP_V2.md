@@ -2213,6 +2213,15 @@ mixed boundary must still pin static busy recapture semantics,
 dynamic/static concrete-ID reservation, onehot0 sibling policy, assertion
 changes, read `RID && RLAST` and raw non-final beat preservation, and layered
 read-data/raw-`ARLEN`/runtime/multi-beat implications before behavior changes.
+`.387` selects `.388`, public contract selection for mixed dynamic/static
+write `BID` same-cycle release-and-recapture. The audit changes no behavior.
+Guarded baseline schedule probes for the one-dynamic/one-static mixed write,
+read single-beat, and read burst-last public samples passed and confirmed the
+current reports still use request-not-busy assertions with no
+release-recapture metadata. Mixed write is the next owner because it exercises
+both dynamic selected-ID recapture and static concrete busy recapture without
+the read `RID`/`RLAST`, read-data, raw-`ARLEN`, runtime validation, and
+multi-beat output-bank preservation stack.
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,
@@ -3079,9 +3088,11 @@ settle report vocabulary, release-only and release-recapture guard semantics,
 idle-or-releasing assertion replacement, scalar single-beat read-data
 preservation, validation, rollback, and deferred burst-last boundaries before
 implementation. At that point, multiple dynamic read burst-last recapture still
-required a later exact owner; mixed dynamic/static recapture, static busy
-recapture, request arbitration beyond onehot0, queues, scoreboards, backend
-variants, VHDL, and full-manager behavior remain later owners. `.380` now selects `.381`, direct implementation of
+required a later exact owner; that burst-last work later shipped in `.385`, and
+mixed dynamic/static recapture advanced through `.386`-`.387` to `.388` mixed
+write contract selection. Static busy-only recapture outside that selected
+mixed write boundary, request arbitration beyond onehot0, queues, scoreboards,
+backend variants, VHDL, and full-manager behavior remain later owners. `.380` now selects `.381`, direct implementation of
 multiple all-dynamic read single-beat `RID` same-cycle release-and-recapture
 for the existing multiple dynamic read response-demux sample. The selector
 changes no behavior. The selected implementation must preserve public syntax,
@@ -3104,9 +3115,10 @@ no-active-same-ID, active-ID uniqueness, raw response active/unique-match,
 completion-active assertions, generated completion names, support identity,
 and scalar single-beat read-data capture over generated completions. Multiple
 dynamic read burst-last recapture then advanced through `.382`-`.385`; mixed
-dynamic/static recapture, static busy recapture, request arbitration beyond
-onehot0, queues, scoreboards, backend variants, VHDL, and full-manager behavior
-remain later owners.
+dynamic/static recapture advanced through `.386`-`.387` to `.388` mixed write
+contract selection. Static busy-only recapture outside that selected mixed
+write boundary, request arbitration beyond onehot0, queues, scoreboards,
+backend variants, VHDL, and full-manager behavior remain later owners.
 No behavior changed in
 `.270`, `.271`, `.273`, `.274`, `.275`, `.277`, `.278`,
 `.279`, `.281`, `.282`, `.283`, `.285`, `.286`, `.288`, `.290`, `.292`, or
@@ -3117,7 +3129,7 @@ No behavior changed in
 `.345`, `.346`, `.348`, `.349`, `.351`, `.352`, `.354`, `.356`, `.358`,
 `.359`, `.360`, `.362`, `.363`, `.364`, `.366`, `.367`, `.369`, `.370`,
 `.371`, `.373`, `.374`, `.376`, `.377`, `.379`, `.380`, `.382`, `.383`,
-`.384`, or `.386`.
+`.384`, `.386`, or `.387`.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.

@@ -7225,6 +7225,18 @@ dynamic/static concrete-ID reservation, onehot0 sibling policy, assertion
 changes, read `RID && RLAST` and raw non-final beat preservation, and layered
 read-data/raw-`ARLEN`/runtime/multi-beat implications before behavior changes.
 
+Mixed dynamic/static recapture readiness audit:
+[AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_RECAPTURE_READINESS_AUDIT](../../AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_RECAPTURE_READINESS_AUDIT.md)
+selects `.388`, public contract selection for mixed dynamic/static write
+`BID` same-cycle release-and-recapture. The audit changes no behavior.
+Guarded baseline schedule probes for the one-dynamic/one-static mixed write,
+read single-beat, and read burst-last public samples passed and confirmed the
+current reports still use request-not-busy assertions with no
+release-recapture metadata. Mixed write is the next owner because it exercises
+both dynamic selected-ID recapture and static concrete busy recapture without
+the read `RID`/`RLAST`, read-data, raw-`ARLEN`, runtime validation, and
+multi-beat output-bank preservation stack.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after
@@ -8627,8 +8639,10 @@ policy, no-active-same-ID, active-ID uniqueness, response active/unique-match,
 completion-active assertions, generated completion names, support identity, and
 scalar single-beat read-data capture over generated completions. Multiple
 dynamic read burst-last recapture then advanced through `.382`-`.385`; mixed
-dynamic/static recapture, static busy recapture, queues, scoreboards, backend
-variants, VHDL, and full-manager behavior remain later owners.
+dynamic/static recapture advanced through `.386`-`.387` to `.388` mixed write
+contract selection. Static busy-only recapture outside that selected mixed
+write boundary, queues, scoreboards, backend variants, VHDL, and full-manager
+behavior remain later owners.
 
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
