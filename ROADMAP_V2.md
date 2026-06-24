@@ -2362,6 +2362,16 @@ static-ID-exclusion/active-match/pairwise-unique-match/completion-active
 assertions, one-static singular recapture shape, and three-static
 no-recapture shape are preserved. `.401` selects the next post two-static
 mixed write recapture activity.
+`.401` selects `.402`, public contract selection for one-dynamic plus
+three-static mixed dynamic/static write `BID` same-cycle release-and-recapture
+under the existing three-static public sample
+`ppif/axi_manager_capacity_status_write_mixed_dynamic_static_response_demux_multi_static3.ppif`.
+The selector changes no behavior. Three-static write recapture is the smallest
+post-`.400` behavior direction because it stays write-only and one-dynamic
+while adding only one more concrete static sibling. Two-dynamic recapture
+remains deferred behind active dynamic-ID uniqueness and no-active-same-ID
+checks; broader mixed read recapture remains deferred behind `RID`/`RLAST`,
+read-data, raw-`ARLEN`, runtime, and multi-beat preservation.
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,

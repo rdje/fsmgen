@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.400: ship multi-static write recapture`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.401` selects the next post one-dynamic plus two-static mixed write recapture activity; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.400` shipped one-dynamic plus two-static mixed dynamic/static write BID same-cycle release-and-recapture for `ppif/axi_manager_capacity_status_write_mixed_dynamic_static_response_demux_multi_static.ppif`. FSMGen now emits dynamic `w0` and static `w1`/`w2` release-recapture rules, list-shaped report metadata, and idle-or-releasing assertions for `w0`, `w1`, and `w2`; public syntax, support identity, mode/source/semantics, transaction lists, static-ID reservations, response-demux matches, generated completions, onehot0/static-ID-exclusion/active-match/pairwise-unique-match/completion-active assertions, one-static singular recapture shape, three-static no-recapture shape, and two-dynamic-plus-one-static no-recapture shape are preserved.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.401: select three-static write recapture contract`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.402` selects the public contract for one-dynamic plus three-static mixed write BID same-cycle release-and-recapture; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.401` selected `.402`, public contract selection for one-dynamic plus three-static mixed dynamic/static write BID same-cycle release-and-recapture under `ppif/axi_manager_capacity_status_write_mixed_dynamic_static_response_demux_multi_static3.ppif`. The selector changes no behavior; three-static is next because it extends `.400` by one concrete static sibling while staying write-only and one-dynamic.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
-- next_action: Start `.401`: select the next exact post two-static mixed write recapture activity before any broader behavior change.
+- next_action: Start `.402`: select the exact three-static mixed write recapture public contract before any behavior change.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact

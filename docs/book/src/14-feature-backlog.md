@@ -7409,6 +7409,18 @@ pairwise-unique-match/completion-active assertions, one-static singular
 recapture shape, and three-static no-recapture shape are preserved. `.401`
 selects the next post two-static mixed write recapture activity.
 
+Post multiple mixed dynamic/static write recapture selector:
+[AXI_IAL2_MANAGER_POST_MULTIPLE_MIXED_DYNAMIC_STATIC_WRITE_RECAPTURE_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_MIXED_DYNAMIC_STATIC_WRITE_RECAPTURE_NEXT_SLICE_SELECTION.md)
+selects `.402`, public contract selection for one-dynamic plus three-static
+mixed dynamic/static write `BID` same-cycle release-and-recapture under the
+existing three-static public sample. The selector changes no behavior.
+Three-static write recapture is the smallest post-`.400` behavior direction
+because it stays write-only and one-dynamic while adding only one more
+concrete static sibling. Two-dynamic recapture remains deferred behind active
+dynamic-ID uniqueness and no-active-same-ID checks; broader mixed read
+recapture remains deferred behind `RID`/`RLAST`, read-data, raw-`ARLEN`,
+runtime, and multi-beat preservation.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after
