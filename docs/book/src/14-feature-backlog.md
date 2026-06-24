@@ -7467,6 +7467,25 @@ entries, and `static_capture`. Broader mixed read recapture remains deferred
 behind raw non-final `RID`, `RLAST`, read-data, raw-`ARLEN`, runtime, and
 multi-beat preservation.
 
+Two-dynamic/one-static mixed dynamic/static write recapture readiness audit:
+[AXI_IAL2_MANAGER_TWO_DYNAMIC_ONE_STATIC_MIXED_DYNAMIC_STATIC_WRITE_RECAPTURE_READINESS_AUDIT](../../AXI_IAL2_MANAGER_TWO_DYNAMIC_ONE_STATIC_MIXED_DYNAMIC_STATIC_WRITE_RECAPTURE_READINESS_AUDIT.md)
+selects `.406`, public contract selection for the same
+two-dynamic-plus-one-static mixed dynamic/static write `BID` same-cycle
+release-and-recapture boundary. The audit changes no behavior. It found no
+smaller parser/source/support-accounting/report/assertion substrate
+prerequisite: the existing state builder already computes sibling dynamic
+request blocks, active sibling same-ID blocks, static request blocks,
+static-ID exclusions, static dynamic-request blocks, idle-or-releasing names,
+no-active-same-ID assertions, active dynamic-ID uniqueness, response
+active-match, unique-match, and completion-active surfaces. Contract
+selection remains required before implementation because the current mixed
+write recapture marker is capped at one dynamic transaction and the dynamic
+recapture helper currently chooses either multi-active dynamic guards or
+mixed static guards. A guarded candidate schedule probe stopped before usable
+output at host memory 89.5% against the default 88% cutoff; no cutoff was
+raised. Broader mixed read recapture remains deferred behind raw non-final
+`RID`, `RLAST`, read-data, raw-`ARLEN`, runtime, and multi-beat preservation.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

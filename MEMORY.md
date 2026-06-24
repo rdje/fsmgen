@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.404: select two-dynamic write recapture audit`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.405` audits two-dynamic-plus-one-static mixed write recapture readiness; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.404` selected `.405`, readiness audit for two-dynamic-plus-one-static mixed write `BID` same-cycle release-and-recapture. The selector changes no behavior and chooses an audit, not direct contract selection, because the candidate stays write-only but composes two active dynamic selected-ID owners, one concrete static owner, active dynamic-ID uniqueness, no-active-same-ID checks, static-ID exclusions, list-shaped dynamic recapture entries, and `static_capture`; broader mixed read recapture remains deferred behind raw non-final `RID`, `RLAST`, read-data, raw-ARLEN, runtime, and multi-beat preservation.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.405: audit two-dynamic write recapture readiness`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.406` selects the two-dynamic-plus-one-static mixed write recapture public contract; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.405` audited two-dynamic-plus-one-static mixed write `BID` same-cycle release-and-recapture readiness and selected `.406`, public contract selection. The audit found no smaller parser/source/support-accounting/report/assertion substrate prerequisite, but direct implementation remains deferred because the mixed write recapture marker is capped at one dynamic transaction and the dynamic recapture helper currently chooses either multi-active dynamic guards or mixed static guards. A guarded candidate schedule probe stopped at host memory 89.5% against the default 88% cutoff before usable output; no cutoff was raised.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
-- next_action: Start `.405`: audit two-dynamic-plus-one-static mixed write recapture readiness with no behavior changes, then commit.
+- next_action: Start `.406`: select the two-dynamic-plus-one-static mixed write recapture public contract with no behavior changes, then commit.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact
