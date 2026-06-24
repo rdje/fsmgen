@@ -6,8 +6,10 @@ Date: 2026-06-23
 
 ## Summary
 
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.255` ships generated bounded multiple
-dynamic read burst-last/`RLAST` response-demux for the public sample:
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.255` shipped generated bounded multiple
+dynamic read burst-last/`RLAST` response-demux for the public sample, and
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.385` adds same-cycle
+release-and-recapture for the same generated state:
 
 ```text
 ppif/axi_manager_capacity_status_dynamic_read_response_demux_multi_burst_last.ppif
@@ -64,7 +66,15 @@ axi0_read_complete && axi0_r1_dynamic_busy_q &&
 ```
 
 The completion pulses release the owning transaction busy bit through the
-generated release rules.
+generated release rules when there is no same-cycle request for that same
+transaction.
+
+If transaction `rN` has an admitted same-cycle read request while its matched
+final `RID && RLAST` completion fires, FSMGen emits
+`axi0_rN_dynamic_id_release_recapture`. The rule captures the new `ARID`,
+keeps the busy bit asserted, and uses the pre-update selected ID for the
+completion match. The guard also requires no sibling admitted dynamic read
+request and no active sibling selected ID equal to the new `ARID`.
 
 Raw response active-match and unique-match assertions intentionally do not
 include `RLAST`. They match each accepted read response beat by `RID` against
@@ -94,8 +104,8 @@ response_demux:
 The generated assertion names for the public two-transaction sample are:
 
 ```text
-axi0_r0_dynamic_request_not_busy
-axi0_r1_dynamic_request_not_busy
+axi0_r0_dynamic_request_idle_or_releasing
+axi0_r1_dynamic_request_idle_or_releasing
 axi0_read_dynamic_request_onehot0
 axi0_r0_dynamic_request_no_active_same_id
 axi0_r1_dynamic_request_no_active_same_id
@@ -104,6 +114,22 @@ axi0_read_dynamic_response_active_match
 axi0_r0_r1_read_dynamic_response_unique_match
 axi0_r0_dynamic_completion_active
 axi0_r1_dynamic_completion_active
+```
+
+Each entry under `dynamic_capture.transactions[]` reports the recapture
+ownership:
+
+```yaml
+- transaction: r0
+  release_recapture_rule: axi0_r0_dynamic_id_release_recapture
+  same_cycle_release_recapture_policy: multi_active_unique_dynamic_read
+  release_recapture_source: generated_dynamic_demux_last_beat_completion
+  release_recapture_transaction: r0
+- transaction: r1
+  release_recapture_rule: axi0_r1_dynamic_id_release_recapture
+  same_cycle_release_recapture_policy: multi_active_unique_dynamic_read
+  release_recapture_source: generated_dynamic_demux_last_beat_completion
+  release_recapture_transaction: r1
 ```
 
 The support-accounting entry is:
@@ -120,21 +146,20 @@ ial2_ppif_manager_capacity_status_dynamic_read_response_demux_multi_burst_last_p
 
 ## Preserved Boundaries
 
-The slice does not add read-data routing over multiple dynamic read demux.
-`read_data.read` still requires exactly one generated dynamic read transaction.
+Layered consumers over the same generated multiple dynamic read burst-last
+response-demux remain preserved:
 
-The following remain future exact owners:
+- scalar last-beat read-data captures `RDATA/RRESP` on each generated
+  last-beat completion pulse;
+- report-only raw-`ARLEN` captures request metadata at admission time;
+- runtime beat-count/`RLAST` validation still counts raw matched beats and
+  checks the final boundary; and
+- multi-beat output banks still capture every raw matched beat while final
+  `RID && RLAST` completion owns transaction release.
 
-- read-data over multiple dynamic read demux;
-- burst-length/runtime validation over multiple dynamic read demux;
-- multi-beat output banks over multiple dynamic read demux;
-- mixed dynamic/static response-demux;
-- same-cycle request widening beyond onehot0;
-- same-cycle release-and-recapture;
-- dynamic same-ID queues and scoreboards;
-- direct backend behavior;
-- backend-language variants; and
-- VHDL.
+Mixed dynamic/static recapture, static busy recapture, request arbitration
+beyond onehot0, queues, scoreboards, direct backend behavior, backend-language
+variants, VHDL, and full AXI manager behavior remain future exact owners.
 
 ## Validation
 

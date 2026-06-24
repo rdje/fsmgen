@@ -1157,10 +1157,11 @@ generated completions, onehot0 request policy, no-active-same-ID, active-ID
 uniqueness, response active/unique-match, completion-active assertions, and
 scalar single-beat read-data capture over generated completion pulses while
 adding per-transaction `multi_active_unique_dynamic_read` release-recapture
-report fields and idle-or-releasing request assertions. Multiple dynamic read
-burst-last recapture, mixed dynamic/static recapture, static busy recapture,
-request arbitration beyond onehot0, queues, scoreboards, backend variants,
-VHDL, and full-manager behavior remain later exact owners.
+report fields and idle-or-releasing request assertions. At that point,
+multiple dynamic read burst-last recapture still required a later exact owner;
+mixed dynamic/static recapture, static busy recapture, request arbitration
+beyond onehot0, queues, scoreboards, backend variants, VHDL, and full-manager
+behavior remain later exact owners.
 `.381` now ships that same-cycle release-and-recapture behavior for
 `ppif/axi_manager_capacity_status_dynamic_read_response_demux_multi.ppif`.
 FSMGen emits `axi0_r0_dynamic_id_release_recapture` and
@@ -1174,9 +1175,10 @@ per-transaction request-not-busy assertions with
 no-active-same-ID, active-ID uniqueness, raw response active/unique-match,
 completion-active assertions, generated completion names, support identity,
 and scalar single-beat read-data capture over generated completions. Multiple
-dynamic read burst-last recapture, mixed dynamic/static recapture, static busy
-recapture, request arbitration beyond onehot0, queues, scoreboards, backend
-variants, VHDL, and full-manager behavior remain later exact owners.
+dynamic read burst-last recapture then advanced through `.382`-`.385`; mixed
+dynamic/static recapture, static busy recapture, request arbitration beyond
+onehot0, queues, scoreboards, backend variants, VHDL, and full-manager behavior
+remain later exact owners.
 `.382` selects `.383`, readiness audit for multiple all-dynamic read
 burst-last `RID && RLAST` same-cycle release-and-recapture. The selector
 changes no behavior. The audit comes before public contract or implementation
@@ -1199,6 +1201,19 @@ changes no behavior. The implementation must preserve the existing
 replace the selected request-not-busy assertions with idle-or-releasing
 assertions while preserving raw non-final beats and the layered read-data,
 raw-`ARLEN`, runtime, and multi-beat consumers.
+`.385` now ships that behavior for
+`ppif/axi_manager_capacity_status_dynamic_read_response_demux_multi_burst_last.ppif`.
+FSMGen emits `axi0_r0_dynamic_id_release_recapture` and
+`axi0_r1_dynamic_id_release_recapture`, keeps release-only updates disjoint
+from same-transaction same-cycle requests, reports
+`same_cycle_release_recapture_policy: multi_active_unique_dynamic_read` with
+`release_recapture_source: generated_dynamic_demux_last_beat_completion` under
+`response_demux.read.dynamic_capture.transactions[]`, and replaces the two
+request-not-busy assertions with
+`axi0_r0_dynamic_request_idle_or_releasing` and
+`axi0_r1_dynamic_request_idle_or_releasing`. Raw non-final beats remain
+matched read beats only, and scalar last-beat read-data, raw-`ARLEN`, runtime
+beat-count/`RLAST`, and multi-beat output-bank consumers remain preserved.
 No behavior
 changed in `.273`, `.274`, `.275`,
 `.277`, `.278`, `.279`, `.281`,

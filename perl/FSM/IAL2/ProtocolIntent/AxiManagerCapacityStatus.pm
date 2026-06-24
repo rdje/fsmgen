@@ -2044,6 +2044,10 @@ sub _normalize_response_demux_read(%args) {
             \%entry,
             release_recapture_source => 'generated_dynamic_demux_last_beat_completion',
         ) if @dynamic_states == 1 && !@static_states;
+        _response_demux_mark_multi_active_dynamic_read_recapture(
+            \%entry,
+            release_recapture_source => 'generated_dynamic_demux_last_beat_completion',
+        ) if $multi_dynamic && !@static_states;
         return \%entry;
     }
 
@@ -2206,7 +2210,7 @@ sub _response_demux_mark_single_active_dynamic_read_recapture($entry, %args) {
     $capture->{release_recapture_transaction} = $state->{release_recapture_transaction};
 }
 
-sub _response_demux_mark_multi_active_dynamic_read_recapture($entry) {
+sub _response_demux_mark_multi_active_dynamic_read_recapture($entry, %args) {
     my $states = $entry->{dynamic_transaction_state};
     return unless ref($states) eq 'ARRAY' && @$states > 1;
 
@@ -2214,7 +2218,8 @@ sub _response_demux_mark_multi_active_dynamic_read_recapture($entry) {
     for my $state (@$states) {
         next unless ref($state) eq 'HASH';
         $state->{same_cycle_release_recapture_policy} = 'multi_active_unique_dynamic_read';
-        $state->{release_recapture_source} = 'generated_dynamic_demux_completion';
+        $state->{release_recapture_source} =
+            $args{release_recapture_source} // 'generated_dynamic_demux_completion';
         $state->{release_recapture_transaction} = $state->{transaction};
         $state_by_transaction{$state->{transaction}} = $state
             if defined $state->{transaction};

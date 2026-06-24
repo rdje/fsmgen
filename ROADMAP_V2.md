@@ -2196,7 +2196,16 @@ implementation of that contract for the existing support-accounted multiple
 all-dynamic read burst-last sample, with mode preservation, per-transaction
 `multi_active_unique_dynamic_read` fields, last-beat release-recapture source,
 idle-or-releasing request assertions, and preservation of raw non-final beats
-plus read-data/raw-`ARLEN`/runtime/multi-beat consumers.
+plus read-data/raw-`ARLEN`/runtime/multi-beat consumers. `.385` now ships that
+behavior for the existing support-accounted multiple all-dynamic read
+burst-last sample. FSMGen emits `axi0_r0_dynamic_id_release_recapture` and
+`axi0_r1_dynamic_id_release_recapture`, reports
+`release_recapture_source: generated_dynamic_demux_last_beat_completion` under
+`response_demux.read.dynamic_capture.transactions[]`, replaces the selected
+request-not-busy assertions with idle-or-releasing assertions, keeps raw
+non-final beats as raw matched beats only, and preserves scalar last-beat
+read-data, raw-`ARLEN`, runtime beat-count/`RLAST`, and multi-beat output-bank
+consumers.
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,
@@ -3062,10 +3071,10 @@ runtime, or multi-beat output-bank coupling. The `.380` contract selection must
 settle report vocabulary, release-only and release-recapture guard semantics,
 idle-or-releasing assertion replacement, scalar single-beat read-data
 preservation, validation, rollback, and deferred burst-last boundaries before
-implementation. Multiple dynamic read burst-last recapture, mixed
-dynamic/static recapture, static busy recapture, request arbitration beyond
-onehot0, queues, scoreboards, backend variants, VHDL, and full-manager behavior
-remain later owners. `.380` now selects `.381`, direct implementation of
+implementation. At that point, multiple dynamic read burst-last recapture still
+required a later exact owner; mixed dynamic/static recapture, static busy
+recapture, request arbitration beyond onehot0, queues, scoreboards, backend
+variants, VHDL, and full-manager behavior remain later owners. `.380` now selects `.381`, direct implementation of
 multiple all-dynamic read single-beat `RID` same-cycle release-and-recapture
 for the existing multiple dynamic read response-demux sample. The selector
 changes no behavior. The selected implementation must preserve public syntax,
@@ -3087,9 +3096,10 @@ idle-or-releasing assertions, and preserves
 no-active-same-ID, active-ID uniqueness, raw response active/unique-match,
 completion-active assertions, generated completion names, support identity,
 and scalar single-beat read-data capture over generated completions. Multiple
-dynamic read burst-last recapture, mixed dynamic/static recapture, static busy
-recapture, request arbitration beyond onehot0, queues, scoreboards, backend
-variants, VHDL, and full-manager behavior remain later owners.
+dynamic read burst-last recapture then advanced through `.382`-`.385`; mixed
+dynamic/static recapture, static busy recapture, request arbitration beyond
+onehot0, queues, scoreboards, backend variants, VHDL, and full-manager behavior
+remain later owners.
 No behavior changed in
 `.270`, `.271`, `.273`, `.274`, `.275`, `.277`, `.278`,
 `.279`, `.281`, `.282`, `.283`, `.285`, `.286`, `.288`, `.290`, `.292`, or

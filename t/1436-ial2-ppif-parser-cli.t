@@ -316,6 +316,10 @@ subtest 'PPIF adapter parses AXI manager multiple dynamic read burst-last respon
     like($isf, qr/\(rule axi0_r1_response_demux \(& axi0_read_complete axi0_r1_dynamic_busy_q \(== axi0_rid axi0_r1_dynamic_id_q\) axi0_rlast\)/, 'multiple dynamic read burst-last response-demux generated IAL1 matches r1 RID and RLAST before completion');
     like($isf, qr/\(assert \(\| \(! axi0_read_complete\) \(\| \(& axi0_r0_dynamic_busy_q \(== axi0_rid axi0_r0_dynamic_id_q\)\) \(& axi0_r1_dynamic_busy_q \(== axi0_rid axi0_r1_dynamic_id_q\)\)\)\) "axi0 read dynamic response matches active captured ID"\)/, 'multiple dynamic read burst-last active-response assertion remains raw RID based');
     like($isf, qr/"axi0 read dynamic response matches at most one captured ID"/, 'multiple dynamic read burst-last response-demux generated IAL1 emits raw unique-match assertion');
+    like($isf, qr/\(rule axi0_r0_dynamic_id_release_recapture \(& \(& axi0_r0_request \(\| \(< axi0_pending_reads_q 4\) \(\| axi0_r0_complete axi0_r1_complete\)\)\) axi0_r0_complete axi0_r0_dynamic_busy_q \(! \(& axi0_r1_request \(\| \(< axi0_pending_reads_q 4\) \(\| axi0_r0_complete axi0_r1_complete\)\)\)\) \(! \(& axi0_r1_dynamic_busy_q \(== axi0_r1_dynamic_id_q axi0_arid\)\)\)\)/, 'multiple dynamic read burst-last response-demux generated IAL1 recaptures r0 on same-cycle final completion');
+    like($isf, qr/\(rule axi0_r1_dynamic_id_release_recapture \(& \(& axi0_r1_request \(\| \(< axi0_pending_reads_q 4\) \(\| axi0_r0_complete axi0_r1_complete\)\)\) axi0_r1_complete axi0_r1_dynamic_busy_q \(! \(& axi0_r0_request \(\| \(< axi0_pending_reads_q 4\) \(\| axi0_r0_complete axi0_r1_complete\)\)\)\) \(! \(& axi0_r0_dynamic_busy_q \(== axi0_r0_dynamic_id_q axi0_arid\)\)\)\)/, 'multiple dynamic read burst-last response-demux generated IAL1 recaptures r1 on same-cycle final completion');
+    like($isf, qr/\(rule axi0_r0_dynamic_id_release \(& axi0_r0_complete axi0_r0_dynamic_busy_q \(! axi0_r0_request\)\)/, 'multiple dynamic read burst-last response-demux release-only r0 excludes same-cycle r0 request');
+    like($isf, qr/\(rule axi0_r1_dynamic_id_release \(& axi0_r1_complete axi0_r1_dynamic_busy_q \(! axi0_r1_request\)\)/, 'multiple dynamic read burst-last response-demux release-only r1 excludes same-cycle r1 request');
     assert_dynamic_read_response_demux_multi_burst_last_report($result->{report}, 'adapter report');
 };
 
@@ -8786,8 +8790,8 @@ sub assert_dynamic_read_response_demux_multi_burst_last_report {
     is_deeply(
         $read->{generated_assertions},
         [qw(
-            axi0_r0_dynamic_request_not_busy
-            axi0_r1_dynamic_request_not_busy
+            axi0_r0_dynamic_request_idle_or_releasing
+            axi0_r1_dynamic_request_idle_or_releasing
             axi0_read_dynamic_request_onehot0
             axi0_r0_dynamic_request_no_active_same_id
             axi0_r1_dynamic_request_no_active_same_id
@@ -8814,6 +8818,10 @@ sub assert_dynamic_read_response_demux_multi_burst_last_report {
                     busy_signal        => 'axi0_r0_dynamic_busy_q',
                     capture_rule       => 'axi0_r0_dynamic_id_capture',
                     release_rule       => 'axi0_r0_dynamic_id_release',
+                    release_recapture_rule => 'axi0_r0_dynamic_id_release_recapture',
+                    same_cycle_release_recapture_policy => 'multi_active_unique_dynamic_read',
+                    release_recapture_source => 'generated_dynamic_demux_last_beat_completion',
+                    release_recapture_transaction => 'r0',
                 },
                 {
                     transaction        => 'r1',
@@ -8821,6 +8829,10 @@ sub assert_dynamic_read_response_demux_multi_burst_last_report {
                     busy_signal        => 'axi0_r1_dynamic_busy_q',
                     capture_rule       => 'axi0_r1_dynamic_id_capture',
                     release_rule       => 'axi0_r1_dynamic_id_release',
+                    release_recapture_rule => 'axi0_r1_dynamic_id_release_recapture',
+                    same_cycle_release_recapture_policy => 'multi_active_unique_dynamic_read',
+                    release_recapture_source => 'generated_dynamic_demux_last_beat_completion',
+                    release_recapture_transaction => 'r1',
                 },
             ],
         },
