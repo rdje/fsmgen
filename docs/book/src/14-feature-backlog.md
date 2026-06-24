@@ -7968,6 +7968,22 @@ the current fail-closed behavior remains. One-dynamic mixed mapping, dynamic
 queues, scoreboards, direct backend behavior, backend-language variants, VHDL,
 and new generated HDL remain deferred.
 
+Single-active dynamic same-ID reject mapping readiness audit:
+[AXI_IAL2_MANAGER_SINGLE_ACTIVE_DYNAMIC_SAME_ID_REJECT_MAPPING_READINESS_AUDIT](../../AXI_IAL2_MANAGER_SINGLE_ACTIVE_DYNAMIC_SAME_ID_REJECT_MAPPING_READINESS_AUDIT.md)
+selects `.441`, public contract selection for single-active dynamic
+same-ID reject mapping. Guarded compact probes confirmed the single-active
+write `BID`, read single-beat `RID`, and read burst-last `RID && RLAST`
+samples expose generated `*_dynamic_request_idle_or_releasing`, active-match,
+and completion-active assertions while still carrying `same_id_ordering`
+residue. Temporary guarded same-ID reject probes still fail closed at the
+`.438` generated multi-active no-active-same-ID diagnostic. The existing
+idle-or-releasing assertions are strong enough for a single-active generated
+reject contract, but they are not the `.438` multi-active evidence model, so
+`.441` must select exact report fields, residue movement, and diagnostics
+before behavior changes. One-dynamic mixed mapping, dynamic queues,
+scoreboards, direct backend behavior, backend-language variants, VHDL, and new
+generated HDL remain deferred.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

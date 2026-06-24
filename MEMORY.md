@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.439: select single-active reject audit`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.440` audits single-active dynamic same-ID reject mapping readiness; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.439` selected `.440`, readiness audit for single-active dynamic same-ID reject mapping over generated `*_dynamic_request_idle_or_releasing`, active-match, and completion-active assertion surfaces. One-dynamic mixed mapping, dynamic queues, scoreboards, direct backend behavior, backend-language variants, VHDL, and new generated HDL remain deferred.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.440: audit single-active reject mapping`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.441` selects the single-active dynamic same-ID reject mapping report contract; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.440` audited single-active dynamic same-ID reject mapping readiness and selected `.441`. Existing single-active write/read response-demux shapes expose generated idle-or-releasing, active-match, and completion-active assertions; the audit found they need a single-active-specific report contract before behavior changes.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
-- next_action: Start `.440`: audit whether generated single-active dynamic response-demux assertions can honestly satisfy selected `dynamic-id-reuse reject` before behavior changes.
+- next_action: Start `.441`: select exact single-active dynamic same-ID reject report fields, residue movement, diagnostics, validation gates, and non-goals before behavior changes.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact
