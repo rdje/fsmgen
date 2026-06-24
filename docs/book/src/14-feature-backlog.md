@@ -7170,6 +7170,15 @@ residue for the supported sample. Response-demux residue still keeps
 release-and-recapture, queues, scoreboards, direct backend, backend-language
 variant, and VHDL behavior remain later owners.
 
+Post multiple dynamic read recapture selector:
+[AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_READ_RECAPTURE_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_READ_RECAPTURE_NEXT_SLICE_SELECTION.md)
+selects `.383`, readiness audit for multiple all-dynamic read burst-last
+`RID && RLAST` same-cycle release-and-recapture. The selector changes no
+behavior. The audit comes before public contract or implementation because
+the burst-last path must preserve final completion, non-final raw read beats,
+scalar last-beat read-data, raw-`ARLEN`, runtime beat-count/`RLAST`, and
+multi-beat output-bank consumers.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

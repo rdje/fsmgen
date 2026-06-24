@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.381: ship multi-dynamic read recapture`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.382` selects the next exact owner after multiple all-dynamic read single-beat `RID` same-cycle release-and-recapture shipped; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.381` shipped same-cycle release-and-recapture for `ppif/axi_manager_capacity_status_dynamic_read_response_demux_multi.ppif`. The implementation emits `axi0_r0_dynamic_id_release_recapture`/`axi0_r1_dynamic_id_release_recapture`, reports `multi_active_unique_dynamic_read` fields under `dynamic_capture.transactions[]`, replaces the two request-not-busy assertions with idle-or-releasing assertions, preserves scalar single-beat read-data consumers, and keeps burst-last/mixed/static recapture deferred. Guarded t/1438 and schedule JSON passed; guarded t/1437/check/semantic/HDL broader probes were stopped by the host-memory guard at the 88% cutoff after focused probes passed.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.382: select read RLAST recapture audit`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.383` audits multiple all-dynamic read burst-last `RID && RLAST` same-cycle release-and-recapture readiness; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.382` selected `.383`, readiness audit for multiple all-dynamic read burst-last `RID && RLAST` same-cycle release-and-recapture. The selector changed no behavior and recorded that burst-last recapture must preserve final completion, non-final raw read beats, scalar last-beat read-data, raw-`ARLEN`, runtime beat-count/`RLAST`, and multi-beat output-bank consumers before any contract or implementation leaf is selected. `.381` previously shipped same-cycle release-and-recapture for `ppif/axi_manager_capacity_status_dynamic_read_response_demux_multi.ppif`; guarded t/1438 and schedule JSON passed while broader guarded probes were stopped by the 88% host-memory cutoff after focused probes passed.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
-- next_action: Start `.382`: select the next exact post-read-recapture owner.
+- next_action: Start `.383`: audit multiple all-dynamic read burst-last `RID && RLAST` recapture readiness.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact

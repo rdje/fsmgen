@@ -2180,6 +2180,13 @@ for bounded generated multiple dynamic multi-beat output-bank behavior. `.267`
 selected `.268`, and `.268` now ships generated bounded multiple dynamic
 multi-beat output-bank behavior through the support-accounted public sample
 `ppif/axi_manager_capacity_status_dynamic_read_data_multi_transaction_multi_beat.ppif`.
+Later recapture work returned to this all-dynamic read family after multiple
+dynamic write and single-beat read recapture shipped. `.382` selects `.383`,
+readiness audit for multiple all-dynamic read burst-last `RID && RLAST`
+same-cycle release-and-recapture, because final completion, non-final raw read
+beats, scalar last-beat read-data, raw-`ARLEN`, runtime beat-count/`RLAST`, and
+multi-beat output banks must be preserved before any burst-last recapture
+contract or implementation is selected.
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,
