@@ -2400,6 +2400,18 @@ pairwise-unique-match/completion-active assertions, the one-static singular
 recapture shape, the two-static recapture shape, and the
 two-dynamic-plus-one-static no-recapture shape are preserved. `.404` selects
 the next post three-static mixed write recapture activity.
+`.404` now selects `.405`, readiness audit for two-dynamic-plus-one-static
+mixed dynamic/static write `BID` same-cycle release-and-recapture under the
+existing `ppif/axi_manager_capacity_status_write_mixed_dynamic_static_response_demux_multi_dynamic.ppif`
+sample. The selector changes no behavior. This is the nearest post-`.403`
+residue because it stays write-only, but it needs an audit before contract
+selection: the current mixed write recapture marker is capped at one dynamic
+transaction, while the candidate composes two active dynamic selected-ID
+owners, one concrete static owner, active dynamic-ID uniqueness,
+no-active-same-ID checks, static-ID exclusions, list-shaped dynamic recapture
+entries, and `static_capture`. Broader mixed read recapture remains deferred
+behind raw non-final `RID`, `RLAST`, read-data, raw-`ARLEN`, runtime, and
+multi-beat preservation.
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,

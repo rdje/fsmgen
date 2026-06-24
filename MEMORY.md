@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.403: ship three-static write recapture`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.404` selects the next post three-static mixed write recapture activity; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.403` shipped one-dynamic plus three-static mixed write `BID` same-cycle release-and-recapture for `ppif/axi_manager_capacity_status_write_mixed_dynamic_static_response_demux_multi_static3.ppif`. FSMGen now emits dynamic `w0` and concrete static `w1`/`w2`/`w3` release-recapture, list-shaped dynamic/static report metadata, disjoint release-only guards, and idle-or-releasing assertions for all four transactions while preserving public syntax, support identity, mode/source/semantics, transaction lists, static-ID reservations, generated demux/completion behavior, and existing one-static/two-static/two-dynamic preservation boundaries. Syntax checks passed; guarded selected schedule probes stopped twice before usable output because host memory was above the default 88% cutoff.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.404: select two-dynamic write recapture audit`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.405` audits two-dynamic-plus-one-static mixed write recapture readiness; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.404` selected `.405`, readiness audit for two-dynamic-plus-one-static mixed write `BID` same-cycle release-and-recapture. The selector changes no behavior and chooses an audit, not direct contract selection, because the candidate stays write-only but composes two active dynamic selected-ID owners, one concrete static owner, active dynamic-ID uniqueness, no-active-same-ID checks, static-ID exclusions, list-shaped dynamic recapture entries, and `static_capture`; broader mixed read recapture remains deferred behind raw non-final `RID`, `RLAST`, read-data, raw-ARLEN, runtime, and multi-beat preservation.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
-- next_action: Start `.404`: select the next post three-static mixed write recapture activity with no behavior changes, then commit.
+- next_action: Start `.405`: audit two-dynamic-plus-one-static mixed write recapture readiness with no behavior changes, then commit.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact
