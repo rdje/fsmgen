@@ -2772,8 +2772,21 @@ It preserves the `.350` scalar last-beat payload capture and `.347` final
 per-transaction raw-`ARLEN` storage for `r0`, `r1`, and `r2`, and
 request-guarded capture rules for all three transactions. The report names
 validation mode `report_only` with runtime beat-count/`RLAST` validation still
-residue. `.354` is the next readiness audit for runtime validation over this
-two-dynamic-plus-one-static raw-`ARLEN` boundary.
+residue. `.353` advanced the frontier to `.354`, the readiness audit for
+runtime validation over this two-dynamic-plus-one-static raw-`ARLEN` boundary.
+`.354` now selects `.355`, direct implementation of runtime
+beat-count/`RLAST` validation over that generated two-dynamic-plus-one-static
+mixed dynamic/static raw-`ARLEN` scalar last-beat read-data boundary. The audit
+changes no behavior. The existing helpers already derive expected-beat storage,
+read-beat counters, request-time initialization, raw matched-read-beat
+increments, beat-count/`RLAST` assertions, and runtime report fields from the
+covered transaction list once the exact two-dynamic-plus-one-static runtime
+shape is admitted. `.355` owns the runtime sibling sample
+`ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_dynamic_burst_last_read_data_burst_length_runtime_assertion.ppif`,
+support identity, coverage key, and focused behavior label while preserving
+two-dynamic-plus-one-static multi-beat output banks, broader cardinalities,
+direct backend behavior, backend-language variants, and VHDL as separate
+owners.
 No behavior changed in
 `.270`, `.271`, `.273`, `.274`, `.275`, `.277`, `.278`,
 `.279`, `.281`, `.282`, `.283`, `.285`, `.286`, `.288`, `.290`, `.292`, or
@@ -2781,7 +2794,7 @@ No behavior changed in
 `.305`, `.306`, `.308`, `.309`, `.311`, `.313`, `.315`, `.316`, `.317`, or
 `.319`, `.320`, `.321`, `.323`, `.324`, `.325`, `.327`, `.328`, `.329`,
 `.331`, `.332`, `.334`, `.336`, `.338`, `.339`, `.340`, `.342`, `.343`,
-`.345`, `.346`, `.348`, `.349`, `.351`, or `.352`.
+`.345`, `.346`, `.348`, `.349`, `.351`, `.352`, or `.354`.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.
