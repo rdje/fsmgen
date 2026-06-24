@@ -2534,13 +2534,20 @@ scalar last-beat read-data. The selector changes no behavior and keeps
 runtime validation, multi-beat output banks, two-dynamic-plus-static shapes,
 broader cardinalities, same-cycle widening, queues/scoreboards, backend
 variants, and VHDL behind later exact owners.
+`.332` now selects `.333`, direct bounded implementation of report-only
+raw-`ARLEN` burst-length capture over that same generated three-static
+last-beat read-data boundary. The audit changes no behavior; the public
+`burst-length` syntax and transaction-list driven raw-`ARLEN` storage,
+capture-rule, and report helpers are already ready once coverage admits the
+`r0`, `r1`, `r2`, `r3` transaction set. Three-static runtime validation and
+multi-beat output banks remain deferred.
 No behavior changed in
 `.270`, `.271`, `.273`, `.274`, `.275`, `.277`, `.278`,
 `.279`, `.281`, `.282`, `.283`, `.285`, `.286`, `.288`, `.290`, `.292`, or
 `.293`, `.294`, `.296`, `.297`, `.298`, `.300`, `.301`, `.302`, `.304`,
 `.305`, `.306`, `.308`, `.309`, `.311`, `.313`, `.315`, `.316`, `.317`, or
-`.319`, `.320`, `.321`, `.323`, `.324`, `.325`, `.327`, `.328`, `.329`, or
-`.331`.
+`.319`, `.320`, `.321`, `.323`, `.324`, `.325`, `.327`, `.328`, `.329`,
+`.331`, or `.332`.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.

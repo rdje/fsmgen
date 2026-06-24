@@ -7927,6 +7927,15 @@ The selector changes no behavior; it follows the read-data ladder by auditing
 raw-`ARLEN` before runtime validation and multi-beat output banks over the
 same three-static boundary.
 
+Three-static mixed dynamic/static read-data burst-length readiness audit:
+[AXI_IAL2_MANAGER_THREE_STATIC_MIXED_DYNAMIC_STATIC_READ_DATA_BURST_LENGTH_READINESS_AUDIT](../../AXI_IAL2_MANAGER_THREE_STATIC_MIXED_DYNAMIC_STATIC_READ_DATA_BURST_LENGTH_READINESS_AUDIT.md)
+selects `.333`, direct bounded implementation of report-only raw-`ARLEN`
+burst-length capture over generated one-dynamic plus three-concrete-static
+mixed dynamic/static read burst-last response-demux and scalar last-beat
+read-data. The audit changes no behavior; the public `burst-length` syntax
+and transaction-list driven raw-`ARLEN` helpers are already ready once
+coverage admits `r0`, `r1`, `r2`, and `r3`.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same
