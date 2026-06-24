@@ -2811,6 +2811,17 @@ public sample
 `ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_dynamic_burst_last_read_data_multi_beat.ppif`,
 support identity, coverage key, focused behavior label, diagnostics,
 validation, rollback, and residue.
+`.357` now ships that selected generated multi-beat output-bank behavior
+through the support-accounted public sample. The generated surface preserves
+runtime beat-count/`RLAST` validation, raw `ARLEN` capture, and generated
+final `RID && RLAST` completion pulses, then emits per-transaction `RDATA`
+and `RRESP` lane outputs, valid masks, read-length outputs, and
+worst-observed scalar `RRESP` aggregates for `r0`, `r1`, and `r2`. Reports
+identify the shape as `bounded_multi_beat_read_data_contract`, set generated
+status aggregation and multi-beat reassembly behavior, keep read-data residue
+empty, and leave only `same_id_ordering` in response-demux residue. `.357`
+advanced the frontier to `.358`, the next IAL2 feature-completeness selector
+after this read-data chain reached multi-beat output banks.
 No behavior changed in
 `.270`, `.271`, `.273`, `.274`, `.275`, `.277`, `.278`,
 `.279`, `.281`, `.282`, `.283`, `.285`, `.286`, `.288`, `.290`, `.292`, or
