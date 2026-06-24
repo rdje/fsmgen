@@ -2958,6 +2958,18 @@ The mapping adds no generated rules, storage, assertions, HDL, or runtime
 behavior; one-dynamic mixed mapping, dynamic queues, scoreboards, direct
 backend behavior, backend-language variants, VHDL, and new generated HDL remain
 deferred. `.442` selects `.443`, the next post-single-active-mapping selector.
+`.443` now selects `.444`, readiness audit for one-dynamic mixed
+dynamic/static dynamic same-ID reject mapping. The selector changes no
+behavior. It compares the remaining one-dynamic mixed fail-closed boundary
+against the generated mixed response-demux evidence: static concrete ID
+reservation/exclusion, dynamic request-not-static-ID and
+active-not-static-ID assertions, mixed request onehot0, response
+active/unique-match, and completion-active assertions. The audit must decide
+whether that evidence can support a generated reject report contract distinct
+from `.438` multi-active no-active-same-ID coverage and `.442` single-active
+idle-or-releasing coverage, or whether the current fail-closed behavior should
+remain. Dynamic queues, scoreboards, direct backend behavior,
+backend-language variants, VHDL, and new generated HDL remain deferred.
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,

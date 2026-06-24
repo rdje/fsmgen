@@ -8020,6 +8020,21 @@ read response-demux sample. One-dynamic mixed response-demux, dynamic queues,
 scoreboards, direct backend behavior, backend-language variants, VHDL, and new
 generated HDL remain deferred.
 
+Post single-active dynamic same-ID reject mapping selector:
+[AXI_IAL2_MANAGER_POST_SINGLE_ACTIVE_DYNAMIC_SAME_ID_REJECT_MAPPING_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_SINGLE_ACTIVE_DYNAMIC_SAME_ID_REJECT_MAPPING_NEXT_SLICE_SELECTION.md)
+selects `.444`, readiness audit for one-dynamic mixed dynamic/static dynamic
+same-ID reject mapping. The selector changes no behavior. The remaining
+one-dynamic mixed fail-closed boundary must be compared against generated
+mixed response-demux evidence: static concrete ID reservation/exclusion,
+dynamic request-not-static-ID and active-not-static-ID assertions, mixed
+request onehot0, response active/unique-match, and completion-active
+assertions. The audit must decide whether that evidence can support a generated
+reject report contract distinct from `.438` multi-active no-active-same-ID
+coverage and `.442` single-active idle-or-releasing coverage, or whether the
+current fail-closed behavior should remain. Dynamic queues, scoreboards,
+direct backend behavior, backend-language variants, VHDL, and new generated
+HDL remain deferred.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after
