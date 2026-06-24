@@ -2681,6 +2681,26 @@ three `static_capture` entries for `r1`/`r2`/`r3` if invoked. The remaining
 implementation gap is deliberate selection logic in the burst-last normalizer
 and focused RLAST expectations, so `.422` must pin the public contract before
 behavior changes.
+`.422` now selects `.423`, direct implementation of
+one-dynamic-plus-three-static mixed dynamic/static read burst-last `RID &&
+RLAST` same-cycle release-and-recapture for the existing support-accounted
+sample
+`ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static3_burst_last.ppif`.
+The selector changes no behavior. The selected contract preserves public
+syntax/support identity,
+`bounded_multi_mixed_dynamic_static_read_rid_rlast_demux_contract`,
+`response_scope: burst_last`, one-bit `axi0_rlast`,
+`generated_multi_mixed_dynamic_static_read_demux_last_beat`, final-beat
+match semantics, `r0`/`r1`/`r2`/`r3` transaction lists, static ID
+reservations for `4'd3`/`4'd5`/`4'd7`, generated demux/completion behavior,
+raw non-final `RID` ownership evidence, adjacent read-data consumers, dynamic
+recapture under `dynamic_capture.transactions[0]`, list-shaped
+`static_capture[]` entries for `r1`/`r2`/`r3`,
+`generated_multi_mixed_dynamic_static_read_demux_last_beat_completion`,
+dynamic/static guard composition, release-only same-transaction request
+exclusions, idle-or-releasing assertion names, validation gates, RAM-guard
+fallback probes, rollback, docs, Knowledge Map impact, and deferred
+two-dynamic/backend/VHDL boundaries.
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,

@@ -7709,6 +7709,19 @@ project three `static_capture[]` entries with
 `generated_multi_mixed_dynamic_static_read_demux_last_beat_completion` once a
 later implementation selects the burst-last normalizer widening.
 
+Three-static mixed dynamic/static read RLAST recapture contract selection:
+[AXI_IAL2_MANAGER_THREE_STATIC_MIXED_DYNAMIC_STATIC_READ_RLAST_RECAPTURE_CONTRACT_SELECTION](../../AXI_IAL2_MANAGER_THREE_STATIC_MIXED_DYNAMIC_STATIC_READ_RLAST_RECAPTURE_CONTRACT_SELECTION.md)
+selects `.423`, direct implementation of one-dynamic-plus-three-static mixed
+dynamic/static read burst-last `RID && RLAST` same-cycle
+release-and-recapture for the existing three-static public sample. The
+selector changes no behavior. The selected contract preserves public syntax,
+the existing `bounded_multi_mixed_dynamic_static_read_rid_rlast_demux_contract`
+mode, final-beat `RID && RLAST` completion semantics, raw non-final `RID`
+ownership evidence, adjacent read-data consumers, dynamic recapture for `r0`,
+list-shaped `static_capture[]` entries for `r1`/`r2`/`r3`, final-beat
+release-recapture source, dynamic/static guard composition, same-transaction
+request exclusions, and idle-or-releasing assertion names.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

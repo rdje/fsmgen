@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.421: audit three-static RLAST recapture readiness`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.422` selects the public contract for one-dynamic-plus-three-static mixed read burst-last RID/RLAST recapture; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.421` audited one-dynamic-plus-three-static mixed dynamic/static read burst-last RID/RLAST same-cycle release-and-recapture readiness and selected `.422`. Direct probes confirmed the current baseline still has no static_capture, no dynamic recapture fields, and four request-not-busy assertions, while the existing marker substrate can project generated_multi_mixed_dynamic_static_read_demux_last_beat_completion and three static_capture entries for r1/r2/r3 if invoked. No behavior changed.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.422: select three-static RLAST recapture contract`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.423` implements one-dynamic-plus-three-static mixed read burst-last RID/RLAST recapture; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.422` selected `.423`, direct implementation of one-dynamic-plus-three-static mixed dynamic/static read burst-last RID/RLAST same-cycle release-and-recapture for ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static3_burst_last.ppif. The selector changes no behavior and pins final-beat release-recapture source generated_multi_mixed_dynamic_static_read_demux_last_beat_completion, dynamic recapture for r0, list-shaped static_capture entries for r1/r2/r3, guard composition, idle-or-releasing assertions, and sibling preservation.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
-- next_action: Start `.422`: select the three-static mixed read burst-last recapture public contract before any implementation.
+- next_action: Start `.423`: implement the selected three-static mixed read burst-last recapture and run guarded/fallback validation.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact
