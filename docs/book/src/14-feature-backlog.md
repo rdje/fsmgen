@@ -7291,6 +7291,22 @@ active/unique-match, and completion-active assertions while selecting
 exclusion, dynamic/static release-recapture guards, and dynamic/static
 idle-or-releasing request assertions.
 
+Mixed dynamic/static read recapture behavior:
+[AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_READ_RECAPTURE_BEHAVIOR](../../AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_READ_RECAPTURE_BEHAVIOR.md)
+ships `.392`, same-cycle release-and-recapture for the existing mixed
+dynamic/static read single-beat `RID` sample. FSMGen emits
+`axi0_r0_dynamic_id_release_recapture` for the dynamic selected-ID slot and
+`axi0_r1_static_busy_release_recapture` for the concrete static busy slot,
+keeps release-only rules disjoint from same-transaction same-cycle requests,
+reports `mixed_dynamic_static_dynamic_read` under
+`response_demux.read.dynamic_capture` and `mixed_dynamic_static_static_read`
+under `response_demux.read.static_capture`, and replaces the selected
+request-not-busy assertions with idle-or-releasing assertions. Public syntax,
+support identity, `bounded_mixed_dynamic_static_read_rid_demux_contract`,
+`response_scope: single_beat`, and the generated mixed read completion source
+are preserved; the mixed read burst-last `RID && RLAST` sample remains
+unchanged.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

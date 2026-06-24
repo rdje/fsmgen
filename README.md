@@ -1278,6 +1278,21 @@ active/unique-match, and completion-active assertions while selecting
 `response_demux.read.static_capture` report block, dynamic/static release-only
 exclusion, dynamic/static release-recapture guards, and dynamic/static
 idle-or-releasing request assertions.
+`.392` now ships that behavior. FSMGen emits
+`axi0_r0_dynamic_id_release_recapture` and
+`axi0_r1_static_busy_release_recapture`, keeps release-only rules disjoint from
+same-transaction same-cycle requests, reports
+`mixed_dynamic_static_dynamic_read` under
+`response_demux.read.dynamic_capture` and
+`mixed_dynamic_static_static_read` under
+`response_demux.read.static_capture`, and replaces the selected
+request-not-busy assertions with
+`axi0_r0_dynamic_request_idle_or_releasing` and
+`axi0_r1_static_request_idle_or_releasing`. Public syntax, support identity,
+the mixed read single-beat mode/scope/source, static-ID reservation, onehot0
+request policy, response active/unique-match, and completion-active assertions
+are preserved. The mixed read burst-last `RID && RLAST` sample remains
+unchanged with no recapture metadata or `static_capture` report block.
 No behavior
 changed in `.273`, `.274`, `.275`,
 `.277`, `.278`, `.279`, `.281`,
@@ -3582,6 +3597,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_WRITE_RECAPTURE_BEHAVIOR.md` — shipped mixed dynamic/static write `BID` same-cycle release-and-recapture under the existing public sample.
 - `docs/AXI_IAL2_MANAGER_POST_MIXED_DYNAMIC_STATIC_WRITE_RECAPTURE_NEXT_SLICE_SELECTION.md` — selected public contract selection for mixed dynamic/static read single-beat `RID` same-cycle release-and-recapture after mixed write recapture shipped.
 - `docs/AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_READ_RECAPTURE_CONTRACT_SELECTION.md` — selected direct mixed dynamic/static read single-beat `RID` same-cycle release-and-recapture implementation under the existing public sample.
+- `docs/AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_READ_RECAPTURE_BEHAVIOR.md` — shipped mixed dynamic/static read single-beat `RID` same-cycle release-and-recapture under the existing public sample.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_CONTRACT_SELECTION.md` — selected direct single-active dynamic write `BID` same-cycle release-and-recapture behavior under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_BEHAVIOR.md` — shipped single-active dynamic write `BID` same-cycle release-and-recapture under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_WRITE_RECAPTURE_NEXT_SLICE_SELECTION.md` — selected `.367`, public contract selection for first single-active dynamic read same-cycle release-and-recapture after dynamic write recapture shipped.

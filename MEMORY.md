@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.391: select mixed read recapture contract`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.392` implements mixed dynamic/static read single-beat RID same-cycle release-and-recapture; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.391` selected `.392`, direct implementation of mixed dynamic/static read single-beat RID same-cycle release-and-recapture. The contract preserves the existing public sample/mode/scope/source while selecting dynamic_capture recapture fields, read static_capture, release-only exclusions, release-recapture guards, and idle-or-releasing assertions; docs/doctrine gates passed.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.392: ship mixed read recapture`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.393` selects the next post mixed dynamic/static read single-beat recapture activity; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.392` shipped mixed dynamic/static read single-beat RID same-cycle release-and-recapture. FSMGen emits dynamic/static release-recapture rules, reports `mixed_dynamic_static_dynamic_read` and `mixed_dynamic_static_static_read`, replaces the selected request-not-busy assertions with idle-or-releasing assertions, preserves the mixed read single-beat public sample/mode/scope/source, and confirms burst-last remains unchanged.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
-- next_action: Start `.392`: implement the selected mixed dynamic/static read single-beat recapture behavior.
+- next_action: Start `.393`: select the next post mixed dynamic/static read recapture activity.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact

@@ -1468,7 +1468,9 @@ sub _response_demux_mixed_dynamic_static_read_transaction(%args) {
             request_acceptance_expr => $dynamic_request_acceptance,
             capture_rule            => "${dynamic_prefix}_dynamic_id_capture",
             release_rule            => "${dynamic_prefix}_dynamic_id_release",
+            release_recapture_rule  => "${dynamic_prefix}_dynamic_id_release_recapture",
             request_not_busy_assertion => "${dynamic_prefix}_dynamic_request_not_busy",
+            request_idle_or_releasing_assertion => "${dynamic_prefix}_dynamic_request_idle_or_releasing",
             request_no_active_same_id_assertion => "${dynamic_prefix}_dynamic_request_no_active_same_id",
             request_not_static_id_assertion => "${dynamic_prefix}_dynamic_request_not_static_id",
             active_not_static_id_assertion => "${dynamic_prefix}_dynamic_active_not_static_id",
@@ -1504,7 +1506,9 @@ sub _response_demux_mixed_dynamic_static_read_transaction(%args) {
             request_acceptance_expr => $static_request_acceptance,
             capture_rule            => "${static_prefix}_static_busy_capture",
             release_rule            => "${static_prefix}_static_busy_release",
+            release_recapture_rule  => "${static_prefix}_static_busy_release_recapture",
             request_not_busy_assertion => "${static_prefix}_static_request_not_busy",
+            request_idle_or_releasing_assertion => "${static_prefix}_static_request_idle_or_releasing",
             completion_assertion    => "${static_prefix}_static_completion_active",
         };
     }
@@ -1523,6 +1527,8 @@ sub _response_demux_mixed_dynamic_static_read_transaction(%args) {
         my @static_id_blocks = map {
             _not_expr(_eq_expr($dynamic_state->{request_id_source}, $_->{concrete_id_literal}))
         } @static_states;
+        $dynamic_state->{static_request_block_exprs} = \@static_request_blocks;
+        $dynamic_state->{static_id_block_exprs} = \@static_id_blocks;
         $dynamic_state->{capture_guard} = _and_expr(
             $dynamic_state->{request_acceptance_expr},
             _not_expr($dynamic_state->{busy_signal}),
@@ -1536,6 +1542,12 @@ sub _response_demux_mixed_dynamic_static_read_transaction(%args) {
         my @dynamic_request_exprs = map { $_->{request_acceptance_expr} } @dynamic_states;
         my @sibling_static_request_exprs = map { $_->{request_acceptance_expr} }
             grep { $_->{transaction} ne $static_state->{transaction} } @static_states;
+        $static_state->{dynamic_request_block_exprs} = [
+            map { _not_expr($_) } @dynamic_request_exprs
+        ];
+        $static_state->{sibling_static_request_block_exprs} = [
+            map { _not_expr($_) } @sibling_static_request_exprs
+        ];
         $static_state->{capture_guard} = _and_expr(
             $static_state->{request_acceptance_expr},
             _not_expr($static_state->{busy_signal}),
@@ -1559,32 +1571,35 @@ sub _response_demux_mixed_dynamic_static_read_transaction(%args) {
         }
     } @static_states;
 
-    return {
-        mode                         => 'bounded_mixed_dynamic_static_read_rid_demux_contract',
-        transaction_completion_source => 'generated_mixed_dynamic_static_read_demux',
-        transaction_completion_semantics => 'matched_dynamic_or_static_concrete_id_single_beat',
-        dynamic_transactions          => \@dynamic_transaction_names,
-        static_transactions           => \@static_transaction_names,
-        mixed_transactions            => {
-            dynamic => $dynamic_states[0]{transaction},
-            static  => $static_states[0]{transaction},
-        },
-        static_id_reservation         => $static_id_reservations[0],
-        dynamic_capture               => {
-            request_id_source           => $dynamic_states[0]{request_id_source},
-            capture_event_source        => 'admitted_dynamic_read_request',
-            ownership                   => 'mixed_dynamic_static_unique_read_ids',
-            simultaneous_request_policy => 'onehot0_mixed_read_request',
-            static_id_conflict_policy   => 'static_concrete_ids_reserved',
-            selected_id_signal          => $dynamic_states[0]{selected_id_signal},
-            busy_signal                 => $dynamic_states[0]{busy_signal},
-            capture_rule                => $dynamic_states[0]{capture_rule},
-            release_rule                => $dynamic_states[0]{release_rule},
-        },
-        generated_completion_signals  => \@completion_signals,
-        dynamic_transaction_state     => \@dynamic_states,
-        static_transaction_state      => \@static_states,
-    } if @dynamic_states == 1 && @static_states == 1;
+    if (@dynamic_states == 1 && @static_states == 1) {
+        my %entry = (
+            mode                         => 'bounded_mixed_dynamic_static_read_rid_demux_contract',
+            transaction_completion_source => 'generated_mixed_dynamic_static_read_demux',
+            transaction_completion_semantics => 'matched_dynamic_or_static_concrete_id_single_beat',
+            dynamic_transactions          => \@dynamic_transaction_names,
+            static_transactions           => \@static_transaction_names,
+            mixed_transactions            => {
+                dynamic => $dynamic_states[0]{transaction},
+                static  => $static_states[0]{transaction},
+            },
+            static_id_reservation         => $static_id_reservations[0],
+            dynamic_capture               => {
+                request_id_source           => $dynamic_states[0]{request_id_source},
+                capture_event_source        => 'admitted_dynamic_read_request',
+                ownership                   => 'mixed_dynamic_static_unique_read_ids',
+                simultaneous_request_policy => 'onehot0_mixed_read_request',
+                static_id_conflict_policy   => 'static_concrete_ids_reserved',
+                selected_id_signal          => $dynamic_states[0]{selected_id_signal},
+                busy_signal                 => $dynamic_states[0]{busy_signal},
+                capture_rule                => $dynamic_states[0]{capture_rule},
+                release_rule                => $dynamic_states[0]{release_rule},
+            },
+            generated_completion_signals  => \@completion_signals,
+            dynamic_transaction_state     => \@dynamic_states,
+            static_transaction_state      => \@static_states,
+        );
+        return \%entry;
+    }
 
     my %dynamic_capture = (
         request_id_source           => $dynamic_states[0]{request_id_source},
@@ -1958,14 +1973,16 @@ sub _normalize_response_demux_read(%args) {
                 generated_completion_signals  => _clone_jsonish($plan->{generated_completion_signals}),
                 dynamic_transaction_state     => _clone_jsonish($plan->{dynamic_transaction_state}),
             );
+            for my $field (qw(static_transactions mixed_transactions static_id_reservation static_id_reservations static_capture static_transaction_state)) {
+                $entry{$field} = _clone_jsonish($plan->{$field})
+                    if exists $plan->{$field};
+            }
             if (@dynamic_states == 1 && !@static_states) {
                 _response_demux_mark_single_active_dynamic_read_recapture(\%entry);
             } elsif ($multi_dynamic && !@static_states) {
                 _response_demux_mark_multi_active_dynamic_read_recapture(\%entry);
-            }
-            for my $field (qw(static_transactions mixed_transactions static_id_reservation static_id_reservations static_transaction_state)) {
-                $entry{$field} = _clone_jsonish($plan->{$field})
-                    if exists $plan->{$field};
+            } elsif (@dynamic_states == 1 && @static_states == 1) {
+                _response_demux_mark_mixed_dynamic_static_read_recapture(\%entry);
             }
             return \%entry;
         }
@@ -2300,6 +2317,59 @@ sub _response_demux_mark_mixed_dynamic_static_write_recapture($entry) {
         capture_event_source                => 'admitted_static_write_request',
         ownership                           => 'mixed_dynamic_static_concrete_write_id',
         simultaneous_request_policy         => 'onehot0_mixed_write_request',
+        busy_signal                         => $static_state->{busy_signal},
+        capture_rule                        => $static_state->{capture_rule},
+        release_rule                        => $static_state->{release_rule},
+        release_recapture_rule              => $static_state->{release_recapture_rule},
+        same_cycle_release_recapture_policy =>
+            $static_state->{same_cycle_release_recapture_policy},
+        release_recapture_source            => $static_state->{release_recapture_source},
+        release_recapture_transaction       =>
+            $static_state->{release_recapture_transaction},
+    };
+}
+
+sub _response_demux_mark_mixed_dynamic_static_read_recapture($entry) {
+    my $dynamic_states = $entry->{dynamic_transaction_state};
+    my $static_states = $entry->{static_transaction_state};
+    return unless ref($dynamic_states) eq 'ARRAY' && @$dynamic_states == 1;
+    return unless ref($static_states) eq 'ARRAY' && @$static_states == 1;
+
+    my $dynamic_state = $dynamic_states->[0];
+    my $static_state = $static_states->[0];
+    return unless ref($dynamic_state) eq 'HASH' && ref($static_state) eq 'HASH';
+
+    $dynamic_state->{same_cycle_release_recapture_policy} =
+        'mixed_dynamic_static_dynamic_read';
+    $dynamic_state->{release_recapture_source} =
+        'generated_mixed_dynamic_static_read_demux_completion';
+    $dynamic_state->{release_recapture_transaction} = $dynamic_state->{transaction};
+
+    $static_state->{same_cycle_release_recapture_policy} =
+        'mixed_dynamic_static_static_read';
+    $static_state->{release_recapture_source} =
+        'generated_mixed_dynamic_static_read_demux_completion';
+    $static_state->{release_recapture_transaction} = $static_state->{transaction};
+
+    my $dynamic_capture = $entry->{dynamic_capture};
+    if (ref($dynamic_capture) eq 'HASH') {
+        $dynamic_capture->{release_recapture_rule} =
+            $dynamic_state->{release_recapture_rule};
+        $dynamic_capture->{same_cycle_release_recapture_policy} =
+            $dynamic_state->{same_cycle_release_recapture_policy};
+        $dynamic_capture->{release_recapture_source} =
+            $dynamic_state->{release_recapture_source};
+        $dynamic_capture->{release_recapture_transaction} =
+            $dynamic_state->{release_recapture_transaction};
+    }
+
+    $entry->{static_capture} = {
+        transaction                         => $static_state->{transaction},
+        concrete_id                         => $static_state->{concrete_id},
+        concrete_id_literal                 => $static_state->{concrete_id_literal},
+        capture_event_source                => 'admitted_static_read_request',
+        ownership                           => 'mixed_dynamic_static_concrete_read_id',
+        simultaneous_request_policy         => 'onehot0_mixed_read_request',
         busy_signal                         => $static_state->{busy_signal},
         capture_rule                        => $static_state->{capture_rule},
         release_rule                        => $static_state->{release_rule},
@@ -5222,7 +5292,7 @@ sub _response_demux_dynamic_release_recapture_rule_lines($contract) {
                 @{$state->{sibling_request_block_exprs} || []},
                 @{$state->{active_same_id_block_exprs} || []},
             );
-        } elsif (_response_demux_state_has_mixed_dynamic_static_dynamic_write_recapture($state)) {
+        } elsif (_response_demux_state_has_mixed_dynamic_static_dynamic_recapture($state)) {
             @extra_guards = (
                 @{$state->{static_request_block_exprs} || []},
                 @{$state->{static_id_block_exprs} || []},
@@ -5248,7 +5318,7 @@ sub _response_demux_dynamic_release_recapture_rule_lines($contract) {
 sub _response_demux_state_has_dynamic_release_recapture($state) {
     return 1 if _response_demux_state_has_single_active_dynamic_recapture($state);
     return 1 if _response_demux_state_has_multi_active_dynamic_recapture($state);
-    return 1 if _response_demux_state_has_mixed_dynamic_static_dynamic_write_recapture($state);
+    return 1 if _response_demux_state_has_mixed_dynamic_static_dynamic_recapture($state);
     return 0;
 }
 
@@ -5284,14 +5354,38 @@ sub _response_demux_state_has_mixed_dynamic_static_dynamic_write_recapture($stat
     return $family eq 'write' && $policy eq 'mixed_dynamic_static_dynamic_write';
 }
 
+sub _response_demux_state_has_mixed_dynamic_static_dynamic_read_recapture($state) {
+    my $family = $state->{family} // '';
+    my $policy = $state->{same_cycle_release_recapture_policy} // '';
+    return $family eq 'read' && $policy eq 'mixed_dynamic_static_dynamic_read';
+}
+
+sub _response_demux_state_has_mixed_dynamic_static_dynamic_recapture($state) {
+    return 1 if _response_demux_state_has_mixed_dynamic_static_dynamic_write_recapture($state);
+    return 1 if _response_demux_state_has_mixed_dynamic_static_dynamic_read_recapture($state);
+    return 0;
+}
+
 sub _response_demux_state_has_mixed_dynamic_static_static_write_recapture($state) {
     my $family = $state->{family} // '';
     my $policy = $state->{same_cycle_release_recapture_policy} // '';
     return $family eq 'write' && $policy eq 'mixed_dynamic_static_static_write';
 }
 
-sub _response_demux_state_has_static_release_recapture($state) {
+sub _response_demux_state_has_mixed_dynamic_static_static_read_recapture($state) {
+    my $family = $state->{family} // '';
+    my $policy = $state->{same_cycle_release_recapture_policy} // '';
+    return $family eq 'read' && $policy eq 'mixed_dynamic_static_static_read';
+}
+
+sub _response_demux_state_has_mixed_dynamic_static_static_recapture($state) {
     return 1 if _response_demux_state_has_mixed_dynamic_static_static_write_recapture($state);
+    return 1 if _response_demux_state_has_mixed_dynamic_static_static_read_recapture($state);
+    return 0;
+}
+
+sub _response_demux_state_has_static_release_recapture($state) {
+    return 1 if _response_demux_state_has_mixed_dynamic_static_static_recapture($state);
     return 0;
 }
 

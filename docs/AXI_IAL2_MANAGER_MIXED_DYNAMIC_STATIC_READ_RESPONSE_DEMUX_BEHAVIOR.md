@@ -59,9 +59,12 @@ The bounded slice requires:
 - dynamic capture excluding the static concrete ID.
 
 Burst-last `RID && RLAST`, read-data, burst-length/runtime, multi-beat output
-banks, multiple mixed transactions, same-cycle widening, release-and-recapture,
-dynamic same-ID queues, scoreboards, direct backend behavior, backend-language
-variants, and VHDL remain future exact-owner work.
+banks, multiple mixed transactions, mixed burst-last recapture, broader
+same-cycle widening, dynamic same-ID queues, scoreboards, direct backend
+behavior, backend-language variants, and VHDL remain future exact-owner work.
+Single-beat same-cycle release-and-recapture for this public sample is now
+documented in
+[AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_READ_RECAPTURE_BEHAVIOR](AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_READ_RECAPTURE_BEHAVIOR.md).
 
 ## Generated Behavior
 
@@ -171,7 +174,7 @@ fail-closed or unshipped:
 - multi-beat output banks over mixed dynamic/static read response-demux;
 - multiple mixed dynamic/static read or write transactions;
 - same-cycle dynamic/static request widening beyond onehot0;
-- same-cycle release-and-recapture;
+- mixed read burst-last release-and-recapture and broader recapture shapes;
 - dynamic same-ID ordering;
 - dynamic same-ID queues and scoreboards;
 - direct backend behavior outside the selected generated SystemVerilog path;
