@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.434: select dynamic same-ID policy contract`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.435` audits metadata-first parser/report readiness for `dynamic-id-reuse reject`; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.434` selected additive family-local `(dynamic-id-reuse reject)` under `(same-id-ordering ...)`, distinct from `concrete-id-reuse`, and selected `.435`, readiness audit before metadata-first parser/report implementation. Dynamic `issue-order-queue` and `scoreboard` values remain unsupported future owners.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.435: audit dynamic same-ID metadata readiness`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.436` implements metadata-first parser/report support for `dynamic-id-reuse reject`; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.435` selected `.436`, direct metadata-first parser/report implementation for `(dynamic-id-reuse reject)`. It found no lowerer/HDL/support-infrastructure prerequisite and kept generated dynamic response-demux plus dynamic same-ID policy fail-closed until a later generated-enforcement mapping owner.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
-- next_action: Start `.435`: audit whether metadata-first parser/report support for `dynamic-id-reuse reject` can be implemented directly or needs a smaller parser/report prerequisite, with no behavior changes before the audit decides.
+- next_action: Start `.436`: implement only metadata-first `dynamic-id-reuse reject` parser/report support, public sample, support accounting, focused tests, docs, and continuity updates; do not add generated dynamic same-ID enforcement or response-demux mapping.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact

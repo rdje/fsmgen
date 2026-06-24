@@ -7895,6 +7895,16 @@ The selected report vocabulary is
 reuse false and no generated queue or scoreboard behavior. The selector
 changes no behavior.
 
+Dynamic same-ID policy metadata readiness audit:
+[AXI_IAL2_MANAGER_DYNAMIC_SAME_ID_POLICY_METADATA_READINESS_AUDIT](../../AXI_IAL2_MANAGER_DYNAMIC_SAME_ID_POLICY_METADATA_READINESS_AUDIT.md)
+selects `.436`, direct metadata-first parser/report implementation for
+`(dynamic-id-reuse reject)`. The audit changes no behavior. The first
+implementation should add the public syntax, normalized report fields,
+focused diagnostics, a metadata-only public sample, and support accounting,
+while keeping generated dynamic response-demux plus dynamic same-ID policy
+fail-closed until a later owner maps generated no-active-same-ID assertion
+enforcement.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

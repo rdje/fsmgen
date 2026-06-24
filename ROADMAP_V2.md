@@ -2855,6 +2855,14 @@ first dynamic same-ID policy value is only `reject`; dynamic
 The selected report vocabulary is
 `same_id_ordering.dynamic_id_reuse_policy.<family>`, with accepted same-ID
 reuse false and no generated queue or scoreboard behavior.
+`.435` now selects `.436`, direct metadata-first parser/report implementation
+for `(dynamic-id-reuse reject)`. The audit changes no behavior. It found no
+lowerer, HDL, support-accounting infrastructure, Knowledge Map, or mdBook
+prerequisite. `.436` should add the public syntax, normalized report fields,
+focused diagnostics, a metadata-only public sample, and support accounting,
+while keeping generated dynamic response-demux plus dynamic same-ID policy
+fail-closed until a later owner maps generated no-active-same-ID assertion
+enforcement.
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,
