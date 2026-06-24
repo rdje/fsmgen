@@ -2788,6 +2788,17 @@ release-recapture rules. The audit is next because this shape reuses the
 `.427` dynamic/static guard problem but adds final-beat source, raw non-final
 `RID`, `RLAST`, and read-data/raw-`ARLEN`/runtime/multi-beat preservation
 questions before any behavior change.
+`.429` now selects `.430`, public contract selection for the same
+two-dynamic-plus-one-static mixed dynamic/static read burst-last `RID &&
+RLAST` release-and-recapture boundary. The audit changes no behavior. It found
+no lower parser, support-accounting, report-schema, IAL1, or HDL prerequisite:
+`.427` already supplied the read-side multi-active mixed recapture policy and
+guard storage, while the burst-last normalizer is the remaining selector that
+leaves the two-dynamic/one-static RLAST branch unmarked. `.430` must pin
+`generated_multi_mixed_dynamic_static_read_demux_last_beat_completion`,
+dynamic/static report fields, guard composition, idle-or-releasing assertion
+names, and read-data/raw-`ARLEN`/runtime/multi-beat preservation before
+implementation.
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,

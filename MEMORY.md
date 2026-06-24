@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.428: select two-dynamic RLAST recapture audit`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.429` audits two-dynamic-plus-one-static mixed read burst-last RID/RLAST recapture readiness; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.428` selected `.429`, readiness audit for two-dynamic-plus-one-static mixed dynamic/static read burst-last RID/RLAST same-cycle release-and-recapture. Direct baseline probes confirmed the candidate burst-last response-demux/read-data/raw-ARLEN samples still have request-not-busy assertions for r0/r1/r2, no static_capture, and no generated release-recapture rules. No behavior changed.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.429: audit two-dynamic RLAST recapture readiness`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.430` selects the two-dynamic-plus-one-static mixed read burst-last RID/RLAST recapture public contract; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.429` selected `.430`, public contract selection for two-dynamic-plus-one-static mixed dynamic/static read burst-last RID/RLAST same-cycle release-and-recapture. The audit found no parser, support-accounting, report-schema, IAL1, or HDL prerequisite; the remaining implementation gap is the burst-last multi-mixed read selector and the final-beat/report/guard/assertion/consumer contract. No behavior changed.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
-- next_action: Start `.429`: audit the two-dynamic mixed read burst-last recapture readiness boundary before any implementation.
+- next_action: Start `.430`: select the exact two-dynamic mixed read burst-last recapture public contract before implementation.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact
