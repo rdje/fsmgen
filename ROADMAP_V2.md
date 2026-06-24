@@ -2933,6 +2933,21 @@ exact report fields, residue movement, and diagnostics before behavior changes.
 One-dynamic mixed mapping, dynamic queues, scoreboards, direct backend
 behavior, backend-language variants, VHDL, and new generated HDL remain
 deferred.
+`.441` now selects `.442`, direct implementation of the single-active dynamic
+same-ID reject mapping. The selected report contract uses
+`implementation_status: generated_single_active_reject`, `enforcement:
+generated_idle_or_releasing_assertions`, `single_active_covered: true`, and
+`single_active_request_policy: idle_or_releasing`, while preserving
+`accepted_same_id_reuse: false`, `request_conflict_policy:
+no_active_same_id`, and generated queue/scoreboard false. It lists generated
+idle-or-releasing, active-match, and completion-active assertion names and
+deliberately does not reuse the `.438` multi-active
+`generated_no_active_same_id_assertions` or
+`generated_active_id_uniqueness_assertions` fields. `.442` is bounded to
+acceptance/report/residue mapping for single-active write `BID`, read
+single-beat `RID`, and read burst-last `RID && RLAST`; one-dynamic mixed
+mapping, dynamic queues, scoreboards, direct backend behavior,
+backend-language variants, VHDL, and new generated HDL remain deferred.
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,

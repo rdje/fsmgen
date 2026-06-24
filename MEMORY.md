@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.440: audit single-active reject mapping`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.441` selects the single-active dynamic same-ID reject mapping report contract; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.440` audited single-active dynamic same-ID reject mapping readiness and selected `.441`. Existing single-active write/read response-demux shapes expose generated idle-or-releasing, active-match, and completion-active assertions; the audit found they need a single-active-specific report contract before behavior changes.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.441: select single-active reject contract`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.442` implements the single-active dynamic same-ID reject report/acceptance mapping; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.441` selected `.442`, direct implementation of single-active dynamic same-ID reject mapping with `generated_single_active_reject`, `generated_idle_or_releasing_assertions`, `single_active_covered`, and `single_active_request_policy: idle_or_releasing` report fields. Multi-active `.438` fields, one-dynamic mixed mapping, queues, scoreboards, direct backend behavior, backend-language variants, VHDL, and new generated HDL remain deferred.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
-- next_action: Start `.441`: select exact single-active dynamic same-ID reject report fields, residue movement, diagnostics, validation gates, and non-goals before behavior changes.
+- next_action: Start `.442`: implement only the selected single-active dynamic same-ID reject acceptance/report/residue mapping with focused tests and docs.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact
