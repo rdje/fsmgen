@@ -2876,6 +2876,14 @@ current onehot0 request policy, active dynamic selected-ID uniqueness,
 request no-active-same-ID checks, static busy release, capacity accounting,
 generated assertion helpers, and scheduler conflict assumptions before any
 request-plus-completion or release-and-recapture behavior changes.
+`.363` now selects `.364`, public contract selection for the first
+single-active dynamic write `BID` same-cycle release-and-recapture boundary.
+The audit found capacity admission already accepts same-cycle completion
+fan-in, while response-demux capture still requires `!busy` and release uses
+a separate generated completion rule. Single-active dynamic write recapture is
+the smallest next contract owner before static recapture, sibling onehot0
+request widening, read `RID`/`RLAST`, read-data payload behavior, queues,
+scoreboards, backend variants, or VHDL work.
 No behavior changed in
 `.270`, `.271`, `.273`, `.274`, `.275`, `.277`, `.278`,
 `.279`, `.281`, `.282`, `.283`, `.285`, `.286`, `.288`, `.290`, `.292`, or
@@ -2884,7 +2892,7 @@ No behavior changed in
 `.319`, `.320`, `.321`, `.323`, `.324`, `.325`, `.327`, `.328`, `.329`,
 `.331`, `.332`, `.334`, `.336`, `.338`, `.339`, `.340`, `.342`, `.343`,
 `.345`, `.346`, `.348`, `.349`, `.351`, `.352`, `.354`, `.356`, `.358`,
-`.359`, or `.360`.
+`.359`, `.360`, `.362`, or `.363`.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.

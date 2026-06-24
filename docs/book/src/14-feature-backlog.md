@@ -8337,6 +8337,16 @@ release-and-recapture can be widened directly while preserving capacity
 accounting, generated assertions, report vocabulary, and scheduler conflict
 assumptions.
 
+Dynamic/mixed same-cycle readiness audit:
+[AXI_IAL2_MANAGER_DYNAMIC_MIXED_SAME_CYCLE_READINESS_AUDIT](../../AXI_IAL2_MANAGER_DYNAMIC_MIXED_SAME_CYCLE_READINESS_AUDIT.md)
+selects `.364`, public contract selection for the first single-active dynamic
+write `BID` same-cycle release-and-recapture boundary. Capacity admission
+already accounts for same-cycle completion fan-in, but response-demux capture
+still requires `!busy` and release uses a separate generated completion rule.
+The first contract owner is deliberately narrower than static recapture,
+mixed sibling request widening, read `RID`/`RLAST`, read-data payload capture,
+queues, scoreboards, backend variants, and VHDL.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same
