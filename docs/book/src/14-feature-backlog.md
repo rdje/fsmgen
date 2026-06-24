@@ -7179,6 +7179,16 @@ the burst-last path must preserve final completion, non-final raw read beats,
 scalar last-beat read-data, raw-`ARLEN`, runtime beat-count/`RLAST`, and
 multi-beat output-bank consumers.
 
+Multiple dynamic read RLAST recapture readiness audit:
+[AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_READ_RLAST_RECAPTURE_READINESS_AUDIT](../../AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_READ_RLAST_RECAPTURE_READINESS_AUDIT.md)
+selects `.384`, public contract selection for multiple all-dynamic read
+burst-last `RID && RLAST` same-cycle release-and-recapture. The audit changes
+no behavior. It found the implementation substrate close, but selected
+contract ownership first for the last-beat release-recapture source, request
+assertions, release guards, raw non-final beat preservation, scalar last-beat
+read-data, raw-`ARLEN`, runtime beat-count/`RLAST`, multi-beat output-bank
+preservation, validation, and rollback semantics.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

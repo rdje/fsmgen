@@ -2186,7 +2186,12 @@ readiness audit for multiple all-dynamic read burst-last `RID && RLAST`
 same-cycle release-and-recapture, because final completion, non-final raw read
 beats, scalar last-beat read-data, raw-`ARLEN`, runtime beat-count/`RLAST`, and
 multi-beat output banks must be preserved before any burst-last recapture
-contract or implementation is selected.
+contract or implementation is selected. `.383` selects `.384`, public
+contract selection for that burst-last recapture boundary, after finding the
+implementation substrate close but public last-beat release-recapture source,
+assertion rename, guard, raw-beat preservation, read-data, raw-`ARLEN`,
+runtime, multi-beat, validation, and rollback semantics still need explicit
+ownership before behavior changes.
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,

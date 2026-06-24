@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.382: select read RLAST recapture audit`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.383` audits multiple all-dynamic read burst-last `RID && RLAST` same-cycle release-and-recapture readiness; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.382` selected `.383`, readiness audit for multiple all-dynamic read burst-last `RID && RLAST` same-cycle release-and-recapture. The selector changed no behavior and recorded that burst-last recapture must preserve final completion, non-final raw read beats, scalar last-beat read-data, raw-`ARLEN`, runtime beat-count/`RLAST`, and multi-beat output-bank consumers before any contract or implementation leaf is selected. `.381` previously shipped same-cycle release-and-recapture for `ppif/axi_manager_capacity_status_dynamic_read_response_demux_multi.ppif`; guarded t/1438 and schedule JSON passed while broader guarded probes were stopped by the 88% host-memory cutoff after focused probes passed.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.383: audit read RLAST recapture readiness`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.384` selects the public contract for multiple all-dynamic read burst-last `RID && RLAST` same-cycle release-and-recapture; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.383` selected `.384`, public contract selection for multiple all-dynamic read burst-last `RID && RLAST` same-cycle release-and-recapture. The guarded baseline schedule probe for `ppif/axi_manager_capacity_status_dynamic_read_response_demux_multi_burst_last.ppif` passed after process-inspection approval for the RAM guard and confirmed the live boundary still reports `bounded_multi_dynamic_read_rid_rlast_demux_contract`, `generated_dynamic_demux_last_beat`, request-not-busy assertions, and no release-recapture fields. The audit changed no behavior.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
-- next_action: Start `.383`: audit multiple all-dynamic read burst-last `RID && RLAST` recapture readiness.
+- next_action: Start `.384`: select the public contract for multiple all-dynamic read burst-last `RID && RLAST` recapture.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact
