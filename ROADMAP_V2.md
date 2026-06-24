@@ -2569,6 +2569,21 @@ raw-`ARLEN`/runtime/multi-beat consumers. It selects
 mixed read policy names, dynamic/static guard composition, release-only
 same-transaction request exclusions, and idle-or-releasing assertion names
 for the implementation owner.
+`.415` now ships that one-dynamic-plus-two-static mixed dynamic/static read
+burst-last `RID && RLAST` same-cycle release-and-recapture behavior. FSMGen
+reports dynamic recapture under `dynamic_capture.transactions[0]`,
+list-shaped static recapture under `static_capture[]`, final-beat source
+`generated_multi_mixed_dynamic_static_read_demux_last_beat_completion`, and
+idle-or-releasing assertions for `r0`/`r1`/`r2`. Public syntax, support
+identity, burst-last mode/source/semantics, generated demux/completion
+behavior, raw `RID` active/unique-match assertions, completion-active
+assertions, one-static RLAST recapture, three-static no-recapture,
+two-dynamic-plus-one-static no-recapture, and scalar read-data/raw-`ARLEN`/
+runtime/multi-beat consumers remain preserved. Guarded selected schedule JSON
+passed and produced a 46549-byte report; focused `t/1438`, strict check JSON,
+semantic JSON, SystemVerilog generation, and `--verify-hdl` stopped at the
+default 88% RAM guard cutoff before completion, with no cutoff raised. `.416`
+now selects the next post two-static mixed read burst-last recapture slice.
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,

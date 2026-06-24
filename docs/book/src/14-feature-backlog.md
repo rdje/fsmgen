@@ -7621,6 +7621,19 @@ mixed read policy names, dynamic/static guard composition, release-only
 same-transaction request exclusions, and idle-or-releasing assertion names
 for the implementation owner.
 
+Multiple mixed dynamic/static read RLAST recapture behavior:
+[AXI_IAL2_MANAGER_MULTIPLE_MIXED_DYNAMIC_STATIC_READ_RLAST_RECAPTURE_BEHAVIOR](../../AXI_IAL2_MANAGER_MULTIPLE_MIXED_DYNAMIC_STATIC_READ_RLAST_RECAPTURE_BEHAVIOR.md)
+ships `.415`. The public sample
+`ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static_burst_last.ppif`
+now reports same-cycle final-beat release-and-recapture for `r0`, `r1`, and
+`r2`: dynamic recapture under `dynamic_capture.transactions[0]`,
+list-shaped static recapture under `static_capture[]`,
+`generated_multi_mixed_dynamic_static_read_demux_last_beat_completion`, and
+idle-or-releasing assertions for all three selected read transactions. The
+one-static RLAST recapture shape, three-static no-recapture shape,
+two-dynamic-plus-one-static no-recapture shape, and scalar read-data/raw-
+`ARLEN`/runtime/multi-beat consumers remain preserved.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after
@@ -8064,7 +8077,8 @@ one one-bit `last-signal`, one dynamic read transaction, and two concrete
 static read transactions. FSMGen now emits dynamic selected-ID/busy state,
 per-static busy state, dynamic capture exclusions for static IDs `4'd3` and
 `4'd5`, generated final-beat `RID && RLAST` completion pulses for `r0`,
-`r1`, and `r2`, pairwise raw `RID` response unique-match assertions, and
+`r1`, and `r2`, same-cycle final-beat release-and-recapture for those three
+transactions, pairwise raw `RID` response unique-match assertions, and
 list-shaped mixed transaction/static-ID reservation report fields while
 preserving the `.276`, `.280`, and `.299` public report contracts.
 

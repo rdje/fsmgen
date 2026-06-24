@@ -3200,6 +3200,7 @@ sub assert_mixed_dynamic_static_read_rlast_multi_static_report {
     }
     my @static_names = map { $_->{transaction} } @static_cases;
     my @transaction_names = ('r0', @static_names);
+    my $release_recapture_expected = @static_cases == 2;
     my @unique_match_assertions;
     for my $left_index (0 .. $#transaction_names - 1) {
         for my $right_index ($left_index + 1 .. $#transaction_names) {
@@ -3244,10 +3245,14 @@ sub assert_mixed_dynamic_static_read_rlast_multi_static_report {
     is_deeply(
         $read->{generated_assertions},
         [
-            'axi0_r0_dynamic_request_not_busy',
+            $release_recapture_expected
+                ? 'axi0_r0_dynamic_request_idle_or_releasing'
+                : 'axi0_r0_dynamic_request_not_busy',
             (map {
                 my $transaction = $_->{transaction};
-                "axi0_${transaction}_static_request_not_busy";
+                $release_recapture_expected
+                    ? "axi0_${transaction}_static_request_idle_or_releasing"
+                    : "axi0_${transaction}_static_request_not_busy";
             } @static_cases),
             'axi0_read_mixed_dynamic_static_request_onehot0',
             (map {
@@ -3267,6 +3272,22 @@ sub assert_mixed_dynamic_static_read_rlast_multi_static_report {
         ],
         'multi-static mixed read RLAST report names generated assertions',
     );
+    my %dynamic_capture_transaction = (
+        transaction        => 'r0',
+        selected_id_signal => 'axi0_r0_dynamic_id_q',
+        busy_signal        => 'axi0_r0_dynamic_busy_q',
+        capture_rule       => 'axi0_r0_dynamic_id_capture',
+        release_rule       => 'axi0_r0_dynamic_id_release',
+    );
+    if ($release_recapture_expected) {
+        $dynamic_capture_transaction{release_recapture_rule} =
+            'axi0_r0_dynamic_id_release_recapture';
+        $dynamic_capture_transaction{same_cycle_release_recapture_policy} =
+            'mixed_dynamic_static_dynamic_read';
+        $dynamic_capture_transaction{release_recapture_source} =
+            'generated_multi_mixed_dynamic_static_read_demux_last_beat_completion';
+        $dynamic_capture_transaction{release_recapture_transaction} = 'r0';
+    }
     is_deeply(
         $read->{dynamic_capture},
         {
@@ -3276,18 +3297,38 @@ sub assert_mixed_dynamic_static_read_rlast_multi_static_report {
             simultaneous_request_policy => 'onehot0_mixed_read_request',
             static_id_conflict_policy   => 'static_concrete_ids_reserved',
             static_id_exclusions        => [map { $_->{literal} } @static_cases],
-            transactions                => [
-                {
-                    transaction        => 'r0',
-                    selected_id_signal => 'axi0_r0_dynamic_id_q',
-                    busy_signal        => 'axi0_r0_dynamic_busy_q',
-                    capture_rule       => 'axi0_r0_dynamic_id_capture',
-                    release_rule       => 'axi0_r0_dynamic_id_release',
-                },
-            ],
+            transactions                => [\%dynamic_capture_transaction],
         },
         'multi-static mixed read RLAST report describes dynamic capture ownership and all static exclusions',
     );
+    if ($release_recapture_expected) {
+        is_deeply(
+            $read->{static_capture},
+            [
+                map {
+                    my $transaction = $_->{transaction};
+                    +{
+                        transaction                         => $transaction,
+                        concrete_id                         => $_->{value},
+                        concrete_id_literal                 => $_->{literal},
+                        capture_event_source                => 'admitted_static_read_request',
+                        ownership                           => 'mixed_dynamic_static_concrete_read_id',
+                        simultaneous_request_policy         => 'onehot0_mixed_read_request',
+                        busy_signal                         => "axi0_${transaction}_static_busy_q",
+                        capture_rule                        => "axi0_${transaction}_static_busy_capture",
+                        release_rule                        => "axi0_${transaction}_static_busy_release",
+                        release_recapture_rule              => "axi0_${transaction}_static_busy_release_recapture",
+                        same_cycle_release_recapture_policy => 'mixed_dynamic_static_static_read',
+                        release_recapture_source            => 'generated_multi_mixed_dynamic_static_read_demux_last_beat_completion',
+                        release_recapture_transaction       => $transaction,
+                    }
+                } @static_cases
+            ],
+            'multi-static mixed read RLAST report lists static release-recapture capture entries',
+        );
+    } else {
+        ok(!exists $read->{static_capture}, 'multi-static mixed read RLAST report leaves static recapture absent outside the selected two-static owner');
+    }
     is($report->{transactions}[0]{id}{implementation_status}, 'generated_capture_matching', 'multi-static mixed read RLAST dynamic transaction reports generated capture/matching');
     for my $case (@static_cases) {
         is_deeply(
