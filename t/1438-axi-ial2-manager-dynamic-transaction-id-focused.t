@@ -134,6 +134,15 @@ my @DYNAMIC_CASES = (
         behavior     => 'mixed_dynamic_static_read_data_multi_dynamic_last_beat',
     },
     {
+        label        => 'multi-dynamic mixed dynamic/static read-data report-only burst-length capture',
+        relpath      => 'ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_dynamic_burst_last_read_data_burst_length.ppif',
+        object_id    => 'axi-manager-capacity-status-read-mixed-dynamic-static-response-demux-multi-dynamic-burst-last-read-data-burst-length',
+        intent_name  => 'axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_dynamic_burst_last_read_data_burst_length',
+        entry_id     => 'intent.ppif_axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_dynamic_burst_last_read_data_burst_length',
+        coverage     => 'ial2_ppif_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_dynamic_burst_last_read_data_burst_length_pipeline_cli',
+        behavior     => 'mixed_dynamic_static_read_data_multi_dynamic_burst_length',
+    },
+    {
         label        => 'mixed dynamic/static read burst-last RID/RLAST response demux',
         relpath      => 'ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_burst_last.ppif',
         object_id    => 'axi-manager-capacity-status-read-mixed-dynamic-static-response-demux-burst-last',
@@ -1032,6 +1041,35 @@ sub assert_dynamic_behavior {
         like($hdl, qr/axi0_r1_last_rresp_next\s*=\s*axi0_rresp\s*;/, 'SystemVerilog captures second dynamic last-beat RRESP');
         like($hdl, qr/axi0_r2_last_rdata_next\s*=\s*axi0_rdata\s*;/, 'SystemVerilog captures static last-beat RDATA');
         like($hdl, qr/axi0_r2_last_rresp_next\s*=\s*axi0_rresp\s*;/, 'SystemVerilog captures static last-beat RRESP');
+        return;
+    }
+
+    if ($case->{behavior} eq 'mixed_dynamic_static_read_data_multi_dynamic_burst_length') {
+        like($isf, qr/\(rule axi0_r0_response_demux \(& axi0_read_complete axi0_r0_dynamic_busy_q \(== axi0_rid axi0_r0_dynamic_id_q\) axi0_rlast\)/, 'multi-dynamic mixed burst-length read-data keeps first dynamic RID/RLAST demux');
+        like($isf, qr/\(rule axi0_r1_response_demux \(& axi0_read_complete axi0_r1_dynamic_busy_q \(== axi0_rid axi0_r1_dynamic_id_q\) axi0_rlast\)/, 'multi-dynamic mixed burst-length read-data keeps second dynamic RID/RLAST demux');
+        like($isf, qr/\(rule axi0_r2_response_demux \(& axi0_read_complete axi0_r2_static_busy_q \(== axi0_rid 4'd3\) axi0_rlast\)/, 'multi-dynamic mixed burst-length read-data keeps static RID/RLAST demux');
+        like($isf, qr/\(input axi0_arlen \(width 8\)\)/, 'multi-dynamic mixed burst-length read-data declares ARLEN input');
+        for my $tx (qw(r0 r1 r2)) {
+            like($isf, qr/\(var axi0_${tx}_arlen_q \(width 8\)\)/, "multi-dynamic mixed burst-length read-data allocates $tx raw ARLEN storage");
+            like($isf, qr/\(rule axi0_${tx}_burst_length_capture axi0_${tx}_request\s+\(axi0_${tx}_arlen_q axi0_arlen\)\)/, "multi-dynamic mixed burst-length read-data captures $tx raw ARLEN under request");
+            like($isf, qr/\(rule axi0_${tx}_read_data_capture axi0_${tx}_complete\s+\(axi0_${tx}_last_rdata axi0_rdata\)\s+\(axi0_${tx}_last_rresp axi0_rresp\)\)/, "multi-dynamic mixed burst-length read-data keeps $tx payload capture under generated completion");
+        }
+        unlike($isf, qr/read_beat_count_q|expected_beats_q|arlen_within_max/, 'multi-dynamic mixed report-only burst-length emits no runtime beat-count state or assertions');
+        assert_mixed_dynamic_static_read_rlast_multi_dynamic_report($result->{report});
+        assert_dynamic_read_data_burst_length_report(
+            $result->{report}{read_data},
+            'report_only',
+            [qw(r0 r1 r2)],
+            'generated_multi_mixed_dynamic_static_read_response_demux_last_beat_completion_pulse',
+        );
+        like($fsm, qr/\(-axi0_r2_burst_length_capture\s+<axi0_r2_request\s+\(<- \(axi0_r2_arlen_q axi0_arlen\)\)\s+\)/, 'scheduled FSM lowers multi-dynamic mixed static raw ARLEN capture');
+        like($fsm, qr/\(-axi0_r2_read_data_capture\s+<axi0_r2_complete\s+\(<- \(axi0_r2_last_rdata> axi0_rdata\)\)\s+\(<- \(axi0_r2_last_rresp> axi0_rresp\)\)/, 'scheduled FSM keeps multi-dynamic mixed static payload capture');
+        my $hdl = hdl_for('axi0_capacity_status', $fsm);
+        like($hdl, qr/\binput\s+(?:wire\s+)?\[7:0\]\s+axi0_arlen\b/, 'SystemVerilog exposes multi-dynamic mixed ARLEN');
+        like($hdl, qr/assign\s+axi0_r2_burst_length_capture_en\s*=\s*axi0_r2_request\s*;/, 'SystemVerilog guards multi-dynamic mixed static ARLEN capture by request');
+        like($hdl, qr/axi0_r2_arlen_q_next\s*=\s*axi0_arlen\s*;/, 'SystemVerilog captures multi-dynamic mixed static raw ARLEN');
+        like($hdl, qr/assign\s+axi0_r2_read_data_capture_en\s*=\s*axi0_r2_complete\s*;/, 'SystemVerilog still guards multi-dynamic mixed static last-beat payload capture by completion');
+        unlike($hdl, qr/arlen_within_max|read_beat_count|expected_beats/, 'SystemVerilog keeps multi-dynamic mixed report-only burst-length free of runtime validation');
         return;
     }
 

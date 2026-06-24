@@ -5,7 +5,6 @@ answers:
   - "what did IAL2-FEATURE-COMPLETENESS-FRONTIER.352 decide?"
   - "is report-only raw-ARLEN over two-dynamic-plus-static mixed read RLAST read-data ready?"
   - "which sample is planned for two-dynamic-plus-static mixed read RLAST read-data burst-length?"
-  - "is two-dynamic-plus-static mixed read RLAST read-data burst-length implemented?"
 date: 2026-06-24
 status: current
 tags: [ial2, axi, dynamic-id, static-id, read-data, read-response-demux, rlast, burst-length, readiness]
@@ -27,5 +26,4 @@ coverage key
 `ial2_ppif_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_dynamic_burst_last_read_data_burst_length_pipeline_cli`,
 and behavior label `mixed_dynamic_static_read_data_multi_dynamic_burst_length`.
 
-The audit changes no behavior. The burst-length behavior is not implemented
-until `.353` lands.
+The audit changed no behavior; `.353` owns the implementation outcome.

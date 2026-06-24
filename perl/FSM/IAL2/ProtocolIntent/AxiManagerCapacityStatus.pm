@@ -2342,6 +2342,10 @@ sub _read_data_response_demux_transaction_coverage(%args) {
             && ($response_demux->{response_scope} // '') eq 'burst_last'
             && @dynamic_transactions == 2
             && @static_transactions == 1;
+        my $supports_two_dynamic_one_static_report_only_burst_length = $multi_mixed_last_beat_supported_burst_length
+            && $burst_length_validation eq 'report_only'
+            && @dynamic_transactions == 2
+            && @static_transactions == 1;
         my $supports_three_static_report_only_burst_length = $multi_mixed_last_beat_supported_burst_length
             && $burst_length_validation eq 'report_only'
             && @static_transactions == 3;
@@ -2350,15 +2354,17 @@ sub _read_data_response_demux_transaction_coverage(%args) {
             && @static_transactions == 3;
         my $supports_three_static_multi_beat_burst_length = $multi_mixed_multi_beat_supported_burst_length
             && @static_transactions == 3;
-        confess "AXI manager capacity/status IAL2 contract read_data.read multiple mixed dynamic/static coverage requires exactly one dynamic read transaction and two concrete static read transactions, scalar single-beat/last-beat read-data with exactly one dynamic read transaction and three concrete static read transactions and no burst_length metadata, scalar last-beat read-data with exactly two dynamic read transactions and one concrete static read transaction and no burst_length metadata, scalar last-beat raw-ARLEN read-data with report-only or runtime-assertion validation and exactly one dynamic read transaction and three concrete static read transactions, or runtime-assertion multi-beat output-bank read-data with exactly one dynamic read transaction and three concrete static read transactions, in this slice\n"
-            unless (
-                @dynamic_transactions == 1
-                    && (@static_transactions == 2
-                        || $supports_three_static_scalar_read_data
-                        || $supports_three_static_report_only_burst_length
-                        || $supports_three_static_runtime_burst_length
-                        || $supports_three_static_multi_beat_burst_length)
-            ) || $supports_two_dynamic_one_static_last_beat_read_data;
+        my $supports_declared_mixed_transaction_set = (
+            @dynamic_transactions == 1
+                && (@static_transactions == 2
+                    || $supports_three_static_scalar_read_data
+                    || $supports_three_static_report_only_burst_length
+                    || $supports_three_static_runtime_burst_length
+                    || $supports_three_static_multi_beat_burst_length)
+        ) || $supports_two_dynamic_one_static_last_beat_read_data
+            || $supports_two_dynamic_one_static_report_only_burst_length;
+        confess "AXI manager capacity/status IAL2 contract read_data.read multiple mixed dynamic/static coverage requires exactly one dynamic read transaction and two concrete static read transactions, scalar single-beat/last-beat read-data with exactly one dynamic read transaction and three concrete static read transactions and no burst_length metadata, scalar last-beat read-data with exactly two dynamic read transactions and one concrete static read transaction and no burst_length metadata, scalar last-beat raw-ARLEN read-data with report-only or runtime-assertion validation and exactly one dynamic read transaction and three concrete static read transactions, scalar last-beat raw-ARLEN read-data with report-only validation and exactly two dynamic read transactions and one concrete static read transaction, or runtime-assertion multi-beat output-bank read-data with exactly one dynamic read transaction and three concrete static read transactions, in this slice\n"
+            unless $supports_declared_mixed_transaction_set;
 
         my @transactions = (@dynamic_transactions, @static_transactions);
         my @completion_signals = @{$response_demux->{generated_completion_signals} || []};

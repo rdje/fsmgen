@@ -2764,6 +2764,16 @@ support identity, coverage key, behavior label, generated `axi0_arlen`, and
 per-transaction raw-`ARLEN` storage/capture rules while runtime validation,
 multi-beat output banks, broader cardinalities, direct backend behavior,
 backend-language variants, and VHDL remain separate owners.
+`.353` now ships that selected report-only raw-`ARLEN` burst-length capture
+through the support-accounted public sample
+`ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_dynamic_burst_last_read_data_burst_length.ppif`.
+It preserves the `.350` scalar last-beat payload capture and `.347` final
+`RID && RLAST` generated completions, adds generated input `axi0_arlen`,
+per-transaction raw-`ARLEN` storage for `r0`, `r1`, and `r2`, and
+request-guarded capture rules for all three transactions. The report names
+validation mode `report_only` with runtime beat-count/`RLAST` validation still
+residue. `.354` is the next readiness audit for runtime validation over this
+two-dynamic-plus-one-static raw-`ARLEN` boundary.
 No behavior changed in
 `.270`, `.271`, `.273`, `.274`, `.275`, `.277`, `.278`,
 `.279`, `.281`, `.282`, `.283`, `.285`, `.286`, `.288`, `.290`, `.292`, or

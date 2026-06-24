@@ -8205,6 +8205,19 @@ request-guarded capture rules for `r0`, `r1`, and `r2`, and report generated
 burst-length inputs/storage/rules while runtime validation and multi-beat
 output banks remain future owners.
 
+Two-dynamic/one-static mixed dynamic/static read burst-last read-data
+burst-length behavior:
+[AXI_IAL2_MANAGER_TWO_DYNAMIC_ONE_STATIC_MIXED_DYNAMIC_STATIC_READ_RLAST_READ_DATA_BURST_LENGTH_BEHAVIOR](../../AXI_IAL2_MANAGER_TWO_DYNAMIC_ONE_STATIC_MIXED_DYNAMIC_STATIC_READ_RLAST_READ_DATA_BURST_LENGTH_BEHAVIOR.md)
+ships `.353`, generated report-only raw-`ARLEN` burst-length capture over the
+`.350` scalar last-beat read-data boundary. The public sample
+`ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_dynamic_burst_last_read_data_burst_length.ppif`
+keeps dynamic reads `r0`/`r1`, static read `r2`, final `RID && RLAST`
+completion pulses, and scalar last-beat `RDATA`/`RRESP` capture; it adds
+generated `axi0_arlen`, raw-`ARLEN` storage for all three transactions, and
+request-guarded burst-length capture rules. Runtime beat-count/`RLAST`
+validation and multi-beat output banks remain future owners; `.354` audits
+runtime-validation readiness next.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same
