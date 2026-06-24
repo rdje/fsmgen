@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.431: ship two-dynamic RLAST recapture`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.432` selects the next slice after two-dynamic-plus-one-static mixed read burst-last RID/RLAST recapture; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.431` shipped two-dynamic-plus-one-static mixed dynamic/static read burst-last RID/RLAST same-cycle release-and-recapture. FSMGen now reports r0/r1 dynamic recapture, list-shaped r2 static capture, final-beat release-recapture source `generated_multi_mixed_dynamic_static_read_demux_last_beat_completion`, release-only request exclusions, and idle-or-releasing assertions while preserving public syntax/support identity, raw non-final RID assertions, final-beat completions, .427 single-beat recapture, one-/two-/three-static burst-last recapture, and read-data/raw-ARLEN/runtime/multi-beat consumers.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.432: select dynamic same-ID readiness`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.433` audits dynamic same-ID issue-order readiness after the dynamic/mixed response-demux, read-data, multi-beat, and recapture chain reached the two-dynamic-plus-one-static mixed read burst-last boundary; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.432` selected `.433`, readiness audit for dynamic same-ID issue-order policy, queue, and scoreboard ownership. It recorded that dynamic transaction-ID contract/report and generated bounded dynamic/mixed response-demux/read-data/recapture behavior now exist, while direct same-ID queues or scoreboards still need public policy, request arbitration, overflow/ambiguity assertions, and report/residue ownership before behavior changes.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
-- next_action: Start `.432`: select the next exact roadmap-aligned IAL2 owner after `.431`, with no behavior changes until the selector records the next leaf.
+- next_action: Start `.433`: audit dynamic same-ID issue-order readiness and choose the first exact policy/queue/scoreboard/report/prerequisite owner, with no behavior changes in the audit.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact

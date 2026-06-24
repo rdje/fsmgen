@@ -2829,6 +2829,15 @@ preserved. A guarded focused `t/1438` selected-case run stopped at host memory
 93.0% against the default 88% cutoff; direct report/ISF/FSM/SystemVerilog
 probes covered the selected behavior. `.432` is the next post two-dynamic
 mixed read burst-last recapture selector.
+`.432` now selects `.433`, readiness audit for dynamic same-ID issue-order
+policy, queue, and scoreboard ownership after the bounded dynamic/mixed
+response-demux, read-data, multi-beat, and same-cycle release-and-recapture
+chain reached the two-dynamic-plus-one-static read burst-last boundary. The
+selector changes no behavior. It records that dynamic transaction-ID
+contract/report support and generated bounded dynamic/mixed response-demux
+behavior now exist, while direct same-ID queue or scoreboard behavior still
+needs public issue-order policy, request arbitration, overflow/ambiguity
+assertions, and report/residue movement before implementation.
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,

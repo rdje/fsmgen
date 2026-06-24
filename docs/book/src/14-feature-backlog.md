@@ -7859,6 +7859,18 @@ semantics, raw non-final `RID` assertions, final-beat completion ownership,
 and read-data/raw-`ARLEN`/runtime/multi-beat consumers remain preserved.
 `.432` is the next post two-dynamic mixed read burst-last recapture selector.
 
+Post two-dynamic/one-static mixed dynamic/static read RLAST recapture selector:
+[AXI_IAL2_MANAGER_POST_TWO_DYNAMIC_ONE_STATIC_MIXED_DYNAMIC_STATIC_READ_RLAST_RECAPTURE_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_TWO_DYNAMIC_ONE_STATIC_MIXED_DYNAMIC_STATIC_READ_RLAST_RECAPTURE_NEXT_SLICE_SELECTION.md)
+selects `.433`, readiness audit for dynamic same-ID issue-order policy,
+queue, and scoreboard ownership after the bounded dynamic/mixed
+response-demux, read-data, multi-beat, and same-cycle release-and-recapture
+chain reached the two-dynamic-plus-one-static read burst-last boundary. The
+selector changes no behavior. It records that dynamic transaction-ID
+contract/report support and generated bounded dynamic/mixed response-demux
+behavior now exist, while direct same-ID queue or scoreboard behavior still
+needs public issue-order policy, request arbitration, overflow/ambiguity
+assertions, and report/residue movement before implementation.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after
