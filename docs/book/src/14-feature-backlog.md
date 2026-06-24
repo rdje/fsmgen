@@ -7695,6 +7695,20 @@ probe confirmed the three-static burst-last report still has no
 `static_capture`, no dynamic recapture fields, and request-not-busy
 assertions for all four transactions.
 
+Three-static mixed dynamic/static read RLAST recapture readiness audit:
+[AXI_IAL2_MANAGER_THREE_STATIC_MIXED_DYNAMIC_STATIC_READ_RLAST_RECAPTURE_READINESS_AUDIT](../../AXI_IAL2_MANAGER_THREE_STATIC_MIXED_DYNAMIC_STATIC_READ_RLAST_RECAPTURE_READINESS_AUDIT.md)
+selects `.422`, public contract selection for one-dynamic-plus-three-static
+mixed dynamic/static read burst-last `RID && RLAST` same-cycle
+release-and-recapture. The audit changes no behavior. A direct
+normalizer/report probe confirmed the current three-static burst-last
+baseline has `burst_last` scope, one-bit `axi0_rlast`,
+`generated_multi_mixed_dynamic_static_read_demux_last_beat`, no
+`static_capture`, no dynamic recapture fields, and four request-not-busy
+assertions. A direct marker probe confirmed the existing marker substrate can
+project three `static_capture[]` entries with
+`generated_multi_mixed_dynamic_static_read_demux_last_beat_completion` once a
+later implementation selects the burst-last normalizer widening.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

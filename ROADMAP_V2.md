@@ -2663,6 +2663,24 @@ single-beat recapture sibling, `.415` shipped the two-static burst-last
 precedent, `.326` already ships the three-static burst-last demux public
 sample, and the burst-last normalizer still marks recapture only for exactly
 one dynamic plus two static states.
+`.421` now selects `.422`, public contract selection for
+one-dynamic-plus-three-static mixed dynamic/static read burst-last `RID &&
+RLAST` same-cycle release-and-recapture. The audit changes no behavior. A
+direct normalizer/report probe confirmed the current public three-static
+burst-last baseline remains
+`bounded_multi_mixed_dynamic_static_read_rid_rlast_demux_contract` with
+`response_scope: burst_last`, `last_signal: axi0_rlast`,
+`last_signal_width: 1`,
+`generated_multi_mixed_dynamic_static_read_demux_last_beat`, no
+`static_capture`, no dynamic recapture fields, and four request-not-busy
+assertions. A direct marker probe confirmed the existing marker substrate
+already sees one dynamic plus three static states and projects
+`mixed_dynamic_static_dynamic_read`,
+`generated_multi_mixed_dynamic_static_read_demux_last_beat_completion`, and
+three `static_capture` entries for `r1`/`r2`/`r3` if invoked. The remaining
+implementation gap is deliberate selection logic in the burst-last normalizer
+and focused RLAST expectations, so `.422` must pin the public contract before
+behavior changes.
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,
