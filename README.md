@@ -1389,6 +1389,22 @@ completion-active assertions. It selects dynamic recapture fields under
 `w1`/`w2`/`w3`, disjoint release-only and release-recapture guards for all
 four transactions, and idle-or-releasing assertion names for `w0`/`w1`/`w2`/
 `w3`.
+`.403` now ships one-dynamic plus three-static mixed dynamic/static write
+`BID` same-cycle release-and-recapture for the existing three-static public
+sample. FSMGen emits `axi0_w0_dynamic_id_release_recapture`,
+`axi0_w1_static_busy_release_recapture`,
+`axi0_w2_static_busy_release_recapture`, and
+`axi0_w3_static_busy_release_recapture`, reports dynamic recapture under
+`dynamic_capture.transactions[0]`, reports concrete static recapture under
+list-shaped `static_capture[]`, makes release-only rules disjoint from
+same-transaction same-cycle requests, and replaces `w0`/`w1`/`w2`/`w3`
+request-not-busy assertions with idle-or-releasing assertions. Public syntax,
+support identity, mode/source/semantics, transaction lists, static-ID
+reservations, generated demux/completion behavior, onehot0/
+static-ID-exclusion/active-match/pairwise-unique-match/completion-active assertions,
+the one-static singular recapture shape, the two-static recapture shape, and
+the two-dynamic-plus-one-static no-recapture shape are preserved. `.404`
+selects the next post three-static mixed write recapture activity.
 No behavior
 changed in `.273`, `.274`, `.275`,
 `.277`, `.278`, `.279`, `.281`,
@@ -3704,6 +3720,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/AXI_IAL2_MANAGER_MULTIPLE_MIXED_DYNAMIC_STATIC_WRITE_RECAPTURE_BEHAVIOR.md` — shipped one-dynamic plus two-static mixed dynamic/static write `BID` same-cycle release-and-recapture under the existing multi-static public sample.
 - `docs/AXI_IAL2_MANAGER_POST_MULTIPLE_MIXED_DYNAMIC_STATIC_WRITE_RECAPTURE_NEXT_SLICE_SELECTION.md` — selected public contract selection for one-dynamic plus three-static mixed dynamic/static write `BID` same-cycle release-and-recapture after the two-static recapture sibling shipped.
 - `docs/AXI_IAL2_MANAGER_THREE_STATIC_MIXED_DYNAMIC_STATIC_WRITE_RECAPTURE_CONTRACT_SELECTION.md` — selected direct one-dynamic plus three-static mixed dynamic/static write `BID` same-cycle release-and-recapture implementation under the existing three-static public sample.
+- `docs/AXI_IAL2_MANAGER_THREE_STATIC_MIXED_DYNAMIC_STATIC_WRITE_RECAPTURE_BEHAVIOR.md` — shipped one-dynamic plus three-static mixed dynamic/static write `BID` same-cycle release-and-recapture under the existing three-static public sample.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_CONTRACT_SELECTION.md` — selected direct single-active dynamic write `BID` same-cycle release-and-recapture behavior under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_BEHAVIOR.md` — shipped single-active dynamic write `BID` same-cycle release-and-recapture under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_WRITE_RECAPTURE_NEXT_SLICE_SELECTION.md` — selected `.367`, public contract selection for first single-active dynamic read same-cycle release-and-recapture after dynamic write recapture shipped.

@@ -60,14 +60,37 @@ Generated behavior includes:
 This slice is write-family only. Read single-beat response-demux, read
 burst-last response-demux, read-data, burst-length/runtime validation,
 multi-beat output banks, two-dynamic-plus-static shapes, general capped mixed
-sets, same-cycle request widening, release-and-recapture, dynamic same-ID
-queues, scoreboards, direct backend behavior, backend-language variants,
-VHDL, profile aliases, queued/blocking policy, and full-manager behavior
-remain future exact-owner work.
+sets, same-cycle request widening beyond generated release-and-recapture,
+dynamic same-ID queues, scoreboards, direct backend behavior,
+backend-language variants, VHDL, profile aliases, queued/blocking policy, and
+full-manager behavior remain future exact-owner work.
 
 Mixed dynamic/static write response-demux remains fail-closed outside the
 selected bounded shapes: exactly one dynamic write transaction plus one, two,
 or three pairwise-distinct concrete static write transactions.
+
+## Same-Cycle Recapture Extension
+
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.403` extends this same public sample with
+same-cycle release-and-recapture. Public syntax, support-accounting identity,
+mode, response-demux match rules, generated completions, static-ID
+reservations, onehot0 policy, static-ID exclusion assertions, response
+active-match assertions, pairwise unique-match assertions, and
+completion-active assertions remain unchanged.
+
+The extension adds `axi0_w0_dynamic_id_release_recapture`,
+`axi0_w1_static_busy_release_recapture`,
+`axi0_w2_static_busy_release_recapture`, and
+`axi0_w3_static_busy_release_recapture`. Dynamic recapture requires an
+admitted `w0` request, generated `w0` completion, active dynamic busy state,
+no admitted `w1`/`w2`/`w3` request, and an `axi0_awid` value different from
+all three static IDs. Each static recapture requires its own admitted static
+request, own generated completion, own active busy state, no admitted dynamic
+request, and no sibling static request.
+
+The report adds dynamic recapture fields under
+`response_demux.write.dynamic_capture.transactions[0]` and list-shaped
+`response_demux.write.static_capture[]` entries for `w1`, `w2`, and `w3`.
 
 ## Validation
 

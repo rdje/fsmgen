@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.402: select three-static write recapture contract`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.403` implements one-dynamic plus three-static mixed write BID same-cycle release-and-recapture; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.402` selected `.403`, direct implementation for `ppif/axi_manager_capacity_status_write_mixed_dynamic_static_response_demux_multi_static3.ppif`. The contract preserves public syntax, support identity, list-shaped multi-mixed write mode/source, transaction lists, static-ID reservations for `4'd3`/`4'd5`/`4'd7`, generated rules/completions, and onehot0/static-ID-exclusion/active-match/pairwise-unique-match/completion-active assertions; it selects list-shaped dynamic/static recapture report fields, release-only/request exclusion semantics, release-recapture guards for `w0`/`w1`/`w2`/`w3`, and idle-or-releasing request assertions. No behavior changed.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.403: ship three-static write recapture`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.404` selects the next post three-static mixed write recapture activity; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.403` shipped one-dynamic plus three-static mixed write `BID` same-cycle release-and-recapture for `ppif/axi_manager_capacity_status_write_mixed_dynamic_static_response_demux_multi_static3.ppif`. FSMGen now emits dynamic `w0` and concrete static `w1`/`w2`/`w3` release-recapture, list-shaped dynamic/static report metadata, disjoint release-only guards, and idle-or-releasing assertions for all four transactions while preserving public syntax, support identity, mode/source/semantics, transaction lists, static-ID reservations, generated demux/completion behavior, and existing one-static/two-static/two-dynamic preservation boundaries. Syntax checks passed; guarded selected schedule probes stopped twice before usable output because host memory was above the default 88% cutoff.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
-- next_action: Start `.403`: implement only the .402-selected one-dynamic plus three-static mixed write BID recapture behavior, update focused expectations and live docs, run guarded checks, then commit.
+- next_action: Start `.404`: select the next post three-static mixed write recapture activity with no behavior changes, then commit.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact

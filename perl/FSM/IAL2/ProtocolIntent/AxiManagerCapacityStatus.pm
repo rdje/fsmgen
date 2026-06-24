@@ -1279,7 +1279,7 @@ sub _response_demux_mixed_dynamic_static_write_transaction(%args) {
         static_transaction_state      => \@static_states,
     );
     _response_demux_mark_mixed_dynamic_static_write_recapture(\%entry)
-        if @dynamic_states == 1 && @static_states == 2;
+        if @dynamic_states == 1 && (@static_states == 2 || @static_states == 3);
     return \%entry;
 }
 
@@ -2287,7 +2287,7 @@ sub _response_demux_mark_mixed_dynamic_static_write_recapture($entry) {
     my $dynamic_states = $entry->{dynamic_transaction_state};
     my $static_states = $entry->{static_transaction_state};
     return unless ref($dynamic_states) eq 'ARRAY' && @$dynamic_states == 1;
-    return unless ref($static_states) eq 'ARRAY' && (@$static_states == 1 || @$static_states == 2);
+    return unless ref($static_states) eq 'ARRAY' && (@$static_states == 1 || @$static_states == 2 || @$static_states == 3);
 
     my $dynamic_state = $dynamic_states->[0];
     return unless ref($dynamic_state) eq 'HASH';

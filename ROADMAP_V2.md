@@ -2386,6 +2386,20 @@ completion-active assertions. It selects dynamic recapture fields under
 `w1`/`w2`/`w3`, disjoint release-only and release-recapture guards for all
 four transactions, and idle-or-releasing assertion names for `w0`/`w1`/`w2`/
 `w3`.
+`.403` now ships one-dynamic plus three-static mixed dynamic/static write
+`BID` same-cycle release-and-recapture for the existing three-static public
+sample. FSMGen emits dynamic `w0` selected-ID release-recapture and concrete
+static `w1`/`w2`/`w3` busy release-recapture, reports dynamic recapture under
+`dynamic_capture.transactions[0]`, reports static recapture under list-shaped
+`static_capture[]`, makes release-only rules disjoint from same-transaction
+same-cycle requests, and replaces `w0`/`w1`/`w2`/`w3` request-not-busy
+assertions with idle-or-releasing assertions. Public syntax, support identity,
+mode/source/semantics, transaction lists, static-ID reservations, generated
+demux/completion behavior, onehot0/static-ID-exclusion/active-match/
+pairwise-unique-match/completion-active assertions, the one-static singular
+recapture shape, the two-static recapture shape, and the
+two-dynamic-plus-one-static no-recapture shape are preserved. `.404` selects
+the next post three-static mixed write recapture activity.
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,
