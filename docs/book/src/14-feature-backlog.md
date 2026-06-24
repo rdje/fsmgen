@@ -7978,6 +7978,20 @@ runtime-assertion `ARLEN` metadata, output-bank report vocabulary, and
 transaction-list-driven helper paths are already present once coverage admits
 the `r0`, `r1`, `r2`, and `r3` shape.
 
+Three-static mixed dynamic/static read-data multi-beat behavior:
+[AXI_IAL2_MANAGER_THREE_STATIC_MIXED_DYNAMIC_STATIC_READ_DATA_MULTI_BEAT_BEHAVIOR](../../AXI_IAL2_MANAGER_THREE_STATIC_MIXED_DYNAMIC_STATIC_READ_DATA_MULTI_BEAT_BEHAVIOR.md)
+ships generated multi-beat output banks over generated one-dynamic plus
+three-concrete-static mixed dynamic/static runtime-validation read-data. The
+public sample
+`ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static3_burst_last_read_data_multi_beat.ppif`
+emits per-transaction output banks for `r0`, `r1`, `r2`, and `r3`,
+including 64 generated `RDATA` lanes, 64 generated `RRESP` lanes, valid
+masks, length outputs, scalar worst-observed `RRESP` aggregates, raw-`ARLEN`
+storage, expected-beat storage, beat counters, lane capture, aggregate
+update, and sixteen runtime beat-count/`RLAST` assertions. Reports mark
+read-data residue empty and keep response-demux residue limited to
+`same_id_ordering`.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same

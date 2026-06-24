@@ -2576,6 +2576,19 @@ three-static multi-beat coverage admission, response-demux residue
 recognition, support publication, and focused assertions. Two-dynamic-plus
 static shapes, broader mixed cardinalities, queues/scoreboards, backend
 variants, and VHDL remain deferred.
+`.337` now ships generated multi-beat output banks over that same
+one-dynamic plus three-concrete-static runtime-validation boundary through
+support-accounted public sample
+`ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static3_burst_last_read_data_multi_beat.ppif`.
+The sample emits per-transaction output banks for `r0`, `r1`, `r2`, and
+`r3`, including 64 generated `RDATA` lanes, 64 generated `RRESP` lanes,
+valid masks, length outputs, scalar worst-observed `RRESP` aggregates,
+raw-`ARLEN` storage, expected-beat storage, beat counters, lane capture,
+aggregate update, and sixteen runtime beat-count/`RLAST` assertions.
+Reports mark read-data residue empty and keep response-demux residue limited
+to `same_id_ordering`. Two-dynamic-plus-static shapes, broader mixed
+cardinalities, same-cycle widening, queues/scoreboards, backend variants,
+and VHDL remain deferred.
 No behavior changed in
 `.270`, `.271`, `.273`, `.274`, `.275`, `.277`, `.278`,
 `.279`, `.281`, `.282`, `.283`, `.285`, `.286`, `.288`, `.290`, `.292`, or

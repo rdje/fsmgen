@@ -10,9 +10,9 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.336: audit three-static multi-beat readiness`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.337` ships multi-beat output banks over generated one-dynamic plus three-concrete-static mixed dynamic/static runtime-validation read-data; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.336` selected direct bounded implementation of generated three-static mixed dynamic/static multi-beat output banks over the runtime-validation boundary, with no behavior changes in the audit slice.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.337: ship three-static multi-beat output banks`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.338` selects the next exact IAL2 owner after one-dynamic plus three-concrete-static mixed dynamic/static read-data reached multi-beat output banks; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.337` shipped support-accounted generated multi-beat output banks over generated one-dynamic plus three-concrete-static mixed dynamic/static runtime-validation read-data, with guarded strict direct checks resource-caveated by the RAM guard.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
 
