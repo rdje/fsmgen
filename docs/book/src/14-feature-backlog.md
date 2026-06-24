@@ -7799,6 +7799,21 @@ report and ISF/FSM/SystemVerilog fallback probes covered the selected
 behavior. `.428` now selects the next post two-dynamic mixed read recapture
 slice.
 
+Post two-dynamic/one-static mixed dynamic/static read recapture selector:
+[AXI_IAL2_MANAGER_POST_TWO_DYNAMIC_ONE_STATIC_MIXED_DYNAMIC_STATIC_READ_RECAPTURE_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_TWO_DYNAMIC_ONE_STATIC_MIXED_DYNAMIC_STATIC_READ_RECAPTURE_NEXT_SLICE_SELECTION.md)
+selects `.429`, readiness audit for two-dynamic-plus-one-static mixed
+dynamic/static read burst-last `RID && RLAST` same-cycle
+release-and-recapture. The selector changes no behavior. Direct baseline
+probes on the burst-last response-demux, burst-last read-data, and burst-last
+raw-`ARLEN` samples confirmed they still use
+`bounded_multi_mixed_dynamic_static_read_rid_rlast_demux_contract`,
+`generated_multi_mixed_dynamic_static_read_demux_last_beat`,
+request-not-busy assertions for `r0`/`r1`/`r2`, no `static_capture`, and no
+release-recapture rules. The audit is next because this shape reuses the
+`.427` dynamic/static guard problem but adds final-beat source, raw non-final
+`RID`, `RLAST`, and read-data/raw-`ARLEN`/runtime/multi-beat preservation
+questions before any behavior change.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after
