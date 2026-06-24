@@ -2846,6 +2846,15 @@ exists, while dynamic same-ID reuse still lacks source/report vocabulary
 distinct from `concrete-id-reuse`. Direct queues or scoreboards remain
 deferred until `.434` chooses the dynamic policy spelling, report fields,
 diagnostics, allowed first policy values, and first later owner.
+`.434` now selects the additive family-local `(dynamic-id-reuse reject)`
+source contract under `(same-id-ordering ...)`, distinct from existing
+`concrete-id-reuse`, and selects `.435`, metadata-first parser/report
+readiness audit before implementation. The selector changes no behavior. The
+first dynamic same-ID policy value is only `reject`; dynamic
+`issue-order-queue` and `scoreboard` values remain unsupported future owners.
+The selected report vocabulary is
+`same_id_ordering.dynamic_id_reuse_policy.<family>`, with accepted same-ID
+reuse false and no generated queue or scoreboard behavior.
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,

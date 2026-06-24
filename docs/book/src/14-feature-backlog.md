@@ -7883,6 +7883,18 @@ queues or scoreboards remain deferred until the contract selects the dynamic
 policy spelling, report fields, diagnostics, allowed first policy values, and
 first later owner.
 
+Dynamic same-ID policy contract:
+[AXI_IAL2_MANAGER_DYNAMIC_SAME_ID_POLICY_CONTRACT_SELECTION](../../AXI_IAL2_MANAGER_DYNAMIC_SAME_ID_POLICY_CONTRACT_SELECTION.md)
+selects additive family-local `(dynamic-id-reuse reject)` under
+`(same-id-ordering ...)`, distinct from `concrete-id-reuse`, and selects
+`.435`, metadata-first parser/report readiness audit before implementation.
+The first dynamic same-ID policy value is only `reject`; dynamic
+`issue-order-queue` and `scoreboard` values remain unsupported future owners.
+The selected report vocabulary is
+`same_id_ordering.dynamic_id_reuse_policy.<family>`, with accepted same-ID
+reuse false and no generated queue or scoreboard behavior. The selector
+changes no behavior.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after
