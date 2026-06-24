@@ -2831,6 +2831,13 @@ support identity, coverage key, focused behavior label, diagnostics,
 validation, rollback, and residue while preserving broader cardinalities,
 same-cycle behavior, queues/scoreboards, backend variants, VHDL, aliases,
 queued/blocking policy, and full-manager behavior as separate owners.
+`.359` now selects `.360`, public contract selection for that scalar
+single-beat read-data shape. The audit changes no behavior. The selected
+candidate surface keeps `.344` response-demux mode
+`bounded_multi_mixed_dynamic_static_read_rid_demux_contract`, read-data mode
+`bounded_single_beat_read_data_contract`, completion validity
+`generated_multi_mixed_dynamic_static_read_response_demux_completion_pulse`,
+and the candidate sample/support/coverage/behavior names selected by `.358`.
 No behavior changed in
 `.270`, `.271`, `.273`, `.274`, `.275`, `.277`, `.278`,
 `.279`, `.281`, `.282`, `.283`, `.285`, `.286`, `.288`, `.290`, `.292`, or
@@ -2838,7 +2845,8 @@ No behavior changed in
 `.305`, `.306`, `.308`, `.309`, `.311`, `.313`, `.315`, `.316`, `.317`, or
 `.319`, `.320`, `.321`, `.323`, `.324`, `.325`, `.327`, `.328`, `.329`,
 `.331`, `.332`, `.334`, `.336`, `.338`, `.339`, `.340`, `.342`, `.343`,
-`.345`, `.346`, `.348`, `.349`, `.351`, `.352`, `.354`, `.356`, or `.358`.
+`.345`, `.346`, `.348`, `.349`, `.351`, `.352`, `.354`, `.356`, `.358`, or
+`.359`.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.

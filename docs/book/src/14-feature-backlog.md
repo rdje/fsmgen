@@ -8283,6 +8283,18 @@ The selector changes no behavior and leaves broader cardinalities,
 same-cycle behavior, queues, backend variants, VHDL, aliases,
 queued/blocking policy, and full-manager behavior as separate owners.
 
+Two-dynamic/one-static mixed dynamic/static read single-beat read-data
+readiness:
+[AXI_IAL2_MANAGER_TWO_DYNAMIC_ONE_STATIC_MIXED_DYNAMIC_STATIC_READ_DATA_READINESS_AUDIT](../../AXI_IAL2_MANAGER_TWO_DYNAMIC_ONE_STATIC_MIXED_DYNAMIC_STATIC_READ_DATA_READINESS_AUDIT.md)
+selects `.360`, public contract selection for scalar single-beat read-data
+over the `.344` generated two-dynamic-plus-one-static mixed dynamic/static
+read single-beat `RID` response-demux. The audit changes no behavior. The
+candidate sample is
+`ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_dynamic_read_data.ppif`,
+and the selected report vocabulary should keep
+`bounded_single_beat_read_data_contract` with generated mixed read
+single-beat completion validity.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same
