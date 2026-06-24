@@ -7948,6 +7948,16 @@ last-beat payload capture guarded by generated mixed `RID && RLAST`
 completion pulses. Runtime beat-count/`RLAST` validation and multi-beat
 output banks remain future exact owners.
 
+Three-static mixed dynamic/static read-data runtime-validation readiness audit:
+[AXI_IAL2_MANAGER_THREE_STATIC_MIXED_DYNAMIC_STATIC_READ_DATA_RUNTIME_VALIDATION_READINESS_AUDIT](../../AXI_IAL2_MANAGER_THREE_STATIC_MIXED_DYNAMIC_STATIC_READ_DATA_RUNTIME_VALIDATION_READINESS_AUDIT.md)
+selects `.335`, direct bounded implementation of runtime beat-count/`RLAST`
+validation over generated one-dynamic plus three-concrete-static mixed
+dynamic/static raw-`ARLEN` last-beat read-data. The audit changes no
+behavior; runtime validation syntax and generated expected-beat/beat-count
+helpers are already transaction-list driven once coverage admits `r0`, `r1`,
+`r2`, and `r3`. Three-static multi-beat output banks remain future
+exact-owner work.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same

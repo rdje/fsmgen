@@ -2550,13 +2550,20 @@ mark `burst_length_validation` as `report_only`, list generated
 burst-length input/storage/rules, and keep runtime beat-count/`RLAST`
 validation and multi-beat output banks fail-closed. `.334` now audits runtime
 validation readiness over this three-static raw-`ARLEN` boundary.
+`.334` now selects `.335`, direct bounded implementation of runtime
+beat-count/`RLAST` validation over the same three-static raw-`ARLEN`
+last-beat read-data boundary. The audit changes no behavior; runtime
+validation syntax/report vocabulary, expected-beat storage, beat-count
+storage, beat-count rules, assertions, and residue movement are already
+transaction-list driven after coverage admits the `r0`, `r1`, `r2`, `r3`
+transaction set. Three-static multi-beat output banks remain fail-closed.
 No behavior changed in
 `.270`, `.271`, `.273`, `.274`, `.275`, `.277`, `.278`,
 `.279`, `.281`, `.282`, `.283`, `.285`, `.286`, `.288`, `.290`, `.292`, or
 `.293`, `.294`, `.296`, `.297`, `.298`, `.300`, `.301`, `.302`, `.304`,
 `.305`, `.306`, `.308`, `.309`, `.311`, `.313`, `.315`, `.316`, `.317`, or
 `.319`, `.320`, `.321`, `.323`, `.324`, `.325`, `.327`, `.328`, `.329`,
-`.331`, or `.332`.
+`.331`, `.332`, or `.334`.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.
