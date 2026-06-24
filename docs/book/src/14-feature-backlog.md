@@ -8527,6 +8527,21 @@ no-active-same-ID, active-ID uniqueness, response active/unique-match, and
 completion-active assertions. The next frontier is `.379`, the next
 multiple-dynamic recapture selector.
 
+Post multiple dynamic write recapture selector:
+[AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_WRITE_RECAPTURE_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_WRITE_RECAPTURE_NEXT_SLICE_SELECTION.md)
+selects `.380`, public contract selection for multiple all-dynamic read
+single-beat `RID` same-cycle release-and-recapture. The selector changes no
+behavior. It chooses single-beat read before burst-last because the single-beat
+shape shares the multi-active selected-ID/busy lifecycle, onehot0 request
+policy, active-ID uniqueness, request no-active-same-ID, response
+active/unique-match, and completion-active assertion structure without `RLAST`
+final-beat, raw non-final beat, last-beat read-data, raw-`ARLEN`, runtime, or
+multi-beat output-bank coupling. The `.380` contract selection must preserve
+the existing `bounded_multi_dynamic_read_rid_demux_contract`, support identity,
+generated completion pulses, scalar single-beat read-data consumer, validation
+gates, rollback, and deferred burst-last/read-data/runtime/multi-beat
+boundaries before implementation.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same

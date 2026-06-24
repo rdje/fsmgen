@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.378: ship multi-dynamic write recapture`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.379` selects the next multiple-dynamic recapture owner after multiple all-dynamic write recapture shipped; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.378` shipped multiple all-dynamic write `BID` same-cycle release-and-recapture for `ppif/axi_manager_capacity_status_dynamic_write_response_demux_multi.ppif`. FSMGen emits per-transaction release-recapture rules, reports `same_cycle_release_recapture_policy: multi_active_unique_dynamic_write`, replaces request-not-busy assertions with idle-or-releasing assertions, and preserves source syntax, support identity, `bounded_multi_dynamic_write_bid_demux_contract`, generated completions, onehot0, no-active-same-ID, active-ID uniqueness, response active/unique-match, and completion-active assertions.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.379: select multi-dynamic read recapture contract`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.380` selects the public contract for multiple all-dynamic read single-beat `RID` same-cycle release-and-recapture; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.379` selected `.380`, public contract selection for multiple all-dynamic read single-beat `RID` same-cycle release-and-recapture. The selector changes no behavior and chooses single-beat read before burst-last because it shares the multi-active selected-ID/busy lifecycle, onehot0 request policy, active-ID uniqueness, request no-active-same-ID, response active/unique-match, and completion-active assertion structure without `RLAST` final-beat, raw non-final beat, last-beat read-data, raw-`ARLEN`, runtime, or multi-beat output-bank coupling.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
-- next_action: Start `.379`: select the next multiple-dynamic recapture owner; do not change behavior before that selector lands.
+- next_action: Start `.380`: select the multiple all-dynamic read single-beat recapture public contract; do not change behavior before that selector lands.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact

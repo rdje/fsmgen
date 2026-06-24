@@ -3036,11 +3036,20 @@ assertions with idle-or-releasing assertions, and preserves source syntax,
 support identity, generated completion names,
 `bounded_multi_dynamic_write_bid_demux_contract`, onehot0 request policy,
 no-active-same-ID, active-ID uniqueness, response active/unique-match, and
-completion-active assertions. `.379` is the next multiple-dynamic recapture
-selector; multiple dynamic read recapture, mixed dynamic/static recapture,
-static busy recapture, request arbitration beyond onehot0, queues,
-scoreboards, backend variants, VHDL, and full-manager behavior remain later
-owners.
+completion-active assertions. `.379` now selects `.380`, public contract
+selection for multiple all-dynamic read single-beat `RID` same-cycle
+release-and-recapture. The selector changes no behavior. Single-beat read is
+the next smallest multiple-dynamic recapture owner because it shares the
+multi-active selected-ID/busy lifecycle and assertion structure without
+`RLAST` final-beat, raw non-final beat, last-beat read-data, raw-`ARLEN`,
+runtime, or multi-beat output-bank coupling. The `.380` contract selection must
+settle report vocabulary, release-only and release-recapture guard semantics,
+idle-or-releasing assertion replacement, scalar single-beat read-data
+preservation, validation, rollback, and deferred burst-last boundaries before
+implementation. Multiple dynamic read burst-last recapture, mixed
+dynamic/static recapture, static busy recapture, request arbitration beyond
+onehot0, queues, scoreboards, backend variants, VHDL, and full-manager behavior
+remain later owners.
 No behavior changed in
 `.270`, `.271`, `.273`, `.274`, `.275`, `.277`, `.278`,
 `.279`, `.281`, `.282`, `.283`, `.285`, `.286`, `.288`, `.290`, `.292`, or
@@ -3050,7 +3059,7 @@ No behavior changed in
 `.331`, `.332`, `.334`, `.336`, `.338`, `.339`, `.340`, `.342`, `.343`,
 `.345`, `.346`, `.348`, `.349`, `.351`, `.352`, `.354`, `.356`, `.358`,
 `.359`, `.360`, `.362`, `.363`, `.364`, `.366`, `.367`, `.369`, `.370`,
-`.371`, `.373`, `.374`, `.376`, or `.377`.
+`.371`, `.373`, `.374`, `.376`, `.377`, or `.379`.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.
