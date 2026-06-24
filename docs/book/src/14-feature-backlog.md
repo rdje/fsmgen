@@ -7215,6 +7215,16 @@ non-final beats as raw matched beats only, and preserves scalar last-beat
 read-data, raw-`ARLEN`, runtime beat-count/`RLAST`, and multi-beat output-bank
 consumers.
 
+Post multiple dynamic read RLAST recapture selector:
+[AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_READ_RLAST_RECAPTURE_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_READ_RLAST_RECAPTURE_NEXT_SLICE_SELECTION.md)
+selects `.387`, readiness audit for mixed dynamic/static same-cycle
+release-and-recapture. The selector changes no behavior. The audit comes next
+because all selected all-dynamic recapture siblings are now covered, while the
+mixed boundary must still pin static busy recapture semantics,
+dynamic/static concrete-ID reservation, onehot0 sibling policy, assertion
+changes, read `RID && RLAST` and raw non-final beat preservation, and layered
+read-data/raw-`ARLEN`/runtime/multi-beat implications before behavior changes.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

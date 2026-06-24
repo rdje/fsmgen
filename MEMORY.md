@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.385: ship read RLAST recapture`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.386` selects the next post multiple all-dynamic read burst-last recapture activity; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.385` shipped same-cycle release-and-recapture for `ppif/axi_manager_capacity_status_dynamic_read_response_demux_multi_burst_last.ppif`. FSMGen now emits per-transaction `multi_active_unique_dynamic_read` recapture rules/fields with `generated_dynamic_demux_last_beat_completion`, replaces request-not-busy with idle-or-releasing assertions, and preserves raw non-final beats plus scalar last-beat read-data, raw-`ARLEN`, runtime, and multi-beat consumers. Syntax, guarded schedule, focused t/1438, and direct adapter/generator probes passed; broad t/1436/t1437 and strict-check retry were RAM-guard-stopped due host memory above cutoff.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.386: select mixed recapture audit`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.387` audits mixed dynamic/static same-cycle release-and-recapture readiness; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.386` selected `.387`, readiness audit for mixed dynamic/static same-cycle release-and-recapture after `.385` completed all-dynamic read RLAST recapture. The selector changes no behavior and routes static busy recapture semantics, dynamic/static concrete-ID reservation, onehot0 sibling policy, assertion changes, read RLAST/raw-beat preservation, read-data/raw-`ARLEN`/runtime/multi-beat implications, validation, rollback, docs, and deferred boundaries into the audit.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
-- next_action: Start `.386`: select the next post multiple all-dynamic read burst-last recapture activity.
+- next_action: Start `.387`: audit mixed dynamic/static same-cycle release-and-recapture readiness.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact

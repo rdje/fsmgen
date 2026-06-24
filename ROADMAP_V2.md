@@ -2206,6 +2206,13 @@ request-not-busy assertions with idle-or-releasing assertions, keeps raw
 non-final beats as raw matched beats only, and preserves scalar last-beat
 read-data, raw-`ARLEN`, runtime beat-count/`RLAST`, and multi-beat output-bank
 consumers.
+`.386` selects `.387`, readiness audit for mixed dynamic/static same-cycle
+release-and-recapture. The selector changes no behavior. The audit comes next
+because all selected all-dynamic recapture siblings are now covered, while the
+mixed boundary must still pin static busy recapture semantics,
+dynamic/static concrete-ID reservation, onehot0 sibling policy, assertion
+changes, read `RID && RLAST` and raw non-final beat preservation, and layered
+read-data/raw-`ARLEN`/runtime/multi-beat implications before behavior changes.
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,
@@ -3109,7 +3116,8 @@ No behavior changed in
 `.331`, `.332`, `.334`, `.336`, `.338`, `.339`, `.340`, `.342`, `.343`,
 `.345`, `.346`, `.348`, `.349`, `.351`, `.352`, `.354`, `.356`, `.358`,
 `.359`, `.360`, `.362`, `.363`, `.364`, `.366`, `.367`, `.369`, `.370`,
-`.371`, `.373`, `.374`, `.376`, `.377`, `.379`, or `.380`.
+`.371`, `.373`, `.374`, `.376`, `.377`, `.379`, `.380`, `.382`, `.383`,
+`.384`, or `.386`.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.
