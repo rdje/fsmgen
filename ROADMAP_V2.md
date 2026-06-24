@@ -2812,6 +2812,23 @@ multi-beat consumers. It adds `r0`/`r1` dynamic recapture fields with
 `generated_multi_mixed_dynamic_static_read_demux_last_beat_completion`,
 combined dynamic/static guards, release-only same-transaction request
 exclusions, and idle-or-releasing assertions for `r0`, `r1`, and `r2`.
+`.431` now ships that two-dynamic-plus-one-static mixed dynamic/static read
+burst-last `RID && RLAST` release-and-recapture behavior. FSMGen emits
+`axi0_r0_dynamic_id_release_recapture`,
+`axi0_r1_dynamic_id_release_recapture`, and
+`axi0_r2_static_busy_release_recapture` from generated final-beat completion
+pulses only; reports `r0`/`r1` recapture under
+`dynamic_capture.transactions[]`; reports list-shaped `static_capture[]` for
+`r2`; keeps release-only rules disjoint from same-transaction requests; and
+replaces the selected request-not-busy assertions with idle-or-releasing
+assertions. Public syntax, support identity, mode/source/semantics, raw
+non-final `RID` active/unique-match assertions, final-beat completion
+ownership, `.427` single-beat recapture, one-/two-/three-static burst-last
+recapture, and read-data/raw-`ARLEN`/runtime/multi-beat consumers are
+preserved. A guarded focused `t/1438` selected-case run stopped at host memory
+93.0% against the default 88% cutoff; direct report/ISF/FSM/SystemVerilog
+probes covered the selected behavior. `.432` is the next post two-dynamic
+mixed read burst-last recapture selector.
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,

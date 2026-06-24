@@ -1828,6 +1828,23 @@ list-shaped `static_capture[]` for `r2`, final-beat release-recapture source
 `generated_multi_mixed_dynamic_static_read_demux_last_beat_completion`,
 combined dynamic/static guards, release-only same-transaction request
 exclusions, and idle-or-releasing assertions for `r0`, `r1`, and `r2`.
+`.431` now ships that two-dynamic-plus-one-static mixed dynamic/static read
+burst-last `RID && RLAST` release-and-recapture behavior. FSMGen emits
+`axi0_r0_dynamic_id_release_recapture`,
+`axi0_r1_dynamic_id_release_recapture`, and
+`axi0_r2_static_busy_release_recapture` from generated final-beat completion
+pulses only; reports `r0`/`r1` recapture under
+`dynamic_capture.transactions[]`; reports list-shaped `static_capture[]` for
+`r2`; keeps release-only rules disjoint from same-transaction requests; and
+replaces the selected request-not-busy assertions with idle-or-releasing
+assertions. Public syntax, support identity, mode/source/semantics, raw
+non-final `RID` active/unique-match assertions, final-beat completion
+ownership, `.427` single-beat recapture, one-/two-/three-static burst-last
+recapture, and read-data/raw-`ARLEN`/runtime/multi-beat consumers are
+preserved. A guarded focused `t/1438` selected-case run stopped at host memory
+93.0% against the default 88% cutoff; direct report/ISF/FSM/SystemVerilog
+probes covered the selected behavior. `.432` is the next post two-dynamic
+mixed read burst-last recapture selector.
 No behavior
 changed in `.273`, `.274`, `.275`,
 `.277`, `.278`, `.279`, `.281`,
@@ -4167,6 +4184,11 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/AXI_IAL2_MANAGER_POST_THREE_STATIC_MIXED_DYNAMIC_STATIC_READ_RLAST_RECAPTURE_NEXT_SLICE_SELECTION.md` — selected readiness audit for two-dynamic-plus-one-static mixed dynamic/static read single-beat `RID` same-cycle release-and-recapture after the one-dynamic-plus-three-static burst-last recapture sibling shipped.
 - `docs/AXI_IAL2_MANAGER_TWO_DYNAMIC_ONE_STATIC_MIXED_DYNAMIC_STATIC_READ_RECAPTURE_READINESS_AUDIT.md` — audited readiness for two-dynamic-plus-one-static mixed dynamic/static read single-beat `RID` same-cycle release-and-recapture and selected public contract selection.
 - `docs/AXI_IAL2_MANAGER_TWO_DYNAMIC_ONE_STATIC_MIXED_DYNAMIC_STATIC_READ_RECAPTURE_CONTRACT_SELECTION.md` — selected direct implementation of the two-dynamic-plus-one-static mixed dynamic/static read single-beat `RID` same-cycle release-and-recapture contract.
+- `docs/AXI_IAL2_MANAGER_TWO_DYNAMIC_ONE_STATIC_MIXED_DYNAMIC_STATIC_READ_RECAPTURE_BEHAVIOR.md` — shipped two-dynamic-plus-one-static mixed dynamic/static read single-beat `RID` same-cycle release-and-recapture under the existing public sample.
+- `docs/AXI_IAL2_MANAGER_POST_TWO_DYNAMIC_ONE_STATIC_MIXED_DYNAMIC_STATIC_READ_RECAPTURE_NEXT_SLICE_SELECTION.md` — selected readiness audit for two-dynamic-plus-one-static mixed dynamic/static read burst-last `RID && RLAST` same-cycle release-and-recapture after the single-beat two-dynamic recapture sibling shipped.
+- `docs/AXI_IAL2_MANAGER_TWO_DYNAMIC_ONE_STATIC_MIXED_DYNAMIC_STATIC_READ_RLAST_RECAPTURE_READINESS_AUDIT.md` — audited readiness for two-dynamic-plus-one-static mixed dynamic/static read burst-last `RID && RLAST` same-cycle release-and-recapture and selected public contract selection.
+- `docs/AXI_IAL2_MANAGER_TWO_DYNAMIC_ONE_STATIC_MIXED_DYNAMIC_STATIC_READ_RLAST_RECAPTURE_CONTRACT_SELECTION.md` — selected direct implementation of the two-dynamic-plus-one-static mixed dynamic/static read burst-last `RID && RLAST` same-cycle release-and-recapture contract.
+- `docs/AXI_IAL2_MANAGER_TWO_DYNAMIC_ONE_STATIC_MIXED_DYNAMIC_STATIC_READ_RLAST_RECAPTURE_BEHAVIOR.md` — shipped two-dynamic-plus-one-static mixed dynamic/static read burst-last `RID && RLAST` same-cycle release-and-recapture under the existing public sample.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_CONTRACT_SELECTION.md` — selected direct single-active dynamic write `BID` same-cycle release-and-recapture behavior under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_BEHAVIOR.md` — shipped single-active dynamic write `BID` same-cycle release-and-recapture under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_WRITE_RECAPTURE_NEXT_SLICE_SELECTION.md` — selected `.367`, public contract selection for first single-active dynamic read same-cycle release-and-recapture after dynamic write recapture shipped.

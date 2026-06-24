@@ -7845,6 +7845,20 @@ It adds release-recapture fields for `r0` and `r1` under
 combined dynamic/static guards, same-transaction release-only exclusions, and
 idle-or-releasing request assertions for `r0`, `r1`, and `r2`.
 
+Two-dynamic/one-static mixed dynamic/static read RLAST recapture behavior:
+[AXI_IAL2_MANAGER_TWO_DYNAMIC_ONE_STATIC_MIXED_DYNAMIC_STATIC_READ_RLAST_RECAPTURE_BEHAVIOR](../../AXI_IAL2_MANAGER_TWO_DYNAMIC_ONE_STATIC_MIXED_DYNAMIC_STATIC_READ_RLAST_RECAPTURE_BEHAVIOR.md)
+ships that existing public burst-last sample's `RID && RLAST`
+release-and-recapture behavior. FSMGen emits dynamic recapture rules for
+`r0`/`r1` and static recapture for `r2` from generated final-beat completion
+pulses only, reports dynamic recapture under
+`dynamic_capture.transactions[]`, reports list-shaped `static_capture[]` for
+`r2`, and replaces the selected request-not-busy assertions with
+idle-or-releasing assertions. Public syntax, support identity, mode/source/
+semantics, raw non-final `RID` assertions, final-beat completion ownership,
+`.427` single-beat recapture, one-/two-/three-static burst-last recapture,
+and read-data/raw-`ARLEN`/runtime/multi-beat consumers remain preserved.
+`.432` is the next post two-dynamic mixed read burst-last recapture selector.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

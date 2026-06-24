@@ -1202,9 +1202,27 @@ sub assert_dynamic_behavior {
         like($isf, qr/\(rule axi0_r0_response_demux \(& axi0_read_complete axi0_r0_dynamic_busy_q \(== axi0_rid axi0_r0_dynamic_id_q\) axi0_rlast\)/, 'multi-dynamic mixed read RLAST demux matches first dynamic active RID and RLAST');
         like($isf, qr/\(rule axi0_r1_response_demux \(& axi0_read_complete axi0_r1_dynamic_busy_q \(== axi0_rid axi0_r1_dynamic_id_q\) axi0_rlast\)/, 'multi-dynamic mixed read RLAST demux matches second dynamic active RID and RLAST');
         like($isf, qr/\(rule axi0_r2_response_demux \(& axi0_read_complete axi0_r2_static_busy_q \(== axi0_rid 4'd3\) axi0_rlast\)/, 'multi-dynamic mixed read RLAST demux matches static concrete RID and RLAST');
+        like($isf, qr/\(rule axi0_r0_dynamic_id_release_recapture\b/, 'multi-dynamic mixed read RLAST demux emits first dynamic release-recapture rule');
+        like($isf, qr/\(rule axi0_r1_dynamic_id_release_recapture\b/, 'multi-dynamic mixed read RLAST demux emits second dynamic release-recapture rule');
+        like($isf, qr/\(rule axi0_r2_static_busy_release_recapture\b/, 'multi-dynamic mixed read RLAST demux emits static release-recapture rule');
+        like($isf, qr/\(rule axi0_r0_dynamic_id_release_recapture[\s\S]*\(! \(& axi0_r1_request/, 'multi-dynamic mixed read RLAST demux blocks first dynamic recapture during second dynamic request');
+        like($isf, qr/\(rule axi0_r1_dynamic_id_release_recapture[\s\S]*\(! \(& axi0_r0_request/, 'multi-dynamic mixed read RLAST demux blocks second dynamic recapture during first dynamic request');
+        like($isf, qr/\(rule axi0_r0_dynamic_id_release_recapture[\s\S]*\(! \(& axi0_r1_dynamic_busy_q \(== axi0_r1_dynamic_id_q axi0_arid\)\)\)/, 'multi-dynamic mixed read RLAST demux blocks first dynamic recapture of active second dynamic ID');
+        like($isf, qr/\(rule axi0_r1_dynamic_id_release_recapture[\s\S]*\(! \(& axi0_r0_dynamic_busy_q \(== axi0_r0_dynamic_id_q axi0_arid\)\)\)/, 'multi-dynamic mixed read RLAST demux blocks second dynamic recapture of active first dynamic ID');
+        like($isf, qr/\(rule axi0_r0_dynamic_id_release_recapture[\s\S]*\(! \(& axi0_r2_request/, 'multi-dynamic mixed read RLAST demux blocks first dynamic recapture during static request');
+        like($isf, qr/\(rule axi0_r1_dynamic_id_release_recapture[\s\S]*\(! \(& axi0_r2_request/, 'multi-dynamic mixed read RLAST demux blocks second dynamic recapture during static request');
+        like($isf, qr/\(rule axi0_r0_dynamic_id_release_recapture[\s\S]*\(! \(== axi0_arid 4'd3\)\)/, 'multi-dynamic mixed read RLAST demux blocks first dynamic recapture of static ID');
+        like($isf, qr/\(rule axi0_r1_dynamic_id_release_recapture[\s\S]*\(! \(== axi0_arid 4'd3\)\)/, 'multi-dynamic mixed read RLAST demux blocks second dynamic recapture of static ID');
+        like($isf, qr/\(rule axi0_r2_static_busy_release_recapture[\s\S]*\(! \(& axi0_r0_request/, 'multi-dynamic mixed read RLAST demux blocks static recapture during first dynamic request');
+        like($isf, qr/\(rule axi0_r2_static_busy_release_recapture[\s\S]*\(! \(& axi0_r1_request/, 'multi-dynamic mixed read RLAST demux blocks static recapture during second dynamic request');
+        like($isf, qr/\(rule axi0_r0_dynamic_id_release \(& axi0_r0_complete axi0_r0_dynamic_busy_q \(! axi0_r0_request\)\)/, 'multi-dynamic mixed read RLAST demux releases first dynamic only without same-cycle request');
+        like($isf, qr/\(rule axi0_r1_dynamic_id_release \(& axi0_r1_complete axi0_r1_dynamic_busy_q \(! axi0_r1_request\)\)/, 'multi-dynamic mixed read RLAST demux releases second dynamic only without same-cycle request');
+        like($isf, qr/\(rule axi0_r2_static_busy_release \(& axi0_r2_complete axi0_r2_static_busy_q \(! axi0_r2_request\)\)/, 'multi-dynamic mixed read RLAST demux releases static only without same-cycle request');
         my $active_match_assertion =
             q{(assert (| (! axi0_read_complete) (| (& axi0_r0_dynamic_busy_q (== axi0_rid axi0_r0_dynamic_id_q)) (& axi0_r1_dynamic_busy_q (== axi0_rid axi0_r1_dynamic_id_q)) (& axi0_r2_static_busy_q (== axi0_rid 4'd3)))) "axi0 read mixed dynamic/static response matches active transaction")};
         like($isf, qr/\Q$active_match_assertion\E/, 'multi-dynamic mixed read RLAST demux keeps active-response assertion on raw RID match');
+        like($isf, qr/axi0 read dynamic request is idle or releasing active captured ID/, 'multi-dynamic mixed read RLAST demux emits dynamic idle-or-releasing assertions');
+        like($isf, qr/axi0 read static request is idle or releasing active concrete ID/, 'multi-dynamic mixed read RLAST demux emits static idle-or-releasing assertion');
         like($isf, qr/axi0 read mixed dynamic\/static requests are mutually exclusive/, 'multi-dynamic mixed read RLAST demux emits mixed request onehot assertion');
         like($isf, qr/axi0 r0 dynamic request does not reuse an active sibling ID/, 'multi-dynamic mixed read RLAST demux emits first no-active-same-ID assertion');
         like($isf, qr/axi0 r1 dynamic request does not reuse an active sibling ID/, 'multi-dynamic mixed read RLAST demux emits second no-active-same-ID assertion');
@@ -1217,6 +1235,12 @@ sub assert_dynamic_behavior {
         like($fsm, qr/\(-axi0_r0_response_demux\s+<\(& axi0_read_complete axi0_r0_dynamic_busy_q \(== axi0_rid axi0_r0_dynamic_id_q\) axi0_rlast\)/, 'scheduled FSM lowers multi-dynamic mixed first dynamic RID/RLAST match');
         like($fsm, qr/\(-axi0_r1_response_demux\s+<\(& axi0_read_complete axi0_r1_dynamic_busy_q \(== axi0_rid axi0_r1_dynamic_id_q\) axi0_rlast\)/, 'scheduled FSM lowers multi-dynamic mixed second dynamic RID/RLAST match');
         like($fsm, qr/\(-axi0_r2_response_demux\s+<\(& axi0_read_complete axi0_r2_static_busy_q \(== axi0_rid 4'd3\) axi0_rlast\)/, 'scheduled FSM lowers multi-dynamic mixed static RID/RLAST match');
+        like($fsm, qr/\(-axi0_r0_dynamic_id_release_recapture\s+<\(& \(& axi0_r0_request/, 'scheduled FSM lowers first multi-dynamic mixed dynamic RLAST release-recapture');
+        like($fsm, qr/\(-axi0_r1_dynamic_id_release_recapture\s+<\(& \(& axi0_r1_request/, 'scheduled FSM lowers second multi-dynamic mixed dynamic RLAST release-recapture');
+        like($fsm, qr/\(-axi0_r2_static_busy_release_recapture\s+<\(& \(& axi0_r2_request/, 'scheduled FSM lowers multi-dynamic mixed static RLAST release-recapture');
+        like($fsm, qr/\(-axi0_r0_dynamic_id_release\s+<\(& axi0_r0_complete axi0_r0_dynamic_busy_q \(! axi0_r0_request\)\)/, 'scheduled FSM lowers first multi-dynamic mixed dynamic RLAST release-only rule');
+        like($fsm, qr/\(-axi0_r1_dynamic_id_release\s+<\(& axi0_r1_complete axi0_r1_dynamic_busy_q \(! axi0_r1_request\)\)/, 'scheduled FSM lowers second multi-dynamic mixed dynamic RLAST release-only rule');
+        like($fsm, qr/\(-axi0_r2_static_busy_release\s+<\(& axi0_r2_complete axi0_r2_static_busy_q \(! axi0_r2_request\)\)/, 'scheduled FSM lowers multi-dynamic mixed static RLAST release-only rule');
         my $hdl = hdl_for('axi0_capacity_status', $fsm);
         like($hdl, qr/\binput\s+(?:wire\s+)?\[3:0\]\s+axi0_arid\b/, 'SystemVerilog exposes ARID for multi-dynamic mixed read RLAST');
         like($hdl, qr/\binput\s+(?:wire\s+)?\[3:0\]\s+axi0_rid\b/, 'SystemVerilog exposes RID for multi-dynamic mixed read RLAST');
@@ -3447,9 +3471,9 @@ sub assert_mixed_dynamic_static_read_rlast_multi_dynamic_report {
     is_deeply(
         $read->{generated_assertions},
         [qw(
-            axi0_r0_dynamic_request_not_busy
-            axi0_r1_dynamic_request_not_busy
-            axi0_r2_static_request_not_busy
+            axi0_r0_dynamic_request_idle_or_releasing
+            axi0_r1_dynamic_request_idle_or_releasing
+            axi0_r2_static_request_idle_or_releasing
             axi0_read_mixed_dynamic_static_request_onehot0
             axi0_r0_dynamic_request_no_active_same_id
             axi0_r1_dynamic_request_no_active_same_id
@@ -3485,6 +3509,10 @@ sub assert_mixed_dynamic_static_read_rlast_multi_dynamic_report {
                     busy_signal        => 'axi0_r0_dynamic_busy_q',
                     capture_rule       => 'axi0_r0_dynamic_id_capture',
                     release_rule       => 'axi0_r0_dynamic_id_release',
+                    release_recapture_rule => 'axi0_r0_dynamic_id_release_recapture',
+                    same_cycle_release_recapture_policy => 'mixed_dynamic_static_multi_active_dynamic_read',
+                    release_recapture_source => 'generated_multi_mixed_dynamic_static_read_demux_last_beat_completion',
+                    release_recapture_transaction => 'r0',
                 },
                 {
                     transaction        => 'r1',
@@ -3492,10 +3520,35 @@ sub assert_mixed_dynamic_static_read_rlast_multi_dynamic_report {
                     busy_signal        => 'axi0_r1_dynamic_busy_q',
                     capture_rule       => 'axi0_r1_dynamic_id_capture',
                     release_rule       => 'axi0_r1_dynamic_id_release',
+                    release_recapture_rule => 'axi0_r1_dynamic_id_release_recapture',
+                    same_cycle_release_recapture_policy => 'mixed_dynamic_static_multi_active_dynamic_read',
+                    release_recapture_source => 'generated_multi_mixed_dynamic_static_read_demux_last_beat_completion',
+                    release_recapture_transaction => 'r1',
                 },
             ],
         },
         'multi-dynamic mixed read RLAST report describes dynamic capture ownership and static exclusions',
+    );
+    is_deeply(
+        $read->{static_capture},
+        [
+            {
+                transaction                         => 'r2',
+                concrete_id                         => 3,
+                concrete_id_literal                 => "4'd3",
+                capture_event_source                => 'admitted_static_read_request',
+                ownership                           => 'mixed_dynamic_static_concrete_read_id',
+                simultaneous_request_policy         => 'onehot0_mixed_read_request',
+                busy_signal                         => 'axi0_r2_static_busy_q',
+                capture_rule                        => 'axi0_r2_static_busy_capture',
+                release_rule                        => 'axi0_r2_static_busy_release',
+                release_recapture_rule              => 'axi0_r2_static_busy_release_recapture',
+                same_cycle_release_recapture_policy => 'mixed_dynamic_static_static_read',
+                release_recapture_source            => 'generated_multi_mixed_dynamic_static_read_demux_last_beat_completion',
+                release_recapture_transaction       => 'r2',
+            },
+        ],
+        'multi-dynamic mixed read RLAST report records list-shaped static recapture ownership',
     );
     is_deeply(
         [map { $_->{id}{implementation_status} } @{$report->{transactions}}[0, 1]],
