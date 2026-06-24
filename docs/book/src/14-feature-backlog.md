@@ -8115,6 +8115,20 @@ raw `RID` beat ownership assertions, final `RID && RLAST` completions,
 diagnostics, validation, residue, rollback, and next frontier before any
 generated behavior changes.
 
+Two-dynamic/one-static mixed dynamic/static read burst-last contract
+selection:
+[AXI_IAL2_MANAGER_TWO_DYNAMIC_ONE_STATIC_MIXED_DYNAMIC_STATIC_READ_RLAST_RESPONSE_DEMUX_CONTRACT_SELECTION](../../AXI_IAL2_MANAGER_TWO_DYNAMIC_ONE_STATIC_MIXED_DYNAMIC_STATIC_READ_RLAST_RESPONSE_DEMUX_CONTRACT_SELECTION.md)
+selects `.347`, direct generated behavior for the bounded burst-last
+`RID`/`RLAST` shape. The selected sample stem is
+`ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_dynamic_burst_last.ppif`.
+The contract uses dynamic reads `r0`/`r1`, static read `r2` with ID `3`,
+one-bit last signal `axi0_rlast`, report mode
+`bounded_multi_mixed_dynamic_static_read_rid_rlast_demux_contract`,
+completion source `generated_multi_mixed_dynamic_static_read_demux_last_beat`,
+raw `RID` beat ownership assertions independent of `RLAST`, final
+`RID && RLAST` generated completions, and explicit read-data, raw `ARLEN`,
+runtime-validation, and multi-beat residue. The selector changes no behavior.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same
