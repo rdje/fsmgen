@@ -2595,6 +2595,17 @@ three-static `static_capture[]`, dynamic/static guard composition,
 idle-or-releasing assertions, validation gates, rollback, docs, Knowledge Map
 impact, and deferred burst-last/two-dynamic/backend boundaries before any
 behavior change.
+`.417` now selects `.418`, public contract selection for
+one-dynamic-plus-three-static mixed dynamic/static read single-beat `RID`
+same-cycle release-and-recapture. The audit changes no behavior. It found no
+lower parser, PPIF syntax, support-accounting, report-schema, or IAL1/HDL
+prerequisite before contract selection: the public three-static read sample
+and list-shaped report mode already ship, rule/assertion helpers already
+compose over dynamic/static request and static-ID guard arrays, and the mixed
+read recapture marker body already projects list-shaped static capture entries
+after its current one-or-two-static selection guard. `.418` must pin the
+exact report, guard, assertion, validation, rollback, docs, Knowledge Map,
+and deferred-boundary contract before implementation.
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,

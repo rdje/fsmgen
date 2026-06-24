@@ -7645,6 +7645,17 @@ produced a 46985-byte report showing request-not-busy assertions for
 The audit must pin the three-static recapture report, guard, assertion,
 validation, rollback, and deferred-boundary contract before implementation.
 
+Three-static mixed dynamic/static read recapture readiness audit:
+[AXI_IAL2_MANAGER_THREE_STATIC_MIXED_DYNAMIC_STATIC_READ_RECAPTURE_READINESS_AUDIT](../../AXI_IAL2_MANAGER_THREE_STATIC_MIXED_DYNAMIC_STATIC_READ_RECAPTURE_READINESS_AUDIT.md)
+selects `.418`, public contract selection for one-dynamic-plus-three-static
+mixed dynamic/static read single-beat `RID` same-cycle
+release-and-recapture. The audit changes no behavior. It found no lower
+parser, syntax, support-accounting, report-schema, or IAL1/HDL prerequisite:
+the public sample and list-shaped report mode already ship, rule/assertion
+helpers already compose over guard arrays, and the marker body already
+projects list-shaped static capture entries after its current one-or-two-
+static selection guard.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

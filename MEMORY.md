@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.416: select three-static read recapture audit`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.417` audits one-dynamic-plus-three-static mixed read single-beat RID recapture readiness; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.416` selected `.417`, readiness audit for one-dynamic-plus-three-static mixed dynamic/static read single-beat `RID` same-cycle release-and-recapture. A guarded baseline schedule probe for `ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static3.ppif` produced a 46985-byte report with request-not-busy assertions for `r0`/`r1`/`r2`/`r3`, no `static_capture`, and no release-recapture fields; `.417` must pin three-static recapture report/guard/assertion/validation and deferred-boundary contracts before behavior changes.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.417: audit three-static read recapture readiness`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.418` selects the public contract for one-dynamic-plus-three-static mixed read single-beat RID recapture; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.417` audited three-static mixed read recapture readiness and selected `.418`, public contract selection. The audit found no lower parser/syntax/support/report/IAL1 prerequisite: the public sample and list-shaped report mode already ship, rule/assertion helpers already compose over guard arrays, and the marker body already projects list-shaped static capture after its current one-or-two-static guard.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
-- next_action: Start `.417`: audit the three-static mixed read single-beat recapture readiness boundary without behavior changes unless a later leaf is selected.
+- next_action: Start `.418`: select the exact three-static mixed read single-beat recapture contract before any implementation.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact
