@@ -2524,6 +2524,22 @@ boundary, and scalar single-beat read-data consumers remain preserved.
 Guarded selected schedule, strict check, semantic JSON, SystemVerilog, and
 verify-hdl probes passed; guarded focused `t/1438` stopped at the RAM cutoff
 before TAP output. `.412` now selects the next post-read-recapture activity.
+`.412` now selects `.413`, readiness audit for one-dynamic-plus-two-static
+mixed dynamic/static read burst-last `RID && RLAST` same-cycle
+release-and-recapture. The selector changes no behavior. A guarded baseline
+schedule probe for
+`ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static_burst_last.ppif`
+started at host memory 85.2% against the default 88% cutoff and produced a
+44340-byte report. The live burst-last report still uses
+`bounded_multi_mixed_dynamic_static_read_rid_rlast_demux_contract`,
+`response_scope: burst_last`,
+`generated_multi_mixed_dynamic_static_read_demux_last_beat`,
+request-not-busy assertions for `r0`/`r1`/`r2`, no `static_capture`, and no
+release-recapture fields under `dynamic_capture.transactions[]`. The next
+audit must pin final-beat release-recapture source, raw non-final `RID`
+preservation, list-shaped `static_capture[]`, idle-or-releasing assertion
+renames, and scalar read-data/raw-`ARLEN`/runtime/multi-beat preservation
+before implementation.
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,

@@ -7580,6 +7580,18 @@ singular mixed read recapture shape, the three-static no-recapture boundary,
 and scalar single-beat read-data consumers; and advances `.412` to select the
 next post-read-recapture activity.
 
+Post multiple mixed dynamic/static read recapture selector:
+[AXI_IAL2_MANAGER_POST_MULTIPLE_MIXED_DYNAMIC_STATIC_READ_RECAPTURE_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_MIXED_DYNAMIC_STATIC_READ_RECAPTURE_NEXT_SLICE_SELECTION.md)
+selects `.413`, readiness audit for one-dynamic-plus-two-static mixed
+dynamic/static read burst-last `RID && RLAST` same-cycle
+release-and-recapture. The selector changes no behavior. A guarded baseline
+schedule probe on the public burst-last sample started at host memory 85.2%
+against the default 88% cutoff and produced a 44340-byte report. The live
+burst-last report still has request-not-busy assertions for `r0`/`r1`/`r2`,
+no `static_capture`, and no release-recapture fields under
+`dynamic_capture.transactions[]`; `.413` must pin the final-beat
+release-recapture source and preservation boundaries before implementation.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.411: ship multi-static read recapture`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.412` selects the next post one-dynamic plus two-static mixed read recapture activity; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.411` shipped one-dynamic-plus-two-static mixed dynamic/static read single-beat `RID` same-cycle release-and-recapture for the existing public sample. FSMGen now emits dynamic/static recapture rules for `r0`/`r1`/`r2`, reports list-shaped `static_capture[]` for `r1`/`r2`, preserves singular mixed read, three-static no-recapture, and scalar read-data boundaries, and documents the guarded t/1438 RAM-cutoff caveat.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.412: select read RLAST recapture audit`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.413` audits one-dynamic plus two-static mixed read burst-last RID/RLAST recapture readiness; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.412` selected `.413`, readiness audit for one-dynamic-plus-two-static mixed dynamic/static read burst-last `RID && RLAST` same-cycle release-and-recapture. A guarded baseline probe started at host memory 85.2% and produced a 44340-byte report showing request-not-busy assertions for `r0`/`r1`/`r2`, no `static_capture`, and no release-recapture fields.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
-- next_action: Start `.412`: select the next post one-dynamic-plus-two-static mixed read recapture activity with no behavior changes, then commit.
+- next_action: Start `.413`: audit one-dynamic-plus-two-static mixed read burst-last recapture readiness with no behavior changes, then commit.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact
