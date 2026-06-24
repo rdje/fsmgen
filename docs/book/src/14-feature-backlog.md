@@ -8001,6 +8001,18 @@ behavior-bearing boundary before read response-demux, read-data,
 burst-length/runtime validation, or multi-beat output-bank widening can
 depend on a combined multiple-dynamic-plus-static policy.
 
+Two-dynamic/one-static mixed dynamic/static write response-demux readiness
+audit:
+[AXI_IAL2_MANAGER_TWO_DYNAMIC_ONE_STATIC_MIXED_DYNAMIC_STATIC_WRITE_RESPONSE_DEMUX_READINESS_AUDIT](../../AXI_IAL2_MANAGER_TWO_DYNAMIC_ONE_STATIC_MIXED_DYNAMIC_STATIC_WRITE_RESPONSE_DEMUX_READINESS_AUDIT.md)
+selects `.340`, public contract selection for the two-dynamic-plus-one-static
+mixed write `BID` response-demux boundary. The audit changes no behavior;
+current mixed write admission and constructors still require exactly one
+dynamic write transaction plus one, two, or three concrete static write
+transactions, while the two-dynamic-plus-static shape needs an owned public
+report/assertion contract that combines multi-dynamic active selected-ID
+uniqueness with static concrete-ID reservations and dynamic-vs-static
+exclusions.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same
