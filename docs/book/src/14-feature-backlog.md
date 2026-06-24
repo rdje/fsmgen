@@ -7686,6 +7686,15 @@ rules, and idle-or-releasing request assertions for all four transactions.
 The three-static burst-last sample and two-dynamic-plus-one-static samples
 remain un-widened.
 
+Post three-static mixed dynamic/static read recapture selector:
+[AXI_IAL2_MANAGER_POST_THREE_STATIC_MIXED_DYNAMIC_STATIC_READ_RECAPTURE_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_THREE_STATIC_MIXED_DYNAMIC_STATIC_READ_RECAPTURE_NEXT_SLICE_SELECTION.md)
+selects `.421`, readiness audit for one-dynamic-plus-three-static mixed
+dynamic/static read burst-last `RID && RLAST` same-cycle
+release-and-recapture. The selector changes no behavior. A direct baseline
+probe confirmed the three-static burst-last report still has no
+`static_capture`, no dynamic recapture fields, and request-not-busy
+assertions for all four transactions.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

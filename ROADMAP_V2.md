@@ -2648,6 +2648,21 @@ remain preserved. Syntax and direct normalizer/rule/preservation probes
 passed. Guarded selected schedule and focused `t/1438` probes stopped because
 host memory was already above the default 88% cutoff; no cutoff was raised.
 `.420` now selects the next exact post-recapture owner.
+`.420` now selects `.421`, readiness audit for one-dynamic-plus-three-static
+mixed dynamic/static read burst-last `RID && RLAST` same-cycle
+release-and-recapture. The selector changes no behavior. A direct baseline
+probe for
+`ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static3_burst_last.ppif`
+confirmed the current report remains
+`bounded_multi_mixed_dynamic_static_read_rid_rlast_demux_contract`,
+`response_scope: burst_last`,
+`generated_multi_mixed_dynamic_static_read_demux_last_beat`, no
+`static_capture`, no dynamic recapture fields, and four request-not-busy
+assertions. The audit comes next because `.419` shipped the three-static
+single-beat recapture sibling, `.415` shipped the two-static burst-last
+precedent, `.326` already ships the three-static burst-last demux public
+sample, and the burst-last normalizer still marks recapture only for exactly
+one dynamic plus two static states.
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,
