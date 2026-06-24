@@ -2541,6 +2541,15 @@ last-beat read-data boundary. The audit changes no behavior; the public
 capture-rule, and report helpers are already ready once coverage admits the
 `r0`, `r1`, `r2`, `r3` transaction set. Three-static runtime validation and
 multi-beat output banks remain deferred.
+`.333` now ships that behavior. The support-accounted public sample
+`ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static3_burst_last_read_data_burst_length.ppif`
+generates width-8 `axi0_arlen`, raw-`ARLEN` storage and request capture rules
+for `r0`, `r1`, `r2`, and `r3`, and scalar last-beat `RDATA`/`RRESP` capture
+still guarded by generated mixed `RID && RLAST` completion pulses. Reports
+mark `burst_length_validation` as `report_only`, list generated
+burst-length input/storage/rules, and keep runtime beat-count/`RLAST`
+validation and multi-beat output banks fail-closed. `.334` now audits runtime
+validation readiness over this three-static raw-`ARLEN` boundary.
 No behavior changed in
 `.270`, `.271`, `.273`, `.274`, `.275`, `.277`, `.278`,
 `.279`, `.281`, `.282`, `.283`, `.285`, `.286`, `.288`, `.290`, `.292`, or
