@@ -7330,6 +7330,18 @@ dynamic/static recapture fields, idle-or-releasing assertions, raw non-final
 `RID` preservation, and read-data/raw-`ARLEN`/runtime/multi-beat consumers are
 pinned before implementation.
 
+Mixed dynamic/static read RLAST recapture contract:
+[AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_READ_RLAST_RECAPTURE_CONTRACT_SELECTION](../../AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_READ_RLAST_RECAPTURE_CONTRACT_SELECTION.md)
+selects `.396`, direct implementation of mixed dynamic/static read burst-last
+`RID && RLAST` same-cycle release-and-recapture for the existing public
+sample. The selector changes no behavior. The selected contract preserves the
+burst-last mode/scope, `last_signal`, last-beat transaction completion source,
+raw non-final `RID` assertions, and layered read-data/raw-`ARLEN`/runtime/
+multi-beat consumers. It reuses `mixed_dynamic_static_dynamic_read` and
+`mixed_dynamic_static_static_read` policy names, with
+`generated_mixed_dynamic_static_read_demux_last_beat_completion` as the
+release-recapture source.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

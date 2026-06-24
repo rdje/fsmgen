@@ -2299,6 +2299,16 @@ source, request-not-busy assertions, no recapture metadata, and no
 dynamic/static recapture fields, idle-or-releasing assertions, raw non-final
 `RID` preservation, and read-data/raw-`ARLEN`/runtime/multi-beat consumers are
 pinned before implementation.
+`.395` selects `.396`, direct implementation of mixed dynamic/static read
+burst-last `RID && RLAST` same-cycle release-and-recapture for the existing
+public sample. The selector changes no behavior. The selected contract
+preserves the burst-last mode/scope, `last_signal`, last-beat transaction
+completion source, raw non-final `RID` assertions, and layered read-data/
+raw-`ARLEN`/runtime/multi-beat consumers. It reuses
+`mixed_dynamic_static_dynamic_read` and `mixed_dynamic_static_static_read`
+policy names, with
+`generated_mixed_dynamic_static_read_demux_last_beat_completion` as the
+release-recapture source.
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,
