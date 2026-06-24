@@ -8050,6 +8050,27 @@ rules distinct from both `.438` multi-active and `.442` single-active
 coverage. Dynamic queues, scoreboards, direct backend behavior,
 backend-language variants, VHDL, and new generated HDL remain deferred.
 
+One-dynamic mixed dynamic same-ID reject mapping contract:
+[AXI_IAL2_MANAGER_ONE_DYNAMIC_MIXED_DYNAMIC_SAME_ID_REJECT_MAPPING_CONTRACT_SELECTION](../../AXI_IAL2_MANAGER_ONE_DYNAMIC_MIXED_DYNAMIC_SAME_ID_REJECT_MAPPING_CONTRACT_SELECTION.md)
+selects `.446`, direct implementation of the one-dynamic mixed dynamic/static
+dynamic same-ID reject mapping. The selected report contract covers generated
+mixed write `BID`, read single-beat `RID`, and read burst-last `RID && RLAST`
+response-demux shapes with exactly one dynamic transaction plus one, two, or
+three pairwise-distinct concrete static transactions. Covered reports use
+`implementation_status: generated_mixed_static_id_exclusion_reject`,
+`enforcement: generated_static_id_exclusion_assertions`,
+`mixed_dynamic_static_covered: true`,
+`mixed_dynamic_static_request_policy: onehot0_mixed_request`,
+`static_id_conflict_policy: static_concrete_ids_reserved`, and
+`static_id_exclusion_policy: dynamic_id_must_not_equal_static_concrete_id`,
+while preserving `accepted_same_id_reuse: false`,
+`request_conflict_policy: no_active_same_id`, and generated queue/scoreboard
+false. `.446` is bounded to acceptance/report/residue mapping over existing
+static-ID exclusion, mixed request onehot0, response active/unique-match, and
+completion-active evidence; queues, scoreboards, direct backend behavior,
+backend-language variants, VHDL, new generated HDL, and new generated rules,
+storage, assertions, or runtime behavior remain deferred.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

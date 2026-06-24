@@ -2982,6 +2982,24 @@ deferred because one-dynamic mixed mapping needs report fields and residue
 rules distinct from both `.438` multi-active and `.442` single-active
 coverage. Dynamic queues, scoreboards, direct backend behavior,
 backend-language variants, VHDL, and new generated HDL remain deferred.
+`.445` now selects `.446`, direct implementation of the one-dynamic mixed
+dynamic/static dynamic same-ID reject report/acceptance mapping. The selected
+contract covers generated mixed write `BID`, read single-beat `RID`, and read
+burst-last `RID && RLAST` response-demux shapes with exactly one dynamic
+transaction plus one, two, or three pairwise-distinct concrete static
+transactions. Covered reports use `implementation_status:
+generated_mixed_static_id_exclusion_reject`, `enforcement:
+generated_static_id_exclusion_assertions`, `mixed_dynamic_static_covered:
+true`, `mixed_dynamic_static_request_policy: onehot0_mixed_request`,
+`static_id_conflict_policy: static_concrete_ids_reserved`, and
+`static_id_exclusion_policy: dynamic_id_must_not_equal_static_concrete_id`,
+while preserving `accepted_same_id_reuse: false`,
+`request_conflict_policy: no_active_same_id`, and generated queue/scoreboard
+false. The mapping is bounded to acceptance/report/residue movement over
+existing generated static-ID exclusion, mixed request onehot0, response
+active/unique-match, and completion-active evidence; it does not add generated
+rules, storage, assertions, HDL, runtime behavior, direct backend behavior,
+backend-language variants, queues, scoreboards, VHDL, or new generated HDL.
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,

@@ -1999,6 +1999,24 @@ deferred because one-dynamic mixed mapping needs report fields and residue
 rules distinct from both `.438` multi-active and `.442` single-active
 coverage. Dynamic queues, scoreboards, direct backend behavior,
 backend-language variants, VHDL, and new generated HDL remain deferred.
+`.445` now selects `.446`, direct implementation of the one-dynamic mixed
+dynamic/static dynamic same-ID reject report/acceptance mapping. The selected
+contract covers generated mixed write `BID`, read single-beat `RID`, and read
+burst-last `RID && RLAST` response-demux shapes with exactly one dynamic
+transaction plus one, two, or three pairwise-distinct concrete static
+transactions. Covered reports use `implementation_status:
+generated_mixed_static_id_exclusion_reject`, `enforcement:
+generated_static_id_exclusion_assertions`, `mixed_dynamic_static_covered:
+true`, `mixed_dynamic_static_request_policy: onehot0_mixed_request`,
+`static_id_conflict_policy: static_concrete_ids_reserved`, and
+`static_id_exclusion_policy: dynamic_id_must_not_equal_static_concrete_id`,
+while preserving `accepted_same_id_reuse: false`,
+`request_conflict_policy: no_active_same_id`, and generated queue/scoreboard
+false. The mapping is bounded to acceptance/report/residue movement over
+existing generated static-ID exclusion, mixed request onehot0, response
+active/unique-match, and completion-active evidence; it does not add generated
+rules, storage, assertions, HDL, runtime behavior, direct backend behavior,
+backend-language variants, queues, scoreboards, VHDL, or new generated HDL.
 No behavior
 changed in `.273`, `.274`, `.275`,
 `.277`, `.278`, `.279`, `.281`,
@@ -4356,6 +4374,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/AXI_IAL2_MANAGER_SINGLE_ACTIVE_DYNAMIC_SAME_ID_REJECT_MAPPING_BEHAVIOR.md` — shipped single-active dynamic same-ID reject report/acceptance mapping over existing generated idle-or-releasing response-demux assertions.
 - `docs/AXI_IAL2_MANAGER_POST_SINGLE_ACTIVE_DYNAMIC_SAME_ID_REJECT_MAPPING_NEXT_SLICE_SELECTION.md` — selected one-dynamic mixed dynamic/static dynamic same-ID reject mapping readiness audit after the single-active generated reject mapping shipped.
 - `docs/AXI_IAL2_MANAGER_ONE_DYNAMIC_MIXED_DYNAMIC_SAME_ID_REJECT_MAPPING_READINESS_AUDIT.md` — audited one-dynamic mixed dynamic/static dynamic same-ID reject mapping readiness and selected public report contract selection.
+- `docs/AXI_IAL2_MANAGER_ONE_DYNAMIC_MIXED_DYNAMIC_SAME_ID_REJECT_MAPPING_CONTRACT_SELECTION.md` — selected direct implementation of the one-dynamic mixed dynamic/static dynamic same-ID reject report/acceptance mapping contract.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_CONTRACT_SELECTION.md` — selected direct single-active dynamic write `BID` same-cycle release-and-recapture behavior under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_BEHAVIOR.md` — shipped single-active dynamic write `BID` same-cycle release-and-recapture under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_WRITE_RECAPTURE_NEXT_SLICE_SELECTION.md` — selected `.367`, public contract selection for first single-active dynamic read same-cycle release-and-recapture after dynamic write recapture shipped.

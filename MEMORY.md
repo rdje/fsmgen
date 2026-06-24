@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.444: audit one-dynamic mixed reject readiness`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.445` selects the public report contract for one-dynamic mixed dynamic/static dynamic same-ID reject mapping; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.444` selected `.445`, public report contract selection for one-dynamic mixed dynamic/static dynamic same-ID reject mapping. Guarded schedule probes confirmed static-ID exclusion, mixed request onehot0, response active/unique-match, and completion-active assertion evidence; a temporary read probe still fails closed at the multi-active no-active-same-ID diagnostic. Direct implementation, queues, scoreboards, direct backend behavior, backend-language variants, VHDL, and new generated HDL remain deferred.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.445: select one-dynamic mixed reject contract`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.446` implements the one-dynamic mixed dynamic/static dynamic same-ID reject report/acceptance mapping selected by `.445`; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.445` selected `.446`, direct implementation of one-dynamic mixed dynamic/static dynamic same-ID reject mapping. The selected report contract uses generated_mixed_static_id_exclusion_reject, generated_static_id_exclusion_assertions, mixed_dynamic_static_covered, onehot0_mixed_request, static_concrete_ids_reserved, and dynamic_id_must_not_equal_static_concrete_id fields over existing static-ID exclusion, mixed request onehot0, response active/unique-match, and completion-active evidence. No parser, generator acceptance, samples, support accounting, tests, generated artifacts, schedule/check/semantic JSON, HDL, runtime behavior, direct backend behavior, backend-language variants, queues, scoreboards, VHDL, or new generated HDL changed.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
-- next_action: Start `.445`: select exact one-dynamic mixed dynamic same-ID reject report fields, residue movement, diagnostics, validation gates, rollback, and non-goals before any behavior change.
+- next_action: Start `.446`: implement only the .445-selected one-dynamic mixed dynamic same-ID reject acceptance/report/residue mapping for covered write BID, read single-beat RID, read burst-last RID/RLAST, and one/two/three-static shapes; preserve .438/.442 report fields and all queue/scoreboard/direct-backend/backend-language/VHDL/new-HDL deferrals.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact
