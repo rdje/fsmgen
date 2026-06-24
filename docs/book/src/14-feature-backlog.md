@@ -7749,6 +7749,21 @@ active same-ID blocking, static concrete busy recapture, onehot0 mixed request
 policy, no-active-same-ID assertions, and active dynamic-ID uniqueness without
 the extra `RLAST` final-beat boundary.
 
+Two-dynamic/one-static mixed dynamic/static read recapture readiness:
+[AXI_IAL2_MANAGER_TWO_DYNAMIC_ONE_STATIC_MIXED_DYNAMIC_STATIC_READ_RECAPTURE_READINESS_AUDIT](../../AXI_IAL2_MANAGER_TWO_DYNAMIC_ONE_STATIC_MIXED_DYNAMIC_STATIC_READ_RECAPTURE_READINESS_AUDIT.md)
+selects `.426`, public contract selection for two-dynamic-plus-one-static
+mixed dynamic/static read single-beat `RID` same-cycle release-and-recapture.
+The audit changes no behavior. A guarded schedule probe stopped at 95.3% host
+memory against the default 88% cutoff, so direct fallback probes were used.
+Those probes confirmed the public single-beat sample still has no dynamic
+release-recapture fields, no `static_capture`, no generated
+release-recapture rules, and request-not-busy assertions for `r0`, `r1`, and
+`r2`. The contract-selection leaf should pin the read-side
+`mixed_dynamic_static_multi_active_dynamic_read` policy, list-shaped static
+capture for `r2`, the generated mixed read completion source, and
+idle-or-releasing assertions while preserving the burst-last no-recapture
+sibling and read-data consumers.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

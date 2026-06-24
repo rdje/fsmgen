@@ -2734,6 +2734,19 @@ multi-dynamic selected-ID recapture, active same-ID blocking, static concrete
 busy recapture, onehot0 mixed request policy, no-active-same-ID assertions,
 and active dynamic-ID uniqueness without final-only `RLAST` release-source or
 raw non-final `RID` questions.
+`.425` now selects `.426`, public contract selection for
+two-dynamic-plus-one-static mixed dynamic/static read single-beat `RID`
+same-cycle release-and-recapture on the same public sample. The audit changes
+no behavior. A guarded schedule JSON probe stopped because host memory was
+already 95.3% against the default 88% cutoff, so direct fallback probes were
+used. Direct probes confirmed the selected sample remains no-recapture today:
+no dynamic release-recapture fields, no `static_capture`, no
+release-recapture rules in ISF, and request-not-busy assertions for
+`r0`/`r1`/`r2`. The audit found the read guard operands already exist; the
+contract-selection leaf should pin `mixed_dynamic_static_multi_active_dynamic_read`,
+list-shaped static capture for `r2`,
+`generated_multi_mixed_dynamic_static_read_demux_completion`, and
+idle-or-releasing assertions for `r0`, `r1`, and `r2`.
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,

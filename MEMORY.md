@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.424: select two-dynamic static read recapture audit`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.425` audits two-dynamic-plus-one-static mixed read single-beat RID same-cycle release-and-recapture readiness; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.424` selected `.425`, readiness audit for two-dynamic-plus-one-static mixed dynamic/static read single-beat RID same-cycle release-and-recapture on ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_dynamic.ppif. A direct adapter/report probe confirmed the current single-beat and burst-last two-dynamic-plus-one-static mixed read reports still have no release-recapture fields, no static_capture, three request-not-busy assertions, and zero idle-or-releasing assertions. No behavior changed.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.425: audit two-dynamic read recapture readiness`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.426` selects the two-dynamic-plus-one-static mixed read single-beat RID recapture public contract; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.425` selected `.426`, public contract selection for two-dynamic-plus-one-static mixed dynamic/static read single-beat RID same-cycle release-and-recapture on ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_dynamic.ppif. Guarded schedule JSON stopped at 95.3% host memory against the default 88% cutoff; direct probes confirmed the selected sample remains no-recapture today, the needed guard operands already exist, and the next contract should pin mixed_dynamic_static_multi_active_dynamic_read plus list-shaped r2 static capture. No behavior changed.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
-- next_action: Start `.425`: audit two-dynamic-plus-one-static mixed read single-beat recapture readiness.
+- next_action: Start `.426`: select the two-dynamic-plus-one-static mixed read single-beat recapture public contract.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact
