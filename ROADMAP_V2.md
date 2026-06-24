@@ -2553,6 +2553,22 @@ selection must pin
 `dynamic_capture.transactions[0]`, list-shaped `static_capture[]`, raw
 non-final `RID` preservation, and scalar read-data/raw-`ARLEN`/runtime/
 multi-beat preservation before implementation.
+`.414` now selects `.415`, direct implementation of that
+one-dynamic-plus-two-static mixed dynamic/static read burst-last `RID &&
+RLAST` same-cycle release-and-recapture contract. The selector changes no
+behavior. The selected contract preserves public syntax, support identity,
+`bounded_multi_mixed_dynamic_static_read_rid_rlast_demux_contract`,
+`response_scope: burst_last`, `last_signal: axi0_rlast`,
+`generated_multi_mixed_dynamic_static_read_demux_last_beat`, final-beat
+completion semantics, `r0`/`r1`/`r2` transaction lists, static ID
+reservations for `4'd3` and `4'd5`, generated demux/completion behavior, raw
+`RID` assertions, completion-active assertions, and scalar read-data/
+raw-`ARLEN`/runtime/multi-beat consumers. It selects
+`dynamic_capture.transactions[0]`, list-shaped `static_capture[]`,
+`generated_multi_mixed_dynamic_static_read_demux_last_beat_completion`,
+mixed read policy names, dynamic/static guard composition, release-only
+same-transaction request exclusions, and idle-or-releasing assertion names
+for the implementation owner.
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,

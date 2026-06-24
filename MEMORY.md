@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.413: audit read RLAST recapture readiness`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.414` selects the public contract for one-dynamic plus two-static mixed read burst-last RID/RLAST recapture; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.413` selected `.414`, public contract selection for one-dynamic-plus-two-static mixed dynamic/static read burst-last `RID && RLAST` recapture. A guarded baseline probe started at host memory 86.3% and produced a 44340-byte report; no lower parser, support-accounting, IAL1/HDL, or report-schema prerequisite was found.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.414: select read RLAST recapture contract`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.415` implements one-dynamic plus two-static mixed read burst-last RID/RLAST recapture; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.414` selected `.415`, direct implementation of one-dynamic-plus-two-static mixed dynamic/static read burst-last `RID && RLAST` recapture. The selector changes no behavior and pins `dynamic_capture.transactions[0]`, list-shaped `static_capture[]`, `generated_multi_mixed_dynamic_static_read_demux_last_beat_completion`, dynamic/static guards, release-only same-request exclusions, idle-or-releasing assertions, and raw non-final `RID` plus read-data/raw-`ARLEN`/runtime/multi-beat preservation.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
-- next_action: Start `.414`: select the one-dynamic-plus-two-static mixed read burst-last recapture public contract with no behavior changes, then commit.
+- next_action: Start `.415`: implement the selected one-dynamic-plus-two-static mixed read burst-last recapture contract, then validate and commit.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact
