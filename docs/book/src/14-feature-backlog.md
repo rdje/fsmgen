@@ -7592,6 +7592,17 @@ no `static_capture`, and no release-recapture fields under
 `dynamic_capture.transactions[]`; `.413` must pin the final-beat
 release-recapture source and preservation boundaries before implementation.
 
+Multiple mixed dynamic/static read RLAST recapture readiness audit:
+[AXI_IAL2_MANAGER_MULTIPLE_MIXED_DYNAMIC_STATIC_READ_RLAST_RECAPTURE_READINESS_AUDIT](../../AXI_IAL2_MANAGER_MULTIPLE_MIXED_DYNAMIC_STATIC_READ_RLAST_RECAPTURE_READINESS_AUDIT.md)
+selects `.414`, public contract selection for one-dynamic-plus-two-static
+mixed dynamic/static read burst-last `RID && RLAST` same-cycle
+release-and-recapture. The audit changes no behavior. A guarded baseline
+schedule probe started at host memory 86.3% against the default 88% cutoff
+and produced a 44340-byte report showing request-not-busy assertions, no
+`static_capture`, and no release-recapture fields. No lower parser, PPIF
+syntax, support-accounting, IAL1/HDL lowering, or report-schema prerequisite
+was found.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

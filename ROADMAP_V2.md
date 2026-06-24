@@ -2540,6 +2540,19 @@ audit must pin final-beat release-recapture source, raw non-final `RID`
 preservation, list-shaped `static_capture[]`, idle-or-releasing assertion
 renames, and scalar read-data/raw-`ARLEN`/runtime/multi-beat preservation
 before implementation.
+`.413` now selects `.414`, public contract selection for
+one-dynamic-plus-two-static mixed dynamic/static read burst-last `RID &&
+RLAST` same-cycle release-and-recapture. The audit changes no behavior. A
+guarded baseline schedule probe for the same public burst-last sample started
+at host memory 86.3% against the default 88% cutoff and produced a 44340-byte
+report showing request-not-busy assertions, no `static_capture`, and no
+release-recapture fields. No lower parser, PPIF syntax, support-accounting,
+IAL1/HDL lowering, or report-schema prerequisite was found. The next contract
+selection must pin
+`generated_multi_mixed_dynamic_static_read_demux_last_beat_completion`,
+`dynamic_capture.transactions[0]`, list-shaped `static_capture[]`, raw
+non-final `RID` preservation, and scalar read-data/raw-`ARLEN`/runtime/
+multi-beat preservation before implementation.
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,
