@@ -8049,6 +8049,19 @@ The next exact owner after `.341` is `.342`, readiness audit for bounded
 two-dynamic-plus-one-static mixed dynamic/static read single-beat `RID`
 response-demux.
 
+Two-dynamic/one-static mixed dynamic/static read response-demux readiness
+audit:
+[AXI_IAL2_MANAGER_TWO_DYNAMIC_ONE_STATIC_MIXED_DYNAMIC_STATIC_READ_RESPONSE_DEMUX_READINESS_AUDIT](../../AXI_IAL2_MANAGER_TWO_DYNAMIC_ONE_STATIC_MIXED_DYNAMIC_STATIC_READ_RESPONSE_DEMUX_READINESS_AUDIT.md)
+selects `.343`, public contract selection for bounded
+two-dynamic-plus-one-static mixed dynamic/static read single-beat `RID`
+response-demux. The audit changes no behavior. Mixed read admission and
+construction still require exactly one dynamic read transaction plus one,
+two, or three concrete static read transactions, while the two-dynamic-plus
+static read shape needs an owned public contract for report mode, completion
+source, transaction order, static-ID reservation, active dynamic selected-ID
+uniqueness, static-ID exclusions, assertion names, diagnostics, validation,
+residue, rollback, and next frontier before any generated behavior changes.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same

@@ -2626,13 +2626,24 @@ pairwise active dynamic selected-ID uniqueness, static-ID reservation and
 request/active exclusion for `4'd3`, three raw `BID` completion pulses, and
 list-shaped report fields while preserving the `.272`, `.295`, and `.318`
 mixed write report contracts.
+`.342` now selects `.343`, public contract selection for bounded
+two-dynamic-plus-one-static mixed dynamic/static read single-beat `RID`
+response-demux. The audit changes no behavior; mixed read admission and
+construction remain singular on the dynamic side while the lower substrate is
+close after `.341` write behavior and `.251` multiple all-dynamic read
+behavior. `.343` must settle the public sample stem, support identity,
+behavior label, transaction order, static concrete ID, report mode,
+completion source, `active_dynamic_ids_must_be_unique`, static-ID exclusions,
+assertion names, diagnostics, validation, residue, rollback, and next
+frontier before any parser, generator, PPIF sample, support-accounting, test,
+JSON, or HDL behavior changes.
 No behavior changed in
 `.270`, `.271`, `.273`, `.274`, `.275`, `.277`, `.278`,
 `.279`, `.281`, `.282`, `.283`, `.285`, `.286`, `.288`, `.290`, `.292`, or
 `.293`, `.294`, `.296`, `.297`, `.298`, `.300`, `.301`, `.302`, `.304`,
 `.305`, `.306`, `.308`, `.309`, `.311`, `.313`, `.315`, `.316`, `.317`, or
 `.319`, `.320`, `.321`, `.323`, `.324`, `.325`, `.327`, `.328`, `.329`,
-`.331`, `.332`, `.334`, `.336`, `.338`, `.339`, or `.340`.
+`.331`, `.332`, `.334`, `.336`, `.338`, `.339`, `.340`, or `.342`.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.
