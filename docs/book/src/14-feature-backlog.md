@@ -8400,6 +8400,15 @@ read-data remains a completion-pulse payload consumer; burst-last, scalar
 last-beat read-data, burst-length/runtime/multi-beat recapture, multiple
 dynamic, mixed dynamic/static, backend, and VHDL behavior remain later owners.
 
+Post dynamic read recapture selector:
+[AXI_IAL2_MANAGER_POST_DYNAMIC_READ_RECAPTURE_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_DYNAMIC_READ_RECAPTURE_NEXT_SLICE_SELECTION.md)
+selects `.370`, readiness audit for single-active dynamic read burst-last
+`RID && RLAST` same-cycle release-and-recapture. The selector changes no
+behavior. It chooses audit before direct implementation because burst-last
+recapture affects final-beat completion, matched non-last beats, raw
+active-match assertions, scalar last-beat read-data, report-only raw-`ARLEN`,
+runtime beat-count/`RLAST`, and multi-beat output-bank consumers.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same

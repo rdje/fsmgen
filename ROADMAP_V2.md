@@ -2931,6 +2931,15 @@ dynamic read-data capture under the generated completion pulse. Burst-last
 recapture, multiple dynamic, mixed dynamic/static, static busy, queue,
 scoreboard, backend variants, VHDL, and full-manager behavior remain later
 owners.
+`.369` now selects `.370`, readiness audit for single-active dynamic read
+burst-last `RID && RLAST` same-cycle release-and-recapture. The selector
+changes no behavior. It chooses audit before direct implementation because the
+burst-last boundary touches final-beat completion, matched non-last beats, raw
+active-match assertions, scalar last-beat read-data, report-only raw-`ARLEN`,
+runtime beat-count/`RLAST`, and multi-beat output-bank consumers.
+Multiple dynamic request widening, mixed dynamic/static recapture, static busy
+recapture, same-ID queues, scoreboards, backend variants, VHDL, and
+full-manager behavior remain later owners.
 No behavior changed in
 `.270`, `.271`, `.273`, `.274`, `.275`, `.277`, `.278`,
 `.279`, `.281`, `.282`, `.283`, `.285`, `.286`, `.288`, `.290`, `.292`, or
@@ -2939,7 +2948,7 @@ No behavior changed in
 `.319`, `.320`, `.321`, `.323`, `.324`, `.325`, `.327`, `.328`, `.329`,
 `.331`, `.332`, `.334`, `.336`, `.338`, `.339`, `.340`, `.342`, `.343`,
 `.345`, `.346`, `.348`, `.349`, `.351`, `.352`, `.354`, `.356`, `.358`,
-`.359`, `.360`, `.362`, `.363`, `.364`, `.366`, or `.367`.
+`.359`, `.360`, `.362`, `.363`, `.364`, `.366`, `.367`, or `.369`.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.
