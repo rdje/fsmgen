@@ -2894,6 +2894,21 @@ response demux where generated reports already expose
 and `*_dynamic_active_id_unique` artifacts. Single-active dynamic demux,
 one-dynamic mixed demux, queues, scoreboards, direct backend behavior, and
 VHDL remain deferred.
+`.438` now ships that generated-enforcement report mapping. Same-family
+`response-demux.<family>` plus `same-id-ordering.<family>
+(dynamic-id-reuse reject)` is accepted for the covered multi-active
+all-dynamic and two-dynamic-plus-one-static mixed response-demux shapes
+without adding generated rules, storage, assertions, HDL behavior, or runtime
+behavior. Covered dynamic policy reports use `implementation_status:
+generated_no_active_same_id_reject`, `enforcement:
+generated_no_active_same_id_assertions`, `assertion_enforcement:
+runtime_assertion`, `response_demux_covered: true`, response-demux
+mode/source metadata, covered dynamic transactions, and exact generated
+no-active-same-ID plus active-ID uniqueness assertion names. The
+support-accounted public sample is
+`ppif/axi_manager_capacity_status_dynamic_read_response_demux_multi_same_id_reject.ppif`.
+Single-active dynamic demux, one-dynamic mixed demux, queues, scoreboards,
+direct backend behavior, backend-language variants, and VHDL remain deferred.
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,

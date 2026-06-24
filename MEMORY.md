@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.437: audit dynamic same-ID reject mapping`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.438` maps selected `dynamic-id-reuse reject` to already generated multi-active dynamic/mixed response-demux assertions; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.437` audited generated dynamic same-ID reject enforcement mapping readiness and selected `.438`, a narrow report/acceptance mapping for bounded multiple all-dynamic write/read response demux and bounded two-dynamic-plus-one-static mixed write/read response demux. Single-active dynamic demux, one-dynamic mixed demux, dynamic queues, scoreboards, direct backend behavior, and VHDL remain deferred.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.438: ship dynamic same-ID reject demux mapping`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.439` selects the next dynamic same-ID policy owner after generated reject mapping; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.438` shipped generated-enforcement report/acceptance mapping for selected `dynamic-id-reuse reject` over covered multi-active all-dynamic and two-dynamic-plus-one-static mixed response-demux families. Reports now credit existing no-active-same-ID and active-ID uniqueness assertions; the new public sample is `ppif/axi_manager_capacity_status_dynamic_read_response_demux_multi_same_id_reject.ppif`. Single-active dynamic demux, one-dynamic mixed demux, queues, scoreboards, direct backend behavior, backend-language variants, and VHDL remain deferred.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
-- next_action: Start `.438`: implement only the `.437` selected generated-enforcement report mapping for multi-active dynamic/mixed response-demux families; preserve generated HDL/runtime behavior and keep single-active/one-dynamic mixed shapes deferred.
+- next_action: Start `.439`: audit the post-mapping dynamic same-ID policy frontier and select the next exact owner before behavior changes.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact

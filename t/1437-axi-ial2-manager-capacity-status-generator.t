@@ -9,6 +9,7 @@ use Test::More;
 use File::Spec;
 use File::Temp qw(tempdir);
 use FindBin;
+use JSON::PP ();
 
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
@@ -329,6 +330,92 @@ subtest 'dynamic same-ID reject policy coexists with concrete same-ID policy met
     is($ordering->{concrete_id_reuse_policy}{read}{policy}, 'reject', 'combined report preserves concrete reject policy');
     is($ordering->{concrete_id_reuse_policy}{read}{enforcement}, 'static_validation', 'combined report preserves concrete static-validation enforcement');
     assert_dynamic_same_id_reject_policy_report($ordering, 'combined generator report', mode => 'id_reuse_policy');
+};
+
+subtest 'multiple dynamic write response-demux maps dynamic same-ID reject to generated assertions' => sub {
+    my $base = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_dynamic_write_response_demux_multi());
+    my $contract = sample_contract_with_dynamic_write_response_demux_multi();
+    $contract->{same_id_ordering_policy} = {
+        write => {
+            dynamic_id_reuse => 'reject',
+        },
+    };
+
+    my $result = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate($contract);
+
+    is(
+        $result->{generated_ial1}{text},
+        $base->{generated_ial1}{text},
+        'dynamic write same-ID reject mapping does not alter generated IAL1 text',
+    );
+    is_deeply(
+        $result->{generated_ial0}{files},
+        $base->{generated_ial0}{files},
+        'dynamic write same-ID reject mapping does not alter generated IAL0 files',
+    );
+    assert_dynamic_write_response_demux_multi_report(
+        $result->{report},
+        'generator mapped dynamic write report',
+        residue => [qw(read_response_demux read_data_interleaving bursts)],
+    );
+    assert_dynamic_same_id_reject_policy_generated_report(
+        $result->{report}{same_id_ordering},
+        'generator mapped dynamic write report',
+        family => 'write',
+        response_demux_mode => 'bounded_multi_dynamic_write_bid_demux_contract',
+        response_demux_transaction_completion_source => 'generated_dynamic_demux',
+        covered_dynamic_transactions => [qw(w0 w1)],
+        generated_no_active_same_id_assertions => [qw(
+            axi0_w0_dynamic_request_no_active_same_id
+            axi0_w1_dynamic_request_no_active_same_id
+        )],
+        generated_active_id_uniqueness_assertions => [qw(
+            axi0_w0_w1_write_dynamic_active_id_unique
+        )],
+    );
+};
+
+subtest 'multiple dynamic read burst-last response-demux maps dynamic same-ID reject to generated assertions' => sub {
+    my $base = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_dynamic_read_response_demux_multi_burst_last());
+    my $contract = sample_contract_with_dynamic_read_response_demux_multi_burst_last();
+    $contract->{same_id_ordering_policy} = {
+        read => {
+            dynamic_id_reuse => 'reject',
+        },
+    };
+
+    my $result = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate($contract);
+
+    is(
+        $result->{generated_ial1}{text},
+        $base->{generated_ial1}{text},
+        'dynamic read RLAST same-ID reject mapping does not alter generated IAL1 text',
+    );
+    is_deeply(
+        $result->{generated_ial0}{files},
+        $base->{generated_ial0}{files},
+        'dynamic read RLAST same-ID reject mapping does not alter generated IAL0 files',
+    );
+    assert_dynamic_read_response_demux_multi_burst_last_report(
+        $result->{report},
+        'generator mapped dynamic read RLAST report',
+        residue => [qw(read_data_interleaving bursts)],
+    );
+    assert_dynamic_same_id_reject_policy_generated_report(
+        $result->{report}{same_id_ordering},
+        'generator mapped dynamic read RLAST report',
+        family => 'read',
+        response_demux_mode => 'bounded_multi_dynamic_read_rid_rlast_demux_contract',
+        response_demux_transaction_completion_source => 'generated_dynamic_demux_last_beat',
+        covered_dynamic_transactions => [qw(r0 r1)],
+        generated_no_active_same_id_assertions => [qw(
+            axi0_r0_dynamic_request_no_active_same_id
+            axi0_r1_dynamic_request_no_active_same_id
+        )],
+        generated_active_id_uniqueness_assertions => [qw(
+            axi0_r0_r1_read_dynamic_active_id_unique
+        )],
+    );
 };
 
 subtest 'dynamic write response-demux captures AWID and matches BID' => sub {
@@ -4874,7 +4961,8 @@ subtest 'malformed contract objects fail closed and no direct lower-to-fsm entry
         ['dynamic transaction ID blocks same-family auto lifecycle behavior', sub { my $c = sample_contract_with_dynamic_transaction_id(); $c->{auto_id_lifecycle} = { read => { pool => [0] } }; $c }, qr/auto_id_lifecycle\.read cannot be combined with dynamic read transaction ID metadata/],
         ['dynamic read response demux requires generated completion distinct from raw response event', sub { my $c = sample_contract_with_dynamic_transaction_id(); $c->{response_demux} = { read => { response_event => 'axi0_read_complete', response_scope => 'single-beat', transaction_completion => 'generated' } }; $c }, qr/response_demux\.read generated transaction completion signal 'axi0_read_complete' must be distinct from response_event 'axi0_read_complete'/],
         ['dynamic transaction ID rejects concrete-only same-ID policy assumptions', sub { my $c = sample_contract_with_dynamic_transaction_id(); $c->{same_id_ordering_policy} = { read => { concrete_id_reuse => 'issue-order-queue' } }; $c }, qr/same_id_ordering_policy\.read concrete-id-reuse policy does not cover dynamic read transaction ID metadata; select dynamic-id-reuse reject for transaction\(s\): r0/],
-        ['dynamic response-demux rejects same-family dynamic same-ID policy', sub { my $c = sample_contract_with_dynamic_read_response_demux(); $c->{same_id_ordering_policy} = { read => { dynamic_id_reuse => 'reject' } }; $c }, qr/response_demux\.read dynamic ID matching cannot be combined with same_id_ordering\.read in this slice/],
+        ['single-active dynamic response-demux rejects dynamic same-ID policy', sub { my $c = sample_contract_with_dynamic_read_response_demux(); $c->{same_id_ordering_policy} = { read => { dynamic_id_reuse => 'reject' } }; $c }, qr/response_demux\.read dynamic-id-reuse reject generated enforcement requires generated multi-active dynamic response-demux no-active-same-ID assertions in this slice/],
+        ['one-dynamic mixed response-demux rejects dynamic same-ID policy', sub { my $c = sample_contract_with_mixed_dynamic_static_read_response_demux(); $c->{same_id_ordering_policy} = { read => { dynamic_id_reuse => 'reject' } }; $c }, qr/response_demux\.read dynamic-id-reuse reject generated enforcement requires generated multi-active dynamic response-demux no-active-same-ID assertions in this slice/],
         ['dynamic write response demux rejects unsupported mixed write transaction counts', sub {
             my $c = sample_contract_with_dynamic_write_response_demux();
             push @{$c->{transactions}}, {
@@ -6897,9 +6985,10 @@ sub assert_dynamic_write_response_demux_report {
 }
 
 sub assert_dynamic_write_response_demux_multi_report {
-    my ($report, $owner) = @_;
+    my ($report, $owner, %args) = @_;
     my $demux = $report->{response_demux};
     my $write = $demux->{write};
+    my $expected_residue = $args{residue} // [qw(read_response_demux same_id_ordering read_data_interleaving bursts)];
 
     is(scalar(@{$report->{transactions}}), 2, "$owner reports two dynamic write transactions");
     is_deeply(
@@ -6969,7 +7058,7 @@ sub assert_dynamic_write_response_demux_multi_report {
     );
     is_deeply(
         $demux->{residue},
-        [qw(read_response_demux same_id_ordering read_data_interleaving bursts)],
+        $expected_residue,
         "$owner keeps unsupported dynamic-read, same-ID, read-data, and burst residue explicit",
     );
     my %residue = map { $_->{id} => 1 } @{$report->{unsupported_residue}};
@@ -7373,9 +7462,10 @@ sub assert_dynamic_read_response_demux_report {
 }
 
 sub assert_dynamic_read_response_demux_multi_report {
-    my ($report, $owner) = @_;
+    my ($report, $owner, %args) = @_;
     my $demux = $report->{response_demux};
     my $read = $demux->{read};
+    my $expected_residue = $args{residue} // [qw(same_id_ordering read_data_interleaving bursts)];
 
     is(scalar(@{$report->{transactions}}), 2, "$owner reports two dynamic read transactions");
     is_deeply(
@@ -7446,7 +7536,7 @@ sub assert_dynamic_read_response_demux_multi_report {
     );
     is_deeply(
         $demux->{residue},
-        [qw(same_id_ordering read_data_interleaving bursts)],
+        $expected_residue,
         "$owner keeps unsupported same-ID, read-data, and burst residue explicit",
     );
     my %residue = map { $_->{id} => 1 } @{$report->{unsupported_residue}};
@@ -8748,12 +8838,54 @@ sub assert_dynamic_same_id_reject_policy_report {
             policy                       => 'reject',
             implementation_status        => 'selected_not_generated',
             enforcement                  => 'not_generated',
-            accepted_same_id_reuse       => 0,
+            accepted_same_id_reuse       => JSON::PP::false(),
             request_conflict_policy      => 'no_active_same_id',
-            generated_queue_behavior     => 0,
-            generated_scoreboard_behavior => 0,
+            generated_queue_behavior     => JSON::PP::false(),
+            generated_scoreboard_behavior => JSON::PP::false(),
         },
         "$owner reports selected-not-generated dynamic same-ID reject metadata",
+    );
+}
+
+sub assert_dynamic_same_id_reject_policy_generated_report {
+    my ($ordering, $owner, %args) = @_;
+    my $family = $args{family} // 'read';
+    my $mode = $args{mode} // 'dynamic_id_reuse_policy';
+    my $expected_residue = $args{residue} // [];
+
+    is($ordering->{mode}, $mode, "$owner marks dynamic same-ID policy mode");
+    ok($ordering->{generated_behavior}, "$owner marks dynamic same-ID policy generated behavior true");
+    ok(!exists($ordering->{families}), "$owner does not report generated concrete same-ID avoidance families");
+    is_deeply($ordering->{residue}, $expected_residue, "$owner reports generated dynamic same-ID residue");
+    ok(@{$ordering->{source_anchors}}, "$owner carries source anchors into dynamic same-ID policy metadata");
+    is_deeply(
+        [sort keys %{$ordering->{dynamic_id_reuse_policy}}],
+        [$family],
+        "$owner reports the covered $family dynamic-ID reuse policy",
+    );
+    is_deeply(
+        $ordering->{dynamic_id_reuse_policy}{$family},
+        {
+            policy => 'reject',
+            implementation_status => 'generated_no_active_same_id_reject',
+            enforcement => 'generated_no_active_same_id_assertions',
+            assertion_enforcement => 'runtime_assertion',
+            accepted_same_id_reuse => JSON::PP::false(),
+            request_conflict_policy => 'no_active_same_id',
+            generated_queue_behavior => JSON::PP::false(),
+            generated_scoreboard_behavior => JSON::PP::false(),
+            response_demux_covered => JSON::PP::true(),
+            response_demux_mode => $args{response_demux_mode},
+            response_demux_transaction_completion_source =>
+                $args{response_demux_transaction_completion_source},
+            covered_dynamic_transactions =>
+                $args{covered_dynamic_transactions},
+            generated_no_active_same_id_assertions =>
+                $args{generated_no_active_same_id_assertions},
+            generated_active_id_uniqueness_assertions =>
+                $args{generated_active_id_uniqueness_assertions},
+        },
+        "$owner reports generated dynamic same-ID reject enforcement metadata",
     );
 }
 

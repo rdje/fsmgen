@@ -483,6 +483,48 @@ subtest 'bounded PPIF adapter checks cover the shipped dynamic transaction-ID fa
     }
 };
 
+subtest 'dynamic same-ID reject maps to two-dynamic mixed response-demux assertions' => sub {
+    my $relpath = 'ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_dynamic.ppif';
+    my $path = repo_path($relpath);
+    my $source = read_file($path);
+    $source =~ s/    \(response-demux/    \(same-id-ordering\n      \(read \(dynamic-id-reuse reject\)\)\)\n    \(response-demux/
+        or die "failed to insert same-id-ordering block into $relpath\n";
+
+    my $base_result = parse_ppif($relpath);
+    my $result = $adapter->parse_source($source, $path);
+
+    is(
+        $result->{generated_ial1}{text},
+        $base_result->{generated_ial1}{text},
+        'two-dynamic mixed same-ID reject mapping does not alter generated IAL1 text',
+    );
+    is_deeply(
+        $result->{generated_ial0}{files},
+        $base_result->{generated_ial0}{files},
+        'two-dynamic mixed same-ID reject mapping does not alter generated IAL0 files',
+    );
+    is_deeply(
+        $result->{report}{response_demux}{residue},
+        [qw(read_data_interleaving bursts)],
+        'two-dynamic mixed same-ID reject mapping removes only same-ID response-demux residue',
+    );
+    assert_dynamic_same_id_reject_policy_generated_report(
+        $result->{report}{same_id_ordering},
+        'two-dynamic mixed read report',
+        family => 'read',
+        response_demux_mode => 'bounded_multi_mixed_dynamic_static_read_rid_demux_contract',
+        response_demux_transaction_completion_source => 'generated_multi_mixed_dynamic_static_read_demux',
+        covered_dynamic_transactions => [qw(r0 r1)],
+        generated_no_active_same_id_assertions => [qw(
+            axi0_r0_dynamic_request_no_active_same_id
+            axi0_r1_dynamic_request_no_active_same_id
+        )],
+        generated_active_id_uniqueness_assertions => [qw(
+            axi0_r0_r1_read_dynamic_active_id_unique
+        )],
+    );
+};
+
 subtest 'bounded CLI JSON checks cover dynamic PPIF support accounting' => sub {
     plan skip_all => 'FSMGEN_DYNAMIC_SKIP_CLI_JSON requested by caller'
         if $ENV{FSMGEN_DYNAMIC_SKIP_CLI_JSON};
@@ -3949,6 +3991,46 @@ sub assert_support_accounting {
     is($json->{support_accounting}{coverage}, $case->{coverage}, "$owner reports expected support coverage");
     ok($json->{support_accounting}{strict_supported}, "$owner reports strict support");
     is($json->{source}{resolved_path}, abs_path(repo_path($case->{relpath})), "$owner reports resolved public PPIF path");
+}
+
+sub assert_dynamic_same_id_reject_policy_generated_report {
+    my ($ordering, $owner, %args) = @_;
+    my $family = $args{family} // 'read';
+
+    is($ordering->{mode}, 'dynamic_id_reuse_policy', "$owner marks dynamic same-ID policy mode");
+    ok($ordering->{generated_behavior}, "$owner marks dynamic same-ID policy generated behavior true");
+    ok(!exists($ordering->{families}), "$owner does not report generated concrete same-ID avoidance families");
+    is_deeply($ordering->{residue}, [], "$owner reports generated dynamic same-ID residue");
+    ok(@{$ordering->{source_anchors}}, "$owner carries source anchors into dynamic same-ID policy metadata");
+    is_deeply(
+        [sort keys %{$ordering->{dynamic_id_reuse_policy}}],
+        [$family],
+        "$owner reports the covered $family dynamic-ID reuse policy",
+    );
+    is_deeply(
+        $ordering->{dynamic_id_reuse_policy}{$family},
+        {
+            policy => 'reject',
+            implementation_status => 'generated_no_active_same_id_reject',
+            enforcement => 'generated_no_active_same_id_assertions',
+            assertion_enforcement => 'runtime_assertion',
+            accepted_same_id_reuse => JSON::PP::false(),
+            request_conflict_policy => 'no_active_same_id',
+            generated_queue_behavior => JSON::PP::false(),
+            generated_scoreboard_behavior => JSON::PP::false(),
+            response_demux_covered => JSON::PP::true(),
+            response_demux_mode => $args{response_demux_mode},
+            response_demux_transaction_completion_source =>
+                $args{response_demux_transaction_completion_source},
+            covered_dynamic_transactions =>
+                $args{covered_dynamic_transactions},
+            generated_no_active_same_id_assertions =>
+                $args{generated_no_active_same_id_assertions},
+            generated_active_id_uniqueness_assertions =>
+                $args{generated_active_id_uniqueness_assertions},
+        },
+        "$owner reports generated dynamic same-ID reject enforcement metadata",
+    );
 }
 
 sub parse_ppif {

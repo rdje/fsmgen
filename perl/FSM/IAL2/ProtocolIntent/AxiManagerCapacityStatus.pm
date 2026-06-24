@@ -940,8 +940,9 @@ sub _response_demux_dynamic_write_transaction(%args) {
     confess "AXI manager capacity/status IAL2 contract response_demux.write dynamic ID matching cannot be combined with write auto_id_lifecycle metadata in this slice\n"
         if ref($args{write_lifecycle}) eq 'HASH';
     my $policy = _same_id_ordering_policy_for_family($args{same_id_ordering_policy}, 'write');
+    my $dynamic_same_id_reject_policy = _same_id_ordering_policy_has_dynamic_reject($policy);
     confess "AXI manager capacity/status IAL2 contract response_demux.write dynamic ID matching cannot be combined with same_id_ordering.write in this slice\n"
-        if ref($policy) eq 'HASH';
+        if ref($policy) eq 'HASH' && !$dynamic_same_id_reject_policy;
 
     my @concrete_static = grep {
         ref($_->{id}) eq 'HASH' && ($_->{id}{policy} // '') eq 'concrete'
@@ -1001,6 +1002,8 @@ sub _response_demux_dynamic_write_transaction(%args) {
     }
 
     my $multi_dynamic = @states > 1;
+    _reject_uncovered_dynamic_same_id_response_demux_policy($policy, 'write')
+        if $dynamic_same_id_reject_policy && !$multi_dynamic;
     if (!$multi_dynamic) {
         $states[0]{same_cycle_release_recapture_policy} = 'single_active_dynamic_write';
         $states[0]{release_recapture_source} = 'generated_dynamic_demux_completion';
@@ -1104,6 +1107,10 @@ sub _response_demux_mixed_dynamic_static_write_transaction(%args) {
     confess "Internal error: mixed dynamic/static write demux requires one dynamic and one, two, or three static transactions, or two dynamic and one static transaction\n"
         unless ($one_dynamic_multi_static || $two_dynamic_one_static)
             && @write_transactions == @dynamic_transactions + @static_transactions;
+    my $same_id_policy = _same_id_ordering_policy_for_family($args{same_id_ordering_policy}, 'write');
+    _reject_uncovered_dynamic_same_id_response_demux_policy($same_id_policy, 'write')
+        if _same_id_ordering_policy_has_dynamic_reject($same_id_policy)
+            && !$two_dynamic_one_static;
 
     my $completion_fanin = _fanin_expression([map { $_->{completion_event} } @write_transactions]);
     my @dynamic_states;
@@ -1321,8 +1328,9 @@ sub _response_demux_dynamic_read_transaction(%args) {
     confess "AXI manager capacity/status IAL2 contract response_demux.read dynamic ID matching cannot be combined with read auto_id_lifecycle metadata in this slice\n"
         if ref($args{read_lifecycle}) eq 'HASH';
     my $policy = _same_id_ordering_policy_for_family($args{same_id_ordering_policy}, 'read');
+    my $dynamic_same_id_reject_policy = _same_id_ordering_policy_has_dynamic_reject($policy);
     confess "AXI manager capacity/status IAL2 contract response_demux.read dynamic ID matching cannot be combined with same_id_ordering.read in this slice\n"
-        if ref($policy) eq 'HASH';
+        if ref($policy) eq 'HASH' && !$dynamic_same_id_reject_policy;
 
     my @concrete_static = grep {
         ref($_->{id}) eq 'HASH' && ($_->{id}{policy} // '') eq 'concrete'
@@ -1382,6 +1390,8 @@ sub _response_demux_dynamic_read_transaction(%args) {
     }
 
     my $multi_dynamic = @states > 1;
+    _reject_uncovered_dynamic_same_id_response_demux_policy($policy, 'read')
+        if $dynamic_same_id_reject_policy && !$multi_dynamic;
     for my $state (@states) {
         my @sibling_request_exprs = map { $_->{request_acceptance_expr} }
             grep { $_->{transaction} ne $state->{transaction} } @states;
@@ -1470,6 +1480,10 @@ sub _response_demux_mixed_dynamic_static_read_transaction(%args) {
     confess "Internal error: mixed dynamic/static read demux requires one dynamic and one, two, or three static transactions, or two dynamic and one static transaction\n"
         unless ($one_dynamic_multi_static || $two_dynamic_one_static)
             && @read_transactions == @dynamic_transactions + @static_transactions;
+    my $same_id_policy = _same_id_ordering_policy_for_family($args{same_id_ordering_policy}, 'read');
+    _reject_uncovered_dynamic_same_id_response_demux_policy($same_id_policy, 'read')
+        if _same_id_ordering_policy_has_dynamic_reject($same_id_policy)
+            && !$two_dynamic_one_static;
 
     my $completion_fanin = _fanin_expression([map { $_->{completion_event} } @read_transactions]);
     my @dynamic_states;
@@ -3590,10 +3604,17 @@ sub _build_same_id_ordering(%args) {
     my $policy = $args{same_id_ordering_policy};
     my $concrete_policy = _same_id_ordering_concrete_policy($policy);
     my $dynamic_policy = _same_id_ordering_dynamic_policy($policy);
+    $dynamic_policy = _same_id_ordering_dynamic_policy_with_response_demux_coverage(
+        policy         => $dynamic_policy,
+        response_demux => $args{response_demux},
+        manager_name   => $args{manager_name},
+    ) if ref($dynamic_policy) eq 'HASH';
     my $has_concrete_policy = ref($concrete_policy) eq 'HASH'
         && (exists($concrete_policy->{read}) || exists($concrete_policy->{write}));
     my $has_dynamic_policy = ref($dynamic_policy) eq 'HASH'
         && (exists($dynamic_policy->{read}) || exists($dynamic_policy->{write}));
+    my ($dynamic_policy_any_covered, $dynamic_policy_all_covered) =
+        _same_id_ordering_dynamic_policy_coverage_summary($dynamic_policy);
     my $has_policy = $has_concrete_policy || $has_dynamic_policy;
     my $lifecycle_generated = ref($lifecycle) eq 'HASH' && $lifecycle->{generated_behavior};
     my $queue_generated = ref($args{same_id_issue_order_queue_behavior}) eq 'HASH'
@@ -3643,13 +3664,14 @@ sub _build_same_id_ordering(%args) {
                 has_concrete_policy => $has_concrete_policy,
                 has_dynamic_policy  => $has_dynamic_policy,
             ),
-            generated_behavior => $queue_generated ? 1 : 0,
+            generated_behavior => ($queue_generated || $dynamic_policy_any_covered) ? 1 : 0,
             source_anchors     => _clone_jsonish($args{source_anchors} || []),
             @policy_entry,
             residue            => _same_id_ordering_policy_residue(
                 has_concrete_policy => $has_concrete_policy,
                 has_dynamic_policy  => $has_dynamic_policy,
                 queue_generated     => $queue_generated,
+                dynamic_policy_all_covered => $dynamic_policy_all_covered,
             ),
         };
     }
@@ -3713,8 +3735,86 @@ sub _same_id_ordering_policy_residue(%args) {
             : qw(concrete_id_same_id_ordering per_id_issue_order_queues);
     }
     push @residue, 'dynamic_id_same_id_ordering'
-        if $args{has_dynamic_policy};
+        if $args{has_dynamic_policy} && !$args{dynamic_policy_all_covered};
     return \@residue;
+}
+
+sub _same_id_ordering_dynamic_policy_with_response_demux_coverage(%args) {
+    my $policy = _clone_jsonish($args{policy});
+    return $policy unless ref($policy) eq 'HASH';
+
+    for my $family_name (qw(write read)) {
+        next unless ref($policy->{$family_name}) eq 'HASH';
+        my $coverage = _dynamic_same_id_response_demux_reject_coverage(
+            response_demux => $args{response_demux},
+            family         => $family_name,
+            manager_name   => $args{manager_name},
+        );
+        next unless ref($coverage) eq 'HASH';
+        @{$policy->{$family_name}}{keys %$coverage} = values %$coverage;
+    }
+
+    return $policy;
+}
+
+sub _same_id_ordering_dynamic_policy_coverage_summary($policy) {
+    return (0, 0) unless ref($policy) eq 'HASH';
+
+    my @families = grep { ref($policy->{$_}) eq 'HASH' } qw(write read);
+    return (0, 0) unless @families;
+
+    my @covered = grep { $policy->{$_}{response_demux_covered} } @families;
+    return (scalar(@covered) ? 1 : 0, @covered == @families ? 1 : 0);
+}
+
+sub _dynamic_same_id_response_demux_reject_coverage(%args) {
+    my $response_demux = $args{response_demux};
+    my $family = $args{family};
+    my $manager_name = $args{manager_name};
+    return undef unless ref($response_demux) eq 'HASH' && $response_demux->{generated_behavior};
+
+    my $entry = $response_demux->{$family};
+    return undef unless ref($entry) eq 'HASH' && $entry->{generated_behavior};
+    return undef unless ref($entry->{dynamic_capture}) eq 'HASH'
+        && ($entry->{dynamic_capture}{same_id_conflict_policy} // '') eq 'active_dynamic_ids_must_be_unique';
+
+    my @states = @{$entry->{dynamic_transaction_state} || []};
+    return undef unless @states > 1;
+
+    my @no_active_assertions = grep { defined && length }
+        map { $_->{request_no_active_same_id_assertion} } @states;
+    my @active_id_unique_assertions;
+    for my $left_index (0 .. $#states) {
+        for my $right_index ($left_index + 1 .. $#states) {
+            my $left = $states[$left_index];
+            my $right = $states[$right_index];
+            push @active_id_unique_assertions,
+                join('_',
+                    $manager_name,
+                    $left->{transaction},
+                    $right->{transaction},
+                    $family,
+                    qw(dynamic active id unique),
+                );
+        }
+    }
+    return undef unless @no_active_assertions && @active_id_unique_assertions;
+
+    return {
+        implementation_status => 'generated_no_active_same_id_reject',
+        enforcement           => 'generated_no_active_same_id_assertions',
+        assertion_enforcement => 'runtime_assertion',
+        response_demux_covered => 1,
+        response_demux_mode   => $entry->{mode},
+        response_demux_transaction_completion_source =>
+            $entry->{transaction_completion_source},
+        covered_dynamic_transactions =>
+            [map { $_->{transaction} } @states],
+        generated_no_active_same_id_assertions =>
+            \@no_active_assertions,
+        generated_active_id_uniqueness_assertions =>
+            \@active_id_unique_assertions,
+    };
 }
 
 sub _same_id_ordering_policy_with_admitted_boundary(%args) {
@@ -3978,6 +4078,17 @@ sub _build_id_response_rule_engine(%args) {
 sub _same_id_ordering_policy_for_family($policy, $family) {
     return undef unless ref($policy) eq 'HASH';
     return $policy->{$family};
+}
+
+sub _same_id_ordering_policy_has_dynamic_reject($policy) {
+    return 0 unless ref($policy) eq 'HASH';
+    return ref($policy->{dynamic_id_reuse}) eq 'HASH'
+        && ($policy->{dynamic_id_reuse}{policy} // '') eq 'reject';
+}
+
+sub _reject_uncovered_dynamic_same_id_response_demux_policy($policy, $family) {
+    return unless _same_id_ordering_policy_has_dynamic_reject($policy);
+    confess "AXI manager capacity/status IAL2 contract response_demux.$family dynamic-id-reuse reject generated enforcement requires generated multi-active dynamic response-demux no-active-same-ID assertions in this slice\n";
 }
 
 sub _build_same_id_admitted_request_boundary(%args) {
@@ -7387,7 +7498,9 @@ sub _report_response_demux($contract) {
             $demux->{$family}{generated_assertions} = $artifacts->{assertions};
         }
     }
-    if (_same_id_ordering_covers_response_demux_family($contract, 'write')) {
+    if (_same_id_ordering_covers_response_demux_family($contract, 'write')
+        || _dynamic_same_id_ordering_covers_response_demux_family($contract, 'write')
+        || _dynamic_same_id_ordering_covers_response_demux_family($contract, 'read')) {
         $demux->{residue} = [
             grep { $_ ne 'same_id_ordering' }
             @{$demux->{residue} || []}
@@ -7483,6 +7596,15 @@ sub _same_id_ordering_covers_response_demux_family($contract, $family_name) {
         return 1 if ($family->{family} // '') eq $family_name && $family->{response_demux_covered};
     }
     return 0;
+}
+
+sub _dynamic_same_id_ordering_covers_response_demux_family($contract, $family_name) {
+    my $ordering = $contract->{same_id_ordering};
+    return 0 unless ref($ordering) eq 'HASH';
+    my $policy = $ordering->{dynamic_id_reuse_policy};
+    return 0 unless ref($policy) eq 'HASH'
+        && ref($policy->{$family_name}) eq 'HASH';
+    return $policy->{$family_name}{response_demux_covered} ? 1 : 0;
 }
 
 sub _dynamic_read_response_demux_covers_multi_beat_boundary($contract) {
@@ -7626,6 +7748,23 @@ sub _report_same_id_ordering($contract) {
             next unless ref($ordering->{concrete_id_reuse_policy}{$family_name}) eq 'HASH';
             my $policy = $ordering->{concrete_id_reuse_policy}{$family_name};
             for my $field (qw(accepted_same_id_reuse generated_queue_behavior)) {
+                next unless exists $policy->{$field};
+                $policy->{$field} = $policy->{$field}
+                    ? JSON::PP::true
+                    : JSON::PP::false;
+            }
+        }
+    }
+    if (ref($ordering->{dynamic_id_reuse_policy}) eq 'HASH') {
+        for my $family_name (qw(read write)) {
+            next unless ref($ordering->{dynamic_id_reuse_policy}{$family_name}) eq 'HASH';
+            my $policy = $ordering->{dynamic_id_reuse_policy}{$family_name};
+            for my $field (qw(
+                accepted_same_id_reuse
+                generated_queue_behavior
+                generated_scoreboard_behavior
+                response_demux_covered
+            )) {
                 next unless exists $policy->{$field};
                 $policy->{$field} = $policy->{$field}
                     ? JSON::PP::true

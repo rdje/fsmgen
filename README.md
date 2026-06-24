@@ -1910,6 +1910,21 @@ response demux where generated reports already expose
 and `*_dynamic_active_id_unique` artifacts. Single-active dynamic demux,
 one-dynamic mixed demux, queues, scoreboards, direct backend behavior, and
 VHDL remain deferred.
+`.438` now ships that generated-enforcement report mapping. Same-family
+`response-demux.<family>` plus `same-id-ordering.<family>
+(dynamic-id-reuse reject)` is accepted for the covered multi-active
+all-dynamic and two-dynamic-plus-one-static mixed response-demux shapes
+without adding generated rules, storage, assertions, HDL behavior, or runtime
+behavior. Covered dynamic policy reports use `implementation_status:
+generated_no_active_same_id_reject`, `enforcement:
+generated_no_active_same_id_assertions`, `assertion_enforcement:
+runtime_assertion`, `response_demux_covered: true`, response-demux
+mode/source metadata, covered dynamic transactions, and exact generated
+no-active-same-ID plus active-ID uniqueness assertion names. The
+support-accounted public sample is
+`ppif/axi_manager_capacity_status_dynamic_read_response_demux_multi_same_id_reject.ppif`.
+Single-active dynamic demux, one-dynamic mixed demux, queues, scoreboards,
+direct backend behavior, backend-language variants, and VHDL remain deferred.
 No behavior
 changed in `.273`, `.274`, `.275`,
 `.277`, `.278`, `.279`, `.281`,
@@ -4260,6 +4275,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_SAME_ID_POLICY_METADATA_READINESS_AUDIT.md` — audited metadata-first implementation readiness for `(dynamic-id-reuse reject)` and selected direct parser/report implementation.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_SAME_ID_POLICY_METADATA_FIRST_SLICE.md` — shipped metadata-first parser/report support for `(dynamic-id-reuse reject)`, including report fields, diagnostics, sample/support accounting, and deferred generated enforcement.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_SAME_ID_REJECT_ENFORCEMENT_MAPPING_READINESS_AUDIT.md` — audited generated dynamic same-ID reject enforcement mapping readiness and selected a narrow multi-active dynamic/mixed response-demux report mapping.
+- `docs/AXI_IAL2_MANAGER_DYNAMIC_SAME_ID_REJECT_ENFORCEMENT_MAPPING_BEHAVIOR.md` — shipped generated dynamic same-ID reject enforcement report mapping over covered multi-active dynamic/mixed response-demux assertions.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_CONTRACT_SELECTION.md` — selected direct single-active dynamic write `BID` same-cycle release-and-recapture behavior under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_BEHAVIOR.md` — shipped single-active dynamic write `BID` same-cycle release-and-recapture under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_WRITE_RECAPTURE_NEXT_SLICE_SELECTION.md` — selected `.367`, public contract selection for first single-active dynamic read same-cycle release-and-recapture after dynamic write recapture shipped.
@@ -4349,6 +4365,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static_burst_last_read_data_burst_length_runtime_assertion.ppif` — checked-in runnable `.ppif` sample for generated runtime beat-count/`RLAST` validation over generated multiple mixed dynamic/static read burst-last/`RLAST` response-demux and scalar last-beat read-data, support-accounted through check JSON and semantic JSON.
 - `ppif/axi_manager_capacity_status_dynamic_read_response_demux.ppif` — checked-in runnable `.ppif` sample for generated single-active dynamic read transaction-ID capture, single-beat `RID` response matching, and same-cycle release-and-recapture through explicit `response-demux.read`, support-accounted through check JSON and semantic JSON.
 - `ppif/axi_manager_capacity_status_dynamic_read_response_demux_multi.ppif` — checked-in runnable `.ppif` sample for generated bounded multiple dynamic read transaction-ID capture, single-beat `RID` response matching, and same-cycle release-and-recapture through explicit `response-demux.read` with all-dynamic read transactions, support-accounted through check JSON and semantic JSON.
+- `ppif/axi_manager_capacity_status_dynamic_read_response_demux_multi_same_id_reject.ppif` — checked-in runnable `.ppif` sample for generated dynamic same-ID reject enforcement mapping over multiple all-dynamic read single-beat response-demux assertions, support-accounted through check JSON and semantic JSON.
 - `ppif/axi_manager_capacity_status_dynamic_read_data_multi.ppif` — checked-in runnable `.ppif` sample for generated scalar single-beat `RDATA`/`RRESP` capture over generated multiple dynamic read single-beat response-demux, support-accounted through check JSON and semantic JSON.
 - `ppif/axi_manager_capacity_status_dynamic_read_data_multi_last_beat.ppif` — checked-in runnable `.ppif` sample for generated scalar last-beat `RDATA`/`RRESP` capture over generated multiple dynamic read burst-last/`RLAST` response-demux, support-accounted through check JSON and semantic JSON.
 - `ppif/axi_manager_capacity_status_dynamic_read_data_multi_burst_length.ppif` — checked-in runnable `.ppif` sample for generated report-only raw-`ARLEN` burst-length capture over generated multiple dynamic read burst-last/`RLAST` response-demux and scalar last-beat read-data, support-accounted through check JSON and semantic JSON.
