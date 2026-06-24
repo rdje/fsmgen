@@ -2463,7 +2463,16 @@ requests, and replaces `w0`/`w1`/`w2` request-not-busy assertions with
 idle-or-releasing assertions. Syntax checks passed. Guarded selected schedule
 JSON and focused t/1438 probes stopped before usable output at host memory
 94.5% and 92.5% against the default 88% cutoff; no cutoff was raised. `.408`
-selects the next post two-dynamic mixed write recapture activity.
+now selects `.409`, readiness audit for one-dynamic-plus-two-static mixed
+dynamic/static read single-beat `RID` same-cycle release-and-recapture. The
+selector changes no behavior. It chooses the read single-beat one-dynamic plus
+two-static sample because broader mixed write recapture is now covered, while
+read burst-last recapture adds raw non-final `RID`, final `RLAST`, read-data,
+raw-`ARLEN`, runtime, and multi-beat preservation, and two-dynamic read
+recapture adds active dynamic-ID uniqueness and no-active-same-ID guards. A
+guarded candidate schedule probe stopped before usable output at host memory
+92.0% against the default 88% cutoff; output was 0 bytes and no cutoff was
+raised.
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,
