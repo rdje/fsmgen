@@ -1775,6 +1775,23 @@ recapture fields for `r0`/`r1` with
 `static_capture[]` for `r2`, the generated mixed read completion source,
 combined dynamic/static guards, same-transaction release-only exclusions, and
 idle-or-releasing assertions for `r0`, `r1`, and `r2`.
+`.427` now ships that two-dynamic-plus-one-static mixed dynamic/static read
+single-beat `RID` same-cycle release-and-recapture behavior for the existing
+public sample. FSMGen emits `axi0_r0_dynamic_id_release_recapture`,
+`axi0_r1_dynamic_id_release_recapture`, and
+`axi0_r2_static_busy_release_recapture`; reports
+`mixed_dynamic_static_multi_active_dynamic_read` under both dynamic
+`dynamic_capture.transactions[]` entries; reports list-shaped
+`static_capture[]` for `r2`; composes dynamic guards across sibling dynamic
+requests, active sibling same-ID, static requests, and static-ID exclusion;
+composes static guards across both dynamic requests; and replaces the
+`r0`/`r1`/`r2` request-not-busy assertions with idle-or-releasing assertions.
+The two-dynamic burst-last and read-data/raw-`ARLEN`/runtime/multi-beat
+consumers remain no-recapture preservation boundaries. A guarded focused
+`t/1438` selected filter stopped at the RAM cutoff before TAP output; direct
+report and ISF/FSM/SystemVerilog fallback probes covered the selected
+behavior. `.428` now selects the next post two-dynamic mixed read recapture
+slice.
 No behavior
 changed in `.273`, `.274`, `.275`,
 `.277`, `.278`, `.279`, `.281`,

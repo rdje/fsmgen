@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.426: select two-dynamic read recapture contract`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.427` implements two-dynamic-plus-one-static mixed read single-beat RID recapture; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.426` selected `.427`, direct implementation of two-dynamic-plus-one-static mixed dynamic/static read single-beat RID same-cycle release-and-recapture on ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_dynamic.ppif. The selected contract preserves public syntax/support identity and pins dynamic r0/r1 recapture policy mixed_dynamic_static_multi_active_dynamic_read, list-shaped r2 static_capture, generated_multi_mixed_dynamic_static_read_demux_completion, combined dynamic/static guards, same-transaction release-only exclusions, and r0/r1/r2 idle-or-releasing assertions. No behavior changed.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.427: ship two-dynamic read recapture`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.428` selects the next post two-dynamic mixed read recapture slice; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.427` shipped two-dynamic-plus-one-static mixed dynamic/static read single-beat RID same-cycle release-and-recapture on ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_dynamic.ppif. FSMGen now reports mixed_dynamic_static_multi_active_dynamic_read for r0/r1, list-shaped r2 static_capture, generated_multi_mixed_dynamic_static_read_demux_completion, combined sibling/static guards, release-only same-transaction exclusions, and r0/r1/r2 idle-or-releasing assertions. The two-dynamic burst-last and read-data/raw-ARLEN/runtime/multi-beat siblings remain no-recapture preservation boundaries.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
-- next_action: Start `.427`: implement the selected two-dynamic-plus-one-static mixed read single-beat recapture contract.
+- next_action: Start `.428`: select the next exact AXI IAL2 feature-completeness owner after two-dynamic mixed read recapture.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact

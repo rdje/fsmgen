@@ -7779,6 +7779,26 @@ assertions. The burst-last two-dynamic read sibling, one-/two-/three-static
 read recapture shapes, the two-dynamic write recapture shape, and read-data
 consumers stay preservation boundaries.
 
+Two-dynamic/one-static mixed dynamic/static read recapture behavior:
+[AXI_IAL2_MANAGER_TWO_DYNAMIC_ONE_STATIC_MIXED_DYNAMIC_STATIC_READ_RECAPTURE_BEHAVIOR](../../AXI_IAL2_MANAGER_TWO_DYNAMIC_ONE_STATIC_MIXED_DYNAMIC_STATIC_READ_RECAPTURE_BEHAVIOR.md)
+ships `.427`, two-dynamic-plus-one-static mixed dynamic/static read
+single-beat `RID` same-cycle release-and-recapture for the existing public
+sample. FSMGen emits `axi0_r0_dynamic_id_release_recapture`,
+`axi0_r1_dynamic_id_release_recapture`, and
+`axi0_r2_static_busy_release_recapture`; reports
+`mixed_dynamic_static_multi_active_dynamic_read` under both dynamic
+`dynamic_capture.transactions[]` entries; reports list-shaped
+`static_capture[]` for `r2`; composes dynamic guards across sibling dynamic
+requests, active sibling same-ID, static requests, and static-ID exclusion;
+composes static guards across both dynamic requests; and replaces the
+`r0`/`r1`/`r2` request-not-busy assertions with idle-or-releasing assertions.
+The two-dynamic burst-last and read-data/raw-`ARLEN`/runtime/multi-beat
+consumers remain no-recapture preservation boundaries. A guarded focused
+`t/1438` selected filter stopped at the RAM cutoff before TAP output; direct
+report and ISF/FSM/SystemVerilog fallback probes covered the selected
+behavior. `.428` now selects the next post two-dynamic mixed read recapture
+slice.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after
