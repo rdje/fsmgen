@@ -2822,6 +2822,15 @@ status aggregation and multi-beat reassembly behavior, keep read-data residue
 empty, and leave only `same_id_ordering` in response-demux residue. `.357`
 advanced the frontier to `.358`, the next IAL2 feature-completeness selector
 after this read-data chain reached multi-beat output banks.
+`.358` now selects `.359`, readiness audit for scalar single-beat read-data
+over the `.344` generated two-dynamic-plus-one-static mixed dynamic/static
+read single-beat `RID` response-demux. The selector changes no behavior. It
+records candidate sample
+`ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_dynamic_read_data.ppif`,
+support identity, coverage key, focused behavior label, diagnostics,
+validation, rollback, and residue while preserving broader cardinalities,
+same-cycle behavior, queues/scoreboards, backend variants, VHDL, aliases,
+queued/blocking policy, and full-manager behavior as separate owners.
 No behavior changed in
 `.270`, `.271`, `.273`, `.274`, `.275`, `.277`, `.278`,
 `.279`, `.281`, `.282`, `.283`, `.285`, `.286`, `.288`, `.290`, `.292`, or
@@ -2829,7 +2838,7 @@ No behavior changed in
 `.305`, `.306`, `.308`, `.309`, `.311`, `.313`, `.315`, `.316`, `.317`, or
 `.319`, `.320`, `.321`, `.323`, `.324`, `.325`, `.327`, `.328`, `.329`,
 `.331`, `.332`, `.334`, `.336`, `.338`, `.339`, `.340`, `.342`, `.343`,
-`.345`, `.346`, `.348`, `.349`, `.351`, `.352`, `.354`, or `.356`.
+`.345`, `.346`, `.348`, `.349`, `.351`, `.352`, `.354`, `.356`, or `.358`.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.

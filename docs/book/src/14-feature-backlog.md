@@ -8271,6 +8271,18 @@ cardinalities, same-cycle behavior, queues, direct backend behavior, backend
 variants, VHDL, aliases, queued/blocking policy, and full-manager behavior
 remain exact-owner work.
 
+Post two-dynamic/one-static mixed dynamic/static read-data multi-beat
+selector:
+[AXI_IAL2_MANAGER_POST_TWO_DYNAMIC_ONE_STATIC_MIXED_DYNAMIC_STATIC_READ_DATA_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_TWO_DYNAMIC_ONE_STATIC_MIXED_DYNAMIC_STATIC_READ_DATA_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
+selects `.359`, readiness audit for scalar single-beat read-data over the
+`.344` generated two-dynamic-plus-one-static mixed dynamic/static read
+single-beat `RID` response-demux. The planned sample, if the audit selects
+direct implementation, is
+`ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_dynamic_read_data.ppif`.
+The selector changes no behavior and leaves broader cardinalities,
+same-cycle behavior, queues, backend variants, VHDL, aliases,
+queued/blocking policy, and full-manager behavior as separate owners.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same
