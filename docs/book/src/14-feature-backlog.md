@@ -7277,6 +7277,20 @@ recapture vocabulary to `response_demux.read` while preserving
 before burst-last, read-data, raw-`ARLEN`, runtime-validation, and multi-beat
 preservation layers are widened.
 
+Mixed dynamic/static read recapture contract:
+[AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_READ_RECAPTURE_CONTRACT_SELECTION](../../AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_READ_RECAPTURE_CONTRACT_SELECTION.md)
+selects `.392`, direct implementation of mixed dynamic/static read
+single-beat `RID` same-cycle release-and-recapture for the existing
+support-accounted public sample. The selector changes no behavior. It
+preserves public syntax, `bounded_mixed_dynamic_static_read_rid_demux_contract`,
+`response_scope: single_beat`, generated mixed read completion source,
+static-ID reservation, onehot0 mixed request policy, response
+active/unique-match, and completion-active assertions while selecting
+`response_demux.read.dynamic_capture` recapture fields, a new
+`response_demux.read.static_capture` report block, dynamic/static release-only
+exclusion, dynamic/static release-recapture guards, and dynamic/static
+idle-or-releasing request assertions.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

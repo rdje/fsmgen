@@ -2256,6 +2256,17 @@ recapture vocabulary to `response_demux.read` while preserving
 `response_scope: single_beat`, and `generated_mixed_dynamic_static_read_demux`
 before burst-last, read-data, raw-`ARLEN`, runtime-validation, and multi-beat
 preservation layers are widened.
+`.391` selects `.392`, direct implementation of mixed dynamic/static read
+single-beat `RID` same-cycle release-and-recapture for the existing
+support-accounted public sample. The selector changes no behavior. It
+preserves public syntax, `bounded_mixed_dynamic_static_read_rid_demux_contract`,
+`response_scope: single_beat`, generated mixed read completion source,
+static-ID reservation, onehot0 mixed request policy, response
+active/unique-match, and completion-active assertions while selecting
+`response_demux.read.dynamic_capture` recapture fields, a new
+`response_demux.read.static_capture` report block, dynamic/static release-only
+exclusion, dynamic/static release-recapture guards, and dynamic/static
+idle-or-releasing request assertions.
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,
