@@ -7918,9 +7918,10 @@ scoreboard behavior. Concrete and dynamic policy clauses may coexist in one
 family arm and report as `same_id_ordering.mode: id_reuse_policy`. The public
 sample is
 `ppif/axi_manager_capacity_status_dynamic_same_id_reject_policy.ppif`.
-Generated dynamic same-ID enforcement, response-demux mapping, queues,
-scoreboards, HDL behavior, and VHDL behavior remain deferred; dynamic
-response-demux plus same-family dynamic policy still fails closed.
+At this metadata-first boundary, generated dynamic same-ID enforcement and
+response-demux mapping were still deferred; later `.438` and `.442` slices now
+cover bounded generated response-demux assertion mappings. Dynamic queues,
+scoreboards, HDL behavior, and VHDL behavior remain deferred.
 
 Dynamic same-ID reject enforcement mapping readiness audit:
 [AXI_IAL2_MANAGER_DYNAMIC_SAME_ID_REJECT_ENFORCEMENT_MAPPING_READINESS_AUDIT](../../AXI_IAL2_MANAGER_DYNAMIC_SAME_ID_REJECT_ENFORCEMENT_MAPPING_READINESS_AUDIT.md)
@@ -8000,6 +8001,24 @@ acceptance/report/residue mapping for single-active write `BID`, read
 single-beat `RID`, and read burst-last `RID && RLAST`; one-dynamic mixed
 mapping, dynamic queues, scoreboards, direct backend behavior,
 backend-language variants, VHDL, and new generated HDL remain deferred.
+
+Single-active dynamic same-ID reject mapping behavior:
+[AXI_IAL2_MANAGER_SINGLE_ACTIVE_DYNAMIC_SAME_ID_REJECT_MAPPING_BEHAVIOR](../../AXI_IAL2_MANAGER_SINGLE_ACTIVE_DYNAMIC_SAME_ID_REJECT_MAPPING_BEHAVIOR.md)
+ships the `.442` mapping. Same-family `response-demux.<family>` plus
+`same-id-ordering.<family> (dynamic-id-reuse reject)` is accepted for
+single-active dynamic write `BID`, read single-beat `RID`, and read burst-last
+`RID && RLAST` shapes that already report generated idle-or-releasing,
+active-match, and completion-active assertions. Covered policy reports use
+`implementation_status: generated_single_active_reject`,
+`enforcement: generated_idle_or_releasing_assertions`,
+`assertion_enforcement: runtime_assertion`, `response_demux_covered: true`,
+`single_active_covered: true`, and `single_active_request_policy:
+idle_or_releasing`, with exact assertion names. The new public sample is
+`ppif/axi_manager_capacity_status_dynamic_read_response_demux_same_id_reject.ppif`;
+its generated IAL1/IAL0/HDL behavior matches the base single-active dynamic
+read response-demux sample. One-dynamic mixed response-demux, dynamic queues,
+scoreboards, direct backend behavior, backend-language variants, VHDL, and new
+generated HDL remain deferred.
 
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)

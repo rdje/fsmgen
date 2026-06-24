@@ -1885,9 +1885,11 @@ dynamic-only family arms and coexistence with existing concrete
 `concrete-id-reuse` clauses; empty arms, duplicate dynamic clauses,
 unsupported dynamic policy values, selected dynamic policy without
 transactions, selected dynamic policy without a same-family dynamic
-transaction, concrete-only same-ID policy against dynamic transaction IDs, and
-dynamic response-demux plus same-family dynamic policy remain fail-closed with
-targeted diagnostics. Reports now carry
+transaction, and concrete-only same-ID policy against dynamic transaction IDs
+fail closed with targeted diagnostics. At the `.436` metadata-only boundary,
+dynamic response-demux plus same-family dynamic policy also failed closed;
+later `.438` and `.442` slices accept covered generated response-demux
+assertion mappings. Reports now carry
 `same_id_ordering.dynamic_id_reuse_policy.<family>` with `policy: reject`,
 `implementation_status: selected_not_generated`, `enforcement:
 not_generated`, `accepted_same_id_reuse: false`,
@@ -1898,7 +1900,9 @@ uses `id_reuse_policy`. The public sample
 `ppif/axi_manager_capacity_status_dynamic_same_id_reject_policy.ppif` is
 support-accounted as
 `intent.ppif_axi_manager_capacity_status_dynamic_same_id_reject_policy`.
-Generated dynamic same-ID enforcement, response-demux mapping, queues,
+At this metadata-first boundary, generated dynamic same-ID enforcement and
+response-demux mapping were still deferred; later `.438` and `.442` slices now
+cover bounded generated response-demux assertion mappings. Dynamic queues,
 scoreboards, HDL behavior, and VHDL behavior remain deferred.
 `.437` now selects `.438`, a narrow generated-enforcement report mapping for
 selected `dynamic-id-reuse reject` policy over already generated multi-active
@@ -1949,21 +1953,27 @@ exact report fields, residue movement, and diagnostics before behavior changes.
 One-dynamic mixed mapping, dynamic queues, scoreboards, direct backend
 behavior, backend-language variants, VHDL, and new generated HDL remain
 deferred.
-`.441` now selects `.442`, direct implementation of the single-active dynamic
-same-ID reject mapping. The selected report contract uses
+`.442` now ships the single-active dynamic same-ID reject mapping. Same-family
+`response-demux.<family>` plus `same-id-ordering.<family>
+(dynamic-id-reuse reject)` is accepted for single-active dynamic write `BID`,
+read single-beat `RID`, and read burst-last `RID && RLAST` shapes that already
+report generated idle-or-releasing, active-match, and completion-active
+assertions. Covered policy reports use
 `implementation_status: generated_single_active_reject`, `enforcement:
 generated_idle_or_releasing_assertions`, `single_active_covered: true`, and
 `single_active_request_policy: idle_or_releasing`, while preserving
 `accepted_same_id_reuse: false`, `request_conflict_policy:
-no_active_same_id`, and generated queue/scoreboard false. It lists generated
+no_active_same_id`, and generated queue/scoreboard false. They list generated
 idle-or-releasing, active-match, and completion-active assertion names and
-deliberately does not reuse the `.438` multi-active
+deliberately do not reuse the `.438` multi-active
 `generated_no_active_same_id_assertions` or
-`generated_active_id_uniqueness_assertions` fields. `.442` is bounded to
-acceptance/report/residue mapping for single-active write `BID`, read
-single-beat `RID`, and read burst-last `RID && RLAST`; one-dynamic mixed
-mapping, dynamic queues, scoreboards, direct backend behavior,
-backend-language variants, VHDL, and new generated HDL remain deferred.
+`generated_active_id_uniqueness_assertions` fields. The support-accounted
+public sample is
+`ppif/axi_manager_capacity_status_dynamic_read_response_demux_same_id_reject.ppif`.
+The mapping adds no generated rules, storage, assertions, HDL, or runtime
+behavior; one-dynamic mixed mapping, dynamic queues, scoreboards, direct
+backend behavior, backend-language variants, VHDL, and new generated HDL remain
+deferred. `.442` selects `.443`, the next post-single-active-mapping selector.
 No behavior
 changed in `.273`, `.274`, `.275`,
 `.277`, `.278`, `.279`, `.281`,
@@ -4318,6 +4328,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_SAME_ID_REJECT_MAPPING_NEXT_SLICE_SELECTION.md` — selected single-active dynamic same-ID reject mapping readiness audit after the multi-active generated reject mapping shipped.
 - `docs/AXI_IAL2_MANAGER_SINGLE_ACTIVE_DYNAMIC_SAME_ID_REJECT_MAPPING_READINESS_AUDIT.md` — audited single-active dynamic same-ID reject mapping readiness and selected public report contract selection.
 - `docs/AXI_IAL2_MANAGER_SINGLE_ACTIVE_DYNAMIC_SAME_ID_REJECT_MAPPING_CONTRACT_SELECTION.md` — selected direct implementation of the single-active dynamic same-ID reject report/acceptance mapping contract.
+- `docs/AXI_IAL2_MANAGER_SINGLE_ACTIVE_DYNAMIC_SAME_ID_REJECT_MAPPING_BEHAVIOR.md` — shipped single-active dynamic same-ID reject report/acceptance mapping over existing generated idle-or-releasing response-demux assertions.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_CONTRACT_SELECTION.md` — selected direct single-active dynamic write `BID` same-cycle release-and-recapture behavior under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_BEHAVIOR.md` — shipped single-active dynamic write `BID` same-cycle release-and-recapture under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_WRITE_RECAPTURE_NEXT_SLICE_SELECTION.md` — selected `.367`, public contract selection for first single-active dynamic read same-cycle release-and-recapture after dynamic write recapture shipped.
@@ -4408,6 +4419,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `ppif/axi_manager_capacity_status_dynamic_read_response_demux.ppif` — checked-in runnable `.ppif` sample for generated single-active dynamic read transaction-ID capture, single-beat `RID` response matching, and same-cycle release-and-recapture through explicit `response-demux.read`, support-accounted through check JSON and semantic JSON.
 - `ppif/axi_manager_capacity_status_dynamic_read_response_demux_multi.ppif` — checked-in runnable `.ppif` sample for generated bounded multiple dynamic read transaction-ID capture, single-beat `RID` response matching, and same-cycle release-and-recapture through explicit `response-demux.read` with all-dynamic read transactions, support-accounted through check JSON and semantic JSON.
 - `ppif/axi_manager_capacity_status_dynamic_read_response_demux_multi_same_id_reject.ppif` — checked-in runnable `.ppif` sample for generated dynamic same-ID reject enforcement mapping over multiple all-dynamic read single-beat response-demux assertions, support-accounted through check JSON and semantic JSON.
+- `ppif/axi_manager_capacity_status_dynamic_read_response_demux_same_id_reject.ppif` — checked-in runnable `.ppif` sample for generated single-active dynamic same-ID reject enforcement mapping over read single-beat `RID` response-demux idle-or-releasing assertions, support-accounted through check JSON and semantic JSON.
 - `ppif/axi_manager_capacity_status_dynamic_read_data_multi.ppif` — checked-in runnable `.ppif` sample for generated scalar single-beat `RDATA`/`RRESP` capture over generated multiple dynamic read single-beat response-demux, support-accounted through check JSON and semantic JSON.
 - `ppif/axi_manager_capacity_status_dynamic_read_data_multi_last_beat.ppif` — checked-in runnable `.ppif` sample for generated scalar last-beat `RDATA`/`RRESP` capture over generated multiple dynamic read burst-last/`RLAST` response-demux, support-accounted through check JSON and semantic JSON.
 - `ppif/axi_manager_capacity_status_dynamic_read_data_multi_burst_length.ppif` — checked-in runnable `.ppif` sample for generated report-only raw-`ARLEN` burst-length capture over generated multiple dynamic read burst-last/`RLAST` response-demux and scalar last-beat read-data, support-accounted through check JSON and semantic JSON.

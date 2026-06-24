@@ -259,6 +259,56 @@ subtest 'PPIF adapter parses AXI manager dynamic read response-demux same-ID rej
     );
 };
 
+subtest 'PPIF adapter parses AXI manager single-active dynamic read response-demux same-ID reject mapping' => sub {
+    my $base = FSM::Adapter::IAL2::PPIF->new()->parse_source(
+        sample_capacity_dynamic_read_response_demux_ppif(),
+        sample_capacity_dynamic_read_response_demux_ppif_path(),
+    );
+    my $sample_path = sample_capacity_dynamic_read_response_demux_same_id_reject_ppif_path();
+    ok(-f $sample_path, 'tracked runnable PPIF capacity/status single-active dynamic read response-demux same-ID reject sample exists');
+
+    my $result = FSM::Adapter::IAL2::PPIF->new()->parse_source(
+        sample_capacity_dynamic_read_response_demux_same_id_reject_ppif(),
+        $sample_path,
+    );
+
+    is(
+        $result->{generated_ial1}{text},
+        $base->{generated_ial1}{text},
+        'single-active dynamic read same-ID reject PPIF mapping does not alter generated IAL1 text',
+    );
+    is_deeply(
+        $result->{generated_ial0}{files},
+        $base->{generated_ial0}{files},
+        'single-active dynamic read same-ID reject PPIF mapping does not alter generated IAL0 files',
+    );
+    is($result->{kind}, 'protocol_intent.axi_manager_capacity_status', 'single-active dynamic read response-demux same-ID reject sample still uses the capacity/status generator');
+    is($result->{report}{source_object}{id}, 'axi-manager-capacity-status-dynamic-read-response-demux-same-id-reject', 'single-active dynamic read response-demux same-ID reject source object id is preserved');
+    is($result->{report}{source_object}{intent_name}, 'axi_manager_capacity_status_dynamic_read_response_demux_same_id_reject', 'single-active dynamic read response-demux same-ID reject source intent name is preserved');
+    assert_dynamic_read_response_demux_report(
+        $result->{report},
+        'adapter mapped single-active dynamic read report',
+        residue => [qw(read_data_interleaving bursts)],
+    );
+    assert_dynamic_same_id_reject_policy_single_active_generated_report(
+        $result->{report}{same_id_ordering},
+        'adapter mapped single-active dynamic read report',
+        family => 'read',
+        response_demux_mode => 'bounded_dynamic_read_rid_demux_contract',
+        response_demux_transaction_completion_source => 'generated_dynamic_demux',
+        covered_dynamic_transactions => [qw(r0)],
+        generated_idle_or_releasing_assertions => [qw(
+            axi0_r0_dynamic_request_idle_or_releasing
+        )],
+        generated_response_active_match_assertions => [qw(
+            axi0_read_dynamic_response_active_match
+        )],
+        generated_completion_active_assertions => [qw(
+            axi0_r0_dynamic_completion_active
+        )],
+    );
+};
+
 subtest 'PPIF adapter parses AXI manager dynamic write response-demux behavior' => sub {
     my $sample_path = sample_capacity_dynamic_write_response_demux_ppif_path();
     ok(-f $sample_path, 'tracked runnable PPIF capacity/status dynamic write response-demux sample exists');
@@ -2505,14 +2555,6 @@ subtest 'PPIF adapter diagnostics fail closed before generation claims' => sub {
                 '(read (concrete-id-reuse issue-order-queue))',
             )),
             qr/same_id_ordering_policy\.read concrete-id-reuse policy does not cover dynamic read transaction ID metadata; select dynamic-id-reuse reject for transaction\(s\): r0/],
-        ['manager single-active dynamic response-demux rejects dynamic same-ID policy',
-            capacity_ppif_with_objects(manager_capacity_object_with_id_families_transactions_same_id_ordering_and_response_demux(
-                '(write (width 4) (request-id awid) (response-id bid)) (read (width 4) (request-id arid) (response-id rid))',
-                '(read r0 (tag rd0) (request axi0_r0_request) (completion axi0_r0_complete) (id dynamic))',
-                '(read (dynamic-id-reuse reject))',
-                '(read (response-event axi0_read_complete) (response-scope single-beat) (transaction-completion generated))',
-            )),
-            qr/response_demux\.read dynamic-id-reuse reject generated enforcement requires generated multi-active dynamic response-demux no-active-same-ID assertions in this slice/],
         ['manager dynamic read-data without response-demux metadata remains unsupported',
             capacity_ppif_with_objects(manager_capacity_object_with_id_families_transactions_and_read_data(
                 '(write (width 4) (request-id awid) (response-id bid)) (read (width 4) (request-id arid) (response-id rid))',
@@ -2990,6 +3032,41 @@ subtest 'CLI emits IAL2 report JSON for AXI manager dynamic read response-demux 
         )],
     );
     is_deeply($report->{generated_artifacts}{ial0}{files}, ['axi0_capacity_status.fsm'], 'dynamic read response-demux same-ID reject keeps the generated .fsm artifact name stable');
+};
+
+subtest 'CLI emits IAL2 report JSON for AXI manager single-active dynamic read response-demux same-ID reject .ppif' => sub {
+    my ($success, undef, undef, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--emit-schedule-json', sample_capacity_dynamic_read_response_demux_same_id_reject_ppif_path()],
+    );
+
+    ok($success, '--emit-schedule-json succeeds for capacity/status single-active dynamic read response-demux same-ID reject .ppif');
+    is(join('', @{$stderr_buf || []}), '', 'capacity/status single-active dynamic read response-demux same-ID reject report keeps stderr clean');
+    my $report = decode_json(join('', @{$stdout_buf || []}));
+    is($report->{schema}, 'fsmgen.ial2.protocol_intent.axi_manager_capacity_status.v1', 'CLI keeps the capacity/status report schema');
+    is($report->{source_object}{intent_name}, 'axi_manager_capacity_status_dynamic_read_response_demux_same_id_reject', 'single-active dynamic read response-demux same-ID reject report carries the PPIF top-level intent name');
+    assert_dynamic_read_response_demux_report(
+        $report,
+        'CLI mapped single-active dynamic read report',
+        residue => [qw(read_data_interleaving bursts)],
+    );
+    assert_dynamic_same_id_reject_policy_single_active_generated_report(
+        $report->{same_id_ordering},
+        'CLI mapped single-active dynamic read report',
+        family => 'read',
+        response_demux_mode => 'bounded_dynamic_read_rid_demux_contract',
+        response_demux_transaction_completion_source => 'generated_dynamic_demux',
+        covered_dynamic_transactions => [qw(r0)],
+        generated_idle_or_releasing_assertions => [qw(
+            axi0_r0_dynamic_request_idle_or_releasing
+        )],
+        generated_response_active_match_assertions => [qw(
+            axi0_read_dynamic_response_active_match
+        )],
+        generated_completion_active_assertions => [qw(
+            axi0_r0_dynamic_completion_active
+        )],
+    );
+    is_deeply($report->{generated_artifacts}{ial0}{files}, ['axi0_capacity_status.fsm'], 'single-active dynamic read response-demux same-ID reject keeps the generated .fsm artifact name stable');
 };
 
 subtest 'CLI emits IAL2 report JSON for AXI manager dynamic write response-demux .ppif' => sub {
@@ -7464,6 +7541,10 @@ sub sample_capacity_dynamic_read_response_demux_ppif_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_dynamic_read_response_demux.ppif');
 }
 
+sub sample_capacity_dynamic_read_response_demux_same_id_reject_ppif_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_dynamic_read_response_demux_same_id_reject.ppif');
+}
+
 sub sample_capacity_dynamic_read_response_demux_multi_ppif_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_dynamic_read_response_demux_multi.ppif');
 }
@@ -7798,6 +7879,10 @@ sub sample_capacity_dynamic_write_response_demux_multi_ppif {
 
 sub sample_capacity_dynamic_read_response_demux_ppif {
     return slurp(sample_capacity_dynamic_read_response_demux_ppif_path());
+}
+
+sub sample_capacity_dynamic_read_response_demux_same_id_reject_ppif {
+    return slurp(sample_capacity_dynamic_read_response_demux_same_id_reject_ppif_path());
 }
 
 sub sample_capacity_dynamic_read_response_demux_multi_ppif {
@@ -8767,9 +8852,10 @@ sub assert_dynamic_write_response_demux_multi_report {
 }
 
 sub assert_dynamic_read_response_demux_report {
-    my ($report, $owner) = @_;
+    my ($report, $owner, %args) = @_;
     my $demux = $report->{response_demux};
     my $read = $demux->{read};
+    my $expected_residue = $args{residue} // [qw(same_id_ordering read_data_interleaving bursts)];
 
     is(scalar(@{$report->{transactions}}), 1, "$owner reports one dynamic read transaction");
     is_deeply(
@@ -8823,7 +8909,7 @@ sub assert_dynamic_read_response_demux_report {
     );
     is_deeply(
         $demux->{residue},
-        [qw(same_id_ordering read_data_interleaving bursts)],
+        $expected_residue,
         "$owner keeps unsupported same-ID, read-data, and burst residue explicit",
     );
     my %residue = map { $_->{id} => 1 } @{$report->{unsupported_residue}};
@@ -9789,6 +9875,51 @@ sub assert_dynamic_same_id_reject_policy_generated_report {
                 $args{generated_active_id_uniqueness_assertions},
         },
         "$owner reports generated dynamic same-ID reject enforcement metadata",
+    );
+}
+
+sub assert_dynamic_same_id_reject_policy_single_active_generated_report {
+    my ($ordering, $owner, %args) = @_;
+    my $family = $args{family} // 'read';
+    my $expected_residue = $args{residue} // [];
+
+    is($ordering->{mode}, 'dynamic_id_reuse_policy', "$owner marks dynamic same-ID policy mode");
+    ok($ordering->{generated_behavior}, "$owner marks dynamic same-ID policy generated behavior true");
+    ok(!exists($ordering->{families}), "$owner does not report generated concrete same-ID avoidance families");
+    is_deeply($ordering->{residue}, $expected_residue, "$owner reports generated dynamic same-ID residue");
+    ok(@{$ordering->{source_anchors}}, "$owner carries source anchors into dynamic same-ID policy metadata");
+    is_deeply(
+        [sort keys %{$ordering->{dynamic_id_reuse_policy}}],
+        [$family],
+        "$owner reports the covered $family dynamic-ID reuse policy",
+    );
+    is_deeply(
+        $ordering->{dynamic_id_reuse_policy}{$family},
+        {
+            policy => 'reject',
+            implementation_status => 'generated_single_active_reject',
+            enforcement => 'generated_idle_or_releasing_assertions',
+            assertion_enforcement => 'runtime_assertion',
+            accepted_same_id_reuse => JSON::PP::false(),
+            request_conflict_policy => 'no_active_same_id',
+            generated_queue_behavior => JSON::PP::false(),
+            generated_scoreboard_behavior => JSON::PP::false(),
+            response_demux_covered => JSON::PP::true(),
+            single_active_covered => JSON::PP::true(),
+            single_active_request_policy => 'idle_or_releasing',
+            response_demux_mode => $args{response_demux_mode},
+            response_demux_transaction_completion_source =>
+                $args{response_demux_transaction_completion_source},
+            covered_dynamic_transactions =>
+                $args{covered_dynamic_transactions},
+            generated_idle_or_releasing_assertions =>
+                $args{generated_idle_or_releasing_assertions},
+            generated_response_active_match_assertions =>
+                $args{generated_response_active_match_assertions},
+            generated_completion_active_assertions =>
+                $args{generated_completion_active_assertions},
+        },
+        "$owner reports generated single-active dynamic same-ID reject enforcement metadata",
     );
 }
 

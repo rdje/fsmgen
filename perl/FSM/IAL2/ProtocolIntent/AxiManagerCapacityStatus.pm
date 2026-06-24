@@ -940,9 +940,8 @@ sub _response_demux_dynamic_write_transaction(%args) {
     confess "AXI manager capacity/status IAL2 contract response_demux.write dynamic ID matching cannot be combined with write auto_id_lifecycle metadata in this slice\n"
         if ref($args{write_lifecycle}) eq 'HASH';
     my $policy = _same_id_ordering_policy_for_family($args{same_id_ordering_policy}, 'write');
-    my $dynamic_same_id_reject_policy = _same_id_ordering_policy_has_dynamic_reject($policy);
     confess "AXI manager capacity/status IAL2 contract response_demux.write dynamic ID matching cannot be combined with same_id_ordering.write in this slice\n"
-        if ref($policy) eq 'HASH' && !$dynamic_same_id_reject_policy;
+        if ref($policy) eq 'HASH' && !_same_id_ordering_policy_has_dynamic_reject($policy);
 
     my @concrete_static = grep {
         ref($_->{id}) eq 'HASH' && ($_->{id}{policy} // '') eq 'concrete'
@@ -1002,8 +1001,6 @@ sub _response_demux_dynamic_write_transaction(%args) {
     }
 
     my $multi_dynamic = @states > 1;
-    _reject_uncovered_dynamic_same_id_response_demux_policy($policy, 'write')
-        if $dynamic_same_id_reject_policy && !$multi_dynamic;
     if (!$multi_dynamic) {
         $states[0]{same_cycle_release_recapture_policy} = 'single_active_dynamic_write';
         $states[0]{release_recapture_source} = 'generated_dynamic_demux_completion';
@@ -1328,9 +1325,8 @@ sub _response_demux_dynamic_read_transaction(%args) {
     confess "AXI manager capacity/status IAL2 contract response_demux.read dynamic ID matching cannot be combined with read auto_id_lifecycle metadata in this slice\n"
         if ref($args{read_lifecycle}) eq 'HASH';
     my $policy = _same_id_ordering_policy_for_family($args{same_id_ordering_policy}, 'read');
-    my $dynamic_same_id_reject_policy = _same_id_ordering_policy_has_dynamic_reject($policy);
     confess "AXI manager capacity/status IAL2 contract response_demux.read dynamic ID matching cannot be combined with same_id_ordering.read in this slice\n"
-        if ref($policy) eq 'HASH' && !$dynamic_same_id_reject_policy;
+        if ref($policy) eq 'HASH' && !_same_id_ordering_policy_has_dynamic_reject($policy);
 
     my @concrete_static = grep {
         ref($_->{id}) eq 'HASH' && ($_->{id}{policy} // '') eq 'concrete'
@@ -1390,8 +1386,6 @@ sub _response_demux_dynamic_read_transaction(%args) {
     }
 
     my $multi_dynamic = @states > 1;
-    _reject_uncovered_dynamic_same_id_response_demux_policy($policy, 'read')
-        if $dynamic_same_id_reject_policy && !$multi_dynamic;
     for my $state (@states) {
         my @sibling_request_exprs = map { $_->{request_acceptance_expr} }
             grep { $_->{transaction} ne $state->{transaction} } @states;
@@ -3775,10 +3769,47 @@ sub _dynamic_same_id_response_demux_reject_coverage(%args) {
 
     my $entry = $response_demux->{$family};
     return undef unless ref($entry) eq 'HASH' && $entry->{generated_behavior};
-    return undef unless ref($entry->{dynamic_capture}) eq 'HASH'
-        && ($entry->{dynamic_capture}{same_id_conflict_policy} // '') eq 'active_dynamic_ids_must_be_unique';
-
     my @states = @{$entry->{dynamic_transaction_state} || []};
+    return undef unless @states;
+
+    my $capture = $entry->{dynamic_capture};
+    return undef unless ref($capture) eq 'HASH';
+
+    my $ownership = $capture->{ownership} // '';
+    if (@states == 1 && $ownership eq "single_active_dynamic_$family") {
+        my $state = $states[0];
+        my @idle_or_releasing_assertions = grep { defined && length }
+            $state->{request_idle_or_releasing_assertion};
+        my @active_match_assertions = grep { defined && length }
+            "${manager_name}_${family}_dynamic_response_active_match";
+        my @completion_active_assertions = grep { defined && length }
+            $state->{completion_assertion};
+        return undef unless @idle_or_releasing_assertions
+            && @active_match_assertions
+            && @completion_active_assertions;
+
+        return {
+            implementation_status => 'generated_single_active_reject',
+            enforcement           => 'generated_idle_or_releasing_assertions',
+            assertion_enforcement => 'runtime_assertion',
+            response_demux_covered => 1,
+            single_active_covered => 1,
+            single_active_request_policy => 'idle_or_releasing',
+            response_demux_mode   => $entry->{mode},
+            response_demux_transaction_completion_source =>
+                $entry->{transaction_completion_source},
+            covered_dynamic_transactions =>
+                [$state->{transaction}],
+            generated_idle_or_releasing_assertions =>
+                \@idle_or_releasing_assertions,
+            generated_response_active_match_assertions =>
+                \@active_match_assertions,
+            generated_completion_active_assertions =>
+                \@completion_active_assertions,
+        };
+    }
+
+    return undef unless ($capture->{same_id_conflict_policy} // '') eq 'active_dynamic_ids_must_be_unique';
     return undef unless @states > 1;
 
     my @no_active_assertions = grep { defined && length }
@@ -7764,6 +7795,7 @@ sub _report_same_id_ordering($contract) {
                 generated_queue_behavior
                 generated_scoreboard_behavior
                 response_demux_covered
+                single_active_covered
             )) {
                 next unless exists $policy->{$field};
                 $policy->{$field} = $policy->{$field}

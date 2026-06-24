@@ -99,11 +99,11 @@ existing metadata-only dynamic transaction-ID sample. The new metadata changes
 the capacity/status report and support accounting, not the scheduled FSM or
 HDL.
 
-Generated dynamic same-ID enforcement is deliberately deferred. The next owner
-should audit how to map selected `dynamic-id-reuse reject` policy onto already
-generated dynamic/mixed response-demux no-active-same-ID and active-ID
-uniqueness assertions without weakening current diagnostics or overclaiming
-coverage.
+At the `.436` metadata-first boundary, generated dynamic same-ID enforcement
+was deliberately deferred. Later `.438` and `.442` slices now map selected
+`dynamic-id-reuse reject` policy onto bounded generated response-demux
+assertion evidence for covered multi-active and single-active shapes without
+weakening diagnostics or overclaiming queue/scoreboard coverage.
 
 ## Validation
 

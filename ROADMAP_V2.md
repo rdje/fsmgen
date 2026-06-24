@@ -2869,9 +2869,11 @@ dynamic-only family arms and coexistence with existing concrete
 `concrete-id-reuse` clauses; empty arms, duplicate dynamic clauses,
 unsupported dynamic policy values, selected dynamic policy without
 transactions, selected dynamic policy without a same-family dynamic
-transaction, concrete-only same-ID policy against dynamic transaction IDs, and
-dynamic response-demux plus same-family dynamic policy remain fail-closed with
-targeted diagnostics. Reports now carry
+transaction, and concrete-only same-ID policy against dynamic transaction IDs
+fail closed with targeted diagnostics. At the `.436` metadata-only boundary,
+dynamic response-demux plus same-family dynamic policy also failed closed;
+later `.438` and `.442` slices accept covered generated response-demux
+assertion mappings. Reports now carry
 `same_id_ordering.dynamic_id_reuse_policy.<family>` with `policy: reject`,
 `implementation_status: selected_not_generated`, `enforcement:
 not_generated`, `accepted_same_id_reuse: false`,
@@ -2882,7 +2884,9 @@ uses `id_reuse_policy`. The public sample
 `ppif/axi_manager_capacity_status_dynamic_same_id_reject_policy.ppif` is
 support-accounted as
 `intent.ppif_axi_manager_capacity_status_dynamic_same_id_reject_policy`.
-Generated dynamic same-ID enforcement, response-demux mapping, queues,
+At this metadata-first boundary, generated dynamic same-ID enforcement and
+response-demux mapping were still deferred; later `.438` and `.442` slices now
+cover bounded generated response-demux assertion mappings. Dynamic queues,
 scoreboards, HDL behavior, and VHDL behavior remain deferred.
 `.437` now selects `.438`, a narrow generated-enforcement report mapping for
 selected `dynamic-id-reuse reject` policy over already generated multi-active
@@ -2933,21 +2937,27 @@ exact report fields, residue movement, and diagnostics before behavior changes.
 One-dynamic mixed mapping, dynamic queues, scoreboards, direct backend
 behavior, backend-language variants, VHDL, and new generated HDL remain
 deferred.
-`.441` now selects `.442`, direct implementation of the single-active dynamic
-same-ID reject mapping. The selected report contract uses
+`.442` now ships the single-active dynamic same-ID reject mapping. Same-family
+`response-demux.<family>` plus `same-id-ordering.<family>
+(dynamic-id-reuse reject)` is accepted for single-active dynamic write `BID`,
+read single-beat `RID`, and read burst-last `RID && RLAST` shapes that already
+report generated idle-or-releasing, active-match, and completion-active
+assertions. Covered policy reports use
 `implementation_status: generated_single_active_reject`, `enforcement:
 generated_idle_or_releasing_assertions`, `single_active_covered: true`, and
 `single_active_request_policy: idle_or_releasing`, while preserving
 `accepted_same_id_reuse: false`, `request_conflict_policy:
-no_active_same_id`, and generated queue/scoreboard false. It lists generated
+no_active_same_id`, and generated queue/scoreboard false. They list generated
 idle-or-releasing, active-match, and completion-active assertion names and
-deliberately does not reuse the `.438` multi-active
+deliberately do not reuse the `.438` multi-active
 `generated_no_active_same_id_assertions` or
-`generated_active_id_uniqueness_assertions` fields. `.442` is bounded to
-acceptance/report/residue mapping for single-active write `BID`, read
-single-beat `RID`, and read burst-last `RID && RLAST`; one-dynamic mixed
-mapping, dynamic queues, scoreboards, direct backend behavior,
-backend-language variants, VHDL, and new generated HDL remain deferred.
+`generated_active_id_uniqueness_assertions` fields. The support-accounted
+public sample is
+`ppif/axi_manager_capacity_status_dynamic_read_response_demux_same_id_reject.ppif`.
+The mapping adds no generated rules, storage, assertions, HDL, or runtime
+behavior; one-dynamic mixed mapping, dynamic queues, scoreboards, direct
+backend behavior, backend-language variants, VHDL, and new generated HDL remain
+deferred. `.442` selects `.443`, the next post-single-active-mapping selector.
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,

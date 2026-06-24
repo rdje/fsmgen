@@ -30,8 +30,8 @@ The public sample is
 accounted as
 `intent.ppif_axi_manager_capacity_status_dynamic_same_id_reject_policy`.
 
-Generated dynamic same-ID enforcement, response-demux mapping, queues,
-scoreboards, HDL behavior, and VHDL behavior remain deferred. Dynamic
-response-demux plus same-family `dynamic-id-reuse reject` still fails closed
-until a later owner maps the policy to generated no-active-same-ID assertion
-enforcement.
+At the `.436` metadata-first boundary, generated dynamic same-ID enforcement
+and response-demux mapping were deferred. Later `.438` and `.442` slices now
+cover bounded generated response-demux assertion mappings for selected
+multi-active and single-active shapes. Dynamic queues, scoreboards, HDL
+behavior, and VHDL behavior remain deferred.

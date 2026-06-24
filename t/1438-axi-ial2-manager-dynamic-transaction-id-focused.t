@@ -525,6 +525,50 @@ subtest 'dynamic same-ID reject maps to two-dynamic mixed response-demux asserti
     );
 };
 
+subtest 'dynamic same-ID reject maps to single-active response-demux assertions' => sub {
+    my $relpath = 'ppif/axi_manager_capacity_status_dynamic_read_response_demux.ppif';
+    my $path = repo_path($relpath);
+    my $source = read_file($path);
+    $source =~ s/    \(response-demux/    \(same-id-ordering\n      \(read \(dynamic-id-reuse reject\)\)\)\n    \(response-demux/
+        or die "failed to insert same-id-ordering block into $relpath\n";
+
+    my $base_result = parse_ppif($relpath);
+    my $result = $adapter->parse_source($source, $path);
+
+    is(
+        $result->{generated_ial1}{text},
+        $base_result->{generated_ial1}{text},
+        'single-active same-ID reject mapping does not alter generated IAL1 text',
+    );
+    is_deeply(
+        $result->{generated_ial0}{files},
+        $base_result->{generated_ial0}{files},
+        'single-active same-ID reject mapping does not alter generated IAL0 files',
+    );
+    is_deeply(
+        $result->{report}{response_demux}{residue},
+        [qw(read_data_interleaving bursts)],
+        'single-active same-ID reject mapping removes only same-ID response-demux residue',
+    );
+    assert_dynamic_same_id_reject_policy_single_active_generated_report(
+        $result->{report}{same_id_ordering},
+        'single-active dynamic read report',
+        family => 'read',
+        response_demux_mode => 'bounded_dynamic_read_rid_demux_contract',
+        response_demux_transaction_completion_source => 'generated_dynamic_demux',
+        covered_dynamic_transactions => [qw(r0)],
+        generated_idle_or_releasing_assertions => [qw(
+            axi0_r0_dynamic_request_idle_or_releasing
+        )],
+        generated_response_active_match_assertions => [qw(
+            axi0_read_dynamic_response_active_match
+        )],
+        generated_completion_active_assertions => [qw(
+            axi0_r0_dynamic_completion_active
+        )],
+    );
+};
+
 subtest 'bounded CLI JSON checks cover dynamic PPIF support accounting' => sub {
     plan skip_all => 'FSMGEN_DYNAMIC_SKIP_CLI_JSON requested by caller'
         if $ENV{FSMGEN_DYNAMIC_SKIP_CLI_JSON};
@@ -4030,6 +4074,50 @@ sub assert_dynamic_same_id_reject_policy_generated_report {
                 $args{generated_active_id_uniqueness_assertions},
         },
         "$owner reports generated dynamic same-ID reject enforcement metadata",
+    );
+}
+
+sub assert_dynamic_same_id_reject_policy_single_active_generated_report {
+    my ($ordering, $owner, %args) = @_;
+    my $family = $args{family} // 'read';
+
+    is($ordering->{mode}, 'dynamic_id_reuse_policy', "$owner marks dynamic same-ID policy mode");
+    ok($ordering->{generated_behavior}, "$owner marks dynamic same-ID policy generated behavior true");
+    ok(!exists($ordering->{families}), "$owner does not report generated concrete same-ID avoidance families");
+    is_deeply($ordering->{residue}, [], "$owner reports generated dynamic same-ID residue");
+    ok(@{$ordering->{source_anchors}}, "$owner carries source anchors into dynamic same-ID policy metadata");
+    is_deeply(
+        [sort keys %{$ordering->{dynamic_id_reuse_policy}}],
+        [$family],
+        "$owner reports the covered $family dynamic-ID reuse policy",
+    );
+    is_deeply(
+        $ordering->{dynamic_id_reuse_policy}{$family},
+        {
+            policy => 'reject',
+            implementation_status => 'generated_single_active_reject',
+            enforcement => 'generated_idle_or_releasing_assertions',
+            assertion_enforcement => 'runtime_assertion',
+            accepted_same_id_reuse => JSON::PP::false(),
+            request_conflict_policy => 'no_active_same_id',
+            generated_queue_behavior => JSON::PP::false(),
+            generated_scoreboard_behavior => JSON::PP::false(),
+            response_demux_covered => JSON::PP::true(),
+            single_active_covered => JSON::PP::true(),
+            single_active_request_policy => 'idle_or_releasing',
+            response_demux_mode => $args{response_demux_mode},
+            response_demux_transaction_completion_source =>
+                $args{response_demux_transaction_completion_source},
+            covered_dynamic_transactions =>
+                $args{covered_dynamic_transactions},
+            generated_idle_or_releasing_assertions =>
+                $args{generated_idle_or_releasing_assertions},
+            generated_response_active_match_assertions =>
+                $args{generated_response_active_match_assertions},
+            generated_completion_active_assertions =>
+                $args{generated_completion_active_assertions},
+        },
+        "$owner reports generated single-active dynamic same-ID reject enforcement metadata",
     );
 }
 
