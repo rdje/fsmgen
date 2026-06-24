@@ -7356,6 +7356,18 @@ and `axi0_r1_static_request_idle_or_releasing`. Public syntax, support
 identity, the burst-last mode/scope/source, raw non-final `RID` assertions,
 and scalar read-data/raw-`ARLEN`/runtime/multi-beat consumers are preserved.
 
+Post mixed dynamic/static read RLAST recapture selector:
+[AXI_IAL2_MANAGER_POST_MIXED_DYNAMIC_STATIC_READ_RLAST_RECAPTURE_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MIXED_DYNAMIC_STATIC_READ_RLAST_RECAPTURE_NEXT_SLICE_SELECTION.md)
+selects `.398`, readiness audit for broader mixed dynamic/static same-cycle
+release-and-recapture. The selector changes no behavior. Broader mixed
+recapture is the nearest next residue now that the one-dynamic plus one-static
+mixed write/read/read-`RLAST` family has shipped; multi-static, three-static,
+and two-dynamic-plus-one-static public samples add sibling static busy
+recapture, static-ID exclusion lists, active dynamic-ID uniqueness, and read
+burst-last raw non-final beat preservation that need audit ownership before
+contract selection or implementation. The `.396` RAM-guard cutoff is recorded
+but is not selected as the next owner.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

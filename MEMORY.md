@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.396: ship mixed read RLAST recapture`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.397` selects the next post mixed dynamic/static read burst-last RID/RLAST recapture activity; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.396` shipped mixed dynamic/static read burst-last RID/RLAST same-cycle release-and-recapture for the existing public sample. FSMGen now emits dynamic and static release-recapture rules from generated final RID/RLAST completion pulses only, reports last-beat recapture metadata under `response_demux.read.dynamic_capture` and `response_demux.read.static_capture`, and replaces the selected request-not-busy assertions with idle-or-releasing assertions. Guarded schedule/focused t1438 probes stopped at the default RAM cutoff due high host memory and were not forced unbounded.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.397: select broader mixed recapture audit`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.398` audits broader mixed dynamic/static same-cycle release-and-recapture readiness; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.397` selected `.398`, readiness audit for broader mixed dynamic/static same-cycle release-and-recapture after the one-dynamic plus one-static mixed write/read/read-RLAST recapture family shipped. Static-busy-only outside public mixed samples, request arbitration widening, queues, scoreboards, backend variants, VHDL, and validation retry remain explicitly deferred behind future owners or `.398` scope; no behavior changed.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
-- next_action: Start `.397`: select the next roadmap-aligned owner after mixed dynamic/static read burst-last recapture, recording validation retry, broader mixed/static recapture, cleanup, backend, or other deferred boundaries before any behavior change.
+- next_action: Start `.398`: audit broader mixed dynamic/static recapture readiness and choose the first public contract owner or prerequisite before any behavior change, using guarded probes only when host memory allows.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact

@@ -2321,6 +2321,15 @@ and `axi0_r1_static_request_idle_or_releasing`. Public syntax, support
 identity, the burst-last mode/scope/source, raw non-final `RID` assertions,
 and the scalar read-data/raw-`ARLEN`/runtime/multi-beat consumers are
 preserved.
+`.397` selects `.398`, readiness audit for broader mixed dynamic/static
+same-cycle release-and-recapture. The selector changes no behavior. Broader
+mixed recapture is the nearest next residue now that the one-dynamic plus
+one-static mixed write/read/read-`RLAST` family has shipped; multi-static,
+three-static, and two-dynamic-plus-one-static public samples add sibling
+static busy recapture, static-ID exclusion lists, active dynamic-ID
+uniqueness, and read burst-last raw non-final beat preservation that need
+audit ownership before contract selection or implementation. The `.396`
+RAM-guard cutoff is recorded but is not selected as the next owner.
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,

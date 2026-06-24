@@ -1333,6 +1333,16 @@ and `axi0_r1_static_request_idle_or_releasing`. Public syntax, support
 identity, the burst-last mode/scope/source, raw non-final `RID` assertions,
 and the scalar read-data/raw-`ARLEN`/runtime/multi-beat consumers are
 preserved.
+`.397` selects `.398`, readiness audit for broader mixed dynamic/static
+same-cycle release-and-recapture. The selector changes no behavior. Broader
+mixed recapture is the next nearest residue because the one-dynamic plus
+one-static mixed write/read/read-`RLAST` recapture family is now covered,
+while existing multi-static, three-static, and two-dynamic-plus-one-static
+public samples add sibling static busy recapture, static-ID exclusion lists,
+active dynamic-ID uniqueness, and read burst-last raw non-final beat
+preservation that need audit ownership before any contract or implementation
+slice. The `.396` RAM-guard cutoff is recorded, but validation retry is not
+the next exact owner.
 No behavior
 changed in `.273`, `.274`, `.275`,
 `.277`, `.278`, `.279`, `.281`,
@@ -3642,6 +3652,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_READ_RLAST_RECAPTURE_READINESS_AUDIT.md` — audited mixed dynamic/static read burst-last `RID && RLAST` same-cycle release-and-recapture readiness and selected public contract selection.
 - `docs/AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_READ_RLAST_RECAPTURE_CONTRACT_SELECTION.md` — selected direct mixed dynamic/static read burst-last `RID && RLAST` same-cycle release-and-recapture implementation under the existing public sample.
 - `docs/AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_READ_RLAST_RECAPTURE_BEHAVIOR.md` — shipped mixed dynamic/static read burst-last `RID && RLAST` same-cycle release-and-recapture under the existing public sample.
+- `docs/AXI_IAL2_MANAGER_POST_MIXED_DYNAMIC_STATIC_READ_RLAST_RECAPTURE_NEXT_SLICE_SELECTION.md` — selected broader mixed dynamic/static same-cycle release-and-recapture readiness audit after the one-dynamic plus one-static mixed recapture family shipped.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_CONTRACT_SELECTION.md` — selected direct single-active dynamic write `BID` same-cycle release-and-recapture behavior under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_BEHAVIOR.md` — shipped single-active dynamic write `BID` same-cycle release-and-recapture under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_WRITE_RECAPTURE_NEXT_SLICE_SELECTION.md` — selected `.367`, public contract selection for first single-active dynamic read same-cycle release-and-recapture after dynamic write recapture shipped.
