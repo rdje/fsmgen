@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.387: audit mixed recapture readiness`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.388` selects the mixed dynamic/static write BID same-cycle release-and-recapture contract; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.387` audited mixed dynamic/static same-cycle release-and-recapture readiness and selected `.388`, public contract selection for mixed dynamic/static write BID recapture. Guarded baseline schedule probes for the one-dynamic/one-static mixed write, read single-beat, and read burst-last public samples passed and confirmed the live reports still use request-not-busy assertions with no release-recapture metadata. No behavior changed.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.388: select mixed write recapture contract`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.389` implements mixed dynamic/static write BID same-cycle release-and-recapture; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.388` selected `.389`, direct implementation of mixed dynamic/static write BID same-cycle release-and-recapture. The selector preserves the existing public sample and mode, adds dynamic recapture report fields plus a new static_capture report contract, and selects dynamic/static idle-or-releasing assertions. No behavior changed.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
-- next_action: Start `.388`: select the public contract for mixed dynamic/static write BID same-cycle release-and-recapture.
+- next_action: Start `.389`: implement the selected mixed dynamic/static write BID same-cycle release-and-recapture contract.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact

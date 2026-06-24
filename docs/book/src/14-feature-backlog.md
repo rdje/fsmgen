@@ -7237,6 +7237,18 @@ both dynamic selected-ID recapture and static concrete busy recapture without
 the read `RID`/`RLAST`, read-data, raw-`ARLEN`, runtime validation, and
 multi-beat output-bank preservation stack.
 
+Mixed dynamic/static write recapture contract:
+[AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_WRITE_RECAPTURE_CONTRACT_SELECTION](../../AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_WRITE_RECAPTURE_CONTRACT_SELECTION.md)
+selects `.389`, direct implementation of mixed dynamic/static write `BID`
+same-cycle release-and-recapture for the existing support-accounted public
+sample. The selector changes no behavior. It preserves public syntax,
+`bounded_mixed_dynamic_static_write_bid_demux_contract`, generated mixed
+completion source, onehot0 mixed request policy, static-ID reservation,
+response active/unique-match, and completion-active assertions while selecting
+dynamic recapture report fields, a new `static_capture` report block,
+dynamic/static release-only exclusion, dynamic/static release-recapture guards,
+and dynamic/static idle-or-releasing request assertions.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after
@@ -8639,9 +8651,9 @@ policy, no-active-same-ID, active-ID uniqueness, response active/unique-match,
 completion-active assertions, generated completion names, support identity, and
 scalar single-beat read-data capture over generated completions. Multiple
 dynamic read burst-last recapture then advanced through `.382`-`.385`; mixed
-dynamic/static recapture advanced through `.386`-`.387` to `.388` mixed write
-contract selection. Static busy-only recapture outside that selected mixed
-write boundary, queues, scoreboards, backend variants, VHDL, and full-manager
+dynamic/static recapture advanced through `.386`-`.388` to `.389` mixed write
+implementation. Static busy-only recapture outside that selected mixed write
+boundary, queues, scoreboards, backend variants, VHDL, and full-manager
 behavior remain later owners.
 
 Post queue-head burst-length selector:
