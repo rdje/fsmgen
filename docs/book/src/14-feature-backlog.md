@@ -8142,6 +8142,18 @@ emits generated completions only on final `RID && RLAST` matches. Read-data,
 raw `ARLEN`, runtime-validation, and multi-beat behavior over this shape remain
 explicit residue.
 
+Two-dynamic/one-static mixed dynamic/static read burst-last read-data readiness:
+[AXI_IAL2_MANAGER_TWO_DYNAMIC_ONE_STATIC_MIXED_DYNAMIC_STATIC_READ_RLAST_READ_DATA_READINESS_AUDIT](../../AXI_IAL2_MANAGER_TWO_DYNAMIC_ONE_STATIC_MIXED_DYNAMIC_STATIC_READ_RLAST_READ_DATA_READINESS_AUDIT.md)
+selects `.349`, public contract selection for scalar last-beat read-data over
+that generated `RID`/`RLAST` demux. The audit changes no behavior. A scratch
+guarded strict-check probe reached the read-data coverage gate and failed
+closed with the current one-dynamic plus two-static/three-static diagnostic.
+The next selector must settle sample
+`ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_dynamic_burst_last_read_data.ppif`,
+support identity, focused behavior label, scalar output names,
+completion-validity vocabulary, validation, rollback, and raw `ARLEN`/runtime/
+multi-beat residue before implementation.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same
