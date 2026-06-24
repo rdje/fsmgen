@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.429: audit two-dynamic RLAST recapture readiness`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.430` selects the two-dynamic-plus-one-static mixed read burst-last RID/RLAST recapture public contract; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.429` selected `.430`, public contract selection for two-dynamic-plus-one-static mixed dynamic/static read burst-last RID/RLAST same-cycle release-and-recapture. The audit found no parser, support-accounting, report-schema, IAL1, or HDL prerequisite; the remaining implementation gap is the burst-last multi-mixed read selector and the final-beat/report/guard/assertion/consumer contract. No behavior changed.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.430: select two-dynamic RLAST recapture contract`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.431` implements the selected two-dynamic-plus-one-static mixed read burst-last RID/RLAST recapture contract; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.430` selected `.431`, direct implementation of two-dynamic-plus-one-static mixed dynamic/static read burst-last RID/RLAST same-cycle release-and-recapture. The contract preserves public syntax/support identity, final-beat source `generated_multi_mixed_dynamic_static_read_demux_last_beat`, raw non-final RID assertions, and read-data/raw-ARLEN/runtime/multi-beat consumers while selecting r0/r1 dynamic recapture, list-shaped r2 static capture, final-beat release-recapture source, guards, and idle-or-releasing assertions. No behavior changed.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
-- next_action: Start `.430`: select the exact two-dynamic mixed read burst-last recapture public contract before implementation.
+- next_action: Start `.431`: implement only the `.430` selected two-dynamic mixed read burst-last recapture contract, with RAM-guarded probes or direct fallback validation.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact

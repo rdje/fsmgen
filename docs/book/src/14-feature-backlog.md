@@ -7829,6 +7829,22 @@ dynamic/static report fields, guard composition, idle-or-releasing assertion
 names, and read-data/raw-`ARLEN`/runtime/multi-beat preservation before
 implementation.
 
+Two-dynamic/one-static mixed dynamic/static read RLAST recapture contract:
+[AXI_IAL2_MANAGER_TWO_DYNAMIC_ONE_STATIC_MIXED_DYNAMIC_STATIC_READ_RLAST_RECAPTURE_CONTRACT_SELECTION](../../AXI_IAL2_MANAGER_TWO_DYNAMIC_ONE_STATIC_MIXED_DYNAMIC_STATIC_READ_RLAST_RECAPTURE_CONTRACT_SELECTION.md)
+selects `.431`, direct implementation of the existing public burst-last
+sample's `RID && RLAST` release-and-recapture contract. The selector changes
+no behavior. The selected implementation keeps the existing support identity,
+`bounded_multi_mixed_dynamic_static_read_rid_rlast_demux_contract`,
+`axi0_rlast`, generated final-beat completion source, raw non-final `RID`
+assertions, and adjacent read-data/raw-`ARLEN`/runtime/multi-beat consumers.
+It adds release-recapture fields for `r0` and `r1` under
+`dynamic_capture.transactions[]` with
+`mixed_dynamic_static_multi_active_dynamic_read`, list-shaped
+`static_capture[]` for `r2`, final-beat source
+`generated_multi_mixed_dynamic_static_read_demux_last_beat_completion`,
+combined dynamic/static guards, same-transaction release-only exclusions, and
+idle-or-releasing request assertions for `r0`, `r1`, and `r2`.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

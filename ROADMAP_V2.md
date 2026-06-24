@@ -2799,6 +2799,19 @@ leaves the two-dynamic/one-static RLAST branch unmarked. `.430` must pin
 dynamic/static report fields, guard composition, idle-or-releasing assertion
 names, and read-data/raw-`ARLEN`/runtime/multi-beat preservation before
 implementation.
+`.430` now selects `.431`, direct implementation of that
+two-dynamic-plus-one-static mixed dynamic/static read burst-last `RID &&
+RLAST` release-and-recapture contract. The selector changes no behavior. The selected
+implementation keeps the existing public sample, support identity,
+`bounded_multi_mixed_dynamic_static_read_rid_rlast_demux_contract`,
+`axi0_rlast`, final-beat completion source, raw non-final `RID` assertion
+roles, completion-active assertions, and read-data/raw-`ARLEN`/runtime/
+multi-beat consumers. It adds `r0`/`r1` dynamic recapture fields with
+`mixed_dynamic_static_multi_active_dynamic_read`, list-shaped
+`static_capture[]` for `r2`, final-beat release-recapture source
+`generated_multi_mixed_dynamic_static_read_demux_last_beat_completion`,
+combined dynamic/static guards, release-only same-transaction request
+exclusions, and idle-or-releasing assertions for `r0`, `r1`, and `r2`.
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,
