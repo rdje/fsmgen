@@ -7992,6 +7992,15 @@ update, and sixteen runtime beat-count/`RLAST` assertions. Reports mark
 read-data residue empty and keep response-demux residue limited to
 `same_id_ordering`.
 
+Post three-static mixed dynamic/static multi-beat selector:
+[AXI_IAL2_MANAGER_POST_THREE_STATIC_MIXED_DYNAMIC_STATIC_READ_DATA_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_THREE_STATIC_MIXED_DYNAMIC_STATIC_READ_DATA_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
+selects `.339`, readiness audit for two-dynamic-plus-one-static mixed
+dynamic/static write `BID` response-demux. The selector changes no behavior
+and starts at write response-demux because it is the smallest
+behavior-bearing boundary before read response-demux, read-data,
+burst-length/runtime validation, or multi-beat output-bank widening can
+depend on a combined multiple-dynamic-plus-static policy.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same

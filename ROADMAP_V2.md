@@ -2589,13 +2589,19 @@ Reports mark read-data residue empty and keep response-demux residue limited
 to `same_id_ordering`. Two-dynamic-plus-static shapes, broader mixed
 cardinalities, same-cycle widening, queues/scoreboards, backend variants,
 and VHDL remain deferred.
+`.338` now selects `.339`, readiness audit for two-dynamic-plus-one-static
+mixed dynamic/static write `BID` response-demux. The selector changes no
+behavior and starts at write response-demux because it is the smallest
+behavior-bearing boundary before read response-demux, read-data,
+burst-length/runtime validation, or multi-beat output-bank widening can
+depend on a combined multiple-dynamic-plus-static policy.
 No behavior changed in
 `.270`, `.271`, `.273`, `.274`, `.275`, `.277`, `.278`,
 `.279`, `.281`, `.282`, `.283`, `.285`, `.286`, `.288`, `.290`, `.292`, or
 `.293`, `.294`, `.296`, `.297`, `.298`, `.300`, `.301`, `.302`, `.304`,
 `.305`, `.306`, `.308`, `.309`, `.311`, `.313`, `.315`, `.316`, `.317`, or
 `.319`, `.320`, `.321`, `.323`, `.324`, `.325`, `.327`, `.328`, `.329`,
-`.331`, `.332`, `.334`, or `.336`.
+`.331`, `.332`, `.334`, `.336`, or `.338`.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.
