@@ -2979,6 +2979,17 @@ no-active-same-ID checks, unique-match assertions, and burst-last raw
 non-final-beat handling. Mixed dynamic/static recapture, static busy recapture,
 queues, scoreboards, backend variants, VHDL, and full-manager behavior remain
 later owners.
+`.374` now selects `.375`, generated support-detail prose alignment for the
+shipped single-active dynamic read burst-last release-and-recapture behavior
+before selecting any multiple-dynamic recapture contract. The audit changes no
+behavior. Guarded probes confirmed the multiple dynamic write/read/read-RLAST
+samples still report onehot0 request policy, active dynamic selected-ID
+uniqueness, request no-active-same-ID checks, response unique-match assertions,
+request-not-busy assertions, and no release-recapture fields. The same probes
+exposed stale generated support prose saying the single-active dynamic read
+burst-last `RID/RLAST` shape is supported without release-and-recapture and
+listing same-cycle recapture as future outside only dynamic write plus read
+single-beat.
 No behavior changed in
 `.270`, `.271`, `.273`, `.274`, `.275`, `.277`, `.278`,
 `.279`, `.281`, `.282`, `.283`, `.285`, `.286`, `.288`, `.290`, `.292`, or
@@ -2988,7 +2999,7 @@ No behavior changed in
 `.331`, `.332`, `.334`, `.336`, `.338`, `.339`, `.340`, `.342`, `.343`,
 `.345`, `.346`, `.348`, `.349`, `.351`, `.352`, `.354`, `.356`, `.358`,
 `.359`, `.360`, `.362`, `.363`, `.364`, `.366`, `.367`, `.369`, `.370`,
-`.371`, or `.373`.
+`.371`, `.373`, or `.374`.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.

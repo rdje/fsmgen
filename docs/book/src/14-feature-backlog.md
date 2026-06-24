@@ -8454,6 +8454,19 @@ unique-match assertions, and burst-last raw non-final-beat handling.
 Mixed dynamic/static recapture, static busy recapture, queues, scoreboards,
 backend variants, VHDL, and full-manager behavior remain later owners.
 
+Multiple dynamic recapture readiness audit:
+[AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_RECAPTURE_READINESS_AUDIT](../../AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_RECAPTURE_READINESS_AUDIT.md)
+selects `.375`, generated support-detail prose alignment for the shipped
+single-active dynamic read burst-last release-and-recapture behavior before any
+multiple-dynamic recapture contract. Guarded probes confirmed the multiple
+dynamic write/read/read-RLAST samples still report onehot0 request policy,
+active dynamic selected-ID uniqueness, request no-active-same-ID checks,
+response unique-match assertions, request-not-busy assertions, and no
+release-recapture fields. The same probes exposed stale generated support prose
+saying the single-active dynamic read burst-last `RID/RLAST` shape is supported
+without release-and-recapture and listing same-cycle recapture as future outside
+only dynamic write plus read single-beat.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same
