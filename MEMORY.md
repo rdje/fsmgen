@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.372: ship read rlast recapture`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.373` selects the next same-cycle/release-recapture owner after single-active dynamic read burst-last recapture shipped; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.372` shipped generated single-active dynamic read burst-last `RID && RLAST` same-cycle release-and-recapture under the existing public sample/source syntax. FSMGen now emits `axi0_r0_dynamic_id_release_recapture`, keeps release-only disjoint from same-cycle requests, reports `release_recapture_source: generated_dynamic_demux_last_beat_completion`, replaces the burst-last single-active request-not-busy assertion with `axi0_r0_dynamic_request_idle_or_releasing`, preserves raw matched non-last beats and raw active-match assertions, and keeps scalar last-beat read-data, raw-`ARLEN`, runtime beat-count/`RLAST`, and multi-beat output-bank payload/validation contracts intact.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.373: select multi-dynamic recapture audit`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.374` audits multiple all-dynamic same-cycle release-and-recapture readiness; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.373` selected `.374`, readiness audit for multiple all-dynamic same-cycle release-and-recapture after single-active dynamic write, read single-beat, and read burst-last recapture shipped. The selector found multiple all-dynamic response-demux is the nearest broader recapture residue because it still uses dynamic selected-ID/busy ownership, but it adds sibling onehot0 request policy, active dynamic selected-ID uniqueness, request no-active-same-ID checks, unique-match assertions, and burst-last raw non-final-beat handling.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
-- next_action: Start `.373`: select the next same-cycle/release-recapture owner without behavior changes unless a later implementation leaf is explicitly created.
+- next_action: Start `.374`: audit multiple all-dynamic recapture readiness without behavior changes unless a later implementation leaf is explicitly created.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact

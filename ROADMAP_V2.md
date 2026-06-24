@@ -2970,6 +2970,15 @@ beats and raw active-match assertions, and keeps scalar last-beat read-data,
 raw-`ARLEN`, runtime beat-count/`RLAST`, and multi-beat output-bank
 payload/validation contracts intact. The frontier advances to `.373`, the next
 same-cycle/release-recapture selector.
+`.373` now selects `.374`, readiness audit for multiple all-dynamic
+same-cycle release-and-recapture. The selector changes no behavior. Multiple
+all-dynamic response-demux is the nearest broader recapture residue because it
+still uses dynamic selected-ID/busy ownership, but it adds sibling onehot0
+request policy, active dynamic selected-ID uniqueness, request
+no-active-same-ID checks, unique-match assertions, and burst-last raw
+non-final-beat handling. Mixed dynamic/static recapture, static busy recapture,
+queues, scoreboards, backend variants, VHDL, and full-manager behavior remain
+later owners.
 No behavior changed in
 `.270`, `.271`, `.273`, `.274`, `.275`, `.277`, `.278`,
 `.279`, `.281`, `.282`, `.283`, `.285`, `.286`, `.288`, `.290`, `.292`, or
@@ -2978,8 +2987,8 @@ No behavior changed in
 `.319`, `.320`, `.321`, `.323`, `.324`, `.325`, `.327`, `.328`, `.329`,
 `.331`, `.332`, `.334`, `.336`, `.338`, `.339`, `.340`, `.342`, `.343`,
 `.345`, `.346`, `.348`, `.349`, `.351`, `.352`, `.354`, `.356`, `.358`,
-`.359`, `.360`, `.362`, `.363`, `.364`, `.366`, `.367`, `.369`, `.370`, or
-`.371`.
+`.359`, `.360`, `.362`, `.363`, `.364`, `.366`, `.367`, `.369`, `.370`,
+`.371`, or `.373`.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.

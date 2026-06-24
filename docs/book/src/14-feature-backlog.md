@@ -8443,6 +8443,17 @@ the burst-last single-active request assertion is now
 matched beats only; scalar last-beat read-data, raw-`ARLEN`, runtime, and
 multi-beat payload/validation contracts remain preserved consumers.
 
+Post dynamic read RLAST recapture selector:
+[AXI_IAL2_MANAGER_POST_DYNAMIC_READ_RLAST_RECAPTURE_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_DYNAMIC_READ_RLAST_RECAPTURE_NEXT_SLICE_SELECTION.md)
+selects `.374`, readiness audit for multiple all-dynamic same-cycle
+release-and-recapture. The selector changes no behavior. Multiple all-dynamic
+response-demux is the nearest broader recapture residue because it still uses
+dynamic selected-ID/busy ownership, but it adds sibling onehot0 request policy,
+active dynamic selected-ID uniqueness, request no-active-same-ID checks,
+unique-match assertions, and burst-last raw non-final-beat handling.
+Mixed dynamic/static recapture, static busy recapture, queues, scoreboards,
+backend variants, VHDL, and full-manager behavior remain later owners.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same
