@@ -7565,6 +7565,21 @@ report. The contract selects dynamic recapture fields for
 idle-or-releasing assertions while preserving scalar single-beat read-data
 consumers.
 
+Multiple mixed dynamic/static read recapture behavior:
+[AXI_IAL2_MANAGER_MULTIPLE_MIXED_DYNAMIC_STATIC_READ_RECAPTURE_BEHAVIOR](../../AXI_IAL2_MANAGER_MULTIPLE_MIXED_DYNAMIC_STATIC_READ_RECAPTURE_BEHAVIOR.md)
+ships one-dynamic-plus-two-static mixed dynamic/static read single-beat `RID`
+same-cycle release-and-recapture for the existing public sample. FSMGen emits
+`axi0_r0_dynamic_id_release_recapture`,
+`axi0_r1_static_busy_release_recapture`, and
+`axi0_r2_static_busy_release_recapture`; reports
+`mixed_dynamic_static_dynamic_read` under
+`dynamic_capture.transactions[0]`; reports list-shaped `static_capture[]` for
+`r1`/`r2`; uses
+`generated_multi_mixed_dynamic_static_read_demux_completion`; preserves the
+singular mixed read recapture shape, the three-static no-recapture boundary,
+and scalar single-beat read-data consumers; and advances `.412` to select the
+next post-read-recapture activity.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

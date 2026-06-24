@@ -1985,7 +1985,7 @@ sub _normalize_response_demux_read(%args) {
                 _response_demux_mark_single_active_dynamic_read_recapture(\%entry);
             } elsif ($multi_dynamic && !@static_states) {
                 _response_demux_mark_multi_active_dynamic_read_recapture(\%entry);
-            } elsif (@dynamic_states == 1 && @static_states == 1) {
+            } elsif (@dynamic_states == 1 && (@static_states == 1 || @static_states == 2)) {
                 _response_demux_mark_mixed_dynamic_static_read_recapture(\%entry);
             }
             return \%entry;
@@ -2377,54 +2377,77 @@ sub _response_demux_mark_mixed_dynamic_static_read_recapture($entry, %args) {
     my $dynamic_states = $entry->{dynamic_transaction_state};
     my $static_states = $entry->{static_transaction_state};
     return unless ref($dynamic_states) eq 'ARRAY' && @$dynamic_states == 1;
-    return unless ref($static_states) eq 'ARRAY' && @$static_states == 1;
-
-    my $dynamic_state = $dynamic_states->[0];
-    my $static_state = $static_states->[0];
-    return unless ref($dynamic_state) eq 'HASH' && ref($static_state) eq 'HASH';
+    return unless ref($static_states) eq 'ARRAY'
+        && (@$static_states == 1 || @$static_states == 2);
+    return if grep { ref($_) ne 'HASH' } @$dynamic_states;
+    return if grep { ref($_) ne 'HASH' } @$static_states;
 
     my $release_recapture_source =
-        $args{release_recapture_source} // 'generated_mixed_dynamic_static_read_demux_completion';
+        $args{release_recapture_source}
+        // (($entry->{transaction_completion_source} // 'generated_mixed_dynamic_static_read_demux')
+            . '_completion');
 
+    my $dynamic_state = $dynamic_states->[0];
     $dynamic_state->{same_cycle_release_recapture_policy} =
         'mixed_dynamic_static_dynamic_read';
     $dynamic_state->{release_recapture_source} = $release_recapture_source;
     $dynamic_state->{release_recapture_transaction} = $dynamic_state->{transaction};
 
-    $static_state->{same_cycle_release_recapture_policy} =
-        'mixed_dynamic_static_static_read';
-    $static_state->{release_recapture_source} = $release_recapture_source;
-    $static_state->{release_recapture_transaction} = $static_state->{transaction};
+    for my $static_state (@$static_states) {
+        $static_state->{same_cycle_release_recapture_policy} =
+            'mixed_dynamic_static_static_read';
+        $static_state->{release_recapture_source} = $release_recapture_source;
+        $static_state->{release_recapture_transaction} = $static_state->{transaction};
+    }
 
     my $dynamic_capture = $entry->{dynamic_capture};
     if (ref($dynamic_capture) eq 'HASH') {
-        $dynamic_capture->{release_recapture_rule} =
-            $dynamic_state->{release_recapture_rule};
-        $dynamic_capture->{same_cycle_release_recapture_policy} =
-            $dynamic_state->{same_cycle_release_recapture_policy};
-        $dynamic_capture->{release_recapture_source} =
-            $dynamic_state->{release_recapture_source};
-        $dynamic_capture->{release_recapture_transaction} =
-            $dynamic_state->{release_recapture_transaction};
+        my $capture_transactions = $dynamic_capture->{transactions};
+        if (ref($capture_transactions) eq 'ARRAY') {
+            for my $capture_entry (@$capture_transactions) {
+                next unless ref($capture_entry) eq 'HASH';
+                next unless ($capture_entry->{transaction} // '') eq ($dynamic_state->{transaction} // '');
+                $capture_entry->{release_recapture_rule} =
+                    $dynamic_state->{release_recapture_rule};
+                $capture_entry->{same_cycle_release_recapture_policy} =
+                    $dynamic_state->{same_cycle_release_recapture_policy};
+                $capture_entry->{release_recapture_source} =
+                    $dynamic_state->{release_recapture_source};
+                $capture_entry->{release_recapture_transaction} =
+                    $dynamic_state->{release_recapture_transaction};
+            }
+        } else {
+            $dynamic_capture->{release_recapture_rule} =
+                $dynamic_state->{release_recapture_rule};
+            $dynamic_capture->{same_cycle_release_recapture_policy} =
+                $dynamic_state->{same_cycle_release_recapture_policy};
+            $dynamic_capture->{release_recapture_source} =
+                $dynamic_state->{release_recapture_source};
+            $dynamic_capture->{release_recapture_transaction} =
+                $dynamic_state->{release_recapture_transaction};
+        }
     }
 
-    $entry->{static_capture} = {
-        transaction                         => $static_state->{transaction},
-        concrete_id                         => $static_state->{concrete_id},
-        concrete_id_literal                 => $static_state->{concrete_id_literal},
-        capture_event_source                => 'admitted_static_read_request',
-        ownership                           => 'mixed_dynamic_static_concrete_read_id',
-        simultaneous_request_policy         => 'onehot0_mixed_read_request',
-        busy_signal                         => $static_state->{busy_signal},
-        capture_rule                        => $static_state->{capture_rule},
-        release_rule                        => $static_state->{release_rule},
-        release_recapture_rule              => $static_state->{release_recapture_rule},
-        same_cycle_release_recapture_policy =>
-            $static_state->{same_cycle_release_recapture_policy},
-        release_recapture_source            => $static_state->{release_recapture_source},
-        release_recapture_transaction       =>
-            $static_state->{release_recapture_transaction},
-    };
+    my @static_capture = map {
+        +{
+            transaction                         => $_->{transaction},
+            concrete_id                         => $_->{concrete_id},
+            concrete_id_literal                 => $_->{concrete_id_literal},
+            capture_event_source                => 'admitted_static_read_request',
+            ownership                           => 'mixed_dynamic_static_concrete_read_id',
+            simultaneous_request_policy         => 'onehot0_mixed_read_request',
+            busy_signal                         => $_->{busy_signal},
+            capture_rule                        => $_->{capture_rule},
+            release_rule                        => $_->{release_rule},
+            release_recapture_rule              => $_->{release_recapture_rule},
+            same_cycle_release_recapture_policy =>
+                $_->{same_cycle_release_recapture_policy},
+            release_recapture_source            => $_->{release_recapture_source},
+            release_recapture_transaction       => $_->{release_recapture_transaction},
+        }
+    } @$static_states;
+    $entry->{static_capture} =
+        @static_capture == 1 ? $static_capture[0] : \@static_capture;
 }
 
 sub _normalize_read_data(%args) {

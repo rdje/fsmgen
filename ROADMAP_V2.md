@@ -2506,6 +2506,24 @@ idle-or-releasing assertions for `r0`/`r1`/`r2`, dynamic guards across both
 static requests and static-ID exclusions, static guards across dynamic request
 and sibling static request, and same-transaction request exclusion on
 release-only rules.
+`.411` now ships one-dynamic-plus-two-static mixed dynamic/static read
+single-beat `RID` same-cycle release-and-recapture for the existing public
+sample. FSMGen emits `axi0_r0_dynamic_id_release_recapture`,
+`axi0_r1_static_busy_release_recapture`, and
+`axi0_r2_static_busy_release_recapture`; reports
+`mixed_dynamic_static_dynamic_read` under
+`dynamic_capture.transactions[0]`; reports list-shaped `static_capture[]` for
+`r1`/`r2`; uses
+`generated_multi_mixed_dynamic_static_read_demux_completion`; keeps
+release-only rules disjoint from same-transaction requests; composes dynamic
+guards across both static requests and both static-ID exclusions; composes
+static guards across dynamic request and sibling static request; and replaces
+`r0`/`r1`/`r2` request-not-busy assertions with idle-or-releasing assertions.
+The singular mixed read recapture shape, the three-static no-recapture
+boundary, and scalar single-beat read-data consumers remain preserved.
+Guarded selected schedule, strict check, semantic JSON, SystemVerilog, and
+verify-hdl probes passed; guarded focused `t/1438` stopped at the RAM cutoff
+before TAP output. `.412` now selects the next post-read-recapture activity.
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,

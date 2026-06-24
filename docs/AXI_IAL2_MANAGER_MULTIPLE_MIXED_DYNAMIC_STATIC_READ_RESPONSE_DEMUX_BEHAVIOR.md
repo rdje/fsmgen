@@ -67,9 +67,13 @@ The bounded slice requires:
 
 Burst-last `RID && RLAST`, read-data, burst-length/runtime validation,
 multi-beat output banks, two-dynamic plus one-static mixed read cardinality,
-broader mixed cardinalities, same-cycle widening, release-and-recapture,
-dynamic same-ID queues, scoreboards, direct backend behavior,
-backend-language variants, and VHDL remain future exact-owner work.
+broader mixed cardinalities, dynamic same-ID queues, scoreboards, direct
+backend behavior, backend-language variants, and VHDL remain future
+exact-owner work. One-dynamic-plus-two-static single-beat same-cycle
+release-and-recapture for this public sample is now documented in
+[AXI_IAL2_MANAGER_MULTIPLE_MIXED_DYNAMIC_STATIC_READ_RECAPTURE_BEHAVIOR](AXI_IAL2_MANAGER_MULTIPLE_MIXED_DYNAMIC_STATIC_READ_RECAPTURE_BEHAVIOR.md).
+The one-dynamic-plus-three-static mixed read sample remains outside that owner
+and keeps request-not-busy assertions with no `static_capture`.
 
 ## Generated Behavior
 
@@ -143,10 +147,11 @@ response_demux:
 
 The read report also lists generated completion signals, response-demux
 rules, per-transaction busy/capture/release state, and generated assertion
-names. The shipped assertion roles are:
+names. For the one-dynamic-plus-two-static public sample, generated assertions
+now use dynamic/static idle-or-releasing request assertions because same-cycle
+release-and-recapture is generated. The remaining assertion roles are
+preserved:
 
-- dynamic request not busy;
-- static request not busy for every selected static transaction;
 - mixed read request onehot0;
 - dynamic request does not use any selected static concrete ID;
 - active dynamic ID is not any selected static concrete ID;
@@ -154,6 +159,10 @@ names. The shipped assertion roles are:
 - pairwise raw response unique match across dynamic/static/static matches;
 - dynamic completion-active release; and
 - static completion-active release for every selected static transaction.
+
+The one-dynamic-plus-three-static mixed read sample still uses the original
+dynamic/static request-not-busy assertions and does not report
+`static_capture`.
 
 The existing one-dynamic plus one-static `.276` public sample keeps the
 singular `bounded_mixed_dynamic_static_read_rid_demux_contract` mode,

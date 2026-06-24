@@ -157,6 +157,13 @@ multi-beat output banks, two-dynamic plus one-static mixed cardinality,
 broader mixed cardinalities, same-cycle widening, release-and-recapture,
 dynamic same-ID queues, scoreboards, direct backend behavior,
 backend-language variants, and VHDL remain future exact owners.
+As of `IAL2-FEATURE-COMPLETENESS-FRONTIER.411`, the underlying
+one-dynamic-plus-two-static single-beat response-demux also supports
+same-cycle release-and-recapture. This read-data owner remains preserved: the
+single-beat read-data report still uses
+`generated_multi_mixed_dynamic_static_read_response_demux_completion_pulse`
+for `r0`, `r1`, and `r2`, and no raw-`ARLEN`, runtime, multi-beat, or
+burst-last read-data behavior changes in `.411`.
 
 ## Validation
 
