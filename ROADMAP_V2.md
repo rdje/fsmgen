@@ -2603,13 +2603,25 @@ concrete static write transactions, while the two-dynamic-plus-static shape
 needs an owned public report/assertion contract that combines multi-dynamic
 active selected-ID uniqueness with static concrete-ID reservations and
 dynamic-vs-static exclusions.
+`.340` now selects `.341`, direct generated behavior for bounded
+two-dynamic-plus-one-static mixed dynamic/static write `BID` response-demux.
+The selector changes no behavior. It chooses public sample stem
+`ppif/axi_manager_capacity_status_write_mixed_dynamic_static_response_demux_multi_dynamic.ppif`,
+support identity
+`intent.ppif_axi_manager_capacity_status_write_mixed_dynamic_static_response_demux_multi_dynamic`,
+focused behavior label `mixed_dynamic_static_write_demux_multi_dynamic`,
+dynamic write transactions `w0`/`w1`, static write transaction `w2` with ID
+`3`, the existing `bounded_multi_mixed_dynamic_static_write_bid_demux_contract`
+report mode, `onehot0_mixed_write_request`, active dynamic selected-ID
+uniqueness, static concrete-ID reservation/exclusion, and mixed response
+active/unique assertion roles.
 No behavior changed in
 `.270`, `.271`, `.273`, `.274`, `.275`, `.277`, `.278`,
 `.279`, `.281`, `.282`, `.283`, `.285`, `.286`, `.288`, `.290`, `.292`, or
 `.293`, `.294`, `.296`, `.297`, `.298`, `.300`, `.301`, `.302`, `.304`,
 `.305`, `.306`, `.308`, `.309`, `.311`, `.313`, `.315`, `.316`, `.317`, or
 `.319`, `.320`, `.321`, `.323`, `.324`, `.325`, `.327`, `.328`, `.329`,
-`.331`, `.332`, `.334`, `.336`, `.338`, or `.339`.
+`.331`, `.332`, `.334`, `.336`, `.338`, `.339`, or `.340`.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.
