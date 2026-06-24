@@ -2338,6 +2338,17 @@ report no `static_capture` recapture block; the two-static write sample is the
 smallest broader owner because it adds sibling static busy recapture and
 multiple static-ID exclusions without adding read `RLAST`/read-data
 preservation or two-dynamic active-ID uniqueness.
+`.399` selects `.400`, direct implementation of one-dynamic plus two-static
+mixed dynamic/static write `BID` same-cycle release-and-recapture for the
+existing multi-static public sample. The selector changes no behavior. The
+selected contract preserves the list-shaped multi-mixed write mode/source,
+transaction lists, static-ID reservations, response-demux rules, generated
+completions, onehot0/static-ID-exclusion/active-match/unique-match/
+completion-active assertions, and support-accounting identity. It adds
+list-shaped recapture report fields under `dynamic_capture.transactions[]` and
+`static_capture[]`, selects disjoint release-only and release-recapture guards
+for `w0`, `w1`, and `w2`, and replaces the selected request-not-busy assertions
+with idle-or-releasing names.
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,

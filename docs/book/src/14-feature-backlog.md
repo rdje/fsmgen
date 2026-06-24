@@ -7379,6 +7379,21 @@ broader owner because it adds sibling static busy recapture and multiple
 static-ID exclusions without adding read `RLAST`/read-data preservation or
 two-dynamic active-ID uniqueness.
 
+Multiple mixed dynamic/static write recapture contract selection:
+[AXI_IAL2_MANAGER_MULTIPLE_MIXED_DYNAMIC_STATIC_WRITE_RECAPTURE_CONTRACT_SELECTION](../../AXI_IAL2_MANAGER_MULTIPLE_MIXED_DYNAMIC_STATIC_WRITE_RECAPTURE_CONTRACT_SELECTION.md)
+selects `.400`, direct implementation of one-dynamic plus two-static mixed
+dynamic/static write `BID` same-cycle release-and-recapture for the existing
+multi-static public sample. The selector changes no behavior. The selected
+contract keeps `bounded_multi_mixed_dynamic_static_write_bid_demux_contract`,
+`generated_multi_mixed_dynamic_static_demux`, the `w0`/`w1`/`w2` transaction
+lists, static-ID reservations for `4'd3` and `4'd5`, generated demux rules,
+generated completions, and the existing onehot0/static-ID-exclusion/
+active-match/unique-match/completion-active assertions. It adds
+list-shaped recapture metadata under `dynamic_capture.transactions[]` and
+`static_capture[]`, makes release-only rules exclude same-transaction
+same-cycle requests, and replaces the `w0`, `w1`, and `w2` request-not-busy
+assertions with idle-or-releasing assertions.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after
