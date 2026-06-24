@@ -8347,6 +8347,16 @@ The first contract owner is deliberately narrower than static recapture,
 mixed sibling request widening, read `RID`/`RLAST`, read-data payload capture,
 queues, scoreboards, backend variants, and VHDL.
 
+Dynamic write same-cycle recapture contract:
+[AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_CONTRACT_SELECTION](../../AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_CONTRACT_SELECTION.md)
+selects `.365`, direct generated behavior for single-active dynamic write
+`BID` same-cycle release-and-recapture. The contract reuses the existing
+dynamic write response-demux public sample, preserves
+`bounded_dynamic_write_bid_demux_contract`, and adds report vocabulary for the
+recapture policy. A same-cycle request plus generated matching completion must
+pulse completion, capture the new `AWID`, and keep busy asserted while the
+response match still uses the pre-update selected ID.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same
