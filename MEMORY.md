@@ -10,9 +10,9 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.342: audit two-dynamic static read readiness`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.343` selects the public contract for bounded two-dynamic-plus-one-static mixed dynamic/static read single-beat RID response-demux; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.342` audited readiness for two-dynamic-plus-one-static mixed dynamic/static read single-beat RID response-demux and selected `.343`, public contract selection, with no behavior changes.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.343: select two-dynamic static read contract`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.344` implements bounded two-dynamic-plus-one-static mixed dynamic/static read single-beat RID response-demux under the `.343` public contract; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.343` selected `.344`, direct generated behavior for bounded two-dynamic-plus-one-static mixed dynamic/static read single-beat RID response-demux, with no behavior changes.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
 
