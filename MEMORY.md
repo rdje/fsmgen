@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.375: align dynamic recapture support prose`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.376` selects the first multiple all-dynamic same-cycle release-and-recapture contract owner; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.375` aligned generated dynamic transaction-ID support-detail prose with shipped single-active dynamic read burst-last release-and-recapture. The generated support detail now describes single-active dynamic read single-beat `RID` and burst-last `RID/RLAST` matching as including same-cycle release-and-recapture and leaves same-cycle recapture future only outside the selected single-active dynamic write `BID`, read single-beat `RID`, and read burst-last `RID/RLAST` demux boundaries. Parser syntax, PPIF samples, response-demux semantics, generated state/rules/assertions, support-accounting identities, HDL, and runtime behavior stayed unchanged.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.376: select multi-dynamic write recapture contract`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.377` selects the public contract for multiple all-dynamic write `BID` same-cycle release-and-recapture; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.376` selected `.377`, public contract selection for multiple all-dynamic write `BID` same-cycle release-and-recapture. The selector starts on write because it exercises multi-active dynamic selected-ID/busy ownership, onehot0 request policy, active-ID uniqueness, request no-active-same-ID checks, response active/unique-match assertions, and completion-active assertions without read-side `RLAST`, read-data, raw-`ARLEN`, runtime, or multi-beat preservation coupling. No parser, generator, PPIF sample, support-accounting catalog, validation behavior, generated artifact, test, schedule/check/semantic JSON, HDL, or runtime behavior changed.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
-- next_action: Start `.376`: select the first multiple all-dynamic recapture contract owner after the support-detail alignment.
+- next_action: Start `.377`: select the multiple all-dynamic write recapture public contract before behavior changes.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact

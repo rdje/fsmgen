@@ -3003,6 +3003,17 @@ and read burst-last `RID/RLAST` demux boundaries. Parser syntax, PPIF samples,
 response-demux semantics, generated state/rules, assertions, HDL, and runtime
 behavior are unchanged. The frontier advances to `.376`, selection of the
 first multiple all-dynamic recapture contract owner.
+`.376` now selects `.377`, public contract selection for multiple all-dynamic
+write `BID` same-cycle release-and-recapture. The selector changes no
+behavior. It starts on the write side because that shape exercises
+multi-active dynamic selected-ID/busy ownership, onehot0 request policy,
+active-ID uniqueness, request no-active-same-ID checks, response active-match,
+response unique-match, and completion-active assertions without read-side
+`RLAST`, raw non-final-beat, read-data, raw-`ARLEN`, runtime, or multi-beat
+preservation coupling. Multiple dynamic read single-beat recapture, read
+burst-last recapture, mixed dynamic/static recapture, static busy recapture,
+queues, scoreboards, backend variants, VHDL, and full-manager behavior remain
+later exact owners.
 No behavior changed in
 `.270`, `.271`, `.273`, `.274`, `.275`, `.277`, `.278`,
 `.279`, `.281`, `.282`, `.283`, `.285`, `.286`, `.288`, `.290`, `.292`, or
@@ -3012,7 +3023,7 @@ No behavior changed in
 `.331`, `.332`, `.334`, `.336`, `.338`, `.339`, `.340`, `.342`, `.343`,
 `.345`, `.346`, `.348`, `.349`, `.351`, `.352`, `.354`, `.356`, `.358`,
 `.359`, `.360`, `.362`, `.363`, `.364`, `.366`, `.367`, `.369`, `.370`,
-`.371`, `.373`, or `.374`.
+`.371`, `.373`, `.374`, or `.376`.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.

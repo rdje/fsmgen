@@ -8481,6 +8481,19 @@ syntax, PPIF samples, response-demux semantics, generated state/rules,
 assertions, HDL, and runtime behavior are unchanged. The frontier advances to
 `.376`, selection of the first multiple all-dynamic recapture contract owner.
 
+Multiple dynamic recapture owner selection:
+[AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_RECAPTURE_CONTRACT_OWNER_SELECTION](../../AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_RECAPTURE_CONTRACT_OWNER_SELECTION.md)
+selects `.377`, public contract selection for multiple all-dynamic write `BID`
+same-cycle release-and-recapture. The selector changes no behavior. It starts
+on the write side because that shape exercises multi-active dynamic
+selected-ID/busy ownership, onehot0 request policy, active-ID uniqueness,
+request no-active-same-ID checks, response active-match, response unique-match,
+and completion-active assertions without read-side `RLAST`, raw non-final-beat,
+read-data, raw-`ARLEN`, runtime, or multi-beat preservation coupling. Multiple
+dynamic read single-beat recapture, read burst-last recapture, mixed
+dynamic/static recapture, static busy recapture, queues, scoreboards, backend
+variants, VHDL, and full-manager behavior remain later exact owners.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same
