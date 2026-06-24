@@ -7736,6 +7736,19 @@ same-transaction requests, dynamic recapture excludes all three reserved
 static IDs, and adjacent read-data/burst-length consumers keep their existing
 completion or raw matched-beat contracts.
 
+Post three-static mixed dynamic/static read RLAST recapture selector:
+[AXI_IAL2_MANAGER_POST_THREE_STATIC_MIXED_DYNAMIC_STATIC_READ_RLAST_RECAPTURE_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_THREE_STATIC_MIXED_DYNAMIC_STATIC_READ_RLAST_RECAPTURE_NEXT_SLICE_SELECTION.md)
+selects `.425`, readiness audit for two-dynamic-plus-one-static mixed
+dynamic/static read single-beat `RID` same-cycle release-and-recapture. The
+selector changes no behavior. Direct baseline probes confirmed the existing
+two-dynamic-plus-one-static read single-beat and burst-last reports still have
+no release-recapture fields, no `static_capture`, request-not-busy assertions
+for `r0`/`r1`/`r2`, and zero idle-or-releasing assertions. The single-beat
+shape is audited first because it covers multi-dynamic selected-ID recapture,
+active same-ID blocking, static concrete busy recapture, onehot0 mixed request
+policy, no-active-same-ID assertions, and active dynamic-ID uniqueness without
+the extra `RLAST` final-beat boundary.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

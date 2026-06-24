@@ -2721,6 +2721,19 @@ memory rose above cutoff; guarded verify-HDL was skipped after those repeated
 trips. Fallback direct adapter/report and FSM-to-SystemVerilog probes were
 used without raising the cutoff. `.424` is now the next selector after this
 recapture shipment.
+`.424` now selects `.425`, readiness audit for two-dynamic-plus-one-static
+mixed dynamic/static read single-beat `RID` same-cycle release-and-recapture
+on
+`ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_dynamic.ppif`.
+The selector changes no behavior. A direct adapter/report probe confirmed the
+current two-dynamic-plus-one-static mixed read single-beat and burst-last
+reports still have no release-recapture fields, no `static_capture`, three
+request-not-busy assertions, and zero idle-or-releasing assertions. The
+single-beat shape is selected for audit before burst-last because it exercises
+multi-dynamic selected-ID recapture, active same-ID blocking, static concrete
+busy recapture, onehot0 mixed request policy, no-active-same-ID assertions,
+and active dynamic-ID uniqueness without final-only `RLAST` release-source or
+raw non-final `RID` questions.
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,

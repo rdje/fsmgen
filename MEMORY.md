@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.423: ship three-static RLAST recapture`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.424` selects the next AXI IAL2 feature-completeness slice after one-dynamic-plus-three-static mixed read burst-last RID/RLAST recapture shipped; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.423` shipped one-dynamic-plus-three-static mixed dynamic/static read burst-last RID/RLAST same-cycle release-and-recapture for ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static3_burst_last.ppif by widening only the burst-last multi-mixed read recapture selector to one dynamic plus two or three static states and aligning focused RLAST expectations. Direct probes confirmed three static_capture entries r1/r2/r3, r0/r1/r2/r3 idle-or-releasing assertions, r3 release-recapture wiring, one-/two-static preservation, two-dynamic no-recapture preservation, and read-data completion-validity preservation. RAM-guarded focused/heavier probes that exceeded the default cutoff were not retried with a higher cutoff.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.424: select two-dynamic static read recapture audit`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.425` audits two-dynamic-plus-one-static mixed read single-beat RID same-cycle release-and-recapture readiness; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.424` selected `.425`, readiness audit for two-dynamic-plus-one-static mixed dynamic/static read single-beat RID same-cycle release-and-recapture on ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_dynamic.ppif. A direct adapter/report probe confirmed the current single-beat and burst-last two-dynamic-plus-one-static mixed read reports still have no release-recapture fields, no static_capture, three request-not-busy assertions, and zero idle-or-releasing assertions. No behavior changed.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
-- next_action: Start `.424`: select the next exact AXI IAL2 slice after the three-static mixed read burst-last recapture shipment.
+- next_action: Start `.425`: audit two-dynamic-plus-one-static mixed read single-beat recapture readiness.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact
