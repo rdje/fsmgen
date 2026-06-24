@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.409: audit broader read recapture readiness`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.410` selects the one-dynamic plus two-static mixed read single-beat recapture public contract; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.409` selected `.410`, public contract selection for one-dynamic-plus-two-static mixed dynamic/static read single-beat `RID` same-cycle release-and-recapture. No behavior changed. A guarded baseline schedule probe for `ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static.ppif` completed at host memory 79.6% against the default 88% cutoff and produced a 44021-byte schedule report showing request-not-busy assertions, no `static_capture`, and no dynamic recapture fields.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.410: select multi-static read recapture contract`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.411` implements one-dynamic plus two-static mixed read single-beat recapture; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.410` selected `.411`, direct implementation of one-dynamic-plus-two-static mixed dynamic/static read single-beat `RID` same-cycle release-and-recapture. No behavior changed. The contract selects dynamic recapture fields for `dynamic_capture.transactions[0]`, list-shaped `static_capture[]` for `r1`/`r2`, `generated_multi_mixed_dynamic_static_read_demux_completion`, and idle-or-releasing assertions while preserving scalar single-beat read-data consumers. A guarded baseline probe completed at host memory 83.5% and produced 44021 bytes.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
-- next_action: Start `.410`: select the public contract for one-dynamic-plus-two-static mixed dynamic/static read single-beat `RID` same-cycle release-and-recapture with no behavior changes, then commit.
+- next_action: Start `.411`: implement the selected one-dynamic-plus-two-static mixed dynamic/static read single-beat `RID` same-cycle release-and-recapture contract, then commit.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact

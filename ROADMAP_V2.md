@@ -2487,6 +2487,25 @@ was found before contract selection; direct behavior remains deferred until
 list-shaped static read recapture, dynamic guard composition,
 idle-or-releasing assertion names, and scalar read-data preservation are
 contract-owned.
+`.410` now selects `.411`, direct implementation of one-dynamic-plus-two-static
+mixed dynamic/static read single-beat `RID` same-cycle release-and-recapture
+for the existing support-accounted public sample. The selector changes no
+behavior. A guarded baseline schedule probe completed at host memory 83.5%
+against the default 88% cutoff and produced a 44021-byte report. The selected
+contract preserves the public syntax, support identity, multi-mixed read
+single-beat mode, generated completion source, response semantics,
+dynamic/static/mixed transaction lists, static ID reservations, generated
+demux rules/completions, onehot0/static-ID-exclusion/active-match/
+unique-match/completion-active assertions, and scalar single-beat read-data
+consumers. It selects dynamic recapture fields for
+`dynamic_capture.transactions[0]`, list-shaped `static_capture[]` entries for
+`r1`/`r2`, `mixed_dynamic_static_dynamic_read`,
+`mixed_dynamic_static_static_read`,
+`generated_multi_mixed_dynamic_static_read_demux_completion`,
+idle-or-releasing assertions for `r0`/`r1`/`r2`, dynamic guards across both
+static requests and static-ID exclusions, static guards across dynamic request
+and sibling static request, and same-transaction request exclusion on
+release-only rules.
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,

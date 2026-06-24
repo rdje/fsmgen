@@ -7553,6 +7553,18 @@ contract must pin list-shaped static read recapture, dynamic guard
 composition across both static siblings, idle-or-releasing assertion names,
 and scalar read-data preservation before behavior widens.
 
+Multiple mixed dynamic/static read recapture contract selection:
+[AXI_IAL2_MANAGER_MULTIPLE_MIXED_DYNAMIC_STATIC_READ_RECAPTURE_CONTRACT_SELECTION](../../AXI_IAL2_MANAGER_MULTIPLE_MIXED_DYNAMIC_STATIC_READ_RECAPTURE_CONTRACT_SELECTION.md)
+selects `.411`, direct implementation of one-dynamic-plus-two-static mixed
+dynamic/static read single-beat `RID` same-cycle release-and-recapture. The
+selector changes no behavior. A guarded baseline schedule probe completed at
+host memory 83.5% against the default 88% cutoff and produced a 44021-byte
+report. The contract selects dynamic recapture fields for
+`dynamic_capture.transactions[0]`, list-shaped `static_capture[]` entries for
+`r1`/`r2`, `generated_multi_mixed_dynamic_static_read_demux_completion`, and
+idle-or-releasing assertions while preserving scalar single-beat read-data
+consumers.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after
