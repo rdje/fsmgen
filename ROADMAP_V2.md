@@ -2372,6 +2372,20 @@ while adding only one more concrete static sibling. Two-dynamic recapture
 remains deferred behind active dynamic-ID uniqueness and no-active-same-ID
 checks; broader mixed read recapture remains deferred behind `RID`/`RLAST`,
 read-data, raw-`ARLEN`, runtime, and multi-beat preservation.
+`.402` selects `.403`, direct implementation of one-dynamic plus three-static
+mixed dynamic/static write `BID` same-cycle release-and-recapture for the
+existing three-static public sample. The selector changes no behavior. The
+selected contract preserves public syntax, support identity,
+`bounded_multi_mixed_dynamic_static_write_bid_demux_contract`,
+`generated_multi_mixed_dynamic_static_demux`,
+`matched_dynamic_or_static_concrete_id`, transaction lists, static-ID
+reservations for `4'd3`/`4'd5`/`4'd7`, generated demux rules/completions, and
+onehot0/static-ID-exclusion/active-match/pairwise-unique-match/
+completion-active assertions. It selects dynamic recapture fields under
+`dynamic_capture.transactions[0]`, list-shaped `static_capture[]` entries for
+`w1`/`w2`/`w3`, disjoint release-only and release-recapture guards for all
+four transactions, and idle-or-releasing assertion names for `w0`/`w1`/`w2`/
+`w3`.
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,
