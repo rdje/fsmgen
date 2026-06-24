@@ -2282,6 +2282,13 @@ the mixed read single-beat mode/scope/source, static-ID reservation, onehot0
 request policy, response active/unique-match, and completion-active assertions
 are preserved. The mixed read burst-last `RID && RLAST` sample remains
 unchanged with no recapture metadata or `static_capture` report block.
+`.393` selects `.394`, readiness audit for mixed dynamic/static read
+burst-last `RID && RLAST` same-cycle release-and-recapture. The selector
+changes no behavior. Burst-last is the nearest sibling after `.392`, but it
+needs audit before contract selection because final-only release and recapture
+must preserve raw non-final `RID` beats, raw active/unique-match assertions,
+scalar last-beat read-data, raw `ARLEN`, runtime beat-count/`RLAST`
+validation, and multi-beat output-bank consumers.
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,

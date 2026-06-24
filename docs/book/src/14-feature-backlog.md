@@ -7307,6 +7307,16 @@ support identity, `bounded_mixed_dynamic_static_read_rid_demux_contract`,
 are preserved; the mixed read burst-last `RID && RLAST` sample remains
 unchanged.
 
+Post mixed dynamic/static read recapture selector:
+[AXI_IAL2_MANAGER_POST_MIXED_DYNAMIC_STATIC_READ_RECAPTURE_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MIXED_DYNAMIC_STATIC_READ_RECAPTURE_NEXT_SLICE_SELECTION.md)
+selects `.394`, readiness audit for mixed dynamic/static read burst-last
+`RID && RLAST` same-cycle release-and-recapture. The selector changes no
+behavior. Burst-last is the nearest sibling after `.392`, but it needs audit
+before contract selection because final-only release and recapture must
+preserve raw non-final `RID` beats, raw active/unique-match assertions,
+scalar last-beat read-data, raw `ARLEN`, runtime beat-count/`RLAST`
+validation, and multi-beat output-bank consumers.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after
