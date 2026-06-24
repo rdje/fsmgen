@@ -2652,6 +2652,17 @@ source `generated_multi_mixed_dynamic_static_read_demux`,
 `onehot0_mixed_read_request`, active dynamic selected-ID uniqueness, static
 concrete-ID reservation/exclusion, and raw `RID` response active/unique
 assertion roles.
+`.344` now ships that generated behavior through the support-accounted public
+sample
+`ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_dynamic.ppif`.
+Mixed dynamic/static read single-beat response-demux now accepts exactly two
+dynamic read transactions plus one concrete static read transaction, emits
+selected dynamic ID/busy state for `r0`/`r1`, static busy state for `r2`,
+onehot0 mixed request assertions, per-dynamic request no-active-same-ID
+checks, pairwise active dynamic selected-ID uniqueness, static-ID reservation
+and request/active exclusion for `4'd3`, three raw `RID` completion pulses,
+and list-shaped report fields while preserving the `.276`, `.299`, and
+`.322` mixed read single-beat report contracts.
 No behavior changed in
 `.270`, `.271`, `.273`, `.274`, `.275`, `.277`, `.278`,
 `.279`, `.281`, `.282`, `.283`, `.285`, `.286`, `.288`, `.290`, `.292`, or
