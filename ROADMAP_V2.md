@@ -2473,6 +2473,20 @@ recapture adds active dynamic-ID uniqueness and no-active-same-ID guards. A
 guarded candidate schedule probe stopped before usable output at host memory
 92.0% against the default 88% cutoff; output was 0 bytes and no cutoff was
 raised.
+`.409` now selects `.410`, public contract selection for
+one-dynamic-plus-two-static mixed dynamic/static read single-beat `RID`
+same-cycle release-and-recapture. The audit changes no behavior. A guarded
+baseline schedule probe for
+`ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static.ppif`
+completed at host memory 79.6% against the default 88% cutoff and produced a
+44021-byte schedule report. The live report still has request-not-busy
+assertions for `r0`/`r1`/`r2`, no `static_capture`, and no
+release-recapture fields under `dynamic_capture.transactions[]`. No smaller
+parser/source/support-accounting/report-substrate or lower IAL prerequisite
+was found before contract selection; direct behavior remains deferred until
+list-shaped static read recapture, dynamic guard composition,
+idle-or-releasing assertion names, and scalar read-data preservation are
+contract-owned.
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,

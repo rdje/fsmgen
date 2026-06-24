@@ -7539,6 +7539,20 @@ guarded candidate schedule probe stopped before usable output at host memory
 92.0% against the default 88% cutoff; output was 0 bytes and no cutoff was
 raised.
 
+Multiple mixed dynamic/static read recapture readiness audit:
+[AXI_IAL2_MANAGER_MULTIPLE_MIXED_DYNAMIC_STATIC_READ_RECAPTURE_READINESS_AUDIT](../../AXI_IAL2_MANAGER_MULTIPLE_MIXED_DYNAMIC_STATIC_READ_RECAPTURE_READINESS_AUDIT.md)
+selects `.410`, public contract selection for one-dynamic-plus-two-static
+mixed dynamic/static read single-beat `RID` same-cycle release-and-recapture.
+The audit changes no behavior. A guarded baseline schedule probe for
+`ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static.ppif`
+completed at host memory 79.6% against the default 88% cutoff and produced a
+44021-byte schedule report. The live report still has request-not-busy
+assertions for `r0`/`r1`/`r2`, no `static_capture`, and no
+release-recapture fields under `dynamic_capture.transactions[]`. The next
+contract must pin list-shaped static read recapture, dynamic guard
+composition across both static siblings, idle-or-releasing assertion names,
+and scalar read-data preservation before behavior widens.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after
