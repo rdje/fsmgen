@@ -7722,6 +7722,20 @@ list-shaped `static_capture[]` entries for `r1`/`r2`/`r3`, final-beat
 release-recapture source, dynamic/static guard composition, same-transaction
 request exclusions, and idle-or-releasing assertion names.
 
+Three-static mixed dynamic/static read RLAST recapture behavior:
+[AXI_IAL2_MANAGER_THREE_STATIC_MIXED_DYNAMIC_STATIC_READ_RLAST_RECAPTURE_BEHAVIOR](../../AXI_IAL2_MANAGER_THREE_STATIC_MIXED_DYNAMIC_STATIC_READ_RLAST_RECAPTURE_BEHAVIOR.md)
+ships one-dynamic-plus-three-static mixed dynamic/static read burst-last
+`RID && RLAST` same-cycle release-and-recapture for the existing three-static
+public sample. The public syntax is unchanged. The report now includes
+dynamic recapture under `dynamic_capture.transactions[0]`, list-shaped
+`static_capture[]` entries for `r1`/`r2`/`r3`, final-beat
+`generated_multi_mixed_dynamic_static_read_demux_last_beat_completion`, and
+idle-or-releasing assertions for all four transactions. The generated rules
+include `axi0_r3_static_busy_release_recapture`, release-only guards exclude
+same-transaction requests, dynamic recapture excludes all three reserved
+static IDs, and adjacent read-data/burst-length consumers keep their existing
+completion or raw matched-beat contracts.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

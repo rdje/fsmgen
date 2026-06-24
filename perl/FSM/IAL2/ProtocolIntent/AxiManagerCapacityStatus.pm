@@ -2049,7 +2049,7 @@ sub _normalize_response_demux_read(%args) {
             if ($multi_mixed) {
                 $entry{static_id_reservations} = _clone_jsonish($plan->{static_id_reservations});
                 _response_demux_mark_mixed_dynamic_static_read_recapture(\%entry)
-                    if @dynamic_states == 1 && @static_states == 2;
+                    if @dynamic_states == 1 && (@static_states == 2 || @static_states == 3);
             } else {
                 $entry{static_id_reservation} = _clone_jsonish($plan->{static_id_reservation});
                 _response_demux_mark_mixed_dynamic_static_read_recapture(

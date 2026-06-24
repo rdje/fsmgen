@@ -2701,6 +2701,26 @@ dynamic/static guard composition, release-only same-transaction request
 exclusions, idle-or-releasing assertion names, validation gates, RAM-guard
 fallback probes, rollback, docs, Knowledge Map impact, and deferred
 two-dynamic/backend/VHDL boundaries.
+`.423` now ships that one-dynamic-plus-three-static mixed dynamic/static read
+burst-last `RID && RLAST` same-cycle release-and-recapture behavior. The
+implementation widens only the burst-last multi-mixed read recapture selector
+from exactly one dynamic plus two static read transactions to exactly one
+dynamic plus two or three static read transactions, and aligns the focused
+RLAST report expectation helper. The selected public sample now reports
+dynamic recapture under `dynamic_capture.transactions[0]`, list-shaped
+`static_capture[]` entries for `r1`/`r2`/`r3`,
+`generated_multi_mixed_dynamic_static_read_demux_last_beat_completion`,
+r0/r1/r2/r3 idle-or-releasing assertions, and generated `r3` static
+release-recapture rule wiring. Direct preservation probes confirmed the
+one-static and two-static RLAST recapture shapes, the
+two-dynamic-plus-one-static no-recapture boundary, and the three-static
+read-data completion-validity contract remain in their expected shapes.
+Guarded selected schedule JSON passed; guarded focused `t/1438`, strict
+check JSON, and generated-SV attempts tripped the default RAM guard when host
+memory rose above cutoff; guarded verify-HDL was skipped after those repeated
+trips. Fallback direct adapter/report and FSM-to-SystemVerilog probes were
+used without raising the cutoff. `.424` is now the next selector after this
+recapture shipment.
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,
