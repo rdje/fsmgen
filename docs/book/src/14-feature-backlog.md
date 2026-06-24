@@ -8101,6 +8101,20 @@ The next exact owner after `.344` is `.345`, readiness audit for bounded
 two-dynamic-plus-one-static mixed dynamic/static read burst-last `RID`/`RLAST`
 response-demux.
 
+Two-dynamic/one-static mixed dynamic/static read burst-last readiness audit:
+[AXI_IAL2_MANAGER_TWO_DYNAMIC_ONE_STATIC_MIXED_DYNAMIC_STATIC_READ_RLAST_RESPONSE_DEMUX_READINESS_AUDIT](../../AXI_IAL2_MANAGER_TWO_DYNAMIC_ONE_STATIC_MIXED_DYNAMIC_STATIC_READ_RLAST_RESPONSE_DEMUX_READINESS_AUDIT.md)
+selects `.346`, public contract selection for bounded
+two-dynamic-plus-one-static mixed dynamic/static read burst-last `RID`/`RLAST`
+response-demux. The audit changes no behavior. A scratch guarded strict-check
+probe confirmed the current generated burst-last mixed dynamic/static read
+boundary still fails closed for this shape. The next selector must settle the
+sample stem, support identity, behavior label, last signal policy, report
+mode `bounded_multi_mixed_dynamic_static_read_rid_rlast_demux_contract`,
+completion source `generated_multi_mixed_dynamic_static_read_demux_last_beat`,
+raw `RID` beat ownership assertions, final `RID && RLAST` completions,
+diagnostics, validation, residue, rollback, and next frontier before any
+generated behavior changes.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same
