@@ -62,9 +62,15 @@ The bounded slice requires:
 - dynamic capture excluding the static concrete ID.
 
 Read-data, burst-length/runtime validation, multi-beat output banks, multiple
-mixed transactions, same-cycle widening, release-and-recapture, dynamic
-same-ID queues, scoreboards, direct backend behavior, backend-language
-variants, and VHDL remain future exact-owner work.
+mixed transactions, same-cycle widening, dynamic same-ID queues, scoreboards,
+direct backend behavior, backend-language variants, and VHDL remain future
+exact-owner work.
+
+As of `IAL2-FEATURE-COMPLETENESS-FRONTIER.396`, the same public sample also
+supports final-beat same-cycle release-and-recapture; see
+`docs/AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_READ_RLAST_RECAPTURE_BEHAVIOR.md`.
+The `.280` response-demux mode, final-beat match shape, and raw non-final
+`RID` assertion split remain the base behavior.
 
 ## Generated Behavior
 
@@ -140,7 +146,8 @@ response_demux:
 ```
 
 The read report also lists generated completion signals, response-demux rules,
-and generated assertion names. The shipped assertion roles are:
+and generated assertion names. In the original `.280` ship, the assertion
+roles were:
 
 - dynamic request not busy;
 - static request not busy;
@@ -151,6 +158,9 @@ and generated assertion names. The shipped assertion roles are:
 - raw response unique match;
 - dynamic completion-active release; and
 - static completion-active release.
+
+As of `.396`, the first two roles are idle-or-releasing request assertions and
+the report includes dynamic/static release-recapture metadata.
 
 ## Public Sample And Checks
 
@@ -185,7 +195,6 @@ remain fail-closed or unshipped:
 - multi-beat output banks over mixed dynamic/static read response-demux;
 - multiple mixed dynamic/static read or write transactions;
 - same-cycle dynamic/static request widening beyond onehot0;
-- same-cycle release-and-recapture;
 - dynamic same-ID ordering;
 - dynamic same-ID queues and scoreboards;
 - direct backend behavior outside the selected generated SystemVerilog path;

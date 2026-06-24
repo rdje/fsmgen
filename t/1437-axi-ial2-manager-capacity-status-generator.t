@@ -586,9 +586,31 @@ subtest 'mixed dynamic/static read burst-last response-demux gates completion wi
     );
     like(
         $isf,
+        qr/\(rule axi0_r0_dynamic_id_release \(& axi0_r0_complete axi0_r0_dynamic_busy_q \(! axi0_r0_request\)\)\s+\(axi0_r0_dynamic_busy_q 0\)\)/,
+        'mixed dynamic/static read RLAST demux dynamic release-only excludes same-cycle dynamic request',
+    );
+    like(
+        $isf,
+        qr/\(rule axi0_r1_static_busy_release \(& axi0_r1_complete axi0_r1_static_busy_q \(! axi0_r1_request\)\)\s+\(axi0_r1_static_busy_q 0\)\)/,
+        'mixed dynamic/static read RLAST demux static release-only excludes same-cycle static request',
+    );
+    like(
+        $isf,
+        qr/\(rule axi0_r0_dynamic_id_release_recapture \(& \(& axi0_r0_request \(\| \(< axi0_pending_reads_q 4\) \(\| axi0_r0_complete axi0_r1_complete\)\)\) axi0_r0_complete axi0_r0_dynamic_busy_q \(! \(& axi0_r1_request \(\| \(< axi0_pending_reads_q 4\) \(\| axi0_r0_complete axi0_r1_complete\)\)\)\) \(! \(== axi0_arid 4'd3\)\)\)\s+\(axi0_r0_dynamic_id_q axi0_arid\)\s+\(axi0_r0_dynamic_busy_q 1\)\)/,
+        'mixed dynamic/static read RLAST demux recaptures dynamic ID on same-cycle final dynamic completion',
+    );
+    like(
+        $isf,
+        qr/\(rule axi0_r1_static_busy_release_recapture \(& \(& axi0_r1_request \(\| \(< axi0_pending_reads_q 4\) \(\| axi0_r0_complete axi0_r1_complete\)\)\) axi0_r1_complete axi0_r1_static_busy_q \(! \(& axi0_r0_request \(\| \(< axi0_pending_reads_q 4\) \(\| axi0_r0_complete axi0_r1_complete\)\)\)\)\)\s+\(axi0_r1_static_busy_q 1\)\)/,
+        'mixed dynamic/static read RLAST demux recaptures static busy on same-cycle final static completion',
+    );
+    like(
+        $isf,
         qr/\(assert \(\| \(! axi0_read_complete\) \(\| \(& axi0_r0_dynamic_busy_q \(== axi0_rid axi0_r0_dynamic_id_q\)\) \(& axi0_r1_static_busy_q \(== axi0_rid 4'd3\)\)\)\) "axi0 read mixed dynamic\/static response matches active transaction"\)/,
         'mixed dynamic/static read RLAST demux keeps raw RID active-match assertion',
     );
+    like($isf, qr/"axi0 read dynamic request is idle or releasing active captured ID"/, 'mixed dynamic/static read RLAST demux emits dynamic idle-or-releasing assertion');
+    like($isf, qr/"axi0 read static request is idle or releasing active concrete ID"/, 'mixed dynamic/static read RLAST demux emits static idle-or-releasing assertion');
     like($isf, qr/"axi0 read mixed dynamic\/static response matches at most one transaction"/, 'mixed dynamic/static read RLAST demux emits raw response unique-match assertion');
     like($isf, qr/"axi0 r1 static completion releases active concrete ID"/, 'mixed dynamic/static read RLAST demux emits static completion-active assertion');
 
@@ -597,6 +619,8 @@ subtest 'mixed dynamic/static read burst-last response-demux gates completion wi
     my $fsm = $result->{generated_ial0}{files}{'axi0_capacity_status.fsm'};
     like($fsm, qr/\(-axi0_r0_response_demux\s+<\(& axi0_read_complete axi0_r0_dynamic_busy_q \(== axi0_rid axi0_r0_dynamic_id_q\) axi0_rlast\)/, 'scheduled .fsm lowers mixed dynamic RID/RLAST match');
     like($fsm, qr/\(-axi0_r1_response_demux\s+<\(& axi0_read_complete axi0_r1_static_busy_q \(== axi0_rid 4'd3\) axi0_rlast\)/, 'scheduled .fsm lowers mixed static RID/RLAST match');
+    like($fsm, qr/\(-axi0_r0_dynamic_id_release_recapture\s+<\(& \(& axi0_r0_request/, 'scheduled .fsm lowers mixed dynamic read RLAST release-recapture');
+    like($fsm, qr/\(-axi0_r1_static_busy_release_recapture\s+<\(& \(& axi0_r1_request/, 'scheduled .fsm lowers mixed static read RLAST release-recapture');
 
     my $hdl = hdl_for('axi0_capacity_status', $fsm);
     like($hdl, qr/\binput\s+(?:wire\s+)?\[3:0\]\s+axi0_arid\b/, 'SystemVerilog declares ARID for mixed read RLAST');
@@ -7159,8 +7183,8 @@ sub assert_mixed_dynamic_static_read_rlast_response_demux_report {
     is_deeply(
         $read->{generated_assertions},
         [qw(
-            axi0_r0_dynamic_request_not_busy
-            axi0_r1_static_request_not_busy
+            axi0_r0_dynamic_request_idle_or_releasing
+            axi0_r1_static_request_idle_or_releasing
             axi0_read_mixed_dynamic_static_request_onehot0
             axi0_r0_dynamic_request_not_static_id
             axi0_r0_dynamic_active_not_static_id
@@ -7183,8 +7207,31 @@ sub assert_mixed_dynamic_static_read_rlast_response_demux_report {
             busy_signal                 => 'axi0_r0_dynamic_busy_q',
             capture_rule                => 'axi0_r0_dynamic_id_capture',
             release_rule                => 'axi0_r0_dynamic_id_release',
+            release_recapture_rule      => 'axi0_r0_dynamic_id_release_recapture',
+            same_cycle_release_recapture_policy => 'mixed_dynamic_static_dynamic_read',
+            release_recapture_source    => 'generated_mixed_dynamic_static_read_demux_last_beat_completion',
+            release_recapture_transaction => 'r0',
         },
         "$owner reports dynamic read RLAST capture state and mixed ownership",
+    );
+    is_deeply(
+        $read->{static_capture},
+        {
+            transaction                         => 'r1',
+            concrete_id                         => 3,
+            concrete_id_literal                 => "4'd3",
+            capture_event_source                => 'admitted_static_read_request',
+            ownership                           => 'mixed_dynamic_static_concrete_read_id',
+            simultaneous_request_policy         => 'onehot0_mixed_read_request',
+            busy_signal                         => 'axi0_r1_static_busy_q',
+            capture_rule                        => 'axi0_r1_static_busy_capture',
+            release_rule                        => 'axi0_r1_static_busy_release',
+            release_recapture_rule              => 'axi0_r1_static_busy_release_recapture',
+            same_cycle_release_recapture_policy => 'mixed_dynamic_static_static_read',
+            release_recapture_source            => 'generated_mixed_dynamic_static_read_demux_last_beat_completion',
+            release_recapture_transaction       => 'r1',
+        },
+        "$owner reports static read RLAST capture and recapture state",
     );
     is_deeply(
         $demux->{residue},

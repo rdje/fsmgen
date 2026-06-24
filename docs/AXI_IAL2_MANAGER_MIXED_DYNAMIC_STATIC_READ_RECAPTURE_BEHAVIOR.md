@@ -143,10 +143,14 @@ static-ID reservation, onehot0 mixed read request policy, dynamic
 request/static-ID exclusion, active dynamic/static-ID exclusion, response
 active-match, response unique-match, and completion-active assertions.
 
-The mixed read burst-last `RID && RLAST` sample remains unchanged: it still has
-`bounded_mixed_dynamic_static_read_rid_rlast_demux_contract`, final-beat
-completion source, request-not-busy assertions, no recapture policy, and no
-`static_capture` report block.
+At `.392` closeout, the mixed read burst-last `RID && RLAST` sample remained
+unchanged: it still had `bounded_mixed_dynamic_static_read_rid_rlast_demux_contract`,
+final-beat completion source, request-not-busy assertions, no recapture policy,
+and no `static_capture` report block.
+
+As of `IAL2-FEATURE-COMPLETENESS-FRONTIER.396`, that burst-last sibling has
+also shipped same-cycle release-and-recapture under its own behavior record:
+`docs/AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_READ_RLAST_RECAPTURE_BEHAVIOR.md`.
 
 ## Validation
 

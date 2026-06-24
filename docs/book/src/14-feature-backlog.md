@@ -7342,6 +7342,20 @@ multi-beat consumers. It reuses `mixed_dynamic_static_dynamic_read` and
 `generated_mixed_dynamic_static_read_demux_last_beat_completion` as the
 release-recapture source.
 
+Mixed dynamic/static read RLAST recapture behavior:
+[AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_READ_RLAST_RECAPTURE_BEHAVIOR](../../AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_READ_RLAST_RECAPTURE_BEHAVIOR.md)
+ships `.396` under the existing public sample. FSMGen emits
+`axi0_r0_dynamic_id_release_recapture` and
+`axi0_r1_static_busy_release_recapture`, keeps release-only rules disjoint
+from same-transaction same-cycle requests, drives both recapture paths from
+generated final `RID && RLAST` completion pulses, reports the last-beat
+release-recapture source under `response_demux.read.dynamic_capture` and
+`response_demux.read.static_capture`, and replaces the selected
+request-not-busy assertions with `axi0_r0_dynamic_request_idle_or_releasing`
+and `axi0_r1_static_request_idle_or_releasing`. Public syntax, support
+identity, the burst-last mode/scope/source, raw non-final `RID` assertions,
+and scalar read-data/raw-`ARLEN`/runtime/multi-beat consumers are preserved.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.395: select mixed read RLAST recapture contract`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.396` implements mixed dynamic/static read burst-last RID/RLAST same-cycle release-and-recapture; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.395` selected `.396`, direct implementation of mixed dynamic/static read burst-last RID/RLAST same-cycle release-and-recapture for the existing public sample. The contract preserves mode/scope, `last_signal`, last-beat transaction-completion source, raw non-final RID assertions, and read-data/raw-ARLEN/runtime/multi-beat consumers; it reuses the mixed read policy names with `generated_mixed_dynamic_static_read_demux_last_beat_completion` as the release-recapture source. No behavior changed.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.396: ship mixed read RLAST recapture`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.397` selects the next post mixed dynamic/static read burst-last RID/RLAST recapture activity; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.396` shipped mixed dynamic/static read burst-last RID/RLAST same-cycle release-and-recapture for the existing public sample. FSMGen now emits dynamic and static release-recapture rules from generated final RID/RLAST completion pulses only, reports last-beat recapture metadata under `response_demux.read.dynamic_capture` and `response_demux.read.static_capture`, and replaces the selected request-not-busy assertions with idle-or-releasing assertions. Guarded schedule/focused t1438 probes stopped at the default RAM cutoff due high host memory and were not forced unbounded.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
-- next_action: Start `.396`: implement only the selected mixed dynamic/static read burst-last recapture contract and run guarded focused/preservation checks where host memory permits.
+- next_action: Start `.397`: select the next roadmap-aligned owner after mixed dynamic/static read burst-last recapture, recording validation retry, broader mixed/static recapture, cleanup, backend, or other deferred boundaries before any behavior change.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact

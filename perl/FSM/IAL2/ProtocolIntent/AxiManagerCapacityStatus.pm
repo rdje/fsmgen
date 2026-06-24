@@ -2046,6 +2046,10 @@ sub _normalize_response_demux_read(%args) {
                 $entry{static_id_reservations} = _clone_jsonish($plan->{static_id_reservations});
             } else {
                 $entry{static_id_reservation} = _clone_jsonish($plan->{static_id_reservation});
+                _response_demux_mark_mixed_dynamic_static_read_recapture(
+                    \%entry,
+                    release_recapture_source => 'generated_mixed_dynamic_static_read_demux_last_beat_completion',
+                );
             }
             return \%entry;
         }
@@ -2329,7 +2333,7 @@ sub _response_demux_mark_mixed_dynamic_static_write_recapture($entry) {
     };
 }
 
-sub _response_demux_mark_mixed_dynamic_static_read_recapture($entry) {
+sub _response_demux_mark_mixed_dynamic_static_read_recapture($entry, %args) {
     my $dynamic_states = $entry->{dynamic_transaction_state};
     my $static_states = $entry->{static_transaction_state};
     return unless ref($dynamic_states) eq 'ARRAY' && @$dynamic_states == 1;
@@ -2339,16 +2343,17 @@ sub _response_demux_mark_mixed_dynamic_static_read_recapture($entry) {
     my $static_state = $static_states->[0];
     return unless ref($dynamic_state) eq 'HASH' && ref($static_state) eq 'HASH';
 
+    my $release_recapture_source =
+        $args{release_recapture_source} // 'generated_mixed_dynamic_static_read_demux_completion';
+
     $dynamic_state->{same_cycle_release_recapture_policy} =
         'mixed_dynamic_static_dynamic_read';
-    $dynamic_state->{release_recapture_source} =
-        'generated_mixed_dynamic_static_read_demux_completion';
+    $dynamic_state->{release_recapture_source} = $release_recapture_source;
     $dynamic_state->{release_recapture_transaction} = $dynamic_state->{transaction};
 
     $static_state->{same_cycle_release_recapture_policy} =
         'mixed_dynamic_static_static_read';
-    $static_state->{release_recapture_source} =
-        'generated_mixed_dynamic_static_read_demux_completion';
+    $static_state->{release_recapture_source} = $release_recapture_source;
     $static_state->{release_recapture_transaction} = $static_state->{transaction};
 
     my $dynamic_capture = $entry->{dynamic_capture};
