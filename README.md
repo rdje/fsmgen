@@ -626,6 +626,15 @@ validation syntax/report vocabulary, expected-beat storage, beat-count
 storage, beat-count rules, assertions, and residue movement are already
 transaction-list driven after coverage admits the `r0`, `r1`, `r2`, `r3`
 transaction set. Three-static multi-beat output banks remain fail-closed.
+`.335` now ships that behavior. The support-accounted public sample
+`ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static3_burst_last_read_data_burst_length_runtime_assertion.ppif`
+generates raw-`ARLEN`, expected-beat, and read-beat-count storage for `r0`,
+`r1`, `r2`, and `r3`; request-time expected-count initialization;
+matched-read-beat counter increments; and four runtime assertions per
+covered transaction. Reports mark `beat_count_validation_generated_behavior`
+true and remove generated beat-count validation from residue while keeping
+multi-beat output banks deferred. `.336` now audits multi-beat output-bank
+readiness over this three-static runtime boundary.
 No behavior
 changed in `.273`, `.274`, `.275`,
 `.277`, `.278`, `.279`, `.281`,
@@ -2888,6 +2897,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/AXI_IAL2_MANAGER_THREE_STATIC_MIXED_DYNAMIC_STATIC_READ_DATA_BURST_LENGTH_READINESS_AUDIT.md` — audited three-static mixed dynamic/static read-data report-only raw-`ARLEN` burst-length readiness and selected direct implementation.
 - `docs/AXI_IAL2_MANAGER_THREE_STATIC_MIXED_DYNAMIC_STATIC_READ_DATA_BURST_LENGTH_BEHAVIOR.md` — shipped generated report-only raw-`ARLEN` burst-length capture over generated one dynamic plus three concrete static mixed dynamic/static last-beat read-data.
 - `docs/AXI_IAL2_MANAGER_THREE_STATIC_MIXED_DYNAMIC_STATIC_READ_DATA_RUNTIME_VALIDATION_READINESS_AUDIT.md` — audited three-static mixed dynamic/static runtime beat-count/`RLAST` validation readiness and selected direct implementation.
+- `docs/AXI_IAL2_MANAGER_THREE_STATIC_MIXED_DYNAMIC_STATIC_READ_DATA_RUNTIME_VALIDATION_BEHAVIOR.md` — shipped generated runtime beat-count/`RLAST` validation over generated one dynamic plus three concrete static mixed dynamic/static raw-`ARLEN` last-beat read-data.
 - `docs/AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md` — selected first AXI-derived IAL2 implementation subset and pre-code contract.
 - `docs/AXI_IAL2_VALID_READY_READINESS_AUDIT.md` — code/test/docs/report owner map for a future AXI Valid-Ready IAL2 implementation slice.
 - `docs/AXI_IAL2_VALID_READY_GENERATOR_FIRST_SLICE.md` — first in-process AXI Valid-Ready IAL2 generator slice and report surface.
@@ -2942,6 +2952,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static.ppif` — checked-in runnable `.ppif` sample for generated bounded multiple mixed dynamic/static read single-beat `RID` response matching through explicit `response-demux.read` with one dynamic and two concrete static read transactions, support-accounted through check JSON and semantic JSON.
 - `ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static3.ppif` — checked-in runnable `.ppif` sample for generated bounded broader mixed dynamic/static read single-beat `RID` response matching through explicit `response-demux.read` with one dynamic and three concrete static read transactions, support-accounted through check JSON and semantic JSON.
 - `ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static3_burst_last_read_data_burst_length.ppif` — checked-in runnable `.ppif` sample for generated report-only raw-`ARLEN` burst-length capture over generated one dynamic plus three concrete static mixed dynamic/static read burst-last/`RLAST` response-demux and scalar last-beat read-data, support-accounted through check JSON and semantic JSON.
+- `ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static3_burst_last_read_data_burst_length_runtime_assertion.ppif` — checked-in runnable `.ppif` sample for generated runtime beat-count/`RLAST` validation over generated one dynamic plus three concrete static mixed dynamic/static read burst-last/`RLAST` response-demux and scalar last-beat read-data, support-accounted through check JSON and semantic JSON.
 - `ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static_burst_last.ppif` — checked-in runnable `.ppif` sample for generated bounded multiple mixed dynamic/static read burst-last `RID && RLAST` response matching through explicit `response-demux.read` with one dynamic and two concrete static read transactions, support-accounted through check JSON and semantic JSON.
 - `ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_read_data.ppif` — checked-in runnable `.ppif` sample for generated scalar single-beat `RDATA`/`RRESP` capture over generated mixed dynamic/static read single-beat response-demux, support-accounted through check JSON and semantic JSON.
 - `ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_burst_last_read_data.ppif` — checked-in runnable `.ppif` sample for generated scalar last-beat `RDATA`/`RRESP` capture over generated mixed dynamic/static read burst-last/`RLAST` response-demux, support-accounted through check JSON and semantic JSON.

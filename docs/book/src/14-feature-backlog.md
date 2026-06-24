@@ -7958,6 +7958,17 @@ helpers are already transaction-list driven once coverage admits `r0`, `r1`,
 `r2`, and `r3`. Three-static multi-beat output banks remain future
 exact-owner work.
 
+Three-static mixed dynamic/static read-data runtime-validation behavior:
+[AXI_IAL2_MANAGER_THREE_STATIC_MIXED_DYNAMIC_STATIC_READ_DATA_RUNTIME_VALIDATION_BEHAVIOR](../../AXI_IAL2_MANAGER_THREE_STATIC_MIXED_DYNAMIC_STATIC_READ_DATA_RUNTIME_VALIDATION_BEHAVIOR.md)
+ships generated runtime beat-count/`RLAST` validation over generated
+one-dynamic plus three-concrete-static mixed dynamic/static raw-`ARLEN`
+last-beat read-data. The public sample
+`ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static3_burst_last_read_data_burst_length_runtime_assertion.ppif`
+emits expected-beat and read-beat-count state for `r0`, `r1`, `r2`, and
+`r3`, request-time initialization, matched-read-beat increments, and four
+runtime assertions per covered transaction. Multi-beat output banks remain
+future exact-owner work.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same

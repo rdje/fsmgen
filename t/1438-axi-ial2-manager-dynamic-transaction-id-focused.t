@@ -152,6 +152,15 @@ my @DYNAMIC_CASES = (
         behavior     => 'mixed_dynamic_static_read_data_multi_static3_burst_length',
     },
     {
+        label        => 'three-static mixed dynamic/static read-data runtime burst-length validation',
+        relpath      => 'ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static3_burst_last_read_data_burst_length_runtime_assertion.ppif',
+        object_id    => 'axi-manager-capacity-status-read-mixed-dynamic-static-response-demux-multi-static3-burst-last-read-data-burst-length-runtime-assertion',
+        intent_name  => 'axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static3_burst_last_read_data_burst_length_runtime_assertion',
+        entry_id     => 'intent.ppif_axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static3_burst_last_read_data_burst_length_runtime_assertion',
+        coverage     => 'ial2_ppif_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static3_burst_last_read_data_burst_length_runtime_assertion_pipeline_cli',
+        behavior     => 'mixed_dynamic_static_read_data_multi_static3_burst_length_runtime_assertion',
+    },
+    {
         label        => 'multiple mixed dynamic/static read-data single-beat capture',
         relpath      => 'ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static_read_data.ppif',
         object_id    => 'axi-manager-capacity-status-read-mixed-dynamic-static-response-demux-multi-static-read-data',
@@ -969,7 +978,9 @@ sub assert_dynamic_behavior {
         return;
     }
 
-    if ($case->{behavior} eq 'mixed_dynamic_static_read_data_multi_static3_burst_length') {
+    if ($case->{behavior} eq 'mixed_dynamic_static_read_data_multi_static3_burst_length'
+        || $case->{behavior} eq 'mixed_dynamic_static_read_data_multi_static3_burst_length_runtime_assertion') {
+        my $runtime_validation = $case->{behavior} eq 'mixed_dynamic_static_read_data_multi_static3_burst_length_runtime_assertion';
         my @static_cases = (
             { transaction => 'r1', value => 3, literal => "4'd3", label => 'first' },
             { transaction => 'r2', value => 5, literal => "4'd5", label => 'second' },
@@ -988,22 +999,52 @@ sub assert_dynamic_behavior {
             like($isf, qr/\(rule axi0_${tx}_burst_length_capture axi0_${tx}_request\s+\(axi0_${tx}_arlen_q axi0_arlen\)\)/, "three-static mixed burst-length read-data captures $tx raw ARLEN under request");
             like($isf, qr/\(rule axi0_${tx}_read_data_capture axi0_${tx}_complete\s+\(axi0_${tx}_last_rdata axi0_rdata\)\s+\(axi0_${tx}_last_rresp axi0_rresp\)\)/, "three-static mixed burst-length read-data keeps $tx payload capture under generated completion");
         }
-        unlike($isf, qr/read_beat_count_q|expected_beats_q|arlen_within_max/, 'three-static mixed report-only burst-length emits no runtime beat-count state or assertions');
+        if ($runtime_validation) {
+            for my $tx (qw(r0 r1 r2 r3)) {
+                like($isf, qr/\(var axi0_${tx}_expected_beats_q \(width 5\)\)/, "three-static mixed runtime burst-length declares $tx expected-beat storage");
+                like($isf, qr/\(var axi0_${tx}_read_beat_count_q \(width 5\)\)/, "three-static mixed runtime burst-length declares $tx beat-count storage");
+                like($isf, qr/\(rule axi0_${tx}_beat_count_init axi0_${tx}_request\s+\(axi0_${tx}_expected_beats_q \(\+ axi0_arlen\[4:0\] 5'd1\)\)\s+\(axi0_${tx}_read_beat_count_q 0\)\)/, "three-static mixed runtime burst-length initializes $tx expected count on request");
+                like($isf, qr/axi0 $tx ARLEN is within configured max beats/, "three-static mixed runtime burst-length emits $tx ARLEN bound assertion");
+                like($isf, qr/axi0 $tx RLAST appears only on the expected final read beat/, "three-static mixed runtime burst-length emits $tx early-RLAST assertion");
+                like($isf, qr/axi0 $tx expected final read beat has RLAST/, "three-static mixed runtime burst-length emits $tx missing-RLAST assertion");
+            }
+            like($isf, qr/\(rule axi0_r0_read_beat_count \(& \(& axi0_read_complete \(& axi0_r0_dynamic_busy_q \(== axi0_rid axi0_r0_dynamic_id_q\)\)\) \(! axi0_r0_request\)\)\s+\(axi0_r0_read_beat_count_q \(\+ axi0_r0_read_beat_count_q 5'd1\)\)\)/, 'three-static mixed runtime burst-length increments dynamic count on matched RID beat');
+            for my $static_case (@static_cases) {
+                my $transaction = $static_case->{transaction};
+                my $label = $static_case->{label};
+                my $literal = quotemeta($static_case->{literal});
+                like($isf, qr/\(rule axi0_${transaction}_read_beat_count \(& \(& axi0_read_complete \(& axi0_${transaction}_static_busy_q \(== axi0_rid $literal\)\)\) \(! axi0_${transaction}_request\)\)\s+\(axi0_${transaction}_read_beat_count_q \(\+ axi0_${transaction}_read_beat_count_q 5'd1\)\)\)/, "three-static mixed runtime burst-length increments $label static count on matched RID beat");
+            }
+        } else {
+            unlike($isf, qr/read_beat_count_q|expected_beats_q|arlen_within_max/, 'three-static mixed report-only burst-length emits no runtime beat-count state or assertions');
+        }
         assert_mixed_dynamic_static_read_rlast_multi_static_report($result->{report}, \@static_cases);
         assert_dynamic_read_data_burst_length_report(
             $result->{report}{read_data},
-            'report_only',
+            $runtime_validation ? 'runtime_assertion' : 'report_only',
             [qw(r0 r1 r2 r3)],
             'generated_multi_mixed_dynamic_static_read_response_demux_last_beat_completion_pulse',
         );
         like($fsm, qr/\(-axi0_r3_burst_length_capture\s+<axi0_r3_request\s+\(<- \(axi0_r3_arlen_q axi0_arlen\)\)\s+\)/, 'scheduled FSM lowers three-static third static raw ARLEN capture');
         like($fsm, qr/\(-axi0_r3_read_data_capture\s+<axi0_r3_complete\s+\(<- \(axi0_r3_last_rdata> axi0_rdata\)\)\s+\(<- \(axi0_r3_last_rresp> axi0_rresp\)\)/, 'scheduled FSM keeps three-static third static payload capture');
+        if ($runtime_validation) {
+            like($fsm, qr/\(<- \(axi0_r3_expected_beats_q \(\+ axi0_arlen\[4:0\] 5'd1\)\)\)/, 'scheduled FSM lowers three-static third static expected-beat initialization');
+            like($fsm, qr/\(<- \(axi0_r3_read_beat_count_q \(\+ axi0_r3_read_beat_count_q 5'd1\)\)\)/, 'scheduled FSM lowers three-static third static beat-count increment');
+        }
         my $hdl = hdl_for('axi0_capacity_status', $fsm);
         like($hdl, qr/\binput\s+(?:wire\s+)?\[7:0\]\s+axi0_arlen\b/, 'SystemVerilog exposes three-static mixed ARLEN');
         like($hdl, qr/assign\s+axi0_r3_burst_length_capture_en\s*=\s*axi0_r3_request\s*;/, 'SystemVerilog guards three-static third static ARLEN capture by request');
         like($hdl, qr/axi0_r3_arlen_q_next\s*=\s*axi0_arlen\s*;/, 'SystemVerilog captures three-static third static raw ARLEN');
         like($hdl, qr/assign\s+axi0_r3_read_data_capture_en\s*=\s*axi0_r3_complete\s*;/, 'SystemVerilog still guards three-static third static last-beat payload capture by completion');
-        unlike($hdl, qr/arlen_within_max|read_beat_count|expected_beats/, 'SystemVerilog keeps three-static mixed report-only burst-length free of runtime validation');
+        if ($runtime_validation) {
+            like($hdl, qr/\breg\s+\[4:0\]\s+axi0_r3_expected_beats_q\b/, 'SystemVerilog declares three-static third static expected-beat storage');
+            like($hdl, qr/\breg\s+\[4:0\]\s+axi0_r3_read_beat_count_q\b/, 'SystemVerilog declares three-static third static beat-count storage');
+            like($hdl, qr/assign\s+axi0_r3_beat_count_init_en\s*=\s*axi0_r3_request\s*;/, 'SystemVerilog guards three-static third static beat-count init by request');
+            like($hdl, qr/assign\s+axi0_r3_read_beat_count_en\s*=/, 'SystemVerilog emits three-static third static beat-count increment enable');
+            like($hdl, qr/axi0_r3_expected_beats_q_next\s*=\s*axi0_arlen\[4:0\]\s*\+\s*5'd1\s*;/, 'SystemVerilog initializes three-static third static expected count from ARLEN+1');
+        } else {
+            unlike($hdl, qr/arlen_within_max|read_beat_count|expected_beats/, 'SystemVerilog keeps three-static mixed report-only burst-length free of runtime validation');
+        }
         return;
     }
 

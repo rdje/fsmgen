@@ -2557,6 +2557,15 @@ validation syntax/report vocabulary, expected-beat storage, beat-count
 storage, beat-count rules, assertions, and residue movement are already
 transaction-list driven after coverage admits the `r0`, `r1`, `r2`, `r3`
 transaction set. Three-static multi-beat output banks remain fail-closed.
+`.335` now ships that behavior. The support-accounted public sample
+`ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static3_burst_last_read_data_burst_length_runtime_assertion.ppif`
+generates raw-`ARLEN`, expected-beat, and read-beat-count storage for `r0`,
+`r1`, `r2`, and `r3`; request-time expected-count initialization;
+matched-read-beat counter increments; and four runtime assertions per
+covered transaction. Reports mark `beat_count_validation_generated_behavior`
+true and remove generated beat-count validation from residue while keeping
+multi-beat output banks deferred. `.336` now audits multi-beat output-bank
+readiness over this three-static runtime boundary.
 No behavior changed in
 `.270`, `.271`, `.273`, `.274`, `.275`, `.277`, `.278`,
 `.279`, `.281`, `.282`, `.283`, `.285`, `.286`, `.288`, `.290`, `.292`, or
