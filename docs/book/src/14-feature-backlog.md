@@ -8295,6 +8295,21 @@ and the selected report vocabulary should keep
 `bounded_single_beat_read_data_contract` with generated mixed read
 single-beat completion validity.
 
+Two-dynamic/one-static mixed dynamic/static read single-beat read-data
+contract:
+[AXI_IAL2_MANAGER_TWO_DYNAMIC_ONE_STATIC_MIXED_DYNAMIC_STATIC_READ_DATA_CONTRACT_SELECTION](../../AXI_IAL2_MANAGER_TWO_DYNAMIC_ONE_STATIC_MIXED_DYNAMIC_STATIC_READ_DATA_CONTRACT_SELECTION.md)
+selects `.361`, direct generated behavior for bounded scalar single-beat
+read-data over the `.344` generated two-dynamic-plus-one-static mixed
+dynamic/static read single-beat `RID` response-demux. The selector changes no
+behavior. The selected public sample is
+`ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_dynamic_read_data.ppif`,
+with report mode `bounded_single_beat_read_data_contract`, completion validity
+`generated_multi_mixed_dynamic_static_read_response_demux_completion_pulse`,
+ordered transactions `r0`, `r1`, and `r2`, generated inputs `axi0_rdata` and
+`axi0_rresp`, scalar data/status outputs for each transaction, and read-data
+residue `rlast_completion`, `bursts`, and
+`multi_beat_read_data_reassembly`.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same
