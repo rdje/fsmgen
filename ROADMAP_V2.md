@@ -2527,14 +2527,20 @@ for `r0`, `r1`, `r2`, and `r3`, report the existing multi-mixed read demux
 contract modes, and bind read-data completion validity to the generated
 single-beat or last-beat response-demux completion pulses. Three-static raw
 `ARLEN`, runtime beat-count/`RLAST` validation, and multi-beat output banks
-remain future exact owners. `.331` is the next selector after this shipped
-behavior.
+remain future exact owners. `.331` now selects `.332`, readiness audit for
+report-only raw-`ARLEN` burst-length capture over generated one-dynamic plus
+three-concrete-static mixed dynamic/static read burst-last response-demux and
+scalar last-beat read-data. The selector changes no behavior and keeps
+runtime validation, multi-beat output banks, two-dynamic-plus-static shapes,
+broader cardinalities, same-cycle widening, queues/scoreboards, backend
+variants, and VHDL behind later exact owners.
 No behavior changed in
 `.270`, `.271`, `.273`, `.274`, `.275`, `.277`, `.278`,
 `.279`, `.281`, `.282`, `.283`, `.285`, `.286`, `.288`, `.290`, `.292`, or
 `.293`, `.294`, `.296`, `.297`, `.298`, `.300`, `.301`, `.302`, `.304`,
 `.305`, `.306`, `.308`, `.309`, `.311`, `.313`, `.315`, `.316`, `.317`, or
-`.319`, `.320`, `.321`, `.323`, `.324`, `.325`, `.327`, `.328`, or `.329`.
+`.319`, `.320`, `.321`, `.323`, `.324`, `.325`, `.327`, `.328`, `.329`, or
+`.331`.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.
