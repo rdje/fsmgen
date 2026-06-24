@@ -5,9 +5,8 @@ answers:
   - "what did IAL2-FEATURE-COMPLETENESS-FRONTIER.346 select?"
   - "what is the contract for two-dynamic-plus-static mixed read RLAST demux?"
   - "which PPIF sample stem is selected for two-dynamic-plus-static mixed read burst-last response demux?"
-  - "what should IAL2-FEATURE-COMPLETENESS-FRONTIER.347 implement?"
 date: 2026-06-24
-status: current
+status: superseded
 tags: [ial2, axi, dynamic-id, static-id, read-response-demux, rlast, contract]
 evidence: docs/AXI_IAL2_MANAGER_TWO_DYNAMIC_ONE_STATIC_MIXED_DYNAMIC_STATIC_READ_RLAST_RESPONSE_DEMUX_CONTRACT_SELECTION.md; docs/AXI_IAL2_MANAGER_TWO_DYNAMIC_ONE_STATIC_MIXED_DYNAMIC_STATIC_READ_RLAST_RESPONSE_DEMUX_READINESS_AUDIT.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md
 reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\.346|IAL2-FEATURE-COMPLETENESS-FRONTIER\.347|TWO_DYNAMIC_ONE_STATIC_MIXED_DYNAMIC_STATIC_READ_RLAST_RESPONSE_DEMUX_CONTRACT_SELECTION|axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_dynamic_burst_last|bounded_multi_mixed_dynamic_static_read_rid_rlast_demux_contract|generated_multi_mixed_dynamic_static_read_demux_last_beat|mixed_dynamic_static_read_rlast_demux_multi_dynamic|matched_dynamic_or_static_concrete_id_and_last_signal' docs/AXI_IAL2_MANAGER_TWO_DYNAMIC_ONE_STATIC_MIXED_DYNAMIC_STATIC_READ_RLAST_RESPONSE_DEMUX_CONTRACT_SELECTION.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md README.md ROADMAP_V2.md docs/book/src/14-feature-backlog.md

@@ -8129,6 +8129,19 @@ raw `RID` beat ownership assertions independent of `RLAST`, final
 `RID && RLAST` generated completions, and explicit read-data, raw `ARLEN`,
 runtime-validation, and multi-beat residue. The selector changes no behavior.
 
+Two-dynamic/one-static mixed dynamic/static read burst-last response-demux
+behavior:
+[AXI_IAL2_MANAGER_TWO_DYNAMIC_ONE_STATIC_MIXED_DYNAMIC_STATIC_READ_RLAST_RESPONSE_DEMUX_BEHAVIOR](../../AXI_IAL2_MANAGER_TWO_DYNAMIC_ONE_STATIC_MIXED_DYNAMIC_STATIC_READ_RLAST_RESPONSE_DEMUX_BEHAVIOR.md)
+ships `.347`, generated bounded two-dynamic-plus-one-static mixed
+dynamic/static read burst-last `RID`/`RLAST` response-demux. The public sample
+is
+`ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_dynamic_burst_last.ppif`.
+It captures dynamic `ARID` for `r0`/`r1`, tracks static busy state for `r2`,
+preserves raw `RID` response ownership assertions independent of `RLAST`, and
+emits generated completions only on final `RID && RLAST` matches. Read-data,
+raw `ARLEN`, runtime-validation, and multi-beat behavior over this shape remain
+explicit residue.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same

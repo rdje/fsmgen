@@ -2,12 +2,10 @@
 id: ial2-two-dynamic-one-static-read-rlast-demux-readiness
 title: Two-dynamic/one-static mixed read burst-last response-demux needs contract selection
 answers:
-  - "is two-dynamic-plus-static mixed read burst-last response-demux implemented?"
   - "what did IAL2-FEATURE-COMPLETENESS-FRONTIER.345 decide?"
-  - "what is the next task for two-dynamic-plus-static mixed read RLAST demux?"
-  - "what sample stem is planned for two-dynamic-plus-static mixed read burst-last response demux?"
+  - "what did the two-dynamic-plus-static mixed read burst-last readiness audit find?"
 date: 2026-06-24
-status: current
+status: superseded
 tags: [ial2, axi, dynamic-id, static-id, read-response-demux, rlast, readiness]
 evidence: docs/AXI_IAL2_MANAGER_TWO_DYNAMIC_ONE_STATIC_MIXED_DYNAMIC_STATIC_READ_RLAST_RESPONSE_DEMUX_READINESS_AUDIT.md; perl/FSM/IAL2/ProtocolIntent/AxiManagerCapacityStatus.pm; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md
 reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\.345|IAL2-FEATURE-COMPLETENESS-FRONTIER\.346|TWO_DYNAMIC_ONE_STATIC_MIXED_DYNAMIC_STATIC_READ_RLAST_RESPONSE_DEMUX_READINESS_AUDIT|axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_dynamic_burst_last|bounded_multi_mixed_dynamic_static_read_rid_rlast_demux_contract|generated_multi_mixed_dynamic_static_read_demux_last_beat|mixed_dynamic_static_read_rlast_demux_multi_dynamic' docs/AXI_IAL2_MANAGER_TWO_DYNAMIC_ONE_STATIC_MIXED_DYNAMIC_STATIC_READ_RLAST_RESPONSE_DEMUX_READINESS_AUDIT.md perl/FSM/IAL2/ProtocolIntent/AxiManagerCapacityStatus.pm docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md README.md ROADMAP_V2.md docs/book/src/14-feature-backlog.md

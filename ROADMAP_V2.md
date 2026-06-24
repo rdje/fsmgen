@@ -2692,6 +2692,15 @@ completion source `generated_multi_mixed_dynamic_static_read_demux_last_beat`,
 raw `RID` beat ownership assertions independent of `RLAST`, final
 `RID && RLAST` generated completions, and explicit read-data, raw `ARLEN`,
 runtime-validation, and multi-beat residue.
+`.347` now ships that generated behavior through the support-accounted public
+sample
+`ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_dynamic_burst_last.ppif`.
+It accepts exactly two dynamic read transactions plus one concrete static read
+transaction under `response-scope burst-last`, emits selected dynamic ID/busy
+state for `r0`/`r1`, static busy state for `r2`, raw `RID` active/unique
+response assertions independent of `RLAST`, and final `RID && RLAST` generated
+completion pulses. Read-data, raw `ARLEN`, runtime-validation, and multi-beat
+behavior over this shape remain explicit residue.
 No behavior changed in
 `.270`, `.271`, `.273`, `.274`, `.275`, `.277`, `.278`,
 `.279`, `.281`, `.282`, `.283`, `.285`, `.286`, `.288`, `.290`, `.292`, or

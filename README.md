@@ -761,6 +761,21 @@ completion source `generated_multi_mixed_dynamic_static_read_demux_last_beat`,
 raw `RID` beat ownership assertions independent of `RLAST`, final
 `RID && RLAST` generated completions, and explicit read-data, raw `ARLEN`,
 runtime-validation, and multi-beat residue.
+`.347` now ships that generated behavior through the support-accounted public
+sample
+`ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_dynamic_burst_last.ppif`.
+Mixed dynamic/static read burst-last response-demux now accepts exactly two
+dynamic read transactions plus one concrete static read transaction, emits
+selected dynamic ID/busy state for `r0`/`r1`, static busy state for `r2`, keeps
+raw `RID` active/unique response assertions independent of `RLAST`, and gates
+the three generated completion pulses with final `RID && RLAST` matches.
+Schedule JSON reports
+`bounded_multi_mixed_dynamic_static_read_rid_rlast_demux_contract`,
+`generated_multi_mixed_dynamic_static_read_demux_last_beat`,
+`matched_dynamic_or_static_concrete_id_and_last_signal`,
+`active_dynamic_ids_must_be_unique`, and static exclusion `4'd3`, while
+read-data, raw `ARLEN`, runtime-validation, and multi-beat behavior over this
+shape remain explicit residue.
 No behavior
 changed in `.273`, `.274`, `.275`,
 `.277`, `.278`, `.279`, `.281`,
@@ -3035,6 +3050,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/AXI_IAL2_MANAGER_TWO_DYNAMIC_ONE_STATIC_MIXED_DYNAMIC_STATIC_READ_RESPONSE_DEMUX_BEHAVIOR.md` — shipped generated bounded two-dynamic-plus-one-static mixed dynamic/static read single-beat `RID` response-demux.
 - `docs/AXI_IAL2_MANAGER_TWO_DYNAMIC_ONE_STATIC_MIXED_DYNAMIC_STATIC_READ_RLAST_RESPONSE_DEMUX_READINESS_AUDIT.md` — audited two-dynamic-plus-one-static mixed dynamic/static read burst-last `RID`/`RLAST` response-demux readiness and selected public contract selection.
 - `docs/AXI_IAL2_MANAGER_TWO_DYNAMIC_ONE_STATIC_MIXED_DYNAMIC_STATIC_READ_RLAST_RESPONSE_DEMUX_CONTRACT_SELECTION.md` — selected direct generated behavior for bounded two-dynamic-plus-one-static mixed dynamic/static read burst-last `RID`/`RLAST` response-demux.
+- `docs/AXI_IAL2_MANAGER_TWO_DYNAMIC_ONE_STATIC_MIXED_DYNAMIC_STATIC_READ_RLAST_RESPONSE_DEMUX_BEHAVIOR.md` — shipped generated bounded two-dynamic-plus-one-static mixed dynamic/static read burst-last `RID`/`RLAST` response-demux.
 - `docs/AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md` — selected first AXI-derived IAL2 implementation subset and pre-code contract.
 - `docs/AXI_IAL2_VALID_READY_READINESS_AUDIT.md` — code/test/docs/report owner map for a future AXI Valid-Ready IAL2 implementation slice.
 - `docs/AXI_IAL2_VALID_READY_GENERATOR_FIRST_SLICE.md` — first in-process AXI Valid-Ready IAL2 generator slice and report surface.

@@ -10,9 +10,9 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.346: select two-dynamic static read rlast contract`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.347` implements bounded two-dynamic-plus-one-static mixed dynamic/static read burst-last RID/RLAST response-demux under the `.346` public contract; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.346` selected `.347`, direct generated behavior for bounded two-dynamic-plus-one-static mixed dynamic/static read burst-last RID/RLAST response-demux, with no behavior changes.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.347: ship two-dynamic static read rlast demux`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.348` audits scalar read-data readiness over the two-dynamic-plus-one-static mixed dynamic/static read burst-last RID/RLAST response-demux; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.347` shipped generated bounded two-dynamic-plus-one-static mixed dynamic/static read burst-last RID/RLAST response-demux through support-accounted sample `ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_dynamic_burst_last.ppif`. Validation passed syntax checks, direct schedule/check/semantic/default-HDL/verify-HDL probes for the new sample, t/248 with 4548 tests, and the focused t/1438 behavior with CLI JSON skipped; the exact focused t/1438 filter with CLI JSON and the existing three-static burst-last preservation probe hit the default 88% RAM guard and were not forced unbounded.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
 
