@@ -1,7 +1,8 @@
 # AXI IAL2 Manager Dynamic Write Transaction-ID Capture Behavior
 
 Status: behavior shipped by `IAL2-FEATURE-COMPLETENESS-FRONTIER.223` on
-2026-06-22.
+2026-06-22; same-cycle release-and-recapture extension shipped by
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.365` on 2026-06-24.
 
 Task-tree owner: `IAL2-FEATURE-COMPLETENESS-FRONTIER.223`
 
@@ -30,7 +31,9 @@ The contract captures the write-family request ID source at the admitted
 write request, stores it in generated selected-ID state, tracks a single
 active dynamic write with generated busy state, matches the raw accepted write
 response `BID` against that captured ID, pulses the transaction completion,
-and releases busy from that generated completion.
+and releases busy from that generated completion. The `.365` extension also
+handles a same-cycle generated completion plus new admitted `w0` request by
+recapturing the new `AWID` while keeping busy asserted.
 
 ## Generated IAL1 Shape
 
@@ -65,19 +68,33 @@ The response-demux rule matches the active captured ID:
   (pulse axi0_w0_complete))
 ```
 
-The release rule clears the single-active busy bit from the generated matched
-completion pulse:
+The release-and-recapture rule handles a same-cycle generated matched
+completion plus admitted request. The response match still uses the pre-update
+selected ID and busy state; the recapture assignment updates the next-cycle
+selected ID:
+
+```lisp
+(rule axi0_w0_dynamic_id_release_recapture
+  (& (& axi0_w0_request (| (< axi0_pending_writes_q 2) axi0_w0_complete))
+     axi0_w0_complete
+     axi0_w0_dynamic_busy_q)
+  (axi0_w0_dynamic_id_q axi0_awid)
+  (axi0_w0_dynamic_busy_q 1))
+```
+
+The release-only rule clears the single-active busy bit from the generated
+matched completion pulse only when there is no same-cycle request:
 
 ```lisp
 (rule axi0_w0_dynamic_id_release
-  (& axi0_w0_complete axi0_w0_dynamic_busy_q)
+  (& axi0_w0_complete axi0_w0_dynamic_busy_q (! axi0_w0_request))
   (axi0_w0_dynamic_busy_q 0))
 ```
 
 The generated runtime assertions require:
 
-- no admitted dynamic write request while the dynamic transaction is already
-  busy;
+- an admitted dynamic write request only when the slot is idle or releasing in
+  the same cycle;
 - a raw write response to match an active captured dynamic ID;
 - a generated dynamic completion to release an active captured ID.
 
@@ -123,10 +140,14 @@ response_demux:
       busy_signal: axi0_w0_dynamic_busy_q
       capture_rule: axi0_w0_dynamic_id_capture
       release_rule: axi0_w0_dynamic_id_release
+      release_recapture_rule: axi0_w0_dynamic_id_release_recapture
+      same_cycle_release_recapture_policy: single_active_dynamic_write
+      release_recapture_source: generated_dynamic_demux_completion
+      release_recapture_transaction: w0
     generated_rules: [axi0_w0_response_demux]
     generated_completion_signals: [axi0_w0_complete]
     generated_assertions:
-      - axi0_w0_dynamic_request_not_busy
+      - axi0_w0_dynamic_request_idle_or_releasing
       - axi0_write_dynamic_response_active_match
       - axi0_w0_dynamic_completion_active
 ```
@@ -164,7 +185,9 @@ Metadata-only `(id dynamic)` remains supported when no same-family behavior
 clause consumes it. The single-active dynamic write behavior in this note is
 extended by
 [AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_WRITE_RESPONSE_DEMUX_BEHAVIOR](AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_WRITE_RESPONSE_DEMUX_BEHAVIOR.md)
-for all-dynamic write families with two or more write transactions. Broader
+for all-dynamic write families with two or more write transactions, and by
+[AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_BEHAVIOR](AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_BEHAVIOR.md)
+for the single-active same-cycle release-and-recapture boundary. Broader
 generated dynamic behavior still fails closed for:
 
 - dynamic read response matching outside the selected single-active
@@ -172,7 +195,8 @@ generated dynamic behavior still fails closed for:
 - mixed dynamic/static write response demux;
 - multiple dynamic write shapes outside the all-dynamic bounded response-demux
   contract;
-- same-cycle release-and-recapture semantics;
+- same-cycle release-and-recapture outside the selected single-active dynamic
+  write `BID` boundary;
 - same-ID ordering for dynamic IDs;
 - read-data routing outside the selected single-active dynamic read-data
   shapes;

@@ -83,7 +83,8 @@ transaction, scalar dynamic read-data for single-beat and last-beat captures,
 and report-only dynamic raw-`ARLEN` burst-length capture over generated
 dynamic last-beat read-data, generated dynamic runtime-validation and
 multi-beat output-bank behavior for the single-active dynamic read-data
-boundary, generated bounded multiple dynamic write response-demux, generated
+boundary, single-active dynamic write same-cycle release-and-recapture,
+generated bounded multiple dynamic write response-demux, generated
 bounded multiple dynamic read single-beat and burst-last response-demux,
 scalar read-data over those multiple dynamic read response-demux shapes, and
 report-only raw-`ARLEN` burst-length capture plus runtime beat-count/`RLAST`

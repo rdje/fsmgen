@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.364: select dynamic write recapture contract`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.365` implements generated single-active dynamic write `BID` same-cycle release-and-recapture; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.364` selected `.365`, direct generated behavior for single-active dynamic write `BID` same-cycle release-and-recapture. The selected contract reuses `ppif/axi_manager_capacity_status_dynamic_write_response_demux.ppif` and existing source syntax, preserves `bounded_dynamic_write_bid_demux_contract`, adds `same_cycle_release_recapture_policy` report vocabulary, defines capture-only/release-only/release-and-recapture update semantics, and replaces the too-narrow request-not-busy assertion role with idle-or-releasing semantics. No parser, generator, HDL, PPIF sample, support-accounting catalog, validation behavior, generated artifact, test, JSON, or runtime behavior changed.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.365: ship dynamic write recapture`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.366` selects the next same-cycle/release-recapture owner after single-active dynamic write recapture shipped; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.365` shipped generated single-active dynamic write `BID` same-cycle release-and-recapture under the existing `ppif/axi_manager_capacity_status_dynamic_write_response_demux.ppif` public sample. FSMGen now emits `axi0_w0_dynamic_id_release_recapture`, release-only gating with no same-cycle request, `same_cycle_release_recapture_policy` report vocabulary, and `axi0_w0_dynamic_request_idle_or_releasing` while preserving source syntax, support identity, `bounded_dynamic_write_bid_demux_contract`, response active-match/completion-active assertions, and broader dynamic/mixed/read/read-data residue.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
-- next_action: Start `.365`: implement the selected single-active dynamic write same-cycle recapture behavior, then run focused dynamic-write probes plus docs/Knowledge Map/mdBook/doctrine gates and commit per `COMMIT.md`.
+- next_action: Start `.366`: select the next exact same-cycle/release-recapture owner by reading `.365` behavior, `.364` contract, `.363` readiness audit, generated dynamic/mixed write/read/read-data surfaces, focused tests, docs, Memory, and Knowledge Map before any further behavior change.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact

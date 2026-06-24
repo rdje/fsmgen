@@ -313,10 +313,15 @@ subtest 'dynamic write response-demux captures AWID and matches BID' => sub {
     );
     like(
         $isf,
-        qr/\(rule axi0_w0_dynamic_id_release \(& axi0_w0_complete axi0_w0_dynamic_busy_q\)\s+\(axi0_w0_dynamic_busy_q 0\)\)/,
-        'dynamic write demux releases the single-active busy state on matched completion',
+        qr/\(rule axi0_w0_dynamic_id_release_recapture \(& \(& axi0_w0_request \(\| \(< axi0_pending_writes_q 2\) axi0_w0_complete\)\) axi0_w0_complete axi0_w0_dynamic_busy_q\)\s+\(axi0_w0_dynamic_id_q axi0_awid\)\s+\(axi0_w0_dynamic_busy_q 1\)\)/,
+        'dynamic write demux recaptures AWID on same-cycle matched completion and admitted request',
     );
-    like($isf, qr/"axi0 write dynamic request is not already active"/, 'dynamic write demux emits request-not-busy assertion');
+    like(
+        $isf,
+        qr/\(rule axi0_w0_dynamic_id_release \(& axi0_w0_complete axi0_w0_dynamic_busy_q \(! axi0_w0_request\)\)\s+\(axi0_w0_dynamic_busy_q 0\)\)/,
+        'dynamic write demux releases the single-active busy state only without a same-cycle request',
+    );
+    like($isf, qr/"axi0 write dynamic request is idle or releasing active captured ID"/, 'dynamic write demux emits idle-or-releasing assertion');
     like($isf, qr/"axi0 write dynamic response matches active captured ID"/, 'dynamic write demux emits active BID-match assertion');
     like($isf, qr/"axi0 w0 dynamic completion releases active captured ID"/, 'dynamic write demux emits active-completion assertion');
 
@@ -327,7 +332,8 @@ subtest 'dynamic write response-demux captures AWID and matches BID' => sub {
     like($fsm, qr/\(\+size[\s\S]*\(axi0_bid 4\)/, 'scheduled .fsm declares BID width');
     like($fsm, qr/\(-axi0_w0_dynamic_id_capture\s+<\(& \(& axi0_w0_request/, 'scheduled .fsm lowers the dynamic capture rule');
     like($fsm, qr/\(-axi0_w0_response_demux\s+<\(& axi0_write_complete axi0_w0_dynamic_busy_q \(== axi0_bid axi0_w0_dynamic_id_q\)\)/, 'scheduled .fsm lowers the dynamic BID match rule');
-    like($fsm, qr/\(-axi0_w0_dynamic_id_release\s+<\(& axi0_w0_complete axi0_w0_dynamic_busy_q\)/, 'scheduled .fsm lowers the dynamic release rule');
+    like($fsm, qr/\(-axi0_w0_dynamic_id_release_recapture\s+<\(& \(& axi0_w0_request/, 'scheduled .fsm lowers the dynamic release-recapture rule');
+    like($fsm, qr/\(-axi0_w0_dynamic_id_release\s+<\(& axi0_w0_complete axi0_w0_dynamic_busy_q \(! axi0_w0_request\)\)/, 'scheduled .fsm lowers the dynamic release-only rule');
 
     my $hdl = hdl_for('axi0_capacity_status', $fsm);
     like($hdl, qr/\binput\s+(?:wire\s+)?\[3:0\]\s+axi0_awid\b/, 'SystemVerilog declares AWID as a 4-bit input');
@@ -337,7 +343,7 @@ subtest 'dynamic write response-demux captures AWID and matches BID' => sub {
     like($hdl, qr/axi0_write_complete\s*&\s*axi0_w0_dynamic_busy_q\s*&\s*\(axi0_bid\s*==\s*axi0_w0_dynamic_id_q\)/, 'SystemVerilog lowers the dynamic BID-match guard');
 
     my $sv_assertions = sv_assertion_block_for_result($result);
-    like($sv_assertions, qr/axi0 write dynamic request is not already active/, 'assertion backend emits request-not-busy dynamic assertion');
+    like($sv_assertions, qr/axi0 write dynamic request is idle or releasing active captured ID/, 'assertion backend emits idle-or-releasing dynamic assertion');
     like($sv_assertions, qr/axi0 write dynamic response matches active captured ID/, 'assertion backend emits active BID-match dynamic assertion');
     like($sv_assertions, qr/axi0 w0 dynamic completion releases active captured ID/, 'assertion backend emits completion-active dynamic assertion');
 };
@@ -6690,7 +6696,7 @@ sub assert_dynamic_write_response_demux_report {
     is_deeply($write->{generated_completion_signals}, [qw(axi0_w0_complete)], "$owner reports generated dynamic completion pulse");
     is_deeply(
         $write->{generated_assertions},
-        [qw(axi0_w0_dynamic_request_not_busy axi0_write_dynamic_response_active_match axi0_w0_dynamic_completion_active)],
+        [qw(axi0_w0_dynamic_request_idle_or_releasing axi0_write_dynamic_response_active_match axi0_w0_dynamic_completion_active)],
         "$owner reports generated dynamic assertions",
     );
     is_deeply(
@@ -6703,6 +6709,10 @@ sub assert_dynamic_write_response_demux_report {
             busy_signal          => 'axi0_w0_dynamic_busy_q',
             capture_rule         => 'axi0_w0_dynamic_id_capture',
             release_rule         => 'axi0_w0_dynamic_id_release',
+            release_recapture_rule => 'axi0_w0_dynamic_id_release_recapture',
+            same_cycle_release_recapture_policy => 'single_active_dynamic_write',
+            release_recapture_source => 'generated_dynamic_demux_completion',
+            release_recapture_transaction => 'w0',
         },
         "$owner reports dynamic capture state and rule ownership",
     );

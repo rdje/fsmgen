@@ -2053,8 +2053,9 @@ point, enforces single-active selected-ID/busy ownership, matches `BID`
 against the captured ID, generates the transaction completion pulse, releases
 busy from that pulse, reports `bounded_dynamic_write_bid_demux_contract`, and
 adds `ppif/axi_manager_capacity_status_dynamic_write_response_demux.ppif` as
-a support-accounted sample. Metadata-only dynamic IDs remain unchanged when no
-behavior clause consumes them. Implementation `.227` ships generated
+a support-accounted sample. `.365` extends that same single-active dynamic write
+sample with same-cycle release-and-recapture. Metadata-only dynamic IDs remain
+unchanged when no behavior clause consumes them. Implementation `.227` ships generated
 single-beat dynamic read ID capture and `RID` response matching using existing
 `response-demux.read` with one transaction-local dynamic read ID. The generated
 path captures admitted `ARID`, stores selected-ID/busy state, matches raw read
@@ -2068,7 +2069,8 @@ completion, generated busy release, and support-accounted public PPIF coverage.
 Dynamic read-data routing, burst-length/runtime validation, and bounded
 multiple dynamic read single-beat response-demux now ship under later leaves.
 Interleaving, multiple dynamic read burst-last/read-data widening, mixed
-dynamic/static read demux, same-cycle recapture, same-ID ordering, queues,
+dynamic/static read demux, same-cycle recapture outside the selected
+single-active dynamic write boundary, same-ID ordering, queues,
 scoreboards, direct backend behavior, HDL shapes outside this selected
 SystemVerilog path, and VHDL remain deferred. Selector `.232` chose `.233`,
 readiness audit for dynamic read-data
@@ -2884,13 +2886,18 @@ a separate generated completion rule. Single-active dynamic write recapture is
 the smallest next contract owner before static recapture, sibling onehot0
 request widening, read `RID`/`RLAST`, read-data payload behavior, queues,
 scoreboards, backend variants, or VHDL work.
-`.364` now selects `.365`, direct generated behavior for single-active dynamic
-write `BID` same-cycle release-and-recapture. The selected contract reuses the
-existing public dynamic write response-demux sample and source syntax, keeps
-`bounded_dynamic_write_bid_demux_contract`, adds explicit report vocabulary for
-the recapture policy, and requires the same-cycle request plus generated
-matching completion to pulse completion, capture the new `AWID`, and keep busy
-asserted using the pre-update selected ID for the response match.
+`.365` now ships direct generated behavior for single-active dynamic write
+`BID` same-cycle release-and-recapture. The behavior reuses the existing public
+dynamic write response-demux sample and source syntax, keeps
+`bounded_dynamic_write_bid_demux_contract`, adds
+`same_cycle_release_recapture_policy` report vocabulary, emits
+`axi0_w0_dynamic_id_release_recapture`, changes release-only to exclude a
+same-cycle request, and replaces the request-not-busy assertion with
+`axi0_w0_dynamic_request_idle_or_releasing`. A same-cycle request plus generated
+matching completion now pulses completion, captures the new `AWID`, and keeps
+busy asserted using the pre-update selected ID for the response match.
+The frontier advances to `.366`, the next selector for same-cycle and
+release-recapture residue after the single-active dynamic write boundary.
 No behavior changed in
 `.270`, `.271`, `.273`, `.274`, `.275`, `.277`, `.278`,
 `.279`, `.281`, `.282`, `.283`, `.285`, `.286`, `.288`, `.290`, `.292`, or

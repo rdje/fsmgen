@@ -548,9 +548,11 @@ sub assert_dynamic_behavior {
         like($isf, qr/\(var axi0_w0_dynamic_busy_q \(width 1\)\)/, 'dynamic write demux allocates busy storage');
         like($isf, qr/\(rule axi0_w0_dynamic_id_capture \(& \(& axi0_w0_request \(\| \(< axi0_pending_writes_q 2\) axi0_w0_complete\)\) \(! axi0_w0_dynamic_busy_q\)\)/, 'dynamic write demux captures admitted AWID');
         like($isf, qr/\(rule axi0_w0_response_demux \(& axi0_write_complete axi0_w0_dynamic_busy_q \(== axi0_bid axi0_w0_dynamic_id_q\)\)/, 'dynamic write demux matches active BID');
-        like($isf, qr/\(rule axi0_w0_dynamic_id_release \(& axi0_w0_complete axi0_w0_dynamic_busy_q\)/, 'dynamic write demux releases active state');
+        like($isf, qr/\(rule axi0_w0_dynamic_id_release_recapture \(& \(& axi0_w0_request \(\| \(< axi0_pending_writes_q 2\) axi0_w0_complete\)\) axi0_w0_complete axi0_w0_dynamic_busy_q\)/, 'dynamic write demux recaptures on same-cycle release');
+        like($isf, qr/\(rule axi0_w0_dynamic_id_release \(& axi0_w0_complete axi0_w0_dynamic_busy_q \(! axi0_w0_request\)\)/, 'dynamic write demux releases active state only without same-cycle request');
         assert_dynamic_write_report($result->{report});
         like($fsm, qr/\(-axi0_w0_response_demux\s+<\(& axi0_write_complete axi0_w0_dynamic_busy_q \(== axi0_bid axi0_w0_dynamic_id_q\)\)/, 'scheduled FSM lowers dynamic write BID match');
+        like($fsm, qr/\(-axi0_w0_dynamic_id_release_recapture\s+<\(& \(& axi0_w0_request/, 'scheduled FSM lowers dynamic write release-recapture');
         my $hdl = hdl_for('axi0_capacity_status', $fsm);
         like($hdl, qr/\binput\s+(?:wire\s+)?\[3:0\]\s+axi0_awid\b/, 'SystemVerilog exposes AWID');
         like($hdl, qr/\binput\s+(?:wire\s+)?\[3:0\]\s+axi0_bid\b/, 'SystemVerilog exposes BID');
@@ -2104,7 +2106,24 @@ sub assert_dynamic_write_report {
     is_deeply($write->{dynamic_transactions}, [qw(w0)], 'dynamic write report names the covered dynamic transaction');
     is_deeply($write->{generated_rules}, [qw(axi0_w0_response_demux)], 'dynamic write report names generated response-demux rule');
     is_deeply($write->{generated_completion_signals}, [qw(axi0_w0_complete)], 'dynamic write report names generated completion');
-    is_deeply($write->{generated_assertions}, [qw(axi0_w0_dynamic_request_not_busy axi0_write_dynamic_response_active_match axi0_w0_dynamic_completion_active)], 'dynamic write report names generated assertions');
+    is_deeply($write->{generated_assertions}, [qw(axi0_w0_dynamic_request_idle_or_releasing axi0_write_dynamic_response_active_match axi0_w0_dynamic_completion_active)], 'dynamic write report names generated assertions');
+    is_deeply(
+        $write->{dynamic_capture},
+        {
+            request_id_source    => 'axi0_awid',
+            capture_event_source => 'admitted_dynamic_write_request',
+            ownership            => 'single_active_dynamic_write',
+            selected_id_signal   => 'axi0_w0_dynamic_id_q',
+            busy_signal          => 'axi0_w0_dynamic_busy_q',
+            capture_rule         => 'axi0_w0_dynamic_id_capture',
+            release_rule         => 'axi0_w0_dynamic_id_release',
+            release_recapture_rule => 'axi0_w0_dynamic_id_release_recapture',
+            same_cycle_release_recapture_policy => 'single_active_dynamic_write',
+            release_recapture_source => 'generated_dynamic_demux_completion',
+            release_recapture_transaction => 'w0',
+        },
+        'dynamic write report names single-active release-recapture update ownership',
+    );
     is($report->{transactions}[0]{id}{implementation_status}, 'generated_capture_matching', 'dynamic write transaction reports generated capture/matching');
     assert_dynamic_residue($report, 'dynamic write demux keeps future dynamic residue visible');
 }

@@ -2345,7 +2345,8 @@ optional structural transaction-envelope metadata with per-transaction event
 dispatch/fan-in, concrete transaction ID request/response assertions,
 metadata-first dynamic transaction-ID parser/report support, generated
 bounded single-active dynamic write transaction-ID capture plus `BID` response
-matching for one explicit `response-demux.write` dynamic write transaction, and
+matching plus same-cycle release-and-recapture for one explicit
+`response-demux.write` dynamic write transaction, and
 generated bounded single-active dynamic read transaction-ID capture plus
 single-beat `RID` response matching plus burst-last `RID && RLAST` response
 matching for one explicit `response-demux.read` dynamic read transaction, and
@@ -6606,7 +6607,8 @@ matching, multiple dynamic write transactions, mixed dynamic/static write
 demux, same-cycle recapture, same-ID ordering, read-data routing, queues,
 scoreboards, direct backend behavior, and VHDL deferred at selection time.
 Later dynamic leaves now ship selected single-active dynamic read matching,
-selected dynamic read-data shapes, the all-dynamic multiple-write
+selected dynamic read-data shapes, the single-active dynamic write same-cycle
+release-and-recapture extension, the all-dynamic multiple-write
 response-demux shape, and the all-dynamic multiple-read single-beat
 response-demux-only shape described below; mixed dynamic/static demux,
 multiple dynamic read burst-last/read-data widening, same-cycle
@@ -6623,12 +6625,14 @@ that pulse, runtime assertions, `bounded_dynamic_write_bid_demux_contract`
 schedule-report keys, and the support-accounted sample
 `ppif/axi_manager_capacity_status_dynamic_write_response_demux.ppif`.
 Metadata-only dynamic IDs remain unchanged when no behavior clause consumes
-them. This single-active write sample remains supported. Later dynamic leaves
-now ship selected single-active dynamic read matching, selected dynamic
-read-data shapes, the all-dynamic multiple-write response-demux shape, and the
-all-dynamic multiple-read single-beat response-demux-only shape described
-below; mixed dynamic/static demux, multiple dynamic read burst-last/read-data
-widening, same-cycle widening/recapture, dynamic same-ID queues, scoreboards,
+them. This single-active write sample remains supported and `.365` extends it
+with same-cycle release-and-recapture. Later dynamic leaves now ship selected
+single-active dynamic read matching, selected dynamic read-data shapes, the
+all-dynamic multiple-write response-demux shape, and the all-dynamic multiple-read
+single-beat response-demux-only shape described below; mixed dynamic/static
+demux, multiple dynamic read burst-last/read-data widening, same-cycle
+recapture outside the selected single-active dynamic write boundary, dynamic
+same-ID queues, scoreboards,
 direct backend behavior, HDL shapes outside the selected SystemVerilog path,
 and VHDL remain deferred.
 
@@ -8349,13 +8353,16 @@ queues, scoreboards, backend variants, and VHDL.
 
 Dynamic write same-cycle recapture contract:
 [AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_CONTRACT_SELECTION](../../AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_CONTRACT_SELECTION.md)
-selects `.365`, direct generated behavior for single-active dynamic write
-`BID` same-cycle release-and-recapture. The contract reuses the existing
-dynamic write response-demux public sample, preserves
-`bounded_dynamic_write_bid_demux_contract`, and adds report vocabulary for the
-recapture policy. A same-cycle request plus generated matching completion must
-pulse completion, capture the new `AWID`, and keep busy asserted while the
-response match still uses the pre-update selected ID.
+selected `.365`, direct generated behavior for single-active dynamic write
+`BID` same-cycle release-and-recapture.
+[AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_BEHAVIOR](../../AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_BEHAVIOR.md)
+now ships that behavior through the existing dynamic write response-demux public
+sample. The generated update emits `axi0_w0_dynamic_id_release_recapture`,
+keeps `bounded_dynamic_write_bid_demux_contract`, adds
+`same_cycle_release_recapture_policy` report vocabulary, changes release-only
+to exclude a same-cycle request, and replaces the request-not-busy assertion
+with `axi0_w0_dynamic_request_idle_or_releasing`. The frontier advances to
+`.366`, the next same-cycle/release-recapture selector.
 
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
