@@ -2940,6 +2940,14 @@ runtime beat-count/`RLAST`, and multi-beat output-bank consumers.
 Multiple dynamic request widening, mixed dynamic/static recapture, static busy
 recapture, same-ID queues, scoreboards, backend variants, VHDL, and
 full-manager behavior remain later owners.
+`.370` now selects `.371`, public contract selection for single-active dynamic
+read burst-last `RID && RLAST` same-cycle release-and-recapture. The audit
+changes no behavior and found no lower cleanup prerequisite, but contract
+selection must precede implementation because final-completion-only recapture,
+matched non-last beats, raw active-match assertions, scalar last-beat
+read-data preservation, raw-`ARLEN`/runtime/multi-beat consumer boundaries,
+report vocabulary, and assertion semantics need exact public ownership before
+generator behavior changes.
 No behavior changed in
 `.270`, `.271`, `.273`, `.274`, `.275`, `.277`, `.278`,
 `.279`, `.281`, `.282`, `.283`, `.285`, `.286`, `.288`, `.290`, `.292`, or
@@ -2948,7 +2956,7 @@ No behavior changed in
 `.319`, `.320`, `.321`, `.323`, `.324`, `.325`, `.327`, `.328`, `.329`,
 `.331`, `.332`, `.334`, `.336`, `.338`, `.339`, `.340`, `.342`, `.343`,
 `.345`, `.346`, `.348`, `.349`, `.351`, `.352`, `.354`, `.356`, `.358`,
-`.359`, `.360`, `.362`, `.363`, `.364`, `.366`, `.367`, or `.369`.
+`.359`, `.360`, `.362`, `.363`, `.364`, `.366`, `.367`, `.369`, or `.370`.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.

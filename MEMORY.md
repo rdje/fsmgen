@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.369: select read rlast recapture audit`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.370` audits single-active dynamic read burst-last `RID && RLAST` same-cycle release-and-recapture readiness; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.369` selected `.370`, readiness audit for single-active dynamic read burst-last `RID && RLAST` same-cycle release-and-recapture after `.368` shipped single-beat read recapture. The selector changes no parser, generator, PPIF sample, support accounting, validation behavior, generated artifact, test, JSON, HDL, or runtime behavior. It chooses audit before direct implementation because burst-last recapture touches final-beat completion, matched non-last beats, raw active-match assertions, scalar last-beat read-data, report-only raw-`ARLEN`, runtime beat-count/`RLAST`, and multi-beat output-bank consumers.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.370: audit read rlast recapture readiness`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.371` selects the public contract for single-active dynamic read burst-last `RID && RLAST` same-cycle release-and-recapture; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.370` audited single-active dynamic read burst-last `RID && RLAST` same-cycle release-and-recapture readiness and selected `.371`, public contract selection. The audit changes no parser, generator, PPIF sample, support accounting, validation behavior, generated artifact, test, JSON, HDL, or runtime behavior. It found no lower cleanup prerequisite, but contract selection must settle final-completion-only recapture, matched non-last beats, raw active-match assertions, scalar last-beat read-data preservation, raw-`ARLEN`/runtime/multi-beat consumer boundaries, report vocabulary, and assertion semantics before generator behavior changes.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
-- next_action: Start `.370`: audit burst-last dynamic read recapture readiness and select the next exact implementation owner or prerequisite without behavior changes unless a later implementation leaf is explicitly created.
+- next_action: Start `.371`: select the public dynamic read burst-last recapture contract without behavior changes unless a later implementation leaf is explicitly created.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact

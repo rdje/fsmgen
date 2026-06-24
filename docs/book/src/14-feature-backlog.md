@@ -8409,6 +8409,16 @@ recapture affects final-beat completion, matched non-last beats, raw
 active-match assertions, scalar last-beat read-data, report-only raw-`ARLEN`,
 runtime beat-count/`RLAST`, and multi-beat output-bank consumers.
 
+Dynamic read RLAST recapture readiness audit:
+[AXI_IAL2_MANAGER_DYNAMIC_READ_RLAST_RECAPTURE_READINESS_AUDIT](../../AXI_IAL2_MANAGER_DYNAMIC_READ_RLAST_RECAPTURE_READINESS_AUDIT.md)
+selects `.371`, public contract selection for single-active dynamic read
+burst-last `RID && RLAST` same-cycle release-and-recapture. The audit changes
+no behavior and found no lower cleanup prerequisite, but contract selection
+must settle final-completion-only recapture, matched non-last beat behavior,
+raw active-match assertions, scalar last-beat read-data preservation,
+raw-`ARLEN`/runtime/multi-beat consumer boundaries, report vocabulary, and
+assertion semantics before generator behavior changes.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same
