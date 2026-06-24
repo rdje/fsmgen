@@ -10,9 +10,9 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.335: ship three-static runtime validation`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.336` audits multi-beat output-bank readiness over generated one-dynamic plus three-concrete-static mixed dynamic/static runtime-validation read-data; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.335` shipped support-accounted runtime beat-count/`RLAST` validation over generated one-dynamic plus three-concrete-static mixed dynamic/static raw-`ARLEN` last-beat read-data, while keeping three-static multi-beat output banks fail-closed.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.336: audit three-static multi-beat readiness`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.337` ships multi-beat output banks over generated one-dynamic plus three-concrete-static mixed dynamic/static runtime-validation read-data; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.336` selected direct bounded implementation of generated three-static mixed dynamic/static multi-beat output banks over the runtime-validation boundary, with no behavior changes in the audit slice.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
 

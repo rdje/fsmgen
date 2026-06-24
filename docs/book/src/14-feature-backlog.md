@@ -7969,6 +7969,15 @@ emits expected-beat and read-beat-count state for `r0`, `r1`, `r2`, and
 runtime assertions per covered transaction. Multi-beat output banks remain
 future exact-owner work.
 
+Three-static mixed dynamic/static read-data multi-beat readiness audit:
+[AXI_IAL2_MANAGER_THREE_STATIC_MIXED_DYNAMIC_STATIC_READ_DATA_MULTI_BEAT_READINESS_AUDIT](../../AXI_IAL2_MANAGER_THREE_STATIC_MIXED_DYNAMIC_STATIC_READ_DATA_MULTI_BEAT_READINESS_AUDIT.md)
+selects `.337`, direct bounded implementation of generated multi-beat output
+banks over that same one-dynamic plus three-concrete-static runtime-validation
+read-data boundary. The audit changes no behavior; public multi-beat syntax,
+runtime-assertion `ARLEN` metadata, output-bank report vocabulary, and
+transaction-list-driven helper paths are already present once coverage admits
+the `r0`, `r1`, `r2`, and `r3` shape.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same
