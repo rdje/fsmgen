@@ -2868,6 +2868,14 @@ Burst-last/last-beat siblings, raw `ARLEN`, runtime validation, multi-beat
 output banks, broader mixed cardinalities, queues, scoreboards, backend
 variants, VHDL, profile aliases, queued/blocking policy, and full-manager
 behavior remain future exact-owner work.
+`.362` now selects `.363`, readiness audit for same-cycle request/response
+and release-and-recapture behavior across the generated dynamic and mixed
+dynamic/static response-demux/read-data shapes. The selector changes no
+behavior. The selected audit must read the shipped dynamic/mixed chains,
+current onehot0 request policy, active dynamic selected-ID uniqueness,
+request no-active-same-ID checks, static busy release, capacity accounting,
+generated assertion helpers, and scheduler conflict assumptions before any
+request-plus-completion or release-and-recapture behavior changes.
 No behavior changed in
 `.270`, `.271`, `.273`, `.274`, `.275`, `.277`, `.278`,
 `.279`, `.281`, `.282`, `.283`, `.285`, `.286`, `.288`, `.290`, `.292`, or

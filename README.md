@@ -970,6 +970,14 @@ pulses. Reports keep `.344` response-demux mode/source, set read-data mode to
 `generated_multi_mixed_dynamic_static_read_response_demux_completion_pulse`,
 and leave read-data residue `rlast_completion`, `bursts`, and
 `multi_beat_read_data_reassembly`.
+`.362` now selects `.363`, readiness audit for same-cycle request/response
+and release-and-recapture behavior across the generated dynamic and mixed
+dynamic/static response-demux/read-data shapes. The selector changes no
+behavior. The current generated dynamic/mixed shapes still report onehot0
+same-cycle request policy, active dynamic selected-ID uniqueness, request
+no-active-same-ID checks, and static busy state; `.363` must decide whether a
+request plus generated completion, dynamic release-and-recapture, or static
+release-and-recapture can be widened directly or needs a smaller prerequisite.
 No behavior
 changed in `.273`, `.274`, `.275`,
 `.277`, `.278`, `.279`, `.281`,
@@ -3259,6 +3267,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/AXI_IAL2_MANAGER_TWO_DYNAMIC_ONE_STATIC_MIXED_DYNAMIC_STATIC_READ_DATA_READINESS_AUDIT.md` — audited scalar single-beat read-data readiness over the generated two-dynamic-plus-one-static mixed dynamic/static read single-beat `RID` response-demux and selected public contract selection.
 - `docs/AXI_IAL2_MANAGER_TWO_DYNAMIC_ONE_STATIC_MIXED_DYNAMIC_STATIC_READ_DATA_CONTRACT_SELECTION.md` — selected direct generated scalar single-beat read-data behavior over the generated two-dynamic-plus-one-static mixed dynamic/static read single-beat `RID` response-demux.
 - `docs/AXI_IAL2_MANAGER_TWO_DYNAMIC_ONE_STATIC_MIXED_DYNAMIC_STATIC_READ_DATA_BEHAVIOR.md` — shipped scalar single-beat read-data capture over the generated two-dynamic-plus-one-static mixed dynamic/static read single-beat `RID` response-demux.
+- `docs/AXI_IAL2_MANAGER_POST_TWO_DYNAMIC_ONE_STATIC_MIXED_DYNAMIC_STATIC_READ_DATA_NEXT_SLICE_SELECTION.md` — selected same-cycle request/response and release-and-recapture readiness audit after the two-dynamic-plus-one-static mixed dynamic/static read-data sibling shipped.
 - `docs/AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md` — selected first AXI-derived IAL2 implementation subset and pre-code contract.
 - `docs/AXI_IAL2_VALID_READY_READINESS_AUDIT.md` — code/test/docs/report owner map for a future AXI Valid-Ready IAL2 implementation slice.
 - `docs/AXI_IAL2_VALID_READY_GENERATOR_FIRST_SLICE.md` — first in-process AXI Valid-Ready IAL2 generator slice and report surface.

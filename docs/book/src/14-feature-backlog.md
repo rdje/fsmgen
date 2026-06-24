@@ -8326,6 +8326,17 @@ read-data report uses completion validity
 and keeps residue `rlast_completion`, `bursts`, and
 `multi_beat_read_data_reassembly`.
 
+Post two-dynamic/one-static mixed dynamic/static read-data selector:
+[AXI_IAL2_MANAGER_POST_TWO_DYNAMIC_ONE_STATIC_MIXED_DYNAMIC_STATIC_READ_DATA_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_TWO_DYNAMIC_ONE_STATIC_MIXED_DYNAMIC_STATIC_READ_DATA_NEXT_SLICE_SELECTION.md)
+selects `.363`, readiness audit for same-cycle request/response and
+release-and-recapture behavior across generated dynamic and mixed
+dynamic/static response-demux/read-data shapes. The selector changes no
+behavior. The selected audit must decide whether request plus generated
+completion, dynamic selected-ID release-and-recapture, or static busy
+release-and-recapture can be widened directly while preserving capacity
+accounting, generated assertions, report vocabulary, and scheduler conflict
+assumptions.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same
