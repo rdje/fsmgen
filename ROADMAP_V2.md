@@ -2330,6 +2330,14 @@ static busy recapture, static-ID exclusion lists, active dynamic-ID
 uniqueness, and read burst-last raw non-final beat preservation that need
 audit ownership before contract selection or implementation. The `.396`
 RAM-guard cutoff is recorded but is not selected as the next owner.
+`.398` selects `.399`, public contract selection for one-dynamic plus
+two-static mixed dynamic/static write `BID` same-cycle release-and-recapture.
+The audit changes no behavior. Guarded baseline probes confirmed the
+two-static, three-static, and two-dynamic-plus-one-static write samples still
+report no `static_capture` recapture block; the two-static write sample is the
+smallest broader owner because it adds sibling static busy recapture and
+multiple static-ID exclusions without adding read `RLAST`/read-data
+preservation or two-dynamic active-ID uniqueness.
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,

@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.397: select broader mixed recapture audit`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.398` audits broader mixed dynamic/static same-cycle release-and-recapture readiness; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.397` selected `.398`, readiness audit for broader mixed dynamic/static same-cycle release-and-recapture after the one-dynamic plus one-static mixed write/read/read-RLAST recapture family shipped. Static-busy-only outside public mixed samples, request arbitration widening, queues, scoreboards, backend variants, VHDL, and validation retry remain explicitly deferred behind future owners or `.398` scope; no behavior changed.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.398: audit broader mixed recapture readiness`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.399` selects the public contract for one-dynamic plus two-static mixed dynamic/static write BID same-cycle release-and-recapture; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.398` audited broader mixed dynamic/static recapture readiness and selected `.399`. Guarded schedule baselines passed for the one-dynamic plus two-static, one-dynamic plus three-static, and two-dynamic-plus-one-static write samples; all still lack `static_capture` recapture metadata. The two-static write sample is the smallest broader owner because it adds sibling static busy recapture and multiple static-ID exclusions without read RLAST/read-data preservation or two-dynamic active-ID uniqueness; no behavior changed.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
-- next_action: Start `.398`: audit broader mixed dynamic/static recapture readiness and choose the first public contract owner or prerequisite before any behavior change, using guarded probes only when host memory allows.
+- next_action: Start `.399`: select the one-dynamic plus two-static mixed write BID recapture public contract, especially list-shaped dynamic/static recapture report fields, guards, assertion names, validation gates, and deferred boundaries before behavior changes.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact

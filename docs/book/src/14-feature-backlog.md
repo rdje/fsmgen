@@ -7368,6 +7368,17 @@ burst-last raw non-final beat preservation that need audit ownership before
 contract selection or implementation. The `.396` RAM-guard cutoff is recorded
 but is not selected as the next owner.
 
+Broader mixed dynamic/static recapture readiness audit:
+[AXI_IAL2_MANAGER_BROADER_MIXED_DYNAMIC_STATIC_RECAPTURE_READINESS_AUDIT](../../AXI_IAL2_MANAGER_BROADER_MIXED_DYNAMIC_STATIC_RECAPTURE_READINESS_AUDIT.md)
+selects `.399`, public contract selection for one-dynamic plus two-static
+mixed dynamic/static write `BID` same-cycle release-and-recapture. The audit
+changes no behavior. Guarded baseline probes confirmed the two-static,
+three-static, and two-dynamic-plus-one-static write samples still report no
+`static_capture` recapture block; the two-static write sample is the smallest
+broader owner because it adds sibling static busy recapture and multiple
+static-ID exclusions without adding read `RLAST`/read-data preservation or
+two-dynamic active-ID uniqueness.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after
