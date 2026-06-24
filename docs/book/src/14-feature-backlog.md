@@ -8373,6 +8373,17 @@ symmetric siblings after the write recapture slice, but the contract selection
 must settle scope and read-data completion-pulse preservation before any
 generator update.
 
+Dynamic read same-cycle recapture contract:
+[AXI_IAL2_MANAGER_DYNAMIC_READ_SAME_CYCLE_RECAPTURE_CONTRACT_SELECTION](../../AXI_IAL2_MANAGER_DYNAMIC_READ_SAME_CYCLE_RECAPTURE_CONTRACT_SELECTION.md)
+selects `.368`, direct generated behavior for single-active dynamic read
+single-beat `RID` same-cycle release-and-recapture. The selector changes no
+behavior. The selected contract reuses the existing dynamic read response-demux
+sample/source syntax, keeps `bounded_dynamic_read_rid_demux_contract`, adds
+read-side `same_cycle_release_recapture_policy` vocabulary, and leaves
+burst-last `RID && RLAST`, scalar last-beat read-data, burst-length/runtime,
+multi-beat, multiple dynamic, mixed dynamic/static, backend, and VHDL behavior
+to later owners.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same

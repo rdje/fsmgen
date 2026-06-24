@@ -2908,6 +2908,17 @@ request-not-busy. The contract owner must settle whether the first behavior
 slice covers only single-beat `RID`, includes burst-last `RID && RLAST`, or
 splits those scopes, and must preserve existing dynamic read-data
 completion-pulse consumers before implementation.
+`.367` now selects `.368`, direct generated behavior for single-active dynamic
+read single-beat `RID` same-cycle release-and-recapture. The selector changes
+no behavior. The selected contract reuses the existing dynamic read
+response-demux public sample/source syntax, keeps
+`bounded_dynamic_read_rid_demux_contract`, adds read-side
+`same_cycle_release_recapture_policy` report vocabulary, and replaces the
+single-active dynamic read request-not-busy assertion role with
+idle-or-releasing semantics. Burst-last `RID && RLAST`, scalar last-beat
+read-data, burst-length/runtime/multi-beat recapture, multiple dynamic,
+mixed dynamic/static, static busy, queue, scoreboard, backend variants, VHDL,
+and full-manager behavior remain later owners.
 No behavior changed in
 `.270`, `.271`, `.273`, `.274`, `.275`, `.277`, `.278`,
 `.279`, `.281`, `.282`, `.283`, `.285`, `.286`, `.288`, `.290`, `.292`, or
@@ -2916,7 +2927,7 @@ No behavior changed in
 `.319`, `.320`, `.321`, `.323`, `.324`, `.325`, `.327`, `.328`, `.329`,
 `.331`, `.332`, `.334`, `.336`, `.338`, `.339`, `.340`, `.342`, `.343`,
 `.345`, `.346`, `.348`, `.349`, `.351`, `.352`, `.354`, `.356`, `.358`,
-`.359`, `.360`, `.362`, `.363`, `.364`, or `.366`.
+`.359`, `.360`, `.362`, `.363`, `.364`, `.366`, or `.367`.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.
