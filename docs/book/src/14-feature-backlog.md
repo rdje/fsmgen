@@ -8419,6 +8419,18 @@ raw active-match assertions, scalar last-beat read-data preservation,
 raw-`ARLEN`/runtime/multi-beat consumer boundaries, report vocabulary, and
 assertion semantics before generator behavior changes.
 
+Dynamic read RLAST recapture contract:
+[AXI_IAL2_MANAGER_DYNAMIC_READ_RLAST_RECAPTURE_CONTRACT_SELECTION](../../AXI_IAL2_MANAGER_DYNAMIC_READ_RLAST_RECAPTURE_CONTRACT_SELECTION.md)
+selects `.372`, direct generated behavior for single-active dynamic read
+burst-last `RID && RLAST` same-cycle release-and-recapture. The selector
+changes no behavior. The contract preserves the existing burst-last response
+demux source syntax and `bounded_dynamic_read_rid_rlast_demux_contract`, uses
+`generated_dynamic_demux_last_beat_completion` as the release-recapture
+source, replaces the single-active burst-last request-not-busy assertion with
+idle-or-releasing semantics, preserves raw matched non-last beats, and treats
+scalar last-beat read-data, raw-`ARLEN`, runtime, and multi-beat output banks as
+payload/validation preservation consumers.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same

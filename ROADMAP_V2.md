@@ -2948,6 +2948,17 @@ matched non-last beats, raw active-match assertions, scalar last-beat
 read-data preservation, raw-`ARLEN`/runtime/multi-beat consumer boundaries,
 report vocabulary, and assertion semantics need exact public ownership before
 generator behavior changes.
+`.371` now selects `.372`, direct generated behavior for single-active dynamic
+read burst-last `RID && RLAST` same-cycle release-and-recapture. The selector
+changes no behavior. The selected contract reuses the existing burst-last
+dynamic read response-demux source syntax and support identity, preserves
+`bounded_dynamic_read_rid_rlast_demux_contract`, reports
+`release_recapture_source: generated_dynamic_demux_last_beat_completion`,
+replaces the single-active burst-last request-not-busy assertion with
+idle-or-releasing semantics, preserves raw matched non-last beats and raw
+active-match assertions, and treats scalar last-beat read-data, raw-`ARLEN`,
+runtime beat-count/`RLAST`, and multi-beat output banks as payload/validation
+preservation consumers.
 No behavior changed in
 `.270`, `.271`, `.273`, `.274`, `.275`, `.277`, `.278`,
 `.279`, `.281`, `.282`, `.283`, `.285`, `.286`, `.288`, `.290`, `.292`, or
@@ -2956,7 +2967,8 @@ No behavior changed in
 `.319`, `.320`, `.321`, `.323`, `.324`, `.325`, `.327`, `.328`, `.329`,
 `.331`, `.332`, `.334`, `.336`, `.338`, `.339`, `.340`, `.342`, `.343`,
 `.345`, `.346`, `.348`, `.349`, `.351`, `.352`, `.354`, `.356`, `.358`,
-`.359`, `.360`, `.362`, `.363`, `.364`, `.366`, `.367`, `.369`, or `.370`.
+`.359`, `.360`, `.362`, `.363`, `.364`, `.366`, `.367`, `.369`, `.370`, or
+`.371`.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.

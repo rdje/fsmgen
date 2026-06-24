@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.370: audit read rlast recapture readiness`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.371` selects the public contract for single-active dynamic read burst-last `RID && RLAST` same-cycle release-and-recapture; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.370` audited single-active dynamic read burst-last `RID && RLAST` same-cycle release-and-recapture readiness and selected `.371`, public contract selection. The audit changes no parser, generator, PPIF sample, support accounting, validation behavior, generated artifact, test, JSON, HDL, or runtime behavior. It found no lower cleanup prerequisite, but contract selection must settle final-completion-only recapture, matched non-last beats, raw active-match assertions, scalar last-beat read-data preservation, raw-`ARLEN`/runtime/multi-beat consumer boundaries, report vocabulary, and assertion semantics before generator behavior changes.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.371: select read rlast recapture contract`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.372` implements generated single-active dynamic read burst-last `RID && RLAST` same-cycle release-and-recapture; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.371` selected `.372`, direct generated behavior for single-active dynamic read burst-last `RID && RLAST` same-cycle release-and-recapture. The selector changes no parser, generator, PPIF sample, support accounting, validation behavior, generated artifact, test, JSON, HDL, or runtime behavior. The selected contract preserves existing source syntax and `bounded_dynamic_read_rid_rlast_demux_contract`, reports `release_recapture_source: generated_dynamic_demux_last_beat_completion`, replaces the single-active burst-last request-not-busy assertion with idle-or-releasing semantics, preserves raw matched non-last beats and raw active-match assertions, and treats scalar last-beat read-data, raw-`ARLEN`, runtime beat-count/`RLAST`, and multi-beat output banks as payload/validation preservation consumers.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
-- next_action: Start `.371`: select the public dynamic read burst-last recapture contract without behavior changes unless a later implementation leaf is explicitly created.
+- next_action: Start `.372`: implement the selected dynamic read burst-last recapture behavior without widening multiple dynamic, mixed dynamic/static, static busy, queue, scoreboard, backend, VHDL, or full-manager behavior.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact
