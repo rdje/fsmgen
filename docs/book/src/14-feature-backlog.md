@@ -8542,6 +8542,21 @@ generated completion pulses, scalar single-beat read-data consumer, validation
 gates, rollback, and deferred burst-last/read-data/runtime/multi-beat
 boundaries before implementation.
 
+Multiple dynamic read recapture contract:
+[AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_READ_RECAPTURE_CONTRACT_SELECTION](../../AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_READ_RECAPTURE_CONTRACT_SELECTION.md)
+selects `.381`, direct implementation of multiple all-dynamic read single-beat
+`RID` same-cycle release-and-recapture for the existing
+`ppif/axi_manager_capacity_status_dynamic_read_response_demux_multi.ppif`
+sample. The selector changes no behavior. The selected implementation must
+preserve public syntax, support identity,
+`bounded_multi_dynamic_read_rid_demux_contract`, generated demux rules,
+generated completions, onehot0 request policy, no-active-same-ID, active-ID
+uniqueness, response active/unique-match, completion-active assertions, and
+scalar single-beat read-data capture over generated completion pulses while
+adding per-transaction `multi_active_unique_dynamic_read` release-recapture
+report fields and idle-or-releasing request assertions. Multiple dynamic
+burst-last recapture remains a later exact owner.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same

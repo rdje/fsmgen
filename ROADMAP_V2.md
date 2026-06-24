@@ -3049,7 +3049,16 @@ preservation, validation, rollback, and deferred burst-last boundaries before
 implementation. Multiple dynamic read burst-last recapture, mixed
 dynamic/static recapture, static busy recapture, request arbitration beyond
 onehot0, queues, scoreboards, backend variants, VHDL, and full-manager behavior
-remain later owners.
+remain later owners. `.380` now selects `.381`, direct implementation of
+multiple all-dynamic read single-beat `RID` same-cycle release-and-recapture
+for the existing multiple dynamic read response-demux sample. The selector
+changes no behavior. The selected implementation must preserve public syntax,
+support identity, `bounded_multi_dynamic_read_rid_demux_contract`, generated
+demux rules, generated completions, onehot0 request policy, no-active-same-ID,
+active-ID uniqueness, response active/unique-match, completion-active
+assertions, and scalar single-beat read-data capture over generated completion
+pulses while adding per-transaction `multi_active_unique_dynamic_read`
+release-recapture report fields and idle-or-releasing request assertions.
 No behavior changed in
 `.270`, `.271`, `.273`, `.274`, `.275`, `.277`, `.278`,
 `.279`, `.281`, `.282`, `.283`, `.285`, `.286`, `.288`, `.290`, `.292`, or
@@ -3059,7 +3068,7 @@ No behavior changed in
 `.331`, `.332`, `.334`, `.336`, `.338`, `.339`, `.340`, `.342`, `.343`,
 `.345`, `.346`, `.348`, `.349`, `.351`, `.352`, `.354`, `.356`, `.358`,
 `.359`, `.360`, `.362`, `.363`, `.364`, `.366`, `.367`, `.369`, `.370`,
-`.371`, `.373`, `.374`, `.376`, `.377`, or `.379`.
+`.371`, `.373`, `.374`, `.376`, `.377`, `.379`, or `.380`.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.
