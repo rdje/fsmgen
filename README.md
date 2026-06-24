@@ -1091,6 +1091,16 @@ exposed stale generated support prose saying the single-active dynamic read
 burst-last `RID/RLAST` shape is supported without release-and-recapture and
 listing same-cycle recapture as future outside only dynamic write plus read
 single-beat.
+`.375` now aligns that generated support-detail prose with the shipped
+single-active dynamic read burst-last release-and-recapture behavior. The
+generated dynamic transaction-ID support detail describes single-active dynamic
+read single-beat `RID` matching and burst-last `RID/RLAST` matching as
+including same-cycle release-and-recapture, and same-cycle recapture remains
+future only outside the selected single-active dynamic write `BID`, read
+single-beat `RID`, and read burst-last `RID/RLAST` demux boundaries. Parser
+syntax, PPIF samples, response-demux semantics, generated state/rules,
+assertions, HDL, and runtime behavior are unchanged. The frontier advances to
+`.376`, selection of the first multiple all-dynamic recapture contract owner.
 No behavior
 changed in `.273`, `.274`, `.275`,
 `.277`, `.278`, `.279`, `.281`,
@@ -1369,7 +1379,8 @@ the transaction completion, releases busy from that completion, reports
 `ppif/axi_manager_capacity_status_dynamic_write_response_demux.ppif` as a
 support-accounted sample. Implementation `.365` extends that same single-active
 write sample with same-cycle release-and-recapture. Implementation `.227` also
-ships the selected single-beat dynamic read shape: explicit
+ships the selected single-beat dynamic read shape, and `.368` extends it with
+same-cycle release-and-recapture: explicit
 `response-demux.read` with exactly one
 transaction-local dynamic read ID captures admitted `ARID`, stores generated
 selected-ID/busy state, matches raw read responses with `RID == captured_id`,
@@ -1377,17 +1388,19 @@ pulses the generated read completion, releases busy, reports
 `bounded_dynamic_read_rid_demux_contract`, and adds
 `ppif/axi_manager_capacity_status_dynamic_read_response_demux.ppif` as a
 support-accounted sample. Implementation `.231` also ships the selected
-burst-last dynamic read shape: explicit `response-demux.read` with exactly one
+burst-last dynamic read shape, and `.372` extends it with same-cycle
+release-and-recapture: explicit `response-demux.read` with exactly one
 transaction-local dynamic read ID, `response-scope burst-last`, and one-bit
 `last-signal` captures admitted `ARID`, stores generated selected-ID/busy
 state, matches raw read responses with `RID == captured_id && RLAST`, pulses
-the generated read completion, releases busy, reports
+the generated read completion, releases or recaptures busy, reports
 `bounded_dynamic_read_rid_rlast_demux_contract`, and adds
 `ppif/axi_manager_capacity_status_dynamic_read_response_demux_burst_last.ppif`
 as a support-accounted sample. Metadata-only dynamic IDs remain unchanged when
 no behavior clause consumes them. Multiple dynamic transactions, mixed
 dynamic/static demux, same-cycle recapture outside the selected single-active
-write and read single-beat boundaries, same-ID ordering, read-data
+write, read single-beat, and read burst-last boundaries, same-ID ordering,
+read-data
 routing, burst-length/runtime validation, queues, scoreboards, direct backend
 behavior, HDL shapes outside this selected SystemVerilog path, and VHDL remain
 deferred.

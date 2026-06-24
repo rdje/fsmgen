@@ -9004,6 +9004,29 @@ sub assert_rlast_report_prose_alignment {
             && ($_->{id} // '') eq 'axi_id_ordering_and_response_matching'
     } @{$report->{unsupported_residue} || []};
     ok($id_residue, "$owner reports AXI ID/order unsupported residue");
+    my ($dynamic_residue) = grep {
+        ref($_) eq 'HASH'
+            && ($_->{id} // '') eq 'dynamic_transaction_id_behavior'
+    } @{$report->{unsupported_residue} || []};
+    ok($dynamic_residue, "$owner reports dynamic transaction-ID unsupported residue");
+    like(
+        $dynamic_residue->{detail},
+        qr/single-active dynamic read ID capture plus single-beat RID response matching and burst-last RID\/RLAST response matching including same-cycle release-and-recapture/,
+        "$owner reports read single-beat and burst-last dynamic recapture as supported",
+    );
+    like(
+        $dynamic_residue->{detail},
+        qr/same-cycle recapture outside single-active dynamic write BID demux, single-active dynamic read single-beat RID demux, and single-active dynamic read burst-last RID\/RLAST demux/,
+        "$owner reports remaining same-cycle recapture residue after all single-active dynamic recapture shapes",
+    );
+    ok(
+        index($dynamic_residue->{detail}, 'without release-and-recapture') < 0,
+        "$owner removes stale dynamic read burst-last no-recapture prose",
+    );
+    ok(
+        index($dynamic_residue->{detail}, 'same-cycle recapture outside single-active dynamic write BID demux and single-active dynamic read single-beat RID demux') < 0,
+        "$owner removes stale same-cycle recapture residue boundary prose",
+    );
     like(
         $id_residue->{detail},
         qr/generated burst-last RLAST response-demux completion, structural last-beat read-data metadata, generated last-beat read-data RDATA\/RRESP capture, generated last-beat read-data RDATA\/RRESP capture from generated read burst-last concrete same-ID queue-head response-demux including multiple independent depth-2 queue-head groups with no burst_length metadata, report-only raw-ARLEN burst-length metadata, or runtime-assertion beat-count\/RLAST validation metadata, plus the selected single depth-3 queue-head group with no burst_length metadata, report-only raw-ARLEN burst-length metadata, or runtime-assertion beat-count\/RLAST validation metadata, plus selected multiple\/mixed depth-3 queue-head groups with no burst_length metadata, report-only raw-ARLEN burst-length metadata, runtime-assertion beat-count\/RLAST validation metadata, or runtime-assertion multi-beat output-bank metadata, generated raw-ARLEN burst-length capture including report-only and runtime-validation generated read burst-last concrete same-ID queue-head read-data contracts with one or more independent depth-2 queue-head groups, the selected single depth-3 report-only and runtime-validation groups, selected multiple\/mixed depth-3 report-only and runtime-validation groups, and the selected same-family mixed auto-ID plus depth-2 concrete queue-head report-only and runtime-validation groups, explicit runtime-assertion beat-count\/RLAST validation for auto-ID, selected dynamic read-data, and bounded read burst-last concrete same-ID queue-head read-data contracts including one or more independent depth-2 queue-head groups plus the selected single depth-3 group, selected multiple\/mixed depth-3 groups, and the selected same-family mixed auto-ID plus depth-2 concrete queue-head group, generated multi-beat read-data output-bank behavior for the covered auto-ID multi-beat-by-RID subset, selected dynamic single-active and bounded multiple all-dynamic read demux subset, and bounded read burst-last concrete same-ID queue-head subset including multiple independent depth-2 queue-head groups plus the selected single depth-3 runtime-validation queue-head group, selected multiple\/mixed depth-3 runtime-validation queue-head groups, and the selected same-family mixed auto-ID plus depth-2 concrete queue-head runtime-validation group, bounded burst payload\/output behavior through that per-beat output bank, and generated scalar RRESP aggregation behavior are supported/,
