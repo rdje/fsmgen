@@ -8494,6 +8494,21 @@ dynamic read single-beat recapture, read burst-last recapture, mixed
 dynamic/static recapture, static busy recapture, queues, scoreboards, backend
 variants, VHDL, and full-manager behavior remain later exact owners.
 
+Multiple dynamic write recapture contract:
+[AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_WRITE_RECAPTURE_CONTRACT_SELECTION](../../AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_WRITE_RECAPTURE_CONTRACT_SELECTION.md)
+selects `.378`, direct implementation of multiple all-dynamic write `BID`
+same-cycle release-and-recapture for the existing
+`ppif/axi_manager_capacity_status_dynamic_write_response_demux_multi.ppif`
+sample. The contract preserves public syntax, support accounting,
+`bounded_multi_dynamic_write_bid_demux_contract`, and onehot0 request policy;
+adds per-transaction `release_recapture_rule`,
+`same_cycle_release_recapture_policy: multi_active_unique_dynamic_write`,
+`release_recapture_source: generated_dynamic_demux_completion`, and
+`release_recapture_transaction` report fields; replaces per-transaction
+request-not-busy assertions with idle-or-releasing assertions; and preserves
+no-active-same-ID, active-ID uniqueness, response active/unique-match, and
+completion-active assertions. The selector changes no behavior.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same

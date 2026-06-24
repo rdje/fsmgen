@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.376: select multi-dynamic write recapture contract`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.377` selects the public contract for multiple all-dynamic write `BID` same-cycle release-and-recapture; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.376` selected `.377`, public contract selection for multiple all-dynamic write `BID` same-cycle release-and-recapture. The selector starts on write because it exercises multi-active dynamic selected-ID/busy ownership, onehot0 request policy, active-ID uniqueness, request no-active-same-ID checks, response active/unique-match assertions, and completion-active assertions without read-side `RLAST`, read-data, raw-`ARLEN`, runtime, or multi-beat preservation coupling. No parser, generator, PPIF sample, support-accounting catalog, validation behavior, generated artifact, test, schedule/check/semantic JSON, HDL, or runtime behavior changed.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.377: select multi-dynamic write recapture contract`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.378` implements multiple all-dynamic write `BID` same-cycle release-and-recapture; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.377` selected `.378`, direct implementation of multiple all-dynamic write `BID` same-cycle release-and-recapture for the existing multi-dynamic write sample. The contract preserves public syntax, support accounting, `bounded_multi_dynamic_write_bid_demux_contract`, and onehot0 request policy; adds per-transaction recapture report fields with `same_cycle_release_recapture_policy: multi_active_unique_dynamic_write`; replaces per-transaction request-not-busy assertions with idle-or-releasing assertions; and preserves no-active-same-ID, active-ID uniqueness, response active/unique-match, and completion-active assertions. No behavior changed.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
-- next_action: Start `.377`: select the multiple all-dynamic write recapture public contract before behavior changes.
+- next_action: Start `.378`: implement the selected multiple all-dynamic write recapture behavior.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact

@@ -3014,6 +3014,18 @@ preservation coupling. Multiple dynamic read single-beat recapture, read
 burst-last recapture, mixed dynamic/static recapture, static busy recapture,
 queues, scoreboards, backend variants, VHDL, and full-manager behavior remain
 later exact owners.
+`.377` now selects `.378`, direct implementation of multiple all-dynamic write
+`BID` same-cycle release-and-recapture for the existing
+`ppif/axi_manager_capacity_status_dynamic_write_response_demux_multi.ppif`
+sample. The contract preserves public syntax, support accounting,
+`bounded_multi_dynamic_write_bid_demux_contract`, and onehot0 request policy;
+adds per-transaction `release_recapture_rule`,
+`same_cycle_release_recapture_policy: multi_active_unique_dynamic_write`,
+`release_recapture_source: generated_dynamic_demux_completion`, and
+`release_recapture_transaction` report fields; replaces per-transaction
+request-not-busy assertions with idle-or-releasing assertions; and preserves
+no-active-same-ID, active-ID uniqueness, response active/unique-match, and
+completion-active assertions. The selector changes no behavior.
 No behavior changed in
 `.270`, `.271`, `.273`, `.274`, `.275`, `.277`, `.278`,
 `.279`, `.281`, `.282`, `.283`, `.285`, `.286`, `.288`, `.290`, `.292`, or
@@ -3023,7 +3035,7 @@ No behavior changed in
 `.331`, `.332`, `.334`, `.336`, `.338`, `.339`, `.340`, `.342`, `.343`,
 `.345`, `.346`, `.348`, `.349`, `.351`, `.352`, `.354`, `.356`, `.358`,
 `.359`, `.360`, `.362`, `.363`, `.364`, `.366`, `.367`, `.369`, `.370`,
-`.371`, `.373`, `.374`, or `.376`.
+`.371`, `.373`, `.374`, `.376`, or `.377`.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.
