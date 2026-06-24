@@ -7922,6 +7922,18 @@ Generated dynamic same-ID enforcement, response-demux mapping, queues,
 scoreboards, HDL behavior, and VHDL behavior remain deferred; dynamic
 response-demux plus same-family dynamic policy still fails closed.
 
+Dynamic same-ID reject enforcement mapping readiness audit:
+[AXI_IAL2_MANAGER_DYNAMIC_SAME_ID_REJECT_ENFORCEMENT_MAPPING_READINESS_AUDIT](../../AXI_IAL2_MANAGER_DYNAMIC_SAME_ID_REJECT_ENFORCEMENT_MAPPING_READINESS_AUDIT.md)
+selects `.438`, a narrow generated-enforcement report mapping for selected
+`dynamic-id-reuse reject` policy over already generated multi-active dynamic
+and mixed dynamic/static response-demux shapes. The audit changes no behavior.
+The first covered shapes are bounded multiple all-dynamic write/read response
+demux and bounded two-dynamic-plus-one-static mixed write/read response demux
+where generated reports already expose `active_dynamic_ids_must_be_unique`,
+`*_dynamic_request_no_active_same_id`, and `*_dynamic_active_id_unique`
+artifacts. Single-active dynamic demux, one-dynamic mixed demux, queues,
+scoreboards, direct backend behavior, and VHDL remain deferred.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

@@ -2884,6 +2884,16 @@ support-accounted as
 `intent.ppif_axi_manager_capacity_status_dynamic_same_id_reject_policy`.
 Generated dynamic same-ID enforcement, response-demux mapping, queues,
 scoreboards, HDL behavior, and VHDL behavior remain deferred.
+`.437` now selects `.438`, a narrow generated-enforcement report mapping for
+selected `dynamic-id-reuse reject` policy over already generated multi-active
+dynamic and mixed dynamic/static response-demux shapes. The audit changes no
+behavior. The first covered shapes are bounded multiple all-dynamic write/read
+response demux and bounded two-dynamic-plus-one-static mixed write/read
+response demux where generated reports already expose
+`active_dynamic_ids_must_be_unique`, `*_dynamic_request_no_active_same_id`,
+and `*_dynamic_active_id_unique` artifacts. Single-active dynamic demux,
+one-dynamic mixed demux, queues, scoreboards, direct backend behavior, and
+VHDL remain deferred.
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,
