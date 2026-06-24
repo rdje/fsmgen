@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.389: ship mixed write recapture`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.390` selects the next post mixed dynamic/static write recapture activity; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.389` shipped mixed dynamic/static write BID same-cycle release-and-recapture. FSMGen now emits dynamic and static release-recapture rules, reports dynamic_capture/static_capture recapture policies, and replaces the selected request-not-busy assertions with idle-or-releasing assertions. Guarded focused t/1438 stopped at 88.1% host memory; syntax, guarded schedule JSON, direct probe, and docs/doctrine gates passed.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.390: select mixed read recapture contract`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.391` selects the public contract for mixed dynamic/static read single-beat RID same-cycle release-and-recapture; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.390` selected `.391`, public contract selection for mixed dynamic/static read single-beat RID same-cycle release-and-recapture. Guarded baseline schedule probes for the mixed read single-beat and burst-last public samples passed below the 88% host-memory cutoff and confirmed no read-side release-recapture metadata or static_capture block after `.389`; docs/doctrine gates passed.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
-- next_action: Start `.390`: select the next post mixed dynamic/static write recapture activity.
+- next_action: Start `.391`: select the mixed dynamic/static read single-beat recapture public contract.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact

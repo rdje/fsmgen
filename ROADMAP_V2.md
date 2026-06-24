@@ -2243,8 +2243,19 @@ request-not-busy assertions with
 `axi0_w0_dynamic_request_idle_or_releasing` and
 `axi0_w1_static_request_idle_or_releasing`. Public syntax, support identity,
 the mixed write mode, static-ID reservation, onehot0 request policy, response
-active/unique-match, and completion-active assertions are preserved. `.390`
-is the next post-mixed-write selector.
+active/unique-match, and completion-active assertions are preserved.
+`.390` selects `.391`, public contract selection for mixed dynamic/static read
+single-beat `RID` same-cycle release-and-recapture. The selector changes no
+behavior. Guarded baseline schedule probes for the mixed read single-beat and
+burst-last public samples passed below the 88% host-memory cutoff and
+confirmed the post-`.389` read reports still use request-not-busy assertions
+with no read-side release-recapture metadata or `static_capture` block.
+Single-beat read is next so `.391` can adapt the `.389` dynamic/static
+recapture vocabulary to `response_demux.read` while preserving
+`bounded_mixed_dynamic_static_read_rid_demux_contract`,
+`response_scope: single_beat`, and `generated_mixed_dynamic_static_read_demux`
+before burst-last, read-data, raw-`ARLEN`, runtime-validation, and multi-beat
+preservation layers are widened.
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,

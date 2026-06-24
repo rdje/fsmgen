@@ -7260,8 +7260,22 @@ same-transaction same-cycle requests, reports
 `response_demux.write.dynamic_capture` and
 `mixed_dynamic_static_static_write` under
 `response_demux.write.static_capture`, and replaces the selected
-request-not-busy assertions with idle-or-releasing assertions. `.390` is the
-next post-mixed-write selector.
+request-not-busy assertions with idle-or-releasing assertions.
+
+Post mixed dynamic/static write recapture selector:
+[AXI_IAL2_MANAGER_POST_MIXED_DYNAMIC_STATIC_WRITE_RECAPTURE_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MIXED_DYNAMIC_STATIC_WRITE_RECAPTURE_NEXT_SLICE_SELECTION.md)
+selects `.391`, public contract selection for mixed dynamic/static read
+single-beat `RID` same-cycle release-and-recapture. The selector changes no
+behavior. Guarded baseline schedule probes for the mixed read single-beat and
+burst-last public samples passed below the 88% host-memory cutoff and
+confirmed the post-`.389` read reports still use request-not-busy assertions
+with no read-side release-recapture metadata or `static_capture` block.
+Single-beat read is next so `.391` can adapt the `.389` dynamic/static
+recapture vocabulary to `response_demux.read` while preserving
+`bounded_mixed_dynamic_static_read_rid_demux_contract`,
+`response_scope: single_beat`, and `generated_mixed_dynamic_static_read_demux`
+before burst-last, read-data, raw-`ARLEN`, runtime-validation, and multi-beat
+preservation layers are widened.
 
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
