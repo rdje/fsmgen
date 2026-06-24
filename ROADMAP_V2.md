@@ -3010,10 +3010,9 @@ multi-active dynamic selected-ID/busy ownership, onehot0 request policy,
 active-ID uniqueness, request no-active-same-ID checks, response active-match,
 response unique-match, and completion-active assertions without read-side
 `RLAST`, raw non-final-beat, read-data, raw-`ARLEN`, runtime, or multi-beat
-preservation coupling. Multiple dynamic read single-beat recapture, read
-burst-last recapture, mixed dynamic/static recapture, static busy recapture,
-queues, scoreboards, backend variants, VHDL, and full-manager behavior remain
-later exact owners.
+preservation coupling. That selector deliberately left read-side, mixed/static,
+static busy, queue, scoreboard, backend-variant, VHDL, and full-manager
+recapture behavior to later exact owners.
 `.377` now selects `.378`, direct implementation of multiple all-dynamic write
 `BID` same-cycle release-and-recapture for the existing
 `ppif/axi_manager_capacity_status_dynamic_write_response_demux_multi.ppif`
@@ -3059,6 +3058,21 @@ active-ID uniqueness, response active/unique-match, completion-active
 assertions, and scalar single-beat read-data capture over generated completion
 pulses while adding per-transaction `multi_active_unique_dynamic_read`
 release-recapture report fields and idle-or-releasing request assertions.
+`.381` now ships that same-cycle release-and-recapture behavior for the
+existing multiple dynamic read response-demux sample. The generator emits
+`axi0_r0_dynamic_id_release_recapture` and
+`axi0_r1_dynamic_id_release_recapture`, reports
+`same_cycle_release_recapture_policy: multi_active_unique_dynamic_read` under
+`response_demux.read.dynamic_capture.transactions[]`, replaces the
+per-transaction request-not-busy assertions with
+idle-or-releasing assertions, and preserves
+`bounded_multi_dynamic_read_rid_demux_contract`, onehot0 request policy,
+no-active-same-ID, active-ID uniqueness, raw response active/unique-match,
+completion-active assertions, generated completion names, support identity,
+and scalar single-beat read-data capture over generated completions. Multiple
+dynamic read burst-last recapture, mixed dynamic/static recapture, static busy
+recapture, request arbitration beyond onehot0, queues, scoreboards, backend
+variants, VHDL, and full-manager behavior remain later owners.
 No behavior changed in
 `.270`, `.271`, `.273`, `.274`, `.275`, `.277`, `.278`,
 `.279`, `.281`, `.282`, `.283`, `.285`, `.286`, `.288`, `.290`, `.292`, or

@@ -63,8 +63,8 @@ The behavior is bounded by these rules:
 Multiple dynamic read burst-last/`RLAST` demux, read-data over multiple dynamic
 read demux, burst-length/runtime validation and multi-beat output banks over
 multiple dynamic read demux, mixed dynamic/static read demux, same-cycle
-request widening beyond onehot0, same-cycle release-and-recapture, dynamic
-same-ID queues, and scoreboards remain future exact-owner work.
+request widening beyond onehot0, burst-last/mixed/static release-recapture,
+dynamic same-ID queues, and scoreboards remain future exact-owner work.
 
 ## Generated Behavior
 
@@ -88,9 +88,13 @@ Each generated response-demux rule matches the raw accepted read response:
 axi0_read_complete && dynamic_busy_q && axi0_rid == dynamic_id_q
 ```
 
-The matched rule pulses that transaction's generated completion output, and the
-generated release rule clears the transaction busy bit from that completion
-pulse. The single-active `.227` dynamic read sample keeps its existing
+The matched rule pulses that transaction's generated completion output. Since
+`.381`, the single-beat multiple dynamic read sample also emits one
+release-recapture rule per transaction, using the same generated completion
+pulse and the new `ARID` request in the same cycle while no sibling read has an
+admitted request and no active sibling holds the new `ARID`. The generated
+release-only rule clears the transaction busy bit when the completion has no
+same-cycle own request. The single-active `.227` dynamic read sample keeps its existing
 `bounded_dynamic_read_rid_demux_contract` report mode, and the `.231`
 single-active burst-last/`RLAST` sample remains supported without widening to
 multiple dynamic read transactions.
@@ -125,18 +129,26 @@ response_demux:
           busy_signal: axi0_r0_dynamic_busy_q
           capture_rule: axi0_r0_dynamic_id_capture
           release_rule: axi0_r0_dynamic_id_release
+          release_recapture_rule: axi0_r0_dynamic_id_release_recapture
+          same_cycle_release_recapture_policy: multi_active_unique_dynamic_read
+          release_recapture_source: generated_dynamic_demux_completion
+          release_recapture_transaction: r0
         - transaction: r1
           selected_id_signal: axi0_r1_dynamic_id_q
           busy_signal: axi0_r1_dynamic_busy_q
           capture_rule: axi0_r1_dynamic_id_capture
           release_rule: axi0_r1_dynamic_id_release
+          release_recapture_rule: axi0_r1_dynamic_id_release_recapture
+          same_cycle_release_recapture_policy: multi_active_unique_dynamic_read
+          release_recapture_source: generated_dynamic_demux_completion
+          release_recapture_transaction: r1
 ```
 
 The read report also lists generated completion signals, response-demux rules,
-and the generated assertion names. The shipped multiple-state assertion roles
-are:
+and the generated assertion names. Since `.381`, the shipped multiple-state
+assertion roles are:
 
-- per-transaction request-not-busy;
+- per-transaction request idle-or-releasing;
 - family request onehot0;
 - per-transaction request no-active-same-ID;
 - pairwise active dynamic ID uniqueness;
@@ -180,7 +192,7 @@ remain fail-closed or unshipped:
   dynamic read demux;
 - mixed dynamic/static write or read response-demux;
 - same-cycle dynamic read request widening beyond onehot0;
-- same-cycle release-and-recapture;
+- burst-last/mixed/static release-and-recapture;
 - dynamic same-ID ordering;
 - dynamic same-ID queues and scoreboards;
 - direct backend behavior outside the selected generated SystemVerilog path;

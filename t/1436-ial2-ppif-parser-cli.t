@@ -283,6 +283,11 @@ subtest 'PPIF adapter parses AXI manager multiple dynamic read response-demux be
     like($isf, qr/\(output axi0_r1_complete\)/, 'multiple dynamic read response-demux generated IAL1 exposes r1 completion');
     like($isf, qr/\(rule axi0_r0_response_demux \(& axi0_read_complete axi0_r0_dynamic_busy_q \(== axi0_rid axi0_r0_dynamic_id_q\)\)/, 'multiple dynamic read response-demux generated IAL1 matches r0 RID before completion');
     like($isf, qr/\(rule axi0_r1_response_demux \(& axi0_read_complete axi0_r1_dynamic_busy_q \(== axi0_rid axi0_r1_dynamic_id_q\)\)/, 'multiple dynamic read response-demux generated IAL1 matches r1 RID before completion');
+    like($isf, qr/\(rule axi0_r0_dynamic_id_release_recapture \(& \(& axi0_r0_request \(\| \(< axi0_pending_reads_q 4\) \(\| axi0_r0_complete axi0_r1_complete\)\)\) axi0_r0_complete axi0_r0_dynamic_busy_q \(! \(& axi0_r1_request \(\| \(< axi0_pending_reads_q 4\) \(\| axi0_r0_complete axi0_r1_complete\)\)\)\) \(! \(& axi0_r1_dynamic_busy_q \(== axi0_r1_dynamic_id_q axi0_arid\)\)\)\)/, 'multiple dynamic read response-demux generated IAL1 recaptures r0 on same-cycle release');
+    like($isf, qr/\(rule axi0_r1_dynamic_id_release_recapture \(& \(& axi0_r1_request \(\| \(< axi0_pending_reads_q 4\) \(\| axi0_r0_complete axi0_r1_complete\)\)\) axi0_r1_complete axi0_r1_dynamic_busy_q \(! \(& axi0_r0_request \(\| \(< axi0_pending_reads_q 4\) \(\| axi0_r0_complete axi0_r1_complete\)\)\)\) \(! \(& axi0_r0_dynamic_busy_q \(== axi0_r0_dynamic_id_q axi0_arid\)\)\)\)/, 'multiple dynamic read response-demux generated IAL1 recaptures r1 on same-cycle release');
+    like($isf, qr/\(rule axi0_r0_dynamic_id_release \(& axi0_r0_complete axi0_r0_dynamic_busy_q \(! axi0_r0_request\)\)/, 'multiple dynamic read response-demux generated IAL1 releases r0 only without same-cycle own request');
+    like($isf, qr/\(rule axi0_r1_dynamic_id_release \(& axi0_r1_complete axi0_r1_dynamic_busy_q \(! axi0_r1_request\)\)/, 'multiple dynamic read response-demux generated IAL1 releases r1 only without same-cycle own request');
+    like($isf, qr/"axi0 read dynamic request is idle or releasing active captured ID"/, 'multiple dynamic read response-demux generated IAL1 emits idle-or-releasing assertions');
     like($isf, qr/"axi0 read dynamic requests are mutually exclusive"/, 'multiple dynamic read response-demux generated IAL1 emits request onehot assertion');
     like($isf, qr/"axi0 read dynamic response matches at most one captured ID"/, 'multiple dynamic read response-demux generated IAL1 emits response unique-match assertion');
     assert_dynamic_read_response_demux_multi_report($result->{report}, 'adapter report');
@@ -8689,8 +8694,8 @@ sub assert_dynamic_read_response_demux_multi_report {
     is_deeply(
         $read->{generated_assertions},
         [qw(
-            axi0_r0_dynamic_request_not_busy
-            axi0_r1_dynamic_request_not_busy
+            axi0_r0_dynamic_request_idle_or_releasing
+            axi0_r1_dynamic_request_idle_or_releasing
             axi0_read_dynamic_request_onehot0
             axi0_r0_dynamic_request_no_active_same_id
             axi0_r1_dynamic_request_no_active_same_id
@@ -8717,6 +8722,10 @@ sub assert_dynamic_read_response_demux_multi_report {
                     busy_signal        => 'axi0_r0_dynamic_busy_q',
                     capture_rule       => 'axi0_r0_dynamic_id_capture',
                     release_rule       => 'axi0_r0_dynamic_id_release',
+                    release_recapture_rule => 'axi0_r0_dynamic_id_release_recapture',
+                    same_cycle_release_recapture_policy => 'multi_active_unique_dynamic_read',
+                    release_recapture_source => 'generated_dynamic_demux_completion',
+                    release_recapture_transaction => 'r0',
                 },
                 {
                     transaction        => 'r1',
@@ -8724,6 +8733,10 @@ sub assert_dynamic_read_response_demux_multi_report {
                     busy_signal        => 'axi0_r1_dynamic_busy_q',
                     capture_rule       => 'axi0_r1_dynamic_id_capture',
                     release_rule       => 'axi0_r1_dynamic_id_release',
+                    release_recapture_rule => 'axi0_r1_dynamic_id_release_recapture',
+                    same_cycle_release_recapture_policy => 'multi_active_unique_dynamic_read',
+                    release_recapture_source => 'generated_dynamic_demux_completion',
+                    release_recapture_transaction => 'r1',
                 },
             ],
         },
@@ -9043,7 +9056,7 @@ sub assert_rlast_report_prose_alignment {
     );
     like(
         $dynamic_residue->{detail},
-        qr/same-cycle recapture outside single-active dynamic write BID demux, bounded multiple all-dynamic write BID demux, single-active dynamic read single-beat RID demux, and single-active dynamic read burst-last RID\/RLAST demux/,
+        qr/same-cycle recapture outside single-active dynamic write BID demux, bounded multiple all-dynamic write BID demux, single-active dynamic read single-beat RID demux, bounded multiple all-dynamic read single-beat RID demux, and single-active dynamic read burst-last RID\/RLAST demux/,
         "$owner reports remaining same-cycle recapture residue after shipped dynamic recapture shapes",
     );
     ok(

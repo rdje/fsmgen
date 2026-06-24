@@ -8557,6 +8557,23 @@ adding per-transaction `multi_active_unique_dynamic_read` release-recapture
 report fields and idle-or-releasing request assertions. Multiple dynamic
 burst-last recapture remains a later exact owner.
 
+Multiple dynamic read recapture behavior:
+[AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_READ_RECAPTURE_BEHAVIOR](../../AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_READ_RECAPTURE_BEHAVIOR.md)
+ships `.381`, same-cycle release-and-recapture for the existing multiple
+all-dynamic read single-beat `RID` response-demux sample. FSMGen now emits
+`axi0_r0_dynamic_id_release_recapture` and
+`axi0_r1_dynamic_id_release_recapture`, reports
+`same_cycle_release_recapture_policy: multi_active_unique_dynamic_read` under
+`response_demux.read.dynamic_capture.transactions[]`, replaces the two
+per-transaction request-not-busy assertions with idle-or-releasing assertions,
+and preserves `bounded_multi_dynamic_read_rid_demux_contract`, onehot0 request
+policy, no-active-same-ID, active-ID uniqueness, response active/unique-match,
+completion-active assertions, generated completion names, support identity, and
+scalar single-beat read-data capture over generated completions. Multiple
+dynamic read burst-last recapture, mixed dynamic/static recapture, static busy
+recapture, queues, scoreboards, backend variants, VHDL, and full-manager
+behavior remain later owners.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same

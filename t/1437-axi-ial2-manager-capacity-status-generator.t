@@ -646,6 +646,11 @@ subtest 'multiple dynamic read response-demux captures ARID and matches single-b
     like($isf, qr/\(rule axi0_r1_dynamic_id_capture \(& \(& axi0_r1_request \(\| \(< axi0_pending_reads_q 4\) \(\| axi0_r0_complete axi0_r1_complete\)\)\) \(! axi0_r1_dynamic_busy_q\) \(! \(& axi0_r0_request/, 'multiple dynamic read demux gates r1 capture against sibling request');
     like($isf, qr/\(rule axi0_r0_response_demux \(& axi0_read_complete axi0_r0_dynamic_busy_q \(== axi0_rid axi0_r0_dynamic_id_q\)\)/, 'multiple dynamic read demux matches r0 RID');
     like($isf, qr/\(rule axi0_r1_response_demux \(& axi0_read_complete axi0_r1_dynamic_busy_q \(== axi0_rid axi0_r1_dynamic_id_q\)\)/, 'multiple dynamic read demux matches r1 RID');
+    like($isf, qr/\(rule axi0_r0_dynamic_id_release_recapture \(& \(& axi0_r0_request \(\| \(< axi0_pending_reads_q 4\) \(\| axi0_r0_complete axi0_r1_complete\)\)\) axi0_r0_complete axi0_r0_dynamic_busy_q \(! \(& axi0_r1_request \(\| \(< axi0_pending_reads_q 4\) \(\| axi0_r0_complete axi0_r1_complete\)\)\)\) \(! \(& axi0_r1_dynamic_busy_q \(== axi0_r1_dynamic_id_q axi0_arid\)\)\)\)\s+\(axi0_r0_dynamic_id_q axi0_arid\)\s+\(axi0_r0_dynamic_busy_q 1\)\)/, 'multiple dynamic read demux recaptures r0 on same-cycle release with sibling guards');
+    like($isf, qr/\(rule axi0_r1_dynamic_id_release_recapture \(& \(& axi0_r1_request \(\| \(< axi0_pending_reads_q 4\) \(\| axi0_r0_complete axi0_r1_complete\)\)\) axi0_r1_complete axi0_r1_dynamic_busy_q \(! \(& axi0_r0_request \(\| \(< axi0_pending_reads_q 4\) \(\| axi0_r0_complete axi0_r1_complete\)\)\)\) \(! \(& axi0_r0_dynamic_busy_q \(== axi0_r0_dynamic_id_q axi0_arid\)\)\)\)\s+\(axi0_r1_dynamic_id_q axi0_arid\)\s+\(axi0_r1_dynamic_busy_q 1\)\)/, 'multiple dynamic read demux recaptures r1 on same-cycle release with sibling guards');
+    like($isf, qr/\(rule axi0_r0_dynamic_id_release \(& axi0_r0_complete axi0_r0_dynamic_busy_q \(! axi0_r0_request\)\)\s+\(axi0_r0_dynamic_busy_q 0\)\)/, 'multiple dynamic read demux releases r0 only without same-cycle own request');
+    like($isf, qr/\(rule axi0_r1_dynamic_id_release \(& axi0_r1_complete axi0_r1_dynamic_busy_q \(! axi0_r1_request\)\)\s+\(axi0_r1_dynamic_busy_q 0\)\)/, 'multiple dynamic read demux releases r1 only without same-cycle own request');
+    like($isf, qr/"axi0 read dynamic request is idle or releasing active captured ID"/, 'multiple dynamic read demux emits idle-or-releasing request assertions');
     like($isf, qr/"axi0 read dynamic requests are mutually exclusive"/, 'multiple dynamic read demux emits request onehot assertion');
     like($isf, qr/"axi0 read dynamic active IDs are unique"/, 'multiple dynamic read demux emits active-ID uniqueness assertion');
     like($isf, qr/"axi0 read dynamic response matches at most one captured ID"/, 'multiple dynamic read demux emits response unique-match assertion');
@@ -655,6 +660,10 @@ subtest 'multiple dynamic read response-demux captures ARID and matches single-b
     my $fsm = $result->{generated_ial0}{files}{'axi0_capacity_status.fsm'};
     like($fsm, qr/\(-axi0_r0_response_demux\s+<\(& axi0_read_complete axi0_r0_dynamic_busy_q \(== axi0_rid axi0_r0_dynamic_id_q\)\)/, 'scheduled .fsm lowers multi dynamic r0 RID match');
     like($fsm, qr/\(-axi0_r1_response_demux\s+<\(& axi0_read_complete axi0_r1_dynamic_busy_q \(== axi0_rid axi0_r1_dynamic_id_q\)\)/, 'scheduled .fsm lowers multi dynamic r1 RID match');
+    like($fsm, qr/\(-axi0_r0_dynamic_id_release_recapture\s+<\(& \(& axi0_r0_request/, 'scheduled .fsm lowers multi dynamic r0 release-recapture');
+    like($fsm, qr/\(-axi0_r1_dynamic_id_release_recapture\s+<\(& \(& axi0_r1_request/, 'scheduled .fsm lowers multi dynamic r1 release-recapture');
+    like($fsm, qr/\(-axi0_r0_dynamic_id_release\s+<\(& axi0_r0_complete axi0_r0_dynamic_busy_q \(! axi0_r0_request\)\)/, 'scheduled .fsm lowers multi dynamic r0 release-only rule');
+    like($fsm, qr/\(-axi0_r1_dynamic_id_release\s+<\(& axi0_r1_complete axi0_r1_dynamic_busy_q \(! axi0_r1_request\)\)/, 'scheduled .fsm lowers multi dynamic r1 release-only rule');
 
     my $hdl = hdl_for('axi0_capacity_status', $fsm);
     like($hdl, qr/\binput\s+(?:wire\s+)?\[3:0\]\s+axi0_arid\b/, 'SystemVerilog declares ARID for multiple dynamic read');
@@ -7182,8 +7191,8 @@ sub assert_dynamic_read_response_demux_multi_report {
     is_deeply(
         $read->{generated_assertions},
         [qw(
-            axi0_r0_dynamic_request_not_busy
-            axi0_r1_dynamic_request_not_busy
+            axi0_r0_dynamic_request_idle_or_releasing
+            axi0_r1_dynamic_request_idle_or_releasing
             axi0_read_dynamic_request_onehot0
             axi0_r0_dynamic_request_no_active_same_id
             axi0_r1_dynamic_request_no_active_same_id
@@ -7210,6 +7219,10 @@ sub assert_dynamic_read_response_demux_multi_report {
                     busy_signal        => 'axi0_r0_dynamic_busy_q',
                     capture_rule       => 'axi0_r0_dynamic_id_capture',
                     release_rule       => 'axi0_r0_dynamic_id_release',
+                    release_recapture_rule => 'axi0_r0_dynamic_id_release_recapture',
+                    same_cycle_release_recapture_policy => 'multi_active_unique_dynamic_read',
+                    release_recapture_source => 'generated_dynamic_demux_completion',
+                    release_recapture_transaction => 'r0',
                 },
                 {
                     transaction        => 'r1',
@@ -7217,6 +7230,10 @@ sub assert_dynamic_read_response_demux_multi_report {
                     busy_signal        => 'axi0_r1_dynamic_busy_q',
                     capture_rule       => 'axi0_r1_dynamic_id_capture',
                     release_rule       => 'axi0_r1_dynamic_id_release',
+                    release_recapture_rule => 'axi0_r1_dynamic_id_release_recapture',
+                    same_cycle_release_recapture_policy => 'multi_active_unique_dynamic_read',
+                    release_recapture_source => 'generated_dynamic_demux_completion',
+                    release_recapture_transaction => 'r1',
                 },
             ],
         },
@@ -7966,8 +7983,8 @@ sub assert_rlast_report_prose_alignment {
             "$owner reports dynamic last-beat read-data capture as supported",
         ],
         [
-            'generated bounded multiple all-dynamic read single-beat RID response demux',
-            "$owner reports bounded multiple dynamic read single-beat demux as supported",
+            'generated bounded multiple all-dynamic read single-beat RID response demux including same-cycle release-and-recapture',
+            "$owner reports bounded multiple dynamic read single-beat recapture as supported",
         ],
         [
             'multiple independent or mixed-depth read single-beat, read burst-last, and write response-demux queue groups',
