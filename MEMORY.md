@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.383: audit read RLAST recapture readiness`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.384` selects the public contract for multiple all-dynamic read burst-last `RID && RLAST` same-cycle release-and-recapture; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.383` selected `.384`, public contract selection for multiple all-dynamic read burst-last `RID && RLAST` same-cycle release-and-recapture. The guarded baseline schedule probe for `ppif/axi_manager_capacity_status_dynamic_read_response_demux_multi_burst_last.ppif` passed after process-inspection approval for the RAM guard and confirmed the live boundary still reports `bounded_multi_dynamic_read_rid_rlast_demux_contract`, `generated_dynamic_demux_last_beat`, request-not-busy assertions, and no release-recapture fields. The audit changed no behavior.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.384: select read RLAST recapture contract`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.385` implements multiple all-dynamic read burst-last `RID && RLAST` same-cycle release-and-recapture; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.384` selected `.385`, direct implementation of multiple all-dynamic read burst-last `RID && RLAST` same-cycle release-and-recapture for `ppif/axi_manager_capacity_status_dynamic_read_response_demux_multi_burst_last.ppif`. The selector changes no behavior; it preserves `bounded_multi_dynamic_read_rid_rlast_demux_contract`, selects per-transaction `multi_active_unique_dynamic_read` release-recapture fields with source `generated_dynamic_demux_last_beat_completion`, selects idle-or-releasing request assertions, and requires preservation of raw non-final beats plus scalar last-beat read-data, raw-`ARLEN`, runtime, and multi-beat consumers.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
-- next_action: Start `.384`: select the public contract for multiple all-dynamic read burst-last `RID && RLAST` recapture.
+- next_action: Start `.385`: implement multiple all-dynamic read burst-last `RID && RLAST` recapture.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact

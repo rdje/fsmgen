@@ -2191,7 +2191,12 @@ contract selection for that burst-last recapture boundary, after finding the
 implementation substrate close but public last-beat release-recapture source,
 assertion rename, guard, raw-beat preservation, read-data, raw-`ARLEN`,
 runtime, multi-beat, validation, and rollback semantics still need explicit
-ownership before behavior changes.
+ownership before behavior changes. `.384` selects `.385`, direct
+implementation of that contract for the existing support-accounted multiple
+all-dynamic read burst-last sample, with mode preservation, per-transaction
+`multi_active_unique_dynamic_read` fields, last-beat release-recapture source,
+idle-or-releasing request assertions, and preservation of raw non-final beats
+plus read-data/raw-`ARLEN`/runtime/multi-beat consumers.
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,

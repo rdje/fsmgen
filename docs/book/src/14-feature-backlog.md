@@ -7189,6 +7189,18 @@ assertions, release guards, raw non-final beat preservation, scalar last-beat
 read-data, raw-`ARLEN`, runtime beat-count/`RLAST`, multi-beat output-bank
 preservation, validation, and rollback semantics.
 
+Multiple dynamic read RLAST recapture contract:
+[AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_READ_RLAST_RECAPTURE_CONTRACT_SELECTION](../../AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_READ_RLAST_RECAPTURE_CONTRACT_SELECTION.md)
+selects `.385`, direct implementation of multiple all-dynamic read burst-last
+`RID && RLAST` same-cycle release-and-recapture. The selector changes no
+behavior. The implementation must preserve
+`bounded_multi_dynamic_read_rid_rlast_demux_contract`, use
+`same_cycle_release_recapture_policy: multi_active_unique_dynamic_read` with
+`release_recapture_source: generated_dynamic_demux_last_beat_completion`,
+replace selected request-not-busy assertions with idle-or-releasing
+assertions, and preserve raw non-final beats plus scalar last-beat read-data,
+raw-`ARLEN`, runtime, and multi-beat consumers.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after
