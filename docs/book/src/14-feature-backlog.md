@@ -8154,6 +8154,18 @@ support identity, focused behavior label, scalar output names,
 completion-validity vocabulary, validation, rollback, and raw `ARLEN`/runtime/
 multi-beat residue before implementation.
 
+Two-dynamic/one-static mixed dynamic/static read burst-last read-data contract:
+[AXI_IAL2_MANAGER_TWO_DYNAMIC_ONE_STATIC_MIXED_DYNAMIC_STATIC_READ_RLAST_READ_DATA_CONTRACT_SELECTION](../../AXI_IAL2_MANAGER_TWO_DYNAMIC_ONE_STATIC_MIXED_DYNAMIC_STATIC_READ_RLAST_READ_DATA_CONTRACT_SELECTION.md)
+selects `.350`, direct generated behavior for scalar last-beat read-data over
+that generated demux. The selector fixes sample
+`ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_dynamic_burst_last_read_data.ppif`,
+support identity, coverage key, focused behavior label, generated
+`axi0_rdata`/`axi0_rresp` inputs, `r0`/`r1`/`r2` scalar last-beat outputs, and
+completion validity
+`generated_multi_mixed_dynamic_static_read_response_demux_last_beat_completion_pulse`.
+Single-beat read-data over `.344`, raw `ARLEN`, runtime validation, and
+multi-beat output banks remain future exact owners.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same

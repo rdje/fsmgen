@@ -4,7 +4,6 @@ title: Two-dynamic/one-static mixed read RLAST read-data readiness audited
 answers:
   - "what did IAL2-FEATURE-COMPLETENESS-FRONTIER.348 decide?"
   - "is scalar read-data over two-dynamic-plus-static mixed read RLAST demux ready?"
-  - "what is the next task after two-dynamic-plus-static mixed read RLAST demux?"
   - "which sample is planned for two-dynamic-plus-static mixed read RLAST read-data?"
 date: 2026-06-24
 status: current

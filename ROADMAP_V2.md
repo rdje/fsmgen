@@ -2713,6 +2713,21 @@ support identity
 focused behavior label `mixed_dynamic_static_read_data_multi_dynamic_last_beat`,
 scalar output names, completion-validity vocabulary, validation, rollback, and
 raw `ARLEN`/runtime/multi-beat residue before implementation.
+`.349` now selects `.350`, direct generated behavior for scalar last-beat
+read-data over that generated two-dynamic-plus-one-static mixed dynamic/static
+read burst-last `RID`/`RLAST` response-demux. The selector changes no behavior.
+It fixes public sample
+`ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_dynamic_burst_last_read_data.ppif`,
+support identity
+`intent.ppif_axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_dynamic_burst_last_read_data`,
+coverage key
+`ial2_ppif_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_dynamic_burst_last_read_data_pipeline_cli`,
+behavior label `mixed_dynamic_static_read_data_multi_dynamic_last_beat`,
+completion validity
+`generated_multi_mixed_dynamic_static_read_response_demux_last_beat_completion_pulse`,
+and exact fail-closed residue for the single-beat sibling, raw `ARLEN`, runtime
+validation, multi-beat output banks, broader cardinalities, and backend
+variants.
 No behavior changed in
 `.270`, `.271`, `.273`, `.274`, `.275`, `.277`, `.278`,
 `.279`, `.281`, `.282`, `.283`, `.285`, `.286`, `.288`, `.290`, `.292`, or
@@ -2720,7 +2735,7 @@ No behavior changed in
 `.305`, `.306`, `.308`, `.309`, `.311`, `.313`, `.315`, `.316`, `.317`, or
 `.319`, `.320`, `.321`, `.323`, `.324`, `.325`, `.327`, `.328`, `.329`,
 `.331`, `.332`, `.334`, `.336`, `.338`, `.339`, `.340`, `.342`, `.343`,
-`.345`, `.346`, or `.348`.
+`.345`, `.346`, `.348`, or `.349`.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.

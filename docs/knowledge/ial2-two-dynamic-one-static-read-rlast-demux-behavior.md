@@ -6,7 +6,6 @@ answers:
   - "is two-dynamic-plus-static mixed read RLAST demux implemented?"
   - "is two-dynamic-plus-static mixed read burst-last response-demux implemented?"
   - "which sample implements two-dynamic-plus-static mixed read burst-last response demux?"
-  - "what is the next task for two-dynamic-plus-static mixed read RLAST demux?"
 date: 2026-06-24
 status: current
 tags: [ial2, axi, dynamic-id, static-id, read-response-demux, rlast, behavior]
@@ -36,5 +35,5 @@ Raw accepted read response-beat ownership assertions match by `RID` without
 `RLAST`; generated completions and busy release require final `RID && RLAST`.
 Read-data, raw `ARLEN`, runtime validation, and multi-beat output-bank behavior
 over this two-dynamic/one-static mixed read burst-last demux remain future
-exact-owner work. The next task is `IAL2-FEATURE-COMPLETENESS-FRONTIER.348`,
-readiness audit for scalar read-data over this burst-last demux.
+exact-owner work. The follow-on readiness audit was
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.348`.
