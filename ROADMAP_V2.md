@@ -2970,6 +2970,18 @@ from `.438` multi-active no-active-same-ID coverage and `.442` single-active
 idle-or-releasing coverage, or whether the current fail-closed behavior should
 remain. Dynamic queues, scoreboards, direct backend behavior,
 backend-language variants, VHDL, and new generated HDL remain deferred.
+`.444` now selects `.445`, public report contract selection for one-dynamic
+mixed dynamic/static dynamic same-ID reject mapping. Guarded schedule probes
+confirmed representative mixed write, read single-beat, read burst-last,
+three-static write, and three-static read burst-last samples expose static-ID
+reservation/exclusion, mixed request onehot0, response active/unique-match,
+and completion-active assertion evidence. A guarded temporary read probe still
+failed closed at the generated multi-active no-active-same-ID diagnostic. The
+evidence is ready for contract selection, but direct implementation is
+deferred because one-dynamic mixed mapping needs report fields and residue
+rules distinct from both `.438` multi-active and `.442` single-active
+coverage. Dynamic queues, scoreboards, direct backend behavior,
+backend-language variants, VHDL, and new generated HDL remain deferred.
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,

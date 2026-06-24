@@ -8035,6 +8035,21 @@ current fail-closed behavior should remain. Dynamic queues, scoreboards,
 direct backend behavior, backend-language variants, VHDL, and new generated
 HDL remain deferred.
 
+One-dynamic mixed dynamic same-ID reject mapping readiness audit:
+[AXI_IAL2_MANAGER_ONE_DYNAMIC_MIXED_DYNAMIC_SAME_ID_REJECT_MAPPING_READINESS_AUDIT](../../AXI_IAL2_MANAGER_ONE_DYNAMIC_MIXED_DYNAMIC_SAME_ID_REJECT_MAPPING_READINESS_AUDIT.md)
+selects `.445`, public report contract selection for one-dynamic mixed
+dynamic/static dynamic same-ID reject mapping. Guarded schedule probes
+confirmed representative mixed write, read single-beat, read burst-last,
+three-static write, and three-static read burst-last samples expose static-ID
+reservation/exclusion, mixed request onehot0, response active/unique-match,
+and completion-active assertion evidence. A guarded temporary read probe still
+failed closed at the generated multi-active no-active-same-ID diagnostic. The
+evidence is ready for contract selection, but direct implementation is
+deferred because one-dynamic mixed mapping needs report fields and residue
+rules distinct from both `.438` multi-active and `.442` single-active
+coverage. Dynamic queues, scoreboards, direct backend behavior,
+backend-language variants, VHDL, and new generated HDL remain deferred.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

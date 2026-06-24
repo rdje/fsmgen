@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.443: select one-dynamic mixed reject audit`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.444` audits one-dynamic mixed dynamic/static dynamic same-ID reject mapping readiness; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.443` selected `.444`, readiness audit for one-dynamic mixed dynamic/static dynamic same-ID reject mapping after `.438` multi-active and `.442` single-active generated reject mappings. The selector changes no behavior and asks whether static-ID exclusion, mixed request onehot0, response active/unique-match, and completion-active assertion evidence can support a third generated reject report contract. Dynamic queues, scoreboards, direct backend behavior, backend-language variants, VHDL, and new generated HDL remain deferred.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.444: audit one-dynamic mixed reject readiness`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.445` selects the public report contract for one-dynamic mixed dynamic/static dynamic same-ID reject mapping; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.444` selected `.445`, public report contract selection for one-dynamic mixed dynamic/static dynamic same-ID reject mapping. Guarded schedule probes confirmed static-ID exclusion, mixed request onehot0, response active/unique-match, and completion-active assertion evidence; a temporary read probe still fails closed at the multi-active no-active-same-ID diagnostic. Direct implementation, queues, scoreboards, direct backend behavior, backend-language variants, VHDL, and new generated HDL remain deferred.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
-- next_action: Start `.444`: audit one-dynamic mixed dynamic/static dynamic same-ID reject mapping readiness and decide whether to select report contract work, direct implementation, continued fail-closed behavior, diagnostic cleanup, or a narrower family/cardinality subset.
+- next_action: Start `.445`: select exact one-dynamic mixed dynamic same-ID reject report fields, residue movement, diagnostics, validation gates, rollback, and non-goals before any behavior change.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact
