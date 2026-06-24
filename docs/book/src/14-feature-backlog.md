@@ -7486,6 +7486,28 @@ output at host memory 89.5% against the default 88% cutoff; no cutoff was
 raised. Broader mixed read recapture remains deferred behind raw non-final
 `RID`, `RLAST`, read-data, raw-`ARLEN`, runtime, and multi-beat preservation.
 
+Two-dynamic/one-static mixed dynamic/static write recapture contract:
+[AXI_IAL2_MANAGER_TWO_DYNAMIC_ONE_STATIC_MIXED_DYNAMIC_STATIC_WRITE_RECAPTURE_CONTRACT_SELECTION](../../AXI_IAL2_MANAGER_TWO_DYNAMIC_ONE_STATIC_MIXED_DYNAMIC_STATIC_WRITE_RECAPTURE_CONTRACT_SELECTION.md)
+selects `.407`, direct implementation of two-dynamic-plus-one-static mixed
+dynamic/static write `BID` same-cycle release-and-recapture for the existing
+`ppif/axi_manager_capacity_status_write_mixed_dynamic_static_response_demux_multi_dynamic.ppif`
+sample. The selector changes no behavior. The contract preserves public
+syntax, support identity, the multi-mixed write mode/source/semantics,
+transaction lists, static ID `4'd3`, generated demux/completion behavior, and
+onehot0/no-active-same-ID/active dynamic-ID uniqueness/static-ID-exclusion/
+active-match/unique-match/completion-active assertions. It selects dynamic
+recapture fields for both `dynamic_capture.transactions[]` entries, new
+dynamic policy `mixed_dynamic_static_multi_active_dynamic_write`,
+`release_recapture_source: generated_multi_mixed_dynamic_static_demux_completion`,
+list-shaped
+`static_capture[]` for `w2`, combined dynamic guards across sibling dynamic
+request, active sibling same-ID, static request, and static-ID exclusion
+blocks, static recapture guarded against both dynamic requests, release-only
+exclusion of same-transaction requests, and idle-or-releasing assertions for
+`w0`/`w1`/`w2`. Broader mixed read recapture remains deferred behind raw
+non-final `RID`, `RLAST`, read-data, raw-`ARLEN`, runtime, and multi-beat
+preservation.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after
