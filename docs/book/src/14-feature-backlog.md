@@ -8166,6 +8166,21 @@ completion validity
 Single-beat read-data over `.344`, raw `ARLEN`, runtime validation, and
 multi-beat output banks remain future exact owners.
 
+Two-dynamic/one-static mixed dynamic/static read burst-last read-data behavior:
+[AXI_IAL2_MANAGER_TWO_DYNAMIC_ONE_STATIC_MIXED_DYNAMIC_STATIC_READ_RLAST_READ_DATA_BEHAVIOR](../../AXI_IAL2_MANAGER_TWO_DYNAMIC_ONE_STATIC_MIXED_DYNAMIC_STATIC_READ_RLAST_READ_DATA_BEHAVIOR.md)
+ships `.350`, scalar last-beat read-data over that generated demux. The public
+sample
+`ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_dynamic_burst_last_read_data.ppif`
+keeps dynamic reads `r0`/`r1`, static read `r2`, final `RID && RLAST`
+completion pulses, and static exclusion `4'd3`; it adds generated
+`axi0_rdata`/`axi0_rresp` inputs and scalar last-beat `RDATA`/`RRESP` outputs
+for all three transactions. Schedule JSON reports
+`bounded_last_beat_read_data_contract`, completion validity
+`generated_multi_mixed_dynamic_static_read_response_demux_last_beat_completion_pulse`,
+and generated capture rules for `r0`, `r1`, and `r2`. Report-only raw `ARLEN`,
+runtime validation, multi-beat output banks, and the single-beat `.344`
+read-data sibling remain future exact owners.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same

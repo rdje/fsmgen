@@ -804,6 +804,25 @@ last-beat output names, completion validity
 and fail-closed residue for single-beat read-data over `.344`, raw `ARLEN`,
 runtime validation, multi-beat output banks, broader cardinalities, and backend
 variants.
+`.350` now ships that selected scalar last-beat read-data behavior through the
+support-accounted public sample
+`ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_dynamic_burst_last_read_data.ppif`.
+The generated surface preserves the `.347`
+`bounded_multi_mixed_dynamic_static_read_rid_rlast_demux_contract`, dynamic
+transactions `r0`/`r1`, static transaction `r2`, final `RID && RLAST`
+completion pulses, and static exclusion `4'd3`; it adds generated
+`axi0_rdata`/`axi0_rresp` inputs, scalar
+`axi0_r*_last_rdata`/`axi0_r*_last_rresp` outputs for `r0`/`r1`/`r2`, and
+capture rules guarded only by the generated final-beat completion pulses.
+Schedule/read-data JSON reports
+`bounded_last_beat_read_data_contract`,
+`generated_multi_mixed_dynamic_static_read_response_demux_last_beat_completion_pulse`,
+transactions `r0`, `r1`, `r2`, and generated rules
+`axi0_r0_read_data_capture`, `axi0_r1_read_data_capture`, and
+`axi0_r2_read_data_capture`. Raw `ARLEN`, runtime validation, multi-beat output
+banks, single-beat read-data over `.344`, broader cardinalities, and backend
+variants remain exact-owner residue; `.351` is the next selector for
+report-only raw-`ARLEN` burst-length readiness over this boundary.
 No behavior
 changed in `.273`, `.274`, `.275`,
 `.277`, `.278`, `.279`, `.281`,
@@ -3081,6 +3100,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/AXI_IAL2_MANAGER_TWO_DYNAMIC_ONE_STATIC_MIXED_DYNAMIC_STATIC_READ_RLAST_RESPONSE_DEMUX_BEHAVIOR.md` — shipped generated bounded two-dynamic-plus-one-static mixed dynamic/static read burst-last `RID`/`RLAST` response-demux.
 - `docs/AXI_IAL2_MANAGER_TWO_DYNAMIC_ONE_STATIC_MIXED_DYNAMIC_STATIC_READ_RLAST_READ_DATA_READINESS_AUDIT.md` — audited scalar last-beat read-data readiness over the two-dynamic-plus-one-static mixed dynamic/static read burst-last `RID`/`RLAST` response-demux and selected public contract selection.
 - `docs/AXI_IAL2_MANAGER_TWO_DYNAMIC_ONE_STATIC_MIXED_DYNAMIC_STATIC_READ_RLAST_READ_DATA_CONTRACT_SELECTION.md` — selected direct generated behavior for scalar last-beat read-data over the two-dynamic-plus-one-static mixed dynamic/static read burst-last `RID`/`RLAST` response-demux.
+- `docs/AXI_IAL2_MANAGER_TWO_DYNAMIC_ONE_STATIC_MIXED_DYNAMIC_STATIC_READ_RLAST_READ_DATA_BEHAVIOR.md` — shipped scalar last-beat read-data capture over the generated two-dynamic-plus-one-static mixed dynamic/static read burst-last `RID`/`RLAST` response-demux.
 - `docs/AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md` — selected first AXI-derived IAL2 implementation subset and pre-code contract.
 - `docs/AXI_IAL2_VALID_READY_READINESS_AUDIT.md` — code/test/docs/report owner map for a future AXI Valid-Ready IAL2 implementation slice.
 - `docs/AXI_IAL2_VALID_READY_GENERATOR_FIRST_SLICE.md` — first in-process AXI Valid-Ready IAL2 generator slice and report surface.

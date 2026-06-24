@@ -2728,6 +2728,22 @@ completion validity
 and exact fail-closed residue for the single-beat sibling, raw `ARLEN`, runtime
 validation, multi-beat output banks, broader cardinalities, and backend
 variants.
+`.350` now ships that selected scalar last-beat read-data behavior through the
+support-accounted public sample
+`ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_dynamic_burst_last_read_data.ppif`.
+It preserves the `.347` burst-last response-demux contract for dynamic
+transactions `r0`/`r1` and static transaction `r2`, adds generated
+`axi0_rdata`/`axi0_rresp` inputs plus `r0`/`r1`/`r2`
+`last_rdata`/`last_rresp` outputs, and captures payload/status under the
+generated final-beat completion pulses. The read-data report names
+`bounded_last_beat_read_data_contract`,
+`generated_multi_mixed_dynamic_static_read_response_demux_last_beat_completion_pulse`,
+transactions `r0`, `r1`, `r2`, and capture rules
+`axi0_r0_read_data_capture`, `axi0_r1_read_data_capture`, and
+`axi0_r2_read_data_capture`. Raw `ARLEN`, runtime validation, multi-beat output
+banks, broader cardinalities, the single-beat `.344` read-data sibling, and
+backend variants remain future exact owners; `.351` selects the report-only
+raw-`ARLEN` burst-length readiness boundary next.
 No behavior changed in
 `.270`, `.271`, `.273`, `.274`, `.275`, `.277`, `.278`,
 `.279`, `.281`, `.282`, `.283`, `.285`, `.286`, `.288`, `.290`, `.292`, or
