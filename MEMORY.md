@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.432: select dynamic same-ID readiness`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.433` audits dynamic same-ID issue-order readiness after the dynamic/mixed response-demux, read-data, multi-beat, and recapture chain reached the two-dynamic-plus-one-static mixed read burst-last boundary; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.432` selected `.433`, readiness audit for dynamic same-ID issue-order policy, queue, and scoreboard ownership. It recorded that dynamic transaction-ID contract/report and generated bounded dynamic/mixed response-demux/read-data/recapture behavior now exist, while direct same-ID queues or scoreboards still need public policy, request arbitration, overflow/ambiguity assertions, and report/residue ownership before behavior changes.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.433: audit dynamic same-ID readiness`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.434` selects the public dynamic same-ID policy contract before queues or scoreboards; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.433` selected `.434`, public dynamic same-ID policy contract selection before dynamic per-ID queues, scoreboards, parser/report implementation, or generated behavior. It recorded that generated bounded dynamic/mixed response-demux, read-data, multi-beat, and recapture substrate now exists, while dynamic same-ID reuse still lacks public source/report vocabulary distinct from `concrete-id-reuse`.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
-- next_action: Start `.433`: audit dynamic same-ID issue-order readiness and choose the first exact policy/queue/scoreboard/report/prerequisite owner, with no behavior changes in the audit.
+- next_action: Start `.434`: select the exact public dynamic same-ID policy spelling, report vocabulary, diagnostics, allowed first policy values, and first later owner, with no parser/generator/runtime behavior changes in the selector.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact

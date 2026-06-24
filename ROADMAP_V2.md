@@ -2838,6 +2838,14 @@ contract/report support and generated bounded dynamic/mixed response-demux
 behavior now exist, while direct same-ID queue or scoreboard behavior still
 needs public issue-order policy, request arbitration, overflow/ambiguity
 assertions, and report/residue movement before implementation.
+`.433` now selects `.434`, public dynamic same-ID policy contract selection
+before dynamic per-ID queues, scoreboards, parser/report implementation, or
+generated behavior. The audit changes no behavior. It records that bounded
+dynamic and mixed response-demux/read-data/multi-beat/recapture substrate now
+exists, while dynamic same-ID reuse still lacks source/report vocabulary
+distinct from `concrete-id-reuse`. Direct queues or scoreboards remain
+deferred until `.434` chooses the dynamic policy spelling, report fields,
+diagnostics, allowed first policy values, and first later owner.
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,

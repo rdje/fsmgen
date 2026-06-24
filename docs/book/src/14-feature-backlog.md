@@ -7871,6 +7871,18 @@ behavior now exist, while direct same-ID queue or scoreboard behavior still
 needs public issue-order policy, request arbitration, overflow/ambiguity
 assertions, and report/residue movement before implementation.
 
+Dynamic same-ID policy readiness audit:
+[AXI_IAL2_MANAGER_DYNAMIC_SAME_ID_POLICY_READINESS_AUDIT](../../AXI_IAL2_MANAGER_DYNAMIC_SAME_ID_POLICY_READINESS_AUDIT.md)
+selects `.434`, public dynamic same-ID policy contract selection before
+dynamic per-ID queues, scoreboards, parser/report implementation, or
+generated behavior. The audit changes no behavior. It records that generated
+bounded dynamic and mixed response-demux/read-data/multi-beat/recapture
+substrate now exists, while dynamic same-ID reuse still lacks public
+source/report vocabulary distinct from concrete `concrete-id-reuse`. Direct
+queues or scoreboards remain deferred until the contract selects the dynamic
+policy spelling, report fields, diagnostics, allowed first policy values, and
+first later owner.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after
