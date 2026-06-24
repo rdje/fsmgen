@@ -7249,6 +7249,20 @@ dynamic recapture report fields, a new `static_capture` report block,
 dynamic/static release-only exclusion, dynamic/static release-recapture guards,
 and dynamic/static idle-or-releasing request assertions.
 
+Mixed dynamic/static write recapture behavior:
+[AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_WRITE_RECAPTURE_BEHAVIOR](../../AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_WRITE_RECAPTURE_BEHAVIOR.md)
+ships `.389`, same-cycle release-and-recapture for the existing mixed
+dynamic/static write `BID` sample. FSMGen emits
+`axi0_w0_dynamic_id_release_recapture` and
+`axi0_w1_static_busy_release_recapture`, keeps release-only rules disjoint from
+same-transaction same-cycle requests, reports
+`mixed_dynamic_static_dynamic_write` under
+`response_demux.write.dynamic_capture` and
+`mixed_dynamic_static_static_write` under
+`response_demux.write.static_capture`, and replaces the selected
+request-not-busy assertions with idle-or-releasing assertions. `.390` is the
+next post-mixed-write selector.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

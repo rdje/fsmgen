@@ -431,9 +431,26 @@ subtest 'mixed dynamic/static write response-demux captures AWID and matches sta
     );
     like(
         $isf,
-        qr/\(rule axi0_w1_static_busy_release \(& axi0_w1_complete axi0_w1_static_busy_q\)\s+\(axi0_w1_static_busy_q 0\)\)/,
-        'mixed dynamic/static write demux releases static busy state on generated completion',
+        qr/\(rule axi0_w0_dynamic_id_release_recapture \(& \(& axi0_w0_request \(\| \(< axi0_pending_writes_q 2\) \(\| axi0_w0_complete axi0_w1_complete\)\)\) axi0_w0_complete axi0_w0_dynamic_busy_q \(! \(& axi0_w1_request \(\| \(< axi0_pending_writes_q 2\) \(\| axi0_w0_complete axi0_w1_complete\)\)\)\) \(! \(== axi0_awid 4'd3\)\)\)\s+\(axi0_w0_dynamic_id_q axi0_awid\)\s+\(axi0_w0_dynamic_busy_q 1\)\)/,
+        'mixed dynamic/static write demux recaptures dynamic ID on same-cycle dynamic completion',
     );
+    like(
+        $isf,
+        qr/\(rule axi0_w1_static_busy_release_recapture \(& \(& axi0_w1_request \(\| \(< axi0_pending_writes_q 2\) \(\| axi0_w0_complete axi0_w1_complete\)\)\) axi0_w1_complete axi0_w1_static_busy_q \(! \(& axi0_w0_request \(\| \(< axi0_pending_writes_q 2\) \(\| axi0_w0_complete axi0_w1_complete\)\)\)\)\)\s+\(axi0_w1_static_busy_q 1\)\)/,
+        'mixed dynamic/static write demux recaptures static busy on same-cycle static completion',
+    );
+    like(
+        $isf,
+        qr/\(rule axi0_w0_dynamic_id_release \(& axi0_w0_complete axi0_w0_dynamic_busy_q \(! axi0_w0_request\)\)\s+\(axi0_w0_dynamic_busy_q 0\)\)/,
+        'mixed dynamic/static write demux releases dynamic busy only without same-cycle dynamic request',
+    );
+    like(
+        $isf,
+        qr/\(rule axi0_w1_static_busy_release \(& axi0_w1_complete axi0_w1_static_busy_q \(! axi0_w1_request\)\)\s+\(axi0_w1_static_busy_q 0\)\)/,
+        'mixed dynamic/static write demux releases static busy only without same-cycle static request',
+    );
+    like($isf, qr/"axi0 write dynamic request is idle or releasing active captured ID"/, 'mixed dynamic/static write demux emits dynamic idle-or-releasing assertion');
+    like($isf, qr/"axi0 write static request is idle or releasing active concrete ID"/, 'mixed dynamic/static write demux emits static idle-or-releasing assertion');
     like($isf, qr/"axi0 write mixed dynamic\/static requests are mutually exclusive"/, 'mixed dynamic/static write demux emits mixed request onehot assertion');
     like($isf, qr/"axi0 w0 dynamic request does not use static concrete ID"/, 'mixed dynamic/static write demux emits dynamic request static-ID reservation assertion');
     like($isf, qr/"axi0 write mixed dynamic\/static response matches active transaction"/, 'mixed dynamic/static write demux emits active response assertion');
@@ -445,6 +462,10 @@ subtest 'mixed dynamic/static write response-demux captures AWID and matches sta
     my $fsm = $result->{generated_ial0}{files}{'axi0_capacity_status.fsm'};
     like($fsm, qr/\(-axi0_w0_response_demux\s+<\(& axi0_write_complete axi0_w0_dynamic_busy_q \(== axi0_bid axi0_w0_dynamic_id_q\)\)/, 'scheduled .fsm lowers mixed dynamic BID match');
     like($fsm, qr/\(-axi0_w1_response_demux\s+<\(& axi0_write_complete axi0_w1_static_busy_q \(== axi0_bid 4'd3\)\)/, 'scheduled .fsm lowers mixed static BID match');
+    like($fsm, qr/\(-axi0_w0_dynamic_id_release_recapture\s+<\(& \(& axi0_w0_request/, 'scheduled .fsm lowers mixed dynamic release-recapture');
+    like($fsm, qr/\(-axi0_w1_static_busy_release_recapture\s+<\(& \(& axi0_w1_request/, 'scheduled .fsm lowers mixed static release-recapture');
+    like($fsm, qr/\(-axi0_w0_dynamic_id_release\s+<\(& axi0_w0_complete axi0_w0_dynamic_busy_q \(! axi0_w0_request\)\)/, 'scheduled .fsm lowers mixed dynamic release-only rule');
+    like($fsm, qr/\(-axi0_w1_static_busy_release\s+<\(& axi0_w1_complete axi0_w1_static_busy_q \(! axi0_w1_request\)\)/, 'scheduled .fsm lowers mixed static release-only rule');
 
     my $hdl = hdl_for('axi0_capacity_status', $fsm);
     like($hdl, qr/\breg\s+\[3:0\]\s+axi0_w0_dynamic_id_q\b/, 'SystemVerilog declares mixed dynamic ID state');
@@ -6895,8 +6916,8 @@ sub assert_mixed_dynamic_static_write_response_demux_report {
     is_deeply(
         $write->{generated_assertions},
         [qw(
-            axi0_w0_dynamic_request_not_busy
-            axi0_w1_static_request_not_busy
+            axi0_w0_dynamic_request_idle_or_releasing
+            axi0_w1_static_request_idle_or_releasing
             axi0_write_mixed_dynamic_static_request_onehot0
             axi0_w0_dynamic_request_not_static_id
             axi0_w0_dynamic_active_not_static_id
@@ -6919,8 +6940,31 @@ sub assert_mixed_dynamic_static_write_response_demux_report {
             busy_signal                 => 'axi0_w0_dynamic_busy_q',
             capture_rule                => 'axi0_w0_dynamic_id_capture',
             release_rule                => 'axi0_w0_dynamic_id_release',
+            release_recapture_rule      => 'axi0_w0_dynamic_id_release_recapture',
+            same_cycle_release_recapture_policy => 'mixed_dynamic_static_dynamic_write',
+            release_recapture_source    => 'generated_mixed_dynamic_static_demux_completion',
+            release_recapture_transaction => 'w0',
         },
         "$owner reports dynamic capture state and mixed ownership",
+    );
+    is_deeply(
+        $write->{static_capture},
+        {
+            transaction                         => 'w1',
+            concrete_id                         => 3,
+            concrete_id_literal                 => "4'd3",
+            capture_event_source                => 'admitted_static_write_request',
+            ownership                           => 'mixed_dynamic_static_concrete_write_id',
+            simultaneous_request_policy         => 'onehot0_mixed_write_request',
+            busy_signal                         => 'axi0_w1_static_busy_q',
+            capture_rule                        => 'axi0_w1_static_busy_capture',
+            release_rule                        => 'axi0_w1_static_busy_release',
+            release_recapture_rule              => 'axi0_w1_static_busy_release_recapture',
+            same_cycle_release_recapture_policy => 'mixed_dynamic_static_static_write',
+            release_recapture_source            => 'generated_mixed_dynamic_static_demux_completion',
+            release_recapture_transaction       => 'w1',
+        },
+        "$owner reports static capture state and mixed ownership",
     );
     is_deeply(
         $demux->{residue},

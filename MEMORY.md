@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.388: select mixed write recapture contract`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.389` implements mixed dynamic/static write BID same-cycle release-and-recapture; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.388` selected `.389`, direct implementation of mixed dynamic/static write BID same-cycle release-and-recapture. The selector preserves the existing public sample and mode, adds dynamic recapture report fields plus a new static_capture report contract, and selects dynamic/static idle-or-releasing assertions. No behavior changed.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.389: ship mixed write recapture`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.390` selects the next post mixed dynamic/static write recapture activity; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.389` shipped mixed dynamic/static write BID same-cycle release-and-recapture. FSMGen now emits dynamic and static release-recapture rules, reports dynamic_capture/static_capture recapture policies, and replaces the selected request-not-busy assertions with idle-or-releasing assertions. Guarded focused t/1438 stopped at 88.1% host memory; syntax, guarded schedule JSON, direct probe, and docs/doctrine gates passed.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
-- next_action: Start `.389`: implement the selected mixed dynamic/static write BID same-cycle release-and-recapture contract.
+- next_action: Start `.390`: select the next post mixed dynamic/static write recapture activity.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact

@@ -2231,6 +2231,20 @@ response active/unique-match, and completion-active assertions while selecting
 dynamic recapture report fields, a new `static_capture` report block,
 dynamic/static release-only exclusion, dynamic/static release-recapture guards,
 and dynamic/static idle-or-releasing request assertions.
+`.389` now ships that behavior. FSMGen emits
+`axi0_w0_dynamic_id_release_recapture` and
+`axi0_w1_static_busy_release_recapture`, keeps release-only rules disjoint from
+same-transaction same-cycle requests, reports
+`mixed_dynamic_static_dynamic_write` under
+`response_demux.write.dynamic_capture` and
+`mixed_dynamic_static_static_write` under
+`response_demux.write.static_capture`, and replaces the selected
+request-not-busy assertions with
+`axi0_w0_dynamic_request_idle_or_releasing` and
+`axi0_w1_static_request_idle_or_releasing`. Public syntax, support identity,
+the mixed write mode, static-ID reservation, onehot0 request policy, response
+active/unique-match, and completion-active assertions are preserved. `.390`
+is the next post-mixed-write selector.
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,

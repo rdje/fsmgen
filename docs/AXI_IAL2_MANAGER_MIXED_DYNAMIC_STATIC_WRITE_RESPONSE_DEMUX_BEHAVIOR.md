@@ -58,8 +58,10 @@ The bounded slice requires:
 
 Read-side mixed dynamic/static demux, multiple mixed dynamic/static write
 transactions, same-cycle request widening beyond onehot0, same-cycle
-release-and-recapture, dynamic same-ID queues, and scoreboards remain future
-exact-owner work.
+release-and-recapture outside the selected one-dynamic/one-static write
+sample, dynamic same-ID queues, and scoreboards remain future exact-owner work.
+Later `.389` extends this same public sample with mixed dynamic/static write
+same-cycle release-and-recapture.
 
 ## Generated Behavior
 
@@ -134,6 +136,11 @@ rules, and generated assertion names. The shipped assertion roles are:
 - dynamic completion-active release; and
 - static completion-active release.
 
+Later `.389` changes the two request-not-busy roles for this same public sample
+to idle-or-releasing and adds dynamic/static release-recapture report fields;
+see
+[AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_WRITE_RECAPTURE_BEHAVIOR](AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_WRITE_RECAPTURE_BEHAVIOR.md).
+
 ## Public Sample And Checks
 
 The public sample is support-accounted:
@@ -165,7 +172,8 @@ unshipped:
 - mixed dynamic/static read response-demux;
 - multiple mixed dynamic/static write response-demux transactions;
 - same-cycle dynamic/static request widening beyond onehot0;
-- same-cycle release-and-recapture;
+- same-cycle release-and-recapture outside the selected one-dynamic/one-static
+  write sample;
 - dynamic same-ID ordering;
 - dynamic same-ID queues and scoreboards;
 - direct backend behavior outside the selected generated SystemVerilog path;
