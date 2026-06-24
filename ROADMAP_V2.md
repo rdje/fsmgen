@@ -2787,6 +2787,19 @@ support identity, coverage key, and focused behavior label while preserving
 two-dynamic-plus-one-static multi-beat output banks, broader cardinalities,
 direct backend behavior, backend-language variants, and VHDL as separate
 owners.
+`.355` now ships that selected runtime beat-count/`RLAST` validation through
+the support-accounted public sample
+`ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_dynamic_burst_last_read_data_burst_length_runtime_assertion.ppif`.
+The generated surface preserves `.353` raw-`ARLEN` capture, `.350` scalar
+last-beat `RDATA`/`RRESP` capture, and `.347` final `RID && RLAST`
+completion pulses. It adds per-transaction expected-beat storage,
+read-beat counters, request-time initialization from `ARLEN + 1`,
+matched-read-beat counter increments, and four beat-count/`RLAST` assertions
+for `r0`, `r1`, and `r2`. Reports name `runtime_assertion`,
+`beat_count_validation_generated_behavior`, `arlen_plus_one`, and
+`response_demux_matched_read_beat` for this exact scalar last-beat shape.
+`.355` advanced the frontier to `.356`, readiness audit for
+two-dynamic-plus-one-static multi-beat output banks over this runtime boundary.
 No behavior changed in
 `.270`, `.271`, `.273`, `.274`, `.275`, `.277`, `.278`,
 `.279`, `.281`, `.282`, `.283`, `.285`, `.286`, `.288`, `.290`, `.292`, or

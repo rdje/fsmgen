@@ -8230,6 +8230,19 @@ request-time initialization, matched-read-beat increments, and four
 beat-count/`RLAST` assertions for `r0`, `r1`, and `r2` while preserving
 multi-beat output banks as a later owner.
 
+Two-dynamic/one-static mixed dynamic/static read burst-last read-data
+runtime-validation behavior:
+[AXI_IAL2_MANAGER_TWO_DYNAMIC_ONE_STATIC_MIXED_DYNAMIC_STATIC_READ_RLAST_READ_DATA_RUNTIME_VALIDATION_BEHAVIOR](../../AXI_IAL2_MANAGER_TWO_DYNAMIC_ONE_STATIC_MIXED_DYNAMIC_STATIC_READ_RLAST_READ_DATA_RUNTIME_VALIDATION_BEHAVIOR.md)
+ships `.355`, generated runtime beat-count/`RLAST` validation over the
+`.353` raw-`ARLEN` scalar last-beat read-data boundary. The public sample
+`ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_dynamic_burst_last_read_data_burst_length_runtime_assertion.ppif`
+keeps the `r0`/`r1` dynamic and `r2` static transaction bindings, raw `ARLEN`
+capture, final `RID && RLAST` completion pulses, and scalar last-beat
+`RDATA`/`RRESP` capture. It adds expected-beat storage, read-beat counters,
+request-time initialization from `ARLEN + 1`, matched-read-beat increments,
+and four beat-count/`RLAST` assertions per covered transaction. Multi-beat
+output banks remain the next exact owner under `.356`.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same

@@ -143,6 +143,15 @@ my @DYNAMIC_CASES = (
         behavior     => 'mixed_dynamic_static_read_data_multi_dynamic_burst_length',
     },
     {
+        label        => 'multi-dynamic mixed dynamic/static read-data runtime burst-length validation',
+        relpath      => 'ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_dynamic_burst_last_read_data_burst_length_runtime_assertion.ppif',
+        object_id    => 'axi-manager-capacity-status-read-mixed-dynamic-static-response-demux-multi-dynamic-burst-last-read-data-burst-length-runtime-assertion',
+        intent_name  => 'axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_dynamic_burst_last_read_data_burst_length_runtime_assertion',
+        entry_id     => 'intent.ppif_axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_dynamic_burst_last_read_data_burst_length_runtime_assertion',
+        coverage     => 'ial2_ppif_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_dynamic_burst_last_read_data_burst_length_runtime_assertion_pipeline_cli',
+        behavior     => 'mixed_dynamic_static_read_data_multi_dynamic_burst_length_runtime_assertion',
+    },
+    {
         label        => 'mixed dynamic/static read burst-last RID/RLAST response demux',
         relpath      => 'ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_burst_last.ppif',
         object_id    => 'axi-manager-capacity-status-read-mixed-dynamic-static-response-demux-burst-last',
@@ -1044,7 +1053,9 @@ sub assert_dynamic_behavior {
         return;
     }
 
-    if ($case->{behavior} eq 'mixed_dynamic_static_read_data_multi_dynamic_burst_length') {
+    if ($case->{behavior} eq 'mixed_dynamic_static_read_data_multi_dynamic_burst_length'
+        || $case->{behavior} eq 'mixed_dynamic_static_read_data_multi_dynamic_burst_length_runtime_assertion') {
+        my $runtime_validation = $case->{behavior} eq 'mixed_dynamic_static_read_data_multi_dynamic_burst_length_runtime_assertion';
         like($isf, qr/\(rule axi0_r0_response_demux \(& axi0_read_complete axi0_r0_dynamic_busy_q \(== axi0_rid axi0_r0_dynamic_id_q\) axi0_rlast\)/, 'multi-dynamic mixed burst-length read-data keeps first dynamic RID/RLAST demux');
         like($isf, qr/\(rule axi0_r1_response_demux \(& axi0_read_complete axi0_r1_dynamic_busy_q \(== axi0_rid axi0_r1_dynamic_id_q\) axi0_rlast\)/, 'multi-dynamic mixed burst-length read-data keeps second dynamic RID/RLAST demux');
         like($isf, qr/\(rule axi0_r2_response_demux \(& axi0_read_complete axi0_r2_static_busy_q \(== axi0_rid 4'd3\) axi0_rlast\)/, 'multi-dynamic mixed burst-length read-data keeps static RID/RLAST demux');
@@ -1054,22 +1065,53 @@ sub assert_dynamic_behavior {
             like($isf, qr/\(rule axi0_${tx}_burst_length_capture axi0_${tx}_request\s+\(axi0_${tx}_arlen_q axi0_arlen\)\)/, "multi-dynamic mixed burst-length read-data captures $tx raw ARLEN under request");
             like($isf, qr/\(rule axi0_${tx}_read_data_capture axi0_${tx}_complete\s+\(axi0_${tx}_last_rdata axi0_rdata\)\s+\(axi0_${tx}_last_rresp axi0_rresp\)\)/, "multi-dynamic mixed burst-length read-data keeps $tx payload capture under generated completion");
         }
-        unlike($isf, qr/read_beat_count_q|expected_beats_q|arlen_within_max/, 'multi-dynamic mixed report-only burst-length emits no runtime beat-count state or assertions');
+        if ($runtime_validation) {
+            for my $tx (qw(r0 r1 r2)) {
+                like($isf, qr/\(var axi0_${tx}_expected_beats_q \(width 5\)\)/, "multi-dynamic mixed runtime burst-length declares $tx expected-beat storage");
+                like($isf, qr/\(var axi0_${tx}_read_beat_count_q \(width 5\)\)/, "multi-dynamic mixed runtime burst-length declares $tx beat-count storage");
+                like($isf, qr/\(rule axi0_${tx}_beat_count_init axi0_${tx}_request\s+\(axi0_${tx}_expected_beats_q \(\+ axi0_arlen\[4:0\] 5'd1\)\)\s+\(axi0_${tx}_read_beat_count_q 0\)\)/, "multi-dynamic mixed runtime burst-length initializes $tx expected count on request");
+                like($isf, qr/axi0 $tx ARLEN is within configured max beats/, "multi-dynamic mixed runtime burst-length emits $tx ARLEN bound assertion");
+                like($isf, qr/axi0 $tx RLAST appears only on the expected final read beat/, "multi-dynamic mixed runtime burst-length emits $tx early-RLAST assertion");
+                like($isf, qr/axi0 $tx expected final read beat has RLAST/, "multi-dynamic mixed runtime burst-length emits $tx missing-RLAST assertion");
+            }
+            like($isf, qr/\(rule axi0_r0_read_beat_count \(& \(& axi0_read_complete \(& axi0_r0_dynamic_busy_q \(== axi0_rid axi0_r0_dynamic_id_q\)\)\) \(! axi0_r0_request\)\)\s+\(axi0_r0_read_beat_count_q \(\+ axi0_r0_read_beat_count_q 5'd1\)\)\)/, 'multi-dynamic mixed runtime burst-length increments first dynamic count on matched RID beat');
+            like($isf, qr/\(rule axi0_r1_read_beat_count \(& \(& axi0_read_complete \(& axi0_r1_dynamic_busy_q \(== axi0_rid axi0_r1_dynamic_id_q\)\)\) \(! axi0_r1_request\)\)\s+\(axi0_r1_read_beat_count_q \(\+ axi0_r1_read_beat_count_q 5'd1\)\)\)/, 'multi-dynamic mixed runtime burst-length increments second dynamic count on matched RID beat');
+            like($isf, qr/\(rule axi0_r2_read_beat_count \(& \(& axi0_read_complete \(& axi0_r2_static_busy_q \(== axi0_rid 4'd3\)\)\) \(! axi0_r2_request\)\)\s+\(axi0_r2_read_beat_count_q \(\+ axi0_r2_read_beat_count_q 5'd1\)\)\)/, 'multi-dynamic mixed runtime burst-length increments static count on matched RID beat');
+        } else {
+            unlike($isf, qr/read_beat_count_q|expected_beats_q|arlen_within_max/, 'multi-dynamic mixed report-only burst-length emits no runtime beat-count state or assertions');
+        }
         assert_mixed_dynamic_static_read_rlast_multi_dynamic_report($result->{report});
         assert_dynamic_read_data_burst_length_report(
             $result->{report}{read_data},
-            'report_only',
+            $runtime_validation ? 'runtime_assertion' : 'report_only',
             [qw(r0 r1 r2)],
             'generated_multi_mixed_dynamic_static_read_response_demux_last_beat_completion_pulse',
         );
         like($fsm, qr/\(-axi0_r2_burst_length_capture\s+<axi0_r2_request\s+\(<- \(axi0_r2_arlen_q axi0_arlen\)\)\s+\)/, 'scheduled FSM lowers multi-dynamic mixed static raw ARLEN capture');
         like($fsm, qr/\(-axi0_r2_read_data_capture\s+<axi0_r2_complete\s+\(<- \(axi0_r2_last_rdata> axi0_rdata\)\)\s+\(<- \(axi0_r2_last_rresp> axi0_rresp\)\)/, 'scheduled FSM keeps multi-dynamic mixed static payload capture');
+        if ($runtime_validation) {
+            like($fsm, qr/\(<- \(axi0_r1_expected_beats_q \(\+ axi0_arlen\[4:0\] 5'd1\)\)\)/, 'scheduled FSM lowers multi-dynamic mixed second dynamic expected-beat initialization');
+            like($fsm, qr/\(<- \(axi0_r1_read_beat_count_q \(\+ axi0_r1_read_beat_count_q 5'd1\)\)\)/, 'scheduled FSM lowers multi-dynamic mixed second dynamic beat-count increment');
+            like($fsm, qr/\(<- \(axi0_r2_expected_beats_q \(\+ axi0_arlen\[4:0\] 5'd1\)\)\)/, 'scheduled FSM lowers multi-dynamic mixed static expected-beat initialization');
+            like($fsm, qr/\(<- \(axi0_r2_read_beat_count_q \(\+ axi0_r2_read_beat_count_q 5'd1\)\)\)/, 'scheduled FSM lowers multi-dynamic mixed static beat-count increment');
+        }
         my $hdl = hdl_for('axi0_capacity_status', $fsm);
         like($hdl, qr/\binput\s+(?:wire\s+)?\[7:0\]\s+axi0_arlen\b/, 'SystemVerilog exposes multi-dynamic mixed ARLEN');
         like($hdl, qr/assign\s+axi0_r2_burst_length_capture_en\s*=\s*axi0_r2_request\s*;/, 'SystemVerilog guards multi-dynamic mixed static ARLEN capture by request');
         like($hdl, qr/axi0_r2_arlen_q_next\s*=\s*axi0_arlen\s*;/, 'SystemVerilog captures multi-dynamic mixed static raw ARLEN');
         like($hdl, qr/assign\s+axi0_r2_read_data_capture_en\s*=\s*axi0_r2_complete\s*;/, 'SystemVerilog still guards multi-dynamic mixed static last-beat payload capture by completion');
-        unlike($hdl, qr/arlen_within_max|read_beat_count|expected_beats/, 'SystemVerilog keeps multi-dynamic mixed report-only burst-length free of runtime validation');
+        if ($runtime_validation) {
+            like($hdl, qr/\breg\s+\[4:0\]\s+axi0_r1_expected_beats_q\b/, 'SystemVerilog declares multi-dynamic mixed second dynamic expected-beat storage');
+            like($hdl, qr/\breg\s+\[4:0\]\s+axi0_r1_read_beat_count_q\b/, 'SystemVerilog declares multi-dynamic mixed second dynamic beat-count storage');
+            like($hdl, qr/\breg\s+\[4:0\]\s+axi0_r2_expected_beats_q\b/, 'SystemVerilog declares multi-dynamic mixed static expected-beat storage');
+            like($hdl, qr/\breg\s+\[4:0\]\s+axi0_r2_read_beat_count_q\b/, 'SystemVerilog declares multi-dynamic mixed static beat-count storage');
+            like($hdl, qr/assign\s+axi0_r1_read_beat_count_en\s*=/, 'SystemVerilog emits multi-dynamic mixed second dynamic beat-count increment enable');
+            like($hdl, qr/assign\s+axi0_r2_read_beat_count_en\s*=/, 'SystemVerilog emits multi-dynamic mixed static beat-count increment enable');
+            like($hdl, qr/axi0_r1_expected_beats_q_next\s*=\s*axi0_arlen\[4:0\]\s*\+\s*5'd1\s*;/, 'SystemVerilog initializes multi-dynamic mixed second dynamic expected count from ARLEN+1');
+            like($hdl, qr/axi0_r2_expected_beats_q_next\s*=\s*axi0_arlen\[4:0\]\s*\+\s*5'd1\s*;/, 'SystemVerilog initializes multi-dynamic mixed static expected count from ARLEN+1');
+        } else {
+            unlike($hdl, qr/arlen_within_max|read_beat_count|expected_beats/, 'SystemVerilog keeps multi-dynamic mixed report-only burst-length free of runtime validation');
+        }
         return;
     }
 
