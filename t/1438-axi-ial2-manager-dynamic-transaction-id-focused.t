@@ -116,6 +116,15 @@ my @DYNAMIC_CASES = (
         behavior     => 'mixed_dynamic_static_read_demux_multi_dynamic',
     },
     {
+        label        => 'multi-dynamic mixed dynamic/static read-data single-beat capture',
+        relpath      => 'ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_dynamic_read_data.ppif',
+        object_id    => 'axi-manager-capacity-status-read-mixed-dynamic-static-response-demux-multi-dynamic-read-data',
+        intent_name  => 'axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_dynamic_read_data',
+        entry_id     => 'intent.ppif_axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_dynamic_read_data',
+        coverage     => 'ial2_ppif_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_dynamic_read_data_pipeline_cli',
+        behavior     => 'mixed_dynamic_static_read_data_multi_dynamic',
+    },
+    {
         label        => 'multi-dynamic mixed dynamic/static read burst-last RID/RLAST response demux',
         relpath      => 'ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_dynamic_burst_last.ppif',
         object_id    => 'axi-manager-capacity-status-read-mixed-dynamic-static-response-demux-multi-dynamic-burst-last',
@@ -836,6 +845,50 @@ sub assert_dynamic_behavior {
         like($hdl, qr/axi0_read_complete\s*&\s*axi0_r2_static_busy_q\s*&\s*\(axi0_rid\s*==\s*4'd3\)/, 'SystemVerilog lowers multi-dynamic mixed static read response guard');
         like($hdl, qr/axi0_r0_dynamic_busy_q\s*&\s*\(axi0_r0_dynamic_id_q\s*==\s*axi0_arid\)/, 'SystemVerilog lowers first dynamic read active sibling-ID expression');
         like($hdl, qr/axi0_r1_dynamic_busy_q\s*&\s*\(axi0_r1_dynamic_id_q\s*==\s*axi0_arid\)/, 'SystemVerilog lowers second dynamic read active sibling-ID expression');
+        return;
+    }
+
+    if ($case->{behavior} eq 'mixed_dynamic_static_read_data_multi_dynamic') {
+        for my $tx (qw(r0 r1 r2)) {
+            like($isf, qr/\(input axi0_${tx}_request\)/, "multi-dynamic mixed read-data declares $tx request input");
+            like($isf, qr/\(output axi0_${tx}_complete\)/, "multi-dynamic mixed read-data exposes $tx completion output");
+            like($isf, qr/\(output axi0_${tx}_rdata \(width 32\)\)/, "multi-dynamic mixed read-data declares $tx scalar data output");
+            like($isf, qr/\(output axi0_${tx}_rresp \(width 2\)\)/, "multi-dynamic mixed read-data declares $tx scalar status output");
+            like($isf, qr/\(rule axi0_${tx}_read_data_capture axi0_${tx}_complete\s+\(axi0_${tx}_rdata axi0_rdata\)\s+\(axi0_${tx}_rresp axi0_rresp\)\)/, "multi-dynamic mixed read-data captures $tx payload under generated completion");
+        }
+        like($isf, qr/\(input axi0_arid \(width 4\)\)/, 'multi-dynamic mixed read-data declares ARID input');
+        like($isf, qr/\(input axi0_rid \(width 4\)\)/, 'multi-dynamic mixed read-data declares RID input');
+        like($isf, qr/\(input axi0_rdata \(width 32\)\)/, 'multi-dynamic mixed read-data declares RDATA input');
+        like($isf, qr/\(input axi0_rresp \(width 2\)\)/, 'multi-dynamic mixed read-data declares RRESP input');
+        like($isf, qr/\(var axi0_r0_dynamic_id_q \(width 4\)\)/, 'multi-dynamic mixed read-data allocates first dynamic selected-ID storage');
+        like($isf, qr/\(var axi0_r1_dynamic_id_q \(width 4\)\)/, 'multi-dynamic mixed read-data allocates second dynamic selected-ID storage');
+        like($isf, qr/\(var axi0_r2_static_busy_q \(width 1\)\)/, 'multi-dynamic mixed read-data allocates static busy storage');
+        like($isf, qr/\(rule axi0_r0_response_demux \(& axi0_read_complete axi0_r0_dynamic_busy_q \(== axi0_rid axi0_r0_dynamic_id_q\)\)/, 'multi-dynamic mixed read-data keeps first dynamic RID demux');
+        like($isf, qr/\(rule axi0_r1_response_demux \(& axi0_read_complete axi0_r1_dynamic_busy_q \(== axi0_rid axi0_r1_dynamic_id_q\)\)/, 'multi-dynamic mixed read-data keeps second dynamic RID demux');
+        like($isf, qr/\(rule axi0_r2_response_demux \(& axi0_read_complete axi0_r2_static_busy_q \(== axi0_rid 4'd3\)\)/, 'multi-dynamic mixed read-data keeps static RID demux');
+        like($isf, qr/axi0 read mixed dynamic\/static requests are mutually exclusive/, 'multi-dynamic mixed read-data keeps mixed request onehot assertion');
+        like($isf, qr/axi0 read mixed dynamic\/static response matches at most one transaction/, 'multi-dynamic mixed read-data keeps response unique-match assertions');
+        unlike($isf, qr/\baxi0_rlast\b/, 'multi-dynamic mixed read-data keeps RLAST absent');
+        unlike($isf, qr/\baxi0_arlen\b/, 'multi-dynamic mixed read-data keeps burst-length metadata absent');
+        assert_mixed_dynamic_static_read_multi_dynamic_report($result->{report});
+        assert_read_data_report(
+            $result->{report}{read_data},
+            'generated_multi_mixed_dynamic_static_read_response_demux_completion_pulse',
+            [qw(rlast_completion bursts multi_beat_read_data_reassembly)],
+            [qw(r0 r1 r2)],
+        );
+        like($fsm, qr/\(-axi0_r1_read_data_capture\s+<axi0_r1_complete\s+\(<- \(axi0_r1_rdata> axi0_rdata\)\)\s+\(<- \(axi0_r1_rresp> axi0_rresp\)\)/, 'scheduled FSM lowers second dynamic read-data capture');
+        like($fsm, qr/\(-axi0_r2_read_data_capture\s+<axi0_r2_complete\s+\(<- \(axi0_r2_rdata> axi0_rdata\)\)\s+\(<- \(axi0_r2_rresp> axi0_rresp\)\)/, 'scheduled FSM lowers static read-data capture');
+        my $hdl = hdl_for('axi0_capacity_status', $fsm);
+        like($hdl, qr/\binput\s+(?:wire\s+)?\[31:0\]\s+axi0_rdata\b/, 'SystemVerilog exposes RDATA for multi-dynamic mixed read-data');
+        like($hdl, qr/\binput\s+(?:wire\s+)?\[1:0\]\s+axi0_rresp\b/, 'SystemVerilog exposes RRESP for multi-dynamic mixed read-data');
+        unlike($hdl, qr/\baxi0_rlast\b/, 'SystemVerilog keeps RLAST absent for single-beat read-data');
+        like($hdl, qr/assign\s+axi0_r1_read_data_capture_en\s*=\s*axi0_r1_complete\s*;/, 'SystemVerilog guards second dynamic read-data capture by completion');
+        like($hdl, qr/assign\s+axi0_r2_read_data_capture_en\s*=\s*axi0_r2_complete\s*;/, 'SystemVerilog guards static read-data capture by completion');
+        like($hdl, qr/axi0_r1_rdata_next\s*=\s*axi0_rdata\s*;/, 'SystemVerilog captures second dynamic RDATA');
+        like($hdl, qr/axi0_r1_rresp_next\s*=\s*axi0_rresp\s*;/, 'SystemVerilog captures second dynamic RRESP');
+        like($hdl, qr/axi0_r2_rdata_next\s*=\s*axi0_rdata\s*;/, 'SystemVerilog captures static RDATA');
+        like($hdl, qr/axi0_r2_rresp_next\s*=\s*axi0_rresp\s*;/, 'SystemVerilog captures static RRESP');
         return;
     }
 

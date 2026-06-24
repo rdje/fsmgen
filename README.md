@@ -960,6 +960,16 @@ and behavior label `mixed_dynamic_static_read_data_multi_dynamic`. The
 selected report contract keeps `.344` response-demux mode/source and
 `bounded_single_beat_read_data_contract` with completion validity
 `generated_multi_mixed_dynamic_static_read_response_demux_completion_pulse`.
+`.361` now ships that scalar single-beat read-data behavior. The new public
+sample is support-accounted and generates shared `axi0_rdata`/`axi0_rresp`
+inputs, scalar data/status outputs for `r0`, `r1`, and `r2`, and capture
+rules `axi0_r0_read_data_capture`, `axi0_r1_read_data_capture`, and
+`axi0_r2_read_data_capture` guarded by the generated single-beat completion
+pulses. Reports keep `.344` response-demux mode/source, set read-data mode to
+`bounded_single_beat_read_data_contract`, use completion validity
+`generated_multi_mixed_dynamic_static_read_response_demux_completion_pulse`,
+and leave read-data residue `rlast_completion`, `bursts`, and
+`multi_beat_read_data_reassembly`.
 No behavior
 changed in `.273`, `.274`, `.275`,
 `.277`, `.278`, `.279`, `.281`,
@@ -3248,6 +3258,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/AXI_IAL2_MANAGER_POST_TWO_DYNAMIC_ONE_STATIC_MIXED_DYNAMIC_STATIC_READ_DATA_MULTI_BEAT_NEXT_SLICE_SELECTION.md` — selected scalar single-beat read-data readiness audit after the two-dynamic-plus-one-static mixed dynamic/static read-data chain reached multi-beat output banks.
 - `docs/AXI_IAL2_MANAGER_TWO_DYNAMIC_ONE_STATIC_MIXED_DYNAMIC_STATIC_READ_DATA_READINESS_AUDIT.md` — audited scalar single-beat read-data readiness over the generated two-dynamic-plus-one-static mixed dynamic/static read single-beat `RID` response-demux and selected public contract selection.
 - `docs/AXI_IAL2_MANAGER_TWO_DYNAMIC_ONE_STATIC_MIXED_DYNAMIC_STATIC_READ_DATA_CONTRACT_SELECTION.md` — selected direct generated scalar single-beat read-data behavior over the generated two-dynamic-plus-one-static mixed dynamic/static read single-beat `RID` response-demux.
+- `docs/AXI_IAL2_MANAGER_TWO_DYNAMIC_ONE_STATIC_MIXED_DYNAMIC_STATIC_READ_DATA_BEHAVIOR.md` — shipped scalar single-beat read-data capture over the generated two-dynamic-plus-one-static mixed dynamic/static read single-beat `RID` response-demux.
 - `docs/AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md` — selected first AXI-derived IAL2 implementation subset and pre-code contract.
 - `docs/AXI_IAL2_VALID_READY_READINESS_AUDIT.md` — code/test/docs/report owner map for a future AXI Valid-Ready IAL2 implementation slice.
 - `docs/AXI_IAL2_VALID_READY_GENERATOR_FIRST_SLICE.md` — first in-process AXI Valid-Ready IAL2 generator slice and report surface.
@@ -3302,6 +3313,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static.ppif` — checked-in runnable `.ppif` sample for generated bounded multiple mixed dynamic/static read single-beat `RID` response matching through explicit `response-demux.read` with one dynamic and two concrete static read transactions, support-accounted through check JSON and semantic JSON.
 - `ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static3.ppif` — checked-in runnable `.ppif` sample for generated bounded broader mixed dynamic/static read single-beat `RID` response matching through explicit `response-demux.read` with one dynamic and three concrete static read transactions, support-accounted through check JSON and semantic JSON.
 - `ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_dynamic.ppif` — checked-in runnable `.ppif` sample for generated bounded two-dynamic-plus-one-static mixed dynamic/static read single-beat `RID` response matching through explicit `response-demux.read`, support-accounted through check JSON and semantic JSON.
+- `ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_dynamic_read_data.ppif` — checked-in runnable `.ppif` sample for generated scalar single-beat `RDATA`/`RRESP` capture over generated two-dynamic-plus-one-static mixed dynamic/static read single-beat `RID` response-demux, support-accounted through check JSON and semantic JSON.
 - `ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_dynamic_burst_last_read_data_burst_length.ppif` — checked-in runnable `.ppif` sample for generated report-only raw-`ARLEN` burst-length capture over generated two-dynamic-plus-one-static mixed dynamic/static read burst-last/`RLAST` response-demux and scalar last-beat read-data, support-accounted through check JSON and semantic JSON.
 - `ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_dynamic_burst_last_read_data_burst_length_runtime_assertion.ppif` — checked-in runnable `.ppif` sample for generated runtime beat-count/`RLAST` validation over generated two-dynamic-plus-one-static mixed dynamic/static read burst-last/`RLAST` response-demux and scalar last-beat read-data, support-accounted through check JSON and semantic JSON.
 - `ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_dynamic_burst_last_read_data_multi_beat.ppif` — checked-in runnable `.ppif` sample for generated multi-beat output banks over generated two-dynamic-plus-one-static mixed dynamic/static read burst-last/`RLAST` response-demux and runtime beat-count/`RLAST` validation, support-accounted through check JSON and semantic JSON.

@@ -2851,6 +2851,23 @@ and behavior label `mixed_dynamic_static_read_data_multi_dynamic`. The
 selected report contract keeps `.344` response-demux mode/source and
 `bounded_single_beat_read_data_contract` with completion validity
 `generated_multi_mixed_dynamic_static_read_response_demux_completion_pulse`.
+`.361` now ships that selected scalar single-beat read-data behavior through
+the support-accounted public sample
+`ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_dynamic_read_data.ppif`.
+The read-data coverage predicate admits only
+`generated_multi_mixed_dynamic_static_read_demux`, response scope
+`single_beat`, capture scope `single-beat`, no `burst_length` metadata,
+dynamic reads `r0`/`r1`, concrete static read `r2`, and one generated
+completion pulse per covered transaction. The generated surface adds shared
+`axi0_rdata`/`axi0_rresp` inputs, scalar data/status outputs for `r0`, `r1`,
+and `r2`, and capture rules guarded by the generated single-beat completion
+pulses. Reports keep the `.344` response-demux contract and mark read-data as
+`bounded_single_beat_read_data_contract` with completion validity
+`generated_multi_mixed_dynamic_static_read_response_demux_completion_pulse`.
+Burst-last/last-beat siblings, raw `ARLEN`, runtime validation, multi-beat
+output banks, broader mixed cardinalities, queues, scoreboards, backend
+variants, VHDL, profile aliases, queued/blocking policy, and full-manager
+behavior remain future exact-owner work.
 No behavior changed in
 `.270`, `.271`, `.273`, `.274`, `.275`, `.277`, `.278`,
 `.279`, `.281`, `.282`, `.283`, `.285`, `.286`, `.288`, `.290`, `.292`, or

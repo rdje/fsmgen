@@ -8310,6 +8310,22 @@ ordered transactions `r0`, `r1`, and `r2`, generated inputs `axi0_rdata` and
 residue `rlast_completion`, `bursts`, and
 `multi_beat_read_data_reassembly`.
 
+Two-dynamic/one-static mixed dynamic/static read single-beat read-data
+behavior:
+[AXI_IAL2_MANAGER_TWO_DYNAMIC_ONE_STATIC_MIXED_DYNAMIC_STATIC_READ_DATA_BEHAVIOR](../../AXI_IAL2_MANAGER_TWO_DYNAMIC_ONE_STATIC_MIXED_DYNAMIC_STATIC_READ_DATA_BEHAVIOR.md)
+ships `.361`, scalar single-beat `RDATA`/`RRESP` capture over the `.344`
+generated two-dynamic-plus-one-static mixed dynamic/static read single-beat
+`RID` response-demux. The support-accounted public sample is
+`ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_dynamic_read_data.ppif`.
+It keeps dynamic transactions `r0` and `r1`, static transaction `r2`, response
+scope `single_beat`, no `RLAST` or `burst_length` metadata, generated inputs
+`axi0_rdata`/`axi0_rresp`, scalar outputs for all three transactions, and
+capture rules guarded by the generated single-beat completion pulses. The
+read-data report uses completion validity
+`generated_multi_mixed_dynamic_static_read_response_demux_completion_pulse`
+and keeps residue `rlast_completion`, `bursts`, and
+`multi_beat_read_data_reassembly`.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same
