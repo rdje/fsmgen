@@ -574,12 +574,21 @@ sub assert_dynamic_behavior {
         like($isf, qr/\(rule axi0_w1_dynamic_id_capture \(& \(& axi0_w1_request \(\| \(< axi0_pending_writes_q 2\) \(\| axi0_w0_complete axi0_w1_complete\)\)\) \(! axi0_w1_dynamic_busy_q\) \(! \(& axi0_w0_request/, 'multiple dynamic write demux gates w1 capture against sibling request');
         like($isf, qr/\(rule axi0_w0_response_demux \(& axi0_write_complete axi0_w0_dynamic_busy_q \(== axi0_bid axi0_w0_dynamic_id_q\)\)/, 'multiple dynamic write demux matches active w0 BID');
         like($isf, qr/\(rule axi0_w1_response_demux \(& axi0_write_complete axi0_w1_dynamic_busy_q \(== axi0_bid axi0_w1_dynamic_id_q\)\)/, 'multiple dynamic write demux matches active w1 BID');
+        like($isf, qr/\(rule axi0_w0_dynamic_id_release_recapture \(& \(& axi0_w0_request \(\| \(< axi0_pending_writes_q 2\) \(\| axi0_w0_complete axi0_w1_complete\)\)\) axi0_w0_complete axi0_w0_dynamic_busy_q \(! \(& axi0_w1_request \(\| \(< axi0_pending_writes_q 2\) \(\| axi0_w0_complete axi0_w1_complete\)\)\)\) \(! \(& axi0_w1_dynamic_busy_q \(== axi0_w1_dynamic_id_q axi0_awid\)\)\)\)\s+\(axi0_w0_dynamic_id_q axi0_awid\)\s+\(axi0_w0_dynamic_busy_q 1\)\)/, 'multiple dynamic write demux recaptures w0 on same-cycle release');
+        like($isf, qr/\(rule axi0_w1_dynamic_id_release_recapture \(& \(& axi0_w1_request \(\| \(< axi0_pending_writes_q 2\) \(\| axi0_w0_complete axi0_w1_complete\)\)\) axi0_w1_complete axi0_w1_dynamic_busy_q \(! \(& axi0_w0_request \(\| \(< axi0_pending_writes_q 2\) \(\| axi0_w0_complete axi0_w1_complete\)\)\)\) \(! \(& axi0_w0_dynamic_busy_q \(== axi0_w0_dynamic_id_q axi0_awid\)\)\)\)\s+\(axi0_w1_dynamic_id_q axi0_awid\)\s+\(axi0_w1_dynamic_busy_q 1\)\)/, 'multiple dynamic write demux recaptures w1 on same-cycle release');
+        like($isf, qr/\(rule axi0_w0_dynamic_id_release \(& axi0_w0_complete axi0_w0_dynamic_busy_q \(! axi0_w0_request\)\)\s+\(axi0_w0_dynamic_busy_q 0\)\)/, 'multiple dynamic write demux releases w0 only without same-cycle own request');
+        like($isf, qr/\(rule axi0_w1_dynamic_id_release \(& axi0_w1_complete axi0_w1_dynamic_busy_q \(! axi0_w1_request\)\)\s+\(axi0_w1_dynamic_busy_q 0\)\)/, 'multiple dynamic write demux releases w1 only without same-cycle own request');
+        like($isf, qr/axi0 write dynamic request is idle or releasing active captured ID/, 'multiple dynamic write demux emits idle-or-releasing assertions');
         like($isf, qr/axi0 write dynamic requests are mutually exclusive/, 'multiple dynamic write demux emits request onehot assertion');
         like($isf, qr/axi0 write dynamic active IDs are unique/, 'multiple dynamic write demux emits active ID uniqueness assertion');
         like($isf, qr/axi0 write dynamic response matches at most one captured ID/, 'multiple dynamic write demux emits response unique-match assertion');
         assert_dynamic_write_multi_report($result->{report});
         like($fsm, qr/\(-axi0_w0_response_demux\s+<\(& axi0_write_complete axi0_w0_dynamic_busy_q \(== axi0_bid axi0_w0_dynamic_id_q\)\)/, 'scheduled FSM lowers multi dynamic w0 BID match');
         like($fsm, qr/\(-axi0_w1_response_demux\s+<\(& axi0_write_complete axi0_w1_dynamic_busy_q \(== axi0_bid axi0_w1_dynamic_id_q\)\)/, 'scheduled FSM lowers multi dynamic w1 BID match');
+        like($fsm, qr/\(-axi0_w0_dynamic_id_release_recapture\s+<\(& \(& axi0_w0_request/, 'scheduled FSM lowers multi dynamic w0 release-recapture');
+        like($fsm, qr/\(-axi0_w1_dynamic_id_release_recapture\s+<\(& \(& axi0_w1_request/, 'scheduled FSM lowers multi dynamic w1 release-recapture');
+        like($fsm, qr/\(-axi0_w0_dynamic_id_release\s+<\(& axi0_w0_complete axi0_w0_dynamic_busy_q \(! axi0_w0_request\)\)/, 'scheduled FSM lowers multi dynamic w0 release-only rule');
+        like($fsm, qr/\(-axi0_w1_dynamic_id_release\s+<\(& axi0_w1_complete axi0_w1_dynamic_busy_q \(! axi0_w1_request\)\)/, 'scheduled FSM lowers multi dynamic w1 release-only rule');
         my $hdl = hdl_for('axi0_capacity_status', $fsm);
         like($hdl, qr/\binput\s+(?:wire\s+)?\[3:0\]\s+axi0_awid\b/, 'SystemVerilog exposes AWID for multi dynamic write');
         like($hdl, qr/\binput\s+(?:wire\s+)?\[3:0\]\s+axi0_bid\b/, 'SystemVerilog exposes BID for multi dynamic write');
@@ -2148,8 +2157,8 @@ sub assert_dynamic_write_multi_report {
     is_deeply(
         $write->{generated_assertions},
         [qw(
-            axi0_w0_dynamic_request_not_busy
-            axi0_w1_dynamic_request_not_busy
+            axi0_w0_dynamic_request_idle_or_releasing
+            axi0_w1_dynamic_request_idle_or_releasing
             axi0_write_dynamic_request_onehot0
             axi0_w0_dynamic_request_no_active_same_id
             axi0_w1_dynamic_request_no_active_same_id
@@ -2176,6 +2185,10 @@ sub assert_dynamic_write_multi_report {
                     busy_signal        => 'axi0_w0_dynamic_busy_q',
                     capture_rule       => 'axi0_w0_dynamic_id_capture',
                     release_rule       => 'axi0_w0_dynamic_id_release',
+                    release_recapture_rule => 'axi0_w0_dynamic_id_release_recapture',
+                    same_cycle_release_recapture_policy => 'multi_active_unique_dynamic_write',
+                    release_recapture_source => 'generated_dynamic_demux_completion',
+                    release_recapture_transaction => 'w0',
                 },
                 {
                     transaction        => 'w1',
@@ -2183,6 +2196,10 @@ sub assert_dynamic_write_multi_report {
                     busy_signal        => 'axi0_w1_dynamic_busy_q',
                     capture_rule       => 'axi0_w1_dynamic_id_capture',
                     release_rule       => 'axi0_w1_dynamic_id_release',
+                    release_recapture_rule => 'axi0_w1_dynamic_id_release_recapture',
+                    same_cycle_release_recapture_policy => 'multi_active_unique_dynamic_write',
+                    release_recapture_source => 'generated_dynamic_demux_completion',
+                    release_recapture_transaction => 'w1',
                 },
             ],
         },

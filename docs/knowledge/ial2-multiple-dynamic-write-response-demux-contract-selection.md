@@ -9,8 +9,8 @@ answers:
 date: 2026-06-22
 status: current
 tags: [ial2, axi, dynamic-id, write-response-demux, contract, selection]
-evidence: docs/AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_WRITE_RESPONSE_DEMUX_CONTRACT_SELECTION.md; docs/AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_RESPONSE_DEMUX_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_TRANSACTION_ID_CAPTURE_BEHAVIOR.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md; perl/FSM/IAL2/ProtocolIntent/AxiManagerCapacityStatus.pm
-reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.246|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.247|MULTIPLE_DYNAMIC_WRITE_RESPONSE_DEMUX_CONTRACT_SELECTION|bounded_multi_dynamic_write_bid_demux_contract|multi_active_unique_dynamic_write_ids|onehot0_dynamic_write_request|active_dynamic_ids_must_be_unique' docs/AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_WRITE_RESPONSE_DEMUX_CONTRACT_SELECTION.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md README.md ROADMAP_V2.md docs/book/src/14-feature-backlog.md
+evidence: docs/AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_WRITE_RESPONSE_DEMUX_CONTRACT_SELECTION.md; docs/AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_WRITE_RESPONSE_DEMUX_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_WRITE_RECAPTURE_BEHAVIOR.md; docs/AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_RESPONSE_DEMUX_READINESS_AUDIT.md; docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_TRANSACTION_ID_CAPTURE_BEHAVIOR.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md; perl/FSM/IAL2/ProtocolIntent/AxiManagerCapacityStatus.pm
+reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.246|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.247|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.378|MULTIPLE_DYNAMIC_WRITE_RESPONSE_DEMUX_CONTRACT_SELECTION|bounded_multi_dynamic_write_bid_demux_contract|multi_active_unique_dynamic_write_ids|onehot0_dynamic_write_request|active_dynamic_ids_must_be_unique|multi_active_unique_dynamic_write' docs/AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_WRITE_RESPONSE_DEMUX_CONTRACT_SELECTION.md docs/AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_WRITE_RECAPTURE_BEHAVIOR.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md README.md ROADMAP_V2.md docs/book/src/14-feature-backlog.md
 ---
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.246` selects
@@ -28,9 +28,9 @@ queues: raw write responses must match at least one and at most one active
 captured dynamic write, active dynamic IDs must be unique, and new dynamic
 write requests must not reuse an ID held by an active sibling transaction.
 
-Multiple dynamic read single-beat response-demux now ships under `.251`.
-Multiple dynamic read burst-last/`RLAST`, read-data, burst-length/runtime
-validation, and multi-beat output-bank widening remain deferred along with
-mixed dynamic/static demux, same-cycle request widening,
-same-cycle release-and-recapture, dynamic same-ID queues, scoreboards, direct
-backend behavior, backend-language variants, and VHDL.
+Multiple dynamic read single-beat response-demux now ships under `.251`, and
+`.378` later adds same-cycle release-and-recapture for the same multiple
+dynamic write sample with `multi_active_unique_dynamic_write` report policy.
+Multiple dynamic read recapture, mixed dynamic/static recapture, same-cycle
+request widening, dynamic same-ID queues, scoreboards, direct backend behavior,
+backend-language variants, and VHDL remain deferred.

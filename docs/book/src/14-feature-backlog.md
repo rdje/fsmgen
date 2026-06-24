@@ -6904,12 +6904,15 @@ generates per-transaction selected-ID/busy state, admitted `AWID` capture,
 matched `BID` completion pulses, busy release rules, request onehot0
 assertions, active-ID uniqueness assertions, request no-active-same-ID
 assertions, response active-match assertions, and response unique-match
-assertions. Multiple dynamic read single-beat response-demux now ships under
-`.251`; multiple dynamic read burst-last/`RLAST`, read-data, burst-length,
-runtime validation, and multi-beat output-bank widening remain deferred along
-with mixed dynamic/static demux, same-cycle request widening beyond onehot0,
-dynamic same-ID queues, scoreboards, direct backend behavior, backend-language
-variants, and VHDL.
+assertions. `.378` extends the same public sample with per-transaction
+same-cycle release-and-recapture while preserving
+`bounded_multi_dynamic_write_bid_demux_contract`. Multiple dynamic read
+single-beat response-demux now ships under `.251`; multiple dynamic read
+burst-last/`RLAST`, read-data, burst-length, runtime validation, and
+multi-beat output-bank widening now ship in selected bounded forms. Multiple
+dynamic read recapture, mixed dynamic/static recapture, same-cycle request
+widening beyond onehot0, dynamic same-ID queues, scoreboards, direct backend
+behavior, backend-language variants, and VHDL remain deferred.
 Post multiple dynamic write response-demux selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_WRITE_RESPONSE_DEMUX_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_WRITE_RESPONSE_DEMUX_NEXT_SLICE_SELECTION.md)
 selects `.249`, readiness audit for multiple dynamic read response-demux. The
@@ -8476,8 +8479,8 @@ generated dynamic transaction-ID support detail now describes single-active
 dynamic read single-beat `RID` matching and burst-last `RID/RLAST` matching as
 including same-cycle release-and-recapture, and same-cycle recapture remains
 future only outside the selected single-active dynamic write `BID`, read
-single-beat `RID`, and read burst-last `RID/RLAST` demux boundaries. Parser
-syntax, PPIF samples, response-demux semantics, generated state/rules,
+single-beat `RID`, and read burst-last `RID/RLAST` demux boundaries at `.375`.
+Parser syntax, PPIF samples, response-demux semantics, generated state/rules,
 assertions, HDL, and runtime behavior are unchanged. The frontier advances to
 `.376`, selection of the first multiple all-dynamic recapture contract owner.
 
@@ -8508,6 +8511,21 @@ adds per-transaction `release_recapture_rule`,
 request-not-busy assertions with idle-or-releasing assertions; and preserves
 no-active-same-ID, active-ID uniqueness, response active/unique-match, and
 completion-active assertions. The selector changes no behavior.
+
+Multiple dynamic write recapture behavior:
+[AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_WRITE_RECAPTURE_BEHAVIOR](../../AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_WRITE_RECAPTURE_BEHAVIOR.md)
+ships `.378`, same-cycle release-and-recapture for the existing multiple
+all-dynamic write `BID` response-demux sample. FSMGen emits per-transaction
+`axi0_w0_dynamic_id_release_recapture` and
+`axi0_w1_dynamic_id_release_recapture`, keeps release-only updates disjoint
+from same-cycle own requests, reports `same_cycle_release_recapture_policy:
+multi_active_unique_dynamic_write`, replaces per-transaction request-not-busy
+assertions with idle-or-releasing assertions, and preserves source syntax,
+support identity, generated completion names,
+`bounded_multi_dynamic_write_bid_demux_contract`, onehot0 request policy,
+no-active-same-ID, active-ID uniqueness, response active/unique-match, and
+completion-active assertions. The next frontier is `.379`, the next
+multiple-dynamic recapture selector.
 
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)

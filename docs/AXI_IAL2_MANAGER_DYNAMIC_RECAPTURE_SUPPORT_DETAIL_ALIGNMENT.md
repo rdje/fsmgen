@@ -44,11 +44,14 @@ The PPIF parser/CLI report-prose alignment check now reads the generated
 
 ## Deferred Boundaries
 
-Multiple dynamic write recapture, multiple dynamic read single-beat recapture,
-multiple dynamic read burst-last recapture, mixed dynamic/static recapture,
-static busy recapture, dynamic same-ID queues, scoreboards, queued/blocking
-policy, profile aliases, direct backend behavior, backend-language variants,
-VHDL, and full AXI manager behavior remain later exact owners.
+At `.375`, multiple dynamic write recapture, multiple dynamic read single-beat
+recapture, multiple dynamic read burst-last recapture, mixed dynamic/static
+recapture, static busy recapture, dynamic same-ID queues, scoreboards,
+queued/blocking policy, profile aliases, direct backend behavior,
+backend-language variants, VHDL, and full AXI manager behavior remained later
+exact owners. `.378` later ships the multiple all-dynamic write `BID`
+same-cycle recapture boundary; the read, mixed, static-busy, queue,
+scoreboard, backend, VHDL, and full-manager boundaries remain future owners.
 
 After this support-detail cleanup, the next owner should return to selecting
 the first multiple all-dynamic release-and-recapture contract.
@@ -71,4 +74,3 @@ scripts/check_memory_architecture.sh
 git --no-pager diff --check
 scripts/check_doctrines.sh
 ```
-

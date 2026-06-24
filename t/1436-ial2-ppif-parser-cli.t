@@ -215,7 +215,7 @@ subtest 'PPIF adapter parses AXI manager dynamic write response-demux behavior' 
     like($isf, qr/\(output axi0_w0_complete\)/, 'dynamic write response-demux generated IAL1 exposes matched completion output');
     like($isf, qr/\(rule axi0_w0_dynamic_id_capture \(& \(& axi0_w0_request \(\| \(< axi0_pending_writes_q 2\) axi0_w0_complete\)\) \(! axi0_w0_dynamic_busy_q\)\)/, 'dynamic write response-demux generated IAL1 captures AWID on admitted requests');
     like($isf, qr/\(rule axi0_w0_response_demux \(& axi0_write_complete axi0_w0_dynamic_busy_q \(== axi0_bid axi0_w0_dynamic_id_q\)\)/, 'dynamic write response-demux generated IAL1 matches BID before completion');
-    like($isf, qr/\(rule axi0_w0_dynamic_id_release \(& axi0_w0_complete axi0_w0_dynamic_busy_q\)/, 'dynamic write response-demux generated IAL1 releases busy state on completion');
+    like($isf, qr/\(rule axi0_w0_dynamic_id_release \(& axi0_w0_complete axi0_w0_dynamic_busy_q \(! axi0_w0_request\)\)/, 'dynamic write response-demux generated IAL1 releases busy state on completion without same-cycle recapture');
     assert_dynamic_write_response_demux_report($result->{report}, 'adapter report');
 };
 
@@ -237,6 +237,8 @@ subtest 'PPIF adapter parses AXI manager multiple dynamic write response-demux b
     like($isf, qr/\(output axi0_w1_complete\)/, 'multiple dynamic write response-demux generated IAL1 exposes w1 completion');
     like($isf, qr/\(rule axi0_w0_response_demux \(& axi0_write_complete axi0_w0_dynamic_busy_q \(== axi0_bid axi0_w0_dynamic_id_q\)\)/, 'multiple dynamic write response-demux generated IAL1 matches w0 BID before completion');
     like($isf, qr/\(rule axi0_w1_response_demux \(& axi0_write_complete axi0_w1_dynamic_busy_q \(== axi0_bid axi0_w1_dynamic_id_q\)\)/, 'multiple dynamic write response-demux generated IAL1 matches w1 BID before completion');
+    like($isf, qr/\(rule axi0_w0_dynamic_id_release_recapture \(& \(& axi0_w0_request \(\| \(< axi0_pending_writes_q 2\) \(\| axi0_w0_complete axi0_w1_complete\)\)\) axi0_w0_complete axi0_w0_dynamic_busy_q \(! \(& axi0_w1_request \(\| \(< axi0_pending_writes_q 2\) \(\| axi0_w0_complete axi0_w1_complete\)\)\)\) \(! \(& axi0_w1_dynamic_busy_q \(== axi0_w1_dynamic_id_q axi0_awid\)\)\)\)/, 'multiple dynamic write response-demux generated IAL1 recaptures w0 on same-cycle release');
+    like($isf, qr/\(rule axi0_w1_dynamic_id_release_recapture \(& \(& axi0_w1_request \(\| \(< axi0_pending_writes_q 2\) \(\| axi0_w0_complete axi0_w1_complete\)\)\) axi0_w1_complete axi0_w1_dynamic_busy_q \(! \(& axi0_w0_request \(\| \(< axi0_pending_writes_q 2\) \(\| axi0_w0_complete axi0_w1_complete\)\)\)\) \(! \(& axi0_w0_dynamic_busy_q \(== axi0_w0_dynamic_id_q axi0_awid\)\)\)\)/, 'multiple dynamic write response-demux generated IAL1 recaptures w1 on same-cycle release');
     like($isf, qr/"axi0 write dynamic requests are mutually exclusive"/, 'multiple dynamic write response-demux generated IAL1 emits request onehot assertion');
     like($isf, qr/"axi0 write dynamic response matches at most one captured ID"/, 'multiple dynamic write response-demux generated IAL1 emits response unique-match assertion');
     assert_dynamic_write_response_demux_multi_report($result->{report}, 'adapter report');
@@ -259,7 +261,7 @@ subtest 'PPIF adapter parses AXI manager dynamic read response-demux behavior' =
     like($isf, qr/\(output axi0_r0_complete\)/, 'dynamic read response-demux generated IAL1 exposes matched completion output');
     like($isf, qr/\(rule axi0_r0_dynamic_id_capture \(& \(& axi0_r0_request \(\| \(< axi0_pending_reads_q 4\) axi0_r0_complete\)\) \(! axi0_r0_dynamic_busy_q\)\)/, 'dynamic read response-demux generated IAL1 captures ARID on admitted requests');
     like($isf, qr/\(rule axi0_r0_response_demux \(& axi0_read_complete axi0_r0_dynamic_busy_q \(== axi0_rid axi0_r0_dynamic_id_q\)\)/, 'dynamic read response-demux generated IAL1 matches RID before completion');
-    like($isf, qr/\(rule axi0_r0_dynamic_id_release \(& axi0_r0_complete axi0_r0_dynamic_busy_q\)/, 'dynamic read response-demux generated IAL1 releases busy state on completion');
+    like($isf, qr/\(rule axi0_r0_dynamic_id_release \(& axi0_r0_complete axi0_r0_dynamic_busy_q \(! axi0_r0_request\)\)/, 'dynamic read response-demux generated IAL1 releases busy state on completion without same-cycle recapture');
     assert_dynamic_read_response_demux_report($result->{report}, 'adapter report');
 };
 
@@ -331,7 +333,7 @@ subtest 'PPIF adapter parses AXI manager dynamic read burst-last response-demux 
     like($isf, qr/\(rule axi0_r0_dynamic_id_capture \(& \(& axi0_r0_request \(\| \(< axi0_pending_reads_q 4\) axi0_r0_complete\)\) \(! axi0_r0_dynamic_busy_q\)\)/, 'dynamic read burst-last response-demux generated IAL1 captures ARID on admitted requests');
     like($isf, qr/\(rule axi0_r0_response_demux \(& axi0_read_complete axi0_r0_dynamic_busy_q \(== axi0_rid axi0_r0_dynamic_id_q\) axi0_rlast\)/, 'dynamic read burst-last response-demux generated IAL1 matches RID and RLAST before completion');
     like($isf, qr/\(assert \(\| \(! axi0_read_complete\) \(& axi0_r0_dynamic_busy_q \(== axi0_rid axi0_r0_dynamic_id_q\)\)\) "axi0 read dynamic response matches active captured ID"\)/, 'dynamic read burst-last active-response assertion remains raw RID based');
-    like($isf, qr/\(rule axi0_r0_dynamic_id_release \(& axi0_r0_complete axi0_r0_dynamic_busy_q\)/, 'dynamic read burst-last response-demux generated IAL1 releases busy state on completion');
+    like($isf, qr/\(rule axi0_r0_dynamic_id_release \(& axi0_r0_complete axi0_r0_dynamic_busy_q \(! axi0_r0_request\)\)/, 'dynamic read burst-last response-demux generated IAL1 releases busy state on completion without same-cycle recapture');
     assert_dynamic_read_response_demux_burst_last_report($result->{report}, 'adapter report');
 };
 
@@ -8482,19 +8484,23 @@ sub assert_dynamic_write_response_demux_report {
     is_deeply($write->{generated_completion_signals}, [qw(axi0_w0_complete)], "$owner reports generated dynamic completion pulse");
     is_deeply(
         $write->{generated_assertions},
-        [qw(axi0_w0_dynamic_request_not_busy axi0_write_dynamic_response_active_match axi0_w0_dynamic_completion_active)],
+        [qw(axi0_w0_dynamic_request_idle_or_releasing axi0_write_dynamic_response_active_match axi0_w0_dynamic_completion_active)],
         "$owner reports generated dynamic assertions",
     );
     is_deeply(
         $write->{dynamic_capture},
         {
-            request_id_source    => 'axi0_awid',
-            capture_event_source => 'admitted_dynamic_write_request',
-            ownership            => 'single_active_dynamic_write',
-            selected_id_signal   => 'axi0_w0_dynamic_id_q',
-            busy_signal          => 'axi0_w0_dynamic_busy_q',
-            capture_rule         => 'axi0_w0_dynamic_id_capture',
-            release_rule         => 'axi0_w0_dynamic_id_release',
+            request_id_source                    => 'axi0_awid',
+            capture_event_source                 => 'admitted_dynamic_write_request',
+            ownership                            => 'single_active_dynamic_write',
+            selected_id_signal                   => 'axi0_w0_dynamic_id_q',
+            busy_signal                          => 'axi0_w0_dynamic_busy_q',
+            capture_rule                         => 'axi0_w0_dynamic_id_capture',
+            release_rule                         => 'axi0_w0_dynamic_id_release',
+            release_recapture_rule               => 'axi0_w0_dynamic_id_release_recapture',
+            same_cycle_release_recapture_policy  => 'single_active_dynamic_write',
+            release_recapture_source             => 'generated_dynamic_demux_completion',
+            release_recapture_transaction        => 'w0',
         },
         "$owner reports dynamic capture state and rule ownership",
     );
@@ -8534,8 +8540,8 @@ sub assert_dynamic_write_response_demux_multi_report {
     is_deeply(
         $write->{generated_assertions},
         [qw(
-            axi0_w0_dynamic_request_not_busy
-            axi0_w1_dynamic_request_not_busy
+            axi0_w0_dynamic_request_idle_or_releasing
+            axi0_w1_dynamic_request_idle_or_releasing
             axi0_write_dynamic_request_onehot0
             axi0_w0_dynamic_request_no_active_same_id
             axi0_w1_dynamic_request_no_active_same_id
@@ -8562,6 +8568,10 @@ sub assert_dynamic_write_response_demux_multi_report {
                     busy_signal        => 'axi0_w0_dynamic_busy_q',
                     capture_rule       => 'axi0_w0_dynamic_id_capture',
                     release_rule       => 'axi0_w0_dynamic_id_release',
+                    release_recapture_rule => 'axi0_w0_dynamic_id_release_recapture',
+                    same_cycle_release_recapture_policy => 'multi_active_unique_dynamic_write',
+                    release_recapture_source => 'generated_dynamic_demux_completion',
+                    release_recapture_transaction => 'w0',
                 },
                 {
                     transaction        => 'w1',
@@ -8569,6 +8579,10 @@ sub assert_dynamic_write_response_demux_multi_report {
                     busy_signal        => 'axi0_w1_dynamic_busy_q',
                     capture_rule       => 'axi0_w1_dynamic_id_capture',
                     release_rule       => 'axi0_w1_dynamic_id_release',
+                    release_recapture_rule => 'axi0_w1_dynamic_id_release_recapture',
+                    same_cycle_release_recapture_policy => 'multi_active_unique_dynamic_write',
+                    release_recapture_source => 'generated_dynamic_demux_completion',
+                    release_recapture_transaction => 'w1',
                 },
             ],
         },
@@ -8618,19 +8632,23 @@ sub assert_dynamic_read_response_demux_report {
     is_deeply($read->{generated_completion_signals}, [qw(axi0_r0_complete)], "$owner reports generated dynamic read completion pulse");
     is_deeply(
         $read->{generated_assertions},
-        [qw(axi0_r0_dynamic_request_not_busy axi0_read_dynamic_response_active_match axi0_r0_dynamic_completion_active)],
+        [qw(axi0_r0_dynamic_request_idle_or_releasing axi0_read_dynamic_response_active_match axi0_r0_dynamic_completion_active)],
         "$owner reports generated dynamic read assertions",
     );
     is_deeply(
         $read->{dynamic_capture},
         {
-            request_id_source    => 'axi0_arid',
-            capture_event_source => 'admitted_dynamic_read_request',
-            ownership            => 'single_active_dynamic_read',
-            selected_id_signal   => 'axi0_r0_dynamic_id_q',
-            busy_signal          => 'axi0_r0_dynamic_busy_q',
-            capture_rule         => 'axi0_r0_dynamic_id_capture',
-            release_rule         => 'axi0_r0_dynamic_id_release',
+            request_id_source                    => 'axi0_arid',
+            capture_event_source                 => 'admitted_dynamic_read_request',
+            ownership                            => 'single_active_dynamic_read',
+            selected_id_signal                   => 'axi0_r0_dynamic_id_q',
+            busy_signal                          => 'axi0_r0_dynamic_busy_q',
+            capture_rule                         => 'axi0_r0_dynamic_id_capture',
+            release_rule                         => 'axi0_r0_dynamic_id_release',
+            release_recapture_rule               => 'axi0_r0_dynamic_id_release_recapture',
+            same_cycle_release_recapture_policy  => 'single_active_dynamic_read',
+            release_recapture_source             => 'generated_dynamic_demux_completion',
+            release_recapture_transaction        => 'r0',
         },
         "$owner reports dynamic read capture state and rule ownership",
     );
@@ -8845,19 +8863,23 @@ sub assert_dynamic_read_response_demux_burst_last_report {
     is_deeply($read->{generated_completion_signals}, [qw(axi0_r0_complete)], "$owner reports generated dynamic RLAST completion pulse");
     is_deeply(
         $read->{generated_assertions},
-        [qw(axi0_r0_dynamic_request_not_busy axi0_read_dynamic_response_active_match axi0_r0_dynamic_completion_active)],
+        [qw(axi0_r0_dynamic_request_idle_or_releasing axi0_read_dynamic_response_active_match axi0_r0_dynamic_completion_active)],
         "$owner reports generated dynamic RLAST assertions",
     );
     is_deeply(
         $read->{dynamic_capture},
         {
-            request_id_source    => 'axi0_arid',
-            capture_event_source => 'admitted_dynamic_read_request',
-            ownership            => 'single_active_dynamic_read',
-            selected_id_signal   => 'axi0_r0_dynamic_id_q',
-            busy_signal          => 'axi0_r0_dynamic_busy_q',
-            capture_rule         => 'axi0_r0_dynamic_id_capture',
-            release_rule         => 'axi0_r0_dynamic_id_release',
+            request_id_source                    => 'axi0_arid',
+            capture_event_source                 => 'admitted_dynamic_read_request',
+            ownership                            => 'single_active_dynamic_read',
+            selected_id_signal                   => 'axi0_r0_dynamic_id_q',
+            busy_signal                          => 'axi0_r0_dynamic_busy_q',
+            capture_rule                         => 'axi0_r0_dynamic_id_capture',
+            release_rule                         => 'axi0_r0_dynamic_id_release',
+            release_recapture_rule               => 'axi0_r0_dynamic_id_release_recapture',
+            same_cycle_release_recapture_policy  => 'single_active_dynamic_read',
+            release_recapture_source             => 'generated_dynamic_demux_last_beat_completion',
+            release_recapture_transaction        => 'r0',
         },
         "$owner reports dynamic read RLAST capture state and rule ownership",
     );
@@ -9011,13 +9033,18 @@ sub assert_rlast_report_prose_alignment {
     ok($dynamic_residue, "$owner reports dynamic transaction-ID unsupported residue");
     like(
         $dynamic_residue->{detail},
+        qr/single-active dynamic write ID capture and BID response matching including same-cycle release-and-recapture, bounded multiple all-dynamic write BID response-demux matching including same-cycle release-and-recapture/,
+        "$owner reports single-active and bounded multiple dynamic write recapture as supported",
+    );
+    like(
+        $dynamic_residue->{detail},
         qr/single-active dynamic read ID capture plus single-beat RID response matching and burst-last RID\/RLAST response matching including same-cycle release-and-recapture/,
         "$owner reports read single-beat and burst-last dynamic recapture as supported",
     );
     like(
         $dynamic_residue->{detail},
-        qr/same-cycle recapture outside single-active dynamic write BID demux, single-active dynamic read single-beat RID demux, and single-active dynamic read burst-last RID\/RLAST demux/,
-        "$owner reports remaining same-cycle recapture residue after all single-active dynamic recapture shapes",
+        qr/same-cycle recapture outside single-active dynamic write BID demux, bounded multiple all-dynamic write BID demux, single-active dynamic read single-beat RID demux, and single-active dynamic read burst-last RID\/RLAST demux/,
+        "$owner reports remaining same-cycle recapture residue after shipped dynamic recapture shapes",
     );
     ok(
         index($dynamic_residue->{detail}, 'without release-and-recapture') < 0,
@@ -9027,9 +9054,13 @@ sub assert_rlast_report_prose_alignment {
         index($dynamic_residue->{detail}, 'same-cycle recapture outside single-active dynamic write BID demux and single-active dynamic read single-beat RID demux') < 0,
         "$owner removes stale same-cycle recapture residue boundary prose",
     );
+    ok(
+        index($dynamic_residue->{detail}, 'same-cycle recapture outside single-active dynamic write BID demux, single-active dynamic read single-beat RID demux') < 0,
+        "$owner removes stale same-cycle recapture residue prose without bounded multiple write",
+    );
     like(
         $id_residue->{detail},
-        qr/generated burst-last RLAST response-demux completion, structural last-beat read-data metadata, generated last-beat read-data RDATA\/RRESP capture, generated last-beat read-data RDATA\/RRESP capture from generated read burst-last concrete same-ID queue-head response-demux including multiple independent depth-2 queue-head groups with no burst_length metadata, report-only raw-ARLEN burst-length metadata, or runtime-assertion beat-count\/RLAST validation metadata, plus the selected single depth-3 queue-head group with no burst_length metadata, report-only raw-ARLEN burst-length metadata, or runtime-assertion beat-count\/RLAST validation metadata, plus selected multiple\/mixed depth-3 queue-head groups with no burst_length metadata, report-only raw-ARLEN burst-length metadata, runtime-assertion beat-count\/RLAST validation metadata, or runtime-assertion multi-beat output-bank metadata, generated raw-ARLEN burst-length capture including report-only and runtime-validation generated read burst-last concrete same-ID queue-head read-data contracts with one or more independent depth-2 queue-head groups, the selected single depth-3 report-only and runtime-validation groups, selected multiple\/mixed depth-3 report-only and runtime-validation groups, and the selected same-family mixed auto-ID plus depth-2 concrete queue-head report-only and runtime-validation groups, explicit runtime-assertion beat-count\/RLAST validation for auto-ID, selected dynamic read-data, and bounded read burst-last concrete same-ID queue-head read-data contracts including one or more independent depth-2 queue-head groups plus the selected single depth-3 group, selected multiple\/mixed depth-3 groups, and the selected same-family mixed auto-ID plus depth-2 concrete queue-head group, generated multi-beat read-data output-bank behavior for the covered auto-ID multi-beat-by-RID subset, selected dynamic single-active and bounded multiple all-dynamic read demux subset, and bounded read burst-last concrete same-ID queue-head subset including multiple independent depth-2 queue-head groups plus the selected single depth-3 runtime-validation queue-head group, selected multiple\/mixed depth-3 runtime-validation queue-head groups, and the selected same-family mixed auto-ID plus depth-2 concrete queue-head runtime-validation group, bounded burst payload\/output behavior through that per-beat output bank, and generated scalar RRESP aggregation behavior are supported/,
+        qr/generated burst-last RLAST response-demux completion, structural last-beat read-data metadata, generated last-beat read-data RDATA\/RRESP capture, generated last-beat read-data RDATA\/RRESP capture from generated read burst-last concrete same-ID queue-head response-demux including multiple independent depth-2 queue-head groups with no burst_length metadata, report-only raw-ARLEN burst-length metadata, or runtime-assertion beat-count\/RLAST validation metadata, plus the selected single depth-3 queue-head group with no burst_length metadata, report-only raw-ARLEN burst-length metadata, or runtime-assertion beat-count\/RLAST validation metadata, plus selected multiple\/mixed depth-3 queue-head groups with no burst_length metadata, report-only raw-ARLEN burst-length metadata, runtime-assertion beat-count\/RLAST validation metadata, or runtime-assertion multi-beat output-bank metadata, generated raw-ARLEN burst-length capture including report-only and runtime-validation generated read burst-last concrete same-ID queue-head read-data contracts with one or more independent depth-2 queue-head groups, the selected single depth-3 report-only and runtime-validation groups, selected multiple\/mixed depth-3 report-only and runtime-validation groups, and the selected same-family mixed auto-ID plus depth-2 concrete queue-head report-only and runtime-validation groups, explicit runtime-assertion beat-count\/RLAST validation for auto-ID, selected dynamic read-data, and bounded read burst-last concrete same-ID queue-head read-data contracts including one or more independent depth-2 queue-head groups plus the selected single depth-3 group, selected multiple\/mixed depth-3 groups, and the selected same-family mixed auto-ID plus depth-2 concrete queue-head group, generated multi-beat read-data output-bank behavior for the covered auto-ID multi-beat-by-RID subset, selected dynamic single-active and bounded multiple all-dynamic read demux subset, selected mixed dynamic\/static read demux subset, and bounded read burst-last concrete same-ID queue-head subset including multiple independent depth-2 queue-head groups plus the selected single depth-3 runtime-validation queue-head group, selected multiple\/mixed depth-3 runtime-validation queue-head groups, and the selected same-family mixed auto-ID plus depth-2 concrete queue-head runtime-validation group, bounded burst payload\/output behavior through that per-beat output bank, and generated scalar RRESP aggregation behavior are supported/,
         "$owner reports generated burst-last, last-beat, queue-head last-beat including multi-group scalar runtime validation, queue-head report-only/raw runtime ARLEN, non-queue-head and queue-head beat-count, multi-beat output-bank, bounded burst output, and scalar aggregation behavior as supported",
     );
     like(

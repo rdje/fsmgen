@@ -2997,12 +2997,12 @@ single-beat.
 single-active dynamic read burst-last release-and-recapture. The generated
 dynamic transaction-ID support detail describes single-active dynamic read
 single-beat `RID` matching and burst-last `RID/RLAST` matching as including
-same-cycle release-and-recapture, and same-cycle recapture remains future only
-outside the selected single-active dynamic write `BID`, read single-beat `RID`,
-and read burst-last `RID/RLAST` demux boundaries. Parser syntax, PPIF samples,
-response-demux semantics, generated state/rules, assertions, HDL, and runtime
-behavior are unchanged. The frontier advances to `.376`, selection of the
-first multiple all-dynamic recapture contract owner.
+same-cycle release-and-recapture. At `.375`, same-cycle recapture remained
+future only outside the selected single-active dynamic write `BID`, read
+single-beat `RID`, and read burst-last `RID/RLAST` demux boundaries. Parser
+syntax, PPIF samples, response-demux semantics, generated state/rules,
+assertions, HDL, and runtime behavior are unchanged. The frontier advances to
+`.376`, selection of the first multiple all-dynamic recapture contract owner.
 `.376` now selects `.377`, public contract selection for multiple all-dynamic
 write `BID` same-cycle release-and-recapture. The selector changes no
 behavior. It starts on the write side because that shape exercises
@@ -3026,6 +3026,21 @@ adds per-transaction `release_recapture_rule`,
 request-not-busy assertions with idle-or-releasing assertions; and preserves
 no-active-same-ID, active-ID uniqueness, response active/unique-match, and
 completion-active assertions. The selector changes no behavior.
+`.378` now ships that multiple all-dynamic write `BID` same-cycle
+release-and-recapture behavior. FSMGen emits per-transaction
+`axi0_w0_dynamic_id_release_recapture` and
+`axi0_w1_dynamic_id_release_recapture`, keeps release-only updates disjoint
+from same-cycle own requests, reports `same_cycle_release_recapture_policy:
+multi_active_unique_dynamic_write`, replaces per-transaction request-not-busy
+assertions with idle-or-releasing assertions, and preserves source syntax,
+support identity, generated completion names,
+`bounded_multi_dynamic_write_bid_demux_contract`, onehot0 request policy,
+no-active-same-ID, active-ID uniqueness, response active/unique-match, and
+completion-active assertions. `.379` is the next multiple-dynamic recapture
+selector; multiple dynamic read recapture, mixed dynamic/static recapture,
+static busy recapture, request arbitration beyond onehot0, queues,
+scoreboards, backend variants, VHDL, and full-manager behavior remain later
+owners.
 No behavior changed in
 `.270`, `.271`, `.273`, `.274`, `.275`, `.277`, `.278`,
 `.279`, `.281`, `.282`, `.283`, `.285`, `.286`, `.288`, `.290`, `.292`, or

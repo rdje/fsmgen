@@ -1095,10 +1095,10 @@ single-beat.
 single-active dynamic read burst-last release-and-recapture behavior. The
 generated dynamic transaction-ID support detail describes single-active dynamic
 read single-beat `RID` matching and burst-last `RID/RLAST` matching as
-including same-cycle release-and-recapture, and same-cycle recapture remains
-future only outside the selected single-active dynamic write `BID`, read
-single-beat `RID`, and read burst-last `RID/RLAST` demux boundaries. Parser
-syntax, PPIF samples, response-demux semantics, generated state/rules,
+including same-cycle release-and-recapture. At `.375`, same-cycle recapture
+remained future only outside the selected single-active dynamic write `BID`,
+read single-beat `RID`, and read burst-last `RID/RLAST` demux boundaries.
+Parser syntax, PPIF samples, response-demux semantics, generated state/rules,
 assertions, HDL, and runtime behavior are unchanged. The frontier advances to
 `.376`, selection of the first multiple all-dynamic recapture contract owner.
 `.376` now selects `.377`, public contract selection for multiple all-dynamic
@@ -1124,6 +1124,25 @@ adds per-transaction `release_recapture_rule`,
 request-not-busy assertions with idle-or-releasing assertions; and preserves
 no-active-same-ID, active-ID uniqueness, response active/unique-match, and
 completion-active assertions. The selector changes no behavior.
+`.378` now ships that multiple all-dynamic write `BID` same-cycle
+release-and-recapture behavior. FSMGen emits per-transaction
+`axi0_w0_dynamic_id_release_recapture` and
+`axi0_w1_dynamic_id_release_recapture` rules under the existing
+`ppif/axi_manager_capacity_status_dynamic_write_response_demux_multi.ppif`
+sample, keeps release-only updates disjoint from same-cycle own requests,
+reports `same_cycle_release_recapture_policy:
+multi_active_unique_dynamic_write`, replaces per-transaction request-not-busy
+assertions with `axi0_w0_dynamic_request_idle_or_releasing` and
+`axi0_w1_dynamic_request_idle_or_releasing`, and preserves onehot0 sibling
+request policy, no-active-same-ID, active-ID uniqueness, response
+active/unique-match, completion-active assertions, source syntax, support
+identity, generated completion names, and
+`bounded_multi_dynamic_write_bid_demux_contract`. The frontier advances to
+`.379`, the next multiple-dynamic recapture selector. Multiple dynamic read
+single-beat recapture, read burst-last recapture, mixed dynamic/static
+recapture, static busy recapture, request arbitration beyond onehot0, queues,
+scoreboards, backend variants, VHDL, and full-manager behavior remain later
+exact owners.
 No behavior
 changed in `.273`, `.274`, `.275`,
 `.277`, `.278`, `.279`, `.281`,
@@ -3434,6 +3453,9 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_READ_RLAST_RECAPTURE_BEHAVIOR.md` — shipped single-active dynamic read burst-last `RID && RLAST` same-cycle release-and-recapture under the existing burst-last dynamic read response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_READ_RLAST_RECAPTURE_NEXT_SLICE_SELECTION.md` — selected readiness audit for multiple all-dynamic same-cycle release-and-recapture after single-active dynamic read burst-last recapture shipped.
 - `docs/AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_RECAPTURE_READINESS_AUDIT.md` — audited multiple all-dynamic same-cycle release-and-recapture readiness and selected generated support-detail prose alignment before broader recapture selection.
+- `docs/AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_RECAPTURE_CONTRACT_OWNER_SELECTION.md` — selected multiple all-dynamic write `BID` recapture as the first broader same-cycle recapture owner.
+- `docs/AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_WRITE_RECAPTURE_CONTRACT_SELECTION.md` — selected direct multiple all-dynamic write `BID` same-cycle release-and-recapture under the existing multiple dynamic write response-demux public sample.
+- `docs/AXI_IAL2_MANAGER_MULTIPLE_DYNAMIC_WRITE_RECAPTURE_BEHAVIOR.md` — shipped multiple all-dynamic write `BID` same-cycle release-and-recapture under the existing multiple dynamic write response-demux public sample.
 - `docs/AXI_IAL2_FIRST_IMPLEMENTATION_SUBSET_SELECTION.md` — selected first AXI-derived IAL2 implementation subset and pre-code contract.
 - `docs/AXI_IAL2_VALID_READY_READINESS_AUDIT.md` — code/test/docs/report owner map for a future AXI Valid-Ready IAL2 implementation slice.
 - `docs/AXI_IAL2_VALID_READY_GENERATOR_FIRST_SLICE.md` — first in-process AXI Valid-Ready IAL2 generator slice and report surface.
@@ -3481,7 +3503,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `ppif/axi_manager_capacity_status_write_mixed_depth3_depth2_same_id_queue_head_response_demux.ppif` — checked-in runnable `.ppif` sample for generated write mixed depth-3/depth-2 concrete same-ID queue-head `BID` response demux, support-accounted through check JSON and semantic JSON.
 - `ppif/axi_manager_capacity_status_dynamic_transaction_id.ppif` — checked-in runnable `.ppif` sample for metadata-first dynamic transaction-ID parser/report support with `(id dynamic)`, support-accounted through check JSON and semantic JSON while HDL dynamic matching remains deferred.
 - `ppif/axi_manager_capacity_status_dynamic_write_response_demux.ppif` — checked-in runnable `.ppif` sample for generated single-active dynamic write transaction-ID capture, `BID` response matching, and same-cycle release-and-recapture through explicit `response-demux.write`, support-accounted through check JSON and semantic JSON.
-- `ppif/axi_manager_capacity_status_dynamic_write_response_demux_multi.ppif` — checked-in runnable `.ppif` sample for generated bounded multiple dynamic write transaction-ID capture and `BID` response matching through explicit `response-demux.write` with all-dynamic write transactions, support-accounted through check JSON and semantic JSON.
+- `ppif/axi_manager_capacity_status_dynamic_write_response_demux_multi.ppif` — checked-in runnable `.ppif` sample for generated bounded multiple dynamic write transaction-ID capture, `BID` response matching, and same-cycle release-and-recapture through explicit `response-demux.write` with all-dynamic write transactions, support-accounted through check JSON and semantic JSON.
 - `ppif/axi_manager_capacity_status_write_mixed_dynamic_static_response_demux.ppif` — checked-in runnable `.ppif` sample for generated bounded mixed dynamic/static write `BID` response matching through explicit `response-demux.write` with one dynamic and one concrete static write transaction, support-accounted through check JSON and semantic JSON.
 - `ppif/axi_manager_capacity_status_write_mixed_dynamic_static_response_demux_multi_static.ppif` — checked-in runnable `.ppif` sample for generated bounded multiple mixed dynamic/static write `BID` response matching through explicit `response-demux.write` with one dynamic and two concrete static write transactions, support-accounted through check JSON and semantic JSON.
 - `ppif/axi_manager_capacity_status_write_mixed_dynamic_static_response_demux_multi_static3.ppif` — checked-in runnable `.ppif` sample for generated bounded broader mixed dynamic/static write `BID` response matching through explicit `response-demux.write` with one dynamic and three concrete static write transactions, support-accounted through check JSON and semantic JSON.

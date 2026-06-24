@@ -205,6 +205,12 @@ unshipped:
 - backend-language variants; and
 - VHDL.
 
+Later note: `.378` ships same-cycle release-and-recapture for this same
+multiple all-dynamic write public sample. Multiple dynamic read recapture,
+mixed dynamic/static recapture, request widening beyond onehot0, queues,
+scoreboards, direct backend behavior, backend-language variants, and VHDL
+remain separate exact-owner work.
+
 ## Validation Gates
 
 For this selector, documentation and continuity gates are sufficient:

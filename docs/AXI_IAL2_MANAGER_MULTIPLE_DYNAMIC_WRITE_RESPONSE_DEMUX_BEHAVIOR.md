@@ -1,6 +1,7 @@
 # AXI IAL2 Manager Multiple Dynamic Write Response-Demux Behavior
 
-Task-tree owner: `IAL2-FEATURE-COMPLETENESS-FRONTIER.247`
+Task-tree owner: `IAL2-FEATURE-COMPLETENESS-FRONTIER.247`;
+same-cycle recapture extension: `IAL2-FEATURE-COMPLETENESS-FRONTIER.378`
 
 Date: 2026-06-22
 
@@ -8,7 +9,8 @@ Date: 2026-06-22
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.247` ships generated bounded multiple
 dynamic write response-demux behavior for the AXI manager capacity/status IAL2
-object.
+object. `IAL2-FEATURE-COMPLETENESS-FRONTIER.378` extends the same public
+sample with per-transaction same-cycle release-and-recapture.
 
 The support-accounted public sample is
 `ppif/axi_manager_capacity_status_dynamic_write_response_demux_multi.ppif`.
@@ -58,10 +60,9 @@ The behavior is bounded by these rules:
   boundary; and
 - active captured dynamic write IDs must be pairwise unique.
 
-Mixed dynamic/static write demux, dynamic read demux with multiple dynamic
-transactions, same-cycle request widening beyond onehot0, same-cycle
-release-and-recapture, dynamic same-ID queues, and scoreboards remain future
-exact-owner work.
+Mixed dynamic/static recapture, dynamic read recapture with multiple dynamic
+transactions, same-cycle request widening beyond onehot0, dynamic same-ID
+queues, and scoreboards remain future exact-owner work.
 
 ## Generated Behavior
 
@@ -85,10 +86,23 @@ Each generated response-demux rule matches the raw accepted write response:
 axi0_write_complete && dynamic_busy_q && axi0_bid == dynamic_id_q
 ```
 
-The matched rule pulses that transaction's generated completion output, and the
-generated release rule clears the transaction busy bit from that completion
-pulse. The single-active `.223` dynamic write sample keeps its existing
-`bounded_dynamic_write_bid_demux_contract` report mode.
+The matched rule pulses that transaction's generated completion output.
+
+Each dynamic write transaction also has two completion-side state update rules:
+
+- `axi0_wN_dynamic_id_release` clears the transaction busy bit when its matched
+  completion arrives without a same-cycle request for that same transaction.
+- `axi0_wN_dynamic_id_release_recapture` captures the same-cycle `axi0_awid`
+  and keeps the busy bit set when the same transaction has an admitted request
+  in the same cycle as its own matched completion.
+
+The release-recapture guard requires the transaction's admitted request, its
+own generated completion, its own busy state, no sibling admitted request, and
+no active sibling holding the new request ID. The response match uses the
+pre-update captured ID; the recapture writes the next selected ID after the
+matched response has been decided. The single-active `.223` dynamic write
+sample keeps its existing `bounded_dynamic_write_bid_demux_contract` report
+mode.
 
 ## Report Contract
 
@@ -119,18 +133,26 @@ response_demux:
           busy_signal: axi0_w0_dynamic_busy_q
           capture_rule: axi0_w0_dynamic_id_capture
           release_rule: axi0_w0_dynamic_id_release
+          release_recapture_rule: axi0_w0_dynamic_id_release_recapture
+          same_cycle_release_recapture_policy: multi_active_unique_dynamic_write
+          release_recapture_source: generated_dynamic_demux_completion
+          release_recapture_transaction: w0
         - transaction: w1
           selected_id_signal: axi0_w1_dynamic_id_q
           busy_signal: axi0_w1_dynamic_busy_q
           capture_rule: axi0_w1_dynamic_id_capture
           release_rule: axi0_w1_dynamic_id_release
+          release_recapture_rule: axi0_w1_dynamic_id_release_recapture
+          same_cycle_release_recapture_policy: multi_active_unique_dynamic_write
+          release_recapture_source: generated_dynamic_demux_completion
+          release_recapture_transaction: w1
 ```
 
 The write report also lists generated completion signals, response-demux rules,
 and the generated assertion names. The shipped multiple-state assertion roles
 are:
 
-- per-transaction request-not-busy;
+- per-transaction request idle-or-releasing;
 - family request onehot0;
 - per-transaction request no-active-same-ID;
 - pairwise active dynamic ID uniqueness;
@@ -168,7 +190,8 @@ shape out of dynamic residue. These remain fail-closed or unshipped:
 - multiple dynamic read response-demux;
 - mixed dynamic/static write or read response-demux;
 - same-cycle dynamic write request widening beyond onehot0;
-- same-cycle release-and-recapture;
+- multiple dynamic read same-cycle release-and-recapture;
+- mixed dynamic/static same-cycle release-and-recapture;
 - dynamic same-ID ordering;
 - dynamic same-ID queues and scoreboards;
 - direct backend behavior outside the selected generated SystemVerilog path;
