@@ -2448,6 +2448,22 @@ exclusion of same-transaction requests, and idle-or-releasing assertions for
 `w0`/`w1`/`w2`. Broader mixed read recapture remains deferred behind raw
 non-final `RID`, `RLAST`, read-data, raw-`ARLEN`, runtime, and multi-beat
 preservation.
+`.407` now ships two-dynamic-plus-one-static mixed dynamic/static write `BID`
+same-cycle release-and-recapture for the existing
+`ppif/axi_manager_capacity_status_write_mixed_dynamic_static_response_demux_multi_dynamic.ppif`
+sample. FSMGen emits `axi0_w0_dynamic_id_release_recapture`,
+`axi0_w1_dynamic_id_release_recapture`, and
+`axi0_w2_static_busy_release_recapture`, reports
+`mixed_dynamic_static_multi_active_dynamic_write` for both dynamic capture
+transaction entries, reports list-shaped `static_capture[]` for `w2`, keeps
+release-only rules disjoint from same-transaction requests, composes dynamic
+guards across sibling dynamic request, active sibling same-ID, static request,
+and static-ID exclusion blocks, guards static recapture against both dynamic
+requests, and replaces `w0`/`w1`/`w2` request-not-busy assertions with
+idle-or-releasing assertions. Syntax checks passed. Guarded selected schedule
+JSON and focused t/1438 probes stopped before usable output at host memory
+94.5% and 92.5% against the default 88% cutoff; no cutoff was raised. `.408`
+selects the next post two-dynamic mixed write recapture activity.
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,

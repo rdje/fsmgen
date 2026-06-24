@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.406: select two-dynamic write recapture contract`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.407` implements the two-dynamic-plus-one-static mixed write recapture contract; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.406` selected `.407`, direct implementation of two-dynamic-plus-one-static mixed write `BID` same-cycle release-and-recapture. The selector changes no behavior and pins dynamic recapture fields for `w0`/`w1`, new policy `mixed_dynamic_static_multi_active_dynamic_write`, release source `generated_multi_mixed_dynamic_static_demux_completion`, list-shaped `static_capture[]` for `w2`, combined dynamic guards, static guards against both dynamic requests, release-only exclusion of same-transaction requests, and idle-or-releasing assertions for `w0`/`w1`/`w2`.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.407: ship two-dynamic write recapture`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.408` selects the next post two-dynamic mixed write recapture activity; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.407` shipped two-dynamic-plus-one-static mixed write `BID` same-cycle release-and-recapture. FSMGen now emits `w0`/`w1` dynamic recapture and `w2` static recapture, reports `mixed_dynamic_static_multi_active_dynamic_write` for both dynamic entries and list-shaped `static_capture[]` for `w2`, and replaces `w0`/`w1`/`w2` request-not-busy assertions with idle-or-releasing assertions. Guarded schedule JSON and focused t/1438 stopped at host memory 94.5% and 92.5% against the default 88% cutoff; no cutoff was raised.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
-- next_action: Start `.407`: implement the selected two-dynamic-plus-one-static mixed write recapture behavior, then commit.
+- next_action: Start `.408`: select the next post two-dynamic mixed write recapture activity with no behavior changes, then commit.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact

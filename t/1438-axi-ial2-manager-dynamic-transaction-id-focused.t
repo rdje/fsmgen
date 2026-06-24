@@ -673,6 +673,24 @@ sub assert_dynamic_behavior {
         like($isf, qr/\(rule axi0_w0_response_demux \(& axi0_write_complete axi0_w0_dynamic_busy_q \(== axi0_bid axi0_w0_dynamic_id_q\)\)/, 'multi-dynamic mixed write demux matches first dynamic active BID');
         like($isf, qr/\(rule axi0_w1_response_demux \(& axi0_write_complete axi0_w1_dynamic_busy_q \(== axi0_bid axi0_w1_dynamic_id_q\)\)/, 'multi-dynamic mixed write demux matches second dynamic active BID');
         like($isf, qr/\(rule axi0_w2_response_demux \(& axi0_write_complete axi0_w2_static_busy_q \(== axi0_bid 4'd3\)\)/, 'multi-dynamic mixed write demux matches static concrete BID');
+        like($isf, qr/\(rule axi0_w0_dynamic_id_release_recapture\b/, 'multi-dynamic mixed write demux emits first dynamic release-recapture rule');
+        like($isf, qr/\(rule axi0_w1_dynamic_id_release_recapture\b/, 'multi-dynamic mixed write demux emits second dynamic release-recapture rule');
+        like($isf, qr/\(rule axi0_w2_static_busy_release_recapture\b/, 'multi-dynamic mixed write demux emits static release-recapture rule');
+        like($isf, qr/\(rule axi0_w0_dynamic_id_release_recapture[\s\S]*\(! \(& axi0_w1_request/, 'multi-dynamic mixed write demux blocks first dynamic recapture during second dynamic request');
+        like($isf, qr/\(rule axi0_w1_dynamic_id_release_recapture[\s\S]*\(! \(& axi0_w0_request/, 'multi-dynamic mixed write demux blocks second dynamic recapture during first dynamic request');
+        like($isf, qr/\(rule axi0_w0_dynamic_id_release_recapture[\s\S]*\(! \(& axi0_w1_dynamic_busy_q \(== axi0_w1_dynamic_id_q axi0_awid\)\)\)/, 'multi-dynamic mixed write demux blocks first dynamic recapture of active second dynamic ID');
+        like($isf, qr/\(rule axi0_w1_dynamic_id_release_recapture[\s\S]*\(! \(& axi0_w0_dynamic_busy_q \(== axi0_w0_dynamic_id_q axi0_awid\)\)\)/, 'multi-dynamic mixed write demux blocks second dynamic recapture of active first dynamic ID');
+        like($isf, qr/\(rule axi0_w0_dynamic_id_release_recapture[\s\S]*\(! \(& axi0_w2_request/, 'multi-dynamic mixed write demux blocks first dynamic recapture during static request');
+        like($isf, qr/\(rule axi0_w1_dynamic_id_release_recapture[\s\S]*\(! \(& axi0_w2_request/, 'multi-dynamic mixed write demux blocks second dynamic recapture during static request');
+        like($isf, qr/\(rule axi0_w0_dynamic_id_release_recapture[\s\S]*\(! \(== axi0_awid 4'd3\)\)/, 'multi-dynamic mixed write demux blocks first dynamic recapture of static ID');
+        like($isf, qr/\(rule axi0_w1_dynamic_id_release_recapture[\s\S]*\(! \(== axi0_awid 4'd3\)\)/, 'multi-dynamic mixed write demux blocks second dynamic recapture of static ID');
+        like($isf, qr/\(rule axi0_w2_static_busy_release_recapture[\s\S]*\(! \(& axi0_w0_request/, 'multi-dynamic mixed write demux blocks static recapture during first dynamic request');
+        like($isf, qr/\(rule axi0_w2_static_busy_release_recapture[\s\S]*\(! \(& axi0_w1_request/, 'multi-dynamic mixed write demux blocks static recapture during second dynamic request');
+        like($isf, qr/\(rule axi0_w0_dynamic_id_release \(& axi0_w0_complete axi0_w0_dynamic_busy_q \(! axi0_w0_request\)\)/, 'multi-dynamic mixed write demux releases first dynamic only without same-cycle request');
+        like($isf, qr/\(rule axi0_w1_dynamic_id_release \(& axi0_w1_complete axi0_w1_dynamic_busy_q \(! axi0_w1_request\)\)/, 'multi-dynamic mixed write demux releases second dynamic only without same-cycle request');
+        like($isf, qr/\(rule axi0_w2_static_busy_release \(& axi0_w2_complete axi0_w2_static_busy_q \(! axi0_w2_request\)\)/, 'multi-dynamic mixed write demux releases static only without same-cycle request');
+        like($isf, qr/axi0 write dynamic request is idle or releasing active captured ID/, 'multi-dynamic mixed write demux emits dynamic idle-or-releasing assertions');
+        like($isf, qr/axi0 write static request is idle or releasing active concrete ID/, 'multi-dynamic mixed write demux emits static idle-or-releasing assertion');
         like($isf, qr/axi0 write mixed dynamic\/static requests are mutually exclusive/, 'multi-dynamic mixed write demux emits mixed request onehot assertion');
         like($isf, qr/axi0 w0 dynamic request does not reuse an active sibling ID/, 'multi-dynamic mixed write demux emits first no-active-same-ID assertion');
         like($isf, qr/axi0 w1 dynamic request does not reuse an active sibling ID/, 'multi-dynamic mixed write demux emits second no-active-same-ID assertion');
@@ -684,6 +702,12 @@ sub assert_dynamic_behavior {
         like($fsm, qr/\(-axi0_w0_response_demux\s+<\(& axi0_write_complete axi0_w0_dynamic_busy_q \(== axi0_bid axi0_w0_dynamic_id_q\)\)/, 'scheduled FSM lowers multi-dynamic mixed first dynamic BID match');
         like($fsm, qr/\(-axi0_w1_response_demux\s+<\(& axi0_write_complete axi0_w1_dynamic_busy_q \(== axi0_bid axi0_w1_dynamic_id_q\)\)/, 'scheduled FSM lowers multi-dynamic mixed second dynamic BID match');
         like($fsm, qr/\(-axi0_w2_response_demux\s+<\(& axi0_write_complete axi0_w2_static_busy_q \(== axi0_bid 4'd3\)\)/, 'scheduled FSM lowers multi-dynamic mixed static BID match');
+        like($fsm, qr/\(-axi0_w0_dynamic_id_release_recapture\s+<\(& \(& axi0_w0_request/, 'scheduled FSM lowers first multi-dynamic mixed dynamic release-recapture');
+        like($fsm, qr/\(-axi0_w1_dynamic_id_release_recapture\s+<\(& \(& axi0_w1_request/, 'scheduled FSM lowers second multi-dynamic mixed dynamic release-recapture');
+        like($fsm, qr/\(-axi0_w2_static_busy_release_recapture\s+<\(& \(& axi0_w2_request/, 'scheduled FSM lowers multi-dynamic mixed static release-recapture');
+        like($fsm, qr/\(-axi0_w0_dynamic_id_release\s+<\(& axi0_w0_complete axi0_w0_dynamic_busy_q \(! axi0_w0_request\)\)/, 'scheduled FSM lowers first multi-dynamic mixed dynamic release-only rule');
+        like($fsm, qr/\(-axi0_w1_dynamic_id_release\s+<\(& axi0_w1_complete axi0_w1_dynamic_busy_q \(! axi0_w1_request\)\)/, 'scheduled FSM lowers second multi-dynamic mixed dynamic release-only rule');
+        like($fsm, qr/\(-axi0_w2_static_busy_release\s+<\(& axi0_w2_complete axi0_w2_static_busy_q \(! axi0_w2_request\)\)/, 'scheduled FSM lowers multi-dynamic mixed static release-only rule');
         my $hdl = hdl_for('axi0_capacity_status', $fsm);
         like($hdl, qr/\breg\s+\[3:0\]\s+axi0_w0_dynamic_id_q\b/, 'SystemVerilog declares first multi-dynamic mixed selected-ID state');
         like($hdl, qr/\breg\s+\[3:0\]\s+axi0_w1_dynamic_id_q\b/, 'SystemVerilog declares second multi-dynamic mixed selected-ID state');
@@ -2582,9 +2606,9 @@ sub assert_mixed_dynamic_static_write_multi_dynamic_report {
     is_deeply(
         $write->{generated_assertions},
         [qw(
-            axi0_w0_dynamic_request_not_busy
-            axi0_w1_dynamic_request_not_busy
-            axi0_w2_static_request_not_busy
+            axi0_w0_dynamic_request_idle_or_releasing
+            axi0_w1_dynamic_request_idle_or_releasing
+            axi0_w2_static_request_idle_or_releasing
             axi0_write_mixed_dynamic_static_request_onehot0
             axi0_w0_dynamic_request_no_active_same_id
             axi0_w1_dynamic_request_no_active_same_id
@@ -2620,6 +2644,10 @@ sub assert_mixed_dynamic_static_write_multi_dynamic_report {
                     busy_signal        => 'axi0_w0_dynamic_busy_q',
                     capture_rule       => 'axi0_w0_dynamic_id_capture',
                     release_rule       => 'axi0_w0_dynamic_id_release',
+                    release_recapture_rule => 'axi0_w0_dynamic_id_release_recapture',
+                    same_cycle_release_recapture_policy => 'mixed_dynamic_static_multi_active_dynamic_write',
+                    release_recapture_source => 'generated_multi_mixed_dynamic_static_demux_completion',
+                    release_recapture_transaction => 'w0',
                 },
                 {
                     transaction        => 'w1',
@@ -2627,10 +2655,35 @@ sub assert_mixed_dynamic_static_write_multi_dynamic_report {
                     busy_signal        => 'axi0_w1_dynamic_busy_q',
                     capture_rule       => 'axi0_w1_dynamic_id_capture',
                     release_rule       => 'axi0_w1_dynamic_id_release',
+                    release_recapture_rule => 'axi0_w1_dynamic_id_release_recapture',
+                    same_cycle_release_recapture_policy => 'mixed_dynamic_static_multi_active_dynamic_write',
+                    release_recapture_source => 'generated_multi_mixed_dynamic_static_demux_completion',
+                    release_recapture_transaction => 'w1',
                 },
             ],
         },
         'multi-dynamic mixed write report describes dynamic capture ownership and static exclusions',
+    );
+    is_deeply(
+        $write->{static_capture},
+        [
+            {
+                transaction                         => 'w2',
+                concrete_id                         => 3,
+                concrete_id_literal                 => "4'd3",
+                capture_event_source                => 'admitted_static_write_request',
+                ownership                           => 'mixed_dynamic_static_concrete_write_id',
+                simultaneous_request_policy         => 'onehot0_mixed_write_request',
+                busy_signal                         => 'axi0_w2_static_busy_q',
+                capture_rule                        => 'axi0_w2_static_busy_capture',
+                release_rule                        => 'axi0_w2_static_busy_release',
+                release_recapture_rule              => 'axi0_w2_static_busy_release_recapture',
+                same_cycle_release_recapture_policy => 'mixed_dynamic_static_static_write',
+                release_recapture_source            => 'generated_multi_mixed_dynamic_static_demux_completion',
+                release_recapture_transaction       => 'w2',
+            },
+        ],
+        'multi-dynamic mixed write report records list-shaped static recapture ownership',
     );
     is_deeply(
         [map { $_->{id}{implementation_status} } @{$report->{transactions}}[0, 1]],

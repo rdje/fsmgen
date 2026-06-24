@@ -63,10 +63,13 @@ The bounded slice requires:
 - dynamic capture excluding the selected static concrete ID; and
 - active dynamic selected IDs remaining pairwise unique.
 
-Read response-demux, read-data, burst-length/runtime validation, multi-beat
-output banks, broader capped mixed sets, same-cycle widening,
+At `.341`, read response-demux, read-data, burst-length/runtime validation,
+multi-beat output banks, broader capped mixed sets, same-cycle widening,
 release-and-recapture, dynamic same-ID queues, scoreboards, direct backend
-behavior, backend-language variants, and VHDL remain future exact-owner work.
+behavior, backend-language variants, and VHDL remained future exact-owner
+work. The write-side same-cycle release-and-recapture sibling for this exact
+sample is now covered by
+`docs/AXI_IAL2_MANAGER_TWO_DYNAMIC_ONE_STATIC_MIXED_DYNAMIC_STATIC_WRITE_RECAPTURE_BEHAVIOR.md`.
 
 ## Generated Behavior
 
