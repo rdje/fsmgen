@@ -2752,6 +2752,18 @@ existing `burst-length` syntax directly, needs public contract selection first,
 needs helper/report cleanup first, or should defer behind another prerequisite.
 Runtime validation, multi-beat output banks, broader cardinalities, direct
 backend behavior, backend-language variants, and VHDL remain separate owners.
+`.352` now selects `.353`, direct implementation of report-only raw-`ARLEN`
+burst-length capture over that generated two-dynamic-plus-one-static mixed
+dynamic/static scalar last-beat read-data boundary. The audit changes no
+behavior. Code review found the current coverage gate already admits the `.350`
+shape only when `burst_length` is absent, while raw-`ARLEN` normalization,
+storage, rule, artifact, and report helpers are transaction-list driven once
+coverage admits the transaction set. `.353` owns the new public sample
+`ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_dynamic_burst_last_read_data_burst_length.ppif`,
+support identity, coverage key, behavior label, generated `axi0_arlen`, and
+per-transaction raw-`ARLEN` storage/capture rules while runtime validation,
+multi-beat output banks, broader cardinalities, direct backend behavior,
+backend-language variants, and VHDL remain separate owners.
 No behavior changed in
 `.270`, `.271`, `.273`, `.274`, `.275`, `.277`, `.278`,
 `.279`, `.281`, `.282`, `.283`, `.285`, `.286`, `.288`, `.290`, `.292`, or
@@ -2759,7 +2771,7 @@ No behavior changed in
 `.305`, `.306`, `.308`, `.309`, `.311`, `.313`, `.315`, `.316`, `.317`, or
 `.319`, `.320`, `.321`, `.323`, `.324`, `.325`, `.327`, `.328`, `.329`,
 `.331`, `.332`, `.334`, `.336`, `.338`, `.339`, `.340`, `.342`, `.343`,
-`.345`, `.346`, `.348`, `.349`, or `.351`.
+`.345`, `.346`, `.348`, `.349`, `.351`, or `.352`.
 AXI-specific same-ID ordering stays profile vocabulary for now; common IAL2
 factoring remains evidence-driven and should be promoted only when multiple
 profiles need compatible semantics.

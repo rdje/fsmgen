@@ -8193,6 +8193,18 @@ behind another prerequisite. Runtime validation, multi-beat output banks,
 broader cardinalities, direct backend behavior, backend-language variants, and
 VHDL remain separate owners.
 
+Two-dynamic/one-static mixed dynamic/static read burst-last read-data
+burst-length readiness:
+[AXI_IAL2_MANAGER_TWO_DYNAMIC_ONE_STATIC_MIXED_DYNAMIC_STATIC_READ_RLAST_READ_DATA_BURST_LENGTH_READINESS_AUDIT](../../AXI_IAL2_MANAGER_TWO_DYNAMIC_ONE_STATIC_MIXED_DYNAMIC_STATIC_READ_RLAST_READ_DATA_BURST_LENGTH_READINESS_AUDIT.md)
+selects `.353`, direct implementation of report-only raw-`ARLEN`
+burst-length capture over the `.350` scalar last-beat read-data boundary. The
+audit changes no behavior. The planned sample is
+`ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_dynamic_burst_last_read_data_burst_length.ppif`;
+it should add generated `axi0_arlen`, per-transaction raw-`ARLEN` storage and
+request-guarded capture rules for `r0`, `r1`, and `r2`, and report generated
+burst-length inputs/storage/rules while runtime validation and multi-beat
+output banks remain future owners.
+
 Post queue-head burst-length selector:
 [AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_QUEUE_HEAD_BURST_LENGTH_NEXT_SLICE_SELECTION.md)
 selects generated queue-head beat-count/RLAST runtime validation for the same
