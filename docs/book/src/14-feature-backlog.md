@@ -8116,6 +8116,18 @@ metadata-first report fields, selected-not-generated boundary, residue,
 diagnostics, support-accounting impact, validation gates, and non-goals before
 any parser or generated behavior change.
 
+Dynamic same-ID issue-order queue policy contract:
+[AXI_IAL2_MANAGER_DYNAMIC_SAME_ID_ISSUE_ORDER_QUEUE_POLICY_CONTRACT_SELECTION](../../AXI_IAL2_MANAGER_DYNAMIC_SAME_ID_ISSUE_ORDER_QUEUE_POLICY_CONTRACT_SELECTION.md)
+selects `.450`, metadata-first parser/report implementation for dynamic
+same-ID `issue-order-queue` policy. The selected source spelling is
+family-local `(dynamic-id-reuse issue-order-queue)` under `same-id-ordering`
+read/write arms. `.450` must accept and report the selected metadata as
+`implementation_status: selected_not_generated`, `enforcement:
+not_generated`, `accepted_same_id_reuse: false`, `generated_queue_behavior:
+false`, and residue `dynamic_per_id_issue_order_queues`, while keeping dynamic
+`scoreboard` unsupported and avoiding generated dynamic queue, HDL, direct
+backend, or accepted-reuse behavior.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

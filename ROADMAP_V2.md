@@ -3039,6 +3039,15 @@ contract, and scoreboard policy separate from issue-order queue semantics.
 selected-not-generated boundary, residue movement, diagnostics,
 support-accounting impact, validation gates, and non-goals before any parser
 or generated behavior change.
+`.449` now selects `.450`, metadata-first parser/report implementation for
+dynamic same-ID `issue-order-queue` policy. The selected public spelling is
+family-local `(dynamic-id-reuse issue-order-queue)` under `same-id-ordering`
+read/write arms. `.450` must accept and report the selected metadata with
+`implementation_status: selected_not_generated`, `enforcement:
+not_generated`, `accepted_same_id_reuse: false`, `generated_queue_behavior:
+false`, and residue for `dynamic_per_id_issue_order_queues`, while preserving
+dynamic `scoreboard` as unsupported and avoiding generated dynamic queue,
+HDL, direct backend, or accepted-reuse behavior.
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,
