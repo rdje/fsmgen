@@ -8544,6 +8544,17 @@ generated two-transaction dynamic queue families. The emitted
 forms such as `r0_dequeue_enqueue_r0`, `r1_r0_dequeue_enqueue_r0`,
 `w0_dequeue_enqueue_w0`, and `w1_w0_dequeue_enqueue_w0`; those rules refresh
 the affected slot ID from current `ARID` or `AWID`.
+
+Dynamic same-ID issue-order queue identity recapture report contract:
+[AXI_IAL2_MANAGER_DYNAMIC_SAME_ID_ISSUE_ORDER_QUEUE_IDENTITY_RECAPTURE_REPORT_CONTRACT_SELECTION](../../AXI_IAL2_MANAGER_DYNAMIC_SAME_ID_ISSUE_ORDER_QUEUE_IDENTITY_RECAPTURE_REPORT_CONTRACT_SELECTION.md)
+selects queue-owned public report fields for the shipped identity recapture
+behavior. The next implementation should add
+`same_transaction_recapture_policy: refresh_captured_request_id`,
+`same_transaction_recapture_rule_scope:
+state_key_preserving_selected_dequeue_enqueue`, and
+`same_transaction_recapture_id_source` under each generated dynamic queue
+entry, while keeping `release_recapture_*` fields exclusive to response-demux
+capture state.
 Broader queue cardinality, mixed dynamic/static queues, scoreboards, direct
 backend behavior, backend-language variants, and VHDL remain future exact
 owners.

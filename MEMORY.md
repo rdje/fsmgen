@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.477: refresh queue recapture IDs`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.478` selects the public report/static contract for generated dynamic same-ID issue-order queue identity recapture after ID-refresh behavior shipped; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.477` shipped state-key-preserving dynamic queue recapture ID refresh. The dynamic transition builder now emits one-entry and tail-selected same-transaction refresh rules such as `r0_dequeue_enqueue_r0`, `r1_r0_dequeue_enqueue_r0`, `w0_dequeue_enqueue_w0`, and `w1_w0_dequeue_enqueue_w0`, refreshing affected slot IDs from current `ARID`/`AWID` while preserving retained slot IDs.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.478: select queue recapture report fields`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.479` aligns the generated dynamic same-ID issue-order queue identity-recapture report/static surface; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.478` selected queue-owned public report fields under `same_id_ordering.dynamic_id_reuse_policy.{read,write}.generated_queues[]`: `same_transaction_recapture_policy: refresh_captured_request_id`, `same_transaction_recapture_rule_scope: state_key_preserving_selected_dequeue_enqueue`, and `same_transaction_recapture_id_source`.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
-- blockers: none. `.477` RAM-guarded fsmgen/prove attempts stopped immediately because host memory was above the default 88% cutoff; syntax checks and lightweight direct helper probes passed, and no unguarded retry or cutoff raise was used.
-- next_action: Start `.478`: decide whether to add a positive explicit queue recapture support field, keep `generated_update_rules` as the only public evidence, adjust support-detail/static-rule prose, split report/static alignment by family, or defer behind a narrower prerequisite.
+- blockers: none. `.478` changed only docs/continuity; behavior and report surface remain unchanged until `.479`.
+- next_action: Start `.479`: add the selected queue-owned recapture report fields, align static/support prose, preserve `.477` behavior and classic response-demux recapture field boundaries, then run focused checks and docs/doctrine gates.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact

@@ -3322,8 +3322,14 @@ dynamic same-ID queue update rules include same-transaction refresh forms such
 as `r0_dequeue_enqueue_r0`, `r1_r0_dequeue_enqueue_r0`,
 `w0_dequeue_enqueue_w0`, and `w1_w0_dequeue_enqueue_w0`; those rules refresh
 the affected slot ID from current `ARID`/`AWID` while preserving retained slot
-IDs. A positive explicit queue recapture report/static contract remains a
-future exact owner.
+IDs. A positive explicit queue recapture report/static contract was the
+remaining exact owner. `.478` now selects `.479`, direct report/static alignment
+for that behavior: add `same_transaction_recapture_policy:
+refresh_captured_request_id`, `same_transaction_recapture_rule_scope:
+state_key_preserving_selected_dequeue_enqueue`, and
+`same_transaction_recapture_id_source` under each generated dynamic queue entry
+while keeping classic `release_recapture_*` fields exclusive to
+response-demux capture state.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
