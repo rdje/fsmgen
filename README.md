@@ -2702,6 +2702,21 @@ queue, raw `ARLEN`, runtime validation, multi-beat output banks, broader mixed
 cardinality, scoreboards, backend behavior, backend-language variants,
 verification-code generation, external converter dependencies such as `sv2v`,
 and VHDL remain deferred.
+`.510` now selects `.511`, public `.ppif` downstream-contract,
+capability-manifest, and mdBook surface synchronization before any further
+mixed queue behavior. The selector found the behavior-specific
+`.503`/`.506`/`.509` surfaces current, but the downstream handoff, public
+interface contract, embedding chapter, and `language_surface.file_surfaces`
+`.ppif` manifest boundary do not yet advertise the generated mixed
+dynamic/static same-ID `issue-order-queue` chain for write `BID`, read
+single-beat `RID`, and read burst-last `RID && RLAST`. `.511` owns that
+public-surface repair without parser/generator/sample/support-accounting,
+generated-artifact, schedule/check/semantic JSON, HDL/runtime, backend,
+external-converter, verification-output, or VHDL behavior changes. Mixed
+read-data over these queues, raw `ARLEN`, runtime validation, multi-beat output
+banks, broader mixed cardinality, scoreboards, backend behavior,
+backend-language variants, verification-code generation, external converter
+dependencies such as `sv2v`, and VHDL remain deferred.
 
 No behavior
 changed in `.273`, `.274`, `.275`,
