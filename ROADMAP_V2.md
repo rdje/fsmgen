@@ -3645,6 +3645,18 @@ arbitrary cardinality, backend behavior, backend-language variants,
 verification-code generation, external converter dependencies such as `sv2v`,
 and VHDL remain deferred; FSMGen-owned generation/lowering remains the
 default.
+`.507` now selects `.508`, readiness audit for generated mixed
+dynamic/static read burst-last `RID && RLAST` same-ID `issue-order-queue`
+behavior. This selector changes no behavior. The next audit is the smallest
+adjacent owner because `.506` proves the queue-owned one-dynamic plus
+one-static mixed read `RID` model, `.463` proves all-dynamic read burst-last
+queue completion/dequeue semantics, and `.280` proves mixed read final
+`RID && RLAST` response-demux matching. Read-data over mixed read queues, raw
+`ARLEN`, runtime validation, multi-beat output banks, broader mixed
+cardinality, scoreboards, backend behavior, backend-language variants,
+verification-code generation, external converter dependencies such as `sv2v`,
+and VHDL remain deferred; FSMGen-owned generation/lowering remains the
+default.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

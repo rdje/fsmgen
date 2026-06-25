@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.506: ship mixed read queue behavior`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.507` selects the next exact owner after generated mixed dynamic/static read single-beat RID same-ID issue-order queue behavior; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.506` shipped generated mixed dynamic/static read single-beat `RID` same-ID `issue-order-queue` behavior through `ppif/axi_manager_capacity_status_read_mixed_dynamic_static_same_id_issue_order_queue.ppif`. Dynamic enqueues store `axi0_arid`, static enqueues store the sized literal such as `4'd3`, and matching selects the earliest occupied queue slot whose stored ID equals `axi0_rid`; mixed read burst-last queues, read-data over this queue, raw `ARLEN`, runtime validation, multi-beat output banks, broader mixed cardinality, scoreboards, backend behavior, external converter dependencies such as `sv2v`, verification-code generation, and VHDL remain deferred.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.507: select mixed read RLAST queue audit`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.508` audits readiness for generated mixed dynamic/static read burst-last RID/RLAST same-ID issue-order queue behavior; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.507` selected `.508`, readiness audit for generated mixed dynamic/static read burst-last `RID && RLAST` same-ID `issue-order-queue` behavior. The selector read `.506`, `.463`, and `.280` evidence and kept read-data over mixed queues, raw `ARLEN`, runtime validation, multi-beat output banks, broader mixed cardinality, scoreboards, backend behavior, external converter dependencies such as `sv2v`, verification-code generation, and VHDL deferred.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
-- next_action: Start `.507`: select the next exact owner after `.506`, choosing among mixed read burst-last queues, read-data over the mixed read queue, raw `ARLEN`, runtime validation, multi-beat output banks, broader mixed cardinality, scoreboards, backend behavior, backend-language variants, external converter audits such as `sv2v`, verification-code generation, VHDL, or another roadmap-aligned prerequisite.
+- next_action: Start `.508`: audit whether direct implementation can add exactly one dynamic plus one concrete static read burst-last `RID && RLAST` same-ID issue-order queue, or whether a smaller parser/report/static-validation prerequisite is needed first; no behavior changes in the audit leaf.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact

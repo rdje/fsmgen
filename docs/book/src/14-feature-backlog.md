@@ -9004,6 +9004,20 @@ verification-code generation, external converter dependencies such as `sv2v`,
 and VHDL remain deferred; FSMGen-owned generation/lowering remains the
 default.
 
+Post mixed dynamic/static read same-ID issue-order queue selector:
+[AXI_IAL2_MANAGER_POST_MIXED_DYNAMIC_STATIC_READ_SAME_ID_ISSUE_ORDER_QUEUE_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MIXED_DYNAMIC_STATIC_READ_SAME_ID_ISSUE_ORDER_QUEUE_NEXT_SLICE_SELECTION.md)
+selects `.508`, readiness audit for generated mixed dynamic/static read
+burst-last `RID && RLAST` same-ID `issue-order-queue` behavior. This selector
+changes no behavior. The next audit is the smallest adjacent owner because
+`.506` proves the queue-owned one-dynamic plus one-static mixed read `RID`
+model, `.463` proves all-dynamic read burst-last queue completion/dequeue
+semantics, and `.280` proves mixed read final `RID && RLAST` response-demux
+matching. Read-data over mixed read queues, raw `ARLEN`, runtime validation,
+multi-beat output banks, broader mixed cardinality, scoreboards, backend
+behavior, backend-language variants, verification-code generation, external
+converter dependencies such as `sv2v`, and VHDL remain deferred; FSMGen-owned
+generation/lowering remains the default.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after
