@@ -3237,6 +3237,23 @@ before behavior changes. Raw `ARLEN`, runtime validation, multi-beat output
 banks, queue recapture widening, broader queue cardinality, mixed
 dynamic/static queues, scoreboards, direct backend behavior, backend-language
 variants, and VHDL remain future exact owners.
+`.466` now selects `.467`, direct implementation of paired bounded scalar
+read-data routing over generated dynamic read same-ID `issue-order-queue`
+completions. The contract-selection slice changes no behavior. It reuses
+existing `read-data.read` syntax and selects two public samples:
+`ppif/axi_manager_capacity_status_dynamic_read_same_id_issue_order_queue_read_data.ppif`
+and
+`ppif/axi_manager_capacity_status_dynamic_read_burst_last_same_id_issue_order_queue_read_data.ppif`.
+The implementation must cover exactly two all-dynamic read transactions with
+complete scalar transaction bindings, keep the underlying queue response-demux
+modes and sources, report
+`generated_dynamic_read_issue_order_queue_response_demux_completion_pulse` for
+single-beat capture and
+`generated_dynamic_read_issue_order_queue_response_demux_last_beat_completion_pulse`
+for last-beat capture, and leave raw `ARLEN`, runtime validation, multi-beat
+output banks, queue recapture widening, broader queue cardinality, mixed
+dynamic/static queues, scoreboards, direct backend behavior, backend-language
+variants, and VHDL as future exact owners.
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,
