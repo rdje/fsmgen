@@ -8485,6 +8485,26 @@ read-data coverage gate. Queue recapture widening, broader queue cardinality,
 mixed dynamic/static queues, scoreboards, direct backend behavior,
 backend-language variants, and VHDL remain future exact owners.
 
+Dynamic read same-ID issue-order queue read-data multi-beat behavior:
+[AXI_IAL2_MANAGER_DYNAMIC_READ_SAME_ID_ISSUE_ORDER_QUEUE_READ_DATA_MULTI_BEAT_BEHAVIOR](../../AXI_IAL2_MANAGER_DYNAMIC_READ_SAME_ID_ISSUE_ORDER_QUEUE_READ_DATA_MULTI_BEAT_BEHAVIOR.md)
+ships the `.473` support-accounted sample
+`ppif/axi_manager_capacity_status_dynamic_read_burst_last_same_id_issue_order_queue_read_data_multi_beat.ppif`.
+The generator admits only the exact two-transaction all-dynamic burst-last
+queue shape with runtime-assertion `ARLEN` metadata and multi-beat
+output-bank bindings. Schedule JSON reports
+`bounded_multi_beat_read_data_contract`, completion validity
+`generated_dynamic_read_issue_order_queue_response_demux_last_beat_completion_pulse`,
+matched-beat source `response_demux_matched_read_beat`, per-transaction valid
+masks, length outputs, worst-observed scalar `RRESP` aggregates, and empty
+read-data residue. For the default 16-beat sample the generated artifacts
+include 32 `RDATA` lanes, 32 `RRESP` lanes, output-bank init rules, lane
+capture rules, aggregate update rules, and the `.471` raw-`ARLEN`,
+expected-beat/read-beat counter, and beat-count/`RLAST` assertion artifacts.
+The `.467`, `.469`, and `.471` queue read-data samples remain supported.
+Queue recapture widening is the next audit owner; broader queue cardinality,
+mixed dynamic/static queues, scoreboards, direct backend behavior,
+backend-language variants, and VHDL remain future exact owners.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

@@ -116,6 +116,15 @@ my @DYNAMIC_CASES = (
         behavior     => 'dynamic_read_burst_last_same_id_issue_order_queue_read_data_burst_length_runtime_assertion',
     },
     {
+        label        => 'dynamic read RID/RLAST same-ID issue-order queue read-data multi-beat output bank',
+        relpath      => 'ppif/axi_manager_capacity_status_dynamic_read_burst_last_same_id_issue_order_queue_read_data_multi_beat.ppif',
+        object_id    => 'axi-manager-capacity-status-dynamic-read-burst-last-same-id-issue-order-queue-read-data-multi-beat',
+        intent_name  => 'axi_manager_capacity_status_dynamic_read_burst_last_same_id_issue_order_queue_read_data_multi_beat',
+        entry_id     => 'intent.ppif_axi_manager_capacity_status_dynamic_read_burst_last_same_id_issue_order_queue_read_data_multi_beat',
+        coverage     => 'ial2_ppif_manager_capacity_status_dynamic_read_burst_last_same_id_issue_order_queue_read_data_multi_beat_pipeline_cli',
+        behavior     => 'dynamic_read_burst_last_same_id_issue_order_queue_read_data_multi_beat',
+    },
+    {
         label        => 'mixed dynamic/static write BID response demux',
         relpath      => 'ppif/axi_manager_capacity_status_write_mixed_dynamic_static_response_demux.ppif',
         object_id    => 'axi-manager-capacity-status-write-mixed-dynamic-static-response-demux',
@@ -1130,6 +1139,60 @@ sub assert_dynamic_behavior {
         } else {
             unlike($hdl, qr/axi0_r1_expected_beats_q/, 'SystemVerilog keeps runtime expected-beat storage absent for report-only queue burst-length');
         }
+        return;
+    }
+
+    if ($case->{behavior} eq 'dynamic_read_burst_last_same_id_issue_order_queue_read_data_multi_beat') {
+        my @transactions = qw(r0 r1);
+
+        like($isf, qr/\(input axi0_arlen \(width 8\)\)/, 'dynamic read burst-last issue-order queue multi-beat read-data declares ARLEN input');
+        like($isf, qr/\(rule axi0_r1_response_demux [\s\S]*axi0_read_dynamic_same_id_issue_order_slot0_id_q[\s\S]*axi0_read_dynamic_same_id_issue_order_slot1_id_q[\s\S]*axi0_rlast[\s\S]*\(pulse axi0_r1_complete\)\)/, 'dynamic read burst-last issue-order queue multi-beat read-data keeps queue-owned r1 RID/RLAST demux');
+        like($isf, qr/\(output axi0_r0_beat_rdata_0 \(width 32\)\)/, 'dynamic read burst-last issue-order queue multi-beat read-data declares r0 first RDATA lane');
+        like($isf, qr/\(output axi0_r1_beat_rdata_15 \(width 32\)\)/, 'dynamic read burst-last issue-order queue multi-beat read-data declares r1 final RDATA lane');
+        like($isf, qr/\(output axi0_r1_beat_rresp_15 \(width 2\)\)/, 'dynamic read burst-last issue-order queue multi-beat read-data declares r1 final RRESP lane');
+        like($isf, qr/\(output axi0_r1_beat_valid \(width 16\)\)/, 'dynamic read burst-last issue-order queue multi-beat read-data declares r1 valid-mask output');
+        like($isf, qr/\(output axi0_r1_read_beats \(width 5\)\)/, 'dynamic read burst-last issue-order queue multi-beat read-data declares r1 length output');
+        like($isf, qr/\(output axi0_r1_rresp \(width 2\)\)/, 'dynamic read burst-last issue-order queue multi-beat read-data declares r1 scalar aggregate RRESP output');
+        for my $tx (@transactions) {
+            like($isf, qr/\(var axi0_${tx}_arlen_q \(width 8\)\)/, "dynamic read burst-last issue-order queue multi-beat read-data allocates $tx raw ARLEN storage");
+            like($isf, qr/\(var axi0_${tx}_expected_beats_q \(width 5\)\)/, "dynamic read burst-last issue-order queue multi-beat read-data allocates $tx expected-beat storage");
+            like($isf, qr/\(var axi0_${tx}_read_beat_count_q \(width 5\)\)/, "dynamic read burst-last issue-order queue multi-beat read-data allocates $tx beat-count storage");
+        }
+        like($isf, qr/\(rule axi0_r1_burst_length_capture axi0_r1_request\s+\(axi0_r1_arlen_q axi0_arlen\)\)/, 'dynamic read burst-last issue-order queue multi-beat read-data captures r1 raw ARLEN under request');
+        like($isf, qr/\(rule axi0_r1_beat_count_init axi0_r1_request\s+\(axi0_r1_expected_beats_q \(\+ axi0_arlen\[4:0\] 5'd1\)\)\s+\(axi0_r1_read_beat_count_q 0\)\)/, 'dynamic read burst-last issue-order queue multi-beat read-data initializes r1 expected count on request');
+        like($isf, qr/\(rule axi0_r1_read_beat_count \(& \(& axi0_read_complete [\s\S]*axi0_read_dynamic_same_id_issue_order_slot0_r1_q[\s\S]*axi0_read_dynamic_same_id_issue_order_slot1_r1_q[\s\S]*\) \(! axi0_r1_request\)\)\s+\(axi0_r1_read_beat_count_q \(\+ axi0_r1_read_beat_count_q 5'd1\)\)\)/, 'dynamic read burst-last issue-order queue multi-beat read-data increments r1 on matched raw read beats');
+        like($isf, qr/\(rule axi0_r1_read_data_output_init axi0_r1_request\s+\(axi0_r1_beat_rdata_0 32'd0\)[\s\S]*\(axi0_r1_rresp 2'd0\)[\s\S]*\(axi0_r1_beat_valid 16'b0\)\s+\(axi0_r1_read_beats 5'd0\)\)/, 'dynamic read burst-last issue-order queue multi-beat read-data clears r1 output bank on request');
+        like($isf, qr/\(rule axi0_r1_read_beat_0_capture \(& \(& axi0_read_complete [\s\S]*axi0_read_dynamic_same_id_issue_order_slot0_r1_q[\s\S]*axi0_read_dynamic_same_id_issue_order_slot1_r1_q[\s\S]*\) \(! axi0_r1_request\) \(== axi0_r1_read_beat_count_q 5'd0\)\)\s+\(axi0_r1_beat_rdata_0 axi0_rdata\)[\s\S]*\(axi0_r1_beat_rresp_0 axi0_rresp\)[\s\S]*\(axi0_r1_beat_valid 16'b0000000000000001\)\s+\(axi0_r1_read_beats 5'd1\)\)/, 'dynamic read burst-last issue-order queue multi-beat read-data captures r1 first matched beat lane');
+        like($isf, qr/\(rule axi0_r1_rresp_aggregate \(& \(& axi0_read_complete [\s\S]*axi0_read_dynamic_same_id_issue_order_slot0_r1_q[\s\S]*axi0_read_dynamic_same_id_issue_order_slot1_r1_q[\s\S]*\) \(! axi0_r1_request\) \(< axi0_r1_rresp axi0_rresp\)\)/, 'dynamic read burst-last issue-order queue multi-beat read-data updates r1 scalar RRESP aggregate on worse status');
+        like($isf, qr/"axi0 r1 RLAST appears only on the expected final read beat"/, 'dynamic read burst-last issue-order queue multi-beat read-data emits r1 RLAST final-beat assertion');
+        like($isf, qr/"axi0 r1 expected final read beat has RLAST"/, 'dynamic read burst-last issue-order queue multi-beat read-data emits r1 expected-final RLAST assertion');
+        assert_dynamic_read_burst_last_same_id_issue_order_queue_report(
+            $result->{report},
+            response_demux_residue => [],
+        );
+        assert_dynamic_read_data_multi_beat_report(
+            $result->{report}{read_data},
+            \@transactions,
+            'generated_dynamic_read_issue_order_queue_response_demux_last_beat_completion_pulse',
+        );
+        is_deeply($result->{report}{response_demux}{residue}, [], 'dynamic read burst-last issue-order queue multi-beat read-data clears demux residue for the covered queue output-bank shape');
+        like($fsm, qr/axi0_r1_read_beat_0_capture[\s\S]*\(<- \(axi0_r1_beat_rdata_0> axi0_rdata\)\)[\s\S]*\(<- \(axi0_r1_beat_rresp_0> axi0_rresp\)\)[\s\S]*\(<- \(axi0_r1_beat_valid> 16'b0000000000000001\)\)[\s\S]*\(<- \(axi0_r1_read_beats> 5'd1\)\)/, 'scheduled FSM lowers r1 queue first-beat lane capture');
+        like($fsm, qr/axi0_r1_rresp_aggregate[\s\S]*\(<- \(axi0_r1_rresp> axi0_rresp\)\)/, 'scheduled FSM lowers r1 queue scalar RRESP aggregation');
+        my $hdl = hdl_for('axi0_capacity_status', $fsm);
+        like($hdl, qr/\binput\s+(?:wire\s+)?\[7:0\]\s+axi0_arlen\b/, 'SystemVerilog exposes ARLEN for dynamic queue multi-beat read-data');
+        like($hdl, qr/\boutput\s+reg\s+\[31:0\]\s+axi0_r1_beat_rdata_0\b/, 'SystemVerilog exposes r1 first queue multi-beat RDATA lane');
+        like($hdl, qr/\boutput\s+reg\s+\[1:0\]\s+axi0_r1_beat_rresp_15\b/, 'SystemVerilog exposes r1 final queue multi-beat RRESP lane');
+        like($hdl, qr/\boutput\s+reg\s+\[15:0\]\s+axi0_r1_beat_valid\b/, 'SystemVerilog exposes r1 queue multi-beat valid mask');
+        like($hdl, qr/\boutput\s+reg\s+\[4:0\]\s+axi0_r1_read_beats\b/, 'SystemVerilog exposes r1 queue multi-beat length');
+        like($hdl, qr/\boutput\s+reg\s+\[1:0\]\s+axi0_r1_rresp\b/, 'SystemVerilog exposes r1 queue scalar aggregate RRESP');
+        like($hdl, qr/\breg\s+\[7:0\]\s+axi0_r1_arlen_q\b/, 'SystemVerilog declares r1 queue raw ARLEN storage');
+        like($hdl, qr/\breg\s+\[4:0\]\s+axi0_r1_expected_beats_q\b/, 'SystemVerilog declares r1 queue expected-beat storage');
+        like($hdl, qr/\breg\s+\[4:0\]\s+axi0_r1_read_beat_count_q\b/, 'SystemVerilog declares r1 queue beat-count storage');
+        like($hdl, qr/assign\s+axi0_r1_read_beat_0_capture_en\s*=/, 'SystemVerilog emits r1 queue first-lane capture enable');
+        like($hdl, qr/axi0_r1_beat_rdata_0_next\s*=\s*axi0_rdata\s*;/, 'SystemVerilog captures r1 queue first-lane RDATA');
+        like($hdl, qr/axi0_r1_beat_rresp_0_next\s*=\s*axi0_rresp\s*;/, 'SystemVerilog captures r1 queue first-lane RRESP');
+        like($hdl, qr/axi0_r1_beat_valid_next\s*=\s*16'b1\s*;/, 'SystemVerilog marks r1 queue first beat valid');
+        like($hdl, qr/axi0_r1_read_beats_next\s*=\s*5'd1\s*;/, 'SystemVerilog records r1 queue first beat length');
         return;
     }
 
@@ -3124,16 +3187,17 @@ sub assert_dynamic_read_same_id_issue_order_queue_report {
 }
 
 sub assert_dynamic_read_burst_last_same_id_issue_order_queue_report {
-    my ($report) = @_;
+    my ($report, %args) = @_;
     my $demux = $report->{response_demux};
     my $read = $demux->{read};
     my $ordering = $report->{same_id_ordering};
     my $policy = $ordering->{dynamic_id_reuse_policy}{read};
     my $queue = $policy->{generated_queues}[0];
+    my $expected_demux_residue = $args{response_demux_residue} // [qw(read_data_interleaving bursts)];
 
     is($demux->{mode}, 'bounded_dynamic_read_rid_rlast_issue_order_queue_demux_contract', 'dynamic read burst-last issue-order queue report marks demux contract');
     ok($demux->{generated_behavior}, 'dynamic read burst-last issue-order queue report marks generated demux behavior');
-    is_deeply($demux->{residue}, [qw(read_data_interleaving bursts)], 'dynamic read burst-last issue-order queue removes same-ID residue from response demux');
+    is_deeply($demux->{residue}, $expected_demux_residue, 'dynamic read burst-last issue-order queue reports expected response-demux residue');
     is($read->{mode}, 'bounded_dynamic_read_rid_rlast_issue_order_queue_demux_contract', 'dynamic read burst-last issue-order queue report marks read mode');
     is($read->{response_scope}, 'burst_last', 'dynamic read burst-last issue-order queue report marks burst-last response scope');
     is($read->{last_signal}, 'axi0_rlast', 'dynamic read burst-last issue-order queue report marks RLAST signal');
