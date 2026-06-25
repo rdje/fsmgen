@@ -3078,6 +3078,14 @@ direct generated queue behavior still needs the public family/scope,
 runtime-ID queue key, entry state, admitted enqueue, dequeue, response
 matching, ordering guarantees, overflow/ambiguity assertions, report fields,
 and residue movement selected first.
+`.453` now selects `.454`, runtime-ID queue-state representation selection
+for the first generated dynamic same-ID `issue-order-queue` behavior. The
+selector changes no behavior. It chooses the all-dynamic write `BID` path as
+the first generated family, but direct behavior still waits for an explicit
+representation contract because accepting dynamic same-ID reuse must replace
+reject-only active-ID uniqueness proofs with runtime-ID queue state,
+enqueue/dequeue semantics, response matching, same-cycle policy,
+overflow/ambiguity assertions, report fields, and residue movement.
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,

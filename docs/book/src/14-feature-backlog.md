@@ -8164,6 +8164,17 @@ key, entry state, admitted enqueue, dequeue, response matching, ordering
 guarantees, overflow/ambiguity assertions, report fields, and residue movement
 selected first.
 
+Generated dynamic same-ID issue-order queue contract:
+[AXI_IAL2_MANAGER_GENERATED_DYNAMIC_SAME_ID_ISSUE_ORDER_QUEUE_CONTRACT_SELECTION](../../AXI_IAL2_MANAGER_GENERATED_DYNAMIC_SAME_ID_ISSUE_ORDER_QUEUE_CONTRACT_SELECTION.md)
+selects `.454`, runtime-ID queue-state representation selection for the first
+generated dynamic same-ID `issue-order-queue` behavior. The selector changes
+no behavior. It chooses the all-dynamic write `BID` path as the first
+generated family, while direct behavior waits for an explicit representation
+contract that replaces reject-only active-ID uniqueness proofs with
+runtime-ID queue state, enqueue/dequeue semantics, response matching,
+same-cycle policy, overflow/ambiguity assertions, report fields, and residue
+movement.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

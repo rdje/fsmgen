@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.452: audit dynamic queue readiness`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.453` selects the public contract for generated dynamic same-ID issue-order queue behavior; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.452` selected `.453`, public contract selection for generated dynamic same-ID issue-order queue behavior. The audit changed no parser, generator, PPIF sample, support-accounting catalog, validation behavior, generated artifact, test, schedule/check/semantic JSON, HDL, runtime behavior, direct backend behavior, backend-language variant, queue, scoreboard, or VHDL behavior; direct generated queue behavior still needs public family/scope, runtime-ID queue key, entry state, admitted enqueue, dequeue, response matching, ordering guarantees, overflow/ambiguity assertions, report fields, and residue movement selected first. Knowledge Map generation/check, mdBook build, docs path audit, memory architecture check, diff check, and doctrine gate passed.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.453: select dynamic queue contract`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.454` selects runtime-ID queue-state representation for generated dynamic same-ID issue-order queues; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.453` selected `.454`, runtime-ID queue-state representation selection before generated dynamic same-ID issue-order queue implementation. The selector changed no parser, generator, PPIF sample, support-accounting catalog, validation behavior, generated artifact, test, schedule/check/semantic JSON, HDL, runtime behavior, direct backend behavior, backend-language variant, queue, scoreboard, or VHDL behavior; it chose all-dynamic write BID as the first generated family but kept direct behavior behind explicit runtime-ID key/state, enqueue/dequeue, response matching, same-cycle policy, overflow/ambiguity assertion, report-field, and residue-movement selection. Knowledge Map generation/check, mdBook build, docs path audit, memory architecture check, diff check, and doctrine gate passed.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
-- next_action: Start `.453`: select the generated dynamic same-ID issue-order queue public contract or an explicit narrower prerequisite before implementation.
+- next_action: Start `.454`: select the runtime-ID queue-state representation or an explicit narrower prerequisite before generated dynamic queue implementation.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact
