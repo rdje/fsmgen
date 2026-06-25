@@ -3160,6 +3160,18 @@ explicit residue before any behavior change. Read-data over queues, raw
 queue cardinality, mixed dynamic/static queues, scoreboards, validation retry,
 direct backend behavior, backend-language variants, and VHDL remain future
 exact owners.
+`.461` now selects `.462`, public contract selection for generated dynamic
+read burst-last `RID && RLAST` same-ID `issue-order-queue` behavior. The
+readiness audit changes no behavior. It found no lower parser, report-schema,
+IAL1, IAL0, or SystemVerilog prerequisite because burst-last response-demux
+metadata, one-bit `RLAST` input lowering, compact runtime-ID queue slots,
+final dynamic `RID && RLAST` completions, raw non-final dynamic beat
+assertions, and concrete burst-last queue-head non-last no-dequeue semantics
+already exist. Direct behavior still needs public contract selection for
+final-beat-only selected dequeue, raw non-final beat preservation, `RLAST`
+requirements, selected completion and report vocabulary, queue assertions,
+residue/support/sample/validation, and downstream read-data/burst/runtime/
+multi-beat/recapture preservation.
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,

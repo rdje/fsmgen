@@ -8297,6 +8297,21 @@ queue cardinality, mixed dynamic/static queues, scoreboards, validation retry,
 direct backend behavior, backend-language variants, and VHDL remain future
 exact owners.
 
+Dynamic read burst-last same-ID issue-order queue readiness:
+[AXI_IAL2_MANAGER_DYNAMIC_READ_BURST_LAST_SAME_ID_ISSUE_ORDER_QUEUE_READINESS_AUDIT](../../AXI_IAL2_MANAGER_DYNAMIC_READ_BURST_LAST_SAME_ID_ISSUE_ORDER_QUEUE_READINESS_AUDIT.md)
+selects `.462`, public contract selection for generated dynamic read
+burst-last `RID && RLAST` same-ID `issue-order-queue` behavior. The readiness
+audit changes no behavior. It found no lower parser, report-schema, IAL1,
+IAL0, or SystemVerilog prerequisite because burst-last response-demux
+metadata, one-bit `RLAST` input lowering, compact runtime-ID queue slots,
+final dynamic `RID && RLAST` completions, raw non-final dynamic beat
+assertions, and concrete burst-last queue-head non-last no-dequeue semantics
+already exist. Direct behavior still needs public contract selection for
+final-beat-only selected dequeue, raw non-final beat preservation, `RLAST`
+requirements, selected completion and report vocabulary, queue assertions,
+residue/support/sample/validation, and downstream read-data/burst/runtime/
+multi-beat/recapture preservation.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after
