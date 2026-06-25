@@ -9086,6 +9086,22 @@ cardinality, scoreboards, backend behavior, backend-language variants,
 verification-code generation, external converter dependencies such as `sv2v`,
 and VHDL. `.512` is the next selector after this public-surface sync.
 
+Post mixed dynamic/static issue-order queue public surface sync selector:
+[AXI_IAL2_MANAGER_POST_MIXED_DYNAMIC_STATIC_ISSUE_ORDER_QUEUE_PUBLIC_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MIXED_DYNAMIC_STATIC_ISSUE_ORDER_QUEUE_PUBLIC_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
+selects `.513`, readiness audit for scalar read-data routing over generated
+mixed dynamic/static read same-ID `issue-order-queue` completion pulses. The
+selector changes no behavior. Read-data is next because the mixed write
+`BID`, read single-beat `RID`, and read burst-last `RID && RLAST` queue
+families now generate one-dynamic plus one-concrete-static completion
+sources, while scalar read-data over those generated mixed read queue
+completions remains explicitly unowned. The audit must decide whether the next
+owner is paired scalar single-beat plus scalar last-beat contract selection,
+direct bounded implementation, a narrower read-data owner, a prerequisite
+cleanup, or deferral. Raw `ARLEN`, runtime validation, multi-beat output
+banks, broader mixed cardinality, scoreboards, backend behavior,
+backend-language variants, verification-code generation, external converter
+dependencies such as `sv2v`, and VHDL remain future exact owners.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

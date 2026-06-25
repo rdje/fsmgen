@@ -3716,6 +3716,18 @@ variants, verification-code generation, external converter dependencies such
 as `sv2v`, and VHDL. `.512` is the next selector after this public-surface
 sync.
 
+`.512` now selects `.513`, readiness audit for scalar read-data routing over
+generated mixed dynamic/static read same-ID `issue-order-queue` completion
+pulses. The selector changes no behavior and follows the established
+progression from generated completion pulses to scalar read-data before raw
+`ARLEN`, runtime validation, multi-beat output banks, broader mixed
+cardinality, scoreboards, backend behavior, backend-language variants,
+verification-code generation, external converter dependencies such as `sv2v`,
+or VHDL. `.513` must decide whether the next owner is paired scalar
+single-beat plus scalar last-beat contract selection, direct bounded
+implementation, a narrower read-data owner, a prerequisite cleanup, or
+deferral before any behavior changes.
+
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,
