@@ -3207,6 +3207,19 @@ over generated dynamic read queues, raw `ARLEN`, runtime validation,
 multi-beat output banks, broader queue cardinality, mixed dynamic/static
 queues, scoreboards, direct backend behavior, backend-language variants, and
 VHDL remain future exact owners.
+`.464` now selects `.465`, readiness audit for read-data routing over
+generated dynamic read same-ID `issue-order-queue` response-demux pulses. The
+selector changes no behavior. Read-data is next because generated dynamic read
+same-ID queues now ship both single-beat `RID` and burst-last `RID && RLAST`
+completion sources, while read-data over generated dynamic read queues remains
+explicitly unowned. The audit must decide whether the first behavior owner is
+scalar single-beat over generated dynamic read single-beat queues, scalar
+last-beat over generated dynamic read burst-last queues, a paired bounded
+scalar contract, a report/static cleanup prerequisite, a lower-layer
+prerequisite, or deferral. Raw `ARLEN`, runtime validation, multi-beat output
+banks, queue recapture widening, broader queue cardinality, mixed
+dynamic/static queues, scoreboards, direct backend behavior, backend-language
+variants, and VHDL remain future exact owners.
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,

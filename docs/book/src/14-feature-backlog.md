@@ -8352,6 +8352,22 @@ multi-beat output banks, broader queue cardinality, mixed dynamic/static
 queues, scoreboards, direct backend behavior, backend-language variants, and
 VHDL remain future exact owners.
 
+Post dynamic read burst-last same-ID issue-order queue selector:
+[AXI_IAL2_MANAGER_POST_DYNAMIC_READ_BURST_LAST_SAME_ID_ISSUE_ORDER_QUEUE_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_DYNAMIC_READ_BURST_LAST_SAME_ID_ISSUE_ORDER_QUEUE_NEXT_SLICE_SELECTION.md)
+selects `.465`, readiness audit for read-data routing over generated dynamic
+read same-ID `issue-order-queue` response-demux pulses. The selector changes
+no behavior. Read-data is next because generated dynamic read same-ID queues
+now ship both single-beat `RID` and burst-last `RID && RLAST` completion
+sources, while read-data over generated dynamic read queues remains explicitly
+unowned. The audit must decide whether the first behavior owner is scalar
+single-beat over generated dynamic read single-beat queues, scalar last-beat
+over generated dynamic read burst-last queues, a paired bounded scalar
+contract, a report/static cleanup prerequisite, a lower-layer prerequisite, or
+deferral. Raw `ARLEN`, runtime validation, multi-beat output banks, queue
+recapture widening, broader queue cardinality, mixed dynamic/static queues,
+scoreboards, direct backend behavior, backend-language variants, and VHDL
+remain future exact owners.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

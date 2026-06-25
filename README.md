@@ -2226,6 +2226,19 @@ over generated dynamic read queues, raw `ARLEN`, runtime validation,
 multi-beat output banks, broader queue cardinality, mixed dynamic/static
 queues, scoreboards, direct backend behavior, backend-language variants, and
 VHDL remain future exact owners.
+`.464` now selects `.465`, readiness audit for read-data routing over
+generated dynamic read same-ID `issue-order-queue` response-demux pulses. The
+selector changes no behavior. Read-data is next because generated dynamic read
+same-ID queues now ship both single-beat `RID` and burst-last `RID && RLAST`
+completion sources, while read-data over generated dynamic read queues remains
+explicitly unowned. The audit must decide whether the first behavior owner is
+scalar single-beat over generated dynamic read single-beat queues, scalar
+last-beat over generated dynamic read burst-last queues, a paired bounded
+scalar contract, a report/static cleanup prerequisite, a lower-layer
+prerequisite, or deferral. Raw `ARLEN`, runtime validation, multi-beat output
+banks, queue recapture widening, broader queue cardinality, mixed
+dynamic/static queues, scoreboards, direct backend behavior, backend-language
+variants, and VHDL remain future exact owners.
 No behavior
 changed in `.273`, `.274`, `.275`,
 `.277`, `.278`, `.279`, `.281`,
@@ -4604,6 +4617,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_READ_BURST_LAST_SAME_ID_ISSUE_ORDER_QUEUE_READINESS_AUDIT.md` — audited generated dynamic read burst-last `RID && RLAST` same-ID issue-order queue readiness and selected public contract selection.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_READ_BURST_LAST_SAME_ID_ISSUE_ORDER_QUEUE_CONTRACT_SELECTION.md` — selected the public contract for the first generated dynamic read burst-last `RID && RLAST` same-ID issue-order queue behavior.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_READ_BURST_LAST_SAME_ID_ISSUE_ORDER_QUEUE_BEHAVIOR.md` — shipped generated bounded two-transaction all-dynamic read burst-last `RID && RLAST` dynamic same-ID issue-order queue behavior.
+- `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_READ_BURST_LAST_SAME_ID_ISSUE_ORDER_QUEUE_NEXT_SLICE_SELECTION.md` — selected read-data over generated dynamic read same-ID issue-order queue readiness after generated dynamic read burst-last same-ID queue behavior.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_CONTRACT_SELECTION.md` — selected direct single-active dynamic write `BID` same-cycle release-and-recapture behavior under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_BEHAVIOR.md` — shipped single-active dynamic write `BID` same-cycle release-and-recapture under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_WRITE_RECAPTURE_NEXT_SLICE_SELECTION.md` — selected `.367`, public contract selection for first single-active dynamic read same-cycle release-and-recapture after dynamic write recapture shipped.
