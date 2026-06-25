@@ -80,6 +80,15 @@ my @DYNAMIC_CASES = (
         behavior     => 'dynamic_read_same_id_issue_order_queue',
     },
     {
+        label        => 'dynamic read RID depth-3 same-ID issue-order queue',
+        relpath      => 'ppif/axi_manager_capacity_status_dynamic_read_depth3_same_id_issue_order_queue.ppif',
+        object_id    => 'axi-manager-capacity-status-dynamic-read-depth3-same-id-issue-order-queue',
+        intent_name  => 'axi_manager_capacity_status_dynamic_read_depth3_same_id_issue_order_queue',
+        entry_id     => 'intent.ppif_axi_manager_capacity_status_dynamic_read_depth3_same_id_issue_order_queue',
+        coverage     => 'ial2_ppif_manager_capacity_status_dynamic_read_depth3_same_id_issue_order_queue_pipeline_cli',
+        behavior     => 'dynamic_read_depth3_same_id_issue_order_queue',
+    },
+    {
         label        => 'dynamic read RID/RLAST same-ID issue-order queue',
         relpath      => 'ppif/axi_manager_capacity_status_dynamic_read_burst_last_same_id_issue_order_queue.ppif',
         object_id    => 'axi-manager-capacity-status-dynamic-read-burst-last-same-id-issue-order-queue',
@@ -1016,6 +1025,28 @@ sub assert_dynamic_behavior {
         like($hdl, qr/\breg\s+\[3:0\]\s+axi0_read_dynamic_same_id_issue_order_slot0_id_q\b/, 'SystemVerilog declares slot0 captured ARID');
         like($hdl, qr/\breg\s+\[3:0\]\s+axi0_read_dynamic_same_id_issue_order_slot1_id_q\b/, 'SystemVerilog declares slot1 captured ARID');
         like($hdl, qr/axi0_read_dynamic_same_id_issue_order_slot1_id_q_next\s*=\s*axi0_arid\s*;/, 'SystemVerilog recaptures ARID into a queue slot');
+        return;
+    }
+
+    if ($case->{behavior} eq 'dynamic_read_depth3_same_id_issue_order_queue') {
+        like($isf, qr/\(input axi0_r0_request\)/, 'dynamic read depth-3 issue-order queue declares r0 request input');
+        like($isf, qr/\(input axi0_r1_request\)/, 'dynamic read depth-3 issue-order queue declares r1 request input');
+        like($isf, qr/\(input axi0_r2_request\)/, 'dynamic read depth-3 issue-order queue declares r2 request input');
+        like($isf, qr/\(input axi0_arid \(width 4\)\)/, 'dynamic read depth-3 issue-order queue declares ARID input');
+        like($isf, qr/\(input axi0_rid \(width 4\)\)/, 'dynamic read depth-3 issue-order queue declares RID input');
+        like($isf, qr/\(output axi0_r2_complete\)/, 'dynamic read depth-3 issue-order queue exposes r2 completion output');
+        unlike($isf, qr/axi0_r2_dynamic_id_q/, 'dynamic read depth-3 issue-order queue does not allocate legacy r2 selected-ID storage');
+        like($isf, qr/\(var axi0_read_dynamic_same_id_issue_order_slot2_r2_q \(width 1\)\)/, 'dynamic read depth-3 issue-order queue allocates slot2 r2 bit');
+        like($isf, qr/\(var axi0_read_dynamic_same_id_issue_order_slot2_id_q \(width 4\)\)/, 'dynamic read depth-3 issue-order queue allocates slot2 captured ARID');
+        like($isf, qr/\(rule axi0_read_dynamic_same_id_issue_order_r2_r1_r0_dequeue_enqueue_r0[\s\S]*\(axi0_read_dynamic_same_id_issue_order_slot2_id_q axi0_arid\)\)/, 'dynamic read depth-3 issue-order queue refreshes tail-selected recaptured ARID');
+        like($isf, qr/\(rule axi0_read_dynamic_same_id_issue_order_r0_r1_dequeue_r0_enqueue_r2[\s\S]*\(axi0_read_dynamic_same_id_issue_order_slot0_id_q axi0_read_dynamic_same_id_issue_order_slot1_id_q\)[\s\S]*\(axi0_read_dynamic_same_id_issue_order_slot1_id_q axi0_arid\)\)/, 'dynamic read depth-3 issue-order queue disambiguates cross-transaction selected dequeue plus enqueue');
+        like($isf, qr/\(rule axi0_r2_response_demux [\s\S]*axi0_read_dynamic_same_id_issue_order_slot0_id_q[\s\S]*axi0_read_dynamic_same_id_issue_order_slot2_id_q[\s\S]*\(pulse axi0_r2_complete\)\)/, 'dynamic read depth-3 issue-order queue emits earliest matching r2 RID demux');
+        like($isf, qr/read dynamic same-ID issue-order queue slot 2 is one-hot-or-empty/, 'dynamic read depth-3 issue-order queue emits slot2 onehot assertion');
+        like($isf, qr/read dynamic same-ID issue-order queue completion for r2 follows selected runtime-ID match/, 'dynamic read depth-3 issue-order queue emits r2 selected-match assertion');
+        assert_dynamic_read_depth3_same_id_issue_order_queue_report($result->{report});
+        my $hdl = hdl_for('axi0_capacity_status', $fsm);
+        like($hdl, qr/\breg\s+\[3:0\]\s+axi0_read_dynamic_same_id_issue_order_slot2_id_q\b/, 'SystemVerilog declares slot2 captured ARID');
+        like($hdl, qr/axi0_read_dynamic_same_id_issue_order_slot1_id_q_next\s*=\s*axi0_arid\s*;/, 'SystemVerilog recaptures ARID into a compacted queue slot');
         return;
     }
 
@@ -3337,6 +3368,79 @@ sub assert_dynamic_read_same_id_issue_order_queue_report {
     ok(grep { $_ eq 'axi0_read_dynamic_same_id_issue_order_r1_r0_dequeue_enqueue_r0' } @{$queue->{generated_update_rules}}, 'dynamic read issue-order queue reports tail-selected same-transaction ID-refresh rule');
     ok(grep { $_ eq 'axi0_read_dynamic_same_id_issue_order_r0_r1_dequeue_enqueue_r0' } @{$queue->{generated_update_rules}}, 'dynamic read issue-order queue reports same-cycle selected dequeue plus enqueue rule');
     assert_dynamic_residue($report, 'dynamic read issue-order queue keeps future dynamic residue visible');
+}
+
+sub assert_dynamic_read_depth3_same_id_issue_order_queue_report {
+    my ($report) = @_;
+    my $demux = $report->{response_demux};
+    my $read = $demux->{read};
+    my $ordering = $report->{same_id_ordering};
+    my $policy = $ordering->{dynamic_id_reuse_policy}{read};
+    my $queue = $policy->{generated_queues}[0];
+
+    is($demux->{mode}, 'bounded_dynamic_read_rid_issue_order_queue_demux_contract', 'dynamic read depth-3 issue-order queue report marks demux contract');
+    ok($demux->{generated_behavior}, 'dynamic read depth-3 issue-order queue report marks generated demux behavior');
+    is_deeply($demux->{residue}, [qw(read_data_interleaving bursts)], 'dynamic read depth-3 issue-order queue removes same-ID residue from response demux');
+    is($read->{response_scope}, 'single_beat', 'dynamic read depth-3 issue-order queue report marks single-beat response scope');
+    is($read->{transaction_completion_source}, 'generated_dynamic_issue_order_queue_demux', 'dynamic read depth-3 issue-order queue report marks generated queue completion source');
+    is($read->{transaction_completion_semantics}, 'earliest_matching_captured_runtime_id', 'dynamic read depth-3 issue-order queue report marks earliest matching semantics');
+    is($read->{queue_state_representation}, 'compact_runtime_id_issue_order_slots', 'dynamic read depth-3 issue-order queue report marks compact runtime-ID slots');
+    is($read->{runtime_id_queue_key}, 'captured_request_id', 'dynamic read depth-3 issue-order queue report marks captured request ID key');
+    is($read->{response_demux_strategy}, 'dynamic_issue_order_earliest_matching_slot', 'dynamic read depth-3 issue-order queue report marks earliest matching strategy');
+    is_deeply($read->{dynamic_transactions}, [qw(r0 r1 r2)], 'dynamic read depth-3 issue-order queue report names covered dynamic reads');
+    is_deeply($read->{generated_rules}, [qw(axi0_r0_response_demux axi0_r1_response_demux axi0_r2_response_demux)], 'dynamic read depth-3 issue-order queue report names generated response-demux rules');
+    is_deeply($read->{generated_completion_signals}, [qw(axi0_r0_complete axi0_r1_complete axi0_r2_complete)], 'dynamic read depth-3 issue-order queue report names generated completions');
+    is_deeply(
+        [map { $_->{id}{implementation_status} } @{$report->{transactions}}],
+        [qw(generated_issue_order_queue_matching generated_issue_order_queue_matching generated_issue_order_queue_matching)],
+        'dynamic read depth-3 issue-order queue transactions report generated queue matching',
+    );
+
+    is($ordering->{mode}, 'dynamic_id_reuse_policy', 'dynamic read depth-3 issue-order queue same-ID report marks dynamic mode');
+    ok($ordering->{generated_behavior}, 'dynamic read depth-3 issue-order queue same-ID report is generated');
+    is_deeply($ordering->{residue}, [], 'dynamic read depth-3 issue-order queue same-ID report clears dynamic residue');
+    is($policy->{implementation_status}, 'generated_dynamic_read_rid_issue_order_queue', 'dynamic read depth-3 issue-order queue policy reports generated implementation');
+    is($policy->{enforcement}, 'generated_dynamic_issue_order_queue', 'dynamic read depth-3 issue-order queue policy reports generated enforcement');
+    ok($policy->{accepted_same_id_reuse}, 'dynamic read depth-3 issue-order queue policy accepts same-ID reuse');
+    ok($policy->{generated_queue_behavior}, 'dynamic read depth-3 issue-order queue policy marks generated queue behavior');
+    ok($policy->{dynamic_issue_order_queue_covered}, 'dynamic read depth-3 issue-order queue policy marks dynamic coverage');
+    is_deeply($policy->{covered_dynamic_transactions}, [qw(r0 r1 r2)], 'dynamic read depth-3 issue-order queue policy names covered transactions');
+    is($policy->{first_generated_scope}, 'read_rid_three_dynamic_transactions', 'dynamic read depth-3 issue-order queue policy reports first generated scope');
+    is($policy->{active_id_uniqueness_policy}, 'not_required_for_issue_order_queue', 'dynamic read depth-3 issue-order queue policy does not require active ID uniqueness');
+
+    is($queue->{depth}, 3, 'dynamic read depth-3 issue-order queue report names queue depth');
+    is($queue->{queue_state_representation}, 'compact_runtime_id_issue_order_slots', 'dynamic read depth-3 issue-order queue report names queue representation');
+    is($queue->{request_id_source}, 'axi0_arid', 'dynamic read depth-3 issue-order queue report names ARID capture source');
+    is_deeply($queue->{transactions}, [qw(r0 r1 r2)], 'dynamic read depth-3 issue-order queue report names queue transactions');
+    assert_dynamic_queue_identity_recapture_report(
+        $queue,
+        'axi0_arid',
+        'dynamic read depth-3 issue-order queue',
+    );
+    is_deeply(
+        $queue->{slot_storage},
+        [
+            { name => 'axi0_read_dynamic_same_id_issue_order_slot0_r0_q', width => 1 },
+            { name => 'axi0_read_dynamic_same_id_issue_order_slot0_r1_q', width => 1 },
+            { name => 'axi0_read_dynamic_same_id_issue_order_slot0_r2_q', width => 1 },
+            { name => 'axi0_read_dynamic_same_id_issue_order_slot0_id_q', width => 4 },
+            { name => 'axi0_read_dynamic_same_id_issue_order_slot1_r0_q', width => 1 },
+            { name => 'axi0_read_dynamic_same_id_issue_order_slot1_r1_q', width => 1 },
+            { name => 'axi0_read_dynamic_same_id_issue_order_slot1_r2_q', width => 1 },
+            { name => 'axi0_read_dynamic_same_id_issue_order_slot1_id_q', width => 4 },
+            { name => 'axi0_read_dynamic_same_id_issue_order_slot2_r0_q', width => 1 },
+            { name => 'axi0_read_dynamic_same_id_issue_order_slot2_r1_q', width => 1 },
+            { name => 'axi0_read_dynamic_same_id_issue_order_slot2_r2_q', width => 1 },
+            { name => 'axi0_read_dynamic_same_id_issue_order_slot2_id_q', width => 4 },
+        ],
+        'dynamic read depth-3 issue-order queue report names slot-local transaction and ID storage',
+    );
+    ok(grep { $_ eq 'axi0_read_dynamic_same_id_issue_order_r0_dequeue_enqueue_r0' } @{$queue->{generated_update_rules}}, 'dynamic read depth-3 issue-order queue reports one-entry same-transaction ID-refresh rule');
+    ok(grep { $_ eq 'axi0_read_dynamic_same_id_issue_order_r2_r1_r0_dequeue_enqueue_r0' } @{$queue->{generated_update_rules}}, 'dynamic read depth-3 issue-order queue reports tail-selected same-transaction ID-refresh rule');
+    ok(grep { $_ eq 'axi0_read_dynamic_same_id_issue_order_r0_r1_dequeue_r0_enqueue_r2' } @{$queue->{generated_update_rules}}, 'dynamic read depth-3 issue-order queue reports disambiguated cross-transaction enqueue rule');
+    ok(grep { $_ eq 'axi0_read_dynamic_same_id_issue_order_slot2_onehot0' } @{$queue->{generated_assertions}}, 'dynamic read depth-3 issue-order queue reports slot2 onehot assertion');
+    ok(grep { $_ eq 'axi0_read_dynamic_same_id_issue_order_r2_completion_selected_match' } @{$queue->{generated_assertions}}, 'dynamic read depth-3 issue-order queue reports r2 completion selected-match assertion');
+    assert_dynamic_residue($report, 'dynamic read depth-3 issue-order queue keeps future dynamic residue visible');
 }
 
 sub assert_dynamic_read_burst_last_same_id_issue_order_queue_report {

@@ -8625,6 +8625,22 @@ Read burst-last depth-3, read-data over depth-3 queues, mixed dynamic/static
 queues, scoreboards, arbitrary cardinality, backend-language variants,
 external converter dependencies, and VHDL remain deferred.
 
+Dynamic read depth-3 same-ID issue-order queue behavior:
+[AXI_IAL2_MANAGER_DYNAMIC_READ_DEPTH3_SAME_ID_ISSUE_ORDER_QUEUE_BEHAVIOR](../../AXI_IAL2_MANAGER_DYNAMIC_READ_DEPTH3_SAME_ID_ISSUE_ORDER_QUEUE_BEHAVIOR.md)
+ships generated support through
+`ppif/axi_manager_capacity_status_dynamic_read_depth3_same_id_issue_order_queue.ppif`.
+The generated read queue covers `r0`, `r1`, and `r2`, allocates three compact
+runtime-ID issue-order slots, captures `ARID` per slot, completes by earliest
+matching single-beat `RID`, reports
+`first_generated_scope: read_rid_three_dynamic_transactions`, and keeps the
+queue-owned same-transaction captured-ID refresh fields. Ambiguous depth-3
+cross-transaction selected-dequeue-plus-enqueue rules include the selected
+dequeued transaction in the generated rule name; existing depth-2 read and
+depth-3 write queue behavior remains stable. Read burst-last depth-3,
+read-data over depth-3 queues, mixed dynamic/static queues, scoreboards,
+arbitrary cardinality, direct backend behavior, backend-language variants,
+external converter dependencies, and VHDL remain deferred.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

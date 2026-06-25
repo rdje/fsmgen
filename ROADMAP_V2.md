@@ -3376,6 +3376,21 @@ the tail-selected refresh rule, and the `r2` completion-selected-match
 assertion. Read burst-last depth-3, read-data over depth-3 queues, mixed
 dynamic/static queues, scoreboards, arbitrary cardinality, backend-language
 variants, external converter dependencies, and VHDL remain deferred.
+`.485` now ships that generated depth-3 all-dynamic read single-beat `RID`
+same-ID `issue-order-queue` behavior through support-accounted public sample
+`ppif/axi_manager_capacity_status_dynamic_read_depth3_same_id_issue_order_queue.ppif`.
+Generated `response-demux.read` covers `r0`/`r1`/`r2`, reports
+`bounded_dynamic_read_rid_issue_order_queue_demux_contract`,
+`generated_dynamic_issue_order_queue_demux`,
+`read_rid_three_dynamic_transactions`, queue depth 3, and queue-owned
+same-transaction captured-`ARID` refresh fields. The generated queue allocates
+three compact runtime-ID slots, emits slot2 onehot and `r2`
+completion-selected-match assertions, and keeps depth-2 read queues plus the
+depth-3 write queue behavior unchanged. Read burst-last depth-3, read-data
+over depth-3 queues, mixed dynamic/static queues, scoreboards, arbitrary
+cardinality, direct backend behavior, backend-language variants, external
+converter dependencies, and VHDL remain deferred. `.486` is the next
+post-behavior selector.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

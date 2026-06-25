@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.484: audit dynamic read depth3 queue`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.485` implements generated all-dynamic read single-beat RID same-ID issue-order queue depth-3 behavior; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.484` selected `.485`, direct bounded implementation of generated all-dynamic read single-beat RID depth-3 same-ID issue-order queue. The audit found only local read admission/depth/report/test/sample gates; shared transition/assertion helpers already produce 99 rules, 19 assertions, and no duplicate names for the synthetic read depth-3 group.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.485: generate dynamic read depth3 queue`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.486` selects the next generated dynamic same-ID issue-order queue widening after depth-3 read single-beat behavior; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.485` shipped generated depth-3 all-dynamic read single-beat RID same-ID issue-order queue behavior through `ppif/axi_manager_capacity_status_dynamic_read_depth3_same_id_issue_order_queue.ppif`, support accounting, focused report/parser/generator/dynamic-ID tests, README, ROADMAP_V2, mdBook, task tree, and Knowledge Map. Syntax checks, RAM-guarded schedule JSON, one-sample adapter smoke, and t/248 support-accounting probes passed; a RAM-guarded full t/1437 attempt reported all 24 subtests passed before manual SIGTERM and is not counted as a clean pass.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
-- next_action: Start `.485`: implement only the r0/r1/r2 generated read single-beat depth-3 dynamic queue shape, with read-max-pending at least 3, new report scope/sample/support/tests/docs, and no read burst-last/read-data/mixed/scoreboard/backend/VHDL widening.
+- next_action: Start `.486`: select the next exact owner after depth-3 read single-beat queue behavior, keeping read burst-last depth-3, read-data over depth-3 queues, mixed dynamic/static queues, scoreboards, arbitrary cardinality, backend-language variants, external converter dependencies such as `sv2v`, and VHDL deferred until specifically owned.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact
