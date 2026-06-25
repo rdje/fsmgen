@@ -3484,7 +3484,16 @@ output banks over this depth-3 queue, mixed dynamic/static queues,
 scoreboards, arbitrary cardinality, verification-code generation, direct
 backend behavior, backend-language variants, external converter dependencies
 such as `sv2v`, and VHDL remain deferred; FSMGen-owned generation/lowering
-remains the default.
+remains the default. `.495` now selects `.496`, readiness audit for runtime
+beat-count/`RLAST` validation over that same depth-3 dynamic RLAST queue
+raw-`ARLEN` read-data shape. This is the smallest adjacent owner because
+`.494` supplies the exact three-transaction report-only raw-`ARLEN` queue
+read-data surface, while `.471` already proves runtime beat-count/`RLAST`
+validation over the two-transaction dynamic RLAST queue. Multi-beat output
+banks, mixed dynamic/static queues, scoreboards, arbitrary cardinality,
+verification-code generation, direct backend behavior, backend-language
+variants, external converter dependencies such as `sv2v`, and VHDL remain
+deferred; FSMGen-owned generation/lowering remains the default.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
