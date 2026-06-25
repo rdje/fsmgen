@@ -1014,7 +1014,7 @@ subtest 'dynamic write same-ID issue-order queue captures AWID slots and matches
     like($isf, qr/\(rule axi0_write_dynamic_same_id_issue_order_w0_w1_dequeue_enqueue_w0[\s\S]*\(axi0_write_dynamic_same_id_issue_order_slot0_id_q axi0_write_dynamic_same_id_issue_order_slot1_id_q\)[\s\S]*\(axi0_write_dynamic_same_id_issue_order_slot1_id_q axi0_awid\)\)/, 'dynamic write issue-order queue compacts retained ID and captures recaptured ID');
     like($isf, qr/\(rule axi0_w0_response_demux [\s\S]*axi0_write_dynamic_same_id_issue_order_slot0_id_q[\s\S]*axi0_write_dynamic_same_id_issue_order_slot1_id_q[\s\S]*\(pulse axi0_w0_complete\)\)/, 'dynamic write issue-order queue emits w0 earliest matching BID completion');
     like($isf, qr/\(rule axi0_w1_response_demux [\s\S]*axi0_write_dynamic_same_id_issue_order_slot0_id_q[\s\S]*axi0_write_dynamic_same_id_issue_order_slot1_id_q[\s\S]*\(pulse axi0_w1_complete\)\)/, 'dynamic write issue-order queue emits w1 earliest matching BID completion');
-    like($isf, qr/write dynamic same-ID issue-order queue admits at most one write request/, 'dynamic write issue-order queue emits enqueue onehot assertion');
+    like($isf, qr/write dynamic same-ID issue-order queue admits at most one request/, 'dynamic write issue-order queue emits enqueue onehot assertion');
     like($isf, qr/write dynamic same-ID response matches at least one captured runtime ID/, 'dynamic write issue-order queue emits response match assertion');
 
     assert_dynamic_write_same_id_issue_order_queue_report($result->{report}, 'generator report');
@@ -1026,6 +1026,36 @@ subtest 'dynamic write same-ID issue-order queue captures AWID slots and matches
     like($hdl, qr/\breg\s+\[3:0\]\s+axi0_write_dynamic_same_id_issue_order_slot0_id_q\b/, 'SystemVerilog declares slot0 ID queue register');
     like($hdl, qr/\breg\s+\[3:0\]\s+axi0_write_dynamic_same_id_issue_order_slot1_id_q\b/, 'SystemVerilog declares slot1 ID queue register');
     like($hdl, qr/axi0_write_dynamic_same_id_issue_order_slot1_id_q_next\s*=\s*axi0_awid\s*;/, 'SystemVerilog captures AWID into queue slot');
+};
+
+subtest 'dynamic read same-ID issue-order queue captures ARID slots and matches RID by issue order' => sub {
+    my $result = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_dynamic_read_same_id_issue_order_queue());
+    my $isf = $result->{generated_ial1}{text};
+
+    like($isf, qr/\(input axi0_arid \(width 4\)\)/, 'dynamic read issue-order queue declares ARID input');
+    like($isf, qr/\(input axi0_rid \(width 4\)\)/, 'dynamic read issue-order queue declares RID input');
+    like($isf, qr/\(output axi0_r0_complete\)/, 'dynamic read issue-order queue exposes r0 completion');
+    like($isf, qr/\(output axi0_r1_complete\)/, 'dynamic read issue-order queue exposes r1 completion');
+    unlike($isf, qr/axi0_r0_dynamic_busy_q/, 'dynamic read issue-order queue does not allocate legacy r0 busy state');
+    unlike($isf, qr/axi0_r1_dynamic_id_q/, 'dynamic read issue-order queue does not allocate legacy r1 selected ID state');
+    like($isf, qr/\(var axi0_read_dynamic_same_id_issue_order_slot0_id_q \(width 4\)\)/, 'dynamic read issue-order queue allocates slot0 captured ID state');
+    like($isf, qr/\(var axi0_read_dynamic_same_id_issue_order_slot1_id_q \(width 4\)\)/, 'dynamic read issue-order queue allocates slot1 captured ID state');
+    like($isf, qr/\(rule axi0_read_dynamic_same_id_issue_order_empty_enqueue_r0[\s\S]*\(axi0_read_dynamic_same_id_issue_order_slot0_id_q axi0_arid\)\)/, 'dynamic read issue-order queue captures ARID on r0 enqueue');
+    like($isf, qr/\(rule axi0_read_dynamic_same_id_issue_order_r0_r1_dequeue_enqueue_r0[\s\S]*\(axi0_read_dynamic_same_id_issue_order_slot0_id_q axi0_read_dynamic_same_id_issue_order_slot1_id_q\)[\s\S]*\(axi0_read_dynamic_same_id_issue_order_slot1_id_q axi0_arid\)\)/, 'dynamic read issue-order queue compacts retained ID and captures recaptured ID');
+    like($isf, qr/\(rule axi0_r0_response_demux [\s\S]*axi0_read_dynamic_same_id_issue_order_slot0_id_q[\s\S]*axi0_read_dynamic_same_id_issue_order_slot1_id_q[\s\S]*\(pulse axi0_r0_complete\)\)/, 'dynamic read issue-order queue emits r0 earliest matching RID completion');
+    like($isf, qr/\(rule axi0_r1_response_demux [\s\S]*axi0_read_dynamic_same_id_issue_order_slot0_id_q[\s\S]*axi0_read_dynamic_same_id_issue_order_slot1_id_q[\s\S]*\(pulse axi0_r1_complete\)\)/, 'dynamic read issue-order queue emits r1 earliest matching RID completion');
+    like($isf, qr/read dynamic same-ID issue-order queue admits at most one request/, 'dynamic read issue-order queue emits enqueue onehot assertion');
+    like($isf, qr/read dynamic same-ID response matches at least one captured runtime ID/, 'dynamic read issue-order queue emits response match assertion');
+
+    assert_dynamic_read_same_id_issue_order_queue_report($result->{report}, 'generator report');
+
+    my $fsm = $result->{generated_ial0}{files}{'axi0_capacity_status.fsm'};
+    like($fsm, qr/\(-axi0_r0_response_demux\s+<\(\|/, 'scheduled .fsm lowers r0 dynamic queue response demux');
+    like($fsm, qr/axi0_read_dynamic_same_id_issue_order_slot1_id_q/, 'scheduled .fsm carries slot1 ID state');
+    my $hdl = hdl_for('axi0_capacity_status', $fsm);
+    like($hdl, qr/\breg\s+\[3:0\]\s+axi0_read_dynamic_same_id_issue_order_slot0_id_q\b/, 'SystemVerilog declares slot0 ID queue register');
+    like($hdl, qr/\breg\s+\[3:0\]\s+axi0_read_dynamic_same_id_issue_order_slot1_id_q\b/, 'SystemVerilog declares slot1 ID queue register');
+    like($hdl, qr/axi0_read_dynamic_same_id_issue_order_slot1_id_q_next\s*=\s*axi0_arid\s*;/, 'SystemVerilog captures ARID into queue slot');
 };
 
 subtest 'mixed dynamic/static write response-demux captures AWID and matches static BID' => sub {
@@ -5895,6 +5925,18 @@ sub sample_contract_with_dynamic_write_same_id_issue_order_queue {
     return $contract;
 }
 
+sub sample_contract_with_dynamic_read_same_id_issue_order_queue {
+    my $contract = sample_contract_with_dynamic_read_response_demux_multi();
+    $contract->{intent_name} = 'axi_manager_capacity_status_dynamic_read_same_id_issue_order_queue';
+    $contract->{source}{object_id} = 'axi-manager-capacity-status-dynamic-read-same-id-issue-order-queue';
+    $contract->{same_id_ordering_policy} = {
+        read => {
+            dynamic_id_reuse => 'issue-order-queue',
+        },
+    };
+    return $contract;
+}
+
 sub sample_contract_with_mixed_dynamic_static_write_response_demux {
     my $contract = sample_contract_with_id_families();
     $contract->{intent_name} = 'axi_manager_capacity_status_write_mixed_dynamic_static_response_demux';
@@ -7729,6 +7771,64 @@ sub assert_dynamic_write_same_id_issue_order_queue_report {
     );
     ok(grep { $_ eq 'axi0_write_dynamic_same_id_issue_order_w0_w1_dequeue_enqueue_w0' } @{$queue->{generated_update_rules}}, "$owner reports same-cycle selected dequeue plus enqueue rule");
     ok(grep { $_ eq 'axi0_write_dynamic_same_id_issue_order_response_has_selected_match' } @{$queue->{generated_assertions}}, "$owner reports dynamic queue selected-match assertion");
+    my %residue = map { $_->{id} => 1 } @{$report->{unsupported_residue}};
+    ok($residue{dynamic_transaction_id_behavior}, "$owner keeps future dynamic behavior residue visible");
+}
+
+sub assert_dynamic_read_same_id_issue_order_queue_report {
+    my ($report, $owner) = @_;
+    my $demux = $report->{response_demux};
+    my $read = $demux->{read};
+    my $policy = $report->{same_id_ordering}{dynamic_id_reuse_policy}{read};
+    my $queue = $policy->{generated_queues}[0];
+
+    is($demux->{mode}, 'bounded_dynamic_read_rid_issue_order_queue_demux_contract', "$owner marks dynamic read issue-order queue demux mode");
+    ok($demux->{generated_behavior}, "$owner marks dynamic read issue-order queue demux generated");
+    is_deeply($demux->{residue}, [qw(read_data_interleaving bursts)], "$owner removes same-ID residue from response-demux report");
+    is($read->{response_scope}, 'single_beat', "$owner reports single-beat response scope");
+    is($read->{transaction_completion_source}, 'generated_dynamic_issue_order_queue_demux', "$owner reports dynamic issue-order queue completion source");
+    is($read->{transaction_completion_semantics}, 'earliest_matching_captured_runtime_id', "$owner reports earliest captured runtime-ID matching");
+    is($read->{queue_state_representation}, 'compact_runtime_id_issue_order_slots', "$owner reports compact runtime-ID slot representation");
+    is($read->{runtime_id_queue_key}, 'captured_request_id', "$owner reports captured request ID queue key");
+    is($read->{response_demux_strategy}, 'dynamic_issue_order_earliest_matching_slot', "$owner reports earliest matching slot strategy");
+    is_deeply($read->{dynamic_transactions}, [qw(r0 r1)], "$owner reports two covered dynamic reads");
+    is_deeply($read->{generated_rules}, [qw(axi0_r0_response_demux axi0_r1_response_demux)], "$owner reports generated response-demux rules");
+    is_deeply($read->{generated_completion_signals}, [qw(axi0_r0_complete axi0_r1_complete)], "$owner reports generated completion signals");
+    is_deeply(
+        [map { $_->{id}{implementation_status} } @{$report->{transactions}}],
+        [qw(generated_issue_order_queue_matching generated_issue_order_queue_matching)],
+        "$owner reports generated dynamic queue matching ownership",
+    );
+
+    ok($report->{same_id_ordering}{generated_behavior}, "$owner marks same-ID ordering generated");
+    is_deeply($report->{same_id_ordering}{residue}, [], "$owner clears same-ID ordering residue");
+    is($policy->{implementation_status}, 'generated_dynamic_read_rid_issue_order_queue', "$owner reports generated dynamic read queue policy");
+    is($policy->{enforcement}, 'generated_dynamic_issue_order_queue', "$owner reports generated dynamic queue enforcement");
+    ok($policy->{accepted_same_id_reuse}, "$owner accepts dynamic same-ID reuse through queue");
+    ok($policy->{generated_queue_behavior}, "$owner marks generated dynamic queue behavior");
+    ok($policy->{dynamic_issue_order_queue_covered}, "$owner marks dynamic issue-order queue coverage");
+    is_deeply($policy->{covered_dynamic_transactions}, [qw(r0 r1)], "$owner reports covered dynamic queue transactions");
+    is($policy->{first_generated_scope}, 'read_rid_two_dynamic_transactions', "$owner reports first generated read queue scope");
+    is($policy->{active_id_uniqueness_policy}, 'not_required_for_issue_order_queue', "$owner does not require active dynamic ID uniqueness");
+
+    is($queue->{queue_state_representation}, 'compact_runtime_id_issue_order_slots', "$owner reports queue representation");
+    is_deeply($queue->{transactions}, [qw(r0 r1)], "$owner reports queue transaction order");
+    is($queue->{request_id_source}, 'axi0_arid', "$owner reports queue request ID capture source");
+    is($queue->{response_demux_strategy}, 'dynamic_issue_order_earliest_matching_slot', "$owner reports queue response-demux strategy");
+    is_deeply(
+        $queue->{slot_storage},
+        [
+            { name => 'axi0_read_dynamic_same_id_issue_order_slot0_r0_q', width => 1 },
+            { name => 'axi0_read_dynamic_same_id_issue_order_slot0_r1_q', width => 1 },
+            { name => 'axi0_read_dynamic_same_id_issue_order_slot0_id_q', width => 4 },
+            { name => 'axi0_read_dynamic_same_id_issue_order_slot1_r0_q', width => 1 },
+            { name => 'axi0_read_dynamic_same_id_issue_order_slot1_r1_q', width => 1 },
+            { name => 'axi0_read_dynamic_same_id_issue_order_slot1_id_q', width => 4 },
+        ],
+        "$owner reports queue slot storage",
+    );
+    ok(grep { $_ eq 'axi0_read_dynamic_same_id_issue_order_r0_r1_dequeue_enqueue_r0' } @{$queue->{generated_update_rules}}, "$owner reports same-cycle selected dequeue plus enqueue rule");
+    ok(grep { $_ eq 'axi0_read_dynamic_same_id_issue_order_response_has_selected_match' } @{$queue->{generated_assertions}}, "$owner reports dynamic queue selected-match assertion");
     my %residue = map { $_->{id} => 1 } @{$report->{unsupported_residue}};
     ok($residue{dynamic_transaction_id_behavior}, "$owner keeps future dynamic behavior residue visible");
 }

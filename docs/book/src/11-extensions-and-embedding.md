@@ -86,9 +86,11 @@ multi-beat output-bank behavior for the single-active dynamic read-data
 boundary, single-active dynamic write same-cycle release-and-recapture,
 generated bounded multiple dynamic write response-demux, generated
 bounded multiple dynamic read single-beat and burst-last response-demux,
-scalar read-data over those multiple dynamic read response-demux shapes, and
-report-only raw-`ARLEN` burst-length capture plus runtime beat-count/`RLAST`
-validation over the multiple dynamic last-beat read-data shape. Multiple
+generated bounded two-transaction all-dynamic read single-beat same-ID
+`RID` issue-order queue behavior, scalar read-data over those multiple
+dynamic read response-demux shapes, and report-only raw-`ARLEN`
+burst-length capture plus runtime beat-count/`RLAST` validation over the
+multiple dynamic last-beat read-data shape. Multiple
 dynamic multi-beat output-bank behavior was audited under
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.266`; `.267` selected `.268`, and `.268`
 now ships generated bounded multiple dynamic multi-beat output-bank behavior

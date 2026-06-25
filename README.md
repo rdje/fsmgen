@@ -2145,18 +2145,27 @@ behavior or burst-last `RID && RLAST` because the single-beat shape can reuse
 the runtime-ID queue model without final-beat-only dequeue, raw non-final
 beats, `RLAST`, read-data, raw `ARLEN`, runtime validation, multi-beat, or
 recapture consumer coupling.
-`.458` now selects `.459`, implementation of the bounded two-transaction
-all-dynamic read single-beat `RID` dynamic same-ID `issue-order-queue`
-behavior. The contract selector changes no behavior. It requires exactly two
-dynamic read transactions, `same-id-ordering.read (dynamic-id-reuse
-issue-order-queue)`, explicit generated `response-demux.read` with
-`response-scope single-beat`, `compact_runtime_id_issue_order_slots`,
-slot-local captured `ARID`, earliest matching `RID` response demux,
-same-cycle selected dequeue plus one enqueue, and queue-specific assertions.
-Read burst-last, read-data over queues, raw `ARLEN`/runtime, multi-beat,
-broader queue cardinality, mixed dynamic/static queues, scoreboards, direct
-backend behavior, backend-language variants, and VHDL remain future exact
-owners.
+`.459` now ships the bounded two-transaction all-dynamic read single-beat
+`RID` dynamic same-ID `issue-order-queue` behavior through support-accounted
+public sample
+`ppif/axi_manager_capacity_status_dynamic_read_same_id_issue_order_queue.ppif`.
+Generated `response-demux.read` now reports
+`bounded_dynamic_read_rid_issue_order_queue_demux_contract`,
+`generated_dynamic_issue_order_queue_demux`,
+`earliest_matching_captured_runtime_id`,
+`compact_runtime_id_issue_order_slots`, and
+`dynamic_issue_order_earliest_matching_slot` for exactly two all-dynamic read
+transactions with `response-scope single-beat`. Generated same-ID ordering
+reports `generated_dynamic_read_rid_issue_order_queue`,
+`first_generated_scope: read_rid_two_dynamic_transactions`,
+`accepted_same_id_reuse: true`, queue-specific assertions, slot-local `ARID`
+capture, same-cycle selected dequeue plus enqueue, earliest matching `RID`,
+and no same-ID ordering residue for the covered read family. Read burst-last,
+read-data over queues, raw `ARLEN`/runtime, multi-beat, broader queue
+cardinality, mixed dynamic/static queues, scoreboards, direct backend
+behavior, backend-language variants, and VHDL remain future exact owners.
+`.459` selects `.460`, the post dynamic read single-beat same-ID
+issue-order queue selector.
 No behavior
 changed in `.273`, `.274`, `.275`,
 `.277`, `.278`, `.279`, `.281`,
@@ -2252,7 +2261,9 @@ transaction-ID parser/report support for `(id dynamic)`, generated
 single-active dynamic write `BID` response matching plus same-cycle
 release-and-recapture, and generated
 single-active dynamic read single-beat `RID` response matching plus
-same-cycle release-and-recapture. Selector
+same-cycle release-and-recapture, plus generated bounded two-transaction
+all-dynamic read single-beat same-ID `RID` issue-order queue behavior.
+Selector
 `.228` selected `.229`, readiness audit for dynamic read burst-last/`RLAST`
 transaction-ID capture and response matching before any behavior changes.
 Selector `.178` selected
@@ -4528,6 +4539,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_WRITE_SAME_ID_ISSUE_ORDER_QUEUE_NEXT_SLICE_SELECTION.md` — selected dynamic read same-ID `issue-order-queue` readiness after the generated dynamic write `BID` queue shipped.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_READ_SAME_ID_ISSUE_ORDER_QUEUE_READINESS_AUDIT.md` — audited dynamic read same-ID `issue-order-queue` readiness and selected public contract selection for the first all-dynamic read single-beat `RID` queue.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_READ_SINGLE_BEAT_SAME_ID_ISSUE_ORDER_QUEUE_CONTRACT_SELECTION.md` — selected the public contract for the bounded two-transaction all-dynamic read single-beat `RID` dynamic same-ID `issue-order-queue` behavior.
+- `docs/AXI_IAL2_MANAGER_DYNAMIC_READ_SINGLE_BEAT_SAME_ID_ISSUE_ORDER_QUEUE_BEHAVIOR.md` — shipped generated bounded two-transaction all-dynamic read single-beat `RID` dynamic same-ID issue-order queue behavior.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_CONTRACT_SELECTION.md` — selected direct single-active dynamic write `BID` same-cycle release-and-recapture behavior under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_BEHAVIOR.md` — shipped single-active dynamic write `BID` same-cycle release-and-recapture under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_WRITE_RECAPTURE_NEXT_SLICE_SELECTION.md` — selected `.367`, public contract selection for first single-active dynamic read same-cycle release-and-recapture after dynamic write recapture shipped.
@@ -4620,6 +4632,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `ppif/axi_manager_capacity_status_dynamic_read_response_demux_multi_same_id_reject.ppif` — checked-in runnable `.ppif` sample for generated dynamic same-ID reject enforcement mapping over multiple all-dynamic read single-beat response-demux assertions, support-accounted through check JSON and semantic JSON.
 - `ppif/axi_manager_capacity_status_dynamic_read_response_demux_same_id_reject.ppif` — checked-in runnable `.ppif` sample for generated single-active dynamic same-ID reject enforcement mapping over read single-beat `RID` response-demux idle-or-releasing assertions, support-accounted through check JSON and semantic JSON.
 - `ppif/axi_manager_capacity_status_dynamic_write_same_id_issue_order_queue.ppif` — checked-in runnable `.ppif` sample for generated bounded two-transaction all-dynamic write `BID` dynamic same-ID issue-order queue behavior, support-accounted through check JSON and semantic JSON.
+- `ppif/axi_manager_capacity_status_dynamic_read_same_id_issue_order_queue.ppif` — checked-in runnable `.ppif` sample for generated bounded two-transaction all-dynamic read single-beat `RID` dynamic same-ID issue-order queue behavior, support-accounted through check JSON and semantic JSON.
 - `ppif/axi_manager_capacity_status_dynamic_read_data_multi.ppif` — checked-in runnable `.ppif` sample for generated scalar single-beat `RDATA`/`RRESP` capture over generated multiple dynamic read single-beat response-demux, support-accounted through check JSON and semantic JSON.
 - `ppif/axi_manager_capacity_status_dynamic_read_data_multi_last_beat.ppif` — checked-in runnable `.ppif` sample for generated scalar last-beat `RDATA`/`RRESP` capture over generated multiple dynamic read burst-last/`RLAST` response-demux, support-accounted through check JSON and semantic JSON.
 - `ppif/axi_manager_capacity_status_dynamic_read_data_multi_burst_length.ppif` — checked-in runnable `.ppif` sample for generated report-only raw-`ARLEN` burst-length capture over generated multiple dynamic read burst-last/`RLAST` response-demux and scalar last-beat read-data, support-accounted through check JSON and semantic JSON.

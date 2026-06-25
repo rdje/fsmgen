@@ -3126,18 +3126,27 @@ behavior or burst-last `RID && RLAST` because the single-beat shape can reuse
 the runtime-ID queue model without final-beat-only dequeue, raw non-final
 beats, `RLAST`, read-data, raw `ARLEN`, runtime validation, multi-beat, or
 recapture consumer coupling.
-`.458` now selects `.459`, implementation of the bounded two-transaction
-all-dynamic read single-beat `RID` dynamic same-ID `issue-order-queue`
-behavior. The contract selector changes no behavior. It requires exactly two
-dynamic read transactions, `same-id-ordering.read (dynamic-id-reuse
-issue-order-queue)`, explicit generated `response-demux.read` with
-`response-scope single-beat`, `compact_runtime_id_issue_order_slots`,
-slot-local captured `ARID`, earliest matching `RID` response demux,
-same-cycle selected dequeue plus one enqueue, and queue-specific assertions.
-Read burst-last, read-data over queues, raw `ARLEN`/runtime, multi-beat,
-broader queue cardinality, mixed dynamic/static queues, scoreboards, direct
-backend behavior, backend-language variants, and VHDL remain future exact
-owners.
+`.459` now ships the bounded two-transaction all-dynamic read single-beat
+`RID` dynamic same-ID `issue-order-queue` behavior through support-accounted
+public sample
+`ppif/axi_manager_capacity_status_dynamic_read_same_id_issue_order_queue.ppif`.
+Generated `response-demux.read` now reports
+`bounded_dynamic_read_rid_issue_order_queue_demux_contract`,
+`generated_dynamic_issue_order_queue_demux`,
+`earliest_matching_captured_runtime_id`,
+`compact_runtime_id_issue_order_slots`, and
+`dynamic_issue_order_earliest_matching_slot` for exactly two all-dynamic read
+transactions with `response-scope single-beat`. Generated same-ID ordering
+reports `generated_dynamic_read_rid_issue_order_queue`,
+`first_generated_scope: read_rid_two_dynamic_transactions`,
+`accepted_same_id_reuse: true`, queue-specific assertions, slot-local `ARID`
+capture, same-cycle selected dequeue plus enqueue, earliest matching `RID`,
+and no same-ID ordering residue for the covered read family. Read burst-last,
+read-data over queues, raw `ARLEN`/runtime, multi-beat, broader queue
+cardinality, mixed dynamic/static queues, scoreboards, direct backend
+behavior, backend-language variants, and VHDL remain future exact owners.
+`.459` selects `.460`, the post dynamic read single-beat same-ID
+issue-order queue selector.
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,

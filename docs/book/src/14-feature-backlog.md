@@ -8259,6 +8259,28 @@ broader queue cardinality, mixed dynamic/static queues, scoreboards, direct
 backend behavior, backend-language variants, and VHDL remain future exact
 owners.
 
+Dynamic read single-beat same-ID issue-order queue behavior:
+[AXI_IAL2_MANAGER_DYNAMIC_READ_SINGLE_BEAT_SAME_ID_ISSUE_ORDER_QUEUE_BEHAVIOR](../../AXI_IAL2_MANAGER_DYNAMIC_READ_SINGLE_BEAT_SAME_ID_ISSUE_ORDER_QUEUE_BEHAVIOR.md)
+ships `.459`, generated bounded two-transaction all-dynamic read single-beat
+`RID` dynamic same-ID `issue-order-queue` behavior. The public support-
+accounted sample is
+`ppif/axi_manager_capacity_status_dynamic_read_same_id_issue_order_queue.ppif`.
+FSMGen now generates compact runtime-ID issue-order slots with slot-local
+captured `ARID`, earliest matching `RID` response demux, same-cycle selected
+dequeue plus one enqueue, generated `r0`/`r1` completion outputs,
+queue-specific assertions, and report mode
+`bounded_dynamic_read_rid_issue_order_queue_demux_contract`.
+The same-ID ordering read policy reports
+`generated_dynamic_read_rid_issue_order_queue`,
+`first_generated_scope: read_rid_two_dynamic_transactions`,
+`accepted_same_id_reuse: true`, and no same-ID ordering residue for the
+covered read family. Read burst-last queues, read-data over dynamic queues,
+raw `ARLEN`/runtime, multi-beat output banks, broader queue cardinality,
+mixed dynamic/static queues, scoreboards, direct backend behavior,
+backend-language variants, and VHDL remain future exact owners. `.459`
+selects `.460`, a post dynamic read single-beat same-ID issue-order queue
+selector.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

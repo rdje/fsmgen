@@ -885,7 +885,18 @@ sub _normalize_response_demux(%args) {
             unless $read_family->{present};
 
         my $read_lifecycle = _auto_id_lifecycle_family_by_name($args{auto_id_lifecycle}, 'read');
-        my $dynamic_read_transaction = _response_demux_dynamic_read_transaction(
+        my $dynamic_read_issue_order_queue = _response_demux_dynamic_read_issue_order_queue_plan(
+            manager_name             => $args{manager_name},
+            transactions             => $args{transactions},
+            read_family              => $read_family,
+            read_lifecycle           => $read_lifecycle,
+            same_id_ordering_policy  => $args{same_id_ordering_policy},
+            storage                  => $args{storage},
+            read_max_pending         => $args{read_max_pending},
+        );
+        my $dynamic_read_transaction = ref($dynamic_read_issue_order_queue) eq 'HASH'
+            ? undef
+            : _response_demux_dynamic_read_transaction(
             manager_name             => $args{manager_name},
             transactions             => $args{transactions},
             read_family              => $read_family,
@@ -895,6 +906,7 @@ sub _normalize_response_demux(%args) {
             read_max_pending         => $args{read_max_pending},
         );
         my $queue_head_plan = ref($dynamic_read_transaction) eq 'HASH'
+            || ref($dynamic_read_issue_order_queue) eq 'HASH'
             ? undef
             : _response_demux_queue_head_plan_for_family(
                 family_name             => 'read',
@@ -911,6 +923,7 @@ sub _normalize_response_demux(%args) {
             read_lifecycle           => $read_lifecycle,
             queue_head_plan          => $queue_head_plan,
             dynamic_read_transaction => $dynamic_read_transaction,
+            dynamic_read_issue_order_queue => $dynamic_read_issue_order_queue,
             read_data_present        => $args{read_data_present},
         );
     }
@@ -931,6 +944,7 @@ sub _normalize_response_demux(%args) {
         ? (!$has_write_contract
             && ($read_mode eq 'bounded_dynamic_read_rid_demux_contract'
                 || $read_mode eq 'bounded_dynamic_read_rid_rlast_demux_contract'
+                || $read_mode eq 'bounded_dynamic_read_rid_issue_order_queue_demux_contract'
                 || $read_mode eq 'bounded_multi_dynamic_read_rid_demux_contract'
                 || $read_mode eq 'bounded_multi_dynamic_read_rid_rlast_demux_contract'
                 || $read_mode eq 'bounded_mixed_dynamic_static_read_rid_demux_contract'
@@ -1173,6 +1187,80 @@ sub _response_demux_dynamic_write_issue_order_queue_plan(%args) {
         groups                       => [
             {
                 family                  => 'write',
+                transactions            => [map { $_->{transaction} } @states],
+                depth                   => 2,
+                request_id_source       => $states[0]{request_id_source},
+                request_id_width        => $states[0]{family_width},
+                runtime_id_queue_key    => 'captured_request_id',
+                queue_state_representation => 'compact_runtime_id_issue_order_slots',
+                response_demux_strategy => 'dynamic_issue_order_earliest_matching_slot',
+                dequeue_event_source    => 'dynamic_issue_order_earliest_matching_slot',
+            },
+        ],
+    };
+}
+
+sub _response_demux_dynamic_read_issue_order_queue_plan(%args) {
+    my @read_transactions = grep { ($_->{kind} // '') eq 'read' } @{$args{transactions} || []};
+    my @dynamic = grep {
+        ref($_->{id}) eq 'HASH' && ($_->{id}{policy} // '') eq 'dynamic'
+    } @read_transactions;
+    return undef unless @dynamic;
+
+    my $policy = _same_id_ordering_policy_for_family($args{same_id_ordering_policy}, 'read');
+    return undef unless _same_id_ordering_policy_has_dynamic_issue_order_queue($policy);
+
+    confess "AXI manager capacity/status IAL2 contract response_demux.read dynamic-id-reuse issue-order-queue cannot be combined with read auto_id_lifecycle metadata in this slice\n"
+        if ref($args{read_lifecycle}) eq 'HASH';
+    confess "AXI manager capacity/status IAL2 contract response_demux.read dynamic-id-reuse issue-order-queue requires exactly two all-dynamic read transactions in this slice\n"
+        unless @read_transactions == 2 && @dynamic == 2;
+    confess "AXI manager capacity/status IAL2 contract response_demux.read dynamic-id-reuse issue-order-queue requires read-max-pending at least 2\n"
+        unless ($args{read_max_pending} // 0) >= 2;
+    confess "AXI manager capacity/status IAL2 contract response_demux.read dynamic-id-reuse issue-order-queue requires read ID-family metadata\n"
+        unless ref($args{read_family}) eq 'HASH' && $args{read_family}{present};
+
+    my $completion_fanin = _fanin_expression([map { $_->{completion_event} } @read_transactions]);
+    my @states;
+    for my $transaction (@dynamic) {
+        my $id = $transaction->{id};
+        $id->{implementation_status} = 'generated_issue_order_queue_matching';
+        push @states, {
+            family                  => 'read',
+            transaction             => $transaction->{name},
+            tag                     => $transaction->{tag},
+            request_event           => $transaction->{request_event},
+            completion_event        => $transaction->{completion_event},
+            request_id_source       => $id->{request_id_source},
+            response_id_signal      => $id->{response_id_signal},
+            family_width            => $id->{family_width},
+            request_acceptance_expr => _same_id_admitted_request_guard_expr(
+                request_event    => $transaction->{request_event},
+                pending_storage  => $args{storage}{pending_reads},
+                max_pending      => $args{read_max_pending},
+                completion_fanin => $completion_fanin,
+            ),
+        };
+    }
+
+    my %request_id_source = map { $_->{request_id_source} => 1 } @states;
+    confess "AXI manager capacity/status IAL2 contract response_demux.read dynamic-id-reuse issue-order-queue requires one shared read request ID source in this slice\n"
+        unless keys(%request_id_source) == 1;
+
+    return {
+        mode                         => 'bounded_dynamic_read_rid_issue_order_queue_demux_contract',
+        transaction_completion_source => 'generated_dynamic_issue_order_queue_demux',
+        transaction_completion_semantics => 'earliest_matching_captured_runtime_id',
+        dynamic_transactions          => [map { $_->{transaction} } @states],
+        generated_completion_signals  => [map { $_->{completion_event} } @states],
+        request_id_source             => $states[0]{request_id_source},
+        request_id_width              => $states[0]{family_width},
+        queue_state_representation    => 'compact_runtime_id_issue_order_slots',
+        response_demux_strategy       => 'dynamic_issue_order_earliest_matching_slot',
+        runtime_id_queue_key          => 'captured_request_id',
+        dynamic_queue_transaction_state => \@states,
+        groups                       => [
+            {
+                family                  => 'read',
                 transactions            => [map { $_->{transaction} } @states],
                 depth                   => 2,
                 request_id_source       => $states[0]{request_id_source},
@@ -1804,6 +1892,9 @@ sub _response_demux_residue($normalized) {
         if ref($read) eq 'HASH'
             && $read->{generated_behavior}
             && @{$read->{dynamic_transaction_state} || []};
+    return qw(same_id_ordering read_data_interleaving bursts)
+        if ref($read) eq 'HASH'
+            && ($read->{transaction_completion_source} // '') eq 'generated_dynamic_issue_order_queue_demux';
 
     return qw(read_data_interleaving bursts)
         if ref($read) eq 'HASH' && $read->{generated_behavior};
@@ -2117,6 +2208,39 @@ sub _normalize_response_demux_read(%args) {
     );
     confess "AXI manager capacity/status IAL2 contract response_demux.read.transaction_completion must be generated in this slice\n"
         unless $transaction_completion eq 'generated';
+
+    if (ref($args{dynamic_read_issue_order_queue}) eq 'HASH') {
+        my $plan = $args{dynamic_read_issue_order_queue};
+        for my $state (@{$plan->{dynamic_queue_transaction_state} || []}) {
+            confess "AXI manager capacity/status IAL2 contract response_demux.read generated transaction completion signal '$state->{completion_event}' must be distinct from response_event '$response_event'\n"
+                if $state->{completion_event} eq $response_event;
+        }
+        confess "AXI manager capacity/status IAL2 contract response_demux.read dynamic-id-reuse issue-order-queue supports only response_scope single-beat in this slice\n"
+            unless $response_scope eq 'single-beat';
+        confess "AXI manager capacity/status IAL2 contract response_demux.read.last_signal is only supported with response_scope burst-last\n"
+            if exists($raw->{last_signal}) || exists($raw->{last_signal_width});
+        return {
+            mode                         => $plan->{mode},
+            generated_behavior           => 0,
+            implementation_status        => 'selected_not_generated',
+            response_event                => $response_event,
+            response_event_role           => 'raw_accepted_read_response',
+            response_scope                => 'single_beat',
+            response_id_signal            => $args{read_family}{response_id_signal},
+            response_id_direction         => 'generated_input',
+            transaction_completion_source => $plan->{transaction_completion_source},
+            transaction_completion_semantics => $plan->{transaction_completion_semantics},
+            dynamic_transactions          => _clone_jsonish($plan->{dynamic_transactions}),
+            request_id_source             => $plan->{request_id_source},
+            request_id_width              => $plan->{request_id_width},
+            runtime_id_queue_key          => $plan->{runtime_id_queue_key},
+            queue_state_representation    => $plan->{queue_state_representation},
+            response_demux_strategy       => $plan->{response_demux_strategy},
+            dynamic_queue_transaction_state => _clone_jsonish($plan->{dynamic_queue_transaction_state}),
+            same_id_issue_order_queues    => _clone_jsonish($plan->{groups}),
+            selected_completion_signals   => _clone_jsonish($plan->{generated_completion_signals}),
+        };
+    }
 
     if (ref($args{dynamic_read_transaction}) eq 'HASH') {
         my $plan = $args{dynamic_read_transaction};
@@ -3956,6 +4080,8 @@ sub _same_id_ordering_dynamic_policy_with_issue_order_queue_behavior(%args) {
         $policy->{$family_name}{request_conflict_policy} = 'generated_issue_order_queue_onehot0_enqueue';
         $policy->{$family_name}{first_generated_scope} = 'write_bid_two_dynamic_transactions'
             if $family_name eq 'write';
+        $policy->{$family_name}{first_generated_scope} = 'read_rid_two_dynamic_transactions'
+            if $family_name eq 'read';
         $policy->{$family_name}{response_demux_mode} = $entry->{mode}
             if ref($entry) eq 'HASH' && defined $entry->{mode};
         $policy->{$family_name}{response_demux_transaction_completion_source} =
@@ -4774,8 +4900,7 @@ sub _build_same_id_issue_order_queue_behavior(%args) {
     } qw(write read);
     return undef if @dynamic_issue_order_queue_families && @queue_head_families;
     return _build_dynamic_same_id_issue_order_queue_behavior(%args)
-        if @dynamic_issue_order_queue_families == 1
-            && $dynamic_issue_order_queue_families[0] eq 'write';
+        if @dynamic_issue_order_queue_families == 1;
     return undef unless @queue_head_families == 1;
 
     my $family_name = $queue_head_families[0];
@@ -4936,14 +5061,20 @@ sub _response_demux_family_has_dynamic_issue_order_queue_contract($response_demu
 
 sub _build_dynamic_same_id_issue_order_queue_behavior(%args) {
     my $demux = $args{response_demux};
-    my $entry = $demux->{write};
+    my @families = grep {
+        _response_demux_family_has_dynamic_issue_order_queue_contract($demux, $_)
+    } qw(write read);
+    return undef unless @families == 1;
+
+    my $family_name = $families[0];
+    my $entry = $demux->{$family_name};
     return undef unless ref($entry) eq 'HASH' && !$entry->{generated_behavior};
     return undef unless ($entry->{transaction_completion_source} // '') eq 'generated_dynamic_issue_order_queue_demux';
 
-    my $policy = _same_id_ordering_policy_for_family($args{same_id_ordering_policy}, 'write');
+    my $policy = _same_id_ordering_policy_for_family($args{same_id_ordering_policy}, $family_name);
     return undef unless _same_id_ordering_policy_has_dynamic_issue_order_queue($policy);
 
-    my $id_family = ref($args{id_families}) eq 'HASH' ? $args{id_families}{write} : undef;
+    my $id_family = ref($args{id_families}) eq 'HASH' ? $args{id_families}{$family_name} : undef;
     return undef unless ref($id_family) eq 'HASH' && $id_family->{present};
 
     my $groups = $entry->{same_id_issue_order_queues};
@@ -4962,7 +5093,7 @@ sub _build_dynamic_same_id_issue_order_queue_behavior(%args) {
         my $transaction = $transaction_by_name{$transaction_name};
         my $state = $dynamic_state_by_name{$transaction_name};
         return undef unless ref($transaction) eq 'HASH'
-            && ($transaction->{kind} // '') eq 'write'
+            && ($transaction->{kind} // '') eq $family_name
             && ref($transaction->{id}) eq 'HASH'
             && ($transaction->{id}{policy} // '') eq 'dynamic'
             && ref($state) eq 'HASH';
@@ -4976,7 +5107,7 @@ sub _build_dynamic_same_id_issue_order_queue_behavior(%args) {
         };
     }
 
-    my $prefix = _dynamic_same_id_issue_order_queue_group_prefix($args{manager_name}, 'write');
+    my $prefix = _dynamic_same_id_issue_order_queue_group_prefix($args{manager_name}, $family_name);
     my %slot_signal;
     my %slot_id_signal;
     my @storage;
@@ -4998,10 +5129,13 @@ sub _build_dynamic_same_id_issue_order_queue_behavior(%args) {
         ];
     }
 
+    my $implementation_status = $family_name eq 'write'
+        ? 'generated_dynamic_write_bid_issue_order_queue'
+        : 'generated_dynamic_read_rid_issue_order_queue';
     my $queue_group = {
-        family                  => 'write',
+        family                  => $family_name,
         dynamic_issue_order_queue => 1,
-        implementation_status   => 'generated_dynamic_write_bid_issue_order_queue',
+        implementation_status   => $implementation_status,
         id_width                => $id_family->{width},
         depth                   => 2,
         queue_state_representation => 'compact_runtime_id_issue_order_slots',
@@ -5028,10 +5162,10 @@ sub _build_dynamic_same_id_issue_order_queue_behavior(%args) {
         mode               => 'bounded_dynamic_same_id_issue_order_queue',
         generated_behavior => 1,
         families           => {
-            write => {
-                family                => 'write',
+            $family_name => {
+                family                => $family_name,
                 generated_behavior    => 1,
-                implementation_status => 'generated_dynamic_write_bid_issue_order_queue',
+                implementation_status => $implementation_status,
                 groups                => [$queue_group],
             },
         },
@@ -6892,7 +7026,7 @@ sub _dynamic_same_id_issue_order_queue_assertion_specs_for_group($group) {
         {
             name      => "${prefix}_request_onehot0",
             condition => _same_id_at_most_one_expr(@enqueue_pulses),
-            message   => "$group->{family} dynamic same-ID issue-order queue admits at most one write request",
+            message   => "$group->{family} dynamic same-ID issue-order queue admits at most one request",
         },
         {
             name      => "${prefix}_enqueue_requires_space_or_dequeue",
