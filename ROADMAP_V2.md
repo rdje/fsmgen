@@ -3352,7 +3352,18 @@ include the selected dequeued transaction, while existing depth-2 and
 same-transaction refresh rule names stay stable. Read depth-3 queues,
 read-data, mixed dynamic/static queues, scoreboards, arbitrary cardinality,
 direct backend behavior, backend-language variants, and VHDL remain future
-owners.
+owners. `.483` now selects `.484`, readiness audit for generated
+all-dynamic read single-beat `RID` same-ID `issue-order-queue` cardinality
+widening from two transactions to one bounded depth-3, three-transaction
+queue. Read single-beat is the smallest read-side depth-3 audit after the
+write proof because it adds generated `RID` completion without `RLAST`,
+read-data, raw `ARLEN`, runtime validation, output banks, mixed static-ID
+exclusion, or scoreboard semantics. A RAM-guarded temporary read-depth3
+schedule probe stopped at host-memory cutoff before producing data; no
+unguarded retry or cutoff raise was used. Backend-language variants and
+external converters such as `sv2v` remain outside this IAL2 slice;
+FSMGen-owned generation/lowering remains the default under the backend
+portability frontier.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

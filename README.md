@@ -2363,7 +2363,18 @@ include the selected dequeued transaction, while existing depth-2 and
 same-transaction refresh rule names stay stable. Read depth-3 queues,
 read-data, mixed dynamic/static queues, scoreboards, arbitrary cardinality,
 direct backend behavior, backend-language variants, and VHDL remain future
-owners.
+owners. `.483` now selects `.484`, readiness audit for generated
+all-dynamic read single-beat `RID` same-ID `issue-order-queue` cardinality
+widening from two transactions to one bounded depth-3, three-transaction
+queue. Read single-beat is the smallest read-side depth-3 audit after the
+write proof because it adds generated `RID` completion without `RLAST`,
+read-data, raw `ARLEN`, runtime validation, output banks, mixed static-ID
+exclusion, or scoreboard semantics. A RAM-guarded temporary read-depth3
+schedule probe stopped at host-memory cutoff before producing data; no
+unguarded retry or cutoff raise was used. Backend-language variants and
+external converters such as `sv2v` remain outside this IAL2 slice;
+FSMGen-owned generation/lowering remains the default under the backend
+portability frontier.
 
 No behavior
 changed in `.273`, `.274`, `.275`,
@@ -4762,6 +4773,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_QUEUE_RECAPTURE_REPORT_NEXT_SLICE_SELECTION.md` — selected depth-3 all-dynamic write BID same-ID issue-order queue readiness as the next dynamic queue widening audit after identity-recapture report alignment.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_DEPTH3_SAME_ID_ISSUE_ORDER_QUEUE_READINESS_AUDIT.md` — audited generated all-dynamic write BID depth-3 same-ID issue-order queue readiness and selected direct bounded implementation.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_DEPTH3_SAME_ID_ISSUE_ORDER_QUEUE_BEHAVIOR.md` — shipped generated all-dynamic write BID depth-3 same-ID issue-order queue behavior with rule-name disambiguation for ambiguous cross-transaction enqueue rules.
+- `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_WRITE_DEPTH3_SAME_ID_ISSUE_ORDER_QUEUE_NEXT_SLICE_SELECTION.md` — selected generated all-dynamic read single-beat RID depth-3 same-ID issue-order queue readiness as the next dynamic queue widening audit after write depth-3 behavior.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_CONTRACT_SELECTION.md` — selected direct single-active dynamic write `BID` same-cycle release-and-recapture behavior under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_BEHAVIOR.md` — shipped single-active dynamic write `BID` same-cycle release-and-recapture under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_WRITE_RECAPTURE_NEXT_SLICE_SELECTION.md` — selected `.367`, public contract selection for first single-active dynamic read same-cycle release-and-recapture after dynamic write recapture shipped.

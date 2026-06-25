@@ -8599,6 +8599,18 @@ cross-transaction selected-dequeue-plus-enqueue rules include the selected
 dequeued transaction in the generated rule name; existing depth-2 and
 same-transaction refresh names remain stable.
 
+Post dynamic write depth-3 same-ID issue-order queue selector:
+[AXI_IAL2_MANAGER_POST_DYNAMIC_WRITE_DEPTH3_SAME_ID_ISSUE_ORDER_QUEUE_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_DYNAMIC_WRITE_DEPTH3_SAME_ID_ISSUE_ORDER_QUEUE_NEXT_SLICE_SELECTION.md)
+selects `.484`, readiness audit for generated all-dynamic read single-beat
+`RID` same-ID `issue-order-queue` cardinality widening from two transactions
+to one bounded depth-3, three-transaction queue. Read single-beat is the
+smallest read-side depth-3 audit after the write proof because it adds
+generated `RID` completion without `RLAST`, read-data, raw `ARLEN`, runtime
+validation, output banks, mixed static-ID exclusion, or scoreboard semantics.
+Backend-language variants and external converters such as `sv2v` remain
+outside this IAL2 slice; FSMGen-owned generation/lowering remains the default
+under the backend portability frontier.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after
