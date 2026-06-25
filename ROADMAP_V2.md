@@ -3408,7 +3408,24 @@ and RLAST scope-reporting gates. A direct helper probe produced 99 transition
 rules, 20 assertions, zero duplicate names, the non-final no-dequeue
 assertion, the slot2 onehot assertion, the `r2` completion-selected-match
 assertion, the tail-selected recapture rule, and the disambiguated
-cross-transaction enqueue rule.
+cross-transaction enqueue rule. `.488` now ships that generated
+three-transaction read burst-last `RID && RLAST` same-ID `issue-order-queue`
+behavior through support-accounted public sample
+`ppif/axi_manager_capacity_status_dynamic_read_burst_last_depth3_same_id_issue_order_queue.ppif`.
+The response-demux report lists `r0`/`r1`/`r2`, generated response-demux
+rules, generated completions,
+`generated_dynamic_issue_order_queue_demux_last_beat`, and
+`read_rid_rlast_three_dynamic_transactions`. The generated queue allocates
+three compact runtime-ID slots, gates completion and dequeue on earliest
+matching captured `RID` plus one-bit `axi0_rlast`, keeps matching non-final
+beats from dequeuing, and reports the slot2 onehot and `r2`
+completion-selected-match assertions. Existing depth-2 RLAST queues,
+depth-3 single-beat read queues, and depth-3 write queues remain unchanged.
+Read-data over depth-3 queues, mixed dynamic/static queues, scoreboards,
+arbitrary cardinality, direct backend behavior, backend-language variants,
+external converter dependencies such as `sv2v`, and VHDL remain deferred;
+FSMGen-owned generation/lowering remains the default. `.489` is the next
+post-behavior selector.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

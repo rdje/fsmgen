@@ -8668,6 +8668,24 @@ rule. Read-data over depth-3 queues, mixed dynamic/static queues, scoreboards,
 arbitrary cardinality, backend-language variants, external converter
 dependencies, and VHDL remain deferred.
 
+Dynamic read burst-last depth-3 same-ID issue-order queue behavior:
+[AXI_IAL2_MANAGER_DYNAMIC_READ_BURST_LAST_DEPTH3_SAME_ID_ISSUE_ORDER_QUEUE_BEHAVIOR](../../AXI_IAL2_MANAGER_DYNAMIC_READ_BURST_LAST_DEPTH3_SAME_ID_ISSUE_ORDER_QUEUE_BEHAVIOR.md)
+ships `.488`, generated support through
+`ppif/axi_manager_capacity_status_dynamic_read_burst_last_depth3_same_id_issue_order_queue.ppif`.
+The generated read queue covers `r0`, `r1`, and `r2`, allocates three compact
+runtime-ID issue-order slots, captures `ARID` per slot, and completes by
+earliest matching captured `RID` plus one-bit `axi0_rlast`. Matching
+non-final beats do not dequeue the queue. The report uses
+`bounded_dynamic_read_rid_rlast_issue_order_queue_demux_contract`,
+`generated_dynamic_issue_order_queue_demux_last_beat`,
+`read_rid_rlast_three_dynamic_transactions`, queue depth 3, and queue-owned
+same-transaction captured-ID refresh fields. Existing depth-2 RLAST queues,
+depth-3 single-beat read queues, and depth-3 write queues remain stable.
+Read-data over depth-3 queues, mixed dynamic/static queues, scoreboards,
+arbitrary cardinality, direct backend behavior, backend-language variants,
+external converter dependencies such as `sv2v`, and VHDL remain deferred;
+FSMGen-owned generation/lowering remains the default.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

@@ -2419,7 +2419,24 @@ and RLAST scope-reporting gates. A direct helper probe produced 99 transition
 rules, 20 assertions, zero duplicate names, the non-final no-dequeue
 assertion, the slot2 onehot assertion, the `r2` completion-selected-match
 assertion, the tail-selected recapture rule, and the disambiguated
-cross-transaction enqueue rule.
+cross-transaction enqueue rule. `.488` now ships that generated
+three-transaction read burst-last `RID && RLAST` same-ID `issue-order-queue`
+behavior through support-accounted public sample
+`ppif/axi_manager_capacity_status_dynamic_read_burst_last_depth3_same_id_issue_order_queue.ppif`.
+The response-demux report lists `r0`/`r1`/`r2`, generated
+`axi0_r0_response_demux`/`axi0_r1_response_demux`/`axi0_r2_response_demux`
+rules, generated completions, `generated_dynamic_issue_order_queue_demux_last_beat`,
+and `read_rid_rlast_three_dynamic_transactions`. The generated queue
+allocates three compact runtime-ID slots, gates completion and dequeue on
+earliest matching captured `RID` plus one-bit `axi0_rlast`, keeps matching
+non-final beats from dequeuing, and reports the slot2 onehot and `r2`
+completion-selected-match assertions. Existing depth-2 RLAST queues,
+depth-3 single-beat read queues, and depth-3 write queues remain unchanged.
+Read-data over depth-3 queues, mixed dynamic/static queues, scoreboards,
+arbitrary cardinality, direct backend behavior, backend-language variants,
+external converter dependencies such as `sv2v`, and VHDL remain deferred;
+FSMGen-owned generation/lowering remains the default. `.489` is the next
+post-behavior selector.
 
 No behavior
 changed in `.273`, `.274`, `.275`,
@@ -4821,6 +4838,8 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_WRITE_DEPTH3_SAME_ID_ISSUE_ORDER_QUEUE_NEXT_SLICE_SELECTION.md` — selected generated all-dynamic read single-beat RID depth-3 same-ID issue-order queue readiness as the next dynamic queue widening audit after write depth-3 behavior.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_READ_DEPTH3_SAME_ID_ISSUE_ORDER_QUEUE_READINESS_AUDIT.md` — audited generated all-dynamic read single-beat RID depth-3 same-ID issue-order queue readiness and selected direct bounded implementation.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_READ_DEPTH3_SAME_ID_ISSUE_ORDER_QUEUE_BEHAVIOR.md` — shipped generated all-dynamic read single-beat RID depth-3 same-ID issue-order queue behavior.
+- `docs/AXI_IAL2_MANAGER_DYNAMIC_READ_BURST_LAST_DEPTH3_SAME_ID_ISSUE_ORDER_QUEUE_READINESS_AUDIT.md` — audited generated all-dynamic read burst-last `RID && RLAST` depth-3 same-ID issue-order queue readiness and selected direct bounded implementation.
+- `docs/AXI_IAL2_MANAGER_DYNAMIC_READ_BURST_LAST_DEPTH3_SAME_ID_ISSUE_ORDER_QUEUE_BEHAVIOR.md` — shipped generated all-dynamic read burst-last `RID && RLAST` depth-3 same-ID issue-order queue behavior.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_CONTRACT_SELECTION.md` — selected direct single-active dynamic write `BID` same-cycle release-and-recapture behavior under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_BEHAVIOR.md` — shipped single-active dynamic write `BID` same-cycle release-and-recapture under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_WRITE_RECAPTURE_NEXT_SLICE_SELECTION.md` — selected `.367`, public contract selection for first single-active dynamic read same-cycle release-and-recapture after dynamic write recapture shipped.
@@ -4917,6 +4936,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `ppif/axi_manager_capacity_status_dynamic_read_same_id_issue_order_queue.ppif` — checked-in runnable `.ppif` sample for generated bounded two-transaction all-dynamic read single-beat `RID` dynamic same-ID issue-order queue behavior, support-accounted through check JSON and semantic JSON.
 - `ppif/axi_manager_capacity_status_dynamic_read_depth3_same_id_issue_order_queue.ppif` — checked-in runnable `.ppif` sample for generated bounded three-transaction all-dynamic read single-beat `RID` dynamic same-ID issue-order queue behavior, support-accounted through check JSON and semantic JSON.
 - `ppif/axi_manager_capacity_status_dynamic_read_burst_last_same_id_issue_order_queue.ppif` — checked-in runnable `.ppif` sample for generated bounded two-transaction all-dynamic read burst-last `RID && RLAST` dynamic same-ID issue-order queue behavior, support-accounted through check JSON and semantic JSON.
+- `ppif/axi_manager_capacity_status_dynamic_read_burst_last_depth3_same_id_issue_order_queue.ppif` — checked-in runnable `.ppif` sample for generated bounded three-transaction all-dynamic read burst-last `RID && RLAST` dynamic same-ID issue-order queue behavior, support-accounted through check JSON and semantic JSON.
 - `ppif/axi_manager_capacity_status_dynamic_read_data_multi.ppif` — checked-in runnable `.ppif` sample for generated scalar single-beat `RDATA`/`RRESP` capture over generated multiple dynamic read single-beat response-demux, support-accounted through check JSON and semantic JSON.
 - `ppif/axi_manager_capacity_status_dynamic_read_data_multi_last_beat.ppif` — checked-in runnable `.ppif` sample for generated scalar last-beat `RDATA`/`RRESP` capture over generated multiple dynamic read burst-last/`RLAST` response-demux, support-accounted through check JSON and semantic JSON.
 - `ppif/axi_manager_capacity_status_dynamic_read_data_multi_burst_length.ppif` — checked-in runnable `.ppif` sample for generated report-only raw-`ARLEN` burst-length capture over generated multiple dynamic read burst-last/`RLAST` response-demux and scalar last-beat read-data, support-accounted through check JSON and semantic JSON.

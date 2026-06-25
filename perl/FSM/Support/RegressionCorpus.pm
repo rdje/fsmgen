@@ -230,6 +230,17 @@ my @REGRESSION_CORPUS = (
         expected_semantic_source_root_kind => 'fsm',
     },
     {
+        id => 'intent.ppif_axi_manager_capacity_status_dynamic_read_burst_last_depth3_same_id_issue_order_queue',
+        relpath => 'ppif/axi_manager_capacity_status_dynamic_read_burst_last_depth3_same_id_issue_order_queue.ppif',
+        family => 'protocol_fixture',
+        classification => 'supported_smoke',
+        coverage => 'ial2_ppif_manager_capacity_status_dynamic_read_burst_last_depth3_same_id_issue_order_queue_pipeline_cli',
+        source_kind => 'ppif',
+        strict_supported => 1,
+        expected_module_name => 'axi0_capacity_status',
+        expected_semantic_source_root_kind => 'fsm',
+    },
+    {
         id => 'intent.ppif_axi_manager_capacity_status_dynamic_read_same_id_issue_order_queue_read_data',
         relpath => 'ppif/axi_manager_capacity_status_dynamic_read_same_id_issue_order_queue_read_data.ppif',
         family => 'protocol_fixture',
