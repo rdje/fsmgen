@@ -3278,16 +3278,16 @@ The generator admits only the exact two-transaction all-dynamic burst-last
 queue report-only shape, emits generated `axi0_arlen`, per-transaction
 raw-`ARLEN` storage, request-capture rules, and reports
 `generated_dynamic_read_issue_order_queue_response_demux_last_beat_completion_pulse`
-with `burst_length_validation: report_only`. `.470` now selects `.471`,
-direct bounded implementation of runtime beat-count/`RLAST` validation over
-that generated dynamic read same-ID `issue-order-queue` last-beat raw-`ARLEN`
-shape. Existing `read-data.read` `burst-length` syntax is sufficient; the
-remaining behavior work is local dynamic queue coverage admission plus
-generated expected-beat storage, beat-count storage/rules, and
-beat-count/`RLAST` assertions. Multi-beat output banks, queue recapture
-widening, broader queue cardinality, mixed dynamic/static queues, scoreboards,
-direct backend behavior, backend-language variants, and VHDL remain future
-exact owners.
+with `burst_length_validation: report_only`. `.471` now ships runtime
+beat-count/`RLAST` validation over that generated dynamic read same-ID
+`issue-order-queue` last-beat raw-`ARLEN` shape through
+`ppif/axi_manager_capacity_status_dynamic_read_burst_last_same_id_issue_order_queue_read_data_burst_length_runtime_assertion.ppif`.
+The generator emits expected-beat storage, beat-count storage, request-time
+`ARLEN[4:0] + 5'd1` initialization, matched queue read-beat increments, and
+four beat-count/`RLAST` assertions per transaction while preserving `.469`.
+Multi-beat output banks, queue recapture widening, broader queue cardinality,
+mixed dynamic/static queues, scoreboards, direct backend behavior,
+backend-language variants, and VHDL remain future exact owners.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

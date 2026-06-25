@@ -107,6 +107,15 @@ my @DYNAMIC_CASES = (
         behavior     => 'dynamic_read_burst_last_same_id_issue_order_queue_read_data_burst_length',
     },
     {
+        label        => 'dynamic read RID/RLAST same-ID issue-order queue read-data runtime burst-length validation',
+        relpath      => 'ppif/axi_manager_capacity_status_dynamic_read_burst_last_same_id_issue_order_queue_read_data_burst_length_runtime_assertion.ppif',
+        object_id    => 'axi-manager-capacity-status-dynamic-read-burst-last-same-id-issue-order-queue-read-data-burst-length-runtime-assertion',
+        intent_name  => 'axi_manager_capacity_status_dynamic_read_burst_last_same_id_issue_order_queue_read_data_burst_length_runtime_assertion',
+        entry_id     => 'intent.ppif_axi_manager_capacity_status_dynamic_read_burst_last_same_id_issue_order_queue_read_data_burst_length_runtime_assertion',
+        coverage     => 'ial2_ppif_manager_capacity_status_dynamic_read_burst_last_same_id_issue_order_queue_read_data_burst_length_runtime_assertion_pipeline_cli',
+        behavior     => 'dynamic_read_burst_last_same_id_issue_order_queue_read_data_burst_length_runtime_assertion',
+    },
+    {
         label        => 'mixed dynamic/static write BID response demux',
         relpath      => 'ppif/axi_manager_capacity_status_write_mixed_dynamic_static_response_demux.ppif',
         object_id    => 'axi-manager-capacity-status-write-mixed-dynamic-static-response-demux',
@@ -1064,7 +1073,10 @@ sub assert_dynamic_behavior {
         return;
     }
 
-    if ($case->{behavior} eq 'dynamic_read_burst_last_same_id_issue_order_queue_read_data_burst_length') {
+    if ($case->{behavior} eq 'dynamic_read_burst_last_same_id_issue_order_queue_read_data_burst_length'
+        || $case->{behavior} eq 'dynamic_read_burst_last_same_id_issue_order_queue_read_data_burst_length_runtime_assertion') {
+        my $runtime_validation = $case->{behavior} eq 'dynamic_read_burst_last_same_id_issue_order_queue_read_data_burst_length_runtime_assertion';
+        my $validation = $runtime_validation ? 'runtime_assertion' : 'report_only';
         like($isf, qr/\(input axi0_r0_request\)/, 'dynamic read burst-last issue-order queue read-data burst-length declares r0 request input');
         like($isf, qr/\(input axi0_r1_request\)/, 'dynamic read burst-last issue-order queue read-data burst-length declares r1 request input');
         like($isf, qr/\(input axi0_arid \(width 4\)\)/, 'dynamic read burst-last issue-order queue read-data burst-length declares ARID input');
@@ -1079,19 +1091,45 @@ sub assert_dynamic_behavior {
         like($isf, qr/\(rule axi0_r1_burst_length_capture axi0_r1_request\s+\(axi0_r1_arlen_q axi0_arlen\)\)/, 'dynamic read burst-last issue-order queue read-data burst-length captures r1 ARLEN under request');
         like($isf, qr/\(rule axi0_r1_response_demux [\s\S]*axi0_read_dynamic_same_id_issue_order_slot0_id_q[\s\S]*axi0_read_dynamic_same_id_issue_order_slot1_id_q[\s\S]*axi0_rlast[\s\S]*\(pulse axi0_r1_complete\)\)/, 'dynamic read burst-last issue-order queue read-data burst-length keeps queue-owned r1 RID/RLAST demux');
         like($isf, qr/\(rule axi0_r1_read_data_capture axi0_r1_complete\s+\(axi0_r1_last_rdata axi0_rdata\)\s+\(axi0_r1_last_rresp axi0_rresp\)\)/, 'dynamic read burst-last issue-order queue read-data burst-length captures r1 payload under queue last-beat completion');
+        if ($runtime_validation) {
+            for my $transaction (qw(r0 r1)) {
+                like($isf, qr/\(var axi0_${transaction}_expected_beats_q \(width 5\)\)/, "dynamic read burst-last issue-order queue runtime burst-length declares $transaction expected-beat storage");
+                like($isf, qr/\(var axi0_${transaction}_read_beat_count_q \(width 5\)\)/, "dynamic read burst-last issue-order queue runtime burst-length declares $transaction read-beat counter");
+                like($isf, qr/\(rule axi0_${transaction}_beat_count_init axi0_${transaction}_request\s+\(axi0_${transaction}_expected_beats_q \(\+ axi0_arlen\[4:0\] 5'd1\)\)\s+\(axi0_${transaction}_read_beat_count_q 0\)\)/, "dynamic read burst-last issue-order queue runtime burst-length initializes $transaction expected beats and count");
+                like($isf, qr/\(rule axi0_${transaction}_read_beat_count \(& \(& axi0_read_complete [\s\S]*axi0_read_dynamic_same_id_issue_order_slot0_${transaction}_q[\s\S]*axi0_read_dynamic_same_id_issue_order_slot1_${transaction}_q[\s\S]*\) \(! axi0_${transaction}_request\)\)\s+\(axi0_${transaction}_read_beat_count_q \(\+ axi0_${transaction}_read_beat_count_q 5'd1\)\)\)/, "dynamic read burst-last issue-order queue runtime burst-length increments $transaction on matched read beats");
+                like($isf, qr/"axi0 ${transaction} ARLEN is within configured max beats"/, "dynamic read burst-last issue-order queue runtime burst-length emits $transaction ARLEN max assertion");
+                like($isf, qr/"axi0 ${transaction} read beat count is below expected count"/, "dynamic read burst-last issue-order queue runtime burst-length emits $transaction beat-count bound assertion");
+                like($isf, qr/"axi0 ${transaction} RLAST appears only on the expected final read beat"/, "dynamic read burst-last issue-order queue runtime burst-length emits $transaction RLAST final-beat assertion");
+                like($isf, qr/"axi0 ${transaction} expected final read beat has RLAST"/, "dynamic read burst-last issue-order queue runtime burst-length emits $transaction expected-final RLAST assertion");
+            }
+        } else {
+            unlike($isf, qr/expected_beats|read_beat_count/, 'dynamic read burst-last issue-order queue report-only burst-length keeps runtime beat-count state absent');
+        }
         assert_dynamic_read_burst_last_same_id_issue_order_queue_report($result->{report});
         assert_dynamic_read_data_burst_length_report(
             $result->{report}{read_data},
-            'report_only',
+            $validation,
             [qw(r0 r1)],
             'generated_dynamic_read_issue_order_queue_response_demux_last_beat_completion_pulse',
         );
         like($fsm, qr/axi0_r1_burst_length_capture[\s\S]*\(<- \(axi0_r1_arlen_q axi0_arlen\)\)/, 'scheduled FSM lowers r1 queue raw ARLEN capture');
+        if ($runtime_validation) {
+            like($fsm, qr/axi0_r1_beat_count_init[\s\S]*\(<- \(axi0_r1_expected_beats_q \(\+ axi0_arlen\[4:0\] 5'd1\)\)\)[\s\S]*\(<- \(axi0_r1_read_beat_count_q 0\)\)/, 'scheduled FSM lowers r1 queue expected-beat init and counter reset');
+            like($fsm, qr/axi0_r1_read_beat_count[\s\S]*axi0_read_dynamic_same_id_issue_order_slot0_r1_q[\s\S]*axi0_read_dynamic_same_id_issue_order_slot1_r1_q[\s\S]*\(<- \(axi0_r1_read_beat_count_q \(\+ axi0_r1_read_beat_count_q 5'd1\)\)\)/, 'scheduled FSM lowers r1 queue beat-count increment');
+        }
         my $hdl = hdl_for('axi0_capacity_status', $fsm);
         like($hdl, qr/\binput\s+(?:wire\s+)?\[7:0\]\s+axi0_arlen\b/, 'SystemVerilog exposes ARLEN for dynamic queue read-data burst-length');
         like($hdl, qr/assign\s+axi0_r1_burst_length_capture_en\s*=\s*axi0_r1_request\s*;/, 'SystemVerilog guards r1 queue ARLEN capture by request');
         like($hdl, qr/axi0_r1_arlen_q_next\s*=\s*axi0_arlen\s*;/, 'SystemVerilog captures r1 queue ARLEN');
-        unlike($hdl, qr/axi0_r1_expected_beats_q/, 'SystemVerilog keeps runtime expected-beat storage absent for report-only queue burst-length');
+        if ($runtime_validation) {
+            like($hdl, qr/\breg\s+\[4:0\]\s+axi0_r1_expected_beats_q\b/, 'SystemVerilog declares r1 queue runtime expected-beat storage');
+            like($hdl, qr/\breg\s+\[4:0\]\s+axi0_r1_read_beat_count_q\b/, 'SystemVerilog declares r1 queue runtime beat-count storage');
+            like($hdl, qr/assign\s+axi0_r1_beat_count_init_en\s*=\s*axi0_r1_request\s*;/, 'SystemVerilog guards r1 queue runtime beat-count init by request');
+            like($hdl, qr/assign\s+axi0_r1_read_beat_count_en\s*=/, 'SystemVerilog emits r1 queue runtime beat-count increment enable');
+            like($hdl, qr/axi0_r1_expected_beats_q_next\s*=\s*axi0_arlen\[4:0\]\s*\+\s*5'd1\s*;/, 'SystemVerilog initializes r1 queue expected count from ARLEN+1');
+        } else {
+            unlike($hdl, qr/axi0_r1_expected_beats_q/, 'SystemVerilog keeps runtime expected-beat storage absent for report-only queue burst-length');
+        }
         return;
     }
 

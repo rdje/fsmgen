@@ -2293,12 +2293,14 @@ through the support-accounted public sample
 the support-accounting entry, generated `axi0_arlen` input,
 per-transaction raw-`ARLEN` storage/capture rules, queue-specific
 report/static-rule vocabulary, focused tests, docs, mdBook, and Knowledge Map
-coverage. `.470` now selects `.471`, direct bounded implementation of runtime
-beat-count/`RLAST` validation over that generated dynamic read same-ID
-`issue-order-queue` last-beat raw-`ARLEN` shape. Existing `read-data.read`
-`burst-length` syntax is sufficient; the remaining behavior work is local
-dynamic queue coverage admission plus generated expected-beat storage,
-beat-count storage/rules, and beat-count/`RLAST` assertions. Multi-beat output
+coverage. `.471` now ships runtime beat-count/`RLAST` validation over that
+generated dynamic read same-ID `issue-order-queue` last-beat raw-`ARLEN`
+shape through the support-accounted public sample
+`ppif/axi_manager_capacity_status_dynamic_read_burst_last_same_id_issue_order_queue_read_data_burst_length_runtime_assertion.ppif`.
+The generator emits per-transaction expected-beat storage, read-beat counters,
+request-time `ARLEN[4:0] + 5'd1` initialization, matched queue read-beat
+counter increments, four beat-count/`RLAST` assertions per transaction,
+focused tests, docs, mdBook, and Knowledge Map coverage. Multi-beat output
 banks, broader queues, mixed dynamic/static queues, scoreboards, direct
 backend behavior, backend-language variants, and VHDL remain future exact
 owners.
@@ -4688,6 +4690,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_READ_SAME_ID_ISSUE_ORDER_QUEUE_READ_DATA_BURST_LENGTH_READINESS_AUDIT.md` — audited report-only raw-`ARLEN` burst-length readiness over generated dynamic read same-ID issue-order queue last-beat read-data and selected direct implementation.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_READ_SAME_ID_ISSUE_ORDER_QUEUE_READ_DATA_BURST_LENGTH_BEHAVIOR.md` — shipped report-only raw-`ARLEN` burst-length capture over generated dynamic read same-ID issue-order queue last-beat read-data.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_READ_SAME_ID_ISSUE_ORDER_QUEUE_READ_DATA_RUNTIME_VALIDATION_READINESS_AUDIT.md` — audited runtime beat-count/`RLAST` validation readiness over generated dynamic read same-ID issue-order queue raw-`ARLEN` read-data and selected direct implementation.
+- `docs/AXI_IAL2_MANAGER_DYNAMIC_READ_SAME_ID_ISSUE_ORDER_QUEUE_READ_DATA_RUNTIME_VALIDATION_BEHAVIOR.md` — shipped runtime beat-count/`RLAST` validation over generated dynamic read same-ID issue-order queue raw-`ARLEN` read-data.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_CONTRACT_SELECTION.md` — selected direct single-active dynamic write `BID` same-cycle release-and-recapture behavior under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_BEHAVIOR.md` — shipped single-active dynamic write `BID` same-cycle release-and-recapture under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_WRITE_RECAPTURE_NEXT_SLICE_SELECTION.md` — selected `.367`, public contract selection for first single-active dynamic read same-cycle release-and-recapture after dynamic write recapture shipped.

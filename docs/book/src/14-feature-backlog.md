@@ -8460,6 +8460,18 @@ Multi-beat output banks, queue recapture widening, broader queues, mixed
 dynamic/static queues, scoreboards, direct backend behavior,
 backend-language variants, and VHDL remain future exact owners.
 
+Dynamic read same-ID issue-order queue read-data runtime-validation behavior:
+[AXI_IAL2_MANAGER_DYNAMIC_READ_SAME_ID_ISSUE_ORDER_QUEUE_READ_DATA_RUNTIME_VALIDATION_BEHAVIOR](../../AXI_IAL2_MANAGER_DYNAMIC_READ_SAME_ID_ISSUE_ORDER_QUEUE_READ_DATA_RUNTIME_VALIDATION_BEHAVIOR.md)
+ships the `.471` support-accounted sample
+`ppif/axi_manager_capacity_status_dynamic_read_burst_last_same_id_issue_order_queue_read_data_burst_length_runtime_assertion.ppif`.
+The generator admits only the exact two-transaction all-dynamic burst-last queue
+shape with `validation runtime-assertion`, keeps completion validity
+`generated_dynamic_read_issue_order_queue_response_demux_last_beat_completion_pulse`,
+and emits per-transaction expected-beat storage, read-beat counters,
+request-time `ARLEN[4:0] + 5'd1` initialization, matched queue read-beat
+increments, and four beat-count/`RLAST` assertions per transaction. The `.469`
+report-only raw-`ARLEN` sample remains supported.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after
