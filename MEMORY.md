@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.485: generate dynamic read depth3 queue`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.486` selects the next generated dynamic same-ID issue-order queue widening after depth-3 read single-beat behavior; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.485` shipped generated depth-3 all-dynamic read single-beat RID same-ID issue-order queue behavior through `ppif/axi_manager_capacity_status_dynamic_read_depth3_same_id_issue_order_queue.ppif`, support accounting, focused report/parser/generator/dynamic-ID tests, README, ROADMAP_V2, mdBook, task tree, and Knowledge Map. Syntax checks, RAM-guarded schedule JSON, one-sample adapter smoke, and t/248 support-accounting probes passed; a RAM-guarded full t/1437 attempt reported all 24 subtests passed before manual SIGTERM and is not counted as a clean pass.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.486: select read RLAST depth3 audit`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.487` audits generated all-dynamic read burst-last RID/RLAST same-ID issue-order queue depth-3 readiness; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.486` selected `.487`, readiness audit for generated all-dynamic read burst-last RID/RLAST same-ID issue-order queue cardinality widening from the shipped two-transaction dynamic read burst-last queue to one bounded depth-3, three-transaction queue. The selector changed docs/task-tree/memory/Knowledge Map only and kept read-data, mixed dynamic/static queues, scoreboards, arbitrary cardinality, backend-language variants, external converter dependencies such as `sv2v`, and VHDL deferred.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
-- next_action: Start `.486`: select the next exact owner after depth-3 read single-beat queue behavior, keeping read burst-last depth-3, read-data over depth-3 queues, mixed dynamic/static queues, scoreboards, arbitrary cardinality, backend-language variants, external converter dependencies such as `sv2v`, and VHDL deferred until specifically owned.
+- next_action: Start `.487`: audit only the r0/r1/r2 generated read burst-last depth-3 dynamic queue shape with one-bit RLAST, read-max-pending at least 3, and no read-data/mixed/scoreboard/backend/VHDL widening.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact

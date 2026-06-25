@@ -8641,6 +8641,19 @@ read-data over depth-3 queues, mixed dynamic/static queues, scoreboards,
 arbitrary cardinality, direct backend behavior, backend-language variants,
 external converter dependencies, and VHDL remain deferred.
 
+Post dynamic read depth-3 same-ID issue-order queue selector:
+[AXI_IAL2_MANAGER_POST_DYNAMIC_READ_DEPTH3_SAME_ID_ISSUE_ORDER_QUEUE_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_DYNAMIC_READ_DEPTH3_SAME_ID_ISSUE_ORDER_QUEUE_NEXT_SLICE_SELECTION.md)
+selects `.487`, readiness audit for generated all-dynamic read burst-last
+`RID && RLAST` same-ID `issue-order-queue` cardinality widening from the
+shipped two-transaction dynamic read burst-last queue to one bounded depth-3,
+three-transaction queue. It is the smallest next audit because `.485` proves
+the read depth-3 runtime-ID queue shape and `.463` proves RLAST-gated dynamic
+read queue semantics. Read-data over depth-3 queues, mixed dynamic/static
+queues, scoreboards, arbitrary cardinality, direct backend behavior,
+backend-language variants, external converter dependencies such as `sv2v`,
+and VHDL remain deferred; FSMGen-owned generation/lowering remains the
+default.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

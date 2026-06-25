@@ -2401,7 +2401,16 @@ depth-3 write queue behavior unchanged. Read burst-last depth-3, read-data
 over depth-3 queues, mixed dynamic/static queues, scoreboards, arbitrary
 cardinality, direct backend behavior, backend-language variants, external
 converter dependencies, and VHDL remain deferred. `.486` is the next
-post-behavior selector.
+post-behavior selector. `.486` now selects `.487`, readiness audit for
+generated all-dynamic read burst-last `RID && RLAST` same-ID
+`issue-order-queue` cardinality widening from the shipped two-transaction
+dynamic read burst-last queue to one bounded depth-3, three-transaction queue.
+It is the smallest next audit because `.485` proves the read depth-3 runtime-ID
+queue shape and `.463` proves RLAST-gated dynamic read queue semantics.
+Read-data over depth-3 queues, mixed dynamic/static queues, scoreboards,
+arbitrary cardinality, direct backend behavior, backend-language variants,
+external converter dependencies such as `sv2v`, and VHDL remain deferred;
+FSMGen-owned generation/lowering remains the default.
 
 No behavior
 changed in `.273`, `.274`, `.275`,
