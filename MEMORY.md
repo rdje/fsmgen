@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.451: select dynamic queue audit`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.452` audits generated dynamic same-ID issue-order queue behavior readiness after metadata-first support; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.451` selected `.452`, readiness audit for generated dynamic same-ID issue-order queue behavior after `.450` made `dynamic_per_id_issue_order_queues` explicit and user-visible. The selector changed no parser, generator, PPIF sample, support-accounting catalog, validation behavior, generated artifact, test, schedule/check/semantic JSON, HDL, runtime behavior, direct backend behavior, backend-language variant, queue, scoreboard, or VHDL behavior; dynamic scoreboard remains a separate unsupported policy. Knowledge Map generation/check, mdBook build, docs path audit, memory architecture check, diff check, and doctrine gate passed.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.452: audit dynamic queue readiness`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.453` selects the public contract for generated dynamic same-ID issue-order queue behavior; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.452` selected `.453`, public contract selection for generated dynamic same-ID issue-order queue behavior. The audit changed no parser, generator, PPIF sample, support-accounting catalog, validation behavior, generated artifact, test, schedule/check/semantic JSON, HDL, runtime behavior, direct backend behavior, backend-language variant, queue, scoreboard, or VHDL behavior; direct generated queue behavior still needs public family/scope, runtime-ID queue key, entry state, admitted enqueue, dequeue, response matching, ordering guarantees, overflow/ambiguity assertions, report fields, and residue movement selected first. Knowledge Map generation/check, mdBook build, docs path audit, memory architecture check, diff check, and doctrine gate passed.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
-- next_action: Start `.452`: audit generated dynamic same-ID issue-order queue readiness and decide whether the next owner should select a generated dynamic queue contract, a narrower prerequisite, or keep generated dynamic queues deferred.
+- next_action: Start `.453`: select the generated dynamic same-ID issue-order queue public contract or an explicit narrower prerequisite before implementation.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact

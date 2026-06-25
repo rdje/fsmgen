@@ -8154,6 +8154,16 @@ completion-tracking semantics. `.452` must decide whether generated dynamic
 queue behavior can move to contract selection, needs a narrower prerequisite,
 or remains deferred.
 
+Generated dynamic same-ID issue-order queue readiness:
+[AXI_IAL2_MANAGER_GENERATED_DYNAMIC_SAME_ID_ISSUE_ORDER_QUEUE_READINESS_AUDIT](../../AXI_IAL2_MANAGER_GENERATED_DYNAMIC_SAME_ID_ISSUE_ORDER_QUEUE_READINESS_AUDIT.md)
+selects `.453`, public contract selection for generated dynamic same-ID
+`issue-order-queue` behavior. The audit changes no behavior. The dynamic
+response-demux substrate is mature enough for a contract pass, but direct
+generated queue behavior still needs the public family/scope, runtime-ID queue
+key, entry state, admitted enqueue, dequeue, response matching, ordering
+guarantees, overflow/ambiguity assertions, report fields, and residue movement
+selected first.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

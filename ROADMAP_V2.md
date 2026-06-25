@@ -3071,6 +3071,13 @@ scoreboard remains a separate unsupported policy with different
 completion-tracking semantics. `.452` must decide whether generated dynamic
 queue behavior can move to contract selection, needs a narrower prerequisite,
 or remains deferred.
+`.452` now selects `.453`, public contract selection for generated dynamic
+same-ID `issue-order-queue` behavior. The audit changes no behavior. It finds
+the dynamic response-demux substrate mature enough for a contract pass, but
+direct generated queue behavior still needs the public family/scope,
+runtime-ID queue key, entry state, admitted enqueue, dequeue, response
+matching, ordering guarantees, overflow/ambiguity assertions, report fields,
+and residue movement selected first.
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,
