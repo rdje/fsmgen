@@ -3531,6 +3531,17 @@ queue. Mixed dynamic/static queues, scoreboards, arbitrary cardinality,
 verification-code generation, direct backend behavior, backend-language
 variants, external converter dependencies such as `sv2v`, and VHDL remain
 deferred; FSMGen-owned generation/lowering remains the default.
+`.499` now selects `.500`, direct bounded implementation of multi-beat output
+banks over that same depth-3 dynamic RLAST queue runtime-validation read-data
+shape. The audit found only the local dynamic issue-order queue read-data
+coverage gate: the RAM-guarded temporary depth-3 multi-beat candidate failed
+closed at the diagnostic that still admits multi-beat only over two dynamic
+transactions. Downstream multi-beat normalization, artifact, report,
+lane-capture, and runtime-validation helpers are already transaction-list
+driven. Mixed dynamic/static queues, scoreboards, arbitrary cardinality,
+verification-code generation, direct backend behavior, backend-language
+variants, external converter dependencies such as `sv2v`, and VHDL remain
+deferred; FSMGen-owned generation/lowering remains the default.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

@@ -8854,6 +8854,22 @@ verification-code generation, direct backend behavior, backend-language
 variants, external converter dependencies such as `sv2v`, and VHDL remain
 deferred; FSMGen-owned generation/lowering remains the default.
 
+Dynamic read burst-last depth-3 same-ID issue-order queue read-data
+multi-beat readiness:
+[AXI_IAL2_MANAGER_DYNAMIC_READ_BURST_LAST_DEPTH3_SAME_ID_ISSUE_ORDER_QUEUE_READ_DATA_MULTI_BEAT_READINESS_AUDIT](../../AXI_IAL2_MANAGER_DYNAMIC_READ_BURST_LAST_DEPTH3_SAME_ID_ISSUE_ORDER_QUEUE_READ_DATA_MULTI_BEAT_READINESS_AUDIT.md)
+selects `.500`, direct bounded implementation of multi-beat output banks over
+generated all-dynamic read burst-last `RID && RLAST` depth-3 same-ID
+`issue-order-queue` runtime-validation read-data. The audit found only the
+local dynamic issue-order queue read-data coverage gate: the RAM-guarded
+temporary depth-3 multi-beat candidate failed closed at the diagnostic that
+still admits multi-beat only over two dynamic transactions. Downstream
+multi-beat normalization, artifact, report, lane-capture, and
+runtime-validation helpers are already transaction-list driven. Mixed
+dynamic/static queues, scoreboards, arbitrary cardinality,
+verification-code generation, direct backend behavior, backend-language
+variants, external converter dependencies such as `sv2v`, and VHDL remain
+deferred; FSMGen-owned generation/lowering remains the default.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after
