@@ -8922,6 +8922,29 @@ multi-static or two-dynamic-plus-static queues, scoreboards, arbitrary
 cardinality, backend behavior, backend-language variants, verification-code
 generation, and VHDL remain deferred.
 
+Mixed dynamic/static write same-ID issue-order queue behavior:
+[AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_WRITE_SAME_ID_ISSUE_ORDER_QUEUE_BEHAVIOR](../../AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_WRITE_SAME_ID_ISSUE_ORDER_QUEUE_BEHAVIOR.md)
+ships `.503` through support-accounted public sample
+`ppif/axi_manager_capacity_status_write_mixed_dynamic_static_same_id_issue_order_queue.ppif`.
+The generated response-demux uses
+`bounded_mixed_dynamic_static_write_bid_issue_order_queue_demux_contract`,
+`generated_mixed_dynamic_static_issue_order_queue_demux`,
+`earliest_matching_captured_or_static_runtime_id`, compact runtime-ID slots,
+and `mixed_dynamic_static_issue_order_earliest_matching_slot`. Dynamic
+enqueues store `axi0_awid`; static enqueues store the sized concrete literal
+such as `4'd3`; static/dynamic runtime-ID overlap is allowed and ordered by
+queue position. The same-ID ordering report uses
+`generated_mixed_dynamic_static_write_bid_issue_order_queue`,
+`generated_mixed_dynamic_static_issue_order_queue`,
+`accepted_same_id_reuse: true`, `generated_scoreboard_behavior: false`,
+`active_id_uniqueness_policy: not_required_for_issue_order_queue`, and
+`static_id_conflict_policy: ordered_overlap_allowed`. Mixed read queues,
+multi-static/two-dynamic mixed queues, scoreboards, arbitrary cardinality,
+backend behavior, backend-language variants, verification-code generation,
+external converter dependencies such as `sv2v`, and VHDL remain deferred;
+FSMGen-owned generation/lowering remains the default. `.504` is the next
+post-mixed-queue selector.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

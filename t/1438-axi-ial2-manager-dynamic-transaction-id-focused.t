@@ -62,6 +62,15 @@ my @DYNAMIC_CASES = (
         behavior     => 'dynamic_write_same_id_issue_order_queue',
     },
     {
+        label        => 'mixed dynamic/static write BID same-ID issue-order queue',
+        relpath      => 'ppif/axi_manager_capacity_status_write_mixed_dynamic_static_same_id_issue_order_queue.ppif',
+        object_id    => 'axi-manager-capacity-status-write-mixed-dynamic-static-same-id-issue-order-queue',
+        intent_name  => 'axi_manager_capacity_status_write_mixed_dynamic_static_same_id_issue_order_queue',
+        entry_id     => 'intent.ppif_axi_manager_capacity_status_write_mixed_dynamic_static_same_id_issue_order_queue',
+        coverage     => 'ial2_ppif_manager_capacity_status_write_mixed_dynamic_static_same_id_issue_order_queue_pipeline_cli',
+        behavior     => 'mixed_dynamic_static_write_same_id_issue_order_queue',
+    },
+    {
         label        => 'dynamic write BID depth-3 same-ID issue-order queue',
         relpath      => 'ppif/axi_manager_capacity_status_dynamic_write_depth3_same_id_issue_order_queue.ppif',
         object_id    => 'axi-manager-capacity-status-dynamic-write-depth3-same-id-issue-order-queue',
@@ -1018,6 +1027,32 @@ sub assert_dynamic_behavior {
         like($hdl, qr/\breg\s+\[3:0\]\s+axi0_write_dynamic_same_id_issue_order_slot0_id_q\b/, 'SystemVerilog declares slot0 captured AWID');
         like($hdl, qr/\breg\s+\[3:0\]\s+axi0_write_dynamic_same_id_issue_order_slot1_id_q\b/, 'SystemVerilog declares slot1 captured AWID');
         like($hdl, qr/axi0_write_dynamic_same_id_issue_order_slot1_id_q_next\s*=\s*axi0_awid\s*;/, 'SystemVerilog recaptures AWID into a queue slot');
+        return;
+    }
+
+    if ($case->{behavior} eq 'mixed_dynamic_static_write_same_id_issue_order_queue') {
+        like($isf, qr/\(input axi0_w0_request\)/, 'mixed write issue-order queue declares dynamic request input');
+        like($isf, qr/\(input axi0_w1_request\)/, 'mixed write issue-order queue declares static request input');
+        like($isf, qr/\(input axi0_awid \(width 4\)\)/, 'mixed write issue-order queue declares AWID input');
+        like($isf, qr/\(input axi0_bid \(width 4\)\)/, 'mixed write issue-order queue declares BID input');
+        like($isf, qr/\(output axi0_w0_complete\)/, 'mixed write issue-order queue exposes dynamic completion output');
+        like($isf, qr/\(output axi0_w1_complete\)/, 'mixed write issue-order queue exposes static completion output');
+        unlike($isf, qr/axi0_w0_dynamic_busy_q/, 'mixed write issue-order queue does not allocate legacy dynamic busy state');
+        unlike($isf, qr/axi0_w1_static_busy_q/, 'mixed write issue-order queue does not allocate legacy static busy state');
+        like($isf, qr/\(var axi0_write_mixed_dynamic_static_same_id_issue_order_slot0_w0_q \(width 1\)\)/, 'mixed write issue-order queue allocates slot0 dynamic bit');
+        like($isf, qr/\(var axi0_write_mixed_dynamic_static_same_id_issue_order_slot0_id_q \(width 4\)\)/, 'mixed write issue-order queue allocates slot0 ID');
+        like($isf, qr/\(var axi0_write_mixed_dynamic_static_same_id_issue_order_slot1_w1_q \(width 1\)\)/, 'mixed write issue-order queue allocates slot1 static bit');
+        like($isf, qr/\(var axi0_write_mixed_dynamic_static_same_id_issue_order_slot1_id_q \(width 4\)\)/, 'mixed write issue-order queue allocates slot1 ID');
+        like($isf, qr/\(rule axi0_write_mixed_dynamic_static_same_id_issue_order_empty_enqueue_w0[\s\S]*\(axi0_write_mixed_dynamic_static_same_id_issue_order_slot0_id_q axi0_awid\)\)/, 'mixed write issue-order queue captures AWID into empty slot0');
+        like($isf, qr/\(rule axi0_write_mixed_dynamic_static_same_id_issue_order_empty_enqueue_w1[\s\S]*\(axi0_write_mixed_dynamic_static_same_id_issue_order_slot0_id_q 4'd3\)\)/, 'mixed write issue-order queue captures static literal into empty slot0');
+        like($isf, qr/\(rule axi0_write_mixed_dynamic_static_same_id_issue_order_w0_w1_dequeue_enqueue_w1[\s\S]*\(axi0_write_mixed_dynamic_static_same_id_issue_order_slot1_id_q 4'd3\)\)/, 'mixed write issue-order queue recaptures static literal after selected dequeue');
+        like($isf, qr/\(rule axi0_w0_response_demux [\s\S]*axi0_write_mixed_dynamic_static_same_id_issue_order_slot0_id_q[\s\S]*axi0_write_mixed_dynamic_static_same_id_issue_order_slot1_id_q[\s\S]*\(pulse axi0_w0_complete\)\)/, 'mixed write issue-order queue emits earliest matching dynamic BID demux');
+        like($isf, qr/\(rule axi0_w1_response_demux [\s\S]*axi0_write_mixed_dynamic_static_same_id_issue_order_slot0_id_q[\s\S]*axi0_write_mixed_dynamic_static_same_id_issue_order_slot1_id_q[\s\S]*\(pulse axi0_w1_complete\)\)/, 'mixed write issue-order queue emits earliest matching static BID demux');
+        assert_mixed_dynamic_static_write_same_id_issue_order_queue_report($result->{report});
+        my $hdl = hdl_for('axi0_capacity_status', $fsm);
+        like($hdl, qr/\breg\s+\[3:0\]\s+axi0_write_mixed_dynamic_static_same_id_issue_order_slot0_id_q\b/, 'SystemVerilog declares mixed slot0 ID register');
+        like($hdl, qr/\breg\s+\[3:0\]\s+axi0_write_mixed_dynamic_static_same_id_issue_order_slot1_id_q\b/, 'SystemVerilog declares mixed slot1 ID register');
+        like($hdl, qr/axi0_write_mixed_dynamic_static_same_id_issue_order_slot1_id_q_next\s*=\s*4'd3\s*;/, 'SystemVerilog recaptures static literal into a queue slot');
         return;
     }
 
@@ -3410,6 +3445,72 @@ sub assert_dynamic_write_same_id_issue_order_queue_report {
     ok(grep { $_ eq 'axi0_write_dynamic_same_id_issue_order_w1_w0_dequeue_enqueue_w0' } @{$queue->{generated_update_rules}}, 'dynamic write issue-order queue reports tail-selected same-transaction ID-refresh rule');
     ok(grep { $_ eq 'axi0_write_dynamic_same_id_issue_order_w0_w1_dequeue_enqueue_w0' } @{$queue->{generated_update_rules}}, 'dynamic write issue-order queue reports same-cycle selected dequeue plus enqueue rule');
     assert_dynamic_residue($report, 'dynamic write issue-order queue keeps future dynamic residue visible');
+}
+
+sub assert_mixed_dynamic_static_write_same_id_issue_order_queue_report {
+    my ($report) = @_;
+    my $demux = $report->{response_demux};
+    my $write = $demux->{write};
+    my $ordering = $report->{same_id_ordering};
+    my $policy = $ordering->{dynamic_id_reuse_policy}{write};
+    my $queue = $policy->{generated_queues}[0];
+
+    is($demux->{mode}, 'bounded_mixed_dynamic_static_write_bid_issue_order_queue_demux_contract', 'mixed write issue-order queue report marks demux contract');
+    ok($demux->{generated_behavior}, 'mixed write issue-order queue report marks generated demux behavior');
+    is_deeply($demux->{residue}, [qw(read_response_demux read_data_interleaving bursts)], 'mixed write issue-order queue removes same-ID residue from response demux');
+    is($write->{transaction_completion_source}, 'generated_mixed_dynamic_static_issue_order_queue_demux', 'mixed write issue-order queue report marks generated queue completion source');
+    is($write->{transaction_completion_semantics}, 'earliest_matching_captured_or_static_runtime_id', 'mixed write issue-order queue report marks earliest matching semantics');
+    is($write->{queue_state_representation}, 'compact_runtime_id_issue_order_slots', 'mixed write issue-order queue report marks compact runtime-ID slots');
+    is($write->{runtime_id_queue_key}, 'captured_or_static_request_id', 'mixed write issue-order queue report marks captured-or-static key');
+    is($write->{response_demux_strategy}, 'mixed_dynamic_static_issue_order_earliest_matching_slot', 'mixed write issue-order queue report marks mixed earliest matching strategy');
+    is_deeply($write->{dynamic_transactions}, [qw(w0)], 'mixed write issue-order queue report names covered dynamic write');
+    is_deeply($write->{static_transactions}, [qw(w1)], 'mixed write issue-order queue report names covered static write');
+    is_deeply($write->{mixed_transactions}, { dynamic => 'w0', static => 'w1' }, 'mixed write issue-order queue report names transaction roles');
+    is($write->{static_id_overlap_policy}, 'allowed_by_issue_order_queue', 'mixed write issue-order queue report allows ordered static overlap');
+    is_deeply($write->{generated_rules}, [qw(axi0_w0_response_demux axi0_w1_response_demux)], 'mixed write issue-order queue report names generated response-demux rules');
+    is_deeply($write->{generated_completion_signals}, [qw(axi0_w0_complete axi0_w1_complete)], 'mixed write issue-order queue report names generated completions');
+
+    is($ordering->{mode}, 'dynamic_id_reuse_policy', 'mixed write issue-order queue same-ID report marks dynamic mode');
+    ok($ordering->{generated_behavior}, 'mixed write issue-order queue same-ID report is generated');
+    is_deeply($ordering->{residue}, [], 'mixed write issue-order queue same-ID report clears dynamic residue');
+    is($policy->{implementation_status}, 'generated_mixed_dynamic_static_write_bid_issue_order_queue', 'mixed write issue-order queue policy reports generated implementation');
+    is($policy->{enforcement}, 'generated_mixed_dynamic_static_issue_order_queue', 'mixed write issue-order queue policy reports mixed enforcement');
+    ok($policy->{accepted_same_id_reuse}, 'mixed write issue-order queue policy accepts same-ID reuse');
+    ok($policy->{generated_queue_behavior}, 'mixed write issue-order queue policy marks generated queue behavior');
+    ok(!$policy->{generated_scoreboard_behavior}, 'mixed write issue-order queue policy does not mark scoreboard behavior');
+    ok($policy->{mixed_dynamic_static_issue_order_queue_covered}, 'mixed write issue-order queue policy marks mixed coverage');
+    is_deeply($policy->{covered_dynamic_transactions}, [qw(w0)], 'mixed write issue-order queue policy names covered dynamic transaction');
+    is_deeply($policy->{covered_static_transactions}, [qw(w1)], 'mixed write issue-order queue policy names covered static transaction');
+    is($policy->{active_id_uniqueness_policy}, 'not_required_for_issue_order_queue', 'mixed write issue-order queue policy does not require active ID uniqueness');
+    is($policy->{static_id_conflict_policy}, 'ordered_overlap_allowed', 'mixed write issue-order queue policy reports ordered overlap');
+    is($policy->{first_generated_scope}, 'write_bid_one_dynamic_one_static_transaction', 'mixed write issue-order queue policy reports generated scope');
+
+    ok($queue->{mixed_dynamic_static_issue_order_queue}, 'mixed write issue-order queue report marks queue as mixed');
+    is_deeply($queue->{transactions}, [qw(w0 w1)], 'mixed write issue-order queue report names queue transactions');
+    is_deeply($queue->{dynamic_transactions}, [qw(w0)], 'mixed write issue-order queue report names queue dynamic transaction');
+    is_deeply($queue->{static_transactions}, [qw(w1)], 'mixed write issue-order queue report names queue static transaction');
+    is($queue->{same_transaction_recapture_id_source}, 'per_transaction_enqueue_id', 'mixed write issue-order queue report names per-transaction recapture ID source');
+    is_deeply(
+        [map { $_->{request_id_source} } @{$queue->{enqueue_pulses}}],
+        ['axi0_awid', "4'd3"],
+        'mixed write issue-order queue report names dynamic signal and static literal enqueue sources',
+    );
+    is_deeply(
+        $queue->{slot_storage},
+        [
+            { name => 'axi0_write_mixed_dynamic_static_same_id_issue_order_slot0_w0_q', width => 1 },
+            { name => 'axi0_write_mixed_dynamic_static_same_id_issue_order_slot0_w1_q', width => 1 },
+            { name => 'axi0_write_mixed_dynamic_static_same_id_issue_order_slot0_id_q', width => 4 },
+            { name => 'axi0_write_mixed_dynamic_static_same_id_issue_order_slot1_w0_q', width => 1 },
+            { name => 'axi0_write_mixed_dynamic_static_same_id_issue_order_slot1_w1_q', width => 1 },
+            { name => 'axi0_write_mixed_dynamic_static_same_id_issue_order_slot1_id_q', width => 4 },
+        ],
+        'mixed write issue-order queue report names slot-local transaction and ID storage',
+    );
+    ok(grep { $_ eq 'axi0_write_mixed_dynamic_static_same_id_issue_order_empty_enqueue_w1' } @{$queue->{generated_update_rules}}, 'mixed write issue-order queue reports static literal enqueue rule');
+    ok(grep { $_ eq 'axi0_write_mixed_dynamic_static_same_id_issue_order_w0_w1_dequeue_enqueue_w1' } @{$queue->{generated_update_rules}}, 'mixed write issue-order queue reports selected dequeue plus static enqueue rule');
+    ok(grep { $_ eq 'axi0_write_mixed_dynamic_static_same_id_issue_order_response_has_selected_match' } @{$queue->{generated_assertions}}, 'mixed write issue-order queue reports selected-match assertion');
+    assert_dynamic_residue($report, 'mixed write issue-order queue keeps future dynamic residue visible');
 }
 
 sub assert_dynamic_write_depth3_same_id_issue_order_queue_report {
