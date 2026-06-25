@@ -2542,17 +2542,27 @@ queue. Mixed dynamic/static queues, scoreboards, arbitrary cardinality,
 verification-code generation, direct backend behavior, backend-language
 variants, external converter dependencies such as `sv2v`, and VHDL remain
 deferred; FSMGen-owned generation/lowering remains the default.
-`.499` now selects `.500`, direct bounded implementation of multi-beat output
-banks over that same depth-3 dynamic RLAST queue runtime-validation read-data
-shape. The audit found only the local dynamic issue-order queue read-data
-coverage gate: the RAM-guarded temporary depth-3 multi-beat candidate failed
-closed at the diagnostic that still admits multi-beat only over two dynamic
-transactions. Downstream multi-beat normalization, artifact, report,
-lane-capture, and runtime-validation helpers are already transaction-list
-driven. Mixed dynamic/static queues, scoreboards, arbitrary cardinality,
-verification-code generation, direct backend behavior, backend-language
-variants, external converter dependencies such as `sv2v`, and VHDL remain
-deferred; FSMGen-owned generation/lowering remains the default.
+`.500` now ships that selected multi-beat output-bank behavior through
+support-accounted sample
+`ppif/axi_manager_capacity_status_dynamic_read_burst_last_depth3_same_id_issue_order_queue_read_data_multi_beat.ppif`.
+The generated path keeps queue-owned `RID && RLAST` completion, raw-`ARLEN`
+capture, expected-beat storage, read-beat counters, six beat-count rules, and
+twelve beat-count/`RLAST` runtime assertions, and adds per-transaction
+multi-beat `RDATA`/`RRESP` output banks for `r0`/`r1`/`r2`, valid masks,
+length outputs, scalar worst-observed `RRESP` aggregate outputs, output-init
+rules, 48 lane-capture rules, and aggregate update rules. The read-data report
+advertises `bounded_multi_beat_read_data_contract`, `capture_scope:
+multi_beat`, response-demux matched-read-beat capture, runtime-assertion
+burst-length validation, three generated valid-mask outputs, three generated
+length outputs, 48 data outputs, 48 status outputs, and 48 capture rules.
+Existing two-transaction dynamic queue multi-beat behavior, the `.494`
+report-only depth-3 raw-`ARLEN` sample, and the `.497` depth-3 scalar
+runtime-validation sample remain supported. Mixed dynamic/static queues,
+scoreboards, arbitrary cardinality, verification-code generation, direct
+backend behavior, backend-language variants, external converter dependencies
+such as `sv2v`, and VHDL remain deferred; FSMGen-owned generation/lowering
+remains the default. `.501` is the next selector after this depth-3 dynamic
+RLAST queue multi-beat behavior.
 
 No behavior
 changed in `.273`, `.274`, `.275`,
@@ -4967,6 +4977,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_READ_BURST_LAST_DEPTH3_SAME_ID_ISSUE_ORDER_QUEUE_READ_DATA_RUNTIME_VALIDATION_BEHAVIOR.md` — shipped runtime beat-count/`RLAST` validation over generated all-dynamic read burst-last `RID && RLAST` depth-3 same-ID issue-order queue raw-`ARLEN` read-data.
 - `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_READ_BURST_LAST_DEPTH3_SAME_ID_ISSUE_ORDER_QUEUE_READ_DATA_RUNTIME_VALIDATION_NEXT_SLICE_SELECTION.md` — selected multi-beat output-bank readiness over generated all-dynamic read burst-last `RID && RLAST` depth-3 same-ID issue-order queue runtime-validation read-data as the next audit.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_READ_BURST_LAST_DEPTH3_SAME_ID_ISSUE_ORDER_QUEUE_READ_DATA_MULTI_BEAT_READINESS_AUDIT.md` — audited multi-beat output-bank readiness over generated all-dynamic read burst-last `RID && RLAST` depth-3 same-ID issue-order queue runtime-validation read-data and selected direct bounded implementation.
+- `docs/AXI_IAL2_MANAGER_DYNAMIC_READ_BURST_LAST_DEPTH3_SAME_ID_ISSUE_ORDER_QUEUE_READ_DATA_MULTI_BEAT_BEHAVIOR.md` — shipped multi-beat output banks over generated all-dynamic read burst-last `RID && RLAST` depth-3 same-ID issue-order queue runtime-validation read-data.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_CONTRACT_SELECTION.md` — selected direct single-active dynamic write `BID` same-cycle release-and-recapture behavior under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_BEHAVIOR.md` — shipped single-active dynamic write `BID` same-cycle release-and-recapture under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_WRITE_RECAPTURE_NEXT_SLICE_SELECTION.md` — selected `.367`, public contract selection for first single-active dynamic read same-cycle release-and-recapture after dynamic write recapture shipped.

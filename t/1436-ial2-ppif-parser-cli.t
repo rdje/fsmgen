@@ -726,6 +726,37 @@ subtest 'PPIF adapter parses AXI manager dynamic read burst-last depth-3 same-ID
     );
 };
 
+subtest 'PPIF adapter parses AXI manager dynamic read burst-last depth-3 same-ID issue-order queue read-data multi-beat behavior' => sub {
+    my $sample_path = sample_capacity_dynamic_read_burst_last_depth3_same_id_issue_order_queue_read_data_multi_beat_ppif_path();
+    ok(-f $sample_path, 'tracked runnable PPIF capacity/status dynamic read burst-last depth-3 same-ID issue-order queue read-data multi-beat sample exists');
+
+    my $result = FSM::Adapter::IAL2::PPIF->new()->parse_source(sample_capacity_dynamic_read_burst_last_depth3_same_id_issue_order_queue_read_data_multi_beat_ppif(), $sample_path);
+    my $isf = $result->{generated_ial1}{text};
+    my $fsm = $result->{generated_ial0}{files}{'axi0_capacity_status.fsm'};
+
+    is($result->{kind}, 'protocol_intent.axi_manager_capacity_status', 'dynamic read burst-last depth-3 same-ID issue-order queue read-data multi-beat sample still uses the capacity/status generator');
+    is($result->{report}{source_object}{id}, 'axi-manager-capacity-status-dynamic-read-burst-last-depth3-same-id-issue-order-queue-read-data-multi-beat', 'dynamic read burst-last depth-3 same-ID issue-order queue read-data multi-beat source object id is preserved');
+    is($result->{report}{source_object}{intent_name}, 'axi_manager_capacity_status_dynamic_read_burst_last_depth3_same_id_issue_order_queue_read_data_multi_beat', 'dynamic read burst-last depth-3 same-ID issue-order queue read-data multi-beat source intent name is preserved');
+    like($isf, qr/\(output axi0_r2_beat_rdata_15 \(width 32\)\)/, 'dynamic read burst-last depth-3 same-ID issue-order queue read-data multi-beat exposes r2 final RDATA lane');
+    like($isf, qr/\(output axi0_r2_beat_rresp_15 \(width 2\)\)/, 'dynamic read burst-last depth-3 same-ID issue-order queue read-data multi-beat exposes r2 final RRESP lane');
+    like($isf, qr/\(output axi0_r2_beat_valid \(width 16\)\)/, 'dynamic read burst-last depth-3 same-ID issue-order queue read-data multi-beat exposes r2 valid mask');
+    like($isf, qr/\(output axi0_r2_read_beats \(width 5\)\)/, 'dynamic read burst-last depth-3 same-ID issue-order queue read-data multi-beat exposes r2 length output');
+    like($isf, qr/\(output axi0_r2_rresp \(width 2\)\)/, 'dynamic read burst-last depth-3 same-ID issue-order queue read-data multi-beat exposes r2 scalar RRESP aggregate');
+    like($isf, qr/\(rule axi0_r2_read_beat_15_capture [\s\S]*axi0_read_dynamic_same_id_issue_order_slot0_r2_q[\s\S]*axi0_read_dynamic_same_id_issue_order_slot1_r2_q[\s\S]*axi0_read_dynamic_same_id_issue_order_slot2_r2_q[\s\S]*\(axi0_r2_beat_rdata_15 axi0_rdata\)[\s\S]*\(axi0_r2_beat_rresp_15 axi0_rresp\)[\s\S]*\(axi0_r2_beat_valid 16'b1111111111111111\)[\s\S]*\(axi0_r2_read_beats 5'd16\)\)/, 'dynamic read burst-last depth-3 same-ID issue-order queue read-data multi-beat captures r2 final lane from matched raw read beats');
+    like($fsm, qr/axi0_r2_read_beat_15_capture[\s\S]*\(<- \(axi0_r2_beat_rdata_15> axi0_rdata\)\)[\s\S]*\(<- \(axi0_r2_beat_rresp_15> axi0_rresp\)\)/, 'dynamic read burst-last depth-3 same-ID issue-order queue read-data multi-beat lowers r2 final lane capture into generated .fsm');
+    assert_dynamic_read_burst_last_depth3_same_id_issue_order_queue_report(
+        $result->{report},
+        'adapter report',
+        response_demux_residue => [],
+    );
+    assert_read_data_multi_beat_report(
+        $result->{report}{read_data},
+        'adapter dynamic read burst-last depth-3 same-ID issue-order queue read-data multi-beat report',
+        completion_validity => 'generated_dynamic_read_issue_order_queue_response_demux_last_beat_completion_pulse',
+        transactions => [qw(r0 r1 r2)],
+    );
+};
+
 subtest 'PPIF adapter parses AXI manager dynamic read burst-last same-ID issue-order queue read-data burst-length behavior' => sub {
     my $sample_path = sample_capacity_dynamic_read_burst_last_same_id_issue_order_queue_read_data_burst_length_ppif_path();
     ok(-f $sample_path, 'tracked runnable PPIF capacity/status dynamic read burst-last same-ID issue-order queue read-data burst-length sample exists');
@@ -3867,6 +3898,30 @@ subtest 'CLI emits IAL2 report JSON for AXI manager dynamic read burst-last dept
     is_deeply($report->{generated_artifacts}{ial0}{files}, ['axi0_capacity_status.fsm'], 'dynamic read burst-last depth-3 same-ID issue-order queue read-data runtime burst-length keeps the generated .fsm artifact name stable');
 };
 
+subtest 'CLI emits IAL2 report JSON for AXI manager dynamic read burst-last depth-3 same-ID issue-order queue read-data multi-beat .ppif' => sub {
+    my ($success, undef, undef, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--emit-schedule-json', sample_capacity_dynamic_read_burst_last_depth3_same_id_issue_order_queue_read_data_multi_beat_ppif_path()],
+    );
+
+    ok($success, '--emit-schedule-json succeeds for capacity/status dynamic read burst-last depth-3 same-ID issue-order queue read-data multi-beat .ppif');
+    is(join('', @{$stderr_buf || []}), '', 'capacity/status dynamic read burst-last depth-3 same-ID issue-order queue read-data multi-beat report keeps stderr clean');
+    my $report = decode_json(join('', @{$stdout_buf || []}));
+    is($report->{schema}, 'fsmgen.ial2.protocol_intent.axi_manager_capacity_status.v1', 'CLI keeps the capacity/status report schema');
+    is($report->{source_object}{intent_name}, 'axi_manager_capacity_status_dynamic_read_burst_last_depth3_same_id_issue_order_queue_read_data_multi_beat', 'dynamic read burst-last depth-3 same-ID issue-order queue read-data multi-beat report carries the PPIF top-level intent name');
+    assert_dynamic_read_burst_last_depth3_same_id_issue_order_queue_report(
+        $report,
+        'CLI report',
+        response_demux_residue => [],
+    );
+    assert_read_data_multi_beat_report(
+        $report->{read_data},
+        'CLI dynamic read burst-last depth-3 same-ID issue-order queue read-data multi-beat report',
+        completion_validity => 'generated_dynamic_read_issue_order_queue_response_demux_last_beat_completion_pulse',
+        transactions => [qw(r0 r1 r2)],
+    );
+    is_deeply($report->{generated_artifacts}{ial0}{files}, ['axi0_capacity_status.fsm'], 'dynamic read burst-last depth-3 same-ID issue-order queue read-data multi-beat keeps the generated .fsm artifact name stable');
+};
+
 subtest 'CLI emits IAL2 report JSON for AXI manager dynamic read burst-last same-ID issue-order queue read-data burst-length .ppif' => sub {
     my ($success, undef, undef, $stdout_buf, $stderr_buf) = run(
         command => ['./bin/fsmgen', '--emit-schedule-json', sample_capacity_dynamic_read_burst_last_same_id_issue_order_queue_read_data_burst_length_ppif_path()],
@@ -6558,6 +6613,14 @@ subtest 'CLI check JSON and semantic JSON support-account dynamic read burst-las
     );
 };
 
+subtest 'CLI check JSON and semantic JSON support-account dynamic read burst-last depth-3 same-ID issue-order queue read-data multi-beat .ppif separately' => sub {
+    assert_ppif_strict_json_support_case(
+        owner    => 'capacity/status dynamic read burst-last depth-3 same-ID issue-order queue read-data multi-beat',
+        path     => \&sample_capacity_dynamic_read_burst_last_depth3_same_id_issue_order_queue_read_data_multi_beat_ppif_path,
+        entry_id => 'intent.ppif_axi_manager_capacity_status_dynamic_read_burst_last_depth3_same_id_issue_order_queue_read_data_multi_beat',
+    );
+};
+
 subtest 'CLI check JSON and semantic JSON support-account dynamic read burst-last same-ID issue-order queue read-data burst-length .ppif separately' => sub {
     assert_ppif_strict_json_support_case(
         owner    => 'capacity/status dynamic read burst-last same-ID issue-order queue read-data burst-length',
@@ -8533,6 +8596,10 @@ sub sample_capacity_dynamic_read_burst_last_depth3_same_id_issue_order_queue_rea
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_dynamic_read_burst_last_depth3_same_id_issue_order_queue_read_data_burst_length_runtime_assertion.ppif');
 }
 
+sub sample_capacity_dynamic_read_burst_last_depth3_same_id_issue_order_queue_read_data_multi_beat_ppif_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_dynamic_read_burst_last_depth3_same_id_issue_order_queue_read_data_multi_beat.ppif');
+}
+
 sub sample_capacity_dynamic_read_burst_last_same_id_issue_order_queue_read_data_burst_length_ppif_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_dynamic_read_burst_last_same_id_issue_order_queue_read_data_burst_length.ppif');
 }
@@ -8931,6 +8998,10 @@ sub sample_capacity_dynamic_read_burst_last_depth3_same_id_issue_order_queue_rea
 
 sub sample_capacity_dynamic_read_burst_last_depth3_same_id_issue_order_queue_read_data_burst_length_runtime_assertion_ppif {
     return slurp(sample_capacity_dynamic_read_burst_last_depth3_same_id_issue_order_queue_read_data_burst_length_runtime_assertion_ppif_path());
+}
+
+sub sample_capacity_dynamic_read_burst_last_depth3_same_id_issue_order_queue_read_data_multi_beat_ppif {
+    return slurp(sample_capacity_dynamic_read_burst_last_depth3_same_id_issue_order_queue_read_data_multi_beat_ppif_path());
 }
 
 sub sample_capacity_dynamic_read_burst_last_same_id_issue_order_queue_read_data_burst_length_ppif {
@@ -10291,10 +10362,11 @@ sub assert_dynamic_read_burst_last_same_id_issue_order_queue_report {
 }
 
 sub assert_dynamic_read_burst_last_depth3_same_id_issue_order_queue_report {
-    my ($report, $owner) = @_;
+    my ($report, $owner, %args) = @_;
     assert_dynamic_read_burst_last_same_id_issue_order_queue_report(
         $report,
         $owner,
+        response_demux_residue       => $args{response_demux_residue} // [qw(read_data_interleaving bursts)],
         transactions                 => [qw(r0 r1 r2)],
         generated_rules              => [qw(axi0_r0_response_demux axi0_r1_response_demux axi0_r2_response_demux)],
         generated_completion_signals => [qw(axi0_r0_complete axi0_r1_complete axi0_r2_complete)],
@@ -10804,7 +10876,7 @@ sub assert_rlast_report_prose_alignment {
     );
     like(
         $id_residue->{detail},
-        qr/generated burst-last RLAST response-demux completion, structural last-beat read-data metadata, generated last-beat read-data RDATA\/RRESP capture, generated last-beat read-data RDATA\/RRESP capture from generated read burst-last concrete same-ID queue-head response-demux including multiple independent depth-2 queue-head groups with no burst_length metadata, report-only raw-ARLEN burst-length metadata, or runtime-assertion beat-count\/RLAST validation metadata, plus the selected single depth-3 queue-head group with no burst_length metadata, report-only raw-ARLEN burst-length metadata, or runtime-assertion beat-count\/RLAST validation metadata, plus selected multiple\/mixed depth-3 queue-head groups with no burst_length metadata, report-only raw-ARLEN burst-length metadata, runtime-assertion beat-count\/RLAST validation metadata, or runtime-assertion multi-beat output-bank metadata, generated raw-ARLEN burst-length capture including report-only and runtime-validation generated read burst-last concrete same-ID queue-head read-data contracts with one or more independent depth-2 queue-head groups, the selected single depth-3 report-only and runtime-validation groups, selected multiple\/mixed depth-3 report-only and runtime-validation groups, and the selected same-family mixed auto-ID plus depth-2 concrete queue-head report-only and runtime-validation groups, explicit runtime-assertion beat-count\/RLAST validation for auto-ID, selected dynamic read-data, selected dynamic issue-order queue read-data, and bounded read burst-last concrete same-ID queue-head read-data contracts including one or more independent depth-2 queue-head groups plus the selected single depth-3 group, selected multiple\/mixed depth-3 groups, and the selected same-family mixed auto-ID plus depth-2 concrete queue-head group, generated multi-beat read-data output-bank behavior for the covered auto-ID multi-beat-by-RID subset, selected dynamic single-active and bounded multiple all-dynamic read demux subset, selected dynamic issue-order queue demux subset, selected mixed dynamic\/static read demux subset, and bounded read burst-last concrete same-ID queue-head subset including multiple independent depth-2 queue-head groups plus the selected single depth-3 runtime-validation queue-head group, selected multiple\/mixed depth-3 runtime-validation queue-head groups, and the selected same-family mixed auto-ID plus depth-2 concrete queue-head runtime-validation group, bounded burst payload\/output behavior through that per-beat output bank, and generated scalar RRESP aggregation behavior are supported/,
+        qr/generated burst-last RLAST response-demux completion, structural last-beat read-data metadata, generated last-beat read-data RDATA\/RRESP capture, generated last-beat read-data RDATA\/RRESP capture from generated read burst-last concrete same-ID queue-head response-demux including multiple independent depth-2 queue-head groups with no burst_length metadata, report-only raw-ARLEN burst-length metadata, or runtime-assertion beat-count\/RLAST validation metadata, plus the selected single depth-3 queue-head group with no burst_length metadata, report-only raw-ARLEN burst-length metadata, or runtime-assertion beat-count\/RLAST validation metadata, plus selected multiple\/mixed depth-3 queue-head groups with no burst_length metadata, report-only raw-ARLEN burst-length metadata, runtime-assertion beat-count\/RLAST validation metadata, or runtime-assertion multi-beat output-bank metadata, generated raw-ARLEN burst-length capture including report-only and runtime-validation generated read burst-last concrete same-ID queue-head read-data contracts with one or more independent depth-2 queue-head groups, the selected single depth-3 report-only and runtime-validation groups, selected multiple\/mixed depth-3 report-only and runtime-validation groups, and the selected same-family mixed auto-ID plus depth-2 concrete queue-head report-only and runtime-validation groups, explicit runtime-assertion beat-count\/RLAST validation for auto-ID, selected dynamic read-data, selected dynamic issue-order queue read-data, and bounded read burst-last concrete same-ID queue-head read-data contracts including one or more independent depth-2 queue-head groups plus the selected single depth-3 group, selected multiple\/mixed depth-3 groups, and the selected same-family mixed auto-ID plus depth-2 concrete queue-head group, generated multi-beat read-data output-bank behavior for the covered auto-ID multi-beat-by-RID subset, selected dynamic single-active and bounded multiple all-dynamic read demux subset, selected dynamic issue-order queue demux subset including the selected depth-3 runtime-validation queue, selected mixed dynamic\/static read demux subset, and bounded read burst-last concrete same-ID queue-head subset including multiple independent depth-2 queue-head groups plus the selected single depth-3 runtime-validation queue-head group, selected multiple\/mixed depth-3 runtime-validation queue-head groups, and the selected same-family mixed auto-ID plus depth-2 concrete queue-head runtime-validation group, bounded burst payload\/output behavior through that per-beat output bank, and generated scalar RRESP aggregation behavior are supported/,
         "$owner reports generated burst-last, last-beat, queue-head last-beat including multi-group scalar runtime validation, queue-head report-only/raw runtime ARLEN, non-queue-head and queue-head beat-count, multi-beat output-bank, bounded burst output, and scalar aggregation behavior as supported",
     );
     like(

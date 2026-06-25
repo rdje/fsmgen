@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.499: audit RLAST depth3 multi-beat readiness`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.500` implements multi-beat output banks over generated all-dynamic read burst-last RID/RLAST depth-3 same-ID issue-order queue runtime-validation read-data; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.499` selected `.500`, direct bounded implementation of multi-beat output banks over the `.497` depth-3 dynamic RLAST queue runtime-validation read-data surface. Code inspection found only the local dynamic queue read-data coverage gate; a RAM-guarded temporary depth-3 multi-beat candidate failed closed at that diagnostic. Downstream multi-beat normalization, artifact, report, lane-capture, and runtime-validation helpers are transaction-list driven. No code or runtime behavior changed.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.500: ship RLAST depth3 multi-beat output banks`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.501` selects the next exact IAL2 owner after generated all-dynamic read burst-last RID/RLAST depth-3 same-ID issue-order queue runtime-validation multi-beat output banks; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.500` shipped support-accounted multi-beat output banks over the `.497` depth-3 dynamic RLAST queue runtime-validation read-data surface through `ppif/axi_manager_capacity_status_dynamic_read_burst_last_depth3_same_id_issue_order_queue_read_data_multi_beat.ppif`. The report advertises `bounded_multi_beat_read_data_contract`, `r0`/`r1`/`r2`, 48 data outputs, 48 status outputs, three valid-mask outputs, three length outputs, 48 capture rules, and twelve beat-count/RLAST assertions. External converters such as `sv2v` remain deferred; FSMGen-owned generation/lowering remains the default.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
-- next_action: Start `.500`: implement only the support-accounted depth-3 dynamic RLAST queue multi-beat output-bank sample and the local coverage/test/docs updates selected by `.499`; preserve external converter dependencies such as sv2v, mixed queues, arbitrary cardinality, backend behavior, verification-code generation, and VHDL.
+- next_action: Start `.501`: select the next exact IAL2 owner after `.500`; do not change parser, generator, PPIF samples, tests, HDL/runtime behavior, external converter dependencies such as sv2v, arbitrary cardinality, backend behavior, verification-code generation, or VHDL in this selector.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact
