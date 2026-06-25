@@ -3119,6 +3119,13 @@ backend-language variants, or VHDL because existing generated dynamic read
 behavior already has single-beat `RID`, burst-last `RID && RLAST`, read-data,
 raw `ARLEN`/runtime validation, multi-beat output-bank, and recapture
 consumers that a queue implementation must preserve.
+`.457` now selects `.458`, public contract selection for the first generated
+dynamic read same-ID `issue-order-queue` behavior. The readiness audit changes
+no behavior. It chooses all-dynamic read single-beat `RID` before direct
+behavior or burst-last `RID && RLAST` because the single-beat shape can reuse
+the runtime-ID queue model without final-beat-only dequeue, raw non-final
+beats, `RLAST`, read-data, raw `ARLEN`, runtime validation, multi-beat, or
+recapture consumer coupling.
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,

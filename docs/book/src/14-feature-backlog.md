@@ -8230,6 +8230,18 @@ single-beat `RID`, burst-last `RID && RLAST`, read-data, raw `ARLEN`/runtime
 validation, multi-beat output-bank, and recapture consumers that a queue
 implementation must preserve.
 
+Dynamic read same-ID issue-order queue readiness audit:
+[AXI_IAL2_MANAGER_DYNAMIC_READ_SAME_ID_ISSUE_ORDER_QUEUE_READINESS_AUDIT](../../AXI_IAL2_MANAGER_DYNAMIC_READ_SAME_ID_ISSUE_ORDER_QUEUE_READINESS_AUDIT.md)
+selects `.458`, public contract selection for the first generated dynamic
+read same-ID `issue-order-queue` behavior. The audit changes no behavior. It
+chooses all-dynamic read single-beat `RID` before direct behavior or
+burst-last `RID && RLAST` because the single-beat shape can reuse the
+runtime-ID queue model without final-beat-only dequeue, raw non-final beats,
+`RLAST`, read-data, raw `ARLEN`, runtime validation, multi-beat, or recapture
+consumer coupling. Burst-last queues, read-data over queues, broader queue
+cardinality, mixed dynamic/static queues, scoreboards, direct backend,
+backend-language variants, and VHDL remain future exact owners.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

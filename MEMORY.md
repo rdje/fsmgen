@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.456: select dynamic read queue audit`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.457` audits generated dynamic read same-ID issue-order queue readiness after the generated dynamic write BID queue shipped; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.456` selected `.457`, readiness audit for generated dynamic read same-ID `issue-order-queue` behavior. The selector changed no behavior and chose read queue readiness before broader write cardinality, mixed dynamic/static queues, scoreboards, validation retry, direct backend, backend-language variants, or VHDL because existing generated dynamic read behavior already has single-beat `RID`, burst-last `RID && RLAST`, read-data, raw `ARLEN`/runtime validation, multi-beat output-bank, and recapture consumers.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.457: audit dynamic read queue readiness`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.458` selects the public contract for first generated dynamic read single-beat RID same-ID issue-order queue behavior; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.457` audited generated dynamic read same-ID `issue-order-queue` readiness and selected `.458`, public contract selection for the first all-dynamic read single-beat `RID` queue. The audit changed no behavior and deferred burst-last queues, read-data over queues, raw `ARLEN`, runtime validation, multi-beat, broader queue cardinality, mixed dynamic/static queues, scoreboards, direct backend, backend-language variants, and VHDL.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
-- next_action: Start `.457`: audit generated dynamic read same-ID issue-order queue readiness, decide whether the next owner is read single-beat `RID`, read burst-last `RID && RLAST`, a shared read queue representation/report prerequisite, broader write cardinality, or another narrower prerequisite, and record preservation of read-data, raw `ARLEN`/runtime, multi-beat, recapture, report/residue, validation, docs, and Knowledge Map before behavior changes.
+- next_action: Start `.458`: select the public contract for first generated dynamic read single-beat `RID` same-ID issue-order queue behavior, including source shape, cardinality, response-demux.read requirements, compact runtime-ID slot representation, report/residue vocabulary, diagnostics, validation gates, rollback, docs, and Knowledge Map before behavior changes.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact
