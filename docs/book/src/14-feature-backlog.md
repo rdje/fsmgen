@@ -8586,6 +8586,19 @@ read-data, mixed dynamic/static queues, scoreboards, arbitrary cardinality,
 direct backend behavior, backend-language variants, and VHDL remain future
 exact owners.
 
+Dynamic write depth-3 same-ID issue-order queue behavior:
+[AXI_IAL2_MANAGER_DYNAMIC_WRITE_DEPTH3_SAME_ID_ISSUE_ORDER_QUEUE_BEHAVIOR](../../AXI_IAL2_MANAGER_DYNAMIC_WRITE_DEPTH3_SAME_ID_ISSUE_ORDER_QUEUE_BEHAVIOR.md)
+ships generated support through
+`ppif/axi_manager_capacity_status_dynamic_write_depth3_same_id_issue_order_queue.ppif`.
+The generated write queue covers `w0`, `w1`, and `w2`, allocates three compact
+runtime-ID issue-order slots, captures `AWID` per slot, completes by earliest
+matching `BID`, reports
+`first_generated_scope: write_bid_three_dynamic_transactions`, and keeps the
+queue-owned same-transaction captured-ID refresh fields. Ambiguous depth-3
+cross-transaction selected-dequeue-plus-enqueue rules include the selected
+dequeued transaction in the generated rule name; existing depth-2 and
+same-transaction refresh names remain stable.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

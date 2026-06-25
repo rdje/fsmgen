@@ -3341,8 +3341,15 @@ all-dynamic write queue. The readiness audit found the behavior blocker is the
 local dynamic queue admission/storage gate, which still requires depth 2 and
 exactly two transactions. Transition, assignment, state-expression,
 selected-match, assertion, and report helpers are already queue-depth and
-transaction-list driven. `.482` owns the behavior change plus focused
-report/test/sample/support-accounting/docs updates; read depth-3 queues,
+transaction-list driven. `.482` now ships the generated depth-3 write shape
+through support-accounted public sample
+`ppif/axi_manager_capacity_status_dynamic_write_depth3_same_id_issue_order_queue.ppif`.
+The generated queue has three compact runtime-ID slots, covers `w0`/`w1`/`w2`,
+reports `first_generated_scope: write_bid_three_dynamic_transactions`, and
+keeps same-transaction captured-`AWID` refresh fields under the generated
+queue report. Ambiguous depth-3 cross-transaction dequeue/enqueue rule names
+include the selected dequeued transaction, while existing depth-2 and
+same-transaction refresh rule names stay stable. Read depth-3 queues,
 read-data, mixed dynamic/static queues, scoreboards, arbitrary cardinality,
 direct backend behavior, backend-language variants, and VHDL remain future
 owners.

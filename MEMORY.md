@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.481: audit dynamic write depth3 queue`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.482` implements generated depth-3 all-dynamic write BID same-ID issue-order queue behavior; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.481` selected `.482`, direct bounded implementation for exactly three all-dynamic write transactions, generated BID response-demux completion, `write-max-pending` at least 3, and one depth-3 queue. The audit found the behavior blocker is local to dynamic queue admission/storage; helpers are already depth/list driven.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.482: generate dynamic write depth3 queue`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.483` selects the next generated dynamic same-ID issue-order queue widening after depth-3 write behavior; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.482` shipped generated depth-3 all-dynamic write BID same-ID issue-order queue behavior through the support-accounted public PPIF sample. Ambiguous depth-3 cross-transaction dequeue/enqueue rule names now include the selected dequeued transaction; depth-2 and same-transaction refresh names stay stable.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
-- blockers: none. A RAM-guarded focused t/1438 dynamic write queue probe for `.479` stopped at the 4096 MiB descendant RSS cutoff; no unguarded retry or cutoff raise was used.
-- next_action: Start `.482`: implement only the owned depth-3 all-dynamic write BID queue slice, including admission/storage/report/test/sample/support-accounting/docs updates while preserving existing depth-2 dynamic queues and all deferred read, mixed, scoreboard, backend-language, direct backend, and VHDL behavior.
+- blockers: none.
+- next_action: Start `.483`: select the next exact owner after depth-3 dynamic write queue behavior, choosing among read depth-3 queue readiness, mixed dynamic/static queue readiness, scoreboard readiness, report/support cleanup, or a smaller prerequisite.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact
