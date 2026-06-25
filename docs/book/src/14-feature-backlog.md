@@ -8768,6 +8768,26 @@ verification-code generation, direct backend behavior, backend-language
 variants, external converter dependencies such as `sv2v`, and VHDL remain
 deferred; FSMGen-owned generation/lowering remains the default.
 
+Dynamic read burst-last depth-3 same-ID issue-order queue read-data
+raw-`ARLEN` behavior:
+[AXI_IAL2_MANAGER_DYNAMIC_READ_BURST_LAST_DEPTH3_SAME_ID_ISSUE_ORDER_QUEUE_READ_DATA_BURST_LENGTH_BEHAVIOR](../../AXI_IAL2_MANAGER_DYNAMIC_READ_BURST_LAST_DEPTH3_SAME_ID_ISSUE_ORDER_QUEUE_READ_DATA_BURST_LENGTH_BEHAVIOR.md)
+ships the `.494` support-accounted sample
+`ppif/axi_manager_capacity_status_dynamic_read_burst_last_depth3_same_id_issue_order_queue_read_data_burst_length.ppif`.
+The generated path keeps the queue-owned `RID && RLAST` completion pulse,
+adds generated input `axi0_arlen`, stores request-time raw length in
+`axi0_r0_arlen_q`, `axi0_r1_arlen_q`, and `axi0_r2_arlen_q`, and emits
+`axi0_r*_burst_length_capture` rules for `r0`/`r1`/`r2`. The report keeps
+completion validity
+`generated_dynamic_read_issue_order_queue_response_demux_last_beat_completion_pulse`
+and records `burst_length_validation: report_only`,
+`generated_burst_length_inputs: [axi0_arlen]`, and the three generated
+storage/rule names. Runtime validation over this depth-3 queue, multi-beat
+output banks over this depth-3 queue, mixed dynamic/static queues,
+scoreboards, arbitrary cardinality, verification-code generation, direct
+backend behavior, backend-language variants, external converter dependencies
+such as `sv2v`, and VHDL remain deferred; FSMGen-owned generation/lowering
+remains the default.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

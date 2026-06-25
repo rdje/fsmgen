@@ -3469,7 +3469,22 @@ that local diagnostic. Runtime validation, multi-beat output banks, mixed
 dynamic/static queues, scoreboards, arbitrary cardinality,
 verification-code generation, direct backend behavior, backend-language
 variants, external converter dependencies such as `sv2v`, and VHDL remain
-deferred; FSMGen-owned generation/lowering remains the default.
+deferred; FSMGen-owned generation/lowering remains the default. `.494` now
+ships that report-only raw `ARLEN` behavior through support-accounted sample
+`ppif/axi_manager_capacity_status_dynamic_read_burst_last_depth3_same_id_issue_order_queue_read_data_burst_length.ppif`.
+The generated `read-data.read` path keeps the queue-owned
+`RID && RLAST` completion pulse, adds generated input `axi0_arlen`, stores raw
+request-time length in `axi0_r0_arlen_q`, `axi0_r1_arlen_q`, and
+`axi0_r2_arlen_q`, and emits `axi0_r*_burst_length_capture` rules for
+`r0`/`r1`/`r2`. The report advertises
+`burst_length_validation: report_only`,
+`generated_burst_length_inputs: [axi0_arlen]`, and the three generated
+storage/rule names. Runtime validation over this depth-3 queue, multi-beat
+output banks over this depth-3 queue, mixed dynamic/static queues,
+scoreboards, arbitrary cardinality, verification-code generation, direct
+backend behavior, backend-language variants, external converter dependencies
+such as `sv2v`, and VHDL remain deferred; FSMGen-owned generation/lowering
+remains the default.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
