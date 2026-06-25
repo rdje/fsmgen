@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.512: select mixed queue read-data audit`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.513` audits scalar read-data readiness over generated mixed dynamic/static read same-ID issue-order queue completions; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.512` selected `.513`, readiness audit for scalar read-data routing over generated mixed dynamic/static read same-ID `issue-order-queue` completion pulses. Raw `ARLEN`, runtime validation, multi-beat output banks, broader mixed cardinality, scoreboards, backend behavior, backend-language variants, verification-code generation, external converter dependencies such as `sv2v`, and VHDL remain deferred.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.513: audit mixed queue read-data readiness`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.514` implements paired scalar read-data over generated mixed dynamic/static read same-ID issue-order queue completions; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.513` selected `.514`, direct bounded implementation for paired scalar read-data over generated mixed dynamic/static read same-ID `issue-order-queue` completions. The audit found no parser, PPIF syntax, IAL1, IAL0, SystemVerilog, backend, external converter, or VHDL prerequisite; the blocker is local to read-data coverage for the generated mixed queue completion sources. Raw `ARLEN`, runtime validation, multi-beat output banks, broader mixed cardinality, scoreboards, backend behavior, backend-language variants, verification-code generation, external converter dependencies such as `sv2v`, and VHDL remain deferred.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
-- next_action: Start `.513`: audit scalar read-data readiness over generated mixed dynamic/static read same-ID issue-order queue completions. Decide whether the next owner is paired scalar read-data contract selection, direct bounded implementation, a narrower single-beat/last-beat owner, a prerequisite cleanup, or deferral before any behavior changes.
+- next_action: Start `.514`: implement paired scalar read-data over generated mixed dynamic/static read same-ID issue-order queue completions, bounded to the two selected public samples and queue-specific completion-validity report vocabulary.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact

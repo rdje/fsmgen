@@ -3728,6 +3728,20 @@ single-beat plus scalar last-beat contract selection, direct bounded
 implementation, a narrower read-data owner, a prerequisite cleanup, or
 deferral before any behavior changes.
 
+`.513` now selects `.514`, direct bounded implementation of paired scalar
+read-data routing over generated mixed dynamic/static read same-ID
+`issue-order-queue` completions. The audit found existing scalar
+`read-data.read` syntax and report modes sufficient, with the remaining
+blocker local to read-data transaction coverage for
+`generated_mixed_dynamic_static_issue_order_queue_demux` and
+`generated_mixed_dynamic_static_issue_order_queue_demux_last_beat`. Temporary
+single-beat and burst-last candidates reached the current coverage fallback,
+so no parser, PPIF syntax, IAL1, IAL0, SystemVerilog, backend, external
+converter, or VHDL prerequisite is exposed. Raw `ARLEN`, runtime validation,
+multi-beat output banks, broader mixed cardinality, scoreboards, backend
+behavior, backend-language variants, verification-code generation, external
+converter dependencies such as `sv2v`, and VHDL remain deferred.
+
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,

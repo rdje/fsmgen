@@ -9102,6 +9102,21 @@ banks, broader mixed cardinality, scoreboards, backend behavior,
 backend-language variants, verification-code generation, external converter
 dependencies such as `sv2v`, and VHDL remain future exact owners.
 
+Mixed dynamic/static issue-order queue read-data readiness audit:
+[AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_ISSUE_ORDER_QUEUE_READ_DATA_READINESS_AUDIT](../../AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_ISSUE_ORDER_QUEUE_READ_DATA_READINESS_AUDIT.md)
+selects `.514`, direct bounded implementation of paired scalar read-data over
+generated mixed dynamic/static read same-ID `issue-order-queue` completions.
+Existing scalar `read-data.read` syntax and scalar report modes are sufficient;
+the remaining blocker is local to read-data transaction coverage for
+`generated_mixed_dynamic_static_issue_order_queue_demux` and
+`generated_mixed_dynamic_static_issue_order_queue_demux_last_beat`. Temporary
+single-beat and burst-last candidates reached the current coverage fallback,
+so no parser, PPIF syntax, IAL1, IAL0, SystemVerilog, backend, external
+converter, or VHDL prerequisite is exposed. Raw `ARLEN`, runtime validation,
+multi-beat output banks, broader mixed cardinality, scoreboards, backend
+behavior, backend-language variants, verification-code generation, external
+converter dependencies such as `sv2v`, and VHDL remain future exact owners.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after
