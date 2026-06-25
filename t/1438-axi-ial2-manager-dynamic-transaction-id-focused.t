@@ -71,6 +71,15 @@ my @DYNAMIC_CASES = (
         behavior     => 'dynamic_read_same_id_issue_order_queue',
     },
     {
+        label        => 'dynamic read RID/RLAST same-ID issue-order queue',
+        relpath      => 'ppif/axi_manager_capacity_status_dynamic_read_burst_last_same_id_issue_order_queue.ppif',
+        object_id    => 'axi-manager-capacity-status-dynamic-read-burst-last-same-id-issue-order-queue',
+        intent_name  => 'axi_manager_capacity_status_dynamic_read_burst_last_same_id_issue_order_queue',
+        entry_id     => 'intent.ppif_axi_manager_capacity_status_dynamic_read_burst_last_same_id_issue_order_queue',
+        coverage     => 'ial2_ppif_manager_capacity_status_dynamic_read_burst_last_same_id_issue_order_queue_pipeline_cli',
+        behavior     => 'dynamic_read_burst_last_same_id_issue_order_queue',
+    },
+    {
         label        => 'mixed dynamic/static write BID response demux',
         relpath      => 'ppif/axi_manager_capacity_status_write_mixed_dynamic_static_response_demux.ppif',
         object_id    => 'axi-manager-capacity-status-write-mixed-dynamic-static-response-demux',
@@ -924,6 +933,37 @@ sub assert_dynamic_behavior {
         like($isf, qr/read dynamic same-ID issue-order queue completion for r0 follows selected runtime-ID match/, 'dynamic read issue-order queue emits selected-match assertion');
         assert_dynamic_read_same_id_issue_order_queue_report($result->{report});
         my $hdl = hdl_for('axi0_capacity_status', $fsm);
+        like($hdl, qr/\breg\s+\[3:0\]\s+axi0_read_dynamic_same_id_issue_order_slot0_id_q\b/, 'SystemVerilog declares slot0 captured ARID');
+        like($hdl, qr/\breg\s+\[3:0\]\s+axi0_read_dynamic_same_id_issue_order_slot1_id_q\b/, 'SystemVerilog declares slot1 captured ARID');
+        like($hdl, qr/axi0_read_dynamic_same_id_issue_order_slot1_id_q_next\s*=\s*axi0_arid\s*;/, 'SystemVerilog recaptures ARID into a queue slot');
+        return;
+    }
+
+    if ($case->{behavior} eq 'dynamic_read_burst_last_same_id_issue_order_queue') {
+        like($isf, qr/\(input axi0_r0_request\)/, 'dynamic read burst-last issue-order queue declares r0 request input');
+        like($isf, qr/\(input axi0_r1_request\)/, 'dynamic read burst-last issue-order queue declares r1 request input');
+        like($isf, qr/\(input axi0_arid \(width 4\)\)/, 'dynamic read burst-last issue-order queue declares ARID input');
+        like($isf, qr/\(input axi0_rid \(width 4\)\)/, 'dynamic read burst-last issue-order queue declares RID input');
+        like($isf, qr/\(input axi0_rlast\)/, 'dynamic read burst-last issue-order queue declares RLAST input');
+        like($isf, qr/\(output axi0_r0_complete\)/, 'dynamic read burst-last issue-order queue exposes r0 completion output');
+        like($isf, qr/\(output axi0_r1_complete\)/, 'dynamic read burst-last issue-order queue exposes r1 completion output');
+        unlike($isf, qr/axi0_r0_dynamic_id_q/, 'dynamic read burst-last issue-order queue does not allocate legacy r0 selected-ID storage');
+        unlike($isf, qr/axi0_r1_dynamic_busy_q/, 'dynamic read burst-last issue-order queue does not allocate legacy r1 busy storage');
+        like($isf, qr/\(var axi0_read_dynamic_same_id_issue_order_slot0_r0_q \(width 1\)\)/, 'dynamic read burst-last issue-order queue allocates slot0 r0 bit');
+        like($isf, qr/\(var axi0_read_dynamic_same_id_issue_order_slot0_id_q \(width 4\)\)/, 'dynamic read burst-last issue-order queue allocates slot0 captured ARID');
+        like($isf, qr/\(var axi0_read_dynamic_same_id_issue_order_slot1_r1_q \(width 1\)\)/, 'dynamic read burst-last issue-order queue allocates slot1 r1 bit');
+        like($isf, qr/\(var axi0_read_dynamic_same_id_issue_order_slot1_id_q \(width 4\)\)/, 'dynamic read burst-last issue-order queue allocates slot1 captured ARID');
+        like($isf, qr/\(rule axi0_read_dynamic_same_id_issue_order_empty_enqueue_r0[\s\S]*\(axi0_read_dynamic_same_id_issue_order_slot0_id_q axi0_arid\)\)/, 'dynamic read burst-last issue-order queue captures ARID into empty slot0');
+        like($isf, qr/\(rule axi0_read_dynamic_same_id_issue_order_r0_r1_dequeue_enqueue_r0[\s\S]*\(axi0_read_dynamic_same_id_issue_order_slot0_id_q axi0_read_dynamic_same_id_issue_order_slot1_id_q\)[\s\S]*\(axi0_read_dynamic_same_id_issue_order_slot1_id_q axi0_arid\)\)/, 'dynamic read burst-last issue-order queue compacts retained ID and recaptures same-cycle enqueue');
+        like($isf, qr/\(rule axi0_r0_response_demux [\s\S]*axi0_read_dynamic_same_id_issue_order_slot0_id_q[\s\S]*axi0_rlast[\s\S]*\(pulse axi0_r0_complete\)\)/, 'dynamic read burst-last issue-order queue emits final r0 RID/RLAST demux');
+        like($isf, qr/\(rule axi0_r1_response_demux [\s\S]*axi0_read_dynamic_same_id_issue_order_slot0_id_q[\s\S]*axi0_read_dynamic_same_id_issue_order_slot1_id_q[\s\S]*axi0_rlast[\s\S]*\(pulse axi0_r1_complete\)\)/, 'dynamic read burst-last issue-order queue emits final r1 RID/RLAST demux');
+        like($isf, qr/read dynamic same-ID issue-order queue admits at most one request/, 'dynamic read burst-last issue-order queue emits enqueue onehot assertion');
+        like($isf, qr/read dynamic same-ID response matches at least one captured runtime ID/, 'dynamic read burst-last issue-order queue emits raw selected-match assertion');
+        like($isf, qr/read dynamic same-ID non-last response beat does not dequeue/, 'dynamic read burst-last issue-order queue emits non-last no-dequeue assertion');
+        like($isf, qr/read dynamic same-ID issue-order queue completion for r0 follows selected runtime-ID match/, 'dynamic read burst-last issue-order queue emits final selected-match assertion');
+        assert_dynamic_read_burst_last_same_id_issue_order_queue_report($result->{report});
+        my $hdl = hdl_for('axi0_capacity_status', $fsm);
+        like($hdl, qr/\binput\s+axi0_rlast\b/, 'SystemVerilog declares RLAST input');
         like($hdl, qr/\breg\s+\[3:0\]\s+axi0_read_dynamic_same_id_issue_order_slot0_id_q\b/, 'SystemVerilog declares slot0 captured ARID');
         like($hdl, qr/\breg\s+\[3:0\]\s+axi0_read_dynamic_same_id_issue_order_slot1_id_q\b/, 'SystemVerilog declares slot1 captured ARID');
         like($hdl, qr/axi0_read_dynamic_same_id_issue_order_slot1_id_q_next\s*=\s*axi0_arid\s*;/, 'SystemVerilog recaptures ARID into a queue slot');
@@ -2918,6 +2958,93 @@ sub assert_dynamic_read_same_id_issue_order_queue_report {
     );
     ok(grep { $_ eq 'axi0_read_dynamic_same_id_issue_order_r0_r1_dequeue_enqueue_r0' } @{$queue->{generated_update_rules}}, 'dynamic read issue-order queue reports same-cycle selected dequeue plus enqueue rule');
     assert_dynamic_residue($report, 'dynamic read issue-order queue keeps future dynamic residue visible');
+}
+
+sub assert_dynamic_read_burst_last_same_id_issue_order_queue_report {
+    my ($report) = @_;
+    my $demux = $report->{response_demux};
+    my $read = $demux->{read};
+    my $ordering = $report->{same_id_ordering};
+    my $policy = $ordering->{dynamic_id_reuse_policy}{read};
+    my $queue = $policy->{generated_queues}[0];
+
+    is($demux->{mode}, 'bounded_dynamic_read_rid_rlast_issue_order_queue_demux_contract', 'dynamic read burst-last issue-order queue report marks demux contract');
+    ok($demux->{generated_behavior}, 'dynamic read burst-last issue-order queue report marks generated demux behavior');
+    is_deeply($demux->{residue}, [qw(read_data_interleaving bursts)], 'dynamic read burst-last issue-order queue removes same-ID residue from response demux');
+    is($read->{mode}, 'bounded_dynamic_read_rid_rlast_issue_order_queue_demux_contract', 'dynamic read burst-last issue-order queue report marks read mode');
+    is($read->{response_scope}, 'burst_last', 'dynamic read burst-last issue-order queue report marks burst-last response scope');
+    is($read->{last_signal}, 'axi0_rlast', 'dynamic read burst-last issue-order queue report marks RLAST signal');
+    is($read->{last_signal_width}, 1, 'dynamic read burst-last issue-order queue report marks one-bit RLAST');
+    is($read->{transaction_completion_source}, 'generated_dynamic_issue_order_queue_demux_last_beat', 'dynamic read burst-last issue-order queue report marks last-beat queue completion source');
+    is($read->{transaction_completion_semantics}, 'earliest_matching_captured_runtime_id_and_last_signal', 'dynamic read burst-last issue-order queue report marks earliest matching RID/RLAST semantics');
+    is($read->{beat_valid_output}, 'none', 'dynamic read burst-last issue-order queue report marks no beat-valid output');
+    is($read->{burst_length_source}, 'rlast_only', 'dynamic read burst-last issue-order queue report marks RLAST-only burst-length source');
+    is($read->{burst_length_validation}, 'not_generated', 'dynamic read burst-last issue-order queue report marks deferred burst-length validation');
+    is($read->{queue_state_representation}, 'compact_runtime_id_issue_order_slots', 'dynamic read burst-last issue-order queue report marks compact runtime-ID slots');
+    is($read->{runtime_id_queue_key}, 'captured_request_id', 'dynamic read burst-last issue-order queue report marks captured request ID key');
+    is($read->{response_demux_strategy}, 'dynamic_issue_order_earliest_matching_slot', 'dynamic read burst-last issue-order queue report marks earliest matching strategy');
+    is_deeply($read->{dynamic_transactions}, [qw(r0 r1)], 'dynamic read burst-last issue-order queue report names covered dynamic reads');
+    is_deeply($read->{generated_rules}, [qw(axi0_r0_response_demux axi0_r1_response_demux)], 'dynamic read burst-last issue-order queue report names generated response-demux rules');
+    is_deeply($read->{generated_completion_signals}, [qw(axi0_r0_complete axi0_r1_complete)], 'dynamic read burst-last issue-order queue report names generated completions');
+    is_deeply(
+        [map { $_->{id}{implementation_status} } @{$report->{transactions}}],
+        [qw(generated_issue_order_queue_matching generated_issue_order_queue_matching)],
+        'dynamic read burst-last issue-order queue transactions report generated queue matching',
+    );
+
+    is($ordering->{mode}, 'dynamic_id_reuse_policy', 'dynamic read burst-last issue-order queue same-ID report marks dynamic mode');
+    ok($ordering->{generated_behavior}, 'dynamic read burst-last issue-order queue same-ID report is generated');
+    is_deeply($ordering->{residue}, [], 'dynamic read burst-last issue-order queue same-ID report clears dynamic residue');
+    is($policy->{implementation_status}, 'generated_dynamic_read_rid_rlast_issue_order_queue', 'dynamic read burst-last issue-order queue policy reports generated implementation');
+    is($policy->{enforcement}, 'generated_dynamic_issue_order_queue', 'dynamic read burst-last issue-order queue policy reports generated enforcement');
+    ok($policy->{accepted_same_id_reuse}, 'dynamic read burst-last issue-order queue policy accepts same-ID reuse');
+    ok($policy->{generated_queue_behavior}, 'dynamic read burst-last issue-order queue policy marks generated queue behavior');
+    ok($policy->{dynamic_issue_order_queue_covered}, 'dynamic read burst-last issue-order queue policy marks dynamic coverage');
+    is_deeply($policy->{covered_dynamic_transactions}, [qw(r0 r1)], 'dynamic read burst-last issue-order queue policy names covered transactions');
+    is($policy->{first_generated_scope}, 'read_rid_rlast_two_dynamic_transactions', 'dynamic read burst-last issue-order queue policy reports first generated scope');
+    is($policy->{active_id_uniqueness_policy}, 'not_required_for_issue_order_queue', 'dynamic read burst-last issue-order queue policy does not require active ID uniqueness');
+
+    is($queue->{queue_state_representation}, 'compact_runtime_id_issue_order_slots', 'dynamic read burst-last issue-order queue report names queue representation');
+    is($queue->{request_id_source}, 'axi0_arid', 'dynamic read burst-last issue-order queue report names ARID capture source');
+    is($queue->{response_id_signal}, 'axi0_rid', 'dynamic read burst-last issue-order queue report names RID response source');
+    is($queue->{last_signal}, 'axi0_rlast', 'dynamic read burst-last issue-order queue report names RLAST gate');
+    is_deeply($queue->{transactions}, [qw(r0 r1)], 'dynamic read burst-last issue-order queue report names queue transactions');
+    is_deeply(
+        $queue->{slot_storage},
+        [
+            { name => 'axi0_read_dynamic_same_id_issue_order_slot0_r0_q', width => 1 },
+            { name => 'axi0_read_dynamic_same_id_issue_order_slot0_r1_q', width => 1 },
+            { name => 'axi0_read_dynamic_same_id_issue_order_slot0_id_q', width => 4 },
+            { name => 'axi0_read_dynamic_same_id_issue_order_slot1_r0_q', width => 1 },
+            { name => 'axi0_read_dynamic_same_id_issue_order_slot1_r1_q', width => 1 },
+            { name => 'axi0_read_dynamic_same_id_issue_order_slot1_id_q', width => 4 },
+        ],
+        'dynamic read burst-last issue-order queue report names slot-local transaction and ID storage',
+    );
+    is_deeply(
+        $queue->{generated_assertions},
+        [qw(
+            axi0_read_dynamic_same_id_issue_order_slot0_onehot0
+            axi0_read_dynamic_same_id_issue_order_slot1_onehot0
+            axi0_read_dynamic_same_id_issue_order_compact
+            axi0_read_dynamic_same_id_issue_order_request_onehot0
+            axi0_read_dynamic_same_id_issue_order_enqueue_requires_space_or_dequeue
+            axi0_read_dynamic_same_id_issue_order_response_requires_nonempty
+            axi0_read_dynamic_same_id_issue_order_response_has_selected_match
+            axi0_read_dynamic_same_id_issue_order_response_selected_match_onehot0
+            axi0_read_dynamic_same_id_issue_order_dequeue_requires_nonempty
+            axi0_read_dynamic_same_id_issue_order_nonlast_no_dequeue
+            axi0_read_dynamic_same_id_issue_order_r0_unique_slot
+            axi0_read_dynamic_same_id_issue_order_r0_no_duplicate_after_dequeue
+            axi0_read_dynamic_same_id_issue_order_r0_completion_selected_match
+            axi0_read_dynamic_same_id_issue_order_r1_unique_slot
+            axi0_read_dynamic_same_id_issue_order_r1_no_duplicate_after_dequeue
+            axi0_read_dynamic_same_id_issue_order_r1_completion_selected_match
+        )],
+        'dynamic read burst-last issue-order queue report names generated queue assertions',
+    );
+    ok(grep { $_ eq 'axi0_read_dynamic_same_id_issue_order_r0_r1_dequeue_enqueue_r0' } @{$queue->{generated_update_rules}}, 'dynamic read burst-last issue-order queue reports same-cycle selected dequeue plus enqueue rule');
+    assert_dynamic_residue($report, 'dynamic read burst-last issue-order queue keeps future dynamic residue visible');
 }
 
 sub assert_mixed_dynamic_static_write_report {

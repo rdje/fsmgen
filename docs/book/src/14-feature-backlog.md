@@ -8330,6 +8330,28 @@ recapture widening, broader queue cardinality, mixed dynamic/static queues,
 scoreboards, direct backend behavior, backend-language variants, and VHDL
 remain future exact owners.
 
+Dynamic read burst-last same-ID issue-order queue behavior:
+[AXI_IAL2_MANAGER_DYNAMIC_READ_BURST_LAST_SAME_ID_ISSUE_ORDER_QUEUE_BEHAVIOR](../../AXI_IAL2_MANAGER_DYNAMIC_READ_BURST_LAST_SAME_ID_ISSUE_ORDER_QUEUE_BEHAVIOR.md)
+ships `.463`, generated bounded two-transaction all-dynamic read burst-last
+`RID && RLAST` dynamic same-ID `issue-order-queue` behavior. The public sample
+`ppif/axi_manager_capacity_status_dynamic_read_burst_last_same_id_issue_order_queue.ppif`
+uses exactly two dynamic reads, `same-id-ordering.read
+(dynamic-id-reuse issue-order-queue)`, explicit generated
+`response-demux.read`, `response-scope burst-last`, and one-bit
+`last-signal axi0_rlast`. FSMGen generates compact runtime-ID queue slots with
+slot-local `ARID`, raw earliest matching `RID` response ownership, final
+completion/dequeue only on earliest matching captured runtime ID plus `RLAST`,
+same-cycle selected final dequeue plus one enqueue, and queue assertions
+including non-final no-dequeue. Reports use
+`bounded_dynamic_read_rid_rlast_issue_order_queue_demux_contract`,
+`generated_dynamic_issue_order_queue_demux_last_beat`,
+`generated_dynamic_read_rid_rlast_issue_order_queue`, and
+`first_generated_scope: read_rid_rlast_two_dynamic_transactions`. Read-data
+over generated dynamic read queues, raw `ARLEN`, runtime validation,
+multi-beat output banks, broader queue cardinality, mixed dynamic/static
+queues, scoreboards, direct backend behavior, backend-language variants, and
+VHDL remain future exact owners.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after
