@@ -8977,6 +8977,33 @@ cardinality, scoreboards, backend behavior, backend-language variants,
 external converter dependencies such as `sv2v`, verification-code generation,
 and VHDL remain deferred.
 
+Mixed dynamic/static read same-ID issue-order queue behavior:
+[AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_READ_SAME_ID_ISSUE_ORDER_QUEUE_BEHAVIOR](../../AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_READ_SAME_ID_ISSUE_ORDER_QUEUE_BEHAVIOR.md)
+ships `.506` through support-accounted public sample
+`ppif/axi_manager_capacity_status_read_mixed_dynamic_static_same_id_issue_order_queue.ppif`.
+The top-level response-demux report remains the aggregate
+`bounded_response_demux_contract`, while `response_demux.read.mode` reports
+`bounded_mixed_dynamic_static_read_rid_issue_order_queue_demux_contract`.
+The generated read demux uses
+`generated_mixed_dynamic_static_issue_order_queue_demux`,
+`earliest_matching_captured_or_static_runtime_id`, compact runtime-ID slots,
+`captured_or_static_request_id`, and
+`mixed_dynamic_static_issue_order_earliest_matching_slot`. Dynamic enqueues
+store `axi0_arid`; static enqueues store the sized concrete literal such as
+`4'd3`; static/dynamic runtime-ID overlap is allowed and ordered by queue
+position. The same-ID ordering report uses
+`generated_mixed_dynamic_static_read_rid_issue_order_queue`,
+`generated_mixed_dynamic_static_issue_order_queue`,
+`accepted_same_id_reuse: true`, `generated_scoreboard_behavior: false`,
+`active_id_uniqueness_policy: not_required_for_issue_order_queue`, and
+`static_id_conflict_policy: ordered_overlap_allowed`. Mixed read burst-last
+queues, read-data over this queue, raw `ARLEN`, runtime validation,
+multi-beat output banks, multi-static/two-dynamic mixed queues, scoreboards,
+arbitrary cardinality, backend behavior, backend-language variants,
+verification-code generation, external converter dependencies such as `sv2v`,
+and VHDL remain deferred; FSMGen-owned generation/lowering remains the
+default.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after
