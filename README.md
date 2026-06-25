@@ -2341,7 +2341,12 @@ state_key_preserving_selected_dequeue_enqueue`, and
 (`axi0_awid` for write BID queues and `axi0_arid` for read RID/RID-and-RLAST
 queues). The literal `generated_update_rules` list remains the emitted-rule
 evidence, and classic `release_recapture_*` fields remain exclusive to
-response-demux capture state.
+response-demux capture state. `.480` now selects `.481`, readiness audit for
+the smallest broader dynamic queue cardinality step: one generated all-dynamic
+write BID same-ID `issue-order-queue` widened from two transactions to a
+bounded depth-3, three-transaction queue. Mixed dynamic/static queues,
+scoreboards, read-side depth-3 queues, direct backend behavior,
+backend-language variants, and VHDL remain future exact owners.
 
 No behavior
 changed in `.273`, `.274`, `.275`,
@@ -4737,6 +4742,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_SAME_ID_ISSUE_ORDER_QUEUE_IDENTITY_RECAPTURE_BEHAVIOR.md` — shipped state-key-preserving dynamic same-ID issue-order queue recapture ID refresh for generated two-transaction dynamic queue families.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_SAME_ID_ISSUE_ORDER_QUEUE_IDENTITY_RECAPTURE_REPORT_CONTRACT_SELECTION.md` — selected queue-owned public report fields for generated dynamic same-ID issue-order queue identity recapture.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_SAME_ID_ISSUE_ORDER_QUEUE_IDENTITY_RECAPTURE_REPORT_BEHAVIOR.md` — shipped queue-owned `same_transaction_*` report fields for generated dynamic same-ID issue-order queue identity recapture.
+- `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_QUEUE_RECAPTURE_REPORT_NEXT_SLICE_SELECTION.md` — selected depth-3 all-dynamic write BID same-ID issue-order queue readiness as the next dynamic queue widening audit after identity-recapture report alignment.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_CONTRACT_SELECTION.md` — selected direct single-active dynamic write `BID` same-cycle release-and-recapture behavior under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_BEHAVIOR.md` — shipped single-active dynamic write `BID` same-cycle release-and-recapture under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_WRITE_RECAPTURE_NEXT_SLICE_SELECTION.md` — selected `.367`, public contract selection for first single-active dynamic read same-cycle release-and-recapture after dynamic write recapture shipped.

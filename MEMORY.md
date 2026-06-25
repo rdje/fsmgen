@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.479: report queue recapture fields`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.480` audits the next generated dynamic same-ID issue-order queue widening after report alignment; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.479` shipped queue-owned positive report fields under `same_id_ordering.dynamic_id_reuse_policy.{read,write}.generated_queues[]`: `same_transaction_recapture_policy: refresh_captured_request_id`, `same_transaction_recapture_rule_scope: state_key_preserving_selected_dequeue_enqueue`, and `same_transaction_recapture_id_source`; focused report helpers assert classic `release_recapture_*` fields remain absent from queue reports.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.480: select dynamic queue cardinality audit`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.481` audits generated depth-3 all-dynamic write BID same-ID issue-order queue readiness; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.480` selected `.481`, readiness audit for widening the generated all-dynamic write BID same-ID issue-order queue from two transactions to one bounded depth-3, three-transaction queue after identity-recapture report alignment.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none. A RAM-guarded focused t/1438 dynamic write queue probe for `.479` stopped at the 4096 MiB descendant RSS cutoff; no unguarded retry or cutoff raise was used.
-- next_action: Start `.480`: audit the next exact owner after identity-recapture report alignment, deciding between broader all-dynamic queue cardinality, mixed dynamic/static queue readiness, scoreboard readiness, or a smaller prerequisite before any behavior change.
+- next_action: Start `.481`: audit whether the existing dynamic queue builder can safely admit exactly three all-dynamic write transactions with generated BID response-demux completion and depth-3 queue state, or whether a smaller prerequisite is needed.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact

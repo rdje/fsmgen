@@ -8563,9 +8563,15 @@ Dynamic same-ID issue-order queue identity recapture report behavior:
 documents the shipped queue-owned `same_transaction_*` report fields and the
 negative contract that classic response-demux recapture fields do not appear
 inside generated queue entries.
-Broader queue cardinality, mixed dynamic/static queues, scoreboards, direct
-backend behavior, backend-language variants, and VHDL remain future exact
-owners.
+
+Post dynamic queue recapture report selector:
+[AXI_IAL2_MANAGER_POST_DYNAMIC_QUEUE_RECAPTURE_REPORT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_DYNAMIC_QUEUE_RECAPTURE_REPORT_NEXT_SLICE_SELECTION.md)
+selects `.481`, readiness audit for one generated all-dynamic write BID
+same-ID `issue-order-queue` widened from two transactions to a bounded
+depth-3, three-transaction queue.
+Other broader queue cardinality, mixed dynamic/static queues, scoreboards,
+direct backend behavior, backend-language variants, and VHDL remain future
+exact owners.
 
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)

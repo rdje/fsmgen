@@ -3330,7 +3330,12 @@ state_key_preserving_selected_dequeue_enqueue`, and
 (`axi0_awid` for write BID queues and `axi0_arid` for read RID/RID-and-RLAST
 queues). The literal `generated_update_rules` list remains the emitted-rule
 evidence, and classic `release_recapture_*` fields remain exclusive to
-response-demux capture state.
+response-demux capture state. `.480` now selects `.481`, readiness audit for
+the smallest broader dynamic queue cardinality step: one generated all-dynamic
+write BID same-ID `issue-order-queue` widened from two transactions to a
+bounded depth-3, three-transaction queue. Mixed dynamic/static queues,
+scoreboards, read-side depth-3 queues, direct backend behavior,
+backend-language variants, and VHDL remain future exact owners.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
