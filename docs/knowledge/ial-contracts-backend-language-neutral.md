@@ -14,11 +14,13 @@ answers:
   - "must every FSMGen variant satisfy the same contracts?"
   - "what role does Perl play for future FSMGen variants?"
   - "should the book be enough to implement FSMGen in another language?"
+  - "should FSMGen depend on sv2v for Verilog conversion?"
+  - "can sv2v be used for FSMGen SystemVerilog to Verilog conversion?"
 date: 2026-06-16
 status: current
-tags: [architecture, ial0, ial1, ial2, mdbook, rust, wasm, javascript, dart, browser]
+tags: [architecture, ial0, ial1, ial2, mdbook, rust, wasm, javascript, dart, browser, verilog]
 evidence: docs/decisions/0018-ial-contracts-are-backend-language-neutral.md; docs/tasks/BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.md; docs/TASK_TREE.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md
-reverify: rg -n 'backend-language-neutral|BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER|Rust/Wasm|browser-capable JavaScript|Dart/web|Julia|Perl 5|reference implementation|Perl reference|FSMGen.*public contracts|in-memory host APIs|language-X' docs/decisions/0018-ial-contracts-are-backend-language-neutral.md docs/tasks/BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.md docs/TASK_TREE.md README.md ROADMAP_V2.md docs/book/src/14-feature-backlog.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md
+reverify: rg -n 'backend-language-neutral|BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER|Rust/Wasm|browser-capable JavaScript|Dart/web|Julia|Perl 5|reference implementation|Perl reference|FSMGen.*public contracts|in-memory host APIs|language-X|sv2v|SystemVerilog-to-Verilog|external converter' docs/decisions/0018-ial-contracts-are-backend-language-neutral.md docs/tasks/BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.md docs/TASK_TREE.md README.md ROADMAP_V2.md docs/book/src/14-feature-backlog.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md
 ---
 
 IAL0, IAL1, IAL2, and the mdBook are backend-language-neutral contracts, not
@@ -45,3 +47,9 @@ fixture parity, host abstractions, Perl-oracle parity gates, and mdBook
 language-X blueprint gaps before any Rust/Rust-Wasm, browser JavaScript,
 Dart/web, Julia, or other non-Perl implementation work changes code or public
 contracts.
+
+For SystemVerilog-to-Verilog portability, FSMGen-owned generation/lowering is
+the default. External converters such as `sv2v` are not selected dependencies
+by default; they are future audit candidates only, usable as optional
+validation aids or selected dependencies only if a later owned audit proves
+exceptional quality and coverage.

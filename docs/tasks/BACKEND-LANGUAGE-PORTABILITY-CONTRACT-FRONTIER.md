@@ -6,7 +6,7 @@
 - Status: `active`
 - Roadmap lane: `Backend portability / public contracts`
 - Created: `2026-06-16`
-- Last updated: `2026-06-16`
+- Last updated: `2026-06-25`
 - Owner: repo-local workflow
 
 ## Goal
@@ -92,7 +92,7 @@ implementation must satisfy the same FSMGen public contracts.
   Status: `active`
   Goal: `Perform the backend-language-neutral contract and infrastructure readiness audit.`
   Children: `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2.1`
-  Acceptance: `Execute the parent audit after the cross-implementation parity doctrine is captured: read the public contract, task-tree, decision, code, test, support-accounting, semantic JSON, MCP, examples, regression corpus, CLI, and in-process API surfaces; separate public contract from Perl implementation detail; define the portable in-memory execution/API contract; define parity harness requirements against the Perl reference/oracle that prove every variant satisfies FSMGen's public contracts; define mdBook blueprint gaps for language-X implementations; select exact future leaves and validation gates before any code or public-contract changes.`
+  Acceptance: `Execute the parent audit after the cross-implementation parity doctrine is captured: read the public contract, task-tree, decision, code, test, support-accounting, semantic JSON, MCP, examples, regression corpus, CLI, and in-process API surfaces; separate public contract from Perl implementation detail; define the portable in-memory execution/API contract; define parity harness requirements against the Perl reference/oracle that prove every variant satisfies FSMGen's public contracts; define mdBook blueprint gaps for language-X implementations; evaluate SystemVerilog-to-Verilog portability with FSMGen-owned generation/lowering as the default and external converters such as sv2v only as optional candidate validation aids or explicitly selected dependencies if a later audit proves exceptional quality/coverage; select exact future leaves and validation gates before any code or public-contract changes.`
   Verification: `pending`
   Commit: `pending`
 
@@ -132,6 +132,13 @@ implementation must satisfy the same FSMGen public contracts.
   catalog docs, integration handoff, public contracts, README, roadmap, book,
   Knowledge Map, and task-tree state now carry the same current `.ppif`/IAL2
   bounded-public boundary and deferrals.
+- `2026-06-25`: Recorded the Verilog-conversion dependency stance under
+  `.2.2`: FSMGen should not make core work depend on an external
+  SystemVerilog-to-Verilog converter by default. FSMGen-owned generation and
+  lowering remain the default. Tools such as `sv2v` may be audited as optional
+  candidate validation aids or, only if a future owned audit proves exceptional
+  quality and coverage, as explicitly selected dependencies. No toolchain,
+  code, generated HDL, or public contract behavior changed.
 
 ## Open Questions
 
@@ -142,6 +149,10 @@ implementation must satisfy the same FSMGen public contracts.
 - Which public in-memory API shape should be canonical for non-CLI hosts? This
   does not block `.2`; the audit must separate semantic contract from current
   Perl CLI/module entrypoints.
+- Can any external SystemVerilog-to-Verilog converter, including `sv2v`, meet
+  a high enough quality and coverage bar to be useful for FSMGen? This does
+  not block `.2`; the default remains FSMGen-owned generation/lowering unless
+  a later owned audit proves and selects otherwise.
 
 ## Blockers
 
@@ -154,6 +165,7 @@ implementation must satisfy the same FSMGen public contracts.
 | `2026-06-16` | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.1` | `mdbook build docs/book`; `env -u PERL5LIB prove -Iperl t/1414-docs-relative-paths-audit.t`; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `git --no-pager diff --check`; README numbering check | `passed`; created active backend-language portability task-tree owner and registered the pending audit frontier |
 | `2026-06-16` | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.1` | `mdbook build docs/book`; `env -u PERL5LIB prove -Iperl t/1414-docs-relative-paths-audit.t`; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `git --no-pager diff --check`; README numbering check | `passed`; captured the cross-implementation parity doctrine and advanced the audit frontier to `.2.2` |
 | `2026-06-16` | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2.1` | `env -u PERL5LIB perl -Iperl -c perl/FSM/Support/LanguageSurfaceSection.pm`; `env -u PERL5LIB prove -Iperl t/297-capability-manifest.t t/317-language-surface-contract.t t/483-language-surface-section-defensive-copy-boundary-audit.t`; `env -u PERL5LIB prove -Iperl t/1436-ial2-ppif-parser-cli.t t/248-regression-corpus-accounting.t t/301-check-json-supported-corpus.t t/303-normalized-semantic-json-supported-corpus.t`; `mdbook build docs/book`; `env -u PERL5LIB prove -Iperl t/1414-docs-relative-paths-audit.t`; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `git --no-pager diff --check`; README numbering check | `passed`; synchronized downstream handoff/integration/contracts/manifest/support-accounting/book surfaces with the current codebase boundary for all downstream consumers |
+| `2026-06-25` | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` | `mdbook build docs/book`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `git --no-pager diff --check`; `scripts/check_doctrines.sh` | `passed`; recorded the SystemVerilog-to-Verilog external dependency stance without selecting `sv2v` or changing code/toolchain behavior |
 
 ## Commit Log
 
@@ -162,6 +174,7 @@ implementation must satisfy the same FSMGen public contracts.
 | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.1` | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.1: create portability task tree` | Created the owner tree and advanced the frontier to `.2`, the backend-language-neutral contract/infrastructure audit. |
 | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.1` | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.1: capture variant parity doctrine` | Captured identical in-memory behavior, variant parity, mandatory FSMGen contract satisfaction, Perl oracle, and mdBook language-X blueprint doctrine; advanced the audit frontier to `.2.2`. |
 | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2.1` | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2.1: sync downstream contract surfaces` | Synchronized the downstream-consumer handoff, integration specs, public contracts, manifest language surface, support-accounting catalog docs, README, roadmap, book, and Knowledge Map; resumed `.2.2` as the broader backend portability audit frontier. |
+| `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2: record sv2v dependency stance` | Recorded that FSMGen-owned SystemVerilog-to-Verilog generation/lowering remains the default and external converters such as `sv2v` require a future owned audit before becoming selected dependencies. |
 
 ## Changelog
 
@@ -176,3 +189,7 @@ implementation must satisfy the same FSMGen public contracts.
   boundary and deferrals are aligned across codebase, handoff, integration
   specs, public contracts, capability manifest, support-accounting docs,
   README, roadmap, mdBook, and Knowledge Map for all downstream consumers.
+- `2026-06-25`: Recorded the `sv2v`/external-converter stance under `.2.2`:
+  no mandatory external converter dependency for core FSMGen work by default,
+  with `sv2v` or similar tools only future audit candidates unless proven
+  strong enough and explicitly selected by a later owned slice.

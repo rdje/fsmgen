@@ -2384,6 +2384,11 @@ contracts, infrastructure, in-memory host APIs, semantic introspection/MCP
 surfaces, fixture parity, host abstractions, parity gates, and book blueprint
 gaps before any Rust/Rust-Wasm, browser JavaScript, Dart/web, Julia, or other
 non-Perl implementation slice changes code or public contracts.
+For SystemVerilog-to-Verilog portability, the default is FSMGen-owned
+generation/lowering rather than a mandatory external converter. Tools such as
+`sv2v` are future audit candidates only: they may become optional validation
+aids, or selected dependencies only if a later owned audit proves exceptional
+quality and coverage.
 Downstream-visible changes must keep the codebase, downstream
 handoff/integration docs, public contracts, capability-manifest metadata,
 support-accounting catalog entries, tests, explicit deferrals, and this book

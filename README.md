@@ -92,6 +92,11 @@ contract is
 backend-language-neutral contract/infrastructure readiness audit before any
 future Rust/Rust-Wasm, browser JavaScript, Dart/web, Julia, or other host work
 changes code or public contracts.
+For SystemVerilog-to-Verilog portability, the default stance is still
+FSMGen-owned generation/lowering rather than a mandatory external converter.
+Tools such as `sv2v` are future audit candidates only: they may become
+optional validation aids, or selected dependencies only if a later owned audit
+proves exceptional quality and coverage.
 Deep semantic introspection is now a first-class FSMGen feature, tracked by
 `SEMANTIC-INTROSPECTION-MCP-FRONTIER`. The selected architecture is stable
 semantic-introspection API first and MCP as a required adapter over that API.

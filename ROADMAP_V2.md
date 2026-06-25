@@ -803,6 +803,11 @@ Architecture constraint:
   language-X blueprint gaps before any
   Rust/Rust-Wasm, browser JavaScript, Dart/web, Julia, or other non-Perl
   implementation slice changes code or public contracts.
+- SystemVerilog-to-Verilog portability should default to FSMGen-owned
+  generation/lowering instead of a mandatory external converter dependency.
+  External converters such as `sv2v` are audit candidates only: they may be
+  optional validation aids, or explicitly selected dependencies only if a
+  later owned audit proves exceptional quality and coverage.
 
 ### H1b. Browser-Capable JavaScript FSMGen
 Long-term goal:
