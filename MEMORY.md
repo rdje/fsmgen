@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.466: select queue read-data contract`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.467` implements paired scalar read-data over generated dynamic read same-ID issue-order queues; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.466` selected `.467`, direct implementation of paired bounded scalar read-data routing over generated dynamic read same-ID `issue-order-queue` completions. It selects two public PPIF samples, support-accounting identities, existing `read-data.read` syntax, queue-specific completion-validity vocabulary, scalar capture report fields, diagnostics, validation, rollback, and non-goals before behavior changes.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.467: generate queue read-data`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.468` selects raw-ARLEN readiness after dynamic queue scalar read-data; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.467` shipped paired scalar read-data over generated dynamic read same-ID `issue-order-queue` completions. It added two public PPIF samples, support-accounting entries, queue-specific read-data coverage/validity vocabulary, scalar capture artifacts, tests, docs, and a Knowledge Map fact card while preserving raw `ARLEN`, runtime validation, multi-beat output banks, broader queues, mixed dynamic/static queues, scoreboards, direct/backend-language variants, and VHDL.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
-- blockers: none. `.466` is docs-only. Current host memory pressure stopped guarded focused t/1438, strict check JSON, and semantic JSON probes for `.463`; syntax checks, guarded schedule JSON, and guarded t/248 support-accounting passed. Broad t/1436/t1437/t1438, strict/semantic closeout, HDL validation, direct backend, backend-language variants, and VHDL are not claimed.
-- next_action: Start `.467`: implement only the paired scalar read-data contract over generated dynamic read same-ID issue-order queues, with public samples, support accounting, tests, docs, Knowledge Map, and guarded validation.
+- blockers: none. `.467` passed syntax checks, guarded schedule JSON for both new samples, guarded targeted parser/report/FSM probes, and guarded t/248 support-accounting. Guarded focused HDL-lowering and strict CLI check attempts were stopped by host-memory cutoffs; broad t/1436/t1438, strict/semantic closeout, HDL validation, direct backend, backend-language variants, and VHDL are not claimed.
+- next_action: Start `.468`: select whether the next exact owner is raw-ARLEN readiness over generated dynamic read same-ID issue-order queue last-beat read-data or a narrower prerequisite, without behavior changes before task-tree ownership.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact

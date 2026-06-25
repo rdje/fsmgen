@@ -3254,6 +3254,20 @@ for last-beat capture, and leave raw `ARLEN`, runtime validation, multi-beat
 output banks, queue recapture widening, broader queue cardinality, mixed
 dynamic/static queues, scoreboards, direct backend behavior, backend-language
 variants, and VHDL as future exact owners.
+`.467` now ships paired scalar read-data routing over generated dynamic read
+same-ID `issue-order-queue` completions. It adds the public samples
+`ppif/axi_manager_capacity_status_dynamic_read_same_id_issue_order_queue_read_data.ppif`
+and
+`ppif/axi_manager_capacity_status_dynamic_read_burst_last_same_id_issue_order_queue_read_data.ppif`,
+strict support-accounting entries, read-data coverage for
+`generated_dynamic_issue_order_queue_demux` and
+`generated_dynamic_issue_order_queue_demux_last_beat`, queue-specific
+completion-validity names
+`generated_dynamic_read_issue_order_queue_response_demux_completion_pulse` and
+`generated_dynamic_read_issue_order_queue_response_demux_last_beat_completion_pulse`,
+and scalar `RDATA`/`RRESP` capture for `r0` and `r1`. The response-demux
+remains queue-owned, raw `ARLEN` remains absent, and `.468` is the next
+selector for raw-ARLEN readiness after dynamic queue scalar read-data.
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,

@@ -8407,6 +8407,24 @@ output banks, queue recapture widening, broader queue cardinality, mixed
 dynamic/static queues, scoreboards, direct backend behavior, backend-language
 variants, and VHDL as future exact owners.
 
+Dynamic read same-ID issue-order queue read-data behavior:
+[AXI_IAL2_MANAGER_DYNAMIC_READ_SAME_ID_ISSUE_ORDER_QUEUE_READ_DATA_BEHAVIOR](../../AXI_IAL2_MANAGER_DYNAMIC_READ_SAME_ID_ISSUE_ORDER_QUEUE_READ_DATA_BEHAVIOR.md)
+ships `.467`, paired scalar read-data routing over generated dynamic read
+same-ID `issue-order-queue` completions. The public samples are
+`ppif/axi_manager_capacity_status_dynamic_read_same_id_issue_order_queue_read_data.ppif`
+and
+`ppif/axi_manager_capacity_status_dynamic_read_burst_last_same_id_issue_order_queue_read_data.ppif`.
+The single-beat shape reports
+`generated_dynamic_read_issue_order_queue_response_demux_completion_pulse`;
+the last-beat shape reports
+`generated_dynamic_read_issue_order_queue_response_demux_last_beat_completion_pulse`.
+Both shapes keep the response-demux queue-owned, bind exactly `r0` and `r1`,
+generate scalar `RDATA`/`RRESP` capture, and leave raw `ARLEN`, runtime
+validation, multi-beat output banks, broader queues, mixed dynamic/static
+queues, scoreboards, direct backend behavior, backend-language variants, and
+VHDL as future exact owners. `.468` selects raw-ARLEN readiness after dynamic
+queue scalar read-data.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after
