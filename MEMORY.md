@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.447: select dynamic issue-order audit`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.448` audits the public dynamic same-ID issue-order-queue policy contract after bounded dynamic-id-reuse reject mappings shipped; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.447` selected `.448`, readiness audit for the public dynamic same-ID `issue-order-queue` policy contract. The selector changes no behavior and accepts no new source value; it chooses issue-order queue contract readiness before scoreboard because concrete same-ID queue-head work is the closest bounded precedent, while dynamic scoreboard behavior has a different completion-tracking promise and remains a separate later owner. Knowledge Map generation/check, mdBook build, docs path audit, memory architecture check, diff check, and doctrine gate passed.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.448: audit dynamic issue-order policy`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.449` selects the public dynamic same-ID issue-order-queue policy contract before parser/report or generated behavior changes; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.448` selected `.449`, public dynamic same-ID `issue-order-queue` policy contract selection. The audit changes no behavior and keeps `dynamic-id-reuse issue-order-queue` and `dynamic-id-reuse scoreboard` unsupported until later exact owners; direct generated dynamic queue behavior is too large, direct parser/report implementation is premature without a contract, and scoreboard remains a separate policy with different completion-tracking semantics. Knowledge Map generation/check, mdBook build, docs path audit, memory architecture check, diff check, and doctrine gate passed.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
-- next_action: Start `.448`: audit whether `dynamic-id-reuse issue-order-queue` should become metadata-first selected-not-generated policy, stay unsupported until generated queue behavior exists, or require another prerequisite before parser/report changes.
+- next_action: Start `.449`: select or reject metadata-first parser/report support for `dynamic-id-reuse issue-order-queue`, defining source spelling, report fields, selected_not_generated semantics, residue, diagnostics, support-accounting impact, validation, rollback, and non-goals before implementation.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact

@@ -3029,6 +3029,16 @@ different completion-tracking promise and remains a separate later owner.
 metadata-first selected-not-generated policy, remains unsupported until a
 generated queue behavior slice exists, or needs another prerequisite before
 parser/report changes.
+`.448` now selects `.449`, public dynamic same-ID `issue-order-queue`
+policy contract selection. The audit changes no behavior and keeps
+`dynamic-id-reuse issue-order-queue` and `dynamic-id-reuse scoreboard`
+unsupported until later exact owners. It finds direct generated dynamic queue
+behavior too large, direct parser/report implementation premature without a
+contract, and scoreboard policy separate from issue-order queue semantics.
+`.449` must decide the source spelling, metadata-first report fields,
+selected-not-generated boundary, residue movement, diagnostics,
+support-accounting impact, validation gates, and non-goals before any parser
+or generated behavior change.
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,

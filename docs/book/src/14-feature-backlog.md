@@ -8103,6 +8103,19 @@ completion-tracking promise. `.448` must decide whether
 selected-not-generated policy, remains unsupported until generated queue
 behavior is selected, or needs a narrower prerequisite.
 
+Dynamic same-ID issue-order queue policy readiness:
+[AXI_IAL2_MANAGER_DYNAMIC_SAME_ID_ISSUE_ORDER_QUEUE_POLICY_READINESS_AUDIT](../../AXI_IAL2_MANAGER_DYNAMIC_SAME_ID_ISSUE_ORDER_QUEUE_POLICY_READINESS_AUDIT.md)
+selects `.449`, public dynamic same-ID `issue-order-queue` policy contract
+selection. The audit changes no behavior and keeps
+`dynamic-id-reuse issue-order-queue` and `dynamic-id-reuse scoreboard`
+unsupported. It rejects direct generated dynamic queue behavior as too large
+for one slice, direct parser/report implementation as premature without a
+contract, and scoreboard as a separate policy with different
+completion-tracking semantics. `.449` must decide source spelling,
+metadata-first report fields, selected-not-generated boundary, residue,
+diagnostics, support-accounting impact, validation gates, and non-goals before
+any parser or generated behavior change.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after
