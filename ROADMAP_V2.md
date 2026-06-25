@@ -3657,6 +3657,23 @@ cardinality, scoreboards, backend behavior, backend-language variants,
 verification-code generation, external converter dependencies such as `sv2v`,
 and VHDL remain deferred; FSMGen-owned generation/lowering remains the
 default.
+`.508` now audits that boundary and selects `.509`, direct bounded
+implementation of generated mixed dynamic/static read burst-last
+`RID && RLAST` same-ID `issue-order-queue` behavior for exactly one dynamic
+read transaction and one concrete static read transaction. A RAM-guarded
+temporary candidate derived from the `.506` mixed read queue sample by
+switching to `response-scope burst-last` and adding one-bit `axi0_rlast`
+fails closed at the local planner diagnostic that still permits mixed
+dynamic/static read issue-order queues only for `response_scope single-beat`.
+No parser, IAL1, IAL0, SystemVerilog, backend-language, external converter,
+verification-output, or VHDL prerequisite is required first. The direct
+implementation is local to mixed read burst-last queue admission, last-beat
+response-demux report projection, mixed queue behavior gating, report
+vocabulary, sample/support accounting, and focused tests. Read-data over the
+mixed queue, raw `ARLEN`, runtime validation, multi-beat output banks,
+broader mixed cardinality, scoreboards, backend behavior, backend-language
+variants, verification-code generation, external converter dependencies such
+as `sv2v`, and VHDL remain deferred.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

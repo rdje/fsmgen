@@ -2668,6 +2668,23 @@ cardinality, scoreboards, backend behavior, backend-language variants,
 verification-code generation, external converter dependencies such as `sv2v`,
 and VHDL remain deferred; FSMGen-owned generation/lowering remains the
 default.
+`.508` now audits that boundary and selects `.509`, direct bounded
+implementation of generated mixed dynamic/static read burst-last
+`RID && RLAST` same-ID `issue-order-queue` behavior for exactly one dynamic
+read transaction and one concrete static read transaction. A RAM-guarded
+temporary candidate derived from the `.506` mixed read queue sample by
+switching to `response-scope burst-last` and adding one-bit `axi0_rlast`
+fails closed at the local planner diagnostic that still permits mixed
+dynamic/static read issue-order queues only for `response_scope single-beat`.
+No parser, IAL1, IAL0, SystemVerilog, backend-language, external converter,
+verification-output, or VHDL prerequisite is required first. The direct
+implementation is local to mixed read burst-last queue admission, last-beat
+response-demux report projection, mixed queue behavior gating, report
+vocabulary, sample/support accounting, and focused tests. Read-data over the
+mixed queue, raw `ARLEN`, runtime validation, multi-beat output banks,
+broader mixed cardinality, scoreboards, backend behavior, backend-language
+variants, verification-code generation, external converter dependencies such
+as `sv2v`, and VHDL remain deferred.
 
 No behavior
 changed in `.273`, `.274`, `.275`,
@@ -5087,6 +5104,10 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_WRITE_SAME_ID_ISSUE_ORDER_QUEUE_READINESS_AUDIT.md` — audited generated mixed dynamic/static write `BID` same-ID issue-order queue readiness and selected direct bounded implementation.
 - `docs/AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_WRITE_SAME_ID_ISSUE_ORDER_QUEUE_BEHAVIOR.md` — documents generated mixed dynamic/static write `BID` same-ID issue-order queue behavior for one dynamic plus one concrete static transaction.
 - `docs/AXI_IAL2_MANAGER_POST_MIXED_DYNAMIC_STATIC_WRITE_SAME_ID_ISSUE_ORDER_QUEUE_NEXT_SLICE_SELECTION.md` — selected mixed dynamic/static read single-beat `RID` same-ID issue-order queue readiness after the first mixed write `BID` issue-order queue shipped.
+- `docs/AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_READ_SAME_ID_ISSUE_ORDER_QUEUE_READINESS_AUDIT.md` — audited generated mixed dynamic/static read single-beat `RID` same-ID issue-order queue readiness and selected direct bounded implementation.
+- `docs/AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_READ_SAME_ID_ISSUE_ORDER_QUEUE_BEHAVIOR.md` — documents generated mixed dynamic/static read single-beat `RID` same-ID issue-order queue behavior for one dynamic plus one concrete static transaction.
+- `docs/AXI_IAL2_MANAGER_POST_MIXED_DYNAMIC_STATIC_READ_SAME_ID_ISSUE_ORDER_QUEUE_NEXT_SLICE_SELECTION.md` — selected generated mixed dynamic/static read burst-last `RID && RLAST` same-ID issue-order queue readiness after the mixed read single-beat `RID` queue shipped.
+- `docs/AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_READ_BURST_LAST_SAME_ID_ISSUE_ORDER_QUEUE_READINESS_AUDIT.md` — audited generated mixed dynamic/static read burst-last `RID && RLAST` same-ID issue-order queue readiness and selected direct bounded implementation.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_CONTRACT_SELECTION.md` — selected direct single-active dynamic write `BID` same-cycle release-and-recapture behavior under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_BEHAVIOR.md` — shipped single-active dynamic write `BID` same-cycle release-and-recapture under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_WRITE_RECAPTURE_NEXT_SLICE_SELECTION.md` — selected `.367`, public contract selection for first single-active dynamic read same-cycle release-and-recapture after dynamic write recapture shipped.

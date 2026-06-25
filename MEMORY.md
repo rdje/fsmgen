@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.507: select mixed read RLAST queue audit`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.508` audits readiness for generated mixed dynamic/static read burst-last RID/RLAST same-ID issue-order queue behavior; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.507` selected `.508`, readiness audit for generated mixed dynamic/static read burst-last `RID && RLAST` same-ID `issue-order-queue` behavior. The selector read `.506`, `.463`, and `.280` evidence and kept read-data over mixed queues, raw `ARLEN`, runtime validation, multi-beat output banks, broader mixed cardinality, scoreboards, backend behavior, external converter dependencies such as `sv2v`, verification-code generation, and VHDL deferred.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.508: audit mixed read RLAST queue readiness`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.509` implements generated mixed dynamic/static read burst-last RID/RLAST same-ID issue-order queue behavior; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.508` selected `.509`, direct bounded implementation of generated mixed dynamic/static read burst-last `RID && RLAST` same-ID `issue-order-queue` behavior for exactly one dynamic read transaction and one concrete static read transaction. The audit's temporary candidate failed closed under RAM guard at the local planner diagnostic that still permits mixed dynamic/static read issue-order queues only for `response_scope single-beat`; no parser, IAL1, IAL0, SystemVerilog, backend-language, external converter, verification-output, or VHDL prerequisite is required first.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
-- next_action: Start `.508`: audit whether direct implementation can add exactly one dynamic plus one concrete static read burst-last `RID && RLAST` same-ID issue-order queue, or whether a smaller parser/report/static-validation prerequisite is needed first; no behavior changes in the audit leaf.
+- next_action: Start `.509`: implement only the bounded one-dynamic plus one-concrete-static mixed read burst-last `RID && RLAST` issue-order queue, then sync sample/support accounting/tests/docs/book/Memory/task tree/Knowledge Map and run focused RAM-guarded checks plus doctrine gates.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact
