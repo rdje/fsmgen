@@ -3363,7 +3363,19 @@ schedule probe stopped at host-memory cutoff before producing data; no
 unguarded retry or cutoff raise was used. Backend-language variants and
 external converters such as `sv2v` remain outside this IAL2 slice;
 FSMGen-owned generation/lowering remains the default under the backend
-portability frontier.
+portability frontier. `.484` now selects `.485`, direct bounded
+implementation of one generated all-dynamic read single-beat `RID` same-ID
+`issue-order-queue` with exactly three dynamic read transactions, generated
+single-beat `RID` response-demux completion, `read-max-pending` at least 3,
+and queue depth 3. The readiness audit found the current blocker is local:
+the dynamic read planner still requires exactly two all-dynamic reads and
+records depth 2, while the shared dynamic queue builder admits depth 3 only
+for write. A lightweight helper probe produced 99 transition rules, 19
+assertions, zero duplicate names, the disambiguated cross-transaction rule,
+the tail-selected refresh rule, and the `r2` completion-selected-match
+assertion. Read burst-last depth-3, read-data over depth-3 queues, mixed
+dynamic/static queues, scoreboards, arbitrary cardinality, backend-language
+variants, external converter dependencies, and VHDL remain deferred.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

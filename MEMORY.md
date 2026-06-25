@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.483: select dynamic read depth3 audit`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.484` audits generated all-dynamic read single-beat RID same-ID issue-order queue depth-3 readiness; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.483` selected `.484`, readiness audit for generated all-dynamic read single-beat RID depth-3 same-ID issue-order queue. It preserves read burst-last depth-3, read-data over depth-3 queues, mixed dynamic/static queues, scoreboards, arbitrary cardinality, backend-language variants, external converter dependency selection, and VHDL for future owners.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.484: audit dynamic read depth3 queue`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.485` implements generated all-dynamic read single-beat RID same-ID issue-order queue depth-3 behavior; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.484` selected `.485`, direct bounded implementation of generated all-dynamic read single-beat RID depth-3 same-ID issue-order queue. The audit found only local read admission/depth/report/test/sample gates; shared transition/assertion helpers already produce 99 rules, 19 assertions, and no duplicate names for the synthetic read depth-3 group.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
-- next_action: Start `.484`: audit the exact read single-beat depth-3 dynamic queue candidate with r0/r1/r2, generated RID response-demux, read-max-pending at least 3, and one depth-3 queue before any behavior change.
+- next_action: Start `.485`: implement only the r0/r1/r2 generated read single-beat depth-3 dynamic queue shape, with read-max-pending at least 3, new report scope/sample/support/tests/docs, and no read burst-last/read-data/mixed/scoreboard/backend/VHDL widening.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact

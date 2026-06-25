@@ -8611,6 +8611,20 @@ Backend-language variants and external converters such as `sv2v` remain
 outside this IAL2 slice; FSMGen-owned generation/lowering remains the default
 under the backend portability frontier.
 
+Dynamic read depth-3 same-ID issue-order queue readiness audit:
+[AXI_IAL2_MANAGER_DYNAMIC_READ_DEPTH3_SAME_ID_ISSUE_ORDER_QUEUE_READINESS_AUDIT](../../AXI_IAL2_MANAGER_DYNAMIC_READ_DEPTH3_SAME_ID_ISSUE_ORDER_QUEUE_READINESS_AUDIT.md)
+selects `.485`, direct bounded implementation of one generated all-dynamic
+read single-beat `RID` same-ID `issue-order-queue` with exactly three dynamic
+read transactions, generated single-beat `RID` response-demux completion,
+`read-max-pending` at least 3, and queue depth 3. The audit found the
+remaining blocker is local to the dynamic read planner and shared builder
+gate. A lightweight helper probe produced 99 transition rules, 19 assertions,
+zero duplicate names, the disambiguated cross-transaction rule, the
+tail-selected refresh rule, and the `r2` completion-selected-match assertion.
+Read burst-last depth-3, read-data over depth-3 queues, mixed dynamic/static
+queues, scoreboards, arbitrary cardinality, backend-language variants,
+external converter dependencies, and VHDL remain deferred.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

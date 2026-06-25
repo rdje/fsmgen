@@ -2374,7 +2374,19 @@ schedule probe stopped at host-memory cutoff before producing data; no
 unguarded retry or cutoff raise was used. Backend-language variants and
 external converters such as `sv2v` remain outside this IAL2 slice;
 FSMGen-owned generation/lowering remains the default under the backend
-portability frontier.
+portability frontier. `.484` now selects `.485`, direct bounded
+implementation of one generated all-dynamic read single-beat `RID` same-ID
+`issue-order-queue` with exactly three dynamic read transactions, generated
+single-beat `RID` response-demux completion, `read-max-pending` at least 3,
+and queue depth 3. The readiness audit found the current blocker is local:
+the dynamic read planner still requires exactly two all-dynamic reads and
+records depth 2, while the shared dynamic queue builder admits depth 3 only
+for write. A lightweight helper probe produced 99 transition rules, 19
+assertions, zero duplicate names, the disambiguated cross-transaction rule,
+the tail-selected refresh rule, and the `r2` completion-selected-match
+assertion. Read burst-last depth-3, read-data over depth-3 queues, mixed
+dynamic/static queues, scoreboards, arbitrary cardinality, backend-language
+variants, external converter dependencies, and VHDL remain deferred.
 
 No behavior
 changed in `.273`, `.274`, `.275`,
@@ -4774,6 +4786,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_DEPTH3_SAME_ID_ISSUE_ORDER_QUEUE_READINESS_AUDIT.md` — audited generated all-dynamic write BID depth-3 same-ID issue-order queue readiness and selected direct bounded implementation.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_DEPTH3_SAME_ID_ISSUE_ORDER_QUEUE_BEHAVIOR.md` — shipped generated all-dynamic write BID depth-3 same-ID issue-order queue behavior with rule-name disambiguation for ambiguous cross-transaction enqueue rules.
 - `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_WRITE_DEPTH3_SAME_ID_ISSUE_ORDER_QUEUE_NEXT_SLICE_SELECTION.md` — selected generated all-dynamic read single-beat RID depth-3 same-ID issue-order queue readiness as the next dynamic queue widening audit after write depth-3 behavior.
+- `docs/AXI_IAL2_MANAGER_DYNAMIC_READ_DEPTH3_SAME_ID_ISSUE_ORDER_QUEUE_READINESS_AUDIT.md` — audited generated all-dynamic read single-beat RID depth-3 same-ID issue-order queue readiness and selected direct bounded implementation.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_CONTRACT_SELECTION.md` — selected direct single-active dynamic write `BID` same-cycle release-and-recapture behavior under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_BEHAVIOR.md` — shipped single-active dynamic write `BID` same-cycle release-and-recapture under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_WRITE_RECAPTURE_NEXT_SLICE_SELECTION.md` — selected `.367`, public contract selection for first single-active dynamic read same-cycle release-and-recapture after dynamic write recapture shipped.
