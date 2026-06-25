@@ -8733,7 +8733,22 @@ Raw `ARLEN`, runtime beat-count/`RLAST` validation, multi-beat output banks,
 mixed dynamic/static queues, scoreboards, arbitrary cardinality, direct
 backend behavior, backend-language variants, external converter dependencies
 such as `sv2v`, and VHDL remain deferred; FSMGen-owned generation/lowering
-remains the default. `.492` is the next post-behavior selector.
+remains the default.
+
+Post dynamic read burst-last depth-3 same-ID issue-order queue read-data
+selector:
+[AXI_IAL2_MANAGER_POST_DYNAMIC_READ_BURST_LAST_DEPTH3_SAME_ID_ISSUE_ORDER_QUEUE_READ_DATA_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_DYNAMIC_READ_BURST_LAST_DEPTH3_SAME_ID_ISSUE_ORDER_QUEUE_READ_DATA_NEXT_SLICE_SELECTION.md)
+selects `.493`, readiness audit for report-only raw `ARLEN` burst-length
+capture over the generated all-dynamic read burst-last `RID && RLAST`
+depth-3 same-ID `issue-order-queue` scalar read-data shipped in `.491`.
+This is the smallest adjacent owner because `.491` supplies the exact
+three-transaction scalar last-beat queue read-data surface, while `.469`
+already proves report-only raw `ARLEN` over the two-transaction dynamic
+RLAST queue. Runtime validation, multi-beat output banks, mixed
+dynamic/static queues, scoreboards, arbitrary cardinality,
+verification-code generation, direct backend behavior, backend-language
+variants, external converter dependencies such as `sv2v`, and VHDL remain
+deferred; FSMGen-owned generation/lowering remains the default.
 
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)

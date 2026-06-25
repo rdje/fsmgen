@@ -3449,7 +3449,16 @@ beat-count/`RLAST` validation, multi-beat output banks, mixed dynamic/static
 queues, scoreboards, arbitrary cardinality, direct backend behavior,
 backend-language variants, external converter dependencies such as `sv2v`,
 and VHDL remain deferred; FSMGen-owned generation/lowering remains the
-default. `.492` is the next post-behavior selector.
+default. `.492` now selects `.493`, readiness audit for report-only raw
+`ARLEN` burst-length capture over that depth-3 dynamic RLAST queue
+read-data. This is the smallest adjacent owner because `.491` supplies the
+exact three-transaction scalar last-beat queue read-data surface, while
+`.469` already proves report-only raw `ARLEN` over the two-transaction
+dynamic RLAST queue. Runtime validation, multi-beat output banks, mixed
+dynamic/static queues, scoreboards, arbitrary cardinality, verification-code
+generation, direct backend behavior, backend-language variants, external
+converter dependencies such as `sv2v`, and VHDL remain deferred;
+FSMGen-owned generation/lowering remains the default.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
