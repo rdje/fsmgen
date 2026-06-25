@@ -7800,6 +7800,11 @@ sub assert_dynamic_write_same_id_issue_order_queue_report {
     is_deeply($queue->{transactions}, [qw(w0 w1)], "$owner reports queue transaction order");
     is($queue->{request_id_source}, 'axi0_awid', "$owner reports queue request ID capture source");
     is($queue->{response_demux_strategy}, 'dynamic_issue_order_earliest_matching_slot', "$owner reports earliest matching slot strategy");
+    assert_dynamic_queue_identity_recapture_report(
+        $queue,
+        'axi0_awid',
+        "$owner dynamic write issue-order queue",
+    );
     is_deeply(
         $queue->{slot_storage},
         [
@@ -7818,6 +7823,38 @@ sub assert_dynamic_write_same_id_issue_order_queue_report {
     ok(grep { $_ eq 'axi0_write_dynamic_same_id_issue_order_response_has_selected_match' } @{$queue->{generated_assertions}}, "$owner reports dynamic queue selected-match assertion");
     my %residue = map { $_->{id} => 1 } @{$report->{unsupported_residue}};
     ok($residue{dynamic_transaction_id_behavior}, "$owner keeps future dynamic behavior residue visible");
+}
+
+sub assert_dynamic_queue_identity_recapture_report {
+    my ($queue, $expected_source, $owner) = @_;
+
+    is(
+        $queue->{same_transaction_recapture_policy},
+        'refresh_captured_request_id',
+        "$owner reports same-transaction captured request-ID refresh",
+    );
+    is(
+        $queue->{same_transaction_recapture_rule_scope},
+        'state_key_preserving_selected_dequeue_enqueue',
+        "$owner reports state-key-preserving selected dequeue/enqueue scope",
+    );
+    is(
+        $queue->{same_transaction_recapture_id_source},
+        $expected_source,
+        "$owner reports the captured ID refresh source",
+    );
+
+    for my $field (qw(
+        same_cycle_release_recapture_policy
+        release_recapture_rule
+        release_recapture_source
+        release_recapture_transaction
+    )) {
+        ok(
+            !exists $queue->{$field},
+            "$owner keeps response-demux $field out of the queue report",
+        );
+    }
 }
 
 sub assert_dynamic_read_same_id_issue_order_queue_report {
@@ -7860,6 +7897,11 @@ sub assert_dynamic_read_same_id_issue_order_queue_report {
     is_deeply($queue->{transactions}, [qw(r0 r1)], "$owner reports queue transaction order");
     is($queue->{request_id_source}, 'axi0_arid', "$owner reports queue request ID capture source");
     is($queue->{response_demux_strategy}, 'dynamic_issue_order_earliest_matching_slot', "$owner reports queue response-demux strategy");
+    assert_dynamic_queue_identity_recapture_report(
+        $queue,
+        'axi0_arid',
+        "$owner dynamic read issue-order queue",
+    );
     is_deeply(
         $queue->{slot_storage},
         [
@@ -7931,6 +7973,11 @@ sub assert_dynamic_read_burst_last_same_id_issue_order_queue_report {
     is($queue->{response_id_signal}, 'axi0_rid', "$owner reports queue response ID source");
     is($queue->{last_signal}, 'axi0_rlast', "$owner carries last signal into queue report");
     is($queue->{response_demux_strategy}, 'dynamic_issue_order_earliest_matching_slot', "$owner reports queue response-demux strategy");
+    assert_dynamic_queue_identity_recapture_report(
+        $queue,
+        'axi0_arid',
+        "$owner dynamic read burst-last issue-order queue",
+    );
     is_deeply(
         $queue->{slot_storage},
         [

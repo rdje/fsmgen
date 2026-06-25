@@ -8548,13 +8548,21 @@ the affected slot ID from current `ARID` or `AWID`.
 Dynamic same-ID issue-order queue identity recapture report contract:
 [AXI_IAL2_MANAGER_DYNAMIC_SAME_ID_ISSUE_ORDER_QUEUE_IDENTITY_RECAPTURE_REPORT_CONTRACT_SELECTION](../../AXI_IAL2_MANAGER_DYNAMIC_SAME_ID_ISSUE_ORDER_QUEUE_IDENTITY_RECAPTURE_REPORT_CONTRACT_SELECTION.md)
 selects queue-owned public report fields for the shipped identity recapture
-behavior. The next implementation should add
+behavior. `.479` ships
 `same_transaction_recapture_policy: refresh_captured_request_id`,
 `same_transaction_recapture_rule_scope:
 state_key_preserving_selected_dequeue_enqueue`, and
 `same_transaction_recapture_id_source` under each generated dynamic queue
-entry, while keeping `release_recapture_*` fields exclusive to response-demux
-capture state.
+entry, with the ID source set to `axi0_awid` for write BID queues and
+`axi0_arid` for read RID/RID-and-RLAST queues. `generated_update_rules`
+remains the literal emitted-rule evidence, and `release_recapture_*` fields
+remain exclusive to response-demux capture state.
+
+Dynamic same-ID issue-order queue identity recapture report behavior:
+[AXI_IAL2_MANAGER_DYNAMIC_SAME_ID_ISSUE_ORDER_QUEUE_IDENTITY_RECAPTURE_REPORT_BEHAVIOR](../../AXI_IAL2_MANAGER_DYNAMIC_SAME_ID_ISSUE_ORDER_QUEUE_IDENTITY_RECAPTURE_REPORT_BEHAVIOR.md)
+documents the shipped queue-owned `same_transaction_*` report fields and the
+negative contract that classic response-demux recapture fields do not appear
+inside generated queue entries.
 Broader queue cardinality, mixed dynamic/static queues, scoreboards, direct
 backend behavior, backend-language variants, and VHDL remain future exact
 owners.

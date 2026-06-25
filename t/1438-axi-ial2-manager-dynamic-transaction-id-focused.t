@@ -3077,6 +3077,11 @@ sub assert_dynamic_write_same_id_issue_order_queue_report {
     is($queue->{queue_state_representation}, 'compact_runtime_id_issue_order_slots', 'dynamic write issue-order queue report names queue representation');
     is($queue->{request_id_source}, 'axi0_awid', 'dynamic write issue-order queue report names AWID capture source');
     is_deeply($queue->{transactions}, [qw(w0 w1)], 'dynamic write issue-order queue report names queue transactions');
+    assert_dynamic_queue_identity_recapture_report(
+        $queue,
+        'axi0_awid',
+        'dynamic write issue-order queue',
+    );
     is_deeply(
         $queue->{slot_storage},
         [
@@ -3114,6 +3119,38 @@ sub assert_dynamic_write_same_id_issue_order_queue_report {
     ok(grep { $_ eq 'axi0_write_dynamic_same_id_issue_order_w1_w0_dequeue_enqueue_w0' } @{$queue->{generated_update_rules}}, 'dynamic write issue-order queue reports tail-selected same-transaction ID-refresh rule');
     ok(grep { $_ eq 'axi0_write_dynamic_same_id_issue_order_w0_w1_dequeue_enqueue_w0' } @{$queue->{generated_update_rules}}, 'dynamic write issue-order queue reports same-cycle selected dequeue plus enqueue rule');
     assert_dynamic_residue($report, 'dynamic write issue-order queue keeps future dynamic residue visible');
+}
+
+sub assert_dynamic_queue_identity_recapture_report {
+    my ($queue, $expected_source, $scope) = @_;
+
+    is(
+        $queue->{same_transaction_recapture_policy},
+        'refresh_captured_request_id',
+        "$scope report names same-transaction captured request-ID refresh",
+    );
+    is(
+        $queue->{same_transaction_recapture_rule_scope},
+        'state_key_preserving_selected_dequeue_enqueue',
+        "$scope report names state-key-preserving selected dequeue/enqueue scope",
+    );
+    is(
+        $queue->{same_transaction_recapture_id_source},
+        $expected_source,
+        "$scope report names the captured ID refresh source",
+    );
+
+    for my $field (qw(
+        same_cycle_release_recapture_policy
+        release_recapture_rule
+        release_recapture_source
+        release_recapture_transaction
+    )) {
+        ok(
+            !exists $queue->{$field},
+            "$scope report keeps response-demux $field out of the queue entry",
+        );
+    }
 }
 
 sub assert_dynamic_read_same_id_issue_order_queue_report {
@@ -3157,6 +3194,11 @@ sub assert_dynamic_read_same_id_issue_order_queue_report {
     is($queue->{queue_state_representation}, 'compact_runtime_id_issue_order_slots', 'dynamic read issue-order queue report names queue representation');
     is($queue->{request_id_source}, 'axi0_arid', 'dynamic read issue-order queue report names ARID capture source');
     is_deeply($queue->{transactions}, [qw(r0 r1)], 'dynamic read issue-order queue report names queue transactions');
+    assert_dynamic_queue_identity_recapture_report(
+        $queue,
+        'axi0_arid',
+        'dynamic read issue-order queue',
+    );
     is_deeply(
         $queue->{slot_storage},
         [
@@ -3246,6 +3288,11 @@ sub assert_dynamic_read_burst_last_same_id_issue_order_queue_report {
     is($queue->{response_id_signal}, 'axi0_rid', 'dynamic read burst-last issue-order queue report names RID response source');
     is($queue->{last_signal}, 'axi0_rlast', 'dynamic read burst-last issue-order queue report names RLAST gate');
     is_deeply($queue->{transactions}, [qw(r0 r1)], 'dynamic read burst-last issue-order queue report names queue transactions');
+    assert_dynamic_queue_identity_recapture_report(
+        $queue,
+        'axi0_arid',
+        'dynamic read burst-last issue-order queue',
+    );
     is_deeply(
         $queue->{slot_storage},
         [
