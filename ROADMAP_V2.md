@@ -3268,6 +3268,17 @@ completion-validity names
 and scalar `RDATA`/`RRESP` capture for `r0` and `r1`. The response-demux
 remains queue-owned, raw `ARLEN` remains absent, and `.468` is the next
 selector for raw-ARLEN readiness after dynamic queue scalar read-data.
+
+`.468` now selects `.469`, direct bounded implementation of report-only
+raw-`ARLEN` burst-length capture over generated dynamic read same-ID
+`issue-order-queue` last-beat read-data. Existing `read-data.read`
+`burst-length` syntax already defines the public contract, so no additional
+contract-selection leaf is required. The future implementation sample is
+`ppif/axi_manager_capacity_status_dynamic_read_burst_last_same_id_issue_order_queue_read_data_burst_length.ppif`.
+Runtime validation, multi-beat output banks, queue recapture widening, broader
+queue cardinality, mixed dynamic/static queues, scoreboards, direct backend
+behavior, backend-language variants, and VHDL remain future exact owners.
+
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,

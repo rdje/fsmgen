@@ -2273,6 +2273,31 @@ for last-beat capture, and leave raw `ARLEN`, runtime validation, multi-beat
 output banks, queue recapture widening, broader queue cardinality, mixed
 dynamic/static queues, scoreboards, direct backend behavior, backend-language
 variants, and VHDL as future exact owners.
+
+`.467` now ships paired scalar read-data routing over generated dynamic read
+same-ID `issue-order-queue` completions. It adds the public samples
+`ppif/axi_manager_capacity_status_dynamic_read_same_id_issue_order_queue_read_data.ppif`
+and
+`ppif/axi_manager_capacity_status_dynamic_read_burst_last_same_id_issue_order_queue_read_data.ppif`,
+queue-specific read-data coverage and completion-validity vocabulary, scalar
+`RDATA`/`RRESP` capture for `r0` and `r1`, tests, behavior docs, and Knowledge
+Map coverage. The response-demux remains queue-owned, raw `ARLEN` remains
+absent, and scalar queue read-data without `burst-length` remains the shipped
+behavior.
+
+`.468` now selects `.469`, direct bounded implementation of report-only
+raw-`ARLEN` burst-length capture over generated dynamic read same-ID
+`issue-order-queue` last-beat read-data. Existing `read-data.read`
+`burst-length` syntax is sufficient; the current blocker is the local dynamic
+issue-order queue read-data coverage gate that rejects `burst-length`
+metadata. `.469` must add
+`ppif/axi_manager_capacity_status_dynamic_read_burst_last_same_id_issue_order_queue_read_data_burst_length.ppif`,
+the support-accounting entry, generated `axi0_arlen` input,
+per-transaction raw-`ARLEN` storage/capture rules, focused tests, docs, and
+Knowledge Map coverage while leaving runtime validation, multi-beat output
+banks, broader queues, mixed dynamic/static queues, scoreboards, direct
+backend behavior, backend-language variants, and VHDL as future exact owners.
+
 No behavior
 changed in `.273`, `.274`, `.275`,
 `.277`, `.278`, `.279`, `.281`,
