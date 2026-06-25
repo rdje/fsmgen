@@ -3126,6 +3126,18 @@ behavior or burst-last `RID && RLAST` because the single-beat shape can reuse
 the runtime-ID queue model without final-beat-only dequeue, raw non-final
 beats, `RLAST`, read-data, raw `ARLEN`, runtime validation, multi-beat, or
 recapture consumer coupling.
+`.458` now selects `.459`, implementation of the bounded two-transaction
+all-dynamic read single-beat `RID` dynamic same-ID `issue-order-queue`
+behavior. The contract selector changes no behavior. It requires exactly two
+dynamic read transactions, `same-id-ordering.read (dynamic-id-reuse
+issue-order-queue)`, explicit generated `response-demux.read` with
+`response-scope single-beat`, `compact_runtime_id_issue_order_slots`,
+slot-local captured `ARID`, earliest matching `RID` response demux,
+same-cycle selected dequeue plus one enqueue, and queue-specific assertions.
+Read burst-last, read-data over queues, raw `ARLEN`/runtime, multi-beat,
+broader queue cardinality, mixed dynamic/static queues, scoreboards, direct
+backend behavior, backend-language variants, and VHDL remain future exact
+owners.
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,

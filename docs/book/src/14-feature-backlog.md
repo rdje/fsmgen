@@ -8242,6 +8242,23 @@ consumer coupling. Burst-last queues, read-data over queues, broader queue
 cardinality, mixed dynamic/static queues, scoreboards, direct backend,
 backend-language variants, and VHDL remain future exact owners.
 
+Dynamic read single-beat same-ID issue-order queue contract:
+[AXI_IAL2_MANAGER_DYNAMIC_READ_SINGLE_BEAT_SAME_ID_ISSUE_ORDER_QUEUE_CONTRACT_SELECTION](../../AXI_IAL2_MANAGER_DYNAMIC_READ_SINGLE_BEAT_SAME_ID_ISSUE_ORDER_QUEUE_CONTRACT_SELECTION.md)
+selects `.459`, implementation of the bounded two-transaction all-dynamic
+read single-beat `RID` dynamic same-ID `issue-order-queue` behavior. The
+selector changes no behavior. The selected public shape requires exactly two
+dynamic read transactions, `same-id-ordering.read (dynamic-id-reuse
+issue-order-queue)`, explicit generated `response-demux.read` with
+`response-scope single-beat`, `compact_runtime_id_issue_order_slots`,
+slot-local captured `ARID`, earliest matching `RID` response demux,
+same-cycle selected dequeue plus one enqueue, and queue-specific assertions.
+The future public sample is
+`ppif/axi_manager_capacity_status_dynamic_read_same_id_issue_order_queue.ppif`.
+Read burst-last, read-data over queues, raw `ARLEN`/runtime, multi-beat,
+broader queue cardinality, mixed dynamic/static queues, scoreboards, direct
+backend behavior, backend-language variants, and VHDL remain future exact
+owners.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after
