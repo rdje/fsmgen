@@ -3298,11 +3298,17 @@ expected-beat/read-beat counter artifacts, and beat-count/`RLAST` assertions.
 The selected queue read-data report uses
 `bounded_multi_beat_read_data_contract`,
 `generated_dynamic_read_issue_order_queue_response_demux_last_beat_completion_pulse`,
-`response_demux_matched_read_beat`, and empty read-data residue. `.474` is the
-next owner: audit queue recapture widening after this generated dynamic queue
-multi-beat boundary. Broader queue cardinality, mixed dynamic/static queues,
-scoreboards, direct backend behavior, backend-language variants, and VHDL
-remain future exact owners.
+`response_demux_matched_read_beat`, and empty read-data residue. `.474` now
+selects `.475`, public report/static contract selection for generated dynamic
+same-ID `issue-order-queue` same-cycle selected-dequeue-plus-enqueue
+recapture. The audit changes no behavior. It found no new queue
+state-machine prerequisite because selected generated dynamic queues already
+emit `*_dequeue_enqueue_*` update rules and capture the current request ID
+source for same-cycle enqueue after selected final dequeue. The gap is
+explicit report/static vocabulary that distinguishes queue-owned recapture
+from classic dynamic response-demux `release_recapture_rule` state. Broader
+queue cardinality, mixed dynamic/static queues, scoreboards, direct backend
+behavior, backend-language variants, and VHDL remain future exact owners.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

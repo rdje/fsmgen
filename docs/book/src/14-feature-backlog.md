@@ -8505,6 +8505,19 @@ Queue recapture widening is the next audit owner; broader queue cardinality,
 mixed dynamic/static queues, scoreboards, direct backend behavior,
 backend-language variants, and VHDL remain future exact owners.
 
+Dynamic read same-ID issue-order queue recapture readiness:
+[AXI_IAL2_MANAGER_DYNAMIC_READ_SAME_ID_ISSUE_ORDER_QUEUE_RECAPTURE_READINESS_AUDIT](../../AXI_IAL2_MANAGER_DYNAMIC_READ_SAME_ID_ISSUE_ORDER_QUEUE_RECAPTURE_READINESS_AUDIT.md)
+selects `.475`, public report/static contract selection for generated dynamic
+same-ID `issue-order-queue` same-cycle selected-dequeue-plus-enqueue
+recapture. The audit changes no behavior. Selected generated dynamic queues
+already emit `*_dequeue_enqueue_*` update rules and capture the current
+request ID source for same-cycle enqueue after selected final dequeue. The
+remaining gap is explicit public vocabulary that distinguishes queue-owned
+recapture from classic dynamic response-demux `release_recapture_rule` state.
+Broader queue cardinality, mixed dynamic/static queues, scoreboards, direct
+backend behavior, backend-language variants, and VHDL remain future exact
+owners.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after
