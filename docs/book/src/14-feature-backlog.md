@@ -8750,6 +8750,24 @@ verification-code generation, direct backend behavior, backend-language
 variants, external converter dependencies such as `sv2v`, and VHDL remain
 deferred; FSMGen-owned generation/lowering remains the default.
 
+Dynamic read burst-last depth-3 same-ID issue-order queue read-data
+raw-`ARLEN` readiness:
+[AXI_IAL2_MANAGER_DYNAMIC_READ_BURST_LAST_DEPTH3_SAME_ID_ISSUE_ORDER_QUEUE_READ_DATA_BURST_LENGTH_READINESS_AUDIT](../../AXI_IAL2_MANAGER_DYNAMIC_READ_BURST_LAST_DEPTH3_SAME_ID_ISSUE_ORDER_QUEUE_READ_DATA_BURST_LENGTH_READINESS_AUDIT.md)
+selects `.494`, direct bounded implementation of report-only raw `ARLEN`
+burst-length capture over the generated all-dynamic read burst-last
+`RID && RLAST` depth-3 same-ID `issue-order-queue` scalar read-data
+shipped in `.491`. Code inspection found the only blocker is local to
+dynamic issue-order queue read-data coverage: depth-2 queue raw-`ARLEN` and
+depth-3 no-burst read-data are already supported, while the generated
+burst-length storage/rule/report helpers already enumerate all covered
+transactions. A RAM-guarded in-memory candidate inserted the existing public
+burst-length clause into the `.491` source and failed closed at that local
+coverage diagnostic. Runtime validation, multi-beat output banks, mixed
+dynamic/static queues, scoreboards, arbitrary cardinality,
+verification-code generation, direct backend behavior, backend-language
+variants, external converter dependencies such as `sv2v`, and VHDL remain
+deferred; FSMGen-owned generation/lowering remains the default.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

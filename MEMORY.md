@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.492: select RLAST depth3 ARLEN audit`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.493` audits report-only raw-ARLEN readiness over scalar last-beat read-data for generated all-dynamic read burst-last RID/RLAST depth-3 same-ID issue-order queue behavior; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.492` selected `.493`, readiness audit for report-only raw-ARLEN burst-length capture over the `.491` depth-3 dynamic RLAST queue read-data shape. No parser, generator, PPIF sample, support-accounting catalog, generated artifact, report JSON, test, HDL/runtime behavior, external converter dependency such as sv2v, arbitrary-cardinality queue behavior, backend behavior, backend-language variant, or VHDL behavior changed.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.493: audit RLAST depth3 ARLEN readiness`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.494` implements report-only raw-ARLEN over scalar last-beat read-data for generated all-dynamic read burst-last RID/RLAST depth-3 same-ID issue-order queue behavior; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.493` selected `.494`, direct bounded implementation of report-only raw-ARLEN burst-length capture over the `.491` depth-3 dynamic RLAST queue read-data shape. Code inspection and a RAM-guarded in-memory candidate found only the local dynamic issue-order queue read-data coverage gate; parser syntax, generated burst-length storage/rule helpers, and report artifact helpers are already aligned.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
-- next_action: Start `.493`: audit whether the existing report-only raw-ARLEN read-data burst-length path can widen to exactly three all-dynamic read burst-last queue transactions; do not change parser, generator, PPIF samples, support accounting, generated artifacts, report JSON, tests, HDL/runtime behavior, external converter dependencies such as sv2v, runtime validation, multi-beat output banks, arbitrary cardinality, backend behavior, or VHDL in the audit.
+- next_action: Start `.494`: implement only report-only raw-ARLEN burst-length capture for exactly three all-dynamic read burst-last queue transactions; keep parser syntax, runtime validation, multi-beat output banks, mixed dynamic/static queues, arbitrary cardinality, external converter dependencies such as sv2v, backend behavior, and VHDL out of scope.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact

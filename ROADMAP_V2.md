@@ -3458,7 +3458,18 @@ dynamic RLAST queue. Runtime validation, multi-beat output banks, mixed
 dynamic/static queues, scoreboards, arbitrary cardinality, verification-code
 generation, direct backend behavior, backend-language variants, external
 converter dependencies such as `sv2v`, and VHDL remain deferred;
-FSMGen-owned generation/lowering remains the default.
+FSMGen-owned generation/lowering remains the default. `.493` now selects
+`.494`, direct bounded implementation of report-only raw `ARLEN` over that
+same depth-3 dynamic RLAST queue read-data shape. The audit found only a
+local dynamic issue-order queue read-data coverage gate: depth-2 queue
+raw-`ARLEN` and depth-3 no-burst read-data are already supported, while the
+generated burst-length storage/rule/report helpers already enumerate all
+covered transactions. The RAM-guarded in-memory candidate failed closed at
+that local diagnostic. Runtime validation, multi-beat output banks, mixed
+dynamic/static queues, scoreboards, arbitrary cardinality,
+verification-code generation, direct backend behavior, backend-language
+variants, external converter dependencies such as `sv2v`, and VHDL remain
+deferred; FSMGen-owned generation/lowering remains the default.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
