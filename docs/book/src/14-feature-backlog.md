@@ -8840,6 +8840,20 @@ backend-language variants, external converter dependencies such as `sv2v`,
 and VHDL remain deferred; FSMGen-owned generation/lowering remains the
 default.
 
+Post dynamic read burst-last depth-3 same-ID issue-order queue read-data
+runtime-validation selector:
+[AXI_IAL2_MANAGER_POST_DYNAMIC_READ_BURST_LAST_DEPTH3_SAME_ID_ISSUE_ORDER_QUEUE_READ_DATA_RUNTIME_VALIDATION_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_DYNAMIC_READ_BURST_LAST_DEPTH3_SAME_ID_ISSUE_ORDER_QUEUE_READ_DATA_RUNTIME_VALIDATION_NEXT_SLICE_SELECTION.md)
+selects `.499`, readiness audit for multi-beat output banks over the
+generated all-dynamic read burst-last `RID && RLAST` depth-3 same-ID
+`issue-order-queue` runtime-validation read-data behavior shipped in `.497`.
+This is the smallest adjacent owner because `.497` supplies the exact
+three-transaction runtime-validation queue read-data surface, while `.473`
+already proves multi-beat output banks over the two-transaction dynamic RLAST
+queue. Mixed dynamic/static queues, scoreboards, arbitrary cardinality,
+verification-code generation, direct backend behavior, backend-language
+variants, external converter dependencies such as `sv2v`, and VHDL remain
+deferred; FSMGen-owned generation/lowering remains the default.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

@@ -3522,6 +3522,15 @@ banks over this depth-3 queue, mixed dynamic/static queues, scoreboards,
 arbitrary cardinality, verification-code generation, direct backend behavior,
 backend-language variants, external converter dependencies such as `sv2v`, and
 VHDL remain deferred; FSMGen-owned generation/lowering remains the default.
+`.498` now selects `.499`, readiness audit for multi-beat output banks over
+that same depth-3 dynamic RLAST queue runtime-validation read-data shape. This
+is the smallest adjacent owner because `.497` supplies the exact
+three-transaction runtime-validation queue read-data surface, while `.473`
+already proves multi-beat output banks over the two-transaction dynamic RLAST
+queue. Mixed dynamic/static queues, scoreboards, arbitrary cardinality,
+verification-code generation, direct backend behavior, backend-language
+variants, external converter dependencies such as `sv2v`, and VHDL remain
+deferred; FSMGen-owned generation/lowering remains the default.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

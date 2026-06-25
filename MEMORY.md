@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.497: ship RLAST depth3 runtime validation`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.498` selects the next exact IAL2 owner after generated all-dynamic read burst-last RID/RLAST depth-3 same-ID issue-order queue raw-ARLEN runtime validation; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.497` shipped runtime beat-count/RLAST validation over the `.494` depth-3 dynamic RLAST queue raw-ARLEN read-data surface. The support-accounted runtime PPIF sample reports r0/r1/r2 expected-beat storage, read-beat counters, six beat-count rules, and twelve beat-count/RLAST assertions. Syntax checks, RAM-guarded schedule JSON, and RAM-guarded t/248 passed; RAM-guarded full t/1436 and strict check JSON stopped at the 88% host-memory cutoff with no unguarded retry.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.498: select RLAST depth3 multi-beat audit`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.499` audits multi-beat output-bank readiness over generated all-dynamic read burst-last RID/RLAST depth-3 same-ID issue-order queue runtime-validation read-data; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.498` selected `.499`, readiness audit for multi-beat output banks over the `.497` depth-3 dynamic RLAST queue runtime-validation read-data surface. The selector changed no parser, generator, PPIF sample, support-accounting catalog, generated artifact, report JSON, test, HDL/runtime behavior, external converter dependency such as sv2v, arbitrary-cardinality queue behavior, backend behavior, backend-language variant, verification-code output, or VHDL behavior.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
-- next_action: Start `.498`: select the next exact IAL2 owner after depth-3 dynamic RLAST queue raw-ARLEN runtime validation; preserve external converter dependencies such as sv2v, backend behavior, multi-beat output banks, mixed queues, arbitrary cardinality, and VHDL unless the selector explicitly chooses a future audited owner.
+- next_action: Start `.499`: audit whether existing multi-beat output-bank helpers can widen from the two-transaction dynamic RLAST queue to exactly three all-dynamic read burst-last queue transactions after `.497`; preserve external converter dependencies such as sv2v, mixed queues, arbitrary cardinality, backend behavior, verification-code generation, and VHDL unless the audit explicitly selects a future owner.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact
