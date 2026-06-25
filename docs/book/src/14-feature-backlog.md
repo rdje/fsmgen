@@ -8700,6 +8700,24 @@ arbitrary cardinality, direct backend behavior, backend-language variants,
 external converter dependencies such as `sv2v`, and VHDL remain deferred;
 FSMGen-owned generation/lowering remains the default.
 
+Dynamic read burst-last depth-3 same-ID issue-order queue read-data readiness:
+[AXI_IAL2_MANAGER_DYNAMIC_READ_BURST_LAST_DEPTH3_SAME_ID_ISSUE_ORDER_QUEUE_READ_DATA_READINESS_AUDIT](../../AXI_IAL2_MANAGER_DYNAMIC_READ_BURST_LAST_DEPTH3_SAME_ID_ISSUE_ORDER_QUEUE_READ_DATA_READINESS_AUDIT.md)
+selects `.491`, direct bounded implementation of scalar last-beat read-data
+over the generated all-dynamic read burst-last `RID && RLAST` depth-3
+same-ID `issue-order-queue`. A RAM-guarded temporary candidate with
+`r0`/`r1`/`r2` failed closed at the local dynamic issue-order queue read-data
+coverage gate, which still requires exactly two dynamic transactions and one
+depth-2 queue. No parser or lower artifact prerequisite was exposed. The
+direct owner should add the support-accounted
+`ppif/axi_manager_capacity_status_dynamic_read_burst_last_depth3_same_id_issue_order_queue_read_data.ppif`
+sample and widen only scalar last-beat read-data coverage/report
+expectations for the exact three-transaction queue. Raw `ARLEN`, runtime
+beat-count/`RLAST` validation, multi-beat output banks, mixed dynamic/static
+queues, scoreboards, arbitrary cardinality, direct backend behavior,
+backend-language variants, external converter dependencies such as `sv2v`,
+and VHDL remain deferred; FSMGen-owned generation/lowering remains the
+default.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

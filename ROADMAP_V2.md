@@ -3436,7 +3436,20 @@ needs explicit audit ownership before implementation. Mixed dynamic/static
 queues, scoreboards, arbitrary cardinality, direct backend behavior,
 backend-language variants, external converter dependencies such as `sv2v`,
 and VHDL remain deferred; FSMGen-owned generation/lowering remains the
-default.
+default. `.490` now selects `.491`, direct bounded implementation of scalar
+last-beat read-data over that generated depth-3 dynamic RLAST queue. The
+readiness audit found no parser or lower artifact prerequisite: a
+RAM-guarded temporary candidate with `r0`/`r1`/`r2` failed closed at the
+local dynamic issue-order queue read-data coverage gate, which still requires
+exactly two dynamic transactions and one depth-2 queue. `.491` should add one
+support-accounted sample,
+`ppif/axi_manager_capacity_status_dynamic_read_burst_last_depth3_same_id_issue_order_queue_read_data.ppif`,
+and widen only scalar last-beat read-data coverage/report expectations for
+the exact three-transaction queue. Raw `ARLEN`, runtime beat-count/`RLAST`
+validation, multi-beat output banks, mixed dynamic/static queues,
+scoreboards, arbitrary cardinality, direct backend behavior, backend-language
+variants, external converter dependencies such as `sv2v`, and VHDL remain
+deferred; FSMGen-owned generation/lowering remains the default.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

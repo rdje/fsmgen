@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.489: select RLAST depth3 read-data audit`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.490` audits scalar last-beat read-data over generated all-dynamic read burst-last RID/RLAST depth-3 same-ID issue-order queue behavior; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.489` selected `.490`, readiness audit for scalar last-beat read-data over the generated all-dynamic read burst-last RID/RLAST depth-3 same-ID issue-order queue shipped in `.488`. No parser, generator, PPIF sample, support-accounting catalog, generated artifact, report JSON, test, HDL/runtime behavior, backend-language variant, external converter dependency, or VHDL behavior changed.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.490: audit RLAST depth3 read-data`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.491` implements scalar last-beat read-data over generated all-dynamic read burst-last RID/RLAST depth-3 same-ID issue-order queue behavior; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.490` selected `.491`, direct bounded implementation of scalar last-beat read-data over the generated depth-3 dynamic RLAST queue. A RAM-guarded temporary candidate failed closed at the local dynamic issue-order queue read-data coverage gate, which still requires exactly two dynamic transactions and one depth-2 queue; no parser or lower artifact prerequisite was exposed.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
-- next_action: Start `.490`: audit whether scalar last-beat read-data can be implemented over the read burst-last depth-3 dynamic queue using existing syntax and local coverage/report widening, or whether a smaller prerequisite is needed; do not change behavior before that audit is complete.
+- next_action: Start `.491`: implement only scalar last-beat read-data over exactly three all-dynamic read burst-last queue transactions, with one support-accounted PPIF sample and focused coverage/report/tests/docs; do not widen raw ARLEN, runtime validation, multi-beat, mixed/static, scoreboard, arbitrary cardinality, backend-language, sv2v, or VHDL behavior.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact
