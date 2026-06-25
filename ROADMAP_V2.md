@@ -3302,13 +3302,16 @@ The selected queue read-data report uses
 selects `.475`, public report/static contract selection for generated dynamic
 same-ID `issue-order-queue` same-cycle selected-dequeue-plus-enqueue
 recapture. The audit changes no behavior. It found no new queue
-state-machine prerequisite because selected generated dynamic queues already
-emit `*_dequeue_enqueue_*` update rules and capture the current request ID
-source for same-cycle enqueue after selected final dequeue. The gap is
-explicit report/static vocabulary that distinguishes queue-owned recapture
-from classic dynamic response-demux `release_recapture_rule` state. Broader
-queue cardinality, mixed dynamic/static queues, scoreboards, direct backend
-behavior, backend-language variants, and VHDL remain future exact owners.
+state-machine prerequisite for emitted state-changing queue transitions, but
+`.475` now selects `.476`, readiness audit for identity-preserving
+same-transaction queue recapture ID refresh, before any positive queue
+recapture report field is added. Current queue reports keep
+`generated_update_rules` as literal emitted-rule lists under
+`same_id_ordering.dynamic_id_reuse_policy.*.generated_queues[]`; classic
+`same_cycle_release_recapture_policy` and `release_recapture_*` fields remain
+exclusive to dynamic response-demux capture state. Broader queue cardinality,
+mixed dynamic/static queues, scoreboards, direct backend behavior,
+backend-language variants, and VHDL remain future exact owners.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

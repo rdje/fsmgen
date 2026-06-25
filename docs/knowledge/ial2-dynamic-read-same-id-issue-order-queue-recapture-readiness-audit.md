@@ -1,6 +1,6 @@
 ---
 id: ial2-dynamic-read-same-id-issue-order-queue-recapture-readiness-audit
-title: Dynamic read same-ID issue-order queue recapture report contract selected
+title: Dynamic read same-ID issue-order queue recapture readiness selected contract follow-up
 answers:
   - "what follows dynamic read issue-order queue multi-beat output banks?"
   - "does dynamic issue-order queue recapture need new queue behavior?"
@@ -19,8 +19,10 @@ same-ID `issue-order-queue` runtime-validation read-data, `.474` selected
 selected-dequeue-plus-enqueue recapture.
 
 No new queue state-machine behavior is selected by `.474`. The generated
-dynamic issue-order queue already emits `*_dequeue_enqueue_*` update rules and
-captures the current request ID source for the newly enqueued transaction.
+dynamic issue-order queue already emits `*_dequeue_enqueue_*` update rules.
+`.475` later narrows the public interpretation: that literal rule list is not
+a complete same-transaction recapture guarantee until the one-entry
+identity-preserving ID-refresh case is audited.
 
 The gap is public vocabulary: queue reports expose generated update rules, but
 they do not expose the classic dynamic response-demux
@@ -28,6 +30,8 @@ they do not expose the classic dynamic response-demux
 queue-owned recapture is a compact slot update, not a busy/selected-ID
 release-recapture rule.
 
-`.475` must pin the explicit report/static contract before any report-key,
-generator-source, parser/CLI expectation, docs, or Knowledge Map alignment
-change.
+`.475` pinned the interim report contract and selected `.476`: keep
+`generated_update_rules` as literal emitted-rule evidence, keep classic
+`same_cycle_release_recapture_policy` / `release_recapture_*` fields exclusive
+to response-demux capture state, and audit identity-preserving one-entry ID
+refresh before any positive queue recapture report field is added.

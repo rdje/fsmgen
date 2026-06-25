@@ -8509,11 +8509,19 @@ Dynamic read same-ID issue-order queue recapture readiness:
 [AXI_IAL2_MANAGER_DYNAMIC_READ_SAME_ID_ISSUE_ORDER_QUEUE_RECAPTURE_READINESS_AUDIT](../../AXI_IAL2_MANAGER_DYNAMIC_READ_SAME_ID_ISSUE_ORDER_QUEUE_RECAPTURE_READINESS_AUDIT.md)
 selects `.475`, public report/static contract selection for generated dynamic
 same-ID `issue-order-queue` same-cycle selected-dequeue-plus-enqueue
-recapture. The audit changes no behavior. Selected generated dynamic queues
-already emit `*_dequeue_enqueue_*` update rules and capture the current
-request ID source for same-cycle enqueue after selected final dequeue. The
-remaining gap is explicit public vocabulary that distinguishes queue-owned
-recapture from classic dynamic response-demux `release_recapture_rule` state.
+recapture. The audit changes no behavior and found existing emitted
+same-cycle dequeue-plus-enqueue queue rules, but `.475` narrows the public
+contract before any positive report field is added.
+
+Dynamic same-ID issue-order queue recapture report contract:
+[AXI_IAL2_MANAGER_DYNAMIC_SAME_ID_ISSUE_ORDER_QUEUE_RECAPTURE_REPORT_CONTRACT_SELECTION](../../AXI_IAL2_MANAGER_DYNAMIC_SAME_ID_ISSUE_ORDER_QUEUE_RECAPTURE_REPORT_CONTRACT_SELECTION.md)
+selects `.476`, readiness audit for identity-preserving same-transaction
+queue recapture ID refresh. Current queue reports keep
+`generated_update_rules` as literal emitted-rule lists under
+`same_id_ordering.dynamic_id_reuse_policy.*.generated_queues[]`; classic
+`same_cycle_release_recapture_policy` and `release_recapture_*` fields remain
+exclusive to dynamic response-demux capture state until that audit settles the
+identity-preserving case.
 Broader queue cardinality, mixed dynamic/static queues, scoreboards, direct
 backend behavior, backend-language variants, and VHDL remain future exact
 owners.

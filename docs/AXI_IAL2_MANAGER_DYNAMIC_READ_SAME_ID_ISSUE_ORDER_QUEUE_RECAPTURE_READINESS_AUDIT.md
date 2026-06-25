@@ -12,16 +12,18 @@ selection for generated dynamic same-ID `issue-order-queue` same-cycle
 selected-dequeue-plus-enqueue recapture.
 
 This audit does not select a new queue state-machine implementation. The
-selected generated dynamic same-ID queue already supports same-cycle queue
-recapture for the bounded two-transaction shapes: a selected final dequeue can
-occur in the same cycle as one admitted request, and the newly enqueued
-transaction captures the current request ID source into the queue slot. The
-remaining gap is public/report vocabulary and static support wording. Queue
-reports expose the generated `*_dequeue_enqueue_*` update rules, while classic
-dynamic response-demux reports expose explicit `same_cycle_release_recapture`
-fields. The next safe slice is therefore a narrow contract-selection leaf that
-pins the report/static alignment before any report-key or generator-source
-change.
+selected generated dynamic same-ID queue already emits same-cycle
+selected-dequeue-plus-enqueue transition rules for the bounded
+two-transaction shapes. The remaining gap is public/report vocabulary and
+static support wording. Queue reports expose the generated
+`*_dequeue_enqueue_*` update rules, while classic dynamic response-demux
+reports expose explicit `same_cycle_release_recapture` fields. The next safe
+slice is therefore a narrow contract-selection leaf that pins the
+report/static alignment before any report-key or generator-source change.
+
+`.475` subsequently refines this boundary: the current generated update-rule
+list is literal and should not be treated as a complete same-transaction
+recapture guarantee until the identity-preserving one-entry case is audited.
 
 This readiness audit changes no parser, generator, PPIF sample,
 support-accounting catalog, validation behavior, generated artifact, test,
@@ -77,10 +79,11 @@ slot match, and `RLAST` before dequeue. Non-final matching read beats are raw
 read-data beats only: they do not dequeue the queue.
 
 The dynamic queue assignment path preserves retained slot IDs, clears emptied
-slots, and captures the current request ID source for the newly enqueued
-transaction. This is the queue-owned form of same-cycle recapture. It is not
-the classic dynamic response-demux form that rewrites a single busy/selected-ID
-register through a `*_dynamic_id_release_recapture` rule.
+slots, and captures the current request ID source for newly enqueued
+transactions in emitted state-changing transitions. This is the queue-owned
+dequeue-plus-enqueue form. It is not the classic dynamic response-demux form
+that rewrites a single busy/selected-ID register through a
+`*_dynamic_id_release_recapture` rule.
 
 Read-data consumers are already behind the queue-selected matched-beat
 boundary:
@@ -92,10 +95,12 @@ boundary:
 - `.473` multi-beat output banks capture per-lane data/status from the same
   matched-beat source.
 
-Because queue recapture updates the queue after the selected final completion
-and captures a new request ID for a new logical transaction, it does not require
-new read-data lane, beat-count, or aggregate-status machinery for the selected
-two-transaction queue shape.
+Because queue same-cycle dequeue-plus-enqueue updates happen behind the
+queue-selected response boundary, they do not require new read-data lane,
+beat-count, or aggregate-status machinery for the selected two-transaction
+queue shape. Whether identity-preserving same-transaction recapture refreshes
+the captured request ID is intentionally left to the `.475`/`.476` contract and
+readiness path.
 
 ## Selected `.475` Contract-Selection Boundary
 
