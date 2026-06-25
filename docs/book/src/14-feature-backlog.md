@@ -8128,6 +8128,21 @@ false`, and residue `dynamic_per_id_issue_order_queues`, while keeping dynamic
 `scoreboard` unsupported and avoiding generated dynamic queue, HDL, direct
 backend, or accepted-reuse behavior.
 
+Dynamic same-ID issue-order queue policy metadata-first behavior:
+[AXI_IAL2_MANAGER_DYNAMIC_SAME_ID_ISSUE_ORDER_QUEUE_POLICY_METADATA_FIRST_BEHAVIOR](../../AXI_IAL2_MANAGER_DYNAMIC_SAME_ID_ISSUE_ORDER_QUEUE_POLICY_METADATA_FIRST_BEHAVIOR.md)
+ships `.450`, metadata-first parser/report support for
+`dynamic-id-reuse issue-order-queue`. The public support-accounted PPIF sample
+is
+`ppif/axi_manager_capacity_status_dynamic_same_id_issue_order_queue_policy.ppif`.
+It lowers to the same generated IAL1/IAL0 artifacts as the base dynamic
+transaction-ID metadata sample and reports `issue_order_queue` with
+`implementation_status: selected_not_generated`, `accepted_same_id_reuse:
+false`, `generated_queue_behavior: false`, `generated_scoreboard_behavior:
+false`, and `dynamic_per_id_issue_order_queues` residue. Dynamic
+`scoreboard`, generated dynamic queues, accepted dynamic same-ID reuse, HDL,
+VHDL, direct backend behavior, and backend-language variants remain deferred.
+`.450` selects `.451`, the next dynamic same-ID policy selector.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

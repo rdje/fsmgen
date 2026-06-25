@@ -2065,6 +2065,21 @@ not_generated`, `accepted_same_id_reuse: false`, `generated_queue_behavior:
 false`, and residue for `dynamic_per_id_issue_order_queues`, while preserving
 dynamic `scoreboard` as unsupported and avoiding generated dynamic queue,
 HDL, direct backend, or accepted-reuse behavior.
+`.450` now ships that metadata-first parser/report support. Public PPIF
+source may use `(dynamic-id-reuse issue-order-queue)` for read or write
+same-ID ordering families. The new support-accounted sample
+`ppif/axi_manager_capacity_status_dynamic_same_id_issue_order_queue_policy.ppif`
+lowers to the same generated IAL1/IAL0 artifacts as the base dynamic
+transaction-ID metadata sample, while its report records
+`dynamic_id_reuse_policy.<family>.policy: issue_order_queue`,
+`implementation_status: selected_not_generated`,
+`request_conflict_policy: dynamic_issue_order_queue_selected_not_generated`,
+`accepted_same_id_reuse: false`, `generated_queue_behavior: false`,
+`generated_scoreboard_behavior: false`, and residue
+`dynamic_per_id_issue_order_queues`. Dynamic `scoreboard`, generated dynamic
+queues, accepted dynamic same-ID reuse, HDL, VHDL, direct backend behavior,
+and backend-language variants remain deferred. `.450` selects `.451`, the
+post-metadata selector for the next dynamic same-ID policy slice.
 No behavior
 changed in `.273`, `.274`, `.275`,
 `.277`, `.278`, `.279`, `.281`,
@@ -4427,6 +4442,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/AXI_IAL2_MANAGER_POST_ONE_DYNAMIC_MIXED_DYNAMIC_SAME_ID_REJECT_MAPPING_NEXT_SLICE_SELECTION.md` — selected dynamic same-ID `issue-order-queue` policy contract readiness after all bounded dynamic reject mappings shipped.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_SAME_ID_ISSUE_ORDER_QUEUE_POLICY_READINESS_AUDIT.md` — audited dynamic same-ID `issue-order-queue` policy readiness and selected public contract selection before parser/report changes.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_SAME_ID_ISSUE_ORDER_QUEUE_POLICY_CONTRACT_SELECTION.md` — selected metadata-first parser/report support for dynamic same-ID `issue-order-queue` policy before generated queue behavior.
+- `docs/AXI_IAL2_MANAGER_DYNAMIC_SAME_ID_ISSUE_ORDER_QUEUE_POLICY_METADATA_FIRST_BEHAVIOR.md` — shipped metadata-first parser/report support and a public PPIF sample for dynamic same-ID `issue-order-queue` policy.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_CONTRACT_SELECTION.md` — selected direct single-active dynamic write `BID` same-cycle release-and-recapture behavior under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_BEHAVIOR.md` — shipped single-active dynamic write `BID` same-cycle release-and-recapture under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_WRITE_RECAPTURE_NEXT_SLICE_SELECTION.md` — selected `.367`, public contract selection for first single-active dynamic read same-cycle release-and-recapture after dynamic write recapture shipped.

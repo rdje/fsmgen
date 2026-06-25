@@ -21,7 +21,7 @@ my @protocol_entries = protocol_fixture_entries();
 
 ok(@entries >= 7, 'regression corpus catalog starts with named entries across multiple classifications');
 ok(@entries >= 50, 'regression corpus catalog now covers supported language-feature fixtures plus root-level, section-level, child-root, direct-generation, and composition-contract residue families');
-is(scalar(@protocol_entries), 122, 'first visible corpus slice contains the named protocol and public intent fixtures');
+is(scalar(@protocol_entries), 123, 'first visible corpus slice contains the named protocol and public intent fixtures');
 
 my %allowed_classifications = map { $_ => 1 } qw(
     supported_smoke
@@ -40,6 +40,7 @@ my %allowed_coverages = map { $_ => 1 } qw(
     ial2_ppif_manager_capacity_status_transaction_envelope_pipeline_cli
     ial2_ppif_manager_capacity_status_dynamic_transaction_id_pipeline_cli
     ial2_ppif_manager_capacity_status_dynamic_same_id_reject_policy_pipeline_cli
+    ial2_ppif_manager_capacity_status_dynamic_same_id_issue_order_queue_policy_pipeline_cli
     ial2_ppif_manager_capacity_status_dynamic_write_response_demux_pipeline_cli
     ial2_ppif_manager_capacity_status_dynamic_write_response_demux_multi_pipeline_cli
     ial2_ppif_manager_capacity_status_write_mixed_dynamic_static_response_demux_pipeline_cli
@@ -192,6 +193,7 @@ my %coverage_classification = (
     ial2_ppif_manager_capacity_status_transaction_envelope_pipeline_cli => 'supported_smoke',
     ial2_ppif_manager_capacity_status_dynamic_transaction_id_pipeline_cli => 'supported_smoke',
     ial2_ppif_manager_capacity_status_dynamic_same_id_reject_policy_pipeline_cli => 'supported_smoke',
+    ial2_ppif_manager_capacity_status_dynamic_same_id_issue_order_queue_policy_pipeline_cli => 'supported_smoke',
     ial2_ppif_manager_capacity_status_dynamic_write_response_demux_pipeline_cli => 'supported_smoke',
     ial2_ppif_manager_capacity_status_dynamic_write_response_demux_multi_pipeline_cli => 'supported_smoke',
     ial2_ppif_manager_capacity_status_write_mixed_dynamic_static_response_demux_pipeline_cli => 'supported_smoke',
@@ -335,6 +337,7 @@ for my $required_id (qw(
     intent.ppif_axi_manager_capacity_status_transaction_envelope
     intent.ppif_axi_manager_capacity_status_dynamic_transaction_id
     intent.ppif_axi_manager_capacity_status_dynamic_same_id_reject_policy
+    intent.ppif_axi_manager_capacity_status_dynamic_same_id_issue_order_queue_policy
     intent.ppif_axi_manager_capacity_status_dynamic_write_response_demux
     intent.ppif_axi_manager_capacity_status_dynamic_write_response_demux_multi
     intent.ppif_axi_manager_capacity_status_write_mixed_dynamic_static_response_demux
@@ -779,8 +782,8 @@ for my $entry (@entries) {
 
 is(
     scalar(grep { $_->{classification} eq 'supported_smoke' } @entries),
-    161,
-    'catalog now keeps one hundred sixty-one named supported-smoke entries including direct, composition, ISF, and PPIF fixtures',
+    162,
+    'catalog now keeps one hundred sixty-two named supported-smoke entries including direct, composition, ISF, and PPIF fixtures',
 );
 is(
     scalar(grep { $_->{classification} eq 'legacy_out_of_scope' } @entries),
@@ -794,8 +797,8 @@ is(
 );
 is(
     scalar(grep { $_->{strict_supported} } @entries),
-    161,
-    'catalog now records one hundred sixty-one positive strict-mode supported-smoke acceptance entries',
+    162,
+    'catalog now records one hundred sixty-two positive strict-mode supported-smoke acceptance entries',
 );
 for my $strict_supported_id (qw(
     protocol.apb_requester
@@ -810,6 +813,7 @@ for my $strict_supported_id (qw(
     intent.ppif_axi_manager_capacity_status_transaction_envelope
     intent.ppif_axi_manager_capacity_status_dynamic_transaction_id
     intent.ppif_axi_manager_capacity_status_dynamic_same_id_reject_policy
+    intent.ppif_axi_manager_capacity_status_dynamic_same_id_issue_order_queue_policy
     intent.ppif_axi_manager_capacity_status_dynamic_write_response_demux
     intent.ppif_axi_manager_capacity_status_dynamic_write_response_demux_multi
     intent.ppif_axi_manager_capacity_status_write_mixed_dynamic_static_response_demux

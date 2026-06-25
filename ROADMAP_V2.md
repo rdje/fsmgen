@@ -3048,6 +3048,21 @@ not_generated`, `accepted_same_id_reuse: false`, `generated_queue_behavior:
 false`, and residue for `dynamic_per_id_issue_order_queues`, while preserving
 dynamic `scoreboard` as unsupported and avoiding generated dynamic queue,
 HDL, direct backend, or accepted-reuse behavior.
+`.450` now ships that metadata-first parser/report support. Public PPIF
+source may use `(dynamic-id-reuse issue-order-queue)` for read or write
+same-ID ordering families. The new support-accounted sample
+`ppif/axi_manager_capacity_status_dynamic_same_id_issue_order_queue_policy.ppif`
+lowers to the same generated IAL1/IAL0 artifacts as the base dynamic
+transaction-ID metadata sample, while its report records
+`dynamic_id_reuse_policy.<family>.policy: issue_order_queue`,
+`implementation_status: selected_not_generated`,
+`request_conflict_policy: dynamic_issue_order_queue_selected_not_generated`,
+`accepted_same_id_reuse: false`, `generated_queue_behavior: false`,
+`generated_scoreboard_behavior: false`, and residue
+`dynamic_per_id_issue_order_queues`. Dynamic `scoreboard`, generated dynamic
+queues, accepted dynamic same-ID reuse, HDL, VHDL, direct backend behavior,
+and backend-language variants remain deferred. `.450` selects `.451`, the
+post-metadata selector for the next dynamic same-ID policy slice.
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,

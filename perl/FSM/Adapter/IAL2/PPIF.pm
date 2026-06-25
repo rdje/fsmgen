@@ -614,8 +614,8 @@ sub _parse_manager_capacity_same_id_ordering_family($items, $source_label, $name
             if exists $entry{dynamic_id_reuse};
         confess "Error: .ppif (manager-capacity-status $name (same-id-ordering ($family (dynamic-id-reuse ...)))) requires exactly one scalar value\n"
             unless @body == 1 && !ref($body[0]);
-        confess "Error: .ppif (manager-capacity-status $name (same-id-ordering ($family (dynamic-id-reuse ...)))) supports only reject in this slice\n"
-            unless $body[0] eq 'reject';
+        confess "Error: .ppif (manager-capacity-status $name (same-id-ordering ($family (dynamic-id-reuse ...)))) supports only reject or issue-order-queue in this slice\n"
+            unless $body[0] =~ /\A(?:reject|issue-order-queue)\z/;
         $entry{dynamic_id_reuse} = $body[0];
     }
 

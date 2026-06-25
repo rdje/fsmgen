@@ -313,6 +313,29 @@ subtest 'dynamic same-ID reject policy reports selected-not-generated metadata w
     ok($residue{dynamic_transaction_id_behavior}, 'dynamic behavior boundary remains explicit unsupported residue');
 };
 
+subtest 'dynamic same-ID issue-order queue policy reports selected-not-generated metadata without generated behavior' => sub {
+    my $base = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_dynamic_transaction_id());
+    my $result = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_dynamic_same_id_issue_order_queue_policy());
+
+    is(
+        $result->{generated_ial1}{text},
+        $base->{generated_ial1}{text},
+        'dynamic same-ID issue-order queue policy metadata does not alter generated IAL1 text',
+    );
+    is_deeply(
+        $result->{generated_ial0}{files},
+        $base->{generated_ial0}{files},
+        'dynamic same-ID issue-order queue policy metadata does not alter generated IAL0 files',
+    );
+    ok(!exists $result->{report}{id_response_rule_engine}, 'dynamic same-ID issue-order queue metadata does not emit a concrete-ID assertion engine');
+    is($result->{report}{source_object}{id}, 'axi-manager-capacity-status-dynamic-same-id-issue-order-queue-policy', 'dynamic same-ID issue-order queue source object id is preserved');
+    is($result->{report}{source_object}{intent_name}, 'axi_manager_capacity_status_dynamic_same_id_issue_order_queue_policy', 'dynamic same-ID issue-order queue source intent name is preserved');
+    assert_dynamic_transaction_id_report($result->{report}{transactions}, 'generator report');
+    assert_dynamic_same_id_issue_order_queue_policy_report($result->{report}{same_id_ordering}, 'generator report');
+    my %residue = map { $_->{id} => 1 } @{$result->{report}{unsupported_residue}};
+    ok($residue{dynamic_transaction_id_behavior}, 'dynamic behavior boundary remains explicit unsupported residue');
+};
+
 subtest 'dynamic same-ID reject policy coexists with concrete same-ID policy metadata' => sub {
     my $contract = sample_contract_with_dynamic_same_id_reject_policy();
     $contract->{same_id_ordering_policy}{read}{concrete_id_reuse} = 'reject';
@@ -330,6 +353,25 @@ subtest 'dynamic same-ID reject policy coexists with concrete same-ID policy met
     is($ordering->{concrete_id_reuse_policy}{read}{policy}, 'reject', 'combined report preserves concrete reject policy');
     is($ordering->{concrete_id_reuse_policy}{read}{enforcement}, 'static_validation', 'combined report preserves concrete static-validation enforcement');
     assert_dynamic_same_id_reject_policy_report($ordering, 'combined generator report', mode => 'id_reuse_policy');
+};
+
+subtest 'dynamic same-ID issue-order queue policy coexists with concrete same-ID policy metadata' => sub {
+    my $contract = sample_contract_with_dynamic_same_id_issue_order_queue_policy();
+    $contract->{same_id_ordering_policy}{read}{concrete_id_reuse} = 'reject';
+
+    my $result = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate($contract);
+    my $ordering = $result->{report}{same_id_ordering};
+
+    is($ordering->{mode}, 'id_reuse_policy', 'combined concrete and dynamic issue-order queue metadata uses combined reuse-policy mode');
+    ok(!$ordering->{generated_behavior}, 'combined dynamic issue-order queue metadata remains selected-not-generated');
+    is_deeply(
+        $ordering->{residue},
+        [qw(concrete_id_same_id_ordering per_id_issue_order_queues dynamic_id_same_id_ordering dynamic_per_id_issue_order_queues)],
+        'combined issue-order queue residue keeps concrete and dynamic queue work explicit',
+    );
+    is($ordering->{concrete_id_reuse_policy}{read}{policy}, 'reject', 'combined report preserves concrete reject policy');
+    is($ordering->{concrete_id_reuse_policy}{read}{enforcement}, 'static_validation', 'combined report preserves concrete static-validation enforcement');
+    assert_dynamic_same_id_issue_order_queue_policy_report($ordering, 'combined generator report', mode => 'id_reuse_policy');
 };
 
 subtest 'single-active dynamic write response-demux maps dynamic same-ID reject to generated assertions' => sub {
@@ -5343,17 +5385,27 @@ subtest 'malformed contract objects fail closed and no direct lower-to-fsm entry
         ['same-ID policy unsupported family', sub { my $c = sample_contract_with_same_id_reject_policy(); $c->{same_id_ordering_policy} = { address => { concrete_id_reuse => 'reject' } }; $c }, qr/same_id_ordering_policy has unsupported family 'address'/],
         ['same-ID policy empty family arm', sub { my $c = sample_contract_with_same_id_reject_policy(); delete $c->{same_id_ordering_policy}{read}{concrete_id_reuse}; $c }, qr/same_id_ordering_policy\.read requires at least one concrete_id_reuse or dynamic_id_reuse field/],
         ['same-ID policy unsupported scoreboard value', sub { my $c = sample_contract_with_same_id_reject_policy(); $c->{same_id_ordering_policy}{read}{concrete_id_reuse} = 'scoreboard'; $c }, qr/same_id_ordering_policy\.read\.concrete_id_reuse must be reject or issue-order-queue in this slice/],
-        ['dynamic same-ID policy unsupported scoreboard value', sub { my $c = sample_contract_with_dynamic_same_id_reject_policy(); $c->{same_id_ordering_policy}{read}{dynamic_id_reuse} = 'scoreboard'; $c }, qr/same_id_ordering_policy\.read\.dynamic_id_reuse must be reject in this slice/],
+        ['dynamic same-ID policy unsupported scoreboard value', sub { my $c = sample_contract_with_dynamic_same_id_reject_policy(); $c->{same_id_ordering_policy}{read}{dynamic_id_reuse} = 'scoreboard'; $c }, qr/same_id_ordering_policy\.read\.dynamic_id_reuse must be reject or issue-order-queue in this slice/],
         ['dynamic same-ID policy requires transactions metadata', sub {
             my $c = sample_contract_with_id_families();
             $c->{same_id_ordering_policy} = { read => { dynamic_id_reuse => 'reject' } };
             $c;
         }, qr/same_id_ordering_policy\.read dynamic-id-reuse reject requires transactions metadata/],
+        ['dynamic same-ID issue-order queue policy requires transactions metadata', sub {
+            my $c = sample_contract_with_id_families();
+            $c->{same_id_ordering_policy} = { read => { dynamic_id_reuse => 'issue-order-queue' } };
+            $c;
+        }, qr/same_id_ordering_policy\.read dynamic-id-reuse issue-order-queue requires transactions metadata/],
         ['dynamic same-ID policy requires same-family dynamic transaction', sub {
             my $c = sample_contract_with_transactions();
             $c->{same_id_ordering_policy} = { write => { dynamic_id_reuse => 'reject' } };
             $c;
         }, qr/same_id_ordering_policy\.write dynamic-id-reuse reject requires at least one dynamic write transaction/],
+        ['dynamic same-ID issue-order queue policy requires same-family dynamic transaction', sub {
+            my $c = sample_contract_with_transactions();
+            $c->{same_id_ordering_policy} = { write => { dynamic_id_reuse => 'issue-order-queue' } };
+            $c;
+        }, qr/same_id_ordering_policy\.write dynamic-id-reuse issue-order-queue requires at least one dynamic write transaction/],
         ['same-ID policy explicit reject blocks concrete same-ID reuse', sub {
             my $c = sample_contract_with_same_id_reject_policy();
             push @{$c->{transactions}}, {
@@ -5392,7 +5444,7 @@ subtest 'malformed contract objects fail closed and no direct lower-to-fsm entry
         }, qr/concrete ID assertions require unique request events; event 'axi0_read_submit' is shared by transactions 'r0' and 'r1'/],
         ['dynamic transaction ID blocks same-family auto lifecycle behavior', sub { my $c = sample_contract_with_dynamic_transaction_id(); $c->{auto_id_lifecycle} = { read => { pool => [0] } }; $c }, qr/auto_id_lifecycle\.read cannot be combined with dynamic read transaction ID metadata/],
         ['dynamic read response demux requires generated completion distinct from raw response event', sub { my $c = sample_contract_with_dynamic_transaction_id(); $c->{response_demux} = { read => { response_event => 'axi0_read_complete', response_scope => 'single-beat', transaction_completion => 'generated' } }; $c }, qr/response_demux\.read generated transaction completion signal 'axi0_read_complete' must be distinct from response_event 'axi0_read_complete'/],
-        ['dynamic transaction ID rejects concrete-only same-ID policy assumptions', sub { my $c = sample_contract_with_dynamic_transaction_id(); $c->{same_id_ordering_policy} = { read => { concrete_id_reuse => 'issue-order-queue' } }; $c }, qr/same_id_ordering_policy\.read concrete-id-reuse policy does not cover dynamic read transaction ID metadata; select dynamic-id-reuse reject for transaction\(s\): r0/],
+        ['dynamic transaction ID rejects concrete-only same-ID policy assumptions', sub { my $c = sample_contract_with_dynamic_transaction_id(); $c->{same_id_ordering_policy} = { read => { concrete_id_reuse => 'issue-order-queue' } }; $c }, qr/same_id_ordering_policy\.read concrete-id-reuse policy does not cover dynamic read transaction ID metadata; select dynamic-id-reuse reject or dynamic-id-reuse issue-order-queue for transaction\(s\): r0/],
         ['dynamic write response demux rejects unsupported mixed write transaction counts', sub {
             my $c = sample_contract_with_dynamic_write_response_demux();
             push @{$c->{transactions}}, {
@@ -5731,6 +5783,18 @@ sub sample_contract_with_dynamic_same_id_reject_policy {
     $contract->{same_id_ordering_policy} = {
         read => {
             dynamic_id_reuse => 'reject',
+        },
+    };
+    return $contract;
+}
+
+sub sample_contract_with_dynamic_same_id_issue_order_queue_policy {
+    my $contract = sample_contract_with_dynamic_transaction_id();
+    $contract->{intent_name} = 'axi_manager_capacity_status_dynamic_same_id_issue_order_queue_policy';
+    $contract->{source}{object_id} = 'axi-manager-capacity-status-dynamic-same-id-issue-order-queue-policy';
+    $contract->{same_id_ordering_policy} = {
+        read => {
+            dynamic_id_reuse => 'issue-order-queue',
         },
     };
     return $contract;
@@ -9361,6 +9425,42 @@ sub assert_dynamic_same_id_reject_policy_report {
             generated_scoreboard_behavior => JSON::PP::false(),
         },
         "$owner reports selected-not-generated dynamic same-ID reject metadata",
+    );
+}
+
+sub assert_dynamic_same_id_issue_order_queue_policy_report {
+    my ($ordering, $owner, %args) = @_;
+    my $mode = $args{mode} // 'dynamic_id_reuse_policy';
+
+    is($ordering->{mode}, $mode, "$owner marks dynamic issue-order queue policy mode");
+    ok(!$ordering->{generated_behavior}, "$owner marks dynamic issue-order queue generated behavior false");
+    ok(!exists($ordering->{families}), "$owner does not report generated same-ID avoidance families");
+    if ($mode eq 'dynamic_id_reuse_policy') {
+        is_deeply(
+            $ordering->{residue},
+            [qw(dynamic_id_same_id_ordering dynamic_per_id_issue_order_queues)],
+            "$owner keeps dynamic issue-order queue residue explicit",
+        );
+    }
+    ok(@{$ordering->{source_anchors}}, "$owner carries source anchors into dynamic issue-order queue metadata");
+    is_deeply(
+        [sort keys %{$ordering->{dynamic_id_reuse_policy}}],
+        ['read'],
+        "$owner reports the selected read dynamic-ID issue-order queue policy",
+    );
+    my $read = $ordering->{dynamic_id_reuse_policy}{read};
+    is_deeply(
+        $read,
+        {
+            policy                       => 'issue_order_queue',
+            implementation_status        => 'selected_not_generated',
+            enforcement                  => 'not_generated',
+            accepted_same_id_reuse       => JSON::PP::false(),
+            request_conflict_policy      => 'dynamic_issue_order_queue_selected_not_generated',
+            generated_queue_behavior     => JSON::PP::false(),
+            generated_scoreboard_behavior => JSON::PP::false(),
+        },
+        "$owner reports selected-not-generated dynamic issue-order queue metadata",
     );
 }
 

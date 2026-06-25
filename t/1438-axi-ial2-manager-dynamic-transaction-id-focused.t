@@ -26,6 +26,15 @@ my @DYNAMIC_CASES = (
         behavior     => 'metadata_only',
     },
     {
+        label        => 'dynamic same-ID issue-order queue policy metadata',
+        relpath      => 'ppif/axi_manager_capacity_status_dynamic_same_id_issue_order_queue_policy.ppif',
+        object_id    => 'axi-manager-capacity-status-dynamic-same-id-issue-order-queue-policy',
+        intent_name  => 'axi_manager_capacity_status_dynamic_same_id_issue_order_queue_policy',
+        entry_id     => 'intent.ppif_axi_manager_capacity_status_dynamic_same_id_issue_order_queue_policy',
+        coverage     => 'ial2_ppif_manager_capacity_status_dynamic_same_id_issue_order_queue_policy_pipeline_cli',
+        behavior     => 'dynamic_same_id_issue_order_queue_metadata',
+    },
+    {
         label        => 'dynamic write BID response demux',
         relpath      => 'ppif/axi_manager_capacity_status_dynamic_write_response_demux.ppif',
         object_id    => 'axi-manager-capacity-status-dynamic-write-response-demux',
@@ -770,16 +779,19 @@ sub assert_dynamic_behavior {
     my $isf = $result->{generated_ial1}{text};
     my $fsm = $result->{generated_ial0}{files}{'axi0_capacity_status.fsm'};
 
-    if ($case->{behavior} eq 'metadata_only') {
-        is($isf, $base->{generated_ial1}{text}, 'dynamic metadata-only sample leaves generated IAL1 unchanged');
-        is_deeply($result->{generated_ial0}{files}, $base->{generated_ial0}{files}, 'dynamic metadata-only sample leaves generated IAL0 unchanged');
-        unlike($isf, qr/\(input axi0_awid\b/, 'dynamic metadata-only sample does not generate AWID input');
-        unlike($isf, qr/\(input axi0_bid\b/, 'dynamic metadata-only sample does not generate BID input');
-        unlike($isf, qr/\(input axi0_arid\b/, 'dynamic metadata-only sample does not generate ARID input');
-        unlike($isf, qr/\(input axi0_rid\b/, 'dynamic metadata-only sample does not generate RID input');
-        ok(!exists $result->{report}{id_response_rule_engine}, 'dynamic metadata-only sample emits no concrete-ID assertion engine');
+    if ($case->{behavior} eq 'metadata_only'
+        || $case->{behavior} eq 'dynamic_same_id_issue_order_queue_metadata') {
+        is($isf, $base->{generated_ial1}{text}, "$case->{label} leaves generated IAL1 unchanged");
+        is_deeply($result->{generated_ial0}{files}, $base->{generated_ial0}{files}, "$case->{label} leaves generated IAL0 unchanged");
+        unlike($isf, qr/\(input axi0_awid\b/, "$case->{label} does not generate AWID input");
+        unlike($isf, qr/\(input axi0_bid\b/, "$case->{label} does not generate BID input");
+        unlike($isf, qr/\(input axi0_arid\b/, "$case->{label} does not generate ARID input");
+        unlike($isf, qr/\(input axi0_rid\b/, "$case->{label} does not generate RID input");
+        ok(!exists $result->{report}{id_response_rule_engine}, "$case->{label} emits no concrete-ID assertion engine");
         assert_dynamic_transaction_metadata($result->{report}{transactions});
         assert_dynamic_residue($result->{report}, 'metadata-only dynamic IDs stay explicitly bounded');
+        assert_dynamic_same_id_issue_order_queue_metadata($result->{report}{same_id_ordering})
+            if $case->{behavior} eq 'dynamic_same_id_issue_order_queue_metadata';
         return;
     }
 
@@ -2542,6 +2554,37 @@ sub assert_dynamic_transaction_metadata {
     is_deeply([map { $_->{id}{family} } @$transactions], [qw(write read)], 'metadata-only dynamic sample reports write/read families');
     is_deeply([map { $_->{id}{request_id_source} } @$transactions], [qw(axi0_awid axi0_arid)], 'metadata-only dynamic sample reports request ID sources');
     is_deeply([map { $_->{id}{response_id_signal} } @$transactions], [qw(axi0_bid axi0_rid)], 'metadata-only dynamic sample reports response ID signals');
+}
+
+sub assert_dynamic_same_id_issue_order_queue_metadata {
+    my ($ordering) = @_;
+
+    is($ordering->{mode}, 'dynamic_id_reuse_policy', 'dynamic issue-order queue metadata reports dynamic policy mode');
+    ok(!$ordering->{generated_behavior}, 'dynamic issue-order queue metadata is not generated behavior');
+    ok(!exists($ordering->{families}), 'dynamic issue-order queue metadata does not report generated same-ID families');
+    is_deeply(
+        $ordering->{residue},
+        [qw(dynamic_id_same_id_ordering dynamic_per_id_issue_order_queues)],
+        'dynamic issue-order queue metadata keeps dynamic queue residue explicit',
+    );
+    is_deeply(
+        [sort keys %{$ordering->{dynamic_id_reuse_policy}}],
+        ['read'],
+        'dynamic issue-order queue metadata reports the selected read family',
+    );
+    is_deeply(
+        $ordering->{dynamic_id_reuse_policy}{read},
+        {
+            policy                       => 'issue_order_queue',
+            implementation_status        => 'selected_not_generated',
+            enforcement                  => 'not_generated',
+            accepted_same_id_reuse       => JSON::PP::false(),
+            request_conflict_policy      => 'dynamic_issue_order_queue_selected_not_generated',
+            generated_queue_behavior     => JSON::PP::false(),
+            generated_scoreboard_behavior => JSON::PP::false(),
+        },
+        'dynamic issue-order queue metadata reports selected-not-generated policy fields',
+    );
 }
 
 sub assert_dynamic_write_report {
