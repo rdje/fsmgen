@@ -8187,6 +8187,38 @@ responses may complete ahead of slot0, same-cycle selected dequeue plus one
 enqueue is supported, and reject-only active-ID uniqueness assertions remain
 exclusive to `dynamic-id-reuse reject`.
 
+Dynamic write same-ID issue-order queue behavior:
+[AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_ID_ISSUE_ORDER_QUEUE_BEHAVIOR](../../AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_ID_ISSUE_ORDER_QUEUE_BEHAVIOR.md)
+ships `.455`, generated bounded behavior for exactly two all-dynamic write
+transactions with explicit generated `response-demux.write` and
+`same-id-ordering.write (dynamic-id-reuse issue-order-queue)`. The public
+sample is
+`ppif/axi_manager_capacity_status_dynamic_write_same_id_issue_order_queue.ppif`.
+It generates `axi0_awid`/`axi0_bid` inputs, slot-local transaction bits,
+slot-local captured `AWID` registers, generated `BID` completion rules for
+`w0` and `w1`, and queue-specific assertions.
+
+The generated write response-demux reports
+`bounded_dynamic_write_bid_issue_order_queue_demux_contract`,
+`generated_dynamic_issue_order_queue_demux`,
+`earliest_matching_captured_runtime_id`,
+`compact_runtime_id_issue_order_slots`, and
+`dynamic_issue_order_earliest_matching_slot`. A `BID` response selects the
+earliest valid slot whose captured ID matches. If both slots hold the same
+captured ID, slot0 completes first; if slot0 has a different ID and slot1
+matches, slot1 may complete ahead of slot0.
+
+The same-ID ordering report now marks the covered write family as generated:
+`implementation_status: generated_dynamic_write_bid_issue_order_queue`,
+`accepted_same_id_reuse: true`, `generated_queue_behavior: true`,
+`same_id_overlap_policy: allowed_by_issue_order_queue`,
+`multi_match_policy: earliest_matching_slot`, and
+`active_id_uniqueness_policy: not_required_for_issue_order_queue`. Dynamic
+read queues, broader write cardinalities, mixed dynamic/static queues,
+dynamic scoreboards, direct backend behavior, backend-language variants, and
+VHDL remain future exact owners. `.456` is the next selector after this
+behavior.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

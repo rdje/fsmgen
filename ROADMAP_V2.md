@@ -3095,6 +3095,22 @@ captured ID matches the response. Same-ID overlaps are ordered by slot age,
 different-ID slot1 responses may complete ahead of slot0, same-cycle selected
 dequeue plus one enqueue is supported, and reject-only active-ID uniqueness
 assertions remain exclusive to `dynamic-id-reuse reject`.
+`.455` now ships that generated bounded behavior through support-accounted
+public sample
+`ppif/axi_manager_capacity_status_dynamic_write_same_id_issue_order_queue.ppif`.
+The generated write response-demux uses
+`bounded_dynamic_write_bid_issue_order_queue_demux_contract`,
+`generated_dynamic_issue_order_queue_demux`,
+`earliest_matching_captured_runtime_id`, and
+`dynamic_issue_order_earliest_matching_slot`. The same-ID ordering report uses
+`generated_dynamic_write_bid_issue_order_queue`, accepts dynamic same-ID reuse
+for the covered write family, clears covered same-ID ordering residue, and
+exposes slot-local `AWID` capture, same-cycle selected dequeue plus enqueue,
+and queue-specific assertions. Dynamic read queues, broader write
+cardinalities, mixed dynamic/static queues, dynamic scoreboards, direct backend
+behavior, backend-language variants, and VHDL remain future exact owners.
+`.455` selects `.456`, the post dynamic write same-ID issue-order queue
+selector.
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,

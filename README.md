@@ -2112,6 +2112,24 @@ captured ID matches the response. Same-ID overlaps are ordered by slot age,
 different-ID slot1 responses may complete ahead of slot0, same-cycle selected
 dequeue plus one enqueue is supported, and reject-only active-ID uniqueness
 assertions remain exclusive to `dynamic-id-reuse reject`.
+`.455` now ships that bounded generated behavior through support-accounted
+public sample
+`ppif/axi_manager_capacity_status_dynamic_write_same_id_issue_order_queue.ppif`.
+Generated `response-demux.write` now reports
+`bounded_dynamic_write_bid_issue_order_queue_demux_contract`,
+`generated_dynamic_issue_order_queue_demux`,
+`earliest_matching_captured_runtime_id`,
+`compact_runtime_id_issue_order_slots`, and
+`dynamic_issue_order_earliest_matching_slot` for exactly two all-dynamic write
+transactions. Generated same-ID ordering reports
+`generated_dynamic_write_bid_issue_order_queue`,
+`accepted_same_id_reuse: true`, queue-specific assertions, slot-local
+`AWID` capture, same-cycle selected dequeue plus enqueue, and no same-ID
+ordering residue for the covered write family. Dynamic read queues, broader
+write cardinalities, mixed dynamic/static queues, dynamic scoreboards, direct
+backend behavior, backend-language variants, and VHDL remain future exact
+owners. `.455` selects `.456`, the post dynamic write same-ID issue-order queue
+selector.
 No behavior
 changed in `.273`, `.274`, `.275`,
 `.277`, `.278`, `.279`, `.281`,
@@ -4479,6 +4497,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/AXI_IAL2_MANAGER_GENERATED_DYNAMIC_SAME_ID_ISSUE_ORDER_QUEUE_READINESS_AUDIT.md` — audited generated dynamic same-ID `issue-order-queue` readiness and selected public contract selection before implementation.
 - `docs/AXI_IAL2_MANAGER_GENERATED_DYNAMIC_SAME_ID_ISSUE_ORDER_QUEUE_CONTRACT_SELECTION.md` — selected runtime-ID queue-state representation before the first generated dynamic same-ID `issue-order-queue` behavior.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_RUNTIME_ID_QUEUE_STATE_REPRESENTATION_SELECTION.md` — selected compact runtime-ID issue-order slots before generated dynamic write `BID` queue behavior.
+- `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_ID_ISSUE_ORDER_QUEUE_BEHAVIOR.md` — shipped generated bounded two-transaction all-dynamic write `BID` dynamic issue-order queue behavior.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_CONTRACT_SELECTION.md` — selected direct single-active dynamic write `BID` same-cycle release-and-recapture behavior under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_BEHAVIOR.md` — shipped single-active dynamic write `BID` same-cycle release-and-recapture under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_WRITE_RECAPTURE_NEXT_SLICE_SELECTION.md` — selected `.367`, public contract selection for first single-active dynamic read same-cycle release-and-recapture after dynamic write recapture shipped.
@@ -4570,6 +4589,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `ppif/axi_manager_capacity_status_dynamic_read_response_demux_multi.ppif` — checked-in runnable `.ppif` sample for generated bounded multiple dynamic read transaction-ID capture, single-beat `RID` response matching, and same-cycle release-and-recapture through explicit `response-demux.read` with all-dynamic read transactions, support-accounted through check JSON and semantic JSON.
 - `ppif/axi_manager_capacity_status_dynamic_read_response_demux_multi_same_id_reject.ppif` — checked-in runnable `.ppif` sample for generated dynamic same-ID reject enforcement mapping over multiple all-dynamic read single-beat response-demux assertions, support-accounted through check JSON and semantic JSON.
 - `ppif/axi_manager_capacity_status_dynamic_read_response_demux_same_id_reject.ppif` — checked-in runnable `.ppif` sample for generated single-active dynamic same-ID reject enforcement mapping over read single-beat `RID` response-demux idle-or-releasing assertions, support-accounted through check JSON and semantic JSON.
+- `ppif/axi_manager_capacity_status_dynamic_write_same_id_issue_order_queue.ppif` — checked-in runnable `.ppif` sample for generated bounded two-transaction all-dynamic write `BID` dynamic same-ID issue-order queue behavior, support-accounted through check JSON and semantic JSON.
 - `ppif/axi_manager_capacity_status_dynamic_read_data_multi.ppif` — checked-in runnable `.ppif` sample for generated scalar single-beat `RDATA`/`RRESP` capture over generated multiple dynamic read single-beat response-demux, support-accounted through check JSON and semantic JSON.
 - `ppif/axi_manager_capacity_status_dynamic_read_data_multi_last_beat.ppif` — checked-in runnable `.ppif` sample for generated scalar last-beat `RDATA`/`RRESP` capture over generated multiple dynamic read burst-last/`RLAST` response-demux, support-accounted through check JSON and semantic JSON.
 - `ppif/axi_manager_capacity_status_dynamic_read_data_multi_burst_length.ppif` — checked-in runnable `.ppif` sample for generated report-only raw-`ARLEN` burst-length capture over generated multiple dynamic read burst-last/`RLAST` response-demux and scalar last-beat read-data, support-accounted through check JSON and semantic JSON.

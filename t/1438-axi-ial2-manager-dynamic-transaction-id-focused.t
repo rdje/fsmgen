@@ -53,6 +53,15 @@ my @DYNAMIC_CASES = (
         behavior     => 'dynamic_write_demux_multi',
     },
     {
+        label        => 'dynamic write BID same-ID issue-order queue',
+        relpath      => 'ppif/axi_manager_capacity_status_dynamic_write_same_id_issue_order_queue.ppif',
+        object_id    => 'axi-manager-capacity-status-dynamic-write-same-id-issue-order-queue',
+        intent_name  => 'axi_manager_capacity_status_dynamic_write_same_id_issue_order_queue',
+        entry_id     => 'intent.ppif_axi_manager_capacity_status_dynamic_write_same_id_issue_order_queue',
+        coverage     => 'ial2_ppif_manager_capacity_status_dynamic_write_same_id_issue_order_queue_pipeline_cli',
+        behavior     => 'dynamic_write_same_id_issue_order_queue',
+    },
+    {
         label        => 'mixed dynamic/static write BID response demux',
         relpath      => 'ppif/axi_manager_capacity_status_write_mixed_dynamic_static_response_demux.ppif',
         object_id    => 'axi-manager-capacity-status-write-mixed-dynamic-static-response-demux',
@@ -856,6 +865,34 @@ sub assert_dynamic_behavior {
         return;
     }
 
+    if ($case->{behavior} eq 'dynamic_write_same_id_issue_order_queue') {
+        like($isf, qr/\(input axi0_w0_request\)/, 'dynamic write issue-order queue declares w0 request input');
+        like($isf, qr/\(input axi0_w1_request\)/, 'dynamic write issue-order queue declares w1 request input');
+        like($isf, qr/\(input axi0_awid \(width 4\)\)/, 'dynamic write issue-order queue declares AWID input');
+        like($isf, qr/\(input axi0_bid \(width 4\)\)/, 'dynamic write issue-order queue declares BID input');
+        like($isf, qr/\(output axi0_w0_complete\)/, 'dynamic write issue-order queue exposes w0 completion output');
+        like($isf, qr/\(output axi0_w1_complete\)/, 'dynamic write issue-order queue exposes w1 completion output');
+        unlike($isf, qr/axi0_w0_dynamic_id_q/, 'dynamic write issue-order queue does not allocate legacy w0 selected-ID storage');
+        unlike($isf, qr/axi0_w1_dynamic_busy_q/, 'dynamic write issue-order queue does not allocate legacy w1 busy storage');
+        like($isf, qr/\(var axi0_write_dynamic_same_id_issue_order_slot0_w0_q \(width 1\)\)/, 'dynamic write issue-order queue allocates slot0 w0 bit');
+        like($isf, qr/\(var axi0_write_dynamic_same_id_issue_order_slot0_id_q \(width 4\)\)/, 'dynamic write issue-order queue allocates slot0 captured AWID');
+        like($isf, qr/\(var axi0_write_dynamic_same_id_issue_order_slot1_w1_q \(width 1\)\)/, 'dynamic write issue-order queue allocates slot1 w1 bit');
+        like($isf, qr/\(var axi0_write_dynamic_same_id_issue_order_slot1_id_q \(width 4\)\)/, 'dynamic write issue-order queue allocates slot1 captured AWID');
+        like($isf, qr/\(rule axi0_write_dynamic_same_id_issue_order_empty_enqueue_w0[\s\S]*\(axi0_write_dynamic_same_id_issue_order_slot0_id_q axi0_awid\)\)/, 'dynamic write issue-order queue captures AWID into empty slot0');
+        like($isf, qr/\(rule axi0_write_dynamic_same_id_issue_order_w0_w1_dequeue_enqueue_w0[\s\S]*\(axi0_write_dynamic_same_id_issue_order_slot0_id_q axi0_write_dynamic_same_id_issue_order_slot1_id_q\)[\s\S]*\(axi0_write_dynamic_same_id_issue_order_slot1_id_q axi0_awid\)\)/, 'dynamic write issue-order queue compacts retained ID and recaptures same-cycle enqueue');
+        like($isf, qr/\(rule axi0_w0_response_demux [\s\S]*axi0_write_dynamic_same_id_issue_order_slot0_id_q[\s\S]*axi0_write_dynamic_same_id_issue_order_slot1_id_q[\s\S]*\(pulse axi0_w0_complete\)\)/, 'dynamic write issue-order queue emits earliest matching w0 BID demux');
+        like($isf, qr/\(rule axi0_w1_response_demux [\s\S]*axi0_write_dynamic_same_id_issue_order_slot0_id_q[\s\S]*axi0_write_dynamic_same_id_issue_order_slot1_id_q[\s\S]*\(pulse axi0_w1_complete\)\)/, 'dynamic write issue-order queue emits earliest matching w1 BID demux');
+        like($isf, qr/write dynamic same-ID issue-order queue admits at most one write request/, 'dynamic write issue-order queue emits enqueue onehot assertion');
+        like($isf, qr/write dynamic same-ID response matches at least one captured runtime ID/, 'dynamic write issue-order queue emits no-match assertion');
+        like($isf, qr/write dynamic same-ID issue-order queue completion for w0 follows selected runtime-ID match/, 'dynamic write issue-order queue emits selected-match assertion');
+        assert_dynamic_write_same_id_issue_order_queue_report($result->{report});
+        my $hdl = hdl_for('axi0_capacity_status', $fsm);
+        like($hdl, qr/\breg\s+\[3:0\]\s+axi0_write_dynamic_same_id_issue_order_slot0_id_q\b/, 'SystemVerilog declares slot0 captured AWID');
+        like($hdl, qr/\breg\s+\[3:0\]\s+axi0_write_dynamic_same_id_issue_order_slot1_id_q\b/, 'SystemVerilog declares slot1 captured AWID');
+        like($hdl, qr/axi0_write_dynamic_same_id_issue_order_slot1_id_q_next\s*=\s*axi0_awid\s*;/, 'SystemVerilog recaptures AWID into a queue slot');
+        return;
+    }
+
     if ($case->{behavior} eq 'mixed_dynamic_static_write_demux') {
         like($isf, qr/\(input axi0_w0_request\)/, 'mixed write demux declares dynamic request input');
         like($isf, qr/\(input axi0_w1_request\)/, 'mixed write demux declares static request input');
@@ -1323,7 +1360,7 @@ sub assert_dynamic_behavior {
                 like($isf, qr/\(rule axi0_${transaction}_static_busy_capture[\s\S]*\(! \(& axi0_${sibling_transaction}_request/, "multi-static mixed read demux blocks $label static capture during $sibling_label static request");
             }
         }
-        my $release_recapture_expected = @static_cases == 2;
+        my $release_recapture_expected = @static_cases == 2 || @static_cases == 3;
         if ($release_recapture_expected) {
             like($isf, qr/\(rule axi0_r0_dynamic_id_release \(& axi0_r0_complete axi0_r0_dynamic_busy_q \(! axi0_r0_request\)\)/, 'multi-static mixed read demux dynamic release excludes same-cycle dynamic request');
             like($isf, qr/\(rule axi0_r0_dynamic_id_release_recapture\b/, 'multi-static mixed read demux emits dynamic release-recapture rule');
@@ -2689,6 +2726,83 @@ sub assert_dynamic_write_multi_report {
         'multiple dynamic write transactions report generated capture/matching',
     );
     assert_dynamic_residue($report, 'multiple dynamic write demux keeps future dynamic residue visible');
+}
+
+sub assert_dynamic_write_same_id_issue_order_queue_report {
+    my ($report) = @_;
+    my $demux = $report->{response_demux};
+    my $write = $demux->{write};
+    my $ordering = $report->{same_id_ordering};
+    my $policy = $ordering->{dynamic_id_reuse_policy}{write};
+    my $queue = $policy->{generated_queues}[0];
+
+    is($demux->{mode}, 'bounded_dynamic_write_bid_issue_order_queue_demux_contract', 'dynamic write issue-order queue report marks demux contract');
+    ok($demux->{generated_behavior}, 'dynamic write issue-order queue report marks generated demux behavior');
+    is_deeply($demux->{residue}, [qw(read_response_demux read_data_interleaving bursts)], 'dynamic write issue-order queue removes same-ID residue from response demux');
+    is($write->{transaction_completion_source}, 'generated_dynamic_issue_order_queue_demux', 'dynamic write issue-order queue report marks generated queue completion source');
+    is($write->{transaction_completion_semantics}, 'earliest_matching_captured_runtime_id', 'dynamic write issue-order queue report marks earliest matching semantics');
+    is($write->{queue_state_representation}, 'compact_runtime_id_issue_order_slots', 'dynamic write issue-order queue report marks compact runtime-ID slots');
+    is($write->{runtime_id_queue_key}, 'captured_request_id', 'dynamic write issue-order queue report marks captured request ID key');
+    is($write->{response_demux_strategy}, 'dynamic_issue_order_earliest_matching_slot', 'dynamic write issue-order queue report marks earliest matching strategy');
+    is_deeply($write->{dynamic_transactions}, [qw(w0 w1)], 'dynamic write issue-order queue report names covered dynamic writes');
+    is_deeply($write->{generated_rules}, [qw(axi0_w0_response_demux axi0_w1_response_demux)], 'dynamic write issue-order queue report names generated response-demux rules');
+    is_deeply($write->{generated_completion_signals}, [qw(axi0_w0_complete axi0_w1_complete)], 'dynamic write issue-order queue report names generated completions');
+    is_deeply($write->{generated_assertions}, [qw(axi0_write_response_demux_active_match axi0_w0_w1_write_response_demux_unique_match)], 'dynamic write issue-order queue report names response-demux assertions');
+    is_deeply(
+        [map { $_->{id}{implementation_status} } @{$report->{transactions}}],
+        [qw(generated_issue_order_queue_matching generated_issue_order_queue_matching)],
+        'dynamic write issue-order queue transactions report generated queue matching',
+    );
+
+    is($ordering->{mode}, 'dynamic_id_reuse_policy', 'dynamic write issue-order queue same-ID report marks dynamic mode');
+    ok($ordering->{generated_behavior}, 'dynamic write issue-order queue same-ID report is generated');
+    is_deeply($ordering->{residue}, [], 'dynamic write issue-order queue same-ID report clears dynamic residue');
+    is($policy->{implementation_status}, 'generated_dynamic_write_bid_issue_order_queue', 'dynamic write issue-order queue policy reports generated implementation');
+    is($policy->{enforcement}, 'generated_dynamic_issue_order_queue', 'dynamic write issue-order queue policy reports generated enforcement');
+    ok($policy->{accepted_same_id_reuse}, 'dynamic write issue-order queue policy accepts same-ID reuse');
+    ok($policy->{generated_queue_behavior}, 'dynamic write issue-order queue policy marks generated queue behavior');
+    ok($policy->{dynamic_issue_order_queue_covered}, 'dynamic write issue-order queue policy marks dynamic coverage');
+    is_deeply($policy->{covered_dynamic_transactions}, [qw(w0 w1)], 'dynamic write issue-order queue policy names covered transactions');
+    is($policy->{active_id_uniqueness_policy}, 'not_required_for_issue_order_queue', 'dynamic write issue-order queue policy does not require active ID uniqueness');
+
+    is($queue->{queue_state_representation}, 'compact_runtime_id_issue_order_slots', 'dynamic write issue-order queue report names queue representation');
+    is($queue->{request_id_source}, 'axi0_awid', 'dynamic write issue-order queue report names AWID capture source');
+    is_deeply($queue->{transactions}, [qw(w0 w1)], 'dynamic write issue-order queue report names queue transactions');
+    is_deeply(
+        $queue->{slot_storage},
+        [
+            { name => 'axi0_write_dynamic_same_id_issue_order_slot0_w0_q', width => 1 },
+            { name => 'axi0_write_dynamic_same_id_issue_order_slot0_w1_q', width => 1 },
+            { name => 'axi0_write_dynamic_same_id_issue_order_slot0_id_q', width => 4 },
+            { name => 'axi0_write_dynamic_same_id_issue_order_slot1_w0_q', width => 1 },
+            { name => 'axi0_write_dynamic_same_id_issue_order_slot1_w1_q', width => 1 },
+            { name => 'axi0_write_dynamic_same_id_issue_order_slot1_id_q', width => 4 },
+        ],
+        'dynamic write issue-order queue report names slot-local transaction and ID storage',
+    );
+    is_deeply(
+        $queue->{generated_assertions},
+        [qw(
+            axi0_write_dynamic_same_id_issue_order_slot0_onehot0
+            axi0_write_dynamic_same_id_issue_order_slot1_onehot0
+            axi0_write_dynamic_same_id_issue_order_compact
+            axi0_write_dynamic_same_id_issue_order_request_onehot0
+            axi0_write_dynamic_same_id_issue_order_enqueue_requires_space_or_dequeue
+            axi0_write_dynamic_same_id_issue_order_response_requires_nonempty
+            axi0_write_dynamic_same_id_issue_order_response_has_selected_match
+            axi0_write_dynamic_same_id_issue_order_response_selected_match_onehot0
+            axi0_write_dynamic_same_id_issue_order_dequeue_requires_nonempty
+            axi0_write_dynamic_same_id_issue_order_w0_unique_slot
+            axi0_write_dynamic_same_id_issue_order_w0_no_duplicate_after_dequeue
+            axi0_write_dynamic_same_id_issue_order_w0_completion_selected_match
+            axi0_write_dynamic_same_id_issue_order_w1_unique_slot
+            axi0_write_dynamic_same_id_issue_order_w1_no_duplicate_after_dequeue
+            axi0_write_dynamic_same_id_issue_order_w1_completion_selected_match
+        )],
+        'dynamic write issue-order queue report names generated queue assertions',
+    );
+    ok(grep { $_ eq 'axi0_write_dynamic_same_id_issue_order_w0_w1_dequeue_enqueue_w0' } @{$queue->{generated_update_rules}}, 'dynamic write issue-order queue reports same-cycle selected dequeue plus enqueue rule');
+    assert_dynamic_residue($report, 'dynamic write issue-order queue keeps future dynamic residue visible');
 }
 
 sub assert_mixed_dynamic_static_write_report {
