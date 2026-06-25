@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.486: select read RLAST depth3 audit`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.487` audits generated all-dynamic read burst-last RID/RLAST same-ID issue-order queue depth-3 readiness; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.486` selected `.487`, readiness audit for generated all-dynamic read burst-last RID/RLAST same-ID issue-order queue cardinality widening from the shipped two-transaction dynamic read burst-last queue to one bounded depth-3, three-transaction queue. The selector changed docs/task-tree/memory/Knowledge Map only and kept read-data, mixed dynamic/static queues, scoreboards, arbitrary cardinality, backend-language variants, external converter dependencies such as `sv2v`, and VHDL deferred.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.487: audit read RLAST depth3 queue`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.488` implements generated all-dynamic read burst-last RID/RLAST same-ID issue-order queue depth-3 behavior; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.487` selected `.488`, direct bounded implementation of generated all-dynamic read burst-last RID/RLAST depth-3 same-ID issue-order queue. The audit found only local admission/builder/report gates; a direct helper probe produced 99 rules, 20 assertions, zero duplicate names, non-final no-dequeue, r2 selected-match, slot2 onehot, tail recapture, and disambiguated cross-enqueue evidence.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
-- next_action: Start `.487`: audit only the r0/r1/r2 generated read burst-last depth-3 dynamic queue shape with one-bit RLAST, read-max-pending at least 3, and no read-data/mixed/scoreboard/backend/VHDL widening.
+- next_action: Start `.488`: implement only the r0/r1/r2 generated read burst-last depth-3 dynamic queue shape with one-bit RLAST, read-max-pending at least 3, new report scope/sample/support/tests/docs, and no read-data/mixed/scoreboard/backend/VHDL widening.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact

@@ -2410,7 +2410,16 @@ queue shape and `.463` proves RLAST-gated dynamic read queue semantics.
 Read-data over depth-3 queues, mixed dynamic/static queues, scoreboards,
 arbitrary cardinality, direct backend behavior, backend-language variants,
 external converter dependencies such as `sv2v`, and VHDL remain deferred;
-FSMGen-owned generation/lowering remains the default.
+FSMGen-owned generation/lowering remains the default. `.487` now selects
+`.488`, direct bounded implementation of one generated all-dynamic read
+burst-last `RID && RLAST` same-ID `issue-order-queue` with exactly three
+dynamic read transactions, one-bit `last_signal`, `read-max-pending` at least
+3, and queue depth 3. The readiness audit found only local planner, builder,
+and RLAST scope-reporting gates. A direct helper probe produced 99 transition
+rules, 20 assertions, zero duplicate names, the non-final no-dequeue
+assertion, the slot2 onehot assertion, the `r2` completion-selected-match
+assertion, the tail-selected recapture rule, and the disambiguated
+cross-transaction enqueue rule.
 
 No behavior
 changed in `.273`, `.274`, `.275`,

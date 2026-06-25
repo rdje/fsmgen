@@ -8654,6 +8654,20 @@ backend-language variants, external converter dependencies such as `sv2v`,
 and VHDL remain deferred; FSMGen-owned generation/lowering remains the
 default.
 
+Dynamic read burst-last depth-3 same-ID issue-order queue readiness audit:
+[AXI_IAL2_MANAGER_DYNAMIC_READ_BURST_LAST_DEPTH3_SAME_ID_ISSUE_ORDER_QUEUE_READINESS_AUDIT](../../AXI_IAL2_MANAGER_DYNAMIC_READ_BURST_LAST_DEPTH3_SAME_ID_ISSUE_ORDER_QUEUE_READINESS_AUDIT.md)
+selects `.488`, direct bounded implementation of one generated all-dynamic
+read burst-last `RID && RLAST` same-ID `issue-order-queue` with exactly three
+dynamic read transactions, one-bit `last_signal`, `read-max-pending` at least
+3, and queue depth 3. The audit found only local planner, builder, and RLAST
+scope-reporting gates. A direct helper probe produced 99 transition rules, 20
+assertions, zero duplicate names, the non-final no-dequeue assertion, the
+slot2 onehot assertion, the `r2` completion-selected-match assertion, the
+tail-selected recapture rule, and the disambiguated cross-transaction enqueue
+rule. Read-data over depth-3 queues, mixed dynamic/static queues, scoreboards,
+arbitrary cardinality, backend-language variants, external converter
+dependencies, and VHDL remain deferred.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after
