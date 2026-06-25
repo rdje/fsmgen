@@ -8959,6 +8959,24 @@ support-accounting catalog, generated artifact, report JSON, test,
 HDL/runtime behavior, backend behavior, external converter dependency, or
 VHDL behavior changed in `.504`.
 
+Mixed dynamic/static read same-ID issue-order queue readiness audit:
+[AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_READ_SAME_ID_ISSUE_ORDER_QUEUE_READINESS_AUDIT](../../AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_READ_SAME_ID_ISSUE_ORDER_QUEUE_READINESS_AUDIT.md)
+selects `.506`, direct bounded implementation of generated mixed
+dynamic/static read single-beat `RID` same-ID `issue-order-queue` behavior for
+exactly one dynamic read transaction and one concrete static read transaction.
+Parser support already accepts read `dynamic-id-reuse issue-order-queue`; a
+RAM-guarded temporary mixed read candidate fails closed only at the local
+all-dynamic read queue planner diagnostic requiring exactly two all-dynamic
+read transactions, or exactly three all-dynamic read transactions with
+single-beat or burst-last scope. The direct implementation is local to mixed
+read queue planning, read response-demux projection, mixed queue coverage
+gating, report projection, queue rule/assertion coverage, sample/support
+accounting, and focused tests. Mixed read burst-last queues, read-data, raw
+`ARLEN`, runtime validation, multi-beat output banks, broader mixed
+cardinality, scoreboards, backend behavior, backend-language variants,
+external converter dependencies such as `sv2v`, verification-code generation,
+and VHDL remain deferred.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

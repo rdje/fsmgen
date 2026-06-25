@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.504: select mixed read queue audit`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.505` audits generated mixed dynamic/static read single-beat RID same-ID issue-order queue readiness; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.504` selected `.505`, readiness audit for generated mixed dynamic/static read single-beat RID same-ID issue-order queue behavior. This is the smallest adjacent FSMGen-owned queue continuation after `.503` because it reuses the one-dynamic plus one-static mixed queue model and all-dynamic read single-beat queue model while avoiding RLAST, read-data, broader cardinality, scoreboards, backend behavior, external converter dependencies such as `sv2v`, verification-code generation, and VHDL.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.505: audit mixed read queue readiness`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.506` implements generated mixed dynamic/static read single-beat RID same-ID issue-order queue behavior; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.505` selected `.506`, direct bounded implementation for exactly one dynamic read transaction plus one concrete static read transaction. Parser support already accepts read `dynamic-id-reuse issue-order-queue`; a RAM-guarded temporary candidate failed closed at the local all-dynamic read queue planner. No parser, IAL1, IAL0, SystemVerilog, backend-language, external converter, VHDL, or smaller static-validation prerequisite is required first.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
-- next_action: Start `.505`: audit mixed dynamic/static read single-beat RID same-ID issue-order queue readiness; do not implement behavior until the audit selects the direct owner or a smaller prerequisite.
+- next_action: Start `.506`: implement only the bounded one-dynamic plus one-concrete-static mixed read single-beat RID issue-order queue behavior selected by `.505`; preserve mixed read burst-last queues, read-data, raw ARLEN, runtime validation, broader cardinality, scoreboards, backend behavior, external converter dependencies such as `sv2v`, verification-code generation, and VHDL as deferred.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact

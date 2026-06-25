@@ -3606,6 +3606,20 @@ dependencies such as `sv2v`, and VHDL. No parser, generator, PPIF sample,
 support-accounting catalog, generated artifact, report JSON, test,
 HDL/runtime behavior, backend behavior, external converter dependency, or
 VHDL behavior changed in `.504`.
+`.505` now audits that boundary and selects `.506`, direct bounded
+implementation for exactly one dynamic read transaction plus one concrete
+static read transaction. Parser support already accepts read
+`dynamic-id-reuse issue-order-queue`; a RAM-guarded temporary mixed read
+candidate fails closed only at the local all-dynamic read queue planner
+diagnostic requiring exactly two all-dynamic read transactions, or exactly
+three all-dynamic read transactions with single-beat or burst-last scope. The
+direct implementation is therefore local to mixed read queue planning, read
+response-demux projection, mixed queue coverage gating, report projection,
+queue rule/assertion coverage, sample/support accounting, and focused tests.
+External converter dependencies such as `sv2v`, mixed read burst-last queues,
+read-data, raw `ARLEN`, runtime validation, multi-beat output banks, broader
+mixed cardinality, scoreboards, backend behavior, backend-language variants,
+verification-code generation, and VHDL remain deferred.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
