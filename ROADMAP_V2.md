@@ -3285,9 +3285,15 @@ beat-count/`RLAST` validation over that generated dynamic read same-ID
 The generator emits expected-beat storage, beat-count storage, request-time
 `ARLEN[4:0] + 5'd1` initialization, matched queue read-beat increments, and
 four beat-count/`RLAST` assertions per transaction while preserving `.469`.
-Multi-beat output banks, queue recapture widening, broader queue cardinality,
-mixed dynamic/static queues, scoreboards, direct backend behavior,
-backend-language variants, and VHDL remain future exact owners.
+`.472` now selects `.473`, direct bounded implementation of multi-beat output
+banks over that generated dynamic read same-ID `issue-order-queue`
+runtime-validation read-data. The audit changes no behavior. It found that
+existing multi-beat `read-data.read` syntax is sufficient and that a guarded
+temporary queue multi-beat candidate fails closed only at the local dynamic
+issue-order queue read-data coverage diagnostic. Queue recapture widening,
+broader queue cardinality, mixed dynamic/static queues, scoreboards, direct
+backend behavior, backend-language variants, and VHDL remain future exact
+owners.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

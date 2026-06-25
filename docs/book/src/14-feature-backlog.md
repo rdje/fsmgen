@@ -8472,6 +8472,19 @@ request-time `ARLEN[4:0] + 5'd1` initialization, matched queue read-beat
 increments, and four beat-count/`RLAST` assertions per transaction. The `.469`
 report-only raw-`ARLEN` sample remains supported.
 
+Dynamic read same-ID issue-order queue read-data multi-beat readiness:
+[AXI_IAL2_MANAGER_DYNAMIC_READ_SAME_ID_ISSUE_ORDER_QUEUE_READ_DATA_MULTI_BEAT_READINESS_AUDIT](../../AXI_IAL2_MANAGER_DYNAMIC_READ_SAME_ID_ISSUE_ORDER_QUEUE_READ_DATA_MULTI_BEAT_READINESS_AUDIT.md)
+selects `.473`, direct bounded implementation of multi-beat output banks over
+the generated dynamic read same-ID `issue-order-queue` runtime-validation
+read-data boundary. Existing `read-data.read` multi-beat syntax already covers
+per-beat status, worst-observed aggregation, multi-beat-by-RID interleaving,
+runtime-assertion `burst-length`, and complete per-transaction output-bank
+bindings. The `.472` audit changes no behavior: a guarded temporary queue
+multi-beat candidate failed closed only at the local dynamic issue-order queue
+read-data coverage gate. Queue recapture widening, broader queue cardinality,
+mixed dynamic/static queues, scoreboards, direct backend behavior,
+backend-language variants, and VHDL remain future exact owners.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after
