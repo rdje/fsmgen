@@ -3018,6 +3018,17 @@ IAL1/IAL0 artifacts against the original samples. Dynamic queues,
 scoreboards, direct backend behavior, backend-language variants, VHDL, new
 generated HDL, and new generated rule/storage/assertion/runtime behavior
 remain deferred. `.446` selects `.447`, the next post-mapping selector.
+`.447` now selects `.448`, readiness audit for the public dynamic same-ID
+`issue-order-queue` policy contract after the bounded `dynamic-id-reuse
+reject` mappings shipped. The selector changes no behavior and does not
+accept new source values yet. It chooses issue-order queue contract readiness
+before scoreboard because concrete same-ID queue-head work already provides
+the closest bounded precedent, while dynamic scoreboard behavior has a
+different completion-tracking promise and remains a separate later owner.
+`.448` must decide whether `dynamic-id-reuse issue-order-queue` becomes
+metadata-first selected-not-generated policy, remains unsupported until a
+generated queue behavior slice exists, or needs another prerequisite before
+parser/report changes.
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,

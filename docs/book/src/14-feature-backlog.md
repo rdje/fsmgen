@@ -8090,6 +8090,19 @@ scoreboards, direct backend behavior, backend-language variants, VHDL, new
 generated HDL, and new generated rule/storage/assertion/runtime behavior
 remain deferred. `.446` selects `.447`, the next post-mapping selector.
 
+Post one-dynamic mixed dynamic same-ID reject mapping selector:
+[AXI_IAL2_MANAGER_POST_ONE_DYNAMIC_MIXED_DYNAMIC_SAME_ID_REJECT_MAPPING_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_ONE_DYNAMIC_MIXED_DYNAMIC_SAME_ID_REJECT_MAPPING_NEXT_SLICE_SELECTION.md)
+selects `.448`, readiness audit for the public dynamic same-ID
+`issue-order-queue` policy contract after all bounded `dynamic-id-reuse
+reject` mappings shipped. The selector changes no behavior and accepts no new
+source values. It puts issue-order queue contract readiness before scoreboard
+because concrete same-ID queue-head behavior is the closest bounded
+precedent, while dynamic scoreboard behavior has a different
+completion-tracking promise. `.448` must decide whether
+`dynamic-id-reuse issue-order-queue` becomes metadata-first
+selected-not-generated policy, remains unsupported until generated queue
+behavior is selected, or needs a narrower prerequisite.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after
