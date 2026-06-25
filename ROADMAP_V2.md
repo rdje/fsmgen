@@ -3063,6 +3063,14 @@ transaction-ID metadata sample, while its report records
 queues, accepted dynamic same-ID reuse, HDL, VHDL, direct backend behavior,
 and backend-language variants remain deferred. `.450` selects `.451`, the
 post-metadata selector for the next dynamic same-ID policy slice.
+`.451` now selects `.452`, readiness audit for generated dynamic same-ID
+`issue-order-queue` behavior. The selector changes no behavior. It chooses
+queue readiness before scoreboard because `.450` made
+`dynamic_per_id_issue_order_queues` explicit and user-visible, while dynamic
+scoreboard remains a separate unsupported policy with different
+completion-tracking semantics. `.452` must decide whether generated dynamic
+queue behavior can move to contract selection, needs a narrower prerequisite,
+or remains deferred.
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,

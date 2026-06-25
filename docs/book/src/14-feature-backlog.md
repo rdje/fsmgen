@@ -8143,6 +8143,17 @@ false`, and `dynamic_per_id_issue_order_queues` residue. Dynamic
 VHDL, direct backend behavior, and backend-language variants remain deferred.
 `.450` selects `.451`, the next dynamic same-ID policy selector.
 
+Post dynamic same-ID issue-order queue metadata selector:
+[AXI_IAL2_MANAGER_POST_DYNAMIC_SAME_ID_ISSUE_ORDER_QUEUE_METADATA_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_DYNAMIC_SAME_ID_ISSUE_ORDER_QUEUE_METADATA_NEXT_SLICE_SELECTION.md)
+selects `.452`, readiness audit for generated dynamic same-ID
+`issue-order-queue` behavior. The selector changes no behavior. It chooses
+queue readiness before scoreboard because `.450` made
+`dynamic_per_id_issue_order_queues` explicit and user-visible, while dynamic
+scoreboard remains a separate unsupported policy with different
+completion-tracking semantics. `.452` must decide whether generated dynamic
+queue behavior can move to contract selection, needs a narrower prerequisite,
+or remains deferred.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after
