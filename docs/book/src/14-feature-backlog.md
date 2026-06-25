@@ -8219,6 +8219,17 @@ dynamic scoreboards, direct backend behavior, backend-language variants, and
 VHDL remain future exact owners. `.456` is the next selector after this
 behavior.
 
+Post dynamic write same-ID issue-order queue selector:
+[AXI_IAL2_MANAGER_POST_DYNAMIC_WRITE_SAME_ID_ISSUE_ORDER_QUEUE_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_DYNAMIC_WRITE_SAME_ID_ISSUE_ORDER_QUEUE_NEXT_SLICE_SELECTION.md)
+selects `.457`, readiness audit for generated dynamic read same-ID
+`issue-order-queue` behavior. The selector changes no behavior. It chooses
+read queue readiness before broader write cardinality, mixed dynamic/static
+queues, scoreboards, validation retry, direct backend, backend-language
+variants, or VHDL because existing generated dynamic read behavior already has
+single-beat `RID`, burst-last `RID && RLAST`, read-data, raw `ARLEN`/runtime
+validation, multi-beat output-bank, and recapture consumers that a queue
+implementation must preserve.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

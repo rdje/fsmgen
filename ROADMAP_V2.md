@@ -3111,6 +3111,14 @@ cardinalities, mixed dynamic/static queues, dynamic scoreboards, direct backend
 behavior, backend-language variants, and VHDL remain future exact owners.
 `.455` selects `.456`, the post dynamic write same-ID issue-order queue
 selector.
+`.456` now selects `.457`, readiness audit for generated dynamic read
+same-ID `issue-order-queue` behavior. The selector changes no behavior. It
+chooses read queue readiness before broader write cardinality, mixed
+dynamic/static queues, scoreboards, validation retry, direct backend,
+backend-language variants, or VHDL because existing generated dynamic read
+behavior already has single-beat `RID`, burst-last `RID && RLAST`, read-data,
+raw `ARLEN`/runtime validation, multi-beat output-bank, and recapture
+consumers that a queue implementation must preserve.
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,
