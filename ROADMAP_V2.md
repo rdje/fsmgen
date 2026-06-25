@@ -3674,6 +3674,19 @@ mixed queue, raw `ARLEN`, runtime validation, multi-beat output banks,
 broader mixed cardinality, scoreboards, backend behavior, backend-language
 variants, verification-code generation, external converter dependencies such
 as `sv2v`, and VHDL remain deferred.
+`.509` now ships that bounded mixed dynamic/static read burst-last
+`RID && RLAST` same-ID `issue-order-queue` behavior through support-accounted
+sample
+`ppif/axi_manager_capacity_status_read_mixed_dynamic_static_burst_last_same_id_issue_order_queue.ppif`.
+The generated queue stores `axi0_arid` for dynamic enqueues and `4'd3` for
+the public static enqueue, completes/dequeues only on the selected
+captured-or-static `RID` match plus `axi0_rlast`, and reports
+`bounded_mixed_dynamic_static_read_rid_rlast_issue_order_queue_demux_contract`
+plus `generated_mixed_dynamic_static_issue_order_queue_demux_last_beat`.
+Read-data, raw `ARLEN`, runtime validation, multi-beat output banks, broader
+mixed cardinality, scoreboards, backend behavior, backend-language variants,
+verification-code generation, external converter dependencies such as `sv2v`,
+and VHDL remain deferred.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

@@ -80,6 +80,15 @@ my @DYNAMIC_CASES = (
         behavior     => 'mixed_dynamic_static_read_same_id_issue_order_queue',
     },
     {
+        label        => 'mixed dynamic/static read RID/RLAST same-ID issue-order queue',
+        relpath      => 'ppif/axi_manager_capacity_status_read_mixed_dynamic_static_burst_last_same_id_issue_order_queue.ppif',
+        object_id    => 'axi-manager-capacity-status-read-mixed-dynamic-static-burst-last-same-id-issue-order-queue',
+        intent_name  => 'axi_manager_capacity_status_read_mixed_dynamic_static_burst_last_same_id_issue_order_queue',
+        entry_id     => 'intent.ppif_axi_manager_capacity_status_read_mixed_dynamic_static_burst_last_same_id_issue_order_queue',
+        coverage     => 'ial2_ppif_manager_capacity_status_read_mixed_dynamic_static_burst_last_same_id_issue_order_queue_pipeline_cli',
+        behavior     => 'mixed_dynamic_static_read_burst_last_same_id_issue_order_queue',
+    },
+    {
         label        => 'dynamic write BID depth-3 same-ID issue-order queue',
         relpath      => 'ppif/axi_manager_capacity_status_dynamic_write_depth3_same_id_issue_order_queue.ppif',
         object_id    => 'axi-manager-capacity-status-dynamic-write-depth3-same-id-issue-order-queue',
@@ -1084,6 +1093,33 @@ sub assert_dynamic_behavior {
         like($isf, qr/\(rule axi0_r0_response_demux [\s\S]*axi0_read_mixed_dynamic_static_same_id_issue_order_slot0_id_q[\s\S]*axi0_read_mixed_dynamic_static_same_id_issue_order_slot1_id_q[\s\S]*\(pulse axi0_r0_complete\)\)/, 'mixed read issue-order queue emits earliest matching dynamic RID demux');
         like($isf, qr/\(rule axi0_r1_response_demux [\s\S]*axi0_read_mixed_dynamic_static_same_id_issue_order_slot0_id_q[\s\S]*axi0_read_mixed_dynamic_static_same_id_issue_order_slot1_id_q[\s\S]*\(pulse axi0_r1_complete\)\)/, 'mixed read issue-order queue emits earliest matching static RID demux');
         assert_mixed_dynamic_static_read_same_id_issue_order_queue_report($result->{report});
+        return;
+    }
+
+    if ($case->{behavior} eq 'mixed_dynamic_static_read_burst_last_same_id_issue_order_queue') {
+        like($isf, qr/\(input axi0_r0_request\)/, 'mixed read burst-last issue-order queue declares dynamic request input');
+        like($isf, qr/\(input axi0_r1_request\)/, 'mixed read burst-last issue-order queue declares static request input');
+        like($isf, qr/\(input axi0_arid \(width 4\)\)/, 'mixed read burst-last issue-order queue declares ARID input');
+        like($isf, qr/\(input axi0_rid \(width 4\)\)/, 'mixed read burst-last issue-order queue declares RID input');
+        like($isf, qr/\(input axi0_rlast\)/, 'mixed read burst-last issue-order queue declares RLAST input');
+        like($isf, qr/\(output axi0_r0_complete\)/, 'mixed read burst-last issue-order queue exposes dynamic completion output');
+        like($isf, qr/\(output axi0_r1_complete\)/, 'mixed read burst-last issue-order queue exposes static completion output');
+        unlike($isf, qr/axi0_r0_dynamic_busy_q/, 'mixed read burst-last issue-order queue does not allocate legacy dynamic busy state');
+        unlike($isf, qr/axi0_r1_static_busy_q/, 'mixed read burst-last issue-order queue does not allocate legacy static busy state');
+        like($isf, qr/\(var axi0_read_mixed_dynamic_static_same_id_issue_order_slot0_r0_q \(width 1\)\)/, 'mixed read burst-last issue-order queue allocates slot0 dynamic bit');
+        like($isf, qr/\(var axi0_read_mixed_dynamic_static_same_id_issue_order_slot0_id_q \(width 4\)\)/, 'mixed read burst-last issue-order queue allocates slot0 ID');
+        like($isf, qr/\(var axi0_read_mixed_dynamic_static_same_id_issue_order_slot1_r1_q \(width 1\)\)/, 'mixed read burst-last issue-order queue allocates slot1 static bit');
+        like($isf, qr/\(var axi0_read_mixed_dynamic_static_same_id_issue_order_slot1_id_q \(width 4\)\)/, 'mixed read burst-last issue-order queue allocates slot1 ID');
+        like($isf, qr/\(rule axi0_read_mixed_dynamic_static_same_id_issue_order_empty_enqueue_r0[\s\S]*\(axi0_read_mixed_dynamic_static_same_id_issue_order_slot0_id_q axi0_arid\)\)/, 'mixed read burst-last issue-order queue captures ARID into empty slot0');
+        like($isf, qr/\(rule axi0_read_mixed_dynamic_static_same_id_issue_order_empty_enqueue_r1[\s\S]*\(axi0_read_mixed_dynamic_static_same_id_issue_order_slot0_id_q 4'd3\)\)/, 'mixed read burst-last issue-order queue captures static literal into empty slot0');
+        like($isf, qr/\(rule axi0_read_mixed_dynamic_static_same_id_issue_order_r0_r1_dequeue_enqueue_r1[\s\S]*\(axi0_read_mixed_dynamic_static_same_id_issue_order_slot1_id_q 4'd3\)\)/, 'mixed read burst-last issue-order queue recaptures static literal after selected dequeue');
+        like($isf, qr/\(rule axi0_r0_response_demux [\s\S]*axi0_read_mixed_dynamic_static_same_id_issue_order_slot0_id_q[\s\S]*axi0_rlast[\s\S]*\(pulse axi0_r0_complete\)\)/, 'mixed read burst-last issue-order queue emits final dynamic RID/RLAST demux');
+        like($isf, qr/\(rule axi0_r1_response_demux [\s\S]*axi0_read_mixed_dynamic_static_same_id_issue_order_slot0_id_q[\s\S]*axi0_rlast[\s\S]*\(pulse axi0_r1_complete\)\)/, 'mixed read burst-last issue-order queue emits final static RID/RLAST demux');
+        like($isf, qr/read dynamic same-ID non-last response beat does not dequeue/, 'mixed read burst-last issue-order queue emits non-last no-dequeue assertion');
+        assert_mixed_dynamic_static_read_same_id_issue_order_queue_report($result->{report}, burst_last => 1);
+        my $hdl = hdl_for('axi0_capacity_status', $fsm);
+        like($hdl, qr/\binput\s+(?:wire\s+)?axi0_rlast\b/, 'SystemVerilog declares mixed read RLAST input');
+        like($hdl, qr/axi0_r1_complete_pulse_delay_pipe\s*<=\s*axi0_r1_complete_1_en\s*;/, 'SystemVerilog drives static read completion pulse through the generated delay pipe');
         return;
     }
 
@@ -3545,7 +3581,24 @@ sub assert_mixed_dynamic_static_write_same_id_issue_order_queue_report {
 }
 
 sub assert_mixed_dynamic_static_read_same_id_issue_order_queue_report {
-    my ($report) = @_;
+    my ($report, %args) = @_;
+    my $burst_last = $args{burst_last} // 0;
+    my $expected_read_mode = $burst_last
+        ? 'bounded_mixed_dynamic_static_read_rid_rlast_issue_order_queue_demux_contract'
+        : 'bounded_mixed_dynamic_static_read_rid_issue_order_queue_demux_contract';
+    my $expected_completion_source = $burst_last
+        ? 'generated_mixed_dynamic_static_issue_order_queue_demux_last_beat'
+        : 'generated_mixed_dynamic_static_issue_order_queue_demux';
+    my $expected_completion_semantics = $burst_last
+        ? 'earliest_matching_captured_or_static_runtime_id_and_last_signal'
+        : 'earliest_matching_captured_or_static_runtime_id';
+    my $expected_response_scope = $burst_last ? 'burst_last' : 'single_beat';
+    my $expected_policy_status = $burst_last
+        ? 'generated_mixed_dynamic_static_read_rid_rlast_issue_order_queue'
+        : 'generated_mixed_dynamic_static_read_rid_issue_order_queue';
+    my $expected_first_scope = $burst_last
+        ? 'read_rid_rlast_one_dynamic_one_static_transaction'
+        : 'read_rid_one_dynamic_one_static_transaction';
     my $demux = $report->{response_demux};
     my $read = $demux->{read};
     my $ordering = $report->{same_id_ordering};
@@ -3555,10 +3608,19 @@ sub assert_mixed_dynamic_static_read_same_id_issue_order_queue_report {
     is($demux->{mode}, 'bounded_response_demux_contract', 'mixed read issue-order queue report marks bounded response-demux contract');
     ok($demux->{generated_behavior}, 'mixed read issue-order queue report marks generated demux behavior');
     is_deeply($demux->{residue}, [qw(read_data_interleaving bursts)], 'mixed read issue-order queue removes same-ID residue from response demux');
-    is($read->{mode}, 'bounded_mixed_dynamic_static_read_rid_issue_order_queue_demux_contract', 'mixed read issue-order queue report marks family demux contract');
-    is($read->{transaction_completion_source}, 'generated_mixed_dynamic_static_issue_order_queue_demux', 'mixed read issue-order queue report marks generated queue completion source');
-    is($read->{transaction_completion_semantics}, 'earliest_matching_captured_or_static_runtime_id', 'mixed read issue-order queue report marks earliest matching semantics');
-    is($read->{response_scope}, 'single_beat', 'mixed read issue-order queue report marks single-beat scope');
+    is($read->{mode}, $expected_read_mode, 'mixed read issue-order queue report marks family demux contract');
+    is($read->{transaction_completion_source}, $expected_completion_source, 'mixed read issue-order queue report marks generated queue completion source');
+    is($read->{transaction_completion_semantics}, $expected_completion_semantics, 'mixed read issue-order queue report marks earliest matching semantics');
+    is($read->{response_scope}, $expected_response_scope, 'mixed read issue-order queue report marks response scope');
+    if ($burst_last) {
+        is($read->{response_event_role}, 'raw_accepted_read_response_beat', 'mixed read issue-order queue report marks raw response beat role');
+        is($read->{last_signal}, 'axi0_rlast', 'mixed read issue-order queue report marks RLAST signal');
+        is($read->{last_signal_width}, 1, 'mixed read issue-order queue report marks one-bit RLAST');
+        is($read->{beat_valid_output}, 'none', 'mixed read issue-order queue report marks no beat-valid output');
+        is($read->{burst_length_source}, 'rlast_only', 'mixed read issue-order queue report marks RLAST-only burst length source');
+        is($read->{burst_length_validation}, 'not_generated', 'mixed read issue-order queue report marks no burst-length validation');
+        is($read->{generated_queue_behavior_boundary}, 'generated_mixed_dynamic_static_read_rid_rlast_issue_order_queue', 'mixed read issue-order queue report marks RID/RLAST queue boundary');
+    }
     is($read->{queue_state_representation}, 'compact_runtime_id_issue_order_slots', 'mixed read issue-order queue report marks compact runtime-ID slots');
     is($read->{runtime_id_queue_key}, 'captured_or_static_request_id', 'mixed read issue-order queue report marks captured-or-static key');
     is($read->{response_demux_strategy}, 'mixed_dynamic_static_issue_order_earliest_matching_slot', 'mixed read issue-order queue report marks mixed earliest matching strategy');
@@ -3572,7 +3634,7 @@ sub assert_mixed_dynamic_static_read_same_id_issue_order_queue_report {
     is($ordering->{mode}, 'dynamic_id_reuse_policy', 'mixed read issue-order queue same-ID report marks dynamic mode');
     ok($ordering->{generated_behavior}, 'mixed read issue-order queue same-ID report is generated');
     is_deeply($ordering->{residue}, [], 'mixed read issue-order queue same-ID report clears dynamic residue');
-    is($policy->{implementation_status}, 'generated_mixed_dynamic_static_read_rid_issue_order_queue', 'mixed read issue-order queue policy reports generated implementation');
+    is($policy->{implementation_status}, $expected_policy_status, 'mixed read issue-order queue policy reports generated implementation');
     is($policy->{enforcement}, 'generated_mixed_dynamic_static_issue_order_queue', 'mixed read issue-order queue policy reports mixed enforcement');
     ok($policy->{accepted_same_id_reuse}, 'mixed read issue-order queue policy accepts same-ID reuse');
     ok($policy->{generated_queue_behavior}, 'mixed read issue-order queue policy marks generated queue behavior');
@@ -3582,12 +3644,16 @@ sub assert_mixed_dynamic_static_read_same_id_issue_order_queue_report {
     is_deeply($policy->{covered_static_transactions}, [qw(r1)], 'mixed read issue-order queue policy names covered static transaction');
     is($policy->{active_id_uniqueness_policy}, 'not_required_for_issue_order_queue', 'mixed read issue-order queue policy does not require active ID uniqueness');
     is($policy->{static_id_conflict_policy}, 'ordered_overlap_allowed', 'mixed read issue-order queue policy reports ordered overlap');
-    is($policy->{first_generated_scope}, 'read_rid_one_dynamic_one_static_transaction', 'mixed read issue-order queue policy reports generated scope');
+    is($policy->{first_generated_scope}, $expected_first_scope, 'mixed read issue-order queue policy reports generated scope');
 
     ok($queue->{mixed_dynamic_static_issue_order_queue}, 'mixed read issue-order queue report marks queue as mixed');
     is_deeply($queue->{transactions}, [qw(r0 r1)], 'mixed read issue-order queue report names queue transactions');
     is_deeply($queue->{dynamic_transactions}, [qw(r0)], 'mixed read issue-order queue report names queue dynamic transaction');
     is_deeply($queue->{static_transactions}, [qw(r1)], 'mixed read issue-order queue report names queue static transaction');
+    is($queue->{runtime_id_queue_key}, 'captured_or_static_request_id', 'mixed read issue-order queue report names captured-or-static key');
+    if ($burst_last) {
+        is($queue->{last_signal}, 'axi0_rlast', 'mixed read issue-order queue report names RLAST');
+    }
     is($queue->{same_transaction_recapture_id_source}, 'per_transaction_enqueue_id', 'mixed read issue-order queue report names per-transaction recapture ID source');
     is_deeply(
         [map { $_->{request_id_source} } @{$queue->{enqueue_pulses}}],
@@ -3609,6 +3675,11 @@ sub assert_mixed_dynamic_static_read_same_id_issue_order_queue_report {
     ok(grep { $_ eq 'axi0_read_mixed_dynamic_static_same_id_issue_order_empty_enqueue_r1' } @{$queue->{generated_update_rules}}, 'mixed read issue-order queue reports static literal enqueue rule');
     ok(grep { $_ eq 'axi0_read_mixed_dynamic_static_same_id_issue_order_r0_r1_dequeue_enqueue_r1' } @{$queue->{generated_update_rules}}, 'mixed read issue-order queue reports selected dequeue plus static enqueue rule');
     ok(grep { $_ eq 'axi0_read_mixed_dynamic_static_same_id_issue_order_response_has_selected_match' } @{$queue->{generated_assertions}}, 'mixed read issue-order queue reports selected-match assertion');
+    if ($burst_last) {
+        ok(grep { $_ eq 'axi0_read_mixed_dynamic_static_same_id_issue_order_nonlast_no_dequeue' } @{$queue->{generated_assertions}}, 'mixed read issue-order queue reports non-last no-dequeue assertion');
+        ok(grep { $_ eq 'axi0_read_mixed_dynamic_static_same_id_issue_order_r0_completion_selected_match' } @{$queue->{generated_assertions}}, 'mixed read issue-order queue reports dynamic completion selected-match assertion');
+        ok(grep { $_ eq 'axi0_read_mixed_dynamic_static_same_id_issue_order_r1_completion_selected_match' } @{$queue->{generated_assertions}}, 'mixed read issue-order queue reports static completion selected-match assertion');
+    }
     assert_dynamic_residue($report, 'mixed read issue-order queue keeps future dynamic residue visible');
 }
 

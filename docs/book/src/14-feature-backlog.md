@@ -9037,6 +9037,23 @@ validation, multi-beat output banks, broader mixed cardinality, scoreboards,
 backend behavior, backend-language variants, verification-code generation,
 external converter dependencies such as `sv2v`, and VHDL remain deferred.
 
+Mixed dynamic/static read burst-last same-ID issue-order queue behavior:
+[AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_READ_BURST_LAST_SAME_ID_ISSUE_ORDER_QUEUE_BEHAVIOR](../../AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_READ_BURST_LAST_SAME_ID_ISSUE_ORDER_QUEUE_BEHAVIOR.md)
+ships `.509`, generated mixed dynamic/static read burst-last `RID && RLAST`
+same-ID `issue-order-queue` behavior for exactly one dynamic read transaction
+and one concrete static read transaction. The public sample
+`ppif/axi_manager_capacity_status_read_mixed_dynamic_static_burst_last_same_id_issue_order_queue.ppif`
+stores `axi0_arid` for the dynamic enqueue, stores `4'd3` for the static
+enqueue, matches the earliest captured-or-static `RID`, and completes/dequeues
+only when that selected match also carries `axi0_rlast`. Reports expose
+`bounded_mixed_dynamic_static_read_rid_rlast_issue_order_queue_demux_contract`,
+`generated_mixed_dynamic_static_issue_order_queue_demux_last_beat`, and
+`read_rid_rlast_one_dynamic_one_static_transaction`. Read-data over this queue,
+raw `ARLEN`, runtime validation, multi-beat output banks, broader mixed
+cardinality, scoreboards, backend behavior, backend-language variants,
+verification-code generation, external converter dependencies such as `sv2v`,
+and VHDL remain deferred.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after
