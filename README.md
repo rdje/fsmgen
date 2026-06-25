@@ -2516,7 +2516,23 @@ names. Multi-beat output banks, mixed dynamic/static queues, scoreboards,
 arbitrary cardinality, verification-code generation, direct backend
 behavior, backend-language variants, external converter dependencies such as
 `sv2v`, and VHDL remain deferred; FSMGen-owned generation/lowering remains
-the default.
+the default. `.497` now ships that selected runtime-validation behavior through
+support-accounted sample
+`ppif/axi_manager_capacity_status_dynamic_read_burst_last_depth3_same_id_issue_order_queue_read_data_burst_length_runtime_assertion.ppif`.
+The generated path keeps queue-owned `RID && RLAST` completion and scalar
+last-beat read-data capture, adds per-transaction expected-beat storage and
+read-beat counters for `r0`/`r1`/`r2`, emits six beat-count init/increment
+rules, and emits twelve `ARLEN`/beat-count/`RLAST` runtime assertions. The
+read-data report advertises `burst_length_validation: runtime_assertion`,
+`beat_count_validation_generated_behavior: true`, three
+`generated_expected_beat_count_storage` entries, three
+`generated_beat_count_storage` entries, six `generated_beat_count_rules`, and
+twelve `generated_beat_count_assertions`. The `.494` report-only sample
+remains supported and keeps runtime beat-count state absent. Multi-beat output
+banks over this depth-3 queue, mixed dynamic/static queues, scoreboards,
+arbitrary cardinality, verification-code generation, direct backend behavior,
+backend-language variants, external converter dependencies such as `sv2v`, and
+VHDL remain deferred; FSMGen-owned generation/lowering remains the default.
 
 No behavior
 changed in `.273`, `.274`, `.275`,
@@ -4928,6 +4944,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_READ_BURST_LAST_DEPTH3_SAME_ID_ISSUE_ORDER_QUEUE_READ_DATA_BURST_LENGTH_BEHAVIOR.md` — shipped report-only raw-`ARLEN` burst-length capture over generated all-dynamic read burst-last `RID && RLAST` depth-3 same-ID issue-order queue read-data.
 - `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_READ_BURST_LAST_DEPTH3_SAME_ID_ISSUE_ORDER_QUEUE_READ_DATA_BURST_LENGTH_NEXT_SLICE_SELECTION.md` — selected runtime beat-count/`RLAST` validation readiness over generated all-dynamic read burst-last `RID && RLAST` depth-3 same-ID issue-order queue raw-`ARLEN` read-data as the next audit.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_READ_BURST_LAST_DEPTH3_SAME_ID_ISSUE_ORDER_QUEUE_READ_DATA_RUNTIME_VALIDATION_READINESS_AUDIT.md` — audited runtime beat-count/`RLAST` validation readiness over generated all-dynamic read burst-last `RID && RLAST` depth-3 same-ID issue-order queue raw-`ARLEN` read-data and selected direct bounded implementation.
+- `docs/AXI_IAL2_MANAGER_DYNAMIC_READ_BURST_LAST_DEPTH3_SAME_ID_ISSUE_ORDER_QUEUE_READ_DATA_RUNTIME_VALIDATION_BEHAVIOR.md` — shipped runtime beat-count/`RLAST` validation over generated all-dynamic read burst-last `RID && RLAST` depth-3 same-ID issue-order queue raw-`ARLEN` read-data.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_CONTRACT_SELECTION.md` — selected direct single-active dynamic write `BID` same-cycle release-and-recapture behavior under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_BEHAVIOR.md` — shipped single-active dynamic write `BID` same-cycle release-and-recapture under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_WRITE_RECAPTURE_NEXT_SLICE_SELECTION.md` — selected `.367`, public contract selection for first single-active dynamic read same-cycle release-and-recapture after dynamic write recapture shipped.
@@ -5027,6 +5044,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `ppif/axi_manager_capacity_status_dynamic_read_burst_last_depth3_same_id_issue_order_queue.ppif` — checked-in runnable `.ppif` sample for generated bounded three-transaction all-dynamic read burst-last `RID && RLAST` dynamic same-ID issue-order queue behavior, support-accounted through check JSON and semantic JSON.
 - `ppif/axi_manager_capacity_status_dynamic_read_burst_last_depth3_same_id_issue_order_queue_read_data.ppif` — checked-in runnable `.ppif` sample for scalar last-beat `RDATA`/`RRESP` capture over generated bounded three-transaction all-dynamic read burst-last `RID && RLAST` dynamic same-ID issue-order queue behavior, support-accounted through check JSON and semantic JSON.
 - `ppif/axi_manager_capacity_status_dynamic_read_burst_last_depth3_same_id_issue_order_queue_read_data_burst_length.ppif` — checked-in runnable `.ppif` sample for report-only raw-`ARLEN` burst-length capture over generated bounded three-transaction all-dynamic read burst-last `RID && RLAST` dynamic same-ID issue-order queue read-data, support-accounted through check JSON and semantic JSON.
+- `ppif/axi_manager_capacity_status_dynamic_read_burst_last_depth3_same_id_issue_order_queue_read_data_burst_length_runtime_assertion.ppif` — checked-in runnable `.ppif` sample for runtime beat-count/`RLAST` validation over generated bounded three-transaction all-dynamic read burst-last `RID && RLAST` dynamic same-ID issue-order queue raw-`ARLEN` read-data, support-accounted through check JSON and semantic JSON.
 - `ppif/axi_manager_capacity_status_dynamic_read_data_multi.ppif` — checked-in runnable `.ppif` sample for generated scalar single-beat `RDATA`/`RRESP` capture over generated multiple dynamic read single-beat response-demux, support-accounted through check JSON and semantic JSON.
 - `ppif/axi_manager_capacity_status_dynamic_read_data_multi_last_beat.ppif` — checked-in runnable `.ppif` sample for generated scalar last-beat `RDATA`/`RRESP` capture over generated multiple dynamic read burst-last/`RLAST` response-demux, support-accounted through check JSON and semantic JSON.
 - `ppif/axi_manager_capacity_status_dynamic_read_data_multi_burst_length.ppif` — checked-in runnable `.ppif` sample for generated report-only raw-`ARLEN` burst-length capture over generated multiple dynamic read burst-last/`RLAST` response-demux and scalar last-beat read-data, support-accounted through check JSON and semantic JSON.

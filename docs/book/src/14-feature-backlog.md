@@ -8819,6 +8819,27 @@ verification-code generation, direct backend behavior, backend-language
 variants, external converter dependencies such as `sv2v`, and VHDL remain
 deferred; FSMGen-owned generation/lowering remains the default.
 
+Dynamic read burst-last depth-3 same-ID issue-order queue read-data runtime
+validation behavior:
+[AXI_IAL2_MANAGER_DYNAMIC_READ_BURST_LAST_DEPTH3_SAME_ID_ISSUE_ORDER_QUEUE_READ_DATA_RUNTIME_VALIDATION_BEHAVIOR](../../AXI_IAL2_MANAGER_DYNAMIC_READ_BURST_LAST_DEPTH3_SAME_ID_ISSUE_ORDER_QUEUE_READ_DATA_RUNTIME_VALIDATION_BEHAVIOR.md)
+ships `.497` through support-accounted sample
+`ppif/axi_manager_capacity_status_dynamic_read_burst_last_depth3_same_id_issue_order_queue_read_data_burst_length_runtime_assertion.ppif`.
+The generated path keeps queue-owned `RID && RLAST` completion and scalar
+last-beat read-data capture, adds per-transaction expected-beat storage and
+read-beat counters for `r0`/`r1`/`r2`, emits six beat-count init/increment
+rules, and emits twelve `ARLEN`/beat-count/`RLAST` runtime assertions. The
+read-data report advertises `burst_length_validation: runtime_assertion`,
+`beat_count_validation_generated_behavior: true`,
+`generated_expected_beat_count_storage`,
+`generated_beat_count_storage`, `generated_beat_count_rules`, and twelve
+`generated_beat_count_assertions`. The `.494` report-only sample remains
+supported and keeps runtime beat-count state absent. Multi-beat output banks
+over this depth-3 queue, mixed dynamic/static queues, scoreboards, arbitrary
+cardinality, verification-code generation, direct backend behavior,
+backend-language variants, external converter dependencies such as `sv2v`,
+and VHDL remain deferred; FSMGen-owned generation/lowering remains the
+default.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after
