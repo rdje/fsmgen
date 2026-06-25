@@ -3493,7 +3493,19 @@ validation over the two-transaction dynamic RLAST queue. Multi-beat output
 banks, mixed dynamic/static queues, scoreboards, arbitrary cardinality,
 verification-code generation, direct backend behavior, backend-language
 variants, external converter dependencies such as `sv2v`, and VHDL remain
-deferred; FSMGen-owned generation/lowering remains the default.
+deferred; FSMGen-owned generation/lowering remains the default. `.496` now
+selects `.497`, direct bounded implementation of runtime beat-count/`RLAST`
+validation over that same depth-3 dynamic RLAST queue raw-`ARLEN` read-data
+shape. The audit found only the local dynamic issue-order queue read-data
+coverage gate: the unmodified runtime candidate failed closed at the existing
+diagnostic, and a RAM-guarded out-of-tree one-line predicate overlay proved the
+existing runtime helpers enumerate `r0`/`r1`/`r2` expected-beat storage,
+read-beat counters, six rules, and twelve beat-count/`RLAST` assertion
+names. Multi-beat output banks, mixed dynamic/static queues, scoreboards,
+arbitrary cardinality, verification-code generation, direct backend
+behavior, backend-language variants, external converter dependencies such as
+`sv2v`, and VHDL remain deferred; FSMGen-owned generation/lowering remains
+the default.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
