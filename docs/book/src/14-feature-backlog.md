@@ -8686,6 +8686,20 @@ arbitrary cardinality, direct backend behavior, backend-language variants,
 external converter dependencies such as `sv2v`, and VHDL remain deferred;
 FSMGen-owned generation/lowering remains the default.
 
+Post dynamic read burst-last depth-3 same-ID issue-order queue selector:
+[AXI_IAL2_MANAGER_POST_DYNAMIC_READ_BURST_LAST_DEPTH3_SAME_ID_ISSUE_ORDER_QUEUE_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_DYNAMIC_READ_BURST_LAST_DEPTH3_SAME_ID_ISSUE_ORDER_QUEUE_NEXT_SLICE_SELECTION.md)
+selects `.490`, readiness audit for scalar last-beat read-data over the
+generated all-dynamic read burst-last `RID && RLAST` depth-3 same-ID
+`issue-order-queue` behavior shipped in `.488`. The selector is next because
+`.488` now provides the missing three-transaction queue-owned last-beat
+completion source, the `.467`/`.469`/`.471`/`.473` chain proves
+two-transaction dynamic issue-order queue read-data, and the concrete
+depth-3 queue-head chain shows depth-3 read-data needs explicit audit
+ownership before implementation. Mixed dynamic/static queues, scoreboards,
+arbitrary cardinality, direct backend behavior, backend-language variants,
+external converter dependencies such as `sv2v`, and VHDL remain deferred;
+FSMGen-owned generation/lowering remains the default.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

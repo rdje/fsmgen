@@ -3425,7 +3425,18 @@ Read-data over depth-3 queues, mixed dynamic/static queues, scoreboards,
 arbitrary cardinality, direct backend behavior, backend-language variants,
 external converter dependencies such as `sv2v`, and VHDL remain deferred;
 FSMGen-owned generation/lowering remains the default. `.489` is the next
-post-behavior selector.
+post-behavior selector. `.489` now selects `.490`, readiness audit for scalar
+last-beat read-data over the generated all-dynamic read burst-last
+`RID && RLAST` depth-3 same-ID `issue-order-queue` behavior shipped in
+`.488`. The selector is next because `.488` now provides the missing
+three-transaction queue-owned last-beat completion source, `.467`/`.469`/
+`.471`/`.473` prove the two-transaction dynamic issue-order queue read-data
+ladder, and the concrete depth-3 queue-head chain shows depth-3 read-data
+needs explicit audit ownership before implementation. Mixed dynamic/static
+queues, scoreboards, arbitrary cardinality, direct backend behavior,
+backend-language variants, external converter dependencies such as `sv2v`,
+and VHDL remain deferred; FSMGen-owned generation/lowering remains the
+default.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

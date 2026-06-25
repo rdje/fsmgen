@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.488: generate read RLAST depth3 queue`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.489` selects the next exact owner after generated all-dynamic read burst-last RID/RLAST depth-3 same-ID issue-order queue behavior; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.488` shipped generated all-dynamic read burst-last RID/RLAST depth-3 same-ID issue-order queue behavior through `ppif/axi_manager_capacity_status_dynamic_read_burst_last_depth3_same_id_issue_order_queue.ppif`. It added the `read_rid_rlast_three_dynamic_transactions` report scope, depth-3 RLAST queue admission, support accounting, focused parser/generator/dynamic-ID expectations, behavior docs, mdBook, and Knowledge Map fact card. Syntax checks, RAM-guarded schedule JSON, RAM-guarded t/248, and RAM-guarded one-sample adapter/report smoke passed; full RAM-guarded t/1438 stopped at the 88% host-memory cutoff before TAP results.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.489: select RLAST depth3 read-data audit`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.490` audits scalar last-beat read-data over generated all-dynamic read burst-last RID/RLAST depth-3 same-ID issue-order queue behavior; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.489` selected `.490`, readiness audit for scalar last-beat read-data over the generated all-dynamic read burst-last RID/RLAST depth-3 same-ID issue-order queue shipped in `.488`. No parser, generator, PPIF sample, support-accounting catalog, generated artifact, report JSON, test, HDL/runtime behavior, backend-language variant, external converter dependency, or VHDL behavior changed.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
-- next_action: Start `.489`: select the next exact owner after the read burst-last depth-3 dynamic queue behavior, likely among read-data over depth-3 queues, mixed dynamic/static queue widening, scoreboard readiness, arbitrary cardinality, report/support cleanup, or a smaller prerequisite; do not change code before that selector is owned and complete.
+- next_action: Start `.490`: audit whether scalar last-beat read-data can be implemented over the read burst-last depth-3 dynamic queue using existing syntax and local coverage/report widening, or whether a smaller prerequisite is needed; do not change behavior before that audit is complete.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact
