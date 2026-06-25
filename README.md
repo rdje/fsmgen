@@ -2573,6 +2573,18 @@ as `sv2v`, scoreboards, arbitrary cardinality, same-cycle widening,
 verification-code generation, direct backend behavior, backend-language
 variants, and VHDL remain deferred; FSMGen-owned generation/lowering remains
 the default.
+`.502` now audits that boundary and selects `.503`, direct bounded
+implementation for exactly one dynamic write transaction plus one concrete
+static write transaction. Parser support already accepts
+`dynamic-id-reuse issue-order-queue`; a RAM-guarded temporary mixed write
+candidate failed closed only at the local all-dynamic write queue planner
+diagnostic requiring two or three all-dynamic write transactions. The direct
+implementation is therefore local to mixed queue planning, report projection,
+queue rule/assertion coverage, sample/support accounting, and focused tests.
+External converter dependencies such as `sv2v`, mixed read queues,
+multi-static or two-dynamic-plus-static queues, scoreboards, arbitrary
+cardinality, backend behavior, backend-language variants, verification-code
+generation, and VHDL remain deferred.
 
 No behavior
 changed in `.273`, `.274`, `.275`,
@@ -4989,6 +5001,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_READ_BURST_LAST_DEPTH3_SAME_ID_ISSUE_ORDER_QUEUE_READ_DATA_MULTI_BEAT_READINESS_AUDIT.md` — audited multi-beat output-bank readiness over generated all-dynamic read burst-last `RID && RLAST` depth-3 same-ID issue-order queue runtime-validation read-data and selected direct bounded implementation.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_READ_BURST_LAST_DEPTH3_SAME_ID_ISSUE_ORDER_QUEUE_READ_DATA_MULTI_BEAT_BEHAVIOR.md` — shipped multi-beat output banks over generated all-dynamic read burst-last `RID && RLAST` depth-3 same-ID issue-order queue runtime-validation read-data.
 - `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_READ_BURST_LAST_DEPTH3_SAME_ID_ISSUE_ORDER_QUEUE_READ_DATA_MULTI_BEAT_NEXT_SLICE_SELECTION.md` — selected generated mixed dynamic/static write `BID` same-ID issue-order queue readiness after the all-dynamic depth-3 dynamic queue/read-data ladder closed.
+- `docs/AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_WRITE_SAME_ID_ISSUE_ORDER_QUEUE_READINESS_AUDIT.md` — audited generated mixed dynamic/static write `BID` same-ID issue-order queue readiness and selected direct bounded implementation.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_CONTRACT_SELECTION.md` — selected direct single-active dynamic write `BID` same-cycle release-and-recapture behavior under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_BEHAVIOR.md` — shipped single-active dynamic write `BID` same-cycle release-and-recapture under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_WRITE_RECAPTURE_NEXT_SLICE_SELECTION.md` — selected `.367`, public contract selection for first single-active dynamic read same-cycle release-and-recapture after dynamic write recapture shipped.

@@ -8908,6 +8908,20 @@ verification-code generation, direct backend behavior, backend-language
 variants, and VHDL remain deferred; FSMGen-owned generation/lowering remains
 the default.
 
+Mixed dynamic/static write same-ID issue-order queue readiness:
+[AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_WRITE_SAME_ID_ISSUE_ORDER_QUEUE_READINESS_AUDIT](../../AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_WRITE_SAME_ID_ISSUE_ORDER_QUEUE_READINESS_AUDIT.md)
+selects `.503`, direct bounded implementation for exactly one dynamic write
+transaction plus one concrete static write transaction. Parser support
+already accepts `dynamic-id-reuse issue-order-queue`; a RAM-guarded temporary
+mixed write candidate failed closed only at the local all-dynamic write queue
+planner diagnostic requiring two or three all-dynamic write transactions. The
+direct implementation is local to mixed queue planning, report projection,
+queue rule/assertion coverage, sample/support accounting, and focused tests.
+External converter dependencies such as `sv2v`, mixed read queues,
+multi-static or two-dynamic-plus-static queues, scoreboards, arbitrary
+cardinality, backend behavior, backend-language variants, verification-code
+generation, and VHDL remain deferred.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.501: select mixed queue readiness`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.502` audits readiness for generated mixed dynamic/static write BID same-ID issue-order queue behavior with exactly one dynamic write transaction and one concrete static write transaction; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.501` selected `.502` as the next IAL2 owner after `.500` closed the all-dynamic depth-3 queue/read-data ladder. The selector changed no parser, generator, PPIF sample, support accounting, generated artifact, report JSON, test, HDL/runtime behavior, backend, backend-language, external converter, verification-output, or VHDL behavior. External converters such as `sv2v` remain deferred; FSMGen-owned generation/lowering remains the default.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.502: audit mixed queue readiness`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.503` implements generated mixed dynamic/static write BID same-ID issue-order queue behavior for exactly one dynamic write transaction and one concrete static write transaction; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.502` selected `.503` direct bounded implementation. Parser support already accepts dynamic-id-reuse issue-order-queue; a RAM-guarded temporary mixed write candidate failed closed only at the local all-dynamic write queue planner diagnostic requiring two or three all-dynamic write transactions. No parser, IAL1, IAL0, SystemVerilog, backend-language, external converter, VHDL, or smaller static-validation prerequisite is required first; `sv2v` remains deferred.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
-- next_action: Start `.502`: audit mixed dynamic/static write BID same-ID issue-order queue readiness; do not change parser, generator, PPIF samples, tests, HDL/runtime behavior, external converter dependencies such as sv2v, mixed read queues, scoreboards, arbitrary cardinality, backend behavior, verification-code generation, or VHDL in this audit.
+- next_action: Start `.503`: implement only the owned one-dynamic plus one-concrete-static mixed write BID issue-order queue shape; keep mixed read queues, multi-static/two-dynamic mixed queues, scoreboards, arbitrary cardinality, external converter dependencies such as sv2v, backend behavior, verification-code generation, and VHDL deferred.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact

@@ -3562,6 +3562,18 @@ as `sv2v`, scoreboards, arbitrary cardinality, same-cycle widening,
 verification-code generation, direct backend behavior, backend-language
 variants, and VHDL remain deferred; FSMGen-owned generation/lowering remains
 the default.
+`.502` now audits that boundary and selects `.503`, direct bounded
+implementation for exactly one dynamic write transaction plus one concrete
+static write transaction. Parser support already accepts
+`dynamic-id-reuse issue-order-queue`; a RAM-guarded temporary mixed write
+candidate failed closed only at the local all-dynamic write queue planner
+diagnostic requiring two or three all-dynamic write transactions. The direct
+implementation is therefore local to mixed queue planning, report projection,
+queue rule/assertion coverage, sample/support accounting, and focused tests.
+External converter dependencies such as `sv2v`, mixed read queues,
+multi-static or two-dynamic-plus-static queues, scoreboards, arbitrary
+cardinality, backend behavior, backend-language variants, verification-code
+generation, and VHDL remain deferred.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
