@@ -2103,6 +2103,15 @@ representation contract because accepting dynamic same-ID reuse must replace
 reject-only active-ID uniqueness proofs with runtime-ID queue state,
 enqueue/dequeue semantics, response matching, same-cycle policy,
 overflow/ambiguity assertions, report fields, and residue movement.
+`.454` now selects `.455`, implementation of the bounded two-transaction
+all-dynamic write `BID` dynamic issue-order queue behavior. The selector
+changes no behavior. It chooses `compact_runtime_id_issue_order_slots`: each
+queue slot stores one-hot transaction identity plus a slot-local captured
+runtime ID, and `BID` response demux selects the earliest valid slot whose
+captured ID matches the response. Same-ID overlaps are ordered by slot age,
+different-ID slot1 responses may complete ahead of slot0, same-cycle selected
+dequeue plus one enqueue is supported, and reject-only active-ID uniqueness
+assertions remain exclusive to `dynamic-id-reuse reject`.
 No behavior
 changed in `.273`, `.274`, `.275`,
 `.277`, `.278`, `.279`, `.281`,
@@ -4469,6 +4478,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_SAME_ID_ISSUE_ORDER_QUEUE_METADATA_NEXT_SLICE_SELECTION.md` — selected generated dynamic same-ID `issue-order-queue` behavior readiness after metadata-first dynamic issue-order policy support.
 - `docs/AXI_IAL2_MANAGER_GENERATED_DYNAMIC_SAME_ID_ISSUE_ORDER_QUEUE_READINESS_AUDIT.md` — audited generated dynamic same-ID `issue-order-queue` readiness and selected public contract selection before implementation.
 - `docs/AXI_IAL2_MANAGER_GENERATED_DYNAMIC_SAME_ID_ISSUE_ORDER_QUEUE_CONTRACT_SELECTION.md` — selected runtime-ID queue-state representation before the first generated dynamic same-ID `issue-order-queue` behavior.
+- `docs/AXI_IAL2_MANAGER_DYNAMIC_RUNTIME_ID_QUEUE_STATE_REPRESENTATION_SELECTION.md` — selected compact runtime-ID issue-order slots before generated dynamic write `BID` queue behavior.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_CONTRACT_SELECTION.md` — selected direct single-active dynamic write `BID` same-cycle release-and-recapture behavior under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_BEHAVIOR.md` — shipped single-active dynamic write `BID` same-cycle release-and-recapture under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_WRITE_RECAPTURE_NEXT_SLICE_SELECTION.md` — selected `.367`, public contract selection for first single-active dynamic read same-cycle release-and-recapture after dynamic write recapture shipped.

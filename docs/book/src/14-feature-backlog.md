@@ -8175,6 +8175,18 @@ runtime-ID queue state, enqueue/dequeue semantics, response matching,
 same-cycle policy, overflow/ambiguity assertions, report fields, and residue
 movement.
 
+Dynamic runtime-ID queue-state representation:
+[AXI_IAL2_MANAGER_DYNAMIC_RUNTIME_ID_QUEUE_STATE_REPRESENTATION_SELECTION](../../AXI_IAL2_MANAGER_DYNAMIC_RUNTIME_ID_QUEUE_STATE_REPRESENTATION_SELECTION.md)
+selects `.455`, implementation of the bounded two-transaction all-dynamic
+write `BID` dynamic issue-order queue behavior. The selector changes no
+behavior. It chooses `compact_runtime_id_issue_order_slots`: each queue slot
+stores one-hot transaction identity plus a slot-local captured runtime ID, and
+`BID` response demux selects the earliest valid slot whose captured ID matches
+the response. Same-ID overlaps are ordered by slot age, different-ID slot1
+responses may complete ahead of slot0, same-cycle selected dequeue plus one
+enqueue is supported, and reject-only active-ID uniqueness assertions remain
+exclusive to `dynamic-id-reuse reject`.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after
