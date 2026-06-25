@@ -3550,8 +3550,18 @@ runtime-validation sample remain supported. Mixed dynamic/static queues,
 scoreboards, arbitrary cardinality, verification-code generation, direct
 backend behavior, backend-language variants, external converter dependencies
 such as `sv2v`, and VHDL remain deferred; FSMGen-owned generation/lowering
-remains the default. `.501` is the next selector after this depth-3 dynamic
-RLAST queue multi-beat behavior.
+remains the default.
+`.501` now selects `.502`, readiness audit for generated mixed
+dynamic/static write `BID` same-ID `issue-order-queue` behavior with exactly
+one dynamic write transaction and one concrete static write transaction. It
+changes no behavior. This is the smallest mixed queue owner after `.500`
+closed the all-dynamic depth-3 queue/read-data ladder: write `BID` avoids
+read-only `RLAST`, read-data, raw `ARLEN`, runtime beat-count validation, and
+multi-beat output-bank complications. Optional external converter audits such
+as `sv2v`, scoreboards, arbitrary cardinality, same-cycle widening,
+verification-code generation, direct backend behavior, backend-language
+variants, and VHDL remain deferred; FSMGen-owned generation/lowering remains
+the default.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

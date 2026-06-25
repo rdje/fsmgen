@@ -2561,8 +2561,18 @@ runtime-validation sample remain supported. Mixed dynamic/static queues,
 scoreboards, arbitrary cardinality, verification-code generation, direct
 backend behavior, backend-language variants, external converter dependencies
 such as `sv2v`, and VHDL remain deferred; FSMGen-owned generation/lowering
-remains the default. `.501` is the next selector after this depth-3 dynamic
-RLAST queue multi-beat behavior.
+remains the default.
+`.501` now selects `.502`, readiness audit for generated mixed
+dynamic/static write `BID` same-ID `issue-order-queue` behavior with exactly
+one dynamic write transaction and one concrete static write transaction. It
+changes no behavior. This is the smallest mixed queue owner after `.500`
+closed the all-dynamic depth-3 queue/read-data ladder: write `BID` avoids
+read-only `RLAST`, read-data, raw `ARLEN`, runtime beat-count validation, and
+multi-beat output-bank complications. Optional external converter audits such
+as `sv2v`, scoreboards, arbitrary cardinality, same-cycle widening,
+verification-code generation, direct backend behavior, backend-language
+variants, and VHDL remain deferred; FSMGen-owned generation/lowering remains
+the default.
 
 No behavior
 changed in `.273`, `.274`, `.275`,
@@ -4978,6 +4988,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_READ_BURST_LAST_DEPTH3_SAME_ID_ISSUE_ORDER_QUEUE_READ_DATA_RUNTIME_VALIDATION_NEXT_SLICE_SELECTION.md` — selected multi-beat output-bank readiness over generated all-dynamic read burst-last `RID && RLAST` depth-3 same-ID issue-order queue runtime-validation read-data as the next audit.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_READ_BURST_LAST_DEPTH3_SAME_ID_ISSUE_ORDER_QUEUE_READ_DATA_MULTI_BEAT_READINESS_AUDIT.md` — audited multi-beat output-bank readiness over generated all-dynamic read burst-last `RID && RLAST` depth-3 same-ID issue-order queue runtime-validation read-data and selected direct bounded implementation.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_READ_BURST_LAST_DEPTH3_SAME_ID_ISSUE_ORDER_QUEUE_READ_DATA_MULTI_BEAT_BEHAVIOR.md` — shipped multi-beat output banks over generated all-dynamic read burst-last `RID && RLAST` depth-3 same-ID issue-order queue runtime-validation read-data.
+- `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_READ_BURST_LAST_DEPTH3_SAME_ID_ISSUE_ORDER_QUEUE_READ_DATA_MULTI_BEAT_NEXT_SLICE_SELECTION.md` — selected generated mixed dynamic/static write `BID` same-ID issue-order queue readiness after the all-dynamic depth-3 dynamic queue/read-data ladder closed.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_CONTRACT_SELECTION.md` — selected direct single-active dynamic write `BID` same-cycle release-and-recapture behavior under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_BEHAVIOR.md` — shipped single-active dynamic write `BID` same-cycle release-and-recapture under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_WRITE_RECAPTURE_NEXT_SLICE_SELECTION.md` — selected `.367`, public contract selection for first single-active dynamic read same-cycle release-and-recapture after dynamic write recapture shipped.

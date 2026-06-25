@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.500: ship RLAST depth3 multi-beat output banks`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.501` selects the next exact IAL2 owner after generated all-dynamic read burst-last RID/RLAST depth-3 same-ID issue-order queue runtime-validation multi-beat output banks; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.500` shipped support-accounted multi-beat output banks over the `.497` depth-3 dynamic RLAST queue runtime-validation read-data surface through `ppif/axi_manager_capacity_status_dynamic_read_burst_last_depth3_same_id_issue_order_queue_read_data_multi_beat.ppif`. The report advertises `bounded_multi_beat_read_data_contract`, `r0`/`r1`/`r2`, 48 data outputs, 48 status outputs, three valid-mask outputs, three length outputs, 48 capture rules, and twelve beat-count/RLAST assertions. External converters such as `sv2v` remain deferred; FSMGen-owned generation/lowering remains the default.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.501: select mixed queue readiness`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.502` audits readiness for generated mixed dynamic/static write BID same-ID issue-order queue behavior with exactly one dynamic write transaction and one concrete static write transaction; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.501` selected `.502` as the next IAL2 owner after `.500` closed the all-dynamic depth-3 queue/read-data ladder. The selector changed no parser, generator, PPIF sample, support accounting, generated artifact, report JSON, test, HDL/runtime behavior, backend, backend-language, external converter, verification-output, or VHDL behavior. External converters such as `sv2v` remain deferred; FSMGen-owned generation/lowering remains the default.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
-- next_action: Start `.501`: select the next exact IAL2 owner after `.500`; do not change parser, generator, PPIF samples, tests, HDL/runtime behavior, external converter dependencies such as sv2v, arbitrary cardinality, backend behavior, verification-code generation, or VHDL in this selector.
+- next_action: Start `.502`: audit mixed dynamic/static write BID same-ID issue-order queue readiness; do not change parser, generator, PPIF samples, tests, HDL/runtime behavior, external converter dependencies such as sv2v, mixed read queues, scoreboards, arbitrary cardinality, backend behavior, verification-code generation, or VHDL in this audit.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact
