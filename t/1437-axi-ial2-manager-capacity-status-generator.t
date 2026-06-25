@@ -1011,7 +1011,9 @@ subtest 'dynamic write same-ID issue-order queue captures AWID slots and matches
     like($isf, qr/\(var axi0_write_dynamic_same_id_issue_order_slot0_id_q \(width 4\)\)/, 'dynamic write issue-order queue allocates slot0 captured ID state');
     like($isf, qr/\(var axi0_write_dynamic_same_id_issue_order_slot1_id_q \(width 4\)\)/, 'dynamic write issue-order queue allocates slot1 captured ID state');
     like($isf, qr/\(rule axi0_write_dynamic_same_id_issue_order_empty_enqueue_w0[\s\S]*\(axi0_write_dynamic_same_id_issue_order_slot0_id_q axi0_awid\)\)/, 'dynamic write issue-order queue captures AWID on w0 enqueue');
+    like($isf, qr/\(rule axi0_write_dynamic_same_id_issue_order_w0_dequeue_enqueue_w0[\s\S]*\(axi0_write_dynamic_same_id_issue_order_slot0_id_q axi0_awid\)\)/, 'dynamic write issue-order queue refreshes one-entry recaptured AWID');
     like($isf, qr/\(rule axi0_write_dynamic_same_id_issue_order_w0_w1_dequeue_enqueue_w0[\s\S]*\(axi0_write_dynamic_same_id_issue_order_slot0_id_q axi0_write_dynamic_same_id_issue_order_slot1_id_q\)[\s\S]*\(axi0_write_dynamic_same_id_issue_order_slot1_id_q axi0_awid\)\)/, 'dynamic write issue-order queue compacts retained ID and captures recaptured ID');
+    like($isf, qr/\(rule axi0_write_dynamic_same_id_issue_order_w1_w0_dequeue_enqueue_w0[\s\S]*\(axi0_write_dynamic_same_id_issue_order_slot1_id_q axi0_awid\)\)/, 'dynamic write issue-order queue refreshes tail-selected recaptured AWID');
     like($isf, qr/\(rule axi0_w0_response_demux [\s\S]*axi0_write_dynamic_same_id_issue_order_slot0_id_q[\s\S]*axi0_write_dynamic_same_id_issue_order_slot1_id_q[\s\S]*\(pulse axi0_w0_complete\)\)/, 'dynamic write issue-order queue emits w0 earliest matching BID completion');
     like($isf, qr/\(rule axi0_w1_response_demux [\s\S]*axi0_write_dynamic_same_id_issue_order_slot0_id_q[\s\S]*axi0_write_dynamic_same_id_issue_order_slot1_id_q[\s\S]*\(pulse axi0_w1_complete\)\)/, 'dynamic write issue-order queue emits w1 earliest matching BID completion');
     like($isf, qr/write dynamic same-ID issue-order queue admits at most one request/, 'dynamic write issue-order queue emits enqueue onehot assertion');
@@ -1041,7 +1043,9 @@ subtest 'dynamic read same-ID issue-order queue captures ARID slots and matches 
     like($isf, qr/\(var axi0_read_dynamic_same_id_issue_order_slot0_id_q \(width 4\)\)/, 'dynamic read issue-order queue allocates slot0 captured ID state');
     like($isf, qr/\(var axi0_read_dynamic_same_id_issue_order_slot1_id_q \(width 4\)\)/, 'dynamic read issue-order queue allocates slot1 captured ID state');
     like($isf, qr/\(rule axi0_read_dynamic_same_id_issue_order_empty_enqueue_r0[\s\S]*\(axi0_read_dynamic_same_id_issue_order_slot0_id_q axi0_arid\)\)/, 'dynamic read issue-order queue captures ARID on r0 enqueue');
+    like($isf, qr/\(rule axi0_read_dynamic_same_id_issue_order_r0_dequeue_enqueue_r0[\s\S]*\(axi0_read_dynamic_same_id_issue_order_slot0_id_q axi0_arid\)\)/, 'dynamic read issue-order queue refreshes one-entry recaptured ARID');
     like($isf, qr/\(rule axi0_read_dynamic_same_id_issue_order_r0_r1_dequeue_enqueue_r0[\s\S]*\(axi0_read_dynamic_same_id_issue_order_slot0_id_q axi0_read_dynamic_same_id_issue_order_slot1_id_q\)[\s\S]*\(axi0_read_dynamic_same_id_issue_order_slot1_id_q axi0_arid\)\)/, 'dynamic read issue-order queue compacts retained ID and captures recaptured ID');
+    like($isf, qr/\(rule axi0_read_dynamic_same_id_issue_order_r1_r0_dequeue_enqueue_r0[\s\S]*\(axi0_read_dynamic_same_id_issue_order_slot1_id_q axi0_arid\)\)/, 'dynamic read issue-order queue refreshes tail-selected recaptured ARID');
     like($isf, qr/\(rule axi0_r0_response_demux [\s\S]*axi0_read_dynamic_same_id_issue_order_slot0_id_q[\s\S]*axi0_read_dynamic_same_id_issue_order_slot1_id_q[\s\S]*\(pulse axi0_r0_complete\)\)/, 'dynamic read issue-order queue emits r0 earliest matching RID completion');
     like($isf, qr/\(rule axi0_r1_response_demux [\s\S]*axi0_read_dynamic_same_id_issue_order_slot0_id_q[\s\S]*axi0_read_dynamic_same_id_issue_order_slot1_id_q[\s\S]*\(pulse axi0_r1_complete\)\)/, 'dynamic read issue-order queue emits r1 earliest matching RID completion');
     like($isf, qr/read dynamic same-ID issue-order queue admits at most one request/, 'dynamic read issue-order queue emits enqueue onehot assertion');
@@ -1070,6 +1074,8 @@ subtest 'dynamic read burst-last same-ID issue-order queue dequeues only on RLAS
     unlike($isf, qr/axi0_r0_dynamic_busy_q/, 'dynamic read burst-last issue-order queue does not allocate legacy r0 busy state');
     like($isf, qr/\(var axi0_read_dynamic_same_id_issue_order_slot0_id_q \(width 4\)\)/, 'dynamic read burst-last issue-order queue allocates slot0 captured ID state');
     like($isf, qr/\(var axi0_read_dynamic_same_id_issue_order_slot1_id_q \(width 4\)\)/, 'dynamic read burst-last issue-order queue allocates slot1 captured ID state');
+    like($isf, qr/\(rule axi0_read_dynamic_same_id_issue_order_r0_dequeue_enqueue_r0[\s\S]*\(axi0_read_dynamic_same_id_issue_order_slot0_id_q axi0_arid\)\)/, 'dynamic read burst-last issue-order queue refreshes one-entry recaptured ARID');
+    like($isf, qr/\(rule axi0_read_dynamic_same_id_issue_order_r1_r0_dequeue_enqueue_r0[\s\S]*\(axi0_read_dynamic_same_id_issue_order_slot1_id_q axi0_arid\)\)/, 'dynamic read burst-last issue-order queue refreshes tail-selected recaptured ARID');
     like($isf, qr/\(rule axi0_r0_response_demux [\s\S]*axi0_read_dynamic_same_id_issue_order_slot0_id_q[\s\S]*axi0_rlast[\s\S]*\(pulse axi0_r0_complete\)\)/, 'dynamic read burst-last issue-order queue emits r0 final RID/RLAST completion');
     like($isf, qr/\(rule axi0_r1_response_demux [\s\S]*axi0_read_dynamic_same_id_issue_order_slot0_id_q[\s\S]*axi0_read_dynamic_same_id_issue_order_slot1_id_q[\s\S]*axi0_rlast[\s\S]*\(pulse axi0_r1_complete\)\)/, 'dynamic read burst-last issue-order queue emits r1 final RID/RLAST completion');
     like($isf, qr/read dynamic same-ID non-last response beat does not dequeue/, 'dynamic read burst-last issue-order queue emits non-last no-dequeue assertion');
@@ -7806,6 +7812,8 @@ sub assert_dynamic_write_same_id_issue_order_queue_report {
         ],
         "$owner reports queue slot storage",
     );
+    ok(grep { $_ eq 'axi0_write_dynamic_same_id_issue_order_w0_dequeue_enqueue_w0' } @{$queue->{generated_update_rules}}, "$owner reports one-entry same-transaction ID-refresh rule");
+    ok(grep { $_ eq 'axi0_write_dynamic_same_id_issue_order_w1_w0_dequeue_enqueue_w0' } @{$queue->{generated_update_rules}}, "$owner reports tail-selected same-transaction ID-refresh rule");
     ok(grep { $_ eq 'axi0_write_dynamic_same_id_issue_order_w0_w1_dequeue_enqueue_w0' } @{$queue->{generated_update_rules}}, "$owner reports same-cycle selected dequeue plus enqueue rule");
     ok(grep { $_ eq 'axi0_write_dynamic_same_id_issue_order_response_has_selected_match' } @{$queue->{generated_assertions}}, "$owner reports dynamic queue selected-match assertion");
     my %residue = map { $_->{id} => 1 } @{$report->{unsupported_residue}};
@@ -7864,6 +7872,8 @@ sub assert_dynamic_read_same_id_issue_order_queue_report {
         ],
         "$owner reports queue slot storage",
     );
+    ok(grep { $_ eq 'axi0_read_dynamic_same_id_issue_order_r0_dequeue_enqueue_r0' } @{$queue->{generated_update_rules}}, "$owner reports one-entry same-transaction ID-refresh rule");
+    ok(grep { $_ eq 'axi0_read_dynamic_same_id_issue_order_r1_r0_dequeue_enqueue_r0' } @{$queue->{generated_update_rules}}, "$owner reports tail-selected same-transaction ID-refresh rule");
     ok(grep { $_ eq 'axi0_read_dynamic_same_id_issue_order_r0_r1_dequeue_enqueue_r0' } @{$queue->{generated_update_rules}}, "$owner reports same-cycle selected dequeue plus enqueue rule");
     ok(grep { $_ eq 'axi0_read_dynamic_same_id_issue_order_response_has_selected_match' } @{$queue->{generated_assertions}}, "$owner reports dynamic queue selected-match assertion");
     my %residue = map { $_->{id} => 1 } @{$report->{unsupported_residue}};
@@ -7933,6 +7943,8 @@ sub assert_dynamic_read_burst_last_same_id_issue_order_queue_report {
         ],
         "$owner reports queue slot storage",
     );
+    ok(grep { $_ eq 'axi0_read_dynamic_same_id_issue_order_r0_dequeue_enqueue_r0' } @{$queue->{generated_update_rules}}, "$owner reports one-entry same-transaction ID-refresh rule");
+    ok(grep { $_ eq 'axi0_read_dynamic_same_id_issue_order_r1_r0_dequeue_enqueue_r0' } @{$queue->{generated_update_rules}}, "$owner reports tail-selected same-transaction ID-refresh rule");
     ok(grep { $_ eq 'axi0_read_dynamic_same_id_issue_order_r0_r1_dequeue_enqueue_r0' } @{$queue->{generated_update_rules}}, "$owner reports same-cycle selected dequeue plus enqueue rule");
     ok(grep { $_ eq 'axi0_read_dynamic_same_id_issue_order_response_has_selected_match' } @{$queue->{generated_assertions}}, "$owner reports raw selected-match assertion");
     ok(grep { $_ eq 'axi0_read_dynamic_same_id_issue_order_nonlast_no_dequeue' } @{$queue->{generated_assertions}}, "$owner reports non-last no-dequeue assertion");

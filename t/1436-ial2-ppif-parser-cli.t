@@ -9609,6 +9609,8 @@ sub assert_dynamic_write_same_id_issue_order_queue_report {
         )],
         "$owner reports dynamic queue slot storage",
     );
+    ok(grep { $_ eq 'axi0_write_dynamic_same_id_issue_order_w0_dequeue_enqueue_w0' } @{$queue->{generated_update_rules}}, "$owner reports one-entry same-transaction ID-refresh rule");
+    ok(grep { $_ eq 'axi0_write_dynamic_same_id_issue_order_w1_w0_dequeue_enqueue_w0' } @{$queue->{generated_update_rules}}, "$owner reports tail-selected same-transaction ID-refresh rule");
     ok(grep { $_ eq 'axi0_write_dynamic_same_id_issue_order_w0_w1_dequeue_enqueue_w0' } @{$queue->{generated_update_rules}}, "$owner reports same-cycle selected dequeue plus enqueue rule");
     ok(grep { $_ eq 'axi0_write_dynamic_same_id_issue_order_response_has_selected_match' } @{$queue->{generated_assertions}}, "$owner reports dynamic queue selected-match assertion");
     my %residue = map { $_->{id} => 1 } @{$report->{unsupported_residue}};
@@ -9662,6 +9664,8 @@ sub assert_dynamic_read_same_id_issue_order_queue_report {
         )],
         "$owner reports dynamic queue slot storage",
     );
+    ok(grep { $_ eq 'axi0_read_dynamic_same_id_issue_order_r0_dequeue_enqueue_r0' } @{$queue->{generated_update_rules}}, "$owner reports one-entry same-transaction ID-refresh rule");
+    ok(grep { $_ eq 'axi0_read_dynamic_same_id_issue_order_r1_r0_dequeue_enqueue_r0' } @{$queue->{generated_update_rules}}, "$owner reports tail-selected same-transaction ID-refresh rule");
     ok(grep { $_ eq 'axi0_read_dynamic_same_id_issue_order_r0_r1_dequeue_enqueue_r0' } @{$queue->{generated_update_rules}}, "$owner reports same-cycle selected dequeue plus enqueue rule");
     ok(grep { $_ eq 'axi0_read_dynamic_same_id_issue_order_response_has_selected_match' } @{$queue->{generated_assertions}}, "$owner reports dynamic queue selected-match assertion");
     my %residue = map { $_->{id} => 1 } @{$report->{unsupported_residue}};
@@ -9731,6 +9735,8 @@ sub assert_dynamic_read_burst_last_same_id_issue_order_queue_report {
         )],
         "$owner reports dynamic queue slot storage",
     );
+    ok(grep { $_ eq 'axi0_read_dynamic_same_id_issue_order_r0_dequeue_enqueue_r0' } @{$queue->{generated_update_rules}}, "$owner reports one-entry same-transaction ID-refresh rule");
+    ok(grep { $_ eq 'axi0_read_dynamic_same_id_issue_order_r1_r0_dequeue_enqueue_r0' } @{$queue->{generated_update_rules}}, "$owner reports tail-selected same-transaction ID-refresh rule");
     ok(grep { $_ eq 'axi0_read_dynamic_same_id_issue_order_r0_r1_dequeue_enqueue_r0' } @{$queue->{generated_update_rules}}, "$owner reports same-cycle selected dequeue plus enqueue rule");
     ok(grep { $_ eq 'axi0_read_dynamic_same_id_issue_order_response_has_selected_match' } @{$queue->{generated_assertions}}, "$owner reports raw selected-match assertion");
     ok(grep { $_ eq 'axi0_read_dynamic_same_id_issue_order_nonlast_no_dequeue' } @{$queue->{generated_assertions}}, "$owner reports non-last no-dequeue assertion");

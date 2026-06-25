@@ -8531,10 +8531,19 @@ identity-preserving case.
 Dynamic same-ID issue-order queue identity recapture readiness:
 [AXI_IAL2_MANAGER_DYNAMIC_SAME_ID_ISSUE_ORDER_QUEUE_IDENTITY_RECAPTURE_READINESS_AUDIT](../../AXI_IAL2_MANAGER_DYNAMIC_SAME_ID_ISSUE_ORDER_QUEUE_IDENTITY_RECAPTURE_READINESS_AUDIT.md)
 selects `.477`, direct implementation of state-key-preserving dynamic queue
-recapture ID refresh. The current transition builder omits same-transaction
-selected-dequeue-plus-enqueue rules such as `r0_dequeue_enqueue_r0` and
-`w0_dequeue_enqueue_w0`, even though the affected slot ID must refresh from
-the current `ARID` or `AWID`.
+recapture ID refresh. The audit found the prior transition builder omitted
+same-transaction selected-dequeue-plus-enqueue rules such as
+`r0_dequeue_enqueue_r0` and `w0_dequeue_enqueue_w0`, even though the affected
+slot ID must refresh from the current `ARID` or `AWID`.
+
+Dynamic same-ID issue-order queue identity recapture behavior:
+[AXI_IAL2_MANAGER_DYNAMIC_SAME_ID_ISSUE_ORDER_QUEUE_IDENTITY_RECAPTURE_BEHAVIOR](../../AXI_IAL2_MANAGER_DYNAMIC_SAME_ID_ISSUE_ORDER_QUEUE_IDENTITY_RECAPTURE_BEHAVIOR.md)
+ships state-key-preserving same-transaction queue recapture ID refresh for the
+generated two-transaction dynamic queue families. The emitted
+`generated_update_rules` list now includes one-entry and tail-selected refresh
+forms such as `r0_dequeue_enqueue_r0`, `r1_r0_dequeue_enqueue_r0`,
+`w0_dequeue_enqueue_w0`, and `w1_w0_dequeue_enqueue_w0`; those rules refresh
+the affected slot ID from current `ARID` or `AWID`.
 Broader queue cardinality, mixed dynamic/static queues, scoreboards, direct
 backend behavior, backend-language variants, and VHDL remain future exact
 owners.

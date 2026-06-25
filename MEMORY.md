@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.476: audit queue identity recapture`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.477` implements state-key-preserving dynamic same-ID issue-order queue recapture ID refresh; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.476` selected `.477`, direct implementation of state-key-preserving dynamic queue recapture ID refresh. The audit found current dynamic queue transition generation skips unchanged transaction-identity state keys, omitting rules such as `r0_dequeue_enqueue_r0` / `w0_dequeue_enqueue_w0` even though slot-local captured `ARID`/`AWID` must refresh for the newly admitted transaction.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.477: refresh queue recapture IDs`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.478` selects the public report/static contract for generated dynamic same-ID issue-order queue identity recapture after ID-refresh behavior shipped; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.477` shipped state-key-preserving dynamic queue recapture ID refresh. The dynamic transition builder now emits one-entry and tail-selected same-transaction refresh rules such as `r0_dequeue_enqueue_r0`, `r1_r0_dequeue_enqueue_r0`, `w0_dequeue_enqueue_w0`, and `w1_w0_dequeue_enqueue_w0`, refreshing affected slot IDs from current `ARID`/`AWID` while preserving retained slot IDs.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
-- blockers: none. `.476` attempted a RAM-guarded report probe, but host memory was already at the default 88% cutoff and the guard stopped before data; no unguarded retry or cutoff raise was used.
-- next_action: Start `.477`: add state-key-preserving selected-dequeue-plus-same-transaction-enqueue dynamic queue transitions for existing bounded generated dynamic write/read/read-data queue samples, refresh affected slot IDs from `AWID`/`ARID`, update literal `generated_update_rules` tests/docs, and keep classic release-recapture fields exclusive to response-demux capture state.
+- blockers: none. `.477` RAM-guarded fsmgen/prove attempts stopped immediately because host memory was above the default 88% cutoff; syntax checks and lightweight direct helper probes passed, and no unguarded retry or cutoff raise was used.
+- next_action: Start `.478`: decide whether to add a positive explicit queue recapture support field, keep `generated_update_rules` as the only public evidence, adjust support-detail/static-rule prose, split report/static alignment by family, or defer behind a narrower prerequisite.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact

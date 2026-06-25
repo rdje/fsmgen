@@ -6767,8 +6767,10 @@ sub _dynamic_same_id_issue_order_queue_transition_specs($group) {
 
                 my @to = @after_dequeue;
                 push @to, $enqueue if defined $enqueue;
-                next if _same_id_issue_order_queue_state_key($from)
+                my $same_identity_state = _same_id_issue_order_queue_state_key($from)
                     eq _same_id_issue_order_queue_state_key(\@to);
+                next if $same_identity_state
+                    && !(defined($dequeue) && defined($enqueue) && $dequeue eq $enqueue);
 
                 my @dequeue_terms = defined $dequeue
                     ? (
