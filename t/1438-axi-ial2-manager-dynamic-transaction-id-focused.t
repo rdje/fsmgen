@@ -525,6 +525,165 @@ subtest 'dynamic same-ID reject maps to two-dynamic mixed response-demux asserti
     );
 };
 
+subtest 'dynamic same-ID reject maps to one-dynamic mixed response-demux static-ID exclusion assertions' => sub {
+    my $relpath = 'ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux.ppif';
+    my $path = repo_path($relpath);
+    my $source = read_file($path);
+    $source =~ s/    \(response-demux/    \(same-id-ordering\n      \(read \(dynamic-id-reuse reject\)\)\)\n    \(response-demux/
+        or die "failed to insert same-id-ordering block into $relpath\n";
+
+    my $base_result = parse_ppif($relpath);
+    my $result = $adapter->parse_source($source, $path);
+
+    is(
+        $result->{generated_ial1}{text},
+        $base_result->{generated_ial1}{text},
+        'one-dynamic mixed same-ID reject mapping does not alter generated IAL1 text',
+    );
+    is_deeply(
+        $result->{generated_ial0}{files},
+        $base_result->{generated_ial0}{files},
+        'one-dynamic mixed same-ID reject mapping does not alter generated IAL0 files',
+    );
+    is_deeply(
+        $result->{report}{response_demux}{residue},
+        [qw(read_data_interleaving bursts)],
+        'one-dynamic mixed same-ID reject mapping removes only same-ID response-demux residue',
+    );
+    assert_dynamic_same_id_reject_policy_mixed_static_generated_report(
+        $result->{report}{same_id_ordering},
+        'one-dynamic mixed read report',
+        family => 'read',
+        response_demux_mode => 'bounded_mixed_dynamic_static_read_rid_demux_contract',
+        response_demux_transaction_completion_source => 'generated_mixed_dynamic_static_read_demux',
+        covered_dynamic_transactions => [qw(r0)],
+        covered_static_transactions => [qw(r1)],
+        static_id_reservations => [
+            {
+                transaction            => 'r1',
+                concrete_id            => 3,
+                concrete_id_literal    => "4'd3",
+                dynamic_capture_policy => 'dynamic_id_must_not_equal_static_concrete_id',
+            },
+        ],
+        generated_request_availability_assertions => [qw(
+            axi0_r0_dynamic_request_idle_or_releasing
+            axi0_r1_static_request_idle_or_releasing
+        )],
+        generated_mixed_request_onehot_assertions => [qw(
+            axi0_read_mixed_dynamic_static_request_onehot0
+        )],
+        generated_dynamic_request_static_id_exclusion_assertions => [qw(
+            axi0_r0_dynamic_request_not_static_id
+        )],
+        generated_dynamic_active_static_id_exclusion_assertions => [qw(
+            axi0_r0_dynamic_active_not_static_id
+        )],
+        generated_response_active_match_assertions => [qw(
+            axi0_read_mixed_dynamic_static_response_active_match
+        )],
+        generated_response_unique_match_assertions => [qw(
+            axi0_r0_r1_read_mixed_dynamic_static_response_unique_match
+        )],
+        generated_completion_active_assertions => [qw(
+            axi0_r0_dynamic_completion_active
+            axi0_r1_static_completion_active
+        )],
+    );
+};
+
+subtest 'dynamic same-ID reject maps to three-static mixed response-demux static-ID exclusion assertions' => sub {
+    my $relpath = 'ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static3_burst_last.ppif';
+    my $path = repo_path($relpath);
+    my $source = read_file($path);
+    $source =~ s/    \(response-demux/    \(same-id-ordering\n      \(read \(dynamic-id-reuse reject\)\)\)\n    \(response-demux/
+        or die "failed to insert same-id-ordering block into $relpath\n";
+
+    my $base_result = parse_ppif($relpath);
+    my $result = $adapter->parse_source($source, $path);
+
+    is(
+        $result->{generated_ial1}{text},
+        $base_result->{generated_ial1}{text},
+        'three-static mixed same-ID reject mapping does not alter generated IAL1 text',
+    );
+    is_deeply(
+        $result->{generated_ial0}{files},
+        $base_result->{generated_ial0}{files},
+        'three-static mixed same-ID reject mapping does not alter generated IAL0 files',
+    );
+    is_deeply(
+        $result->{report}{response_demux}{residue},
+        [qw(read_data_interleaving bursts)],
+        'three-static mixed same-ID reject mapping removes only same-ID response-demux residue',
+    );
+    assert_dynamic_same_id_reject_policy_mixed_static_generated_report(
+        $result->{report}{same_id_ordering},
+        'three-static mixed read RLAST report',
+        family => 'read',
+        response_demux_mode => 'bounded_multi_mixed_dynamic_static_read_rid_rlast_demux_contract',
+        response_demux_transaction_completion_source => 'generated_multi_mixed_dynamic_static_read_demux_last_beat',
+        covered_dynamic_transactions => [qw(r0)],
+        covered_static_transactions => [qw(r1 r2 r3)],
+        static_id_reservations => [
+            {
+                transaction            => 'r1',
+                concrete_id            => 3,
+                concrete_id_literal    => "4'd3",
+                dynamic_capture_policy => 'dynamic_id_must_not_equal_static_concrete_id',
+            },
+            {
+                transaction            => 'r2',
+                concrete_id            => 5,
+                concrete_id_literal    => "4'd5",
+                dynamic_capture_policy => 'dynamic_id_must_not_equal_static_concrete_id',
+            },
+            {
+                transaction            => 'r3',
+                concrete_id            => 7,
+                concrete_id_literal    => "4'd7",
+                dynamic_capture_policy => 'dynamic_id_must_not_equal_static_concrete_id',
+            },
+        ],
+        generated_request_availability_assertions => [qw(
+            axi0_r0_dynamic_request_idle_or_releasing
+            axi0_r1_static_request_idle_or_releasing
+            axi0_r2_static_request_idle_or_releasing
+            axi0_r3_static_request_idle_or_releasing
+        )],
+        generated_mixed_request_onehot_assertions => [qw(
+            axi0_read_mixed_dynamic_static_request_onehot0
+        )],
+        generated_dynamic_request_static_id_exclusion_assertions => [qw(
+            axi0_r0_r1_read_dynamic_request_not_static_id
+            axi0_r0_r2_read_dynamic_request_not_static_id
+            axi0_r0_r3_read_dynamic_request_not_static_id
+        )],
+        generated_dynamic_active_static_id_exclusion_assertions => [qw(
+            axi0_r0_r1_read_dynamic_active_not_static_id
+            axi0_r0_r2_read_dynamic_active_not_static_id
+            axi0_r0_r3_read_dynamic_active_not_static_id
+        )],
+        generated_response_active_match_assertions => [qw(
+            axi0_read_mixed_dynamic_static_response_active_match
+        )],
+        generated_response_unique_match_assertions => [qw(
+            axi0_r0_r1_read_mixed_dynamic_static_response_unique_match
+            axi0_r0_r2_read_mixed_dynamic_static_response_unique_match
+            axi0_r0_r3_read_mixed_dynamic_static_response_unique_match
+            axi0_r1_r2_read_mixed_dynamic_static_response_unique_match
+            axi0_r1_r3_read_mixed_dynamic_static_response_unique_match
+            axi0_r2_r3_read_mixed_dynamic_static_response_unique_match
+        )],
+        generated_completion_active_assertions => [qw(
+            axi0_r0_dynamic_completion_active
+            axi0_r1_static_completion_active
+            axi0_r2_static_completion_active
+            axi0_r3_static_completion_active
+        )],
+    );
+};
+
 subtest 'dynamic same-ID reject maps to single-active response-demux assertions' => sub {
     my $relpath = 'ppif/axi_manager_capacity_status_dynamic_read_response_demux.ppif';
     my $path = repo_path($relpath);
@@ -4118,6 +4277,64 @@ sub assert_dynamic_same_id_reject_policy_single_active_generated_report {
                 $args{generated_completion_active_assertions},
         },
         "$owner reports generated single-active dynamic same-ID reject enforcement metadata",
+    );
+}
+
+sub assert_dynamic_same_id_reject_policy_mixed_static_generated_report {
+    my ($ordering, $owner, %args) = @_;
+    my $family = $args{family} // 'read';
+
+    is($ordering->{mode}, 'dynamic_id_reuse_policy', "$owner marks dynamic same-ID policy mode");
+    ok($ordering->{generated_behavior}, "$owner marks dynamic same-ID policy generated behavior true");
+    ok(!exists($ordering->{families}), "$owner does not report generated concrete same-ID avoidance families");
+    is_deeply($ordering->{residue}, [], "$owner reports generated dynamic same-ID residue");
+    ok(@{$ordering->{source_anchors}}, "$owner carries source anchors into dynamic same-ID policy metadata");
+    is_deeply(
+        [sort keys %{$ordering->{dynamic_id_reuse_policy}}],
+        [$family],
+        "$owner reports the covered $family dynamic-ID reuse policy",
+    );
+    is_deeply(
+        $ordering->{dynamic_id_reuse_policy}{$family},
+        {
+            policy => 'reject',
+            implementation_status => 'generated_mixed_static_id_exclusion_reject',
+            enforcement => 'generated_static_id_exclusion_assertions',
+            assertion_enforcement => 'runtime_assertion',
+            accepted_same_id_reuse => JSON::PP::false(),
+            request_conflict_policy => 'no_active_same_id',
+            generated_queue_behavior => JSON::PP::false(),
+            generated_scoreboard_behavior => JSON::PP::false(),
+            response_demux_covered => JSON::PP::true(),
+            mixed_dynamic_static_covered => JSON::PP::true(),
+            mixed_dynamic_static_request_policy => 'onehot0_mixed_request',
+            static_id_conflict_policy => 'static_concrete_ids_reserved',
+            static_id_exclusion_policy => 'dynamic_id_must_not_equal_static_concrete_id',
+            response_demux_mode => $args{response_demux_mode},
+            response_demux_transaction_completion_source =>
+                $args{response_demux_transaction_completion_source},
+            covered_dynamic_transactions =>
+                $args{covered_dynamic_transactions},
+            covered_static_transactions =>
+                $args{covered_static_transactions},
+            static_id_reservations =>
+                $args{static_id_reservations},
+            generated_request_availability_assertions =>
+                $args{generated_request_availability_assertions},
+            generated_mixed_request_onehot_assertions =>
+                $args{generated_mixed_request_onehot_assertions},
+            generated_dynamic_request_static_id_exclusion_assertions =>
+                $args{generated_dynamic_request_static_id_exclusion_assertions},
+            generated_dynamic_active_static_id_exclusion_assertions =>
+                $args{generated_dynamic_active_static_id_exclusion_assertions},
+            generated_response_active_match_assertions =>
+                $args{generated_response_active_match_assertions},
+            generated_response_unique_match_assertions =>
+                $args{generated_response_unique_match_assertions},
+            generated_completion_active_assertions =>
+                $args{generated_completion_active_assertions},
+        },
+        "$owner reports generated mixed dynamic/static dynamic same-ID reject enforcement metadata",
     );
 }
 

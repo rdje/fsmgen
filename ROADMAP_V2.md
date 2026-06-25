@@ -3000,6 +3000,24 @@ existing generated static-ID exclusion, mixed request onehot0, response
 active/unique-match, and completion-active evidence; it does not add generated
 rules, storage, assertions, HDL, runtime behavior, direct backend behavior,
 backend-language variants, queues, scoreboards, VHDL, or new generated HDL.
+`.446` now ships that one-dynamic mixed dynamic/static dynamic same-ID reject
+mapping. Same-family `response-demux.<family>` plus
+`same-id-ordering.<family> (dynamic-id-reuse reject)` is accepted for
+generated mixed write `BID`, read single-beat `RID`, and read burst-last
+`RID && RLAST` shapes with exactly one dynamic transaction plus one, two, or
+three pairwise-distinct concrete static transactions. Covered reports use the
+`.445` selected `generated_mixed_static_id_exclusion_reject` and
+`generated_static_id_exclusion_assertions` contract, list exact static-ID
+reservations, dynamic request/active static-ID exclusion assertions, mixed
+request onehot0 assertions, response active/unique-match assertions, and
+completion-active assertions, and remove only covered same-family
+`same_id_ordering` residue. No new public PPIF sample or support-accounting
+entry is added; focused tests insert the same-ID policy into existing
+support-accounted mixed response-demux samples in memory and compare generated
+IAL1/IAL0 artifacts against the original samples. Dynamic queues,
+scoreboards, direct backend behavior, backend-language variants, VHDL, new
+generated HDL, and new generated rule/storage/assertion/runtime behavior
+remain deferred. `.446` selects `.447`, the next post-mapping selector.
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,

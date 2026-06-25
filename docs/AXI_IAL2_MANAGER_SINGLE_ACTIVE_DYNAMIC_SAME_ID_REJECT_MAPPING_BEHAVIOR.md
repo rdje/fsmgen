@@ -93,11 +93,12 @@ selected dynamic policy families are covered by generated enforcement.
 
 ## Deferred Work
 
-One-dynamic mixed dynamic/static response-demux still fails closed at the
-existing generated multi-active no-active-same-ID diagnostic. Dynamic
-issue-order queues, dynamic scoreboards, request arbitration widening, direct
-backend behavior, backend-language variants, VHDL behavior, and new generated
-HDL remain separate exact-owner work.
+One-dynamic mixed dynamic/static response-demux dynamic same-ID reject mapping
+later shipped in `IAL2-FEATURE-COMPLETENESS-FRONTIER.446` through a separate
+static-ID exclusion evidence model. Dynamic issue-order queues, dynamic
+scoreboards, request arbitration widening, direct backend behavior,
+backend-language variants, VHDL behavior, and new generated HDL remain
+separate exact-owner work.
 
 ## Validation
 

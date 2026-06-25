@@ -467,6 +467,303 @@ subtest 'single-active dynamic read burst-last response-demux maps dynamic same-
     );
 };
 
+subtest 'one-dynamic mixed write response-demux maps dynamic same-ID reject to static-ID exclusion assertions' => sub {
+    my $base = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_mixed_dynamic_static_write_response_demux());
+    my $contract = sample_contract_with_mixed_dynamic_static_write_response_demux();
+    $contract->{same_id_ordering_policy} = {
+        write => {
+            dynamic_id_reuse => 'reject',
+        },
+    };
+
+    my $result = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate($contract);
+
+    is(
+        $result->{generated_ial1}{text},
+        $base->{generated_ial1}{text},
+        'one-dynamic mixed write same-ID reject mapping does not alter generated IAL1 text',
+    );
+    is_deeply(
+        $result->{generated_ial0}{files},
+        $base->{generated_ial0}{files},
+        'one-dynamic mixed write same-ID reject mapping does not alter generated IAL0 files',
+    );
+    assert_mixed_dynamic_static_write_response_demux_report(
+        $result->{report},
+        'generator mapped one-dynamic mixed write report',
+        residue => [qw(read_response_demux read_data_interleaving bursts)],
+    );
+    assert_dynamic_same_id_reject_policy_mixed_static_generated_report(
+        $result->{report}{same_id_ordering},
+        'generator mapped one-dynamic mixed write report',
+        family => 'write',
+        response_demux_mode => 'bounded_mixed_dynamic_static_write_bid_demux_contract',
+        response_demux_transaction_completion_source => 'generated_mixed_dynamic_static_demux',
+        covered_dynamic_transactions => [qw(w0)],
+        covered_static_transactions => [qw(w1)],
+        static_id_reservations => [
+            {
+                transaction            => 'w1',
+                concrete_id            => 3,
+                concrete_id_literal    => "4'd3",
+                dynamic_capture_policy => 'dynamic_id_must_not_equal_static_concrete_id',
+            },
+        ],
+        generated_request_availability_assertions => [qw(
+            axi0_w0_dynamic_request_idle_or_releasing
+            axi0_w1_static_request_idle_or_releasing
+        )],
+        generated_mixed_request_onehot_assertions => [qw(
+            axi0_write_mixed_dynamic_static_request_onehot0
+        )],
+        generated_dynamic_request_static_id_exclusion_assertions => [qw(
+            axi0_w0_dynamic_request_not_static_id
+        )],
+        generated_dynamic_active_static_id_exclusion_assertions => [qw(
+            axi0_w0_dynamic_active_not_static_id
+        )],
+        generated_response_active_match_assertions => [qw(
+            axi0_write_mixed_dynamic_static_response_active_match
+        )],
+        generated_response_unique_match_assertions => [qw(
+            axi0_w0_w1_write_mixed_dynamic_static_response_unique_match
+        )],
+        generated_completion_active_assertions => [qw(
+            axi0_w0_dynamic_completion_active
+            axi0_w1_static_completion_active
+        )],
+    );
+};
+
+subtest 'one-dynamic mixed read response-demux maps dynamic same-ID reject to static-ID exclusion assertions' => sub {
+    my $base = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_mixed_dynamic_static_read_response_demux());
+    my $contract = sample_contract_with_mixed_dynamic_static_read_response_demux();
+    $contract->{same_id_ordering_policy} = {
+        read => {
+            dynamic_id_reuse => 'reject',
+        },
+    };
+
+    my $result = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate($contract);
+
+    is(
+        $result->{generated_ial1}{text},
+        $base->{generated_ial1}{text},
+        'one-dynamic mixed read same-ID reject mapping does not alter generated IAL1 text',
+    );
+    is_deeply(
+        $result->{generated_ial0}{files},
+        $base->{generated_ial0}{files},
+        'one-dynamic mixed read same-ID reject mapping does not alter generated IAL0 files',
+    );
+    assert_mixed_dynamic_static_read_response_demux_report(
+        $result->{report},
+        'generator mapped one-dynamic mixed read report',
+        residue => [qw(read_data_interleaving bursts)],
+    );
+    assert_dynamic_same_id_reject_policy_mixed_static_generated_report(
+        $result->{report}{same_id_ordering},
+        'generator mapped one-dynamic mixed read report',
+        family => 'read',
+        response_demux_mode => 'bounded_mixed_dynamic_static_read_rid_demux_contract',
+        response_demux_transaction_completion_source => 'generated_mixed_dynamic_static_read_demux',
+        covered_dynamic_transactions => [qw(r0)],
+        covered_static_transactions => [qw(r1)],
+        static_id_reservations => [
+            {
+                transaction            => 'r1',
+                concrete_id            => 3,
+                concrete_id_literal    => "4'd3",
+                dynamic_capture_policy => 'dynamic_id_must_not_equal_static_concrete_id',
+            },
+        ],
+        generated_request_availability_assertions => [qw(
+            axi0_r0_dynamic_request_idle_or_releasing
+            axi0_r1_static_request_idle_or_releasing
+        )],
+        generated_mixed_request_onehot_assertions => [qw(
+            axi0_read_mixed_dynamic_static_request_onehot0
+        )],
+        generated_dynamic_request_static_id_exclusion_assertions => [qw(
+            axi0_r0_dynamic_request_not_static_id
+        )],
+        generated_dynamic_active_static_id_exclusion_assertions => [qw(
+            axi0_r0_dynamic_active_not_static_id
+        )],
+        generated_response_active_match_assertions => [qw(
+            axi0_read_mixed_dynamic_static_response_active_match
+        )],
+        generated_response_unique_match_assertions => [qw(
+            axi0_r0_r1_read_mixed_dynamic_static_response_unique_match
+        )],
+        generated_completion_active_assertions => [qw(
+            axi0_r0_dynamic_completion_active
+            axi0_r1_static_completion_active
+        )],
+    );
+};
+
+subtest 'one-dynamic mixed read burst-last response-demux maps dynamic same-ID reject to static-ID exclusion assertions' => sub {
+    my $base = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_mixed_dynamic_static_read_response_demux_burst_last());
+    my $contract = sample_contract_with_mixed_dynamic_static_read_response_demux_burst_last();
+    $contract->{same_id_ordering_policy} = {
+        read => {
+            dynamic_id_reuse => 'reject',
+        },
+    };
+
+    my $result = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate($contract);
+
+    is(
+        $result->{generated_ial1}{text},
+        $base->{generated_ial1}{text},
+        'one-dynamic mixed read RLAST same-ID reject mapping does not alter generated IAL1 text',
+    );
+    is_deeply(
+        $result->{generated_ial0}{files},
+        $base->{generated_ial0}{files},
+        'one-dynamic mixed read RLAST same-ID reject mapping does not alter generated IAL0 files',
+    );
+    assert_mixed_dynamic_static_read_rlast_response_demux_report(
+        $result->{report},
+        'generator mapped one-dynamic mixed read RLAST report',
+        residue => [qw(read_data_interleaving bursts)],
+    );
+    assert_dynamic_same_id_reject_policy_mixed_static_generated_report(
+        $result->{report}{same_id_ordering},
+        'generator mapped one-dynamic mixed read RLAST report',
+        family => 'read',
+        response_demux_mode => 'bounded_mixed_dynamic_static_read_rid_rlast_demux_contract',
+        response_demux_transaction_completion_source => 'generated_mixed_dynamic_static_read_demux_last_beat',
+        covered_dynamic_transactions => [qw(r0)],
+        covered_static_transactions => [qw(r1)],
+        static_id_reservations => [
+            {
+                transaction            => 'r1',
+                concrete_id            => 3,
+                concrete_id_literal    => "4'd3",
+                dynamic_capture_policy => 'dynamic_id_must_not_equal_static_concrete_id',
+            },
+        ],
+        generated_request_availability_assertions => [qw(
+            axi0_r0_dynamic_request_idle_or_releasing
+            axi0_r1_static_request_idle_or_releasing
+        )],
+        generated_mixed_request_onehot_assertions => [qw(
+            axi0_read_mixed_dynamic_static_request_onehot0
+        )],
+        generated_dynamic_request_static_id_exclusion_assertions => [qw(
+            axi0_r0_dynamic_request_not_static_id
+        )],
+        generated_dynamic_active_static_id_exclusion_assertions => [qw(
+            axi0_r0_dynamic_active_not_static_id
+        )],
+        generated_response_active_match_assertions => [qw(
+            axi0_read_mixed_dynamic_static_response_active_match
+        )],
+        generated_response_unique_match_assertions => [qw(
+            axi0_r0_r1_read_mixed_dynamic_static_response_unique_match
+        )],
+        generated_completion_active_assertions => [qw(
+            axi0_r0_dynamic_completion_active
+            axi0_r1_static_completion_active
+        )],
+    );
+};
+
+subtest 'three-static mixed read burst-last response-demux maps dynamic same-ID reject to static-ID exclusion assertions' => sub {
+    my $base = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_mixed_dynamic_static_read_response_demux_multi_static3_burst_last());
+    my $contract = sample_contract_with_mixed_dynamic_static_read_response_demux_multi_static3_burst_last();
+    $contract->{same_id_ordering_policy} = {
+        read => {
+            dynamic_id_reuse => 'reject',
+        },
+    };
+
+    my $result = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate($contract);
+
+    is(
+        $result->{generated_ial1}{text},
+        $base->{generated_ial1}{text},
+        'three-static mixed read RLAST same-ID reject mapping does not alter generated IAL1 text',
+    );
+    is_deeply(
+        $result->{generated_ial0}{files},
+        $base->{generated_ial0}{files},
+        'three-static mixed read RLAST same-ID reject mapping does not alter generated IAL0 files',
+    );
+    is_deeply(
+        $result->{report}{response_demux}{residue},
+        [qw(read_data_interleaving bursts)],
+        'three-static mixed read RLAST same-ID reject mapping removes only same-ID response-demux residue',
+    );
+    assert_dynamic_same_id_reject_policy_mixed_static_generated_report(
+        $result->{report}{same_id_ordering},
+        'generator mapped three-static mixed read RLAST report',
+        family => 'read',
+        response_demux_mode => 'bounded_multi_mixed_dynamic_static_read_rid_rlast_demux_contract',
+        response_demux_transaction_completion_source => 'generated_multi_mixed_dynamic_static_read_demux_last_beat',
+        covered_dynamic_transactions => [qw(r0)],
+        covered_static_transactions => [qw(r1 r2 r3)],
+        static_id_reservations => [
+            {
+                transaction            => 'r1',
+                concrete_id            => 3,
+                concrete_id_literal    => "4'd3",
+                dynamic_capture_policy => 'dynamic_id_must_not_equal_static_concrete_id',
+            },
+            {
+                transaction            => 'r2',
+                concrete_id            => 5,
+                concrete_id_literal    => "4'd5",
+                dynamic_capture_policy => 'dynamic_id_must_not_equal_static_concrete_id',
+            },
+            {
+                transaction            => 'r3',
+                concrete_id            => 7,
+                concrete_id_literal    => "4'd7",
+                dynamic_capture_policy => 'dynamic_id_must_not_equal_static_concrete_id',
+            },
+        ],
+        generated_request_availability_assertions => [qw(
+            axi0_r0_dynamic_request_idle_or_releasing
+            axi0_r1_static_request_idle_or_releasing
+            axi0_r2_static_request_idle_or_releasing
+            axi0_r3_static_request_idle_or_releasing
+        )],
+        generated_mixed_request_onehot_assertions => [qw(
+            axi0_read_mixed_dynamic_static_request_onehot0
+        )],
+        generated_dynamic_request_static_id_exclusion_assertions => [qw(
+            axi0_r0_r1_read_dynamic_request_not_static_id
+            axi0_r0_r2_read_dynamic_request_not_static_id
+            axi0_r0_r3_read_dynamic_request_not_static_id
+        )],
+        generated_dynamic_active_static_id_exclusion_assertions => [qw(
+            axi0_r0_r1_read_dynamic_active_not_static_id
+            axi0_r0_r2_read_dynamic_active_not_static_id
+            axi0_r0_r3_read_dynamic_active_not_static_id
+        )],
+        generated_response_active_match_assertions => [qw(
+            axi0_read_mixed_dynamic_static_response_active_match
+        )],
+        generated_response_unique_match_assertions => [qw(
+            axi0_r0_r1_read_mixed_dynamic_static_response_unique_match
+            axi0_r0_r2_read_mixed_dynamic_static_response_unique_match
+            axi0_r0_r3_read_mixed_dynamic_static_response_unique_match
+            axi0_r1_r2_read_mixed_dynamic_static_response_unique_match
+            axi0_r1_r3_read_mixed_dynamic_static_response_unique_match
+            axi0_r2_r3_read_mixed_dynamic_static_response_unique_match
+        )],
+        generated_completion_active_assertions => [qw(
+            axi0_r0_dynamic_completion_active
+            axi0_r1_static_completion_active
+            axi0_r2_static_completion_active
+            axi0_r3_static_completion_active
+        )],
+    );
+};
+
 subtest 'multiple dynamic write response-demux maps dynamic same-ID reject to generated assertions' => sub {
     my $base = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_dynamic_write_response_demux_multi());
     my $contract = sample_contract_with_dynamic_write_response_demux_multi();
@@ -5096,7 +5393,6 @@ subtest 'malformed contract objects fail closed and no direct lower-to-fsm entry
         ['dynamic transaction ID blocks same-family auto lifecycle behavior', sub { my $c = sample_contract_with_dynamic_transaction_id(); $c->{auto_id_lifecycle} = { read => { pool => [0] } }; $c }, qr/auto_id_lifecycle\.read cannot be combined with dynamic read transaction ID metadata/],
         ['dynamic read response demux requires generated completion distinct from raw response event', sub { my $c = sample_contract_with_dynamic_transaction_id(); $c->{response_demux} = { read => { response_event => 'axi0_read_complete', response_scope => 'single-beat', transaction_completion => 'generated' } }; $c }, qr/response_demux\.read generated transaction completion signal 'axi0_read_complete' must be distinct from response_event 'axi0_read_complete'/],
         ['dynamic transaction ID rejects concrete-only same-ID policy assumptions', sub { my $c = sample_contract_with_dynamic_transaction_id(); $c->{same_id_ordering_policy} = { read => { concrete_id_reuse => 'issue-order-queue' } }; $c }, qr/same_id_ordering_policy\.read concrete-id-reuse policy does not cover dynamic read transaction ID metadata; select dynamic-id-reuse reject for transaction\(s\): r0/],
-        ['one-dynamic mixed response-demux rejects dynamic same-ID policy', sub { my $c = sample_contract_with_mixed_dynamic_static_read_response_demux(); $c->{same_id_ordering_policy} = { read => { dynamic_id_reuse => 'reject' } }; $c }, qr/response_demux\.read dynamic-id-reuse reject generated enforcement requires generated multi-active dynamic response-demux no-active-same-ID assertions in this slice/],
         ['dynamic write response demux rejects unsupported mixed write transaction counts', sub {
             my $c = sample_contract_with_dynamic_write_response_demux();
             push @{$c->{transactions}}, {
@@ -5115,8 +5411,24 @@ subtest 'malformed contract objects fail closed and no direct lower-to-fsm entry
                 completion_event => 'axi0_w2_complete',
                 id               => { value => 2 },
             };
+            push @{$c->{transactions}}, {
+                kind             => 'write',
+                name             => 'w3',
+                tag              => 'wr3',
+                request_event    => 'axi0_w3_request',
+                completion_event => 'axi0_w3_complete',
+                id               => { value => 4 },
+            };
+            push @{$c->{transactions}}, {
+                kind             => 'write',
+                name             => 'w4',
+                tag              => 'wr4',
+                request_event    => 'axi0_w4_request',
+                completion_event => 'axi0_w4_complete',
+                id               => { value => 5 },
+            };
             $c;
-        }, qr/response_demux\.write mixed dynamic\/static ID matching supports exactly one dynamic write transaction and one concrete static write transaction/],
+        }, qr/response_demux\.write mixed dynamic\/static ID matching supports exactly one dynamic write transaction plus one, two, or three pairwise-distinct concrete static write transactions, or exactly two dynamic write transactions plus one concrete static write transaction/],
         ['dynamic read-data rejects incomplete multiple dynamic read RLAST coverage', sub {
             my $c = sample_contract_with_dynamic_read_response_demux_multi_burst_last();
             $c->{read_data} = {
@@ -5140,7 +5452,7 @@ subtest 'malformed contract objects fail closed and no direct lower-to-fsm entry
             };
             $c;
         }, qr/read_data\.read transaction coverage is missing read response_demux dynamic transaction\(s\): r1/],
-        ['dynamic read response demux rejects mixed read transaction ownership', sub {
+        ['dynamic read response demux rejects unsupported mixed read transaction counts', sub {
             my $c = sample_contract_with_dynamic_read_response_demux();
             push @{$c->{transactions}}, {
                 kind             => 'read',
@@ -5150,8 +5462,32 @@ subtest 'malformed contract objects fail closed and no direct lower-to-fsm entry
                 completion_event => 'axi0_r1_complete',
                 id               => { value => 1 },
             };
+            push @{$c->{transactions}}, {
+                kind             => 'read',
+                name             => 'r2',
+                tag              => 'rd2',
+                request_event    => 'axi0_r2_request',
+                completion_event => 'axi0_r2_complete',
+                id               => { value => 2 },
+            };
+            push @{$c->{transactions}}, {
+                kind             => 'read',
+                name             => 'r3',
+                tag              => 'rd3',
+                request_event    => 'axi0_r3_request',
+                completion_event => 'axi0_r3_complete',
+                id               => { value => 4 },
+            };
+            push @{$c->{transactions}}, {
+                kind             => 'read',
+                name             => 'r4',
+                tag              => 'rd4',
+                request_event    => 'axi0_r4_request',
+                completion_event => 'axi0_r4_complete',
+                id               => { value => 5 },
+            };
             $c;
-        }, qr/response_demux\.read dynamic ID matching requires every read transaction to use dynamic IDs/],
+        }, qr/response_demux\.read mixed dynamic\/static ID matching supports exactly one dynamic read transaction plus one, two, or three pairwise-distinct concrete static read transactions, or exactly two dynamic read transactions plus one concrete static read transaction/],
         ['dynamic read RLAST response demux requires width-1 last signal', sub {
             my $c = sample_contract_with_dynamic_read_response_demux_burst_last();
             $c->{response_demux}{read}{last_signal_width} = 2;
@@ -5524,6 +5860,47 @@ sub sample_contract_with_mixed_dynamic_static_read_response_demux_burst_last {
     $contract->{response_demux}{read}{response_scope} = 'burst-last';
     $contract->{response_demux}{read}{last_signal} = 'axi0_rlast';
     $contract->{response_demux}{read}{last_signal_width} = 1;
+    return $contract;
+}
+
+sub sample_contract_with_mixed_dynamic_static_read_response_demux_multi_static3_burst_last {
+    my $contract = sample_contract_with_mixed_dynamic_static_read_response_demux_burst_last();
+    $contract->{intent_name} = 'axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static3_burst_last';
+    $contract->{source}{object_id} = 'axi-manager-capacity-status-read-mixed-dynamic-static-response-demux-multi-static3-burst-last';
+    $contract->{transactions} = [
+        {
+            kind             => 'read',
+            name             => 'r0',
+            tag              => 'rd0',
+            request_event    => 'axi0_r0_request',
+            completion_event => 'axi0_r0_complete',
+            id               => { policy => 'dynamic' },
+        },
+        {
+            kind             => 'read',
+            name             => 'r1',
+            tag              => 'rd1',
+            request_event    => 'axi0_r1_request',
+            completion_event => 'axi0_r1_complete',
+            id               => { value => 3 },
+        },
+        {
+            kind             => 'read',
+            name             => 'r2',
+            tag              => 'rd2',
+            request_event    => 'axi0_r2_request',
+            completion_event => 'axi0_r2_complete',
+            id               => { value => 5 },
+        },
+        {
+            kind             => 'read',
+            name             => 'r3',
+            tag              => 'rd3',
+            request_event    => 'axi0_r3_request',
+            completion_event => 'axi0_r3_complete',
+            id               => { value => 7 },
+        },
+    ];
     return $contract;
 }
 
@@ -7201,9 +7578,10 @@ sub assert_dynamic_write_response_demux_multi_report {
 }
 
 sub assert_mixed_dynamic_static_write_response_demux_report {
-    my ($report, $owner) = @_;
+    my ($report, $owner, %args) = @_;
     my $demux = $report->{response_demux};
     my $write = $demux->{write};
+    my $expected_residue = $args{residue} // [qw(read_response_demux same_id_ordering read_data_interleaving bursts)];
 
     is(scalar(@{$report->{transactions}}), 2, "$owner reports dynamic and static write transactions");
     is($report->{transactions}[0]{id}{implementation_status}, 'generated_capture_matching', "$owner reports generated capture/matching for the dynamic write");
@@ -7301,7 +7679,7 @@ sub assert_mixed_dynamic_static_write_response_demux_report {
     );
     is_deeply(
         $demux->{residue},
-        [qw(read_response_demux same_id_ordering read_data_interleaving bursts)],
+        $expected_residue,
         "$owner keeps unsupported dynamic-read, same-ID, read-data, and burst residue explicit",
     );
     my %residue = map { $_->{id} => 1 } @{$report->{unsupported_residue}};
@@ -7309,9 +7687,10 @@ sub assert_mixed_dynamic_static_write_response_demux_report {
 }
 
 sub assert_mixed_dynamic_static_read_response_demux_report {
-    my ($report, $owner) = @_;
+    my ($report, $owner, %args) = @_;
     my $demux = $report->{response_demux};
     my $read = $demux->{read};
+    my $expected_residue = $args{residue} // [qw(same_id_ordering read_data_interleaving bursts)];
 
     is(scalar(@{$report->{transactions}}), 2, "$owner reports dynamic and static read transactions");
     is($report->{transactions}[0]{id}{implementation_status}, 'generated_capture_matching', "$owner reports generated capture/matching for the dynamic read");
@@ -7410,7 +7789,7 @@ sub assert_mixed_dynamic_static_read_response_demux_report {
     );
     is_deeply(
         $demux->{residue},
-        [qw(same_id_ordering read_data_interleaving bursts)],
+        $expected_residue,
         "$owner keeps unsupported same-ID, read-data, and burst residue explicit",
     );
     my %residue = map { $_->{id} => 1 } @{$report->{unsupported_residue}};
@@ -7418,9 +7797,10 @@ sub assert_mixed_dynamic_static_read_response_demux_report {
 }
 
 sub assert_mixed_dynamic_static_read_rlast_response_demux_report {
-    my ($report, $owner) = @_;
+    my ($report, $owner, %args) = @_;
     my $demux = $report->{response_demux};
     my $read = $demux->{read};
+    my $expected_residue = $args{residue} // [qw(same_id_ordering read_data_interleaving bursts)];
 
     is(scalar(@{$report->{transactions}}), 2, "$owner reports dynamic and static read transactions");
     is($report->{transactions}[0]{id}{implementation_status}, 'generated_capture_matching', "$owner reports generated capture/matching for the dynamic read");
@@ -7525,7 +7905,7 @@ sub assert_mixed_dynamic_static_read_rlast_response_demux_report {
     );
     is_deeply(
         $demux->{residue},
-        [qw(same_id_ordering read_data_interleaving bursts)],
+        $expected_residue,
         "$owner keeps unsupported same-ID, read-data, and burst residue explicit",
     );
     my %residue = map { $_->{id} => 1 } @{$report->{unsupported_residue}};
@@ -9069,6 +9449,66 @@ sub assert_dynamic_same_id_reject_policy_single_active_generated_report {
                 $args{generated_completion_active_assertions},
         },
         "$owner reports generated single-active dynamic same-ID reject enforcement metadata",
+    );
+}
+
+sub assert_dynamic_same_id_reject_policy_mixed_static_generated_report {
+    my ($ordering, $owner, %args) = @_;
+    my $family = $args{family} // 'read';
+    my $mode = $args{mode} // 'dynamic_id_reuse_policy';
+    my $expected_residue = $args{residue} // [];
+
+    is($ordering->{mode}, $mode, "$owner marks dynamic same-ID policy mode");
+    ok($ordering->{generated_behavior}, "$owner marks dynamic same-ID policy generated behavior true");
+    ok(!exists($ordering->{families}), "$owner does not report generated concrete same-ID avoidance families");
+    is_deeply($ordering->{residue}, $expected_residue, "$owner reports generated dynamic same-ID residue");
+    ok(@{$ordering->{source_anchors}}, "$owner carries source anchors into dynamic same-ID policy metadata");
+    is_deeply(
+        [sort keys %{$ordering->{dynamic_id_reuse_policy}}],
+        [$family],
+        "$owner reports the covered $family dynamic-ID reuse policy",
+    );
+    is_deeply(
+        $ordering->{dynamic_id_reuse_policy}{$family},
+        {
+            policy => 'reject',
+            implementation_status => 'generated_mixed_static_id_exclusion_reject',
+            enforcement => 'generated_static_id_exclusion_assertions',
+            assertion_enforcement => 'runtime_assertion',
+            accepted_same_id_reuse => JSON::PP::false(),
+            request_conflict_policy => 'no_active_same_id',
+            generated_queue_behavior => JSON::PP::false(),
+            generated_scoreboard_behavior => JSON::PP::false(),
+            response_demux_covered => JSON::PP::true(),
+            mixed_dynamic_static_covered => JSON::PP::true(),
+            mixed_dynamic_static_request_policy => 'onehot0_mixed_request',
+            static_id_conflict_policy => 'static_concrete_ids_reserved',
+            static_id_exclusion_policy => 'dynamic_id_must_not_equal_static_concrete_id',
+            response_demux_mode => $args{response_demux_mode},
+            response_demux_transaction_completion_source =>
+                $args{response_demux_transaction_completion_source},
+            covered_dynamic_transactions =>
+                $args{covered_dynamic_transactions},
+            covered_static_transactions =>
+                $args{covered_static_transactions},
+            static_id_reservations =>
+                $args{static_id_reservations},
+            generated_request_availability_assertions =>
+                $args{generated_request_availability_assertions},
+            generated_mixed_request_onehot_assertions =>
+                $args{generated_mixed_request_onehot_assertions},
+            generated_dynamic_request_static_id_exclusion_assertions =>
+                $args{generated_dynamic_request_static_id_exclusion_assertions},
+            generated_dynamic_active_static_id_exclusion_assertions =>
+                $args{generated_dynamic_active_static_id_exclusion_assertions},
+            generated_response_active_match_assertions =>
+                $args{generated_response_active_match_assertions},
+            generated_response_unique_match_assertions =>
+                $args{generated_response_unique_match_assertions},
+            generated_completion_active_assertions =>
+                $args{generated_completion_active_assertions},
+        },
+        "$owner reports generated mixed dynamic/static dynamic same-ID reject enforcement metadata",
     );
 }
 

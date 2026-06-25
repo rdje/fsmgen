@@ -31,5 +31,7 @@ It has the same generated IAL1/IAL0/HDL behavior as the base single-active
 dynamic read response-demux sample; only acceptance, report metadata, and
 residue movement change.
 
-One-dynamic mixed response-demux, dynamic queues, scoreboards, direct backend
-behavior, backend-language variants, and VHDL remain future exact-owner work.
+One-dynamic mixed response-demux dynamic same-ID reject mapping later shipped
+under `.446` through a separate static-ID exclusion evidence model. Dynamic
+queues, scoreboards, direct backend behavior, backend-language variants, and
+VHDL remain future exact-owner work.

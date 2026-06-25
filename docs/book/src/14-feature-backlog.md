@@ -8071,6 +8071,25 @@ completion-active evidence; queues, scoreboards, direct backend behavior,
 backend-language variants, VHDL, new generated HDL, and new generated rules,
 storage, assertions, or runtime behavior remain deferred.
 
+One-dynamic mixed dynamic same-ID reject mapping behavior:
+[AXI_IAL2_MANAGER_ONE_DYNAMIC_MIXED_DYNAMIC_SAME_ID_REJECT_MAPPING_BEHAVIOR](../../AXI_IAL2_MANAGER_ONE_DYNAMIC_MIXED_DYNAMIC_SAME_ID_REJECT_MAPPING_BEHAVIOR.md)
+ships the `.446` mapping. Same-family `response-demux.<family>` plus
+`same-id-ordering.<family> (dynamic-id-reuse reject)` is accepted for
+generated mixed write `BID`, read single-beat `RID`, and read burst-last
+`RID && RLAST` shapes with exactly one dynamic transaction plus one, two, or
+three pairwise-distinct concrete static transactions. Covered reports use
+`implementation_status: generated_mixed_static_id_exclusion_reject`,
+`enforcement: generated_static_id_exclusion_assertions`,
+`mixed_dynamic_static_covered: true`, and
+`static_id_exclusion_policy: dynamic_id_must_not_equal_static_concrete_id`,
+with exact static-ID reservations and generated mixed assertion names. `.446`
+adds no public PPIF sample or support-accounting entry; focused tests inject
+the same-ID policy into existing mixed response-demux samples and prove
+generated IAL1/IAL0 artifacts match the originals. Dynamic queues,
+scoreboards, direct backend behavior, backend-language variants, VHDL, new
+generated HDL, and new generated rule/storage/assertion/runtime behavior
+remain deferred. `.446` selects `.447`, the next post-mapping selector.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

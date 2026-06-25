@@ -309,6 +309,78 @@ subtest 'PPIF adapter parses AXI manager single-active dynamic read response-dem
     );
 };
 
+subtest 'PPIF adapter maps one-dynamic mixed read response-demux dynamic same-ID reject' => sub {
+    my $sample_path = File::Spec->catfile(
+        $FindBin::Bin,
+        '..',
+        'ppif',
+        'axi_manager_capacity_status_read_mixed_dynamic_static_response_demux.ppif',
+    );
+    ok(-f $sample_path, 'tracked runnable PPIF capacity/status one-dynamic mixed read response-demux sample exists');
+    my $source = slurp($sample_path);
+    my $base = FSM::Adapter::IAL2::PPIF->new()->parse_source($source, $sample_path);
+    $source =~ s/    \(response-demux/    \(same-id-ordering\n      \(read \(dynamic-id-reuse reject\)\)\)\n    \(response-demux/
+        or die "failed to insert same-id-ordering block into one-dynamic mixed read response-demux sample\n";
+
+    my $result = FSM::Adapter::IAL2::PPIF->new()->parse_source($source, $sample_path);
+
+    is(
+        $result->{generated_ial1}{text},
+        $base->{generated_ial1}{text},
+        'one-dynamic mixed read same-ID reject PPIF mapping does not alter generated IAL1 text',
+    );
+    is_deeply(
+        $result->{generated_ial0}{files},
+        $base->{generated_ial0}{files},
+        'one-dynamic mixed read same-ID reject PPIF mapping does not alter generated IAL0 files',
+    );
+    is_deeply(
+        $result->{report}{response_demux}{residue},
+        [qw(read_data_interleaving bursts)],
+        'one-dynamic mixed read same-ID reject PPIF mapping removes only same-ID response-demux residue',
+    );
+    assert_dynamic_same_id_reject_policy_mixed_static_generated_report(
+        $result->{report}{same_id_ordering},
+        'adapter mapped one-dynamic mixed read report',
+        family => 'read',
+        response_demux_mode => 'bounded_mixed_dynamic_static_read_rid_demux_contract',
+        response_demux_transaction_completion_source => 'generated_mixed_dynamic_static_read_demux',
+        covered_dynamic_transactions => [qw(r0)],
+        covered_static_transactions => [qw(r1)],
+        static_id_reservations => [
+            {
+                transaction            => 'r1',
+                concrete_id            => 3,
+                concrete_id_literal    => "4'd3",
+                dynamic_capture_policy => 'dynamic_id_must_not_equal_static_concrete_id',
+            },
+        ],
+        generated_request_availability_assertions => [qw(
+            axi0_r0_dynamic_request_idle_or_releasing
+            axi0_r1_static_request_idle_or_releasing
+        )],
+        generated_mixed_request_onehot_assertions => [qw(
+            axi0_read_mixed_dynamic_static_request_onehot0
+        )],
+        generated_dynamic_request_static_id_exclusion_assertions => [qw(
+            axi0_r0_dynamic_request_not_static_id
+        )],
+        generated_dynamic_active_static_id_exclusion_assertions => [qw(
+            axi0_r0_dynamic_active_not_static_id
+        )],
+        generated_response_active_match_assertions => [qw(
+            axi0_read_mixed_dynamic_static_response_active_match
+        )],
+        generated_response_unique_match_assertions => [qw(
+            axi0_r0_r1_read_mixed_dynamic_static_response_unique_match
+        )],
+        generated_completion_active_assertions => [qw(
+            axi0_r0_dynamic_completion_active
+            axi0_r1_static_completion_active
+        )],
+    );
+};
+
 subtest 'PPIF adapter parses AXI manager dynamic write response-demux behavior' => sub {
     my $sample_path = sample_capacity_dynamic_write_response_demux_ppif_path();
     ok(-f $sample_path, 'tracked runnable PPIF capacity/status dynamic write response-demux sample exists');
@@ -3067,6 +3139,81 @@ subtest 'CLI emits IAL2 report JSON for AXI manager single-active dynamic read r
         )],
     );
     is_deeply($report->{generated_artifacts}{ial0}{files}, ['axi0_capacity_status.fsm'], 'single-active dynamic read response-demux same-ID reject keeps the generated .fsm artifact name stable');
+};
+
+subtest 'CLI emits IAL2 report JSON for one-dynamic mixed read response-demux dynamic same-ID reject .ppif' => sub {
+    my $sample_path = File::Spec->catfile(
+        $FindBin::Bin,
+        '..',
+        'ppif',
+        'axi_manager_capacity_status_read_mixed_dynamic_static_response_demux.ppif',
+    );
+    my $source = slurp($sample_path);
+    $source =~ s/    \(response-demux/    \(same-id-ordering\n      \(read \(dynamic-id-reuse reject\)\)\)\n    \(response-demux/
+        or die "failed to insert same-id-ordering block into one-dynamic mixed read response-demux sample\n";
+    my $tmpdir = tempdir(CLEANUP => 1);
+    my $tmp_ppif = File::Spec->catfile($tmpdir, 'axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_same_id_reject.ppif');
+    open my $fh, '>', $tmp_ppif
+        or die "failed to write $tmp_ppif: $!";
+    print {$fh} $source;
+    close $fh
+        or die "failed to close $tmp_ppif: $!";
+
+    my ($success, undef, undef, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--emit-schedule-json', $tmp_ppif],
+    );
+
+    ok($success, '--emit-schedule-json succeeds for one-dynamic mixed read response-demux dynamic same-ID reject .ppif');
+    is(join('', @{$stderr_buf || []}), '', 'one-dynamic mixed read response-demux dynamic same-ID reject report keeps stderr clean');
+    my $report = decode_json(join('', @{$stdout_buf || []}));
+    is($report->{schema}, 'fsmgen.ial2.protocol_intent.axi_manager_capacity_status.v1', 'CLI keeps the capacity/status report schema');
+    is($report->{source_object}{intent_name}, 'axi_manager_capacity_status_read_mixed_dynamic_static_response_demux', 'one-dynamic mixed read response-demux dynamic same-ID reject report carries the PPIF top-level intent name');
+    is_deeply(
+        $report->{response_demux}{residue},
+        [qw(read_data_interleaving bursts)],
+        'CLI one-dynamic mixed read same-ID reject mapping removes only same-ID response-demux residue',
+    );
+    assert_dynamic_same_id_reject_policy_mixed_static_generated_report(
+        $report->{same_id_ordering},
+        'CLI mapped one-dynamic mixed read report',
+        family => 'read',
+        response_demux_mode => 'bounded_mixed_dynamic_static_read_rid_demux_contract',
+        response_demux_transaction_completion_source => 'generated_mixed_dynamic_static_read_demux',
+        covered_dynamic_transactions => [qw(r0)],
+        covered_static_transactions => [qw(r1)],
+        static_id_reservations => [
+            {
+                transaction            => 'r1',
+                concrete_id            => 3,
+                concrete_id_literal    => "4'd3",
+                dynamic_capture_policy => 'dynamic_id_must_not_equal_static_concrete_id',
+            },
+        ],
+        generated_request_availability_assertions => [qw(
+            axi0_r0_dynamic_request_idle_or_releasing
+            axi0_r1_static_request_idle_or_releasing
+        )],
+        generated_mixed_request_onehot_assertions => [qw(
+            axi0_read_mixed_dynamic_static_request_onehot0
+        )],
+        generated_dynamic_request_static_id_exclusion_assertions => [qw(
+            axi0_r0_dynamic_request_not_static_id
+        )],
+        generated_dynamic_active_static_id_exclusion_assertions => [qw(
+            axi0_r0_dynamic_active_not_static_id
+        )],
+        generated_response_active_match_assertions => [qw(
+            axi0_read_mixed_dynamic_static_response_active_match
+        )],
+        generated_response_unique_match_assertions => [qw(
+            axi0_r0_r1_read_mixed_dynamic_static_response_unique_match
+        )],
+        generated_completion_active_assertions => [qw(
+            axi0_r0_dynamic_completion_active
+            axi0_r1_static_completion_active
+        )],
+    );
+    is_deeply($report->{generated_artifacts}{ial0}{files}, ['axi0_capacity_status.fsm'], 'one-dynamic mixed read response-demux dynamic same-ID reject keeps the generated .fsm artifact name stable');
 };
 
 subtest 'CLI emits IAL2 report JSON for AXI manager dynamic write response-demux .ppif' => sub {
@@ -9920,6 +10067,65 @@ sub assert_dynamic_same_id_reject_policy_single_active_generated_report {
                 $args{generated_completion_active_assertions},
         },
         "$owner reports generated single-active dynamic same-ID reject enforcement metadata",
+    );
+}
+
+sub assert_dynamic_same_id_reject_policy_mixed_static_generated_report {
+    my ($ordering, $owner, %args) = @_;
+    my $family = $args{family} // 'read';
+    my $expected_residue = $args{residue} // [];
+
+    is($ordering->{mode}, 'dynamic_id_reuse_policy', "$owner marks dynamic same-ID policy mode");
+    ok($ordering->{generated_behavior}, "$owner marks dynamic same-ID policy generated behavior true");
+    ok(!exists($ordering->{families}), "$owner does not report generated concrete same-ID avoidance families");
+    is_deeply($ordering->{residue}, $expected_residue, "$owner reports generated dynamic same-ID residue");
+    ok(@{$ordering->{source_anchors}}, "$owner carries source anchors into dynamic same-ID policy metadata");
+    is_deeply(
+        [sort keys %{$ordering->{dynamic_id_reuse_policy}}],
+        [$family],
+        "$owner reports the covered $family dynamic-ID reuse policy",
+    );
+    is_deeply(
+        $ordering->{dynamic_id_reuse_policy}{$family},
+        {
+            policy => 'reject',
+            implementation_status => 'generated_mixed_static_id_exclusion_reject',
+            enforcement => 'generated_static_id_exclusion_assertions',
+            assertion_enforcement => 'runtime_assertion',
+            accepted_same_id_reuse => JSON::PP::false(),
+            request_conflict_policy => 'no_active_same_id',
+            generated_queue_behavior => JSON::PP::false(),
+            generated_scoreboard_behavior => JSON::PP::false(),
+            response_demux_covered => JSON::PP::true(),
+            mixed_dynamic_static_covered => JSON::PP::true(),
+            mixed_dynamic_static_request_policy => 'onehot0_mixed_request',
+            static_id_conflict_policy => 'static_concrete_ids_reserved',
+            static_id_exclusion_policy => 'dynamic_id_must_not_equal_static_concrete_id',
+            response_demux_mode => $args{response_demux_mode},
+            response_demux_transaction_completion_source =>
+                $args{response_demux_transaction_completion_source},
+            covered_dynamic_transactions =>
+                $args{covered_dynamic_transactions},
+            covered_static_transactions =>
+                $args{covered_static_transactions},
+            static_id_reservations =>
+                $args{static_id_reservations},
+            generated_request_availability_assertions =>
+                $args{generated_request_availability_assertions},
+            generated_mixed_request_onehot_assertions =>
+                $args{generated_mixed_request_onehot_assertions},
+            generated_dynamic_request_static_id_exclusion_assertions =>
+                $args{generated_dynamic_request_static_id_exclusion_assertions},
+            generated_dynamic_active_static_id_exclusion_assertions =>
+                $args{generated_dynamic_active_static_id_exclusion_assertions},
+            generated_response_active_match_assertions =>
+                $args{generated_response_active_match_assertions},
+            generated_response_unique_match_assertions =>
+                $args{generated_response_unique_match_assertions},
+            generated_completion_active_assertions =>
+                $args{generated_completion_active_assertions},
+        },
+        "$owner reports generated mixed dynamic/static dynamic same-ID reject enforcement metadata",
     );
 }
 
