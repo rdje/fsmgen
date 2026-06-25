@@ -8419,25 +8419,35 @@ The single-beat shape reports
 the last-beat shape reports
 `generated_dynamic_read_issue_order_queue_response_demux_last_beat_completion_pulse`.
 Both shapes keep the response-demux queue-owned, bind exactly `r0` and `r1`,
-generate scalar `RDATA`/`RRESP` capture, and leave raw `ARLEN`, runtime
-validation, multi-beat output banks, broader queues, mixed dynamic/static
-queues, scoreboards, direct backend behavior, backend-language variants, and
-VHDL as future exact owners. `.468` selects raw-ARLEN readiness after dynamic
-queue scalar read-data.
+generate scalar `RDATA`/`RRESP` capture, and leave the report-only raw
+`ARLEN` scalar last-beat sibling to `.469`. Runtime validation, multi-beat
+output banks, broader queues, mixed dynamic/static queues, scoreboards,
+direct backend behavior, backend-language variants, and VHDL remain future
+exact owners.
 
 Dynamic read same-ID issue-order queue read-data raw-ARLEN readiness:
 [AXI_IAL2_MANAGER_DYNAMIC_READ_SAME_ID_ISSUE_ORDER_QUEUE_READ_DATA_BURST_LENGTH_READINESS_AUDIT](../../AXI_IAL2_MANAGER_DYNAMIC_READ_SAME_ID_ISSUE_ORDER_QUEUE_READ_DATA_BURST_LENGTH_READINESS_AUDIT.md)
-selects `.469`, direct bounded implementation of report-only raw-`ARLEN`
+selected `.469`, direct bounded implementation of report-only raw-`ARLEN`
 burst-length capture over generated dynamic read same-ID `issue-order-queue`
 last-beat read-data. Existing `read-data.read` `burst-length` syntax is
-sufficient, so no new public contract-selection leaf is required. The future
-support-accounted sample is
+sufficient, so no new public contract-selection leaf was required. The
+selected support-accounted sample is
 `ppif/axi_manager_capacity_status_dynamic_read_burst_last_same_id_issue_order_queue_read_data_burst_length.ppif`.
-The `.467` no-`burst-length` queue samples remain unchanged. Runtime
-beat-count/`RLAST` validation, multi-beat output banks, queue recapture
-widening, broader queues, mixed dynamic/static queues, scoreboards, direct
-backend behavior, backend-language variants, and VHDL remain future exact
-owners.
+
+Dynamic read same-ID issue-order queue read-data raw-ARLEN behavior:
+[AXI_IAL2_MANAGER_DYNAMIC_READ_SAME_ID_ISSUE_ORDER_QUEUE_READ_DATA_BURST_LENGTH_BEHAVIOR](../../AXI_IAL2_MANAGER_DYNAMIC_READ_SAME_ID_ISSUE_ORDER_QUEUE_READ_DATA_BURST_LENGTH_BEHAVIOR.md)
+ships the `.469` support-accounted sample. The generator admits only the
+exact two-transaction all-dynamic burst-last queue shape with
+`validation report-only`, keeps completion validity
+`generated_dynamic_read_issue_order_queue_response_demux_last_beat_completion_pulse`,
+adds generated `axi0_arlen`, per-transaction raw-`ARLEN` storage
+`axi0_r0_arlen_q`/`axi0_r1_arlen_q`, and request-capture rules
+`axi0_r0_burst_length_capture`/`axi0_r1_burst_length_capture`. The `.467`
+no-`burst-length` queue samples remain unchanged. `.470` is runtime
+beat-count/`RLAST` validation readiness after queue raw-`ARLEN` capture;
+multi-beat output banks, queue recapture widening, broader queues, mixed
+dynamic/static queues, scoreboards, direct backend behavior,
+backend-language variants, and VHDL remain future exact owners.
 
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)

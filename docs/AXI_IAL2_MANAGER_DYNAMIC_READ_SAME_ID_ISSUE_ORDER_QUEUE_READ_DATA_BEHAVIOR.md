@@ -19,10 +19,13 @@ The covered public shapes are deliberately narrow:
 - `read-data.read` uses existing scalar single-beat or scalar last-beat syntax;
 - `read-data.read` covers exactly the two generated dynamic queue
   transactions once each;
-- raw `ARLEN`, runtime beat-count/RLAST validation, multi-beat output banks,
-  queue recapture widening, broader queue cardinality, mixed dynamic/static
-  queues, scoreboards, direct backend behavior, backend-language variants, and
-  VHDL remain future exact-owner work.
+- report-only raw `ARLEN` burst-length capture for the scalar last-beat queue
+  sibling is owned separately by
+  `IAL2-FEATURE-COMPLETENESS-FRONTIER.469`;
+- runtime beat-count/RLAST validation, multi-beat output banks, queue
+  recapture widening, broader queue cardinality, mixed dynamic/static queues,
+  scoreboards, direct backend behavior, backend-language variants, and VHDL
+  remain future exact-owner work.
 
 ## Public Samples
 
@@ -46,6 +49,10 @@ with coverage buckets:
 ial2_ppif_manager_capacity_status_dynamic_read_same_id_issue_order_queue_read_data_pipeline_cli
 ial2_ppif_manager_capacity_status_dynamic_read_burst_last_same_id_issue_order_queue_read_data_pipeline_cli
 ```
+
+The report-only raw-`ARLEN` last-beat sibling added after this slice is
+documented in
+[docs/AXI_IAL2_MANAGER_DYNAMIC_READ_SAME_ID_ISSUE_ORDER_QUEUE_READ_DATA_BURST_LENGTH_BEHAVIOR.md](AXI_IAL2_MANAGER_DYNAMIC_READ_SAME_ID_ISSUE_ORDER_QUEUE_READ_DATA_BURST_LENGTH_BEHAVIOR.md).
 
 ## Single-Beat Contract
 
@@ -168,8 +175,9 @@ For the last-beat sample, the same rule names capture into
 
 The implementation rejects dynamic issue-order queue read-data coverage unless
 the response-demux completion source and read-data capture scope match one of
-the two selected scalar shapes. It also rejects `read-data.read.burst-length`
-metadata for this queue path.
+the selected scalar shapes. The no-`burst-length` single-beat and last-beat
+samples remain unchanged; the report-only raw-`ARLEN` last-beat queue sibling
+is owned by `IAL2-FEATURE-COMPLETENESS-FRONTIER.469`.
 
 Guarded validation passed for:
 

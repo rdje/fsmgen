@@ -2285,18 +2285,18 @@ Map coverage. The response-demux remains queue-owned, raw `ARLEN` remains
 absent, and scalar queue read-data without `burst-length` remains the shipped
 behavior.
 
-`.468` now selects `.469`, direct bounded implementation of report-only
+`.468` selected `.469`, direct bounded implementation of report-only
 raw-`ARLEN` burst-length capture over generated dynamic read same-ID
-`issue-order-queue` last-beat read-data. Existing `read-data.read`
-`burst-length` syntax is sufficient; the current blocker is the local dynamic
-issue-order queue read-data coverage gate that rejects `burst-length`
-metadata. `.469` must add
+`issue-order-queue` last-beat read-data. `.469` now ships that behavior
+through the support-accounted public sample
 `ppif/axi_manager_capacity_status_dynamic_read_burst_last_same_id_issue_order_queue_read_data_burst_length.ppif`,
 the support-accounting entry, generated `axi0_arlen` input,
-per-transaction raw-`ARLEN` storage/capture rules, focused tests, docs, and
-Knowledge Map coverage while leaving runtime validation, multi-beat output
-banks, broader queues, mixed dynamic/static queues, scoreboards, direct
-backend behavior, backend-language variants, and VHDL as future exact owners.
+per-transaction raw-`ARLEN` storage/capture rules, queue-specific
+report/static-rule vocabulary, focused tests, docs, mdBook, and Knowledge Map
+coverage. `.470` is the next owner: runtime beat-count/`RLAST` validation
+readiness after dynamic queue raw-`ARLEN` capture. Multi-beat output banks,
+broader queues, mixed dynamic/static queues, scoreboards, direct backend
+behavior, backend-language variants, and VHDL remain future exact owners.
 
 No behavior
 changed in `.273`, `.274`, `.275`,
@@ -4680,6 +4680,8 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_READ_SAME_ID_ISSUE_ORDER_QUEUE_READ_DATA_READINESS_AUDIT.md` — audited read-data over generated dynamic read same-ID issue-order queue completions and selected paired scalar public contract selection.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_READ_SAME_ID_ISSUE_ORDER_QUEUE_READ_DATA_CONTRACT_SELECTION.md` — selected direct implementation of paired scalar read-data over generated dynamic read same-ID issue-order queue completions.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_READ_SAME_ID_ISSUE_ORDER_QUEUE_READ_DATA_BEHAVIOR.md` — shipped paired scalar read-data over generated dynamic read same-ID issue-order queue completions.
+- `docs/AXI_IAL2_MANAGER_DYNAMIC_READ_SAME_ID_ISSUE_ORDER_QUEUE_READ_DATA_BURST_LENGTH_READINESS_AUDIT.md` — audited report-only raw-`ARLEN` burst-length readiness over generated dynamic read same-ID issue-order queue last-beat read-data and selected direct implementation.
+- `docs/AXI_IAL2_MANAGER_DYNAMIC_READ_SAME_ID_ISSUE_ORDER_QUEUE_READ_DATA_BURST_LENGTH_BEHAVIOR.md` — shipped report-only raw-`ARLEN` burst-length capture over generated dynamic read same-ID issue-order queue last-beat read-data.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_CONTRACT_SELECTION.md` — selected direct single-active dynamic write `BID` same-cycle release-and-recapture behavior under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_BEHAVIOR.md` — shipped single-active dynamic write `BID` same-cycle release-and-recapture under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_WRITE_RECAPTURE_NEXT_SLICE_SELECTION.md` — selected `.367`, public contract selection for first single-active dynamic read same-cycle release-and-recapture after dynamic write recapture shipped.

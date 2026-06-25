@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.468: audit queue raw-ARLEN readiness`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.469` implements report-only raw-ARLEN capture over generated dynamic read same-ID issue-order queue last-beat read-data; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.468` selected direct `.469` implementation of report-only raw-`ARLEN` burst-length capture over generated dynamic read same-ID `issue-order-queue` last-beat read-data. Existing `read-data.read` `burst-length` syntax is sufficient; current behavior still fails closed at the local dynamic queue read-data coverage gate. Docs, mdBook, roadmap, task tree, and Knowledge Map were synced without behavior changes.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.469: generate queue raw-ARLEN capture`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.470` audits runtime beat-count/RLAST validation readiness after generated dynamic read same-ID issue-order queue raw-ARLEN read-data; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.469` shipped report-only raw-`ARLEN` burst-length capture over generated dynamic read same-ID `issue-order-queue` last-beat read-data. It added the support-accounted public sample, queue-specific coverage admission, generated `axi0_arlen` input, per-transaction raw-`ARLEN` storage/request-capture rules, report/static-rule prose, focused tests, docs, mdBook, and Knowledge Map fact card.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
-- blockers: none. `.468` passed guarded shipped-sample schedule JSON probing, a guarded temporary burst-length candidate fail-closed probe at the expected coverage diagnostic, Knowledge Map generation/check, mdBook build, docs path audit, memory architecture check, diff check, and doctrine gate. No parser/generator/sample/support/test/JSON/HDL/runtime behavior changed.
-- next_action: Start `.469`: implement report-only raw-`ARLEN` capture over generated dynamic read same-ID issue-order queue last-beat read-data using the selected support-accounted public sample, focused validation, docs, mdBook, Knowledge Map, memory, and commit workflow.
+- blockers: none. `.469` passed syntax checks, guarded schedule JSON, guarded reduced parser/report/ISF/FSM probing, and `t/248` support-accounting. Guarded strict check JSON, semantic JSON, full filtered `t/1438`, and HDL-lowering attempts were stopped by RAM guard host/RSS cutoffs or reviewer risk limits; no unguarded retry was run.
+- next_action: Start `.470`: audit runtime beat-count/`RLAST` validation readiness over generated dynamic read same-ID issue-order queue raw-`ARLEN` read-data before any runtime-validation behavior change.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact
