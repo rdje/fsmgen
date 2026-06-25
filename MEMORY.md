@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2: record sv2v dependency stance`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.476` audits identity-preserving same-transaction queue recapture ID refresh for generated dynamic same-ID issue-order queues; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` recorded the SystemVerilog-to-Verilog external dependency stance: FSMGen-owned generation/lowering remains the default; `sv2v` or similar converters are future audit candidates only, not mandatory dependencies unless a later owned audit proves exceptional quality/coverage and selects them. `.475` remains the latest IAL2 feature slice and selected `.476`.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.476: audit queue identity recapture`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.477` implements state-key-preserving dynamic same-ID issue-order queue recapture ID refresh; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.476` selected `.477`, direct implementation of state-key-preserving dynamic queue recapture ID refresh. The audit found current dynamic queue transition generation skips unchanged transaction-identity state keys, omitting rules such as `r0_dequeue_enqueue_r0` / `w0_dequeue_enqueue_w0` even though slot-local captured `ARID`/`AWID` must refresh for the newly admitted transaction.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
-- blockers: none. `.475` was documentation/continuity only; RAM-guarded schedule-report probes and the transition builder showed current emitted queue rules omit one-entry same-transaction ID-refresh rules such as `r0_dequeue_enqueue_r0` / `w0_dequeue_enqueue_w0`.
-- next_action: Start `.476`: audit whether to add state-key-preserving queue update rules that refresh slot IDs when the selected-dequeue transaction is admitted again in the same cycle, document/fail-close that identity-preserving case, split by family/queue length/scope, select report/static cleanup, or defer.
+- blockers: none. `.476` attempted a RAM-guarded report probe, but host memory was already at the default 88% cutoff and the guard stopped before data; no unguarded retry or cutoff raise was used.
+- next_action: Start `.477`: add state-key-preserving selected-dequeue-plus-same-transaction-enqueue dynamic queue transitions for existing bounded generated dynamic write/read/read-data queue samples, refresh affected slot IDs from `AWID`/`ARID`, update literal `generated_update_rules` tests/docs, and keep classic release-recapture fields exclusive to response-demux capture state.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact

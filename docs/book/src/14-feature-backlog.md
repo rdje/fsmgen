@@ -8527,6 +8527,14 @@ queue recapture ID refresh. Current queue reports keep
 `same_cycle_release_recapture_policy` and `release_recapture_*` fields remain
 exclusive to dynamic response-demux capture state until that audit settles the
 identity-preserving case.
+
+Dynamic same-ID issue-order queue identity recapture readiness:
+[AXI_IAL2_MANAGER_DYNAMIC_SAME_ID_ISSUE_ORDER_QUEUE_IDENTITY_RECAPTURE_READINESS_AUDIT](../../AXI_IAL2_MANAGER_DYNAMIC_SAME_ID_ISSUE_ORDER_QUEUE_IDENTITY_RECAPTURE_READINESS_AUDIT.md)
+selects `.477`, direct implementation of state-key-preserving dynamic queue
+recapture ID refresh. The current transition builder omits same-transaction
+selected-dequeue-plus-enqueue rules such as `r0_dequeue_enqueue_r0` and
+`w0_dequeue_enqueue_w0`, even though the affected slot ID must refresh from
+the current `ARID` or `AWID`.
 Broader queue cardinality, mixed dynamic/static queues, scoreboards, direct
 backend behavior, backend-language variants, and VHDL remain future exact
 owners.

@@ -3316,7 +3316,12 @@ recapture report field is added. Current queue reports keep
 `same_cycle_release_recapture_policy` and `release_recapture_*` fields remain
 exclusive to dynamic response-demux capture state. Broader queue cardinality,
 mixed dynamic/static queues, scoreboards, direct backend behavior,
-backend-language variants, and VHDL remain future exact owners.
+backend-language variants, and VHDL remain future exact owners. `.476` now
+selects `.477`, direct implementation of state-key-preserving dynamic queue
+recapture ID refresh. The current transition builder omits same-transaction
+selected-dequeue-plus-enqueue rules such as `r0_dequeue_enqueue_r0` and
+`w0_dequeue_enqueue_w0`; the next implementation must emit those literal
+rules and refresh the affected slot ID from current `ARID`/`AWID`.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
