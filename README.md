@@ -2347,6 +2347,16 @@ write BID same-ID `issue-order-queue` widened from two transactions to a
 bounded depth-3, three-transaction queue. Mixed dynamic/static queues,
 scoreboards, read-side depth-3 queues, direct backend behavior,
 backend-language variants, and VHDL remain future exact owners.
+`.481` now selects `.482`, direct bounded implementation of that depth-3
+all-dynamic write queue. The readiness audit found the behavior blocker is the
+local dynamic queue admission/storage gate, which still requires depth 2 and
+exactly two transactions. Transition, assignment, state-expression,
+selected-match, assertion, and report helpers are already queue-depth and
+transaction-list driven. `.482` owns the behavior change plus focused
+report/test/sample/support-accounting/docs updates; read depth-3 queues,
+read-data, mixed dynamic/static queues, scoreboards, arbitrary cardinality,
+direct backend behavior, backend-language variants, and VHDL remain future
+owners.
 
 No behavior
 changed in `.273`, `.274`, `.275`,
@@ -4743,6 +4753,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_SAME_ID_ISSUE_ORDER_QUEUE_IDENTITY_RECAPTURE_REPORT_CONTRACT_SELECTION.md` — selected queue-owned public report fields for generated dynamic same-ID issue-order queue identity recapture.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_SAME_ID_ISSUE_ORDER_QUEUE_IDENTITY_RECAPTURE_REPORT_BEHAVIOR.md` — shipped queue-owned `same_transaction_*` report fields for generated dynamic same-ID issue-order queue identity recapture.
 - `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_QUEUE_RECAPTURE_REPORT_NEXT_SLICE_SELECTION.md` — selected depth-3 all-dynamic write BID same-ID issue-order queue readiness as the next dynamic queue widening audit after identity-recapture report alignment.
+- `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_DEPTH3_SAME_ID_ISSUE_ORDER_QUEUE_READINESS_AUDIT.md` — audited generated all-dynamic write BID depth-3 same-ID issue-order queue readiness and selected direct bounded implementation.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_CONTRACT_SELECTION.md` — selected direct single-active dynamic write `BID` same-cycle release-and-recapture behavior under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_BEHAVIOR.md` — shipped single-active dynamic write `BID` same-cycle release-and-recapture under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_WRITE_RECAPTURE_NEXT_SLICE_SELECTION.md` — selected `.367`, public contract selection for first single-active dynamic read same-cycle release-and-recapture after dynamic write recapture shipped.

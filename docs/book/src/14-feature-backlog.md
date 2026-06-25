@@ -8573,6 +8573,19 @@ Other broader queue cardinality, mixed dynamic/static queues, scoreboards,
 direct backend behavior, backend-language variants, and VHDL remain future
 exact owners.
 
+Dynamic write depth-3 same-ID issue-order queue readiness audit:
+[AXI_IAL2_MANAGER_DYNAMIC_WRITE_DEPTH3_SAME_ID_ISSUE_ORDER_QUEUE_READINESS_AUDIT](../../AXI_IAL2_MANAGER_DYNAMIC_WRITE_DEPTH3_SAME_ID_ISSUE_ORDER_QUEUE_READINESS_AUDIT.md)
+selects `.482`, direct bounded implementation for exactly three all-dynamic
+write transactions, generated BID response-demux completion,
+`write-max-pending` at least 3, and one depth-3 queue. The audit found the
+current behavior blocker is local to the dynamic queue admission/storage gate:
+it still requires depth 2 and exactly two transactions. Transition,
+assignment, state-expression, selected-match, assertion, and report helpers
+are already queue-depth and transaction-list driven. Read depth-3 queues,
+read-data, mixed dynamic/static queues, scoreboards, arbitrary cardinality,
+direct backend behavior, backend-language variants, and VHDL remain future
+exact owners.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

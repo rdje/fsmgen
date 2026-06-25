@@ -3336,6 +3336,16 @@ write BID same-ID `issue-order-queue` widened from two transactions to a
 bounded depth-3, three-transaction queue. Mixed dynamic/static queues,
 scoreboards, read-side depth-3 queues, direct backend behavior,
 backend-language variants, and VHDL remain future exact owners.
+`.481` now selects `.482`, direct bounded implementation of that depth-3
+all-dynamic write queue. The readiness audit found the behavior blocker is the
+local dynamic queue admission/storage gate, which still requires depth 2 and
+exactly two transactions. Transition, assignment, state-expression,
+selected-match, assertion, and report helpers are already queue-depth and
+transaction-list driven. `.482` owns the behavior change plus focused
+report/test/sample/support-accounting/docs updates; read depth-3 queues,
+read-data, mixed dynamic/static queues, scoreboards, arbitrary cardinality,
+direct backend behavior, backend-language variants, and VHDL remain future
+owners.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

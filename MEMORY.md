@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.480: select dynamic queue cardinality audit`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.481` audits generated depth-3 all-dynamic write BID same-ID issue-order queue readiness; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.480` selected `.481`, readiness audit for widening the generated all-dynamic write BID same-ID issue-order queue from two transactions to one bounded depth-3, three-transaction queue after identity-recapture report alignment.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.481: audit dynamic write depth3 queue`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.482` implements generated depth-3 all-dynamic write BID same-ID issue-order queue behavior; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.481` selected `.482`, direct bounded implementation for exactly three all-dynamic write transactions, generated BID response-demux completion, `write-max-pending` at least 3, and one depth-3 queue. The audit found the behavior blocker is local to dynamic queue admission/storage; helpers are already depth/list driven.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none. A RAM-guarded focused t/1438 dynamic write queue probe for `.479` stopped at the 4096 MiB descendant RSS cutoff; no unguarded retry or cutoff raise was used.
-- next_action: Start `.481`: audit whether the existing dynamic queue builder can safely admit exactly three all-dynamic write transactions with generated BID response-demux completion and depth-3 queue state, or whether a smaller prerequisite is needed.
+- next_action: Start `.482`: implement only the owned depth-3 all-dynamic write BID queue slice, including admission/storage/report/test/sample/support-accounting/docs updates while preserving existing depth-2 dynamic queues and all deferred read, mixed, scoreboard, backend-language, direct backend, and VHDL behavior.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact
