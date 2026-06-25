@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.464: select dynamic queue read-data audit`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.465` audits read-data routing over generated dynamic read same-ID `issue-order-queue` completions; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.464` selected `.465`, readiness audit for read-data routing over generated dynamic read same-ID `issue-order-queue` response-demux pulses. The selector changes no behavior. Read-data is next because generated dynamic read same-ID queues now ship both single-beat `RID` and burst-last `RID && RLAST` completion sources, while read-data over generated dynamic read queues remains explicitly unowned.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.465: audit queue read-data readiness`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.466` selects the public contract for paired scalar read-data over generated dynamic read same-ID queues; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.465` selected `.466`, public contract selection for paired bounded scalar read-data routing over generated dynamic read same-ID `issue-order-queue` completions. The audit changes no behavior. It selected a paired contract because single-beat `generated_dynamic_issue_order_queue_demux` and burst-last `generated_dynamic_issue_order_queue_demux_last_beat` completions now ship, and ordinary generated dynamic read-data already supports matching scalar public syntax.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
-- blockers: none. `.464` is docs-only. Current host memory pressure stopped guarded focused t/1438, strict check JSON, and semantic JSON probes for `.463`; syntax checks, guarded schedule JSON, and guarded t/248 support-accounting passed. Broad t/1436/t1437/t1438, strict/semantic closeout, HDL validation, direct backend, backend-language variants, and VHDL are not claimed.
-- next_action: Start `.465`: audit read-data routing over generated dynamic read same-ID `issue-order-queue` completions and select the exact behavior owner or prerequisite before any behavior change.
+- blockers: none. `.465` is docs-only. Current host memory pressure stopped guarded focused t/1438, strict check JSON, and semantic JSON probes for `.463`; syntax checks, guarded schedule JSON, and guarded t/248 support-accounting passed. Broad t/1436/t1437/t1438, strict/semantic closeout, HDL validation, direct backend, backend-language variants, and VHDL are not claimed.
+- next_action: Start `.466`: select the exact paired scalar read-data public contract, sample identities, report vocabulary, diagnostics, validation, rollback, and non-goals before any behavior change.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact

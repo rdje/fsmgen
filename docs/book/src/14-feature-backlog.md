@@ -8368,6 +8368,25 @@ recapture widening, broader queue cardinality, mixed dynamic/static queues,
 scoreboards, direct backend behavior, backend-language variants, and VHDL
 remain future exact owners.
 
+Dynamic read same-ID issue-order queue read-data readiness:
+[AXI_IAL2_MANAGER_DYNAMIC_READ_SAME_ID_ISSUE_ORDER_QUEUE_READ_DATA_READINESS_AUDIT](../../AXI_IAL2_MANAGER_DYNAMIC_READ_SAME_ID_ISSUE_ORDER_QUEUE_READ_DATA_READINESS_AUDIT.md)
+selects `.466`, public contract selection for paired bounded scalar read-data
+routing over generated dynamic read same-ID `issue-order-queue` completions.
+The readiness audit changes no behavior. It selects a paired contract because
+generated dynamic read same-ID queues now ship both single-beat
+`generated_dynamic_issue_order_queue_demux` and burst-last
+`generated_dynamic_issue_order_queue_demux_last_beat` completion sources, and
+the ordinary generated dynamic read-data path already supports the matching
+scalar single-beat and scalar last-beat public syntax. `.466` must pin the
+public source shape, sample identities, report keys, diagnostics, residue,
+validation, rollback, and queue-specific read-data completion validity names
+`generated_dynamic_read_issue_order_queue_response_demux_completion_pulse` and
+`generated_dynamic_read_issue_order_queue_response_demux_last_beat_completion_pulse`
+before behavior changes. Raw `ARLEN`, runtime validation, multi-beat output
+banks, queue recapture widening, broader queue cardinality, mixed
+dynamic/static queues, scoreboards, direct backend behavior, backend-language
+variants, and VHDL remain future exact owners.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after
