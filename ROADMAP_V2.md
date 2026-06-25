@@ -3278,12 +3278,16 @@ The generator admits only the exact two-transaction all-dynamic burst-last
 queue report-only shape, emits generated `axi0_arlen`, per-transaction
 raw-`ARLEN` storage, request-capture rules, and reports
 `generated_dynamic_read_issue_order_queue_response_demux_last_beat_completion_pulse`
-with `burst_length_validation: report_only`. `.470` is the next owner:
-runtime beat-count/`RLAST` validation readiness after dynamic queue
-raw-`ARLEN` capture. Multi-beat output banks, queue recapture widening,
-broader queue cardinality, mixed dynamic/static queues, scoreboards, direct
-backend behavior, backend-language variants, and VHDL remain future exact
-owners.
+with `burst_length_validation: report_only`. `.470` now selects `.471`,
+direct bounded implementation of runtime beat-count/`RLAST` validation over
+that generated dynamic read same-ID `issue-order-queue` last-beat raw-`ARLEN`
+shape. Existing `read-data.read` `burst-length` syntax is sufficient; the
+remaining behavior work is local dynamic queue coverage admission plus
+generated expected-beat storage, beat-count storage/rules, and
+beat-count/`RLAST` assertions. Multi-beat output banks, queue recapture
+widening, broader queue cardinality, mixed dynamic/static queues, scoreboards,
+direct backend behavior, backend-language variants, and VHDL remain future
+exact owners.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

@@ -8443,9 +8443,20 @@ exact two-transaction all-dynamic burst-last queue shape with
 adds generated `axi0_arlen`, per-transaction raw-`ARLEN` storage
 `axi0_r0_arlen_q`/`axi0_r1_arlen_q`, and request-capture rules
 `axi0_r0_burst_length_capture`/`axi0_r1_burst_length_capture`. The `.467`
-no-`burst-length` queue samples remain unchanged. `.470` is runtime
-beat-count/`RLAST` validation readiness after queue raw-`ARLEN` capture;
-multi-beat output banks, queue recapture widening, broader queues, mixed
+no-`burst-length` queue samples remain unchanged.
+
+Dynamic read same-ID issue-order queue read-data runtime-validation readiness:
+[AXI_IAL2_MANAGER_DYNAMIC_READ_SAME_ID_ISSUE_ORDER_QUEUE_READ_DATA_RUNTIME_VALIDATION_READINESS_AUDIT](../../AXI_IAL2_MANAGER_DYNAMIC_READ_SAME_ID_ISSUE_ORDER_QUEUE_READ_DATA_RUNTIME_VALIDATION_READINESS_AUDIT.md)
+selects `.471`, direct bounded implementation of runtime beat-count/`RLAST`
+validation over the generated dynamic read same-ID `issue-order-queue`
+last-beat raw-`ARLEN` shape. Existing `read-data.read` `burst-length` syntax
+already covers `(validation runtime-assertion)`, so no new public
+contract-selection leaf is required. The selected future sample is
+`ppif/axi_manager_capacity_status_dynamic_read_burst_last_same_id_issue_order_queue_read_data_burst_length_runtime_assertion.ppif`.
+`.470` changes no parser, generator, PPIF sample, support accounting,
+validation behavior, generated artifact, test, JSON, HDL, runtime behavior,
+direct backend behavior, backend-language variant, or VHDL behavior.
+Multi-beat output banks, queue recapture widening, broader queues, mixed
 dynamic/static queues, scoreboards, direct backend behavior,
 backend-language variants, and VHDL remain future exact owners.
 
