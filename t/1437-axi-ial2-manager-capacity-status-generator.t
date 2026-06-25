@@ -1162,6 +1162,42 @@ subtest 'dynamic read burst-last depth-3 same-ID issue-order queue captures thir
     like($hdl, qr/axi0_read_dynamic_same_id_issue_order_slot1_id_q_next\s*=\s*axi0_arid\s*;/, 'SystemVerilog recaptures ARID into a compacted queue slot');
 };
 
+subtest 'dynamic read burst-last depth-3 same-ID issue-order queue read-data captures r2 last payload' => sub {
+    my $result = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_dynamic_read_burst_last_depth3_same_id_issue_order_queue_read_data());
+    my $isf = $result->{generated_ial1}{text};
+
+    like($isf, qr/\(input axi0_r2_request\)/, 'dynamic read burst-last depth-3 queue read-data declares r2 request input');
+    like($isf, qr/\(input axi0_rlast\)/, 'dynamic read burst-last depth-3 queue read-data declares RLAST input');
+    like($isf, qr/\(input axi0_rdata \(width 32\)\)/, 'dynamic read burst-last depth-3 queue read-data declares RDATA input');
+    like($isf, qr/\(input axi0_rresp \(width 2\)\)/, 'dynamic read burst-last depth-3 queue read-data declares RRESP input');
+    like($isf, qr/\(output axi0_r2_complete\)/, 'dynamic read burst-last depth-3 queue read-data exposes r2 completion');
+    like($isf, qr/\(output axi0_r2_last_rdata \(width 32\)\)/, 'dynamic read burst-last depth-3 queue read-data exposes r2 scalar last RDATA');
+    like($isf, qr/\(output axi0_r2_last_rresp \(width 2\)\)/, 'dynamic read burst-last depth-3 queue read-data exposes r2 scalar last RRESP');
+    unlike($isf, qr/axi0_r2_dynamic_id_q/, 'dynamic read burst-last depth-3 queue read-data does not allocate legacy r2 selected ID state');
+    like($isf, qr/\(var axi0_read_dynamic_same_id_issue_order_slot2_id_q \(width 4\)\)/, 'dynamic read burst-last depth-3 queue read-data allocates slot2 captured ARID');
+    like($isf, qr/\(rule axi0_r2_response_demux [\s\S]*axi0_read_dynamic_same_id_issue_order_slot0_id_q[\s\S]*axi0_read_dynamic_same_id_issue_order_slot1_id_q[\s\S]*axi0_read_dynamic_same_id_issue_order_slot2_id_q[\s\S]*axi0_rlast[\s\S]*\(pulse axi0_r2_complete\)\)/, 'dynamic read burst-last depth-3 queue read-data keeps queue-owned r2 RID/RLAST demux');
+    like($isf, qr/\(rule axi0_r2_read_data_capture axi0_r2_complete\s+\(axi0_r2_last_rdata axi0_rdata\)\s+\(axi0_r2_last_rresp axi0_rresp\)\)/, 'dynamic read burst-last depth-3 queue read-data captures r2 payload under queue last-beat completion');
+    unlike($isf, qr/\baxi0_arlen\b/, 'dynamic read burst-last depth-3 queue read-data keeps burst-length metadata absent');
+
+    assert_dynamic_read_burst_last_depth3_same_id_issue_order_queue_report($result->{report}, 'generator report');
+    assert_read_data_last_beat_report(
+        $result->{report}{read_data},
+        'generator dynamic read burst-last depth-3 queue read-data report',
+        'generated_dynamic_read_issue_order_queue_response_demux_last_beat_completion_pulse',
+        transactions => [qw(r0 r1 r2)],
+    );
+
+    my $fsm = $result->{generated_ial0}{files}{'axi0_capacity_status.fsm'};
+    like($fsm, qr/\(-axi0_r2_read_data_capture\s+<axi0_r2_complete\s+\(<- \(axi0_r2_last_rdata> axi0_rdata\)\)\s+\(<- \(axi0_r2_last_rresp> axi0_rresp\)\)/, 'scheduled .fsm lowers r2 depth-3 queue read-data capture');
+    my $hdl = hdl_for('axi0_capacity_status', $fsm);
+    like($hdl, qr/\binput\s+(?:wire\s+)?axi0_rlast\b/, 'SystemVerilog exposes RLAST for depth-3 queue read-data');
+    like($hdl, qr/\boutput\s+reg\s+\[31:0\]\s+axi0_r2_last_rdata\b/, 'SystemVerilog exposes r2 depth-3 queue read-data output');
+    like($hdl, qr/assign\s+axi0_r2_read_data_capture_en\s*=\s*axi0_r2_complete\s*;/, 'SystemVerilog guards r2 depth-3 queue read-data capture by completion');
+    like($hdl, qr/axi0_r2_last_rdata_next\s*=\s*axi0_rdata\s*;/, 'SystemVerilog captures r2 depth-3 queue RDATA');
+    like($hdl, qr/axi0_r2_last_rresp_next\s*=\s*axi0_rresp\s*;/, 'SystemVerilog captures r2 depth-3 queue RRESP');
+    unlike($hdl, qr/\baxi0_arlen\b/, 'SystemVerilog keeps ARLEN absent for scalar depth-3 queue read-data');
+};
+
 subtest 'mixed dynamic/static write response-demux captures AWID and matches static BID' => sub {
     my $result = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_mixed_dynamic_static_write_response_demux());
     my $isf = $result->{generated_ial1}{text};
@@ -6090,6 +6126,34 @@ sub sample_contract_with_dynamic_read_burst_last_depth3_same_id_issue_order_queu
     $contract->{response_demux}{read}{response_scope} = 'burst-last';
     $contract->{response_demux}{read}{last_signal} = 'axi0_rlast';
     $contract->{response_demux}{read}{last_signal_width} = 1;
+    return $contract;
+}
+
+sub sample_contract_with_dynamic_read_burst_last_depth3_same_id_issue_order_queue_read_data {
+    my $contract = sample_contract_with_dynamic_read_burst_last_depth3_same_id_issue_order_queue();
+    $contract->{intent_name} = 'axi_manager_capacity_status_dynamic_read_burst_last_depth3_same_id_issue_order_queue_read_data';
+    $contract->{source}{object_id} = 'axi-manager-capacity-status-dynamic-read-burst-last-depth3-same-id-issue-order-queue-read-data';
+    $contract->{read_data} = {
+        read => {
+            capture_scope     => 'last-beat',
+            completion_source => 'response-demux',
+            data_signal       => 'axi0_rdata',
+            data_width        => 32,
+            status_signal     => 'axi0_rresp',
+            status_width      => 2,
+            status_policy     => 'last-beat',
+            interleaving      => 'last-beat-by-rid',
+            transactions      => [
+                map {
+                    {
+                        transaction   => $_,
+                        data_output   => "axi0_${_}_last_rdata",
+                        status_output => "axi0_${_}_last_rresp",
+                    }
+                } qw(r0 r1 r2)
+            ],
+        },
+    };
     return $contract;
 }
 

@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.490: audit RLAST depth3 read-data`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.491` implements scalar last-beat read-data over generated all-dynamic read burst-last RID/RLAST depth-3 same-ID issue-order queue behavior; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.490` selected `.491`, direct bounded implementation of scalar last-beat read-data over the generated depth-3 dynamic RLAST queue. A RAM-guarded temporary candidate failed closed at the local dynamic issue-order queue read-data coverage gate, which still requires exactly two dynamic transactions and one depth-2 queue; no parser or lower artifact prerequisite was exposed.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.491: ship RLAST depth3 read-data`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.492` selects the next exact owner after scalar last-beat read-data over generated all-dynamic read burst-last RID/RLAST depth-3 same-ID issue-order queue behavior; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.491` shipped scalar last-beat read-data over exactly three all-dynamic read burst-last queue transactions through `ppif/axi_manager_capacity_status_dynamic_read_burst_last_depth3_same_id_issue_order_queue_read_data.ppif`. Syntax checks, RAM-guarded schedule JSON, adapter/report smoke, generated IAL1/IAL0 smoke, and `t/248` passed; guarded filtered `t/1438`, strict check JSON, and direct HDL generation stopped at the 88% host-memory cutoff without unsafe retry.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
-- next_action: Start `.491`: implement only scalar last-beat read-data over exactly three all-dynamic read burst-last queue transactions, with one support-accounted PPIF sample and focused coverage/report/tests/docs; do not widen raw ARLEN, runtime validation, multi-beat, mixed/static, scoreboard, arbitrary cardinality, backend-language, sv2v, or VHDL behavior.
+- next_action: Start `.492`: select one next exact IAL2 owner after the depth-3 dynamic RLAST queue read-data slice; do not change parser, generator, PPIF samples, support accounting, generated artifacts, report JSON, tests, HDL/runtime behavior, external converter dependencies such as sv2v, arbitrary cardinality, backend behavior, or VHDL in the selector.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact

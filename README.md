@@ -2447,20 +2447,20 @@ needs explicit audit ownership before implementation. Mixed dynamic/static
 queues, scoreboards, arbitrary cardinality, direct backend behavior,
 backend-language variants, external converter dependencies such as `sv2v`,
 and VHDL remain deferred; FSMGen-owned generation/lowering remains the
-default. `.490` now selects `.491`, direct bounded implementation of scalar
-last-beat read-data over that generated depth-3 dynamic RLAST queue. The
-readiness audit found no parser or lower artifact prerequisite: a
-RAM-guarded temporary candidate with `r0`/`r1`/`r2` failed closed at the
-local dynamic issue-order queue read-data coverage gate, which still requires
-exactly two dynamic transactions and one depth-2 queue. `.491` should add one
-support-accounted sample,
-`ppif/axi_manager_capacity_status_dynamic_read_burst_last_depth3_same_id_issue_order_queue_read_data.ppif`,
-and widen only scalar last-beat read-data coverage/report expectations for
-the exact three-transaction queue. Raw `ARLEN`, runtime beat-count/`RLAST`
-validation, multi-beat output banks, mixed dynamic/static queues,
-scoreboards, arbitrary cardinality, direct backend behavior, backend-language
-variants, external converter dependencies such as `sv2v`, and VHDL remain
-deferred; FSMGen-owned generation/lowering remains the default.
+default. `.491` now ships scalar last-beat read-data over that generated
+depth-3 dynamic RLAST queue through support-accounted sample
+`ppif/axi_manager_capacity_status_dynamic_read_burst_last_depth3_same_id_issue_order_queue_read_data.ppif`.
+The generated capture covers `r0`, `r1`, and `r2`, binds each
+`axi0_r*_read_data_capture` rule to the generated queue completion pulse,
+captures `axi0_rdata`/`axi0_rresp` into `axi0_r*_last_rdata`/
+`axi0_r*_last_rresp`, and reports
+`generated_dynamic_read_issue_order_queue_response_demux_last_beat_completion_pulse`
+with `read_rid_rlast_three_dynamic_transactions`. Raw `ARLEN`, runtime
+beat-count/`RLAST` validation, multi-beat output banks, mixed dynamic/static
+queues, scoreboards, arbitrary cardinality, direct backend behavior,
+backend-language variants, external converter dependencies such as `sv2v`,
+and VHDL remain deferred; FSMGen-owned generation/lowering remains the
+default. `.492` is the next post-behavior selector.
 
 No behavior
 changed in `.273`, `.274`, `.275`,
@@ -4866,6 +4866,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_READ_BURST_LAST_DEPTH3_SAME_ID_ISSUE_ORDER_QUEUE_BEHAVIOR.md` — shipped generated all-dynamic read burst-last `RID && RLAST` depth-3 same-ID issue-order queue behavior.
 - `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_READ_BURST_LAST_DEPTH3_SAME_ID_ISSUE_ORDER_QUEUE_NEXT_SLICE_SELECTION.md` — selected scalar last-beat read-data over generated all-dynamic read burst-last `RID && RLAST` depth-3 same-ID issue-order queue behavior as the next readiness audit.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_READ_BURST_LAST_DEPTH3_SAME_ID_ISSUE_ORDER_QUEUE_READ_DATA_READINESS_AUDIT.md` — audited scalar last-beat read-data over generated all-dynamic read burst-last `RID && RLAST` depth-3 same-ID issue-order queue behavior and selected direct bounded implementation.
+- `docs/AXI_IAL2_MANAGER_DYNAMIC_READ_BURST_LAST_DEPTH3_SAME_ID_ISSUE_ORDER_QUEUE_READ_DATA_BEHAVIOR.md` — shipped scalar last-beat read-data over generated all-dynamic read burst-last `RID && RLAST` depth-3 same-ID issue-order queue behavior.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_CONTRACT_SELECTION.md` — selected direct single-active dynamic write `BID` same-cycle release-and-recapture behavior under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_BEHAVIOR.md` — shipped single-active dynamic write `BID` same-cycle release-and-recapture under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_WRITE_RECAPTURE_NEXT_SLICE_SELECTION.md` — selected `.367`, public contract selection for first single-active dynamic read same-cycle release-and-recapture after dynamic write recapture shipped.

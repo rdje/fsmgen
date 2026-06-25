@@ -3333,7 +3333,7 @@ sub _read_data_response_demux_transaction_coverage(%args) {
             && $transaction_completion_source eq 'generated_dynamic_issue_order_queue_demux_last_beat'
             && ($response_demux->{response_scope} // '') eq 'burst_last'
             && $burst_length_validation eq 'runtime_assertion';
-        my $queue_diagnostic = 'AXI manager capacity/status IAL2 contract read_data.read dynamic issue-order queue coverage requires generated dynamic read issue-order queue single-beat response_demux with capture_scope single-beat and no burst_length metadata, generated dynamic read issue-order queue burst-last response_demux with capture_scope last-beat and no burst_length metadata, generated dynamic read issue-order queue burst-last response_demux with capture_scope last-beat and report-only/runtime-assertion burst_length metadata, or generated dynamic read issue-order queue burst-last response_demux with capture_scope multi-beat and runtime-assertion burst_length metadata in this slice';
+        my $queue_diagnostic = 'AXI manager capacity/status IAL2 contract read_data.read dynamic issue-order queue coverage requires generated dynamic read issue-order queue single-beat response_demux with capture_scope single-beat and no burst_length metadata, generated dynamic read issue-order queue burst-last response_demux with capture_scope last-beat and no burst_length metadata over two dynamic transactions or one depth-3 all-dynamic queue, generated dynamic read issue-order queue burst-last response_demux with capture_scope last-beat and report-only/runtime-assertion burst_length metadata over two dynamic transactions, or generated dynamic read issue-order queue burst-last response_demux with capture_scope multi-beat and runtime-assertion burst_length metadata over two dynamic transactions in this slice';
         confess "$queue_diagnostic\n"
             unless ref($supported) eq 'HASH'
                 && $transaction_completion_source eq $supported->{transaction_completion_source}
@@ -3343,7 +3343,7 @@ sub _read_data_response_demux_transaction_coverage(%args) {
         my @transactions = @{$response_demux->{dynamic_transactions} || []};
         my $groups = $response_demux->{same_id_issue_order_queues};
         confess "$queue_diagnostic\n"
-            unless @transactions == 2
+            unless (@transactions == 2 || @transactions == 3)
                 && ref($groups) eq 'ARRAY'
                 && @$groups == 1;
 
@@ -3351,10 +3351,20 @@ sub _read_data_response_demux_transaction_coverage(%args) {
         my $depth = ref($group) eq 'HASH' ? ($group->{depth} // 0) : 0;
         my $group_transactions = ref($group) eq 'HASH' ? $group->{transactions} : undef;
         my @group_transactions = ref($group_transactions) eq 'ARRAY' ? @$group_transactions : ();
+        my $valid_depth2_queue = @transactions == 2
+            && $depth == 2
+            && @group_transactions == 2
+            && join("\0", @group_transactions) eq join("\0", @transactions);
+        my $valid_depth3_last_beat_queue = @transactions == 3
+            && !$has_burst_length
+            && $capture_scope eq 'last-beat'
+            && $transaction_completion_source eq 'generated_dynamic_issue_order_queue_demux_last_beat'
+            && ($response_demux->{response_scope} // '') eq 'burst_last'
+            && $depth == 3
+            && @group_transactions == 3
+            && join("\0", @group_transactions) eq join("\0", @transactions);
         confess "$queue_diagnostic\n"
-            unless $depth == 2
-                && @group_transactions == 2
-                && join("\0", @group_transactions) eq join("\0", @transactions);
+            unless $valid_depth2_queue || $valid_depth3_last_beat_queue;
 
         my @completion_signals = @{$response_demux->{generated_completion_signals} || []};
         confess "AXI manager capacity/status IAL2 contract read_data.read dynamic issue-order queue coverage requires one generated completion signal per covered read transaction\n"

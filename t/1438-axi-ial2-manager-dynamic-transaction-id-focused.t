@@ -107,6 +107,15 @@ my @DYNAMIC_CASES = (
         behavior     => 'dynamic_read_burst_last_depth3_same_id_issue_order_queue',
     },
     {
+        label        => 'dynamic read RID/RLAST depth-3 same-ID issue-order queue read-data',
+        relpath      => 'ppif/axi_manager_capacity_status_dynamic_read_burst_last_depth3_same_id_issue_order_queue_read_data.ppif',
+        object_id    => 'axi-manager-capacity-status-dynamic-read-burst-last-depth3-same-id-issue-order-queue-read-data',
+        intent_name  => 'axi_manager_capacity_status_dynamic_read_burst_last_depth3_same_id_issue_order_queue_read_data',
+        entry_id     => 'intent.ppif_axi_manager_capacity_status_dynamic_read_burst_last_depth3_same_id_issue_order_queue_read_data',
+        coverage     => 'ial2_ppif_manager_capacity_status_dynamic_read_burst_last_depth3_same_id_issue_order_queue_read_data_pipeline_cli',
+        behavior     => 'dynamic_read_burst_last_depth3_same_id_issue_order_queue_read_data',
+    },
+    {
         label        => 'dynamic read RID same-ID issue-order queue read-data',
         relpath      => 'ppif/axi_manager_capacity_status_dynamic_read_same_id_issue_order_queue_read_data.ppif',
         object_id    => 'axi-manager-capacity-status-dynamic-read-same-id-issue-order-queue-read-data',
@@ -1182,6 +1191,47 @@ sub assert_dynamic_behavior {
         like($hdl, qr/axi0_r1_last_rdata_next\s*=\s*axi0_rdata\s*;/, 'SystemVerilog captures r1 queue last-beat RDATA');
         like($hdl, qr/axi0_r1_last_rresp_next\s*=\s*axi0_rresp\s*;/, 'SystemVerilog captures r1 queue last-beat RRESP');
         unlike($hdl, qr/\baxi0_arlen\b/, 'SystemVerilog keeps ARLEN absent for scalar last-beat dynamic queue read-data');
+        return;
+    }
+
+    if ($case->{behavior} eq 'dynamic_read_burst_last_depth3_same_id_issue_order_queue_read_data') {
+        for my $tx (qw(r0 r1 r2)) {
+            like($isf, qr/\(input axi0_${tx}_request\)/, "dynamic read burst-last depth-3 issue-order queue read-data declares $tx request input");
+            like($isf, qr/\(output axi0_${tx}_complete\)/, "dynamic read burst-last depth-3 issue-order queue read-data exposes $tx completion output");
+            like($isf, qr/\(output axi0_${tx}_last_rdata \(width 32\)\)/, "dynamic read burst-last depth-3 issue-order queue read-data exposes $tx scalar last RDATA");
+            like($isf, qr/\(output axi0_${tx}_last_rresp \(width 2\)\)/, "dynamic read burst-last depth-3 issue-order queue read-data exposes $tx scalar last RRESP");
+        }
+        like($isf, qr/\(input axi0_arid \(width 4\)\)/, 'dynamic read burst-last depth-3 issue-order queue read-data declares ARID input');
+        like($isf, qr/\(input axi0_rid \(width 4\)\)/, 'dynamic read burst-last depth-3 issue-order queue read-data declares RID input');
+        like($isf, qr/\(input axi0_rlast\)/, 'dynamic read burst-last depth-3 issue-order queue read-data declares RLAST input');
+        like($isf, qr/\(input axi0_rdata \(width 32\)\)/, 'dynamic read burst-last depth-3 issue-order queue read-data declares RDATA input');
+        like($isf, qr/\(input axi0_rresp \(width 2\)\)/, 'dynamic read burst-last depth-3 issue-order queue read-data declares RRESP input');
+        unlike($isf, qr/axi0_r0_dynamic_id_q/, 'dynamic read burst-last depth-3 issue-order queue read-data does not allocate legacy selected-ID storage');
+        unlike($isf, qr/axi0_r2_dynamic_busy_q/, 'dynamic read burst-last depth-3 issue-order queue read-data does not allocate legacy busy storage');
+        like($isf, qr/\(var axi0_read_dynamic_same_id_issue_order_slot0_id_q \(width 4\)\)/, 'dynamic read burst-last depth-3 issue-order queue read-data allocates slot0 captured ARID');
+        like($isf, qr/\(var axi0_read_dynamic_same_id_issue_order_slot1_id_q \(width 4\)\)/, 'dynamic read burst-last depth-3 issue-order queue read-data allocates slot1 captured ARID');
+        like($isf, qr/\(var axi0_read_dynamic_same_id_issue_order_slot2_id_q \(width 4\)\)/, 'dynamic read burst-last depth-3 issue-order queue read-data allocates slot2 captured ARID');
+        like($isf, qr/\(rule axi0_r2_response_demux [\s\S]*axi0_read_dynamic_same_id_issue_order_slot0_id_q[\s\S]*axi0_read_dynamic_same_id_issue_order_slot1_id_q[\s\S]*axi0_read_dynamic_same_id_issue_order_slot2_id_q[\s\S]*axi0_rlast[\s\S]*\(pulse axi0_r2_complete\)\)/, 'dynamic read burst-last depth-3 issue-order queue read-data keeps queue-owned r2 RID/RLAST demux');
+        like($isf, qr/\(rule axi0_r0_read_data_capture axi0_r0_complete\s+\(axi0_r0_last_rdata axi0_rdata\)\s+\(axi0_r0_last_rresp axi0_rresp\)\)/, 'dynamic read burst-last depth-3 issue-order queue read-data captures r0 payload under queue completion');
+        like($isf, qr/\(rule axi0_r1_read_data_capture axi0_r1_complete\s+\(axi0_r1_last_rdata axi0_rdata\)\s+\(axi0_r1_last_rresp axi0_rresp\)\)/, 'dynamic read burst-last depth-3 issue-order queue read-data captures r1 payload under queue completion');
+        like($isf, qr/\(rule axi0_r2_read_data_capture axi0_r2_complete\s+\(axi0_r2_last_rdata axi0_rdata\)\s+\(axi0_r2_last_rresp axi0_rresp\)\)/, 'dynamic read burst-last depth-3 issue-order queue read-data captures r2 payload under queue completion');
+        unlike($isf, qr/\baxi0_arlen\b/, 'dynamic read burst-last depth-3 issue-order queue read-data keeps burst-length metadata absent');
+        assert_dynamic_read_burst_last_depth3_same_id_issue_order_queue_report($result->{report});
+        assert_read_data_report(
+            $result->{report}{read_data},
+            'generated_dynamic_read_issue_order_queue_response_demux_last_beat_completion_pulse',
+            [qw(multi_beat_read_data_reassembly per_beat_outputs rresp_aggregation arlen_or_beat_count_validation)],
+            [qw(r0 r1 r2)],
+        );
+        like($fsm, qr/\(-axi0_r2_read_data_capture\s+<axi0_r2_complete\s+\(<- \(axi0_r2_last_rdata> axi0_rdata\)\)\s+\(<- \(axi0_r2_last_rresp> axi0_rresp\)\)/, 'scheduled FSM lowers r2 queue last-beat read-data capture');
+        my $hdl = hdl_for('axi0_capacity_status', $fsm);
+        like($hdl, qr/\binput\s+(?:wire\s+)?axi0_rlast\b/, 'SystemVerilog exposes RLAST for depth-3 dynamic queue last-beat read-data');
+        like($hdl, qr/\binput\s+(?:wire\s+)?\[31:0\]\s+axi0_rdata\b/, 'SystemVerilog exposes RDATA for depth-3 dynamic queue last-beat read-data');
+        like($hdl, qr/\binput\s+(?:wire\s+)?\[1:0\]\s+axi0_rresp\b/, 'SystemVerilog exposes RRESP for depth-3 dynamic queue last-beat read-data');
+        like($hdl, qr/assign\s+axi0_r2_read_data_capture_en\s*=\s*axi0_r2_complete\s*;/, 'SystemVerilog guards r2 queue last-beat read-data capture by completion');
+        like($hdl, qr/axi0_r2_last_rdata_next\s*=\s*axi0_rdata\s*;/, 'SystemVerilog captures r2 queue last-beat RDATA');
+        like($hdl, qr/axi0_r2_last_rresp_next\s*=\s*axi0_rresp\s*;/, 'SystemVerilog captures r2 queue last-beat RRESP');
+        unlike($hdl, qr/\baxi0_arlen\b/, 'SystemVerilog keeps ARLEN absent for scalar last-beat depth-3 dynamic queue read-data');
         return;
     }
 

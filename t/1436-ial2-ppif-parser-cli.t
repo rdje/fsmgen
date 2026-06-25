@@ -631,6 +631,37 @@ subtest 'PPIF adapter parses AXI manager dynamic read burst-last same-ID issue-o
     );
 };
 
+subtest 'PPIF adapter parses AXI manager dynamic read burst-last depth-3 same-ID issue-order queue read-data behavior' => sub {
+    my $sample_path = sample_capacity_dynamic_read_burst_last_depth3_same_id_issue_order_queue_read_data_ppif_path();
+    ok(-f $sample_path, 'tracked runnable PPIF capacity/status dynamic read burst-last depth-3 same-ID issue-order queue read-data sample exists');
+
+    my $result = FSM::Adapter::IAL2::PPIF->new()->parse_source(sample_capacity_dynamic_read_burst_last_depth3_same_id_issue_order_queue_read_data_ppif(), $sample_path);
+    my $isf = $result->{generated_ial1}{text};
+    my $fsm = $result->{generated_ial0}{files}{'axi0_capacity_status.fsm'};
+
+    is($result->{kind}, 'protocol_intent.axi_manager_capacity_status', 'dynamic read burst-last depth-3 same-ID issue-order queue read-data sample still uses the capacity/status generator');
+    is($result->{report}{source_object}{id}, 'axi-manager-capacity-status-dynamic-read-burst-last-depth3-same-id-issue-order-queue-read-data', 'dynamic read burst-last depth-3 same-ID issue-order queue read-data source object id is preserved');
+    is($result->{report}{source_object}{intent_name}, 'axi_manager_capacity_status_dynamic_read_burst_last_depth3_same_id_issue_order_queue_read_data', 'dynamic read burst-last depth-3 same-ID issue-order queue read-data source intent name is preserved');
+    like($isf, qr/\(input axi0_r2_request\)/, 'dynamic read burst-last depth-3 same-ID issue-order queue read-data declares r2 request input');
+    like($isf, qr/\(input axi0_rlast\)/, 'dynamic read burst-last depth-3 same-ID issue-order queue read-data declares RLAST input');
+    like($isf, qr/\(input axi0_rdata \(width 32\)\)/, 'dynamic read burst-last depth-3 same-ID issue-order queue read-data declares RDATA input');
+    like($isf, qr/\(input axi0_rresp \(width 2\)\)/, 'dynamic read burst-last depth-3 same-ID issue-order queue read-data declares RRESP input');
+    like($isf, qr/\(output axi0_r2_last_rdata \(width 32\)\)/, 'dynamic read burst-last depth-3 same-ID issue-order queue read-data declares r2 scalar last data output');
+    like($isf, qr/\(output axi0_r2_last_rresp \(width 2\)\)/, 'dynamic read burst-last depth-3 same-ID issue-order queue read-data declares r2 scalar last status output');
+    like($isf, qr/\(var axi0_read_dynamic_same_id_issue_order_slot2_id_q \(width 4\)\)/, 'dynamic read burst-last depth-3 same-ID issue-order queue read-data allocates slot2 captured ID');
+    like($isf, qr/\(rule axi0_r2_response_demux [\s\S]*axi0_read_dynamic_same_id_issue_order_slot0_id_q[\s\S]*axi0_read_dynamic_same_id_issue_order_slot1_id_q[\s\S]*axi0_read_dynamic_same_id_issue_order_slot2_id_q[\s\S]*axi0_rlast[\s\S]*\(pulse axi0_r2_complete\)\)/, 'dynamic read burst-last depth-3 same-ID issue-order queue read-data keeps queue-owned r2 RID/RLAST demux');
+    like($isf, qr/\(rule axi0_r2_read_data_capture axi0_r2_complete\s+\(axi0_r2_last_rdata axi0_rdata\)\s+\(axi0_r2_last_rresp axi0_rresp\)\)/, 'dynamic read burst-last depth-3 same-ID issue-order queue read-data captures r2 payload under queue last-beat completion');
+    unlike($isf, qr/\baxi0_arlen\b/, 'dynamic read burst-last depth-3 same-ID issue-order queue read-data keeps burst-length metadata absent');
+    like($fsm, qr/\(-axi0_r2_read_data_capture\s+<axi0_r2_complete\s+\(<- \(axi0_r2_last_rdata> axi0_rdata\)\)\s+\(<- \(axi0_r2_last_rresp> axi0_rresp\)\)/, 'dynamic read burst-last depth-3 same-ID issue-order queue read-data lowers r2 capture rule into generated .fsm');
+    assert_dynamic_read_burst_last_depth3_same_id_issue_order_queue_report($result->{report}, 'adapter report');
+    assert_read_data_last_beat_report(
+        $result->{report}{read_data},
+        'adapter dynamic read burst-last depth-3 same-ID issue-order queue read-data report',
+        'generated_dynamic_read_issue_order_queue_response_demux_last_beat_completion_pulse',
+        transactions => [qw(r0 r1 r2)],
+    );
+};
+
 subtest 'PPIF adapter parses AXI manager dynamic read burst-last same-ID issue-order queue read-data burst-length behavior' => sub {
     my $sample_path = sample_capacity_dynamic_read_burst_last_same_id_issue_order_queue_read_data_burst_length_ppif_path();
     ok(-f $sample_path, 'tracked runnable PPIF capacity/status dynamic read burst-last same-ID issue-order queue read-data burst-length sample exists');
@@ -3710,6 +3741,26 @@ subtest 'CLI emits IAL2 report JSON for AXI manager dynamic read burst-last same
     is_deeply($report->{generated_artifacts}{ial0}{files}, ['axi0_capacity_status.fsm'], 'dynamic read burst-last same-ID issue-order queue read-data keeps the generated .fsm artifact name stable');
 };
 
+subtest 'CLI emits IAL2 report JSON for AXI manager dynamic read burst-last depth-3 same-ID issue-order queue read-data .ppif' => sub {
+    my ($success, undef, undef, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--emit-schedule-json', sample_capacity_dynamic_read_burst_last_depth3_same_id_issue_order_queue_read_data_ppif_path()],
+    );
+
+    ok($success, '--emit-schedule-json succeeds for capacity/status dynamic read burst-last depth-3 same-ID issue-order queue read-data .ppif');
+    is(join('', @{$stderr_buf || []}), '', 'capacity/status dynamic read burst-last depth-3 same-ID issue-order queue read-data report keeps stderr clean');
+    my $report = decode_json(join('', @{$stdout_buf || []}));
+    is($report->{schema}, 'fsmgen.ial2.protocol_intent.axi_manager_capacity_status.v1', 'CLI keeps the capacity/status report schema');
+    is($report->{source_object}{intent_name}, 'axi_manager_capacity_status_dynamic_read_burst_last_depth3_same_id_issue_order_queue_read_data', 'dynamic read burst-last depth-3 same-ID issue-order queue read-data report carries the PPIF top-level intent name');
+    assert_dynamic_read_burst_last_depth3_same_id_issue_order_queue_report($report, 'CLI report');
+    assert_read_data_last_beat_report(
+        $report->{read_data},
+        'CLI dynamic read burst-last depth-3 same-ID issue-order queue read-data report',
+        'generated_dynamic_read_issue_order_queue_response_demux_last_beat_completion_pulse',
+        transactions => [qw(r0 r1 r2)],
+    );
+    is_deeply($report->{generated_artifacts}{ial0}{files}, ['axi0_capacity_status.fsm'], 'dynamic read burst-last depth-3 same-ID issue-order queue read-data keeps the generated .fsm artifact name stable');
+};
+
 subtest 'CLI emits IAL2 report JSON for AXI manager dynamic read burst-last same-ID issue-order queue read-data burst-length .ppif' => sub {
     my ($success, undef, undef, $stdout_buf, $stderr_buf) = run(
         command => ['./bin/fsmgen', '--emit-schedule-json', sample_capacity_dynamic_read_burst_last_same_id_issue_order_queue_read_data_burst_length_ppif_path()],
@@ -6377,6 +6428,14 @@ subtest 'CLI check JSON and semantic JSON support-account dynamic read burst-las
     );
 };
 
+subtest 'CLI check JSON and semantic JSON support-account dynamic read burst-last depth-3 same-ID issue-order queue read-data .ppif separately' => sub {
+    assert_ppif_strict_json_support_case(
+        owner    => 'capacity/status dynamic read burst-last depth-3 same-ID issue-order queue read-data',
+        path     => \&sample_capacity_dynamic_read_burst_last_depth3_same_id_issue_order_queue_read_data_ppif_path,
+        entry_id => 'intent.ppif_axi_manager_capacity_status_dynamic_read_burst_last_depth3_same_id_issue_order_queue_read_data',
+    );
+};
+
 subtest 'CLI check JSON and semantic JSON support-account dynamic read burst-last same-ID issue-order queue read-data burst-length .ppif separately' => sub {
     assert_ppif_strict_json_support_case(
         owner    => 'capacity/status dynamic read burst-last same-ID issue-order queue read-data burst-length',
@@ -8340,6 +8399,10 @@ sub sample_capacity_dynamic_read_burst_last_same_id_issue_order_queue_read_data_
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_dynamic_read_burst_last_same_id_issue_order_queue_read_data.ppif');
 }
 
+sub sample_capacity_dynamic_read_burst_last_depth3_same_id_issue_order_queue_read_data_ppif_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_dynamic_read_burst_last_depth3_same_id_issue_order_queue_read_data.ppif');
+}
+
 sub sample_capacity_dynamic_read_burst_last_same_id_issue_order_queue_read_data_burst_length_ppif_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_manager_capacity_status_dynamic_read_burst_last_same_id_issue_order_queue_read_data_burst_length.ppif');
 }
@@ -8726,6 +8789,10 @@ sub sample_capacity_dynamic_read_same_id_issue_order_queue_read_data_ppif {
 
 sub sample_capacity_dynamic_read_burst_last_same_id_issue_order_queue_read_data_ppif {
     return slurp(sample_capacity_dynamic_read_burst_last_same_id_issue_order_queue_read_data_ppif_path());
+}
+
+sub sample_capacity_dynamic_read_burst_last_depth3_same_id_issue_order_queue_read_data_ppif {
+    return slurp(sample_capacity_dynamic_read_burst_last_depth3_same_id_issue_order_queue_read_data_ppif_path());
 }
 
 sub sample_capacity_dynamic_read_burst_last_same_id_issue_order_queue_read_data_burst_length_ppif {

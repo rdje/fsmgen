@@ -8708,15 +8708,32 @@ same-ID `issue-order-queue`. A RAM-guarded temporary candidate with
 `r0`/`r1`/`r2` failed closed at the local dynamic issue-order queue read-data
 coverage gate, which still requires exactly two dynamic transactions and one
 depth-2 queue. No parser or lower artifact prerequisite was exposed. The
-direct owner should add the support-accounted
+direct owner, shipped in `.491`, adds the support-accounted
 `ppif/axi_manager_capacity_status_dynamic_read_burst_last_depth3_same_id_issue_order_queue_read_data.ppif`
-sample and widen only scalar last-beat read-data coverage/report
+sample and widens only scalar last-beat read-data coverage/report
 expectations for the exact three-transaction queue. Raw `ARLEN`, runtime
 beat-count/`RLAST` validation, multi-beat output banks, mixed dynamic/static
 queues, scoreboards, arbitrary cardinality, direct backend behavior,
 backend-language variants, external converter dependencies such as `sv2v`,
 and VHDL remain deferred; FSMGen-owned generation/lowering remains the
 default.
+
+Dynamic read burst-last depth-3 same-ID issue-order queue read-data behavior:
+[AXI_IAL2_MANAGER_DYNAMIC_READ_BURST_LAST_DEPTH3_SAME_ID_ISSUE_ORDER_QUEUE_READ_DATA_BEHAVIOR](../../AXI_IAL2_MANAGER_DYNAMIC_READ_BURST_LAST_DEPTH3_SAME_ID_ISSUE_ORDER_QUEUE_READ_DATA_BEHAVIOR.md)
+ships `.491`, scalar last-beat read-data over the generated all-dynamic
+read burst-last `RID && RLAST` depth-3 same-ID `issue-order-queue` through
+`ppif/axi_manager_capacity_status_dynamic_read_burst_last_depth3_same_id_issue_order_queue_read_data.ppif`.
+The generated capture covers `r0`, `r1`, and `r2`, binds each
+`axi0_r*_read_data_capture` rule to the generated queue completion pulse,
+and captures `axi0_rdata`/`axi0_rresp` into `axi0_r*_last_rdata`/
+`axi0_r*_last_rresp`. The report keeps the `.488` queue contract,
+`read_rid_rlast_three_dynamic_transactions`, and
+`generated_dynamic_read_issue_order_queue_response_demux_last_beat_completion_pulse`.
+Raw `ARLEN`, runtime beat-count/`RLAST` validation, multi-beat output banks,
+mixed dynamic/static queues, scoreboards, arbitrary cardinality, direct
+backend behavior, backend-language variants, external converter dependencies
+such as `sv2v`, and VHDL remain deferred; FSMGen-owned generation/lowering
+remains the default. `.492` is the next post-behavior selector.
 
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
