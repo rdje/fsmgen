@@ -46,20 +46,27 @@ bounded auto-ID lifecycle, same-ID reject and issue-order-queue policy,
 generated auto-ID write/read response-demux, generated single/last/multi-beat
 read-data capture, burst-length/runtime validation, scalar `RRESP`
 aggregation, one-or-more read burst-last queue-head groups, one-or-more write
-queue-head groups, and read single-beat queue-head response-demux including
-multiple response-demux-only and scalar read-data groups, selected
-multiple/mixed depth-3 scalar/runtime/multi-beat queue-head read-data groups,
-and same-family mixed auto-ID plus concrete queue-head response-demux with
-scalar read-data for read single-beat and read burst-last shapes plus
-report-only raw-`ARLEN` burst-length and generated runtime beat-count/`RLAST`
-validation and generated multi-beat output-bank behavior over that mixed read
-burst-last runtime-validation family. Broader mixed-family
-burst-length/runtime validation beyond the selected same-family mixed read
-burst-last shape,
-group-local simultaneous enqueue widening, packed burst-vector outputs,
-alternate full burst payload assembly, aliases, platform clauses, full AXI
-manager behavior, direct backend lowering, verification-output generation,
-backend-language variants, and VHDL remain deferred.
+queue-head groups, read single-beat and read burst-last queue-head
+response-demux including multiple/mixed depth-3 scalar, raw-`ARLEN`,
+runtime-validation, and multi-beat output-bank read-data groups, same-family
+mixed auto-ID plus concrete queue-head response-demux with scalar,
+raw-`ARLEN`, runtime-validation, and multi-beat output-bank read-data over the
+selected read burst-last shape, generated single-active and multiple
+all-dynamic write/read response-demux, generated all-dynamic same-ID
+issue-order queues for selected write `BID`, read single-beat `RID`, and read
+burst-last `RID && RLAST` depth-2/depth-3 shapes, selected read-data,
+raw-`ARLEN`, runtime-validation, and multi-beat output-bank behavior over
+generated all-dynamic read burst-last issue-order queues, generated mixed
+dynamic/static response-demux families, and generated one-dynamic plus
+one-concrete-static mixed dynamic/static same-ID issue-order queue behavior
+for write `BID`, read single-beat `RID`, and read burst-last `RID && RLAST`.
+Mixed read-data, raw `ARLEN`, runtime validation, and multi-beat output banks
+over generated mixed dynamic/static issue-order queues, broader mixed
+issue-order queue cardinality, scoreboards, group-local simultaneous enqueue
+widening, packed burst-vector outputs, alternate full burst payload assembly,
+aliases, platform clauses, full AXI manager behavior, direct backend lowering,
+verification-output generation, backend-language variants, and VHDL remain
+deferred.
 
 Machine-readable discovery lives in
 [perl/FSM/Support/ISFPublicInterfaceContract.pm](../perl/FSM/Support/ISFPublicInterfaceContract.pm)

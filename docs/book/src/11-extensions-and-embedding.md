@@ -58,56 +58,29 @@ concrete-ID assertions, bounded auto-ID lifecycle, same-ID reject and
 issue-order-queue policy, generated auto-ID write/read response-demux,
 generated single/last/multi-beat read-data capture, burst-length/runtime
 validation, scalar `RRESP` aggregation, one-or-more read burst-last
-queue-head groups, one-or-more write queue-head groups, and read single-beat
-queue-head response-demux and scalar read-data including multiple queue-head
-groups, plus selected read and write single-group depth-3 queue-head shapes,
-multiple/mixed depth-3 response-demux-only queue-head groups for read
-single-beat, read burst-last, and write families, selected multiple/mixed
-depth-3 read single-beat scalar read-data groups, selected multiple/mixed
-depth-3 read burst-last scalar last-beat read-data groups, selected
-report-only raw-`ARLEN` burst-length capture over those multiple/mixed
-depth-3 read burst-last scalar last-beat groups, and generated runtime
-beat-count/`RLAST` validation over those multiple/mixed depth-3 read
-burst-last scalar last-beat groups, and generated multi-beat output-bank
-behavior over those multiple/mixed depth-3 runtime-validation groups, plus
-same-family mixed auto-ID lifecycle and concrete queue-head response-demux for
-response-demux-only read single-beat, read burst-last, and write shapes, and
-scalar read-data over that mixed read boundary for read single-beat and read
-burst-last, plus report-only raw-`ARLEN` burst-length capture over that mixed
-read burst-last scalar last-beat shape, plus generated runtime
-beat-count/`RLAST` validation and generated multi-beat output-bank behavior
-over that same mixed burst-last runtime-validation shape, plus metadata-first
-dynamic transaction-ID reports and generated single-active dynamic write,
-read single-beat, and read burst-last response-demux for one explicit dynamic
-transaction, scalar dynamic read-data for single-beat and last-beat captures,
-and report-only dynamic raw-`ARLEN` burst-length capture over generated
-dynamic last-beat read-data, generated dynamic runtime-validation and
-multi-beat output-bank behavior for the single-active dynamic read-data
-boundary, single-active dynamic write same-cycle release-and-recapture,
-generated bounded multiple dynamic write response-demux, generated
-bounded multiple dynamic read single-beat and burst-last response-demux,
-generated bounded two-transaction all-dynamic read single-beat same-ID
-`RID` issue-order queue behavior, scalar read-data over those multiple
-dynamic read response-demux shapes, and report-only raw-`ARLEN`
-burst-length capture plus runtime beat-count/`RLAST` validation over the
-multiple dynamic last-beat read-data shape. Multiple
-dynamic multi-beat output-bank behavior was audited under
-`IAL2-FEATURE-COMPLETENESS-FRONTIER.266`; `.267` selected `.268`, and `.268`
-now ships generated bounded multiple dynamic multi-beat output-bank behavior
-through the support-accounted public sample
-`ppif/axi_manager_capacity_status_dynamic_read_data_multi_transaction_multi_beat.ppif`.
-`.269` selected mixed dynamic/static response-demux readiness, and `.270`
-selected public contract selection for bounded mixed dynamic/static write
-`BID` response-demux. `.271` selected direct generated behavior for that
-bounded mixed write contract as the next exact owner. The selector changed no
-behavior.
-Broader concrete same-ID queues, group-local
-simultaneous enqueue widening, packed burst-vector outputs, alternate full
-burst payload assembly, aliases, platform clauses, full AXI manager behavior,
-direct backend lowering, verification-output generation, backend-language
-variants, and VHDL remain deferred. This manifest boundary, the downstream
-handoff, the public contracts, this book, support-accounting, and the codebase
-must remain lockstep.
+queue-head groups, one-or-more write queue-head groups, read single-beat and
+read burst-last queue-head response-demux including multiple/mixed depth-3
+scalar, raw-`ARLEN`, runtime-validation, and multi-beat output-bank read-data
+groups, same-family mixed auto-ID plus concrete queue-head response-demux
+with scalar, raw-`ARLEN`, runtime-validation, and multi-beat output-bank
+read-data over the selected read burst-last shape, generated single-active
+and multiple all-dynamic write/read response-demux, generated all-dynamic
+same-ID issue-order queues for selected write `BID`, read single-beat `RID`,
+and read burst-last `RID && RLAST` depth-2/depth-3 shapes, selected read-data,
+raw-`ARLEN`, runtime-validation, and multi-beat output-bank behavior over
+generated all-dynamic read burst-last issue-order queues, generated mixed
+dynamic/static response-demux families, and generated one-dynamic plus
+one-concrete-static mixed dynamic/static same-ID issue-order queue behavior
+for write `BID`, read single-beat `RID`, and read burst-last `RID && RLAST`.
+Mixed read-data, raw `ARLEN`, runtime validation, and multi-beat output banks
+over generated mixed dynamic/static issue-order queues, broader mixed
+issue-order queue cardinality, scoreboards, group-local simultaneous enqueue
+widening, packed burst-vector outputs, alternate full burst payload assembly,
+aliases, platform clauses, full AXI manager behavior, direct backend lowering,
+verification-output generation, backend-language variants, and VHDL remain
+deferred. This manifest boundary, the downstream handoff, the public
+contracts, this book, support-accounting, and the codebase must remain
+lockstep.
 
 The embedding section's `serializable_plan_reports` branch also advertises
 `public_top_level_presence_keys` and `json_safe_surface_keys`; both the

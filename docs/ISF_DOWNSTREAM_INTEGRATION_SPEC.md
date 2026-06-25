@@ -1,7 +1,7 @@
 # ISF Downstream Integration Specification
 
 Status: `bounded_public`
-Document version: `2026-06-16`
+Document version: `2026-06-26`
 ISF source specification: `.isf` specification v0.6
 Primary audience: downstream tools that emit, validate, inspect, or consume
 FSMGen Intent Scheduling Format sources and reports.
@@ -92,34 +92,28 @@ Intent abstraction levels:
   issue-order-queue policy, generated auto-ID write/read response-demux,
   generated single/last/multi-beat read-data capture, burst-length/runtime
   validation, scalar `RRESP` aggregation, one-or-more read burst-last
-  queue-head groups, one-or-more write queue-head groups, and read
-  single-beat queue-head response-demux including multiple response-demux-only
-  groups and scalar read-data groups, plus selected multiple/mixed depth-3
-  read single-beat scalar read-data groups, selected multiple/mixed depth-3
-  read burst-last scalar last-beat read-data groups, selected report-only
-  raw-`ARLEN` burst-length capture over those multiple/mixed depth-3 read
-  burst-last scalar last-beat groups, and generated runtime beat-count/`RLAST`
-  validation over those multiple/mixed depth-3 read burst-last scalar
-  last-beat groups, generated multi-beat output-bank behavior over those
-  multiple/mixed depth-3 runtime-validation groups, and same-family mixed
-  auto-ID plus concrete queue-head response-demux with scalar read-data for
-  read single-beat and read burst-last shapes plus report-only raw-`ARLEN`
-  burst-length, generated runtime beat-count/`RLAST` validation, and generated
-  multi-beat output-bank behavior over that mixed read burst-last
-  runtime-validation family, plus generated single-active dynamic write,
-  dynamic read single-beat, and dynamic read burst-last response-demux,
-  scalar dynamic read-data for single-beat and last-beat captures, and
-  report-only dynamic raw-`ARLEN` burst-length capture over generated dynamic
-  last-beat read-data.
-- Broader mixed-family burst-length/runtime validation beyond the selected
-  same-family mixed read burst-last shape, write-family read-data,
-  dynamic runtime beat-count/`RLAST` validation over generated dynamic
-  last-beat read-data, dynamic multi-beat output banks, group-local
-  simultaneous enqueue widening, packed burst-vector outputs, alternate full
-  burst payload assembly, aliases, platform clauses, full AXI manager
-  behavior, direct backend lowering, verification-output generation,
-  backend-language variants, and VHDL remain
-  deferred.
+  queue-head groups, one-or-more write queue-head groups, read single-beat and
+  read burst-last queue-head response-demux including multiple/mixed depth-3
+  scalar, raw-`ARLEN`, runtime-validation, and multi-beat output-bank read-data
+  groups, same-family mixed auto-ID plus concrete queue-head response-demux
+  with scalar, raw-`ARLEN`, runtime-validation, and multi-beat output-bank
+  read-data over the selected read burst-last shape, generated single-active
+  and multiple all-dynamic write/read response-demux, generated all-dynamic
+  same-ID issue-order queues for selected write `BID`, read single-beat `RID`,
+  and read burst-last `RID && RLAST` depth-2/depth-3 shapes, selected
+  read-data, raw-`ARLEN`, runtime-validation, and multi-beat output-bank
+  behavior over generated all-dynamic read burst-last issue-order queues,
+  generated mixed dynamic/static response-demux families, and generated
+  one-dynamic plus one-concrete-static mixed dynamic/static same-ID
+  issue-order queue behavior for write `BID`, read single-beat `RID`, and read
+  burst-last `RID && RLAST`.
+- Mixed read-data, raw `ARLEN`, runtime validation, and multi-beat output
+  banks over generated mixed dynamic/static issue-order queues, broader mixed
+  issue-order queue cardinality, scoreboards, group-local simultaneous enqueue
+  widening, packed burst-vector outputs, alternate full burst payload assembly,
+  aliases, platform clauses, full AXI manager behavior, direct backend
+  lowering, verification-output generation, backend-language variants, and VHDL
+  remain deferred.
 - The machine-readable source of truth for shipped suffixes, layers, lowering
   order, CLI modes, and current per-suffix boundary text is
   `./bin/fsmgen --capability-manifest` under

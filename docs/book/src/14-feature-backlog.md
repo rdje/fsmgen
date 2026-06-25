@@ -9071,6 +9071,21 @@ output banks, broader mixed cardinality, scoreboards, backend behavior,
 backend-language variants, verification-code generation, external converter
 dependencies such as `sv2v`, and VHDL remain deferred.
 
+Mixed dynamic/static issue-order queue public surface synchronization:
+[AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_ISSUE_ORDER_QUEUE_PUBLIC_SURFACE_SYNC](../../AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_ISSUE_ORDER_QUEUE_PUBLIC_SURFACE_SYNC.md)
+ships `.511`, public `.ppif` downstream-contract, capability-manifest, and
+mdBook surface synchronization. The downstream integration spec, public
+interface contract, embedding chapter, and `language_surface.file_surfaces`
+`.ppif` manifest boundary now advertise generated one-dynamic plus
+one-concrete-static mixed dynamic/static same-ID `issue-order-queue` behavior
+for write `BID`, read single-beat `RID`, and read burst-last `RID && RLAST`.
+The manifest test now locks that boundary. Mixed read-data, raw `ARLEN`,
+runtime validation, and multi-beat output banks over generated mixed
+dynamic/static issue-order queues remain deferred, as do broader mixed
+cardinality, scoreboards, backend behavior, backend-language variants,
+verification-code generation, external converter dependencies such as `sv2v`,
+and VHDL. `.512` is the next selector after this public-surface sync.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after
