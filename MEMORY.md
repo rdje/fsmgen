@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.503: ship mixed queue behavior`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.504` selects the next exact owner after generated mixed dynamic/static write BID same-ID issue-order queue behavior; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.503` shipped generated mixed dynamic/static write BID same-ID issue-order queue behavior for exactly one dynamic write transaction and one concrete static write transaction through support-accounted public sample `ppif/axi_manager_capacity_status_write_mixed_dynamic_static_same_id_issue_order_queue.ppif`. Dynamic enqueues store `axi0_awid`, static enqueues store `4'd3` in the public sample, response demux reports `generated_mixed_dynamic_static_issue_order_queue_demux`, static/dynamic runtime-ID overlap is allowed by issue order, and `sv2v` remains deferred.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.504: select mixed read queue audit`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.505` audits generated mixed dynamic/static read single-beat RID same-ID issue-order queue readiness; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.504` selected `.505`, readiness audit for generated mixed dynamic/static read single-beat RID same-ID issue-order queue behavior. This is the smallest adjacent FSMGen-owned queue continuation after `.503` because it reuses the one-dynamic plus one-static mixed queue model and all-dynamic read single-beat queue model while avoiding RLAST, read-data, broader cardinality, scoreboards, backend behavior, external converter dependencies such as `sv2v`, verification-code generation, and VHDL.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
-- next_action: Start `.504`: select the next exact owner after mixed dynamic/static write BID same-ID issue-order queue behavior; keep mixed read queues, multi-static/two-dynamic mixed queues, scoreboards, arbitrary cardinality, external converter dependencies such as sv2v, backend behavior, verification-code generation, and VHDL deferred unless explicitly selected.
+- next_action: Start `.505`: audit mixed dynamic/static read single-beat RID same-ID issue-order queue readiness; do not implement behavior until the audit selects the direct owner or a smaller prerequisite.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact

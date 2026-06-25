@@ -8942,8 +8942,22 @@ queue position. The same-ID ordering report uses
 multi-static/two-dynamic mixed queues, scoreboards, arbitrary cardinality,
 backend behavior, backend-language variants, verification-code generation,
 external converter dependencies such as `sv2v`, and VHDL remain deferred;
-FSMGen-owned generation/lowering remains the default. `.504` is the next
-post-mixed-queue selector.
+FSMGen-owned generation/lowering remains the default.
+
+Post mixed dynamic/static write same-ID issue-order queue selector:
+[AXI_IAL2_MANAGER_POST_MIXED_DYNAMIC_STATIC_WRITE_SAME_ID_ISSUE_ORDER_QUEUE_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MIXED_DYNAMIC_STATIC_WRITE_SAME_ID_ISSUE_ORDER_QUEUE_NEXT_SLICE_SELECTION.md)
+selects `.505`, readiness audit for generated mixed dynamic/static read
+single-beat `RID` same-ID `issue-order-queue` behavior. This is the smallest
+adjacent FSMGen-owned queue continuation after `.503`: it reuses the
+one-dynamic plus one-concrete-static queue model and the all-dynamic read
+single-beat `RID` queue model while avoiding mixed read burst-last
+`RID && RLAST`, read-data, raw `ARLEN`, runtime validation, multi-beat output
+banks, broader mixed cardinality, scoreboards, direct backend behavior,
+backend-language variants, verification-code generation, external converter
+dependencies such as `sv2v`, and VHDL. No parser, generator, PPIF sample,
+support-accounting catalog, generated artifact, report JSON, test,
+HDL/runtime behavior, backend behavior, external converter dependency, or
+VHDL behavior changed in `.504`.
 
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)

@@ -3593,8 +3593,19 @@ queue position. The same-ID ordering report uses
 multi-static/two-dynamic mixed queues, scoreboards, arbitrary cardinality,
 backend behavior, backend-language variants, verification-code generation,
 external converter dependencies such as `sv2v`, and VHDL remain deferred;
-FSMGen-owned generation/lowering remains the default. `.504` is the next
-post-mixed-queue selector.
+FSMGen-owned generation/lowering remains the default.
+`.504` now selects `.505`, readiness audit for generated mixed dynamic/static
+read single-beat `RID` same-ID `issue-order-queue` behavior. This is the
+smallest adjacent FSMGen-owned queue continuation after `.503`: it reuses the
+one-dynamic plus one-concrete-static queue model and the all-dynamic read
+single-beat `RID` queue model while avoiding mixed read burst-last
+`RID && RLAST`, read-data, raw `ARLEN`, runtime validation, multi-beat output
+banks, broader mixed cardinality, scoreboards, direct backend behavior,
+backend-language variants, verification-code generation, external converter
+dependencies such as `sv2v`, and VHDL. No parser, generator, PPIF sample,
+support-accounting catalog, generated artifact, report JSON, test,
+HDL/runtime behavior, backend behavior, external converter dependency, or
+VHDL behavior changed in `.504`.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
