@@ -8312,6 +8312,24 @@ requirements, selected completion and report vocabulary, queue assertions,
 residue/support/sample/validation, and downstream read-data/burst/runtime/
 multi-beat/recapture preservation.
 
+Dynamic read burst-last same-ID issue-order queue contract:
+[AXI_IAL2_MANAGER_DYNAMIC_READ_BURST_LAST_SAME_ID_ISSUE_ORDER_QUEUE_CONTRACT_SELECTION](../../AXI_IAL2_MANAGER_DYNAMIC_READ_BURST_LAST_SAME_ID_ISSUE_ORDER_QUEUE_CONTRACT_SELECTION.md)
+selects `.463`, direct implementation of the first generated dynamic read
+burst-last `RID && RLAST` same-ID `issue-order-queue` behavior. The contract
+changes no behavior. It selects exactly two all-dynamic reads, explicit
+`response-demux.read` with `response-scope burst-last` and one-bit
+`last-signal`, compact runtime-ID issue-order slots, raw `RID` beat matching
+without `RLAST`, selected final dequeue and generated completion only on the
+earliest matching captured runtime ID plus `RLAST`, mode
+`bounded_dynamic_read_rid_rlast_issue_order_queue_demux_contract`, completion
+source `generated_dynamic_issue_order_queue_demux_last_beat`, implementation
+status `generated_dynamic_read_rid_rlast_issue_order_queue`, and first scope
+`read_rid_rlast_two_dynamic_transactions`. Read-data over generated dynamic
+read queues, raw `ARLEN`, runtime validation, multi-beat output banks, queue
+recapture widening, broader queue cardinality, mixed dynamic/static queues,
+scoreboards, direct backend behavior, backend-language variants, and VHDL
+remain future exact owners.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after
