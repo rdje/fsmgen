@@ -9765,6 +9765,14 @@ completer `.apb` alias exposure, sidebands, alternate widths, multi-register
 decode, back-to-back policy, direct backend lowering, verification-output
 generation, backend-language variants, AXI behavior, and VHDL remain deferred.
 
+Post APB completer selector:
+[IAL2_POST_APB_COMPLETER_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_COMPLETER_NEXT_SLICE_SELECTION.md)
+selects `.564`, a no-behavior APB interconnect/composition readiness audit.
+The selector reverified the generated APB completer `.ppif`, APB requester
+`.ppif`, APB requester `.apb`, lower-layer completer, and lower-layer APB
+composition surfaces, then chose `apb_interconnect_generation_deferred` as the
+next residue to audit now that both generated endpoint paths exist.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

@@ -4154,6 +4154,15 @@ interconnect/composition, completer `.apb` alias exposure, sidebands,
 alternate widths, multi-register decode, back-to-back policy, direct backend
 lowering, verification-output generation, backend-language variants, AXI
 behavior, and VHDL remain deferred.
+`.563` now selects `.564`, a no-behavior APB interconnect/composition
+readiness audit after generated APB requester and completer `.ppif` endpoints
+both exist. The selector reverified the completer `.ppif`, requester `.ppif`,
+requester `.apb`, lower-layer completer, and lower-layer APB composition
+surfaces, then chose the `apb_interconnect_generation_deferred` residue for
+audit. APB completer `.apb` alias exposure, multi-register decode, sidebands,
+alternate widths, back-to-back policy, direct backend lowering,
+verification-output generation, backend-language variants, AXI behavior, and
+VHDL remain deferred.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
