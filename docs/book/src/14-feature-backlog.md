@@ -2383,12 +2383,15 @@ Its `.2.1` leaf captures that doctrine. Its `.2.2` readiness audit separates
 backend-neutral public contracts from current Perl implementation details and
 selects exact future leaves for the portable API, host abstraction, parity
 harness, book blueprint, extension boundary, and first implementation-language
-selection. The active `.2.3` leaf has drafted the candidate portable in-memory
-request/result API family with JSON-safe envelopes and virtual artifacts, but
-completion is blocked on focused corpus verification. The `.2.4` host
-source/artifact abstraction leaf remains pending until `.2.3` completes,
-before any Rust/Rust-Wasm, browser JavaScript, Dart/web, Julia, or other
-non-Perl implementation slice changes code or public contracts.
+selection. The `.2.3` leaf selected a portable in-memory request/result API
+family with JSON-safe envelopes and virtual artifacts. The `.2.4` leaf selected
+the host abstraction behind that API: pure in-memory hosts provide a
+`source_catalog` plus `artifact_sink`, while the current filesystem CLI remains
+an adapter for `--path`, `FSMLIB`, current-directory lookup, `--outdir`,
+`--output`, and verification-output directories. The active `.2.5` leaf now owns
+the Perl-reference parity harness and normalization rules before any
+Rust/Rust-Wasm, browser JavaScript, Dart/web, Julia, or other non-Perl
+implementation slice changes code or public contracts.
 For SystemVerilog-to-Verilog portability, the default is FSMGen-owned
 generation/lowering rather than a mandatory external converter. Tools such as
 `sv2v` are future audit candidates only: they may become optional validation

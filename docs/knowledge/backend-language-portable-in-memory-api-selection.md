@@ -12,8 +12,8 @@ answers:
 date: 2026-06-26
 status: current
 tags: [architecture, portability, in-memory-api, host-abstraction, artifacts]
-evidence: docs/BACKEND_LANGUAGE_PORTABLE_IN_MEMORY_API_CONTRACT_SELECTION.md; docs/tasks/BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.md; docs/BACKEND_LANGUAGE_PORTABILITY_READINESS_AUDIT.md; docs/TASK_TREE.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md; perl/FSM/Support/CheckDiagnostics.pm; perl/FSM/Support/NormalizedSemanticReportContract.pm; perl/FSM/Support/SerializableGenerationResultSnapshot.pm; perl/FSM/Support/HDLGeneratorResultContract.pm; perl/FSM/Support/VerificationOutputsContract.pm
-reverify: rg -n 'BACKEND_LANGUAGE_PORTABLE_IN_MEMORY_API_CONTRACT_SELECTION|BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.3|blocked|request/result|capabilities\\(request\\?\\)|execute\\(request\\)|virtual artifact|filesystem CLI remains an adapter|JSON-safe result|t/301-check-json-supported-corpus' docs/BACKEND_LANGUAGE_PORTABLE_IN_MEMORY_API_CONTRACT_SELECTION.md docs/tasks/BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.md docs/BACKEND_LANGUAGE_PORTABILITY_READINESS_AUDIT.md docs/TASK_TREE.md README.md ROADMAP_V2.md docs/book/src/14-feature-backlog.md docs/knowledge/backend-language-portable-in-memory-api-selection.md
+evidence: docs/BACKEND_LANGUAGE_PORTABLE_IN_MEMORY_API_CONTRACT_SELECTION.md; docs/BACKEND_LANGUAGE_PORTABLE_HOST_ABSTRACTION_SELECTION.md; docs/tasks/BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.md; docs/BACKEND_LANGUAGE_PORTABILITY_READINESS_AUDIT.md; docs/TASK_TREE.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md; perl/FSM/Support/CheckDiagnostics.pm; perl/FSM/Support/NormalizedSemanticReportContract.pm; perl/FSM/Support/SerializableGenerationResultSnapshot.pm; perl/FSM/Support/HDLGeneratorResultContract.pm; perl/FSM/Support/VerificationOutputsContract.pm
+reverify: rg -n 'BACKEND_LANGUAGE_PORTABLE_IN_MEMORY_API_CONTRACT_SELECTION|BACKEND_LANGUAGE_PORTABLE_HOST_ABSTRACTION_SELECTION|BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.3|BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.4|BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.5|request/result|capabilities\\(request\\?\\)|execute\\(request\\)|virtual artifact|filesystem CLI remains an adapter|source_catalog|artifact_sink|JSON-safe result|t/301-check-json-supported-corpus' docs/BACKEND_LANGUAGE_PORTABLE_IN_MEMORY_API_CONTRACT_SELECTION.md docs/BACKEND_LANGUAGE_PORTABLE_HOST_ABSTRACTION_SELECTION.md docs/tasks/BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.md docs/BACKEND_LANGUAGE_PORTABILITY_READINESS_AUDIT.md docs/TASK_TREE.md README.md ROADMAP_V2.md docs/book/src/14-feature-backlog.md docs/knowledge/backend-language-portable-in-memory-api-selection.md docs/knowledge/backend-language-portable-host-abstraction-selection.md
 ---
 
 `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.3` completed a candidate
@@ -37,5 +37,5 @@ The original focused `t/301` resource cliff on
 was recovered by `.2.3.1` with a bounded oversized PPIF check-json summary
 path. A full guarded `t/301` rerun remains host-memory-policy blocked in the
 current environment, so the broad `t/301`/`t/303` parity gates remain future
-`.2.5` parity-harness work. The next active selector is `.2.4`, the portable
-source/artifact host abstraction.
+`.2.5` parity-harness work. `.2.4` has since selected the source-catalog plus
+artifact-sink host abstraction, and the next active selector is `.2.5`.

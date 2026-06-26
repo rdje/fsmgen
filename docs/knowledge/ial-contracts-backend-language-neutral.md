@@ -19,8 +19,8 @@ answers:
 date: 2026-06-26
 status: current
 tags: [architecture, ial0, ial1, ial2, mdbook, rust, wasm, javascript, dart, browser, verilog]
-evidence: docs/decisions/0018-ial-contracts-are-backend-language-neutral.md; docs/tasks/BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.md; docs/BACKEND_LANGUAGE_PORTABILITY_READINESS_AUDIT.md; docs/BACKEND_LANGUAGE_PORTABLE_IN_MEMORY_API_CONTRACT_SELECTION.md; docs/TASK_TREE.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/knowledge/backend-language-portability-readiness-audit.md; docs/knowledge/backend-language-portable-in-memory-api-selection.md
-reverify: rg -n 'backend-language-neutral|BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER|BACKEND_LANGUAGE_PORTABILITY_READINESS_AUDIT|BACKEND_LANGUAGE_PORTABLE_IN_MEMORY_API_CONTRACT_SELECTION|Rust/Wasm|browser-capable JavaScript|Dart/web|Julia|Perl 5|reference implementation|Perl reference|FSMGen.*public contracts|in-memory host APIs|language-X|sv2v|SystemVerilog-to-Verilog|external converter|portable in-memory API contract|request/result|virtual artifacts|BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.4' docs/decisions/0018-ial-contracts-are-backend-language-neutral.md docs/tasks/BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.md docs/BACKEND_LANGUAGE_PORTABILITY_READINESS_AUDIT.md docs/BACKEND_LANGUAGE_PORTABLE_IN_MEMORY_API_CONTRACT_SELECTION.md docs/TASK_TREE.md README.md ROADMAP_V2.md docs/book/src/14-feature-backlog.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/knowledge/ial-contracts-backend-language-neutral.md docs/knowledge/backend-language-portability-readiness-audit.md docs/knowledge/backend-language-portable-in-memory-api-selection.md
+evidence: docs/decisions/0018-ial-contracts-are-backend-language-neutral.md; docs/tasks/BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.md; docs/BACKEND_LANGUAGE_PORTABILITY_READINESS_AUDIT.md; docs/BACKEND_LANGUAGE_PORTABLE_IN_MEMORY_API_CONTRACT_SELECTION.md; docs/BACKEND_LANGUAGE_PORTABLE_HOST_ABSTRACTION_SELECTION.md; docs/TASK_TREE.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/knowledge/backend-language-portability-readiness-audit.md; docs/knowledge/backend-language-portable-in-memory-api-selection.md; docs/knowledge/backend-language-portable-host-abstraction-selection.md
+reverify: rg -n 'backend-language-neutral|BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER|BACKEND_LANGUAGE_PORTABILITY_READINESS_AUDIT|BACKEND_LANGUAGE_PORTABLE_IN_MEMORY_API_CONTRACT_SELECTION|BACKEND_LANGUAGE_PORTABLE_HOST_ABSTRACTION_SELECTION|Rust/Wasm|browser-capable JavaScript|Dart/web|Julia|Perl 5|reference implementation|Perl reference|FSMGen.*public contracts|in-memory host APIs|language-X|sv2v|SystemVerilog-to-Verilog|external converter|portable in-memory API contract|request/result|virtual artifacts|source_catalog|artifact_sink|BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.5' docs/decisions/0018-ial-contracts-are-backend-language-neutral.md docs/tasks/BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.md docs/BACKEND_LANGUAGE_PORTABILITY_READINESS_AUDIT.md docs/BACKEND_LANGUAGE_PORTABLE_IN_MEMORY_API_CONTRACT_SELECTION.md docs/BACKEND_LANGUAGE_PORTABLE_HOST_ABSTRACTION_SELECTION.md docs/TASK_TREE.md README.md ROADMAP_V2.md docs/book/src/14-feature-backlog.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/knowledge/ial-contracts-backend-language-neutral.md docs/knowledge/backend-language-portability-readiness-audit.md docs/knowledge/backend-language-portable-in-memory-api-selection.md docs/knowledge/backend-language-portable-host-abstraction-selection.md
 ---
 
 IAL0, IAL1, IAL2, and the mdBook are backend-language-neutral contracts, not
@@ -41,15 +41,13 @@ reference/oracle.
 
 `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER` now owns the portability
 contract/infrastructure roadmap. `.1` created the tree, `.2.1` captured the
-variant-parity doctrine, and `.2.2` completed the readiness audit for public
-contracts, semantic introspection/MCP surfaces, support accounting, fixture
-parity, host abstractions, Perl-oracle parity gates, and mdBook language-X
-blueprint gaps. `.2.3` drafted the portable in-memory request/result API
-candidate with JSON-safe envelopes and virtual artifacts, but remains blocked
-on focused corpus verification. `.2.4`, the host source/artifact abstraction
-selector, remains pending until `.2.3` completes. No Rust/Rust-Wasm, browser
-JavaScript, Dart/web, Julia, or other non-Perl implementation work may change
-code or public contracts before those selectors complete.
+variant-parity doctrine, `.2.2` completed the readiness audit, `.2.3` selected
+the portable request/result API with JSON-safe envelopes and virtual artifacts,
+and `.2.4` selected the source-catalog plus artifact-sink host abstraction.
+Active `.2.5` owns the Perl-reference parity harness and normalization rules.
+No Rust/Rust-Wasm, browser JavaScript, Dart/web, Julia, or other non-Perl
+implementation work may change code or public contracts before those selectors
+complete.
 
 For SystemVerilog-to-Verilog portability, FSMGen-owned generation/lowering is
 the default. External converters such as `sv2v` are not selected dependencies
