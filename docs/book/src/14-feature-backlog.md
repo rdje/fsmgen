@@ -2400,8 +2400,12 @@ extensions as a Perl-reference surface and leaves extension/plugin support out
 of scope for the first non-Perl implementation experiment unless a future exact
 task selects a portable extension API first. The `.2.8` leaf selected
 the same-repository Rust/Rust-Wasm portable API smoke as the first non-Perl
-implementation experiment. The active `.3.1` leaf now owns the Rust contract
-crate scaffold before shipped runtime behavior changes.
+implementation experiment. The `.3.1` leaf scaffolded the additive
+`fsmgen_portable_api` Rust contract crate with an incomplete capability
+profile and fail-closed unsupported-operation behavior for every operation.
+The crate is not wired into `bin/fsmgen`, Perl manifests, generated HDL,
+package installation, or shipped runtime behavior. The active `.3.2` leaf now
+owns the first direct `.fsm` check-operation smoke.
 For SystemVerilog-to-Verilog portability, the default is FSMGen-owned
 generation/lowering rather than a mandatory external converter. Tools such as
 `sv2v` are future audit candidates only: they may become optional validation

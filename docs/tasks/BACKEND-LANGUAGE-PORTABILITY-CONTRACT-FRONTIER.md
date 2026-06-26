@@ -162,14 +162,14 @@ implementation must satisfy the same FSMGen public contracts.
   Commit: `pending`
 
 - ID: `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.3.1`
-  Status: `active`
+  Status: `done`
   Goal: `Scaffold the Rust portable API contract crate and tests.`
   Acceptance: `Create the same-repo Rust workspace/crate under rust/; model the JSON-safe request/result envelope and initial host/source/artifact identity fields from .2.3/.2.4; expose an incomplete experiment capability profile; return fail-closed unsupported-operation diagnostics for operations not implemented yet; add Rust unit tests and docs; do not wire the crate into bin/fsmgen, Perl manifests, generated HDL, package install paths, or shipped runtime behavior.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `passed`
+  Commit: `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.3.1: scaffold Rust contract crate`
 
 - ID: `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.3.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Add the first direct .fsm check-operation smoke in Rust.`
   Acceptance: `After .3.1, implement exactly one tiny direct .fsm check-operation smoke over a supported fixture, returning a JSON-safe public result shape without HDL generation, .isf/.ppif support, semantic JSON, schedule JSON, verification output, MCP, or extension support.`
   Verification: `pending`
@@ -193,7 +193,8 @@ implementation must satisfy the same FSMGen public contracts.
 | 5 | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.6` | `done` | Selected the mdBook language-X implementation blueprint structure and added the book-facing implementation-blueprint entry point. |
 | 6 | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.7` | `done` | Selected current typed extensions as a Perl-reference surface and out of scope for the first non-Perl implementation experiment unless a future portable extension API is selected first. |
 | 7 | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.8` | `done` | Selected the same-repository Rust/Rust-Wasm portable API smoke experiment as the first implementation-language experiment. |
-| 8 | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.3.1` | `active` | Scaffold the Rust portable API contract crate and tests. |
+| 8 | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.3.1` | `done` | Scaffolded the Rust portable API contract crate and tests without changing shipped Perl runtime behavior. |
+| 9 | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.3.2` | `active` | Add the first direct `.fsm` check-operation smoke in Rust. |
 
 ## Decisions
 
@@ -285,13 +286,17 @@ implementation must satisfy the same FSMGen public contracts.
   Rust/Rust-Wasm portable API smoke frontier, starting with `.3.1` to scaffold
   a Rust contract crate and tests without wiring it into the shipped Perl CLI
   or claiming replacement behavior.
+- `2026-06-26`: Completed `.3.1` as the first code-bearing Rust experiment
+  slice. The new `fsmgen_portable_api` crate models the initial request/result
+  envelope, source identity, host profile, virtual artifact shell, diagnostics,
+  support-accounting shell, and incomplete capability profile. `execute(...)`
+  fails closed with `E_PORTABLE_RUST_UNIMPLEMENTED_OPERATION` for every
+  operation. The crate is not wired into `bin/fsmgen`, Perl manifests,
+  generated HDL, package installation, or shipped runtime behavior. `.3.2`
+  now owns the first direct `.fsm` check-operation smoke.
 
 ## Open Questions
 
-- Which implementation language should be attempted first after the audit:
-  Rust/Rust-Wasm, browser JavaScript, Dart/web, Julia, or another host? This
-  does not block `.2`; the audit must define selection criteria and parity
-  gates before choosing an implementation slice.
 - Can any external SystemVerilog-to-Verilog converter, including `sv2v`, meet
   a high enough quality and coverage bar to be useful for FSMGen? This does
   not block `.2`; the default remains FSMGen-owned generation/lowering unless
@@ -336,6 +341,7 @@ implementation must satisfy the same FSMGen public contracts.
 | `2026-06-26` | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.6` | Read/audit mdBook summary/reference/backlog/embedding/lowering chapters, `.2.3` API selector, `.2.4` host abstraction selector, `.2.5` parity harness selector, readiness audit, public ISF contract, downstream integration spec, README, roadmap, and Knowledge Map facts; created `docs/BACKEND_LANGUAGE_MDBOOK_BLUEPRINT_SELECTION.md`; added `docs/book/src/15-implementation-blueprint.md`; wired the chapter into `docs/book/src/SUMMARY.md` and `docs/book/src/90-reference-map.md`; `rg -n 'BACKEND_LANGUAGE_MDBOOK_BLUEPRINT_SELECTION|15-implementation-blueprint|Implementation Blueprint|BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.6|source_catalog|artifact_sink|capabilities\\(request\\?\\)|execute\\(request\\)|BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.7' docs/BACKEND_LANGUAGE_MDBOOK_BLUEPRINT_SELECTION.md docs/book/src/SUMMARY.md docs/book/src/15-implementation-blueprint.md docs/book/src/14-feature-backlog.md docs/book/src/90-reference-map.md docs/tasks/BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.md docs/TASK_TREE.md README.md ROADMAP_V2.md docs/knowledge/backend-language-mdbook-blueprint-selection.md`; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `git --no-pager diff --check`; `mdbook build docs/book`; `scripts/check_doctrines.sh` | `passed`; selected the mdBook language-X implementation blueprint chapter structure, added the book-facing implementation-blueprint entry point, and advanced the frontier to `.2.7` |
 | `2026-06-26` | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.7` | Read/audit `docs/EXTENSION_MODEL.md`, mdBook extension/blueprint/backlog chapters, `perl/FSM/Support/ExtensionContract.pm`, `perl/FSM/Extension/Loader.pm`, `perl/FSM/Extension/Registry.pm`, `perl/FSM/Extension/Context.pm`, typed-extension loading/discovery/module-name audits, and prior portability selectors; created `docs/BACKEND_LANGUAGE_TYPED_EXTENSION_PORTABILITY_AUDIT.md`; `rg -n 'BACKEND_LANGUAGE_TYPED_EXTENSION_PORTABILITY_AUDIT|BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.7|typed extension|Perl reference|out of scope for the first non-Perl|Module::Name|source_catalog|artifact_sink|BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.8' docs/BACKEND_LANGUAGE_TYPED_EXTENSION_PORTABILITY_AUDIT.md docs/EXTENSION_MODEL.md docs/book/src/11-extensions-and-embedding.md docs/book/src/15-implementation-blueprint.md docs/book/src/14-feature-backlog.md docs/tasks/BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.md docs/TASK_TREE.md README.md ROADMAP_V2.md docs/knowledge/backend-language-typed-extension-portability.md`; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `git --no-pager diff --check`; `mdbook build docs/book`; `scripts/check_doctrines.sh` | `passed`; selected current typed extensions as Perl-reference only for backend portability, deferred portable extension support behind a future exact API selector, and advanced the frontier to `.2.8` |
 | `2026-06-26` | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.8` | Read/audit roadmap H1 Rust guidance, README portability summary, prior `.2.3` API selector, `.2.4` host abstraction selector, `.2.5` parity harness selector, `.2.6` mdBook blueprint selector, `.2.7` extension portability audit, repository layout, and local Rust tool availability (`cargo 1.95.0`, `rustc 1.95.0`, `wasm-bindgen 0.2.100`, no `wasm-pack`); created `docs/BACKEND_LANGUAGE_FIRST_IMPLEMENTATION_EXPERIMENT_SELECTION.md`; `rg -n 'BACKEND_LANGUAGE_FIRST_IMPLEMENTATION_EXPERIMENT_SELECTION|BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.8|BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.3|Rust/Rust-Wasm portable API smoke|cargo 1.95.0|wasm-pack|source_catalog|artifact_sink|BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.3.1' docs/BACKEND_LANGUAGE_FIRST_IMPLEMENTATION_EXPERIMENT_SELECTION.md docs/tasks/BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.md docs/TASK_TREE.md README.md ROADMAP_V2.md docs/book/src/14-feature-backlog.md docs/book/src/15-implementation-blueprint.md docs/knowledge/backend-language-first-implementation-experiment.md`; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `git --no-pager diff --check`; `mdbook build docs/book`; `scripts/check_doctrines.sh` | `passed`; selected the same-repository Rust/Rust-Wasm portable API smoke experiment and advanced the frontier to `.3.1` |
+| `2026-06-26` | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.3.1` | Created `rust/` workspace, `fsmgen_portable_api` crate, README, request/result/source/host/artifact/diagnostic/capability shell, and Rust unit tests; `cargo fmt --manifest-path rust/Cargo.toml`; `cargo test --manifest-path rust/Cargo.toml`; `cargo clippy --manifest-path rust/Cargo.toml --all-targets -- -D warnings`; `rg -n 'fsmgen_portable_api|E_PORTABLE_RUST_UNIMPLEMENTED_OPERATION|BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.3.1|BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.3.2|rust/Cargo.toml|source_catalog|artifact_sink|unsupported-operation|Rust contract crate' rust/Cargo.toml rust/fsmgen-portable-api/Cargo.toml rust/fsmgen-portable-api/README.md rust/fsmgen-portable-api/src/lib.rs docs/tasks/BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.md docs/TASK_TREE.md README.md ROADMAP_V2.md docs/book/src/14-feature-backlog.md docs/book/src/15-implementation-blueprint.md docs/knowledge/backend-language-rust-portable-api-contract-scaffold.md`; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `git --no-pager diff --check`; `mdbook build docs/book`; `scripts/check_doctrines.sh` | `passed`; scaffolded the additive fail-closed Rust contract crate, kept shipped Perl runtime behavior unchanged, and advanced the frontier to `.3.2` |
 
 ## Commit Log
 
@@ -354,6 +360,7 @@ implementation must satisfy the same FSMGen public contracts.
 | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.6` | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.6: select mdBook blueprint` | Selected the dedicated mdBook implementation-blueprint chapter structure and advanced the frontier to `.2.7`. |
 | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.7` | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.7: audit extension portability` | Selected typed extensions as Perl-reference only for backend portability, with portable extension support deferred behind a future exact API selector; advanced the frontier to `.2.8`. |
 | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.8` | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.8: select Rust experiment` | Selected the same-repository Rust/Rust-Wasm portable API smoke experiment and advanced the frontier to `.3.1`. |
+| `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.3.1` | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.3.1: scaffold Rust contract crate` | Scaffolded the same-repository `fsmgen_portable_api` crate, fail-closed unsupported-operation behavior, tests, and docs; advanced the frontier to `.3.2`. |
 
 ## Changelog
 
@@ -403,3 +410,8 @@ implementation must satisfy the same FSMGen public contracts.
   with active work advanced to `.2.8`.
 - `2026-06-26`: Completed `.2.8`; selected the same-repository Rust/Rust-Wasm
   portable API smoke experiment and made `.3.1` the active scaffold owner.
+- `2026-06-26`: Completed `.3.1`; scaffolded the additive
+  `fsmgen_portable_api` Rust crate with an incomplete capability profile and
+  fail-closed unsupported-operation result for all operations, leaving the
+  shipped Perl CLI/runtime untouched and making `.3.2` the active direct
+  `.fsm` check-operation smoke owner.

@@ -119,6 +119,7 @@ temp_fsm/
 # Build directories
 build/
 dist/
+rust/target/
 
 # Package files
 *.tar.gz

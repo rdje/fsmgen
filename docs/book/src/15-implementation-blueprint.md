@@ -30,7 +30,7 @@ selector records, and regression corpus.
 | Semantic introspection and MCP | Chapter 11 and the semantic-introspection contract tests |
 | Parity harness | [BACKEND_LANGUAGE_PORTABLE_PARITY_HARNESS_SELECTION.md](../../BACKEND_LANGUAGE_PORTABLE_PARITY_HARNESS_SELECTION.md) |
 | Extension/plugin portability | [BACKEND_LANGUAGE_TYPED_EXTENSION_PORTABILITY_AUDIT.md](../../BACKEND_LANGUAGE_TYPED_EXTENSION_PORTABILITY_AUDIT.md) |
-| First implementation experiment | Same-repository Rust/Rust-Wasm portable API smoke, active scaffold owner `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.3.1` |
+| First implementation experiment | Same-repository Rust/Rust-Wasm portable API smoke; `.3.1` scaffolded `fsmgen_portable_api`, and `.3.2` owns the first direct `.fsm` check-operation smoke |
 
 ## Source Layers
 
@@ -108,6 +108,11 @@ extension support from the current Perl `Module::Name`/`@INC`/blessed-object
 surface.
 
 The first implementation experiment is a same-repository Rust/Rust-Wasm
-portable API smoke. Its first active slice scaffolds a Rust contract crate and
-tests without wiring it into the shipped Perl CLI or claiming replacement
-runtime behavior.
+portable API smoke. The `.3.1` slice scaffolded `rust/fsmgen-portable-api` as
+an additive `fsmgen_portable_api` crate. It models the initial source,
+request/result, host, virtual-artifact, diagnostic, support-accounting, and
+capability-profile shell, reports itself as incomplete, and returns
+`E_PORTABLE_RUST_UNIMPLEMENTED_OPERATION` for every operation. It is not wired
+into the shipped Perl CLI, capability manifest, generated HDL, package install
+paths, or runtime behavior. The active `.3.2` slice owns the first direct
+`.fsm` check-operation smoke.
