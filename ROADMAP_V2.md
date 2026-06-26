@@ -4011,6 +4011,12 @@ public chronology sync. The next owner is deliberately not another AXI
 implementation: it must audit `.chi`, `.ace`, `.ahb`, `.apb`, `.atb`,
 `.smbus`, `.i2s`, `.pif`, and `.ppi` readiness or prerequisites without
 accepting any new suffix or changing behavior.
+`.545` now selects `.546`, a non-AXI profile-alias taxonomy and evidence
+prerequisite. The audit found no non-AXI protocol suffix ready for contract
+selection: `.chi`, `.ace`, `.ahb`, `.apb`, `.atb`, `.smbus`, and `.i2s` still
+lack source-shape, profile-matching, report, support-accounting, and mdBook
+evidence, while `.pif` and `.ppi` remain generic-container candidates rather
+than protocol aliases.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

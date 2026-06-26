@@ -9538,6 +9538,14 @@ must audit `.chi`, `.ace`, `.ahb`, `.apb`, `.atb`, `.smbus`, `.i2s`, `.pif`,
 and `.ppi` readiness or prerequisites without accepting a new suffix or
 changing behavior.
 
+IAL2 non-AXI profile-alias readiness audit:
+[IAL2_NON_AXI_PROFILE_ALIAS_READINESS_AUDIT](../../IAL2_NON_AXI_PROFILE_ALIAS_READINESS_AUDIT.md)
+selects `.546`, a taxonomy and evidence prerequisite before any non-AXI alias
+contract. `.chi`, `.ace`, `.ahb`, `.apb`, `.atb`, `.smbus`, and `.i2s` do not
+yet have source-shape, profile-matching, report, support-accounting, or book
+evidence; `.pif` and `.ppi` remain generic-container candidates rather than
+protocol aliases.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after
