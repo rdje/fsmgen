@@ -70,7 +70,7 @@ subtest 'adapter rejects .apb profile and behavior boundaries' => sub {
     ok(!$unsupported_object_ok, '.apb valid-ready object remains outside the first alias slice');
     like(
         $@,
-        qr/profile apb requires exactly one \(apb-requester \.\.\.\) or \(apb-completer \.\.\.\) object in this slice/,
+        qr/profile apb requires exactly one \(apb-requester \.\.\.\), one \(apb-completer \.\.\.\), or the explicit one-requester\/one-completer\/one-composition shape in this slice/,
         '.apb unsupported object diagnostic is targeted',
     );
 };

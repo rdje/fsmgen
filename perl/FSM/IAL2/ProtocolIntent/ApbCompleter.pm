@@ -580,12 +580,16 @@ sub _build_report(%args) {
         ],
         unsupported_residue => [
             {
-                id     => 'apb_interconnect_generation_deferred',
-                detail => 'APB requester/completer composition and generated interconnect remain future PPIF work.',
+                id     => 'apb_interconnect_multi_peripheral_decode_deferred',
+                detail => 'The one-requester/one-completer APB composition is support-accounted through generic .ppif; multi-peripheral address decode and routing remain future APB interconnect work.',
             },
             {
                 id     => 'apb_profile_alias_completer_deferred',
                 detail => '.apb remains the bounded requester-transfer profile alias and does not accept APB completer sources in this slice.',
+            },
+            {
+                id     => 'apb_profile_alias_composition_deferred',
+                detail => 'The generated APB composition is supported through generic .ppif only; .apb composition alias exposure remains future work.',
             },
             {
                 id     => 'apb_multi_register_decode_deferred',

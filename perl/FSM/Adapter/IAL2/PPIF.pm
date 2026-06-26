@@ -10,6 +10,7 @@ no warnings 'experimental::signatures';
 
 use Lispish;
 use FSM::Adapter::ISF::LispishAdapter;
+use FSM::IAL2::ProtocolIntent::ApbComposition;
 use FSM::IAL2::ProtocolIntent::ApbCompleter;
 use FSM::IAL2::ProtocolIntent::ApbRequesterTransfer;
 use FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus;
@@ -60,6 +61,8 @@ sub parse_source($self, @args) {
     my $generator = FSM::IAL2::ProtocolIntent::ValidReadyChannel->new(debug => $self->{debug});
     return _generate_bundle($generator, $contract)
         if _is_bundle_contract($contract);
+    return FSM::IAL2::ProtocolIntent::ApbComposition->new(debug => $self->{debug})->generate($contract)
+        if _is_apb_composition_contract($contract);
     return FSM::IAL2::ProtocolIntent::ApbCompleter->new(debug => $self->{debug})->generate($contract)
         if _is_apb_completer_contract($contract);
     return FSM::IAL2::ProtocolIntent::ApbRequesterTransfer->new(debug => $self->{debug})->generate($contract)
@@ -130,7 +133,7 @@ sub _validate_profile_alias_contract($source_label, $contract) {
         confess "Error: .apb source '$source_label' profile '$profile' does not match .apb profile alias; expected apb\n"
             unless defined($profile) && !ref($profile) && $profile eq 'apb';
 
-        confess "Error: .apb source '$source_label' supports only one APB requester-transfer object in this slice; requested APB completer, interconnect, bundle, Valid-Ready, or AXI manager behavior remains unsupported for the first APB profile-alias implementation\n"
+        confess "Error: .apb source '$source_label' supports only one APB requester-transfer object in this slice; requested APB completer, APB composition, interconnect, bundle, Valid-Ready, or AXI manager behavior remains unsupported for the first APB profile-alias implementation\n"
             unless _is_apb_requester_transfer_contract($contract);
         return;
     }
@@ -155,6 +158,7 @@ sub _contract_from_root($root, $source_label) {
     my @managers;
     my @apb_requesters;
     my @apb_completers;
+    my @apb_compositions;
     for my $clause (@clauses) {
         my ($head, @body) = _clause_parts($clause, $source_label);
         if ($head eq 'profile') {
@@ -175,6 +179,8 @@ sub _contract_from_root($root, $source_label) {
             push @apb_requesters, _parse_apb_requester(\@body, $source_label);
         } elsif ($head eq 'apb-completer') {
             push @apb_completers, _parse_apb_completer(\@body, $source_label);
+        } elsif ($head eq 'apb-composition') {
+            push @apb_compositions, _parse_apb_composition(\@body, $source_label);
         } else {
             confess "Error: $surface source '$source_label' has unsupported top-level clause '($head ...)'\n";
         }
@@ -184,13 +190,29 @@ sub _contract_from_root($root, $source_label) {
         unless defined $profile;
     confess "Error: $surface source '$source_label' is missing required (source ...) clause\n"
         unless defined $source;
-    confess "Error: $surface source '$source_label' is missing required intent object clause, expected (valid-ready-channel ...), (manager-capacity-status ...), (apb-requester ...), or (apb-completer ...)\n"
-        unless @channels || @managers || @apb_requesters || @apb_completers;
+    confess "Error: $surface source '$source_label' is missing required intent object clause, expected (valid-ready-channel ...), (manager-capacity-status ...), (apb-requester ...), (apb-completer ...), or (apb-composition ...)\n"
+        unless @channels || @managers || @apb_requesters || @apb_completers || @apb_compositions;
+    if (@apb_compositions) {
+        confess "Error: $surface source '$source_label' profile '$profile' does not match (apb-composition ...); expected apb\n"
+            unless $profile eq 'apb';
+        confess "Error: $surface source '$source_label' APB composition requires exactly one (apb-requester ...), one (apb-completer ...), and one (apb-composition ...) object in this slice\n"
+            unless @apb_requesters == 1 && @apb_completers == 1 && @apb_compositions == 1 && !@channels && !@managers;
+
+        return {
+            kind        => 'apb_composition',
+            intent_name => $intent_name,
+            protocol    => $profile,
+            source      => $source,
+            requester   => $apb_requesters[0],
+            completer   => $apb_completers[0],
+            composition => $apb_compositions[0],
+        };
+    }
     if (@apb_requesters) {
         confess "Error: $surface source '$source_label' profile '$profile' does not match (apb-requester ...); expected apb\n"
             unless $profile eq 'apb';
-        confess "Error: $surface source '$source_label' cannot mix (apb-requester ...) with (valid-ready-channel ...), (manager-capacity-status ...), or (apb-completer ...) objects in this slice\n"
-            if @channels || @managers || @apb_completers;
+        confess "Error: $surface source '$source_label' cannot mix (apb-requester ...) with (valid-ready-channel ...), (manager-capacity-status ...), (apb-completer ...), or (apb-composition ...) objects outside the explicit APB composition shape in this slice\n"
+            if @channels || @managers || @apb_completers || @apb_compositions;
         confess "Error: $surface source '$source_label' supports exactly one (apb-requester ...) object in this slice\n"
             if @apb_requesters > 1;
 
@@ -204,8 +226,8 @@ sub _contract_from_root($root, $source_label) {
     if (@apb_completers) {
         confess "Error: $surface source '$source_label' profile '$profile' does not match (apb-completer ...); expected apb\n"
             unless $profile eq 'apb';
-        confess "Error: $surface source '$source_label' cannot mix (apb-completer ...) with (valid-ready-channel ...), (manager-capacity-status ...), or (apb-requester ...) objects in this slice\n"
-            if @channels || @managers || @apb_requesters;
+        confess "Error: $surface source '$source_label' cannot mix (apb-completer ...) with (valid-ready-channel ...), (manager-capacity-status ...), (apb-requester ...), or (apb-composition ...) objects outside the explicit APB composition shape in this slice\n"
+            if @channels || @managers || @apb_requesters || @apb_compositions;
         confess "Error: $surface source '$source_label' supports exactly one (apb-completer ...) object in this slice\n"
             if @apb_completers > 1;
 
@@ -216,7 +238,7 @@ sub _contract_from_root($root, $source_label) {
             source      => $source,
         };
     }
-    confess "Error: $surface source '$source_label' profile apb requires exactly one (apb-requester ...) or (apb-completer ...) object in this slice\n"
+    confess "Error: $surface source '$source_label' profile apb requires exactly one (apb-requester ...), one (apb-completer ...), or the explicit one-requester/one-completer/one-composition shape in this slice\n"
         if $profile eq 'apb';
     confess "Error: $surface source '$source_label' cannot mix (valid-ready-channel ...) and (manager-capacity-status ...) objects in this slice\n"
         if @channels && @managers;
@@ -795,6 +817,110 @@ sub _parse_apb_completer_transfer_block($items, $source_label, $name) {
     }
 
     return \%transfer;
+}
+
+sub _parse_apb_composition($body, $source_label) {
+    confess "Error: .ppif (apb-composition ...) requires a scalar object name\n"
+        unless @$body >= 1 && !ref($body->[0]) && length($body->[0]);
+
+    my $name = $body->[0];
+    my %contract = (
+        kind => 'apb_composition',
+        name => $name,
+    );
+    my %seen;
+    for my $clause (@{$body}[1 .. $#$body]) {
+        my ($head, @items) = _clause_parts($clause, $source_label);
+        confess "Error: .ppif (apb-composition $name ...) has duplicate ($head ...) clause\n"
+            if $seen{$head}++;
+
+        if ($head =~ /\A(?:role|clock)\z/) {
+            confess "Error: .ppif (apb-composition $name ($head ...)) requires exactly one scalar value\n"
+                unless @items == 1 && !ref($items[0]);
+            $contract{$head} = $items[0];
+        } elsif ($head eq 'reset') {
+            $contract{reset} = _parse_reset(\@items, $source_label);
+        } elsif ($head eq 'children') {
+            $contract{children} = _parse_apb_composition_children_block(\@items, $source_label, $name);
+        } elsif ($head eq 'wiring') {
+            $contract{wiring} = _parse_apb_composition_wiring_block(\@items, $source_label, $name);
+        } else {
+            confess "Error: .ppif (apb-composition $name ...) has unsupported clause '($head ...)'\n";
+        }
+    }
+
+    for my $required (qw(role clock reset children wiring)) {
+        confess "Error: .ppif (apb-composition $name ...) is missing required ($required ...) clause\n"
+            unless exists $contract{$required};
+    }
+
+    return \%contract;
+}
+
+sub _parse_apb_composition_children_block($items, $source_label, $name) {
+    my %children;
+
+    for my $clause (@$items) {
+        my ($head, @body) = _clause_parts($clause, $source_label);
+        confess "Error: .ppif (apb-composition $name (children ...)) supports only (requester INSTANCE OBJECT) and (completer INSTANCE OBJECT)\n"
+            unless $head =~ /\A(?:requester|completer)\z/;
+        confess "Error: .ppif (apb-composition $name (children ...)) has duplicate ($head ...) clause\n"
+            if exists $children{$head};
+        confess "Error: .ppif (apb-composition $name (children ($head ...))) requires exactly instance and object scalar names\n"
+            unless @body == 2 && !ref($body[0]) && length($body[0]) && !ref($body[1]) && length($body[1]);
+        $children{$head} = {
+            instance_name => $body[0],
+            object_name   => $body[1],
+        };
+    }
+
+    for my $required (qw(requester completer)) {
+        confess "Error: .ppif (apb-composition $name (children ...)) is missing required ($required ...) clause\n"
+            unless exists $children{$required};
+    }
+
+    return \%children;
+}
+
+sub _parse_apb_composition_wiring_block($items, $source_label, $name) {
+    confess "Error: .ppif (apb-composition $name (wiring ...)) requires a scalar wiring name\n"
+        unless @$items >= 1 && !ref($items->[0]) && length($items->[0]);
+
+    my $wiring_name = $items->[0];
+    my %allowed = (
+        select       => 'select',
+        enable       => 'enable',
+        write        => 'write',
+        address      => 'address',
+        'write-data' => 'write_data',
+        ready        => 'ready',
+        'read-data'  => 'read_data',
+        error        => 'error',
+    );
+    my %bus;
+
+    for my $clause (@{$items}[1 .. $#$items]) {
+        my ($head, @body) = _clause_parts($clause, $source_label);
+        confess "Error: .ppif (apb-composition $name (wiring $wiring_name ...)) has unsupported clause '($head ...)'\n"
+            unless exists $allowed{$head};
+        confess "Error: .ppif (apb-composition $name (wiring $wiring_name ...)) has duplicate ($head ...) clause\n"
+            if exists $bus{$allowed{$head}};
+        $bus{$allowed{$head}} = $head =~ /\A(?:address|write-data|read-data)\z/
+            ? _parse_apb_width_binding(\@body, $source_label, "apb-composition $name wiring $wiring_name $head")
+            : _parse_apb_scalar_binding(\@body, $source_label, "apb-composition $name wiring $wiring_name $head");
+    }
+
+    for my $required (qw(select enable write address write_data ready read_data error)) {
+        my $clause = $required;
+        $clause =~ s/_/-/g;
+        confess "Error: .ppif (apb-composition $name (wiring $wiring_name ...)) is missing required ($clause ...) clause\n"
+            unless exists $bus{$required};
+    }
+
+    return {
+        name => $wiring_name,
+        bus  => \%bus,
+    };
 }
 
 sub _parse_manager_capacity_status($body, $source_label) {
@@ -1642,6 +1768,11 @@ sub _is_apb_requester_transfer_contract($contract) {
 sub _is_apb_completer_contract($contract) {
     return ref($contract) eq 'HASH'
         && ($contract->{kind} // '') eq 'apb_completer';
+}
+
+sub _is_apb_composition_contract($contract) {
+    return ref($contract) eq 'HASH'
+        && ($contract->{kind} // '') eq 'apb_composition';
 }
 
 sub _generate_bundle($generator, $bundle) {

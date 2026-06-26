@@ -160,17 +160,25 @@ The APB requester-transfer report keeps these future APB owners explicit:
 ```text
 apb_multi_peripheral_decode_deferred
 apb_protection_and_strobes_deferred
-apb_completer_and_interconnect_generation_deferred
+apb_profile_alias_completer_and_composition_deferred
+apb_requester_busy_status_deferred
 apb_alternate_widths_deferred
 apb_back_to_back_policy_deferred
 ```
 
+Generated APB requester transfers now deassert `PSEL` and `PENABLE` directly
+in the terminal `done_phase`; they do not expose parameterized helper inputs
+for those bus controls in the generated FSM. The later APB completer and fixed
+one-requester/one-completer composition behaviors are documented separately.
+
 ## Non-Goals
 
-This `.550` slice did not accept `.apb` or any other new suffix, did not extend
-`.axi`, did not add APB completer or interconnect generation, did not add
-verification-output behavior, did not add direct IAL2-to-backend lowering, and
-did not change VHDL behavior.
+This `.550` slice did not accept `.apb` or any other new suffix and did not
+extend `.axi`. Current APB completer `.ppif` and fixed requester/completer
+composition `.ppif` behavior are owned by later slices; requester `busy`,
+multi-peripheral APB interconnect/decode, APB completer/composition `.apb`
+aliases, verification-output behavior, direct IAL2-to-backend lowering, and
+VHDL remain outside this requester-transfer page.
 
 ## Validation
 

@@ -311,6 +311,24 @@ sub ppif_generated_ial0_entry {
     return (undef, undef);
 }
 
+sub ppif_generated_ial1_items {
+    my ($ppif_result) = @_;
+
+    my $ial1 = ref($ppif_result->{generated_ial1}) eq 'HASH'
+        ? $ppif_result->{generated_ial1}
+        : {};
+    return @{$ial1->{items}}
+        if ref($ial1->{items}) eq 'ARRAY';
+
+    return ({
+        format => $ial1->{format},
+        name   => $ial1->{name},
+        text   => $ial1->{text},
+    }) if defined($ial1->{name}) && defined($ial1->{text});
+
+    return ();
+}
+
 sub ppif_generated_fsm_needs_bounded_check_summary {
     my ($ppif_result) = @_;
     my (undef, $entry_text) = ppif_generated_ial0_entry($ppif_result);
@@ -1059,10 +1077,9 @@ if ($fsm_file =~ /\.(?:ppif|axi|apb)$/i) {
         }
     } else {
         $isf_schedule_report = $ppif_result->{generated_ial1_schedule_report};
-        my $files = $ppif_result->{generated_ial0}{files};
-        my $artifact_files = $ppif_result->{report}{generated_artifacts}{ial0}{files} || [];
-        my $entry_basename = $artifact_files->[0];
-        if (!defined $entry_basename || !exists $files->{$entry_basename}) {
+        my $files = $ppif_result->{generated_ial0}{files} || {};
+        my ($entry_basename, $entry_text) = ppif_generated_ial0_entry($ppif_result);
+        if (!defined($entry_basename) || !defined($entry_text)) {
             my $display_error = emit_machine_failure_if_requested(
                 input => $fsm_input,
                 source_file => ($check_json_mode ? $public_source_file : $fsm_file),
@@ -1091,20 +1108,22 @@ if ($fsm_file =~ /\.(?:ppif|axi|apb)$/i) {
         }
 
         my $dir = $outdir || undef;
-        if (!$dir && scalar(keys %$files) == 1) {
+        if (!$dir) {
             my ($fh, $tmp_path) = File::Temp::tempfile(SUFFIX => '.fsm');
-            print $fh $files->{$entry_basename};
+            print $fh $entry_text;
             close $fh;
             $fsm_file = $tmp_path;
         } else {
-            $dir ||= '.';
             mkdir $dir unless -d $dir;
 
-            my $isf_path = File::Spec->catfile($dir, $ppif_result->{generated_ial1}{name});
-            open my $isf_fh, '>', $isf_path or die "Cannot write $isf_path: $!\n";
-            print $isf_fh $ppif_result->{generated_ial1}{text};
-            close $isf_fh;
-            print "Wrote: $isf_path\n" unless $machine_json_mode;
+            for my $item (ppif_generated_ial1_items($ppif_result)) {
+                next unless defined($item->{name}) && defined($item->{text});
+                my $isf_path = File::Spec->catfile($dir, $item->{name});
+                open my $isf_fh, '>', $isf_path or die "Cannot write $isf_path: $!\n";
+                print $isf_fh $item->{text};
+                close $isf_fh;
+                print "Wrote: $isf_path\n" unless $machine_json_mode;
+            }
 
             for my $fname (sort keys %$files) {
                 my $path = File::Spec->catfile($dir, $fname);
@@ -1119,7 +1138,9 @@ if ($fsm_file =~ /\.(?:ppif|axi|apb)$/i) {
         unless ($machine_json_mode) {
             print "=== IAL2 Protocol/Platform Intent ===\n\n";
             print "Source: " . $ppif_result->{report}{source_object}{id} . "\n";
-            print "Generated IAL1: " . $ppif_result->{generated_ial1}{name} . "\n";
+            my @ial1_names = map { $_->{name} } grep { defined($_->{name}) } ppif_generated_ial1_items($ppif_result);
+            print "Generated IAL1: " . (@ial1_names == 1 ? $ial1_names[0] : join(', ', @ial1_names)) . "\n"
+                if @ial1_names;
             print "Lowered to: $fsm_file\n\n" unless $quiet;
         }
     }

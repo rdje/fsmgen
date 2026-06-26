@@ -319,8 +319,12 @@ coverage: ial2_ppif_apb_composition_pipeline_cli
 source_kind: ppif
 expected_top_name: apb_tb
 expected_child_modules: [apb_requester, apb_completer]
-expected_semantic_source_root_kind: composition
+expected_semantic_source_root_kind: top
 ```
+
+`.566` implementation confirmed the normalized semantic root kind as `top`,
+because the generated composition artifact is an IAL0 `?top` root. The APB
+protocol object remains `apb-composition`.
 
 The existing direct lower-layer fixture remains separately support-accounted:
 

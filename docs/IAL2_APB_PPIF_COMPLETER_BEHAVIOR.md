@@ -157,8 +157,9 @@ diagnostic.
 The APB completer report keeps these future APB owners explicit:
 
 ```text
-apb_interconnect_generation_deferred
+apb_interconnect_multi_peripheral_decode_deferred
 apb_profile_alias_completer_deferred
+apb_profile_alias_composition_deferred
 apb_multi_register_decode_deferred
 apb_protection_and_strobes_deferred
 apb_alternate_widths_deferred
@@ -173,11 +174,13 @@ the hand-authored fixture.
 
 ## Non-Goals
 
-This `.562` slice does not add APB interconnect/composition generation, does
-not widen `.apb` beyond requester-transfer, does not add sidebands, alternate
-widths, multiple register decode, byte lanes, back-to-back policy, direct
-IAL2-to-IAL0 lowering, direct backend lowering, verification-output
-generation, backend-language variants, AXI behavior, or VHDL behavior.
+This `.562` slice does not add multi-peripheral APB interconnect/decode
+generation, does not widen `.apb` beyond requester-transfer, does not add
+sidebands, alternate widths, multiple register decode, byte lanes,
+back-to-back policy, direct IAL2-to-IAL0 lowering, direct backend lowering,
+verification-output generation, backend-language variants, AXI behavior, or
+VHDL behavior. The later fixed one-requester/one-completer APB composition
+behavior is documented separately.
 
 ## Validation
 

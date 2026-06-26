@@ -4186,6 +4186,17 @@ composition/completer aliases, multi-peripheral interconnect/decode,
 multi-register decode, sidebands, alternate widths, back-to-back policy,
 direct backend lowering, verification-output generation, backend-language
 variants, AXI behavior, and VHDL remain deferred.
+`.566` now ships that APB `.ppif` composition behavior. The sample
+`ppif/apb_composition.ppif` lowers one embedded APB requester and one embedded
+APB completer through generated `apb_requester.isf`,
+`apb_completer.isf`, `apb_requester.fsm`, `apb_completer.fsm`, and
+`apb_tb.fsm`; selects `apb_tb.fsm` as the HDL entry; emits report schema
+`fsmgen.ial2.protocol_intent.apb_composition.v1`; and support-accounts
+`intent.ppif_apb_composition` with semantic source root kind `top`. The top
+exposes `start`, request fields, `wait_cycles`, `done`, `last_error`, and
+`last_read_data`, but not requester `busy`. `.566` selects `.567`, the next
+no-behavior APB surface selector after shipped requester, completer, and fixed
+composition `.ppif` paths.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

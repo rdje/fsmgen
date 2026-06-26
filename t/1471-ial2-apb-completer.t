@@ -72,8 +72,9 @@ subtest 'adapter parses the selected APB completer PPIF shape' => sub {
     is($result->{report}{layering}{direct_ial2_to_ial0}, 0, 'APB completer lowering goes through generated IAL1 before IAL0');
 
     my %residue = map { $_->{id} => 1 } @{$result->{report}{unsupported_residue}};
-    ok($residue{apb_interconnect_generation_deferred}, 'report keeps interconnect residue explicit');
+    ok($residue{apb_interconnect_multi_peripheral_decode_deferred}, 'report keeps multi-peripheral interconnect residue explicit');
     ok($residue{apb_profile_alias_completer_deferred}, 'report keeps .apb completer alias residue explicit');
+    ok($residue{apb_profile_alias_composition_deferred}, 'report keeps .apb composition alias residue explicit');
     ok($residue{apb_back_to_back_policy_deferred}, 'report keeps back-to-back policy residue explicit');
 };
 

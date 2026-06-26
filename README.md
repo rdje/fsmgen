@@ -3187,6 +3187,17 @@ composition/completer aliases, multi-peripheral interconnect/decode,
 multi-register decode, sidebands, alternate widths, back-to-back policy,
 direct backend lowering, verification-output generation, backend-language
 variants, AXI behavior, and VHDL remain deferred.
+`.566` now ships that APB `.ppif` composition behavior. The sample
+`ppif/apb_composition.ppif` lowers one embedded APB requester and one embedded
+APB completer through generated `apb_requester.isf`,
+`apb_completer.isf`, `apb_requester.fsm`, `apb_completer.fsm`, and
+`apb_tb.fsm`; selects `apb_tb.fsm` as the HDL entry; emits report schema
+`fsmgen.ial2.protocol_intent.apb_composition.v1`; and support-accounts
+`intent.ppif_apb_composition` with semantic source root kind `top`. The top
+exposes `start`, request fields, `wait_cycles`, `done`, `last_error`, and
+`last_read_data`, but not requester `busy`. `.566` selects `.567`, the next
+no-behavior APB surface selector after shipped requester, completer, and fixed
+composition `.ppif` paths.
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
 `.562` without adding APB behavior in `.561`.
@@ -5707,6 +5718,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_POST_APB_COMPLETER_NEXT_SLICE_SELECTION.md` — selects APB interconnect/composition readiness audit after generated APB requester and completer `.ppif` endpoints both exist, while keeping APB completer `.apb` alias exposure and wider APB protocol breadth deferred.
 - `docs/IAL2_APB_INTERCONNECT_COMPOSITION_READINESS_AUDIT.md` — audits APB interconnect/composition readiness after generated APB requester/completer endpoints and selects public contract selection before any generated composition behavior.
 - `docs/IAL2_APB_INTERCONNECT_COMPOSITION_CONTRACT_SELECTION.md` — selects the explicit APB `.ppif` requester/completer composition contract and routes the next slice to direct bounded implementation.
+- `docs/IAL2_APB_PPIF_COMPOSITION_BEHAVIOR.md` — ships the first fixed one-requester/one-completer APB `.ppif` composition behavior with `ppif/apb_composition.ppif`, generated endpoint `.isf`/`.fsm` review artifacts, selected `apb_tb.fsm` HDL entry, report schema `fsmgen.ial2.protocol_intent.apb_composition.v1`, and support identity `intent.ppif_apb_composition`.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_CONTRACT_SELECTION.md` — selected direct single-active dynamic write `BID` same-cycle release-and-recapture behavior under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_BEHAVIOR.md` — shipped single-active dynamic write `BID` same-cycle release-and-recapture under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_WRITE_RECAPTURE_NEXT_SLICE_SELECTION.md` — selected `.367`, public contract selection for first single-active dynamic read same-cycle release-and-recapture after dynamic write recapture shipped.

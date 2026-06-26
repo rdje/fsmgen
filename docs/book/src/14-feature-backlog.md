@@ -9795,6 +9795,35 @@ The selected generated review chain is `apb_requester.isf`,
 `intent.ppif_apb_composition`. Requester `busy` exposure and wider APB
 interconnect/decode remain deferred.
 
+APB `.ppif` composition behavior:
+[IAL2_APB_PPIF_COMPOSITION_BEHAVIOR](../../IAL2_APB_PPIF_COMPOSITION_BEHAVIOR.md)
+ships `.566`, the first fixed one-requester/one-completer APB composition
+source under the generic `.ppif` IAL2 container. The sample
+`ppif/apb_composition.ppif` uses explicit `(profile apb)` with one requester,
+one completer, and one `(apb-composition apb_tb ...)` object, emits report
+schema `fsmgen.ial2.protocol_intent.apb_composition.v1`, materializes
+`apb_requester.isf`, `apb_completer.isf`, `apb_requester.fsm`,
+`apb_completer.fsm`, and `apb_tb.fsm`, selects `apb_tb.fsm` as the HDL entry,
+and support-accounts `intent.ppif_apb_composition`.
+
+```bash
+./bin/fsmgen --emit-schedule-json ppif/apb_composition.ppif
+./bin/fsmgen --strict --check --json ppif/apb_composition.ppif
+./bin/fsmgen --strict --emit-semantic-json ppif/apb_composition.ppif
+./bin/fsmgen --quiet --outdir /tmp/fsmgen-apb-composition \
+  --output /tmp/fsmgen-apb-composition/apb_tb.sv \
+  ppif/apb_composition.ppif
+```
+
+The generated top exposes `clk`, `rst_n`, `start`, `req_write`, `req_addr`,
+`req_wdata`, `wait_cycles`, `done`, `last_error`, and `last_read_data`.
+Requester `busy`, `.apb` completer/composition aliases, multi-peripheral
+interconnect/decode, sidebands/strobes, alternate widths, back-to-back policy,
+direct backend lowering, verification-output generation, backend-language
+variants, AXI behavior, and VHDL remain deferred. The next owner is `.567`,
+a no-behavior selector for the next APB surface after requester, completer,
+and fixed composition `.ppif` paths shipped.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

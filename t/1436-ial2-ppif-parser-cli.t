@@ -99,7 +99,8 @@ subtest 'PPIF adapter parses the APB requester-transfer source shape' => sub {
     is_deeply($result->{report}{transfer}{sample}, ['read-data', 'error'], 'APB report captures sample list');
     is($result->{report}{generated_artifacts}{hdl_entry}{entry_artifact}, 'apb_requester.fsm', 'APB report selects the generated requester .fsm as HDL entry');
     my %residue = map { $_->{id} => 1 } @{$result->{report}{unsupported_residue}};
-    ok($residue{apb_completer_and_interconnect_generation_deferred}, 'APB report keeps completer/interconnect residue explicit');
+    ok($residue{apb_profile_alias_completer_and_composition_deferred}, 'APB report keeps completer/composition alias residue explicit');
+    ok($residue{apb_requester_busy_status_deferred}, 'APB report keeps requester busy/status residue explicit');
     ok($residue{apb_back_to_back_policy_deferred}, 'APB report keeps back-to-back policy residue explicit');
     is($result->{report}{layering}{direct_ial2_to_ial0}, 0, 'APB lowering goes through generated IAL1 before IAL0');
 };
@@ -3674,7 +3675,7 @@ BUS
 
     my @cases = (
         ['apb requester profile mismatch', $profile_mismatch, qr/profile 'axi4' does not match \(apb-requester \.\.\.\); expected apb/],
-        ['apb profile rejects valid-ready object', $apb_profile_valid_ready, qr/profile apb requires exactly one \(apb-requester \.\.\.\) or \(apb-completer \.\.\.\) object/],
+        ['apb profile rejects valid-ready object', $apb_profile_valid_ready, qr/profile apb requires exactly one \(apb-requester \.\.\.\), one \(apb-completer \.\.\.\), or the explicit one-requester\/one-completer\/one-composition shape in this slice/],
         ['apb requester missing bus', $missing_bus, qr/is missing required \(bus \.\.\.\) clause/],
         ['apb requester wrong setup select', $bad_setup, qr/transfer\.setup\.select must be 1/],
     );
