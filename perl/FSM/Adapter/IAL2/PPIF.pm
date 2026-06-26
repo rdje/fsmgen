@@ -133,8 +133,10 @@ sub _validate_profile_alias_contract($source_label, $contract) {
         confess "Error: .apb source '$source_label' profile '$profile' does not match .apb profile alias; expected apb\n"
             unless defined($profile) && !ref($profile) && $profile eq 'apb';
 
-        confess "Error: .apb source '$source_label' supports only one APB requester-transfer object in this slice; requested APB completer, APB composition, interconnect, bundle, Valid-Ready, or AXI manager behavior remains unsupported for the first APB profile-alias implementation\n"
-            unless _is_apb_requester_transfer_contract($contract);
+        confess "Error: .apb source '$source_label' profile apb requires exactly one (apb-requester ...), one (apb-completer ...), or the explicit one-requester/one-completer/one-composition shape in this slice\n"
+            unless _is_apb_requester_transfer_contract($contract)
+                || _is_apb_completer_contract($contract)
+                || _is_apb_composition_contract($contract);
         return;
     }
 

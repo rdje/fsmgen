@@ -437,20 +437,12 @@ sub _build_report(%args) {
             'requester, completer, and composition must share clock and reset policy',
             'composition children must reference the embedded requester and completer objects by name',
             'composition bus wiring must match requester and completer APB signal names and widths',
-            'APB composition is exposed through .ppif only; .apb alias exposure remains deferred',
+            'APB composition is exposed through .ppif and bounded .apb profile-alias sources; direct IAL2-to-IAL0 lowering remains forbidden',
         ],
         unsupported_residue => [
             {
                 id     => 'apb_interconnect_multi_peripheral_decode_deferred',
                 detail => 'The first APB composition wires one requester to one completer; multi-peripheral address decode and routing remain future APB interconnect work.',
-            },
-            {
-                id     => 'apb_profile_alias_composition_deferred',
-                detail => 'The APB composition source is supported through generic .ppif only; .apb composition alias exposure remains future work.',
-            },
-            {
-                id     => 'apb_profile_alias_completer_deferred',
-                detail => 'The .apb profile alias remains requester-transfer only in this slice.',
             },
             {
                 id     => 'apb_requester_busy_status_deferred',

@@ -12,8 +12,8 @@ completer/interconnect contract path.
 The first public contract is APB completer generation under the generic
 `.ppif` IAL2 container. APB interconnect/composition generation remains a
 later contract after the completer path has a generated review-artifact chain.
-The bounded `.apb` profile alias remains requester-transfer only until a later
-alias owner explicitly widens it.
+At `.559` selection time, the bounded `.apb` profile alias remained
+requester-transfer only until a later alias owner explicitly widened it.
 
 The next exact owner is `IAL2-FEATURE-COMPLETENESS-FRONTIER.560`, a
 no-behavior APB completer generated-IAL1 substrate audit. `.560` must verify
@@ -25,8 +25,9 @@ Later status: `.562` implemented this selected APB completer `.ppif` contract
 at `ppif/apb_completer.ppif`, with generated `apb_completer.isf` before
 generated `apb_completer.fsm`, report schema
 `fsmgen.ial2.protocol_intent.apb_completer.v1`, and support identity
-`intent.ppif_apb_completer`. APB interconnect/composition and APB completer
-`.apb` alias exposure remain later owners.
+`intent.ppif_apb_completer`. `.569` later exposed the same bounded completer
+through `ppif/apb_completer.apb`; multi-peripheral APB interconnect/decode
+remains a later owner.
 
 No parser behavior, generator behavior, samples, support-accounting catalog,
 validation behavior, generated artifacts, tests, schedule/check/semantic JSON,
@@ -186,7 +187,7 @@ That residue movement is behavior/report-surface work and is not performed in
 
 The first APB completer implementation should be `.ppif` only.
 
-The bounded `.apb` profile alias remains limited to:
+At `.559` selection time, the bounded `.apb` profile alias remained limited to:
 
 ```text
 ppif/apb_requester_transfer.apb
@@ -202,6 +203,9 @@ object until a later APB profile-alias contract selects `.apb` completer
 exposure. This preserves the established sequence used by the requester path:
 generic `.ppif` behavior first, then profile-alias widening after a separate
 readiness/contract step.
+
+That later sequence has now occurred for the bounded completer: `.569` exposes
+`ppif/apb_completer.apb` after `.562` shipped `ppif/apb_completer.ppif`.
 
 ## Diagnostics
 

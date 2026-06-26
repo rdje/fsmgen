@@ -10,8 +10,8 @@ answers:
 date: 2026-06-26
 status: current
 tags: [ial2, apb, profile-alias, ppif, composition, task-tree]
-evidence: docs/IAL2_APB_PROFILE_ALIAS_COMPLETER_COMPOSITION_CONTRACT_SELECTION.md; docs/IAL2_POST_APB_COMPOSITION_NEXT_SLICE_SELECTION.md; docs/IAL2_APB_PPIF_COMPOSITION_BEHAVIOR.md; docs/IAL2_APB_PPIF_COMPLETER_BEHAVIOR.md; docs/IAL2_APB_PROFILE_ALIAS_BEHAVIOR.md; ppif/apb_composition.ppif; ppif/apb_completer.ppif; ppif/apb_requester_transfer.apb; perl/FSM/Adapter/IAL2/PPIF.pm; perl/FSM/IAL2/ProtocolIntent/ApbComposition.pm; perl/FSM/IAL2/ProtocolIntent/ApbCompleter.pm; perl/FSM/IAL2/ProtocolIntent/ApbRequesterTransfer.pm; perl/FSM/Support/RegressionCorpus.pm; perl/FSM/Support/LanguageSurfaceSection.pm; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; MEMORY.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md
-reverify: ./bin/fsmgen --quiet --emit-schedule-json ppif/apb_requester_transfer.apb && ./bin/fsmgen --quiet --emit-schedule-json ppif/apb_completer.ppif && ./bin/fsmgen --quiet --emit-schedule-json ppif/apb_composition.ppif
+evidence: docs/IAL2_APB_PROFILE_ALIAS_COMPLETER_COMPOSITION_CONTRACT_SELECTION.md; docs/IAL2_POST_APB_COMPOSITION_NEXT_SLICE_SELECTION.md; docs/IAL2_APB_PPIF_COMPOSITION_BEHAVIOR.md; docs/IAL2_APB_PPIF_COMPLETER_BEHAVIOR.md; docs/IAL2_APB_PROFILE_ALIAS_BEHAVIOR.md; ppif/apb_composition.ppif; ppif/apb_composition.apb; ppif/apb_completer.ppif; ppif/apb_completer.apb; ppif/apb_requester_transfer.apb; perl/FSM/Adapter/IAL2/PPIF.pm; perl/FSM/IAL2/ProtocolIntent/ApbComposition.pm; perl/FSM/IAL2/ProtocolIntent/ApbCompleter.pm; perl/FSM/IAL2/ProtocolIntent/ApbRequesterTransfer.pm; perl/FSM/Support/RegressionCorpus.pm; perl/FSM/Support/LanguageSurfaceSection.pm; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; MEMORY.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md
+reverify: ./bin/fsmgen --quiet --emit-schedule-json ppif/apb_requester_transfer.apb && ./bin/fsmgen --quiet --emit-schedule-json ppif/apb_completer.apb && ./bin/fsmgen --quiet --emit-schedule-json ppif/apb_composition.apb
 ---
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.568` selects
@@ -19,10 +19,11 @@ reverify: ./bin/fsmgen --quiet --emit-schedule-json ppif/apb_requester_transfer.
 `.apb` profile-alias widening for the shipped APB completer and fixed
 requester/completer composition shapes.
 
-The selected future `.apb` sample paths are `ppif/apb_completer.apb` and
-`ppif/apb_composition.apb`. Both mirror the existing generic `.ppif` sources,
-keep explicit `(profile apb)`, preserve generated `.isf` and `.fsm` review
-artifacts, and keep authored `.apb` paths in check JSON and semantic JSON.
+The selected `.apb` sample paths are `ppif/apb_completer.apb` and
+`ppif/apb_composition.apb`; `.569` implements them. Both mirror the existing
+generic `.ppif` sources, keep explicit `(profile apb)`, preserve generated
+`.isf` and `.fsm` review artifacts, and keep authored `.apb` paths in check
+JSON and semantic JSON.
 
 The selected support-accounting identities are
 `intent.apb_profile_alias_completer` and
@@ -32,8 +33,8 @@ The selected support-accounting identities are
 `ial2_apb_profile_alias_composition_pipeline_cli`.
 
 `.568` changes no behavior. At `.568` closeout, temporary `.apb` copies of the
-APB completer and APB composition sources still fail closed with the current
-requester-transfer-only alias diagnostic. Multi-peripheral APB interconnect,
+APB completer and APB composition sources still failed closed; `.569` later
+implemented the selected widening. Multi-peripheral APB interconnect,
 multi-register decode, sidebands/strobes, alternate widths, requester
 busy/status exposure, back-to-back policy, direct backend lowering,
 verification-output generation, backend-language variants, AXI behavior, and

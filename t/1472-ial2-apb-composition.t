@@ -61,7 +61,6 @@ subtest 'adapter parses the selected APB requester/completer composition PPIF sh
 
     my %residue = map { $_->{id} => 1 } @{$result->{report}{unsupported_residue}};
     ok($residue{apb_interconnect_multi_peripheral_decode_deferred}, 'report keeps multi-peripheral interconnect residue explicit');
-    ok($residue{apb_profile_alias_composition_deferred}, 'report keeps .apb composition alias residue explicit');
     ok($residue{apb_requester_busy_status_deferred}, 'report keeps requester busy/status residue explicit');
 };
 
@@ -114,7 +113,7 @@ subtest 'CLI check and semantic JSON support-account APB composition PPIF identi
     is($semantic_report->{semantic}{module}{name}, 'apb_tb', 'APB composition semantic JSON records the generated top module');
 };
 
-subtest 'CLI schedule JSON, outdir, and .apb alias boundary expose APB composition review artifacts' => sub {
+subtest 'CLI schedule JSON, outdir, and .apb alias expose APB composition review artifacts' => sub {
     my $path = sample_apb_composition_ppif_path();
     my ($schedule_success, undef, undef, $schedule_stdout, $schedule_stderr) = run(
         command => ['./bin/fsmgen', '--emit-schedule-json', $path],
@@ -144,21 +143,22 @@ subtest 'CLI schedule JSON, outdir, and .apb alias boundary expose APB compositi
     like($sv, qr/\bmodule\s+apb_completer\b/, 'APB composition HDL contains the completer child module');
     unlike($sv, qr/\bbusy\b/, 'APB composition HDL does not expose deferred requester busy status');
 
-    my $alias_path = File::Spec->catfile($tempdir, 'apb_composition.apb');
-    write_file($alias_path, sample_apb_composition_ppif());
-    my $ok = eval { FSM::Adapter::IAL2::PPIF->new()->parse_file($alias_path); 1 };
-    ok(!$ok, '.apb rejects APB composition content');
-    like(
-        $@,
-        qr/\.apb source '.*apb_composition\.apb' supports only one APB requester-transfer object in this slice/,
-        '.apb APB composition rejection keeps the alias boundary targeted',
-    );
+    ok(-f sample_apb_composition_apb_path(), 'tracked runnable APB composition .apb sample exists');
+    my $alias = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_composition_apb_path());
+    my $ppif = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_composition_ppif_path());
+    is($alias->{kind}, 'protocol_intent.apb_composition', '.apb APB composition alias returns the composition kind');
+    is_deeply($alias->{generated_ial1}{items}, $ppif->{generated_ial1}{items}, '.apb APB composition alias mirrors .ppif generated IAL1 artifacts');
+    is_deeply($alias->{generated_ial0}{files}, $ppif->{generated_ial0}{files}, '.apb APB composition alias mirrors .ppif generated IAL0');
 };
 
 done_testing();
 
 sub sample_apb_composition_ppif_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_composition.ppif');
+}
+
+sub sample_apb_composition_apb_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_composition.apb');
 }
 
 sub sample_apb_composition_ppif {

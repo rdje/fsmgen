@@ -24,6 +24,11 @@ HDL/runtime behavior, suffix acceptance, direct backend lowering,
 verification-output generation, backend-language variants, AXI behavior, APB
 behavior, or VHDL behavior changed.
 
+Later status: `.566` shipped the fixed one-requester/one-completer APB
+composition through `.ppif`, and `.569` later exposed the APB completer and
+fixed composition through `.apb`. This selector remains the historical
+post-completer owner.
+
 ## Evidence Read
 
 The selector read the shipped APB `.ppif` completer behavior, the IAL1
@@ -35,20 +40,23 @@ requester-transfer source contract, APB requester/completer samples and
 reports, `fsm/apb_tb.fsm`, `RegressionCorpus`, `LanguageSurfaceSection`,
 README, ROADMAP_V2, mdBook, task tree, Memory, and the Knowledge Map.
 
-Current APB IAL2 behavior now has two generated `.ppif` endpoint paths:
+At `.563` selection time, APB IAL2 behavior had two generated `.ppif`
+endpoint paths:
 
 ```text
 ppif/apb_requester_transfer.ppif
 ppif/apb_completer.ppif
 ```
 
-The bounded `.apb` profile alias remains requester-transfer only:
+At `.563` selection time, the bounded `.apb` profile alias remained
+requester-transfer only:
 
 ```text
 ppif/apb_requester_transfer.apb
 ```
 
-The current APB completer report keeps these residues explicit:
+At `.563` selection time, the APB completer report kept these residues
+explicit:
 
 ```text
 apb_interconnect_generation_deferred
@@ -119,6 +127,10 @@ APB completer `.apb` alias exposure is not selected next. The current `.apb`
 surface is intentionally requester-transfer only, and widening the alias before
 selecting the `.ppif` interconnect/composition contract would expose another
 endpoint surface while the composition boundary remains unsettled.
+
+That rejection was resolved later by sequencing: `.566` first shipped the
+fixed `.ppif` composition contract, then `.569` widened `.apb` for the already
+shipped completer and fixed composition shapes.
 
 APB multi-register decode, sidebands/strobes, alternate widths, and
 back-to-back policy remain deferred. Those expand endpoint behavior and APB

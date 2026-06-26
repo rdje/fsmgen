@@ -10,7 +10,7 @@ answers:
 date: 2026-06-26
 status: current
 tags: [ial2, apb, ppif, composition, behavior, task-tree]
-evidence: docs/IAL2_APB_PPIF_COMPOSITION_BEHAVIOR.md; ppif/apb_composition.ppif; perl/FSM/Adapter/IAL2/PPIF.pm; perl/FSM/IAL2/ProtocolIntent/ApbComposition.pm; perl/FSM/Support/RegressionCorpus.pm; t/1472-ial2-apb-composition.t; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; MEMORY.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md
+evidence: docs/IAL2_APB_PPIF_COMPOSITION_BEHAVIOR.md; docs/IAL2_APB_PROFILE_ALIAS_BEHAVIOR.md; ppif/apb_composition.ppif; ppif/apb_composition.apb; perl/FSM/Adapter/IAL2/PPIF.pm; perl/FSM/IAL2/ProtocolIntent/ApbComposition.pm; perl/FSM/Support/RegressionCorpus.pm; t/1472-ial2-apb-composition.t; t/1470-ial2-apb-profile-alias.t; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; MEMORY.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md
 reverify: ./bin/fsmgen --emit-schedule-json ppif/apb_composition.ppif && ./bin/fsmgen --strict --check --json ppif/apb_composition.ppif && ./bin/fsmgen --strict --emit-semantic-json ppif/apb_composition.ppif && prove -Iperl t/1472-ial2-apb-composition.t
 ---
 
@@ -38,8 +38,11 @@ The shipped top exposes `clk`, `rst_n`, `start`, `req_write`, `req_addr`,
 Requester `busy` is not exposed. The fixed composition wires requester APB
 outputs to the completer and completer APB responses back to the requester.
 
-`.apb` remains requester-transfer only. APB composition/completer `.apb`
-aliases, requester busy/status exposure, multi-peripheral interconnect/decode,
+The later `IAL2-FEATURE-COMPLETENESS-FRONTIER.569` slice also exposes this
+same bounded fixed composition through `ppif/apb_composition.apb`,
+support-accounted as `intent.apb_profile_alias_composition`.
+
+Requester busy/status exposure, multi-peripheral interconnect/decode,
 multi-register decode, sidebands/strobes, alternate widths, back-to-back
 policy, direct backend lowering, verification-output generation,
 backend-language variants, AXI, and VHDL remain future owners.

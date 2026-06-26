@@ -73,8 +73,6 @@ subtest 'adapter parses the selected APB completer PPIF shape' => sub {
 
     my %residue = map { $_->{id} => 1 } @{$result->{report}{unsupported_residue}};
     ok($residue{apb_interconnect_multi_peripheral_decode_deferred}, 'report keeps multi-peripheral interconnect residue explicit');
-    ok($residue{apb_profile_alias_completer_deferred}, 'report keeps .apb completer alias residue explicit');
-    ok($residue{apb_profile_alias_composition_deferred}, 'report keeps .apb composition alias residue explicit');
     ok($residue{apb_back_to_back_policy_deferred}, 'report keeps back-to-back policy residue explicit');
 };
 
@@ -168,24 +166,24 @@ subtest 'CLI schedule JSON and outdir expose APB completer review artifacts and 
     like($sv, qr/\bPSLVERR\b/, 'APB completer HDL carries PSLVERR');
 };
 
-subtest '.apb alias remains requester-transfer only' => sub {
-    my $tempdir = tempdir(CLEANUP => 1);
-    my $alias_path = File::Spec->catfile($tempdir, 'apb_completer.apb');
-    write_file($alias_path, sample_apb_completer_ppif());
+subtest '.apb alias accepts APB completer content' => sub {
+    ok(-f sample_apb_completer_apb_path(), 'tracked runnable APB completer .apb sample exists');
 
-    my $ok = eval { FSM::Adapter::IAL2::PPIF->new()->parse_file($alias_path); 1 };
-    ok(!$ok, '.apb rejects APB completer content');
-    like(
-        $@,
-        qr/\.apb source '.*apb_completer\.apb' supports only one APB requester-transfer object in this slice/,
-        '.apb APB completer rejection keeps the alias boundary targeted',
-    );
+    my $alias = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_completer_apb_path());
+    my $ppif = FSM::Adapter::IAL2::PPIF->new()->parse_file(sample_apb_completer_ppif_path());
+    is($alias->{kind}, 'protocol_intent.apb_completer', '.apb APB completer alias returns the completer kind');
+    is($alias->{generated_ial1}{text}, $ppif->{generated_ial1}{text}, '.apb APB completer alias mirrors .ppif generated IAL1');
+    is_deeply($alias->{generated_ial0}{files}, $ppif->{generated_ial0}{files}, '.apb APB completer alias mirrors .ppif generated IAL0');
 };
 
 done_testing();
 
 sub sample_apb_completer_ppif_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_completer.ppif');
+}
+
+sub sample_apb_completer_apb_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_completer.apb');
 }
 
 sub sample_apb_completer_ppif {

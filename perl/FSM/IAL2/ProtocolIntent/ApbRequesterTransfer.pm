@@ -541,7 +541,7 @@ sub _build_report(%args) {
             'setup phase must drive select 1 and enable 0',
             'access phase must drive select 1 and enable 1',
             'completion waits on ready, samples read-data and error, and reports latency min 2 max 16',
-            'APB requester-transfer is exposed through .ppif and bounded .apb profile-alias sources; direct IAL2-to-IAL0 lowering remains forbidden',
+            'APB requester-transfer is exposed through .ppif and bounded .apb profile-alias sources; APB completer and fixed composition aliases are exposed through sibling .apb samples; direct IAL2-to-IAL0 lowering remains forbidden',
         ],
         unsupported_residue => [
             {
@@ -551,10 +551,6 @@ sub _build_report(%args) {
             {
                 id     => 'apb_protection_and_strobes_deferred',
                 detail => 'PPROT, PSTRB, byte-enable policy, and APB4/APB5 sideband behavior remain future APB work.',
-            },
-            {
-                id     => 'apb_profile_alias_completer_and_composition_deferred',
-                detail => 'APB completer and one-requester/one-completer composition generation are support-accounted through generic .ppif sources; the .apb profile alias remains requester-transfer only.',
             },
             {
                 id     => 'apb_requester_busy_status_deferred',

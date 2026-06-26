@@ -585,7 +585,7 @@ Arguments:
                   • bare_name.isf     - lowers IAL1 intent scheduling to .fsm before HDL
                   • bare_name.ppif    - lowers IAL2 protocol/platform intent to .isf, then .fsm before HDL
                   • bare_name.axi     - lowers the first AXI IAL2 profile alias through .isf, then .fsm
-                  • bare_name.apb     - lowers the first APB IAL2 profile alias through .isf, then .fsm
+                  • bare_name.apb     - lowers bounded APB IAL2 profile aliases through .isf, then .fsm
                   • relative/path.fsm - uses relative path (no FSMLIB search)
                   • /absolute/path.fsm - uses absolute path (no FSMLIB search)
 

@@ -9,8 +9,8 @@ answers:
 date: 2026-06-26
 status: current
 tags: [ial2, apb, ppif, profile-alias, task-tree]
-evidence: docs/IAL2_APB_COMPLETER_INTERCONNECT_CONTRACT_SELECTION.md; docs/IAL2_APB_PPIF_COMPLETER_BEHAVIOR.md; docs/IAL2_APB_COMPLETER_INTERCONNECT_READINESS_AUDIT.md; docs/IAL2_APB_PROFILE_ALIAS_BEHAVIOR.md; docs/IAL2_APB_PPIF_REQUESTER_TRANSFER_BEHAVIOR.md; docs/IAL2_APB_PPIF_SOURCE_SHAPE_CONTRACT_SELECTION.md; ppif/apb_completer.ppif; fsm/apb_completer.fsm; fsm/apb_tb.fsm; isf/apb_requester.isf; perl/FSM/Adapter/IAL2/PPIF.pm; perl/FSM/IAL2/ProtocolIntent/ApbCompleter.pm; perl/FSM/IAL2/ProtocolIntent/ApbRequesterTransfer.pm; perl/FSM/Support/RegressionCorpus.pm; perl/FSM/Support/LanguageSurfaceSection.pm; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; MEMORY.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md
-reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.559|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.562|apb-completer|ppif/apb_completer\\.ppif|intent\\.ppif_apb_completer|apb_interconnect_generation_deferred|\\.apb.*requester-transfer only' docs/IAL2_APB_COMPLETER_INTERCONNECT_CONTRACT_SELECTION.md docs/IAL2_APB_PPIF_COMPLETER_BEHAVIOR.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md MEMORY.md README.md ROADMAP_V2.md docs/book/src/14-feature-backlog.md
+evidence: docs/IAL2_APB_COMPLETER_INTERCONNECT_CONTRACT_SELECTION.md; docs/IAL2_APB_PPIF_COMPLETER_BEHAVIOR.md; docs/IAL2_APB_COMPLETER_INTERCONNECT_READINESS_AUDIT.md; docs/IAL2_APB_PROFILE_ALIAS_BEHAVIOR.md; docs/IAL2_APB_PPIF_REQUESTER_TRANSFER_BEHAVIOR.md; docs/IAL2_APB_PPIF_SOURCE_SHAPE_CONTRACT_SELECTION.md; ppif/apb_completer.ppif; ppif/apb_completer.apb; fsm/apb_completer.fsm; fsm/apb_tb.fsm; isf/apb_requester.isf; perl/FSM/Adapter/IAL2/PPIF.pm; perl/FSM/IAL2/ProtocolIntent/ApbCompleter.pm; perl/FSM/IAL2/ProtocolIntent/ApbRequesterTransfer.pm; perl/FSM/Support/RegressionCorpus.pm; perl/FSM/Support/LanguageSurfaceSection.pm; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; MEMORY.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md
+reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.559|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.562|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.569|apb-completer|ppif/apb_completer\\.(ppif|apb)|intent\\.(ppif_apb_completer|apb_profile_alias_completer)|apb_interconnect_generation_deferred' docs/IAL2_APB_COMPLETER_INTERCONNECT_CONTRACT_SELECTION.md docs/IAL2_APB_PPIF_COMPLETER_BEHAVIOR.md docs/IAL2_APB_PROFILE_ALIAS_BEHAVIOR.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md MEMORY.md README.md ROADMAP_V2.md docs/book/src/14-feature-backlog.md
 ---
 
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.559` selects a split APB
@@ -29,5 +29,7 @@ an authored `.fsm` fixture and the public contract had to preserve generated
 in `.562`; this card remains the contract-selection fact, while
 `docs/knowledge/ial2-apb-ppif-completer-behavior.md` is the behavior fact.
 
-The `.apb` alias remains requester-transfer only until a later alias owner
-selects APB completer exposure.
+The later `IAL2-FEATURE-COMPLETENESS-FRONTIER.569` alias-widening slice now
+exposes the same bounded completer through `ppif/apb_completer.apb`,
+support-accounted as `intent.apb_profile_alias_completer`. Multi-peripheral
+APB interconnect/decode remains a later owner.

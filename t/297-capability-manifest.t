@@ -2915,7 +2915,7 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
     );
     like(
         $file_surface_by_suffix{'.ppif'}{current_boundary},
-        qr/\.apb is now the bounded APB requester-transfer profile-alias file surface/,
+        qr/\.apb is now the bounded APB requester-transfer\/completer\/fixed-composition profile-alias file surface/,
         'manifest states .apb is the bounded APB profile alias over the same model',
     );
     like(
@@ -3084,8 +3084,8 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
     );
     like(
         $file_surface_by_suffix{'.apb'}{current_boundary},
-        qr/APB requester-transfer IAL2 profile-alias suffix/,
-        'manifest describes .apb as the APB requester-transfer profile-alias suffix',
+        qr/APB requester-transfer, APB completer, and fixed one-requester\/one-completer APB composition IAL2 profile-alias suffix/,
+        'manifest describes .apb as the bounded APB profile-alias suffix',
     );
     like(
         $file_surface_by_suffix{'.apb'}{current_boundary},
@@ -3094,13 +3094,13 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
     );
     like(
         $file_surface_by_suffix{'.apb'}{current_boundary},
-        qr/lower through generated apb_requester\.isf before generated apb_requester\.fsm/,
+        qr/lower through generated \.isf before generated \.fsm/,
         'manifest records generated APB review artifacts for .apb',
     );
     like(
         $file_surface_by_suffix{'.apb'}{current_boundary},
-        qr/APB completer and one-requester\/one-completer APB composition generation are shipped through generic \.ppif/,
-        'manifest keeps APB completer and composition behavior on .ppif rather than .apb',
+        qr/ppif\/apb_requester_transfer\.apb, ppif\/apb_completer\.apb, and ppif\/apb_composition\.apb/,
+        'manifest records the shipped APB profile-alias samples',
     );
     like(
         $file_surface_by_suffix{'.apb'}{current_boundary},

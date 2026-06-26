@@ -99,7 +99,6 @@ subtest 'PPIF adapter parses the APB requester-transfer source shape' => sub {
     is_deeply($result->{report}{transfer}{sample}, ['read-data', 'error'], 'APB report captures sample list');
     is($result->{report}{generated_artifacts}{hdl_entry}{entry_artifact}, 'apb_requester.fsm', 'APB report selects the generated requester .fsm as HDL entry');
     my %residue = map { $_->{id} => 1 } @{$result->{report}{unsupported_residue}};
-    ok($residue{apb_profile_alias_completer_and_composition_deferred}, 'APB report keeps completer/composition alias residue explicit');
     ok($residue{apb_requester_busy_status_deferred}, 'APB report keeps requester busy/status residue explicit');
     ok($residue{apb_back_to_back_policy_deferred}, 'APB report keeps back-to-back policy residue explicit');
     is($result->{report}{layering}{direct_ial2_to_ial0}, 0, 'APB lowering goes through generated IAL1 before IAL0');
@@ -6901,6 +6900,35 @@ subtest 'CLI accepts .apb as the APB requester-transfer profile alias' => sub {
     is($report->{result}{module_name}, 'apb_requester', '.apb alias check JSON reports the generated APB requester module');
 };
 
+subtest 'CLI accepts .apb as APB completer and composition profile aliases' => sub {
+    my ($completer_success, undef, undef, $completer_stdout, $completer_stderr) = run(
+        command => ['./bin/fsmgen', '--strict', '--check', '--json', sample_apb_completer_apb_path()],
+    );
+    ok($completer_success, '.apb alias is accepted for APB completer content');
+    is(join('', @{$completer_stderr || []}), '', '.apb APB completer check JSON keeps stderr clean');
+    my $completer_report = decode_json(join('', @{$completer_stdout || []}));
+    ok($completer_report->{success}, '.apb APB completer check JSON reports success');
+    is(
+        $completer_report->{support_accounting}{entry_id},
+        'intent.apb_profile_alias_completer',
+        '.apb APB completer check JSON support-accounts the alias',
+    );
+
+    my ($composition_success, undef, undef, $composition_stdout, $composition_stderr) = run(
+        command => ['./bin/fsmgen', '--strict', '--check', '--json', sample_apb_composition_apb_path()],
+    );
+    ok($composition_success, '.apb alias is accepted for APB composition content');
+    is(join('', @{$composition_stderr || []}), '', '.apb APB composition check JSON keeps stderr clean');
+    my $composition_report = decode_json(join('', @{$composition_stdout || []}));
+    ok($composition_report->{success}, '.apb APB composition check JSON reports success');
+    is(
+        $composition_report->{support_accounting}{entry_id},
+        'intent.apb_profile_alias_composition',
+        '.apb APB composition check JSON support-accounts the alias',
+    );
+    is($composition_report->{result}{module_name}, 'apb_tb', '.apb APB composition check JSON reports the generated top module');
+};
+
 subtest 'CLI check JSON and semantic JSON accept capacity/status .ppif public source identity' => sub {
     my ($success, undef, undef, $stdout_buf, $stderr_buf) = run(
         command => ['./bin/fsmgen', '--strict', '--check', '--json', sample_capacity_ppif_path()],
@@ -9229,6 +9257,14 @@ sub sample_valid_ready_handshake_ppif_path {
 
 sub sample_apb_requester_transfer_ppif_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_requester_transfer.ppif');
+}
+
+sub sample_apb_completer_apb_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_completer.apb');
+}
+
+sub sample_apb_composition_apb_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_composition.apb');
 }
 
 sub sample_bundle_ppif_path {

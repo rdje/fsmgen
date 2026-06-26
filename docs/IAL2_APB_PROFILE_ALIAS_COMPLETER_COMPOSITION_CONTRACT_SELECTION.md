@@ -15,6 +15,10 @@ This selector changes no parser, generator, sample, support-accounting,
 manifest, test, schedule/check/semantic JSON, HDL/runtime, direct backend,
 verification-output, backend-language variant, AXI, APB, or VHDL behavior.
 
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.569` implements this selected contract.
+The current behavior is documented in
+`docs/IAL2_APB_PROFILE_ALIAS_BEHAVIOR.md`.
+
 ## Evidence Read
 
 The selector read the shipped APB profile and generic-container surfaces:

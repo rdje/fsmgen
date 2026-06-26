@@ -20,9 +20,13 @@ The source uses the explicit APB profile and one APB completer object:
 (apb-completer apb_completer ...)
 ```
 
-This is a `.ppif` behavior, not a `.apb` profile-alias behavior. The `.apb`
-suffix remains bounded to `ppif/apb_requester_transfer.apb` and still rejects
-APB completer sources in this slice.
+This `.562` slice first shipped the APB completer through `.ppif`. The later
+`.569` alias-widening slice also exposes the same bounded completer behavior
+through:
+
+```text
+ppif/apb_completer.apb
+```
 
 ## Source Shape
 
@@ -143,14 +147,15 @@ Materialize generated review artifacts and HDL:
   ppif/apb_completer.ppif
 ```
 
-The `.apb` suffix remains requester-transfer only:
+The `.apb` profile alias now mirrors this bounded completer source:
 
 ```bash
-./bin/fsmgen --strict --check --json /tmp/apb_completer.apb
+./bin/fsmgen --strict --check --json ppif/apb_completer.apb
 ```
 
-That path rejects APB completer content with a profile-alias boundary
-diagnostic.
+The alias preserves the authored `.apb` public source path, support-accounts as
+`intent.apb_profile_alias_completer`, and lowers through the same generated
+`apb_completer.isf` and `apb_completer.fsm` review artifacts.
 
 ## Residue
 
@@ -158,8 +163,6 @@ The APB completer report keeps these future APB owners explicit:
 
 ```text
 apb_interconnect_multi_peripheral_decode_deferred
-apb_profile_alias_completer_deferred
-apb_profile_alias_composition_deferred
 apb_multi_register_decode_deferred
 apb_protection_and_strobes_deferred
 apb_alternate_widths_deferred
@@ -175,12 +178,11 @@ the hand-authored fixture.
 ## Non-Goals
 
 This `.562` slice does not add multi-peripheral APB interconnect/decode
-generation, does not widen `.apb` beyond requester-transfer, does not add
-sidebands, alternate widths, multiple register decode, byte lanes,
+generation, sidebands, alternate widths, multiple register decode, byte lanes,
 back-to-back policy, direct IAL2-to-IAL0 lowering, direct backend lowering,
 verification-output generation, backend-language variants, AXI behavior, or
 VHDL behavior. The later fixed one-requester/one-completer APB composition
-behavior is documented separately.
+behavior and the `.569` `.apb` alias expansion are documented separately.
 
 ## Validation
 
@@ -203,5 +205,7 @@ The final `.562` closeout also reruns the repository doctrine gates.
 Rollback of `.562` removes `ppif/apb_completer.ppif`, the APB completer
 generator and parser dispatch, the support-accounting entry, focused tests,
 this behavior record, its Knowledge Map fact card, and the README/ROADMAP/
-mdBook/task-tree/memory updates. The APB requester-transfer `.ppif` and `.apb`
-behaviors remain owned by their earlier slices.
+mdBook/task-tree/memory updates. Rollback of `.569` separately removes
+`ppif/apb_completer.apb` and the alias support-accounting entry. The APB
+requester-transfer `.ppif` and `.apb` behaviors remain owned by their earlier
+slices.

@@ -10,7 +10,7 @@ answers:
 date: 2026-06-26
 status: current
 tags: [ial2, apb, ppif, composition, interconnect, task-tree]
-evidence: docs/IAL2_APB_INTERCONNECT_COMPOSITION_CONTRACT_SELECTION.md; docs/IAL2_APB_INTERCONNECT_COMPOSITION_READINESS_AUDIT.md; docs/IAL2_APB_PPIF_COMPLETER_BEHAVIOR.md; docs/IAL2_APB_PPIF_REQUESTER_TRANSFER_BEHAVIOR.md; docs/IAL2_APB_PROFILE_ALIAS_BEHAVIOR.md; ppif/apb_completer.ppif; ppif/apb_requester_transfer.ppif; fsm/apb_tb.fsm; fsm/apb_requester.fsm; perl/FSM/Adapter/IAL2/PPIF.pm; perl/FSM/IAL2/ProtocolIntent/ApbCompleter.pm; perl/FSM/IAL2/ProtocolIntent/ApbRequesterTransfer.pm; perl/FSM/Support/RegressionCorpus.pm; perl/FSM/Support/LanguageSurfaceSection.pm; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; MEMORY.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md
+evidence: docs/IAL2_APB_INTERCONNECT_COMPOSITION_CONTRACT_SELECTION.md; docs/IAL2_APB_INTERCONNECT_COMPOSITION_READINESS_AUDIT.md; docs/IAL2_APB_PPIF_COMPOSITION_BEHAVIOR.md; docs/IAL2_APB_PPIF_COMPLETER_BEHAVIOR.md; docs/IAL2_APB_PPIF_REQUESTER_TRANSFER_BEHAVIOR.md; docs/IAL2_APB_PROFILE_ALIAS_BEHAVIOR.md; ppif/apb_composition.ppif; ppif/apb_composition.apb; ppif/apb_completer.ppif; ppif/apb_completer.apb; ppif/apb_requester_transfer.ppif; fsm/apb_tb.fsm; fsm/apb_requester.fsm; perl/FSM/Adapter/IAL2/PPIF.pm; perl/FSM/IAL2/ProtocolIntent/ApbCompleter.pm; perl/FSM/IAL2/ProtocolIntent/ApbRequesterTransfer.pm; perl/FSM/Support/RegressionCorpus.pm; perl/FSM/Support/LanguageSurfaceSection.pm; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; MEMORY.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md
 reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.565|ppif/apb_composition\\.ppif|apb-composition|fsmgen\\.ial2\\.protocol_intent\\.apb_composition\\.v1|intent\\.ppif_apb_composition|apb_requester_busy_status_deferred|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.566' docs/IAL2_APB_INTERCONNECT_COMPOSITION_CONTRACT_SELECTION.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md MEMORY.md README.md ROADMAP_V2.md docs/book/src/14-feature-backlog.md
 ---
 
@@ -37,8 +37,8 @@ shipped public APB requester `.ppif` response contract exposes `done`,
 
 `.565` selects `(apb-composition ...)`, not `(apb-interconnect ...)`, because
 the first behavior is fixed one-requester/one-completer wiring and not
-multi-peripheral address decode or routing. `.apb` composition alias exposure,
-APB completer `.apb` alias exposure, multi-peripheral interconnect/decode,
-multi-register decode, sidebands/strobes, alternate widths, back-to-back
-policy, direct backend, verification-output generation, backend-language
-variants, AXI, and VHDL remain deferred.
+multi-peripheral address decode or routing. `.569` later exposes the shipped
+completer and fixed composition through `.apb`. Multi-peripheral
+interconnect/decode, multi-register decode, sidebands/strobes, alternate
+widths, back-to-back policy, direct backend, verification-output generation,
+backend-language variants, AXI, and VHDL remain deferred.

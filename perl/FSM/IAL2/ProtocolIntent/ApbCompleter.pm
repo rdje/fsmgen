@@ -576,20 +576,12 @@ sub _build_report(%args) {
             'setup detection must require select 1 and enable 0',
             'the only implemented register address is 0 and reset value is 0',
             'read and write behavior must target the selected register and unmapped addresses must assert error',
-            'APB completer is exposed through .ppif only; .apb remains bounded to requester-transfer in this slice',
+            'APB completer is exposed through .ppif and bounded .apb profile-alias sources; direct IAL2-to-IAL0 lowering remains forbidden',
         ],
         unsupported_residue => [
             {
                 id     => 'apb_interconnect_multi_peripheral_decode_deferred',
                 detail => 'The one-requester/one-completer APB composition is support-accounted through generic .ppif; multi-peripheral address decode and routing remain future APB interconnect work.',
-            },
-            {
-                id     => 'apb_profile_alias_completer_deferred',
-                detail => '.apb remains the bounded requester-transfer profile alias and does not accept APB completer sources in this slice.',
-            },
-            {
-                id     => 'apb_profile_alias_composition_deferred',
-                detail => 'The generated APB composition is supported through generic .ppif only; .apb composition alias exposure remains future work.',
             },
             {
                 id     => 'apb_multi_register_decode_deferred',

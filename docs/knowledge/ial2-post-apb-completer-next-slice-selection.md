@@ -10,7 +10,7 @@ answers:
 date: 2026-06-26
 status: current
 tags: [ial2, apb, ppif, completer, interconnect, composition, task-tree]
-evidence: docs/IAL2_POST_APB_COMPLETER_NEXT_SLICE_SELECTION.md; docs/IAL2_APB_PPIF_COMPLETER_BEHAVIOR.md; docs/IAL2_APB_COMPLETER_INTERCONNECT_CONTRACT_SELECTION.md; docs/IAL2_APB_COMPLETER_INTERCONNECT_READINESS_AUDIT.md; docs/IAL2_APB_PROFILE_ALIAS_BEHAVIOR.md; docs/IAL2_APB_PPIF_REQUESTER_TRANSFER_BEHAVIOR.md; ppif/apb_completer.ppif; ppif/apb_requester_transfer.ppif; ppif/apb_requester_transfer.apb; fsm/apb_completer.fsm; fsm/apb_tb.fsm; perl/FSM/Support/RegressionCorpus.pm; perl/FSM/Support/LanguageSurfaceSection.pm; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; MEMORY.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md
+evidence: docs/IAL2_POST_APB_COMPLETER_NEXT_SLICE_SELECTION.md; docs/IAL2_APB_PPIF_COMPLETER_BEHAVIOR.md; docs/IAL2_APB_COMPLETER_INTERCONNECT_CONTRACT_SELECTION.md; docs/IAL2_APB_COMPLETER_INTERCONNECT_READINESS_AUDIT.md; docs/IAL2_APB_PROFILE_ALIAS_BEHAVIOR.md; docs/IAL2_APB_PPIF_REQUESTER_TRANSFER_BEHAVIOR.md; ppif/apb_completer.ppif; ppif/apb_completer.apb; ppif/apb_requester_transfer.ppif; ppif/apb_requester_transfer.apb; fsm/apb_completer.fsm; fsm/apb_tb.fsm; perl/FSM/Support/RegressionCorpus.pm; perl/FSM/Support/LanguageSurfaceSection.pm; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; MEMORY.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md
 reverify: ./bin/fsmgen --quiet --emit-schedule-json ppif/apb_completer.ppif && ./bin/fsmgen --quiet --strict --check --json ppif/apb_completer.ppif && ./bin/fsmgen --quiet --strict --emit-semantic-json ppif/apb_completer.ppif && ./bin/fsmgen --quiet --emit-schedule-json ppif/apb_requester_transfer.ppif && ./bin/fsmgen --quiet --strict --check --json ppif/apb_requester_transfer.ppif && ./bin/fsmgen --quiet --emit-schedule-json ppif/apb_requester_transfer.apb && ./bin/fsmgen --quiet --strict --check --json ppif/apb_requester_transfer.apb && ./bin/fsmgen --quiet --strict --check --json fsm/apb_tb.fsm
 ---
 
@@ -29,3 +29,7 @@ alias exposure, multi-register decode, sidebands, alternate widths, or
 back-to-back policy. `.564` must decide whether APB interconnect/composition
 contract selection, a smaller prerequisite, or continued deferral is the next
 safe owner.
+
+Later status: `.566` shipped the fixed `.ppif` requester/completer
+composition, and `.569` then exposed the bounded completer and fixed
+composition through `.apb`.

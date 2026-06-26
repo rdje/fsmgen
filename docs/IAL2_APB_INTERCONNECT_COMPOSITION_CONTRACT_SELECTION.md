@@ -31,6 +31,11 @@ behavior, HDL/runtime behavior, suffix acceptance, direct backend lowering,
 verification-output generation, backend-language variants, AXI behavior, APB
 behavior, or VHDL behavior changed in this selection slice.
 
+Later status: `.566` implemented this fixed `.ppif` composition contract, and
+`.569` later exposed the APB completer and fixed composition through `.apb`.
+Multi-peripheral interconnect/decode and requester busy/status remain separate
+future owners.
+
 ## Evidence Read
 
 The selector read the `.564` readiness audit, `.563` post-completer selector,
@@ -375,7 +380,8 @@ apb_back_to_back_policy_deferred
 ```
 
 Residue movement is behavior/report-surface work and is not performed in
-`.565`.
+`.565`. The `apb_profile_alias_composition_deferred` and
+`apb_profile_alias_completer_deferred` residues were later resolved by `.569`.
 
 ## Rejected Alternatives
 

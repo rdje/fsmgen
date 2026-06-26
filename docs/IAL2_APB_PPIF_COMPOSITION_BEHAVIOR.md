@@ -24,8 +24,12 @@ completer object, and one explicit APB composition object:
 ```
 
 This is a fixed one-requester/one-completer composition behavior. It is not a
-multi-peripheral APB interconnect/decode behavior, and it is not exposed
-through the `.apb` profile alias in this slice.
+multi-peripheral APB interconnect/decode behavior. The later `.569`
+alias-widening slice also exposes the same bounded fixed composition through:
+
+```text
+ppif/apb_composition.apb
+```
 
 ## Source Shape
 
@@ -179,14 +183,16 @@ does not write the generated review artifacts into the repository root. With
 `--outdir`, it writes all generated `.isf` and `.fsm` review artifacts before
 the HDL output.
 
-The `.apb` suffix remains requester-transfer only:
+The `.apb` profile alias now mirrors this bounded fixed composition source:
 
 ```bash
-./bin/fsmgen --strict --check --json /tmp/apb_composition.apb
+./bin/fsmgen --strict --check --json ppif/apb_composition.apb
 ```
 
-That path rejects APB composition content with a profile-alias boundary
-diagnostic.
+The alias preserves the authored `.apb` public source path, support-accounts as
+`intent.apb_profile_alias_composition`, and lowers through the same generated
+`apb_requester.isf`, `apb_completer.isf`, `apb_requester.fsm`,
+`apb_completer.fsm`, and `apb_tb.fsm` review artifacts.
 
 ## Residue
 
@@ -194,8 +200,6 @@ The APB composition report keeps these future APB owners explicit:
 
 ```text
 apb_interconnect_multi_peripheral_decode_deferred
-apb_profile_alias_composition_deferred
-apb_profile_alias_completer_deferred
 apb_requester_busy_status_deferred
 apb_multi_register_decode_deferred
 apb_protection_and_strobes_deferred
@@ -203,19 +207,20 @@ apb_alternate_widths_deferred
 apb_back_to_back_policy_deferred
 ```
 
-The APB requester-transfer report now keeps completer/composition alias
-exposure and requester busy/status as separate future owners. The APB
-completer report now keeps multi-peripheral interconnect/decode separate from
-the shipped fixed composition behavior.
+The APB requester-transfer and completer reports keep requester busy/status,
+multi-register decode, sidebands/strobes, alternate widths, back-to-back
+policy, and multi-peripheral interconnect/decode separate from the shipped
+fixed composition behavior.
 
 ## Non-Goals
 
 This `.566` slice does not add a multi-peripheral APB interconnect/decode
-surface, does not widen `.apb` beyond requester-transfer, does not expose a
-requester `busy` status, does not add sidebands, strobes, alternate widths,
-multiple register decode, byte lanes, back-to-back policy, direct IAL2-to-IAL0
-lowering, direct backend lowering, verification-output generation,
-backend-language variants, AXI behavior, or VHDL behavior.
+surface, does not expose a requester `busy` status, does not add sidebands,
+strobes, alternate widths, multiple register decode, byte lanes, back-to-back
+policy, direct IAL2-to-IAL0 lowering, direct backend lowering,
+verification-output generation, backend-language variants, AXI behavior, or
+VHDL behavior. The later `.569` slice documents the matching `.apb` alias
+exposure.
 
 ## Validation
 
@@ -248,6 +253,7 @@ The final `.566` closeout also reruns the repository doctrine gates.
 Rollback of `.566` removes `ppif/apb_composition.ppif`, the APB composition
 generator and parser dispatch, multi-artifact PPIF CLI selection support, the
 support-accounting entry, focused tests, this behavior record, its Knowledge
-Map fact card, and the README/ROADMAP/mdBook/task-tree/memory updates. The
-APB requester-transfer `.ppif`/`.apb` and APB completer `.ppif` behaviors
-remain owned by their earlier slices.
+Map fact card, and the README/ROADMAP/mdBook/task-tree/memory updates.
+Rollback of `.569` separately removes `ppif/apb_composition.apb` and the alias
+support-accounting entry. The APB requester-transfer `.ppif`/`.apb` and APB
+completer `.ppif`/`.apb` behaviors remain owned by their respective slices.
