@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.556: sync post-APB profile-alias surfaces`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.557` is active after `.556`; select the next exact IAL2 slice after post-APB profile-alias public-surface sync.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.556` synchronized current profile-alias public surfaces. `.axi` and `.apb` are now the shipped bounded profile-alias suffixes in current docs/facts; `.chi`, `.ace`, `.ahb`, `.atb`, `.smbus`, `.i2s`, `.pif`, and `.ppi` remain unsupported. Historical pre-`.554` `.apb`-unsupported wording remains dated chronology.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.557: select APB completer readiness`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.558` is active after `.557`; audit APB completer/interconnect generation readiness.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.557` selected `.558`, a no-behavior APB completer/interconnect generation readiness audit. Reverified supported APB completer and APB composition strict checks plus current `.apb` requester-transfer schedule/check; the explicit residue is `apb_completer_and_interconnect_generation_deferred`.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: The original exact `t/301` resource cliff is fixed for oversized PPIF check-json via `.2.3.1`, but a full guarded `t/301-check-json-supported-corpus.t` rerun stopped on host-memory cutoff from a high host baseline and a higher-cutoff retry was rejected by the approval layer. Do not bypass that rejection without explicit user approval; `.2.5` selected RAM-guarded or exact bounded replacement policy for any future broad `t/301`/`t/303` parity plan. During `.550`, broad `t/1436-ial2-ppif-parser-cli.t` attempts were not used as closeout: normal PATH reached an unrelated existing AXI `--verify-hdl` Verilator warning-as-error, and a reduced-path run was stopped in an existing AXI dynamic check case.
-- next_action: Start `.557` by reading `.556`, `.555`, `.554`, `.553`, `.552`, `.550`, `.540`, current `.axi`/`.apb` docs/facts, remaining unsupported alias inventory, README, ROADMAP_V2, mdBook, task tree, Memory, and Knowledge Map; then select the next exact IAL2 owner without behavior changes.
+- next_action: Start `.558` by reading `.557`, `.556`, `.554`, `.550`, `.549`, `.548`, APB lower-layer fixtures, support-accounting surfaces, README, ROADMAP_V2, mdBook, task tree, Memory, and Knowledge Map; then decide whether APB completer/interconnect generation is ready for contract selection, needs a prerequisite, or remains deferred.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact

@@ -9686,6 +9686,15 @@ shipped bounded aliases, keep `.chi`, `.ace`, `.ahb`, `.atb`, `.smbus`,
 `.apb`-unsupported wording only as dated history. No behavior changes in
 `.556`; it selects `.557`, the next exact IAL2 owner selector after the sync.
 
+Post APB surface-sync selector:
+[IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
+selects `.558`, a no-behavior readiness audit for APB completer/interconnect
+generation. The selector reverified the supported APB completer fixture, the
+APB requester-to-completer composition top, and the current `.apb`
+requester-transfer schedule/check path, then chose the explicit
+`apb_completer_and_interconnect_generation_deferred` residue for audit before
+any APB expansion behavior.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

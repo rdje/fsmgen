@@ -4103,6 +4103,12 @@ list `.axi` and `.apb` as shipped bounded aliases, keep `.chi`, `.ace`,
 `.ahb`, `.atb`, `.smbus`, `.i2s`, `.pif`, and `.ppi` unsupported, and
 preserve pre-`.554` `.apb`-unsupported wording only as dated history. `.556`
 selects `.557`, the next exact IAL2 owner selector after the sync.
+`.557` now selects `.558`, a no-behavior readiness audit for APB
+completer/interconnect generation. The selector reverified the supported APB
+completer fixture, the APB requester-to-completer composition top, and the
+current `.apb` requester-transfer schedule/check path, then chose the explicit
+`apb_completer_and_interconnect_generation_deferred` residue for audit before
+any APB expansion behavior.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
