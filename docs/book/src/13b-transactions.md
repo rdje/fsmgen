@@ -174,6 +174,15 @@ entry state for checks; it still is not a generated activation site.
     (-> apb_transfer_drive_1)))
 ```
 
+When the entry activation is written as `(when EXPR ...)`, the generated
+sample enables and entry transition use the rendered `.fsm` expression guard,
+not an implementation-internal representation:
+
+```lisp
+(<= (hold din) <(& go (! busy)))
+(-> main_done_1 <(& go (! busy)))
+```
+
 **Implicit signals created**:
 | Signal | Width | Purpose |
 |--------|-------|---------|

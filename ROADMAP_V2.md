@@ -4129,11 +4129,19 @@ completer alias exposure remain deferred until later owners.
 repair before APB completer behavior. The audit found runtime `wait_cycles`,
 storage reset/update, no-public-done target transactions, address-dependent
 read/write state, `PSLVERR`, and generated report/artifact structure are
-viable, but direct APB `.ppif` completer implementation is blocked because
-`(when EXPR (sample ...))` entry guards currently lower to invalid generated
-`.fsm` guard suffixes containing `ARRAY(...)`. The APB setup detector requires
-`PSEL && !PENABLE`, so `.561` owns the IAL1 guard serialization repair before
-any APB completer parser/generator/sample/support behavior.
+viable. At `.560` closeout, direct APB `.ppif` completer implementation was
+blocked because `(when EXPR (sample ...))` entry guards lowered to invalid
+generated `.fsm` guard suffixes containing `ARRAY(...)`. The APB setup detector
+requires `PSEL && !PENABLE`, so `.561` was selected to repair the IAL1 guard
+serialization before any APB completer parser/generator/sample/support
+behavior.
+`.561` now ships that IAL1 guard serialization repair. First-clause
+`(when EXPR (sample ...))` entry activation renders valid generated `.fsm`
+expression guard text for sample enables and entry transitions, keeps the
+structured expression AST for internal analysis, preserves scalar entry guard,
+when-body, and runtime-wait behavior, and proves the APB-shaped
+`PSEL && !PENABLE` setup detector without `ARRAY(...)`. APB completer
+parser/generator/sample/support behavior remains deferred to `.562`.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

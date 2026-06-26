@@ -55,6 +55,87 @@ subtest 'APB entry and named drive samples lower into their scheduled states' =>
     unlike($fsm, qr/\bapb_transfer_sample_6\b/, 'post-terminal sample state is not emitted');
 };
 
+subtest 'scalar entry sample guard rendering is preserved' => sub {
+    my $source = <<'ISF';
+(actor scalar_entry_sample
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface
+    (input start)
+    (input din (width 8))
+    (output done))
+  (transaction main
+    (on start
+      (sample din as hold))
+    (complete done)))
+ISF
+
+    my $fsm = lower_source($source, 'scalar_entry_sample.fsm');
+    my $idle = state_block($fsm, 'main_idle_0');
+
+    like($idle, qr/\Q(<= (hold din) <start)\E/, 'scalar entry samples still use the scalar start guard');
+    like($idle, qr/\Q(<start\E/, 'scalar entry transition still uses the scalar guard block');
+    unlike($fsm, qr/ARRAY\(/, 'scalar entry guard never stringifies a Perl array reference');
+};
+
+subtest 'expression entry sample guard renders valid fsm expression text' => sub {
+    my $source = <<'ISF';
+(actor expression_entry_sample
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface
+    (input go)
+    (input busy)
+    (input din (width 8))
+    (output done))
+  (transaction main
+    (when (& go (! busy))
+      (sample din as hold))
+    (complete done)))
+ISF
+
+    my $fsm = lower_source($source, 'expression_entry_sample.fsm');
+    my $idle = state_block($fsm, 'main_idle_0');
+
+    like($idle, qr/\Q(<= (hold din) <(& go (! busy)))\E/, 'expression entry sample uses rendered .fsm guard text');
+    like($idle, qr/\Q(-> main_done_1 <(& go (! busy)))\E/, 'expression entry transition uses rendered .fsm guard text');
+    unlike($fsm, qr/ARRAY\(/, 'expression entry guard never stringifies a Perl array reference');
+};
+
+subtest 'APB-shaped expression entry guard renders on every setup sample and transition' => sub {
+    my $source = <<'ISF';
+(actor apb_entry_sample
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface
+    (input PSEL)
+    (input PENABLE)
+    (input PADDR (width 32))
+    (input PWRITE)
+    (input PWDATA (width 32))
+    (input wait_cycles (width 4))
+    (output done))
+  (transaction apb_complete
+    (when (& PSEL (! PENABLE))
+      (sample PADDR as addr)
+      (sample PWRITE as write_q)
+      (sample PWDATA as wdata_q)
+      (sample wait_cycles as wait_n))
+    (complete done)))
+ISF
+
+    my $fsm = lower_source($source, 'apb_entry_sample.fsm');
+    my $idle = state_block($fsm, 'apb_complete_idle_0');
+    my $guard = '(& PSEL (! PENABLE))';
+
+    like($idle, qr/\Q(<= (addr PADDR) <$guard)\E/, 'APB address setup sample uses rendered expression guard');
+    like($idle, qr/\Q(<= (write_q PWRITE) <$guard)\E/, 'APB write flag setup sample uses rendered expression guard');
+    like($idle, qr/\Q(<= (wdata_q PWDATA) <$guard)\E/, 'APB write data setup sample uses rendered expression guard');
+    like($idle, qr/\Q(<= (wait_n wait_cycles) <$guard)\E/, 'APB wait count setup sample uses rendered expression guard');
+    like($idle, qr/\Q(-> apb_complete_done_1 <$guard)\E/, 'APB setup transition uses rendered expression guard');
+    unlike($fsm, qr/ARRAY\(/, 'APB-shaped expression entry guard never stringifies a Perl array reference');
+};
+
 subtest 'pending samples piggyback onto awaits' => sub {
     my $source = <<'ISF';
 (actor sample_await

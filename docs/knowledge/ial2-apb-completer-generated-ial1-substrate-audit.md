@@ -4,9 +4,7 @@ title: APB completer generation needs an IAL1 expression entry-guard prerequisit
 answers:
   - "what did IAL2-FEATURE-COMPLETENESS-FRONTIER.560 select?"
   - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.560?"
-  - "is APB .ppif completer ready for direct implementation?"
   - "what blocks APB completer generated IAL1?"
-  - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.561?"
   - "why does APB completer need an IAL1 prerequisite?"
 date: 2026-06-26
 status: current
@@ -26,10 +24,9 @@ The selected APB completer contract still targets future
 `fsmgen.ial2.protocol_intent.apb_completer.v1`, and support identity
 `intent.ppif_apb_completer`.
 
-Direct implementation is blocked because the required setup detector
-`PSEL && !PENABLE` must be expressed as transaction entry `(when EXPR
-(sample ...))`. Current generated IAL1 lowering can render scalar entry
-guards, but expression entry guards produce invalid generated `.fsm` guard
-suffixes containing `ARRAY(...)`. `.561` must repair that IAL1 guard
-serialization and add focused coverage before APB completer behavior is
-implemented.
+At `.560` closeout, direct implementation was blocked because the required
+setup detector `PSEL && !PENABLE` had to be expressed as transaction entry
+`(when EXPR (sample ...))`. Generated IAL1 lowering could render scalar entry
+guards, but expression entry guards produced invalid generated `.fsm` guard
+suffixes containing `ARRAY(...)`. `.561` has since repaired that IAL1 guard
+serialization; APB completer behavior remains a separate implementation owner.

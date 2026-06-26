@@ -8057,7 +8057,7 @@ sub _on_activation_label {
 sub _ir_on {
     my ($cl, $tn, $i, $point_bindings) = @_;
     my $event = $cl->[1];
-    my $guard = !ref($event) ? { port => $event } : { expr => $event };
+    my $guard = _entry_activation_guard($event);
     my @assignments = map { +{ %$_, guard => $guard } } _inline_on_samples($cl);
     my $state_name = "${tn}_idle_$i";
 
@@ -8082,7 +8082,7 @@ sub _ir_on {
 sub _ir_when_activation {
     my ($cl, $tn, $i) = @_;
     my $event = $cl->[1];
-    my $guard = !ref($event) ? { port => $event } : { expr => $event };
+    my $guard = _entry_activation_guard($event);
     my @assignments = map { +{ %$_, guard => $guard } } _inline_on_samples($cl);
 
     return {
@@ -8091,6 +8091,14 @@ sub _ir_when_activation {
         guard       => $guard,
         assignments => \@assignments,
         transitions => [],
+    };
+}
+sub _entry_activation_guard {
+    my ($event) = @_;
+    return { port => $event } unless ref($event);
+    return {
+        expr     => _format_isf_expr($event),
+        expr_ast => _clone_isf_value($event),
     };
 }
 sub _ir_data_op  { my ($op,$cl,$tn,$i,$widths,$actor)=@_; $op eq'shift_left' ? _ir_shift_left($cl,$tn,$i,$widths,$actor) : $op eq'shift_right' ? _ir_shift_right($cl,$tn,$i,$widths,$actor) : $op eq'assemble' ? _ir_assemble($cl,$tn,$i,$actor) : $op eq'extract' ? _ir_extract($cl,$tn,$i,$widths,$actor) : _ir_update($cl,$tn,$i,$op) }

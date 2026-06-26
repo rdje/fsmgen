@@ -9725,10 +9725,16 @@ selects `.561`, IAL1 expression entry-activation guard rendering repair before
 APB completer behavior. Runtime `wait_cycles`, storage reset/update,
 no-public-done target transactions, address-dependent read/write state,
 `PSLVERR`, and generated report/artifact structure are viable substrate
-pieces. Direct APB `.ppif` completer implementation remains deferred because
-the required setup detector uses `PSEL && !PENABLE`, and current
-`(when EXPR (sample ...))` entry guards lower to invalid generated `.fsm`
-guard suffixes containing `ARRAY(...)`.
+pieces.
+
+IAL1 expression entry-guard rendering behavior:
+[IAL1_EXPRESSION_ENTRY_GUARD_RENDERING_BEHAVIOR](../../IAL1_EXPRESSION_ENTRY_GUARD_RENDERING_BEHAVIOR.md)
+ships `.561`, so first-clause `(when EXPR (sample ...))` entry guards now
+render valid generated `.fsm` expression guard text on sample enables and entry
+transitions. The APB-shaped `PSEL && !PENABLE` setup detector now lowers
+through IAL1 without `ARRAY(...)` guard suffixes. Direct APB `.ppif`
+completer parser/generator/sample/support behavior remains deferred to the
+next task-tree owner.
 
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)

@@ -3132,11 +3132,20 @@ completer alias exposure remain deferred until later owners.
 repair before APB completer behavior. The audit found generated-IAL1 substrate
 pieces for no-public-done target transactions, runtime `wait_cycles`, storage
 reset/update, address-dependent read/write state, `PSLVERR`, and generated
-report/artifact structure, but direct APB `.ppif` completer implementation is
-blocked because `(when EXPR (sample ...))` entry guards currently lower to
-invalid generated `.fsm` guard suffixes containing `ARRAY(...)`. The APB setup
-detector requires `PSEL && !PENABLE`, so `.561` must repair IAL1 guard
-serialization before any APB completer parser/generator/sample/support change.
+report/artifact structure. At `.560` closeout, direct APB `.ppif` completer
+implementation was blocked because `(when EXPR (sample ...))` entry guards
+lowered to invalid generated `.fsm` guard suffixes containing `ARRAY(...)`.
+The APB setup detector requires `PSEL && !PENABLE`, so `.561` was selected to
+repair IAL1 guard serialization before any APB completer parser/generator/
+sample/support change.
+`.561` now ships that IAL1 guard serialization repair. First-clause
+`(when EXPR (sample ...))` entry activation stores rendered `.fsm` expression
+guard text for sample enables and entry transitions while preserving the
+structured expression AST for internal analysis. Scalar entry guards, existing
+when-body behavior, and runtime-wait behavior remain covered by focused tests.
+The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
+`ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
+`.562` without adding APB behavior in `.561`.
 
 No behavior
 changed in `.273`, `.274`, `.275`,
@@ -5649,6 +5658,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_APB_COMPLETER_INTERCONNECT_READINESS_AUDIT.md` — audits APB completer/interconnect generation readiness and selects public contract selection before any APB completer/interconnect behavior.
 - `docs/IAL2_APB_COMPLETER_INTERCONNECT_CONTRACT_SELECTION.md` — selects a split APB completer-first `.ppif` contract and routes the next slice to generated-IAL1 substrate audit before implementation.
 - `docs/IAL2_APB_COMPLETER_GENERATED_IAL1_SUBSTRATE_AUDIT.md` — audits generated-IAL1 substrate readiness for APB completer and selects expression entry-guard rendering repair before APB completer behavior.
+- `docs/IAL1_EXPRESSION_ENTRY_GUARD_RENDERING_BEHAVIOR.md` — ships the IAL1 expression entry-guard rendering repair so first-clause `(when EXPR (sample ...))` generated `.fsm` sample enables and entry transitions use rendered expression guard text instead of `ARRAY(...)`.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_CONTRACT_SELECTION.md` — selected direct single-active dynamic write `BID` same-cycle release-and-recapture behavior under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_BEHAVIOR.md` — shipped single-active dynamic write `BID` same-cycle release-and-recapture under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_WRITE_RECAPTURE_NEXT_SLICE_SELECTION.md` — selected `.367`, public contract selection for first single-active dynamic read same-cycle release-and-recapture after dynamic write recapture shipped.
