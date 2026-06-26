@@ -2855,7 +2855,9 @@ and completion validity
 The read-data report residue is empty for this bounded queue-owned shape.
 Broader mixed issue-order queue cardinality, scoreboards, backend behavior,
 backend-language variants, verification-code generation, external converter
-dependencies such as `sv2v`, and VHDL remain deferred.
+dependencies such as `sv2v`, and VHDL remain deferred. `.522` now selects
+`.523`, readiness audit for one-dynamic plus two-concrete-static mixed
+dynamic/static write `BID` same-ID issue-order queue behavior.
 
 No behavior
 changed in `.273`, `.274`, `.275`,

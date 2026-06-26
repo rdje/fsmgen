@@ -9310,6 +9310,14 @@ Broader mixed issue-order queue cardinality, scoreboards, backend behavior,
 backend-language variants, verification-code generation, external converter
 dependencies such as `sv2v`, and VHDL remain future exact owners.
 
+Post mixed issue-order queue multi-beat selector:
+[AXI_IAL2_MANAGER_POST_MIXED_DYNAMIC_STATIC_ISSUE_ORDER_QUEUE_READ_DATA_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MIXED_DYNAMIC_STATIC_ISSUE_ORDER_QUEUE_READ_DATA_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
+selects `.523`, readiness audit for one-dynamic plus two-concrete-static
+mixed dynamic/static write `BID` same-ID `issue-order-queue` behavior. The
+selector changes no behavior. It chooses write `BID` first because it widens
+static siblings without adding read `RLAST`, read-data, raw-`ARLEN`, runtime,
+multi-beat, scoreboard, backend, external-converter, or VHDL behavior.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after
