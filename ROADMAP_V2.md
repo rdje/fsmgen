@@ -797,12 +797,12 @@ Architecture constraint:
 - `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER` is the active task-tree
   owner for this horizon. Its `.2.1` leaf records that every future variant or
   implementation must satisfy FSMGen's public contracts and stay on par with
-  the Perl reference/oracle. Its `.2.2` frontier must audit public contracts,
-  infrastructure, in-memory host APIs, semantic introspection/MCP surfaces,
-  fixture parity, host abstractions, Perl-oracle parity gates, and mdBook
-  language-X blueprint gaps before any
-  Rust/Rust-Wasm, browser JavaScript, Dart/web, Julia, or other non-Perl
-  implementation slice changes code or public contracts.
+  the Perl reference/oracle. Its `.2.2` readiness audit separated
+  backend-neutral public contracts from current Perl implementation details
+  and selected exact future leaves. The active `.2.3` frontier selects the
+  portable in-memory API contract before any Rust/Rust-Wasm, browser
+  JavaScript, Dart/web, Julia, or other non-Perl implementation slice changes
+  code or public contracts.
 - SystemVerilog-to-Verilog portability should default to FSMGen-owned
   generation/lowering instead of a mandatory external converter dependency.
   External converters such as `sv2v` are audit candidates only: they may be

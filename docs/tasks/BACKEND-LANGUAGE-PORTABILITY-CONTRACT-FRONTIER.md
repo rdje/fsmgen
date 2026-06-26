@@ -6,7 +6,7 @@
 - Status: `active`
 - Roadmap lane: `Backend portability / public contracts`
 - Created: `2026-06-16`
-- Last updated: `2026-06-25`
+- Last updated: `2026-06-26`
 - Owner: repo-local workflow
 
 ## Goal
@@ -64,7 +64,7 @@ implementation must satisfy the same FSMGen public contracts.
 - ID: `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER`
   Status: `active`
   Goal: `Own the backend-language portability contract and infrastructure audit frontier.`
-  Children: `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.1, BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2, BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.1, BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2, BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2.1`
+  Children: `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.1, BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2, BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.1, BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2, BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2.1, BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.3, BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.4, BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.5, BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.6, BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.7, BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.8`
 
 - ID: `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.1`
   Status: `done`
@@ -76,7 +76,7 @@ implementation must satisfy the same FSMGen public contracts.
 - ID: `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2`
   Status: `active`
   Goal: `Audit backend-language-neutral contract and infrastructure readiness.`
-  Children: `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.1, BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2, BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2.1`
+  Children: `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.1, BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2, BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2.1, BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.3, BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.4, BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.5, BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.6, BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.7, BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.8`
   Acceptance: `Read decision 0018, README, roadmap, mdBook, semantic-introspection/MCP tree, current source/report/diagnostic/support-accounting/semantic JSON/MCP surfaces, public examples, regression corpus, CLI behavior, in-process Perl APIs, generated artifacts, and relevant task trees; identify every Perl/POSIX/process/filesystem/module-loading assumption that is public contract versus current implementation detail; define the portable in-memory execution contract needed by Rust/Rust-Wasm, browser-capable JavaScript, Dart/web, Julia, and future hosts; map parity requirements for source syntax, diagnostics, support accounting, semantic JSON, MCP resources/tools, examples, review artifacts, HDL outputs, and test suites; define how the Perl reference/oracle is used to prove that every variant satisfies the same FSMGen public contracts; define what the mdBook must contain so an implementation in language X can be built from public contracts rather than Perl internals; record exact future implementation leaves, validation gates, docs/book impact, compatibility risks, and rollback boundaries before any code or public-contract changes.`
   Verification: `pending`
   Commit: `pending`
@@ -89,12 +89,12 @@ implementation must satisfy the same FSMGen public contracts.
   Commit: `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.1: capture variant parity doctrine`
 
 - ID: `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2`
-  Status: `active`
+  Status: `done`
   Goal: `Perform the backend-language-neutral contract and infrastructure readiness audit.`
   Children: `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2.1`
   Acceptance: `Execute the parent audit after the cross-implementation parity doctrine is captured: read the public contract, task-tree, decision, code, test, support-accounting, semantic JSON, MCP, examples, regression corpus, CLI, and in-process API surfaces; separate public contract from Perl implementation detail; define the portable in-memory execution/API contract; define parity harness requirements against the Perl reference/oracle that prove every variant satisfies FSMGen's public contracts; define mdBook blueprint gaps for language-X implementations; evaluate SystemVerilog-to-Verilog portability with FSMGen-owned generation/lowering as the default and external converters such as sv2v only as optional candidate validation aids or explicitly selected dependencies if a later audit proves exceptional quality/coverage; select exact future leaves and validation gates before any code or public-contract changes.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `passed`
+  Commit: `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2: audit portability readiness`
 
 - ID: `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2.1`
   Status: `done`
@@ -103,11 +103,54 @@ implementation must satisfy the same FSMGen public contracts.
   Verification: `passed`
   Commit: `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2.1: sync downstream contract surfaces`
 
+- ID: `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.3`
+  Status: `active`
+  Goal: `Select the portable in-memory API contract.`
+  Acceptance: `Define the backend-neutral source-text/source-id/options/result contract for check, lower, schedule, semantic export, HDL generation, generated review artifacts, diagnostics, support accounting, and verification-output artifact capture without requiring POSIX filesystem access, process spawning, Perl module loading, or Perl object receivers. Record exact entrypoints, JSON-safe result shapes, host-abstraction dependencies, tests, mdBook impact, compatibility risks, and rollback boundaries before any implementation code changes.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.4`
+  Status: `pending`
+  Goal: `Select the portable source and artifact host abstraction.`
+  Acceptance: `Define how filesystem CLI, browser/Wasm, embedded, and pure in-memory hosts provide source lookup, generated review-artifact storage, HDL/verification artifact sinks, diagnostics provenance, and optional search roots while preserving current CLI behavior through an adapter.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.5`
+  Status: `pending`
+  Goal: `Select the Perl-reference parity harness and normalization rules.`
+  Acceptance: `Define the differential-test matrix, corpus partitions, path/output normalization, expected JSON/artifact comparisons, HDL comparison strategy, diagnostic/support-accounting parity requirements, and pass/fail gates for any future implementation-language variant.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.6`
+  Status: `pending`
+  Goal: `Select the mdBook language-X implementation blueprint structure.`
+  Acceptance: `Define the book chapters/sections needed to let a competent implementer build a conforming FSMGen variant from public contracts rather than Perl internals, including source grammars, lowering order, report schemas, artifact semantics, host abstractions, parity harness, and backend validation boundaries.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.7`
+  Status: `pending`
+  Goal: `Audit typed extension and plugin portability.`
+  Acceptance: `Separate current Perl module-loading extension behavior from any backend-neutral extension/plugin contract; select whether extensions are out of scope for the first non-Perl variant or require a portable API before implementation.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.8`
+  Status: `pending`
+  Goal: `Select the first implementation-language experiment.`
+  Acceptance: `After the API, host abstraction, parity harness, mdBook blueprint, and extension boundary are selected, choose the first Rust/Rust-Wasm, browser JavaScript, Dart/web, Julia, or other implementation experiment with exact scope, tests, docs, compatibility risks, and rollback plan.`
+  Verification: `pending`
+  Commit: `pending`
+
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` | `active` | `.2.2.1` synchronized the downstream-consumer handoff, integration specs, public contracts, manifest language surface, support accounting, and mdBook; resume the broader backend-language-neutral contract/infrastructure readiness audit. |
+| 1 | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` | `done` | Completed the backend-language-neutral readiness audit and selected future exact leaves for API, host abstraction, parity, mdBook blueprint, extension, and implementation-language selection. |
+| 2 | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.3` | `active` | Select the portable in-memory API contract before any non-Perl implementation code. |
 
 ## Decisions
 
@@ -139,6 +182,12 @@ implementation must satisfy the same FSMGen public contracts.
   candidate validation aids or, only if a future owned audit proves exceptional
   quality and coverage, as explicitly selected dependencies. No toolchain,
   code, generated HDL, or public contract behavior changed.
+- `2026-06-26`: Completed the `.2.2` readiness audit. The public
+  source/report/manifest/support-accounting/semantic-introspection/corpus
+  surfaces are strong enough for parity planning, but the portable in-memory
+  API, host source/artifact abstraction, Perl-oracle parity harness, mdBook
+  language-X blueprint, and extension/plugin boundary need exact selectors
+  before any non-Perl implementation starts.
 
 ## Open Questions
 
@@ -146,9 +195,8 @@ implementation must satisfy the same FSMGen public contracts.
   Rust/Rust-Wasm, browser JavaScript, Dart/web, Julia, or another host? This
   does not block `.2`; the audit must define selection criteria and parity
   gates before choosing an implementation slice.
-- Which public in-memory API shape should be canonical for non-CLI hosts? This
-  does not block `.2`; the audit must separate semantic contract from current
-  Perl CLI/module entrypoints.
+- Which exact public in-memory API shape should be canonical for non-CLI
+  hosts? This is now owned by `.2.3`.
 - Can any external SystemVerilog-to-Verilog converter, including `sv2v`, meet
   a high enough quality and coverage bar to be useful for FSMGen? This does
   not block `.2`; the default remains FSMGen-owned generation/lowering unless
@@ -166,6 +214,7 @@ implementation must satisfy the same FSMGen public contracts.
 | `2026-06-16` | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.1` | `mdbook build docs/book`; `env -u PERL5LIB prove -Iperl t/1414-docs-relative-paths-audit.t`; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `git --no-pager diff --check`; README numbering check | `passed`; captured the cross-implementation parity doctrine and advanced the audit frontier to `.2.2` |
 | `2026-06-16` | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2.1` | `env -u PERL5LIB perl -Iperl -c perl/FSM/Support/LanguageSurfaceSection.pm`; `env -u PERL5LIB prove -Iperl t/297-capability-manifest.t t/317-language-surface-contract.t t/483-language-surface-section-defensive-copy-boundary-audit.t`; `env -u PERL5LIB prove -Iperl t/1436-ial2-ppif-parser-cli.t t/248-regression-corpus-accounting.t t/301-check-json-supported-corpus.t t/303-normalized-semantic-json-supported-corpus.t`; `mdbook build docs/book`; `env -u PERL5LIB prove -Iperl t/1414-docs-relative-paths-audit.t`; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `git --no-pager diff --check`; README numbering check | `passed`; synchronized downstream handoff/integration/contracts/manifest/support-accounting/book surfaces with the current codebase boundary for all downstream consumers |
 | `2026-06-25` | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` | `mdbook build docs/book`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `git --no-pager diff --check`; `scripts/check_doctrines.sh` | `passed`; recorded the SystemVerilog-to-Verilog external dependency stance without selecting `sv2v` or changing code/toolchain behavior |
+| `2026-06-26` | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` | Read/audit decision `0018`, README, roadmap, mdBook, task index, semantic-introspection/MCP task tree, public ISF/downstream contracts, `bin/fsmgen`, `bin/fsmgen-mcp`, source/lowering/manifest/support/semantic/MCP/facade modules, regression corpus, and focused manifest/check/semantic/MCP tests; `prove -Iperl t/297-capability-manifest.t t/1438-semantic-introspection-contract.t t/1440-semantic-introspection-manifest-contract-roundtrip-audit.t`; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `mdbook build docs/book`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_docs_relative_paths.sh`; `scripts/check_memory_architecture.sh`; `git --no-pager diff --check`; `scripts/check_doctrines.sh` | `passed`; completed the portability readiness audit and routed future work to `.2.3` through `.2.8` before non-Perl implementation code |
 
 ## Commit Log
 
@@ -175,6 +224,7 @@ implementation must satisfy the same FSMGen public contracts.
 | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.1` | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.1: capture variant parity doctrine` | Captured identical in-memory behavior, variant parity, mandatory FSMGen contract satisfaction, Perl oracle, and mdBook language-X blueprint doctrine; advanced the audit frontier to `.2.2`. |
 | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2.1` | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2.1: sync downstream contract surfaces` | Synchronized the downstream-consumer handoff, integration specs, public contracts, manifest language surface, support-accounting catalog docs, README, roadmap, book, and Knowledge Map; resumed `.2.2` as the broader backend portability audit frontier. |
 | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2: record sv2v dependency stance` | Recorded that FSMGen-owned SystemVerilog-to-Verilog generation/lowering remains the default and external converters such as `sv2v` require a future owned audit before becoming selected dependencies. |
+| `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2: audit portability readiness` | Completed the readiness audit, separated backend-neutral public contracts from Perl implementation details, and selected future leaves for portable API, host abstraction, parity harness, mdBook blueprint, extension boundary, and first implementation-language selection. |
 
 ## Changelog
 
@@ -193,3 +243,7 @@ implementation must satisfy the same FSMGen public contracts.
   no mandatory external converter dependency for core FSMGen work by default,
   with `sv2v` or similar tools only future audit candidates unless proven
   strong enough and explicitly selected by a later owned slice.
+- `2026-06-26`: Completed `.2.2`; public manifest/report/corpus surfaces are
+  ready for parity planning, while portable in-memory API, host abstraction,
+  parity harness, mdBook blueprint, extension boundary, and first
+  implementation-language selection move to exact future leaves.

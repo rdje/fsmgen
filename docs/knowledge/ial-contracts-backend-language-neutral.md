@@ -16,11 +16,11 @@ answers:
   - "should the book be enough to implement FSMGen in another language?"
   - "should FSMGen depend on sv2v for Verilog conversion?"
   - "can sv2v be used for FSMGen SystemVerilog to Verilog conversion?"
-date: 2026-06-16
+date: 2026-06-26
 status: current
 tags: [architecture, ial0, ial1, ial2, mdbook, rust, wasm, javascript, dart, browser, verilog]
-evidence: docs/decisions/0018-ial-contracts-are-backend-language-neutral.md; docs/tasks/BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.md; docs/TASK_TREE.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md
-reverify: rg -n 'backend-language-neutral|BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER|Rust/Wasm|browser-capable JavaScript|Dart/web|Julia|Perl 5|reference implementation|Perl reference|FSMGen.*public contracts|in-memory host APIs|language-X|sv2v|SystemVerilog-to-Verilog|external converter' docs/decisions/0018-ial-contracts-are-backend-language-neutral.md docs/tasks/BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.md docs/TASK_TREE.md README.md ROADMAP_V2.md docs/book/src/14-feature-backlog.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md
+evidence: docs/decisions/0018-ial-contracts-are-backend-language-neutral.md; docs/tasks/BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.md; docs/BACKEND_LANGUAGE_PORTABILITY_READINESS_AUDIT.md; docs/TASK_TREE.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/knowledge/backend-language-portability-readiness-audit.md
+reverify: rg -n 'backend-language-neutral|BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER|BACKEND_LANGUAGE_PORTABILITY_READINESS_AUDIT|Rust/Wasm|browser-capable JavaScript|Dart/web|Julia|Perl 5|reference implementation|Perl reference|FSMGen.*public contracts|in-memory host APIs|language-X|sv2v|SystemVerilog-to-Verilog|external converter|portable in-memory API contract|BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.3' docs/decisions/0018-ial-contracts-are-backend-language-neutral.md docs/tasks/BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.md docs/BACKEND_LANGUAGE_PORTABILITY_READINESS_AUDIT.md docs/TASK_TREE.md README.md ROADMAP_V2.md docs/book/src/14-feature-backlog.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/knowledge/ial-contracts-backend-language-neutral.md docs/knowledge/backend-language-portability-readiness-audit.md
 ---
 
 IAL0, IAL1, IAL2, and the mdBook are backend-language-neutral contracts, not
@@ -41,10 +41,11 @@ reference/oracle.
 
 `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER` now owns the portability
 contract/infrastructure roadmap. `.1` created the tree, `.2.1` captured the
-variant-parity doctrine, and `.2.2` is the pending audit for public contracts,
-in-memory host APIs, semantic introspection/MCP surfaces, support accounting,
-fixture parity, host abstractions, Perl-oracle parity gates, and mdBook
-language-X blueprint gaps before any Rust/Rust-Wasm, browser JavaScript,
+variant-parity doctrine, and `.2.2` completed the readiness audit for public
+contracts, semantic introspection/MCP surfaces, support accounting, fixture
+parity, host abstractions, Perl-oracle parity gates, and mdBook language-X
+blueprint gaps. `.2.3` is the active next leaf for selecting the portable
+in-memory API contract before any Rust/Rust-Wasm, browser JavaScript,
 Dart/web, Julia, or other non-Perl implementation work changes code or public
 contracts.
 

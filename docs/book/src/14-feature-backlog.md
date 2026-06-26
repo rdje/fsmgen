@@ -2379,10 +2379,12 @@ reference/oracle. The book must grow into the language-independent blueprint
 for building a conforming FSMGen variant in language X.
 The active owner for that portability work is
 [BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER](../../tasks/BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.md).
-Its `.2.1` leaf captures that doctrine and its `.2.2` frontier audits public
-contracts, infrastructure, in-memory host APIs, semantic introspection/MCP
-surfaces, fixture parity, host abstractions, parity gates, and book blueprint
-gaps before any Rust/Rust-Wasm, browser JavaScript, Dart/web, Julia, or other
+Its `.2.1` leaf captures that doctrine. Its `.2.2` readiness audit separates
+backend-neutral public contracts from current Perl implementation details and
+selects exact future leaves for the portable API, host abstraction, parity
+harness, book blueprint, extension boundary, and first implementation-language
+selection. The active `.2.3` leaf selects the portable in-memory API contract
+before any Rust/Rust-Wasm, browser JavaScript, Dart/web, Julia, or other
 non-Perl implementation slice changes code or public contracts.
 For SystemVerilog-to-Verilog portability, the default is FSMGen-owned
 generation/lowering rather than a mandatory external converter. Tools such as

@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.6: audit direct IAL2 verification route`.
-- active_work_unit: `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` is the next PNT candidate after the verification-code-generation frontier completed and the IAL2 tree had no `.522` leaf selected.
-- recently_done: `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.6` selected no direct `.ppif` verification-output route for the current lane. Future protocol-specific verification facts should first lower or annotate generated IAL1 `.isf` review artifacts unless a later exact owner proves a direct route is required.
+- latest_commit: `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2: audit portability readiness`.
+- active_work_unit: `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.3` selects the portable in-memory API contract before any non-Perl implementation code.
+- recently_done: `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` completed the backend-language portability readiness audit: public manifest/report/corpus surfaces are ready for parity planning, while portable API, host abstraction, parity harness, mdBook blueprint, extension boundary, and first implementation-language selection require exact future leaves.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
-- next_action: Resume PNT at `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2`, the active backend-language-neutral contract/infrastructure readiness audit.
+- next_action: Start `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.3`, the portable in-memory API contract selector.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact
