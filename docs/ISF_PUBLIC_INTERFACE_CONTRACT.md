@@ -3343,11 +3343,14 @@ does not add scheduler, generated `.fsm`, generated-top, HDL, VHDL,
 scoreboard, coverage, or VIP runtime behavior, and schedule-report consumers
 must not infer generated artifacts from it. The explicit verification-output
 mode `--emit-verification-output uvm-passive-monitor --verification-outdir DIR`
-is the only shipped mode that consumes this metadata to emit an inert UVM
-passive-monitor skeleton plus `verification-output-manifest.json`; it is not
-part of the schedule-report schema and does not claim UVM compile support. It
-does not imply VHDL assertion, PSL, testbench, package, or monitor output; the
-selected VHDL package target remains pending implementation in `.11`. The
+consumes this metadata to emit an inert UVM passive-monitor skeleton plus
+`verification-output-manifest.json`; it is not part of the schedule-report
+schema and does not claim UVM compile support. The sibling
+`--emit-verification-output vhdl-observation-package --verification-outdir DIR`
+mode consumes the same metadata to emit an inert VHDL observation metadata
+package plus the same manifest; it does not imply VHDL compile, VHDL syntax,
+PSL, testbench, monitor process, scoreboard, coverage, reusable VIP, or direct
+IAL2 behavior. The
 machine-readable schedule-report contract advertises these metadata keys
 through
 `schedule_report_verification_observation_keys`,

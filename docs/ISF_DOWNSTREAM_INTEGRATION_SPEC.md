@@ -3399,6 +3399,13 @@ the artifact as a VHDL syntax/compile/PSL/simulation/formal/analyzer result or
 as scoreboard, coverage, reusable VIP, direct IAL2, schedule JSON, check JSON,
 or semantic JSON behavior.
 
+Direct `.ppif` verification-output generation is intentionally not selected
+for the current lane. IAL2 sources remain reviewable through generated `.isf`
+before generated `.fsm`; future protocol-specific checker, scoreboard,
+coverage, or VIP work must first define how PPIF facts annotate or lower into
+generated IAL1 verification metadata unless a later exact task-tree owner
+proves that a direct IAL2 route is required.
+
 Golden fixture matrix:
 
 - `t/1255-isf-schedule-report-golden-matrix.t` is the executable matrix for

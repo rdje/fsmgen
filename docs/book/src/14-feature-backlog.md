@@ -4236,10 +4236,14 @@ package is metadata-only: it records observation name/role/clock/reset and
 signal name/direction/width constants, and it does not contain an entity,
 architecture, process, assert, PSL, testbench, scoreboard, coverage, simulator
 binding, analyzer claim, reusable VIP behavior, or direct IAL2 protocol
-behavior. Direct
-IAL2-to-verification routing,
-scoreboard behavior, coverage behavior, and reusable VIP behavior remain
-deferred behind later selector leaves.
+behavior. The direct IAL2 route audit
+[IAL1_DIRECT_IAL2_VERIFICATION_ROUTE_AUDIT](../../IAL1_DIRECT_IAL2_VERIFICATION_ROUTE_AUDIT.md)
+selects no direct `.ppif` verification-output route for the current lane:
+future protocol-specific verification facts should first lower or annotate
+generated IAL1 `.isf` review artifacts, then reuse the IAL1
+verification-output path unless a later exact owner proves a direct route is
+required. Scoreboard behavior, coverage behavior, and reusable VIP behavior
+remain deferred behind later selector leaves.
 
 Read-data interleaving queue readiness audit:
 [AXI_IAL2_MANAGER_READ_DATA_INTERLEAVING_QUEUE_READINESS_AUDIT](../../AXI_IAL2_MANAGER_READ_DATA_INTERLEAVING_QUEUE_READINESS_AUDIT.md)

@@ -4788,9 +4788,11 @@ vhdl-observation-package --verification-outdir DIR source.isf`, producing
 `DIR/vhdl/<actor>_observation_vhdl_pkg.vhd` plus the manifest under canonical
 target `vhdl_observation_package_skeleton`. It does not claim VHDL compile,
 syntax, PSL, simulator, analyzer, scoreboard, coverage, reusable VIP, or
-direct IAL2 support. Direct
-IAL2-to-verification generation remains an explicit audit question, not an
-implementation assumption.
+direct IAL2 support. Audit `.6` selects no direct IAL2-to-verification route
+for the current lane: `.ppif` remains unsupported for verification-output CLI
+modes, and future protocol-specific verification facts should first lower or
+annotate generated IAL1 `.isf` review artifacts unless a later exact owner
+proves a direct route is required.
 Packed burst outputs, concrete same-ID queue variants beyond the shipped
 read burst-last, write, and read single-beat depth-2 queue-head boundaries,
 per-ID queues, queued policy, profile
