@@ -3905,6 +3905,14 @@ accepts only AXI protocol names plus AXI channel families. A non-AXI or
 protocol-neutral Valid-Ready sample therefore needs public vocabulary
 selection before parser, generator, sample, support-accounting, or report
 changes.
+`.530` now selects `.531`, direct bounded implementation of the first
+protocol-neutral/non-AXI Valid-Ready `.ppif` sample. The selected contract
+keeps `(profile valid-ready)` explicit and required, keeps no-profile input
+unsupported, uses `ppif/valid_ready_handshake.ppif` with support identity
+`intent.ppif_valid_ready_handshake`, treats `(channel data_link)` as an
+authored logical channel identifier rather than an AXI family, selects
+`producer-to-consumer` as the first neutral role, and introduces no `.axi` or
+other suffix alias.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.529: audit protocol-neutral PPIF readiness`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.530` is active after `.529`; select the public protocol-neutral/non-AXI Valid-Ready `.ppif` profile/source vocabulary contract.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.529` selected `.530`, public contract selection for a protocol-neutral/non-AXI Valid-Ready `.ppif` profile/source vocabulary. The audit found that `.ppif` is generic IAL2, but current Valid-Ready implementation behavior is still AXI-profile-local: it requires a profile clause and accepts only AXI protocol names plus AXI channel families.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.530: select neutral Valid-Ready PPIF contract`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.531` is active after `.530`; implement the first protocol-neutral/non-AXI Valid-Ready `.ppif` sample under the selected `(profile valid-ready)` contract.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.530` selected `.531`, direct bounded implementation of `ppif/valid_ready_handshake.ppif` with support identity `intent.ppif_valid_ready_handshake`, logical channel `data_link`, role `producer-to-consumer`, explicit required `(profile valid-ready)`, no no-profile form, and no suffix alias.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: The original exact `t/301` resource cliff is fixed for oversized PPIF check-json via `.2.3.1`, but a full guarded `t/301-check-json-supported-corpus.t` rerun stopped on host-memory cutoff from a high host baseline and a higher-cutoff retry was rejected by the approval layer. Do not bypass that rejection without explicit user approval; `.2.5` selected RAM-guarded or exact bounded replacement policy for any future broad `t/301`/`t/303` parity plan.
-- next_action: Start `.530` by reading `.529` audit, `.528` selector, `.527` public-surface sync, decisions `0014`/`0015`/`0016`/`0017`, common-vs-profile Knowledge Map facts, current `.ppif` Valid-Ready parser/report/generator surfaces, shipped AXI-shaped Valid-Ready samples, support accounting, public contracts, capability-manifest boundary, README, ROADMAP_V2, mdBook, task tree, Memory, and Knowledge Map; then select the protocol-neutral Valid-Ready `.ppif` vocabulary contract before behavior changes.
+- next_action: Start `.531` by reading `.530` contract, `.529` audit, decisions `0014`/`0015`/`0016`/`0017`, current `.ppif` Valid-Ready parser/report/generator surfaces, shipped AXI one-channel and AW/W bundle samples, support accounting, public contracts, capability-manifest boundary, README, ROADMAP_V2, mdBook, task tree, Memory, and Knowledge Map; then implement the selected `valid-ready` profile sample and focused preservation checks.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact

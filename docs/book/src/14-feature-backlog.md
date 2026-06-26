@@ -9389,6 +9389,17 @@ protocol-neutral Valid-Ready sample therefore needs public vocabulary
 selection before parser, generator, sample, support-accounting, or report
 changes.
 
+IAL2 protocol-neutral Valid-Ready PPIF contract:
+[IAL2_PROTOCOL_NEUTRAL_VALID_READY_PPIF_CONTRACT_SELECTION](../../IAL2_PROTOCOL_NEUTRAL_VALID_READY_PPIF_CONTRACT_SELECTION.md)
+selects `.531`, direct bounded implementation of the first
+protocol-neutral/non-AXI Valid-Ready `.ppif` sample. The selected source keeps
+`(profile valid-ready)` explicit and required, keeps no-profile input
+unsupported, uses `ppif/valid_ready_handshake.ppif` with support identity
+`intent.ppif_valid_ready_handshake`, treats `(channel data_link)` as an
+authored logical channel identifier rather than an AXI family, selects
+`producer-to-consumer` as the first neutral role, and introduces no `.axi` or
+other suffix alias.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after
