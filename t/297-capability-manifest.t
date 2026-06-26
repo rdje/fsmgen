@@ -2841,18 +2841,18 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
     );
     like(
         $file_surface_by_suffix{'.ppif'}{current_boundary},
-        qr/generated one-dynamic plus one-concrete-static mixed dynamic\/static same-ID issue-order queue behavior for write BID, read single-beat RID, read burst-last RID\/RLAST, paired scalar read-data over the generated mixed read single-beat and burst-last queue completions, report-only raw-ARLEN burst-length capture, and runtime beat-count\/RLAST validation over the generated mixed read burst-last queue completion/,
-        'manifest advertises shipped mixed dynamic/static same-ID issue-order queues, scalar read-data, raw-ARLEN, and runtime validation',
+        qr/generated one-dynamic plus one-concrete-static mixed dynamic\/static same-ID issue-order queue behavior for write BID, read single-beat RID, read burst-last RID\/RLAST, paired scalar read-data over the generated mixed read single-beat and burst-last queue completions, report-only raw-ARLEN burst-length capture, runtime beat-count\/RLAST validation, and runtime-validation multi-beat output banks over the generated mixed read burst-last queue completion/,
+        'manifest advertises shipped mixed dynamic/static same-ID issue-order queues, scalar read-data, raw-ARLEN, runtime validation, and multi-beat output banks',
     );
     like(
         $file_surface_by_suffix{'.ppif'}{current_boundary},
-        qr/paired scalar read-data over the generated mixed read single-beat and burst-last queue completions, report-only raw-ARLEN burst-length capture, and runtime beat-count\/RLAST validation over the generated mixed read burst-last queue completion/,
-        'manifest advertises shipped mixed dynamic/static issue-order queue scalar read-data, raw-ARLEN, and runtime validation',
+        qr/paired scalar read-data over the generated mixed read single-beat and burst-last queue completions, report-only raw-ARLEN burst-length capture, runtime beat-count\/RLAST validation, and runtime-validation multi-beat output banks over the generated mixed read burst-last queue completion/,
+        'manifest advertises shipped mixed dynamic/static issue-order queue scalar read-data, raw-ARLEN, runtime validation, and multi-beat output banks',
     );
     like(
         $file_surface_by_suffix{'.ppif'}{current_boundary},
-        qr/Multi-beat output banks over generated mixed dynamic\/static issue-order queues/,
-        'manifest keeps mixed dynamic/static issue-order queue multi-beat family deferred',
+        qr/Broader mixed issue-order queue cardinality/,
+        'manifest keeps broader mixed dynamic/static issue-order queue cardinality deferred',
     );
     my %unsupported_aliases = map { $_ => 1 } @{$manifest->{language_surface}{file_surfaces}{unsupported_first_slice_aliases}};
     ok($unsupported_aliases{'.pif'}, 'manifest keeps .pif unsupported in the first PPIF slice');

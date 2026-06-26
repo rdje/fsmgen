@@ -3823,6 +3823,23 @@ Broader mixed cardinality, scoreboards, backend behavior,
 backend-language variants, verification-code generation, external converter
 dependencies such as `sv2v`, and VHDL remain deferred.
 
+`.520` now ships multi-beat output banks over generated mixed dynamic/static
+read burst-last same-ID `issue-order-queue` runtime-validation read-data. The
+support-accounted sample is
+`ppif/axi_manager_capacity_status_read_mixed_dynamic_static_burst_last_same_id_issue_order_queue_read_data_multi_beat.ppif`.
+The shipped shape is exactly one dynamic read plus one concrete static read,
+one depth-2 generated mixed queue, generated burst-last queue completion source
+`generated_mixed_dynamic_static_issue_order_queue_demux_last_beat`,
+`capture-scope multi-beat`, runtime-assertion raw-`ARLEN` burst-length
+metadata, complete per-transaction data/status output banks, scalar
+worst-observed `RRESP` aggregate outputs, valid-mask outputs, length outputs,
+and completion validity
+`generated_mixed_dynamic_static_read_issue_order_queue_response_demux_last_beat_completion_pulse`.
+The read-data report residue is empty for this bounded queue-owned shape.
+Broader mixed issue-order queue cardinality, scoreboards, backend behavior,
+backend-language variants, verification-code generation, external converter
+dependencies such as `sv2v`, and VHDL remain deferred.
+
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
 write/read/read-data/multi-beat chain is now covered. `.270` selected `.271`,

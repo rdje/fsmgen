@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.519: audit mixed queue multi-beat readiness`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.520` implements multi-beat output banks over generated mixed dynamic/static read burst-last same-ID issue-order queue runtime-validation read-data; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.519` selected `.520`, direct bounded implementation of multi-beat output banks over the `.518` mixed queue runtime-validation read-data path. The audit changed no behavior; source inspection found the remaining blocker local to the mixed dynamic/static issue-order queue read-data coverage branch lacking a `multi-beat` runtime-assertion boundary, while shared parser syntax, normalization, output-bank rule generation, status aggregation, beat-count/`RLAST` assertions, response-state lookup, report metadata, and test helpers already exist.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.520: ship mixed queue multi-beat output banks`.
+- active_work_unit: `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` selects the first SV/UVM verification output contract now that observation metadata ships; `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remains active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.520` shipped multi-beat output banks over generated mixed dynamic/static read burst-last same-ID issue-order queue runtime-validation read-data. The support-accounted sample is `ppif/axi_manager_capacity_status_read_mixed_dynamic_static_burst_last_same_id_issue_order_queue_read_data_multi_beat.ppif`; the boundary is exactly one dynamic read plus one concrete static read, one depth-2 generated mixed queue, runtime-assertion raw-`ARLEN` metadata, complete per-transaction output-bank bindings, scalar worst-observed `RRESP` aggregate outputs, valid masks, length outputs, and completion validity `generated_mixed_dynamic_static_read_issue_order_queue_response_demux_last_beat_completion_pulse`.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
-- next_action: Start `.520`: implement only the selected multi-beat output-bank PPIF sample and local coverage admission over the `.518` mixed burst-last issue-order queue runtime-validation read-data path.
+- next_action: Start `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4`: select the first bounded SV/UVM verification output contract before any verification-code-generation behavior changes.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact

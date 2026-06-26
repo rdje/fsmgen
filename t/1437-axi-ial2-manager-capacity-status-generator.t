@@ -1240,6 +1240,44 @@ subtest 'mixed dynamic/static read burst-last same-ID issue-order queue read-dat
     like($hdl, qr/assign\s+axi0_r1_read_beat_count_en\s*=/, 'SystemVerilog emits static mixed queue beat-count increment enable');
 };
 
+subtest 'mixed dynamic/static read burst-last same-ID issue-order queue read-data multi-beat emits output banks' => sub {
+    my $result = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_mixed_dynamic_static_read_burst_last_same_id_issue_order_queue_read_data_multi_beat());
+    my $isf = $result->{generated_ial1}{text};
+
+    like($isf, qr/\(input axi0_rlast\)/, 'mixed dynamic/static read burst-last issue-order queue read-data multi-beat declares RLAST input');
+    like($isf, qr/\(input axi0_arlen \(width 8\)\)/, 'mixed dynamic/static read burst-last issue-order queue read-data multi-beat declares ARLEN input');
+    like($isf, qr/\(output axi0_r0_beat_rdata_0 \(width 32\)\)/, 'mixed dynamic/static read burst-last issue-order queue read-data multi-beat exposes dynamic first RDATA lane');
+    like($isf, qr/\(output axi0_r1_beat_rdata_15 \(width 32\)\)/, 'mixed dynamic/static read burst-last issue-order queue read-data multi-beat exposes static final RDATA lane');
+    like($isf, qr/\(output axi0_r1_beat_rresp_15 \(width 2\)\)/, 'mixed dynamic/static read burst-last issue-order queue read-data multi-beat exposes static final RRESP lane');
+    like($isf, qr/\(output axi0_r1_beat_valid \(width 16\)\)/, 'mixed dynamic/static read burst-last issue-order queue read-data multi-beat exposes static valid mask');
+    like($isf, qr/\(output axi0_r1_read_beats \(width 5\)\)/, 'mixed dynamic/static read burst-last issue-order queue read-data multi-beat exposes static length output');
+    like($isf, qr/\(output axi0_r1_rresp \(width 2\)\)/, 'mixed dynamic/static read burst-last issue-order queue read-data multi-beat exposes static scalar RRESP aggregate');
+    like($isf, qr/\(rule axi0_r1_read_data_output_init axi0_r1_request[\s\S]*\(axi0_r1_beat_valid 0\)[\s\S]*\(axi0_r1_read_beats 0\)[\s\S]*\(axi0_r1_rresp 0\)\)/, 'mixed dynamic/static read burst-last issue-order queue read-data multi-beat initializes static bank outputs on request');
+    like($isf, qr/\(rule axi0_r1_read_beat_15_capture [\s\S]*axi0_read_mixed_dynamic_static_same_id_issue_order_slot0_r1_q[\s\S]*\(axi0_r1_beat_rdata_15 axi0_rdata\)[\s\S]*\(axi0_r1_beat_rresp_15 axi0_rresp\)[\s\S]*\(axi0_r1_beat_valid 16'b1111111111111111\)[\s\S]*\(axi0_r1_read_beats 5'd16\)\)/, 'mixed dynamic/static read burst-last issue-order queue read-data multi-beat captures static final lane from matched raw queue beats');
+    like($isf, qr/\(rule axi0_r1_rresp_aggregate [\s\S]*axi0_r1_rresp[\s\S]*axi0_rresp/, 'mixed dynamic/static read burst-last issue-order queue read-data multi-beat emits static scalar RRESP aggregate update');
+
+    assert_mixed_dynamic_static_read_same_id_issue_order_queue_report(
+        $result->{report},
+        'generator report',
+        burst_last => 1,
+        response_demux_residue => [],
+    );
+    assert_read_data_multi_beat_report(
+        $result->{report}{read_data},
+        'generator mixed dynamic/static read burst-last same-ID issue-order queue read-data multi-beat report',
+        completion_validity => 'generated_mixed_dynamic_static_read_issue_order_queue_response_demux_last_beat_completion_pulse',
+        transactions => [qw(r0 r1)],
+    );
+
+    my $fsm = $result->{generated_ial0}{files}{'axi0_capacity_status.fsm'};
+    like($fsm, qr/axi0_r1_read_beat_15_capture[\s\S]*\(<- \(axi0_r1_beat_rdata_15> axi0_rdata\)\)[\s\S]*\(<- \(axi0_r1_beat_rresp_15> axi0_rresp\)\)/, 'scheduled .fsm lowers static mixed queue final multi-beat lane capture');
+    my $hdl = hdl_for('axi0_capacity_status', $fsm);
+    like($hdl, qr/\boutput\s+(?:reg\s+)?\[31:0\]\s+axi0_r1_beat_rdata_15\b/, 'SystemVerilog exposes static final RDATA lane output');
+    like($hdl, qr/\boutput\s+(?:reg\s+)?\[1:0\]\s+axi0_r1_beat_rresp_15\b/, 'SystemVerilog exposes static final RRESP lane output');
+    like($hdl, qr/\boutput\s+(?:reg\s+)?\[15:0\]\s+axi0_r1_beat_valid\b/, 'SystemVerilog exposes static valid-mask output');
+    like($hdl, qr/\boutput\s+(?:reg\s+)?\[4:0\]\s+axi0_r1_read_beats\b/, 'SystemVerilog exposes static length output');
+};
+
 subtest 'dynamic write depth-3 same-ID issue-order queue captures third AWID slot and matches BID by issue order' => sub {
     my $result = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_dynamic_write_depth3_same_id_issue_order_queue());
     my $isf = $result->{generated_ial1}{text};
@@ -6497,6 +6535,14 @@ sub sample_contract_with_mixed_dynamic_static_read_burst_last_same_id_issue_orde
     return $contract;
 }
 
+sub sample_contract_with_mixed_dynamic_static_read_burst_last_same_id_issue_order_queue_read_data_multi_beat {
+    my $contract = sample_contract_with_mixed_dynamic_static_read_burst_last_same_id_issue_order_queue_read_data_burst_length_runtime_assertion();
+    $contract->{intent_name} = 'axi_manager_capacity_status_read_mixed_dynamic_static_burst_last_same_id_issue_order_queue_read_data_multi_beat';
+    $contract->{source}{object_id} = 'axi-manager-capacity-status-read-mixed-dynamic-static-burst-last-same-id-issue-order-queue-read-data-multi-beat';
+    $contract->{read_data} = sample_contract_with_read_data_multi_beat()->{read_data};
+    return $contract;
+}
+
 sub sample_contract_with_dynamic_write_depth3_same_id_issue_order_queue {
     my $contract = sample_contract_with_dynamic_write_same_id_issue_order_queue();
     $contract->{intent_name} = 'axi_manager_capacity_status_dynamic_write_depth3_same_id_issue_order_queue';
@@ -8540,6 +8586,7 @@ sub assert_mixed_dynamic_static_write_same_id_issue_order_queue_report {
 sub assert_mixed_dynamic_static_read_same_id_issue_order_queue_report {
     my ($report, $owner, %args) = @_;
     my $burst_last = $args{burst_last} // 0;
+    my $response_demux_residue = $args{response_demux_residue} // [qw(read_data_interleaving bursts)];
     my $expected_read_mode = $burst_last
         ? 'bounded_mixed_dynamic_static_read_rid_rlast_issue_order_queue_demux_contract'
         : 'bounded_mixed_dynamic_static_read_rid_issue_order_queue_demux_contract';
@@ -8562,7 +8609,7 @@ sub assert_mixed_dynamic_static_read_same_id_issue_order_queue_report {
 
     is($demux->{mode}, 'bounded_response_demux_contract', "$owner marks bounded response-demux contract mode");
     ok($demux->{generated_behavior}, "$owner marks mixed dynamic/static read issue-order queue demux generated");
-    is_deeply($demux->{residue}, [qw(read_data_interleaving bursts)], "$owner removes same-ID residue from response-demux report");
+    is_deeply($demux->{residue}, $response_demux_residue, "$owner removes covered residue from response-demux report");
     is($read->{mode}, $expected_read_mode, "$owner marks mixed dynamic/static read issue-order queue demux mode");
     is($read->{transaction_completion_source}, $expected_completion_source, "$owner reports mixed read issue-order queue completion source");
     is($read->{transaction_completion_semantics}, $expected_completion_semantics, "$owner reports mixed read issue-order queue completion semantics");
