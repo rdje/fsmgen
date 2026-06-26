@@ -325,7 +325,10 @@ The APB requester can also be authored from the IAL2 `.ppif` source shape
 `ppif/apb_requester_transfer.ppif`. That path uses `(profile apb)`, lowers
 through generated `apb_requester.isf` before generated `apb_requester.fsm`, and
 the bounded `.apb` profile alias `ppif/apb_requester_transfer.apb` now mirrors
-that same requester-transfer behavior. See
+that same requester-transfer behavior. The APB completer can now also be
+authored from `ppif/apb_completer.ppif`, which lowers through generated
+`apb_completer.isf` before generated `apb_completer.fsm` and covers the
+bounded address-0 register completer subset. See
 [Feature Backlog](14-feature-backlog.md) for runnable APB `.ppif` and `.apb`
 commands and the current APB residue list.
 

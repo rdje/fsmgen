@@ -592,6 +592,7 @@ manifest output while keeping the exact file lists widenable.
 | `protocol.apb_tb` | [fsm/apb_tb.fsm](fsm/apb_tb.fsm) | `supported_smoke` | `composition_top_pipeline_cli` |
 | `intent.isf_apb_requester` | [isf/apb_requester.isf](isf/apb_requester.isf) | `supported_smoke` | `isf_pipeline_cli` |
 | `intent.ppif_apb_requester_transfer` | [ppif/apb_requester_transfer.ppif](ppif/apb_requester_transfer.ppif) | `supported_smoke` | `ial2_ppif_apb_requester_transfer_pipeline_cli` |
+| `intent.ppif_apb_completer` | [ppif/apb_completer.ppif](ppif/apb_completer.ppif) | `supported_smoke` | `ial2_ppif_apb_completer_pipeline_cli` |
 | `intent.apb_profile_alias_requester_transfer` | [ppif/apb_requester_transfer.apb](ppif/apb_requester_transfer.apb) | `supported_smoke` | `ial2_apb_profile_alias_requester_transfer_pipeline_cli` |
 | `intent.ppif_axi_aw_valid_ready` | [ppif/axi_aw_valid_ready.ppif](ppif/axi_aw_valid_ready.ppif) | `supported_smoke` | `ial2_ppif_pipeline_cli` |
 | `intent.ppif_valid_ready_handshake` | [ppif/valid_ready_handshake.ppif](ppif/valid_ready_handshake.ppif) | `supported_smoke` | `ial2_ppif_valid_ready_handshake_pipeline_cli` |

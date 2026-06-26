@@ -3674,7 +3674,7 @@ BUS
 
     my @cases = (
         ['apb requester profile mismatch', $profile_mismatch, qr/profile 'axi4' does not match \(apb-requester \.\.\.\); expected apb/],
-        ['apb profile rejects valid-ready object', $apb_profile_valid_ready, qr/profile apb requires exactly one \(apb-requester \.\.\.\) object/],
+        ['apb profile rejects valid-ready object', $apb_profile_valid_ready, qr/profile apb requires exactly one \(apb-requester \.\.\.\) or \(apb-completer \.\.\.\) object/],
         ['apb requester missing bus', $missing_bus, qr/is missing required \(bus \.\.\.\) clause/],
         ['apb requester wrong setup select', $bad_setup, qr/transfer\.setup\.select must be 1/],
     );

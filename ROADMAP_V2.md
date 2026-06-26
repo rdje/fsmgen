@@ -4142,6 +4142,18 @@ structured expression AST for internal analysis, preserves scalar entry guard,
 when-body, and runtime-wait behavior, and proves the APB-shaped
 `PSEL && !PENABLE` setup detector without `ARRAY(...)`. APB completer
 parser/generator/sample/support behavior remains deferred to `.562`.
+`.562` now ships the first generated APB `.ppif` completer behavior. The
+sample `ppif/apb_completer.ppif` uses explicit `(profile apb)` with one
+`(apb-completer apb_completer ...)` object, lowers through generated
+`apb_completer.isf` before generated `apb_completer.fsm`, emits report schema
+`fsmgen.ial2.protocol_intent.apb_completer.v1`, and support-accounts
+`intent.ppif_apb_completer`. The bounded subset covers setup detection
+`PSEL && !PENABLE`, runtime `wait_cycles`, address-0 register read/write, and
+unmapped-address `PSLVERR`. `.apb` remains requester-transfer only; APB
+interconnect/composition, completer `.apb` alias exposure, sidebands,
+alternate widths, multi-register decode, back-to-back policy, direct backend
+lowering, verification-output generation, backend-language variants, AXI
+behavior, and VHDL remain deferred.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

@@ -3143,6 +3143,18 @@ sample/support change.
 guard text for sample enables and entry transitions while preserving the
 structured expression AST for internal analysis. Scalar entry guards, existing
 when-body behavior, and runtime-wait behavior remain covered by focused tests.
+`.562` now ships the first generated APB `.ppif` completer behavior. The
+sample `ppif/apb_completer.ppif` uses explicit `(profile apb)` with one
+`(apb-completer apb_completer ...)` object, lowers through generated
+`apb_completer.isf` before generated `apb_completer.fsm`, emits report schema
+`fsmgen.ial2.protocol_intent.apb_completer.v1`, and support-accounts
+`intent.ppif_apb_completer`. The bounded subset covers setup detection
+`PSEL && !PENABLE`, runtime `wait_cycles`, address-0 register read/write, and
+unmapped-address `PSLVERR`. `.apb` remains requester-transfer only; APB
+interconnect/composition, completer `.apb` alias exposure, sidebands,
+alternate widths, multi-register decode, back-to-back policy, direct backend
+lowering, verification-output generation, backend-language variants, AXI
+behavior, and VHDL remain deferred.
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
 `.562` without adding APB behavior in `.561`.
@@ -5648,6 +5660,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_APB_SOURCE_SHAPE_READINESS_AUDIT.md` — audits APB lower-layer evidence and selects APB `.ppif` source-shape public contract selection before any APB behavior or `.apb` suffix support.
 - `docs/IAL2_APB_PPIF_SOURCE_SHAPE_CONTRACT_SELECTION.md` — selects `(profile apb)`, the first `(apb-requester ...)` source shape, `ppif/apb_requester_transfer.ppif`, `intent.ppif_apb_requester_transfer`, and direct implementation as the next exact owner.
 - `docs/IAL2_APB_PPIF_REQUESTER_TRANSFER_BEHAVIOR.md` — ships the first APB `.ppif` requester-transfer behavior with `ppif/apb_requester_transfer.ppif`, generated `apb_requester.isf`/`apb_requester.fsm`, and report schema `fsmgen.ial2.protocol_intent.apb_requester_transfer.v1`; the later `.apb` alias is documented separately.
+- `docs/IAL2_APB_PPIF_COMPLETER_BEHAVIOR.md` — ships the first APB `.ppif` completer behavior with `ppif/apb_completer.ppif`, generated `apb_completer.isf`/`apb_completer.fsm`, report schema `fsmgen.ial2.protocol_intent.apb_completer.v1`, address-0 register read/write, runtime `wait_cycles`, and unmapped-address `PSLVERR`.
 - `docs/IAL2_POST_APB_REQUESTER_TRANSFER_NEXT_SLICE_SELECTION.md` — selects APB `.apb` profile-alias readiness audit after APB `.ppif` requester-transfer behavior, without accepting `.apb` or changing behavior.
 - `docs/IAL2_APB_PROFILE_ALIAS_READINESS_AUDIT.md` — audits APB `.apb` profile-alias readiness and selects public `.apb` contract selection while keeping `.apb` unsupported at `.552` closeout.
 - `docs/IAL2_APB_PROFILE_ALIAS_CONTRACT_SELECTION.md` — selects direct bounded implementation of the first APB `.apb` profile alias at `ppif/apb_requester_transfer.apb`, with explicit `(profile apb)` and generated `.isf` review preservation.

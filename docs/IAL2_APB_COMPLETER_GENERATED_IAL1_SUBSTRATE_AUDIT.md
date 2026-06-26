@@ -27,6 +27,11 @@ guards and sample enables carry valid expression syntax, add focused coverage,
 and preserve scalar entry guard behavior. `.561` must not implement APB
 completer `.ppif` behavior.
 
+Later status: `.561` repaired the expression entry-guard prerequisite and
+`.562` shipped the selected APB completer `.ppif` behavior. The generated
+IAL1 path keeps no public APB `done` port by using internal storage
+`apb_complete_done_q` as the transaction terminal completion pulse target.
+
 No parser behavior, generator behavior, samples, support-accounting catalog,
 validation behavior, generated tracked artifacts, tests, schedule/check/
 semantic JSON behavior, HDL/runtime behavior, suffix acceptance, direct
@@ -124,9 +129,13 @@ violate the selected APB contract and repository doctrine.
 
 ## Implementation Boundary After `.561`
 
-After `.561` repairs expression entry guard rendering, a later APB completer
-implementation owner may use this audit as readiness evidence but still needs
-its own behavior task-tree leaf. That future behavior owner must add, in one
+This boundary is historical for `.560` closeout. `.562` later implemented the
+listed behavior items for the bounded APB `.ppif` completer path while leaving
+interconnect/composition and `.apb` completer exposure deferred.
+
+After `.561` repaired expression entry guard rendering, the APB completer
+implementation owner could use this audit as readiness evidence but still
+needed its own behavior task-tree leaf. That behavior owner had to add, in one
 owned slice or a further split if needed:
 
 - PPIF parser support for exactly one `(apb-completer ...)` object under

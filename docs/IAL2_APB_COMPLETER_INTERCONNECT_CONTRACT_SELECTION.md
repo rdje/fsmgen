@@ -21,6 +21,13 @@ whether the selected APB completer contract can lower through generated `.isf`
 before `.fsm` without bypassing the reviewable IAL1 boundary. It must not
 implement parser or generator behavior.
 
+Later status: `.562` implemented this selected APB completer `.ppif` contract
+at `ppif/apb_completer.ppif`, with generated `apb_completer.isf` before
+generated `apb_completer.fsm`, report schema
+`fsmgen.ial2.protocol_intent.apb_completer.v1`, and support identity
+`intent.ppif_apb_completer`. APB interconnect/composition and APB completer
+`.apb` alias exposure remain later owners.
+
 No parser behavior, generator behavior, samples, support-accounting catalog,
 validation behavior, generated artifacts, tests, schedule/check/semantic JSON,
 HDL/runtime behavior, suffix acceptance, direct backend lowering,

@@ -2895,6 +2895,11 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
     );
     like(
         $file_surface_by_suffix{'.ppif'}{current_boundary},
+        qr/APB completer source/,
+        'manifest advertises the APB completer PPIF source',
+    );
+    like(
+        $file_surface_by_suffix{'.ppif'}{current_boundary},
         qr/AXI is the first shipped IAL2 profile\/example, not the definition of IAL2/,
         'manifest states AXI is the first shipped IAL2 profile, not the IAL2 definition',
     );
@@ -3086,6 +3091,11 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
         $file_surface_by_suffix{'.apb'}{current_boundary},
         qr/lower through generated apb_requester\.isf before generated apb_requester\.fsm/,
         'manifest records generated APB review artifacts for .apb',
+    );
+    like(
+        $file_surface_by_suffix{'.apb'}{current_boundary},
+        qr/APB completer generation is shipped through generic \.ppif/,
+        'manifest keeps APB completer behavior on .ppif rather than .apb',
     );
     like(
         $file_surface_by_suffix{'.apb'}{current_boundary},

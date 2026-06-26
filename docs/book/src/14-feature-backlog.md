@@ -9665,10 +9665,12 @@ and semantic JSON, and support-accounts
 ```
 
 Remaining unsupported aliases are `.chi`, `.ace`, `.ahb`, `.atb`, `.smbus`,
-`.i2s`, `.pif`, and `.ppi`. APB completer/interconnect generation, sidebands,
-alternate widths, multi-peripheral decode, back-to-back policy, implicit
-profile inference, direct backend lowering, verification-output generation,
-backend-language variants, and VHDL remain deferred.
+`.i2s`, `.pif`, and `.ppi`. APB completer generation is now shipped through
+generic `.ppif`; APB completer `.apb` alias exposure, APB interconnect/
+composition generation, sidebands, alternate widths, multi-peripheral decode,
+back-to-back policy, implicit profile inference, direct backend lowering,
+verification-output generation, backend-language variants, and VHDL remain
+deferred.
 
 Post APB profile-alias selector:
 [IAL2_POST_APB_PROFILE_ALIAS_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_PROFILE_ALIAS_NEXT_SLICE_SELECTION.md)
@@ -9735,6 +9737,33 @@ transitions. The APB-shaped `PSEL && !PENABLE` setup detector now lowers
 through IAL1 without `ARRAY(...)` guard suffixes. Direct APB `.ppif`
 completer parser/generator/sample/support behavior remains deferred to the
 next task-tree owner.
+
+APB `.ppif` completer behavior:
+[IAL2_APB_PPIF_COMPLETER_BEHAVIOR](../../IAL2_APB_PPIF_COMPLETER_BEHAVIOR.md)
+ships `.562`, the first generated APB completer source under the generic
+`.ppif` IAL2 container. The sample `ppif/apb_completer.ppif` uses explicit
+`(profile apb)` with one `(apb-completer apb_completer ...)` object, emits
+report schema `fsmgen.ial2.protocol_intent.apb_completer.v1`, materializes
+`apb_completer.isf` before `apb_completer.fsm`, reaches HDL module
+`apb_completer`, and support-accounts `intent.ppif_apb_completer`.
+
+```bash
+./bin/fsmgen --emit-schedule-json ppif/apb_completer.ppif
+./bin/fsmgen --strict --check --json ppif/apb_completer.ppif
+./bin/fsmgen --strict --emit-semantic-json ppif/apb_completer.ppif
+./bin/fsmgen --quiet --outdir /tmp/fsmgen-apb-completer \
+  --output /tmp/fsmgen-apb-completer/apb_completer.sv \
+  ppif/apb_completer.ppif
+```
+
+The bounded subset covers setup detection `PSEL && !PENABLE`, runtime
+`wait_cycles`, one address-0 32-bit register, mapped read/write behavior, and
+`PSLVERR` for unmapped addresses. The generated IAL1 uses an internal
+`apb_complete_done_q` terminal bit rather than adding a public APB `done` port.
+`.apb` remains requester-transfer only. APB interconnect/composition,
+completer `.apb` alias exposure, sidebands, alternate widths, multi-register
+decode, back-to-back policy, direct backend lowering, verification-output
+generation, backend-language variants, AXI behavior, and VHDL remain deferred.
 
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
