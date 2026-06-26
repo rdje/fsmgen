@@ -9678,6 +9678,14 @@ behavior/fact wording stop listing `.apb` as unsupported after `.554`, while
 preserving historical pre-`.554` closeout wording and keeping `.chi`, `.ace`,
 `.ahb`, `.atb`, `.smbus`, `.i2s`, `.pif`, and `.ppi` unsupported.
 
+Post APB profile-alias public-surface sync:
+[IAL2_POST_APB_PROFILE_ALIAS_PUBLIC_SURFACE_SYNC](../../IAL2_POST_APB_PROFILE_ALIAS_PUBLIC_SURFACE_SYNC.md)
+completes that sync. Current profile-alias surfaces list `.axi` and `.apb` as
+shipped bounded aliases, keep `.chi`, `.ace`, `.ahb`, `.atb`, `.smbus`,
+`.i2s`, `.pif`, and `.ppi` unsupported, and preserve pre-`.554`
+`.apb`-unsupported wording only as dated history. No behavior changes in
+`.556`; it selects `.557`, the next exact IAL2 owner selector after the sync.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

@@ -4098,6 +4098,11 @@ profile-alias support shipped. The next owner must make current `.axi`
 behavior/fact wording stop listing `.apb` as unsupported after `.554`, while
 preserving historical pre-`.554` closeout wording and keeping `.chi`, `.ace`,
 `.ahb`, `.atb`, `.smbus`, `.i2s`, `.pif`, and `.ppi` unsupported.
+`.556` now completes that public-surface sync. Current profile-alias surfaces
+list `.axi` and `.apb` as shipped bounded aliases, keep `.chi`, `.ace`,
+`.ahb`, `.atb`, `.smbus`, `.i2s`, `.pif`, and `.ppi` unsupported, and
+preserve pre-`.554` `.apb`-unsupported wording only as dated history. `.556`
+selects `.557`, the next exact IAL2 owner selector after the sync.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
