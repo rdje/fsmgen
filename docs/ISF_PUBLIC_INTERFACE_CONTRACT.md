@@ -68,12 +68,13 @@ mixed read burst-last queue completion. Broader mixed issue-order queue
 cardinality, scoreboards, group-local simultaneous enqueue widening, packed
 burst-vector outputs, alternate full burst payload assembly, aliases, platform
 clauses, full AXI manager behavior, direct backend lowering,
-backend-language variants, and VHDL remain deferred. Verification-output
-generation also remains unimplemented, but its first public surface has been
-selected for a later owner as `--emit-verification-output uvm-passive-monitor
---verification-outdir DIR source.isf`, emitting an inert UVM monitor skeleton
-package plus `verification-output-manifest.json` only after
-`IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.8` implements it.
+backend-language variants, and VHDL remain deferred. The first explicit
+verification-output surface now ships as `--emit-verification-output
+uvm-passive-monitor --verification-outdir DIR source.isf`, emitting an inert
+UVM monitor skeleton package plus `verification-output-manifest.json` for
+`.isf` sources with passive `verification_observations[]`. That surface is
+separate from schedule/check/semantic JSON and does not claim UVM compile
+support.
 
 Machine-readable discovery lives in
 [perl/FSM/Support/ISFPublicInterfaceContract.pm](../perl/FSM/Support/ISFPublicInterfaceContract.pm)
@@ -3332,9 +3333,15 @@ default-domain clock, `reset` is the same reset summary shape used by the
 top-level report, and `signals` is the source-ordered public actor interface
 signal list. Each signal entry reports `name`, `direction`, and resolved
 scalar `width`. Observation metadata is informational report metadata only; it
-does not add scheduler, generated `.fsm`, generated-top, HDL, UVM, VHDL,
-scoreboard, coverage, or VIP runtime behavior. The machine-readable contract
-advertises these through
+does not add scheduler, generated `.fsm`, generated-top, HDL, VHDL,
+scoreboard, coverage, or VIP runtime behavior, and schedule-report consumers
+must not infer generated artifacts from it. The explicit verification-output
+mode `--emit-verification-output uvm-passive-monitor --verification-outdir DIR`
+is the only shipped mode that consumes this metadata to emit an inert UVM
+passive-monitor skeleton plus `verification-output-manifest.json`; it is not
+part of the schedule-report schema and does not claim UVM compile support. The
+machine-readable schedule-report contract advertises these metadata keys
+through
 `schedule_report_verification_observation_keys`,
 `schedule_report_verification_observation_signal_keys`, and
 `schedule_report_verification_observation_role_values`; the only shipped role

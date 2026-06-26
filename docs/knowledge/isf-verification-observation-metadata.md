@@ -39,9 +39,13 @@ Each observation entry reports `name`, `role`, inherited `clock`, `reset`, and
 `signals`; each signal entry reports `name`, `direction`, and resolved scalar
 `width`.
 
-The feature is report-only. It does not generate scheduled `.fsm` carriers,
-HDL, UVM, VHDL, scoreboards, coverage, reusable VIP, or public verification
-output artifacts.
+The schedule-report feature is report-only. It does not generate scheduled
+`.fsm` carriers, HDL, VHDL, scoreboards, coverage, reusable VIP, or public
+verification output artifacts by itself. The separate explicit command
+`--emit-verification-output uvm-passive-monitor --verification-outdir DIR`
+now consumes this metadata to emit the first inert UVM passive-monitor
+skeleton package plus `verification-output-manifest.json`, without changing
+the schedule/check/semantic JSON surfaces or claiming UVM compile support.
 
 The supported-smoke fixture is
 `isf/verification_observation_metadata.isf`; focused coverage lives in

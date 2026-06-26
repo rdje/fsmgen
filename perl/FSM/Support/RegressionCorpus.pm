@@ -1627,6 +1627,17 @@ my @REGRESSION_CORPUS = (
         expected_semantic_source_root_kind => 'fsm',
     },
     {
+        id => 'feature.isf_verification_observation_uvm_passive_monitor_skeleton',
+        relpath => 'isf/verification_observation_metadata.isf',
+        family => 'language_feature_fixture',
+        classification => 'supported_smoke',
+        coverage => 'isf_verification_output_uvm_passive_monitor_skeleton_cli',
+        source_kind => 'isf',
+        strict_supported => 1,
+        expected_module_name => 'verification_observation_metadata',
+        expected_semantic_source_root_kind => 'fsm',
+    },
+    {
         id => 'feature.isf_storage_field_metadata',
         relpath => 'isf/storage_fields.isf',
         family => 'language_feature_fixture',

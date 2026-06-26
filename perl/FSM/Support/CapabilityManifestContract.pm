@@ -33,6 +33,9 @@ use FSM::Support::SemanticIntrospectionContract qw(
 use FSM::Support::SupportAccountingContract qw(
     support_accounting_contract_source
 );
+use FSM::Support::VerificationOutputsContract qw(
+    verification_outputs_contract_source
+);
 
 our @EXPORT_OK = qw(
     build_capability_manifest_contract
@@ -50,6 +53,7 @@ our @EXPORT_OK = qw(
     capability_manifest_semantic_exports_keys
     capability_manifest_semantic_introspection_keys
     capability_manifest_support_accounting_keys
+    capability_manifest_verification_outputs_keys
 );
 
 sub capability_manifest_contract_source {
@@ -83,6 +87,7 @@ sub build_capability_manifest_contract {
         backend_validation_presence_keys => capability_manifest_backend_validation_keys(),
         embedding_presence_keys => capability_manifest_embedding_keys(),
         language_surface_presence_keys => capability_manifest_language_surface_keys(),
+        verification_outputs_presence_keys => capability_manifest_verification_outputs_keys(),
         documentation_presence_keys => capability_manifest_documentation_keys(),
         full_manifest_json_safe => JSON::PP::true,
         nested_section_contracts_advertised => JSON::PP::true,
@@ -107,6 +112,7 @@ sub capability_manifest_top_level_contract_source_map {
         backend_validation => backend_validation_contract_source(),
         embedding => embedding_contract_source(),
         language_surface => language_surface_contract_source(),
+        verification_outputs => verification_outputs_contract_source(),
         documentation => documentation_contract_source(),
     };
 }
@@ -121,6 +127,7 @@ sub capability_manifest_top_level_section_presence_key_map {
         backend_validation => capability_manifest_backend_validation_keys(),
         embedding => capability_manifest_embedding_keys(),
         language_surface => capability_manifest_language_surface_keys(),
+        verification_outputs => capability_manifest_verification_outputs_keys(),
         documentation => capability_manifest_documentation_keys(),
     };
 }
@@ -135,6 +142,7 @@ sub capability_manifest_presence_key_family_map {
         backend_validation_presence_keys => capability_manifest_backend_validation_keys(),
         embedding_presence_keys => capability_manifest_embedding_keys(),
         language_surface_presence_keys => capability_manifest_language_surface_keys(),
+        verification_outputs_presence_keys => capability_manifest_verification_outputs_keys(),
         documentation_presence_keys => capability_manifest_documentation_keys(),
     };
 }
@@ -151,6 +159,7 @@ sub capability_manifest_public_top_level_keys {
             backend_validation
             embedding
             language_surface
+            verification_outputs
             documentation
             manifest_contract
         ),
@@ -291,6 +300,31 @@ sub capability_manifest_language_surface_keys {
             composition
             intentionally_blocked_or_not_yet_public
             surface_contract
+        ),
+    ];
+}
+
+sub capability_manifest_verification_outputs_keys {
+    return [
+        qw(
+            schema_version
+            status
+            contract_source
+            report_source
+            entrypoints
+            public_top_level_presence_keys
+            target_entry_keys
+            artifact_manifest_keys
+            artifact_entry_keys
+            observation_entry_keys
+            signal_entry_keys
+            source_keys
+            validation_keys
+            presence_key_family_map
+            targets
+            artifact_manifest
+            validation
+            section_contract
         ),
     ];
 }

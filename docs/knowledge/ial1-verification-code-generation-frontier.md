@@ -32,15 +32,18 @@ passive UVM monitor skeleton package as the first SV/UVM output target.
 Frontier `.7` selected the public CLI, artifact layout, report/manifest shape,
 support-accounting identity, and validation gates:
 `--emit-verification-output uvm-passive-monitor --verification-outdir DIR
-source.isf`. Generated verification code remains deferred until `.8`
-implements that selected surface.
+source.isf`. Frontier `.8` implements that first bounded inert UVM
+passive-monitor skeleton output and advertises it through the capability
+manifest without claiming UVM compile support.
 
 Future target families are explicitly tracked, not implied: SV/UVM agents,
 monitors, scoreboards, protocol checkers, coverage, reusable verification IP,
 and VHDL-oriented verification artifacts each require contract-selection
 owners before implementation.
 
-Direct IAL2-to-verification generation remains an audit question. It may later
-be selected as a direct route, as an IAL2-to-IAL1 verification annotation
-handoff, or as unnecessary for the first implementation. No implementation may
-assume that answer before the audit completes.
+The next eligible verification-code-generation leaf is `.5`, selecting the
+first VHDL-oriented verification output contract. Direct IAL2-to-verification
+generation remains an audit question. It may later be selected as a direct
+route, as an IAL2-to-IAL1 verification annotation handoff, or as unnecessary
+for the first implementation. No implementation may assume that answer before
+the audit completes.

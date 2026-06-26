@@ -4202,14 +4202,16 @@ generate coverage, or emit reusable VIP behavior. Public CLI, artifact layout,
 report/manifest shape, support-accounting identity, and validation gates now
 have their own selector:
 [IAL1_VERIFICATION_OUTPUT_PUBLIC_SURFACE_CONTRACT_SELECTION](../../IAL1_VERIFICATION_OUTPUT_PUBLIC_SURFACE_CONTRACT_SELECTION.md).
-It chooses the future command `--emit-verification-output
+It chose the command `--emit-verification-output
 uvm-passive-monitor --verification-outdir DIR source.isf`, with artifacts at
 `DIR/uvm/<actor>_observation_uvm_pkg.sv` and
-`DIR/verification-output-manifest.json`. Implementation belongs to
-`IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.8` before any SV/UVM files are
-emitted. VHDL-oriented verification, direct IAL2-to-verification routing,
-scoreboard behavior, coverage behavior, and reusable VIP behavior remain
-deferred behind later selector leaves.
+`DIR/verification-output-manifest.json`. Implementation
+`IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.8` now ships that bounded inert
+UVM passive-monitor skeleton output for `.isf` sources with passive
+`verification_observations[]`. The output is reviewable source plus a manifest;
+FSMGen still does not claim UVM compile support. VHDL-oriented verification,
+direct IAL2-to-verification routing, scoreboard behavior, coverage behavior,
+and reusable VIP behavior remain deferred behind later selector leaves.
 
 Read-data interleaving queue readiness audit:
 [AXI_IAL2_MANAGER_READ_DATA_INTERLEAVING_QUEUE_READINESS_AUDIT](../../AXI_IAL2_MANAGER_READ_DATA_INTERLEAVING_QUEUE_READINESS_AUDIT.md)

@@ -4772,13 +4772,15 @@ it must not sample a DUT interface, publish transactions, infer events, build
 an agent, generate a scoreboard, generate coverage, or emit reusable VIP
 behavior. Public CLI, artifact layout, report/manifest shape,
 support-accounting identity, and validation gates were selected by
-`IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.7`: the future public command is
+`IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.7`: the public command is
 `--emit-verification-output uvm-passive-monitor --verification-outdir DIR
 source.isf`, with artifacts under `DIR/uvm/` and
-`DIR/verification-output-manifest.json`. `.8` owns implementation before any
-SV/UVM files are emitted. VHDL-oriented verification artifacts each require
-separate contract-selection owners. Direct IAL2-to-verification generation
-remains an explicit audit question, not an implementation assumption.
+`DIR/verification-output-manifest.json`. `.8` implements that first bounded
+inert UVM passive-monitor skeleton output and advertises it through the
+capability manifest without claiming UVM compile support. VHDL-oriented
+verification artifacts each require separate contract-selection owners. Direct
+IAL2-to-verification generation remains an explicit audit question, not an
+implementation assumption.
 Packed burst outputs, concrete same-ID queue variants beyond the shipped
 read burst-last, write, and read single-beat depth-2 queue-head boundaries,
 per-ID queues, queued policy, profile

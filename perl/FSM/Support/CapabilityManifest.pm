@@ -14,6 +14,7 @@ use FSM::Support::ProducerSection qw(build_producer_section);
 use FSM::Support::SemanticExportsSection qw(build_semantic_exports_section);
 use FSM::Support::SemanticIntrospectionSection qw(build_semantic_introspection_section);
 use FSM::Support::SupportAccountingSection qw(build_support_accounting_section);
+use FSM::Support::VerificationOutputsSection qw(build_verification_outputs_section);
 
 our @EXPORT_OK = qw(build_capability_manifest);
 
@@ -28,6 +29,7 @@ sub build_capability_manifest {
         backend_validation => build_backend_validation_section(),
         embedding => build_embedding_section(),
         language_surface => build_language_surface_section(),
+        verification_outputs => build_verification_outputs_section(),
         documentation => build_documentation_section(),
         manifest_contract => build_capability_manifest_contract(),
     };

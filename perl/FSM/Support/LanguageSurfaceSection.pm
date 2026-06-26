@@ -56,6 +56,7 @@ sub build_language_surface_section {
                     supported_cli_modes => [
                         'default HDL generation',
                         '--outdir',
+                        '--emit-verification-output uvm-passive-monitor --verification-outdir',
                         '--emit-schedule-json',
                         '--check --json / --check-json',
                         '--emit-semantic-json',

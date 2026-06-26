@@ -29,6 +29,7 @@ skeleton package as the first SV/UVM output target. SV/UVM emission, VHDL
 output, direct IAL2 routing, and public CLI/artifact contracts stay behind
 later owners. `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.7` selected the
 public verification-output command and artifact/manifest contract for the
-passive UVM monitor skeleton; the next frontier leaf is
-`IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.8`, which implements that selected
-surface.
+passive UVM monitor skeleton; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.8`
+implements that selected first output surface without claiming UVM compile
+support. The next frontier leaf is `.5`, selecting the first VHDL-oriented
+verification output contract.

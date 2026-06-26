@@ -33,6 +33,7 @@ my %allowed_coverages = map { $_ => 1 } qw(
     direct_root_pipeline_cli
     composition_top_pipeline_cli
     isf_pipeline_cli
+    isf_verification_output_uvm_passive_monitor_skeleton_cli
     ial2_ppif_pipeline_cli
     ial2_ppif_bundle_pipeline_cli
     ial2_ppif_manager_capacity_status_pipeline_cli
@@ -209,6 +210,7 @@ my %coverage_classification = (
     direct_root_pipeline_cli => 'supported_smoke',
     composition_top_pipeline_cli => 'supported_smoke',
     isf_pipeline_cli => 'supported_smoke',
+    isf_verification_output_uvm_passive_monitor_skeleton_cli => 'supported_smoke',
     ial2_ppif_pipeline_cli => 'supported_smoke',
     ial2_ppif_bundle_pipeline_cli => 'supported_smoke',
     ial2_ppif_manager_capacity_status_pipeline_cli => 'supported_smoke',
@@ -509,6 +511,7 @@ for my $required_id (qw(
     intent.ppif_axi_manager_capacity_status_read_data_burst_length_runtime_assertion
     intent.ppif_axi_manager_capacity_status_read_data_multi_beat
     feature.isf_verification_observation_metadata
+    feature.isf_verification_observation_uvm_passive_monitor_skeleton
     feature.isf_storage_field_metadata
     feature.partial_lhs_with_size
     feature.partial_lhs_inferred_width
@@ -849,8 +852,8 @@ for my $entry (@entries) {
 
 is(
     scalar(grep { $_->{classification} eq 'supported_smoke' } @entries),
-    185,
-    'catalog now keeps one hundred eighty-five named supported-smoke entries including direct, composition, ISF, and PPIF fixtures',
+    186,
+    'catalog now keeps one hundred eighty-six named supported-smoke entries including direct, composition, ISF, PPIF, and verification-output fixtures',
 );
 is(
     scalar(grep { $_->{classification} eq 'legacy_out_of_scope' } @entries),
@@ -864,8 +867,8 @@ is(
 );
 is(
     scalar(grep { $_->{strict_supported} } @entries),
-    185,
-    'catalog now records one hundred eighty-five positive strict-mode supported-smoke acceptance entries',
+    186,
+    'catalog now records one hundred eighty-six positive strict-mode supported-smoke acceptance entries',
 );
 for my $strict_supported_id (qw(
     protocol.apb_requester
@@ -1008,6 +1011,7 @@ for my $strict_supported_id (qw(
     intent.ppif_axi_manager_capacity_status_read_data_burst_length_runtime_assertion
     intent.ppif_axi_manager_capacity_status_read_data_multi_beat
     feature.isf_verification_observation_metadata
+    feature.isf_verification_observation_uvm_passive_monitor_skeleton
     feature.isf_storage_field_metadata
     feature.partial_lhs_with_size
     feature.partial_lhs_inferred_width

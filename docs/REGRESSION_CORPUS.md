@@ -47,6 +47,9 @@ or claim `expected_failure` while using a default-compatible coverage bucket.
 - `composition_top_pipeline_cli`: the entry must compile through both the
   pipeline API and the CLI as a composition top, including its realized child
   path.
+- `isf_verification_output_uvm_passive_monitor_skeleton_cli`: the entry covers
+  the explicit `.isf` verification-output CLI path that emits the inert UVM
+  passive-monitor skeleton package plus `verification-output-manifest.json`.
 - `legacy_root_default_pipeline_cli`: the entry is retained as a compatibility
   asset and must still compile through both the pipeline API and the CLI in
   default mode.
@@ -726,6 +729,7 @@ manifest output while keeping the exact file lists widenable.
 | `intent.ppif_axi_manager_capacity_status_read_data_burst_length_runtime_assertion` | [ppif/axi_manager_capacity_status_read_data_burst_length_runtime_assertion.ppif](ppif/axi_manager_capacity_status_read_data_burst_length_runtime_assertion.ppif) | `supported_smoke` | `ial2_ppif_manager_capacity_status_read_data_burst_length_runtime_assertion_pipeline_cli` |
 | `intent.ppif_axi_manager_capacity_status_read_data_multi_beat` | [ppif/axi_manager_capacity_status_read_data_multi_beat.ppif](ppif/axi_manager_capacity_status_read_data_multi_beat.ppif) | `supported_smoke` | `ial2_ppif_manager_capacity_status_read_data_multi_beat_pipeline_cli` |
 | `feature.isf_verification_observation_metadata` | [isf/verification_observation_metadata.isf](isf/verification_observation_metadata.isf) | `supported_smoke` | `isf_pipeline_cli` |
+| `feature.isf_verification_observation_uvm_passive_monitor_skeleton` | [isf/verification_observation_metadata.isf](isf/verification_observation_metadata.isf) | `supported_smoke` | `isf_verification_output_uvm_passive_monitor_skeleton_cli` |
 | `feature.isf_storage_field_metadata` | [isf/storage_fields.isf](isf/storage_fields.isf) | `supported_smoke` | `isf_pipeline_cli` |
 | `feature.partial_lhs_with_size` | [t/corpus/partial_lhs_with_size.fsm](t/corpus/partial_lhs_with_size.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
 | `feature.partial_lhs_inferred_width` | [t/corpus/partial_lhs_inferred_width.fsm](t/corpus/partial_lhs_inferred_width.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
@@ -963,6 +967,13 @@ manifest output while keeping the exact file lists widenable.
   `feature.isf_storage_field_metadata` entries cover public `.isf`
   language-feature fixtures through the same support-accounted pipeline,
   check JSON, and normalized semantic JSON paths as other supported fixtures.
+  The
+  `feature.isf_verification_observation_uvm_passive_monitor_skeleton` entry is
+  separately locked by
+  [t/1464-isf-verification-output-uvm-passive-monitor.t](t/1464-isf-verification-output-uvm-passive-monitor.t),
+  which checks the explicit verification-output CLI, emitted package path,
+  artifact manifest, selected class/field shape, and absence of deferred UVM
+  behavior.
   The field metadata fixture keeps the field map itself on the schedule JSON
   `inferred_storage[].fields` payload. The
   `feature.declarative_bits_symbol_widths` entry proves that direct-root

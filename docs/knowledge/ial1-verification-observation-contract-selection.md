@@ -27,6 +27,9 @@ Implementation shipped in `ISF-VERIFICATION-OBSERVATION-METADATA.1`.
 `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` then selected a bounded passive
 UVM monitor skeleton package as the first SV/UVM output target derived from
 `verification_observations[]`. `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.7`
-then selected the public verification-output surface for that skeleton, but
-generated SV/UVM files remain disabled until
-`IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.8` implements it.
+then selected the public verification-output surface for that skeleton, and
+`IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.8` now implements the explicit
+`--emit-verification-output uvm-passive-monitor --verification-outdir DIR`
+mode for `.isf` sources with passive observations. The observation metadata
+itself remains schedule-report metadata; generated artifacts require the
+explicit verification-output command.

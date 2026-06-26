@@ -334,6 +334,11 @@ use FSM::Support::SupportAccountingContract qw(
     support_accounting_contract_source
     support_accounting_presence_key_family_map
 );
+use FSM::Support::VerificationOutputsContract qw(
+    verification_outputs_contract_source
+    verification_outputs_presence_key_family_map
+    verification_outputs_target_entry_keys
+);
 
 my @entries = regression_corpus_entries();
 my @diagnostic_codes = diagnostic_code_ids();
@@ -2768,6 +2773,36 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
         scalar(@{$manifest->{manifest_contract}{documentation_presence_keys} || []}) >= 3,
         'manifest advertises bounded documentation section key presence',
     );
+    is(
+        $manifest->{verification_outputs}{schema_version},
+        1,
+        'manifest records verification-output schema version',
+    );
+    is(
+        $manifest->{verification_outputs}{status},
+        'bounded_public',
+        'manifest marks verification outputs as bounded public',
+    );
+    is(
+        $manifest->{verification_outputs}{contract_source},
+        verification_outputs_contract_source(),
+        'manifest records the verification-output contract owner',
+    );
+    is(
+        $manifest->{verification_outputs}{section_contract}{contract_source},
+        verification_outputs_contract_source(),
+        'manifest records the verification-output section contract owner',
+    );
+    is_deeply(
+        $manifest->{verification_outputs}{section_contract}{presence_key_family_map},
+        verification_outputs_presence_key_family_map(),
+        'manifest records the grouped verification-output key-family map',
+    );
+    is_deeply(
+        $manifest->{verification_outputs}{target_entry_keys},
+        verification_outputs_target_entry_keys(),
+        'manifest advertises bounded verification-output target entry keys',
+    );
 };
 
 subtest 'manifest captures the first downstream tool contract surface' => sub {
@@ -2799,6 +2834,11 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
         'manifest states direct IAL2-to-IAL0 lowering is not allowed',
     );
     my %file_surface_by_suffix = map { $_->{suffix} => $_ } @{$manifest->{language_surface}{file_surfaces}{entries}};
+    my %isf_cli_modes = map { $_ => 1 } @{$file_surface_by_suffix{'.isf'}{supported_cli_modes} || []};
+    ok(
+        $isf_cli_modes{'--emit-verification-output uvm-passive-monitor --verification-outdir'},
+        'manifest records .isf verification-output CLI mode',
+    );
     is($file_surface_by_suffix{'.ppif'}{intent_layer}, 'IAL2', 'manifest marks .ppif as IAL2');
     is(
         $file_surface_by_suffix{'.ppif'}{status},
@@ -2819,6 +2859,10 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
     ok($ppif_cli_modes{'--emit-schedule-json'}, 'manifest records .ppif schedule-report CLI mode');
     ok($ppif_cli_modes{'--emit-semantic-json'}, 'manifest records .ppif semantic JSON CLI mode');
     ok($ppif_cli_modes{'--check --json / --check-json'}, 'manifest records .ppif check JSON CLI mode');
+    ok(
+        !$ppif_cli_modes{'--emit-verification-output uvm-passive-monitor --verification-outdir'},
+        'manifest does not advertise verification-output CLI mode for .ppif yet',
+    );
     is(
         $file_surface_by_suffix{'.ppif'}{sample_path},
         'ppif/axi_aw_valid_ready.ppif',
@@ -2833,6 +2877,26 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
         $file_surface_by_suffix{'.ppif'}{current_boundary},
         qr/read single-beat and read burst-last queue-head response-demux including multiple\/mixed depth-3 scalar, raw-ARLEN, runtime-validation, and multi-beat output-bank read-data groups/,
         'manifest advertises shipped queue-head scalar, raw-ARLEN, runtime-validation, and multi-beat read-data',
+    );
+    my ($uvm_target) = grep { $_->{id} eq 'uvm_passive_monitor_skeleton' }
+        @{$manifest->{verification_outputs}{targets} || []};
+    ok($uvm_target, 'manifest advertises the UVM passive-monitor skeleton target');
+    is($uvm_target->{cli_target}, 'uvm-passive-monitor', 'manifest records the verification-output CLI target');
+    is_deeply($uvm_target->{source_suffixes}, ['.isf'], 'manifest limits the first verification-output target to .isf');
+    ok($uvm_target->{requires_verification_observations}, 'manifest records the observation metadata prerequisite');
+    is(
+        $uvm_target->{artifact_relpath_pattern},
+        'uvm/<actor>_observation_uvm_pkg.sv',
+        'manifest records the UVM package artifact path pattern',
+    );
+    is(
+        $uvm_target->{manifest_relpath},
+        'verification-output-manifest.json',
+        'manifest records the verification-output artifact manifest path',
+    );
+    ok(
+        !$manifest->{verification_outputs}{validation}{claimed_uvm_compile_support},
+        'manifest does not claim UVM compile support for the skeleton target',
     );
     like(
         $file_surface_by_suffix{'.ppif'}{current_boundary},

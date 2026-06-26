@@ -3384,12 +3384,13 @@ Downstream consumers may read `verification_observations[]` to discover
 authored passive monitor intent, inherited clock/reset context, and
 source-ordered signal `name`/`direction`/`width` summaries. They must not infer
 generated `.fsm`, HDL, UVM, VHDL, scoreboard, coverage, or VIP artifacts from
-that metadata. The future first verification-output surface has now been
-selected as `--emit-verification-output uvm-passive-monitor
+that schedule metadata alone. Current releases also expose the first explicit
+verification-output surface as `--emit-verification-output uvm-passive-monitor
 --verification-outdir DIR source.isf`, with artifacts under `DIR/uvm/` and a
-`DIR/verification-output-manifest.json` manifest, but implementation remains
-owned by `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.8`; current releases do
-not emit verification output from this metadata yet.
+`DIR/verification-output-manifest.json` manifest. That explicit mode consumes
+passive `verification_observations[]` to emit an inert UVM passive-monitor
+skeleton; it does not widen the schedule/check/semantic JSON surfaces and does
+not claim UVM compile support.
 
 Golden fixture matrix:
 
