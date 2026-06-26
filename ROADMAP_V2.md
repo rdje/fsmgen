@@ -3881,6 +3881,11 @@ generality guardrail before more profile-specific implementation. AXI is the
 first shipped IAL2 profile/example, not the definition of IAL2. Common IAL2
 constructs remain protocol/platform-generic and AXI-specific vocabulary stays
 profile-local unless compatible reuse is proven across multiple profiles.
+`.526` now selects `.527`, public-surface cleanup for that IAL2
+protocol/platform generality guardrail. The audit found the architecture
+records correct and the remaining risk in downstream/public capability
+boundary wording: public `.ppif` surfaces should lead with AXI as the first
+shipped IAL2 profile/example, not the IAL2 definition.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

@@ -9353,6 +9353,14 @@ shipped IAL2 profile/example, not the definition of IAL2. Common IAL2
 constructs remain protocol/platform-generic and AXI-specific vocabulary stays
 profile-local unless compatible reuse is proven across multiple profiles.
 
+IAL2 protocol generality guardrail readiness audit:
+[IAL2_PROTOCOL_GENERALITY_GUARDRAIL_READINESS_AUDIT](../../IAL2_PROTOCOL_GENERALITY_GUARDRAIL_READINESS_AUDIT.md)
+selects `.527`, public-surface cleanup for the IAL2 protocol/platform
+generality guardrail. The audit found the architecture records correct and
+the remaining risk in downstream/public capability boundary wording: public
+`.ppif` surfaces should lead with AXI as the first shipped IAL2
+profile/example, not the IAL2 definition.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after
