@@ -3966,12 +3966,12 @@ profile-alias candidates over IAL2, but the shipped CLI still accepts only
 `.fsm`, `.isf`, and `.ppif` as source suffixes, the PPIF adapter requires a
 `.ppif` path, and the manifest unsupported-alias inventory must be aligned with
 the public boundary prose before any suffix behavior changes.
-`.538` now synchronizes that public inventory: the capability manifest keeps
-`.pif`, `.ppi`, `.axi`, `.chi`, `.ace`, `.ahb`, `.apb`, `.atb`, `.smbus`, and
-`.i2s` unsupported in the first IAL2 public file-surface slice. The shipped
-source suffixes remain `.fsm`, `.isf`, and `.ppif`; no profile-alias suffix is
-accepted. `.538` selects `.539`, public contract selection for the first IAL2
-profile-alias suffix.
+`.538` synchronized that pre-`.540` public inventory: at that point the
+capability manifest kept `.pif`, `.ppi`, `.axi`, `.chi`, `.ace`, `.ahb`,
+`.apb`, `.atb`, `.smbus`, and `.i2s` unsupported in the first IAL2 public
+file-surface slice. The shipped source suffixes were still `.fsm`, `.isf`, and
+`.ppif`; no profile-alias suffix was accepted until `.540`. `.538` selected
+`.539`, public contract selection for the first IAL2 profile-alias suffix.
 `.539` now selects `.540`, direct bounded implementation of `.axi` as the first
 IAL2 profile-alias suffix. The selected alias mirrors
 `ppif/axi_aw_valid_ready.ppif` at `ppif/axi_aw_valid_ready.axi`, requires an
@@ -4000,6 +4000,12 @@ post-`.axi` profile-alias chronology. The audit found code, manifest,
 support-accounting, and Knowledge Map routing current after `.540`/`.541`; the
 remaining prerequisite is to make pre-`.540` mdBook wording around `.537` and
 `.538` explicitly historical before selecting another behavior owner.
+`.543` now completes that public wording sync: README, ROADMAP_V2, and mdBook
+make the `.537`/`.538` profile-alias readiness and unsupported-inventory
+wording explicitly historical pre-`.540` state, while current `.axi` behavior
+and remaining unsupported aliases stay clear. AXI remains the first shipped
+profile-alias example, not the definition or full scope of IAL2. No behavior
+changed in `.543`.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

@@ -9468,21 +9468,22 @@ suffixes such as `.axi`, `.chi`, `.ace`, `.ahb`, `.apb`, `.atb`, `.smbus`, or
 behavior, support accounting, reports, source paths, and mandatory
 `IAL2 -> IAL1 -> IAL0` lowering.
 
-IAL2 profile-alias suffix readiness audit:
+Historical IAL2 profile-alias suffix readiness audit (pre-.540):
 [IAL2_PROFILE_ALIAS_SUFFIX_READINESS_AUDIT](../../IAL2_PROFILE_ALIAS_SUFFIX_READINESS_AUDIT.md)
 selects `.538`, public unsupported-alias inventory synchronization before any
-profile-alias suffix implementation. The audit keeps `.ppif` as the only
-shipped IAL2 suffix and records that future profile-alias candidates such as
+profile-alias suffix implementation. At that pre-`.540` point, `.ppif` was the
+only shipped IAL2 suffix and the audit recorded that future profile-alias
+candidates such as
 `.axi`, `.chi`, `.ace`, `.ahb`, `.apb`, `.atb`, `.smbus`, and `.i2s` remain
 aliases over IAL2, not separate layers or AXI-only scope.
 
-IAL2 profile-alias unsupported inventory sync:
+Historical IAL2 profile-alias unsupported inventory sync (pre-.540):
 [IAL2_PROFILE_ALIAS_UNSUPPORTED_INVENTORY_SYNC](../../IAL2_PROFILE_ALIAS_UNSUPPORTED_INVENTORY_SYNC.md)
-keeps `.pif`, `.ppi`, `.axi`, `.chi`, `.ace`, `.ahb`, `.apb`, `.atb`,
+kept `.pif`, `.ppi`, `.axi`, `.chi`, `.ace`, `.ahb`, `.apb`, `.atb`,
 `.smbus`, and `.i2s` listed as unsupported first-slice aliases in the
-capability manifest. Shipped source suffixes remain `.fsm`, `.isf`, and
-`.ppif`, and `.539` will select the public contract for the first IAL2
-profile-alias suffix before any implementation.
+capability manifest at `.538`. At that point, shipped source suffixes were
+`.fsm`, `.isf`, and `.ppif`, and `.539` selected the public contract for the
+first IAL2 profile-alias suffix before `.540` implemented `.axi`.
 
 IAL2 first profile-alias contract:
 [IAL2_FIRST_PROFILE_ALIAS_CONTRACT_SELECTION](../../IAL2_FIRST_PROFILE_ALIAS_CONTRACT_SELECTION.md)
@@ -9520,6 +9521,14 @@ selects `.543`, public-surface historical wording sync before another behavior
 owner. The code, manifest, support-accounting, and Knowledge Map routing are
 current after `.540`/`.541`; the remaining public prerequisite is to make
 pre-`.540` profile-alias chronology explicit in the book.
+
+IAL2 profile-alias public chronology sync:
+[IAL2_PROFILE_ALIAS_PUBLIC_CHRONOLOGY_SYNC](../../IAL2_PROFILE_ALIAS_PUBLIC_CHRONOLOGY_SYNC.md)
+marks the `.537` readiness audit and `.538` unsupported-inventory sync as
+historical pre-`.540` public state, then keeps current `.axi` behavior anchored
+to the `.540` bounded AXI AW Valid-Ready profile-alias sample. `.axi` is the
+first shipped profile-alias example over IAL2; it is not the definition or full
+scope of IAL2, and the other profile-alias candidates remain unsupported.
 
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
