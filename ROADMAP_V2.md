@@ -4032,6 +4032,13 @@ The next APB owner must audit whether existing APB lower-layer fixtures are
 enough for an APB `.ppif` source-shape contract, a lower-layer prerequisite, a
 report/support-accounting prerequisite, or deferral; it must not accept `.apb`
 or add APB `.ppif` behavior.
+`.548` now selects `.549`, APB `.ppif` source-shape public contract
+selection. The audit found enough lower-layer APB evidence in the ISF
+requester, requester/completer FSMs, composition top, mdBook examples, and
+support catalog to choose a public APB IAL2 source-shape contract. It does not
+select implementation: `.apb` remains unsupported, no APB `.ppif` sample is
+added, and APB report/support-accounting identity remains a contract-selection
+decision before behavior changes.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

@@ -9563,6 +9563,16 @@ spellings and selects `.548`, an APB IAL2 source-shape readiness audit. The
 next owner must audit the existing APB lower-layer fixtures before selecting
 any APB `.ppif` contract or `.apb` suffix behavior.
 
+IAL2 APB source-shape readiness audit:
+[IAL2_APB_SOURCE_SHAPE_READINESS_AUDIT](../../IAL2_APB_SOURCE_SHAPE_READINESS_AUDIT.md)
+selects `.549`, APB `.ppif` source-shape public contract selection. The audit
+finds enough APB lower-layer evidence in the shipped ISF requester,
+requester/completer FSMs, composition top, mdBook examples, and support
+catalog to select the public IAL2 source-shape contract before implementation.
+It does not accept `.apb`, add an APB `.ppif` sample, or change parser,
+generator, manifest, support-accounting, JSON, HDL, backend, AXI, or VHDL
+behavior.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

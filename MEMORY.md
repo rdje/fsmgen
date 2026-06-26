@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.547: select .pif/.ppi alias policy`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.548` is active after `.547`; audit APB IAL2 source-shape readiness without accepting `.apb` or adding APB `.ppif` behavior.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.547` kept `.pif`/`.ppi` explicitly unsupported historical generic-container spellings and selected `.548`, APB IAL2 source-shape readiness audit.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.548: audit APB source-shape readiness`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.549` is active after `.548`; select the public APB `.ppif` source-shape contract without accepting `.apb` or adding APB behavior.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.548` audited APB lower-layer evidence and selected APB `.ppif` source-shape public contract selection before behavior changes.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: The original exact `t/301` resource cliff is fixed for oversized PPIF check-json via `.2.3.1`, but a full guarded `t/301-check-json-supported-corpus.t` rerun stopped on host-memory cutoff from a high host baseline and a higher-cutoff retry was rejected by the approval layer. Do not bypass that rejection without explicit user approval; `.2.5` selected RAM-guarded or exact bounded replacement policy for any future broad `t/301`/`t/303` parity plan.
-- next_action: Start `.548` by reading `.547` selector, `.546` taxonomy, decisions `0015`/`0016`/`0017`, APB ISF/FSM fixtures, APB mdBook sections, current suffix/manifest/help surfaces, README, ROADMAP_V2, task tree, Memory, and Knowledge Map; then audit APB IAL2 source-shape readiness without behavior changes.
+- next_action: Start `.549` by reading `.548` audit, `.547` selector, `.546` taxonomy, decisions `0015`/`0016`/`0017`, APB ISF/FSM fixtures, APB mdBook sections, current PPIF parser/generator/report/support-accounting surfaces, suffix/manifest/help surfaces, README, ROADMAP_V2, task tree, Memory, and Knowledge Map; then select the APB `.ppif` source-shape public contract without behavior changes.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact
