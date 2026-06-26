@@ -28,5 +28,6 @@ portability status, and an implementation checklist.
 
 `.2.7` has since selected current typed extensions as Perl-reference only for
 backend portability. `.2.8` selected the same-repository Rust/Rust-Wasm
-portable API smoke experiment. The next active backend-portability slice is
-`.3.1`, the Rust contract-crate scaffold.
+portable API smoke experiment. The `.3.1` through `.3.3` slices then
+scaffolded the Rust contract crate, added one direct `.fsm` check smoke, and
+proved that result against the Perl oracle.

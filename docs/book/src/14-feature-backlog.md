@@ -2409,8 +2409,9 @@ sources fail closed with `E_PORTABLE_RUST_UNSUPPORTED_CHECK_SOURCE`, and
 non-check operations fail closed with
 `E_PORTABLE_RUST_UNIMPLEMENTED_OPERATION`. The crate is not wired into
 `bin/fsmgen`, Perl manifests, generated HDL, package installation, or shipped
-runtime behavior. The active `.3.3` leaf now owns the first Perl-oracle parity
-smoke for that result.
+runtime behavior. The `.3.3` leaf added the first Perl-oracle parity smoke for
+that result through a test-only Rust projection binary and a focused normalized
+comparison against the Perl check-JSON oracle.
 For SystemVerilog-to-Verilog portability, the default is FSMGen-owned
 generation/lowering rather than a mandatory external converter. Tools such as
 `sv2v` are future audit candidates only: they may become optional validation

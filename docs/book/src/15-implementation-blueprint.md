@@ -30,7 +30,7 @@ selector records, and regression corpus.
 | Semantic introspection and MCP | Chapter 11 and the semantic-introspection contract tests |
 | Parity harness | [BACKEND_LANGUAGE_PORTABLE_PARITY_HARNESS_SELECTION.md](../../BACKEND_LANGUAGE_PORTABLE_PARITY_HARNESS_SELECTION.md) |
 | Extension/plugin portability | [BACKEND_LANGUAGE_TYPED_EXTENSION_PORTABILITY_AUDIT.md](../../BACKEND_LANGUAGE_TYPED_EXTENSION_PORTABILITY_AUDIT.md) |
-| First implementation experiment | Same-repository Rust/Rust-Wasm portable API smoke; `.3.2` added one direct `.fsm` check smoke, and `.3.3` owns Perl-oracle parity for that result |
+| First implementation experiment | Same-repository Rust/Rust-Wasm portable API smoke; `.3.2` added one direct `.fsm` check smoke, and `.3.3` added Perl-oracle parity for that result |
 
 ## Source Layers
 
@@ -118,5 +118,7 @@ Other Rust check sources fail closed with
 `E_PORTABLE_RUST_UNSUPPORTED_CHECK_SOURCE`, and non-check operations fail
 closed with `E_PORTABLE_RUST_UNIMPLEMENTED_OPERATION`. It is not wired into the
 shipped Perl CLI, capability manifest, generated HDL, package install paths, or
-runtime behavior. The active `.3.3` slice owns Perl-oracle parity for that
-result.
+runtime behavior. The `.3.3` slice added a test-only Rust projection binary and
+`t/1467-rust-portable-api-check-parity.t`, which compares the one supported
+direct `.fsm` check result against the Perl oracle after normalized
+check-JSON field projection.

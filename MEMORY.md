@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.3.2: add Rust FSM check smoke`.
-- active_work_unit: `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.3.3` is active; add the first Perl-oracle parity smoke for the Rust check result.
-- recently_done: `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.3.2` added the first direct Rust `.fsm` check smoke for `feature.direct_sreset_active_high`. The crate returns a JSON-safe check result with no HDL emission and matched `supported_smoke` accounting for that exact fixture, fails other check sources with `E_PORTABLE_RUST_UNSUPPORTED_CHECK_SOURCE`, and leaves non-check operations fail-closed with `E_PORTABLE_RUST_UNIMPLEMENTED_OPERATION`.
+- latest_commit: `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.3.3: add Rust Perl parity smoke`.
+- active_work_unit: none selected after closing `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.3.3`; continue PNT from `docs/TASK_TREE.md` and create or select the next exact owner leaf before any new code change.
+- recently_done: `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.3.3` added the test-only Rust check projection binary plus `t/1467-rust-portable-api-check-parity.t`, comparing the one supported `feature.direct_sreset_active_high` direct `.fsm` check result against the Perl oracle after normalized check-JSON field projection. The shipped Perl CLI/runtime remains unchanged, and the current Rust/Rust-Wasm smoke experiment frontier is closed.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: The original exact `t/301` resource cliff is fixed for oversized PPIF check-json via `.2.3.1`, but a full guarded `t/301-check-json-supported-corpus.t` rerun stopped on host-memory cutoff from a high host baseline and a higher-cutoff retry was rejected by the approval layer. Do not bypass that rejection without explicit user approval; `.2.5` selected RAM-guarded or exact bounded replacement policy for any future broad `t/301`/`t/303` parity plan.
-- next_action: Start `.3.3` by comparing the Rust `feature.direct_sreset_active_high` check result against the Perl oracle after `.2.5` normalization, using bounded guarded Perl calls where needed.
+- next_action: Continue the PNT loop from the first active task tree in `docs/TASK_TREE.md`; if that tree has no executable leaf selected, create the smallest roadmap-aligned owner leaf before making any code/source/config change.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact

@@ -6,3 +6,7 @@ publish = false
 
 [lib]
 path = "src/lib.rs"
+
+[[bin]]
+name = "fsmgen-portable-api-check-smoke"
+path = "src/bin/check_smoke_projection.rs"

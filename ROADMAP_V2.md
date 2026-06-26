@@ -794,10 +794,11 @@ Architecture constraint:
   records that IAL0/IAL1/IAL2 and the mdBook are portable contracts for the
   current Perl reference implementation plus future Rust, Rust/Wasm, and
   browser-capable JavaScript and Dart/web implementations.
-- `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER` is the active task-tree
-  owner for this horizon. Its `.2.1` leaf records that every future variant or
-  implementation must satisfy FSMGen's public contracts and stay on par with
-  the Perl reference/oracle. Its `.2.2` readiness audit separated
+- `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER` completed the current
+  task-tree owner frontier for this horizon. Its `.2.1` leaf records that
+  every future variant or implementation must satisfy FSMGen's public
+  contracts and stay on par with the Perl reference/oracle. Its `.2.2`
+  readiness audit separated
   backend-neutral public contracts from current Perl implementation details
   and selected exact future leaves. The `.2.3` leaf selected a portable
   in-memory request/result API family with JSON-safe envelopes and virtual
@@ -814,7 +815,9 @@ Architecture constraint:
   shipped Perl runtime integration. The `.3.2` leaf added the first direct
   `.fsm` check smoke for `feature.direct_sreset_active_high` only, with all
   other Rust check sources and non-check operations still fail-closed. The
-  active `.3.3` leaf now adds Perl-oracle parity for that result.
+  `.3.3` leaf added Perl-oracle parity for that result through a Rust
+  projection binary and a focused normalized comparison against the Perl
+  check-JSON oracle.
 - SystemVerilog-to-Verilog portability should default to FSMGen-owned
   generation/lowering instead of a mandatory external converter dependency.
   External converters such as `sv2v` are audit candidates only: they may be

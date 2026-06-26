@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `Backend portability / public contracts`
 - Created: `2026-06-16`
 - Last updated: `2026-06-26`
@@ -62,7 +62,7 @@ implementation must satisfy the same FSMGen public contracts.
 ## Task Tree
 
 - ID: `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER`
-  Status: `active`
+  Status: `done`
   Goal: `Own the backend-language portability contract and infrastructure audit frontier.`
   Children: `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.1, BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2, BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.1, BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2, BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2.1, BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.3, BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.3.1, BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.4, BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.5, BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.6, BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.7, BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.8, BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.3, BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.3.1, BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.3.2, BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.3.3`
 
@@ -154,12 +154,12 @@ implementation must satisfy the same FSMGen public contracts.
   Commit: `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.8: select Rust experiment`
 
 - ID: `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.3`
-  Status: `active`
+  Status: `done`
   Goal: `Run the first Rust/Rust-Wasm portable API smoke experiment.`
   Children: `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.3.1, BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.3.2, BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.3.3`
   Acceptance: `Add a same-repository Rust/Rust-Wasm experiment that starts from the selected portable request/result API, source-catalog/artifact-sink host boundary, Perl-reference parity harness, mdBook blueprint, and extension deferral. Keep the experiment additive, clearly incomplete, and not wired into the shipped Perl CLI until exact parity gates are selected and passed.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `passed through .3.1-.3.3`
+  Commit: `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.3.3: add Rust Perl parity smoke`
 
 - ID: `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.3.1`
   Status: `done`
@@ -176,11 +176,11 @@ implementation must satisfy the same FSMGen public contracts.
   Commit: `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.3.2: add Rust FSM check smoke`
 
 - ID: `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.3.3`
-  Status: `active`
+  Status: `done`
   Goal: `Add the first Perl-oracle parity smoke for the Rust check result.`
   Acceptance: `Compare the Rust direct .fsm check-operation smoke result with the Perl oracle after .2.5 normalization, using a bounded focused fixture and guarded Perl calls where needed.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `passed`
+  Commit: `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.3.3: add Rust Perl parity smoke`
 
 ## Current Frontier
 
@@ -195,7 +195,7 @@ implementation must satisfy the same FSMGen public contracts.
 | 7 | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.8` | `done` | Selected the same-repository Rust/Rust-Wasm portable API smoke experiment as the first implementation-language experiment. |
 | 8 | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.3.1` | `done` | Scaffolded the Rust portable API contract crate and tests without changing shipped Perl runtime behavior. |
 | 9 | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.3.2` | `done` | Added the first direct `.fsm` check-operation smoke in Rust for `feature.direct_sreset_active_high`. |
-| 10 | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.3.3` | `active` | Add the first Perl-oracle parity smoke for the Rust check result. |
+| 10 | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.3.3` | `done` | Added the first Perl-oracle parity smoke for the Rust check result. |
 
 ## Decisions
 
@@ -301,7 +301,10 @@ implementation must satisfy the same FSMGen public contracts.
   matched `supported_smoke` support accounting, and fails closed for all other
   check sources with `E_PORTABLE_RUST_UNSUPPORTED_CHECK_SOURCE`. Non-check
   operations still fail closed with `E_PORTABLE_RUST_UNIMPLEMENTED_OPERATION`.
-  `.3.3` now owns Perl-oracle parity for that result.
+- `2026-06-26`: Completed `.3.3` as the first Perl-oracle parity smoke for the
+  Rust check result. The test-only Rust projection binary emits the supported
+  check JSON shape, and `t/1467-rust-portable-api-check-parity.t` compares its
+  normalized backend-portable fields against the Perl oracle.
 
 ## Open Questions
 
@@ -351,6 +354,7 @@ implementation must satisfy the same FSMGen public contracts.
 | `2026-06-26` | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.8` | Read/audit roadmap H1 Rust guidance, README portability summary, prior `.2.3` API selector, `.2.4` host abstraction selector, `.2.5` parity harness selector, `.2.6` mdBook blueprint selector, `.2.7` extension portability audit, repository layout, and local Rust tool availability (`cargo 1.95.0`, `rustc 1.95.0`, `wasm-bindgen 0.2.100`, no `wasm-pack`); created `docs/BACKEND_LANGUAGE_FIRST_IMPLEMENTATION_EXPERIMENT_SELECTION.md`; `rg -n 'BACKEND_LANGUAGE_FIRST_IMPLEMENTATION_EXPERIMENT_SELECTION|BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.8|BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.3|Rust/Rust-Wasm portable API smoke|cargo 1.95.0|wasm-pack|source_catalog|artifact_sink|BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.3.1' docs/BACKEND_LANGUAGE_FIRST_IMPLEMENTATION_EXPERIMENT_SELECTION.md docs/tasks/BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.md docs/TASK_TREE.md README.md ROADMAP_V2.md docs/book/src/14-feature-backlog.md docs/book/src/15-implementation-blueprint.md docs/knowledge/backend-language-first-implementation-experiment.md`; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `git --no-pager diff --check`; `mdbook build docs/book`; `scripts/check_doctrines.sh` | `passed`; selected the same-repository Rust/Rust-Wasm portable API smoke experiment and advanced the frontier to `.3.1` |
 | `2026-06-26` | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.3.1` | Created `rust/` workspace, `fsmgen_portable_api` crate, README, request/result/source/host/artifact/diagnostic/capability shell, and Rust unit tests; `cargo fmt --manifest-path rust/Cargo.toml`; `cargo test --manifest-path rust/Cargo.toml`; `cargo clippy --manifest-path rust/Cargo.toml --all-targets -- -D warnings`; `rg -n 'fsmgen_portable_api|E_PORTABLE_RUST_UNIMPLEMENTED_OPERATION|BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.3.1|BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.3.2|rust/Cargo.toml|source_catalog|artifact_sink|unsupported-operation|Rust contract crate' rust/Cargo.toml rust/fsmgen-portable-api/Cargo.toml rust/fsmgen-portable-api/README.md rust/fsmgen-portable-api/src/lib.rs docs/tasks/BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.md docs/TASK_TREE.md README.md ROADMAP_V2.md docs/book/src/14-feature-backlog.md docs/book/src/15-implementation-blueprint.md docs/knowledge/backend-language-rust-portable-api-contract-scaffold.md`; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `git --no-pager diff --check`; `mdbook build docs/book`; `scripts/check_doctrines.sh` | `passed`; scaffolded the additive fail-closed Rust contract crate, kept shipped Perl runtime behavior unchanged, and advanced the frontier to `.3.2` |
 | `2026-06-26` | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.3.2` | Added direct Rust `.fsm` check smoke for `feature.direct_sreset_active_high`; guarded Perl context probe `scripts/run_with_ram_guard.sh --process-max-rss-mb 1024 --host-max-pct 88 --poll-seconds 1 -- ./bin/fsmgen --check-json t/corpus/direct_sreset_active_high.fsm`; `cargo fmt --manifest-path rust/Cargo.toml`; `cargo test --manifest-path rust/Cargo.toml`; `cargo clippy --manifest-path rust/Cargo.toml --all-targets -- -D warnings`; `rg -n 'direct_sreset_active_high|feature.direct_sreset_active_high|E_PORTABLE_RUST_UNSUPPORTED_CHECK_SOURCE|E_PORTABLE_RUST_UNIMPLEMENTED_OPERATION|BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.3.2|BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.3.3|check_json|supported_smoke' rust/fsmgen-portable-api/src/lib.rs rust/fsmgen-portable-api/README.md t/corpus/direct_sreset_active_high.fsm docs/tasks/BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.md docs/TASK_TREE.md README.md ROADMAP_V2.md docs/book/src/14-feature-backlog.md docs/book/src/15-implementation-blueprint.md docs/knowledge/backend-language-rust-direct-fsm-check-smoke.md docs/knowledge/backend-language-rust-portable-api-contract-scaffold.md`; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `git --no-pager diff --check`; `mdbook build docs/book`; `scripts/check_doctrines.sh` | `passed`; added one support-accounted direct Rust `.fsm` check smoke, kept all other Rust sources/operations fail-closed, and advanced the frontier to `.3.3` |
+| `2026-06-26` | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.3.3` | Added the Rust check-smoke projection binary and focused Perl parity test; guarded Perl context probe `scripts/run_with_ram_guard.sh --process-max-rss-mb 1024 --host-max-pct 88 --poll-seconds 1 -- ./bin/fsmgen --check-json t/corpus/direct_sreset_active_high.fsm`; `prove -Iperl t/1467-rust-portable-api-check-parity.t`; `cargo fmt --manifest-path rust/Cargo.toml`; `cargo test --manifest-path rust/Cargo.toml`; `cargo clippy --manifest-path rust/Cargo.toml --all-targets -- -D warnings`; `rg -n 'fsmgen-portable-api-check-smoke|t/1467-rust-portable-api-check-parity|BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.3.3|Perl-oracle parity|direct_sreset_active_high|check_json' rust/fsmgen-portable-api/Cargo.toml rust/fsmgen-portable-api/src/bin/check_smoke_projection.rs rust/fsmgen-portable-api/README.md t/1467-rust-portable-api-check-parity.t docs/tasks/BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.md docs/TASK_TREE.md README.md ROADMAP_V2.md docs/book/src/14-feature-backlog.md docs/book/src/15-implementation-blueprint.md docs/knowledge/backend-language-rust-check-perl-oracle-parity.md`; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `git --no-pager diff --check`; `mdbook build docs/book`; `scripts/check_doctrines.sh` | `passed`; proved the one Rust direct `.fsm` check projection against the Perl oracle after normalized field comparison, left the shipped Perl CLI/runtime unchanged, and closed the current Rust/Rust-Wasm smoke experiment frontier |
 
 ## Commit Log
 
@@ -371,6 +375,7 @@ implementation must satisfy the same FSMGen public contracts.
 | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.8` | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.8: select Rust experiment` | Selected the same-repository Rust/Rust-Wasm portable API smoke experiment and advanced the frontier to `.3.1`. |
 | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.3.1` | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.3.1: scaffold Rust contract crate` | Scaffolded the same-repository `fsmgen_portable_api` crate, fail-closed unsupported-operation behavior, tests, and docs; advanced the frontier to `.3.2`. |
 | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.3.2` | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.3.2: add Rust FSM check smoke` | Added the first direct Rust `.fsm` check smoke for `feature.direct_sreset_active_high` and advanced the frontier to `.3.3`. |
+| `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.3.3` | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.3.3: add Rust Perl parity smoke` | Added the Rust projection binary plus Perl-oracle parity smoke for the one supported direct `.fsm` check result and closed the current Rust/Rust-Wasm smoke experiment frontier. |
 
 ## Changelog
 
@@ -429,5 +434,10 @@ implementation must satisfy the same FSMGen public contracts.
   direct `.fsm` check smoke, `feature.direct_sreset_active_high`, with
   JSON-safe check result and matched `supported_smoke` support accounting while
   leaving general `.fsm`, `.isf`, `.ppif`, HDL, semantic JSON, schedule JSON,
-  verification-output, MCP, and extension behavior unsupported. `.3.3` is the
-  active Perl-oracle parity-smoke owner.
+  verification-output, MCP, and extension behavior unsupported. Active work
+  advanced to the `.3.3` Perl-oracle parity-smoke owner.
+- `2026-06-26`: Completed `.3.3`; the Rust experiment now has a focused
+  projection binary and `t/1467-rust-portable-api-check-parity.t`, which
+  compares the one supported direct `.fsm` check result against the Perl oracle
+  after `.2.5` normalization. The shipped Perl CLI/runtime remains unchanged,
+  and the current Rust/Rust-Wasm smoke experiment frontier is closed.

@@ -29,5 +29,6 @@ implementation experiment unless a future exact task selects a portable
 extension API first. A non-Perl variant that does not implement that future API
 must advertise extension support as unsupported and fail closed on extension
 loading requests. `.2.8` selected the same-repository Rust/Rust-Wasm portable
-API smoke experiment. The next active backend-portability slice is `.3.1`, the
-Rust contract-crate scaffold.
+API smoke experiment. The `.3.1` through `.3.3` slices then scaffolded the Rust
+contract crate, added one direct `.fsm` check smoke, and proved that result
+against the Perl oracle.
