@@ -30,7 +30,7 @@ selector records, and regression corpus.
 | Semantic introspection and MCP | Chapter 11 and the semantic-introspection contract tests |
 | Parity harness | [BACKEND_LANGUAGE_PORTABLE_PARITY_HARNESS_SELECTION.md](../../BACKEND_LANGUAGE_PORTABLE_PARITY_HARNESS_SELECTION.md) |
 | Extension/plugin portability | [BACKEND_LANGUAGE_TYPED_EXTENSION_PORTABILITY_AUDIT.md](../../BACKEND_LANGUAGE_TYPED_EXTENSION_PORTABILITY_AUDIT.md) |
-| First implementation experiment | Pending `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.8` |
+| First implementation experiment | Same-repository Rust/Rust-Wasm portable API smoke, active scaffold owner `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.3.1` |
 
 ## Source Layers
 
@@ -106,3 +106,8 @@ first non-Perl implementation experiment unless a future exact task first
 selects a portable extension API. A future variant must not claim portable
 extension support from the current Perl `Module::Name`/`@INC`/blessed-object
 surface.
+
+The first implementation experiment is a same-repository Rust/Rust-Wasm
+portable API smoke. Its first active slice scaffolds a Rust contract crate and
+tests without wiring it into the shipped Perl CLI or claiming replacement
+runtime behavior.

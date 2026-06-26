@@ -11,7 +11,7 @@ date: 2026-06-26
 status: current
 tags: [architecture, portability, extensions, plugins, perl]
 evidence: docs/BACKEND_LANGUAGE_TYPED_EXTENSION_PORTABILITY_AUDIT.md; docs/EXTENSION_MODEL.md; docs/book/src/11-extensions-and-embedding.md; docs/book/src/15-implementation-blueprint.md; docs/tasks/BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.md; docs/TASK_TREE.md; README.md; ROADMAP_V2.md; perl/FSM/Support/ExtensionContract.pm; perl/FSM/Extension/Loader.pm; perl/FSM/Extension/Registry.pm; perl/FSM/Extension/Context.pm; t/391-typed-extension-programmatic-loading-boundary-audit.t; t/395-typed-extension-explicit-discovery-boundary-audit.t; t/401-typed-extension-module-name-shape-boundary-audit.t
-reverify: rg -n 'BACKEND_LANGUAGE_TYPED_EXTENSION_PORTABILITY_AUDIT|BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.7|typed extension|Perl reference|out of scope for the first non-Perl|Module::Name|source_catalog|artifact_sink|BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.8' docs/BACKEND_LANGUAGE_TYPED_EXTENSION_PORTABILITY_AUDIT.md docs/EXTENSION_MODEL.md docs/book/src/11-extensions-and-embedding.md docs/book/src/15-implementation-blueprint.md docs/book/src/14-feature-backlog.md docs/tasks/BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.md docs/TASK_TREE.md README.md ROADMAP_V2.md docs/knowledge/backend-language-typed-extension-portability.md
+reverify: rg -n 'BACKEND_LANGUAGE_TYPED_EXTENSION_PORTABILITY_AUDIT|BACKEND_LANGUAGE_FIRST_IMPLEMENTATION_EXPERIMENT_SELECTION|BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.7|typed extension|Perl reference|out of scope for the first non-Perl|Module::Name|source_catalog|artifact_sink|BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.8|BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.3.1' docs/BACKEND_LANGUAGE_TYPED_EXTENSION_PORTABILITY_AUDIT.md docs/BACKEND_LANGUAGE_FIRST_IMPLEMENTATION_EXPERIMENT_SELECTION.md docs/EXTENSION_MODEL.md docs/book/src/11-extensions-and-embedding.md docs/book/src/15-implementation-blueprint.md docs/book/src/14-feature-backlog.md docs/tasks/BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.md docs/TASK_TREE.md README.md ROADMAP_V2.md docs/knowledge/backend-language-typed-extension-portability.md docs/knowledge/backend-language-first-implementation-experiment.md
 ---
 
 `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.7` selected the typed
@@ -28,5 +28,6 @@ Typed extension/plugin support is out of scope for the first non-Perl
 implementation experiment unless a future exact task selects a portable
 extension API first. A non-Perl variant that does not implement that future API
 must advertise extension support as unsupported and fail closed on extension
-loading requests. The next active backend-portability selector is `.2.8`, the
-first implementation-language experiment.
+loading requests. `.2.8` selected the same-repository Rust/Rust-Wasm portable
+API smoke experiment. The next active backend-portability slice is `.3.1`, the
+Rust contract-crate scaffold.

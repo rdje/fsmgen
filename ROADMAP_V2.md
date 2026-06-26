@@ -807,9 +807,10 @@ Architecture constraint:
   implementation blueprint structure and added the implementation-blueprint
   chapter. The `.2.7` leaf selected typed extension/plugin support as out of
   scope for the first non-Perl implementation experiment unless a future
-  portable extension API is selected first. The active `.2.8` leaf now selects
-  the first Rust/Rust-Wasm, browser JavaScript, Dart/web, Julia, or other
-  non-Perl implementation experiment before code or public contracts change.
+  portable extension API is selected first. The `.2.8` leaf selected the
+  same-repository Rust/Rust-Wasm portable API smoke as the first implementation
+  experiment. The active `.3.1` leaf now scaffolds the Rust contract crate
+  before shipped runtime behavior changes.
 - SystemVerilog-to-Verilog portability should default to FSMGen-owned
   generation/lowering instead of a mandatory external converter dependency.
   External converters such as `sv2v` are audit candidates only: they may be
