@@ -5,7 +5,6 @@ answers:
   - "what did IAL2-FEATURE-COMPLETENESS-FRONTIER.549 select?"
   - "what is the first APB .ppif source shape?"
   - "what APB .ppif sample path is selected?"
-  - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.550?"
 date: 2026-06-26
 status: current
 tags: [ial2, apb, ppif, source-shape, task-tree]

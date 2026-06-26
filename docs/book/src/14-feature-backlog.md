@@ -9584,6 +9584,29 @@ implementation. The future sample path is
 `fsmgen.ial2.protocol_intent.apb_requester_transfer.v1`. `.apb` and all other
 new suffixes remain unsupported.
 
+IAL2 APB `.ppif` requester-transfer behavior:
+[IAL2_APB_PPIF_REQUESTER_TRANSFER_BEHAVIOR](../../IAL2_APB_PPIF_REQUESTER_TRANSFER_BEHAVIOR.md)
+ships that first APB `.ppif` source shape through the existing IAL2 -> IAL1 ->
+IAL0 -> HDL path. The shipped sample is
+`ppif/apb_requester_transfer.ppif`; it uses `(profile apb)` with one
+`(apb-requester apb_requester ...)` object, emits report schema
+`fsmgen.ial2.protocol_intent.apb_requester_transfer.v1`, materializes
+review artifacts `apb_requester.isf` and `apb_requester.fsm`, and
+support-accounts `intent.ppif_apb_requester_transfer`. APB support here is a
+`.ppif` profile behavior, not a `.apb` suffix and not an AXI extension.
+
+```bash
+./bin/fsmgen --emit-schedule-json ppif/apb_requester_transfer.ppif
+./bin/fsmgen --strict --check --json ppif/apb_requester_transfer.ppif
+./bin/fsmgen --strict --emit-semantic-json ppif/apb_requester_transfer.ppif
+./bin/fsmgen --quiet --outdir /tmp/fsmgen-apb-ppif \
+  --output /tmp/fsmgen-apb-ppif/apb_requester.sv \
+  ppif/apb_requester_transfer.ppif
+```
+
+The `.apb` suffix remains a known unsupported alias candidate even when the
+file contents match the APB `.ppif` source.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

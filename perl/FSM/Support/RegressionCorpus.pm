@@ -63,6 +63,17 @@ my @REGRESSION_CORPUS = (
         expected_semantic_source_root_kind => 'fsm',
     },
     {
+        id => 'intent.ppif_apb_requester_transfer',
+        relpath => 'ppif/apb_requester_transfer.ppif',
+        family => 'protocol_fixture',
+        classification => 'supported_smoke',
+        coverage => 'ial2_ppif_apb_requester_transfer_pipeline_cli',
+        source_kind => 'ppif',
+        strict_supported => 1,
+        expected_module_name => 'apb_requester',
+        expected_semantic_source_root_kind => 'fsm',
+    },
+    {
         id => 'intent.ppif_axi_aw_valid_ready',
         relpath => 'ppif/axi_aw_valid_ready.ppif',
         family => 'protocol_fixture',

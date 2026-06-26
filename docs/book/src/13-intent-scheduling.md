@@ -321,6 +321,13 @@ The schedule report is generated from the same IR as the `.fsm` text.
 
 The current APB report shape is regression-covered.
 
+The APB requester can also be authored from the IAL2 `.ppif` source shape
+`ppif/apb_requester_transfer.ppif`. That path uses `(profile apb)`, lowers
+through generated `apb_requester.isf` before generated `apb_requester.fsm`, and
+keeps `.apb` as an unsupported suffix. See
+[Feature Backlog](14-feature-backlog.md) for runnable APB `.ppif` commands and
+the current APB residue list.
+
 ### Public Interface Contract
 
 The bounded downstream-facing

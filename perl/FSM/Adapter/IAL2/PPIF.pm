@@ -10,6 +10,7 @@ no warnings 'experimental::signatures';
 
 use Lispish;
 use FSM::Adapter::ISF::LispishAdapter;
+use FSM::IAL2::ProtocolIntent::ApbRequesterTransfer;
 use FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus;
 use FSM::IAL2::ProtocolIntent::ValidReadyChannel;
 
@@ -58,6 +59,8 @@ sub parse_source($self, @args) {
     my $generator = FSM::IAL2::ProtocolIntent::ValidReadyChannel->new(debug => $self->{debug});
     return _generate_bundle($generator, $contract)
         if _is_bundle_contract($contract);
+    return FSM::IAL2::ProtocolIntent::ApbRequesterTransfer->new(debug => $self->{debug})->generate($contract)
+        if _is_apb_requester_transfer_contract($contract);
     return FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new(debug => $self->{debug})->generate($contract)
         if _is_manager_capacity_status_contract($contract);
     return $generator->generate($contract);
@@ -132,6 +135,7 @@ sub _contract_from_root($root, $source_label) {
     my ($profile, $source);
     my @channels;
     my @managers;
+    my @apb_requesters;
     for my $clause (@clauses) {
         my ($head, @body) = _clause_parts($clause, $source_label);
         if ($head eq 'profile') {
@@ -148,6 +152,8 @@ sub _contract_from_root($root, $source_label) {
             push @channels, _parse_valid_ready_channel(\@body, $source_label);
         } elsif ($head eq 'manager-capacity-status') {
             push @managers, _parse_manager_capacity_status(\@body, $source_label);
+        } elsif ($head eq 'apb-requester') {
+            push @apb_requesters, _parse_apb_requester(\@body, $source_label);
         } else {
             confess "Error: $surface source '$source_label' has unsupported top-level clause '($head ...)'\n";
         }
@@ -157,8 +163,25 @@ sub _contract_from_root($root, $source_label) {
         unless defined $profile;
     confess "Error: $surface source '$source_label' is missing required (source ...) clause\n"
         unless defined $source;
-    confess "Error: $surface source '$source_label' is missing required intent object clause, expected (valid-ready-channel ...) or (manager-capacity-status ...)\n"
-        unless @channels || @managers;
+    confess "Error: $surface source '$source_label' is missing required intent object clause, expected (valid-ready-channel ...), (manager-capacity-status ...), or (apb-requester ...)\n"
+        unless @channels || @managers || @apb_requesters;
+    if (@apb_requesters) {
+        confess "Error: $surface source '$source_label' profile '$profile' does not match (apb-requester ...); expected apb\n"
+            unless $profile eq 'apb';
+        confess "Error: $surface source '$source_label' cannot mix (apb-requester ...) with (valid-ready-channel ...) or (manager-capacity-status ...) objects in this slice\n"
+            if @channels || @managers;
+        confess "Error: $surface source '$source_label' supports exactly one (apb-requester ...) object in this slice\n"
+            if @apb_requesters > 1;
+
+        return {
+            %{$apb_requesters[0]},
+            intent_name => $intent_name,
+            protocol    => $profile,
+            source      => $source,
+        };
+    }
+    confess "Error: $surface source '$source_label' profile apb requires exactly one (apb-requester ...) object in this slice\n"
+        if $profile eq 'apb';
     confess "Error: $surface source '$source_label' cannot mix (valid-ready-channel ...) and (manager-capacity-status ...) objects in this slice\n"
         if @channels && @managers;
     confess "Error: $surface source '$source_label' supports exactly one (manager-capacity-status ...) object in this slice\n"
@@ -298,6 +321,242 @@ sub _parse_valid_ready_channel($body, $source_label) {
     }
 
     return \%contract;
+}
+
+sub _parse_apb_requester($body, $source_label) {
+    confess "Error: .ppif (apb-requester ...) requires a scalar object name\n"
+        unless @$body >= 1 && !ref($body->[0]) && length($body->[0]);
+
+    my $name = $body->[0];
+    my %contract = (
+        kind => 'apb_requester_transfer',
+        name => $name,
+    );
+    my %seen;
+    for my $clause (@{$body}[1 .. $#$body]) {
+        my ($head, @items) = _clause_parts($clause, $source_label);
+        confess "Error: .ppif (apb-requester $name ...) has duplicate ($head ...) clause\n"
+            if $seen{$head}++;
+
+        if ($head =~ /\A(?:role|clock)\z/) {
+            confess "Error: .ppif (apb-requester $name ($head ...)) requires exactly one scalar value\n"
+                unless @items == 1 && !ref($items[0]);
+            $contract{$head} = $items[0];
+        } elsif ($head eq 'reset') {
+            $contract{reset} = _parse_reset(\@items, $source_label);
+        } elsif ($head eq 'request') {
+            $contract{request} = _parse_apb_request_block(\@items, $source_label, $name);
+        } elsif ($head eq 'response') {
+            $contract{response} = _parse_apb_response_block(\@items, $source_label, $name);
+        } elsif ($head eq 'bus') {
+            $contract{bus} = _parse_apb_bus_block(\@items, $source_label, $name);
+        } elsif ($head eq 'transfer') {
+            $contract{transfer} = _parse_apb_transfer_block(\@items, $source_label, $name);
+        } else {
+            confess "Error: .ppif (apb-requester $name ...) has unsupported clause '($head ...)'\n";
+        }
+    }
+
+    for my $required (qw(role clock reset request response bus transfer)) {
+        confess "Error: .ppif (apb-requester $name ...) is missing required ($required ...) clause\n"
+            unless exists $contract{$required};
+    }
+
+    return \%contract;
+}
+
+sub _parse_apb_request_block($items, $source_label, $name) {
+    my %allowed = (
+        start        => 'start',
+        write        => 'write',
+        address      => 'address',
+        'write-data' => 'write_data',
+    );
+    my %request;
+
+    for my $clause (@$items) {
+        my ($head, @body) = _clause_parts($clause, $source_label);
+        confess "Error: .ppif (apb-requester $name (request ...)) has unsupported clause '($head ...)'\n"
+            unless exists $allowed{$head};
+        confess "Error: .ppif (apb-requester $name (request ...)) has duplicate ($head ...) clause\n"
+            if exists $request{$allowed{$head}};
+        $request{$allowed{$head}} = $head =~ /\A(?:address|write-data)\z/
+            ? _parse_apb_width_binding(\@body, $source_label, "apb-requester $name request $head")
+            : _parse_apb_scalar_binding(\@body, $source_label, "apb-requester $name request $head");
+    }
+
+    for my $required (qw(start write address write_data)) {
+        my $clause = $required;
+        $clause =~ s/_/-/g;
+        confess "Error: .ppif (apb-requester $name (request ...)) is missing required ($clause ...) clause\n"
+            unless exists $request{$required};
+    }
+
+    return \%request;
+}
+
+sub _parse_apb_response_block($items, $source_label, $name) {
+    my %allowed = (
+        done        => 'done',
+        'read-data' => 'read_data',
+        error       => 'error',
+    );
+    my %response;
+
+    for my $clause (@$items) {
+        my ($head, @body) = _clause_parts($clause, $source_label);
+        confess "Error: .ppif (apb-requester $name (response ...)) has unsupported clause '($head ...)'\n"
+            unless exists $allowed{$head};
+        confess "Error: .ppif (apb-requester $name (response ...)) has duplicate ($head ...) clause\n"
+            if exists $response{$allowed{$head}};
+        $response{$allowed{$head}} = $head eq 'read-data'
+            ? _parse_apb_width_binding(\@body, $source_label, "apb-requester $name response $head")
+            : _parse_apb_scalar_binding(\@body, $source_label, "apb-requester $name response $head");
+    }
+
+    for my $required (qw(done read_data error)) {
+        my $clause = $required;
+        $clause =~ s/_/-/g;
+        confess "Error: .ppif (apb-requester $name (response ...)) is missing required ($clause ...) clause\n"
+            unless exists $response{$required};
+    }
+
+    return \%response;
+}
+
+sub _parse_apb_bus_block($items, $source_label, $name) {
+    my %allowed = (
+        address      => 'address',
+        write        => 'write',
+        'write-data' => 'write_data',
+        select       => 'select',
+        enable       => 'enable',
+        ready        => 'ready',
+        'read-data'  => 'read_data',
+        error        => 'error',
+    );
+    my %bus;
+
+    for my $clause (@$items) {
+        my ($head, @body) = _clause_parts($clause, $source_label);
+        confess "Error: .ppif (apb-requester $name (bus ...)) has unsupported clause '($head ...)'\n"
+            unless exists $allowed{$head};
+        confess "Error: .ppif (apb-requester $name (bus ...)) has duplicate ($head ...) clause\n"
+            if exists $bus{$allowed{$head}};
+        $bus{$allowed{$head}} = $head =~ /\A(?:address|write-data|read-data)\z/
+            ? _parse_apb_width_binding(\@body, $source_label, "apb-requester $name bus $head")
+            : _parse_apb_scalar_binding(\@body, $source_label, "apb-requester $name bus $head");
+    }
+
+    for my $required (qw(address write write_data select enable ready read_data error)) {
+        my $clause = $required;
+        $clause =~ s/_/-/g;
+        confess "Error: .ppif (apb-requester $name (bus ...)) is missing required ($clause ...) clause\n"
+            unless exists $bus{$required};
+    }
+
+    return \%bus;
+}
+
+sub _parse_apb_transfer_block($items, $source_label, $name) {
+    confess "Error: .ppif (apb-requester $name (transfer ...)) requires a scalar transfer name\n"
+        unless @$items >= 1 && !ref($items->[0]) && length($items->[0]);
+
+    my $transfer_name = $items->[0];
+    my %transfer = (name => $transfer_name);
+    my %seen;
+    for my $clause (@{$items}[1 .. $#$items]) {
+        my ($head, @body) = _clause_parts($clause, $source_label);
+        confess "Error: .ppif (apb-requester $name (transfer $transfer_name ...)) has duplicate ($head ...) clause\n"
+            if $seen{$head}++;
+        if ($head =~ /\A(?:setup|access)\z/) {
+            $transfer{$head} = _parse_apb_phase_binding(\@body, $source_label, "apb-requester $name transfer $transfer_name $head");
+        } elsif ($head eq 'complete-on') {
+            $transfer{complete_on} = _parse_apb_scalar_binding(\@body, $source_label, "apb-requester $name transfer $transfer_name complete-on");
+        } elsif ($head eq 'sample') {
+            $transfer{sample} = _parse_apb_sample_binding(\@body, $source_label, "apb-requester $name transfer $transfer_name sample");
+        } elsif ($head eq 'latency') {
+            $transfer{latency} = _parse_apb_latency_binding(\@body, $source_label, "apb-requester $name transfer $transfer_name latency");
+        } else {
+            confess "Error: .ppif (apb-requester $name (transfer $transfer_name ...)) has unsupported clause '($head ...)'\n";
+        }
+    }
+
+    for my $required (qw(setup access complete_on sample latency)) {
+        my $clause = $required;
+        $clause =~ s/_/-/g;
+        confess "Error: .ppif (apb-requester $name (transfer $transfer_name ...)) is missing required ($clause ...) clause\n"
+            unless exists $transfer{$required};
+    }
+
+    return \%transfer;
+}
+
+sub _parse_apb_scalar_binding($body, $source_label, $context) {
+    confess "Error: .ppif ($context ...) requires exactly one scalar value\n"
+        unless @$body == 1 && !ref($body->[0]) && length($body->[0]);
+    return $body->[0];
+}
+
+sub _parse_apb_width_binding($body, $source_label, $context) {
+    confess "Error: .ppif ($context ...) requires '(signal width N)'\n"
+        unless @$body == 3 && !ref($body->[0]) && !ref($body->[1]) && !ref($body->[2]) && $body->[1] eq 'width';
+    return {
+        name  => $body->[0],
+        width => $body->[2],
+    };
+}
+
+sub _parse_apb_phase_binding($body, $source_label, $context) {
+    my %phase;
+    for my $clause (@$body) {
+        my ($head, @items) = _clause_parts($clause, $source_label);
+        confess "Error: .ppif ($context ...) supports only (select N) and (enable N)\n"
+            unless $head =~ /\A(?:select|enable)\z/;
+        confess "Error: .ppif ($context ...) has duplicate ($head ...) clause\n"
+            if exists $phase{$head};
+        confess "Error: .ppif ($context ($head ...)) requires exactly one scalar value\n"
+            unless @items == 1 && !ref($items[0]);
+        $phase{$head} = $items[0];
+    }
+
+    for my $required (qw(select enable)) {
+        confess "Error: .ppif ($context ...) is missing required ($required ...) clause\n"
+            unless exists $phase{$required};
+    }
+
+    return \%phase;
+}
+
+sub _parse_apb_sample_binding($body, $source_label, $context) {
+    confess "Error: .ppif ($context ...) requires at least one scalar sample name\n"
+        unless @$body;
+    for my $item (@$body) {
+        confess "Error: .ppif ($context ...) sample entries must be scalar names\n"
+            if ref($item) || !length($item);
+    }
+    return [@$body];
+}
+
+sub _parse_apb_latency_binding($body, $source_label, $context) {
+    my %latency;
+    for my $clause (@$body) {
+        my ($head, @items) = _clause_parts($clause, $source_label);
+        confess "Error: .ppif ($context ...) supports only (min N) and (max N)\n"
+            unless $head =~ /\A(?:min|max)\z/;
+        confess "Error: .ppif ($context ...) has duplicate ($head ...) clause\n"
+            if exists $latency{$head};
+        confess "Error: .ppif ($context ($head ...)) requires exactly one scalar value\n"
+            unless @items == 1 && !ref($items[0]);
+        $latency{$head} = $items[0];
+    }
+
+    for my $required (qw(min max)) {
+        confess "Error: .ppif ($context ...) is missing required ($required ...) clause\n"
+            unless exists $latency{$required};
+    }
+
+    return \%latency;
 }
 
 sub _parse_manager_capacity_status($body, $source_label) {
@@ -1135,6 +1394,11 @@ sub _is_manager_capacity_status_contract($contract) {
         && exists($contract->{write_max_pending})
         && exists($contract->{read_submit})
         && exists($contract->{write_submit});
+}
+
+sub _is_apb_requester_transfer_contract($contract) {
+    return ref($contract) eq 'HASH'
+        && ($contract->{kind} // '') eq 'apb_requester_transfer';
 }
 
 sub _generate_bundle($generator, $bundle) {

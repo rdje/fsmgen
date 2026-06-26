@@ -4047,6 +4047,14 @@ decision before behavior changes.
 `apb_requester.isf` and `apb_requester.fsm`, and report schema
 `fsmgen.ial2.protocol_intent.apb_requester_transfer.v1`. `.apb` and all other
 new suffixes remain unsupported.
+`.550` now ships that APB `.ppif` requester-transfer first slice. The sample
+`ppif/apb_requester_transfer.ppif` parses `(profile apb)` with one
+`(apb-requester apb_requester ...)` object, emits report schema
+`fsmgen.ial2.protocol_intent.apb_requester_transfer.v1`, generates review
+artifacts `apb_requester.isf` and `apb_requester.fsm` through IAL1 before
+IAL0, reaches HDL module `apb_requester`, and support-accounts
+`intent.ppif_apb_requester_transfer`. `.apb` and all other new suffixes remain
+unsupported; APB is a `.ppif` profile behavior, not an AXI extension.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

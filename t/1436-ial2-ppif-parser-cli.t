@@ -59,6 +59,51 @@ subtest 'PPIF adapter parses the protocol-neutral Valid-Ready profile source sha
     is($result->{report}{layering}{direct_ial2_to_ial0}, 0, 'direct IAL2-to-IAL0 remains forbidden for neutral profile');
 };
 
+subtest 'PPIF adapter parses the APB requester-transfer source shape' => sub {
+    my $sample_path = sample_apb_requester_transfer_ppif_path();
+    ok(-f $sample_path, 'tracked runnable APB PPIF sample exists');
+
+    my $result = FSM::Adapter::IAL2::PPIF->new()->parse_source(sample_apb_requester_transfer_ppif(), $sample_path);
+
+    is($result->{layer}, 'IAL2', 'APB adapter result stays IAL2');
+    is($result->{kind}, 'protocol_intent.apb_requester_transfer', 'adapter returns the APB requester-transfer kind');
+    is($result->{mode}, 'requester-transfer', 'APB result keeps the transfer mode explicit');
+    is($result->{report}{schema}, 'fsmgen.ial2.protocol_intent.apb_requester_transfer.v1', 'APB report schema is selected');
+    is($result->{report}{source_object}{id}, 'fsmgen-apb-requester-transfer', 'APB source object id is preserved');
+    is($result->{report}{source_object}{intent_name}, 'apb_requester_transfer', 'APB source intent name is preserved');
+    is($result->{report}{target_protocol}{profile}, 'apb', 'APB report carries the APB profile');
+    is($result->{report}{target_protocol}{object}, 'apb-requester', 'APB report carries the APB requester object');
+    is($result->{report}{target_protocol}{role}, 'requester', 'APB report carries the requester role');
+    is($result->{report}{target_protocol}{transfer}, 'apb_transfer', 'APB report carries the transfer name');
+    is($result->{generated_ial1}{name}, 'apb_requester.isf', 'APB adapter exposes generated IAL1 artifact');
+    like($result->{generated_ial1}{text}, qr/\A\(actor apb_requester\b/, 'APB generated IAL1 is .isf text');
+    like($result->{generated_ial1}{text}, qr/\(input start\)/, 'APB generated IAL1 declares the start request');
+    like($result->{generated_ial1}{text}, qr/\(input req_addr \(width 32\)\)/, 'APB generated IAL1 declares the 32-bit address request');
+    like($result->{generated_ial1}{text}, qr/\(output PSEL\)/, 'APB generated IAL1 declares PSEL');
+    like($result->{generated_ial1}{text}, qr/\(await PREADY\)/, 'APB generated IAL1 awaits PREADY');
+    like($result->{generated_ial1}{text}, qr/\(sample PRDATA as rdata\)/, 'APB generated IAL1 samples PRDATA');
+    is_deeply(
+        sorted([keys %{$result->{generated_ial0}{files}}]),
+        ['apb_requester.fsm'],
+        'APB adapter exposes generated APB IAL0 .fsm file map',
+    );
+    like($result->{generated_ial0}{files}{'apb_requester.fsm'}, qr/\(\?fsm:apb_requester\b/, 'APB generated IAL0 names the requester FSM');
+    like($result->{generated_ial0}{files}{'apb_requester.fsm'}, qr/\bPREADY\b/, 'APB generated IAL0 carries PREADY');
+    like($result->{generated_ial0}{files}{'apb_requester.fsm'}, qr/\bPRDATA\b/, 'APB generated IAL0 carries PRDATA');
+    like($result->{generated_ial0}{files}{'apb_requester.fsm'}, qr/\bPSLVERR\b/, 'APB generated IAL0 carries PSLVERR');
+    is($result->{report}{bindings}{request}{address}{name}, 'req_addr', 'APB report captures local request address binding');
+    is($result->{report}{bindings}{bus}{ready}, 'PREADY', 'APB report captures bus ready binding');
+    is($result->{report}{transfer}{setup}{select}, 1, 'APB report captures setup PSEL value');
+    is($result->{report}{transfer}{setup}{enable}, 0, 'APB report captures setup PENABLE value');
+    is($result->{report}{transfer}{access}{enable}, 1, 'APB report captures access PENABLE value');
+    is_deeply($result->{report}{transfer}{sample}, ['read-data', 'error'], 'APB report captures sample list');
+    is($result->{report}{generated_artifacts}{hdl_entry}{entry_artifact}, 'apb_requester.fsm', 'APB report selects the generated requester .fsm as HDL entry');
+    my %residue = map { $_->{id} => 1 } @{$result->{report}{unsupported_residue}};
+    ok($residue{apb_completer_and_interconnect_generation_deferred}, 'APB report keeps completer/interconnect residue explicit');
+    ok($residue{apb_back_to_back_policy_deferred}, 'APB report keeps back-to-back policy residue explicit');
+    is($result->{report}{layering}{direct_ial2_to_ial0}, 0, 'APB lowering goes through generated IAL1 before IAL0');
+};
+
 subtest 'PPIF adapter parses a multi-channel Valid-Ready bundle' => sub {
     my $sample_path = sample_bundle_ppif_path();
     ok(-f $sample_path, 'tracked runnable PPIF bundle sample exists');
@@ -3602,6 +3647,46 @@ subtest 'PPIF adapter diagnostics fail closed before generation claims' => sub {
     }
 };
 
+subtest 'PPIF adapter rejects malformed APB requester-transfer source shapes with targeted diagnostics' => sub {
+    my $profile_mismatch = sample_apb_requester_transfer_ppif();
+    $profile_mismatch =~ s/\(profile apb\)/(profile axi4)/;
+
+    my $apb_profile_valid_ready = sample_ppif();
+    $apb_profile_valid_ready =~ s/\(profile axi4\)/(profile apb)/;
+
+    my $missing_bus = sample_apb_requester_transfer_ppif();
+    my $bus_block = <<'BUS';
+    (bus
+      (address PADDR width 32)
+      (write PWRITE)
+      (write-data PWDATA width 32)
+      (select PSEL)
+      (enable PENABLE)
+      (ready PREADY)
+      (read-data PRDATA width 32)
+      (error PSLVERR))
+BUS
+    $missing_bus =~ s/\Q$bus_block\E//
+        or die "failed to remove APB bus block from sample\n";
+
+    my $bad_setup = sample_apb_requester_transfer_ppif();
+    $bad_setup =~ s/\(setup \(select 1\) \(enable 0\)\)/(setup (select 0) (enable 0))/;
+
+    my @cases = (
+        ['apb requester profile mismatch', $profile_mismatch, qr/profile 'axi4' does not match \(apb-requester \.\.\.\); expected apb/],
+        ['apb profile rejects valid-ready object', $apb_profile_valid_ready, qr/profile apb requires exactly one \(apb-requester \.\.\.\) object/],
+        ['apb requester missing bus', $missing_bus, qr/is missing required \(bus \.\.\.\) clause/],
+        ['apb requester wrong setup select', $bad_setup, qr/transfer\.setup\.select must be 1/],
+    );
+
+    for my $case (@cases) {
+        my ($label, $source, $pattern) = @$case;
+        my $ok = eval { FSM::Adapter::IAL2::PPIF->new()->parse_source($source, "$label.ppif"); 1 };
+        ok(!$ok, "$label is rejected");
+        like($@, $pattern, "$label diagnostic is targeted");
+    }
+};
+
 subtest 'CLI emits IAL2 bundle report JSON for multi-channel .ppif' => sub {
     my $bundle_path = sample_bundle_ppif_path();
 
@@ -3655,6 +3740,25 @@ subtest 'CLI emits IAL2 report JSON for protocol-neutral .ppif without writing H
     is($report->{target_channel}{family}, 'data_link', 'neutral CLI report carries authored channel identifier');
     is($report->{target_channel}{role}, 'producer-to-consumer', 'neutral CLI report carries neutral role');
     is($report->{transfer_fire_condition}, 'valid && ready', 'neutral CLI report carries fire condition');
+};
+
+subtest 'CLI emits IAL2 report JSON for APB requester-transfer .ppif without writing HDL' => sub {
+    my ($success, undef, undef, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--emit-schedule-json', sample_apb_requester_transfer_ppif_path()],
+    );
+
+    ok($success, '--emit-schedule-json succeeds for APB requester-transfer .ppif');
+    is(join('', @{$stderr_buf || []}), '', 'APB requester-transfer report keeps stderr clean');
+    my $report = decode_json(join('', @{$stdout_buf || []}));
+    is($report->{schema}, 'fsmgen.ial2.protocol_intent.apb_requester_transfer.v1', 'CLI emits the APB requester-transfer report schema');
+    is($report->{source_object}{intent_name}, 'apb_requester_transfer', 'APB report carries the PPIF top-level intent name');
+    is($report->{target_protocol}{profile}, 'apb', 'APB report carries the APB profile');
+    is($report->{target_protocol}{object}, 'apb-requester', 'APB report carries the APB object');
+    is($report->{generated_artifacts}{ial1}{name}, 'apb_requester.isf', 'APB report names generated .isf');
+    is_deeply($report->{generated_artifacts}{ial0}{files}, ['apb_requester.fsm'], 'APB report names generated .fsm');
+    is($report->{generated_artifacts}{hdl_entry}{entry_artifact}, 'apb_requester.fsm', 'APB report names the generated APB HDL entry');
+    is($report->{bindings}{bus}{ready}, 'PREADY', 'APB report carries ready binding');
+    is($report->{transfer}{latency}{max}, 16, 'APB report carries latency bound');
 };
 
 subtest 'CLI emits IAL2 report JSON for AXI manager capacity/status .ppif' => sub {
@@ -6527,6 +6631,29 @@ subtest 'CLI --outdir materializes generated .isf, .fsm, and HDL for .ppif' => s
     like(slurp($hdl), qr/\bmodule\s+axi_aw_valid_ready_monitor\b/, 'generated HDL contains the monitor module');
 };
 
+subtest 'CLI --outdir materializes APB requester-transfer review artifacts and HDL' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $outdir = File::Spec->catdir($tempdir, 'out');
+    my $hdl = File::Spec->catfile($tempdir, 'apb_requester.sv');
+
+    my ($success, undef, undef, undef, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--quiet', '--outdir', $outdir, '--output', $hdl, sample_apb_requester_transfer_ppif_path()],
+    );
+
+    ok($success, 'APB requester-transfer CLI generation succeeds');
+    is(join('', @{$stderr_buf || []}), '', 'APB requester-transfer generation keeps stderr clean');
+    ok(-f File::Spec->catfile($outdir, 'apb_requester.isf'), 'APB --outdir writes generated .isf');
+    ok(-f File::Spec->catfile($outdir, 'apb_requester.fsm'), 'APB --outdir writes generated .fsm');
+    ok(-f $hdl, 'APB --output writes generated HDL');
+    like(slurp(File::Spec->catfile($outdir, 'apb_requester.isf')), qr/\(actor apb_requester\b/, 'APB generated .isf is inspectable text');
+    like(slurp(File::Spec->catfile($outdir, 'apb_requester.fsm')), qr/\(\?fsm:apb_requester\b/, 'APB generated .fsm is inspectable text');
+    my $sv = slurp($hdl);
+    like($sv, qr/\bmodule\s+apb_requester\b/, 'APB HDL contains the generated requester module');
+    like($sv, qr/\bPREADY\b/, 'APB HDL carries PREADY');
+    like($sv, qr/\bPRDATA\b/, 'APB HDL carries PRDATA');
+    like($sv, qr/\bPSLVERR\b/, 'APB HDL carries PSLVERR');
+};
+
 SKIP: {
     my $skip_reason = external_systemverilog_validation_skip_reason();
     skip $skip_reason, 2 if defined $skip_reason;
@@ -6702,6 +6829,74 @@ subtest 'CLI check JSON and semantic JSON accept protocol-neutral .ppif public s
         'fsm',
         'neutral semantic JSON payload describes the generated .fsm semantic root',
     );
+};
+
+subtest 'CLI check JSON and semantic JSON accept APB requester-transfer .ppif public source identity' => sub {
+    my $apb_path = sample_apb_requester_transfer_ppif_path();
+    my ($success, undef, undef, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--strict', '--check', '--json', $apb_path],
+    );
+    ok($success, 'APB requester-transfer --check --json succeeds');
+    is(join('', @{$stderr_buf || []}), '', 'APB requester-transfer --check --json keeps stderr clean');
+    my $check_report = decode_json(join('', @{$stdout_buf || []}));
+    ok($check_report->{success}, 'APB requester-transfer check JSON reports success');
+    is(
+        $check_report->{source}{resolved_path},
+        File::Spec->rel2abs($apb_path),
+        'APB requester-transfer check JSON reports the public .ppif source path',
+    );
+    ok($check_report->{support_accounting}{matched}, 'APB requester-transfer check JSON support accounting matches the PPIF sample');
+    is(
+        $check_report->{support_accounting}{entry_id},
+        'intent.ppif_apb_requester_transfer',
+        'APB requester-transfer check JSON support accounting names the PPIF corpus entry',
+    );
+    is($check_report->{support_accounting}{source_kind}, 'ppif', 'APB requester-transfer check JSON records PPIF source kind');
+
+    my ($semantic_success, undef, undef, $semantic_stdout, $semantic_stderr) = run(
+        command => ['./bin/fsmgen', '--strict', '--emit-semantic-json', $apb_path],
+    );
+    ok($semantic_success, 'APB requester-transfer --emit-semantic-json succeeds');
+    is(join('', @{$semantic_stderr || []}), '', 'APB requester-transfer --emit-semantic-json keeps stderr clean');
+    my $semantic_report = decode_json(join('', @{$semantic_stdout || []}));
+    ok($semantic_report->{success}, 'APB requester-transfer semantic JSON reports success');
+    is(
+        $semantic_report->{source}{resolved_path},
+        File::Spec->rel2abs($apb_path),
+        'APB requester-transfer semantic JSON reports the public .ppif source path',
+    );
+    is(
+        $semantic_report->{support_accounting}{entry_id},
+        'intent.ppif_apb_requester_transfer',
+        'APB requester-transfer semantic JSON support accounting names the PPIF corpus entry',
+    );
+    is(
+        $semantic_report->{semantic}{module}{source_root_kind},
+        'fsm',
+        'APB requester-transfer semantic JSON payload describes the generated .fsm semantic root',
+    );
+    is(
+        $semantic_report->{semantic}{module}{name},
+        'apb_requester',
+        'APB requester-transfer semantic JSON records the generated APB requester module',
+    );
+};
+
+subtest 'CLI keeps .apb as a known unsupported alias even for APB requester-transfer content' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $alias_path = File::Spec->catfile($tempdir, 'apb_requester_transfer.apb');
+    write_file($alias_path, sample_apb_requester_transfer_ppif());
+
+    my ($success, undef, undef, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--strict', '--check', '--json', $alias_path],
+    );
+
+    ok(!$success, '.apb alias remains rejected');
+    is(join('', @{$stderr_buf || []}), '', '.apb alias JSON failure keeps stderr clean');
+    my $stdout = join('', @{$stdout_buf || []});
+    my $report = decode_json($stdout);
+    ok(!$report->{success}, '.apb alias check JSON reports failure');
+    like($stdout, qr/source suffix '\.apb' is a known IAL2 alias candidate but is not supported/, '.apb alias diagnostic is explicit');
 };
 
 subtest 'CLI check JSON and semantic JSON accept capacity/status .ppif public source identity' => sub {
@@ -9030,6 +9225,10 @@ sub sample_valid_ready_handshake_ppif_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'valid_ready_handshake.ppif');
 }
 
+sub sample_apb_requester_transfer_ppif_path {
+    return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'apb_requester_transfer.ppif');
+}
+
 sub sample_bundle_ppif_path {
     return File::Spec->catfile($FindBin::Bin, '..', 'ppif', 'axi_aw_w_valid_ready_bundle.ppif');
 }
@@ -9472,6 +9671,10 @@ sub sample_ppif {
 
 sub sample_valid_ready_handshake_ppif {
     return slurp(sample_valid_ready_handshake_ppif_path());
+}
+
+sub sample_apb_requester_transfer_ppif {
+    return slurp(sample_apb_requester_transfer_ppif_path());
 }
 
 sub sample_bundle_ppif {
