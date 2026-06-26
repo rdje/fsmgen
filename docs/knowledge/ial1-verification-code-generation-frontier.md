@@ -13,8 +13,8 @@ answers:
 date: 2026-06-16
 status: current
 tags: [ial1, isf, verification, sv-uvm, vhdl, task-tree]
-evidence: docs/tasks/IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.md; docs/IAL1_VERIFICATION_CODE_GENERATION_SOURCE_READINESS_AUDIT.md; docs/IAL1_VERIFICATION_OBSERVATION_CONTRACT_SELECTION.md; docs/IAL1_SV_UVM_PASSIVE_MONITOR_SKELETON_CONTRACT_SELECTION.md; docs/IAL1_VERIFICATION_OUTPUT_PUBLIC_SURFACE_CONTRACT_SELECTION.md; docs/tasks/ISF-VERIFICATION-OBSERVATION-METADATA.md; docs/TASK_TREE.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md; docs/knowledge/ial2-axi-manager-post-rresp-aggregation-next-slice.md
-reverify: rg -n 'IAL1-VERIFICATION-CODE-GENERATION-FRONTIER|IAL1 verification-specific|SV/UVM|VHDL-oriented verification|Direct IAL2-to-verification|Verification Code Generation|ISF-VERIFICATION-OBSERVATION-METADATA|observe NAME|verification_observations|passive UVM monitor skeleton|--emit-verification-output uvm-passive-monitor|IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.8' docs/tasks/IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.md docs/IAL1_VERIFICATION_CODE_GENERATION_SOURCE_READINESS_AUDIT.md docs/IAL1_VERIFICATION_OBSERVATION_CONTRACT_SELECTION.md docs/tasks/ISF-VERIFICATION-OBSERVATION-METADATA.md docs/TASK_TREE.md README.md ROADMAP_V2.md docs/book/src/14-feature-backlog.md docs/knowledge/ial2-axi-manager-post-rresp-aggregation-next-slice.md docs/IAL1_SV_UVM_PASSIVE_MONITOR_SKELETON_CONTRACT_SELECTION.md docs/IAL1_VERIFICATION_OUTPUT_PUBLIC_SURFACE_CONTRACT_SELECTION.md
+evidence: docs/tasks/IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.md; docs/IAL1_VERIFICATION_CODE_GENERATION_SOURCE_READINESS_AUDIT.md; docs/IAL1_VERIFICATION_OBSERVATION_CONTRACT_SELECTION.md; docs/IAL1_SV_UVM_PASSIVE_MONITOR_SKELETON_CONTRACT_SELECTION.md; docs/IAL1_VERIFICATION_OUTPUT_PUBLIC_SURFACE_CONTRACT_SELECTION.md; docs/IAL1_VHDL_VERIFICATION_OUTPUT_CONTRACT_SELECTION.md; docs/tasks/ISF-VERIFICATION-OBSERVATION-METADATA.md; docs/TASK_TREE.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md; docs/knowledge/ial1-vhdl-verification-output-selection.md; docs/knowledge/ial2-axi-manager-post-rresp-aggregation-next-slice.md
+reverify: rg -n 'IAL1-VERIFICATION-CODE-GENERATION-FRONTIER|IAL1 verification-specific|SV/UVM|VHDL-oriented verification|Direct IAL2-to-verification|Verification Code Generation|ISF-VERIFICATION-OBSERVATION-METADATA|observe NAME|verification_observations|passive UVM monitor skeleton|--emit-verification-output uvm-passive-monitor|IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.8|IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.9|VHDL verification validation substrate' docs/tasks/IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.md docs/IAL1_VERIFICATION_CODE_GENERATION_SOURCE_READINESS_AUDIT.md docs/IAL1_VERIFICATION_OBSERVATION_CONTRACT_SELECTION.md docs/tasks/ISF-VERIFICATION-OBSERVATION-METADATA.md docs/TASK_TREE.md README.md ROADMAP_V2.md docs/book/src/14-feature-backlog.md docs/knowledge/ial1-verification-code-generation-frontier.md docs/knowledge/ial1-vhdl-verification-output-selection.md docs/knowledge/ial2-axi-manager-post-rresp-aggregation-next-slice.md docs/IAL1_SV_UVM_PASSIVE_MONITOR_SKELETON_CONTRACT_SELECTION.md docs/IAL1_VERIFICATION_OUTPUT_PUBLIC_SURFACE_CONTRACT_SELECTION.md docs/IAL1_VHDL_VERIFICATION_OUTPUT_CONTRACT_SELECTION.md
 ---
 
 FSMGen verification-code generation is now owned by the active
@@ -34,15 +34,18 @@ support-accounting identity, and validation gates:
 `--emit-verification-output uvm-passive-monitor --verification-outdir DIR
 source.isf`. Frontier `.8` implements that first bounded inert UVM
 passive-monitor skeleton output and advertises it through the capability
-manifest without claiming UVM compile support.
+manifest without claiming UVM compile support. Frontier `.5` audited VHDL
+assertion/testbench/PSL feasibility and selected no VHDL verification artifact
+yet; `.9` now owns selection of the first VHDL verification validation
+substrate before any VHDL artifact implementation.
 
 Future target families are explicitly tracked, not implied: SV/UVM agents,
 monitors, scoreboards, protocol checkers, coverage, reusable verification IP,
-and VHDL-oriented verification artifacts each require contract-selection
-owners before implementation.
+and VHDL-oriented verification artifacts each require contract-selection and
+validation-substrate owners before implementation.
 
-The next eligible verification-code-generation leaf is `.5`, selecting the
-first VHDL-oriented verification output contract. Direct IAL2-to-verification
+The next eligible verification-code-generation leaf is `.9`, selecting the
+first VHDL verification validation substrate. Direct IAL2-to-verification
 generation remains an audit question. It may later be selected as a direct
 route, as an IAL2-to-IAL1 verification annotation handoff, or as unnecessary
 for the first implementation. No implementation may assume that answer before

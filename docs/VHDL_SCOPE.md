@@ -94,6 +94,12 @@ This document defines the scoped R14 VHDL backend plan for FSMGen.
   parity, aggregate record/array lowering, package emission, GHDL validation,
   composition parity, and full backend parity remain future-owner work, not
   active VHDL scope.
+- `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.5` selected no VHDL-oriented
+  verification artifact. The current VHDL path is synthesizable scaffold-only,
+  the external validation contract remains SystemVerilog-only, and
+  `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.9` must select a VHDL
+  verification validation substrate before any VHDL assertion, PSL, testbench,
+  package, or monitor-like verification output is implemented.
 - Composition VHDL is shipped only for the bounded C3 external-RTL
   literal/concat structural top in
   `t/corpus/composition_intent_integer_literals.fsm` and the bounded C1

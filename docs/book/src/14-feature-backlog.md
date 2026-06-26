@@ -4209,9 +4209,14 @@ uvm-passive-monitor --verification-outdir DIR source.isf`, with artifacts at
 `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.8` now ships that bounded inert
 UVM passive-monitor skeleton output for `.isf` sources with passive
 `verification_observations[]`. The output is reviewable source plus a manifest;
-FSMGen still does not claim UVM compile support. VHDL-oriented verification,
-direct IAL2-to-verification routing, scoreboard behavior, coverage behavior,
-and reusable VIP behavior remain deferred behind later selector leaves.
+FSMGen still does not claim UVM compile support. The VHDL selector
+[IAL1_VHDL_VERIFICATION_OUTPUT_CONTRACT_SELECTION](../../IAL1_VHDL_VERIFICATION_OUTPUT_CONTRACT_SELECTION.md)
+selected no VHDL verification artifact yet: the current VHDL path is a
+synthesizable scaffold, VHDL/GHDL validation is not active, and
+`IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.9` must first select a VHDL
+verification validation substrate. Direct IAL2-to-verification routing,
+scoreboard behavior, coverage behavior, and reusable VIP behavior remain
+deferred behind later selector leaves.
 
 Read-data interleaving queue readiness audit:
 [AXI_IAL2_MANAGER_READ_DATA_INTERLEAVING_QUEUE_READINESS_AUDIT](../../AXI_IAL2_MANAGER_READ_DATA_INTERLEAVING_QUEUE_READINESS_AUDIT.md)
