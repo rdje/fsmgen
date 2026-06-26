@@ -3173,6 +3173,20 @@ implementation, APB completer `.apb` alias exposure, multi-register decode,
 sidebands, alternate widths, back-to-back policy, direct backend lowering,
 verification-output generation, backend-language variants, AXI behavior, and
 VHDL remain deferred until a public composition contract is selected.
+`.565` now selects `.566`, direct bounded APB `.ppif` composition
+implementation. The selected first contract is `ppif/apb_composition.ppif`
+with top-level intent `apb_composition`, exactly one embedded
+`(apb-requester apb_requester ...)`, exactly one embedded `(apb-completer
+apb_completer ...)`, and one explicit `(apb-composition apb_tb ...)` object
+that references those endpoints. It generates `apb_requester.isf`,
+`apb_requester.fsm`, `apb_completer.isf`, `apb_completer.fsm`, and
+`apb_tb.fsm`, selects report schema
+`fsmgen.ial2.protocol_intent.apb_composition.v1`, and support-accounts
+`intent.ppif_apb_composition`. Requester `busy` exposure, `.apb`
+composition/completer aliases, multi-peripheral interconnect/decode,
+multi-register decode, sidebands, alternate widths, back-to-back policy,
+direct backend lowering, verification-output generation, backend-language
+variants, AXI behavior, and VHDL remain deferred.
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
 `.562` without adding APB behavior in `.561`.
@@ -5692,6 +5706,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL1_EXPRESSION_ENTRY_GUARD_RENDERING_BEHAVIOR.md` — ships the IAL1 expression entry-guard rendering repair so first-clause `(when EXPR (sample ...))` generated `.fsm` sample enables and entry transitions use rendered expression guard text instead of `ARRAY(...)`.
 - `docs/IAL2_POST_APB_COMPLETER_NEXT_SLICE_SELECTION.md` — selects APB interconnect/composition readiness audit after generated APB requester and completer `.ppif` endpoints both exist, while keeping APB completer `.apb` alias exposure and wider APB protocol breadth deferred.
 - `docs/IAL2_APB_INTERCONNECT_COMPOSITION_READINESS_AUDIT.md` — audits APB interconnect/composition readiness after generated APB requester/completer endpoints and selects public contract selection before any generated composition behavior.
+- `docs/IAL2_APB_INTERCONNECT_COMPOSITION_CONTRACT_SELECTION.md` — selects the explicit APB `.ppif` requester/completer composition contract and routes the next slice to direct bounded implementation.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_CONTRACT_SELECTION.md` — selected direct single-active dynamic write `BID` same-cycle release-and-recapture behavior under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_BEHAVIOR.md` — shipped single-active dynamic write `BID` same-cycle release-and-recapture under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_WRITE_RECAPTURE_NEXT_SLICE_SELECTION.md` — selected `.367`, public contract selection for first single-active dynamic read same-cycle release-and-recapture after dynamic write recapture shipped.

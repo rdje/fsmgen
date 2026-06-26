@@ -4172,6 +4172,20 @@ implementation, APB completer `.apb` alias exposure, multi-register decode,
 sidebands, alternate widths, back-to-back policy, direct backend lowering,
 verification-output generation, backend-language variants, AXI behavior, and
 VHDL remain deferred until a public composition contract is selected.
+`.565` now selects `.566`, direct bounded APB `.ppif` composition
+implementation. The selected first contract is `ppif/apb_composition.ppif`
+with top-level intent `apb_composition`, exactly one embedded
+`(apb-requester apb_requester ...)`, exactly one embedded `(apb-completer
+apb_completer ...)`, and one explicit `(apb-composition apb_tb ...)` object
+that references those endpoints. It generates `apb_requester.isf`,
+`apb_requester.fsm`, `apb_completer.isf`, `apb_completer.fsm`, and
+`apb_tb.fsm`, selects report schema
+`fsmgen.ial2.protocol_intent.apb_composition.v1`, and support-accounts
+`intent.ppif_apb_composition`. Requester `busy` exposure, `.apb`
+composition/completer aliases, multi-peripheral interconnect/decode,
+multi-register decode, sidebands, alternate widths, back-to-back policy,
+direct backend lowering, verification-output generation, backend-language
+variants, AXI behavior, and VHDL remain deferred.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

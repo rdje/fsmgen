@@ -9782,6 +9782,19 @@ completer `.ppif` endpoint paths now exist, and the strict-supported
 through the APB bus. Direct interconnect implementation remains deferred until
 that public contract is selected.
 
+APB interconnect/composition contract selection:
+[IAL2_APB_INTERCONNECT_COMPOSITION_CONTRACT_SELECTION](../../IAL2_APB_INTERCONNECT_COMPOSITION_CONTRACT_SELECTION.md)
+selects `.566`, direct bounded APB `.ppif` composition implementation. The
+selected first contract is `ppif/apb_composition.ppif` with top-level intent
+`apb_composition`, one embedded APB requester endpoint, one embedded APB
+completer endpoint, and one explicit `(apb-composition apb_tb ...)` object.
+The selected generated review chain is `apb_requester.isf`,
+`apb_requester.fsm`, `apb_completer.isf`, `apb_completer.fsm`, and
+`apb_tb.fsm`, with report schema
+`fsmgen.ial2.protocol_intent.apb_composition.v1` and support identity
+`intent.ppif_apb_composition`. Requester `busy` exposure and wider APB
+interconnect/decode remain deferred.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after
