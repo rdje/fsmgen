@@ -2968,6 +2968,12 @@ profile-alias candidates over IAL2, but the shipped CLI still accepts only
 `.fsm`, `.isf`, and `.ppif` as source suffixes, the PPIF adapter requires a
 `.ppif` path, and the manifest unsupported-alias inventory must be aligned with
 the public boundary prose before any suffix behavior changes.
+`.538` now synchronizes that public inventory: the capability manifest keeps
+`.pif`, `.ppi`, `.axi`, `.chi`, `.ace`, `.ahb`, `.apb`, `.atb`, `.smbus`, and
+`.i2s` unsupported in the first IAL2 public file-surface slice. The shipped
+source suffixes remain `.fsm`, `.isf`, and `.ppif`; no profile-alias suffix is
+accepted. `.538` selects `.539`, public contract selection for the first IAL2
+profile-alias suffix.
 
 No behavior
 changed in `.273`, `.274`, `.275`,
@@ -5457,6 +5463,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_PROTOCOL_NEUTRAL_VALID_READY_BUNDLE_BEHAVIOR.md` — documents the shipped protocol-neutral/non-AXI dual-channel Valid-Ready `.ppif` bundle, support accounting, generated artifacts, generic aggregate residue, and preserved AXI AW/W residue boundary.
 - `docs/IAL2_POST_NEUTRAL_VALID_READY_BUNDLE_NEXT_SLICE_SELECTION.md` — selected profile-alias readiness as the next IAL2 owner after the neutral Valid-Ready bundle shipped.
 - `docs/IAL2_PROFILE_ALIAS_SUFFIX_READINESS_AUDIT.md` — audited future IAL2 profile-alias suffix readiness and selected public unsupported-alias inventory synchronization before any suffix behavior change.
+- `docs/IAL2_PROFILE_ALIAS_UNSUPPORTED_INVENTORY_SYNC.md` — synchronizes the public unsupported-alias inventory for future IAL2 profile-alias suffixes and selects first-alias contract selection.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_CONTRACT_SELECTION.md` — selected direct single-active dynamic write `BID` same-cycle release-and-recapture behavior under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_BEHAVIOR.md` — shipped single-active dynamic write `BID` same-cycle release-and-recapture under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_WRITE_RECAPTURE_NEXT_SLICE_SELECTION.md` — selected `.367`, public contract selection for first single-active dynamic read same-cycle release-and-recapture after dynamic write recapture shipped.

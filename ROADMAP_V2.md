@@ -3966,6 +3966,12 @@ profile-alias candidates over IAL2, but the shipped CLI still accepts only
 `.fsm`, `.isf`, and `.ppif` as source suffixes, the PPIF adapter requires a
 `.ppif` path, and the manifest unsupported-alias inventory must be aligned with
 the public boundary prose before any suffix behavior changes.
+`.538` now synchronizes that public inventory: the capability manifest keeps
+`.pif`, `.ppi`, `.axi`, `.chi`, `.ace`, `.ahb`, `.apb`, `.atb`, `.smbus`, and
+`.i2s` unsupported in the first IAL2 public file-surface slice. The shipped
+source suffixes remain `.fsm`, `.isf`, and `.ppif`; no profile-alias suffix is
+accepted. `.538` selects `.539`, public contract selection for the first IAL2
+profile-alias suffix.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

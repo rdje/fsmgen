@@ -9476,6 +9476,14 @@ shipped IAL2 suffix and records that future profile-alias candidates such as
 `.axi`, `.chi`, `.ace`, `.ahb`, `.apb`, `.atb`, `.smbus`, and `.i2s` remain
 aliases over IAL2, not separate layers or AXI-only scope.
 
+IAL2 profile-alias unsupported inventory sync:
+[IAL2_PROFILE_ALIAS_UNSUPPORTED_INVENTORY_SYNC](../../IAL2_PROFILE_ALIAS_UNSUPPORTED_INVENTORY_SYNC.md)
+keeps `.pif`, `.ppi`, `.axi`, `.chi`, `.ace`, `.ahb`, `.apb`, `.atb`,
+`.smbus`, and `.i2s` listed as unsupported first-slice aliases in the
+capability manifest. Shipped source suffixes remain `.fsm`, `.isf`, and
+`.ppif`, and `.539` will select the public contract for the first IAL2
+profile-alias suffix before any implementation.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

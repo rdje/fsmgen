@@ -2993,7 +2993,12 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
     my %unsupported_aliases = map { $_ => 1 } @{$manifest->{language_surface}{file_surfaces}{unsupported_first_slice_aliases}};
     ok($unsupported_aliases{'.pif'}, 'manifest keeps .pif unsupported in the first PPIF slice');
     ok($unsupported_aliases{'.ppi'}, 'manifest keeps .ppi unsupported in the first PPIF slice');
-    ok($unsupported_aliases{'.axi'}, 'manifest keeps .axi unsupported in the first PPIF slice');
+    for my $profile_alias (qw(.axi .chi .ace .ahb .apb .atb .smbus .i2s)) {
+        ok(
+            $unsupported_aliases{$profile_alias},
+            "manifest keeps $profile_alias unsupported as a future IAL2 profile alias",
+        );
+    }
     is(
         $manifest->{language_surface}{surface_contract}{schema_version},
         1,
