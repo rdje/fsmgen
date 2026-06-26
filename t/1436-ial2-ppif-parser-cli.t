@@ -6882,7 +6882,7 @@ subtest 'CLI check JSON and semantic JSON accept APB requester-transfer .ppif pu
     );
 };
 
-subtest 'CLI keeps .apb as a known unsupported alias even for APB requester-transfer content' => sub {
+subtest 'CLI accepts .apb as the APB requester-transfer profile alias' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $alias_path = File::Spec->catfile($tempdir, 'apb_requester_transfer.apb');
     write_file($alias_path, sample_apb_requester_transfer_ppif());
@@ -6891,12 +6891,13 @@ subtest 'CLI keeps .apb as a known unsupported alias even for APB requester-tran
         command => ['./bin/fsmgen', '--strict', '--check', '--json', $alias_path],
     );
 
-    ok(!$success, '.apb alias remains rejected');
-    is(join('', @{$stderr_buf || []}), '', '.apb alias JSON failure keeps stderr clean');
+    ok($success, '.apb alias is accepted for APB requester-transfer content');
+    is(join('', @{$stderr_buf || []}), '', '.apb alias check JSON keeps stderr clean');
     my $stdout = join('', @{$stdout_buf || []});
     my $report = decode_json($stdout);
-    ok(!$report->{success}, '.apb alias check JSON reports failure');
-    like($stdout, qr/source suffix '\.apb' is a known IAL2 alias candidate but is not supported/, '.apb alias diagnostic is explicit');
+    ok($report->{success}, '.apb alias check JSON reports success');
+    is($report->{source}{resolved_path}, File::Spec->rel2abs($alias_path), '.apb alias check JSON reports the authored alias path');
+    is($report->{result}{module_name}, 'apb_requester', '.apb alias check JSON reports the generated APB requester module');
 };
 
 subtest 'CLI check JSON and semantic JSON accept capacity/status .ppif public source identity' => sub {

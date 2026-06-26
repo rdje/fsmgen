@@ -20,6 +20,7 @@ implementation. At `.538`, `.pif`, `.ppi`, `.axi`, `.chi`, `.ace`, `.ahb`,
 `.apb`, `.atb`, `.smbus`, and `.i2s` were all unsupported in the first IAL2
 public file-surface slice.
 
-This card is historical after `.540`: FSMGen now accepts only the selected
-`.axi` AXI AW Valid-Ready profile-alias sample. `.smbus`, `.i2s`, `.chi`,
-`.ace`, `.ahb`, `.apb`, `.atb`, `.pif`, and `.ppi` remain unsupported.
+This card is historical after `.540` and `.554`: FSMGen now accepts the
+selected `.axi` AXI AW Valid-Ready profile-alias sample and the selected `.apb`
+APB requester-transfer profile-alias sample. `.smbus`, `.i2s`, `.chi`, `.ace`,
+`.ahb`, `.atb`, `.pif`, and `.ppi` remain unsupported.

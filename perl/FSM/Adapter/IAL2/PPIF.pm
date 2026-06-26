@@ -29,7 +29,7 @@ sub parse_file($self, @args) {
     _validate_object_receiver($self, 'parse_file');
     my ($source_path) = _validate_scalar_args('parse_file', 1, @args);
     confess "FSM::Adapter::IAL2::PPIF->parse_file argument 1 must name a readable .ppif file or supported IAL2 profile-alias file\n"
-        unless $source_path =~ /\.(?:ppif|axi)\z/i && -f $source_path && -r $source_path;
+        unless $source_path =~ /\.(?:ppif|axi|apb)\z/i && -f $source_path && -r $source_path;
 
     open my $fh, '<', $source_path or confess "Cannot read IAL2 PPIF/profile-alias file '$source_path': $!\n";
     my $source_text = do { local $/; <$fh> };
@@ -104,6 +104,7 @@ sub _validate_scalar_args($method, $expected, @args) {
 }
 
 sub _source_surface_name($source_label) {
+    return '.apb' if defined($source_label) && $source_label =~ /\.apb\z/i;
     return '.axi' if defined($source_label) && $source_label =~ /\.axi\z/i;
     return '.ppif';
 }
@@ -112,11 +113,25 @@ sub _is_axi_profile_alias_source($source_label) {
     return defined($source_label) && $source_label =~ /\.axi\z/i;
 }
 
+sub _is_apb_profile_alias_source($source_label) {
+    return defined($source_label) && $source_label =~ /\.apb\z/i;
+}
+
 sub _is_axi_family_profile($profile) {
     return defined($profile) && !ref($profile) && $profile =~ /\Aaxi(?:3|4|5)?\z/;
 }
 
 sub _validate_profile_alias_contract($source_label, $contract) {
+    if (_is_apb_profile_alias_source($source_label)) {
+        my $profile = $contract->{protocol};
+        confess "Error: .apb source '$source_label' profile '$profile' does not match .apb profile alias; expected apb\n"
+            unless defined($profile) && !ref($profile) && $profile eq 'apb';
+
+        confess "Error: .apb source '$source_label' supports only one APB requester-transfer object in this slice; requested APB completer, interconnect, bundle, Valid-Ready, or AXI manager behavior remains unsupported for the first APB profile-alias implementation\n"
+            unless _is_apb_requester_transfer_contract($contract);
+        return;
+    }
+
     return unless _is_axi_profile_alias_source($source_label);
 
     my $profile = $contract->{protocol};

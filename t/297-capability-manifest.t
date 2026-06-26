@@ -2830,6 +2830,7 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
     ok($suffixes{'.isf'}, 'manifest advertises .isf as a shipped file surface');
     ok($suffixes{'.ppif'}, 'manifest advertises .ppif as a shipped file surface');
     ok($suffixes{'.axi'}, 'manifest advertises .axi as a shipped profile-alias file surface');
+    ok($suffixes{'.apb'}, 'manifest advertises .apb as a shipped profile-alias file surface');
     ok(
         !$manifest->{language_surface}{file_surfaces}{direct_ial2_to_ial0_allowed},
         'manifest states direct IAL2-to-IAL0 lowering is not allowed',
@@ -2904,8 +2905,13 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
     );
     like(
         $file_surface_by_suffix{'.ppif'}{current_boundary},
-        qr/additional protocol-specific suffixes such as \.chi, \.ace, \.ahb, \.apb, \.atb, \.smbus, or \.i2s remain future profile aliases/,
-        'manifest states remaining protocol-specific suffixes are future IAL2 profile aliases',
+        qr/\.apb is now the bounded APB requester-transfer profile-alias file surface/,
+        'manifest states .apb is the bounded APB profile alias over the same model',
+    );
+    like(
+        $file_surface_by_suffix{'.ppif'}{current_boundary},
+        qr/additional protocol-specific suffixes such as \.chi, \.ace, \.ahb, \.atb, \.smbus, or \.i2s remain future profile aliases/,
+        'manifest states remaining non-APB protocol-specific suffixes are future IAL2 profile aliases',
     );
     like(
         $file_surface_by_suffix{'.ppif'}{current_boundary},
@@ -3041,11 +3047,57 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
         qr/Direct IAL2-to-IAL0 lowering remains forbidden/,
         'manifest keeps direct IAL2-to-IAL0 lowering forbidden for .axi',
     );
+    is($file_surface_by_suffix{'.apb'}{intent_layer}, 'IAL2', 'manifest marks .apb as IAL2');
+    is(
+        $file_surface_by_suffix{'.apb'}{status},
+        'shipped_bounded_profile_alias',
+        'manifest marks .apb as a bounded profile-alias surface',
+    );
+    is_deeply(
+        $file_surface_by_suffix{'.apb'}{lowers_to},
+        ['.isf', '.fsm'],
+        'manifest records .apb lowering through .isf before .fsm',
+    );
+    is_deeply(
+        $file_surface_by_suffix{'.apb'}{generated_review_artifacts},
+        ['.isf', '.fsm'],
+        'manifest records .apb generated review artifacts',
+    );
+    my %apb_cli_modes = map { $_ => 1 } @{$file_surface_by_suffix{'.apb'}{supported_cli_modes} || []};
+    ok($apb_cli_modes{'--emit-schedule-json'}, 'manifest records .apb schedule-report CLI mode');
+    ok($apb_cli_modes{'--emit-semantic-json'}, 'manifest records .apb semantic JSON CLI mode');
+    ok($apb_cli_modes{'--check --json / --check-json'}, 'manifest records .apb check JSON CLI mode');
+    is(
+        $file_surface_by_suffix{'.apb'}{sample_path},
+        'ppif/apb_requester_transfer.apb',
+        'manifest points at the first .apb profile-alias sample',
+    );
+    like(
+        $file_surface_by_suffix{'.apb'}{current_boundary},
+        qr/APB requester-transfer IAL2 profile-alias suffix/,
+        'manifest describes .apb as the APB requester-transfer profile-alias suffix',
+    );
+    like(
+        $file_surface_by_suffix{'.apb'}{current_boundary},
+        qr/must declare explicit \(profile apb\)/,
+        'manifest records explicit APB profile matching for .apb',
+    );
+    like(
+        $file_surface_by_suffix{'.apb'}{current_boundary},
+        qr/lower through generated apb_requester\.isf before generated apb_requester\.fsm/,
+        'manifest records generated APB review artifacts for .apb',
+    );
+    like(
+        $file_surface_by_suffix{'.apb'}{current_boundary},
+        qr/Direct IAL2-to-IAL0 lowering|direct IAL2-to-IAL0 lowering/,
+        'manifest keeps direct IAL2-to-IAL0 lowering forbidden for .apb',
+    );
     my %unsupported_aliases = map { $_ => 1 } @{$manifest->{language_surface}{file_surfaces}{unsupported_first_slice_aliases}};
     ok($unsupported_aliases{'.pif'}, 'manifest keeps .pif unsupported in the first PPIF slice');
     ok($unsupported_aliases{'.ppi'}, 'manifest keeps .ppi unsupported in the first PPIF slice');
     ok(!$unsupported_aliases{'.axi'}, 'manifest no longer lists .axi as unsupported after the first profile-alias slice');
-    for my $profile_alias (qw(.chi .ace .ahb .apb .atb .smbus .i2s)) {
+    ok(!$unsupported_aliases{'.apb'}, 'manifest no longer lists .apb as unsupported after the APB profile-alias slice');
+    for my $profile_alias (qw(.chi .ace .ahb .atb .smbus .i2s)) {
         ok(
             $unsupported_aliases{$profile_alias},
             "manifest keeps $profile_alias unsupported as a future IAL2 profile alias",

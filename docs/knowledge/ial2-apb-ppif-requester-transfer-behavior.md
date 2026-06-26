@@ -5,7 +5,6 @@ answers:
   - "does FSMGen support an APB .ppif source?"
   - "what did IAL2-FEATURE-COMPLETENESS-FRONTIER.550 implement?"
   - "what APB PPIF behavior is shipped?"
-  - "does APB PPIF accept .apb?"
   - "what report schema does APB requester-transfer use?"
 date: 2026-06-26
 status: current
@@ -27,5 +26,7 @@ The IAL2 report schema is
 `fsmgen.ial2.protocol_intent.apb_requester_transfer.v1`, and support accounting
 matches `intent.ppif_apb_requester_transfer`.
 
-`.apb` remains a known unsupported suffix. APB support in `.550` is an APB
-profile inside `.ppif`, not a new suffix and not an AXI extension.
+At `.550` closeout, `.apb` remained a known unsupported suffix. Current `.apb`
+alias behavior is tracked separately by
+`docs/knowledge/ial2-apb-profile-alias-behavior.md`. APB support in this `.ppif`
+path remains an APB profile inside `.ppif`, not an AXI extension.

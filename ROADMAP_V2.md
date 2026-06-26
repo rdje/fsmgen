@@ -4036,9 +4036,9 @@ or add APB `.ppif` behavior.
 selection. The audit found enough lower-layer APB evidence in the ISF
 requester, requester/completer FSMs, composition top, mdBook examples, and
 support catalog to choose a public APB IAL2 source-shape contract. It does not
-select implementation: `.apb` remains unsupported, no APB `.ppif` sample is
-added, and APB report/support-accounting identity remains a contract-selection
-decision before behavior changes.
+select implementation. At `.548` closeout, `.apb` remained unsupported, no APB
+`.ppif` sample was added, and APB report/support-accounting identity remained a
+contract-selection decision before behavior changes.
 `.549` now selects `.550`, direct bounded implementation of the first APB
 `.ppif` source shape. The selected contract uses `(profile apb)` and a single
 `(apb-requester apb_requester ...)` object, future sample path
@@ -4066,11 +4066,11 @@ selection. The audit found APB is ready for contract selection because the
 shipped `.ppif` requester-transfer path already locks profile `apb`,
 `apb-requester` vocabulary, generated `apb_requester.isf` and
 `apb_requester.fsm` review artifacts, report schema, strict check JSON,
-semantic JSON, and support accounting. `.apb` remains unsupported until a
-separate contract and implementation owner settle explicit profile policy,
-authored `.apb` source identity, support-accounting identity/source kind,
-manifest wording, diagnostics, and mandatory generated `.isf` review
-preservation.
+semantic JSON, and support accounting. At `.552` closeout, `.apb` remained
+unsupported until a separate contract and implementation owner settled explicit
+profile policy, authored `.apb` source identity, support-accounting
+identity/source kind, manifest wording, diagnostics, and mandatory generated
+`.isf` review preservation.
 `.553` now selects `.554`, direct bounded implementation of the first APB
 `.apb` profile-alias suffix. The selected contract mirrors
 `ppif/apb_requester_transfer.ppif` at future path
@@ -4079,8 +4079,20 @@ suffix inference, lowers through generated `apb_requester.isf` before
 `apb_requester.fsm`, support-accounts the alias as
 `intent.apb_profile_alias_requester_transfer` with source kind
 `ial2_profile_alias`, and reserves focused
-`t/1470-ial2-apb-profile-alias.t` coverage. `.apb` remains unsupported until
-`.554` implements the contract.
+`t/1470-ial2-apb-profile-alias.t` coverage. At `.553` closeout, `.apb`
+remained unsupported until `.554` implemented the contract.
+`.554` now ships that bounded APB `.apb` profile-alias requester-transfer
+behavior. The sample `ppif/apb_requester_transfer.apb` uses explicit
+`(profile apb)` with one `(apb-requester apb_requester ...)` object, lowers
+through generated `apb_requester.isf` before `apb_requester.fsm`, preserves the
+authored `.apb` source path in check JSON and semantic JSON, reaches HDL module
+`apb_requester`, and support-accounts
+`intent.apb_profile_alias_requester_transfer` with source kind
+`ial2_profile_alias`. `.chi`, `.ace`, `.ahb`, `.atb`, `.smbus`, `.i2s`,
+`.pif`, and `.ppi` remain unsupported aliases, and APB completer/interconnect
+generation, sidebands, alternate widths, multi-peripheral decode,
+back-to-back policy, direct backend lowering, verification-output generation,
+backend-language variants, and VHDL remain deferred.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

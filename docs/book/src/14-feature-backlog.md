@@ -9604,8 +9604,9 @@ support-accounts `intent.ppif_apb_requester_transfer`. APB support here is a
   ppif/apb_requester_transfer.ppif
 ```
 
-The `.apb` suffix remains a known unsupported alias candidate even when the
-file contents match the APB `.ppif` source.
+At `.550` closeout, the `.apb` suffix remained a known unsupported alias
+candidate even when the file contents matched the APB `.ppif` source. The
+later `.554` slice ships the bounded `.apb` alias documented below.
 
 Post APB requester-transfer selector:
 [IAL2_POST_APB_REQUESTER_TRANSFER_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_REQUESTER_TRANSFER_NEXT_SLICE_SELECTION.md)
@@ -9639,8 +9640,35 @@ profile-alias suffix. The selected contract mirrors
 suffix inference, preserves generated `apb_requester.isf` before generated
 `apb_requester.fsm`, and support-accounts the alias as
 `intent.apb_profile_alias_requester_transfer` with source kind
-`ial2_profile_alias`. `.apb` remains unsupported until `.554` implements the
-contract.
+`ial2_profile_alias`. At `.553` closeout, `.apb` remained unsupported until
+`.554` implemented the contract.
+
+IAL2 APB `.apb` profile-alias behavior:
+[IAL2_APB_PROFILE_ALIAS_BEHAVIOR](../../IAL2_APB_PROFILE_ALIAS_BEHAVIOR.md)
+ships `ppif/apb_requester_transfer.apb` as the bounded APB
+requester-transfer IAL2 profile alias. The alias keeps explicit `(profile apb)`
+with no suffix inference, supports exactly one
+`(apb-requester apb_requester ...)` object in this first slice, lowers through
+generated `apb_requester.isf` before generated `apb_requester.fsm`, reaches HDL
+module `apb_requester`, preserves the authored `.apb` source path in check JSON
+and semantic JSON, and support-accounts
+`intent.apb_profile_alias_requester_transfer` with source kind
+`ial2_profile_alias`.
+
+```bash
+./bin/fsmgen --emit-schedule-json ppif/apb_requester_transfer.apb
+./bin/fsmgen --strict --check --json ppif/apb_requester_transfer.apb
+./bin/fsmgen --strict --emit-semantic-json ppif/apb_requester_transfer.apb
+./bin/fsmgen --quiet --outdir /tmp/fsmgen-apb-alias \
+  --output /tmp/fsmgen-apb-alias/apb_requester.sv \
+  ppif/apb_requester_transfer.apb
+```
+
+Remaining unsupported aliases are `.chi`, `.ace`, `.ahb`, `.atb`, `.smbus`,
+`.i2s`, `.pif`, and `.ppi`. APB completer/interconnect generation, sidebands,
+alternate widths, multi-peripheral decode, back-to-back policy, implicit
+profile inference, direct backend lowering, verification-output generation,
+backend-language variants, and VHDL remain deferred.
 
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)

@@ -20,10 +20,12 @@ The source uses the explicit APB profile and one APB requester object:
 (apb-requester apb_requester ...)
 ```
 
-APB is not exposed through a `.apb` suffix in this slice. `.apb` remains a
-known unsupported alias candidate. APB is also not an AXI behavior: AXI is only
-the first profile-alias example, while this slice proves the same `.ppif` IAL2
-container can carry a non-AXI protocol profile.
+In this `.550` slice, APB was not exposed through a `.apb` suffix and `.apb`
+remained a known unsupported alias candidate. The later `.554` slice ships the
+bounded `.apb` profile alias at `ppif/apb_requester_transfer.apb`; this page
+continues to describe the generic `.ppif` APB source shape. APB is also not an
+AXI behavior: AXI is only the first profile-alias example, while this slice
+proves the same `.ppif` IAL2 container can carry a non-AXI protocol profile.
 
 ## Source Shape
 
@@ -140,15 +142,16 @@ Materialize generated review artifacts and HDL:
   ppif/apb_requester_transfer.ppif
 ```
 
-The `.apb` suffix remains rejected even when the file contents match the APB
-`.ppif` sample:
+At `.550` closeout, the `.apb` suffix was still rejected even when the file
+contents matched the APB `.ppif` sample:
 
 ```bash
 ./bin/fsmgen --strict --check --json /tmp/apb_requester_transfer.apb
 ```
 
-That reports `source suffix '.apb' is a known IAL2 alias candidate but is not
-supported in this slice`.
+That reported `source suffix '.apb' is a known IAL2 alias candidate but is not
+supported in this slice`. Current `.apb` behavior is documented in
+[IAL2_APB_PROFILE_ALIAS_BEHAVIOR](IAL2_APB_PROFILE_ALIAS_BEHAVIOR.md).
 
 ## Residue
 
@@ -164,10 +167,10 @@ apb_back_to_back_policy_deferred
 
 ## Non-Goals
 
-This slice does not accept `.apb` or any other new suffix, does not extend
-`.axi`, does not add APB completer or interconnect generation, does not add
-verification-output behavior, does not add direct IAL2-to-backend lowering, and
-does not change VHDL behavior.
+This `.550` slice did not accept `.apb` or any other new suffix, did not extend
+`.axi`, did not add APB completer or interconnect generation, did not add
+verification-output behavior, did not add direct IAL2-to-backend lowering, and
+did not change VHDL behavior.
 
 ## Validation
 
@@ -197,7 +200,8 @@ direct parser/CLI/report/support-accounting/suffix checks above.
 
 ## Rollback
 
-Rollback removes `ppif/apb_requester_transfer.ppif`, the APB requester-transfer
-generator and parser dispatch, the support-accounting entry, the focused tests,
-this behavior record, its Knowledge Map fact card, and the README/ROADMAP/mdBook
-task-tree/memory updates. `.apb` remains unsupported before and after rollback.
+Rollback of `.550` removes `ppif/apb_requester_transfer.ppif`, the APB
+requester-transfer generator and parser dispatch, the support-accounting entry,
+the focused tests, this behavior record, its Knowledge Map fact card, and the
+README/ROADMAP/mdBook task-tree/memory updates. `.apb` support is owned by the
+later `.554` slice.

@@ -187,7 +187,7 @@ sub unsupported_ial2_alias_suffix {
     my ($path) = @_;
     my $suffix = source_suffix($path);
     return undef unless defined $suffix;
-    my %unsupported = map { $_ => 1 } qw(.pif .ppi .chi .ace .ahb .apb .atb .smbus .i2s);
+    my %unsupported = map { $_ => 1 } qw(.pif .ppi .chi .ace .ahb .atb .smbus .i2s);
     return $suffix if $unsupported{$suffix};
     return undef;
 }
@@ -567,6 +567,7 @@ Arguments:
                   • bare_name.isf     - lowers IAL1 intent scheduling to .fsm before HDL
                   • bare_name.ppif    - lowers IAL2 protocol/platform intent to .isf, then .fsm before HDL
                   • bare_name.axi     - lowers the first AXI IAL2 profile alias through .isf, then .fsm
+                  • bare_name.apb     - lowers the first APB IAL2 profile alias through .isf, then .fsm
                   • relative/path.fsm - uses relative path (no FSMLIB search)
                   • /absolute/path.fsm - uses absolute path (no FSMLIB search)
 
@@ -932,9 +933,9 @@ if (length($emit_verification_output)) {
     exit 0;
 }
 
-# PPIF pipeline: if input is .ppif or the first .axi profile alias, lower
-# through generated .isf to .fsm first.
-if ($fsm_file =~ /\.(?:ppif|axi)$/i) {
+# PPIF pipeline: if input is .ppif or a supported profile alias, lower through
+# generated .isf to .fsm first.
+if ($fsm_file =~ /\.(?:ppif|axi|apb)$/i) {
     require FSM::Adapter::IAL2::PPIF;
     require File::Temp;
 

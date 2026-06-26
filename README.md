@@ -3038,9 +3038,10 @@ or add APB `.ppif` behavior.
 selection. The audit found that APB has enough lower-layer evidence in the
 existing ISF requester, requester/completer FSMs, composition top, mdBook
 examples, and support catalog to choose a public IAL2 source-shape contract
-before implementation. That evidence is not yet an IAL2 behavior contract:
-`.apb` remains unsupported, no APB `.ppif` sample exists, and report/
-support-accounting identities still need selection before behavior changes.
+before implementation. At `.548` closeout, that evidence was not yet an IAL2
+behavior contract: `.apb` remained unsupported, no APB `.ppif` sample existed,
+and report/support-accounting identities still needed selection before behavior
+changes.
 `.549` now selects `.550`, direct bounded implementation of the first APB
 `.ppif` source shape. The selected source uses `(profile apb)` and one
 `(apb-requester apb_requester ...)` object, selects the future sample
@@ -3068,11 +3069,11 @@ selection. The audit found APB is ready for contract selection because the
 shipped `.ppif` requester-transfer path already locks profile `apb`,
 `apb-requester` vocabulary, generated `apb_requester.isf` and
 `apb_requester.fsm` review artifacts, report schema, strict check JSON,
-semantic JSON, and support accounting. `.apb` remains unsupported until a
-separate contract and implementation owner settle explicit profile policy,
-authored `.apb` source identity, support-accounting identity/source kind,
-manifest wording, diagnostics, and mandatory generated `.isf` review
-preservation.
+semantic JSON, and support accounting. At `.552` closeout, `.apb` remained
+unsupported until a separate contract and implementation owner settled explicit
+profile policy, authored `.apb` source identity, support-accounting
+identity/source kind, manifest wording, diagnostics, and mandatory generated
+`.isf` review preservation.
 `.553` now selects `.554`, direct bounded implementation of the first APB
 `.apb` profile-alias suffix. The selected contract mirrors
 `ppif/apb_requester_transfer.ppif` at future path
@@ -3081,8 +3082,20 @@ suffix inference, lowers through generated `apb_requester.isf` before
 `apb_requester.fsm`, support-accounts the alias as
 `intent.apb_profile_alias_requester_transfer` with source kind
 `ial2_profile_alias`, and reserves focused
-`t/1470-ial2-apb-profile-alias.t` coverage. `.apb` remains unsupported until
-`.554` implements the contract.
+`t/1470-ial2-apb-profile-alias.t` coverage. At `.553` closeout, `.apb`
+remained unsupported until `.554` implemented the contract.
+`.554` now ships that bounded APB `.apb` profile-alias requester-transfer
+behavior. The sample `ppif/apb_requester_transfer.apb` uses explicit
+`(profile apb)` with one `(apb-requester apb_requester ...)` object, lowers
+through generated `apb_requester.isf` before `apb_requester.fsm`, preserves the
+authored `.apb` source path in check JSON and semantic JSON, reaches HDL module
+`apb_requester`, and support-accounts
+`intent.apb_profile_alias_requester_transfer` with source kind
+`ial2_profile_alias`. `.chi`, `.ace`, `.ahb`, `.atb`, `.smbus`, `.i2s`,
+`.pif`, and `.ppi` remain unsupported aliases, and APB completer/interconnect
+generation, sidebands, alternate widths, multi-peripheral decode,
+back-to-back policy, direct backend lowering, verification-output generation,
+backend-language variants, and VHDL remain deferred.
 
 No behavior
 changed in `.273`, `.274`, `.275`,
@@ -5584,10 +5597,11 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_PIF_PPI_GENERIC_CONTAINER_ALIAS_POLICY_SELECTION.md` — keeps `.pif`/`.ppi` unsupported historical generic-container spellings and selects an APB IAL2 source-shape readiness audit.
 - `docs/IAL2_APB_SOURCE_SHAPE_READINESS_AUDIT.md` — audits APB lower-layer evidence and selects APB `.ppif` source-shape public contract selection before any APB behavior or `.apb` suffix support.
 - `docs/IAL2_APB_PPIF_SOURCE_SHAPE_CONTRACT_SELECTION.md` — selects `(profile apb)`, the first `(apb-requester ...)` source shape, `ppif/apb_requester_transfer.ppif`, `intent.ppif_apb_requester_transfer`, and direct implementation as the next exact owner.
-- `docs/IAL2_APB_PPIF_REQUESTER_TRANSFER_BEHAVIOR.md` — ships the first APB `.ppif` requester-transfer behavior with `ppif/apb_requester_transfer.ppif`, generated `apb_requester.isf`/`apb_requester.fsm`, report schema `fsmgen.ial2.protocol_intent.apb_requester_transfer.v1`, and `.apb` still unsupported.
+- `docs/IAL2_APB_PPIF_REQUESTER_TRANSFER_BEHAVIOR.md` — ships the first APB `.ppif` requester-transfer behavior with `ppif/apb_requester_transfer.ppif`, generated `apb_requester.isf`/`apb_requester.fsm`, and report schema `fsmgen.ial2.protocol_intent.apb_requester_transfer.v1`; the later `.apb` alias is documented separately.
 - `docs/IAL2_POST_APB_REQUESTER_TRANSFER_NEXT_SLICE_SELECTION.md` — selects APB `.apb` profile-alias readiness audit after APB `.ppif` requester-transfer behavior, without accepting `.apb` or changing behavior.
 - `docs/IAL2_APB_PROFILE_ALIAS_READINESS_AUDIT.md` — audits APB `.apb` profile-alias readiness and selects public `.apb` contract selection while keeping `.apb` unsupported.
 - `docs/IAL2_APB_PROFILE_ALIAS_CONTRACT_SELECTION.md` — selects direct bounded implementation of the first APB `.apb` profile alias at `ppif/apb_requester_transfer.apb`, with explicit `(profile apb)` and generated `.isf` review preservation.
+- `docs/IAL2_APB_PROFILE_ALIAS_BEHAVIOR.md` — ships `ppif/apb_requester_transfer.apb` as the bounded APB requester-transfer IAL2 profile alias with explicit `(profile apb)`, generated `apb_requester.isf`/`apb_requester.fsm`, and support identity `intent.apb_profile_alias_requester_transfer`.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_CONTRACT_SELECTION.md` — selected direct single-active dynamic write `BID` same-cycle release-and-recapture behavior under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_BEHAVIOR.md` — shipped single-active dynamic write `BID` same-cycle release-and-recapture under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_WRITE_RECAPTURE_NEXT_SLICE_SELECTION.md` — selected `.367`, public contract selection for first single-active dynamic read same-cycle release-and-recapture after dynamic write recapture shipped.

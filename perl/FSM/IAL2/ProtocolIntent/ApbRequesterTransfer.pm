@@ -544,7 +544,7 @@ sub _build_report(%args) {
             'setup phase must drive select 1 and enable 0',
             'access phase must drive select 1 and enable 1',
             'completion waits on ready, samples read-data and error, and reports latency min 2 max 16',
-            'APB is exposed as a .ppif profile; .apb remains a known unsupported suffix in this slice',
+            'APB requester-transfer is exposed through .ppif and bounded .apb profile-alias sources; direct IAL2-to-IAL0 lowering remains forbidden',
         ],
         unsupported_residue => [
             {
