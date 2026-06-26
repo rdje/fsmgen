@@ -4205,6 +4205,20 @@ copies fail closed with the current requester-transfer-only alias diagnostic.
 No behavior changed in `.567`; exact `.apb` sample paths, support identities,
 source-kind behavior, diagnostics, and validation scope must be selected before
 alias widening.
+`.568` now selects `.569`, direct bounded implementation of APB `.apb`
+profile-alias widening for shipped APB completer and fixed APB composition
+sources. The selected future samples are `ppif/apb_completer.apb` and
+`ppif/apb_composition.apb`, both retaining explicit `(profile apb)`,
+generated `.isf`/`.fsm` review artifacts, authored `.apb` source identity in
+check/semantic JSON, and source kind `ial2_profile_alias`. The selected
+support identities are `intent.apb_profile_alias_completer` and
+`intent.apb_profile_alias_composition`; the composition alias keeps `apb_tb`
+as semantic top with children `apb_requester` and `apb_completer`. No behavior
+changed in `.568`; `.569` owns the parser/sample/support/test/docs behavior
+widening, while multi-peripheral interconnect/decode, requester busy/status,
+multi-register decode, sidebands/strobes, alternate widths, back-to-back
+policy, direct backend, verification-output, backend-language variants, AXI,
+and VHDL remain deferred.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

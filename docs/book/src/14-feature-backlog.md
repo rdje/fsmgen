@@ -9835,6 +9835,34 @@ No behavior changes in `.567`; exact `.apb` sample paths, support identities,
 source-kind behavior, diagnostics, validation, and rollback must be selected
 before alias widening.
 
+APB `.apb` completer/composition contract:
+[IAL2_APB_PROFILE_ALIAS_COMPLETER_COMPOSITION_CONTRACT_SELECTION](../../IAL2_APB_PROFILE_ALIAS_COMPLETER_COMPOSITION_CONTRACT_SELECTION.md)
+selects `.569`, direct bounded implementation of APB `.apb` profile-alias
+widening for the shipped APB completer and fixed APB requester/completer
+composition shapes. The selected future samples are `ppif/apb_completer.apb`
+and `ppif/apb_composition.apb`; both keep explicit `(profile apb)`, preserve
+the generated `.isf`/`.fsm` review artifacts from the generic `.ppif`
+behaviors, and keep authored `.apb` source paths in check JSON and semantic
+JSON. The selected support identities are
+`intent.apb_profile_alias_completer` and
+`intent.apb_profile_alias_composition`, both with source kind
+`ial2_profile_alias`.
+
+The completer alias keeps report schema
+`fsmgen.ial2.protocol_intent.apb_completer.v1`, generated
+`apb_completer.isf` and `apb_completer.fsm`, HDL module `apb_completer`, and
+semantic root kind `fsm`. The composition alias keeps report schema
+`fsmgen.ial2.protocol_intent.apb_composition.v1`, generated
+`apb_requester.isf`, `apb_completer.isf`, `apb_requester.fsm`,
+`apb_completer.fsm`, and `apb_tb.fsm`, HDL entry `apb_tb.fsm`, expected top
+`apb_tb`, children `apb_requester` and `apb_completer`, and semantic root kind
+`top`. No behavior changes in `.568`; temporary completer/composition `.apb`
+copies still fail closed until `.569` implements the selected widening.
+Multi-peripheral interconnect/decode, requester `busy`/status exposure,
+multi-register decode, sidebands/strobes, alternate widths, back-to-back
+policy, direct backend lowering, verification-output generation,
+backend-language variants, AXI behavior, and VHDL remain deferred.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

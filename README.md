@@ -3206,6 +3206,20 @@ copies fail closed with the current requester-transfer-only alias diagnostic.
 No behavior changed in `.567`; exact `.apb` sample paths, support identities,
 source-kind behavior, diagnostics, and validation scope must be selected before
 alias widening.
+`.568` now selects `.569`, direct bounded implementation of APB `.apb`
+profile-alias widening for shipped APB completer and fixed APB composition
+sources. The selected future samples are `ppif/apb_completer.apb` and
+`ppif/apb_composition.apb`, both retaining explicit `(profile apb)`,
+generated `.isf`/`.fsm` review artifacts, authored `.apb` source identity in
+check/semantic JSON, and source kind `ial2_profile_alias`. The selected
+support identities are `intent.apb_profile_alias_completer` and
+`intent.apb_profile_alias_composition`; the composition alias keeps `apb_tb`
+as semantic top with children `apb_requester` and `apb_completer`. No behavior
+changed in `.568`; `.569` owns the parser/sample/support/test/docs behavior
+widening, while multi-peripheral interconnect/decode, requester busy/status,
+multi-register decode, sidebands/strobes, alternate widths, back-to-back
+policy, direct backend, verification-output, backend-language variants, AXI,
+and VHDL remain deferred.
 The APB-shaped `PSEL && !PENABLE` setup detector now lowers without
 `ARRAY(...)`, and direct APB `.ppif` completer implementation is routed to
 `.562` without adding APB behavior in `.561`.
@@ -5728,6 +5742,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_APB_INTERCONNECT_COMPOSITION_CONTRACT_SELECTION.md` — selects the explicit APB `.ppif` requester/completer composition contract and routes the next slice to direct bounded implementation.
 - `docs/IAL2_APB_PPIF_COMPOSITION_BEHAVIOR.md` — ships the first fixed one-requester/one-completer APB `.ppif` composition behavior with `ppif/apb_composition.ppif`, generated endpoint `.isf`/`.fsm` review artifacts, selected `apb_tb.fsm` HDL entry, report schema `fsmgen.ial2.protocol_intent.apb_composition.v1`, and support identity `intent.ppif_apb_composition`.
 - `docs/IAL2_POST_APB_COMPOSITION_NEXT_SLICE_SELECTION.md` — selects APB `.apb` profile-alias public contract selection for the shipped APB completer and fixed APB composition `.ppif` shapes, without changing behavior.
+- `docs/IAL2_APB_PROFILE_ALIAS_COMPLETER_COMPOSITION_CONTRACT_SELECTION.md` — selects direct bounded implementation of APB `.apb` alias widening for `ppif/apb_completer.apb` and `ppif/apb_composition.apb`, with explicit `(profile apb)`, generated review-artifact preservation, support identities `intent.apb_profile_alias_completer` and `intent.apb_profile_alias_composition`, and no behavior change in the selector slice.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_CONTRACT_SELECTION.md` — selected direct single-active dynamic write `BID` same-cycle release-and-recapture behavior under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_BEHAVIOR.md` — shipped single-active dynamic write `BID` same-cycle release-and-recapture under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_WRITE_RECAPTURE_NEXT_SLICE_SELECTION.md` — selected `.367`, public contract selection for first single-active dynamic read same-cycle release-and-recapture after dynamic write recapture shipped.
