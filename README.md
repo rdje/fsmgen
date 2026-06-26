@@ -2723,13 +2723,14 @@ integration spec, public interface contract, embedding chapter, and
 `language_surface.file_surfaces` `.ppif` manifest boundary now advertise
 generated one-dynamic plus one-concrete-static mixed dynamic/static same-ID
 `issue-order-queue` behavior for write `BID`, read single-beat `RID`, and read
-burst-last `RID && RLAST`. The manifest test now locks that boundary. Mixed
-read-data, raw `ARLEN`, runtime validation, and multi-beat output banks over
-generated mixed dynamic/static issue-order queues remain deferred, as do
-broader mixed cardinality, scoreboards, backend behavior, backend-language
-variants, verification-code generation, external converter dependencies such
-as `sv2v`, and VHDL. `.512` is the next selector after this public-surface
-sync.
+burst-last `RID && RLAST`. The manifest test now locks that boundary. The
+later `.514` slice adds paired scalar read-data over the generated mixed read
+single-beat and burst-last queue completions; raw `ARLEN`, runtime validation,
+and multi-beat output banks over generated mixed dynamic/static issue-order
+queues remain deferred, as do broader mixed cardinality, scoreboards, backend
+behavior, backend-language variants, verification-code generation, external
+converter dependencies such as `sv2v`, and VHDL. `.512` is the next selector
+after this public-surface sync.
 
 `.512` now selects `.513`, readiness audit for scalar read-data routing over
 generated mixed dynamic/static read same-ID `issue-order-queue` completion
@@ -2759,6 +2760,25 @@ and VHDL remain deferred. `.513` changes no parser, generator, PPIF sample,
 support-accounting catalog, generated artifact, schedule/check/semantic JSON,
 test, HDL/runtime behavior, backend behavior, external converter dependency,
 verification-output, or VHDL behavior.
+
+`.514` now ships paired scalar read-data routing over the generated mixed
+dynamic/static read same-ID `issue-order-queue` completions. The
+support-accounted public samples are
+`ppif/axi_manager_capacity_status_read_mixed_dynamic_static_same_id_issue_order_queue_read_data.ppif`
+and
+`ppif/axi_manager_capacity_status_read_mixed_dynamic_static_burst_last_same_id_issue_order_queue_read_data.ppif`.
+Both shapes use exactly one dynamic read transaction plus one concrete static
+read transaction, one depth-2 generated mixed queue, existing scalar
+`read-data.read` syntax, complete scalar `RDATA`/`RRESP` output bindings, and
+queue-specific completion-validity names
+`generated_mixed_dynamic_static_read_issue_order_queue_response_demux_completion_pulse`
+or
+`generated_mixed_dynamic_static_read_issue_order_queue_response_demux_last_beat_completion_pulse`.
+Raw `ARLEN`, runtime validation, multi-beat output banks, broader mixed
+cardinality, scoreboards, backend behavior, backend-language variants,
+verification-code generation, external converter dependencies such as `sv2v`,
+and VHDL remain deferred. `.515` is the raw-`ARLEN` burst-length readiness
+audit over the mixed burst-last queue read-data path.
 
 No behavior
 changed in `.273`, `.274`, `.275`,
@@ -5183,6 +5203,10 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/AXI_IAL2_MANAGER_POST_MIXED_DYNAMIC_STATIC_READ_SAME_ID_ISSUE_ORDER_QUEUE_NEXT_SLICE_SELECTION.md` — selected generated mixed dynamic/static read burst-last `RID && RLAST` same-ID issue-order queue readiness after the mixed read single-beat `RID` queue shipped.
 - `docs/AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_READ_BURST_LAST_SAME_ID_ISSUE_ORDER_QUEUE_READINESS_AUDIT.md` — audited generated mixed dynamic/static read burst-last `RID && RLAST` same-ID issue-order queue readiness and selected direct bounded implementation.
 - `docs/AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_READ_BURST_LAST_SAME_ID_ISSUE_ORDER_QUEUE_BEHAVIOR.md` — documents generated mixed dynamic/static read burst-last `RID && RLAST` same-ID issue-order queue behavior for one dynamic plus one concrete static transaction.
+- `docs/AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_ISSUE_ORDER_QUEUE_PUBLIC_SURFACE_SYNC.md` — synchronized the public `.ppif` boundary after generated mixed dynamic/static same-ID issue-order queue behavior shipped.
+- `docs/AXI_IAL2_MANAGER_POST_MIXED_DYNAMIC_STATIC_ISSUE_ORDER_QUEUE_PUBLIC_SURFACE_SYNC_NEXT_SLICE_SELECTION.md` — selected mixed dynamic/static issue-order queue scalar read-data readiness after public-surface synchronization.
+- `docs/AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_ISSUE_ORDER_QUEUE_READ_DATA_READINESS_AUDIT.md` — audited scalar read-data readiness over generated mixed dynamic/static read same-ID issue-order queue completions and selected direct bounded implementation.
+- `docs/AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_ISSUE_ORDER_QUEUE_READ_DATA_BEHAVIOR.md` — documents paired scalar read-data over generated mixed dynamic/static read same-ID issue-order queue completions.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_CONTRACT_SELECTION.md` — selected direct single-active dynamic write `BID` same-cycle release-and-recapture behavior under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_BEHAVIOR.md` — shipped single-active dynamic write `BID` same-cycle release-and-recapture under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_WRITE_RECAPTURE_NEXT_SLICE_SELECTION.md` — selected `.367`, public contract selection for first single-active dynamic read same-cycle release-and-recapture after dynamic write recapture shipped.
@@ -5278,6 +5302,8 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `ppif/axi_manager_capacity_status_write_mixed_dynamic_static_same_id_issue_order_queue.ppif` — checked-in runnable `.ppif` sample for generated bounded one-dynamic plus one-concrete-static mixed dynamic/static write `BID` same-ID issue-order queue behavior, support-accounted through check JSON and semantic JSON.
 - `ppif/axi_manager_capacity_status_read_mixed_dynamic_static_same_id_issue_order_queue.ppif` — checked-in runnable `.ppif` sample for generated bounded one-dynamic plus one-concrete-static mixed dynamic/static read single-beat `RID` same-ID issue-order queue behavior, support-accounted through check JSON and semantic JSON.
 - `ppif/axi_manager_capacity_status_read_mixed_dynamic_static_burst_last_same_id_issue_order_queue.ppif` — checked-in runnable `.ppif` sample for generated bounded one-dynamic plus one-concrete-static mixed dynamic/static read burst-last `RID && RLAST` same-ID issue-order queue behavior, support-accounted through check JSON and semantic JSON.
+- `ppif/axi_manager_capacity_status_read_mixed_dynamic_static_same_id_issue_order_queue_read_data.ppif` — checked-in runnable `.ppif` sample for scalar single-beat `RDATA`/`RRESP` capture over generated bounded one-dynamic plus one-concrete-static mixed dynamic/static read single-beat same-ID issue-order queue completions, support-accounted through check JSON and semantic JSON.
+- `ppif/axi_manager_capacity_status_read_mixed_dynamic_static_burst_last_same_id_issue_order_queue_read_data.ppif` — checked-in runnable `.ppif` sample for scalar last-beat `RDATA`/`RRESP` capture over generated bounded one-dynamic plus one-concrete-static mixed dynamic/static read burst-last same-ID issue-order queue completions, support-accounted through check JSON and semantic JSON.
 - `ppif/axi_manager_capacity_status_dynamic_write_depth3_same_id_issue_order_queue.ppif` — checked-in runnable `.ppif` sample for generated bounded three-transaction all-dynamic write `BID` dynamic same-ID issue-order queue behavior, support-accounted through check JSON and semantic JSON.
 - `ppif/axi_manager_capacity_status_dynamic_read_same_id_issue_order_queue.ppif` — checked-in runnable `.ppif` sample for generated bounded two-transaction all-dynamic read single-beat `RID` dynamic same-ID issue-order queue behavior, support-accounted through check JSON and semantic JSON.
 - `ppif/axi_manager_capacity_status_dynamic_read_depth3_same_id_issue_order_queue.ppif` — checked-in runnable `.ppif` sample for generated bounded three-transaction all-dynamic read single-beat `RID` dynamic same-ID issue-order queue behavior, support-accounted through check JSON and semantic JSON.

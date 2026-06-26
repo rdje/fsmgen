@@ -3708,13 +3708,14 @@ integration spec, public interface contract, embedding chapter, and
 `language_surface.file_surfaces` `.ppif` manifest boundary now advertise
 generated one-dynamic plus one-concrete-static mixed dynamic/static same-ID
 `issue-order-queue` behavior for write `BID`, read single-beat `RID`, and read
-burst-last `RID && RLAST`. The manifest test now locks that boundary. Mixed
-read-data, raw `ARLEN`, runtime validation, and multi-beat output banks over
-generated mixed dynamic/static issue-order queues remain deferred, as do
-broader mixed cardinality, scoreboards, backend behavior, backend-language
-variants, verification-code generation, external converter dependencies such
-as `sv2v`, and VHDL. `.512` is the next selector after this public-surface
-sync.
+burst-last `RID && RLAST`. The manifest test now locks that boundary. The
+later `.514` slice adds paired scalar read-data over the generated mixed read
+single-beat and burst-last queue completions; raw `ARLEN`, runtime validation,
+and multi-beat output banks over generated mixed dynamic/static issue-order
+queues remain deferred, as do broader mixed cardinality, scoreboards, backend
+behavior, backend-language variants, verification-code generation, external
+converter dependencies such as `sv2v`, and VHDL. `.512` is the next selector
+after this public-surface sync.
 
 `.512` now selects `.513`, readiness audit for scalar read-data routing over
 generated mixed dynamic/static read same-ID `issue-order-queue` completion
@@ -3741,6 +3742,20 @@ converter, or VHDL prerequisite is exposed. Raw `ARLEN`, runtime validation,
 multi-beat output banks, broader mixed cardinality, scoreboards, backend
 behavior, backend-language variants, verification-code generation, external
 converter dependencies such as `sv2v`, and VHDL remain deferred.
+
+`.514` now ships paired scalar read-data routing over the generated mixed
+dynamic/static read same-ID `issue-order-queue` completions. The two
+support-accounted samples add existing scalar single-beat and scalar last-beat
+`read-data.read` clauses to the shipped mixed read queue samples. Coverage is
+deliberately bounded to exactly one dynamic read transaction plus one concrete
+static read transaction, one depth-2 generated mixed queue, no `burst_length`
+metadata, complete scalar `RDATA`/`RRESP` bindings, and queue-specific
+completion-validity names for the single-beat and last-beat queue demux
+pulses. Raw `ARLEN`, runtime validation, multi-beat output banks, broader
+mixed cardinality, scoreboards, backend behavior, backend-language variants,
+verification-code generation, external converter dependencies such as `sv2v`,
+and VHDL remain deferred. `.515` is the raw-`ARLEN` burst-length readiness
+audit over the mixed burst-last queue read-data path.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

@@ -9066,10 +9066,10 @@ the generated mixed dynamic/static same-ID `issue-order-queue` chain for write
 owns that public-surface repair without parser/generator/sample/support-accounting,
 generated-artifact, schedule/check/semantic JSON, HDL/runtime,
 backend, external-converter, verification-output, or VHDL behavior changes.
-Mixed read-data over these queues, raw `ARLEN`, runtime validation, multi-beat
-output banks, broader mixed cardinality, scoreboards, backend behavior,
-backend-language variants, verification-code generation, external converter
-dependencies such as `sv2v`, and VHDL remain deferred.
+At that point, mixed read-data over these queues, raw `ARLEN`, runtime
+validation, multi-beat output banks, broader mixed cardinality, scoreboards,
+backend behavior, backend-language variants, verification-code generation,
+external converter dependencies such as `sv2v`, and VHDL remained deferred.
 
 Mixed dynamic/static issue-order queue public surface synchronization:
 [AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_ISSUE_ORDER_QUEUE_PUBLIC_SURFACE_SYNC](../../AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_ISSUE_ORDER_QUEUE_PUBLIC_SURFACE_SYNC.md)
@@ -9079,12 +9079,14 @@ interface contract, embedding chapter, and `language_surface.file_surfaces`
 `.ppif` manifest boundary now advertise generated one-dynamic plus
 one-concrete-static mixed dynamic/static same-ID `issue-order-queue` behavior
 for write `BID`, read single-beat `RID`, and read burst-last `RID && RLAST`.
-The manifest test now locks that boundary. Mixed read-data, raw `ARLEN`,
-runtime validation, and multi-beat output banks over generated mixed
-dynamic/static issue-order queues remain deferred, as do broader mixed
-cardinality, scoreboards, backend behavior, backend-language variants,
-verification-code generation, external converter dependencies such as `sv2v`,
-and VHDL. `.512` is the next selector after this public-surface sync.
+The manifest test now locks that boundary. The later `.514` slice adds paired
+scalar read-data over the generated mixed read single-beat and burst-last queue
+completions; raw `ARLEN`, runtime validation, and multi-beat output banks over
+generated mixed dynamic/static issue-order queues remain deferred, as do
+broader mixed cardinality, scoreboards, backend behavior, backend-language
+variants, verification-code generation, external converter dependencies such
+as `sv2v`, and VHDL. `.512` is the next selector after this public-surface
+sync.
 
 Post mixed dynamic/static issue-order queue public surface sync selector:
 [AXI_IAL2_MANAGER_POST_MIXED_DYNAMIC_STATIC_ISSUE_ORDER_QUEUE_PUBLIC_SURFACE_SYNC_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MIXED_DYNAMIC_STATIC_ISSUE_ORDER_QUEUE_PUBLIC_SURFACE_SYNC_NEXT_SLICE_SELECTION.md)
@@ -9116,6 +9118,25 @@ converter, or VHDL prerequisite is exposed. Raw `ARLEN`, runtime validation,
 multi-beat output banks, broader mixed cardinality, scoreboards, backend
 behavior, backend-language variants, verification-code generation, external
 converter dependencies such as `sv2v`, and VHDL remain future exact owners.
+
+Mixed dynamic/static issue-order queue read-data behavior:
+[AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_ISSUE_ORDER_QUEUE_READ_DATA_BEHAVIOR](../../AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_ISSUE_ORDER_QUEUE_READ_DATA_BEHAVIOR.md)
+ships `.514`, paired scalar read-data routing over generated mixed
+dynamic/static read same-ID `issue-order-queue` completions. The public samples
+are
+`ppif/axi_manager_capacity_status_read_mixed_dynamic_static_same_id_issue_order_queue_read_data.ppif`
+and
+`ppif/axi_manager_capacity_status_read_mixed_dynamic_static_burst_last_same_id_issue_order_queue_read_data.ppif`.
+Each sample uses exactly one dynamic read transaction plus one concrete static
+read transaction, one depth-2 generated mixed queue, existing scalar
+`read-data.read` syntax, complete scalar `RDATA`/`RRESP` output bindings, no
+`burst_length` metadata, and queue-specific completion-validity names for the
+single-beat and last-beat queue demux pulses. Raw `ARLEN`, runtime validation,
+multi-beat output banks, broader mixed cardinality, scoreboards, backend
+behavior, backend-language variants, verification-code generation, external
+converter dependencies such as `sv2v`, and VHDL remain future exact owners.
+The next owned frontier is `.515`, raw-`ARLEN` burst-length readiness over the
+mixed burst-last queue read-data path.
 
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
