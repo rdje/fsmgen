@@ -2878,13 +2878,18 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
     );
     like(
         $file_surface_by_suffix{'.ppif'}{current_boundary},
-        qr/multi-channel Valid-Ready bundles/,
-        'manifest keeps the current PPIF boundary explicit',
+        qr/AXI AW\/W multi-channel Valid-Ready bundle/,
+        'manifest advertises the AXI AW/W multi-channel bundle explicitly',
     );
     like(
         $file_surface_by_suffix{'.ppif'}{current_boundary},
         qr/protocol-neutral valid-ready handshake sample/,
         'manifest advertises the protocol-neutral valid-ready handshake sample',
+    );
+    like(
+        $file_surface_by_suffix{'.ppif'}{current_boundary},
+        qr/protocol-neutral dual-channel Valid-Ready bundle/,
+        'manifest advertises the protocol-neutral dual-channel valid-ready bundle',
     );
     like(
         $file_surface_by_suffix{'.ppif'}{current_boundary},

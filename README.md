@@ -2943,6 +2943,17 @@ wording, and RAM-guard-friendly validation. No behavior changes in `.533`.
 preserves the aggregate `valid_ready_bundle.v1` schema, requires generic
 neutral aggregate residue instead of AXI manager residue, and preserves the
 AXI AW/W bundle boundary. No behavior changes in `.534`.
+`.535` now ships that protocol-neutral/non-AXI Valid-Ready `.ppif` bundle.
+`ppif/valid_ready_dual_channel_bundle.ppif` lowers through generated
+`data_downstream_valid_ready_monitor.isf`,
+`status_upstream_valid_ready_monitor.isf`, their generated `.fsm` monitors,
+and the aggregate wrapper/top `valid_ready_dual_channel_bundle.fsm`.
+Schedule/check/semantic JSON report support identity
+`intent.ppif_valid_ready_dual_channel_bundle`, both neutral roles,
+one inherited channel source, generic aggregate residue
+`valid_ready_profile_bundle_behavior_outside_monitor`, and no AXI manager
+residue. Existing AXI AW/W bundle behavior still reports its AXI-profile
+`axi_manager_concurrency` residue.
 
 No behavior
 changed in `.273`, `.274`, `.275`,
@@ -3012,8 +3023,8 @@ IAL2 protocol/platform intent is public through bounded `.ppif` sources, with
 mandatory lowering `IAL2 -> IAL1 -> IAL0`; direct IAL2-to-IAL0 lowering is not
 a public contract. Current bounded `.ppif` coverage includes one-channel
 Valid-Ready sources, the shipped AXI AW/W multi-channel Valid-Ready bundle,
-and one-object AXI manager capacity/status sources. Support-accounted AXI
-manager coverage now
+the protocol-neutral dual-channel Valid-Ready bundle, and one-object AXI
+manager capacity/status sources. Support-accounted AXI manager coverage now
 includes capacity/status, ID-family metadata, transaction envelopes and
 fan-in, concrete-ID assertions, bounded auto-ID lifecycle, same-ID reject and
 issue-order-queue policy, generated auto-ID write/read response-demux,
@@ -5429,6 +5440,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_POST_NEUTRAL_VALID_READY_PPIF_NEXT_SLICE_SELECTION.md` — selected protocol-neutral/non-AXI Valid-Ready `.ppif` bundle readiness as the next IAL2 generality owner after the first neutral sample shipped.
 - `docs/IAL2_PROTOCOL_NEUTRAL_VALID_READY_BUNDLE_READINESS_AUDIT.md` — audited protocol-neutral/non-AXI Valid-Ready bundle readiness and selected public contract selection before neutral bundle behavior changes.
 - `docs/IAL2_PROTOCOL_NEUTRAL_VALID_READY_BUNDLE_CONTRACT_SELECTION.md` — selected `ppif/valid_ready_dual_channel_bundle.ppif`, `intent.ppif_valid_ready_dual_channel_bundle`, and the generic aggregate residue contract for the first protocol-neutral/non-AXI Valid-Ready bundle implementation.
+- `docs/IAL2_PROTOCOL_NEUTRAL_VALID_READY_BUNDLE_BEHAVIOR.md` — documents the shipped protocol-neutral/non-AXI dual-channel Valid-Ready `.ppif` bundle, support accounting, generated artifacts, generic aggregate residue, and preserved AXI AW/W residue boundary.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_CONTRACT_SELECTION.md` — selected direct single-active dynamic write `BID` same-cycle release-and-recapture behavior under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_BEHAVIOR.md` — shipped single-active dynamic write `BID` same-cycle release-and-recapture under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_WRITE_RECAPTURE_NEXT_SLICE_SELECTION.md` — selected `.367`, public contract selection for first single-active dynamic read same-cycle release-and-recapture after dynamic write recapture shipped.
@@ -5459,6 +5471,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `ppif/axi_aw_valid_ready.ppif` — first checked-in runnable `.ppif` sample for the public IAL2 Valid-Ready CLI surface.
 - `ppif/valid_ready_handshake.ppif` — checked-in runnable protocol-neutral/non-AXI `(profile valid-ready)` `.ppif` sample for the bounded Valid-Ready monitor path.
 - `ppif/axi_aw_w_valid_ready_bundle.ppif` — checked-in runnable multi-channel `.ppif` bundle sample for aggregate report/review-artifact modes.
+- `ppif/valid_ready_dual_channel_bundle.ppif` — checked-in runnable protocol-neutral/non-AXI dual-channel `(profile valid-ready)` `.ppif` bundle sample for aggregate report/review-artifact and wrapper/top HDL modes.
 - `ppif/axi_manager_capacity_status_id_family.ppif` — checked-in runnable `.ppif` sample for static AXI manager ID-family metadata.
 - `ppif/axi_manager_capacity_status_transaction_envelope.ppif` — checked-in runnable `.ppif` sample for AXI manager transaction-envelope metadata and concrete direction-level ID assertions.
 - `ppif/axi_manager_capacity_status_transaction_event_dispatch.ppif` — checked-in runnable `.ppif` sample for AXI manager transaction event dispatch/fan-in and concrete per-transaction ID assertions.

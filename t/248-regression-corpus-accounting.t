@@ -21,7 +21,7 @@ my @protocol_entries = protocol_fixture_entries();
 
 ok(@entries >= 7, 'regression corpus catalog starts with named entries across multiple classifications');
 ok(@entries >= 50, 'regression corpus catalog now covers supported language-feature fixtures plus root-level, section-level, child-root, direct-generation, and composition-contract residue families');
-is(scalar(@protocol_entries), 148, 'first visible corpus slice contains the named protocol and public intent fixtures');
+is(scalar(@protocol_entries), 149, 'first visible corpus slice contains the named protocol and public intent fixtures');
 
 my %allowed_classifications = map { $_ => 1 } qw(
     supported_smoke
@@ -37,6 +37,7 @@ my %allowed_coverages = map { $_ => 1 } qw(
     isf_verification_output_vhdl_observation_package_skeleton_cli
     ial2_ppif_pipeline_cli
     ial2_ppif_valid_ready_handshake_pipeline_cli
+    ial2_ppif_valid_ready_dual_channel_bundle_pipeline_cli
     ial2_ppif_bundle_pipeline_cli
     ial2_ppif_manager_capacity_status_pipeline_cli
     ial2_ppif_manager_capacity_status_id_family_pipeline_cli
@@ -217,6 +218,7 @@ my %coverage_classification = (
     isf_verification_output_vhdl_observation_package_skeleton_cli => 'supported_smoke',
     ial2_ppif_pipeline_cli => 'supported_smoke',
     ial2_ppif_valid_ready_handshake_pipeline_cli => 'supported_smoke',
+    ial2_ppif_valid_ready_dual_channel_bundle_pipeline_cli => 'supported_smoke',
     ial2_ppif_bundle_pipeline_cli => 'supported_smoke',
     ial2_ppif_manager_capacity_status_pipeline_cli => 'supported_smoke',
     ial2_ppif_manager_capacity_status_id_family_pipeline_cli => 'supported_smoke',
@@ -386,6 +388,7 @@ for my $required_id (qw(
     intent.isf_apb_requester
     intent.ppif_axi_aw_valid_ready
     intent.ppif_valid_ready_handshake
+    intent.ppif_valid_ready_dual_channel_bundle
     intent.ppif_axi_aw_w_valid_ready_bundle
     intent.ppif_axi_manager_capacity_status
     intent.ppif_axi_manager_capacity_status_id_family
@@ -861,8 +864,8 @@ for my $entry (@entries) {
 
 is(
     scalar(grep { $_->{classification} eq 'supported_smoke' } @entries),
-    189,
-    'catalog now keeps one hundred eighty-nine named supported-smoke entries including direct, composition, ISF, PPIF, and verification-output fixtures',
+    190,
+    'catalog now keeps one hundred ninety named supported-smoke entries including direct, composition, ISF, PPIF, and verification-output fixtures',
 );
 is(
     scalar(grep { $_->{classification} eq 'legacy_out_of_scope' } @entries),
@@ -876,8 +879,8 @@ is(
 );
 is(
     scalar(grep { $_->{strict_supported} } @entries),
-    189,
-    'catalog now records one hundred eighty-nine positive strict-mode supported-smoke acceptance entries',
+    190,
+    'catalog now records one hundred ninety positive strict-mode supported-smoke acceptance entries',
 );
 for my $strict_supported_id (qw(
     protocol.apb_requester
@@ -887,6 +890,7 @@ for my $strict_supported_id (qw(
     intent.isf_apb_requester
     intent.ppif_axi_aw_valid_ready
     intent.ppif_valid_ready_handshake
+    intent.ppif_valid_ready_dual_channel_bundle
     intent.ppif_axi_aw_w_valid_ready_bundle
     intent.ppif_axi_manager_capacity_status
     intent.ppif_axi_manager_capacity_status_id_family

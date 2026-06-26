@@ -92,8 +92,9 @@ Intent abstraction levels:
   reuse is proven across multiple profiles.
 - Current bounded `.ppif` coverage includes one-channel Valid-Ready sources,
   including the AXI AW first-profile sample and the protocol-neutral
-  valid-ready handshake sample, multi-channel Valid-Ready bundles, and
-  one-object AXI manager capacity/status sources. Support-accounted AXI
+  valid-ready handshake sample, the AXI AW/W multi-channel Valid-Ready bundle,
+  the protocol-neutral dual-channel Valid-Ready bundle, and one-object AXI
+  manager capacity/status sources. Support-accounted AXI
   manager coverage includes
   capacity/status, ID-family metadata, transaction envelopes and fan-in,
   concrete-ID assertions, bounded auto-ID lifecycle, same-ID reject and

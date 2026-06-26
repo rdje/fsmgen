@@ -1,0 +1,26 @@
+(protocol-platform-intent valid_ready_dual_channel_bundle
+  (profile valid-ready)
+  (source
+    (object fsmgen-valid-ready-dual-channel-bundle)
+    (anchor (document FSMGEN-IAL2-VALID-READY-PROFILE) (section bundle) (page contract)))
+  (valid-ready-channel data_downstream
+    (source
+      (object fsmgen-valid-ready-data-downstream)
+      (anchor (document FSMGEN-IAL2-VALID-READY-PROFILE) (section monitor) (page producer-to-consumer)))
+    (channel data_downstream)
+    (role producer-to-consumer)
+    (clock clk)
+    (reset (rst_n active_low async))
+    (valid data_valid)
+    (ready data_ready)
+    (payload
+      (data width 8)))
+  (valid-ready-channel status_upstream
+    (channel status_upstream)
+    (role consumer-to-producer)
+    (clock clk)
+    (reset (rst_n active_low async))
+    (valid status_valid)
+    (ready status_ready)
+    (payload
+      (status width 4))))

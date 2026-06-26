@@ -3941,6 +3941,17 @@ wording, and RAM-guard-friendly validation. No behavior changes in `.533`.
 preserves the aggregate `valid_ready_bundle.v1` schema, requires generic
 neutral aggregate residue instead of AXI manager residue, and preserves the
 AXI AW/W bundle boundary. No behavior changes in `.534`.
+`.535` now ships that protocol-neutral/non-AXI Valid-Ready `.ppif` bundle.
+`ppif/valid_ready_dual_channel_bundle.ppif` lowers through generated
+`data_downstream_valid_ready_monitor.isf`,
+`status_upstream_valid_ready_monitor.isf`, their generated `.fsm` monitors,
+and the aggregate wrapper/top `valid_ready_dual_channel_bundle.fsm`.
+Schedule/check/semantic JSON report support identity
+`intent.ppif_valid_ready_dual_channel_bundle`, both neutral roles,
+one inherited channel source, generic aggregate residue
+`valid_ready_profile_bundle_behavior_outside_monitor`, and no AXI manager
+residue. Existing AXI AW/W bundle behavior still reports its AXI-profile
+`axi_manager_concurrency` residue.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

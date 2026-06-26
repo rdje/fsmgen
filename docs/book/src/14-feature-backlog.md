@@ -2339,8 +2339,10 @@ semantic value to exist.
 Current boundary: FSMGen names `.fsm` as Intent Abstraction Layer 0 (`IAL0`)
 and current `.isf` as Intent Abstraction Layer 1 (`IAL1`). `IAL2` now has a
 first bounded shipped surface for one AXI Valid-Ready protocol intent object,
-multi-channel Valid-Ready bundles, and one AXI manager capacity/status shell
-through public `.ppif`, including optional static ID-family metadata,
+the first protocol-neutral Valid-Ready sample, the AXI AW/W multi-channel
+Valid-Ready bundle, the protocol-neutral dual-channel Valid-Ready bundle, and
+one AXI manager capacity/status shell through public `.ppif`, including
+optional static ID-family metadata,
 optional structural transaction-envelope metadata with per-transaction event
 dispatch/fan-in, concrete transaction ID request/response assertions,
 metadata-first dynamic transaction-ID parser/report support, generated
@@ -2442,9 +2444,11 @@ distinct runtime model should stay inside IAL1 or remain out of the language.
 
 Current evaluation: IAL2 now has a first in-process behavior-bearing slice for
 an AXI Valid-Ready contract object, a first public `.ppif` parser/CLI slice for
-that same object shape, multi-channel Valid-Ready bundle behavior, and a public
-`.ppif` AXI manager capacity/status shell with reviewable generated `.isf` and
-`.fsm` artifacts plus optional ID-family metadata, transaction-envelope
+that same object shape, protocol-neutral Valid-Ready one-channel and
+dual-channel bundle samples, AXI AW/W multi-channel Valid-Ready bundle
+behavior, and a public `.ppif` AXI manager capacity/status shell with
+reviewable generated `.isf` and `.fsm` artifacts plus optional ID-family
+metadata, transaction-envelope
 metadata, per-transaction event dispatch/fan-in, and concrete transaction ID
 request/response assertions. It also ships optional auto-ID lifecycle
 bounded-pool parser/report metadata plus bounded request-ID drive behavior
@@ -9444,6 +9448,17 @@ AXI AW/W bundle boundary. No parser, generator, sample, support-accounting,
 report, HDL, backend, profile-alias, common-construct, or VHDL behavior changes
 in `.534`.
 
+IAL2 protocol-neutral Valid-Ready bundle behavior:
+[IAL2_PROTOCOL_NEUTRAL_VALID_READY_BUNDLE_BEHAVIOR](../../IAL2_PROTOCOL_NEUTRAL_VALID_READY_BUNDLE_BEHAVIOR.md)
+ships `ppif/valid_ready_dual_channel_bundle.ppif` as the first
+protocol-neutral/non-AXI dual-channel Valid-Ready `.ppif` bundle. It generates
+`data_downstream_valid_ready_monitor.isf`,
+`status_upstream_valid_ready_monitor.isf`, their generated `.fsm` monitors,
+and the aggregate wrapper/top `valid_ready_dual_channel_bundle.fsm`; reports
+support identity `intent.ppif_valid_ready_dual_channel_bundle`, both neutral
+roles, one inherited channel source, and generic aggregate residue; and
+preserves the AXI AW/W bundle's AXI-profile residue boundary.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after
@@ -11002,6 +11017,47 @@ The same CLI modes work for the neutral sample:
 ./bin/fsmgen --strict --emit-semantic-json ppif/valid_ready_handshake.ppif
 ```
 
+Protocol-neutral dual-channel Valid-Ready bundle, checked in as
+`ppif/valid_ready_dual_channel_bundle.ppif`:
+
+```text
+(protocol-platform-intent valid_ready_dual_channel_bundle
+  (profile valid-ready)
+  (source
+    (object fsmgen-valid-ready-dual-channel-bundle)
+    (anchor (document FSMGEN-IAL2-VALID-READY-PROFILE) (section bundle) (page contract)))
+  (valid-ready-channel data_downstream
+    (source
+      (object fsmgen-valid-ready-data-downstream)
+      (anchor (document FSMGEN-IAL2-VALID-READY-PROFILE) (section monitor) (page producer-to-consumer)))
+    (channel data_downstream)
+    (role producer-to-consumer)
+    (clock clk)
+    (reset (rst_n active_low async))
+    (valid data_valid)
+    (ready data_ready)
+    (payload
+      (data width 8)))
+  (valid-ready-channel status_upstream
+    (channel status_upstream)
+    (role consumer-to-producer)
+    (clock clk)
+    (reset (rst_n active_low async))
+    (valid status_valid)
+    (ready status_ready)
+    (payload
+      (status width 4))))
+```
+
+The same CLI modes work for the neutral bundle:
+
+```bash
+./bin/fsmgen --emit-schedule-json ppif/valid_ready_dual_channel_bundle.ppif
+./bin/fsmgen --outdir generated --output valid_ready_dual_channel_bundle.sv ppif/valid_ready_dual_channel_bundle.ppif
+./bin/fsmgen --strict --check --json ppif/valid_ready_dual_channel_bundle.ppif
+./bin/fsmgen --strict --emit-semantic-json ppif/valid_ready_dual_channel_bundle.ppif
+```
+
 The `.ppif` path always lowers through generated `.isf` before generated
 `.fsm`. `--outdir` writes both review artifacts before the HDL path runs.
 `--emit-schedule-json` emits the IAL2 source-anchor/residue report for the
@@ -11105,6 +11161,16 @@ Runnable bundle commands:
 ./bin/fsmgen --strict --check --json ppif/axi_aw_w_valid_ready_bundle.ppif
 ./bin/fsmgen --strict --emit-semantic-json ppif/axi_aw_w_valid_ready_bundle.ppif
 ./bin/fsmgen --outdir generated --output bundle.sv --verify-hdl ppif/axi_aw_w_valid_ready_bundle.ppif
+```
+
+The neutral bundle uses the same aggregate surfaces with neutral logical
+channels and roles:
+
+```bash
+./bin/fsmgen --emit-schedule-json ppif/valid_ready_dual_channel_bundle.ppif
+./bin/fsmgen --outdir generated --output valid_ready_dual_channel_bundle.sv ppif/valid_ready_dual_channel_bundle.ppif
+./bin/fsmgen --strict --check --json ppif/valid_ready_dual_channel_bundle.ppif
+./bin/fsmgen --strict --emit-semantic-json ppif/valid_ready_dual_channel_bundle.ppif
 ```
 
 The semantic export uses `semantic.module.source_root_kind = ppif_bundle` and

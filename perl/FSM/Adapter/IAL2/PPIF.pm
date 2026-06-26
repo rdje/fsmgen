@@ -152,9 +152,6 @@ sub _contract_from_root($root, $source_label) {
             if $seen_channel_names{$channel->{name}}++;
     }
 
-    confess "Error: .ppif source '$source_label' profile valid-ready supports exactly one (valid-ready-channel ...) object in this slice; neutral bundles need a future exact owner\n"
-        if @channels > 1 && lc($profile) eq 'valid-ready';
-
     if (@channels == 1) {
         my %channel = %{$channels[0]};
         my $channel_source = delete($channel{source}) // $source;
@@ -1284,13 +1281,25 @@ sub _build_bundle_report(%args) {
                     ),
             },
         },
-        unsupported_residue => [
-            {
-                id     => 'axi_manager_concurrency',
-                detail => 'Transaction IDs, outstanding windows, bursts, response matching, and channel dependency rules remain outside this monitor-only bundle slice.',
-            },
-        ],
+        unsupported_residue => _bundle_unsupported_residue($bundle),
     };
+}
+
+sub _bundle_unsupported_residue($bundle) {
+    my $protocol = lc($bundle->{protocol} // '');
+    return [
+        {
+            id     => 'valid_ready_profile_bundle_behavior_outside_monitor',
+            detail => 'The generic valid-ready bundle is monitor-only; producer/consumer drive policy, backpressure policy, coordination, and protocol-specific ordering remain outside this bundle.',
+        },
+    ] if $protocol eq 'valid-ready';
+
+    return [
+        {
+            id     => 'axi_manager_concurrency',
+            detail => 'Transaction IDs, outstanding windows, bursts, response matching, and channel dependency rules remain outside this monitor-only bundle slice.',
+        },
+    ];
 }
 
 sub _build_bundle_hdl_entry(%args) {

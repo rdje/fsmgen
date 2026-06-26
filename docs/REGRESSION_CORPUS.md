@@ -593,6 +593,7 @@ manifest output while keeping the exact file lists widenable.
 | `intent.isf_apb_requester` | [isf/apb_requester.isf](isf/apb_requester.isf) | `supported_smoke` | `isf_pipeline_cli` |
 | `intent.ppif_axi_aw_valid_ready` | [ppif/axi_aw_valid_ready.ppif](ppif/axi_aw_valid_ready.ppif) | `supported_smoke` | `ial2_ppif_pipeline_cli` |
 | `intent.ppif_valid_ready_handshake` | [ppif/valid_ready_handshake.ppif](ppif/valid_ready_handshake.ppif) | `supported_smoke` | `ial2_ppif_valid_ready_handshake_pipeline_cli` |
+| `intent.ppif_valid_ready_dual_channel_bundle` | [ppif/valid_ready_dual_channel_bundle.ppif](ppif/valid_ready_dual_channel_bundle.ppif) | `supported_smoke` | `ial2_ppif_valid_ready_dual_channel_bundle_pipeline_cli` |
 | `intent.ppif_axi_aw_w_valid_ready_bundle` | [ppif/axi_aw_w_valid_ready_bundle.ppif](ppif/axi_aw_w_valid_ready_bundle.ppif) | `supported_smoke` | `ial2_ppif_bundle_pipeline_cli` |
 | `intent.ppif_axi_manager_capacity_status` | [ppif/axi_manager_capacity_status.ppif](ppif/axi_manager_capacity_status.ppif) | `supported_smoke` | `ial2_ppif_manager_capacity_status_pipeline_cli` |
 | `intent.ppif_axi_manager_capacity_status_id_family` | [ppif/axi_manager_capacity_status_id_family.ppif](ppif/axi_manager_capacity_status_id_family.ppif) | `supported_smoke` | `ial2_ppif_manager_capacity_status_id_family_pipeline_cli` |
