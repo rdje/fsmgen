@@ -9546,6 +9546,16 @@ yet have source-shape, profile-matching, report, support-accounting, or book
 evidence; `.pif` and `.ppi` remain generic-container candidates rather than
 protocol aliases.
 
+IAL2 non-AXI profile-alias taxonomy/evidence prerequisite:
+[IAL2_NON_AXI_PROFILE_ALIAS_TAXONOMY_EVIDENCE_PREREQUISITE](../../IAL2_NON_AXI_PROFILE_ALIAS_TAXONOMY_EVIDENCE_PREREQUISITE.md)
+selects `.547`, a generic-container alias policy selection for `.pif` and
+`.ppi`. `.ppif` remains the shipped generic IAL2 container; `.pif` and `.ppi`
+are generic-container spelling candidates, not protocol aliases; and `.chi`,
+`.ace`, `.ahb`, `.apb`, `.atb`, `.smbus`, and `.i2s` remain protocol-profile
+alias candidates without contract evidence. `(profile valid-ready)` under
+`.ppif` is the current protocol-neutral/non-AXI IAL2 evidence and does not
+define a protocol suffix.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

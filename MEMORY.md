@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.545: audit non-AXI alias readiness`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.546` is active after `.545`; create the non-AXI profile-alias taxonomy/evidence prerequisite without accepting any suffix or changing behavior.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.545` found no non-AXI protocol suffix ready for contract selection and selected `.546`, taxonomy/evidence prerequisite. `.pif`/`.ppi` remain generic-container candidates, not protocol aliases.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.546: classify non-AXI alias taxonomy`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.547` is active after `.546`; select the generic-container alias policy for `.pif`/`.ppi` without accepting any suffix or changing behavior.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.546` separated `.pif`/`.ppi` generic-container candidates from `.chi`/`.ace`/`.ahb`/`.apb`/`.atb`/`.smbus`/`.i2s` protocol-profile alias candidates. `(profile valid-ready)` under `.ppif` remains the non-AXI IAL2 evidence, not a suffix contract.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: The original exact `t/301` resource cliff is fixed for oversized PPIF check-json via `.2.3.1`, but a full guarded `t/301-check-json-supported-corpus.t` rerun stopped on host-memory cutoff from a high host baseline and a higher-cutoff retry was rejected by the approval layer. Do not bypass that rejection without explicit user approval; `.2.5` selected RAM-guarded or exact bounded replacement policy for any future broad `t/301`/`t/303` parity plan.
-- next_action: Start `.546` by reading `.545` audit, `.544` selection, decisions `0015`/`0016`/`0017`, current suffix/manifest/support-accounting surfaces, tracked PPIF samples, README, ROADMAP_V2, mdBook, task tree, Memory, and Knowledge Map; then classify non-AXI alias candidates and missing evidence without behavior changes.
+- next_action: Start `.547` by reading `.546` taxonomy, `.545` audit, decisions `0015`/`0016`/`0017`, current suffix/manifest/help surfaces, README, ROADMAP_V2, mdBook, task tree, Memory, and Knowledge Map; then select the `.pif`/`.ppi` generic-container alias policy without behavior changes.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact

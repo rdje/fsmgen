@@ -4017,6 +4017,14 @@ selection: `.chi`, `.ace`, `.ahb`, `.apb`, `.atb`, `.smbus`, and `.i2s` still
 lack source-shape, profile-matching, report, support-accounting, and mdBook
 evidence, while `.pif` and `.ppi` remain generic-container candidates rather
 than protocol aliases.
+`.546` now selects `.547`, a generic-container alias policy selection for
+`.pif` and `.ppi`. The taxonomy records that `.ppif` is the shipped generic
+IAL2 container, `.pif` and `.ppi` are generic-container spelling candidates,
+and `.chi`, `.ace`, `.ahb`, `.apb`, `.atb`, `.smbus`, and `.i2s` are
+protocol-profile alias candidates that still lack contract evidence.
+Protocol-neutral `(profile valid-ready)` under `.ppif` remains the current
+non-AXI IAL2 evidence; it proves IAL2 is not AXI-only but does not define a
+protocol suffix contract.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
