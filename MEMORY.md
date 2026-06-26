@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.10: select VHDL observation package`.
-- active_work_unit: `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.11` implements the selected inert VHDL observation package verification-output target; `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remains active/pending.
-- recently_done: `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.10` selected `--emit-verification-output vhdl-observation-package --verification-outdir DIR source.isf`, canonical target `vhdl_observation_package_skeleton`, artifact path `vhdl/<actor>_observation_vhdl_pkg.vhd`, manifest no-compile/no-PSL validation claims, and future support entry `feature.isf_verification_observation_vhdl_package_skeleton`; `.11` owns implementation.
+- latest_commit: `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.11: implement VHDL observation package`.
+- active_work_unit: `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.6` audits whether future verification generation needs a direct IAL2 route or should keep routing through generated IAL1; `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remains active/pending.
+- recently_done: `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.11` shipped `--emit-verification-output vhdl-observation-package --verification-outdir DIR source.isf`, canonical target `vhdl_observation_package_skeleton`, artifact path `vhdl/<actor>_observation_vhdl_pkg.vhd`, manifest no-compile/no-syntax/no-PSL validation claims, and support entry `feature.isf_verification_observation_vhdl_package_skeleton`.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
-- next_action: Start `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.11`: implement the selected inert VHDL observation package verification-output target.
+- next_action: Start `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.6`: audit direct IAL2-to-verification routing versus keeping verification output sourced from generated IAL1.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact

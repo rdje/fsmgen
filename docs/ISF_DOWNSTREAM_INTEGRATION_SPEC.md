@@ -3390,10 +3390,14 @@ verification-output surface as `--emit-verification-output uvm-passive-monitor
 `DIR/verification-output-manifest.json` manifest. That explicit mode consumes
 passive `verification_observations[]` to emit an inert UVM passive-monitor
 skeleton; it does not widen the schedule/check/semantic JSON surfaces and does
-not claim UVM compile support. No VHDL verification-output mode is currently
-shipped; `.10` selected a future inert `vhdl-observation-package` target, but
-downstream tools must treat it as pending until `.11` implements and documents
-the artifact.
+not claim UVM compile support. The sibling VHDL verification-output mode is
+`--emit-verification-output vhdl-observation-package --verification-outdir DIR
+source.isf`, with artifacts under `DIR/vhdl/` and the same
+`DIR/verification-output-manifest.json` manifest. Downstream tools may inspect
+the inert observation constants and manifest metadata, but they must not treat
+the artifact as a VHDL syntax/compile/PSL/simulation/formal/analyzer result or
+as scoreboard, coverage, reusable VIP, direct IAL2, schedule JSON, check JSON,
+or semantic JSON behavior.
 
 Golden fixture matrix:
 

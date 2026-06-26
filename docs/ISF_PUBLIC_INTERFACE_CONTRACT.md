@@ -74,10 +74,13 @@ uvm-passive-monitor --verification-outdir DIR source.isf`, emitting an inert
 UVM monitor skeleton package plus `verification-output-manifest.json` for
 `.isf` sources with passive `verification_observations[]`. That surface is
 separate from schedule/check/semantic JSON and does not claim UVM compile
-support. No VHDL verification-output target ships yet; `.10` selected the
-future inert `vhdl-observation-package` artifact under the `.9` shape-only
-validation substrate, and `.11` owns implementation before that target becomes
-public behavior.
+support. The bounded VHDL verification-output surface also now ships as
+`--emit-verification-output vhdl-observation-package --verification-outdir DIR
+source.isf`, emitting an inert VHDL observation metadata package plus
+`verification-output-manifest.json` for the same passive observation metadata.
+It remains under the `.9` shape-only validation substrate and makes no VHDL
+compile, VHDL syntax, PSL, simulator, analyzer, scoreboard, coverage, reusable
+VIP, or direct IAL2 support claim.
 
 Machine-readable discovery lives in
 [perl/FSM/Support/ISFPublicInterfaceContract.pm](../perl/FSM/Support/ISFPublicInterfaceContract.pm)

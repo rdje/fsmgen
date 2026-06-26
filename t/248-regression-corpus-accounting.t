@@ -34,6 +34,7 @@ my %allowed_coverages = map { $_ => 1 } qw(
     composition_top_pipeline_cli
     isf_pipeline_cli
     isf_verification_output_uvm_passive_monitor_skeleton_cli
+    isf_verification_output_vhdl_observation_package_skeleton_cli
     ial2_ppif_pipeline_cli
     ial2_ppif_bundle_pipeline_cli
     ial2_ppif_manager_capacity_status_pipeline_cli
@@ -211,6 +212,7 @@ my %coverage_classification = (
     composition_top_pipeline_cli => 'supported_smoke',
     isf_pipeline_cli => 'supported_smoke',
     isf_verification_output_uvm_passive_monitor_skeleton_cli => 'supported_smoke',
+    isf_verification_output_vhdl_observation_package_skeleton_cli => 'supported_smoke',
     ial2_ppif_pipeline_cli => 'supported_smoke',
     ial2_ppif_bundle_pipeline_cli => 'supported_smoke',
     ial2_ppif_manager_capacity_status_pipeline_cli => 'supported_smoke',
@@ -512,6 +514,7 @@ for my $required_id (qw(
     intent.ppif_axi_manager_capacity_status_read_data_multi_beat
     feature.isf_verification_observation_metadata
     feature.isf_verification_observation_uvm_passive_monitor_skeleton
+    feature.isf_verification_observation_vhdl_package_skeleton
     feature.isf_storage_field_metadata
     feature.partial_lhs_with_size
     feature.partial_lhs_inferred_width
@@ -852,8 +855,8 @@ for my $entry (@entries) {
 
 is(
     scalar(grep { $_->{classification} eq 'supported_smoke' } @entries),
-    186,
-    'catalog now keeps one hundred eighty-six named supported-smoke entries including direct, composition, ISF, PPIF, and verification-output fixtures',
+    187,
+    'catalog now keeps one hundred eighty-seven named supported-smoke entries including direct, composition, ISF, PPIF, and verification-output fixtures',
 );
 is(
     scalar(grep { $_->{classification} eq 'legacy_out_of_scope' } @entries),
@@ -867,8 +870,8 @@ is(
 );
 is(
     scalar(grep { $_->{strict_supported} } @entries),
-    186,
-    'catalog now records one hundred eighty-six positive strict-mode supported-smoke acceptance entries',
+    187,
+    'catalog now records one hundred eighty-seven positive strict-mode supported-smoke acceptance entries',
 );
 for my $strict_supported_id (qw(
     protocol.apb_requester
@@ -1012,6 +1015,7 @@ for my $strict_supported_id (qw(
     intent.ppif_axi_manager_capacity_status_read_data_multi_beat
     feature.isf_verification_observation_metadata
     feature.isf_verification_observation_uvm_passive_monitor_skeleton
+    feature.isf_verification_observation_vhdl_package_skeleton
     feature.isf_storage_field_metadata
     feature.partial_lhs_with_size
     feature.partial_lhs_inferred_width

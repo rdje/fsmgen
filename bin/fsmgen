@@ -31,6 +31,9 @@ use FSM::Support::NormalizedSemanticReport qw(
 use FSM::VerificationOutput::UVM::PassiveMonitorSkeleton qw(
     write_uvm_passive_monitor_skeleton
 );
+use FSM::VerificationOutput::VHDL::ObservationPackageSkeleton qw(
+    write_vhdl_observation_package_skeleton
+);
 
 # FSM file resolution function using FSMLIB environment variable
 sub resolve_fsm_file {
@@ -477,7 +480,7 @@ Options:
                   Alias: --semantic-json
   --emit-verification-output <target>
                   Emit generated verification artifacts for a supported target
-                  Current target: uvm-passive-monitor
+                  Current targets: uvm-passive-monitor, vhdl-observation-package
   --verification-outdir <dir>
                   Required output directory for --emit-verification-output
   --verify-hdl    After writing generated SystemVerilog, run Verilator lint and
@@ -589,6 +592,11 @@ Other Examples:
     --verification-outdir generated-verification \
     isf/verification_observation_metadata.isf
 
+  # Emit the bounded VHDL observation metadata package for an ISF observe source
+  ./bin/fsmgen --emit-verification-output vhdl-observation-package \
+    --verification-outdir generated-verification \
+    isf/verification_observation_metadata.isf
+
   # Generate SystemVerilog and validate it with Verilator plus Yosys
   ./bin/fsmgen --verify-hdl my_fsm
 
@@ -621,11 +629,15 @@ if (length($verification_outdir) && !length($emit_verification_output)) {
     die "Error: --verification-outdir requires --emit-verification-output\n";
 }
 if (length($emit_verification_output)) {
-    if ($emit_verification_output ne 'uvm-passive-monitor') {
-        die "Error: unsupported verification output target '$emit_verification_output'; supported target: uvm-passive-monitor\n";
+    my %supported_verification_outputs = map { $_ => 1 } qw(
+        uvm-passive-monitor
+        vhdl-observation-package
+    );
+    if (!$supported_verification_outputs{$emit_verification_output}) {
+        die "Error: unsupported verification output target '$emit_verification_output'; supported targets: uvm-passive-monitor, vhdl-observation-package\n";
     }
     if (!length($verification_outdir)) {
-        die "Error: --verification-outdir is required for --emit-verification-output uvm-passive-monitor\n";
+        die "Error: --verification-outdir is required for --emit-verification-output $emit_verification_output\n";
     }
     if ($check_mode || $json_output || $emit_semantic_json || $emit_schedule_json) {
         die "Error: --emit-verification-output cannot be combined with --check, --json, --check-json, --emit-semantic-json, or --emit-schedule-json\n";
@@ -698,7 +710,7 @@ my $public_source_file = $fsm_file;
 if (length($emit_verification_output)) {
     if ($fsm_file !~ /\.isf\z/i) {
         die format_cli_artifact_error(
-            "Error: --emit-verification-output uvm-passive-monitor currently supports .isf sources only\n",
+            "Error: --emit-verification-output $emit_verification_output currently supports .isf sources only\n",
             ['Requested source', $public_source_file],
             ['Verification target', $emit_verification_output],
             ['Verification output directory', $verification_outdir],
@@ -732,12 +744,21 @@ if (length($emit_verification_output)) {
 
     my $verification_output_dir = File::Spec->rel2abs($verification_outdir);
     my $verification_result = eval {
-        write_uvm_passive_monitor_skeleton(
-            actor => $actor,
-            schedule_report => $schedule_report,
-            source_file => $public_source_file,
-            output_dir => $verification_output_dir,
-        );
+        if ($emit_verification_output eq 'uvm-passive-monitor') {
+            write_uvm_passive_monitor_skeleton(
+                actor => $actor,
+                schedule_report => $schedule_report,
+                source_file => $public_source_file,
+                output_dir => $verification_output_dir,
+            );
+        } else {
+            write_vhdl_observation_package_skeleton(
+                actor => $actor,
+                schedule_report => $schedule_report,
+                source_file => $public_source_file,
+                output_dir => $verification_output_dir,
+            );
+        }
     };
     if ($@) {
         die format_cli_artifact_error(
@@ -750,7 +771,7 @@ if (length($emit_verification_output)) {
 
     unless ($quiet) {
         print "=== Verification Output ===\n\n";
-        print "Target: uvm-passive-monitor\n";
+        print "Target: $emit_verification_output\n";
         print "Package: " . $verification_result->{package_name} . "\n";
         print "Artifact: " . $verification_result->{artifact_path} . "\n";
         print "Manifest: " . $verification_result->{manifest_path} . "\n";

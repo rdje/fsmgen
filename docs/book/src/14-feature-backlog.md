@@ -4221,7 +4221,22 @@ enabled the VHDL artifact selector
 [IAL1_VHDL_OBSERVATION_PACKAGE_CONTRACT_SELECTION](../../IAL1_VHDL_OBSERVATION_PACKAGE_CONTRACT_SELECTION.md),
 which chose `vhdl-observation-package`: an inert VHDL observation metadata
 package with canonical id `vhdl_observation_package_skeleton`.
-`IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.11` owns implementation. Direct
+`IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.11` now implements that bounded
+target:
+
+```bash
+./bin/fsmgen --emit-verification-output vhdl-observation-package \
+  --verification-outdir generated-verification \
+  isf/verification_observation_metadata.isf
+```
+
+The command writes `generated-verification/vhdl/<actor>_observation_vhdl_pkg.vhd`
+plus `generated-verification/verification-output-manifest.json`. The VHDL
+package is metadata-only: it records observation name/role/clock/reset and
+signal name/direction/width constants, and it does not contain an entity,
+architecture, process, assert, PSL, testbench, scoreboard, coverage, simulator
+binding, analyzer claim, reusable VIP behavior, or direct IAL2 protocol
+behavior. Direct
 IAL2-to-verification routing,
 scoreboard behavior, coverage behavior, and reusable VIP behavior remain
 deferred behind later selector leaves.

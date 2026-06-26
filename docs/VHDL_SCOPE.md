@@ -4,6 +4,12 @@ This document defines the scoped R14 VHDL backend plan for FSMGen.
 
 ## Status
 - The CLI currently accepts `--language vhdl` and routes to `FSM::Pipeline::HDLGenerator`.
+- Verification-output mode separately accepts `--emit-verification-output
+  vhdl-observation-package --verification-outdir DIR source.isf` and emits an
+  inert metadata package at `vhdl/<actor>_observation_vhdl_pkg.vhd` plus a
+  manifest. This is not a VHDL RTL backend package, GHDL validation path, PSL
+  flow, simulator flow, analyzer flow, scoreboard, coverage model, reusable
+  VIP, or direct IAL2 verification route.
 - `FSM::HDL::FlattenedDT::generate_vhdl()` now routes direct single-FSM roots
   through `FSM::HDL::FlattenedDT::Backend::VHDL`, an SV-first scaffold
   converter.

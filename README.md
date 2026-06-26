@@ -3511,11 +3511,15 @@ GHDL validation is not active. Frontier `.9` selected the first VHDL
 verification validation substrate as artifact-shape and inert-behavior checks
 with manifest non-claims for VHDL compile, syntax, PSL, simulation, formal,
 and analyzer support. Frontier `.10` selected the first VHDL-oriented
-verification artifact as an inert VHDL observation metadata package, future
-target `vhdl-observation-package`, canonical id
-`vhdl_observation_package_skeleton`, emitted under
-`vhdl/<actor>_observation_vhdl_pkg.vhd`; `.11` owns implementation before any
-broader VHDL verification output.
+verification artifact as an inert VHDL observation metadata package. Frontier
+`.11` now ships `--emit-verification-output vhdl-observation-package
+--verification-outdir DIR source.isf`, writing
+`DIR/vhdl/<actor>_observation_vhdl_pkg.vhd` plus
+`DIR/verification-output-manifest.json` for `.isf` sources with passive
+`verification_observations[]`. The capability manifest advertises canonical
+target `vhdl_observation_package_skeleton`; the artifact and manifest remain
+shape-only and inert, with no VHDL compile, VHDL syntax, PSL, simulator,
+analyzer, scoreboard, coverage, reusable VIP, or direct IAL2 support claim.
 Direct IAL2-to-verification generation remains an audit question, not an
 implementation assumption.
 Implementation `.85` ships that report/static alignment: the public
@@ -4392,7 +4396,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/tasks/COMPOSITION-TYPE-BACKLOG-EXHAUSTION.md` — completed Composition/type backlog tree; shipped aggregate parameter/generic equality/inequality, closed the remaining Composition/type leaves behind exact prerequisites, and routed VHDL-dependent work through the completed backend/API frontier.
 - `docs/tasks/ISF-REMAINING-BROAD-FRONTIER.md` — proposed broad `R14` ISF frontier owner tree for deferred ISF backlog directions not already owned by narrower active trees.
 - `docs/tasks/BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.md` — active backend-language portability contract tree; `.2.1` captured the variant-parity doctrine and `.2.2` audits public contracts, infrastructure, in-memory host APIs, semantic introspection, and parity gates before any non-Perl implementation work changes code.
-- `docs/tasks/IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.md` — active IAL1-first verification-code generation tree; `.1` promoted the deferred verification-code route into task-tree ownership, `.2` completed the IAL1 source-readiness audit, `.3` selected actor-level passive observation metadata as the first source prerequisite, `.4` selected a passive UVM monitor skeleton package as the first SV/UVM output target, `.7` selected the public verification-output CLI/artifact/report/support-accounting surface, `.8` shipped the bounded inert UVM passive-monitor skeleton output mode, `.5` deferred VHDL artifact selection behind validation-substrate selection, `.9` selected shape-only inert-artifact validation, `.10` selected an inert VHDL observation package, and `.11` now owns implementation.
+- `docs/tasks/IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.md` — active IAL1-first verification-code generation tree; `.1` promoted the deferred verification-code route into task-tree ownership, `.2` completed the IAL1 source-readiness audit, `.3` selected actor-level passive observation metadata as the first source prerequisite, `.4` selected a passive UVM monitor skeleton package as the first SV/UVM output target, `.7` selected the public verification-output CLI/artifact/report/support-accounting surface, `.8` shipped the bounded inert UVM passive-monitor skeleton output mode, `.5` deferred VHDL artifact selection behind validation-substrate selection, `.9` selected shape-only inert-artifact validation, `.10` selected an inert VHDL observation package, `.11` shipped the bounded inert VHDL observation package output mode, and `.6` is the next direct IAL2 route audit.
 - `docs/tasks/ISF-VERIFICATION-OBSERVATION-METADATA.md` — completed implementation owner for the selected IAL1 passive observation source feature; `.1` shipped actor-level `(observe NAME (role passive_monitor) (signals SIG...))` metadata, additive `verification_observations[]` schedule JSON projection, public contract metadata, a supported-smoke fixture, and mdBook coverage without generated verification output.
 - `docs/tasks/ISF-SPECFORGE-PHASE-MEMBERSHIP-RESPONSE.md` — completed downstream-response task tree answering SPECFORGE's 2026-06-16 transaction phase-membership/value/order request; records that no runtime code change was needed, `.isf` remains SPECFORGE's synthesizable target, future checked transaction phase-group metadata belongs in an owned ISF slice, and `.val` is not a replacement for `.isf`.
 - `docs/tasks/ISF-FIELD-STRUCTURED-STORAGE-RESPONSE.md` — completed downstream-response task tree for SPECFORGE's 2026-06-22 declarative field-structured storage request; records that FSMGen accepts the direction as future ISF work, existing runtime field operations are not static field-map declarations, and implementation selection moves to `ISF-FIELD-STRUCTURED-STORAGE-FRONTIER.1`.
@@ -4405,7 +4409,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL1_VERIFICATION_OUTPUT_PUBLIC_SURFACE_CONTRACT_SELECTION.md` — selector for `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.7`; chose `--emit-verification-output uvm-passive-monitor --verification-outdir DIR`, the UVM package artifact layout, manifest shape, support-accounting entry, capability-manifest surface, diagnostics, and validation boundary implemented by `.8`.
 - `docs/IAL1_VHDL_VERIFICATION_OUTPUT_CONTRACT_SELECTION.md` — selector for `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.5`; records that no VHDL verification artifact is selected yet and routes the prerequisite to `.9`, VHDL verification validation-substrate selection.
 - `docs/IAL1_VHDL_VERIFICATION_VALIDATION_SUBSTRATE_SELECTION.md` — selector for `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.9`; chooses shape-only inert-artifact validation with explicit no-compile/no-PSL manifest claims and routes first VHDL artifact selection to `.10`.
-- `docs/IAL1_VHDL_OBSERVATION_PACKAGE_CONTRACT_SELECTION.md` — selector for `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.10`; chooses `vhdl-observation-package`, an inert VHDL observation metadata package target implemented by `.11`.
+- `docs/IAL1_VHDL_OBSERVATION_PACKAGE_CONTRACT_SELECTION.md` — selector for `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.10`; chose `vhdl-observation-package`, an inert VHDL observation metadata package target implemented by `.11`.
 - `docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md` — completed immediate semantic-introspection/MCP task tree; `.2` made deep semantic introspection a first-class feature, `.29` shipped catalog-backed source discovery, and `.30` returned active priority to IAL2.
 - `docs/tasks/BACKEND-API-VALIDATION-FRONTIER.md` — completed backend/API frontier owner tree for VHDL, external validation, ABC, structured generation, embedding API, and normalized export backlog through `.132`.
 - `docs/tasks/ARCHITECTURE-DEBT-FRONTIER.md` — completed architecture-debt frontier owner tree; direct-backend structural internal declaration nets shipped, and ISF parser/lowerer extraction remains deferred behind future exact ownership.
@@ -5462,6 +5466,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `perl/FSM/Scheduler/ISF/Emitter/CompositionTop.pm` — generated `?top` emitter for ISF spawned-child parent/child handoff.
 - `perl/FSM/Scheduler/ISF/Emitter/JSON.pm` — machine-readable schedule-report emitter for `.isf` lowering results.
 - `perl/FSM/VerificationOutput/UVM/PassiveMonitorSkeleton.pm` — explicit verification-output builder for the inert UVM passive-monitor skeleton package and artifact manifest.
+- `perl/FSM/VerificationOutput/VHDL/ObservationPackageSkeleton.pm` — explicit verification-output builder for the inert VHDL observation metadata package and artifact manifest.
 - `perl/FSM/Pipeline/HDLGenerator.pm` — thin public generation facade around source/direct/composition orchestrators; accepts supported `.fsm`, `.isf`, and `.ppif` source roots.
 - `perl/FSM/Composition/Net.pm` — typed internal net plan for multi-child composition wiring.
 - `perl/FSM/Composition/Parser.pm` — first typed composition parser/IR boundary.
@@ -5478,7 +5483,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `perl/FSM/Support/DocumentationContract.pm` — bounded manifest-facing contract for the `documentation` section's public path-list keys.
 - `perl/FSM/Support/LanguageSurfaceContract.pm` — bounded manifest-facing contract for the `language_surface` section's public top-level, first nested key lists, file-surface discovery keys, and per-suffix supported CLI-mode metadata.
 - `perl/FSM/Support/VerificationOutputsContract.pm` — bounded manifest-facing contract for generated verification-output target discovery and artifact-manifest key families.
-- `perl/FSM/Support/VerificationOutputsSection.pm` — capability-manifest `verification_outputs` section builder for the shipped UVM passive-monitor skeleton target.
+- `perl/FSM/Support/VerificationOutputsSection.pm` — capability-manifest `verification_outputs` section builder for the shipped UVM passive-monitor skeleton and VHDL observation package targets.
 - `perl/FSM/Support/ProducerContract.pm` — bounded manifest-facing contract for the `producer` section's public identity/build metadata keys.
 - `perl/FSM/Support/SemanticExportsContract.pm` — bounded manifest-facing contract for the `semantic_exports` section's public top-level and nested contract-owner map.
 - `perl/FSM/Support/SemanticIntrospectionContract.pm` — bounded manifest-facing first-class semantic-introspection contract with query domains, query families, MCP resource/tool mappings, safety policy, and public surface ownership.
@@ -5568,6 +5573,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 ./bin/fsmgen --emit-schedule-json isf/i2c_master.isf
 ./bin/fsmgen --emit-schedule-json ppif/axi_aw_valid_ready.ppif
 ./bin/fsmgen --emit-verification-output uvm-passive-monitor --verification-outdir /tmp/fsmgen-uvm isf/verification_observation_metadata.isf
+./bin/fsmgen --emit-verification-output vhdl-observation-package --verification-outdir /tmp/fsmgen-vhdl-observation isf/verification_observation_metadata.isf
 ./bin/fsmgen --capability-manifest
 perl bin/fsmgen-mcp --request-json '{"jsonrpc":"2.0","id":1,"method":"tools/list"}'
 ```
@@ -5672,6 +5678,7 @@ check unless the user explicitly authorizes a different cap.
 - `--emit-semantic-json`: run the full pipeline, emit bounded normalized semantic JSON, and do not write HDL.
 - `--emit-schedule-json`: for `.isf` input, emit the scheduler's JSON report and exit before HDL generation.
 - `--emit-verification-output uvm-passive-monitor`: for `.isf` input with passive `verification_observations[]`, emit the inert UVM passive-monitor skeleton package and artifact manifest.
+- `--emit-verification-output vhdl-observation-package`: for `.isf` input with passive `verification_observations[]`, emit the inert VHDL observation metadata package and artifact manifest.
 - `--verification-outdir <dir>`: required destination directory for `--emit-verification-output`.
 - `--verify-hdl`: after writing generated SystemVerilog, run Verilator lint and ABC-free Yosys structural synthesis; optional ABC executable discovery is reported for contract visibility but ABC is not required or run by the CLI. In-process callers can explicitly opt into ABC-backed Yosys mapping validation with `FSM::Support::HDLExternalValidation::validate_systemverilog_file(..., abc_mapping => 1)`.
 - `-q, --quiet`: suppress informational output.
@@ -6192,7 +6199,11 @@ for generated verification artifacts:
 publishes the shipped `uvm_passive_monitor_skeleton` target, its
 `uvm-passive-monitor` CLI target, `.isf` source restriction,
 `uvm/<actor>_observation_uvm_pkg.sv` artifact path pattern, manifest path, and
-no-UVM-compile-support validation boundary, while
+no-UVM-compile-support validation boundary. It also publishes the shipped
+`vhdl_observation_package_skeleton` target, its `vhdl-observation-package` CLI
+target, `.isf` source restriction,
+`vhdl/<actor>_observation_vhdl_pkg.vhd` artifact path pattern, manifest path,
+and no-VHDL-compile/no-VHDL-syntax/no-PSL validation boundary, while
 [perl/FSM/Support/VerificationOutputsContract.pm](perl/FSM/Support/VerificationOutputsContract.pm)
 owns the bounded target, artifact-manifest, observation, signal, source, and
 validation key families advertised through

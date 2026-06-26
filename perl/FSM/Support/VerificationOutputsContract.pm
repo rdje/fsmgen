@@ -50,7 +50,7 @@ sub build_verification_outputs_contract {
         guidance => [
             'Treat this section as the bounded public discovery surface for generated verification-output targets.',
             'Generated verification artifact manifests use the advertised manifest, artifact, observation, signal, source, and validation key families.',
-            'The first target is an inert UVM passive monitor skeleton and does not claim UVM compile support.',
+            'The first targets are inert observation skeleton artifacts and do not claim UVM, VHDL compile, VHDL syntax, or PSL validation support.',
             'Widen this section only with task-tree-owned implementation and regression coverage for the new verification-output target or manifest field.',
         ],
     };
@@ -129,6 +129,7 @@ sub verification_outputs_observation_entry_keys {
         qw(
             name
             role
+            constant_prefix
             snapshot_class
             monitor_class
             signals
@@ -160,6 +161,10 @@ sub verification_outputs_validation_keys {
         qw(
             claimed_uvm_compile_support
             uvm_compile_validator
+            claimed_vhdl_compile_support
+            vhdl_syntax_validator
+            claimed_psl_support
+            psl_validator
             artifact_shape_checked
             inert_behavior_checked
         ),

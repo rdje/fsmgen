@@ -11,8 +11,8 @@ answers:
 date: 2026-06-26
 status: current
 tags: [ial1, vhdl, verification, validation, task-tree]
-evidence: docs/IAL1_VHDL_VERIFICATION_VALIDATION_SUBSTRATE_SELECTION.md; docs/IAL1_VHDL_VERIFICATION_OUTPUT_CONTRACT_SELECTION.md; docs/IAL1_VHDL_OBSERVATION_PACKAGE_CONTRACT_SELECTION.md; docs/tasks/IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.md; docs/VHDL_SCOPE.md; perl/FSM/Support/HDLExternalValidationContract.pm; perl/FSM/Support/VerificationOutputsContract.pm; t/1464-isf-verification-output-uvm-passive-monitor.t; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md
-reverify: rg -n 'IAL1_VHDL_VERIFICATION_VALIDATION_SUBSTRATE_SELECTION|IAL1_VHDL_OBSERVATION_PACKAGE_CONTRACT_SELECTION|IAL1-VERIFICATION-CODE-GENERATION-FRONTIER\\.9|IAL1-VERIFICATION-CODE-GENERATION-FRONTIER\\.10|IAL1-VERIFICATION-CODE-GENERATION-FRONTIER\\.11|artifact-shape|inert-behavior|claimed_vhdl_compile_support|vhdl_syntax_validator|claimed_psl_support|vhdl-observation-package|GHDL validation' docs/IAL1_VHDL_VERIFICATION_VALIDATION_SUBSTRATE_SELECTION.md docs/IAL1_VHDL_OBSERVATION_PACKAGE_CONTRACT_SELECTION.md docs/tasks/IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.md docs/VHDL_SCOPE.md README.md ROADMAP_V2.md docs/book/src/14-feature-backlog.md
+evidence: docs/IAL1_VHDL_VERIFICATION_VALIDATION_SUBSTRATE_SELECTION.md; docs/IAL1_VHDL_VERIFICATION_OUTPUT_CONTRACT_SELECTION.md; docs/IAL1_VHDL_OBSERVATION_PACKAGE_CONTRACT_SELECTION.md; docs/tasks/IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.md; docs/VHDL_SCOPE.md; perl/FSM/VerificationOutput/VHDL/ObservationPackageSkeleton.pm; perl/FSM/Support/HDLExternalValidationContract.pm; perl/FSM/Support/VerificationOutputsContract.pm; t/1464-isf-verification-output-uvm-passive-monitor.t; t/1465-isf-verification-output-vhdl-observation-package.t; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md
+reverify: rg -n 'IAL1_VHDL_VERIFICATION_VALIDATION_SUBSTRATE_SELECTION|IAL1_VHDL_OBSERVATION_PACKAGE_CONTRACT_SELECTION|IAL1-VERIFICATION-CODE-GENERATION-FRONTIER\\.9|IAL1-VERIFICATION-CODE-GENERATION-FRONTIER\\.10|IAL1-VERIFICATION-CODE-GENERATION-FRONTIER\\.11|ObservationPackageSkeleton|artifact-shape|inert-behavior|claimed_vhdl_compile_support|vhdl_syntax_validator|claimed_psl_support|vhdl-observation-package|GHDL validation' docs/IAL1_VHDL_VERIFICATION_VALIDATION_SUBSTRATE_SELECTION.md docs/IAL1_VHDL_OBSERVATION_PACKAGE_CONTRACT_SELECTION.md docs/tasks/IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.md docs/VHDL_SCOPE.md perl/FSM/VerificationOutput/VHDL/ObservationPackageSkeleton.pm t/1465-isf-verification-output-vhdl-observation-package.t README.md ROADMAP_V2.md docs/book/src/14-feature-backlog.md
 ---
 
 `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.9` selected the first VHDL
@@ -29,6 +29,7 @@ source identity, observation projection, and absence of runtime behavior.
 `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.10` selected the first artifact
 under this substrate: an inert VHDL observation metadata package target named
 `vhdl-observation-package`. `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.11`
-owns implementation. Any artifact that claims VHDL syntax, compile,
+implements that target under the same shape-only, inert validation substrate.
+Any artifact that claims VHDL syntax, compile,
 simulation, formal, PSL, coverage, scoreboard, reusable VIP, or direct IAL2
 behavior needs a later validation owner before implementation.

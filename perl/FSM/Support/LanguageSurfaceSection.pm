@@ -57,6 +57,7 @@ sub build_language_surface_section {
                         'default HDL generation',
                         '--outdir',
                         '--emit-verification-output uvm-passive-monitor --verification-outdir',
+                        '--emit-verification-output vhdl-observation-package --verification-outdir',
                         '--emit-schedule-json',
                         '--check --json / --check-json',
                         '--emit-semantic-json',

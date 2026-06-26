@@ -2837,7 +2837,11 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
     my %isf_cli_modes = map { $_ => 1 } @{$file_surface_by_suffix{'.isf'}{supported_cli_modes} || []};
     ok(
         $isf_cli_modes{'--emit-verification-output uvm-passive-monitor --verification-outdir'},
-        'manifest records .isf verification-output CLI mode',
+        'manifest records .isf UVM verification-output CLI mode',
+    );
+    ok(
+        $isf_cli_modes{'--emit-verification-output vhdl-observation-package --verification-outdir'},
+        'manifest records .isf VHDL verification-output CLI mode',
     );
     is($file_surface_by_suffix{'.ppif'}{intent_layer}, 'IAL2', 'manifest marks .ppif as IAL2');
     is(
@@ -2861,7 +2865,11 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
     ok($ppif_cli_modes{'--check --json / --check-json'}, 'manifest records .ppif check JSON CLI mode');
     ok(
         !$ppif_cli_modes{'--emit-verification-output uvm-passive-monitor --verification-outdir'},
-        'manifest does not advertise verification-output CLI mode for .ppif yet',
+        'manifest does not advertise UVM verification-output CLI mode for .ppif yet',
+    );
+    ok(
+        !$ppif_cli_modes{'--emit-verification-output vhdl-observation-package --verification-outdir'},
+        'manifest does not advertise VHDL verification-output CLI mode for .ppif yet',
     );
     is(
         $file_surface_by_suffix{'.ppif'}{sample_path},
@@ -2897,6 +2905,45 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
     ok(
         !$manifest->{verification_outputs}{validation}{claimed_uvm_compile_support},
         'manifest does not claim UVM compile support for the skeleton target',
+    );
+    my ($vhdl_target) = grep { $_->{id} eq 'vhdl_observation_package_skeleton' }
+        @{$manifest->{verification_outputs}{targets} || []};
+    ok($vhdl_target, 'manifest advertises the VHDL observation package skeleton target');
+    is($vhdl_target->{cli_target}, 'vhdl-observation-package', 'manifest records the VHDL verification-output CLI target');
+    is_deeply($vhdl_target->{source_suffixes}, ['.isf'], 'manifest limits the VHDL verification-output target to .isf');
+    ok($vhdl_target->{requires_verification_observations}, 'manifest records the VHDL observation metadata prerequisite');
+    is(
+        $vhdl_target->{artifact_language},
+        'vhdl',
+        'manifest records the VHDL artifact language',
+    );
+    is(
+        $vhdl_target->{artifact_relpath_pattern},
+        'vhdl/<actor>_observation_vhdl_pkg.vhd',
+        'manifest records the VHDL package artifact path pattern',
+    );
+    is(
+        $vhdl_target->{manifest_relpath},
+        'verification-output-manifest.json',
+        'manifest records the VHDL artifact manifest path',
+    );
+    ok(
+        !$manifest->{verification_outputs}{validation}{claimed_vhdl_compile_support},
+        'manifest does not claim VHDL compile support for the skeleton target',
+    );
+    is(
+        $manifest->{verification_outputs}{validation}{vhdl_syntax_validator},
+        'none',
+        'manifest records no VHDL syntax validator for the skeleton target',
+    );
+    ok(
+        !$manifest->{verification_outputs}{validation}{claimed_psl_support},
+        'manifest does not claim PSL support for the skeleton target',
+    );
+    is(
+        $manifest->{verification_outputs}{validation}{psl_validator},
+        'none',
+        'manifest records no PSL validator for the skeleton target',
     );
     like(
         $file_surface_by_suffix{'.ppif'}{current_boundary},

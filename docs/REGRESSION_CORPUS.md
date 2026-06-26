@@ -50,6 +50,9 @@ or claim `expected_failure` while using a default-compatible coverage bucket.
 - `isf_verification_output_uvm_passive_monitor_skeleton_cli`: the entry covers
   the explicit `.isf` verification-output CLI path that emits the inert UVM
   passive-monitor skeleton package plus `verification-output-manifest.json`.
+- `isf_verification_output_vhdl_observation_package_skeleton_cli`: the entry
+  covers the explicit `.isf` verification-output CLI path that emits the inert
+  VHDL observation metadata package plus `verification-output-manifest.json`.
 - `legacy_root_default_pipeline_cli`: the entry is retained as a compatibility
   asset and must still compile through both the pipeline API and the CLI in
   default mode.
@@ -974,6 +977,13 @@ manifest output while keeping the exact file lists widenable.
   which checks the explicit verification-output CLI, emitted package path,
   artifact manifest, selected class/field shape, and absence of deferred UVM
   behavior.
+  The
+  `feature.isf_verification_observation_vhdl_package_skeleton` entry is
+  separately locked by
+  [t/1465-isf-verification-output-vhdl-observation-package.t](t/1465-isf-verification-output-vhdl-observation-package.t),
+  which checks the explicit VHDL verification-output CLI, emitted package
+  path, artifact manifest, selected observation constant shape, and absence of
+  deferred VHDL compile/syntax/PSL/testbench/scoreboard/coverage behavior.
   The field metadata fixture keeps the field map itself on the schedule JSON
   `inferred_storage[].fields` payload. The
   `feature.declarative_bits_symbol_widths` entry proves that direct-root
