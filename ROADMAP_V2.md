@@ -4055,6 +4055,12 @@ artifacts `apb_requester.isf` and `apb_requester.fsm` through IAL1 before
 IAL0, reaches HDL module `apb_requester`, and support-accounts
 `intent.ppif_apb_requester_transfer`. `.apb` and all other new suffixes remain
 unsupported; APB is a `.ppif` profile behavior, not an AXI extension.
+`.551` now selects `.552`, an APB `.apb` profile-alias readiness audit. The
+selector found that `.550` creates enough generic `.ppif` APB evidence to
+audit `.apb` alias readiness, but direct `.apb` implementation still needs a
+separate public file-surface contract for explicit profile matching,
+source-path/report identity, support accounting, manifest wording,
+diagnostics, and generated `.isf` review artifacts before generated `.fsm`.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

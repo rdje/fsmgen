@@ -3057,6 +3057,12 @@ artifacts `apb_requester.isf` and `apb_requester.fsm` through IAL1 before
 IAL0, reaches HDL module `apb_requester`, and support-accounts
 `intent.ppif_apb_requester_transfer`. `.apb` and all other new suffixes remain
 unsupported; APB is a `.ppif` profile behavior, not an AXI extension.
+`.551` now selects `.552`, an APB `.apb` profile-alias readiness audit. The
+selector found that `.550` creates enough generic `.ppif` APB evidence to
+audit `.apb` alias readiness, but direct `.apb` implementation still needs a
+separate public file-surface contract for explicit profile matching,
+source-path/report identity, support accounting, manifest wording,
+diagnostics, and generated `.isf` review artifacts before generated `.fsm`.
 
 No behavior
 changed in `.273`, `.274`, `.275`,
@@ -5559,6 +5565,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_APB_SOURCE_SHAPE_READINESS_AUDIT.md` — audits APB lower-layer evidence and selects APB `.ppif` source-shape public contract selection before any APB behavior or `.apb` suffix support.
 - `docs/IAL2_APB_PPIF_SOURCE_SHAPE_CONTRACT_SELECTION.md` — selects `(profile apb)`, the first `(apb-requester ...)` source shape, `ppif/apb_requester_transfer.ppif`, `intent.ppif_apb_requester_transfer`, and direct implementation as the next exact owner.
 - `docs/IAL2_APB_PPIF_REQUESTER_TRANSFER_BEHAVIOR.md` — ships the first APB `.ppif` requester-transfer behavior with `ppif/apb_requester_transfer.ppif`, generated `apb_requester.isf`/`apb_requester.fsm`, report schema `fsmgen.ial2.protocol_intent.apb_requester_transfer.v1`, and `.apb` still unsupported.
+- `docs/IAL2_POST_APB_REQUESTER_TRANSFER_NEXT_SLICE_SELECTION.md` — selects APB `.apb` profile-alias readiness audit after APB `.ppif` requester-transfer behavior, without accepting `.apb` or changing behavior.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_CONTRACT_SELECTION.md` — selected direct single-active dynamic write `BID` same-cycle release-and-recapture behavior under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_BEHAVIOR.md` — shipped single-active dynamic write `BID` same-cycle release-and-recapture under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_WRITE_RECAPTURE_NEXT_SLICE_SELECTION.md` — selected `.367`, public contract selection for first single-active dynamic read same-cycle release-and-recapture after dynamic write recapture shipped.

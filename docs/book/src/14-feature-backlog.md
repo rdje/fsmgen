@@ -9607,6 +9607,16 @@ support-accounts `intent.ppif_apb_requester_transfer`. APB support here is a
 The `.apb` suffix remains a known unsupported alias candidate even when the
 file contents match the APB `.ppif` source.
 
+Post APB requester-transfer selector:
+[IAL2_POST_APB_REQUESTER_TRANSFER_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_REQUESTER_TRANSFER_NEXT_SLICE_SELECTION.md)
+selects `.552`, an APB `.apb` profile-alias readiness audit. The selector
+records that the shipped APB `.ppif` requester-transfer behavior is enough
+evidence to audit `.apb` alias readiness, but not enough to accept `.apb`
+without a separate public file-surface contract for explicit profile matching,
+source-path/report identity, support accounting, manifest wording,
+diagnostics, and generated `.isf` review artifacts before generated `.fsm`.
+No suffix behavior changes in `.551`.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after
