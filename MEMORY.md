@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.543: sync profile-alias chronology`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.544` is active after `.543`; select the next exact IAL2 owner without behavior changes, preserving AXI as one IAL2 profile example rather than the whole IAL2 scope.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.543` synchronized README, ROADMAP_V2, and mdBook profile-alias chronology so `.537`/`.538` wording is explicitly historical pre-`.540` state while current `.axi` behavior remains the bounded `.540` AW Valid-Ready profile-alias sample.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.544: select non-AXI alias audit`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.545` is active after `.544`; audit non-AXI profile-alias readiness without accepting any suffix or changing parser/generator behavior.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.544` selected `.545`, a non-AXI profile-alias readiness audit after the public chronology sync. The selector explicitly avoids another AXI implementation and keeps AXI as one IAL2 profile example, not the whole IAL2 scope.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: The original exact `t/301` resource cliff is fixed for oversized PPIF check-json via `.2.3.1`, but a full guarded `t/301-check-json-supported-corpus.t` rerun stopped on host-memory cutoff from a high host baseline and a higher-cutoff retry was rejected by the approval layer. Do not bypass that rejection without explicit user approval; `.2.5` selected RAM-guarded or exact bounded replacement policy for any future broad `t/301`/`t/303` parity plan.
-- next_action: Start `.544` by reading `.543` sync, `.542` audit, `.541` selector, `.540` `.axi` behavior, `.535` neutral bundle behavior, `.531` neutral one-channel behavior, decisions `0015`/`0016`/`0017`, current public surfaces, README, ROADMAP_V2, mdBook, task tree, Memory, and Knowledge Map; then select the next exact IAL2 owner without behavior changes.
+- next_action: Start `.545` by reading `.544` selection, `.543` sync, `.540` `.axi` behavior, `.535` neutral bundle behavior, `.531` neutral one-channel behavior, decisions `0015`/`0016`/`0017`, suffix/manifest/support-accounting surfaces, README, ROADMAP_V2, mdBook, task tree, Memory, and Knowledge Map; then audit non-AXI alias readiness without behavior changes.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact

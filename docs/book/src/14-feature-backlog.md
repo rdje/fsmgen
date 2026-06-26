@@ -9530,6 +9530,14 @@ to the `.540` bounded AXI AW Valid-Ready profile-alias sample. `.axi` is the
 first shipped profile-alias example over IAL2; it is not the definition or full
 scope of IAL2, and the other profile-alias candidates remain unsupported.
 
+IAL2 non-AXI profile-alias readiness selector:
+[IAL2_NON_AXI_PROFILE_ALIAS_READINESS_SELECTION](../../IAL2_NON_AXI_PROFILE_ALIAS_READINESS_SELECTION.md)
+selects `.545`, a non-AXI profile-alias readiness audit after the public
+chronology sync. The selected next owner is not another AXI implementation; it
+must audit `.chi`, `.ace`, `.ahb`, `.apb`, `.atb`, `.smbus`, `.i2s`, `.pif`,
+and `.ppi` readiness or prerequisites without accepting a new suffix or
+changing behavior.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

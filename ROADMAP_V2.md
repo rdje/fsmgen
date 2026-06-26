@@ -4006,6 +4006,11 @@ wording explicitly historical pre-`.540` state, while current `.axi` behavior
 and remaining unsupported aliases stay clear. AXI remains the first shipped
 profile-alias example, not the definition or full scope of IAL2. No behavior
 changed in `.543`.
+`.544` now selects `.545`, a non-AXI profile-alias readiness audit after the
+public chronology sync. The next owner is deliberately not another AXI
+implementation: it must audit `.chi`, `.ace`, `.ahb`, `.apb`, `.atb`,
+`.smbus`, `.i2s`, `.pif`, and `.ppi` readiness or prerequisites without
+accepting any new suffix or changing behavior.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
