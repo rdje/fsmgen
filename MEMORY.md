@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.521: sync mixed queue public contracts`.
-- active_work_unit: `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` selects the first SV/UVM verification output contract now that observation metadata ships; `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remains active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.521` synced `docs/ISF_PUBLIC_INTERFACE_CONTRACT.md` and `docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md` after `.520` so public contract summaries no longer describe mixed queue multi-beat output banks as deferred. `.520` shipped `ppif/axi_manager_capacity_status_read_mixed_dynamic_static_burst_last_same_id_issue_order_queue_read_data_multi_beat.ppif` for exactly one dynamic read plus one concrete static read in one depth-2 generated mixed queue, with runtime-assertion raw-`ARLEN` metadata, complete output-bank bindings, valid masks, length outputs, scalar `RRESP` aggregation, and completion validity `generated_mixed_dynamic_static_read_issue_order_queue_response_demux_last_beat_completion_pulse`.
+- latest_commit: `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4: select passive UVM monitor skeleton`.
+- active_work_unit: `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.7` selects the public CLI/artifact-layout/report/manifest/support-accounting/validation contract for the passive UVM monitor skeleton before any SV/UVM files are emitted; `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remains active/pending.
+- recently_done: `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` selected a bounded passive UVM monitor skeleton package as the first SV/UVM output target derived from shipped `verification_observations[]`. The selected contract permits inert UVM 1.2 snapshot item and monitor class declarations only; it defers DUT sampling, `run_phase`, virtual interfaces/config DB, transaction publication, assertions/properties, coverage, agents/envs/tests, scoreboards, reusable VIP, VHDL output, direct IAL2 routing, and every public emission surface to `.7`.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
-- next_action: Start `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4`: select the first bounded SV/UVM verification output contract before any verification-code-generation behavior changes.
+- next_action: Start `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.7`: select the public CLI, artifact layout, report/manifest, support-accounting, and validation gates for the selected passive UVM monitor skeleton before any verification-code-generation behavior changes.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact

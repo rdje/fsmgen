@@ -74,11 +74,11 @@ reusable verification IP, and VHDL-oriented verification artifacts.
   Commit: `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.3: select observation metadata`
 
 - ID: `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4`
-  Status: `pending`
+  Status: `done`
   Goal: `Select the first SV/UVM verification output contract.`
   Acceptance: `The selector chooses one bounded SV/UVM output target such as a monitor, checker, scoreboard shell, agent skeleton, coverage collector, or reusable VIP package; records source prerequisites, generated artifact names, CLI/report surfaces, UVM version/reference assumptions, simulation/formal boundaries, validation gates, and explicit non-goals before code generation.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Selected a bounded passive UVM monitor skeleton package derived only from shipped verification_observations[] report entries. The selected future artifact family is uvm/<actor>_observation_uvm_pkg.sv with package <actor>_observation_uvm_pkg and inert <observation>_snapshot / <observation>_monitor class skeletons. The selector read the .2 source-readiness audit, .3 observation selection, ISF-VERIFICATION-OBSERVATION-METADATA.1 implementation record, downstream schedule-report contract, local UVM 1.2 monitor/agent/analysis-port sources, README, ROADMAP_V2, mdBook, task index, Memory, and Knowledge Map. It records that .7 must select public CLI, artifact layout, report/manifest shape, support accounting, and validation gates before any SV/UVM files are emitted.`
+  Commit: `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4: select passive UVM monitor skeleton`
 
 - ID: `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.5`
   Status: `pending`
@@ -108,7 +108,8 @@ reusable verification IP, and VHDL-oriented verification artifacts.
 | 1 | `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.2` | `done` | Audit completed; existing IAL1 checks/properties are enough for inline SV assertion projection but not enough for first-class SV/UVM or VHDL-oriented verification-code generation. |
 | 2 | `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.3` | `done` | Selected actor-level passive observation metadata as the first IAL1 verification-specific source feature. |
 | 3 | `ISF-VERIFICATION-OBSERVATION-METADATA.1` | `done` | Shipped the selected report-only `observe` metadata contract through parser/report/public-contract coverage. |
-| 4 | `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` | `pending` | Select the first bounded SV/UVM output contract now that the selected IAL1 observation source contract ships. |
+| 4 | `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` | `done` | Selected a passive UVM monitor skeleton package as the first bounded SV/UVM output target. |
+| 5 | `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.7` | `pending` | Select public CLI, artifact layout, report/manifest, support-accounting, and validation gates before any SV/UVM files are emitted. |
 
 ## Decisions
 
@@ -144,6 +145,15 @@ reusable verification IP, and VHDL-oriented verification artifacts.
   not be lowered by fabricating drive values or transaction-body order. Future
   checked transaction phase-group metadata belongs in `.isf`; `.val`, if ever
   selected, is a verification artifact/layer and not a replacement for `.isf`.
+- `2026-06-26`: Complete selector `.4`. The first SV/UVM output target is a
+  passive UVM monitor skeleton package derived only from shipped
+  `verification_observations[]` metadata. The selected skeleton may declare
+  inert UVM 1.2 snapshot item and monitor classes, but it must not sample a
+  DUT interface, publish transactions, infer events, build an agent, generate
+  a scoreboard, generate coverage, or emit reusable VIP behavior. `.7` is the
+  next prerequisite because public CLI, artifact layout, report/manifest shape,
+  support-accounting identity, and validation gates must be selected before any
+  implementation emits SV/UVM files.
 
 ## Open Questions
 
@@ -156,14 +166,15 @@ reusable verification IP, and VHDL-oriented verification artifacts.
 - Should protocol-specific IAL2 facts become verification annotations on the
   generated IAL1 artifact, or should a future direct IAL2 verification route
   exist at all?
-- Which output family should be first: SV/UVM monitor/checker, scoreboard,
-  coverage, reusable VIP, or a smaller VHDL-oriented verification artifact?
+- Which public CLI/artifact/report/support-accounting surface should emit the
+  selected passive UVM monitor skeleton package?
 
 ## Blockers
 
-- None for `.4`; the selected observation metadata source prerequisite has
-  shipped. SV/UVM output code generation still requires `.4` to choose one
-  exact output contract before implementation.
+- None for `.7`; `.4` selected the passive UVM monitor skeleton package as the
+  first SV/UVM output target. SV/UVM output code generation still requires `.7`
+  to select public CLI, artifact layout, report/manifest, support-accounting,
+  and validation gates before implementation.
 
 ## Verification Log
 
@@ -173,6 +184,7 @@ reusable verification IP, and VHDL-oriented verification artifacts.
 | `2026-06-16` | `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.2` | Audit/read: `docs/IAL1_VERIFICATION_CODE_GENERATION_SOURCE_READINESS_AUDIT.md`; `docs/ISF_SPEC.md`; `docs/ISF_PUBLIC_INTERFACE_CONTRACT.md`; `docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md`; `docs/book/src/13d-control-flow.md`; `docs/book/src/13h-lowering-reference.md`; `docs/book/src/13k-isf-feature-support-matrix.md`; `docs/book/src/14-feature-backlog.md`; `docs/tasks/ISF-ASSERT.md`; `docs/tasks/ISF-ASSERT-CONCURRENT.md`; `docs/tasks/ISF-COVER-ASSUME.md`; `docs/tasks/ISF-PROPERTY-IMPLICATION.md`; `docs/tasks/ISF-PROPERTY-SAMPLED-VALUE.md`; `docs/tasks/ISF-PROPERTY-WINDOW-RANGE.md`; `docs/tasks/ISF-TRIGGER-ANCHOR.md`; `docs/tasks/ISF-TEMPORAL-CONTRACT-ASSERTIONS.md`; `docs/tasks/ISF-TEMPORAL-CONTRACT-STORAGE-REPORTS.md`; `docs/tasks/R11-DIRECT-STRUCTURAL-VHDL-REROUTING.md`; `docs/vendor/accellera/uvm/UVM_Class_Reference_Manual_1.2.pdf`; `docs/vendor/accellera/uvm/uvm_users_guide_1.2.pdf`; `.cache/local-references/accellera/uvm/uvm-1.2`; `perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl/FSM/Scheduler/ISF/Emitter/FSM.pm`; `perl/FSM/Adapter/FSMGenFull/Parser.pm`; `perl/FSM/Adapter/FSMGenFull/SignalAnalyzer.pm`; `perl/FSM/Pipeline/GeneratedModuleInfoBuilder.pm`; `perl/FSM/Backend/GeneratedModuleEmitter.pm`; `pdftotext`/`rg` UVM reference scans; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `mdbook build docs/book`; `env -u PERL5LIB prove -Iperl t/1414-docs-relative-paths-audit.t`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `git diff --check` | `passed`; existing IAL1 verification checks/properties are sufficient for inline SV assertion projection but insufficient for first-class verification-code generation, so `.3` is selected to define an IAL1 verification observation/source-feature contract |
 | `2026-06-16` | `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.3` | Selection/read: `docs/IAL1_VERIFICATION_CODE_GENERATION_SOURCE_READINESS_AUDIT.md`; `docs/IAL1_VERIFICATION_OBSERVATION_CONTRACT_SELECTION.md`; `docs/tasks/ISF-VERIFICATION-OBSERVATION-METADATA.md`; `docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md`; `docs/ISF_PUBLIC_INTERFACE_CONTRACT.md`; `docs/book/src/13k-isf-feature-support-matrix.md`; `perl/FSM/Scheduler/ISF/Emitter/JSON.pm`; `perl/FSM/Adapter/ISF/Parser.pm`; `t/1179-isf-phase-stage-boundary.t`; `t/1252-isf-actor-phase-stage-report.t`; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `mdbook build docs/book`; `env -u PERL5LIB prove -Iperl t/1414-docs-relative-paths-audit.t`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `git diff --check` | `passed`; selected actor-level passive `observe` metadata and created `ISF-VERIFICATION-OBSERVATION-METADATA.1` as the implementation owner before SV/UVM output selection |
 | `2026-06-16` | `ISF-VERIFICATION-OBSERVATION-METADATA.1` | See [docs/tasks/ISF-VERIFICATION-OBSERVATION-METADATA.md](ISF-VERIFICATION-OBSERVATION-METADATA.md) | `passed`; implementation prerequisite for `.4` shipped |
+| `2026-06-26` | `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` | `docs/IAL1_SV_UVM_PASSIVE_MONITOR_SKELETON_CONTRACT_SELECTION.md`; `.2` source-readiness audit; `.3` observation selector; `ISF-VERIFICATION-OBSERVATION-METADATA.1`; `docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md`; local UVM 1.2 `uvm_monitor`, `uvm_agent`, and `uvm_analysis_port` sources; README, ROADMAP_V2, mdBook, task index, Memory, and Knowledge Map; docs/doctrine closeout gates | `passed`; selected a passive UVM monitor skeleton package as the first SV/UVM output target and routed public CLI/artifact/report/support-accounting selection to `.7` before implementation. No parser, generator, CLI, artifact, support-accounting, schedule/check/semantic JSON, test, HDL/runtime, UVM output, VHDL output, direct IAL2 route, scoreboard, coverage, reusable VIP, or backend behavior changed. |
 
 ## Commit Log
 
@@ -182,6 +194,7 @@ reusable verification IP, and VHDL-oriented verification artifacts.
 | `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.2` | `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.2: audit IAL1 verification source` | Completed the IAL1 source-readiness audit and selected `.3`, an IAL1 verification observation/source-feature contract selector. |
 | `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.3` | `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.3: select observation metadata` | Selected the first IAL1 verification-specific source feature and created `ISF-VERIFICATION-OBSERVATION-METADATA.1`. |
 | `ISF-VERIFICATION-OBSERVATION-METADATA.1` | `ISF-VERIFICATION-OBSERVATION-METADATA.1: ship observation metadata` | Observation metadata implementation owner; unblocks `.4`. |
+| `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` | `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4: select passive UVM monitor skeleton` | Selected the first SV/UVM output target and routed public artifact/CLI contract selection to `.7`. |
 
 ## Changelog
 
@@ -194,3 +207,6 @@ reusable verification IP, and VHDL-oriented verification artifacts.
 - `2026-06-16`: `ISF-VERIFICATION-OBSERVATION-METADATA.1` shipped the
   report-only observation metadata source prerequisite; `.4` is the next
   executable selector.
+- `2026-06-26`: Completed `.4`, selecting a passive UVM monitor skeleton
+  package as the first SV/UVM output target and routing public CLI/artifact/
+  report/support-accounting selection to `.7`.

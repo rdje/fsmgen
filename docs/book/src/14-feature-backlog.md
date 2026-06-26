@@ -4192,9 +4192,18 @@ then selected actor-level passive observation metadata,
 verification-specific source feature. `ISF-VERIFICATION-OBSERVATION-METADATA.1`
 shipped the parser, additive `verification_observations[]` schedule-report
 projection, public contract metadata, supported-smoke fixture, and mdBook
-example for that report-only metadata. Generated SV/UVM, VHDL-oriented,
-scoreboard, coverage, reusable VIP, public artifact/CLI, and direct
-IAL2-to-verification generation remain deferred behind later selector leaves.
+example for that report-only metadata. The SV/UVM selector
+[IAL1_SV_UVM_PASSIVE_MONITOR_SKELETON_CONTRACT_SELECTION](../../IAL1_SV_UVM_PASSIVE_MONITOR_SKELETON_CONTRACT_SELECTION.md)
+then selected a passive UVM monitor skeleton package as the first SV/UVM
+output target. It may declare inert UVM 1.2 snapshot item and monitor classes
+from `verification_observations[]`, but it must not sample a DUT interface,
+publish transactions, infer events, build an agent, generate a scoreboard,
+generate coverage, or emit reusable VIP behavior. Public CLI, artifact layout,
+report/manifest shape, support-accounting identity, and validation gates now
+belong to `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.7` before
+implementation emits SV/UVM files. VHDL-oriented verification, direct
+IAL2-to-verification routing, scoreboard behavior, coverage behavior, and
+reusable VIP behavior remain deferred behind later selector leaves.
 
 Read-data interleaving queue readiness audit:
 [AXI_IAL2_MANAGER_READ_DATA_INTERLEAVING_QUEUE_READINESS_AUDIT](../../AXI_IAL2_MANAGER_READ_DATA_INTERLEAVING_QUEUE_READINESS_AUDIT.md)

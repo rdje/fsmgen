@@ -10,8 +10,8 @@ answers:
 date: 2026-06-16
 status: current
 tags: [ial1, isf, verification, observation, task-tree]
-evidence: docs/IAL1_VERIFICATION_OBSERVATION_CONTRACT_SELECTION.md; docs/tasks/ISF-VERIFICATION-OBSERVATION-METADATA.md; docs/tasks/IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.md
-reverify: rg -n 'IAL1_VERIFICATION_OBSERVATION_CONTRACT_SELECTION|ISF-VERIFICATION-OBSERVATION-METADATA|observe NAME|verification_observations|passive_monitor' docs/IAL1_VERIFICATION_OBSERVATION_CONTRACT_SELECTION.md docs/tasks/ISF-VERIFICATION-OBSERVATION-METADATA.md docs/tasks/IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.md docs/TASK_TREE.md README.md ROADMAP_V2.md docs/book/src/14-feature-backlog.md
+evidence: docs/IAL1_VERIFICATION_OBSERVATION_CONTRACT_SELECTION.md; docs/IAL1_SV_UVM_PASSIVE_MONITOR_SKELETON_CONTRACT_SELECTION.md; docs/tasks/ISF-VERIFICATION-OBSERVATION-METADATA.md; docs/tasks/IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.md
+reverify: rg -n 'IAL1_VERIFICATION_OBSERVATION_CONTRACT_SELECTION|IAL1_SV_UVM_PASSIVE_MONITOR_SKELETON_CONTRACT_SELECTION|ISF-VERIFICATION-OBSERVATION-METADATA|observe NAME|verification_observations|passive_monitor|passive UVM monitor skeleton|IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.7' docs/IAL1_VERIFICATION_OBSERVATION_CONTRACT_SELECTION.md docs/IAL1_SV_UVM_PASSIVE_MONITOR_SKELETON_CONTRACT_SELECTION.md docs/tasks/ISF-VERIFICATION-OBSERVATION-METADATA.md docs/tasks/IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.md docs/TASK_TREE.md README.md ROADMAP_V2.md docs/book/src/14-feature-backlog.md
 ---
 
 `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.3` selected the first IAL1
@@ -23,7 +23,9 @@ implementation `.1` now populates `verification_observations[]` in schedule
 JSON and must not emit scheduled `.fsm`, HDL, UVM, VHDL, scoreboard, coverage,
 or VIP artifacts.
 
-Implementation shipped in `ISF-VERIFICATION-OBSERVATION-METADATA.1`; the next
-verification-code generation frontier leaf is
-`IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4`, the first SV/UVM output
-contract selector.
+Implementation shipped in `ISF-VERIFICATION-OBSERVATION-METADATA.1`.
+`IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` then selected a bounded passive
+UVM monitor skeleton package as the first SV/UVM output target derived from
+`verification_observations[]`. Generated SV/UVM files remain disabled until
+`IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.7` selects the public CLI,
+artifact-layout, report/manifest, support-accounting, and validation contract.

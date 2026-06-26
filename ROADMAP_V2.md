@@ -4765,11 +4765,17 @@ verification-specific source feature. Implementation
 source feature through parser validation, additive
 `verification_observations[]` schedule JSON, public contract metadata,
 supported-smoke coverage, and mdBook documentation before any output generator
-was selected. SV/UVM agents, monitors, scoreboards, protocol checkers,
-coverage, reusable verification IP, and VHDL-oriented verification artifacts
-each require separate contract-selection owners. Direct IAL2-to-verification
-generation remains an explicit audit question, not an implementation
-assumption.
+was selected. Selector `.4` chose a passive UVM monitor skeleton package as
+the first SV/UVM output target. The selected skeleton may declare inert UVM
+1.2 snapshot item and monitor classes from `verification_observations[]`, but
+it must not sample a DUT interface, publish transactions, infer events, build
+an agent, generate a scoreboard, generate coverage, or emit reusable VIP
+behavior. Public CLI, artifact layout, report/manifest shape,
+support-accounting identity, and validation gates now belong to
+`IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.7` before implementation emits
+SV/UVM files. VHDL-oriented verification artifacts each require separate
+contract-selection owners. Direct IAL2-to-verification generation remains an
+explicit audit question, not an implementation assumption.
 Packed burst outputs, concrete same-ID queue variants beyond the shipped
 read burst-last, write, and read single-beat depth-2 queue-head boundaries,
 per-ID queues, queued policy, profile
