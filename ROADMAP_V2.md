@@ -4125,6 +4125,15 @@ before `apb_completer.fsm`, report schema
 `fsmgen.ial2.protocol_intent.apb_completer.v1`, and future support identity
 `intent.ppif_apb_completer`; APB interconnect/composition and `.apb`
 completer alias exposure remain deferred until later owners.
+`.560` now selects `.561`, IAL1 expression entry-activation guard rendering
+repair before APB completer behavior. The audit found runtime `wait_cycles`,
+storage reset/update, no-public-done target transactions, address-dependent
+read/write state, `PSLVERR`, and generated report/artifact structure are
+viable, but direct APB `.ppif` completer implementation is blocked because
+`(when EXPR (sample ...))` entry guards currently lower to invalid generated
+`.fsm` guard suffixes containing `ARRAY(...)`. The APB setup detector requires
+`PSEL && !PENABLE`, so `.561` owns the IAL1 guard serialization repair before
+any APB completer parser/generator/sample/support behavior.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

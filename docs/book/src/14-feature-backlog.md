@@ -9719,6 +9719,17 @@ generated `apb_completer.isf` before `apb_completer.fsm`, report schema
 `intent.ppif_apb_completer`. APB interconnect/composition and `.apb`
 completer alias exposure remain deferred.
 
+APB completer generated-IAL1 substrate audit:
+[IAL2_APB_COMPLETER_GENERATED_IAL1_SUBSTRATE_AUDIT](../../IAL2_APB_COMPLETER_GENERATED_IAL1_SUBSTRATE_AUDIT.md)
+selects `.561`, IAL1 expression entry-activation guard rendering repair before
+APB completer behavior. Runtime `wait_cycles`, storage reset/update,
+no-public-done target transactions, address-dependent read/write state,
+`PSLVERR`, and generated report/artifact structure are viable substrate
+pieces. Direct APB `.ppif` completer implementation remains deferred because
+the required setup detector uses `PSEL && !PENABLE`, and current
+`(when EXPR (sample ...))` entry guards lower to invalid generated `.fsm`
+guard suffixes containing `ARRAY(...)`.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

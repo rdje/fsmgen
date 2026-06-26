@@ -1,0 +1,35 @@
+---
+id: ial2-apb-completer-generated-ial1-substrate-audit
+title: APB completer generation needs an IAL1 expression entry-guard prerequisite
+answers:
+  - "what did IAL2-FEATURE-COMPLETENESS-FRONTIER.560 select?"
+  - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.560?"
+  - "is APB .ppif completer ready for direct implementation?"
+  - "what blocks APB completer generated IAL1?"
+  - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.561?"
+  - "why does APB completer need an IAL1 prerequisite?"
+date: 2026-06-26
+status: current
+tags: [ial2, ial1, apb, ppif, task-tree]
+evidence: docs/IAL2_APB_COMPLETER_GENERATED_IAL1_SUBSTRATE_AUDIT.md; docs/IAL2_APB_COMPLETER_INTERCONNECT_CONTRACT_SELECTION.md; docs/IAL2_APB_COMPLETER_INTERCONNECT_READINESS_AUDIT.md; docs/IAL2_APB_PROFILE_ALIAS_BEHAVIOR.md; docs/IAL2_APB_PPIF_REQUESTER_TRANSFER_BEHAVIOR.md; docs/IAL2_APB_PPIF_SOURCE_SHAPE_CONTRACT_SELECTION.md; fsm/apb_completer.fsm; fsm/apb_tb.fsm; isf/apb_requester.isf; isf/storage_fields.isf; isf/burst_reader.isf; docs/book/src/13b-transactions.md; docs/book/src/13d-control-flow.md; perl/FSM/Adapter/ISF/Parser.pm; perl/FSM/Scheduler/ISF/LoweringIR.pm; perl/FSM/Adapter/IAL2/PPIF.pm; perl/FSM/IAL2/ProtocolIntent/ApbRequesterTransfer.pm; perl/FSM/Support/RegressionCorpus.pm; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; MEMORY.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md
+reverify: rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\\.560|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.561|ARRAY\\(\\.\\.\\.\\)|expression entry|PSEL.*PENABLE|apb_completer\\.isf|intent\\.ppif_apb_completer' docs/IAL2_APB_COMPLETER_GENERATED_IAL1_SUBSTRATE_AUDIT.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md MEMORY.md README.md ROADMAP_V2.md docs/book/src/14-feature-backlog.md
+---
+
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.560` selects
+`IAL2-FEATURE-COMPLETENESS-FRONTIER.561`, an IAL1 expression entry-activation
+guard rendering prerequisite, before direct APB `.ppif` completer
+implementation.
+
+The selected APB completer contract still targets future
+`ppif/apb_completer.ppif`, `(apb-completer apb_completer ...)`,
+`apb_completer.isf`, `apb_completer.fsm`, report schema
+`fsmgen.ial2.protocol_intent.apb_completer.v1`, and support identity
+`intent.ppif_apb_completer`.
+
+Direct implementation is blocked because the required setup detector
+`PSEL && !PENABLE` must be expressed as transaction entry `(when EXPR
+(sample ...))`. Current generated IAL1 lowering can render scalar entry
+guards, but expression entry guards produce invalid generated `.fsm` guard
+suffixes containing `ARRAY(...)`. `.561` must repair that IAL1 guard
+serialization and add focused coverage before APB completer behavior is
+implemented.

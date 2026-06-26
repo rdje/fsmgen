@@ -5,7 +5,6 @@ answers:
   - "what did IAL2-FEATURE-COMPLETENESS-FRONTIER.559 select?"
   - "what is the first APB completer IAL2 contract?"
   - "does .559 select APB completer implementation?"
-  - "what is IAL2-FEATURE-COMPLETENESS-FRONTIER.560?"
   - "does .apb expose APB completer yet?"
 date: 2026-06-26
 status: current
