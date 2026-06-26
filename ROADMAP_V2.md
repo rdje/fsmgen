@@ -3995,6 +3995,11 @@ current `.axi` acceptance questions point to the shipped `.540` behavior card,
 while older profile-alias readiness and inventory cards are historical
 pre-implementation facts. The next owner must choose from neutral/profile-
 generic evidence and must not treat AXI as all of IAL2.
+`.542` now selects `.543`, public-surface historical wording sync for the
+post-`.axi` profile-alias chronology. The audit found code, manifest,
+support-accounting, and Knowledge Map routing current after `.540`/`.541`; the
+remaining prerequisite is to make pre-`.540` mdBook wording around `.537` and
+`.538` explicitly historical before selecting another behavior owner.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

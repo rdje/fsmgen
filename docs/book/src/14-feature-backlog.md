@@ -9514,6 +9514,13 @@ unsupported-inventory facts are historical pre-implementation facts. The next ow
 choose from neutral/profile-generic evidence and must not treat AXI as the
 whole IAL2 layer.
 
+Post-.axi generality readiness audit:
+[IAL2_POST_AXI_GENERALITY_READINESS_AUDIT](../../IAL2_POST_AXI_GENERALITY_READINESS_AUDIT.md)
+selects `.543`, public-surface historical wording sync before another behavior
+owner. The code, manifest, support-accounting, and Knowledge Map routing are
+current after `.540`/`.541`; the remaining public prerequisite is to make
+pre-`.540` profile-alias chronology explicit in the book.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

@@ -2997,6 +2997,11 @@ current `.axi` acceptance questions point to the shipped `.540` behavior card,
 while older profile-alias readiness and inventory cards are historical
 pre-implementation facts. The next owner must choose from neutral/profile-
 generic evidence and must not treat AXI as all of IAL2.
+`.542` now selects `.543`, public-surface historical wording sync for the
+post-`.axi` profile-alias chronology. The audit found code, manifest,
+support-accounting, and Knowledge Map routing current after `.540`/`.541`; the
+remaining prerequisite is to make pre-`.540` mdBook wording around `.537` and
+`.538` explicitly historical before selecting another behavior owner.
 
 No behavior
 changed in `.273`, `.274`, `.275`,
@@ -5490,6 +5495,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_FIRST_PROFILE_ALIAS_CONTRACT_SELECTION.md` — selects `.axi` as the first IAL2 profile-alias contract while keeping AXI as an example over IAL2, not the IAL2 definition.
 - `docs/IAL2_AXI_PROFILE_ALIAS_BEHAVIOR.md` — documents the shipped `.axi` IAL2 profile-alias behavior, explicit AXI-family profile matching, generated `.isf`/`.fsm` review artifacts, support accounting, and remaining unsupported aliases.
 - `docs/IAL2_POST_AXI_PROFILE_ALIAS_NEXT_SLICE_SELECTION.md` — selects the post-`.axi` IAL2 generality readiness audit and records the Knowledge Map routing correction for historical pre-implementation alias facts.
+- `docs/IAL2_POST_AXI_GENERALITY_READINESS_AUDIT.md` — audits post-`.axi` generality readiness and selects public historical wording sync before another behavior owner.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_CONTRACT_SELECTION.md` — selected direct single-active dynamic write `BID` same-cycle release-and-recapture behavior under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_BEHAVIOR.md` — shipped single-active dynamic write `BID` same-cycle release-and-recapture under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_WRITE_RECAPTURE_NEXT_SLICE_SELECTION.md` — selected `.367`, public contract selection for first single-active dynamic read same-cycle release-and-recapture after dynamic write recapture shipped.
