@@ -9573,6 +9573,17 @@ It does not accept `.apb`, add an APB `.ppif` sample, or change parser,
 generator, manifest, support-accounting, JSON, HDL, backend, AXI, or VHDL
 behavior.
 
+IAL2 APB `.ppif` source-shape contract:
+[IAL2_APB_PPIF_SOURCE_SHAPE_CONTRACT_SELECTION](../../IAL2_APB_PPIF_SOURCE_SHAPE_CONTRACT_SELECTION.md)
+selects `(profile apb)` plus one `(apb-requester apb_requester ...)` object as
+the first APB `.ppif` source shape and selects `.550` for direct bounded
+implementation. The future sample path is
+`ppif/apb_requester_transfer.ppif`, the support identity is
+`intent.ppif_apb_requester_transfer`, generated review artifacts are
+`apb_requester.isf` and `apb_requester.fsm`, and the report schema is
+`fsmgen.ial2.protocol_intent.apb_requester_transfer.v1`. `.apb` and all other
+new suffixes remain unsupported.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

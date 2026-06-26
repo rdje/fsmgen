@@ -4039,6 +4039,14 @@ support catalog to choose a public APB IAL2 source-shape contract. It does not
 select implementation: `.apb` remains unsupported, no APB `.ppif` sample is
 added, and APB report/support-accounting identity remains a contract-selection
 decision before behavior changes.
+`.549` now selects `.550`, direct bounded implementation of the first APB
+`.ppif` source shape. The selected contract uses `(profile apb)` and a single
+`(apb-requester apb_requester ...)` object, future sample path
+`ppif/apb_requester_transfer.ppif`, support identity
+`intent.ppif_apb_requester_transfer`, generated review artifacts
+`apb_requester.isf` and `apb_requester.fsm`, and report schema
+`fsmgen.ial2.protocol_intent.apb_requester_transfer.v1`. `.apb` and all other
+new suffixes remain unsupported.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
