@@ -9421,6 +9421,17 @@ and does not change behavior; the audit is next because `(profile valid-ready)`
 multi-channel bundles remain fail-closed while the shipped aggregate bundle
 path is proven through the AXI AW/W profile sample.
 
+IAL2 protocol-neutral Valid-Ready bundle readiness audit:
+[IAL2_PROTOCOL_NEUTRAL_VALID_READY_BUNDLE_READINESS_AUDIT](../../IAL2_PROTOCOL_NEUTRAL_VALID_READY_BUNDLE_READINESS_AUDIT.md)
+selects `.534`, public contract selection for a bounded protocol-neutral/non-AXI
+Valid-Ready `.ppif` bundle. The audit found the aggregate wrapper/top substrate
+close enough to reuse, but direct implementation still needs an exact public
+contract for the neutral sample/support identity, both neutral roles,
+source-anchor inheritance, generic aggregate residue, docs/manifest wording,
+and RAM-guard-friendly validation. No parser, generator, sample,
+support-accounting, report, HDL, backend, profile-alias, common-construct, or
+VHDL behavior changes in `.533`.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

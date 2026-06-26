@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.532: select neutral bundle readiness`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.533` is active after `.532`; audit protocol-neutral/non-AXI Valid-Ready `.ppif` bundle readiness.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.532` selected `.533`, readiness audit for protocol-neutral/non-AXI Valid-Ready `.ppif` bundles because `.531` left `(profile valid-ready)` multi-channel bundles fail-closed while the aggregate bundle path is shipped only through the AXI AW/W profile sample.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.533: audit neutral bundle readiness`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.534` is active after `.533`; select the public contract for a bounded protocol-neutral/non-AXI Valid-Ready `.ppif` bundle.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.533` audited protocol-neutral/non-AXI Valid-Ready bundle readiness and selected `.534`, contract selection before behavior changes. The aggregate wrapper/top substrate is close enough to reuse, but neutral bundle public details still need an exact contract: source shape, both neutral roles, source-anchor inheritance, generic aggregate residue, support accounting, docs/manifest wording, and focused validation.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: The original exact `t/301` resource cliff is fixed for oversized PPIF check-json via `.2.3.1`, but a full guarded `t/301-check-json-supported-corpus.t` rerun stopped on host-memory cutoff from a high host baseline and a higher-cutoff retry was rejected by the approval layer. Do not bypass that rejection without explicit user approval; `.2.5` selected RAM-guarded or exact bounded replacement policy for any future broad `t/301`/`t/303` parity plan.
-- next_action: Start `.533` by reading `.532` selector, `.531` behavior, `.530` contract, `.529` audit, `.527` public guardrail sync, decision `0017`, shipped AXI AW/W bundle docs, current PPIF bundle parser/report paths, Valid-Ready profile normalization/residue reporting, support accounting, public contracts, README, ROADMAP_V2, mdBook, task tree, Memory, and Knowledge Map; then decide whether neutral bundles can be implemented directly or need another exact prerequisite.
+- next_action: Start `.534` by reading `.533` audit, `.532` selector, `.531` behavior, `.530` contract, decision `0017`, shipped AXI AW/W bundle records, `FSM::Adapter::IAL2::PPIF` bundle parser/report paths, `FSM::IAL2::ProtocolIntent::ValidReadyChannel` residue reporting, support accounting, public contracts, README, ROADMAP_V2, mdBook, task tree, Memory, and Knowledge Map; then select the neutral bundle contract before implementation.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact
