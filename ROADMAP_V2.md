@@ -4244,6 +4244,14 @@ whether the first widening exposes only `busy` or also a named status field,
 generated `.isf`/`.fsm` review artifacts, fixed composition top-port
 propagation, support/report/residue/docs updates, diagnostics, validation, and
 rollback before any parser or generator behavior changes.
+`.571` now selects `.572`, direct bounded implementation of additive
+busy-only APB requester status exposure. Existing APB requester-transfer and
+fixed-composition samples remain unchanged; the selected new busy-capable
+paths are `ppif/apb_requester_transfer_busy.ppif`,
+`ppif/apb_requester_transfer_busy.apb`, `ppif/apb_composition_busy.ppif`, and
+`ppif/apb_composition_busy.apb`. The selected syntax adds optional
+`(busy busy)` inside the APB requester `(response ...)` block. Named status
+fields remain deferred through `apb_requester_status_field_deferred`.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

@@ -9905,6 +9905,16 @@ widening exposes only `busy` or also a named status field, generated review
 artifacts, fixed composition top-port propagation, support/report/residue
 updates, diagnostics, validation, and rollback before behavior changes.
 
+APB requester busy/status contract:
+[IAL2_APB_REQUESTER_BUSY_STATUS_CONTRACT_SELECTION](../../IAL2_APB_REQUESTER_BUSY_STATUS_CONTRACT_SELECTION.md)
+selects `.572`, additive busy-only APB requester status exposure. Existing APB
+requester-transfer and fixed-composition samples remain unchanged. The new
+selected busy-capable samples are `ppif/apb_requester_transfer_busy.ppif`,
+`ppif/apb_requester_transfer_busy.apb`, `ppif/apb_composition_busy.ppif`, and
+`ppif/apb_composition_busy.apb`. The source syntax adds optional
+`(busy busy)` inside the APB requester `(response ...)` block. Named status
+fields remain deferred through `apb_requester_status_field_deferred`.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after
