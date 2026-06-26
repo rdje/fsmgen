@@ -9378,6 +9378,17 @@ selects `.529`, readiness audit for a protocol-neutral/non-AXI Valid-Ready
 another AXI behavior slice before auditing the existing Valid-Ready family as
 the next small IAL2 generality exercise.
 
+IAL2 protocol-neutral Valid-Ready PPIF readiness audit:
+[IAL2_PROTOCOL_NEUTRAL_VALID_READY_PPIF_READINESS_AUDIT](../../IAL2_PROTOCOL_NEUTRAL_VALID_READY_PPIF_READINESS_AUDIT.md)
+selects `.530`, public contract selection for a protocol-neutral/non-AXI
+Valid-Ready `.ppif` profile and source-vocabulary boundary. `.ppif` is the
+generic IAL2 container, and AXI is only the first shipped profile/example, but
+the current Valid-Ready implementation path still requires a profile clause
+and accepts only AXI protocol names plus AXI channel families. A non-AXI or
+protocol-neutral Valid-Ready sample therefore needs public vocabulary
+selection before parser, generator, sample, support-accounting, or report
+changes.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

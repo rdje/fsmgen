@@ -3897,6 +3897,14 @@ profiles.
 Valid-Ready `.ppif` example boundary. The selector deliberately does not
 return to another AXI behavior slice before auditing the existing
 Valid-Ready family as the next small IAL2 generality exercise.
+`.529` now selects `.530`, public contract selection for a
+protocol-neutral/non-AXI Valid-Ready `.ppif` profile and source-vocabulary
+boundary. The audit found that `.ppif` is the generic IAL2 container, but the
+current Valid-Ready implementation path still requires a profile clause and
+accepts only AXI protocol names plus AXI channel families. A non-AXI or
+protocol-neutral Valid-Ready sample therefore needs public vocabulary
+selection before parser, generator, sample, support-accounting, or report
+changes.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
