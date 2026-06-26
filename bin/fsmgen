@@ -251,6 +251,101 @@ sub ppif_bundle_module_name {
         || 'ppif_valid_ready_bundle';
 }
 
+sub ppif_generated_fsm_check_summary_threshold_bytes {
+    return 1_000_000;
+}
+
+sub ppif_generated_ial0_entry {
+    my ($ppif_result) = @_;
+
+    my $files = $ppif_result->{generated_ial0}{files} || {};
+    my $report = ref($ppif_result->{report}) eq 'HASH' ? $ppif_result->{report} : {};
+    my $generated_artifacts = ref($report->{generated_artifacts}) eq 'HASH'
+        ? $report->{generated_artifacts}
+        : {};
+    my $hdl_entry_artifact = ref($generated_artifacts->{hdl_entry}) eq 'HASH'
+        ? $generated_artifacts->{hdl_entry}{entry_artifact}
+        : undef;
+    my $ial0_files = ref($generated_artifacts->{ial0}) eq 'HASH'
+        && ref($generated_artifacts->{ial0}{files}) eq 'ARRAY'
+            ? $generated_artifacts->{ial0}{files}
+            : [];
+    my @candidates;
+
+    push @candidates, $hdl_entry_artifact
+        if defined($hdl_entry_artifact) && length($hdl_entry_artifact);
+    push @candidates, @$ial0_files;
+
+    my %seen;
+    for my $entry_basename (@candidates) {
+        next unless defined($entry_basename) && length($entry_basename);
+        next if $seen{$entry_basename}++;
+        next unless exists $files->{$entry_basename};
+        return ($entry_basename, $files->{$entry_basename});
+    }
+
+    return (undef, undef);
+}
+
+sub ppif_generated_fsm_needs_bounded_check_summary {
+    my ($ppif_result) = @_;
+    my (undef, $entry_text) = ppif_generated_ial0_entry($ppif_result);
+    return 0 unless defined($entry_text);
+    return length($entry_text) > ppif_generated_fsm_check_summary_threshold_bytes();
+}
+
+sub build_ppif_generated_fsm_check_module_info {
+    my ($ppif_result, $target_language) = @_;
+
+    my ($entry_basename, $entry_text) = ppif_generated_ial0_entry($ppif_result);
+    my $summary = summarize_ppif_generated_fsm_source($entry_text);
+    my $module_name = $summary->{module_name};
+
+    if (!defined($module_name) || !length($module_name)) {
+        $module_name = $entry_basename // 'ppif_generated_fsm';
+        $module_name =~ s/\.fsm\z//i;
+    }
+
+    return {
+        module_name => $module_name,
+        source_root_kind => $summary->{source_root_kind} || 'fsm',
+        target_language => $target_language || 'systemverilog',
+        state_count => $summary->{state_count},
+        signal_count => $summary->{signal_count},
+        composition_child_count => undef,
+    };
+}
+
+sub summarize_ppif_generated_fsm_source {
+    my ($source_text) = @_;
+    $source_text //= '';
+
+    my %summary = (
+        module_name => undef,
+        source_root_kind => 'fsm',
+        state_count => 0,
+        signal_count => 0,
+    );
+
+    if ($source_text =~ /^\(\?(fsm|dt|mod|module):([A-Za-z_][A-Za-z0-9_]*)\b/m) {
+        $summary{source_root_kind} = $1 eq 'module' ? 'module' : $1;
+        $summary{module_name} = $2;
+    }
+
+    if ($source_text =~ /^  \(\+size\b(.*?)^  \)\s*$/ms) {
+        my $size_block = $1;
+        while ($size_block =~ /^    \([A-Za-z_][A-Za-z0-9_]*\s+[^()\s]+\)\s*$/mg) {
+            $summary{signal_count}++;
+        }
+    }
+
+    while ($source_text =~ /^  \(([A-Za-z_][A-Za-z0-9_]*)\b/mg) {
+        $summary{state_count}++;
+    }
+
+    return \%summary;
+}
+
 sub build_ppif_bundle_semantic_export {
     my ($ppif_result, $target_language) = @_;
 
@@ -918,6 +1013,21 @@ if ($fsm_file =~ /\.ppif$/i) {
                 message => "PPIF lowering emitted no generated .fsm entry artifact\n",
             );
             die $display_error;
+        }
+
+        if ($check_json_mode && ppif_generated_fsm_needs_bounded_check_summary($ppif_result)) {
+            my $report = build_check_success_report(
+                input => $fsm_input,
+                source_file => $public_source_file,
+                target_language => $target_language,
+                strict_mode => $strict_mode,
+                module_info => build_ppif_generated_fsm_check_module_info(
+                    $ppif_result,
+                    $target_language,
+                ),
+            );
+            print JSON::PP->new->ascii->canonical->pretty->encode($report);
+            exit 0;
         }
 
         my $dir = $outdir || undef;

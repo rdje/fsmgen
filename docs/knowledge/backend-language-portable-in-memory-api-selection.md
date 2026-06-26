@@ -8,7 +8,7 @@ answers:
   - "how should generated artifacts be returned by an in-memory FSMGen candidate?"
   - "what blocks the portable in-memory API selection?"
 date: 2026-06-26
-status: blocked
+status: current
 tags: [architecture, portability, in-memory-api, host-abstraction, artifacts]
 evidence: docs/BACKEND_LANGUAGE_PORTABLE_IN_MEMORY_API_CONTRACT_SELECTION.md; docs/tasks/BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.md; docs/BACKEND_LANGUAGE_PORTABILITY_READINESS_AUDIT.md; docs/TASK_TREE.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md; perl/FSM/Support/CheckDiagnostics.pm; perl/FSM/Support/NormalizedSemanticReportContract.pm; perl/FSM/Support/SerializableGenerationResultSnapshot.pm; perl/FSM/Support/HDLGeneratorResultContract.pm; perl/FSM/Support/VerificationOutputsContract.pm
 reverify: rg -n 'BACKEND_LANGUAGE_PORTABLE_IN_MEMORY_API_CONTRACT_SELECTION|BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.3|blocked|request/result|capabilities\\(request\\?\\)|execute\\(request\\)|virtual artifact|filesystem CLI remains an adapter|JSON-safe result|t/301-check-json-supported-corpus' docs/BACKEND_LANGUAGE_PORTABLE_IN_MEMORY_API_CONTRACT_SELECTION.md docs/tasks/BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.md docs/BACKEND_LANGUAGE_PORTABILITY_READINESS_AUDIT.md docs/TASK_TREE.md README.md ROADMAP_V2.md docs/book/src/14-feature-backlog.md docs/knowledge/backend-language-portable-in-memory-api-selection.md
@@ -30,8 +30,10 @@ virtual artifact entries with stable relative identities, kind, role,
 language, content, source layer, and generated-from provenance. The filesystem
 CLI remains an adapter over that model.
 
-The selection is blocked pending verification: the focused `t/301` corpus
-proof remained on
+The selection still needs follow-on verification before `.2.3` can complete.
+The original focused `t/301` resource cliff on
 `ppif/axi_manager_capacity_status_dynamic_write_depth3_same_id_issue_order_queue.ppif`
-for about 44 minutes at roughly 11 GB RSS and was terminated before the full
-gate completed. `.2.4` must not start until `.2.3` completes.
+was recovered by `.2.3.1` with a bounded oversized PPIF check-json summary
+path. A full guarded `t/301` rerun remains host-memory-policy blocked in the
+current environment, so `.2.3` must resume from the recorded focused
+replacement coverage before `.2.4` starts.
