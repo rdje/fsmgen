@@ -26,33 +26,35 @@ sub new($class, @constructor_args) {
 
 sub parse_file($self, @args) {
     _validate_object_receiver($self, 'parse_file');
-    my ($ppif_path) = _validate_scalar_args('parse_file', 1, @args);
-    confess "FSM::Adapter::IAL2::PPIF->parse_file argument 1 must name a readable .ppif file\n"
-        unless $ppif_path =~ /\.ppif\z/i && -f $ppif_path && -r $ppif_path;
+    my ($source_path) = _validate_scalar_args('parse_file', 1, @args);
+    confess "FSM::Adapter::IAL2::PPIF->parse_file argument 1 must name a readable .ppif file or supported IAL2 profile-alias file\n"
+        unless $source_path =~ /\.(?:ppif|axi)\z/i && -f $source_path && -r $source_path;
 
-    open my $fh, '<', $ppif_path or confess "Cannot read .ppif file '$ppif_path': $!\n";
+    open my $fh, '<', $source_path or confess "Cannot read IAL2 PPIF/profile-alias file '$source_path': $!\n";
     my $source_text = do { local $/; <$fh> };
-    close $fh or confess "Cannot close .ppif file '$ppif_path': $!\n";
-    return $self->parse_source($source_text, $ppif_path);
+    close $fh or confess "Cannot close IAL2 PPIF/profile-alias file '$source_path': $!\n";
+    return $self->parse_source($source_text, $source_path);
 }
 
 sub parse_source($self, @args) {
     _validate_object_receiver($self, 'parse_source');
     my ($source_text, $source_label) = _validate_scalar_args('parse_source', 2, @args);
 
+    my $surface = _source_surface_name($source_label);
     my $raw = Lispish::multi(\$source_text);
-    confess "Error: failed to parse .ppif source '$source_label' with Lispish\n"
+    confess "Error: failed to parse $surface source '$source_label' with Lispish\n"
         unless defined $raw && ref($raw) eq 'ARRAY';
 
     my $forms = $self->{adapter}->normalize_multi($raw);
-    confess "Error: .ppif source '$source_label' must contain exactly one top-level (protocol-platform-intent ...) form\n"
+    confess "Error: $surface source '$source_label' must contain exactly one top-level (protocol-platform-intent ...) form\n"
         unless ref($forms) eq 'ARRAY' && @$forms == 1;
 
     my $root = $forms->[0];
-    confess "Error: .ppif source '$source_label' must start with (protocol-platform-intent ...)\n"
+    confess "Error: $surface source '$source_label' must start with (protocol-platform-intent ...)\n"
         unless ref($root) eq 'ARRAY' && ($root->[0] // '') eq 'protocol-platform-intent';
 
     my $contract = _contract_from_root($root, $source_label);
+    _validate_profile_alias_contract($source_label, $contract);
     my $generator = FSM::IAL2::ProtocolIntent::ValidReadyChannel->new(debug => $self->{debug});
     return _generate_bundle($generator, $contract)
         if _is_bundle_contract($contract);
@@ -98,7 +100,32 @@ sub _validate_scalar_args($method, $expected, @args) {
     return @args;
 }
 
+sub _source_surface_name($source_label) {
+    return '.axi' if defined($source_label) && $source_label =~ /\.axi\z/i;
+    return '.ppif';
+}
+
+sub _is_axi_profile_alias_source($source_label) {
+    return defined($source_label) && $source_label =~ /\.axi\z/i;
+}
+
+sub _is_axi_family_profile($profile) {
+    return defined($profile) && !ref($profile) && $profile =~ /\Aaxi(?:3|4|5)?\z/;
+}
+
+sub _validate_profile_alias_contract($source_label, $contract) {
+    return unless _is_axi_profile_alias_source($source_label);
+
+    my $profile = $contract->{protocol};
+    confess "Error: .axi source '$source_label' profile '$profile' does not match .axi profile alias; expected axi, axi3, axi4, or axi5\n"
+        unless _is_axi_family_profile($profile);
+
+    confess "Error: .axi source '$source_label' supports only one AXI-family valid-ready-channel object in this slice; requested AXI bundle or manager behavior remains unsupported for the first profile-alias implementation\n"
+        if _is_bundle_contract($contract) || _is_manager_capacity_status_contract($contract);
+}
+
 sub _contract_from_root($root, $source_label) {
+    my $surface = _source_surface_name($source_label);
     my (undef, $intent_name, @clauses) = @$root;
     _require_scalar($intent_name, "protocol-platform-intent name", $source_label);
 
@@ -108,13 +135,13 @@ sub _contract_from_root($root, $source_label) {
     for my $clause (@clauses) {
         my ($head, @body) = _clause_parts($clause, $source_label);
         if ($head eq 'profile') {
-            confess "Error: .ppif source '$source_label' has duplicate (profile ...) clauses\n"
+            confess "Error: $surface source '$source_label' has duplicate (profile ...) clauses\n"
                 if defined $profile;
             confess "Error: .ppif (profile ...) requires exactly one scalar profile name\n"
                 unless @body == 1 && !ref($body[0]);
             $profile = $body[0];
         } elsif ($head eq 'source') {
-            confess "Error: .ppif source '$source_label' has duplicate (source ...) clauses\n"
+            confess "Error: $surface source '$source_label' has duplicate (source ...) clauses\n"
                 if defined $source;
             $source = _parse_source_clause(\@body, $source_label);
         } elsif ($head eq 'valid-ready-channel') {
@@ -122,19 +149,19 @@ sub _contract_from_root($root, $source_label) {
         } elsif ($head eq 'manager-capacity-status') {
             push @managers, _parse_manager_capacity_status(\@body, $source_label);
         } else {
-            confess "Error: .ppif source '$source_label' has unsupported top-level clause '($head ...)'\n";
+            confess "Error: $surface source '$source_label' has unsupported top-level clause '($head ...)'\n";
         }
     }
 
-    confess "Error: .ppif source '$source_label' is missing required (profile ...) clause\n"
+    confess "Error: $surface source '$source_label' is missing required (profile ...) clause\n"
         unless defined $profile;
-    confess "Error: .ppif source '$source_label' is missing required (source ...) clause\n"
+    confess "Error: $surface source '$source_label' is missing required (source ...) clause\n"
         unless defined $source;
-    confess "Error: .ppif source '$source_label' is missing required intent object clause, expected (valid-ready-channel ...) or (manager-capacity-status ...)\n"
+    confess "Error: $surface source '$source_label' is missing required intent object clause, expected (valid-ready-channel ...) or (manager-capacity-status ...)\n"
         unless @channels || @managers;
-    confess "Error: .ppif source '$source_label' cannot mix (valid-ready-channel ...) and (manager-capacity-status ...) objects in this slice\n"
+    confess "Error: $surface source '$source_label' cannot mix (valid-ready-channel ...) and (manager-capacity-status ...) objects in this slice\n"
         if @channels && @managers;
-    confess "Error: .ppif source '$source_label' supports exactly one (manager-capacity-status ...) object in this slice\n"
+    confess "Error: $surface source '$source_label' supports exactly one (manager-capacity-status ...) object in this slice\n"
         if @managers > 1;
 
     if (@managers == 1) {
@@ -148,7 +175,7 @@ sub _contract_from_root($root, $source_label) {
 
     my %seen_channel_names;
     for my $channel (@channels) {
-        confess "Error: .ppif source '$source_label' has duplicate valid-ready-channel object name '$channel->{name}'\n"
+        confess "Error: $surface source '$source_label' has duplicate valid-ready-channel object name '$channel->{name}'\n"
             if $seen_channel_names{$channel->{name}}++;
     }
 

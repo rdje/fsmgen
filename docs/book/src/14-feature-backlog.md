@@ -9493,6 +9493,18 @@ an explicit AXI-family profile such as `(profile axi4)`, and stays on the
 mandatory `IAL2 -> IAL1 -> IAL0` lowering chain. AXI remains a first
 profile-alias example, not the definition of IAL2.
 
+IAL2 AXI profile-alias behavior:
+[IAL2_AXI_PROFILE_ALIAS_BEHAVIOR](../../IAL2_AXI_PROFILE_ALIAS_BEHAVIOR.md)
+ships `.axi` as the first bounded IAL2 profile-alias suffix. The runnable
+`ppif/axi_aw_valid_ready.axi` source keeps the generic
+`protocol-platform-intent` shape, requires an explicit AXI-family profile
+(`axi`, `axi3`, `axi4`, or `axi5`), writes reviewable generated `.isf` and
+`.fsm` artifacts before HDL generation, and support-accounts
+`intent.axi_profile_alias_aw_valid_ready` with source kind
+`ial2_profile_alias`. `.chi`, `.ace`, `.ahb`, `.apb`, `.atb`, `.smbus`, `.i2s`,
+`.pif`, and `.ppi` remain unsupported; AXI is still only the first profile
+alias over IAL2.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

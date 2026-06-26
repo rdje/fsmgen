@@ -54,11 +54,11 @@ sub resolve_fsm_file {
     # Cases 1 & 2: No slash - search in FSMLIB paths and current directory
     my $target_filename;
     
-    # Case 1: Bare name (no .fsm, .isf, or .ppif extension) - append .fsm
-    if ($fsm_input !~ /\.(?:fsm|isf|ppif)\z/i) {
+    # Case 1: Bare name (no known source extension) - append .fsm
+    if ($fsm_input !~ /\.(?:fsm|isf|ppif|axi|pif|ppi|chi|ace|ahb|apb|atb|smbus|i2s)\z/i) {
         $target_filename = "$fsm_input.fsm";
     } else {
-        # Case 2: Already has .fsm, .isf, or .ppif extension
+        # Case 2: Already has a known source or known unsupported-alias extension
         $target_filename = $fsm_input;
     }
     
@@ -174,6 +174,30 @@ sub normalize_cli_error_text {
     $text =~ s/\n{3,}/\n\n/g;
     $text =~ s/\s+\z//s;
     return $text . "\n";
+}
+
+sub source_suffix {
+    my ($path) = @_;
+    return undef unless defined($path) && length($path);
+    return lc($1) if $path =~ /(\.[^\/.]*)\z/;
+    return undef;
+}
+
+sub unsupported_ial2_alias_suffix {
+    my ($path) = @_;
+    my $suffix = source_suffix($path);
+    return undef unless defined $suffix;
+    my %unsupported = map { $_ => 1 } qw(.pif .ppi .chi .ace .ahb .apb .atb .smbus .i2s);
+    return $suffix if $unsupported{$suffix};
+    return undef;
+}
+
+sub known_source_suffix {
+    my ($path) = @_;
+    my $suffix = source_suffix($path);
+    return 0 unless defined $suffix;
+    my %known = map { $_ => 1 } qw(.fsm .isf .ppif .axi .pif .ppi .chi .ace .ahb .apb .atb .smbus .i2s);
+    return $known{$suffix} ? 1 : 0;
 }
 
 sub format_cli_artifact_error {
@@ -542,6 +566,7 @@ Arguments:
                   • bare_name.fsm     - searches explicit --path roots, FSMLIB, then current directory
                   • bare_name.isf     - lowers IAL1 intent scheduling to .fsm before HDL
                   • bare_name.ppif    - lowers IAL2 protocol/platform intent to .isf, then .fsm before HDL
+                  • bare_name.axi     - lowers the first AXI IAL2 profile alias through .isf, then .fsm
                   • relative/path.fsm - uses relative path (no FSMLIB search)
                   • /absolute/path.fsm - uses absolute path (no FSMLIB search)
 
@@ -802,6 +827,39 @@ if ($@) {
 $fsm_file = File::Spec->rel2abs($fsm_file);
 my $public_source_file = $fsm_file;
 
+if (my $unsupported_alias = unsupported_ial2_alias_suffix($fsm_file)) {
+    my $display_error = emit_machine_failure_if_requested(
+        input => $fsm_input,
+        source_file => $public_source_file,
+        target_language => $target_language,
+        strict_mode => $strict_mode,
+        emit_semantic_json => $emit_semantic_json,
+        check_json_mode => $check_json_mode,
+        message => format_cli_artifact_error(
+            "Error: source suffix '$unsupported_alias' is a known IAL2 alias candidate but is not supported in this slice\n",
+            ['Requested source', $public_source_file],
+        ),
+    );
+    die $display_error;
+}
+
+if (defined(source_suffix($fsm_file)) && !known_source_suffix($fsm_file)) {
+    my $unknown_suffix = source_suffix($fsm_file);
+    my $display_error = emit_machine_failure_if_requested(
+        input => $fsm_input,
+        source_file => $public_source_file,
+        target_language => $target_language,
+        strict_mode => $strict_mode,
+        emit_semantic_json => $emit_semantic_json,
+        check_json_mode => $check_json_mode,
+        message => format_cli_artifact_error(
+            "Error: source suffix '$unknown_suffix' is not a known FSMGen source suffix\n",
+            ['Requested source', $public_source_file],
+        ),
+    );
+    die $display_error;
+}
+
 if (length($emit_verification_output)) {
     if ($fsm_file !~ /\.isf\z/i) {
         die format_cli_artifact_error(
@@ -874,8 +932,9 @@ if (length($emit_verification_output)) {
     exit 0;
 }
 
-# PPIF pipeline: if input is .ppif, lower through generated .isf to .fsm first
-if ($fsm_file =~ /\.ppif$/i) {
+# PPIF pipeline: if input is .ppif or the first .axi profile alias, lower
+# through generated .isf to .fsm first.
+if ($fsm_file =~ /\.(?:ppif|axi)$/i) {
     require FSM::Adapter::IAL2::PPIF;
     require File::Temp;
 
@@ -1194,7 +1253,7 @@ if (!$check_mode && !$emit_semantic_json && !$output_file) {
     } else {
         # Bare name or name.fsm provided - extract bare name
         $fsm_bare_name = $fsm_input;
-        $fsm_bare_name =~ s/\.(?:fsm|isf|ppif)$//i;  # Remove source extension if present
+        $fsm_bare_name =~ s/\.(?:fsm|isf|ppif|axi)$//i;  # Remove source extension if present
     }
     
     # Keep implicit generated HDL out of the repository root.

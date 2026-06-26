@@ -3978,6 +3978,17 @@ IAL2 profile-alias suffix. The selected alias mirrors
 explicit AXI-family profile such as `(profile axi4)`, and remains an IAL2 alias
 that lowers through generated `.isf` before generated `.fsm`. This is only the
 first profile-alias example; it does not make IAL2 AXI-only.
+`.540` now ships that `.axi` profile-alias behavior for the selected AXI AW
+Valid-Ready sample. `ppif/axi_aw_valid_ready.axi` uses the same IAL2
+`protocol-platform-intent` shape as `.ppif`, must declare an explicit
+AXI-family profile (`axi`, `axi3`, `axi4`, or `axi5`), and lowers through the
+reviewable `axi_aw_valid_ready_monitor.isf` and
+`axi_aw_valid_ready_monitor.fsm` artifacts before HDL generation. Check JSON
+and semantic JSON keep the authored `.axi` path and support-account the sample
+as `intent.axi_profile_alias_aw_valid_ready` with source kind
+`ial2_profile_alias`. `.chi`, `.ace`, `.ahb`, `.apb`, `.atb`, `.smbus`,
+`.i2s`, `.pif`, and `.ppi` remain unsupported; `.ppif` remains the generic
+IAL2 container and AXI remains only the first profile-alias example.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

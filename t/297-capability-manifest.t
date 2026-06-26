@@ -2829,6 +2829,7 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
     ok($suffixes{'.fsm'}, 'manifest advertises .fsm as a shipped file surface');
     ok($suffixes{'.isf'}, 'manifest advertises .isf as a shipped file surface');
     ok($suffixes{'.ppif'}, 'manifest advertises .ppif as a shipped file surface');
+    ok($suffixes{'.axi'}, 'manifest advertises .axi as a shipped profile-alias file surface');
     ok(
         !$manifest->{language_surface}{file_surfaces}{direct_ial2_to_ial0_allowed},
         'manifest states direct IAL2-to-IAL0 lowering is not allowed',
@@ -2898,8 +2899,13 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
     );
     like(
         $file_surface_by_suffix{'.ppif'}{current_boundary},
-        qr/future protocol-specific suffixes such as \.axi, \.chi, \.ace, \.ahb, \.apb, \.atb, \.smbus, or \.i2s are profile aliases over IAL2/,
-        'manifest states protocol-specific suffixes are future IAL2 profile aliases',
+        qr/\.axi is now the first profile-alias file surface over the same IAL2 model/,
+        'manifest states .axi is the first shipped IAL2 profile alias over the same model',
+    );
+    like(
+        $file_surface_by_suffix{'.ppif'}{current_boundary},
+        qr/additional protocol-specific suffixes such as \.chi, \.ace, \.ahb, \.apb, \.atb, \.smbus, or \.i2s remain future profile aliases/,
+        'manifest states remaining protocol-specific suffixes are future IAL2 profile aliases',
     );
     like(
         $file_surface_by_suffix{'.ppif'}{current_boundary},
@@ -2990,10 +2996,56 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
         qr/Broader mixed issue-order queue cardinality beyond that selected write BID multi-static shape/,
         'manifest keeps broader mixed dynamic/static issue-order queue cardinality deferred beyond the selected write multi-static shape',
     );
+    is($file_surface_by_suffix{'.axi'}{intent_layer}, 'IAL2', 'manifest marks .axi as IAL2');
+    is(
+        $file_surface_by_suffix{'.axi'}{status},
+        'shipped_bounded_profile_alias',
+        'manifest marks .axi as a bounded profile-alias surface',
+    );
+    is_deeply(
+        $file_surface_by_suffix{'.axi'}{lowers_to},
+        ['.isf', '.fsm'],
+        'manifest records .axi lowering through .isf before .fsm',
+    );
+    is_deeply(
+        $file_surface_by_suffix{'.axi'}{generated_review_artifacts},
+        ['.isf', '.fsm'],
+        'manifest records .axi generated review artifacts',
+    );
+    my %axi_cli_modes = map { $_ => 1 } @{$file_surface_by_suffix{'.axi'}{supported_cli_modes} || []};
+    ok($axi_cli_modes{'--emit-schedule-json'}, 'manifest records .axi schedule-report CLI mode');
+    ok($axi_cli_modes{'--emit-semantic-json'}, 'manifest records .axi semantic JSON CLI mode');
+    ok($axi_cli_modes{'--check --json / --check-json'}, 'manifest records .axi check JSON CLI mode');
+    is(
+        $file_surface_by_suffix{'.axi'}{sample_path},
+        'ppif/axi_aw_valid_ready.axi',
+        'manifest points at the first .axi profile-alias sample',
+    );
+    like(
+        $file_surface_by_suffix{'.axi'}{current_boundary},
+        qr/first IAL2 profile-alias suffix/,
+        'manifest describes .axi as the first IAL2 profile-alias suffix',
+    );
+    like(
+        $file_surface_by_suffix{'.axi'}{current_boundary},
+        qr/only an AXI example over IAL2, not the definition of IAL2/,
+        'manifest keeps .axi scoped as an example over IAL2',
+    );
+    like(
+        $file_surface_by_suffix{'.axi'}{current_boundary},
+        qr/must declare an explicit AXI-family profile axi, axi3, axi4, or axi5/,
+        'manifest records explicit AXI-family profile matching for .axi',
+    );
+    like(
+        $file_surface_by_suffix{'.axi'}{current_boundary},
+        qr/Direct IAL2-to-IAL0 lowering remains forbidden/,
+        'manifest keeps direct IAL2-to-IAL0 lowering forbidden for .axi',
+    );
     my %unsupported_aliases = map { $_ => 1 } @{$manifest->{language_surface}{file_surfaces}{unsupported_first_slice_aliases}};
     ok($unsupported_aliases{'.pif'}, 'manifest keeps .pif unsupported in the first PPIF slice');
     ok($unsupported_aliases{'.ppi'}, 'manifest keeps .ppi unsupported in the first PPIF slice');
-    for my $profile_alias (qw(.axi .chi .ace .ahb .apb .atb .smbus .i2s)) {
+    ok(!$unsupported_aliases{'.axi'}, 'manifest no longer lists .axi as unsupported after the first profile-alias slice');
+    for my $profile_alias (qw(.chi .ace .ahb .apb .atb .smbus .i2s)) {
         ok(
             $unsupported_aliases{$profile_alias},
             "manifest keeps $profile_alias unsupported as a future IAL2 profile alias",

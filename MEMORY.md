@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.539: select first profile-alias contract`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.540` is active after `.539`; implement only `.axi` as the first IAL2 profile-alias suffix for the existing AXI AW Valid-Ready sample.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.539` selected `.axi` as the first IAL2 profile-alias contract, requiring explicit AXI-family `(profile ...)` and mirroring `ppif/axi_aw_valid_ready.ppif` at `ppif/axi_aw_valid_ready.axi`; AXI remains only the first profile-alias example, not the IAL2 definition.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.540: ship .axi profile alias`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.541` is active after `.540`; select the next roadmap-aligned IAL2 follow-up after the first `.axi` profile-alias example without treating AXI as all of IAL2.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.540` shipped `ppif/axi_aw_valid_ready.axi` as the first bounded IAL2 profile-alias suffix, requiring explicit AXI-family profiles, preserving `.axi -> .isf -> .fsm -> HDL` lowering, support-accounting `intent.axi_profile_alias_aw_valid_ready`, and leaving `.chi/.ace/.ahb/.apb/.atb/.smbus/.i2s/.pif/.ppi` unsupported.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: The original exact `t/301` resource cliff is fixed for oversized PPIF check-json via `.2.3.1`, but a full guarded `t/301-check-json-supported-corpus.t` rerun stopped on host-memory cutoff from a high host baseline and a higher-cutoff retry was rejected by the approval layer. Do not bypass that rejection without explicit user approval; `.2.5` selected RAM-guarded or exact bounded replacement policy for any future broad `t/301`/`t/303` parity plan.
-- next_action: Start `.540` by reading `.539` contract, `.538` inventory sync, decisions `0015`/`0016`, `bin/fsmgen`, `FSM::Adapter::IAL2::PPIF`, `LanguageSurfaceSection`, `RegressionCorpus`, focused PPIF/manifest/support tests, README, ROADMAP_V2, mdBook, task tree, Memory, and Knowledge Map; then implement only the selected `.axi` alias.
+- next_action: Start `.541` by reading `.540` behavior, `.539` contract, decisions `0015`/`0016`, README, ROADMAP_V2, mdBook, task tree, Memory, and Knowledge Map; then select the next IAL2 follow-up without code changes.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact
