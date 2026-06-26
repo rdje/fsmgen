@@ -3923,6 +3923,11 @@ reports `target_channel.protocol = "valid-ready"`,
 bundle, AXI manager capacity/status, unsupported suffix aliases, direct
 backend, verification-output, backend-language variant, and VHDL boundaries
 remain unchanged.
+`.532` now selects `.533`, readiness audit for protocol-neutral/non-AXI
+Valid-Ready `.ppif` bundles. This is the next smallest IAL2 generality owner
+because `.531` deliberately kept `(profile valid-ready)` multi-channel bundles
+fail-closed while the existing aggregate bundle path is shipped only through
+the AXI AW/W profile sample. No behavior changes in `.532`.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

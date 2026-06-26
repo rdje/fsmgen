@@ -9413,6 +9413,14 @@ bundle, AXI manager capacity/status, unsupported suffix aliases, direct
 backend, verification-output, backend-language variant, and VHDL boundaries
 remain unchanged.
 
+Post neutral Valid-Ready PPIF selector:
+[IAL2_POST_NEUTRAL_VALID_READY_PPIF_NEXT_SLICE_SELECTION](../../IAL2_POST_NEUTRAL_VALID_READY_PPIF_NEXT_SLICE_SELECTION.md)
+selects `.533`, readiness audit for protocol-neutral/non-AXI Valid-Ready
+`.ppif` bundles. The selector keeps `.ppif` generic, keeps AXI profile-local,
+and does not change behavior; the audit is next because `(profile valid-ready)`
+multi-channel bundles remain fail-closed while the shipped aggregate bundle
+path is proven through the AXI AW/W profile sample.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

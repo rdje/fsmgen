@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.531: ship neutral Valid-Ready PPIF sample`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.532` is active after `.531`; select the next roadmap-aligned IAL2 slice after the protocol-neutral Valid-Ready `.ppif` sample shipped.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.531` shipped `ppif/valid_ready_handshake.ppif` as the first protocol-neutral/non-AXI Valid-Ready `.ppif` sample under `(profile valid-ready)`, with logical channel `data_link`, role `producer-to-consumer`, generated `data_link_valid_ready_monitor.isf/.fsm`, and support identity `intent.ppif_valid_ready_handshake`.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.532: select neutral bundle readiness`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.533` is active after `.532`; audit protocol-neutral/non-AXI Valid-Ready `.ppif` bundle readiness.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.532` selected `.533`, readiness audit for protocol-neutral/non-AXI Valid-Ready `.ppif` bundles because `.531` left `(profile valid-ready)` multi-channel bundles fail-closed while the aggregate bundle path is shipped only through the AXI AW/W profile sample.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: The original exact `t/301` resource cliff is fixed for oversized PPIF check-json via `.2.3.1`, but a full guarded `t/301-check-json-supported-corpus.t` rerun stopped on host-memory cutoff from a high host baseline and a higher-cutoff retry was rejected by the approval layer. Do not bypass that rejection without explicit user approval; `.2.5` selected RAM-guarded or exact bounded replacement policy for any future broad `t/301`/`t/303` parity plan.
-- next_action: Start `.532` by reading `.531` behavior, `.530` contract, `.529` audit, `.527` public guardrail sync, decisions `0014`/`0015`/`0016`/`0017`, current `.ppif` Valid-Ready surfaces, shipped neutral and AXI Valid-Ready samples, support accounting, public contracts, capability manifest, README, ROADMAP_V2, mdBook, task tree, Memory, and Knowledge Map; then select the next exact IAL2 owner without treating AXI as the whole IAL2 roadmap.
+- next_action: Start `.533` by reading `.532` selector, `.531` behavior, `.530` contract, `.529` audit, `.527` public guardrail sync, decision `0017`, shipped AXI AW/W bundle docs, current PPIF bundle parser/report paths, Valid-Ready profile normalization/residue reporting, support accounting, public contracts, README, ROADMAP_V2, mdBook, task tree, Memory, and Knowledge Map; then decide whether neutral bundles can be implemented directly or need another exact prerequisite.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact
