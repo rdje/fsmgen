@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.517: audit mixed queue runtime readiness`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.518` implements runtime beat-count/`RLAST` validation over generated mixed dynamic/static read burst-last same-ID issue-order queue raw-`ARLEN` read-data; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.517` selected `.518`, direct bounded implementation of runtime beat-count/`RLAST` validation over generated mixed dynamic/static read burst-last same-ID `issue-order-queue` scalar last-beat read-data with raw-`ARLEN` capture. The audit changed no behavior; source inspection found the remaining blocker local to mixed queue read-data coverage admitting `report_only` but not `runtime_assertion`, while shared runtime generation already exists. A temporary runtime candidate stopped at the 88% RAM guard before a diagnostic; no unguarded retry was run.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.518: ship mixed queue runtime validation`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.519` audits multi-beat output-bank readiness over generated mixed dynamic/static read burst-last same-ID issue-order queue runtime-validation read-data; `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4` and `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remain active/pending.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.518` shipped runtime beat-count/`RLAST` validation over generated mixed dynamic/static read burst-last same-ID `issue-order-queue` scalar last-beat read-data with raw-`ARLEN` capture. The slice added the support-accounted runtime PPIF sample, local mixed queue runtime admission, parser/generator/accounting expectations, public docs, mdBook, and Knowledge Map fact card, while preserving multi-beat output banks and broader mixed queue behavior as future work. Guarded schedule JSON attempts stopped at the 88% RAM guard because host memory was already 88.5%; no unguarded retry or cutoff raise was run.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
-- next_action: Start `.518`: implement only the runtime-assertion raw-`ARLEN` mixed burst-last queue read-data sample and local coverage admission selected by `.517`.
+- next_action: Start `.519`: audit whether multi-beat output banks over the `.518` mixed burst-last issue-order queue runtime-validation read-data path can be implemented directly, require a narrower contract/prerequisite, or must remain deferred.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact

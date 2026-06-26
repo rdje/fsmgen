@@ -1205,6 +1205,41 @@ subtest 'mixed dynamic/static read burst-last same-ID issue-order queue read-dat
     unlike($hdl, qr/\bread_beat_count_q\b/, 'SystemVerilog omits beat-count storage for report-only mixed queue burst-length');
 };
 
+subtest 'mixed dynamic/static read burst-last same-ID issue-order queue read-data validates runtime raw ARLEN' => sub {
+    my $result = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_mixed_dynamic_static_read_burst_last_same_id_issue_order_queue_read_data_burst_length_runtime_assertion());
+    my $isf = $result->{generated_ial1}{text};
+
+    like($isf, qr/\(input axi0_arlen \(width 8\)\)/, 'mixed dynamic/static read burst-last issue-order queue read-data runtime burst-length declares ARLEN input');
+    like($isf, qr/\(var axi0_r0_expected_beats_q \(width 5\)\)/, 'mixed dynamic/static read burst-last issue-order queue read-data runtime burst-length allocates dynamic expected-beat storage');
+    like($isf, qr/\(var axi0_r1_expected_beats_q \(width 5\)\)/, 'mixed dynamic/static read burst-last issue-order queue read-data runtime burst-length allocates static expected-beat storage');
+    like($isf, qr/\(var axi0_r0_read_beat_count_q \(width 5\)\)/, 'mixed dynamic/static read burst-last issue-order queue read-data runtime burst-length allocates dynamic read-beat counter');
+    like($isf, qr/\(var axi0_r1_read_beat_count_q \(width 5\)\)/, 'mixed dynamic/static read burst-last issue-order queue read-data runtime burst-length allocates static read-beat counter');
+    like($isf, qr/\(rule axi0_r0_beat_count_init axi0_r0_request\s+\(axi0_r0_expected_beats_q \(\+ axi0_arlen\[4:0\] 5'd1\)\)\s+\(axi0_r0_read_beat_count_q 0\)\)/, 'mixed dynamic/static read burst-last issue-order queue read-data runtime burst-length initializes dynamic expected beats and count');
+    like($isf, qr/\(rule axi0_r1_beat_count_init axi0_r1_request\s+\(axi0_r1_expected_beats_q \(\+ axi0_arlen\[4:0\] 5'd1\)\)\s+\(axi0_r1_read_beat_count_q 0\)\)/, 'mixed dynamic/static read burst-last issue-order queue read-data runtime burst-length initializes static expected beats and count');
+    like($isf, qr/\(rule axi0_r1_read_beat_count \(& \(& axi0_read_complete [\s\S]*axi0_read_mixed_dynamic_static_same_id_issue_order_slot0_id_q[\s\S]*\) \(! axi0_r1_request\)\)\s+\(axi0_r1_read_beat_count_q \(\+ axi0_r1_read_beat_count_q 5'd1\)\)\)/, 'mixed dynamic/static read burst-last issue-order queue read-data runtime burst-length increments static counter on raw matched queue beat');
+    like($isf, qr/read_data_beat_count_checks[\s\S]*axi0_r1_expected_final_beat_has_rlast/, 'mixed dynamic/static read burst-last issue-order queue read-data runtime burst-length emits static final-beat RLAST assertion');
+
+    assert_mixed_dynamic_static_read_same_id_issue_order_queue_report($result->{report}, 'generator report', burst_last => 1);
+    assert_read_data_burst_length_report(
+        $result->{report}{read_data},
+        'generator mixed dynamic/static read burst-last same-ID issue-order queue read-data runtime burst-length report',
+        'runtime_assertion',
+        'generated_mixed_dynamic_static_read_issue_order_queue_response_demux_last_beat_completion_pulse',
+        transactions => [qw(r0 r1)],
+    );
+
+    my $fsm = $result->{generated_ial0}{files}{'axi0_capacity_status.fsm'};
+    my @beat_count_assertions = $fsm =~ /axi0_read_data_beat_count_checks_assert_/g;
+    is(scalar(@beat_count_assertions), 8, 'scheduled .fsm lowers four mixed queue beat-count/RLAST assertions per covered transaction');
+    like($fsm, qr/\(-axi0_r1_beat_count_init\s+<axi0_r1_request\s+\(<- \(axi0_r1_expected_beats_q \(\+ axi0_arlen\[4:0\] 5'd1\)\)\)\s+\(<- \(axi0_r1_read_beat_count_q 0\)\)/, 'scheduled .fsm lowers static mixed queue expected-beat initialization');
+    like($fsm, qr/\(-axi0_r1_read_beat_count\s+<[\s\S]*axi0_read_mixed_dynamic_static_same_id_issue_order_slot0_id_q[\s\S]*\(<- \(axi0_r1_read_beat_count_q \(\+ axi0_r1_read_beat_count_q 5'd1\)\)\)/, 'scheduled .fsm lowers static mixed queue matched-beat increment');
+    my $hdl = hdl_for('axi0_capacity_status', $fsm);
+    like($hdl, qr/\breg\s+\[4:0\]\s+axi0_r1_expected_beats_q\b/, 'SystemVerilog declares static mixed queue expected-beat storage');
+    like($hdl, qr/\breg\s+\[4:0\]\s+axi0_r1_read_beat_count_q\b/, 'SystemVerilog declares static mixed queue beat-count storage');
+    like($hdl, qr/axi0_r1_read_beat_count_q_next\s*=\s*axi0_r1_read_beat_count_q\s*\+\s*5'd1\s*;/, 'SystemVerilog increments static mixed queue beat count');
+    like($hdl, qr/assign\s+axi0_r1_read_beat_count_en\s*=/, 'SystemVerilog emits static mixed queue beat-count increment enable');
+};
+
 subtest 'dynamic write depth-3 same-ID issue-order queue captures third AWID slot and matches BID by issue order' => sub {
     my $result = FSM::IAL2::ProtocolIntent::AxiManagerCapacityStatus->new()->generate(sample_contract_with_dynamic_write_depth3_same_id_issue_order_queue());
     my $isf = $result->{generated_ial1}{text};
@@ -6451,6 +6486,14 @@ sub sample_contract_with_mixed_dynamic_static_read_burst_last_same_id_issue_orde
         max_beats    => 16,
         validation   => 'report-only',
     };
+    return $contract;
+}
+
+sub sample_contract_with_mixed_dynamic_static_read_burst_last_same_id_issue_order_queue_read_data_burst_length_runtime_assertion {
+    my $contract = sample_contract_with_mixed_dynamic_static_read_burst_last_same_id_issue_order_queue_read_data_burst_length();
+    $contract->{intent_name} = 'axi_manager_capacity_status_read_mixed_dynamic_static_burst_last_same_id_issue_order_queue_read_data_burst_length_runtime_assertion';
+    $contract->{source}{object_id} = 'axi-manager-capacity-status-read-mixed-dynamic-static-burst-last-same-id-issue-order-queue-read-data-burst-length-runtime-assertion';
+    $contract->{read_data}{read}{burst_length}{validation} = 'runtime-assertion';
     return $contract;
 }
 

@@ -9161,10 +9161,10 @@ It remains bounded to exactly one dynamic read plus one concrete static read,
 one depth-2 generated mixed queue, complete scalar last-beat `RDATA`/`RRESP`
 bindings, existing report-only `burst-length` metadata, and completion validity
 `generated_mixed_dynamic_static_read_issue_order_queue_response_demux_last_beat_completion_pulse`.
-Runtime validation, multi-beat output banks, broader mixed cardinality,
-scoreboards, backend behavior, backend-language variants, verification-code
-generation, external converter dependencies such as `sv2v`, and VHDL remain
-future exact owners.
+Runtime validation is now covered by `.517`/`.518`; multi-beat output banks,
+broader mixed cardinality, scoreboards, backend behavior,
+backend-language variants, verification-code generation, external converter
+dependencies such as `sv2v`, and VHDL remain future exact owners.
 
 Mixed dynamic/static issue-order queue read-data runtime-validation readiness:
 [AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_ISSUE_ORDER_QUEUE_READ_DATA_RUNTIME_VALIDATION_READINESS_AUDIT](../../AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_ISSUE_ORDER_QUEUE_READ_DATA_RUNTIME_VALIDATION_READINESS_AUDIT.md)
@@ -9179,6 +9179,24 @@ mixed queue read-data coverage branch admitting `report_only` but not
 scoreboards, backend behavior, backend-language variants, verification-code
 generation, external converter dependencies such as `sv2v`, and VHDL remain
 future exact owners.
+
+Mixed dynamic/static issue-order queue read-data runtime-validation behavior:
+[AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_ISSUE_ORDER_QUEUE_READ_DATA_RUNTIME_VALIDATION_BEHAVIOR](../../AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_ISSUE_ORDER_QUEUE_READ_DATA_RUNTIME_VALIDATION_BEHAVIOR.md)
+ships `.518`, runtime beat-count/`RLAST` validation over generated mixed
+dynamic/static read burst-last same-ID `issue-order-queue` scalar last-beat
+read-data with raw-`ARLEN` capture. The public sample is
+`ppif/axi_manager_capacity_status_read_mixed_dynamic_static_burst_last_same_id_issue_order_queue_read_data_burst_length_runtime_assertion.ppif`.
+It remains bounded to exactly one dynamic read plus one concrete static read,
+one depth-2 generated mixed queue, complete scalar last-beat `RDATA`/`RRESP`
+bindings, runtime-assertion raw-`ARLEN` metadata, per-transaction
+expected-beat/read-beat-count storage, eight beat-count/`RLAST` assertions, and
+completion validity
+`generated_mixed_dynamic_static_read_issue_order_queue_response_demux_last_beat_completion_pulse`.
+Multi-beat output banks, broader mixed cardinality, scoreboards, backend
+behavior, backend-language variants, verification-code generation, external
+converter dependencies such as `sv2v`, and VHDL remain future exact owners. The
+next owned frontier is `.519`, multi-beat output-bank readiness over this mixed
+queue path.
 
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)

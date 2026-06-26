@@ -2726,14 +2726,14 @@ generated one-dynamic plus one-concrete-static mixed dynamic/static same-ID
 burst-last `RID && RLAST`. The manifest test now locks that boundary. The
 later `.514` slice adds paired scalar read-data over the generated mixed read
 single-beat and burst-last queue completions. `.516` adds report-only
-raw-`ARLEN` burst-length capture over the generated mixed read burst-last
-queue completion. Runtime validation and multi-beat output banks over generated
-mixed dynamic/static issue-order queues remain deferred, as do broader mixed
-cardinality, scoreboards, backend behavior, backend-language variants,
-verification-code generation, external converter dependencies such as `sv2v`,
-and VHDL. `.517` audits runtime-validation readiness over this new mixed-queue
-raw-`ARLEN` boundary and selects `.518`, direct bounded runtime beat-count/
-`RLAST` validation over the same path.
+raw-`ARLEN` burst-length capture over the generated mixed read burst-last queue
+completion. `.518` now ships runtime beat-count/`RLAST` validation over that
+same generated mixed read burst-last queue completion. Multi-beat output banks
+over generated mixed dynamic/static issue-order queues remain deferred, as do
+broader mixed cardinality, scoreboards, backend behavior, backend-language
+variants, verification-code generation, external converter dependencies such as
+`sv2v`, and VHDL. `.519` is the next readiness audit over mixed queue
+multi-beat output banks.
 
 `.512` now selects `.513`, readiness audit for scalar read-data routing over
 generated mixed dynamic/static read same-ID `issue-order-queue` completion
@@ -2791,15 +2791,30 @@ to the `.514` burst-last sample reached the local mixed queue read-data
 coverage branch and failed only because that branch still requires no
 `burst_length` metadata. The selected `.516` sample is
 `ppif/axi_manager_capacity_status_read_mixed_dynamic_static_burst_last_same_id_issue_order_queue_read_data_burst_length.ppif`.
-Runtime validation, multi-beat output banks, broader mixed cardinality,
-scoreboards, backend behavior, backend-language variants, verification-code
-generation, external converter dependencies such as `sv2v`, and VHDL remain
-deferred.
+Runtime validation is now covered by `.517`/`.518`; multi-beat output banks,
+broader mixed cardinality, scoreboards, backend behavior,
+backend-language variants, verification-code generation, external converter
+dependencies such as `sv2v`, and VHDL remain deferred.
+
+`.518` now ships runtime beat-count/`RLAST` validation over generated mixed
+dynamic/static read burst-last same-ID `issue-order-queue` scalar last-beat
+read-data with raw-`ARLEN` capture. The public sample is
+`ppif/axi_manager_capacity_status_read_mixed_dynamic_static_burst_last_same_id_issue_order_queue_read_data_burst_length_runtime_assertion.ppif`.
+The slice admits only the `.516` depth-2 mixed queue shape with exactly one
+dynamic read plus one concrete static read, complete scalar last-beat
+`RDATA`/`RRESP` bindings, runtime-assertion raw-`ARLEN` metadata, per-transaction
+expected-beat/read-beat-count storage, eight beat-count/`RLAST` assertions, and
+completion validity
+`generated_mixed_dynamic_static_read_issue_order_queue_response_demux_last_beat_completion_pulse`.
+Multi-beat output banks, broader mixed cardinality, scoreboards, backend
+behavior, backend-language variants, verification-code generation, external
+converter dependencies such as `sv2v`, and VHDL remain deferred. `.519` is the
+multi-beat output-bank readiness audit over this mixed queue path.
 
 No behavior
 changed in `.273`, `.274`, `.275`,
 `.277`, `.278`, `.279`, `.281`,
-`.282`, `.283`, `.285`, `.286`, `.288`, `.290`, `.292`, `.293`, `.294`, `.296`, `.297`, `.298`, `.300`, `.301`, `.302`, `.304`, `.305`, `.306`, `.308`, `.309`, `.311`, `.313`, `.315`, `.316`, `.317`, `.323`, `.324`, `.325`, `.327`, `.328`, `.329`, `.331`, `.332`, `.334`, `.336`, `.338`, `.339`, `.340`, `.342`, `.343`, `.345`, `.346`, `.348`, `.349`, `.351`, `.352`, `.354`, `.356`, `.358`, `.359`, `.360`, `.362`, `.363`, `.364`, `.366`, `.367`, `.369`, `.370`, `.371`, `.373`, `.374`, `.376`, `.377`, `.379`, `.380`, `.382`, `.383`, `.384`, `.386`, `.387`, `.388`, `.390`, `.391`, `.393`, `.394`, `.395`, `.397`, `.398`, `.399`, `.401`, `.402`, `.404`, `.405`, `.406`, `.408`, `.409`, `.410`, `.412`, `.413`, `.414`, `.416`, `.417`, `.418`, `.420`, `.421`, `.422`, `.424`, `.425`, `.426`, `.428`, `.429`, `.430`, `.432`, `.433`, `.434`, `.435`, `.437`, `.470`, `.472`, `.474`, `.475`, `.476`, `.492`, `.493`, `.495`, `.496`, `.498`, `.499`, `.504`, `.510`, `.511`, `.512`, or `.513`.
+`.282`, `.283`, `.285`, `.286`, `.288`, `.290`, `.292`, `.293`, `.294`, `.296`, `.297`, `.298`, `.300`, `.301`, `.302`, `.304`, `.305`, `.306`, `.308`, `.309`, `.311`, `.313`, `.315`, `.316`, `.317`, `.323`, `.324`, `.325`, `.327`, `.328`, `.329`, `.331`, `.332`, `.334`, `.336`, `.338`, `.339`, `.340`, `.342`, `.343`, `.345`, `.346`, `.348`, `.349`, `.351`, `.352`, `.354`, `.356`, `.358`, `.359`, `.360`, `.362`, `.363`, `.364`, `.366`, `.367`, `.369`, `.370`, `.371`, `.373`, `.374`, `.376`, `.377`, `.379`, `.380`, `.382`, `.383`, `.384`, `.386`, `.387`, `.388`, `.390`, `.391`, `.393`, `.394`, `.395`, `.397`, `.398`, `.399`, `.401`, `.402`, `.404`, `.405`, `.406`, `.408`, `.409`, `.410`, `.412`, `.413`, `.414`, `.416`, `.417`, `.418`, `.420`, `.421`, `.422`, `.424`, `.425`, `.426`, `.428`, `.429`, `.430`, `.432`, `.433`, `.434`, `.435`, `.437`, `.470`, `.472`, `.474`, `.475`, `.476`, `.492`, `.493`, `.495`, `.496`, `.498`, `.499`, `.504`, `.510`, `.511`, `.512`, `.513`, `.515`, or `.517`.
 Current primary target is SystemVerilog, with Verilog conversion support and a scoped direct-root VHDL scaffold for the accepted single-FSM subset, including delayed-pulse clock-branch lowering, generic-bearing direct-root module headers with typed scalar/vector sized-literal defaults, signed vector and signed scalar direct-root ports, scalar/vector two-state `bit` input-port and internal declaration lowering, signed scalar/vector, non-signed four-state `logic` input-port/internal declaration lowering, and vector `logic signed` internal declaration lowering, scalar and signed scalar addition/subtraction/multiplication RHS/chain lowering, vector numeric-literal addition/subtraction emitted by compound update/shorthand forms, same-width unsigned-style addition/subtraction/multiplication/division/modulo/XOR RHS/chain lowering, same-width signed vector addition/subtraction/multiplication/division/modulo RHS lowering for signed targets and operands, signed vector numeric-literal addition/subtraction/multiplication/division/modulo RHS lowering including signed vector negative decimal addition, subtraction, multiplication, division, and modulo literals, non-signed vector positive decimal multiplication/division/modulo literal lowering in signal-first, literal-first, and literal-literal order, non-signed vector negative decimal addition/subtraction/multiplication/division/modulo literal lowering, bounded generated AMBA wrap arithmetic for `fsm/amba_requester.fsm`, bounded non-signed vector, signed vector, and scalar output-port decimal literal assignment lowering including non-signed vector, signed vector, and scalar negative decimal literals, bounded direct aggregate-output packed-vector lowering, a bounded C3 external-RTL literal/concat composition VHDL structural top for `t/corpus/composition_intent_integer_literals.fsm`, bounded external-RTL scalar integer, scalar integer expression, one-bit sized bitstring, multi-bit sized bitstring, and resolved packed aggregate VHDL generic maps including resolved package-backed constants, a bounded C1 standalone-DT child composition VHDL passthrough top for `t/corpus/standalone_dtc_explicit_system_autowire.fsm`, bounded C1 standalone-DT scalar integer, scalar expression, one-bit sized bitstring, multi-bit sized bitstring, packed-list, and packed-map VHDL generic maps, a bounded C2 generated-FSM child composition VHDL scalar-autowire top for `t/corpus/implicit_composition_system_autowire.fsm`, bounded C2 generated-FSM scalar integer, scalar expression, one-bit sized bitstring, multi-bit sized bitstring, and resolved packed aggregate VHDL generic maps, and a bounded APB/C4 generated-FSM child composition VHDL top for `fsm/apb_tb.fsm` with scalar integer, scalar expression, one-bit sized bitstring, multi-bit sized bitstring, resolved packed aggregate, and resolved package-backed generic maps in the same APB/C4 shape.
 Scalar division/modulo, including signed scalar division/modulo, in the direct
 VHDL scaffold remains an explicit fail-closed boundary; full aggregate
@@ -5226,6 +5241,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_ISSUE_ORDER_QUEUE_READ_DATA_BURST_LENGTH_READINESS_AUDIT.md` — audited report-only raw-`ARLEN` burst-length readiness over generated mixed dynamic/static read burst-last same-ID issue-order queue read-data and selected direct bounded implementation.
 - `docs/AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_ISSUE_ORDER_QUEUE_READ_DATA_BURST_LENGTH_BEHAVIOR.md` — documents report-only raw-`ARLEN` burst-length capture over generated mixed dynamic/static read burst-last same-ID issue-order queue read-data.
 - `docs/AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_ISSUE_ORDER_QUEUE_READ_DATA_RUNTIME_VALIDATION_READINESS_AUDIT.md` — audits runtime beat-count/`RLAST` validation readiness over generated mixed dynamic/static read burst-last same-ID issue-order queue raw-`ARLEN` read-data and selects direct bounded implementation.
+- `docs/AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_ISSUE_ORDER_QUEUE_READ_DATA_RUNTIME_VALIDATION_BEHAVIOR.md` — documents runtime beat-count/`RLAST` validation over generated mixed dynamic/static read burst-last same-ID issue-order queue raw-`ARLEN` read-data.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_CONTRACT_SELECTION.md` — selected direct single-active dynamic write `BID` same-cycle release-and-recapture behavior under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_BEHAVIOR.md` — shipped single-active dynamic write `BID` same-cycle release-and-recapture under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_WRITE_RECAPTURE_NEXT_SLICE_SELECTION.md` — selected `.367`, public contract selection for first single-active dynamic read same-cycle release-and-recapture after dynamic write recapture shipped.
@@ -5323,6 +5339,8 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `ppif/axi_manager_capacity_status_read_mixed_dynamic_static_burst_last_same_id_issue_order_queue.ppif` — checked-in runnable `.ppif` sample for generated bounded one-dynamic plus one-concrete-static mixed dynamic/static read burst-last `RID && RLAST` same-ID issue-order queue behavior, support-accounted through check JSON and semantic JSON.
 - `ppif/axi_manager_capacity_status_read_mixed_dynamic_static_same_id_issue_order_queue_read_data.ppif` — checked-in runnable `.ppif` sample for scalar single-beat `RDATA`/`RRESP` capture over generated bounded one-dynamic plus one-concrete-static mixed dynamic/static read single-beat same-ID issue-order queue completions, support-accounted through check JSON and semantic JSON.
 - `ppif/axi_manager_capacity_status_read_mixed_dynamic_static_burst_last_same_id_issue_order_queue_read_data.ppif` — checked-in runnable `.ppif` sample for scalar last-beat `RDATA`/`RRESP` capture over generated bounded one-dynamic plus one-concrete-static mixed dynamic/static read burst-last same-ID issue-order queue completions, support-accounted through check JSON and semantic JSON.
+- `ppif/axi_manager_capacity_status_read_mixed_dynamic_static_burst_last_same_id_issue_order_queue_read_data_burst_length.ppif` — checked-in runnable `.ppif` sample for report-only raw-`ARLEN` burst-length capture over generated bounded one-dynamic plus one-concrete-static mixed dynamic/static read burst-last same-ID issue-order queue read-data, support-accounted through check JSON and semantic JSON.
+- `ppif/axi_manager_capacity_status_read_mixed_dynamic_static_burst_last_same_id_issue_order_queue_read_data_burst_length_runtime_assertion.ppif` — checked-in runnable `.ppif` sample for runtime beat-count/`RLAST` validation over generated bounded one-dynamic plus one-concrete-static mixed dynamic/static read burst-last same-ID issue-order queue raw-`ARLEN` read-data, support-accounted through check JSON and semantic JSON.
 - `ppif/axi_manager_capacity_status_dynamic_write_depth3_same_id_issue_order_queue.ppif` — checked-in runnable `.ppif` sample for generated bounded three-transaction all-dynamic write `BID` dynamic same-ID issue-order queue behavior, support-accounted through check JSON and semantic JSON.
 - `ppif/axi_manager_capacity_status_dynamic_read_same_id_issue_order_queue.ppif` — checked-in runnable `.ppif` sample for generated bounded two-transaction all-dynamic read single-beat `RID` dynamic same-ID issue-order queue behavior, support-accounted through check JSON and semantic JSON.
 - `ppif/axi_manager_capacity_status_dynamic_read_depth3_same_id_issue_order_queue.ppif` — checked-in runnable `.ppif` sample for generated bounded three-transaction all-dynamic read single-beat `RID` dynamic same-ID issue-order queue behavior, support-accounted through check JSON and semantic JSON.
