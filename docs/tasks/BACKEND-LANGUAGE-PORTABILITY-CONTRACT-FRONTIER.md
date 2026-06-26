@@ -104,11 +104,11 @@ implementation must satisfy the same FSMGen public contracts.
   Commit: `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2.1: sync downstream contract surfaces`
 
 - ID: `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.3`
-  Status: `active`
+  Status: `blocked`
   Goal: `Select the portable in-memory API contract.`
   Acceptance: `Define the backend-neutral source-text/source-id/options/result contract for check, lower, schedule, semantic export, HDL generation, generated review artifacts, diagnostics, support accounting, and verification-output artifact capture without requiring POSIX filesystem access, process spawning, Perl module loading, or Perl object receivers. Record exact entrypoints, JSON-safe result shapes, host-abstraction dependencies, tests, mdBook impact, compatibility risks, and rollback boundaries before any implementation code changes.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `blocked`
+  Commit: `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.3: record portable API verification blocker`
 
 - ID: `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.4`
   Status: `pending`
@@ -150,7 +150,8 @@ implementation must satisfy the same FSMGen public contracts.
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
 | 1 | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` | `done` | Completed the backend-language-neutral readiness audit and selected future exact leaves for API, host abstraction, parity, mdBook blueprint, extension, and implementation-language selection. |
-| 2 | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.3` | `active` | Select the portable in-memory API contract before any non-Perl implementation code. |
+| 2 | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.3` | `blocked` | Candidate portable request/result in-memory API family is drafted, but the focused `t/301` corpus verification run hit a resource blocker before completion. |
+| 3 | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.4` | `pending` | Select the host source/artifact abstraction after `.2.3` completes. |
 
 ## Decisions
 
@@ -188,6 +189,13 @@ implementation must satisfy the same FSMGen public contracts.
   API, host source/artifact abstraction, Perl-oracle parity harness, mdBook
   language-X blueprint, and extension/plugin boundary need exact selectors
   before any non-Perl implementation starts.
+- `2026-06-26`: Drafted the `.2.3` candidate backend-neutral in-memory
+  request/result contract family with conceptual `capabilities(request?)` and
+  `execute(request)` entrypoints, operation tokens for check/lower/schedule/
+  semantic/HDL/verification-output behavior, JSON-safe result envelopes, and
+  virtual artifacts. Completion is blocked on the focused `t/301` corpus
+  verification resource issue below. Implementation remains deferred until
+  `.2.3` completes and `.2.4` selects the host source/artifact abstraction.
 
 ## Open Questions
 
@@ -196,7 +204,8 @@ implementation must satisfy the same FSMGen public contracts.
   does not block `.2`; the audit must define selection criteria and parity
   gates before choosing an implementation slice.
 - Which exact public in-memory API shape should be canonical for non-CLI
-  hosts? This is now owned by `.2.3`.
+  hosts? This remains owned by blocked `.2.3` until the verification blocker
+  is resolved.
 - Can any external SystemVerilog-to-Verilog converter, including `sv2v`, meet
   a high enough quality and coverage bar to be useful for FSMGen? This does
   not block `.2`; the default remains FSMGen-owned generation/lowering unless
@@ -204,7 +213,16 @@ implementation must satisfy the same FSMGen public contracts.
 
 ## Blockers
 
-- None.
+- `2026-06-26`: `.2.3` focused verification is blocked by a heavy
+  `t/301-check-json-supported-corpus.t` fixture. The direct command was
+  `prove -Iperl t/297-capability-manifest.t t/301-check-json-supported-corpus.t t/303-normalized-semantic-json-supported-corpus.t t/1438-semantic-introspection-contract.t`.
+  It was stopped after about 1 hour 58 minutes total runtime. `t/297` had
+  reported `ok`; `t/301` remained on
+  `ppif/axi_manager_capacity_status_dynamic_write_depth3_same_id_issue_order_queue.ppif`
+  for about 44 minutes with roughly 11 GB RSS and CPU activity. `t/303` and
+  `t/1438` were not reached. Per `COMMIT.md`, any retry of broad/heavy
+  `prove`/`fsmgen` coverage must run under `scripts/run_with_ram_guard.sh` or
+  an explicitly owned replacement validation plan.
 
 ## Verification Log
 
@@ -215,6 +233,7 @@ implementation must satisfy the same FSMGen public contracts.
 | `2026-06-16` | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2.1` | `env -u PERL5LIB perl -Iperl -c perl/FSM/Support/LanguageSurfaceSection.pm`; `env -u PERL5LIB prove -Iperl t/297-capability-manifest.t t/317-language-surface-contract.t t/483-language-surface-section-defensive-copy-boundary-audit.t`; `env -u PERL5LIB prove -Iperl t/1436-ial2-ppif-parser-cli.t t/248-regression-corpus-accounting.t t/301-check-json-supported-corpus.t t/303-normalized-semantic-json-supported-corpus.t`; `mdbook build docs/book`; `env -u PERL5LIB prove -Iperl t/1414-docs-relative-paths-audit.t`; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `git --no-pager diff --check`; README numbering check | `passed`; synchronized downstream handoff/integration/contracts/manifest/support-accounting/book surfaces with the current codebase boundary for all downstream consumers |
 | `2026-06-25` | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` | `mdbook build docs/book`; `prove -Iperl t/1414-docs-relative-paths-audit.t`; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `git --no-pager diff --check`; `scripts/check_doctrines.sh` | `passed`; recorded the SystemVerilog-to-Verilog external dependency stance without selecting `sv2v` or changing code/toolchain behavior |
 | `2026-06-26` | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` | Read/audit decision `0018`, README, roadmap, mdBook, task index, semantic-introspection/MCP task tree, public ISF/downstream contracts, `bin/fsmgen`, `bin/fsmgen-mcp`, source/lowering/manifest/support/semantic/MCP/facade modules, regression corpus, and focused manifest/check/semantic/MCP tests; `prove -Iperl t/297-capability-manifest.t t/1438-semantic-introspection-contract.t t/1440-semantic-introspection-manifest-contract-roundtrip-audit.t`; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `mdbook build docs/book`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_docs_relative_paths.sh`; `scripts/check_memory_architecture.sh`; `git --no-pager diff --check`; `scripts/check_doctrines.sh` | `passed`; completed the portability readiness audit and routed future work to `.2.3` through `.2.8` before non-Perl implementation code |
+| `2026-06-26` | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.3` | Read/audit `.2.2` readiness audit, current CLI/source/lowering facades, check/semantic/verification/result contracts, semantic-introspection/MCP contract, manifest contract, and focused tests; attempted direct `prove -Iperl t/297-capability-manifest.t t/301-check-json-supported-corpus.t t/303-normalized-semantic-json-supported-corpus.t t/1438-semantic-introspection-contract.t`; reran lightweight guard-safe subset `scripts/run_with_ram_guard.sh -- prove -Iperl t/297-capability-manifest.t t/1438-semantic-introspection-contract.t` | `blocked`; guarded `t/297`/`t/1438` subset passed, but the full focused gate is blocked because direct `t/301` remained on `ppif/axi_manager_capacity_status_dynamic_write_depth3_same_id_issue_order_queue.ppif` for about 44 minutes with roughly 11 GB RSS and was terminated with signal 143 before `t/303`; candidate API contract is drafted but `.2.3` is not complete |
 
 ## Commit Log
 
@@ -225,6 +244,7 @@ implementation must satisfy the same FSMGen public contracts.
 | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2.1` | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2.1: sync downstream contract surfaces` | Synchronized the downstream-consumer handoff, integration specs, public contracts, manifest language surface, support-accounting catalog docs, README, roadmap, book, and Knowledge Map; resumed `.2.2` as the broader backend portability audit frontier. |
 | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2: record sv2v dependency stance` | Recorded that FSMGen-owned SystemVerilog-to-Verilog generation/lowering remains the default and external converters such as `sv2v` require a future owned audit before becoming selected dependencies. |
 | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2: audit portability readiness` | Completed the readiness audit, separated backend-neutral public contracts from Perl implementation details, and selected future leaves for portable API, host abstraction, parity harness, mdBook blueprint, extension boundary, and first implementation-language selection. |
+| `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.3` | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.3: record portable API verification blocker` | Drafted the conceptual backend-neutral request/result API family and recorded the focused corpus verification resource blocker that prevents `.2.3` completion. |
 
 ## Changelog
 
@@ -247,3 +267,6 @@ implementation must satisfy the same FSMGen public contracts.
   ready for parity planning, while portable in-memory API, host abstraction,
   parity harness, mdBook blueprint, extension boundary, and first
   implementation-language selection move to exact future leaves.
+- `2026-06-26`: Drafted the `.2.3` portable in-memory request/result API
+  candidate, but left `.2.3` blocked because the focused `t/301` corpus
+  verification run hit a resource blocker before completion.

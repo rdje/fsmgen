@@ -2383,7 +2383,10 @@ Its `.2.1` leaf captures that doctrine. Its `.2.2` readiness audit separates
 backend-neutral public contracts from current Perl implementation details and
 selects exact future leaves for the portable API, host abstraction, parity
 harness, book blueprint, extension boundary, and first implementation-language
-selection. The active `.2.3` leaf selects the portable in-memory API contract
+selection. The active `.2.3` leaf has drafted the candidate portable in-memory
+request/result API family with JSON-safe envelopes and virtual artifacts, but
+completion is blocked on focused corpus verification. The `.2.4` host
+source/artifact abstraction leaf remains pending until `.2.3` completes,
 before any Rust/Rust-Wasm, browser JavaScript, Dart/web, Julia, or other
 non-Perl implementation slice changes code or public contracts.
 For SystemVerilog-to-Verilog portability, the default is FSMGen-owned

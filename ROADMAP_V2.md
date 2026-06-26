@@ -799,8 +799,11 @@ Architecture constraint:
   implementation must satisfy FSMGen's public contracts and stay on par with
   the Perl reference/oracle. Its `.2.2` readiness audit separated
   backend-neutral public contracts from current Perl implementation details
-  and selected exact future leaves. The active `.2.3` frontier selects the
-  portable in-memory API contract before any Rust/Rust-Wasm, browser
+  and selected exact future leaves. The active `.2.3` frontier has drafted
+  the candidate portable in-memory request/result API family with JSON-safe
+  envelopes and virtual artifacts, but completion is blocked on focused corpus
+  verification. `.2.4`, the host source/artifact abstraction selector, remains
+  pending until `.2.3` completes, before any Rust/Rust-Wasm, browser
   JavaScript, Dart/web, Julia, or other non-Perl implementation slice changes
   code or public contracts.
 - SystemVerilog-to-Verilog portability should default to FSMGen-owned
