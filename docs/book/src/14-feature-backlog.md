@@ -9318,6 +9318,18 @@ selector changes no behavior. It chooses write `BID` first because it widens
 static siblings without adding read `RLAST`, read-data, raw-`ARLEN`, runtime,
 multi-beat, scoreboard, backend, external-converter, or VHDL behavior.
 
+Mixed dynamic/static write multi-static same-ID issue-order queue readiness:
+[AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_WRITE_MULTI_STATIC_SAME_ID_ISSUE_ORDER_QUEUE_READINESS_AUDIT](../../AXI_IAL2_MANAGER_MIXED_DYNAMIC_STATIC_WRITE_MULTI_STATIC_SAME_ID_ISSUE_ORDER_QUEUE_READINESS_AUDIT.md)
+selects `.524`, direct bounded implementation for one dynamic write plus two
+concrete static writes over generated write `BID` same-ID
+`issue-order-queue` behavior. The current candidate fails closed at the local
+mixed queue planner/materializer boundary, not at parser, lower IAL1/IAL0,
+SystemVerilog, backend, external-converter, or VHDL prerequisites. The next
+behavior slice remains bounded to write `BID`; broader read queues, read-data,
+raw-`ARLEN`, runtime validation, multi-beat output banks, scoreboards,
+arbitrary cardinality, backend behavior, verification-output generation, and
+VHDL stay deferred.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

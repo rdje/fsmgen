@@ -3855,7 +3855,14 @@ Broader mixed issue-order queue cardinality, scoreboards, backend behavior,
 backend-language variants, verification-code generation, external converter
 dependencies such as `sv2v`, and VHDL remain deferred. `.522` now selects
 `.523`, readiness audit for one-dynamic plus two-concrete-static mixed
-dynamic/static write `BID` same-ID issue-order queue behavior.
+dynamic/static write `BID` same-ID issue-order queue behavior. `.523` now
+selects `.524`, direct bounded implementation for that one-dynamic plus
+two-concrete-static write queue shape. The audit found the current candidate
+fails closed only at the local mixed write issue-order queue
+planner/materializer boundary, while lower queue transition, assignment,
+assertion, storage, and report helpers are already transaction-list driven.
+No parser, IAL1, IAL0, SystemVerilog, backend, external converter, or VHDL
+prerequisite is required before the bounded `.524` implementation.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

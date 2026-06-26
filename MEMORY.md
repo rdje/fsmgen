@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.522: select broader mixed queue audit`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.523` is active; audit one-dynamic plus two-concrete-static mixed dynamic/static write `BID` same-ID issue-order queue readiness before any behavior change.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.522` selected `.523` after `.520/.521` closed the bounded one-dynamic plus one-static mixed issue-order queue multi-beat path and public sync. The selector is docs-only and changed no parser, generator, PPIF sample, support-accounting catalog, generated artifact, schedule/check/semantic JSON, test, HDL/runtime behavior, backend behavior, verification-output generation, backend-language variant, external converter dependency, or VHDL behavior.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.523: audit broader mixed queue readiness`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.524` is active; ship bounded one-dynamic plus two-concrete-static mixed dynamic/static write `BID` same-ID issue-order queue behavior.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.523` selected `.524` after auditing the one-dynamic plus two-static mixed write queue candidate. The RAM-guarded `/tmp` candidate failed closed at the local mixed queue planner diagnostic and emitted no artifacts; the audit changed no parser, generator, PPIF sample, support-accounting catalog, generated artifact, schedule/check/semantic JSON, test, HDL/runtime behavior, backend behavior, verification-output generation, backend-language variant, external converter dependency, scoreboard, group-local simultaneous enqueue, broader read queue, arbitrary cardinality, or VHDL behavior.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: The original exact `t/301` resource cliff is fixed for oversized PPIF check-json via `.2.3.1`, but a full guarded `t/301-check-json-supported-corpus.t` rerun stopped on host-memory cutoff from a high host baseline and a higher-cutoff retry was rejected by the approval layer. Do not bypass that rejection without explicit user approval; `.2.5` selected RAM-guarded or exact bounded replacement policy for any future broad `t/301`/`t/303` parity plan.
-- next_action: Start `.523` by reading the `.522` selector, prior mixed queue/cardinality records, current parser/generator/report helpers, support-accounting catalog, README, ROADMAP_V2, mdBook, and Knowledge Map; then decide whether direct implementation is safe or a smaller prerequisite is needed.
+- next_action: Start `.524` by editing only the local mixed write issue-order queue planner/materializer/report/test/support surfaces for the selected public multi-static sample, then run focused syntax/parser/generator/support checks plus docs/doctrine gates before committing.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact
