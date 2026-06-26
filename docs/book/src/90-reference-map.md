@@ -17,6 +17,7 @@ Start here:
 - [Introduction](00-introduction.md)
 - [Your First FSM](01-first-fsm.md)
 - [Cookbook](12-cookbook.md)
+- [Implementation Blueprint](15-implementation-blueprint.md)
 
 ## What Still Lives Outside The Book
 
@@ -29,6 +30,10 @@ Some docs are intentionally still focused references:
 - [../../ISF_DOWNSTREAM_INTEGRATION_SPEC.md](../../ISF_DOWNSTREAM_INTEGRATION_SPEC.md)
 - [../../ISF_SPEC.md](../../ISF_SPEC.md)
 - [../../ISF_PUBLIC_INTERFACE_CONTRACT.md](../../ISF_PUBLIC_INTERFACE_CONTRACT.md)
+- [../../BACKEND_LANGUAGE_MDBOOK_BLUEPRINT_SELECTION.md](../../BACKEND_LANGUAGE_MDBOOK_BLUEPRINT_SELECTION.md)
+- [../../BACKEND_LANGUAGE_PORTABLE_IN_MEMORY_API_CONTRACT_SELECTION.md](../../BACKEND_LANGUAGE_PORTABLE_IN_MEMORY_API_CONTRACT_SELECTION.md)
+- [../../BACKEND_LANGUAGE_PORTABLE_HOST_ABSTRACTION_SELECTION.md](../../BACKEND_LANGUAGE_PORTABLE_HOST_ABSTRACTION_SELECTION.md)
+- [../../BACKEND_LANGUAGE_PORTABLE_PARITY_HARNESS_SELECTION.md](../../BACKEND_LANGUAGE_PORTABLE_PARITY_HARNESS_SELECTION.md)
 - [../../BIN_FSMGEN_IMPORT_TREE.md](../../BIN_FSMGEN_IMPORT_TREE.md)
 - [../../TASK_TREE.md](../../TASK_TREE.md)
 - [../../tasks/ISF-PUBLIC-CONTRACT-SYNC.md](../../tasks/ISF-PUBLIC-CONTRACT-SYNC.md)
@@ -43,6 +48,12 @@ These should stay precise and sometimes narrower than the book.
 for SPECFORGE-style downstream consumers. The book includes that file directly
 in the ISF downstream integration chapter, so edits to the handoff document and
 the book view cannot drift apart.
+
+`BACKEND_LANGUAGE_MDBOOK_BLUEPRINT_SELECTION.md` records the selected
+implementation-blueprint structure for future backend-language variants. The
+book-facing entry point is Chapter 15, which links to the portable API, host
+abstraction, and parity-harness selectors instead of duplicating their full
+maintainer detail.
 
 `BIN_FSMGEN_IMPORT_TREE.md` is the live maintainer-facing architecture map for
 the `bin/fsmgen` runtime spine. It is not a tutorial chapter, but it is the

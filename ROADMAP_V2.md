@@ -803,10 +803,11 @@ Architecture constraint:
   in-memory request/result API family with JSON-safe envelopes and virtual
   artifacts. The `.2.4` leaf selected a source-catalog plus artifact-sink host
   abstraction. The `.2.5` leaf selected the Perl-reference parity harness and
-  normalization rules. The active `.2.6` leaf now selects the mdBook language-X
-  implementation blueprint before any Rust/Rust-Wasm, browser JavaScript,
-  Dart/web, Julia, or other non-Perl implementation slice changes code or
-  public contracts.
+  normalization rules. The `.2.6` leaf selected the mdBook language-X
+  implementation blueprint structure and added the implementation-blueprint
+  chapter. The active `.2.7` leaf now audits typed extension and plugin
+  portability before any Rust/Rust-Wasm, browser JavaScript, Dart/web, Julia,
+  or other non-Perl implementation slice changes code or public contracts.
 - SystemVerilog-to-Verilog portability should default to FSMGen-owned
   generation/lowering instead of a mandatory external converter dependency.
   External converters such as `sv2v` are audit candidates only: they may be

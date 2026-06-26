@@ -2392,8 +2392,10 @@ an adapter for `--path`, `FSMLIB`, current-directory lookup, `--outdir`,
 Perl-reference parity harness and normalization rules: future variants compare
 normalized public contracts against the Perl oracle across corpus partitions,
 reports, diagnostics, support accounting, artifacts, HDL behavior, and
-resource-sensitive fixtures. The active `.2.6` leaf now owns the mdBook
-language-X implementation blueprint before any Rust/Rust-Wasm, browser
+resource-sensitive fixtures. The `.2.6` leaf selected the mdBook language-X
+implementation blueprint structure and added Chapter 15 as the public
+implementation-blueprint entry point. The active `.2.7` leaf now audits typed
+extension and plugin portability before any Rust/Rust-Wasm, browser
 JavaScript, Dart/web, Julia, or other non-Perl implementation slice changes
 code or public contracts.
 For SystemVerilog-to-Verilog portability, the default is FSMGen-owned
