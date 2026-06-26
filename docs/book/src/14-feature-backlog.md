@@ -9617,6 +9617,19 @@ source-path/report identity, support accounting, manifest wording,
 diagnostics, and generated `.isf` review artifacts before generated `.fsm`.
 No suffix behavior changes in `.551`.
 
+IAL2 APB `.apb` profile-alias readiness audit:
+[IAL2_APB_PROFILE_ALIAS_READINESS_AUDIT](../../IAL2_APB_PROFILE_ALIAS_READINESS_AUDIT.md)
+selects `.553`, APB `.apb` public profile-alias contract selection. The audit
+finds that the shipped APB `.ppif` requester-transfer path has enough evidence
+to write a bounded `.apb` alias contract: explicit `(profile apb)`, one
+`(apb-requester apb_requester ...)` object, generated
+`apb_requester.isf`, generated `apb_requester.fsm`, APB report schema, strict
+check JSON, semantic JSON, and support accounting. `.apb` is still a known
+unsupported suffix; the next owner must settle explicit profile policy,
+authored `.apb` source identity, support-accounting identity/source kind,
+manifest wording, diagnostics, and mandatory generated `.isf` review
+preservation before implementation.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after
@@ -11110,11 +11123,14 @@ selects `.ppif` as the first generic IAL2 file suffix and records the first
 public Valid-Ready source shape. The first parser/CLI slice for `.ppif` is now
 shipped by
 [IAL2_PPIF_PARSER_CLI_FIRST_SLICE](../../IAL2_PPIF_PARSER_CLI_FIRST_SLICE.md).
-Public `.pif`, `.ppi`, `.axi`, protocol-profile aliases, and full AXI manager
-behavior remain unshipped. Multi-channel `.ppif` Valid-Ready bundle
-report/review-artifact behavior is now shipped in the bounded slice below;
-aggregate semantic JSON is shipped as a bundle semantic root; and the tracked
-AW/W bundle now generates an aggregate wrapper/top HDL entry.
+Public `.pif` and `.ppi` remain unshipped generic-container spellings. `.axi`
+is now shipped only for the bounded AXI AW Valid-Ready profile-alias sample,
+while `.chi`, `.ace`, `.ahb`, `.apb`, `.atb`, `.smbus`, `.i2s`, and full AXI
+manager profile-alias behavior remain unshipped. Multi-channel `.ppif`
+Valid-Ready bundle report/review-artifact behavior is now shipped in the
+bounded slice below; aggregate semantic JSON is shipped as a bundle semantic
+root; and the tracked AW/W bundle now generates an aggregate wrapper/top HDL
+entry.
 
 First selected `.ppif` shape, checked in as
 `ppif/axi_aw_valid_ready.ppif`:

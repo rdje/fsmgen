@@ -4061,6 +4061,16 @@ audit `.apb` alias readiness, but direct `.apb` implementation still needs a
 separate public file-surface contract for explicit profile matching,
 source-path/report identity, support accounting, manifest wording,
 diagnostics, and generated `.isf` review artifacts before generated `.fsm`.
+`.552` now selects `.553`, APB `.apb` public profile-alias contract
+selection. The audit found APB is ready for contract selection because the
+shipped `.ppif` requester-transfer path already locks profile `apb`,
+`apb-requester` vocabulary, generated `apb_requester.isf` and
+`apb_requester.fsm` review artifacts, report schema, strict check JSON,
+semantic JSON, and support accounting. `.apb` remains unsupported until a
+separate contract and implementation owner settle explicit profile policy,
+authored `.apb` source identity, support-accounting identity/source kind,
+manifest wording, diagnostics, and mandatory generated `.isf` review
+preservation.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
