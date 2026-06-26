@@ -9432,6 +9432,18 @@ and RAM-guard-friendly validation. No parser, generator, sample,
 support-accounting, report, HDL, backend, profile-alias, common-construct, or
 VHDL behavior changes in `.533`.
 
+IAL2 protocol-neutral Valid-Ready bundle contract:
+[IAL2_PROTOCOL_NEUTRAL_VALID_READY_BUNDLE_CONTRACT_SELECTION](../../IAL2_PROTOCOL_NEUTRAL_VALID_READY_BUNDLE_CONTRACT_SELECTION.md)
+selects `.535`, direct bounded implementation of
+`ppif/valid_ready_dual_channel_bundle.ppif`. The contract keeps explicit
+`(profile valid-ready)`, selects support identity
+`intent.ppif_valid_ready_dual_channel_bundle`, exercises both neutral roles,
+preserves the aggregate `valid_ready_bundle.v1` schema, requires generic
+neutral aggregate residue instead of AXI manager residue, and preserves the
+AXI AW/W bundle boundary. No parser, generator, sample, support-accounting,
+report, HDL, backend, profile-alias, common-construct, or VHDL behavior changes
+in `.534`.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

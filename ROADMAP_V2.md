@@ -3934,6 +3934,13 @@ separate aggregate wrapper/top prerequisite, but direct implementation would
 still force public choices into code: sample/support identity, both neutral
 roles, source-anchor inheritance, generic aggregate residue, docs/manifest
 wording, and RAM-guard-friendly validation. No behavior changes in `.533`.
+`.534` now selects `.535`, direct bounded implementation of
+`ppif/valid_ready_dual_channel_bundle.ppif`. The contract keeps explicit
+`(profile valid-ready)`, selects support identity
+`intent.ppif_valid_ready_dual_channel_bundle`, exercises both neutral roles,
+preserves the aggregate `valid_ready_bundle.v1` schema, requires generic
+neutral aggregate residue instead of AXI manager residue, and preserves the
+AXI AW/W bundle boundary. No behavior changes in `.534`.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
