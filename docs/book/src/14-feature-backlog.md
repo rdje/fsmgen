@@ -4213,8 +4213,13 @@ FSMGen still does not claim UVM compile support. The VHDL selector
 [IAL1_VHDL_VERIFICATION_OUTPUT_CONTRACT_SELECTION](../../IAL1_VHDL_VERIFICATION_OUTPUT_CONTRACT_SELECTION.md)
 selected no VHDL verification artifact yet: the current VHDL path is a
 synthesizable scaffold, VHDL/GHDL validation is not active, and
-`IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.9` must first select a VHDL
-verification validation substrate. Direct IAL2-to-verification routing,
+`IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.9` selected shape-only
+inert-artifact validation with explicit no-compile/no-PSL manifest claims. The
+validation-substrate selector
+[IAL1_VHDL_VERIFICATION_VALIDATION_SUBSTRATE_SELECTION](../../IAL1_VHDL_VERIFICATION_VALIDATION_SUBSTRATE_SELECTION.md)
+routes first VHDL artifact selection to
+`IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.10`. Direct
+IAL2-to-verification routing,
 scoreboard behavior, coverage behavior, and reusable VIP behavior remain
 deferred behind later selector leaves.
 

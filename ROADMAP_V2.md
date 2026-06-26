@@ -4780,8 +4780,10 @@ inert UVM passive-monitor skeleton output and advertises it through the
 capability manifest without claiming UVM compile support. VHDL-oriented
 verification artifacts remain deferred: `.5` selected no VHDL assertion, PSL,
 testbench, package, or monitor-like artifact because the current VHDL path is
-synthesizable scaffold-only and VHDL/GHDL validation is not active. `.9` now
-owns the smaller VHDL verification validation-substrate selector. Direct
+synthesizable scaffold-only and VHDL/GHDL validation is not active. `.9`
+selected shape-only inert-artifact validation with explicit no-compile/no-PSL
+manifest claims; `.10` now owns first VHDL artifact selection under that
+substrate. Direct
 IAL2-to-verification generation remains an explicit audit question, not an
 implementation assumption.
 Packed burst outputs, concrete same-ID queue variants beyond the shipped

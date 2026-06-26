@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.5: select VHDL verification prerequisite`.
-- active_work_unit: `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.9` selects the first VHDL verification validation substrate before any VHDL-oriented verification artifact; `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remains active/pending.
-- recently_done: `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.5` audited VHDL assertion/testbench/PSL feasibility and selected no VHDL verification artifact yet. The current VHDL path is synthesizable scaffold-only, external HDL validation remains SystemVerilog-only, `ghdl` was unavailable in the selector environment, and `.9` now owns the smaller VHDL validation-substrate prerequisite before any VHDL assertion, PSL, testbench, package, or monitor-like output.
+- latest_commit: `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.9: select VHDL validation substrate`.
+- active_work_unit: `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.10` selects the first VHDL-oriented verification artifact under the shape-only validation substrate; `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.2` also remains active/pending.
+- recently_done: `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.9` selected artifact-shape and inert-behavior validation with explicit manifest non-claims for VHDL compile, syntax, PSL, simulation, formal, and analyzer support. GHDL/NVC/vcom remain unavailable locally; Verilator/Yosys remain SystemVerilog-only; `.10` now owns first VHDL artifact selection or deferral.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: none.
-- next_action: Start `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.9`: select the first VHDL verification validation substrate before any VHDL-oriented verification artifact implementation.
+- next_action: Start `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.10`: select the first VHDL-oriented verification artifact under the shape-only validation substrate before any implementation.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact

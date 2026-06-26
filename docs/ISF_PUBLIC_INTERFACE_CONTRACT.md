@@ -74,9 +74,10 @@ uvm-passive-monitor --verification-outdir DIR source.isf`, emitting an inert
 UVM monitor skeleton package plus `verification-output-manifest.json` for
 `.isf` sources with passive `verification_observations[]`. That surface is
 separate from schedule/check/semantic JSON and does not claim UVM compile
-support. No VHDL verification-output target ships yet; VHDL assertion, PSL,
-testbench, package, and monitor-like artifacts remain deferred behind the
-`IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.9` validation-substrate selector.
+support. No VHDL verification-output target ships yet; `.9` selected only a
+shape-only inert-artifact validation substrate with no VHDL compile, syntax,
+PSL, simulation, formal, or analyzer claim, and `.10` must select an artifact
+contract before any VHDL verification-output implementation.
 
 Machine-readable discovery lives in
 [perl/FSM/Support/ISFPublicInterfaceContract.pm](../perl/FSM/Support/ISFPublicInterfaceContract.pm)
@@ -3342,7 +3343,9 @@ mode `--emit-verification-output uvm-passive-monitor --verification-outdir DIR`
 is the only shipped mode that consumes this metadata to emit an inert UVM
 passive-monitor skeleton plus `verification-output-manifest.json`; it is not
 part of the schedule-report schema and does not claim UVM compile support. It
-does not imply VHDL assertion, PSL, testbench, package, or monitor output. The
+does not imply VHDL assertion, PSL, testbench, package, or monitor output; the
+only selected VHDL verification validation substrate is shape-only and inert
+until `.10` selects an artifact. The
 machine-readable schedule-report contract advertises these metadata keys
 through
 `schedule_report_verification_observation_keys`,

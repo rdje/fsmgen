@@ -3392,7 +3392,8 @@ passive `verification_observations[]` to emit an inert UVM passive-monitor
 skeleton; it does not widen the schedule/check/semantic JSON surfaces and does
 not claim UVM compile support. No VHDL verification-output mode is currently
 selected; downstream tools must continue treating VHDL verification artifacts
-as deferred behind validation-substrate selection.
+as deferred until `.10` selects an artifact under the `.9` shape-only
+validation substrate.
 
 Golden fixture matrix:
 
