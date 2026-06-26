@@ -11,7 +11,7 @@ date: 2026-06-26
 status: current
 tags: [architecture, portability, host-abstraction, artifacts, source-identity]
 evidence: docs/BACKEND_LANGUAGE_PORTABLE_HOST_ABSTRACTION_SELECTION.md; docs/BACKEND_LANGUAGE_PORTABLE_IN_MEMORY_API_CONTRACT_SELECTION.md; docs/BACKEND_LANGUAGE_PORTABLE_PARITY_HARNESS_SELECTION.md; docs/BACKEND_LANGUAGE_MDBOOK_BLUEPRINT_SELECTION.md; docs/BACKEND_LANGUAGE_PORTABILITY_READINESS_AUDIT.md; docs/tasks/BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.md; docs/TASK_TREE.md; docs/book/src/14-feature-backlog.md; docs/book/src/15-implementation-blueprint.md; perl/FSM/SourcePathResolver.pm; perl/FSM/Support/ReportSourceContract.pm
-reverify: rg -n 'BACKEND_LANGUAGE_PORTABLE_HOST_ABSTRACTION_SELECTION|BACKEND_LANGUAGE_PORTABLE_PARITY_HARNESS_SELECTION|BACKEND_LANGUAGE_MDBOOK_BLUEPRINT_SELECTION|BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.4|BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.5|BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.6|source_catalog|artifact_sink|filesystem CLI remains an adapter|FSMLIB|--path|--outdir|pure in-memory|BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.7' docs/BACKEND_LANGUAGE_PORTABLE_HOST_ABSTRACTION_SELECTION.md docs/BACKEND_LANGUAGE_PORTABLE_PARITY_HARNESS_SELECTION.md docs/BACKEND_LANGUAGE_MDBOOK_BLUEPRINT_SELECTION.md docs/tasks/BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.md docs/TASK_TREE.md docs/book/src/14-feature-backlog.md docs/book/src/15-implementation-blueprint.md docs/knowledge/backend-language-portable-host-abstraction-selection.md docs/knowledge/backend-language-portable-parity-harness-selection.md docs/knowledge/backend-language-mdbook-blueprint-selection.md
+reverify: rg -n 'BACKEND_LANGUAGE_PORTABLE_HOST_ABSTRACTION_SELECTION|BACKEND_LANGUAGE_PORTABLE_PARITY_HARNESS_SELECTION|BACKEND_LANGUAGE_MDBOOK_BLUEPRINT_SELECTION|BACKEND_LANGUAGE_TYPED_EXTENSION_PORTABILITY_AUDIT|BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.4|BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.5|BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.6|BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.7|source_catalog|artifact_sink|filesystem CLI remains an adapter|FSMLIB|--path|--outdir|pure in-memory|BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.8' docs/BACKEND_LANGUAGE_PORTABLE_HOST_ABSTRACTION_SELECTION.md docs/BACKEND_LANGUAGE_PORTABLE_PARITY_HARNESS_SELECTION.md docs/BACKEND_LANGUAGE_MDBOOK_BLUEPRINT_SELECTION.md docs/BACKEND_LANGUAGE_TYPED_EXTENSION_PORTABILITY_AUDIT.md docs/tasks/BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.md docs/TASK_TREE.md docs/book/src/14-feature-backlog.md docs/book/src/15-implementation-blueprint.md docs/knowledge/backend-language-portable-host-abstraction-selection.md docs/knowledge/backend-language-portable-parity-harness-selection.md docs/knowledge/backend-language-mdbook-blueprint-selection.md docs/knowledge/backend-language-typed-extension-portability.md
 ---
 
 `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.4` selected a two-part
@@ -27,6 +27,7 @@ verification-output directories map onto the same source-catalog/artifact-sink
 model.
 
 `.2.5` has since selected the Perl-reference parity harness and normalization
-rules, and `.2.6` selected the mdBook implementation-blueprint chapter
-structure. The next active backend-portability selector is `.2.7`, typed
-extension/plugin portability.
+rules, `.2.6` selected the mdBook implementation-blueprint chapter structure,
+and `.2.7` selected current typed extensions as Perl-reference only for
+backend portability. The next active backend-portability selector is `.2.8`,
+the first implementation-language experiment.

@@ -29,7 +29,7 @@ selector records, and regression corpus.
 | Backend output boundaries | Chapter 09, Chapter 14, and backend-validation manifest sections |
 | Semantic introspection and MCP | Chapter 11 and the semantic-introspection contract tests |
 | Parity harness | [BACKEND_LANGUAGE_PORTABLE_PARITY_HARNESS_SELECTION.md](../../BACKEND_LANGUAGE_PORTABLE_PARITY_HARNESS_SELECTION.md) |
-| Extension/plugin portability | Pending `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.7` |
+| Extension/plugin portability | [BACKEND_LANGUAGE_TYPED_EXTENSION_PORTABILITY_AUDIT.md](../../BACKEND_LANGUAGE_TYPED_EXTENSION_PORTABILITY_AUDIT.md) |
 | First implementation experiment | Pending `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.8` |
 
 ## Source Layers
@@ -101,6 +101,8 @@ public contracts before code claims parity:
 - How is parity proven against the Perl oracle?
 - Which extension surfaces are portable, unsupported, or out of scope?
 
-Typed extension and plugin portability is still pending
-`BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.7`, so a future variant must
-not claim portable extension support until that boundary is selected.
+Typed extension and plugin portability is selected as out of scope for the
+first non-Perl implementation experiment unless a future exact task first
+selects a portable extension API. A future variant must not claim portable
+extension support from the current Perl `Module::Name`/`@INC`/blessed-object
+surface.

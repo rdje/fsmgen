@@ -805,9 +805,11 @@ Architecture constraint:
   abstraction. The `.2.5` leaf selected the Perl-reference parity harness and
   normalization rules. The `.2.6` leaf selected the mdBook language-X
   implementation blueprint structure and added the implementation-blueprint
-  chapter. The active `.2.7` leaf now audits typed extension and plugin
-  portability before any Rust/Rust-Wasm, browser JavaScript, Dart/web, Julia,
-  or other non-Perl implementation slice changes code or public contracts.
+  chapter. The `.2.7` leaf selected typed extension/plugin support as out of
+  scope for the first non-Perl implementation experiment unless a future
+  portable extension API is selected first. The active `.2.8` leaf now selects
+  the first Rust/Rust-Wasm, browser JavaScript, Dart/web, Julia, or other
+  non-Perl implementation experiment before code or public contracts change.
 - SystemVerilog-to-Verilog portability should default to FSMGen-owned
   generation/lowering instead of a mandatory external converter dependency.
   External converters such as `sv2v` are audit candidates only: they may be

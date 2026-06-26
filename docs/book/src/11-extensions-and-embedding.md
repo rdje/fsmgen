@@ -758,6 +758,14 @@ It is:
 - typed context objects
 - explicit programmatic or CLI loading
 
+For backend-language portability, this is a bounded Perl reference surface, not
+a portable plugin API. `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.7`
+selects typed extension/plugin support as out of scope for the first non-Perl
+implementation experiment unless a future exact task first selects a portable
+extension API. A non-Perl variant that does not implement that future API must
+advertise extension support as unsupported and fail closed on extension loading
+requests.
+
 ## Typed Extensions
 
 Current shipped hooks are:

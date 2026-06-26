@@ -2394,10 +2394,13 @@ normalized public contracts against the Perl oracle across corpus partitions,
 reports, diagnostics, support accounting, artifacts, HDL behavior, and
 resource-sensitive fixtures. The `.2.6` leaf selected the mdBook language-X
 implementation blueprint structure and added Chapter 15 as the public
-implementation-blueprint entry point. The active `.2.7` leaf now audits typed
-extension and plugin portability before any Rust/Rust-Wasm, browser
-JavaScript, Dart/web, Julia, or other non-Perl implementation slice changes
-code or public contracts.
+implementation-blueprint entry point. The `.2.7` leaf audited typed extension
+and plugin portability; its selected boundary keeps current typed
+extensions as a Perl-reference surface and leaves extension/plugin support out
+of scope for the first non-Perl implementation experiment unless a future exact
+task selects a portable extension API first. The active `.2.8` leaf now selects
+the first Rust/Rust-Wasm, browser JavaScript, Dart/web, Julia, or other
+non-Perl implementation experiment before code or public contracts change.
 For SystemVerilog-to-Verilog portability, the default is FSMGen-owned
 generation/lowering rather than a mandatory external converter. Tools such as
 `sv2v` are future audit candidates only: they may become optional validation

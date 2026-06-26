@@ -10,8 +10,8 @@ answers:
 date: 2026-06-26
 status: current
 tags: [architecture, portability, mdbook, implementation-blueprint, documentation]
-evidence: docs/BACKEND_LANGUAGE_MDBOOK_BLUEPRINT_SELECTION.md; docs/book/src/15-implementation-blueprint.md; docs/book/src/SUMMARY.md; docs/book/src/14-feature-backlog.md; docs/book/src/90-reference-map.md; docs/tasks/BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.md; docs/TASK_TREE.md; README.md; ROADMAP_V2.md; docs/BACKEND_LANGUAGE_PORTABLE_IN_MEMORY_API_CONTRACT_SELECTION.md; docs/BACKEND_LANGUAGE_PORTABLE_HOST_ABSTRACTION_SELECTION.md; docs/BACKEND_LANGUAGE_PORTABLE_PARITY_HARNESS_SELECTION.md
-reverify: rg -n 'BACKEND_LANGUAGE_MDBOOK_BLUEPRINT_SELECTION|15-implementation-blueprint|Implementation Blueprint|BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.6|source_catalog|artifact_sink|capabilities\\(request\\?\\)|execute\\(request\\)|BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.7' docs/BACKEND_LANGUAGE_MDBOOK_BLUEPRINT_SELECTION.md docs/book/src/SUMMARY.md docs/book/src/15-implementation-blueprint.md docs/book/src/14-feature-backlog.md docs/book/src/90-reference-map.md docs/tasks/BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.md docs/TASK_TREE.md README.md ROADMAP_V2.md docs/knowledge/backend-language-mdbook-blueprint-selection.md
+evidence: docs/BACKEND_LANGUAGE_MDBOOK_BLUEPRINT_SELECTION.md; docs/BACKEND_LANGUAGE_TYPED_EXTENSION_PORTABILITY_AUDIT.md; docs/book/src/15-implementation-blueprint.md; docs/book/src/SUMMARY.md; docs/book/src/14-feature-backlog.md; docs/book/src/90-reference-map.md; docs/tasks/BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.md; docs/TASK_TREE.md; README.md; ROADMAP_V2.md; docs/BACKEND_LANGUAGE_PORTABLE_IN_MEMORY_API_CONTRACT_SELECTION.md; docs/BACKEND_LANGUAGE_PORTABLE_HOST_ABSTRACTION_SELECTION.md; docs/BACKEND_LANGUAGE_PORTABLE_PARITY_HARNESS_SELECTION.md
+reverify: rg -n 'BACKEND_LANGUAGE_MDBOOK_BLUEPRINT_SELECTION|BACKEND_LANGUAGE_TYPED_EXTENSION_PORTABILITY_AUDIT|15-implementation-blueprint|Implementation Blueprint|BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.6|source_catalog|artifact_sink|capabilities\\(request\\?\\)|execute\\(request\\)|BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.7|BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.8' docs/BACKEND_LANGUAGE_MDBOOK_BLUEPRINT_SELECTION.md docs/BACKEND_LANGUAGE_TYPED_EXTENSION_PORTABILITY_AUDIT.md docs/book/src/SUMMARY.md docs/book/src/15-implementation-blueprint.md docs/book/src/14-feature-backlog.md docs/book/src/90-reference-map.md docs/tasks/BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.md docs/TASK_TREE.md README.md ROADMAP_V2.md docs/knowledge/backend-language-mdbook-blueprint-selection.md docs/knowledge/backend-language-typed-extension-portability.md
 ---
 
 `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.6` selected a dedicated
@@ -26,6 +26,6 @@ contracts, artifact semantics, diagnostics and support accounting, backend
 output boundaries, semantic introspection/MCP, parity harness, extension/plugin
 portability status, and an implementation checklist.
 
-The next active backend-portability selector is `.2.7`, auditing typed
-extension and plugin portability before any first implementation-language
-experiment is selected.
+`.2.7` has since selected current typed extensions as Perl-reference only for
+backend portability. The next active backend-portability selector is `.2.8`,
+the first implementation-language experiment.

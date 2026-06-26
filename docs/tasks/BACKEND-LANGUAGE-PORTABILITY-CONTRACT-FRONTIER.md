@@ -140,14 +140,14 @@ implementation must satisfy the same FSMGen public contracts.
   Commit: `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.6: select mdBook blueprint`
 
 - ID: `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.7`
-  Status: `active`
+  Status: `done`
   Goal: `Audit typed extension and plugin portability.`
   Acceptance: `Separate current Perl module-loading extension behavior from any backend-neutral extension/plugin contract; select whether extensions are out of scope for the first non-Perl variant or require a portable API before implementation.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `passed`
+  Commit: `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.7: audit extension portability`
 
 - ID: `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.8`
-  Status: `pending`
+  Status: `active`
   Goal: `Select the first implementation-language experiment.`
   Acceptance: `After the API, host abstraction, parity harness, mdBook blueprint, and extension boundary are selected, choose the first Rust/Rust-Wasm, browser JavaScript, Dart/web, Julia, or other implementation experiment with exact scope, tests, docs, compatibility risks, and rollback plan.`
   Verification: `pending`
@@ -162,7 +162,8 @@ implementation must satisfy the same FSMGen public contracts.
 | 3 | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.4` | `done` | Selected the source catalog plus artifact sink abstraction and preserved the filesystem CLI as an adapter. |
 | 4 | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.5` | `done` | Selected the Perl-reference parity harness and normalization rules for future implementation variants. |
 | 5 | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.6` | `done` | Selected the mdBook language-X implementation blueprint structure and added the book-facing implementation-blueprint entry point. |
-| 6 | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.7` | `active` | Audit typed extension and plugin portability. |
+| 6 | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.7` | `done` | Selected current typed extensions as a Perl-reference surface and out of scope for the first non-Perl implementation experiment unless a future portable extension API is selected first. |
+| 7 | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.8` | `active` | Select the first implementation-language experiment. |
 
 ## Decisions
 
@@ -243,7 +244,12 @@ implementation must satisfy the same FSMGen public contracts.
   `docs/book/src/15-implementation-blueprint.md`, wired into `SUMMARY.md`
   after the feature backlog. The chapter is a public blueprint entry point and
   status surface, not a non-Perl implementation start; typed extension/plugin
-  portability remains active `.2.7`.
+  portability moved to `.2.7`.
+- `2026-06-26`: Completed `.2.7` as the typed extension/plugin portability
+  audit. The current typed extension system remains a bounded Perl reference
+  surface, not a backend-neutral portable plugin API. Extension/plugin support
+  is out of scope for the first non-Perl implementation experiment unless a
+  future exact task selects a portable extension API first.
 
 ## Open Questions
 
@@ -293,6 +299,7 @@ implementation must satisfy the same FSMGen public contracts.
 | `2026-06-26` | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.4` | Read/audit `.2.2` readiness audit, `.2.3` API selector, current CLI source resolver, report source contract, serializable generation snapshot, downstream/public interface contract source/artifact surfaces, and mdBook backlog; created `docs/BACKEND_LANGUAGE_PORTABLE_HOST_ABSTRACTION_SELECTION.md`; `rg -n 'BACKEND_LANGUAGE_PORTABLE_HOST_ABSTRACTION_SELECTION|BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.4|source_catalog|artifact_sink|filesystem CLI remains an adapter|FSMLIB|--path|--outdir|pure in-memory|BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.5' docs/BACKEND_LANGUAGE_PORTABLE_HOST_ABSTRACTION_SELECTION.md docs/tasks/BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.md docs/TASK_TREE.md docs/book/src/14-feature-backlog.md docs/knowledge/backend-language-portable-host-abstraction-selection.md`; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `git --no-pager diff --check`; `mdbook build docs/book`; `scripts/check_doctrines.sh` | `passed`; selected the source catalog plus artifact sink host abstraction and advanced the frontier to `.2.5` |
 | `2026-06-26` | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.5` | Read/audit `.2.3` API selector, `.2.4` host abstraction selector, regression corpus metadata, supported-smoke behavior gate, classified-failure behavior gate, check JSON corpus gate, normalized semantic JSON corpus gate, capability/semantic-introspection gates, oversized PPIF bounded replacement gate, README, roadmap, and mdBook backlog; created `docs/BACKEND_LANGUAGE_PORTABLE_PARITY_HARNESS_SELECTION.md`; `rg -n 'BACKEND_LANGUAGE_PORTABLE_PARITY_HARNESS_SELECTION|BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.5|Perl-reference parity harness|source_id|support_accounting|resource_sensitive|t/301-check-json-supported-corpus|t/303-normalized-semantic-json-supported-corpus|run_with_ram_guard|BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.6' docs/BACKEND_LANGUAGE_PORTABLE_PARITY_HARNESS_SELECTION.md docs/tasks/BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.md docs/TASK_TREE.md README.md ROADMAP_V2.md docs/book/src/14-feature-backlog.md docs/knowledge/backend-language-portable-parity-harness-selection.md`; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `git --no-pager diff --check`; `mdbook build docs/book`; `scripts/check_doctrines.sh` | `passed`; selected the Perl-reference differential parity harness, normalization rules, corpus partitions, resource-sensitive replacement policy, and pass/fail gates; advanced the frontier to `.2.6` |
 | `2026-06-26` | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.6` | Read/audit mdBook summary/reference/backlog/embedding/lowering chapters, `.2.3` API selector, `.2.4` host abstraction selector, `.2.5` parity harness selector, readiness audit, public ISF contract, downstream integration spec, README, roadmap, and Knowledge Map facts; created `docs/BACKEND_LANGUAGE_MDBOOK_BLUEPRINT_SELECTION.md`; added `docs/book/src/15-implementation-blueprint.md`; wired the chapter into `docs/book/src/SUMMARY.md` and `docs/book/src/90-reference-map.md`; `rg -n 'BACKEND_LANGUAGE_MDBOOK_BLUEPRINT_SELECTION|15-implementation-blueprint|Implementation Blueprint|BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.6|source_catalog|artifact_sink|capabilities\\(request\\?\\)|execute\\(request\\)|BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.7' docs/BACKEND_LANGUAGE_MDBOOK_BLUEPRINT_SELECTION.md docs/book/src/SUMMARY.md docs/book/src/15-implementation-blueprint.md docs/book/src/14-feature-backlog.md docs/book/src/90-reference-map.md docs/tasks/BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.md docs/TASK_TREE.md README.md ROADMAP_V2.md docs/knowledge/backend-language-mdbook-blueprint-selection.md`; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `git --no-pager diff --check`; `mdbook build docs/book`; `scripts/check_doctrines.sh` | `passed`; selected the mdBook language-X implementation blueprint chapter structure, added the book-facing implementation-blueprint entry point, and advanced the frontier to `.2.7` |
+| `2026-06-26` | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.7` | Read/audit `docs/EXTENSION_MODEL.md`, mdBook extension/blueprint/backlog chapters, `perl/FSM/Support/ExtensionContract.pm`, `perl/FSM/Extension/Loader.pm`, `perl/FSM/Extension/Registry.pm`, `perl/FSM/Extension/Context.pm`, typed-extension loading/discovery/module-name audits, and prior portability selectors; created `docs/BACKEND_LANGUAGE_TYPED_EXTENSION_PORTABILITY_AUDIT.md`; `rg -n 'BACKEND_LANGUAGE_TYPED_EXTENSION_PORTABILITY_AUDIT|BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.7|typed extension|Perl reference|out of scope for the first non-Perl|Module::Name|source_catalog|artifact_sink|BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.8' docs/BACKEND_LANGUAGE_TYPED_EXTENSION_PORTABILITY_AUDIT.md docs/EXTENSION_MODEL.md docs/book/src/11-extensions-and-embedding.md docs/book/src/15-implementation-blueprint.md docs/book/src/14-feature-backlog.md docs/tasks/BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.md docs/TASK_TREE.md README.md ROADMAP_V2.md docs/knowledge/backend-language-typed-extension-portability.md`; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_memory_architecture.sh`; `git --no-pager diff --check`; `mdbook build docs/book`; `scripts/check_doctrines.sh` | `passed`; selected current typed extensions as Perl-reference only for backend portability, deferred portable extension support behind a future exact API selector, and advanced the frontier to `.2.8` |
 
 ## Commit Log
 
@@ -309,6 +316,7 @@ implementation must satisfy the same FSMGen public contracts.
 | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.4` | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.4: select host abstraction` | Selected source catalog plus artifact sink as the portable host boundary and advanced the frontier to `.2.5`. |
 | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.5` | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.5: select parity harness` | Selected Perl-reference differential parity, corpus partitions, normalization rules, resource-sensitive replacement policy, and pass/fail gates; advanced the frontier to `.2.6`. |
 | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.6` | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.6: select mdBook blueprint` | Selected the dedicated mdBook implementation-blueprint chapter structure and advanced the frontier to `.2.7`. |
+| `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.7` | `BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.2.7: audit extension portability` | Selected typed extensions as Perl-reference only for backend portability, with portable extension support deferred behind a future exact API selector; advanced the frontier to `.2.8`. |
 
 ## Changelog
 
@@ -352,3 +360,7 @@ implementation must satisfy the same FSMGen public contracts.
 - `2026-06-26`: Completed `.2.6`; the mdBook now has Chapter 15 as the selected
   implementation-blueprint entry point and status surface, with active work
   advanced to `.2.7` typed extension/plugin portability.
+- `2026-06-26`: Completed `.2.7`; current typed extensions remain a bounded
+  Perl-reference surface and are out of scope for the first non-Perl
+  implementation experiment unless a future portable extension API is selected,
+  with active work advanced to `.2.8`.
