@@ -9670,6 +9670,14 @@ alternate widths, multi-peripheral decode, back-to-back policy, implicit
 profile inference, direct backend lowering, verification-output generation,
 backend-language variants, and VHDL remain deferred.
 
+Post APB profile-alias selector:
+[IAL2_POST_APB_PROFILE_ALIAS_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_PROFILE_ALIAS_NEXT_SLICE_SELECTION.md)
+selects `.556`, a no-behavior public-surface sync after APB `.apb`
+profile-alias support shipped. The next owner must make current `.axi`
+behavior/fact wording stop listing `.apb` as unsupported after `.554`, while
+preserving historical pre-`.554` closeout wording and keeping `.chi`, `.ace`,
+`.ahb`, `.atb`, `.smbus`, `.i2s`, `.pif`, and `.ppi` unsupported.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

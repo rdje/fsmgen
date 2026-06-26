@@ -4093,6 +4093,11 @@ authored `.apb` source path in check JSON and semantic JSON, reaches HDL module
 generation, sidebands, alternate widths, multi-peripheral decode,
 back-to-back policy, direct backend lowering, verification-output generation,
 backend-language variants, and VHDL remain deferred.
+`.555` now selects `.556`, a no-behavior public-surface sync after APB `.apb`
+profile-alias support shipped. The next owner must make current `.axi`
+behavior/fact wording stop listing `.apb` as unsupported after `.554`, while
+preserving historical pre-`.554` closeout wording and keeping `.chi`, `.ace`,
+`.ahb`, `.atb`, `.smbus`, `.i2s`, `.pif`, and `.ppi` unsupported.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
