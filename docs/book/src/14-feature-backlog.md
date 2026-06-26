@@ -9345,6 +9345,14 @@ group-local simultaneous enqueue widening, backend behavior,
 verification-output generation, backend-language variants, external converter
 dependencies such as `sv2v`, and VHDL stay deferred.
 
+IAL2 protocol generality guardrail selector:
+[IAL2_PROTOCOL_GENERALITY_GUARDRAIL_READINESS_SELECTION](../../IAL2_PROTOCOL_GENERALITY_GUARDRAIL_READINESS_SELECTION.md)
+selects `.526`, readiness audit for the IAL2 protocol/platform generality
+guardrail before more profile-specific implementation. AXI is the first
+shipped IAL2 profile/example, not the definition of IAL2. Common IAL2
+constructs remain protocol/platform-generic and AXI-specific vocabulary stays
+profile-local unless compatible reuse is proven across multiple profiles.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

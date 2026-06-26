@@ -3876,6 +3876,11 @@ multi-beat output banks, scoreboards, arbitrary mixed cardinality,
 group-local simultaneous enqueue widening, backend behavior,
 verification-output generation, backend-language variants, external converter
 dependencies such as `sv2v`, and VHDL remain deferred.
+`.525` now selects `.526`, readiness audit for the IAL2 protocol/platform
+generality guardrail before more profile-specific implementation. AXI is the
+first shipped IAL2 profile/example, not the definition of IAL2. Common IAL2
+constructs remain protocol/platform-generic and AXI-specific vocabulary stays
+profile-local unless compatible reuse is proven across multiple profiles.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic
