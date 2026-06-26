@@ -4234,6 +4234,16 @@ non-APB profile, non-APB objects, and implicit mixed requester/completer
 sources still fail closed. `.569` selects `.570`, the next no-behavior APB
 surface selector after requester/completer/composition `.apb` alias coverage
 shipped.
+`.570` now selects `.571`, APB requester busy/status public contract
+selection, without changing behavior. Current generated APB requester and
+fixed composition IAL2 reports expose `done`, `last_error`, and
+`last_read_data` while carrying `apb_requester_busy_status_deferred`;
+lower-layer hand-authored `fsm/apb_requester.fsm` and `fsm/apb_tb.fsm`
+already expose `busy`. The next owner must decide exact source syntax,
+whether the first widening exposes only `busy` or also a named status field,
+generated `.isf`/`.fsm` review artifacts, fixed composition top-port
+propagation, support/report/residue/docs updates, diagnostics, validation, and
+rollback before any parser or generator behavior changes.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

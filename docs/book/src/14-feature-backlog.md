@@ -9893,6 +9893,18 @@ sources without explicit `(apb-composition ...)` still fail closed. `.569`
 selects `.570`, a no-behavior selector for the next APB surface after
 requester/completer/composition `.apb` alias coverage shipped.
 
+Post APB alias-widening selector:
+[IAL2_POST_APB_ALIAS_WIDENING_NEXT_SLICE_SELECTION](../../IAL2_POST_APB_ALIAS_WIDENING_NEXT_SLICE_SELECTION.md)
+selects `.571`, APB requester busy/status public contract selection. The
+selector changes no behavior. The current generated requester and fixed
+composition IAL2 reports expose `done`, `last_error`, and `last_read_data`
+while carrying `apb_requester_busy_status_deferred`; lower-layer
+hand-authored `fsm/apb_requester.fsm` and `fsm/apb_tb.fsm` already expose
+`busy`. The next owner must settle exact source syntax, whether the first
+widening exposes only `busy` or also a named status field, generated review
+artifacts, fixed composition top-port propagation, support/report/residue
+updates, diagnostics, validation, and rollback before behavior changes.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after
