@@ -50,7 +50,7 @@ reusable verification IP, and VHDL-oriented verification artifacts.
 - ID: `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER`
   Status: `active`
   Goal: `Build an IAL1-first verification-code generation lane for SV/UVM, VHDL-oriented verification artifacts, and future reusable verification IP.`
-  Children: `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.1, IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.2, IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.3, IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4, IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.5, IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.6, IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.7, IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.8, IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.9, IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.10`
+  Children: `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.1, IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.2, IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.3, IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.4, IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.5, IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.6, IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.7, IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.8, IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.9, IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.10, IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.11`
 
 - ID: `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.1`
   Status: `done`
@@ -116,9 +116,16 @@ reusable verification IP, and VHDL-oriented verification artifacts.
   Commit: `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.9: select VHDL validation substrate`
 
 - ID: `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.10`
-  Status: `pending`
+  Status: `done`
   Goal: `Select the first VHDL-oriented verification artifact under the shape-only validation substrate.`
   Acceptance: `The selector chooses a bounded inert VHDL verification artifact family, such as a package shell, testbench shell, PSL sidecar placeholder, or no artifact yet; records CLI target, canonical manifest/capability id, artifact layout, validation non-claims, support-accounting shape, mdBook expectations, and implementation owner before any generator code changes.`
+  Verification: `Complete: selected an inert VHDL observation metadata package skeleton with future CLI target vhdl-observation-package, canonical id vhdl_observation_package_skeleton, artifact path vhdl/<actor>_observation_vhdl_pkg.vhd, explicit no-compile/no-PSL validation claims, and support-accounting entry feature.isf_verification_observation_vhdl_package_skeleton.`
+  Commit: `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.10: select VHDL observation package`
+
+- ID: `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.11`
+  Status: `pending`
+  Goal: `Implement the selected VHDL observation package verification-output target.`
+  Acceptance: `The CLI accepts --emit-verification-output vhdl-observation-package --verification-outdir DIR for .isf sources with passive verification_observations[], emits the selected inert VHDL package skeleton and manifest, rejects unsupported sources/options before artifact writes, advertises the target in capability manifest metadata, adds the selected support-accounting entry, documents the user-facing flow in the mdBook, and proves artifact shape plus deferred-behavior absence without claiming VHDL compile, syntax, PSL, simulator, analyzer, scoreboard, coverage, reusable VIP, or direct IAL2 support.`
   Verification: `pending`
   Commit: `pending`
 
@@ -134,8 +141,9 @@ reusable verification IP, and VHDL-oriented verification artifacts.
 | 6 | `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.8` | `done` | Shipped the selected `.isf` verification-output command and inert UVM package skeleton before any broader verification output. |
 | 7 | `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.5` | `done` | Audited VHDL assertion/testbench/PSL feasibility and deferred VHDL verification artifact selection behind a smaller validation-substrate prerequisite. |
 | 8 | `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.9` | `done` | Selected artifact-shape and inert-behavior validation with explicit no-compile/no-PSL manifest claims for future inert VHDL verification skeletons. |
-| 9 | `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.10` | `pending` | Select the first VHDL-oriented verification artifact under the selected shape-only validation substrate, or defer it again with exact evidence. |
-| 10 | `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.6` | `pending` | Audit whether future verification generation needs a direct IAL2 route or should keep routing through IAL1 after the VHDL artifact selector is resolved. |
+| 9 | `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.10` | `done` | Selected an inert VHDL observation metadata package skeleton as the first VHDL-oriented verification artifact. |
+| 10 | `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.11` | `pending` | Implement the selected `vhdl-observation-package` verification-output target before any broader VHDL verification output. |
+| 11 | `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.6` | `pending` | Audit whether future verification generation needs a direct IAL2 route or should keep routing through IAL1 after the VHDL package implementation is resolved. |
 
 ## Decisions
 
@@ -213,9 +221,15 @@ reusable verification IP, and VHDL-oriented verification artifacts.
   substrate is artifact-shape and inert-behavior checking with explicit
   manifest non-claims for VHDL compile, syntax, PSL, simulation, formal, and
   analyzer support. GHDL/NVC/vcom are unavailable in the selector environment,
-  so real VHDL syntax or PSL validation remains a future owner. `.10` must
-  select the first VHDL-oriented verification artifact under this substrate or
-  defer it again.
+  so real VHDL syntax or PSL validation remains a future owner. `.10` selected
+  the inert VHDL observation package under this substrate.
+- `2026-06-26`: Complete selector `.10`. The first selected VHDL-oriented
+  verification artifact is an inert VHDL observation metadata package skeleton
+  emitted by future target `vhdl-observation-package`, canonical id
+  `vhdl_observation_package_skeleton`, under
+  `vhdl/<actor>_observation_vhdl_pkg.vhd`. It remains shape-only and inert,
+  with explicit no-compile/no-PSL validation claims. `.11` owns
+  implementation.
 
 ## Open Questions
 
@@ -230,15 +244,15 @@ reusable verification IP, and VHDL-oriented verification artifacts.
   exist at all?
 - After the inert passive UVM monitor skeleton ships, what transaction/event
   source contract should allow real DUT sampling and transaction publication?
-- Which inert VHDL-oriented verification artifact, if any, should be selected
-  first under the shape-only validation substrate?
+- After the inert VHDL observation package ships, which VHDL/PSL/tool
+  validation owner should be selected before any behavioral VHDL verification
+  artifact?
 
 ## Blockers
 
-- None for `.10` selection. VHDL-oriented verification artifact implementation
-  remains blocked until `.10` selects an artifact contract and implementation
-  owner. VHDL compile, syntax, PSL, simulation, formal, and analyzer support
-  remain blocked behind future real-tool validation owners.
+- None for `.11` implementation. VHDL compile, syntax, PSL, simulation,
+  formal, and analyzer support remain blocked behind future real-tool
+  validation owners.
 
 ## Verification Log
 
@@ -252,7 +266,8 @@ reusable verification IP, and VHDL-oriented verification artifacts.
 | `2026-06-26` | `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.7` | `docs/IAL1_VERIFICATION_OUTPUT_PUBLIC_SURFACE_CONTRACT_SELECTION.md`; `.4` passive UVM monitor skeleton selector; shipped `verification_observations[]` fixture and tests; CLI/outdir/report/support-accounting/capability-manifest code and contract patterns; generated HDL artifact placement policy; local tool availability for Verilator/Yosys/Icarus without a selected UVM-aware compile gate; README, ROADMAP_V2, mdBook, public/downstream contracts, task index, Memory, and Knowledge Map; docs/doctrine closeout gates | `passed`; selected the public verification-output command, artifact layout, manifest shape, support-accounting entry, capability-manifest section, diagnostics, and validation boundary for `.8`. No parser, generator, CLI, artifact, support-accounting, schedule/check/semantic JSON, HDL/runtime, UVM output, VHDL output, direct IAL2 route, scoreboard, coverage, reusable VIP, or backend behavior changed. |
 | `2026-06-26` | `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.8` | `perl -Iperl -c bin/fsmgen`; syntax checks for `perl/FSM/VerificationOutput/UVM/PassiveMonitorSkeleton.pm`, `perl/FSM/Support/VerificationOutputsContract.pm`, `perl/FSM/Support/VerificationOutputsSection.pm`, `perl/FSM/Support/CapabilityManifest.pm`, `perl/FSM/Support/CapabilityManifestContract.pm`, `perl/FSM/Support/LanguageSurfaceSection.pm`, `perl/FSM/Support/RegressionCorpus.pm`, `t/1464-isf-verification-output-uvm-passive-monitor.t`, `t/248-regression-corpus-accounting.t`, `t/297-capability-manifest.t`; `prove -Iperl t/1464-isf-verification-output-uvm-passive-monitor.t t/248-regression-corpus-accounting.t t/297-capability-manifest.t`; `./bin/fsmgen --quiet --strict --check --json isf/verification_observation_metadata.isf`; `./bin/fsmgen --quiet --strict --emit-semantic-json isf/verification_observation_metadata.isf`; `./bin/fsmgen --quiet --emit-verification-output uvm-passive-monitor --verification-outdir /tmp/fsmgen-uvm-smoke isf/verification_observation_metadata.isf`; `./bin/fsmgen --capability-manifest`; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `mdbook build docs/book`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_docs_relative_paths.sh`; `scripts/check_memory_architecture.sh`; `git --no-pager diff --check`; `scripts/check_doctrines.sh`; guarded broad attempts `scripts/run_with_ram_guard.sh -- prove -Iperl t/296-regression-corpus-supported-behavior.t t/301-check-json-supported-corpus.t t/303-normalized-semantic-json-supported-corpus.t`, then `t/301` and `t/303` separately | `passed` for focused syntax/CLI/manifest/support-accounting/report checks and docs/doctrine closeout gates; guarded broad corpus attempts stopped at the 4096 MiB descendant RSS cutoff on existing dynamic PPIF cases before completion; `.8` shipped the explicit inert UVM passive-monitor skeleton output without widening schedule/check/semantic JSON or claiming UVM compile support |
 | `2026-06-26` | `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.5` | Read/audit `docs/VHDL_SCOPE.md`, `docs/knowledge/direct-vhdl-scaffold.md`, `docs/knowledge/vhdl-deferred-until-sv-ial-complete.md`, `perl/FSM/Support/HDLExternalValidationContract.pm`, `perl/FSM/Support/HDLExternalValidation.pm`, `perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm`, `perl/FSM/Backend/VHDL/StructuralRTLIREmitter.pm`, `t/1420-vhdl-direct-backend-scaffold.t`, current CLI help, current capability manifest, and public docs; checked local `ghdl`/`verilator`/`yosys` availability; `./bin/fsmgen --quiet --language vhdl --output /tmp/fsmgen-vhdl-selector-smoke.vhd isf/verification_observation_metadata.isf`; scanned the emitted VHDL for assertion/PSL/testbench/UVM/monitor constructs; `prove -Iperl t/1420-vhdl-direct-backend-scaffold.t`; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `mdbook build docs/book`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_docs_relative_paths.sh`; `scripts/check_memory_architecture.sh`; `git --no-pager diff --check`; `scripts/check_doctrines.sh` | `passed`; selected no VHDL verification artifact. The emitted VHDL is synthesizable entity/architecture scaffold only, the validation contract remains SystemVerilog-only, `ghdl` was unavailable, and `.9` later selected the VHDL verification validation substrate before any VHDL artifact implementation |
-| `2026-06-26` | `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.9` | Read/audit `docs/IAL1_VHDL_VERIFICATION_OUTPUT_CONTRACT_SELECTION.md`, `docs/VHDL_SCOPE.md`, `docs/knowledge/direct-vhdl-scaffold.md`, `docs/knowledge/vhdl-deferred-until-sv-ial-complete.md`, `perl/FSM/Support/HDLExternalValidationContract.pm`, `perl/FSM/Support/VerificationOutputsContract.pm`, `perl/FSM/VerificationOutput/UVM/PassiveMonitorSkeleton.pm`, `t/1464-isf-verification-output-uvm-passive-monitor.t`, current capability manifest, README, ROADMAP_V2, and mdBook VHDL/GHDL backlog text; checked local `ghdl`/`nvc`/`vcom`/`verilator`/`yosys` availability; targeted capability-manifest probe for VHDL validation deferral and absence of VHDL verification targets; `prove -Iperl t/313-hdl-external-validation-contract.t t/297-capability-manifest.t`; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `mdbook build docs/book`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_docs_relative_paths.sh`; `scripts/check_memory_architecture.sh`; `git --no-pager diff --check`; `scripts/check_doctrines.sh` | `passed`; selected artifact-shape and inert-behavior validation. The substrate makes no VHDL compile, syntax, PSL, simulation, formal, or analyzer claim, and `.10` now owns first VHDL artifact selection |
+| `2026-06-26` | `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.9` | Read/audit `docs/IAL1_VHDL_VERIFICATION_OUTPUT_CONTRACT_SELECTION.md`, `docs/VHDL_SCOPE.md`, `docs/knowledge/direct-vhdl-scaffold.md`, `docs/knowledge/vhdl-deferred-until-sv-ial-complete.md`, `perl/FSM/Support/HDLExternalValidationContract.pm`, `perl/FSM/Support/VerificationOutputsContract.pm`, `perl/FSM/VerificationOutput/UVM/PassiveMonitorSkeleton.pm`, `t/1464-isf-verification-output-uvm-passive-monitor.t`, current capability manifest, README, ROADMAP_V2, and mdBook VHDL/GHDL backlog text; checked local `ghdl`/`nvc`/`vcom`/`verilator`/`yosys` availability; targeted capability-manifest probe for VHDL validation deferral and absence of VHDL verification targets; `prove -Iperl t/313-hdl-external-validation-contract.t t/297-capability-manifest.t`; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `mdbook build docs/book`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_docs_relative_paths.sh`; `scripts/check_memory_architecture.sh`; `git --no-pager diff --check`; `scripts/check_doctrines.sh` | `passed`; selected artifact-shape and inert-behavior validation. The substrate makes no VHDL compile, syntax, PSL, simulation, formal, or analyzer claim, and `.10` later selected the inert VHDL observation package under it |
+| `2026-06-26` | `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.10` | Read/audit `.5` VHDL output selector, `.9` validation-substrate selector, public verification-output selector `.7`, UVM skeleton selector `.4`, current `bin/fsmgen` verification-output branch, `perl/FSM/Support/VerificationOutputsContract.pm`, `perl/FSM/Support/VerificationOutputsSection.pm`, `perl/FSM/Support/RegressionCorpus.pm`, `t/1464-isf-verification-output-uvm-passive-monitor.t`, README, ROADMAP_V2, mdBook, ISF public/downstream contracts, task index, Memory, and Knowledge Map; targeted capability-manifest probe proving `vhdl-observation-package` remains pending implementation; `prove -Iperl t/1464-isf-verification-output-uvm-passive-monitor.t t/297-capability-manifest.t`; `bash knowledge-map/scripts/gen_knowledge_map.sh`; `mdbook build docs/book`; `bash knowledge-map/scripts/check_knowledge_map.sh`; `scripts/check_docs_relative_paths.sh`; `scripts/check_memory_architecture.sh`; `git --no-pager diff --check`; `scripts/check_doctrines.sh` | `passed`; selected inert VHDL observation metadata package. `.11` owns implementation of `--emit-verification-output vhdl-observation-package --verification-outdir DIR source.isf` without VHDL compile, syntax, PSL, simulator, analyzer, scoreboard, coverage, reusable VIP, or direct IAL2 support claims |
 
 ## Commit Log
 
@@ -267,6 +282,7 @@ reusable verification IP, and VHDL-oriented verification artifacts.
 | `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.8` | `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.8: implement UVM passive monitor output` | Implemented the explicit verification-output CLI, inert UVM package/manifest writer, capability-manifest target, support-accounting entry, focused tests, and public docs. |
 | `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.5` | `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.5: select VHDL verification prerequisite` | Selected no VHDL verification artifact; routed the next step to `.9`, the VHDL verification validation-substrate selector. |
 | `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.9` | `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.9: select VHDL validation substrate` | Selected shape-only inert-artifact validation with explicit no-compile/no-PSL manifest claims and routed artifact selection to `.10`. |
+| `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.10` | `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.10: select VHDL observation package` | Selected the inert VHDL observation metadata package target and routed implementation to `.11`. |
 
 ## Changelog
 
@@ -296,3 +312,5 @@ reusable verification IP, and VHDL-oriented verification artifacts.
 - `2026-06-26`: Completed `.9`, selecting shape-only inert-artifact validation
   for future VHDL verification skeletons and routing the next exact selector to
   `.10`, first VHDL artifact selection.
+- `2026-06-26`: Completed `.10`, selecting the inert VHDL observation metadata
+  package target and routing implementation to `.11`.

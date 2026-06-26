@@ -99,8 +99,9 @@ This document defines the scoped R14 VHDL backend plan for FSMGen.
   the external validation contract remains SystemVerilog-only, and
   `IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.9` selected only
   artifact-shape and inert-behavior validation with no VHDL compile, syntax,
-  PSL, simulation, formal, or analyzer claim. `.10` must select the first VHDL
-  verification artifact before any VHDL verification output is implemented.
+  PSL, simulation, formal, or analyzer claim. `.10` selected an inert VHDL
+  observation metadata package target, and `.11` must implement it before any
+  VHDL verification output is shipped.
 - Composition VHDL is shipped only for the bounded C3 external-RTL
   literal/concat structural top in
   `t/corpus/composition_intent_integer_literals.fsm` and the bounded C1

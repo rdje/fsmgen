@@ -4217,8 +4217,11 @@ synthesizable scaffold, VHDL/GHDL validation is not active, and
 inert-artifact validation with explicit no-compile/no-PSL manifest claims. The
 validation-substrate selector
 [IAL1_VHDL_VERIFICATION_VALIDATION_SUBSTRATE_SELECTION](../../IAL1_VHDL_VERIFICATION_VALIDATION_SUBSTRATE_SELECTION.md)
-routes first VHDL artifact selection to
-`IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.10`. Direct
+enabled the VHDL artifact selector
+[IAL1_VHDL_OBSERVATION_PACKAGE_CONTRACT_SELECTION](../../IAL1_VHDL_OBSERVATION_PACKAGE_CONTRACT_SELECTION.md),
+which chose `vhdl-observation-package`: an inert VHDL observation metadata
+package with canonical id `vhdl_observation_package_skeleton`.
+`IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.11` owns implementation. Direct
 IAL2-to-verification routing,
 scoreboard behavior, coverage behavior, and reusable VIP behavior remain
 deferred behind later selector leaves.

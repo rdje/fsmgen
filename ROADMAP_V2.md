@@ -4782,8 +4782,9 @@ verification artifacts remain deferred: `.5` selected no VHDL assertion, PSL,
 testbench, package, or monitor-like artifact because the current VHDL path is
 synthesizable scaffold-only and VHDL/GHDL validation is not active. `.9`
 selected shape-only inert-artifact validation with explicit no-compile/no-PSL
-manifest claims; `.10` now owns first VHDL artifact selection under that
-substrate. Direct
+manifest claims. `.10` selected an inert VHDL observation metadata package,
+future target `vhdl-observation-package`, canonical id
+`vhdl_observation_package_skeleton`; `.11` owns implementation. Direct
 IAL2-to-verification generation remains an explicit audit question, not an
 implementation assumption.
 Packed burst outputs, concrete same-ID queue variants beyond the shipped
