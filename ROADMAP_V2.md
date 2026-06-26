@@ -3952,6 +3952,13 @@ one inherited channel source, generic aggregate residue
 `valid_ready_profile_bundle_behavior_outside_monitor`, and no AXI manager
 residue. Existing AXI AW/W bundle behavior still reports its AXI-profile
 `axi_manager_concurrency` residue.
+`.536` now selects `.537`, readiness audit for future IAL2 profile-alias file
+suffixes after the neutral one-channel and dual-channel Valid-Ready `.ppif`
+examples shipped. The selector is not an `.axi` implementation selection; it
+audits how future suffixes such as `.axi`, `.chi`, `.ace`, `.ahb`, `.apb`,
+`.atb`, `.smbus`, or `.i2s` can remain aliases over the same IAL2 model
+without changing `.ppif` behavior, support accounting, reports, source paths,
+or mandatory `IAL2 -> IAL1 -> IAL0` lowering.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

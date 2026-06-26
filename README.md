@@ -2954,6 +2954,13 @@ one inherited channel source, generic aggregate residue
 `valid_ready_profile_bundle_behavior_outside_monitor`, and no AXI manager
 residue. Existing AXI AW/W bundle behavior still reports its AXI-profile
 `axi_manager_concurrency` residue.
+`.536` now selects `.537`, readiness audit for future IAL2 profile-alias file
+suffixes after the neutral one-channel and dual-channel Valid-Ready `.ppif`
+examples shipped. The selector is not an `.axi` implementation selection; it
+audits how future suffixes such as `.axi`, `.chi`, `.ace`, `.ahb`, `.apb`,
+`.atb`, `.smbus`, or `.i2s` can remain aliases over the same IAL2 model
+without changing `.ppif` behavior, support accounting, reports, source paths,
+or mandatory `IAL2 -> IAL1 -> IAL0` lowering.
 
 No behavior
 changed in `.273`, `.274`, `.275`,
@@ -5441,6 +5448,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/IAL2_PROTOCOL_NEUTRAL_VALID_READY_BUNDLE_READINESS_AUDIT.md` — audited protocol-neutral/non-AXI Valid-Ready bundle readiness and selected public contract selection before neutral bundle behavior changes.
 - `docs/IAL2_PROTOCOL_NEUTRAL_VALID_READY_BUNDLE_CONTRACT_SELECTION.md` — selected `ppif/valid_ready_dual_channel_bundle.ppif`, `intent.ppif_valid_ready_dual_channel_bundle`, and the generic aggregate residue contract for the first protocol-neutral/non-AXI Valid-Ready bundle implementation.
 - `docs/IAL2_PROTOCOL_NEUTRAL_VALID_READY_BUNDLE_BEHAVIOR.md` — documents the shipped protocol-neutral/non-AXI dual-channel Valid-Ready `.ppif` bundle, support accounting, generated artifacts, generic aggregate residue, and preserved AXI AW/W residue boundary.
+- `docs/IAL2_POST_NEUTRAL_VALID_READY_BUNDLE_NEXT_SLICE_SELECTION.md` — selected profile-alias readiness as the next IAL2 owner after the neutral Valid-Ready bundle shipped.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_CONTRACT_SELECTION.md` — selected direct single-active dynamic write `BID` same-cycle release-and-recapture behavior under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_DYNAMIC_WRITE_SAME_CYCLE_RECAPTURE_BEHAVIOR.md` — shipped single-active dynamic write `BID` same-cycle release-and-recapture under the existing dynamic write response-demux public sample.
 - `docs/AXI_IAL2_MANAGER_POST_DYNAMIC_WRITE_RECAPTURE_NEXT_SLICE_SELECTION.md` — selected `.367`, public contract selection for first single-active dynamic read same-cycle release-and-recapture after dynamic write recapture shipped.

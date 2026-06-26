@@ -9459,6 +9459,15 @@ support identity `intent.ppif_valid_ready_dual_channel_bundle`, both neutral
 roles, one inherited channel source, and generic aggregate residue; and
 preserves the AXI AW/W bundle's AXI-profile residue boundary.
 
+Post neutral Valid-Ready bundle selector:
+[IAL2_POST_NEUTRAL_VALID_READY_BUNDLE_NEXT_SLICE_SELECTION](../../IAL2_POST_NEUTRAL_VALID_READY_BUNDLE_NEXT_SLICE_SELECTION.md)
+selects `.537`, readiness audit for future IAL2 profile-alias file suffixes.
+The selector is not an `.axi` implementation selection; it audits how future
+suffixes such as `.axi`, `.chi`, `.ace`, `.ahb`, `.apb`, `.atb`, `.smbus`, or
+`.i2s` can remain aliases over the same IAL2 model while preserving `.ppif`
+behavior, support accounting, reports, source paths, and mandatory
+`IAL2 -> IAL1 -> IAL0` lowering.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after
