@@ -3972,6 +3972,12 @@ the public boundary prose before any suffix behavior changes.
 source suffixes remain `.fsm`, `.isf`, and `.ppif`; no profile-alias suffix is
 accepted. `.538` selects `.539`, public contract selection for the first IAL2
 profile-alias suffix.
+`.539` now selects `.540`, direct bounded implementation of `.axi` as the first
+IAL2 profile-alias suffix. The selected alias mirrors
+`ppif/axi_aw_valid_ready.ppif` at `ppif/axi_aw_valid_ready.axi`, requires an
+explicit AXI-family profile such as `(profile axi4)`, and remains an IAL2 alias
+that lowers through generated `.isf` before generated `.fsm`. This is only the
+first profile-alias example; it does not make IAL2 AXI-only.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

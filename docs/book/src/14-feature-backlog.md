@@ -9484,6 +9484,15 @@ capability manifest. Shipped source suffixes remain `.fsm`, `.isf`, and
 `.ppif`, and `.539` will select the public contract for the first IAL2
 profile-alias suffix before any implementation.
 
+IAL2 first profile-alias contract:
+[IAL2_FIRST_PROFILE_ALIAS_CONTRACT_SELECTION](../../IAL2_FIRST_PROFILE_ALIAS_CONTRACT_SELECTION.md)
+selects `.540`, direct bounded implementation of `.axi` as the first IAL2
+profile-alias suffix. The selected `.axi` alias mirrors the existing
+`ppif/axi_aw_valid_ready.ppif` sample at `ppif/axi_aw_valid_ready.axi`, requires
+an explicit AXI-family profile such as `(profile axi4)`, and stays on the
+mandatory `IAL2 -> IAL1 -> IAL0` lowering chain. AXI remains a first
+profile-alias example, not the definition of IAL2.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after
