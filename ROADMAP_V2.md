@@ -3893,6 +3893,10 @@ lead with AXI as the first shipped IAL2 profile/example, not the IAL2
 definition; future protocol-specific suffixes are profile aliases over IAL2;
 and common IAL2 constructs stay small until compatible reuse is proven across
 profiles.
+`.528` now selects `.529`, readiness audit for a protocol-neutral/non-AXI
+Valid-Ready `.ppif` example boundary. The selector deliberately does not
+return to another AXI behavior slice before auditing the existing
+Valid-Ready family as the next small IAL2 generality exercise.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

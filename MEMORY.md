@@ -10,12 +10,12 @@ prior 38,776-line history is preserved in git (recoverable via `git log -- MEMOR
 - Durable cross-cutting facts/decisions live in `docs/decisions/` (index `docs/decisions/INDEX.md`).
 - Before committing, run `scripts/check_memory_architecture.sh` (git hooks + CI run it too).
 
-- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.527: sync IAL2 public guardrail`.
-- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.528` is active after `.527`; select the next roadmap-aligned IAL2 slice after public generality guardrail cleanup.
-- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.527` synchronized the public `.ppif` contract, downstream handoff, and capability-manifest language-surface boundary with the IAL2 protocol/platform generality guardrail and selected `.528`. AXI is public as the first shipped IAL2 profile/example, not the definition of IAL2; future protocol-specific suffixes are profile aliases over IAL2. `.524` remains the latest generated-behavior change: bounded one-dynamic plus two-concrete-static mixed dynamic/static write `BID` same-ID `issue-order-queue`.
+- latest_commit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.528: select protocol-neutral PPIF audit`.
+- active_work_unit: `IAL2-FEATURE-COMPLETENESS-FRONTIER.529` is active after `.528`; audit readiness for a protocol-neutral/non-AXI Valid-Ready `.ppif` example boundary.
+- recently_done: `IAL2-FEATURE-COMPLETENESS-FRONTIER.528` selected `.529`, readiness audit for a protocol-neutral/non-AXI Valid-Ready `.ppif` example boundary. The selector keeps AXI profile-local and audits the existing Valid-Ready family as the next small IAL2 generality exercise. `.527` synchronized public `.ppif` surfaces with the guardrail that AXI is the first shipped IAL2 profile/example, not the definition of IAL2.
 - in_flight_uncommitted: none. Ignored local-only mirrors remain at `.cache/local-references/accellera/uvm/uvm-1.2`, `.cache/local-references/sv/1800-2017`, and `.cache/local-references/sv/1800-2023`.
 - blockers: The original exact `t/301` resource cliff is fixed for oversized PPIF check-json via `.2.3.1`, but a full guarded `t/301-check-json-supported-corpus.t` rerun stopped on host-memory cutoff from a high host baseline and a higher-cutoff retry was rejected by the approval layer. Do not bypass that rejection without explicit user approval; `.2.5` selected RAM-guarded or exact bounded replacement policy for any future broad `t/301`/`t/303` parity plan.
-- next_action: Start `.528` by reading `.527` public-surface sync, `.526` audit, `.525` selector, decisions `0014`/`0015`/`0016`, common-vs-profile Knowledge Map facts, public contracts, capability-manifest boundary, README, ROADMAP_V2, mdBook, task tree, Memory, and Knowledge Map; select the next exact owner without treating AXI as the whole IAL2 roadmap.
+- next_action: Start `.529` by reading `.528` selector, `.527` public-surface sync, decisions `0014`/`0015`/`0016`, common-vs-profile Knowledge Map facts, current `.ppif` Valid-Ready parser/report/generator surfaces, shipped AXI-shaped Valid-Ready sample, support accounting, public contracts, capability-manifest boundary, README, ROADMAP_V2, mdBook, task tree, Memory, and Knowledge Map.
 
 ## Notes
 - Before re-deriving a logged fact, consult `KNOWLEDGE_MAP.md` (derived question→fact

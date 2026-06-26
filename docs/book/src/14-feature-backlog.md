@@ -9371,6 +9371,13 @@ definition; future protocol-specific suffixes are profile aliases over IAL2;
 and common IAL2 constructs stay small until compatible reuse is proven across
 profiles.
 
+IAL2 post-guardrail next-slice selector:
+[IAL2_POST_GUARDRAIL_NEXT_SLICE_SELECTION](../../IAL2_POST_GUARDRAIL_NEXT_SLICE_SELECTION.md)
+selects `.529`, readiness audit for a protocol-neutral/non-AXI Valid-Ready
+`.ppif` example boundary. The selector deliberately does not return to
+another AXI behavior slice before auditing the existing Valid-Ready family as
+the next small IAL2 generality exercise.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after
