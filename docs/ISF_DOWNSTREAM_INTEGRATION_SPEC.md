@@ -84,6 +84,12 @@ Intent abstraction levels:
   surface. It is Protocol/Platform Intent Format source and always lowers
   through generated `.isf` before generated `.fsm`; direct IAL2-to-IAL0
   lowering is not a public contract.
+- The public `.ppif` surface is the generic protocol/platform IAL2 container:
+  AXI is the first shipped IAL2 profile/example, not the definition of IAL2.
+  Future protocol-specific suffixes such as `.axi`, `.chi`, `.ace`, `.ahb`,
+  `.apb`, `.atb`, `.smbus`, or `.i2s` are profile aliases over IAL2 rather
+  than separate layers. Common IAL2 constructs stay small until compatible
+  reuse is proven across multiple profiles.
 - Current bounded `.ppif` coverage includes one-channel Valid-Ready sources,
   multi-channel Valid-Ready bundles, and one-object AXI manager
   capacity/status sources. Support-accounted AXI manager coverage includes

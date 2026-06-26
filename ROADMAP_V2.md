@@ -3886,6 +3886,13 @@ protocol/platform generality guardrail. The audit found the architecture
 records correct and the remaining risk in downstream/public capability
 boundary wording: public `.ppif` surfaces should lead with AXI as the first
 shipped IAL2 profile/example, not the IAL2 definition.
+`.527` now synchronizes the public `.ppif` contract, downstream handoff, and
+capability-manifest language-surface boundary with that guardrail and selects
+`.528`, post-guardrail IAL2 next-slice selection. Public `.ppif` surfaces now
+lead with AXI as the first shipped IAL2 profile/example, not the IAL2
+definition; future protocol-specific suffixes are profile aliases over IAL2;
+and common IAL2 constructs stay small until compatible reuse is proven across
+profiles.
 
 `.269` selected `.270`, readiness audit for mixed dynamic/static
 response-demux after the all-dynamic multiple dynamic

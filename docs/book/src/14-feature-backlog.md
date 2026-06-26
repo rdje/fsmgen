@@ -9361,6 +9361,16 @@ the remaining risk in downstream/public capability boundary wording: public
 `.ppif` surfaces should lead with AXI as the first shipped IAL2
 profile/example, not the IAL2 definition.
 
+IAL2 protocol generality guardrail public-surface sync:
+[IAL2_PROTOCOL_GENERALITY_GUARDRAIL_PUBLIC_SURFACE_SYNC](../../IAL2_PROTOCOL_GENERALITY_GUARDRAIL_PUBLIC_SURFACE_SYNC.md)
+synchronizes the public `.ppif` contract, downstream handoff, and
+capability-manifest language-surface boundary with the guardrail and selects
+`.528`, post-guardrail IAL2 next-slice selection. Public `.ppif` surfaces now
+lead with AXI as the first shipped IAL2 profile/example, not the IAL2
+definition; future protocol-specific suffixes are profile aliases over IAL2;
+and common IAL2 constructs stay small until compatible reuse is proven across
+profiles.
+
 Post multiple dynamic multi-beat selector:
 [AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION](../../AXI_IAL2_MANAGER_POST_MULTIPLE_DYNAMIC_MULTI_BEAT_NEXT_SLICE_SELECTION.md)
 selects `.270`, readiness audit for mixed dynamic/static response-demux after

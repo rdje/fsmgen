@@ -37,6 +37,12 @@ generated `.isf` before generated `.fsm`; direct IAL2-to-IAL0 lowering is not a
 public contract. The machine-readable downstream-consumer boundary for shipped
 suffixes, CLI modes, lowering order, and per-suffix status lives in
 `./bin/fsmgen --capability-manifest` under `language_surface.file_surfaces`.
+The public `.ppif` surface is the generic protocol/platform IAL2 container:
+AXI is the first shipped IAL2 profile/example, not the definition of IAL2.
+Future protocol-specific suffixes such as `.axi`, `.chi`, `.ace`, `.ahb`,
+`.apb`, `.atb`, `.smbus`, or `.i2s` are profile aliases over IAL2 rather
+than separate layers. Common IAL2 constructs stay small until compatible reuse
+is proven across multiple profiles.
 
 Current bounded `.ppif` coverage includes one-channel Valid-Ready sources,
 multi-channel Valid-Ready bundles, and one-object AXI manager capacity/status

@@ -2883,6 +2883,21 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
     );
     like(
         $file_surface_by_suffix{'.ppif'}{current_boundary},
+        qr/AXI is the first shipped IAL2 profile\/example, not the definition of IAL2/,
+        'manifest states AXI is the first shipped IAL2 profile, not the IAL2 definition',
+    );
+    like(
+        $file_surface_by_suffix{'.ppif'}{current_boundary},
+        qr/future protocol-specific suffixes such as \.axi, \.chi, \.ace, \.ahb, \.apb, \.atb, \.smbus, or \.i2s are profile aliases over IAL2/,
+        'manifest states protocol-specific suffixes are future IAL2 profile aliases',
+    );
+    like(
+        $file_surface_by_suffix{'.ppif'}{current_boundary},
+        qr/common IAL2 constructs stay small until compatible reuse is proven across multiple profiles/,
+        'manifest keeps common IAL2 construct promotion evidence-driven across profiles',
+    );
+    like(
+        $file_surface_by_suffix{'.ppif'}{current_boundary},
         qr/read single-beat and read burst-last queue-head response-demux including multiple\/mixed depth-3 scalar, raw-ARLEN, runtime-validation, and multi-beat output-bank read-data groups/,
         'manifest advertises shipped queue-head scalar, raw-ARLEN, runtime-validation, and multi-beat read-data',
     );
